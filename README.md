@@ -13,11 +13,11 @@ when to use it, and when to skip it.
 
 | Directory | Analyses |
 |---|---|
-| [`agent-orchestration/`](agent-orchestration/) | Agent Teams, Skills adoption, Ralph loop enhancements |
-| [`execution-infrastructure/`](execution-infrastructure/) | Sandboxing, cloud sessions, remote control, remote access landscape |
-| [`context-memory/`](context-memory/) | Extended context (1M tokens), memory system, llms.txt |
-| [`configuration/`](configuration/) | Model/provider configuration, fast mode, hooks system |
-| [`packaging-enterprise/`](packaging-enterprise/) | Plugin packaging, cowork/enterprise plugins, Chrome extension |
+| [`docs/agent-orchestration/`](docs/agent-orchestration/) | Agent Teams, Skills adoption, Ralph loop enhancements |
+| [`docs/execution-infrastructure/`](docs/execution-infrastructure/) | Sandboxing, cloud sessions, remote control, remote access landscape |
+| [`docs/context-memory/`](docs/context-memory/) | Extended context (1M tokens), memory system, llms.txt |
+| [`docs/configuration/`](docs/configuration/) | Model/provider configuration, fast mode, hooks system |
+| [`docs/packaging-enterprise/`](docs/packaging-enterprise/) | Plugin packaging, cowork/enterprise plugins, Chrome extension |
 | [`CC-changelog-feature-scan.md`](CC-changelog-feature-scan.md) | Changelog triage of new CC features (v2.1.0–2.1.71) |
 
 ## Structure
