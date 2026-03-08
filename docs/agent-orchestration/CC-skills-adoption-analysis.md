@@ -10,16 +10,14 @@ status: completed
 
 **Date**: 2026-01-11
 **Status**: Completed
-**Branch**: feat-evals
-
 ## Summary
 
-Adopted Claude Code Skills as the modular capability pattern for this project.
+Claude Code Skills provide a modular capability pattern for projects using CC.
 Skills follow the [Agent Skills open standard][agentskills-spec] (originated by
 Anthropic, now adopted by 30+ agent products) and are extended by Claude Code
 with additional frontmatter fields.
 
-Ralph Loop adoption is documented separately in [ralph/README.md](../../../ralph/README.md).
+Autonomous development loop adoption is documented separately (see the Ralph loop references in [CC-ralph-enhancement-research.md](CC-ralph-enhancement-research.md)).
 
 ## Skills Created (Initial Adoption)
 
@@ -30,14 +28,14 @@ Ralph Loop adoption is documented separately in [ralph/README.md](../../../ralph
 | `reviewing-code` | `.claude/skills/reviewing-code/SKILL.md` | Code quality review |
 | `generating-prd` | `.claude/skills/generating-prd/SKILL.md` | PRD.md → prd.json conversion |
 
-Since initial adoption, the project has grown to 16 skills. Run
-`ls .claude/skills/` for the current list.
+A project can grow to many more skills over time. Run
+`ls .claude/skills/` for the current list in your project.
 
 **Key Features**:
 
 - Progressive disclosure architecture (name+description → full body → resources)
 - Third-person descriptions with explicit triggers for auto-discovery
-- References to @AGENTS.md, @CONTRIBUTING.md for compliance
+- References to project instructions and contributing guide for compliance
 - Under 500 lines per SKILL.md
 
 ## Skills Evolution (v2.1.0–v2.1.69)
@@ -83,22 +81,22 @@ The skills system has evolved significantly since initial adoption:
 
 ## Skills Auto-Discovery
 
-Skills are auto-discovered by Claude Code. Trigger by:
+Skills are auto-discovered by Claude Code based on task context. Example triggers:
 
 - Requesting backend design → `designing-backend` activates
 - Asking to implement Python → `implementing-python` activates
 - Requesting code review → `reviewing-code` activates
-- Converting PRD to JSON → `generating-prd` activates
+- Converting a requirements document to JSON → `generating-prd` activates
 
 ## Design Decision: Skills vs Agents
 
-Kept both systems:
+Both systems can coexist in a project:
 
-- `.claude/agents/` — Existing subagent definitions (9 total)
-- `.claude/skills/` — Claude Code Skills (16 total)
-- **Rationale**: Incremental adoption; Skills complement Agents with progressive
-  disclosure and auto-discovery. Agents define subagent roles for Task tool
-  invocations; Skills define modular capabilities triggered by task context.
+- `.claude/agents/` — Subagent definitions for specific roles
+- `.claude/skills/` — Claude Code Skills for modular capabilities
+- **Rationale**: Skills complement Agents with progressive disclosure and
+  auto-discovery. Agents define subagent roles for Task tool invocations; Skills
+  define modular capabilities triggered by task context.
 
 ## SKILL.md Format: Open Standard vs Claude Code Extensions
 
@@ -151,10 +149,10 @@ Fields like `allowed-tools`, `model`, `context`, `agent` trigger false-positive
 warnings. This is a [known upstream bug][cc-schema-bug] (issues #23329, #25380,
 #25795 — all closed as duplicates of a tracked fix).
 
-**Current project workaround**: CC-specific fields are nested under `metadata:`
-to avoid the warning. This is valid per the agentskills.io spec (metadata is a
-free-form map) but means CC may not interpret them as first-class directives.
-Monitor the upstream fix; when shipped, move these fields to top-level.
+**Workaround**: Nest CC-specific fields under `metadata:` to avoid the warning.
+This is valid per the agentskills.io spec (metadata is a free-form map) but means
+CC may not interpret them as first-class directives. Monitor the upstream fix;
+when shipped, move these fields to top-level.
 
 ## Ecosystem Context
 
@@ -175,10 +173,10 @@ competing patterns.
 
 ## Settings Configuration
 
-Updated `.claude/settings.json` for Skills adoption:
+Update `.claude/settings.json` to adopt Skills:
 
-- Added Skills tool permission
-- Enabled skill script execution paths
+- Add Skills tool permission
+- Enable skill script execution paths
 
 ## References
 
