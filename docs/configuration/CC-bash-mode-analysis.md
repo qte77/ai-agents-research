@@ -236,16 +236,61 @@ Adopt for any skill that benefits from live data. The preprocessing model is cle
 - Environment-aware skills (validation, diagnostics)
 - Any skill that needs runtime context without Claude running commands itself
 
+## Related: Agent SDK Bash Tool
+
+The Agent SDK provides a server-side Bash tool (`bash_20250124`) that is distinct from CC's client-side `!` prefix ([source][sdk-bash]):
+
+| Aspect | CC `!` prefix | SDK Bash tool |
+|---|---|---|
+| **Side** | Client-side (user's terminal) | Server-side (Claude requests execution, host implements) |
+| **Session** | User's shell | Persistent bash session maintained by host |
+| **Pricing** | No API cost (direct execution) | 245 input tokens per tool use + output tokens |
+| **Approval** | None (direct) | Host controls execution policy |
+| **State** | User's env | Persistent across tool calls (env vars, cwd) |
+
+### SDK Bash Tool Key Patterns
+
+- **Git-based checkpointing**: Commit baseline before agent work, commit per feature, revert on failure via `git checkout` ([source][sdk-bash])
+- **Persistent session**: Environment variables and working directory persist between commands within a conversation
+- **Security**: Run in isolated environments (Docker/VM), implement command filtering/allowlists, set resource limits with `ulimit` ([source][sdk-bash])
+- **No interactive commands**: Cannot handle `vim`, `less`, or password prompts
+
+### Community: Bash Permission Patterns
+
+The `Bash(pattern:*)` syntax in `~/.claude.json` controls which commands Claude can execute per project ([source][claudelog-bash]):
+
+```json
+{
+  "projects": {
+    "/path/to/project": {
+      "allowedTools": [
+        "Bash(git *:*)",
+        "Bash(npm run:*)",
+        "Bash(make *:*)"
+      ]
+    }
+  }
+}
+```
+
+The `/permissions` command provides interactive visual management. Tab completion (v2.0.10+) mirrors standard terminal behavior ([source][claudelog-bash]).
+
+**Security principle**: Use specific patterns (`Bash(git *:*)`) rather than blanket `Bash(*)`. Configure per-project for isolation ([source][claudelog-bash]).
+
 ## References
 
 - [CC Interactive Mode docs][cc-interactive-mode]
 - [CC Skills docs][cc-skills-docs]
 - [CC Security docs][cc-security]
+- [Agent SDK Bash tool][sdk-bash]
+- [Claudelog — What is Bash Mode?][claudelog-bash]
 - [DEV.to — The `!` prefix every Claude Code user needs][devto-bash-mode]
 - [Snyk — ToxicSkills supply chain research][snyk-toxicskills]
 
 [cc-interactive-mode]: https://code.claude.com/docs/en/interactive-mode
 [cc-skills-docs]: https://code.claude.com/docs/en/slash-commands
 [cc-security]: https://code.claude.com/docs/en/security
+[sdk-bash]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/bash-tool
+[claudelog-bash]: https://claudelog.com/faqs/what-is-bash-mode/
 [devto-bash-mode]: https://dev.to/rajeshroyal/stop-wasting-tokens-the-prefix-that-every-claude-code-user-needs-to-know-2c6i
 [snyk-toxicskills]: https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/
