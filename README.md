@@ -13,11 +13,11 @@ when to use it, and when to skip it.
 
 | Directory | Analyses |
 |---|---|
-| [`docs/agent-orchestration/`](docs/agent-orchestration/) | Agent Teams, Skills adoption, Ralph loop enhancements, CLI-Anything analysis |
-| [`docs/execution-infrastructure/`](docs/execution-infrastructure/) | Sandboxing, cloud sessions, remote control, remote access landscape, version pinning & self-hosted runners, GitHub Actions & Claude App |
+| [`docs/agents-skills/`](docs/agents-skills/) | Agent Teams, Skills adoption, Ralph loop enhancements, CLI-Anything analysis |
+| [`docs/ci-execution/`](docs/ci-execution/) | Sandboxing, cloud sessions, remote control, remote access landscape, version pinning & self-hosted runners, GitHub Actions & Claude App |
 | [`docs/context-memory/`](docs/context-memory/) | Extended context (1M tokens), memory system (with path-scoped rules deep dive), llms.txt |
 | [`docs/configuration/`](docs/configuration/) | Model/provider configuration, fast mode, hooks system, bash mode (with SDK & community refs) |
-| [`docs/packaging-enterprise/`](docs/packaging-enterprise/) | Plugin packaging, cowork/enterprise plugins, Chrome extension, web scraping plugins, official plugins landscape |
+| [`docs/plugins-ecosystem/`](docs/plugins-ecosystem/) | Plugin packaging, cowork/enterprise plugins, Chrome extension, web scraping plugins, official plugins landscape |
 | [`docs/CC-changelog-feature-scan.md`](docs/CC-changelog-feature-scan.md) | Changelog triage of new CC features (v2.1.0–2.1.71) |
 
 | [`examples/`](examples/) | Settings, statusline, rules, and user preferences |

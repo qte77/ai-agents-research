@@ -122,7 +122,7 @@ Worth revisiting if:
 ## References
 
 - [CLI-Anything (GitHub)][cli-anything]
-- [CC Plugin Packaging Research](../packaging-enterprise/CC-plugin-packaging-research.md)
+- [CC Plugin Packaging Research](../plugins-ecosystem/CC-plugin-packaging-research.md)
 - [CC Skills Adoption Analysis](CC-skills-adoption-analysis.md)
 
 [cli-anything]: https://github.com/HKUDS/CLI-Anything

@@ -66,7 +66,7 @@ Claude coordinates tasks across Excel and PowerPoint — running analyses in one
 | Aspect | Fit | Rationale |
 | ------ | --- | --------- |
 | Plugin architecture for agent bundles | Moderate | Plugins as portable agent bundles can package a project's agents for distribution across teams |
-| OTel support for usage tracking | Strong | Aligns with Phoenix/OTel observability strategies (see [CC-agent-teams-orchestration.md](../agent-orchestration/CC-agent-teams-orchestration.md#tracing--observability)) |
+| OTel support for usage tracking | Strong | Aligns with Phoenix/OTel observability strategies (see [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md#tracing--observability)) |
 | Connector ecosystem | Conditional | Relevant only if a project integrates with Google Workspace, Docusign, or other supported services |
 | Pre-built templates | Weak | Templates target business workflows; technical/research projects typically need custom agents |
 | Multi-app orchestration (Excel/PowerPoint) | Conditional | Only relevant if a project's workflows span Excel/PowerPoint |
@@ -76,7 +76,7 @@ Claude coordinates tasks across Excel and PowerPoint — running analyses in one
 
 ### Plugin Architecture vs Repo-Local Skills
 
-Current Skills architecture is documented in [CC-skills-adoption-analysis.md](../agent-orchestration/CC-skills-adoption-analysis.md). Key differences: Plugins are cross-platform (Cowork + Agent SDK) with org marketplace distribution and admin provisioning; Skills are repo-local with auto-discovery. Plugins add structured form UI and OTel integration that Skills lack.
+Current Skills architecture is documented in [CC-skills-adoption-analysis.md](../agents-skills/CC-skills-adoption-analysis.md). Key differences: Plugins are cross-platform (Cowork + Agent SDK) with org marketplace distribution and admin provisioning; Skills are repo-local with auto-discovery. Plugins add structured form UI and OTel integration that Skills lack.
 
 ### Decision Rule
 

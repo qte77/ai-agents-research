@@ -237,7 +237,7 @@ runs-on:
 
 **Adopt for `@claude` interactive use.** The mention-based workflow is low-friction — install app, add secret, copy workflow, start mentioning. Ideal for PR feedback, issue triage, and ad-hoc code questions.
 
-**Evaluate for automated PR review.** The prompt-driven mode on `pull_request: [opened, synchronize]` enables auto-review, but results post as comments, not GitHub review annotations. Compare with the [Code Review plugin](../packaging-enterprise/CC-official-plugins-landscape.md#code-review) for structured multi-agent scoring.
+**Evaluate for automated PR review.** The prompt-driven mode on `pull_request: [opened, synchronize]` enables auto-review, but results post as comments, not GitHub review annotations. Compare with the [Code Review plugin](../plugins-ecosystem/CC-official-plugins-landscape.md#code-review) for structured multi-agent scoring.
 
 **Defer for fully autonomous issue-to-PR.** PR creation is manual (button click). Until the action calls the PR creation API directly, fully unattended issue→branch→PR pipelines require wrapper scripts.
 
@@ -246,7 +246,7 @@ runs-on:
 ## Cross-References
 
 - Version pinning and self-hosted runners for GHA — [CC-version-pinning-resilience.md](CC-version-pinning-resilience.md#github-actions)
-- Official plugins (Code Review, Security Guidance) — [CC-official-plugins-landscape.md](../packaging-enterprise/CC-official-plugins-landscape.md)
+- Official plugins (Code Review, Security Guidance) — [CC-official-plugins-landscape.md](../plugins-ecosystem/CC-official-plugins-landscape.md)
 - Bash tool behavior inside GHA — [CC-bash-mode-analysis.md](../configuration/CC-bash-mode-analysis.md)
 - Cloud sessions as alternative execution — [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md)
 

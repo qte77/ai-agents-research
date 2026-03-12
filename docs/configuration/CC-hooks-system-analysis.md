@@ -139,5 +139,5 @@ resolved or artifact-based collection proves insufficient.
 - [CC Hooks docs](https://code.claude.com/docs/en/hooks)
 - [CC Settings docs](https://code.claude.com/docs/en/settings)
 - [CC Agent Teams docs](https://code.claude.com/docs/en/agent-teams) (TeammateIdle, TaskCompleted hooks)
-- [CC-agent-teams-orchestration.md](../agent-orchestration/CC-agent-teams-orchestration.md) (Agent Teams analysis)
-- [CC-ralph-enhancement-research.md](../agent-orchestration/CC-ralph-enhancement-research.md) (Stop hook pattern for autonomous loops)
+- [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (Agent Teams analysis)
+- [CC-ralph-enhancement-research.md](../agents-skills/CC-ralph-enhancement-research.md) (Stop hook pattern for autonomous loops)

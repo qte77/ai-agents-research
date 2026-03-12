@@ -26,8 +26,8 @@ The CC plugin ecosystem has grown to 9,000+ plugins across the marketplace, Clau
 | 7 | [Chrome DevTools MCP](#chrome-devtools-mcp) | 20k | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
 | 8 | [Figma MCP](#figma-mcp) | 18.1k | None | Brief section (design-focused, skip unless UI) |
 | 9 | [Linear](#linear) | 9.5k | None | Brief section (adopt if using Linear PM) |
-| 10 | [Ralph Loop](#ralph-loop) | — | Full ([ralph enhancement research](../agent-orchestration/CC-ralph-enhancement-research.md)) | Cross-ref only |
-| — | [CLI-Anything](#cli-anything) | — | Full ([CLI-Anything analysis](../agent-orchestration/CC-cli-anything-analysis.md)) | Cross-ref only |
+| 10 | [Ralph Loop](#ralph-loop) | — | Full ([ralph enhancement research](../agents-skills/CC-ralph-enhancement-research.md)) | Cross-ref only |
+| — | [CLI-Anything](#cli-anything) | — | Full ([CLI-Anything analysis](../agents-skills/CC-cli-anything-analysis.md)) | Cross-ref only |
 
 <!-- markdownlint-enable MD013 -->
 
@@ -77,7 +77,7 @@ mcp__context7__get-library-docs \
 - Results aggregated into a structured review summary
 - Flags potential bugs, edge cases, and missing test coverage
 
-**Fit assessment**: **Moderate adopt.** Complements the existing `/review` skill pattern. The multi-agent scoring approach aligns with the parallel review pattern documented in [CC-agent-teams-orchestration.md](../agent-orchestration/CC-agent-teams-orchestration.md). Consider using alongside project-specific review skills for defense-in-depth.
+**Fit assessment**: **Moderate adopt.** Complements the existing `/review` skill pattern. The multi-agent scoring approach aligns with the parallel review pattern documented in [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md). Consider using alongside project-specific review skills for defense-in-depth.
 
 **Interaction with CC's bash layer**: The plugin's review agents use CC's Bash tool ([source][sdk-bash]) to run linters, type checkers, and test suites as part of their analysis. The persistent bash session (245 input tokens per tool use) means agents can chain `git diff`, `ruff check`, and `pyright` in sequence while maintaining working directory state.
 
@@ -156,8 +156,8 @@ These plugins have full analysis elsewhere in this repo:
 - **Firecrawl** — [CC Web Scraping Plugins Analysis](CC-web-scraping-plugins-analysis.md)
 - **Playwright** — [CC Web Scraping Plugins Analysis](CC-web-scraping-plugins-analysis.md)
 - **Chrome DevTools MCP** — [CC Web Scraping Plugins Analysis](CC-web-scraping-plugins-analysis.md)
-- **Ralph Loop** — [CC Ralph Enhancement Research](../agent-orchestration/CC-ralph-enhancement-research.md)
-- **CLI-Anything** (community) — [CC CLI-Anything Analysis](../agent-orchestration/CC-cli-anything-analysis.md)
+- **Ralph Loop** — [CC Ralph Enhancement Research](../agents-skills/CC-ralph-enhancement-research.md)
+- **CLI-Anything** (community) — [CC CLI-Anything Analysis](../agents-skills/CC-cli-anything-analysis.md)
 
 ## Community Resources
 
