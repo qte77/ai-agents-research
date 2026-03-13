@@ -2,13 +2,12 @@
 """Monitor community sources for Claude Code features, tips, and tricks.
 
 Fetches content from community sources (claudelog.com, awesome-claude-code,
-awesome-claude-code-plugins) and identifies entries not yet covered by
-existing community docs.
+awesome-claude-code-plugins, Reddit, X) and identifies entries not yet
+covered by existing community docs.
 
 Usage:
     python community-monitor.py \\
         --community-docs-dir PATH \\
-        --sources-dir PATH \\
         [--state-file PATH]
 
 Exit codes:
@@ -17,8 +16,14 @@ Exit codes:
 """
 
 import argparse
+import base64
+import json
+import os
 import re
 import sys
+import urllib.error
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -53,6 +58,20 @@ SOURCES: list[dict[str, str]] = [
         "url": "https://raw.githubusercontent.com/ccplugins/awesome-claude-code-plugins/main/README.md",
         "type": "markdown",
         "description": "Installable plugin registry with marketplace format",
+    },
+    {
+        "name": "reddit-claudeai",
+        "url": "https://oauth.reddit.com/r/ClaudeAI/search.json?q=claude+code&sort=new&limit=100&restrict_sr=1",
+        "type": "reddit",
+        "auth": "reddit",
+        "description": "r/ClaudeAI posts mentioning Claude Code",
+    },
+    {
+        "name": "x-claudecode",
+        "url": "https://api.x.com/2/tweets/search/recent?query=%23ClaudeCode&max_results=100&tweet.fields=text,created_at",
+        "type": "x",
+        "auth": "x_bearer",
+        "description": "X/Twitter posts with #ClaudeCode hashtag",
     },
 ]
 
@@ -145,6 +164,137 @@ def extract_html_entries(text: str) -> list[dict[str, str]]:
             })
 
     return entries
+
+
+# ---------------------------------------------------------------------------
+# Reddit / X fetching and extraction
+# ---------------------------------------------------------------------------
+
+def fetch_reddit(url: str, client_id: str, client_secret: str) -> list[dict[str, str]]:
+    """Fetch Reddit search results using OAuth2 client_credentials grant.
+
+    Args:
+        url: Reddit OAuth API search URL.
+        client_id: Reddit app client ID.
+        client_secret: Reddit app client secret.
+
+    Returns:
+        List of entry dicts extracted from search results.
+    """
+    # Obtain access token
+    token_url = "https://www.reddit.com/api/v1/access_token"
+    credentials = base64.b64encode(
+        f"{client_id}:{client_secret}".encode()
+    ).decode()
+    token_data = urllib.parse.urlencode(
+        {"grant_type": "client_credentials"}
+    ).encode()
+    token_req = urllib.request.Request(
+        token_url,
+        data=token_data,
+        headers={
+            "Authorization": f"Basic {credentials}",
+            "User-Agent": "cc-community-monitor/1.0",
+        },
+    )
+    with urllib.request.urlopen(token_req, timeout=15) as resp:
+        token_resp = json.loads(resp.read().decode("utf-8"))
+    access_token = token_resp["access_token"]
+
+    # Fetch search results
+    search_req = urllib.request.Request(
+        url,
+        headers={
+            "Authorization": f"Bearer {access_token}",
+            "User-Agent": "cc-community-monitor/1.0",
+        },
+    )
+    with urllib.request.urlopen(search_req, timeout=30) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+
+    entries: list[dict[str, str]] = []
+    for child in data.get("data", {}).get("children", []):
+        post = child.get("data", {})
+        entries.append({
+            "name": post.get("title", ""),
+            "url": f"https://reddit.com{post.get('permalink', '')}",
+            "description": (post.get("selftext") or "")[:200],
+            "heading": "r/ClaudeAI",
+        })
+    return entries
+
+
+def fetch_x_tweets(url: str, bearer_token: str) -> list[dict[str, str]]:
+    """Fetch recent tweets from X API v2.
+
+    Args:
+        url: X API search/recent endpoint URL with query params.
+        bearer_token: X API bearer token.
+
+    Returns:
+        List of entry dicts extracted from tweet results.
+    """
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Authorization": f"Bearer {bearer_token}",
+            "User-Agent": "cc-community-monitor/1.0",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+
+    entries: list[dict[str, str]] = []
+    for tweet in data.get("data", []):
+        text = tweet.get("text", "")
+        tweet_id = tweet.get("id", "")
+        entries.append({
+            "name": text[:80],
+            "url": f"https://x.com/i/status/{tweet_id}" if tweet_id else "",
+            "description": text[:200],
+            "heading": "#ClaudeCode",
+        })
+    return entries
+
+
+# ---------------------------------------------------------------------------
+# Auth-aware fetch dispatcher
+# ---------------------------------------------------------------------------
+
+def fetch_and_extract_source(source: dict[str, str]) -> list[dict[str, str]]:
+    """Fetch and extract entries from a source, handling auth requirements.
+
+    Returns extracted entries. Skips with WARNING on missing auth or errors.
+    """
+    source_type = source["type"]
+    auth = source.get("auth", "none")
+
+    if auth == "reddit":
+        client_id = os.environ.get("REDDIT_CLIENT_ID", "")
+        client_secret = os.environ.get("REDDIT_CLIENT_SECRET", "")
+        if not client_id or not client_secret:
+            print(
+                f"WARNING: Skipping {source['name']} — REDDIT_CLIENT_ID/SECRET not set",
+                file=sys.stderr,
+            )
+            return []
+        return fetch_reddit(source["url"], client_id, client_secret)
+
+    if auth == "x_bearer":
+        bearer = os.environ.get("X_BEARER_TOKEN", "")
+        if not bearer:
+            print(
+                f"WARNING: Skipping {source['name']} — X_BEARER_TOKEN not set",
+                file=sys.stderr,
+            )
+            return []
+        return fetch_x_tweets(source["url"], bearer)
+
+    # No auth required — fetch as text and extract by type
+    content = fetch_text(source["url"])
+    if source_type == "markdown":
+        return extract_markdown_entries(content)
+    return extract_html_entries(content)
 
 
 # ---------------------------------------------------------------------------
@@ -248,10 +398,10 @@ def main() -> None:
 
     for source in SOURCES:
         name = source["name"]
-        print(f"Fetching {name}: {source['url']}", file=sys.stderr)
+        print(f"Fetching {name}...", file=sys.stderr)
 
         try:
-            content = fetch_text(source["url"])
+            entries = fetch_and_extract_source(source)
         except Exception as e:
             print(f"WARNING: Failed to fetch {name}: {e}", file=sys.stderr)
             source_results.append({
@@ -261,12 +411,6 @@ def main() -> None:
                 "new_entries": [],
             })
             continue
-
-        # Extract entries based on content type
-        if source["type"] == "markdown":
-            entries = extract_markdown_entries(content)
-        else:
-            entries = extract_html_entries(content)
 
         print(f"  Extracted {len(entries)} entries", file=sys.stderr)
 
