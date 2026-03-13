@@ -22,7 +22,7 @@ Coordinates multiple independent CC sessions with:
 - **Delegate mode** — restricts lead to coordination only ([source][cc-teams-docs])
 - **Plan approval** — teammates plan in read-only mode; lead approves/rejects autonomously ([source][cc-teams-docs])
 - **Agent memory** — teammates have user/project/local scoped memory (v2.1.33)
-- **Worktree isolation** — `isolation: worktree` gives each agent an isolated repo copy (v2.1.49–v2.1.50)
+- **Worktree isolation** — `isolation: worktree` gives each agent an isolated repo copy (v2.1.49–v2.1.50). Worktree auto-cleaned if agent makes no changes; path and branch returned if changes exist. `.claude/` project configs auto-shared across worktrees (v2.1.63) — no duplication or symlinking needed
 - **Background agents** — `background: true` lets agents run while user works (v2.1.49, v2.0.60); Ctrl+F kills background agents (two-press confirmation, v2.1.49)
 - **Agent frontmatter hooks** — PreToolUse, PostToolUse, Stop hooks in agent definitions (v2.1.0)
 - **Agent spawning restrictions** — `Task(agent_type)` controls which agents can spawn (v2.1.33)
@@ -141,6 +141,8 @@ Compare a multi-agent system (MAS) against simpler patterns using the same evalu
 | Setup complexity | Medium (Collector) | Low (script) | Low (parse files) |
 | Unified dashboard | Yes | Yes | No |
 | In settings.json | Yes (vars exist, currently disabled) | No | No |
+
+**Task Tool Metrics** (v2.1.30): Task completions now include per-task metrics (tokens consumed, tool uses, duration) natively in the task completion response — no OTel required. Useful for cost/performance tracking per teammate without additional infrastructure.
 
 **Upstream limitation**: CC OTel exports metrics and logs only — no trace spans. This is a known limitation tracked in [anthropics/claude-code#9584](https://github.com/anthropics/claude-code/issues/9584) and [#2090](https://github.com/anthropics/claude-code/issues/2090). Until resolved, trace-level execution analysis requires artifact collection: parse `raw_stream.jsonl` for `TeamCreate`, `Task`, `TodoWrite` events into structured trace data.
 

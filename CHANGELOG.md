@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `CC-changelog-feature-scan.md`: group sections under `[yyyy-MM-dd]` date heading
+- `CC-agent-teams-orchestration.md`: expand worktree isolation (auto-cleanup, config sharing v2.1.63), add Task Tool Metrics (v2.1.30)
+- `CC-memory-system-analysis.md`: add agent memory frontmatter (v2.1.33), add `includeGitInstructions` setting (v2.1.69)
+- `CC-ralph-enhancement-research.md`: note `.claude/` config sharing resolved by v2.1.63
+- `CC-version-pinning-resilience.md`: add structured output schema note for `-p` mode (v2.1.22)
 
 ## [0.3.0] - 2026-03-12
 

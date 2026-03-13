@@ -162,6 +162,8 @@ jobs:
         run: claude -p "your prompt" --output-format json
 ```
 
+**Note**: `-p` mode now supports structured output schemas (v2.1.22), not just the `json` format flag — enables enforcing result schemas (e.g., pass/fail/error + identifiers) directly in CLI calls, reducing parsing brittleness in shell wrapper scripts.
+
 ### With Alternative Provider in GHA
 
 ```yaml

@@ -186,6 +186,7 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 - Machine-local; not shared across machines or cloud environments
 - Claude reads/writes during session; "Writing memory" / "Recalled memory" indicators shown
 - **Subagent support**: Subagents can maintain their own auto memory ([source][cc-sub])
+- **Agent memory frontmatter**: Agent definitions in `.claude/agents/` support persistent memory via frontmatter configuration (v2.1.33) — scoped to that agent's execution, distinct from subagent auto-memory
 
 #### Configuration
 
@@ -219,6 +220,7 @@ Auto memory files are plain markdown — edit or delete at any time. Run `/memor
 | ------ | ----- | ------------------------ |
 | Autonomous loop context | Each iteration starts fresh; reads CLAUDE.md + auto memory | Working as designed — see context rot analysis for headless invocation patterns |
 | Cloud sessions | Auto memory is machine-local | Cloud sessions rely on committed CLAUDE.md only (see CC-cloud-sessions-analysis.md) |
+| `includeGitInstructions` | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` removes built-in git workflow instructions from context (v2.1.69) | Saves context tokens in headless/autonomous loops that don't need commit/PR guidance |
 
 <!-- markdownlint-enable MD013 -->
 
