@@ -20,11 +20,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/cc-native/agents-skills/CC-plans-as-skill-rule-templates.md`: plan file anatomy, plan mode mechanics, plan-to-skill/rule extraction
 - `cc-changelog-community-monitor.yaml`: community source monitor workflow (claudelog, awesome-claude-code, awesome-claude-code-plugins)
 - `.github/scripts/community-monitor.py`: companion script for community source monitoring
+- `.github/actions/create-triage-pr/action.yaml`: reusable composite action for triage PR creation
 
 ### Changed
 
 - Rename `changelog-monitor.yaml` to `cc-changelog-monitor.yaml`
 - Restructure `docs/` into `docs/cc-native/` (Anthropic features) and `docs/community/` (third-party)
+- DRY both monitor workflows via `create-triage-pr` composite action
+- `cc-changelog-monitor.yaml`: scope `--docs-dir` to `docs/cc-native/` (was `docs/`)
+- `cc-changelog-community-monitor.yaml`: align schedule to Monday 10:00 UTC (1h after native)
 - `CC-changelog-feature-scan.md`: group sections under `[yyyy-MM-dd]` date heading
 - `CC-agent-teams-orchestration.md`: expand worktree isolation (auto-cleanup, config sharing v2.1.63), add Task Tool Metrics (v2.1.30)
 - `CC-memory-system-analysis.md`: add agent memory frontmatter (v2.1.33), add `includeGitInstructions` setting (v2.1.69)
