@@ -15,10 +15,10 @@ when to use it, and when to skip it.
 
 | Directory | Analyses |
 |---|---|
-| [`agents-skills/`](docs/cc-native/agents-skills/) | Agent Teams, Skills adoption, Ralph loop enhancements, CLI-Anything analysis, plans as skill/rule templates |
-| [`ci-execution/`](docs/cc-native/ci-execution/) | Sandboxing, cloud sessions, remote control, remote access landscape, version pinning & self-hosted runners, GitHub Actions & Claude App |
+| [`agents-skills/`](docs/cc-native/agents-skills/) | Agent Teams, Skills adoption, Ralph loop enhancements, recursive spawning patterns, CLI-Anything analysis, plans as skill/rule templates |
+| [`ci-execution/`](docs/cc-native/ci-execution/) | Sandboxing, permissions bypass, cloud sessions, remote control, remote access landscape, version pinning & self-hosted runners, GitHub Actions & Claude App |
 | [`context-memory/`](docs/cc-native/context-memory/) | Extended context (1M tokens), memory system (with path-scoped rules deep dive), llms.txt |
-| [`configuration/`](docs/cc-native/configuration/) | Model/provider configuration, fast mode, hooks system, bash mode (with SDK & community refs) |
+| [`configuration/`](docs/cc-native/configuration/) | Model/provider configuration, fast mode, hooks system, bash mode (with SDK & community refs), /loop cron system |
 | [`plugins-ecosystem/`](docs/cc-native/plugins-ecosystem/) | Plugin packaging, cowork/enterprise plugins, Chrome extension, web scraping plugins, official plugins landscape |
 | [`CC-changelog-feature-scan.md`](docs/cc-native/CC-changelog-feature-scan.md) | Changelog triage of new CC features (v2.1.0–2.1.71) |
 
