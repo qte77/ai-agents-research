@@ -1,6 +1,6 @@
-# claude-code-research
+# coding-agents-research
 
-> Field research and feature analysis for Claude Code — from sandboxing internals to agent orchestration.
+> Field research and feature analysis for AI coding agents — from sandboxing internals to agent orchestration.
 
 ## Overview
 
