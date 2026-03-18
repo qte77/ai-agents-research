@@ -16,7 +16,7 @@ when to use it, and when to skip it.
 | Directory | Analyses |
 |---|---|
 | [`agents-skills/`](docs/cc-native/agents-skills/) | Agent Teams, Skills adoption, Ralph loop enhancements, recursive spawning patterns, CLI-Anything analysis, plans as skill/rule templates |
-| [`ci-execution/`](docs/cc-native/ci-execution/) | Sandboxing, permissions bypass, cloud sessions, remote control, remote access landscape, version pinning & self-hosted runners, GitHub Actions & Claude App |
+| [`ci-execution/`](docs/cc-native/ci-execution/) | Sandboxing, permissions bypass, cloud sessions, remote control, remote access landscape, version pinning & self-hosted runners, GitHub Actions & Claude App, status monitoring & Statuspage API |
 | [`context-memory/`](docs/cc-native/context-memory/) | Extended context (1M tokens), memory system (with path-scoped rules deep dive), llms.txt |
 | [`configuration/`](docs/cc-native/configuration/) | Model/provider configuration, fast mode, hooks system, bash mode (with SDK & community refs), /loop cron system |
 | [`plugins-ecosystem/`](docs/cc-native/plugins-ecosystem/) | Plugin packaging, cowork/enterprise plugins, Chrome extension, web scraping plugins, official plugins landscape |
@@ -30,6 +30,13 @@ when to use it, and when to skip it.
 | [`CC-community-plugins-landscape.md`](docs/community/CC-community-plugins-landscape.md) | Plugin catalogs: awesome-claude-code, awesome-claude-code-plugins |
 | [`CC-community-tooling-landscape.md`](docs/community/CC-community-tooling-landscape.md) | Developer tooling: RTK (Rust Token Killer) context compression |
 | [`CC-domain-claudemd-showcase.md`](docs/community/CC-domain-claudemd-showcase.md) | Domain-specific CLAUDE.md patterns: genome analysis pipeline |
+
+### Data (`data/`)
+
+| File | Description |
+|---|---|
+| [`outages.jsonl`](data/outages.jsonl) | JSONL archive of all Claude platform incidents (auto-updated daily) |
+| [`outage-stats.md`](data/outage-stats.md) | Auto-generated statistical analysis of outage patterns |
 
 ### Other
 
