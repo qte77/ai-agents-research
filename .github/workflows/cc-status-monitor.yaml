@@ -1,0 +1,56 @@
+name: Status Monitor
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Daily 08:00 UTC (backup collector)
+  workflow_dispatch:
+  repository_dispatch:
+    types: [status-change]  # Statuspage webhook
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    name: Collect Claude platform incidents
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Save webhook payload
+        if: github.event_name == 'repository_dispatch'
+        env:
+          WEBHOOK_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+        run: echo "$WEBHOOK_PAYLOAD" > /tmp/webhook-payload.json
+
+      - name: Collect incidents
+        id: collect
+        run: |
+          set +e
+          ARGS="--archive data/outages.jsonl"
+          if [ -f /tmp/webhook-payload.json ]; then
+            ARGS="$ARGS --webhook-payload /tmp/webhook-payload.json"
+          fi
+          python .github/scripts/status-collector.py $ARGS
+          echo "changed=$( [ $? -eq 1 ] && echo true || echo false )" >> "$GITHUB_OUTPUT"
+
+      - name: Generate statistics
+        if: steps.collect.outputs.changed == 'true'
+        run: python .github/scripts/status-stats.py --archive data/outages.jsonl > data/outage-stats.md
+
+      - name: Commit changes
+        if: steps.collect.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/outages.jsonl data/outage-stats.md
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update outage archive $(date -u +%Y-%m-%d)"
+          git push
