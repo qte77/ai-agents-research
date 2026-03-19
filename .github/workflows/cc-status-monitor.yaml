@@ -1,3 +1,6 @@
+# Polls Anthropic Statuspage API for Claude platform incidents and upserts
+# into outages.jsonl archive. Opens a PR when new/updated incidents are found.
+# Output: triage/status-monitor/outages.jsonl + outage-stats.md
 name: Status Monitor
 
 on:
