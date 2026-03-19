@@ -31,7 +31,15 @@ Closes <!-- #issue-number or N/A -->
 - [ ] Markdown renders correctly on GitHub
 - [ ] All reference links resolve
 - [ ] No broken internal cross-references
+- [ ] CI workflows pass (if `.github/` files modified)
 
 ## Documentation
 
 - [ ] README updated if new analysis added or structure changed
+- [ ] `.github/README.md` updated if workflows or scripts changed
+
+## Security
+
+- [ ] No hardcoded secrets, API keys, or credentials
+- [ ] No new injection vectors in workflow `run:` steps
+- [ ] Sensitive data not logged or exposed in workflow outputs

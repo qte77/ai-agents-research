@@ -1,3 +1,6 @@
+# Diffs CC CHANGELOG.md against last scanned version and polls Anthropic blog +
+# GitHub issues/discussions for new Claude Code content not yet covered by docs.
+# Opens a triage PR when uncovered features are found.
 name: Changelog Monitor
 
 on:

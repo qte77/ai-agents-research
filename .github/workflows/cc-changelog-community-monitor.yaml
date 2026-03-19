@@ -1,3 +1,6 @@
+# Polls community sources (claudelog.com, awesome-claude-code, Reddit, X) for
+# Claude Code tips and features not yet covered by community docs.
+# Opens a triage PR when new uncovered content is found.
 name: Community Monitor
 
 on:
