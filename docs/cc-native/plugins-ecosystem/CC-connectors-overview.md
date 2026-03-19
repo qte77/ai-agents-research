@@ -2,6 +2,7 @@
 title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
+cc_version: ">=2.1.46 (MCP bridge), >=2.1.63 (opt-out env var), 2.1.71 (OAuth fixes)"
 sources:
   - https://claude.com/docs/connectors/overview
   - https://claude.com/docs/connectors/google/gmail
@@ -53,9 +54,9 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 
 **Setup** ([source][cc-mcp-docs]):
 
-1. Configure connectors at [claude.ai/settings/connectors](https://claude.ai/settings/connectors) (Team/Enterprise: admin-only)
-2. Complete authentication in claude.ai
-3. In Claude Code, run `/mcp` — claude.ai servers appear with indicators showing their origin
+1. **Configure in claude.ai**: Go to [claude.ai/settings/connectors](https://claude.ai/settings/connectors) and add Google connectors. Authenticate with your Google account. (Team/Enterprise: admin must enable first.)
+2. **Connectors auto-appear in CC**: Start Claude Code and run `/mcp` — claude.ai servers show up with indicators marking their origin. No extra CLI setup needed.
+3. **Use naturally**: Ask Claude directly — "search my Gmail for emails about the deploy failure", "what meetings do I have tomorrow", "find the architecture doc in Drive". Connectors are read-only; Claude searches and answers but cannot send, create, or modify anything.
 
 **Opt out**: `ENABLE_CLAUDEAI_MCP_SERVERS=false claude` (added in [v2.1.63, Feb 28, 2026][cc-changelog])
 
