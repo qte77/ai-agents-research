@@ -21,11 +21,11 @@ Sources (Statuspage API, CC CHANGELOG, blogs, Reddit, X)
 
 - **Scripts** (`scripts/`): stdlib-only Python. Exit `0` = no changes, `1` = new content → PR created.
 - **State** (`state/`): JSON cursor files ("last seen"). Committed with triage PRs to persist across runs.
-- **Composite action** (`actions/create-triage-pr/`): Used by changelog + community monitors. Status monitor creates PRs inline (no timestamped report copies).
+- **Composite action** (`actions/create-triage-pr/`): Used by all 3 monitors. Pass `skip-report: 'true'` to skip timestamped report copy (status monitor).
 
 ## Adding a new monitor
 
 1. Add script in `scripts/` following exit code convention
 2. Add workflow in `workflows/` with cron schedule
-3. Use `create-triage-pr` action or inline PR creation for output
+3. Use `create-triage-pr` action for output (`skip-report: 'true'` if no timestamped report needed)
 4. Add state file to `state/` if the script needs cursor tracking
