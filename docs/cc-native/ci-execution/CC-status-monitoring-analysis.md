@@ -3,7 +3,7 @@ title: CC Platform Status Monitoring & Outage Archive
 source: https://status.anthropic.com
 purpose: Real-time and archival monitoring of Claude platform incidents via Statuspage API, webhook integration, and statistical analysis.
 created: 2026-03-17
-updated: 2026-03-17
+updated: 2026-03-20
 validated_links: 2026-03-17
 ---
 

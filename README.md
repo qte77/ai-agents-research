@@ -25,6 +25,16 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 
 Three automated monitors poll external sources on cron and open triage PRs when new content is found. See [`.github/README.md`](.github/README.md) for details.
 
+## Related Repos
+
+Research from this repository feeds into these downstream implementation repos:
+
+| Repo | Purpose | Consumes |
+|---|---|---|
+| [cc-recursive-team-mode](https://github.com/qte77/cc-recursive-team-mode) | CLAUDECODE guard clearing, recursive CC subprocess spawning | CC spawning patterns, session artifact research |
+| [coding-agent-eval](https://github.com/qte77/coding-agent-eval) | Hands-off coding agent comparison harness | Agent feature matrices, invocation methods |
+| [multi-tasking-quality-benchmark](https://github.com/qte77/multi-tasking-quality-benchmark) | WakaTime activity vs code quality correlation | Quality metric methodology |
+
 ## Origin
 
 These analyses were originally produced as part of [Agents-eval](https://github.com/qte77/Agents-eval) to inform adoption decisions for a multi-agent evaluation framework built on Claude Code.
