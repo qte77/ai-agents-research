@@ -77,7 +77,7 @@ _... and 502 more entries._
 | claude-code-docs | General | by [Constantin Shafranski](https://github.com/costiash) - A mirror of the Anthro |
 | Laravel TALL Stack AI Development Starter Kit | General | by [tott](https://github.com/tott) - Transform your Laravel TALL (Tailwind, Alpi |
 | Learn Claude Code | General | by [shareAI-Lab](https://github.com/shareAI-lab/) - A really interesting analysi |
-| learn-faster-kit | General | by [Hugo Lau](https://github.com/cheukyin175) - A creative educational framework |
+| learn-faster-kit | General | by Hugo Lau (GitHub account deleted) - A creative educational framework |
 | The Ralph Playbook | Ralph Wiggum | by [Clayton Farr](https://github.com/ClaytonFarr) - A remarkably detailed and co |
 | cc-sessions | General | by [toastdev](https://github.com/satoastshi) - An opinionated approach to produc |
 | cclogviewer | General | by [Brad S.](https://github.com/Brads3290) - A humble but handy utility for view |
