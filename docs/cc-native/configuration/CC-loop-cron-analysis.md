@@ -1,9 +1,9 @@
 ---
 title: CC /loop Command and Cron System Analysis
-source: https://code.claude.com/docs/en/slash-commands (inferred), gist by @sorrycc (v2.1.71 cli.js decompilation)
-purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches.
+source: https://code.claude.com/docs/en/slash-commands (inferred), gist by @sorrycc (v2.1.71 cli.js decompilation), empirical testing (cc-recursive-team-mode, 2026-03-23)
+purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches. Includes empirical finding that /loop accepts syntax in -p mode but exits after first iteration.
 created: 2026-03-17
-updated: 2026-03-17
+updated: 2026-03-23
 ---
 
 **Status**: Generally available (v2.1.71+, feature gate `tengu_kairos_cron`)
