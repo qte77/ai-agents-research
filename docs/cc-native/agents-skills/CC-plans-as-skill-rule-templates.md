@@ -195,5 +195,5 @@ The most reusable parts of plans are:
 
 ## References
 
-- [Claude Code Plan Mode](https://docs.anthropic.com/en/docs/claude-code/plan-mode) — official documentation
-- [Agent Skills Spec](https://agentskills.org/) — open standard for agent skill definitions
+- [Claude Code Plan Mode](https://code.claude.com/docs/en/plan-mode) — official documentation
+- ~~[Agent Skills Spec](https://agentskills.org/)~~ — domain offline (archived reference)

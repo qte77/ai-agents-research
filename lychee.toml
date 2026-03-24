@@ -1,0 +1,17 @@
+# Lychee link checker config
+# https://lychee.cli.rs/configuration/
+
+# Exclude auto-generated triage files (contain truncated URLs from table columns)
+exclude_path = ["triage/"]
+
+# Accept common bot-blocked status codes
+accept = [200, 429]
+
+# Exclude domains that block automated requests
+exclude = [
+    "medium.com",
+    "npmjs.com",
+    "cuttlesoft.com",
+    "linearb.io",
+    "hashicorp.com",
+]

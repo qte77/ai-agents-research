@@ -1,9 +1,9 @@
 ---
 title: CC /loop Command and Cron System Analysis
-source: https://code.claude.com/docs/en/slash-commands (inferred), gist by @sorrycc (v2.1.71 cli.js decompilation)
-purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches.
+source: https://code.claude.com/docs/en/slash-commands (inferred), gist by @sorrycc (v2.1.71 cli.js decompilation), empirical testing (cc-recursive-team-mode, 2026-03-23)
+purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches. Includes empirical finding that /loop accepts syntax in -p mode but exits after first iteration.
 created: 2026-03-17
-updated: 2026-03-17
+updated: 2026-03-23
 ---
 
 **Status**: Generally available (v2.1.71+, feature gate `tengu_kairos_cron`)
@@ -38,19 +38,28 @@ as user-facing slash commands beyond `/loop`.
 
 ## Critical Limitation: Session-Bound Only
 
-**`/loop` is incompatible with `-p` (print mode).** Print mode exits on
-completion -- there's no persistent session for the cron scheduler to fire in.
-`/loop` only works in interactive terminal sessions.
+**`/loop` accepts syntax in `-p` mode but does not persist.** The session exits
+after the first iteration, killing the cron scheduler. The cron job is created
+(with a job ID and auto-expiry), the first prompt executes, but subsequent fires
+never happen because the process is gone.
+
+Tested 2026-03-23 (CC v2.1.81):
 
 ```bash
-# DOES NOT WORK -- -p exits immediately, /loop never fires
-claude --dangerously-skip-permissions -p "/loop 5m check deploy"
+# APPEARS TO WORK but exits after first iteration
+$ claude -p "/loop say hi every 30 seconds"
+# Output: "Scheduled. Every 1 minute (rounded up from 30s)..."
+# Then: "Hi!"
+# Then: process exits — cron job dies with session
 
-# WORKS -- interactive session with bypass
+# WORKS -- interactive session persists for recurring fires
 claude --dangerously-skip-permissions
 # then inside the session:
 /loop 5m check deploy
 ```
+
+**Key detail**: `/loop` rounds intervals up to 1-minute minimum (cron
+granularity). Jobs auto-expire after 7 days. Max 50 jobs per session.
 
 ## `/loop` + `--dangerously-skip-permissions`
 
