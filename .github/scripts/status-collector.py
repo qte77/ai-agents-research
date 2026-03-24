@@ -6,7 +6,7 @@ and upserts them into a local JSONL archive. Can also process webhook payloads
 from repository_dispatch events.
 
 Usage:
-    # Fetch from API (daily cron)
+    # Fetch from API (weekly cron)
     python status-collector.py --archive triage/status-monitor/outages.jsonl
 
     # Process webhook payload (repository_dispatch)
