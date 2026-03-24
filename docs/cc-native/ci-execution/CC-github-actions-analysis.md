@@ -251,6 +251,7 @@ runs-on:
 - Official plugins (Code Review, Security Guidance) — [CC-official-plugins-landscape.md](../plugins-ecosystem/CC-official-plugins-landscape.md)
 - Bash tool behavior inside GHA — [CC-bash-mode-analysis.md](../configuration/CC-bash-mode-analysis.md)
 - Cloud sessions as alternative execution — [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md)
+- Authentication and API key setup — [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md)
 
 ## References
 

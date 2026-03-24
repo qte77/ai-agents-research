@@ -132,3 +132,8 @@ Bypassing permissions does not bypass the sandbox.
 | [#29064](https://github.com/anthropics/claude-code/issues/29064) | Plan mode infinite loop |
 
 <!-- markdownlint-enable MD013 -->
+
+## See Also
+
+- [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md) — authentication methods and API key setup for headless/CI
+- [CC-print-mode-gotchas.md](CC-print-mode-gotchas.md) — `--bare` auth breakage, stream-json pitfalls
