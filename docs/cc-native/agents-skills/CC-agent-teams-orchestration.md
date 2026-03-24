@@ -34,7 +34,9 @@ Coordinates multiple independent CC sessions with:
 - Shared task list (pending/in-progress/completed) with dependency tracking
 - Teammates load project context (project instructions, MCP servers, skills) automatically
 - Lead's conversation history does NOT carry over to teammates
-- Display: in-process (single terminal) or split panes (tmux/iTerm2)
+- Display modes: in-process (single terminal, Shift+Down to cycle teammates) or split panes (tmux/iTerm2, click into pane)
+- `--teammate-mode` CLI flag: `in-process`, `tmux`, or `auto` (default). `auto` uses split panes if already inside tmux, in-process otherwise
+- `teammateMode` in `settings.json` for persistent config; iTerm2 split panes require [`it2` CLI](https://github.com/mkusaka/it2) + Python API enabled
 
 ### Configuration
 
