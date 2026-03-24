@@ -187,6 +187,10 @@ Tools that complement any remote access method ([source][zilliz]):
 
 <!-- markdownlint-enable MD013 -->
 
+## See Also
+
+- [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md) — authentication methods for web, terminal, and headless modes
+
 ## References
 
 - [CC Remote Control docs][cc-rc] — native feature

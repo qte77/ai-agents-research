@@ -130,6 +130,8 @@ Revisit when:
 
 ## See Also
 
+For authentication setup (GitHub connection, API keys, headless usage), see [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md).
+
 For external sandbox platforms (OpenSandbox, E2B, Sprites.dev) that provide
 alternative cloud execution environments with different tradeoffs (self-hosted,
 ephemeral vs stateful, checkpoint/restore), see
