@@ -13,6 +13,8 @@ validated_links: 2026-03-12
 
 **Cowork** is Claude's agentic desktop application for knowledge work — a local app (Windows/macOS) where users give Claude access to local files and tools, set a task, and step away ([source][cowork-product]). Operates with more agency than Claude Chat: users describe outcomes and cadence, Claude takes action and reports progress ([source][cowork-product]). Available on all paid plans (Max, Team, Enterprise); agent safety is still in development ([source][cowork-product]).
 
+**Dispatch** enables one continuous conversation with Claude across phone and desktop — start a Cowork task from mobile, continue on desktop, or vice versa. Bridges the gap between mobile Claude app and desktop Cowork for non-coding tasks.
+
 **Plugins** are portable file-system bundles that transform into specialized agents, deployable across Cowork and anything built on the Claude Agent SDK ([source][sdk-plugins]).
 
 ### Core Components
@@ -96,6 +98,11 @@ If the framework or tooling becomes a team-wide tool:
 
 1. Agents or skills need distribution to non-developer stakeholders
 2. Plugin API stabilizes and supports programmatic creation
+
+## See Also
+
+- [CC-channels-analysis.md](CC-channels-analysis.md) — push events from Telegram/Discord/iMessage into CC sessions
+- [CC-chrome-extension-analysis.md](CC-chrome-extension-analysis.md) — browser automation in Cowork workflows
 
 ## References
 
