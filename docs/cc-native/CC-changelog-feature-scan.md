@@ -3,7 +3,7 @@ title: CC Changelog Feature Scan
 source: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md, https://claudelog.com/claude-code-changelog/
 purpose: Identify actionable CC features from recent releases (v2.1.0–2.1.79) not yet covered by existing analysis docs. Applicable to any project using Claude Code.
 created: 2026-03-07
-updated: 2026-03-13
+updated: 2026-03-24
 validated_links: 2026-03-12
 ---
 
@@ -121,11 +121,32 @@ Hook fires when CC configuration changes — useful for security auditing. ([sou
 | Auto memory + CLAUDE.md hierarchy | [CC-memory-system-analysis.md](context-memory/CC-memory-system-analysis.md) |
 | Cloud sessions (`claude --remote`) | [CC-cloud-sessions-analysis.md](ci-execution/CC-cloud-sessions-analysis.md) |
 | Skills (auto-discovery, SKILL.md) | [CC-skills-adoption-analysis.md](agents-skills/CC-skills-adoption-analysis.md) |
-| Plugins + Cowork | [CC-cowork-plugins-enterprise-analysis.md](plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) |
+| Plugins + Cowork (incl. dispatch) | [CC-cowork-plugins-enterprise-analysis.md](plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) |
 | Chrome extension | [CC-chrome-extension-analysis.md](plugins-ecosystem/CC-chrome-extension-analysis.md) |
+| Channels (Telegram/Discord/iMessage) | [CC-channels-analysis.md](plugins-ecosystem/CC-channels-analysis.md) |
+| Web scheduled tasks (cloud recurring) | [CC-web-scheduled-tasks-analysis.md](ci-execution/CC-web-scheduled-tasks-analysis.md) |
+| Web auth, GitHub App, API keys | [CC-web-auth-setup-analysis.md](ci-execution/CC-web-auth-setup-analysis.md) |
 | Hooks system (all events) | [CC-hooks-system-analysis.md](configuration/CC-hooks-system-analysis.md) |
 | Opus 4.6 + 1M context | [CC-extended-context-analysis.md](context-memory/CC-extended-context-analysis.md) |
 | Task system with dependencies | [CC-agent-teams-orchestration.md](agents-skills/CC-agent-teams-orchestration.md) |
+
+<!-- markdownlint-enable MD013 -->
+
+### Open Community Feature Requests (from triage)
+
+<!-- markdownlint-disable MD013 -->
+
+Tracked from changelog/native-sources triage monitors. Not shipped features — open enhancement requests.
+
+- [ ] **`WriteTemp()` tool** ([#34939][writetemp], 2026-03-18) — Medium. Temporary file creation without permission prompts. Would simplify headless scripts that generate intermediate files
+- [ ] **Compaction-proof `INVARIANT.md`** ([#34716][invariant], 2026-03-17) — Medium. `~/.claude/INVARIANT.md` that survives context compaction. Would guarantee critical instructions persist in long sessions
+- [ ] **riscv64 architecture support** ([#35016][riscv64], 2026-03-18) — Low. Linux RISC-V support. Niche — only relevant if deploying CC on RISC-V hardware
+- [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Medium. Cowork dispatch for CC CLI. See [CC-cowork-plugins-enterprise-analysis.md](plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md#open-feature-requests)
+
+[writetemp]: https://github.com/anthropics/claude-code/issues/34939
+[invariant]: https://github.com/anthropics/claude-code/issues/34716
+[riscv64]: https://github.com/anthropics/claude-code/issues/35016
+[dispatch-cli]: https://github.com/anthropics/claude-code/issues/36011
 
 <!-- markdownlint-enable MD013 -->
 

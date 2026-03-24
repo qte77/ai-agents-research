@@ -3,7 +3,7 @@ title: CC Cowork, Plugins & Enterprise Analysis
 source: https://claude.com/blog/cowork-plugins-across-enterprise, https://claude.com/product/cowork
 purpose: Analysis of Claude's Cowork enterprise platform, plugin architecture, and connector ecosystem for potential relevance to projects using Claude Code.
 created: 2026-03-07
-updated: 2026-03-12
+updated: 2026-03-24
 validated_links: 2026-03-12
 ---
 
@@ -98,6 +98,12 @@ If the framework or tooling becomes a team-wide tool:
 
 1. Agents or skills need distribution to non-developer stakeholders
 2. Plugin API stabilizes and supports programmatic creation
+
+## Open Feature Requests
+
+- [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Linux users want Cowork dispatch in CC CLI (mobile→terminal). Currently dispatch is Cowork desktop↔phone only. Alternative: Remote Control (`claude rc`) covers steering from mobile, but lacks dispatch's continuous conversation handoff
+
+[dispatch-cli]: https://github.com/anthropics/claude-code/issues/36011
 
 ## See Also
 
