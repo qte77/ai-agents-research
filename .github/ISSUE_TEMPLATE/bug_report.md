@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a problem with monitors, workflows, or documentation
+about: Report a problem
 title: ''
 labels: bug
 assignees: ''
@@ -25,8 +25,8 @@ assignees: ''
 
 ## Environment
 
-- Workflow run URL (if applicable):
-- Browser (if rendering issue):
+- OS/Runner:
+- Version:
 
 ## Additional Context
 

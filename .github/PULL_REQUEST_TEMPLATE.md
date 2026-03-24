@@ -19,27 +19,19 @@ Closes <!-- #issue-number or N/A -->
 - [ ] `style` — formatting, whitespace (no logic change)
 - [ ] `revert` — reverts a previous commit
 - [ ] `chore` — tooling, config, maintenance
-- [ ] **Breaking change** — add `!` after commit type, e.g. `feat!:` or `feat(scope)!:`
+- [ ] **Breaking change** — add `!` after commit type
 
 ## Self-Review
 
 - [ ] I have reviewed my own diff and removed debug/dead code
-- [ ] Commit messages follow conventional commits format: `type[(scope)][!]: description`
+- [ ] Commit messages follow conventional commits format
 
 ## Testing
 
-- [ ] Markdown renders correctly on GitHub
-- [ ] All reference links resolve
-- [ ] No broken internal cross-references
-- [ ] CI workflows pass (if `.github/` files modified)
-
-## Documentation
-
-- [ ] README updated if new analysis added or structure changed
-- [ ] `.github/README.md` updated if workflows or scripts changed
+- [ ] Tests pass locally
+- [ ] CI workflows pass
 
 ## Security
 
 - [ ] No hardcoded secrets, API keys, or credentials
 - [ ] No new injection vectors in workflow `run:` steps
-- [ ] Sensitive data not logged or exposed in workflow outputs
