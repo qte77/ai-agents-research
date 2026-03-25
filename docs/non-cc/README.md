@@ -7,6 +7,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
 | [air-analysis.md](air-analysis.md) | JetBrains Air (GUI) | No | No |
+| [deerflow-analysis.md](deerflow-analysis.md) | ByteDance DeerFlow (LangGraph) | Yes | Yes (Apache 2.0) |
 | [devteam-analysis.md](devteam-analysis.md) | agent-era/devteam (TUI) | No | Yes (MIT) |
 
 ## Planned
