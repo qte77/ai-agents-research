@@ -75,11 +75,11 @@ of truth is always `pyproject.toml [tool.lcm]` and `.lcm/status.json`.
 ## Kiro / SDD Alignment
 
 Kiro's spec-driven development (requirements → design → tasks → code) maps
-directly to the existing CABIO + Ralph pipeline:
+directly to the existing RAPID + Ralph pipeline:
 
 | Kiro Concept | qte77 Equivalent |
 |-------------|-----------------|
-| Spec generation | CABIO BRD → PRD → FRD |
+| Spec generation | RAPID BRD → PRD → FRD |
 | Task breakdown | Ralph prd.json |
 | Agent hooks (event-driven) | Ralph pre/post-loop gates |
 | Human-editable specs | PRD.md, UserStory.md |
@@ -94,7 +94,7 @@ agents. No architectural changes needed to support Kiro-like workflows.
 | **MCP** | Anthropic / AAIF | Tool access standardization | CC plugins, Gemini CLI tools |
 | **A2A** | Google | Agent-to-agent collaboration | Multi-agent orchestration (future) |
 | **ACP** | IBM | Enterprise governance | Compliance/audit (Phase 3) |
-| **AG-UI** | Community | Human-in-the-loop UX | CABIO cockpit (future) |
+| **AG-UI** | Community | Human-in-the-loop UX | RAPID cockpit (future) |
 
 ## Summary
 

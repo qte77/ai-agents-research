@@ -1,12 +1,12 @@
 ---
-title: TODO - coding-agents-research
-description: Research task backlog, active work, and deferred items for coding-agents-research
+title: TODO - ai-agents-research
+description: Research task backlog, active work, and deferred items for ai-agents-research
 category: implementation
 created: 2026-03-22
 updated: 2026-03-22
 ---
 
-# TODO: coding-agents-research
+# TODO: ai-agents-research
 
 ## Done
 

@@ -8,8 +8,8 @@ assignees: ''
 
 **Have you checked the docs?**
 
-- [ ] [README.md](https://github.com/qte77/coding-agents-research/blob/main/README.md)
-- [ ] [.github/README.md](https://github.com/qte77/coding-agents-research/blob/main/.github/README.md)
+- [ ] [README.md](https://github.com/qte77/ai-agents-research/blob/main/README.md)
+- [ ] [.github/README.md](https://github.com/qte77/ai-agents-research/blob/main/.github/README.md)
 
 ## Question
 

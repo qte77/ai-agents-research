@@ -17,7 +17,7 @@ Dev lifecycle phases for all repos using Ralph, Polyforge, or manual workflows.
 |-----------|-------|
 | **Entry criteria** | Business requirement or user story exists |
 | **Required artifacts** | PRD.md or UserStory.md with acceptance criteria |
-| **Responsible tool** | CABIO (BRD -> PRD -> FRD) |
+| **Responsible tool** | RAPID (BRD -> PRD -> FRD) |
 | **Exit gate** | PRD approved, FRD generated, prd.json initialized |
 
 ### 2. Design

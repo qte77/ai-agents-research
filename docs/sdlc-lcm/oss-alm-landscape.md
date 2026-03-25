@@ -43,6 +43,6 @@ not agent-driven pipelines where state is inferred from repo artifacts.
 **Phase 3 trigger conditions:**
 - Multiple human users need lifecycle visibility
 - Audit/compliance requirements demand formal traceability
-- CABIO cockpit needs a persistent UI beyond CLI/TUI
+- RAPID cockpit needs a persistent UI beyond CLI/TUI
 
 **If triggered:** Tuleap CE via REST API integration with sdlc-lcm-manager.

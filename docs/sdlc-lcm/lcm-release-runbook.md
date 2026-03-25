@@ -82,7 +82,7 @@ These releases mark lifecycle phase changes, not just version increments.
 - [ ] Sunset date reached
 - [ ] Verify no active dependents (check submodule refs, import references)
 - [ ] Archive repo on GitHub
-- [ ] Update references in ecosystem docs (coding-agents-research, profile README)
+- [ ] Update references in ecosystem docs (ai-agents-research, profile README)
 - [ ] Retain docs and release artifacts for reference
 
 ## Automation Candidates

@@ -13,7 +13,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | Track | Scope | Applies To | Key Question |
 |-------|-------|------------|--------------|
 | **SDLC** | Dev process phases (plan, build, test, release, deploy, maintain) | All repos via Ralph + Polyforge | "What dev phase is this repo/feature in?" |
-| **LCM** | Product lifecycle phases (incubation, active, maintenance, deprecated, retired) | Products/projects via CABIO | "What lifecycle stage is this product in?" |
+| **LCM** | Product lifecycle phases (incubation, active, maintenance, deprecated, retired) | Products/projects via RAPID | "What lifecycle stage is this product in?" |
 
 ## Documents
 

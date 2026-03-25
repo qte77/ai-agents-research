@@ -1,12 +1,12 @@
 ---
-title: Architecture - coding-agents-research
-description: Document hierarchy, conventions, and downstream consumer relationships for the coding-agents-research repository
+title: Architecture - ai-agents-research
+description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
 updated: 2026-03-22
 ---
 
-# Architecture: coding-agents-research
+# Architecture: ai-agents-research
 
 ## Overview
 
@@ -15,7 +15,7 @@ This is a research-only repository — no code, only structured markdown documen
 ## Document Hierarchy
 
 ```
-coding-agents-research/
+ai-agents-research/
 ├── docs/
 │   ├── cc-native/          # Anthropic-native CC features
 │   │   ├── agents-skills/  # Agent spawning, skills, orchestration patterns
