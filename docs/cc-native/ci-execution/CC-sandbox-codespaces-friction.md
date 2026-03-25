@@ -4,7 +4,7 @@ description: Analysis of sandbox friction points in Codespace/devcontainer envir
 source: https://code.claude.com/docs/en/sandboxing, https://code.claude.com/docs/en/settings#sandbox-settings, https://code.claude.com/docs/en/security
 category: analysis
 created: 2026-03-17
-updated: 2026-03-17
+updated: 2026-03-25
 validated_links: 2026-03-17
 ---
 
@@ -23,6 +23,7 @@ multi-repo workflows.
 | Cross-repo writes blocked | `write.allowOnly` defaults to CWD | Use `allowWrite: ["/workspaces"]` (additive, merges across scopes) ([source][cc-sandbox-settings]) |
 | Git/gh operations fail | Same — `.git/` writes outside CWD rejected | Same fix. Note: `excludedCommands: ["git"]` does NOT work ([source][gh-28730]) |
 | Credential sourcing blocked | `source` denied + fresh shell per Bash call | Use Codespace encrypted secrets (injected as env vars at container creation) |
+| Secret env vars appear empty | Sandbox masks secret values in Bash tool output (e.g., `echo $KEY` returns blank) | Secrets ARE available — scripts can use them, but `echo`/`head` output is stripped. Test presence without exposing: `echo "key set: ${SECRET:+yes}"` → `key set: yes` (CC 2.1.81, 2026-03-25) |
 | Settings don't hot-reload | Sandbox is an OS-level process primitive, baked at startup | Pre-configure correctly; restart session for changes ([source][cc-sandboxing]) |
 
 ## Key External Findings
