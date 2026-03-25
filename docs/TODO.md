@@ -58,6 +58,9 @@ updated: 2026-03-22
 - [ ] aider analysis (`docs/non-cc/`)
 - [ ] CC Agent SDK deep dive — tool registration, permissions model, MCP integration (`docs/cc-native/agents-skills/`)
 - [ ] Cross-agent orchestration comparison — CC teams vs. CrewAI vs. LangGraph patterns (`docs/cc-native/comparisons/`)
+- [ ] Kiro analysis (`docs/non-cc/`) — spec-driven dev, agent hooks, SDD alignment with RAPID+Ralph
+- [ ] Antigravity analysis (`docs/non-cc/`) — multi-agent orchestration, built-in browser
+- [ ] Cursor/Windsurf analysis (`docs/non-cc/`) — agentic IDE comparison
 
 ---
 
