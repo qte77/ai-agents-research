@@ -1,13 +1,13 @@
 ---
 title: Product Lifecycle Management (LCM) Specification
-purpose: Product/project lifecycle phases for CABIO-managed products in the qte77 ecosystem.
+purpose: Product/project lifecycle phases for RAPID-managed products in the qte77 ecosystem.
 created: 2026-03-24
 authority: This document is the specification. Implementation lives in qte77/sdlc-lcm-manager.
 ---
 
 # Product Lifecycle Management (LCM) Specification
 
-Lifecycle phases for products and projects managed through CABIO. Applies at the
+Lifecycle phases for products and projects managed through RAPID. Applies at the
 product/project level (cross-repo), not per-feature.
 
 ## Phase Definitions
@@ -125,7 +125,7 @@ phase = "active"
 
 | Risk | Phase | Likelihood | Impact | Treatment |
 |------|-------|------------|--------|-----------|
-| Inadequate specification | Incubation | HIGH | HIGH | PRD review gates in CABIO |
+| Inadequate specification | Incubation | HIGH | HIGH | PRD review gates in RAPID |
 | Undetected defects | Beta | MEDIUM | HIGH | Security review + `make validate` |
 | Dependency vulnerabilities | Active, Maintenance | HIGH | MEDIUM | Dependabot + `exclude-newer` awareness |
 | Knowledge loss | Maintenance | MEDIUM | HIGH | AGENT_LEARNINGS.md, architecture docs |

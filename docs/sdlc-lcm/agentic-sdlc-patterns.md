@@ -31,7 +31,7 @@ A lifecycle for systems where LLMs are core product behavior, not just assistant
 
 **Phases:** Define -> Build -> Evaluate -> Deploy -> Observe -> Correct
 
-**qte77 mapping:** Ralph = Build+Evaluate, CABIO = Define+Evaluate.
+**qte77 mapping:** Ralph = Build+Evaluate, RAPID = Define+Evaluate.
 Gap: no formal Observe+Correct phases (post-deployment feedback loop).
 
 ## 2. Agentic SDLC (Microsoft/GitLab/PwC)
@@ -40,7 +40,7 @@ Specialized agents per SDLC phase, orchestrated in parallel.
 
 ```
 Orchestrator
-  +-- Requirements Agent    (Ralph: CABIO BRD->PRD->FRD)
+  +-- Requirements Agent    (Ralph: RAPID BRD->PRD->FRD)
   +-- Coding Agent          (Ralph: TDD loop)
   +-- Review Agent          (gap: no formal review agent)
   +-- Deploy Agent          (gap: manual CI/CD)
@@ -59,7 +59,7 @@ review comments lead to code fixes (Atlassian RovoDev).
 - Spec changes trigger agent re-execution (like code changes trigger CI)
 - Human review shifts from code to specs
 
-**qte77 mapping:** CABIO pipeline + Ralph prd.json already spec-driven.
+**qte77 mapping:** RAPID pipeline + Ralph prd.json already spec-driven.
 Gap: no automated spec-change -> agent-trigger pipeline.
 
 ## 4. Agent-First Developer Toolchain (Amplify Partners)
@@ -78,8 +78,8 @@ Traditional SDLC artifacts reimagined as coordination layers for agents.
 | Pattern | Have | Gap |
 |---------|------|-----|
 | ADLC Observe+Correct | -- | Post-deployment feedback loop |
-| Parallel agents | Ralph (build), CABIO (req) | Review, Monitor agents |
-| SDD spec-as-trigger | CABIO, prd.json | Automated trigger pipeline |
+| Parallel agents | Ralph (build), RAPID (req) | Review, Monitor agents |
+| SDD spec-as-trigger | RAPID, prd.json | Automated trigger pipeline |
 | Agent-first toolchain | CC, worktrees, Polyforge | Agent-triggered CI/CD |
 
 **sdlc-lcm-manager priorities:**
