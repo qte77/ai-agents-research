@@ -210,7 +210,7 @@ jobs:
 
 | Method | Session Scope | Persistence | Monitoring |
 |---|---|---|---|
-| `/loop` (session cron) | Session-scoped, 3-day expiry | Dies with process | In-session only |
+| `/loop` (session cron) | Session-scoped, 7-day expiry | Dies with process | In-session only |
 | `claude --remote` | Cloud VM | Survives disconnect | `/tasks`, web, mobile |
 | GitHub Actions cron | Workflow-scoped | Survives everything | Actions UI |
 | Desktop scheduled tasks | Desktop app | Survives restarts | Desktop notifications |

@@ -3,7 +3,7 @@ title: CC /loop Command and Cron System Analysis
 source: https://code.claude.com/docs/en/slash-commands (inferred), gist by @sorrycc (v2.1.71 cli.js decompilation), empirical testing (cc-recursive-team-mode, 2026-03-23)
 purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches. Includes empirical finding that /loop accepts syntax in -p mode but exits after first iteration.
 created: 2026-03-17
-updated: 2026-03-23
+updated: 2026-03-25
 ---
 
 **Status**: Generally available (v2.1.71+, feature gate `tengu_kairos_cron`)
@@ -36,6 +36,25 @@ Under the hood, `/loop` is syntactic sugar over three internal tools:
 These tools are available to the model within the session but are not exposed
 as user-facing slash commands beyond `/loop`.
 
+### State Files
+
+- **`scheduled_tasks.json`** — durable job definitions (in `.claude/`)
+- **`scheduled_tasks.lock`** — mutex preventing concurrent sessions from firing
+  the same job. Contains `sessionId`, `pid`, `acquiredAt`. CC checks if the
+  holding PID is alive before honoring the lock.
+
+**Known bug**: `scheduled_tasks.lock` is written to `.claude/` in the working
+tree instead of `~/.claude/`, polluting the repo with ephemeral runtime state.
+Not gitignored by default.
+
+- [#32108][gh-32108] — lock written to main repo instead of worktree
+- [#33565][gh-33565] — should be globally gitignored
+
+**Workaround**: Add `.claude/scheduled_tasks.lock` to `.gitignore`.
+
+[gh-32108]: https://github.com/anthropics/claude-code/issues/32108
+[gh-33565]: https://github.com/anthropics/claude-code/issues/33565
+
 ## Critical Limitation: Session-Bound Only
 
 **`/loop` accepts syntax in `-p` mode but does not persist.** The session exits
@@ -43,7 +62,7 @@ after the first iteration, killing the cron scheduler. The cron job is created
 (with a job ID and auto-expiry), the first prompt executes, but subsequent fires
 never happen because the process is gone.
 
-Tested 2026-03-23 (CC v2.1.81):
+Tested 2026-03-23 (CC v2.1.81), lock file confirmed 2026-03-25 (CC v2.1.83):
 
 ```bash
 # APPEARS TO WORK but exits after first iteration
