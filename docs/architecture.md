@@ -32,6 +32,11 @@ ai-agents-research/
 │   ├── non-cc/             # Non-CC coding agents
 │   │   ├── air/            # JetBrains AI Assistant / Air analysis
 │   │   └── devteam/        # agent-era/devteam analysis
+│   ├── sdlc-lcm/           # SDLC + product lifecycle management specs
+│   ├── analysis/           # Evaluation analysis (benchmarks, security, adoption)
+│   ├── landscape/          # Evaluation landscape (metrics, frameworks, data)
+│   ├── best-practices/     # MAS design principles and security
+│   ├── research/           # 263+ research papers and convergence analysis
 │   └── community/          # Community resources
 │                           # Skills, plugins, tooling, CLAUDE.md patterns
 ├── triage/                 # Auto-generated monitor outputs (at repo root)

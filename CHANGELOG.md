@@ -13,9 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `docs/sdlc-lcm/`: SDLC phase spec, LCM product lifecycle spec, release runbook, OSS ALM landscape, agentic SDLC patterns, multi-agent onboarding outlook (PRs #51, #54)
 - `.github/README.md`: CI automation overview — monitors, scripts, state, triage pipeline
 - `.github/ISSUE_TEMPLATE/`: bug report, question, and config templates
 - Header comments on all 3 workflow YAMLs describing purpose and output
+
+### Changed
+
+- Renamed CABIO → RAPID across sdlc-lcm docs (PR #57)
 
 ### Changed
 

@@ -3,7 +3,7 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-03-12
+updated: 2026-03-25
 validated_links: 2026-03-12
 ---
 
@@ -13,21 +13,40 @@ validated_links: 2026-03-12
 
 Claude Code provides built-in web tools (WebSearch, WebFetch) for basic web access. Two prominent MCP plugins — **Firecrawl** and **Playwright** — extend these capabilities significantly. This analysis evaluates when each option is the right tool and whether the plugins justify their setup cost over the built-in tools.
 
+## CC Plugin vs Raw MCP Server
+
+Both Firecrawl and Playwright are available in **two forms**. The underlying MCP tools are identical — the plugin wraps them with slash commands and auto-activation hooks.
+
+<!-- markdownlint-disable MD013 -->
+
+| | CC Plugin (`/plugin install`) | Raw MCP Server (`claude mcp add`) |
+|---|---|---|
+| **Install** | `/plugin` → search → install | `claude mcp add <name> npx ...` or `.claude/settings.json` |
+| **Slash commands** | Yes (`/firecrawl:scrape`, `/firecrawl:agent`, etc.) | No — tools are model-invoked only |
+| **Auto-activation** | Hooks trigger on web-related tasks | Manual invocation or model decides |
+| **Bundled CLI** | Firecrawl plugin requires `npm install -g firecrawl-cli` | npx handles dependency |
+| **Distribution** | Single installable unit (skills + MCP + hooks) | MCP server config only |
+| **Portability** | Follows CC plugin system (per-user or per-project) | `.claude/settings.json` or `.mcp.json` |
+
+<!-- markdownlint-enable MD013 -->
+
+**Rule of thumb**: Use the plugin for interactive development (slash commands, auto-activation). Use raw MCP for CI/headless (`claude -p`) or when you need fine-grained config control.
+
 ## Built-in Tools: WebSearch & WebFetch
 
 ### WebSearch
 
-- Accepts a search query, returns page titles + URLs ([source][cc-web-tools])
-- Same backend as Claude.ai web search ([source][apiyi-comparison])
+- Accepts a search query, returns page titles + URLs ([source][cc-webfetch-docs])
+- Same backend as Claude.ai web search ([source][cc-plugins-docs])
 - Supports `allowed_domains` and `blocked_domains` filtering
-- Returns only titles and URLs — no page body content ([source][apiyi-comparison])
+- Returns only titles and URLs — no page body content ([source][cc-webfetch-docs])
 
 ### WebFetch
 
 - Accepts a URL + a question prompt, returns an answer about the page content ([source][cc-webfetch-docs])
 - Never returns raw HTML or markdown — always a summarized answer ([source][cc-webfetch-docs])
 - Built-in security: restricted URL construction prevents data exfiltration ([source][cc-webfetch-docs])
-- 15-minute cache, ~10MB size limit ([source][apiyi-comparison])
+- 15-minute cache, ~10MB size limit ([source][cc-webfetch-docs])
 - Automatic HTTPS upgrade ([source][cc-webfetch-docs])
 
 ### Limitations
@@ -49,11 +68,20 @@ A cloud-hosted (or self-hostable) web scraping API exposed as an MCP server. Tur
 
 ### Setup
 
-```bash
-# Claude Code CLI
-claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-mcp
+**As CC Plugin** (recommended for interactive use):
 
-# Or JSON config in .claude/settings.json
+```bash
+# /plugin → search "firecrawl" → install, then:
+npm install -g firecrawl-cli    # required CLI dependency
+/firecrawl:setup                # configure API key interactively
+```
+
+Slash commands: `/firecrawl:scrape`, `/firecrawl:crawl`, `/firecrawl:search`, `/firecrawl:map`, `/firecrawl:agent` ([source][firecrawl-plugin], [source][firecrawl-plugin-gh]).
+
+**As raw MCP server** (for CI/headless or config control):
+
+```bash
+claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-mcp
 ```
 
 ```json
@@ -71,8 +99,6 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 ```
 
 ([source][firecrawl-mcp-gh])
-
-Also available as an official Claude Code plugin: `/plugin install firecrawl` ([source][firecrawl-plugin]).
 
 ### Available Tools
 
@@ -103,15 +129,35 @@ Also available as an official Claude Code plugin: `/plugin install firecrawl` ([
 
 ### Pricing
 
-- **Free tier**: 500 credits, no credit card required ([source][firecrawl-ai-mcps])
+- **Free tier**: 500 credits **lifetime** (not monthly), no credit card required ([source][firecrawl-ai-mcps])
 - **Rate limits (free)**: 10 scrapes/min, 10 maps/min, 5 searches/min, 1 crawl/min ([source][firecrawl-ai-mcps])
 - **Paid tiers**: Scale with credit packs; see [firecrawl.dev/pricing](https://www.firecrawl.dev/pricing)
-- **Self-hosted**: No credit cost; requires infrastructure
+- **Self-hosted**: No credit cost; requires Docker Compose (5 containers: API, Redis, RabbitMQ, PostgreSQL, Playwright-service) ([source][firecrawl-self-host])
+
+### Cloud vs Self-Hosted vs firecrawl-simple
+
+<!-- markdownlint-disable MD013 -->
+
+| Feature | Cloud | Self-hosted | firecrawl-simple |
+|---|---|---|---|
+| `/scrape`, `/crawl` | Yes | Yes | Yes |
+| `/map`, `/search` | Yes | Yes | No |
+| `/extract` (LLM) | Yes | Needs external LLM | No |
+| `/agent`, `/browser` | Yes | **No** (cloud-only) | No |
+| Fire-engine (anti-bot, proxy rotation) | Yes | **No** (cloud-only) | No (uses Hero browser) |
+| CAPTCHA solving | Yes | No | Via 2captcha config |
+| API key required | Yes | Buggy — [still enforced][firecrawl-key-bug] | No |
+| Billing/auth | Built-in | Optional | Removed |
+| Infra | Managed | Docker (5 containers) | Docker (Redis + API + workers) |
+
+<!-- markdownlint-enable MD013 -->
+
+**Key gap**: Fire-engine (anti-bot, IP rotation) and `/agent` + `/browser` endpoints are **cloud-exclusive**. Self-hosted is effectively scrape + crawl + map with Playwright rendering. [firecrawl-simple][firecrawl-simple] is a community fork ([devflowinc][firecrawl-simple]) that strips billing, AI, and heavy dependencies — scrape + crawl only ([source][firecrawl-self-host], [source][firecrawl-simple]).
 
 ### Limitations
 
-- **API key required** for cloud use (free tier available)
-- **Credit consumption** — each operation costs credits; heavy use requires paid plan
+- **API key effectively required** — cloud needs a key; self-hosted has a [persistent bug][firecrawl-key-bug] enforcing it. Workaround: dummy key (`api_key="no-key"`)
+- **Credit consumption** — 500 lifetime credits exhaust quickly during development
 - **Latency** — cloud round-trip adds overhead vs local tools
 - **Privacy** — page content passes through Firecrawl's cloud (unless self-hosted)
 
@@ -119,12 +165,22 @@ Also available as an official Claude Code plugin: `/plugin install firecrawl` ([
 
 ### What It Is
 
-Microsoft's official MCP server that provides full browser automation using Playwright. Interacts with pages through structured accessibility snapshots — no vision model needed. The browser runs locally ([source][playwright-mcp-gh]).
+Microsoft's official MCP server that provides full browser automation using Playwright. Interacts with pages through structured accessibility snapshots — no vision model needed. **Runs a local Chromium process** on your machine — no cloud service, no API key, no credit cost. Optional remote mode via `--port` for Docker/server setups, or `--cdp-endpoint` to attach to an existing browser ([source][playwright-mcp-gh]).
 
 ### Setup
 
+**As CC Plugin** (118k+ installs, by Microsoft):
+
 ```bash
-# Claude Code CLI
+# /plugin → search "playwright" → install
+# No API key, no CLI dependency — works immediately
+```
+
+Ask Claude naturally: "navigate to example.com and take a screenshot" ([source][playwright-plugin]).
+
+**As raw MCP server** (for config control, headless, codegen):
+
+```bash
 claude mcp add playwright npx @playwright/mcp@latest
 
 # Headless mode
@@ -157,9 +213,9 @@ Enable via `--caps=core,vision,pdf` or config file ([source][playwright-mcp-gh])
 
 ### Key Features
 
-- **Accessibility tree snapshots**: 2-5KB structured data vs screenshots — 10-100x less tokens ([source][playwright-blog])
+- **Accessibility tree snapshots**: 2-5KB structured data vs screenshots — 10-100x less tokens ([source][playwright-mcp-gh])
 - **No vision model needed**: Operates on structured data, not pixels ([source][playwright-mcp-gh])
-- **Deterministic references**: Element references are unique and stable — no coordinate ambiguity ([source][playwright-blog])
+- **Deterministic references**: Element references are unique and stable — no coordinate ambiguity ([source][playwright-mcp-gh])
 - **Full browser control**: Navigation, form filling, authentication, file upload/download
 - **Multiple browsers**: Chromium, Firefox, WebKit, Edge ([source][playwright-mcp-gh])
 - **Persistent profiles**: Reuse browser profiles with cookies/storage across sessions ([source][playwright-mcp-gh])
@@ -191,6 +247,81 @@ Enable via `--caps=core,vision,pdf` or config file ([source][playwright-mcp-gh])
 - **No anti-bot bypass**: No proxy rotation or CAPTCHA solving — blocked by protected sites
 - **Privacy**: All page content Claude sees goes to Anthropic's API ([source][simonwillison-til])
 - **Headless restrictions**: Some sites detect headless browsers
+
+## Using the Plugins
+
+### Firecrawl Plugin Usage
+
+**Slash commands** invoke specific operations; **natural language** lets Claude pick the right tool automatically.
+
+| Method | Example |
+|---|---|
+| `/firecrawl:scrape` | Prompts for a URL, extracts clean markdown |
+| `/firecrawl:crawl` | Prompts for a URL, recursively extracts an entire site |
+| `/firecrawl:search` | Prompts for a query, searches web + scrapes results |
+| `/firecrawl:map` | Prompts for a URL, discovers all URLs on the site |
+| `/firecrawl:agent` | Describe what you need in plain language — no URLs required |
+| Natural language | "Scrape https://docs.stripe.com and explain webhook setup" |
+
+**Agent mode**: Claude evaluates your request and selects the right Firecrawl tool automatically. You describe the goal; it handles tool selection, pagination, and multi-site navigation.
+
+**Output**: Results save to `.firecrawl/` directory (e.g., `search-query.json`, `domain-name.md`) to avoid cluttering context.
+
+**Example workflows**:
+
+```text
+# Research aggregation
+"Search for 'AI agent frameworks 2026' and compile the top 5 with pros/cons"
+
+# Structured extraction
+"Scrape all event listings from https://luma.com/discover and structure as JSON
+ with title, date, location, url"
+
+# Site-wide ingestion
+"Crawl https://docs.pydantic.dev and summarize the validation patterns"
+
+# Autonomous research
+/firecrawl:agent → "Find all upcoming SF tech meetups across luma, meetup, and
+eventbrite. Return title, date, venue, and registration URL."
+```
+
+### Playwright Plugin Usage
+
+**No slash commands** — interact via natural language. Claude opens a browser and performs actions through accessibility tree snapshots (not screenshots).
+
+**Example prompts**:
+
+```text
+# Navigation + extraction
+"Navigate to meetup.com/find/?keywords=san+francisco, take a snapshot of the
+ event listings"
+
+# Form filling
+"Go to luma.com, click 'Explore Events', type 'San Francisco' in the location
+ filter, and list the results"
+
+# Auth flow
+"Navigate to meetup.com/login, fill email with X and password with Y, click
+ Sign In, then go to my groups page"
+
+# Testing + debugging
+"Navigate to localhost:3000, fill the contact form with test data, submit,
+ and check the console for errors"
+
+# Screenshot capture
+"Take a screenshot of https://example.com after the page fully loads"
+```
+
+**Key behavior**: Playwright operates on the accessibility tree (structured element data), not pixels. Claude sees element roles, labels, and refs — then issues deterministic click/type commands. This means ~2-5KB per page snapshot vs ~100KB+ for screenshots.
+
+### Combined Workflow
+
+For event scraping across multiple sites:
+
+1. **Firecrawl** `/firecrawl:map` → discover all event URLs on luma.com
+2. **Firecrawl** `/firecrawl:agent` → "extract structured event data from these URLs"
+3. **Playwright** → log into Meetup, navigate to private group events, extract listings
+4. **Firecrawl** `/firecrawl:scrape` → grab individual event detail pages for full descriptions
 
 ## Comparison Matrix
 
@@ -291,28 +422,44 @@ Community testing ([source][devto-browser-tools]) identified additional options 
 
 ## References
 
+### First-Party
+
 - [Firecrawl MCP Docs][firecrawl-mcp-docs]
 - [Firecrawl MCP Server (GitHub)][firecrawl-mcp-gh]
-- [Firecrawl Claude Plugin][firecrawl-plugin]
-- [Firecrawl AI MCPs use cases][firecrawl-ai-mcps]
+- [Firecrawl Claude Plugin (Marketplace)][firecrawl-plugin]
+- [Firecrawl Claude Plugin (GitHub)][firecrawl-plugin-gh]
+- [Firecrawl Pricing][firecrawl-pricing]
+- [Firecrawl Use Cases — AI MCPs][firecrawl-ai-mcps]
 - [Playwright MCP (GitHub)][playwright-mcp-gh]
-- [Playwright MCP blog][playwright-blog]
+- [Playwright Claude Plugin (Marketplace)][playwright-plugin]
+- [CC Plugins Docs][cc-plugins-docs]
+- [CC WebFetch Docs][cc-webfetch-docs]
+
+### Third-Party
+
 - [Simon Willison — Playwright MCP with Claude Code][simonwillison-til]
-- [CC WebFetch docs][cc-webfetch-docs]
+- [Browser tools comparison (DEV.to)][devto-browser-tools]
+- [Morph — CC Plugins Guide][morph-plugins]
 - [CC built-in web tools analysis][cc-web-tools]
 - [Built-in vs MCP search comparison][apiyi-comparison]
-- [Browser tools comparison (DEV.to)][devto-browser-tools]
 - [Zyte: Claude skills vs MCP vs Web Scraping Copilot][zyte-comparison]
 
 [firecrawl-mcp-docs]: https://docs.firecrawl.dev/mcp-server
 [firecrawl-mcp-gh]: https://github.com/firecrawl/firecrawl-mcp-server
 [firecrawl-plugin]: https://claude.com/plugins/firecrawl
+[firecrawl-plugin-gh]: https://github.com/firecrawl/firecrawl-claude-plugin
+[firecrawl-pricing]: https://www.firecrawl.dev/pricing
 [firecrawl-ai-mcps]: https://www.firecrawl.dev/use-cases/ai-mcps
+[firecrawl-self-host]: https://docs.firecrawl.dev/contributing/self-host
+[firecrawl-key-bug]: https://github.com/firecrawl/firecrawl-mcp-server/issues/126
+[firecrawl-simple]: https://github.com/devflowinc/firecrawl-simple
 [playwright-mcp-gh]: https://github.com/microsoft/playwright-mcp
-[playwright-blog]: https://claudefa.st/blog/tools/mcp-extensions/browser-automation
-[simonwillison-til]: https://til.simonwillison.net/claude-code/playwright-mcp-claude-code
+[playwright-plugin]: https://claude.com/plugins/playwright
+[cc-plugins-docs]: https://code.claude.com/docs/en/plugins
 [cc-webfetch-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool
+[simonwillison-til]: https://til.simonwillison.net/claude-code/playwright-mcp-claude-code
+[devto-browser-tools]: https://dev.to/minatoplanb/i-tested-every-browser-automation-tool-for-claude-code-heres-my-final-verdict-3hb7
+[morph-plugins]: https://www.morphllm.com/claude-code-plugins
 [cc-web-tools]: https://mikhail.io/2025/10/claude-code-web-tools/
 [apiyi-comparison]: https://help.apiyi.com/en/claude-code-web-search-websearch-mcp-guide-en.html
-[devto-browser-tools]: https://dev.to/minatoplanb/i-tested-every-browser-automation-tool-for-claude-code-heres-my-final-verdict-3hb7
 [zyte-comparison]: https://www.zyte.com/blog/claude-skills-vs-mcp-vs-web-scraping-copilot/
