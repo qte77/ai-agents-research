@@ -6,7 +6,7 @@ status: research
 sources:
   - https://github.com/rtk-ai/rtk
 created: 2026-03-13
-updated: 2026-03-13
+updated: 2026-03-26
 ---
 
 **Status**: Research (informational)
@@ -140,6 +140,25 @@ rtk discover --all --since 7      # All projects, last 7 days
 
 Global flags: `-u/--ultra-compact` (ASCII icons, extra savings), `-v/-vv/-vvv` (verbosity).
 
+## Validated Findings (2026-03-26, v0.33.1)
+
+Independent benchmark: 5 repos (83–74K files, 568K–8.2G), 9 categories, 10 iterations, 3 runs = 2,100 measurements. Deterministic: 699/700 ops <10-byte variance. Issue filed: [rtk-ai/rtk#839](https://github.com/rtk-ai/rtk/issues/839).
+
+| Operation | Claimed | Measured | Verdict |
+|-----------|---------|----------|---------|
+| `ls` | -80% | **-72%** | Matches on verbose; dominated by large repos |
+| `git log` | -80% | **-98%** | Truncation, not compression (544K→1.8K) |
+| `git status` | -80% | **-46%** | Verbose only; `-s`/`--porcelain` = 0% |
+| `git diff` | -75% | **-20%** | Full diff only; `--stat` = 0% |
+| `docker ps` | -80% | **-38%** | `docker ps` = 75%; `docker ps -a` = 0% |
+| `tree` | -80% | **-4%** | Near-passthrough |
+| `cat` | -70% | **0%** | Byte-identical passthrough |
+| `grep` | -80% | **-0%** | Adds bytes (RTK overhead) |
+| `ruff` | -80% | **-1%** | Adds bytes |
+| `pytest` | -90% | **0%** | 185,962B unchanged |
+
+**Key finding**: 6 of 9 categories show 0% or negative savings. The 72% grand total is dominated by `git log` truncation and `ls -laR` on large repos. `cat` and `grep` — the two highest-volume claimed categories (54% of total claim) — deliver zero.
+
 ## Adoption Considerations
 
 **Strengths**:
@@ -147,16 +166,20 @@ Global flags: `-u/--ultra-compact` (ASCII icons, extra savings), `-v/-vv/-vvv` (
 - Zero-friction integration via hooks — no workflow changes needed
 - Lossless on failure: `tee` mode preserves full output for debugging
 - Measurable ROI via `rtk gain` analytics
-- Broad language/tool coverage (Rust, Python, JS/TS, Go, Docker, k8s)
+- Effective on `ls` (72%), verbose `git log` (up to 98%), `docker ps` (75%)
 
 **Risks**:
 
 - Compression may remove context needed for complex debugging (mitigated by `tee`)
 - Hook rewrite intercepting is opaque — Claude doesn't know outputs are compressed
 - Third-party binary in the command path (security consideration for CI environments)
-- Savings claims are self-reported; independent benchmarks unavailable
+- **Savings claims overstate breadth**: independent testing shows ~22% in sandboxed CC, ~72% unsandboxed (inflated by `git log` truncation and large `ls`). `cat`, `grep`, `pytest`, `ruff` deliver 0% or negative
 
 **Relevance to context management**: RTK addresses the same problem as CC's built-in context compaction but at the tool output layer rather than the conversation layer. The two approaches are complementary — RTK reduces input noise, CC's `/compact` reduces accumulated context.
+
+## Recommendation
+
+**Keep RTK installed.** Real savings on `ls` and verbose git output are free — the hook adds negligible latency. But set expectations: "Solid on `ls`/`git log`/`docker ps`; zero on `cat`/`grep`/`pytest`/`ruff`." The 80% headline does not hold under independent testing.
 
 ## Cross-References
 
