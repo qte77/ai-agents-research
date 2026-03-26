@@ -96,6 +96,14 @@ Restricts lead to coordination-only (spawn, assign, synthesize). Blocks direct i
 9. **Experimental, disabled by default** ([source][cc-teams-docs])
 10. **Split panes require tmux or iTerm2** — not supported in VS Code terminal, Windows Terminal, or Ghostty ([source][cc-teams-docs])
 11. **Agent Teams crash fixes ongoing** — v2.1.34, v2.1.41 addressed model identifier and crash issues
+12. **`isolation: "worktree"` silently ignored with `team_name`** — worktree creation skipped; all teammates run in lead's CWD causing file-edit race conditions. Agent Teams remain experimental (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`, [docs][cc-teams-docs]). The official [Limitations section][cc-teams-limits] lists 8 items but does not mention this bug. `isolation: "worktree"` is [documented as a subagent frontmatter field][cc-subagent-isolation] ("creates a temporary git worktree so the agent works on an isolated copy of the repo") and works correctly for non-team subagents (v2.1.49+). Root cause: teammate subprocess spawn command omits worktree flags when `team_name` is present ([repro in #38949][wt-38949]). No Anthropic fix timeline as of v2.1.83 (2026-03-26). Issues: [#38949][wt-38949] (has repro, 2026-03-25), [#33045][wt-33045] (oldest, 7 comments, 2026-03-18), [#37549][wt-37549] (2026-03-22). Feature request: [#37587][wt-37587] (extend `EnterWorktree` for team orchestration). **Mitigations**: (a) standalone `Agent` + `isolation: "worktree"` without `team_name` — worktrees work but lose team coordination (shared task list, SendMessage); (b) teams without worktree + file-partitioned tasks — no conflicts if each teammate edits different files; (c) accept shared-CWD chaos — agents self-heal via cherry-picks but waste tokens (validated: 10 PRs across 2 team runs, all delivered despite races, CC v2.1.83, 2026-03-26).
+
+[wt-38949]: https://github.com/anthropics/claude-code/issues/38949
+[wt-33045]: https://github.com/anthropics/claude-code/issues/33045
+[wt-37549]: https://github.com/anthropics/claude-code/issues/37549
+[wt-37587]: https://github.com/anthropics/claude-code/issues/37587
+[cc-teams-limits]: https://code.claude.com/docs/en/agent-teams#limitations
+[cc-subagent-isolation]: https://code.claude.com/docs/en/sub-agents#supported-frontmatter-fields
 
 ## When to Use Each Mode
 
