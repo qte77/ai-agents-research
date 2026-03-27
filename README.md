@@ -44,4 +44,4 @@ These analyses were originally produced as part of [Agents-eval](https://github.
 
 ## License
 
-[MIT](LICENSE)
+[Apache-2.0](LICENSE)
