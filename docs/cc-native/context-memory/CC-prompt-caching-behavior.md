@@ -128,7 +128,6 @@ Slug is a CC-internal auto-generated session display name (e.g., `stateful-dream
 ## Cross-References
 
 - [CC-session-cost-analysis.md](../ci-execution/CC-session-cost-analysis.md) — JSONL cache fields, jq cost recipes
-- [CC-context-caching-patterns.md](CC-context-caching-patterns.md) — FACT caching-over-RAG pattern (third-party)
 - [CC-extended-context-analysis.md](CC-extended-context-analysis.md) — Context window management
 - [CC-session-lifecycle-analysis.md](../ci-execution/CC-session-lifecycle-analysis.md) — Session naming, slug, `/rename`
 
