@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-03-22
+updated: 2026-03-27
 ---
 
 # Architecture: ai-agents-research
@@ -37,7 +37,9 @@ ai-agents-research/
 │   ├── landscape/          # Evaluation landscape (metrics, frameworks, data)
 │   ├── best-practices/     # MAS design principles and security
 │   ├── research/           # 263+ research papers and convergence analysis
-│   └── community/          # Community resources
+│   ├── community/          # Community resources
+│   └── learnings/          # Cross-repo compound learnings hub (CRLA write-back target)
+│       └── per-repo/       # Per-repo pattern distillations
 │                           # Skills, plugins, tooling, CLAUDE.md patterns
 ├── triage/                 # Auto-generated monitor outputs (at repo root)
 │   ├── outage-archive/     # CC status page incident archive
@@ -94,6 +96,7 @@ Research from this repository feeds directly into implementation repos:
 | [cc-recursive-team-mode](https://github.com/qte77/cc-recursive-team-mode) | `docs/cc-native/agents-skills/`, `docs/cc-native/session-analysis/` | `CC-recursive-spawning-patterns.md`, session artifact schema docs |
 | [coding-agent-eval](https://github.com/qte77/coding-agent-eval) | `docs/cc-native/comparisons/`, `docs/cc-native/features/`, `docs/non-cc/` | Agent feature matrices, invocation method analyses |
 | [multi-tasking-quality-benchmark](https://github.com/qte77/multi-tasking-quality-benchmark) | `docs/cc-native/meta/` | Quality metric methodology docs |
+| [ralph-loop-cc-tdd-wt-vibe-kanban-template](https://github.com/qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template) | `docs/learnings/` | Cross-repo compound learning aggregation (CRLA) — Ralph reads this as `COMPOUND_LEARNINGS_PATH` |
 
 ## Reference Flow
 
