@@ -3,13 +3,7 @@ title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
 cc_version: ">=2.1.46 (MCP bridge), >=2.1.63 (opt-out env var), 2.1.71 (OAuth fixes)"
-sources:
-  - https://claude.com/docs/connectors/overview
-  - https://claude.com/docs/connectors/google/gmail
-  - https://claude.com/docs/connectors/google/drive
-  - https://claude.com/docs/connectors/google/calendar
-  - https://code.claude.com/docs/en/mcp
-  - https://code.claude.com/docs/en/changelog
+validated_links: 2026-03-19
 ---
 
 # Claude Connectors Overview
