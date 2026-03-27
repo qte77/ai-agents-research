@@ -23,6 +23,7 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 | [`docs/landscape/`](docs/landscape/) | Evaluation landscape: metrics, frameworks, data resources, observability |
 | [`docs/best-practices/`](docs/best-practices/) | MAS design principles and security best practices |
 | [`docs/research/`](docs/research/) | 263+ research papers list and cross-framework convergence analysis |
+| [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
 | [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage |
 | [`.github/`](.github/README.md) | CI automation: monitors, scripts, templates — see [.github/README.md](.github/README.md) |
 

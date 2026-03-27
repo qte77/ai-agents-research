@@ -115,19 +115,19 @@ Hook fires when CC configuration changes — useful for security auditing. ([sou
 
 | Feature | Covered In |
 | ------- | ---------- |
-| Remote Control (`claude remote-control`) | [CC-remote-control-analysis.md](ci-execution/CC-remote-control-analysis.md) |
-| Agent Teams (TeamCreate, Task tools) | [CC-agent-teams-orchestration.md](agents-skills/CC-agent-teams-orchestration.md) |
-| Fast mode (Opus 4.6) | [CC-fast-mode-analysis.md](configuration/CC-fast-mode-analysis.md) |
-| Auto memory + CLAUDE.md hierarchy | [CC-memory-system-analysis.md](context-memory/CC-memory-system-analysis.md) |
-| Cloud sessions (`claude --remote`) | [CC-cloud-sessions-analysis.md](ci-execution/CC-cloud-sessions-analysis.md) |
-| Skills (auto-discovery, SKILL.md) | [CC-skills-adoption-analysis.md](agents-skills/CC-skills-adoption-analysis.md) |
-| Plugins + Cowork (incl. dispatch) | [CC-cowork-plugins-enterprise-analysis.md](plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) |
-| Chrome extension | [CC-chrome-extension-analysis.md](plugins-ecosystem/CC-chrome-extension-analysis.md) |
-| Channels (Telegram/Discord/iMessage) | [CC-channels-analysis.md](plugins-ecosystem/CC-channels-analysis.md) |
-| Web scheduled tasks (cloud recurring) | [CC-web-scheduled-tasks-analysis.md](ci-execution/CC-web-scheduled-tasks-analysis.md) |
-| Web auth, GitHub App, API keys | [CC-web-auth-setup-analysis.md](ci-execution/CC-web-auth-setup-analysis.md) |
-| Hooks system (all events) | [CC-hooks-system-analysis.md](configuration/CC-hooks-system-analysis.md) |
-| Opus 4.6 + 1M context | [CC-extended-context-analysis.md](context-memory/CC-extended-context-analysis.md) |
+| Remote Control (`claude remote-control`) | [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md) |
+| Agent Teams (TeamCreate, Task tools) | [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) |
+| Fast mode (Opus 4.6) | [CC-fast-mode-analysis.md](CC-fast-mode-analysis.md) |
+| Auto memory + CLAUDE.md hierarchy | [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md) |
+| Cloud sessions (`claude --remote`) | [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md) |
+| Skills (auto-discovery, SKILL.md) | [CC-skills-adoption-analysis.md](../agents-skills/CC-skills-adoption-analysis.md) |
+| Plugins + Cowork (incl. dispatch) | [CC-cowork-plugins-enterprise-analysis.md](../plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) |
+| Chrome extension | [CC-chrome-extension-analysis.md](../plugins-ecosystem/CC-chrome-extension-analysis.md) |
+| Channels (Telegram/Discord/iMessage) | [CC-channels-analysis.md](../plugins-ecosystem/CC-channels-analysis.md) |
+| Web scheduled tasks (cloud recurring) | [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md) |
+| Web auth, GitHub App, API keys | [CC-web-auth-setup-analysis.md](../ci-remote/CC-web-auth-setup-analysis.md) |
+| Hooks system (all events) | [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md) |
+| Opus 4.6 + 1M context | [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md) |
 | Task system with dependencies | [CC-agent-teams-orchestration.md](agents-skills/CC-agent-teams-orchestration.md) |
 
 <!-- markdownlint-enable MD013 -->

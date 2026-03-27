@@ -19,3 +19,4 @@ Sandboxing, remote execution, GitHub Actions, cloud sessions, and operational co
 | [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md) | Web auth setup and OAuth flows |
 | [CC-web-scheduled-tasks-analysis.md](CC-web-scheduled-tasks-analysis.md) | Web-based scheduled task execution |
 | [CC-session-cost-analysis.md](CC-session-cost-analysis.md) | Per-session cost extraction from transcript JSONL |
+| [CC-session-lifecycle-analysis.md](CC-session-lifecycle-analysis.md) | Session naming, /rename bugs, persistence model |
