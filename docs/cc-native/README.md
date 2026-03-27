@@ -8,7 +8,7 @@ Deep-dive analyses of Anthropic-native Claude Code features and internals.
 |-----------|----------|------|
 | [agents-skills/](agents-skills/) | Agent teams, recursive spawning, skills adoption, Ralph enhancement | 6 |
 | [ci-execution/](ci-execution/) | Sandboxing, GitHub Actions, cloud sessions, remote access, print mode, cost/lifecycle | 16 |
-| [configuration/](configuration/) | Hooks, model/provider config, fast mode, bash mode, loop/cron, env vars | 6 |
+| [configuration/](configuration/) | Hooks, model/provider config, fast mode, bash mode, loop/cron, env vars, tools | 7 |
 | [context-memory/](context-memory/) | Extended context, memory system, llms.txt, prompt caching | 4 |
 | [plugins-ecosystem/](plugins-ecosystem/) | Official plugins, connectors, Cowork, packaging, web scraping | 8 |
 
