@@ -119,6 +119,12 @@ In a CC session, the input to each API call is:
 
 Everything except the new user message is identical to the prior call's prefix. Since tool results and assistant responses are part of the cached prefix, only the delta (new message + its tool results) triggers cache writes. The growing prefix stays cached.
 
+## CC Uses Deterministic Tools, Not Vector Search
+
+CC's code retrieval is entirely deterministic — `Glob` (file pattern matching), `Grep` (content pattern search), `Read` (direct file read). There is no vector search, no embeddings, and no RAG in CC's [tool set][tools]. This is why prompt caching works so well: tool results are exact and reproducible, making the conversation prefix stable across turns.
+
+Source: [CC tools reference][tools] — full tool list with descriptions. No semantic search tool exists. Accessed 2026-03-27, CC 2.1.83.
+
 ## Slug (CC-Internal)
 
 "Slug" is **not an Anthropic API concept**. It does not appear in the [API docs][api], [prompt caching docs][caching], or any platform documentation.
@@ -140,6 +146,7 @@ Slug is a CC-internal auto-generated session display name (e.g., `stateful-dream
 | [Prompt caching docs][caching] | What's cached, prefix matching, breakpoints, TTL, pricing multipliers |
 | [Pricing docs][pricing] | Per-model cache write/read rates (accessed 2026-03-27) |
 | [API messages docs][api] | Usage object fields (`cache_read_input_tokens`, `cache_creation_input_tokens`) |
+| [CC tools reference][tools] | Deterministic tool set (Glob, Grep, Read) — no vector search or RAG |
 | CC 2.1.83, session `9f7de296`, Codespaces, 2026-03-27 | Cache warmup curve, 5m-only behavior, 96.3% hit rate |
 
 <!-- markdownlint-enable MD013 -->
@@ -147,3 +154,4 @@ Slug is a CC-internal auto-generated session display name (e.g., `stateful-dream
 [caching]: https://platform.claude.com/docs/en/docs/build-with-claude/prompt-caching
 [pricing]: https://platform.claude.com/docs/en/docs/about-claude/pricing
 [api]: https://platform.claude.com/docs/en/docs/api/messages
+[tools]: https://code.claude.com/docs/en/tools-reference
