@@ -19,10 +19,7 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 | [`docs/non-cc/`](docs/non-cc/) | Non-CC agents and orchestrators: JetBrains Air, agent-era/devteam |
 | [`docs/cc-community/`](docs/cc-community/) | Community skills, plugins, tooling, and domain-specific CLAUDE.md patterns |
 | [`docs/sdlc-lcm/`](docs/sdlc-lcm/) | SDLC/lifecycle management specs, agentic SDLC patterns, OSS ALM landscape |
-| [`docs/analysis/`](docs/analysis/) | AI agent evaluation analysis: benchmarks, inference providers, security governance, adoption plans |
-| [`docs/landscape/`](docs/landscape/) | Evaluation landscape: metrics, frameworks, data resources, observability |
-| [`docs/best-practices/`](docs/best-practices/) | MAS design principles and security best practices |
-| [`docs/research/`](docs/research/) | 263+ research papers list and cross-framework convergence analysis |
+| [`docs/todo/`](docs/todo/) | Agents-eval era docs (analysis, landscape, best-practices, research) — pending review and reorganization |
 | [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
 | [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage |
 | [`.github/`](.github/README.md) | CI automation: monitors, scripts, templates — see [.github/README.md](.github/README.md) |

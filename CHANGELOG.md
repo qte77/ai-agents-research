@@ -13,6 +13,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `CONTRIBUTING.md`: doc standards (frontmatter, validated_links, status badge, Sources section, naming, anti-patterns)
+- `docs/cc-native/sessions/CC-session-cost-analysis.md`: transcript JSONL cost extraction with jq recipes, Opus 4.6 pricing
+- `docs/cc-native/sessions/CC-session-lifecycle-analysis.md`: /rename bugs, slug persistence, 6 upstream issues
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: server-side caching, 96.3% hit rate, 85% cost savings
+- `docs/cc-native/configuration/CC-env-vars-reference.md`: consolidated CLAUDE_CODE_* env vars
+- `docs/cc-native/configuration/CC-tools-inventory.md`: 28 built-in tools snapshot (CC 2.1.83)
+- `docs/learnings/`: cross-repo compound learnings hub
+
+### Changed
+
+- Split `ci-execution/` (16 docs) into `sessions/` (4), `sandboxing/` (4), `ci-remote/` (8)
+- Rename `community/` → `cc-community/` (all docs are CC-scoped)
+- Move `CC-changelog-feature-scan.md`, `CC-inline-visuals-analysis.md` into `configuration/`
+- Move `analysis/`, `landscape/`, `best-practices/`, `research/` → `docs/todo/` (Agents-eval era, pending review)
+- Fix `sources:` in frontmatter → Sources section (9 docs)
+- Add Sources tables to 5 cc-community docs
+
+### Removed
+
+- `CC-context-caching-patterns.md`: FACT/Arcade.dev third-party pattern, not CC-native
+- `ci-execution/` directory (replaced by sessions/, sandboxing/, ci-remote/)
+
 - `docs/sdlc-lcm/`: SDLC phase spec, LCM product lifecycle spec, release runbook, OSS ALM landscape, agentic SDLC patterns, multi-agent onboarding outlook (PRs #51, #54)
 - `.github/README.md`: CI automation overview — monitors, scripts, state, triage pipeline
 - `.github/ISSUE_TEMPLATE/`: bug report, question, and config templates
