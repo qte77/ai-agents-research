@@ -3,10 +3,9 @@ title: CC Domain-Specific CLAUDE.md Showcase
 description: Analysis of CLAUDE.md as a domain-specific pipeline controller — genome analysis toolkit case study demonstrating the pattern of CLAUDE.md orchestrating multi-script workflows beyond software development.
 category: landscape
 status: research
-sources:
-  - https://github.com/shmlkv/dna-claude-analysis
 created: 2026-03-13
 updated: 2026-03-13
+validated_links: 2026-03-13
 ---
 
 **Status**: Research (informational)
@@ -143,3 +142,11 @@ This pattern applies wherever domain experts need to run and explore multi-scrip
 
 - [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CLAUDE.md format and hierarchy
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — skills as an alternative to CLAUDE.md-driven workflows
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [dna-claude-analysis][dna] | Genome analysis CLAUDE.md case study |
+
+[dna]: https://github.com/shmlkv/dna-claude-analysis

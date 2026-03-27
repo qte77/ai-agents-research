@@ -168,7 +168,7 @@ claude mcp add --transport http composio "<YOUR_MCP_URL>" --headers "X-API-Key:Y
 
 - [CC-connectors-overview.md](CC-connectors-overview.md) — Built-in connectors (Google, M365, GitHub, Slack)
 - [CC-office-document-skills.md](CC-office-document-skills.md) — Document generation skills that consume data from these APIs
-- [CC-office-worker-workflows.md](../../community/CC-office-worker-workflows.md) — End-to-end workflows combining APIs + document skills
+- [CC-office-worker-workflows.md](../../cc-community/CC-office-worker-workflows.md) — End-to-end workflows combining APIs + document skills
 
 ## Sources
 

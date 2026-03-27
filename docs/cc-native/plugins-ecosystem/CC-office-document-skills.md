@@ -98,7 +98,7 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 - [CC-cowork-skills-api-workflows.md](CC-cowork-skills-api-workflows.md) — Skills API endpoints, skill type details, capability table
 - [CC-connectors-overview.md](CC-connectors-overview.md) — Claude for Excel/PowerPoint add-ins, M365 connector
 - [CC-business-api-integrations.md](CC-business-api-integrations.md) — Business APIs (accounting, CRM, payments) that feed into document workflows
-- [CC-office-worker-workflows.md](../../community/CC-office-worker-workflows.md) — End-to-end workflow patterns combining these capabilities
+- [CC-office-worker-workflows.md](../../cc-community/CC-office-worker-workflows.md) — End-to-end workflow patterns combining these capabilities
 
 ## Sources
 

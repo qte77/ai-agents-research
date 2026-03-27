@@ -3,10 +3,9 @@ title: CC Community Tooling Landscape
 description: Analysis of RTK (Rust Token Killer) — a CLI proxy that compresses command outputs before they reach LLM context, saving 60-90% tokens via Claude Code hook integration.
 category: landscape
 status: research
-sources:
-  - https://github.com/rtk-ai/rtk
 created: 2026-03-13
 updated: 2026-03-26
+validated_links: 2026-03-26
 ---
 
 **Status**: Research (informational)
@@ -185,3 +184,13 @@ Independent benchmark: 5 repos (83–74K files, 568K–8.2G), 9 categories, 10 i
 
 - [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — hooks system that RTK integrates with
 - [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — context window management (complementary approach)
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [RTK repository][rtk] | CLI proxy, hook integration, benchmarks |
+| [rtk-ai/rtk#839][rtk-839] | Independent benchmark findings |
+
+[rtk]: https://github.com/rtk-ai/rtk
+[rtk-839]: https://github.com/rtk-ai/rtk/issues/839

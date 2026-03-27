@@ -102,7 +102,7 @@ External sources (CC changelog, status page, community)
         ↓ (automated monitors)
 triage/  (raw triage outputs, human-reviewed)
         ↓ (researcher promotes findings)
-docs/cc-native/ or docs/non-cc/ or docs/community/  (structured analyses)
+docs/cc-native/ or docs/non-cc/ or docs/cc-community/  (structured analyses)
         ↓ (downstream repos consume)
 cc-recursive-team-mode / coding-agent-eval / multi-tasking-quality-benchmark
 ```

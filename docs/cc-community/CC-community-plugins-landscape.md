@@ -3,11 +3,9 @@ title: CC Community Plugins Landscape
 description: Survey of community plugin catalogs — awesome-claude-code (curated resource list) and awesome-claude-code-plugins (installable plugin registry with marketplace format).
 category: landscape
 status: research
-sources:
-  - https://github.com/hesreallyhim/awesome-claude-code
-  - https://github.com/ccplugins/awesome-claude-code-plugins
 created: 2026-03-13
 updated: 2026-03-13
+validated_links: 2026-03-13
 ---
 
 **Status**: Research (informational)
@@ -114,3 +112,13 @@ A structured plugin registry organized around Claude Code's installable plugin f
 - [CC-plugin-packaging-research.md](../cc-native/plugins-ecosystem/CC-plugin-packaging-research.md) — plugin packaging format and distribution
 - [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — skill libraries (gstack, pm-skills)
 - [CC-cowork-plugins-enterprise-analysis.md](../cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) — Cowork/enterprise plugin distribution
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [awesome-claude-code][acc] | Curated resource list |
+| [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
+
+[acc]: https://github.com/hesreallyhim/awesome-claude-code
+[accp]: https://github.com/ccplugins/awesome-claude-code-plugins

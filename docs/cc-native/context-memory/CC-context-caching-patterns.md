@@ -86,7 +86,7 @@ The core principle — *prefer exact tool execution over probabilistic similarit
 
 - [CC-extended-context-analysis.md](CC-extended-context-analysis.md) — context window management strategies
 - [CC-memory-system-analysis.md](CC-memory-system-analysis.md) — CC's native memory system
-- [CC-community-tooling-landscape.md](../../community/CC-community-tooling-landscape.md) — RTK and Pilot Shell context optimization approaches
+- [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) — RTK and Pilot Shell context optimization approaches
 
 ## Sources
 

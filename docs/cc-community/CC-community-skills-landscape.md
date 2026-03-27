@@ -3,12 +3,9 @@ title: CC Community Skills Landscape
 description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), and claude-code-best-practice (knowledge base).
 category: landscape
 status: research
-sources:
-  - https://github.com/garrytan/gstack
-  - https://github.com/phuryn/pm-skills
-  - https://github.com/shanraisshan/claude-code-best-practice
 created: 2026-03-13
 updated: 2026-03-13
+validated_links: 2026-03-13
 ---
 
 **Status**: Research (informational)
@@ -137,3 +134,15 @@ Valuable as a **community health indicator** and discovery entry point. The open
 - [CC-plans-as-skill-rule-templates.md](../cc-native/agents-skills/CC-plans-as-skill-rule-templates.md) — plan-to-skill extraction (gstack's `/plan-*` skills are concrete examples)
 - [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — official plugin ecosystem
 - [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) — plugin catalogs
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [gstack][gstack] | Founder/engineering workflow skills |
+| [pm-skills][pm-skills] | Product management skill framework |
+| [claude-code-best-practice][ccbp] | Community knowledge base |
+
+[gstack]: https://github.com/garrytan/gstack
+[pm-skills]: https://github.com/phuryn/pm-skills
+[ccbp]: https://github.com/shanraisshan/claude-code-best-practice

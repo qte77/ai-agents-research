@@ -116,7 +116,7 @@ ai-agents-research/
       plugins-ecosystem/README.md      # Official plugins, connectors, Cowork, packaging
       examples/                        # Working config/script examples
     non-cc/                            # Non-CC agents (JetBrains Air, DeerFlow, etc.)
-    community/                         # Community skills, plugins, tooling, CLAUDE.md patterns
+    cc-community/                      # Community skills, plugins, tooling, CLAUDE.md patterns
     sdlc-lcm/                          # SDLC/lifecycle management specs
     analysis/                          # Benchmarks, providers, security governance
     landscape/                         # Eval metrics, frameworks, observability
@@ -130,7 +130,8 @@ ai-agents-research/
 
 - Each `cc-native/` subdirectory has a `README.md` index with a doc table
 - When adding a doc, update **both** the subdirectory README and `cc-native/README.md` (doc count)
-- Non-cc-native directories follow their own conventions (no enforced frontmatter)
+- `cc-community/` follows the same standard as `cc-native/`
+- Other directories (`analysis/`, `landscape/`, `sdlc-lcm/`, `research/`, `best-practices/`) follow their own conventions
 
 ## Naming Convention
 
