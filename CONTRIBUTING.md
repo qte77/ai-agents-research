@@ -120,10 +120,7 @@ ai-agents-research/
     non-cc/                            # Non-CC agents (JetBrains Air, DeerFlow, etc.)
     cc-community/                      # Community skills, plugins, tooling, CLAUDE.md patterns
     sdlc-lcm/                          # SDLC/lifecycle management specs
-    analysis/                          # Benchmarks, providers, security governance
-    landscape/                         # Eval metrics, frameworks, observability
-    best-practices/                    # MAS design and security
-    research/                          # 263+ papers, cross-framework convergence
+    todo/                              # Agents-eval era docs pending review (analysis, landscape, best-practices, research)
   triage/                              # Auto-generated monitor outputs
   .github/                             # CI automation (monitors, scripts, templates)
 ```
@@ -133,7 +130,8 @@ ai-agents-research/
 - Each `cc-native/` subdirectory has a `README.md` index with a doc table
 - When adding a doc, update **both** the subdirectory README and `cc-native/README.md` (doc count)
 - `cc-community/` follows the same standard as `cc-native/`
-- Other directories (`analysis/`, `landscape/`, `sdlc-lcm/`, `research/`, `best-practices/`) follow their own conventions
+- `docs/todo/` contains Agents-eval era docs pending review — not yet standardized
+- Other directories (`sdlc-lcm/`, `non-cc/`) follow their own conventions
 
 ## Naming Convention
 

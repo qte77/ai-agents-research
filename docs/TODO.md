@@ -45,6 +45,7 @@ updated: 2026-03-22
 
 ## Next
 
+- [ ] Review and triage `docs/todo/` (18 Agents-eval era docs moved from analysis/, landscape/, best-practices/, research/) — promote, merge into cc-native, or delete
 - [ ] Update feature comparison matrix for latest agent releases (post-CC 1.x)
 - [ ] Document CC 1.x session artifact schema changes (new fields in `raw_stream.jsonl`)
 - [ ] Add Gemini CLI analysis to `docs/non-cc/` (invocation methods, tool schema, session artifacts)
@@ -77,7 +78,6 @@ updated: 2026-03-22
 | Doc / Directory | Feeds Into |
 |---|---|
 | `docs/cc-native/agents-skills/CC-recursive-spawning-patterns.md` | cc-recursive-team-mode (spawning implementation) |
-| `docs/cc-native/session-analysis/` | cc-recursive-team-mode (artifact parser schema) |
-| `docs/cc-native/comparisons/`, `docs/non-cc/` | coding-agent-eval (agent feature matrices) |
-| `docs/cc-native/features/`, invocation method docs | coding-agent-eval (invocation harness design) |
-| `docs/cc-native/meta/` quality methodology notes | multi-tasking-quality-benchmark (metric selection) |
+| `docs/cc-native/sessions/` | cc-recursive-team-mode (session artifact schema) |
+| `docs/non-cc/` | coding-agent-eval (agent feature matrices) |
+| `docs/todo/` (pending review) | coding-agent-eval, multi-tasking-quality-benchmark |
