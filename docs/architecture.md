@@ -21,7 +21,9 @@ ai-agents-research/
 │   │   ├── agents-skills/  # Agent spawning, skills, orchestration patterns
 │   │   ├── architecture/   # CC internals and system design analyses
 │   │   ├── changelog-triage/ # Per-release feature breakdowns
-│   │   ├── ci-execution/   # Sandboxing, CI runners, remote execution
+│   │   ├── sessions/       # Session lifecycle, cost, keepalive, headless
+│   │   ├── sandboxing/     # Sandbox internals, platforms, permissions
+│   │   ├── ci-remote/      # GHA, cloud sessions, remote access, web auth
 │   │   ├── comparisons/    # Cross-agent and cross-feature comparisons
 │   │   ├── configuration/  # Hooks, fast mode, model/provider config
 │   │   ├── features/       # Discrete feature analyses

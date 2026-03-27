@@ -110,9 +110,11 @@ ai-agents-research/
     cc-native/                         # Anthropic-native CC features (primary focus)
       README.md                        # Index with doc counts per subdirectory
       agents-skills/README.md          # Agent teams, spawning, skills, Ralph
-      ci-execution/README.md           # Sandboxing, GHA, cloud, print mode, cost
-      configuration/README.md          # Hooks, model config, env vars, fast/bash mode
-      context-memory/README.md         # Extended context, memory, caching, llms.txt
+      sessions/README.md               # Session lifecycle, cost, keepalive, headless
+      sandboxing/README.md             # Sandbox internals, Codespaces friction, platforms
+      ci-remote/README.md              # GHA, cloud sessions, remote access, web auth
+      configuration/README.md          # Hooks, model config, env vars, tools, fast/bash mode
+      context-memory/README.md         # Extended context, memory, prompt caching, llms.txt
       plugins-ecosystem/README.md      # Official plugins, connectors, Cowork, packaging
       examples/                        # Working config/script examples
     non-cc/                            # Non-CC agents (JetBrains Air, DeerFlow, etc.)

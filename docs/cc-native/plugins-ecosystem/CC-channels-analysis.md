@@ -73,10 +73,10 @@ claude --dangerously-load-development-channels server:my-webhook
 | Feature | What it does | Direction |
 |---------|-------------|-----------|
 | **Channels** | External systems push events into running local session | Inbound push |
-| [CC Web sessions](../ci-execution/CC-cloud-sessions-analysis.md) | Fresh cloud sandbox from GitHub | Outbound delegation |
+| [CC Web sessions](../ci-remote/CC-cloud-sessions-analysis.md) | Fresh cloud sandbox from GitHub | Outbound delegation |
 | [Claude in Slack](https://code.claude.com/docs/en/slack) | `@Claude` mention spawns web session | Outbound delegation |
 | [Standard MCP](CC-connectors-overview.md) | Claude queries on demand | Outbound pull |
-| [Remote Control](../ci-execution/CC-remote-control-analysis.md) | You drive local session from web/mobile | Bidirectional steering |
+| [Remote Control](../ci-remote/CC-remote-control-analysis.md) | You drive local session from web/mobile | Bidirectional steering |
 
 ## Use Cases
 

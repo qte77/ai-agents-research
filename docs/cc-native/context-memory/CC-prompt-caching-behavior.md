@@ -123,13 +123,13 @@ Everything except the new user message is identical to the prior call's prefix. 
 
 "Slug" is **not an Anthropic API concept**. It does not appear in the [API docs][api], [prompt caching docs][caching], or any platform documentation.
 
-Slug is a CC-internal auto-generated session display name (e.g., `stateful-dreaming-donut`) carried on every message in session JSONL files. See [CC-session-lifecycle-analysis.md](../ci-execution/CC-session-lifecycle-analysis.md) for slug behavior and `/rename` bugs.
+Slug is a CC-internal auto-generated session display name (e.g., `stateful-dreaming-donut`) carried on every message in session JSONL files. See [CC-session-lifecycle-analysis.md](../sessions/CC-session-lifecycle-analysis.md) for slug behavior and `/rename` bugs.
 
 ## Cross-References
 
-- [CC-session-cost-analysis.md](../ci-execution/CC-session-cost-analysis.md) — JSONL cache fields, jq cost recipes
+- [CC-session-cost-analysis.md](../sessions/CC-session-cost-analysis.md) — JSONL cache fields, jq cost recipes
 - [CC-extended-context-analysis.md](CC-extended-context-analysis.md) — Context window management
-- [CC-session-lifecycle-analysis.md](../ci-execution/CC-session-lifecycle-analysis.md) — Session naming, slug, `/rename`
+- [CC-session-lifecycle-analysis.md](../sessions/CC-session-lifecycle-analysis.md) — Session naming, slug, `/rename`
 
 ## Sources
 

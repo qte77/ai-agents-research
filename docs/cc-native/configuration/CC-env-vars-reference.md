@@ -68,7 +68,7 @@ Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-conte
 
 <!-- markdownlint-enable MD013 -->
 
-Cross-ref: [CC-version-pinning-resilience.md](../ci-execution/CC-version-pinning-resilience.md), [monitoring docs][monitoring]
+Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [monitoring docs][monitoring]
 
 ### Session Guards & Runtime
 

@@ -96,7 +96,7 @@ claude --dangerously-skip-permissions
 
 Each loop iteration fires with full bypass permissions -- Claude can read,
 write, execute, and network without any prompts. See
-[CC-permissions-bypass-analysis.md](../ci-execution/CC-permissions-bypass-analysis.md)
+[CC-permissions-bypass-analysis.md](../sandboxing/CC-permissions-bypass-analysis.md)
 for security implications.
 
 ## Comparison: `/loop` vs Ralph Loop vs GitHub Actions
@@ -118,7 +118,7 @@ for security implications.
 
 See [CC-ralph-enhancement-research.md](../agents-skills/CC-ralph-enhancement-research.md)
 for Ralph loop details and
-[CC-github-actions-analysis.md](../ci-execution/CC-github-actions-analysis.md)
+[CC-github-actions-analysis.md](../ci-remote/CC-github-actions-analysis.md)
 for GitHub Actions integration.
 
 ## Practical Patterns
