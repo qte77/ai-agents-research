@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD013 -->
 ---
 title: CC Binary Architecture
 purpose: Analysis of Claude Code CLI binary and VS Code extension internals — build system, shared codebase proof, internal API endpoints, and model ID inventory.
@@ -77,7 +78,6 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 
 ### Anthropic API (api.anthropic.com)
 
-<!-- markdownlint-disable MD013 -->
 
 | Endpoint | Inferred Purpose | Documented? |
 |---|---|---|
@@ -92,11 +92,9 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 | `/api/web/domain_info` | Domain info lookup | No |
 | `/mcp-registry/v0/servers` | MCP server registry | No |
 
-<!-- markdownlint-enable MD013 -->
 
 ### Other Services
 
-<!-- markdownlint-disable MD013 -->
 
 | URL | Inferred Purpose | Notes |
 |---|---|---|
@@ -110,7 +108,6 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 | `raw.githubusercontent.com/.../security.json` | Plugin security checks | String extraction |
 | `raw.githubusercontent.com/.../plugin-installs.json` | Plugin install stats | String extraction |
 
-<!-- markdownlint-enable MD013 -->
 
 ## Model ID Inventory (String Extraction)
 
@@ -149,7 +146,6 @@ Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
 
 | Source | Content |
 |---|---|
@@ -164,7 +160,6 @@ Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.
 | [GitHub issue #11795][gh-11795] | Request to link schema from official docs |
 | [CC RE landscape][re-landscape] | Community reverse engineering tools and research |
 
-<!-- markdownlint-enable MD013 -->
 
 [frr-build]: https://www.frr.dev/posts/claude-code-native-build-bun/
 [ghuntley]: https://ghuntley.com/tradecraft/

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD013 -->
 ---
 title: CC Reverse Engineering Landscape
 purpose: Survey of community tools, blogs, and trackers that reverse engineer Claude Code internals — system prompts, binary analysis, env vars, API interception.
@@ -160,7 +161,6 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
 
 [piebald-prompts]: https://github.com/Piebald-AI/claude-code-system-prompts
 [agiflow]: https://agiflow.io/blog/claude-code-internals-reverse-engineering-prompt-augmentation/
@@ -185,4 +185,3 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 [env-ref]: ../cc-native/configuration/CC-env-vars-reference.md
 [tracking-issue]: https://github.com/qte77/ai-agents-research/issues/70
 
-<!-- markdownlint-enable MD013 -->

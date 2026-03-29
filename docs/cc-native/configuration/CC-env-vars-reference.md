@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD013 -->
 ---
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
@@ -19,17 +20,11 @@ This doc covers vars observed in agent workflows. For the **complete authoritati
 ## Variable Reference
 
 ### Model & Agent Selection
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `ANTHROPIC_MODEL` | `sonnet` | Primary model alias or full ID | [env-vars][env-vars] |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | (inherits primary) | Model for Agent tool subagents and teammates | [env-vars][env-vars] |
 | `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `max` (Opus 4.6 only), `auto` | [env-vars][env-vars] |
-
-<!-- markdownlint-enable MD013 -->
-
 Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.md)
 
 ### Agent Teams
@@ -41,55 +36,34 @@ Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.
 Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md)
 
 ### Context & Token Control
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | `0` | Prevent extended context window (stays at 200K) | [env-vars][env-vars] |
 | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | `0` | Remove built-in git workflow instructions from context | [env-vars][env-vars] |
 | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | ~95 | Auto-compaction trigger threshold (% of context window). Official docs say ~95%; observed triggers at ~78-85% ([#18264][gh-18264], [#18241][gh-18241]) | [env-vars][env-vars] |
 | `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | (model context size) | Override context capacity in tokens for compaction calculations | [env-vars][env-vars] |
-
-<!-- markdownlint-enable MD013 -->
-
 Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md), [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md)
 
 ### Traffic & Telemetry
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | `0` | Equivalent of `DISABLE_AUTOUPDATER` + `DISABLE_FEEDBACK_COMMAND` + `DISABLE_ERROR_REPORTING` + `DISABLE_TELEMETRY` | [env-vars][env-vars] |
 | `CLAUDE_CODE_ENABLE_TELEMETRY` | `0` | Enable OTel metrics/logs export | [env-vars][env-vars], [monitoring][monitoring] |
 | `DISABLE_AUTOUPDATER` | `0` | Prevent automatic CC updates | [env-vars][env-vars] |
 | `DISABLE_COST_WARNINGS` | `0` | Suppress cost warning messages | [env-vars][env-vars] |
-
-<!-- markdownlint-enable MD013 -->
-
 Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [monitoring docs][monitoring]
 
 ### Session Guards & Runtime
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDECODE` | Set by CC | Session guard — set to `1` in shells CC spawns. Clear to enable recursive spawning | [env-vars][env-vars] |
 | `CLAUDE_CODE_TMPDIR` | `/tmp` (Unix) | Override temp directory. CC appends `/claude/` | [env-vars][env-vars] |
 | `CLAUDE_CODE_SIMPLE` | `0` | Minimal mode (set by `--bare` flag). Disables hooks, plugins, MCP, auto memory, CLAUDE.md | [env-vars][env-vars] |
-
-<!-- markdownlint-enable MD013 -->
-
 Cross-ref: [CC-recursive-spawning-patterns.md](../agents-skills/CC-recursive-spawning-patterns.md)
 
 ### Runtime-Injected Variables (Not User-Configurable)
 
 These vars are set by CC at runtime and observed via `env` inside a session. They are **not documented** in the official env vars page and cannot be configured by users.
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Observed Value | Purpose | Observation |
 |---|---|---|---|
 | `CLAUDE_CODE_ENTRYPOINT` | `cli` | How CC was launched | CC 2.1.83, Codespaces, 2026-03-27 |
@@ -97,20 +71,11 @@ These vars are set by CC at runtime and observed via `env` inside a session. The
 | `CLAUDE_CODE_HOST_HTTP_PROXY_PORT` | (dynamic) | HTTP proxy port for sandboxed network access | CC 2.1.83, Codespaces, 2026-03-27 |
 | `CLAUDE_CODE_HOST_SOCKS_PROXY_PORT` | (dynamic) | SOCKS proxy port for sandboxed network access | CC 2.1.83, Codespaces, 2026-03-27 |
 | `SANDBOX_RUNTIME` | `1` | Set when running inside CC's sandbox | CC 2.1.83, Codespaces, 2026-03-27 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### Memory & Instructions
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDE_CODE_DISABLE_AUTO_MEMORY` | `0` | Disable auto memory system | [env-vars][env-vars] |
 | `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD` | `0` | Load CLAUDE.md from `--add-dir` directories | [env-vars][env-vars] |
-
-<!-- markdownlint-enable MD013 -->
-
 Cross-ref: [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md)
 
 ## Configuration Methods
@@ -143,9 +108,6 @@ The following variables were extracted from the CC 2.1.87 CLI binary via `string
 Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landscape][re-landscape]
 
 ### Feature Flags & Experimental
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_ENABLE_CFC` | Unknown feature gate | String extraction, CC 2.1.87 |
@@ -159,13 +121,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_PLAN_MODE_REQUIRED` | Force plan mode | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_PLAN_MODE_INTERVIEW_PHASE` | Plan mode phase control | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_PLAN_V` | Plan version selector | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### Disable Flags
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | Disable adaptive thinking | String extraction, CC 2.1.87 |
@@ -186,13 +142,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_DISABLE_TERMINAL_TITLE` | Disable terminal title updates | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_DISABLE_THINKING` | Disable thinking entirely | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_DISABLE_VIRTUAL_SCROLL` | Disable virtual scrolling | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### Teams & Collaboration
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_TEAMMATE_COMMAND` | Command to invoke teammate agent | String extraction, CC 2.1.87 |
@@ -201,13 +151,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_AGENT_LIST_IN_MESSAGES` | Expose agent list in messages | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_AGENT_NAME` | Agent identity | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_AGENT_RULE_DISABLED` | Disable agent rules | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### Plugin & MCP Internals
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_PLUGIN_CACHE_DIR` | Plugin cache directory | String extraction, CC 2.1.87 |
@@ -220,13 +164,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_MCP_SERVER_NAME` | MCP server name override | String extraction, CC 2.1.87; also in [turboai][turboai] |
 | `CLAUDE_CODE_MCP_SERVER_URL` | MCP server URL override | String extraction, CC 2.1.87; also in [turboai][turboai] |
 | `CLAUDE_CODE_USE_COWORK_PLUGINS` | Enable Cowork plugin mode | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### OAuth & Auth
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_OAUTH_TOKEN` | OAuth access token | String extraction, CC 2.1.87 |
@@ -242,13 +180,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_SKIP_BEDROCK_AUTH` | Skip Bedrock auth | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_SKIP_VERTEX_AUTH` | Skip Vertex auth | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_SKIP_FOUNDRY_AUTH` | Skip Foundry auth | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### Runtime Limits & Performance
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | Response token limit | String extraction, CC 2.1.87 |
@@ -264,13 +196,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_GLOB_NO_IGNORE` | Ignore .gitignore in Glob | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_GLOB_TIMEOUT_SECONDS` | Glob timeout | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS` | SessionEnd hook timeout | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### Remote & IDE
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_REMOTE` | Remote session flag | String extraction, CC 2.1.87 |
@@ -283,13 +209,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL` | Skip IDE extension install | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_IDE_SKIP_VALID_CHECK` | Skip IDE validation | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_AUTO_CONNECT_IDE` | Auto-connect to IDE | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ### ANTHROPIC_* Undocumented
-
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `ANTHROPIC_FOUNDRY_API_KEY` | Microsoft Foundry API key | String extraction, CC 2.1.87 |
@@ -305,13 +225,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `ANTHROPIC_BETAS` | Beta feature flags | String extraction, CC 2.1.87 |
 | `ANTHROPIC_CUSTOM_HEADERS` | Custom HTTP headers | String extraction, CC 2.1.87 |
 | `ANTHROPIC_LOG` | SDK logging level | String extraction, CC 2.1.87 |
-
-<!-- markdownlint-enable MD013 -->
-
 ## Sources
-
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [CC env vars reference][env-vars] | Official complete list (80+ vars) |
@@ -324,9 +238,6 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | [unkn0wncode env vars gist][unkn0wncode] | Categorized 200+ env vars (v2.1.81) |
 | [CC binary architecture][binary-arch] | Binary analysis methodology |
 | [CC RE landscape][re-landscape] | Community reverse engineering tools and research |
-
-<!-- markdownlint-enable MD013 -->
-
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [settings]: https://code.claude.com/docs/en/settings
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage

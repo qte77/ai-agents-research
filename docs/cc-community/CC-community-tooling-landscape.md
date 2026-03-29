@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD013 -->
 ---
 title: CC Community Tooling Landscape
 purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development.
@@ -99,7 +100,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
+
 
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
@@ -112,4 +113,3 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [gsd-1431]: https://github.com/gsd-build/get-shit-done/issues/1431
 [gsd-1466]: https://github.com/gsd-build/get-shit-done/issues/1466
 
-<!-- markdownlint-enable MD013 -->

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD013 -->
 ---
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
@@ -194,7 +195,6 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
 
 | Source | Content |
 |---|---|
@@ -207,7 +207,6 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
 | CC 2.1.87 `/config` panel observation, 2026-03-29 | `.claude.json` key inventory |
 | [ZhangHanDong /btw gist][btw-gist] | `/btw` command analysis |
 
-<!-- markdownlint-enable MD013 -->
 
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
