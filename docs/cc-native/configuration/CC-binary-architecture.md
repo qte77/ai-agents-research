@@ -46,6 +46,36 @@ plansDirectory:y.string().optional().describe(
    If not set, defaults to ~/.claude/plans/")
 ```
 
+**Verified** (CC 2.1.87, 2026-03-29): Setting `"plansDirectory": "./plans"` in `settings.json` saves plan files to `./plans/` relative to project root. Works at both user (`~/.claude/settings.json`) and project (`.claude/settings.json`) scope. Absolute paths also work. Similarly, `autoMemoryDirectory` redirects auto-memory storage (user-level only — ignored in project settings per schema description).
+
+### Redirecting CC Data: Settings vs Symlinks
+
+Two approaches to centralizing CC artifacts outside `~/.claude/`:
+
+**Option A: `settings.json` keys** (per-setting, portable)
+
+```json
+{
+  "plansDirectory": "/path/to/plans",
+  "autoMemoryDirectory": "/path/to/memory"
+}
+```
+
+Only covers `plans/` and `memory/`. Sessions, transcripts, tool results, and subagent logs remain in `~/.claude/projects/`.
+
+**Option B: Symlinks** (comprehensive, dotfiles-friendly)
+
+```bash
+ln -sfn /path/to/data/projects ~/.claude/projects
+ln -sfn /path/to/data/plans ~/.claude/plans
+```
+
+Covers everything — sessions, transcripts, tool results, plans, memory. CC reports symlink source paths but reads/writes at the physical location. No `settings.json` changes needed.
+
+**Why symlinks matter in Codespaces**: `~/.claude/` is wiped on rebuild, `/workspaces/` persists. Symlinks to `/workspaces/<org>/.claude/` survive rebuilds when re-established via dotfiles install script.
+
+**Recommendation**: Symlinks for Codespaces/devcontainers. Settings for per-project overrides.
+
 Cross-ref: [CC-tools-inventory.md](CC-tools-inventory.md) — three-layer config surface
 
 ## Extraction Methodology
