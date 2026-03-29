@@ -3,7 +3,5 @@
 Thumbs.db
 
 # Plugin-deployed files (source of truth: claude-code-utils-plugin)
-.claude/rules/compound-learning.md
-.claude/rules/context-management.md
-.claude/rules/core-principles.md
+.claude/rules/
 .claude/scripts/
