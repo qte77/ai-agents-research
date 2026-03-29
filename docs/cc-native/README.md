@@ -13,3 +13,9 @@ Deep-dive analyses of Anthropic-native Claude Code features and internals.
 | [configuration/](configuration/) | Hooks, model/provider config, fast/bash mode, loop/cron, env vars, tools, changelog, visuals | 9 |
 | [context-memory/](context-memory/) | Extended context, memory system, llms.txt, prompt caching | 4 |
 | [plugins-ecosystem/](plugins-ecosystem/) | Official plugins, connectors, Cowork, packaging, web scraping | 8 |
+
+## Reference
+
+| Document | Coverage |
+|----------|----------|
+| [CC-first-party-docs-index.md](CC-first-party-docs-index.md) | Canonical Anthropic URLs for CC, Agent SDK, API, hooks, and best practices |
