@@ -1,9 +1,9 @@
 ---
 title: CC Environment Variables Reference
-purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows. Not exhaustive — links to official docs for the full list.
+purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-03-27
-validated_links: 2026-03-27
+updated: 2026-03-29
+validated_links: 2026-03-29
 ---
 
 **Status**: Adopt
@@ -134,6 +134,180 @@ env | grep -E '^(CLAUDE|ANTHROPIC|SANDBOX|DISABLE)' | sort
 
 Note: Runtime-injected vars (`CLAUDE_CODE_SSE_PORT`, `SANDBOX_RUNTIME`, etc.) reflect session state and are not user-configurable.
 
+## Undocumented Variables (Binary String Extraction)
+
+The following variables were extracted from the CC 2.1.87 CLI binary via `strings` / `grep -boa`. They are **not listed** in the [official env vars reference][env-vars]. Presence in the binary does not guarantee functionality — some may be deprecated, internal-only, or feature-gated.
+
+**Method**: `grep -oP 'CLAUDE_CODE_[A-Z_]+' <binary> | sort -u` against `/home/vscode/.local/share/claude/versions/2.1.87` ([frr-build][frr-build]).
+
+Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landscape][re-landscape]
+
+### Feature Flags & Experimental
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `CLAUDE_CODE_ENABLE_CFC` | Unknown feature gate | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENABLE_XAA` | Unknown feature gate | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENABLE_TASKS` | Enable task system | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | Prompt suggestions | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | Tool-level streaming | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENABLE_TOKEN_USAGE_ATTACHMENT` | Token usage in responses | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING` | SDK checkpoint support | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA` | Extended telemetry | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_PLAN_MODE_REQUIRED` | Force plan mode | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_PLAN_MODE_INTERVIEW_PHASE` | Plan mode phase control | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_PLAN_V` | Plan version selector | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
+### Disable Flags
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | Disable adaptive thinking | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_ADVISOR_TOOL` | Disable advisor tool | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_ATTACHMENTS` | Disable file attachments | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | Disable background tasks | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_CLAUDE_MDS` | Disable CLAUDE.md loading | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_COMMAND_INJECTION_CHECK` | Skip security check on Bash | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_CRON` | Disable cron scheduling | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` | Disable beta features | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_FAST_MODE` | Disable fast mode toggle | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY` | Disable quality surveys | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING` | Disable file checkpoints | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | Disable model alias remapping | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK` | Disable non-streaming fallback | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL` | Skip official plugin auto-install | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_PRECOMPACT_SKIP` | Disable pre-compaction optimization | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_TERMINAL_TITLE` | Disable terminal title updates | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_THINKING` | Disable thinking entirely | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_VIRTUAL_SCROLL` | Disable virtual scrolling | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
+### Teams & Collaboration
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `CLAUDE_CODE_TEAMMATE_COMMAND` | Command to invoke teammate agent | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_TEAM_NAME` | Team identifier | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_IS_COWORK` | Cowork mode detection | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_AGENT_LIST_IN_MESSAGES` | Expose agent list in messages | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_AGENT_NAME` | Agent identity | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_AGENT_RULE_DISABLED` | Disable agent rules | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
+### Plugin & MCP Internals
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `CLAUDE_CODE_PLUGIN_CACHE_DIR` | Plugin cache directory | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_PLUGIN_SEED_DIR` | Plugin seed/template directory | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_PLUGIN_USE_ZIP_CACHE` | Use zip-based plugin cache | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` | Git timeout for plugin ops | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | Synchronous plugin install | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SYNC_PLUGIN_INSTALL_TIMEOUT_MS` | Timeout for sync install | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_MCP_INSTR_DELTA` | MCP instruction delta | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_MCP_SERVER_NAME` | MCP server name override | String extraction, CC 2.1.87; also in [turboai][turboai] |
+| `CLAUDE_CODE_MCP_SERVER_URL` | MCP server URL override | String extraction, CC 2.1.87; also in [turboai][turboai] |
+| `CLAUDE_CODE_USE_COWORK_PLUGINS` | Enable Cowork plugin mode | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
+### OAuth & Auth
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `CLAUDE_CODE_OAUTH_TOKEN` | OAuth access token | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` | OAuth refresh token | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_OAUTH_CLIENT_ID` | OAuth client ID | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_OAUTH_SCOPES` | OAuth scopes | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_OAUTH_TOKEN_FILE_DESCRIPTOR` | OAuth token via fd | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_CUSTOM_OAUTH_URL` | Custom OAuth endpoint | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SESSION_ACCESS_TOKEN` | Session token | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_WEBSOCKET_AUTH_FILE_DESCRIPTOR` | WebSocket auth via fd | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_API_KEY_FILE_DESCRIPTOR` | API key via fd | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_API_KEY_HELPER_TTL_MS` | API key helper cache TTL | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SKIP_BEDROCK_AUTH` | Skip Bedrock auth | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SKIP_VERTEX_AUTH` | Skip Vertex auth | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SKIP_FOUNDRY_AUTH` | Skip Foundry auth | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
+### Runtime Limits & Performance
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | Response token limit | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_MAX_RETRIES` | Max API retries | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY` | Parallel tool limit | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS` | Read tool token cap | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_IDLE_THRESHOLD_MINUTES` | Idle timeout | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_IDLE_TOKEN_THRESHOLD` | Idle token limit | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_STALL_TIMEOUT_MS_FOR_TESTING` | Stall detection timeout | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SLOW_OPERATION_THRESHOLD_MS` | Slow op warning threshold | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE` | Blocking call limit | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_GLOB_HIDDEN` | Include hidden files in Glob | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_GLOB_NO_IGNORE` | Ignore .gitignore in Glob | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_GLOB_TIMEOUT_SECONDS` | Glob timeout | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS` | SessionEnd hook timeout | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
+### Remote & IDE
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `CLAUDE_CODE_REMOTE` | Remote session flag | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_REMOTE_SESSION_ID` | Remote session identifier | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE` | Remote environment type | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_REMOTE_MEMORY_DIR` | Remote memory directory | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_REMOTE_SEND_KEEPALIVES` | Remote keepalive flag | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_CONTAINER_ID` | Container identifier | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_IDE_HOST_OVERRIDE` | IDE host override | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL` | Skip IDE extension install | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_IDE_SKIP_VALID_CHECK` | Skip IDE validation | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_AUTO_CONNECT_IDE` | Auto-connect to IDE | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
+### ANTHROPIC_* Undocumented
+
+<!-- markdownlint-disable MD013 -->
+
+| Variable | Inferred Purpose | Notes |
+|---|---|---|
+| `ANTHROPIC_FOUNDRY_API_KEY` | Microsoft Foundry API key | String extraction, CC 2.1.87 |
+| `ANTHROPIC_FOUNDRY_AUTH_TOKEN` | Foundry auth token | String extraction, CC 2.1.87 |
+| `ANTHROPIC_FOUNDRY_BASE_URL` | Foundry endpoint | String extraction, CC 2.1.87 |
+| `ANTHROPIC_FOUNDRY_RESOURCE` | Foundry resource ID | String extraction, CC 2.1.87 |
+| `ANTHROPIC_SMALL_FAST_MODEL` | Haiku-tier model override | String extraction, CC 2.1.87 |
+| `ANTHROPIC_SMALL_FAST_MODEL_AWS_REGION` | Haiku model AWS region | String extraction, CC 2.1.87 |
+| `ANTHROPIC_CUSTOM_MODEL_OPTION` | Custom model option | String extraction, CC 2.1.87 |
+| `ANTHROPIC_CUSTOM_MODEL_OPTION_NAME` | Custom model display name | String extraction, CC 2.1.87 |
+| `ANTHROPIC_CUSTOM_MODEL_OPTION_DESCRIPTION` | Custom model description | String extraction, CC 2.1.87 |
+| `ANTHROPIC_UNIX_SOCKET` | Unix socket transport | String extraction, CC 2.1.87 |
+| `ANTHROPIC_BETAS` | Beta feature flags | String extraction, CC 2.1.87 |
+| `ANTHROPIC_CUSTOM_HEADERS` | Custom HTTP headers | String extraction, CC 2.1.87 |
+| `ANTHROPIC_LOG` | SDK logging level | String extraction, CC 2.1.87 |
+
+<!-- markdownlint-enable MD013 -->
+
 ## Sources
 
 <!-- markdownlint-disable MD013 -->
@@ -145,6 +319,11 @@ Note: Runtime-injected vars (`CLAUDE_CODE_SSE_PORT`, `SANDBOX_RUNTIME`, etc.) re
 | [CC monitoring docs][monitoring] | OTel configuration and metrics |
 | [CC statusline docs][statusline] | Statusline JSON schema and examples |
 | CC 2.1.83 `env` output, Codespaces, 2026-03-27 | Runtime-injected vars observation |
+| CC 2.1.87 CLI binary string extraction, Codespaces, 2026-03-29 | Undocumented vars via `grep -oP` |
+| [TurboAI.dev version tracker][turboai] | 204 env vars, 41 feature gates tracked across releases |
+| [unkn0wncode env vars gist][unkn0wncode] | Categorized 200+ env vars (v2.1.81) |
+| [CC binary architecture][binary-arch] | Binary analysis methodology |
+| [CC RE landscape][re-landscape] | Community reverse engineering tools and research |
 
 <!-- markdownlint-enable MD013 -->
 
@@ -154,3 +333,8 @@ Note: Runtime-injected vars (`CLAUDE_CODE_SSE_PORT`, `SANDBOX_RUNTIME`, etc.) re
 [statusline]: https://code.claude.com/docs/en/statusline
 [gh-18264]: https://github.com/anthropics/claude-code/issues/18264
 [gh-18241]: https://github.com/anthropics/claude-code/issues/18241
+[turboai]: https://www.turboai.dev/blog/claude-code-versions
+[unkn0wncode]: https://gist.github.com/unkn0wncode/f87295d055dd0f0e8082358a0b5cc467
+[binary-arch]: CC-binary-architecture.md
+[re-landscape]: ../../cc-community/CC-reverse-engineering-landscape.md
+[frr-build]: https://www.frr.dev/posts/claude-code-native-build-bun/
