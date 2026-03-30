@@ -18,6 +18,8 @@ Distilled operational learnings from active development across the qte77 ecosyst
 | [per-repo/ralph-template.md](per-repo/ralph-template.md) | Ralph-specific patterns: shell scripting, prd.json, self-evolving loop |
 | [per-repo/so101-biolab.md](per-repo/so101-biolab.md) | so101-biolab-automation patterns (placeholder) |
 | [per-repo/deepvariant.md](per-repo/deepvariant.md) | DeepVariant ARM64/ML patterns (placeholder) |
+| [contribution-sprint/style-cheatsheets.md](contribution-sprint/style-cheatsheets.md) | Per-repo coding style, commit format, PR process for compass-mcp, SimpleAgents, opencode |
+| [contribution-sprint/plugin-safety-matrix.md](contribution-sprint/plugin-safety-matrix.md) | Safe plugins per repo + pre-PR .claude/ leakage checklist |
 
 ## How This Folder Is Maintained
 
