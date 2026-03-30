@@ -1,3 +1,7 @@
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Plugin-deployed files (source of truth: claude-code-utils-plugin)
+.claude/rules/
+.claude/scripts/

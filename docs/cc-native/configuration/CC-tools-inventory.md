@@ -1,9 +1,10 @@
+<!-- markdownlint-disable MD013 -->
 ---
 title: CC Tools Inventory
-purpose: Point-in-time snapshot of all CC built-in tools with permission requirements and categories.
+purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-03-27
-validated_links: 2026-03-27
+updated: 2026-03-29
+validated_links: 2026-03-29
 ---
 
 **Status**: Adopt
@@ -86,20 +87,134 @@ CC 2.1.83 ships 28 built-in tools. This is a categorized snapshot linking to the
 - **"Yes"** = requires permission (configurable via `allow`/`ask`/`deny` rules in [settings][settings])
 - Permission rules follow `Tool` or `Tool(specifier)` syntax — see [permission rule syntax][permissions]
 
+## Slash Commands (CC 2.1.87, Binary String Extraction)
+
+Commands extracted via `grep -oP` from CLI binary. **Documented** commands are linked; **undocumented** are marked.
+
+### Documented
+
+| Command | Purpose | Source |
+|---|---|---|
+| `/clear` | Clear conversation | [cli-ref][cli-ref] |
+| `/commit` | Commit staged changes | [cli-ref][cli-ref] |
+| `/config` | Open interactive config panel (`.claude.json` prefs) | [cli-ref][cli-ref] |
+| `/exit` | Exit session | [cli-ref][cli-ref] |
+| `/fast` | Toggle fast mode | [fast-mode][fast-mode] |
+| `/feedback` | Submit feedback | [cli-ref][cli-ref] |
+| `/login` | Authenticate | [cli-ref][cli-ref] |
+| `/logout` | Sign out | [cli-ref][cli-ref] |
+| `/loop` | Run on recurring interval | [cli-ref][cli-ref] |
+| `/mcp` | Manage MCP servers | [mcp-docs][mcp-docs] |
+| `/model` | Switch model | [model-config][model-config] |
+| `/review-pr` | Review pull request | [cli-ref][cli-ref] |
+| `/schedule` | Manage scheduled remote agents | [remote-control][remote-control] |
+| `/status` | Show session status | [cli-ref][cli-ref] |
+
+### Undocumented (String Extraction)
+
+| Command | Observed Behavior | Notes |
+|---|---|---|
+| `/settings` | Routes to `update-config` skill (conversational, modifies `settings.json`) | **Not** an alias for `/config`; confirmed CC 2.1.87 |
+| `/update-config` | Same skill as `/settings`, direct invocation | Asks "what would you like to configure?" |
+| `/bash` | Unknown | String extraction, CC 2.1.87 |
+| `/btw` | Side-question during task ([btw-gist][btw-gist]) | String extraction; community-documented |
+| `/chrome` | Chrome extension related | String extraction, CC 2.1.87 |
+| `/commit-push-pr` | Combined commit+push+PR workflow | String extraction, CC 2.1.87 |
+| `/issue` | Create/reference GitHub issue | String extraction, CC 2.1.87 |
+| `/remote-control` | Remote session management | String extraction, CC 2.1.87 |
+| `/ultrareview` | Unknown — enhanced review? | String extraction, CC 2.1.87 |
+
+## Configuration Surface (CC 2.1.87)
+
+CC uses **three distinct configuration layers**. This was confirmed by cross-referencing the CLI binary, extension schema, and interactive `/config` panel.
+
+### Layer 1: `.claude.json` — Interactive Preferences
+
+Written by `/config` panel and UI interactions. Located at `~/.claude/.claude.json` or `.claude/.claude.json` per-project.
+
+| Key | Type | `/config` Label | Source |
+|---|---|---|---|
+| `fastMode` | boolean | Fast mode (Opus 4.6 only) | `/config` panel observation |
+| `respectGitignore` | boolean | Respect .gitignore in file picker | `/config` panel observation |
+| `theme` | string | Theme | `/config` panel observation |
+| `editorMode` | string | (not shown) | File observation |
+| `diffTool` | string | (not shown) | File observation |
+| `fileCheckpointingEnabled` | boolean | Rewind code (checkpoints) | `/config` panel observation |
+| `terminalProgressBarEnabled` | boolean | Terminal progress bar | `/config` panel observation |
+| `preferredNotifChannel` | string | Notifications | `/config` panel observation |
+| `installMethod` | string | (not shown) | File observation |
+| `autoInstallIdeExtension` | boolean | (not shown) | File observation |
+| `claudeInChromeDefaultEnabled` | boolean | (not shown) | File observation |
+
+**Not documented** in any first-party page. No dedicated reference exists.
+
+### Layer 2: `settings.json` — Declarative Behavior Config
+
+80+ keys for permissions, hooks, plugins, model, env, statusLine, etc. Documented at [settings][settings]. Written by `/settings` (update-config skill) or manually.
+
+Cross-ref: [CC-env-vars-reference.md](CC-env-vars-reference.md), [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md)
+
+### Layer 3: `claudeCode.*` — VS Code Extension Settings
+
+13 IDE-only settings in VS Code `settings.json`. Control how the extension **hosts** Claude, not how Claude **behaves**. Documented at [vs-code][vs-code].
+
+| Setting | Purpose |
+|---|---|
+| `claudeCode.useTerminal` | Terminal vs native UI |
+| `claudeCode.autosave` | Auto-save before read/write |
+| `claudeCode.preferredLocation` | Default panel location |
+| `claudeCode.initialPermissionMode` | Default permission mode |
+| `claudeCode.allowDangerouslySkipPermissions` | Bypass mode |
+| `claudeCode.environmentVariables` | Env vars for launch |
+| `claudeCode.respectGitIgnore` | File picker gitignore |
+| `claudeCode.disableLoginPrompt` | Suppress auth prompts |
+| `claudeCode.useCtrlEnterToSend` | Send key behavior |
+| `claudeCode.enableNewConversationShortcut` | Cmd+N shortcut |
+| `claudeCode.hideOnboarding` | Hide onboarding |
+| `claudeCode.claudeProcessWrapper` | Custom launcher |
+| `claudeCode.usePythonEnvironment` | Python env |
+
+### Overlap Between Layers
+
+| Key | `.claude.json` | `settings.json` | `claudeCode.*` |
+|---|---|---|---|
+| `fastMode` | Yes | Yes | No |
+| `respectGitignore` | Yes | Yes | Yes (`claudeCode.respectGitIgnore`) |
+
+Precedence unclear. Behavior observed: `/config` panel writes to `.claude.json`; `settings.json` keys may override at runtime.
+
+Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
+
 ## Cross-References
 
 - [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md) — Bash tool and `!` mode deep-dive
 - [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md) — PreToolUse/PostToolUse hook events
 - [CC-env-vars-reference.md](CC-env-vars-reference.md) — `BASH_DEFAULT_TIMEOUT_MS`, `BASH_MAX_OUTPUT_LENGTH`
+- [CC-binary-architecture.md](CC-binary-architecture.md) — Binary analysis methodology
+- [CC RE landscape](../../cc-community/CC-reverse-engineering-landscape.md) — Community RE tools
 
 ## Sources
+
 
 | Source | Content |
 |---|---|
 | [CC tools reference][tools-ref] | Authoritative tool list, descriptions, permission requirements |
+| [CC CLI reference][cli-ref] | Official slash command documentation |
 | [CC settings — permissions][permissions] | Permission rule syntax and tool-specific patterns |
-| CC 2.1.83, Codespaces, 2026-03-27 | Version this snapshot was taken from |
+| [CC VS Code docs][vs-code] | Extension settings (`claudeCode.*`) |
+| CC 2.1.83, Codespaces, 2026-03-27 | Tool inventory snapshot version |
+| CC 2.1.87 CLI binary string extraction, 2026-03-29 | Slash commands, config keys, undocumented commands |
+| CC 2.1.87 `/config` panel observation, 2026-03-29 | `.claude.json` key inventory |
+| [ZhangHanDong /btw gist][btw-gist] | `/btw` command analysis |
+
 
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
+[cli-ref]: https://code.claude.com/docs/en/cli-reference
 [settings]: https://code.claude.com/docs/en/settings
 [permissions]: https://code.claude.com/docs/en/permissions#tool-specific-permission-rules
+[vs-code]: https://code.claude.com/docs/en/vs-code
+[fast-mode]: https://code.claude.com/docs/en/fast-mode
+[mcp-docs]: https://code.claude.com/docs/en/mcp
+[model-config]: https://code.claude.com/docs/en/model-config
+[remote-control]: https://code.claude.com/docs/en/remote-control
+[btw-gist]: https://gist.github.com/ZhangHanDong
