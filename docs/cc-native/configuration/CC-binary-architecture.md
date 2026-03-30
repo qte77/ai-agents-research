@@ -1,10 +1,10 @@
 <!-- markdownlint-disable MD013 -->
 ---
 title: CC Binary Architecture
-purpose: Analysis of Claude Code CLI binary and VS Code extension internals — build system, shared codebase proof, internal API endpoints, and model ID inventory.
+purpose: Analysis of Claude Code CLI binary and VS Code extension internals — build system, shared codebase proof, internal API endpoints, model IDs, directory map, /stats data flow, /voice timeline.
 created: 2026-03-29
-updated: 2026-03-29
-validated_links: 2026-03-29
+updated: 2026-03-30
+validated_links: 2026-03-30
 ---
 
 **Status**: Research (informational)
@@ -174,7 +174,99 @@ All model IDs found in CLI binary v2.1.87. Includes current, deprecated, and **p
 
 Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.md)
 
+## `~/.claude/` Directory Map (CC 2.1.87)
+
+Direct observation, Codespaces, 2026-03-29.
+
+### Persistent (survives session restarts)
+
+| Path | Purpose | Evidence |
+|---|---|---|
+| `projects/<hash>/` | Transcripts (`.jsonl`), tool results, subagent logs, memory | Direct observation |
+| `sessions/*.json` | Session index: PID, sessionId, cwd, startedAt, name | Direct observation |
+| `plans/` | Plan mode output files | Verified — `plansDirectory` setting |
+| `file-history/<session>/` | File checkpoints for rewind feature (`fileCheckpointingEnabled`) | Direct observation |
+| `history.jsonl` | User command history with timestamps and session IDs | Direct observation |
+| `.credentials.json` | OAuth tokens (`claudeAiOauth.accessToken`) — **sensitive** | Direct observation |
+| `.claude.json` | Interactive preferences (theme, fastMode, etc.) — see [CC-tools-inventory.md](CC-tools-inventory.md) | Direct observation |
+| `settings.json` | Behavior config — see [settings docs][settings] | Documented |
+| `backups/` | Timestamped `.claude.json` backups | Direct observation |
+
+### Transient / Conditional
+
+| Path | Purpose | Evidence |
+|---|---|---|
+| `cache/` | Only `changelog.md` (fetched from GitHub). **Not login tokens** | Direct observation — only 1 file |
+| `telemetry/` | OTel export staging. **Empty unless `CLAUDE_CODE_ENABLE_TELEMETRY=1`** | Binary: `lH(process.env.CLAUDE_CODE_ENABLE_TELEMETRY)`. Exports at 300s intervals. See [monitoring docs][monitoring] |
+| `session-env/<session>/` | Per-session environment snapshots | Direct observation |
+| `shell-snapshots/` | Bash shell state snapshots (aliases, functions) | Direct observation |
+| `plugins/` | Plugin cache, blocklist, marketplace metadata | Rebuilt on install |
+| `mcp-needs-auth-cache.json` | MCP auth state cache | Transient |
+
+### Not in `~/.claude/` (stored elsewhere)
+
+| Path | Purpose |
+|---|---|
+| `~/.local/share/claude/versions/<version>` | CLI binary (Bun single-executable) |
+| `~/.vscode-remote/extensions/anthropic.claude-code-*/` | VS Code extension |
+
+## `/stats` and `/usage` Data Flow
+
+Both commands compute from transcript `.jsonl` files — no separate output file.
+
+| Command | Data Source | Introduced | Evidence |
+|---|---|---|---|
+| `/stats` | Aggregates `"usage"` blocks across all project transcripts + `sessions/*.json` index | v2.0.64 ([changelog][cc-changelog]) | v2.1.69 fix: "crash when transcript files contain entries with missing or malformed timestamps" |
+| `/usage` | Current session in-memory counters (`totalCostUSD`, `totalAPIDuration`, etc.) | Unknown (VS Code: v2.1.6) | Binary: in-memory state struct with `totalCostUSD`, `totalToolDuration`, `turnToolCount` |
+
+`stats-cache.json`: Constant `YA9="stats-cache.json"` exists in binary with `require("fs/promises")` — likely a computed cache to avoid re-scanning all transcripts. Not found on disk (may be temp-dir-only or feature-gated). The **transcripts are the persistent source of truth**.
+
+Per-message usage block format (from transcript `.jsonl`):
+
+```json
+{"usage":{"input_tokens":1,"cache_creation_input_tokens":390,
+  "cache_read_input_tokens":250273,"output_tokens":137,
+  "server_tool_use":{"web_search_requests":0,"web_fetch_requests":0}}}
+```
+
+Retention controlled by `cleanupPeriodDays` setting (default: 30). Changelog: "Fixed tool result files never being cleaned up, ignoring the `cleanupPeriodDays` setting."
+
+## `/voice` Timeline
+
+Voice mode first appears in changelog at **v2.1.69** (bug fixes + STT language additions). No "Added voice mode" entry exists in the full changelog (goes back to v0.2.21) — introduction version unclear.
+
+| Version | Entry | Type |
+|---|---|---|
+| v2.1.69 | Added Voice STT for 10 new languages (20 total) | Feature |
+| v2.1.69 | Fixed voice space bar stuck after failed activation | Bug fix |
+| v2.1.70 | Fixed voice mode on Windows native binary | Bug fix |
+| v2.1.73 | Fixed voice session corruption on slow connection | Bug fix |
+| v2.1.76 | Improved `/voice` to show dictation language on enable | Enhancement |
+| v2.1.78 | Fixed voice on WSL2 with WSLg | Bug fix |
+| v2.1.83 | Fixed 1-8s UI freeze on startup with voice enabled | Bug fix |
+| v2.1.84 | Stats screenshot (Ctrl+S in /stats) 16x faster | Enhancement |
+
+Settings key: `voiceEnabled:y.boolean().optional()` — toggled via `/voice` command or `settings.json`.
+
 ## Sources
+
+
+| Source | Content |
+|---|---|
+| CC 2.1.87 CLI binary, Codespaces, 2026-03-29 | All string extractions in this doc |
+| CC 2.1.87 VS Code extension, Codespaces, 2026-03-29 | Schema + extension.js analysis |
+| CC 2.1.87 `~/.claude/` directory, Codespaces, 2026-03-29 | Directory map observations |
+| CC 2.1.87 transcript `.jsonl`, Codespaces, 2026-03-29 | Usage block format |
+| [CC changelog][cc-changelog] | `/stats` v2.0.64, `/voice` v2.1.69+, `cleanupPeriodDays` |
+| [frr.dev — CC native build][frr-build] | Bun single-executable architecture analysis |
+| [ghuntley.com/tradecraft][ghuntley] | Source-map restoration attempt; DMCA takedown |
+| [HN discussion (item 43217357)][hn-thread] | Community discussion of decompilation |
+| [CC settings reference][settings] | Official settings documentation |
+| [CC monitoring docs][monitoring] | Telemetry, OTel configuration |
+| [CC model configuration][model-config] | Official model docs |
+| [JSON Schema Store][schema-store] | Settings schema (not linked from official docs) |
+| [GitHub issue #11795][gh-11795] | Request to link schema from official docs |
+| [CC RE landscape][re-landscape] | Community reverse engineering tools and research |
 
 
 | Source | Content |
@@ -196,8 +288,10 @@ Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.
 [hn-thread]: https://news.ycombinator.com/item?id=43217357
 [settings]: https://code.claude.com/docs/en/settings
 [model-config]: https://code.claude.com/docs/en/model-config
+[monitoring]: https://code.claude.com/docs/en/monitoring-usage
 [api-ref]: https://platform.claude.com/docs/en/api
 [remote-control]: https://code.claude.com/docs/en/remote-control
 [schema-store]: https://json.schemastore.org/claude-code-settings.json
 [gh-11795]: https://github.com/anthropics/claude-code/issues/11795
 [re-landscape]: ../../cc-community/CC-reverse-engineering-landscape.md
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
