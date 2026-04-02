@@ -2,7 +2,7 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows. Not exhaustive — links to official docs for the full list.
 created: 2026-03-27
-updated: 2026-03-27
+updated: 2026-04-02
 validated_links: 2026-03-27
 ---
 
@@ -79,10 +79,11 @@ Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-re
 | `CLAUDECODE` | Set by CC | Session guard — set to `1` in shells CC spawns. Clear to enable recursive spawning | [env-vars][env-vars] |
 | `CLAUDE_CODE_TMPDIR` | `/tmp` (Unix) | Override temp directory. CC appends `/claude/` | [env-vars][env-vars] |
 | `CLAUDE_CODE_SIMPLE` | `0` | Minimal mode (set by `--bare` flag). Disables hooks, plugins, MCP, auto memory, CLAUDE.md | [env-vars][env-vars] |
+| `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | (unset) | Return to the original working directory after each Bash command. `1` = reset cwd to project root after each command; unset = cwd persists across Bash calls. **Note**: `=0` behavior is undocumented — only `1` is confirmed. See [tools-reference § Bash tool behavior][tools-ref], [#9359][gh-9359], [#11067][gh-11067] | [env-vars][env-vars], [tools-ref][tools-ref] |
 
 <!-- markdownlint-enable MD013 -->
 
-Cross-ref: [CC-recursive-spawning-patterns.md](../agents-skills/CC-recursive-spawning-patterns.md)
+Cross-ref: [CC-recursive-spawning-patterns.md](../agents-skills/CC-recursive-spawning-patterns.md), [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md)
 
 ### Runtime-Injected Variables (Not User-Configurable)
 
@@ -150,7 +151,10 @@ Note: Runtime-injected vars (`CLAUDE_CODE_SSE_PORT`, `SANDBOX_RUNTIME`, etc.) re
 
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [settings]: https://code.claude.com/docs/en/settings
+[tools-ref]: https://code.claude.com/docs/en/tools-reference#bash-tool-behavior
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
 [statusline]: https://code.claude.com/docs/en/statusline
+[gh-9359]: https://github.com/anthropics/claude-code/issues/9359
+[gh-11067]: https://github.com/anthropics/claude-code/issues/11067
 [gh-18264]: https://github.com/anthropics/claude-code/issues/18264
 [gh-18241]: https://github.com/anthropics/claude-code/issues/18241
