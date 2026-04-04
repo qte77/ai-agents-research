@@ -91,15 +91,13 @@
     "enableWeakerNestedSandbox": false,
     "network": {
       "allowLocalBinding": true,
-      "allowedHosts": ["api.github.com"]
+      "allowedDomains": ["api.github.com"]
     },
     "filesystem": {
-      "write": {
-        "allowOnly": [
-          "/tmp/claude-1000",
-          ".git"
-        ]
-      }
+      "allowWrite": [
+        "/tmp/claude-1000",
+        ".git"
+      ]
     }
   },
   "outputStyle": "default",
