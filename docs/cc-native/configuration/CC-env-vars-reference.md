@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD013 -->
 ---
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
@@ -71,7 +70,7 @@ These vars are set by CC at runtime and observed via `env` inside a session. The
 | Variable | Observed Value | Purpose | Observation |
 |---|---|---|---|
 | `CLAUDE_CODE_ENTRYPOINT` | `cli` | How CC was launched | CC 2.1.83, Codespaces, 2026-03-27 |
-| `CLAUDE_CODE_SSE_PORT` | (dynamic) | SSE event stream port for IDE extensions | CC 2.1.83, Codespaces, 2026-03-27 |
+| `CLAUDE_CODE_SSE_PORT` | (dynamic) | WebSocket (JSON-RPC 2.0 / MCP) port for IDE extensions. Despite the name, this is **not SSE** — it is a WebSocket server with per-session auth token stored at `~/.claude/ide/<port>.lock`. Localhost-only binding (`127.0.0.1`). Protocol reverse-engineered by [coder/claudecode.nvim][claudecode-nvim]. See also `ENABLE_IDE_INTEGRATION` | CC 2.1.83, Codespaces, 2026-03-27 |
 | `CLAUDE_CODE_HOST_HTTP_PROXY_PORT` | (dynamic) | HTTP proxy port for sandboxed network access | CC 2.1.83, Codespaces, 2026-03-27 |
 | `CLAUDE_CODE_HOST_SOCKS_PROXY_PORT` | (dynamic) | SOCKS proxy port for sandboxed network access | CC 2.1.83, Codespaces, 2026-03-27 |
 | `SANDBOX_RUNTIME` | `1` | Set when running inside CC's sandbox | CC 2.1.83, Codespaces, 2026-03-27 |
@@ -118,7 +117,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_ENABLE_XAA` | Unknown feature gate | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_ENABLE_TASKS` | Enable task system | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | Prompt suggestions | String extraction, CC 2.1.87 |
-| `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | Tool-level streaming | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | Tool-level streaming. Adds `eager_input_streaming: true` to tool definitions. Reduces permission prompt latency from 10-20s to 1-3s (especially Bedrock). Now GA across all platforms. `1` to enable, `0` to disable | String extraction, CC 2.1.87; confirmed GA |
 | `CLAUDE_CODE_ENABLE_TOKEN_USAGE_ATTACHMENT` | Token usage in responses | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING` | SDK checkpoint support | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA` | Extended telemetry | String extraction, CC 2.1.87 |
@@ -256,3 +255,4 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 [binary-arch]: CC-binary-architecture.md
 [re-landscape]: ../../cc-community/CC-reverse-engineering-landscape.md
 [frr-build]: https://www.frr.dev/posts/claude-code-native-build-bun/
+[claudecode-nvim]: https://github.com/coder/claudecode.nvim
