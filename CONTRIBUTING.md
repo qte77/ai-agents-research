@@ -24,6 +24,8 @@ validated_links: YYYY-MM-DD
 
 Optional fields: `source` (primary URL the doc is based on), `category`, `test_run`.
 
+**Frontmatter must be on line 1.** No HTML comments (`<!-- -->`) before the opening `---` — this breaks markdownlint's frontmatter parser and causes false MD041/MD003 errors.
+
 ### 2. Status Badge
 
 Immediately after frontmatter:
@@ -45,7 +47,7 @@ Values (Technology Radar convention):
 
 - **"What It Is"** section — brief description
 - Domain-specific sections (implementation, configuration, comparison tables, etc.)
-- Use `<!-- markdownlint-disable MD013 -->` around wide tables
+- MD013 (line length) is disabled globally in `.markdownlint.json` — no inline `<!-- markdownlint-disable MD013 -->` needed
 
 ### 4. Inline References
 

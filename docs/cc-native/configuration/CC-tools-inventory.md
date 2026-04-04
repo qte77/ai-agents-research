@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD013 -->
 ---
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
