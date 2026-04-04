@@ -3,8 +3,8 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-03-25
-validated_links: 2026-03-12
+updated: 2026-04-04
+validated_links: 2026-04-04
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -17,8 +17,6 @@ Claude Code provides built-in web tools (WebSearch, WebFetch) for basic web acce
 
 Both Firecrawl and Playwright are available in **two forms**. The underlying MCP tools are identical — the plugin wraps them with slash commands and auto-activation hooks.
 
-<!-- markdownlint-disable MD013 -->
-
 | | CC Plugin (`/plugin install`) | Raw MCP Server (`claude mcp add`) |
 |---|---|---|
 | **Install** | `/plugin` → search → install | `claude mcp add <name> npx ...` or `.claude/settings.json` |
@@ -27,8 +25,6 @@ Both Firecrawl and Playwright are available in **two forms**. The underlying MCP
 | **Bundled CLI** | Firecrawl plugin requires `npm install -g firecrawl-cli` | npx handles dependency |
 | **Distribution** | Single installable unit (skills + MCP + hooks) | MCP server config only |
 | **Portability** | Follows CC plugin system (per-user or per-project) | `.claude/settings.json` or `.mcp.json` |
-
-<!-- markdownlint-enable MD013 -->
 
 **Rule of thumb**: Use the plugin for interactive development (slash commands, auto-activation). Use raw MCP for CI/headless (`claude -p`) or when you need fine-grained config control.
 
@@ -40,25 +36,43 @@ Both Firecrawl and Playwright are available in **two forms**. The underlying MCP
 - Same backend as Claude.ai web search ([source][cc-plugins-docs])
 - Supports `allowed_domains` and `blocked_domains` filtering
 - Returns only titles and URLs — no page body content ([source][cc-webfetch-docs])
+- **US-only** availability ([source][cc-system-prompts])
+- No additional cost beyond standard token pricing ([source][webfetch-api-docs])
 
 ### WebFetch
 
-- Accepts a URL + a question prompt, returns an answer about the page content ([source][cc-webfetch-docs])
-- Never returns raw HTML or markdown — always a summarized answer ([source][cc-webfetch-docs])
-- Built-in security: restricted URL construction prevents data exfiltration ([source][cc-webfetch-docs])
-- 15-minute cache, ~10MB size limit ([source][cc-webfetch-docs])
-- Automatic HTTPS upgrade ([source][cc-webfetch-docs])
+**CC wrapper vs API tool**: CC's built-in WebFetch accepts a URL + question prompt and returns a **summarized answer** via a small model (likely Haiku). The API-level `web_fetch_20250910` tool returns **full document content** (text or base64 PDF) with optional citations ([source][webfetch-api-docs]).
+
+- **Architecture**: HTTP fetch → HTML-to-markdown conversion → LLM summarization ([source][cc-system-prompts]). Specific HTML-to-markdown library not disclosed; community reimplementations use Mozilla Readability + Turndown or html2text ([source][openclaude-gh])
+- **Security**: Claude cannot dynamically construct URLs — can only fetch URLs from user messages or prior search/fetch results ([source][webfetch-api-docs])
+- **Cache**: 15-minute self-cleaning cache ([source][cc-system-prompts])
+- **Size limit**: `maxContentLength: 10485760` (10MB) ([source][webfetch-pdf-issue])
+- **HTTPS**: Automatic HTTP → HTTPS upgrade ([source][cc-system-prompts])
+- **PDF fetching**: API tool returns base64-encoded PDF data with automatic text extraction ([source][webfetch-api-docs]). **CC's wrapper has a known bug**: returns raw binary for PDFs, causing model hallucination from binary fragments ([source][webfetch-pdf-issue]). Workaround: `curl` + `pdftotext` + `Read`
+- **Dynamic filtering** (`web_fetch_20260209`): Claude can write and execute code to filter fetched content before it enters context, reducing token consumption. Requires code execution tool. Available with Opus 4.6 and Sonnet 4.6 ([source][webfetch-api-docs])
+- **No additional cost** beyond standard token pricing ([source][webfetch-api-docs]). Typical token usage: avg web page ~2,500 tokens, large doc ~25K, PDF ~125K ([source][webfetch-api-docs])
+
+### Read Tool: PDF & Image Parsing
+
+The built-in Read tool handles local PDFs and images natively:
+
+- **PDFs**: Page-by-page text and visual content extraction. `pages` parameter required for >10 pages (e.g., `pages: "1-5"`), max 20 pages per request. Internally uses `poppler-utils` for text extraction ([source][webfetch-pdf-issue], [source][cc-system-prompts])
+- **Images**: Presented visually to the multimodal model (PNG, JPG, etc.). Input methods: drag-and-drop, Ctrl+V paste, or file path reference ([source][cc-common-workflows])
+- **Jupyter notebooks**: Returns all cells with outputs, combining code, text, and visualizations ([source][cc-system-prompts])
+- **Defaults**: 2,000 lines from start, 2,000 chars/line max ([source][cc-system-prompts])
 
 ### Limitations
 
 | Limitation | Impact |
 |---|---|
 | No JavaScript rendering | Cannot scrape SPAs or dynamic content |
-| No raw content output | Always summarized through an LLM — no markdown or HTML access |
+| No raw content output (CC wrapper) | Always summarized through LLM — API tool returns full content |
 | No browser state | Cannot authenticate, fill forms, or navigate multi-step flows |
 | No batch operations | One URL at a time |
 | Two-step workflow | Must search, then fetch each result separately |
 | Protected sites blocked | Anti-bot measures and CAPTCHAs block requests |
+| PDF via WebFetch broken in CC | Returns raw binary, model hallucinates ([#23694][webfetch-pdf-issue]) |
+| WebSearch US-only | Not available outside the United States |
 
 ## Firecrawl MCP Server
 
@@ -102,8 +116,6 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 
 ### Available Tools
 
-<!-- markdownlint-disable MD013 -->
-
 | Tool | Purpose | Returns |
 |---|---|---|
 | `firecrawl_scrape` | Single-page content extraction | JSON / markdown / raw HTML |
@@ -114,8 +126,6 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 | `firecrawl_extract` | LLM-powered structured data extraction via schema | JSON per schema |
 | `firecrawl_agent` | Autonomous multi-source research agent | Structured JSON |
 | `firecrawl_browser` | Interactive browser session (CDP) | Live session control |
-
-<!-- markdownlint-enable MD013 -->
 
 ([source][firecrawl-mcp-docs], [source][firecrawl-mcp-gh])
 
@@ -136,8 +146,6 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 
 ### Cloud vs Self-Hosted vs firecrawl-simple
 
-<!-- markdownlint-disable MD013 -->
-
 | Feature | Cloud | Self-hosted | firecrawl-simple |
 |---|---|---|---|
 | `/scrape`, `/crawl` | Yes | Yes | Yes |
@@ -149,8 +157,6 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 | API key required | Yes | Buggy — [still enforced][firecrawl-key-bug] | No |
 | Billing/auth | Built-in | Optional | Removed |
 | Infra | Managed | Docker (5 containers) | Docker (Redis + API + workers) |
-
-<!-- markdownlint-enable MD013 -->
 
 **Key gap**: Fire-engine (anti-bot, IP rotation) and `/agent` + `/browser` endpoints are **cloud-exclusive**. Self-hosted is effectively scrape + crawl + map with Playwright rendering. [firecrawl-simple][firecrawl-simple] is a community fork ([devflowinc][firecrawl-simple]) that strips billing, AI, and heavy dependencies — scrape + crawl only ([source][firecrawl-self-host], [source][firecrawl-simple]).
 
@@ -261,7 +267,7 @@ Enable via `--caps=core,vision,pdf` or config file ([source][playwright-mcp-gh])
 | `/firecrawl:search` | Prompts for a query, searches web + scrapes results |
 | `/firecrawl:map` | Prompts for a URL, discovers all URLs on the site |
 | `/firecrawl:agent` | Describe what you need in plain language — no URLs required |
-| Natural language | "Scrape https://docs.stripe.com and explain webhook setup" |
+| Natural language | "Scrape <https://docs.stripe.com> and explain webhook setup" |
 
 **Agent mode**: Claude evaluates your request and selects the right Firecrawl tool automatically. You describe the goal; it handles tool selection, pagination, and multi-site navigation.
 
@@ -325,8 +331,6 @@ For event scraping across multiple sites:
 
 ## Comparison Matrix
 
-<!-- markdownlint-disable MD013 -->
-
 | Capability | WebFetch/WebSearch | Firecrawl MCP | Playwright MCP |
 |---|---|---|---|
 | **Setup complexity** | None (built-in) | Low (API key + npx) | Low (npx, no key) |
@@ -344,8 +348,6 @@ For event scraping across multiple sites:
 | **Self-QA (localhost)** | Limited | No (cloud can't reach localhost) | Yes (local browser) |
 | **Test code generation** | No | No | Yes (--codegen) |
 | **Token efficiency** | Low (LLM-summarized) | Medium (clean markdown) | Good (accessibility tree) |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Decision Framework
 
@@ -434,6 +436,9 @@ Community testing ([source][devto-browser-tools]) identified additional options 
 - [Playwright Claude Plugin (Marketplace)][playwright-plugin]
 - [CC Plugins Docs][cc-plugins-docs]
 - [CC WebFetch Docs][cc-webfetch-docs]
+- [WebFetch API Docs][webfetch-api-docs]
+- [CC Common Workflows — Images][cc-common-workflows]
+- [WebFetch PDF issue #23694][webfetch-pdf-issue]
 
 ### Third-Party
 
@@ -463,3 +468,8 @@ Community testing ([source][devto-browser-tools]) identified additional options 
 [cc-web-tools]: https://mikhail.io/2025/10/claude-code-web-tools/
 [apiyi-comparison]: https://help.apiyi.com/en/claude-code-web-search-websearch-mcp-guide-en.html
 [zyte-comparison]: https://www.zyte.com/blog/claude-skills-vs-mcp-vs-web-scraping-copilot/
+[webfetch-api-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool
+[cc-common-workflows]: https://code.claude.com/docs/en/common-workflows#work-with-images
+[cc-system-prompts]: https://github.com/Piebald-AI/claude-code-system-prompts
+[webfetch-pdf-issue]: https://github.com/anthropics/claude-code/issues/23694
+[openclaude-gh]: https://github.com/Gitlawb/openclaude
