@@ -10,6 +10,12 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [deerflow-analysis.md](deerflow-analysis.md) | ByteDance DeerFlow (LangGraph) | Yes | Yes (Apache 2.0) |
 | [devteam-analysis.md](devteam-analysis.md) | agent-era/devteam (TUI) | No | Yes (MIT) |
 
+## Frameworks
+
+| Document | Type | Headless | Open Source |
+|---|---|---|---|
+| [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
+
 ## Planned
 
 Cline, opencode, Codebuff, Gemini CLI, Cursor, Antigravity, Kiro, Codex CLI,

@@ -2,13 +2,14 @@
 title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
-cc_version: ">=2.1.46 (MCP bridge), >=2.1.63 (opt-out env var), 2.1.71 (OAuth fixes)"
 validated_links: 2026-03-19
 ---
 
 # Claude Connectors Overview
 
 Connectors extend Claude via [MCP (Model Context Protocol)][mcp] — an open standard by Anthropic for AI-to-external-service interaction. They provide tool access (search, read, act) and UI rendering (charts, maps, forms via MCP Apps).
+
+CC version requirements: >=2.1.46 (MCP bridge), >=2.1.63 (opt-out env var), 2.1.71 (OAuth fixes).
 
 ## Prebuilt Connectors
 
