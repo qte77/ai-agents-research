@@ -6,7 +6,7 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 
 | Document | Coverage |
 |----------|----------|
-| [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, Miessler taxonomy, PAI, SPARC |
+| [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, BHIL, Miessler taxonomy, PAI, SPARC |
 | [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) | Plugin catalogs: awesome-claude-code, awesome-claude-code-plugins |
 | [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling: RTK (token compression), everything-claude-code (agent/skill framework), Boucle (read-once deduplication) |
 | [CC-community-reimplementations-landscape.md](CC-community-reimplementations-landscape.md) | Reimplementations: claw-code, CLAURST, learn-claude-code, openclaude (with provenance classification) |

@@ -1,6 +1,6 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), and claude-code-best-practice (knowledge base).
+description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), and BHIL (AI-first development methodology with artifact chains).
 category: landscape
 status: research
 created: 2026-03-13
@@ -12,7 +12,7 @@ validated_links: 2026-03-13
 
 ## Summary
 
-Three community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, and claude-code-best-practice curates a knowledge index of CC patterns and open questions.
+Four community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, and BHIL provides an AI-first development methodology with traceable artifact chains.
 
 ## gstack (Garry Tan)
 
@@ -128,6 +128,44 @@ Organized across 4 domains — memory/instructions (4), agents/skills/workflows 
 
 Valuable as a **community health indicator** and discovery entry point. The open research questions surface gaps in CC documentation and community understanding. The workflow pattern catalog (with star counts) tracks ecosystem adoption velocity.
 
+## BHIL AI-First Development Toolkit (camalus)
+
+**Repo**: [camalus/BHIL-AI-First-Development-Toolkit][bhil] | **Stars**: 115 | **License**: MIT
+
+A production-grade methodology for AI-native development using traceable artifact chains. Core thesis: *"The bottleneck in AI-assisted development is not code generation. It is specification quality."*
+
+### Artifact Chain
+
+PRD → SPEC → ADR → TASK → CODE → REVIEW → DEPLOY, with sprint retrospectives feeding back to requirements. Each artifact carries unique IDs enabling machine-actionable traceability.
+
+### CC Integration
+
+| Component | Path | Purpose |
+|-----------|------|---------|
+| CLAUDE.md | root | Project config auto-loaded by CC |
+| Agents | `.claude/agents/` | Custom subagent definitions |
+| Skills | `.claude/skills/` | `new-sprint`, `new-adr`, `validate` workflows |
+| Rules | `.claude/rules/` | Path-scoped coding standards |
+| Settings | `.claude/settings.json` | Model routing, permission hooks |
+
+### AI-Native ADR Extensions
+
+Beyond traditional architecture decisions, three LLM-specific decision types:
+
+- **Model Selection ADRs** — benchmarks, costs, latency tradeoffs
+- **Prompt Strategy ADRs** — approach, versioning, evaluation criteria
+- **Agent Orchestration ADRs** — pattern selection and rationale
+
+### Key Differentiator
+
+Where gstack focuses on cognitive mode-switching and pm-skills on domain framework delivery, BHIL provides **process infrastructure** — the artifact chain that connects sprint planning to deployment with machine-readable traceability. Compatible with CC, RuFlo (Agentics Foundation), and RuVector.
+
+### Adoption Considerations
+
+**Strengths**: Full SDLC coverage, traceable artifact IDs, CC-native configuration (.claude/ directory), methodology-agnostic (works with any sprint framework).
+
+**Risks**: Early stage (3 commits, 115 stars). Heavy methodology — may be more structure than small projects need. No plugin marketplace integration.
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -142,7 +180,9 @@ Valuable as a **community health indicator** and discovery entry point. The open
 | [gstack][gstack] | Founder/engineering workflow skills |
 | [pm-skills][pm-skills] | Product management skill framework |
 | [claude-code-best-practice][ccbp] | Community knowledge base |
+| [BHIL AI-First Development Toolkit][bhil] | AI-native methodology with artifact chains |
 
 [gstack]: https://github.com/garrytan/gstack
 [pm-skills]: https://github.com/phuryn/pm-skills
 [ccbp]: https://github.com/shanraisshan/claude-code-best-practice
+[bhil]: https://github.com/camalus/BHIL-AI-First-Development-Toolkit
