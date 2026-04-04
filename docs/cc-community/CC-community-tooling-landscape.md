@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD013 -->
 ---
 title: CC Community Tooling Landscape
 purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file read deduplication.

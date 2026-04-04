@@ -62,8 +62,10 @@ Community perspectives on limits and workarounds:
 
 The BUDDY companion (Glitch) is a Tamagotchi-style pet displayed beside the input box. Users looking to disable it:
 
-- `/buddy off` — works temporarily but [reappears after 1-2 minutes][gh-42348]
-- No persistent disable option exists yet — tracked in [anthropics/claude-code#42348][gh-42348] (dupes: [#42212][gh-42212], [#42287][gh-42287])
+- `/buddy off` — works per-session but [reappears after 1-2 minutes][gh-42348]
+- No persistent disable exists — no settings.json key, no env var, no CLI flag (verified 2026-04-04)
+- Hooks cannot invoke `/buddy off` (slash commands run inside REPL, hooks run shell scripts outside it)
+- Tracked in [anthropics/claude-code#42506][gh-42506] (dupes: [#42348][gh-42348], [#42287][gh-42287], [#41942][gh-41942])
 - Community guide: [How to disable the BUDDY pet][buddy-guide]
 
 ## Cross-References
@@ -77,7 +79,8 @@ The BUDDY companion (Glitch) is a Tamagotchi-style pet displayed beside the inpu
 | Source | Content |
 |---|---|
 | [Troubleshoot Claude error messages][err-article] | Official Anthropic support article (1st-party) |
-| [anthropics/claude-code#42348][gh-42348] | Feature request: persistent /buddy off (1st-party) |
+| [anthropics/claude-code#42506][gh-42506] | Feature request: disable companion pets (1st-party) |
+| [anthropics/claude-code#42348][gh-42348] | Feature request: remove /buddy prefix (1st-party) |
 | [r/ClaudeAI][reddit] | Community subreddit (2nd-party) |
 | [Usage limits megathread][mega] | Ongoing community limits discussion (2nd-party) |
 | [Nicholas Rhodes — usage limits fix][rhodes] | Substack: limit mitigations (2nd-party) |
@@ -87,8 +90,9 @@ The BUDDY companion (Glitch) is a Tamagotchi-style pet displayed beside the inpu
 
 [err-article]: https://support.claude.com/en/articles/12466728-troubleshoot-claude-error-messages
 [gh-42348]: https://github.com/anthropics/claude-code/issues/42348
-[gh-42212]: https://github.com/anthropics/claude-code/issues/42212
+[gh-42506]: https://github.com/anthropics/claude-code/issues/42506
 [gh-42287]: https://github.com/anthropics/claude-code/issues/42287
+[gh-41942]: https://github.com/anthropics/claude-code/issues/41942
 [reddit]: https://www.reddit.com/r/ClaudeAI/
 [mega]: https://www.reddit.com/r/ClaudeAI/comments/1s7fcjf/claude_usage_limits_discussion_megathread_ongoing/
 [rhodes]: https://nicholasrhodes.substack.com/p/claude-usage-limits-fix
