@@ -178,6 +178,33 @@ Open-source Python agent harness framework — infrastructure plumbing between L
 
 ---
 
+## ByteRover CLI (campfirein)
+
+**Repo**: [campfirein/byterover-cli][byterover] | **Stars**: 4.1K | **License**: Elastic License 2.0 | **Paper**: [arXiv:2604.01599][byterover-paper]
+
+Portable memory layer for autonomous coding agents. Persistent hierarchical context trees (Domain→Topic→Subtopic→Entry) with cloud sync and sub-100ms retrieval without vector databases.
+
+### Architecture
+
+- **Context Tree**: LLM-curated hierarchical knowledge storage in human-readable markdown
+- **Adaptive Knowledge Lifecycle**: Importance scoring + recency decay
+- **5-tier progressive retrieval**: Escalates to LLM reasoning only for novel queries
+- **MCP integration**: `brv mcp` starts an MCP server for CC to access memory natively
+
+### CC Integration
+
+ByteRover integrates with Claude Code via MCP protocol. Run `brv mcp` to expose the memory layer as an MCP server, giving CC access to persistent cross-session knowledge, semantic search, and context tree operations.
+
+### Adoption Considerations
+
+**Strengths**: Research-backed ([arXiv:2604.01599][byterover-paper] — SOTA on LoCoMo benchmark), 20+ LLM provider support, cloud sync with SOC 2 Type II, active development (48 releases, 2,391 commits).
+
+**Risks**: Elastic License 2.0 (not OSS — requires commercial agreement for production). Cloud dependency for sync features. Overlaps with CC's built-in memory system (`~/.claude/memory/`). Standalone daemon CLI — install alongside CC via MCP, not embeddable in plugins.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
 ## Comparison
 
 | Tool | Layer | CC Integration | Approach | Maturity |
@@ -187,8 +214,9 @@ Open-source Python agent harness framework — infrastructure plumbing between L
 | **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
 | **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
 | **OpenHarness** | Full agent harness | CC-convention compatible | Open harness framework (10 subsystems) | Early (v0.1.0, 3.3K stars) |
+| **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Active (4.1K stars, 48 releases) |
 
-All five address different layers of the agent stack — complementary, not competing.
+All six address different layers of the agent stack — complementary, not competing.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction (fifth approach)
 
@@ -202,6 +230,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
 | [Boucle-framework][boucle] | Read-once file deduplication hook |
 | [OpenHarness][openharness] | Open-source agent harness framework (10 subsystems, 43 tools) |
+| [ByteRover CLI][byterover] | Portable memory layer for coding agents (MCP, context trees) |
+| [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
 
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
@@ -216,3 +246,5 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [ecc]: https://github.com/affaan-m/everything-claude-code
 [boucle]: https://github.com/Bande-a-Bonnot/Boucle-framework
 [openharness]: https://github.com/HKUDS/OpenHarness
+[byterover]: https://github.com/campfirein/byterover-cli
+[byterover-paper]: https://arxiv.org/abs/2604.01599
