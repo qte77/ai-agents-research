@@ -12,7 +12,7 @@ validated_links: 2026-03-13
 
 ## Summary
 
-Four community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, and BHIL provides an AI-first development methodology with traceable artifact chains.
+Five community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, and claude-howto delivers example-driven learning with production-ready templates.
 
 ## gstack (Garry Tan)
 
@@ -166,6 +166,24 @@ Where gstack focuses on cognitive mode-switching and pm-skills on domain framewo
 
 **Risks**: Early stage (3 commits, 115 stars). Heavy methodology — may be more structure than small projects need. No plugin marketplace integration.
 
+## claude-howto (luongnv89)
+
+**Repo**: [luongnv89/claude-howto][claude-howto] | **Stars**: 18.9K | **License**: MIT
+
+Example-driven learning guide for Claude Code — 10 sequential modules covering slash commands, memory, skills, subagents, MCP, hooks, plugins, checkpoints, advanced features, and CLI. Bridges the gap between official reference docs and production-ready implementation.
+
+### Key Templates
+
+- **Subagent definitions**: code-reviewer, test-engineer, security-auditor, documentation-writer
+- **Hook scripts**: security scanning (PreToolUse), commit validation, formatting, team notifications
+- **Skill bundles**: code-review, brand-voice, doc-generation
+- **CLAUDE.md templates**: team, directory, and personal memory levels
+- **MCP configs**: GitHub, database, filesystem, multi-server examples
+
+### Relevance
+
+Learning resource with production-ready templates, not a plugin. Where claude-code-best-practice indexes *what exists* and gstack delivers *opinionated workflows*, claude-howto demonstrates *how to combine* CC features into automated pipelines (11–13 hour structured curriculum, beginner → advanced).
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -181,8 +199,10 @@ Where gstack focuses on cognitive mode-switching and pm-skills on domain framewo
 | [pm-skills][pm-skills] | Product management skill framework |
 | [claude-code-best-practice][ccbp] | Community knowledge base |
 | [BHIL AI-First Development Toolkit][bhil] | AI-native methodology with artifact chains |
+| [claude-howto][claude-howto] | Example-driven CC learning guide (10 modules, templates) |
 
 [gstack]: https://github.com/garrytan/gstack
 [pm-skills]: https://github.com/phuryn/pm-skills
 [ccbp]: https://github.com/shanraisshan/claude-code-best-practice
 [bhil]: https://github.com/camalus/BHIL-AI-First-Development-Toolkit
+[claude-howto]: https://github.com/luongnv89/claude-howto
