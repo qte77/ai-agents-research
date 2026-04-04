@@ -1,12 +1,12 @@
 <!-- markdownlint-disable MD013 -->
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development.
+purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file read deduplication.
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-03-29
-validated_links: 2026-03-29
+updated: 2026-04-04
+validated_links: 2026-04-04
 ---
 
 **Status**: Research (informational)
@@ -87,20 +87,86 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
+## everything-claude-code
+
+**Repo**: [affaan-m/everything-claude-code][ecc] | **Stars**: 50K+ | **License**: MIT
+
+Comprehensive agent, skill, and workflow framework for Claude Code. Won the Anthropic Build with Claude hackathon (June 2025).
+
+### What It Provides
+
+| Category | Count | Examples |
+|----------|-------|---------|
+| **Agents** | 36 | Code reviewer, debugger, data scientist, security auditor, DevOps, PM |
+| **Skills** | 156 | Code generation, testing, documentation, refactoring, deployment |
+| **Command shims** | 72 | Pre-built slash commands wrapping common workflows |
+| **Hooks** | Architecture | PreToolUse/PostToolUse pipeline for quality gates and automation |
+
+### Architecture
+
+Layered system: skills compose into agents, agents are dispatched by command shims, hooks enforce quality gates across the pipeline. Designed for drop-in adoption — install the plugin and skills/agents become available immediately.
+
+### Adoption Considerations
+
+**Strengths**:
+
+- Broadest single-package coverage of CC extensibility (agents + skills + hooks + shims)
+- Active community (50K+ stars, hackathon-validated)
+- MIT licensed, installable as plugin
+
+**Risks**:
+
+- Large surface area — may conflict with project-specific skills or hooks
+- Shim commands may shadow custom slash commands
+- Quality varies across 156 skills — not all independently validated
+
+---
+
+## Boucle Read-Once Framework
+
+**Repo**: [Bande-a-Bonnot/Boucle-framework][boucle] | **License**: MIT
+
+PreToolUse hook that deduplicates file reads within a session. When Claude requests a file already read in the current context, the hook blocks the redundant read and returns a cache notice instead.
+
+### How It Works
+
+1. **PreToolUse hook** intercepts `Read` tool calls
+2. Checks if file path was already read in the current session
+3. If cached: blocks the read, returns "file already in context" (~2K tokens saved per blocked re-read)
+4. **PostCompact integration**: clears the cache after `/compact` (compacted context no longer contains the file contents)
+
+### Token Savings
+
+~40% token reduction on file-read-heavy sessions. Savings depend on how often Claude re-reads files — common in long sessions with context compaction cycles.
+
+### Configuration
+
+Default mode is **warn** (logs but does not block) to avoid conflicts with the Edit tool, which requires a preceding Read. Switch to **block** mode after validating it doesn't break your edit workflow.
+
+---
+
 ## Comparison
 
 | Tool | Layer | CC Integration | Approach | Maturity |
 |---|---|---|---|---|
 | **RTK** | Tool output compression | Hooks (transparent rewrite) | Reduce input noise | Stable (v0.33.1) |
 | **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Active (v1.30.0, rapid iteration) |
+| **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
+| **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
 
-Both address context management but at different layers — RTK compresses tool output, GSD structures the entire development workflow. Complementary.
+All four address context management at different layers — complementary, not competing.
 
-Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction (third approach)
+Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction (fifth approach)
 
 ## Sources
 
-
+| Source | Content |
+|---|---|
+| [RTK repository][rtk-repo] | CLI proxy, hook integration, benchmarks |
+| [rtk-ai/rtk#839][rtk-839] | Independent benchmark findings |
+| [GSD repository][gsd-repo] | Meta-prompting + context engineering framework |
+| [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
+| [Boucle-framework][boucle] | Read-once file deduplication hook |
 
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
@@ -112,4 +178,5 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [gsd-1461]: https://github.com/gsd-build/get-shit-done/issues/1461
 [gsd-1431]: https://github.com/gsd-build/get-shit-done/issues/1431
 [gsd-1466]: https://github.com/gsd-build/get-shit-done/issues/1466
-
+[ecc]: https://github.com/affaan-m/everything-claude-code
+[boucle]: https://github.com/Bande-a-Bonnot/Boucle-framework
