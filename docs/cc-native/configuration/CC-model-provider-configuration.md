@@ -11,8 +11,6 @@ validated_links: 2026-03-12
 
 ## Model Selection
 
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Purpose | Example |
 | -------- | ------- | ------- |
 | `ANTHROPIC_MODEL` | Primary model override | `claude-sonnet-4-6` |
@@ -25,11 +23,7 @@ validated_links: 2026-03-12
 
 All variables can also be set in `settings.json` under the `env` key. ([source][cc-settings])
 
-<!-- markdownlint-enable MD013 -->
-
 ## API Key & Endpoint
-
-<!-- markdownlint-disable MD013 -->
 
 | Variable | Purpose | Example |
 | -------- | ------- | ------- |
@@ -37,8 +31,6 @@ All variables can also be set in `settings.json` under the `env` key. ([source][
 | `ANTHROPIC_AUTH_TOKEN` | Custom `Authorization` header value (auto-prefixed with `Bearer`) | OpenRouter key |
 | `ANTHROPIC_BASE_URL` | Override API endpoint | `https://openrouter.ai/api` |
 | `ANTHROPIC_CUSTOM_HEADERS` | Extra headers (newline-separated `Name: Value`) | Custom routing headers |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Provider Configuration
 
@@ -168,16 +160,12 @@ claude
 
 #### Tips for Local Models
 
-<!-- markdownlint-disable MD013 -->
-
 | Tip | Detail |
 |---|---|
 | **KV cache invalidation** | CC prepends an attribution header that invalidates KV cache. Set `CLAUDE_CODE_ATTRIBUTION_HEADER=0` to prevent this ([source][local-setup]) |
 | **Login bypass** | If CC prompts for login, add `"hasCompletedOnboarding": true` and `"primaryApiKey": "sk-dummy-key"` to `~/.claude.json` ([source][local-setup]) |
 | **Non-essential traffic** | Set `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` to reduce calls to Anthropic servers ([source][cc-settings]) |
-| **Cost savings** | Local models are free; third-party cloud options like DeepSeek V3.2 are ~$0.28/$0.42 per million tokens vs Opus ~$15/$75 ([source][local-setup]) |
-
-<!-- markdownlint-enable MD013 -->
+| **Cost savings** | Local models are free; third-party cloud options like DeepSeek V3.2 are ~$0.28/$0.42 per million tokens vs Opus 4.6 $5/$25 ([source][models-pricing]) |
 
 ### LLM Gateway / Proxy Configuration
 
@@ -228,8 +216,6 @@ When routing through gateways, additionally set ([source][cc-settings]):
 
 ## Output & Context Tuning
 
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Purpose | Default |
 | -------- | ------- | ------- |
 | `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | Max output tokens | 32,000 (max 64,000) |
@@ -238,11 +224,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 
 ([source][cc-settings])
 
-<!-- markdownlint-enable MD013 -->
-
 ## Applicability
-
-<!-- markdownlint-disable MD013 -->
 
 | Aspect | Fit | Rationale |
 | ------ | --- | --------- |
@@ -254,15 +236,11 @@ When routing through gateways, additionally set ([source][cc-settings]):
 | Bedrock/Vertex/Foundry | Conditional | Relevant when a project runs on cloud infrastructure |
 | Effort level tuning | Strong | `CLAUDE_CODE_EFFORT_LEVEL=medium` for routine tasks saves tokens |
 
-<!-- markdownlint-enable MD013 -->
-
 ### Decision Rule
 
 **Model and effort variables are immediately useful** for optimizing autonomous CC runs (cost vs quality trade-offs). OpenRouter is recommended for provider failover and team budget controls. Local models (Ollama) are useful for privacy-sensitive work, offline development, or eliminating API costs — but quality and context window are limited by hardware. LLM gateways (LiteLLM) add value for team environments needing auth and audit logging. Cloud providers (Bedrock/Vertex/Foundry) are relevant once a project runs on cloud infrastructure.
 
 ### Provider Decision Matrix
-
-<!-- markdownlint-disable MD013 -->
 
 | Need | Best Option | Setup Effort |
 |---|---|---|
@@ -272,8 +250,6 @@ When routing through gateways, additionally set ([source][cc-settings]):
 | **Multi-provider / team** | LiteLLM proxy | Medium (proxy setup) |
 | **Enterprise cloud** | Bedrock / Vertex / Foundry | High (cloud config) |
 | **Non-Anthropic models in CC** | LiteLLM or claude-code-proxy | Medium (proxy) |
-
-<!-- markdownlint-enable MD013 -->
 
 ## References
 
@@ -296,3 +272,4 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [olla]: https://thushan.github.io/olla/integrations/frontend/claude-code/
 [bifrost]: https://www.getmaxim.ai/articles/running-non-anthropic-models-in-claude-code-via-an-enterprise-ai-gateway/
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
+[models-pricing]: https://platform.claude.com/docs/en/docs/about-claude/models
