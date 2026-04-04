@@ -101,8 +101,6 @@ A structured plugin registry organized around Claude Code's installable plugin f
 
 ## TTS / Voice Output Plugins (Emerging Category)
 
-<!-- markdownlint-disable MD013 -->
-
 8+ community projects add text-to-speech output to Claude Code. All converge on the same pattern: Stop hook → sentence chunking → TTS → non-blocking playback. CC has native `/voice` for STT input but **no native TTS output**.
 
 | Project | Engine | Key Feature | Local/OSS |
@@ -120,7 +118,29 @@ A structured plugin registry organized around Claude Code's installable plugin f
 
 **TTS engines used**: Kokoro (most popular local), OpenAI TTS API (most polished cloud), ElevenLabs (highest quality cloud), espeak-ng (fallback). [RealtimeTTS][realtimetts] library provides sentence-boundary detection with 12+ engine backends.
 
-<!-- markdownlint-enable MD013 -->
+## STT / Voice Input (Community Alternatives)
+
+CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires Claude.ai account, 20 languages, coding-tuned transcription. See [official voice dictation docs][voice-docs] for details. The community projects below address gaps: local/offline STT, continuous listening, and wake-word activation.
+
+### Local STT Engines
+
+| Engine | Params | Latency (10s audio) | Designed For | Notes |
+|--------|--------|---------------------|-------------|-------|
+| [Moonshine][moonshine] | 34M (tiny) – 245M (medium) | 34ms (tiny, MacBook) – 802ms (medium, RPi5) | Edge/mobile/IoT | Variable-length input, no zero-padding; 8 languages ([source][moonshine]) |
+| [whisper.cpp][whispercpp] | 39M (tiny) – 1.5B (large) | ~200-500ms (medium, CPU) | Desktop/server | C++ port of OpenAI Whisper; GPU acceleration; 99 languages |
+| [Vosk][vosk] | 50MB (small model) | Real-time streaming | Lightweight/embedded | Continuous listening built-in; offline; 20+ languages |
+
+### Community Voice Input Projects
+
+| Project | Engine | Integration | Status |
+|---------|--------|-------------|--------|
+| [jarrodwatts/claude-stt][claude-stt] | Moonshine ONNX | Plugin: hotkey → local STT → keyboard injection (xdotool/accessibility API) | **Archived** — superseded by native `/voice` |
+| [Traves-Theberge/Wake-Word][wake-word] | Picovoice Porcupine | Electron app: "Hey Claude" wake-word → launch Claude CLI | Active |
+| [mbailey/voicemode][tts-voice] | Whisper (local) | MCP server: 2-way voice (STT + Kokoro TTS), webrtcvad silence detection | Active |
+| [SergeyKirk/hey-claude][hey-claude] | Picovoice Porcupine | macOS: always-on "Hey Claude" → execute via Claude Code | Active |
+| [bacharyehya/talk-to-claude][talk-to-claude] | Various | MCP: wake-word activated voice conversations | Active |
+
+**Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. Community projects fill these gaps but require separate installation.
 
 ## Ecosystem Observations
 
@@ -154,3 +174,11 @@ A structured plugin registry organized around Claude Code's installable plugin f
 [tts-hooks]: https://github.com/husniadil/cc-hooks
 [tts-shanr]: https://github.com/shanraisshan/claude-code-hooks
 [realtimetts]: https://github.com/KoljaB/RealtimeTTS
+[voice-docs]: https://code.claude.com/docs/en/voice-dictation
+[moonshine]: https://github.com/moonshine-ai/moonshine
+[whispercpp]: https://github.com/ggerganov/whisper.cpp
+[vosk]: https://alphacephei.com/vosk/
+[claude-stt]: https://github.com/jarrodwatts/claude-stt
+[wake-word]: https://github.com/Traves-Theberge/Wake-Word
+[hey-claude]: https://github.com/SergeyKirk/hey-claude
+[talk-to-claude]: https://github.com/bacharyehya/talk-to-claude
