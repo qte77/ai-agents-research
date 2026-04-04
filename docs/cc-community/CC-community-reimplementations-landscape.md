@@ -24,6 +24,7 @@ Multiple community projects have reimplemented or deconstructed Claude Code's ar
 | [Kuberwastaken/claude-code][claurst] (CLAURST) | Rust | Spec-derived | 7.9K | — | MEDIUM |
 | [shareAI-lab/learn-claude-code][learn] | Python / TypeScript | Educational | 48K | MIT | LOW |
 | [Gitlawb/openclaude][openclaude] | TypeScript 99.7% | Leak-derived | 13K | MIT | MEDIUM |
+| [coder/claudecode.nvim][nvim] | Lua | Cleanroom | — | Apache-2.0 | LOW |
 | [leaked-claude-code/leaked-claude-code][leaked] | TypeScript | Leaked source | — | — | **HIGH** |
 
 <!-- markdownlint-enable MD013 -->
@@ -90,6 +91,18 @@ Open-source multi-provider CLI derived from the March 2026 Claude Code source ex
 
 **Provenance note**: Explicitly acknowledges derivation from leaked source. "Not an authorized fork or open-source release by Anthropic." Claude remains trademarked by Anthropic. 304 commits, actively maintained.
 
+## coder/claudecode.nvim
+
+**Repo**: [coder/claudecode.nvim][nvim] | **License**: Apache-2.0 | **Approach**: Cleanroom
+
+Pure Lua Neovim plugin that reverse-engineered the Claude Code IDE integration protocol (WebSocket JSON-RPC 2.0 / MCP). Achieved 100% compatibility with the VS Code extension protocol without accessing proprietary source.
+
+**Key contribution**: First public documentation of the IDE integration protocol — WebSocket transport (not SSE despite `CLAUDE_CODE_SSE_PORT` name), per-session auth tokens at `~/.claude/ide/<port>.lock`, localhost-only binding, and the complete tool interface (selection tracking, native diff, file context).
+
+**Provenance note**: Built entirely from observed behavior and public API contracts. No leaked source involved.
+
+Cross-ref: [CC-ide-integration-protocol.md](../cc-native/configuration/CC-ide-integration-protocol.md)
+
 ## leaked-claude-code/leaked-claude-code
 
 **Excluded from analysis** — claims to contain full proprietary TypeScript source code (~512K lines) from the March 2026 npm sourcemap exposure. Includes alleged security bypass techniques. Included in landscape table for completeness only. Do not use as a source for factual claims elsewhere in this repository.
@@ -108,10 +121,12 @@ Open-source multi-provider CLI derived from the March 2026 Claude Code source ex
 | [Kuberwastaken/claude-code][claurst] | Spec-derived Rust reimplementation (CLAURST) |
 | [shareAI-lab/learn-claude-code][learn] | Educational harness engineering course |
 | [Gitlawb/openclaude][openclaude] | Multi-provider CLI (leak-derived) |
+| [coder/claudecode.nvim][nvim] | Cleanroom Neovim IDE integration (Lua, Apache-2.0) |
 | [leaked-claude-code/leaked-claude-code][leaked] | Alleged proprietary source (excluded from analysis) |
 
 [claw]: https://github.com/instructkr/claw-code
 [claurst]: https://github.com/Kuberwastaken/claude-code
 [learn]: https://github.com/shareAI-lab/learn-claude-code
 [openclaude]: https://github.com/Gitlawb/openclaude
+[nvim]: https://github.com/coder/claudecode.nvim
 [leaked]: https://github.com/leaked-claude-code/leaked-claude-code
