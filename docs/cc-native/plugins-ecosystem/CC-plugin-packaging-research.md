@@ -70,8 +70,6 @@ async for message in query(
 
 ## Typical Project Structure vs Plugin Structure
 
-<!-- markdownlint-disable MD013 -->
-
 | Project Component | Typical Location | Plugin Equivalent | Notes |
 | ----------------- | ---------------- | ----------------- | ----- |
 | Skills | `.claude/skills/` | `plugin/skills/` | Direct mapping — SKILL.md format identical |
@@ -81,8 +79,6 @@ async for message in query(
 | Hooks | `.claude/settings.json` hooks | `plugin/hooks/hooks.json` | Can be ported to plugin hooks format |
 | MCP servers | `.claude/settings.json` mcpServers | `plugin/.mcp.json` | Can be ported to plugin MCP config |
 | Automation scripts | `scripts/` or similar | `plugin/commands/` | Could expose as slash commands |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Direct Edit vs Plugin Packaging
 
@@ -130,8 +126,6 @@ example-plugin/
 
 Keep project instructions and rules as repo-local (they're project-specific). Separately evaluate plugin packaging only for components that would benefit from cross-project reuse.
 
-<!-- markdownlint-disable MD013 -->
-
 | Component | Keep Repo-Local | Package as Plugin | Rationale |
 | --------- | --------------- | ----------------- | --------- |
 | Project instructions / behavioral rules | Yes | No | Project-specific behavioral rules |
@@ -140,8 +134,6 @@ Keep project instructions and rules as repo-local (they're project-specific). Se
 | `.claude/agents/` | Yes | Future | Agent definitions reference project-specific patterns |
 | Automation loop commands | Yes | Future | Loop scripts are project infrastructure; plugin if standardizing across repos |
 | MCP config | Yes | No | Project-specific server endpoints |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Plugin Packaging: When It Makes Sense
 
@@ -214,8 +206,6 @@ at standard paths and derives the plugin name from the directory name
 `hooks`, `mcpServers`) when files are at *non-standard* locations. Standard
 locations are always auto-discovered.
 
-<!-- markdownlint-disable MD013 -->
-
 | Component | Standard Path (auto-discovered) | Manifest field needed? |
 | --------- | ------------------------------- | ---------------------- |
 | Hooks | `hooks/hooks.json` | No — only for additional hook files |
@@ -225,11 +215,14 @@ locations are always auto-discovered.
 | Agents | `agents/` | No — only for additional files |
 | Commands | `commands/` | No — only for additional files |
 
-<!-- markdownlint-enable MD013 -->
-
-### 3. Plugin Cache Staleness After Manifest Changes
+### 3. Plugin Cache and Symlink Resolution
 
 Marketplace plugins are copied to `~/.claude/plugins/cache/` at install time.
+**Symlinks are resolved during this copy** — symlinked content is copied into
+the cache as regular files ([source][cc-plugins-ref]). This means DRY patterns
+using symlinked references (e.g., shared rules across skills) work both during
+development and after marketplace installation.
+
 Changing `plugin.json` in the marketplace source does **not** propagate to
 already-installed users until they run `claude plugin update` or the version
 is bumped ([source][cc-plugins-ref]).
