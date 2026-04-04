@@ -144,6 +144,40 @@ Default mode is **warn** (logs but does not block) to avoid conflicts with the E
 
 ---
 
+## OpenHarness (HKUDS)
+
+**Repo**: [HKUDS/OpenHarness][openharness] | **Stars**: 3.3K | **License**: MIT | **Version**: 0.1.0 (2026-04-01)
+
+Open-source Python agent harness framework — infrastructure plumbing between LLMs and tools. Implements 10 core subsystems compatible with CC conventions (markdown skills, plugin architecture, CLAUDE.md, hooks, MCP).
+
+### Core Subsystems
+
+| Subsystem | Purpose | CC Equivalent |
+|-----------|---------|---------------|
+| **Engine** | Streaming tool-call loop with retry | CC agent loop |
+| **Tools** | 43+ integrated tools (file I/O, shell, web, MCP) | CC built-in tools |
+| **Skills** | On-demand markdown knowledge loading | `.claude/skills/` |
+| **Plugins** | Extensions for commands, hooks, agents | `.claude-plugin/` |
+| **Permissions** | Multi-level safety with path rules | `settings.json` permissions |
+| **Hooks** | PreToolUse/PostToolUse lifecycle events | CC hooks system |
+| **Commands** | 54 built-in directives (/commit, /plan, etc.) | CC slash commands |
+| **Memory** | Persistent cross-session knowledge | CC memory system |
+| **Coordinator** | Subagent spawning and team management | CC agent teams |
+| **UI** | React (Ink) TUI + backend protocol | CC terminal UI |
+
+### Multi-Provider Support
+
+- **Anthropic format** (default): Claude, Moonshot/Kimi, Vertex, Bedrock
+- **OpenAI format** (`--api-format openai`): OpenAI, DeepSeek, DashScope, GitHub Models, Groq, Ollama
+
+### Adoption Considerations
+
+**Strengths**: Most complete open harness (10 subsystems, 43 tools, 114 tests, 6 E2E suites). CC-convention compatible — skills, plugins, CLAUDE.md, hooks all work. Multi-provider. MIT licensed.
+
+**Risks**: Early stage (v0.1.0, 3.3K stars). Not a CC replacement — lacks CC's model quality, context window management, and Anthropic infrastructure. Python-only (CC is TypeScript/Node).
+
+---
+
 ## Comparison
 
 | Tool | Layer | CC Integration | Approach | Maturity |
@@ -152,8 +186,9 @@ Default mode is **warn** (logs but does not block) to avoid conflicts with the E
 | **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Active (v1.30.0, rapid iteration) |
 | **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
 | **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
+| **OpenHarness** | Full agent harness | CC-convention compatible | Open harness framework (10 subsystems) | Early (v0.1.0, 3.3K stars) |
 
-All four address context management at different layers — complementary, not competing.
+All five address different layers of the agent stack — complementary, not competing.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction (fifth approach)
 
@@ -166,6 +201,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [GSD repository][gsd-repo] | Meta-prompting + context engineering framework |
 | [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
 | [Boucle-framework][boucle] | Read-once file deduplication hook |
+| [OpenHarness][openharness] | Open-source agent harness framework (10 subsystems, 43 tools) |
 
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
@@ -179,3 +215,4 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [gsd-1466]: https://github.com/gsd-build/get-shit-done/issues/1466
 [ecc]: https://github.com/affaan-m/everything-claude-code
 [boucle]: https://github.com/Bande-a-Bonnot/Boucle-framework
+[openharness]: https://github.com/HKUDS/OpenHarness
