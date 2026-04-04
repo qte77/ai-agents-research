@@ -99,6 +99,29 @@ A structured plugin registry organized around Claude Code's installable plugin f
 | **Size** | ~100-200+ resources | ~136 plugins |
 | **Unique content** | Workflow methodologies, CLAUDE.md examples, alternative clients | Business-function plugins, formal marketplace format |
 
+## TTS / Voice Output Plugins (Emerging Category)
+
+<!-- markdownlint-disable MD013 -->
+
+8+ community projects add text-to-speech output to Claude Code. All converge on the same pattern: Stop hook → sentence chunking → TTS → non-blocking playback. CC has native `/voice` for STT input but **no native TTS output**.
+
+| Project | Engine | Key Feature | Local/OSS |
+|---------|--------|-------------|-----------|
+| [ybouhjira/claude-code-tts][tts-ybou] | OpenAI API | Worker pool, cross-platform, `speak-text` CLI | No |
+| [~cg/claude-code-tts][tts-cg] | Kokoro | Smart interruption, markdown stripping | Yes |
+| [ktaletsk/claude-code-tts][tts-ktal] | Kokoro | Audio ducking | Yes |
+| [LAURA-agent/Claude-to-Speech][tts-laura] | ElevenLabs | Invisible markers, smart defaults (silent for code) | No |
+| [mbailey/voicemode][tts-voice] | Kokoro/cloud | Full 2-way voice (Whisper STT + TTS), MCP server | Yes |
+| [johnmatthewtennant/mcp-voice-hooks][tts-mcp] | Various | MCP server for voice I/O | Depends |
+| [husniadil/cc-hooks][tts-hooks] | Multi-provider | Sound effects, TTS announcements | Depends |
+| [shanraisshan/claude-code-hooks][tts-shanr] | Various | Voice via hooks (Stop, PreToolUse, PostToolUse) | Depends |
+
+**Common pattern**: All use the Stop hook (fires after full response). No project has achieved true mid-generation streaming — CC exposes no streaming hook in interactive mode. `--output-format stream-json` enables token-level streaming but only in headless mode (`claude -p`).
+
+**TTS engines used**: Kokoro (most popular local), OpenAI TTS API (most polished cloud), ElevenLabs (highest quality cloud), espeak-ng (fallback). [RealtimeTTS][realtimetts] library provides sentence-boundary detection with 12+ engine backends.
+
+<!-- markdownlint-enable MD013 -->
+
 ## Ecosystem Observations
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
@@ -122,3 +145,12 @@ A structured plugin registry organized around Claude Code's installable plugin f
 
 [acc]: https://github.com/hesreallyhim/awesome-claude-code
 [accp]: https://github.com/ccplugins/awesome-claude-code-plugins
+[tts-ybou]: https://github.com/ybouhjira/claude-code-tts
+[tts-cg]: https://git.sr.ht/~cg/claude-code-tts
+[tts-ktal]: https://github.com/ktaletsk/claude-code-tts
+[tts-laura]: https://github.com/LAURA-agent/Claude-to-Speech
+[tts-voice]: https://github.com/mbailey/voicemode
+[tts-mcp]: https://github.com/johnmatthewtennant/mcp-voice-hooks
+[tts-hooks]: https://github.com/husniadil/cc-hooks
+[tts-shanr]: https://github.com/shanraisshan/claude-code-hooks
+[realtimetts]: https://github.com/KoljaB/RealtimeTTS

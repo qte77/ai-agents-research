@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD013 -->
 ---
 title: CC Binary Architecture
 purpose: Analysis of Claude Code CLI binary and VS Code extension internals — build system, shared codebase proof, internal API endpoints, model IDs, directory map, /stats data flow, /voice timeline.

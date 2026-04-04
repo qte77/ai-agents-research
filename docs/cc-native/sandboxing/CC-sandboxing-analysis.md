@@ -44,12 +44,10 @@ From `.claude/settings.json` ([source][cc-sandbox-settings]):
   "enableWeakerNestedSandbox": false,
   "network": {
     "allowLocalBinding": true,
-    "allowedHosts": ["api.github.com"]
+    "allowedDomains": ["api.github.com"]
   },
   "filesystem": {
-    "write": {
-      "allowOnly": ["/tmp/claude-1000", ".git"]
-    }
+    "allowWrite": ["/tmp/claude-1000", ".git"]
   }
 }
 ```
