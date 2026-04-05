@@ -10,4 +10,4 @@ CC configuration features: hooks, model routing, execution modes.
 | [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md) | Bash mode capabilities and sandbox interaction |
 | [CC-loop-cron-analysis.md](CC-loop-cron-analysis.md) | Loop and cron scheduling patterns |
 | [CC-env-vars-reference.md](CC-env-vars-reference.md) | Consolidated CLAUDE_CODE_* env vars reference |
-| [CC-tools-inventory.md](CC-tools-inventory.md) | Categorized snapshot of all 28 built-in tools (CC 2.1.83) |
+| [CC-tools-inventory.md](CC-tools-inventory.md) | 28 public tools (CC 2.1.83) + internal/gated tools appendix, feature flags |

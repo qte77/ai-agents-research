@@ -2,8 +2,8 @@
 title: CC Reverse Engineering Landscape
 purpose: Survey of community tools, blogs, and trackers that reverse engineer Claude Code internals — system prompts, binary analysis, env vars, API interception.
 created: 2026-03-29
-updated: 2026-03-29
-validated_links: 2026-03-29
+updated: 2026-04-05
+validated_links: 2026-04-05
 ---
 
 **Status**: Research (informational)
@@ -88,6 +88,24 @@ Claims Claude Code can decompile its own bundled JS. Content partially paywalled
 
 URL: [ghuntley][ghuntley]
 
+## Source Leak Visual Guides
+
+### ccunpacked.dev — Visual Architecture Guide
+
+Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31). Created by autocracy101 ([zackautocracy][zack-gh]) within hours of the leak using AI-assisted development.
+
+**Sections**: Architecture Explorer (color-coded codebase tiles linking to source files), Agent Loop (message processing from `TextInput.tsx` through response), Tool Systems (40+ tools categorized by function), Command Catalog (50+ slash commands), Hidden Features (Buddy, Kairos, UltraPlan, Coordinator Mode, Bridge, Daemon Mode, UDS Inbox, Auto-Dream).
+
+**Companion repo**: [zackautocracy/claude-code][zack-repo] (696 stars) — read-only source snapshot the site navigates. No license. Described as maintained for *"educational, defensive security research, and software supply-chain analysis."*
+
+**Community reception**: Featured on [Hacker News][hn-ccunpacked], [GIGAZINE][gigazine-ccunpacked], [daily.dev][dailydev-ccunpacked]. Praised for design quality and navigability of a 512K-LOC codebase.
+
+**Provenance note**: Built from leaked source. Reference architectural observations only; do not cite internal code.
+
+URL: [ccunpacked.dev][ccunpacked]
+
+Cross-ref: [CC-community-reimplementations-landscape.md](CC-community-reimplementations-landscape.md) — zackautocracy/claude-code snapshot entry; [CC-tools-inventory.md](../cc-native/configuration/CC-tools-inventory.md) — internal/gated tools appendix sourced from same exposure
+
 ## Version Tracking & Feature Gates
 
 ### TurboAI.dev — Version Tracker
@@ -160,7 +178,6 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 
 ## Sources
 
-
 [piebald-prompts]: https://github.com/Piebald-AI/claude-code-system-prompts
 [agiflow]: https://agiflow.io/blog/claude-code-internals-reverse-engineering-prompt-augmentation/
 [beyondthehype]: https://beyondthehype.dev/p/inside-claude-code-prompt-engineering-masterpiece
@@ -183,4 +200,9 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 [tools-inv]: ../cc-native/configuration/CC-tools-inventory.md
 [env-ref]: ../cc-native/configuration/CC-env-vars-reference.md
 [tracking-issue]: https://github.com/qte77/ai-agents-research/issues/70
-
+[ccunpacked]: https://ccunpacked.dev/
+[zack-gh]: https://github.com/zackautocracy
+[zack-repo]: https://github.com/zackautocracy/claude-code
+[hn-ccunpacked]: https://news.ycombinator.com/item?id=47597085
+[gigazine-ccunpacked]: https://gigazine.net/gsc_news/en/20260402-claude-code-unpacked/
+[dailydev-ccunpacked]: https://app.daily.dev/posts/claude-code-unpacked-v2vrsegim

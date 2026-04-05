@@ -3,8 +3,8 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-04-05
+validated_links: 2026-04-05
 ---
 
 **Status**: Generally available (CLAUDE.md); Auto memory enabled by default
@@ -20,8 +20,6 @@ Both load at session start. Neither is enforced configuration — they're contex
 
 ### CLAUDE.md vs Auto Memory
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | CLAUDE.md | Auto Memory |
 | ------ | --------- | ----------- |
 | Author | Human | Claude |
@@ -30,11 +28,7 @@ Both load at session start. Neither is enforced configuration — they're contex
 | Loaded | Every session (full file) | Every session (first 200 lines of MEMORY.md) |
 | Use for | Coding standards, workflows, architecture | Build commands, debugging insights, preferences |
 
-<!-- markdownlint-enable MD013 -->
-
 ### CLAUDE.md Scope Hierarchy
-
-<!-- markdownlint-disable MD013 -->
 
 | Scope | Location | Shared with |
 | ----- | -------- | ----------- |
@@ -42,8 +36,6 @@ Both load at session start. Neither is enforced configuration — they're contex
 | Project | `./CLAUDE.md` or `./.claude/CLAUDE.md` | Team via source control |
 | User | `~/.claude/CLAUDE.md` | Just you (all projects) |
 | Local | `./CLAUDE.local.md` | Just you (current project, gitignored) |
-
-<!-- markdownlint-enable MD013 -->
 
 More specific locations take precedence. Files in parent directories load at launch; files in subdirectories load on demand when Claude reads files there ([source][cc-mem]).
 
@@ -212,17 +204,55 @@ Auto memory files are plain markdown — edit or delete at any time. Run `/memor
 - **`InstructionsLoaded` hook**: Log exactly which instruction files load, when, and why — useful for debugging path-specific rules ([source][cc-mem])
 - **First-time trust**: CC shows approval dialog for external `@` imports on first encounter in a project ([source][cc-mem])
 
-## Usage Considerations
+## Auto-Dream — Background Memory Consolidation (Feature-Flagged)
 
-<!-- markdownlint-disable MD013 -->
+Auto-Dream is a background memory consolidation engine that runs as a forked subagent between sessions. Where auto memory writes notes on-demand during active sessions, Auto-Dream performs a scheduled reflective pass — consolidating, deduplicating, and pruning accumulated memories. Analogous to REM sleep consolidating short-term memories into long-term storage.
+
+**Provenance**: Sourced from `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31). System prompt extracted by [Piebald-AI][piebald-dream]. Not officially documented by Anthropic. Feature-flagged via `isAutoDreamEnabled()`.
+
+### Three Memory Layers
+
+| Layer | Author | Trigger | Mechanism |
+|-------|--------|---------|-----------|
+| CLAUDE.md | Human | Manual edit | Loaded at session start |
+| Auto memory | Claude (active) | On-demand during session | Writes to `MEMORY.md` + topic files |
+| **Auto-Dream** | Claude (background) | Scheduled between sessions | Forked subagent consolidates existing memory |
+
+### Four Phases
+
+1. **Orient** — `ls` memory directory, read `MEMORY.md`, skim existing topic files to understand current state and avoid duplication
+2. **Gather Signal** — search recent session transcripts (JSONL) and daily logs via narrow grep for user corrections, key decisions, contradicted facts
+3. **Consolidate** — merge new signal into existing topic files, convert relative dates to absolute, delete contradicted facts, deduplicate
+4. **Prune & Index** — trim `MEMORY.md` to ~25 KB / ~200 lines, enforce one-line entries (<150 chars), remove stale pointers, resolve cross-file contradictions
+
+### Triggering Gates (ordered by cost)
+
+All gates must pass before a dream runs:
+
+| Gate | Threshold | Purpose |
+|------|-----------|---------|
+| Time | 24 h since last dream | Prevent over-dreaming |
+| Sessions | >=5 recent transcripts | Ensure enough new signal |
+| Lock | No concurrent consolidation | Prevent race conditions |
+| Cooldown | 10-min scan throttle | Batch rapid session bursts |
+
+### Constraints
+
+- **Read-only bash** — dream subagent can inspect files but not modify the project
+- **Disabled when**: Kairos mode active, remote mode, or auto memory turned off
+- **Telemetry**: `tengu_auto_dream_fired`, `tengu_auto_dream_completed`, `tengu_auto_dream_failed`
+- **User control**: abortable via background-tasks dialog; lock rolls back on failure
+- **Surfaced**: around v2.1.83 under the `/memory` interface
+
+Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST documents Auto-Dream's three-gate trigger and four-phase architecture
+
+## Usage Considerations
 
 | Aspect | Notes | Optimization Opportunity |
 | ------ | ----- | ------------------------ |
 | Autonomous loop context | Each iteration starts fresh; reads CLAUDE.md + auto memory | Working as designed — see context rot analysis for headless invocation patterns |
 | Cloud sessions | Auto memory is machine-local | Cloud sessions rely on committed CLAUDE.md only (see CC-cloud-sessions-analysis.md) |
 | `includeGitInstructions` | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` removes built-in git workflow instructions from context (v2.1.69) | Saves context tokens in headless/autonomous loops that don't need commit/PR guidance |
-
-<!-- markdownlint-enable MD013 -->
 
 For CLAUDE.md size, import chains, path-scoped rules, auto memory deduplication, `claudeMdExcludes`, and managed policy details, see the expanded sections above.
 
@@ -260,3 +290,4 @@ For CLAUDE.md size, import chains, path-scoped rules, auto memory deduplication,
 [cc-skills]: https://code.claude.com/docs/en/skills
 [cc-settings]: https://code.claude.com/docs/en/settings
 [cc-sub]: https://code.claude.com/docs/en/sub-agents#enable-persistent-memory
+[piebald-dream]: https://github.com/Piebald-AI/claude-code-system-prompts/blob/main/system-prompts/agent-prompt-dream-memory-consolidation.md

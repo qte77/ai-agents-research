@@ -9,7 +9,8 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 | [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, BHIL, claude-howto, dispatch, superpowers |
 | [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) | Plugin catalogs: awesome-claude-code, awesome-claude-code-plugins |
 | [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling: RTK, GSD, everything-claude-code, Boucle, OpenHarness, ByteRover, claude-mem, CC Switch, opensrc |
-| [CC-community-reimplementations-landscape.md](CC-community-reimplementations-landscape.md) | Reimplementations: claw-code, CLAURST, learn-claude-code, openclaude (with provenance classification) |
+| [CC-community-reimplementations-landscape.md](CC-community-reimplementations-landscape.md) | Reimplementations: claw-code, CLAURST (expanded), learn-claude-code, openclaude, zackautocracy/claude-code (with provenance classification) |
+| [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscape.md) | RE tools: system prompts, binary analysis, env vars, API interception, ccunpacked.dev |
 | [CC-office-worker-workflows.md](CC-office-worker-workflows.md) | Office workflows: invoices, documents, email, financial reporting + multi-agent orchestrators (Vibe Kanban, Conductor, tmux tools) |
 | [CC-domain-claudemd-showcase.md](CC-domain-claudemd-showcase.md) | CLAUDE.md as domain pipeline controller (genome analysis case study) |
 | [CC-compass-mcp-analysis.md](CC-compass-mcp-analysis.md) | Compass MCP: cross-surface task/context bridge (architecture, status, alignment) |
