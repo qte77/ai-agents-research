@@ -60,8 +60,6 @@ Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-re
 | `CLAUDE_CODE_SIMPLE` | `0` | Minimal mode (set by `--bare` flag). Disables hooks, plugins, MCP, auto memory, CLAUDE.md | [env-vars][env-vars] |
 | `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | (unset) | Return to the original working directory after each Bash command. `1` = reset cwd to project root after each command; unset = cwd persists across Bash calls. **Note**: `=0` behavior is undocumented — only `1` is confirmed. See [tools-reference § Bash tool behavior][tools-ref], [#9359][gh-9359], [#11067][gh-11067] | [env-vars][env-vars], [tools-ref][tools-ref] |
 
-<!-- markdownlint-enable MD013 -->
-
 Cross-ref: [CC-recursive-spawning-patterns.md](../agents-skills/CC-recursive-spawning-patterns.md), [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md)
 
 ### Runtime-Injected Variables (Not User-Configurable)

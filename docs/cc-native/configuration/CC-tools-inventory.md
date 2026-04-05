@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-03-29
-validated_links: 2026-03-29
+updated: 2026-04-05
+validated_links: 2026-04-05
 ---
 
 **Status**: Adopt
@@ -184,6 +184,67 @@ Precedence unclear. Behavior observed: `/config` panel writes to `.claude.json`;
 
 Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
 
+## Internal and Feature-Gated Tools (Leak-Derived)
+
+The following tools appear in the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31) but are not present in the public tool registry. Categorized by [CLAURST][claurst] analysis. **Unverified — Anthropic has not confirmed these tools.**
+
+### Internal-Only Tools (`USER_TYPE === 'ant'`)
+
+| Tool | Purpose | Gate |
+|------|---------|------|
+| `ConfigTool` | Modify settings programmatically | `ant` user type |
+| `TungstenTool` | Advanced features (undocumented) | `ant` user type |
+| `SuggestBackgroundPRTool` | Suggest background pull requests | `ant` user type |
+
+### Feature-Gated Tools
+
+| Tool | Purpose | Feature Gate |
+|------|---------|-------------|
+| `BriefTool` | Upload/summarize files to claude.ai | — |
+| `SendMessageTool` | Inter-agent messaging (UDS Inbox) | `COORDINATOR_MODE` |
+| `ListPeersTool` | Discover active CC sessions | `COORDINATOR_MODE` |
+| `TeamCreateTool` | Create agent team | `tengu_amber_flint` |
+| `TeamDeleteTool` | Delete agent team | `tengu_amber_flint` |
+| `MonitorTool` | Monitor MCP servers | — |
+| `WorkflowTool` | Execute workflow scripts | `WORKFLOW_SCRIPTS` |
+| `SleepTool` | Async delays | — |
+| `SnipTool` | History snippet extraction | `HISTORY_SNIP` |
+| `McpAuthTool` | MCP server authentication | — |
+| `SyntheticOutputTool` | Structured output via dynamic JSON schemas | — |
+| `VerifyPlanExecutionTool` | Verify plan execution | `CLAUDE_CODE_VERIFY_PLAN` |
+| `CtxInspectTool` | Context window inspection | `CONTEXT_COLLAPSE` |
+| `TerminalCaptureTool` | Terminal panel capture | `TERMINAL_PANEL` |
+| `REPLTool` | Interactive VM shell | `--bare` mode |
+
+### Kairos-Exclusive Tools (Unreleased)
+
+| Tool | Purpose | Feature Gate |
+|------|---------|-------------|
+| `SendUserFile` | Push files to user devices | `KAIROS` |
+| `PushNotification` | Send push notifications | `KAIROS` |
+| `SubscribePR` | Monitor and review PRs autonomously | `KAIROS` |
+
+### Compile-Time Feature Flags
+
+| Flag | Gates |
+|------|-------|
+| `PROACTIVE` / `KAIROS` | Always-on assistant mode |
+| `KAIROS_BRIEF` | Brief command for concise output |
+| `BRIDGE_MODE` | Remote control via claude.ai |
+| `DAEMON` | Background daemon mode |
+| `VOICE_MODE` | Voice input |
+| `WORKFLOW_SCRIPTS` | Workflow automation |
+| `COORDINATOR_MODE` | Multi-agent orchestration |
+| `TRANSCRIPT_CLASSIFIER` | AFK mode (ML auto-approval) |
+| `BUDDY` | Companion pet system |
+| `NATIVE_CLIENT_ATTESTATION` | Client authenticity verification |
+| `HISTORY_SNIP` | History snipping |
+| `EXPERIMENTAL_SKILL_SEARCH` | Skill discovery |
+
+Runtime feature gating uses GrowthBook with `tengu_`-prefixed flags and `getFeatureValue_CACHED_MAY_BE_STALE()` to avoid blocking the main loop.
+
+Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) — UDS Inbox and Coordinator Mode; [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST full tool registry source
+
 ## Cross-References
 
 - [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md) — Bash tool and `!` mode deep-dive
@@ -193,7 +254,6 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
 - [CC RE landscape](../../cc-community/CC-reverse-engineering-landscape.md) — Community RE tools
 
 ## Sources
-
 
 | Source | Content |
 |---|---|
@@ -205,7 +265,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
 | CC 2.1.87 CLI binary string extraction, 2026-03-29 | Slash commands, config keys, undocumented commands |
 | CC 2.1.87 `/config` panel observation, 2026-03-29 | `.claude.json` key inventory |
 | [ZhangHanDong /btw gist][btw-gist] | `/btw` command analysis |
-
+| [CLAURST README][claurst] | Internal/gated tool registry, feature flags |
 
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
@@ -217,3 +277,4 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
 [model-config]: https://code.claude.com/docs/en/model-config
 [remote-control]: https://code.claude.com/docs/en/remote-control
 [btw-gist]: https://gist.github.com/ZhangHanDong
+[claurst]: https://github.com/Kuberwastaken/claude-code

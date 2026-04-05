@@ -63,8 +63,6 @@ devteam
 
 ## Comparison with JetBrains Air
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | devteam | JetBrains Air |
 |---|---|---|
 | Interface | Terminal UI | Desktop GUI |
@@ -74,8 +72,6 @@ devteam
 | Codebase awareness | Basic | Symbol-level (files, commits, classes, methods) |
 | Platform | Cross-platform (Node.js) | macOS only (preview) |
 | Cost | Free | JetBrains AI subscription or BYOK |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Relevance to coding-agent-eval
 

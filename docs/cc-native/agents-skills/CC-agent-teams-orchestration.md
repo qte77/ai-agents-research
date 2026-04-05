@@ -4,8 +4,8 @@ source: https://code.claude.com/docs/en/agent-teams
 purpose: Analysis of Claude Code Agent Teams for parallel code review, cross-layer implementation, and adversarial debugging.
 test_run: 2026-02-11 (parallel code review with 3 teammates)
 created: 2026-02-08
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-04-05
+validated_links: 2026-04-05
 ---
 
 **Status**: Research preview (disabled by default, `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`)
@@ -61,8 +61,6 @@ Restricts lead to coordination-only (spawn, assign, synthesize). Blocks direct i
 
 ### Agent Teams vs Subagents (Task tool)
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | Subagents | Agent Teams |
 | -------- | ----------- | ------------- |
 | Context | Own window; results return to caller | Own window; fully independent |
@@ -70,8 +68,6 @@ Restricts lead to coordination-only (spawn, assign, synthesize). Blocks direct i
 | Coordination | Main agent manages all work | Shared task list with self-coordination |
 | Best for | Focused tasks where only the result matters | Complex work requiring discussion and collaboration |
 | Token cost | Lower: results summarized back | Higher: each teammate is a separate instance |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Use Cases
 
@@ -139,8 +135,6 @@ Compare a multi-agent system (MAS) against simpler patterns using the same evalu
 
 ### Approach Comparison
 
-<!-- markdownlint-disable MD013 -->
-
 | Dimension | OTel -> Phoenix (recommended) | Hooks -> Phoenix | Artifact collection |
 | --------- | ----------------------------- | ---------------- | ------------------- |
 | Same Phoenix instance | Yes | Yes | No (file-based) |
@@ -155,8 +149,6 @@ Compare a multi-agent system (MAS) against simpler patterns using the same evalu
 **Task Tool Metrics** (v2.1.30): Task completions now include per-task metrics (tokens consumed, tool uses, duration) natively in the task completion response — no OTel required. Useful for cost/performance tracking per teammate without additional infrastructure.
 
 **Upstream limitation**: CC OTel exports metrics and logs only — no trace spans. This is a known limitation tracked in [anthropics/claude-code#9584](https://github.com/anthropics/claude-code/issues/9584) and [#2090](https://github.com/anthropics/claude-code/issues/2090). Until resolved, trace-level execution analysis requires artifact collection: parse `raw_stream.jsonl` for `TeamCreate`, `Task`, `TodoWrite` events into structured trace data.
-
-<!-- markdownlint-enable MD013 -->
 
 ### OTel -> Phoenix (Recommended)
 
@@ -363,9 +355,70 @@ Each task is tracked in its own JSON file:
 - **Agent Teams traces** (CC orchestration): `~/.claude/teams/` + `~/.claude/tasks/`, file-based JSON
 - **Unified approach**: Application-level tracing for the MAS layer, CC artifact files for the orchestration layer; cross-reference by timestamps
 
-### Sources
+## UDS Inbox — Inter-Session IPC (Unreleased)
 
-<!-- markdownlint-disable MD013 -->
+Unix Domain Socket messaging layer for local inter-session communication between CC instances. This is the networking substrate underneath Coordinator Mode and Agent Teams.
+
+**Provenance**: Sourced from `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]). Not officially documented by Anthropic.
+
+### Architecture
+
+- UDS messaging server starts automatically at session launch (skipped in `--bare` mode)
+- Socket location: `~/.claude/sessions/`
+- **Dual addressing**: local paths (`uds:/.../sock`) and remote endpoints (`bridge:...`)
+
+### Core Tools
+
+| Tool | Purpose |
+|------|---------|
+| `SendMessage` | Inter-session data exchange |
+| `ListPeers` | Discover active CC sessions on the machine |
+| Coordinator dispatch | Route tasks to worker agents |
+
+Workers respond via XML-based `<task-notification>` protocol with fields for status, summary, token usage, and duration.
+
+### Transport Layer Comparison
+
+| Transport | Direction | Purpose | Protocol |
+|-----------|-----------|---------|----------|
+| IDE WebSocket | IDE ↔ Claude | Editor integration (selection, diff, file context) | WebSocket JSON-RPC 2.0 (MCP) |
+| Channels | External → Claude | Push events from Telegram, Discord, iMessage | MCP over channel adapters |
+| **UDS Inbox** | Claude ↔ Claude | Inter-session IPC on same machine | Unix Domain Sockets |
+
+Cross-ref: [CC-ide-integration-protocol.md](../configuration/CC-ide-integration-protocol.md) — WebSocket IDE protocol; [CC-channels-analysis.md](../plugins-ecosystem/CC-channels-analysis.md) — external push channels
+
+## Coordinator Mode — Internal Orchestration (Unreleased)
+
+Multi-agent orchestration mode activated via `CLAUDE_CODE_COORDINATOR_MODE=1`. Transforms CC from a single agent into a coordinator that spawns and manages multiple worker agents in parallel. The coordinator itself has **no filesystem/shell tools** — it is a pure management layer that relies on UDS Inbox for all worker communication.
+
+**Provenance**: Sourced from `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]). Not officially documented by Anthropic.
+
+### Four-Phase Workflow
+
+| Phase | Actor | Purpose |
+|-------|-------|---------|
+| Research | Workers (parallel) | Investigate codebase, find files, understand problem |
+| Synthesis | **Coordinator** | Read findings, understand problem, craft implementation specs |
+| Implementation | Workers | Make targeted changes per spec, commit |
+| Verification | Workers | Test changes work |
+
+### Key Mechanisms
+
+- **Shared scratchpad** (`tengu_scratch` feature gate) — durable cross-worker knowledge sharing directory
+- **Agent Teams/Swarm** (`tengu_amber_flint` feature gate) — in-process teammates via `AsyncLocalStorage` for context isolation, or process-based teammates via tmux/iTerm2 panes
+- **Penguin Mode kill switch** (`tengu_penguins_off`) — disables fast mode for coordinator sessions
+- **Anti-lazy-delegation rule**: coordinator prompt forbids *"based on your findings"* — must read actual findings and specify exactly what to do
+
+### Relationship to Agent Teams
+
+Coordinator Mode and Agent Teams are complementary:
+
+- **Agent Teams** (current, experimental): User-facing team orchestration via shared task list + mailboxes. Communication via file-based JSON inboxes under `~/.claude/teams/`
+- **Coordinator Mode** (unreleased): Internal orchestration layer using UDS for real-time IPC. Coordinator has no tools except worker management
+
+Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST documents Coordinator Mode phases and tool registry
+
+### Sources
 
 | Source | Author | Key Content |
 | ------ | ------ | ----------- |
@@ -379,8 +432,6 @@ Each task is tracked in its own JSON file:
 | [Aura Frog Guide][aura-frog] | Community | Structured workflow integration |
 | [C Compiler with 16 Agents][compiler-case] | Anthropic/Register | 2,000 sessions, 100k-line compiler |
 
-<!-- markdownlint-enable MD013 -->
-
 [cc-teams-docs]: https://code.claude.com/docs/en/agent-teams
 [anthropic-teams]: https://www.anthropic.com/engineering/building-c-compiler
 [addy-swarms]: https://addyosmani.com/blog/claude-code-agent-teams/
@@ -390,3 +441,7 @@ Each task is tracked in its own JSON file:
 [dev-opencode]: https://dev.to/uenyioha/porting-claude-codes-agent-teams-to-opencode-4hol
 [aura-frog]: https://github.com/nguyenthienthanh/aura-frog/blob/main/aura-frog/docs/AGENT_TEAMS_GUIDE.md
 [compiler-case]: https://www.theregister.com/2026/02/09/claude_opus_46_compiler/
+[register-leak]: https://www.theregister.com/2026/03/31/anthropic_claude_code_source_code/
+[techsy-leaked]: https://techsy.io/blog/claude-code-leaked-features-2026
+[minbook-hidden]: https://minbook.dev/en/blog/claude-code-anatomy-hidden-features/
+[zread-coordinator]: https://zread.ai/instructkr/claude-code/19-coordinator-mode

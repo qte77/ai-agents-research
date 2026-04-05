@@ -40,15 +40,11 @@ claude --remote "Refactor logger to structured output"
 
 ### Terminal-to-Web-to-Terminal Flow
 
-<!-- markdownlint-disable MD013 -->
-
 | Direction | Method | Details |
 | --------- | ------ | ------- |
 | Terminal -> Web | `claude --remote "prompt"` | Creates new cloud session; runs independently |
 | Web -> Terminal | `/teleport` or `claude --teleport` | Fetches branch, loads conversation history into terminal |
 | Plan -> Execute | `claude --permission-mode plan` then `claude --remote "Execute plan"` | Plan locally (read-only), execute remotely |
-
-<!-- markdownlint-enable MD013 -->
 
 **Teleport requirements**: Clean git state, correct repository (not fork), branch pushed to remote, same Claude.ai account ([source][cc-cloud]).
 
@@ -86,8 +82,6 @@ Shares rate limits with all Claude/Claude Code usage. Parallel tasks consume pro
 
 ## Applicability to Common Workflows
 
-<!-- markdownlint-disable MD013 -->
-
 | Workflow | Fit | Rationale |
 | -------- | --- | --------- |
 | Parallel CC baseline collection | Strong | `claude --remote` can run N tasks simultaneously on cloud VMs; no local resource contention |
@@ -95,8 +89,6 @@ Shares rate limits with all Claude/Claude Code usage. Parallel tasks consume pro
 | CI/CD integration (PR review) | Strong | Kick off cloud session for automated review; results appear as PR |
 | Interactive development | Weak | Latency to clone + setup; better to use local CC or Remote Control |
 | Workflows requiring local toolchains | Weak | Custom toolchains (LaTeX, pandoc, etc.) need complex setup scripts to replicate in cloud |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Decision Rule
 

@@ -107,7 +107,6 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 
 ### Anthropic API (api.anthropic.com)
 
-
 | Endpoint | Inferred Purpose | Documented? |
 |---|---|---|
 | `/v1/messages` | Main inference API | Yes — [api-ref][api-ref] |
@@ -121,9 +120,7 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 | `/api/web/domain_info` | Domain info lookup | No |
 | `/mcp-registry/v0/servers` | MCP server registry | No |
 
-
 ### Other Services
-
 
 | URL | Inferred Purpose | Notes |
 |---|---|---|
@@ -136,7 +133,6 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 | `platform.claude.com/v1/oauth/token` | Platform OAuth token exchange | String extraction |
 | `raw.githubusercontent.com/.../security.json` | Plugin security checks | String extraction |
 | `raw.githubusercontent.com/.../plugin-installs.json` | Plugin install stats | String extraction |
-
 
 ## Model ID Inventory (String Extraction)
 
@@ -249,7 +245,6 @@ Settings key: `voiceEnabled:y.boolean().optional()` — toggled via `/voice` com
 
 ## Sources
 
-
 | Source | Content |
 |---|---|
 | CC 2.1.87 CLI binary, Codespaces, 2026-03-29 | All string extractions in this doc |
@@ -267,7 +262,6 @@ Settings key: `voiceEnabled:y.boolean().optional()` — toggled via `/voice` com
 | [GitHub issue #11795][gh-11795] | Request to link schema from official docs |
 | [CC RE landscape][re-landscape] | Community reverse engineering tools and research |
 
-
 | Source | Content |
 |---|---|
 | CC 2.1.87 CLI binary, Codespaces, 2026-03-29 | All string extractions in this doc |
@@ -280,7 +274,6 @@ Settings key: `voiceEnabled:y.boolean().optional()` — toggled via `/voice` com
 | [JSON Schema Store][schema-store] | Settings schema (not linked from official docs) |
 | [GitHub issue #11795][gh-11795] | Request to link schema from official docs |
 | [CC RE landscape][re-landscape] | Community reverse engineering tools and research |
-
 
 [frr-build]: https://www.frr.dev/posts/claude-code-native-build-bun/
 [ghuntley]: https://ghuntley.com/tradecraft/

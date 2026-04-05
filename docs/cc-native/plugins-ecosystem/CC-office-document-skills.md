@@ -102,8 +102,6 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [Anthropic skills][skills] | Official built-in document skills |
@@ -113,8 +111,6 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 | [excel-mcp-server][excel] | Excel MCP server |
 | [document-edit-mcp][docedit] | Document editing MCP server |
 | [mcp-server-doccreator][doccreator] | Multi-format document generator |
-
-<!-- markdownlint-enable MD013 -->
 
 [skills]: https://github.com/anthropics/skills
 [kw]: https://github.com/anthropics/knowledge-work-plugins

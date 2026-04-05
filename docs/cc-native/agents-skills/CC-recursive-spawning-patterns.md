@@ -75,8 +75,6 @@ any work.
 
 ## Key Environment Variables
 
-<!-- markdownlint-disable MD013 -->
-
 | Variable | Purpose |
 |---|---|
 | `CLAUDECODE=1` | **Session guard** -- set by CC; blocks nested launches. Clear with `CLAUDECODE=` or `unset CLAUDECODE` for recursive spawning |
@@ -86,11 +84,7 @@ any work.
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` | Prevent extended context in headless runs |
 | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` | Reduce API calls |
 
-<!-- markdownlint-enable MD013 -->
-
 ## Spawning Methods Comparison
-
-<!-- markdownlint-disable MD013 -->
 
 | Method | How | Nested? | `CLAUDECODE` guard | Session |
 |---|---|---|---|---|
@@ -100,8 +94,6 @@ any work.
 | Agent Teams (tmux) | `--teammate-mode tmux` | Teammates get Agent tool | Handled internally | Persistent within team |
 | Subagents (`Agent` tool) | Within single session | 1 level deep | Handled internally | Shared parent session |
 | Claude Agent SDK | `subprocess_cli.py` | Yes | **Must filter** `os.environ` | Fresh per call |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Relationship to Agent Teams and Ralph
 
@@ -126,8 +118,6 @@ teams are independent.
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [Official sub-agents docs](https://code.claude.com/docs/en/sub-agents) | Subagent architecture |
@@ -136,5 +126,3 @@ teams are independent.
 | [haasonsaas/claude-recursive-spawn](https://github.com/haasonsaas/claude-recursive-spawn) | Bash script with depth control, JSON parsing |
 | [#31977](https://github.com/anthropics/claude-code/issues/31977) | No Agent tool in in-process teammates |
 | [#30008](https://github.com/anthropics/claude-code/issues/30008) | Teams + print mode hang |
-
-<!-- markdownlint-enable MD013 -->

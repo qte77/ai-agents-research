@@ -22,16 +22,12 @@ A Chrome browser extension that allows Claude to navigate, click, and fill forms
 
 ## Applicability
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | Fit | Rationale |
 | ------ | --- | --------- |
 | Browser automation for API/CLI workflows | None | API/CLI-based pipelines have no browser interaction surface |
 | Cross-platform integration with CC | Weak | CC integration is useful but headless `claude -p` usage gets no benefit |
 | Form filling / web scraping | Conditional | Relevant only if a project's data sources require browser-based retrieval |
 | End-to-end workflows with Cowork | Conditional | Only relevant if Cowork is adopted (see [CC-cowork-plugins-enterprise-analysis.md](CC-cowork-plugins-enterprise-analysis.md)) |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Decision Rule
 

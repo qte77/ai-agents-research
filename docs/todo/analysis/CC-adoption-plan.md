@@ -15,8 +15,6 @@ This plan synthesizes CC feature analysis documents into a prioritized adoption 
 
 ### Tier 1 — Adopt Now (zero cost, immediate value)
 
-<!-- markdownlint-disable MD013 -->
-
 - [ ] **Remote Control for Ralph monitoring**: Run `claude remote-control --name "Ralph"` before interactive sessions. [CC-remote-control-analysis.md](https://github.com/qte77/ai-agents-research/blob/main/docs/execution-infrastructure/CC-remote-control-analysis.md)
 - [ ] **Auto memory / AGENT_LEARNINGS.md dedup**: Run `/memory` audit; reconcile stale entries. [CC-memory-system-analysis.md](https://github.com/qte77/ai-agents-research/blob/main/docs/context-memory/CC-memory-system-analysis.md)
 - [ ] **llms.txt bookmark**: Add `platform.claude.com/llms.txt` and `code.claude.com/docs/llms.txt` as reference indexes. [CC-llms-txt-analysis.md](https://github.com/qte77/ai-agents-research/blob/main/docs/context-memory/CC-llms-txt-analysis.md)
@@ -32,11 +30,7 @@ This plan synthesizes CC feature analysis documents into a prioritized adoption 
 - [x] **Effort level tuning**: Deferred from `settings.json` to Ralph per-story computation. [CC-model-provider-configuration.md](https://github.com/qte77/ai-agents-research/blob/main/docs/configuration/CC-model-provider-configuration.md)
 - [x] **Subagent model override**: `CLAUDE_CODE_SUBAGENT_MODEL=opusplan` already set in `.claude/settings.json`. [CC-model-provider-configuration.md](https://github.com/qte77/ai-agents-research/blob/main/docs/configuration/CC-model-provider-configuration.md)
 
-<!-- markdownlint-enable MD013 -->
-
 ### Tier 2 — Research Spike (high potential, needs validation)
-
-<!-- markdownlint-disable MD013 -->
 
 | Item | Action | Effort | Trigger | Source |
 | ---- | ------ | ------ | ------- | ------ |
@@ -48,11 +42,7 @@ This plan synthesizes CC feature analysis documents into a prioritized adoption 
 | **HTTP hooks for status notifications** | Evaluate HTTP hooks to push Ralph status events (story pass/fail) to Slack or dashboard | 2 hrs spike | Manual monitoring becomes tedious | [CC-changelog-feature-scan.md](https://github.com/qte77/ai-agents-research/blob/main/docs/CC-changelog-feature-scan.md) |
 | **OpenRouter for failover + budget** | Route CC through OpenRouter for provider failover and team budget controls. Set `ANTHROPIC_BASE_URL=https://openrouter.ai/api` | 2 hrs spike | Anthropic API reliability issues or team cost management needed | [CC-model-provider-configuration.md](https://github.com/qte77/ai-agents-research/blob/main/docs/configuration/CC-model-provider-configuration.md) |
 
-<!-- markdownlint-enable MD013 -->
-
 ### Tier 3 — Monitor (not yet actionable, revisit on trigger)
-
-<!-- markdownlint-disable MD013 -->
 
 | Item | Current Blocker | Trigger to Revisit | Source |
 | ---- | --------------- | ------------------ | ------ |
@@ -63,8 +53,6 @@ This plan synthesizes CC feature analysis documents into a prioritized adoption 
 | **Agent Teams as core infra** | No session resumption; task status lag; no nested teams; experimental | Limitations resolved upstream; reliability proven over multiple sprints | [CC-agent-teams-orchestration.md](https://github.com/qte77/ai-agents-research/blob/main/docs/agent-orchestration/CC-agent-teams-orchestration.md) |
 | **Agent SDK as PydanticAI alternative** | Working PydanticAI MAS with Logfire/Phoenix observability already in place | PydanticAI becomes a bottleneck or Agent SDK offers unique capabilities | [CC-llms-txt-analysis.md](https://github.com/qte77/ai-agents-research/blob/main/docs/context-memory/CC-llms-txt-analysis.md) |
 | **Chrome extension for browser automation** | Project is API/CLI-driven; no browser interaction surface | Evaluation workflows require web UI interaction | [CC-chrome-extension-analysis.md](https://github.com/qte77/ai-agents-research/blob/main/docs/packaging-enterprise/CC-chrome-extension-analysis.md) |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Decision Log
 

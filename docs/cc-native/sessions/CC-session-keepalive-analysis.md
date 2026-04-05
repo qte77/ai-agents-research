@@ -124,8 +124,6 @@ gh codespace create --idle-timeout 240m
 
 ## Known Upstream Issues
 
-<!-- markdownlint-disable MD013 -->
-
 | Issue | Summary | Status |
 |-------|---------|--------|
 | [#21432][gh-21432] | Built-in caffeinate has no disable setting | Open |
@@ -133,8 +131,6 @@ gh codespace create --idle-timeout 240m
 | [#34868][gh-34868] | RC WebSocket drops every ~25 min | Open |
 | [#32050][gh-32050] | Idle timeout during background tasks | Open |
 | [#36807][gh-36807] | OAuth expires, needs interactive re-login | Open |
-
-<!-- markdownlint-enable MD013 -->
 
 ## See Also
 

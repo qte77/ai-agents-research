@@ -135,8 +135,6 @@ CC-first for high ROI MVP, but these extend the pattern:
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [Vibe Kanban][vk] | Agent-agnostic project management |
@@ -148,8 +146,6 @@ CC-first for high ROI MVP, but these extend the pattern:
 | [CC agent teams docs][teams] | Official agent teams documentation |
 | [Cowork getting started][cowork] | Cowork onboarding guide |
 | [Cowork scheduled tasks][cowork-sched] | Recurring task scheduling |
-
-<!-- markdownlint-enable MD013 -->
 
 [vk]: https://www.vibekanban.com/
 [conductor]: https://conductor.build

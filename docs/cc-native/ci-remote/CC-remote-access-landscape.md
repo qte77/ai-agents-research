@@ -18,8 +18,6 @@ monitoring and steering from phone/web without being desk-bound.
 
 ## Options Compared
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | CC Remote Control | Happy Coder | Omnara | CloudCLI | Emdash | DIY (tmux + Tailscale) |
 | ------ | ----------------- | ----------- | ------ | -------- | ------ | ---------------------- |
 | **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (7.8k stars) | Multi-agent orchestrator | Self-hosted infrastructure |
@@ -35,8 +33,6 @@ monitoring and steering from phone/web without being desk-bound.
 | **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | CC + Codex (provider-agnostic) | Any terminal tool |
 | **Open source** | No (native) | Yes (MIT) | No (archived OSS) | Yes | Yes | N/A |
 | **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Zero external dependency |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Detailed Notes
 
@@ -124,8 +120,6 @@ stay on and connected.
 
 ## Workflow Fit by Use Case
 
-<!-- markdownlint-disable MD013 -->
-
 | Workflow | Best Option | Rationale |
 | -------- | ----------- | --------- |
 | Monitor autonomous loop from phone | CC Remote Control | Free, zero-setup, sufficient for steering |
@@ -135,8 +129,6 @@ stay on and connected.
 | Parallel agent orchestration | Emdash | Parallel worktrees, issue tracker integration |
 | Parallel baseline collection | CC Cloud Sessions (`--remote`) | See [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md) |
 | Security-sensitive work | Happy Coder or DIY | E2E encryption (Happy) or full control (DIY) |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Decision Rule
 
@@ -148,8 +140,6 @@ sleeps mid-session.**
 
 ### Risk Assessment
 
-<!-- markdownlint-disable MD013 -->
-
 | Option | Risk | Mitigation |
 | ------ | ---- | ---------- |
 | CC Remote Control | Session drops on laptop sleep | Keep laptop on power + prevent sleep during runs |
@@ -158,8 +148,6 @@ sleeps mid-session.**
 | Emdash | Orchestration complexity; community-maintained | Evaluate only when parallel agent runs are a real need |
 | CloudCLI | Cloud-first doesn't fit local MCP/state workflows | Only for tasks that don't need local config |
 | DIY | Setup overhead, raw terminal UX on mobile | One-time setup; acceptable for power users |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Actionable Next Steps
 
@@ -177,15 +165,11 @@ sleeps mid-session.**
 
 Tools that complement any remote access method ([source][zilliz]):
 
-<!-- markdownlint-disable MD013 -->
-
 | Tool | Purpose | Setup | Notes |
 | ---- | ------- | ----- | ----- |
 | **Typeless** | Voice-to-text for prompts | Mobile app | ~4x faster than phone typing; replaces keyboard for prompt input |
 | **memsearch** | Persistent searchable recall across sessions/devices | CC plugin | Vector search over conversation history; useful for cross-session context |
 | **cc-tmux-worktree-orchestration** | Parallel CC instances via git worktrees | CC plugin | `/tmux-worktree-split login signup dashboard` runs 3 agents simultaneously |
-
-<!-- markdownlint-enable MD013 -->
 
 ## See Also
 

@@ -4,7 +4,8 @@ description: Analysis of Claude Code plan files — anatomy, plan mode mechanics
 category: analysis
 status: research
 created: 2026-03-13
-updated: 2026-03-13
+updated: 2026-04-05
+validated_links: 2026-04-05
 ---
 
 **Status**: Research (informational)
@@ -187,6 +188,46 @@ The most reusable parts of plans are:
 - Plans where the context section is the primary value (the "why" doesn't generalize)
 - Plans with fewer than 3 occurrences of the pattern
 
+## UltraPlan — Cloud-Offloaded Planning (Research Preview)
+
+UltraPlan hands a planning task from the local CLI to a [Claude Code on the web][cc-web] session running Opus in plan mode. The plan drafts asynchronously in the cloud while the terminal stays free for other work. A browser-based review surface provides inline comments, emoji reactions, and an outline sidebar — none of which exist in local plan mode ([source][ultraplan]).
+
+### Invocation
+
+| Method | Example | Notes |
+|--------|---------|-------|
+| Command | `/ultraplan migrate auth from sessions to JWTs` | Shows confirmation dialog |
+| Keyword | Include `ultraplan` anywhere in a normal prompt | Shows confirmation dialog |
+| Escalate from local plan | Choose *"No, refine with Ultraplan on Claude Code on the web"* from local plan approval dialog | Skips confirmation (selection is implicit) |
+
+### Terminal Status Indicators
+
+| Indicator | Meaning |
+|-----------|---------|
+| `◇ ultraplan` | Claude is researching and drafting the plan |
+| `◇ ultraplan needs your input` | Clarifying question — open session link to respond |
+| `◆ ultraplan ready` | Plan ready for browser review |
+
+Run `/tasks` and select the ultraplan entry for session link, agent activity, and a **Stop ultraplan** action.
+
+### Execution After Approval
+
+From the browser, choose one of:
+
+1. **Execute on the web** — Claude implements in the same cloud session; review diff and create PR from the browser
+2. **Teleport back to terminal** — plan sent back to the waiting CLI with three sub-options:
+   - *Implement here* — inject into current conversation
+   - *Start new session* — clear conversation, begin fresh with plan as context (`claude --resume` command printed for return)
+   - *Cancel* — save plan to file without executing
+
+### Requirements and Constraints
+
+- Requires [Claude Code on the web][cc-web] account and a GitHub repository
+- Disconnects [Remote Control][rc] when active (both occupy the claude.ai/code interface)
+- Cloud session runs in the account's default cloud environment
+
+Cross-ref: [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md) — cloud execution environment details
+
 ## Related Documents
 
 - [CC-skills-adoption-analysis.md](CC-skills-adoption-analysis.md) — skills format and adoption patterns
@@ -196,4 +237,9 @@ The most reusable parts of plans are:
 ## References
 
 - [Claude Code Plan Mode](https://code.claude.com/docs/en/plan-mode) — official documentation
+- [UltraPlan][ultraplan] — official documentation (research preview)
 - ~~[Agent Skills Spec](https://agentskills.org/)~~ — domain offline (archived reference)
+
+[ultraplan]: https://code.claude.com/docs/en/ultraplan
+[cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
+[rc]: https://code.claude.com/docs/en/remote-control

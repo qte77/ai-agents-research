@@ -42,8 +42,6 @@ for team architecture details.
 
 ## The 5 Permission Modes
 
-<!-- markdownlint-disable MD013 -->
-
 | Mode | Behavior | Risk |
 |---|---|---|
 | **Default** | Asks for everything | Lowest -- blocks on every action |
@@ -51,8 +49,6 @@ for team architecture details.
 | **`plan`** | Requires plan approval before implementation | Low |
 | **`dontAsk`** | Auto-approves everything matching `settings.json` allowlist | Medium -- granular control |
 | **`bypassPermissions`** | Auto-approves ALL actions | Highest -- no guardrails |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Safer Alternative: `settings.json` Allowlists
 
@@ -88,14 +84,10 @@ Server-managed settings can force-disable bypass mode:
 
 ## Known Bugs
 
-<!-- markdownlint-disable MD013 -->
-
 | Bug | Description | Status |
 |---|---|---|
 | [#29110](https://github.com/anthropics/claude-code/issues/29110) | `bypassPermissions` mode on spawned agents (via Task tool) is ineffective -- agents still can't use Write/Edit/Bash | Open (2026-03) |
 | [#29064](https://github.com/anthropics/claude-code/issues/29064) | Teammates spawned with `mode: "plan"` get stuck in infinite plan-approval loops -- never exit plan mode | Open (2026-03) |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Security Considerations
 
@@ -122,16 +114,12 @@ Bypassing permissions does not bypass the sandbox.
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [Official settings docs](https://code.claude.com/docs/en/settings) | Permission modes, allowlists |
 | [Official security docs](https://code.claude.com/docs/en/security) | Security model, sandbox separation |
 | [#29110](https://github.com/anthropics/claude-code/issues/29110) | Bypass ineffective on Task tool agents |
 | [#29064](https://github.com/anthropics/claude-code/issues/29064) | Plan mode infinite loop |
-
-<!-- markdownlint-enable MD013 -->
 
 ## See Also
 
