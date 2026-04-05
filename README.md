@@ -15,7 +15,7 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 
 | Directory | What's there |
 |---|---|
-| [`docs/cc-native/`](docs/cc-native/) | Anthropic-native features: agents/skills, CI/sandboxing, context/memory, configuration, plugins/ecosystem, MCP connectors |
+| [`docs/cc-native/`](docs/cc-native/) | Anthropic-native features: agents/skills, CI/sandboxing, context/memory, configuration, plugins/ecosystem, model-internals, MCP connectors |
 | [`docs/non-cc/`](docs/non-cc/) | Non-CC agents and orchestrators: JetBrains Air, agent-era/devteam |
 | [`docs/cc-community/`](docs/cc-community/) | Community skills, plugins, tooling, and domain-specific CLAUDE.md patterns |
 | [`docs/sdlc-lcm/`](docs/sdlc-lcm/) | SDLC/lifecycle management specs, agentic SDLC patterns, OSS ALM landscape |

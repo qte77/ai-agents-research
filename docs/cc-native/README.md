@@ -13,6 +13,7 @@ Deep-dive analyses of Anthropic-native Claude Code features and internals.
 | [configuration/](configuration/) | Hooks, model/provider config, fast/bash mode, loop/cron, env vars, tools, changelog, visuals | 9 |
 | [context-memory/](context-memory/) | Extended context, memory system, llms.txt, prompt caching | 4 |
 | [plugins-ecosystem/](plugins-ecosystem/) | Official plugins, connectors, Cowork, packaging, web scraping | 8 |
+| [model-internals/](model-internals/) | Emotion vectors, interpretability, safety classifiers, alignment steering, first-party research index | 2 |
 
 ## Reference
 
