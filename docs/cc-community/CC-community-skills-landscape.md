@@ -1,18 +1,18 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), and BHIL (AI-first development methodology with artifact chains).
+description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), and dispatch (context window multiplication via background workers).
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-03-13
-validated_links: 2026-03-13
+updated: 2026-04-04
+validated_links: 2026-04-04
 ---
 
 **Status**: Research (informational)
 
 ## Summary
 
-Five community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, and claude-howto delivers example-driven learning with production-ready templates.
+Seven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, and superpowers enforces a complete TDD-driven development methodology with subagent orchestration.
 
 ## gstack (Garry Tan)
 
@@ -90,29 +90,32 @@ pm-skills is the clearest public example of CC plugins as a **domain expertise d
 
 ## claude-code-best-practice (shanraisshan)
 
-**Repo**: [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) | **Author**: Claude Community Ambassador
+**Repo**: [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) | **Stars**: 31.8K | **Author**: Claude Community Ambassador
 
-A **living community knowledge base** — not a skill library or plugin, but a curated reference index.
+*"practice made claude perfect"* — a **living community knowledge base** and curated reference index, not a skill library or plugin.
+
+### Organizational Framework: A/C/S Tags
+
+All CC features categorized under three primary tags:
+
+| Tag | Meaning | Role |
+|-----|---------|------|
+| **A** (Agents) | Autonomous actors in isolated contexts | Custom tools, persistent identity |
+| **C** (Commands) | Knowledge-injected prompt templates | Workflow orchestration |
+| **S** (Skills) | Configurable, discoverable capabilities | Context forking |
 
 ### Content Structure
 
 | Section | Entries | Coverage |
 |---------|---------|----------|
-| Concepts Table | 12 | Core CC features with docs links and example repos |
-| Hot Features | 8 | Emerging/beta capabilities (/btw, voice mode, agent teams, remote control) |
+| Concepts Table | 12 | Subagents, Commands, Skills, Workflows, Hooks, MCP Servers, Plugins, Settings, Status Line, Memory, Checkpointing, CLI Startup Flags |
+| Hot Features | 8+ | Power-ups, Ultraplan, CC Web, No Flicker, Computer Use, Auto Mode, Channels, Slack, Code Review, GHA, Chrome Extension, Scheduled Tasks, Voice, Simplify & Batch, Agent Teams, Remote Control, Worktrees, Ralph |
 | Orchestration Workflow | 1 | Visual diagram: Command -> Agent -> Skill architecture |
-| Development Workflows | 7+ | External patterns with star counts (Ralph, RPI, cross-model, Agent Teams) |
+| Development Workflows | 9+ | everything-claude-code (137K stars), Superpowers (135K), Spec Kit (85K), gstack, GSD, BMAD-METHOD, OpenSpec, oh-my-claudecode, Compound Engineering, HumanLayer — with uniqueness badges and component breakdowns |
 | Tips and Tricks | 38+ | Across 7 categories (prompting, planning, workflows, debugging, utilities, daily) |
 | Startup Comparison | 5 | CC features vs commercial tool equivalents |
 | Open Research Questions | 13 | Across 4 domains |
 | Technical Reports | 9 | Deep-dives on specific CC features |
-
-### Notable Workflow Patterns Referenced
-
-- **Ralph Wiggum Loop**: autonomous development loop (listed as hot feature)
-- **RPI (Research -> Plan -> Implement)**: from Human Layer, systematic structured development
-- **Cross-Model (Claude Code + Codex)**: multi-model collaboration
-- **Agent Teams**: parallel development using tmux and git worktrees
 
 ### Open Research Questions (13)
 
@@ -184,12 +187,107 @@ Example-driven learning guide for Claude Code — 10 sequential modules covering
 
 Learning resource with production-ready templates, not a plugin. Where claude-code-best-practice indexes *what exists* and gstack delivers *opinionated workflows*, claude-howto demonstrates *how to combine* CC features into automated pipelines (11–13 hour structured curriculum, beginner → advanced).
 
+**Notable fork**: [akolaarthurali/claude-howto-Master-Claude-Code-in-a-Weekend](https://github.com/akolaarthurali/claude-howto-Master-Claude-Code-in-a-Weekend) (3 stars) — repackaged as a weekend crash course. Same v2.2.0 content; signals demand for condensed onboarding formats but no original content beyond the upstream.
+
+## Dispatch (bassimeledath)
+
+**Repo**: [bassimeledath/dispatch](https://github.com/bassimeledath/dispatch) | **Stars**: 352 | **License**: MIT
+
+A CC skill that **10x's effective context window** by dispatching tasks to background AI workers. The main session becomes a lightweight orchestrator — work fans out to parallel agents, each with their own full context window.
+
+### How It Works
+
+```
+Without dispatch:                    With dispatch:
+Task 1 → fills context              /dispatch all 5 tasks
+Task 2 → context grows              Workers execute in parallel
+Task 3 → losing track               Main session stays lean
+Task 5 → new session needed          Questions surface when needed
+```
+
+1. User invokes `/dispatch <task>` (optionally specifying model)
+2. Dispatcher generates a checklist (sole main-session artifact)
+3. Background worker executes with full independent context
+4. Worker surfaces questions via IPC — no context restart
+5. Results surface on completion or on-demand status check
+
+### Architecture
+
+| Layer | Role |
+|-------|------|
+| **Host dispatcher** | Runs in main CC session, creates checklists, coordinates |
+| **Background workers** | Claude, Cursor, or Codex CLIs with fresh contexts |
+| **IPC system** | Async question/answer flow preserving worker context continuity |
+
+### Multi-Backend Support
+
+Config at `~/.dispatch/config.yaml` — three sections:
+
+- **Backends**: CLI command definitions (Claude, Cursor, Codex)
+- **Models**: Model names mapped to backend providers
+- **Aliases**: Named shortcuts with optional system prompts
+
+Auto-discovery generates initial config on first run. Last-mentioned model takes precedence.
+
+### Installation
+
+```bash
+npx skills add bassimeledath/dispatch -g      # user-level
+npx skills add bassimeledath/dispatch         # project-level
+```
+
+### Key Differentiator
+
+Inverts traditional context usage: *"the main session becomes a mediator, not the thinker."* Unlike manual `claude --background` or multi-terminal approaches, dispatch automates worker lifecycle, error handling, progress tracking, and worktree isolation. Example: `/dispatch use sonnet to find better design patterns for the auth module`.
+
+### Relevance
+
+Addresses the core context exhaustion problem from a different angle than GSD (meta-prompting), RTK (output compression), or Boucle (read deduplication). Dispatch **multiplies** available context by parallelizing across independent agent processes.
+
+## Superpowers (obra / Jesse Vincent)
+
+**Repo**: [obra/superpowers][superpowers] | **Stars**: 135K | **License**: MIT | **Version**: v5.0.7
+
+*"An agentic skills framework & software development methodology that works."* Composable skills and initial instructions that enable coding agents to execute structured development workflows autonomously.
+
+### Core Philosophy
+
+Test-driven development, systematic processes over ad-hoc approaches, complexity reduction, evidence-based validation. Goal: *"Claude to be able to work autonomously for a couple hours at a time without deviating from the plan."*
+
+### Foundational Workflow Stages
+
+1. **Brainstorming** — design refinement through Socratic questioning
+2. **Git worktrees** — isolated development environments
+3. **Implementation planning** — task decomposition (2–5 min granularity)
+4. **Subagent-driven execution** — autonomous task completion with review
+5. **TDD** — mandatory RED-GREEN-REFACTOR cycle enforcement
+6. **Code review** — plan-compliance verification (two-stage: spec + quality)
+7. **Branch completion** — merge decision and cleanup
+
+### Skills Inventory
+
+| Category | Skills |
+|----------|--------|
+| Testing | test-driven-development (RED-GREEN-REFACTOR with anti-patterns) |
+| Debugging | systematic-debugging (4-phase root cause), verification-before-completion |
+| Collaboration | brainstorming, writing-plans, executing-plans, dispatching-parallel-agents, requesting/receiving-code-review, using-git-worktrees, finishing-a-development-branch, subagent-driven-development |
+| Meta | writing-skills (new skill creation), using-superpowers (framework intro) |
+
+### Installation
+
+Available via official CC marketplace (`/plugin install superpowers@claude-plugins-official`), plus Cursor, Codex, OpenCode, GitHub Copilot CLI, and Gemini CLI. Skills trigger automatically based on context — mandatory workflows, not suggestions.
+
+### Key Differentiator
+
+Where gstack locks cognitive *modes* and pm-skills delivers domain *frameworks*, superpowers enforces a complete **development methodology** — spec-before-code, subagent-per-task, mandatory TDD, chunked design presentation. Multi-runtime: 7 agent platforms supported. Largest community in the CC skills space (135K stars, 28 contributors).
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
 - [CC-plans-as-skill-rule-templates.md](../cc-native/agents-skills/CC-plans-as-skill-rule-templates.md) — plan-to-skill extraction (gstack's `/plan-*` skills are concrete examples)
 - [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — official plugin ecosystem
 - [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) — plugin catalogs
+- [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — claude-mem persistent memory
 
 ## Sources
 
@@ -200,9 +298,13 @@ Learning resource with production-ready templates, not a plugin. Where claude-co
 | [claude-code-best-practice][ccbp] | Community knowledge base |
 | [BHIL AI-First Development Toolkit][bhil] | AI-native methodology with artifact chains |
 | [claude-howto][claude-howto] | Example-driven CC learning guide (10 modules, templates) |
+| [dispatch][dispatch] | Context window multiplication via background workers |
+| [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
 
 [gstack]: https://github.com/garrytan/gstack
 [pm-skills]: https://github.com/phuryn/pm-skills
 [ccbp]: https://github.com/shanraisshan/claude-code-best-practice
 [bhil]: https://github.com/camalus/BHIL-AI-First-Development-Toolkit
 [claude-howto]: https://github.com/luongnv89/claude-howto
+[dispatch]: https://github.com/bassimeledath/dispatch
+[superpowers]: https://github.com/obra/superpowers
