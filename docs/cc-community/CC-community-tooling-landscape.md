@@ -1,11 +1,11 @@
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file read deduplication.
+purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file read deduplication, persistent memory.
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-04-04
-validated_links: 2026-04-04
+updated: 2026-04-05
+validated_links: 2026-04-05
 ---
 
 **Status**: Research (informational)
@@ -205,6 +205,138 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ---
 
+## Claude-Mem (thedotmack / Alex Newman)
+
+**Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 45.2K | **License**: AGPL-3.0 | **Version**: 6.5.0
+
+Persistent memory compression system for Claude Code. Automatically captures everything Claude does during coding sessions, compresses it with AI, and injects relevant context back into future sessions for continuity.
+
+### Architecture
+
+| Component | Purpose |
+|-----------|---------|
+| **Lifecycle Hooks** (5) | SessionStart, UserPromptSubmit, PostToolUse, Stop, SessionEnd |
+| **Worker Service** | Express API on port 37777, managed by Bun runtime, includes web viewer UI |
+| **SQLite Storage** | Sessions, observations, summaries with FTS5 full-text search |
+| **Chroma Vector DB** | Hybrid semantic/keyword search |
+| **MCP Tools** | 3-layer progressive disclosure workflow |
+
+### MCP Search Pattern (Token-Efficient)
+
+| Tool | Purpose | Cost |
+|------|---------|------|
+| `search` | Compact index retrieval with IDs | ~50–100 tokens/result |
+| `timeline` | Chronological context around observations | moderate |
+| `get_observations` | Full detail for filtered IDs | ~500–1,000 tokens/result |
+
+Progressive disclosure: start with index → assess via timeline → fetch full detail only for relevant matches. Estimated **10x token savings** over naive retrieval.
+
+### Installation
+
+```bash
+npx claude-mem install                          # CLI install
+/plugin marketplace add thedotmack/claude-mem   # marketplace install
+```
+
+**Note**: npm global install provides only the SDK library; proper plugin registration requires `npx claude-mem install`.
+
+### Key Features
+
+- AI-compressed semantic summaries of session activity
+- Automatic context injection into new sessions
+- `<private>` tags for content exclusion
+- Citation system referencing past observations by ID
+- Web viewer UI at localhost:37777
+- Notification integrations (Telegram, Discord, Slack)
+
+### Live Observer Architecture
+
+A dedicated observer AI watches each session in real-time, generating searchable observations with before-and-after context — capturing causality and decision chains, not just snapshots. Observations are auto-categorized by type (decisions, bugfixes, features, discoveries) and queryable by file path or semantic concept (e.g., "decisions about token refresh").
+
+### RAD Protocol (Coming Soon)
+
+**Real-Time Agent Data** — an open protocol standardizing how AI agents capture and retrieve working memory. Positioned as a counterpart to RAG (Retrieval Augmented Generation). Hook-based architecture for temporal awareness.
+
+### Adoption Considerations
+
+**Strengths**: Largest community memory solution (45.2K stars), progressive disclosure saves tokens, hybrid search (FTS5 + vector), multi-platform (CC + Gemini CLI), web UI for browsing history, [dedicated docs site][claude-mem-docs].
+
+**Risks**: AGPL-3.0 (copyleft — commercial use requires compliance). Ragtime subdirectory under separate PolyForm Noncommercial License. Heavy dependencies (Bun + uv + Chroma). Overlaps with CC's built-in memory system and ByteRover.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## CC Switch (farion1231)
+
+**Repo**: [farion1231/cc-switch][cc-switch] | **Stars**: 38.9K | **License**: TBD | **Commits**: 1,376
+
+Cross-platform desktop app managing 5 AI CLI tools: Claude Code, Codex, Gemini CLI, OpenCode, and OpenClaw. Consolidates provider management, eliminating manual config file editing.
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **Provider switching** | One-click switching between 50+ built-in API provider presets, no config file editing |
+| **MCP/Prompts/Skills** | Unified management across all 5 tools with bidirectional sync |
+| **System tray** | Quick-access provider switching without opening the app |
+| **Cloud sync** | Dropbox, OneDrive, iCloud, WebDAV support |
+| **Usage tracking** | Cost monitoring and request logging across tools |
+| **Session browser** | Search conversation history across all supported apps |
+| **Deep links** | `ccswitch://` protocol for config imports |
+
+### Installation
+
+Available for Windows (MSI/portable), macOS (DMG/Homebrew), and Linux (deb/rpm/AppImage). Multi-language: English, 中文, 日本語.
+
+### Key Differentiator
+
+Only tool that manages provider configuration **across multiple AI CLIs** from a single GUI. Where RTK optimizes output and GSD orchestrates workflows, CC Switch operates at the **infrastructure layer** — which provider, which model, which API key, across which tools.
+
+Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — CC's native provider config
+
+---
+
+## opensrc (vercel-labs)
+
+**Repo**: [vercel-labs/opensrc][opensrc] | **Stars**: 1.5K | **License**: Apache-2.0
+
+Fetches npm package **source code** (not just type definitions) to give AI coding agents deeper implementation context. Solves the problem of agents only seeing type signatures without understanding internal behavior.
+
+### How It Works
+
+1. Queries npm registry for package repository URLs
+2. Auto-detects installed versions from lockfiles (package-lock.json, pnpm-lock.yaml, yarn.lock)
+3. Clones repositories at matching git tags
+4. Stores sources in `opensrc/<package-name>/`
+5. Optionally modifies `.gitignore`, `tsconfig.json`, `AGENTS.md`
+
+### CLI Usage
+
+```bash
+npx opensrc zod              # fetch version matching lockfile
+npx opensrc zod@3.22.0       # exact version
+npx opensrc facebook/react   # GitHub repo
+npx opensrc list             # show fetched sources
+npx opensrc remove zod       # clean up
+```
+
+### Output Structure
+
+```
+opensrc/
+├── settings.json       # user preferences
+├── sources.json        # package index with versions/paths
+└── zod/
+    └── src/            # actual source code
+```
+
+### Key Differentiator
+
+Complements the context management stack from a different angle: RTK **reduces** noise, Boucle **deduplicates** reads, dispatch **multiplies** context, opensrc **deepens** context with actual implementations. TypeScript/npm ecosystem specific.
+
+---
+
 ## Comparison
 
 | Tool | Layer | CC Integration | Approach | Maturity |
@@ -215,10 +347,13 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 | **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
 | **OpenHarness** | Full agent harness | CC-convention compatible | Open harness framework (10 subsystems) | Early (v0.1.0, 3.3K stars) |
 | **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Active (4.1K stars, 48 releases) |
+| **Claude-Mem** | Persistent memory + compression | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (45.2K stars, v6.5.0) |
+| **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
+| **opensrc** | Source code enrichment | CLI (npx) | Fetch npm package sources for agent context | Early (1.5K stars) |
 
-All six address different layers of the agent stack — complementary, not competing.
+All nine address different layers of the agent stack — complementary, not competing.
 
-Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction (fifth approach)
+Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
 ## Sources
 
@@ -232,6 +367,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [OpenHarness][openharness] | Open-source agent harness framework (10 subsystems, 43 tools) |
 | [ByteRover CLI][byterover] | Portable memory layer for coding agents (MCP, context trees) |
 | [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
+| [Claude-Mem][claude-mem] | Persistent memory compression system (45.2K stars) |
+| [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
+| [opensrc][opensrc] | npm package source fetcher for agent context (1.5K stars) |
 
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
@@ -248,3 +386,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [openharness]: https://github.com/HKUDS/OpenHarness
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
+[claude-mem]: https://github.com/thedotmack/claude-mem
+[claude-mem-docs]: https://docs.claude-mem.ai/introduction
+[cc-switch]: https://github.com/farion1231/cc-switch
+[opensrc]: https://github.com/vercel-labs/opensrc
