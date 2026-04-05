@@ -36,7 +36,7 @@ They go out of sync when one is updated and the rest forgotten.
 
 **AGENTS.md** (originated by OpenAI, Aug 2025) is becoming the universal standard:
 
-- Adopted by Linux Foundation's **Agentic AI Foundation** (AAIF) alongside MCP and Goose
+- Adopted by Linux Foundation's **Agentic AI Foundation** (AAIF) alongside MCP and Goose (MCP co-creator — see [goose-analysis](../non-cc/goose-analysis.md))
 - 60,000+ repos, supported by Codex, Cursor, Windsurf, Zed, Jules, Gemini CLI
 - **Exception**: Claude Code uses CLAUDE.md (open issue with 3,000+ upvotes)
 - MCP Dev Summit (April 2026, NYC) may bring further governance updates

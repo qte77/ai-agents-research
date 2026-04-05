@@ -10,6 +10,12 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [deerflow-analysis.md](deerflow-analysis.md) | ByteDance DeerFlow (LangGraph) | Yes | Yes (Apache 2.0) |
 | [devteam-analysis.md](devteam-analysis.md) | agent-era/devteam (TUI) | No | Yes (MIT) |
 
+## Agents
+
+| Document | Type | Headless | Open Source |
+|---|---|---|---|
+| [goose-analysis.md](goose-analysis.md) | Block Goose (MCP co-creator, reference impl) | Yes | Yes (Apache-2.0) |
+
 ## Frameworks
 
 | Document | Type | Headless | Open Source |
