@@ -94,8 +94,6 @@ Cache warms in ~5 turns. After turn 5, hit rate is consistently 98%+. Small cach
 
 Same session (281 turns, Opus 4.6):
 
-<!-- markdownlint-disable MD013 -->
-
 | Metric | Value |
 |---|---|
 | Overall hit rate | 96.3% |
@@ -104,8 +102,6 @@ Same session (281 turns, Opus 4.6):
 | Actual session cost | $35.52 |
 | Hypothetical cost without caching (all at base input) | $242.49 |
 | **Savings** | **$206.97 (85%)** |
-
-<!-- markdownlint-enable MD013 -->
 
 Pricing: input $5/MTok, output $25/MTok, 5m cache write $6.25/MTok (1.25x), cache read $0.50/MTok (0.1x). Source: [pricing docs][pricing], accessed 2026-03-27.
 
@@ -133,16 +129,12 @@ Slug is a CC-internal auto-generated session display name (e.g., `stateful-dream
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [Prompt caching docs][caching] | What's cached, prefix matching, breakpoints, TTL, pricing multipliers |
 | [Pricing docs][pricing] | Per-model cache write/read rates (accessed 2026-03-27) |
 | [API messages docs][api] | Usage object fields (`cache_read_input_tokens`, `cache_creation_input_tokens`) |
 | CC 2.1.83, session `9f7de296`, Codespaces, 2026-03-27 | Cache warmup curve, 5m-only behavior, 96.3% hit rate |
-
-<!-- markdownlint-enable MD013 -->
 
 [caching]: https://platform.claude.com/docs/en/docs/build-with-claude/prompt-caching
 [pricing]: https://platform.claude.com/docs/en/docs/about-claude/pricing

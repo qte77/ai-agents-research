@@ -74,8 +74,6 @@ Optional body content (no headings)
 651 English pages across 11 language versions. Full content at
 `platform.claude.com/llms-full.txt`.
 
-<!-- markdownlint-disable MD013 -->
-
 | Section | Pages | Key Topics |
 | ------- | ----- | ---------- |
 | Getting Started | 3 | Intro, quickstart, features overview |
@@ -95,8 +93,6 @@ Optional body content (no headings)
 | API Reference | 40+ | Messages, batches, completions, models, files, skills, admin |
 | Client SDKs | 9 | Python, TypeScript, C#, Go, Java, PHP, Ruby, OpenAI compat |
 
-<!-- markdownlint-enable MD013 -->
-
 Multi-language SDK coverage: CLI, C#, Go, Java, Kotlin, PHP, Python,
 Ruby, Terraform, TypeScript.
 
@@ -107,8 +103,6 @@ Ruby, Terraform, TypeScript.
 - No `## Optional` section, no `llms-full.txt` companion
 
 ### Key URLs for CC Research
-
-<!-- markdownlint-disable MD013 -->
 
 | Category | URL | Why It Matters |
 | -------- | --- | -------------- |
@@ -124,11 +118,7 @@ Ruby, Terraform, TypeScript.
 | CC Analytics API | `platform.claude.com/docs/en/build-with-claude/claude-code-analytics-api` | Programmatic CC usage data |
 | Eval Tool | `platform.claude.com/docs/en/test-and-evaluate/eval-tool` | Anthropic's evaluation tooling |
 
-<!-- markdownlint-enable MD013 -->
-
 ### Pattern Comparison
-
-<!-- markdownlint-disable MD013 -->
 
 | Attribute | platform.claude.com | code.claude.com | Example project |
 | --------- | ------------------- | --------------- | --------------- |
@@ -138,8 +128,6 @@ Ruby, Terraform, TypeScript.
 | URL pattern | `.md` suffix | `.md` suffix | GitHub blob links |
 | `## Optional` | Not used | Not used | Used |
 | Companion file | `llms-full.txt` | None | None |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Example Project Implementation
 
@@ -173,8 +161,6 @@ A template file (e.g., `.github/templates/llms.txt.tpl`) holds curated markdown 
 
 ## Relevance for CC Research
 
-<!-- markdownlint-disable MD013 -->
-
 | Documentation Area | Fit | Rationale |
 | ------------------ | --- | --------- |
 | Agent SDK | Strong | Foundation for understanding CC agent orchestration and subagent architecture |
@@ -183,8 +169,6 @@ A template file (e.g., `.github/templates/llms.txt.tpl`) holds curated markdown 
 | Structured Outputs | Moderate | API-level reference for debugging structured output issues |
 | Eval Tool | Moderate | Anthropic's own evaluation tooling for comparison |
 | Skills API | Moderate | Programmatic skill management if adopting CC plugins |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Priority Research Queue
 

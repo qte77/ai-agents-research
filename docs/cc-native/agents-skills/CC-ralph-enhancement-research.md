@@ -19,18 +19,12 @@ These are patterns to watch for in any Ralph implementation — bugs or inconsis
 
 ### High Priority (Broken Functionality)
 
-<!-- markdownlint-disable MD013 -->
-
 | Gap | Impact | Fix |
 | --- | ------ | --- |
 | **Status field name mismatch** | `jq` query references a legacy field name that no longer matches the current `status` schema — always shows 0 completed stories | Audit `jq` queries in Makefile recipes; align field names with the current schema (e.g., `.status == "passed"` rather than a legacy `.passes == true`) |
 | **Documentation path drift** | Project instructions reference one script path (e.g., `.claude/scripts/ralph/`) but actual implementation lives elsewhere (e.g., `ralph/scripts/`) | Update project instructions to reference the actual script location; treat this as a living sync issue whenever scripts are moved |
 
-<!-- markdownlint-enable MD013 -->
-
 ### Medium Priority (Concurrency / Robustness)
-
-<!-- markdownlint-disable MD013 -->
 
 | Gap | Impact | Fix |
 | --- | ------ | --- |
@@ -38,18 +32,12 @@ These are patterns to watch for in any Ralph implementation — bugs or inconsis
 | **Stale snapshot tests in teams mode** | Story A's baseline doesn't account for story B's concurrent changes | No clean fix without sequential validation; document as known limitation |
 | **File-conflict dependencies not auto-detected** | The PRD/story generation script doesn't auto-detect file overlaps between stories | Add an `--check-overlaps` flag to the story generation script that warns when stories share files without an explicit `depends_on` |
 
-<!-- markdownlint-enable MD013 -->
-
 ### Low Priority (Enhancement Opportunities)
-
-<!-- markdownlint-disable MD013 -->
 
 | Gap | Impact | Fix |
 | --- | ------ | --- |
 | **No BDD support** | Only TDD `[RED]/[GREEN]/[REFACTOR]` accepted; BDD workflows need different markers | Add `RALPH_TEST_WORKFLOW=tdd\|bdd` switch (TODO noted in ralph.sh header) |
 | **Bash brittleness** | Shell script untestable, hard to extend | Rewrite in Rust or Python (acknowledged TODO — YAGNI until measured need) |
-
-<!-- markdownlint-enable MD013 -->
 
 ## External Pattern Research
 

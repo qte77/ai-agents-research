@@ -16,14 +16,10 @@ CC sessions have a lifecycle: create → auto-name (slug) → optionally `/renam
 
 ### Two storage locations
 
-<!-- markdownlint-disable MD013 -->
-
 | Location | Content | Used by |
 |---|---|---|
 | `~/.claude/history.jsonl` | Global index — one line per user prompt: `sessionId`, `display` (prompt text), `project`, `timestamp` | Unknown — not used by `/resume` |
 | `~/.claude/projects/<key>/<id>.jsonl` | Per-project transcript — full conversation with messages, usage, tool results | `/resume` session discovery |
-
-<!-- markdownlint-enable MD013 -->
 
 The `<key>` is derived from the working directory path with `/` replaced by `-` (e.g., `-workspaces-Agents-eval`). The `<id>` is the session UUID.
 
@@ -136,8 +132,6 @@ Source: [settings docs][settings]
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [CC commands reference][commands] | `/rename`, `/resume`, `/clear` behavior |
@@ -149,8 +143,6 @@ Source: [settings docs][settings]
 | [#27195][gh-27195] | CLI resume by name fails |
 | [#34360][gh-34360] | `--resume` + `--print` ignores renamed sessions |
 | CC 2.1.83, session `ea0fa2d5`, Codespaces, 2026-03-27 | Slug-not-updated reproduction |
-
-<!-- markdownlint-enable MD013 -->
 
 [commands]: https://code.claude.com/docs/en/commands
 [cli]: https://code.claude.com/docs/en/cli-reference

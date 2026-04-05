@@ -15,8 +15,6 @@ The CC plugin ecosystem has grown to 9,000+ plugins across the marketplace, Clau
 
 ## Plugin Coverage Matrix
 
-<!-- markdownlint-disable MD013 -->
-
 | # | Plugin | Installs | This Repo Coverage | Action |
 |---|---|---|---|---|
 | 1 | [Frontend Design](#frontend-design) | 96.4k | None | Brief section (UI-focused, skip unless frontend) |
@@ -30,8 +28,6 @@ The CC plugin ecosystem has grown to 9,000+ plugins across the marketplace, Clau
 | 9 | [Linear](#linear) | 9.5k | None | Brief section (adopt if using Linear PM) |
 | 10 | Ralph Loop | — | Full ([ralph enhancement research](../agents-skills/CC-ralph-enhancement-research.md)) | Cross-ref only |
 | — | CLI-Anything | — | Full ([CLI-Anything analysis](../agents-skills/CC-cli-anything-analysis.md)) | Cross-ref only |
-
-<!-- markdownlint-enable MD013 -->
 
 **Coverage summary**: 3 fully covered, 3 now documented below, 5 cross-referenced to existing analysis (including CLI-Anything as a notable community plugin).
 
@@ -135,8 +131,6 @@ mcp__context7__get-library-docs \
 
 ## Applicability Decision Framework
 
-<!-- markdownlint-disable MD013 -->
-
 | Project Type | Recommended Plugins | Skip |
 |---|---|---|
 | **Backend/API** | Context7, Code Review, Security Guidance | Figma, Frontend Design |
@@ -144,8 +138,6 @@ mcp__context7__get-library-docs \
 | **Data science/ML** | Context7, Code Review | Figma, Frontend Design, Linear |
 | **Open-source library** | Context7, Code Review, Security Guidance | Figma, Frontend Design |
 | **Enterprise team** | All above + Linear (if using Linear) | Per project type |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Decision Rule
 

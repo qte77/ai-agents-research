@@ -17,8 +17,6 @@ Cross-referenced CHANGELOG.md (v2.1.0–v2.1.71, Jan–Mar 2026) against 18 anal
 
 ### High Relevance (directly applicable)
 
-<!-- markdownlint-disable MD013 -->
-
 #### `/loop` Command + Cron Scheduling (v2.1.71)
 
 Run prompts or slash commands at recurring intervals: `/loop 5m check the deploy`. Cron scheduling enables recurring prompts within a session without manual resubmission. ([source][changelog], [source][claudelog])
@@ -130,11 +128,7 @@ Hook fires when CC configuration changes — useful for security auditing. ([sou
 | Opus 4.6 + 1M context | [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md) |
 | Task system with dependencies | [CC-agent-teams-orchestration.md](agents-skills/CC-agent-teams-orchestration.md) |
 
-<!-- markdownlint-enable MD013 -->
-
 ### Open Community Feature Requests (from triage)
-
-<!-- markdownlint-disable MD013 -->
 
 Tracked from changelog/native-sources triage monitors. Not shipped features — open enhancement requests.
 
@@ -147,8 +141,6 @@ Tracked from changelog/native-sources triage monitors. Not shipped features — 
 [invariant]: https://github.com/anthropics/claude-code/issues/34716
 [riscv64]: https://github.com/anthropics/claude-code/issues/35016
 [dispatch-cli]: https://github.com/anthropics/claude-code/issues/36011
-
-<!-- markdownlint-enable MD013 -->
 
 ### References
 

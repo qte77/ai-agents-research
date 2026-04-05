@@ -17,15 +17,11 @@ Reference of user-facing error messages in Claude and Claude Code, sourced from 
 
 ### Usage Limits
 
-<!-- markdownlint-disable MD013 -->
-
 | Message | Trigger | Resolution |
 |---------|---------|------------|
 | "Approaching 5-hour limit." | Approaching plan's limit within a 5-hour window | Review [usage limit best practices][err-article] |
 | "5-hour limit reached - resets [time]." | Plan limit exceeded | Wait for reset timer |
 | "5-hour limit resets [time] - continuing with extra usage." | Paid user with extra usage enabled hits limit | Consult extra usage docs for plan type |
-
-<!-- markdownlint-enable MD013 -->
 
 Community perspectives on limits and workarounds:
 

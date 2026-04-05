@@ -172,8 +172,6 @@ claude mcp add --transport http composio "<YOUR_MCP_URL>" --headers "X-API-Key:Y
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [Stripe MCP][stripe] | Official Stripe MCP server |
@@ -183,8 +181,6 @@ claude mcp add --transport http composio "<YOUR_MCP_URL>" --headers "X-API-Key:Y
 | [Composio][composio] | Universal 850+ app hub |
 | [NetSuite MCP][netsuite] | Official Oracle NetSuite MCP |
 | [USPTO patent MCP][patent] | Patent search, 51 tools |
-
-<!-- markdownlint-enable MD013 -->
 
 [stripe]: https://mcp.stripe.com
 [xero]: https://github.com/XeroAPI/xero-mcp-server

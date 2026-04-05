@@ -17,8 +17,6 @@ run locally, outside the sandbox, with full system access.
 
 ## Hook Events
 
-<!-- markdownlint-disable MD013 -->
-
 | Event | Trigger | Since | Key Use Cases |
 | ----- | ------- | ----- | ------------- |
 | `PreToolUse` | Before any tool executes | v2.0.41 | Approval/denial gates, context injection via `additionalContext` (v2.1.9), input modification via `updatedInput` (v2.1.0) |
@@ -32,8 +30,6 @@ run locally, outside the sandbox, with full system access.
 | `TaskCompleted` | Agent Teams task finishes | v2.1.33 | Dependency unblocking, aggregation triggers |
 | `WorktreeCreate` | Git worktree created | v2.1.50 | Environment setup for isolated agents |
 | `WorktreeRemove` | Git worktree removed | v2.1.50 | Cleanup after agent completes |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Hook Configuration
 

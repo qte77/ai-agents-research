@@ -17,14 +17,10 @@ hitting context limits or triggering auto-compaction.
 
 ## Availability
 
-<!-- markdownlint-disable MD013 -->
-
 | Account Type | 1M Access | Billing |
 | ------------ | --------- | ------- |
 | API / pay-as-you-go | Full access | Long-context pricing above 200K |
 | Pro, Max, Teams, Enterprise | Requires [extra usage](https://support.claude.com/en/articles/12429409-extra-usage-for-paid-claude-plans) enabled | Tokens above 200K billed as extra usage |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Pricing Model
 
@@ -73,8 +69,6 @@ Removes 1M model variants from the model picker entirely. Set in
 
 ## Relevance by Workflow
 
-<!-- markdownlint-disable MD013 -->
-
 | Workflow | Fit | Rationale |
 | -------- | --- | --------- |
 | Interactive development | Strong | Large codebase exploration without compaction; avoids context rot mid-session |
@@ -82,8 +76,6 @@ Removes 1M model variants from the model picker entirely. Set in
 | Headless teams mode | Weak | Each teammate has its own context window; same fresh-start pattern as solo mode |
 | CC baseline collection | Neutral | Longer runs may benefit, but cost scales with context; only if evaluation requires deep multi-file analysis in a single pass |
 | Code review sessions | Medium | Multi-file reviews with large diffs can benefit from sustained context |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Decision Rule
 

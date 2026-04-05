@@ -101,8 +101,6 @@ for security implications.
 
 ## Comparison: `/loop` vs Ralph Loop vs GitHub Actions
 
-<!-- markdownlint-disable MD013 -->
-
 | Feature | `/loop` | Ralph (`claude -p` loop) | GitHub Actions |
 |---|---|---|---|
 | State persistence | Session only (lost on exit) | External files (prd.json, git) | Workflow artifacts |
@@ -113,8 +111,6 @@ for security implications.
 | Survives disconnection | No | Yes (script continues) | Yes (cloud) |
 | Nested teams | Yes (if teams enabled) | N/A (subprocess) | N/A |
 | Best for | Monitoring, polling, light automation | Structured multi-story dev | CI/CD, scheduled builds |
-
-<!-- markdownlint-enable MD013 -->
 
 See [CC-ralph-enhancement-research.md](../agents-skills/CC-ralph-enhancement-research.md)
 for Ralph loop details and
@@ -159,11 +155,7 @@ for GitHub Actions integration.
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | gist by @sorrycc (v2.1.71 cli.js decompilation) | `/loop` internals, CronCreate/List/Delete tools, feature gate |
 | [Official agent teams docs](https://code.claude.com/docs/en/agent-teams) | Permission inheritance for recurring tasks |
-
-<!-- markdownlint-enable MD013 -->

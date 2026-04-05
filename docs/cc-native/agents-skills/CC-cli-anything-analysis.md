@@ -77,8 +77,6 @@ Also available for OpenCode (experimental, `.opencode/commands/`) and Codex (`co
 
 ## Comparison with Existing Tooling
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | CLI-Anything | `.gitmodules` | `bun` scripts | Makefile recipes |
 |---|---|---|---|---|
 | **Purpose** | Generate agent-native CLIs from any codebase | Distribute source code as submodules | Run JS/TS scripts | Hand-written shell recipes |
@@ -88,8 +86,6 @@ Also available for OpenCode (experimental, `.opencode/commands/`) and Codex (`co
 | **Undo/redo** | Built-in | No (git revert) | No | No |
 | **Effort** | Automated generation | Manual setup | Manual writing | Manual writing |
 | **Distribution** | pip install / CC plugin | git submodule add | npm/bun install | Copy Makefile |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Relationship to Each Tool
 

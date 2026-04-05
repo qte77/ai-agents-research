@@ -23,8 +23,6 @@ environments — from self-hosted open-source to managed cloud services.
 
 ## Platform Comparison
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | CC Built-in | `sandbox-runtime` | OpenSandbox (Alibaba) | E2B | Sprites.dev (fly.io) | Daytona |
 | ------ | ----------- | ------------------ | --------------------- | --- | -------------------- | ------- |
 | **Type** | Local (OS-level) | Local (npm package) | Self-hosted (Docker/K8s) | Cloud SaaS | Cloud SaaS | Cloud / self-hosted |
@@ -37,8 +35,6 @@ environments — from self-hosted open-source to managed cloud services.
 | **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Open source (core) |
 | **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-minute (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Usage-based |
 | **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Yes |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Platform Details
 
@@ -148,15 +144,11 @@ landscape.
 
 ## Ephemeral vs Stateful: The Core Tradeoff
 
-<!-- markdownlint-disable MD013 -->
-
 | Model | Platforms | Pros | Cons |
 | ----- | --------- | ---- | ---- |
 | **Ephemeral** | E2B, OpenSandbox | Clean slate every run; no state leakage; simple mental model | Rebuild cost (packages, config) per session; no cross-session memory |
 | **Stateful** | Sprites, Daytona | Warm environments; fast resume; lower per-session cost | State management complexity; potential for drift; storage costs |
 | **Local** | CC built-in, sandbox-runtime | Zero network latency; full local config; no cloud cost | Single machine; no cloud scale; no multi-tenant isolation |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Decision Rule
 

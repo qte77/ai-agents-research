@@ -196,8 +196,6 @@ All project-specific behavior (review criteria, coding standards, patterns) is d
 
 Standard runners (`ubuntu-latest`) are 2-core/7 GB RAM. For large repos or complex Claude tasks, **larger runners** provide up to 96 cores and proportionally more RAM/disk. Requires GitHub Team or Enterprise Cloud plan ([source][gh-larger-runners]).
 
-<!-- markdownlint-disable MD013 -->
-
 | Runner | Cores | Per-min (Linux x64) | Notes |
 |---|---|---|---|
 | Standard | 2 | $0.006 | Included minutes on private repos |
@@ -206,8 +204,6 @@ Standard runners (`ubuntu-latest`) are 2-core/7 GB RAM. For large repos or compl
 | Larger 64-core | 64 | $0.168 | Heavy parallel / large codebase |
 | GPU (4-core + T4) | 4 | $0.052 | ML workloads only |
 | arm64 2-core | 2 | $0.005 | Cheapest option |
-
-<!-- markdownlint-enable MD013 -->
 
 ([source][gh-runner-pricing])
 

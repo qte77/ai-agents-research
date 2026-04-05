@@ -187,8 +187,6 @@ For rotating keys (e.g., from HashiCorp Vault):
 
 ## Decision Matrix — Which Auth Method to Use
 
-<!-- markdownlint-disable MD013 -->
-
 | Scenario | Auth Method | Setup |
 | -------- | ----------- | ----- |
 | Web sessions (cloud VMs) | OAuth subscription + GitHub App | `claude.ai/code` → Connect GitHub |
@@ -199,8 +197,6 @@ For rotating keys (e.g., from HashiCorp Vault):
 | AWS/GCP/Azure backend | Cloud provider env vars | Provider-specific setup |
 | LLM gateway/proxy | `ANTHROPIC_AUTH_TOKEN` | Gateway provides bearer token |
 | Remote Control (mobile monitoring) | OAuth subscription | `claude remote-control` (must be logged in) |
-
-<!-- markdownlint-enable MD013 -->
 
 ## See Also
 

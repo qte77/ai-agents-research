@@ -15,8 +15,6 @@ A high-speed API configuration for Opus 4.6 — **same model, same quality, 2.5x
 
 ### Pricing
 
-<!-- markdownlint-disable MD013 -->
-
 | Mode | Input (MTok) | Output (MTok) |
 | ---- | ------------ | ------------- |
 | Fast mode Opus 4.6 (<200K context) | $30 | $150 |
@@ -24,8 +22,6 @@ A high-speed API configuration for Opus 4.6 — **same model, same quality, 2.5x
 | Standard Opus 4.6 | Lower | Lower |
 
 ([source][cc-fast])
-
-<!-- markdownlint-enable MD013 -->
 
 Compatible with the 1M token extended context window ([source][cc-fast]). As of v2.1.50, Opus 4.6 in fast mode includes the full 1M context window.
 

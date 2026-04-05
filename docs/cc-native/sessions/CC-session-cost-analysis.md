@@ -83,8 +83,6 @@ jq -s '[.[] | select(.type == "assistant" and .message.usage)] |
 
 ### Cost estimate (Opus 4.6 pricing)
 
-<!-- markdownlint-disable MD013 -->
-
 Pricing from the [official pricing page][pricing] (accessed 2026-03-27):
 
 | Token type | Opus 4.6 | Sonnet 4.6 | Haiku 4.5 |
@@ -94,8 +92,6 @@ Pricing from the [official pricing page][pricing] (accessed 2026-03-27):
 | 1h cache write | $10/MTok (2x) | $6/MTok | $2/MTok |
 | Cache read (hit) | $0.50/MTok (0.1x) | $0.30/MTok | $0.10/MTok |
 | Output | $25/MTok | $15/MTok | $5/MTok |
-
-<!-- markdownlint-enable MD013 -->
 
 **Note**: The transcript `cache_creation` sub-object distinguishes `ephemeral_5m_input_tokens` from `ephemeral_1h_input_tokens`, enabling precise cost calculation per cache tier.
 
@@ -174,8 +170,6 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 
 ## Sources
 
-<!-- markdownlint-disable MD013 -->
-
 | Source | Content |
 |---|---|
 | [CC statusline docs][statusline] | Statusline JSON schema (full field list) |
@@ -183,8 +177,6 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 | [Anthropic pricing][pricing] | Official per-model token pricing |
 | [CC settings docs][settings] | `cleanupPeriodDays` transcript retention |
 | CC 2.1.83 transcript inspection, Codespaces, 2026-03-27 | JSONL structure, usage object fields |
-
-<!-- markdownlint-enable MD013 -->
 
 [statusline]: https://code.claude.com/docs/en/statusline
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage

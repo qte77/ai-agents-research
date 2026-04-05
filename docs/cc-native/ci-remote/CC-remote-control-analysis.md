@@ -67,8 +67,6 @@ Enable for all sessions automatically:
 
 ### Remote Control vs Claude Code on the Web
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | Remote Control | Claude Code on the Web |
 | ------ | -------------- | ---------------------- |
 | Execution | Your machine | Anthropic-managed cloud VM |
@@ -77,11 +75,7 @@ Enable for all sessions automatically:
 | Use case | Continue local work from another device | Start tasks without local setup |
 | Offline survival | Reconnects after sleep | Runs independently of your machine |
 
-<!-- markdownlint-enable MD013 -->
-
 ## Applicability to Common Workflows
-
-<!-- markdownlint-disable MD013 -->
 
 | Workflow | Fit | Rationale |
 | -------- | --- | --------- |
@@ -90,8 +84,6 @@ Enable for all sessions automatically:
 | Interactive development (debugging, iteration) | Moderate | Useful for remote coding sessions |
 | Batch processes | Weak | No need for interactive monitoring on non-interactive runs |
 | Headless `claude -p` invocations | None | Print mode exits on completion; no persistent session to connect to |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Decision Rule
 

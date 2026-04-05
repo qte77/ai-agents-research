@@ -65,8 +65,6 @@ Claude coordinates tasks across Excel and PowerPoint — running analyses in one
 
 ## Applicability
 
-<!-- markdownlint-disable MD013 -->
-
 | Aspect | Fit | Rationale |
 | ------ | --- | --------- |
 | Plugin architecture for agent bundles | Moderate | Plugins as portable agent bundles can package a project's agents for distribution across teams |
@@ -75,8 +73,6 @@ Claude coordinates tasks across Excel and PowerPoint — running analyses in one
 | Pre-built templates | Weak | Templates target business workflows; technical/research projects typically need custom agents |
 | Multi-app orchestration (Excel/PowerPoint) | Conditional | Only relevant if a project's workflows span Excel/PowerPoint |
 | Organization marketplace | Moderate | Valuable for distributing skills and agents to a broader team |
-
-<!-- markdownlint-enable MD013 -->
 
 ### Plugin Architecture vs Repo-Local Skills
 
