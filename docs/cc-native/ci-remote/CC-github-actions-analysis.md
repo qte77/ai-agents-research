@@ -3,7 +3,7 @@ title: CC GitHub Actions — claude-code-action & Claude GitHub App
 source: https://code.claude.com/docs/en/github-actions, https://github.com/apps/claude, https://github.com/anthropics/claude-code-action/discussions/578, https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
 purpose: Evaluate Claude Code GitHub Actions for PR automation, code review, issue triage, and scheduled workflows — setup, capabilities, limitations, and cost.
 created: 2026-03-12
-updated: 2026-03-12
+updated: 2026-04-06
 validated_links: 2026-03-12
 ---
 
@@ -241,6 +241,39 @@ runs-on:
 
 **Monitor scheduled workflows.** Cron-triggered prompts (daily reports, audits) are powerful but cost-unconstrained — set `--max-turns` and workflow `timeout-minutes` aggressively.
 
+## Issue Lifecycle Automation Landscape
+
+The CC GHA interactive mode supports `@claude` in issue comments, but the broader issue lifecycle — duplicate detection, triage, feasibility analysis, solution suggestion — is not covered by any single solution.
+
+### Solution Comparison
+
+| Solution | Autonomous Issue→PR | Duplicate Detection | Auto-Triage | Feasibility / Solution Suggestion | OSS | Cost |
+|---|---|---|---|---|---|---|
+| [Claude Code Action][cc-action-repo] | Yes (`@claude` mention) | Via prompt | Via prompt | Via prompt | MIT | Pay-per-token |
+| [GitHub Copilot Coding Agent][copilot-agent] | Yes (assign issue) | No | No | Plans before coding | No | $10-39/mo |
+| [OpenAI Codex Action][codex-action] | Yes (event triggers) | No | Via triggers | Yes | Yes | Pay-per-token |
+| [Sweep AI][sweep-repo] | Yes (label-triggered) | Basic | Label-based | Plans changes | Yes | Free-$480/mo |
+| [SWE-agent][swe-agent-repo] | Yes (wrappable) | No | No | Diagnoses + patches | MIT | Free (BYOK) |
+| [CodeRabbit][coderabbit] | No (PR review only) | No | No | Inline suggestions | Partial | Free-$24/dev/mo |
+| [Greptile][greptile] | No (PR review only) | No | No | Codebase-aware review | No | $30/dev/mo |
+| [Devin][devin] | Yes (full autonomous) | No | Basic | Full agent | No | $20/mo + ACUs |
+| [AI Issue Resolver][axiotree] | Yes (label-triggered) | No | Label-triggered | Generates PRs | MIT | Free (BYOK) |
+
+### Gap Analysis
+
+Four capabilities most solutions miss when applied to issue lifecycle:
+
+1. **Fuzzy duplicate detection** — search existing open+closed issues, score similarity, flag duplicates before human review
+2. **Automated triage with scoring** — urgency/relevance scoring against repo scope (README, CLAUDE.md), not just label assignment
+3. **Feasibility analysis** — scan codebase for affected files, estimate implementation complexity, flag architectural concerns
+4. **Implementation suggestion** — propose approach with specific file references, not just "fix the bug"
+
+No solution in the landscape provides all four as a single GHA-native action. Claude Code Action comes closest via prompt engineering on `issues: [opened]` triggers, but requires per-repo prompt tuning and has no built-in duplicate detection.
+
+### qte77/gha-issue-triage
+
+A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-triage][gha-issue-triage]. Uses `gh` CLI for GitHub API access, `difflib.SequenceMatcher` for fuzzy matching, and GitHub Models API (default) or Anthropic API for LLM analysis. Follows the [gha-biorxiv-stats-action][gha-biorxiv] pattern (composite action, `uv`, pytest TDD).
+
 ## Cross-References
 
 - Version pinning and self-hosted runners for GHA — [CC-version-pinning-resilience.md](CC-version-pinning-resilience.md#github-actions)
@@ -258,3 +291,14 @@ runs-on:
 [gh-larger-runners]: https://docs.github.com/en/actions/concepts/runners/larger-runners
 [gh-runner-pricing]: https://docs.github.com/en/billing/reference/actions-runner-pricing
 [gh-larger-runner-jobs]: https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners/running-jobs-on-larger-runners
+[cc-action-repo]: https://github.com/anthropics/claude-code-action
+[copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent
+[codex-action]: https://github.com/openai/codex-action
+[sweep-repo]: https://github.com/sweepai/sweep
+[swe-agent-repo]: https://github.com/SWE-agent/SWE-agent
+[coderabbit]: https://www.coderabbit.ai/
+[greptile]: https://www.greptile.com
+[devin]: https://devin.ai
+[axiotree]: https://github.com/marketplace/actions/ai-issue-resolver-ai-generated-pr-updates
+[gha-issue-triage]: https://github.com/qte77/gha-issue-triage
+[gha-biorxiv]: https://github.com/qte77/gha-biorxiv-stats-action
