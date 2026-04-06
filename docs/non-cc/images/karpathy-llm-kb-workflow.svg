@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 720 380" font-family="system-ui, -apple-system, sans-serif" font-size="13">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1a1a2e;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --ingest: #dbeafe;
+      --ingest-stroke: #3b82f6;
+      --query: #dcfce7;
+      --query-stroke: #22c55e;
+      --lint: #fef3c7;
+      --lint-stroke: #f59e0b;
+      --gap: #fee2e2;
+      --gap-stroke: #ef4444;
+      --ours: #f3e8ff;
+      --ours-stroke: #a855f7;
+      --arrow: #6b7280;
+      --cycle: #9ca3af;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --fg: #e6edf3;
+        --muted: #8b949e;
+        --border: #30363d;
+        --ingest: #1e3a5f;
+        --ingest-stroke: #58a6ff;
+        --query: #1a3a2a;
+        --query-stroke: #3fb950;
+        --lint: #3d2e00;
+        --lint-stroke: #d29922;
+        --gap: #3d1a1a;
+        --gap-stroke: #f85149;
+        --ours: #2a1a3e;
+        --ours-stroke: #bc8cff;
+        --arrow: #8b949e;
+        --cycle: #484f58;
+      }
+    }
+    text { fill: var(--fg); }
+    .muted { fill: var(--muted); font-size: 11px; }
+    .title { font-size: 16px; font-weight: 700; }
+    .subtitle { font-size: 11px; fill: var(--muted); }
+    .op-label { font-weight: 600; font-size: 14px; }
+    .link-text { fill: var(--ours-stroke); font-size: 10px; text-decoration: underline; }
+    .gap-text { fill: var(--gap-stroke); font-size: 10px; font-weight: 600; }
+    .arrow-line { stroke: var(--arrow); stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+    .cycle-arc { stroke: var(--cycle); stroke-width: 1.5; fill: none; stroke-dasharray: 5,3; marker-end: url(#arr-cycle); }
+  </style>
+
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--arrow)" />
+    </marker>
+    <marker id="arr-cycle" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cycle)" />
+    </marker>
+  </defs>
+
+  <rect width="720" height="380" rx="8" fill="var(--bg)" stroke="var(--border)" stroke-width="1" />
+
+  <text x="360" y="32" text-anchor="middle" class="title">Operations Cycle</text>
+  <text x="360" y="48" text-anchor="middle" class="subtitle">Karpathy Ingest-Query-Lint mapped to ai-agents-research equivalents</text>
+
+  <!-- ===== INGEST ===== -->
+  <rect x="30" y="70" width="200" height="70" rx="6" fill="var(--ingest)" stroke="var(--ingest-stroke)" stroke-width="1.5" />
+  <text x="130" y="96" text-anchor="middle" class="op-label">Ingest</text>
+  <text x="130" y="114" text-anchor="middle" class="muted">Raw source -> LLM reads,</text>
+  <text x="130" y="128" text-anchor="middle" class="muted">writes summaries, updates pages</text>
+
+  <a xlink:href="../../../../.github/workflows/cc-changelog-monitor.yaml">
+    <rect x="30" y="155" width="200" height="55" rx="6" fill="var(--ours)" stroke="var(--ours-stroke)" stroke-width="1.5" />
+    <text x="130" y="176" text-anchor="middle" class="muted">3 cron monitors -> triage PRs</text>
+    <text x="130" y="193" text-anchor="middle" class="link-text">.github/workflows/</text>
+  </a>
+
+  <line x1="130" y1="140" x2="130" y2="155" class="arrow-line" />
+
+  <rect x="30" y="222" width="200" height="38" rx="4" fill="var(--gap)" stroke="var(--gap-stroke)" stroke-width="1" stroke-dasharray="4,3" />
+  <text x="130" y="237" text-anchor="middle" class="gap-text">GAP: LLM draft from triage</text>
+  <text x="130" y="251" text-anchor="middle" class="muted">Compilation is manual today</text>
+
+  <line x1="130" y1="210" x2="130" y2="222" class="arrow-line" />
+
+  <!-- ===== QUERY ===== -->
+  <rect x="260" y="70" width="200" height="70" rx="6" fill="var(--query)" stroke="var(--query-stroke)" stroke-width="1.5" />
+  <text x="360" y="96" text-anchor="middle" class="op-label">Query</text>
+  <text x="360" y="114" text-anchor="middle" class="muted">Search wiki, synthesise answer,</text>
+  <text x="360" y="128" text-anchor="middle" class="muted">file valuable answers as pages</text>
+
+  <a xlink:href="../../cc-native/context-memory/CC-memory-system-analysis.md">
+    <rect x="260" y="155" width="200" height="55" rx="6" fill="var(--ours)" stroke="var(--ours-stroke)" stroke-width="1.5" />
+    <text x="360" y="176" text-anchor="middle" class="muted">Claude memory + CRLA learnings</text>
+    <text x="360" y="193" text-anchor="middle" class="link-text">context-memory/</text>
+  </a>
+
+  <line x1="360" y1="140" x2="360" y2="155" class="arrow-line" />
+
+  <a xlink:href="../../learnings/">
+    <rect x="260" y="222" width="200" height="38" rx="6" fill="var(--ours)" stroke="var(--ours-stroke)" stroke-width="1.5" />
+    <text x="360" y="237" text-anchor="middle" class="muted">Learnings filed back to</text>
+    <text x="360" y="251" text-anchor="middle" class="link-text">docs/learnings/</text>
+  </a>
+
+  <line x1="360" y1="210" x2="360" y2="222" class="arrow-line" />
+
+  <!-- ===== LINT ===== -->
+  <rect x="490" y="70" width="200" height="70" rx="6" fill="var(--lint)" stroke="var(--lint-stroke)" stroke-width="1.5" />
+  <text x="590" y="96" text-anchor="middle" class="op-label">Lint</text>
+  <text x="590" y="114" text-anchor="middle" class="muted">LLM checks contradictions,</text>
+  <text x="590" y="128" text-anchor="middle" class="muted">stale claims, orphan pages</text>
+
+  <a xlink:href="../../../../.markdownlint.json">
+    <rect x="490" y="155" width="200" height="55" rx="6" fill="var(--ours)" stroke="var(--ours-stroke)" stroke-width="1.5" />
+    <text x="590" y="176" text-anchor="middle" class="muted">markdownlint (structural) +</text>
+    <text x="590" y="193" text-anchor="middle" class="link-text">.markdownlint.json</text>
+  </a>
+
+  <line x1="590" y1="140" x2="590" y2="155" class="arrow-line" />
+
+  <rect x="490" y="222" width="200" height="38" rx="4" fill="var(--gap)" stroke="var(--gap-stroke)" stroke-width="1" stroke-dasharray="4,3" />
+  <text x="590" y="237" text-anchor="middle" class="gap-text">GAP: Orphan/stale-link detection</text>
+  <text x="590" y="251" text-anchor="middle" class="muted">No broken-ref or orphan check</text>
+
+  <line x1="590" y1="210" x2="590" y2="222" class="arrow-line" />
+
+  <!-- Cycle arrows -->
+  <path d="M230,88 Q245,60 260,88" class="cycle-arc" />
+  <path d="M460,88 Q475,60 490,88" class="cycle-arc" />
+  <path d="M590,70 Q590,30 130,30 Q55,30 55,70" class="cycle-arc" />
+
+  <!-- Legend -->
+  <rect x="30" y="290" width="660" height="75" rx="6" fill="none" stroke="var(--border)" stroke-width="1" />
+  <text x="50" y="312" class="muted" font-weight="600">Legend:</text>
+  <rect x="50" y="322" width="14" height="14" rx="2" fill="var(--ingest)" stroke="var(--ingest-stroke)" stroke-width="1" />
+  <text x="70" y="334" class="muted">Karpathy operation</text>
+  <rect x="200" y="322" width="14" height="14" rx="2" fill="var(--ours)" stroke="var(--ours-stroke)" stroke-width="1" />
+  <text x="220" y="334" class="muted">ai-agents-research equivalent</text>
+  <rect x="420" y="322" width="14" height="14" rx="2" fill="var(--gap)" stroke="var(--gap-stroke)" stroke-width="1" stroke-dasharray="4,3" />
+  <text x="440" y="334" class="muted">Identified gap (value-add opportunity)</text>
+  <text x="50" y="354" class="muted">Click purple boxes to navigate to source docs</text>
+</svg>

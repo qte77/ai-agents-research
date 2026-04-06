@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 720 420" font-family="system-ui, -apple-system, sans-serif" font-size="13">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1a1a2e;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --layer-raw: #dbeafe;
+      --layer-raw-stroke: #3b82f6;
+      --layer-wiki: #dcfce7;
+      --layer-wiki-stroke: #22c55e;
+      --layer-schema: #fef3c7;
+      --layer-schema-stroke: #f59e0b;
+      --ours-bg: #f3e8ff;
+      --ours-stroke: #a855f7;
+      --arrow: #6b7280;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --fg: #e6edf3;
+        --muted: #8b949e;
+        --border: #30363d;
+        --layer-raw: #1e3a5f;
+        --layer-raw-stroke: #58a6ff;
+        --layer-wiki: #1a3a2a;
+        --layer-wiki-stroke: #3fb950;
+        --layer-schema: #3d2e00;
+        --layer-schema-stroke: #d29922;
+        --ours-bg: #2a1a3e;
+        --ours-stroke: #bc8cff;
+        --arrow: #8b949e;
+      }
+    }
+    text { fill: var(--fg); }
+    .muted { fill: var(--muted); font-size: 11px; }
+    .title { font-size: 16px; font-weight: 700; }
+    .subtitle { font-size: 11px; fill: var(--muted); }
+    .layer-label { font-weight: 600; font-size: 13px; }
+    .link-text { fill: var(--ours-stroke); font-size: 11px; text-decoration: underline; }
+    .arrow-line { stroke: var(--arrow); stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--arrow)" />
+    </marker>
+  </defs>
+
+  <rect width="720" height="420" rx="8" fill="var(--bg)" stroke="var(--border)" stroke-width="1" />
+
+  <text x="360" y="32" text-anchor="middle" class="title">Three-Layer Architecture</text>
+  <text x="360" y="48" text-anchor="middle" class="subtitle">Karpathy LLM Knowledge Base vs ai-agents-research</text>
+
+  <!-- Column headers -->
+  <text x="200" y="74" text-anchor="middle" class="layer-label">Karpathy Pattern</text>
+  <text x="540" y="74" text-anchor="middle" class="layer-label">ai-agents-research</text>
+  <line x1="370" y1="60" x2="370" y2="400" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Layer 1: Raw Sources -->
+  <rect x="40" y="90" width="280" height="80" rx="6" fill="var(--layer-raw)" stroke="var(--layer-raw-stroke)" stroke-width="1.5" />
+  <text x="180" y="115" text-anchor="middle" class="layer-label">Layer 1: Raw Sources</text>
+  <text x="180" y="133" text-anchor="middle" class="muted">Immutable ingest directory</text>
+  <text x="180" y="150" text-anchor="middle" class="muted">Articles, papers, web clips</text>
+
+  <a xlink:href="../../../../triage/">
+    <rect x="400" y="90" width="280" height="80" rx="6" fill="var(--ours-bg)" stroke="var(--ours-stroke)" stroke-width="1.5" />
+    <text x="540" y="115" text-anchor="middle" class="layer-label">triage/</text>
+    <text x="540" y="133" text-anchor="middle" class="muted">3 automated monitors (status,</text>
+    <text x="540" y="150" text-anchor="middle" class="muted">changelog, community)</text>
+    <text x="540" y="165" text-anchor="middle" class="link-text">triage/</text>
+  </a>
+
+  <line x1="320" y1="130" x2="400" y2="130" class="arrow-line" />
+
+  <!-- Layer 2: Wiki -->
+  <rect x="40" y="195" width="280" height="80" rx="6" fill="var(--layer-wiki)" stroke="var(--layer-wiki-stroke)" stroke-width="1.5" />
+  <text x="180" y="220" text-anchor="middle" class="layer-label">Layer 2: Wiki</text>
+  <text x="180" y="238" text-anchor="middle" class="muted">LLM-compiled .md pages</text>
+  <text x="180" y="255" text-anchor="middle" class="muted">index.md + backlinks</text>
+
+  <a xlink:href="../../cc-native/">
+    <rect x="400" y="195" width="280" height="80" rx="6" fill="var(--ours-bg)" stroke="var(--ours-stroke)" stroke-width="1.5" />
+    <text x="540" y="220" text-anchor="middle" class="layer-label">docs/</text>
+    <text x="540" y="238" text-anchor="middle" class="muted">118 structured analysis docs</text>
+    <text x="540" y="255" text-anchor="middle" class="muted">Subdirectory READMEs + architecture.md</text>
+    <text x="540" y="270" text-anchor="middle" class="link-text">docs/cc-native/</text>
+  </a>
+
+  <line x1="320" y1="235" x2="400" y2="235" class="arrow-line" />
+
+  <!-- Layer 3: Schema -->
+  <rect x="40" y="300" width="280" height="80" rx="6" fill="var(--layer-schema)" stroke="var(--layer-schema-stroke)" stroke-width="1.5" />
+  <text x="180" y="325" text-anchor="middle" class="layer-label">Layer 3: Schema</text>
+  <text x="180" y="343" text-anchor="middle" class="muted">CLAUDE.md conventions</text>
+  <text x="180" y="360" text-anchor="middle" class="muted">Structure + workflow rules</text>
+
+  <a xlink:href="../../../../CONTRIBUTING.md">
+    <rect x="400" y="300" width="280" height="80" rx="6" fill="var(--ours-bg)" stroke="var(--ours-stroke)" stroke-width="1.5" />
+    <text x="540" y="325" text-anchor="middle" class="layer-label">Governance</text>
+    <text x="540" y="343" text-anchor="middle" class="muted">CONTRIBUTING.md + .claude/rules/</text>
+    <text x="540" y="360" text-anchor="middle" class="muted">+ .markdownlint.json</text>
+    <text x="540" y="375" text-anchor="middle" class="link-text">CONTRIBUTING.md</text>
+  </a>
+
+  <line x1="320" y1="340" x2="400" y2="340" class="arrow-line" />
+
+  <!-- Vertical flow arrows (left) -->
+  <line x1="180" y1="170" x2="180" y2="195" class="arrow-line" />
+  <line x1="180" y1="275" x2="180" y2="300" class="arrow-line" />
+
+  <!-- Vertical flow arrows (right) -->
+  <line x1="540" y1="170" x2="540" y2="195" class="arrow-line" />
+  <line x1="540" y1="275" x2="540" y2="300" class="arrow-line" />
+</svg>
