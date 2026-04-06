@@ -1,15 +1,15 @@
 # Claude Platform Outage Statistics
 
-*Generated: 2026-03-30 09:41 UTC | 69 incidents in archive*
+*Generated: 2026-04-06 09:37 UTC | 78 incidents in archive*
 
 ## Summary
 
-- **Total incidents**: 69
-- **Resolved**: 69
+- **Total incidents**: 78
+- **Resolved**: 78
 - **Unresolved/ongoing**: 2
-- **Date range**: 2026-02-17 to 2026-03-29
-- **Span**: 39 days
-- **Rate**: 12.4 incidents/week
+- **Date range**: 2026-02-17 to 2026-04-04
+- **Span**: 45 days
+- **Rate**: 12.1 incidents/week
 
 ## Resolution Time
 
@@ -17,17 +17,17 @@
 |--------|-------|
 | Min | 0m |
 | Max | 6.6d |
-| Median | 1.7h |
-| Mean | 6.9h |
-| Total downtime | 19.7d |
+| Median | 1.6h |
+| Mean | 6.2h |
+| Total downtime | 20.1d |
 
 ## Severity Distribution
 
 | Impact | Count | % |
 |--------|-------|---|
-| minor | 42 | 61% |
-| major | 23 | 33% |
-| none | 2 | 3% |
+| minor | 44 | 56% |
+| major | 29 | 37% |
+| none | 3 | 4% |
 | critical | 2 | 3% |
 
 ## MTTR by Severity
@@ -35,34 +35,35 @@
 | Impact | MTTR (mean) | MTTR (median) | Count |
 |--------|-------------|---------------|-------|
 | critical | 18m | 18m | 2 |
-| major | 5.2h | 2.8h | 23 |
-| minor | 7.8h | 1.4h | 42 |
-| none | 12.2h | 12.2h | 2 |
+| major | 4.4h | 1.9h | 29 |
+| minor | 7.5h | 1.2h | 44 |
+| none | 8.1h | 1.9h | 3 |
 
 ## Component Frequency
 
 | Component | Incidents | Total Downtime | Avg Duration |
 |-----------|-----------|----------------|--------------|
-| claude.ai | 61 | 14.8d | 5.8h |
-| Claude Code | 44 | 4.0d | 2.2h |
-| Claude API (api.anthropic.com) | 42 | 11.6d | 6.6h |
-| platform.claude.com (formerly console.anthropic.com) | 29 | 4.8d | 4.0h |
+| claude.ai | 69 | 15.2d | 5.3h |
+| Claude Code | 50 | 4.3d | 2.1h |
+| Claude API (api.anthropic.com) | 48 | 11.9d | 5.9h |
+| platform.claude.com (formerly console.anthropic.com) | 33 | 5.0d | 3.7h |
 | Claude for Government | 10 | 23.1h | 2.3h |
+| Claude Cowork | 1 | 1.1h | 1.1h |
 
 ## Time-of-Day Distribution (UTC)
 
 | Hour | Incidents | Bar |
 |------|-----------|-----|
 | 00:00 | 3 | ###### |
-| 01:00 | 0 |  |
+| 01:00 | 1 | ## |
 | 02:00 | 0 |  |
 | 03:00 | 1 | ## |
 | 04:00 | 0 |  |
 | 05:00 | 1 | ## |
 | 06:00 | 3 | ###### |
-| 07:00 | 1 | ## |
-| 08:00 | 2 | #### |
-| 09:00 | 2 | #### |
+| 07:00 | 2 | #### |
+| 08:00 | 3 | ###### |
+| 09:00 | 3 | ###### |
 | 10:00 | 0 |  |
 | 11:00 | 3 | ###### |
 | 12:00 | 5 | ########## |
@@ -71,43 +72,45 @@
 | 15:00 | 9 | ################## |
 | 16:00 | 5 | ########## |
 | 17:00 | 6 | ############ |
-| 18:00 | 3 | ###### |
-| 19:00 | 5 | ########## |
-| 20:00 | 1 | ## |
+| 18:00 | 5 | ########## |
+| 19:00 | 6 | ############ |
+| 20:00 | 2 | #### |
 | 21:00 | 1 | ## |
-| 22:00 | 2 | #### |
+| 22:00 | 3 | ###### |
 | 23:00 | 0 |  |
 
 ## Day-of-Week Distribution
 
 | Day | Incidents | Bar |
 |-----|-----------|-----|
-| Monday | 12 | ################ |
-| Tuesday | 12 | ################ |
-| Wednesday | 15 | #################### |
-| Thursday | 10 | ############# |
-| Friday | 9 | ############ |
-| Saturday | 7 | ######### |
-| Sunday | 4 | ##### |
+| Monday | 12 | ############ |
+| Tuesday | 15 | ############### |
+| Wednesday | 19 | #################### |
+| Thursday | 10 | ########## |
+| Friday | 10 | ########## |
+| Saturday | 8 | ######## |
+| Sunday | 4 | #### |
 
 ## Monthly Trend
 
 | Month | Incidents | Bar |
 |-------|-----------|-----|
 | 2026-02 | 21 | ######## |
-| 2026-03 | 48 | #################### |
+| 2026-03 | 51 | #################### |
+| 2026-04 | 6 | ## |
 
 ## Uptime Estimate
 
-- **Overall uptime**: 49.746%
-- **Total downtime**: 19.7d
-- **Measurement period**: 39.2d
+- **Overall uptime**: 56.245%
+- **Total downtime**: 20.1d
+- **Measurement period**: 45.9d
 
 | Component | Uptime % | Downtime |
 |-----------|----------|----------|
-| claude.ai | 62.211% | 14.8d |
-| Claude API (api.anthropic.com) | 70.389% | 11.6d |
-| platform.claude.com (formerly console.anthropic.com) | 87.765% | 4.8d |
-| Claude Code | 89.675% | 4.0d |
-| Claude for Government | 97.546% | 23.1h |
+| claude.ai | 66.883% | 15.2d |
+| Claude API (api.anthropic.com) | 74.116% | 11.9d |
+| platform.claude.com (formerly console.anthropic.com) | 89.021% | 5.0d |
+| Claude Code | 90.576% | 4.3d |
+| Claude for Government | 97.906% | 23.1h |
+| Claude Cowork | 99.897% | 1.1h |
 
