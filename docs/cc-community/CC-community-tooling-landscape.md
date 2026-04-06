@@ -4,8 +4,8 @@ purpose: Survey of community developer tools that integrate with or enhance Clau
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-04-06
+validated_links: 2026-04-06
 ---
 
 **Status**: Research (informational)
@@ -337,6 +337,40 @@ Complements the context management stack from a different angle: RTK **reduces**
 
 ---
 
+## awesome-design-md (VoltAgent)
+
+**Repo**: [VoltAgent/awesome-design-md][awesome-design-md] | **Stars**: 21,849 | **License**: MIT
+
+Curated collection of **58 DESIGN.md files** capturing design systems from popular websites in LLM-consumable Markdown. Each file includes color palettes, typography rules, component styles, layout principles, responsive behavior, and an explicit **Agent Prompt Guide** section. Format designed for Google Stitch and general-purpose coding agents.
+
+### DESIGN.md Format (9 Sections)
+
+1. Visual Theme & Atmosphere — mood, density, design philosophy
+2. Color Palette & Roles — semantic names with hex codes (40+ per file)
+3. Typography Rules — font families, 16-role hierarchy with px/weight/line-height
+4. Component Stylings — buttons (5 variants), cards, inputs, navigation
+5. Layout Principles — spacing scale (8px base), grid widths, border-radius (7 levels)
+6. Depth & Elevation — 5-level system with exact CSS shadow values
+7. Do's and Don'ts — design guardrails and anti-patterns
+8. Responsive Behavior — 5 breakpoints, collapsing strategies, touch targets (44x44px min)
+9. Agent Prompt Guide — color reference table, 4 example component prompts, 7 iteration principles
+
+### 58 Design Systems (7 Categories)
+
+AI & ML (12): Claude, Mistral AI, Replicate, xAI, ElevenLabs. Developer Tools (14): Cursor, Linear, PostHog, Sentry, Vercel. Infrastructure (6): Stripe, MongoDB, HashiCorp. Design & Productivity (10): Figma, Notion, Framer, Miro. Fintech (4): Coinbase, Revolut, Wise. Enterprise (7): Airbnb, Apple, IBM, SpaceX, Spotify. Car Brands (5): BMW, Ferrari, Tesla.
+
+### Key Differentiator
+
+A new artifact type: design systems encoded for LLM consumption rather than human developers or design tool plugins. The Agent Prompt Guide section is a novel contribution — ready-to-use component prompts with iteration instructions. Files capture publicly visible CSS values, not proprietary design tokens. 21.8K stars in 6 days (riding Google Stitch launch wave).
+
+**Who is VoltAgent**: Open-source [TypeScript AI Agent Framework](https://voltagent.dev) for enterprise multi-agent systems (tool calling, persistent memory, supervisor orchestration, 40+ integrations). The awesome-design-md repo is a community/marketing project.
+
+**Gap**: No public tooling for generating DESIGN.md from arbitrary sites — extraction appears manual/internal.
+
+Cross-ref: [CC-domain-claudemd-showcase.md](CC-domain-claudemd-showcase.md) — CLAUDE.md as domain controller, analogous pattern
+
+---
+
 ## Comparison
 
 | Tool | Layer | CC Integration | Approach | Maturity |
@@ -350,8 +384,9 @@ Complements the context management stack from a different angle: RTK **reduces**
 | **Claude-Mem** | Persistent memory + compression | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (45.2K stars, v6.5.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
 | **opensrc** | Source code enrichment | CLI (npx) | Fetch npm package sources for agent context | Early (1.5K stars) |
+| **awesome-design-md** | Agent-consumable design systems | Markdown files (drop-in) | 58 DESIGN.md files for UI generation | Viral (21.8K stars in 6 days) |
 
-All nine address different layers of the agent stack — complementary, not competing.
+All ten address different layers of the agent stack — complementary, not competing.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -370,7 +405,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Claude-Mem][claude-mem] | Persistent memory compression system (45.2K stars) |
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
 | [opensrc][opensrc] | npm package source fetcher for agent context (1.5K stars) |
+| [awesome-design-md][awesome-design-md] | 58 DESIGN.md files for agent-consumable UI generation (21.8K stars) |
 
+[awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
 [gsd-repo]: https://github.com/gsd-build/get-shit-done

@@ -22,11 +22,18 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 |---|---|---|---|
 | [karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md) | Karpathy LLM Knowledge Base (markdown-first wiki) | Yes | Gist only |
 
+## Context & Memory Infrastructure
+
+| Document | Type | Headless | Open Source |
+|---|---|---|---|
+| [openviking-analysis.md](openviking-analysis.md) | ByteDance OpenViking (filesystem-based context DB) | Yes | Yes (AGPL-3.0) |
+
 ## Frameworks
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
 | [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
+| [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
 
 ## Planned
 

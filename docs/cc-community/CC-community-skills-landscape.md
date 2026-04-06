@@ -1,18 +1,18 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), and dispatch (context window multiplication via background workers).
+description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering).
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-04-04
-validated_links: 2026-04-04
+updated: 2026-04-06
+validated_links: 2026-04-06
 ---
 
 **Status**: Research (informational)
 
 ## Summary
 
-Seven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, and superpowers enforces a complete TDD-driven development methodology with subagent orchestration.
+Eight community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, and agent-skills encodes Google engineering practices across the full SDLC.
 
 ## gstack (Garry Tan)
 
@@ -281,6 +281,68 @@ Available via official CC marketplace (`/plugin install superpowers@claude-plugi
 
 Where gstack locks cognitive *modes* and pm-skills delivers domain *frameworks*, superpowers enforces a complete **development methodology** — spec-before-code, subagent-per-task, mandatory TDD, chunked design presentation. Multi-runtime: 7 agent platforms supported. Largest community in the CC skills space (135K stars, 28 contributors).
 
+## agent-skills (Addy Osmani)
+
+**Repo**: [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | **Stars**: 5,554 | **License**: MIT
+
+19 production-grade SDLC skills, 7 slash commands, 3 agent personas, and 4 reference checklists. Platform-agnostic (Claude Code, Cursor, Gemini CLI, Windsurf, GitHub Copilot). Heavily influenced by [Google's engineering practices](https://google.github.io/eng-practices/) and [Software Engineering at Google](https://abseil.io/resources/swe-book).
+
+### SDLC Phase Mapping
+
+```
+DEFINE -> PLAN -> BUILD -> VERIFY -> REVIEW -> SHIP
+/spec    /plan   /build   /test     /review   /ship
+                                    /code-simplify
+```
+
+### All 19 Skills
+
+| Phase | Skill | What It Does |
+|-------|-------|-------------|
+| Define | `idea-refine` | Structured divergent/convergent thinking to turn vague ideas into concrete proposals |
+| Define | `spec-driven-development` | Write a PRD covering objectives, commands, structure, code style, testing, boundaries before any code |
+| Plan | `planning-and-task-breakdown` | Decompose specs into small verifiable tasks with acceptance criteria and dependency ordering |
+| Build | `incremental-implementation` | Thin vertical slices: implement, test, verify, commit. Feature flags, safe defaults, rollback-friendly |
+| Build | `test-driven-development` | Red-Green-Refactor, test pyramid (80/15/5), DAMP over DRY, Beyonce Rule |
+| Build | `context-engineering` | Feed agents the right information at the right time: rules files, context packing, MCP integrations |
+| Build | `frontend-ui-engineering` | Component architecture, design systems, state management, WCAG 2.1 AA accessibility |
+| Build | `api-and-interface-design` | Contract-first design, Hyrum's Law, One-Version Rule, error semantics, boundary validation |
+| Verify | `browser-testing-with-devtools` | Chrome DevTools MCP for live runtime data: DOM, console, network, performance |
+| Verify | `debugging-and-error-recovery` | Five-step triage: reproduce, localize, reduce, fix, guard |
+| Review | `code-review-and-quality` | Five-axis review, ~100 line changes, severity labels, splitting strategies |
+| Review | `code-simplification` | Chesterton's Fence, Rule of 500, reduce complexity preserving behavior |
+| Review | `security-and-hardening` | OWASP Top 10 prevention, auth patterns, secrets management, dependency auditing |
+| Review | `performance-optimization` | Measure-first: Core Web Vitals targets, profiling workflows, bundle analysis |
+| Ship | `git-workflow-and-versioning` | Trunk-based development, atomic commits, commit-as-save-point pattern |
+| Ship | `ci-cd-and-automation` | Shift Left, Faster is Safer, feature flags, quality gate pipelines |
+| Ship | `deprecation-and-migration` | Code-as-liability mindset, compulsory vs advisory deprecation, zombie code removal |
+| Ship | `documentation-and-adrs` | Architecture Decision Records, API docs, document the "why" |
+| Ship | `shipping-and-launch` | Pre-launch checklists, feature flag lifecycle, staged rollouts, monitoring setup |
+
+### Agent Personas (3) and Reference Checklists (4)
+
+| Agent | Role | Perspective |
+|-------|------|-------------|
+| `code-reviewer` | Senior Staff Engineer | Five-axis code review: "would a staff engineer approve this?" |
+| `test-engineer` | QA Specialist | Test strategy, coverage analysis, Prove-It pattern |
+| `security-auditor` | Security Engineer | Vulnerability detection, threat modeling, OWASP assessment |
+
+Checklists: `testing-patterns.md`, `security-checklist.md`, `performance-checklist.md`, `accessibility-checklist.md`.
+
+### Google Engineering Practices Embedded
+
+Hyrum's Law, Beyonce Rule, Test Pyramid (80/15/5), One-Version Rule, Change sizing (~100 LOC), Chesterton's Fence, Trunk-based development, Shift Left — sourced from [SWE Book](https://abseil.io/resources/swe-book) and [Eng Practices Guide](https://google.github.io/eng-practices/).
+
+### Skill Design Pattern
+
+Every skill follows: Frontmatter -> Overview -> When to Use -> Process -> **Rationalizations** (anti-rationalization table) -> Red Flags -> Verification. Key principle: *"Seems right" is never sufficient — every skill requires concrete evidence.*
+
+### Key Differentiator
+
+Where gstack locks cognitive *modes*, pm-skills delivers domain *frameworks*, and superpowers enforces *TDD methodology*, agent-skills embeds **Google senior-engineer culture** (Hyrum's Law, Beyonce Rule, Chesterton's Fence) into anti-rationalization-guarded workflows across the full SDLC. The anti-rationalization tables (per skill) are a unique contribution — they enumerate excuses agents use to skip steps and provide counter-arguments.
+
+Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/claude-code-agent-teams/) (referenced in [CC-agent-teams-orchestration.md](../cc-native/agents-skills/CC-agent-teams-orchestration.md))
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -300,7 +362,9 @@ Where gstack locks cognitive *modes* and pm-skills delivers domain *frameworks*,
 | [claude-howto][claude-howto] | Example-driven CC learning guide (10 modules, templates) |
 | [dispatch][dispatch] | Context window multiplication via background workers |
 | [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
+| [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
 
+[agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
 [pm-skills]: https://github.com/phuryn/pm-skills
 [ccbp]: https://github.com/shanraisshan/claude-code-best-practice
