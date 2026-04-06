@@ -16,6 +16,12 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 |---|---|---|---|
 | [goose-analysis.md](goose-analysis.md) | Block Goose (MCP co-creator, reference impl) | Yes | Yes (Apache-2.0) |
 
+## Knowledge Management
+
+| Document | Type | Headless | Open Source |
+|---|---|---|---|
+| [karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md) | Karpathy LLM Knowledge Base (markdown-first wiki) | Yes | Gist only |
+
 ## Frameworks
 
 | Document | Type | Headless | Open Source |
