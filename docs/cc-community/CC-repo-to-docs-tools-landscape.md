@@ -5,7 +5,7 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-09
 validated_links: 2026-04-06
 ---
 
@@ -16,15 +16,6 @@ validated_links: 2026-04-06
 Three tools represent an emerging category of **AI-powered repo-to-documentation generators**: DeepWiki (by Cognition/Devin) produces wiki-style reference docs with architecture diagrams, Code2Tutorial (by The-Pocket/PocketFlow) generates chapter-based educational tutorials, and GitSummarize (indie open-source) produces multi-level summaries via URL rewrite. All take a GitHub URL as input and produce structured natural-language documentation.
 
 **Relevance to agent workflows**: These tools can serve as context sources for coding agents -- pre-generated documentation reduces the need for expensive runtime codebase analysis. The repo-to-docs pattern also overlaps with the `llms.txt` standard and context engineering approaches documented in this repository.
-
-## Cross-References in This Repository
-
-| Topic | Existing Analysis | File |
-|-------|------------------|------|
-| llms.txt documentation standard | Context memory analysis | `docs/cc-native/context-memory/CC-llmstxt-analysis.md` |
-| Context engineering for agents | Osmani's context-engineering skill | `docs/cc-community/CC-agent-skills-osmani-analysis.md` |
-| Code understanding | OpenViking L0/L1/L2 tiering | `docs/non-cc/openviking-analysis.md` |
-| DeepWiki as documentation source | Used by OpenViking | [deepwiki.com/volcengine/OpenViking](https://deepwiki.com/volcengine/OpenViking) |
 
 ## Comparison
 
@@ -107,6 +98,16 @@ Differentiation happens at the output stage:
 1. Fed as context to coding agents (replacing expensive runtime analysis)
 2. Used as `llms.txt` equivalent for external repos
 3. Cached as L1/L2 context in OpenViking-style tiered systems
+
+## Cross-References
+
+| Topic | File |
+|-------|------|
+| Knowledge graphs from code (CC-integrated) | [CC-community-tooling-landscape.md — Graphify](CC-community-tooling-landscape.md#graphify-safishamsi) |
+| AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
+| llms.txt documentation standard | [CC-llmstxt-analysis.md](../cc-native/context-memory/CC-llmstxt-analysis.md) |
+| Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](CC-community-skills-landscape.md) |
+| OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../non-cc/openviking-analysis.md) |
 
 ## Sources
 
