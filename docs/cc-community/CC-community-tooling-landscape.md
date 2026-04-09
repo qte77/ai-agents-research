@@ -3,6 +3,7 @@ title: CC Community Tooling Landscape
 purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file read deduplication, persistent memory, knowledge graphs, code analysis.
 category: landscape
 status: research
+platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
 updated: 2026-04-09
 validated_links: 2026-04-09

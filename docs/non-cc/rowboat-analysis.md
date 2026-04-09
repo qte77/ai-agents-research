@@ -2,6 +2,7 @@
 title: Rowboat AI Coworker Analysis
 source: https://github.com/rowboatlabs/rowboat
 purpose: Analysis of Rowboat as a local-first AI coworker building long-lived knowledge graphs from communications.
+platform_scope: [desktop, ollama, mcp-generic]
 created: 2026-04-09
 updated: 2026-04-09
 validated_links: 2026-04-09

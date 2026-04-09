@@ -2,6 +2,7 @@
 title: Hermes Agent Analysis
 source: https://github.com/nousresearch/hermes-agent
 purpose: Analysis of Hermes as a self-improving autonomous agent by Nous Research with multi-platform presence and skill creation.
+platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email]
 created: 2026-04-09
 updated: 2026-04-09
 validated_links: 2026-04-09

@@ -127,6 +127,30 @@ ai-agents-research/
   .github/                             # CI automation (monitors, scripts, templates)
 ```
 
+### Classification: cc-community vs non-cc
+
+Many tools work with multiple AI agents/editors, not just Claude Code. The
+placement decision is based on **research interest**, not exclusivity:
+
+| Directory | Placement criterion | Example |
+|---|---|---|
+| `cc-community/` | The CC integration surface is the primary research interest — how the tool plugs into CC via hooks, MCP, plugins, slash commands | Graphify (5 platforms, but CC hook/MCP integration is the analysis focus) |
+| `non-cc/` | The tool's architecture or capabilities are the primary research subject — CC is incidental or one of many providers | Hermes Agent (supports Claude via API, but self-improving skill loop is the analysis focus) |
+
+When a tool spans both, place it where the **deeper analysis** lives and
+cross-reference from the other directory.
+
+#### platform_scope frontmatter
+
+For tools that support multiple platforms, add a `platform_scope` field to
+frontmatter to make cross-platform reach explicit:
+
+```yaml
+platform_scope: [claude-code, cursor, windsurf, zed, opencode, antigravity]
+```
+
+This prevents misreading a `cc-community` placement as "CC-exclusive."
+
 ### Index maintenance
 
 - Each `cc-native/` subdirectory has a `README.md` index with a doc table
