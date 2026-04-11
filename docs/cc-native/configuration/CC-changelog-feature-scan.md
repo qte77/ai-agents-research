@@ -135,7 +135,7 @@ Tracked from changelog/native-sources triage monitors. Not shipped features — 
 - [ ] **`WriteTemp()` tool** ([#34939][writetemp], 2026-03-18) — Medium. Temporary file creation without permission prompts. Would simplify headless scripts that generate intermediate files
 - [ ] **Compaction-proof `INVARIANT.md`** ([#34716][invariant], 2026-03-17) — Medium. `~/.claude/INVARIANT.md` that survives context compaction. Would guarantee critical instructions persist in long sessions
 - [ ] **riscv64 architecture support** ([#35016][riscv64], 2026-03-18) — Low. Linux RISC-V support. Niche — only relevant if deploying CC on RISC-V hardware
-- [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Medium. Cowork dispatch for CC CLI. See [CC-cowork-plugins-enterprise-analysis.md](plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md#open-feature-requests)
+- [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Medium. Cowork dispatch for CC CLI. See [CC-cowork-plugins-enterprise-analysis.md](../plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md#open-feature-requests)
 
 [writetemp]: https://github.com/anthropics/claude-code/issues/34939
 [invariant]: https://github.com/anthropics/claude-code/issues/34716
@@ -201,8 +201,8 @@ On March 30 2026, [Boris Cherny](https://www.threads.com/@boris_cherny/) (Head o
 - [Boris Cherny original thread](https://www.threads.com/@boris_cherny/post/DWfjnqGFPHE/) (2026-03-30)
 - [howborisusesclaudecode.com](https://howborisusesclaudecode.com) (fan site)
 - [claude-code-best-practice: Boris 15 tips](https://github.com/shanraisshan/claude-code-best-practice/blob/main/tips/claude-boris-15-tips-30-mar-26.md)
-- [Anthropic Hooks Guide](https://docs.anthropic.com/en/docs/claude-code/hooks-guide)
-- [Claude Code SDK Overview](https://docs.anthropic.com/en/docs/claude-code/sdk)
+- [Anthropic Hooks Guide](https://code.claude.com/docs/en/hooks-guide)
+- [Claude Code SDK Overview](https://code.claude.com/docs/en/agent-sdk/overview)
 
 ### References
 

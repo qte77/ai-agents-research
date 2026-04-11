@@ -102,4 +102,4 @@ goes versus conventional APIs. Skills library is early (12 stars).
 [insforge-py]: https://github.com/InsForge/insforge-python
 [insforge-templates]: https://github.com/InsForge/insforge-templates
 [insforge-cloud]: https://insforge.dev
-[insforge-docs]: https://docs.insforge.dev
+[insforge-docs]: https://docs.insforge.dev/introduction

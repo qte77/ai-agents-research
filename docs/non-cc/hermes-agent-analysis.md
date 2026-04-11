@@ -103,4 +103,4 @@ on multi-channel deployment but different architecture.
 [hermes]: https://github.com/nousresearch/hermes-agent
 [hermes-docs]: https://hermes-agent.nousresearch.com/docs/
 [nous]: https://nousresearch.com
-[skills-hub]: https://agentskills.io
+[skills-hub]: https://agentskills.io/home

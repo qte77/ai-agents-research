@@ -37,6 +37,7 @@ Three tools represent an emerging category of **AI-powered repo-to-documentation
 **Maker**: [Cognition Labs](https://cognition.ai) (the company behind Devin AI)
 
 AI indexes an entire GitHub repository and generates hierarchical wiki-style documentation with:
+
 - Table of contents with subsections and cross-links
 - Mermaid-format architecture diagrams (flowcharts, dependency graphs, lifecycle hierarchies)
 - Source file references with GitHub links including line ranges
@@ -73,7 +74,8 @@ Published examples: [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-C
 **GitHub**: [antarixxx/gitsummarize](https://github.com/antarixxx/gitsummarize) | **Stars**: 444 | **License**: Apache-2.0
 
 One-click AI documentation generator. URL rewrite workflow:
-```
+
+```text
 github.com/user/repo  -->  gitsummarize.com/user/repo
 ```
 
@@ -85,7 +87,7 @@ Three output levels: system architecture, directory-level summaries, file-level 
 
 All three tools share a common pipeline:
 
-```
+```text
 GitHub URL --> Clone/Fetch --> AI Analysis --> Structured Output
 ```
 
@@ -105,7 +107,7 @@ Differentiation happens at the output stage:
 |-------|------|
 | Knowledge graphs from code (CC-integrated) | [CC-community-tooling-landscape.md — Graphify](CC-community-tooling-landscape.md#graphify-safishamsi) |
 | AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
-| llms.txt documentation standard | [CC-llmstxt-analysis.md](../cc-native/context-memory/CC-llmstxt-analysis.md) |
+| llms.txt documentation standard | [CC-llms-txt-analysis.md](../cc-native/context-memory/CC-llms-txt-analysis.md) |
 | Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](CC-community-skills-landscape.md) |
 | OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../non-cc/openviking-analysis.md) |
 
