@@ -391,6 +391,8 @@ Workers respond via XML-based `<task-notification>` protocol with fields for sta
 
 Cross-ref: [CC-ide-integration-protocol.md](../configuration/CC-ide-integration-protocol.md) — WebSocket IDE protocol; [CC-channels-analysis.md](../plugins-ecosystem/CC-channels-analysis.md) — external push channels
 
+Community coverage of leaked/hidden features referenced in this section: [Techsy leaked features overview][techsy-leaked]; [Minbook CC anatomy — hidden features][minbook-hidden].
+
 ## Coordinator Mode — Internal Orchestration (Unreleased)
 
 Multi-agent orchestration mode activated via `CLAUDE_CODE_COORDINATOR_MODE=1`. Transforms CC from a single agent into a coordinator that spawns and manages multiple worker agents in parallel. The coordinator itself has **no filesystem/shell tools** — it is a pure management layer that relies on UDS Inbox for all worker communication.
@@ -420,7 +422,7 @@ Coordinator Mode and Agent Teams are complementary:
 - **Agent Teams** (current, experimental): User-facing team orchestration via shared task list + mailboxes. Communication via file-based JSON inboxes under `~/.claude/teams/`
 - **Coordinator Mode** (unreleased): Internal orchestration layer using UDS for real-time IPC. Coordinator has no tools except worker management
 
-Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST documents Coordinator Mode phases and tool registry
+Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST documents Coordinator Mode phases and tool registry; [zread.ai Coordinator Mode walkthrough][zread-coordinator] — community breakdown of the unreleased mode.
 
 ### Sources
 

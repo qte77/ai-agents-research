@@ -9,7 +9,7 @@ endif
 .SILENT:
 .ONESHELL:
 .PHONY: \
-	setup_node setup_lychee setup_mdlint setup_all \
+	setup_node setup_lychee setup_mdlint setup_skills setup_all \
 	check_links check_docs autofix lint \
 	help
 .DEFAULT_GOAL := help
@@ -20,6 +20,10 @@ NODE_VERSION ?= 22.11.0
 NODE_DIR     := $(HOME)/.local/share/node
 NODE_BIN     := $(NODE_DIR)/bin
 LOCAL_BIN    := $(HOME)/.local/bin
+
+# Sibling repo providing plugin skills (docs-governance, cc-meta)
+UTILS_PLUGIN_DIR ?= $(HOME)/repos/claude-code-utils-plugin
+SKILLS_DIR       := .claude/skills
 
 
 # MARK: SETUP
@@ -65,6 +69,33 @@ setup_mdlint: setup_node ## Install markdownlint-cli2 via user-local npm (no sud
 			exit 1
 		fi
 	fi
+
+setup_skills: ## Symlink docs-governance + compacting-context skills from sibling claude-code-utils-plugin (local dev; gitignored)
+	if [ ! -d "$(UTILS_PLUGIN_DIR)" ]; then
+		echo "ERROR: expected sibling repo at $(UTILS_PLUGIN_DIR)"
+		echo "Clone: git clone https://github.com/qte77/claude-code-utils-plugin $(UTILS_PLUGIN_DIR)"
+		echo "Or override: make setup_skills UTILS_PLUGIN_DIR=/path/to/claude-code-utils-plugin"
+		exit 1
+	fi
+	mkdir -p $(SKILLS_DIR)
+	for skill_path in \
+		$(UTILS_PLUGIN_DIR)/plugins/docs-governance/skills/enforcing-doc-hierarchy \
+		$(UTILS_PLUGIN_DIR)/plugins/docs-governance/skills/maintaining-agents-md \
+		$(UTILS_PLUGIN_DIR)/plugins/cc-meta/skills/compacting-context; do
+		name=$$(basename $$skill_path)
+		if [ ! -d "$$skill_path" ]; then
+			echo "WARN: source skill missing: $$skill_path — skipping"
+			continue
+		fi
+		if [ -L "$(SKILLS_DIR)/$$name" ]; then
+			echo "$$name: already symlinked"
+		elif [ -e "$(SKILLS_DIR)/$$name" ]; then
+			echo "WARN: $(SKILLS_DIR)/$$name exists and is not a symlink — skipping"
+		else
+			ln -s $$skill_path $(SKILLS_DIR)/$$name
+			echo "$$name: linked"
+		fi
+	done
 
 setup_all: setup_lychee setup_mdlint ## Install all tooling (lychee + node + markdownlint-cli2)
 
