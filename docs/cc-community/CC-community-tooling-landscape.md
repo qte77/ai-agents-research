@@ -1,11 +1,12 @@
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file read deduplication, persistent memory.
+purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file read deduplication, persistent memory, knowledge graphs, code analysis.
 category: landscape
 status: research
+platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-04-09
+validated_links: 2026-04-09
 ---
 
 **Status**: Research (informational)
@@ -337,6 +338,172 @@ Complements the context management stack from a different angle: RTK **reduces**
 
 ---
 
+## awesome-design-md (VoltAgent)
+
+**Repo**: [VoltAgent/awesome-design-md][awesome-design-md] | **Stars**: 21,849 | **License**: MIT
+
+Curated collection of **58 DESIGN.md files** capturing design systems from popular websites in LLM-consumable Markdown. Each file includes color palettes, typography rules, component styles, layout principles, responsive behavior, and an explicit **Agent Prompt Guide** section. Format designed for Google Stitch and general-purpose coding agents.
+
+### DESIGN.md Format (9 Sections)
+
+1. Visual Theme & Atmosphere — mood, density, design philosophy
+2. Color Palette & Roles — semantic names with hex codes (40+ per file)
+3. Typography Rules — font families, 16-role hierarchy with px/weight/line-height
+4. Component Stylings — buttons (5 variants), cards, inputs, navigation
+5. Layout Principles — spacing scale (8px base), grid widths, border-radius (7 levels)
+6. Depth & Elevation — 5-level system with exact CSS shadow values
+7. Do's and Don'ts — design guardrails and anti-patterns
+8. Responsive Behavior — 5 breakpoints, collapsing strategies, touch targets (44x44px min)
+9. Agent Prompt Guide — color reference table, 4 example component prompts, 7 iteration principles
+
+### 58 Design Systems (7 Categories)
+
+AI & ML (12): Claude, Mistral AI, Replicate, xAI, ElevenLabs. Developer Tools (14): Cursor, Linear, PostHog, Sentry, Vercel. Infrastructure (6): Stripe, MongoDB, HashiCorp. Design & Productivity (10): Figma, Notion, Framer, Miro. Fintech (4): Coinbase, Revolut, Wise. Enterprise (7): Airbnb, Apple, IBM, SpaceX, Spotify. Car Brands (5): BMW, Ferrari, Tesla.
+
+### Key Differentiator
+
+A new artifact type: design systems encoded for LLM consumption rather than human developers or design tool plugins. The Agent Prompt Guide section is a novel contribution — ready-to-use component prompts with iteration instructions. Files capture publicly visible CSS values, not proprietary design tokens. 21.8K stars in 6 days (riding Google Stitch launch wave).
+
+**Who is VoltAgent**: Open-source [TypeScript AI Agent Framework](https://voltagent.dev) for enterprise multi-agent systems (tool calling, persistent memory, supervisor orchestration, 40+ integrations). The awesome-design-md repo is a community/marketing project.
+
+**Gap**: No public tooling for generating DESIGN.md from arbitrary sites — extraction appears manual/internal.
+
+Cross-ref: [CC-domain-claudemd-showcase.md](CC-domain-claudemd-showcase.md) — CLAUDE.md as domain controller, analogous pattern
+
+---
+
+## Graphify (safishamsi)
+
+**Repo**: [safishamsi/graphify][graphify] | **Stars**: 16.5K | **License**: MIT
+
+Transforms codebases, documentation, papers, and images into queryable knowledge graphs. Two-pass architecture: AST extraction via tree-sitter (local, deterministic) then LLM-powered semantic extraction (parallel subagents). Results merge into a NetworkX graph, clustered via Leiden community detection, exported as interactive HTML, JSON, and markdown reports.
+
+### CC Integration
+
+| Surface | Mechanism |
+|---------|-----------|
+| **Slash commands** | `/graphify .`, `/graphify query "..."`, `/graphify path`, `/graphify explain` |
+| **PreToolUse hook** | Fires before Glob/Grep to surface graph structure instead of keyword search |
+| **CLAUDE.md** | `graphify claude install` injects section directing Claude to read `GRAPH_REPORT.md` |
+| **MCP server** | `python -m graphify.serve graph.json` exposes `query_graph`, `get_node`, `get_neighbors`, `shortest_path` |
+
+### Key Features
+
+- **71.5x token reduction** on mixed corpora versus raw file reading
+- **20+ languages**: Python, TypeScript, Go, Rust, Java, C/C++, Ruby, C#, Kotlin, Scala, PHP, Swift, Lua, Zig, PowerShell, Elixir, Objective-C, Julia
+- **Multimodal**: code, PDFs, markdown, screenshots, diagrams
+- **Confidence tagging**: EXTRACTED (1.0), INFERRED (0.0–1.0), AMBIGUOUS
+- **SHA256 caching**: only changed files reprocess; `--watch` mode for auto-sync
+- **Wiki generation**: `--wiki` flag for agent-navigable knowledge bases
+- **Privacy**: code processed locally via tree-sitter; only docs/images sent to LLM APIs
+
+### Installation
+
+```bash
+pip install graphifyy && graphify install
+```
+
+Multi-platform: `--platform codex`, `opencode`, `claw`, `droid`, `trae`.
+
+### Adoption Considerations
+
+**Strengths**: Deepest CC integration in this category (hooks + slash commands + MCP + CLAUDE.md). No embeddings — Leiden clustering uses graph topology directly. Hyperedge support for n-way relationships. Rationale extraction from `# NOTE:`, `# HACK:`, `# WHY:` comments.
+
+**Risks**: LLM-dependent for semantic pass (cost scales with repo size). PyPI package name is `graphifyy` (doubled y). Early stage relative to star count.
+
+Cross-ref: [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) — complementary repo-to-docs generators
+
+---
+
+## MemPalace (milla-jovovich)
+
+**Repo**: [milla-jovovich/mempalace][mempalace] | **Stars**: 33.6K | **License**: MIT | **Version**: 3.0.0
+
+Local-first AI memory system storing conversation histories verbatim using a spatial "palace" metaphor. Achieved 96.6% R@5 on [LongMemEval benchmark][longmemeval] — the highest published result — without cloud dependencies.
+
+### Palace Architecture
+
+| Layer | Metaphor | Purpose |
+|-------|----------|---------|
+| **Wings** | Projects or people | Top-level partitioning |
+| **Rooms** | Topic categories | Within-wing organization |
+| **Halls** | Memory types | Cross-wing shared categories (facts, events, discoveries) |
+| **Closets** | Summaries | Pointers to original content |
+| **Drawers** | Verbatim files | Raw original data |
+| **Tunnels** | Cross-references | Links between rooms across wings |
+
+34% retrieval improvement over unstructured search from this hierarchical organization.
+
+### Memory Stack
+
+| Layer | Content | Size | Timing |
+|-------|---------|------|--------|
+| L0 | Identity/system prompt | ~50 tokens | Always loaded |
+| L1 | Critical facts | ~120 tokens (AAAK) | Always loaded |
+| L2 | Room recall (recent sessions) | On demand | When topic emerges |
+| L3 | Deep semantic search | On demand | When explicitly queried |
+
+### CC Integration
+
+```bash
+claude plugin marketplace add milla-jovovich/mempalace   # marketplace install
+claude mcp add mempalace -- python -m mempalace.mcp_server  # MCP install
+```
+
+19 MCP tools for search and memory operations. Also supports ChatGPT, Cursor, Gemini, and local models (Ollama, Mistral).
+
+### Adoption Considerations
+
+**Strengths**: Highest published LongMemEval score (96.6% raw mode, reproducible via `/benchmarks`). Free and fully local. ChromaDB + SQLite knowledge graph. Specialist agent support with per-agent memory wings.
+
+**Risks**: AAAK compression is lossy and regresses to 84.2% ([README candid note][mempalace]). Overlaps with CC's built-in memory, ByteRover, and Claude-Mem. ChromaDB dependency adds install complexity.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## Code-Review-Graph (tirth8205)
+
+**Repo**: [tirth8205/code-review-graph][code-review-graph] | **Stars**: 7.1K | **License**: MIT
+
+Persistent structural knowledge graph of codebases via tree-sitter AST parsing. Computes "blast radius" of changes — which functions, classes, and files are affected — to provide AI assistants with precisely scoped review context.
+
+### Key Claims
+
+- **8.2x average token reduction** across 6 repositories
+- **Up to 49x fewer tokens** for monorepo daily tasks
+- **100% recall** in impact analysis (no missed affected files)
+- **Sub-2s incremental updates** (re-parses only modified files)
+
+### CC Integration
+
+`code-review-graph install` auto-configures Claude Code (plus Cursor, Windsurf, Zed, Continue, OpenCode, Antigravity). Exposes 22 MCP tools:
+
+- Impact radius computation
+- Token-optimized review context generation
+- Graph querying (callers, callees, test coverage)
+- Semantic search across codebase entities
+
+### Language Support (19)
+
+Python, TypeScript, JavaScript, Go, Rust, Java, C, C++, Ruby, C#, Kotlin, PHP, Swift, Scala, Lua, Elixir, Dart, R, Jupyter notebooks.
+
+### Architecture
+
+- **Storage**: SQLite in `.code-review-graph/` — no external dependencies
+- **Parsing**: tree-sitter grammars for structural extraction
+- **Monorepo optimized**: reduces review context from 27,700+ files to ~15 files
+
+### Adoption Considerations
+
+**Strengths**: Complementary to graphify (structural blast-radius vs. semantic knowledge graph). Zero external dependencies (SQLite-only). One-command multi-editor install. Research-grade recall claims.
+
+**Risks**: Token reduction claims are self-reported (no independent benchmark). Overlaps with graphify's AST extraction layer. Early stage.
+
+Cross-ref: [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) — related code understanding tools
+
+---
+
 ## Comparison
 
 | Tool | Layer | CC Integration | Approach | Maturity |
@@ -350,8 +517,12 @@ Complements the context management stack from a different angle: RTK **reduces**
 | **Claude-Mem** | Persistent memory + compression | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (45.2K stars, v6.5.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
 | **opensrc** | Source code enrichment | CLI (npx) | Fetch npm package sources for agent context | Early (1.5K stars) |
+| **awesome-design-md** | Agent-consumable design systems | Markdown files (drop-in) | 58 DESIGN.md files for UI generation | Viral (21.8K stars in 6 days) |
+| **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
+| **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
+| **Code-Review-Graph** | Structural code analysis | MCP server (22 tools, auto-config) | AST-based blast radius for reviews | Active (7.1K stars) |
 
-All nine address different layers of the agent stack — complementary, not competing.
+All thirteen address different layers of the agent stack — complementary, not competing.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -370,7 +541,16 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Claude-Mem][claude-mem] | Persistent memory compression system (45.2K stars) |
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
 | [opensrc][opensrc] | npm package source fetcher for agent context (1.5K stars) |
+| [awesome-design-md][awesome-design-md] | 58 DESIGN.md files for agent-consumable UI generation (21.8K stars) |
+| [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
+| [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
+| [Code-Review-Graph][code-review-graph] | AST-based blast radius analysis, 22 MCP tools (7.1K stars) |
 
+[awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
+[graphify]: https://github.com/safishamsi/graphify
+[mempalace]: https://github.com/milla-jovovich/mempalace
+[longmemeval]: https://github.com/xiaowu0162/LongMemEval
+[code-review-graph]: https://github.com/tirth8205/code-review-graph
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
 [gsd-repo]: https://github.com/gsd-build/get-shit-done

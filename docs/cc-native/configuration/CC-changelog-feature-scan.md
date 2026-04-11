@@ -3,8 +3,8 @@ title: CC Changelog Feature Scan
 source: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md, https://claudelog.com/claude-code-changelog/
 purpose: Identify actionable CC features from recent releases (v2.1.0–2.1.81) not yet covered by existing analysis docs. Applicable to any project using Claude Code.
 created: 2026-03-07
-updated: 2026-03-24
-validated_links: 2026-03-12
+updated: 2026-04-06
+validated_links: 2026-04-06
 ---
 
 **Status**: Research (informational — feeds into adoption plan)
@@ -43,7 +43,7 @@ New `includeGitInstructions` setting and `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` 
 
 #### HTTP Hooks (v2.1.63)
 
-JSON POST/receive on hook events. See [CC-hooks-system-analysis.md](configuration/CC-hooks-system-analysis.md) for full hooks reference.
+JSON POST/receive on hook events. See [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md) for full hooks reference.
 
 #### Agent Worktree Isolation (`isolation: worktree`) (v2.1.50)
 
@@ -53,7 +53,7 @@ Spawn subagents in isolated git worktrees via `Agent(isolation: "worktree")`. Wo
 
 #### `Setup` Hook Event (v2.1.10)
 
-One-time repo maintenance on session start. See [CC-hooks-system-analysis.md](configuration/CC-hooks-system-analysis.md).
+One-time repo maintenance on session start. See [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md).
 
 #### Task Tool Metrics (v2.1.30)
 
@@ -63,7 +63,7 @@ Task completions now include metrics: tokens consumed, tool uses, and duration. 
 
 #### TeammateIdle + TaskCompleted Hook Events (v2.1.33)
 
-Agent Teams lifecycle hooks. See [CC-hooks-system-analysis.md](configuration/CC-hooks-system-analysis.md).
+Agent Teams lifecycle hooks. See [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md).
 
 #### Memory Frontmatter for Agents (v2.1.33)
 
@@ -126,7 +126,7 @@ Hook fires when CC configuration changes — useful for security auditing. ([sou
 | Web auth, GitHub App, API keys | [CC-web-auth-setup-analysis.md](../ci-remote/CC-web-auth-setup-analysis.md) |
 | Hooks system (all events) | [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md) |
 | Opus 4.6 + 1M context | [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md) |
-| Task system with dependencies | [CC-agent-teams-orchestration.md](agents-skills/CC-agent-teams-orchestration.md) |
+| Task system with dependencies | [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) |
 
 ### Open Community Feature Requests (from triage)
 
@@ -141,6 +141,68 @@ Tracked from changelog/native-sources triage monitors. Not shipped features — 
 [invariant]: https://github.com/anthropics/claude-code/issues/34716
 [riscv64]: https://github.com/anthropics/claude-code/issues/35016
 [dispatch-cli]: https://github.com/anthropics/claude-code/issues/36011
+
+## [2026-04-06] Boris Cherny 15 Power Features
+
+On March 30 2026, [Boris Cherny](https://www.threads.com/@boris_cherny/) (Head of Claude Code at Anthropic) posted his 15 favorite hidden/under-utilized CC features. 2.3M+ views. Amplified by [Zain Kahn / Superhuman AI](https://www.linkedin.com/posts/zainkahn_claude-codes-creator-just-leaked-15-hidden-activity-7445800598727344128-XnX0) on LinkedIn.
+
+### Features with Coverage Status
+
+| # | Feature | CLI | Already Covered? |
+|---|---------|-----|------------------|
+| 1 | Mobile App (iOS/Android) | Code tab | No |
+| 2 | `/teleport` (cloud to local) | `claude --teleport` | [CC-cowork-skills-api-workflows.md](../plugins-ecosystem/CC-cowork-skills-api-workflows.md) |
+| 3 | `/remote-control` (local to anywhere) | `/remote-control` | [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md) |
+| 4 | `/loop` + `/schedule` | `/loop 5m <cmd>` | [CC-loop-cron-analysis.md](CC-loop-cron-analysis.md) |
+| 5 | Hooks (25+ lifecycle events) | `settings.json` | [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md) |
+| 6 | Cowork Dispatch | Desktop app | [CC-cowork-skills-api-workflows.md](../plugins-ecosystem/CC-cowork-skills-api-workflows.md) |
+| 7 | Chrome Extension (browser verification) | Extension | [CC-chrome-extension-analysis.md](../plugins-ecosystem/CC-chrome-extension-analysis.md) |
+| 8 | Desktop web server testing | Desktop app | No |
+| 9 | `/branch` (session forking) | `/branch`, `--fork-session` | No |
+| 10 | `/btw` (side questions) | `/btw <question>` | No |
+| 11 | Git worktrees (parallel sessions) | `claude -w` | [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) |
+| 12 | `/batch` (parallel fan-out) | `/batch` | Above (Medium Relevance) |
+| 13 | `--bare` (fast startup) | `claude -p --bare` | [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md) |
+| 14 | `--add-dir` (multi-repo) | `--add-dir <path>` | No |
+| 15 | `--agent` (custom agents) | `--agent=<name>` | [CC-skills-adoption-analysis.md](../agents-skills/CC-skills-adoption-analysis.md) |
+| Bonus | `/voice` (voice input) | `/voice`, hold spacebar | No |
+
+### Boris's Daily Workflows
+
+- `/loop 5m /babysit` — auto-review code, shepherd PRs
+- `/loop 30m /slack-feedback` — generate PRs from Slack feedback
+- `/loop /post-merge-sweeper` — address missed review comments
+- `/loop 1h /pr-pruner` — close stale PRs
+- Keeps "Enable Remote Control for all sessions" on permanently
+- Does "most of his coding by speaking to Claude rather than typing"
+- Runs "dozens of Claudes" simultaneously via worktrees
+
+### CLI Quick Reference
+
+| Flag/Command | Purpose |
+|---|---|
+| `--teleport` / `/teleport` | Pull cloud session to local |
+| `/remote-control` | Control local from browser/phone |
+| `/loop <interval> <cmd>` | Recurring automation (max 1 week) |
+| `/schedule` | Cron-like scheduling |
+| `/branch` | Fork current session |
+| `--fork-session` | Fork when resuming |
+| `-r <id>` | Resume prior session |
+| `/btw <question>` | Side question without interrupting |
+| `-w` | Start in git worktree |
+| `/batch` | Parallel fan-out to worktree agents |
+| `--bare` | Skip config (10x faster) |
+| `--add-dir <path>` | Grant access to additional dirs |
+| `--agent=<name>` | Load custom agent from `.claude/agents/` |
+| `/voice` | Voice input |
+
+### Sources
+
+- [Boris Cherny original thread](https://www.threads.com/@boris_cherny/post/DWfjnqGFPHE/) (2026-03-30)
+- [howborisusesclaudecode.com](https://howborisusesclaudecode.com) (fan site)
+- [claude-code-best-practice: Boris 15 tips](https://github.com/shanraisshan/claude-code-best-practice/blob/main/tips/claude-boris-15-tips-30-mar-26.md)
+- [Anthropic Hooks Guide](https://docs.anthropic.com/en/docs/claude-code/hooks-guide)
+- [Claude Code SDK Overview](https://docs.anthropic.com/en/docs/claude-code/sdk)
 
 ### References
 
