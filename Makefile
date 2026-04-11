@@ -21,8 +21,11 @@ NODE_DIR     := $(HOME)/.local/share/node
 NODE_BIN     := $(NODE_DIR)/bin
 LOCAL_BIN    := $(HOME)/.local/bin
 
-# Sibling repo providing plugin skills (docs-governance, cc-meta)
-UTILS_PLUGIN_DIR ?= $(HOME)/repos/claude-code-utils-plugin
+# Source plugin providing skills (docs-governance, cc-meta).
+# Default: clone from GitHub to an XDG cache path. Override
+# UTILS_PLUGIN_DIR to point at an existing local clone.
+UTILS_PLUGIN_URL ?= https://github.com/qte77/claude-code-utils-plugin
+UTILS_PLUGIN_DIR ?= $(HOME)/.cache/claude-code-utils-plugin
 SKILLS_DIR       := .claude/skills
 
 
@@ -70,12 +73,14 @@ setup_mdlint: setup_node ## Install markdownlint-cli2 via user-local npm (no sud
 		fi
 	fi
 
-setup_skills: ## Symlink docs-governance + compacting-context skills from sibling claude-code-utils-plugin (local dev; gitignored)
-	if [ ! -d "$(UTILS_PLUGIN_DIR)" ]; then
-		echo "ERROR: expected sibling repo at $(UTILS_PLUGIN_DIR)"
-		echo "Clone: git clone https://github.com/qte77/claude-code-utils-plugin $(UTILS_PLUGIN_DIR)"
-		echo "Or override: make setup_skills UTILS_PLUGIN_DIR=/path/to/claude-code-utils-plugin"
-		exit 1
+setup_skills: ## Clone claude-code-utils-plugin (if missing) and symlink its skills into .claude/skills (gitignored; zero sudo)
+	if [ ! -d "$(UTILS_PLUGIN_DIR)/.git" ]; then
+		echo "Cloning $(UTILS_PLUGIN_URL) to $(UTILS_PLUGIN_DIR) ..."
+		mkdir -p $$(dirname $(UTILS_PLUGIN_DIR))
+		git clone --depth=1 $(UTILS_PLUGIN_URL) $(UTILS_PLUGIN_DIR) \
+			|| { echo "ERROR: clone failed — check network, URL, or override UTILS_PLUGIN_DIR=/path/to/local/clone"; exit 1; }
+	else
+		echo "Plugin repo already present at $(UTILS_PLUGIN_DIR)"
 	fi
 	mkdir -p $(SKILLS_DIR)
 	for skill_path in \
