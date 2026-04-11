@@ -5,3 +5,4 @@ Thumbs.db
 # Plugin-deployed files (source of truth: claude-code-utils-plugin)
 .claude/rules/
 .claude/scripts/
+.claude/skills/

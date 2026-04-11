@@ -9,7 +9,7 @@ endif
 .SILENT:
 .ONESHELL:
 .PHONY: \
-	setup_node setup_lychee setup_mdlint setup_all \
+	setup_node setup_lychee setup_mdlint setup_skills setup_all \
 	check_links check_docs autofix lint \
 	help
 .DEFAULT_GOAL := help
@@ -20,6 +20,13 @@ NODE_VERSION ?= 22.11.0
 NODE_DIR     := $(HOME)/.local/share/node
 NODE_BIN     := $(NODE_DIR)/bin
 LOCAL_BIN    := $(HOME)/.local/bin
+
+# Source plugin providing skills (docs-governance, cc-meta).
+# Default: clone from GitHub to an XDG cache path. Override
+# UTILS_PLUGIN_DIR to point at an existing local clone.
+UTILS_PLUGIN_URL ?= https://github.com/qte77/claude-code-utils-plugin
+UTILS_PLUGIN_DIR ?= $(HOME)/.cache/claude-code-utils-plugin
+SKILLS_DIR       := .claude/skills
 
 
 # MARK: SETUP
@@ -65,6 +72,35 @@ setup_mdlint: setup_node ## Install markdownlint-cli2 via user-local npm (no sud
 			exit 1
 		fi
 	fi
+
+setup_skills: ## Clone claude-code-utils-plugin (if missing) and symlink its skills into .claude/skills (gitignored; zero sudo)
+	if [ ! -d "$(UTILS_PLUGIN_DIR)/.git" ]; then
+		echo "Cloning $(UTILS_PLUGIN_URL) to $(UTILS_PLUGIN_DIR) ..."
+		mkdir -p $$(dirname $(UTILS_PLUGIN_DIR))
+		git clone --depth=1 $(UTILS_PLUGIN_URL) $(UTILS_PLUGIN_DIR) \
+			|| { echo "ERROR: clone failed — check network, URL, or override UTILS_PLUGIN_DIR=/path/to/local/clone"; exit 1; }
+	else
+		echo "Plugin repo already present at $(UTILS_PLUGIN_DIR)"
+	fi
+	mkdir -p $(SKILLS_DIR)
+	for skill_path in \
+		$(UTILS_PLUGIN_DIR)/plugins/docs-governance/skills/enforcing-doc-hierarchy \
+		$(UTILS_PLUGIN_DIR)/plugins/docs-governance/skills/maintaining-agents-md \
+		$(UTILS_PLUGIN_DIR)/plugins/cc-meta/skills/compacting-context; do
+		name=$$(basename $$skill_path)
+		if [ ! -d "$$skill_path" ]; then
+			echo "WARN: source skill missing: $$skill_path — skipping"
+			continue
+		fi
+		if [ -L "$(SKILLS_DIR)/$$name" ]; then
+			echo "$$name: already symlinked"
+		elif [ -e "$(SKILLS_DIR)/$$name" ]; then
+			echo "WARN: $(SKILLS_DIR)/$$name exists and is not a symlink — skipping"
+		else
+			ln -s $$skill_path $(SKILLS_DIR)/$$name
+			echo "$$name: linked"
+		fi
+	done
 
 setup_all: setup_lychee setup_mdlint ## Install all tooling (lychee + node + markdownlint-cli2)
 
