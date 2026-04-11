@@ -174,3 +174,20 @@ This prevents misreading a `cc-community` placement as "CC-exclusive."
 - Duplicating content across docs — cross-reference the authoritative doc
 - Missing Sources section — every doc must cite its sources
 - Stale `validated_links` dates — re-check URLs when updating findings
+
+## Auto-generated content
+
+The `triage/` directory contains **auto-generated monitor outputs** (changelog triage, community triage, outage archive). It is populated exclusively by the GitHub Actions monitors in `.github/workflows/` and is **not a source of hand-written analysis**. Do not treat triage files as content candidates for promotion into `docs/` — findings of interest should be re-researched from their first-party sources and written as new analysis docs under the appropriate `docs/` subdirectory. The directory is intentionally excluded from link checking via `lychee.toml`.
+
+## Local development
+
+Doc linting is wired into the top-level `Makefile`. All tools install user-locally with zero sudo.
+
+```bash
+make setup_all   # install lychee, Node.js (user-local), markdownlint-cli2
+make lint        # run lychee + markdownlint-cli2 over the full repo
+make autofix     # mechanical markdownlint --fix pass
+make help        # list all recipes grouped by section
+```
+
+Run `make lint` against any PR that touches docs before requesting review. `lychee` reads `lychee.toml`; `markdownlint-cli2` reads `.markdownlint.json`.

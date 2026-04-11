@@ -28,6 +28,19 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 
 Three automated monitors poll external sources on cron and open triage PRs when new content is found. See [`.github/README.md`](.github/README.md) for details.
 
+## Local development
+
+Doc linting is wired into a `Makefile` that installs everything user-locally with zero sudo:
+
+```bash
+make setup_all   # install lychee, Node.js, markdownlint-cli2 under ~/.local
+make lint        # run both link checker (lychee) and markdown linter
+make autofix     # mechanical markdownlint --fix pass
+make help        # show all recipes grouped by section
+```
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for document standards and [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
 ## Related Repos
 
 Research from this repository feeds into these downstream implementation repos:
