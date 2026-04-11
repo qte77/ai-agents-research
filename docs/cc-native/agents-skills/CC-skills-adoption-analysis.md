@@ -5,8 +5,8 @@ category: analysis
 version: 2.0.0
 status: completed
 created: 2026-01-11
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-04-11
+validated_links: 2026-04-11
 ---
 
 **Date**: 2026-01-11
@@ -41,6 +41,79 @@ A project can grow to many more skills over time. Run
 - Third-person descriptions with explicit triggers for auto-discovery
 - References to project instructions and contributing guide for compliance
 - Under 500 lines per SKILL.md
+
+## Skill Context Budgets
+
+Skills are both a capability pattern and a context-management mechanism.
+The four budget mechanics below apply to any project that ships multiple
+skills and shape how many can remain effective in a single session.
+Mechanics described here reflect current Claude Code; see
+[Skills Evolution](#skills-evolution-v210v2169) below for version-tagged
+values in historical releases.
+
+### Three-level progressive disclosure
+
+SKILL.md uses a three-level loading model, confirmed across the
+[Agent Skills overview][skills-overview] and Anthropic's
+[Complete Guide to Building Skills for Claude][skills-pdf] (p. 5):
+
+| Level | When loaded | Approximate cost | Content |
+| ----- | ----------- | ---------------- | ------- |
+| 1 — YAML frontmatter (`name`, `description`) | Always, at session start | ~100 tokens per skill | Discovery metadata used to decide when to invoke the skill |
+| 2 — SKILL.md body | When the skill is invoked | Under 5,000 tokens (target) | Full instructions; recommended cap of 500 lines per [`code.claude.com/docs/en/skills`][cc-skills] and [authoring best practices][skills-best-practices] |
+| 3 — Bundled files (`references/`, `scripts/`, examples) | On demand via Read or Bash | Effectively unlimited until read | Reference docs, utility scripts, templates — zero context cost until accessed |
+
+### Shared auto-compaction budget
+
+When Claude Code summarizes the conversation to free context, recently
+invoked skills are re-attached after the summary rather than lost. Per
+the Skill content lifecycle section of [`code.claude.com/docs/en/skills`][cc-skills]:
+"Claude Code re-attaches the most recent invocation of each skill after
+the summary, keeping the first 5,000 tokens of each. Re-attached skills
+share a combined budget of 25,000 tokens. Claude Code fills this budget
+starting from the most recently invoked skill, so older skills can be
+dropped entirely after compaction."
+
+Two numbers matter for sizing: **5,000 tokens per skill** (the preserved
+window of each re-attached invocation) and **25,000 tokens shared**
+(combined ceiling across all re-attached skills). Tight SKILL.md bodies
+mean more recently-used skills fit inside this ceiling after compaction.
+
+### Description budget (always loaded)
+
+Skill descriptions are always in context so Claude knows which skills
+exist. They share a budget that, per the Troubleshooting section of
+[`code.claude.com/docs/en/skills`][cc-skills], "scales dynamically at 1%
+of the context window, with a fallback of 8,000 characters." Additional
+mechanics from the same source:
+
+- **Per-skill cap: 250 characters.** Entries longer than this are
+  truncated in the skill listing regardless of the shared budget.
+- **Override via `SLASH_COMMAND_TOOL_CHAR_BUDGET`** environment variable
+  to raise the shared ceiling.
+- **Front-load trigger keywords** in the description so truncation does
+  not hide the match terms Claude needs for auto-discovery.
+- **`disable-model-invocation: true` exempts a skill from the budget.**
+  Per the invocation-control table in the same page, such a skill's
+  description is "not in context" — the skill loads only on explicit
+  user invocation via `/name`.
+
+### Skills as the replacement for procedural CLAUDE.md content
+
+The framing statement from [`code.claude.com/docs/en/skills`][cc-skills]:
+"Create a skill when you keep pasting the same playbook, checklist, or
+multi-step procedure into chat, or when a section of CLAUDE.md has grown
+into a procedure rather than a fact. Unlike CLAUDE.md content, a skill's
+body loads only when it's used, so long reference material costs almost
+nothing until you need it."
+
+This is why skills exist as a context-management mechanism and not merely
+as reusable workflows: every CLAUDE.md token is always loaded, while a
+skill body is only loaded when invoked. Procedural content that rarely
+fires but is expensive to inline is the canonical migration candidate.
+Memory-side constraints on CLAUDE.md itself (sizing, discovery,
+`claudeMdExcludes`) are covered in
+[CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md).
 
 ## Skills Evolution (v2.1.0–v2.1.69)
 
@@ -186,6 +259,9 @@ Update `.claude/settings.json` to adopt Skills:
 
 [agentskills-spec]: https://agentskills.io/specification
 [cc-skills]: https://code.claude.com/docs/en/skills
+[skills-overview]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
+[skills-best-practices]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
+[skills-pdf]: https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf
 [gh-skills]: https://github.com/anthropics/skills/tree/main/skills
 [skills-sh]: https://skills.sh/
 [ms-skills]: https://learn.microsoft.com/en-us/agent-framework/agents/skills
