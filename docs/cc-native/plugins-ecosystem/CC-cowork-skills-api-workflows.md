@@ -243,4 +243,4 @@ jobs:
 - [Scheduled Tasks](https://code.claude.com/docs/en/scheduled-tasks)
 - [Cowork Plugins](https://claude.com/blog/cowork-plugins)
 - [Knowledge Work Plugins](https://github.com/anthropics/knowledge-work-plugins)
-- [Agent Skills Open Standard](https://agentskills.io)
+- [Agent Skills Open Standard](https://agentskills.io/home)

@@ -203,7 +203,7 @@ CC OTel integrates at the infrastructure level (env vars + Phoenix endpoint), se
 [cc-bed]: https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/blob/main/assets/docs/MONITORING.md
 [otel-spec]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md
 [langfuse]: https://langfuse.com/integrations/other/claude-code
-[phoenix-docs]: https://docs.arize.com/phoenix
+[phoenix-docs]: https://arize.com/docs/phoenix
 
 ## Recommendation
 
@@ -433,7 +433,6 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 | [Agent Orchestration Analysis][linkedin-trace] | Sigrid Jin | `~/.claude/teams` structure analysis |
 | [Agent Teams Guide][claudefast] | Community | Multi-session orchestration guide |
 | [Porting to OpenCode][dev-opencode] | Uenyioha | Architecture comparison |
-| [Aura Frog Guide][aura-frog] | Community | Structured workflow integration |
 | [C Compiler with 16 Agents][compiler-case] | Anthropic/Register | 2,000 sessions, 100k-line compiler |
 
 [cc-teams-docs]: https://code.claude.com/docs/en/agent-teams
@@ -443,7 +442,6 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 [linkedin-trace]: https://www.linkedin.com/pulse/how-claude-code-orchestrate-team-agents-sigrid-jin--msedc
 [claudefast]: https://claudefa.st/blog/guide/agents/agent-teams
 [dev-opencode]: https://dev.to/uenyioha/porting-claude-codes-agent-teams-to-opencode-4hol
-[aura-frog]: https://github.com/nguyenthienthanh/aura-frog/blob/main/aura-frog/docs/AGENT_TEAMS_GUIDE.md
 [compiler-case]: https://www.theregister.com/2026/02/09/claude_opus_46_compiler/
 [register-leak]: https://www.theregister.com/2026/03/31/anthropic_claude_code_source_code/
 [techsy-leaked]: https://techsy.io/blog/claude-code-leaked-features-2026
