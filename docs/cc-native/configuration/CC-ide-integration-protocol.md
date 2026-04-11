@@ -17,6 +17,7 @@ Claude Code communicates with IDE extensions (VS Code, JetBrains) via a **WebSoc
 1. IDE extension starts a WebSocket server on a random high port
 2. Extension sets `CLAUDE_CODE_SSE_PORT=<port>` and `ENABLE_IDE_INTEGRATION=true` in the terminal environment
 3. Lock file written at `~/.claude/ide/<port>.lock`:
+
    ```json
    {
      "workspaceFolders": ["/path/to/project"],
@@ -26,6 +27,7 @@ Claude Code communicates with IDE extensions (VS Code, JetBrains) via a **WebSoc
      "token": "<random-auth-token>"
    }
    ```
+
 4. Lock file: `0600` permissions, directory: `0700`
 5. Server binds to `127.0.0.1` only
 6. Each IDE activation generates a fresh random auth token

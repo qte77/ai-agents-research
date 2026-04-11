@@ -83,6 +83,7 @@ Traditional SDLC artifacts reimagined as coordination layers for agents.
 | Agent-first toolchain | CC, worktrees, Polyforge | Agent-triggered CI/CD |
 
 **sdlc-lcm-manager priorities:**
+
 1. Codify Observe+Correct as formal phases (extend maintain)
 2. Gate predicates agents can evaluate programmatically
 3. Phase inference from repo artifacts (SDD alignment)

@@ -67,6 +67,7 @@ All endpoints are under `https://status.anthropic.com/api/v2/`.
 Statuspage supports webhook subscriptions that POST on every incident update and component status change.
 
 **Payload format** (POST body):
+
 - `page.status_indicator`, `page.status_description`
 - `incident.*` — full incident object (same structure as JSON API)
 - `component_update.old_status`, `.new_status`, `component.name`
@@ -125,6 +126,7 @@ Generated from the archive as `triage/status-monitor/outage-stats.md`, covering:
 ### Workflow
 
 `cc-status-monitor.yaml` runs on:
+
 - **4-hour cron** — primary collection mechanism, catches everything
 - **`repository_dispatch`** (`status-change` event) — retained for future webhook proxy
 - **`workflow_dispatch`** — manual trigger for testing

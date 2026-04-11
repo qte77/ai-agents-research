@@ -92,11 +92,13 @@ GitHub URL --> Clone/Fetch --> AI Analysis --> Structured Output
 ```
 
 Differentiation happens at the output stage:
+
 - **Reference** (DeepWiki): architecture-level, developer-to-developer
 - **Educational** (Code2Tutorial): abstraction-level, teacher-to-student
 - **Summary** (GitSummarize): evaluation-level, quick scan
 
 **Agent integration opportunity**: Generated documentation could be:
+
 1. Fed as context to coding agents (replacing expensive runtime analysis)
 2. Used as `llms.txt` equivalent for external repos
 3. Cached as L1/L2 context in OpenViking-style tiered systems
