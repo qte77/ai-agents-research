@@ -5,7 +5,7 @@ created: 2026-03-27
 updated: 2026-03-27
 ---
 
-# Learnings Hub
+## Learnings Hub
 
 Distilled operational learnings from active development across the qte77 ecosystem. This folder is the write-back target for Ralph's Cross-Repo Compound Learning Aggregator (CRLA).
 

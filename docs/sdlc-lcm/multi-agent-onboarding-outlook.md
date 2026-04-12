@@ -9,7 +9,7 @@ sources:
   - https://particula.tech/blog/agents-md-ai-coding-agent-configuration
 ---
 
-# Multi-Agent Onboarding Outlook
+## Multi-Agent Onboarding Outlook
 
 How the SDLC/LCM framework supports onboarding any coding agent — not just
 Claude Code — onto projects in the qte77 ecosystem.
@@ -50,7 +50,7 @@ consolidate.
 The sdlc-lcm framework communicates via **file artifacts**, not code imports.
 Any agent that reads files can participate:
 
-```
+```text
 pyproject.toml [tool.lcm]     <- phase metadata (any agent reads TOML)
 .lcm/status.json              <- machine-readable phase state (any agent reads JSON)
 prd.json                      <- task tracking (Ralph convention, readable by any agent)

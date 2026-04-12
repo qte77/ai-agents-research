@@ -28,7 +28,7 @@ Can Claude's product surfaces (Cowork, CC Web, Chrome extension) be populated vi
 
 ### Required Beta Headers
 
-```
+```text
 anthropic-beta: code-execution-2025-08-25,skills-2025-10-02,files-api-2025-04-14
 ```
 
@@ -104,7 +104,7 @@ Skills **do not sync across surfaces**:
 
 **Plugin Structure** (from [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins)):
 
-```
+```text
 plugin-name/
 ├── .claude-plugin/plugin.json   # Manifest
 ├── .mcp.json                    # MCP tool connections

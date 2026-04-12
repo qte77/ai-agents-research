@@ -6,7 +6,7 @@ updated: 2026-03-27
 source: https://github.com/qte77/Agents-eval
 ---
 
-# Agents-eval Learnings
+## Agents-eval Learnings
 
 Project-specific patterns from [qte77/Agents-eval](https://github.com/qte77/Agents-eval). Cross-repo patterns are in [../cross-repo-digest.md](../cross-repo-digest.md).
 

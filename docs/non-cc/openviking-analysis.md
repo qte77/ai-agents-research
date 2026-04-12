@@ -30,7 +30,7 @@ OpenViking is an open-source **context database** for AI agents that replaces fl
 
 ## Core Architecture
 
-```
+```text
 Agent --> Client SDK (Python/Rust/HTTP)
             |
             v
@@ -78,7 +78,7 @@ The key cost-reduction mechanism. Every piece of content is processed into three
 
 ## Three Context Roots
 
-```
+```text
 viking://resources/  -- external knowledge (docs, APIs, code repos) -- user-added, static
 viking://user/       -- preferences, interaction history -- agent-extracted, dynamic
 viking://agent/      -- learned skills, operational experience -- agent-written, evolving

@@ -7,7 +7,7 @@ updated: 2026-03-22
 version: 1.0.0
 ---
 
-# User Story: ai-agents-research
+## User Story: ai-agents-research
 
 ## Problem Statement
 

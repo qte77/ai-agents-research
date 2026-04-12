@@ -4,7 +4,7 @@ purpose: Checklist bridging SDLC release phase to LCM phase transitions.
 created: 2026-03-24
 ---
 
-# Release Management Runbook
+## Release Management Runbook
 
 Checklist for executing the SDLC **Release** phase and triggering LCM phase
 transitions when applicable.

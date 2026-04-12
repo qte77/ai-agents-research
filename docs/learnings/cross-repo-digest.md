@@ -5,7 +5,7 @@ created: 2026-03-27
 updated: 2026-03-27
 ---
 
-# Cross-Repo Pattern Digest
+## Cross-Repo Pattern Digest
 
 Patterns that recur across two or more repos. Each entry is distilled from AGENT_LEARNINGS.md files. Full entries live in the source repos; this is the canonical cross-cutting reference.
 

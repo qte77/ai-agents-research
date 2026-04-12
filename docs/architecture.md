@@ -6,7 +6,7 @@ created: 2026-03-22
 updated: 2026-03-27
 ---
 
-# Architecture: ai-agents-research
+## Architecture: ai-agents-research
 
 ## Overview
 
@@ -14,7 +14,7 @@ This is a research-only repository — no code, only structured markdown documen
 
 ## Document Hierarchy
 
-```
+```text
 ai-agents-research/
 ├── docs/
 │   ├── cc-native/          # Anthropic-native CC features
@@ -102,7 +102,7 @@ Research from this repository feeds directly into implementation repos:
 
 ## Reference Flow
 
-```
+```text
 External sources (CC changelog, status page, community)
         ↓ (automated monitors)
 triage/  (raw triage outputs, human-reviewed)

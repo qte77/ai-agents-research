@@ -23,7 +23,7 @@ than to an agent runtime.
 
 ## Core Architecture
 
-```
+```text
 Agent (Claude, Cursor, MCP client)
   → InsForge semantic layer
     → Auth (user management, sessions)

@@ -5,7 +5,7 @@ created: 2026-03-24
 authority: This document is the specification. Implementation lives in qte77/sdlc-lcm-manager.
 ---
 
-# Product Lifecycle Management (LCM) Specification
+## Product Lifecycle Management (LCM) Specification
 
 Lifecycle phases for products and projects managed through RAPID. Applies at the
 product/project level (cross-repo), not per-feature.
@@ -92,7 +92,7 @@ product/project level (cross-repo), not per-feature.
 
 ## Phase Transition Rules
 
-```
+```text
 incubation --> alpha --> beta --> active --> maintenance --> deprecated --> retired
                                    ^            |
                                    +-- (reactivate, rare, re-enter via beta gate)

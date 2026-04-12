@@ -67,7 +67,7 @@ The CLAUDE.md defines a four-step workflow:
 
 ### Three-Stage Architecture
 
-```
+```text
 Stage 1: Analysis          Stage 2: Exploration        Stage 3: Visualization
 scripts/*.py               Conversational Q&A          dna_terminal.html
   |                          |                            |

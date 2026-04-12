@@ -16,7 +16,7 @@ Claude can handle typical office workflows — invoice processing, document gene
 
 ### Invoice & Receipt Processing
 
-```
+```text
 Receipt images/PDFs → Claude OCR → Excel spreadsheet → Accounting API (Xero/QB)
 ```
 
@@ -29,7 +29,7 @@ Receipt images/PDFs → Claude OCR → Excel spreadsheet → Accounting API (Xer
 
 ### Document Renaming & Organization
 
-```
+```text
 Chaotic folder → Content-aware analysis → YYYY-MM-DD taxonomy → Organized archive
 ```
 
@@ -40,7 +40,7 @@ Chaotic folder → Content-aware analysis → YYYY-MM-DD taxonomy → Organized 
 
 ### Email Triage
 
-```
+```text
 Gmail/Outlook (read) → Categorize → Draft responses → Flag priorities
 ```
 
@@ -50,7 +50,7 @@ Gmail/Outlook (read) → Categorize → Draft responses → Flag priorities
 
 ### Financial Reporting
 
-```
+```text
 QuickBooks/Xero MCP → P&L + Balance Sheet → Excel modeling → PowerPoint deck
 ```
 
@@ -61,7 +61,7 @@ QuickBooks/Xero MCP → P&L + Balance Sheet → Excel modeling → PowerPoint de
 
 ### Offer & Contract Generation
 
-```
+```text
 Template (docx) → Client data (CRM) → Populated document → PDF export
 ```
 
@@ -100,7 +100,7 @@ Most agent-agnostic option. 9 coding agents supported. Key differentiators:
 
 ### Business Task Session Pattern
 
-```
+```text
 tmux session 1: /rename invoices    → CC + pdf skill + Xero MCP
 tmux session 2: /rename offers      → CC + docx skill + CRM MCP
 tmux session 3: /rename mails       → CC + Gmail MCP (read) + Google Workspace MCP (write)

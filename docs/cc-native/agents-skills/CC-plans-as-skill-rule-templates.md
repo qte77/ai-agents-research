@@ -102,7 +102,7 @@ A skill consumes a plan file as a reviewable artifact, adding a review or valida
 
 **When to use**: When plans need approval gates from different stakeholder perspectives before implementation.
 
-```
+```text
 User creates plan → /plan-ceo-review (business viability check)
                    → /plan-eng-review (technical feasibility check)
                    → Approved → Implementation
@@ -116,7 +116,7 @@ A skill ships a companion plan template with `{{PLACEHOLDERS}}` that gets filled
 
 **When to use**: When a repeatable workflow always follows the same structural pattern but with different content per project/task.
 
-```
+```text
 Skill SKILL.md defines:
   - Trigger conditions
   - Template reference: templates/research-paper-plan.md

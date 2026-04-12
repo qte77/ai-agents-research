@@ -5,7 +5,7 @@ created: 2026-03-30
 updated: 2026-03-30
 ---
 
-# Plugin Safety Matrix and Pre-PR Checklist
+## Plugin Safety Matrix and Pre-PR Checklist
 
 ## Plugin Safety Matrix
 

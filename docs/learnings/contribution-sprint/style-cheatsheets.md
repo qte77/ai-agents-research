@@ -5,7 +5,7 @@ created: 2026-03-30
 updated: 2026-03-30
 ---
 
-# Contribution Style Cheatsheets
+## Contribution Style Cheatsheets
 
 ## Quick Comparison
 

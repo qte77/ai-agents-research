@@ -324,7 +324,7 @@ npx opensrc remove zod       # clean up
 
 ### Output Structure
 
-```
+```text
 opensrc/
 ├── settings.json       # user preferences
 ├── sources.json        # package index with versions/paths

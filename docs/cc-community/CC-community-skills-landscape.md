@@ -197,7 +197,7 @@ A CC skill that **10x's effective context window** by dispatching tasks to backg
 
 ### How It Works
 
-```
+```text
 Without dispatch:                    With dispatch:
 Task 1 → fills context              /dispatch all 5 tasks
 Task 2 → context grows              Workers execute in parallel
@@ -289,7 +289,7 @@ Where gstack locks cognitive *modes* and pm-skills delivers domain *frameworks*,
 
 ### SDLC Phase Mapping
 
-```
+```text
 DEFINE -> PLAN -> BUILD -> VERIFY -> REVIEW -> SHIP
 /spec    /plan   /build   /test     /review   /ship
                                     /code-simplify
