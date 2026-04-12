@@ -236,9 +236,8 @@ Cross-ref: [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analys
 
 ## References
 
-- [Claude Code Plan Mode](https://code.claude.com/docs/en/plan-mode) — official documentation
 - [UltraPlan][ultraplan] — official documentation (research preview)
-- ~~[Agent Skills Spec](https://agentskills.org/)~~ — domain offline (archived reference)
+- [Agent Skills Spec](https://agentskills.io/) — open standard for agent skills
 
 [ultraplan]: https://code.claude.com/docs/en/ultraplan
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web

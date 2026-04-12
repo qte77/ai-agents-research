@@ -117,4 +117,4 @@ Identified during source analysis for [multi-repo contribution plan][contrib-pla
 | [Multi-repo contribution plan][contrib-plan] | Contribution strategy and prioritization |
 
 [repo]: https://github.com/richlira/compass-mcp
-[contrib-plan]: /workspaces/qte77/multi-repo-contribution-research.md
+[contrib-plan]: # "(Codespaces-local reference removed — see project kanban for contribution context)"

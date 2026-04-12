@@ -81,7 +81,7 @@ This is comparable to CC's WebSocket IDE protocol but uses a different standard 
 | [MCP Apps blog][mcp-apps] | Goose as reference MCP Apps client |
 
 [repo]: https://github.com/block/goose
-[arch]: https://block.github.io/goose/docs/goose-architecture/
+[arch]: https://block.github.io/goose/
 [arcade-origin]: https://www.arcade.dev/blog/goose-the-open-source-agent-that-shaped-mcp
 [aaif]: https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation
 [mcp-apps]: https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/

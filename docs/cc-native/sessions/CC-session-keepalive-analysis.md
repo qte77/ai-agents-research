@@ -110,7 +110,7 @@ gh codespace create --idle-timeout 240m
 
 **3. tmux inside Codespace** — CC survives terminal tab switches and browser reconnects.
 
-**4. For truly unattended work** — don't fight the 4h hard limit. Use `claude --remote` (cloud VM, survives everything). See [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md).
+**4. For truly unattended work** — don't fight the 4h hard limit. Use `claude --remote` (cloud VM, survives everything). See [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
 
 **Auth persistence:** Store `ANTHROPIC_API_KEY` as a Codespace secret
 ([source][gh-codespace-secrets]) — injected on every start. OAuth requires
@@ -120,7 +120,7 @@ gh codespace create --idle-timeout 240m
 
 **`/loop` as keepalive:** `/loop 5m echo keepalive` — keeps session active.
 
-**Remote Control + tmux:** Best combo for long-running interactive sessions. See [CC-remote-control-analysis.md](CC-remote-control-analysis.md).
+**Remote Control + tmux:** Best combo for long-running interactive sessions. See [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md).
 
 ## Known Upstream Issues
 
@@ -134,18 +134,18 @@ gh codespace create --idle-timeout 240m
 
 ## See Also
 
-- [CC-remote-control-analysis.md](CC-remote-control-analysis.md)
-- [CC-remote-access-landscape.md](CC-remote-access-landscape.md) — Happy Coder, Omnara, DIY tmux+Tailscale
-- [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md) — `claude --remote`
-- [CC-web-scheduled-tasks-analysis.md](CC-web-scheduled-tasks-analysis.md) — `/schedule`
+- [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md)
+- [CC-remote-access-landscape.md](../ci-remote/CC-remote-access-landscape.md) — Happy Coder, Omnara, DIY tmux+Tailscale
+- [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md) — `claude --remote`
+- [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md) — `/schedule`
 - [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md) — `/loop` internals + lock file bug
-- [CC-sandbox-codespaces-friction.md](CC-sandbox-codespaces-friction.md)
+- [CC-sandbox-codespaces-friction.md](../sandboxing/CC-sandbox-codespaces-friction.md)
 
 ## References
 
 [gh-idle-timeout]: https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces
 [gh-codespace-secrets]: https://docs.github.com/en/codespaces/managing-your-codespaces/managing-your-account-specific-secrets-for-github-codespaces
-[apple-caffeinate]: https://developer.apple.com/library/archive/documentation/Darwin/Reference/ManPages/man8/caffeinate.8.html
+[apple-caffeinate]: https://ss64.com/mac/caffeinate.html
 [apple-pmset]: https://support.apple.com/guide/mac-help/set-sleep-and-wake-settings-mchle41a6ccd/mac
 [apple-launchd]: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html
 [freedesktop-inhibit]: https://www.freedesktop.org/software/systemd/man/latest/systemd-inhibit.html

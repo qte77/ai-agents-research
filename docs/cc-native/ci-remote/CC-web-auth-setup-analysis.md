@@ -11,7 +11,7 @@ validated_links: 2026-03-24
 
 ## Scope
 
-This document covers **authentication and setup** for Claude Code across web, terminal, and headless modes. For cloud VM execution mechanics, environment configuration, network policy, and session handoff details, see [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md). For remote monitoring of local sessions, see [CC-remote-control-analysis.md](CC-remote-control-analysis.md). For print mode pitfalls, see [CC-print-mode-gotchas.md](CC-print-mode-gotchas.md).
+This document covers **authentication and setup** for Claude Code across web, terminal, and headless modes. For cloud VM execution mechanics, environment configuration, network policy, and session handoff details, see [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md). For remote monitoring of local sessions, see [CC-remote-control-analysis.md](CC-remote-control-analysis.md). For print mode pitfalls, see [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md).
 
 ## 1. Claude Code on the Web — GitHub Setup
 
@@ -144,7 +144,7 @@ cat error.log | claude -p "What's causing these errors?"
 claude -c -p "Now fix the issue you identified"
 ```
 
-For stream-json and `--bare` gotchas with API keys, see [CC-print-mode-gotchas.md](CC-print-mode-gotchas.md).
+For stream-json and `--bare` gotchas with API keys, see [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md).
 
 ### Interactive Mode with API Key
 
@@ -203,7 +203,7 @@ For rotating keys (e.g., from HashiCorp Vault):
 - [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md) — cloud VM execution, environment config, network policy, session handoff
 - [CC-remote-control-analysis.md](CC-remote-control-analysis.md) — local execution with remote monitoring
 - [CC-remote-access-landscape.md](CC-remote-access-landscape.md) — third-party remote access tools comparison
-- [CC-print-mode-gotchas.md](CC-print-mode-gotchas.md) — `--bare`, `stream-json`, and `--verbose` pitfalls
+- [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md) — `--bare`, `stream-json`, and `--verbose` pitfalls
 
 ## References
 

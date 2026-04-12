@@ -127,7 +127,7 @@ For authentication setup (GitHub connection, API keys, headless usage), see [CC-
 For external sandbox platforms (OpenSandbox, E2B, Sprites.dev) that provide
 alternative cloud execution environments with different tradeoffs (self-hosted,
 ephemeral vs stateful, checkpoint/restore), see
-[CC-sandbox-platforms-landscape.md](CC-sandbox-platforms-landscape.md).
+[CC-sandbox-platforms-landscape.md](../sandboxing/CC-sandbox-platforms-landscape.md).
 
 ## References
 
