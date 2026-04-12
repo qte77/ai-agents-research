@@ -5,7 +5,7 @@ created: 2026-03-24
 authority: This document is the specification. Implementation lives in qte77/sdlc-lcm-manager.
 ---
 
-# SDLC Phase Specification
+## SDLC Phase Specification
 
 Dev lifecycle phases for all repos using Ralph, Polyforge, or manual workflows.
 
@@ -77,7 +77,7 @@ Dev lifecycle phases for all repos using Ralph, Polyforge, or manual workflows.
 
 ## Phase Transition Rules
 
-```
+```text
 plan --> design --> build --> test --> release --> deploy --> maintain
                       ^        ^                              |
                       |        |                              v

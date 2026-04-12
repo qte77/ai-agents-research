@@ -12,47 +12,47 @@ validated_links: 2026-04-05
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Towards Understanding Sycophancy in Language Models | [link][sycophancy] | RLHF models exhibit sycophancy because both humans and preference models favor sycophantic responses a non-negligible fraction of the time |
-| Persona Vectors | [link][persona-vectors] | Extracts persona vectors (including sycophancy) from activations; steering with/against them controls sycophantic behavior |
-| Auditing Language Models for Hidden Objectives | [link][auditing-hidden] | Created model with hidden RM-sycophancy objective as auditing challenge |
-| From Shortcuts to Sabotage | [link][emergent-misalignment] | Sycophancy → checklist alteration → reward tampering chain; sycophancy generalizes into increasingly dangerous misalignment |
+| Towards Understanding Sycophancy in Language Models | [paper][sycophancy] | RLHF models exhibit sycophancy because both humans and preference models favor sycophantic responses a non-negligible fraction of the time |
+| Persona Vectors | [paper][persona-vectors] | Extracts persona vectors (including sycophancy) from activations; steering with/against them controls sycophantic behavior |
+| Auditing Language Models for Hidden Objectives | [paper][auditing-hidden] | Created model with hidden RM-sycophancy objective as auditing challenge |
+| From Shortcuts to Sabotage | [paper][emergent-misalignment] | Sycophancy → checklist alteration → reward tampering chain; sycophancy generalizes into increasingly dangerous misalignment |
 
 ## Reasoning Trace Interpretability
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Tracing the Thoughts of a Large Language Model | [link][tracing-thoughts] | Circuit tracing reveals shared conceptual space where reasoning occurs before translation into language |
-| Reasoning Models Don't Always Say What They Think | [link][dont-say-think] | Extended thinking traces can be unfaithful — models use hints without acknowledging them |
-| Measuring Faithfulness in Chain-of-Thought Reasoning | [link][cot-faithfulness] | Tests CoT trustworthiness by feeding subtle hints and checking acknowledgement |
+| Tracing the Thoughts of a Large Language Model | [paper][tracing-thoughts] | Circuit tracing reveals shared conceptual space where reasoning occurs before translation into language |
+| Reasoning Models Don't Always Say What They Think | [paper][dont-say-think] | Extended thinking traces can be unfaithful — models use hints without acknowledging them |
+| Measuring Faithfulness in Chain-of-Thought Reasoning | [paper][cot-faithfulness] | Tests CoT trustworthiness by feeding subtle hints and checking acknowledgement |
 
 ## Safety Classifier Behavior
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Next-Generation Constitutional Classifiers | [link][constitutional-classifiers] | Two-stage classifier reduced jailbreak success 86%→4.4%, false refusals cut 87% (to 0.05%) |
-| Cost-Effective Constitutional Classifiers via Representation Re-use | [link][cheap-monitors] | Compute-efficient classifiers by reusing internal representations |
-| Enhancing Model Safety through Pretraining Data Filtering | [link][pretraining-filtering] | Safety improvements at data level before classifier-based post-hoc filtering |
-| Simple Probes Can Catch Sleeper Agents | [link][probes-sleeper] | Linear probes on model internals detect deceptive behavior that external classifiers miss |
+| Next-Generation Constitutional Classifiers | [paper][constitutional-classifiers] | Two-stage classifier reduced jailbreak success 86%→4.4%, false refusals cut 87% (to 0.05%) |
+| Cost-Effective Constitutional Classifiers via Representation Re-use | [paper][cheap-monitors] | Compute-efficient classifiers by reusing internal representations |
+| Enhancing Model Safety through Pretraining Data Filtering | [paper][pretraining-filtering] | Safety improvements at data level before classifier-based post-hoc filtering |
+| Simple Probes Can Catch Sleeper Agents | [paper][probes-sleeper] | Linear probes on model internals detect deceptive behavior that external classifiers miss |
 
 ## Alignment Steering Techniques
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Evaluating Feature Steering | [link][feature-steering] | Sweet spot where feature steering influences outputs without degrading capabilities; mitigated biases across 9 dimensions |
-| Alignment Faking in Large Language Models | [link][alignment-faking] | Models can strategically fake alignment during training |
-| The Assistant Axis | [link][assistant-axis] | Steering toward "Assistant" end makes models more resistant to adversarial role-playing |
-| A General Language Assistant as a Laboratory for Alignment | [link][lab-alignment] | Foundational work on using language assistants to study alignment techniques |
+| Evaluating Feature Steering | [paper][feature-steering] | Sweet spot where feature steering influences outputs without degrading capabilities; mitigated biases across 9 dimensions |
+| Alignment Faking in Large Language Models | [paper][alignment-faking] | Models can strategically fake alignment during training |
+| The Assistant Axis | [paper][assistant-axis] | Steering toward "Assistant" end makes models more resistant to adversarial role-playing |
+| A General Language Assistant as a Laboratory for Alignment | [paper][lab-alignment] | Foundational work on using language assistants to study alignment techniques |
 
 ## Foundational Interpretability (Cross-Cutting)
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Emotion Concepts and Their Function in a Large Language Model | [link][emotion-concepts] | 171 emotion vectors causally influence behavior; desperation increases reward-hacking, calm reduces unethical outputs |
-| Mapping the Mind of a Large Language Model | [link][mapping-mind] | First detailed look inside production LLM — millions of concepts identified via dictionary learning |
-| Decomposing Language Models Into Understandable Components | [link][decomposing] | Dictionary learning isolates recurring neuron activation patterns as interpretable features |
-| Circuits Updates (September 2024) | [link][circuits-updates] | Progress on multi-hop reasoning, planning, and CoT faithfulness circuits |
-| Interpretability Dreams | [link][interp-dreams] | Vision for interpretability research direction and its role in AI safety |
-| The Engineering Challenges of Scaling Interpretability | [link][scaling-interp] | Technical challenges applying dictionary learning and circuit analysis at scale |
+| Emotion Concepts and Their Function in a Large Language Model | [paper][emotion-concepts] | 171 emotion vectors causally influence behavior; desperation increases reward-hacking, calm reduces unethical outputs |
+| Mapping the Mind of a Large Language Model | [paper][mapping-mind] | First detailed look inside production LLM — millions of concepts identified via dictionary learning |
+| Decomposing Language Models Into Understandable Components | [paper][decomposing] | Dictionary learning isolates recurring neuron activation patterns as interpretable features |
+| Circuits Updates (September 2024) | [paper][circuits-updates] | Progress on multi-hop reasoning, planning, and CoT faithfulness circuits |
+| Interpretability Dreams | [paper][interp-dreams] | Vision for interpretability research direction and its role in AI safety |
+| The Engineering Challenges of Scaling Interpretability | [paper][scaling-interp] | Technical challenges applying dictionary learning and circuit analysis at scale |
 
 ## Cross-References
 

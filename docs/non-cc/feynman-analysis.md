@@ -23,7 +23,7 @@ replication on local or cloud GPUs.
 
 ## Core Architecture
 
-```
+```text
 User → CLI commands → Dispatcher → Sub-agents (4 bundled)
                                  → AlphaXiv (paper search)
                                  → GPU backends (Modal, RunPod)

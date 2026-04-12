@@ -6,7 +6,7 @@ updated: 2026-03-27
 source: https://github.com/qte77/so101-biolab-automation
 ---
 
-# so101-biolab-automation Learnings
+## so101-biolab-automation Learnings
 
 Placeholder for [qte77/so101-biolab-automation](https://github.com/qte77/so101-biolab-automation) patterns. Cross-repo patterns are in [../cross-repo-digest.md](../cross-repo-digest.md).
 

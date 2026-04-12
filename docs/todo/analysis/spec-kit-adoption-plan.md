@@ -8,7 +8,7 @@ version: 1.0.0
 validated_links: 2026-03-12
 ---
 
-# Spec-Kit Adoption Plan for Agents-eval
+## Spec-Kit Adoption Plan for Agents-eval
 
 ## Executive Summary
 

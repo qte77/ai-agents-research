@@ -7,7 +7,7 @@ updated: 2026-03-29
 validated_links: 2026-03-29
 ---
 
-# Compass-MCP Analysis
+## Compass-MCP Analysis
 
 ## What It Is
 
@@ -21,7 +21,7 @@ Provides task management and project context persistence in plain markdown files
 
 ## Architecture
 
-```
+```text
 src/
 ├── index.ts           # MCP server entry (StdioServerTransport)
 ├── tools/

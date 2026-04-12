@@ -31,7 +31,7 @@ grep -boa "plansDirectory" <cli-binary>  # 8 byte-offset matches
 
 Confirmed via byte-offset extraction (CC 2.1.87, 2026-03-29):
 
-```
+```text
 106947304:plansDirectory
 112354169:plansDirectory
 ...

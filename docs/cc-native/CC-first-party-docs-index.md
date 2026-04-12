@@ -6,7 +6,7 @@ updated: 2026-03-28
 validated_links: 2026-03-28
 ---
 
-# CC First-Party Documentation Index
+## CC First-Party Documentation Index
 
 ## Claude Code (code.claude.com)
 

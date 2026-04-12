@@ -20,7 +20,7 @@ an extensible tool/skill system.
 
 ## Core Architecture
 
-```
+```text
 User → Primary Agent → Sub-agents (spawned dynamically)
                      → Skills (Markdown-based, modular)
                      → Tools (web search, file ops, bash, MCP)

@@ -6,7 +6,7 @@ updated: 2026-03-27
 source: https://github.com/qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template
 ---
 
-# Ralph Template Learnings
+## Ralph Template Learnings
 
 Patterns from [qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template](https://github.com/qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template) and its instances. Cross-repo patterns are in [../cross-repo-digest.md](../cross-repo-digest.md).
 

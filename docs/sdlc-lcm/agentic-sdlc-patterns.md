@@ -11,7 +11,7 @@ sources:
   - https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html
 ---
 
-# Agentic SDLC Patterns
+## Agentic SDLC Patterns
 
 Lifecycle patterns designed for AI agent-driven development, not traditional
 human-driven SDLC.
@@ -38,7 +38,7 @@ Gap: no formal Observe+Correct phases (post-deployment feedback loop).
 
 Specialized agents per SDLC phase, orchestrated in parallel.
 
-```
+```text
 Orchestrator
   +-- Requirements Agent    (Ralph: RAPID BRD->PRD->FRD)
   +-- Coding Agent          (Ralph: TDD loop)

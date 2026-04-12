@@ -5,7 +5,7 @@ created: 2026-03-19
 validated_links: 2026-03-19
 ---
 
-# Claude Connectors Overview
+## Claude Connectors Overview
 
 Connectors extend Claude via [MCP (Model Context Protocol)][mcp] — an open standard by Anthropic for AI-to-external-service interaction. They provide tool access (search, read, act) and UI rendering (charts, maps, forms via MCP Apps).
 

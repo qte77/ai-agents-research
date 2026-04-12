@@ -26,7 +26,7 @@ across messaging channels.
 
 ### 8-Stage Execution Pipeline
 
-```
+```text
 Context → History → Prompt → Think → Act → Observe → Memory → Summarize
 ```
 

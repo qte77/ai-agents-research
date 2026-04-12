@@ -4,7 +4,7 @@ purpose: Research overview for Software Development Lifecycle (SDLC) and Lifecyc
 created: 2026-03-24
 ---
 
-# SDLC & LCM Research
+## SDLC & LCM Research
 
 Lifecycle management specs for the qte77 coding agent ecosystem.
 

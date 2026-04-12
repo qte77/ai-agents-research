@@ -24,7 +24,7 @@ companies, topics across communications and producing business artifacts.
 
 ## Core Architecture
 
-```
+```text
 Communication Sources (Gmail, Calendar, Meetings)
   → Ingestion & Entity Extraction
     → Knowledge Graph (Markdown + backlinks)
