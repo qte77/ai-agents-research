@@ -123,5 +123,5 @@ Bypassing permissions does not bypass the sandbox.
 
 ## See Also
 
-- [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md) — authentication methods and API key setup for headless/CI
-- [CC-print-mode-gotchas.md](CC-print-mode-gotchas.md) — `--bare` auth breakage, stream-json pitfalls
+- [CC-web-auth-setup-analysis.md](../ci-remote/CC-web-auth-setup-analysis.md) — authentication methods and API key setup for headless/CI
+- [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md) — `--bare` auth breakage, stream-json pitfalls

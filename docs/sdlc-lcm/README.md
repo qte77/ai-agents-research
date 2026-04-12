@@ -28,11 +28,9 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 
 ## Framework Grounding
 
-Specs build on [Agents-eval: ai-security-governance-frameworks.md](https://github.com/qte77/Agents-eval/blob/main/docs/analysis/ai-security-governance-frameworks.md)
-(NIST AI RMF, ISO 42001 A.6, ISO 23894, OWASP MAESTRO). See sdlc-spec.md cross-framework summary table.
+Specs build on NIST AI RMF, ISO 42001 A.6, ISO 23894, and OWASP MAESTRO. See sdlc-spec.md cross-framework summary table.
 
 ## Target Repo
 
-Implementation code (state machines, gates, config) will live in
-[qte77/sdlc-lcm-manager](https://github.com/qte77/sdlc-lcm-manager) (future),
-consumed as a git submodule by downstream repos.
+Implementation code (state machines, gates, config) will live in a dedicated
+`sdlc-lcm-manager` repo (future), consumed as a git submodule by downstream repos.

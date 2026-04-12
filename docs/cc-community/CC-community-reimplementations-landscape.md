@@ -161,8 +161,8 @@ Cross-ref: [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscap
 [learn]: https://github.com/shareAI-lab/learn-claude-code
 [openclaude]: https://github.com/Gitlawb/openclaude
 [nvim]: https://github.com/coder/claudecode.nvim
-[leaked]: https://github.com/leaked-claude-code/leaked-claude-code
-[zack]: https://github.com/zackautocracy/claude-code
+[leaked]: # "https://github.com/leaked-claude-code/leaked-claude-code (archived/removed — repo deleted/DMCA'd)"
+[zack]: # "https://github.com/zackautocracy/claude-code (account removed/404)"
 [ccunpacked]: https://ccunpacked.dev/
 [ultraplan]: https://code.claude.com/docs/en/ultraplan
 [register-leak]: https://www.theregister.com/2026/03/31/anthropic_claude_code_source_code/

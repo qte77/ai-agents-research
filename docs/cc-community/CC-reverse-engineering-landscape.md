@@ -201,8 +201,8 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 [env-ref]: ../cc-native/configuration/CC-env-vars-reference.md
 [tracking-issue]: https://github.com/qte77/ai-agents-research/issues/70
 [ccunpacked]: https://ccunpacked.dev/
-[zack-gh]: https://github.com/zackautocracy
-[zack-repo]: https://github.com/zackautocracy/claude-code
+[zack-gh]: # "https://github.com/zackautocracy (account removed/404)"
+[zack-repo]: # "https://github.com/zackautocracy/claude-code (account removed/404)"
 [hn-ccunpacked]: https://news.ycombinator.com/item?id=47597085
 [gigazine-ccunpacked]: https://gigazine.net/gsc_news/en/20260402-claude-code-unpacked/
 [dailydev-ccunpacked]: https://app.daily.dev/posts/claude-code-unpacked-v2vrsegim

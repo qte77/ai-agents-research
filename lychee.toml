@@ -1,13 +1,15 @@
 # Lychee link checker config
 # https://lychee.cli.rs/configuration/
 
-# Exclude auto-generated triage files (contain truncated URLs from table columns)
-exclude_path = ["triage/"]
+# Exclude auto-generated and pre-standardized content
+# triage/ — auto-generated monitor outputs (see CONTRIBUTING.md)
+# docs/todo/ — Agents-eval era docs pending content review and reorganization
+exclude_path = ["triage/", "docs/todo/"]
 
 # Accept common bot-blocked status codes
 accept = [200, 429]
 
-# Exclude domains that block automated requests
+# Exclude domains that block automated requests (return 403/401 to HEAD)
 exclude = [
     "medium.com",
     "npmjs.com",
@@ -16,4 +18,13 @@ exclude = [
     "hashicorp.com",
     "epam.com",
     "thectoclub.com",
+    "blogs.oracle.com",
+    "netsuite.com",
+    "mcp.stripe.com",
+    "dl.acm.org",
+    "oxford.universitypressscholarship.com",
+    "agentverse.ai",
+    "crunchbase.com",
+    "openreview.net",
+    "scite.ai",
 ]

@@ -79,7 +79,7 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 | **excel-mcp-server** | XLSX | Read/write with formulas | [negokaz/excel-mcp-server](https://github.com/negokaz/excel-mcp-server) |
 | **excel-to-pdf-mcp** | XLSX/Numbers → PDF | LibreOffice-based conversion | [kmexnx/excel-to-pdf-mcp](https://github.com/kmexnx/excel-to-pdf-mcp) |
 | **document-edit-mcp** | PDF + Word + Excel | Multi-format CRUD | [alejandroBallesterosC/document-edit-mcp](https://github.com/alejandroBallesterosC/document-edit-mcp) |
-| **mcp-server-doccreator** | PDF, DOCX, PPTX, XLSX | Multi-format generation | [Git-Fg/mcp-server-doccreator](https://github.com/Git-Fg/mcp-server-doccreator) |
+| **mcp-server-doccreator** | PDF, DOCX, PPTX, XLSX | Multi-format generation | ~~Git-Fg/mcp-server-doccreator~~ (repo removed) |
 
 **When to use MCP servers vs built-in skills**: MCP servers give fine-grained programmatic control (specific API calls for cell operations, page manipulation). Built-in skills provide higher-level natural language interaction ("create an invoice spreadsheet"). Use MCP servers for automation pipelines; use skills for interactive work.
 
@@ -110,7 +110,7 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 | [Office-Word-MCP-Server][word] | Word document MCP server |
 | [excel-mcp-server][excel] | Excel MCP server |
 | [document-edit-mcp][docedit] | Document editing MCP server |
-| [mcp-server-doccreator][doccreator] | Multi-format document generator |
+| ~~mcp-server-doccreator~~ | Multi-format document generator (repo removed) |
 
 [skills]: https://github.com/anthropics/skills
 [kw]: https://github.com/anthropics/knowledge-work-plugins
@@ -118,4 +118,4 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 [word]: https://github.com/GongRzhe/Office-Word-MCP-Server
 [excel]: https://github.com/negokaz/excel-mcp-server
 [docedit]: https://github.com/alejandroBallesterosC/document-edit-mcp
-[doccreator]: https://github.com/Git-Fg/mcp-server-doccreator
+[doccreator]: # "https://github.com/Git-Fg/mcp-server-doccreator (repo removed)"

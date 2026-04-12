@@ -29,4 +29,4 @@ Distilled operational learnings from active development across the qte77 ecosyst
 
 ## Consumer
 
-Ralph reads `docs/learnings/` via `COMPOUND_LEARNINGS_PATH` to inject story-relevant context at execution time. See [CRLA plan](../../.claude/plans/ralph-cross-repo-compound-learning-aggregator.md) for architecture details (if available locally).
+Ralph reads `docs/learnings/` via `COMPOUND_LEARNINGS_PATH` to inject story-relevant context at execution time.
