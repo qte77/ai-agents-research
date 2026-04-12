@@ -41,6 +41,7 @@ Python + docs; Phase 3 may need a UI dashboard or multi-user access.
 not agent-driven pipelines where state is inferred from repo artifacts.
 
 **Phase 3 trigger conditions:**
+
 - Multiple human users need lifecycle visibility
 - Audit/compliance requirements demand formal traceability
 - RAPID cockpit needs a persistent UI beyond CLI/TUI

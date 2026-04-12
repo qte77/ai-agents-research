@@ -110,6 +110,7 @@ tmux session 4: /financial-report   → CC + xlsx skill + QuickBooks MCP + pptx 
 Each session gets its own Claude Code instance with task-specific MCP servers configured. Sessions survive disconnect (tmux persistence), giving business task continuity across the workday.
 
 **Implementation options**:
+
 - **Simplest**: CC Agent Teams (native, zero setup)
 - **Most flexible**: claude-session-driver (fan-out pattern, programmatic control)
 - **Most visual**: Vibe Kanban (kanban board, agent-agnostic)

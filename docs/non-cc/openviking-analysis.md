@@ -71,6 +71,7 @@ The key cost-reduction mechanism. Every piece of content is processed into three
 **Generation**: Asynchronous, bottom-up. SemanticProcessor traverses directory hierarchies from leaf nodes upward. Child abstracts aggregate into parent overviews, creating navigable hierarchy.
 
 **Benchmark (LoCoMo10, 1,540 long-range dialogue cases)**:
+
 - Token reduction: 24.6M -> 4.3M (**80%+ reduction**), or 2.1M with memory-core
 - Average load per retrieval: **550 tokens** (95% cheaper than traditional vector search)
 - Task completion: 35.65% -> 52.08% (**49% improvement**)

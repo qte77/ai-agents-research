@@ -14,4 +14,6 @@ exclude = [
     "cuttlesoft.com",
     "linearb.io",
     "hashicorp.com",
+    "epam.com",
+    "thectoclub.com",
 ]

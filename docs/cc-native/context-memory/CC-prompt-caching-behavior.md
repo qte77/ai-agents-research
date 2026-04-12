@@ -65,6 +65,7 @@ Source: [prompt caching docs][caching], "How cache lookback works" section
 CC uses `{"type": "ephemeral"}` (default 5-minute TTL) exclusively. The 1-hour tier (`{"type": "ephemeral", "ttl": "1h"}`) is never used.
 
 **Evidence**: Session `9f7de296`, CC 2.1.83, Codespaces, 2026-03-27 — 281 turns:
+
 - `ephemeral_5m_input_tokens`: 1,732,355 (all cache writes)
 - `ephemeral_1h_input_tokens`: 0
 
