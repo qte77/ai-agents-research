@@ -2,8 +2,8 @@
 title: CC First-Party Documentation Index
 purpose: Canonical Anthropic URLs for CC, Agent SDK, Anthropic SDK, API, and best practices.
 created: 2026-03-28
-updated: 2026-03-28
-validated_links: 2026-03-28
+updated: 2026-04-13
+validated_links: 2026-04-13
 ---
 
 ## CC First-Party Documentation Index
@@ -14,11 +14,21 @@ validated_links: 2026-03-28
 |-------|-----|
 | Overview | <https://code.claude.com/docs/en/overview> |
 | Quickstart | <https://code.claude.com/docs/en/quickstart> |
+| How Claude Code works | <https://code.claude.com/docs/en/how-claude-code-works> |
+| CLI reference | <https://code.claude.com/docs/en/cli-reference> |
+| .claude directory | <https://code.claude.com/docs/en/claude-directory> |
 | Memory (CLAUDE.md) | <https://code.claude.com/docs/en/memory> |
 | Hooks system | <https://code.claude.com/docs/en/hooks-guide> |
 | Settings & configuration | <https://code.claude.com/docs/en/settings> |
+| Permission modes | <https://code.claude.com/docs/en/permission-modes> |
+| Common workflows | <https://code.claude.com/docs/en/common-workflows> |
+| Headless mode | <https://code.claude.com/docs/en/headless> |
+| Sub-agents | <https://code.claude.com/docs/en/sub-agents> |
 | Agent Teams | <https://code.claude.com/docs/en/agent-teams> |
 | MCP integration | <https://code.claude.com/docs/en/mcp> |
+| Plugins reference | <https://code.claude.com/docs/en/plugins-reference> |
+| Channels | <https://code.claude.com/docs/en/channels> |
+| Chrome extension | <https://code.claude.com/docs/en/chrome> |
 | LLMs.txt | <https://code.claude.com/docs/llms.txt> |
 
 ## Agent SDK (platform.claude.com)
