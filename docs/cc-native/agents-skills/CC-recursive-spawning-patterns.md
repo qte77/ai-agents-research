@@ -116,6 +116,11 @@ harness (Ralph) calling `claude -p` with
 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` per iteration, but each iteration's
 teams are independent.
 
+## Cross-References
+
+- [CC-cli-reference.md](../configuration/CC-cli-reference.md) — canonical flag definitions (`-p`, `--output-format`)
+- [CC-subagent-session-artifacts.md](../sessions/CC-subagent-session-artifacts.md) — subagent worktree lifecycle, meta.json, transcript storage
+
 ## Sources
 
 | Source | Content |

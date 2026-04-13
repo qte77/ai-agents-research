@@ -2,8 +2,8 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-04-04
-validated_links: 2026-04-04
+updated: 2026-04-13
+validated_links: 2026-04-13
 ---
 
 **Status**: Adopt
@@ -100,6 +100,18 @@ Variables can be set via (in priority order, per [settings docs][settings]):
 4. **`settings.json` `env` block** — persistent per-project or user-level
 
 See [examples/settings.json](../examples/settings.json) for a working `env` block.
+
+### MCP servers and PATH
+
+MCP servers and hook commands are spawned from Claude Code's own process environment — **not** via a login shell. Shell profile files (`.bashrc`, `.zshrc`, `.profile`) are not sourced. If a tool binary (e.g., `npx`, `node`) is installed to a non-standard location, it must be either:
+
+1. Symlinked to a directory already in CC's inherited `PATH` (e.g., `~/.local/bin/`)
+2. Added via the `env` block in `settings.json`: `"PATH": "/custom/bin:${PATH}"`
+3. Specified as an absolute path in the MCP server `command` field
+
+This commonly affects user-local Node.js installs (e.g., `~/.local/share/node/bin/`) that rely on `.bashrc` PATH additions. MCP servers using `npx` will fail with "command not found" unless the symlink or env override is in place.
+
+Source: [CC plugins reference — environment variables](https://code.claude.com/docs/en/plugins-reference), [CC MCP docs](https://code.claude.com/docs/en/mcp). Observation: Opus 4.6, 2026-04-13.
 
 ## Discovery Method
 

@@ -21,6 +21,39 @@ NODE_DIR     := $(HOME)/.local/share/node
 NODE_BIN     := $(NODE_DIR)/bin
 LOCAL_BIN    := $(HOME)/.local/bin
 
+# -- OS / arch detection --
+UNAME_S := $(shell uname -s)
+UNAME_M := $(shell uname -m)
+ifeq ($(UNAME_S),Darwin)
+  PKG_CMD := brew install
+else ifeq ($(shell command -v dnf 2>/dev/null),)
+  ifeq ($(shell command -v apt-get 2>/dev/null),)
+    ifeq ($(shell command -v pacman 2>/dev/null),)
+      PKG_CMD := echo "No supported package manager (brew/dnf/apt-get/pacman)" && exit 1 &&
+    else
+      PKG_CMD := sudo pacman -S --noconfirm
+    endif
+  else
+    PKG_CMD := sudo apt-get install -y -qq
+  endif
+else
+  PKG_CMD := sudo dnf install -y
+endif
+
+ifeq ($(UNAME_M),x86_64)
+  NODE_ARCH   := x64
+  LYCHEE_ARCH := x86_64-unknown-linux-gnu
+else ifeq ($(UNAME_M),aarch64)
+  NODE_ARCH   := arm64
+  LYCHEE_ARCH := aarch64-unknown-linux-gnu
+else ifeq ($(UNAME_M),arm64)
+  NODE_ARCH   := arm64
+  LYCHEE_ARCH := aarch64-apple-darwin
+else
+  NODE_ARCH   := $(UNAME_M)
+  LYCHEE_ARCH := $(UNAME_M)-unknown-linux-gnu
+endif
+
 # Source plugin providing skills (docs-governance, cc-meta).
 # Default: clone from GitHub to an XDG cache path. Override
 # UTILS_PLUGIN_DIR to point at an existing local clone.
@@ -37,21 +70,34 @@ setup_node: ## Install Node.js user-locally to ~/.local/share/node (no sudo)
 		echo "node already installed: $$($(NODE_BIN)/node --version) (at $(NODE_DIR))"
 	elif command -v node > /dev/null 2>&1; then
 		echo "node already installed on PATH: $$(node --version)"
+	elif [ "$(UNAME_S)" = "Darwin" ]; then
+		echo "Installing Node.js via brew ..."
+		brew install node
 	else
-		echo "Installing Node.js $(NODE_VERSION) to $(NODE_DIR) ..."
+		echo "Installing Node.js $(NODE_VERSION) ($(UNAME_S)/$(NODE_ARCH)) to $(NODE_DIR) ..."
 		mkdir -p $(NODE_DIR)
-		curl -sSfL https://nodejs.org/dist/v$(NODE_VERSION)/node-v$(NODE_VERSION)-linux-x64.tar.xz \
+		curl -sSfL https://nodejs.org/dist/v$(NODE_VERSION)/node-v$(NODE_VERSION)-linux-$(NODE_ARCH).tar.xz \
 			| tar -xJ --strip-components=1 -C $(NODE_DIR) \
-			&& echo "node installed — add to PATH: export PATH=$(NODE_BIN):\$$PATH" \
-			|| echo "Install failed — download manually from https://nodejs.org/dist/v$(NODE_VERSION)/"
+			|| { echo "Install failed — download manually from https://nodejs.org/dist/v$(NODE_VERSION)/"; exit 1; }
 	fi
+	mkdir -p $(LOCAL_BIN)
+	for bin in node npm npx; do \
+		if [ -x "$(NODE_BIN)/$$bin" ] && [ ! -e "$(LOCAL_BIN)/$$bin" ]; then \
+			ln -s "$(NODE_BIN)/$$bin" "$(LOCAL_BIN)/$$bin"; \
+			echo "symlinked $$bin -> $(LOCAL_BIN)/$$bin"; \
+		fi; \
+	done
 
 setup_lychee: ## Install lychee link checker user-locally to ~/.local/bin (no sudo)
 	if command -v lychee > /dev/null 2>&1; then
 		echo "lychee already installed: $$(lychee --version)"
+	elif [ "$(UNAME_S)" = "Darwin" ]; then
+		echo "Installing lychee via brew ..."
+		brew install lychee
 	else
+		echo "Installing lychee ($(LYCHEE_ARCH)) to $(LOCAL_BIN) ..."
 		mkdir -p $(LOCAL_BIN)
-		curl -sSfL https://github.com/lycheeverse/lychee/releases/latest/download/lychee-x86_64-unknown-linux-gnu.tar.gz \
+		curl -sSfL https://github.com/lycheeverse/lychee/releases/latest/download/lychee-$(LYCHEE_ARCH).tar.gz \
 			| tar xz -C $(LOCAL_BIN) \
 			&& echo "lychee installed to $(LOCAL_BIN) — ensure it is on PATH" \
 			|| echo "Install failed — download manually from https://github.com/lycheeverse/lychee/releases"
@@ -109,11 +155,15 @@ setup_all: setup_lychee setup_mdlint ## Install all tooling (lychee + node + mar
 
 
 check_links: ## Check links with lychee
-	if command -v lychee > /dev/null 2>&1; then
-		lychee --config lychee.toml .
-	else
+	if ! command -v lychee > /dev/null 2>&1; then
 		echo "lychee not installed — run: make setup_lychee"
 		exit 1
+	fi
+	if [ ! -f lychee.toml ]; then
+		echo "lychee.toml not found — running without config"
+		lychee .
+	else
+		lychee --config lychee.toml .
 	fi
 
 check_docs: ## Lint markdown files (reads .markdownlint.json)

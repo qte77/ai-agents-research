@@ -2,8 +2,8 @@
 title: CC Binary Architecture
 purpose: Analysis of Claude Code CLI binary and VS Code extension internals — build system, shared codebase proof, internal API endpoints, model IDs, directory map, /stats data flow, /voice timeline.
 created: 2026-03-29
-updated: 2026-03-30
-validated_links: 2026-03-30
+updated: 2026-04-13
+validated_links: 2026-04-13
 ---
 
 **Status**: Research (informational)
@@ -178,7 +178,7 @@ Direct observation, Codespaces, 2026-03-29.
 | Path | Purpose | Evidence |
 |---|---|---|
 | `projects/<hash>/` | Transcripts (`.jsonl`), tool results, subagent logs, memory | Direct observation |
-| `sessions/*.json` | Session index: PID, sessionId, cwd, startedAt, name | Direct observation |
+| `sessions/<pid>.json` | Session index keyed by PID. Fields: `sessionId`, `cwd`, `startedAt`, `name`. **Not listed** in first-party [.claude directory cleanup tables](https://code.claude.com/docs/en/claude-directory#application-data) — appears in neither "cleaned automatically" nor "kept until you delete". Cleanup lifecycle undocumented. Observation: Opus 4.6, 2026-04-13 | Direct observation |
 | `plans/` | Plan mode output files | Verified — `plansDirectory` setting |
 | `file-history/<session>/` | File checkpoints for rewind feature (`fileCheckpointingEnabled`) | Direct observation |
 | `history.jsonl` | User command history with timestamps and session IDs | Direct observation |
@@ -195,7 +195,7 @@ Direct observation, Codespaces, 2026-03-29.
 | `telemetry/` | OTel export staging. **Empty unless `CLAUDE_CODE_ENABLE_TELEMETRY=1`** | Binary: `lH(process.env.CLAUDE_CODE_ENABLE_TELEMETRY)`. Exports at 300s intervals. See [monitoring docs][monitoring] |
 | `session-env/<session>/` | Per-session environment snapshots | Direct observation |
 | `shell-snapshots/` | Bash shell state snapshots (aliases, functions) | Direct observation |
-| `plugins/` | Plugin cache, blocklist, marketplace metadata | Rebuilt on install |
+| `plugins/` | Plugin cache, blocklist, marketplace metadata. Contains `installed_plugins.json` with `projectPath` entries scoping installs to projects — stale paths cause plugins to silently stop loading for that project. See [plugins reference](https://code.claude.com/docs/en/plugins-reference). Observation: Opus 4.6, 2026-04-13 | Rebuilt on install |
 | `mcp-needs-auth-cache.json` | MCP auth state cache | Transient |
 
 ### Not in `~/.claude/` (stored elsewhere)

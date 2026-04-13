@@ -122,6 +122,8 @@ Revisit when:
 
 ## See Also
 
+For canonical CLI flag definitions (`--remote`, `--teleport`, `--permission-mode`), see [CC-cli-reference.md](../configuration/CC-cli-reference.md).
+
 For authentication setup (GitHub connection, API keys, headless usage), see [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md).
 
 For external sandbox platforms (OpenSandbox, E2B, Sprites.dev) that provide

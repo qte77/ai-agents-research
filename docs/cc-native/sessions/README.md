@@ -8,4 +8,5 @@ Session lifecycle, persistence, cost analysis, and headless mode.
 | [CC-session-lifecycle-analysis.md](CC-session-lifecycle-analysis.md) | Session naming, /rename bugs, persistence model |
 | [CC-session-keepalive-analysis.md](CC-session-keepalive-analysis.md) | Session timeout and keepalive strategies |
 | [CC-print-mode-gotchas.md](CC-print-mode-gotchas.md) | `claude -p` headless mode pitfalls |
+| [CC-subagent-session-artifacts.md](CC-subagent-session-artifacts.md) | Subagent worktree lifecycle, meta.json, transcript storage, cleanup |
 | [CC-error-messages-reference.md](CC-error-messages-reference.md) | Error catalog: usage limits, login, capacity, BUDDY companion |

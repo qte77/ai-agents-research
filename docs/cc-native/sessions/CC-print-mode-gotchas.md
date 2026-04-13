@@ -80,6 +80,8 @@ This is the most reliable approach.
 
 ## Summary Table
 
+See [CC-cli-reference.md](../configuration/CC-cli-reference.md) for canonical flag definitions. This table covers behavioral gotchas only.
+
 | Flag | Purpose | Gotcha |
 |---|---|---|
 | `--output-format stream-json` | Structured per-event output | Requires `--verbose` in `-p` mode |

@@ -424,6 +424,11 @@ Coordinator Mode and Agent Teams are complementary:
 
 Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST documents Coordinator Mode phases and tool registry; [zread.ai Coordinator Mode walkthrough][zread-coordinator] — community breakdown of the unreleased mode.
 
+### Cross-References
+
+- [CC-cli-reference.md](../configuration/CC-cli-reference.md) — canonical flag definitions (`--agent`, `--agents`, `--teammate-mode`, `--worktree`)
+- [CC-subagent-session-artifacts.md](../sessions/CC-subagent-session-artifacts.md) — subagent worktree lifecycle, meta.json, transcript storage
+
 ### Sources
 
 | Source | Author | Key Content |

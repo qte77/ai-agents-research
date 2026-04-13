@@ -129,15 +129,11 @@ Aggregate merged PR titles/descriptions, filter for user-facing changes, group b
 
 ### Common `claude_args`
 
+See [CC-cli-reference.md](../configuration/CC-cli-reference.md) for canonical flag definitions. Common flags used in GHA workflows:
+
 ```yaml
 claude_args: "--max-turns 5 --model claude-sonnet-4-6 --mcp-config /path/to/config.json"
 ```
-
-- `--max-turns`: Maximum conversation turns (default: 10)
-- `--model`: Model selection (e.g., `claude-sonnet-4-6`, `claude-opus-4-6`)
-- `--mcp-config`: Path to MCP server configuration
-- `--allowed-tools`: Comma-separated tool allowlist
-- `--append-system-prompt`: Additional system instructions
 
 ### Migration from Beta to v1
 
@@ -276,6 +272,7 @@ A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-t
 
 ## Cross-References
 
+- CLI flag definitions (`--max-turns`, `--model`, `--mcp-config`, `--allowedTools`, `--append-system-prompt`) — [CC-cli-reference.md](../configuration/CC-cli-reference.md)
 - Version pinning and self-hosted runners for GHA — [CC-version-pinning-resilience.md](CC-version-pinning-resilience.md#github-actions)
 - Official plugins (Code Review, Security Guidance) — [CC-official-plugins-landscape.md](../plugins-ecosystem/CC-official-plugins-landscape.md)
 - Bash tool behavior inside GHA — [CC-bash-mode-analysis.md](../configuration/CC-bash-mode-analysis.md)
