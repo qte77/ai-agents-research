@@ -123,5 +123,6 @@ Bypassing permissions does not bypass the sandbox.
 
 ## See Also
 
+- [CC-cli-reference.md](../configuration/CC-cli-reference.md) — canonical flag definitions (`--dangerously-skip-permissions`, `--permission-mode`, `--allowedTools`)
 - [CC-web-auth-setup-analysis.md](../ci-remote/CC-web-auth-setup-analysis.md) — authentication methods and API key setup for headless/CI
 - [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md) — `--bare` auth breakage, stream-json pitfalls

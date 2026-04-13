@@ -73,6 +73,7 @@ claude -p --output-format stream-json "First task" \
 
 ## Cross-References
 
+- [CC-cli-reference.md](CC-cli-reference.md) — canonical flag definitions (`--output-format`, `--input-format`, `--include-partial-messages`, `--verbose`)
 - [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md) — headless mode caveats
 - [CC-env-vars-reference.md](CC-env-vars-reference.md) — `CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK`
 

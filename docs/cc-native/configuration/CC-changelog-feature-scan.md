@@ -179,22 +179,7 @@ On March 30 2026, [Boris Cherny](https://www.threads.com/@boris_cherny/) (Head o
 
 ### CLI Quick Reference
 
-| Flag/Command | Purpose |
-|---|---|
-| `--teleport` / `/teleport` | Pull cloud session to local |
-| `/remote-control` | Control local from browser/phone |
-| `/loop <interval> <cmd>` | Recurring automation (max 1 week) |
-| `/schedule` | Cron-like scheduling |
-| `/branch` | Fork current session |
-| `--fork-session` | Fork when resuming |
-| `-r <id>` | Resume prior session |
-| `/btw <question>` | Side question without interrupting |
-| `-w` | Start in git worktree |
-| `/batch` | Parallel fan-out to worktree agents |
-| `--bare` | Skip config (10x faster) |
-| `--add-dir <path>` | Grant access to additional dirs |
-| `--agent=<name>` | Load custom agent from `.claude/agents/` |
-| `/voice` | Voice input |
+See [CC-cli-reference.md](CC-cli-reference.md) for canonical flag definitions. See [CC-tools-inventory.md](CC-tools-inventory.md) for slash commands.
 
 ### Sources
 
