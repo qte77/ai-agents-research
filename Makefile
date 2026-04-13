@@ -57,8 +57,8 @@ endif
 # Source plugin providing skills (docs-governance, cc-meta).
 # Default: clone from GitHub to an XDG cache path. Override
 # UTILS_PLUGIN_DIR to point at an existing local clone.
-UTILS_PLUGIN_URL ?= https://github.com/qte77/claude-code-utils-plugin
-UTILS_PLUGIN_DIR ?= $(HOME)/.cache/claude-code-utils-plugin
+UTILS_PLUGIN_URL ?= https://github.com/qte77/claude-code-plugins
+UTILS_PLUGIN_DIR ?= $(HOME)/.cache/claude-code-plugins
 SKILLS_DIR       := .claude/skills
 
 
@@ -119,7 +119,7 @@ setup_mdlint: setup_node ## Install markdownlint-cli2 via user-local npm (no sud
 		fi
 	fi
 
-setup_skills: ## Clone claude-code-utils-plugin (if missing) and symlink its skills into .claude/skills (gitignored; zero sudo)
+setup_skills: ## Clone claude-code-plugins (if missing) and symlink its skills into .claude/skills (gitignored; zero sudo)
 	if [ ! -d "$(UTILS_PLUGIN_DIR)/.git" ]; then
 		echo "Cloning $(UTILS_PLUGIN_URL) to $(UTILS_PLUGIN_DIR) ..."
 		mkdir -p $$(dirname $(UTILS_PLUGIN_DIR))

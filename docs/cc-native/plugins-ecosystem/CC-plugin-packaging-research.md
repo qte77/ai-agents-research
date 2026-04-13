@@ -156,8 +156,8 @@ Based on external research on plugin adoption patterns:
 ## Common Pitfalls
 
 Observed failure modes when packaging plugins, derived from production experience
-with the [qte77/claude-code-utils-plugin](https://github.com/qte77/claude-code-utils-plugin)
-marketplace ([PR #16](https://github.com/qte77/claude-code-utils-plugin/pull/16))
+with the [qte77/claude-code-plugins](https://github.com/qte77/claude-code-plugins)
+marketplace ([PR #16](https://github.com/qte77/claude-code-plugins/pull/16))
 and cross-referencing official Anthropic plugins ([source][cc-plugins-official]).
 
 ### 1. Duplicate Hooks from Explicit Manifest Reference
