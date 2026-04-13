@@ -78,9 +78,15 @@ setup_node: ## Install Node.js user-locally to ~/.local/share/node (no sudo)
 		mkdir -p $(NODE_DIR)
 		curl -sSfL https://nodejs.org/dist/v$(NODE_VERSION)/node-v$(NODE_VERSION)-linux-$(NODE_ARCH).tar.xz \
 			| tar -xJ --strip-components=1 -C $(NODE_DIR) \
-			&& echo "node installed — add to PATH: export PATH=$(NODE_BIN):\$$PATH" \
-			|| echo "Install failed — download manually from https://nodejs.org/dist/v$(NODE_VERSION)/"
+			|| { echo "Install failed — download manually from https://nodejs.org/dist/v$(NODE_VERSION)/"; exit 1; }
 	fi
+	mkdir -p $(LOCAL_BIN)
+	for bin in node npm npx; do \
+		if [ -x "$(NODE_BIN)/$$bin" ] && [ ! -e "$(LOCAL_BIN)/$$bin" ]; then \
+			ln -s "$(NODE_BIN)/$$bin" "$(LOCAL_BIN)/$$bin"; \
+			echo "symlinked $$bin -> $(LOCAL_BIN)/$$bin"; \
+		fi; \
+	done
 
 setup_lychee: ## Install lychee link checker user-locally to ~/.local/bin (no sudo)
 	if command -v lychee > /dev/null 2>&1; then
