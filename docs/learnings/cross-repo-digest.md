@@ -128,7 +128,7 @@ Patterns that recur across two or more repos. Each entry is distilled from AGENT
 - **Context**: Multi-manifest systems (CC plugins: `plugin.json` + `marketplace.json`)
 - **Problem**: Bumping version in one manifest but not the other causes CI validation failures.
 - **Solution**: Grep for old version string across all manifest files and update all occurrences atomically.
-- **References**: AGENT_LEARNINGS.md (Agents-eval, claude-code-utils-plugin)
+- **References**: AGENT_LEARNINGS.md (Agents-eval, claude-code-plugins)
 
 ---
 

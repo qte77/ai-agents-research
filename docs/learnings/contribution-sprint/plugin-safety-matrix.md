@@ -70,4 +70,4 @@ These repos do NOT exclude Claude Code config directories from version control. 
 | [cc-plugins-utils][plugins] | Plugin inventory, all branches, 2026-03-30 |
 | [style-cheatsheets.md](style-cheatsheets.md) | Per-repo .gitignore observations |
 
-[plugins]: https://github.com/qte77/claude-code-utils-plugin
+[plugins]: https://github.com/qte77/claude-code-plugins
