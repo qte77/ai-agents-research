@@ -2,8 +2,8 @@
 title: CC Session Lifecycle — Naming, Persistence, and /rename Bugs
 purpose: Analysis of session creation, naming, persistence, /resume discovery, and known /rename bugs with reproduction evidence.
 created: 2026-03-27
-updated: 2026-03-27
-validated_links: 2026-03-27
+updated: 2026-04-13
+validated_links: 2026-04-13
 ---
 
 **Status**: Research
@@ -25,6 +25,8 @@ The `<key>` is derived from the working directory path with `/` replaced by `-` 
 
 **Critical**: `/resume` only lists sessions that have a `.jsonl` file in the per-project directory. Sessions in `history.jsonl` without a corresponding project JSONL are invisible to `/resume`.
 
+**Path migration risk**: Because `<key>` encodes the absolute working directory, moving a repo (e.g., `/home/user/repos/foo` → `/home/user/repos/org/foo`) orphans all project data. CC auto-creates a new project directory on first session from the new path, so a manual `mv` of the old project dir into the already-existing new one causes double nesting. Observation: Opus 4.6, 2026-04-13.
+
 Source: observed CC 2.1.83, Codespaces, 2026-03-27. `history.jsonl` fields: `["display","pastedContents","project","sessionId","timestamp"]`.
 
 ### Session identification fields
@@ -34,11 +36,20 @@ Each JSONL message carries:
 | Field | Purpose | Set by |
 |---|---|---|
 | `sessionId` | UUID, primary key | CC at session start |
+| `cwd` | Working directory path. Validated against current directory on resume — mismatch prevents session from loading | CC at session start |
 | `slug` | Auto-generated display name (e.g., `stateful-dreaming-donut`) | CC auto-title logic |
 | `version` | CC version | CC |
 | `gitBranch` | Current git branch | CC |
 
-Source: per-project JSONL inspection, CC 2.1.83
+The `cwd` field is the key resumability gate: a session may appear in the `/resume` picker but fail to load if the embedded `cwd` doesn't match the current working directory. This is the primary breakage when repos are moved.
+
+Source: per-project JSONL inspection, CC 2.1.83. `cwd` field observation: Opus 4.6, 2026-04-13.
+
+### Session index files
+
+`~/.claude/sessions/<pid>.json` maps PIDs to session metadata (`sessionId`, `cwd`, `startedAt`, `name`). These files are **not listed** in the first-party [.claude directory cleanup tables][claude-directory] — they appear in neither the "cleaned up automatically" nor "kept until you delete" categories. Observed behavior: index files for dead PIDs may be cleaned up, but the exact lifecycle is undocumented. Synthetic entries with fake PIDs survive across sessions.
+
+Source: [CC-binary-architecture.md](../configuration/CC-binary-architecture.md). Cleanup gap observation: Opus 4.6, 2026-04-13.
 
 ## `/rename` Command
 
@@ -129,6 +140,9 @@ Source: [settings docs][settings]
 
 - [CC-session-cost-analysis.md](CC-session-cost-analysis.md) — JSONL structure, usage fields, cost extraction
 - [CC-session-keepalive-analysis.md](CC-session-keepalive-analysis.md) — Session timeout and keepalive strategies
+- [CC-subagent-session-artifacts.md](CC-subagent-session-artifacts.md) — Subagent worktree lifecycle, meta.json, transcript storage
+- [CC-binary-architecture.md](../configuration/CC-binary-architecture.md) — `~/.claude/` directory map, session index files
+- [CC-cli-reference.md](../configuration/CC-cli-reference.md) — `--name`, `--resume`, `--continue` flag details
 
 ## Sources
 
@@ -143,8 +157,11 @@ Source: [settings docs][settings]
 | [#27195][gh-27195] | CLI resume by name fails |
 | [#34360][gh-34360] | `--resume` + `--print` ignores renamed sessions |
 | CC 2.1.83, session `ea0fa2d5`, Codespaces, 2026-03-27 | Slug-not-updated reproduction |
+| [CC .claude directory][claude-directory] | Application data paths and cleanup rules |
+| Opus 4.6, 2026-04-13 | `cwd` field, path migration, session index lifecycle observations |
 
 [commands]: https://code.claude.com/docs/en/commands
+[claude-directory]: https://code.claude.com/docs/en/claude-directory#application-data
 [cli]: https://code.claude.com/docs/en/cli-reference
 [settings]: https://code.claude.com/docs/en/settings
 [gh-25090]: https://github.com/anthropics/claude-code/issues/25090
