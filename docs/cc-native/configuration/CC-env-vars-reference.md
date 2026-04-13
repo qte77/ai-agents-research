@@ -51,7 +51,7 @@ Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-conte
 
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
-| `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | `0` | Equivalent of `DISABLE_AUTOUPDATER` + `DISABLE_FEEDBACK_COMMAND` + `DISABLE_ERROR_REPORTING` + `DISABLE_TELEMETRY` | [env-vars][env-vars] |
+| `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | `0` | Equivalent of `DISABLE_AUTOUPDATER` + `DISABLE_FEEDBACK_COMMAND` + `DISABLE_ERROR_REPORTING` + `DISABLE_TELEMETRY`. **Blocks Remote Control** — eligibility check uses this path. Use individual flags instead if Remote Control is needed. See [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md#environment-variable-blockers) | [env-vars][env-vars] |
 | `CLAUDE_CODE_ENABLE_TELEMETRY` | `0` | Enable OTel metrics/logs export | [env-vars][env-vars], [monitoring][monitoring] |
 | `DISABLE_AUTOUPDATER` | `0` | Prevent automatic CC updates | [env-vars][env-vars] |
 | `DISABLE_COST_WARNINGS` | `0` | Suppress cost warning messages | [env-vars][env-vars] |
