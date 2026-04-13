@@ -107,6 +107,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/model` | Switch model | [model-config][model-config] |
 | `/review-pr` | Review pull request | [cli-ref][cli-ref] |
 | `/remote-control`, `/rc` | Enable Remote Control on current session | [remote-control][remote-control] |
+| `/remote-env` | Configure default remote environment for `--remote` web sessions | [commands][commands] |
 | `/schedule` | Manage scheduled remote agents | [remote-control][remote-control] |
 | `/status` | Show session status | [cli-ref][cli-ref] |
 
@@ -121,7 +122,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/chrome` | Chrome extension related | String extraction, CC 2.1.87 |
 | `/commit-push-pr` | Combined commit+push+PR workflow | String extraction, CC 2.1.87 |
 | `/issue` | Create/reference GitHub issue | String extraction, CC 2.1.87 |
-| `/remote-env` | Configure cloud session environment (setup scripts, network policy) | String extraction; undocumented; open issue reports it as unavailable |
+
 | `/ultrareview` | Unknown — enhanced review? | String extraction, CC 2.1.87 |
 
 ## Configuration Surface (CC 2.1.87)
@@ -269,6 +270,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | [CLAURST README][claurst] | Internal/gated tool registry, feature flags |
 
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
+[commands]: https://code.claude.com/docs/en/commands
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
 [settings]: https://code.claude.com/docs/en/settings
 [permissions]: https://code.claude.com/docs/en/permissions#tool-specific-permission-rules

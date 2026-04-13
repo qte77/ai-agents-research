@@ -61,6 +61,7 @@ pip install -r requirements.txt
 - **Setup scripts**: Run only on new sessions (not resume). Non-zero exit = session fails ([source][cc-cloud])
 - **SessionStart hooks**: Run on every session start (local + cloud). Use `CLAUDE_CODE_REMOTE` env var to scope ([source][cc-hooks])
 - **Environment variables**: Configured in UI as `.env` format key-value pairs ([source][cc-cloud])
+- **`/remote-env`**: Configure the default remote environment for web sessions started with `--remote`. Sets up setup scripts, network policy, and environment variables for cloud VMs. Was undocumented in CC 2.1.87; now listed in the [commands reference][cc-commands]
 
 ### Network Access Levels
 
@@ -138,6 +139,7 @@ ephemeral vs stateful, checkpoint/restore), see
 - [CC Hooks docs][cc-hooks]
 - [CC Settings docs][cc-settings]
 
+[cc-commands]: https://code.claude.com/docs/en/commands
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-rc]: https://code.claude.com/docs/en/remote-control
 [cc-hooks]: https://code.claude.com/docs/en/hooks
