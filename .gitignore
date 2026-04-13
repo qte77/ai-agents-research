@@ -2,6 +2,6 @@
 .DS_Store
 Thumbs.db
 
-# Plugin-deployed files (source of truth: claude-code-utils-plugin)
+# Plugin-deployed files (source of truth: claude-code-plugins)
 .claude/rules/
 .claude/scripts/
