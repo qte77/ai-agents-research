@@ -29,6 +29,7 @@ validated_links: 2026-04-13
 | Plugins reference | <https://code.claude.com/docs/en/plugins-reference> |
 | Channels | <https://code.claude.com/docs/en/channels> |
 | Chrome extension | <https://code.claude.com/docs/en/chrome> |
+| Docs map (LLM sitemap) | <https://code.claude.com/docs/en/claude_code_docs_map.md> |
 | LLMs.txt | <https://code.claude.com/docs/llms.txt> |
 
 ## Agent SDK (platform.claude.com)
