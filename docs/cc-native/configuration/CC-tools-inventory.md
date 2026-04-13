@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-04-13
+validated_links: 2026-04-13
 ---
 
 **Status**: Adopt
@@ -106,6 +106,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/mcp` | Manage MCP servers | [mcp-docs][mcp-docs] |
 | `/model` | Switch model | [model-config][model-config] |
 | `/review-pr` | Review pull request | [cli-ref][cli-ref] |
+| `/remote-control`, `/rc` | Enable Remote Control on current session | [remote-control][remote-control] |
 | `/schedule` | Manage scheduled remote agents | [remote-control][remote-control] |
 | `/status` | Show session status | [cli-ref][cli-ref] |
 
@@ -120,7 +121,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/chrome` | Chrome extension related | String extraction, CC 2.1.87 |
 | `/commit-push-pr` | Combined commit+push+PR workflow | String extraction, CC 2.1.87 |
 | `/issue` | Create/reference GitHub issue | String extraction, CC 2.1.87 |
-| `/remote-control` | Remote session management | String extraction, CC 2.1.87 |
+| `/remote-env` | Configure cloud session environment (setup scripts, network policy) | String extraction; undocumented; open issue reports it as unavailable |
 | `/ultrareview` | Unknown — enhanced review? | String extraction, CC 2.1.87 |
 
 ## Configuration Surface (CC 2.1.87)
