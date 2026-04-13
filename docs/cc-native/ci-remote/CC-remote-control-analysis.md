@@ -34,7 +34,7 @@ claude remote-control --sandbox  # Enable filesystem/network sandboxing
 /rc
 ```
 
-Server mode flags ([source][cc-rc]):
+Server mode flags ([source][cc-rc-start]):
 
 | Flag | Description |
 |---|---|
@@ -66,15 +66,15 @@ Enable for all sessions automatically:
 
 | Requirement | Detail | Source |
 |---|---|---|
-| **Plan** | Pro, Max, Team, Enterprise. API-key-only billing does not qualify | [rc][cc-rc] |
-| **Auth** | OAuth via `/login` — API keys and `setup-token` long-lived tokens are not supported | [rc][cc-rc] |
-| **Team/Enterprise admin** | Admin must enable Remote Control toggle at `claude.ai/admin-settings/claude-code` (off by default) | [rc][cc-rc] |
+| **Plan** | Pro, Max, Team, Enterprise. API-key-only billing does not qualify | [requirements][cc-rc-req] |
+| **Auth** | OAuth via `/login` — API keys and `setup-token` long-lived tokens are not supported | [requirements][cc-rc-req], [troubleshooting][cc-rc-troubleshoot] |
+| **Team/Enterprise admin** | Admin must enable Remote Control toggle at `claude.ai/admin-settings/claude-code` (off by default) | [requirements][cc-rc-req], [troubleshooting][cc-rc-troubleshoot] |
 | **Version** | CC v2.1.51+ | [rc][cc-rc] |
-| **Workspace trust** | Must have run `claude` in the project dir at least once to accept the trust dialog | [rc][cc-rc] |
+| **Workspace trust** | Must have run `claude` in the project dir at least once to accept the trust dialog | [requirements][cc-rc-req] |
 
 ### Environment Variable Blockers
 
-These env vars **break the Remote Control eligibility check** and cause "Remote Control is not yet enabled for your account" ([source][cc-rc]):
+These env vars **break the Remote Control eligibility check** and cause "Remote Control is not yet enabled for your account" ([source][cc-rc-troubleshoot]):
 
 | Variable | Effect on Remote Control |
 |---|---|
@@ -97,6 +97,23 @@ These env vars **break the Remote Control eligibility check** and cause "Remote 
 ```
 
 This preserves most traffic reduction while keeping Remote Control functional. Omit `DISABLE_TELEMETRY` — that's the specific flag that blocks the eligibility check.
+
+**Per-project override**: If `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` is set globally in `~/.claude/settings.json`, override it at project level in `.claude/settings.local.json` (gitignored):
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1"
+  }
+}
+```
+
+Project-level env vars override user-level per [settings scope precedence][cc-settings].
+
+Source: [CC settings — configuration scopes][cc-settings]
 
 Cross-ref: [CC-env-vars-reference.md](../configuration/CC-env-vars-reference.md) for full variable definitions
 
@@ -149,7 +166,11 @@ loop_remote:
 - [CC Security][cc-sec]
 
 [cc-rc]: https://code.claude.com/docs/en/remote-control
+[cc-rc-req]: https://code.claude.com/docs/en/remote-control#requirements
+[cc-rc-start]: https://code.claude.com/docs/en/remote-control#start-a-remote-control-session
+[cc-rc-troubleshoot]: https://code.claude.com/docs/en/remote-control#troubleshooting
 [cc-rc-guide]: https://claudefa.st/blog/guide/development/remote-control-guide "Claude Code Remote Control: Complete Setup Guide"
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-cli]: https://code.claude.com/docs/en/cli-reference
 [cc-sec]: https://code.claude.com/docs/en/security
+[cc-settings]: https://code.claude.com/docs/en/settings#configuration-scopes
