@@ -3,8 +3,8 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-04-23
+validated_links: 2026-04-23
 ---
 
 **Status**: Reference (actionable configuration guide)
@@ -68,6 +68,12 @@ Or in `.claude/settings.local.json` (project-level, git-ignored):
 - Prompts not logged unless explicitly enabled in OpenRouter account settings
 
 **Benefits**: Provider failover during Anthropic outages, centralized team budget controls, real-time cost monitoring via Activity Dashboard. ([source][openrouter])
+
+**Fast Mode via OpenRouter** (CC v2.1.96+): CC's built-in `/fast` command sends `speed: "fast"` in the request (up to 2.5× faster output on Opus 4.7, premium pricing). OpenRouter supports this parameter and auto-routes such requests to the Anthropic 1P provider while injecting the required beta header. To enable: ([source][openrouter])
+
+```bash
+export CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK=1
+```
 
 ### AWS Bedrock
 
