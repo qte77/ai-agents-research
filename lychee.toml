@@ -7,7 +7,8 @@
 exclude_path = ["triage/", "docs/todo/"]
 
 # Accept common bot-blocked status codes
-accept = [200, 429]
+# 405 = HEAD method not allowed (status pages often reject HEAD)
+accept = [200, 429, 405]
 
 # Exclude domains that block automated requests (return 403/401 to HEAD)
 exclude = [
@@ -27,4 +28,20 @@ exclude = [
     "crunchbase.com",
     "openreview.net",
     "scite.ai",
+    # Bot-blocking / Cloudflare-protected
+    "reddit.com",
+    "substack.com",
+    "blog.jetbrains.com",
+    "neptune.ai",
+    # Auth-gated (requires login)
+    "claude.ai/code/scheduled",
+    # Timeout-prone marketing sites (heavy JS homepages or JS-rendered)
+    "agentskills.io",
+    "e2b.dev",
+    "modelcontextprotocol.io",
+    "devin.ai",
+    "cognition.ai",
+    "deepwiki.com",
+    "minbook.dev",
+    "emdash.dev",
 ]
