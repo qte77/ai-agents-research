@@ -1,0 +1,55 @@
+# Runs markdownlint-cli2 and lychee via existing Makefile targets.
+# TODO: extract into a standalone reusable action (gha-md-lychee) — see issue.
+name: Lint
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.md'
+      - '.markdownlint.json'
+      - 'lychee.toml'
+      - 'Makefile'
+      - '.github/workflows/lint.yaml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.md'
+      - '.markdownlint.json'
+      - 'lychee.toml'
+      - 'Makefile'
+      - '.github/workflows/lint.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  markdown:
+    name: Markdown lint (markdownlint-cli2)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint-cli2
+        run: make setup_mdlint
+
+      - name: Run markdownlint
+        run: make check_docs
+
+  links:
+    name: Link check (lychee)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install lychee
+        run: make setup_lychee
+
+      - name: Run lychee
+        run: make check_links

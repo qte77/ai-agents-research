@@ -4,8 +4,8 @@ description: Survey of community plugin catalogs — awesome-claude-code (curate
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-03-13
-validated_links: 2026-03-13
+updated: 2026-04-23
+validated_links: 2026-04-23
 ---
 
 **Status**: Research (informational)
@@ -142,6 +142,49 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 
 **Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. Community projects fill these gaps but require separate installation.
 
+## Notable Plugin Profile: claude-seo (Marketing Growth)
+
+**Repo**: [AgriciDaniel/claude-seo][claude-seo] | **Homepage**: [claude-seo.md][claude-seo-site] | **License**: MIT | **CC version**: 1.0.33+ (plugin install) | **Category**: Marketing Growth
+
+Representative example of the Marketing Growth category. Per the [repo README][claude-seo-readme] (commit dated 2026-04-14, repo pushed 2026-04-15), the plugin ships **23 skill directories, 17 subagent definitions, and 3 extensions** (DataForSEO, Firecrawl, Banana) exposed through a single `/seo` command with ~27 subcommands. (GitHub short description still advertises "19 sub-skills, 12 subagents" — the README is authoritative; verified against the `skills/` and `agents/` directory listings via `gh api` on 2026-04-23.) Selected subcommands:
+
+| Command | Purpose |
+|---------|---------|
+| `/seo audit <url>` | Full site audit with parallel subagent delegation |
+| `/seo page <url>` | Deep single-page analysis |
+| `/seo technical <url>` | Technical SEO audit (9 categories) |
+| `/seo content <url>` | E-E-A-T and content-quality analysis (Sept 2025 Quality Rater Guidelines) |
+| `/seo schema <url>` | Detect, validate, and generate Schema.org markup |
+| `/seo geo <url>` | Generative Engine Optimization — AI Overviews, ChatGPT, Perplexity, Copilot |
+| `/seo sitemap <url>` / `/seo sitemap generate` | Analyze or generate XML sitemaps with industry templates |
+| `/seo hreflang <url>` | Hreflang/i18n audit; validates self-references, return tags, x-default, ISO-639-1 + ISO-3166-1 codes |
+| `/seo local <url>` / `/seo maps [cmd]` | Local SEO (GBP, citations, reviews, map pack) and maps intelligence (geo-grid) |
+| `/seo google [cmd] [url]` / `/seo google report [type]` | Google Search Console, PageSpeed, CrUX, Indexing, GA4 APIs + PDF/HTML report generation |
+| `/seo cluster <seed>` | SERP-based semantic clustering and content architecture |
+| `/seo sxo <url>` | Search Experience Optimization — page-type, user stories, personas |
+| `/seo drift baseline\|compare\|history <url>` | SEO baseline capture and drift monitoring over time |
+| `/seo ecommerce <url>` | Product schema, marketplace intelligence |
+| `/seo backlinks <url>` | Backlink profile analysis via free sources (Moz, Bing, Common Crawl) |
+| `/seo competitor-pages <url>` | "X vs Y" / "alternatives to X" page generation with Product schema |
+| `/seo programmatic <url>` | Programmatic-SEO analysis with quality gates (warn at 100+, hard stop at 500+ pages) |
+| `/seo firecrawl`, `/seo dataforseo`, `/seo image-gen` | Optional paid extensions |
+
+**Install** (requires Claude Code 1.0.33+):
+
+```bash
+/plugin marketplace add AgriciDaniel/claude-seo
+/plugin install claude-seo@AgriciDaniel-claude-seo
+```
+
+Manual install via `git clone` + `install.sh` (Unix) or `install.ps1` (Windows) is also documented. The repo explicitly rejects the `irm … | iex` Windows pattern on supply-chain-risk grounds and recommends review-before-run.
+
+**Notable patterns**:
+
+- `/seo audit` fans out to **up to 15 specialists (8 always + 7 conditional)** per the [`seo-audit` SKILL.md][seo-audit-skill] — one of the more aggressive parallel-subagent fan-outs observed in a public plugin. Conditional subagents spawn on signal detection (e.g., `seo-local` when a brick-and-mortar business is detected, `seo-google` when Google API credentials are present). Relevant to the patterns catalogued in [CC-agent-teams-orchestration](../cc-native/agents-skills/CC-agent-teams-orchestration.md).
+- `/seo geo` is an early plugin explicitly targeting **GEO/AEO** (AI-answer citability across AI Overviews, ChatGPT, Perplexity, Copilot) rather than classical search ranking.
+- `/seo drift` implements change-monitoring via stored baselines — a pattern worth watching for other domain plugins (security, compliance, docs drift).
+- Programmatic SEO quality gates (hard stop at 500+ pages without audit) are a rare example of a plugin enforcing scale-safety guardrails in prompt-driven workflows.
+
 ## Ecosystem Observations
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
@@ -165,6 +208,10 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 
 [acc]: https://github.com/hesreallyhim/awesome-claude-code
 [accp]: https://github.com/ccplugins/awesome-claude-code-plugins
+[claude-seo]: https://github.com/AgriciDaniel/claude-seo
+[claude-seo-site]: https://claude-seo.md
+[claude-seo-readme]: https://github.com/AgriciDaniel/claude-seo/blob/main/README.md
+[seo-audit-skill]: https://github.com/AgriciDaniel/claude-seo/blob/main/skills/seo-audit/SKILL.md
 [tts-ybou]: https://github.com/ybouhjira/claude-code-tts
 [tts-cg]: https://git.sr.ht/~cg/claude-code-tts
 [tts-ktal]: https://github.com/ktaletsk/claude-code-tts

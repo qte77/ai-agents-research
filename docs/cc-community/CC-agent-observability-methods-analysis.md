@@ -16,7 +16,7 @@ This analysis examines the specific technical mechanisms used by 17 observabilit
 
 **Key Developments**: Six new tools added (Braintrust, Maxim AI, AgentOps, Datadog LLM Observability, Pydantic Logfire, otel-tui), six existing tools received major feature updates (Langfuse v2 APIs, MLflow TypeScript support, Arize Phoenix continuous releases, enhanced multi-agent observability across platforms).
 
-**See**: [landscape.md](landscape.md)
+**See**: [landscape-agent-frameworks-infrastructure.md](../todo/landscape/landscape-agent-frameworks-infrastructure.md)
 
 ## Key Features of the Analysis
 
@@ -128,7 +128,7 @@ This pattern uses Python decorators to intercept function calls and capture exec
 **Primary Sources**:
 
 - [Comet Opik GitHub Repository](https://github.com/comet-ml/opik)
-- [Comet Opik Tracing Documentation](https://www.comet.com/docs/opik/tracing/export_data)
+- [Comet Opik Tracing Documentation](https://www.comet.com/docs/opik/tracing/advanced/export-data)
 - [Best AI Observability Tools 2025](https://www.firecrawl.dev/blog/best-llm-observability-tools)
 
 #### MLflow

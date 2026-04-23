@@ -3,7 +3,7 @@ title: CC /loop Command and Cron System Analysis
 source: https://code.claude.com/docs/en/slash-commands (inferred), gist by @sorrycc (v2.1.71 cli.js decompilation), empirical testing (cc-recursive-team-mode, 2026-03-23)
 purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches. Includes empirical finding that /loop accepts syntax in -p mode but exits after first iteration.
 created: 2026-03-17
-updated: 2026-03-25
+updated: 2026-04-23
 ---
 
 **Status**: Generally available (v2.1.71+, feature gate `tengu_kairos_cron`)
@@ -35,6 +35,21 @@ Under the hood, `/loop` is syntactic sugar over three internal tools:
 
 These tools are available to the model within the session but are not exposed
 as user-facing slash commands beyond `/loop`.
+
+**Durable vs session-only jobs** *(observed in @anthropic-ai/claude-code@2.1.88
+cli.js, 2026-03-31; not documented in first-party [slash-commands][slash-cmds]
+or [commands reference][cmds-ref])*: `CronCreate` accepts a `durable: true`
+parameter that writes the job definition to `.claude/scheduled_tasks.json`,
+allowing it to survive a CC restart (as long as an interactive session is
+eventually resumed to fire it). Without `durable: true`, the job is session-only
+and disappears on exit. The `/loop` bundled skill — see
+[Bundled skills][bundled-skills] — creates **session-only** jobs by default;
+durable persistence requires calling `CronCreate` with the flag explicitly
+(e.g., from a skill, agent tool call, or direct `CronCreate` invocation).
+
+[slash-cmds]: https://code.claude.com/docs/en/slash-commands
+[cmds-ref]: https://code.claude.com/docs/en/commands
+[bundled-skills]: https://code.claude.com/docs/en/skills#bundled-skills
 
 ### State Files
 

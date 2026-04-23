@@ -23,8 +23,8 @@ Multiple community projects have reimplemented or deconstructed Claude Code's ar
 | [shareAI-lab/learn-claude-code][learn] | Python / TypeScript | Educational | 48K | MIT | LOW |
 | [Gitlawb/openclaude][openclaude] | TypeScript 99.7% | Leak-derived | 13K | MIT | MEDIUM |
 | [coder/claudecode.nvim][nvim] | Lua | Cleanroom | — | Apache-2.0 | LOW |
-| [zackautocracy/claude-code][zack] | TypeScript | Leak-derived (snapshot) | 696 | — | **HIGH** |
-| [leaked-claude-code/leaked-claude-code][leaked] | TypeScript | Leaked source | — | — | **HIGH** |
+| zackautocracy/claude-code *(account removed/404)* | TypeScript | Leak-derived (snapshot) | 696 | — | **HIGH** |
+| leaked-claude-code/leaked-claude-code *(archived — repo deleted/DMCA'd)* | TypeScript | Leaked source | — | — | **HIGH** |
 
 ## Provenance & Risk Classification
 
@@ -119,7 +119,7 @@ Cross-ref: [CC-ide-integration-protocol.md](../cc-native/configuration/CC-ide-in
 
 ## zackautocracy/claude-code
 
-**Repo**: [zackautocracy/claude-code][zack] | **Stars**: 696 | **Approach**: Leak-derived (snapshot)
+**Repo**: zackautocracy/claude-code *(account removed/404)* | **Stars**: 696 | **Approach**: Leak-derived (snapshot)
 
 Read-only source snapshot from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]). Not a reimplementation — a navigable archive maintained for *"educational, defensive security research, and software supply-chain analysis"* by a university student (autocracy101).
 
@@ -153,16 +153,14 @@ Cross-ref: [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscap
 | [shareAI-lab/learn-claude-code][learn] | Educational harness engineering course |
 | [Gitlawb/openclaude][openclaude] | Multi-provider CLI (leak-derived) |
 | [coder/claudecode.nvim][nvim] | Cleanroom Neovim IDE integration (Lua, Apache-2.0) |
-| [leaked-claude-code/leaked-claude-code][leaked] | Alleged proprietary source (excluded from analysis) |
-| [zackautocracy/claude-code][zack] | Source snapshot powering ccunpacked.dev (leak-derived) |
+| leaked-claude-code/leaked-claude-code *(archived — repo deleted/DMCA'd)* | Alleged proprietary source (excluded from analysis) |
+| zackautocracy/claude-code *(account removed/404)* | Source snapshot powering ccunpacked.dev (leak-derived) |
 
 [claw]: https://github.com/ultraworkers/claw-code
 [claurst]: https://github.com/Kuberwastaken/claurst
 [learn]: https://github.com/shareAI-lab/learn-claude-code
 [openclaude]: https://github.com/Gitlawb/openclaude
 [nvim]: https://github.com/coder/claudecode.nvim
-[leaked]: # "https://github.com/leaked-claude-code/leaked-claude-code (archived/removed — repo deleted/DMCA'd)"
-[zack]: # "https://github.com/zackautocracy/claude-code (account removed/404)"
 [ccunpacked]: https://ccunpacked.dev/
 [ultraplan]: https://code.claude.com/docs/en/ultraplan
 [register-leak]: https://www.theregister.com/2026/03/31/anthropic_claude_code_source_code/

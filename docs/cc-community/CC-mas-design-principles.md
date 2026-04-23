@@ -86,7 +86,7 @@ variables.
 ## Agent/Plugin Design Checklist
 
 For security-specific checks, see the
-[Security Checklist](mas-security.md#security-checklist).
+[Security Checklist](CC-mas-security-framework.md#security-checklist).
 
 - [ ] **Stateless Reducer**: Pure function, no shared state
 - [ ] **Own Context Window**: Manages own context

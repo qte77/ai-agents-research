@@ -73,7 +73,7 @@ Individual markdown files in `contexts/{project-slug}.md`.
 
 ## Contribution Gaps (2026-03-29)
 
-Identified during source analysis for [multi-repo contribution plan][contrib-plan].
+Identified during source analysis for a multi-repo contribution plan (Codespaces-local reference; see project kanban for contribution context).
 
 ### Repo Hygiene (Pressing)
 
@@ -114,7 +114,6 @@ Identified during source analysis for [multi-repo contribution plan][contrib-pla
 | Source | Content |
 |---|---|
 | [richlira/compass-mcp][repo] | Repository source (3 commits, 2026-03-28) |
-| [Multi-repo contribution plan][contrib-plan] | Contribution strategy and prioritization |
+| Multi-repo contribution plan *(Codespaces-local; see project kanban)* | Contribution strategy and prioritization |
 
 [repo]: https://github.com/richlira/compass-mcp
-[contrib-plan]: # "(Codespaces-local reference removed — see project kanban for contribution context)"

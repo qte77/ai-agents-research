@@ -12,8 +12,8 @@ Analysis of four frameworks applicable to the Agents-eval multi-agent evaluation
 system (PydanticAI-based MAS evaluating academic papers via LLM providers).
 
 **Category**: Research / Informational
-**Authority**: [security-advisories.md](../security-advisories.md) for CVE status;
-[mas-security.md](../best-practices/mas-security.md) for MAESTRO implementation
+**Authority**: [SECURITY.md](../../SECURITY.md) for CVE status;
+[CC-mas-security-framework.md](CC-mas-security-framework.md) for MAESTRO implementation
 **Created**: 2026-03-01
 
 ## Framework Overview
@@ -28,7 +28,7 @@ system (PydanticAI-based MAS evaluating academic papers via LLM providers).
 ## 1. OWASP MAESTRO
 
 **Source**: [OWASP MAESTRO v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
-**Existing coverage**: Comprehensive — see [mas-security.md](../best-practices/mas-security.md)
+**Existing coverage**: Comprehensive — see [CC-mas-security-framework.md](CC-mas-security-framework.md)
 
 ### 7-Layer Threat Model
 
@@ -66,7 +66,7 @@ Controls implemented across sprints 5-6:
 
 **Source**: [MITRE ATLAS](https://atlas.mitre.org/)
 **Existing coverage**: Minimal — name and scope referenced in
-[security-advisories.md](../security-advisories.md)
+[SECURITY.md](../../SECURITY.md)
 
 ### Framework Structure
 
@@ -134,7 +134,7 @@ define both the attack vector taxonomy and the control set.
 
 **Source**: [NIST AI 100-1](https://www.nist.gov/artificial-intelligence/executive-order-safe-secure-and-trustworthy-artificial-intelligence) (January 2023)
 **Companion**: [NIST AI 600-1 Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1) (July 2024)
-**Existing coverage**: Brief reference in [security-advisories.md](../security-advisories.md)
+**Existing coverage**: Brief reference in [SECURITY.md](../../SECURITY.md)
 
 ### Four Core Functions
 
@@ -230,7 +230,7 @@ human oversight, context window manipulation.
 
 **Sources**: [ISO 42001:2023](https://www.iso.org/standard/81230.html),
 [ISO 23894:2023](https://www.iso.org/standard/77304.html)
-**Existing coverage**: Brief reference in [security-advisories.md](../security-advisories.md)
+**Existing coverage**: Brief reference in [SECURITY.md](../../SECURITY.md)
 
 ### ISO 42001 — AI Management System (AIMS)
 
@@ -363,7 +363,7 @@ Given the project's open-source research context, full certification (ISO 42001)
 is not warranted. A lightweight alignment approach:
 
 1. **Continue using MAESTRO** as the primary threat model — existing implementation
-   in [mas-security.md](../best-practices/mas-security.md) is comprehensive
+   in [CC-mas-security-framework.md](CC-mas-security-framework.md) is comprehensive
 2. **Tag security tests with ATLAS technique IDs** in docstrings (e.g.,
    `# ATLAS: AML.T0051`) to ground existing tests in the adversary taxonomy
 3. **Adopt NIST AI RMF MEASURE function** for evaluation quality — benchmark

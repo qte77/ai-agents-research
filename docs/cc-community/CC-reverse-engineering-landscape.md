@@ -92,11 +92,11 @@ URL: [ghuntley][ghuntley]
 
 ### ccunpacked.dev — Visual Architecture Guide
 
-Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31). Created by autocracy101 ([zackautocracy][zack-gh]) within hours of the leak using AI-assisted development.
+Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31). Created by autocracy101 (`github.com/zackautocracy` — account removed/404) within hours of the leak using AI-assisted development.
 
 **Sections**: Architecture Explorer (color-coded codebase tiles linking to source files), Agent Loop (message processing from `TextInput.tsx` through response), Tool Systems (40+ tools categorized by function), Command Catalog (50+ slash commands), Hidden Features (Buddy, Kairos, UltraPlan, Coordinator Mode, Bridge, Daemon Mode, UDS Inbox, Auto-Dream).
 
-**Companion repo**: [zackautocracy/claude-code][zack-repo] (696 stars) — read-only source snapshot the site navigates. No license. Described as maintained for *"educational, defensive security research, and software supply-chain analysis."*
+**Companion repo**: zackautocracy/claude-code *(account removed/404)* (696 stars) — read-only source snapshot the site navigates. No license. Described as maintained for *"educational, defensive security research, and software supply-chain analysis."*
 
 **Community reception**: Featured on [Hacker News][hn-ccunpacked], [GIGAZINE][gigazine-ccunpacked], [daily.dev][dailydev-ccunpacked]. Praised for design quality and navigability of a 512K-LOC codebase.
 
@@ -201,8 +201,6 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 [env-ref]: ../cc-native/configuration/CC-env-vars-reference.md
 [tracking-issue]: https://github.com/qte77/ai-agents-research/issues/70
 [ccunpacked]: https://ccunpacked.dev/
-[zack-gh]: # "https://github.com/zackautocracy (account removed/404)"
-[zack-repo]: # "https://github.com/zackautocracy/claude-code (account removed/404)"
 [hn-ccunpacked]: https://news.ycombinator.com/item?id=47597085
 [gigazine-ccunpacked]: https://gigazine.net/gsc_news/en/20260402-claude-code-unpacked/
 [dailydev-ccunpacked]: https://app.daily.dev/posts/claude-code-unpacked-v2vrsegim

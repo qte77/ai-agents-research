@@ -97,7 +97,7 @@ v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guid
 ## Security Checklist
 
 For design quality checks, see the [Design
-Checklist](mas-design-principles.md#agentplugin-design-checklist).
+Checklist](CC-mas-design-principles.md#agentplugin-design-checklist).
 
 ### Input Validation
 
@@ -141,5 +141,5 @@ Checklist](mas-design-principles.md#agentplugin-design-checklist).
 - [12-Factor App](https://12factor.net/)
 - [OWASP Top 10 for LLM
   Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [ai-security-governance-frameworks.md](../analysis/ai-security-governance-frameworks.md)
+- [CC-ai-security-governance-analysis.md](CC-ai-security-governance-analysis.md)
   — Cross-framework analysis: MAESTRO, MITRE ATLAS, NIST AI RMF, ISO 42001/23894
