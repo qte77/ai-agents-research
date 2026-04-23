@@ -118,4 +118,3 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 [word]: https://github.com/GongRzhe/Office-Word-MCP-Server
 [excel]: https://github.com/negokaz/excel-mcp-server
 [docedit]: https://github.com/alejandroBallesterosC/document-edit-mcp
-[doccreator]: # "https://github.com/Git-Fg/mcp-server-doccreator (repo removed)"
