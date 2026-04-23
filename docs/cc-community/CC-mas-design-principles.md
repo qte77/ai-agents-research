@@ -1,14 +1,12 @@
 ---
-title: Multi-Agent System Design Principles
-description: >-
-  Design principles for building maintainable,
-  secure, and scalable multi-agent systems
+title: "Multi-Agent System Design Principles"
+purpose: Core design principles for multi-agent systems synthesized from 12-Factor Agents, Anthropic Effective Harnesses, and PydanticAI.
 created: 2026-02-09
-category: best-practices
-version: 2.0.0
-see-also: mas-security.md
-validated_links: 2026-03-12
+updated: 2026-04-23
+validated_links: 2026-04-23
 ---
+
+**Status**: Adopt
 
 Synthesized from
 [12-Factor Agents](https://github.com/humanlayer/12-factor-agents),

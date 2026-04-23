@@ -1,12 +1,12 @@
 ---
-title: Multi-Agent System Security Framework
-description: OWASP MAESTRO 7-layer security framework for multi-agent systems
+title: "Multi-Agent System Security Framework"
+purpose: OWASP MAESTRO v1.0 threat modeling framework for multi-agent systems — 7 security layers with concrete controls.
 created: 2026-02-09
-category: best-practices
-version: 2.0.0
-see-also: mas-design-principles.md
-validated_links: 2026-03-12
+updated: 2026-04-23
+validated_links: 2026-04-23
 ---
+
+**Status**: Assess
 
 Based on [OWASP MAESTRO
 v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)

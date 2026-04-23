@@ -1,15 +1,12 @@
 ---
-title: AI Security & Governance Frameworks Analysis
-source: OWASP MAESTRO v1.0, MITRE ATLAS, NIST AI 100-1, ISO/IEC 42001:2023, ISO/IEC 23894:2023
-purpose: >-
-  Comparative analysis of four AI security and governance frameworks and their
-  applicability to the Agents-eval multi-agent evaluation system. Covers threat
-  modeling (MAESTRO, ATLAS), risk management (NIST AI RMF), and AI governance
-  standards (ISO 42001/23894) with unified cross-framework mapping.
+title: "AI Security & Governance Frameworks Analysis"
+purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-03-01
-validated_links: 2026-03-12
+updated: 2026-04-23
+validated_links: 2026-04-23
 ---
+
+**Status**: Assess
 
 Analysis of four frameworks applicable to the Agents-eval multi-agent evaluation
 system (PydanticAI-based MAS evaluating academic papers via LLM providers).

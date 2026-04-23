@@ -1,16 +1,13 @@
 ---
-title: Agent Evaluation Metrics Survey
-description: Survey of agent evaluation metrics from the landscape analysis, focused on practical implementation for PeerRead multi-agent evaluation
-category: technical-analysis
-tags:
-  - agent-evaluation
-  - metrics
-  - peerread-evaluation
+title: "Agent Evaluation Metrics Landscape"
+purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-03-01
-version: 1.2.0
-validated_links: 2026-03-12
+updated: 2026-04-23
+validated_links: 2026-04-23
 ---
+
+**Status**: Assess
+
 <!-- markdownlint-disable MD024 no-duplicate-heading -->
 
 Comprehensive catalog of evaluation metrics for AI agent systems, with
