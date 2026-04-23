@@ -3,7 +3,11 @@ title: Inference Provider Analysis
 purpose: Free-tier model recommendations for each provider in PROVIDER_REGISTRY
 created: 2026-02-21
 validated_links: 2026-03-12
+status: archived
+archived_date: 2026-04-23
 ---
+
+> **Status: archived** on 2026-04-23. This document is preserved for historical context. See [docs/cc-community/](../../cc-community/) for current analyses.
 
 ## Provider Free-Tier Summary
 

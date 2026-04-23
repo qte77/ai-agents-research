@@ -1,7 +1,7 @@
 ---
 title: Research Integration Analysis: Multi-Framework Convergence for Agent Evaluation
 description: Technical analysis of academic research and production frameworks convergence for enhancing the Agents-eval project with emerging trends and framework-agnostic methodology
-status: analysis
+status: archived
 category: technical-research
 tags:
   - research-integration
@@ -21,8 +21,9 @@ related_documents:
 created: 2025-09-02
 updated: 2026-03-01
 version: 3.2.0
-validated_links: 2026-03-12
----
+validated_links: 2026-03-12---
+
+> **Status: archived** on 2026-04-23. This document is preserved for historical context. See [docs/cc-community/](../../cc-community/) for current analyses.
 
 ## Executive Summary
 

@@ -17,7 +17,11 @@ created: 2025-08-24
 updated: 2026-02-15
 version: 3.2.0
 validated_links: 2026-03-12
+status: archived
+archived_date: 2026-04-23
 ---
+
+> **Status: archived** on 2026-04-23. This document is preserved for historical context. See [docs/cc-community/](../../cc-community/) for current analyses.
 
 ## Overview
 

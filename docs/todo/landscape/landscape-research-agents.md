@@ -6,7 +6,11 @@ updated: 2026-03-01
 category: landscape
 version: 1.2.0
 validated_links: 2026-03-12
+status: archived
+archived_date: 2026-04-23
 ---
+
+> **Status: archived** on 2026-04-23. This document is preserved for historical context. See [docs/cc-community/](../../cc-community/) for current analyses.
 
 This document provides a comprehensive overview of research agents and platforms designed for autonomous scientific discovery, paper analysis, and academic research automation. It covers autonomous research agents, specialized AI models for scientific domains, research discovery platforms, and support frameworks.
 

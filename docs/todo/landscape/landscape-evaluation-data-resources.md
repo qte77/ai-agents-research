@@ -6,7 +6,11 @@ created: 2025-08-23
 updated: 2026-03-01
 version: 1.3.0
 validated_links: 2026-03-12
+status: archived
+archived_date: 2026-04-23
 ---
+
+> **Status: archived** on 2026-04-23. This document is preserved for historical context. See [docs/cc-community/](../../cc-community/) for current analyses.
 
 This document provides a comprehensive overview of evaluation frameworks, datasets, benchmarks, graph analysis tools, and research resources relevant to evaluating AI agent systems and academic research applications. It includes technical details, feasibility assessments, integration scenarios, and project-specific guidance for the PeerRead evaluation use case.
 
