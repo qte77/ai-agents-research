@@ -50,7 +50,7 @@ validated_links: 2026-04-13
 
 | Topic | URL |
 |-------|-----|
-| Client SDKs (Python + TypeScript) | <https://docs.anthropic.com/en/api/client-sdks> |
+| Client SDKs (Python + TypeScript) | <https://platform.claude.com/docs/en/api/client-sdks> |
 | GitHub (Python) | <https://github.com/anthropics/anthropic-sdk-python> |
 | GitHub (TypeScript) | <https://github.com/anthropics/anthropic-sdk-typescript> |
 
@@ -58,9 +58,9 @@ validated_links: 2026-04-13
 
 | Topic | URL |
 |-------|-----|
-| Tool use overview | <https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview> |
-| Text editor tool | <https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool> |
-| Building effective agents | <https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/building-effective-agents> |
+| Tool use overview | <https://platform.claude.com/docs/en/docs/agents-and-tools/tool-use/overview> |
+| Text editor tool | <https://platform.claude.com/docs/en/docs/build-with-claude/tool-use/text-editor-tool> |
+| Building effective agents | <https://platform.claude.com/docs/en/docs/build-with-claude/prompt-engineering/building-effective-agents> |
 
 ## GitHub Resources
 

@@ -81,7 +81,7 @@ Evolution of "Imagine with Claude" — a temporary experience previewed in Fall 
 ## References
 
 [blog]: https://claude.com/blog/claude-builds-visuals "Claude builds interactive visuals right in your conversation"
-[helpcenter]: https://support.claude.com/en/articles/13979539-custom-visuals-in-chat "Custom visuals in chat — Claude Help Center"
+[helpcenter]: https://support.claude.com/en/articles/13979539-custom-visuals-in-chat-and-cowork "Custom visuals in chat — Claude Help Center"
 [engadget]: https://www.engadget.com/ai/claude-can-now-generate-charts-and-diagrams-160000369.html "Claude can now generate charts and diagrams — Engadget"
 [thenewstack]: https://thenewstack.io/anthropics-claude-interactive-visualizations/ "Anthropic's Claude interactive visualizations — The New Stack"
 [opentools]: https://opentools.ai/news/anthropics-claude-ai-unleashes-exciting-inline-visualization-capabilities "Anthropic's Claude AI inline visualization capabilities — OpenTools"

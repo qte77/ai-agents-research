@@ -136,7 +136,7 @@ Community-published Ralph loop as a CC Skill. Uses `.claude/ralph-loop.local.md`
 [ghuntley-loop]: https://ghuntley.com/loop/
 [ralph-playbook]: https://github.com/ClaytonFarr/ralph-playbook
 [ralphinho]: https://github.com/affaan-m/everything-claude-code
-[trellis]: https://docs.trytrellis.app/guide/ch05-commands
+[trellis]: https://docs.trytrellis.app/start/everyday-use
 [lobehub-ralph]: https://lobehub.com/skills/101mare-skill-library-ralph-loop
 [ralph-official]: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/ralph-loop
 [linearb]: https://linearb.io/dev-interrupted/podcast/inventing-the-ralph-wiggum-loop

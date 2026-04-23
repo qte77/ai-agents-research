@@ -1,6 +1,6 @@
 ---
 title: CC Recursive Spawning Patterns
-source: https://code.claude.com/docs/en/sub-agents, https://github.com/anthropics/claude-agent-sdk-python/issues/573, https://forem.com/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma
+source: https://code.claude.com/docs/en/sub-agents, https://github.com/anthropics/claude-agent-sdk-python/issues/573, https://dev.to/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma
 purpose: Analysis of recursive claude -p invocation patterns, the CLAUDECODE=1 session guard, and spawning method trade-offs for autonomous agent orchestration.
 created: 2026-03-17
 updated: 2026-03-17
@@ -71,7 +71,7 @@ any work.
 - Set `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` to skip git context
 - Set `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` to prevent extended context
 
-**Source**: [DEV Community -- "Why Each Subprocess Burns 50K Tokens"](https://forem.com/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma)
+**Source**: [DEV Community -- "Why Each Subprocess Burns 50K Tokens"](https://dev.to/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma)
 
 ## Key Environment Variables
 
@@ -127,7 +127,7 @@ teams are independent.
 |---|---|
 | [Official sub-agents docs](https://code.claude.com/docs/en/sub-agents) | Subagent architecture |
 | [claude-agent-sdk-python#573](https://github.com/anthropics/claude-agent-sdk-python/issues/573) | `CLAUDECODE=1` guard bug in SDK |
-| [DEV Community](https://forem.com/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma) | 50K token cost per subprocess |
+| [DEV Community](https://dev.to/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma) | 50K token cost per subprocess |
 | [haasonsaas/claude-recursive-spawn](https://github.com/haasonsaas/claude-recursive-spawn) | Bash script with depth control, JSON parsing |
 | [#31977](https://github.com/anthropics/claude-code/issues/31977) | No Agent tool in in-process teammates |
 | [#30008](https://github.com/anthropics/claude-code/issues/30008) | Teams + print mode hang |

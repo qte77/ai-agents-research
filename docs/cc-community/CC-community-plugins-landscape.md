@@ -168,7 +168,7 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 [tts-ybou]: https://github.com/ybouhjira/claude-code-tts
 [tts-cg]: https://git.sr.ht/~cg/claude-code-tts
 [tts-ktal]: https://github.com/ktaletsk/claude-code-tts
-[tts-laura]: https://github.com/LAURA-agent/Claude-to-Speech
+[tts-laura]: https://github.com/TwinPeaksTownie/Claude-to-Speech
 [tts-voice]: https://github.com/mbailey/voicemode
 [tts-mcp]: https://github.com/johnmatthewtennant/mcp-voice-hooks
 [tts-hooks]: https://github.com/husniadil/cc-hooks
@@ -176,7 +176,7 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 [realtimetts]: https://github.com/KoljaB/RealtimeTTS
 [voice-docs]: https://code.claude.com/docs/en/voice-dictation
 [moonshine]: https://github.com/moonshine-ai/moonshine
-[whispercpp]: https://github.com/ggerganov/whisper.cpp
+[whispercpp]: https://github.com/ggml-org/whisper.cpp
 [vosk]: https://alphacephei.com/vosk/
 [claude-stt]: https://github.com/jarrodwatts/claude-stt
 [wake-word]: https://github.com/Traves-Theberge/Wake-Word

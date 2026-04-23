@@ -191,7 +191,7 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 [hn-thread]: https://news.ycombinator.com/item?id=43217357
 [turboai]: https://www.turboai.dev/blog/claude-code-versions
 [unkn0wncode]: https://gist.github.com/unkn0wncode/f87295d055dd0f0e8082358a0b5cc467
-[schema-store]: https://json.schemastore.org/claude-code-settings.json
+[schema-store]: https://www.schemastore.org/claude-code-settings.json
 [gh-11795]: https://github.com/anthropics/claude-code/issues/11795
 [xdanny-gist]: https://gist.github.com/xdannyrobertsx/0a395c59b1ef09508e52522289bd5bf6
 [yoffe]: https://medium.com/@liranyoffe/reverse-engineering-claude-code-web-tools-1409249316c3

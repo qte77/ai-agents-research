@@ -1,6 +1,6 @@
 ---
 title: CC Version Pinning & Provider Resilience
-source: https://code.claude.com/docs/en/setup, https://www.npmjs.com/package/@anthropic-ai/claude-code, https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners, https://www.vcluster.com/blog/comparing-coder-vs-codespaces-vs-gitpod-vs-devpod
+source: https://code.claude.com/docs/en/setup, https://www.npmjs.com/package/@anthropic-ai/claude-code, https://docs.github.com/en/actions/concepts/runners/self-hosted-runners, https://www.vcluster.com/blog/comparing-coder-vs-codespaces-vs-gitpod-vs-devpod
 purpose: Document how to pin Claude Code versions for reproducible CI/CD and container environments, self-hosted runners, cloud dev environments, and resilience against Anthropic API outages or discontinuation.
 created: 2026-03-12
 updated: 2026-03-12
@@ -388,6 +388,6 @@ For scenarios where Anthropic may be entirely unavailable (business discontinuat
 [npm-cc]: https://www.npmjs.com/package/@anthropic-ai/claude-code
 [datacamp-docker]: https://www.datacamp.com/tutorial/claude-code-docker
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
-[gh-runners]: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners
-[gh-runners-req]: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners#requirements-for-self-hosted-runner-machines
-[gh-runners-net]: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners#communication-requirements
+[gh-runners]: https://docs.github.com/en/actions/concepts/runners/self-hosted-runners
+[gh-runners-req]: https://docs.github.com/en/actions/concepts/runners/self-hosted-runners#requirements-for-self-hosted-runner-machines
+[gh-runners-net]: https://docs.github.com/en/actions/concepts/runners/self-hosted-runners#communication-requirements
