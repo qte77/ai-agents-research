@@ -6,7 +6,11 @@ created: 2025-09-01
 updated: 2026-03-01
 version: 1.4.0
 validated_links: 2026-03-12
+status: archived
+archived_date: 2026-04-23
 ---
+
+> **Status: archived** on 2026-04-23. This document is preserved for historical context. See [docs/cc-community/](../../cc-community/) for current analyses.
 
 This document provides a comprehensive overview of AI agent frameworks, LLM orchestration platforms, observability tools, and development infrastructure relevant to building and deploying AI agent systems. It includes technical details, feasibility assessments, integration scenarios, and project-specific guidance for the PeerRead evaluation use case.
 
