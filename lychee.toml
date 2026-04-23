@@ -1,9 +1,9 @@
 # Lychee link checker config
 # https://lychee.cli.rs/configuration/
 
-# Exclude auto-generated and pre-standardized content
+# Exclude auto-generated and archived content
 # triage/ — auto-generated monitor outputs (see CONTRIBUTING.md)
-# docs/todo/ — Agents-eval era docs pending content review and reorganization
+# docs/todo/ — archived Agents-eval era docs (status: archived frontmatter); see #105
 exclude_path = ["triage/", "docs/todo/"]
 
 # Accept common bot-blocked status codes
