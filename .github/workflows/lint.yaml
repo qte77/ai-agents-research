@@ -48,6 +48,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Cache lychee binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/bin/lychee
+          # Bump suffix (v1 -> v2) to force a fresh lychee download
+          key: lychee-${{ runner.os }}-v1
+
       - name: Install lychee
         run: make setup_lychee
 
