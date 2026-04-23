@@ -1,6 +1,6 @@
 ---
 title: CC Remote Access Landscape
-source: https://omnara.com, https://cloudcli.ai, https://happy.engineering, https://code.claude.com/docs/en/remote-control, https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
+source: https://www.omnara.com, https://cloudcli.ai, https://happy.engineering, https://code.claude.com/docs/en/remote-control, https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
 updated: 2026-03-12
@@ -192,13 +192,13 @@ Tools that complement any remote access method ([source][zilliz]):
 [happy]: https://happy.engineering
 [happy-gh]: https://github.com/slopus/happy
 [happy-hn]: https://news.ycombinator.com/item?id=44904039
-[omnara]: https://omnara.com
+[omnara]: https://www.omnara.com
 [omnara-yc]: https://www.ycombinator.com/companies/omnara
 [omnara-gh]: https://github.com/omnara-ai/omnara
 [omnara-hn]: https://news.ycombinator.com/item?id=44878650
 [omnara-techmonk]: https://techmonk.economictimes.indiatimes.com/news/ai/omnara-wants-to-put-your-coding-agent-on-your-phone/128286862
 [omnara-hiretop]: https://hiretop.com/blog5/omnara-mobile-voice-interface-for-claude-code/
-[omnara-appstore]: https://apps.apple.com/us/app/omnara-ai-command-center/id6748426727
+[omnara-appstore]: https://apps.apple.com/us/app/omnara-claude-codex-mobile/id6748426727
 [emdash]: https://emdash.dev
 [cloudcli]: https://cloudcli.ai
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web

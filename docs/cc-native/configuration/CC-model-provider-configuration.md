@@ -1,6 +1,6 @@
 ---
 title: CC Model & Provider Configuration
-source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
+source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
 updated: 2026-03-12
@@ -269,7 +269,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [Local setup guide][local-setup]
 
 [cc-settings]: https://code.claude.com/docs/en/settings#environment-variables
-[openrouter]: https://openrouter.ai/docs/guides/guides/coding-agents/claude-code-integration
+[openrouter]: https://openrouter.ai/docs/guides/coding-agents/claude-code-integration
 [ollama-claude]: https://ollama.com/blog/claude
 [llamacpp-anthropic]: https://huggingface.co/blog/ggml-org/anthropic-messages-api-in-llamacpp
 [litellm]: https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models

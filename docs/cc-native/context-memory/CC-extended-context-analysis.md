@@ -20,7 +20,7 @@ hitting context limits or triggering auto-compaction.
 | Account Type | 1M Access | Billing |
 | ------------ | --------- | ------- |
 | API / pay-as-you-go | Full access | Long-context pricing above 200K |
-| Pro, Max, Teams, Enterprise | Requires [extra usage](https://support.claude.com/en/articles/12429409-extra-usage-for-paid-claude-plans) enabled | Tokens above 200K billed as extra usage |
+| Pro, Max, Teams, Enterprise | Requires [extra usage](https://support.claude.com/en/articles/12429409-manage-extra-usage-for-paid-claude-plans) enabled | Tokens above 200K billed as extra usage |
 
 ## Pricing Model
 

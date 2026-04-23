@@ -548,7 +548,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 
 [awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [graphify]: https://github.com/safishamsi/graphify
-[mempalace]: https://github.com/milla-jovovich/mempalace
+[mempalace]: https://github.com/MemPalace/mempalace
 [longmemeval]: https://github.com/xiaowu0162/LongMemEval
 [code-review-graph]: https://github.com/tirth8205/code-review-graph
 [rtk-repo]: https://github.com/rtk-ai/rtk

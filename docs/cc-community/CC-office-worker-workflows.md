@@ -25,7 +25,7 @@ Receipt images/PDFs → Claude OCR → Excel spreadsheet → Accounting API (Xer
 - **Validation**: Flags duplicate invoice numbers, inconsistent payment terms, budget overruns
 - **Output**: Tax-ready organized records pushed to accounting system
 - **Tools**: Built-in `xlsx`/`pdf` skills + [Xero MCP](../cc-native/plugins-ecosystem/CC-business-api-integrations.md#xero-official-xeroapi) or [QuickBooks MCP](../cc-native/plugins-ecosystem/CC-business-api-integrations.md#quickbooks)
-- **Reference**: [Cowork invoice processing](https://support.claude.com/en/articles/13345190-get-started-with-cowork)
+- **Reference**: [Cowork invoice processing](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
 
 ### Document Renaming & Organization
 
@@ -36,7 +36,7 @@ Chaotic folder → Content-aware analysis → YYYY-MM-DD taxonomy → Organized 
 - **Pattern**: Claude reads document content (not just filenames), classifies by type, applies consistent naming
 - **Example**: 247 chaotic invoice files → tax-ready order with date-based naming
 - **Tools**: CC CLI file operations or Cowork drag-and-drop
-- **Scheduling**: [Cowork scheduled tasks](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-cowork) — set weekly/monthly cleanup cadence
+- **Scheduling**: [Cowork scheduled tasks](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork) — set weekly/monthly cleanup cadence
 
 ### Email Triage
 
@@ -155,5 +155,5 @@ CC-first for high ROI MVP, but these extend the pattern:
 [orch]: https://github.com/Jedward23/Tmux-Orchestrator
 [cc-conductor]: https://github.com/lancejames221b/claude-conductor
 [teams]: https://code.claude.com/docs/en/agent-teams
-[cowork]: https://support.claude.com/en/articles/13345190-get-started-with-cowork
-[cowork-sched]: https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-cowork
+[cowork]: https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork
+[cowork-sched]: https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork

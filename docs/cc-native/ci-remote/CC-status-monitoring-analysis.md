@@ -166,4 +166,4 @@ Changes are submitted via PR (branch protection requires PRs on `main`). Unlike 
 
 - [Statuspage API docs](https://developer.statuspage.io/)
 - [GitHub repository_dispatch](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#repository_dispatch)
-- [Claude API errors](https://docs.anthropic.com/en/api/errors)
+- [Claude API errors](https://platform.claude.com/docs/en/api/errors)

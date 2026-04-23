@@ -156,8 +156,8 @@ Cross-ref: [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscap
 | [leaked-claude-code/leaked-claude-code][leaked] | Alleged proprietary source (excluded from analysis) |
 | [zackautocracy/claude-code][zack] | Source snapshot powering ccunpacked.dev (leak-derived) |
 
-[claw]: https://github.com/instructkr/claw-code
-[claurst]: https://github.com/Kuberwastaken/claude-code
+[claw]: https://github.com/ultraworkers/claw-code
+[claurst]: https://github.com/Kuberwastaken/claurst
 [learn]: https://github.com/shareAI-lab/learn-claude-code
 [openclaude]: https://github.com/Gitlawb/openclaude
 [nvim]: https://github.com/coder/claudecode.nvim

@@ -1,6 +1,6 @@
 ---
 title: Block Goose Analysis
-source: https://github.com/block/goose
+source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
 updated: 2026-04-05
@@ -80,7 +80,7 @@ This is comparable to CC's WebSocket IDE protocol but uses a different standard 
 | [AAIF announcement][aaif] | Linux Foundation founding with MCP + Goose + AGENTS.md |
 | [MCP Apps blog][mcp-apps] | Goose as reference MCP Apps client |
 
-[repo]: https://github.com/block/goose
+[repo]: https://github.com/aaif-goose/goose
 [arch]: https://block.github.io/goose/
 [arcade-origin]: https://www.arcade.dev/blog/goose-the-open-source-agent-that-shaped-mcp
 [aaif]: https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation

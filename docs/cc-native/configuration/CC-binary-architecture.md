@@ -283,7 +283,7 @@ Settings key: `voiceEnabled:y.boolean().optional()` — toggled via `/voice` com
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
 [api-ref]: https://platform.claude.com/docs/en/api
 [remote-control]: https://code.claude.com/docs/en/remote-control
-[schema-store]: https://json.schemastore.org/claude-code-settings.json
+[schema-store]: https://www.schemastore.org/claude-code-settings.json
 [gh-11795]: https://github.com/anthropics/claude-code/issues/11795
 [re-landscape]: ../../cc-community/CC-reverse-engineering-landscape.md
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md

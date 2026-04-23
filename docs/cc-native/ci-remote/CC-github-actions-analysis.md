@@ -287,9 +287,9 @@ A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-t
 [dev-to-pr]: https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
 [gh-larger-runners]: https://docs.github.com/en/actions/concepts/runners/larger-runners
 [gh-runner-pricing]: https://docs.github.com/en/billing/reference/actions-runner-pricing
-[gh-larger-runner-jobs]: https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners/running-jobs-on-larger-runners
+[gh-larger-runner-jobs]: https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/use-larger-runners
 [cc-action-repo]: https://github.com/anthropics/claude-code-action
-[copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent
+[copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent
 [codex-action]: https://github.com/openai/codex-action
 [sweep-repo]: https://github.com/sweepai/sweep
 [swe-agent-repo]: https://github.com/SWE-agent/SWE-agent

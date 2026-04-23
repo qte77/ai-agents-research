@@ -280,4 +280,4 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 [model-config]: https://code.claude.com/docs/en/model-config
 [remote-control]: https://code.claude.com/docs/en/remote-control
 [btw-gist]: https://gist.github.com/ZhangHanDong
-[claurst]: https://github.com/Kuberwastaken/claude-code
+[claurst]: https://github.com/Kuberwastaken/claurst

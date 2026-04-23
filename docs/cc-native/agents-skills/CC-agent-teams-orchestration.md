@@ -451,6 +451,6 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 [dev-opencode]: https://dev.to/uenyioha/porting-claude-codes-agent-teams-to-opencode-4hol
 [compiler-case]: https://www.theregister.com/2026/02/09/claude_opus_46_compiler/
 [register-leak]: https://www.theregister.com/2026/03/31/anthropic_claude_code_source_code/
-[techsy-leaked]: https://techsy.io/blog/claude-code-leaked-features-2026
+[techsy-leaked]: https://techsy.io/en/blog/claude-code-leaked-features-2026
 [minbook-hidden]: https://minbook.dev/en/blog/claude-code-anatomy-hidden-features/
 [zread-coordinator]: https://zread.ai/instructkr/claude-code/19-coordinator-mode
