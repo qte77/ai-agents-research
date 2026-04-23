@@ -6,3 +6,7 @@ Thumbs.db
 .claude/rules/
 .claude/scripts/
 .claude/skills/
+
+# Python artifacts
+__pycache__/
+*.pyc
