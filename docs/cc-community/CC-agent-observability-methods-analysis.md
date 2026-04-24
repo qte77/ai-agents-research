@@ -2,8 +2,8 @@
 title: "Agent Observability Methods Analysis"
 purpose: Technical analysis of 17 observability platforms and five primary tracing patterns for AI agent behavior.
 created: 2025-08-24
-updated: 2026-04-23
-validated_links: 2026-04-23
+updated: 2026-04-24
+validated_links: 2026-04-24
 ---
 
 **Status**: Assess
@@ -36,6 +36,59 @@ This analysis examines the specific technical mechanisms used by 17 observabilit
 - **Integration complexity** assessment for each approach
 - **OpenTelemetry adoption** rates and semantic convention compliance
 - **Multi-agent observability** patterns for distributed agent coordination
+
+## Claude Code (First-Party OTel Integration)
+
+Source: [Claude Code — Monitoring usage][cc-monitoring] (first-party).
+
+Claude Code is itself an OTel-instrumented client — enabling `CLAUDE_CODE_ENABLE_TELEMETRY=1` emits metrics (time series) and logs/events via standard OTLP. Distributed tracing is available in beta via `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER`. This makes every OTel-native backend in the sections below a candidate CC observability backend out of the box.
+
+### Span Hierarchy (Beta Traces)
+
+```text
+claude_code.interaction                        # root span: one per user prompt
+├── claude_code.llm_request                    # API call to Anthropic Messages
+├── claude_code.hook                           # requires detailed beta tracing
+└── claude_code.tool
+    ├── claude_code.tool.blocked_on_user       # permission-wait time
+    ├── claude_code.tool.execution             # actual tool run
+    └── (Task tool) subagent claude_code.llm_request / claude_code.tool spans
+```
+
+- Task-spawned subagents nest their own `llm_request` and `tool` spans under the parent's `claude_code.tool` span
+- Retries on `claude_code.llm_request` are recorded as `gen_ai.request.attempt` span events with `attempt` and `client_request_id` attributes
+- Tool span attributes include `file_path` (Read/Edit/Write), `full_command` (Bash), `skill_name` (Skill tool), `subagent_type` (Task tool) — all gated behind `OTEL_LOG_TOOL_DETAILS`
+
+### Privacy-First Defaults
+
+All sensitive attributes are **redacted unless explicitly unlocked**:
+
+| Gate | What it reveals |
+|---|---|
+| `OTEL_LOG_USER_PROMPTS` | Prompt text on `user_prompt` events / interaction span |
+| `OTEL_LOG_TOOL_DETAILS` | Bash command, MCP tool name, Skill name, file path, subagent type |
+| `OTEL_LOG_TOOL_CONTENT` | Tool input/output content in span events (60 KB truncation) |
+| `OTEL_LOG_RAW_API_BODIES` | Full Anthropic API request/response JSON (`1` inline / `file:<dir>` to disk with `body_ref`) |
+
+This is notably stricter than most third-party LLM observability platforms, which default to capturing prompts and tool I/O.
+
+### Distributed Trace Propagation
+
+`TRACEPARENT` is auto-injected into Bash and PowerShell subprocesses so any W3C-compliant child can parent its spans under the active tool execution span. In Agent SDK and headless (`claude -p`) sessions, CC **reads** `TRACEPARENT` + `TRACESTATE` from its own environment so an embedding process can pass in its active context. Interactive sessions deliberately ignore inbound `TRACEPARENT` to prevent accidental inheritance from CI/container ambient values.
+
+### Cardinality Controls
+
+Toggle metric attributes to trade granularity for storage cost:
+
+| Variable | Default | Attribute toggled |
+|---|---|---|
+| `OTEL_METRICS_INCLUDE_SESSION_ID` | `true` | `session.id` |
+| `OTEL_METRICS_INCLUDE_VERSION` | `false` | `app.version` |
+| `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` | `true` | `user.account_uuid`, `user.account_id` |
+
+### Cross-Reference
+
+For the complete env var reference, see [CC-env-vars-reference.md § OpenTelemetry Exporter Configuration](../cc-native/configuration/CC-env-vars-reference.md#opentelemetry-exporter-configuration). For SaaS backends that can ingest CC's native OTel output unmodified, see [§ Pydantic Logfire](#pydantic-logfire) below — Logfire explicitly advertises a "zero-config" Claude Code path via its MCP server ([source][logfire]).
 
 ## OpenTelemetry GenAI Semantic Conventions (2025-2026)
 
@@ -588,3 +641,6 @@ The 2026 landscape shows significant maturation with 89% of organizations implem
 ### Future Outlook
 
 The observability landscape continues rapid evolution toward standardization (OpenTelemetry), specialization (multi-agent coordination), and integration (development-to-production workflows). Framework-specific semantic conventions completion expected through 2026 will further unify agent observability across diverse technical stacks, while multi-agent capabilities will become standard rather than specialized features as agentic systems scale in production environments.
+
+[cc-monitoring]: https://code.claude.com/docs/en/monitoring-usage
+[logfire]: https://pydantic.dev/logfire
