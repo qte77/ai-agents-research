@@ -2,8 +2,8 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-04-13
-validated_links: 2026-04-13
+updated: 2026-04-24
+validated_links: 2026-04-24
 ---
 
 **Status**: Adopt
@@ -52,11 +52,53 @@ Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-conte
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | `0` | Equivalent of `DISABLE_AUTOUPDATER` + `DISABLE_FEEDBACK_COMMAND` + `DISABLE_ERROR_REPORTING` + `DISABLE_TELEMETRY`. **Blocks Remote Control** — eligibility check uses this path. Use individual flags instead if Remote Control is needed. See [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md#environment-variable-blockers) | [env-vars][env-vars] |
-| `CLAUDE_CODE_ENABLE_TELEMETRY` | `0` | Enable OTel metrics/logs export | [env-vars][env-vars], [monitoring][monitoring] |
+| `CLAUDE_CODE_ENABLE_TELEMETRY` | `0` | Enable OTel metrics/logs export (prerequisite for all `OTEL_*` vars below) | [env-vars][env-vars], [monitoring][monitoring] |
+| `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA` | `0` | Enable distributed tracing (beta) in addition to metrics/logs | [monitoring][monitoring] |
+| `CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS` | `1740000` (29 min) | Refresh interval for dynamic OTLP headers | [monitoring][monitoring] |
 | `DISABLE_AUTOUPDATER` | `0` | Prevent automatic CC updates | [env-vars][env-vars] |
 | `DISABLE_COST_WARNINGS` | `0` | Suppress cost warning messages | [env-vars][env-vars] |
 
-Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [monitoring docs][monitoring]
+Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [monitoring docs][monitoring], [CC-agent-observability-methods-analysis.md](../../cc-community/CC-agent-observability-methods-analysis.md#claude-code-first-party-otel-integration)
+
+### OpenTelemetry Exporter Configuration
+
+Standard `OTEL_*` variables (per the [OpenTelemetry specification][otel-spec]) that Claude Code honours when `CLAUDE_CODE_ENABLE_TELEMETRY=1`. Source for all rows: [monitoring][monitoring].
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `OTEL_METRICS_EXPORTER` | — | Comma-separated: `otlp`, `prometheus`, `console`, `none` |
+| `OTEL_LOGS_EXPORTER` | — | Comma-separated: `otlp`, `console`, `none` |
+| `OTEL_TRACES_EXPORTER` | — | Comma-separated: `otlp`, `console`, `none`. Requires `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | — | `grpc`, `http/json`, `http/protobuf` (applies to all signals) |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | — | Collector endpoint for all signals (e.g. `http://localhost:4317`) |
+| `OTEL_EXPORTER_OTLP_{METRICS,LOGS,TRACES}_{PROTOCOL,ENDPOINT}` | — | Per-signal overrides |
+| `OTEL_EXPORTER_OTLP_HEADERS` | — | Auth headers (e.g. `Authorization=Bearer token`) |
+| `OTEL_EXPORTER_OTLP_METRICS_CLIENT_KEY` / `_CLIENT_CERTIFICATE` | — | mTLS client key/cert file paths |
+| `OTEL_METRIC_EXPORT_INTERVAL` | `60000` ms | Metrics export interval |
+| `OTEL_LOGS_EXPORT_INTERVAL` | `5000` ms | Logs export interval |
+| `OTEL_TRACES_EXPORT_INTERVAL` | `5000` ms | Span batch export interval |
+| `OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE` | `delta` | Set to `cumulative` if backend requires it |
+
+### OpenTelemetry Privacy Gates
+
+All disabled by default. Enabling `OTEL_LOG_RAW_API_BODIES` implies consent to everything the other three would reveal. Source: [monitoring][monitoring].
+
+| Variable | Effect |
+|---|---|
+| `OTEL_LOG_USER_PROMPTS` | Include prompt text in `user_prompt` event and `claude_code.interaction` span attribute (`1` to enable) |
+| `OTEL_LOG_TOOL_DETAILS` | Include tool parameters (Bash command, MCP tool name, Skill name, file path, subagent type) on tool events / span attributes |
+| `OTEL_LOG_TOOL_CONTENT` | Include tool input/output content in span events (truncated at 60 KB; requires tracing) |
+| `OTEL_LOG_RAW_API_BODIES` | Emit full Anthropic Messages API request/response as `api_request_body` / `api_response_body` events. `1` = inline 60 KB truncation; `file:<dir>` = untruncated to disk with `body_ref` pointer |
+
+### OpenTelemetry Cardinality Controls
+
+Toggle metric attributes to trade granularity for storage cost. Source: [monitoring][monitoring].
+
+| Variable | Default | Effect |
+|---|---|---|
+| `OTEL_METRICS_INCLUDE_SESSION_ID` | `true` | Include `session.id` attribute on metrics |
+| `OTEL_METRICS_INCLUDE_VERSION` | `false` | Include `app.version` attribute on metrics |
+| `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` | `true` | Include `user.account_uuid` and `user.account_id` on metrics |
 
 ### Session Guards & Runtime
 
@@ -284,6 +326,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 [settings]: https://code.claude.com/docs/en/settings
 [tools-ref]: https://code.claude.com/docs/en/tools-reference#bash-tool-behavior
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
+[otel-spec]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options
 [statusline]: https://code.claude.com/docs/en/statusline
 [gh-9359]: https://github.com/anthropics/claude-code/issues/9359
 [gh-11067]: https://github.com/anthropics/claude-code/issues/11067

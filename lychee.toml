@@ -8,7 +8,8 @@ exclude_path = ["triage/", "docs/todo/"]
 
 # Accept common bot-blocked status codes
 # 405 = HEAD method not allowed (status pages often reject HEAD)
-accept = [200, 429, 405]
+# 418 = I'm a teapot (freedesktop.org bot-block)
+accept = [200, 429, 405, 418, 202]
 
 # Exclude domains that block automated requests (return 403/401 to HEAD)
 exclude = [
