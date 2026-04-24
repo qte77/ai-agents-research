@@ -45,6 +45,12 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
 | [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
 
+## Protocols & Interfaces
+
+| Document | Scope |
+|---|---|
+| [ag-ui-protocol-landscape.md](ag-ui-protocol-landscape.md) | AG-UI (Agent-User Interaction protocol), A2UI (Google declarative generative-UI spec), OpenGenerativeUI (CopilotKit reference framework); 2026 ecosystem adoption + Salesforce non-adoption note |
+
 ## Planned
 
 Cline, opencode, Codebuff, Gemini CLI, Cursor, Antigravity, Kiro, Codex CLI,
