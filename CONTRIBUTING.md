@@ -102,6 +102,14 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 - **Observations** include CC version, environment, and date: `CC 2.1.83, Codespaces, 2026-03-27`
 - **Pricing and version-specific data** must note the access date — these change across model generations
 
+## Research Workflow
+
+- **Search before creating** — extend an existing doc on hit; create a new file only if there is zero coverage. Agents: prefer the **Grep**/**Glob**/**Read** tools over shell `grep`/`find`/`cat` for speed and lower token cost
+- **Cross-verify counts and capabilities** against the upstream repo (README, source tree, lockfile via `gh api repos/<owner>/<repo>/contents/<path>`) — vendor marketing copy and short GitHub descriptions drift from reality
+- **Soften or remove unverified claims** — explicit hedging beats unsourced numbers; "up to N" without a first-party source is not acceptable
+- **Cite a version gate** when behavior is version-specific (e.g., `@anthropic-ai/claude-code@2.1.88, 2026-03-31`, `CC v2.1.96+`)
+- **Shell tooling**: prefix shell calls with `rtk` (Rust Token Killer) when a shell call is genuinely needed — see `/workspaces/.claude-files/RTK.md`. Shell is a fallback, not the default
+
 ## Directory Structure
 
 ```text
@@ -179,6 +187,27 @@ This prevents misreading a `cc-community` placement as "CC-exclusive."
 
 The `triage/` directory contains **auto-generated monitor outputs** (changelog triage, community triage, outage archive). It is populated exclusively by the GitHub Actions monitors in `.github/workflows/` and is **not a source of hand-written analysis**. Do not treat triage files as content candidates for promotion into `docs/` — findings of interest should be re-researched from their first-party sources and written as new analysis docs under the appropriate `docs/` subdirectory. The directory is intentionally excluded from link checking via `lychee.toml`.
 
+## Maintenance
+
+| Trigger | Required action |
+|---|---|
+| Content change | Bump `updated:` |
+| Lychee re-run on the file | Bump `validated_links:` |
+| Vendor releases new version affecting documented behavior | Re-fetch first-party page, update version gate, bump `updated:` |
+| External URL 404 / redirect | Replace with current canonical URL; do not add to `lychee.toml` exclude unless the host is bot-blocking (403/418) |
+| Vendor renames a feature | Replace in-place; add a one-line `Note:` only if the old name is widely cited externally |
+
+### Archiving legacy content
+
+When a doc is superseded, **archive — do not delete**. Pattern (see commits `#105`, `#120`, `#121`):
+
+1. Set frontmatter `status: archived` and add the archive date
+2. Move the file to `docs/todo/<original-subdir>/`
+3. Add a banner immediately after frontmatter: `> **Status: archived** on YYYY-MM-DD. Preserved for historical context. See [<replacement>](path) for current analyses.`
+4. Rewrite incoming refs to point at the replacement (or remove if dead)
+
+`docs/todo/` is in `lychee.toml` `exclude_path` — archived files do not gate CI.
+
 ## Local development
 
 Doc linting is wired into the top-level `Makefile`. All tools install user-locally with zero sudo.
@@ -191,3 +220,11 @@ make help        # list all recipes grouped by section
 ```
 
 Run `make lint` against any PR that touches docs before requesting review. `lychee` reads `lychee.toml`; `markdownlint-cli2` reads `.markdownlint.json`.
+
+## Commit & PR
+
+- **Conventional commits** per `.gitmessage`: `docs:`, `chore:`, `ci:`, `feat:`, `fix:`, …
+- **Split commits by topic** within a single PR — content additions, lint cleanup, CI/config changes each get their own commit
+- **Branch naming**: `<type>/<short-slug>` (e.g., `docs/otel-and-ag-ui-research`, `ci/cache-lychee-binary`)
+- **Merge policy**: squash-merge to main; delete the remote branch on merge. Squash breaks ancestry, so the local branch must be force-deleted (`git branch -D`) afterward
+- **Track follow-up work as GitHub issues**, not in-doc TODOs (e.g., `#123` for the `gha-md-lychee` extraction)
