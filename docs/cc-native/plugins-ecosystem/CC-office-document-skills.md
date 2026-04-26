@@ -100,6 +100,10 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 - [CC-business-api-integrations.md](CC-business-api-integrations.md) — Business APIs (accounting, CRM, payments) that feed into document workflows
 - [CC-office-worker-workflows.md](../../cc-community/CC-office-worker-workflows.md) — End-to-end workflow patterns combining these capabilities
 
+### Engine-layer view (added 2026-04-26 per #131)
+
+For the Python-library landscape behind office-document generation (python-docx, python-pptx, openpyxl, docxtpl, WeasyPrint, ReportLab, Pandoc, Typst — including license/runtime trade-offs), see [doc-pipeline-engine / landscape-output.md](https://github.com/qte77/doc-pipeline-engine/blob/main/docs/landscape-output.md). This file covers the CC orchestration layer above those libraries.
+
 ## Sources
 
 | Source | Content |
