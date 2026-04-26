@@ -1,6 +1,6 @@
 # Contributing to ai-agents-research
 
-Documentation standards and conventions for research analysis documents.
+Documentation standards and conventions for research analysis documents — for any contributor, human or AI agent.
 
 ## Document Structure
 
