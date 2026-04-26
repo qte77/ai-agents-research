@@ -1,18 +1,18 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering).
+description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression).
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-04-06
-validated_links: 2026-04-06
+updated: 2026-04-26
+validated_links: 2026-04-26
 ---
 
 **Status**: Research (informational)
 
 ## Summary
 
-Eight community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, and agent-skills encodes Google engineering practices across the full SDLC.
+Nine community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, and caveman compresses agent output via telegraphic-speech intensity levels.
 
 ## gstack (Garry Tan)
 
@@ -343,6 +343,58 @@ Where gstack locks cognitive *modes*, pm-skills delivers domain *frameworks*, an
 
 Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/claude-code-agent-teams/) (referenced in [CC-agent-teams-orchestration.md](../cc-native/agents-skills/CC-agent-teams-orchestration.md))
 
+## Caveman (JuliusBrussee)
+
+**Repo**: [JuliusBrussee/caveman][caveman] | **Stars**: 46.9K | **License**: MIT | **Version**: v1.6.0 (2026-04-15)
+
+Skill pack and cross-agent plugin that compresses agent **output** by switching the assistant into telegraphic-speech registers. Tagline: *"why use many token when few do trick"* ([README][caveman]).
+
+### Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `caveman-commit` | Terse conventional commits (≤50-char subject) |
+| `caveman-review` | One-line PR comments |
+| `caveman-help` | Quick-reference card |
+| `caveman-compress` | Compresses memory/input files (~46% token reduction, [README][caveman]) |
+
+### Intensity Levels
+
+- **Lite** — drop filler, keep grammar
+- **Full** — drop articles, fragments allowed (default)
+- **Ultra** — telegraphic, maximum compression
+- **Wenyan** (Lite/Full/Ultra) — Classical Chinese variants
+
+### Token Savings Claims
+
+Per the [README][caveman]: "cutting ~75% of output tokens" headline; benchmark across 10 real API tasks averages **65%** with a 22–87% range. **caveman-compress** reports an average **46%** reduction on memory files. Claims are self-reported; no independent benchmark.
+
+### Installation
+
+```bash
+# Claude Code
+claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman
+
+# Gemini CLI
+gemini extensions install https://github.com/JuliusBrussee/caveman
+
+# Cursor / Windsurf / Cline / Copilot / others
+npx skills add JuliusBrussee/caveman -a [agent-name]
+
+# Standalone hook (macOS/Linux/WSL)
+bash <(curl -s https://raw.githubusercontent.com/JuliusBrussee/caveman/main/hooks/install.sh)
+```
+
+### Activation
+
+Triggers: `/caveman`, `"talk like caveman"`, `"caveman mode"`, `"less tokens please"`. Deactivation: `"stop caveman"` or `"normal mode"` ([README][caveman]).
+
+### Key Differentiator
+
+Where RTK compresses **tool output** going *into* context (see [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md)) and dispatch parallelizes **work** to spare context, caveman compresses the **assistant's own output** — a different layer of the token-reduction stack. Self-reported savings are higher than RTK's independently-benchmarked range, but unverified.
+
+Cross-ref: [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — RTK (output ingestion compression), CodeBurn (token-usage observability)
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -363,6 +415,7 @@ Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/cl
 | [dispatch][dispatch] | Context window multiplication via background workers |
 | [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
 | [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
+| [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -372,3 +425,4 @@ Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/cl
 [claude-howto]: https://github.com/luongnv89/claude-howto
 [dispatch]: https://github.com/bassimeledath/dispatch
 [superpowers]: https://github.com/obra/superpowers
+[caveman]: https://github.com/JuliusBrussee/caveman
