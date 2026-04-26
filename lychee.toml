@@ -3,13 +3,17 @@
 
 # Exclude auto-generated and archived content
 # triage/ — auto-generated monitor outputs (see CONTRIBUTING.md)
-# docs/todo/ — archived Agents-eval era docs (status: archived frontmatter); see #105
-exclude_path = ["triage/", "docs/todo/"]
+# docs/archive/ — historical snapshots with known-broken cross-refs (moved from docs/todo/ per #105)
+exclude_path = ["triage/", "docs/archive/"]
 
 # Accept common bot-blocked status codes
 # 405 = HEAD method not allowed (status pages often reject HEAD)
 # 418 = I'm a teapot (freedesktop.org bot-block)
 accept = [200, 429, 405, 418, 202, 415]
+
+# Retry transient failures (GitHub 502s, network blips) — see AGENT_LEARNINGS.md
+max_retries = 3
+retry_wait_time = 2
 
 # Exclude domains that block automated requests (return 403/401 to HEAD)
 exclude = [

@@ -21,7 +21,7 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 | [`docs/non-cc/`](docs/non-cc/) | Non-CC agents, orchestrators, and infrastructure: JetBrains Air, DeerFlow, Goose, Feynman, Hermes Agent, Rowboat, InsForge, GoClaw, and more |
 | [`docs/cc-community/`](docs/cc-community/) | Community skills, plugins, tooling (16 tools), and domain-specific CLAUDE.md patterns |
 | [`docs/sdlc-lcm/`](docs/sdlc-lcm/) | SDLC/lifecycle management specs, agentic SDLC patterns, OSS ALM landscape |
-| [`docs/todo/`](docs/todo/) | Agents-eval era docs (analysis, landscape, best-practices, research) — pending review and reorganization |
+| [`docs/archive/`](docs/archive/) | Agents-eval era docs retained for reference (frameworks/infrastructure, evaluation/data resources, further reading, adoption plans) |
 | [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
 | [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage |
 | [`.github/`](.github/README.md) | CI automation: monitors, scripts, templates — see [.github/README.md](.github/README.md) |
