@@ -35,7 +35,7 @@ Rust-based CLI proxy that intercepts shell command outputs and compresses them b
 
 **Recommendation**: Keep installed — free savings on verbose output with negligible overhead. Set expectations accordingly.
 
-Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md)
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md); [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — caveman (output-side compression); CodeBurn / ccusage / Claude-Code-Usage-Monitor below (measurement layer)
 
 ---
 
@@ -142,6 +142,8 @@ PreToolUse hook that deduplicates file reads within a session. When Claude reque
 ### Configuration
 
 Default mode is **warn** (logs but does not block) to avoid conflicts with the Edit tool, which requires a preceding Read. Switch to **block** mode after validating it doesn't break your edit workflow.
+
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — PreToolUse hook mechanism Boucle relies on
 
 ---
 
@@ -556,6 +558,93 @@ Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) 
 
 ---
 
+## ccusage (ryoppippi)
+
+**Repo**: [ryoppippi/ccusage][ccusage] | **Stars**: 13.4K | **License**: MIT | **Version**: v18.0.11 (2026-04-19) | **Stack**: TypeScript
+
+CLI tool that analyzes Claude Code / Codex CLI usage from local JSONL files. Established reference tool in the CC usage-tracking space — predates and is broader-adopted than CodeBurn ([README][ccusage]).
+
+### Reports
+
+- **Daily** — token usage and costs aggregated by date
+- **Monthly** — long-horizon aggregation
+- **Session** — usage grouped by conversation
+- **Blocks** — 5-hour billing windows (matches Anthropic's plan limits)
+- **Statusline** (Beta) — integration for hooks
+
+### Capabilities
+
+Per the [README][ccusage]:
+
+- **Model tracking** — per-model breakdown with `--breakdown`
+- **Cache token support** — tracks cache creation and cache read tokens separately (codeburn does not split these)
+- **Offline mode** — `--offline` uses pre-cached pricing (no network)
+- **MCP integration** — built-in MCP server for in-session queries
+- **Multi-instance** — group usage by project
+- **JSON export**
+
+### Installation
+
+```bash
+npx ccusage@latest          # recommended — always latest
+bunx ccusage
+pnpm dlx ccusage
+```
+
+Reads `~/.claude/projects/` JSONL by default; data path is configurable.
+
+### Key Differentiator
+
+Where CodeBurn is **multi-agent** (Claude/Codex/Cursor/OpenCode/Copilot in one TUI), ccusage is **CC/Codex-focused** with deeper CC-specific features (cache token split, MCP server, statusline hook). The two are complementary, not redundant: ccusage for CC-deep analysis and in-session queries via MCP; CodeBurn for cross-agent comparison.
+
+Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — manual JSONL/jq extraction patterns ccusage automates; [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — statusline hook integration point
+
+---
+
+## Claude-Code-Usage-Monitor (Maciek-roboblog)
+
+**Repo**: [Maciek-roboblog/Claude-Code-Usage-Monitor][claude-monitor] | **Stars**: 7.8K | **License**: MIT | **Version**: v3.1.0 | **Stack**: Python 3.9+
+
+Real-time terminal monitor for Claude Code with **predictions and warnings**, distinguishing it from after-the-fact analyzers like ccusage / CodeBurn ([README][claude-monitor]).
+
+### Plan Support
+
+Per the [README][claude-monitor]:
+
+| Plan | Token limit |
+|---|---|
+| Pro | ~19,000 |
+| Max5 | ~88,000 |
+| Max20 | ~220,000 |
+| **Custom** | P90 auto-detection over recent session blocks |
+
+The Custom plan analyzes recent session blocks and computes a personalized 90th-percentile limit — adapts to actual usage patterns without manual configuration.
+
+### Views
+
+- **Realtime** — live progress bars + burn rate (default)
+- **Daily** — aggregated table
+- **Monthly** — long-trend analysis
+
+### Methodology
+
+P90 percentile analysis across all available session blocks; multi-session burn-rate analytics; intelligent session-limit detection. Stack: `pytz`, `rich`, `pydantic`, `numpy`, `pyyaml`, `sentry-sdk`.
+
+### Installation
+
+```bash
+uv tool install claude-monitor       # recommended
+pip install claude-monitor
+```
+
+### Key Differentiator
+
+Only tool in this category that does **prediction** (not just retrospective measurement). ccusage and CodeBurn answer "what did I spend?"; claude-monitor answers "will I exhaust my window?" Useful pairing: claude-monitor for live discipline, ccusage for historical trend, CodeBurn for cross-agent comparison.
+
+Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — Anthropic plan limits and 5-hour windows
+
+---
+
 ## Comparison
 
 | Tool | Layer | CC Integration | Approach | Maturity |
@@ -573,9 +662,11 @@ Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) 
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
 | **Code-Review-Graph** | Structural code analysis | MCP server (22 tools, auto-config) | AST-based blast radius for reviews | Active (7.1K stars) |
-| **CodeBurn** | Token-usage observability | CLI (reads on-disk session data) | Cross-agent dashboard, 13 task categories, optimize/compare | Active (4K stars) |
+| **CodeBurn** | Token-usage observability (cross-agent) | CLI (reads on-disk session data) | Cross-agent dashboard, 13 task categories, optimize/compare | Active (4K stars) |
+| **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
+| **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 
-All fourteen address different layers of the agent stack — complementary, not competing.
+All sixteen address different layers of the agent stack — complementary, not competing.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -599,6 +690,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [Code-Review-Graph][code-review-graph] | AST-based blast radius analysis, 22 MCP tools (7.1K stars) |
 | [CodeBurn][codeburn] | Cross-agent token-usage TUI dashboard (4K stars, MIT) |
+| [ccusage][ccusage] | CC/Codex JSONL usage analyzer, MCP-integrated (13.4K stars, MIT) |
+| [Claude-Code-Usage-Monitor][claude-monitor] | Predictive real-time usage monitor with P90-based limits (7.8K stars, MIT) |
 
 [awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [graphify]: https://github.com/safishamsi/graphify
@@ -625,3 +718,5 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [cc-switch]: https://github.com/farion1231/cc-switch
 [opensrc]: https://github.com/vercel-labs/opensrc
 [codeburn]: https://github.com/getagentseal/codeburn
+[ccusage]: https://github.com/ryoppippi/ccusage
+[claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
