@@ -422,6 +422,10 @@ Community testing ([source][devto-browser-tools]) identified additional options 
 - **Self-host Firecrawl** if scraping volume exceeds free tier or privacy requirements mandate it
 - **Evaluate PinchTab** as a lighter-weight Playwright alternative for token-constrained contexts
 
+## Engine-layer view (added 2026-04-26 per #132)
+
+For the Python-library landscape behind web crawling and source connectors (polyfetch-scrape, trafilatura, scrapy, httpx, watchdog, plus SharePoint/Confluence/Drive/S3/IMAP connectors), see [doc-pipeline-engine / landscape-ingest.md](https://github.com/qte77/doc-pipeline-engine/blob/main/docs/landscape-ingest.md). This file covers the CC orchestration layer above those tools.
+
 ## References
 
 ### First-Party
