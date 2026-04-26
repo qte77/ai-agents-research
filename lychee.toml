@@ -11,6 +11,10 @@ exclude_path = ["triage/", "docs/archive/"]
 # 418 = I'm a teapot (freedesktop.org bot-block)
 accept = [200, 429, 405, 418, 202, 415]
 
+# Retry transient failures (GitHub 502s, network blips) — see AGENT_LEARNINGS.md
+max_retries = 3
+retry_wait_time = 2
+
 # Exclude domains that block automated requests (return 403/401 to HEAD)
 exclude = [
     "medium.com",
