@@ -6,9 +6,9 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 
 | Document | Coverage |
 |----------|----------|
-| [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, BHIL, claude-howto, dispatch, superpowers |
+| [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, BHIL, claude-howto, dispatch, superpowers, agent-skills, caveman |
 | [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) | Plugin catalogs: awesome-claude-code, awesome-claude-code-plugins |
-| [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling: RTK, GSD, everything-claude-code, Boucle, OpenHarness, ByteRover, claude-mem, CC Switch, opensrc, awesome-design-md, Graphify, MemPalace, Code-Review-Graph |
+| [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling: RTK, GSD, everything-claude-code, Boucle, OpenHarness, ByteRover, claude-mem, CC Switch, opensrc, awesome-design-md, Graphify, MemPalace, Code-Review-Graph, CodeBurn |
 | [CC-community-reimplementations-landscape.md](CC-community-reimplementations-landscape.md) | Reimplementations: claw-code, CLAURST (expanded), learn-claude-code, openclaude, zackautocracy/claude-code (with provenance classification) |
 | [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscape.md) | RE tools: system prompts, binary analysis, env vars, API interception, ccunpacked.dev |
 | [CC-office-worker-workflows.md](CC-office-worker-workflows.md) | Office workflows: invoices, documents, email, financial reporting + multi-agent orchestrators (Vibe Kanban, Conductor, tmux tools) |
