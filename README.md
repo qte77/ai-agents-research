@@ -1,5 +1,7 @@
 # ai-agents-research
 
+> Project overview — start here. Audience: any contributor or AI agent.
+>
 > Field research and feature analysis for AI coding agents — from sandboxing internals to agent orchestration.
 
 ## Why

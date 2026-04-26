@@ -91,6 +91,13 @@ Gather more context or escalate to AGENT_REQUESTS.md
 
 ## Agent Quick Reference
 
+**Onboarding (fresh AI agent):**
+
+1. Read README.md (project overview) → AGENTS.md (this file) → CONTRIBUTING.md (workflow)
+2. Read AGENT_LEARNINGS.md and AGENT_REQUESTS.md for tracked patterns and open asks. If your harness exposes a per-project auto-memory store, read it too (host-local, optional, not git-tracked)
+3. Use one Explore-style subagent for "survey docs/ for existing coverage of X" — return summary, not raw dumps. Default to single-agent execution; switch to team mode only if work parallelizes across independent files
+4. Then follow CONTRIBUTING.md (Research Workflow → Maintenance → Commit & PR)
+
 **Pre-Task:**
 
 - Read AGENTS.md > CONTRIBUTING.md for technical details
