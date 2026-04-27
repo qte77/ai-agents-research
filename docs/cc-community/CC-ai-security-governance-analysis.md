@@ -12,7 +12,7 @@ Analysis of four frameworks applicable to the Agents-eval multi-agent evaluation
 system (PydanticAI-based MAS evaluating academic papers via LLM providers).
 
 **Category**: Research / Informational
-**Authority**: [SECURITY.md](../../SECURITY.md) for CVE status;
+**Authority**: [Security policy](https://github.com/qte77/ai-agents-research/security/policy) for CVE status;
 [CC-mas-security-framework.md](CC-mas-security-framework.md) for MAESTRO implementation
 **Created**: 2026-03-01
 
@@ -66,7 +66,7 @@ Controls implemented across sprints 5-6:
 
 **Source**: [MITRE ATLAS](https://atlas.mitre.org/)
 **Existing coverage**: Minimal — name and scope referenced in
-[SECURITY.md](../../SECURITY.md)
+[Security policy](https://github.com/qte77/ai-agents-research/security/policy)
 
 ### Framework Structure
 
@@ -134,7 +134,7 @@ define both the attack vector taxonomy and the control set.
 
 **Source**: [NIST AI 100-1](https://www.nist.gov/artificial-intelligence/executive-order-safe-secure-and-trustworthy-artificial-intelligence) (January 2023)
 **Companion**: [NIST AI 600-1 Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1) (July 2024)
-**Existing coverage**: Brief reference in [SECURITY.md](../../SECURITY.md)
+**Existing coverage**: Brief reference in [Security policy](https://github.com/qte77/ai-agents-research/security/policy)
 
 ### Four Core Functions
 
@@ -230,7 +230,7 @@ human oversight, context window manipulation.
 
 **Sources**: [ISO 42001:2023](https://www.iso.org/standard/81230.html),
 [ISO 23894:2023](https://www.iso.org/standard/77304.html)
-**Existing coverage**: Brief reference in [SECURITY.md](../../SECURITY.md)
+**Existing coverage**: Brief reference in [Security policy](https://github.com/qte77/ai-agents-research/security/policy)
 
 ### ISO 42001 — AI Management System (AIMS)
 
