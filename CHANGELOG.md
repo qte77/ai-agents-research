@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `devstral-analysis.md`: Mistral Devstral (Apache 2.0); Small 1.0/1.1/2 (24B) at 46.8/53.6/**68.0%** SWE-Bench, Devstral 2 (123B) at 72.2%; 256k, vision, single-GPU local; runs under Claude Code; new "Coding Models" section in `non-cc/README.md`
 - `CC-llms-txt-analysis.md`: HuggingScience (huggingscience.co) as `llms-full.txt` adoption beyond product docs — 100+ scientific models across 17 domains
 - `CC-office-document-skills.md`, `CC-web-scraping-plugins-analysis.md`: engine-layer cross-links (dated 2026-04-26) to doc-pipeline-engine `landscape-{output,ingest}.md` (#131, #132)
-- `CC-community-tooling-landscape.md`: ccusage (13.4K, MIT, v18.0.11), Claude-Code-Usage-Monitor (7.8K, MIT, v3.1.0), CodeBurn (4K, MIT); cross-refs on RTK/Boucle to measurement layer
+- `CC-community-tooling-landscape.md`: ccusage (13.4K, MIT, v18.0.11), Claude-Code-Usage-Monitor (7.8K, MIT, v3.1.0), CodeBurn (4K, MIT) + 7-category Optimization Rules taxonomy (file-read repeats, read:edit ratio, bash output cap, unused MCP, ghost agents/skills, bloated configs, cache overhead); cross-refs on RTK/Boucle to measurement layer
 - `CC-community-skills-landscape.md`: Caveman (46.9K, MIT, v1.6.0) — output-compression skill pack
 - `Makefile`: docs-lint build tooling (`setup_*`, `check_*`, `autofix`, `lint`) per `qte77/so101-biolab-automation` (PR #98)
 - `CC-skills-adoption-analysis.md`: Skill Context Budgets — 100/5k/unlimited disclosure tiers, 25k auto-compaction budget, 1%/8000-char description budget (PR #96)
