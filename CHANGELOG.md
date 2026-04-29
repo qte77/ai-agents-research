@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `docs/cc-native/ci-remote/CC-github-actions-analysis.md`: Interactive Setup Flow subsection documenting `/install-github-app` wizard panels — pre-flight `gh auth` warnings, OAuth-vs-API-key chooser (`CLAUDE_CODE_OAUTH_TOKEN` for Pro/Max subscribers vs `ANTHROPIC_API_KEY`), workflow selector (@Claude Code + Claude Code Review templates); Custom GitHub App subsection for Bedrock/Vertex with required permissions; cited to first-party `claude-code-action/docs/setup.md` and `examples/`. Action version pinned to v1.0 GA (2025-08-26)
+
 - `docs/cc-native/plugins-ecosystem/CC-office-document-skills.md`: engine-layer cross-link (dated 2026-04-26) to `qte77/doc-pipeline-engine/docs/landscape-output.md` per #131
 - `docs/cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md`: engine-layer cross-link (dated 2026-04-26) to `qte77/doc-pipeline-engine/docs/landscape-ingest.md` per #132
 
