@@ -13,94 +13,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `docs/cc-native/ci-remote/CC-github-actions-analysis.md`: Interactive Setup Flow subsection documenting `/install-github-app` wizard panels — pre-flight `gh auth` warnings, OAuth-vs-API-key chooser (`CLAUDE_CODE_OAUTH_TOKEN` for Pro/Max subscribers vs `ANTHROPIC_API_KEY`), workflow selector (@Claude Code + Claude Code Review templates); Custom GitHub App subsection for Bedrock/Vertex with required permissions; cited to first-party `claude-code-action/docs/setup.md` and `examples/`. Action version pinned to v1.0 GA (2025-08-26)
-- `docs/cc-native/ci-remote/CC-github-actions-analysis.md`: Claude GitHub App provenance — official Anthropic tagline ("virtual teammate that works alongside your development pipelines"), publisher (@anthropics), built on Claude Code SDK, third-party-app status — sourced from [github.com/apps/claude](https://github.com/apps/claude)
-- `docs/non-cc/devstral-analysis.md`: Mistral Devstral analysis — agentic-first open-source coding LLM (Apache 2.0); covers all three releases (Small 1.0/2505 at 46.8% SWE-Bench, 1.1/2507 at 53.6%, **Small 2/2512 at 68.0%**) plus 123B Devstral 2 at 72.2%; 256k context, vision, FP8 quantization, single-GPU local deployment; integration with Claude Code as model backend; cited to first-party Mistral news + HF model cards
-- `docs/non-cc/README.md`: new "Coding Models" section for Devstral entry
-- `docs/cc-native/context-memory/CC-llms-txt-analysis.md`: "Pattern Adoption Beyond Product Docs" subsection — HuggingScience as evidence of `llms-full.txt` extending into curated scientific-resource catalogs (100+ models across 17 domains: Evo-2, ESM2, FourCastNet 3, MedGemma, etc.); cited to [huggingscience.co](https://huggingscience.co/)
-
-- `docs/cc-native/plugins-ecosystem/CC-office-document-skills.md`: engine-layer cross-link (dated 2026-04-26) to `qte77/doc-pipeline-engine/docs/landscape-output.md` per #131
-- `docs/cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md`: engine-layer cross-link (dated 2026-04-26) to `qte77/doc-pipeline-engine/docs/landscape-ingest.md` per #132
-
-- `docs/cc-community/CC-community-tooling-landscape.md`: ccusage (13.4K stars, MIT, ryoppippi, v18.0.11) — CC/Codex JSONL usage analyzer with daily/monthly/session/blocks reports, cache-token split, offline mode (`--offline`), built-in MCP server, statusline hook (Beta); reads `~/.claude/projects/`
-- `docs/cc-community/CC-community-tooling-landscape.md`: Claude-Code-Usage-Monitor (7.8K stars, MIT, Maciek-roboblog, v3.1.0) — predictive real-time TUI with P90-based custom plan auto-detection, burn-rate analytics, Pro/Max5/Max20 plan-aware limits; Python 3.9+ via `uv tool install` or `pip`
-- `docs/cc-community/CC-community-tooling-landscape.md`: CodeBurn (4K stars, MIT, AgentSeal) — cross-agent token-usage TUI dashboard reading on-disk session data from Claude Code, Codex, Cursor, OpenCode, Copilot and others; 13 task categories, `optimize`/`compare`/`export` subcommands, LiteLLM-sourced pricing, native macOS menubar app
-- `docs/cc-community/CC-community-tooling-landscape.md`: cross-refs added on RTK and Boucle sections linking to caveman, the new measurement-layer tools (CodeBurn / ccusage / Claude-Code-Usage-Monitor), and CC hooks system
-- `docs/cc-community/CC-community-skills-landscape.md`: Caveman (46.9K stars, MIT, v1.6.0) — telegraphic-speech output-compression skill pack (Lite/Full/Ultra plus Wenyan variants); skills `caveman-commit`, `caveman-review`, `caveman-help`, `caveman-compress`; multi-agent install (Claude Code marketplace, Gemini extensions, npx skills, standalone hook); self-reported ~65% avg output-token savings (22–87% range)
-- `Makefile`: build tooling for docs linting — sudo-less install recipes for Node.js, lychee, markdownlint-cli2 (`setup_node`, `setup_lychee`, `setup_mdlint`, `setup_all`), plus `check_links`, `check_docs`, `autofix`, `lint` targets; adapted from the authoritative `qte77/so101-biolab-automation` Makefile conventions (PR #98)
-- `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`: new Skill Context Budgets subsection documenting three-level progressive disclosure (~100 tokens metadata / <5k SKILL.md body / unlimited bundled), shared 25k-token auto-compaction budget with 5k per-skill preservation, 1% / 8000-char description budget with 250-char per-skill cap and `SLASH_COMMAND_TOOL_CHAR_BUDGET` override, and the framing quote on skills as the replacement for procedural CLAUDE.md content (PR #96)
-- `docs/cc-community/CC-community-tooling-landscape.md`: Graphify (16.5K stars, code→knowledge graph, CC hooks/MCP), MemPalace (33.6K stars, palace-metaphor memory, 19 MCP tools), Code-Review-Graph (7.1K stars, AST blast-radius, 22 MCP tools)
-- `docs/non-cc/feynman-analysis.md`: Companion AI Feynman research agent (3.8K stars, 4 sub-agents, experiment replication)
-- `docs/non-cc/insforge-analysis.md`: InsForge agent backend platform (7.3K stars, auth/DB/storage/functions semantic layer)
-- `docs/non-cc/goclaw-analysis.md`: GoClaw multi-tenant agent gateway (2.4K stars, Go, 7 messaging channels, 8-stage pipeline)
-- `docs/non-cc/rowboat-analysis.md`: Rowboat AI coworker (11.1K stars, knowledge graph from communications, Obsidian-compatible)
-- `docs/non-cc/hermes-agent-analysis.md`: Nous Research Hermes Agent (43.2K stars, self-improving skills, 7 platforms)
-- `CONTRIBUTING.md`: classification guidance for cc-community vs non-cc placement, `platform_scope` frontmatter field
-
-### Fixed
-
-- `docs/cc-community/CC-repo-to-docs-tools-landscape.md`: typo `CC-llmstxt-analysis.md` → `CC-llms-txt-analysis.md` (broken relative link regression from the URL triage batches PR); opportunistic markdownlint cleanup (MD031 / MD032 / MD040) in the same file (PR #97)
-- `docs/cc-native/configuration/CC-changelog-feature-scan.md`: relative path `plugins-ecosystem/` → `../plugins-ecosystem/` (pre-existing broken internal link), resolve two permanent redirects `docs.anthropic.com/en/docs/claude-code/{hooks-guide,sdk}` → `code.claude.com/docs/en/{hooks-guide,agent-sdk/overview}` (PR #97)
-- `docs/cc-native/agents-skills/CC-agent-teams-orchestration.md`: remove Aura Frog guide row + link def (external repo returned 404); resolve `docs.arize.com/phoenix` → `arize.com/docs/phoenix` permanent redirect (PR #97)
-- `docs/non-cc/{hermes-agent,insforge}-analysis.md`, `docs/cc-native/plugins-ecosystem/CC-cowork-skills-api-workflows.md`: resolve permanent redirects on `agentskills.io` and `docs.insforge.dev` (PR #97)
-
-### Changed
-
-- `docs/cc-community/CC-repo-to-docs-tools-landscape.md`: consolidate cross-references, link Graphify and Code-Review-Graph
-- `docs/non-cc/README.md`: add Infrastructure section (InsForge, GoClaw), expand Agents section (Feynman, Hermes, Rowboat)
-- `README.md`: update contents table with expanded non-cc and cc-community descriptions
-- `docs/cc-community/CC-community-tooling-landscape.md`: add `platform_scope` frontmatter, update comparison table (10→13 tools)
-
-- `docs/cc-native/model-internals/`: new category for model-level interpretability research
-- `docs/cc-native/model-internals/CC-emotion-vectors-interpretability.md`: Anthropic emotion concepts paper analysis (171 vectors, causal behavioral influence)
-- `docs/cc-native/model-internals/CC-first-party-interpretability-index.md`: curated index of 21 Anthropic research publications (sycophancy, reasoning traces, safety classifiers, alignment steering)
-- `docs/cc-community/CC-community-skills-landscape.md`: superpowers (135K stars, TDD methodology), dispatch (context window multiplication), claude-howto weekend fork note
-- `docs/cc-community/CC-community-tooling-landscape.md`: claude-mem (45.2K stars, persistent memory), CC Switch (38.9K stars, multi-CLI provider management), opensrc (npm source fetcher)
-
-### Changed
-
-- `docs/cc-community/CC-community-skills-landscape.md`: claude-code-best-practice updated to 31.8K stars with A/C/S tag framework
-- `CONTRIBUTING.md`: doc standards (frontmatter, validated_links, status badge, Sources section, naming, anti-patterns)
-- `docs/cc-native/sessions/CC-session-cost-analysis.md`: transcript JSONL cost extraction with jq recipes, Opus 4.6 pricing
-- `docs/cc-native/sessions/CC-session-lifecycle-analysis.md`: /rename bugs, slug persistence, 6 upstream issues
-- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: server-side caching, 96.3% hit rate, 85% cost savings
-- `docs/cc-native/configuration/CC-env-vars-reference.md`: consolidated CLAUDE_CODE_* env vars
-- `docs/cc-native/configuration/CC-tools-inventory.md`: 28 built-in tools snapshot (CC 2.1.83)
+- `CC-github-actions-analysis.md`: `/install-github-app` interactive wizard (pre-flight warnings, OAuth/API-key chooser, workflow selector); Custom App for Bedrock/Vertex; pin v1.0 GA (2025-08-26); GitHub App provenance from [github.com/apps/claude](https://github.com/apps/claude)
+- `devstral-analysis.md`: Mistral Devstral (Apache 2.0); Small 1.0/1.1/2 (24B) at 46.8/53.6/**68.0%** SWE-Bench, Devstral 2 (123B) at 72.2%; 256k, vision, single-GPU local; runs under Claude Code; new "Coding Models" section in `non-cc/README.md`
+- `CC-llms-txt-analysis.md`: HuggingScience (huggingscience.co) as `llms-full.txt` adoption beyond product docs — 100+ scientific models across 17 domains
+- `CC-office-document-skills.md`, `CC-web-scraping-plugins-analysis.md`: engine-layer cross-links (dated 2026-04-26) to doc-pipeline-engine `landscape-{output,ingest}.md` (#131, #132)
+- `CC-community-tooling-landscape.md`: ccusage (13.4K, MIT, v18.0.11), Claude-Code-Usage-Monitor (7.8K, MIT, v3.1.0), CodeBurn (4K, MIT); cross-refs on RTK/Boucle to measurement layer
+- `CC-community-skills-landscape.md`: Caveman (46.9K, MIT, v1.6.0) — output-compression skill pack
+- `Makefile`: docs-lint build tooling (`setup_*`, `check_*`, `autofix`, `lint`) per `qte77/so101-biolab-automation` (PR #98)
+- `CC-skills-adoption-analysis.md`: Skill Context Budgets — 100/5k/unlimited disclosure tiers, 25k auto-compaction budget, 1%/8000-char description budget (PR #96)
+- `CC-community-tooling-landscape.md`: Graphify (16.5K), MemPalace (33.6K), Code-Review-Graph (7.1K); claude-mem (45.2K), CC Switch (38.9K), opensrc
+- `CC-community-skills-landscape.md`: superpowers (135K, TDD methodology), dispatch (context window multiplication), claude-howto weekend fork note
+- `non-cc/`: feynman (3.8K), insforge (7.3K), goclaw (2.4K), rowboat (11.1K), hermes-agent (43.2K)
+- `cc-native/model-internals/`: emotion vectors (171), first-party interpretability index (21 publications)
+- `CONTRIBUTING.md`: cc-community vs non-cc classification, `platform_scope` frontmatter, doc standards (validated_links, status badge, Sources section)
 - `docs/learnings/`: cross-repo compound learnings hub
 
 ### Changed
 
-- Split `ci-execution/` (16 docs) into `sessions/` (4), `sandboxing/` (4), `ci-remote/` (8)
-- Rename `community/` → `cc-community/` (all docs are CC-scoped)
-- Move `CC-changelog-feature-scan.md`, `CC-inline-visuals-analysis.md` into `configuration/`
-- Move `analysis/`, `landscape/`, `best-practices/`, `research/` → `docs/todo/` (Agents-eval era, pending review)
-- Fix `sources:` in frontmatter → Sources section (9 docs)
-- Add Sources tables to 5 cc-community docs
-
-### Removed
-
-- `CC-context-caching-patterns.md`: FACT/Arcade.dev third-party pattern, not CC-native
-- `ci-execution/` directory (replaced by sessions/, sandboxing/, ci-remote/)
-
-- `docs/sdlc-lcm/`: SDLC phase spec, LCM product lifecycle spec, release runbook, OSS ALM landscape, agentic SDLC patterns, multi-agent onboarding outlook (PRs #51, #54)
-- `.github/README.md`: CI automation overview — monitors, scripts, state, triage pipeline
-- `.github/ISSUE_TEMPLATE/`: bug report, question, and config templates
-- Header comments on all 3 workflow YAMLs describing purpose and output
-
-### Changed
-
+- `CC-community-tooling-landscape.md`: `platform_scope` frontmatter, comparison table 10→13 tools
+- `CC-repo-to-docs-tools-landscape.md`: cross-references; link Graphify and Code-Review-Graph
+- `non-cc/README.md`: Infrastructure section (InsForge, GoClaw); expand Agents (Feynman, Hermes, Rowboat)
+- `README.md`: contents table with expanded non-cc and cc-community; concise entrypoint structure
+- `CC-community-skills-landscape.md`: claude-code-best-practice → 31.8K stars + A/C/S tag framework
+- `cc-native/`: session JSONL cost extraction (jq recipes, Opus 4.6 pricing); /rename bugs + 6 upstream issues; prompt caching (96.3% hit, 85% savings); CLAUDE_CODE_* env vars consolidated; 28 built-in tools snapshot (CC 2.1.83)
+- Restructure: split `ci-execution/` → `sessions/`/`sandboxing/`/`ci-remote/`; rename `community/` → `cc-community/`; move `analysis/landscape/best-practices/research/` → `docs/todo/`; `sources:` frontmatter → Sources section (9 docs); Sources tables on 5 cc-community docs
 - Renamed CABIO → RAPID across sdlc-lcm docs (PR #57)
+- CI: monitors `cc-status-monitor.yaml` inline PR creation, `outages.jsonl` as sole DB; upgrade `actions/checkout` v4→v6 + `setup-python` v5→v6
+- `PULL_REQUEST_TEMPLATE.md`: CI validation + security checklist
 
-### Changed
+### Fixed
 
-- `cc-status-monitor.yaml`: replace `create-triage-pr` with inline PR creation — no timestamped report copies, `outages.jsonl` as sole database
-- `cc-status-monitor.yaml`, `cc-changelog-monitor.yaml`, `cc-changelog-community-monitor.yaml`: upgrade `actions/checkout` v4→v6 and `actions/setup-python` v5→v6 (Node.js 24)
-- `PULL_REQUEST_TEMPLATE.md`: add CI validation and security checklist sections
-- `README.md`: simplify as concise entrypoint with why/what/how structure
+- `CC-repo-to-docs-tools-landscape.md`: typo `llmstxt` → `llms-txt`; markdownlint cleanup (PR #97)
+- `CC-changelog-feature-scan.md`: relative path fix; `docs.anthropic.com` → `code.claude.com` redirects (PR #97)
+- `CC-agent-teams-orchestration.md`: remove dead Aura Frog row; `docs.arize.com/phoenix` → `arize.com/docs/phoenix` (PR #97)
+- Permanent redirects: `agentskills.io`, `docs.insforge.dev` (PR #97)
 
 ### Removed
 
-- `triage/status-monitor/2026-03-18-status-report.md`: redundant timestamped copy of `outage-stats.md`
+- `CC-context-caching-patterns.md` (third-party FACT/Arcade.dev, not CC-native)
+- `ci-execution/` (replaced by sessions/sandboxing/ci-remote)
+- `docs/sdlc-lcm/`: SDLC/LCM specs, runbooks, OSS ALM landscape (PRs #51, #54)
+- `.github/README.md`, `.github/ISSUE_TEMPLATE/`, workflow YAML headers
+- `triage/status-monitor/2026-03-18-status-report.md`: redundant timestamped copy
 
 ---
 
