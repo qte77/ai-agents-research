@@ -45,6 +45,12 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
 | [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
 
+## Coding Models
+
+| Document | Type | Headless | Open Source |
+|---|---|---|---|
+| [devstral-analysis.md](devstral-analysis.md) | Mistral Devstral 2 (24B / 123B, agentic-first, 68.0–72.2% SWE-Bench Verified, 256k context, runs under OpenHands / Mistral Vibe / Claude Code) | Yes | Yes (Apache-2.0) |
+
 ## Protocols & Interfaces
 
 | Document | Scope |
