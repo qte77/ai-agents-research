@@ -15,7 +15,7 @@ Claude Code GitHub Actions ([`anthropics/claude-code-action@v1`][cc-action-repo]
 
 Built on the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview). Defaults to Sonnet; Opus 4.6 available via `--model claude-opus-4-6` ([source][cc-gha-docs]).
 
-The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. It requires read & write access to Contents, Issues, and Pull Requests ([source][cc-gha-docs]).
+The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. Publisher: Anthropic (@anthropics). Official tagline: *"Run Claude Code from your GitHub Pull Requests and Issues to respond to reviewer feedback, fix CI errors, or modify code, turning it into a virtual teammate that works alongside your development pipelines"* ([app page][claude-app]). Built on the publicly available [Claude Code SDK][agent-sdk] and provided as a third-party app (governed by separate terms beyond GitHub's). It requires read & write access to Contents, Issues, and Pull Requests ([setup.md][gha-setup]).
 
 ## Setup
 
@@ -326,6 +326,7 @@ A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-t
 
 [cc-gha-docs]: https://code.claude.com/docs/en/github-actions
 [claude-app]: https://github.com/apps/claude
+[agent-sdk]: https://platform.claude.com/docs/en/agent-sdk/overview
 [gha-setup]: https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md
 [gha-examples]: https://github.com/anthropics/claude-code-action/blob/main/examples/
 [gh-discussion-578]: https://github.com/anthropics/claude-code-action/discussions/578
