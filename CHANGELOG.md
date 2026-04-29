@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `.claude/settings.json`: `env.BASH_MAX_OUTPUT_LENGTH=15000` (default 30000) — CodeBurn rule #3, ~3.8K tokens/session saved on bash output cap
 - `CC-community-tooling-landscape.md`: `platform_scope` frontmatter, comparison table 10→13 tools
 - `CC-repo-to-docs-tools-landscape.md`: cross-references; link Graphify and Code-Review-Graph
 - `non-cc/README.md`: Infrastructure section (InsForge, GoClaw); expand Agents (Feynman, Hermes, Rowboat)
