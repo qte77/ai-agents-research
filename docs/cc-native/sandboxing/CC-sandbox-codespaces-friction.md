@@ -79,6 +79,9 @@ traffic.
 
 - [CC-sandboxing-analysis.md](CC-sandboxing-analysis.md) — full sandbox
   configuration reference with inline citations
+- [CC-sandbox-bwrap-host-quirks.md](CC-sandbox-bwrap-host-quirks.md) —
+  non-codespace bwrap leakage (phantom dotfiles, AppArmor prerequisite) on
+  local Linux/WSL2; reproduces in codespaces too
 - [CC-sandbox-platforms-landscape.md](CC-sandbox-platforms-landscape.md) —
   external sandbox platforms (E2B, OpenSandbox, gVisor)
 
