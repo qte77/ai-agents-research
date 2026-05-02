@@ -10,7 +10,7 @@ Thumbs.db
 # bwrap sandbox phantom files
 # Bug: $HOME-dotfile deny list resolved against process.cwd() leaks 0-byte
 # char-special /dev/null bind-mount targets into the project root. See
-# docs/cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md.
+# https://github.com/qte77/ai-agents-research/blob/main/docs/cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md
 # Tracked: anthropics/claude-code#17727, sandbox-runtime#139
 /.bash_profile
 /.bashrc
