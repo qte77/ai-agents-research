@@ -123,6 +123,24 @@ Upstream fix tracker: [`anthropic-experimental/sandbox-runtime#139`][sr-139].
 - Avoid project-scoped `.mcp.json` while bug is live — the phantom shadows
   any real config placed there.
 
+### What does NOT work (don't waste time on these)
+
+- **Editing `permissions.deny` or `sandbox.filesystem.denyRead`** — the
+  `$HOME`-dotfile deny list is built by an internal runtime function
+  (`Rx4`'s hardcoded `oiH` array per [poltimmer on #17727][gh-17727]),
+  not from user settings. There is nothing to remove.
+- **`submodule.recurse=false`** or other submodule git config — git probes
+  `.gitmodules` to discover submodules regardless of recurse settings, so
+  the `unable to access ... .gitmodules: Permission denied` warning during
+  `git fetch` persists.
+- **`touch .gitmodules`** (or any other affected file) to pre-create a real
+  file — bwrap mounts `/dev/null` over it during the session, and
+  cleanup-on-exit is best-effort and skipped when concurrent sandboxes are
+  active. Real content can be lost.
+
+The only working mitigations are gitignore (cosmetic), full sandbox disable,
+or waiting for [`sandbox-runtime#139`][sr-139].
+
 ### Version timeline
 
 | Version | Observation |
