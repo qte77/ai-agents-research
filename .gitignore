@@ -7,6 +7,33 @@ Thumbs.db
 .claude/scripts/
 .claude/skills/
 
+# bwrap sandbox phantom files
+# Bug: $HOME-dotfile deny list resolved against process.cwd() leaks 0-byte
+# char-special /dev/null bind-mount targets into the project root. See
+# docs/cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md.
+# Tracked: anthropics/claude-code#17727, sandbox-runtime#139
+/.bash_profile
+/.bashrc
+/.claude/agents
+/.claude/commands
+/.claude/skills
+/.gitconfig
+/.gitmodules
+/.idea
+/.mcp.json
+/.profile
+/.ripgreprc
+/.vscode
+/.zprofile
+/.zshrc
+# Git internals leaked by denyWithinAllow auto-generation dropping the
+# .git/ prefix — same root cause class
+/HEAD
+/config
+/hooks
+/objects
+/refs
+
 # Python artifacts
 __pycache__/
 *.pyc
