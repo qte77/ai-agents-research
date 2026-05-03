@@ -6,6 +6,9 @@ Thumbs.db
 .claude/scripts/
 .claude/skills/
 
+# Tooling caches (per-session artifacts, never tracked)
+.gh-cache/
+
 # bwrap sandbox phantom files
 # Bug: $HOME-dotfile deny list resolved against process.cwd() leaks 0-byte
 # char-special /dev/null bind-mount targets into the project root. See
@@ -16,6 +19,7 @@ Thumbs.db
 /.claude/agents
 /.claude/commands
 /.claude/skills
+/.env
 /.gitconfig
 /.gitmodules
 /.idea
