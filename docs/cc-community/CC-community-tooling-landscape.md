@@ -550,6 +550,22 @@ npm install -g codeburn
 npx codeburn
 ```
 
+### Optimization Rules
+
+`codeburn optimize` ranks findings by urgency and assigns a setup health grade (A–F) with new/improving/resolved tracking across a 48-hour window. Seven detection categories ([README][codeburn]):
+
+| # | Category | Typical waste | Remediation pattern |
+|---|---|---|---|
+| 1 | **Repeated file reads** | Same file re-read across sessions | Cite exact `file:lines` ranges in prompts |
+| 2 | **Low Read:Edit ratio** | <4 reads per edit → wasted retries | CLAUDE.md rule: "read before edit; grep callers before modifying" |
+| 3 | **Wasted bash output** | Uncapped `BASH_MAX_OUTPUT_LENGTH`, trailing noise | `export BASH_MAX_OUTPUT_LENGTH=15000` |
+| 4 | **Unused MCP servers** | Tool-schema overhead per session for unused servers | Disable servers in `~/.claude/settings.json` |
+| 5 | **Ghost agents/skills/slash commands** | Defined in `~/.claude/` but never invoked | Archive or delete dormant entries |
+| 6 | **Bloated configuration files** | Oversized `CLAUDE.md` (with `@-import` expansion counted) | Trim, hoist to skills, use progressive disclosure |
+| 7 | **Cache creation overhead** | Junk directory reads polluting cache | Add to `.gitignore` / exclude paths |
+
+Each finding ships with estimated token/dollar savings and copy-paste remediation steps (CLAUDE.md edits, environment variables, or file archival commands). No standalone docs site at the time of writing — taxonomy lives in the [README][codeburn].
+
 ### Key Differentiator
 
 Where RTK reduces tokens *entering* context and caveman compresses tokens *leaving* the assistant, **CodeBurn observes** what was actually spent — across agents, models, and projects. Complementary to both: optimization needs measurement. Local-first (no API keys, no telemetry) makes it usable in air-gapped or compliance-sensitive environments.

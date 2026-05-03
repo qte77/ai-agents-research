@@ -4,8 +4,8 @@ description: Analysis of the llms.txt standard, Anthropic's documentation surfac
 source: https://llmstxt.org/, https://platform.claude.com/llms.txt, https://code.claude.com/docs/llms.txt
 category: analysis
 created: 2026-03-07
-updated: 2026-03-08
-validated_links: 2026-03-12
+updated: 2026-04-26
+validated_links: 2026-04-26
 ---
 
 **Status**: Stable (spec analysis + 651-page Anthropic index + example project implementation)
@@ -184,10 +184,25 @@ A template file (e.g., `.github/templates/llms.txt.tpl`) holds curated markdown 
 - [ ] Add section for autonomous development loop documentation
 - [ ] Add blockquote summary (spec recommends it)
 
+## Pattern Adoption Beyond Product Docs
+
+The `llms.txt` / `llms-full.txt` pattern is spreading from product-doc sites into curated **resource catalogs**:
+
+- **[HuggingScience][hugscience]** (Hugging Face, 2026) — curated index of 100+ scientific datasets and models across 17 domains (Astronomy, Biology, Chemistry, Climate, Genomics, Medicine, etc.). Ships `/llms-full.txt` for bulk LLM ingestion alongside the human-browsable site. Covers domain-specific models like Evo-2, ESM2, FourCastNet 3, MedGemma, AstroCLIP. Demonstrates the pattern extending beyond software-product docs into curated scientific-resource indexes — directly relevant for agents doing literature/dataset/model discovery in scientific domains.
+
+This is a meaningful generalization of the spec's intent: the llms-full.txt artifact is no longer just a docs-site convention but a publishing format for curated knowledge bases consumable by agentic workflows.
+
 ## References
 
-- [llmstxt.org](https://llmstxt.org/) — specification
-- [platform.claude.com/llms.txt](https://platform.claude.com/llms.txt) — API docs index
-- [platform.claude.com/llms-full.txt](https://platform.claude.com/llms-full.txt) — full API docs
-- [code.claude.com/docs/llms.txt](https://code.claude.com/docs/llms.txt) — CC docs index
+- [llmstxt.org][llmstxt-spec] — specification
+- [platform.claude.com/llms.txt][platform-llms] — API docs index
+- [platform.claude.com/llms-full.txt][platform-llms-full] — full API docs
+- [code.claude.com/docs/llms.txt][code-llms] — CC docs index
+- [HuggingScience][hugscience] — curated AI-for-science catalog with `/llms-full.txt`
 - `llms_txt2ctx` — CLI tool to expand llms.txt into a flat context file
+
+[llmstxt-spec]: https://llmstxt.org/
+[platform-llms]: https://platform.claude.com/llms.txt
+[platform-llms-full]: https://platform.claude.com/llms-full.txt
+[code-llms]: https://code.claude.com/docs/llms.txt
+[hugscience]: https://huggingscience.co/
