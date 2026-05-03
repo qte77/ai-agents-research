@@ -9,6 +9,9 @@ Thumbs.db
 # Tooling caches (per-session artifacts, never tracked)
 .gh-cache/
 
+# Local-only auto-memory (per-clone working scratchpad, not shared)
+/MEMORY.md
+
 # bwrap sandbox phantom files
 # Bug: $HOME-dotfile deny list resolved against process.cwd() leaks 0-byte
 # char-special /dev/null bind-mount targets into the project root. See
