@@ -38,8 +38,11 @@ exclude = [
     "substack.com",
     "blog.jetbrains.com",
     "neptune.ai",
-    # Auth-gated (requires login)
-    "claude.ai/code/scheduled",
+    # Auth-gated (requires login) — both `/code` and `/code/scheduled` and `/settings/*` return 403 to anonymous requests
+    "claude.ai/code",
+    "claude.ai/settings",
+    # HF Space outage 2026-04 — re-check periodically; underlying paper is still cited in autoagent-analysis.md
+    "gaia-benchmark-leaderboard.hf.space",
     # Timeout-prone marketing sites (heavy JS homepages or JS-rendered)
     "agentskills.io",
     "e2b.dev",

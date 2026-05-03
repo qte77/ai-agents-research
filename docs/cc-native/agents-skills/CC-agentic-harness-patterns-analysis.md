@@ -94,7 +94,7 @@ Shell commands fire automatically at specific agent lifecycle points, outside th
 
 ## Author
 
-[Bilgin Ibryam](https://www.linkedin.com/in/bibryam/) -- Principal PM at Diagrid (Dapr). Apache Software Foundation Member. Previously 9 years at Red Hat, before that BBC News. Author of *Kubernetes Patterns* (O'Reilly, 2nd ed. 2023), *Camel Design Patterns*, and the new [Prompt Patterns](https://www.promptpatterns.dev/) catalog.
+[Bilgin Ibryam](https://github.com/bibryam) -- Principal PM at Diagrid (Dapr). Apache Software Foundation Member. Previously 9 years at Red Hat, before that BBC News. Author of *Kubernetes Patterns* (O'Reilly, 2nd ed. 2023), *Camel Design Patterns*, and the new [Prompt Patterns](https://www.promptpatterns.dev/) catalog.
 
 Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt patterns -> Agentic harness patterns.
 
