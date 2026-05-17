@@ -4,8 +4,8 @@ description: bwrap-on-Linux friction independent of execution context (local, WS
 source: https://github.com/anthropics/claude-code/issues/17727, https://github.com/anthropics/claude-code/issues/17087, https://github.com/anthropic-experimental/sandbox-runtime/issues/139
 category: analysis
 created: 2026-05-02
-updated: 2026-05-02
-validated_links: 2026-05-02
+updated: 2026-05-17
+validated_links: 2026-05-17
 ---
 
 **Status**: Active upstream bug — `claude-code#17727` open; `claude-code#17087` closed-as-completed but recurring; `sandbox-runtime#139` is the upstream fix tracker.
@@ -193,6 +193,108 @@ and Claude Code starts cleanly.
 
 Hard startup-blocker as of v2.1.120 — first-time Ubuntu 24.04 users hit a
 wall with no actionable error message. Tracking: [#17727][gh-17727].
+
+## Friction 3 — Bind-Mount-Held Files Block `git unlink`
+
+### Symptom
+
+`git switch`, `git restore`, `git pull --ff-only`, and `gh pr merge` (which
+runs `git pull` internally) fail with:
+
+```text
+error: unable to unlink old 'CHANGELOG.md': Device or resource busy
+error: unable to unlink old 'README.md': Device or resource busy
+error: unable to unlink old 'Makefile': Device or resource busy
+```
+
+Server-side `gh pr merge` succeeds (`origin/main` advances), but the
+local-side `git pull` aborts mid-flight — leaving the local branch behind
+origin and the working tree partially stale.
+
+### Affected files (project-dependent)
+
+The set is stable per project but varies across projects. Observed:
+
+- **`qte77/analyze-stock-kpi`**: `CHANGELOG.md`, `README.md`, `pyproject.toml`, `Makefile`
+- **`qte77/ai-agents-research`**: `.claude/settings.json`, `Makefile`, `README.md`
+
+Pattern: project-root config/context files CC reads at session start.
+Distinct symptom class from Friction 1 — that one *creates* extra files;
+this one makes *existing* files temporarily un-`unlink(2)`-able.
+
+### Root cause
+
+Related bug class to Friction 1 ([`claude-code#17727`][gh-17727]). Open file
+descriptors against the sandbox's bind-mount targets block `unlink(2)`,
+which is what git calls on every checkout/restore to swap file content.
+Cleanup is best-effort and skipped while other sandboxes are active.
+Distinct from Friction 1's `--ro-bind /dev/null` phantom-creation: here the
+bind-mount holds real files open via fd.
+
+### Side effects
+
+- After `git switch <branch>`: HEAD ref moves but busy files stay at the
+  prior branch's content. `git status` reports them "Modified" on a
+  freshly-switched branch — confusing.
+- After `gh pr merge --delete-branch`: server-side merge completes,
+  `origin/<branch>` advances, but the local `git pull` step inside `gh`
+  aborts. Local main desyncs from origin.
+- Subagents launched mid-session inherit the sandbox state — they see the
+  same busy-lock.
+
+### Recovery workaround
+
+```bash
+# 1. Ensure remote ref is current
+git fetch origin
+
+# 2. Move local branch pointer to remote without touching working tree
+git update-ref refs/heads/main refs/remotes/origin/main
+
+# 3. Refresh the index from new HEAD (working tree untouched)
+git reset HEAD -- .
+
+# 4. Restore files NOT on the busy list (normal git path)
+git restore <unlocked-files>
+
+# 5. For files ON the busy list: overwrite in place via Claude Code's
+#    Edit/Write tool. open(O_WRONLY|O_TRUNC) bypasses unlink(2), so the
+#    bind-mount lock doesn't block it. Source the desired content via:
+git show HEAD:<file> > "$TMPDIR/<file>.head"
+#    Then Edit the working-tree file to match.
+```
+
+### Data-safety guards
+
+- **Pre-flight**: `git rev-parse HEAD origin/main` — confirm the SHA you're
+  about to `update-ref` to is what you want. The SHA the server reported on
+  the merge is the truth source.
+- **WIP detection**: `git diff HEAD -- <busy-files>` before any step. If the
+  diff is only stale-branch leftovers, proceed. If it shows pending edits
+  you care about, stage them first via `git add` (index updates bypass the
+  unlink lock).
+- **Source from HEAD, not working tree**: when overwriting via Edit/Write,
+  dump `git show HEAD:<file> > $TMPDIR/<file>.head` and eyeball before
+  applying. The stuck working-tree copy is, by definition, stale.
+- **Recovery net**: `git reflog` records every `update-ref` for 90 days;
+  objects persist until `gc`. Mistakes are reversible.
+
+### What does NOT work
+
+- `git restore <busy-file>` — hits the same `unlink(2)` path.
+- `git checkout -- <busy-file>` — same.
+- `git reset --hard` — same, with worse failure mode: partial reset state
+  plus the unlink error.
+- `git update-index --skip-worktree <busy-file> && git restore` — `restore`
+  still tries to `unlink` before `skip-worktree` takes effect.
+- `rm -f <busy-file>` from inside the sandbox — same unlink failure. Only
+  `rm` from a non-sandboxed shell works.
+
+### Version timeline
+
+| Version | Observation |
+| ------- | ----------- |
+| 2.1.123 — 2.1.127 (2026-05) | Reproduces on Fedora 43 across multiple PR-merge cycles in `qte77/analyze-stock-kpi` and `qte77/ai-agents-research` |
 
 ## See Also
 
