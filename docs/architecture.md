@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-03-27
+updated: 2026-05-25
 ---
 
 ## Architecture: ai-agents-research
@@ -17,38 +17,32 @@ This is a research-only repository — no code, only structured markdown documen
 ```text
 ai-agents-research/
 ├── docs/
-│   ├── cc-native/          # Anthropic-native CC features
-│   │   ├── agents-skills/  # Agent spawning, skills, orchestration patterns
-│   │   ├── architecture/   # CC internals and system design analyses
-│   │   ├── changelog-triage/ # Per-release feature breakdowns
-│   │   ├── sessions/       # Session lifecycle, cost, keepalive, headless
-│   │   ├── sandboxing/     # Sandbox internals, platforms, permissions
-│   │   ├── ci-remote/      # GHA, cloud sessions, remote access, web auth
-│   │   ├── comparisons/    # Cross-agent and cross-feature comparisons
-│   │   ├── configuration/  # Hooks, fast mode, model/provider config
-│   │   ├── features/       # Discrete feature analyses
-│   │   ├── meta/           # Research methodology, scope, coverage tracking
+│   ├── cc-native/             # Anthropic-native CC features
+│   │   ├── agents-skills/     # Agent spawning, skills, orchestration patterns
+│   │   ├── ci-remote/         # GHA, cloud sessions, remote access, web auth
+│   │   ├── configuration/     # Hooks, fast mode, model/provider config, CLI ref
+│   │   ├── context-memory/    # Extended context, memory system, llms.txt
+│   │   ├── examples/          # Worked examples and reference workflows
+│   │   ├── model-internals/   # Model-level interpretability research
 │   │   ├── plugins-ecosystem/ # Official plugins, community plugins, cowork API
-│   │   ├── context-memory/ # Extended context, memory system, llms.txt
-│   │   └── session-analysis/ # Session artifacts, trace schemas, OTEL
-│   ├── non-cc/             # Non-CC coding agents
-│   │   ├── air/            # JetBrains AI Assistant / Air analysis
-│   │   └── devteam/        # agent-era/devteam analysis
-│   ├── sdlc-lcm/           # SDLC + product lifecycle management specs
-│   ├── analysis/           # Evaluation analysis (benchmarks, security, adoption)
-│   ├── landscape/          # Evaluation landscape (metrics, frameworks, data)
-│   ├── best-practices/     # MAS design principles and security
-│   ├── research/           # 263+ research papers and convergence analysis
-│   ├── community/          # Community resources
-│   └── learnings/          # Cross-repo compound learnings hub (CRLA write-back target)
-│       └── per-repo/       # Per-repo pattern distillations
-│                           # Skills, plugins, tooling, CLAUDE.md patterns
-├── triage/                 # Auto-generated monitor outputs (at repo root)
-│   ├── outage-archive/     # CC status page incident archive
-│   ├── changelog-triage/   # CC changelog triage outputs
-│   └── community-triage/   # Community content triage outputs
+│   │   ├── sandboxing/        # Sandbox internals (bwrap, platforms, permissions)
+│   │   └── sessions/          # Session lifecycle, artifacts, schemas
+│   ├── cc-community/          # Community skills, tooling, CLAUDE.md patterns
+│   ├── non-cc/                # Non-CC coding agents (JetBrains Air, DeerFlow, Goose, ...)
+│   ├── sdlc-lcm/              # SDLC + product lifecycle management specs
+│   ├── learnings/             # Cross-repo compound learnings hub (CRLA write-back target)
+│   │   └── per-repo/          # Per-repo pattern distillations
+│   └── archive/               # Retired Agents-eval era docs
+├── triage/                    # Auto-generated monitor outputs (at repo root)
+│   ├── cc-changelog/          # CC changelog + native-sources triage
+│   ├── community/             # Community-sources triage
+│   ├── status-monitor/        # CC status page incident archive + stats
+│   └── rxiv/                  # ArXiv paper eval triage (filtered by RXIV_TOPIC)
 └── .github/
-    └── workflows/          # 3 automated monitor cron jobs
+    ├── workflows/             # 4 monitor cron jobs + lint workflow
+    ├── actions/               # Composite actions (create-triage-pr)
+    ├── scripts/               # Monitor scripts + shared lib/monitor_utils.py
+    └── state/                 # Per-monitor fingerprint files (committed)
 ```
 
 ## Analysis Format Convention
@@ -79,15 +73,28 @@ Optional fields: `category`, `version`, `tags`, `source`.
 
 ## Automated Monitors
 
-Three GitHub Actions cron workflows maintain currency by polling external sources and opening triage PRs when new content is found:
+Four GitHub Actions cron workflows maintain currency by polling external sources and opening triage PRs when new content is found:
 
-| Monitor | Source | Output |
+| Monitor | Source | Output | Schedule |
+|---|---|---|---|
+| CC status monitor | Anthropic status page | `triage/status-monitor/` | Monday 09:00 UTC |
+| CC changelog + native sources | CC release notes + GH issues/discussions + Anthropic blog | `triage/cc-changelog/` | Monday 09:00 UTC |
+| Community monitor | Community forums, GitHub | `triage/community/` | Monday 10:00 UTC |
+| ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → LLM relevance filter | `triage/rxiv/` | Tuesday 09:00 UTC |
+
+Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key. See [`.github/README.md`](../.github/README.md) for monitor configuration details.
+
+## Lint Gate
+
+Three lint jobs run on every PR touching docs, workflows, or actions:
+
+| Job | Tool | Scope |
 |---|---|---|
-| CC status monitor | Anthropic status page | `triage/outage-archive/` |
-| CC changelog monitor | CC release notes / changelog | `triage/changelog-triage/` |
-| Community monitor | Community forums, GitHub | `triage/community-triage/` |
+| Markdown lint | `markdownlint-cli2` | `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `docs/**/*.md` |
+| Link check | `lychee` | repo-wide (configured via `lychee.toml`) |
+| Action lint | `actionlint` (+ `shellcheck` on the runner) | `.github/workflows/**`, `.github/actions/**` |
 
-See [`.github/README.md`](../.github/README.md) for monitor configuration details.
+The rxiv triage job additionally runs `markdownlint-cli2` against the assembled would-be PR content (with the action's H1 prepend simulated) and fails the job before opening a triage PR if the output is md-dirty.
 
 ## Downstream Consumers
 

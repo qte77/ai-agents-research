@@ -3,7 +3,7 @@ title: User Story - ai-agents-research
 description: User stories for systematic coding agent research, comparison, and feature triage
 category: requirements
 created: 2026-03-22
-updated: 2026-03-22
+updated: 2026-05-25
 version: 1.0.0
 ---
 
@@ -27,6 +27,7 @@ Maintain a living knowledge base of coding agent capabilities, CC internals, and
 - As a researcher, I want to triage CC changelog entries for new features so that I can identify evaluation-relevant changes quickly.
 - As a researcher, I want to update the feature comparison matrix so that cross-agent capability differences are visible at a glance.
 - As a researcher, I want to document CC session artifacts and orchestration patterns so that downstream repos (cc-recursive-team-mode, coding-agent-eval) have accurate reference material.
+- As a researcher, I want weekly ArXiv preprints filtered by an AI-agent relevance prompt so that I see only papers worth promoting to `docs/` without manually scanning the firehose.
 
 ## Success Criteria
 
@@ -40,7 +41,7 @@ Maintain a living knowledge base of coding agent capabilities, CC internals, and
 - Markdown-only (no code implementation)
 - Follows existing doc hierarchy (cc-native/, non-cc/, community/, triage/)
 - Analysis format: What it is → How it works → Adoption decision → Action items
-- Three automated monitors maintain currency via GitHub Actions
+- Four automated monitors maintain currency via GitHub Actions (CC status, CC changelog + native sources, community, ArXiv paper eval)
 
 ## Out of Scope
 

@@ -9,17 +9,18 @@ endif
 .SILENT:
 .ONESHELL:
 .PHONY: \
-	setup_node setup_lychee setup_mdlint setup_skills setup_all \
-	check_links check_docs autofix lint \
+	setup_node setup_lychee setup_mdlint setup_actionlint setup_skills setup_all \
+	check_links check_docs check_actions autofix lint \
 	help
 .DEFAULT_GOAL := help
 
 
 # -- config --
-NODE_VERSION ?= 22.11.0
-NODE_DIR     := $(HOME)/.local/share/node
-NODE_BIN     := $(NODE_DIR)/bin
-LOCAL_BIN    := $(HOME)/.local/bin
+NODE_VERSION       ?= 22.11.0
+ACTIONLINT_VERSION ?= 1.7.12
+NODE_DIR           := $(HOME)/.local/share/node
+NODE_BIN           := $(NODE_DIR)/bin
+LOCAL_BIN          := $(HOME)/.local/bin
 
 # -- OS / arch detection --
 UNAME_S := $(shell uname -s)
@@ -127,6 +128,33 @@ setup_mdlint: setup_node ## Install markdownlint-cli2 via user-local npm (no sud
 		fi
 	fi
 
+setup_actionlint: ## Install actionlint user-locally to ~/.local/bin (no sudo)
+	if command -v actionlint > /dev/null 2>&1; then
+		echo "actionlint already installed: $$(actionlint -version | head -1)"
+	else
+		case "$(UNAME_S)" in \
+		Linux) ACTIONLINT_OS="linux" ;; \
+		Darwin) ACTIONLINT_OS="darwin" ;; \
+		*) echo "ERROR: unsupported OS for actionlint binary"; exit 1 ;; \
+		esac
+		case "$(UNAME_M)" in \
+		x86_64) ACTIONLINT_ARCH="amd64" ;; \
+		aarch64|arm64) ACTIONLINT_ARCH="arm64" ;; \
+		*) echo "ERROR: unsupported arch for actionlint binary"; exit 1 ;; \
+		esac
+		echo "Installing actionlint $(ACTIONLINT_VERSION) ($$ACTIONLINT_OS/$$ACTIONLINT_ARCH) to $(LOCAL_BIN) ..."
+		mkdir -p $(LOCAL_BIN)
+		# Tarball contains the binary at the root (no wrapper dir) — single
+		# extract step. Mirror lychee's mktemp + install -m 755 hygiene.
+		tmp=$$(mktemp -d) \
+			&& curl -sSfL "https://github.com/rhysd/actionlint/releases/download/v$(ACTIONLINT_VERSION)/actionlint_$(ACTIONLINT_VERSION)_$${ACTIONLINT_OS}_$${ACTIONLINT_ARCH}.tar.gz" \
+				| tar xz -C "$$tmp" \
+			&& install -m 755 "$$tmp/actionlint" $(LOCAL_BIN)/actionlint \
+			&& rm -rf "$$tmp" \
+			&& echo "actionlint installed to $(LOCAL_BIN)/actionlint — ensure $(LOCAL_BIN) is on PATH" \
+			|| { rm -rf "$$tmp"; echo "Install failed — download manually from https://github.com/rhysd/actionlint/releases"; exit 1; }
+	fi
+
 setup_skills: ## Clone claude-code-plugins (if missing) and symlink its skills into .claude/skills (gitignored; zero sudo)
 	if [ ! -d "$(UTILS_PLUGIN_DIR)/.git" ]; then
 		echo "Cloning $(UTILS_PLUGIN_URL) to $(UTILS_PLUGIN_DIR) ..."
@@ -156,7 +184,7 @@ setup_skills: ## Clone claude-code-plugins (if missing) and symlink its skills i
 		fi
 	done
 
-setup_all: setup_lychee setup_mdlint ## Install all tooling (lychee + node + markdownlint-cli2)
+setup_all: setup_lychee setup_mdlint setup_actionlint ## Install all tooling (lychee + node + markdownlint-cli2 + actionlint)
 
 
 # MARK: DEV
@@ -193,7 +221,15 @@ autofix: ## Auto-fix markdown lint issues (markdownlint --fix)
 		exit 1
 	fi
 
-lint: check_links check_docs ## Run all linters (links + markdown)
+check_actions: ## Lint GitHub Actions workflows + composite actions
+	export PATH="$(LOCAL_BIN):$$PATH"
+	if ! command -v actionlint > /dev/null 2>&1; then
+		echo "actionlint not installed — run: make setup_actionlint"
+		exit 1
+	fi
+	actionlint -color
+
+lint: check_links check_docs check_actions ## Run all linters (links + markdown + actions)
 
 
 # MARK: HELP

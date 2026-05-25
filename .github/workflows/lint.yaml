@@ -10,7 +10,8 @@ on:
       - '.markdownlint.json'
       - 'lychee.toml'
       - 'Makefile'
-      - '.github/workflows/lint.yaml'
+      - '.github/workflows/**'
+      - '.github/actions/**'
   pull_request:
     branches: [main]
     paths:
@@ -18,7 +19,8 @@ on:
       - '.markdownlint.json'
       - 'lychee.toml'
       - 'Makefile'
-      - '.github/workflows/lint.yaml'
+      - '.github/workflows/**'
+      - '.github/actions/**'
   workflow_dispatch:
 
 permissions:
@@ -60,3 +62,15 @@ jobs:
 
       - name: Run lychee
         run: make check_links
+
+  actions:
+    name: Action lint (actionlint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install actionlint
+        run: make setup_actionlint
+
+      - name: Run actionlint
+        run: make check_actions
