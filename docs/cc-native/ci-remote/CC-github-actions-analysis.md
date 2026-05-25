@@ -1,10 +1,10 @@
 ---
 title: CC GitHub Actions — claude-code-action & Claude GitHub App
-source: https://code.claude.com/docs/en/github-actions, https://github.com/apps/claude, https://github.com/anthropics/claude-code-action/discussions/578, https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
+source: https://code.claude.com/docs/en/github-actions, https://github.com/apps/claude, https://github.com/anthropics/claude-code-action/blob/main/action.yml, https://github.com/anthropics/claude-code-action/discussions/578, https://code.claude.com/docs/en/amazon-bedrock, https://code.claude.com/docs/en/google-vertex-ai, https://code.claude.com/docs/en/microsoft-foundry, https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
 purpose: Evaluate Claude Code GitHub Actions for PR automation, code review, issue triage, and scheduled workflows — setup, capabilities, limitations, and cost.
 created: 2026-03-12
-updated: 2026-04-06
-validated_links: 2026-03-12
+updated: 2026-05-25
+validated_links: 2026-05-25
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -15,7 +15,28 @@ Claude Code GitHub Actions (`anthropics/claude-code-action@v1`) brings AI-powere
 
 Built on the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview). Defaults to Sonnet; Opus 4.6 available via `--model claude-opus-4-6` ([source][cc-gha-docs]).
 
-The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. It requires read & write access to Contents, Issues, and Pull Requests ([source][cc-gha-docs]).
+The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. The full permission surface is documented in [GitHub App Permission Surface](#github-app-permission-surface) below.
+
+## GitHub App Permission Surface
+
+`gh api /apps/claude` (live, 2026-05-18) returns 10 permission scopes:
+
+| Scope | Access | Notable |
+|---|---|---|
+| `actions` | read | — |
+| `checks` | write | — |
+| `contents` | write | modify any repo file |
+| `discussions` | write | — |
+| `issues` | write | — |
+| `members` | read | — |
+| `metadata` | read | — |
+| `pull_requests` | write | — |
+| `repository_hooks` | write | manage webhooks |
+| `workflows` | write | modify GHA workflows themselves |
+
+Not a vulnerability — by design for `claude-code-action`'s code-write flows. The implication for downstream design: any caller using `apps/claude` as a `GH_TOKEN` source grants all 10 scopes to the App, even if the workflow only posts comments. Per-repo permissions can be restricted at App installation time, but the App's *available* surface remains the full set.
+
+The App identity (`claude[bot]`) is honest only because `claude-code-action` is Claude-only across every auth path (see [Auth Path Constraints](#auth-path-constraints)). Reusing the App for an arbitrary multi-LLM workflow breaks that identity guarantee.
 
 ## Setup
 
@@ -148,6 +169,26 @@ claude_args: "--max-turns 5 --model claude-sonnet-4-6 --mcp-config /path/to/conf
 | `claude_env` | `settings` JSON format |
 
 ([source][cc-gha-docs])
+
+## Auth Path Constraints
+
+`anthropics/claude-code-action`'s `action.yml` defines exactly 5 auth inputs (verified at `@main`). All 5 paths route to Claude — there is no model-shopping capability.
+
+| Input | Auths to | Model | Env var |
+|---|---|---|---|
+| `anthropic_api_key` | Anthropic API | Claude | — |
+| `claude_code_oauth_token` | Anthropic OAuth | Claude | — |
+| `use_bedrock: true` | AWS Bedrock | Claude (served via Bedrock) | `CLAUDE_CODE_USE_BEDROCK=1` |
+| `use_vertex: true` | GCP Vertex AI | Claude (served via Vertex) | `CLAUDE_CODE_USE_VERTEX=1` |
+| `use_foundry: true` | Microsoft Foundry | Claude (served via Foundry) | `CLAUDE_CODE_USE_FOUNDRY=1` |
+
+**Common misreading**: `use_bedrock: true` does *not* enable "any model from Bedrock." Bedrock, Vertex, and Foundry are billing/hosting layers; model selection is constrained to Claude variants the hyperscaler ships. Default model IDs per first-party docs:
+
+- **Bedrock**: `us.anthropic.claude-sonnet-4-5-20250929-v1:0` ([source][cc-bedrock])
+- **Vertex**: `claude-sonnet-4-5@20250929` ([source][cc-vertex])
+- **Foundry**: `claude-opus-4-7`, `claude-sonnet-4-6`, `claude-haiku-4-5` ([source][cc-foundry])
+
+The Mantle endpoint (Bedrock-served Claude via Anthropic-native API shape) reaches the same conclusion via a different transport — still Claude.
 
 ## Enterprise: AWS Bedrock & Google Vertex AI
 
@@ -283,6 +324,9 @@ A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-t
 
 [cc-gha-docs]: https://code.claude.com/docs/en/github-actions
 [claude-app]: https://github.com/apps/claude
+[cc-bedrock]: https://code.claude.com/docs/en/amazon-bedrock
+[cc-vertex]: https://code.claude.com/docs/en/google-vertex-ai
+[cc-foundry]: https://code.claude.com/docs/en/microsoft-foundry
 [gh-discussion-578]: https://github.com/anthropics/claude-code-action/discussions/578
 [dev-to-pr]: https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
 [gh-larger-runners]: https://docs.github.com/en/actions/concepts/runners/larger-runners
