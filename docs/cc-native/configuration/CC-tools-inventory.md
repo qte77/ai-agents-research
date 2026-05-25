@@ -73,6 +73,16 @@ CC 2.1.83 ships 28 built-in tools. This is a categorized snapshot linking to the
 | `ReadMcpResourceTool` | No | Read MCP resource by URI |
 | `ToolSearch` | No | Search/load deferred tools (MCP tool search) |
 
+#### `WebFetch` behavior notes
+
+First-party-documented behaviors that researchers should know before relying on `WebFetch`:
+
+- **Minimal schema, no header customization.** The tool takes only `url` and `prompt` — there is no parameter for `User-Agent`, `Accept`, `Accept-Language`, or `Referer`. The permission specifier is `WebFetch(domain:...)` only ([permissions][permissions]).
+- **Cross-host redirects do not auto-follow.** When a fetched URL redirects to a different host, `WebFetch` returns the redirect target in a special format and asks the caller to issue a new `WebFetch` request — protecting against unintended cross-domain fetches without an explicit re-confirmation.
+- **GitHub URLs: prefer the `gh` CLI.** The tool's own description explicitly recommends `gh` CLI (`gh pr view`, `gh issue view`, `gh api`) for GitHub content — the API surface returns richer, structured data than HTML scraping.
+- **Two caches, not one.** A ~15-minute self-cleaning **content cache** is documented in the tool's Anthropic-authored description (per-URL, holds fetched body). A separate **5-minute per-hostname safety-preflight cache** is documented in [data-usage][data-usage] (caches domain-allow decisions, not content). Don't conflate them when reasoning about cache hits.
+- **Default User-Agent and bot-block behavior** — open question; tracked in [#188](https://github.com/qte77/ai-agents-research/issues/188).
+
 ### Other
 
 | Tool | Permission | Purpose |
@@ -274,6 +284,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
 [settings]: https://code.claude.com/docs/en/settings
 [permissions]: https://code.claude.com/docs/en/permissions#tool-specific-permission-rules
+[data-usage]: https://code.claude.com/docs/en/data-usage
 [vs-code]: https://code.claude.com/docs/en/vs-code
 [fast-mode]: https://code.claude.com/docs/en/fast-mode
 [mcp-docs]: https://code.claude.com/docs/en/mcp

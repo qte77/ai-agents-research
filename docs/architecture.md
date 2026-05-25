@@ -82,7 +82,7 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 | Community monitor | Community forums, GitHub | `triage/community/` | Monday 10:00 UTC |
 | ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → LLM relevance filter | `triage/rxiv/` | Tuesday 09:00 UTC |
 
-Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key. See [`.github/README.md`](../.github/README.md) for monitor configuration details.
+Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key.
 
 ## Lint Gate
 
