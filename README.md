@@ -24,21 +24,30 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 | [`docs/archive/`](docs/archive/) | Agents-eval era docs retained for reference (frameworks/infrastructure, evaluation/data resources, further reading, adoption plans) |
 | [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
 | [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage, rxiv paper triage |
-| [`.github/`](.github/README.md) | CI automation: monitors, scripts, templates — see [.github/README.md](.github/README.md) |
+| [`.github/`](.github/) | Monitor workflows, scripts, composite actions, state files |
 
 ## How it stays current
 
-Four automated monitors poll external sources on cron and open triage PRs when new content is found: CC status (outages), CC changelog (new feature releases), community sources, and ArXiv preprint feeds filtered by the AI-agent relevance prompt in `vars.RXIV_TOPIC`. See [`.github/README.md`](.github/README.md) for details.
+Four cron-driven monitors open triage PRs against this repo whenever upstream content changes:
+
+| Monitor | Source | Schedule | Output |
+|---|---|---|---|
+| CC status | Anthropic status page | Mon 09:00 UTC | `triage/status-monitor/` |
+| CC changelog + native sources | CC release notes + GitHub issues/discussions + Anthropic blog | Mon 09:00 UTC | `triage/cc-changelog/` |
+| Community | claudelog, awesome-* repos, Reddit, X | Mon 10:00 UTC | `triage/community/` |
+| ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSV → LLM relevance filter | Tue 09:00 UTC | `triage/rxiv/` |
+
+Each monitor fingerprints its output and skips PR creation when content hasn't changed since the last emission. See [`docs/architecture.md`](docs/architecture.md) for the full pipeline.
 
 ## Local development
 
-Doc linting is wired into a `Makefile` that installs everything user-locally with zero sudo:
+`Makefile` installs all tooling user-locally with zero sudo (`~/.local/bin`):
 
 ```bash
-make setup_all   # install lychee, Node.js, markdownlint-cli2 under ~/.local
-make lint        # run both link checker (lychee) and markdown linter
+make setup_all   # lychee + Node.js + markdownlint-cli2 + actionlint
+make lint        # link check (lychee) + markdown (markdownlint-cli2) + action (actionlint)
 make autofix     # mechanical markdownlint --fix pass
-make help        # show all recipes grouped by section
+make help        # all recipes grouped by section
 ```
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for document standards and [`CHANGELOG.md`](CHANGELOG.md) for release history.
