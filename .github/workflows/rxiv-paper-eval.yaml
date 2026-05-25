@@ -89,12 +89,13 @@ jobs:
       - name: Assemble triage report
         run: |
           set -euo pipefail
-          # Strip eval's own leading H1 — create-triage-pr prepends its own
-          # `# <pr-body-header>` so keeping the inner H1 would violate MD025
-          # (multiple top-level headings). Demote any other H1s in the body
-          # to H2 as a belt-and-suspenders guard.
+          # Strip eval's own leading H1 (create-triage-pr prepends its own,
+          # would violate MD025) and any leading blank lines that would
+          # collide with the action's prepend (MD012 — double blank).
+          # Demote in-body H1s to H2 as a belt-and-suspenders guard.
           {
-            sed -E '1{/^# /d;}; s/^# (.*)$/## \1/' eval-output/summary.md
+            sed -E '1{/^# /d;}; s/^# (.*)$/## \1/' eval-output/summary.md \
+              | sed '/./,$!d'
             echo ""
             echo "## Extracts"
             echo ""
@@ -105,7 +106,10 @@ jobs:
                   continue
               d = json.loads(line)
               ex = d.get("extracted", {})
+              # Blank line below heading and around lists is required
+              # (MD022 / MD032).
               print(f"### {d.get('title', '(no title)')}")
+              print()
               doi = d.get("doi", "")
               if doi:
                   print(f"- arxiv: <https://arxiv.org/abs/{doi}>")
@@ -118,6 +122,10 @@ jobs:
               print()
           PY
           } > /tmp/report.md
+          # Collapse runs of blank lines to one (MD012) and trim leading/
+          # trailing blanks so the action's prepend produces clean output.
+          awk 'BEGIN{blank=0;started=0} /^$/{blank=1;next} {if(started&&blank)print ""; started=1; blank=0; print}' /tmp/report.md > /tmp/report.md.clean
+          mv /tmp/report.md.clean /tmp/report.md
 
       - name: Lint assembled report
         # Simulate create-triage-pr's H1 prepend then lint with the repo's
