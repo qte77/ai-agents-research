@@ -155,6 +155,7 @@ setup_all: setup_lychee setup_mdlint ## Install all tooling (lychee + node + mar
 
 
 check_links: ## Check links with lychee
+	export PATH="$(LOCAL_BIN):$$PATH"
 	if ! command -v lychee > /dev/null 2>&1; then
 		echo "lychee not installed — run: make setup_lychee"
 		exit 1
