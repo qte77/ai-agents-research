@@ -270,7 +270,7 @@ def generate_report(records: list[dict]) -> str:
 
     if not records:
         lines.append("No incidents recorded yet.")
-        return "\n".join(lines)
+        return "\n".join(lines).rstrip("\n")
 
     resolved, all_starts, durations = _extract_timing(records)
     comp_counts, comp_durations = _build_component_data(records)
@@ -283,7 +283,7 @@ def generate_report(records: list[dict]) -> str:
     lines += _section_time_distributions(all_starts)
     lines += _section_uptime(all_starts, durations, comp_durations)
 
-    return "\n".join(lines)
+    return "\n".join(lines).rstrip("\n")
 
 
 def main() -> None:

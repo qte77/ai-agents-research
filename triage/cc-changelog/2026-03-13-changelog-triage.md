@@ -1,3 +1,5 @@
+# CC Changelog & Native Sources Triage
+
 ## Changelog Monitor Report
 
 Last scanned version: **2.1.71**
@@ -238,87 +240,33 @@ Sources checked: **3**
 
 | Entry | Section | Description |
 |-------|---------|-------------|
-| [FEATURE] Ephemeral/Fresh Start Mode for Claude Code | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] Web UI with multi-project support | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] ctrl+o should keep the scroll position centered wh | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] 今できる正直な提案：    この問題はAnthropicへのフィードバックとして送る価値があります。 | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] /feedback REMARKS-ONLY | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] OS Keychain/Credential Manager Support for MCP Con | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] /btw within AskUserQuestion flow | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] /fyi to inform Claude for its running job | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] Collapse MCP tools by server in /context view | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [BUG/Question] Should  scheduled_tasks.lock be globally igno | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing issues](https://github. |
-| [FEATURE] Edit tool: boundary-anchored wildcard for `old_str | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| Adicionar suporte para localização em português brasileiro ( | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [BUG] Accepting plan with 'clear context' discards file-read | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing issues](https://github. |
-| [FEATURE] user-selectable refresh rate for inference spinner | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] Show /usage for enterprise customers in the CLI | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] Allow MCP servers to opt-in to /btw side conversat | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [BUG] Conversation not auto-resumed when returning to a proj | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing issues](https://github. |
-| Adjust max output token | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| Spinner verbs should be context-aware, not random | GitHub Issues (enhancement) | ## Problem
-
-The spinner currently picks **random creative words** ("Coalescing", |
-| [FEATURE] Add YOLO mode toggle support to Claude Code CLI | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] [FEATURE] Add hint support to Claude Code CLI | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] Claude Code CLI can detect timezone | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] Automatically close XML tags | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] Rolling asynchronous compaction | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
-| [FEATURE] | GitHub Issues (enhancement) | ### Preflight Checklist
-
-- [x] I have searched [existing requests](https://githu |
+| [FEATURE] Ephemeral/Fresh Start Mode for Claude Code | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] Web UI with multi-project support | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] ctrl+o should keep the scroll position centered wh | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] 今できる正直な提案：    この問題はAnthropicへのフィードバックとして送る価値があります。 | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] /feedback REMARKS-ONLY | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] OS Keychain/Credential Manager Support for MCP Con | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] /btw within AskUserQuestion flow | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] /fyi to inform Claude for its running job | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] Collapse MCP tools by server in /context view | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [BUG/Question] Should  scheduled_tasks.lock be globally igno | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing issues](<https://github>. |
+| [FEATURE] Edit tool: boundary-anchored wildcard for `old_str | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| Adicionar suporte para localização em português brasileiro ( | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [BUG] Accepting plan with 'clear context' discards file-read | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing issues](<https://github>. |
+| [FEATURE] user-selectable refresh rate for inference spinner | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] Show /usage for enterprise customers in the CLI | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] Allow MCP servers to opt-in to /btw side conversat | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [BUG] Conversation not auto-resumed when returning to a proj | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing issues](<https://github>. |
+| Adjust max output token | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| Spinner verbs should be context-aware, not random | GitHub Issues (enhancement) | ## Problem  The spinner currently picks **random creative words** ("Coalescing", |
+| [FEATURE] Add YOLO mode toggle support to Claude Code CLI | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] [FEATURE] Add hint support to Claude Code CLI | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] Claude Code CLI can detect timezone | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] Automatically close XML tags | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] Rolling asynchronous compaction | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
+| [FEATURE] | GitHub Issues (enhancement) | ### Preflight Checklist  - [x] I have searched [existing requests](<https://githu> |
 
 ### cc-discussions-feature-request
 
@@ -330,4 +278,3 @@ The spinner currently picks **random creative words** ("Coalescing", |
 Total new uncovered entries: **35**
 
 _Generated by `.github/scripts/native-sources-monitor.py`_
-
