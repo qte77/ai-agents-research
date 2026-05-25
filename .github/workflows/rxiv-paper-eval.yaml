@@ -75,6 +75,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
       - name: Download eval artifact
         uses: actions/download-artifact@v8
         with:
@@ -84,8 +89,13 @@ jobs:
       - name: Assemble triage report
         run: |
           set -euo pipefail
+          # Strip eval's own leading H1 (create-triage-pr prepends its own,
+          # would violate MD025) and any leading blank lines that would
+          # collide with the action's prepend (MD012 — double blank).
+          # Demote in-body H1s to H2 as a belt-and-suspenders guard.
           {
-            cat eval-output/summary.md
+            sed -E '1{/^# /d;}; s/^# (.*)$/## \1/' eval-output/summary.md \
+              | sed '/./,$!d'
             echo ""
             echo "## Extracts"
             echo ""
@@ -96,7 +106,10 @@ jobs:
                   continue
               d = json.loads(line)
               ex = d.get("extracted", {})
+              # Blank line below heading and around lists is required
+              # (MD022 / MD032).
               print(f"### {d.get('title', '(no title)')}")
+              print()
               doi = d.get("doi", "")
               if doi:
                   print(f"- arxiv: <https://arxiv.org/abs/{doi}>")
@@ -109,6 +122,27 @@ jobs:
               print()
           PY
           } > /tmp/report.md
+          # Collapse runs of blank lines to one (MD012) and trim leading/
+          # trailing blanks so the action's prepend produces clean output.
+          awk 'BEGIN{blank=0;started=0} /^$/{blank=1;next} {if(started&&blank)print ""; started=1; blank=0; print}' /tmp/report.md > /tmp/report.md.clean
+          mv /tmp/report.md.clean /tmp/report.md
+
+      - name: Lint assembled report
+        # Simulate create-triage-pr's H1 prepend then lint with the repo's
+        # .markdownlint.json. Fails the job (and prevents an opening PR) if
+        # the assembled output would land md-lint-dirty.
+        env:
+          PR_BODY_HEADER: 'ArXiv AI Agents: Relevant Papers'
+        run: |
+          set -euo pipefail
+          {
+            echo "# ${PR_BODY_HEADER}"
+            echo ""
+            cat /tmp/report.md
+          } > /tmp/final.md
+          make setup_mdlint
+          export PATH="$HOME/.local/share/node/bin:$PATH"
+          markdownlint-cli2 --config .markdownlint.json /tmp/final.md
 
       - name: Create triage PR
         uses: ./.github/actions/create-triage-pr
