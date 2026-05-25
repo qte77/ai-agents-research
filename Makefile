@@ -98,8 +98,9 @@ setup_lychee: ## Install lychee link checker user-locally to ~/.local/bin (no su
 		echo "Installing lychee ($(LYCHEE_ARCH)) to $(LOCAL_BIN) ..."
 		mkdir -p $(LOCAL_BIN)
 		curl -sSfL https://github.com/lycheeverse/lychee/releases/latest/download/lychee-$(LYCHEE_ARCH).tar.gz \
-			| tar xz -C $(LOCAL_BIN) \
-			&& echo "lychee installed to $(LOCAL_BIN) — ensure it is on PATH" \
+			| tar xz --strip-components=1 -C $(LOCAL_BIN) --wildcards '*/lychee' \
+			&& chmod +x $(LOCAL_BIN)/lychee \
+			&& echo "lychee installed to $(LOCAL_BIN)/lychee — ensure $(LOCAL_BIN) is on PATH" \
 			|| echo "Install failed — download manually from https://github.com/lycheeverse/lychee/releases"
 	fi
 
@@ -155,6 +156,7 @@ setup_all: setup_lychee setup_mdlint ## Install all tooling (lychee + node + mar
 
 
 check_links: ## Check links with lychee
+	export PATH="$(LOCAL_BIN):$$PATH"
 	if ! command -v lychee > /dev/null 2>&1; then
 		echo "lychee not installed — run: make setup_lychee"
 		exit 1
