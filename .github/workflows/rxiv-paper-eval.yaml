@@ -75,6 +75,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
       - name: Download eval artifact
         uses: actions/download-artifact@v8
         with:
@@ -84,8 +89,12 @@ jobs:
       - name: Assemble triage report
         run: |
           set -euo pipefail
+          # Strip eval's own leading H1 — create-triage-pr prepends its own
+          # `# <pr-body-header>` so keeping the inner H1 would violate MD025
+          # (multiple top-level headings). Demote any other H1s in the body
+          # to H2 as a belt-and-suspenders guard.
           {
-            cat eval-output/summary.md
+            sed -E '1{/^# /d;}; s/^# (.*)$/## \1/' eval-output/summary.md
             echo ""
             echo "## Extracts"
             echo ""
@@ -109,6 +118,23 @@ jobs:
               print()
           PY
           } > /tmp/report.md
+
+      - name: Lint assembled report
+        # Simulate create-triage-pr's H1 prepend then lint with the repo's
+        # .markdownlint.json. Fails the job (and prevents an opening PR) if
+        # the assembled output would land md-lint-dirty.
+        env:
+          PR_BODY_HEADER: 'ArXiv AI Agents: Relevant Papers'
+        run: |
+          set -euo pipefail
+          {
+            echo "# ${PR_BODY_HEADER}"
+            echo ""
+            cat /tmp/report.md
+          } > /tmp/final.md
+          make setup_mdlint
+          export PATH="$HOME/.local/share/node/bin:$PATH"
+          markdownlint-cli2 --config .markdownlint.json /tmp/final.md
 
       - name: Create triage PR
         uses: ./.github/actions/create-triage-pr
