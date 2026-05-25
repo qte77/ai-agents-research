@@ -59,4 +59,4 @@ jobs:
         run: make setup_lychee
 
       - name: Run lychee
-        run: make check_links
+        run: PATH="$HOME/.local/bin:$PATH" make check_links
