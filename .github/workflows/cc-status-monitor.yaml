@@ -38,11 +38,11 @@ jobs:
         id: collect
         run: |
           set +e
-          ARGS="--archive triage/status-monitor/outages.jsonl"
+          ARGS=(--archive triage/status-monitor/outages.jsonl)
           if [ -f /tmp/webhook-payload.json ]; then
-            ARGS="$ARGS --webhook-payload /tmp/webhook-payload.json"
+            ARGS+=(--webhook-payload /tmp/webhook-payload.json)
           fi
-          python .github/scripts/status-collector.py $ARGS
+          python .github/scripts/status-collector.py "${ARGS[@]}"
           echo "changed=$( [ $? -eq 1 ] && echo true || echo false )" >> "$GITHUB_OUTPUT"
 
       - name: Generate statistics
