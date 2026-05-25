@@ -58,5 +58,8 @@ jobs:
       - name: Install lychee
         run: make setup_lychee
 
+      - name: Add ~/.local/bin to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - name: Run lychee
         run: make check_links
