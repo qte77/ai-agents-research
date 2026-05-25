@@ -59,4 +59,11 @@ jobs:
         run: make setup_lychee
 
       - name: Run lychee
-        run: PATH="$HOME/.local/bin:$PATH" make check_links
+        run: |
+          echo "DEBUG PATH=$PATH"
+          echo "DEBUG HOME=$HOME"
+          ls -la "$HOME/.local/bin/" || true
+          which lychee || echo "DEBUG: lychee not on PATH directly"
+          export PATH="$HOME/.local/bin:$PATH"
+          which lychee || echo "DEBUG: lychee not on PATH after export"
+          PATH="$HOME/.local/bin:$PATH" make check_links
