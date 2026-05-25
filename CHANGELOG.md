@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `.github/workflows/rxiv-paper-eval.yaml`: fourth monitor — weekly Tuesday ArXiv preprint eval via `qte77/gha-rxiv-paper-eval@v0.2.2`, GITHUB_TOKEN-only auth posture (no PAT), outputs to `triage/rxiv/`. (PR #175)
+- `.github/state/rxiv-paper-eval-state.json` + dedup step in rxiv triage job: content-hash skip keyed by `(server, year, week)` so same-params re-dispatch on a different UTC day no longer opens duplicate PRs. Closes #181. (PR #182)
+- `Makefile` + `.github/workflows/lint.yaml`: actionlint v1.7.12 as third lint job; path filter widened to `.github/workflows/**` + `.github/actions/**`. (PR #182)
+- `.github/actions/create-triage-pr/action.yaml`: prepends an H1 master title (new `report-title` input) and `mkdir -p` the destination dir so new monitor subdirs work on first run. (PRs #171, #182)
+- Rxiv triage assembly: simulated-prepend markdownlint validation before PR creation — md-dirty output fails the job. (PR #179)
+- `docs/cc-native/ci-remote/CC-github-actions-analysis.md`: **GitHub App Permission Surface** (10-scope dump) + **Auth Path Constraints** sections (all 5 `claude-code-action` auth paths are Claude-only). Closes #163. (PR #172)
 - `docs/cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md`: Friction 3 — bwrap bind-mount holds project-root config files (`CHANGELOG.md`, `README.md`, `pyproject.toml`, `Makefile`, `.claude/settings.json` — set varies by project) open via fd, blocking `git unlink(2)` on `git switch` / `git restore` / `git pull` / `gh pr merge`; recovery workaround via `git update-ref` + `git reset HEAD` + Claude Code Edit/Write tool (which uses `O_TRUNC` instead of `unlink`). Tracks anthropics/claude-code#17727
 - `AGENT_LEARNINGS.md`: second learned pattern — bwrap bind-mount blocks `git unlink` on project-root config files; pointer to Friction 3
 - `docs/cc-native/plugins-ecosystem/CC-office-document-skills.md`: engine-layer cross-link (dated 2026-04-26) to `qte77/doc-pipeline-engine/docs/landscape-output.md` per #131
@@ -35,6 +41,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `Makefile` setup_lychee: tarball-wrapper-dir bug — switch to `mktemp + install -m 755` mirroring `lycheeverse/lychee-action`. Closes #160. (PRs #170, #174)
+- Triage-output generators (`monitor_utils.build_report`, `changelog-compare.build_report`, `status-stats.generate_report`) + `create-triage-pr` H1 prepend: md-lint-clean output going forward; historical `triage/**/*.md` cleaned in one pass. Closes #159. (PR #171)
+- `learnings-aggregator.py` + 7 mirrored `docs/learnings/per-repo/*.md`: strip upstream frontmatter, conditional H1 demotion (only when upstream has its own H1). (PR #173)
+- Bump `actions/setup-node@v4 → v6`, `actions/cache@v4 → v5`, `actions/download-artifact@v4 → v8` (Node 20 deprecation; 2026-06-02 cutover). (PR #177)
+- `cc-status-monitor.yaml` Collect-incidents step: convert `ARGS="..."` string to bash array (shellcheck SC2086, surfaced by actionlint). (PR #182)
 - `docs/cc-community/CC-repo-to-docs-tools-landscape.md`: typo `CC-llmstxt-analysis.md` → `CC-llms-txt-analysis.md` (broken relative link regression from the URL triage batches PR); opportunistic markdownlint cleanup (MD031 / MD032 / MD040) in the same file (PR #97)
 - `docs/cc-native/configuration/CC-changelog-feature-scan.md`: relative path `plugins-ecosystem/` → `../plugins-ecosystem/` (pre-existing broken internal link), resolve two permanent redirects `docs.anthropic.com/en/docs/claude-code/{hooks-guide,sdk}` → `code.claude.com/docs/en/{hooks-guide,agent-sdk/overview}` (PR #97)
 - `docs/cc-native/agents-skills/CC-agent-teams-orchestration.md`: remove Aura Frog guide row + link def (external repo returned 404); resolve `docs.arize.com/phoenix` → `arize.com/docs/phoenix` permanent redirect (PR #97)

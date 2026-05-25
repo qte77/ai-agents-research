@@ -23,12 +23,12 @@ Standalone deep-dive analyses of CC features, each following a consistent format
 | [`docs/sdlc-lcm/`](docs/sdlc-lcm/) | SDLC/lifecycle management specs, agentic SDLC patterns, OSS ALM landscape |
 | [`docs/archive/`](docs/archive/) | Agents-eval era docs retained for reference (frameworks/infrastructure, evaluation/data resources, further reading, adoption plans) |
 | [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
-| [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage |
+| [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage, rxiv paper triage |
 | [`.github/`](.github/README.md) | CI automation: monitors, scripts, templates — see [.github/README.md](.github/README.md) |
 
 ## How it stays current
 
-Three automated monitors poll external sources on cron and open triage PRs when new content is found. See [`.github/README.md`](.github/README.md) for details.
+Four automated monitors poll external sources on cron and open triage PRs when new content is found: CC status (outages), CC changelog (new feature releases), community sources, and ArXiv preprint feeds filtered by the AI-agent relevance prompt in `vars.RXIV_TOPIC`. See [`.github/README.md`](.github/README.md) for details.
 
 ## Local development
 

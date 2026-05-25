@@ -3,7 +3,7 @@ title: TODO - ai-agents-research
 description: Research task backlog, active work, and deferred items for ai-agents-research
 category: implementation
 created: 2026-03-22
-updated: 2026-03-22
+updated: 2026-05-25
 ---
 
 ## TODO: ai-agents-research
@@ -32,8 +32,16 @@ updated: 2026-03-22
 **Automated monitors:**
 
 - [x] CC status monitor (outage archive)
-- [x] CC changelog monitor (triage PRs)
+- [x] CC changelog + native sources monitor (triage PRs)
 - [x] Community monitor (triage PRs)
+- [x] ArXiv paper eval monitor (triage PRs; `vars.RXIV_TOPIC` filter)
+- [x] Lint gate: markdownlint + lychee + actionlint, plus md-lint validation of assembled triage reports before any PR opens
+
+**CI hardening:**
+
+- [x] zero-sudo, user-local install pattern for all CLI dependencies (lychee, node, markdownlint-cli2, actionlint) via `~/.local/bin`
+- [x] cross-platform `setup_lychee` mirroring `lycheeverse/lychee-action` (BSD tar compatible)
+- [x] Node 24-supporting majors for all JS actions (`actions/checkout@v6`, `setup-node@v6`, `cache@v5`, `download-artifact@v8`, `setup-python@v6`)
 
 **Foundational docs:**
 
