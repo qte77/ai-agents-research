@@ -9,13 +9,13 @@ source: https://github.com/qte77/research-ralphy/blob/main/AGENT_LEARNINGS.md
 > Source: [qte77/research-ralphy/AGENT_LEARNINGS.md](https://github.com/qte77/research-ralphy/blob/main/AGENT_LEARNINGS.md).
 > Manual edits will be overwritten on the next run.
 
-# Agent Learnings
+## Agent Learnings
 
-## Patterns
+### Patterns
 <!-- Format: "- Pattern description (from STORY-XXX)" -->
 
-## Mistakes
+### Mistakes
 <!-- Format: "- Mistake description (from STORY-XXX)" -->
 
-## Fixes
+### Fixes
 <!-- Format: "- [STORY-XXX] Fix description" -->

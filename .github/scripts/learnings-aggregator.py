@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -43,6 +44,24 @@ def fetch_learnings(owner: str, repo: str) -> str | None:
         return None
 
 
+def normalize_upstream(content: str) -> str:
+    """Prepare upstream AGENT_LEARNINGS.md for embedding under wrapper frontmatter.
+
+    - Strips a leading YAML frontmatter block (avoids two frontmatter blocks per
+      file, which render as a stray setext heading).
+    - When upstream has its own H1, demotes every ATX heading by one level so
+      the wrapper's `title:` remains the sole H1 (per `.markdownlint.json`
+      `MD041.front_matter_title`, which also drives MD025). When upstream
+      starts at H2 or lower, headings are left alone to preserve MD001
+      increment correctness.
+    - Ensures exactly one trailing newline.
+    """
+    content = re.sub(r"\A---\n.*?\n---\n+", "", content, count=1, flags=re.DOTALL)
+    if re.search(r"^# ", content, flags=re.MULTILINE):
+        content = re.sub(r"^(#{1,5}) ", r"#\1 ", content, flags=re.MULTILINE)
+    return content.rstrip("\n") + "\n"
+
+
 def render_file(owner: str, repo: str, content: str) -> str:
     """Wrap upstream content with frontmatter + source attribution."""
     today = date.today().isoformat()
@@ -58,7 +77,7 @@ def render_file(owner: str, repo: str, content: str) -> str:
         f"> Source: [{owner}/{repo}/AGENT_LEARNINGS.md]({source_url}).\n"
         "> Manual edits will be overwritten on the next run.\n\n"
     )
-    return frontmatter + content
+    return frontmatter + normalize_upstream(content)
 
 
 def main() -> int:
