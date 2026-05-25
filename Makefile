@@ -97,11 +97,18 @@ setup_lychee: ## Install lychee link checker user-locally to ~/.local/bin (no su
 	else
 		echo "Installing lychee ($(LYCHEE_ARCH)) to $(LOCAL_BIN) ..."
 		mkdir -p $(LOCAL_BIN)
-		curl -sSfL https://github.com/lycheeverse/lychee/releases/latest/download/lychee-$(LYCHEE_ARCH).tar.gz \
-			| tar xz --strip-components=1 -C $(LOCAL_BIN) --wildcards '*/lychee' \
-			&& chmod +x $(LOCAL_BIN)/lychee \
+		# Tarball contains a wrapper dir (lychee-<target>/lychee).
+		# Mirror lycheeverse/lychee-action's pattern: extract to tmpdir, find
+		# binary via glob, install with explicit mode. Avoids GNU-tar-only
+		# flags (--wildcards, --strip-components with member matching) so the
+		# recipe is portable to BSD tar.
+		tmp=$$(mktemp -d) \
+			&& curl -sSfL https://github.com/lycheeverse/lychee/releases/latest/download/lychee-$(LYCHEE_ARCH).tar.gz \
+				| tar xz -C "$$tmp" \
+			&& install -m 755 "$$tmp"/lychee-*/lychee $(LOCAL_BIN)/lychee \
+			&& rm -rf "$$tmp" \
 			&& echo "lychee installed to $(LOCAL_BIN)/lychee — ensure $(LOCAL_BIN) is on PATH" \
-			|| echo "Install failed — download manually from https://github.com/lycheeverse/lychee/releases"
+			|| { rm -rf "$$tmp"; echo "Install failed — download manually from https://github.com/lycheeverse/lychee/releases"; exit 1; }
 	fi
 
 setup_mdlint: setup_node ## Install markdownlint-cli2 via user-local npm (no sudo)
