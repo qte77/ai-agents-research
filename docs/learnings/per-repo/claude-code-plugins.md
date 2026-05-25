@@ -9,11 +9,6 @@ source: https://github.com/qte77/claude-code-plugins/blob/main/AGENT_LEARNINGS.m
 > Source: [qte77/claude-code-plugins/AGENT_LEARNINGS.md](https://github.com/qte77/claude-code-plugins/blob/main/AGENT_LEARNINGS.md).
 > Manual edits will be overwritten on the next run.
 
----
-title: Agent Learning Documentation
-description: Non-obvious patterns that prevent repeated mistakes across sprints
----
-
 ## Template
 
 - **Context**: When/where this applies

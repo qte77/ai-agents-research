@@ -9,9 +9,9 @@ source: https://github.com/qte77/cc-voice-plugin-prototype/blob/main/AGENT_LEARN
 > Source: [qte77/cc-voice-plugin-prototype/AGENT_LEARNINGS.md](https://github.com/qte77/cc-voice-plugin-prototype/blob/main/AGENT_LEARNINGS.md).
 > Manual edits will be overwritten on the next run.
 
-# Agent Learnings
+## Agent Learnings
 
-## PTY proxy: fork + thread deadlock in sandboxed/test environments
+### PTY proxy: fork + thread deadlock in sandboxed/test environments
 
 **Pattern**: `os.fork()` in a multi-threaded process (pytest, bwrap sandbox) causes deadlocks. The forked child inherits thread state in a broken/locked state.
 
@@ -21,7 +21,7 @@ source: https://github.com/qte77/cc-voice-plugin-prototype/blob/main/AGENT_LEARN
 
 **How to apply**: Always test PTY proxy via direct Python invocation, not through sandboxed make recipes. For CI, use `uv run python -c` or a dedicated test script.
 
-## espeak-ng vs Piper voice names are incompatible
+### espeak-ng vs Piper voice names are incompatible
 
 **Pattern**: Piper uses `en_US-amy-medium` format. espeak-ng uses `en-us` format. Passing Piper voice names to espeak-ng causes `non-zero exit status 1`.
 
@@ -29,7 +29,7 @@ source: https://github.com/qte77/cc-voice-plugin-prototype/blob/main/AGENT_LEARN
 
 **How to apply**: When adding new engines, always validate voice name compatibility. Don't pass config.voice blindly to engines with different naming conventions.
 
-## Piper CLI requires full model path, not voice name
+### Piper CLI requires full model path, not voice name
 
 **Pattern**: `piper --model en_US-amy-medium` fails. It needs the full path to the `.onnx` file: `piper --model /path/to/en_US-amy-medium.onnx`.
 

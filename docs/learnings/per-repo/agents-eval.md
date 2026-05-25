@@ -9,14 +9,6 @@ source: https://github.com/qte77/Agents-eval/blob/main/AGENT_LEARNINGS.md
 > Source: [qte77/Agents-eval/AGENT_LEARNINGS.md](https://github.com/qte77/Agents-eval/blob/main/AGENT_LEARNINGS.md).
 > Manual edits will be overwritten on the next run.
 
----
-title: Agent Learning Documentation
-description: Non-obvious patterns that prevent repeated mistakes across sprints
-version: 1.0.0
-created: 2025-08-19
-updated: 2026-03-07
----
-
 ## Template
 
 - **Context**: When/where this applies
