@@ -116,4 +116,3 @@
 | Claude Console (platform.claude.com) | 98.079% | 1.7d |
 | Claude Cowork | 98.100% | 1.7d |
 | Claude for Government | 98.127% | 1.7d |
-

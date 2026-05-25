@@ -26,6 +26,10 @@ inputs:
   pr-body-note:
     description: 'Note line below header'
     required: true
+  report-title:
+    description: 'H1 title prepended to the report file (defaults to pr-body-header)'
+    required: false
+    default: ''
 
 runs:
   using: composite
@@ -34,6 +38,8 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
+        PR_BODY_HEADER: ${{ inputs.pr-body-header }}
+        REPORT_TITLE_INPUT: ${{ inputs.report-title }}
       run: |
         DATE_STAMP=$(date -u +%Y-%m-%d)
         BRANCH="${{ inputs.branch-prefix }}-${DATE_STAMP}"
@@ -47,7 +53,12 @@ runs:
           DEST_DIR=$(dirname "${{ inputs.report-dest }}")
           DEST_BASE=$(basename "${{ inputs.report-dest }}")
           REPORT_PATH="${DEST_DIR}/${DATE_STAMP}-${DEST_BASE}.md"
-          cp /tmp/report.md "$REPORT_PATH"
+          REPORT_TITLE="${REPORT_TITLE_INPUT:-$PR_BODY_HEADER}"
+          {
+            echo "# ${REPORT_TITLE}"
+            echo ""
+            cat /tmp/report.md
+          } > "$REPORT_PATH"
           git add "$REPORT_PATH"
         fi
 
