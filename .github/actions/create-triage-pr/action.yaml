@@ -54,6 +54,7 @@ runs:
           DEST_BASE=$(basename "${{ inputs.report-dest }}")
           REPORT_PATH="${DEST_DIR}/${DATE_STAMP}-${DEST_BASE}.md"
           REPORT_TITLE="${REPORT_TITLE_INPUT:-$PR_BODY_HEADER}"
+          mkdir -p "$DEST_DIR"
           {
             echo "# ${REPORT_TITLE}"
             echo ""
