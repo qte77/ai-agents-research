@@ -1,17 +1,19 @@
 # ai-agents-research
 
-> Project overview — start here. Audience: any contributor or AI agent.
->
-> Field research and feature analysis for AI coding agents — from sandboxing internals to agent orchestration.
+> Field research and feature analysis for AI coding agents — sandboxing, orchestration, plugins, community tooling, SDLC patterns.
 
 ## Why
 
-Understand how Claude Code works under the hood so you can make informed adopt/defer/skip decisions before building production systems with it.
+Make informed adopt / defer / skip decisions about coding agents and their ecosystems before building production systems on them. Tracks Claude Code, JetBrains Air, DeerFlow, Goose, Codex, Devin and others — plus the surrounding plugins, observability, SDLC patterns, and cross-repo learnings.
 
 ## What
 
-Standalone deep-dive analyses of CC features, each following a consistent format:
+A continuously-updated research catalog spanning Anthropic-native CC features, non-CC coding agents, the community ecosystem (skills, plugins, tooling), SDLC + lifecycle patterns, and cross-repo learnings distilled from live development across the qte77 ecosystem.
+
+Each analysis follows the same four-section structure:
 **What it is** → **How it works** → **Adoption decision** → **Action items**
+
+Currency is maintained by four cron-driven monitors — see [How it stays current](#how-it-stays-current) below.
 
 ## Contents
 
