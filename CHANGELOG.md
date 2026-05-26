@@ -39,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/non-cc/hermes-agent-analysis.md`: Nous Research Hermes Agent (43.2K stars, self-improving skills, 7 platforms)
 - `CONTRIBUTING.md`: classification guidance for cc-community vs non-cc placement, `platform_scope` frontmatter field
 
+### Removed
+
+- `docs/TODO.md`: GitHub issues are the authoritative roadmap; the static file duplicated CHANGELOG (Done items) and drifted from issue state (Next/Backlog). Remaining pending items migrated to #191 (research backlog tracking issue); deferred items dropped.
+
 ### Fixed
 
 - `Makefile` setup_lychee: tarball-wrapper-dir bug — switch to `mktemp + install -m 755` mirroring `lycheeverse/lychee-action`. Closes #160. (PRs #170, #174)
