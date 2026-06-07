@@ -4,7 +4,8 @@
 # Exclude auto-generated and archived content
 # triage/ — auto-generated monitor outputs (see CONTRIBUTING.md)
 # docs/archive/ — historical snapshots with known-broken cross-refs (moved from docs/todo/ per #105)
-exclude_path = ["triage/", "docs/archive/"]
+# docs/research/rxiv-agentic-papers.md — auto-generated paper index; arxiv links grow weekly
+exclude_path = ["triage/", "docs/archive/", "docs/research/rxiv-agentic-papers.md"]
 
 # Accept common bot-blocked status codes
 # 405 = HEAD method not allowed (status pages often reject HEAD)
