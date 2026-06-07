@@ -51,8 +51,11 @@ jobs:
 
           if [ $EXIT_CODE -eq 1 ]; then
             echo "new_features=true" >> "$GITHUB_OUTPUT"
-          else
+          elif [ $EXIT_CODE -eq 0 ]; then
             echo "new_features=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::changelog-compare.py failed (exit $EXIT_CODE)"
+            exit "$EXIT_CODE"
           fi
 
       - name: Run native sources monitor

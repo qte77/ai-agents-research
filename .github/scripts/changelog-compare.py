@@ -14,6 +14,8 @@ Usage:
 Exit codes:
     0 = no new uncovered features
     1 = new features found (workflow should open a PR)
+    2 = fatal error (bad input / parse failure) — distinct from 1 so the
+        workflow fails loudly instead of treating an error as "new features"
 """
 
 import argparse
@@ -23,6 +25,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.monitor_utils import extract_keywords
+
+
+def _fatal(message: str) -> None:
+    """Print an error to stderr and exit 2.
+
+    Exit 2 is distinct from the exit-1 "new features found" signal, so the
+    workflow can fail loudly on a real error instead of mistaking it for a PR-worthy result.
+    """
+    print(message, file=sys.stderr)
+    sys.exit(2)
 
 
 # ---------------------------------------------------------------------------
@@ -42,7 +54,7 @@ def parse_scanned_version(scan_doc_path: Path) -> str:
     # Match frontmatter block between --- markers
     fm_match = re.search(r"^---\s*\n(.*?)\n---", text, re.DOTALL | re.MULTILINE)
     if not fm_match:
-        sys.exit(f"ERROR: No frontmatter found in {scan_doc_path}")
+        _fatal(f"ERROR: No frontmatter found in {scan_doc_path}")
 
     frontmatter = fm_match.group(1)
     # purpose: ... (v2.1.0–2.1.71) ...
@@ -51,7 +63,7 @@ def parse_scanned_version(scan_doc_path: Path) -> str:
         r"purpose:.*?v(\d+\.\d+\.\d+)[–\-](\d+\.\d+\.\d+)", frontmatter
     )
     if not purpose_match:
-        sys.exit(
+        _fatal(
             f"ERROR: Could not find version range in purpose field of {scan_doc_path}"
         )
 
@@ -99,7 +111,7 @@ def parse_changelog_versions(changelog_path: Path) -> list[tuple[str, list[str]]
     )
     matches = list(section_pattern.finditer(text))
     if not matches:
-        sys.exit(f"ERROR: No version sections found in {changelog_path}")
+        _fatal(f"ERROR: No version sections found in {changelog_path}")
 
     versions: list[tuple[str, list[str]]] = []
     for i, match in enumerate(matches):
@@ -280,7 +292,7 @@ def main() -> None:
     # Validate inputs
     for p in (args.changelog, args.scan_doc, args.docs_dir):
         if not p.exists():
-            sys.exit(f"ERROR: Path does not exist: {p}")
+            _fatal(f"ERROR: Path does not exist: {p}")
 
     last_scanned = parse_scanned_version(args.scan_doc)
     print(f"Last scanned version: {last_scanned}", file=sys.stderr)
