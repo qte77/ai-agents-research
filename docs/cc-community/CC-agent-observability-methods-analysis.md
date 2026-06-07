@@ -409,7 +409,7 @@ This pattern provides deep integration with specific frameworks or ecosystems.
 
 **2025-2026 Updates**:
 
-- **Performance**: Virtually no measurable overhead making it ideal for performance-critical production environments (0% overhead compared to 12% for AgentOps, 15% for Langfuse)
+- **Performance**: Virtually no measurable overhead making it ideal for performance-critical production environments
 - **OpenTelemetry Support**: Supports OpenTelemetry (OTel) to unify observability stacks across services
 - **Production Grade**: Complete visibility into agent behavior with tracing, real-time monitoring, alerting, and high-level usage insights
 - **Enterprise Adoption**: Proven enterprise deployment with production-grade reliability
@@ -418,7 +418,6 @@ This pattern provides deep integration with specific frameworks or ecosystems.
 
 - [LangSmith Observability](https://www.langchain.com/langsmith/observability)
 - [LangSmith Data Export Documentation](https://docs.smith.langchain.com/observability/how_to_guides/data_export)
-- [LangSmith Performance Comparison](https://www.akira.ai/blog/langsmith-and-agentops-with-ai-agents)
 
 #### Pydantic Logfire
 
