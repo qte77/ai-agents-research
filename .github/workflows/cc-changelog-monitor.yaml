@@ -40,7 +40,7 @@ jobs:
           set +e
           python .github/scripts/changelog-compare.py \
             --changelog /tmp/CC-CHANGELOG.md \
-            --scan-doc docs/cc-native/CC-changelog-feature-scan.md \
+            --scan-doc docs/cc-native/configuration/CC-changelog-feature-scan.md \
             --docs-dir docs/cc-native/ \
             --update-scan-doc \
             > /tmp/report.md 2>/tmp/compare-stderr.txt
@@ -83,7 +83,7 @@ jobs:
           branch-prefix: chore/changelog-triage
           report-dest: triage/cc-changelog/changelog-triage
           extra-files: >-
-            docs/cc-native/CC-changelog-feature-scan.md
+            docs/cc-native/configuration/CC-changelog-feature-scan.md
             .github/state/native-monitor-state.json
           pr-title-prefix: 'chore: changelog triage'
           pr-body-header: 'CC Changelog & Native Sources: New Uncovered Features Detected'
