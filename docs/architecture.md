@@ -32,6 +32,7 @@ ai-agents-research/
 │   ├── sdlc-lcm/              # SDLC + product lifecycle management specs
 │   ├── learnings/             # Cross-repo compound learnings hub (CRLA write-back target)
 │   │   └── per-repo/          # Per-repo pattern distillations
+│   ├── research/              # Auto-generated cumulative agentic-AI paper index (rxiv eval)
 │   └── archive/               # Retired Agents-eval era docs
 ├── triage/                    # Auto-generated monitor outputs (at repo root)
 │   ├── cc-changelog/          # CC changelog + native-sources triage

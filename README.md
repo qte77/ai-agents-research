@@ -25,6 +25,7 @@ Currency is maintained by four cron-driven monitors — see [How it stays curren
 | [`docs/sdlc-lcm/`](docs/sdlc-lcm/) | SDLC/lifecycle management specs, agentic SDLC patterns, OSS ALM landscape |
 | [`docs/archive/`](docs/archive/) | Agents-eval era docs retained for reference (frameworks/infrastructure, evaluation/data resources, further reading, adoption plans) |
 | [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
+| [`docs/research/`](docs/research/) | Auto-generated cumulative index of agentic-AI papers from the rxiv eval pipeline |
 | [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage, rxiv paper triage |
 | [`.github/`](.github/) | Monitor workflows, scripts, composite actions, state files |
 
