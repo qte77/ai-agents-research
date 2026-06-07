@@ -130,6 +130,7 @@ ai-agents-research/
     non-cc/                            # Non-CC agents (JetBrains Air, DeerFlow, etc.)
     cc-community/                      # Community skills, plugins, tooling, CLAUDE.md patterns
     sdlc-lcm/                          # SDLC/lifecycle management specs
+    research/                          # Auto-generated cumulative rxiv agentic-AI paper index
     todo/                              # Agents-eval era docs pending review (analysis, landscape, best-practices, research)
   triage/                              # Auto-generated monitor outputs
   .github/                             # CI automation (monitors, scripts, templates)

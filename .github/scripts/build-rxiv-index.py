@@ -10,7 +10,7 @@ when the same paper appears in multiple weeks the newest week wins.
 Usage:
     python build-rxiv-index.py \\
         --data-dir triage/rxiv/data \\
-        --out triage/rxiv/index.md
+        --out docs/research/rxiv-agentic-papers.md
 
 Exit codes:
     0 = index written
