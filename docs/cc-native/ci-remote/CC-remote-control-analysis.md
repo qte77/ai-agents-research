@@ -3,11 +3,11 @@ title: CC Remote Control Analysis
 source: https://code.claude.com/docs/en/remote-control
 purpose: Analysis of Claude Code Remote Control for mobile monitoring of long-running CC sessions and cross-device session continuity.
 created: 2026-03-07
-updated: 2026-04-13
-validated_links: 2026-04-13
+updated: 2026-06-07
+validated_links: 2026-06-07
 ---
 
-**Status**: Generally available (all plans)
+**Status**: Research preview (all plans; off by default on Team/Enterprise until an admin enables the Remote Control toggle) ([source][cc-rc])
 
 ## What Remote Control Is
 
@@ -23,16 +23,23 @@ A feature that connects `claude.ai/code` or the Claude mobile app (iOS/Android) 
 
 ### Starting a Session
 
+Three invocation modes ([source][cc-rc-start]):
+
 ```bash
-# New session
+# Server mode — process waits for remote connections; serves many sessions
 claude remote-control
 claude remote-control --name "My Project"
 claude remote-control --sandbox  # Enable filesystem/network sandboxing
 
-# From existing session
-/remote-control
-/rc
+# Interactive mode — full local terminal session that is ALSO drivable remotely
+claude --remote-control          # alias: --rc
+claude --remote-control "My Project"
+
+# From an existing session (carries over conversation history)
+/remote-control                  # alias: /rc
 ```
+
+In the [VS Code extension](https://code.claude.com/docs/en/vs-code), use `/remote-control` or `/rc` (requires CC v2.1.79+; no name arg or QR code).
 
 Server mode flags ([source][cc-rc-start]):
 
@@ -62,6 +69,10 @@ Enable for all sessions automatically:
 /config → "Enable Remote Control for all sessions" → true
 ```
 
+### Mobile Push Notifications
+
+When Remote Control is active, Claude can push to your phone — typically when a long-running task finishes or it needs a decision; you can also request one in-prompt (e.g. "notify me when the tests finish"). Enable via `/config` → **Push when Claude decides** (Desktop: Settings → Claude Code). Requires CC **v2.1.110+** and the Claude mobile app signed into the same account ([source][cc-rc]).
+
 ### Requirements
 
 | Requirement | Detail | Source |
@@ -69,8 +80,23 @@ Enable for all sessions automatically:
 | **Plan** | Pro, Max, Team, Enterprise. API-key-only billing does not qualify | [requirements][cc-rc-req] |
 | **Auth** | OAuth via `/login` — API keys and `setup-token` long-lived tokens are not supported | [requirements][cc-rc-req], [troubleshooting][cc-rc-troubleshoot] |
 | **Team/Enterprise admin** | Admin must enable Remote Control toggle at `claude.ai/admin-settings/claude-code` (off by default) | [requirements][cc-rc-req], [troubleshooting][cc-rc-troubleshoot] |
-| **Version** | CC v2.1.51+ | [rc][cc-rc] |
+| **Managed policy** | IT admins can disable Remote Control per-device via `disableRemoteControl` in [managed settings][cc-settings-files], independent of the org-wide toggle | [troubleshooting][cc-rc-troubleshoot] |
+| **Version** | CC v2.1.51+ (VS Code `/remote-control` needs v2.1.79+; push notifications need v2.1.110+) | [rc][cc-rc] |
 | **Workspace trust** | Must have run `claude` in the project dir at least once to accept the trust dialog | [requirements][cc-rc-req] |
+
+### Network Allowlist (what to permit)
+
+All Remote Control traffic is **outbound HTTPS on port 443** — no inbound ports. In a firewall/proxy environment, do **not** block these ([network config][cc-netcfg], [troubleshooting][cc-rc-troubleshoot]):
+
+| Host | Purpose | Required for RC |
+|---|---|---|
+| `api.anthropic.com` | RC registration, polling, short-lived credentials; Claude API; WebFetch domain safety check | **Yes** |
+| `claude.ai` | claude.ai OAuth login + the web/mobile client side of the session | **Yes** |
+| `platform.claude.com` | Anthropic Console account auth | Only if using Console auth |
+| operational telemetry (rides `api.anthropic.com`) | The RC **eligibility check** goes through this path | **Effectively yes** — suppressing it breaks RC (see blockers below) |
+| `downloads.claude.ai`, `raw.githubusercontent.com`, Sentry, `bridge.claudeusercontent.com` | Updates, release notes, error reporting, Chrome-extension bridge | Optional — safe to block without breaking RC |
+
+Proxy notes ([network config][cc-netcfg]): `HTTPS_PROXY`/`NO_PROXY` respected; **SOCKS unsupported**; TLS-inspection proxies work if the root CA is trusted (`NODE_EXTRA_CA_CERTS`); mTLS via `CLAUDE_CODE_CLIENT_CERT`/`CLAUDE_CODE_CLIENT_KEY`. Under Bedrock/Vertex/Foundry, model traffic leaves `api.anthropic.com` — but RC itself is unavailable there anyway (see blockers).
 
 ### Environment Variable Blockers
 
@@ -123,6 +149,7 @@ Cross-ref: [CC-env-vars-reference.md](../configuration/CC-env-vars-reference.md)
 2. **Terminal must stay open** — closing terminal or stopping `claude` ends the session ([source][cc-rc])
 3. **~10 minute network timeout** — extended outage causes session exit ([source][cc-rc])
 4. **No inbound connections** — security model is outbound HTTPS polling only ([source][cc-sec])
+5. **Ultraplan disconnects RC** — starting an ultraplan session drops any active Remote Control session; both occupy the claude.ai/code interface and only one can connect ([source][cc-rc])
 
 ### Remote Control vs Claude Code on the Web
 
@@ -169,6 +196,8 @@ loop_remote:
 [cc-rc-req]: https://code.claude.com/docs/en/remote-control#requirements
 [cc-rc-start]: https://code.claude.com/docs/en/remote-control#start-a-remote-control-session
 [cc-rc-troubleshoot]: https://code.claude.com/docs/en/remote-control#troubleshooting
+[cc-netcfg]: https://code.claude.com/docs/en/network-config
+[cc-settings-files]: https://code.claude.com/docs/en/settings#settings-files
 [cc-rc-guide]: https://claudefa.st/blog/guide/development/remote-control-guide "Claude Code Remote Control: Complete Setup Guide"
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-cli]: https://code.claude.com/docs/en/cli-reference
