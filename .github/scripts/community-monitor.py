@@ -13,6 +13,8 @@ Usage:
 Exit codes:
     0 = no new uncovered content
     1 = new content found (workflow should open a PR)
+    2 = fatal error (bad input) — distinct from 1 so the workflow fails loudly
+        instead of treating an error as "new content"
 """
 
 import argparse
@@ -30,6 +32,16 @@ from lib.monitor_utils import (
     fetch_text,
     run_monitor,
 )
+
+
+def _fatal(message: str) -> None:
+    """Print an error to stderr and exit 2.
+
+    Exit 2 is distinct from the exit-1 "new content found" signal, so the
+    workflow can fail loudly on a real error instead of opening an empty triage PR.
+    """
+    print(message, file=sys.stderr)
+    sys.exit(2)
 
 # ---------------------------------------------------------------------------
 # Source definitions
@@ -303,7 +315,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--community-docs-dir", required=True, type=Path,
-        help="Path to docs/community/ directory",
+        help="Path to docs/cc-community/ directory",
     )
     parser.add_argument(
         "--state-file", type=Path,
@@ -313,7 +325,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if not args.community_docs_dir.exists():
-        sys.exit(
+        _fatal(
             f"ERROR: Community docs dir does not exist: {args.community_docs_dir}"
         )
 

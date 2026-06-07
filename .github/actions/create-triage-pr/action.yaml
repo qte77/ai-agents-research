@@ -86,6 +86,15 @@ runs:
           echo "_${{ inputs.pr-body-note }}_" > /tmp/pr-body.md
         fi
 
+        # GitHub caps PR bodies at 65536 chars. The full report is committed as
+        # the triage file in this branch, so truncate an oversized body and
+        # point to that file rather than failing the run on a large catch-up.
+        if [ "$(wc -c < /tmp/pr-body.md)" -gt 60000 ]; then
+          head -c 60000 /tmp/pr-body.md > /tmp/pr-body.trunc
+          printf '\n\n_…truncated (GitHub PR-body limit). Full report: `%s` in this branch._\n' "${REPORT_PATH:-the committed triage file}" >> /tmp/pr-body.trunc
+          mv /tmp/pr-body.trunc /tmp/pr-body.md
+        fi
+
         gh pr create \
           --base main \
           --head "$BRANCH" \
