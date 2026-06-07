@@ -41,6 +41,7 @@ exclude = [
     "openai.com",  # 403 to HEAD on /index/* article URLs
     "code2tutorial.com",  # 404 to HEAD; root may anti-bot — referenced in cc-community landscape
     "techcommunity.microsoft.com",  # 403 to HEAD on /blog/* URLs (anti-bot)
+    "zread.ai",  # 403 to all automated requests (Cloudflare); AI doc-reader of GitHub repos — referenced in CC-agent-teams-orchestration.md
     # Auth-gated (requires login) — both `/code` and `/code/scheduled` and `/settings/*` return 403 to anonymous requests
     "claude.ai/code",
     "claude.ai/settings",
@@ -55,4 +56,5 @@ exclude = [
     "deepwiki.com",
     "minbook.dev",
     "emdash.dev",
+    "apmdigest.com",  # valid (200) but slow — times out lychee even with retries
 ]
