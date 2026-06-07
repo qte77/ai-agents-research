@@ -45,7 +45,55 @@ permissions:
   models: read
 
 jobs:
+  resolve:
+    name: Resolve latest available feed week
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      year: ${{ steps.pick.outputs.year }}
+      week: ${{ steps.pick.outputs.week }}
+    steps:
+      - name: Pick latest available week from the feed repo
+        id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SERVER: ${{ inputs.server || vars.RXIV_SERVER || 'arxiv' }}
+          FEED_REPO: ${{ vars.RXIV_FEED_REPO || format('{0}/gha-rxiv-feed-action', github.repository_owner) }}
+          YEAR_INPUT: ${{ inputs.year }}
+          WEEK_INPUT: ${{ inputs.week }}
+        run: |
+          set -euo pipefail
+          # An explicit dispatch week wins — pass it straight through.
+          if [ -n "$WEEK_INPUT" ]; then
+            echo "year=${YEAR_INPUT:-$(date -u +%G)}" >> "$GITHUB_OUTPUT"
+            echo "week=$WEEK_INPUT" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Otherwise resolve the newest week the feed ACTUALLY has, so a feed
+          # that lags the calendar week doesn't 404 the eval. Try the target
+          # year, then fall back to the prior year (early-January boundary).
+          latest_week() {
+            gh api "repos/${FEED_REPO}/contents/data/${SERVER}/$1" \
+              --jq '[.[].name | select(endswith(".csv")) | rtrimstr(".csv")] | sort_by(tonumber) | last // empty' \
+              2>/dev/null || true
+          }
+          year="${YEAR_INPUT:-$(date -u +%G)}"
+          week="$(latest_week "$year")"
+          if [ -z "$week" ]; then
+            year="$((year - 1))"
+            week="$(latest_week "$year")"
+          fi
+          if [ -z "$week" ]; then
+            echo "::error::No feed CSVs found for ${SERVER} in ${FEED_REPO}"
+            exit 1
+          fi
+          echo "Resolved latest available feed week: ${year} W${week}"
+          echo "year=${year}" >> "$GITHUB_OUTPUT"
+          echo "week=${week}" >> "$GITHUB_OUTPUT"
+
   eval:
+    needs: resolve
     uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@6a4bb87ea02a9bfbb837fa7d500eec0d9c24172f  # v0.2.2
     with:
       server: ${{ inputs.server || vars.RXIV_SERVER || 'arxiv' }}
@@ -56,8 +104,8 @@ jobs:
       # No-op for arxiv (no Category column in feed CSV); only meaningful if
       # dispatching biorxiv/medrxiv runs.
       categories: ${{ vars.RXIV_CATEGORIES || '' }}
-      year: ${{ inputs.year || '' }}
-      week: ${{ inputs.week || '' }}
+      year: ${{ needs.resolve.outputs.year }}
+      week: ${{ needs.resolve.outputs.week }}
       max_papers: ${{ github.event_name == 'pull_request' && 5 || fromJSON(inputs.max_papers || '50') }}
       model: openai/gpt-4o-mini
       enrich: true
@@ -65,7 +113,7 @@ jobs:
       eval_ref: 6a4bb87ea02a9bfbb837fa7d500eec0d9c24172f  # v0.2.2
 
   triage:
-    needs: eval
+    needs: [resolve, eval]
     if: ${{ github.event_name != 'pull_request' && fromJSON(needs.eval.outputs.relevant_count || '0') > 0 }}
     runs-on: ubuntu-latest
     permissions:
@@ -128,22 +176,19 @@ jobs:
           mv /tmp/report.md.clean /tmp/report.md
 
       - name: Derive run key
-        # Compose the dedup key from the same precedence chain the eval job
-        # uses (inputs -> repo vars -> current ISO date). Cron runs (no
-        # inputs) get the current ISO week; dispatch runs with explicit
-        # year/week reuse the same key across UTC days.
+        # Key the dedup on the actually-evaluated week (resolved from the feed
+        # in the resolve job), so re-runs on a different UTC day don't open a
+        # duplicate PR and the key matches the week the eval really used.
         id: key
         env:
           SERVER_INPUT: ${{ inputs.server }}
-          YEAR_INPUT: ${{ inputs.year }}
-          WEEK_INPUT: ${{ inputs.week }}
           SERVER_VAR: ${{ vars.RXIV_SERVER }}
+          RESOLVED_YEAR: ${{ needs.resolve.outputs.year }}
+          RESOLVED_WEEK: ${{ needs.resolve.outputs.week }}
         run: |
           set -euo pipefail
           SERVER="${SERVER_INPUT:-${SERVER_VAR:-arxiv}}"
-          YEAR="${YEAR_INPUT:-$(date -u +%G)}"
-          WEEK="${WEEK_INPUT:-$(date -u +%V)}"
-          echo "key=${SERVER}-${YEAR}-W${WEEK}" >> "$GITHUB_OUTPUT"
+          echo "key=${SERVER}-${RESOLVED_YEAR}-W${RESOLVED_WEEK}" >> "$GITHUB_OUTPUT"
 
       - name: Check dedup state
         # Hash /tmp/report.md and compare against the committed fingerprint
