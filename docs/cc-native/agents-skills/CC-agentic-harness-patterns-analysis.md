@@ -106,6 +106,31 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Prompt Patterns catalog](https://www.promptpatterns.dev/)
 - [The Generative Programmer Substack](https://generativeprogrammer.com/)
 
+## Security-Domain Application: Defending Code Reference Harness
+
+**Source**: [anthropics/defending-code-reference-harness][dcrh] | First-party Anthropic reference implementation
+
+A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to autonomous vulnerability discovery. The harness encodes these two harness patterns into a seven-stage security pipeline:
+
+**Pipeline** (build → recon → find → verify → dedupe → report → patch):
+
+1. **Build** — compile target with ASAN into Docker image
+2. **Recon** — lightweight agent proposes input-parsing subsystems to attack
+3. **Find** — parallel agents craft malformed inputs until reproducible crashes (Fork-Join: multiple find-agents run concurrently, each in an isolated gVisor container)
+4. **Verify** — separate grader agent reproduces crashes in a fresh container (Context-Isolated Subagent: verifier has no access to find-agent context)
+5. **Dedupe** — judge agent compares findings against known bugs
+6. **Report** — exploitability analysis and severity assessment
+7. **Patch** — fix proposals validated through build/test cycle
+
+**Sandboxing model**: each pipeline agent runs inside a dedicated gVisor container on a `vp-internal` Docker network; egress is restricted to `api.anthropic.com:443` only via a proxy sidecar. Entry point `bin/vp-sandboxed` refuses to run unless gVisor and the proxy are active. See also: [CC-sandbox-platforms-landscape.md](../sandboxing/CC-sandbox-platforms-landscape.md#defending-code-reference-harness-gvisor-pattern).
+
+**Shipped CC skills**: `/quickstart`, `/threat-model`, `/vuln-scan`, `/triage`, `/patch`, `/customize`
+
+**Companion products**: [Claude Security][claude-security] (managed hosted product for multi-project vuln discovery with false-positive reduction); Glasswing partnership (security team collaboration program).
+
+[dcrh]: https://github.com/anthropics/defending-code-reference-harness
+[claude-security]: https://claude.com/product/claude-security
+
 ## Action Items
 
 - [ ] Map remaining patterns to existing analyses (6/12 mapped above)
