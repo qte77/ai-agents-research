@@ -110,6 +110,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/exit` | Exit session | [cli-ref][cli-ref] |
 | `/fast` | Toggle fast mode | [fast-mode][fast-mode] |
 | `/feedback` | Submit feedback | [cli-ref][cli-ref] |
+| `/goal` | Set a completion condition; Claude keeps working across turns until it is met. Works in interactive, `-p`, and Remote Control modes. Shows elapsed time, turns, and token usage as a live overlay panel. (v2.1.139) | CHANGELOG v2.1.139 |
 | `/login` | Authenticate | [cli-ref][cli-ref] |
 | `/logout` | Sign out | [cli-ref][cli-ref] |
 | `/loop` | Run on recurring interval | [cli-ref][cli-ref] |

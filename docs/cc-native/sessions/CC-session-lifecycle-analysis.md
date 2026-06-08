@@ -136,6 +136,32 @@ Retention is controlled by the `cleanupPeriodDays` setting (default: 30 days). S
 
 Source: [settings docs][settings]
 
+### `claude project purge` (v2.1.126)
+
+Deletes **all** Claude Code state for a project: transcripts, task records, file history, and the project's config entry. Useful when a project has been moved, archived, or accumulated stale data that causes discovery issues.
+
+```bash
+# Preview what will be deleted without removing anything
+claude project purge --dry-run
+
+# Delete state for the current directory
+claude project purge
+
+# Delete with confirmation prompt skipped
+claude project purge --yes
+
+# Interactive selection of which data to purge
+claude project purge --interactive
+
+# Purge state for a specific path
+claude project purge /path/to/project
+
+# Purge state for all projects
+claude project purge --all
+```
+
+Source: CHANGELOG v2.1.126
+
 ## Cross-References
 
 - [CC-session-cost-analysis.md](CC-session-cost-analysis.md) — JSONL structure, usage fields, cost extraction

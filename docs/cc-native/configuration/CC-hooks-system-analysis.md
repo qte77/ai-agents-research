@@ -63,7 +63,9 @@ run locally, outside the sandbox, with full system access.
 | Field | Description | Since |
 | ----- | ----------- | ----- |
 | `matcher` | Tool name filter (`*` for all, specific tool name) | v2.0.41 |
-| `command` | Shell command to execute | v2.0.41 |
+| `command` | Shell command to execute (string form — passed to shell) | v2.0.41 |
+| `args` | `string[]` exec form — spawns the command directly without a shell, so path placeholders never need quoting. Mutually exclusive with `command`. | v2.1.139 |
+| `continueOnBlock` | `PostToolUse` only. When `true`, a blocking hook result feeds the rejection reason back to Claude as context and continues the turn instead of halting. | v2.1.139 |
 | `once` | Execute only once per session | v2.1.0 |
 | `model` | Custom model for hook evaluation | v2.0.41 |
 | `tool_use_id` | Available in hook input | v2.0.45 |
