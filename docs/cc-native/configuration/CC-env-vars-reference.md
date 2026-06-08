@@ -54,6 +54,7 @@ Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-conte
 | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | `0` | Equivalent of `DISABLE_AUTOUPDATER` + `DISABLE_FEEDBACK_COMMAND` + `DISABLE_ERROR_REPORTING` + `DISABLE_TELEMETRY`. **Blocks Remote Control** — eligibility check uses this path. Use individual flags instead if Remote Control is needed. See [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md#environment-variable-blockers) | [env-vars][env-vars] |
 | `CLAUDE_CODE_ENABLE_TELEMETRY` | `0` | Enable OTel metrics/logs export (prerequisite for all `OTEL_*` vars below) | [env-vars][env-vars], [monitoring][monitoring] |
 | `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA` | `0` | Enable distributed tracing (beta) in addition to metrics/logs | [monitoring][monitoring] |
+| `CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL` | (unset) | Re-enable the session quality survey for enterprises capturing responses through OpenTelemetry (disabled by default when OTel is active). Set to `1` to opt in. (v2.1.136) | CHANGELOG v2.1.136 |
 | `CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS` | `1740000` (29 min) | Refresh interval for dynamic OTLP headers | [monitoring][monitoring] |
 | `DISABLE_AUTOUPDATER` | `0` | Prevent automatic CC updates | [env-vars][env-vars] |
 | `DISABLE_COST_WARNINGS` | `0` | Suppress cost warning messages | [env-vars][env-vars] |
@@ -99,6 +100,18 @@ Toggle metric attributes to trade granularity for storage cost. Source: [monitor
 | `OTEL_METRICS_INCLUDE_SESSION_ID` | `true` | Include `session.id` attribute on metrics |
 | `OTEL_METRICS_INCLUDE_VERSION` | `false` | Include `app.version` attribute on metrics |
 | `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` | `true` | Include `user.account_uuid` and `user.account_id` on metrics |
+
+### Display & Terminal
+
+| Variable | Default | Purpose | Source |
+|---|---|---|---|
+| `CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN` | (unset) | Set to `1` to opt out of the fullscreen alternate-screen renderer and keep the conversation in the terminal's native scrollback. Useful for tmux, logging pipelines, or terminals that mishandle alternate-screen. (v2.1.132) | CHANGELOG v2.1.132 |
+
+### Update & Package Management
+
+| Variable | Default | Purpose | Source |
+|---|---|---|---|
+| `CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE` | (unset) | When set on Homebrew or WinGet installations, CC runs the package-manager upgrade command in the background and prompts to restart once a new version is available. (v2.1.129) | CHANGELOG v2.1.129 |
 
 ### Session Guards & Runtime
 
@@ -288,6 +301,12 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL` | Skip IDE extension install | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_IDE_SKIP_VALID_CHECK` | Skip IDE validation | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_AUTO_CONNECT_IDE` | Auto-connect to IDE | String extraction, CC 2.1.87 |
+
+### ANTHROPIC_* Documented (Recent Additions)
+
+| Variable | Default | Purpose | Source |
+|---|---|---|---|
+| `ANTHROPIC_BEDROCK_SERVICE_TIER` | `default` | Select AWS Bedrock service tier: `default`, `flex`, or `priority`. Sent as the `X-Amzn-Bedrock-Service-Tier` request header. (v2.1.122) | CHANGELOG v2.1.122 |
 
 ### ANTHROPIC_* Undocumented
 

@@ -24,7 +24,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.monitor_utils import extract_keywords
+from lib.monitor_utils import DEFAULT_NOISE, extract_keywords
 
 
 def _fatal(message: str) -> None:
@@ -155,27 +155,41 @@ def collect_doc_index(docs_dir: Path) -> dict[str, list[str]]:
 # Coverage checking
 # ---------------------------------------------------------------------------
 
+_NOISE_ONLY_PATTERNS = re.compile(
+    r"^[-\s]*bug fixes and reliability improvements\.?\s*$",
+    re.IGNORECASE,
+)
+
+_COVERAGE_THRESHOLD = 0.4
+
+
 def find_covering_docs(
     feature_line: str, doc_index: dict[str, list[str]]
 ) -> list[str]:
-    """Return list of doc paths whose filename or headings share keywords with the feature."""
-    feature_kw = extract_keywords(feature_line)
+    """Return list of doc paths that meaningfully cover the feature.
+
+    Uses a keyword-overlap threshold (>= 0.4 of non-noise feature keywords)
+    against each doc's filename + headings, matching the approach used by the
+    native-sources monitor.  Pure "Bug fixes and reliability improvements" lines
+    are treated as non-actionable and return an empty list (caller marks them
+    skipped rather than covered).
+    """
+    if _NOISE_ONLY_PATTERNS.match(feature_line.strip("- ")):
+        return []
+
+    feature_kw = extract_keywords(feature_line) - DEFAULT_NOISE
     if not feature_kw:
         return []
 
     covering: list[str] = []
     for path, headings in doc_index.items():
-        # Check filename
-        file_kw = extract_keywords(Path(path).name)
-        if feature_kw & file_kw:
-            covering.append(path)
-            continue
-        # Check headings
+        doc_kw: set[str] = extract_keywords(Path(path).name)
         for heading in headings:
-            heading_kw = extract_keywords(heading)
-            if feature_kw & heading_kw:
-                covering.append(path)
-                break
+            doc_kw.update(extract_keywords(heading))
+
+        overlap = feature_kw & doc_kw
+        if len(overlap) / len(feature_kw) > _COVERAGE_THRESHOLD:
+            covering.append(path)
 
     return covering
 
