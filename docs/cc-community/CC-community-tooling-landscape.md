@@ -552,19 +552,28 @@ npx codeburn
 
 ### Optimization Rules
 
-`codeburn optimize` ranks findings by urgency and assigns a setup health grade (A–F) with new/improving/resolved tracking across a 48-hour window. Seven detection categories ([README][codeburn]):
+`codeburn optimize` scans recent sessions (default ~30 days), ranks each finding by token/dollar impact, grades the setup A–F, and emits copy-paste fixes. The [README][codeburn] presents these as ~7 categories and `docs/architecture.md` lists 14, but the source of truth — [`src/optimize.ts`][codeburn-optimize] — runs **16 waste detectors**:
 
-| # | Category | Typical waste | Remediation pattern |
-|---|---|---|---|
-| 1 | **Repeated file reads** | Same file re-read across sessions | Cite exact `file:lines` ranges in prompts |
-| 2 | **Low Read:Edit ratio** | <4 reads per edit → wasted retries | CLAUDE.md rule: "read before edit; grep callers before modifying" |
-| 3 | **Wasted bash output** | Uncapped `BASH_MAX_OUTPUT_LENGTH`, trailing noise | `export BASH_MAX_OUTPUT_LENGTH=15000` |
-| 4 | **Unused MCP servers** | Tool-schema overhead per session for unused servers | Disable servers in `~/.claude/settings.json` |
-| 5 | **Ghost agents/skills/slash commands** | Defined in `~/.claude/` but never invoked | Archive or delete dormant entries |
-| 6 | **Bloated configuration files** | Oversized `CLAUDE.md` (with `@-import` expansion counted) | Trim, hoist to skills, use progressive disclosure |
-| 7 | **Cache creation overhead** | Junk directory reads polluting cache | Add to `.gitignore` / exclude paths |
+| # | Detector | Flags | Fix |
+|---|----------|-------|-----|
+| 1 | `detectCacheBloat` | Cache-creation tokens above the p25 baseline +40% (bloated MCP/skill warm-up) | Trim per-session loaded context |
+| 2 | `detectLowReadEditRatio` | Read:edit ratio under 4:1 (high severity <2:1) → retries | "Read before edit; grep callers first" |
+| 3 | `detectJunkReads` | Reads into generated/dependency dirs (`node_modules`, `.git`, `dist`, `.venv`…), ~600 tokens each | Exclude paths |
+| 4 | `detectDuplicateReads` | Same file re-read within a session (high severity >30) | Cite `file:lines`, hold context |
+| 5 | `detectUnusedMcp` | MCP servers configured but never invoked (24h grace for new configs) | Disable unused servers |
+| 6 | `detectMcpToolCoverage` | MCP servers with >10 tools where <20% are ever called | Prune tools / split the server |
+| 7 | `detectMcpProfileAdvisor` | Server invoked ≥80% in a few projects but loaded globally | Project-scope the server |
+| 8 | `detectCapabilityReliability` | MCP/skill correlated with high retry/edit-cycle rates | Replace the unreliable capability |
+| 9 | `detectLowWorthSessions` | Costly sessions with weak delivery (no edits ≥$3, or ≥3 retries) | Revisit the prompting approach |
+| 10 | `detectContextBloat` | Effective input ≥75K tokens and input:output ≥25:1 (target 15:1) | Compact / clear stale context |
+| 11 | `detectSessionOutliers` | Session costing ≥2× its project peer-session average | Investigate the cost anomaly |
+| 12 | `detectBloatedClaudeMd` | `CLAUDE.md` >200 lines after `@`-import expansion (high >400) | Trim, hoist to skills |
+| 13 | `detectBashBloat` | `BASH_MAX_OUTPUT_LENGTH` set above 15000 chars | Lower the cap |
+| 14 | `detectGhostAgents` | `~/.claude/agents/` entries never invoked (~80 tok/session each) | Archive or delete |
+| 15 | `detectGhostSkills` | `~/.claude/skills/` entries never invoked (~80 tok/session each) | Archive or delete |
+| 16 | `detectGhostCommands` | `~/.claude/commands/` entries never referenced (~60 tok/session each) | Archive or delete |
 
-Each finding ships with estimated token/dollar savings and copy-paste remediation steps (CLAUDE.md edits, environment variables, or file archival commands). No standalone docs site at the time of writing — taxonomy lives in the [README][codeburn].
+Each finding ships estimated token/dollar savings plus copy-paste remediation (CLAUDE.md edits, env vars, or archival commands). No standalone docs site yet; the canonical, complete list lives in [`src/optimize.ts`][codeburn-optimize] — the [README][codeburn] grouping undercounts it.
 
 ### Key Differentiator
 
@@ -734,5 +743,6 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [cc-switch]: https://github.com/farion1231/cc-switch
 [opensrc]: https://github.com/vercel-labs/opensrc
 [codeburn]: https://github.com/getagentseal/codeburn
+[codeburn-optimize]: https://github.com/getagentseal/codeburn/blob/main/src/optimize.ts
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
