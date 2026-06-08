@@ -143,6 +143,41 @@ mcp__context7__get-library-docs \
 
 **Install Context7 and Code Review for all projects. Add Security Guidance for projects with security-sensitive code. Everything else is conditional on project type and tooling choices.**
 
+## Full Ecosystem Inventory
+
+**Source**: [anthropics/claude-plugins-official][cpp-gh] | **Docs**: [plugin-marketplaces][cpp-docs]
+
+The repository has a two-tier structure: `plugins/` (35 Anthropic-internal plugins) and `external_plugins/` (15 partner/community plugins).
+
+### Additional Internal Plugins Not Covered Above
+
+**LSP language servers** (13): `clangd-lsp`, `csharp-lsp`, `gopls-lsp`, `jdtls-lsp`, `kotlin-lsp`, `lua-lsp`, `php-lsp`, `pyright-lsp`, `ruby-lsp`, `rust-analyzer-lsp`, `swift-lsp`, `typescript-lsp` — per-language LSP integrations; install the one matching your stack.
+
+**Dev workflow** (13): `agent-sdk-dev`, `claude-code-setup`, `claude-md-management`, `code-modernization`, `code-simplifier`, `commit-commands`, `feature-dev`, `hookify`, `mcp-server-dev`, `mcp-tunnels`, `playground`, `plugin-dev`, `pr-review-toolkit` — scaffolding, migration, hook authoring, MCP development, and PR tooling.
+
+**Session & reporting** (2): `session-report`, `skill-creator` — session summaries and guided skill authoring.
+
+**Output style** (3): `cwc-makers`, `explanatory-output-style`, `learning-output-style` — response style profiles for different audiences.
+
+**Other**: `math-olympiad` — competitive math problem solving.
+
+### External Partners (15)
+
+`asana`, `context7`, `discord`, `fakechat`, `firebase`, `github`, `gitlab`, `greptile`, `imessage`, `laravel-boost`, `linear`, `playwright`, `serena`, `telegram`, `terraform`
+
+### Skill-Bundle Packaging Format
+
+Repos shipping `SKILL.md` files without a `plugin.json` can use `"strict": false` alongside an explicit `skills` array in their plugin manifest. Each skill registers as `<plugin-name>:<skill-name>` inside CC.
+
+### Discovery and Submission
+
+- Browse the marketplace: `/plugin > Discover` in CC
+- Submit a third-party plugin: [clau.de/plugin-directory-submission][cpp-submit]
+
+[cpp-gh]: https://github.com/anthropics/claude-plugins-official
+[cpp-docs]: https://code.claude.com/docs/en/plugin-marketplaces
+[cpp-submit]: https://clau.de/plugin-directory-submission
+
 ## Already Covered Plugins
 
 These plugins have full analysis elsewhere in this repo:

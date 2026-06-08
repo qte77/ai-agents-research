@@ -29,9 +29,9 @@ These are the production skills powering Claude.ai, Cowork, and the Skills API. 
 
 ## Layer 2: Anthropic Knowledge-Work Plugins
 
-**Source**: [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) (2026-03-26)
+**Source**: [anthropics/knowledge-work-plugins][kw] (verified 2026-06-08 — 18 plugin directories, latest commit 2026-06-08)
 
-11 official open-source plugins for business domain workflows:
+18 official open-source plugins for business domain workflows (corrected from prior count of 11; actively maintained with automated SHA-pin bumps):
 
 | Plugin | Domain | Office-Relevant Capabilities |
 |--------|--------|------------------------------|
@@ -43,11 +43,20 @@ These are the production skills powering Claude.ai, Cowork, and the Skills API. 
 | **Design** | Creative | Design briefs, asset specifications |
 | **Engineering** | Development | Technical specs, architecture docs |
 | **Enterprise Search** | Knowledge | Cross-platform document search |
-| **Plugin Create** | Meta | Build custom plugins |
-| **Plugin Customize** | Meta | Extend existing plugins |
-| **Investment Banking** | Finance (specialized) | Financial modeling, deal documentation |
+| **Product Management** | Strategy/roadmap | PRDs, roadmap docs, OKR tracking |
+| **Marketing** | Growth/content | Campaign briefs, content calendars |
+| **Legal** | Compliance | Contract review, policy documentation |
+| **Customer Support** | Service ops | Knowledge base articles, response templates |
+| **Small Business** | SMB workflows | Business ops across functions |
+| **Data** | Analytics | Data reports, dashboards, analysis docs |
+| **Bio Research** | Life sciences | Research protocols, lab documentation |
+| **Cowork Plugin Management** | Meta | Manage and configure Cowork plugins |
+| **Partner-Built** | Various | Partner-contributed plugins |
+| **PDF Viewer** | Document reading | PDF viewing and extraction |
 
-**Key insight**: These plugins combine document skills with domain expertise — the Finance plugin doesn't just create spreadsheets, it knows accounting conventions (journal entry format, P&L structure, reconciliation workflows).
+**Install**: `claude plugin marketplace add anthropics/knowledge-work-plugins`
+
+**Key insight**: These plugins combine document skills with domain expertise — the Finance plugin doesn't just create spreadsheets, it knows accounting conventions (journal entry format, P&L structure, reconciliation workflows). Serves both Cowork and Claude Code.
 
 ## Layer 3: Community CC Skills
 

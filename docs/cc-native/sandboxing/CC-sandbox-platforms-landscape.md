@@ -166,6 +166,17 @@ Need cloud execution?
         └── Fly Machines (Docker) or Modal (autoscaling)
 ```
 
+## Defending Code Reference Harness: gVisor Pattern
+
+**Source**: [anthropics/defending-code-reference-harness][dcrh] — [agent-sandbox.md][dcrh-sandbox]
+
+The `bin/vp-sandboxed` pattern: each pipeline agent (`claude -p` process) runs inside a dedicated gVisor container alongside the target binary, on a `vp-internal` Docker network with no internet access. A sidecar proxy forwards traffic only to `api.anthropic.com:443` (overridable via `VP_EGRESS_ALLOW`). The wrapper refuses to execute unless gVisor and the proxy are verified active, preventing accidental unsandboxed runs.
+
+This is a first-party Anthropic reference for applying gVisor to CC-driven security pipelines — distinct from the general-purpose platforms above. See [CC-agentic-harness-patterns-analysis.md](../agents-skills/CC-agentic-harness-patterns-analysis.md#security-domain-application-defending-code-reference-harness) for the full pipeline context.
+
+[dcrh]: https://github.com/anthropics/defending-code-reference-harness
+[dcrh-sandbox]: https://github.com/anthropics/defending-code-reference-harness/blob/main/docs/agent-sandbox.md
+
 ## Relationship to CC Sandboxing
 
 CC's built-in sandboxing and these platforms solve **different problems**:
