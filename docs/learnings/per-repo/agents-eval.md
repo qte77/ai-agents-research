@@ -1,7 +1,7 @@
 ---
 title: "Agents-eval AGENT_LEARNINGS"
 description: Mirror of AGENT_LEARNINGS.md from qte77/Agents-eval.
-updated: 2026-05-18
+updated: 2026-06-08
 source: https://github.com/qte77/Agents-eval/blob/main/AGENT_LEARNINGS.md
 ---
 
