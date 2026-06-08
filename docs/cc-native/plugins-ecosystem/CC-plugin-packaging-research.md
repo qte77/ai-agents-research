@@ -56,7 +56,12 @@ async for message in query(
 # CLI — install from marketplace or local
 /plugin install my-plugin@marketplace
 # Or reference by path in settings
+
+# Fetch a plugin .zip archive from a URL for the current session only (v2.1.129)
+claude --plugin-url https://example.com/my-plugin.zip
 ```
+
+**`--plugin-url <url>` (v2.1.129)**: Fetches a plugin `.zip` archive from a URL and loads it for the current session without installing to `~/.claude/plugins/`. Useful for one-shot use of a remote plugin, CI testing of unpublished plugins, or ephemeral sessions where a persistent install is undesirable.
 
 ([source][sdk-plugins])
 
