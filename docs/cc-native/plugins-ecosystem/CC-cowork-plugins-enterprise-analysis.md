@@ -95,6 +95,35 @@ If the framework or tooling becomes a team-wide tool:
 1. Agents or skills need distribution to non-developer stakeholders
 2. Plugin API stabilizes and supports programmatic creation
 
+## First-Party Financial Services Agent Collection
+
+**Source**: [anthropics/financial-services][fin-svc]
+
+Anthropic's reference collection of production-ready financial services agents and plugins. Distinct from the generic pre-built templates in the Cowork plugin templates above — this is a standalone repo with agent cookbooks, vertical plugins, and MCP data connectors.
+
+**10 named agents** (in `managed-agent-cookbooks/`):
+
+| Category | Agents |
+|----------|--------|
+| Coverage & Advisory | Pitch Agent, Meeting Prep Agent |
+| Research & Modeling | Market Researcher, Earnings Reviewer, Model Builder |
+| Fund Admin & Finance Ops | Valuation Reviewer, GL Reconciler, Month-End Closer, Statement Auditor |
+| Operations & Onboarding | KYC Screener |
+
+**7 vertical plugins** (in `plugins/vertical-plugins/`): financial-analysis (core), investment-banking, equity-research, private-equity, wealth-management, fund-admin, operations.
+**2 partner-built plugins** (in `plugins/partner-built/`): LSEG, S&P Global.
+
+**12 MCP data connectors**: Daloopa, Morningstar, S&P Global, FactSet, Moody's, MT Newswires, Aiera, LSEG, PitchBook, Chronograph, Egnyte, Box.
+
+**Deployment options**:
+
+- Claude Code CLI: `claude plugin marketplace add anthropics/financial-services`
+- Managed Agents API: `scripts/deploy-managed-agent.sh [agent-slug]` (deploys via `/v1/agents`)
+- Cowork: upload plugin zips or add marketplace URL
+- Microsoft 365: `claude-for-msft-365-install` provisions against Vertex AI, Bedrock, or internal LLM gateways for Excel, PowerPoint, Word, and Outlook
+
+[fin-svc]: https://github.com/anthropics/financial-services
+
 ## Open Feature Requests
 
 - [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Linux users want Cowork dispatch in CC CLI (mobile→terminal). Currently dispatch is Cowork desktop↔phone only. Alternative: Remote Control (`claude rc`) covers steering from mobile, but lacks dispatch's continuous conversation handoff

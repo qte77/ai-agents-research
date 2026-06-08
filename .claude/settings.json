@@ -3,6 +3,31 @@
     "commit": "Co-Authored-By: Claude <noreply@anthropic.com>",
     "pr": "Generated with Claude <noreply@anthropic.com>"
   },
+  "permissions": {
+    "allow": [
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh run view *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh run list *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh pr view *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh pr list *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh pr checks *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh pr diff *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh pr status *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh issue view *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh issue list *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh api *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh workflow list *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh repo view *)",
+      "Bash(env -u GH_TOKEN -u GITHUB_TOKEN gh auth status *)",
+      "Bash(lychee --config *)",
+      "Bash(markdownlint-cli2 --config *)",
+      "Bash(git -C * log *)",
+      "Bash(git -C * status *)",
+      "Bash(git -C * remote *)",
+      "Bash(git -C * diff *)",
+      "Bash(git -C * show *)",
+      "Bash(git -C * branch *)"
+    ]
+  },
   "enabledPlugins": {
     "commit-helper@qte77-claude-code-utils": true,
     "docs-governance@qte77-claude-code-utils": true,
