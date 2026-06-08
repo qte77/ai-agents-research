@@ -13,11 +13,14 @@ import urllib.request
 from collections.abc import Callable
 from pathlib import Path
 
-# Noise words that match too broadly across docs
+# Noise words that match too broadly across docs.
+# Changelog verbs (added, fixed, improved, removed, renamed) are included so
+# "Bug fixes and reliability improvements" lines don't generate spurious matches.
 DEFAULT_NOISE: set[str] = {
     "claude", "code", "with", "that", "this", "from", "have",
     "been", "will", "your", "more", "tool", "tools", "https",
-    "github", "added", "fixed", "support", "feature",
+    "github", "added", "fixed", "improved", "removed", "renamed",
+    "support", "feature",
 }
 
 

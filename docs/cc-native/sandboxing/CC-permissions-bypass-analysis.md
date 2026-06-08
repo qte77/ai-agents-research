@@ -72,6 +72,25 @@ the risk:
 This auto-approves listed patterns while still prompting for unlisted actions
 (e.g., network requests, MCP tool calls).
 
+## Auto Mode Hard-Deny Rules (v2.1.136)
+
+`settings.autoMode.hard_deny` accepts the same rule syntax as `permissions.deny` but for the auto mode classifier specifically. Rules listed here block unconditionally regardless of user intent or allow exceptions — they cannot be overridden by an `allow` entry or a user confirmation.
+
+```json
+{
+  "autoMode": {
+    "hard_deny": [
+      "Bash(rm -rf *)",
+      "WebFetch(domain:internal.corp)"
+    ]
+  }
+}
+```
+
+Use this for absolute red lines (data exfiltration paths, destructive commands) that should never be approved even in auto mode. Distinct from `permissions.deny` which governs the interactive permission prompt system.
+
+Source: CHANGELOG v2.1.136
+
 ## Disabling Organization-Wide
 
 Server-managed settings can force-disable bypass mode:

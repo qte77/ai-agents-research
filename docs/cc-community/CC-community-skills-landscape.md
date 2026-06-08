@@ -1,10 +1,10 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression).
+description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms).
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-04-26
+updated: 2026-06-08
 validated_links: 2026-04-26
 ---
 
@@ -12,7 +12,7 @@ validated_links: 2026-04-26
 
 ## Summary
 
-Nine community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, and caveman compresses agent output via telegraphic-speech intensity levels.
+Ten community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis.
 
 ## gstack (Garry Tan)
 
@@ -395,6 +395,30 @@ Where RTK compresses **tool output** going *into* context (see [CC-community-too
 
 Cross-ref: [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — RTK (output ingestion compression), CodeBurn (token-usage observability)
 
+## last30days (mvanhorn)
+
+**Repo**: [mvanhorn/last30days-skill][last30days] | **Stars**: 34,179 | **License**: MIT | **Version**: v3.x
+
+Real-time social-research skill. Fans out parallel searches across 14+ platforms simultaneously and synthesizes results with an AI judge:
+
+**Platforms searched**: Reddit (with top comments), X/Twitter, YouTube (full transcripts), TikTok, Instagram Reels, Hacker News, Polymarket (prediction markets with real-money odds), GitHub, Bluesky, Threads, Pinterest, Digg (AI-curated X leaderboard), Perplexity Sonar (grounded web), editorial web coverage.
+
+**Design pattern**: Parallel fan-out — all sources queried concurrently, results scored by engagement metrics (upvotes, views, prediction odds), duplicate stories merged into clusters, AI-judge synthesis with citations. Pre-research entity resolution identifies relevant handles, subreddits, and hashtags before searching.
+
+**Installation**:
+
+```bash
+# Claude Code (recommended)
+/plugin marketplace add mvanhorn/last30days-skill
+
+# Other agents (50+ hosts)
+npx skills add mvanhorn/last30days-skill -g
+```
+
+**Key differentiator**: Only real-time social-consensus skill in the landscape — ranks by actual engagement rather than SEO/editorial algorithms, includes prediction-market odds alongside discourse, and outputs shareable self-contained HTML briefs. No tracking; research stays local.
+
+**Cross-ref**: Dispatch (above) fans out *work* to parallel agents; last30days fans out *searches* to parallel platforms — different layers of the parallel-fan-out pattern.
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -416,6 +440,7 @@ Cross-ref: [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md
 | [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
 | [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
 | [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
+| [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -426,3 +451,4 @@ Cross-ref: [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md
 [dispatch]: https://github.com/bassimeledath/dispatch
 [superpowers]: https://github.com/obra/superpowers
 [caveman]: https://github.com/JuliusBrussee/caveman
+[last30days]: https://github.com/mvanhorn/last30days-skill
