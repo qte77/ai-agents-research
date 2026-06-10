@@ -4,8 +4,8 @@ description: Survey of community reimplementations and educational deconstructio
 category: landscape
 status: research
 created: 2026-04-04
-updated: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-06-10
+validated_links: 2026-06-10
 ---
 
 **Status**: Research (informational)
@@ -95,15 +95,15 @@ Comprehensive educational project teaching "harness engineering" — building in
 
 ## Gitlawb/openclaude
 
-**Repo**: [Gitlawb/openclaude][openclaude] | **Stars**: 13K | **License**: MIT | **Approach**: Leak-derived
+**Repo**: [Gitlawb/openclaude][openclaude] | **Stars**: 28.6K | **License**: MIT | **Version**: v0.18.0 (2026-06-10) | **Approach**: Leak-derived
 
 Open-source multi-provider CLI derived from the March 2026 Claude Code source exposure. Strips telemetry and adds provider-agnostic functionality.
 
-**Multi-provider support**: OpenAI, Gemini, DeepSeek, Ollama, GitHub Models, Codex. Provider selection via `/provider` command or environment variables.
+**Multi-provider support**: Anthropic (Bedrock/Vertex), OpenAI and OpenAI-compatible endpoints, Google Gemini, GitHub Models, DeepSeek, Groq, Mistral, Ollama, Xiaomi MiMo, OpenCode Zen/Go. Provider selection via `/provider` command or environment variables.
 
-**Features**: Bash/file tools, grep/glob, slash commands, MCP integration, web search (DuckDuckGo/Firecrawl), agent routing for cost optimization.
+**Features**: Bash/file tools, grep/glob, slash commands, MCP integration, web search (DuckDuckGo/Firecrawl), per-task agent routing for cost optimization, and a headless gRPC server mode for embedding in other apps.
 
-**Provenance note**: Explicitly acknowledges derivation from leaked source. "Not an authorized fork or open-source release by Anthropic." Claude remains trademarked by Anthropic. 304 commits, actively maintained.
+**Provenance note**: Explicitly acknowledges derivation from leaked source. "Not an authorized fork or open-source release by Anthropic." Claude remains trademarked by Anthropic. 804 commits, actively maintained.
 
 ## coder/claudecode.nvim
 
