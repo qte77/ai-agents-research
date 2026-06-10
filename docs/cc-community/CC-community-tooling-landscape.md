@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-04-26
-validated_links: 2026-04-26
+updated: 2026-06-10
+validated_links: 2026-06-10
 ---
 
 **Status**: Research (informational)
@@ -506,6 +506,117 @@ Cross-ref: [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.
 
 ---
 
+## codebase-memory-mcp (DeusData)
+
+**Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Stars**: 3.2K | **License**: MIT | **Version**: v0.7.0 (2026-05-30)
+
+Single static binary that builds a persistent code knowledge graph for agents — no runtime dependencies, no external API. Combines 159 vendored tree-sitter grammars (syntactic parse), a clean-room hybrid-LSP type-resolution layer (Python, TS/JS, PHP, C#, Go, C/C++), and bundled `nomic-embed-code` embeddings (semantic search) into a SQLite-backed graph of typed nodes (Function, Class, Route) and edges (CALLS, IMPORTS, HTTP_CALLS).
+
+### CC Integration
+
+| Surface | Mechanism |
+|---------|-----------|
+| **MCP server** | 14 tools — `index_repository`, `search_graph`, `trace_path`, `query_graph` (Cypher-like read-only), `get_architecture`, `detect_changes`, `manage_adr`, `ingest_traces` |
+| **PreToolUse hook** | Augments Grep/Glob with graph results before keyword search |
+| **Auto-config** | `install` wires up Claude Code, Codex, Gemini CLI, Zed, OpenCode, Aider + others (PreToolUse hook for CC; SessionStart reminders for the rest) |
+
+### Key Features
+
+- **99.2% token reduction** claim: ~3,400 tokens for 5 structural queries vs ~412,000 via file-by-file grep
+- **159 languages** (88 full AST, 71 additional); Linux kernel (~28M LOC) indexed in ~3 min, sub-ms queries
+- **Install**: one-line `curl … | bash`, plus AUR / Homebrew / PyPI / npm; macOS / Linux / Windows
+
+### Adoption Considerations
+
+**Strengths**: Zero-dependency single binary (vs graphify's PyPI + LLM calls). Bundled local embeddings — semantic search with no API cost or data egress. Broadest language coverage in this category.
+
+**Risks**: 99.2% reduction is self-reported (no independent benchmark). Hybrid-LSP type resolution is a clean-room reimplementation (only 7 languages fully resolved). Overlaps graphify and Code-Review-Graph on the AST/graph layer. Early stage (v0.x).
+
+Cross-ref: Graphify and Code-Review-Graph above — same code→graph category; Serena below — live-LSP alternative
+
+---
+
+## Serena (oraios)
+
+**Repo**: [oraios/serena][serena] | **Stars**: 25.2K | **License**: MIT | **Version**: v1.5.3 (2026-05-26)
+
+LSP-based semantic coding toolkit — "an IDE for your agent." Unlike the AST/graph tools above (which precompute a graph), Serena drives live language servers via the Language Server Protocol, giving agents symbol-level operations: find symbol, find references, type hierarchy, rename/move refactor, safe delete, and diagnostics — atomic cross-file edits instead of text-replace guesswork.
+
+### CC Integration
+
+| Surface | Mechanism |
+|---------|-----------|
+| **MCP server** | 20+ symbol-level tools, configured as a launch command in CC. In a harness like CC the overlapping file/search/shell tools are often disabled, leaving Serena's semantic tools |
+| **Memory** | Project memory files for long-lived workflows |
+| **Install** | `uv tool install -p 3.13 serena-agent` then `serena init` |
+
+### Key Features
+
+- **40+ languages** via open-source language servers (Python, TS/JS, Go, Rust, C/C++, C#, Java, Kotlin, Scala, …); optional paid JetBrains backend
+- Symbol-level retrieval/edit "especially in larger and more complex codebases"
+- Free and OSS; reuses LLMs you already have
+
+### Adoption Considerations
+
+**Strengths**: Live LSP semantics (always current, no index to rebuild) vs the precomputed-graph approach of graphify / Code-Review-Graph / codebase-memory-mcp. Most-starred tool in this category. Symbol-aware refactors agents can't safely do via text edits.
+
+**Risks**: Per-language LSP setup adds moving parts. Overlap with CC's built-in tools means the payoff is mainly in larger codebases. No headline token-reduction metric — efficiency comes from precise symbol queries, not corpus compression.
+
+Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — previously only named there (partner marketplace); analyzed here
+
+---
+
+## ast-grep MCP (ast-grep)
+
+**Repo**: [ast-grep/ast-grep-mcp][ast-grep-mcp] | **Stars**: 419 | **License**: MIT | **Version**: unreleased (main branch)
+
+Experimental MCP wrapper around the [ast-grep][ast-grep] Rust structural search/rewrite CLI. Exposes tree-sitter AST pattern matching to agents so they search by *syntax structure* (functions, classes, imports, call shapes) instead of text — fewer false positives than Grep, and structure-preserving rewrites.
+
+### CC Integration
+
+| Surface | Mechanism |
+|---------|-----------|
+| **MCP server** | 4 tools — `dump_syntax_tree`, `test_match_code_rule`, `find_code`, `find_code_by_rule` (YAML rules) |
+| **Runtime** | Python + FastMCP; `uvx --from git+https://github.com/ast-grep/ast-grep-mcp`; JSON client config (CC / Cursor / Claude Desktop) |
+
+### Key Features
+
+- Structural patterns across JS/TS, Python, Rust, Go, Java, C/C++, C# and more (custom languages supported)
+- **~75% fewer tokens** with the text output format vs JSON metadata
+- `dump_syntax_tree` lets the agent learn a language's node types before writing a pattern
+
+### Adoption Considerations
+
+**Strengths**: Lightweight and on-demand — no index to build (vs the persistent-graph tools above). Precise structural search/rewrite; pairs well with a graph tool for navigation plus a pattern tool for edits.
+
+**Risks**: Experimental, no tagged releases, low star count (the parent ast-grep CLI is mature; the MCP wrapper is early). Requires writing ast-grep patterns / YAML rules to get full value.
+
+Cross-ref: complements the persistent-graph tools above (search/rewrite vs navigation)
+
+---
+
+## Repomix & code2prompt (repository packers)
+
+A distinct sub-category: one-shot **context export** rather than a live MCP graph. Both flatten a repo into a single LLM-ready artifact with token counting, for pasting into a chat or seeding an agent's first turn.
+
+### Repomix (yamadashy)
+
+**Repo**: [yamadashy/repomix][repomix] | **Stars**: 26.2K | **License**: MIT | **Version**: v1.14.1 (2026-05-27)
+
+Packs a repository into one AI-friendly file (XML / Markdown / JSON / plain text), respecting `.gitignore` and scanning for secrets via Secretlint. `--compress` uses tree-sitter to keep classes/functions/interfaces and drop bodies — **~70% token reduction** while preserving structure. Reports per-file and repo-wide token counts (`o200k_base` / `cl100k_base`). **CC integration**: MCP server (`pack_codebase`, `pack_remote_repository`, `read_repomix_output`, `grep_repomix_output`, …) plus official CC plugins — `repomix-mcp`, `repomix-commands`, `repomix-explorer` via `/plugin marketplace add yamadashy/repomix`. Run with `npx repomix@latest`.
+
+### code2prompt (mufeedvh)
+
+**Repo**: [mufeedvh/code2prompt][code2prompt] | **Stars**: 7.4K | **License**: MIT | **Version**: v4.2.0 (2025-12-11)
+
+Rust CLI that renders a codebase into a single prompt with a source tree, Handlebars templating, git integration, and token counting. Ships an MCP server and a Python SDK (`pip install code2prompt-rs`); also `cargo install` / Homebrew.
+
+### Adoption Considerations
+
+**Use when**: you want a deterministic, whole-repo snapshot for a one-off question, an agent's first turn, or a non-CC LLM — no server to run. **Prefer the graph/LSP tools above** (codebase-memory-mcp, graphify, Serena) for repeated, large-codebase work, where re-sending a packed corpus every turn would blow the context budget. Repomix's `--compress` and these packers are complementary to RTK (output-side) and Boucle (read dedup), both above.
+
+---
+
 ## CodeBurn (AgentSeal)
 
 **Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 4K | **License**: MIT | **Latest**: Menubar v0.9.0 (2026-04-25) | **Stack**: TypeScript, Node.js 20+
@@ -662,11 +773,16 @@ Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-a
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
 | **Code-Review-Graph** | Structural code analysis | MCP server (22 tools, auto-config) | AST-based blast radius for reviews | Active (7.1K stars) |
+| **codebase-memory-mcp** | Code→graph + LSP + embeddings | MCP (14 tools) + PreToolUse hook + auto-config | Single-binary knowledge graph | Active (3.2K stars, v0.7.0) |
+| **Serena** | Semantic code (live LSP) | MCP server (20+ tools) | Symbol-level retrieve/edit/refactor | Active (25.2K stars, v1.5.3) |
+| **ast-grep MCP** | Structural search/rewrite | MCP server (4 tools) | tree-sitter AST patterns | Experimental (419 stars, no release) |
+| **Repomix** | Repo→single-file context export | MCP server + official CC plugins | tree-sitter compression + token counts | Stable (26.2K stars, v1.14.1) |
+| **code2prompt** | Repo→single-prompt context export | MCP server + CLI | Templated export + token counts | Stable (7.4K stars, v4.2.0) |
 | **CodeBurn** | Token-usage observability (cross-agent) | CLI (reads on-disk session data) | Cross-agent dashboard, 13 task categories, optimize/compare | Active (4K stars) |
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 
-All sixteen address different layers of the agent stack — complementary, not competing.
+All twenty-one address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -689,6 +805,11 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [Code-Review-Graph][code-review-graph] | AST-based blast radius analysis, 22 MCP tools (7.1K stars) |
+| [codebase-memory-mcp][codebase-memory-mcp] | Single-binary code knowledge graph: 159 tree-sitter grammars + hybrid LSP + embeddings, 14 MCP tools (3.2K stars, MIT) |
+| [Serena][serena] | LSP-based semantic coding MCP toolkit, 20+ symbol-level tools, 40+ languages (25.2K stars, MIT) |
+| [ast-grep MCP][ast-grep-mcp] | MCP wrapper for ast-grep structural AST search/rewrite, 4 tools (419 stars, MIT) |
+| [Repomix][repomix] | Repo→single-file packer, tree-sitter `--compress`, MCP server + CC plugins (26.2K stars, MIT) |
+| [code2prompt][code2prompt] | Repo→single-prompt CLI with token counting, MCP server + Python SDK (7.4K stars, MIT) |
 | [CodeBurn][codeburn] | Cross-agent token-usage TUI dashboard (4K stars, MIT) |
 | [ccusage][ccusage] | CC/Codex JSONL usage analyzer, MCP-integrated (13.4K stars, MIT) |
 | [Claude-Code-Usage-Monitor][claude-monitor] | Predictive real-time usage monitor with P90-based limits (7.8K stars, MIT) |
@@ -698,6 +819,12 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [mempalace]: https://github.com/MemPalace/mempalace
 [longmemeval]: https://github.com/xiaowu0162/LongMemEval
 [code-review-graph]: https://github.com/tirth8205/code-review-graph
+[codebase-memory-mcp]: https://github.com/DeusData/codebase-memory-mcp
+[serena]: https://github.com/oraios/serena
+[ast-grep-mcp]: https://github.com/ast-grep/ast-grep-mcp
+[ast-grep]: https://github.com/ast-grep/ast-grep
+[repomix]: https://github.com/yamadashy/repomix
+[code2prompt]: https://github.com/mufeedvh/code2prompt
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
 [gsd-repo]: https://github.com/gsd-build/get-shit-done
