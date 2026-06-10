@@ -3,8 +3,8 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-04-23
-validated_links: 2026-04-23
+updated: 2026-06-10
+validated_links: 2026-06-10
 ---
 
 **Status**: Reference (actionable configuration guide)
@@ -18,10 +18,28 @@ validated_links: 2026-04-23
 | `ANTHROPIC_DEFAULT_SONNET_MODEL` | Override Sonnet-class model | Custom model ID |
 | `ANTHROPIC_DEFAULT_OPUS_MODEL` | Override Opus-class model | Custom model ID |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | Model for subagents/teammates | Custom model ID |
-| `CLAUDE_CODE_EFFORT_LEVEL` | Reasoning effort (Opus 4.6, Sonnet 4.6) | `low`, `medium`, `high` |
+| `CLAUDE_CODE_EFFORT_LEVEL` | Reasoning effort (Fable 5, Opus 4.8/4.7/4.6, Sonnet 4.6) | `low`, `medium`, `high`, `xhigh`, `max` |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | Disable adaptive reasoning | `1` |
 
 All variables can also be set in `settings.json` under the `env` key. ([source][cc-settings])
+
+### Claude Fable 5 (newest model)
+
+Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released model, built for complex, long-running agentic work — is selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. Generally available on the Claude API and major clouds since 2026-06-09 ([source][fable5-intro]).
+
+| Property | Value |
+| -------- | ----- |
+| Model ID | `claude-fable-5` |
+| Context / max output | 1M tokens (default) / 128K tokens ([source][models-overview]) |
+| Pricing | $10 / $50 per MTok (input / output) — above Opus-tier's $5 / $25 ([source][models-pricing]) |
+| Thinking | Adaptive only, always on (`thinking: disabled` unsupported); tune depth with `CLAUDE_CODE_EFFORT_LEVEL` / effort `low`–`xhigh`/`max` ([source][fable5-intro]) |
+
+CC-relevant caveats ([source][fable5-intro]):
+
+- **New tokenizer** (the one introduced with Opus 4.7): the same text is ~30% more tokens than on pre-4.7 models — re-baseline cost and `CLAUDE_CODE_MAX_OUTPUT_TOKENS` expectations.
+- **`refusal` stop reason**: safety classifiers may decline a request as a successful HTTP 200 (not an error); plan for refusal handling and fallback to another model.
+- **30-day data retention required** — not available to zero-data-retention orgs.
+- **CC plan access** (per the in-product `/model` notice, 2026-06): included in Claude plan limits until 2026-06-22, after which it continues via usage credits.
 
 ## API Key & Endpoint
 
@@ -171,7 +189,7 @@ claude
 | **KV cache invalidation** | CC prepends an attribution header that invalidates KV cache. Set `CLAUDE_CODE_ATTRIBUTION_HEADER=0` to prevent this ([source][local-setup]) |
 | **Login bypass** | If CC prompts for login, add `"hasCompletedOnboarding": true` and `"primaryApiKey": "sk-dummy-key"` to `~/.claude.json` ([source][local-setup]) |
 | **Non-essential traffic** | Set `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` to reduce calls to Anthropic servers ([source][cc-settings]) |
-| **Cost savings** | Local models are free; third-party cloud options like DeepSeek V3.2 are ~$0.28/$0.42 per million tokens vs Opus 4.6 $5/$25 ([source][models-pricing]) |
+| **Cost savings** | Local models are free; third-party cloud options like DeepSeek V3.2 are ~$0.28/$0.42 per million tokens vs Opus 4.8 $5/$25 (Fable 5 $10/$50) ([source][models-pricing]) |
 
 ### LLM Gateway / Proxy Configuration
 
@@ -265,6 +283,9 @@ When routing through gateways, additionally set ([source][cc-settings]):
 ## References
 
 - [CC Settings — Environment Variables][cc-settings]
+- [Anthropic — Introducing Claude Fable 5 & Mythos 5][fable5-intro]
+- [Anthropic — Models Overview][models-overview]
+- [Anthropic — Pricing][models-pricing]
 - [OpenRouter — Claude Code Integration][openrouter]
 - [Ollama — Claude Code with Anthropic API Compatibility][ollama-claude]
 - [llama.cpp — Anthropic Messages API][llamacpp-anthropic]
@@ -283,4 +304,6 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [olla]: https://thushan.github.io/olla/integrations/frontend/claude-code/
 [bifrost]: https://www.getmaxim.ai/articles/running-non-anthropic-models-in-claude-code-via-an-enterprise-ai-gateway/
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
-[models-pricing]: https://platform.claude.com/docs/en/docs/about-claude/models
+[fable5-intro]: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
+[models-overview]: https://platform.claude.com/docs/en/about-claude/models/overview
+[models-pricing]: https://platform.claude.com/docs/en/about-claude/pricing
