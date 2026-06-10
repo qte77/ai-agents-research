@@ -215,6 +215,22 @@ Supports: `claude --model gpt-4o`, `claude --model gemini-3.0-flash-exp`, `claud
 
 Open-source Go-based gateway supporting 1000+ models. Intercepts Anthropic-format requests, converts to target provider format, and translates responses back transparently ([source][bifrost]).
 
+#### Claude Code Router (CCR)
+
+A local, **task-aware** router — not a passive translator. It intercepts CC's outbound requests and picks a provider/model **per request** by task type, token count, or custom rules, with no cloud hop for the routing logic ([source][cc-router]).
+
+```bash
+npm install -g @musistudio/claude-code-router
+ccr start    # local router on :3456
+ccr code     # launches CC with ANTHROPIC_BASE_URL=http://localhost:3456
+```
+
+- **Routing scenarios**: `default`, `background`, `think`, `longContext` (auto-switches past a token threshold, default ~60K), `webSearch`, `image` (beta)
+- **Providers / transformers**: OpenRouter, DeepSeek, Gemini, Ollama, Volcengine, SiliconFlow, ModelScope, DashScope, AIHubmix; plus custom JS routing functions
+- **Maturity**: very popular (~34.9K stars, MIT) but a large open-issue backlog (~800+) — pin a known-good version
+
+Unlike the passive proxies above (LiteLLM/Bifrost translate API formats), CCR decides *which* model handles each request. CCR is also the community routing layer noted in [CC-vlm-screen-sharing-landscape.md](../../cc-community/CC-vlm-screen-sharing-landscape.md).
+
 #### Direct CC-Compatible Endpoints
 
 Some providers expose Anthropic-compatible endpoints natively (no proxy needed):
@@ -274,6 +290,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 | **Multi-provider / team** | LiteLLM proxy | Medium (proxy setup) |
 | **Enterprise cloud** | Bedrock / Vertex / Foundry | High (cloud config) |
 | **Non-Anthropic models in CC** | LiteLLM or claude-code-proxy | Medium (proxy) |
+| **Per-task local routing / cost control** | Claude Code Router (CCR) | Medium (npm + `ccr start`) |
 
 ## Cross-References
 
@@ -293,6 +310,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [claude-code-proxy (GitHub)][cc-proxy]
 - [Olla — Multi-Backend Proxy][olla]
 - [Bifrost — Open-Source AI Gateway][bifrost]
+- [Claude Code Router (CCR)][cc-router]
 - [Local setup guide][local-setup]
 
 [cc-settings]: https://code.claude.com/docs/en/settings#environment-variables
@@ -303,6 +321,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [cc-proxy]: https://github.com/fuergaosi233/claude-code-proxy
 [olla]: https://thushan.github.io/olla/integrations/frontend/claude-code/
 [bifrost]: https://www.getmaxim.ai/articles/running-non-anthropic-models-in-claude-code-via-an-enterprise-ai-gateway/
+[cc-router]: https://github.com/musistudio/claude-code-router
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
 [fable5-intro]: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
 [models-overview]: https://platform.claude.com/docs/en/about-claude/models/overview
