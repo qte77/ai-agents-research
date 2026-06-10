@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code]
 created: 2026-04-11
-updated: 2026-04-11
-validated_links: 2026-04-11
+updated: 2026-06-10
+validated_links: 2026-06-10
 ---
 
 **Status**: Assess
@@ -125,7 +125,7 @@ Three FRs on the `anthropics/claude-code` issue tracker are relevant to visual c
 
 ## Claude Code Routing Options (for LLM-agnostic flows)
 
-If a workflow needs to route different tasks (e.g. visual OCR vs. code generation) to different model providers within a single Claude Code session, the current community answer is an external router. [claude-code-router][cc-router] (32K+ stars, multi-provider) is the most prominent example; it sits in front of Claude Code and routes requests to OpenRouter, DeepSeek, Ollama, Gemini, or others based on configuration.
+If a workflow needs to route different tasks (e.g. visual OCR vs. code generation) to different model providers within a single Claude Code session, the current community answer is an external router. [claude-code-router][cc-router] (~34.9K stars, multi-provider) is the most prominent example; it sits in front of Claude Code and routes requests per task to OpenRouter, DeepSeek, Ollama, Gemini, and others. See [CC-model-provider-configuration.md][cc-router-config] for setup and the full routing-scenario list.
 
 Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow could route visual-OCR subagents to local Ollama and reasoning subagents to Anthropic, without waiting for FR #38698.
 
@@ -163,4 +163,5 @@ Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow co
 [cc-22903]: https://github.com/anthropics/claude-code/issues/22903
 [cc-38698]: https://github.com/anthropics/claude-code/issues/38698
 [cc-router]: https://github.com/musistudio/claude-code-router
+[cc-router-config]: ../cc-native/configuration/CC-model-provider-configuration.md
 [cc-voice]: https://github.com/qte77/cc-voice-plugin-prototype
