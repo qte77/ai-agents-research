@@ -2,7 +2,7 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-04-23
+updated: 2026-06-11
 validated_links: 2026-04-23
 ---
 
@@ -357,6 +357,21 @@ ISO 42001 + 23894 (certifiable management system + risk methodology)
 | Agent hijacking | AML.T0056 | L7 Orchestration | MEASURE 2.6 | A.6.4 |
 | Evaluation bias | AML.T0043 | L2 Agent Logic | MEASURE 2.5 | A.7.4 |
 
+## Defensive Tooling
+
+The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](CC-community-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
+
+| Command | What it does | Maps to (this doc) |
+| --- | --- | --- |
+| `guard` | Offline scan of agent configs (skills, MCP) across 28+ agents for dangerous patterns | Supply chain — AML.T0040 / MAESTRO L6 |
+| `scan` | Tests system prompts against 225+ adversarial probes | Prompt injection / jailbreak — AML.T0051, AML.T0054 / MAESTRO L1 |
+| `scan-mcp` | Audits live MCP servers for tool-description poisoning | Agent hijacking / tool poisoning — AML.T0056 / MAESTRO L7 |
+| `shield` | Real-time file monitoring with threat alerts | Continuous monitoring — MAESTRO L4 |
+
+Backed by an MCP Security Registry (6,600+ indexed servers), semantic analysis (MiniLM-L6-v2 embeddings), and payload deobfuscation. It complements MAESTRO's prescriptive controls with an executable check: MAESTRO says *what* to defend; AgentSeal scans *whether* a given skill/MCP setup is exposed — operationalizing the Unified Mapping Table above.
+
+**Adoption caveat**: licensed FSL-1.1-Apache-2.0 (Functional Source License → Apache-2.0 after the change window) — source-available, not OSI-open at release. Review the license window before bundling it into permissively-licensed tooling.
+
 ## Recommendations for Agents-eval
 
 Given the project's open-source research context, full certification (ISO 42001)
@@ -383,3 +398,4 @@ is not warranted. A lightweight alignment approach:
 - [ISO/IEC 23894:2023](https://www.iso.org/standard/77304.html)
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents)
+- [AgentSeal (getagentseal)](https://github.com/getagentseal/agentseal) — open-source scanner for agent skills/MCP configs (adversarial prompt probes, MCP poisoning audit)
