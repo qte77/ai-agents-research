@@ -97,6 +97,28 @@ Three lint jobs run on every PR touching docs, workflows, or actions:
 
 The rxiv triage job additionally runs `markdownlint-cli2` against the assembled would-be PR content (with the action's H1 prepend simulated) and fails the job before opening a triage PR if the output is md-dirty.
 
+## Knowledge Graph (graphify)
+
+An optional graphify knowledge graph maps the corpus — concepts, cross-document references, and community structure — for navigation and gap-finding. It is **on-demand only**: no hooks or `CLAUDE.md` mandates run it automatically (that per-tool-call overhead was deliberately removed), so it adds no cost to normal sessions. Build output (`graphify-out/`) is gitignored; the rendered graph is published to the `gh-pages` branch.
+
+**Live graph:** <https://qte77.github.io/ai-agents-research/> — refresh with `make graph-publish` after a rebuild.
+
+**Build** (semantic extraction needs an LLM):
+
+- Interactive, key-free — the `/graphify` Claude Code skill (uses the session as the extraction model).
+- Headless, for CI/scripts — `graphify extract . --backend gemini` (or `claude`, `openai`, …) with the matching API key, then `graphify label .` to name communities. Also exposed as `make graph-build`.
+
+**Navigate** (free, no LLM — operate on `graphify-out/graph.json`):
+
+| Action | Command |
+|---|---|
+| Query | `make graph-query Q="<question>"` |
+| Explain a node | `make graph-explain N="<node>"` |
+| Shortest path | `make graph-path A="<node>" B="<node>"` |
+| Re-render viz | `make graph-html` |
+
+`graphify` is side-loaded (not on `PATH`); set `GRAPHIFY=/path/to/graphify` to point the recipes at a specific build.
+
 ## Downstream Consumers
 
 Research from this repository feeds directly into implementation repos:
