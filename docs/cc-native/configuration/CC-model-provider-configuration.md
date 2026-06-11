@@ -48,6 +48,8 @@ Opus 4.6 and Sonnet 4.6 support `low`/`medium`/`high`/`max` (no `xhigh`). Settin
 - **`ultracode`** — a session setting that sends `xhigh` *and* auto-orchestrates dynamic workflows; not part of `effortLevel`/`--effort`/`CLAUDE_CODE_EFFORT_LEVEL`. See [CC-dynamic-workflows-analysis.md](../agents-skills/CC-dynamic-workflows-analysis.md#ultracode-effort-setting).
 - **`ultrathink`** — include it anywhere in a prompt for one-off deeper reasoning on that turn; Claude Code adds an in-context instruction but the **effort level sent to the API is unchanged**. Phrases like "think", "think hard", and "think more" are *not* recognized keywords ([source][cc-ultrathink]).
 
+**Verified 2026-06-11.** Effort availability and defaults are model-generation-specific and shift over time; `xhigh` is gated on the `xhigh_effort` capability (CC v2.1.111+), and `xhigh`-capable models require recent CC builds (Opus 4.8 → v2.1.154+, Fable 5 → v2.1.170+) ([source][cc-effort]).
+
 ### Claude Fable 5 (newest model)
 
 Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released model, built for complex, long-running agentic work — is selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. Generally available on the Claude API and major clouds since 2026-06-09 ([source][fable5-intro]).
