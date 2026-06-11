@@ -641,7 +641,7 @@ Per the [README][codeburn]: Claude Code, Claude Desktop, Codex, Cursor, cursor-a
 
 - **TUI dashboard** with gradient charts and responsive panels
 - **13 task categories** classified from tool patterns: Coding, Debugging, Feature Dev, Refactoring, Testing, Exploration, Planning, Delegation, Git Ops, Build/Deploy, Brainstorming, Conversation, General
-- **`codeburn optimize`** — surfaces waste patterns with copy-paste fixes
+- **[`codeburn optimize`](https://github.com/getagentseal/codeburn#optimize)** — surfaces nine waste patterns (files re-read across sessions, low Read:Edit ratio, unused MCP servers, ghost agents/skills/slash commands, bloated `CLAUDE.md`, wasted bash output, cache-creation overhead, context-heavy and low-worth sessions) with copy-paste token/$ fixes ranked into an A–F health grade
 - **`codeburn compare`** — side-by-side model performance metrics
 - **`codeburn report -p 30days`** — rolling-window analysis
 - **`codeburn export`** — CSV/JSON across multiple time periods
