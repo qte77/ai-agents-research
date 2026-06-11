@@ -11,6 +11,7 @@ endif
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_skills setup_all \
 	check_links check_docs check_actions autofix lint \
+	graph-build graph-html graph-query graph-explain graph-path graph-publish \
 	help
 .DEFAULT_GOAL := help
 
@@ -21,6 +22,15 @@ ACTIONLINT_VERSION ?= 1.7.12
 NODE_DIR           := $(HOME)/.local/share/node
 NODE_BIN           := $(NODE_DIR)/bin
 LOCAL_BIN          := $(HOME)/.local/bin
+
+# graphify knowledge graph — https://qte77.github.io/ai-agents-research/
+# GRAPHIFY: binary (override for a side-loaded build, e.g.
+#   GRAPHIFY=/workspaces/external/graphify/.venv/bin/graphify)
+# GRAPHIFY_BACKEND: LLM backend for headless `make graph-build` (needs its API key)
+# PYTHON: interpreter for the stdlib-only publish helper (no deps, so no uv needed)
+GRAPHIFY           ?= graphify
+GRAPHIFY_BACKEND   ?= gemini
+PYTHON             ?= python3
 
 # -- OS / arch detection --
 UNAME_S := $(shell uname -s)
@@ -230,6 +240,37 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 	actionlint -color
 
 lint: check_links check_docs check_actions ## Run all linters (links + markdown + actions)
+
+
+# MARK: GRAPH
+
+
+# Query/navigate ops are free (no LLM). Building needs an extraction model: the
+# /graphify skill (key-free, uses the Claude Code session) or `graphify extract`
+# with an API key. Config (GRAPHIFY / GRAPHIFY_BACKEND / PYTHON) is at the top.
+
+graph-build: ## Headless full rebuild (AST + semantic) — needs an LLM backend API key
+	$(GRAPHIFY) extract . --backend $(GRAPHIFY_BACKEND)
+	$(GRAPHIFY) label . --backend $(GRAPHIFY_BACKEND)
+
+graph-html: ## Re-render graphify-out/graph.html from graph.json (no LLM)
+	if [ ! -f graphify-out/graph.json ]; then echo "no graph.json — build first (/graphify skill or make graph-build)"; exit 1; fi
+	$(GRAPHIFY) export html
+
+graph-query: ## Query the graph: make graph-query Q="how does X work?"
+	if [ -z "$(Q)" ]; then echo 'Usage: make graph-query Q="<question>"'; exit 2; fi
+	$(GRAPHIFY) query "$(Q)"
+
+graph-explain: ## Explain a node + neighbors: make graph-explain N="Node Label"
+	if [ -z "$(N)" ]; then echo 'Usage: make graph-explain N="<node>"'; exit 2; fi
+	$(GRAPHIFY) explain "$(N)"
+
+graph-path: ## Shortest path between nodes: make graph-path A="Node A" B="Node B"
+	if [ -z "$(A)" ] || [ -z "$(B)" ]; then echo 'Usage: make graph-path A="<node>" B="<node>"'; exit 2; fi
+	$(GRAPHIFY) path "$(A)" "$(B)"
+
+graph-publish: ## Push graphify-out/graph.html to the gh-pages branch (refresh the live page)
+	$(PYTHON) scripts/graphify-publish-pages.py
 
 
 # MARK: HELP
