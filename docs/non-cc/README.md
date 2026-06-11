@@ -18,6 +18,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [feynman-analysis.md](feynman-analysis.md) | Companion AI Feynman (research agent, multi-agent investigation) | Yes | Yes (MIT) |
 | [hermes-agent-analysis.md](hermes-agent-analysis.md) | Nous Research Hermes (self-improving, multi-platform, 43K stars) | Yes | Yes (MIT) |
 | [rowboat-analysis.md](rowboat-analysis.md) | Rowboat (AI coworker, knowledge graph from comms) | No | Yes (Apache-2.0) |
+| [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md) | GitHub Copilot CLI (terminal agent, same harness as Copilot coding agent) | Yes | No (proprietary) |
 
 ## Knowledge Management
 
@@ -54,6 +55,14 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 ## Planned
 
 Cline, opencode, Codebuff, Gemini CLI, Cursor, Antigravity, Kiro, Codex CLI,
-Copilot, Windsurf, Aider, Amazon Q -- see
+VS Code Copilot Chat, Devin CLI, Windsurf, Aider, Amazon Q,
+CodeBuddy, Kilo Code, Trae, Kimi Code, Amp, Pi -- see
 [coding-agent-eval plan](https://github.com/qte77/coding-agent-eval) for the
 full landscape.
+
+**Disambiguation.** [GitHub Copilot CLI](github-copilot-cli-analysis.md)
+(analyzed above) and *Devin CLI* are interactive terminal agents. They share
+branding — but not surface — with the *GitHub Copilot Coding Agent* (cloud;
+assign an issue, it opens a PR) and *autonomous Devin*, which are covered
+separately under CI automation in
+[CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape).

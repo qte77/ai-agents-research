@@ -296,6 +296,8 @@ The CC GHA interactive mode supports `@claude` in issue comments, but the broade
 | [Devin][devin] | Yes (full autonomous) | No | Basic | Full agent | No | $20/mo + ACUs |
 | [AI Issue Resolver][axiotree] | Yes (label-triggered) | No | Label-triggered | Generates PRs | MIT | Free (BYOK) |
 
+**CLI vs cloud-agent surfaces.** The *GitHub Copilot Coding Agent* and *Devin* rows above are the autonomous **cloud** products (assign work, it opens a PR). They are distinct from the same brands' interactive **terminal/IDE** agents — [GitHub Copilot CLI][copilot-cli] (same agentic harness, run locally), VS Code Copilot Chat, and Devin CLI — which are tracked in the [non-CC coding-agent landscape](../../non-cc/README.md#planned), not as CI-native issue→PR automations.
+
 ### Gap Analysis
 
 Four capabilities most solutions miss when applied to issue lifecycle:
@@ -334,6 +336,7 @@ A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-t
 [gh-larger-runner-jobs]: https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/use-larger-runners
 [cc-action-repo]: https://github.com/anthropics/claude-code-action
 [copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent
+[copilot-cli]: https://github.com/github/copilot-cli
 [codex-action]: https://github.com/openai/codex-action
 [sweep-repo]: https://github.com/sweepai/sweep
 [swe-agent-repo]: https://github.com/SWE-agent/SWE-agent
