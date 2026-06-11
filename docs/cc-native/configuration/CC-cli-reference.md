@@ -2,8 +2,8 @@
 title: CC CLI Reference
 purpose: Single canonical reference for all claude CLI flags, subcommands, and constraints. Other docs cross-ref here for flag definitions.
 created: 2026-04-13
-updated: 2026-04-13
-validated_links: 2026-04-13
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Adopt
@@ -72,7 +72,7 @@ For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools
 | Flag | Description | Constraints | Source |
 |---|---|---|---|
 | `--model` | Model alias (`sonnet`, `opus`) or full ID | — | [model-config][model-config] |
-| `--effort` | Reasoning effort: `low`, `medium`, `high`, `max` (Opus 4.6 only) | Session-scoped, not persisted | [model-config][model-config] |
+| `--effort` | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`, `auto` — support varies by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | Session-scoped, not persisted | [model-config][model-config] |
 | `--fallback-model` | Auto-fallback model when primary is overloaded | `--print` only | [cli-ref][cli-ref] |
 | `--max-turns` | Limit agentic turns; exits with error when reached | `--print` only | [cli-ref][cli-ref] |
 | `--max-budget-usd` | Maximum dollar spend before stopping | `--print` only | [cli-ref][cli-ref] |

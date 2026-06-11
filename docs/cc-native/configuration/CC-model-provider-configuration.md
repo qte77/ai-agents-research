@@ -3,8 +3,8 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-06-10
-validated_links: 2026-06-10
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Reference (actionable configuration guide)
@@ -22,6 +22,31 @@ validated_links: 2026-06-10
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | Disable adaptive reasoning | `1` |
 
 All variables can also be set in `settings.json` under the `env` key. ([source][cc-settings])
+
+### Effort Levels
+
+`CLAUDE_CODE_EFFORT_LEVEL` (above), the `/effort` command, the `--effort` flag, and per-skill/subagent `effort` frontmatter all select an **adaptive-reasoning effort level**. The levels available depend on the model ([source][cc-effort]):
+
+| Level | Models | Notes |
+|---|---|---|
+| `low` | all effort-capable | Short, scoped, latency-sensitive work |
+| `medium` | all effort-capable | Cost-sensitive work trading some intelligence |
+| `high` | all effort-capable | Balance — **default** on Fable 5, Opus 4.8, Opus 4.6, Sonnet 4.6 |
+| `xhigh` | Fable 5, Opus 4.8, Opus 4.7 | Deeper reasoning, higher spend — **default** on Opus 4.7 |
+| `max` | all effort-capable | Deepest reasoning, no token cap; can overthink |
+
+Opus 4.6 and Sonnet 4.6 support `low`/`medium`/`high`/`max` (no `xhigh`). Setting an unsupported level falls back to the highest the model supports (e.g. `xhigh` runs as `high` on Opus 4.6).
+
+**Precedence & persistence** ([source][cc-effort]):
+
+- Precedence: `CLAUDE_CODE_EFFORT_LEVEL` > configured level (`effortLevel` / `/effort`) > model default. Skill/subagent `effort` frontmatter overrides the session level while active (but not the env var).
+- `low`/`medium`/`high`/`xhigh` **persist** across sessions; `max` is **session-only** (except via `CLAUDE_CODE_EFFORT_LEVEL`). `effortLevel` in `settings.json` accepts only `low`/`medium`/`high`/`xhigh` — `max` and `ultracode` are not accepted there.
+- `/effort auto` (or `CLAUDE_CODE_EFFORT_LEVEL=auto`) resets to the model default.
+
+**Related, but not effort levels**:
+
+- **`ultracode`** — a session setting that sends `xhigh` *and* auto-orchestrates dynamic workflows; not part of `effortLevel`/`--effort`/`CLAUDE_CODE_EFFORT_LEVEL`. See [CC-dynamic-workflows-analysis.md](../agents-skills/CC-dynamic-workflows-analysis.md#ultracode-effort-setting).
+- **`ultrathink`** — include it anywhere in a prompt for one-off deeper reasoning on that turn; Claude Code adds an in-context instruction but the **effort level sent to the API is unchanged**. Phrases like "think", "think hard", and "think more" are *not* recognized keywords ([source][cc-ultrathink]).
 
 ### Claude Fable 5 (newest model)
 
@@ -300,6 +325,8 @@ When routing through gateways, additionally set ([source][cc-settings]):
 ## References
 
 - [CC Settings — Environment Variables][cc-settings]
+- [CC Model Configuration — Effort Levels][cc-effort]
+- [CC Model Configuration — ultrathink][cc-ultrathink]
 - [Anthropic — Introducing Claude Fable 5 & Mythos 5][fable5-intro]
 - [Anthropic — Models Overview][models-overview]
 - [Anthropic — Pricing][models-pricing]
@@ -314,6 +341,8 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [Local setup guide][local-setup]
 
 [cc-settings]: https://code.claude.com/docs/en/settings#environment-variables
+[cc-effort]: https://code.claude.com/docs/en/model-config#adjust-effort-level
+[cc-ultrathink]: https://code.claude.com/docs/en/model-config#use-ultrathink-for-one-off-deep-reasoning
 [openrouter]: https://openrouter.ai/docs/guides/coding-agents/claude-code-integration
 [ollama-claude]: https://ollama.com/blog/claude
 [llamacpp-anthropic]: https://huggingface.co/blog/ggml-org/anthropic-messages-api-in-llamacpp

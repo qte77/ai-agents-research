@@ -2,8 +2,8 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-04-24
-validated_links: 2026-04-24
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Adopt
@@ -24,7 +24,7 @@ This doc covers vars observed in agent workflows. For the **complete authoritati
 |---|---|---|---|
 | `ANTHROPIC_MODEL` | `sonnet` | Primary model alias or full ID | [env-vars][env-vars] |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | (inherits primary) | Model for Agent tool subagents and teammates | [env-vars][env-vars] |
-| `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `max` (Opus 4.6 only), `auto` | [env-vars][env-vars] |
+| `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`, `auto` — support varies by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | [env-vars][env-vars] |
 
 Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.md)
 
