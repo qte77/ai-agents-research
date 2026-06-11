@@ -181,6 +181,12 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 - **Latency** — cloud round-trip adds overhead vs local tools
 - **Privacy** — page content passes through Firecrawl's cloud (unless self-hosted)
 
+### Prometheus (natural-language collector builder)
+
+[Prometheus][firecrawl-prometheus] is Firecrawl's agent-style layer over the scrape/crawl API: describe the data you want in plain English and it generates **reproducible Firecrawl SDK "collector" code plus sample output**, which you can run standalone or deploy on Firecrawl's infrastructure on a schedule with automated maintenance. The flow is three steps — **Ask** (describe the data), **Keep** (get collector code + sample data), **Deploy** (optional scheduled runs) — and requires a connected Firecrawl account ([source][firecrawl-prometheus]).
+
+**vs the MCP tools above**: the `firecrawl_*` MCP tools are imperative calls Claude makes per request; Prometheus is a higher-level *codegen + scheduling* layer that emits durable SDK collectors (distinct from the request-time `firecrawl_agent` tool). For Claude Code, the MCP server stays the integration surface — Prometheus is relevant when you want a maintained, scheduled pipeline rather than ad-hoc scrapes. Pricing, endpoints, and GA status are not stated on the landing page.
+
 ## Playwright MCP Server
 
 ### What It Is
@@ -450,6 +456,7 @@ For the Python-library landscape behind web crawling and source connectors (poly
 - [Firecrawl Claude Plugin (GitHub)][firecrawl-plugin-gh]
 - [Firecrawl Pricing][firecrawl-pricing]
 - [Firecrawl Use Cases — AI MCPs][firecrawl-ai-mcps]
+- [Firecrawl Prometheus][firecrawl-prometheus]
 - [Playwright MCP (GitHub)][playwright-mcp-gh]
 - [Playwright Claude Plugin (Marketplace)][playwright-plugin]
 - [CC Plugins Docs][cc-plugins-docs]
@@ -475,6 +482,7 @@ For the Python-library landscape behind web crawling and source connectors (poly
 [firecrawl-plugin-gh]: https://github.com/firecrawl/firecrawl-claude-plugin
 [firecrawl-pricing]: https://www.firecrawl.dev/pricing
 [firecrawl-ai-mcps]: https://www.firecrawl.dev/use-cases/ai-mcps
+[firecrawl-prometheus]: https://www.firecrawl.dev/prometheus
 [firecrawl-self-host]: https://docs.firecrawl.dev/contributing/self-host
 [firecrawl-key-bug]: https://github.com/firecrawl/firecrawl-mcp-server/issues/126
 [firecrawl-simple]: https://github.com/devflowinc/firecrawl-simple
