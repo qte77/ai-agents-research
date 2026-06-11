@@ -76,7 +76,7 @@ The built-in Read tool handles local PDFs and images natively:
 
 ### Native web stack as a pair — and its constraint floor
 
-WebSearch and WebFetch are a **pair**: WebSearch *discovers* (result blocks — titles + URLs/snippets, no page body), WebFetch *reads* one URL. To read a result you hand its URL to WebFetch — so every WebFetch fetch-side limit applies the moment you follow a search result. Both are **model-mediated** (output is summarized markdown, not raw HTML — see the WebFetch architecture above) and **cached ~15 min per URL**. Beyond that, they share a constraint floor that no input can configure around — the gap the heavier tiers exist to fill: Firecrawl / Playwright (below) and, at the Python-library layer, polyfetch's tiered fetch ([doc-pipeline-engine][ingest-landscape]).
+WebSearch and WebFetch are a **pair**: WebSearch *discovers* (result blocks — titles + URLs/snippets, no page body), WebFetch *reads* one URL. To read a result you hand its URL to WebFetch — so every WebFetch fetch-side limit applies the moment you follow a search result. Both are **model-mediated** (output is summarized markdown, not raw HTML — see the WebFetch architecture above) and **cached ~15 min per URL**. Beyond that, they share a constraint floor that no input can configure around — the gap the heavier tiers exist to fill: Firecrawl / Playwright (below).
 
 | Constraint (beyond the Limitations table above) | Detail | Source |
 |---|---|---|
@@ -496,4 +496,3 @@ For the Python-library landscape behind web crawling and source connectors (poly
 [cc-tools-reference]: https://code.claude.com/docs/en/tools-reference
 [websearch-api-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool
 [cc-tools-inventory]: ../configuration/CC-tools-inventory.md
-[ingest-landscape]: https://github.com/qte77/doc-pipeline-engine/blob/main/docs/landscape/ingest.md
