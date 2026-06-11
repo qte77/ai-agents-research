@@ -43,3 +43,7 @@ Thumbs.db
 # Python artifacts
 __pycache__/
 *.pyc
+
+# graphify knowledge graph — generated, regenerable; published to the gh-pages
+# branch (https://qte77.github.io/ai-agents-research/), never tracked on main.
+graphify-out/
