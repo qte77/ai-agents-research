@@ -1,11 +1,11 @@
 ---
 title: Repo-to-Docs AI Tools Landscape
-source: https://deepwiki.com, https://code2tutorial.com, https://gitsummarize.com
+source: https://deepwiki.com, https://code2tutorial.com, https://gitsummarize.com, https://github.com/egonex-ai/understand-anything
 purpose: Survey of AI-powered tools that generate documentation from GitHub repositories.
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-04-09
+updated: 2026-06-11
 validated_links: 2026-04-06
 ---
 
@@ -16,6 +16,8 @@ validated_links: 2026-04-06
 Three tools represent an emerging category of **AI-powered repo-to-documentation generators**: DeepWiki (by Cognition/Devin) produces wiki-style reference docs with architecture diagrams, Code2Tutorial (by The-Pocket/PocketFlow) generates chapter-based educational tutorials, and GitSummarize (indie open-source) produces multi-level summaries via URL rewrite. All take a GitHub URL as input and produce structured natural-language documentation.
 
 **Relevance to agent workflows**: These tools can serve as context sources for coding agents -- pre-generated documentation reduces the need for expensive runtime codebase analysis. The repo-to-docs pattern also overlaps with the `llms.txt` standard and context engineering approaches documented in this repository.
+
+A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose -- the external analogue to this repo's own [graphify integration](../architecture.md#knowledge-graph-graphify).
 
 ## Comparison
 
@@ -68,6 +70,22 @@ python main.py --repo <github-url> --language English --max-abstractions 10
 
 Published examples: [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/), Flask, LangGraph, NumPy Core.
 
+## Understand Anything (Egonex-AI)
+
+**URL**: [github.com/egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything) | **Stars**: 57.4k | **License**: MIT | **Stack**: TypeScript (originally by Lum1104)
+
+Unlike the doc-*generators* in this landscape, Understand Anything emits an **interactive knowledge graph** -- files, functions, classes, and dependencies as color-coded, navigable nodes -- the external analogue to this repo's own [graphify integration](../architecture.md#knowledge-graph-graphify).
+
+Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, call graphs) plus LLMs for semantic summaries and architecture classification, run through a **5-agent pipeline** (scanner -> analyzer -> architecture-mapper -> tour-builder -> reviewer) in parallel, with incremental updates.
+
+- **Structural + business-logic views** -- pan/zoom/search nodes; a domain view maps code to real processes
+- **Guided tours** -- auto-generated, dependency-ordered walkthroughs
+- **Diff impact analysis** -- which parts of the system a change touches
+- **Karpathy-pattern LLM-wiki support** -- entity extraction + relationship discovery over markdown KBs, directly overlapping this repo's three-layer architecture
+- **Version-controllable output** -- the graph is JSON; multi-platform (Claude Code, Cursor, VS Code Copilot, Codex, Gemini CLI)
+
+**Relevance**: it produces the same primitive graphify gives this repo (a queryable code/doc graph), but as an external multi-agent tool -- a useful benchmark for the graphify approach and its Karpathy-KB handling.
+
 ## GitSummarize
 
 **URL**: [gitsummarize.com](https://gitsummarize.com)
@@ -85,7 +103,7 @@ Three output levels: system architecture, directory-level summaries, file-level 
 
 ## Pattern Analysis
 
-All three tools share a common pipeline:
+All three doc-generators share a common pipeline:
 
 ```text
 GitHub URL --> Clone/Fetch --> AI Analysis --> Structured Output
@@ -120,9 +138,11 @@ Differentiation happens at the output stage:
 - [GitHub: The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge](https://github.com/The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge)
 - [gitsummarize.com](https://gitsummarize.com)
 - [GitHub: antarixxx/gitsummarize](https://github.com/antarixxx/gitsummarize)
+- [GitHub: egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything)
 
 ## Action Items
 
 - [ ] Evaluate DeepWiki output as pre-generated context for CC analysis workflows
 - [ ] Test Code2Tutorial on this repository for documentation generation
 - [ ] Monitor GitSummarize API for programmatic integration potential
+- [ ] Benchmark Understand Anything against the graphify integration (graph quality, Karpathy-KB handling, incremental updates)
