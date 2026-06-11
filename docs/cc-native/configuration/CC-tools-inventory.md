@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-04-13
-validated_links: 2026-04-13
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Adopt

@@ -64,6 +64,25 @@ The one built-in workflow Claude Code ships ([bundled workflows][cc-bundled]):
 
 **Workflow vs harness**: `/deep-research` is the **only** bundled workflow Claude Code currently ships, and it is a *workflow* — not a skill. "Harness" describes its *pattern* (fan-out → cross-check → vote → synthesize), not its mechanism; the mechanism is a dynamic workflow. A project may also define a same-named custom `deep-research` **skill** that labels itself a "harness" and mirrors the behavior, but the first-party artifact is the bundled workflow.
 
+## Managing Runs (`/workflows`)
+
+Runs execute in the background, so the session stays responsive. Run `/workflows` to **list running and completed runs** and open a progress view showing each phase with its agent count, token total, and elapsed time; a one-line summary also appears in the task panel below the input box ([watch the run][cc-watch]).
+
+Progress-view controls ([watch the run][cc-watch]):
+
+| Key | Action |
+|---|---|
+| `↑` / `↓` | Select a phase or agent |
+| `Enter` / `→` | Drill into a phase, then an agent (its prompt, recent tool calls, result) |
+| `Esc` | Back out one level |
+| `j` / `k` | Scroll within the agent detail |
+| `p` | Pause or resume the run |
+| `x` | Stop the selected agent, or the whole workflow |
+| `r` | Restart the selected running agent |
+| `s` | Save the run's script as a `/<name>` command |
+
+**Resume** is **same-session only**: a paused or stopped run resumes with completed agents returning cached results and the rest running live (select it and press `p`, or ask Claude to relaunch). Exiting Claude Code restarts a running workflow fresh in the next session ([manage runs][cc-manage]).
+
 ## Disabling
 
 Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and the [Agent SDK][cc-agent-sdk]. Disable via *Dynamic workflows* off in `/config`, `"disableWorkflows": true` in settings, or `CLAUDE_CODE_DISABLE_WORKFLOWS=1`. When disabled, bundled workflow commands are unavailable, the `ultracode` keyword stops triggering, and `ultracode` is removed from the `/effort` menu ([workflows][cc-workflows]).
@@ -88,6 +107,8 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 |---|---|
 | [Dynamic workflows][cc-workflows] | Workflow tool, script API, ultracode triggers, limits, disabling |
 | [Bundled workflows][cc-bundled] | The `/deep-research` table + walkthrough |
+| [Watch the run][cc-watch] | `/workflows` progress view + key controls |
+| [Manage runs][cc-manage] | Resume / pause / stop after launch |
 | [Model configuration — effort][cc-effort] | ultracode effort setting definition and constraints |
 | [Subagents][cc-subagents] | The worker primitive workflows orchestrate |
 | [Run agents in parallel][cc-agents] | Subagents vs skills vs teams vs workflows |
@@ -96,6 +117,8 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 
 [cc-workflows]: https://code.claude.com/docs/en/workflows
 [cc-bundled]: https://code.claude.com/docs/en/workflows#bundled-workflows
+[cc-watch]: https://code.claude.com/docs/en/workflows#watch-the-run
+[cc-manage]: https://code.claude.com/docs/en/workflows#manage-runs
 [cc-effort]: https://code.claude.com/docs/en/model-config#adjust-effort-level
 [cc-subagents]: https://code.claude.com/docs/en/sub-agents
 [cc-agents]: https://code.claude.com/docs/en/agents

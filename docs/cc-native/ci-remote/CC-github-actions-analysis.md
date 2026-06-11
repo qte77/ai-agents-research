@@ -3,8 +3,8 @@ title: CC GitHub Actions — claude-code-action & Claude GitHub App
 source: https://code.claude.com/docs/en/github-actions, https://github.com/apps/claude, https://github.com/anthropics/claude-code-action/blob/main/action.yml, https://github.com/anthropics/claude-code-action/discussions/578, https://code.claude.com/docs/en/amazon-bedrock, https://code.claude.com/docs/en/google-vertex-ai, https://code.claude.com/docs/en/microsoft-foundry, https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
 purpose: Evaluate Claude Code GitHub Actions for PR automation, code review, issue triage, and scheduled workflows — setup, capabilities, limitations, and cost.
 created: 2026-03-12
-updated: 2026-05-25
-validated_links: 2026-05-25
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Research (informational — not implementation requirements)
