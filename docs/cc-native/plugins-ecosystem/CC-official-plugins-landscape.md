@@ -3,8 +3,8 @@ title: CC Official Plugins Landscape
 source: https://www.firecrawl.dev/blog/best-claude-code-plugins, https://code.claude.com/docs/en/plugins
 purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this research repo, and provide adoption guidance per plugin.
 created: 2026-03-12
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Reference (living catalog — update as ecosystem evolves)
@@ -121,6 +121,8 @@ mcp__context7__get-library-docs \
 
 **Fit assessment**: **Skip unless frontend project.** A skills-based plugin that adjusts Claude's design sensibility. No backend or API relevance. Adopt if building user-facing web interfaces where visual quality matters.
 
+**Disambiguation — three Anthropic "design" offerings.** Don't conflate: **`frontend-design`** (the CC plugin above — adjusts UI-generation sensibility); the **`design`** plugin ([claude.com/plugins/design][design-cowork]), a **Claude Cowork** plugin for design critique, UX microcopy, WCAG 2.1 AA accessibility audits, research synthesis, and dev handoff; and **Claude Design** (`claude.ai/design`), an Anthropic Labs research-preview *product* (Opus 4.7 vision; designs, prototypes, slides) that packages a build bundle for handoff to Claude Code ([announced 2026-04-17][labs-design]). The first two are plugins; the third is a standalone product, not a plugin.
+
 ### Linear
 
 **What it does**: Connects Claude to Linear issue tracker — pull issues, summarize tickets, mark in-progress, break into subtasks ([source][firecrawl-blog]).
@@ -226,3 +228,5 @@ These plugins have full analysis elsewhere in this repo:
 [cc-best-practice-gh]: https://github.com/shanraisshan/claude-code-best-practice
 [everything-cc]: https://github.com/affaan-m/everything-claude-code
 [cuttlesoft]: https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/
+[design-cowork]: https://claude.com/plugins/design
+[labs-design]: https://www.anthropic.com/news/claude-design-anthropic-labs
