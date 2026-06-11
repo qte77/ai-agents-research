@@ -1,19 +1,19 @@
 ---
-title: Block Goose Analysis
+title: Goose Analysis
 source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
-updated: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Assess (open-source, active, architecturally significant)
 
 ## What It Is
 
-Goose is an open-source (Apache-2.0) coding agent by Block (Square). 36K+ stars, Rust 58% / TypeScript 34%, 126 releases. Desktop app + CLI. LLM-agnostic with multi-model routing.
+Goose is an open-source (Apache-2.0) general-purpose AI agent — "for code, workflows, and everything in between" — now stewarded by the **Agentic AI Foundation (AAIF)** at the Linux Foundation, donated by Block (Square). 48K+ stars, Rust 64% / TypeScript 29%. Desktop app + CLI + API. LLM-agnostic with multi-model routing.
 
-**Key distinction**: Goose co-developed MCP with Anthropic — Block's internal extension friction led to the collaboration that produced the protocol. Goose is the **reference MCP implementation**, not merely an adopter. It is an AAIF founding project alongside MCP and AGENTS.md ([source][aaif]).
+**Key distinction**: Goose co-developed MCP with Anthropic — Block's internal extension friction led to the collaboration that produced the protocol. Goose is the **reference MCP implementation**, not merely an adopter. It moved from `block/goose` to the **Agentic AI Foundation** in April 2026 — a founding AAIF project alongside MCP and AGENTS.md ([formation][aaif], [move][goose-move]).
 
 ## MCP Co-Origin
 
@@ -74,14 +74,16 @@ This is comparable to CC's WebSocket IDE protocol but uses a different standard 
 
 | Source | Content |
 |---|---|
-| [block/goose][repo] | Repository, architecture docs |
+| [aaif-goose/goose][repo] | Repository, architecture docs |
 | [Goose Architecture][arch] | Agent loop, extensions, MCP integration |
 | [Arcade: Goose shaped MCP][arcade-origin] | MCP co-development history |
 | [AAIF announcement][aaif] | Linux Foundation founding with MCP + Goose + AGENTS.md |
+| [Goose moves to AAIF][goose-move] | April 2026 relocation from block/goose |
 | [MCP Apps blog][mcp-apps] | Goose as reference MCP Apps client |
 
 [repo]: https://github.com/aaif-goose/goose
-[arch]: https://block.github.io/goose/
+[arch]: https://goose-docs.ai/
 [arcade-origin]: https://www.arcade.dev/blog/goose-the-open-source-agent-that-shaped-mcp
 [aaif]: https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation
+[goose-move]: https://goose-docs.ai/blog/2026/04/07/goose-moves-to-aaif/
 [mcp-apps]: https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/

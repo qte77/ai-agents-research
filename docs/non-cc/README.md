@@ -14,7 +14,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
-| [goose-analysis.md](goose-analysis.md) | Block Goose (MCP co-creator, reference impl) | Yes | Yes (Apache-2.0) |
+| [goose-analysis.md](goose-analysis.md) | Goose (AAIF; MCP co-creator, reference impl) | Yes | Yes (Apache-2.0) |
 | [feynman-analysis.md](feynman-analysis.md) | Companion AI Feynman (research agent, multi-agent investigation) | Yes | Yes (MIT) |
 | [hermes-agent-analysis.md](hermes-agent-analysis.md) | Nous Research Hermes (self-improving, multi-platform, 43K stars) | Yes | Yes (MIT) |
 | [rowboat-analysis.md](rowboat-analysis.md) | Rowboat (AI coworker, knowledge graph from comms) | No | Yes (Apache-2.0) |
