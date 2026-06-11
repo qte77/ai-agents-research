@@ -58,7 +58,7 @@ It is **not** part of `effortLevel` in settings.json, the `--effort` flag, or `C
 
 ## Bundled Workflow: /deep-research
 
-The one built-in workflow Claude Code ships ([workflows][cc-workflows]):
+The one built-in workflow Claude Code ships ([bundled workflows][cc-bundled]):
 
 > `/deep-research <question>` — Fans out web searches on a question across several angles, fetches and cross-checks the sources it finds, votes on each claim, and returns a cited report with claims that didn't survive cross-checking filtered out. Requires the [WebSearch tool][cc-tools-ref] to be available.
 
@@ -86,7 +86,8 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 
 | Source | Content |
 |---|---|
-| [Dynamic workflows][cc-workflows] | Workflow tool, script API, bundled /deep-research, ultracode triggers, limits, disabling |
+| [Dynamic workflows][cc-workflows] | Workflow tool, script API, ultracode triggers, limits, disabling |
+| [Bundled workflows][cc-bundled] | The `/deep-research` table + walkthrough |
 | [Model configuration — effort][cc-effort] | ultracode effort setting definition and constraints |
 | [Subagents][cc-subagents] | The worker primitive workflows orchestrate |
 | [Run agents in parallel][cc-agents] | Subagents vs skills vs teams vs workflows |
@@ -94,6 +95,7 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 | [Tools reference — WebSearch][cc-tools-ref] | `/deep-research` dependency |
 
 [cc-workflows]: https://code.claude.com/docs/en/workflows
+[cc-bundled]: https://code.claude.com/docs/en/workflows#bundled-workflows
 [cc-effort]: https://code.claude.com/docs/en/model-config#adjust-effort-level
 [cc-subagents]: https://code.claude.com/docs/en/sub-agents
 [cc-agents]: https://code.claude.com/docs/en/agents
