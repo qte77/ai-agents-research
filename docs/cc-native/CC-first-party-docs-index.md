@@ -2,8 +2,8 @@
 title: CC First-Party Documentation Index
 purpose: Canonical Anthropic URLs for CC, Agent SDK, Anthropic SDK, API, and best practices.
 created: 2026-03-28
-updated: 2026-04-13
-validated_links: 2026-04-13
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 ## CC First-Party Documentation Index
@@ -67,5 +67,7 @@ validated_links: 2026-04-13
 | Topic | URL |
 |-------|-----|
 | Claude Code repo | <https://github.com/anthropics/claude-code> |
-| Official plugins | <https://github.com/anthropics/claude-code/tree/main/plugins> |
+| Official plugins marketplace | <https://github.com/anthropics/claude-plugins-official> |
+| Knowledge-work plugins | <https://github.com/anthropics/knowledge-work-plugins> |
+| Financial services agents | <https://github.com/anthropics/financial-services> |
 | Model Context Protocol | <https://modelcontextprotocol.io/> |
