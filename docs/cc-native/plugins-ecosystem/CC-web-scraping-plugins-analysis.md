@@ -3,8 +3,8 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-04-04
-validated_links: 2026-04-04
+updated: 2026-06-11
+validated_links: 2026-06-11
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -73,6 +73,20 @@ The built-in Read tool handles local PDFs and images natively:
 | Protected sites blocked | Anti-bot measures and CAPTCHAs block requests |
 | PDF via WebFetch broken in CC | Returns raw binary, model hallucinates ([#23694][webfetch-pdf-issue]) |
 | WebSearch US-only | Not available outside the United States |
+
+### Native web stack as a pair — and its constraint floor
+
+WebSearch and WebFetch are a **pair**: WebSearch *discovers* (result blocks — titles + URLs/snippets, no page body), WebFetch *reads* one URL. To read a result you hand its URL to WebFetch — so every WebFetch fetch-side limit applies the moment you follow a search result. Both are **model-mediated** (output is summarized markdown, not raw HTML — see the WebFetch architecture above) and **cached ~15 min per URL**. Beyond that, they share a constraint floor that no input can configure around — the gap the heavier tiers exist to fill: Firecrawl / Playwright (below) and, at the Python-library layer, polyfetch's tiered fetch ([doc-pipeline-engine][ingest-landscape]).
+
+| Constraint (beyond the Limitations table above) | Detail | Source |
+|---|---|---|
+| No request-header control | Inputs are only `url` + `prompt` — no custom `User-Agent`, `Referer`, or `Accept`, so header/UA-gated blocks can't be coaxed past | [tools reference][cc-tools-reference] |
+| No anti-bot bypass | Bot-protected sites return `403`; with no header control (and TLS/JA3 fingerprinting in play) there is no way around it | observed; [tools inventory][cc-tools-inventory] |
+| Auth/private URLs fail | Errors on authenticated/private URLs — use an authenticated tool (e.g. `gh`) instead | [tools reference][cc-tools-reference] |
+| Cross-host redirects not followed | Returned to you to re-invoke WebFetch with the new URL | [system prompt][cc-system-prompts] |
+| HTTP → HTTPS upgrade | Plain-HTTP URLs are auto-upgraded before fetch | [system prompt][cc-system-prompts] |
+
+WebSearch adds two of its own: **US-only** region-locking (the API `web_search` tool exposes a `user_location` parameter; the Claude Code built-in does not), and **domain filtering as the only operator** (`allowed_domains` / `blocked_domains`; no other query operators beyond the search string). Both per the [web search tool][websearch-api-docs] docs.
 
 ## Firecrawl MCP Server
 
@@ -441,6 +455,8 @@ For the Python-library landscape behind web crawling and source connectors (poly
 - [CC Plugins Docs][cc-plugins-docs]
 - [CC WebFetch Docs][cc-webfetch-docs]
 - [WebFetch API Docs][webfetch-api-docs]
+- [Web Search API Docs][websearch-api-docs]
+- [CC Tools Reference][cc-tools-reference]
 - [CC Common Workflows — Images][cc-common-workflows]
 - [WebFetch PDF issue #23694][webfetch-pdf-issue]
 
@@ -477,3 +493,7 @@ For the Python-library landscape behind web crawling and source connectors (poly
 [cc-system-prompts]: https://github.com/Piebald-AI/claude-code-system-prompts
 [webfetch-pdf-issue]: https://github.com/anthropics/claude-code/issues/23694
 [openclaude-gh]: https://github.com/Gitlawb/openclaude
+[cc-tools-reference]: https://code.claude.com/docs/en/tools-reference
+[websearch-api-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool
+[cc-tools-inventory]: ../configuration/CC-tools-inventory.md
+[ingest-landscape]: https://github.com/qte77/doc-pipeline-engine/blob/main/docs/landscape/ingest.md
