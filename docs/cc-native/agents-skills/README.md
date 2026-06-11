@@ -11,3 +11,4 @@ CC agent teams, recursive spawning, skills system, and autonomous loop patterns.
 | [CC-ralph-enhancement-research.md](CC-ralph-enhancement-research.md) | Ralph autonomous loop enhancement research |
 | [CC-cli-anything-analysis.md](CC-cli-anything-analysis.md) | CC CLI invocation patterns and capabilities |
 | [CC-agentic-harness-patterns-analysis.md](CC-agentic-harness-patterns-analysis.md) | 12 agentic harness patterns (Bilgin Ibryam): memory, orchestration, tools, automation |
+| [CC-dynamic-workflows-analysis.md](CC-dynamic-workflows-analysis.md) | Dynamic workflow orchestration tool + script API, ultracode effort, bundled /deep-research |

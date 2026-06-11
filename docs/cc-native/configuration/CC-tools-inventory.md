@@ -219,7 +219,7 @@ The following tools appear in the `@anthropic-ai/claude-code@2.1.88` npm sourcem
 | `TeamCreateTool` | Create agent team | `tengu_amber_flint` |
 | `TeamDeleteTool` | Delete agent team | `tengu_amber_flint` |
 | `MonitorTool` | Monitor MCP servers | — |
-| `WorkflowTool` | Execute workflow scripts | `WORKFLOW_SCRIPTS` |
+| `WorkflowTool` | Execute workflow scripts ([analysis](../agents-skills/CC-dynamic-workflows-analysis.md)) | `WORKFLOW_SCRIPTS` |
 | `SleepTool` | Async delays | — |
 | `SnipTool` | History snippet extraction | `HISTORY_SNIP` |
 | `McpAuthTool` | MCP server authentication | — |
