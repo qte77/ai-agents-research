@@ -26,6 +26,12 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 |---|---|---|---|
 | [karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md) | Karpathy LLM Knowledge Base (markdown-first wiki) | Yes | Gist only |
 
+## Reference & Background
+
+| Document | Topic | Access |
+|---|---|---|
+| [intro-autonomous-robots-analysis.md](intro-autonomous-robots-analysis.md) | Introduction to Autonomous Robots (open textbook, MIT Press) | Open access |
+
 ## Context & Memory Infrastructure
 
 | Document | Type | Headless | Open Source |
@@ -38,6 +44,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 |---|---|---|---|
 | [insforge-analysis.md](insforge-analysis.md) | InsForge (backend platform for agentic development) | Yes | Yes (Apache-2.0) |
 | [goclaw-analysis.md](goclaw-analysis.md) | GoClaw (multi-tenant agent gateway, Go, 7 channels) | Yes | Yes (CC BY-NC 4.0) |
+| [searxng-analysis.md](searxng-analysis.md) | SearXNG (self-hostable metasearch for agent web-search) | Yes | Yes (AGPL-3.0) |
 
 ## Frameworks
 
@@ -45,6 +52,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 |---|---|---|---|
 | [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
 | [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
+| [deepagents-analysis.md](deepagents-analysis.md) | langchain-ai/deepagents (deep-agents: planning + subagents + virtual FS, on LangGraph) | Yes | Yes (MIT) |
 
 ## Protocols & Interfaces
 
