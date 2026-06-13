@@ -59,4 +59,5 @@ exclude = [
     "minbook.dev",
     "emdash.dev",
     "apmdigest.com",  # valid (200) but slow — times out lychee even with retries
+    "techsy.io",  # valid but slow — times out in CI (community coverage link in CC-agent-teams-orchestration.md; sibling minbook.dev already excluded)
 ]
