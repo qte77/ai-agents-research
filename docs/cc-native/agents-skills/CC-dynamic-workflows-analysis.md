@@ -64,6 +64,8 @@ The one built-in workflow Claude Code ships ([bundled workflows][cc-bundled]):
 
 **Workflow vs harness**: `/deep-research` is the **only** bundled workflow Claude Code currently ships, and it is a *workflow* — not a skill. "Harness" describes its *pattern* (fan-out → cross-check → vote → synthesize), not its mechanism; the mechanism is a dynamic workflow. A project may also define a same-named custom `deep-research` **skill** that labels itself a "harness" and mirrors the behavior, but the first-party artifact is the bundled workflow.
 
+**Third-party equivalents**: for deep-research agents outside CC (local-deep-research, GPT-Researcher, OpenAI/Gemini Deep Research, AutoScientists — the last built *on* CC subagents) mapped to this fan-out → cross-check → synthesize pattern, see [CC-research-agents-landscape.md § Mapping to the CC /deep-research Harness](../../cc-community/CC-research-agents-landscape.md#mapping-to-the-cc-deep-research-harness).
+
 ## Managing Runs (`/workflows`)
 
 Runs execute in the background, so the session stays responsive. Run `/workflows` to **list running and completed runs** and open a progress view showing each phase with its agent count, token total, and elapsed time; a one-line summary also appears in the task panel below the input box ([watch the run][cc-watch]).
