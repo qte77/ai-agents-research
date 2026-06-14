@@ -60,4 +60,9 @@ exclude = [
     "emdash.dev",
     "apmdigest.com",  # valid (200) but slow — times out lychee even with retries
     "techsy.io",  # valid but slow — times out in CI (community coverage link in CC-agent-teams-orchestration.md; sibling minbook.dev already excluded)
+    # Research-discovery + observability tools that 403/timeout to lychee (browser-OK)
+    "scispace.com",  # 403 to automated requests — CC-research-agents-landscape.md
+    "perplexity.ai",  # 403 to HEAD on /academic — CC-research-agents-landscape.md
+    "qa.allen.ai",  # Ai2 Scholar QA — times out lychee — CC-research-agents-landscape.md
+    "langtrace.ai",  # 404 to root (site relocated?) — pre-existing Langtrace entry in CC-agent-observability-methods-analysis.md; revisit/update URL
 ]
