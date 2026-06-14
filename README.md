@@ -26,6 +26,7 @@ Currency is maintained by four cron-driven monitors — see [How it stays curren
 | [`docs/archive/`](docs/archive/) | Agents-eval era docs retained for reference (frameworks/infrastructure, evaluation/data resources, further reading, adoption plans) |
 | [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
 | [`docs/research/`](docs/research/) | Auto-generated cumulative index of agentic-AI papers from the rxiv eval pipeline |
+| [`docs/plans/`](docs/plans/) | Plan/design docs (durable plan-mode output); backlog/roadmap lives in GitHub Issues |
 | [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage, rxiv paper triage |
 | [`.github/`](.github/) | Monitor workflows, scripts, composite actions, state files |
 

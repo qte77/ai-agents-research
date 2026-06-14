@@ -131,6 +131,7 @@ ai-agents-research/
     cc-community/                      # Community skills, plugins, tooling, CLAUDE.md patterns
     sdlc-lcm/                          # SDLC/lifecycle management specs
     research/                          # Auto-generated cumulative rxiv agentic-AI paper index
+    plans/                             # Plan/design docs (durable plan-mode output; backlog = GitHub Issues)
     todo/                              # Agents-eval era docs pending review (analysis, landscape, best-practices, research)
   triage/                              # Auto-generated monitor outputs
   .github/                             # CI automation (monitors, scripts, templates)
