@@ -359,7 +359,7 @@ ISO 42001 + 23894 (certifiable management system + risk methodology)
 
 ## Defensive Tooling
 
-The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](CC-community-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
+The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
 
 | Command | What it does | Maps to (this doc) |
 | --- | --- | --- |
