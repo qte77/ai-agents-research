@@ -5,7 +5,7 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-06-10
+updated: 2026-06-14
 validated_links: 2026-06-10
 ---
 
@@ -464,6 +464,40 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ---
 
+## MemSearch (zilliztech)
+
+**Repo**: [zilliztech/memsearch][memsearch] | **Stars**: ~2K | **License**: MIT | **Version**: v0.4.7
+
+Persistent, cross-session semantic memory for AI coding agents from the Milvus/Zilliz team. Stores conversation history as human-readable Markdown and indexes it with Milvus for hybrid vector + BM25 search. Unlike MCP-based memory tools, it ships as a **native Claude Code plugin** — "4 shell hooks + 1 skill + 1 watch process, no MCP, no sidecar service" ([CC plugin docs][memsearch-docs]).
+
+### Architecture
+
+- **Markdown is the source of truth** (`.memsearch/memory/*.md`); the Milvus index is a derived "shadow" cache, rebuildable at any time
+- **3-layer progressive retrieval**: search → expand → transcript
+- **Hybrid search**: dense vector embeddings + BM25 sparse + RRF reranking
+- **Local-first embeddings**: ONNX bge-m3 int8 by default (CPU, no API key); pluggable to OpenAI, Google, Voyage, Ollama
+- **SHA-256 dedup** avoids re-indexing unchanged content; a live file watcher auto-indexes edits
+- **Backend options**: Milvus Lite (embedded default), self-hosted Milvus, or Zilliz Cloud (free tier)
+
+### CC Integration
+
+```bash
+/plugin marketplace add zilliztech/memsearch
+/plugin install memsearch
+```
+
+The memory-recall skill runs in a `context: fork` subagent, so intermediate search results never pollute the main context — and because there is no MCP server, no tool definitions consume context tokens permanently. The same Markdown store is shared across Claude Code, OpenCode, Codex CLI, and OpenClaw.
+
+### Adoption Considerations
+
+**Strengths**: Zero permanent context overhead (no MCP tool defs); human-readable Markdown that survives index loss; local embeddings need no API key; one memory store across multiple agent CLIs.
+
+**Risks**: Overlaps with CC's built-in memory, Claude-Mem, MemPalace, and ByteRover — pick one. Milvus/Zilliz dependency for the index. Pre-1.0 (v0.4.7), active release cadence. Distinct from Zilliz's separate `claude-context` code-search MCP — do not conflate the two.
+
+Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) — memsearch as a mobile/remote supporting tool
+
+---
+
 ## Code-Review-Graph (tirth8205)
 
 **Repo**: [tirth8205/code-review-graph][code-review-graph] | **Stars**: 7.1K | **License**: MIT
@@ -772,6 +806,7 @@ Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-a
 | **awesome-design-md** | Agent-consumable design systems | Markdown files (drop-in) | 58 DESIGN.md files for UI generation | Viral (21.8K stars in 6 days) |
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
+| **MemSearch** | Persistent memory (cross-agent) | Plugin (hooks + skill, no MCP) | Markdown source-of-truth + Milvus hybrid search | Active (~2K stars, v0.4.7) |
 | **Code-Review-Graph** | Structural code analysis | MCP server (22 tools, auto-config) | AST-based blast radius for reviews | Active (7.1K stars) |
 | **codebase-memory-mcp** | Code→graph + LSP + embeddings | MCP (14 tools) + PreToolUse hook + auto-config | Single-binary knowledge graph | Active (3.2K stars, v0.7.0) |
 | **Serena** | Semantic code (live LSP) | MCP server (20+ tools) | Symbol-level retrieve/edit/refactor | Active (25.2K stars, v1.5.3) |
@@ -782,7 +817,7 @@ Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-a
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 
-All twenty-one address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server.
+All twenty-two address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -804,6 +839,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [awesome-design-md][awesome-design-md] | 58 DESIGN.md files for agent-consumable UI generation (21.8K stars) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
+| [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
 | [Code-Review-Graph][code-review-graph] | AST-based blast radius analysis, 22 MCP tools (7.1K stars) |
 | [codebase-memory-mcp][codebase-memory-mcp] | Single-binary code knowledge graph: 159 tree-sitter grammars + hybrid LSP + embeddings, 14 MCP tools (3.2K stars, MIT) |
 | [Serena][serena] | LSP-based semantic coding MCP toolkit, 20+ symbol-level tools, 40+ languages (25.2K stars, MIT) |
@@ -818,6 +854,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [graphify]: https://github.com/safishamsi/graphify
 [mempalace]: https://github.com/MemPalace/mempalace
 [longmemeval]: https://github.com/xiaowu0162/LongMemEval
+[memsearch]: https://github.com/zilliztech/memsearch
+[memsearch-docs]: https://zilliztech.github.io/memsearch/platforms/claude-code/
 [code-review-graph]: https://github.com/tirth8205/code-review-graph
 [codebase-memory-mcp]: https://github.com/DeusData/codebase-memory-mcp
 [serena]: https://github.com/oraios/serena

@@ -53,6 +53,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
 | [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
 | [deepagents-analysis.md](deepagents-analysis.md) | langchain-ai/deepagents (deep-agents: planning + subagents + virtual FS, on LangGraph) | Yes | Yes (MIT) |
+| [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) | Landscape catalog: orchestration frameworks, LLM routing, memory infrastructure, agent models | — | Mixed |
 
 ## Protocols & Interfaces
 

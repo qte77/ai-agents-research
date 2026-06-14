@@ -1,8 +1,8 @@
 ---
 title: "Agent Observability Methods Analysis"
-purpose: Technical analysis of 17 observability platforms and five primary tracing patterns for AI agent behavior.
+purpose: Technical analysis of 18 observability platforms and five primary tracing patterns for AI agent behavior.
 created: 2025-08-24
-updated: 2026-04-24
+updated: 2026-06-14
 validated_links: 2026-04-24
 ---
 
@@ -10,13 +10,13 @@ validated_links: 2026-04-24
 
 ## Executive Summary
 
-This analysis examines the specific technical mechanisms used by 17 observability platforms (updated February 2026) to trace and observe AI agent behavior. The research reveals five primary technical patterns plus emerging multi-agent observability capabilities: decorator-based instrumentation, proxy-based interception, OpenTelemetry standard implementation, native framework integration, specialized statistical approaches, and distributed multi-agent coordination tracking.
+This analysis examines the specific technical mechanisms used by 18 observability platforms (updated June 2026) to trace and observe AI agent behavior. The research reveals five primary technical patterns plus emerging multi-agent observability capabilities: decorator-based instrumentation, proxy-based interception, OpenTelemetry standard implementation, native framework integration, specialized statistical approaches, and distributed multi-agent coordination tracking.
 
 **2026 Update**: The landscape has matured significantly with 89% of organizations implementing agent observability. OpenTelemetry GenAI semantic conventions are now finalized for agent applications, with framework-specific conventions in active development. New standards enable consistent tracing across IBM Bee Stack, CrewAI, AutoGen, LangGraph, and other major frameworks.
 
 **Key Developments**: Six new tools added (Braintrust, Maxim AI, AgentOps, Datadog LLM Observability, Pydantic Logfire, otel-tui), six existing tools received major feature updates (Langfuse v2 APIs, MLflow TypeScript support, Arize Phoenix continuous releases, enhanced multi-agent observability across platforms).
 
-**See**: [landscape-agent-frameworks-infrastructure.md](../archive/landscape-agent-frameworks-infrastructure.md)
+**See**: [agent-frameworks-infrastructure-landscape.md](../non-cc/agent-frameworks-infrastructure-landscape.md)
 
 ## Key Features of the Analysis
 
@@ -29,7 +29,7 @@ This analysis examines the specific technical mechanisms used by 17 observabilit
 
 ## Technical Insights Documented
 
-- **17 tools analyzed** across 5 technical patterns (updated February 2026)
+- **18 tools analyzed** across 5 technical patterns (updated June 2026)
 - **Specific implementation mechanisms** rather than generic feature descriptions
 - **Performance characteristics** (latency, scalability, storage backends) with updated benchmarks
 - **Export capabilities** for offline analysis and graph construction
@@ -133,7 +133,7 @@ The OpenTelemetry community has established standardized semantic conventions fo
 - **Proxy-Based Interception**: 1 tool (6%) - Helicone
 - **Native Framework Integration**: 2 tools (12%) - LangSmith, Pydantic Logfire
 - **Specialized Approaches**: 3 tools (18%) - Neptune.ai, Evidently AI, Maxim AI
-- **Lightweight Development Tools**: 1 tool (6%) - otel-tui
+- **Lightweight Development Tools**: 2 tools (11%) - otel-tui, AgentCanvas
 
 **Note**: Percentages reflect the updated landscape of 17 analyzed tools. Decorator-based instrumentation remains the dominant pattern, while OpenTelemetry adoption continues growing as the vendor-neutral standard. Pydantic Logfire is notable as the first-party observability solution for PydanticAI, the framework used by this project.
 
@@ -573,6 +573,27 @@ This emerging pattern addresses the specific challenges of distributed multi-age
 - [otel-tui GitHub Repository](https://github.com/ymtdzzz/otel-tui)
 - [PydanticAI Alternative OTel Backends](https://ai.pydantic.dev/logfire/#using-opentelemetry)
 
+#### AgentCanvas
+
+**Technical Mechanism**: Python CLI (>=3.12) that visualizes previously-captured agent runs — it queries [Pydantic Logfire](#pydantic-logfire) for OpenTelemetry GenAI spans (`invoke_agent`, `chat`, `execute_tool`) and renders them as a self-contained, interactive HTML block diagram. It is a trace *consumer/visualizer*, not a live tracing backend (it reads history post-execution rather than instrumenting code).
+
+- Pan/zoom/drag block diagram of the agent workflow; nested agents render as recursive frames
+- Full multi-turn conversation transcripts with per-step reasoning and token counts
+- Exact cost calculation via the `genai-prices` library; deep-inspection panel (provider details, finish reasons, available tools)
+- Guided auto-walkthrough "tour" mode for demos
+- Output is a single offline-capable HTML file — no server required, shareable as a standalone artifact
+
+**Setup**: `pip install agentcanvas`; requires a `LOGFIRE_READ_TOKEN` to query historical traces
+
+**Use Case**: Turn one PydanticAI agent run into a portable, shareable HTML report. Complements otel-tui (live terminal viewer) with a persistent post-hoc visualization. Because it consumes Logfire/OTel GenAI spans, any PydanticAI-instrumented agent (regardless of underlying LLM provider) is in scope.
+
+**License**: MIT (early-stage — v0.1.1 as of June 2026)
+
+**Primary Sources**:
+
+- [AgentCanvas GitHub Repository](https://github.com/vstorm-co/agentcanvas)
+- [AgentCanvas on PyPI](https://pypi.org/project/agentcanvas/)
+
 ## Local Development Deployment Comparison
 
 Setup complexity for local MAS tracing (most relevant to development workflows):
@@ -600,7 +621,7 @@ Setup complexity for local MAS tracing (most relevant to development workflows):
 
 ### Tools Examined (Updated January 2026)
 
-17 observability platforms were analyzed across 7 technical categories (5 core patterns, emerging multi-agent observability, and lightweight development tools), focusing on:
+18 observability platforms were analyzed across 7 technical categories (5 core patterns, emerging multi-agent observability, and lightweight development tools), focusing on:
 
 - Actual implementation mechanisms (not just feature descriptions)
 - Data capture and storage approaches
@@ -612,7 +633,7 @@ Setup complexity for local MAS tracing (most relevant to development workflows):
 
 ## Conclusions (Updated February 2026)
 
-The 2026 landscape shows significant maturation with 89% of organizations implementing agent observability, up from earlier adoption rates. The analysis of 17 platforms (increased from 15 in January 2026) reveals decorator-based instrumentation remains dominant at 41%, while OpenTelemetry adoption continues growing. Native framework integration gained significance with the addition of Pydantic Logfire, the first-party observability solution for PydanticAI.
+The 2026 landscape shows significant maturation with 89% of organizations implementing agent observability, up from earlier adoption rates. The analysis of 18 platforms (up from 17 in February 2026) reveals decorator-based instrumentation remains dominant at 41%, while OpenTelemetry adoption continues growing. Native framework integration gained significance with the addition of Pydantic Logfire, the first-party observability solution for PydanticAI.
 
 ### Key 2026 Developments
 
