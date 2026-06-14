@@ -168,7 +168,7 @@ Tools that complement any remote access method ([source][zilliz]):
 | Tool | Purpose | Setup | Notes |
 | ---- | ------- | ----- | ----- |
 | **Typeless** | Voice-to-text for prompts | Mobile app | ~4x faster than phone typing; replaces keyboard for prompt input |
-| **memsearch** | Persistent searchable recall across sessions/devices | CC plugin | Vector search over conversation history; useful for cross-session context |
+| **memsearch** | Persistent searchable recall across sessions/devices | CC plugin (hooks + skill, no MCP) | Markdown store + Milvus hybrid vector+BM25 search; full entry in [CC-memory-tooling-landscape.md](../../cc-community/CC-memory-tooling-landscape.md#memsearch-zilliztech) |
 | **cc-tmux-worktree-orchestration** | Parallel CC instances via git worktrees | CC plugin | `/tmux-worktree-split login signup dashboard` runs 3 agents simultaneously |
 
 ## See Also

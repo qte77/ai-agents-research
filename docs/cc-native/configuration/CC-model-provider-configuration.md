@@ -1,9 +1,9 @@
 ---
 title: CC Model & Provider Configuration
-source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
-purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
+source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
+purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-06-11
+updated: 2026-06-14
 validated_links: 2026-06-11
 ---
 
@@ -50,23 +50,9 @@ Opus 4.6 and Sonnet 4.6 support `low`/`medium`/`high`/`max` (no `xhigh`). Settin
 
 **Verified 2026-06-11.** Effort availability and defaults are model-generation-specific and shift over time; `xhigh` is gated on the `xhigh_effort` capability (CC v2.1.111+), and `xhigh`-capable models require recent CC builds (Opus 4.8 → v2.1.154+, Fable 5 → v2.1.170+) ([source][cc-effort]).
 
-### Claude Fable 5 (newest model)
+### Newest Model (Fable 5)
 
-Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released model, built for complex, long-running agentic work — is selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. Generally available on the Claude API and major clouds since 2026-06-09 ([source][fable5-intro]).
-
-| Property | Value |
-| -------- | ----- |
-| Model ID | `claude-fable-5` |
-| Context / max output | 1M tokens (default) / 128K tokens ([source][models-overview]) |
-| Pricing | $10 / $50 per MTok (input / output) — above Opus-tier's $5 / $25 ([source][models-pricing]) |
-| Thinking | Adaptive only, always on (`thinking: disabled` unsupported); tune depth with `CLAUDE_CODE_EFFORT_LEVEL` / effort `low`–`xhigh`/`max` ([source][fable5-intro]) |
-
-CC-relevant caveats ([source][fable5-intro]):
-
-- **New tokenizer** (the one introduced with Opus 4.7): the same text is ~30% more tokens than on pre-4.7 models — re-baseline cost and `CLAUDE_CODE_MAX_OUTPUT_TOKENS` expectations.
-- **`refusal` stop reason**: safety classifiers may decline a request as a successful HTTP 200 (not an error); plan for refusal handling and fallback to another model.
-- **30-day data retention required** — not available to zero-data-retention orgs.
-- **CC plan access** (per the in-product `/model` notice, 2026-06): included in Claude plan limits until 2026-06-22, after which it continues via usage credits.
+Claude **Fable 5** (`claude-fable-5`) is the newest model, selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. For its model card (context, pricing, tokenizer/refusal caveats, CC plan access) and a free-tier/OSS provider snapshot, see [CC-models-reference.md](CC-models-reference.md).
 
 ## API Key & Endpoint
 
@@ -150,6 +136,19 @@ export ANTHROPIC_FOUNDRY_BASE_URL="https://my-resource.services.ai.azure.com/ant
 ```
 
 ([source][cc-settings])
+
+### Infomaniak AI (EU-Sovereign, OpenAI-Compatible)
+
+Infomaniak (Swiss host) runs an **OpenAI-compatible** inference API serving open-source models — Llama, Mistral, Qwen, Gemma, plus Infomaniak's own vLLM build of Google's [TranslateGemma-27B][infomaniak-translategemma] — with end-to-end processing in Switzerland and 1M free credits for a one-month trial ([source][infomaniak-ai]). Because it speaks OpenAI Chat Completions rather than the Anthropic Messages API, **using it from CC needs a translation proxy** (LiteLLM or claude-code-proxy — see the LLM Gateway / Proxy section below); OpenAI-native agents such as OpenCode and n8n point at it directly.
+
+```bash
+# product_id is per-organization: GET https://api.infomaniak.com/1/ai (Authorization: Bearer $API_TOKEN)
+# v2 (current) OpenAI-compatible base URL:
+https://api.infomaniak.com/2/ai/${PRODUCT_ID}/openai/v1
+```
+
+- **OpenCode** ([source][infomaniak-opencode]): register a provider in `~/.config/opencode/opencode.json` using the `@ai-sdk/openai-compatible` package with `baseURL` set to the v2 endpoint and model ids `qwen3` / `llama3` / `mistral3` / `gemma3n` (e.g. default `infomaniak/qwen3`). The recipe wires `API_TOKEN` (created with the `ai-tools` scope at manager.infomaniak.com) and `PRODUCT_ID` as environment variables.
+- **n8n** ([source][infomaniak-n8n]): no native node — use the built-in OpenAI node with a custom base URL (`.../1/ai/{product_id}/openai`) and the API token as the key. The credential test fails but inference works; early threads predated function-calling support.
 
 ### Local Models
 
@@ -318,9 +317,11 @@ When routing through gateways, additionally set ([source][cc-settings]):
 | **Enterprise cloud** | Bedrock / Vertex / Foundry | High (cloud config) |
 | **Non-Anthropic models in CC** | LiteLLM or claude-code-proxy | Medium (proxy) |
 | **Per-task local routing / cost control** | Claude Code Router (CCR) | Medium (npm + `ccr start`) |
+| **EU / Swiss data sovereignty, OSS models** | Infomaniak AI (+ proxy for CC; native in OpenCode) | Medium (OpenAI→Anthropic proxy) |
 
 ## Cross-References
 
+- [CC-models-reference.md](CC-models-reference.md) — Fable 5 model card + free-tier/OSS provider reference table
 - [CC-cli-reference.md](CC-cli-reference.md) — canonical flag definitions (`--model`, `--effort`, `--fallback-model`, `--betas`)
 - [CC-env-vars-reference.md](CC-env-vars-reference.md) — env var reference for `ANTHROPIC_MODEL`, `CLAUDE_CODE_EFFORT_LEVEL`, etc.
 
@@ -329,8 +330,6 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [CC Settings — Environment Variables][cc-settings]
 - [CC Model Configuration — Effort Levels][cc-effort]
 - [CC Model Configuration — ultrathink][cc-ultrathink]
-- [Anthropic — Introducing Claude Fable 5 & Mythos 5][fable5-intro]
-- [Anthropic — Models Overview][models-overview]
 - [Anthropic — Pricing][models-pricing]
 - [OpenRouter — Claude Code Integration][openrouter]
 - [Ollama — Claude Code with Anthropic API Compatibility][ollama-claude]
@@ -341,6 +340,10 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [Bifrost — Open-Source AI Gateway][bifrost]
 - [Claude Code Router (CCR)][cc-router]
 - [Local setup guide][local-setup]
+- [Infomaniak — Open-Source AI Models][infomaniak-ai]
+- [Infomaniak — vLLM TranslateGemma-27B (Hugging Face)][infomaniak-translategemma]
+- [OpenCode + Infomaniak AI Tools setup (janikvonrotz)][infomaniak-opencode]
+- [n8n community — add Infomaniak AI language model][infomaniak-n8n]
 
 [cc-settings]: https://code.claude.com/docs/en/settings#environment-variables
 [cc-effort]: https://code.claude.com/docs/en/model-config#adjust-effort-level
@@ -354,6 +357,8 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [bifrost]: https://www.getmaxim.ai/articles/running-non-anthropic-models-in-claude-code-via-an-enterprise-ai-gateway/
 [cc-router]: https://github.com/musistudio/claude-code-router
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
-[fable5-intro]: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
-[models-overview]: https://platform.claude.com/docs/en/about-claude/models/overview
 [models-pricing]: https://platform.claude.com/docs/en/about-claude/pricing
+[infomaniak-ai]: https://www.infomaniak.com/en/hosting/ai-services/open-source-models
+[infomaniak-translategemma]: https://huggingface.co/Infomaniak-AI/vllm-translategemma-27b-it
+[infomaniak-opencode]: https://janikvonrotz.ch/2026/04/01/setup-opencode-with-infomaniak-ai-tools/
+[infomaniak-n8n]: https://community.n8n.io/t/add-new-language-model-informaniak-ai/73182

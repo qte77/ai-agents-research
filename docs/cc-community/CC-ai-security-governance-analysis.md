@@ -2,7 +2,7 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-06-11
+updated: 2026-06-14
 validated_links: 2026-04-23
 ---
 
@@ -359,7 +359,7 @@ ISO 42001 + 23894 (certifiable management system + risk methodology)
 
 ## Defensive Tooling
 
-The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](CC-community-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
+The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
 
 | Command | What it does | Maps to (this doc) |
 | --- | --- | --- |
@@ -371,6 +371,26 @@ The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/
 Backed by an MCP Security Registry (6,600+ indexed servers), semantic analysis (MiniLM-L6-v2 embeddings), and payload deobfuscation. It complements MAESTRO's prescriptive controls with an executable check: MAESTRO says *what* to defend; AgentSeal scans *whether* a given skill/MCP setup is exposed — operationalizing the Unified Mapping Table above.
 
 **Adoption caveat**: licensed FSL-1.1-Apache-2.0 (Functional Source License → Apache-2.0 after the change window) — source-available, not OSI-open at release. Review the license window before bundling it into permissively-licensed tooling.
+
+## MCP Ecosystem Security
+
+Model Context Protocol is now the dominant tool-integration standard — Anthropic, Block, and OpenAI donated it to the [Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation) (a Linux Foundation directed fund) on 2025-12-09, with Google, Microsoft, and AWS as supporting members. That ubiquity makes MCP servers a first-class attack surface, mapped here to the threat model above.
+
+### Threats (map to MAESTRO L7 / ATLAS AML.T0056, AML.T0051)
+
+- **Authentication gaps** — [Knostic's July 2025 scan](https://www.knostic.ai/blog/mapping-mcp-servers-study) found 1,862 internet-exposed MCP servers; all 119 it manually verified answered unauthenticated requests and exposed their full tool listings, since the spec requires no auth by default. This is the dominant real-world exposure.
+- **Prompt injection** — content returned by a tool can hijack agent behavior (AML.T0051 / MAESTRO L1).
+- **Tool-permission combination risk** — benign-looking tools combined can open data-exfiltration pathways.
+- **Lookalike-tool attacks** — a malicious tool silently shadows a trusted one (tool-description poisoning; the `scan-mcp` command above tests for exactly this).
+
+### Mitigations
+
+- Require authentication/authorization on every MCP server; never expose one unauthenticated to a network
+- Network-isolate MCP servers, maintain allowlists of trusted tool sources, and audit tool combinations for leakage
+- Monitor MCP server logs for anomalous access; run `agentseal scan-mcp` (above) against live servers
+- Prefer managed/gateway hosting — Google Cloud shipped [fully-managed remote MCP servers](https://cloud.google.com/blog/products/ai-machine-learning/announcing-official-mcp-support-for-google-services) (including Apigee API-to-MCP translation that preserves existing governance controls) on 2025-12-11; gateways like AgentPass and Composio are emerging as the secure-access pattern
+
+Security is the #1 MCP adoption blocker across a fast-growing ecosystem (10,000+ active public servers per Anthropic in Dec 2025; ~16,000+ counted across public directories). For agents-eval specifically: mandate auth on all MCP servers, isolate evaluation infrastructure, and audit tool combinations before granting evaluation agents MCP connectivity.
 
 ## Recommendations for Agents-eval
 
@@ -397,5 +417,9 @@ is not warranted. A lightweight alignment approach:
 - [ISO/IEC 42001:2023](https://www.iso.org/standard/81230.html)
 - [ISO/IEC 23894:2023](https://www.iso.org/standard/77304.html)
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [Knostic — Mapping Exposed MCP Servers (July 2025)](https://www.knostic.ai/blog/mapping-mcp-servers-study)
+- [Linux Foundation — Agentic AI Foundation (Dec 2025)](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation)
+- [Anthropic — Donating MCP & establishing the Agentic AI Foundation](https://anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation)
+- [Google Cloud — Official MCP support for Google services (Dec 2025)](https://cloud.google.com/blog/products/ai-machine-learning/announcing-official-mcp-support-for-google-services)
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents)
 - [AgentSeal (getagentseal)](https://github.com/getagentseal/agentseal) — open-source scanner for agent skills/MCP configs (adversarial prompt probes, MCP poisoning audit)

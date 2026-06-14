@@ -1,0 +1,82 @@
+---
+title: Agent Frameworks & Infrastructure Landscape
+purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/routing tools, agent memory infrastructure, and agent-oriented foundation models beyond Claude Code — restored and refreshed from the archived frameworks-infrastructure landscape.
+category: landscape
+status: research
+created: 2026-06-14
+updated: 2026-06-14
+validated_links: 2026-03-12
+---
+
+**Status**: Research (informational)
+
+Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
+
+## 1. Multi-Agent Orchestration Frameworks
+
+- [LangGraph](https://github.com/langchain-ai/langgraph) — graph-based stateful orchestration with checkpointing and conditional routing (MIT); the base for many harnesses below.
+- [CrewAI](https://github.com/crewAIInc/crewAI) — role-based crews with sequential/hierarchical/consensus execution (MIT).
+- [AutoGen / AG2](https://github.com/ag2ai/ag2) — conversational multi-agent framework with group chat and code execution (Apache-2.0).
+- [PydanticAI](https://github.com/pydantic/pydantic-ai) — type-safe agents on Pydantic v2 with durable execution + MCP/A2A; the framework this repo's evaluation work builds on.
+- [LlamaIndex Agents](https://github.com/run-llama/llama_index) — RAG-optimized agents over 100+ data sources.
+- [Letta](https://github.com/letta-ai/letta) — stateful agents with hierarchical self-editing memory, by the [MemGPT](https://arxiv.org/abs/2310.08560) authors (Apache-2.0).
+- [Agno](https://github.com/agno-agi/agno) — high-performance multi-agent runtime with built-in memory/session, FastAPI app, strong MCP support.
+- [Microsoft Agent Framework](https://github.com/microsoft/semantic-kernel) — unifies Semantic Kernel + AutoGen (public preview Oct 2025); dual agent/workflow orchestration, A2A + MCP, .NET + Python.
+- [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) — lightweight provider-agnostic agents with handoffs, guardrails, tracing (Mar 2025).
+- [Google ADK](https://github.com/google/adk-python) — LLM/Workflow/Custom agents with built-in eval + MCP; deploys to Vertex AI Agent Engine (Apr 2025).
+- [AWS Agent Squad](https://github.com/awslabs/agent-squad) — intent-classification query routing across agents, Python + TypeScript.
+- [Swarms](https://github.com/kyegomez/swarms) — enterprise swarm orchestration (hierarchical/parallel/graph), Apache-2.0.
+- [Fetch.ai uAgents](https://github.com/fetchai/uAgents) — blockchain-integrated autonomous agents with on-chain payments (Agentverse).
+- [DeerFlow (ByteDance)](https://github.com/bytedance/deer-flow) — LangGraph super-agent harness with Markdown skills + sandboxed execution. Full analysis: [deerflow-analysis.md](deerflow-analysis.md).
+- [DeepAgents (LangChain)](https://github.com/langchain-ai/deepagents) — planning + sub-agent harness. Full analysis: [deepagents-analysis.md](deepagents-analysis.md).
+
+## 2. LLM Orchestration & Routing
+
+- [LangChain](https://github.com/langchain-ai/langchain) — broad LLM app framework, 100+ integrations (MIT).
+- [Haystack (deepset)](https://github.com/deepset-ai/haystack) — production RAG/pipeline framework (Apache-2.0).
+- [DSPy (Stanford)](https://github.com/stanfordnlp/dspy) — "programming, not prompting": modules + optimizers auto-tune prompts/weights; v3.1 (Jan 2026), Agenspy adds MCP/A2A.
+- [Restack](https://github.com/restackio) — event-driven, durable agent backend with task queues (Apache-2.0).
+- [Withmartian](https://www.withmartian.com/) — Model Router® routing prompts to optimal models for cost/accuracy.
+- [OpenRouter](https://openrouter.ai/) — unified gateway to 400+ models via OpenAI-compatible API. Config for CC: [CC-model-provider-configuration.md § OpenRouter](../cc-native/configuration/CC-model-provider-configuration.md).
+
+## 3. Lightweight & Specialized Frameworks
+
+- [Atomic Agents](https://github.com/BrainBlend-AI/atomic-agents) — modular Pydantic/Instructor pipelines with strict I/O schemas.
+- [smolAgents (HuggingFace)](https://github.com/huggingface/smolagents) — minimalist code-first agents with HF model access.
+- [Youtu-Agent (Tencent)](https://github.com/Tencent/Youtu-agent) — async, YAML-configured agents; 71.47% WebWalkerQA, OSS-model friendly.
+- [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), [BabyAGI](https://github.com/yoheinakajima/babyagi), [SuperAGI](https://github.com/TransformerOptimus/SuperAGI) — the original autonomous-task-loop projects (recursive planning; AutoGPT/BabyAGI/SuperAGI respectively minimal→GUI).
+- [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
+
+## 4. Agent Memory Infrastructure
+
+Non-CC memory frameworks; for memory tools that integrate *with Claude Code* (MemSearch, Claude-Mem, MemPalace, ByteRover) see [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md).
+
+The field has reframed memory as **context engineering** — assembling persistent, evolving state across sessions rather than just enlarging the context window.
+
+- [Graphiti (Zep)](https://github.com/getzep/graphiti) — real-time temporal knowledge-graph engine; P95 ~300ms hybrid (vector + BM25 + graph) retrieval, MCP server, Apache-2.0.
+- [Zep](https://github.com/getzep/zep) — memory platform on Graphiti; temporal KG, multi-language SDKs ([paper](https://arxiv.org/abs/2501.13956)).
+- [Mem0](https://github.com/mem0ai/mem0) — universal memory layer; claims +26% vs OpenAI Memory, 90% lower tokens on LOCOMO ([paper](https://arxiv.org/abs/2504.19413)), Apache-2.0.
+- [Cognee](https://github.com/topoteretes/cognee) — open-source KG memory engine, 30+ data types, MCP server; raised $7.5M seed (Feb 2026).
+- [A-MEM](https://github.com/agiresearch/A-mem) — Zettelkasten-style agentic memory with dynamic linking ([paper](https://arxiv.org/abs/2502.12110)).
+- [LangMem](https://github.com/langchain-ai/langmem) — LangGraph-native semantic/episodic/procedural memory (MIT).
+- [Gulp.ai (Osmosis)](https://docs.gulp.ai/introduction) — agent-improvement API enriching prompts with past-interaction knowledge.
+
+## 5. Foundation Models for Agents
+
+Frontier model facts and pricing change fast and are maintained in [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) (Claude, OpenAI, Gemini) and its free-tier/OSS provider reference. Notable agent-oriented / OSS entries from the snapshot:
+
+- [DeepSeek V3.2 / V3.2-Speciale / R1](https://api-docs.deepseek.com/news/news251201) — reasoning-first, agent-trained models (V3.2-Speciale synthesized 1,800+ environments, 85K+ instructions; integrates thinking into tool use). Cost-efficient OSS.
+- [Arcee Foundation Models (AFM)](https://www.arcee.ai/) — ~4.5B CPU-optimized enterprise model for private/offline deployment.
+
+## Production Patterns & Reference Frameworks
+
+- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) — principles for production-grade LLM agents.
+- [Agents Towards Production](https://github.com/NirDiamant/agents-towards-production) — end-to-end playbooks for shipping agents.
+
+## Cross-References
+
+- [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — CC-integrating memory and tooling
+- [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — model/provider configuration and free-tier reference
+- [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — observability/tracing platforms (separate restore)
+- [CC-research-agents-landscape.md](../cc-community/CC-research-agents-landscape.md) — research/discovery agents
+- [CC-ai-security-governance-analysis.md § MCP Ecosystem Security](../cc-community/CC-ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
