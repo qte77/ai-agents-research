@@ -33,6 +33,7 @@ ai-agents-research/
 │   ├── learnings/             # Cross-repo compound learnings hub (CRLA write-back target)
 │   │   └── per-repo/          # Per-repo pattern distillations
 │   ├── research/              # Auto-generated cumulative agentic-AI paper index (rxiv eval)
+│   ├── plans/                 # Plan/design docs (durable plan-mode output; backlog = GitHub Issues)
 │   └── archive/               # Retired Agents-eval era docs
 ├── triage/                    # Auto-generated monitor outputs (at repo root)
 │   ├── cc-changelog/          # CC changelog + native-sources triage
@@ -45,6 +46,12 @@ ai-agents-research/
     ├── scripts/               # Monitor scripts + shared lib/monitor_utils.py
     └── state/                 # Per-monitor fingerprint files (committed)
 ```
+
+## Planning & Roadmap
+
+- **Backlog / roadmap** — [GitHub Issues](https://github.com/qte77/ai-agents-research/issues) are the single source of truth for planned and deferred work (per #191; the former static `docs/TODO.md` was retired to avoid CHANGELOG/issue duplication).
+- **Design docs** — `docs/plans/` holds durable plan/design docs (the saved output of plan-mode work); each links its tracking issue. See [docs/plans/README.md](plans/README.md).
+- **Landed work** — `CHANGELOG.md` `[Unreleased]` records what has merged.
 
 ## Analysis Format Convention
 
