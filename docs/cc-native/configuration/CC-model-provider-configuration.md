@@ -1,9 +1,9 @@
 ---
 title: CC Model & Provider Configuration
-source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
-purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
+source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
+purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-06-11
+updated: 2026-06-14
 validated_links: 2026-06-11
 ---
 
@@ -150,6 +150,19 @@ export ANTHROPIC_FOUNDRY_BASE_URL="https://my-resource.services.ai.azure.com/ant
 ```
 
 ([source][cc-settings])
+
+### Infomaniak AI (EU-Sovereign, OpenAI-Compatible)
+
+Infomaniak (Swiss host) runs an **OpenAI-compatible** inference API serving open-source models — Llama, Mistral, Qwen, Gemma, plus Infomaniak's own vLLM build of Google's [TranslateGemma-27B][infomaniak-translategemma] — with end-to-end processing in Switzerland and 1M free credits for a one-month trial ([source][infomaniak-ai]). Because it speaks OpenAI Chat Completions rather than the Anthropic Messages API, **using it from CC needs a translation proxy** (LiteLLM or claude-code-proxy — see the LLM Gateway / Proxy section below); OpenAI-native agents such as OpenCode and n8n point at it directly.
+
+```bash
+# product_id is per-organization: GET https://api.infomaniak.com/1/ai (Authorization: Bearer $API_TOKEN)
+# v2 (current) OpenAI-compatible base URL:
+https://api.infomaniak.com/2/ai/${PRODUCT_ID}/openai/v1
+```
+
+- **OpenCode** ([source][infomaniak-opencode]): register a provider in `~/.config/opencode/opencode.json` using the `@ai-sdk/openai-compatible` package with `baseURL` set to the v2 endpoint and model ids `qwen3` / `llama3` / `mistral3` / `gemma3n` (e.g. default `infomaniak/qwen3`). The recipe wires `API_TOKEN` (created with the `ai-tools` scope at manager.infomaniak.com) and `PRODUCT_ID` as environment variables.
+- **n8n** ([source][infomaniak-n8n]): no native node — use the built-in OpenAI node with a custom base URL (`.../1/ai/{product_id}/openai`) and the API token as the key. The credential test fails but inference works; early threads predated function-calling support.
 
 ### Local Models
 
@@ -318,6 +331,35 @@ When routing through gateways, additionally set ([source][cc-settings]):
 | **Enterprise cloud** | Bedrock / Vertex / Foundry | High (cloud config) |
 | **Non-Anthropic models in CC** | LiteLLM or claude-code-proxy | Medium (proxy) |
 | **Per-task local routing / cost control** | Claude Code Router (CCR) | Medium (npm + `ccr start`) |
+| **EU / Swiss data sovereignty, OSS models** | Infomaniak AI (+ proxy for CC; native in OpenCode) | Medium (OpenAI→Anthropic proxy) |
+
+## Free-Tier & OSS Provider Reference
+
+Snapshot of inference providers with free or trial tiers — useful when routing CC (via proxy) or sibling agents (OpenCode, n8n, PydanticAI) to non-Anthropic models. Free-tier terms and model ids change frequently: **the rows below are a February 2026 snapshot** (except Infomaniak, verified June 2026); confirm current offerings on each provider's site before relying on them.
+
+| Provider | Free Tier | Example Model (API ID) | Context | Output | Tools | Notes / Limit |
+| --- | --- | --- | --- | --- | --- | --- |
+| **infomaniak** | 1M credits, 1-mo trial | OSS via OpenAI API: `qwen3`, `mistral3`, `gemma3`, `llama3` | model-dependent | — | Yes | EU/Swiss-hosted; OpenAI-compatible (proxy for CC) |
+| **gemini** | Truly free | `gemini-2.0-flash` | 1M | 8K | Yes | 15 RPM, ~1.5K RPD |
+| **github** | Truly free | `gpt-4.1-mini` | 1M | 32K | Yes | 15 RPM, ~150 RPD |
+| **cerebras** | Truly free | `gpt-oss-120b` | 128K | 8K | Yes | 30 RPM, 1M TPD |
+| **groq** | Truly free | `llama-3.3-70b-versatile` | 131K | 32K | Yes | 30 RPM, 1K RPD |
+| **mistral** | Truly free | `open-mistral-nemo` | 128K | 4K | Yes | 1 RPS, 1B tokens/mo |
+| **openrouter** | Truly free | `qwen/qwen3-next-80b-a3b-instruct:free` | 262K | 8K | Yes | 20 RPM, 50 RPD |
+| **cohere** | Truly free | `command-a-03-2025` | 256K | 8K | Yes | 20 RPM, 1K calls/mo |
+| **deepseek** | 5M free tokens | `deepseek-chat` | 128K | 8K | Yes | Spend-limited |
+| **grok** | $25 trial credit | `grok-3-mini` | 131K | 32K | Yes | Spend-limited |
+| **sambanova** | $5 trial + limited free | `Meta-Llama-3.3-70B-Instruct` | 128K | 8K | Yes | Free: 40 RPD |
+| **nebius** | $1 trial credit | `meta-llama/Meta-Llama-3.1-70B-Instruct` | 128K | 8K | Yes | $1 credit |
+| **fireworks** | $1 trial credit | `accounts/fireworks/models/llama-v3p3-70b-instruct` | 131K | 8K | Yes | $1 credit |
+| **together** | No free tier | `meta-llama/Llama-3.3-70B-Instruct-Turbo` | 128K | 8K | Yes | $5 min purchase |
+| **perplexity** | No free API tier | `sonar` | 127K | 4K | Limited | Credits required |
+| **huggingface** | ~$0.10/mo | `meta-llama/Meta-Llama-3.3-70B-Instruct` | 128K | 8K | Yes | ~10 calls on free |
+| **ollama** | Always free (local) | `llama3.3:70b` | 128K | 8K | Yes | Hardware-bound (see Local Models above) |
+
+> **OpenAI-compatible tool calling**: some providers reject strict tool-definition schemas — `groq`, `cerebras`, `fireworks`, `together`, `sambanova`. With PydanticAI, set `OpenAIModelProfile(openai_supports_strict_tool_definition=False)` for these.
+
+(`restack`, which appears on some provider lists, is a workflow-orchestration platform — not an inference provider; it proxies to others.)
 
 ## Cross-References
 
@@ -341,6 +383,10 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [Bifrost — Open-Source AI Gateway][bifrost]
 - [Claude Code Router (CCR)][cc-router]
 - [Local setup guide][local-setup]
+- [Infomaniak — Open-Source AI Models][infomaniak-ai]
+- [Infomaniak — vLLM TranslateGemma-27B (Hugging Face)][infomaniak-translategemma]
+- [OpenCode + Infomaniak AI Tools setup (janikvonrotz)][infomaniak-opencode]
+- [n8n community — add Infomaniak AI language model][infomaniak-n8n]
 
 [cc-settings]: https://code.claude.com/docs/en/settings#environment-variables
 [cc-effort]: https://code.claude.com/docs/en/model-config#adjust-effort-level
@@ -357,3 +403,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [fable5-intro]: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
 [models-overview]: https://platform.claude.com/docs/en/about-claude/models/overview
 [models-pricing]: https://platform.claude.com/docs/en/about-claude/pricing
+[infomaniak-ai]: https://www.infomaniak.com/en/hosting/ai-services/open-source-models
+[infomaniak-translategemma]: https://huggingface.co/Infomaniak-AI/vllm-translategemma-27b-it
+[infomaniak-opencode]: https://janikvonrotz.ch/2026/04/01/setup-opencode-with-infomaniak-ai-tools/
+[infomaniak-n8n]: https://community.n8n.io/t/add-new-language-model-informaniak-ai/73182
