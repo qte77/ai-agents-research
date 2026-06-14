@@ -63,9 +63,10 @@ The field has reframed memory as **context engineering** — assembling persiste
 
 ## 5. Foundation Models for Agents
 
-Frontier model facts and pricing change fast and are maintained in [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) (Claude, OpenAI, Gemini) and its free-tier/OSS provider reference. Notable agent-oriented / OSS entries from the snapshot:
+Frontier model facts and pricing change fast and live in [CC-models-reference.md](../cc-native/configuration/CC-models-reference.md) (Fable 5 card + free-tier/OSS provider table) and [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) (how to route CC to them). Notable agent-oriented / OSS entries:
 
 - [DeepSeek V3.2 / V3.2-Speciale / R1](https://api-docs.deepseek.com/news/news251201) — reasoning-first, agent-trained models (V3.2-Speciale synthesized 1,800+ environments, 85K+ instructions; integrates thinking into tool use). Cost-efficient OSS.
+- [Devstral (Mistral)](https://mistral.ai/news/devstral) — Apache-2.0 agentic-coding model family (All Hands AI / OpenHands lineage). Devstral Small 2 (24B) hits 68.0% SWE-Bench Verified (123B: 72.2%) — the top open-source agentic-coding scores; runs on a single RTX 4090 / 32GB Mac, ~30–50× cheaper than Sonnet, and is a listed [Claude Code model backend](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512) via OpenAI-compatible routing. Capabilities are folding into the unified Mistral Small 4 line.
 - [Arcee Foundation Models (AFM)](https://www.arcee.ai/) — ~4.5B CPU-optimized enterprise model for private/offline deployment.
 
 ## Production Patterns & Reference Frameworks
