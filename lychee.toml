@@ -72,4 +72,5 @@ exclude = [
     "codebuddy.ai",  # geo/IP-blocks CI (302 -> /banned); real site is browser-OK — codebuddy-analysis.md
     "api.semanticscholar.org",  # SSL cert expired upstream (persists) — pre-existing in CC-research-agents-landscape.md; drop this exclude once renewed
     "orbisius.com",  # 500 to lychee (persists) — pre-existing third-party blog link in CC-error-messages-reference.md
+    "finance.biggo.com",  # times out in CI (slow news aggregator) — secondary source in codebuddy-analysis.md
 ]
