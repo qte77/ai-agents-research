@@ -10,7 +10,7 @@ exclude_path = ["triage/", "docs/archive/", "docs/research/rxiv-agentic-papers.m
 # Accept common bot-blocked status codes
 # 405 = HEAD method not allowed (status pages often reject HEAD)
 # 418 = I'm a teapot (freedesktop.org bot-block)
-accept = [200, 429, 405, 418, 202, 415]
+accept = [200, 204, 429, 405, 418, 202, 415]
 
 # Retry transient failures (GitHub 502s, network blips) — see AGENT_LEARNINGS.md
 max_retries = 3
@@ -65,4 +65,12 @@ exclude = [
     "perplexity.ai",  # 403 to HEAD on /academic — CC-research-agents-landscape.md
     "qa.allen.ai",  # Ai2 Scholar QA — times out lychee — CC-research-agents-landscape.md
     "langtrace.ai",  # 404 to root (site relocated?) — pre-existing Langtrace entry in CC-agent-observability-methods-analysis.md; revisit/update URL
+    # PR #248 — bot-blocked / protocol-incompatible to lychee (browser-OK)
+    "iso.org",  # 403 to HEAD (anti-bot) — pre-existing in CC-ai-security-governance-analysis.md
+    "lens.org",  # 403 to automated requests — web-scraping-extraction-landscape.md (migrated catalog)
+    "epo.org",  # HTTP/2 protocol error to lychee — web-scraping-extraction-landscape.md (migrated catalog)
+    "codebuddy.ai",  # geo/IP-blocks CI (302 -> /banned); real site is browser-OK — codebuddy-analysis.md
+    "api.semanticscholar.org",  # SSL cert expired upstream (persists) — pre-existing in CC-research-agents-landscape.md; drop this exclude once renewed
+    "orbisius.com",  # 500 to lychee (persists) — pre-existing third-party blog link in CC-error-messages-reference.md
+    "finance.biggo.com",  # times out in CI (slow news aggregator) — secondary source in codebuddy-analysis.md
 ]

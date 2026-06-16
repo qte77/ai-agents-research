@@ -4,7 +4,7 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-14
+updated: 2026-06-16
 validated_links: 2026-03-12
 ---
 
@@ -36,8 +36,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Haystack (deepset)](https://github.com/deepset-ai/haystack) — production RAG/pipeline framework (Apache-2.0).
 - [DSPy (Stanford)](https://github.com/stanfordnlp/dspy) — "programming, not prompting": modules + optimizers auto-tune prompts/weights; v3.1 (Jan 2026), Agenspy adds MCP/A2A.
 - [Restack](https://github.com/restackio) — event-driven, durable agent backend with task queues (Apache-2.0).
-- [Withmartian](https://www.withmartian.com/) — Model Router® routing prompts to optimal models for cost/accuracy.
-- [OpenRouter](https://openrouter.ai/) — unified gateway to 400+ models via OpenAI-compatible API. Config for CC: [CC-model-provider-configuration.md § OpenRouter](../cc-native/configuration/CC-model-provider-configuration.md).
+- **Routers, gateways & aggregators** now live in a dedicated catalog → [llm-routers-gateways-landscape.md](llm-routers-gateways-landscape.md) (29 provider-agnostic tools: OpenRouter, Withmartian/Martian, LiteLLM, Portkey, Mammouth, Requesty, Helicone, Vercel/Cloudflare AI Gateway, OpenRouter Fusion, …). CC-side routing config: [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md).
 
 ## 3. Lightweight & Specialized Frameworks
 
