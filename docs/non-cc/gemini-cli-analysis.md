@@ -22,7 +22,7 @@ that Gemini CLI would stop serving requests for free-tier users, Google AI Pro
 subscribers, and Google AI Ultra subscribers on **June 18, 2026** — one day after
 this analysis was written. Only Gemini Code Assist Standard and Enterprise
 subscribers retain access. Non-enterprise users are directed to migrate to
-[Antigravity CLI][antigravity-discussion], Google's closed-source replacement.
+[Antigravity CLI][antigravity-discussion], Google's closed-source replacement (full analysis: [antigravity-analysis.md](antigravity-analysis.md)).
 This renders the project effectively an archive for the vast majority of its
 100,000+ GitHub-star community.
 

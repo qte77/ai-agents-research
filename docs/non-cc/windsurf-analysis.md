@@ -20,7 +20,7 @@ December 2025 for approximately $250 million (accessed 2026-06-16, first-party v
 
 The product retains backward compatibility with VS Code extensions and continues
 under active development. Pricing, plans, and extensions carried over without
-change at the rebrand date ([Devin Desktop launch post][devin-desktop-blog]).
+change at the rebrand date ([Devin Desktop launch post][devin-desktop-blog]). See also [devin-cli-analysis.md](devin-cli-analysis.md) — Cognition's terminal Devin CLI in the same product family.
 
 **Ownership chain** (as of 2026-06-16, via [cognition.ai][cognition-windsurf-blog]):
 
