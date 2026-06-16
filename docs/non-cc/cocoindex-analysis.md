@@ -56,7 +56,7 @@ server (not independently verified by this analysis).
 
 ## Adoption Decision
 
-**Status: Assess**
+**Status**: Assess
 
 CocoIndex addresses a real gap in the agent-research toolchain: keeping indexed context
 fresh without full recomputation. The Apache 2.0 license and Python-native API lower

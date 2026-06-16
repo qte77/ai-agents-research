@@ -92,7 +92,7 @@ Design principles (from the spec, accessed 2026-06-16):
 problem this repo studies, but it is a v0.1 draft published only days before
 this analysis (2026-06-12). Key trade-offs:
 
-**Strengths for agent-research context**
+### Strengths for agent-research context
 
 - Directly addresses the knowledge-sharing gap between data producers and AI
   agents; the spec explicitly frames agents as first-class consumers.
@@ -103,7 +103,7 @@ this analysis (2026-06-12). Key trade-offs:
 - Reference enrichment agent (BigQuery-focused) demonstrates the
   auto-generation workflow that agent pipelines need.
 
-**Limitations / unknowns**
+### Limitations / unknowns
 
 - v0.1 Draft — the spec is explicitly a draft; breaking changes are possible
   before a stable release.
@@ -139,7 +139,7 @@ an internal agent experiment before committing to it as a standard.
 | [Google Cloud Blog — OKF introduction][blog] | OKF purpose, design principles, v0.1 release date (2026-06-12), structure examples, reference implementations |
 | [OKF SPEC.md v0.1][spec] | Mandatory/recommended fields, bundle organisation, link conventions, consumer tolerance rules |
 | [GoogleCloudPlatform/knowledge-catalog (GitHub)][repo] | Apache 2.0 license, 2.2 k stars, language breakdown, repo description |
-| https://github.com/GoogleCloudPlatform/knowledge-catalog | Parent platform repo — directory structure (`agents/`, `okf/`, `samples/`, `toolbox/`), ~2.3 k stars, platform description verified 2026-06-16 |
+| [knowledge-catalog platform][repo] | Parent platform repo — directory structure (`agents/`, `okf/`, `samples/`, `toolbox/`), ~2.3 k stars, platform description verified 2026-06-16 |
 
 [blog]: https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing/
 [spec]: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md

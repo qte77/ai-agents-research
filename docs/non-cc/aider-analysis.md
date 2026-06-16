@@ -155,7 +155,7 @@ cross-session memory or cloud sandbox.
 
 [aider-home]: https://aider.chat/
 [aider-gh]: https://github.com/Aider-AI/aider
-[aider-license]: https://github.com/Aider-AI/aider/blob/main/LICENSE
+[aider-license]: https://github.com/Aider-AI/aider/blob/main/LICENSE.txt
 [aider-releases]: https://github.com/Aider-AI/aider/releases/latest
 [aider-leaderboard]: https://aider.chat/docs/leaderboards/
 [aider-history]: https://aider.chat/HISTORY.html
