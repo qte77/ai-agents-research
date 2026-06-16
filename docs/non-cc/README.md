@@ -99,7 +99,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [ag-ui-protocol-landscape.md](ag-ui-protocol-landscape.md) | AG-UI (Agent-User Interaction protocol), A2UI (Google declarative generative-UI spec), OpenGenerativeUI (CopilotKit reference framework); 2026 ecosystem adoption + Salesforce non-adoption note |
 | [agentcanvas-analysis.md](agentcanvas-analysis.md) | AgentCanvas — renders Pydantic AI + Logfire execution traces as interactive HTML diagrams (OTel agent observability) |
 
-## Planned
+## Backlog status
 
 The former coding-agent backlog — Cline, opencode, Codebuff, Gemini CLI, Cursor,
 Antigravity, Kiro, Codex CLI, VS Code Copilot Chat, Devin CLI, Windsurf, Aider,
