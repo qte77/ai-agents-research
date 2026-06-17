@@ -122,11 +122,13 @@ The site applies the qte77 EyeRest brand (`qte77/qte77/brand/DESIGN.md`: zero-bl
 | `ui/style.css` | EyeRest design tokens + `@font-face` + layout |
 | `ui/favicon.svg` | Adapted qte77 logo-mark |
 | `ui/assets/fonts/*.woff2` | Self-hosted Inter + JetBrains Mono — gitignored, fetched by `make graph-fonts` (locally and in CI); `@font-face` falls back to system-ui if absent |
-| `src/pages_build.py` | Pure, unit-tested helpers — `restyle_graph()` recolors the graphify export to EyeRest, injects fonts/favicon/title, and repoints vis-network from unpkg to the vendored copy (run locally by `make graph-page`); font helpers feed the fetch script |
+| `src/pages_build.py` | Pure, unit-tested helpers — `filter_graph_data()` prunes tooling/code nodes; `restyle_graph()` recolors the export to EyeRest, injects fonts/favicon/title, and repoints vis-network from unpkg to the vendored copy (both run by `make graph-page`); font helpers feed the fetch script |
 
 **Deploy** is a GitHub Actions workflow (`.github/workflows/gh-pages.yaml`) using the Pages API — like the sibling repos `analyze-stock-kpi` and `paperverse` (no `gh-pages` branch). On push to `main` (paths under `ui/`), CI fetches the brand fonts, assembles `ui/` into the Pages artifact, and deploys. The repo's **Settings → Pages → Source** must be set to "GitHub Actions".
 
-The knowledge graph stays **local and interactive** (key-free, via the `/graphify` skill — no LLM in CI): rebuild the graph, run `make graph-page` to render + EyeRest-restyle it into the committed `ui/graph.html`, then commit & push to trigger a deploy.
+The knowledge graph stays **local and interactive** (key-free, via the `/graphify` skill — no LLM in CI): rebuild the graph, run `make graph-page` to render + EyeRest-restyle it into the committed `ui/graph.html`, then commit & push to trigger a deploy. `make graph-page` also **prunes build/tooling nodes** (`scripts/`, `tests/`, `ui/`, `src/`, `.github/scripts/`) so the published graph maps the research corpus, not the machinery — workflows and actions are kept.
+
+The landing page carries a **System / Light / Dark theme picker** (persisted to `localStorage`, no-flash, OS-following by default); the graph page stays dark.
 
 **Build** (semantic extraction needs an LLM):
 
