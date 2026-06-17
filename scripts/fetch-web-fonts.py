@@ -35,7 +35,8 @@ def main() -> int:
             failures += 1
             continue
         try:
-            with urllib.request.urlopen(url, timeout=TIMEOUT) as resp:
+            # Scheme is constrained to https:// by the guard above (file:// can't reach here).
+            with urllib.request.urlopen(url, timeout=TIMEOUT) as resp:  # nosec B310
                 data = resp.read()
         except Exception as e:
             print(f"FAIL  {name}: {e}")
