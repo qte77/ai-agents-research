@@ -7,12 +7,21 @@
   <meta name="description" content="Field research and feature analysis for AI coding agents — sandboxing, orchestration, plugins, community tooling, SDLC patterns." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
+  <script>
+    // Apply the saved theme before first paint to avoid a flash of the wrong palette.
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "system";
+  </script>
 </head>
 <body>
   <main class="wrap">
     <header class="masthead">
       <img src="favicon.svg" alt="qte77 mark" width="56" height="56" />
       <h1>ai-agents-research</h1>
+      <select id="theme" aria-label="Color theme">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
     </header>
     <p class="tagline">
       Field research and feature analysis for AI coding agents — sandboxing,
@@ -75,5 +84,18 @@
       </p>
     </footer>
   </main>
+  <script>
+    // Theme picker: reflect the saved choice and persist changes. Default = follow the OS.
+    (function () {
+      var sel = document.getElementById("theme");
+      var mode = localStorage.getItem("theme") || "system";
+      document.documentElement.dataset.theme = mode;
+      sel.value = mode;
+      sel.addEventListener("change", function () {
+        localStorage.setItem("theme", sel.value);
+        document.documentElement.dataset.theme = sel.value;
+      });
+    })();
+  </script>
 </body>
 </html>

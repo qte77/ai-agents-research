@@ -36,6 +36,7 @@
   --text-muted: #686040;
   --primary: #7a6010;
   --primary-on: #ece8d8;
+  color-scheme: light;
 
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
@@ -47,8 +48,23 @@
   --container: 768px;
 }
 
+/* Dark palette — explicit `data-theme="dark"`, or the OS preference unless the
+   user has explicitly chosen a mode. The block is duplicated by necessity: a
+   media-query selector can't be grouped with a plain one. No-JS users (no
+   data-theme attr) still get OS-driven dark via the second block. */
+:root[data-theme="dark"] {
+  --bg: #1c1a14;
+  --surface: #242018;
+  --border: #383428;
+  --text: #d8d0b8;
+  --text-muted: #a89878;
+  --primary: #c8a858;
+  --primary-on: #1c1a14;
+  color-scheme: dark;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
     --bg: #1c1a14;
     --surface: #242018;
     --border: #383428;
@@ -56,6 +72,7 @@
     --text-muted: #a89878;
     --primary: #c8a858;
     --primary-on: #1c1a14;
+    color-scheme: dark;
   }
 }
 
@@ -63,10 +80,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html {
-  color-scheme: light dark;
 }
 
 body {
@@ -96,6 +109,17 @@ body {
   width: 56px;
   height: 56px;
   border-radius: var(--radius-md);
+}
+#theme {
+  margin-left: auto;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
 }
 h1 {
   font-size: 30px;
