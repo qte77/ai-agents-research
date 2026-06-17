@@ -79,6 +79,48 @@ class RestyleGraphTests(unittest.TestCase):
         self.assertEqual(pages_build.restyle_graph(self.out), self.out)
 
 
+SAMPLE_GRAPH = """<html><body>
+<script>
+const RAW_NODES = [{"id":"a","source_file":"docs/x.md"},{"id":"b","source_file":"scripts/y.py"},{"id":"c","source_file":".github/scripts/z.py"},{"id":"d","source_file":"docs/w.md"}];
+const RAW_EDGES = [{"from":"a","to":"d"},{"from":"a","to":"b"},{"from":"b","to":"c"}];
+const hyperedges = [{"id":"h1","nodes":["a","d","b"],"source_file":"docs/x.md"},{"id":"h2","nodes":["b","c"],"source_file":"scripts/y.py"},{"id":"h3","nodes":["a","b"],"source_file":"docs/x.md"}];
+</script></body></html>"""
+
+
+def _array(html, var):
+    import json
+    import re
+    return json.loads(re.search(var + r" = (\[.*?\]);", html, re.DOTALL).group(1))
+
+
+class FilterGraphDataTests(unittest.TestCase):
+    def setUp(self):
+        self.out = pages_build.filter_graph_data(SAMPLE_GRAPH)
+
+    def test_excluded_dir_nodes_dropped(self):
+        ids = {n["id"] for n in _array(self.out, "RAW_NODES")}
+        self.assertEqual(ids, {"a", "d"})  # scripts/ and .github/scripts/ gone
+        self.assertNotIn("scripts/y.py", self.out)
+        self.assertNotIn(".github/scripts/z.py", self.out)
+
+    def test_dangling_edges_pruned(self):
+        edges = _array(self.out, "RAW_EDGES")
+        self.assertEqual(edges, [{"from": "a", "to": "d"}])
+
+    def test_hyperedges_pruned_and_trimmed(self):
+        hy = _array(self.out, "hyperedges")
+        # h2 excluded by source_file; h3 drops to <2 members; h1 keeps a,d only.
+        self.assertEqual([h["id"] for h in hy], ["h1"])
+        self.assertEqual(hy[0]["nodes"], ["a", "d"])
+
+    def test_unparseable_returns_unchanged(self):
+        broken = "<html>no graph arrays here</html>"
+        self.assertEqual(pages_build.filter_graph_data(broken), broken)
+
+    def test_idempotent(self):
+        self.assertEqual(pages_build.filter_graph_data(self.out), self.out)
+
+
 class IsWoff2Tests(unittest.TestCase):
     def test_accepts_woff2_signature(self):
         self.assertTrue(pages_build.is_woff2(b"wOF2\x00\x01\x00\x00rest"))

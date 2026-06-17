@@ -10,6 +10,7 @@ repos analyze-stock-kpi/ui/style.css and paperverse/ui/src/theme.css.
 """
 from __future__ import annotations
 
+import json
 import re
 
 # -- Fonts -------------------------------------------------------------------
@@ -98,3 +99,55 @@ def restyle_graph(html: str) -> str:
     if _BRAND_HEAD not in html:
         html = html.replace("</head>", _BRAND_HEAD + "</head>", 1)
     return html
+
+
+# -- Graph node pruning -------------------------------------------------------
+# The published graph maps the docs/research corpus, not build tooling. Drop
+# nodes whose source_file is under these dirs (and any edge/hyperedge that would
+# then dangle). Keeps .github/workflows + .github/actions (architecture).
+_EXCLUDED_DIRS = ("scripts/", "tests/", "ui/", "src/", ".github/scripts/")
+_GRAPH_ARRAYS = ("RAW_NODES", "RAW_EDGES", "hyperedges")
+
+
+def _excluded(source_file) -> bool:
+    return str(source_file or "").startswith(_EXCLUDED_DIRS)
+
+
+def filter_graph_data(html: str) -> str:
+    """Prune tooling/code nodes (and their now-dangling edges) from the inline
+    graph data, so the published graph maps the research corpus.
+
+    All-or-nothing: if the inline arrays can't be located and parsed, return the
+    HTML unchanged rather than risk emitting edges that reference missing nodes.
+    Idempotent — re-running on already-pruned output is a no-op.
+    """
+    found = {}
+    for var in _GRAPH_ARRAYS:
+        m = re.search(rf"{var} = (\[.*?\]);", html, re.DOTALL)
+        if not m:
+            return html
+        try:
+            found[var] = (m.group(0), json.loads(m.group(1)))
+        except ValueError:
+            return html
+
+    nodes = [n for n in found["RAW_NODES"][1] if not _excluded(n.get("source_file"))]
+    kept = {n["id"] for n in nodes}
+    edges = [
+        e for e in found["RAW_EDGES"][1]
+        if e.get("from") in kept and e.get("to") in kept
+    ]
+    hyper = []
+    for h in found["hyperedges"][1]:
+        if _excluded(h.get("source_file")):
+            continue
+        members = [nid for nid in h.get("nodes", []) if nid in kept]
+        if len(members) >= 2:  # a hyperedge needs at least two members to mean anything
+            hyper.append({**h, "nodes": members})
+
+    out = html
+    for var, data in (("RAW_NODES", nodes), ("RAW_EDGES", edges), ("hyperedges", hyper)):
+        out = out.replace(
+            found[var][0], f"{var} = {json.dumps(data, ensure_ascii=False)};", 1
+        )
+    return out

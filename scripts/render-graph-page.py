@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from pages_build import restyle_graph  # noqa: E402
+from pages_build import filter_graph_data, restyle_graph  # noqa: E402
 
 SRC = Path("graphify-out/graph.html")
 DST = Path("ui/graph.html")
@@ -20,6 +20,8 @@ DST = Path("ui/graph.html")
 if not SRC.exists():
     sys.exit(f"{SRC} not found — run `make graph-html` (or build the graph) first")
 
+# Prune tooling/code nodes, then apply the EyeRest brand.
+html = restyle_graph(filter_graph_data(SRC.read_text(encoding="utf-8")))
 DST.parent.mkdir(parents=True, exist_ok=True)
-DST.write_text(restyle_graph(SRC.read_text(encoding="utf-8")), encoding="utf-8")
+DST.write_text(html, encoding="utf-8")
 print(f"Wrote branded {DST} ({DST.stat().st_size:,} bytes) — commit it to publish")
