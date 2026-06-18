@@ -51,6 +51,7 @@ Each monitor fingerprints its output and skips PR creation when content hasn't c
 make setup_all   # lychee + Node.js + markdownlint-cli2 + actionlint
 make lint        # link check (lychee) + markdown (markdownlint-cli2) + action (actionlint)
 make autofix     # mechanical markdownlint --fix pass
+make test        # unit tests for src/ + .github/scripts/lib/ modules
 make help        # all recipes grouped by section
 ```
 

@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `ui/` branded GitHub Pages site: EyeRest-themed landing page (`index.html`, System/Light/Dark theme picker), restyled knowledge graph (`graph.html`), `style.css`, `favicon.svg`, vendored `vis-network` + self-hosted Inter/JetBrains Mono fonts. (PR #253)
+- `.github/workflows/gh-pages.yaml`: GitHub Actions Pages deploy (Pages API); repo Pages source set to "GitHub Actions". (PR #253)
+- `src/pages_build.py` + `tests/test_pages_build.py`: pure, unit-tested helpers (EyeRest restyle, tooling-node pruning, woff2 validation). (PR #253)
+- `.github/scripts/lib/` pure-logic modules (`status_report`, `status_incidents`, `changelog`, `native_sources`, `community_sources`, expanded `monitor_utils`) + a stdlib `unittest` suite under `tests/` (67 tests total); `make test`. (PRs #256–#259)
+- `Makefile`: `graph-page`, `graph-fonts`, `preview`, and `test` targets. (PRs #253, #256)
 - `.github/workflows/rxiv-paper-eval.yaml`: fourth monitor — weekly Tuesday ArXiv preprint eval via `qte77/gha-rxiv-paper-eval@v0.2.2`, GITHUB_TOKEN-only auth posture (no PAT), outputs to `triage/rxiv/`. (PR #175)
 - `.github/state/rxiv-paper-eval-state.json` + dedup step in rxiv triage job: content-hash skip keyed by `(server, year, week)` so same-params re-dispatch on a different UTC day no longer opens duplicate PRs. Closes #181. (PR #182)
 - `Makefile` + `.github/workflows/lint.yaml`: actionlint v1.7.12 as third lint job; path filter widened to `.github/workflows/**` + `.github/actions/**`. (PR #182)
@@ -41,10 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- `scripts/graphify-publish-pages.py` + the `Makefile` `graph-publish` target: superseded by `make graph-page` (render + EyeRest-restyle into committed `ui/graph.html`) and the `gh-pages.yaml` workflow. (PR #253)
+- `gh-pages` branch: deleted — deploys now come from the GitHub Actions artifact. (PR #253)
 - `docs/TODO.md`: GitHub issues are the authoritative roadmap; the static file duplicated CHANGELOG (Done items) and drifted from issue state (Next/Backlog). Remaining pending items migrated to #191 (research backlog tracking issue); deferred items dropped.
 
 ### Fixed
 
+- Monitor scripts (`community-monitor.py`, `native-sources-monitor.py`): CodeQL `py/bad-tag-filter` hardening — the `<script>`/`<style>` strip regex is now case- and trailing-whitespace-tolerant via `monitor_utils.strip_html_noise`. (PR #255)
 - `Makefile` setup_lychee: tarball-wrapper-dir bug — switch to `mktemp + install -m 755` mirroring `lycheeverse/lychee-action`. Closes #160. (PRs #170, #174)
 - Triage-output generators (`monitor_utils.build_report`, `changelog-compare.build_report`, `status-stats.generate_report`) + `create-triage-pr` H1 prepend: md-lint-clean output going forward; historical `triage/**/*.md` cleaned in one pass. Closes #159. (PR #171)
 - `learnings-aggregator.py` + 7 mirrored `docs/learnings/per-repo/*.md`: strip upstream frontmatter, conditional H1 demotion (only when upstream has its own H1). (PR #173)
@@ -57,6 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- GitHub Pages now deploys via the Actions workflow instead of a `gh-pages` branch push; the published knowledge graph prunes tooling/code nodes (`scripts/`, `tests/`, `ui/`, `src/`, `.github/scripts/`). (PR #253)
+- `.github/scripts/` monitors (status, changelog, native-sources, community) refactored to thin IO entry points with pure logic extracted to importable `.github/scripts/lib/` modules — behavior-preserving (`status-stats` + `changelog-compare` output byte-identical on fixtures). (PRs #256–#259)
 - `docs/cc-community/CC-repo-to-docs-tools-landscape.md`: consolidate cross-references, link Graphify and Code-Review-Graph
 - `docs/non-cc/README.md`: add Infrastructure section (InsForge, GoClaw), expand Agents section (Feynman, Hermes, Rowboat)
 - `README.md`: update contents table with expanded non-cc and cc-community descriptions
