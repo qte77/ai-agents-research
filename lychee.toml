@@ -69,6 +69,7 @@ exclude = [
     "iso.org",  # 403 to HEAD (anti-bot) — pre-existing in CC-ai-security-governance-analysis.md
     "lens.org",  # 403 to automated requests — web-scraping-extraction-landscape.md (migrated catalog)
     "epo.org",  # HTTP/2 protocol error to lychee — web-scraping-extraction-landscape.md (migrated catalog)
+    "patentscope.wipo.int",  # 403 (anti-bot) to lychee — web-scraping-extraction-landscape.md (migrated catalog)
     "codebuddy.ai",  # geo/IP-blocks CI (302 -> /banned); real site is browser-OK — codebuddy-analysis.md
     "api.semanticscholar.org",  # SSL cert expired upstream (persists) — pre-existing in CC-research-agents-landscape.md; drop this exclude once renewed
     "orbisius.com",  # 500 to lychee (persists) — pre-existing third-party blog link in CC-error-messages-reference.md
