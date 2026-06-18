@@ -47,8 +47,3 @@ __pycache__/
 # graphify knowledge graph — generated, regenerable; published to the gh-pages
 # branch (https://qte77.github.io/ai-agents-research/), never tracked on main.
 graphify-out/
-
-# Self-hosted web fonts — fetched on demand (make graph-fonts), never tracked
-# (mirrors the qte77/brand fonts-on-demand convention). The @font-face rules in
-# ui/style.css fall back to system-ui when these are absent.
-ui/assets/fonts/*.woff2
