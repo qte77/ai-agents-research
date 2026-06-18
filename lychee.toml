@@ -73,4 +73,5 @@ exclude = [
     "api.semanticscholar.org",  # SSL cert expired upstream (persists) — pre-existing in CC-research-agents-landscape.md; drop this exclude once renewed
     "orbisius.com",  # 500 to lychee (persists) — pre-existing third-party blog link in CC-error-messages-reference.md
     "finance.biggo.com",  # times out in CI (slow news aggregator) — secondary source in codebuddy-analysis.md
+    "vibekanban.com",  # untrusted SSL cert (UnknownIssuer) upstream as of 2026-06-18 — referenced in CC-office-worker-workflows.md; drop once renewed
 ]
