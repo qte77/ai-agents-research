@@ -2,10 +2,9 @@
 """Download self-hosted web fonts (Inter + JetBrains Mono, latin woff2) into
 ui/assets/fonts/.
 
-Mirrors the qte77/brand fonts-on-demand convention: the woff2 files are
-gitignored and fetched when needed (before `make graph-publish`). The site's
-@font-face falls back to system-ui if they are absent, so this step is optional
-but recommended for true brand rendering.
+The woff2 files are committed to the repo; run this (via `make graph-fonts`) to
+fetch or refresh them. The site's @font-face falls back to system-ui if they are
+absent, so this step is only needed when adding or updating the brand fonts.
 
 Stdlib only. Run from the repo root, or via `make graph-fonts`.
   --force   re-download even if the file already exists

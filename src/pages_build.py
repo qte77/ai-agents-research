@@ -1,7 +1,7 @@
 """Pure helpers for building the branded GitHub Pages site.
 
 Stdlib only, no side effects on import — so it is unit-testable. The
-`scripts/*.py` entry points (graphify-publish-pages.py, fetch-web-fonts.py) are
+`scripts/*.py` entry points (render-graph-page.py, fetch-web-fonts.py) are
 thin IO wrappers that import from here; all testable logic lives in this module.
 
 Brand source of truth: qte77/qte77/brand/DESIGN.md (EyeRest — zero-blue, warm
