@@ -137,8 +137,8 @@ def extract_html_entries(text: str) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
 
     # Extract text from HTML by stripping tags (simple approach)
-    clean = re.sub(r"<script[^>]*>.*?</script>", "", text, flags=re.DOTALL)
-    clean = re.sub(r"<style[^>]*>.*?</style>", "", clean, flags=re.DOTALL)
+    clean = re.sub(r"<script[^>]*>.*?</script[^>]*>", "", text, flags=re.DOTALL | re.IGNORECASE)
+    clean = re.sub(r"<style[^>]*>.*?</style[^>]*>", "", clean, flags=re.DOTALL | re.IGNORECASE)
     clean = re.sub(r"<[^>]+>", "\n", clean)
     clean = re.sub(r"\n{3,}", "\n\n", clean)
 

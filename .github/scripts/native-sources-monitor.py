@@ -76,8 +76,8 @@ def extract_blog_entries(html: str) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
 
     # Strip script/style
-    clean = re.sub(r"<script[^>]*>.*?</script>", "", html, flags=re.DOTALL)
-    clean = re.sub(r"<style[^>]*>.*?</style>", "", clean, flags=re.DOTALL)
+    clean = re.sub(r"<script[^>]*>.*?</script[^>]*>", "", html, flags=re.DOTALL | re.IGNORECASE)
+    clean = re.sub(r"<style[^>]*>.*?</style[^>]*>", "", clean, flags=re.DOTALL | re.IGNORECASE)
 
     # Extract links with text: <a href="...">Title</a>
     for match in re.finditer(r'<a[^>]+href="(/news/[^"]+)"[^>]*>(.*?)</a>', clean, re.DOTALL):
