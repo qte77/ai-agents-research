@@ -6,7 +6,8 @@ name: Deploy GitHub Pages
 #
 # The knowledge graph stays local/interactive (key-free, no LLM in CI): rebuild
 # it, run `make graph-page` to render + restyle into ui/graph.html, then commit.
-# This workflow only fetches fonts, assembles ui/, and deploys.
+# Fonts (ui/assets/fonts/) and vis-network (ui/vendor/) are committed, so this
+# workflow just assembles ui/ and deploys.
 #
 # Requires repo Settings -> Pages -> Source = "GitHub Actions".
 
@@ -15,8 +16,6 @@ on:
     branches: [main]
     paths:
       - "ui/**"
-      - "scripts/fetch-web-fonts.py"
-      - "src/pages_build.py"
       - ".github/workflows/gh-pages.yaml"
   workflow_dispatch:
 
@@ -37,11 +36,6 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
-
-      - name: Fetch self-hosted brand fonts (non-fatal)
-        run: |
-          python3 scripts/fetch-web-fonts.py \
-            || echo "font fetch failed — site falls back to system-ui"
 
       - name: Assemble _site
         run: |
