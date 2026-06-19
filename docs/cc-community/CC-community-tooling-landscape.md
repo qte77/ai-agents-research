@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-06-14
-validated_links: 2026-06-14
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Research (informational)
@@ -36,6 +36,20 @@ Rust-based CLI proxy that intercepts shell command outputs and compresses them b
 **Recommendation**: Keep installed — free savings on verbose output with negligible overhead. Set expectations accordingly.
 
 Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md); [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — caveman (output-side compression); the [usage-observability tools](CC-usage-tooling-landscape.md) (measurement layer)
+
+### Token-Waste Reduction Stack
+
+A layered approach to keeping context in Claude's ~75k-token "smart zone" via deterministic developer-side output filtering, rather than relying on the model to decide what matters ([context-efficient-backpressure][hlyr-backpressure], 2025-12-09).
+
+| Layer | Mechanism | Tool / Pattern | Known limitation |
+|---|---|---|---|
+| **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` strips built-in git-workflow tokens from context in headless mode (CC v2.1.69+) | Shell env / `.env` | Headless-only; no effect in interactive sessions |
+| **2 — Native hook filters (DIY)** | `run_silent()` PostToolUse bash wrapper: captures stdout to a temp file, emits `✓ <desc>` on exit 0, surfaces full output only on non-zero exit; pair with failFast flags (`pytest -x`, `jest --bail`, `go test -failfast`) to halt at first failure | CC PostToolUse hook | Must be written per project; no packaging or reuse mechanism built in |
+| **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); independently verified zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
+| **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity | See [CC-community-skills-landscape.md][skills-landscape] | Output-side only; does not reduce tool or shell output |
+
+Layer 1 cross-ref: [CC-changelog-feature-scan.md](../cc-native/configuration/CC-changelog-feature-scan.md) — env var inventory.
+Layer 2 cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — PostToolUse hook mechanism.
 
 ---
 
@@ -352,6 +366,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [CodeBurn][codeburn] | Cross-agent token-usage TUI dashboard (4K stars, MIT) |
 | [ccusage][ccusage] | CC/Codex JSONL usage analyzer, MCP-integrated (13.4K stars, MIT) |
 | [Claude-Code-Usage-Monitor][claude-monitor] | Predictive real-time usage monitor with P90-based limits (7.8K stars, MIT) |
+| [Context-Efficient Backpressure for Coding Agents][hlyr-backpressure] | 4-layer token-waste reduction ladder: env vars, hook filters, wrapper scripts, output-style skills (hlyr.dev, 2025-12-09) |
 
 [awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [graphify]: https://github.com/safishamsi/graphify
@@ -381,6 +396,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [claude-mem]: https://github.com/thedotmack/claude-mem
 [cc-switch]: https://github.com/farion1231/cc-switch
 [opensrc]: https://github.com/vercel-labs/opensrc
+[hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
+[skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
