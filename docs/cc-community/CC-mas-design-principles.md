@@ -2,56 +2,113 @@
 title: "Multi-Agent System Design Principles"
 purpose: Core design principles for multi-agent systems synthesized from 12-Factor Agents, Anthropic Effective Harnesses, and PydanticAI.
 created: 2026-02-09
-updated: 2026-04-23
-validated_links: 2026-04-23
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Adopt
 
 Synthesized from
-[12-Factor Agents](https://github.com/humanlayer/12-factor-agents),
-[Anthropic Effective Harnesses](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents),
-and [PydanticAI](https://pydantic.dev/articles/building-agentic-application).
+[12-Factor Agents][12fa-blog] (Dex Horthy / [HumanLayer][humanlayer], 2025-04-03; accessed 2026-06-19),
+[Anthropic Effective Harnesses][ant-harness],
+and [PydanticAI][pydantic-ai].
+HumanLayer is the org behind the spec and ships a human-in-the-loop approval-gate SDK
+that implements factor #7 directly. Factor numbering follows the canonical post — they
+have been renumbered across releases, so the access date matters.
+GitHub mirror: [github.com/humanlayer/12-factor-agents][12fa-gh].
 
-## 12-Factor Agents (Selected)
+## 12-Factor Agents
 
-### #3: Config in Environment
+### #1: Natural Language to Tool Calls
 
-Store configuration in environment variables, not code
-or JSON files. Use typed settings classes
-(e.g., `BaseSettings`) with env-var prefixes per module.
+Convert natural language into structured tool calls that deterministic code
+can execute via a simple switch-statement dispatcher. The LLM produces JSON;
+the harness executes it — keeping model reasoning separate from application
+logic. CC: tool-use architecture (model emits structured JSON, harness
+dispatches execution).
 
-### #4: Backing Services as Attached Resources
+### #2: Own Your Prompts
 
-Treat LLM providers, trace stores, and databases as
-swappable resources behind interfaces. Plugin/registry
-patterns enable runtime discovery without vendor lock-in.
+Treat prompts as first-class, testable code artifacts — not framework black
+boxes hidden behind abstraction layers. Version-control and test them like
+any other source. CC: CLAUDE.md and skills files are engineered,
+version-controlled prompt artifacts that encode agent behavior explicitly.
 
-### #8: Stateless Processes
+### #3: Own Your Context Window
 
-Agent components should be stateless pure functions:
-`(context) -> result`. Persist state externally
-(database, trace store). Enables horizontal scaling
-and deterministic behavior.
+Structure and control how information is presented to the LLM. Curate what
+enters the context window rather than letting frameworks decide. Related
+principle from 12-Factor App: store configuration in environment variables,
+not code or JSON files; use typed settings classes (e.g., `BaseSettings`)
+with env-var prefixes per module.
 
-### #9: Graceful Degradation
+### #4: Tools Are Just Structured Outputs
 
-Component errors produce structured partial results,
-not crashes. Pipeline continues with degraded output.
-Per-component timeouts prevent cascading failures.
+Decouple the LLM's JSON output from application execution. Tool calls are
+simply structured data the model emits; deterministic code handles the side
+effects. Related principle from 12-Factor App: treat LLM providers, trace
+stores, and databases as swappable resources behind interfaces.
+Plugin/registry patterns enable runtime discovery without vendor lock-in.
 
-### #10: Dev/Prod Parity
+### #5: Unify Execution State and Business State
 
-Same architecture in all environments. Environment
-variables control behavior differences, not code
-branches. Local infrastructure (Docker Compose)
-mirrors production.
+Consolidate agent execution state and business-domain state into a single
+source of truth rather than maintaining parallel state machines. Reduces
+drift and makes agent behavior auditable.
 
-### #12: Logs as Event Streams
+### #6: Launch/Pause/Resume with Simple APIs
 
-Structured logging with JSON output. Traces capture
-agent event streams. Queryable audit trails for
-debugging and compliance.
+Serialize durable state so agents can be interrupted and resumed through
+straightforward APIs — no bespoke recovery logic per workflow. CC: headless
+mode + cloud sessions provide the launch/pause/resume surface.
+
+### #7: Contact Humans with Tool Calls
+
+Request human input and approval via structured tool definitions, not special
+tokens or out-of-band syntax. Human contact is just another tool call with a
+well-typed schema. CC: permission prompts expose this pattern natively;
+HumanLayer's approval-gate SDK implements it as a first-class service.
+
+### #8: Own Your Control Flow
+
+Build control structures appropriate for the specific use case rather than
+relying on generic agent loops. Agent components should behave as stateless
+pure functions: `(context) -> result`. Persist state externally (database,
+trace store). Enables horizontal scaling and deterministic behavior.
+
+### #9: Compact Errors into Context Window
+
+Incorporate error messages back into the context window so the agent can
+self-heal on the next step. Component errors produce structured partial
+results, not crashes. Per-component timeouts prevent cascading failures.
+
+### #10: Small, Focused Agents
+
+Design agents with narrow scopes (roughly 3–20 steps) to keep context
+windows manageable and behavior predictable. Same architecture in all
+environments; environment variables control behavior differences, not code
+branches.
+
+### #11: Trigger from Anywhere
+
+Outer-loop agents should be launchable via HTTP, message queue, Slack,
+email, SMS, or cron — not tied to a single entry point. CC: GitHub Actions
+triggers and remote cloud sessions provide this multi-channel activation
+surface.
+
+### #12: Make Your Agent a Stateless Reducer
+
+Implement agents as functional transformations of state: `(state, event) ->
+(state, actions)`. Structured logging with JSON output; traces capture agent
+event streams; queryable audit trails for debugging and compliance.
+
+## 12-Factor App Alignment
+
+The factors above blend 12-Factor Agents (Horthy/HumanLayer, 2025) with
+principles from the original [12-Factor App][12fa-app] methodology (Heroku,
+2011) where they map directly: config in environment (#3), backing services
+(#4), stateless processes (#8), dev/prod parity (#10), logs as event streams
+(#12).
 
 ## Anthropic Harnesses
 
@@ -101,7 +158,18 @@ For security-specific checks, see the
 
 ## References
 
-- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents)
-- [Anthropic: Effective Harnesses](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-- [PydanticAI](https://ai.pydantic.dev/)
-- [OWASP MAESTRO](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
+- [12-Factor Agents — canonical post][12fa-blog] (Dex Horthy / HumanLayer, 2025-04-03; accessed 2026-06-19)
+- [12-Factor Agents — GitHub mirror][12fa-gh]
+- [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK (implements factor #7)
+- [Anthropic: Effective Harnesses][ant-harness]
+- [PydanticAI][pydantic-ai]
+- [12-Factor App][12fa-app] (Heroku, 2011) — original methodology
+- [OWASP MAESTRO][owasp-maestro]
+
+[12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
+[12fa-gh]: https://github.com/humanlayer/12-factor-agents
+[12fa-app]: https://12factor.net/
+[humanlayer]: https://www.humanlayer.dev/
+[ant-harness]: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
+[pydantic-ai]: https://ai.pydantic.dev/
+[owasp-maestro]: https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/

@@ -1,11 +1,11 @@
 ---
 title: Agent Frameworks & Infrastructure Landscape
-purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/routing tools, agent memory infrastructure, and agent-oriented foundation models beyond Claude Code — restored and refreshed from the archived frameworks-infrastructure landscape.
+purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/routing tools, agent memory infrastructure, agent-oriented foundation models, and specialist models agents call as tools beyond Claude Code — restored and refreshed from the archived frameworks-infrastructure landscape.
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-16
-validated_links: 2026-03-12
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Research (informational)
@@ -29,6 +29,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Fetch.ai uAgents](https://github.com/fetchai/uAgents) — blockchain-integrated autonomous agents with on-chain payments (Agentverse).
 - [DeerFlow (ByteDance)](https://github.com/bytedance/deer-flow) — LangGraph super-agent harness with Markdown skills + sandboxed execution. Full analysis: [deerflow-analysis.md](deerflow-analysis.md).
 - [DeepAgents (LangChain)](https://github.com/langchain-ai/deepagents) — planning + sub-agent harness. Full analysis: [deepagents-analysis.md](deepagents-analysis.md).
+- [Flue (Astro)](https://github.com/withastro/flue) — durable, sandboxed TypeScript agent framework from the Astro team: every session is recorded to a durable stream and safely resumed after a crash; agents/workflows/sandboxes/tools/skills + multi-agent swarms, model-agnostic and MCP-native, built on the Pi agent harness (Apache-2.0, [flueframework.com](https://www.flueframework.com)).
 
 ## 2. LLM Orchestration & Routing
 
@@ -45,6 +46,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Youtu-Agent (Tencent)](https://github.com/Tencent/Youtu-agent) — async, YAML-configured agents; 71.47% WebWalkerQA, OSS-model friendly.
 - [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), [BabyAGI](https://github.com/yoheinakajima/babyagi), [SuperAGI](https://github.com/TransformerOptimus/SuperAGI) — the original autonomous-task-loop projects (recursive planning; AutoGPT/BabyAGI/SuperAGI respectively minimal→GUI).
 - [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
+- [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
 
 ## 4. Agent Memory Infrastructure
 
@@ -59,6 +61,7 @@ The field has reframed memory as **context engineering** — assembling persiste
 - [A-MEM](https://github.com/agiresearch/A-mem) — Zettelkasten-style agentic memory with dynamic linking ([paper](https://arxiv.org/abs/2502.12110)).
 - [LangMem](https://github.com/langchain-ai/langmem) — LangGraph-native semantic/episodic/procedural memory (MIT).
 - [Gulp.ai (Osmosis)](https://docs.gulp.ai/introduction) — agent-improvement API enriching prompts with past-interaction knowledge.
+- [ACE — Agentic Context Engine (Kayba)](https://github.com/kayba-ai/agentic-context-engine) — self-improving context layer: a three-role loop (Agent / Reflector / SkillManager) curates a persistent "Skillbook" of strategies that evolves with every task, so agents stop repeating mistakes without fine-tuning or a vector DB (Apache-2.0, [paper](https://arxiv.org/abs/2510.04618)). PydanticAI-based; ships an MCP server (`ace-mcp`) and a Claude Code runner. Offline benchmark-driven counterpart: autoharness (§3).
 
 ## 5. Foundation Models for Agents
 
@@ -68,10 +71,18 @@ Frontier model facts and pricing change fast and live in [CC-models-reference.md
 - [Devstral (Mistral)](https://mistral.ai/news/devstral) — Apache-2.0 agentic-coding model family (All Hands AI / OpenHands lineage). Devstral Small 2 (24B) hits 68.0% SWE-Bench Verified (123B: 72.2%) — the top open-source agentic-coding scores; runs on a single RTX 4090 / 32GB Mac, ~30–50× cheaper than Sonnet, and is a listed [Claude Code model backend](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512) via OpenAI-compatible routing. Capabilities are folding into the unified Mistral Small 4 line.
 - [Arcee Foundation Models (AFM)](https://www.arcee.ai/) — ~4.5B CPU-optimized enterprise model for private/offline deployment.
 
+## 6. Specialist Models Agents Call as Tools
+
+Non-LLM foundation models an agent invokes as a *tool* for one narrow capability (forecasting, ranking, etc.) — distinct from the agent-driving LLMs in §5. Listed when reachable from an agent via an endpoint or SDK.
+
+- [TimesFM (Google Research)](https://github.com/google-research/timesfm) — time-series **forecasting** foundation model (v2.5: ~200M params, up to 16k context, point + quantile forecasts; PyTorch + JAX/Flax, Apache-2.0). Not an agent LLM — an agent calls it for numeric forecasting, exposed for programmatic/agent use via Vertex AI Model Garden and BigQuery ML.
+
 ## Production Patterns & Reference Frameworks
 
-- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) — principles for production-grade LLM agents.
+- [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [CC-mas-design-principles.md](../cc-community/CC-mas-design-principles.md).
 - [Agents Towards Production](https://github.com/NirDiamant/agents-towards-production) — end-to-end playbooks for shipping agents.
+- [Learn Harness Engineering (WalkingLabs)](https://github.com/walkinglabs/learn-harness-engineering) — project-based course on *harness engineering* for reliable AI coding agents: structuring Instructions, State, Verification, Scope, and Session Lifecycle around the model instead of fine-tuning it (12 lectures + 6 projects, framed around Claude Code / Codex; MIT). Maps onto [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
+- [Hands-On Modern RL (WalkingLabs)](https://github.com/walkinglabs/hands-on-modern-rl) — practice-first RL curriculum from classic control to LLM post-training (RLHF, DPO, GRPO, RLVR, DeepSeek-R1) and agentic RL (multi-turn credit assignment, tool-use trajectories, Deep Research); Python/PyTorch (CC BY-NC-SA 4.0, non-commercial).
 
 ## Cross-References
 
@@ -80,3 +91,6 @@ Frontier model facts and pricing change fast and live in [CC-models-reference.md
 - [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — observability/tracing platforms (separate restore)
 - [CC-research-agents-landscape.md](../cc-community/CC-research-agents-landscape.md) — research/discovery agents
 - [CC-ai-security-governance-analysis.md § MCP Ecosystem Security](../cc-community/CC-ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
+
+[12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
+[12fa-gh]: https://github.com/humanlayer/12-factor-agents

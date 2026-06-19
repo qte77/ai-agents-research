@@ -10,7 +10,7 @@ Deep-dive analyses of Anthropic-native Claude Code features and internals.
 | [sessions/](sessions/) | Session lifecycle, cost analysis, keepalive, headless mode, error messages | 5 |
 | [sandboxing/](sandboxing/) | Filesystem/network sandbox, Codespaces friction, platform comparison, permission bypass | 4 |
 | [ci-remote/](ci-remote/) | GitHub Actions, cloud sessions, remote access/control, web auth, version pinning, monitoring | 8 |
-| [configuration/](configuration/) | Hooks, model/provider config, fast/bash mode, loop/cron, env vars, tools, changelog, visuals | 9 |
+| [configuration/](configuration/) | Hooks, model/provider config, fast/bash mode, loop/cron, env vars, tools, binary + IDE/stream-json internals, models reference, changelog, visuals | 14 |
 | [context-memory/](context-memory/) | Extended context, memory system, llms.txt, prompt caching | 4 |
 | [plugins-ecosystem/](plugins-ecosystem/) | Official plugins, connectors, Cowork, packaging, web scraping | 8 |
 | [model-internals/](model-internals/) | Emotion vectors, interpretability, safety classifiers, alignment steering, first-party research index | 2 |

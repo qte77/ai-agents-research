@@ -10,8 +10,8 @@ endif
 .ONESHELL:
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_skills setup_all \
-	check_links check_docs check_actions autofix lint \
-	graph-build graph-html graph-query graph-explain graph-path graph-publish \
+	check_links check_docs check_actions autofix lint test \
+	graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
 	help
 .DEFAULT_GOAL := help
 
@@ -241,6 +241,9 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 
 lint: check_links check_docs check_actions ## Run all linters (links + markdown + actions)
 
+test: ## Run unit tests (stdlib unittest; covers the src/ modules, not the scripts)
+	$(PYTHON) -m unittest discover -s tests -v
+
 
 # MARK: GRAPH
 
@@ -269,8 +272,16 @@ graph-path: ## Shortest path between nodes: make graph-path A="Node A" B="Node B
 	if [ -z "$(A)" ] || [ -z "$(B)" ]; then echo 'Usage: make graph-path A="<node>" B="<node>"'; exit 2; fi
 	$(GRAPHIFY) path "$(A)" "$(B)"
 
-graph-publish: ## Push graphify-out/graph.html to the gh-pages branch (refresh the live page)
-	$(PYTHON) scripts/graphify-publish-pages.py
+graph-fonts: ## Fetch self-hosted brand fonts (Inter + JetBrains Mono woff2) into ui/assets/fonts/
+	$(PYTHON) scripts/fetch-web-fonts.py
+
+graph-page: graph-html ## Render + EyeRest-restyle the graph into committed ui/graph.html (commit + push; the gh-pages workflow deploys)
+	$(PYTHON) scripts/render-graph-page.py
+
+preview: ## Serve the branded site (ui/) locally at http://localhost:$$PORT (default 8000)
+	echo "Serving ui/ at http://localhost:$${PORT:-8000}/  ->  / (landing), /graph.html  (Ctrl-C to stop)"
+	echo "Tip: run 'make graph-fonts' first to preview the real brand fonts (else system-ui fallback)."
+	$(PYTHON) -m http.server $${PORT:-8000} --directory ui
 
 
 # MARK: HELP

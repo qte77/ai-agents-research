@@ -6,6 +6,9 @@ Thumbs.db
 .claude/scripts/
 .claude/skills/
 
+# Local-only agent handoff notes (per-session scratch, not shared)
+.claude/handoffs/
+
 # Tooling caches (per-session artifacts, never tracked)
 .gh-cache/
 

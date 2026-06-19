@@ -106,9 +106,29 @@ The rxiv triage job additionally runs `markdownlint-cli2` against the assembled 
 
 ## Knowledge Graph (graphify)
 
-An optional graphify knowledge graph maps the corpus — concepts, cross-document references, and community structure — for navigation and gap-finding. It is **on-demand only**: no hooks or `CLAUDE.md` mandates run it automatically (that per-tool-call overhead was deliberately removed), so it adds no cost to normal sessions. Build output (`graphify-out/`) is gitignored; the rendered graph is published to the `gh-pages` branch.
+An optional graphify knowledge graph maps the corpus — concepts, cross-document references, and community structure — for navigation and gap-finding. It is **on-demand only**: no hooks or `CLAUDE.md` mandates run it automatically (that per-tool-call overhead was deliberately removed), so it adds no cost to normal sessions. Build output (`graphify-out/`) is gitignored; the EyeRest-restyled copy is committed to `ui/graph.html` and published to GitHub Pages by the deploy workflow.
 
-**Live graph:** <https://qte77.github.io/ai-agents-research/> — refresh with `make graph-publish` after a rebuild.
+**Live site:** <https://qte77.github.io/ai-agents-research/> — a branded EyeRest landing page (`index.html`) linking to the knowledge graph at `/graph.html`. After a rebuild, run `make graph-page`, then commit & push — the gh-pages workflow deploys.
+
+### Published site (gh-pages)
+
+The site applies the qte77 EyeRest brand (`qte77/qte77/brand/DESIGN.md`: zero-blue, warm umber/parchment), like the sibling repos `analyze-stock-kpi` and `paperverse`. Source lives in `ui/`:
+
+| Path | Role |
+|---|---|
+| `ui/index.html` | Branded landing page (site root) |
+| `ui/graph.html` | EyeRest-restyled knowledge graph — committed; produced locally by `make graph-page` |
+| `ui/vendor/vis-network.min.js` | Self-hosted vis-network (graphify's renderer) — committed so the graph renders offline / without a CDN round-trip |
+| `ui/style.css` | EyeRest design tokens + `@font-face` + layout |
+| `ui/favicon.svg` | Adapted qte77 logo-mark |
+| `ui/assets/fonts/*.woff2` | Self-hosted Inter + JetBrains Mono — committed (refresh with `make graph-fonts`); `@font-face` falls back to system-ui if absent |
+| `src/pages_build.py` | Pure, unit-tested helpers — `filter_graph_data()` prunes tooling/code nodes; `restyle_graph()` recolors the export to EyeRest, injects fonts/favicon/title, and repoints vis-network from unpkg to the vendored copy (both run by `make graph-page`); font helpers feed the fetch script |
+
+**Deploy** is a GitHub Actions workflow (`.github/workflows/gh-pages.yaml`) using the Pages API — like the sibling repos `analyze-stock-kpi` and `paperverse` (no `gh-pages` branch). On push to `main` (paths under `ui/`), CI assembles `ui/` (with the committed fonts and vendored vis-network) into the Pages artifact and deploys. The repo's **Settings → Pages → Source** must be set to "GitHub Actions".
+
+The knowledge graph stays **local and interactive** (key-free, via the `/graphify` skill — no LLM in CI): rebuild the graph, run `make graph-page` to render + EyeRest-restyle it into the committed `ui/graph.html`, then commit & push to trigger a deploy. `make graph-page` also **prunes build/tooling nodes** (`scripts/`, `tests/`, `ui/`, `src/`, `.github/scripts/`) so the published graph maps the research corpus, not the machinery — workflows and actions are kept.
+
+The landing page carries a **System / Light / Dark theme picker** (persisted to `localStorage`, no-flash, OS-following by default); the graph page stays dark.
 
 **Build** (semantic extraction needs an LLM):
 

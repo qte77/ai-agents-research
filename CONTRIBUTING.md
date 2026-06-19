@@ -218,6 +218,7 @@ Doc linting is wired into the top-level `Makefile`. All tools install user-local
 make setup_all   # install lychee, Node.js (user-local), markdownlint-cli2
 make lint        # run lychee + markdownlint-cli2 over the full repo
 make autofix     # mechanical markdownlint --fix pass
+make test        # unit tests for src/ + .github/scripts/lib/ modules (stdlib unittest)
 make help        # list all recipes grouped by section
 ```
 

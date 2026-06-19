@@ -44,6 +44,7 @@ exclude = [
     "techcommunity.microsoft.com",  # 403 to HEAD on /blog/* URLs (anti-bot)
     "datacamp.com",  # 403 to HEAD (anti-bot) on /tutorial/* URLs — referenced in CC-version-pinning-resilience.md
     "zread.ai",  # 403 to all automated requests (Cloudflare); AI doc-reader of GitHub repos — referenced in CC-agent-teams-orchestration.md
+    "theregister.com",  # intermittent 403 (anti-bot) to lychee CI — pre-existing news links in CC-community-reimplementations-landscape.md + CC-agent-teams-orchestration.md
     # Auth-gated (requires login) — both `/code` and `/code/scheduled` and `/settings/*` return 403 to anonymous requests
     "claude.ai/code",
     "claude.ai/settings",
@@ -69,8 +70,10 @@ exclude = [
     "iso.org",  # 403 to HEAD (anti-bot) — pre-existing in CC-ai-security-governance-analysis.md
     "lens.org",  # 403 to automated requests — web-scraping-extraction-landscape.md (migrated catalog)
     "epo.org",  # HTTP/2 protocol error to lychee — web-scraping-extraction-landscape.md (migrated catalog)
+    "patentscope.wipo.int",  # 403 (anti-bot) to lychee — web-scraping-extraction-landscape.md (migrated catalog)
     "codebuddy.ai",  # geo/IP-blocks CI (302 -> /banned); real site is browser-OK — codebuddy-analysis.md
     "api.semanticscholar.org",  # SSL cert expired upstream (persists) — pre-existing in CC-research-agents-landscape.md; drop this exclude once renewed
     "orbisius.com",  # 500 to lychee (persists) — pre-existing third-party blog link in CC-error-messages-reference.md
     "finance.biggo.com",  # times out in CI (slow news aggregator) — secondary source in codebuddy-analysis.md
+    "vibekanban.com",  # untrusted SSL cert (UnknownIssuer) upstream as of 2026-06-18 — referenced in CC-office-worker-workflows.md; drop once renewed
 ]
