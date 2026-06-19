@@ -48,7 +48,7 @@ Three layers: compact index (capped at 200 lines) stays in context permanently; 
 
 Background process runs periodically during idle time to review, deduplicate, prune, and reorganize agent memory. Referenced as `autoDream` mode with 8 phases and 5 types of context compaction. Merges duplicates, prunes contradictions, keeps index tight.
 
-**Cross-ref**: This repo documents the three-gate trigger (24h + 5 sessions + lock) and four phases (Orient, Gather Signal, Consolidate, Prune & Index) in [CC-community-reimplementations-landscape.md](../../../docs/cc-community/CC-community-reimplementations-landscape.md).
+**Cross-ref**: This repo documents the three-gate trigger (24h + 5 sessions + lock) and four phases (Orient, Gather Signal, Consolidate, Prune & Index) in [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md).
 
 ### 5. Progressive Context Compaction
 
