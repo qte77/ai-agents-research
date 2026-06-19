@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: normalized non-canonical cross-ref path `../../../docs/cc-community/` → `../../cc-community/` (resolved correctly, so lychee never flagged it — lychee does not resolve relative Markdown paths). (PR #269)
 - Monitor scripts (`community-monitor.py`, `native-sources-monitor.py`): CodeQL `py/bad-tag-filter` hardening — the `<script>`/`<style>` strip regex is now case- and trailing-whitespace-tolerant via `monitor_utils.strip_html_noise`. (PR #255)
 - `Makefile` setup_lychee: tarball-wrapper-dir bug — switch to `mktemp + install -m 755` mirroring `lycheeverse/lychee-action`. Closes #160. (PRs #170, #174)
 - Triage-output generators (`monitor_utils.build_report`, `changelog-compare.build_report`, `status-stats.generate_report`) + `create-triage-pr` H1 prepend: md-lint-clean output going forward; historical `triage/**/*.md` cleaned in one pass. Closes #159. (PR #171)
@@ -68,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `docs/cc-native/configuration/README.md`, `docs/cc-native/README.md`, `docs/cc-community/README.md`, `docs/learnings/README.md`: indexed orphaned docs surfaced by the full-repo doc-hierarchy audit — 6 configuration docs (subdir count 9 → 14), CC-vlm-screen-sharing-landscape, and 4 auto-aggregated AGENT_LEARNINGS mirrors. (PR #269)
 - `docs/cc-community/CC-code-tooling-landscape.md`: refreshed codebase-memory-mcp entry — docs-site link, stars 3.2K → 6.8K, v0.7.0 → v0.8.1; frontmatter dates bumped. (PRs #262, #265)
 - `docs/cc-native/context-memory/CC-memory-system-analysis.md`: refreshed against current code.claude.com/docs/en/memory — `autoMemoryDirectory` + v2.1.59 requirement, MEMORY.md 25 KB / 200-line threshold, `CLAUDE_CODE_NEW_INIT`, AGENTS.md handling, `claudeMd` managed-settings key. (PR #265)
 - `lychee.toml`: added `theregister.com` to the exclude list (intermittent anti-bot 403 in CI). (PR #264)
