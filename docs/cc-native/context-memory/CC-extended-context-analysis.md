@@ -3,8 +3,8 @@ title: CC Extended Context Window (1M) Analysis
 source: https://code.claude.com/docs/en/model-config#extended-context
 purpose: Analysis of 1M token extended context window for cost planning and headless CC workflow usage.
 created: 2026-03-07
-updated: 2026-03-08
-validated_links: 2026-03-12
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Beta (features, pricing, and availability may change)
@@ -90,6 +90,33 @@ The 200K threshold is the key cost boundary. Monitor context usage via
 For headless autonomous runs, `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` prevents
 accidental long-context charges.
 
+## Context Quality Degradation
+
+A larger context window does not raise a model's **instruction budget** — the count of instructions it reliably follows before adherence drops. The instruction budget is set by model size and instruction-tuning; window-extension techniques such as YaRN extend the position space but do not increase how many directives the model tracks simultaneously ([source][hlyr-long-ctx]).
+
+### Smart Zone vs Dumb Zone
+
+HumanLayer distinguishes two operating regions based on their empirical practice ([source][hlyr-backpressure]):
+
+| Region | Token range | Behavior |
+|---|---|---|
+| Smart Zone | 0 – ~75k tokens | Peak adherence; retrieval fidelity high |
+| Dumb Zone | Beyond ~75k tokens | Positional interpolation loses fidelity; "lost in the middle" effects increase |
+
+The ~75k smart-zone figure is comparable to this repo's 40–60% utilization target (for a 200K standard window). HumanLayer's empirical practice sets a context warning/reset around ~100k tokens regardless of the model's stated maximum window.
+
+> **Framing note**: HumanLayer reports observing instruction-adherence degradation when defaulting to very large context windows. This is a practitioner observation, not an Anthropic-confirmed specification.
+
+### Observable Degradation Signals
+
+- Model ignores instructions given early in the session
+- Coherence drops between consecutive turns
+- Repetition of already-completed steps increases
+
+### Mitigation
+
+The primary mitigation is [frequent intentional compaction][cc-mem-ace]: distilling progress into a structured artifact before the dumb zone is reached, then starting a fresh session from the artifact. This is preferable to relying on a 1M window to avoid compaction altogether. Cross-ref: [fresh-context-per-iteration in CC-ralph-enhancement-research.md][cc-ralph]; [Context Engineering Workflow (ACE-FCA) in CC-memory-system-analysis.md][cc-mem-ace].
+
 ## References
 
 - [CC Model Configuration — Extended context](https://code.claude.com/docs/en/model-config#extended-context)
@@ -98,3 +125,10 @@ accidental long-context charges.
 - [Long-context rate limits](https://platform.claude.com/docs/en/api/rate-limits#long-context-rate-limits)
 - [CC-fast-mode-analysis.md](../configuration/CC-fast-mode-analysis.md) — fast mode pricing tiers
 - [CC-model-provider-configuration.md](../configuration/CC-model-provider-configuration.md) — model env vars
+- [Long-Context Isn't the Answer][hlyr-long-ctx] — hlyr.dev, Kyle, 2026-03-23
+- [Context-Efficient Backpressure][hlyr-backpressure] — hlyr.dev, Dex, 2025-12-09
+
+[hlyr-long-ctx]: https://www.hlyr.dev/blog/long-context-isnt-the-answer
+[hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
+[cc-ralph]: ../agents-skills/CC-ralph-enhancement-research.md
+[cc-mem-ace]: CC-memory-system-analysis.md#context-engineering-workflow-ace-fca

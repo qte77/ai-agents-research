@@ -4,8 +4,8 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-14
-validated_links: 2026-06-14
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Research (informational)
@@ -99,7 +99,7 @@ Cross-ref: [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.
 
 ## codebase-memory-mcp (DeusData)
 
-**Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Stars**: 3.2K | **License**: MIT | **Version**: v0.7.0 (2026-05-30)
+**Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Docs**: [deusdata.github.io][codebase-memory-mcp-docs] | **Stars**: 6.8K | **License**: MIT | **Version**: v0.8.1 (2026-06-12)
 
 Single static binary that builds a persistent code knowledge graph for agents — no runtime dependencies, no external API. Combines 159 vendored tree-sitter grammars (syntactic parse), a clean-room hybrid-LSP type-resolution layer (Python, TS/JS, PHP, C#, Go, C/C++), and bundled `nomic-embed-code` embeddings (semantic search) into a SQLite-backed graph of typed nodes (Function, Class, Route) and edges (CALLS, IMPORTS, HTTP_CALLS).
 
@@ -214,6 +214,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [graphify]: https://github.com/safishamsi/graphify
 [code-review-graph]: https://github.com/tirth8205/code-review-graph
 [codebase-memory-mcp]: https://github.com/DeusData/codebase-memory-mcp
+[codebase-memory-mcp-docs]: https://deusdata.github.io/codebase-memory-mcp/
 [serena]: https://github.com/oraios/serena
 [ast-grep-mcp]: https://github.com/ast-grep/ast-grep-mcp
 [ast-grep]: https://github.com/ast-grep/ast-grep

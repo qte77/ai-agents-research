@@ -4,7 +4,7 @@ purpose: Persistent cross-session memory tools that integrate with Claude Code �
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-14
+updated: 2026-06-16
 validated_links: 2026-06-14
 ---
 
@@ -150,7 +150,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## MemSearch (zilliztech)
 
-**Repo**: [zilliztech/memsearch][memsearch] | **Stars**: ~2K | **License**: MIT | **Version**: v0.4.7
+**Repo**: [zilliztech/memsearch][memsearch] | **Stars**: 2K | **Forks**: 184 | **License**: MIT | **Version**: v0.4.8 (2026-06-15)
 
 Persistent, cross-session semantic memory for AI coding agents from the Milvus/Zilliz team. Stores conversation history as human-readable Markdown and indexes it with Milvus for hybrid vector + BM25 search. Unlike MCP-based memory tools, it ships as a **native Claude Code plugin** — "4 shell hooks + 1 skill + 1 watch process, no MCP, no sidecar service" ([CC plugin docs][memsearch-docs]).
 
@@ -176,7 +176,7 @@ The memory-recall skill runs in a `context: fork` subagent, so intermediate sear
 
 **Strengths**: Zero permanent context overhead (no MCP tool defs); human-readable Markdown that survives index loss; local embeddings need no API key; one memory store across multiple agent CLIs.
 
-**Risks**: Overlaps with CC's built-in memory, Claude-Mem, MemPalace, and ByteRover — pick one. Milvus/Zilliz dependency for the index. Pre-1.0 (v0.4.7), active release cadence. Distinct from Zilliz's separate `claude-context` code-search MCP — do not conflate the two.
+**Risks**: Overlaps with CC's built-in memory, Claude-Mem, MemPalace, and ByteRover — pick one. Milvus/Zilliz dependency for the index. Pre-1.0 (v0.4.8), active release cadence. Distinct from Zilliz's separate `claude-context` code-search MCP — do not conflate the two.
 
 Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) — memsearch as a mobile/remote supporting tool
 

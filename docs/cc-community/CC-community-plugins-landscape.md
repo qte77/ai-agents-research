@@ -4,7 +4,7 @@ description: Survey of community plugin catalogs — awesome-claude-code (curate
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-04-23
+updated: 2026-06-16
 validated_links: 2026-04-23
 ---
 
@@ -185,6 +185,45 @@ Manual install via `git clone` + `install.sh` (Unix) or `install.ps1` (Windows) 
 - `/seo drift` implements change-monitoring via stored baselines — a pattern worth watching for other domain plugins (security, compliance, docs drift).
 - Programmatic SEO quality gates (hard stop at 500+ pages without audit) are a rare example of a plugin enforcing scale-safety guardrails in prompt-driven workflows.
 
+## Notable Plugin Profile: ponytail (Code Quality — Cross-Agent)
+
+**Repo**: [DietrichGebert/ponytail][ponytail] | **License**: MIT | **Stars**: ~16.6k | **Language**: JavaScript (~91%)
+
+A cross-agent ruleset/plugin that enforces YAGNI-first minimalism across all major AI coding platforms. Tagline: *"Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote."*
+
+### Decision Hierarchy
+
+The plugin installs a structured decision ladder agents must traverse before writing any new code:
+
+1. Does this code need to exist at all?
+2. Standard library?
+3. Native platform features?
+4. Existing dependencies?
+5. Custom implementation (last resort)
+
+### Platform Support
+
+Ponytail is notable for being one of the few plugins explicitly targeting all major AI coding agents from a single repo:
+
+| Platform | Integration method |
+|----------|--------------------|
+| Claude Code | `/plugin marketplace add DietrichGebert/ponytail` |
+| GitHub Copilot CLI | `.github/copilot-instructions.md` ruleset copy |
+| Cursor | `.cursor/rules/` ruleset copy |
+| Windsurf | `.windsurf/rules/` ruleset copy |
+| Codex | Plugin install command |
+| Cline / Kiro / Aider | Platform-specific rule files |
+
+The repo ships Node.js lifecycle hooks (`hooks/`), platform-specific markdown rule files, and an optional `~/.config/ponytail/config.json` for default-mode configuration.
+
+**Install (Claude Code)**:
+
+```bash
+/plugin marketplace add DietrichGebert/ponytail
+```
+
+**Notable pattern**: Unusually high star count (~16.6k) for a code-quality plugin reflects broad cross-ecosystem appeal — the minimalism philosophy is platform-agnostic and the multi-platform distribution lowers the barrier for polyglot teams.
+
 ## Ecosystem Observations
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
@@ -206,6 +245,7 @@ Manual install via `git clone` + `install.sh` (Unix) or `install.ps1` (Windows) 
 | [awesome-claude-code][acc] | Curated resource list |
 | [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
 
+[ponytail]: https://github.com/DietrichGebert/ponytail
 [acc]: https://github.com/hesreallyhim/awesome-claude-code
 [accp]: https://github.com/ccplugins/awesome-claude-code-plugins
 [claude-seo]: https://github.com/AgriciDaniel/claude-seo

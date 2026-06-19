@@ -3,11 +3,10 @@
 
 Polls Anthropic Blog, GitHub Issues (enhancement), and GitHub Discussions
 (feature-request) for new entries not yet covered by existing native docs.
+Pure HTML/JSON parsing lives in lib/native_sources.py.
 
 Usage:
-    python native-sources-monitor.py \\
-        --native-docs-dir PATH \\
-        [--state-file PATH]
+    python native-sources-monitor.py --native-docs-dir PATH [--state-file PATH]
 
 Exit codes:
     0 = no new uncovered content
@@ -19,21 +18,23 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.monitor_utils import (
-    fetch_text,
-    run_monitor,
+from lib.monitor_utils import fetch_text, run_monitor
+from lib.native_sources import (
+    discussion_page,
+    extract_blog_entries,
+    extract_discussions,
+    extract_issues,
+    feature_category_id,
 )
-
-# ---------------------------------------------------------------------------
-# Source definitions
-# ---------------------------------------------------------------------------
 
 CC_REPO_OWNER = "anthropics"
 CC_REPO_NAME = "claude-code"
+MAX_PAGES = 3
 
 SOURCES: list[dict[str, str]] = [
     {
@@ -61,81 +62,6 @@ SOURCES: list[dict[str, str]] = [
     },
 ]
 
-MAX_PAGES = 3
-
-
-# ---------------------------------------------------------------------------
-# Extractors
-# ---------------------------------------------------------------------------
-
-def extract_blog_entries(html: str) -> list[dict[str, str]]:
-    """Extract blog post entries from Anthropic /news HTML.
-
-    Looks for link+text patterns that mention Claude Code or related features.
-    """
-    entries: list[dict[str, str]] = []
-
-    # Strip script/style
-    clean = re.sub(r"<script[^>]*>.*?</script>", "", html, flags=re.DOTALL)
-    clean = re.sub(r"<style[^>]*>.*?</style>", "", clean, flags=re.DOTALL)
-
-    # Extract links with text: <a href="...">Title</a>
-    for match in re.finditer(r'<a[^>]+href="(/news/[^"]+)"[^>]*>(.*?)</a>', clean, re.DOTALL):
-        href = match.group(1)
-        title = re.sub(r"<[^>]+>", "", match.group(2)).strip()
-        if not title or len(title) < 5:
-            continue
-        entries.append({
-            "name": title,
-            "url": f"https://www.anthropic.com{href}",
-            "description": title,
-            "heading": "Anthropic Blog",
-        })
-
-    # Deduplicate by URL
-    seen_urls: set[str] = set()
-    deduped: list[dict[str, str]] = []
-    for entry in entries:
-        if entry["url"] not in seen_urls:
-            seen_urls.add(entry["url"])
-            deduped.append(entry)
-
-    return deduped
-
-
-def extract_issues(json_pages: list[list[dict]]) -> list[dict[str, str]]:
-    """Extract entries from GitHub REST Issues API response pages."""
-    entries: list[dict[str, str]] = []
-    for page in json_pages:
-        for issue in page:
-            # Skip pull requests (they have a pull_request key)
-            if "pull_request" in issue:
-                continue
-            entries.append({
-                "name": issue.get("title", ""),
-                "url": issue.get("html_url", ""),
-                "description": (issue.get("body") or "")[:200],
-                "heading": "GitHub Issues (enhancement)",
-            })
-    return entries
-
-
-def extract_discussions(nodes: list[dict]) -> list[dict[str, str]]:
-    """Extract entries from GitHub GraphQL Discussions response nodes."""
-    entries: list[dict[str, str]] = []
-    for node in nodes:
-        entries.append({
-            "name": node.get("title", ""),
-            "url": node.get("url", ""),
-            "description": (node.get("body") or "")[:200],
-            "heading": f"GitHub Discussions ({node.get('category', {}).get('name', 'feature-request')})",
-        })
-    return entries
-
-
-# ---------------------------------------------------------------------------
-# GitHub API helpers
-# ---------------------------------------------------------------------------
 
 def github_headers(token: str) -> dict[str, str]:
     """Build GitHub API request headers."""
@@ -150,21 +76,31 @@ def fetch_github_rest_pages(url: str, token: str) -> list[list[dict]]:
     """Fetch paginated GitHub REST API results (up to MAX_PAGES)."""
     pages: list[list[dict]] = []
     current_url: str | None = url
-
     for _ in range(MAX_PAGES):
         if current_url is None:
             break
-        headers = github_headers(token)
-        req = urllib.request.Request(current_url, headers=headers)
+        req = urllib.request.Request(current_url, headers=github_headers(token))
         with urllib.request.urlopen(req, timeout=30) as resp:
             pages.append(json.loads(resp.read().decode("utf-8")))
-
-            # Parse Link header for next page
-            link_header = resp.headers.get("Link", "")
-            next_match = re.search(r'<([^>]+)>;\s*rel="next"', link_header)
+            next_match = re.search(r'<([^>]+)>;\s*rel="next"', resp.headers.get("Link", ""))
             current_url = next_match.group(1) if next_match else None
-
     return pages
+
+
+def graphql_request(query: str, variables: dict, token: str) -> dict | None:
+    """Execute a GitHub GraphQL request (None on network failure)."""
+    payload = json.dumps({"query": query, "variables": variables}).encode("utf-8")
+    headers = github_headers(token)
+    headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(
+        "https://api.github.com/graphql", data=payload, headers=headers, method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.URLError as e:
+        print(f"WARNING: GraphQL request failed: {e}", file=sys.stderr)
+        return None
 
 
 def resolve_discussion_category_id(token: str) -> str | None:
@@ -178,28 +114,14 @@ def resolve_discussion_category_id(token: str) -> str | None:
       }
     }
     """
-    variables = {"owner": CC_REPO_OWNER, "name": CC_REPO_NAME}
-    data = graphql_request(query, variables, token)
-    if data is None:
-        return None
-
-    categories = (
-        data.get("data", {})
-        .get("repository", {})
-        .get("discussionCategories", {})
-        .get("nodes", [])
-    )
-    for cat in categories:
-        if "feature" in cat.get("name", "").lower():
-            return cat["id"]
-    return None
+    data = graphql_request(query, {"owner": CC_REPO_OWNER, "name": CC_REPO_NAME}, token)
+    return feature_category_id(data)
 
 
 def fetch_discussions_graphql(token: str, category_id: str | None) -> list[dict]:
     """Fetch discussions via GraphQL with cursor pagination (up to MAX_PAGES)."""
     all_nodes: list[dict] = []
     cursor: str | None = None
-
     query = """
     query($owner: String!, $name: String!, $categoryId: ID, $after: String) {
       repository(owner: $owner, name: $name) {
@@ -210,116 +132,51 @@ def fetch_discussions_graphql(token: str, category_id: str | None) -> list[dict]
       }
     }
     """
-
     for _ in range(MAX_PAGES):
-        variables: dict = {
-            "owner": CC_REPO_OWNER,
-            "name": CC_REPO_NAME,
-            "after": cursor,
-        }
+        variables: dict = {"owner": CC_REPO_OWNER, "name": CC_REPO_NAME, "after": cursor}
         if category_id:
             variables["categoryId"] = category_id
-
-        data = graphql_request(query, variables, token)
-        if data is None:
-            break
-
-        discussions = (
-            data.get("data", {})
-            .get("repository", {})
-            .get("discussions", {})
-        )
-        nodes = discussions.get("nodes", [])
+        nodes, page_info = discussion_page(graphql_request(query, variables, token))
         all_nodes.extend(nodes)
-
-        page_info = discussions.get("pageInfo", {})
         if not page_info.get("hasNextPage"):
             break
         cursor = page_info.get("endCursor")
-
     return all_nodes
 
-
-def graphql_request(
-    query: str, variables: dict, token: str
-) -> dict | None:
-    """Execute a GitHub GraphQL request."""
-    payload = json.dumps({"query": query, "variables": variables}).encode("utf-8")
-    headers = github_headers(token)
-    headers["Content-Type"] = "application/json"
-    req = urllib.request.Request(
-        "https://api.github.com/graphql",
-        data=payload,
-        headers=headers,
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.URLError as e:
-        print(f"WARNING: GraphQL request failed: {e}", file=sys.stderr)
-        return None
-
-
-# ---------------------------------------------------------------------------
-# Source dispatching
-# ---------------------------------------------------------------------------
 
 def fetch_and_extract(source: dict[str, str]) -> list[dict[str, str]]:
     """Fetch a source and extract entries based on its type and auth.
 
-    Returns extracted entries. Skips with WARNING on auth/network failures.
+    Skips github-token sources (returning []) when no token is set.
     """
     source_type = source["type"]
-    auth = source["auth"]
-
-    # Check auth requirements
-    if auth == "github_token":
-        token = os.environ.get("GITHUB_TOKEN", "")
-        if not token:
-            print(
-                f"WARNING: Skipping {source['name']} — GITHUB_TOKEN not set",
-                file=sys.stderr,
-            )
-            return []
+    token = os.environ.get("GITHUB_TOKEN", "")
+    if source["auth"] == "github_token" and not token:
+        print(f"WARNING: Skipping {source['name']} — GITHUB_TOKEN not set", file=sys.stderr)
+        return []
 
     if source_type == "html":
-        html = fetch_text(source["url"])
-        return extract_blog_entries(html)
-
+        return extract_blog_entries(fetch_text(source["url"]))
     if source_type == "github_rest":
-        token = os.environ["GITHUB_TOKEN"]
-        pages = fetch_github_rest_pages(source["url"], token)
-        return extract_issues(pages)
-
+        return extract_issues(fetch_github_rest_pages(source["url"], token))
     if source_type == "github_graphql":
-        token = os.environ["GITHUB_TOKEN"]
         category_id = resolve_discussion_category_id(token)
-        nodes = fetch_discussions_graphql(token, category_id)
-        return extract_discussions(nodes)
+        return extract_discussions(fetch_discussions_graphql(token, category_id))
 
     print(f"WARNING: Unknown source type '{source_type}'", file=sys.stderr)
     return []
 
-
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
 
 def main() -> None:
     """Entry point for the native sources monitor script."""
     parser = argparse.ArgumentParser(
         description="Monitor native/Anthropic sources for CC updates."
     )
-    parser.add_argument(
-        "--native-docs-dir", required=True, type=Path,
-        help="Path to docs/cc-native/ directory",
-    )
-    parser.add_argument(
-        "--state-file", type=Path,
-        default=Path(".github/state/native-monitor-state.json"),
-        help="Path to state file tracking previously seen entries",
-    )
+    parser.add_argument("--native-docs-dir", required=True, type=Path,
+                        help="Path to docs/cc-native/ directory")
+    parser.add_argument("--state-file", type=Path,
+                        default=Path(".github/state/native-monitor-state.json"),
+                        help="Path to state file tracking previously seen entries")
     args = parser.parse_args()
 
     if not args.native_docs_dir.exists():

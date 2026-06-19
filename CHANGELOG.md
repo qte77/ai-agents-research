@@ -13,6 +13,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: **Instruction Adherence Patterns** (CLAUDE.md `<system-reminder>` deprioritization; conditional `<important if="…">` XML blocks; foundational-vs-conditional split; HumanLayer `improve-claude-md` skill) and **Context Engineering Workflow (ACE-FCA)** (Research→Plan→Implement, frequent intentional compaction, review-leverage hierarchy) — first-party sourced to hlyr.dev (Dex Horthy, 2026-03-17 and 2025-08-29); the previously dangling "context rot analysis" reference now resolves to the new Context Quality Degradation section.
+- `docs/cc-native/context-memory/CC-extended-context-analysis.md`: **Context Quality Degradation** section (instruction budget, smart/dumb zone ~75k tokens, ~100k practitioner reset threshold, degradation signals) — sourced to hlyr.dev "Long-Context Isn't the Answer" (2026-03-23) and "Context-Efficient Backpressure" (2025-12-09).
+- `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`: **`context: fork` — Mechanics and Economics** subsection (context-as-stack model, turn-boundary forking, prompt-caching economics, four CC forking mechanisms compared) — sourced to hlyr.dev "Context Forking…" (Kyle, 2026-05-15; CC v2.1.0).
+- `docs/cc-native/agents-skills/CC-ralph-enhancement-research.md`: **History and Naming** section (Ralph Wiggum origin, overbaking, Cursed Lang, Desired State Loops) — sourced to hlyr.dev "A Brief History of Ralph" (Dex Horthy, 2026-01-06).
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: Pattern #8 cross-ref to the new `context: fork` section + HumanLayer human-in-the-loop approval-layer note (PermissionRequest hooks) — sourced to hlyr.dev "Skill Issue: Harness Engineering…" (2026-03-12).
+- `docs/cc-community/CC-community-tooling-landscape.md`: **Token-Waste Reduction Stack** subsection — 4-layer ladder (env vars → DIY PostToolUse `run_silent()`/failFast filters → wrapper scripts (RTK) → output-style skills (caveman)) — sourced to hlyr.dev "Context-Efficient Backpressure" (2025-12-09).
+- Subdirectory README one-liners refreshed (`context-memory`, `agents-skills`, `cc-community`) to surface the new sections.
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: ACE — Agentic Context Engine (Kayba, §4, Apache-2.0, arXiv:2510.04618), autoharness (Kayba, §3, benchmark-driven harness optimizer, MIT), and TimesFM (Google Research, new §6 "Specialist Models Agents Call as Tools"). (PR #262)
+- `docs/cc-community/CC-community-skills-landscape.md`: agent-native skills (BuilderIO/skills, MIT, v0.2.35) — 10 composable cross-agent meta-skills as the 11th library; Summary count Ten → Eleven. (PR #263)
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: Flue (withastro, §1, Apache-2.0) — durable sandboxed agent framework on the Pi harness; plus Learn Harness Engineering and Hands-On Modern RL (WalkingLabs) under Production Patterns & Reference Frameworks. (PR #264)
+- `ui/` branded GitHub Pages site: EyeRest-themed landing page (`index.html`, System/Light/Dark theme picker), restyled knowledge graph (`graph.html`), `style.css`, `favicon.svg`, vendored `vis-network` + self-hosted Inter/JetBrains Mono fonts. (PR #253)
+- `.github/workflows/gh-pages.yaml`: GitHub Actions Pages deploy (Pages API); repo Pages source set to "GitHub Actions". (PR #253)
+- `src/pages_build.py` + `tests/test_pages_build.py`: pure, unit-tested helpers (EyeRest restyle, tooling-node pruning, woff2 validation). (PR #253)
+- `.github/scripts/lib/` pure-logic modules (`status_report`, `status_incidents`, `changelog`, `native_sources`, `community_sources`, expanded `monitor_utils`) + a stdlib `unittest` suite under `tests/` (67 tests total); `make test`. (PRs #256–#259)
+- `Makefile`: `graph-page`, `graph-fonts`, `preview`, and `test` targets. (PRs #253, #256)
 - `.github/workflows/rxiv-paper-eval.yaml`: fourth monitor — weekly Tuesday ArXiv preprint eval via `qte77/gha-rxiv-paper-eval@v0.2.2`, GITHUB_TOKEN-only auth posture (no PAT), outputs to `triage/rxiv/`. (PR #175)
 - `.github/state/rxiv-paper-eval-state.json` + dedup step in rxiv triage job: content-hash skip keyed by `(server, year, week)` so same-params re-dispatch on a different UTC day no longer opens duplicate PRs. Closes #181. (PR #182)
 - `Makefile` + `.github/workflows/lint.yaml`: actionlint v1.7.12 as third lint job; path filter widened to `.github/workflows/**` + `.github/actions/**`. (PR #182)
@@ -41,10 +56,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- `scripts/graphify-publish-pages.py` + the `Makefile` `graph-publish` target: superseded by `make graph-page` (render + EyeRest-restyle into committed `ui/graph.html`) and the `gh-pages.yaml` workflow. (PR #253)
+- `gh-pages` branch: deleted — deploys now come from the GitHub Actions artifact. (PR #253)
 - `docs/TODO.md`: GitHub issues are the authoritative roadmap; the static file duplicated CHANGELOG (Done items) and drifted from issue state (Next/Backlog). Remaining pending items migrated to #191 (research backlog tracking issue); deferred items dropped.
 
 ### Fixed
 
+- `docs/cc-community/CC-mas-design-principles.md`: corrected the "12-Factor Agents (Selected)" section — it listed Heroku **12-Factor App** factors (config-in-env, backing services, stateless processes, dev/prod parity, logs as event streams) mislabeled as agent factors. Reconciled to HumanLayer's actual **12-Factor Agents** (Dex Horthy, 2025-04-03), folding the original App principles in as alignment notes; hlyr.dev canonical post now cited as primary alongside the GitHub mirror (accessed 2026-06-19). `docs/non-cc/agent-frameworks-infrastructure-landscape.md` 12-Factor bullet repointed to this doc + the canonical URL.
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: normalized non-canonical cross-ref path `../../../docs/cc-community/` → `../../cc-community/` (resolved correctly, so lychee never flagged it — lychee does not resolve relative Markdown paths). (PR #269)
+- Monitor scripts (`community-monitor.py`, `native-sources-monitor.py`): CodeQL `py/bad-tag-filter` hardening — the `<script>`/`<style>` strip regex is now case- and trailing-whitespace-tolerant via `monitor_utils.strip_html_noise`. (PR #255)
 - `Makefile` setup_lychee: tarball-wrapper-dir bug — switch to `mktemp + install -m 755` mirroring `lycheeverse/lychee-action`. Closes #160. (PRs #170, #174)
 - Triage-output generators (`monitor_utils.build_report`, `changelog-compare.build_report`, `status-stats.generate_report`) + `create-triage-pr` H1 prepend: md-lint-clean output going forward; historical `triage/**/*.md` cleaned in one pass. Closes #159. (PR #171)
 - `learnings-aggregator.py` + 7 mirrored `docs/learnings/per-repo/*.md`: strip upstream frontmatter, conditional H1 demotion (only when upstream has its own H1). (PR #173)
@@ -57,6 +77,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `docs/cc-native/configuration/README.md`, `docs/cc-native/README.md`, `docs/cc-community/README.md`, `docs/learnings/README.md`: indexed orphaned docs surfaced by the full-repo doc-hierarchy audit — 6 configuration docs (subdir count 9 → 14), CC-vlm-screen-sharing-landscape, and 4 auto-aggregated AGENT_LEARNINGS mirrors. (PR #269)
+- `docs/cc-community/CC-code-tooling-landscape.md`: refreshed codebase-memory-mcp entry — docs-site link, stars 3.2K → 6.8K, v0.7.0 → v0.8.1; frontmatter dates bumped. (PRs #262, #265)
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: refreshed against current code.claude.com/docs/en/memory — `autoMemoryDirectory` + v2.1.59 requirement, MEMORY.md 25 KB / 200-line threshold, `CLAUDE_CODE_NEW_INIT`, AGENTS.md handling, `claudeMd` managed-settings key. (PR #265)
+- `lychee.toml`: added `theregister.com` to the exclude list (intermittent anti-bot 403 in CI). (PR #264)
+- `docs/cc-community/README.md`: skills-landscape index row updated to 11 libraries (added last30days, agent-native). (PR #267)
+- GitHub Pages now deploys via the Actions workflow instead of a `gh-pages` branch push; the published knowledge graph prunes tooling/code nodes (`scripts/`, `tests/`, `ui/`, `src/`, `.github/scripts/`). (PR #253)
+- `.github/scripts/` monitors (status, changelog, native-sources, community) refactored to thin IO entry points with pure logic extracted to importable `.github/scripts/lib/` modules — behavior-preserving (`status-stats` + `changelog-compare` output byte-identical on fixtures). (PRs #256–#259)
 - `docs/cc-community/CC-repo-to-docs-tools-landscape.md`: consolidate cross-references, link Graphify and Code-Review-Graph
 - `docs/non-cc/README.md`: add Infrastructure section (InsForge, GoClaw), expand Agents section (Feynman, Hermes, Rowboat)
 - `README.md`: update contents table with expanded non-cc and cc-community descriptions
