@@ -2,6 +2,8 @@
 
 > Field research and feature analysis for AI coding agents — sandboxing, orchestration, plugins, community tooling, SDLC patterns.
 
+**Write-up:** the research catalog feeding an open agentic coding harness — [An Open Agentic Coding Harness](https://qte77.github.io/open-agentic-coding-harness/).
+
 ## Why
 
 Make informed adopt / defer / skip decisions about coding agents and their ecosystems before building production systems on them. Tracks Claude Code, JetBrains Air, DeerFlow, Goose, Codex, Devin and others — plus the surrounding plugins, observability, SDLC patterns, and cross-repo learnings.
