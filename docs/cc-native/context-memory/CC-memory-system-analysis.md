@@ -164,6 +164,42 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 | Deep `@` import chains | Increases token cost | Audit total imported size; keep chain under 400 total lines |
 | Duplicate auto memory vs manual learnings | Stale or contradicting patterns | Periodic deduplication review |
 
+### Instruction Adherence Patterns
+
+CC injects CLAUDE.md content wrapped in a `<system-reminder>` tag — [observed via API interception][cc-reverse-eng] and documented in the Agiflow prompt-augmentation analysis. The `<system-reminder>` framing signals to the model that the content is optionally relevant rather than unconditionally binding. As the file grows, instruction adherence degrades: instructions buried deeper in a large file are less reliably followed than those at the top.
+
+This answers the open question "Why Claude ignores explicit MUST directives" flagged in [CC-community-skills-landscape.md][cc-skills-landscape] (claude-code-best-practice entry).
+
+#### Conditional XML Blocks
+
+The recommended fix is to scope domain-specific rules with [conditional XML blocks][hlyr-claude-md] rather than shrinking the file:
+
+```markdown
+<important if="you are writing or modifying tests">
+- Every test must have an Arrange-Act-Assert comment block
+- Mocks are forbidden for the system under test
+</important>
+```
+
+The condition narrows when the block fires. This improves adherence without reducing total instruction coverage.
+
+**Foundational vs conditional split**:
+
+| Rule type | Treatment | Examples |
+|---|---|---|
+| Foundational | Unconditional (always in scope) | Project identity, tech stack, directory structure |
+| Conditional | Wrapped in `<important if="…">` | Testing procedures, deployment steps, domain rules |
+
+**Condition specificity principle**: conditions must be narrow enough to fire only when relevant. Anti-pattern: `"you are writing code"` (fires on nearly every task, defeating the purpose). Good: `"you are writing or modifying tests"` or `"you are modifying a CI workflow file"`.
+
+HumanLayer ships an `improve-claude-md` skill that automates this restructuring ([source][hlyr-claude-md]):
+
+```bash
+npx skills add humanlayer/skills --skill improve-claude-md
+```
+
+Cross-ref: [CC-reverse-engineering-landscape.md][cc-reverse-eng] — Agiflow section documents the five injection mechanisms including the `<system-reminder>` wrapping of CLAUDE.md; [CC-community-skills-landscape.md][cc-skills-landscape] — claude-code-best-practice open research questions.
+
 ### Auto Memory Architecture
 
 ```text
@@ -256,7 +292,7 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 
 | Aspect | Notes | Optimization Opportunity |
 | ------ | ----- | ------------------------ |
-| Autonomous loop context | Each iteration starts fresh; reads CLAUDE.md + auto memory | Working as designed — see context rot analysis for headless invocation patterns |
+| Autonomous loop context | Each iteration starts fresh; reads CLAUDE.md + auto memory | Working as designed — see [Context Quality Degradation][cc-extended-ctx-degradation] for headless invocation patterns |
 | Cloud sessions | Auto memory is machine-local | Cloud sessions rely on committed CLAUDE.md only (see CC-cloud-sessions-analysis.md) |
 | `includeGitInstructions` | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` removes built-in git workflow instructions from context (v2.1.69) | Saves context tokens in headless/autonomous loops that don't need commit/PR guidance |
 
@@ -285,15 +321,72 @@ For CLAUDE.md size, import chains, path-scoped rules, auto memory deduplication,
 
 **Recommendation**: No structural changes needed for a project already using CLAUDE.md + rules + auto memory. Minor wins from path-scoping and deduplication reviews.
 
+## Context Engineering Workflow (ACE-FCA)
+
+The ACE-FCA (Advanced Context Engineering — Frequent Compaction Architecture) methodology was introduced by [Dex at hlyr.dev][hlyr-ace] (2025-08-29) as a structured approach to preventing context degradation in long agentic sessions. This repo's [.claude/rules/context-management.md](../../../.claude/rules/context-management.md) encodes this framework — the 40–60% utilization target and the context-quality ranking originate from the hlyr.dev source.
+
+### Three-Phase Workflow with Human-Review Gates
+
+```text
+Research → [human review] → Planning → [human review] → Implementation
+```
+
+Each phase produces a **durable markdown artifact** before the next phase begins:
+
+| Phase | Artifact | Content |
+|---|---|---|
+| Research | `research.md` | Sources, findings, open questions |
+| Planning | `plan.md` | Approach rationale, step sequence, tradeoffs |
+| Implementation | `implement.md` | Completed steps, current state, blockers |
+
+Human review gates are ordered by downstream leverage: reviewing research first catches misframing before it propagates into planning and code. A wrong plan costs more to fix than a wrong research note.
+
+### Frequent Intentional Compaction
+
+Rather than letting context fill to exhaustion, ACE-FCA calls for distilling progress into a structured artifact at each phase boundary — or earlier when a compaction trigger is hit. The artifact schema:
+
+- **End goal**: what the session is trying to accomplish
+- **Approach rationale**: why this path was chosen
+- **Completed steps**: what has been done and verified
+- **Current failures**: what isn't working and what was tried
+- **File and dependency map**: which files are involved and how they relate
+
+### Generic Subagents for Discovery Isolation
+
+Noisy discovery operations (file searches, grep sweeps, large JSON tool results) run inside generic subagents that return structured summaries only. This prevents search artifacts from polluting the parent window. Cross-ref: [Progressive Context Compaction in CC-agentic-harness-patterns-analysis.md][cc-harness-patterns]; [skills compaction budget in CC-skills-adoption-analysis.md][cc-skills-adoption]; [fresh-context-per-iteration in CC-ralph-enhancement-research.md][cc-ralph]; [1M-window compaction-avoidance in CC-extended-context-analysis.md][cc-extended-ctx].
+
+### Context-Quality Ranking
+
+When information is imperfect, the quality hierarchy determines what to drop ([source][hlyr-ace]):
+
+| Rank | Information type | Effect |
+|---|---|---|
+| Worst | Incorrect information | Cascading errors (garbage in, garbage out) |
+| Middle | Missing information | Model guesses, sometimes wrong |
+| Least bad | Excessive noise | Dilutes signal; truth still present |
+
+Better to have less correct information than more information with errors.
+
 ## References
 
 - [CC Memory docs][cc-mem]
 - [CC Skills docs][cc-skills]
 - [CC Settings docs][cc-settings]
 - [CC Subagent memory][cc-sub]
+- [Getting Claude to Actually Read Your CLAUDE.md][hlyr-claude-md] — hlyr.dev, Dex, 2026-03-17
+- [Advanced Context Engineering for Coding Agents][hlyr-ace] — hlyr.dev, Dex, 2025-08-29
 
 [cc-mem]: https://code.claude.com/docs/en/memory
 [cc-skills]: https://code.claude.com/docs/en/skills
 [cc-settings]: https://code.claude.com/docs/en/settings
 [cc-sub]: https://code.claude.com/docs/en/sub-agents#enable-persistent-memory
 [piebald-dream]: https://github.com/Piebald-AI/claude-code-system-prompts/blob/main/system-prompts/agent-prompt-dream-memory-consolidation.md
+[hlyr-claude-md]: https://www.hlyr.dev/blog/stop-claude-from-ignoring-your-claude-md
+[hlyr-ace]: https://www.hlyr.dev/blog/advanced-context-engineering
+[cc-reverse-eng]: ../../cc-community/CC-reverse-engineering-landscape.md
+[cc-skills-landscape]: ../../cc-community/CC-community-skills-landscape.md
+[cc-harness-patterns]: ../agents-skills/CC-agentic-harness-patterns-analysis.md
+[cc-skills-adoption]: ../agents-skills/CC-skills-adoption-analysis.md
+[cc-ralph]: ../agents-skills/CC-ralph-enhancement-research.md
+[cc-extended-ctx]: CC-extended-context-analysis.md
+[cc-extended-ctx-degradation]: CC-extended-context-analysis.md#context-quality-degradation
