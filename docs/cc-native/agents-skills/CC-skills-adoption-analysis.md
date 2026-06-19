@@ -5,8 +5,8 @@ category: analysis
 version: 2.0.0
 status: completed
 created: 2026-01-11
-updated: 2026-04-11
-validated_links: 2026-04-11
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Date**: 2026-01-11
@@ -139,6 +139,41 @@ The skills system has evolved significantly since initial adoption:
 | `hooks` | v2.1.0 | Agent frontmatter hooks (PreToolUse, PostToolUse, Stop) |
 | `skills` | v2.0.43 | Auto-load skills for subagents |
 
+#### `context: fork` — Mechanics and Economics
+
+`context: fork` (v2.1.0) runs a skill in an isolated subagent context: the SKILL.md
+body becomes the seed context; the parent conversation history is not carried in.
+The `agent` field selects the subagent type for that fork (e.g. `agent: Explore` for
+read-only research sweeps that must not pollute the parent conversation).
+
+**Context as a stack.** An agent conversation is a downward-growing stack of message
+frames. The only valid operations are push (send a user message) and pop (rewind to an
+earlier turn). Random-access edits to the middle of the stack are not possible without
+forcing a cache miss across every subsequent frame. Forks happen at user-turn boundaries
+— not mid-tool-call — to avoid corrupting in-flight agent state. This is sometimes
+called "turn-boundary rewinding," and is referred to across tools as "rewind,"
+"branching," or "time traveling" depending on the product.
+
+**Context salvage.** Fork after a context-expensive operation — a large file read,
+verbose test output, or a wide grep sweep — to discard the bloat in a fresh child
+context and resume cleanly. This is an alternative to compacting the parent context
+when the expensive content is no longer needed downstream.
+
+**Four CC forking mechanisms (relative cross-references):**
+
+| Mechanism | Where documented |
+| --------- | ---------------- |
+| `context: fork` in skills (this section) | CC-skills-adoption-analysis.md |
+| `parallel()` in dynamic workflows | [CC-dynamic-workflows-analysis.md](CC-dynamic-workflows-analysis.md) |
+| Agent teams with shared task lists | [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md) |
+| External `claude -p` subprocess harnesses | [CC-recursive-spawning-patterns.md](CC-recursive-spawning-patterns.md) |
+
+For prompt-caching behavior that affects forked subagents, see
+[CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md).
+
+Source: [Context Forking to Save Time, Tokens and Trouble][context-forking-post]
+(Kyle, hlyr.dev, 2026-05-15).
+
 ### Variable Substitutions
 
 | Variable | Version | Description |
@@ -267,3 +302,4 @@ Update `.claude/settings.json` to adopt Skills:
 [ms-skills]: https://learn.microsoft.com/en-us/agent-framework/agents/skills
 [hashi-skills]: https://www.hashicorp.com/en/blog/introducing-hashicorp-agent-skills
 [cc-schema-bug]: https://github.com/anthropics/claude-code/issues/25795
+[context-forking-post]: https://www.hlyr.dev/blog/context-forking-to-save-time-trouble-and-tokens
