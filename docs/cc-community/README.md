@@ -19,6 +19,7 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 | [CC-compass-mcp-analysis.md](CC-compass-mcp-analysis.md) | Compass MCP: cross-surface task/context bridge (architecture, status, alignment) |
 | [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) | Repo-to-docs AI tools: DeepWiki, Code2Tutorial, GitSummarize |
 | [CC-research-agents-landscape.md](CC-research-agents-landscape.md) | Research/discovery agents: STORM, GPT-Researcher, Elicit, FutureHouse, OpenScholar, PaperQA2 |
+| [CC-vlm-screen-sharing-landscape.md](CC-vlm-screen-sharing-landscape.md) | VLM + screen-sharing landscape: vision models, local runtimes, image token math, visual-context integration patterns |
 
 ## MAS & Agent Best Practices
 
