@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Collect Claude platform incidents from Statuspage API into a JSONL archive.
+"""Collect Claude platform incidents from the Statuspage API into a JSONL archive.
 
-Fetches all incidents (resolved + unresolved) from the Anthropic Statuspage
-and upserts them into a local JSONL archive. Can also process webhook payloads
-from repository_dispatch events.
+Fetches incidents from the Anthropic Statuspage and upserts them into a local
+JSONL archive; can also process webhook payloads from repository_dispatch
+events. Pure normalization logic lives in lib/status_incidents.py.
 
 Usage:
     # Fetch from API (weekly cron)
     python status-collector.py --archive triage/status-monitor/outages.jsonl
 
     # Process webhook payload (repository_dispatch)
-    python status-collector.py --archive triage/status-monitor/outages.jsonl --webhook-payload /tmp/payload.json
+    python status-collector.py --archive ... --webhook-payload /tmp/payload.json
 
 Exit codes:
     0 = no new or updated incidents
@@ -22,10 +22,16 @@ import json
 import sys
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 
-STATUSPAGE_BASE = "https://status.anthropic.com"
+sys.path.insert(0, str(Path(__file__).parent))
+from lib.monitor_utils import fatal, load_jsonl
+from lib.status_incidents import (
+    STATUSPAGE_BASE,
+    normalize_incident,
+    normalize_webhook_incident,
+    upsert_record,
+)
 
 
 def fetch_incidents(base_url: str) -> list[dict]:
@@ -36,73 +42,8 @@ def fetch_incidents(base_url: str) -> list[dict]:
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.URLError as e:
-        print(f"ERROR: Failed to fetch incidents: {e}", file=sys.stderr)
-        sys.exit(2)
+        fatal(f"ERROR: Failed to fetch incidents: {e}")
     return data.get("incidents", [])
-
-
-def normalize_incident(raw: dict) -> dict:
-    """Normalize a Statuspage incident into an archive record."""
-    started_at = raw.get("started_at") or raw.get("created_at", "")
-    resolved_at = raw.get("resolved_at")
-    duration = compute_duration(started_at, resolved_at)
-
-    components = []
-    for comp in raw.get("components", []):
-        name = comp.get("name", "")
-        if name:
-            components.append(name)
-
-    updates = raw.get("incident_updates", [])
-
-    return {
-        "id": raw["id"],
-        "name": raw.get("name", ""),
-        "status": raw.get("status", ""),
-        "impact": raw.get("impact", ""),
-        "started_at": started_at,
-        "resolved_at": resolved_at or "",
-        "duration_minutes": duration,
-        "affected_components": components,
-        "updates_count": len(updates),
-        "url": raw.get("shortlink", f"{STATUSPAGE_BASE}/incidents/{raw['id']}"),
-        "collected_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-    }
-
-
-def compute_duration(started_at: str, resolved_at: str | None) -> int | None:
-    """Compute incident duration in minutes. Returns None if unresolved."""
-    if not resolved_at or not started_at:
-        return None
-    try:
-        start = datetime.fromisoformat(started_at.replace("Z", "+00:00"))
-        end = datetime.fromisoformat(resolved_at.replace("Z", "+00:00"))
-        return max(0, int((end - start).total_seconds() / 60))
-    except (ValueError, TypeError):
-        return None
-
-
-def normalize_webhook_incident(payload: dict) -> dict | None:
-    """Extract and normalize incident from a webhook payload."""
-    incident = payload.get("incident")
-    if not incident:
-        return None
-    return normalize_incident(incident)
-
-
-def load_archive(path: Path) -> dict[str, dict]:
-    """Load existing archive as a dict keyed by incident ID."""
-    archive: dict[str, dict] = {}
-    if not path.exists():
-        return archive
-    with open(path) as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            record = json.loads(line)
-            archive[record["id"]] = record
-    return archive
 
 
 def save_archive(path: Path, archive: dict[str, dict]) -> None:
@@ -114,13 +55,33 @@ def save_archive(path: Path, archive: dict[str, dict]) -> None:
             f.write(json.dumps(record, separators=(",", ":")) + "\n")
 
 
-def record_changed(old: dict, new: dict) -> bool:
-    """Check if a record has meaningfully changed (ignoring collected_at)."""
-    for key in ("status", "resolved_at", "duration_minutes", "updates_count",
-                "affected_components", "impact", "name"):
-        if old.get(key) != new.get(key):
-            return True
+def _process_webhook(archive: dict[str, dict], payload_path: Path) -> bool:
+    """Upsert one incident from a webhook payload; True if the archive changed."""
+    with open(payload_path) as f:
+        payload = json.load(f)
+    record = normalize_webhook_incident(payload)
+    if not record:
+        return False
+    is_new = record["id"] not in archive
+    if upsert_record(archive, record):
+        print(f"Webhook: {'new' if is_new else 'updated'} incident {record['id']}: {record['name']}")
+        return True
+    print(f"Webhook: no changes for incident {record['id']}")
     return False
+
+
+def _process_api(archive: dict[str, dict], base_url: str) -> bool:
+    """Fetch + upsert all API incidents; True if the archive changed."""
+    incidents = fetch_incidents(base_url)
+    print(f"Fetched {len(incidents)} incidents from API")
+    changed = False
+    for raw in incidents:
+        record = normalize_incident(raw)
+        is_new = record["id"] not in archive
+        if upsert_record(archive, record):
+            changed = True
+            print(f"  {'NEW' if is_new else 'UPDATED'}: {record['id']} — {record['name']}")
+    return changed
 
 
 def main() -> None:
@@ -142,46 +103,19 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    archive = load_archive(args.archive)
-    changed = False
-
-    if args.webhook_payload:
-        # Process webhook payload
-        with open(args.webhook_payload) as f:
-            payload = json.load(f)
-        record = normalize_webhook_incident(payload)
-        if record:
-            existing = archive.get(record["id"])
-            if not existing or record_changed(existing, record):
-                archive[record["id"]] = record
-                changed = True
-                print(f"Webhook: {'updated' if existing else 'new'} incident {record['id']}: {record['name']}")
-            else:
-                print(f"Webhook: no changes for incident {record['id']}")
-    else:
-        # Fetch all incidents from API
-        incidents = fetch_incidents(args.statuspage_base)
-        print(f"Fetched {len(incidents)} incidents from API")
-
-        for raw in incidents:
-            record = normalize_incident(raw)
-            existing = archive.get(record["id"])
-            if not existing:
-                archive[record["id"]] = record
-                changed = True
-                print(f"  NEW: {record['id']} — {record['name']}")
-            elif record_changed(existing, record):
-                archive[record["id"]] = record
-                changed = True
-                print(f"  UPDATED: {record['id']} — {record['name']}")
+    archive = {r["id"]: r for r in load_jsonl(args.archive)}
+    changed = (
+        _process_webhook(archive, args.webhook_payload)
+        if args.webhook_payload
+        else _process_api(archive, args.statuspage_base)
+    )
 
     if changed:
         save_archive(args.archive, archive)
         print(f"Archive updated: {len(archive)} total incidents in {args.archive}")
         sys.exit(1)
-    else:
-        print(f"No changes. Archive has {len(archive)} incidents.")
-        sys.exit(0)
+    print(f"No changes. Archive has {len(archive)} incidents.")
+    sys.exit(0)
 
 
 if __name__ == "__main__":

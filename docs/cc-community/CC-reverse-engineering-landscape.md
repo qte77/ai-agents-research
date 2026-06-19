@@ -2,7 +2,7 @@
 title: CC Reverse Engineering Landscape
 purpose: Survey of community tools, blogs, and trackers that reverse engineer Claude Code internals — system prompts, binary analysis, env vars, API interception.
 created: 2026-03-29
-updated: 2026-04-05
+updated: 2026-06-16
 validated_links: 2026-04-05
 ---
 
@@ -53,6 +53,18 @@ URL: [beyondthehype][beyondthehype]
 Documented TODO tool system prompt, task state management (pending/in_progress/completed), WebFetch configuration, and reference to "ULTRACLAUDE.md" experimental mode.
 
 URL: [sabrina][sabrina]
+
+### elder-plinius/CL4R1T4S
+
+Cross-vendor corpus of **extracted system prompts and guidelines** from major AI models and services. Directories cover OpenAI, Google, Anthropic, xAI, Perplexity, Cursor, Windsurf, Devin, Manus, Replit, and more. Purpose: transparency into the hidden prompt scaffolds that shape model behavior — personas, refusal patterns, and embedded frameworks.
+
+- ~39.8k stars; ~189 commits; AGPL-3.0
+- **Includes Anthropic/Claude entries**, making it relevant alongside the CC-specific prompt extraction work above
+- Method: prompt extraction (observed/elicited at inference time), not binary decompilation or sourcemap exposure
+
+**Provenance note**: Content is extracted via model interaction, not leaked source. Anthropic entries reflect prompted behavior as captured by contributors; accuracy and completeness vary by model version and extraction method. Cite as observed prompts, not authoritative internals.
+
+URL: [cl4r1t4s][cl4r1t4s]
 
 ## Binary & Architecture Analysis
 
@@ -196,6 +208,7 @@ Tracking issue: [qte77/ai-agents-research#70][tracking-issue]
 [xdanny-gist]: https://gist.github.com/xdannyrobertsx/0a395c59b1ef09508e52522289bd5bf6
 [yoffe]: https://medium.com/@liranyoffe/reverse-engineering-claude-code-web-tools-1409249316c3
 [claudelog]: https://claudelog.com/
+[cl4r1t4s]: https://github.com/elder-plinius/CL4R1T4S
 [binary-arch]: ../cc-native/configuration/CC-binary-architecture.md
 [tools-inv]: ../cc-native/configuration/CC-tools-inventory.md
 [env-ref]: ../cc-native/configuration/CC-env-vars-reference.md

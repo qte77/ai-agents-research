@@ -6,9 +6,9 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 
 | Document | Coverage |
 |----------|----------|
-| [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, BHIL, claude-howto, dispatch, superpowers, agent-skills, caveman |
+| [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, BHIL, claude-howto, dispatch, superpowers, agent-skills, caveman, last30days, agent-native |
 | [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) | Plugin catalogs: awesome-claude-code, awesome-claude-code-plugins |
-| [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling + cross-tool comparison: RTK, GSD, everything-claude-code, Boucle, OpenHarness, CC Switch, opensrc, awesome-design-md |
+| [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling + cross-tool comparison: RTK, GSD, everything-claude-code, Boucle, OpenHarness, CC Switch, opensrc, awesome-design-md; token-waste reduction stack |
 | [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) | Persistent memory: ByteRover, Claude-Mem, MemPalace, MemSearch |
 | [CC-code-tooling-landscape.md](CC-code-tooling-landscape.md) | Code analysis: Graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP, Repomix, code2prompt |
 | [CC-usage-tooling-landscape.md](CC-usage-tooling-landscape.md) | Usage observability: CodeBurn, ccusage, Claude-Code-Usage-Monitor |
@@ -19,6 +19,7 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 | [CC-compass-mcp-analysis.md](CC-compass-mcp-analysis.md) | Compass MCP: cross-surface task/context bridge (architecture, status, alignment) |
 | [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) | Repo-to-docs AI tools: DeepWiki, Code2Tutorial, GitSummarize |
 | [CC-research-agents-landscape.md](CC-research-agents-landscape.md) | Research/discovery agents: STORM, GPT-Researcher, Elicit, FutureHouse, OpenScholar, PaperQA2 |
+| [CC-vlm-screen-sharing-landscape.md](CC-vlm-screen-sharing-landscape.md) | VLM + screen-sharing landscape: vision models, local runtimes, image token math, visual-context integration patterns |
 
 ## MAS & Agent Best Practices
 

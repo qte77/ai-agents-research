@@ -11,7 +11,9 @@ import re
 import sys
 import urllib.request
 from collections.abc import Callable
+from datetime import datetime
 from pathlib import Path
+from typing import NoReturn
 
 # Noise words that match too broadly across docs.
 # Changelog verbs (added, fixed, improved, removed, renamed) are included so
@@ -22,6 +24,48 @@ DEFAULT_NOISE: set[str] = {
     "github", "added", "fixed", "improved", "removed", "renamed",
     "support", "feature",
 }
+
+
+def fatal(message: str, code: int = 2) -> NoReturn:
+    """Print an error to stderr and exit with ``code`` (default 2)."""
+    print(message, file=sys.stderr)
+    sys.exit(code)
+
+
+def strip_html_noise(html: str) -> str:
+    """Remove <script>/<style> blocks from HTML.
+
+    Tolerant of case and whitespace/junk in tags (e.g. ``</script >``) so the
+    regex can't be trivially defeated (CodeQL py/bad-tag-filter).
+    """
+    clean = re.sub(r"<script[^>]*>.*?</script[^>]*>", "", html, flags=re.DOTALL | re.IGNORECASE)
+    clean = re.sub(r"<style[^>]*>.*?</style[^>]*>", "", clean, flags=re.DOTALL | re.IGNORECASE)
+    return clean
+
+
+def parse_iso(s: str) -> datetime | None:
+    """Parse an ISO-8601 timestamp (tolerating a trailing ``Z``); None on failure."""
+    if not s:
+        return None
+    try:
+        return datetime.fromisoformat(s.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def load_jsonl(path: Path) -> list[dict]:
+    """Load a JSONL file into a list of dicts, skipping blank lines.
+
+    Returns ``[]`` when the file does not exist.
+    """
+    if not path.exists():
+        return []
+    records: list[dict] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line:
+            records.append(json.loads(line))
+    return records
 
 
 def extract_keywords(text: str, min_len: int = 4) -> set[str]:
@@ -106,34 +150,9 @@ def build_report(
     ]
 
     total_new = 0
-
     for result in source_results:
-        name = result["name"]
-        new_entries = result["new_entries"]
-        total_new += len(new_entries)
-
-        lines += [
-            f"### {name}",
-            "",
-            f"- Source: {result['description']}",
-            f"- Entries fetched: {result['total']}",
-            f"- New uncovered: {len(new_entries)}",
-            "",
-        ]
-
-        if new_entries:
-            lines.append("| Entry | Section | Description |")
-            lines.append("|-------|---------|-------------|")
-            for entry in new_entries[:30]:
-                name_col = _clean_table_cell(entry.get("name", ""), 60)
-                heading = _clean_table_cell(entry.get("heading", ""), 40)
-                desc = _clean_table_cell(entry.get("description", ""), 80)
-                lines.append(f"| {name_col} | {heading} | {desc} |")
-            lines.append("")
-
-            if len(new_entries) > 30:
-                lines.append(f"_... and {len(new_entries) - 30} more entries._")
-                lines.append("")
+        total_new += len(result["new_entries"])
+        lines += _render_source_section(result)
 
     lines += [
         "---",
@@ -143,6 +162,32 @@ def build_report(
     ]
 
     return "\n".join(lines).rstrip("\n"), total_new > 0
+
+
+def _render_source_section(result: dict) -> list[str]:
+    """Render one source's markdown section (header, counts, optional table)."""
+    new_entries = result["new_entries"]
+    lines = [
+        f"### {result['name']}",
+        "",
+        f"- Source: {result['description']}",
+        f"- Entries fetched: {result['total']}",
+        f"- New uncovered: {len(new_entries)}",
+        "",
+    ]
+    if new_entries:
+        lines.append("| Entry | Section | Description |")
+        lines.append("|-------|---------|-------------|")
+        for entry in new_entries[:30]:
+            name_col = _clean_table_cell(entry.get("name", ""), 60)
+            heading = _clean_table_cell(entry.get("heading", ""), 40)
+            desc = _clean_table_cell(entry.get("description", ""), 80)
+            lines.append(f"| {name_col} | {heading} | {desc} |")
+        lines.append("")
+        if len(new_entries) > 30:
+            lines.append(f"_... and {len(new_entries) - 30} more entries._")
+            lines.append("")
+    return lines
 
 
 def _clean_table_cell(text: str, max_len: int) -> str:
@@ -155,6 +200,31 @@ def _clean_table_cell(text: str, max_len: int) -> str:
     text = text.replace("\n", " ").replace("|", "\\|")
     text = re.sub(r"\s+", " ", text).strip()
     return text[:max_len]
+
+
+def _process_source(
+    source: dict[str, str],
+    fetch_fn: Callable[[dict[str, str]], list[dict[str, str]]],
+    seen: set[str],
+    doc_keywords: set[str],
+) -> tuple[dict, list[str]]:
+    """Fetch + filter one source.
+
+    Returns ``(result_dict, fingerprints_of_all_fetched)``. Pure except for the
+    injected ``fetch_fn`` (whose exceptions propagate to the caller).
+    """
+    entries = fetch_fn(source)
+    new_entries = [
+        e for e in entries
+        if entry_fingerprint(e) not in seen and not is_covered(e, doc_keywords)
+    ]
+    result = {
+        "name": source["name"],
+        "description": source["description"],
+        "total": len(entries),
+        "new_entries": new_entries,
+    }
+    return result, [entry_fingerprint(e) for e in entries]
 
 
 def run_monitor(
@@ -186,7 +256,9 @@ def run_monitor(
         print(f"Fetching {name}...", file=sys.stderr)
 
         try:
-            entries = fetch_fn(source)
+            result, fingerprints = _process_source(
+                source, fetch_fn, set(state.get(name, [])), doc_keywords
+            )
         except Exception as e:
             print(f"WARNING: Failed to fetch {name}: {e}", file=sys.stderr)
             source_results.append({
@@ -197,28 +269,10 @@ def run_monitor(
             })
             continue
 
-        print(f"  Extracted {len(entries)} entries", file=sys.stderr)
-
-        seen = set(state.get(name, []))
-        new_entries: list[dict[str, str]] = []
-
-        for entry in entries:
-            fp = entry_fingerprint(entry)
-            if fp in seen:
-                continue
-            if not is_covered(entry, doc_keywords):
-                new_entries.append(entry)
-
-        print(f"  New uncovered: {len(new_entries)}", file=sys.stderr)
-
-        state[name] = [entry_fingerprint(e) for e in entries]
-
-        source_results.append({
-            "name": name,
-            "description": source["description"],
-            "total": len(entries),
-            "new_entries": new_entries,
-        })
+        print(f"  Extracted {result['total']} entries", file=sys.stderr)
+        print(f"  New uncovered: {len(result['new_entries'])}", file=sys.stderr)
+        state[name] = fingerprints
+        source_results.append(result)
 
     save_state(state_file, state)
     print(f"State saved to {state_file}", file=sys.stderr)

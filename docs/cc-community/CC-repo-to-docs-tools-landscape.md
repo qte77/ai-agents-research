@@ -5,7 +5,7 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-06-11
+updated: 2026-06-16
 validated_links: 2026-04-06
 ---
 
@@ -37,6 +37,7 @@ A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the gra
 
 **URL**: [deepwiki.com](https://deepwiki.com)
 **Maker**: [Cognition Labs](https://cognition.ai) (the company behind Devin AI)
+**Full analysis**: [deepwiki-analysis.md](../non-cc/deepwiki-analysis.md)
 
 AI indexes an entire GitHub repository and generates hierarchical wiki-style documentation with:
 
