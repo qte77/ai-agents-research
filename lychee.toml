@@ -44,6 +44,7 @@ exclude = [
     "techcommunity.microsoft.com",  # 403 to HEAD on /blog/* URLs (anti-bot)
     "datacamp.com",  # 403 to HEAD (anti-bot) on /tutorial/* URLs — referenced in CC-version-pinning-resilience.md
     "zread.ai",  # 403 to all automated requests (Cloudflare); AI doc-reader of GitHub repos — referenced in CC-agent-teams-orchestration.md
+    "theregister.com",  # intermittent 403 (anti-bot) to lychee CI — pre-existing news links in CC-community-reimplementations-landscape.md + CC-agent-teams-orchestration.md
     # Auth-gated (requires login) — both `/code` and `/code/scheduled` and `/settings/*` return 403 to anonymous requests
     "claude.ai/code",
     "claude.ai/settings",
