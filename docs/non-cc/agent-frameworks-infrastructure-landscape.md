@@ -79,7 +79,7 @@ Non-LLM foundation models an agent invokes as a *tool* for one narrow capability
 
 ## Production Patterns & Reference Frameworks
 
-- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) — principles for production-grade LLM agents.
+- [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [CC-mas-design-principles.md](../cc-community/CC-mas-design-principles.md).
 - [Agents Towards Production](https://github.com/NirDiamant/agents-towards-production) — end-to-end playbooks for shipping agents.
 - [Learn Harness Engineering (WalkingLabs)](https://github.com/walkinglabs/learn-harness-engineering) — project-based course on *harness engineering* for reliable AI coding agents: structuring Instructions, State, Verification, Scope, and Session Lifecycle around the model instead of fine-tuning it (12 lectures + 6 projects, framed around Claude Code / Codex; MIT). Maps onto [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
 - [Hands-On Modern RL (WalkingLabs)](https://github.com/walkinglabs/hands-on-modern-rl) — practice-first RL curriculum from classic control to LLM post-training (RLHF, DPO, GRPO, RLVR, DeepSeek-R1) and agentic RL (multi-turn credit assignment, tool-use trajectories, Deep Research); Python/PyTorch (CC BY-NC-SA 4.0, non-commercial).
@@ -91,3 +91,6 @@ Non-LLM foundation models an agent invokes as a *tool* for one narrow capability
 - [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — observability/tracing platforms (separate restore)
 - [CC-research-agents-landscape.md](../cc-community/CC-research-agents-landscape.md) — research/discovery agents
 - [CC-ai-security-governance-analysis.md § MCP Ecosystem Security](../cc-community/CC-ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
+
+[12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
+[12fa-gh]: https://github.com/humanlayer/12-factor-agents
