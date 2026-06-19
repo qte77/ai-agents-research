@@ -18,6 +18,10 @@ Distilled operational learnings from active development across the qte77 ecosyst
 | [per-repo/ralph-template.md](per-repo/ralph-template.md) | Ralph-specific patterns: shell scripting, prd.json, self-evolving loop |
 | [per-repo/so101-biolab.md](per-repo/so101-biolab.md) | so101-biolab-automation patterns (placeholder) |
 | [per-repo/deepvariant.md](per-repo/deepvariant.md) | DeepVariant ARM64/ML patterns (placeholder) |
+| [per-repo/claude-code-plugins.md](per-repo/claude-code-plugins.md) | Mirror of qte77/claude-code-plugins AGENT_LEARNINGS.md (auto-aggregated) |
+| [per-repo/cc-voice-plugin-prototype.md](per-repo/cc-voice-plugin-prototype.md) | Mirror of qte77/cc-voice-plugin-prototype AGENT_LEARNINGS.md (auto-aggregated) |
+| [per-repo/learnings-ralphy.md](per-repo/learnings-ralphy.md) | Mirror of qte77/learnings-ralphy AGENT_LEARNINGS.md (auto-aggregated) |
+| [per-repo/research-ralphy.md](per-repo/research-ralphy.md) | Mirror of qte77/research-ralphy AGENT_LEARNINGS.md (auto-aggregated) |
 | [contribution-sprint/style-cheatsheets.md](contribution-sprint/style-cheatsheets.md) | Per-repo coding style, commit format, PR process for compass-mcp, SimpleAgents, opencode |
 | [contribution-sprint/plugin-safety-matrix.md](contribution-sprint/plugin-safety-matrix.md) | Safe plugins per repo + pre-PR .claude/ leakage checklist |
 

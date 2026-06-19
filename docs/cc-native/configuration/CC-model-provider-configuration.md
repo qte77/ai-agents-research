@@ -3,7 +3,7 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-06-14
+updated: 2026-06-16
 validated_links: 2026-06-11
 ---
 
@@ -197,7 +197,7 @@ claude
 
 Servers that only speak OpenAI's Chat Completions format (not Anthropic's Messages API) need a translation proxy. Options:
 
-- **claude-code-proxy** ([source][cc-proxy]) — lightweight Node.js proxy converting Anthropic → OpenAI format
+- **claude-code-proxy** ([source][cc-proxy]) — lightweight Python (FastAPI) proxy converting Anthropic → OpenAI format
 - **Olla** ([source][olla]) — multi-backend proxy with load balancing across Ollama, LM Studio, and vLLM
 - **LiteLLM** ([source][litellm]) — full-featured proxy with auth, rate limiting, audit logging
 
@@ -223,7 +223,7 @@ For enterprise or multi-provider setups, an LLM gateway sits between CC and the 
 
 #### LiteLLM
 
-Full-featured proxy supporting 100+ providers. Recommended for team environments ([source][litellm]).
+Full-featured proxy supporting 100+ providers. Recommended for team environments. Latest: v1.89.0 (2026-06-14, MIT) ([source][litellm]).
 
 ```bash
 # Start LiteLLM proxy
@@ -239,7 +239,7 @@ Supports: `claude --model gpt-4o`, `claude --model gemini-3.0-flash-exp`, `claud
 
 #### Bifrost (Maxim AI)
 
-Open-source Go-based gateway supporting 1000+ models. Intercepts Anthropic-format requests, converts to target provider format, and translates responses back transparently ([source][bifrost]).
+Open-source Go-based gateway supporting 1000+ models across 23+ providers (5,814 stars, Apache-2.0, enterprise v1.4.9). Intercepts Anthropic-format requests, converts to target provider format, and translates responses back transparently. Also acts as an MCP gateway (`claude mcp add --transport http bifrost http://localhost:8080/mcp`) that aggregates upstream MCP servers behind a single endpoint ([source][bifrost]).
 
 #### Claude Code Router (CCR)
 
@@ -253,9 +253,78 @@ ccr code     # launches CC with ANTHROPIC_BASE_URL=http://localhost:3456
 
 - **Routing scenarios**: `default`, `background`, `think`, `longContext` (auto-switches past a token threshold, default ~60K), `webSearch`, `image` (beta)
 - **Providers / transformers**: OpenRouter, DeepSeek, Gemini, Ollama, Volcengine, SiliconFlow, ModelScope, DashScope, AIHubmix; plus custom JS routing functions
-- **Maturity**: very popular (~34.9K stars, MIT) but a large open-issue backlog (~800+) — pin a known-good version
+- **Maturity**: very popular (35K stars, MIT, v2.0.0) but a large open-issue backlog (~800+) — pin a known-good version
 
 Unlike the passive proxies above (LiteLLM/Bifrost translate API formats), CCR decides *which* model handles each request. CCR is also the community routing layer noted in [CC-vlm-screen-sharing-landscape.md](../../cc-community/CC-vlm-screen-sharing-landscape.md).
+
+#### CLIProxyAPI
+
+Wraps Claude Code (and Gemini CLI, ChatGPT Codex, Grok Build) as an OpenAI/Anthropic-compatible API endpoint, harvesting free-tier quota from existing authenticated CLI sessions — no API-key billing ([source][cliproxyapi]).
+
+```bash
+# Point any Anthropic-SDK client at the local proxy
+export ANTHROPIC_BASE_URL=http://localhost:<PORT>
+export ANTHROPIC_AUTH_TOKEN=<cliproxy-key>
+```
+
+- **Stars / version**: 37.6K stars, v7.2.7 (MIT, Go)
+- **CC story**: wraps `claude` via OAuth account; supports multi-account switching, per-credential circuit breakers, quota management
+- **Also routes**: Gemini CLI, Codex, Grok Build, Antigravity — plus OpenAI-compatible upstream relay (e.g. OpenRouter)
+- **Companion GUI**: [EasyCLI][easycli] (Rust/Tauri desktop app)
+
+#### 9Router
+
+Multi-tool AI gateway with built-in RTK token compression (~20–40% savings), routing CC, Codex, Cursor, Cline, and Copilot to 40+ providers with auto-fallback ([source][9router]).
+
+```bash
+# Claude Code config in ~/.claude/config.json
+# "anthropic_api_base": "http://localhost:20128/v1"
+# "anthropic_api_key": "<9router-key>"
+```
+
+- **Stars / version**: 17.6K stars, v0.4.80 (MIT, JavaScript)
+- **Providers**: OpenRouter, DeepSeek, Groq, xAI, Mistral, Kiro AI, OpenCode Free, Vertex AI, custom OpenAI-compatible endpoints, plus subscription proxies (CC, Codex, Copilot, Cursor)
+- **Pricing**: free/open-source; no billing layer — users pay providers directly (free tiers available; cheap fallback from $0.20/1M tokens)
+
+#### llama-swap
+
+Hot-swaps local models on demand across llama.cpp, vLLM, tabbyAPI, and other backends — a zero-overhead router for multi-model local inference ([source][llama-swap]).
+
+```bash
+# ANTHROPIC_BASE_URL=http://localhost:<port>  (Anthropic-compatible endpoint)
+# or OPENAI_BASE_URL for OpenAI-compatible path
+```
+
+- **Stars / version**: 4,571 stars, v226 (MIT, Go)
+- **CC story**: exposes both `/v1/messages` (Anthropic) and `/v1/chat/completions` (OpenAI) — point CC at it via `ANTHROPIC_BASE_URL`. Routing is model-name-based: the `model` field in the request selects which backend process to hot-load.
+- **Backends**: llama.cpp, vLLM, tabbyAPI, stable-diffusion.cpp, whisper.cpp, ik-llama-server, and any OpenAI/Anthropic-compatible server; OpenRouter supported as a remote peer.
+- **No CC-specific docs** found as of 2026-06-16 — integration inferred from Anthropic endpoint support.
+
+#### Claudish
+
+580+ models via OpenRouter and direct provider integrations behind an `ANTHROPIC_BASE_URL` intercept; auto-detects well-known model names ([source][claudish]).
+
+```bash
+# Install via Homebrew, npm, or Bun; then:
+export ANTHROPIC_BASE_URL=http://127.0.0.1:<PORT>
+```
+
+- **Stars / version**: 912 stars, v7.5.0 (MIT, TypeScript)
+- **Providers**: OpenRouter (580+ models), Google Gemini, OpenAI, MiniMax, Kimi, GLM, Z.AI, OllamaCloud, Vertex AI, Ollama, LM Studio, vLLM, MLX
+- **Routing**: `provider@model[:concurrency]` notation; auto-detection for well-known model names (e.g. `gemini-2.0-flash` routes to Google automatically)
+
+#### Requesty
+
+Hosted LLM router (SaaS) with 300–400+ models across 30+ providers, dedicated Claude Code integration, and optional analytics tagging by git branch/repo/developer ([source][requesty]).
+
+```bash
+export ANTHROPIC_BASE_URL=https://router.requesty.ai
+export ANTHROPIC_AUTH_TOKEN=<requesty-api-key>
+# EU residency: export ANTHROPIC_BASE_URL=https://router.eu.requesty.ai
+```
+
+- **Pricing**: pay-per-token at provider rates; $10 free credits for new accounts; enterprise volume discounts. No open-source core.
+- **Analytics**: optional wrapper tags sessions with git metadata for per-developer cost attribution.
 
 #### Direct CC-Compatible Endpoints
 
@@ -318,6 +387,11 @@ When routing through gateways, additionally set ([source][cc-settings]):
 | **Non-Anthropic models in CC** | LiteLLM or claude-code-proxy | Medium (proxy) |
 | **Per-task local routing / cost control** | Claude Code Router (CCR) | Medium (npm + `ccr start`) |
 | **EU / Swiss data sovereignty, OSS models** | Infomaniak AI (+ proxy for CC; native in OpenCode) | Medium (OpenAI→Anthropic proxy) |
+| **Free-tier quota harvesting (no API key)** | CLIProxyAPI | Medium (OAuth setup + local server) |
+| **Multi-tool gateway + token compression** | 9Router | Medium (local server + config) |
+| **Hot-swap multiple local models** | llama-swap | Medium (config + backends) |
+| **580+ models via OpenRouter / direct providers** | Claudish | Low (install + env var) |
+| **Hosted SaaS router, per-developer analytics** | Requesty | Low (env vars only) |
 
 ## Cross-References
 
@@ -339,6 +413,11 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [Olla — Multi-Backend Proxy][olla]
 - [Bifrost — Open-Source AI Gateway][bifrost]
 - [Claude Code Router (CCR)][cc-router]
+- [CLIProxyAPI][cliproxyapi]
+- [9Router][9router]
+- [llama-swap][llama-swap]
+- [Claudish (MadAppGang)][claudish]
+- [Requesty — Claude Code Integration][requesty]
 - [Local setup guide][local-setup]
 - [Infomaniak — Open-Source AI Models][infomaniak-ai]
 - [Infomaniak — vLLM TranslateGemma-27B (Hugging Face)][infomaniak-translategemma]
@@ -356,6 +435,12 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [olla]: https://thushan.github.io/olla/integrations/frontend/claude-code/
 [bifrost]: https://www.getmaxim.ai/articles/running-non-anthropic-models-in-claude-code-via-an-enterprise-ai-gateway/
 [cc-router]: https://github.com/musistudio/claude-code-router
+[cliproxyapi]: https://github.com/router-for-me/CLIProxyAPI
+[easycli]: https://github.com/router-for-me/EasyCLI
+[9router]: https://github.com/decolua/9router
+[llama-swap]: https://github.com/mostlygeek/llama-swap
+[claudish]: https://github.com/MadAppGang/claudish
+[requesty]: https://docs.requesty.ai/integrations/claude-code
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
 [models-pricing]: https://platform.claude.com/docs/en/about-claude/pricing
 [infomaniak-ai]: https://www.infomaniak.com/en/hosting/ai-services/open-source-models

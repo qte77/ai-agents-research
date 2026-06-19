@@ -1,18 +1,18 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms).
+description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI).
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-06-08
-validated_links: 2026-04-26
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Research (informational)
 
 ## Summary
 
-Ten community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis.
+Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI.
 
 ## gstack (Garry Tan)
 
@@ -419,6 +419,38 @@ npx skills add mvanhorn/last30days-skill -g
 
 **Cross-ref**: Dispatch (above) fans out *work* to parallel agents; last30days fans out *searches* to parallel platforms — different layers of the parallel-fan-out pattern.
 
+## agent-native skills (Builder.io)
+
+**Repo**: [BuilderIO/skills][builderio-skills] | **Stars**: 1.5K | **License**: MIT | **Version**: v0.2.35 (2026-06-19, npm `@agent-native/skills`)
+
+Ten à-la-carte, cross-agent **meta-skills** — orchestration, review, and guardrail capabilities rather than a full methodology. Installed via the `@agent-native/skills` CLI through the shared `.agents` path (Codex, Pi, Cursor, OpenCode, GitHub Copilot / VS Code) plus Claude Code's native skills path. Visual outputs render as MDX.
+
+| Skill | Purpose |
+|-------|---------|
+| `/visual-plan` | Turn text plans into interactive visual plans (diagrams, file maps, annotated code) |
+| `/visual-recap` | Turn a branch/commit/PR diff into a visual recap with annotated diffs |
+| `/agent-watchdog` | Audit another agent's work from a Codex/Claude Code transcript, PR, branch, or run summary |
+| `/plan-arbiter` | Compare competing agent plans and choose one executable direction |
+| `/plow-ahead` | Work through ordinary ambiguity and finish with a clear decision recap |
+| `/efficient-fable` | Use Claude Fable as orchestrator, architect, synthesizer, and final judge |
+| `/efficient-frontier` | Apply the same orchestration to any high-cost frontier model |
+| `/stay-within-limits` | Check current 5-hour and weekly usage before substantial work |
+| `/quick-recap` | Append a concise final status block to every completed response |
+| `/read-the-damn-docs` | Web-search authoritative docs before guessing from stale model memory |
+
+### Installation
+
+```bash
+npx @agent-native/skills@latest add                  # choose skills interactively
+npx @agent-native/skills@latest add --skill quick-recap
+```
+
+### Key Differentiator
+
+Where gstack locks cognitive *modes*, pm-skills delivers domain *frameworks*, superpowers enforces a *TDD methodology*, and agent-skills embeds *Google SDLC culture*, agent-native ships **composable cross-agent meta-skills** adopted individually — orchestration (`/plan-arbiter`, `/efficient-fable`), self-audit (`/agent-watchdog`), and budget/quality guardrails (`/stay-within-limits`, `/read-the-damn-docs`). The Fable-orchestration skills and the usage-budget skill are distinctive in this set.
+
+Cross-ref: Dispatch (above) fans out *work* to background agents; `/agent-watchdog` instead *audits* another agent's work — different layers of the multi-agent pattern. [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format these install into.
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -441,6 +473,7 @@ npx skills add mvanhorn/last30days-skill -g
 | [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
 | [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
 | [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
+| [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -452,3 +485,4 @@ npx skills add mvanhorn/last30days-skill -g
 [superpowers]: https://github.com/obra/superpowers
 [caveman]: https://github.com/JuliusBrussee/caveman
 [last30days]: https://github.com/mvanhorn/last30days-skill
+[builderio-skills]: https://github.com/BuilderIO/skills

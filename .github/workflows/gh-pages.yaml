@@ -1,0 +1,53 @@
+name: Deploy GitHub Pages
+
+# Publishes the branded static site in ui/ (landing page + committed,
+# EyeRest-restyled ui/graph.html) via the GitHub Pages API — same pattern as the
+# sibling repos analyze-stock-kpi and paperverse (no gh-pages branch).
+#
+# The knowledge graph stays local/interactive (key-free, no LLM in CI): rebuild
+# it, run `make graph-page` to render + restyle into ui/graph.html, then commit.
+# Fonts (ui/assets/fonts/) and vis-network (ui/vendor/) are committed, so this
+# workflow just assembles ui/ and deploys.
+#
+# Requires repo Settings -> Pages -> Source = "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ui/**"
+      - ".github/workflows/gh-pages.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+
+      - name: Assemble _site
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp -r ui/. _site/
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  # v6.0.0
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128  # v5.0.0

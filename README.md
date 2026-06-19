@@ -2,6 +2,8 @@
 
 > Field research and feature analysis for AI coding agents — sandboxing, orchestration, plugins, community tooling, SDLC patterns.
 
+**Write-up:** the research catalog feeding an open agentic coding harness — [An Open Agentic Coding Harness](https://qte77.github.io/open-agentic-coding-harness/).
+
 ## Why
 
 Make informed adopt / defer / skip decisions about coding agents and their ecosystems before building production systems on them. Tracks Claude Code, JetBrains Air, DeerFlow, Goose, Codex, Devin and others — plus the surrounding plugins, observability, SDLC patterns, and cross-repo learnings.
@@ -51,6 +53,7 @@ Each monitor fingerprints its output and skips PR creation when content hasn't c
 make setup_all   # lychee + Node.js + markdownlint-cli2 + actionlint
 make lint        # link check (lychee) + markdown (markdownlint-cli2) + action (actionlint)
 make autofix     # mechanical markdownlint --fix pass
+make test        # unit tests for src/ + .github/scripts/lib/ modules
 make help        # all recipes grouped by section
 ```
 
