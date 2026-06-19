@@ -3,8 +3,8 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Generally available (CLAUDE.md); Auto memory enabled by default
@@ -144,6 +144,8 @@ Centrally managed file that applies to all users on a machine ([source][cc-mem])
 
 Deploy via MDM, Group Policy, Ansible, or similar. Cannot be excluded by individual `claudeMdExcludes` settings.
 
+The `claudeMd` key in `managed-settings.json` can carry CLAUDE.md content inline instead of deploying a separate file (honored in managed/policy settings only) ([source][cc-mem]).
+
 #### Additional Directories
 
 Load CLAUDE.md from directories outside the main working directory ([source][cc-mem]):
@@ -173,7 +175,7 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 ```
 
 - `<project>` derived from git repo — all worktrees and subdirectories within the same repo share one auto memory directory. Outside a git repo, the project root is used instead ([source][cc-mem])
-- **MEMORY.md**: First 200 lines loaded at session start. Content beyond line 200 is not loaded. Claude keeps it concise by moving detailed notes into topic files ([source][cc-mem])
+- **MEMORY.md**: First 200 lines (or 25 KB, whichever comes first) loaded at session start. Content beyond that threshold is not loaded. Claude keeps it concise by moving detailed notes into topic files ([source][cc-mem])
 - **Topic files** (e.g., `debugging.md`, `patterns.md`): Not loaded at startup. Claude reads them on demand using file tools when needed ([source][cc-mem])
 - Machine-local; not shared across machines or cloud environments
 - Claude reads/writes during session; "Writing memory" / "Recalled memory" indicators shown
@@ -190,6 +192,8 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 
 Or: `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` env var. Toggle via `/memory` command in session ([source][cc-mem]).
 
+**Requires Claude Code v2.1.59+** for auto memory. **Custom location**: set `autoMemoryDirectory` in `settings.json` (absolute or `~/`-prefixed path; honored only after the workspace-trust dialog) to relocate the memory directory from the default `~/.claude/projects/<project>/memory/` ([source][cc-mem]).
+
 #### Auditing
 
 Auto memory files are plain markdown — edit or delete at any time. Run `/memory` to browse loaded files, toggle auto memory, and open the memory folder ([source][cc-mem]).
@@ -198,12 +202,13 @@ Auto memory files are plain markdown — edit or delete at any time. Run `/memor
 
 - **Import syntax**: `@path/to/file` expands imports in CLAUDE.md. Both relative and absolute paths supported; relative paths resolve relative to the containing file. Max 5 hops recursion ([source][cc-mem])
 - **Size target**: Under 200 lines per CLAUDE.md for best adherence ([source][cc-mem])
-- **`/init`**: Auto-generates starting CLAUDE.md from codebase analysis. If CLAUDE.md exists, suggests improvements rather than overwriting ([source][cc-mem])
+- **`/init`**: Auto-generates starting CLAUDE.md from codebase analysis. If CLAUDE.md exists, suggests improvements rather than overwriting; `CLAUDE_CODE_NEW_INIT=1` enables an interactive multi-phase flow that also sets up skills/hooks and proposes changes before writing ([source][cc-mem])
 - **`/memory`**: Lists all loaded instruction files; toggles auto memory; opens memory folder ([source][cc-mem])
 - **Compaction survival**: CLAUDE.md fully survives `/compact` (re-read from disk). Instructions given only in conversation are lost after compaction ([source][cc-mem])
 - **Sensitive instruction preservation**: As of v2.1.139, the compaction prompt explicitly asks the model to preserve sensitive user instructions carried in the conversation. This reduces the risk of security-relevant directives (e.g., credential handling rules, output filtering instructions) being dropped during mid-session compaction.
 - **`InstructionsLoaded` hook**: Log exactly which instruction files load, when, and why — useful for debugging path-specific rules ([source][cc-mem])
 - **First-time trust**: CC shows approval dialog for external `@` imports on first encounter in a project ([source][cc-mem])
+- **AGENTS.md**: CC reads `CLAUDE.md`, not `AGENTS.md` — import (`@AGENTS.md`) or symlink it so both agents share one instruction source; `/init` folds an existing `AGENTS.md` (and `.cursorrules` / `.windsurfrules`) into the generated CLAUDE.md ([source][cc-mem])
 
 ## Auto-Dream — Background Memory Consolidation (Feature-Flagged)
 
