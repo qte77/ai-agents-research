@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-18
-validated_links: 2026-03-12
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Research (informational)
@@ -29,6 +29,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Fetch.ai uAgents](https://github.com/fetchai/uAgents) — blockchain-integrated autonomous agents with on-chain payments (Agentverse).
 - [DeerFlow (ByteDance)](https://github.com/bytedance/deer-flow) — LangGraph super-agent harness with Markdown skills + sandboxed execution. Full analysis: [deerflow-analysis.md](deerflow-analysis.md).
 - [DeepAgents (LangChain)](https://github.com/langchain-ai/deepagents) — planning + sub-agent harness. Full analysis: [deepagents-analysis.md](deepagents-analysis.md).
+- [Flue (Astro)](https://github.com/withastro/flue) — durable, sandboxed TypeScript agent framework from the Astro team: every session is recorded to a durable stream and safely resumed after a crash; agents/workflows/sandboxes/tools/skills + multi-agent swarms, model-agnostic and MCP-native, built on the Pi agent harness (Apache-2.0, [flueframework.com](https://www.flueframework.com)).
 
 ## 2. LLM Orchestration & Routing
 
@@ -80,6 +81,8 @@ Non-LLM foundation models an agent invokes as a *tool* for one narrow capability
 
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) — principles for production-grade LLM agents.
 - [Agents Towards Production](https://github.com/NirDiamant/agents-towards-production) — end-to-end playbooks for shipping agents.
+- [Learn Harness Engineering (WalkingLabs)](https://github.com/walkinglabs/learn-harness-engineering) — project-based course on *harness engineering* for reliable AI coding agents: structuring Instructions, State, Verification, Scope, and Session Lifecycle around the model instead of fine-tuning it (12 lectures + 6 projects, framed around Claude Code / Codex; MIT). Maps onto [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
+- [Hands-On Modern RL (WalkingLabs)](https://github.com/walkinglabs/hands-on-modern-rl) — practice-first RL curriculum from classic control to LLM post-training (RLHF, DPO, GRPO, RLVR, DeepSeek-R1) and agentic RL (multi-turn credit assignment, tool-use trajectories, Deep Research); Python/PyTorch (CC BY-NC-SA 4.0, non-commercial).
 
 ## Cross-References
 
