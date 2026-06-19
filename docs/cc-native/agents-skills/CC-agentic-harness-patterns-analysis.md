@@ -5,8 +5,8 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-04-06
-validated_links: 2026-04-06
+updated: 2026-06-19
+validated_links: 2026-06-19
 ---
 
 **Status**: Research (informational)
@@ -70,6 +70,15 @@ Separate agents with distinct context windows, system prompts, and restricted to
 
 Multiple subagents spawned in parallel, each in an isolated git worktree. Cached context reused by each fork. Results merge when all complete.
 
+CC's native implementation of this pattern via the `context: fork` skill frontmatter
+field (v2.1.0) is documented in depth — including the context-as-stack model, turn-boundary
+rewinding, and a comparison of the four CC forking mechanisms — in
+[CC-skills-adoption-analysis.md][context-fork-section].
+The skills doc also documents "harness engineering" (coined by Viv Trivedy) as a subset of
+"context engineering" (coined by Dex Horthy) for reference.
+
+[context-fork-section]: CC-skills-adoption-analysis.md#context-fork--mechanics-and-economics
+
 ## Category 3: Tools and Permissions (3 patterns)
 
 ### 9. Progressive Tool Expansion
@@ -92,6 +101,12 @@ Shell commands fire automatically at specific agent lifecycle points, outside th
 
 **Cross-ref**: This repo documents the full hook lifecycle in [CC-hooks-system-analysis.md](../configuration/CC-hooks-system-analysis.md).
 
+[HumanLayer][humanlayer] provides a structured approval-gate SDK that intercepts agent
+tool calls for human review before execution. This is complementary to CC's built-in
+permission prompts and `PermissionRequest` hooks: CC's hooks handle automated allow/deny
+logic, while HumanLayer adds a structured human-in-the-loop layer for cases where
+automated approval rules are insufficient.
+
 ## Author
 
 [Bilgin Ibryam](https://github.com/bibryam) -- Principal PM at Diagrid (Dapr). Apache Software Foundation Member. Previously 9 years at Red Hat, before that BBC News. Author of *Kubernetes Patterns* (O'Reilly, 2nd ed. 2023), *Camel Design Patterns*, and the new [Prompt Patterns](https://www.promptpatterns.dev/) catalog.
@@ -102,6 +117,8 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 
 - [12 Agentic Harness Patterns from Claude Code](https://generativeprogrammer.com/p/12-agentic-harness-patterns-from) (2026-04-05)
 - [Practical Lessons From the Claude Code Leak](https://generativeprogrammer.com/p/practical-lessons-from-the-claude) (2026-04-03)
+- [Skill Issue: Harness Engineering for Coding Agents][skill-issue-post] (Kyle, hlyr.dev, 2026-03-12) — harness engineering framing, HumanLayer mention
+- [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK for agent tool calls
 - [Kubernetes Patterns (O'Reilly)](https://k8spatterns.com/)
 - [Prompt Patterns catalog](https://www.promptpatterns.dev/)
 - [The Generative Programmer Substack](https://generativeprogrammer.com/)
@@ -130,6 +147,8 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 
 [dcrh]: https://github.com/anthropics/defending-code-reference-harness
 [claude-security]: https://claude.com/product/claude-security
+[skill-issue-post]: https://www.hlyr.dev/blog/skill-issue-harness-engineering-for-coding-agents
+[humanlayer]: https://www.humanlayer.dev/
 
 ## Action Items
 

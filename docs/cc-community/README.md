@@ -8,7 +8,7 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 |----------|----------|
 | [CC-community-skills-landscape.md](CC-community-skills-landscape.md) | Skill libraries: gstack, pm-skills, claude-code-best-practice, BHIL, claude-howto, dispatch, superpowers, agent-skills, caveman, last30days, agent-native |
 | [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) | Plugin catalogs: awesome-claude-code, awesome-claude-code-plugins |
-| [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling + cross-tool comparison: RTK, GSD, everything-claude-code, Boucle, OpenHarness, CC Switch, opensrc, awesome-design-md |
+| [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) | Dev tooling + cross-tool comparison: RTK, GSD, everything-claude-code, Boucle, OpenHarness, CC Switch, opensrc, awesome-design-md; token-waste reduction stack |
 | [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) | Persistent memory: ByteRover, Claude-Mem, MemPalace, MemSearch |
 | [CC-code-tooling-landscape.md](CC-code-tooling-landscape.md) | Code analysis: Graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP, Repomix, code2prompt |
 | [CC-usage-tooling-landscape.md](CC-usage-tooling-landscape.md) | Usage observability: CodeBurn, ccusage, Claude-Code-Usage-Monitor |
