@@ -113,7 +113,26 @@ def render(records: list[dict], week_count: int) -> str:
             lines.append(f"- findings: {'; '.join(ex['key_findings'])}")
         lines.append("")
 
-    return "\n".join(lines).rstrip("\n") + "\n"
+    return _collapse_blank_lines(lines)
+
+
+def _collapse_blank_lines(lines: list[str]) -> str:
+    """Return text with at most one consecutive blank line.
+
+    Some rxiv extraction records may omit all optional bullet fields. The
+    renderer still separates headings and records with blank lines, so sparse
+    records can otherwise produce MD012-triggering double blanks.
+    """
+    collapsed: list[str] = []
+    previous_blank = False
+    for line in lines:
+        is_blank = line == ""
+        # Reason: Markdownlint MD012 allows one separator blank, not repeated blanks.
+        if is_blank and previous_blank:
+            continue
+        collapsed.append(line)
+        previous_blank = is_blank
+    return "\n".join(collapsed).rstrip("\n") + "\n"
 
 
 def main() -> None:
