@@ -2,7 +2,7 @@
 title: Office Worker Workflows & Multi-Agent Orchestration
 description: End-to-end office workflow patterns (invoices, documents, email, financial reporting) and multi-agent orchestrators (Vibe Kanban, Conductor, tmux tools) for parallel business task execution.
 created: 2026-03-26
-updated: 2026-03-26
+updated: 2026-06-20
 validated_links: 2026-03-26
 ---
 
@@ -78,7 +78,7 @@ The `/rename invoices`, `/rename offers`, `/rename mails` pattern — dedicated 
 
 | Tool | Type | Agents Supported | Key Capability | URL |
 |------|------|-----------------|----------------|-----|
-| **Vibe Kanban** | Web platform | CC + Cursor, Gemini, Copilot, Aider, Amp, OpenCode, ChatGPT, Windsurf | Plan→Prompt→Review with kanban board, git worktrees, QA browser | [vibekanban.com](https://www.vibekanban.com/) |
+| **Vibe Kanban** | Local (was web) | CC + Cursor, Gemini, Copilot, Aider, Amp, OpenCode, ChatGPT, Windsurf | Plan→Prompt→Review, kanban board, git worktrees, QA browser. **Sunsetting** — Bloop shut down 2026-04-10; Apache-2.0, local-only | [vibekanban.com](https://www.vibekanban.com/) |
 | **CC Agent Teams** | Native | CC only | Shift+Tab lead agent + parallel teammates in tmux panes | [code.claude.com](https://code.claude.com/docs/en/agent-teams) |
 | **Conductor** | macOS app | CC, Codex | Isolated workspaces per agent, review before merge. Used by Linear, Vercel, Stripe | [conductor.build](https://conductor.build) |
 | **claude-tmux** | OSS TUI | CC | Manage multiple CC sessions in tmux with git worktree and PR support | [nielsgroen/claude-tmux](https://github.com/nielsgroen/claude-tmux) |
@@ -86,17 +86,22 @@ The `/rename invoices`, `/rename offers`, `/rename mails` pattern — dedicated 
 | **Tmux-Orchestrator** | OSS | CC | 24/7 autonomous agents with self-scheduled check-ins, multi-project coordination | [Jedward23/Tmux-Orchestrator](https://github.com/Jedward23/Tmux-Orchestrator) |
 | **claude-conductor** | OSS | CC | Multi-agent via `claude -p` in tmux with MCP server integration (filesystem, Slack, Atlassian) | [lancejames221b/claude-conductor](https://github.com/lancejames221b/claude-conductor) |
 
-### Vibe Kanban (30K+ Users, 100K+ PRs)
+*Naming note: several agent-management surfaces adopt cockpit / "command center" / "HUD" framing — see the [Agent Control-Surface Naming landscape](../non-cc/ag-ui-protocol-landscape.md#agent-control-surface-naming-2026) for the verified taxonomy and the live-generative-UI gap.*
 
-Most agent-agnostic option. 9 coding agents supported. Key differentiators:
+### Vibe Kanban (Sunsetting — Apache-2.0, ~27k stars)
+
+**Status update (2026-06-20):** Bloop AI announced its shutdown on **2026-04-10** (in the [v0.1.42 release notes][vk-releases], which link to the project's shutdown post). The repo stays at [`BloopAI/vibe-kanban`][vk-repo] under **Apache-2.0** (not archived); a community edition is under discussion but not yet an established fork. Last release: v0.1.44 (2026-04-24). Hosted remote services were discontinued ~30 days post-announcement → **use as a local self-hosted tool only**. Earlier "30K+ users / 100K+ PRs" figures are unverifiable; GitHub shows ~27 k stars and ~2,400 PRs.
+
+Still the most agent-agnostic option (9 agents). Differentiators (Rust + React/Axum):
 
 - **Plan→Prompt→Review** workflow with built-in issue tracker
-- **Git worktree automation**: Isolated environments per agent/task
-- **Built-in QA browser**: Test outputs within the platform
-- **Code review interface**: Comment on agent-generated changes
+- **Git worktree automation**: isolated environment per agent/task/attempt
+- **"Attempts"**: multiple independent agent runs per task in separate worktrees, with **manual** human selection of the best (functionally Best-of-N, but not automated)
+- **MCP client + server**: connects to external MCP servers and exposes itself as one
+- **Built-in QA browser** + code-review interface
 - Install: `npx vibe-kanban`
 
-**Business workflow fit**: The Plan→Prompt→Review cycle and parallel agent dispatch pattern applies directly to office task parallelism. Currently dev-focused, but the architecture (kanban board → agent dispatch → human review) is the exact pattern needed for dedicated business function sessions.
+**Business workflow fit**: the kanban-board → agent-dispatch → human-review architecture still maps cleanly to office-task parallelism, but factor in the sunsetting status before adopting.
 
 ### Business Task Session Pattern
 
@@ -113,14 +118,14 @@ Each session gets its own Claude Code instance with task-specific MCP servers co
 
 - **Simplest**: CC Agent Teams (native, zero setup)
 - **Most flexible**: claude-session-driver (fan-out pattern, programmatic control)
-- **Most visual**: Vibe Kanban (kanban board, agent-agnostic)
+- **Most visual**: Vibe Kanban (kanban board, agent-agnostic) — note: sunsetting, local-only
 - **Most persistent**: Tmux-Orchestrator (24/7, self-scheduling)
 
 ## Non-CC Outlook (Future)
 
 CC-first for high ROI MVP, but these extend the pattern:
 
-- **Vibe Kanban**: Already agent-agnostic — swap CC for Cursor/Gemini/Copilot per task
+- **Vibe Kanban**: Already agent-agnostic — swap CC for Cursor/Gemini/Copilot per task (now community/local-only after Bloop's 2026-04-10 shutdown)
 - **n8n**: Open-source workflow automation with MCP server support
 - **Zapier / Make**: Low-code automation with Claude API integration
 - **Microsoft Copilot**: Native M365 integration (competing approach for Excel/PowerPoint)
@@ -139,6 +144,8 @@ CC-first for high ROI MVP, but these extend the pattern:
 | Source | Content |
 |---|---|
 | [Vibe Kanban][vk] | Agent-agnostic project management |
+| [BloopAI/vibe-kanban repo][vk-repo] | Apache-2.0 repo (~27k stars, Rust+React, MCP client/server, "Attempts") |
+| [Vibe Kanban releases][vk-releases] | v0.1.42 shutdown announcement (2026-04-10); v0.1.44 last release |
 | [Conductor][conductor] | Multi-agent orchestration platform |
 | [claude-tmux][tmux] | Tmux-based parallel CC sessions |
 | [claude-session-driver][driver] | Session lifecycle management |
@@ -149,6 +156,8 @@ CC-first for high ROI MVP, but these extend the pattern:
 | [Cowork scheduled tasks][cowork-sched] | Recurring task scheduling |
 
 [vk]: https://www.vibekanban.com/
+[vk-repo]: https://github.com/BloopAI/vibe-kanban
+[vk-releases]: https://github.com/BloopAI/vibe-kanban/releases
 [conductor]: https://conductor.build
 [tmux]: https://github.com/nielsgroen/claude-tmux
 [driver]: https://github.com/obra/claude-session-driver

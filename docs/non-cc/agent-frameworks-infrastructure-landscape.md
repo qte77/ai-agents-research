@@ -4,7 +4,7 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-19
+updated: 2026-06-20
 validated_links: 2026-06-19
 ---
 
@@ -29,7 +29,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Fetch.ai uAgents](https://github.com/fetchai/uAgents) — blockchain-integrated autonomous agents with on-chain payments (Agentverse).
 - [DeerFlow (ByteDance)](https://github.com/bytedance/deer-flow) — LangGraph super-agent harness with Markdown skills + sandboxed execution. Full analysis: [deerflow-analysis.md](deerflow-analysis.md).
 - [DeepAgents (LangChain)](https://github.com/langchain-ai/deepagents) — planning + sub-agent harness. Full analysis: [deepagents-analysis.md](deepagents-analysis.md).
-- [Flue (Astro)](https://github.com/withastro/flue) — durable, sandboxed TypeScript agent framework from the Astro team: every session is recorded to a durable stream and safely resumed after a crash; agents/workflows/sandboxes/tools/skills + multi-agent swarms, model-agnostic and MCP-native, built on the Pi agent harness (Apache-2.0, [flueframework.com](https://www.flueframework.com)).
+- [Flue (Astro)](https://github.com/withastro/flue) — durable, sandboxed TypeScript agent framework from the Astro team; **1.0 Beta** (~2026-06-16, Apache-2.0, [flueframework.com](https://www.flueframework.com)). Harness-first model on the **Pi** agent loop (via `@flue/runtime`): **Durable Streams** record every prompt/tool-response/model-choice to an append-only log, so a fresh process resumes from the last checkpoint after a crash or provider timeout. Ships a **just-bash** in-memory sandbox (no Docker/VM) plus a `local()` sandbox; MCP-native and model-agnostic; **channels** ingest events from Slack/Teams/Discord/GitHub/Linear; on Cloudflare Workers each agent becomes a Durable Object (SQLite FS, `runFiber`/`stash`/`onFiberRecovered`). Supports **subagents / task delegation** (swarm-style coordination is not documented in first-party sources); `SuperagenticAI/pyflue` is a community Python port, not first-party.
 
 ## 2. LLM Orchestration & Routing
 
@@ -47,6 +47,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), [BabyAGI](https://github.com/yoheinakajima/babyagi), [SuperAGI](https://github.com/TransformerOptimus/SuperAGI) — the original autonomous-task-loop projects (recursive planning; AutoGPT/BabyAGI/SuperAGI respectively minimal→GUI).
 - [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
 - [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
+- [VibeFlow](https://vibeflow.ai) — YC S25 no-code / visual full-stack **app** builder: natural-language → deployable web apps with an **editable, n8n-style visual backend workflow editor** (business logic is inspectable, not a black box), a Convex real-time DB, GitHub deploy + custom domains, "AI Agent Nodes" for in-flow LLM steps, and ~15+ integrations (Stripe/Slack/Notion/…). Web-only, closed SaaS, freemium (paid tiers not surfaced as of 2026-06-20). Name collisions: `pe-menezes/vibeflow` (a CC/Cursor spec-driven tool) and `vibeflowing-inc/vibe_figma` are **not** this product.
 
 ## 4. Agent Memory Infrastructure
 

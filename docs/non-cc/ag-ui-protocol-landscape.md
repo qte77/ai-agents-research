@@ -2,7 +2,7 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the "Protocol Triangle" frontend layer — AG-UI (Agent-User Interaction), A2UI (declarative generative UI spec), OpenGenerativeUI (reference framework). Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-04-24
+updated: 2026-06-20
 validated_links: 2026-04-24
 ---
 
@@ -107,6 +107,22 @@ Supported clients per the repo: Claude Desktop (stdio), Claude Code / HTTP clien
 | End-to-end demo with generative HTML components | **OpenGenerativeUI** (reference) |
 | Claude Code observability over agent-user interactions | Use AG-UI-compatible backend + OTel (see [CC-agent-observability-methods-analysis.md § Claude Code (First-Party OTel Integration)](../cc-community/CC-agent-observability-methods-analysis.md#claude-code-first-party-otel-integration)) |
 
+## Agent Control-Surface Naming (2026)
+
+A wave of agent-management products has adopted **cockpit / "command center" / "flight deck" / "HUD"** framing. This is adjacent to — but distinct from — the generative-UI layer above: these are surfaces for *operating* agents, not protocols for agents to *render* UI. First-party-verified examples (June 2026):
+
+| Product | Self-description (first-party) | What it actually is |
+|---|---|---|
+| Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](windsurf-analysis.md#agent-command-center) |
+| [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer |
+| [flightdeckhq/flightdeck][flightdeck] | "observability and control plane for production and coding agents" | Observability dashboard |
+| [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" | Task-loop TUI — see [CC-ralph-enhancement-research.md](../cc-native/agents-skills/CC-ralph-enhancement-research.md) |
+| [Vibe Kanban][vibe-kanban] | kanban board (sunsetting) | Orchestrator board — see [CC-office-worker-workflows.md](../cc-community/CC-office-worker-workflows.md) |
+
+**The positioning gap.** All of the above are **orchestration-board or observability** surfaces. None is a *live generative-UI* surface — one where the agent streams and renders UI components in real time. That capability is precisely what the AG-UI + A2UI + OpenGenerativeUI stack on this page provides, and **not** what the "command center" products do. So the cockpit/HUD naming space is crowding with board/observability tools, while the live-generative-UI cockpit position remains largely unoccupied under those labels.
+
+**Myth-busting (verified 2026-06-20).** Two widely-repeated "HUD" attributions are **third-party coinages, not first-party framings**: Nous Research's [Hermes][hermes-nous] uses no HUD terminology (it self-describes as a self-improving agent; `hermes-hudui` is an unofficial community monitor), and [Ralph][ralph-tui] self-describes as an "AI Agent Loop Orchestrator" ("heads-up display" appears only as a third-party reviewer's simile).
+
 ## Cross-References
 
 - [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — OTel observability patterns (AG-UI events can be modeled as OTel spans)
@@ -125,6 +141,11 @@ Supported clients per the repo: Claude Desktop (stdio), Claude Code / HTTP clien
 | [Microsoft Learn — AG-UI Integration][ms-learn-agui] | Microsoft Agent Framework integration |
 | [CopilotKit/OpenGenerativeUI][ogui-repo] | Reference framework |
 | [Salesforce Agentforce 360][sf-agentforce] | Salesforce protocol strategy (MCP, not AG-UI) |
+| [Devin Desktop FAQ][devin-faq] | "Agent Command Center" framing (Kanban for local + cloud agents) |
+| [Omnara (YC launch)][omnara] | "command center for AI agents: terminal, web, mobile" |
+| [flightdeckhq/flightdeck][flightdeck] | "observability and control plane" for agents |
+| [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" — no first-party HUD framing |
+| [Nous Research — Hermes Agent][hermes-nous] | Self-improving agent — no HUD / "heads-up display" framing |
 
 [ag-ui-repo]: https://github.com/ag-ui-protocol/ag-ui
 [ag-ui-docs]: https://docs.ag-ui.com/
@@ -138,3 +159,9 @@ Supported clients per the repo: Claude Desktop (stdio), Claude Code / HTTP clien
 [sf-agentforce]: https://www.salesforce.com/agentforce/what-is-new/
 [sf-ben]: https://www.salesforceben.com/salesforce-opens-agentforce-360-to-isvs-so-partners-can-build-and-distribute-ai-agents/
 [sf-aws]: https://www.salesforce.com/news/stories/agentforce-360-for-aws-announcement/
+[devin-faq]: https://docs.devin.ai/desktop/devin-desktop-faq
+[omnara]: https://www.ycombinator.com/launches/OCT-omnara-the-first-command-center-for-ai-agents-terminal-web-and-mobile
+[flightdeck]: https://github.com/flightdeckhq/flightdeck
+[ralph-tui]: https://ralph-tui.com/
+[hermes-nous]: https://hermes-agent.nousresearch.com/
+[vibe-kanban]: https://www.vibekanban.com/
