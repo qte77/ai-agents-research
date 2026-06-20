@@ -78,12 +78,54 @@ Non-LLM foundation models an agent invokes as a *tool* for one narrow capability
 
 - [TimesFM (Google Research)](https://github.com/google-research/timesfm) — time-series **forecasting** foundation model (v2.5: ~200M params, up to 16k context, point + quantile forecasts; PyTorch + JAX/Flax, Apache-2.0). Not an agent LLM — an agent calls it for numeric forecasting, exposed for programmatic/agent use via Vertex AI Model Garden and BigQuery ML.
 
+## 7. RAG & Retrieval Infrastructure
+
+Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; this section is how agents *retrieve* over corpora. Tool facts verified first-party 2026-06-20; star counts are GitHub-rendered (approximate). For incremental code/RAG ETL see [cocoindex-analysis.md](cocoindex-analysis.md); for a filesystem-first retrieval contrast see [openviking-analysis.md](openviking-analysis.md).
+
+**Pipeline taxonomy**: Naive RAG (index→retrieve→read, single-hop) → Advanced RAG (pre/post-retrieval transforms) → Modular RAG (interoperable, multi-hop) → **Agentic RAG** (the agent plans retrieval, reflects, and calls tools). Survey: [Singh et al. 2025, arXiv:2501.09136](https://arxiv.org/abs/2501.09136).
+
+### GraphRAG family
+
+- [Microsoft GraphRAG](https://github.com/microsoft/graphrag) — entity/relationship extraction → Leiden community detection → Global / Local / DRIFT search over community summaries (MIT, v3.1.0, ~34k★). Indexing is compute-heavy; built for reasoning over large private corpora. Paper: [Edge et al. 2024, arXiv:2404.16130](https://arxiv.org/abs/2404.16130).
+- [LightRAG (HKUDS)](https://github.com/HKUDS/LightRAG) — dual-layer KG + vector with five query modes (local/global/hybrid/naive/mix); positioned as an efficient GraphRAG alternative (MIT, v1.5.3, ~37k★).
+- [RAPTOR](https://arxiv.org/abs/2401.18059) — recursive embed→cluster→summarize tree; retrieves across abstraction levels (MIT; ICLR 2024; paper reports +20% absolute on QuALITY with GPT-4).
+- [nano-graphrag](https://github.com/gusye1234/nano-graphrag) — ~1,100-LOC hackable GraphRAG; swappable LLM/embedding/vector backends (Faiss/Neo4j/Ollama), async (MIT, ~3.9k★).
+
+### Hybrid search & query transforms
+
+- **BM25 + dense** — sparse keyword precision + dense semantic recall, fused via Reciprocal Rank Fusion or weighted combination.
+- **Reciprocal Rank Fusion (RRF)** — rank-position-only fusion, default k=60 (Cormack et al., SIGIR 2009).
+- [ColBERT (Stanford)](https://github.com/stanford-futuredata/ColBERT) — token-level late interaction (MaxSim); v2 adds residual compression; usable as retriever or reranker (MIT; [arXiv:2112.01488](https://arxiv.org/abs/2112.01488)).
+- **HyDE** — the LLM drafts a hypothetical answer whose embedding retrieves real docs, bridging the query↔document vocabulary gap ([Gao et al. 2022, arXiv:2212.10496](https://arxiv.org/abs/2212.10496)); plus multi-query expansion and step-back prompting.
+
+### Rerankers
+
+- [Cohere Rerank](https://cohere.com/rerank) — cross-encoder rerank API (rerank-v4.0 pro/fast, 100+ languages); commercial.
+- **Cross-encoders** — joint query+document forward pass (via sentence-transformers); higher accuracy than bi-encoders at O(n) per-candidate cost; run as a second stage after ANN retrieval. ColBERT (above) is the late-interaction middle ground.
+
+### Vector databases
+
+- [Qdrant](https://github.com/qdrant/qdrant) — dense + sparse + multi-vector (ColBERT), built-in RRF/DBSF hybrid fusion, quantization (Apache-2.0, Rust).
+- [Milvus](https://github.com/milvus-io/milvus) — cloud-native distributed; HNSW/IVF/DiskANN; billion-vector scale (Apache-2.0).
+- [Weaviate](https://github.com/weaviate/weaviate) — vector + keyword + RAG in a single query; integrated auto-vectorization (BSD-3-Clause).
+- [Chroma](https://github.com/chroma-core/chroma) — minimal API, in-memory → production (Apache-2.0).
+- [pgvector](https://github.com/pgvector/pgvector) — vectors inside Postgres: ACID, JOINs, no separate system (PostgreSQL License).
+- [Pinecone](https://www.pinecone.io/) — fully managed serverless ANN; no self-hosted option (proprietary).
+- [LanceDB](https://github.com/lancedb/lancedb) — embedded, multimodal, Lance columnar format, zero-copy + versioning (Apache-2.0).
+
+### RAG evaluation
+
+- [RAGAs](https://github.com/explodinggradients/ragas) — reference-free metrics (faithfulness, answer relevancy, context precision/recall) via LLM-as-judge (Apache-2.0; [arXiv:2309.15217](https://arxiv.org/abs/2309.15217)).
+- [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with agentic evaluators (MIT).
+- [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
+
 ## Production Patterns & Reference Frameworks
 
 - [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [CC-mas-design-principles.md](../cc-community/CC-mas-design-principles.md).
 - [Agents Towards Production](https://github.com/NirDiamant/agents-towards-production) — end-to-end playbooks for shipping agents.
 - [Learn Harness Engineering (WalkingLabs)](https://github.com/walkinglabs/learn-harness-engineering) — project-based course on *harness engineering* for reliable AI coding agents: structuring Instructions, State, Verification, Scope, and Session Lifecycle around the model instead of fine-tuning it (12 lectures + 6 projects, framed around Claude Code / Codex; MIT). Maps onto [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
 - [Hands-On Modern RL (WalkingLabs)](https://github.com/walkinglabs/hands-on-modern-rl) — practice-first RL curriculum from classic control to LLM post-training (RLHF, DPO, GRPO, RLVR, DeepSeek-R1) and agentic RL (multi-turn credit assignment, tool-use trajectories, Deep Research); Python/PyTorch (CC BY-NC-SA 4.0, non-commercial).
+- [Compiling Agentic Workflows into LLM Weights](https://arxiv.org/abs/2605.22502) — Dennis et al. (2026-05-21) argue for *compiling* an agent's orchestration procedure into the weights of a small fine-tuned model instead of an external framework, reporting near-frontier quality at ~2 orders-of-magnitude lower cost — with no context-window or orchestration overhead — across travel-booking, support, and insurance-claims workflows (14–55 nodes). A weight-level counterpoint to the graph/framework orchestration in §1 (paper claims; methodology not independently verified).
 
 ## Cross-References
 

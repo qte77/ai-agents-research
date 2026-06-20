@@ -3,7 +3,7 @@ title: CocoIndex — Incremental Indexing Engine for AI/RAG Pipelines
 source: https://github.com/cocoindex-io/cocoindex
 purpose: Evaluate CocoIndex as an incremental ETL/indexing layer for AI agent context ingestion and RAG pipelines.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-06-20
 validated_links: 2026-06-16
 ---
 
@@ -20,12 +20,12 @@ than reindexing everything on every run. The project self-describes as targeting
 A companion project, [cocoindex-code][cocoindex-code-gh], is a lightweight, embedded
 AST-based semantic code-search CLI built on the same engine. It targets the code-search
 use case specifically, integrating with coding agents (Claude Code, Codex, Cursor) via
-MCP servers or Skills.
+MCP servers or Skills — cataloged in [CC-code-tooling-landscape.md](../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io).
 
 **Core repo**: Apache 2.0 | Rust (50%) + Python (50%) | 10.3k stars | v1.0.10 (2026-06-14)
-**cocoindex-code**: Apache 2.0 | Python (98%) | 1.9k stars | v0.2.35 (2026-06-09)
+**cocoindex-code**: Apache 2.0 | Python (98%) | ~2.2k stars | v0.2.36 (2026-06-19)
 
-(Star counts and versions as fetched 2026-06-16.)
+(Core counts/version as fetched 2026-06-16; cocoindex-code refreshed 2026-06-20.)
 
 ## How It Works
 

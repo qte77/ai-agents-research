@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: new **§7 RAG & Retrieval Infrastructure** (pipeline taxonomy; GraphRAG family — Microsoft GraphRAG / LightRAG / RAPTOR / nano-graphrag; hybrid search, RRF, ColBERT, HyDE; rerankers; vector DBs; RAG eval — RAGAs / TruLens / DeepEval) + **"Compiling Agentic Workflows into LLM Weights"** ([arXiv:2605.22502](https://arxiv.org/abs/2605.22502)) under Production Patterns. First-party-verified; star/benchmark figures hedged.
+- `docs/cc-community/CC-code-tooling-landscape.md`: **cocoindex-code** (embedded AST + embeddings semantic code-search CLI + `ccc mcp` server, Apache-2.0) added as the embedded-semantic-search entry; `docs/non-cc/cocoindex-analysis.md` cocoindex-code stats refreshed (→~2.2k★, v0.2.36) + bidirectional cross-ref.
 - `docs/non-cc/databricks-genie-analysis.md`: Databricks **Genie One** (agentic data coworker, GA 2026-06-16) — **Genie Ontology** authority-ranked, MCP-exposed semantic graph (Public Preview) + **Genie Agents**; first-party Databricks blog + press release; benchmark/pricing claims hedged; OKF-vs-Genie-Ontology cross-ref.
 - `docs/non-cc/opennote-analysis.md`: **Opennote** (AI tutor in notes; YC S25, Llama-backed) — Feynman video lessons, Turing coding sidekick, MIT Python/TS SDKs via `opennote-dev`; pricing/user-count secondary-sourced.
 - `docs/non-cc/open-knowledge-format-analysis.md`: extended — v0.1 spec precision (`okf_version`, three conformance MUST rules, strict versioning, consumer-tolerance rules), two-pass enrichment-agent detail, star count ~2.2k → ~4.5k, and a new **OKF vs Databricks Genie Ontology** comparison.
