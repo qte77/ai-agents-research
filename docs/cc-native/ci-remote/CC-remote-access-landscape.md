@@ -45,6 +45,8 @@ stay on and connected.
 
 ### Omnara
 
+*Markets itself as a "command center for AI agents" — see the [agent control-surface naming landscape](../../non-cc/ag-ui-protocol-landscape.md#agent-control-surface-naming-2026) for how that framing compares across the category.*
+
 - **YC S25 startup** (San Francisco, 3-person team) ([source][omnara-yc])
 - **Pivoted**: Original open-source CLI wrapper (`omnara-ai/omnara`,
   Apache-2.0) is **archived and unmaintained** as of late 2025. New

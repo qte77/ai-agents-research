@@ -4,13 +4,13 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-19
+updated: 2026-06-20
 validated_links: 2026-06-19
 ---
 
 **Status**: Research (informational)
 
-Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **one-shot export** (Repomix, code2prompt).
+Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
 
 ## Graphify (safishamsi)
 
@@ -127,6 +127,26 @@ Cross-ref: Graphify and Code-Review-Graph above — same code→graph category; 
 
 ---
 
+## cocoindex-code (cocoindex-io)
+
+**Repo**: [cocoindex-io/cocoindex-code][cocoindex-code] | **Stars**: 2.2K | **License**: Apache-2.0 | **Version**: v0.2.36 (2026-06-19)
+
+A lightweight embedded **semantic code-search** CLI (`ccc`) built on the Rust [CocoIndex](../non-cc/cocoindex-analysis.md) engine — natural-language queries over a codebase with a self-reported ~70% token saving vs file reading. tree-sitter AST chunking across 28+ languages, embeddings via local SentenceTransformers or 100+ providers (LiteLLM), incremental re-indexing of changed files only, and LMDB embedded storage (no external service).
+
+### CC Integration
+
+| Surface | Mechanism |
+|---------|-----------|
+| **MCP server** | `ccc mcp` — exposes code search to Claude Code, Codex, OpenCode |
+
+### Adoption Considerations
+
+**Strengths**: embeddings-based *semantic* search (vs the typed-graph approach of codebase-memory-mcp / Code-Review-Graph); embedded + incremental; a thin agent-integration layer over CocoIndex's Rust core. **Risks**: ~70% token-saving is self-reported (no independent benchmark); early stage (v0.x); embedding quality/cost depends on the chosen provider.
+
+Cross-ref: [cocoindex-analysis.md](../non-cc/cocoindex-analysis.md) — the parent CocoIndex ETL/indexing engine; codebase-memory-mcp above — embedded typed-graph alternative
+
+---
+
 ## Serena (oraios)
 
 **Repo**: [oraios/serena][serena] | **Stars**: 25.2K | **License**: MIT | **Version**: v1.5.3 (2026-05-26)
@@ -215,6 +235,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [code-review-graph]: https://github.com/tirth8205/code-review-graph
 [codebase-memory-mcp]: https://github.com/DeusData/codebase-memory-mcp
 [codebase-memory-mcp-docs]: https://deusdata.github.io/codebase-memory-mcp/
+[cocoindex-code]: https://github.com/cocoindex-io/cocoindex-code
 [serena]: https://github.com/oraios/serena
 [ast-grep-mcp]: https://github.com/ast-grep/ast-grep-mcp
 [ast-grep]: https://github.com/ast-grep/ast-grep

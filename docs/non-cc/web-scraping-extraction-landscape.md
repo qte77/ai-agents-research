@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-06-16
+updated: 2026-06-20
 validated_links: 2026-04-23
 ---
 
@@ -59,8 +59,11 @@ See [CC Web Scraping Plugins Analysis](../cc-native/plugins-ecosystem/CC-web-scr
 | [Camoufox](https://camoufox.com/) | MPL-2.0 | Engine-level fingerprint | Modified Firefox build; C++-level patching; experimental |
 | [Selenium](https://www.selenium.dev/) | Apache-2.0 | None built-in | Cross-browser W3C WebDriver; IDE + Grid |
 | [Puppeteer](https://pptr.dev/) | Apache-2.0 | None built-in | Google's Chrome/Firefox DevTools control (Node) |
+| [Magnitude](https://magnitude.run) | Apache-2.0 | n/a (AI test/automation) | Vision-first: LLM drives the browser via screenshots + pixel coordinates (no selectors); `act()` / `extract()` (Zod schemas); dedicated test runner; Playwright as low-level escape hatch |
 
-**When to use what**: Playwright for JS rendering without anti-bot. Patchright or Nodriver when detection is an issue. Botasaurus for the hardest targets.
+**When to use what**: Playwright for JS rendering without anti-bot. Patchright or Nodriver when detection is an issue. Botasaurus for the hardest targets. Magnitude when selector maintenance (dynamic UIs, canvas, drag-and-drop) is the pain point and you can afford per-step vision-model cost.
+
+**Magnitude — vision-first, two products from `magnitudedev`.** [Magnitude](https://magnitude.run) (`@magnitudedev/browser-agent` + `magnitude-test`, ~4.1 k stars, TypeScript) drives the browser through a visually-grounded LLM (Claude Sonnet 4 recommended; most non-vision OpenAI/Gemini/Llama models unsupported) and works as an MCP tool in Cline/Cursor/Windsurf — resilient to UI churn that breaks selector-based tools. Do **not** confuse it with [magnitude.dev](https://magnitude.dev), the same org's separate **CLI coding agent** (open-model routing — GLM 5.2 + DeepSeek V4 Flash + Kimi K2.7 Code; pass-through pricing + $5 free credits; license unconfirmed). Selector-based contrast: [CC web-scraping plugins analysis](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) (Playwright MCP).
 
 ## Scraping Frameworks
 
