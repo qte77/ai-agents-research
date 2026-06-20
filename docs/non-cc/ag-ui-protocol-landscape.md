@@ -114,12 +114,12 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 | Product | Self-description (first-party) | What it actually is |
 |---|---|---|
 | Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](windsurf-analysis.md#agent-command-center) |
-| [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer |
+| [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer — full analysis: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md#omnara) |
 | [flightdeckhq/flightdeck][flightdeck] | "observability and control plane for production and coding agents" | Observability dashboard |
 | [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" | Task-loop TUI — see [CC-ralph-enhancement-research.md](../cc-native/agents-skills/CC-ralph-enhancement-research.md) |
 | [Vibe Kanban][vibe-kanban] | kanban board (sunsetting) | Orchestrator board — see [CC-office-worker-workflows.md](../cc-community/CC-office-worker-workflows.md) |
 
-**The positioning gap.** All of the above are **orchestration-board or observability** surfaces. None is a *live generative-UI* surface — one where the agent streams and renders UI components in real time. That capability is precisely what the AG-UI + A2UI + OpenGenerativeUI stack on this page provides, and **not** what the "command center" products do. So the cockpit/HUD naming space is crowding with board/observability tools, while the live-generative-UI cockpit position remains largely unoccupied under those labels.
+**The positioning gap.** All of the above are **orchestration-board or observability** surfaces. None is a *live generative-UI* surface — one where the agent streams and renders UI components in real time. That capability is precisely what the AG-UI + A2UI + OpenGenerativeUI stack on this page provides, and **not** what the "command center" products do. So the cockpit/HUD naming space is crowding with board/observability tools, while the live-generative-UI cockpit position remains largely unoccupied under those labels. Within this corpus, that niche maps to the forward-looking **RAPID cockpit** idea (a persistent live UI beyond CLI/TUI) tracked in the [multi-agent onboarding outlook](../sdlc-lcm/multi-agent-onboarding-outlook.md) and [OSS ALM landscape](../sdlc-lcm/oss-alm-landscape.md).
 
 **Myth-busting (verified 2026-06-20).** Two widely-repeated "HUD" attributions are **third-party coinages, not first-party framings**: Nous Research's [Hermes][hermes-nous] uses no HUD terminology (it self-describes as a self-improving agent; `hermes-hudui` is an unofficial community monitor), and [Ralph][ralph-tui] self-describes as an "AI Agent Loop Orchestrator" ("heads-up display" appears only as a third-party reviewer's simile).
 
