@@ -85,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `docs/non-cc/ag-ui-protocol-landscape.md` + `docs/sdlc-lcm/{multi-agent-onboarding-outlook,oss-alm-landscape}.md`: **RAPID cockpit** references corrected — RAPID (and predecessor CABIO) are **legacy** (RAPID-spec-forge archived 2026-04-26, superseded by qte77/qte77). Removed the AG-UI doc's forward-looking RAPID cross-ref; flagged the two sdlc-lcm cockpit mentions as legacy. (polyforge-/office-forge-orchestrator verified NOT to be RAPID successors.)
 - `docs/cc-community/CC-office-worker-workflows.md`: **Vibe Kanban** reframed to *sunsetting* — Bloop AI shut down 2026-04-10 (repo stays Apache-2.0 at `BloopAI/vibe-kanban`, local-only; community edition under discussion); corrected stale "30K+ users / 100K+ PRs" to ~27k stars / ~2,400 PRs, and "Best-of-N" to "Attempts" (manual selection).
 - `docs/cc-native/configuration/README.md`, `docs/cc-native/README.md`, `docs/cc-community/README.md`, `docs/learnings/README.md`: indexed orphaned docs surfaced by the full-repo doc-hierarchy audit — 6 configuration docs (subdir count 9 → 14), CC-vlm-screen-sharing-landscape, and 4 auto-aggregated AGENT_LEARNINGS mirrors. (PR #269)
 - `docs/cc-community/CC-code-tooling-landscape.md`: refreshed codebase-memory-mcp entry — docs-site link, stars 3.2K → 6.8K, v0.7.0 → v0.8.1; frontmatter dates bumped. (PRs #262, #265)

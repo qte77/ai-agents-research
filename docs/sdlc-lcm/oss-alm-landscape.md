@@ -44,6 +44,6 @@ not agent-driven pipelines where state is inferred from repo artifacts.
 
 - Multiple human users need lifecycle visibility
 - Audit/compliance requirements demand formal traceability
-- RAPID cockpit needs a persistent UI beyond CLI/TUI
+- RAPID cockpit needs a persistent UI beyond CLI/TUI — *note: RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))*
 
 **If triggered:** Tuleap CE via REST API integration with sdlc-lcm-manager.

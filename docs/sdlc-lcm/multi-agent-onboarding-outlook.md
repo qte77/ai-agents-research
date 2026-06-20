@@ -94,7 +94,7 @@ agents. No architectural changes needed to support Kiro-like workflows.
 | **MCP** | Anthropic / AAIF | Tool access standardization | CC plugins, Gemini CLI tools |
 | **A2A** | Google | Agent-to-agent collaboration | Multi-agent orchestration (future) |
 | **ACP** | IBM | Enterprise governance | Compliance/audit (Phase 3) |
-| **AG-UI** | Community | Human-in-the-loop UX | RAPID cockpit (future) |
+| **AG-UI** | Community | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
 
 ## Summary
 
