@@ -10,6 +10,8 @@ authority: This document is the specification. Implementation lives in qte77/sdl
 Lifecycle phases for products and projects managed through RAPID. Applies at the
 product/project level (cross-repo), not per-feature.
 
+> **Legacy note:** RAPID is legacy — the `RAPID-spec-forge` repo was archived 2026-04-26 and superseded by [qte77/qte77](https://github.com/qte77/qte77). RAPID references below are retained for historical SDLC/LCM-pattern context.
+
 ## Phase Definitions
 
 ### 1. Incubation

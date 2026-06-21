@@ -16,5 +16,12 @@ Precise citation is local discipline for our subagent fan-outs.
 - **Cite precisely.** In prompts — and especially in subagent briefs — name
   `<file>:<lines>`, never "the sandboxing doc." Scoped briefs are what keep fan-out
   subagents on task.
+- **Verify subagent findings before acting.** Treat a subagent's "no coverage" /
+  "file doesn't exist" / structural report as *advisory*. Before creating a doc,
+  deleting, or concluding absence, confirm with your own `git grep` + `Read` —
+  sweeps in this repo have repeatedly returned false negatives (missed
+  already-existing docs and whole sections). Calibrate by grepping a string you
+  know exists. See [AGENT_LEARNINGS.md](../../AGENT_LEARNINGS.md) ("Subagent
+  reference sweeps can return false negatives").
 
 [codeburn]: https://github.com/getagentseal/codeburn#optimize
