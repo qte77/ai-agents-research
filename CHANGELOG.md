@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `docs/sdlc-lcm/{README,agentic-sdlc-patterns,lcm-spec,sdlc-spec,multi-agent-onboarding-outlook}.md`: per-doc **legacy notes** added — RAPID is legacy (`RAPID-spec-forge` archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77)). Flags the five docs that still presented RAPID as an active methodology, completing the partial #275 cockpit-only correction.
+- `.claude/rules/read-discipline.md` + `AGENT_LEARNINGS.md`: promoted the recurring **"verify subagent findings before acting"** learning to an always-loaded rule (subagent sweeps returned false negatives 3×+ this cycle — incl. "create-new" calls on already-existing docs).
+
 ### Added
 
 - `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: new **§7 RAG & Retrieval Infrastructure** (pipeline taxonomy; GraphRAG family — Microsoft GraphRAG / LightRAG / RAPTOR / nano-graphrag; hybrid search, RRF, ColBERT, HyDE; rerankers; vector DBs; RAG eval — RAGAs / TruLens / DeepEval) + **"Compiling Agentic Workflows into LLM Weights"** ([arXiv:2605.22502](https://arxiv.org/abs/2605.22502)) under Production Patterns. First-party-verified; star/benchmark figures hedged.

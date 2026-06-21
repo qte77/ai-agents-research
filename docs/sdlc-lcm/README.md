@@ -8,6 +8,8 @@ created: 2026-03-24
 
 Lifecycle management specs for the qte77 coding agent ecosystem.
 
+> **Legacy note:** RAPID is legacy — the `RAPID-spec-forge` repo was archived 2026-04-26 and superseded by [qte77/qte77](https://github.com/qte77/qte77). RAPID references below are retained for historical SDLC/LCM-pattern context.
+
 ## Two Tracks
 
 | Track | Scope | Applies To | Key Question |

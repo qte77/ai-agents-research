@@ -11,6 +11,8 @@ sources:
 
 ## Multi-Agent Onboarding Outlook
 
+> **Legacy note:** RAPID is legacy — the `RAPID-spec-forge` repo was archived 2026-04-26 and superseded by [qte77/qte77](https://github.com/qte77/qte77). RAPID references below are retained for historical SDLC/LCM-pattern context.
+
 How the SDLC/LCM framework supports onboarding any coding agent — not just
 Claude Code — onto projects in the qte77 ecosystem.
 

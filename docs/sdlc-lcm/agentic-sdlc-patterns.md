@@ -16,6 +16,8 @@ sources:
 Lifecycle patterns designed for AI agent-driven development, not traditional
 human-driven SDLC.
 
+> **Legacy note:** RAPID is legacy — the `RAPID-spec-forge` repo was archived 2026-04-26 and superseded by [qte77/qte77](https://github.com/qte77/qte77). RAPID references below are retained for historical SDLC/LCM-pattern context.
+
 ## 1. ADLC (Agentic Development Lifecycle)
 
 **Source:** EPAM
