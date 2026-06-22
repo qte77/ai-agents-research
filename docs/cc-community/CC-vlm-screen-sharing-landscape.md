@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code]
 created: 2026-04-11
-updated: 2026-06-10
-validated_links: 2026-06-10
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Assess
@@ -132,6 +132,7 @@ Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow co
 ## Observed Implementations
 
 - [qte77/cc-voice-plugin-prototype][cc-voice] — plugin integration demonstrating a Tier 2 pipeline (local VLM → text) for a voice-driven CC workflow. See the repo's own docs and ADRs for the specific model / runtime / resize choices adopted there.
+- [StarTrail-org/PixelRAG][pixelrag] — **pixel-native RAG**: renders pages/PDFs to image tiles and retrieves by visual similarity with a fine-tuned [Qwen3-VL][qwen3-vl]-Embedding model, skipping text parsing entirely. Ships a Claude Code **`pixelbrowse`** plugin (`claude plugin install pixelbrowse@pixelrag-plugins`) — a skill calling `pixelshot` (Playwright/CDP) via a `/screenshot <url>` command; no MCP server or backend. A Tier 1 (CC-native plugin) visual-retrieval pattern, distinct from the Tier 2 local-VLM→text prototype above. ~3.3k★.
 
 ## Sources
 
@@ -143,6 +144,7 @@ Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow co
 | [python-mss][python-mss], [Peekaboo][peekaboo] | Screen capture primitives |
 | [anthropics/claude-code#22903][cc-22903], [anthropics/claude-code#38698][cc-38698] | First-party feature-request status |
 | [claude-code-router][cc-router] | Community routing layer |
+| [StarTrail-org/PixelRAG][pixelrag] | Pixel-native RAG + Claude Code `pixelbrowse` plugin (Qwen3-VL-Embedding) |
 
 [anthropic-vision]: https://platform.claude.com/docs/en/build-with-claude/vision
 [qwen25-vl]: https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct
@@ -165,3 +167,4 @@ Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow co
 [cc-router]: https://github.com/musistudio/claude-code-router
 [cc-router-config]: ../cc-native/configuration/CC-model-provider-configuration.md
 [cc-voice]: https://github.com/qte77/cc-voice-plugin-prototype
+[pixelrag]: https://github.com/StarTrail-org/PixelRAG

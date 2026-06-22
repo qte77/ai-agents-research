@@ -4,8 +4,8 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-14
-validated_links: 2026-06-14
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational)
@@ -32,6 +32,8 @@ Agents that conduct multi-step research and generate research outputs.
 - [Gemini Deep Research](https://blog.google/technology/developers/deep-research-agent-gemini-api/) — Gemini 3 Pro long-horizon agent via the Interactions API (`deep-research-pro-preview-12-2025`); 46.4% HLE, 66.1% DeepSearchQA, background execution + remote MCP.
 - [AutoScientists (mims-harvard)](https://github.com/mims-harvard/AutoScientists) — decentralized team of AI agents for long-running computational-science experiments, self-organizing around promising hypotheses; **packaged as Claude Code subagents** coordinating via a local ClawInstitute server (no central planner). BioML-Bench 74.4% mean leaderboard percentile (629★, Python) — the most direct CC-harness tie-in here.
 - [local-deep-research (LearningCircuit)](https://github.com/LearningCircuit/local-deep-research) — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's `/deep-research`.
+- [local-deep-researcher (langchain-ai)](https://github.com/langchain-ai/local-deep-researcher) — **distinct from the above** despite the near-identical name: LangChain's minimal LangGraph *reference* implementation of the search→summarize→reflect loop (Ollama/LMStudio, local-only by default) — the canonical starting pattern, not a full assistant. MIT, ~9.2k★.
+- [dataroom (hanxiao / Jina)](https://github.com/hanxiao/dataroom) — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](../non-cc/pi-analysis.md)); ~168★, new.
 
 **Domain-specific science agents**: [Coscientist (CMU, Nature)](https://www.nature.com/articles/s41586-023-06792-0) — GPT-4 chemistry agent driving cloud-lab experiments; [ChemCrow](https://arxiv.org/abs/2304.05376) — GPT-4 + 18 chemistry tools; [BioPlanner](https://arxiv.org/abs/2310.10632) — biology protocol generation (BIOPROT, 9K+ protocols); [BioChatter](https://biochatter.org/) — privacy-preserving biomedical conversational-AI framework.
 
@@ -74,6 +76,8 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 | Agent | Overlap with `/deep-research` | Beyond / gap vs the CC workflow | CC-based? |
 |---|---|---|---|
 | **local-deep-research** | Same fan-out → search → cross-check → cited-report loop | Local/offline LLMs, 20+ specialized sources (PubMed/arXiv/SearXNG), persistence + encryption | No (LangGraph; runs Claude as a model option) |
+| **local-deep-researcher** | Same iterative search→summarize→reflect loop | Minimal LangGraph *reference* design; local-only by default; not a full assistant | No (LangGraph reference impl) |
+| **dataroom** | Gathers + cross-checks sources into a structured package | Two-stage local-gather / frontier-synthesize split; Jina CLI tools; no CC tie-in | No (Pi + local LLM) |
 | **AutoScientists** | Multi-agent fan-out + peer-critique ≈ cross-check/vote | Runs *experiments* (code/compute), not just literature; computational-science domain | **Yes** — built on CC subagents |
 | **GPT-Researcher** | Multi-agent web+local research → cited long-form report | Self-hosted LangGraph with explicit planner/executor roles | No |
 | **OpenAI Deep Research** | Agentic multi-step browse → cited analyst report | Hosted `o3`-tuned browsing model, RL-trained; API-gated, not local | No |
