@@ -4,8 +4,8 @@ source: https://github.com/rowboatlabs/rowboat
 purpose: Analysis of Rowboat as a local-first AI coworker building long-lived knowledge graphs from communications.
 platform_scope: [desktop, ollama, mcp-generic]
 created: 2026-04-09
-updated: 2026-04-09
-validated_links: 2026-04-09
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Open-source (Apache-2.0), active development by [Rowboat Labs][rowboat-site]
@@ -54,6 +54,10 @@ Communication Sources (Gmail, Calendar, Meetings)
 Works with local models (Ollama, LM Studio) or hosted APIs. Model-swappable
 without data migration — knowledge graph is model-independent Markdown.
 
+Despite the GitHub topic tags `claude-code` and `claude-cowork`, there is no
+Claude-specific integration surface — model access is via MCP and bring-your-own
+API key, fully model-agnostic. The tags are discovery/categorization only.
+
 ## Adoption Decision
 
 | Dimension | Assessment |
@@ -62,11 +66,11 @@ without data migration — knowledge graph is model-independent Markdown.
 | **Storage** | Obsidian-compatible Markdown vault |
 | **Privacy** | Local-first, all data on disk |
 | **Platforms** | Mac, Windows, Linux desktop apps |
-| **Maturity** | Active (11.1K stars, 1K forks) |
+| **Maturity** | Active (15K stars, 1.5K forks) |
 | **License** | Apache-2.0 |
-| **Stack** | TypeScript (96.7%) |
+| **Stack** | TypeScript (96.6%) |
 
-**Strengths**: Largest community in the knowledge-work agent space (11.1K stars).
+**Strengths**: Largest community in the knowledge-work agent space (15K stars).
 Obsidian compatibility means no vendor lock-in. MCP support for extensibility.
 Local model support (Ollama) for fully offline operation.
 
@@ -83,7 +87,7 @@ depth with each service may vary.
 
 | Source | Content |
 |---|---|
-| [Rowboat repo][rowboat] | Open-source AI coworker (11.1K stars) |
+| [Rowboat repo][rowboat] | Open-source AI coworker (15K stars) |
 | [Rowboat Labs][rowboat-site] | Company site and downloads |
 
 [rowboat]: https://github.com/rowboatlabs/rowboat
