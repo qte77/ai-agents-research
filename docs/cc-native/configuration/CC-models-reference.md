@@ -3,8 +3,8 @@ title: CC Models & Free-Tier Provider Reference
 source: https://platform.claude.com/docs/en/about-claude/models/overview, https://platform.claude.com/docs/en/about-claude/pricing
 purpose: Descriptive reference for the newest Claude model (Fable 5) and a snapshot of free-tier / OSS inference providers — the model/provider facts behind CC-model-provider-configuration.md.
 created: 2026-06-14
-updated: 2026-06-14
-validated_links: 2026-06-14
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Reference (descriptive). For *how to configure* CC against these models/providers (env vars, endpoints, gateways), see [CC-model-provider-configuration.md](CC-model-provider-configuration.md).
@@ -22,10 +22,10 @@ Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released m
 
 CC-relevant caveats ([source][fable5-intro]):
 
-- **New tokenizer** (the one introduced with Opus 4.7): the same text is ~30% more tokens than on pre-4.7 models — re-baseline cost and `CLAUDE_CODE_MAX_OUTPUT_TOKENS` expectations.
+- **New tokenizer** (introduced with Opus 4.7, shared with Opus 4.8): the same text is roughly 1×–1.35× the tokens of pre-4.7 models (varies by content) — re-baseline cost and `CLAUDE_CODE_MAX_OUTPUT_TOKENS` expectations. Token counts are roughly unchanged when moving between Opus 4.7/4.8 and Fable 5.
 - **`refusal` stop reason**: safety classifiers may decline a request as a successful HTTP 200 (not an error); plan for refusal handling and fallback to another model.
 - **30-day data retention required** — not available to zero-data-retention orgs.
-- **CC plan access** (per the in-product `/model` notice, 2026-06): included in Claude plan limits until 2026-06-22, after which it continues via usage credits.
+- **CC plan access** (per the in-product `/model` notice, 2026-06): included in Claude plan limits through 2026-06-22; from 2026-06-22 it continues via usage credits.
 
 ## Free-Tier & OSS Provider Reference
 

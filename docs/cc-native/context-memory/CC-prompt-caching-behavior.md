@@ -2,8 +2,8 @@
 title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economics
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
-updated: 2026-03-27
-validated_links: 2026-03-27
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Adopt
@@ -57,6 +57,12 @@ From the [caching docs][caching]:
 The server checks at most 20 block positions backward from the breakpoint. If the prior cache entry is beyond 20 blocks back, it's a miss even if the prefix is identical.
 
 Source: [prompt caching docs][caching], "How cache lookback works" section
+
+### Minimum cacheable prefix
+
+The cacheable prefix is model-dependent — **4096 tokens on Opus-tier models** (Opus 4.6/4.7/4.8, which CC defaults to), 2048 on Fable 5 / Sonnet 4.6. A prefix shorter than the minimum silently skips caching: no error, just `cache_creation_input_tokens: 0`.
+
+Source: [prompt caching docs][caching], "Cache limitations" section
 
 ## CC-Specific Caching Behavior
 
@@ -137,6 +143,6 @@ Slug is a CC-internal auto-generated session display name (e.g., `stateful-dream
 | [API messages docs][api] | Usage object fields (`cache_read_input_tokens`, `cache_creation_input_tokens`) |
 | CC 2.1.83, session `9f7de296`, Codespaces, 2026-03-27 | Cache warmup curve, 5m-only behavior, 96.3% hit rate |
 
-[caching]: https://platform.claude.com/docs/en/docs/build-with-claude/prompt-caching
-[pricing]: https://platform.claude.com/docs/en/docs/about-claude/pricing
-[api]: https://platform.claude.com/docs/en/docs/api/messages
+[caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+[pricing]: https://platform.claude.com/docs/en/about-claude/pricing
+[api]: https://platform.claude.com/docs/en/api/messages
