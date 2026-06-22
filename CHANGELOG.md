@@ -11,6 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.5.0] - 2026-06-22
+
+### Added
+
+- `docs/cc-community/CC-memory-tooling-landscape.md`: **Memory Taxonomy** section — CoALA working/episodic/semantic/procedural framing plus a classification table normalizing Mem0 / Cognee / Letta / Zep-Graphiti / A-MEM / LangMem / MemoryOS onto those axes (mappings flagged approximate; full descriptions stay in non-cc §4, not duplicated) — and a **Benchmarks** section (LongMemEval + LOCOMO) with the per-framework numbers flagged as vendor self-reported, not benchmark-author-audited.
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: added **MemoryOS** (hierarchical short/mid/long-term memory OS, EMNLP 2025) to §4 Agent Memory Infrastructure. (#276)
+
+- `docs/cc-community/CC-community-tooling-landscape.md`: **Layer 5 — context/prompt compression (library)** added to the Token-Waste Reduction Stack — LLMLingua family + Selective Context (prompt compression) and semantic-router (adjacent: routing, which skips LLM calls for recognized intents). Flagged as upstream, **not CC-native** libraries; first-party compression ratios cited as vendor README claims, not measured against a CC workload. (#276)
+
+- `docs/non-cc/ag-ui-protocol-landscape.md`: dedicated **A2A** (agent↔agent — Agent Card / Task lifecycle / JSON-RPC+SSE+gRPC; Google→Linux Foundation, v1.0.1), **AGNTCY** ("Internet of Agents" infra stack — OASF / Agent Directory / SLIM / Identity / ACP; Cisco→LF), and **MCP-as-spec** (2025-11-25 revision: experimental Tasks, OIDC/OAuth client-ID-metadata, enum/URL elicitation, icon metadata) sections — completing the Protocol Triangle beyond the existing AG-UI/A2UI frontend coverage. Purpose/scope broadened accordingly. (#276)
+
+- `docs/cc-community/CC-research-agents-landscape.md`: **local-deep-researcher** (langchain-ai LangGraph *reference* impl — explicitly distinguished from the look-alike LearningCircuit `local-deep-research`) and **dataroom** (hanxiao/Jina local-gather → frontier-synthesize harness, Pi-based) added to §1 + the `/deep-research` mapping table.
+- `docs/cc-community/CC-vlm-screen-sharing-landscape.md`: **PixelRAG** (StarTrail-org) added to Observed Implementations — pixel-native RAG (Qwen3-VL-Embedding) shipping a Claude Code `pixelbrowse` plugin.
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: **Academic Design-Space Analysis** section for arXiv 2604.14228 ("Dive into Claude Code"), mapping its findings onto the Ibryam pattern taxonomy. (#276)
+
+- `docs/non-cc/semantic-layers-data-catalog-landscape.md`: **new landscape** — the semantic-layer (Cube, dbt MetricFlow, Malloy, AtScale) and data-catalog (DataHub, OpenMetadata, Unity Catalog OSS, Apache Atlas, Google Dataplex) substrate for **agentic data access**, classified by *agent surface* (official MCP server / SDK / NL query). Frames the agent-native evolution via Databricks Genie Ontology + Open Knowledge Format cross-refs. Added to `docs/non-cc/README.md` Infrastructure. (#276)
+
 ## [0.4.0] - 2026-06-22
 
 ### Changed
