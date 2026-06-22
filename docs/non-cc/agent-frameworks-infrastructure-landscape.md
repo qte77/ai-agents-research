@@ -104,6 +104,11 @@ Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; t
 - [Cohere Rerank](https://cohere.com/rerank) — cross-encoder rerank API (rerank-v4.0 pro/fast, 100+ languages); commercial.
 - **Cross-encoders** — joint query+document forward pass (via sentence-transformers); higher accuracy than bi-encoders at O(n) per-candidate cost; run as a second stage after ANN retrieval. ColBERT (above) is the late-interaction middle ground.
 
+### Embedding models
+
+- [SPECTER2](https://huggingface.co/allenai/specter2) — scientific-document embeddings (AllenAI; citation-proximity-trained, task-adaptive adapters), a strong default for scholarly-paper similarity where general-purpose embeddings underperform (Apache-2.0). SciNCL is a citation-neighbour-sampled alternative.
+- General-purpose text embeddings (sentence-transformers bi-encoders, BAAI **bge**, **nomic-embed**) cover cross-domain corpora; prefer a domain-tuned model when the corpus is narrow (e.g. SPECTER2 for papers).
+
 ### Vector databases
 
 - [Qdrant](https://github.com/qdrant/qdrant) — dense + sparse + multi-vector (ColBERT), built-in RRF/DBSF hybrid fusion, quantization (Apache-2.0, Rust).
@@ -113,6 +118,7 @@ Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; t
 - [pgvector](https://github.com/pgvector/pgvector) — vectors inside Postgres: ACID, JOINs, no separate system (PostgreSQL License).
 - [Pinecone](https://www.pinecone.io/) — fully managed serverless ANN; no self-hosted option (proprietary).
 - [LanceDB](https://github.com/lancedb/lancedb) — embedded, multimodal, Lance columnar format, zero-copy + versioning (Apache-2.0).
+- [sqlite-vec](https://github.com/asg017/sqlite-vec) — vector search as a single-file **SQLite extension**; runs in-process and compiles to **WASM** for in-browser KNN, so precomputed embeddings can ship inside a static site with no server (Apache-2.0). Brute-force (no ANN index yet, pre-1.0) — fine at small/medium corpus sizes.
 
 ### RAG evaluation
 
