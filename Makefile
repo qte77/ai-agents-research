@@ -241,7 +241,7 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 
 lint: check_links check_docs check_actions ## Run all linters (links + markdown + actions)
 
-test: ## Run unit tests (stdlib unittest; covers the src/ modules, not the scripts)
+test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/pages_build modules)
 	$(PYTHON) -m unittest discover -s tests -v
 
 
