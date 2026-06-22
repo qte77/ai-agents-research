@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-06-19
-validated_links: 2026-06-19
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational)
@@ -47,9 +47,11 @@ A layered approach to keeping context in Claude's ~75k-token "smart zone" via de
 | **2 — Native hook filters (DIY)** | `run_silent()` PostToolUse bash wrapper: captures stdout to a temp file, emits `✓ <desc>` on exit 0, surfaces full output only on non-zero exit; pair with failFast flags (`pytest -x`, `jest --bail`, `go test -failfast`) to halt at first failure | CC PostToolUse hook | Must be written per project; no packaging or reuse mechanism built in |
 | **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); independently verified zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
 | **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity | See [CC-community-skills-landscape.md][skills-landscape] | Output-side only; does not reduce tool or shell output |
+| **5 — Context/prompt compression (library)** | Prune low-information tokens from the prompt before the model call — [LLMLingua][llmlingua] (perplexity-based; LLMLingua-2 is task-agnostic and 3–6× faster) and [Selective Context][selective-context] (self-information pruning). *Adjacent mechanism:* [semantic-router][semantic-router] skips the LLM call entirely for recognized intents (routing, not compression) | [LLMLingua][llmlingua] · [Selective Context][selective-context] · [semantic-router][semantic-router] | General-purpose libraries, **not CC-native** — wire in upstream via a model gateway/proxy or PreToolUse hook; Selective Context effectively unmaintained (last release 2024) |
 
 Layer 1 cross-ref: [CC-changelog-feature-scan.md](../cc-native/configuration/CC-changelog-feature-scan.md) — env var inventory.
 Layer 2 cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — PostToolUse hook mechanism.
+Layer 5 note: compression (LLMLingua, Selective Context) shrinks the prompt *text*; routing (semantic-router) skips the LLM *call* for known intents. Both sit upstream of CC, not as plugins — the headline ratios (LLMLingua "up to 20×", Selective Context "~2× content") are first-party README claims, not measured against a CC workload.
 
 ---
 
@@ -367,6 +369,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [ccusage][ccusage] | CC/Codex JSONL usage analyzer, MCP-integrated (13.4K stars, MIT) |
 | [Claude-Code-Usage-Monitor][claude-monitor] | Predictive real-time usage monitor with P90-based limits (7.8K stars, MIT) |
 | [Context-Efficient Backpressure for Coding Agents][hlyr-backpressure] | 4-layer token-waste reduction ladder: env vars, hook filters, wrapper scripts, output-style skills (hlyr.dev, 2025-12-09) |
+| [LLMLingua][llmlingua] | Microsoft prompt-compression library (LLMLingua / LongLLMLingua / LLMLingua-2); README compression claims (6.3K stars, MIT) |
+| [Selective Context][selective-context] | Self-information prompt pruning; arXiv:2310.06201 (423 stars, MIT; unmaintained since 2024) |
+| [semantic-router][semantic-router] | Aurelio Labs semantic routing/decision layer — skips LLM calls for recognized intents (3.6K stars, MIT) |
 
 [awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [graphify]: https://github.com/safishamsi/graphify
@@ -401,3 +406,6 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [codeburn]: https://github.com/getagentseal/codeburn
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
+[llmlingua]: https://github.com/microsoft/LLMLingua
+[selective-context]: https://github.com/liyucheng09/Selective_Context
+[semantic-router]: https://github.com/aurelio-labs/semantic-router
