@@ -4,8 +4,8 @@ purpose: Token-usage and cost observability tools for Claude Code (and sibling a
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-14
-validated_links: 2026-06-14
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational)
@@ -36,7 +36,7 @@ Per the [README][codeburn]: Claude Code, Claude Desktop, Codex, Cursor, cursor-a
 
 - **TUI dashboard** with gradient charts and responsive panels
 - **13 task categories** classified from tool patterns: Coding, Debugging, Feature Dev, Refactoring, Testing, Exploration, Planning, Delegation, Git Ops, Build/Deploy, Brainstorming, Conversation, General
-- **[`codeburn optimize`](https://github.com/getagentseal/codeburn#optimize)** — surfaces nine waste patterns (files re-read across sessions, low Read:Edit ratio, unused MCP servers, ghost agents/skills/slash commands, bloated `CLAUDE.md`, wasted bash output, cache-creation overhead, context-heavy and low-worth sessions) with copy-paste token/$ fixes ranked into an A–F health grade
+- **[`codeburn optimize`](https://github.com/getagentseal/codeburn#optimize)** — scans recent sessions for token-waste patterns, grades the setup A–F, and emits copy-paste token/$ fixes ranked by impact (full detector list in [Optimization Rules](#optimization-rules) below)
 - **`codeburn compare`** — side-by-side model performance metrics
 - **`codeburn report -p 30days`** — rolling-window analysis
 - **`codeburn export`** — CSV/JSON across multiple time periods
@@ -55,6 +55,31 @@ npm install -g codeburn
 # or run without installing:
 npx codeburn
 ```
+
+### Optimization Rules
+
+`codeburn optimize` scans recent sessions (default ~30 days), ranks each finding by token/dollar impact, grades the setup A–F, and emits copy-paste fixes. The [README][codeburn] presents these as ~7 categories and `docs/architecture.md` lists 14, but the source of truth — [`src/optimize.ts`][codeburn-optimize] — runs **16 waste detectors**:
+
+| # | Detector | Flags | Fix |
+|---|----------|-------|-----|
+| 1 | `detectCacheBloat` | Cache-creation tokens above the p25 baseline +40% (bloated MCP/skill warm-up) | Trim per-session loaded context |
+| 2 | `detectLowReadEditRatio` | Read:edit ratio under 4:1 (high severity <2:1) → retries | "Read before edit; grep callers first" |
+| 3 | `detectJunkReads` | Reads into generated/dependency dirs (`node_modules`, `.git`, `dist`, `.venv`…), ~600 tokens each | Exclude paths |
+| 4 | `detectDuplicateReads` | Same file re-read within a session (high severity >30) | Cite `file:lines`, hold context |
+| 5 | `detectUnusedMcp` | MCP servers configured but never invoked (24h grace for new configs) | Disable unused servers |
+| 6 | `detectMcpToolCoverage` | MCP servers with >10 tools where <20% are ever called | Prune tools / split the server |
+| 7 | `detectMcpProfileAdvisor` | Server invoked ≥80% in a few projects but loaded globally | Project-scope the server |
+| 8 | `detectCapabilityReliability` | MCP/skill correlated with high retry/edit-cycle rates | Replace the unreliable capability |
+| 9 | `detectLowWorthSessions` | Costly sessions with weak delivery (no edits ≥$3, or ≥3 retries) | Revisit the prompting approach |
+| 10 | `detectContextBloat` | Effective input ≥75K tokens and input:output ≥25:1 (target 15:1) | Compact / clear stale context |
+| 11 | `detectSessionOutliers` | Session costing ≥2× its project peer-session average | Investigate the cost anomaly |
+| 12 | `detectBloatedClaudeMd` | `CLAUDE.md` >200 lines after `@`-import expansion (high >400) | Trim, hoist to skills |
+| 13 | `detectBashBloat` | `BASH_MAX_OUTPUT_LENGTH` set above 15000 chars | Lower the cap |
+| 14 | `detectGhostAgents` | `~/.claude/agents/` entries never invoked (~80 tok/session each) | Archive or delete |
+| 15 | `detectGhostSkills` | `~/.claude/skills/` entries never invoked (~80 tok/session each) | Archive or delete |
+| 16 | `detectGhostCommands` | `~/.claude/commands/` entries never referenced (~60 tok/session each) | Archive or delete |
+
+Each finding ships estimated token/dollar savings plus copy-paste remediation (`CLAUDE.md` edits, env vars, or archival commands). No standalone docs site yet; the canonical, complete list lives in [`src/optimize.ts`][codeburn-optimize] — the [README][codeburn] grouping undercounts it.
 
 ### Key Differentiator
 
@@ -155,5 +180,6 @@ Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-a
 - [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's native session-cost extraction
 
 [codeburn]: https://github.com/getagentseal/codeburn
+[codeburn-optimize]: https://github.com/getagentseal/codeburn/blob/main/src/optimize.ts
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
