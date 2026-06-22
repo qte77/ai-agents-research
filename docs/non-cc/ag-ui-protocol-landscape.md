@@ -1,9 +1,9 @@
 ---
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
-purpose: Disambiguates the "Protocol Triangle" frontend layer — AG-UI (Agent-User Interaction), A2UI (declarative generative UI spec), OpenGenerativeUI (reference framework). Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
+purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-06-20
-validated_links: 2026-04-24
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational)
@@ -22,6 +22,44 @@ Three frequently-confused names occupy the agent↔user frontend layer in 2026: 
 | UI payload format | **A2UI** (and others) | Declarative widget descriptions carried inside AG-UI events |
 
 Source: [CopilotKit — AG-UI vs A2UI][ag-vs-a2]
+
+## A2A (Agent-to-Agent Protocol)
+
+The **agent ↔ agent** leg. Open protocol for interoperability between *opaque* agentic apps — agents on different frameworks discover each other, delegate tasks, and exchange results without exposing internal logic. Originally **Google**, donated to the **Linux Foundation** (2025; TSC spans AWS, Cisco, Google, IBM, Microsoft, Salesforce, SAP, ServiceNow). Spec at [a2a-protocol.org][a2a]; current **v1.0.1** (2026-05; v1.0.0 in 2026-03 broke from the v0.x line).
+
+Core primitives ([spec][a2a-spec]):
+
+- **Agent Card** — JSON discovery doc at `/.well-known/agent-card.json` (renamed from `agent.json` in v0.3.0): name, service URL, capabilities (streaming, push), auth schemes (Bearer / OAuth2 / mTLS / OIDC), skills; digitally signable.
+- **Task** — stateful unit of work with a lifecycle (`submitted → working → input-required / auth-required → completed / failed / canceled / rejected`).
+- **Message / Artifact / Part** — conversational turns, generated outputs, and the content container (text, bytes, URLs, structured JSON).
+- **Transport** — JSON-RPC 2.0 over HTTP(S); SSE for streaming; gRPC for high-throughput. v1.0.0 modernized auth to OAuth 2.0 (PKCE / device code).
+
+Complementary to MCP, not competing: "encapsulating an agent as a simple [tool] is fundamentally limiting" ([spec][a2a-spec]) — MCP is agent↔tools, A2A is agent↔agent.
+
+## AGNTCY ("Internet of Agents")
+
+An open-source **infrastructure stack beneath** the semantic protocols — discovery, identity, messaging, observability — rather than a task-semantics protocol itself. Initiated by **Cisco (Outshift)** in 2026-03, donated to the **Linux Foundation** by 2026-07 (75+ orgs). Components ([agntcy.org][agntcy]):
+
+| Component | Role | Status |
+|---|---|---|
+| **OASF** (Open Agentic Schema Framework) | Agent-description schema (OCSF-inspired); carries A2A agent cards + MCP server descriptions | v1.0.0 (2026-02) |
+| **Agent Directory** | Federated, synchronized agent registry | active |
+| **SLIM** (Secure Low-latency Interactive Messaging) | Transport (gRPC/HTTP2 + MLS E2E encryption); carries A2A/MCP as payload | IETF draft |
+| **Identity** | Agent/MCP identity via W3C Verifiable Credentials + DIDs | v0.0.x |
+| **ACP** (Agent Connect Protocol) | REST interface to invoke remote agents | **archived 2026-04** |
+
+Positioned as complementary infra *below* the semantic protocols (SLIM transports A2A/MCP; OASF and the Directory index both). Overlap with A2A's coordination role exists at different stack layers; independent overlap analysis is limited (vendor framing). Note: "AGP" (Agent Gateway Protocol) is informal naming — **SLIM** is the actual transport component.
+
+## MCP as a Protocol Spec
+
+The **model ↔ tools** leg ([modelcontextprotocol.io][mcp]). Spec revisions are date-stamped `YYYY-MM-DD`; current stable **2025-11-25**. Key additions over **2025-06-18** ([changelog][mcp-changelog]):
+
+- **Tasks** (experimental) — durable requests with polling + deferred result retrieval (mirrors A2A's Task lifecycle at the tool layer).
+- **Auth** — OpenID Connect Discovery, OAuth Client ID Metadata Documents, incremental scope consent via `WWW-Authenticate`.
+- **Elicitation enhancements** — enum schemas (single/multi-select), URL-mode elicitation; plus **tool calling in sampling** (`tools` / `toolChoice`).
+- **Icon metadata** for tools/resources/prompts; **JSON Schema 2020-12** as the default dialect; formalized governance + SDK tiering.
+
+(The prior 2025-06-18 revision introduced elicitation, structured tool output, OAuth Resource-Server classification, and removed JSON-RPC batching.) Cross-ref: [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) — CC's MCP connector surface.
 
 ## AG-UI (Agent-User Interaction Protocol)
 
@@ -146,6 +184,9 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 | [flightdeckhq/flightdeck][flightdeck] | "observability and control plane" for agents |
 | [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" — no first-party HUD framing |
 | [Nous Research — Hermes Agent][hermes-nous] | Self-improving agent — no HUD / "heads-up display" framing |
+| [A2A protocol][a2a] · [spec][a2a-spec] | Agent-to-agent interop (Google → Linux Foundation), v1.0.1 |
+| [AGNTCY][agntcy] | "Internet of Agents" infra stack (Cisco → Linux Foundation): OASF, Directory, SLIM, Identity |
+| [MCP spec 2025-11-25][mcp] · [changelog][mcp-changelog] | Model↔tools protocol; current spec revision |
 
 [ag-ui-repo]: https://github.com/ag-ui-protocol/ag-ui
 [ag-ui-docs]: https://docs.ag-ui.com/
@@ -165,3 +206,8 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [ralph-tui]: https://ralph-tui.com/
 [hermes-nous]: https://hermes-agent.nousresearch.com/
 [vibe-kanban]: https://www.vibekanban.com/
+[a2a]: https://a2a-protocol.org/
+[a2a-spec]: https://a2a-protocol.org/latest/specification/
+[agntcy]: https://agntcy.org/
+[mcp]: https://modelcontextprotocol.io/
+[mcp-changelog]: https://modelcontextprotocol.io/specification/2025-11-25
