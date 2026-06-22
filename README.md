@@ -2,76 +2,52 @@
 
 > Field research and feature analysis for AI coding agents — sandboxing, orchestration, plugins, community tooling, SDLC patterns.
 
-**Write-up:** the research catalog feeding an open agentic coding harness — [An Open Agentic Coding Harness](https://qte77.github.io/open-agentic-coding-harness/).
-
-## Why
-
-Make informed adopt / defer / skip decisions about coding agents and their ecosystems before building production systems on them. Tracks Claude Code, JetBrains Air, DeerFlow, Goose, Codex, Devin and others — plus the surrounding plugins, observability, SDLC patterns, and cross-repo learnings.
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Changelog](https://img.shields.io/badge/changelog-Keep_a_Changelog-blue.svg)](CHANGELOG.md)
+[![Lint](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml/badge.svg)](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml)
 
 ## What
 
-A continuously-updated research catalog spanning Anthropic-native CC features, non-CC coding agents, the community ecosystem (skills, plugins, tooling), SDLC + lifecycle patterns, and cross-repo learnings distilled from live development across the qte77 ecosystem.
+A continuously-updated research catalog for making **adopt / defer / skip** decisions about AI
+coding agents and their ecosystems before building production systems on them. Every analysis
+follows one structure: **What it is → How it works → Adoption decision → Action items**.
 
-Each analysis follows the same four-section structure:
-**What it is** → **How it works** → **Adoption decision** → **Action items**
+- **Claude Code (Anthropic-native)** — agents/skills, CI/sandboxing, context/memory, configuration, plugins, MCP connectors
+- **Non-CC agents & infrastructure** — JetBrains Air, DeerFlow, Goose, Codex, Devin, frameworks, orchestrators
+- **Community ecosystem** — skills, plugins, tooling, domain-specific CLAUDE.md patterns
+- **SDLC / lifecycle management** — agentic SDLC patterns, OSS ALM landscape
+- **Cross-repo learnings** and an auto-generated cumulative index of agentic-AI papers
+- **Self-currency** — four cron monitors open triage PRs when upstream sources change
 
-Currency is maintained by four cron-driven monitors — see [How it stays current](#how-it-stays-current) below.
+Full directory map and the monitor pipeline live in [`docs/architecture.md`](docs/architecture.md); browse the analyses under [`docs/`](docs/).
 
-## Contents
+## How
 
-| Directory | What's there |
-|---|---|
-| [`docs/cc-native/`](docs/cc-native/) | Anthropic-native features: agents/skills, CI/sandboxing, context/memory, configuration, plugins/ecosystem, model-internals, MCP connectors |
-| [`docs/non-cc/`](docs/non-cc/) | Non-CC agents, orchestrators, and infrastructure: JetBrains Air, DeerFlow, Goose, Feynman, Hermes Agent, Rowboat, InsForge, GoClaw, and more |
-| [`docs/cc-community/`](docs/cc-community/) | Community skills, plugins, tooling (16 tools), and domain-specific CLAUDE.md patterns |
-| [`docs/sdlc-lcm/`](docs/sdlc-lcm/) | SDLC/lifecycle management specs, agentic SDLC patterns, OSS ALM landscape |
-| [`docs/archive/`](docs/archive/) | Agents-eval era docs retained for reference (frameworks/infrastructure, evaluation/data resources, further reading, adoption plans) |
-| [`docs/learnings/`](docs/learnings/) | Cross-repo compound learnings hub — recurring patterns from live development across the qte77 ecosystem |
-| [`docs/research/`](docs/research/) | Auto-generated cumulative index of agentic-AI papers from the rxiv eval pipeline |
-| [`docs/plans/`](docs/plans/) | Plan/design docs (durable plan-mode output); backlog/roadmap lives in GitHub Issues |
-| [`triage/`](triage/) | Auto-generated monitor outputs: outage archive, changelog triage, community triage, rxiv paper triage |
-| [`.github/`](.github/) | Monitor workflows, scripts, composite actions, state files |
-
-## How it stays current
-
-Four cron-driven monitors open triage PRs against this repo whenever upstream content changes:
-
-| Monitor | Source | Schedule | Output |
-|---|---|---|---|
-| CC status | Anthropic status page | Mon 09:00 UTC | `triage/status-monitor/` |
-| CC changelog + native sources | CC release notes + GitHub issues/discussions + Anthropic blog | Mon 09:00 UTC | `triage/cc-changelog/` |
-| Community | claudelog, awesome-* repos, Reddit, X | Mon 10:00 UTC | `triage/community/` |
-| ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSV → LLM relevance filter | Tue 09:00 UTC | `triage/rxiv/` |
-
-Each monitor fingerprints its output and skips PR creation when content hasn't changed since the last emission. See [`docs/architecture.md`](docs/architecture.md) for the full pipeline.
-
-## Local development
-
-`Makefile` installs all tooling user-locally with zero sudo (`~/.local/bin`):
+Doc tooling installs user-locally (zero sudo, into `~/.local/bin`) and runs through the `Makefile`:
 
 ```bash
-make setup_all   # lychee + Node.js + markdownlint-cli2 + actionlint
-make lint        # link check (lychee) + markdown (markdownlint-cli2) + action (actionlint)
-make autofix     # mechanical markdownlint --fix pass
-make test        # unit tests for src/ + .github/scripts/lib/ modules
-make help        # all recipes grouped by section
+make setup_all   # lychee + Node.js + markdownlint-cli2 + actionlint + shellcheck
+make lint        # links (lychee) + markdown (markdownlint-cli2) + actions (actionlint)
+make test        # stdlib unit tests for scripts/ + .github/scripts/lib/ modules
+make help        # all recipes, grouped by section
 ```
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for document standards and [`CHANGELOG.md`](CHANGELOG.md) for release history.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for document standards and [`CHANGELOG.md`](CHANGELOG.md) for history.
 
-## Related Repos
+## Why
 
-Research from this repository feeds into these downstream implementation repos:
+Make informed decisions about coding agents before committing production systems to them. The
+catalog tracks Claude Code, JetBrains Air, DeerFlow, Goose, Codex, Devin and others — plus the
+surrounding plugins, observability, SDLC patterns, and cross-repo learnings distilled from live
+development across the qte77 ecosystem.
 
-| Repo | Purpose | Consumes |
-|---|---|---|
-| [cc-recursive-team-mode](https://github.com/qte77/cc-recursive-team-mode) | CLAUDECODE guard clearing, recursive CC subprocess spawning | CC spawning patterns, session artifact research |
-| [coding-agent-eval](https://github.com/qte77/coding-agent-eval) | Hands-off coding agent comparison harness | Agent feature matrices, invocation methods |
-| [multi-tasking-quality-benchmark](https://github.com/qte77/multi-tasking-quality-benchmark) | WakaTime activity vs code quality correlation | Quality metric methodology |
+## Refs
 
-## Origin
-
-These analyses were originally produced as part of [Agents-eval](https://github.com/qte77/Agents-eval) to inform adoption decisions for a multi-agent evaluation framework built on Claude Code.
+- [An Open Agentic Coding Harness](https://qte77.github.io/open-agentic-coding-harness/) — the write-up this catalog feeds
+- [cc-recursive-team-mode](https://github.com/qte77/cc-recursive-team-mode) — recursive CC subprocess spawning, session-artifact research
+- [coding-agent-eval](https://github.com/qte77/coding-agent-eval) — hands-off coding-agent comparison harness
+- [multi-tasking-quality-benchmark](https://github.com/qte77/multi-tasking-quality-benchmark) — WakaTime activity vs code-quality correlation
+- [Agents-eval](https://github.com/qte77/Agents-eval) — origin: these analyses began here, to inform a multi-agent evaluation framework
 
 ## License
 

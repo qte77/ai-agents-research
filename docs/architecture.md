@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-05-25
+updated: 2026-06-22
 ---
 
 ## Architecture: ai-agents-research
@@ -122,7 +122,7 @@ The site applies the qte77 EyeRest brand (`qte77/qte77/brand/DESIGN.md`: zero-bl
 | `ui/style.css` | EyeRest design tokens + `@font-face` + layout |
 | `ui/favicon.svg` | Adapted qte77 logo-mark |
 | `ui/assets/fonts/*.woff2` | Self-hosted Inter + JetBrains Mono — committed (refresh with `make graph-fonts`); `@font-face` falls back to system-ui if absent |
-| `src/pages_build.py` | Pure, unit-tested helpers — `filter_graph_data()` prunes tooling/code nodes; `restyle_graph()` recolors the export to EyeRest, injects fonts/favicon/title, and repoints vis-network from unpkg to the vendored copy (both run by `make graph-page`); font helpers feed the fetch script |
+| `scripts/pages_build.py` | Pure, unit-tested helpers — `filter_graph_data()` prunes tooling/code nodes; `restyle_graph()` recolors the export to EyeRest, injects fonts/favicon/title, and repoints vis-network from unpkg to the vendored copy (both run by `make graph-page`); font helpers feed the fetch script |
 
 **Deploy** is a GitHub Actions workflow (`.github/workflows/gh-pages.yaml`) using the Pages API — like the sibling repos `analyze-stock-kpi` and `paperverse` (no `gh-pages` branch). On push to `main` (paths under `ui/`), CI assembles `ui/` (with the committed fonts and vendored vis-network) into the Pages artifact and deploys. The repo's **Settings → Pages → Source** must be set to "GitHub Actions".
 

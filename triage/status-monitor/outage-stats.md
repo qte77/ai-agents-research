@@ -1,15 +1,15 @@
 # Claude Platform Outage Statistics
 
-*Generated: 2026-06-15 11:15 UTC | 188 incidents in archive*
+*Generated: 2026-06-22 11:05 UTC | 201 incidents in archive*
 
 ## Summary
 
-- **Total incidents**: 188
-- **Resolved**: 187
-- **Unresolved/ongoing**: 3
-- **Date range**: 2026-02-17 to 2026-06-15
-- **Span**: 117 days
-- **Rate**: 11.2 incidents/week
+- **Total incidents**: 201
+- **Resolved**: 199
+- **Unresolved/ongoing**: 4
+- **Date range**: 2026-02-17 to 2026-06-22
+- **Span**: 124 days
+- **Rate**: 11.3 incidents/week
 
 ## Resolution Time
 
@@ -17,37 +17,37 @@
 |--------|-------|
 | Min | 0m |
 | Max | 6.6d |
-| Median | 56m |
-| Mean | 3.3h |
-| Total downtime | 25.8d |
+| Median | 57m |
+| Mean | 3.2h |
+| Total downtime | 26.4d |
 
 ## Severity Distribution
 
 | Impact | Count | % |
 |--------|-------|---|
-| minor | 112 | 60% |
-| major | 58 | 31% |
-| none | 11 | 6% |
-| critical | 7 | 4% |
+| minor | 120 | 60% |
+| major | 62 | 31% |
+| none | 12 | 6% |
+| critical | 7 | 3% |
 
 ## MTTR by Severity
 
 | Impact | MTTR (mean) | MTTR (median) | Count |
 |--------|-------------|---------------|-------|
 | critical | 59m | 39m | 7 |
-| major | 3.3h | 1.6h | 58 |
-| minor | 3.5h | 50m | 111 |
-| none | 2.5h | 17m | 11 |
+| major | 3.2h | 1.6h | 61 |
+| minor | 3.4h | 51m | 119 |
+| none | 2.3h | 16m | 12 |
 
 ## Component Frequency
 
 | Component | Incidents | Total Downtime | Avg Duration |
 |-----------|-----------|----------------|--------------|
-| claude.ai | 155 | 20.0d | 3.1h |
-| Claude Code | 135 | 9.4d | 1.7h |
-| Claude API (api.anthropic.com) | 127 | 15.7d | 3.0h |
-| Claude Cowork | 66 | 3.1d | 1.1h |
-| Claude Console (platform.claude.com) | 56 | 2.8d | 1.2h |
+| claude.ai | 168 | 20.6d | 3.0h |
+| Claude Code | 147 | 10.0d | 1.7h |
+| Claude API (api.anthropic.com) | 138 | 16.2d | 2.9h |
+| Claude Cowork | 77 | 3.6d | 1.2h |
+| Claude Console (platform.claude.com) | 63 | 3.1d | 1.2h |
 | platform.claude.com (formerly console.anthropic.com) | 30 | 4.9d | 3.9h |
 | Claude for Government | 22 | 1.7d | 1.8h |
 
@@ -55,27 +55,27 @@
 
 | Hour | Incidents | Bar |
 |------|-----------|-----|
-| 00:00 | 7 | ####### |
+| 00:00 | 9 | ######### |
 | 01:00 | 5 | ##### |
 | 02:00 | 2 | ## |
 | 03:00 | 3 | ### |
 | 04:00 | 4 | #### |
-| 05:00 | 2 | ## |
-| 06:00 | 11 | ########### |
-| 07:00 | 6 | ###### |
-| 08:00 | 11 | ########### |
+| 05:00 | 3 | ### |
+| 06:00 | 12 | ############ |
+| 07:00 | 7 | ####### |
+| 08:00 | 14 | ############## |
 | 09:00 | 7 | ####### |
 | 10:00 | 3 | ### |
 | 11:00 | 4 | #### |
 | 12:00 | 9 | ######### |
 | 13:00 | 12 | ############ |
 | 14:00 | 20 | #################### |
-| 15:00 | 15 | ############### |
+| 15:00 | 16 | ################ |
 | 16:00 | 8 | ######## |
-| 17:00 | 12 | ############ |
+| 17:00 | 14 | ############## |
 | 18:00 | 13 | ############# |
-| 19:00 | 11 | ########### |
-| 20:00 | 5 | ##### |
+| 19:00 | 12 | ############ |
+| 20:00 | 6 | ###### |
 | 21:00 | 4 | #### |
 | 22:00 | 10 | ########## |
 | 23:00 | 4 | #### |
@@ -84,12 +84,12 @@
 
 | Day | Incidents | Bar |
 |-----|-----------|-----|
-| Monday | 34 | ################## |
-| Tuesday | 34 | ################## |
-| Wednesday | 36 | #################### |
-| Thursday | 27 | ############### |
-| Friday | 28 | ############### |
-| Saturday | 22 | ############ |
+| Monday | 36 | ################## |
+| Tuesday | 37 | ################## |
+| Wednesday | 40 | #################### |
+| Thursday | 28 | ############## |
+| Friday | 30 | ############### |
+| Saturday | 23 | ########### |
 | Sunday | 7 | ### |
 
 ## Monthly Trend
@@ -100,20 +100,20 @@
 | 2026-03 | 51 | #################### |
 | 2026-04 | 49 | ################### |
 | 2026-05 | 41 | ################ |
-| 2026-06 | 26 | ########## |
+| 2026-06 | 39 | ############### |
 
 ## Uptime Estimate
 
-- **Overall uptime**: 77.997%
-- **Total downtime**: 25.8d
-- **Measurement period**: 117.4d
+- **Overall uptime**: 78.774%
+- **Total downtime**: 26.4d
+- **Measurement period**: 124.5d
 
 | Component | Uptime % | Downtime |
 |-----------|----------|----------|
-| claude.ai | 82.971% | 20.0d |
-| Claude API (api.anthropic.com) | 86.657% | 15.7d |
-| Claude Code | 91.984% | 9.4d |
-| platform.claude.com (formerly console.anthropic.com) | 95.829% | 4.9d |
-| Claude Cowork | 97.395% | 3.1d |
-| Claude Console (platform.claude.com) | 97.647% | 2.8d |
-| Claude for Government | 98.573% | 1.7d |
+| claude.ai | 83.465% | 20.6d |
+| Claude API (api.anthropic.com) | 86.971% | 16.2d |
+| Claude Code | 91.986% | 10.0d |
+| platform.claude.com (formerly console.anthropic.com) | 96.066% | 4.9d |
+| Claude Cowork | 97.098% | 3.6d |
+| Claude Console (platform.claude.com) | 97.494% | 3.1d |
+| Claude for Government | 98.655% | 1.7d |
