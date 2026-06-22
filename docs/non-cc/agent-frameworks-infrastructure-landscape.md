@@ -132,6 +132,32 @@ Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; t
 - [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with agentic evaluators (MIT).
 - [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
 
+## 8. Output Validation, Guardrails & Verification
+
+Validation is the post-generation sibling of retrieval (§7): enforcing that agent output conforms to a **schema/contract**, a **policy**, or **ground truth** before it is used. Tool facts (license, mechanism) verified first-party 2026-06-22. For the governance/threat-model framing (NIST AI RMF, OWASP LLM Top 10, MAESTRO) see [CC-ai-security-governance-analysis.md](../cc-community/CC-ai-security-governance-analysis.md) and [CC-mas-security-framework.md](../cc-community/CC-mas-security-framework.md).
+
+### Structured-output / schema enforcement
+
+- [Instructor](https://github.com/567-labs/instructor) — wraps any LLM call, validates the response against a Pydantic model, and re-prompts on validation failure (MIT). Thinnest provider-agnostic retrofit; no constrained decoding.
+- [Outlines](https://github.com/dottxt-ai/outlines) — constrained decoding via finite-state machines over the model vocabulary: guarantees JSON-schema / regex / grammar conformance *during* generation (Apache-2.0); requires local or served model access.
+- [BAML](https://github.com/BoundaryML/baml) — schema-as-contract DSL with Schema-Aligned Parsing (post-hoc, tolerant of markdown/CoT preambles), compiled to typed functions in several languages (Apache-2.0). Fits contract-first pipelines even when a model lacks native tool-calling.
+- [Guidance](https://github.com/guidance-ai/guidance) — grammar-constrained generation interleaving prompt control flow with sampling (MIT); local/vLLM backends.
+- [Pydantic AI](https://github.com/pydantic/pydantic-ai) / [Marvin](https://github.com/PrefectHQ/marvin) — agent frameworks that validate outputs against Pydantic models by construction, with auto-retry on mismatch (MIT / Apache-2.0).
+
+### Guardrails / policy
+
+- [Guardrails AI](https://github.com/guardrails-ai/guardrails) — composable pre/post validator pipeline (PII, toxicity, schema, relevance) with a Hub of pre-built validators and retry-on-violation (Apache-2.0).
+- [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) — Colang DSL for dialog-flow rails (topicality, jailbreak, self-check input/output) that models full conversation state, not just single-turn I/O (NVIDIA).
+- [LLM Guard](https://github.com/protectai/llm-guard) — provider-agnostic input/output scanners: PII anonymization, prompt-injection classifiers, toxicity, secrets detection (MIT).
+- **Safety classifiers** — Llama Guard / ShieldGemma are fine-tuned hazard-taxonomy classifiers run as a pre/post filter (Llama / Gemma community licenses, use restrictions); Lakera Guard is the hosted closed-source equivalent.
+
+### Verification / fact-checking
+
+- [Bespoke-MiniCheck](https://huggingface.co/bespokelabs/Bespoke-MiniCheck-7B) — fast claim-vs-document grounding checker; a binary support score maps naturally onto confidence-tagging of extracted facts (**CC BY-NC 4.0 — non-commercial**; commercial license separate).
+- [FActScore](https://github.com/shmsw25/FActScore) — decomposes long output into atomic claims and verifies each against a knowledge source (MIT); higher latency, gold-standard for biographical/encyclopedic factuality.
+- **Self-consistency** (sample-N + semantic majority vote for output stability) and **property-based testing** (assert output *properties* — schema shape, field presence, value bounds — across prompt variations) are dependency-light techniques rather than tools.
+- For CI eval gates, [DeepEval](https://github.com/confident-ai/deepeval) (under RAG evaluation above) doubles as a faithfulness/hallucination output-quality gate.
+
 ## Production Patterns & Reference Frameworks
 
 - [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [CC-mas-design-principles.md](../cc-community/CC-mas-design-principles.md).
