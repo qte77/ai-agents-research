@@ -3,7 +3,7 @@ title: LLM Routers & Gateways Landscape
 source: https://openrouter.ai/
 purpose: Provider-agnostic model routers, hosted aggregators, self-hostable gateways, and model-fusion/ensemble routing tools — a reference catalog verified 2026-06-16.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-06-22
 validated_links: 2026-06-16
 ---
 
@@ -108,4 +108,4 @@ Facts compiled from each tool's first-party page (1p-verified 2026-06-16). No th
 | [github.com/glama-ai/lightport](https://github.com/glama-ai/lightport) | Lightport license, providers |
 | [github.com/lm-sys/RouteLLM](https://github.com/lm-sys/RouteLLM) | RouteLLM paper/OSS router |
 
-Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — OpenRouter and LiteLLM appear there as Claude Code integration targets (ANTHROPIC\_BASE\_URL patterns, model-slot env vars).
+Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — OpenRouter and LiteLLM appear there as Claude Code integration targets, and the five hosted CC-integrated gateways here (Portkey, Martian, Vercel AI Gateway, Zuplo, RelayPlane) are back-ported there with their Claude Code `ANTHROPIC_BASE_URL` config. This landscape stays the authoritative catalog (license/pricing/breadth); the CC doc holds only the CC-specific setup.
