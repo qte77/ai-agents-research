@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `.claude/settings.json`: add `env.BASH_MAX_OUTPUT_LENGTH=15000` (CodeBurn `detectBashBloat` rule — caps bash tool output to trim per-session tokens). Re-homed from closed PR #206 per #243.
 - `lychee.toml`: set `timeout = 30` (lychee default is 20) — keeps genuinely-slow hosts (apmdigest/techsy/qa.allen.ai/e2b.dev/…) link-checked instead of timing out into the exclude list. Orthogonal to transient 5xx, which `max_retries` handles.
 - `README.md`: restructured to the qte77 README canon (Hero → Badges → What → How → Why → Refs → License) — added License/Changelog/CI badges, folded the 10-row Contents table and the monitor table into `What` bullets that defer to [`docs/architecture.md`](docs/architecture.md), renamed "Related Repos" → "Refs" (links only), and trimmed local-dev into `How`. Closes #280.
 - `docs/architecture.md`: corrected the stale `src/pages_build.py` reference to `scripts/pages_build.py` (the module moved this cycle).
@@ -28,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `docs/cc-community/CC-usage-tooling-landscape.md`: **CodeBurn Optimization Rules** — the full 16-detector `codeburn optimize` taxonomy table (cache bloat, read:edit ratio, junk/duplicate reads, MCP coverage/profile, ghost agents/skills/commands, bash & `CLAUDE.md` bloat, …), sourced to `src/optimize.ts` (README's ~7-category grouping undercounts). Re-homed from closed PR #206 per #243.
+- `docs/cc-native/ci-remote/CC-github-actions-analysis.md`: **`/install-github-app` interactive wizard** (pre-flight warnings, OAuth-token vs API-key chooser, workflow selector), **Custom GitHub App (Bedrock/Vertex)** setup, App provenance, and the `CLAUDE_CODE_OAUTH_TOKEN` path in Manual Setup. Re-homed from PR #206 per #243.
+- `docs/cc-native/context-memory/CC-llms-txt-analysis.md`: **Pattern Adoption Beyond Product Docs** — HuggingScience (`/llms-full.txt` for 100+ scientific models across 17 domains) as an `llms-full.txt` adoption example beyond product docs. Re-homed from PR #206 per #243.
 - `pyproject.toml` + `.github/workflows/{bump-my-version,tag-release,publish-release}.yaml` + `changelog.d/`: **operator-driven release flow** adapted from [qte77/paperverse](https://github.com/qte77/paperverse) — bump-my-version (version SSOT in `[tool.bumpversion]`) + scriv changelog fragments, run ephemerally via `pipx` (no repo venv/lockfile). Adds `make changelog_new`/`changelog_preview`/`changelog_release` recipes and a CONTRIBUTING "Release & Changelog" section. Adopts the `changelog.d/` fragment workflow deferred in #217. Closes #217.
 - `docs/cc-native/configuration/CC-tools-inventory.md`: documented the **WebFetch default User-Agent** (`Claude-User (claude-code/2.1.185; +https://support.anthropic.com/)`, captured 2026-06-22, no override path) and a **bimodal bot-block model** (server WAF 403 vs CC-side denylist) with an observed status-code table (clarivate/g2/crunchbase 403, reddit denylist, langtrace 404, marktechpost 200). Closes #188.
 - `docs/cc-community/CC-openmontage-analysis.md`: **OpenMontage** (calesthio, AGPL-3.0) — agentic video production as a `CLAUDE.md`→`AGENT_GUIDE.md` domain-controller workspace (three-layer skill architecture, runtime capability discovery, checkpoint-gated pipelines); plus a **Palmier** concepts + coding-agent→video pivot-signal note (timeline-as-MCP-workspace, control/generation-plane split). Cross-refs `CC-domain-claudemd-showcase.md`.
