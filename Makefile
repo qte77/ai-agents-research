@@ -12,6 +12,7 @@ endif
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
 	check_links check_docs check_actions autofix lint test \
 	graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
+	changelog_new changelog_preview changelog_release \
 	help
 .DEFAULT_GOAL := help
 
@@ -307,6 +308,27 @@ preview: ## Serve the branded site (ui/) locally at http://localhost:$$PORT (def
 	echo "Serving ui/ at http://localhost:$${PORT:-8000}/  ->  / (landing), /graph.html  (Ctrl-C to stop)"
 	echo "Tip: run 'make graph-fonts' first to preview the real brand fonts (else system-ui fallback)."
 	$(PYTHON) -m http.server $${PORT:-8000} --directory ui
+
+
+# MARK: RELEASE
+
+
+# Changelog fragments + version bump. Tools run ephemerally via pipx (no repo
+# venv); config lives in pyproject.toml ([tool.scriv] / [tool.bumpversion]).
+# Cutting a release is operator-driven via the GHA workflows — see CONTRIBUTING.md
+# "Release & Changelog": bump-my-version (dispatch) -> tag-release (auto) ->
+# publish-release (dispatch). SCRIV overridable for a local install.
+SCRIV ?= pipx run --spec 'scriv[toml]' scriv
+
+changelog_new: ## Create + stage a changelog fragment under changelog.d/ (one per PR)
+	$(SCRIV) create --add
+
+changelog_preview: ## Preview the assembled release entry without consuming fragments
+	$(SCRIV) print
+
+changelog_release: ## Collect fragments into CHANGELOG.md (VERSION=X.Y.Z); run by the bump workflow
+	test -n "$(VERSION)" || (echo "VERSION required, e.g. make changelog_release VERSION=0.4.0"; exit 2)
+	$(SCRIV) collect --version $(VERSION)
 
 
 # MARK: HELP
