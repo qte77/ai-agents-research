@@ -16,6 +16,13 @@ accept = [200, 204, 429, 405, 418, 202, 415]
 max_retries = 3
 retry_wait_time = 2
 
+# Per-link timeout in seconds (lychee default: 20). Several genuinely-slow hosts
+# (apmdigest.com, techsy.io, qa.allen.ai, e2b.dev, finance.biggo.com, …) time out
+# at the default and end up in the exclude list below; 30s keeps more of them
+# actually link-checked. Does not affect transient 5xx/connection errors, which
+# are handled by max_retries.
+timeout = 30
+
 # Exclude domains that block automated requests (return 403/401 to HEAD)
 exclude = [
     "medium.com",
