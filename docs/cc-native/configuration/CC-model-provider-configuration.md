@@ -3,8 +3,8 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/guides/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-06-16
-validated_links: 2026-06-11
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Reference (actionable configuration guide)
@@ -326,6 +326,20 @@ export ANTHROPIC_AUTH_TOKEN=<requesty-api-key>
 - **Pricing**: pay-per-token at provider rates; $10 free credits for new accounts; enterprise volume discounts. No open-source core.
 - **Analytics**: optional wrapper tags sessions with git metadata for per-developer cost attribution.
 
+#### Hosted CC-Integrated Gateways (Portkey · Martian · Vercel · Zuplo · RelayPlane)
+
+Five more hosted gateways document explicit Claude Code support — set `ANTHROPIC_BASE_URL` (plus the gateway's auth token) and CC routes through them. To avoid duplicating the catalog, provider breadth, licensing, and pricing for these (and ~30 more routers/gateways) live in [llm-routers-gateways-landscape.md](../../non-cc/llm-routers-gateways-landscape.md); the **CC-specific config** is below (each verified against the gateway's own CC docs, 2026-06-22):
+
+| Gateway | CC config | First-party CC doc |
+|---|---|---|
+| **Portkey** | `ANTHROPIC_BASE_URL=https://api.portkey.ai` + `ANTHROPIC_AUTH_TOKEN=<portkey-key>` + `ANTHROPIC_CUSTOM_HEADERS` carrying `x-portkey-api-key` and `x-portkey-provider: @<provider-slug>` — one unified endpoint fronting Anthropic/Bedrock/Vertex backends; OSS gateway is also self-hostable | [portkey.ai/docs][portkey-cc] |
+| **Martian** | `ANTHROPIC_BASE_URL=https://api.withmartian.com/v1`; key via `apiKeyHelper: echo $MARTIAN_API_KEY` — per-request ML cost-quality routing | [docs.withmartian.com][martian-cc] |
+| **Vercel AI Gateway** | `ANTHROPIC_BASE_URL=https://ai-gateway.vercel.sh` — Anthropic Messages API, zero token markup, BYOK option | [vercel.com/docs][vercel-gw] |
+| **Zuplo AI Gateway** | `ANTHROPIC_BASE_URL=<your-app-gateway-url>` + `ANTHROPIC_AUTH_TOKEN=<app-key>` — per-app URL after provider/team/app setup; serves Anthropic `/v1/messages` | [zuplo.com/docs][zuplo-cc] |
+| **RelayPlane** | local Node.js proxy (no Docker) wired via a `settings.json` hook; `rp:best` / `rp:cheap` model offload through OpenRouter | [relayplane.com][relayplane] |
+
+All five satisfy the [Gateway Requirements](#gateway-requirements) below (Anthropic `/v1/messages` + forwarded `anthropic-beta` / `anthropic-version` headers).
+
 #### Direct CC-Compatible Endpoints
 
 Some providers expose Anthropic-compatible endpoints natively (no proxy needed):
@@ -398,6 +412,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [CC-models-reference.md](CC-models-reference.md) — Fable 5 model card + free-tier/OSS provider reference table
 - [CC-cli-reference.md](CC-cli-reference.md) — canonical flag definitions (`--model`, `--effort`, `--fallback-model`, `--betas`)
 - [CC-env-vars-reference.md](CC-env-vars-reference.md) — env var reference for `ANTHROPIC_MODEL`, `CLAUDE_CODE_EFFORT_LEVEL`, etc.
+- [llm-routers-gateways-landscape.md](../../non-cc/llm-routers-gateways-landscape.md) — authoritative provider-agnostic router/gateway catalog (license, pricing, model breadth) for the gateways above and ~30 more; this doc holds only their CC-specific config
 
 ## References
 
@@ -418,6 +433,11 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [llama-swap][llama-swap]
 - [Claudish (MadAppGang)][claudish]
 - [Requesty — Claude Code Integration][requesty]
+- [Portkey — Claude Code integration][portkey-cc]
+- [Martian — Claude Code integration][martian-cc]
+- [Vercel AI Gateway docs][vercel-gw]
+- [Zuplo AI Gateway — Claude Code integration][zuplo-cc]
+- [RelayPlane][relayplane]
 - [Local setup guide][local-setup]
 - [Infomaniak — Open-Source AI Models][infomaniak-ai]
 - [Infomaniak — vLLM TranslateGemma-27B (Hugging Face)][infomaniak-translategemma]
@@ -447,3 +467,8 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [infomaniak-translategemma]: https://huggingface.co/Infomaniak-AI/vllm-translategemma-27b-it
 [infomaniak-opencode]: https://janikvonrotz.ch/2026/04/01/setup-opencode-with-infomaniak-ai-tools/
 [infomaniak-n8n]: https://community.n8n.io/t/add-new-language-model-informaniak-ai/73182
+[portkey-cc]: https://portkey.ai/docs/integrations/libraries/claude-code
+[martian-cc]: https://docs.withmartian.com/integrations/claude-code
+[vercel-gw]: https://vercel.com/docs/ai-gateway
+[zuplo-cc]: https://zuplo.com/docs/ai-gateway/integrations/claude-code
+[relayplane]: https://relayplane.com/

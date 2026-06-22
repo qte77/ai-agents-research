@@ -3,8 +3,8 @@ title: Aider — Terminal AI Pair Programmer
 source: https://aider.chat/
 purpose: OSS terminal coding agent with git-native workflow and multi-LLM support
 created: 2026-06-16
-updated: 2026-06-16
-validated_links: 2026-06-16
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Adopt
@@ -42,12 +42,30 @@ aider-install
 Then invoke `aider` in a git repository with an LLM API key set in the
 environment (e.g. `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`).
 
-### Codebase mapping
+### Codebase mapping (repo map)
 
 Aider builds a **repo map** — a compressed, token-efficient index of all
 files, classes, and functions — so the LLM can reason about large codebases
 without loading every file into context. The map is regenerated incrementally
 as files change ([aider.chat docs][aider-repomap]).
+
+How the map is built and sized ([aider.chat docs][aider-repomap]):
+
+- **Symbol extraction** — each file is parsed for its key identifiers (classes,
+  functions, method signatures) and the critical lines that define them.
+- **Graph ranking** — Aider builds a dependency graph (files as nodes,
+  references as edges) and applies a PageRank-style ranking to surface the
+  identifiers most often referenced elsewhere, so the most load-bearing symbols
+  win the limited budget rather than a flat file listing.
+- **Token budget** — `--map-tokens` (default **1,000**) caps the map; Aider
+  **auto-sizes** it dynamically, expanding well past the default when no files
+  are in the chat and shrinking as files are added to the session.
+- **Delivery** — the ranked map is sent to the LLM with each request, alongside
+  the contents of the files currently in the chat.
+
+This graph-ranked, budget-bounded map is the mechanism behind Aider's
+"scales to large codebases" claim — only the highest-signal slice of the
+repository competes for context on any given turn.
 
 ### Edit loop
 
@@ -152,6 +170,7 @@ cross-session memory or cloud sandbox.
 | [Aider releases page][aider-releases] | Latest release v0.86.0, 2025-08-09 (accessed 2026-06-16) |
 | [Aider LLM leaderboard][aider-leaderboard] | Polyglot benchmark methodology, top scores, last updated 2025-11-20 (accessed 2026-06-16) |
 | [Aider HISTORY][aider-history] | v0.86.0 self-authorship stat (88 %), main-branch Claude 4.x aliases (accessed 2026-06-16) |
+| [Aider repo-map docs][aider-repomap] | Repo-map construction: symbol extraction, graph/PageRank ranking, `--map-tokens` default (1,000), dynamic auto-sizing (accessed 2026-06-22) |
 
 [aider-home]: https://aider.chat/
 [aider-gh]: https://github.com/Aider-AI/aider
