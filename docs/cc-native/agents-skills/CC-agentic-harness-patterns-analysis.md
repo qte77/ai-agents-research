@@ -5,8 +5,8 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-06-19
-validated_links: 2026-06-19
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational)
@@ -122,6 +122,7 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Kubernetes Patterns (O'Reilly)](https://k8spatterns.com/)
 - [Prompt Patterns catalog](https://www.promptpatterns.dev/)
 - [The Generative Programmer Substack](https://generativeprogrammer.com/)
+- ["Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems" (arXiv 2604.14228)](https://arxiv.org/abs/2604.14228) — academic design-space analysis of CC's source (Liu et al., 2026)
 
 ## Security-Domain Application: Defending Code Reference Harness
 
@@ -149,6 +150,17 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 [claude-security]: https://claude.com/product/claude-security
 [skill-issue-post]: https://www.hlyr.dev/blog/skill-issue-harness-engineering-for-coding-agents
 [humanlayer]: https://www.humanlayer.dev/
+
+## Academic Design-Space Analysis (arXiv 2604.14228)
+
+["Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems"](https://arxiv.org/abs/2604.14228) (Liu, Zhao, Shang, Shen, 2026) reverse-engineers CC's published TypeScript source — an academic complement to Ibryam's pattern taxonomy above, framing the same artifact as a *design space*. It extracts five design motivations and traces them to concrete mechanisms:
+
+- **Seven-mode permission system** + an ML-based command risk classifier — cf. patterns 9–10 (Progressive Tool Expansion, Command Risk Classification).
+- **Five-layer context-compaction pipeline** — cf. pattern 5 (Progressive Context Compaction).
+- **Four extensibility mechanisms** — MCP, plugins, skills, hooks.
+- **Subagent + worktree delegation** and append-oriented session management.
+
+It compares CC against a second system ("OpenClaw") to show how deployment context drives divergent architectural choices, and closes with six open design directions. Cross-ref: [CC-reverse-engineering-landscape.md](../../cc-community/CC-reverse-engineering-landscape.md) for the broader source/binary analysis lineage.
 
 ## Action Items
 
