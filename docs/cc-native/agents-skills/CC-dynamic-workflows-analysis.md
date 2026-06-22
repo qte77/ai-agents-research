@@ -96,6 +96,14 @@ Dynamic workflows run on **every** Claude Code surface — interactive CLI, Desk
 
 **Bottom line:** workflows work in the SDK, headless `-p`, *and* interactive — the only headless caveats are that background agents are awaited (10-min default cap) and `--bare` requires passing skills/hooks/MCP explicitly.
 
+## Observability & tracing
+
+Workflow and subagent execution is observable via Claude Code's OpenTelemetry export (opt-in: `CLAUDE_CODE_ENABLE_TELEMETRY=1`) — **metrics** and **log events** are GA; **traces (spans)** are **beta** (`CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER`) ([monitoring][cc-monitoring]).
+
+- **Per-subagent spans.** With beta traces on, a spawned subagent's `claude_code.llm_request` and `claude_code.tool` spans **nest under the parent `claude_code.tool` (Agent tool) span**, carrying `agent_id` / `parent_agent_id` — a real agent-trajectory trace, not just session metrics. There is **no dedicated "workflow phase" span**; structure is inferred from Agent-tool nesting. Without beta traces you still get per-subagent attribution on metrics/log events (`query_source` = `main`/`subagent`/`auxiliary`, `agent.name`, token/cost) but no span waterfall.
+- **GenAI conventions (partial):** spans carry `gen_ai.system`, `gen_ai.request.model`, `gen_ai.response.*`, `gen_ai.tool.call.id`, but CC uses its own `claude_code.*` span namespace (not the `invoke_agent` naming). The in-session `/workflows` progress view is a **TUI**, not OTel export.
+- **Backends:** the output is standard **OTLP**, so any OTLP backend ingests it — Arize Phoenix, Pydantic Logfire, Grafana/Tempo, Honeycomb, Datadog, Langfuse. **None has a CC-specific integration** — it's generic OTLP, so you get the span waterfall but not bespoke CC topology rendering. Datadog's GenAI-convention support (v1.37+) parses the `gen_ai.*` attributes closest to CC-aware; Phoenix lacks OpenInference tags natively; Logfire's "zero-config CC" path is CC→Logfire-as-MCP-server, not Logfire parsing CC's OTel. Full platform + OTel-attribute detail: [CC-agent-observability-methods-analysis.md](../../cc-community/CC-agent-observability-methods-analysis.md).
+
 ## Disabling
 
 Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and the [Agent SDK][cc-agent-sdk]. Disable via *Dynamic workflows* off in `/config`, `"disableWorkflows": true` in settings, or `CLAUDE_CODE_DISABLE_WORKFLOWS=1`. When disabled, bundled workflow commands are unavailable, the `ultracode` keyword stops triggering, and `ultracode` is removed from the `/effort` menu ([workflows][cc-workflows]).
@@ -127,6 +135,7 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 | [Run agents in parallel][cc-agents] | Subagents vs skills vs teams vs workflows |
 | [Agent SDK overview][cc-agent-sdk] | Workflows on the SDK surface |
 | [Headless mode][cc-headless] | `-p` skills/subagents/hooks behavior, `--bare`, background-agent wait cap |
+| [Monitoring usage][cc-monitoring] | OTel signals (metrics/logs GA, traces beta), per-subagent span nesting, `gen_ai.*` attributes |
 | [Tools reference — WebSearch][cc-tools-ref] | `/deep-research` dependency |
 
 [cc-workflows]: https://code.claude.com/docs/en/workflows
@@ -138,4 +147,5 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 [cc-agents]: https://code.claude.com/docs/en/agents
 [cc-agent-sdk]: https://code.claude.com/docs/en/agent-sdk/overview
 [cc-headless]: https://code.claude.com/docs/en/headless
+[cc-monitoring]: https://code.claude.com/docs/en/monitoring-usage
 [cc-tools-ref]: https://code.claude.com/docs/en/tools-reference#websearch-tool-behavior
