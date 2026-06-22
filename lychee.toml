@@ -65,7 +65,6 @@ exclude = [
     "scispace.com",  # 403 to automated requests — CC-research-agents-landscape.md
     "perplexity.ai",  # 403 to HEAD on /academic — CC-research-agents-landscape.md
     "qa.allen.ai",  # Ai2 Scholar QA — times out lychee — CC-research-agents-landscape.md
-    "langtrace.ai",  # 404 to root (site relocated?) — pre-existing Langtrace entry in CC-agent-observability-methods-analysis.md; revisit/update URL
     "clarivate.com",  # 403 (anti-bot) to lychee AND WebFetch (verified 2026-06-21) — CC-research-agents-landscape.md (Web of Science Research Assistant)
     # PR #248 — bot-blocked / protocol-incompatible to lychee (browser-OK)
     "iso.org",  # 403 to HEAD (anti-bot) — pre-existing in CC-ai-security-governance-analysis.md

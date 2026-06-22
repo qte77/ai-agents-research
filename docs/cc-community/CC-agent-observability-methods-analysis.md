@@ -372,7 +372,7 @@ This pattern leverages the OpenTelemetry standard for vendor-neutral observabili
 
 **Primary Sources**:
 
-- [Langtrace](https://www.langtrace.ai/)
+- [Langtrace (Scale3-Labs)](https://github.com/Scale3-Labs/langtrace)
 - [Langtrace Local Setup Documentation](https://docs.langtrace.ai/hosting/using_local_setup)
 
 #### Datadog LLM Observability
