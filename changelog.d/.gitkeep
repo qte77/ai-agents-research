@@ -1,0 +1,3 @@
+# scriv changelog fragments live in this directory (one per PR), created via
+# `make changelog_new`. They are collected into CHANGELOG.md at release time by
+# bump-my-version.yaml. This .gitkeep keeps the directory tracked while empty.

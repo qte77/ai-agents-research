@@ -231,3 +231,38 @@ Run `make lint` against any PR that touches docs before requesting review. `lych
 - **Branch naming**: `<type>/<short-slug>` (e.g., `docs/otel-and-ag-ui-research`, `ci/cache-lychee-binary`)
 - **Merge policy**: squash-merge to main; delete the remote branch on merge. Squash breaks ancestry, so the local branch must be force-deleted (`git branch -D`) afterward
 - **Track follow-up work as GitHub issues**, not in-doc TODOs (e.g., `#123` for the `gha-md-lychee` extraction)
+
+## Release & Changelog
+
+Releases are **operator-driven** and the CHANGELOG is managed with
+[scriv](https://scriv.readthedocs.io/) fragments (the `changelog.d/` workflow
+deferred in #217). Version config lives in `pyproject.toml` — `[tool.bumpversion]`
+holds the version single-source-of-truth, `[tool.scriv]` configures fragments. The
+tooling runs ephemerally via `pipx` (CI) / the Makefile recipes (local); this repo
+ships no Python package, so there is no venv or lockfile.
+
+### Per-PR: add a changelog fragment
+
+Instead of editing `CHANGELOG.md` directly, add a fragment:
+
+```bash
+make changelog_new        # creates + stages changelog.d/<timestamp>_<branch>.md
+```
+
+Edit the generated file — uncomment the relevant category (`Added`, `Changed`,
+`Fixed`, …) and write the entry in the same `` `path`: description `` style as
+existing CHANGELOG entries. `make changelog_preview` shows the assembled result.
+
+### Cutting a release (maintainer)
+
+1. **Bump** — run the `bump-my-version` workflow (Actions → Run workflow → choose
+   `major`/`minor`/`patch`). It bumps `current_version`, collects `changelog.d/`
+   fragments into a dated `## [X.Y.Z]` CHANGELOG section, and opens a release PR.
+2. **Merge** — review and squash-merge the release PR to `main`.
+3. **Tag** — `tag-release` fires automatically on the `pyproject.toml` change and
+   pushes the annotated `vX.Y.Z` tag against the merge commit.
+4. **Publish (optional)** — run the `publish-release` workflow to create a GitHub
+   Release with notes extracted from the matching CHANGELOG section.
+
+> **Transition note:** `## [Unreleased]` content predating this flow is collected
+> into the first tagged release (`v0.4.0`); from `v0.5.0` onward, use fragments.

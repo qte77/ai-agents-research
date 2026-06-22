@@ -1,0 +1,30 @@
+# Python tool configuration for this repository's release flow.
+#
+# This repo ships NO Python package — there is intentionally no [project] or
+# [build-system] table. pyproject.toml exists only as the conventional config
+# location that bump-my-version and scriv read. The release tooling runs
+# ephemerally via `pipx run` in CI (.github/workflows/bump-my-version.yaml) and
+# locally via the Makefile `# MARK: RELEASE` recipes; nothing is installed into
+# the repo and there is no virtualenv or lockfile.
+
+# Version single source of truth. bump-my-version rewrites `current_version`
+# here on a workflow bump; tag-release.yaml reads it to create the v* tag.
+# Seeded at 0.3.0 — the latest version section already present in CHANGELOG.md.
+[tool.bumpversion]
+current_version = "0.3.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+commit = true
+tag = false  # tag-release.yaml tags main's squash-merge commit, not the bump branch
+allow_dirty = false
+message = "chore(release): bump {current_version} -> {new_version}"
+
+# CHANGELOG.md is owned by scriv: one fragment per PR under changelog.d/,
+# collected into a dated `## [version]` section at release time.
+[tool.scriv]
+format = "md"
+fragment_directory = "changelog.d"
+categories = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"]
+md_header_level = "2"
+entry_title_template = "[{{ version }}] - {{ date.strftime('%Y-%m-%d') }}"
+md_html_anchors = false
