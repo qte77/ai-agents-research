@@ -11,6 +11,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.6.0] - 2026-06-22
+
+### Added
+
+- `docs/cc-native/configuration/CC-model-provider-configuration.md`: **5 hosted CC-integrated gateways** (Portkey, Martian, Vercel AI Gateway, Zuplo, RelayPlane) back-ported as a compact CC-config table — each `ANTHROPIC_BASE_URL` / auth pattern verified against the gateway's own Claude Code docs (2026-06-22). Defers to `llm-routers-gateways-landscape.md` for the full catalog (router-architecture consolidation, DRY). Partial #304.
+- `docs/non-cc/aider-analysis.md`: expanded the **repo-map** mechanism — symbol extraction, PageRank-style graph ranking over the dependency graph, `--map-tokens` (default 1,000), and dynamic auto-sizing (first-party `aider.chat/docs/repomap.html`). Partial #304.
+
+- `docs/cc-community/CC-research-agents-landscape.md` + `CC-memory-tooling-landscape.md`: **`## Sources` tables** — added the CONTRIBUTING-mandated Sources section to both landscape docs. `CC-research-agents` converted ~45 inline body links to reference-style + a Sources table; `CC-memory-tooling` wraps its existing reference definitions in a Sources table.
+
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md` (§7 RAG & Retrieval): new **Embedding models** subsection ([SPECTER2](https://huggingface.co/allenai/specter2) scholarly-document embeddings + SciNCL; general-purpose note) and **[sqlite-vec](https://github.com/asg017/sqlite-vec)** in Vector databases (single-file SQLite extension, WASM/in-browser KNN so precomputed embeddings ship inside a static site). Fills the §7 embeddings gap and the static-serverless vector-search angle; provenance for the paperverse semantic-"near" roadmap.
+
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md` (§7 Rerankers): added permissive-license OSS rerankers — [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3), [Qwen3-Reranker](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B), [mxbai-rerank](https://github.com/mixedbread-ai/mxbai-rerank), [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank), and the [rerankers](https://github.com/AnswerDotAI/rerankers) unified wrapper + [RAGatouille](https://github.com/AnswerDotAI/RAGatouille) — plus a hosted-alternatives note (Voyage/ZeroEntropy/Contextual instruction-following; Jina multimodal). Previously only Cohere Rerank + generic cross-encoders + ColBERT were listed. Self-reported/unverified benchmark figures and NC-licensed/unmaintained entries were deliberately excluded.
+
+### Changed
+
+- `docs/non-cc/llm-routers-gateways-landscape.md`: bottom cross-ref now records that the five CC-integrated gateways are back-ported into the CC config doc, with the landscape kept as the single authoritative catalog (license/pricing/breadth).
+
+- `CONTRIBUTING.md`: **rxiv dispatch serialization note** in Auto-generated content — never fire two same-day `rxiv-paper-eval` dispatches concurrently (the date-stamped `chore/rxiv-paper-triage-<date>` branch collides; the second push is rejected). Cross-refs upstream `gha-rxiv-paper-eval#71`.
+
+- `docs/non-cc/rowboat-analysis.md`: **freshness refresh** against the first-party repo — star count 11.1K → **15K** (forks 1K → 1.5K), language share to TypeScript 96.6%, `updated`/`validated_links` bumped to 2026-06-22. Reconciled the misattribution concern: `rowboatlabs/rowboat` is correctly identified (local-first AI coworker → Obsidian knowledge graph), and the `claude-code`/`claude-cowork` GitHub topic tags are discovery-only — there is no Claude-specific integration surface (model-agnostic via MCP / bring-your-own API key).
+
+- `docs/cc-native/configuration/CC-models-reference.md` + `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: **stale-fact refresh** against first-party Anthropic sources (claude-api reference) — Fable 5 tokenizer figure tightened to ≈1×–1.35× (was "~30%"); the Fable 5 CC-plan-access line reframed now that the 2026-06-22 credit-transition date has arrived; added the model-dependent **minimum cacheable prefix** (4096 tokens on Opus-tier, 2048 on Fable 5 / Sonnet 4.6). Partial #304.
+
+### Fixed
+
+- `docs/cc-native/README.md`: corrected stale subdirectory doc counts — sessions 5→7, sandboxing 4→5, plugins-ecosystem 8→10 (verified against `git ls-files`).
+
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: corrected the doubled `/docs/en/docs/` path segment in the prompt-caching, pricing, and messages source URLs to the canonical first-party form.
+
 ## [0.5.0] - 2026-06-22
 
 ### Added
