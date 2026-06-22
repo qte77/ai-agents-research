@@ -113,7 +113,14 @@ def render(records: list[dict], week_count: int) -> str:
             lines.append(f"- findings: {'; '.join(ex['key_findings'])}")
         lines.append("")
 
-    return "\n".join(lines).rstrip("\n") + "\n"
+    # Collapse consecutive blank lines (MD012): a record with empty `extracted`
+    # otherwise leaves two blank lines before the next heading. (#274)
+    collapsed: list[str] = []
+    for ln in lines:
+        if ln == "" and collapsed and collapsed[-1] == "":
+            continue
+        collapsed.append(ln)
+    return "\n".join(collapsed).rstrip("\n") + "\n"
 
 
 def main() -> None:
