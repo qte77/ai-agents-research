@@ -11,8 +11,7 @@ Stdlib only; reuses the unit-tested restyle_graph from the src/ module.
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from pages_build import filter_graph_data, restyle_graph  # noqa: E402
+from pages_build import filter_graph_data, restyle_graph
 
 SRC = Path("graphify-out/graph.html")
 DST = Path("ui/graph.html")

@@ -13,12 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `README.md`: restructured to the qte77 README canon (Hero → Badges → What → How → Why → Refs → License) — added License/Changelog/CI badges, folded the 10-row Contents table and the monitor table into `What` bullets that defer to [`docs/architecture.md`](docs/architecture.md), renamed "Related Repos" → "Refs" (links only), and trimmed local-dev into `How`. Closes #280.
+- `docs/architecture.md`: corrected the stale `src/pages_build.py` reference to `scripts/pages_build.py` (the module moved this cycle).
+- `src/pages_build.py` → `scripts/pages_build.py`: co-located the pure site-build module with its only consumer (`render-graph-page.py`), dropped the `sys.path` shim, and removed the now-empty `src/`. `tests/` kept at root (67 module tests unchanged); `make test` comment updated.
 - `docs/sdlc-lcm/{README,agentic-sdlc-patterns,lcm-spec,sdlc-spec,multi-agent-onboarding-outlook}.md`: per-doc **legacy notes** added — RAPID is legacy (`RAPID-spec-forge` archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77)). Flags the five docs that still presented RAPID as an active methodology, completing the partial #275 cockpit-only correction.
 - `.claude/rules/read-discipline.md` + `AGENT_LEARNINGS.md`: promoted the recurring **"verify subagent findings before acting"** learning to an always-loaded rule (subagent sweeps returned false negatives 3×+ this cycle — incl. "create-new" calls on already-existing docs).
 - `lychee.toml`: exclude `clarivate.com` (confirmed 403 bot-block via WebFetch, 2026-06-21) — sibling to the existing research-discovery 403 excludes (scispace/perplexity/qa.allen.ai). `marktechpost.com` 500 was transient (re-verified 200), left unchanged.
 
+### Fixed
+
+- `.github/scripts/build-rxiv-index.py`: `render()` no longer emits a double blank line (markdownlint MD012) when a paper has empty `extracted` metadata — consecutive blanks are collapsed before output. Regression test added (`tests/test_build_rxiv_index.py`). Closes #274.
+- `docs/cc-community/CC-agent-observability-methods-analysis.md` + `lychee.toml`: repoint the dead Langtrace link (`www.langtrace.ai/` returns 404) to the canonical [Scale3-Labs/langtrace](https://github.com/Scale3-Labs/langtrace) repo and drop the `langtrace.ai` lychee exclude (the `docs.langtrace.ai` setup link still resolves). Closes #242.
+
 ### Added
 
+- `docs/cc-community/CC-openmontage-analysis.md`: **OpenMontage** (calesthio, AGPL-3.0) — agentic video production as a `CLAUDE.md`→`AGENT_GUIDE.md` domain-controller workspace (three-layer skill architecture, runtime capability discovery, checkpoint-gated pipelines); plus a **Palmier** concepts + coding-agent→video pivot-signal note (timeline-as-MCP-workspace, control/generation-plane split). Cross-refs `CC-domain-claudemd-showcase.md`.
+- `Makefile`: `setup_shellcheck` recipe (+ wired into `setup_all`) — installs shellcheck user-locally so `make check_actions` (actionlint) runs its shellcheck integration locally, matching CI's pre-installed shellcheck. Closes #185.
 - `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: new **§7 RAG & Retrieval Infrastructure** (pipeline taxonomy; GraphRAG family — Microsoft GraphRAG / LightRAG / RAPTOR / nano-graphrag; hybrid search, RRF, ColBERT, HyDE; rerankers; vector DBs; RAG eval — RAGAs / TruLens / DeepEval) + **"Compiling Agentic Workflows into LLM Weights"** ([arXiv:2605.22502](https://arxiv.org/abs/2605.22502)) under Production Patterns. First-party-verified; star/benchmark figures hedged.
 - `docs/cc-community/CC-code-tooling-landscape.md`: **cocoindex-code** (embedded AST + embeddings semantic code-search CLI + `ccc mcp` server, Apache-2.0) added as the embedded-semantic-search entry; `docs/non-cc/cocoindex-analysis.md` cocoindex-code stats refreshed (→~2.2k★, v0.2.36) + bidirectional cross-ref.
 - `docs/non-cc/databricks-genie-analysis.md`: Databricks **Genie One** (agentic data coworker, GA 2026-06-16) — **Genie Ontology** authority-ranked, MCP-exposed semantic graph (Public Preview) + **Genie Agents**; first-party Databricks blog + press release; benchmark/pricing claims hedged; OKF-vs-Genie-Ontology cross-ref.

@@ -9,7 +9,7 @@ endif
 .SILENT:
 .ONESHELL:
 .PHONY: \
-	setup_node setup_lychee setup_mdlint setup_actionlint setup_skills setup_all \
+	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
 	check_links check_docs check_actions autofix lint test \
 	graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
 	help
@@ -194,7 +194,32 @@ setup_skills: ## Clone claude-code-plugins (if missing) and symlink its skills i
 		fi
 	done
 
-setup_all: setup_lychee setup_mdlint setup_actionlint ## Install all tooling (lychee + node + markdownlint-cli2 + actionlint)
+setup_shellcheck: ## Install shellcheck user-locally to ~/.local/bin (no sudo); actionlint runs it when on PATH
+	if command -v shellcheck > /dev/null 2>&1; then
+		echo "shellcheck already installed: $$(shellcheck --version 2>&1 | grep '^version:' || true)"
+	elif [ "$(UNAME_S)" = "Darwin" ]; then
+		echo "Installing shellcheck via brew ..."
+		brew install shellcheck
+	else
+		case "$(UNAME_M)" in \
+		x86_64) SC_ARCH="x86_64" ;; \
+		aarch64|arm64) SC_ARCH="aarch64" ;; \
+		*) echo "ERROR: unsupported arch for shellcheck binary"; exit 1 ;; \
+		esac
+		echo "Installing shellcheck (stable, linux/$$SC_ARCH) to $(LOCAL_BIN) ..."
+		mkdir -p $(LOCAL_BIN)
+		# Tarball (.tar.xz) holds shellcheck-stable/shellcheck — extract to tmp,
+		# install with explicit mode (mirrors setup_lychee / setup_actionlint).
+		tmp=$$(mktemp -d) \
+			&& curl -sSfL "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.$${SC_ARCH}.tar.xz" \
+				| tar xJ -C "$$tmp" \
+			&& install -m 755 "$$tmp"/shellcheck-stable/shellcheck $(LOCAL_BIN)/shellcheck \
+			&& rm -rf "$$tmp" \
+			&& echo "shellcheck installed to $(LOCAL_BIN)/shellcheck — ensure $(LOCAL_BIN) is on PATH" \
+			|| { rm -rf "$$tmp"; echo "Install failed — download manually from https://github.com/koalaman/shellcheck/releases"; exit 1; }
+	fi
+
+setup_all: setup_lychee setup_mdlint setup_actionlint setup_shellcheck ## Install all tooling (lychee + node + markdownlint-cli2 + actionlint + shellcheck)
 
 
 # MARK: DEV
@@ -241,7 +266,7 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 
 lint: check_links check_docs check_actions ## Run all linters (links + markdown + actions)
 
-test: ## Run unit tests (stdlib unittest; covers the src/ modules, not the scripts)
+test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/pages_build modules)
 	$(PYTHON) -m unittest discover -s tests -v
 
 
