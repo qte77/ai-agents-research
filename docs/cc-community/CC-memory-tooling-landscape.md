@@ -232,6 +232,25 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
 - [agent-frameworks-infrastructure-landscape.md](../non-cc/agent-frameworks-infrastructure-landscape.md) — non-CC memory infrastructure (Mem0, Zep, Cognee, LangMem)
 
+## Sources
+
+| Source | Content |
+|---|---|
+| [Byterover][byterover] · [paper][byterover-paper] | Agent memory layer (CLI) |
+| [claude-mem][claude-mem] · [docs][claude-mem-docs] | Claude Code memory plugin |
+| [MemPalace][mempalace] | Agent memory tool |
+| [memsearch][memsearch] · [CC docs][memsearch-docs] | Zilliz memory search (CC integration) |
+| [LangMem][langmem] · [concepts][langmem-concepts] | LangChain long-term memory |
+| [Mem0][mem0] · [paper][mem0-paper] | Memory layer for agents |
+| [Cognee][cognee] | Memory / knowledge-graph framework |
+| [Letta][letta] | Stateful agents (MemGPT lineage) |
+| [Zep Graphiti][graphiti] | Temporal knowledge-graph memory |
+| [A-MEM][a-mem] | Agentic memory system |
+| [MemoryOS][memoryos] | Hierarchical memory OS |
+| [CoALA][coala] | Cognitive-architectures framework (paper) |
+| [LongMemEval][longmemeval] | Long-term-memory benchmark |
+| [LOCOMO][locomo] | Long-conversation memory benchmark |
+
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
