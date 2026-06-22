@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Adopt
@@ -75,13 +75,27 @@ CC 2.1.83 ships 28 built-in tools. This is a categorized snapshot linking to the
 
 #### `WebFetch` behavior notes
 
-First-party-documented behaviors that researchers should know before relying on `WebFetch`:
+Documented and empirically observed behaviors researchers should know before relying on `WebFetch`:
 
 - **Minimal schema, no header customization.** The tool takes only `url` and `prompt` — there is no parameter for `User-Agent`, `Accept`, `Accept-Language`, or `Referer`. The permission specifier is `WebFetch(domain:...)` only ([permissions][permissions]).
 - **Cross-host redirects do not auto-follow.** When a fetched URL redirects to a different host, `WebFetch` returns the redirect target in a special format and asks the caller to issue a new `WebFetch` request — protecting against unintended cross-domain fetches without an explicit re-confirmation.
 - **GitHub URLs: prefer the `gh` CLI.** The tool's own description explicitly recommends `gh` CLI (`gh pr view`, `gh issue view`, `gh api`) for GitHub content — the API surface returns richer, structured data than HTML scraping.
 - **Two caches, not one.** A ~15-minute self-cleaning **content cache** is documented in the tool's Anthropic-authored description (per-URL, holds fetched body). A separate **5-minute per-hostname safety-preflight cache** is documented in [data-usage][data-usage] (caches domain-allow decisions, not content). Don't conflate them when reasoning about cache hits.
-- **Default User-Agent and bot-block behavior** — open question; tracked in [#188](https://github.com/qte77/ai-agents-research/issues/188).
+- **Default User-Agent is a bot token, not a browser.** `WebFetch` sends `Claude-User (claude-code/<version>; +https://support.anthropic.com/)` — observed as `Claude-User (claude-code/2.1.185; +https://support.anthropic.com/)` (`CC 2.1.185, Codespaces, 2026-06-22`, cross-verified against `postman-echo.com/headers` and `ifconfig.me/ua`). There is **no override**: no `User-Agent` parameter (per the minimal-schema note above) and no documented env var. CC identifies itself honestly (no browser spoofing), which is exactly why anti-bot WAFs reject it.
+- **Bot-block behavior is bimodal.** WAF-protected hosts return HTTP `403` to the bot UA; separately, a CC-side denylist refuses some hosts before any request leaves (`Claude Code is unable to fetch from <host>`). A `403` here means *the bot UA was rejected*, not necessarily a dead link — verify in a browser before adding a host to `lychee.toml` excludes.
+
+Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
+
+| Host | Result | Class |
+|---|---|---|
+| `clarivate.com` | `403 Forbidden` | WAF block |
+| `g2.com` | `403 Forbidden` | WAF block (Cloudflare-class) |
+| `crunchbase.com` | `403 Forbidden` | WAF block |
+| `reddit.com` | `unable to fetch` | CC-side denylist (no request sent) |
+| `langtrace.ai` | `404 Not Found` | reachable; page missing |
+| `httpbin.org` | `503` | transient upstream outage |
+| `marktechpost.com` | `200 OK` | reachable |
+| `postman-echo.com`, `ifconfig.me` | `200 OK` | reachable (header echo) |
 
 ### Other
 
@@ -277,6 +291,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | CC 2.1.83, Codespaces, 2026-03-27 | Tool inventory snapshot version |
 | CC 2.1.87 CLI binary string extraction, 2026-03-29 | Slash commands, config keys, undocumented commands |
 | CC 2.1.87 `/config` panel observation, 2026-03-29 | `.claude.json` key inventory |
+| CC 2.1.185, Codespaces, 2026-06-22 | `WebFetch` default User-Agent + bot-block status codes (observed) |
 | [ZhangHanDong /btw gist][btw-gist] | `/btw` command analysis |
 | [CLAURST README][claurst] | Internal/gated tool registry, feature flags |
 
