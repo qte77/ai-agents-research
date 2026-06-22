@@ -3,8 +3,8 @@ title: CC GitHub Actions — claude-code-action & Claude GitHub App
 source: https://code.claude.com/docs/en/github-actions, https://github.com/apps/claude, https://github.com/anthropics/claude-code-action/blob/main/action.yml, https://github.com/anthropics/claude-code-action/discussions/578, https://code.claude.com/docs/en/amazon-bedrock, https://code.claude.com/docs/en/google-vertex-ai, https://code.claude.com/docs/en/microsoft-foundry, https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
 purpose: Evaluate Claude Code GitHub Actions for PR automation, code review, issue triage, and scheduled workflows — setup, capabilities, limitations, and cost.
 created: 2026-03-12
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -15,7 +15,7 @@ Claude Code GitHub Actions (`anthropics/claude-code-action@v1`) brings AI-powere
 
 Built on the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview). Defaults to Sonnet; Opus 4.6 available via `--model claude-opus-4-6` ([source][cc-gha-docs]).
 
-The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. The full permission surface is documented in [GitHub App Permission Surface](#github-app-permission-surface) below.
+The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. Publisher: Anthropic (`@anthropics`); built on the publicly available Claude Agent SDK and provided as a third-party GitHub App governed by separate terms beyond GitHub's ([setup.md][gha-setup]). The full permission surface is documented in [GitHub App Permission Surface](#github-app-permission-surface) below.
 
 ## GitHub App Permission Surface
 
@@ -49,13 +49,56 @@ The App identity (`claude[bot]`) is honest only because `claude-code-action` is 
 
 Requires repository admin. Only available for direct Anthropic API users (not Bedrock/Vertex) ([source][cc-gha-docs]).
 
+### Interactive Setup Flow
+
+`/install-github-app` is an interactive wizard with three panels (observed in `claude-code` 2.1.x — UI surfaces verified against [`claude-code-action` setup.md][gha-setup] and [`examples/`][gha-examples]):
+
+#### 1. Pre-flight warnings
+
+Detects environment issues before proceeding. Most common: `gh` CLI not authenticated. The wizard displays a warnings panel listing the issues and lets you continue (Enter) or abort (Ctrl+C). Recovery options:
+
+- `gh auth login` — interactive GitHub login
+- Set environment variables (`GITHUB_TOKEN`)
+- Bail out and follow the [manual setup guide][gha-setup]
+
+#### 2. API key chooser
+
+Two authentication paths, gated by repository secret name ([setup.md][gha-setup]):
+
+| Choice | Secret name | Source |
+|---|---|---|
+| **Long-lived OAuth token** | `CLAUDE_CODE_OAUTH_TOKEN` | Claude Pro/Max subscription via `claude setup-token` |
+| **Anthropic API key** | `ANTHROPIC_API_KEY` | Console-issued, value starts `sk-ant-` |
+
+The OAuth path lets Pro/Max subscribers run the action without a separate API key — the workflow consumes subscription quota. API key remains the path for org accounts and Bedrock/Vertex routing.
+
+#### 3. Workflow selector
+
+Checkbox list of workflow templates to install into `.github/workflows/`:
+
+| Template | What it does |
+|---|---|
+| **@Claude Code** | Tag `@claude` in issues and PR comments to trigger interactive responses |
+| **Claude Code Review** | Automated review on every new PR (no mention required) |
+
+More templates (issue triage, CI fixes, scheduled reports) at [`claude-code-action/examples/`][gha-examples] — install manually after the wizard.
+
 ### Manual Setup
 
 1. Install the [Claude GitHub App][claude-app] to your repository
-2. Add `ANTHROPIC_API_KEY` to repository secrets
+2. Add `ANTHROPIC_API_KEY` **or** `CLAUDE_CODE_OAUTH_TOKEN` to repository secrets ([setup.md][gha-setup])
 3. Copy the [example workflow](https://github.com/anthropics/claude-code-action/blob/main/examples/claude.yml) into `.github/workflows/`
 
 Test by tagging `@claude` in an issue or PR comment ([source][cc-gha-docs]).
+
+### Custom GitHub App (Bedrock/Vertex)
+
+For AWS Bedrock or Google Vertex AI routing, the wizard does not apply — install your own GitHub App. The [setup.md][gha-setup] documents two approaches:
+
+- **App manifest** (recommended) — download `create-app.html`, click "Create App", GitHub auto-configures permissions
+- **Manual** — create app at `github.com/settings/apps`, generate `.pem` private key, add `APP_ID` + `APP_PRIVATE_KEY` to secrets
+
+Required permissions (Repository): **Contents** Read & Write, **Issues** Read & Write, **Pull requests** Read & Write ([setup.md][gha-setup]).
 
 ## Capabilities
 
@@ -335,6 +378,8 @@ A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-t
 [gh-runner-pricing]: https://docs.github.com/en/billing/reference/actions-runner-pricing
 [gh-larger-runner-jobs]: https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/use-larger-runners
 [cc-action-repo]: https://github.com/anthropics/claude-code-action
+[gha-setup]: https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md
+[gha-examples]: https://github.com/anthropics/claude-code-action/blob/main/examples/
 [copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent
 [copilot-cli]: https://github.com/github/copilot-cli
 [codex-action]: https://github.com/openai/codex-action
