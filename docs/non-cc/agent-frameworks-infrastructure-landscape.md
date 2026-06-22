@@ -103,6 +103,12 @@ Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; t
 
 - [Cohere Rerank](https://cohere.com/rerank) — cross-encoder rerank API (rerank-v4.0 pro/fast, 100+ languages); commercial.
 - **Cross-encoders** — joint query+document forward pass (via sentence-transformers); higher accuracy than bi-encoders at O(n) per-candidate cost; run as a second stage after ANN retrieval. ColBERT (above) is the late-interaction middle ground.
+- [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) — multilingual cross-encoder (BAAI, Apache-2.0); pairs with bge-m3 dense embeddings and is a strong default second stage after BM25+dense fusion.
+- [Qwen3-Reranker](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B) — instruction-aware cross-encoder family (Alibaba, Apache-2.0; 0.6B/4B/8B, long context); the 0.6B is CPU-viable, larger sizes trade latency for quality.
+- [mxbai-rerank](https://github.com/mixedbread-ai/mxbai-rerank) — DeBERTa-based cross-encoders in three sizes (mixedbread, Apache-2.0); a permissive-license alternative to bge-reranker.
+- [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) — lightweight CPU reranker (Apache-2.0); bundles tiny cross-encoders (optional GGUF listwise) with no PyTorch dependency — for latency-sensitive post-retrieval.
+- [rerankers](https://github.com/AnswerDotAI/rerankers) — unified Python API over cross-encoders, ColBERT, MonoT5, RankGPT, FlashRank and hosted APIs (answerdotai, Apache-2.0); swap backends without code changes, handy for A/B eval. [RAGatouille](https://github.com/AnswerDotAI/RAGatouille) makes ColBERT indexing + reranking practical in a few lines.
+- **Hosted alternatives** (managed comparison points for local-first stacks): Voyage `rerank-2.5`, ZeroEntropy `zerank-2`, and Contextual AI `ctxl-rerank-v2` add instruction-following without fine-tuning (Contextual also ships open weights); Jina `reranker-m0` is multimodal (CC BY-NC). Per-search (Cohere) vs per-token (Voyage/ZeroEntropy) billing makes headline cost comparison non-trivial.
 
 ### Embedding models
 
