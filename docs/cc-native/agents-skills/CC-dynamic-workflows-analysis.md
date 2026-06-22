@@ -3,8 +3,8 @@ title: CC Dynamic Workflows, Ultracode & deep-research
 source: https://code.claude.com/docs/en/workflows
 purpose: Document Claude Code's dynamic workflow orchestration tool, the ultracode effort setting, and the bundled /deep-research workflow, with first-party sourcing.
 created: 2026-06-11
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Trial (GA since CC v2.1.154; paid plans + API/Bedrock/Vertex/Foundry)
@@ -85,6 +85,17 @@ Progress-view controls ([watch the run][cc-watch]):
 
 **Resume** is **same-session only**: a paused or stopped run resumes with completed agents returning cached results and the rest running live (select it and press `p`, or ask Claude to relaunch). Exiting Claude Code restarts a running workflow fresh in the next session ([manage runs][cc-manage]).
 
+## Across surfaces: interactive, headless (`claude -p`), Agent SDK
+
+Dynamic workflows run on **every** Claude Code surface — interactive CLI, Desktop, IDE extensions, headless `claude -p`, and the [Agent SDK][cc-agent-sdk] ([workflows][cc-workflows]). Availability is uniform; execution and discovery differ:
+
+- **Headless awaits the run.** A workflow's background agents are part of the final output, so `claude -p` does not exit until they finish (unlike a background Bash task, killed ~5s after the result). From **v2.1.182** that wait is capped at **10 minutes** by default — adjust via `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS` (`0` = unlimited) ([headless][cc-headless]).
+- **`--bare` skips auto-discovery.** `--bare` (recommended for scripted/SDK runs, and slated to become the `-p` default) skips hooks, skills, plugins, MCP servers, auto-memory, and `CLAUDE.md` — so a workflow **saved as a `/<name>` command won't auto-load**; pass what's needed explicitly (`--agents`, `--settings`, `--mcp-config`) ([headless][cc-headless]).
+- **The primitives are headless-capable.** Subagents run and are awaited as above; **user-invoked skills and custom commands work in `-p`** since **v2.1.181** (put `/skill-name` in the prompt string) — but built-in interactive-dialog commands (e.g. `/login`) are not ([headless][cc-headless]).
+- **SDK control.** From the Agent SDK, workflows and their subagents are driven programmatically (the `agents` option, hook callbacks, and `ultracode` via `--settings` or a control request — see [Ultracode](#ultracode-effort-setting)).
+
+**Bottom line:** workflows work in the SDK, headless `-p`, *and* interactive — the only headless caveats are that background agents are awaited (10-min default cap) and `--bare` requires passing skills/hooks/MCP explicitly.
+
 ## Disabling
 
 Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and the [Agent SDK][cc-agent-sdk]. Disable via *Dynamic workflows* off in `/config`, `"disableWorkflows": true` in settings, or `CLAUDE_CODE_DISABLE_WORKFLOWS=1`. When disabled, bundled workflow commands are unavailable, the `ultracode` keyword stops triggering, and `ultracode` is removed from the `/effort` menu ([workflows][cc-workflows]).
@@ -115,6 +126,7 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 | [Subagents][cc-subagents] | The worker primitive workflows orchestrate |
 | [Run agents in parallel][cc-agents] | Subagents vs skills vs teams vs workflows |
 | [Agent SDK overview][cc-agent-sdk] | Workflows on the SDK surface |
+| [Headless mode][cc-headless] | `-p` skills/subagents/hooks behavior, `--bare`, background-agent wait cap |
 | [Tools reference — WebSearch][cc-tools-ref] | `/deep-research` dependency |
 
 [cc-workflows]: https://code.claude.com/docs/en/workflows
@@ -125,4 +137,5 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 [cc-subagents]: https://code.claude.com/docs/en/sub-agents
 [cc-agents]: https://code.claude.com/docs/en/agents
 [cc-agent-sdk]: https://code.claude.com/docs/en/agent-sdk/overview
+[cc-headless]: https://code.claude.com/docs/en/headless
 [cc-tools-ref]: https://code.claude.com/docs/en/tools-reference#websearch-tool-behavior
