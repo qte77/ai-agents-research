@@ -4,13 +4,36 @@ purpose: Persistent cross-session memory tools that integrate with Claude Code �
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-16
-validated_links: 2026-06-14
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational)
 
 Persistent-memory tools for Claude Code. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). For non-CC memory *infrastructure* (Mem0, Zep/Graphiti, Cognee, LangMem, A-MEM), see [agent-frameworks-infrastructure-landscape.md § Agent Memory Infrastructure](../non-cc/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure). CC's native memory: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md).
+
+## Memory Taxonomy
+
+Agent memory is conventionally split into four modules ([CoALA][coala], arXiv:2309.02427):
+
+- **Working** — active in-context state for the current decision cycle; transient.
+- **Episodic** — records of past interactions/experiences, retrievable across sessions.
+- **Semantic** — persistent facts about the world, the user, and the domain.
+- **Procedural** — encoded behavior: implicit in model weights, explicit in system prompt / agent code.
+
+[LangMem][langmem] maps its API most directly to the semantic/episodic/procedural split ([conceptual guide][langmem-concepts]); the others use their own scheme (OS-style tiers, memory blocks, temporal graphs) that only *approximately* aligns. The table normalizes the non-CC frameworks onto the CoALA axes — full descriptions live in [agent-frameworks-infrastructure-landscape.md §4][non-cc-mem] (not duplicated here):
+
+| Framework | Working | Episodic | Semantic | Procedural | Primary backend |
+|---|:-:|:-:|:-:|:-:|---|
+| [Mem0][mem0] | ~ | ✓ | ✓ | — | Vector (+ optional graph) |
+| [Cognee][cognee] | ~ | ✓ | ✓ | — | Relational + vector + graph |
+| [Letta / MemGPT][letta] | ✓ | ✓ | ✓ | — | In-context blocks + external store |
+| [Zep / Graphiti][graphiti] | — | ✓ | ✓ | — | Temporal graph + vector + BM25 |
+| [A-MEM][a-mem] | — | ✓ | ✓ | — | Vector (ChromaDB) |
+| [LangMem][langmem] | — | ✓ | ✓ | ✓ | KV / DB-backed store |
+| [MemoryOS][memoryos] | ✓ | ✓ | ✓ | — | File-based (+ ChromaDB) |
+
+Legend: ✓ explicit layer · ~ partial/implicit · — not a documented layer. Mappings are approximate — each project names its tiers differently; only LangMem ships an explicit *procedural* layer.
 
 ## ByteRover CLI (campfirein)
 
@@ -180,6 +203,30 @@ The memory-recall skill runs in a `context: fork` subagent, so intermediate sear
 
 Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) — memsearch as a mobile/remote supporting tool
 
+## Benchmarks
+
+Two long-term-memory benchmarks recur in this space. **Most per-framework numbers are vendor self-reported** — each project's own run on the public dataset, with its own LLM/harness — not produced or audited by the benchmark authors, and not directly comparable across rows. Treat as directional.
+
+### LongMemEval ([repo][longmemeval], arXiv:2410.10813)
+
+500 questions over multi-session chat histories testing five abilities: information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention. Two settings: ~115k tokens (S) and ~1.5M tokens / 500 sessions (M). The paper reports a ~30% accuracy drop for commercial assistants on long histories and names no framework scores.
+
+| Framework | Reported result | Source |
+|---|---|---|
+| MemPalace | 96.6% R@5 (raw mode) | vendor README — see [MemPalace](#mempalace-milla-jovovich) above |
+| Mem0 | ~94% accuracy, ~6.8k mean tokens | mem0.ai/research (vendor, 2026) |
+
+### LOCOMO ([Meta][locomo], arXiv:2402.17753)
+
+Long conversational memory — QA (single/multi-hop, temporal, open-domain), event summarization, multimodal dialogue over conversations averaging ~300 turns / ~9k tokens across up to 35 sessions. Humans substantially outperform all evaluated systems.
+
+| Framework | Reported result (self-reported) | Source |
+|---|---|---|
+| Mem0 | ~92.5 overall; ~7k tokens vs 25k+ full-context; "~90% lower token cost" | [Mem0 paper][mem0-paper] |
+| MemoryOS | +49.11% F1, +46.18% BLEU-1 over baselines | vendor README ([MemoryOS][memoryos]) |
+
+Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-reported on LOCOMO," not "LOCOMO result."
+
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
@@ -193,3 +240,15 @@ Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-acce
 [longmemeval]: https://github.com/xiaowu0162/LongMemEval
 [memsearch]: https://github.com/zilliztech/memsearch
 [memsearch-docs]: https://zilliztech.github.io/memsearch/platforms/claude-code/
+[coala]: https://arxiv.org/abs/2309.02427
+[langmem]: https://github.com/langchain-ai/langmem
+[langmem-concepts]: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/
+[non-cc-mem]: ../non-cc/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure
+[mem0]: https://github.com/mem0ai/mem0
+[mem0-paper]: https://arxiv.org/abs/2504.19413
+[cognee]: https://github.com/topoteretes/cognee
+[letta]: https://github.com/letta-ai/letta
+[graphiti]: https://github.com/getzep/graphiti
+[a-mem]: https://github.com/agiresearch/A-mem
+[memoryos]: https://github.com/BAI-LAB/MemoryOS
+[locomo]: https://arxiv.org/abs/2402.17753

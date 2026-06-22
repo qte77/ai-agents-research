@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-20
-validated_links: 2026-06-19
+updated: 2026-06-22
+validated_links: 2026-06-22
 ---
 
 **Status**: Research (informational)
@@ -61,6 +61,7 @@ The field has reframed memory as **context engineering** — assembling persiste
 - [Cognee](https://github.com/topoteretes/cognee) — open-source KG memory engine, 30+ data types, MCP server; raised $7.5M seed (Feb 2026).
 - [A-MEM](https://github.com/agiresearch/A-mem) — Zettelkasten-style agentic memory with dynamic linking ([paper](https://arxiv.org/abs/2502.12110)).
 - [LangMem](https://github.com/langchain-ai/langmem) — LangGraph-native semantic/episodic/procedural memory (MIT).
+- [MemoryOS](https://github.com/BAI-LAB/MemoryOS) — hierarchical short/mid/long-term memory OS for personalized agents; +49.11% F1 over baselines on LoCoMo (self-reported), EMNLP 2025 Oral (Apache-2.0).
 - [Gulp.ai (Osmosis)](https://docs.gulp.ai/introduction) — agent-improvement API enriching prompts with past-interaction knowledge.
 - [ACE — Agentic Context Engine (Kayba)](https://github.com/kayba-ai/agentic-context-engine) — self-improving context layer: a three-role loop (Agent / Reflector / SkillManager) curates a persistent "Skillbook" of strategies that evolves with every task, so agents stop repeating mistakes without fine-tuning or a vector DB (Apache-2.0, [paper](https://arxiv.org/abs/2510.04618)). PydanticAI-based; ships an MCP server (`ace-mcp`) and a Claude Code runner. Offline benchmark-driven counterpart: autoharness (§3).
 
