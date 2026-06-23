@@ -96,6 +96,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 - [agent-frameworks-infrastructure-landscape.md][frameworks] — orchestration frameworks, RAG, §8 output validation
 - [agentic-sdlc-patterns.md][sdlc-patterns] — the ADLC this stack instantiates
 - [CC-ralph-enhancement-research.md][ralph] — the Ralph loop in this repo's tooling
+- [Startup CTO Handbook → qte77 mapping][cto-map] — the traditional human-team engineering-leadership baseline these agentic disciplines diverge from
 
 ## Sources
 
@@ -113,6 +114,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | [GitHub Spec-Kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [Kiro specs][kiro] | SDD frameworks |
 | [qte77/open-agentic-coding-harness][oach] | Reference implementation (sibling repo) |
 | Tobi Lütke / Karpathy (X, Jun 2025); Dave Farley (davefarley.net / courses.cd.training); Geoffrey Huntley Ralph loop (2025) | Attributions cited in prose (no stable/linkable URL) |
+| [Startup CTO Handbook (Goldberg)][cto-handbook] · [qte77 mapping][cto-map] | Traditional engineering-leadership baseline — contrast to the agentic disciplines |
 
 [anthropic-ce]: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
 [anthropic-bea]: https://www.anthropic.com/research/building-effective-agents
@@ -120,6 +122,8 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [alphacodium]: https://arxiv.org/abs/2401.08500
 [react]: https://arxiv.org/abs/2210.11610
 [walkinglabs]: https://github.com/walkinglabs/learn-harness-engineering
+[cto-handbook]: https://github.com/ZachGoldberg/Startup-CTO-Handbook
+[cto-map]: https://github.com/qte77/qte77/blob/main/docs/cto-handbook-mapping.md
 [bdd]: https://dannorth.net/blog/introducing-bdd/
 [husain-evals]: https://hamel.dev/blog/posts/evals/
 [fowler-sdd]: https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html
