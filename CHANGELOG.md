@@ -11,6 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.7.0] - 2026-06-23
+
+### Added
+
+- `docs/cc-native/agents-skills/CC-dynamic-workflows-analysis.md`: new **Observability & tracing** section — workflow/subagent execution emits OpenTelemetry (metrics + logs GA; traces beta via `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA`). Per-subagent `claude_code.llm_request` / `claude_code.tool` spans **nest under the parent Agent-tool span** (`agent_id` / `parent_agent_id`) → a real agent-trajectory trace; partial `gen_ai.*` GenAI conventions. Any OTLP backend (Arize Phoenix, Pydantic Logfire, Datadog, Tempo) ingests it **generically — none has a CC-specific integration**. Cross-refs `CC-agent-observability-methods-analysis.md`. First-party: code.claude.com/docs/en/monitoring-usage.
+
+- `docs/cc-native/agents-skills/CC-dynamic-workflows-analysis.md`: new **Across surfaces** section — dynamic workflows and their primitives across interactive / headless `claude -p` / Agent SDK, with first-party-verified headless nuances: background agents are **awaited** (10-min default cap from **v2.1.182**, `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS`), `--bare` skips skills/hooks/MCP/memory (slated to become the `-p` default), and user-invoked skills/custom commands work in `-p` since **v2.1.181**. Answers "are workflows usable in the SDK / `-p` / interactive?" (yes, all three).
+
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: new **§8 Output Validation, Guardrails & Verification** — structured-output enforcement ([Instructor](https://github.com/567-labs/instructor), [Outlines](https://github.com/dottxt-ai/outlines), [BAML](https://github.com/BoundaryML/baml), Guidance, Pydantic AI / Marvin), guardrails/policy ([Guardrails AI](https://github.com/guardrails-ai/guardrails), NeMo Guardrails, LLM Guard, safety classifiers), and verification/fact-checking (Bespoke-MiniCheck, FActScore, self-consistency, DeepEval gate). Fills a verified coverage gap (only incidental mentions existed); cross-refs the security/governance docs. Licenses verified first-party — NeMo `NOASSERTION` noted as NVIDIA-only, Bespoke-MiniCheck flagged CC BY-NC.
+
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: new **credo-framed synthesis** landscape — the **"-engineering"** disciplines ladder (prompt → context → harness → loop → flow → spec, with first-party coiners: Lütke/Karpathy + Anthropic for context engineering, WalkingLabs + OpenAI for harness engineering, Itamar Friedman/AlphaCodium for flow engineering) and the **"-driven development"** ladder (TDD → BDD → EDD → SDD + Dave Farley), composed into a **five-layer stack** (Disciplines → Methodology → Execution → Feedback → Compound) with **EDD as the keystone**. Cross-links the shipped workflows / observability / eval docs; spec-driven-frameworks table (spec-kit 114.8k★ / OpenSpec / BMAD / Kiro); `open-agentic-coding-harness` as the reference implementation. Indexed in `sdlc-lcm/README.md`.
+
 ## [0.6.0] - 2026-06-22
 
 ### Added
