@@ -4,8 +4,8 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-06-23
+validated_links: 2026-06-23
 ---
 
 **Status**: Research (informational)
@@ -31,7 +31,7 @@ Agents that conduct multi-step research and generate research outputs.
 - [OpenAI Deep Research][openai-deep-research] — agentic ChatGPT capability; API as `o3-deep-research` ($10/$40 per MTok, 200K ctx, MCP connectors), led HLE at launch.
 - [Gemini Deep Research][gemini-deep-research] — Gemini 3 Pro long-horizon agent via the Interactions API (`deep-research-pro-preview-12-2025`); 46.4% HLE, 66.1% DeepSearchQA, background execution + remote MCP.
 - [AutoScientists (mims-harvard)][autoscientists] — decentralized team of AI agents for long-running computational-science experiments, self-organizing around promising hypotheses; **packaged as Claude Code subagents** coordinating via a local ClawInstitute server (no central planner). BioML-Bench 74.4% mean leaderboard percentile (629★, Python) — the most direct CC-harness tie-in here.
-- [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's `/deep-research`.
+- [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's [`/deep-research`](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research).
 - [local-deep-researcher (langchain-ai)][local-deep-researcher] — **distinct from the above** despite the near-identical name: LangChain's minimal LangGraph *reference* implementation of the search→summarize→reflect loop (Ollama/LMStudio, local-only by default) — the canonical starting pattern, not a full assistant. MIT, ~9.2k★.
 - [dataroom (hanxiao / Jina)][dataroom] — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](../non-cc/pi-analysis.md)); ~168★, new.
 

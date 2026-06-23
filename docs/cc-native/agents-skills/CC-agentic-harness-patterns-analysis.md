@@ -5,8 +5,8 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-06-23
+validated_links: 2026-06-23
 ---
 
 **Status**: Research (informational)
@@ -122,7 +122,7 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Kubernetes Patterns (O'Reilly)](https://k8spatterns.com/)
 - [Prompt Patterns catalog](https://www.promptpatterns.dev/)
 - [The Generative Programmer Substack](https://generativeprogrammer.com/)
-- ["Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems" (arXiv 2604.14228)](https://arxiv.org/abs/2604.14228) — academic design-space analysis of CC's source (Liu et al., 2026)
+- ["Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems" (arXiv 2604.14228)](https://arxiv.org/abs/2604.14228) — academic design-space analysis of CC's source (Liu et al., 2026); companion code: [VILA-Lab/Dive-into-Claude-Code](https://github.com/VILA-Lab/Dive-into-Claude-Code)
 
 ## Security-Domain Application: Defending Code Reference Harness
 

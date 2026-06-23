@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-06-23
+validated_links: 2026-06-23
 ---
 
 **Status**: Research (informational)
@@ -17,7 +17,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [LangGraph](https://github.com/langchain-ai/langgraph) — graph-based stateful orchestration with checkpointing and conditional routing (MIT); the base for many harnesses below.
 - [CrewAI](https://github.com/crewAIInc/crewAI) — role-based crews with sequential/hierarchical/consensus execution (MIT).
 - [AutoGen / AG2](https://github.com/ag2ai/ag2) — conversational multi-agent framework with group chat and code execution (Apache-2.0).
-- [PydanticAI](https://github.com/pydantic/pydantic-ai) — type-safe agents on Pydantic v2 with durable execution + MCP/A2A; the framework this repo's evaluation work builds on.
+- [PydanticAI](https://github.com/pydantic/pydantic-ai) — type-safe agents on Pydantic v2 with durable execution + MCP/A2A; the framework this repo's evaluation work builds on. Its [capabilities system][pai-caps] (Jun 2026) bundles instructions + tools + model settings into composable units that support **on-demand / deferred loading** (`defer_loading=True`) — a capability's context is injected only when the agent requests it, trimming per-run tokens (PydanticAI's progressive-disclosure / "skills" answer); capability-scoped hooks fire only on load. Companion managed services: the Pydantic AI Gateway (routing) and [Logfire](../cc-community/CC-agent-observability-methods-analysis.md) observability.
 - [LlamaIndex Agents](https://github.com/run-llama/llama_index) — RAG-optimized agents over 100+ data sources.
 - [Letta](https://github.com/letta-ai/letta) — stateful agents with hierarchical self-editing memory, by the [MemGPT](https://arxiv.org/abs/2310.08560) authors (Apache-2.0).
 - [Agno](https://github.com/agno-agi/agno) — high-performance multi-agent runtime with built-in memory/session, FastAPI app, strong MCP support.
@@ -176,3 +176,4 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 
 [12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
 [12fa-gh]: https://github.com/humanlayer/12-factor-agents
+[pai-caps]: https://pydantic.dev/articles/pydantic-ai-capabilities

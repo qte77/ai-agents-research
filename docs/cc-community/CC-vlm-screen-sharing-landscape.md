@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code]
 created: 2026-04-11
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-06-23
+validated_links: 2026-06-23
 ---
 
 **Status**: Assess
@@ -132,7 +132,7 @@ Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow co
 ## Observed Implementations
 
 - [qte77/cc-voice-plugin-prototype][cc-voice] — plugin integration demonstrating a Tier 2 pipeline (local VLM → text) for a voice-driven CC workflow. See the repo's own docs and ADRs for the specific model / runtime / resize choices adopted there.
-- [StarTrail-org/PixelRAG][pixelrag] — **pixel-native RAG**: renders pages/PDFs to image tiles and retrieves by visual similarity with a fine-tuned [Qwen3-VL][qwen3-vl]-Embedding model, skipping text parsing entirely. Ships a Claude Code **`pixelbrowse`** plugin (`claude plugin install pixelbrowse@pixelrag-plugins`) — a skill calling `pixelshot` (Playwright/CDP) via a `/screenshot <url>` command; no MCP server or backend. A Tier 1 (CC-native plugin) visual-retrieval pattern, distinct from the Tier 2 local-VLM→text prototype above. ~3.3k★.
+- [StarTrail-org/PixelRAG][pixelrag] — **pixel-native RAG**: renders pages/PDFs to image tiles and retrieves by visual similarity with a fine-tuned [Qwen3-VL][qwen3-vl]-Embedding model, skipping text parsing entirely. Ships a Claude Code **`pixelbrowse`** plugin (`claude plugin install pixelbrowse@pixelrag-plugins`) — a skill calling `pixelshot` (Playwright/CDP) via a `/screenshot <url>` command; no MCP server or backend. A Tier 1 (CC-native plugin) visual-retrieval pattern, distinct from the Tier 2 local-VLM→text prototype above. ~4.2k★ (v0.3.0, 2026-06-23).
 
 ## Sources
 
