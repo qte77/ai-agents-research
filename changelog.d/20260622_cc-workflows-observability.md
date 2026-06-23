@@ -1,3 +1,0 @@
-### Added
-
-- `docs/cc-native/agents-skills/CC-dynamic-workflows-analysis.md`: new **Observability & tracing** section — workflow/subagent execution emits OpenTelemetry (metrics + logs GA; traces beta via `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA`). Per-subagent `claude_code.llm_request` / `claude_code.tool` spans **nest under the parent Agent-tool span** (`agent_id` / `parent_agent_id`) → a real agent-trajectory trace; partial `gen_ai.*` GenAI conventions. Any OTLP backend (Arize Phoenix, Pydantic Logfire, Datadog, Tempo) ingests it **generically — none has a CC-specific integration**. Cross-refs `CC-agent-observability-methods-analysis.md`. First-party: code.claude.com/docs/en/monitoring-usage.
