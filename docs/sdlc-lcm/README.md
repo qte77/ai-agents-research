@@ -26,6 +26,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [lcm-release-runbook.md](lcm-release-runbook.md) | Release management checklist bridging SDLC release phase to LCM transitions |
 | [oss-alm-landscape.md](oss-alm-landscape.md) | OSS ALM tool comparison (Tuleap, OpenProject, Redmine, GitLab) |
 | [agentic-sdlc-patterns.md](agentic-sdlc-patterns.md) | Emerging patterns: ADLC, Agentic SDLC, Spec-Driven Development |
+| [agentic-engineering-disciplines-landscape.md](agentic-engineering-disciplines-landscape.md) | Synthesis: "-engineering" disciplines (prompt→spec) + "-driven-dev" methodologies (TDD→EDD→SDD) in a five-layer credo stack |
 | [multi-agent-onboarding-outlook.md](multi-agent-onboarding-outlook.md) | Multi-agent support: CC, Kiro, Cursor, Gemini CLI, AGENTS.md convergence |
 
 ## Framework Grounding
