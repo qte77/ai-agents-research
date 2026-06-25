@@ -4,8 +4,8 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-20
-validated_links: 2026-06-19
+updated: 2026-06-25
+validated_links: 2026-06-25
 ---
 
 **Status**: Research (informational)
@@ -94,6 +94,32 @@ Python, TypeScript, JavaScript, Go, Rust, Java, C, C++, Ruby, C#, Kotlin, PHP, S
 **Risks**: Token reduction claims are self-reported (no independent benchmark). Overlaps with graphify's AST extraction layer. Early stage.
 
 Cross-ref: [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) — related code understanding tools
+
+---
+
+## Qodo (qodo-ai)
+
+**Repos**: [qodo-ai/agents][qodo-agents] · [qodo-ai/open-aware][qodo-aware] | **License**: MIT (both) | **Cross-repo review**: [docs.qodo.ai governance][qodo-crr]
+
+A code-review / code-intelligence platform with three surfaces relevant here, all MCP-based — so they plug into Claude Code (and other assistants) directly.
+
+| Surface | What it is |
+|---|---|
+| **open-aware** | Free "deep code research" MCP server — semantic search (`get_context`), architectural Q&A (`deep_research`, `ask`) across **multiple repositories** with daily-updated indexes of popular OSS libraries. Goes beyond keyword search via vector embeddings; private repos need the paid Qodo Aware tier. |
+| **agents** ("Qodo Commands Playbooks") | TOML-defined agent workflows for Qodo Command — code review, test generation, issue handling, docs/changelog, license-compliance, security-scorecard fixes. Each agent declares instructions, tools (MCP servers), arguments, a `plan`/`act` execution strategy, an output schema, and exit expressions. |
+| **cross-repo code review** | Governance feature: traces a PR's impact bidirectionally across *related* repos (Code / Service / Data / Pipeline relationships) to surface breaking changes — a signature change, API-contract shift, or schema evolution — that single-repo review misses. Findings appear inline, tagged "Cross-repo". |
+
+### Key Differentiator
+
+Code-Review-Graph (above) computes structural blast radius **within one repo**; Qodo's cross-repo review extends impact tracing **across repository boundaries** (shared libraries, API contracts, schemas). open-aware is the semantic-index counterpart (multi-repo embeddings) to the AST-graph tools in this doc, and the `agents` TOML format is an openly reusable playbook pattern.
+
+### Adoption Considerations
+
+**Strengths**: MCP-native (works with CC out of the box); the agent playbooks are an open (MIT) TOML pattern reusable as a harness reference; cross-repo review fills a gap no AST-blast-radius tool here covers.
+
+**Risks**: open-aware's free tier indexes only pre-indexed *public* repos — private-repo coverage and cross-repo review are paid/enterprise. Star/adoption figures not independently verified here.
+
+Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
 
 ---
 
@@ -241,3 +267,6 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [ast-grep]: https://github.com/ast-grep/ast-grep
 [repomix]: https://github.com/yamadashy/repomix
 [code2prompt]: https://github.com/mufeedvh/code2prompt
+[qodo-agents]: https://github.com/qodo-ai/agents
+[qodo-aware]: https://github.com/qodo-ai/open-aware
+[qodo-crr]: https://docs.qodo.ai/governance/cross-repo-code-review

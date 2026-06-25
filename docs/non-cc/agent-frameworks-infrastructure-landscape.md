@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-23
-validated_links: 2026-06-23
+updated: 2026-06-25
+validated_links: 2026-06-25
 ---
 
 **Status**: Research (informational)
@@ -72,6 +72,7 @@ Frontier model facts and pricing change fast and live in [CC-models-reference.md
 - [DeepSeek V3.2 / V3.2-Speciale / R1](https://api-docs.deepseek.com/news/news251201) — reasoning-first, agent-trained models (V3.2-Speciale synthesized 1,800+ environments, 85K+ instructions; integrates thinking into tool use). Cost-efficient OSS.
 - [Devstral (Mistral)](https://mistral.ai/news/devstral) — Apache-2.0 agentic-coding model family (All Hands AI / OpenHands lineage). Devstral Small 2 (24B) hits 68.0% SWE-Bench Verified (123B: 72.2%) — the top open-source agentic-coding scores; runs on a single RTX 4090 / 32GB Mac, ~30–50× cheaper than Sonnet, and is a listed [Claude Code model backend](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512) via OpenAI-compatible routing. Capabilities are folding into the unified Mistral Small 4 line.
 - [Arcee Foundation Models (AFM)](https://www.arcee.ai/) — ~4.5B CPU-optimized enterprise model for private/offline deployment.
+- [UniRL (Tencent Hunyuan)](https://github.com/Tencent-Hunyuan/UniRL) — unified RL **post-training** framework: one loop (sample → score → advantage → policy update → weight sync) across diffusion, autoregressive VLM/LLM, and unified models, with team algorithms Flow-DPPO / DRPO / CPPO. *Training infrastructure, not an agent or a model an agent calls* — listed as the RL post-training layer behind agent-oriented multimodal models (Hunyuan, Qwen, Stable Diffusion).
 
 ## 6. Specialist Models Agents Call as Tools
 

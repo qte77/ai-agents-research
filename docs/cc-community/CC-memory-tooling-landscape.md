@@ -4,8 +4,8 @@ purpose: Persistent cross-session memory tools that integrate with Claude Code �
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-06-25
+validated_links: 2026-06-25
 ---
 
 **Status**: Research (informational)
@@ -34,6 +34,8 @@ Agent memory is conventionally split into four modules ([CoALA][coala], arXiv:23
 | [MemoryOS][memoryos] | ✓ | ✓ | ✓ | — | File-based (+ ChromaDB) |
 
 Legend: ✓ explicit layer · ~ partial/implicit · — not a documented layer. Mappings are approximate — each project names its tiers differently; only LangMem ships an explicit *procedural* layer.
+
+**Design lens — memory should change future behavior.** Beyond *what is stored*, the test for any of these layers is whether a stored item actually alters a later decision. André Lindenberg frames memory as a first-class component judged by behavior change — a "skillbook" that updates after tasks, failures, and feedback, not a passive transcript (Lindenberg, *Memory should change future behavior*, LinkedIn, 2026). It reframes episodic/procedural memory as the loop that lets an agent compound rather than merely recall — the same write-back-and-reuse intent behind this repo's CRLA/`docs/learnings/` flow.
 
 ## ByteRover CLI (campfirein)
 
@@ -248,6 +250,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 | [A-MEM][a-mem] | Agentic memory system |
 | [MemoryOS][memoryos] | Hierarchical memory OS |
 | [CoALA][coala] | Cognitive-architectures framework (paper) |
+| André Lindenberg — *Memory should change future behavior* (LinkedIn, 2026) | Design principle: memory judged by behavior change, not storage (LinkedIn — not link-checked) |
 | [LongMemEval][longmemeval] | Long-term-memory benchmark |
 | [LOCOMO][locomo] | Long-conversation memory benchmark |
 
