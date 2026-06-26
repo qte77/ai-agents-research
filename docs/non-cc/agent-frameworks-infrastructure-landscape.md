@@ -80,6 +80,7 @@ Frontier model facts and pricing change fast and live in [CC-models-reference.md
 Non-LLM foundation models an agent invokes as a *tool* for one narrow capability (forecasting, ranking, etc.) — distinct from the agent-driving LLMs in §5. Listed when reachable from an agent via an endpoint or SDK.
 
 - [TimesFM (Google Research)](https://github.com/google-research/timesfm) — time-series **forecasting** foundation model (v2.5: ~200M params, up to 16k context, point + quantile forecasts; PyTorch + JAX/Flax, Apache-2.0). Not an agent LLM — an agent calls it for numeric forecasting, exposed for programmatic/agent use via Vertex AI Model Garden and BigQuery ML.
+- [LuxTTS](https://github.com/ysharma3501/LuxTTS) — text-to-speech **voice-cloning** model (~150× realtime, 48kHz, sub-1GB VRAM; Apache-2.0). Not an agent LLM — an agent calls it for the speech-output half of a voice loop (agent text → TTS → audio); voice/TTS sits at the edge of this corpus's scope, listed for completeness.
 
 ## 7. RAG & Retrieval Infrastructure
 

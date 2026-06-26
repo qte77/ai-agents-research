@@ -123,6 +123,20 @@ Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-
 
 ---
 
+## AI PR-review agents (SaaS)
+
+Adjacent to Qodo and Code-Review-Graph: hosted bots that review pull requests with whole-codebase context. Unlike the AST/graph tools above (which you run locally and an agent queries), these are GitHub/GitLab-app SaaS that comment on PRs directly; most also expose IDE or agent hooks.
+
+- [CodeRabbit](https://www.coderabbit.ai/) — GitHub/GitLab/Azure/Bitbucket app + IDE (VS Code/Cursor/Windsurf) + CLI; bills itself "the most installed AI app on GitHub" (SaaS).
+- [Greptile](https://www.greptile.com/) — a swarm of agents builds a codebase graph index, then reviews PRs in parallel; GitHub/GitLab, API, **MCP**, and a Claude Code plugin; SaaS or self-hosted in AWS.
+- [Ellipsis](https://www.ellipsis.dev/) — GitHub-app code review plus automated bug fixes, Q&A, and changelogs (SaaS; free for public repos).
+- [Sourcery](https://sourcery.ai/) — review focused on security and AI-generated-code defects; GitHub/GitLab, VS Code/JetBrains, fixes via coding agents (SaaS).
+- [Qodo Merge / PR-Agent](https://github.com/qodo-ai/pr-agent) — the original open-source PR reviewer (Apache-2.0) behind Qodo; `/review` `/improve` `/describe` `/ask` via CLI, GitHub Action, Docker, or webhooks; GitHub/GitLab/Bitbucket/Azure/Gitea.
+
+These overlap heavily; the differentiators are codebase-context depth (Greptile's graph index), OSS vs SaaS (PR-Agent is the lone Apache-2.0 option), and agent/MCP reach (Greptile, CodeRabbit, Sourcery). Structural/AST counterpart: Code-Review-Graph above; cross-repo review: Qodo above.
+
+---
+
 ## codebase-memory-mcp (DeusData)
 
 **Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Docs**: [deusdata.github.io][codebase-memory-mcp-docs] | **Stars**: 6.8K | **License**: MIT | **Version**: v0.8.1 (2026-06-12)

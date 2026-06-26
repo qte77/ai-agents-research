@@ -316,6 +316,10 @@ Google Labs' canonical **format specification + CLI** for the artifact awesome-d
 
 awesome-design-md is a *corpus* of 58 hand-authored DESIGN.md files; Google Labs `design.md` is the *spec + toolchain* that makes the format machine-checkable (lint/diff/export). The two are complementary — the spec defines the contract, the corpus demonstrates it. Format is **alpha**; expect changes.
 
+### Related: design source + token standard
+
+DESIGN.md sits downstream of two adjacent pieces. **Source of truth:** the [Figma Dev Mode MCP server][figma-mcp] (beta) feeds AI coding agents structured design context — components, variables, layout — straight from Figma files (and can write frames/variables back to the canvas), supported in Claude Code, Copilot/VS Code, Cursor, and Windsurf. **Token format:** the [W3C Design Tokens (DTCG) format][dtcg] (`$value`/`$type`; first stable spec Oct 2025) is the interchange standard that Amazon's [Style Dictionary][style-dictionary] (v4+) emits — the same token shape DESIGN.md's CLI exports. The chain: Figma MCP supplies live design context to the agent → DTCG/Style Dictionary standardizes the tokens → DESIGN.md packages them as agent-readable Markdown.
+
 ---
 
 ## Detailed Tool Landscapes
@@ -374,6 +378,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [opensrc][opensrc] | npm package source fetcher for agent context (1.5K stars) |
 | [awesome-design-md][awesome-design-md] | 58 DESIGN.md files for agent-consumable UI generation (21.8K stars) |
 | [google-labs-code/design.md][google-design-md] | Canonical DESIGN.md format spec + `@google/design.md` CLI (lint/diff/export to Tailwind/CSS/W3C tokens); alpha |
+| [Figma Dev Mode MCP server][figma-mcp] | Feeds Figma design context to coding agents (Claude Code/Copilot/Cursor/Windsurf); beta |
+| [W3C Design Tokens (DTCG)][dtcg] · [Style Dictionary][style-dictionary] | Design-token interchange standard (first stable spec Oct 2025) + Amazon's token transformer (v4 DTCG support) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -393,6 +399,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 
 [awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [google-design-md]: https://github.com/google-labs-code/design.md
+[figma-mcp]: https://www.figma.com/blog/introducing-figma-mcp-server/
+[dtcg]: https://www.w3.org/community/design-tokens/
+[style-dictionary]: https://styledictionary.com/
 [graphify]: https://github.com/safishamsi/graphify
 [mempalace]: https://github.com/MemPalace/mempalace
 [memsearch]: https://github.com/zilliztech/memsearch
