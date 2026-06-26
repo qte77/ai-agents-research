@@ -34,7 +34,7 @@ The following models are the main candidates for local-VLM workflows on develope
 
 Licenses differ — LFM2-VL-3B in particular uses Liquid AI's own "LFM Open License v1.0", not Apache-2.0. Verify license terms on the model card before production use.
 
-**Long-document OCR / document parsing (edge of scope).** [baidu/Unlimited-OCR][unlimited-ocr] (MIT) targets *one-shot long-horizon parsing* — multi-page documents and PDFs in a single inference pass (32K-token context; `gundam`/`base` modes; HF Transformers + SGLang; OpenAI-compatible streaming), building on DeepSeek-OCR. [opendatalab/MinerU][mineru] (MinerU Open Source License, Apache-2.0-based) is the broader sibling — PDFs/DOCX/PPTX/XLSX/images → LLM-ready Markdown/JSON *for agentic workflows* (dual VLM + OCR engines, 109 languages, formulas→LaTeX, tables→HTML), shipping an MCP server usable from Claude Desktop/Cursor plus LangChain/LlamaIndex integrations. Both are document-parsing tools rather than screen-context VLMs, so they sit at the edge of this doc's scope — noted here for the visual-OCR-subagent routing pattern below. Deeper OCR / document-extraction tooling is deferred to the `polyfetch-scrape` repo's `docs/scraping-landscape.md` per cross-repo routing; for adjacent in-repo coverage see [web-scraping-extraction-landscape.md](../non-cc/web-scraping-extraction-landscape.md).
+**Long-document OCR / document parsing (edge of scope).** [baidu/Unlimited-OCR][unlimited-ocr] (MIT) targets *one-shot long-horizon parsing* — multi-page documents and PDFs in a single inference pass (32K-token context; `gundam`/`base` modes; HF Transformers + SGLang; OpenAI-compatible streaming), building on DeepSeek-OCR. [opendatalab/MinerU][mineru] (MinerU Open Source License, Apache-2.0-based) is the broader sibling — PDFs/DOCX/PPTX/XLSX/images → LLM-ready Markdown/JSON *for agentic workflows* (dual VLM + OCR engines, 109 languages, formulas→LaTeX, tables→HTML), shipping an MCP server usable from Claude Desktop/Cursor plus LangChain/LlamaIndex integrations. Both are document-parsing tools rather than screen-context VLMs, so they sit at the edge of this doc's scope — noted here for the visual-OCR-subagent routing pattern below. Deeper scraping / document-extraction tooling lives in this repo's single-source-of-truth catalog, [web-scraping-extraction-landscape.md](../non-cc/web-scraping-extraction-landscape.md).
 
 ## Local VLM Runtimes
 
@@ -142,8 +142,8 @@ Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow co
 | ------ | ------- |
 | [Anthropic vision documentation][anthropic-vision] | Token formula, resize thresholds, format support, recommended sizes, cost tables |
 | Model cards listed in the Small VLM Landscape table above | Parameter counts, licenses, release dates, benchmark scores |
-| [baidu/Unlimited-OCR][unlimited-ocr] | Long-document OCR VLM — one-shot multi-page/PDF parsing (MIT); deferred to polyfetch-scrape for depth |
-| [opendatalab/MinerU][mineru] | Document (PDF/Office/image)→Markdown/JSON extraction for agentic workflows; MCP server (Claude Desktop/Cursor); deferred to polyfetch-scrape for depth |
+| [baidu/Unlimited-OCR][unlimited-ocr] | Long-document OCR VLM — one-shot multi-page/PDF parsing (MIT) |
+| [opendatalab/MinerU][mineru] | Document (PDF/Office/image)→Markdown/JSON extraction for agentic workflows; MCP server (Claude Desktop/Cursor) |
 | [llama.cpp][llamacpp], [llama-cpp-python][llamacpp-py], [Ollama][ollama], [MLX][mlx] | Runtime capability and VLM support |
 | [python-mss][python-mss], [Peekaboo][peekaboo] | Screen capture primitives |
 | [anthropics/claude-code#22903][cc-22903], [anthropics/claude-code#38698][cc-38698] | First-party feature-request status |
