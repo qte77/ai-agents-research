@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-06-25
-validated_links: 2026-06-25
+updated: 2026-06-26
+validated_links: 2026-06-26
 ---
 
 **Status**: Research (informational)

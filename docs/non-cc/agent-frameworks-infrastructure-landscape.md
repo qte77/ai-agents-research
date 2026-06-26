@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-25
-validated_links: 2026-06-25
+updated: 2026-06-26
+validated_links: 2026-06-26
 ---
 
 **Status**: Research (informational)
