@@ -10,5 +10,5 @@
 - `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: Warp agentic development environment (+ Oz cloud-agent orchestration) and the Vstorm PydanticAI full-stack starter template.
 - `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: "factory engineers, not product engineers" framing (Zach Lloyd/Warp) and the Talking AI podcast perspective.
 - `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: LuxTTS TTS voice-cloning model (§6 specialist-models-agents-call-as-tools, flagged not-an-agent).
-- `docs/cc-community/CC-code-tooling-landscape.md`: AI PR-review agents roundup (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge/PR-Agent).
+- `docs/cc-community/CC-code-tooling-landscape.md`: AI PR-review agents roundup (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge/PR-Agent, Graphite Diamond, Cursor Bugbot, Cubic, Bito, Korbit).
 - `docs/cc-community/CC-community-tooling-landscape.md`: related design source + token standard (Figma Dev Mode MCP, W3C Design Tokens/DTCG, Style Dictionary).

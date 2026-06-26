@@ -125,6 +125,8 @@ Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-
 
 ## AI PR-review agents (SaaS)
 
+> **⚠ Placement — flagged for repositioning.** These are standalone SaaS code-review *products*, not community Claude Code integrations, so they do not fit this `cc-community` doc; queued for a move to a non-CC home (e.g. a `docs/non-cc/` code-review-products landscape). Retained here for now alongside the Qodo entry. Classification criteria: [CONTRIBUTING.md](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc).
+
 Adjacent to Qodo and Code-Review-Graph: hosted bots that review pull requests with whole-codebase context. Unlike the AST/graph tools above (which you run locally and an agent queries), these are GitHub/GitLab-app SaaS that comment on PRs directly; most also expose IDE or agent hooks.
 
 - [CodeRabbit](https://www.coderabbit.ai/) — GitHub/GitLab/Azure/Bitbucket app + IDE (VS Code/Cursor/Windsurf) + CLI; bills itself "the most installed AI app on GitHub" (SaaS).
@@ -132,6 +134,11 @@ Adjacent to Qodo and Code-Review-Graph: hosted bots that review pull requests wi
 - [Ellipsis](https://www.ellipsis.dev/) — GitHub-app code review plus automated bug fixes, Q&A, and changelogs (SaaS; free for public repos).
 - [Sourcery](https://sourcery.ai/) — review focused on security and AI-generated-code defects; GitHub/GitLab, VS Code/JetBrains, fixes via coding agents (SaaS).
 - [Qodo Merge / PR-Agent](https://github.com/qodo-ai/pr-agent) — the original open-source PR reviewer (Apache-2.0) behind Qodo; `/review` `/improve` `/describe` `/ask` via CLI, GitHub Action, Docker, or webhooks; GitHub/GitLab/Bitbucket/Azure/Gitea.
+- [Graphite Diamond](https://graphite.com/) — AI reviewer bundled with Graphite's PR-stacking workflow; GitHub app, tuned for low false positives (SaaS).
+- [Cursor Bugbot](https://cursor.com/bugbot) — Cursor's PR-review agent; comments on GitHub PRs and pushes fixes into the Cursor editor or a Background Agent; usage-based billing (SaaS).
+- [Cubic](https://www.cubic.dev/) — YC-backed AI review plus whole-codebase bug scanning; GitHub app + IDE, one-click fixes, custom rules (SaaS).
+- [Bito](https://bito.ai/) — codebase-aware AI Code Review Agent for GitHub/GitLab/Bitbucket (SaaS).
+- [Korbit](https://www.korbit.ai/) — AI review across GitHub/GitLab/Bitbucket with bug explanations and auto-generated PR descriptions (SaaS).
 
 These overlap heavily; the differentiators are codebase-context depth (Greptile's graph index), OSS vs SaaS (PR-Agent is the lone Apache-2.0 option), and agent/MCP reach (Greptile, CodeRabbit, Sourcery). Structural/AST counterpart: Code-Review-Graph above; cross-repo review: Qodo above.
 
