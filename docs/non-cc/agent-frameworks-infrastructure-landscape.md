@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-23
-validated_links: 2026-06-23
+updated: 2026-06-25
+validated_links: 2026-06-25
 ---
 
 **Status**: Research (informational)
@@ -17,7 +17,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [LangGraph](https://github.com/langchain-ai/langgraph) — graph-based stateful orchestration with checkpointing and conditional routing (MIT); the base for many harnesses below.
 - [CrewAI](https://github.com/crewAIInc/crewAI) — role-based crews with sequential/hierarchical/consensus execution (MIT).
 - [AutoGen / AG2](https://github.com/ag2ai/ag2) — conversational multi-agent framework with group chat and code execution (Apache-2.0).
-- [PydanticAI](https://github.com/pydantic/pydantic-ai) — type-safe agents on Pydantic v2 with durable execution + MCP/A2A; the framework this repo's evaluation work builds on. Its [capabilities system][pai-caps] (Jun 2026) bundles instructions + tools + model settings into composable units that support **on-demand / deferred loading** (`defer_loading=True`) — a capability's context is injected only when the agent requests it, trimming per-run tokens (PydanticAI's progressive-disclosure / "skills" answer); capability-scoped hooks fire only on load. Companion managed services: the Pydantic AI Gateway (routing) and [Logfire](../cc-community/CC-agent-observability-methods-analysis.md) observability.
+- [PydanticAI](https://github.com/pydantic/pydantic-ai) — type-safe agents on Pydantic v2 with durable execution + MCP/A2A; the framework this repo's evaluation work builds on. Its [capabilities system][pai-caps] (Jun 2026) bundles instructions + tools + model settings into composable units that support **on-demand / deferred loading** (`defer_loading=True`) — a capability's context is injected only when the agent requests it, trimming per-run tokens (PydanticAI's progressive-disclosure / "skills" answer); capability-scoped hooks fire only on load. Companion managed services: the Pydantic AI Gateway (routing) and [Logfire](../cc-community/CC-agent-observability-methods-analysis.md) observability. A community **full-stack starter** ([Vstorm template](https://pydantic.dev/articles/full-stack-ai-agent-template-pydantic-ai), Jun 2026) scaffolds a production PydanticAI app — Next.js 15 + FastAPI + Postgres/Mongo + Redis, WebSocket streaming, JWT auth, Alembic migrations, Logfire/OpenTelemetry tracing, Docker deploy (LangChain swappable for PydanticAI).
 - [LlamaIndex Agents](https://github.com/run-llama/llama_index) — RAG-optimized agents over 100+ data sources.
 - [Letta](https://github.com/letta-ai/letta) — stateful agents with hierarchical self-editing memory, by the [MemGPT](https://arxiv.org/abs/2310.08560) authors (Apache-2.0).
 - [Agno](https://github.com/agno-agi/agno) — high-performance multi-agent runtime with built-in memory/session, FastAPI app, strong MCP support.
@@ -48,6 +48,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
 - [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
 - [VibeFlow](https://vibeflow.ai) — YC S25 no-code / visual full-stack **app** builder: natural-language → deployable web apps with an **editable, n8n-style visual backend workflow editor** (business logic is inspectable, not a black box), a Convex real-time DB, GitHub deploy + custom domains, "AI Agent Nodes" for in-flow LLM steps, and ~15+ integrations (Stripe/Slack/Notion/…). Web-only, closed SaaS, freemium (paid tiers not surfaced as of 2026-06-20). Name collisions: `pe-menezes/vibeflow` (a CC/Cursor spec-driven tool) and `vibeflowing-inc/vibe_figma` are **not** this product.
+- [Warp](https://www.warp.dev/) — "agentic development environment" (ADE): a terminal-rooted agent platform spanning inline completions → prompt-driven agentic workflows → system-triggered autonomous agents, plus **Oz**, an orchestration platform for cloud coding agents. Industry framing: [GV — From Terminal to Agent](https://www.gv.com/news/ai-agent-warp) (Zach Lloyd, 2025).
 
 ## 4. Agent Memory Infrastructure
 
@@ -72,12 +73,14 @@ Frontier model facts and pricing change fast and live in [CC-models-reference.md
 - [DeepSeek V3.2 / V3.2-Speciale / R1](https://api-docs.deepseek.com/news/news251201) — reasoning-first, agent-trained models (V3.2-Speciale synthesized 1,800+ environments, 85K+ instructions; integrates thinking into tool use). Cost-efficient OSS.
 - [Devstral (Mistral)](https://mistral.ai/news/devstral) — Apache-2.0 agentic-coding model family (All Hands AI / OpenHands lineage). Devstral Small 2 (24B) hits 68.0% SWE-Bench Verified (123B: 72.2%) — the top open-source agentic-coding scores; runs on a single RTX 4090 / 32GB Mac, ~30–50× cheaper than Sonnet, and is a listed [Claude Code model backend](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512) via OpenAI-compatible routing. Capabilities are folding into the unified Mistral Small 4 line.
 - [Arcee Foundation Models (AFM)](https://www.arcee.ai/) — ~4.5B CPU-optimized enterprise model for private/offline deployment.
+- [UniRL (Tencent Hunyuan)](https://github.com/Tencent-Hunyuan/UniRL) — unified RL **post-training** framework: one loop (sample → score → advantage → policy update → weight sync) across diffusion, autoregressive VLM/LLM, and unified models, with team algorithms Flow-DPPO / DRPO / CPPO. *Training infrastructure, not an agent or a model an agent calls* — listed as the RL post-training layer behind agent-oriented multimodal models (Hunyuan, Qwen, Stable Diffusion).
 
 ## 6. Specialist Models Agents Call as Tools
 
 Non-LLM foundation models an agent invokes as a *tool* for one narrow capability (forecasting, ranking, etc.) — distinct from the agent-driving LLMs in §5. Listed when reachable from an agent via an endpoint or SDK.
 
 - [TimesFM (Google Research)](https://github.com/google-research/timesfm) — time-series **forecasting** foundation model (v2.5: ~200M params, up to 16k context, point + quantile forecasts; PyTorch + JAX/Flax, Apache-2.0). Not an agent LLM — an agent calls it for numeric forecasting, exposed for programmatic/agent use via Vertex AI Model Garden and BigQuery ML.
+- [LuxTTS](https://github.com/ysharma3501/LuxTTS) — text-to-speech **voice-cloning** model (~150× realtime, 48kHz, sub-1GB VRAM; Apache-2.0). Not an agent LLM — an agent calls it for the speech-output half of a voice loop (agent text → TTS → audio); voice/TTS sits at the edge of this corpus's scope, listed for completeness.
 
 ## 7. RAG & Retrieval Infrastructure
 
