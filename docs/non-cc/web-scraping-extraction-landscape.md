@@ -3,8 +3,8 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-06-20
-validated_links: 2026-04-23
+updated: 2026-06-26
+validated_links: 2026-06-26
 ---
 
 **Status**: Reference (informational catalog)
@@ -123,6 +123,7 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 | [Zyte](https://www.zyte.com/) | Free trial ($200) | No | AI-powered unblock + extraction API |
 | [ScraperAPI](https://www.scraperapi.com/) | Free tier; paid | No | Proxy-rotation + JS rendering API at scale |
 | [Decodo](https://decodo.com/) | Free tier; from $0.09/1K | No | 125M+ IP network; formerly Smartproxy |
+| [Scrape.do](https://scrape.do/) | ~$0.60/1K req | No | 110M+ proxies; HTML/JSON/XML/MD output, JS render; ~98.6% success at low cost |
 
 ## Document-Specific Extraction
 
