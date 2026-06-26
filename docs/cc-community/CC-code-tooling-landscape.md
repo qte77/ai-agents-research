@@ -4,8 +4,8 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-25
-validated_links: 2026-06-25
+updated: 2026-06-26
+validated_links: 2026-06-26
 ---
 
 **Status**: Research (informational)
@@ -125,7 +125,7 @@ Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-
 
 ## AI PR-review agents (SaaS)
 
-> **⚠ Placement — flagged for repositioning.** These are standalone SaaS code-review *products*, not community Claude Code integrations, so they do not fit this `cc-community` doc; queued for a move to a non-CC home (e.g. a `docs/non-cc/` code-review-products landscape). Retained here for now alongside the Qodo entry. Classification criteria: [CONTRIBUTING.md](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc).
+> **⚠ Placement — flagged for repositioning.** These are standalone SaaS code-review *products*, not community Claude Code integrations, so they do not fit this `cc-community` doc; queued for a move to a non-CC home (e.g. a `docs/non-cc/` code-review-products landscape) — tracked in [#326](https://github.com/qte77/ai-agents-research/issues/326). Retained here for now alongside the Qodo entry. Classification criteria: [CONTRIBUTING.md](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc).
 
 Adjacent to Qodo and Code-Review-Graph: hosted bots that review pull requests with whole-codebase context. Unlike the AST/graph tools above (which you run locally and an agent queries), these are GitHub/GitLab-app SaaS that comment on PRs directly; most also expose IDE or agent hooks.
 
