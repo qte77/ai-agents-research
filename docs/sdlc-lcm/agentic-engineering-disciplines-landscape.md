@@ -13,7 +13,7 @@ validated_links: 2026-06-25
 
 A map of the **disciplines** and **methodologies** of agentic coding, organized by the qte77 credo: a polyrepo agent fleet where *goals, specs, builds, and learnings compound instead of drift; agents drive, humans approve and steer.* Each discipline below is an instrument for that goal.
 
-Two sibling vocabularies have crystallized in 2024–2026 — the **"-engineering"** disciplines (the *skills*: how to think about the environment around the model) and the **"-driven development"** methodologies (the *processes*: how to work) — and they compose into one five-layer stack. This doc is a **synthesis**; deeper per-tool coverage is cross-linked, not duplicated. It builds on the harness *patterns* in [CC-agentic-harness-patterns-analysis.md][harness-patterns] and the execution mechanics in [CC-dynamic-workflows-analysis.md][workflows].
+Two sibling vocabularies have crystallized in 2024–2026 — the **"-engineering"** disciplines (the *skills*: how to think about the environment around the model) and the **"-driven development"** methodologies (the *processes*: how to work) — and they compose into one five-layer stack. This doc is a **synthesis**; deeper per-tool coverage is cross-linked, not duplicated. It builds on the harness *patterns* in [CC-agentic-harness-patterns-analysis.md][harness-patterns] and the execution mechanics in [CC-dynamic-workflows-analysis.md][workflows]. The same shift surfaces in industry framing — Warp's Zach Lloyd reframes it as moving from *product engineers* to *factory engineers* (you build the system that builds the product), the practitioner mirror of *Agent = Model + Harness*.
 
 ## The five-layer stack
 
@@ -116,6 +116,8 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | [GitHub Spec-Kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [Kiro specs][kiro] | SDD frameworks |
 | [qte77/open-agentic-coding-harness][oach] | Reference implementation (sibling repo) |
 | Tobi Lütke / Karpathy (X, Jun 2025); Dave Farley (davefarley.net / courses.cd.training); Geoffrey Huntley Ralph loop (2025) | Attributions cited in prose (no stable/linkable URL) |
+| Zach Lloyd / Warp — *We are now factory engineers, not product engineers* (LinkedIn memo, 2026) | Industry framing of the "-engineering" shift: build the system that builds the product (LinkedIn — not link-checked) |
+| *Talking AI* podcast — agentic development & the future of engineering (Hatchworks, 2026) | Practitioner perspective on the agentic-engineering shift (LinkedIn — not link-checked) |
 | [Startup CTO Handbook (Goldberg)][cto-handbook] · [qte77 mapping][cto-map] | Traditional engineering-leadership baseline — contrast to the agentic disciplines |
 
 [anthropic-ce]: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
