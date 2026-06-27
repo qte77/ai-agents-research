@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-14
-validated_links: 2026-03-12
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Research (informational)

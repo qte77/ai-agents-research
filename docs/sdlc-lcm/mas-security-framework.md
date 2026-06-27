@@ -2,8 +2,8 @@
 title: "Multi-Agent System Security Framework"
 purpose: OWASP MAESTRO v1.0 threat modeling framework for multi-agent systems — 7 security layers with concrete controls.
 created: 2026-02-09
-updated: 2026-04-23
-validated_links: 2026-04-23
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Assess
