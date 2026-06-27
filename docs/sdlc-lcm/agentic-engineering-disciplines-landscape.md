@@ -148,7 +148,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [workflows]: ../cc-native/agents-skills/CC-dynamic-workflows-analysis.md
 [harness-patterns]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md
 [frameworks]: ../non-cc/agent-frameworks-infrastructure-landscape.md
-[observability]: ../cc-community/CC-agent-observability-methods-analysis.md
+[observability]: ../non-cc/agent-observability-methods-analysis.md
 [memory]: ../cc-native/context-memory/CC-memory-system-analysis.md
 [eval-data]: evaluation-data-resources-landscape.md
 [sdlc-patterns]: agentic-sdlc-patterns.md

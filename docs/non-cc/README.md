@@ -105,6 +105,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 |---|---|
 | [ag-ui-protocol-landscape.md](ag-ui-protocol-landscape.md) | AG-UI (Agent-User Interaction protocol), A2UI (Google declarative generative-UI spec), OpenGenerativeUI (CopilotKit reference framework); 2026 ecosystem adoption + Salesforce non-adoption note |
 | [agentcanvas-analysis.md](agentcanvas-analysis.md) | AgentCanvas — renders Pydantic AI + Logfire execution traces as interactive HTML diagrams (OTel agent observability) |
+| [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) | Survey of 18 OTel observability platforms + 5 tracing patterns for agent behavior (Langfuse, Arize Phoenix, Logfire, …); CC's own first-party telemetry split to cc-native |
 
 ## Backlog status
 

@@ -59,7 +59,7 @@ Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-conte
 | `DISABLE_AUTOUPDATER` | `0` | Prevent automatic CC updates | [env-vars][env-vars] |
 | `DISABLE_COST_WARNINGS` | `0` | Suppress cost warning messages | [env-vars][env-vars] |
 
-Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [monitoring docs][monitoring], [CC-agent-observability-methods-analysis.md](../../cc-community/CC-agent-observability-methods-analysis.md#claude-code-first-party-otel-integration)
+Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [monitoring docs][monitoring], [CC-monitoring-telemetry-analysis.md](CC-monitoring-telemetry-analysis.md)
 
 ### OpenTelemetry Exporter Configuration
 
