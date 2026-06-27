@@ -2,10 +2,10 @@
 title: Hermes Agent Analysis
 source: https://github.com/nousresearch/hermes-agent
 purpose: Analysis of Hermes as a self-improving autonomous agent by Nous Research with multi-platform presence and skill creation.
-platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email]
+platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email, simplex]
 created: 2026-04-09
-updated: 2026-04-09
-validated_links: 2026-04-09
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Open-source (MIT), active development by [Nous Research][nous] | **Version**: v0.8.0
@@ -45,6 +45,16 @@ execution.
 | Email | Unified gateway |
 
 Cross-platform conversation continuity — context carries across channels.
+
+> **Update (2026-06-27):** The channel roster has grown well past these seven
+> since the v0.8.0 baseline. The current [integrations index][hermes-int] (Hermes
+> at v0.17.0 "The Reach Release", 2026-06-19) lists 27+ messaging platforms —
+> among them [SimpleX][simplex], Matrix, Mattermost, ntfy, and Microsoft Teams.
+> [SimpleX][simplex] is the most privacy-preserving channel of the set: a
+> decentralized messenger with **no user identifiers of any kind** and
+> double-ratchet end-to-end encryption (AGPLv3), which Hermes reaches via SimpleX's
+> bot/WebSocket client library. (The integrations index lists SimpleX; the release
+> notes do not attribute it to a specific version.)
 
 ### Terminal Backends (6)
 
@@ -99,8 +109,12 @@ on multi-channel deployment but different architecture.
 |---|---|
 | [Hermes Agent repo][hermes] | Self-improving autonomous agent (43.2K stars) |
 | [Hermes docs][hermes-docs] | CLI, config, messaging, security, tools, skills, memory |
+| [Hermes integrations index][hermes-int] | Full channel roster (27+ platforms incl. SimpleX) |
+| [SimpleX Chat repo][simplex] | Privacy-preserving messaging transport (no user identifiers; AGPLv3) — a Hermes channel |
 
 [hermes]: https://github.com/nousresearch/hermes-agent
 [hermes-docs]: https://hermes-agent.nousresearch.com/docs/
+[hermes-int]: https://hermes-agent.nousresearch.com/docs/integrations/
+[simplex]: https://github.com/simplex-chat/simplex-chat
 [nous]: https://nousresearch.com
 [skills-hub]: https://agentskills.io/home
