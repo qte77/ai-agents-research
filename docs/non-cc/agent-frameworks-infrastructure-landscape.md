@@ -181,3 +181,7 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 [12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
 [12fa-gh]: https://github.com/humanlayer/12-factor-agents
 [pai-caps]: https://pydantic.dev/articles/pydantic-ai-capabilities
+
+## Sources
+
+Each framework / tool entry cites its repo or docs inline (reference-style and inline links above); framework stars were `gh api`-verified at the snapshot dates noted in the relevant sections.

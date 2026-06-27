@@ -62,7 +62,7 @@ See the [monitoring docs][monitoring] for OTel configuration.
 
 ### 5. Sources Section (End)
 
-Every doc ends with a `## Sources` table linking all references used:
+Every doc ends with a `## Sources` table (a `## References` section is accepted as equivalent) linking all references used:
 
 ```markdown
 ## Sources
@@ -182,7 +182,7 @@ This prevents misreading a `cc-community` placement as "CC-exclusive."
 - `sources:` in YAML frontmatter — use Sources section instead
 - Bare URLs in prose — use reference-style links
 - Duplicating content across docs — cross-reference the authoritative doc
-- Missing Sources section — every doc must cite its sources
+- Missing Sources section — every doc must cite its sources (a `## Sources` table, or an equivalent `## References` section)
 - Stale `validated_links` dates — re-check URLs when updating findings
 
 ## Auto-generated content

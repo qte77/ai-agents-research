@@ -271,3 +271,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [qodo-agents]: https://github.com/qodo-ai/agents
 [qodo-aware]: https://github.com/qodo-ai/open-aware
 [qodo-crr]: https://docs.qodo.ai/governance/cross-repo-code-review
+
+## Sources
+
+Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, Repomix, code2prompt).

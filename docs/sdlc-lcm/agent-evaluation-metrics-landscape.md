@@ -440,3 +440,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 ## Additional Resources
 
 [Framework implementations and practical guidance on using these metrics](evaluation-data-resources-landscape.md)
+
+## Sources
+
+Metric definitions are sourced from the research papers and tool docs cited inline throughout; the implementing frameworks, benchmarks, and datasets are catalogued in [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md).
