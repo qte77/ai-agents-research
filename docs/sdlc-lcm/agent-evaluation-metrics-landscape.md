@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-06-14
-validated_links: 2026-04-23
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Assess

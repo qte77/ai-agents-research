@@ -5,8 +5,8 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-06-16
-validated_links: 2026-04-06
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Research (informational)
