@@ -163,40 +163,6 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
-## OpenHarness (HKUDS)
-
-**Repo**: [HKUDS/OpenHarness][openharness] | **Stars**: 3.3K | **License**: MIT | **Version**: 0.1.0 (2026-04-01)
-
-Open-source Python agent harness framework — infrastructure plumbing between LLMs and tools. Implements 10 core subsystems compatible with CC conventions (markdown skills, plugin architecture, CLAUDE.md, hooks, MCP).
-
-### Core Subsystems
-
-| Subsystem | Purpose | CC Equivalent |
-|-----------|---------|---------------|
-| **Engine** | Streaming tool-call loop with retry | CC agent loop |
-| **Tools** | 43+ integrated tools (file I/O, shell, web, MCP) | CC built-in tools |
-| **Skills** | On-demand markdown knowledge loading | `.claude/skills/` |
-| **Plugins** | Extensions for commands, hooks, agents | `.claude-plugin/` |
-| **Permissions** | Multi-level safety with path rules | `settings.json` permissions |
-| **Hooks** | PreToolUse/PostToolUse lifecycle events | CC hooks system |
-| **Commands** | 54 built-in directives (/commit, /plan, etc.) | CC slash commands |
-| **Memory** | Persistent cross-session knowledge | CC memory system |
-| **Coordinator** | Subagent spawning and team management | CC agent teams |
-| **UI** | React (Ink) TUI + backend protocol | CC terminal UI |
-
-### Multi-Provider Support
-
-- **Anthropic format** (default): Claude, Moonshot/Kimi, Vertex, Bedrock
-- **OpenAI format** (`--api-format openai`): OpenAI, DeepSeek, DashScope, GitHub Models, Groq, Ollama
-
-### Adoption Considerations
-
-**Strengths**: Most complete open harness (10 subsystems, 43 tools, 114 tests, 6 E2E suites). CC-convention compatible — skills, plugins, CLAUDE.md, hooks all work. Multi-provider. MIT licensed.
-
-**Risks**: Early stage (v0.1.0, 3.3K stars). Not a CC replacement — lacks CC's model quality, context window management, and Anthropic infrastructure. Python-only (CC is TypeScript/Node).
-
----
-
 ## CC Switch (farion1231)
 
 **Repo**: [farion1231/cc-switch][cc-switch] | **Stars**: 38.9K | **License**: TBD | **Commits**: 1,376
@@ -227,46 +193,6 @@ Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-mo
 
 ---
 
-## opensrc (vercel-labs)
-
-**Repo**: [vercel-labs/opensrc][opensrc] | **Stars**: 1.5K | **License**: Apache-2.0
-
-Fetches npm package **source code** (not just type definitions) to give AI coding agents deeper implementation context. Solves the problem of agents only seeing type signatures without understanding internal behavior.
-
-### How It Works
-
-1. Queries npm registry for package repository URLs
-2. Auto-detects installed versions from lockfiles (package-lock.json, pnpm-lock.yaml, yarn.lock)
-3. Clones repositories at matching git tags
-4. Stores sources in `opensrc/<package-name>/`
-5. Optionally modifies `.gitignore`, `tsconfig.json`, `AGENTS.md`
-
-### CLI Usage
-
-```bash
-npx opensrc zod              # fetch version matching lockfile
-npx opensrc zod@3.22.0       # exact version
-npx opensrc facebook/react   # GitHub repo
-npx opensrc list             # show fetched sources
-npx opensrc remove zod       # clean up
-```
-
-### Output Structure
-
-```text
-opensrc/
-├── settings.json       # user preferences
-├── sources.json        # package index with versions/paths
-└── zod/
-    └── src/            # actual source code
-```
-
-### Key Differentiator
-
-Complements the context management stack from a different angle: RTK **reduces** noise, Boucle **deduplicates** reads, dispatch **multiplies** context, opensrc **deepens** context with actual implementations. TypeScript/npm ecosystem specific.
-
----
-
 ## Detailed Tool Landscapes
 
 Per-tool entries for three categories have moved to focused topic docs; the cross-tool comparison below still covers all of them:
@@ -287,11 +213,9 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Active (v1.30.0, rapid iteration) |
 | **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
 | **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
-| **OpenHarness** | Full agent harness | CC-convention compatible | Open harness framework (10 subsystems) | Early (v0.1.0, 3.3K stars) |
 | **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Active (4.1K stars, 48 releases) |
 | **Claude-Mem** | Persistent memory + compression | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (45.2K stars, v6.5.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
-| **opensrc** | Source code enrichment | CLI (npx) | Fetch npm package sources for agent context | Early (1.5K stars) |
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
 | **MemSearch** | Persistent memory (cross-agent) | Plugin (hooks + skill, no MCP) | Markdown source-of-truth + Milvus hybrid search | Active (~2K stars, v0.4.7) |
@@ -305,7 +229,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 
-All twenty-one address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
+All nineteen address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -318,12 +242,10 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [GSD repository][gsd-repo] | Meta-prompting + context engineering framework |
 | [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
 | [Boucle-framework][boucle] | Read-once file deduplication hook |
-| [OpenHarness][openharness] | Open-source agent harness framework (10 subsystems, 43 tools) |
 | [ByteRover CLI][byterover] | Portable memory layer for coding agents (MCP, context trees) |
 | [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
 | [Claude-Mem][claude-mem] | Persistent memory compression system (45.2K stars) |
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
-| [opensrc][opensrc] | npm package source fetcher for agent context (1.5K stars) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -362,12 +284,10 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [gsd-1466]: https://github.com/gsd-build/get-shit-done/issues/1466
 [ecc]: https://github.com/affaan-m/everything-claude-code
 [boucle]: https://github.com/Bande-a-Bonnot/Boucle-framework
-[openharness]: https://github.com/HKUDS/OpenHarness
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
 [cc-switch]: https://github.com/farion1231/cc-switch
-[opensrc]: https://github.com/vercel-labs/opensrc
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn

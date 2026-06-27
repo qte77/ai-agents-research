@@ -74,6 +74,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [openviking-analysis.md](openviking-analysis.md) | ByteDance OpenViking (filesystem-based context DB) | Yes | Yes (AGPL-3.0) |
 | [fastcontext-analysis.md](fastcontext-analysis.md) | Microsoft FastContext (Qwen3-4B repo-exploration subagent; parallel READ/GLOB/GREP) | Yes | Yes (MIT) |
 | [cocoindex-analysis.md](cocoindex-analysis.md) | CocoIndex (incremental ETL for AI context/RAG; MCP code-search variant) | Yes | Yes (Apache-2.0) |
+| [opensrc-analysis.md](opensrc-analysis.md) | opensrc (Vercel Labs; fetches npm package source code for agent context) | Yes | Yes (Apache-2.0) |
 
 ## Infrastructure
 
@@ -95,6 +96,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
 | [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
 | [deepagents-analysis.md](deepagents-analysis.md) | langchain-ai/deepagents (deep-agents: planning + subagents + virtual FS, on LangGraph) | Yes | Yes (MIT) |
+| [openharness-analysis.md](openharness-analysis.md) | HKUDS/OpenHarness (open Python agent harness; 10 subsystems, CC-convention compatible, multi-provider) | Yes | Yes (MIT) |
 | [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) | Landscape catalog: orchestration frameworks, LLM routing, memory infrastructure, agent models | — | Mixed |
 | [openai-swarm-analysis.md](openai-swarm-analysis.md) | OpenAI Swarm (deprecated educational multi-agent; superseded by Agents SDK) | Yes | Yes (MIT) |
 | [openai-agents-sdk-analysis.md](openai-agents-sdk-analysis.md) | OpenAI Agents SDK (multi-agent: handoffs, guardrails, sessions, tracing; GA successor to Swarm) | Yes | Yes (MIT) |
