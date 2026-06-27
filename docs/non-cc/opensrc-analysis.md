@@ -51,3 +51,9 @@ Complements the context-management stack from a different angle: source-fetchers
 
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — agent context/memory infrastructure
 - [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — the CC dev-tooling stack (RTK, Boucle) opensrc complements
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [vercel-labs/opensrc](https://github.com/vercel-labs/opensrc) | Fetches npm package source code for agent context (repo) |

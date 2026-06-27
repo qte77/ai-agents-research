@@ -612,3 +612,7 @@ The 2026 landscape shows significant maturation with 89% of organizations implem
 ### Future Outlook
 
 The observability landscape continues rapid evolution toward standardization (OpenTelemetry), specialization (multi-agent coordination), and integration (development-to-production workflows). Framework-specific semantic conventions completion expected through 2026 will further unify agent observability across diverse technical stacks, while multi-agent capabilities will become standard rather than specialized features as agentic systems scale in production environments.
+
+## Sources
+
+Each of the 18 platforms cites its official docs/repo inline across the five tracing-pattern sections above. Claude Code's own first-party OTel telemetry is documented separately in [CC-monitoring-telemetry-analysis.md](../cc-native/configuration/CC-monitoring-telemetry-analysis.md).
