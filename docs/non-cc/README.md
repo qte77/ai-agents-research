@@ -99,6 +99,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [openharness-analysis.md](openharness-analysis.md) | HKUDS/OpenHarness (open Python agent harness; 10 subsystems, CC-convention compatible, multi-provider) | Yes | Yes (MIT) |
 | [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) | Landscape catalog: orchestration frameworks, LLM routing, memory infrastructure, agent models | — | Mixed |
 | [workflow-frameworks-landscape.md](workflow-frameworks-landscape.md) | Agentic workflow frameworks: Anthropic's 5 patterns, durable execution (Temporal/Inngest/Restate), 8 anti-patterns; the workflows-vs-agents distinction | — | Mixed |
+| [spec-driven-frameworks-landscape.md](spec-driven-frameworks-landscape.md) | Spec-driven development frameworks (spec-kit, OpenSpec, BMAD, Agent-OS, Kiro, Tessl); standalone deep-dive behind the disciplines §3 synthesis | — | Mixed |
 | [openai-swarm-analysis.md](openai-swarm-analysis.md) | OpenAI Swarm (deprecated educational multi-agent; superseded by Agents SDK) | Yes | Yes (MIT) |
 | [openai-agents-sdk-analysis.md](openai-agents-sdk-analysis.md) | OpenAI Agents SDK (multi-agent: handoffs, guardrails, sessions, tracing; GA successor to Swarm) | Yes | Yes (MIT) |
 
