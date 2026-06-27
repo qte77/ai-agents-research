@@ -6,7 +6,7 @@ Deep-dive analyses of Anthropic-native Claude Code features and internals.
 
 | Directory | Coverage | Docs |
 |-----------|----------|------|
-| [agents-skills/](agents-skills/) | Agent teams, recursive spawning, skills adoption, Ralph, dynamic workflows | 8 |
+| [agents-skills/](agents-skills/) | Agent teams, recursive spawning, skills adoption, Ralph, dynamic workflows, output verification | 9 |
 | [sessions/](sessions/) | Session lifecycle, cost analysis, keepalive, headless mode, error messages | 7 |
 | [sandboxing/](sandboxing/) | Filesystem/network sandbox, Codespaces friction, platform comparison, permission bypass | 5 |
 | [ci-remote/](ci-remote/) | GitHub Actions, cloud sessions, remote access/control, web auth, version pinning, monitoring | 8 |
