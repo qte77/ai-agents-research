@@ -51,7 +51,7 @@ Multi-platform: `--platform codex`, `opencode`, `claw`, `droid`, `trae`.
 
 **Risks**: LLM-dependent for semantic pass (cost scales with repo size). PyPI package name is `graphifyy` (doubled y). Early stage relative to star count.
 
-Cross-ref: [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) — complementary repo-to-docs generators
+Cross-ref: [repo-to-docs-tools-landscape.md](../non-cc/repo-to-docs-tools-landscape.md) — complementary repo-to-docs generators
 
 ---
 
@@ -93,7 +93,7 @@ Python, TypeScript, JavaScript, Go, Rust, Java, C, C++, Ruby, C#, Kotlin, PHP, S
 
 **Risks**: Token reduction claims are self-reported (no independent benchmark). Overlaps with graphify's AST extraction layer. Early stage.
 
-Cross-ref: [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) — related code understanding tools
+Cross-ref: [repo-to-docs-tools-landscape.md](../non-cc/repo-to-docs-tools-landscape.md) — related code understanding tools
 
 ---
 
@@ -255,7 +255,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
-- [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) — repo-to-docs generators
+- [repo-to-docs-tools-landscape.md](../non-cc/repo-to-docs-tools-landscape.md) — repo-to-docs generators
 - [code-review-products-landscape.md](../non-cc/code-review-products-landscape.md) — standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, …) moved out of this doc per #326
 
 [graphify]: https://github.com/safishamsi/graphify

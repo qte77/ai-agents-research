@@ -13,7 +13,7 @@ system (PydanticAI-based MAS evaluating academic papers via LLM providers).
 
 **Category**: Research / Informational
 **Authority**: [Security policy](https://github.com/qte77/ai-agents-research/security/policy) for CVE status;
-[CC-mas-security-framework.md](CC-mas-security-framework.md) for MAESTRO implementation
+[mas-security-framework.md](mas-security-framework.md) for MAESTRO implementation
 **Created**: 2026-03-01
 
 ## Framework Overview
@@ -28,7 +28,7 @@ system (PydanticAI-based MAS evaluating academic papers via LLM providers).
 ## 1. OWASP MAESTRO
 
 **Source**: [OWASP MAESTRO v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
-**Existing coverage**: Comprehensive — see [CC-mas-security-framework.md](CC-mas-security-framework.md)
+**Existing coverage**: Comprehensive — see [mas-security-framework.md](mas-security-framework.md)
 
 ### 7-Layer Threat Model
 
@@ -359,7 +359,7 @@ ISO 42001 + 23894 (certifiable management system + risk methodology)
 
 ## Defensive Tooling
 
-The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
+The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](../cc-community/CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
 
 | Command | What it does | Maps to (this doc) |
 | --- | --- | --- |
@@ -398,7 +398,7 @@ Given the project's open-source research context, full certification (ISO 42001)
 is not warranted. A lightweight alignment approach:
 
 1. **Continue using MAESTRO** as the primary threat model — existing implementation
-   in [CC-mas-security-framework.md](CC-mas-security-framework.md) is comprehensive
+   in [mas-security-framework.md](mas-security-framework.md) is comprehensive
 2. **Tag security tests with ATLAS technique IDs** in docstrings (e.g.,
    `# ATLAS: AML.T0051`) to ground existing tests in the adversary taxonomy
 3. **Adopt NIST AI RMF MEASURE function** for evaluation quality — benchmark

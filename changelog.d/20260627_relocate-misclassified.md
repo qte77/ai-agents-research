@@ -1,0 +1,3 @@
+### Changed
+
+- Relocated mislabeled docs out of `docs/cc-community/` (classification hygiene, #329): the 6-doc MAS/methodology cluster (`mas-design-principles`, `mas-benchmarking-best-practices`, `mas-security-framework`, `ai-security-governance-analysis`, `agent-evaluation-metrics-landscape`, `evaluation-data-resources-landscape`) → `docs/sdlc-lcm/`; `research-agents-landscape` + `repo-to-docs-tools-landscape` → `docs/non-cc/`; `agent-observability-methods-analysis` → `docs/non-cc/` with Claude Code's first-party OTel telemetry extracted to a new `docs/cc-native/configuration/CC-monitoring-telemetry-analysis.md`. All de-`CC-`prefixed; cross-references and directory READMEs updated.

@@ -10,11 +10,11 @@ validated_links: 2026-03-12
 
 **Status**: Research (informational)
 
-Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [CC-agent-evaluation-metrics-landscape.md](CC-agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
+Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
 
 ## 1. Evaluation & Testing Frameworks
 
-Observability-first platforms with strong eval features — **LangWatch, Evidently AI, Braintrust** — have full entries in [CC-agent-observability-methods-analysis.md](CC-agent-observability-methods-analysis.md); not duplicated here.
+Observability-first platforms with strong eval features — **LangWatch, Evidently AI, Braintrust** — have full entries in [agent-observability-methods-analysis.md](../non-cc/agent-observability-methods-analysis.md); not duplicated here.
 
 | Tool | Link | Focus | Notable |
 |---|---|---|---|
@@ -85,7 +85,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 ## Cross-References
 
-- [CC-agent-evaluation-metrics-landscape.md](CC-agent-evaluation-metrics-landscape.md) — metric definitions these tools/benchmarks measure
-- [CC-agent-observability-methods-analysis.md](CC-agent-observability-methods-analysis.md) — tracing/observability platforms (LangWatch, Evidently, Braintrust full entries)
-- [CC-research-agents-landscape.md](CC-research-agents-landscape.md) — research/discovery agents
+- [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) — metric definitions these tools/benchmarks measure
+- [agent-observability-methods-analysis.md](../non-cc/agent-observability-methods-analysis.md) — tracing/observability platforms (LangWatch, Evidently, Braintrust full entries)
+- [research-agents-landscape.md](../non-cc/research-agents-landscape.md) — research/discovery agents
 - [agent-frameworks-infrastructure-landscape.md](../non-cc/agent-frameworks-infrastructure-landscape.md) — agent frameworks & memory infrastructure
