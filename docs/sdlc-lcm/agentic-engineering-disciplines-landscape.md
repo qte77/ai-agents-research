@@ -3,8 +3,8 @@ title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 category: landscape
 created: 2026-06-23
-updated: 2026-06-26
-validated_links: 2026-06-26
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Assess
@@ -29,6 +29,8 @@ The same two control points recur at every layer: **"agents drive"** = the autom
 
 **Through-line:** Discipline → Methodology → Execution → Feedback → Compound. **EDD is the keystone** — simultaneously a Layer-2 methodology (evals-as-spec), a Layer-4 feedback mechanism (verify non-deterministic output), and the engine of Layer-5 compounding. The repo's own [agentic-sdlc-patterns.md][sdlc-patterns] ADLC (Build → Evaluate → Observe → Correct) is this loop.
 
+**Org-adoption lens:** Pydantic's [Applied GenAI Maturity Model][pydantic-maturity] (Jun 2026) grades an organization across five dimensions — visibility, evaluation, cost governance, access/identity, and audit/incident-response — mapping onto Layers 4–5 above; it is a diagnostic for *which* layer's gaps currently bite, not a scoreboard to race.
+
 ## §1. The "-engineering" ladder
 
 Each rung scaffolds the next; together they describe the environment built *around* the model ("the model doesn't change — the harness does").
@@ -37,7 +39,7 @@ Each rung scaffolds the next; together they describe the environment built *arou
 |---|---|---|---|
 | **Prompt engineering** | crafting the literal input text | GPT-3 era (Brown et al. 2020); Learn Prompting (Schulhoff) | Established, now "table stakes" |
 | **Context engineering** | filling the context window with the right tokens each step | **Tobi Lütke** (X, Jun 2025), amplified by Karpathy; **Anthropic** canonical 4-component framework ([Effective Context Engineering][anthropic-ce], Sep 2025); LangChain *write/select/compress/isolate* | Emerging→established |
-| **Harness engineering** | the full runtime environment (Instructions/State/Verification/Scope/Session-Lifecycle) | WalkingLabs ([learn-harness-engineering][walkinglabs], MIT); **OpenAI** independently ([Harness Engineering][openai-harness], Feb 2026, from the Codex effort) | Established in practice |
+| **Harness engineering** | the full runtime environment (Instructions/State/Verification/Scope/Session-Lifecycle) | WalkingLabs ([learn-harness-engineering][walkinglabs], MIT); **OpenAI** independently ([Harness Engineering][openai-harness], Feb 2026, from the Codex effort); **Pydantic** ([The Harness Thesis][pydantic-thesis] + [What Makes a Good Harness][pydantic-good-harness], Jun 2026 — axioms: *disclosure* = just-in-time context/tools, *steering* = catch agent drift early) | Established in practice |
 | **Loop engineering** | the outer autonomous cycle (schedule/spawn/persist across many ticks) | no single coiner; [ReAct][react] = inner loop; Ralph loop (Geoffrey Huntley, 2025) and [loop-engineering][loop-eng] (Cobus Greyling, 2026 — 7 production patterns, `loop-audit`/`loop-init`/`loop-cost` CLIs, Claude Code/Grok/Codex starter kits) = concrete outer-loop references | Emerging / buzzword |
 | **Flow engineering** | a structured multi-stage pipeline (reflect → generate → test → fix → validate) | **Itamar Friedman** / CodiumAI, [AlphaCodium][alphacodium] (arXiv 2401.08500, Jan 2024; +2.3× pass@5) | Established in code-gen |
 | **Spec engineering / SDD** | machine-readable specs as the agent's source of truth | GitHub Spec-Kit (Sep 2025), Kiro (2025); [Fowler on SDD tools][fowler-sdd] | Emerging→mainstream |
@@ -105,6 +107,8 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | [Anthropic — Effective Context Engineering][anthropic-ce] | Canonical 4-component context-engineering framework |
 | [Anthropic — Building Effective Agents][anthropic-bea] | Workflows-vs-agents; 5 patterns |
 | [OpenAI — Harness Engineering][openai-harness] | Convergent harness definition; Codex throughput evidence |
+| [Pydantic — The Harness Thesis][pydantic-thesis] · [What Makes a Good Harness][pydantic-good-harness] | Harness > model; *disclosure* + *steering* operational axioms |
+| [Pydantic — Applied GenAI Maturity Model][pydantic-maturity] | 5-dimension org-adoption maturity diagnostic |
 | [AlphaCodium (arXiv 2401.08500)][alphacodium] | Flow engineering; Itamar Friedman / CodiumAI |
 | [ReAct (arXiv 2210.11610)][react] | Inner-loop foundation |
 | [WalkingLabs learn-harness-engineering][walkinglabs] | 5-subsystem harness model (MIT) |
@@ -123,6 +127,9 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [anthropic-ce]: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
 [anthropic-bea]: https://www.anthropic.com/research/building-effective-agents
 [openai-harness]: https://openai.com/index/harness-engineering/
+[pydantic-thesis]: https://pydantic.dev/articles/the-harness-thesis
+[pydantic-good-harness]: https://pydantic.dev/articles/what-makes-a-good-harness
+[pydantic-maturity]: https://pydantic.dev/articles/applied-generative-ai-maturity-model
 [alphacodium]: https://arxiv.org/abs/2401.08500
 [react]: https://arxiv.org/abs/2210.11610
 [walkinglabs]: https://github.com/walkinglabs/learn-harness-engineering
