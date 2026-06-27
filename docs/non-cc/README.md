@@ -55,6 +55,8 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 |---|---|---|---|
 | [karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md) | Karpathy LLM Knowledge Base (markdown-first wiki) | Yes | Gist only |
 | [deepwiki-analysis.md](deepwiki-analysis.md) | DeepWiki (Cognition/Devin auto-generated repo wikis + chat Q&A) | No (hosted) | No |
+| [repo-to-docs-tools-landscape.md](repo-to-docs-tools-landscape.md) | Repo-to-docs AI tools catalog (DeepWiki, Code2Tutorial, GitSummarize, Understand Anything); multi-platform | — | Mixed |
+| [research-agents-landscape.md](research-agents-landscape.md) | Research/discovery agents catalog (STORM, GPT-Researcher, Elicit, FutureHouse, OpenScholar, PaperQA2) + mapping to CC's /deep-research harness | — | Mixed |
 | [open-knowledge-format-analysis.md](open-knowledge-format-analysis.md) | Open Knowledge Format (Google Cloud agent-readable data-catalog spec, v0.1) | — (spec) | Yes (Apache-2.0) |
 | [opennote-analysis.md](opennote-analysis.md) | Opennote (AI tutor in notes; video lessons; YC S25, Llama-backed) | No (hosted) | Partial (MIT SDKs; closed core) |
 

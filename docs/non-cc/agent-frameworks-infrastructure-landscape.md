@@ -175,7 +175,7 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 - [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — CC-integrating memory and tooling
 - [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — model/provider configuration and free-tier reference
 - [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — observability/tracing platforms (separate restore)
-- [CC-research-agents-landscape.md](../cc-community/CC-research-agents-landscape.md) — research/discovery agents
+- [research-agents-landscape.md](research-agents-landscape.md) — research/discovery agents
 - [ai-security-governance-analysis.md § MCP Ecosystem Security](../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
 
 [12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents

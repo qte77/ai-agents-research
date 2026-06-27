@@ -18,6 +18,4 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 | [CC-domain-claudemd-showcase.md](CC-domain-claudemd-showcase.md) | CLAUDE.md as domain pipeline controller (genome analysis case study) |
 | [CC-openmontage-analysis.md](CC-openmontage-analysis.md) | OpenMontage: agentic video production as a CLAUDE.md-driven workspace (three-layer skills, checkpoint pipelines); + Palmier concepts & coding-agent→video pivot signal |
 | [CC-compass-mcp-analysis.md](CC-compass-mcp-analysis.md) | Compass MCP: cross-surface task/context bridge (architecture, status, alignment) |
-| [CC-repo-to-docs-tools-landscape.md](CC-repo-to-docs-tools-landscape.md) | Repo-to-docs AI tools: DeepWiki, Code2Tutorial, GitSummarize |
-| [CC-research-agents-landscape.md](CC-research-agents-landscape.md) | Research/discovery agents: STORM, GPT-Researcher, Elicit, FutureHouse, OpenScholar, PaperQA2 |
 | [CC-vlm-screen-sharing-landscape.md](CC-vlm-screen-sharing-landscape.md) | VLM + screen-sharing landscape: vision models, local runtimes, image token math, visual-context integration patterns |
