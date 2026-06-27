@@ -150,7 +150,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [frameworks]: ../non-cc/agent-frameworks-infrastructure-landscape.md
 [observability]: ../cc-community/CC-agent-observability-methods-analysis.md
 [memory]: ../cc-native/context-memory/CC-memory-system-analysis.md
-[eval-data]: ../cc-community/CC-evaluation-data-resources-landscape.md
+[eval-data]: evaluation-data-resources-landscape.md
 [sdlc-patterns]: agentic-sdlc-patterns.md
 [ralph]: ../cc-native/agents-skills/CC-ralph-enhancement-research.md
 [kiro-doc]: ../non-cc/kiro-analysis.md

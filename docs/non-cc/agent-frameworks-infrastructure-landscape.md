@@ -46,7 +46,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Youtu-Agent (Tencent)](https://github.com/Tencent/Youtu-agent) — async, YAML-configured agents; 71.47% WebWalkerQA, OSS-model friendly.
 - [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), [BabyAGI](https://github.com/yoheinakajima/babyagi), [SuperAGI](https://github.com/TransformerOptimus/SuperAGI) — the original autonomous-task-loop projects (recursive planning; AutoGPT/BabyAGI/SuperAGI respectively minimal→GUI).
 - [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
-- [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
+- [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [evaluation-data-resources-landscape.md](../sdlc-lcm/evaluation-data-resources-landscape.md).
 - [VibeFlow](https://vibeflow.ai) — YC S25 no-code / visual full-stack **app** builder: natural-language → deployable web apps with an **editable, n8n-style visual backend workflow editor** (business logic is inspectable, not a black box), a Convex real-time DB, GitHub deploy + custom domains, "AI Agent Nodes" for in-flow LLM steps, and ~15+ integrations (Stripe/Slack/Notion/…). Web-only, closed SaaS, freemium (paid tiers not surfaced as of 2026-06-20). Name collisions: `pe-menezes/vibeflow` (a CC/Cursor spec-driven tool) and `vibeflowing-inc/vibe_figma` are **not** this product.
 - [Warp](https://www.warp.dev/) — "agentic development environment" (ADE): a terminal-rooted agent platform spanning inline completions → prompt-driven agentic workflows → system-triggered autonomous agents, plus **Oz**, an orchestration platform for cloud coding agents. Industry framing: [GV — From Terminal to Agent](https://www.gv.com/news/ai-agent-warp) (Zach Lloyd, 2025).
 
@@ -134,11 +134,11 @@ Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; t
 
 - [RAGAs](https://github.com/explodinggradients/ragas) — reference-free metrics (faithfulness, answer relevancy, context precision/recall) via LLM-as-judge (Apache-2.0; [arXiv:2309.15217](https://arxiv.org/abs/2309.15217)).
 - [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with agentic evaluators (MIT).
-- [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
+- [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [evaluation-data-resources-landscape.md](../sdlc-lcm/evaluation-data-resources-landscape.md).
 
 ## 8. Output Validation, Guardrails & Verification
 
-Validation is the post-generation sibling of retrieval (§7): enforcing that agent output conforms to a **schema/contract**, a **policy**, or **ground truth** before it is used. Tool facts (license, mechanism) verified first-party 2026-06-22. For the governance/threat-model framing (NIST AI RMF, OWASP LLM Top 10, MAESTRO) see [CC-ai-security-governance-analysis.md](../cc-community/CC-ai-security-governance-analysis.md) and [CC-mas-security-framework.md](../cc-community/CC-mas-security-framework.md).
+Validation is the post-generation sibling of retrieval (§7): enforcing that agent output conforms to a **schema/contract**, a **policy**, or **ground truth** before it is used. Tool facts (license, mechanism) verified first-party 2026-06-22. For the governance/threat-model framing (NIST AI RMF, OWASP LLM Top 10, MAESTRO) see [ai-security-governance-analysis.md](../sdlc-lcm/ai-security-governance-analysis.md) and [mas-security-framework.md](../sdlc-lcm/mas-security-framework.md).
 
 ### Structured-output / schema enforcement
 
@@ -164,7 +164,7 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 
 ## Production Patterns & Reference Frameworks
 
-- [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [CC-mas-design-principles.md](../cc-community/CC-mas-design-principles.md).
+- [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [mas-design-principles.md](../sdlc-lcm/mas-design-principles.md).
 - [Agents Towards Production](https://github.com/NirDiamant/agents-towards-production) — end-to-end playbooks for shipping agents.
 - [Learn Harness Engineering (WalkingLabs)](https://github.com/walkinglabs/learn-harness-engineering) — project-based course on *harness engineering* for reliable AI coding agents: structuring Instructions, State, Verification, Scope, and Session Lifecycle around the model instead of fine-tuning it (12 lectures + 6 projects, framed around Claude Code / Codex; MIT). Maps onto [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
 - [Hands-On Modern RL (WalkingLabs)](https://github.com/walkinglabs/hands-on-modern-rl) — practice-first RL curriculum from classic control to LLM post-training (RLHF, DPO, GRPO, RLVR, DeepSeek-R1) and agentic RL (multi-turn credit assignment, tool-use trajectories, Deep Research); Python/PyTorch (CC BY-NC-SA 4.0, non-commercial).
@@ -176,7 +176,7 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 - [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — model/provider configuration and free-tier reference
 - [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — observability/tracing platforms (separate restore)
 - [CC-research-agents-landscape.md](../cc-community/CC-research-agents-landscape.md) — research/discovery agents
-- [CC-ai-security-governance-analysis.md § MCP Ecosystem Security](../cc-community/CC-ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
+- [ai-security-governance-analysis.md § MCP Ecosystem Security](../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
 
 [12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
 [12fa-gh]: https://github.com/humanlayer/12-factor-agents
