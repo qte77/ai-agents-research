@@ -81,6 +81,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [goclaw-analysis.md](goclaw-analysis.md) | GoClaw (multi-tenant agent gateway, Go, 7 channels) | Yes | Yes (CC BY-NC 4.0) |
 | [searxng-analysis.md](searxng-analysis.md) | SearXNG (self-hostable metasearch for agent web-search) | Yes | Yes (AGPL-3.0) |
 | [web-scraping-extraction-landscape.md](web-scraping-extraction-landscape.md) | Scraping / crawling / extraction tool catalog (SSOT; HTTP clients, browser automation, AI-native scrapers, search APIs, managed platforms, doc extraction, anti-bot) | — | Mixed |
+| [code-review-products-landscape.md](code-review-products-landscape.md) | Standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge, Graphite, Cursor Bugbot, Cubic, Bito, Korbit); multi-platform, not CC-specific | — | Mixed |
 | [llm-routers-gateways-landscape.md](llm-routers-gateways-landscape.md) | LLM routers / gateways / aggregators catalog (29 tools: OpenRouter, LiteLLM, Portkey, Bifrost, Vercel/Cloudflare AI Gateway, OpenRouter Fusion) | — | Mixed |
 | [semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md) | Semantic-layer + data-catalog substrate for agentic data access (Cube, dbt MetricFlow, Malloy, AtScale, DataHub, OpenMetadata, Unity Catalog, Atlas, Dataplex) — MCP/SDK agent surfaces; cross-refs Genie Ontology + OKF | — | Mixed |
 
