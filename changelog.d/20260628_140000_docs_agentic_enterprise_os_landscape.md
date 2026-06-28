@@ -1,0 +1,3 @@
+### Added
+
+- `docs/non-cc/agentic-enterprise-os-landscape.md`: NEW landscape — the "agentic enterprise OS" pattern across three tiers: enterprise vendor platforms (Salesforce Agentforce 360, Microsoft Copilot Studio + Agent 365, ServiceNow Otto, SAP Joule Studio, Databricks Genie), open-source self-operating workspaces/runtimes (AutoAgent, Odysseus, Goose, multica), and qte77 estate orchestrators (polyforge, office-forge, liminal-flux-gh-acc). Framed honestly against Gartner's "AI agent development platforms" category (not a real "agent OS" category); documents the agent-native goal-attribution gap — none of the enterprise platforms exposes a machine-writable goal schema or per-run cost+outcome attribution, and none has adopted AG-UI. Status: Assess.
