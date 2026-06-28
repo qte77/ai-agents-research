@@ -3,8 +3,8 @@ title: Goose Analysis
 source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Assess (open-source, active, architecturally significant)
@@ -51,6 +51,23 @@ Goose implements ACP bidirectionally:
 
 This is comparable to CC's WebSocket IDE protocol but uses a different standard ([source][arch]).
 
+## Install, CLI & Configuration
+
+**Install** (see [Goose install docs][install]):
+
+```bash
+# Linux/macOS
+curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh | bash
+# macOS (Homebrew)
+brew install block-goose-cli
+# non-interactive (CI): skip the interactive configure step
+curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh | CONFIGURE=false bash
+```
+
+**CLI**: `goose session` (interactive run), `goose configure` (providers + extensions), `goose update`; `goose acp` exposes the ACP server for IDEs (above).
+
+**Environment variables**: provider keys — `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GOOGLE_API_KEY` (other providers per the [docs][install]); `GOOSE_VERSION` pins a release for reproducible CI; `CONFIGURE=false` skips interactive setup at install time. Beyond keys, configuration (15+ providers, 70+ MCP extensions) lives in `goose configure`.
+
 ## Comparison with CC
 
 | Aspect | Claude Code | Goose |
@@ -80,6 +97,7 @@ This is comparable to CC's WebSocket IDE protocol but uses a different standard 
 | [AAIF announcement][aaif] | Linux Foundation founding with MCP + Goose + AGENTS.md |
 | [Goose moves to AAIF][goose-move] | April 2026 relocation from block/goose |
 | [MCP Apps blog][mcp-apps] | Goose as reference MCP Apps client |
+| [Goose install & CLI docs][install] | Install, CLI commands, provider env vars |
 
 [repo]: https://github.com/aaif-goose/goose
 [arch]: https://goose-docs.ai/
@@ -87,3 +105,4 @@ This is comparable to CC's WebSocket IDE protocol but uses a different standard 
 [aaif]: https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation
 [goose-move]: https://goose-docs.ai/blog/2026/04/07/goose-moves-to-aaif/
 [mcp-apps]: https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/
+[install]: https://goose-docs.ai/docs/getting-started/installation
