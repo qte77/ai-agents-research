@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -30,6 +30,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [DeerFlow (ByteDance)](https://github.com/bytedance/deer-flow) — LangGraph super-agent harness with Markdown skills + sandboxed execution. Full analysis: [deerflow-analysis.md](deerflow-analysis.md).
 - [DeepAgents (LangChain)](https://github.com/langchain-ai/deepagents) — planning + sub-agent harness. Full analysis: [deepagents-analysis.md](deepagents-analysis.md).
 - [Flue (Astro)](https://github.com/withastro/flue) — durable, sandboxed TypeScript agent framework from the Astro team; **1.0 Beta** (~2026-06-16, Apache-2.0, [flueframework.com](https://www.flueframework.com)). Harness-first model on the **Pi** agent loop (via `@flue/runtime`): **Durable Streams** record every prompt/tool-response/model-choice to an append-only log, so a fresh process resumes from the last checkpoint after a crash or provider timeout. Ships a **just-bash** in-memory sandbox (no Docker/VM) plus a `local()` sandbox; MCP-native and model-agnostic; **channels** ingest events from Slack/Teams/Discord/GitHub/Linear; on Cloudflare Workers each agent becomes a Durable Object (SQLite FS, `runFiber`/`stash`/`onFiberRecovered`). Supports **subagents / task delegation** (swarm-style coordination is not documented in first-party sources); `SuperagenticAI/pyflue` is a community Python port, not first-party.
+- [multica](https://github.com/multica-ai/multica) — open-source platform that turns coding-agent CLIs into managed teammates: create issues → assign to an agent or a squad, a local daemon executes and streams progress over WebSocket, with autopilot (cron/webhook) scheduling and a reusable skill library. Integrates 11 agent CLIs (Claude Code, Codex, Copilot CLI, OpenClaw, OpenCode, Hermes, Gemini, Pi, Cursor, Kimi, Kiro); Go + Postgres 17/pgvector backend, Next.js 16 UI (Apache-2.0). Install `brew install multica-ai/tap/multica` or the `install.sh` script (`--with-server` to self-host); CLI flows `multica login` → `multica daemon start` → `multica issue create` / `multica workspace switch`. Auth is browser-based via `multica login` — no API-key env vars documented.
 
 ## 2. LLM Orchestration & Routing
 
