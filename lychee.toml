@@ -13,8 +13,11 @@ exclude_path = ["triage/", "docs/archive/", "docs/research/rxiv-agentic-papers.m
 accept = [200, 204, 429, 405, 418, 202, 415]
 
 # Retry transient failures (GitHub 502s, network blips) — see AGENT_LEARNINGS.md
-max_retries = 3
-retry_wait_time = 2
+# Bumped 3->5 retries / 2->3s wait (2026-06-28): GitHub 5xx windows recurred and
+# blocked PRs even with 3 retries. NOT accepting 502 as success — that would mask
+# real outages; a sustained outage still needs a CI re-run.
+max_retries = 5
+retry_wait_time = 3
 
 # Per-link timeout in seconds (lychee default: 20). Several genuinely-slow hosts
 # (apmdigest.com, techsy.io, qa.allen.ai, e2b.dev, finance.biggo.com, …) time out
