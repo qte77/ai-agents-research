@@ -94,7 +94,7 @@ jobs:
 
   eval:
     needs: resolve
-    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@6a4bb87ea02a9bfbb837fa7d500eec0d9c24172f  # v0.2.2
+    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@c748a066744876b4ef07ca28cc072f8b41449555  # v0.4.0
     with:
       server: ${{ inputs.server || vars.RXIV_SERVER || 'arxiv' }}
       topic: ${{ vars.RXIV_TOPIC || 'LLM-based autonomous agents, tool use and function calling, multi-agent coordination, agentic evaluation and benchmarking, and LLM reasoning and planning' }}
