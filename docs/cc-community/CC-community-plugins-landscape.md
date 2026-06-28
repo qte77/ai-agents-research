@@ -4,8 +4,8 @@ description: Survey of community plugin catalogs — awesome-claude-code (curate
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-06-16
-validated_links: 2026-04-23
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -224,6 +224,33 @@ The repo ships Node.js lifecycle hooks (`hooks/`), platform-specific markdown ru
 
 **Notable pattern**: Unusually high star count (~16.6k) for a code-quality plugin reflects broad cross-ecosystem appeal — the minimalism philosophy is platform-agnostic and the multi-platform distribution lowers the barrier for polyglot teams.
 
+## Notable Plugin Profile: squid (Agentic Engineering Pipeline)
+
+**Repo**: [iusztinpaul/squid][squid] | **Writeup**: [decodingai][squid-writeup] | **License**: Apache-2.0 | **Stars**: ~114 | **Category**: Workflow Orchestration
+
+An opinionated full-lifecycle engineering pipeline that mirrors a real team across five role subagents — `product-architect` → `software-engineer` → `tester` → `pr-reviewer` → `oncall-engineer` — plus an optional self-improve meta-agent. Core principle: *no agent both writes code and decides if it's correct*. Human gates sit at plan approval and final merge. Architectural memory is externalised to ADR files (`docs/adr/<NNNN>.md`) and a DDD `docs/glossary.md`; `/scaffold` generates `AGENTS.md` + folder skeletons for Python/TypeScript/Go.
+
+| Command | Purpose |
+|---------|---------|
+| `/scaffold` | Bootstrap stack + `AGENTS.md` + folder skeleton |
+| `/plan <spec>` | Groom a spec into a Tasks Plan; create branch + worktree |
+| `/implement-night <plan>` | Full 5-agent pipeline (async, ≤5 retry loops, 2 human gates) |
+| `/implement-task` | Single task — SWE ↔ Tester loop only |
+| `/review`, `/review-ci` | Acceptance/diff review + On-Call CI validation |
+
+**Install** (Claude Code plugin):
+
+```bash
+/plugin marketplace add iusztinpaul/squid
+/plugin install squid@iusztinpaul
+# or via the skills runner:
+npx skills add iusztinpaul/squid
+```
+
+**Env vars**: none documented — configuration is per-project via `AGENTS.md` + `.claude/settings.json`.
+
+**Notable pattern**: the ADR layer (architectural memory) and the Tasks Plan (explicit goal decomposition) make squid a worked example of memory + goal-tracking *inside* a CC pipeline — threads picked up in the deferred agentic-memory / goal-attribution research. Relevant to [CC-agent-teams-orchestration](../cc-native/agents-skills/CC-agent-teams-orchestration.md).
+
 ## Ecosystem Observations
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
@@ -244,8 +271,12 @@ The repo ships Node.js lifecycle hooks (`hooks/`), platform-specific markdown ru
 |---|---|
 | [awesome-claude-code][acc] | Curated resource list |
 | [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
+| [squid][squid] | Agentic engineering pipeline plugin (5-agent; ADR memory + Tasks Plan goal decomposition) |
+| [squid writeup][squid-writeup] | Author's setup rationale (decodingai) |
 
 [ponytail]: https://github.com/DietrichGebert/ponytail
+[squid]: https://github.com/iusztinpaul/squid
+[squid-writeup]: https://www.decodingai.com/p/squid-my-agentic-coding-setup-may-2026
 [acc]: https://github.com/hesreallyhim/awesome-claude-code
 [accp]: https://github.com/ccplugins/awesome-claude-code-plugins
 [claude-seo]: https://github.com/AgriciDaniel/claude-seo

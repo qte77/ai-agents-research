@@ -1,0 +1,7 @@
+### Added
+
+- `docs/cc-community/CC-community-plugins-landscape.md`: **squid** plugin profile — iusztinpaul's Claude Code agentic-engineering pipeline (5 role subagents Product Architect → SWE → Tester → PR Reviewer → On-Call; ADRs as architectural memory + Tasks Plan as goal decomposition; `/scaffold` `/plan` `/implement-night` `/implement-task` `/review` slash commands; env vars: none documented).
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md` (§1): **multica** (multica-ai) — multi-agent orchestration platform routing issues to agents/squads across 11 agent CLIs; local daemon + autopilot scheduling, Go + Postgres/pgvector; `multica login` / `daemon start` / `issue create` (browser auth, no env vars).
+- `docs/non-cc/web-scraping-extraction-landscape.md` (Document-Specific Extraction): **olmOCR** (AllenAI) — GPU PDF/image → Markdown/Dolma OCR pipeline on a fine-tuned Qwen2.5-VL 7B; document-ingestion front-end for RAG/knowledge bases; install/CLI/flags captured leanly with upstream link (default model `allenai/olmOCR-2-7B-1025-FP8`).
+- `docs/non-cc/goose-analysis.md`: new **Install, CLI & Configuration** section — `goose session` / `configure` / `update`, install one-liners, and provider/runtime env vars (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GOOGLE_API_KEY`, `GOOSE_VERSION`, `CONFIGURE`); `validated_links` refreshed for the aaif-goose migration.
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: cited **Lenny's Newsletter (AI)** as a practitioner-perspective source on agentic adoption.
