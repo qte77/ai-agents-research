@@ -67,7 +67,7 @@ Real-time session sharing via URL with comment and steering capabilities for co-
 
 **Technical facts (GitHub, 2026-06-16):**
 
-- Stars: 1.9k
+- Stars: ~5.3k (2026-06-28)
 - Primary language: Python (83.1%), TypeScript (16.2%)
 - Requires Python 3.12+
 - Install: `uv tool install omnigent` or `brew install omnigent-ai/tap/omnigent`

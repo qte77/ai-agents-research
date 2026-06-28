@@ -4,18 +4,18 @@ source: https://github.com/nousresearch/hermes-agent
 purpose: Analysis of Hermes as a self-improving autonomous agent by Nous Research with multi-platform presence and skill creation.
 platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email, simplex]
 created: 2026-04-09
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
-**Status**: Open-source (MIT), active development by [Nous Research][nous] | **Version**: v0.8.0
+**Status**: Open-source (MIT), active development by [Nous Research][nous] | **Version**: v0.17.0
 
 ## What It Is
 
 Hermes is a **self-improving AI agent** by Nous Research that operates
 autonomously across multiple platforms. It features a built-in learning loop for
 autonomous skill creation, persistent user models, and cross-session conversation
-search. Largest agent project in this survey by star count (43.2K).
+search. Largest agent project in this survey by star count (205K+, as of 2026-06-28).
 
 **Key distinction**: Unlike coding-focused agents (CC, Goose) or research agents
 (Feynman), Hermes is a **general-purpose autonomous agent** with multi-platform
@@ -85,10 +85,10 @@ parallel workstreams in isolated contexts.
 | **Self-improvement** | Autonomous skill creation and refinement |
 | **Platforms** | CLI + 6 messaging channels |
 | **Compute** | 6 terminal backends (local → serverless) |
-| **Maturity** | Active (43.2K stars, 5.5K forks, v0.8.0) |
+| **Maturity** | Active (205K+ stars, v0.17.0, 2026-06-19) |
 | **License** | MIT |
 
-**Strengths**: Largest community (43.2K stars). Self-improving skill loop is
+**Strengths**: Largest community (205K+ stars). Self-improving skill loop is
 unique in this survey. Broadest platform coverage (7 channels). 6 compute
 backends from local to serverless. MIT licensed. [Skills Hub][skills-hub] for
 community skill sharing.

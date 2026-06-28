@@ -4,8 +4,8 @@ description: Survey of community reimplementations and educational deconstructio
 category: landscape
 status: research
 created: 2026-04-04
-updated: 2026-06-16
-validated_links: 2026-06-10
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -171,7 +171,7 @@ Cross-ref: [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscap
 | [Kuberwastaken/claude-code][claurst] | Spec-derived Rust reimplementation (CLAURST) |
 | [shareAI-lab/learn-claude-code][learn] | Educational harness engineering course |
 | [Gitlawb/openclaude][openclaude] | Multi-provider CLI (leak-derived) |
-| [coder/claudecode.nvim][nvim] | Cleanroom Neovim IDE integration (Lua, Apache-2.0) |
+| [coder/claudecode.nvim][nvim] | Cleanroom Neovim IDE integration (Lua, MIT) |
 | [agentforce314/clawcodex][clawcodex] | Cleanroom Python reimplementation; SWE-bench results, tool inventory, multi-LLM support |
 | leaked-claude-code/leaked-claude-code *(archived — repo deleted/DMCA'd)* | Alleged proprietary source (excluded from analysis) |
 | zackautocracy/claude-code *(account removed/404)* | Source snapshot powering ccunpacked.dev (leak-derived) |

@@ -4,8 +4,8 @@ purpose: Persistent cross-session memory tools that integrate with Claude Code �
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-26
-validated_links: 2026-06-26
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -66,7 +66,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## Claude-Mem (thedotmack / Alex Newman)
 
-**Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 45.2K | **License**: AGPL-3.0 | **Version**: 6.5.0
+**Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 45.2K | **License**: Apache-2.0 | **Version**: 6.5.0
 
 Persistent memory compression system for Claude Code. Automatically captures everything Claude does during coding sessions, compresses it with AI, and injects relevant context back into future sessions for continuity.
 
@@ -120,7 +120,7 @@ A dedicated observer AI watches each session in real-time, generating searchable
 
 **Strengths**: Largest community memory solution (45.2K stars), progressive disclosure saves tokens, hybrid search (FTS5 + vector), multi-platform (CC + Gemini CLI), web UI for browsing history, [dedicated docs site][claude-mem-docs].
 
-**Risks**: AGPL-3.0 (copyleft — commercial use requires compliance). Ragtime subdirectory under separate PolyForm Noncommercial License. Heavy dependencies (Bun + uv + Chroma). Overlaps with CC's built-in memory system and ByteRover.
+**Risks**: Heavy dependencies (Bun + uv + Chroma). Overlaps with CC's built-in memory system and ByteRover.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 

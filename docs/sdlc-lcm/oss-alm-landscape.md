@@ -2,6 +2,7 @@
 title: OSS ALM Landscape
 purpose: Comparison of open-source Application Lifecycle Management tools for potential Phase 3 adoption.
 created: 2026-03-24
+updated: 2026-06-28
 sources:
   - https://www.tuleap.com/alm/
   - https://www.tuleap.com/comparisons/
@@ -19,11 +20,11 @@ Python + docs; Phase 3 may need a UI dashboard or multi-user access.
 
 | Tool | License | Weight | ALM Coverage | CI/CD | Test Mgmt | API |
 |------|---------|--------|-------------|-------|-----------|-----|
-| **Tuleap CE** | GPL | Heavy (PHP) | Full | Jenkins | Built-in | Yes |
-| **OpenProject** | GPL | Heavy (Rails) | Partial (PM) | Limited | Plugins | Yes |
-| **Redmine** | Open | Light (Ruby) | Minimal | Plugins | Plugins | Yes |
+| **Tuleap CE** | GPL-2.0 | Heavy (PHP) | Full | Jenkins | Built-in | Yes |
+| **OpenProject** | GPL-3.0 | Heavy (Rails) | Partial (PM) | Limited | Plugins | Yes |
+| **Redmine** | GPL-2.0 | Light (Ruby) | Minimal | Plugins | Plugins | Yes |
 | **GitLab CE** | MIT | Heavy (Rails) | Partial (DevOps) | Built-in | Limited | Yes |
-| **Zentao** | Open | Medium (PHP) | Good | Limited | Built-in | Yes |
+| **Zentao** | AGPL-3.0 / ZPL-1.2 (non-OSI) | Medium (PHP) | Good | Limited | Built-in | Yes |
 
 ## Fit Assessment
 
