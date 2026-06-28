@@ -3,8 +3,8 @@ title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 category: landscape
 created: 2026-06-23
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Assess
@@ -122,6 +122,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | Tobi Lütke / Karpathy (X, Jun 2025); Dave Farley (davefarley.net / courses.cd.training); Geoffrey Huntley Ralph loop (2025) | Attributions cited in prose (no stable/linkable URL) |
 | Zach Lloyd / Warp — *We are now factory engineers, not product engineers* (LinkedIn memo, 2026) | Industry framing of the "-engineering" shift: build the system that builds the product (LinkedIn — not link-checked) |
 | *Talking AI* podcast — agentic development & the future of engineering (Hatchworks, 2026) | Practitioner perspective on the agentic-engineering shift (LinkedIn — not link-checked) |
+| [Lenny's Newsletter — AI][lennys] | Practitioner essays on agentic adoption & AI-first product/eng workflows (e.g. "Not all AI agents are created equal") — perspective layer, not a technical reference |
 | [Startup CTO Handbook (Goldberg)][cto-handbook] · [qte77 mapping][cto-map] | Traditional engineering-leadership baseline — contrast to the agentic disciplines |
 
 [anthropic-ce]: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
@@ -134,6 +135,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [react]: https://arxiv.org/abs/2210.11610
 [walkinglabs]: https://github.com/walkinglabs/learn-harness-engineering
 [cto-handbook]: https://github.com/ZachGoldberg/Startup-CTO-Handbook
+[lennys]: https://www.lennysnewsletter.com/t/ai
 [cto-map]: https://github.com/qte77/qte77/blob/main/docs/cto-handbook-mapping.md
 [bdd]: https://dannorth.net/blog/introducing-bdd/
 [husain-evals]: https://hamel.dev/blog/posts/evals/
