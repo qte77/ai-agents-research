@@ -151,7 +151,7 @@ Distinct from the source-specific APIs above: general-purpose OCR/VLM tools that
 
 | Platform | License/Pricing | Differentiator |
 |----------|----------------|----------------|
-| [Steel](https://steel.dev/) | MIT (core); cloud from $29/mo | Sub-second sessions, 24h persistence, anti-bot + CAPTCHA |
+| [Steel](https://steel.dev/) | Apache-2.0 (core); cloud from $29/mo | Sub-second sessions, 24h persistence, anti-bot + CAPTCHA |
 | [Hyperbrowser](https://www.hyperbrowser.ai/) | HyperAgent OSS; cloud from $99/mo | Three-tier API (ai/perform/extract), 10K+ concurrent browsers |
 | [TinyFish](https://www.tinyfish.ai/) | SaaS from $15/mo | Unified search + fetch + browser + agent under one API key |
 | GoWatch | SaaS (YC W25) | AI agent-based web monitoring; pivoting — site down as of 2026-04 |

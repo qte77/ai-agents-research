@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -20,7 +20,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 |---|---|---|---|
 | RAGAs | [github](https://github.com/explodinggradients/ragas) | RAG eval: context precision/recall, faithfulness | — |
 | TruLens | [github](https://github.com/truera/trulens) | RAG Triad + agent feedback functions | — |
-| DeepEval | [github](https://github.com/confident-ai/deepeval) | Pytest-like LLM testing, 14+ metrics | 14+ research-backed metrics |
+| DeepEval | [github](https://github.com/confident-ai/deepeval) | Pytest-like LLM testing, 30+ metrics | 30+ research-backed metrics |
 | Confident AI | [site](https://www.confident-ai.com/) | Enterprise eval platform (DeepEval cloud) | 30+ judge metrics, HIPAA/SOC2 |
 | Giskard | [site](https://www.giskard.ai/) | AI red-teaming / vulnerability detection | — |
 | Patronus AI | [site](https://www.patronus.ai/) | Hallucination detection, custom evaluators | +18% vs OpenAI LLM-judges |

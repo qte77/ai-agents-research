@@ -3,10 +3,11 @@ title: ByteDance DeerFlow Analysis
 source: https://github.com/bytedance/deer-flow
 purpose: Analysis of DeerFlow as an open-source super agent harness for research, coding, and content creation.
 created: 2026-03-25
-updated: 2026-03-25
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
-**Status**: Open-source (Apache 2.0), active development by ByteDance
+**Status**: Open-source (MIT), active development by ByteDance
 
 ## What It Is
 
@@ -67,7 +68,7 @@ tool definitions.
 | Sandboxing | Docker/K8s/local | Filesystem + network | Worktrees/Docker |
 | Multi-agent | Sub-agent spawning | Agent teams | Multi-agent parallel |
 | MCP support | Yes (tools) | Yes (servers) | Planned (ACP) |
-| Open source | Yes (Apache 2.0) | Yes (consumer license) | No |
+| Open source | Yes (MIT) | Yes (consumer license) | No |
 
 ## Action Items
 

@@ -80,7 +80,7 @@ By 2026 every major coding tool shipped an SDD flavor. Stars verified via `gh ap
 |---|---|---|---|
 | [github/spec-kit][spec-kit] | 114,808 | MIT | Spec → Plan → Tasks → Implement; 30+ agent integrations, 70+ extensions ("intent is the source of truth") |
 | [Fission-AI/OpenSpec][openspec] | 56,043 | MIT | Proposal → Apply → Archive; no MCP/keys required |
-| [bmadcode/BMAD-METHOD][bmad] | 49,513 | NOASSERTION | multi-agent planning (Analyst/PM/Architect) → context-engineered dev |
+| [bmadcode/BMAD-METHOD][bmad] | 49,513 | MIT | multi-agent planning (Analyst/PM/Architect) → context-engineered dev |
 | buildermethods/agent-os | 4,936 | MIT | MCP context-injection layer; pairs with any SDD framework |
 | kirodotdev/Kiro | 3,912 | Proprietary | requirements→design→tasks "waves"; full IDE — see [kiro-analysis.md][kiro-doc] |
 | Tessl (tile) | 41 | MIT | "spec-as-source" (spec is the maintained artifact); main framework closed-beta |

@@ -3,8 +3,8 @@ title: Spec-Driven Frameworks — Landscape
 purpose: Comparison of spec-driven development (SDD) frameworks — GitHub Spec-Kit, OpenSpec, BMAD-METHOD, Agent-OS, Kiro, Tessl — the standalone deep-dive behind the synthesis entry in the agentic-engineering disciplines landscape.
 category: landscape
 created: 2026-06-27
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -19,7 +19,7 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 |---|---|---|---|---|
 | [github/spec-kit][spec-kit] | 115.9K | MIT | Spec → Plan → Tasks → Implement | 30+ agent integrations, 70+ extensions; "intent is the source of truth" |
 | [Fission-AI/OpenSpec][openspec] | 57.1K | MIT | Proposal → Apply → Archive | change-proposal centric; no MCP/keys required |
-| [bmadcode/BMAD-METHOD][bmad] | 49.8K | custom | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec |
+| [bmadcode/BMAD-METHOD][bmad] | 49.8K | MIT | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec |
 | [buildermethods/agent-os][agent-os] | 5.0K | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
 | [kirodotdev/Kiro][kiro-repo] | 3.9K | proprietary | requirements → design → tasks "waves" | full IDE; spec phase is mandatory — see [kiro-analysis.md](kiro-analysis.md) |
 | Tessl (`tile`) | ~41 | MIT | "spec-as-source" | the spec, not the code, is the maintained artifact; main framework closed-beta |

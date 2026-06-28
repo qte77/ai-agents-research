@@ -4,8 +4,8 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -125,7 +125,7 @@ Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-
 
 ## codebase-memory-mcp (DeusData)
 
-**Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Docs**: [deusdata.github.io][codebase-memory-mcp-docs] | **Stars**: 6.8K | **License**: MIT | **Version**: v0.8.1 (2026-06-12)
+**Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Docs**: [deusdata.github.io][codebase-memory-mcp-docs] | **Stars**: ~19K (2026-06-28) | **License**: MIT | **Version**: v0.8.1 (2026-06-12)
 
 Single static binary that builds a persistent code knowledge graph for agents — no runtime dependencies, no external API. Combines 159 vendored tree-sitter grammars (syntactic parse), a clean-room hybrid-LSP type-resolution layer (Python, TS/JS, PHP, C#, Go, C/C++), and bundled `nomic-embed-code` embeddings (semantic search) into a SQLite-backed graph of typed nodes (Function, Class, Route) and edges (CALLS, IMPORTS, HTTP_CALLS).
 
