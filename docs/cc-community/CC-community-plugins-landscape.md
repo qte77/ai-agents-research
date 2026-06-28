@@ -228,7 +228,7 @@ The repo ships Node.js lifecycle hooks (`hooks/`), platform-specific markdown ru
 
 **Repo**: [iusztinpaul/squid][squid] | **Writeup**: [decodingai][squid-writeup] | **License**: Apache-2.0 | **Stars**: ~114 | **Category**: Workflow Orchestration
 
-An opinionated full-lifecycle engineering pipeline that mirrors a real team across five role subagents — `product-architect` → `software-engineer` → `tester` → `pr-reviewer` → `oncall-engineer` — plus an optional self-improve meta-agent. Core principle: *no agent both writes code and decides if it's correct*. Human gates sit at plan approval and final merge. Architectural memory is externalised to ADR files (`docs/adr/<NNNN>.md`) and a DDD `docs/glossary.md`; `/scaffold` generates `AGENTS.md` + folder skeletons for Python/TypeScript/Go.
+An opinionated full-lifecycle engineering pipeline that mirrors a real team across five role subagents — `product-architect` → `software-engineer` → `tester` → `pr-reviewer` → `oncall-engineer` — plus an optional self-improve meta-agent. Core principle: *no agent both writes code and decides if it's correct*. Human gates sit at plan approval and final merge. Architectural memory is externalised to ADR files (`docs/adr/<NNNN_title>.md`) and a DDD `docs/glossary.md`; `/scaffold` generates `AGENTS.md` + folder skeletons for Python/TypeScript/Go.
 
 | Command | Purpose |
 |---------|---------|
@@ -249,7 +249,7 @@ npx skills add iusztinpaul/squid
 
 **Env vars**: none documented — configuration is per-project via `AGENTS.md` + `.claude/settings.json`.
 
-**Notable pattern**: the ADR layer (architectural memory) and the Tasks Plan (explicit goal decomposition) make squid a worked example of memory + goal-tracking *inside* a CC pipeline — threads picked up in the deferred agentic-memory / goal-attribution research. Relevant to [CC-agent-teams-orchestration](../cc-native/agents-skills/CC-agent-teams-orchestration.md).
+**Notable pattern**: the ADR layer (architectural memory) and the Tasks Plan (feature → task decomposition) make squid a worked example of memory + goal-tracking *inside* a CC pipeline — threads picked up in the deferred agentic-memory / goal-attribution research. Relevant to [CC-agent-teams-orchestration](../cc-native/agents-skills/CC-agent-teams-orchestration.md).
 
 ## Ecosystem Observations
 
@@ -271,7 +271,7 @@ npx skills add iusztinpaul/squid
 |---|---|
 | [awesome-claude-code][acc] | Curated resource list |
 | [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
-| [squid][squid] | Agentic engineering pipeline plugin (5-agent; ADR memory + Tasks Plan goal decomposition) |
+| [squid][squid] | Agentic engineering pipeline plugin (5-agent; ADR memory + Tasks Plan task decomposition) |
 | [squid writeup][squid-writeup] | Author's setup rationale (decodingai) |
 
 [ponytail]: https://github.com/DietrichGebert/ponytail

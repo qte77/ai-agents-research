@@ -11,7 +11,7 @@ validated_links: 2026-06-28
 
 ## What It Is
 
-Goose is an open-source (Apache-2.0) general-purpose AI agent — "for code, workflows, and everything in between" — now stewarded by the **Agentic AI Foundation (AAIF)** at the Linux Foundation, donated by Block (Square). 48K+ stars, Rust 64% / TypeScript 29%. Desktop app + CLI + API. LLM-agnostic with multi-model routing.
+Goose is an open-source (Apache-2.0) general-purpose AI agent — "for code, workflows, and everything in between" — now stewarded by the **Agentic AI Foundation (AAIF)** at the Linux Foundation, donated by Block (Square). ~50K stars, Rust 65% / TypeScript 28%. Desktop app + CLI + API. LLM-agnostic with multi-model routing.
 
 **Key distinction**: Goose co-developed MCP with Anthropic — Block's internal extension friction led to the collaboration that produced the protocol. Goose is the **reference MCP implementation**, not merely an adopter. It moved from `block/goose` to the **Agentic AI Foundation** in April 2026 — a founding AAIF project alongside MCP and AGENTS.md ([formation][aaif], [move][goose-move]).
 
@@ -66,7 +66,7 @@ curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download
 
 **CLI**: `goose session` (interactive run), `goose configure` (providers + extensions), `goose update`; `goose acp` exposes the ACP server for IDEs (above).
 
-**Environment variables**: provider keys — `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GOOGLE_API_KEY` (other providers per the [docs][install]); `GOOSE_VERSION` pins a release for reproducible CI; `CONFIGURE=false` skips interactive setup at install time. Beyond keys, configuration (15+ providers, 70+ MCP extensions) lives in `goose configure`.
+**Environment variables**: runtime provider keys — `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GOOGLE_API_KEY` (other providers per the [docs][install]). Install-time: `GOOSE_VERSION` pins a release for reproducible CI and `CONFIGURE=false` skips interactive setup. Beyond keys, configuration (15+ providers, 70+ MCP extensions) lives in `goose configure`.
 
 ## Comparison with CC
 
