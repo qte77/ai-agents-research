@@ -73,3 +73,9 @@ tool definitions.
 
 - [ ] Track skill format evolution — compare with CC SKILL.md for convergence
 - [ ] Monitor MCP tool registry for reusable tool definitions
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [ByteDance/deer-flow](https://github.com/bytedance/deer-flow) | DeerFlow — LangGraph super-agent harness (repo) |

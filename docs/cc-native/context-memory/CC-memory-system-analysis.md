@@ -323,7 +323,7 @@ For CLAUDE.md size, import chains, path-scoped rules, auto memory deduplication,
 
 ## Context Engineering Workflow (ACE-FCA)
 
-The ACE-FCA (Advanced Context Engineering — Frequent Compaction Architecture) methodology was introduced by [Dex at hlyr.dev][hlyr-ace] (2025-08-29) as a structured approach to preventing context degradation in long agentic sessions. This repo's [.claude/rules/context-management.md](../../../.claude/rules/context-management.md) encodes this framework — the 40–60% utilization target and the context-quality ranking originate from the hlyr.dev source.
+The ACE-FCA (Advanced Context Engineering — Frequent Compaction Architecture) methodology was introduced by [Dex at hlyr.dev][hlyr-ace] (2025-08-29) as a structured approach to preventing context degradation in long agentic sessions. This repo's [.claude/rules/context-management.md](../../../.claude/rules/context-management.md) encodes this framework — the 40–60% utilization target and the context-quality ranking originate from the hlyr.dev source. It converges with **Anthropic's** canonical first-party framework ([Effective Context Engineering for AI Agents][anthropic-ce], Sept 2025): *write / select / compress / isolate* — this repo's compaction maps to *compress*, subagent isolation to *isolate*.
 
 ### Three-Phase Workflow with Human-Review Gates
 
@@ -383,6 +383,7 @@ Better to have less correct information than more information with errors.
 [piebald-dream]: https://github.com/Piebald-AI/claude-code-system-prompts/blob/main/system-prompts/agent-prompt-dream-memory-consolidation.md
 [hlyr-claude-md]: https://www.hlyr.dev/blog/stop-claude-from-ignoring-your-claude-md
 [hlyr-ace]: https://www.hlyr.dev/blog/advanced-context-engineering
+[anthropic-ce]: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
 [cc-reverse-eng]: ../../cc-community/CC-reverse-engineering-landscape.md
 [cc-skills-landscape]: ../../cc-community/CC-community-skills-landscape.md
 [cc-harness-patterns]: ../agents-skills/CC-agentic-harness-patterns-analysis.md

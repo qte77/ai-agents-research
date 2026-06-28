@@ -1,12 +1,12 @@
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file-read deduplication, source enrichment, provider management, design systems. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
+purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file-read deduplication, source enrichment, provider management. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
 category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Research (informational)
@@ -163,40 +163,6 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
-## OpenHarness (HKUDS)
-
-**Repo**: [HKUDS/OpenHarness][openharness] | **Stars**: 3.3K | **License**: MIT | **Version**: 0.1.0 (2026-04-01)
-
-Open-source Python agent harness framework — infrastructure plumbing between LLMs and tools. Implements 10 core subsystems compatible with CC conventions (markdown skills, plugin architecture, CLAUDE.md, hooks, MCP).
-
-### Core Subsystems
-
-| Subsystem | Purpose | CC Equivalent |
-|-----------|---------|---------------|
-| **Engine** | Streaming tool-call loop with retry | CC agent loop |
-| **Tools** | 43+ integrated tools (file I/O, shell, web, MCP) | CC built-in tools |
-| **Skills** | On-demand markdown knowledge loading | `.claude/skills/` |
-| **Plugins** | Extensions for commands, hooks, agents | `.claude-plugin/` |
-| **Permissions** | Multi-level safety with path rules | `settings.json` permissions |
-| **Hooks** | PreToolUse/PostToolUse lifecycle events | CC hooks system |
-| **Commands** | 54 built-in directives (/commit, /plan, etc.) | CC slash commands |
-| **Memory** | Persistent cross-session knowledge | CC memory system |
-| **Coordinator** | Subagent spawning and team management | CC agent teams |
-| **UI** | React (Ink) TUI + backend protocol | CC terminal UI |
-
-### Multi-Provider Support
-
-- **Anthropic format** (default): Claude, Moonshot/Kimi, Vertex, Bedrock
-- **OpenAI format** (`--api-format openai`): OpenAI, DeepSeek, DashScope, GitHub Models, Groq, Ollama
-
-### Adoption Considerations
-
-**Strengths**: Most complete open harness (10 subsystems, 43 tools, 114 tests, 6 E2E suites). CC-convention compatible — skills, plugins, CLAUDE.md, hooks all work. Multi-provider. MIT licensed.
-
-**Risks**: Early stage (v0.1.0, 3.3K stars). Not a CC replacement — lacks CC's model quality, context window management, and Anthropic infrastructure. Python-only (CC is TypeScript/Node).
-
----
-
 ## CC Switch (farion1231)
 
 **Repo**: [farion1231/cc-switch][cc-switch] | **Stars**: 38.9K | **License**: TBD | **Commits**: 1,376
@@ -227,80 +193,6 @@ Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-mo
 
 ---
 
-## opensrc (vercel-labs)
-
-**Repo**: [vercel-labs/opensrc][opensrc] | **Stars**: 1.5K | **License**: Apache-2.0
-
-Fetches npm package **source code** (not just type definitions) to give AI coding agents deeper implementation context. Solves the problem of agents only seeing type signatures without understanding internal behavior.
-
-### How It Works
-
-1. Queries npm registry for package repository URLs
-2. Auto-detects installed versions from lockfiles (package-lock.json, pnpm-lock.yaml, yarn.lock)
-3. Clones repositories at matching git tags
-4. Stores sources in `opensrc/<package-name>/`
-5. Optionally modifies `.gitignore`, `tsconfig.json`, `AGENTS.md`
-
-### CLI Usage
-
-```bash
-npx opensrc zod              # fetch version matching lockfile
-npx opensrc zod@3.22.0       # exact version
-npx opensrc facebook/react   # GitHub repo
-npx opensrc list             # show fetched sources
-npx opensrc remove zod       # clean up
-```
-
-### Output Structure
-
-```text
-opensrc/
-├── settings.json       # user preferences
-├── sources.json        # package index with versions/paths
-└── zod/
-    └── src/            # actual source code
-```
-
-### Key Differentiator
-
-Complements the context management stack from a different angle: RTK **reduces** noise, Boucle **deduplicates** reads, dispatch **multiplies** context, opensrc **deepens** context with actual implementations. TypeScript/npm ecosystem specific.
-
----
-
-## awesome-design-md (VoltAgent)
-
-**Repo**: [VoltAgent/awesome-design-md][awesome-design-md] | **Stars**: 21,849 | **License**: MIT
-
-Curated collection of **58 DESIGN.md files** capturing design systems from popular websites in LLM-consumable Markdown. Each file includes color palettes, typography rules, component styles, layout principles, responsive behavior, and an explicit **Agent Prompt Guide** section. Format designed for Google Stitch and general-purpose coding agents.
-
-### DESIGN.md Format (9 Sections)
-
-1. Visual Theme & Atmosphere — mood, density, design philosophy
-2. Color Palette & Roles — semantic names with hex codes (40+ per file)
-3. Typography Rules — font families, 16-role hierarchy with px/weight/line-height
-4. Component Stylings — buttons (5 variants), cards, inputs, navigation
-5. Layout Principles — spacing scale (8px base), grid widths, border-radius (7 levels)
-6. Depth & Elevation — 5-level system with exact CSS shadow values
-7. Do's and Don'ts — design guardrails and anti-patterns
-8. Responsive Behavior — 5 breakpoints, collapsing strategies, touch targets (44x44px min)
-9. Agent Prompt Guide — color reference table, 4 example component prompts, 7 iteration principles
-
-### 58 Design Systems (7 Categories)
-
-AI & ML (12): Claude, Mistral AI, Replicate, xAI, ElevenLabs. Developer Tools (14): Cursor, Linear, PostHog, Sentry, Vercel. Infrastructure (6): Stripe, MongoDB, HashiCorp. Design & Productivity (10): Figma, Notion, Framer, Miro. Fintech (4): Coinbase, Revolut, Wise. Enterprise (7): Airbnb, Apple, IBM, SpaceX, Spotify. Car Brands (5): BMW, Ferrari, Tesla.
-
-### Key Differentiator
-
-A new artifact type: design systems encoded for LLM consumption rather than human developers or design tool plugins. The Agent Prompt Guide section is a novel contribution — ready-to-use component prompts with iteration instructions. Files capture publicly visible CSS values, not proprietary design tokens. 21.8K stars in 6 days (riding Google Stitch launch wave).
-
-**Who is VoltAgent**: Open-source [TypeScript AI Agent Framework](https://voltagent.dev) for enterprise multi-agent systems (tool calling, persistent memory, supervisor orchestration, 40+ integrations). The awesome-design-md repo is a community/marketing project.
-
-**Gap**: No public tooling for generating DESIGN.md from arbitrary sites — extraction appears manual/internal.
-
-Cross-ref: [CC-domain-claudemd-showcase.md](CC-domain-claudemd-showcase.md) — CLAUDE.md as domain controller, analogous pattern
-
----
-
 ## Detailed Tool Landscapes
 
 Per-tool entries for three categories have moved to focused topic docs; the cross-tool comparison below still covers all of them:
@@ -308,6 +200,10 @@ Per-tool entries for three categories have moved to focused topic docs; the cros
 - [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) — persistent memory: ByteRover, Claude-Mem, MemPalace, MemSearch
 - [CC-code-tooling-landscape.md](CC-code-tooling-landscape.md) — code analysis: Graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP, Repomix, code2prompt
 - [CC-usage-tooling-landscape.md](CC-usage-tooling-landscape.md) — usage observability: CodeBurn, ccusage, Claude-Code-Usage-Monitor
+
+Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec + CLI) has moved to a non-CC home — multi-agent, not CC-specific:
+
+- [agent-design-formats-landscape.md](../non-cc/agent-design-formats-landscape.md) — agent-consumable design formats (incl. the CC-supported Figma Dev Mode MCP context)
 
 ## Comparison
 
@@ -317,12 +213,9 @@ Per-tool entries for three categories have moved to focused topic docs; the cros
 | **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Active (v1.30.0, rapid iteration) |
 | **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
 | **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
-| **OpenHarness** | Full agent harness | CC-convention compatible | Open harness framework (10 subsystems) | Early (v0.1.0, 3.3K stars) |
 | **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Active (4.1K stars, 48 releases) |
 | **Claude-Mem** | Persistent memory + compression | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (45.2K stars, v6.5.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
-| **opensrc** | Source code enrichment | CLI (npx) | Fetch npm package sources for agent context | Early (1.5K stars) |
-| **awesome-design-md** | Agent-consumable design systems | Markdown files (drop-in) | 58 DESIGN.md files for UI generation | Viral (21.8K stars in 6 days) |
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
 | **MemSearch** | Persistent memory (cross-agent) | Plugin (hooks + skill, no MCP) | Markdown source-of-truth + Milvus hybrid search | Active (~2K stars, v0.4.7) |
@@ -336,7 +229,7 @@ Per-tool entries for three categories have moved to focused topic docs; the cros
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 
-All twenty-two address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
+All nineteen address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -349,13 +242,10 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [GSD repository][gsd-repo] | Meta-prompting + context engineering framework |
 | [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
 | [Boucle-framework][boucle] | Read-once file deduplication hook |
-| [OpenHarness][openharness] | Open-source agent harness framework (10 subsystems, 43 tools) |
 | [ByteRover CLI][byterover] | Portable memory layer for coding agents (MCP, context trees) |
 | [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
 | [Claude-Mem][claude-mem] | Persistent memory compression system (45.2K stars) |
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
-| [opensrc][opensrc] | npm package source fetcher for agent context (1.5K stars) |
-| [awesome-design-md][awesome-design-md] | 58 DESIGN.md files for agent-consumable UI generation (21.8K stars) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -373,7 +263,6 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Selective Context][selective-context] | Self-information prompt pruning; arXiv:2310.06201 (423 stars, MIT; unmaintained since 2024) |
 | [semantic-router][semantic-router] | Aurelio Labs semantic routing/decision layer — skips LLM calls for recognized intents (3.6K stars, MIT) |
 
-[awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [graphify]: https://github.com/safishamsi/graphify
 [mempalace]: https://github.com/MemPalace/mempalace
 [memsearch]: https://github.com/zilliztech/memsearch
@@ -395,12 +284,10 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [gsd-1466]: https://github.com/gsd-build/get-shit-done/issues/1466
 [ecc]: https://github.com/affaan-m/everything-claude-code
 [boucle]: https://github.com/Bande-a-Bonnot/Boucle-framework
-[openharness]: https://github.com/HKUDS/OpenHarness
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
 [cc-switch]: https://github.com/farion1231/cc-switch
-[opensrc]: https://github.com/vercel-labs/opensrc
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn

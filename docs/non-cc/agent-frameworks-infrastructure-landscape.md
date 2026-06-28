@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Research (informational)
@@ -17,7 +17,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [LangGraph](https://github.com/langchain-ai/langgraph) — graph-based stateful orchestration with checkpointing and conditional routing (MIT); the base for many harnesses below.
 - [CrewAI](https://github.com/crewAIInc/crewAI) — role-based crews with sequential/hierarchical/consensus execution (MIT).
 - [AutoGen / AG2](https://github.com/ag2ai/ag2) — conversational multi-agent framework with group chat and code execution (Apache-2.0).
-- [PydanticAI](https://github.com/pydantic/pydantic-ai) — type-safe agents on Pydantic v2 with durable execution + MCP/A2A; the framework this repo's evaluation work builds on.
+- [PydanticAI](https://github.com/pydantic/pydantic-ai) — type-safe agents on Pydantic v2 with durable execution + MCP/A2A; the framework this repo's evaluation work builds on. Its [capabilities system][pai-caps] (Jun 2026) bundles instructions + tools + model settings into composable units that support **on-demand / deferred loading** (`defer_loading=True`) — a capability's context is injected only when the agent requests it, trimming per-run tokens (PydanticAI's progressive-disclosure / "skills" answer); capability-scoped hooks fire only on load. Companion managed services: the Pydantic AI Gateway (routing) and [Logfire](agent-observability-methods-analysis.md) observability. A community **full-stack starter** ([Vstorm template](https://pydantic.dev/articles/full-stack-ai-agent-template-pydantic-ai), Jun 2026) scaffolds a production PydanticAI app — Next.js 15 + FastAPI + Postgres/Mongo + Redis, WebSocket streaming, JWT auth, Alembic migrations, Logfire/OpenTelemetry tracing, Docker deploy (LangChain swappable for PydanticAI). A separate capability library, [`pydantic-ai-harness`](https://github.com/pydantic/pydantic-ai-harness) ("batteries for your agent", MIT, 595★; iterates faster than core), ships ready agent capabilities — a sandboxed **CodeMode** (Python via the Monty sandbox), filesystem + shell tools (path-traversal guards / allowlists / timeouts), and provider-adaptive web search — on a *fall-up* model (a local implementation works with any model, auto-switching to provider-native when available); 30+ capabilities are on the roadmap. It is the product face of Pydantic's "harness > model" thesis (see [agentic-engineering-disciplines-landscape.md](../sdlc-lcm/agentic-engineering-disciplines-landscape.md)).
 - [LlamaIndex Agents](https://github.com/run-llama/llama_index) — RAG-optimized agents over 100+ data sources.
 - [Letta](https://github.com/letta-ai/letta) — stateful agents with hierarchical self-editing memory, by the [MemGPT](https://arxiv.org/abs/2310.08560) authors (Apache-2.0).
 - [Agno](https://github.com/agno-agi/agno) — high-performance multi-agent runtime with built-in memory/session, FastAPI app, strong MCP support.
@@ -30,6 +30,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [DeerFlow (ByteDance)](https://github.com/bytedance/deer-flow) — LangGraph super-agent harness with Markdown skills + sandboxed execution. Full analysis: [deerflow-analysis.md](deerflow-analysis.md).
 - [DeepAgents (LangChain)](https://github.com/langchain-ai/deepagents) — planning + sub-agent harness. Full analysis: [deepagents-analysis.md](deepagents-analysis.md).
 - [Flue (Astro)](https://github.com/withastro/flue) — durable, sandboxed TypeScript agent framework from the Astro team; **1.0 Beta** (~2026-06-16, Apache-2.0, [flueframework.com](https://www.flueframework.com)). Harness-first model on the **Pi** agent loop (via `@flue/runtime`): **Durable Streams** record every prompt/tool-response/model-choice to an append-only log, so a fresh process resumes from the last checkpoint after a crash or provider timeout. Ships a **just-bash** in-memory sandbox (no Docker/VM) plus a `local()` sandbox; MCP-native and model-agnostic; **channels** ingest events from Slack/Teams/Discord/GitHub/Linear; on Cloudflare Workers each agent becomes a Durable Object (SQLite FS, `runFiber`/`stash`/`onFiberRecovered`). Supports **subagents / task delegation** (swarm-style coordination is not documented in first-party sources); `SuperagenticAI/pyflue` is a community Python port, not first-party.
+- [multica](https://github.com/multica-ai/multica) — open-source platform that turns coding-agent CLIs into managed teammates: create issues → assign to an agent or a squad, a local daemon executes and streams progress over WebSocket, with autopilot (cron/webhook) scheduling and a reusable skill library. Integrates 11 agent CLIs (Claude Code, Codex, Copilot CLI, OpenClaw, OpenCode, Hermes, Gemini, Pi, Cursor, Kimi, Kiro); Go + Postgres 17/pgvector backend, Next.js 16 UI (Apache-2.0). Install `brew install multica-ai/tap/multica` or the `install.sh` script (`--with-server` to self-host); CLI flows `multica login` → `multica daemon start` → `multica issue create` / `multica workspace switch`. Auth is browser-based via `multica login` — no API-key env vars documented.
 
 ## 2. LLM Orchestration & Routing
 
@@ -46,8 +47,9 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [Youtu-Agent (Tencent)](https://github.com/Tencent/Youtu-agent) — async, YAML-configured agents; 71.47% WebWalkerQA, OSS-model friendly.
 - [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), [BabyAGI](https://github.com/yoheinakajima/babyagi), [SuperAGI](https://github.com/TransformerOptimus/SuperAGI) — the original autonomous-task-loop projects (recursive planning; AutoGPT/BabyAGI/SuperAGI respectively minimal→GUI).
 - [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
-- [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
+- [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [evaluation-data-resources-landscape.md](../sdlc-lcm/evaluation-data-resources-landscape.md).
 - [VibeFlow](https://vibeflow.ai) — YC S25 no-code / visual full-stack **app** builder: natural-language → deployable web apps with an **editable, n8n-style visual backend workflow editor** (business logic is inspectable, not a black box), a Convex real-time DB, GitHub deploy + custom domains, "AI Agent Nodes" for in-flow LLM steps, and ~15+ integrations (Stripe/Slack/Notion/…). Web-only, closed SaaS, freemium (paid tiers not surfaced as of 2026-06-20). Name collisions: `pe-menezes/vibeflow` (a CC/Cursor spec-driven tool) and `vibeflowing-inc/vibe_figma` are **not** this product.
+- [Warp](https://www.warp.dev/) — "agentic development environment" (ADE): a terminal-rooted agent platform spanning inline completions → prompt-driven agentic workflows → system-triggered autonomous agents, plus **Oz**, an orchestration platform for cloud coding agents. Industry framing: [GV — From Terminal to Agent](https://www.gv.com/news/ai-agent-warp) (Zach Lloyd, 2025).
 
 ## 4. Agent Memory Infrastructure
 
@@ -62,6 +64,7 @@ The field has reframed memory as **context engineering** — assembling persiste
 - [A-MEM](https://github.com/agiresearch/A-mem) — Zettelkasten-style agentic memory with dynamic linking ([paper](https://arxiv.org/abs/2502.12110)).
 - [LangMem](https://github.com/langchain-ai/langmem) — LangGraph-native semantic/episodic/procedural memory (MIT).
 - [MemoryOS](https://github.com/BAI-LAB/MemoryOS) — hierarchical short/mid/long-term memory OS for personalized agents; +49.11% F1 over baselines on LoCoMo (self-reported), EMNLP 2025 Oral (Apache-2.0).
+- [EverOS (EverMind-AI)](https://github.com/EverMind-AI/EverOS) — **Markdown-native, local-first** portable memory layer (9.4K★, Apache-2.0): plain Markdown files as source of truth over a SQLite + LanceDB hybrid index, file-watch cascade sync, multimodal ingest (text/image/PDF/audio/office), LLM-driven extraction/ranking, and an OpenAI-compatible endpoint; user-owned and self-evolving across apps — a files-first contrast to Mem0's graph-first and MemoryOS's hierarchical designs.
 - [Gulp.ai (Osmosis)](https://docs.gulp.ai/introduction) — agent-improvement API enriching prompts with past-interaction knowledge.
 - [ACE — Agentic Context Engine (Kayba)](https://github.com/kayba-ai/agentic-context-engine) — self-improving context layer: a three-role loop (Agent / Reflector / SkillManager) curates a persistent "Skillbook" of strategies that evolves with every task, so agents stop repeating mistakes without fine-tuning or a vector DB (Apache-2.0, [paper](https://arxiv.org/abs/2510.04618)). PydanticAI-based; ships an MCP server (`ace-mcp`) and a Claude Code runner. Offline benchmark-driven counterpart: autoharness (§3).
 
@@ -72,12 +75,14 @@ Frontier model facts and pricing change fast and live in [CC-models-reference.md
 - [DeepSeek V3.2 / V3.2-Speciale / R1](https://api-docs.deepseek.com/news/news251201) — reasoning-first, agent-trained models (V3.2-Speciale synthesized 1,800+ environments, 85K+ instructions; integrates thinking into tool use). Cost-efficient OSS.
 - [Devstral (Mistral)](https://mistral.ai/news/devstral) — Apache-2.0 agentic-coding model family (All Hands AI / OpenHands lineage). Devstral Small 2 (24B) hits 68.0% SWE-Bench Verified (123B: 72.2%) — the top open-source agentic-coding scores; runs on a single RTX 4090 / 32GB Mac, ~30–50× cheaper than Sonnet, and is a listed [Claude Code model backend](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512) via OpenAI-compatible routing. Capabilities are folding into the unified Mistral Small 4 line.
 - [Arcee Foundation Models (AFM)](https://www.arcee.ai/) — ~4.5B CPU-optimized enterprise model for private/offline deployment.
+- [UniRL (Tencent Hunyuan)](https://github.com/Tencent-Hunyuan/UniRL) — unified RL **post-training** framework: one loop (sample → score → advantage → policy update → weight sync) across diffusion, autoregressive VLM/LLM, and unified models, with team algorithms Flow-DPPO / DRPO / CPPO. *Training infrastructure, not an agent or a model an agent calls* — listed as the RL post-training layer behind agent-oriented multimodal models (Hunyuan, Qwen, Stable Diffusion).
 
 ## 6. Specialist Models Agents Call as Tools
 
 Non-LLM foundation models an agent invokes as a *tool* for one narrow capability (forecasting, ranking, etc.) — distinct from the agent-driving LLMs in §5. Listed when reachable from an agent via an endpoint or SDK.
 
 - [TimesFM (Google Research)](https://github.com/google-research/timesfm) — time-series **forecasting** foundation model (v2.5: ~200M params, up to 16k context, point + quantile forecasts; PyTorch + JAX/Flax, Apache-2.0). Not an agent LLM — an agent calls it for numeric forecasting, exposed for programmatic/agent use via Vertex AI Model Garden and BigQuery ML.
+- [LuxTTS](https://github.com/ysharma3501/LuxTTS) — text-to-speech **voice-cloning** model (~150× realtime, 48kHz, sub-1GB VRAM; Apache-2.0). Not an agent LLM — an agent calls it for the speech-output half of a voice loop (agent text → TTS → audio); voice/TTS sits at the edge of this corpus's scope, listed for completeness.
 
 ## 7. RAG & Retrieval Infrastructure
 
@@ -130,11 +135,11 @@ Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; t
 
 - [RAGAs](https://github.com/explodinggradients/ragas) — reference-free metrics (faithfulness, answer relevancy, context precision/recall) via LLM-as-judge (Apache-2.0; [arXiv:2309.15217](https://arxiv.org/abs/2309.15217)).
 - [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with agentic evaluators (MIT).
-- [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [CC-evaluation-data-resources-landscape.md](../cc-community/CC-evaluation-data-resources-landscape.md).
+- [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [evaluation-data-resources-landscape.md](../sdlc-lcm/evaluation-data-resources-landscape.md).
 
 ## 8. Output Validation, Guardrails & Verification
 
-Validation is the post-generation sibling of retrieval (§7): enforcing that agent output conforms to a **schema/contract**, a **policy**, or **ground truth** before it is used. Tool facts (license, mechanism) verified first-party 2026-06-22. For the governance/threat-model framing (NIST AI RMF, OWASP LLM Top 10, MAESTRO) see [CC-ai-security-governance-analysis.md](../cc-community/CC-ai-security-governance-analysis.md) and [CC-mas-security-framework.md](../cc-community/CC-mas-security-framework.md).
+Validation is the post-generation sibling of retrieval (§7): enforcing that agent output conforms to a **schema/contract**, a **policy**, or **ground truth** before it is used. Tool facts (license, mechanism) verified first-party 2026-06-22. For the governance/threat-model framing (NIST AI RMF, OWASP LLM Top 10, MAESTRO) see [ai-security-governance-analysis.md](../sdlc-lcm/ai-security-governance-analysis.md) and [mas-security-framework.md](../sdlc-lcm/mas-security-framework.md).
 
 ### Structured-output / schema enforcement
 
@@ -160,7 +165,7 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 
 ## Production Patterns & Reference Frameworks
 
-- [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [CC-mas-design-principles.md](../cc-community/CC-mas-design-principles.md).
+- [12-Factor Agents][12fa-blog] ([GitHub mirror][12fa-gh]) — principles for production-grade LLM agents (Dex Horthy / HumanLayer, 2025-04-03). Full treatment: [mas-design-principles.md](../sdlc-lcm/mas-design-principles.md).
 - [Agents Towards Production](https://github.com/NirDiamant/agents-towards-production) — end-to-end playbooks for shipping agents.
 - [Learn Harness Engineering (WalkingLabs)](https://github.com/walkinglabs/learn-harness-engineering) — project-based course on *harness engineering* for reliable AI coding agents: structuring Instructions, State, Verification, Scope, and Session Lifecycle around the model instead of fine-tuning it (12 lectures + 6 projects, framed around Claude Code / Codex; MIT). Maps onto [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
 - [Hands-On Modern RL (WalkingLabs)](https://github.com/walkinglabs/hands-on-modern-rl) — practice-first RL curriculum from classic control to LLM post-training (RLHF, DPO, GRPO, RLVR, DeepSeek-R1) and agentic RL (multi-turn credit assignment, tool-use trajectories, Deep Research); Python/PyTorch (CC BY-NC-SA 4.0, non-commercial).
@@ -170,9 +175,14 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 
 - [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — CC-integrating memory and tooling
 - [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — model/provider configuration and free-tier reference
-- [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — observability/tracing platforms (separate restore)
-- [CC-research-agents-landscape.md](../cc-community/CC-research-agents-landscape.md) — research/discovery agents
-- [CC-ai-security-governance-analysis.md § MCP Ecosystem Security](../cc-community/CC-ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
+- [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) — observability/tracing platforms (separate restore)
+- [research-agents-landscape.md](research-agents-landscape.md) — research/discovery agents
+- [ai-security-governance-analysis.md § MCP Ecosystem Security](../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) — MCP server threat model
 
 [12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
 [12fa-gh]: https://github.com/humanlayer/12-factor-agents
+[pai-caps]: https://pydantic.dev/articles/pydantic-ai-capabilities
+
+## Sources
+
+Each framework / tool entry cites its repo or docs inline (reference-style and inline links above); framework stars were `gh api`-verified at the snapshot dates noted in the relevant sections.

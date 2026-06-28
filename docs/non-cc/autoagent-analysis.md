@@ -24,7 +24,7 @@ AutoAgent is a **fully-automated, zero-code LLM agent framework** from the Unive
 | Topic | Existing Analysis | File |
 |-------|------------------|------|
 | Paper citation | Further reading (arxiv 2502.05957) | `docs/todo/research/further_reading.md:797` |
-| HKUDS OpenHarness | Community tooling landscape | `docs/cc-community/CC-community-tooling-landscape.md:147-179` |
+| HKUDS OpenHarness | Standalone analysis | [openharness-analysis.md](openharness-analysis.md) |
 | HKUDS CLI-Anything | CLI analysis | `docs/cc-native/agents-skills/CC-cli-anything-analysis.md` |
 | HKUDS AI-Researcher | Further reading (NeurIPS 2025 Spotlight) | `docs/todo/research/further_reading.md:732` |
 | Agent frameworks | 30+ frameworks landscape | `docs/todo/landscape/landscape-agent-frameworks-infrastructure.md` |

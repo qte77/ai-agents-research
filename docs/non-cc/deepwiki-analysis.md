@@ -21,7 +21,7 @@ The service describes itself as "up-to-date documentation you can talk to, for e
 the world" (fetched 2026-06-16 from deepwiki.com).
 
 For broader context on AI repo-to-docs tooling see the
-[Repo-to-Docs AI Tools Landscape](../cc-community/CC-repo-to-docs-tools-landscape.md);
+[Repo-to-Docs AI Tools Landscape](repo-to-docs-tools-landscape.md);
 for a complementary markdown-first knowledge-base pattern see
 [Karpathy LLM Knowledge Base](karpathy-llm-kb-analysis.md).
 
@@ -54,7 +54,7 @@ output or the underlying indexing engine is stated on either first-party page.
 ## Adoption Decision
 
 **Assess.** DeepWiki addresses the same gap that the
-[Repo-to-Docs AI Tools Landscape](../cc-community/CC-repo-to-docs-tools-landscape.md)
+[Repo-to-Docs AI Tools Landscape](repo-to-docs-tools-landscape.md)
 documents: converting raw source into navigable, queryable documentation. Strengths for the
 ai-agents-research workflow:
 

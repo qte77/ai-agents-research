@@ -143,7 +143,7 @@ Supported clients per the repo: Claude Desktop (stdio), Claude Code / HTTP clien
 | Stream agent events to any frontend | **AG-UI** (protocol) |
 | Agent emits structured UI widgets | **A2UI** spec over AG-UI |
 | End-to-end demo with generative HTML components | **OpenGenerativeUI** (reference) |
-| Claude Code observability over agent-user interactions | Use AG-UI-compatible backend + OTel (see [CC-agent-observability-methods-analysis.md § Claude Code (First-Party OTel Integration)](../cc-community/CC-agent-observability-methods-analysis.md#claude-code-first-party-otel-integration)) |
+| Claude Code observability over agent-user interactions | Use AG-UI-compatible backend + OTel (see [CC-monitoring-telemetry-analysis.md](../cc-native/configuration/CC-monitoring-telemetry-analysis.md)) |
 
 ## Agent Control-Surface Naming (2026)
 
@@ -163,7 +163,7 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 
 ## Cross-References
 
-- [CC-agent-observability-methods-analysis.md](../cc-community/CC-agent-observability-methods-analysis.md) — OTel observability patterns (AG-UI events can be modeled as OTel spans)
+- [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) — OTel observability patterns (AG-UI events can be modeled as OTel spans)
 - [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) — MCP connector landscape (the model↔tool leg of the Protocol Triangle)
 
 ## Sources

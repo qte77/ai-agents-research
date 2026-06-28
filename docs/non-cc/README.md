@@ -55,6 +55,8 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 |---|---|---|---|
 | [karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md) | Karpathy LLM Knowledge Base (markdown-first wiki) | Yes | Gist only |
 | [deepwiki-analysis.md](deepwiki-analysis.md) | DeepWiki (Cognition/Devin auto-generated repo wikis + chat Q&A) | No (hosted) | No |
+| [repo-to-docs-tools-landscape.md](repo-to-docs-tools-landscape.md) | Repo-to-docs AI tools catalog (DeepWiki, Code2Tutorial, GitSummarize, Understand Anything); multi-platform | — | Mixed |
+| [research-agents-landscape.md](research-agents-landscape.md) | Research/discovery agents catalog (STORM, GPT-Researcher, Elicit, FutureHouse, OpenScholar, PaperQA2) + mapping to CC's /deep-research harness | — | Mixed |
 | [open-knowledge-format-analysis.md](open-knowledge-format-analysis.md) | Open Knowledge Format (Google Cloud agent-readable data-catalog spec, v0.1) | — (spec) | Yes (Apache-2.0) |
 | [opennote-analysis.md](opennote-analysis.md) | Opennote (AI tutor in notes; video lessons; YC S25, Llama-backed) | No (hosted) | Partial (MIT SDKs; closed core) |
 
@@ -72,6 +74,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [openviking-analysis.md](openviking-analysis.md) | ByteDance OpenViking (filesystem-based context DB) | Yes | Yes (AGPL-3.0) |
 | [fastcontext-analysis.md](fastcontext-analysis.md) | Microsoft FastContext (Qwen3-4B repo-exploration subagent; parallel READ/GLOB/GREP) | Yes | Yes (MIT) |
 | [cocoindex-analysis.md](cocoindex-analysis.md) | CocoIndex (incremental ETL for AI context/RAG; MCP code-search variant) | Yes | Yes (Apache-2.0) |
+| [opensrc-analysis.md](opensrc-analysis.md) | opensrc (Vercel Labs; fetches npm package source code for agent context) | Yes | Yes (Apache-2.0) |
 
 ## Infrastructure
 
@@ -81,6 +84,8 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [goclaw-analysis.md](goclaw-analysis.md) | GoClaw (multi-tenant agent gateway, Go, 7 channels) | Yes | Yes (CC BY-NC 4.0) |
 | [searxng-analysis.md](searxng-analysis.md) | SearXNG (self-hostable metasearch for agent web-search) | Yes | Yes (AGPL-3.0) |
 | [web-scraping-extraction-landscape.md](web-scraping-extraction-landscape.md) | Scraping / crawling / extraction tool catalog (SSOT; HTTP clients, browser automation, AI-native scrapers, search APIs, managed platforms, doc extraction, anti-bot) | — | Mixed |
+| [code-review-products-landscape.md](code-review-products-landscape.md) | Standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge, Graphite, Cursor Bugbot, Cubic, Bito, Korbit); multi-platform, not CC-specific | — | Mixed |
+| [agent-design-formats-landscape.md](agent-design-formats-landscape.md) | Agent-consumable design formats (awesome-design-md corpus; Google Labs DESIGN.md spec + CLI; Figma/W3C token chain); multi-platform, not CC-specific | — | Mixed |
 | [llm-routers-gateways-landscape.md](llm-routers-gateways-landscape.md) | LLM routers / gateways / aggregators catalog (29 tools: OpenRouter, LiteLLM, Portkey, Bifrost, Vercel/Cloudflare AI Gateway, OpenRouter Fusion) | — | Mixed |
 | [semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md) | Semantic-layer + data-catalog substrate for agentic data access (Cube, dbt MetricFlow, Malloy, AtScale, DataHub, OpenMetadata, Unity Catalog, Atlas, Dataplex) — MCP/SDK agent surfaces; cross-refs Genie Ontology + OKF | — | Mixed |
 
@@ -91,7 +96,10 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
 | [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
 | [deepagents-analysis.md](deepagents-analysis.md) | langchain-ai/deepagents (deep-agents: planning + subagents + virtual FS, on LangGraph) | Yes | Yes (MIT) |
+| [openharness-analysis.md](openharness-analysis.md) | HKUDS/OpenHarness (open Python agent harness; 10 subsystems, CC-convention compatible, multi-provider) | Yes | Yes (MIT) |
 | [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) | Landscape catalog: orchestration frameworks, LLM routing, memory infrastructure, agent models | — | Mixed |
+| [workflow-frameworks-landscape.md](workflow-frameworks-landscape.md) | Agentic workflow frameworks: Anthropic's 5 patterns, durable execution (Temporal/Inngest/Restate), 8 anti-patterns; the workflows-vs-agents distinction | — | Mixed |
+| [spec-driven-frameworks-landscape.md](spec-driven-frameworks-landscape.md) | Spec-driven development frameworks (spec-kit, OpenSpec, BMAD, Agent-OS, Kiro, Tessl); standalone deep-dive behind the disciplines §3 synthesis | — | Mixed |
 | [openai-swarm-analysis.md](openai-swarm-analysis.md) | OpenAI Swarm (deprecated educational multi-agent; superseded by Agents SDK) | Yes | Yes (MIT) |
 | [openai-agents-sdk-analysis.md](openai-agents-sdk-analysis.md) | OpenAI Agents SDK (multi-agent: handoffs, guardrails, sessions, tracing; GA successor to Swarm) | Yes | Yes (MIT) |
 
@@ -101,6 +109,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 |---|---|
 | [ag-ui-protocol-landscape.md](ag-ui-protocol-landscape.md) | AG-UI (Agent-User Interaction protocol), A2UI (Google declarative generative-UI spec), OpenGenerativeUI (CopilotKit reference framework); 2026 ecosystem adoption + Salesforce non-adoption note |
 | [agentcanvas-analysis.md](agentcanvas-analysis.md) | AgentCanvas — renders Pydantic AI + Logfire execution traces as interactive HTML diagrams (OTel agent observability) |
+| [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) | Survey of 18 OTel observability platforms + 5 tracing patterns for agent behavior (Langfuse, Arize Phoenix, Logfire, …); CC's own first-party telemetry split to cc-native |
 
 ## Backlog status
 

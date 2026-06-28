@@ -3,8 +3,8 @@ title: Ralph Loop Enhancement Research
 source: ralph/scripts/ralph.sh, ralph/README.md, external Ralph pattern research (ralph/README.md is project-specific; see external references below for the general pattern)
 purpose: Identify actionable enhancements to autonomous headless CC development loops (Ralph pattern) based on gap analysis and external pattern research.
 created: 2026-03-07
-updated: 2026-06-19
-validated_links: 2026-06-19
+updated: 2026-06-23
+validated_links: 2026-06-23
 ---
 
 **Status**: Research (informational — feeds into iteration planning)
@@ -139,6 +139,14 @@ Community-published Ralph loop as a CC Skill. Uses `.claude/ralph-loop.local.md`
 
 **Relevance**: Validates that the Ralph loop can be packaged as a CC Skill or Plugin.
 
+### SantanderAI/ralph — Multi-CLI Loop Harness
+
+**Source**: Banco Santander AI Lab ([SantanderAI/ralph][santander-ralph], [ralph-vault-skill][santander-vault])
+
+A dependency-free, production-minded Ralph loop that drives **four** coding CLIs — Claude Code, Codex, Gemini CLI, Devin — with a fresh session per iteration and all continuity living in the workspace. Apache-2.0, v0.1.0 (2026-06-17), ~57★. Notable beyond the bash baseline: live `.ralph/.env` reload before each iteration; automatic agent rotation on token exhaustion (codex→claude→gemini→devin); systemd-enforced hard RAM caps (8 GB default, kernel OOM-kill); project-level **distributed skills** that travel with the repo (`juez` for task review, `maestro` for skill curation); a `stop.md` signal file for graceful shutdown; automatic log rotation. The companion [`ralph-vault-skill`][santander-vault] (~49★) generates progressive-disclosure knowledge vaults as the planning artifact a Ralph loop consumes.
+
+**Relevance**: A maintained multi-CLI harness whose agent-rotation and distributed-skills design extend the single-CLI bash baseline; the vault skill complements the LobeHub skill-packaging above.
+
 ## Actionable Enhancements
 
 ### Tier 1 — Fix Now (bugs, 15 min each)
@@ -171,6 +179,8 @@ Community-published Ralph loop as a CC Skill. Uses `.claude/ralph-loop.local.md`
 - [Ralph Wiggum plugin][ralph-official] — Official Anthropic plugin
 - [LinearB podcast][linearb] — Huntley on context rot and loop discipline
 - [Shipyard Ralph guide][shipyard] — Ralph loop pattern explanation
+- [SantanderAI/ralph][santander-ralph] — Banco Santander AI Lab multi-CLI Ralph harness (Apache-2.0, v0.1.0)
+- [ralph-vault-skill][santander-vault] — knowledge-vault generator companion to the loop
 
 [ralph-history-post]: https://www.hlyr.dev/blog/brief-history-of-ralph
 [effective-harnesses]: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
@@ -183,3 +193,5 @@ Community-published Ralph loop as a CC Skill. Uses `.claude/ralph-loop.local.md`
 [ralph-official]: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/ralph-loop
 [linearb]: https://linearb.io/dev-interrupted/podcast/inventing-the-ralph-wiggum-loop
 [shipyard]: https://shipyard.build/blog/claude-code-ralph-loop/
+[santander-ralph]: https://github.com/SantanderAI/ralph
+[santander-vault]: https://github.com/SantanderAI/ralph-vault-skill

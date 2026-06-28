@@ -3,8 +3,8 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-06-20
-validated_links: 2026-04-23
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Reference (informational catalog)
@@ -123,6 +123,7 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 | [Zyte](https://www.zyte.com/) | Free trial ($200) | No | AI-powered unblock + extraction API |
 | [ScraperAPI](https://www.scraperapi.com/) | Free tier; paid | No | Proxy-rotation + JS rendering API at scale |
 | [Decodo](https://decodo.com/) | Free tier; from $0.09/1K | No | 125M+ IP network; formerly Smartproxy |
+| [Scrape.do](https://scrape.do/) | ~$0.60/1K req | No | 110M+ proxies; HTML/JSON/XML/MD output, JS render; ~98.6% success at low cost |
 
 ## Document-Specific Extraction
 
@@ -142,7 +143,11 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 
 **Key insight**: government legislation portals and patent offices have official APIs that are easier than fighting their anti-bot. Use the API, not the PDF download page.
 
-## Browser-as-a-Service / Agent Platforms
+### Document OCR pipelines
+
+Distinct from the source-specific APIs above: general-purpose OCR/VLM tools that turn arbitrary PDFs and images into LLM-ready text — a document-ingestion front-end for RAG and knowledge bases.
+
+- [olmOCR (AllenAI)](https://github.com/allenai/olmocr) — GPU OCR pipeline converting PDF/PNG/JPEG → Markdown or Dolma JSON via a fine-tuned Qwen2.5-VL 7B model; handles equations, tables, handwriting, multi-column layout and reading-order recovery (<$200 / 1M pages, Apache-2.0). Install `pip install olmocr` (remote inference) or `pip install olmocr[gpu] --extra-index-url https://download.pytorch.org/whl/cu128` for local vLLM (Docker image `alleninstituteforai/olmocr:latest-with-model`). Run `olmocr <workspace> --pdfs … --markdown` — default model `allenai/olmOCR-2-7B-1025-FP8`; point at a remote endpoint with `--server`/`--api_key`, or read/write S3 via `--workspace_profile`/`--pdf_profile` (no env vars; the full ~25-flag reference is in the [repo README](https://github.com/allenai/olmocr)).
 
 | Platform | License/Pricing | Differentiator |
 |----------|----------------|----------------|

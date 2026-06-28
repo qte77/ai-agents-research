@@ -2,8 +2,8 @@
 title: "Multi-Agent System Design Principles"
 purpose: Core design principles for multi-agent systems synthesized from 12-Factor Agents, Anthropic Effective Harnesses, and PydanticAI.
 created: 2026-02-09
-updated: 2026-06-19
-validated_links: 2026-06-19
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Adopt
@@ -143,7 +143,7 @@ variables.
 ## Agent/Plugin Design Checklist
 
 For security-specific checks, see the
-[Security Checklist](CC-mas-security-framework.md#security-checklist).
+[Security Checklist](mas-security-framework.md#security-checklist).
 
 - [ ] **Stateless Reducer**: Pure function, no shared state
 - [ ] **Own Context Window**: Manages own context

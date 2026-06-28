@@ -5,8 +5,8 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-06-16
-validated_links: 2026-04-06
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Research (informational)
@@ -37,7 +37,7 @@ A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the gra
 
 **URL**: [deepwiki.com](https://deepwiki.com)
 **Maker**: [Cognition Labs](https://cognition.ai) (the company behind Devin AI)
-**Full analysis**: [deepwiki-analysis.md](../non-cc/deepwiki-analysis.md)
+**Full analysis**: [deepwiki-analysis.md](deepwiki-analysis.md)
 
 AI indexes an entire GitHub repository and generates hierarchical wiki-style documentation with:
 
@@ -126,11 +126,11 @@ Differentiation happens at the output stage:
 
 | Topic | File |
 |-------|------|
-| Knowledge graphs from code (CC-integrated) | [CC-community-tooling-landscape.md — Graphify](CC-community-tooling-landscape.md#graphify-safishamsi) |
-| AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
+| Knowledge graphs from code (CC-integrated) | [CC-community-tooling-landscape.md — Graphify](../cc-community/CC-community-tooling-landscape.md#graphify-safishamsi) |
+| AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](../cc-community/CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
 | llms.txt documentation standard | [CC-llms-txt-analysis.md](../cc-native/context-memory/CC-llms-txt-analysis.md) |
-| Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](CC-community-skills-landscape.md) |
-| OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../non-cc/openviking-analysis.md) |
+| Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](../cc-community/CC-community-skills-landscape.md) |
+| OpenViking L0/L1/L2 tiering | [openviking-analysis.md](openviking-analysis.md) |
 
 ## Sources
 

@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-06-14
-validated_links: 2026-04-23
+updated: 2026-06-27
+validated_links: 2026-06-27
 ---
 
 **Status**: Assess
@@ -13,13 +13,13 @@ validated_links: 2026-04-23
 Comprehensive catalog of evaluation metrics for AI agent systems, with
 definitions, use cases, and primary research references for each metric.
 
-**Related Document:** [Evaluation & Data Resources Landscape](CC-evaluation-data-resources-landscape.md) - Tools, platforms, datasets, and benchmarks for implementing these metrics
+**Related Document:** [Evaluation & Data Resources Landscape](evaluation-data-resources-landscape.md) - Tools, platforms, datasets, and benchmarks for implementing these metrics
 
 ## Core Evaluation Metrics
 
 ### Text Generation Quality
 
-*See also: [Traditional Metrics Libraries](CC-evaluation-data-resources-landscape.md)*
+*See also: [Traditional Metrics Libraries](evaluation-data-resources-landscape.md)*
 
 #### BLEU (Bilingual Evaluation Understudy)
 
@@ -60,7 +60,7 @@ definitions, use cases, and primary research references for each metric.
 
 ### LLM-as-a-Judge Quality Assessment
 
-*See also: evaluation frameworks and benchmarks in [CC-evaluation-data-resources-landscape.md](CC-evaluation-data-resources-landscape.md)*
+*See also: evaluation frameworks and benchmarks in [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md)*
 
 #### Answer Relevancy
 
@@ -97,11 +97,11 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: RAG-specific, improves retrieval quality
 - **Limitations**: Requires clear context-query relationships
 - **Reference**: [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
-- **Landscape Reference**: [RAG evaluation tools (RAGAs, TruLens)](CC-evaluation-data-resources-landscape.md)
+- **Landscape Reference**: [RAG evaluation tools (RAGAs, TruLens)](evaluation-data-resources-landscape.md)
 
 ### Agent Performance Metrics
 
-*See also: [evaluation frameworks & benchmarks](CC-evaluation-data-resources-landscape.md) and [observability platforms](CC-agent-observability-methods-analysis.md)*
+*See also: [evaluation frameworks & benchmarks](evaluation-data-resources-landscape.md) and [observability platforms](../non-cc/agent-observability-methods-analysis.md)*
 
 #### Tool Selection Accuracy
 
@@ -138,7 +138,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Quantifies workflow efficiency, identifies optimization opportunities
 - **Limitations**: Requires determination of optimal path
 - **Reference**: [WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854)
-- **Landscape Reference**: [Arize Phoenix - Path Metrics](CC-agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix - Path Metrics](../non-cc/agent-observability-methods-analysis.md)
 
 #### Tool Call Accuracy
 
@@ -148,7 +148,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Direct measure of agent competency with tools
 - **Limitations**: Requires clear success/failure definitions
 - **Reference**: [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
-- **Landscape Reference**: [Arize Phoenix - LLM-as-a-Judge Templates](CC-agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix - LLM-as-a-Judge Templates](../non-cc/agent-observability-methods-analysis.md)
 
 #### Behavioral Fingerprint Profile
 
@@ -173,7 +173,7 @@ definitions, use cases, and primary research references for each metric.
 
 ### Multi-Agent Coordination Metrics
 
-*See also: [Graph Analysis & Network Tools](CC-evaluation-data-resources-landscape.md) and [Agent Frameworks](../non-cc/agent-frameworks-infrastructure-landscape.md)*
+*See also: [Graph Analysis & Network Tools](evaluation-data-resources-landscape.md) and [Agent Frameworks](../non-cc/agent-frameworks-infrastructure-landscape.md)*
 
 #### Step Efficiency
 
@@ -183,7 +183,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Measures workflow optimization effectiveness
 - **Limitations**: Requires classification of step types
 - **Reference**: Multi-agent coordination in distributed systems
-- **Landscape Reference**: [Arize Phoenix - Path Metrics](CC-agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix - Path Metrics](../non-cc/agent-observability-methods-analysis.md)
 
 #### Centrality Measures
 
@@ -195,7 +195,7 @@ definitions, use cases, and primary research references for each metric.
 - **Limitations**: Requires graph construction from interaction logs
 - **Reference**: [Networks: An Introduction](https://oxford.universitypressscholarship.com/view/10.1093/acprof:oso/9780199206650.001.0001/acprof-9780199206650)
   (Newman, 2010)
-- **Landscape Reference**: [Graph Analysis & Network Tools](CC-evaluation-data-resources-landscape.md)
+- **Landscape Reference**: [Graph Analysis & Network Tools](evaluation-data-resources-landscape.md)
 
 #### Communication Overhead
 
@@ -230,7 +230,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Separates planning quality from execution discipline
 - **Limitations**: Requires plan extraction and step matching
 - **Reference**: DeepEval PlanAdherenceMetric
-- **Landscape Reference**: [DeepEval Framework](CC-evaluation-data-resources-landscape.md)
+- **Landscape Reference**: [DeepEval Framework](evaluation-data-resources-landscape.md)
 
 #### Argument Correctness
 
@@ -249,7 +249,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Quantifies multi-agent coordination effectiveness
 - **Limitations**: Requires handoff event detection and context comparison
 - **Reference**: Arize Phoenix Multi-Agent Evaluation
-- **Landscape Reference**: [Arize Phoenix](CC-agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix](../non-cc/agent-observability-methods-analysis.md)
 
 #### Semantic Outcome
 
@@ -327,7 +327,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ### Observability-Based Metrics
 
-*See also: [Observability & Monitoring Platforms](CC-agent-observability-methods-analysis.md)*
+*See also: [Observability & Monitoring Platforms](../non-cc/agent-observability-methods-analysis.md)*
 
 #### Trace Coverage
 
@@ -337,7 +337,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Validates observability completeness
 - **Limitations**: Requires trace path definition
 - **Reference**: [OpenTelemetry Specification](https://opentelemetry.io/docs/specs/)
-- **Landscape Reference**: [AgentNeo - Observability Platform](CC-agent-observability-methods-analysis.md)
+- **Landscape Reference**: [AgentNeo - Observability Platform](../non-cc/agent-observability-methods-analysis.md)
 
 #### Error Recovery Rate
 
@@ -347,7 +347,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Quantifies system robustness
 - **Limitations**: Requires error classification and recovery detection
 - **Reference**: [Fault tolerance in distributed systems](https://dl.acm.org/doi/10.1145/98163.98167)
-- **Landscape Reference**: [Browser Use - Self-Correcting Architecture](CC-evaluation-data-resources-landscape.md)
+- **Landscape Reference**: [Browser Use - Self-Correcting Architecture](evaluation-data-resources-landscape.md)
 
 #### Memory Utilization Efficiency
 
@@ -361,7 +361,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ### Security & Safety Metrics
 
-*See also: [AI Model Testing & Validation Platforms](CC-evaluation-data-resources-landscape.md)*
+*See also: [AI Model Testing & Validation Platforms](evaluation-data-resources-landscape.md)*
 
 #### Hallucination Rate
 
@@ -371,7 +371,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Critical for academic integrity
 - **Limitations**: Requires ground truth verification
 - **Reference**: [Survey of Hallucination in Natural Language Generation](https://arxiv.org/abs/2202.03629)
-- **Landscape Reference**: [Patronus AI - Hallucination Detection](CC-evaluation-data-resources-landscape.md)
+- **Landscape Reference**: [Patronus AI - Hallucination Detection](evaluation-data-resources-landscape.md)
 
 #### Bias Detection Score
 
@@ -381,7 +381,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Promotes fair and equitable agent behavior
 - **Limitations**: Requires demographic data and bias definitions
 - **Reference**: [Bias in AI Systems](https://arxiv.org/abs/1909.01326)
-- **Landscape Reference**: [Patronus AI - Bias Assessment](CC-evaluation-data-resources-landscape.md)
+- **Landscape Reference**: [Patronus AI - Bias Assessment](evaluation-data-resources-landscape.md)
 
 #### Prompt Injection Resistance
 
@@ -391,7 +391,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Essential for production security
 - **Limitations**: Requires comprehensive attack vectors
 - **Reference**: [Prompt injection attacks against large language models](https://arxiv.org/abs/2302.12173)
-- **Landscape Reference**: [Giskard - Security Testing](CC-evaluation-data-resources-landscape.md)
+- **Landscape Reference**: [Giskard - Security Testing](evaluation-data-resources-landscape.md)
 
 #### LLM Evaluator Vulnerability
 
@@ -409,7 +409,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ### Evaluation Platform Integration
 
-*For comprehensive implementation guidance, see [Agent Evaluation & Benchmarking](CC-evaluation-data-resources-landscape.md)*
+*For comprehensive implementation guidance, see [Agent Evaluation & Benchmarking](evaluation-data-resources-landscape.md)*
 
 - **AutoGenBench**: Docker-isolated evaluation with benchmark performance metrics
 - **Swarms Agent Evaluation**: Continuous monitoring with real-time performance tracking  
@@ -419,7 +419,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ### Observability Tool Integration
 
-*For detailed technical analysis, see [Observability & Monitoring Platforms](CC-agent-observability-methods-analysis.md)*
+*For detailed technical analysis, see [Observability & Monitoring Platforms](../non-cc/agent-observability-methods-analysis.md)*
 
 - **Pydantic Logfire**: First-party PydanticAI instrumentation via `logfire.instrument_pydantic_ai()` with OTel-based tracing
 - **Comet Opik**: OpenTelemetry-compatible spans with local deployment
@@ -430,7 +430,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ### Graph Analysis Integration
 
-*For network analysis capabilities, see [Graph Analysis & Network Tools](CC-evaluation-data-resources-landscape.md)*
+*For network analysis capabilities, see [Graph Analysis & Network Tools](evaluation-data-resources-landscape.md)*
 
 - **NetworkX**: Centrality measures and coordination pattern analysis
 - **LangGraph**: Stateful agent workflow orchestration with conditional logic
@@ -439,4 +439,8 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ## Additional Resources
 
-[Framework implementations and practical guidance on using these metrics](CC-evaluation-data-resources-landscape.md)
+[Framework implementations and practical guidance on using these metrics](evaluation-data-resources-landscape.md)
+
+## Sources
+
+Metric definitions are sourced from the research papers and tool docs cited inline throughout; the implementing frameworks, benchmarks, and datasets are catalogued in [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md).
