@@ -136,6 +136,8 @@ Layered system: skills compose into agents, agents are dispatched by command shi
 - Shim commands may shadow custom slash commands
 - Quality varies across 156 skills — not all independently validated
 
+Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) (§ Superpowers) — the closest peer at equivalent scale (~135K★), methodology-first vs. this collection's framework-first packaging.
+
 ---
 
 ## Boucle Read-Once Framework
