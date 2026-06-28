@@ -27,6 +27,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [oss-alm-landscape.md](oss-alm-landscape.md) | OSS ALM tool comparison (Tuleap, OpenProject, Redmine, GitLab) |
 | [agentic-sdlc-patterns.md](agentic-sdlc-patterns.md) | Emerging patterns: ADLC, Agentic SDLC, Spec-Driven Development |
 | [agentic-engineering-disciplines-landscape.md](agentic-engineering-disciplines-landscape.md) | Synthesis: "-engineering" disciplines (prompt→spec) + "-driven-dev" methodologies (TDD→EDD→SDD) in a five-layer credo stack |
+| [goal-tracking-attribution-landscape.md](goal-tracking-attribution-landscape.md) | Top-down goals → bottom-up attribution: the goal→spec→build→learning loop, qte77-estate worked examples, and the commercial OKR/PM baseline |
 | [multi-agent-onboarding-outlook.md](multi-agent-onboarding-outlook.md) | Multi-agent support: CC, Kiro, Cursor, Gemini CLI, AGENTS.md convergence |
 | [mas-design-principles.md](mas-design-principles.md) | MAS design principles from 12-Factor Agents, Anthropic harnesses, PydanticAI |
 | [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md) | Production best practices for MAS development and benchmarking |
