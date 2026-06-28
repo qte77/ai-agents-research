@@ -3,8 +3,8 @@ title: OpenAI Codex CLI (Terminal Agent)
 source: https://github.com/openai/codex
 purpose: Evaluate Codex CLI as an interactive and headless terminal coding agent, distinct from the cloud Codex environment.
 created: 2026-06-16
-updated: 2026-06-16
-validated_links: 2026-06-16
+updated: 2026-06-28
+validated_links: 2026-06-28
 platform_scope: [openai, cli, vscode, cursor, windsurf]
 ---
 
@@ -68,7 +68,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 - **Subagent parallelisation**: explicit fan-out for parallel subtasks (extra token cost)
 - **MCP support**: connect STDIO or streaming-HTTP MCP servers via `config.toml`; launched automatically
 - **Session resume**: `codex resume` restores prior conversation and repository state
-- **AGENTS.md**: honours `AGENTS.md` files for custom per-project instructions ([agents-md][agents-md])
+- **AGENTS.md**: honours `AGENTS.md` files for custom per-project instructions ([agents-md][agents-md]); cross-agent convergence of this convention is tracked in [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md)
 - **Shell completions**: bash, zsh, fish
 
 ### Authentication and access

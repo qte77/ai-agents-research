@@ -1,0 +1,4 @@
+### Changed
+
+- `docs/sdlc-lcm/goal-tracking-attribution-landscape.md`: added a **substrate-thread** synthesis (file/graph/vector memory → KG/GraphRAG/visualization → ontology/semantic-layer → goal graph → enterprise-OS) and a bidirectional cross-ref to the new enterprise-OS landscape; corrected liminal-flux to "six action roles across an 8-phase progression".
+- Pass 2 connections wiring: `multi-agent-onboarding-outlook.md` and `agent-frameworks-infrastructure-landscape.md` now cross-ref `ag-ui-protocol-landscape.md` (the MCP / A2A / AG-UI protocol triangle); `codex-cli-analysis.md` and `gemini-cli-analysis.md` now cross-ref the `AGENTS.md`/`GEMINI.md` convergence in `multi-agent-onboarding-outlook.md`; `CC-community-tooling-landscape.md` cross-refs Superpowers from the everything-claude-code entry.

@@ -78,7 +78,11 @@ The mature commercial tools target this space, but from the human-ceremony side:
 - [agentic-engineering-disciplines-landscape.md][disciplines] — this doc is the **goals** anchor of the credo's compound loop (its Layer 5, *Compound*).
 - [agentic-sdlc-patterns.md][sdlc-patterns] — the reflector loop + cost gates instantiate the ADLC **Observe → Correct** phase the patterns doc flags as a gap.
 - [Startup CTO Handbook → qte77 mapping][cto-map] — the traditional human-OKR baseline the estate maps its `goals.json` onto.
-- The enterprise "self-operating account / agent-OS" layer around liminal-flux's 8-role account is a sibling subject (a dedicated `non-cc` enterprise-OS landscape is the natural follow-up).
+- [agentic-enterprise-os-landscape.md][enterprise-os] — the operating-environment layer around liminal-flux's self-operating account (six action roles across an 8-phase progression); the enterprise platforms surveyed there govern human-set goals but do not close this attribution loop.
+
+### The substrate thread
+
+Goal attribution is the top of a substrate stack this corpus tracks end-to-end: **file/graph/vector memory** ([agent-frameworks §4][frameworks]) persists agent state → **knowledge graphs / GraphRAG + graph visualization** ([agent-frameworks §7][frameworks]) structure it → **formal ontologies & semantic layers** ([semantic-layers-data-catalog][semantic]) formalize and govern its meaning → the **goal graph** here attributes work back to it → **enterprise agent-OS platforms** ([agentic-enterprise-os][enterprise-os]) operate the whole stack (and reveal the attribution gap). Each rung is one expression of the same *compound, don't drift* credo.
 
 ## Sources
 
@@ -110,3 +114,6 @@ The mature commercial tools target this space, but from the human-ceremony side:
 [disciplines]: agentic-engineering-disciplines-landscape.md
 [sdlc-patterns]: agentic-sdlc-patterns.md
 [oss-alm]: oss-alm-landscape.md
+[enterprise-os]: ../non-cc/agentic-enterprise-os-landscape.md
+[frameworks]: ../non-cc/agent-frameworks-infrastructure-landscape.md
+[semantic]: ../non-cc/semantic-layers-data-catalog-landscape.md

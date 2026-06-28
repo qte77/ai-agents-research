@@ -4,8 +4,8 @@ source: https://github.com/google-gemini/gemini-cli
 purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now deprecated for non-enterprise users.
 platform_scope: [cli]
 created: 2026-06-16
-updated: 2026-06-16
-validated_links: 2026-06-16
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Hold
@@ -65,7 +65,7 @@ server support, configured in `~/.gemini/settings.json`.
 
 Project-specific behavior was customizable via `GEMINI.md` files (analogous to
 `CLAUDE.md` in Claude Code), loaded at session start to inject system-level
-instructions. Conversation checkpointing and token caching were also supported.
+instructions. Conversation checkpointing and token caching were also supported. The cross-agent convergence of these instruction files (`AGENTS.md` / `GEMINI.md` / `CLAUDE.md`) is covered in [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md).
 
 ### Headless / scripting mode
 
