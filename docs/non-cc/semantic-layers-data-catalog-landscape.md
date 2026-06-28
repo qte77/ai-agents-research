@@ -41,6 +41,25 @@ Discovery, lineage, ownership, and permissions across the data estate.
 | [Apache Atlas][atlas] | Apache-2.0 (~2.1k★) | None (pre-MCP; REST only) | Hadoop-era lineage backend; no LLM-facing surface |
 | [Google Dataplex / Universal Catalog][dataplex] | Proprietary (Google) | Gemini NL querying; underpins the OKF reference impl | Managed GCP governance + metadata |
 
+## Formal Ontologies & Semantic Web
+
+Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized machine-readable meaning. These standards predate agents but increasingly **connect to, are excluded by, or enhance** the LLM-native layers below:
+
+- **[RDF][rdf]** — subject–predicate–object triples; the base data model for graph-structured facts.
+- **[OWL][owl]** — Web Ontology Language: classes, properties, and logical constraints enabling automated inference (open-world assumption — unstated ≠ false).
+- **[SKOS][skos]** — lightweight taxonomy/thesaurus vocabulary (broader/narrower/related) for concept schemes; the pragmatic middle between flat tags and a full OWL ontology.
+- **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above.
+
+**Open- vs closed-world.** OWL/RDF assume an *open world* (absent ≠ false), which fits the web's incompleteness but makes hard validation awkward; [SHACL][shacl] adds closed-world *shape* constraints for validation. SQL catalogs and most semantic layers above are closed-world — an agent reasoning across both must know which regime applies.
+
+**connect / exclude / enhance** — how formal ontologies relate to the LLM-embedded KGs (Genie Ontology, GraphRAG) and the catalog/semantic layers above:
+
+- **Connect** — an existing OWL/SKOS ontology can seed or constrain an LLM KG's entity/relation types instead of extracting them from scratch; a SPARQL endpoint is a queryable tool surface (MCP-wrappable) next to the catalogs above.
+- **Exclude** — for many agent tasks full OWL reasoning is overkill: LLMs approximate semantic relations statistically, and a heavyweight ontology adds authoring/maintenance cost without payoff; the pragmatic stack often stops at SKOS + a catalog.
+- **Enhance** — where correctness must be *provable* (compliance, finance, clinical), formal ontologies + SHACL give the deterministic backbone probabilistic LLM KGs lack; the two compose (LLM for recall/extraction, ontology for precision/validation).
+
+This is the formal-semantics counterpart to [The Agent-Native Layer](#the-agent-native-layer) below: Genie Ontology and OKF are the *LLM-native* curation of the same verified business meaning that OWL/SKOS encode *formally*.
+
 ## The Agent-Native Layer
 
 The generic layers above solve the *plumbing* — governed APIs an agent can query. But an agent hitting a raw semantic API still re-derives business meaning on every call (and can still get it wrong). Two efforts go further, and are analyzed in depth elsewhere in this repo:
@@ -69,6 +88,7 @@ Together they mark the shift from "query the catalog at runtime" to "pre-loaded,
 | [Unity Catalog OSS][unity-catalog] | LF open catalog + `unitycatalog-ai` SDK |
 | [Apache Atlas][atlas] | Hadoop-era governance framework |
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
+| [RDF][rdf] · [OWL][owl] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
 
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
@@ -81,3 +101,8 @@ Together they mark the shift from "query the catalog at runtime" to "pre-loaded,
 [unity-catalog]: https://github.com/unitycatalog/unitycatalog
 [atlas]: https://github.com/apache/atlas
 [dataplex]: https://cloud.google.com/dataplex
+[rdf]: https://www.w3.org/RDF/
+[owl]: https://www.w3.org/OWL/
+[skos]: https://www.w3.org/2004/02/skos/
+[sparql]: https://www.w3.org/TR/sparql11-overview/
+[shacl]: https://www.w3.org/TR/shacl/

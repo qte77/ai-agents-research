@@ -67,6 +67,7 @@ The field has reframed memory as **context engineering** — assembling persiste
 - [EverOS (EverMind-AI)](https://github.com/EverMind-AI/EverOS) — **Markdown-native, local-first** portable memory layer (9.4K★, Apache-2.0): plain Markdown files as source of truth over a SQLite + LanceDB hybrid index, file-watch cascade sync, multimodal ingest (text/image/PDF/audio/office), LLM-driven extraction/ranking, and an OpenAI-compatible endpoint; user-owned and self-evolving across apps — a files-first contrast to Mem0's graph-first and MemoryOS's hierarchical designs.
 - [Gulp.ai (Osmosis)](https://docs.gulp.ai/introduction) — agent-improvement API enriching prompts with past-interaction knowledge.
 - [ACE — Agentic Context Engine (Kayba)](https://github.com/kayba-ai/agentic-context-engine) — self-improving context layer: a three-role loop (Agent / Reflector / SkillManager) curates a persistent "Skillbook" of strategies that evolves with every task, so agents stop repeating mistakes without fine-tuning or a vector DB (Apache-2.0, [paper](https://arxiv.org/abs/2510.04618)). PydanticAI-based; ships an MCP server (`ace-mcp`) and a Claude Code runner. Offline benchmark-driven counterpart: autoharness (§3).
+- [learnings-ralphy (qte77 estate)](https://github.com/qte77/learnings-ralphy) — **file-based compound-learning memory**, the filesystem-as-memory complement to the graph/vector engines above: plain-Markdown `CLAUDE.md` + `AGENT_LEARNINGS.md` / `LEARNINGS.md` as durable, git-versioned agent memory with an explicit promotion path (inline fix → `AGENT_LEARNINGS.md` → always-loaded `.claude/rules/` → skills). `learnings-ralphy` distills these **across the whole repo estate** on a weekly loop (synthesize → PRD → TDD → write-back PR). EverOS (above) is the productized markdown-native analog; the trade-off vs the graph engines is recall (grep/LLM over files) for zero infra and full git auditability.
 
 ## 5. Foundation Models for Agents
 
@@ -136,6 +137,18 @@ Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; t
 - [RAGAs](https://github.com/explodinggradients/ragas) — reference-free metrics (faithfulness, answer relevancy, context precision/recall) via LLM-as-judge (Apache-2.0; [arXiv:2309.15217](https://arxiv.org/abs/2309.15217)).
 - [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with agentic evaluators (MIT).
 - [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [evaluation-data-resources-landscape.md](../sdlc-lcm/evaluation-data-resources-landscape.md).
+
+### Graph visualization
+
+The post-retrieval / analysis layer: once a GraphRAG pipeline or knowledge graph (the GraphRAG family above) is built, these render it for inspection. JS browser libraries dominate for embeddable / static-site graphs; desktop and GPU tools handle large-scale exploration. Licenses verified first-party 2026-06-28.
+
+- [vis-network](https://github.com/visjs/vis-network) — force-directed interactive renderer with physics layout out of the box (dual **Apache-2.0 OR MIT**); this repo's own knowledge graph ships as a static `ui/graph.html` rendered by vis-network (graphify output).
+- [D3.js](https://github.com/d3/d3) — low-level SVG/Canvas toolkit (**ISC**, formerly BSD); maximal control, but you author the force-simulation and layout yourself — not a drop-in graph renderer.
+- [Cytoscape.js](https://github.com/cytoscape/cytoscape.js) — graph-theory library with built-in layouts for browser + Node (**MIT**); strong for biological / network analysis.
+- [Sigma.js](https://github.com/jacomyal/sigma.js) — WebGL-accelerated renderer for large graphs in the browser (**MIT**).
+- [Gephi](https://github.com/gephi/gephi) — open-source desktop graph-analysis app (**GPL-3.0**; some NetBeans modules CDDL); ForceAtlas2 layout + interactive exploration for big static graphs.
+- [PyGraphistry](https://github.com/graphistry/pygraphistry) — **BSD-3-Clause** Python client that pushes data to a **Graphistry** GPU server whose rendering engine is **commercial / closed** (open-core: the client alone is just data-shaping).
+- [Neo4j Bloom](https://neo4j.com/product/bloom/) — codeless graph-exploration UI bundled with Neo4j; **freemium** (local DB only — remote/sharing/perspectives require paid Neo4j Enterprise). OSS alternative: [Neo4j Browser](https://github.com/neo4j/neo4j-browser) (**GPL-3.0** Cypher IDE).
 
 ## 8. Output Validation, Guardrails & Verification
 
