@@ -4,8 +4,8 @@ source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface.
 platform_scope: [cli, cloud]
 created: 2026-06-11
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-06-28
+validated_links: 2026-06-28
 ---
 
 **Status**: Proprietary ([custom license][copilot-cli-license], no derivatives) | **GA**: 2026-02-25 | **Version**: v1.0.61 (2026-06-09) | requires active Copilot subscription
@@ -53,7 +53,7 @@ Select via `/agent` or `--agent=<name>`.
 | LSP | `~/.copilot/lsp-config.json` (user) or `.github/lsp.json` (repo) |
 
 Note the instruction file is `copilot-instructions.md`, **not `AGENTS.md`** — a
-portability gap vs the AGENTS.md convergence ([CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md)).
+portability gap vs the AGENTS.md convergence ([multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md)).
 
 ### Permissions, sandboxing, autonomy
 
@@ -114,8 +114,7 @@ off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 ## Cross-References
 
 - [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape) — the Copilot **coding agent** (cloud) it shares a harness with
-- [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — AGENTS.md convergence vs `copilot-instructions.md`
-- [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) — per-agent config-file comparison
+- [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) — the AGENTS.md/GEMINI.md convergence + per-agent config-file comparison (`copilot-instructions.md` ≠ `AGENTS.md`)
 - [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — multi-agent tooling (CC Switch, CodeBurn) that targets Copilot; `~/.copilot` session data
 
 ## Sources
