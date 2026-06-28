@@ -221,10 +221,13 @@ make setup_all   # install lychee, Node.js (user-local), markdownlint-cli2
 make lint        # run lychee + markdownlint-cli2 over the full repo
 make autofix     # mechanical markdownlint --fix pass
 make test        # unit tests for src/ + .github/scripts/lib/ modules (stdlib unittest)
+make graph-page  # rebuild + restyle the knowledge graph into committed ui/graph.html (then commit to publish)
 make help        # list all recipes grouped by section
 ```
 
 Run `make lint` against any PR that touches docs before requesting review. `lychee` reads `lychee.toml`; `markdownlint-cli2` reads `.markdownlint.json`.
+
+**Knowledge graph:** the corpus knowledge graph is rebuilt on-demand via the `/graphify` skill (uses the session as the extraction model — no LLM key in CI), then `make graph-page` restyles it into the committed `ui/graph.html`; pushing that to `main` redeploys the Pages site. Full flow + rationale: [architecture.md §Knowledge Graph](docs/architecture.md#knowledge-graph-graphify).
 
 ## Commit & PR
 
