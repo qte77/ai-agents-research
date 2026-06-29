@@ -1,7 +1,7 @@
 ---
 title: "cc-voice-plugin-prototype AGENT_LEARNINGS"
 description: Mirror of AGENT_LEARNINGS.md from qte77/cc-voice-plugin-prototype.
-updated: 2026-06-22
+updated: 2026-06-29
 source: https://github.com/qte77/cc-voice-plugin-prototype/blob/main/AGENT_LEARNINGS.md
 ---
 
