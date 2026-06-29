@@ -1,7 +1,7 @@
 ---
 title: "ralph-loop-cc-tdd-wt-vibe-kanban-template AGENT_LEARNINGS"
 description: Mirror of AGENT_LEARNINGS.md from qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template.
-updated: 2026-06-22
+updated: 2026-06-29
 source: https://github.com/qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template/blob/main/AGENT_LEARNINGS.md
 ---
 
