@@ -35,6 +35,7 @@ and `CONTRIBUTING.md:214` uses `status: archived` for archives — so frontmatte
 - **Tooling verdict (§6):** `git grep 'Status\*\*' -- scripts .github ui Makefile` → **0 hits**. Frontmatter parsers (`.github/scripts/lib/changelog.py:26-47` keys off `purpose:`; `learnings-aggregator.py:69-75` writes title/description/updated/source) **never touch status**. `scripts/pages_build.py`, `render-graph-page.py`, README-index generation, lint — none read status. **Migration is pure text; nothing breaks.**
 
 ### Badge value distribution (144 lines)
+
 Clean radar tokens **~52**: `Assess` 33 (doc-level) · `Adopt` 11 · `Trial` 5 · `Hold` 3.
 Decorated / non-radar **~88** — the ones needing the split-and-relocate transform:
 `Research (informational)` 28 · `Research (…unique tail…)` ~13 · `Research preview (…)` 7 · `Reference (…)` 8 ·
@@ -43,6 +44,7 @@ Decorated / non-radar **~88** — the ones needing the split-and-relocate transf
 Source-available/Adopted (…)/Active development/Active upstream bug/Completed/Done…) ~18.
 
 ### Status vocabulary (faithful — do NOT re-assess adoption)
+
 `status:` = normalized leading token of the existing badge (kebab-case). Controlled set:
 `adopt · trial · assess · hold · research · reference · research-preview · beta · generally-available ·
 stable · public-preview · available · verified · proprietary · source-available · open-source ·
@@ -50,24 +52,29 @@ active-development · completed · done · archived`. Fold synonyms ("Research (
 "Generally available"→`generally-available`).
 
 ## Transform (per doc)
+
 1. Extract the leading status phrase (up to the first `|`, `(`, `,`, `.`, `—`, `:` that begins decoration) → normalize to a vocab token → add `status: <token>` to frontmatter after `validated_links`.
 2. Relocate the decoration into a body line right after the frontmatter close, only if it carries real info: `**Details:** <remainder>` (preserve license/GA/version/vendor/`[link]` refs verbatim). Drop pure filler (`(informational)`, `(not implementation requirements)`). The ~52 clean docs have no remainder.
 3. Delete the `**Status**: …` line + one adjacent blank, leaving `---` → blank → `## Heading`.
 
 ## Mismatches (frontmatter `status:` vs body badge) — 3 flagged; on inspection only 1 is a true bug
+
 - **CC-vlm-screen-sharing-landscape.md** — fm `research` vs badge `Assess` → **FIXED in this PR** (badge → `Research (informational)`, matching fm + sibling landscapes).
 - **autoagent-analysis.md**, **openviking-analysis.md** — fm `research` vs badge `Open-source (<license>), active development`. NOT a true contradiction: fm = adoption-status `research`; badge = release/license metadata (different axis). Resolves naturally in the migration (keep `status: research`, relocate the badge to `**Details:**`). No change now.
 
 ## Special cases
+
 - **19 dual docs** (already `status:`, listed via the §Source-map grep): keep the fm token, drop the badge, relocate decoration.
 - **agent-observability-methods-analysis.md:61** — a `**Status**:` inside a body section describing an *upstream project*, NOT the doc's status → **leave**.
 - **cocoindex-analysis.md:59** — a duplicate second `**Status**: Assess` → **remove**.
 - **docs/archive/** (already `status: archived`, no badge) → leave. Docs with **no badge** (39: READMEs, specs, auto-gen) → out of scope.
 
 ## Staging (one PR per subdir; same green-CI → admin-merge flow)
+
 `cc-native/` (largest) · `non-cc/` (most decorated/license badges) · `cc-community/` · `sdlc-lcm/`+`plans/` · then the convention docs (CONTRIBUTING + architecture). The decorated docs concentrate in `non-cc/` + `cc-native/plugins-ecosystem|configuration` — batch those with extra review. **Recommended:** an Agent subagent per subdir applies the transform + self-reviews before each PR (the decoration split is judgment-y); changelog fragment per PR.
 
 ## Verification (per PR)
+
 1. `make lint` (markdownlint over edited docs — badge removal + `**Details:**` line must keep MD022/MD041 clean; lychee: relocated `[link]` refs must still resolve; no orphaned reference-style defs) → 0 errors.
 2. `make test` → 69/69 (no modules touched).
 3. Invariants: `git grep -c '^\*\*Status\*\*:' <subdir>` → 0; every ex-badge doc has `^status:`.

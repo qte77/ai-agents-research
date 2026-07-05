@@ -38,12 +38,14 @@ Read it first — it has the exact grep commands, counts, file:line lists, vocab
    only once the corpus is migrated.
 
 ## Already done (this session, PR that shipped this handoff)
+
 - Fixed the one **true** frontmatter↔badge mismatch: `CC-vlm-screen-sharing-landscape.md` (badge `Assess` →
   `Research (informational)` to match its `status: research` + sibling landscapes).
 - The other 2 flagged "mismatches" (`autoagent`, `openviking`) are **not** bugs — fm `research` (adoption)
   vs a release-metadata badge; they resolve naturally in the migration. No pre-fix needed.
 
 ## Gotchas (from the plan's Special cases)
+
 - **Leave** `agent-observability-methods-analysis.md:61` (that `**Status**:` describes an upstream project,
   not the doc). **Remove** the duplicate `cocoindex-analysis.md:59`. **Leave** `docs/archive/**` (already
   `status: archived`). Don't add status to the 39 badge-less docs (READMEs/specs/auto-gen).
