@@ -9,7 +9,7 @@ updated: 2026-06-26
 validated_links: 2026-06-26
 ---
 
-**Status**: Assess
+**Status**: Research (informational)
 
 ## What It Is
 
