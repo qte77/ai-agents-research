@@ -1,13 +1,15 @@
 ---
 title: FastContext — Dedicated Repository-Exploration Subagent
-source: https://github.com/microsoft/fastcontext
+source: https://arxiv.org/abs/2606.14066
 purpose: Evaluate FastContext as a token-saving repo-exploration subagent for coding agents
 created: 2026-06-16
-updated: 2026-06-16
-validated_links: 2026-06-16
+updated: 2026-07-05
+validated_links: 2026-07-05
 ---
 
 **Status**: Assess
+
+> **⚠️ Under review ([#362](https://github.com/qte77/ai-agents-research/issues/362), 2026-07-05):** Microsoft's upstream repo (`microsoft/fastcontext`) was **removed** (GitHub 404); the `[repo]` reference below now points to a live community fork, and the HuggingFace model card auth-walls automated link checks (excluded in `lychee.toml`). The arXiv paper remains authoritative — findings pending re-verification.
 
 ## What It Is
 
@@ -89,11 +91,11 @@ Related context-management approaches are catalogued in
 
 | Source | Content |
 |---|---|
-| [GitHub — microsoft/fastcontext][repo] | Architecture, license (MIT), language, stars, README |
+| [GitHub — Cirius1792/fastcontext][repo] (community fork; Microsoft original removed 2026-07-05) | Architecture, license (MIT), language, README |
 | [arXiv 2606.14066][paper] | Paper title, authors, submission date, methodology, benchmark numbers |
 | [HuggingFace — FastContext-1.0-4B-SFT][hf] | Base model (Qwen3-4B-Instruct), license, four-step loop, quantitative results |
 
-[repo]: https://github.com/microsoft/fastcontext
+[repo]: https://github.com/Cirius1792/fastcontext
 [paper]: https://arxiv.org/abs/2606.14066
 [hf]: https://huggingface.co/microsoft/FastContext-1.0-4B-SFT
 [memory]: ../cc-native/context-memory/CC-memory-system-analysis.md
