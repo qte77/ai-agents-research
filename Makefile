@@ -33,6 +33,9 @@ GRAPHIFY           ?= graphify
 GRAPHIFY_BACKEND   ?= gemini
 PYTHON             ?= python3
 
+# Markdown lint scope — root governance docs + all docs/ (single source for check_docs + autofix)
+DOC_LINT_GLOB      := "README.md" "CHANGELOG.md" "CONTRIBUTING.md" "CLAUDE.md" "AGENTS.md" "AGENT_LEARNINGS.md" "AGENT_REQUESTS.md" "docs/**/*.md"
+
 # -- OS / arch detection --
 UNAME_S := $(shell uname -s)
 UNAME_M := $(shell uname -m)
@@ -242,7 +245,7 @@ check_links: ## Check links with lychee
 check_docs: ## Lint markdown files (reads .markdownlint.json)
 	export PATH="$(NODE_BIN):$$PATH"
 	if command -v markdownlint-cli2 > /dev/null 2>&1; then
-		markdownlint-cli2 "README.md" "CHANGELOG.md" "CONTRIBUTING.md" "docs/**/*.md"
+		markdownlint-cli2 $(DOC_LINT_GLOB)
 	else
 		echo "markdownlint-cli2 not installed — run: make setup_mdlint"
 		exit 1
@@ -251,7 +254,7 @@ check_docs: ## Lint markdown files (reads .markdownlint.json)
 autofix: ## Auto-fix markdown lint issues (markdownlint --fix)
 	export PATH="$(NODE_BIN):$$PATH"
 	if command -v markdownlint-cli2 > /dev/null 2>&1; then
-		markdownlint-cli2 --fix "README.md" "CHANGELOG.md" "CONTRIBUTING.md" "docs/**/*.md"
+		markdownlint-cli2 --fix $(DOC_LINT_GLOB)
 	else
 		echo "markdownlint-cli2 not installed — run: make setup_mdlint"
 		exit 1

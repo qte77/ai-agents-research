@@ -98,7 +98,7 @@ Three lint jobs run on every PR touching docs, workflows, or actions:
 
 | Job | Tool | Scope |
 |---|---|---|
-| Markdown lint | `markdownlint-cli2` | `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `docs/**/*.md` |
+| Markdown lint | `markdownlint-cli2` | root governance docs (`README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CLAUDE.md`, `AGENTS.md`, `AGENT_LEARNINGS.md`, `AGENT_REQUESTS.md`) + `docs/**/*.md` |
 | Link check | `lychee` | repo-wide (configured via `lychee.toml`) |
 | Action lint | `actionlint` (+ `shellcheck` on the runner) | `.github/workflows/**`, `.github/actions/**` |
 
@@ -144,7 +144,7 @@ The landing page carries a **System / Light / Dark theme picker** (persisted to 
 | Shortest path | `make graph-path A="<node>" B="<node>"` |
 | Re-render viz | `make graph-html` |
 
-`graphify` is side-loaded (not on `PATH`); set `GRAPHIFY=/path/to/graphify` to point the recipes at a specific build.
+Install `graphify` with `uv tool install graphifyy` — this puts the `graphify` CLI on `PATH` (interpreter under `~/.local/share/uv/tools/graphifyy/`) and is the key-free path used for a local `/graphify` rebuild. Alternatively it is side-loaded (not on `PATH`); set `GRAPHIFY=/path/to/graphify` to point the recipes at a specific build.
 
 ## Downstream Consumers
 
