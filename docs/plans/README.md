@@ -2,7 +2,7 @@
 title: Plans — Design & Decision Docs
 purpose: Convention for docs/plans/ — durable plan/design docs (the saved output of plan-mode work). GitHub Issues remain the authoritative backlog/roadmap; each plan doc links its tracking issue.
 created: 2026-06-14
-updated: 2026-06-14
+updated: 2026-07-05
 ---
 
 **Status**: Reference (convention)
@@ -30,3 +30,4 @@ updated: 2026-06-14
 | Plan | Status | Issue(s) |
 |---|---|---|
 | [2026-06-14-planning-workflow-and-open-task-triage.md](2026-06-14-planning-workflow-and-open-task-triage.md) | done | #242, #243 |
+| [2026-07-05-status-frontmatter-migration.md](2026-07-05-status-frontmatter-migration.md) | approved | #348 |
