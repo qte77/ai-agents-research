@@ -1,0 +1,83 @@
+---
+name: Link rot monitor
+
+# Weekly scheduled lychee link-check that opens/updates a single `link-rot`
+# tracking issue on broken links, and auto-closes it when links are healthy.
+# The PR/push lint gate lives in lint.yaml; this is the proactive monitor that
+# catches external rot between docs PRs instead of ambushing the next one.
+
+on:
+  schedule:
+    - cron: '0 12 * * 1'  # Mon 12:00 UTC — free slot (other monitors run 09/10/11)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: link-rot
+  cancel-in-progress: false
+
+jobs:
+  link-rot:
+    name: Scheduled link check + issue upsert
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+
+      - name: Cache lychee binary
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
+        with:
+          path: ~/.local/bin/lychee
+          key: lychee-${{ runner.os }}-v1
+
+      - name: Install lychee
+        run: make setup_lychee
+
+      - name: Run link check report
+        id: lychee
+        env:
+          GITHUB_TOKEN: ${{ github.token }}  # lychee authenticates github.com — fewer rate-limit false negatives
+        run: |
+          set +e
+          make check_links_report
+          echo "ec=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Upsert or resolve link-rot issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EC: ${{ steps.lychee.outputs.ec }}
+        run: |
+          set -euo pipefail
+          ec="$EC"
+          if [ "$ec" = "1" ]; then
+            echo "::error::lychee tooling error (exit 1) — not filing a broken-links issue"
+            exit 1
+          fi
+          num="$(gh issue list --state open --label link-rot --json number --jq '.[0].number // empty')"
+          if [ "$ec" = "2" ]; then
+            {
+              echo "Scheduled lychee (weekly) found broken links. Auto-generated; edited in place on each run."
+              echo
+              echo "**To resolve:** fix or repoint the link; if it is a persistent bot-block / auth-wall, add it to \`lychee.toml\` \`exclude\` with a note (per CONTRIBUTING). Transient network/TLS flakes clear on the next run. This issue auto-closes when all links are healthy again."
+              echo
+              sed -n '/^## Errors per input/,$p' lychee-report.md
+            } > issue-body.md
+            if [ -n "$num" ]; then
+              gh issue edit "$num" --body-file issue-body.md
+              echo "Updated existing issue #$num"
+            else
+              gh issue create --title "Link rot report (scheduled lychee)" --label link-rot --body-file issue-body.md
+            fi
+          else
+            # ec == 0: all links healthy
+            if [ -n "$num" ]; then
+              gh issue comment "$num" --body "All links healthy as of $(date -u '+%Y-%m-%d %H:%M UTC') — auto-closing."
+              gh issue close "$num"
+              echo "Closed resolved issue #$num"
+            else
+              echo "No broken links and no open link-rot issue — nothing to do."
+            fi
+          fi

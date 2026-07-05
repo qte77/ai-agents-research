@@ -10,7 +10,7 @@ endif
 .ONESHELL:
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
-	check_links check_docs check_actions autofix lint test \
+	check_links check_links_report check_docs check_actions autofix lint test \
 	graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
 	changelog_new changelog_preview changelog_release \
 	help
@@ -241,6 +241,10 @@ check_links: ## Check links with lychee
 	else
 		lychee --config lychee.toml .
 	fi
+
+check_links_report: ## Emit a markdown broken-links report (scheduled link-rot monitor)
+	export PATH="$(LOCAL_BIN):$$PATH"
+	lychee --config lychee.toml --no-progress --format markdown --output lychee-report.md .
 
 check_docs: ## Lint markdown files (reads .markdownlint.json)
 	export PATH="$(NODE_BIN):$$PATH"
