@@ -9,7 +9,7 @@ validated_links: 2026-07-05
 
 **Status**: Assess
 
-> **⚠️ Under review ([#362](https://github.com/qte77/ai-agents-research/issues/362), 2026-07-05):** Microsoft's upstream repo (`microsoft/fastcontext`) was **removed** (GitHub 404); the `[repo]` reference below now points to a live community fork, and the HuggingFace model card auth-walls automated link checks (excluded in `lychee.toml`). The arXiv paper remains authoritative — findings pending re-verification.
+> **Note ([#362](https://github.com/qte77/ai-agents-research/issues/362), 2026-07-05):** Microsoft's upstream repo (`microsoft/fastcontext`) was **removed** (GitHub 404); the `[repo]` reference below now points to a live community fork, and the HuggingFace model card auth-walls automated link checks (excluded in `lychee.toml`). This analysis is **kept** (not archived): the [arXiv paper](https://arxiv.org/abs/2606.14066) remains the authoritative source and its findings stand on the paper, not the code repo.
 
 ## What It Is
 

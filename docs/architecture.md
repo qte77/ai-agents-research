@@ -10,7 +10,7 @@ updated: 2026-06-22
 
 ## Overview
 
-This is a research-only repository — no code, only structured markdown documents. The "architecture" is the document hierarchy, naming conventions, and the three automated monitors that keep it current.
+This is a research-only repository — no code, only structured markdown documents. The "architecture" is the document hierarchy, naming conventions, and the four automated monitors that keep it current.
 
 ## Document Hierarchy
 
@@ -40,8 +40,12 @@ ai-agents-research/
 │   ├── community/             # Community-sources triage
 │   ├── status-monitor/        # CC status page incident archive + stats
 │   └── rxiv/                  # ArXiv paper eval triage (filtered by RXIV_TOPIC)
+├── scripts/                   # Graph-page render + font-fetch helpers (stdlib-only)
+├── tests/                     # Unit tests for scripts/ + .github/scripts/lib modules
+├── ui/                        # Branded gh-pages site (index.html, graph.html, assets)
+├── changelog.d/               # scriv changelog fragments (collected on release)
 └── .github/
-    ├── workflows/             # 4 monitor cron jobs + lint workflow
+    ├── workflows/             # 4 content-monitor crons + link-rot monitor + lint workflow
     ├── actions/               # Composite actions (create-triage-pr)
     ├── scripts/               # Monitor scripts + shared lib/monitor_utils.py
     └── state/                 # Per-monitor fingerprint files (committed)
@@ -91,6 +95,8 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 | ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → LLM relevance filter | `triage/rxiv/` | Tuesday 09:00 UTC |
 
 Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key.
+
+A fifth scheduled workflow — `link-rot-monitor` (Monday 12:00 UTC) — is a **health** monitor rather than a content monitor: it runs lychee weekly and upserts (then auto-closes) a single `link-rot` issue when external links break. See [Lint Gate](#lint-gate).
 
 ## Lint Gate
 
