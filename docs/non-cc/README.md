@@ -87,6 +87,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [code-review-products-landscape.md](code-review-products-landscape.md) | Standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge, Graphite, Cursor Bugbot, Cubic, Bito, Korbit); multi-platform, not CC-specific | — | Mixed |
 | [agent-design-formats-landscape.md](agent-design-formats-landscape.md) | Agent-consumable design formats (awesome-design-md corpus; Google Labs DESIGN.md spec + CLI; Figma/W3C token chain); multi-platform, not CC-specific | — | Mixed |
 | [llm-routers-gateways-landscape.md](llm-routers-gateways-landscape.md) | LLM routers / gateways / aggregators catalog (29 tools: OpenRouter, LiteLLM, Portkey, Bifrost, Vercel/Cloudflare AI Gateway, OpenRouter Fusion) | — | Mixed |
+| [kv-cache-serving-landscape.md](kv-cache-serving-landscape.md) | KV-cache serving: vendor prompt-caching (Anthropic/OpenAI/Gemini) + serving internals (PagedAttention, RadixAttention, quantization, MLA/GQA, offload/disaggregation) | — | Mixed |
 | [semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md) | Semantic-layer + data-catalog substrate for agentic data access (Cube, dbt MetricFlow, Malloy, AtScale, DataHub, OpenMetadata, Unity Catalog, Atlas, Dataplex) — MCP/SDK agent surfaces; cross-refs Genie Ontology + OKF | — | Mixed |
 
 ## Frameworks
