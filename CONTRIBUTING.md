@@ -109,6 +109,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 - **Soften or remove unverified claims** — explicit hedging beats unsourced numbers; "up to N" without a first-party source is not acceptable
 - **Cite a version gate** when behavior is version-specific (e.g., `@anthropic-ai/claude-code@2.1.88, 2026-03-31`, `CC v2.1.96+`)
 - **Shell tooling**: prefix shell calls with `rtk` (Rust Token Killer) when a shell call is genuinely needed — see `/workspaces/.claude-files/RTK.md`. Shell is a fallback, not the default
+- **Dynamic / unparsable sources**: when WebFetch can't render a page (JS-SPA, TLS- or bot-blocked) or parse a document (PDF/Office/image), escalate to the estate tools via `uv run --directory <clone>` (runs in the clone's own venv — no poison): [polyfetch-scrape](https://github.com/qte77/polyfetch-scrape) to **fetch** dynamic/blocked pages (see its `USING.md`), and [doc-pipeline-engine](https://github.com/qte77/doc-pipeline-engine) to **process** documents to text/markdown (offline `local` leg; one-off `uv sync --extra extract`)
 
 ## Directory Structure
 
