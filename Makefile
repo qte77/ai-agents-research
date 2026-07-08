@@ -272,7 +272,7 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 	fi
 	actionlint -color
 
-lint: check_links check_docs check_actions ## Run all linters (links + markdown + actions)
+lint: check_docs check_actions check_links ## Run all linters (markdown + actions first; flaky link check last so it can't mask them)
 
 test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/pages_build modules)
 	$(PYTHON) -m unittest discover -s tests -v
