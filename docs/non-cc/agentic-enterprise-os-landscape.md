@@ -4,8 +4,8 @@ purpose: Survey of the "agentic enterprise OS" pattern — the operating-environ
 category: landscape
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, self-hosted-oss, claude-code]
 created: 2026-06-28
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-08
+validated_links: 2026-07-08
 ---
 
 **Status**: Assess
@@ -46,6 +46,27 @@ The qte77 estate assembles the self-operating environment from primitives rather
 - **[polyforge-orchestrator][polyforge]** — orchestrates parallel coding agents across a polyrepo from one devcontainer/workspace; it bridges the VS Code multi-root lifecycle gap by replaying each sibling repo's `onCreateCommand`/`postCreateCommand` hooks and generating a `workspace.code-workspace` with per-repo terminal tasks.
 - **[office-forge-orchestrator][office-forge]** — the same pattern applied to office/business workflows, in three layers: `.claude/skills` (deterministic invoice/contract/report workflows) + `mcp/` (a business-API MCP catalog) + `config/` (project and credential definitions).
 - **[liminal-flux-gh-acc][liminal]** ("Lim Sid") — a self-evolving, agent-operated GitHub account where agents **plan, code, review, reflect, supervise, and evolve** their own infrastructure (six action roles) across an **8-phase autonomy progression** (Phase 0–7; Phase 0 is deployment-ready, no live infra running yet). Humans set goals and handle security escalations. Its per-run attribution and cost gates are detailed in [goal-tracking-attribution-landscape][goal-attr].
+
+## Company brain (adjacent synthesis label)
+
+"Company brain" is a fresh (mid-2026; YC-Summer-2026-RFS- and essayist-coined) umbrella for a
+**shared, permissioned, continuously-updated operational memory/context layer** over an organization's
+data and decisions that both humans and agents query and act through: ingest → consolidate (typed
+entities, contradictions auto-resolved, provenance + temporal tags) → retrieve (semantic + entity +
+graph, permissioned at query time) → act (agents read/act/write outcomes back). It is **not a distinct
+technology** but a *synthesis* of layers this repo already tracks — agent-memory infrastructure
+([agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) §4),
+knowledge-graph/GraphRAG + informal ontology
+([semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md)) — plus
+retrieval-time permissioning and a write-back loop, applied org-wide.
+
+Two of the four canonical sources are vendor marketing (a LinkedIn "context graph" pitch; a
+Vectorize build-guide plugging its own ecosystem); the more substantive are an early OSS prototype
+([caelstewart/company-brain](https://github.com/caelstewart/company-brain) — a temporal-KG engine on
+Postgres+pgvector with an MCP server, ~alpha) and a concept note in
+[hornof/llm-wiki](https://github.com/hornof/llm-wiki) (Karpathy-pattern KB). Treated here as an
+**adjacent framing** of the same goal-attribution gap the enterprise platforms leave — not a separate
+category. A standalone doc is deferred until the term accrues non-vendor traction.
 
 ## Synthesis
 

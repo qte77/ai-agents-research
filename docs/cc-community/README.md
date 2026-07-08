@@ -19,3 +19,4 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 | [CC-openmontage-analysis.md](CC-openmontage-analysis.md) | OpenMontage: agentic video production as a CLAUDE.md-driven workspace (three-layer skills, checkpoint pipelines); + Palmier concepts & coding-agent→video pivot signal |
 | [CC-compass-mcp-analysis.md](CC-compass-mcp-analysis.md) | Compass MCP: cross-surface task/context bridge (architecture, status, alignment) |
 | [CC-vlm-screen-sharing-landscape.md](CC-vlm-screen-sharing-landscape.md) | VLM + screen-sharing landscape: vision models, local runtimes, image token math, visual-context integration patterns |
+| [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md) | OpenAI Codex→CC plugin (Apache-2.0): slash commands, codex-rescue subagent, Stop-hook review gate, session transfer |

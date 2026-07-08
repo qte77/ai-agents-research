@@ -5,8 +5,8 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-07-08
+validated_links: 2026-07-08
 ---
 
 **Status**: Research (informational)
@@ -18,6 +18,8 @@ Three tools represent an emerging category of **AI-powered repo-to-documentation
 **Relevance to agent workflows**: These tools can serve as context sources for coding agents -- pre-generated documentation reduces the need for expensive runtime codebase analysis. The repo-to-docs pattern also overlaps with the `llms.txt` standard and context engineering approaches documented in this repository.
 
 A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose -- the external analogue to this repo's own [graphify integration](../architecture.md#knowledge-graph-graphify).
+
+A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes docs **for coding agents**, appending pointers into `AGENTS.md`/`CLAUDE.md`, rather than human-browsable wikis.
 
 ## Comparison
 
@@ -102,6 +104,19 @@ Three output levels: system architecture, directory-level summaries, file-level 
 
 **Tech stack**: Next.js + Tailwind (Vercel), FastAPI (Render), PostgreSQL (Supabase), Gemini 2.5 Pro, PostHog analytics.
 
+## OpenWiki (LangChain)
+
+**URL**: [github.com/langchain-ai/openwiki](https://github.com/langchain-ai/openwiki) | **Stars**: 9.7k | **License**: MIT | **Version**: v0.0.3 (2026-07-08, pre-1.0)
+
+A CLI that "writes and maintains documentation for your codebase, **built specifically for agents**." Unlike the human-facing generators above, its output is *agent context*, not a browsable wiki:
+
+- `npm install -g openwiki`; bootstrap with `openwiki --init`, refresh on change.
+- Writes generated docs into an `openwiki/` directory, and **auto-appends pointers into `AGENTS.md` and `CLAUDE.md`** so coding agents find the context.
+- CI/CD integration opens PRs with documentation refreshes as the repo changes.
+- TypeScript-heavy; very early (v0.0.3).
+
+**Relevance**: the "repo → machine-readable agent context" corner of this space — directly adjacent to CC's own `CLAUDE.md`/`AGENTS.md` conventions, and the agent-oriented contrast to human-facing DeepWiki-style tools.
+
 ## Pattern Analysis
 
 All three doc-generators share a common pipeline:
@@ -140,6 +155,7 @@ Differentiation happens at the output stage:
 - [gitsummarize.com](https://gitsummarize.com)
 - [GitHub: antarixxx/gitsummarize](https://github.com/antarixxx/gitsummarize)
 - [GitHub: egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything)
+- [GitHub: langchain-ai/openwiki](https://github.com/langchain-ai/openwiki)
 
 ## Action Items
 
