@@ -251,6 +251,10 @@ npx skills add iusztinpaul/squid
 
 **Notable pattern**: the ADR layer (architectural memory) and the Tasks Plan (feature → task decomposition) make squid a worked example of memory + goal-tracking *inside* a CC pipeline — threads picked up in the deferred agentic-memory / goal-attribution research. Relevant to [CC-agent-teams-orchestration](../cc-native/agents-skills/CC-agent-teams-orchestration.md).
 
+## Notable Plugin Profile: codex-plugin-cc (OpenAI Codex → CC delegation)
+
+[openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) — an **official OpenAI** plugin (Apache-2.0, ~26.9k★, v1.0.6) that runs Codex from inside a CC session for review or task delegation. Notable for building entirely on CC's own extension surface: slash commands (`/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:transfer`, …), a `codex-rescue` subagent, and a **`Stop`-hook review gate** that can block Claude's response when Codex flags issues; plus background delegation and full session transfer. A rival lab productizing cross-agent delegation on CC primitives. Full analysis: [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md).
+
 ## Ecosystem Observations
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
