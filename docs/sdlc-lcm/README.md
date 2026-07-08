@@ -33,6 +33,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md) | Production best practices for MAS development and benchmarking |
 | [mas-security-framework.md](mas-security-framework.md) | OWASP MAESTRO v1.0 threat modeling (7-layer) for multi-agent systems |
 | [ai-security-governance-analysis.md](ai-security-governance-analysis.md) | NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001 frameworks |
+| [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) | Operational vuln layer: AIVSS scoring, MITRE ATLAS + AI Incident Sharing, vendor discovery (MDASH/Vuln.AI), Berkeley tracker |
 | [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) | Agent evaluation metrics survey (task completion, reasoning, safety) |
 | [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md) | Eval frameworks, agentic benchmarks, datasets (companion to the metrics survey) |
 

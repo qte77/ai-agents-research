@@ -87,4 +87,5 @@ exclude = [
     "finance.biggo.com",  # times out in CI (slow news aggregator) — secondary source in codebuddy-analysis.md
     "vibekanban.com",  # untrusted SSL cert (UnknownIssuer) upstream as of 2026-06-18 — referenced in CC-office-worker-workflows.md; drop once renewed
     "huggingface.co/microsoft/FastContext-1.0-4B-SFT",  # 401 auth-wall to lychee on a live model page — fastcontext-analysis.md; drop when HF stops 401-ing (see #362)
+    "ai-incidents.mitre.org",  # untrusted SSL cert chain (UnknownIssuer) upstream — MITRE AI Incident Sharing, browser-OK; agentic-ai-vulnerability-landscape.md; drop once MITRE fixes the chain
 ]
