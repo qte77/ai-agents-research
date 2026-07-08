@@ -1,0 +1,6 @@
+### Added
+
+- `docs/non-cc/agents-cli-analysis.md`: Google agents-cli — a skill-pack that upskills a coding agent (Claude Code, Antigravity, Codex) to build/evaluate/deploy ADK agents on the Gemini Enterprise Platform (Apache-2.0; v1.0.0 but Pre-GA). Cross-ref'd from the CC-community skills landscape (it installs as a CC skill-pack).
+- `docs/non-cc/agentic-payments-landscape.md`: new landscape on machine-native agent payment rails — x402 (Coinbase → Linux Foundation; HTTP 402; USDC/Base), Google AP2 (Mandates = W3C Verifiable Credentials), Stripe MPP, Fetch.ai — with the Apify x402 case study.
+- `docs/non-cc/karpathy-agentic-coding-analysis.md`: primary-source map of Andrej Karpathy's agentic-coding arc (LLM OS → vibe coding → Software 3.0 / autonomy slider → agentic engineering).
+- `docs/sdlc-lcm/agent-identity-auth-landscape.md`: new landscape on agent identity / authentication / personhood — SPIFFE, Microsoft Entra Agent ID, MCP-OAuth, Okta Cross-App Access, AP2 Mandates, World ID / Humanity Protocol, Cloudflare Web Bot Auth — organized by the authenticate-the-agent / authorize-on-behalf-of-human / personhood axes, plus one-time/JIT permissions. Joins the sdlc-lcm security cluster.

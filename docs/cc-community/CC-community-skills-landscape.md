@@ -458,6 +458,7 @@ Cross-ref: Dispatch (above) fans out *work* to background agents; `/agent-watchd
 - [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — official plugin ecosystem
 - [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) — plugin catalogs
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — claude-mem persistent memory
+- [agents-cli-analysis.md](../non-cc/agents-cli-analysis.md) — Google agents-cli installs as a CC skill-pack (`npx skills add`) but is cross-agent; deeper analysis lives in non-cc
 
 ## Sources
 

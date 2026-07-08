@@ -66,6 +66,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 |---|---|---|
 | [intro-autonomous-robots-analysis.md](intro-autonomous-robots-analysis.md) | Introduction to Autonomous Robots (open textbook, MIT Press) | Open access |
 | [harnessx-analysis.md](harnessx-analysis.md) | HarnessX — composable/evolvable agent harness foundry (arXiv 2606.14249) | Preprint (code TBD) |
+| [karpathy-agentic-coding-analysis.md](karpathy-agentic-coding-analysis.md) | Karpathy's agentic-coding arc (vibe coding → Software 3.0 / autonomy slider → agentic engineering) | Blog + talks |
 
 ## Context & Memory Infrastructure
 
@@ -104,6 +105,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [spec-driven-frameworks-landscape.md](spec-driven-frameworks-landscape.md) | Spec-driven development frameworks (spec-kit, OpenSpec, BMAD, Agent-OS, Kiro, Tessl); standalone deep-dive behind the disciplines §3 synthesis | — | Mixed |
 | [openai-swarm-analysis.md](openai-swarm-analysis.md) | OpenAI Swarm (deprecated educational multi-agent; superseded by Agents SDK) | Yes | Yes (MIT) |
 | [openai-agents-sdk-analysis.md](openai-agents-sdk-analysis.md) | OpenAI Agents SDK (multi-agent: handoffs, guardrails, sessions, tracing; GA successor to Swarm) | Yes | Yes (MIT) |
+| [agents-cli-analysis.md](agents-cli-analysis.md) | Google agents-cli (skill-pack that upskills a coding agent — Claude Code/Antigravity/Codex — to build/eval/deploy ADK agents on Gemini Enterprise) | — | Yes (Apache-2.0) |
 
 ## Protocols & Interfaces
 
@@ -112,6 +114,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [ag-ui-protocol-landscape.md](ag-ui-protocol-landscape.md) | AG-UI (Agent-User Interaction protocol), A2UI (Google declarative generative-UI spec), OpenGenerativeUI (CopilotKit reference framework); 2026 ecosystem adoption + Salesforce non-adoption note |
 | [agentcanvas-analysis.md](agentcanvas-analysis.md) | AgentCanvas — renders Pydantic AI + Logfire execution traces as interactive HTML diagrams (OTel agent observability) |
 | [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) | Survey of 18 OTel observability platforms + 5 tracing patterns for agent behavior (Langfuse, Arize Phoenix, Logfire, …); CC's own first-party telemetry split to cc-native |
+| [agentic-payments-landscape.md](agentic-payments-landscape.md) | Machine-native agent payment rails: x402 (Coinbase/Linux Foundation), Google AP2, Stripe MPP, Fetch.ai |
 
 ## Backlog status
 

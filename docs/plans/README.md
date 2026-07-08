@@ -32,3 +32,4 @@ updated: 2026-07-08
 | [2026-06-14-planning-workflow-and-open-task-triage.md](2026-06-14-planning-workflow-and-open-task-triage.md) | done | #242, #243 |
 | [2026-07-05-status-frontmatter-migration.md](2026-07-05-status-frontmatter-migration.md) | approved | #348 |
 | [2026-07-08-new-sources-batch.md](2026-07-08-new-sources-batch.md) | done | #374 |
+| [2026-07-08-source-expansion-wave2.md](2026-07-08-source-expansion-wave2.md) | done | #374 |
