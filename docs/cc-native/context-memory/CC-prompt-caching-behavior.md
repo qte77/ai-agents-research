@@ -2,8 +2,8 @@
 title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economics
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-07-08
+validated_links: 2026-07-08
 ---
 
 **Status**: Adopt
@@ -60,7 +60,7 @@ Source: [prompt caching docs][caching], "How cache lookback works" section
 
 ### Minimum cacheable prefix
 
-The cacheable prefix is model-dependent — **4096 tokens on Opus-tier models** (Opus 4.6/4.7/4.8, which CC defaults to), 2048 on Fable 5 / Sonnet 4.6. A prefix shorter than the minimum silently skips caching: no error, just `cache_creation_input_tokens: 0`.
+The cacheable prefix is model-dependent (verified against the [caching docs][caching], 2026-07-08): **1,024 tokens on Opus 4.8 and Sonnet 5/4.6/4.5**, 2,048 on Opus 4.7, 4,096 on the older Opus 4.6/4.5 and Haiku 4.5, and 512 on Fable 5 / Mythos 5. CC defaults to Opus — 4.8 is now 1,024 (down from the 4,096 this doc previously cited). A prefix shorter than the minimum silently skips caching: no error, just `cache_creation_input_tokens: 0`. (Bedrock differs: Fable 5 / Mythos 5 = 1,024 there.)
 
 Source: [prompt caching docs][caching], "Cache limitations" section
 
@@ -133,6 +133,15 @@ Slug is a CC-internal auto-generated session display name (e.g., `stateful-dream
 - [CC-session-cost-analysis.md](../sessions/CC-session-cost-analysis.md) — JSONL cache fields, jq cost recipes
 - [CC-extended-context-analysis.md](CC-extended-context-analysis.md) — Context window management
 - [CC-session-lifecycle-analysis.md](../sessions/CC-session-lifecycle-analysis.md) — Session naming, slug, `/rename`
+
+## Related
+
+This doc is the **CC client / session-economics** view of Anthropic prompt caching. For the
+cross-vendor prompt-caching comparison (OpenAI, Gemini) and the underlying serving-engine KV-cache
+internals (PagedAttention, RadixAttention, quantization, offload/disaggregation), see
+[kv-cache-serving-landscape.md](../../non-cc/kv-cache-serving-landscape.md). For the KV-cache
+invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`), see
+[CC-model-provider-configuration.md](../configuration/CC-model-provider-configuration.md).
 
 ## Sources
 
