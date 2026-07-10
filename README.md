@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Changelog](https://img.shields.io/badge/changelog-Keep_a_Changelog-blue.svg)](CHANGELOG.md)
 [![Lint](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml/badge.svg)](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml)
+[![CodeFactor](https://www.codefactor.io/repository/github/qte77/ai-agents-research/badge)](https://www.codefactor.io/repository/github/qte77/ai-agents-research)
+
+**Live:** [knowledge graph](https://qte77.github.io/ai-agents-research/graph.html) · [site](https://qte77.github.io/ai-agents-research/)
 
 ## What
 
