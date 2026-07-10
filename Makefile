@@ -10,7 +10,7 @@ endif
 .ONESHELL:
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
-	check_links check_links_report check_docs check_actions autofix lint test \
+	check_links check_links_report check_docs check_status check_actions autofix lint test \
 	graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
 	changelog_new changelog_preview changelog_release \
 	help
@@ -272,7 +272,10 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 	fi
 	actionlint -color
 
-lint: check_docs check_actions check_links ## Run all linters (markdown + actions first; flaky link check last so it can't mask them)
+check_status: ## Validate doc frontmatter status: tokens (lenient; #348)
+	$(PYTHON) .github/scripts/check-doc-status.py
+
+lint: check_docs check_status check_actions check_links ## Run all linters (markdown + status + actions first; flaky link check last so it can't mask them)
 
 test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/pages_build modules)
 	$(PYTHON) -m unittest discover -s tests -v
