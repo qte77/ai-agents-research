@@ -3,7 +3,7 @@ title: Amp Analysis
 source: https://ampcode.com/
 purpose: Analysis of Amp (Sourcegraph spinoff) as a terminal-first agentic coding tool with pay-as-you-go model pricing.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-07-10
 validated_links: 2026-06-16
 ---
 
@@ -140,7 +140,7 @@ product.
 | [Sourcegraph Wikipedia][sg-wiki] | Organizational background; Cody → Amp transition (accessed 2026-06-16) |
 
 [amp-home]: https://ampcode.com/
-[amp-pricing]: https://ampcode.com/pricing
+[amp-pricing]: https://ampcode.com/manual
 [amp-news]: https://ampcode.com/news
 [amp-manual-cli]: https://github.com/sourcegraph/amp-examples-and-guides/blob/main/guides/cli/README.md
 [amp-examples]: https://github.com/sourcegraph/amp-examples-and-guides

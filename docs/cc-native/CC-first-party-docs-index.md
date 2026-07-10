@@ -2,7 +2,7 @@
 title: CC First-Party Documentation Index
 purpose: Canonical Anthropic URLs for CC, Agent SDK, Anthropic SDK, API, and best practices.
 created: 2026-03-28
-updated: 2026-06-11
+updated: 2026-07-10
 validated_links: 2026-06-11
 ---
 
@@ -60,7 +60,7 @@ validated_links: 2026-06-11
 |-------|-----|
 | Tool use overview | <https://platform.claude.com/docs/en/docs/agents-and-tools/tool-use/overview> |
 | Text editor tool | <https://platform.claude.com/docs/en/docs/build-with-claude/tool-use/text-editor-tool> |
-| Building effective agents | <https://platform.claude.com/docs/en/docs/build-with-claude/prompt-engineering/building-effective-agents> |
+| Building effective agents | <https://www.anthropic.com/engineering/building-effective-agents> |
 
 ## GitHub Resources
 
