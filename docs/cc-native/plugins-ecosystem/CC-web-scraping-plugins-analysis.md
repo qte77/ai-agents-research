@@ -3,8 +3,8 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-07-10
+validated_links: 2026-07-10
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -418,14 +418,17 @@ The tools are complementary, not competing:
 
 ## Alternative MCP Options (Brief)
 
-Community testing ([source][devto-browser-tools]) identified additional options worth noting:
+Beyond Firecrawl and Playwright MCP, several agent-browser tools are worth noting. License/language are first-party (GitHub repo metadata, checked 2026-07-10); token-efficiency figures are one community benchmark ([source][devto-browser-tools]) — indicative, not first-party. The load-bearing axis is **representation**: most converge on the **accessibility tree** — the same structured role/name view Playwright MCP uses (see *Key behavior* and the Comparison Matrix above), which is why their per-page token cost lands well below a screenshot-driven agent.
 
-| Tool | Token Efficiency | Best For |
-|---|---|---|
-| **PinchTab** | ~800 tokens/page (best) | Daily lightweight browsing |
-| **agent-browser** (Vercel) | 3-5K tokens/page | Backup browser automation |
-| **browser-use** | ~10K tokens/page | Complex autonomous form-filling |
-| **Chrome DevTools MCP** | ~10K tokens/page | Raw DevTools access (unstable) |
+| Tool | License (lang) | Representation | Token eff. (community) | Best for |
+|---|---|---|---|---|
+| [agent-browser][agent-browser-gh] (Vercel) | Apache-2.0 (Rust CLI + MCP) | Accessibility tree (`@e1` refs) | 3–5K tokens/page | Backup browser automation; standalone CLI |
+| [Chrome DevTools MCP][chrome-devtools-mcp-gh] (Google) | Apache-2.0 (TS) | A11y-tree snapshot over raw CDP | ~10K tokens/page | Raw DevTools access; perf traces |
+| [Stagehand][stagehand-gh] (Browserbase) | MIT (TS + Python) | Accessibility tree + DOM hybrid | n/a | `act()`/`extract()`/`observe()` over a browser |
+| [browser-use][browser-use-gh] | MIT (Python) | Custom numbered-DOM map (**not** the native a11y tree) | ~10K tokens/page | Complex autonomous form-filling |
+| PinchTab | unverified | unverified | ~800 tokens/page (best) | Daily lightweight browsing |
+
+**Counterexamples (not a11y-tree-based):** Anthropic Computer Use and OpenAI Operator drive the browser from **screenshots + pixel coordinates**, not structured element data — no dependency on the page exposing a clean a11y tree, at higher token/latency cost. For the raw-library API behind the accessibility-tree representation (Playwright 1.57 `aria_snapshot`, Patchright version gate), see the [scraping-landscape catalog](../../non-cc/web-scraping-extraction-landscape.md#accessibility-tree-page-representation).
 
 ## Actionable Recommendations
 
@@ -459,6 +462,10 @@ For the Python-library landscape behind web crawling and source connectors (poly
 - [Firecrawl Prometheus][firecrawl-prometheus]
 - [Playwright MCP (GitHub)][playwright-mcp-gh]
 - [Playwright Claude Plugin (Marketplace)][playwright-plugin]
+- [agent-browser (GitHub)][agent-browser-gh]
+- [Chrome DevTools MCP (GitHub)][chrome-devtools-mcp-gh]
+- [Stagehand (GitHub)][stagehand-gh]
+- [browser-use (GitHub)][browser-use-gh]
 - [CC Plugins Docs][cc-plugins-docs]
 - [CC WebFetch Docs][cc-webfetch-docs]
 - [WebFetch API Docs][webfetch-api-docs]
@@ -488,6 +495,10 @@ For the Python-library landscape behind web crawling and source connectors (poly
 [firecrawl-simple]: https://github.com/devflowinc/firecrawl-simple
 [playwright-mcp-gh]: https://github.com/microsoft/playwright-mcp
 [playwright-plugin]: https://claude.com/plugins/playwright
+[agent-browser-gh]: https://github.com/vercel-labs/agent-browser
+[chrome-devtools-mcp-gh]: https://github.com/ChromeDevTools/chrome-devtools-mcp
+[stagehand-gh]: https://github.com/browserbase/stagehand
+[browser-use-gh]: https://github.com/browser-use/browser-use
 [cc-plugins-docs]: https://code.claude.com/docs/en/plugins
 [cc-webfetch-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool
 [simonwillison-til]: https://til.simonwillison.net/claude-code/playwright-mcp-claude-code
