@@ -1,7 +1,7 @@
 ---
 title: "so101-biolab-automation AGENT_LEARNINGS"
 description: Mirror of AGENT_LEARNINGS.md from qte77/so101-biolab-automation.
-updated: 2026-06-22
+updated: 2026-07-13
 source: https://github.com/qte77/so101-biolab-automation/blob/main/AGENT_LEARNINGS.md
 ---
 
