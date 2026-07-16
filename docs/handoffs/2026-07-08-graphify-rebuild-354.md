@@ -7,6 +7,10 @@ updated: 2026-07-08
 
 **Status**: Reference (handoff)
 
+> **DONE — executed by PR #379 (2026-07-10, 637 nodes; #354 closed).** Retained for method reference
+> only. Do **not** re-run as a per-doc update — a fine-chunk re-extract is denser than the uniform
+> base graph and lopsides it (see AGENT_LEARNINGS). A refresh must be a full uniform rebuild.
+
 ## TL;DR
 
 Run the deferred **#354** graph rebuild so the published knowledge graph + gh-pages site include this
