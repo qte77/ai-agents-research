@@ -33,4 +33,4 @@ updated: 2026-07-08
 | [2026-07-05-status-frontmatter-migration.md](2026-07-05-status-frontmatter-migration.md) | approved | #348 |
 | [2026-07-08-new-sources-batch.md](2026-07-08-new-sources-batch.md) | done | #374 |
 | [2026-07-08-source-expansion-wave2.md](2026-07-08-source-expansion-wave2.md) | done | #374 |
-| [2026-07-08-graphify-rebuild-354.md](2026-07-08-graphify-rebuild-354.md) | approved | #354 |
+| [2026-07-08-graphify-rebuild-354.md](2026-07-08-graphify-rebuild-354.md) | done | #354 |
