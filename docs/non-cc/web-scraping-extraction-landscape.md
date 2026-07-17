@@ -3,8 +3,8 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-10
+validated_links: 2026-07-10
 ---
 
 **Status**: Reference (informational catalog)
@@ -64,6 +64,12 @@ See [CC Web Scraping Plugins Analysis](../cc-native/plugins-ecosystem/CC-web-scr
 **When to use what**: Playwright for JS rendering without anti-bot. Patchright or Nodriver when detection is an issue. Botasaurus for the hardest targets. Magnitude when selector maintenance (dynamic UIs, canvas, drag-and-drop) is the pain point and you can afford per-step vision-model cost.
 
 **Magnitude — vision-first, two products from `magnitudedev`.** [Magnitude](https://magnitude.run) (`@magnitudedev/browser-agent` + `magnitude-test`, ~4.1 k stars, TypeScript) drives the browser through a visually-grounded LLM (Claude Sonnet 4 recommended; most non-vision OpenAI/Gemini/Llama models unsupported) and works as an MCP tool in Cline/Cursor/Windsurf — resilient to UI churn that breaks selector-based tools. Do **not** confuse it with [magnitude.dev](https://magnitude.dev), the same org's separate **CLI coding agent** (open-model routing — GLM 5.2 + DeepSeek V4 Flash + Kimi K2.7 Code; pass-through pricing + $5 free credits; license unconfirmed). Selector-based contrast: [CC web-scraping plugins analysis](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) (Playwright MCP).
+
+### Accessibility-tree page representation
+
+A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/screenshots (Magnitude, above): the browser's **accessibility (a11y) tree** — a semantic role/name view that runs ~80–90 % smaller than the raw DOM and stays stable across visual redesigns, at the cost of being an assistive-tech-shaped subset (decorative / non-interactive nodes are pruned — not a full-fidelity extraction of body text). It is the representation the agent-browser MCP tools converge on; see the [CC web-scraping plugins analysis](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for the MCP-level framing (Playwright MCP, Chrome DevTools MCP).
+
+**Version-gate before relying on the API — it moved recently.** Playwright removed `page.accessibility.snapshot()` in [1.57](https://playwright.dev/docs/release-notes) (it now points to Axe for a11y *testing*); the LLM-facing replacement is `aria_snapshot` (role/name YAML). The [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) 1.58.2 pin exposes only `page.locator("body").aria_snapshot()` (signature `aria_snapshot(*, timeout) -> str`) — no `Page.aria_snapshot` shortcut and no `mode="ai"` option (the AI-optimised snapshot with `[ref=e2]` element refs is a newer upstream Playwright feature, absent from this pin). Re-check against the pinned version before use.
 
 ## Scraping Frameworks
 
