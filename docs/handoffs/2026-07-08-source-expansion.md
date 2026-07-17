@@ -20,7 +20,9 @@ Tracker: [#374](https://github.com/qte77/ai-agents-research/issues/374).
 - **Wave 1:** #372 agentic-AI-vulnerability-landscape · #373 kv-cache-serving-landscape (+ CC-prompt-caching min-token fix) · #375 Codex-CC plugin + OpenWiki + company-brain + CONTRIBUTING polyfetch/doc-pipeline pointer.
 - **Wave 2:** agents-cli, agentic-payments, karpathy-agentic-coding, agent-identity-auth (this PR).
 
-## The open action — graph rebuild (#354)
+## Graph rebuild (#354) — DONE
+
+> Executed by PR #379 (2026-07-10, 637 nodes; #354 closed). Steps below retained for method reference.
 
 1. `graphify` is installed: `uv tool install graphifyy` (package `graphifyy`, executable `graphify`).
    Python API via `uv tool run --from graphifyy python …` or the interpreter written to

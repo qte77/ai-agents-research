@@ -4,7 +4,7 @@ Thumbs.db
 
 # Plugin-deployed files (source of truth: claude-code-plugins)
 .claude/scripts/
-.claude/skills/
+.claude/skills/*
 
 # Local-only agent handoff notes (per-session scratch, not shared)
 .claude/handoffs/
@@ -24,7 +24,10 @@ Thumbs.db
 /.bashrc
 /.claude/agents
 /.claude/commands
-/.claude/skills
+/.claude/skills/*
+# Exception: the one repo-native skill we track (ai-agents-research source-onboarding workflow).
+# Direct-child phantom leaks are still caught by the /* rules; only this skill's own subdir is exempt.
+!/.claude/skills/adding-research-source/
 /.env
 /.gitconfig
 /.gitmodules

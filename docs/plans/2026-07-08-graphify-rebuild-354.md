@@ -1,6 +1,6 @@
 ---
 title: Graphify rebuild (#354) — incorporate the new-sources docs → gh-pages
-status: approved
+status: done
 issue: 354
 created: 2026-07-08
 updated: 2026-07-08
@@ -9,7 +9,7 @@ updated: 2026-07-08
 **Status**: Reference (plan)
 
 Staged, execution-ready plan for the deferred [#354](https://github.com/qte77/ai-agents-research/issues/354)
-graph rebuild. **Approved but not yet executed** — deliberately handed to a fresh, focused session
+graph rebuild. **Executed by PR #379** (2026-07-10, 637 nodes; #354 closed) — retained as method reference; originally — deliberately handed to a fresh, focused session
 (the extraction is token-heavy). Handoff: [../handoffs/2026-07-08-graphify-rebuild-354.md](../handoffs/2026-07-08-graphify-rebuild-354.md).
 Tracker: [#374](https://github.com/qte77/ai-agents-research/issues/374).
 

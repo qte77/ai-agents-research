@@ -13,6 +13,20 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
 
 ## Learned Patterns
 
+### Continued sessions: reconcile git HEAD vs the conversation summary before executing tracked work
+
+- **Context**: A long/continued session whose summary predates recent merges.
+- **Problem**: The session built a full plan to "execute the #354 graph rebuild" when it was already done (PR #379, 637 nodes, #354 closed) — wasted effort and nearly re-ran a completed rebuild.
+- **Solution**: Before executing any tracked/deferred work in a continued session, reconcile the *actual* state — `git log`, the tracking issue's open/closed state, and key artifacts (e.g. `graphify-out/graph.json` node count) — against what the summary claims. On mismatch, surface it; don't act on the stale model.
+- **References**: [docs/plans/2026-07-08-graphify-rebuild-354.md](docs/plans/2026-07-08-graphify-rebuild-354.md), PR #379.
+
+### graphify: never partial-update a uniformly-built graph
+
+- **Context**: Refreshing the corpus graph after a few docs changed.
+- **Problem**: A per-doc `--update` re-extracts with the current (fine) chunking, which is *denser* than the base graph's uniform density (#379 built ~1–2 nodes/doc; a fresh 2-doc extract yielded 43). Merging lopsides the graph — a few docs dense, the rest sparse — worse than leaving it.
+- **Solution**: Refresh only via a **full uniform rebuild**, and only when there's substantial new *concept* content (link-fix/typo edits don't change concepts → skip). Note `build_merge` prunes by `source_file` (stored as a **relative** path in `graph.json`); an absolute-path mismatch silently duplicates nodes.
+- **References**: [docs/plans/2026-07-08-graphify-rebuild-354.md](docs/plans/2026-07-08-graphify-rebuild-354.md); memory `project_graphify_rebuild_354_learnings`.
+
 ### Phantom files in repo root from bwrap sandbox
 
 - **Context**: Claude Code with bubblewrap sandbox on Linux/WSL2/Codespaces.
