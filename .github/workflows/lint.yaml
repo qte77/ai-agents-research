@@ -12,6 +12,9 @@ on:
       - 'Makefile'
       - '.github/workflows/**'
       - '.github/actions/**'
+      - '.github/scripts/**'
+      - 'scripts/**'
+      - 'tests/**'
   pull_request:
     branches: [main]
     paths:
@@ -21,6 +24,9 @@ on:
       - 'Makefile'
       - '.github/workflows/**'
       - '.github/actions/**'
+      - '.github/scripts/**'
+      - 'scripts/**'
+      - 'tests/**'
   workflow_dispatch:
 
 permissions:
@@ -74,3 +80,21 @@ jobs:
 
       - name: Run actionlint
         run: make check_actions
+
+  status:
+    name: Doc status tokens (check_status)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+
+      - name: Validate doc frontmatter status tokens
+        run: make check_status
+
+  tests:
+    name: Unit tests (unittest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+
+      - name: Run unit tests
+        run: make test
