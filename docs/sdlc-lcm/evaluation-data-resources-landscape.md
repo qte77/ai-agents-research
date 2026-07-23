@@ -4,13 +4,17 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
 
 Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
+
+## Why This Catalog Exists: EDD as Methodology
+
+The tools below serve **eval-driven development (EDD)** — evals authored *before* the agent capability they measure, then used as the iteration oracle. The term has **no single coiner** (see the provenance-uncertain framing in [agentic-engineering-disciplines-landscape.md §2](agentic-engineering-disciplines-landscape.md)); it is used in parallel by first parties and tool vendors: Anthropic's [Demystifying evals for AI agents][anthropic-evals] (2026-01-09) names the practice directly — "build evals to define planned capabilities before agents can fulfill them, then iterate", "owning and iterating on evaluations should be as routine as maintaining unit tests" — and frames eval-task definition as a stress-test of whether requirements are concrete enough to build. OpenAI's [evaluation best-practices guidance][openai-evals] recommends "adopting eval-driven development … evaluating early and often" and draws the BDD analogy (specify behavior before implementing). Vendors [Braintrust][braintrust-edd] and [DeepEval][deepeval-edd] each market the exact term ("define success early and build toward it … use the eval scores as your oracle"). Counterweight: [Hamel Husain's practitioner essay][husain-evals] cautions against blind eval-first — discover real failure modes, *then* encode them as evals. This section names the methodology; the disciplines landscape holds the full "-driven-development" stack.
 
 ## 1. Evaluation & Testing Frameworks
 
@@ -92,4 +96,10 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 ## Sources
 
-Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above.
+Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. EDD-methodology sources:
+
+[anthropic-evals]: https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
+[openai-evals]: https://developers.openai.com/api/docs/guides/evaluation-best-practices
+[braintrust-edd]: https://www.braintrust.dev/articles/eval-driven-development
+[deepeval-edd]: https://deepeval.com/blog/eval-driven-development
+[husain-evals]: https://hamel.dev/blog/posts/evals
