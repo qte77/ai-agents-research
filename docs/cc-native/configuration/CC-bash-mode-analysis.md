@@ -1,10 +1,10 @@
 ---
 title: CC Bash Mode — CLI `!` Prefix and Dynamic Context Injection in Skills/Rules
-source: https://code.claude.com/docs/en/interactive-mode, https://code.claude.com/docs/en/slash-commands
+source: https://code.claude.com/docs/en/interactive-mode, https://code.claude.com/docs/en/skills
 purpose: Document bash mode usage in CLI interactive sessions and dynamic shell execution within skills and rules files.
 created: 2026-03-12
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Adopted (both features are stable and production-ready)
@@ -34,9 +34,9 @@ Prefixing any input with `!` in the interactive Claude Code prompt runs the comm
 ! docker ps
 ```
 
-- The command executes immediately — Claude does not interpret, approve, or explain it
+- The command executes immediately — Claude does not interpret or approve it
 - Output streams in real-time and is added to conversation context
-- Claude can then reference the output in subsequent responses
+- As of CC v2.1.186, Claude automatically responds to the output once it lands in the transcript — no second prompt needed — at the same token cost as a normal prompt turn; set `respondToBashCommands: false` in `settings.json` to restore the pre-v2.1.186 behavior (output added to context with no automatic response) ([source][cc-interactive-mode])
 - Supports `Ctrl+B` to background long-running commands ([source][cc-interactive-mode])
 
 ### Key Behaviors
@@ -57,7 +57,7 @@ Prefixing any input with `!` in the interactive Claude Code prompt runs the comm
 | Scenario | `! command` (direct) | Claude runs bash |
 |---|---|---|
 | **Steps** | 1 (execute) | 3 (interpret, execute, explain) |
-| **Token cost** | Output only | Prompt + reasoning + output + explanation |
+| **Token cost** | Output + auto-response, same cost as a prompt turn (default since v2.1.186); output only if `respondToBashCommands: false` | Prompt + reasoning + output + explanation |
 | **Approval** | None | May require permission approval |
 | **Speed** | Instant | Waits for Claude's reasoning |
 | **Best for** | Quick checks, test runs, git ops | Complex commands needing explanation |
@@ -121,8 +121,11 @@ Skills support these built-in variables alongside bash injection ([source][cc-sk
 |---|---|
 | `$ARGUMENTS` | All arguments passed when invoking the skill |
 | `$ARGUMENTS[N]` or `$N` | Specific argument by 0-based index |
+| `$name` | Named argument declared via the frontmatter `arguments` field |
 | `${CLAUDE_SESSION_ID}` | Current session ID |
 | `${CLAUDE_SKILL_DIR}` | Directory containing the skill's `SKILL.md` |
+| `${CLAUDE_EFFORT}` | Current effort level: `low`/`medium`/`high`/`xhigh`/`max` |
+| `${CLAUDE_PROJECT_DIR}` | Project root directory; usable in bash injection and in `allowed-tools` rules (requires v2.1.196+) |
 
 ### Use Cases for Dynamic Injection
 
@@ -246,7 +249,7 @@ The Agent SDK provides a server-side Bash tool (`bash_20250124`) that is distinc
 |---|---|---|
 | **Side** | Client-side (user's terminal) | Server-side (Claude requests execution, host implements) |
 | **Session** | User's shell | Persistent bash session maintained by host |
-| **Pricing** | No API cost (direct execution) | 245 input tokens per tool use + output tokens |
+| **Pricing** | No API cost (direct execution) | 325 input tokens per request including the bash tool (Claude Opus 4.7/4.8); 244 input tokens (Claude Opus 4.6, Claude Sonnet 4.6, and earlier), plus output/error tokens |
 | **Approval** | None (direct) | Host controls execution policy |
 | **State** | User's env | Persistent across tool calls (env vars, cwd) |
 
@@ -259,23 +262,23 @@ The Agent SDK provides a server-side Bash tool (`bash_20250124`) that is distinc
 
 ### Community: Bash Permission Patterns
 
-The `Bash(pattern:*)` syntax in `~/.claude.json` controls which commands Claude can execute per project ([source][claudelog-bash]):
+The `Bash(pattern:*)` syntax is configured via a `permissions.allow` / `permissions.deny` array inside a `settings.json` file — project (`.claude/settings.json`), user (`~/.claude/settings.json`), or local (`.claude/settings.local.json`) ([source][cc-permissions]):
 
 ```json
 {
-  "projects": {
-    "/path/to/project": {
-      "allowedTools": [
-        "Bash(git *:*)",
-        "Bash(npm run:*)",
-        "Bash(make *:*)"
-      ]
-    }
+  "permissions": {
+    "allow": [
+      "Bash(git *:*)",
+      "Bash(npm run:*)",
+      "Bash(make *:*)"
+    ]
   }
 }
 ```
 
-The `/permissions` command provides interactive visual management. Tab completion (v2.0.10+) mirrors standard terminal behavior ([source][claudelog-bash]).
+The legacy `~/.claude.json` → `projects.<path>.allowedTools` structure is outdated; `~/.claude.json` today holds only a few global settings (e.g. `permissionExplainerEnabled`), not per-project Bash allow rules ([source][cc-permissions]).
+
+The `/permissions` command provides interactive visual management, including which `settings.json` file each rule comes from ([source][cc-permissions]). Tab completion (v2.0.10+) mirrors standard terminal behavior ([source][claudelog-bash]).
 
 **Security principle**: Use specific patterns (`Bash(git *:*)`) rather than blanket `Bash(*)`. Configure per-project for isolation ([source][claudelog-bash]).
 
@@ -283,6 +286,7 @@ The `/permissions` command provides interactive visual management. Tab completio
 
 - [CC Interactive Mode docs][cc-interactive-mode]
 - [CC Skills docs][cc-skills-docs]
+- [CC Permissions docs][cc-permissions]
 - [CC Security docs][cc-security]
 - [Agent SDK Bash tool][sdk-bash]
 - [Claudelog — What is Bash Mode?][claudelog-bash]
@@ -290,7 +294,8 @@ The `/permissions` command provides interactive visual management. Tab completio
 - [Snyk — ToxicSkills supply chain research][snyk-toxicskills]
 
 [cc-interactive-mode]: https://code.claude.com/docs/en/interactive-mode
-[cc-skills-docs]: https://code.claude.com/docs/en/slash-commands
+[cc-skills-docs]: https://code.claude.com/docs/en/skills
+[cc-permissions]: https://code.claude.com/docs/en/permissions
 [cc-security]: https://code.claude.com/docs/en/security
 [sdk-bash]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/bash-tool
 [claudelog-bash]: https://claudelog.com/faqs/what-is-bash-mode/

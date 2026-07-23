@@ -1,10 +1,10 @@
 ---
 title: CC Plugin Packaging Research
-source: https://platform.claude.com/docs/en/agent-sdk/plugins, https://code.claude.com/docs/en/plugins
+source: https://code.claude.com/docs/en/agent-sdk/plugins, https://code.claude.com/docs/en/plugins
 purpose: Evaluate packaging project skills, agents, and rules as a CC Plugin — including migration from repo-local configuration to a plugin-based integration.
 created: 2026-03-07
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -23,7 +23,7 @@ Plugins are portable directory bundles that extend Claude Code with commands, ag
 my-plugin/
 ├── .claude-plugin/
 │   └── plugin.json          # Optional: manifest (auto-discovery if omitted)
-├── commands/                 # Custom slash commands
+├── commands/                 # Custom slash commands (legacy — use skills/ for new plugins)
 │   └── custom-cmd.md
 ├── agents/                   # Custom subagents
 │   └── specialist.md
@@ -43,11 +43,11 @@ my-plugin/
 # Agent SDK (Python)
 async for message in query(
     prompt="Hello",
-    options={
-        "plugins": [
+    options=ClaudeAgentOptions(
+        plugins=[
             {"type": "local", "path": "./my-plugin"},
         ]
-    },
+    ),
 ):
     pass
 ```
@@ -68,6 +68,7 @@ claude --plugin-url https://example.com/my-plugin.zip
 ### Key Mechanics
 
 - Commands namespaced: `plugin-name:command-name` ([source][sdk-plugins])
+- `commands/` is now documented as a **legacy format** — "Use `skills/` for new plugins. Claude Code continues to support both formats for backward compatibility" ([source][sdk-plugins])
 - Plugins discovered via `.claude-plugin/plugin.json` manifest ([source][sdk-plugins])
 - CLI-installed plugins stored in `~/.claude/plugins/` ([source][sdk-plugins])
 - Plugins loaded at session init; appear in system init message ([source][sdk-plugins])
@@ -104,7 +105,7 @@ Package project skills, agents, and automation commands as a plugin:
 example-plugin/
 ├── .claude-plugin/
 │   └── plugin.json
-├── commands/
+├── commands/                # legacy format — use skills/ for new plugins
 │   ├── loop-init.md         # /example-plugin:loop-init
 │   ├── loop-run.md          # /example-plugin:loop-run
 │   └── loop-status.md       # /example-plugin:loop-status
@@ -223,10 +224,18 @@ locations are always auto-discovered.
 ### 3. Plugin Cache and Symlink Resolution
 
 Marketplace plugins are copied to `~/.claude/plugins/cache/` at install time.
-**Symlinks are resolved during this copy** — symlinked content is copied into
-the cache as regular files ([source][cc-plugins-ref]). This means DRY patterns
-using symlinked references (e.g., shared rules across skills) work both during
-development and after marketplace installation.
+Symlink handling during this copy depends on where the link resolves
+([source][cc-plugins-ref]):
+
+- **Resolves within the plugin's own directory** (e.g., shared rules
+  referenced from multiple skills) — **preserved as a relative symlink** in
+  the cache, not dereferenced.
+- **Resolves elsewhere in the same marketplace** — dereferenced; the
+  target's content is copied in its place.
+- **Resolves outside the marketplace** — skipped entirely, for security.
+
+This means DRY patterns using symlinked references (e.g., shared rules across
+skills) work both during development and after marketplace installation.
 
 Changing `plugin.json` in the marketplace source does **not** propagate to
 already-installed users until they run `claude plugin update` or the version
@@ -238,17 +247,19 @@ when publishing fixes. Users with cached copies won't see changes otherwise.
 ### 4. Official Plugin Pattern — Minimal Manifests
 
 Anthropic's official plugins use minimal manifests with only metadata fields
-(`name`, `description`, `author`). No component path fields. This is the
-recommended baseline ([source][cc-plugins-official]):
+(`name`, `version`, `description`, `author`, `homepage`). No component path
+fields. This is the recommended baseline ([source][cc-plugins-official]):
 
 ```json
 {
   "name": "security-guidance",
-  "description": "Security reminder hook that warns about potential security issues",
+  "version": "2.0.6",
+  "description": "Security review for Claude-generated code. Pattern-based warnings on edits, LLM-powered diff review on Stop, and an agentic commit reviewer that catches injection, XSS, SSRF, hardcoded secrets, and 25+ other vulnerability classes.",
   "author": {
-    "name": "Anthropic",
-    "email": "support@anthropic.com"
-  }
+    "name": "David Dworken",
+    "email": "dworken@anthropic.com"
+  },
+  "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/security-guidance"
 }
 ```
 
@@ -286,7 +297,7 @@ This is YAGNI until a second project needs these skills.
 - [Skill Development skill][skill-dev] — SKILL.md authoring best practices
 - [CC Memory docs][cc-mem] — CLAUDE.md and rules (repo-local patterns)
 
-[sdk-plugins]: https://platform.claude.com/docs/en/agent-sdk/plugins
+[sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
 [cc-plugins]: https://code.claude.com/docs/en/plugins
 [cc-plugins-ref]: https://code.claude.com/docs/en/plugins-reference
 [plugin-structure]: https://claude-plugins.dev/skills/@anthropics/claude-plugins-official/plugin-structure

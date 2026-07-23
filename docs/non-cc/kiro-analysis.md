@@ -3,7 +3,7 @@ title: Kiro Analysis
 source: https://kiro.dev/
 purpose: Analysis of Kiro, AWS's spec-driven agentic IDE, as a coding agent platform distinct from conversational AI coding assistants.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-07-23
 validated_links: 2026-06-16
 ---
 
@@ -122,7 +122,7 @@ Credits reset monthly; unused credits do not roll over. Overage billing is disab
 | [Kiro changelog][kiro-changelog] | CLI v2.7.0 (2026-06-12), /goal command, Queue Steering, GitLab support, Opus 4.8 |
 | [Constellation Research — AWS launches Kiro][constellation] | Preview launch 2025-07-14 at AWS Summit New York; AWS executives Nikhil Swaminathan and Deepak Singh |
 | [AWS blog — Kiro GA (2025-11-24 roundup)][aws-kiro-ga] | GA date (week of 2025-11-17); 250k preview users; four GA-launch capabilities including CLI and enterprise plans |
-| [usage.ai — AWS May 2026 updates][aws-may-2026] | Kiro Web launch; Q Developer retirement timeline; new Q Developer signups blocked 2026-05-15 |
+| usage.ai — AWS May 2026 updates (`usage.ai/blogs/aws/monthly-updates/aws-may-2026`, dead as of 2026-07-23 — redirect loop; retained for provenance) | Kiro Web launch; Q Developer retirement timeline; new Q Developer signups blocked 2026-05-15 |
 
 [kiro-home]: https://kiro.dev/
 [kiro-docs]: https://kiro.dev/docs/
@@ -134,5 +134,4 @@ Credits reset monthly; unused credits do not roll over. Overage billing is disab
 [kiro-changelog]: https://kiro.dev/changelog/
 [constellation]: https://www.constellationr.com/insights/news/aws-launches-kiro-ide-powered-ai-agents
 [aws-kiro-ga]: https://aws.amazon.com/blogs/aws/aws-weekly-roundup-how-to-join-aws-reinvent-2025-plus-kiro-ga-and-lots-of-launches-nov-24-2025
-[aws-may-2026]: https://www.usage.ai/blogs/aws/monthly-updates/aws-may-2026/
 [github-copilot-cli-analysis]: github-copilot-cli-analysis.md

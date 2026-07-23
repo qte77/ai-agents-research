@@ -3,8 +3,8 @@ title: CC Session Keepalive Across Environments
 source: https://code.claude.com/docs/en/remote-control, https://code.claude.com/docs/en/claude-code-on-the-web, https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces
 purpose: Actionable techniques to keep CC sessions alive on local machines, in containers, and in GitHub Codespaces.
 created: 2026-03-25
-updated: 2026-03-25
-validated_links: 2026-03-25
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -15,7 +15,7 @@ validated_links: 2026-03-25
 |--------|-------|-------------|
 | Host sleep | Machine suspends, WebSocket drops | Local (macOS/Linux/Windows) |
 | WSL VM shutdown | WSL2 VM idles out (default 60s) | Windows/WSL |
-| CC idle timeout | No user interaction during background tasks ([#32050][gh-32050]) | All |
+| CC idle timeout | No user interaction during background tasks ([#32050][gh-32050], closed as stale, unresolved) | All |
 | Platform timeout | Codespace stops after inactivity (default 30 min, max 4h) ([source][gh-idle-timeout]) | Codespace |
 
 ## macOS
@@ -31,7 +31,7 @@ active sessions ([#21432][gh-21432]). This prevents idle sleep but respawns ever
 
 **Auto-restart on schedule:** `/loop` expires after 7 days (see
 [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md)), OAuth
-after ~2 days ([#36807][gh-36807]). Use `launchctl` to restart the tmux+CC
+after ~2 days ([#36807][gh-36807], closed as stale, unresolved). Use `launchctl` to restart the tmux+CC
 session daily ([source][apple-launchd]). Cron doesn't work — runs outside the
 user login session, no keychain/auth access.
 
@@ -110,7 +110,7 @@ gh codespace create --idle-timeout 240m
 
 **3. tmux inside Codespace** — CC survives terminal tab switches and browser reconnects.
 
-**4. For truly unattended work** — don't fight the 4h hard limit. Use `claude --remote` (cloud VM, survives everything). See [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
+**4. For truly unattended work** — don't fight the 4h hard limit. Use `claude --cloud` (cloud VM, survives everything; `--remote` still works as a deprecated alias). See [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
 
 **Auth persistence:** Store `ANTHROPIC_API_KEY` as a Codespace secret
 ([source][gh-codespace-secrets]) — injected on every start. OAuth requires
@@ -128,15 +128,15 @@ gh codespace create --idle-timeout 240m
 |-------|---------|--------|
 | [#21432][gh-21432] | Built-in caffeinate has no disable setting | Open |
 | [#32982][gh-32982] | RC idle TTL ignores keepalives | **Partially fixed** v2.1.74 |
-| [#34868][gh-34868] | RC WebSocket drops every ~25 min | Open |
-| [#32050][gh-32050] | Idle timeout during background tasks | Open |
-| [#36807][gh-36807] | OAuth expires, needs interactive re-login | Open |
+| [#34868][gh-34868] | RC WebSocket drops every ~25 min | Closed (stale-bot, unresolved) |
+| [#32050][gh-32050] | Idle timeout during background tasks | Closed (stale-bot, unresolved) |
+| [#36807][gh-36807] | OAuth expires, needs interactive re-login | Closed (stale-bot, unresolved) |
 
 ## See Also
 
 - [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md)
 - [CC-remote-access-landscape.md](../ci-remote/CC-remote-access-landscape.md) — Happy Coder, Omnara, DIY tmux+Tailscale
-- [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md) — `claude --remote`
+- [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md) — `claude --cloud`
 - [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md) — `/schedule`
 - [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md) — `/loop` internals + lock file bug
 - [CC-sandbox-codespaces-friction.md](../sandboxing/CC-sandbox-codespaces-friction.md)

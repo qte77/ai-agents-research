@@ -4,8 +4,8 @@ description: Analysis of CLAUDE.md as a domain-specific pipeline controller — 
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-03-13
-validated_links: 2026-03-13
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -42,15 +42,15 @@ A genome analysis toolkit: 17 Python scripts in `scripts/`, each targeting a dis
 | `pain_sensitivity_analysis.py` | Pain perception variants |
 | `reproductive_analysis.py` | Reproductive health genetics |
 | `physical_traits_analysis.py` | Physical characteristic variants |
-| *(+1 additional)* | |
+| `analyze_dna.py` | 23andMe ancestry/haplogroup/Neanderthal-marker analysis (standalone; no `GENOME_FILE` variable, excluded from batch execution) |
 
-Each script reads from a single configurable `GENOME_FILE` variable and outputs a markdown report to `reports/`.
+Each of the 16 `*_analysis.py` scripts reads from a single configurable `GENOME_FILE` variable and outputs a markdown report to `reports/`. `analyze_dna.py` is a standalone script with no `GENOME_FILE` variable — its filename doesn't match the `*_analysis.py` glob, so it is neither reconfigured nor executed by the documented four-step workflow.
 
 ### CLAUDE.md as Pipeline Controller
 
 The CLAUDE.md defines a four-step workflow:
 
-1. **Configuration**: user places DNA file in `data/` and tells Claude the filename. Claude updates `GENOME_FILE` across all 17 scripts simultaneously — no manual editing.
+1. **Configuration**: user places DNA file in `data/` and tells Claude the filename. Claude updates `GENOME_FILE` across all 16 `*_analysis.py` scripts simultaneously — no manual editing (`analyze_dna.py` has no `GENOME_FILE` variable and is not reconfigured).
 2. **Execution**: Claude runs all scripts: `for f in *_analysis.py; do python "$f"; done`
 3. **Report ingestion**: Claude reads generated markdown reports from `reports/`
 4. **Visualization**: Claude generates a single-file HTML dashboard at `webpage/dna_terminal.html`
@@ -148,5 +148,7 @@ This pattern applies wherever domain experts need to run and explore multi-scrip
 | Source | Content |
 |---|---|
 | [dna-claude-analysis][dna] | Genome analysis CLAUDE.md case study |
+| [dna-claude-analysis CLAUDE.md][dna-claudemd] | Verbatim four-step workflow, `*_analysis.py` glob, script count |
 
 [dna]: https://github.com/shmlkv/dna-claude-analysis
+[dna-claudemd]: https://raw.githubusercontent.com/shmlkv/dna-claude-analysis/main/CLAUDE.md

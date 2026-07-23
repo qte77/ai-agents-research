@@ -1,13 +1,15 @@
 ---
 title: CC Web Scheduled Tasks — Cloud Recurring Automation
-source: https://code.claude.com/docs/en/web-scheduled-tasks
+source: https://code.claude.com/docs/en/routines
 purpose: Analysis of cloud-native scheduled tasks for recurring autonomous work without local machine dependency.
 created: 2026-03-24
-updated: 2026-03-24
-validated_links: 2026-03-24
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
-**Status**: Available (all CC Web users — Pro, Max, Team, Enterprise)
+**Status**: Available (all CC Web users — Pro, Max, Team, Enterprise). Vendor marks the underlying feature as **research preview** — behavior, limits, and API surface may change.
+
+> **Note**: Anthropic renamed this feature to **Routines** (canonical page: [routines][cc-sched], H1 "Automate work with routines"). A routine now supports three trigger types — Schedule, API (HTTP POST to a per-routine `/fire` endpoint), and GitHub event (PR/release webhooks) — not only recurring schedules. This doc covers only the **Schedule-trigger** subset of Routines.
 
 ## What It Is
 
@@ -20,7 +22,7 @@ Recurring prompts that run on Anthropic cloud infrastructure on a schedule. Task
 | Runs on | Anthropic cloud | Your machine | Your machine |
 | Requires machine on | No | Yes | Yes |
 | Requires open session | No | No | Yes |
-| Persistent across restarts | Yes | Yes | No (session-scoped) |
+| Persistent across restarts | Yes | Yes | Restored on `--resume` if unexpired |
 | Access to local files | No (fresh clone) | Yes | Yes |
 | MCP servers | Connectors per task | Config files + connectors | Inherits from session |
 | Minimum interval | 1 hour | 1 minute | 1 minute |
@@ -31,8 +33,8 @@ For `/loop` details, see [CC-loop-cron-analysis.md](../configuration/CC-loop-cro
 
 Three entry points:
 
-1. **Web**: [claude.ai/code/scheduled](https://claude.ai/code/scheduled) → New scheduled task
-2. **Desktop**: Schedule page → New task → New remote task
+1. **Web**: [claude.ai/code/routines](https://claude.ai/code/routines) → New routine
+2. **Desktop**: Routines (sidebar) → New routine → choose **Cloud** (choosing **Local** creates a Desktop scheduled task instead)
 3. **CLI**: `/schedule` (guided) or `/schedule daily PR review at 9am`
 
 ### Configuration
@@ -93,6 +95,6 @@ Tasks may run a few minutes after scheduled time (consistent offset per task).
 - [CC Cloud Environment docs][cc-cloud]
 - [CC Desktop Scheduled Tasks docs][cc-desktop]
 
-[cc-sched]: https://code.claude.com/docs/en/web-scheduled-tasks
-[cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web#cloud-environment
-[cc-desktop]: https://code.claude.com/docs/en/desktop#schedule-recurring-tasks
+[cc-sched]: https://code.claude.com/docs/en/routines
+[cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web#the-cloud-environment
+[cc-desktop]: https://code.claude.com/docs/en/desktop-scheduled-tasks

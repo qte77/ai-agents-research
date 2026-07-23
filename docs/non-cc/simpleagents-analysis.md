@@ -3,19 +3,19 @@ title: SimpleAgents Analysis
 source: https://github.com/CraftsMan-Labs/SimpleAgents
 purpose: Architecture analysis of SimpleAgents — Rust-first LLM agent framework with polyglot bindings and YAML workflow orchestration.
 created: 2026-03-29
-updated: 2026-03-29
-validated_links: 2026-03-29
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Assess
 
 ## What It Is
 
-Rust-first framework for building LLM agent applications with a unified provider client (OpenAI, Anthropic, OpenRouter), YAML-driven workflow authoring, and polyglot bindings ([repo][repo]).
+Rust-first framework for building LLM agent applications with a unified OpenAI-compatible provider client, YAML-driven workflow authoring, and polyglot bindings ([repo][repo]).
 
-- **Stack**: Rust (edition 2021, MSRV 1.75), 13 crates in workspace
-- **Version**: 0.2.31 | **License**: Apache-2.0 | **Stars**: 18
-- **Bindings**: Python (PyO3), Node.js (N-API), Go (C FFI), WASM (wasm-bindgen)
+- **Stack**: Rust (edition 2021, MSRV 1.75), 7 crates in workspace
+- **Version**: 0.5.2 | **License**: Apache-2.0 (root) / MIT OR Apache-2.0 (crates, per `Cargo.toml`) | **Stars**: 34
+- **Bindings**: Python (PyO3), Node.js/TypeScript (N-API, npm `simple-agents-node`), WASM (Rust backend) — Go/C-FFI removed in v0.3.7
 - **Docs**: VitePress at `docs.simpleagents.craftsmanlabs.net`
 
 ## Architecture
@@ -24,26 +24,20 @@ Rust-first framework for building LLM agent applications with a unified provider
 |---|---|
 | `simple-agent-type` | Canonical request/response types and traits |
 | `simple-agents-core` | Unified client orchestration |
-| `simple-agents-providers` | Provider adapters (OpenAI, Anthropic, OpenRouter) |
-| `simple-agents-router` | Routing: round-robin, latency, cost, fallback, circuit-breaker |
-| `simple-agents-cache` | In-memory TTL/eviction cache |
+| `simple-agents-providers` | OpenAI-compatible provider adapter (`OpenAiCompatProvider`) — no Anthropic- or OpenRouter-specific modules remain |
 | `simple-agents-healing` | JSON parsing coercion and schema normalization |
 | `simple-agents-workflow` | YAML workflow IR, runtime, validation, tracing |
-| `simple-agents-workflow-workers` | gRPC worker contract and client pool |
-| `simple-agents-cli` | CLI (chat, complete, benchmark, workflow) |
-| `simple-agents-ffi` | C ABI surface |
 | `simple-agents-napi` | Node.js N-API binding |
 | `simple-agents-py` | Python binding (PyO3) |
-| `simple-agents-macros` | Procedural macros |
 
-Polyglot workers in `workers/go/`, `workers/python/`, `workers/typescript/`.
+Custom workflow steps run as an in-process "custom worker" callback inside each language binding (e.g. `crates/simple-agents-napi/src/workflow_custom_worker.rs`), replacing the earlier polyglot gRPC worker-process design.
 
 ## Key Differentiators
 
 - **Rust-first with generated bindings** — single source of truth, not separate implementations per language
 - **YAML workflow IR** with validation, tracing, and replay
 - **Built-in resilience** — circuit breakers, fallback routing, healing/coercion
-- **gRPC worker contract** — polyglot workflow steps (Go, Python, TypeScript workers)
+- **In-process custom worker callbacks** — per-binding step execution (e.g. `simple-agents-napi`'s `workflow_custom_worker.rs`), replacing the earlier gRPC polyglot worker-process design
 - **WASM binding** — browser-native execution
 
 ## Known Gaps
@@ -51,13 +45,8 @@ Polyglot workers in `workers/go/`, `workers/python/`, `workers/typescript/`.
 | Issue | Detail |
 |---|---|
 | [#25][gh-25] | Skills system for coding agents — requested but unbuilt |
-| [#24][gh-24] | Parallel DAG execution for guardrails and deep research |
-| [#27][gh-27] | Multimodal support (images/video) — currently text-only |
-| [#33][gh-33] | Email example shows unrelated content |
-| [#30][gh-30] | Runtime error message mislabels provider |
-| [#32][gh-32] | Example switching leaks stale chat/error state |
-| No GitHub Releases | v0.2.31 in Cargo.toml but 0 tagged releases |
-| Bus factor of 1 | ~353 commits from single contributor |
+| No GitHub Releases | v0.5.2 in Cargo.toml; 82 git tags (v0.2.4–v0.5.2) but 0 formal GitHub Releases |
+| Bus factor of 1 | 696 contributions from single contributor |
 
 ## Positioning
 
@@ -67,8 +56,3 @@ Comparable to LangChain/LlamaIndex (Python-first) and Vercel AI SDK (TypeScript-
 
 [repo]: https://github.com/CraftsMan-Labs/SimpleAgents
 [gh-25]: https://github.com/CraftsMan-Labs/SimpleAgents/issues/25
-[gh-24]: https://github.com/CraftsMan-Labs/SimpleAgents/issues/24
-[gh-27]: https://github.com/CraftsMan-Labs/SimpleAgents/issues/27
-[gh-33]: https://github.com/CraftsMan-Labs/SimpleAgents/issues/33
-[gh-30]: https://github.com/CraftsMan-Labs/SimpleAgents/issues/30
-[gh-32]: https://github.com/CraftsMan-Labs/SimpleAgents/issues/32

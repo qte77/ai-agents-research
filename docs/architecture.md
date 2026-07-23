@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-06-22
+updated: 2026-07-23
 ---
 
 ## Architecture: ai-agents-research
@@ -97,6 +97,8 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key.
 
 A fifth scheduled workflow — `link-rot-monitor` (Monday 12:00 UTC) — is a **health** monitor rather than a content monitor: it runs lychee weekly and upserts (then auto-closes) a single `link-rot` issue when external links break. See [Lint Gate](#lint-gate).
+
+**On-demand refresh (session-driven, not CI):** `.claude/workflows/refresh-docs.js` is a Claude Code Workflow-tool script (companion to the `adding-research-source` skill's `batch-sources` workflow) that re-verifies a given list of docs against their first-party sources — one read-only checker agent per doc plus an adversarial verifier per proposed correction set — and returns a corrections list the session then applies. The link-rot monitor guards URL *liveness*; `refresh-docs` guards claim *currency* (version gates, counts, renamed features). First run: the 2026-07-23 stale-cohort refresh (27 docs with `validated_links: 2026-03-*`).
 
 ## Lint Gate
 

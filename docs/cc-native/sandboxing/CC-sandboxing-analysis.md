@@ -4,8 +4,8 @@ description: Analysis of CC sandboxing mechanics, configuration options, securit
 source: https://code.claude.com/docs/en/sandboxing, https://code.claude.com/docs/en/settings#sandbox-settings, https://code.claude.com/docs/en/security
 category: analysis
 created: 2026-03-07
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -28,7 +28,7 @@ backdoor system resources to gain network access ([source][cc-security]).
 | macOS | Seatbelt (built-in) | Works out of the box |
 | Linux/WSL2 | bubblewrap + socat | `make setup_sandbox` or `sudo apt-get install bubblewrap socat` |
 | WSL1 | Not supported | bubblewrap requires WSL2 kernel features |
-| Windows | Not supported | Planned |
+| Windows | Not supported | not supported (use WSL2); no first-party statement on native support |
 
 ([source][cc-sandboxing])
 
@@ -75,6 +75,15 @@ the default dev setup — must be run separately.
 
 ## Configuration Reference
 
+> **Note**: This section reflects the doc's original 2026-03 snapshot. Several
+> additive sandbox settings have shipped since and are not yet covered here,
+> including `sandbox.filesystem.disabled` (v2.1.216+),
+> `sandbox.credentials.files`/`envVars` (v2.1.187+), `envVars` `mode: mask` plus
+> `sandbox.network.tlsTerminate` (v2.1.199+), per-session host-approval
+> persistence (v2.1.191+), a plan-mode ask-rule behavior change (v2.1.212+), and
+> `allowAppleEvents`, `allowManagedReadPathsOnly`, `network.deniedDomains`,
+> `filesystem.allowRead` ([source][cc-sandboxing]).
+
 ### Core Settings
 
 | Key | Description | Default |
@@ -94,8 +103,9 @@ the default dev setup — must be run separately.
 | `sandbox.filesystem.denyWrite` | Paths blocked from writing |
 | `sandbox.filesystem.denyRead` | Paths blocked from reading |
 
-**Defaults**: Write to CWD and subdirectories only. Read entire filesystem
-except explicitly denied paths ([source][cc-sandbox-settings]).
+**Defaults**: Write access to the current working directory and its
+subdirectories, plus the session temp directory that `$TMPDIR` points to. Read
+entire filesystem except explicitly denied paths ([source][cc-sandboxing]).
 
 ### Network
 
@@ -122,13 +132,17 @@ except explicitly denied paths ([source][cc-sandbox-settings]).
 
 ### Path Prefix Conventions
 
+Sandbox filesystem paths use standard conventions (not the `//`/`/` scheme used
+by Read/Edit permission rules):
+
 | Prefix | Meaning | Example |
 | ------ | ------- | ------- |
-| `//` | Absolute from filesystem root | `//tmp/build` → `/tmp/build` |
+| `/` | Absolute from filesystem root | `/tmp/build` is absolute |
 | `~/` | Relative to home directory | `~/.kube` → `$HOME/.kube` |
-| `/` | Relative to settings file directory | `/build` → `$SETTINGS_DIR/build` |
+| `./` or no prefix | Relative to the project root (project settings) or `~/.claude` (user settings) | `./build` |
 
-([source][cc-sandbox-settings])
+This differs from Read and Edit permission rules, which use `//path` for
+absolute and `/path` for project-relative ([source][cc-sandboxing]).
 
 ### Array Merging Across Scopes
 
@@ -212,12 +226,12 @@ Based on architecture:
 
 | Feature | Description |
 | ------- | ----------- |
-| Command blocklist | `curl` and `wget` blocked by default |
+| Command approval | `curl` and `wget` are not auto-approved by default — they prompt like any other non-read-only Bash command; add to `permissions.deny` to block entirely |
 | Isolated WebFetch | Separate context window prevents prompt injection via web |
 | Trust verification | First-time codebase runs require trust confirmation |
 | Command injection detection | Suspicious bash commands require manual approval |
 | Fail-closed matching | Unmatched commands default to requiring approval |
-| Secure credential storage | API keys encrypted at rest |
+| Credential storage | API keys/tokens stored in the macOS Keychain when available; protected by file permissions on Windows and Linux |
 
 ([source][cc-security])
 

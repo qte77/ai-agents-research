@@ -2,8 +2,8 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-03-27
-validated_links: 2026-03-27
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Adopt
@@ -25,7 +25,7 @@ The transcript path is also available in the [statusline JSON][statusline] as `t
 
 The `<project-key>` is derived from the working directory path with `/` replaced by `-` (e.g., `-workspaces-Agents-eval`).
 
-Transcript retention is controlled by `cleanupPeriodDays` (default: 30 days). Setting to `0` disables persistence entirely ([settings docs][settings]).
+Transcript retention is controlled by `cleanupPeriodDays` (default: 30 days, minimum: 1). Setting `0` now fails with a validation error rather than disabling persistence; use `CLAUDE_CODE_SKIP_PROMPT_HISTORY` to fully disable transcript writes ([settings docs][settings]).
 
 ## Message Types
 
@@ -166,7 +166,7 @@ The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin o
 
 The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metric) and `claude_code.token.usage` (by type: input/output/cacheRead/cacheCreation) as time-series metrics. It also exports `api_request` events with per-call cost. Transcripts provide the same data without OTel infrastructure. Use transcripts for local analysis; use OTel for centralized dashboards across teams.
 
-**Note**: CC OTel exports metrics and logs only -- no distributed trace spans. See [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (OTel section) and upstream issues [#9584][gh-9584], [#2090][gh-2090].
+**Note**: CC now has a "Traces (beta)" feature exporting distributed trace spans (`claude_code.interaction`, `claude_code.llm_request`, `claude_code.tool`, etc.), enabled via `CLAUDE_CODE_ENABLE_TELEMETRY=1` + `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER` (CC v2.1.216+, [monitoring docs][monitoring]). Upstream issues [#9584][gh-9584] and [#2090][gh-2090], which had requested this capability, are now closed. See also [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (OTel section).
 
 ## Sources
 

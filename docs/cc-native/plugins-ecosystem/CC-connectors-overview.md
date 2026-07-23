@@ -2,7 +2,8 @@
 title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
-validated_links: 2026-03-19
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 ## Claude Connectors Overview
@@ -18,9 +19,9 @@ CC version requirements: >=2.1.46 (MCP bridge), >=2.1.63 (opt-out env var), 2.1.
 | Google Drive | Docs only (up to 10 MB) | No | Pro+ | Beta |
 | Gmail | Search & read threads | No (can't send/draft) | Pro+ | Beta |
 | Google Calendar | Schedule, attendees, conflicts | No (can't create/modify/delete) | Pro+ | Beta |
-| GitHub | Issues, PRs, code | Yes (via Claude Code) | Pro+ | GA |
-| Slack | Messages, channels | Yes (send messages) | Pro+ | Beta |
-| Microsoft 365 | Excel, PowerPoint | Yes (cross-app orchestration) | Paid | Research preview |
+| GitHub | File names, file contents, branch content | No | All plans | GA |
+| Slack | Messages, channels | No (search only) | Team/Enterprise | Beta |
+| Microsoft 365 | SharePoint, OneDrive, Outlook, Teams | Yes (mail, calendar, SharePoint files) | All plans (Team/Enterprise: admin consent) | GA |
 
 **Key pattern**: Google connectors are **read-only** — Claude can search and answer questions but cannot create, modify, or delete any content.
 
@@ -103,7 +104,7 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 | Multi-repo orchestration | No | Connectors don't provide repo-level operations |
 | Enterprise admin | Yes | Connectors + plugins provisioning via admin controls |
 
-**Bottom line**: Since v2.1.46, all claude.ai connectors work in Claude Code via the MCP bridge. Google connectors are read-only but useful for ingesting docs, emails, and calendar context into coding workflows. GitHub and Slack connectors support both read and write.
+**Bottom line**: Since v2.1.46, all claude.ai connectors work in Claude Code via the MCP bridge. Google, GitHub, and Slack connectors are read-only (search/answer only, no create/send/modify actions); Microsoft 365 is the only prebuilt connector with write actions (mail, calendar, SharePoint files), gated by admin consent on Team/Enterprise plans.
 
 ## Discovery
 
@@ -116,6 +117,9 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 - [Google Drive connector][drive]
 - [Gmail connector][gmail]
 - [Google Calendar connector][calendar]
+- [GitHub connector][github]
+- [Slack connector][slack]
+- [Microsoft 365 connector][ms365]
 - [CC MCP docs][cc-mcp-docs]
 - [MCP specification][mcp]
 - [Cowork plugins & enterprise analysis](CC-cowork-plugins-enterprise-analysis.md)
@@ -124,6 +128,9 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 [drive]: https://claude.com/docs/connectors/google/drive
 [gmail]: https://claude.com/docs/connectors/google/gmail
 [calendar]: https://claude.com/docs/connectors/google/calendar
+[github]: https://claude.com/docs/connectors/github/index
+[slack]: https://claude.com/docs/connectors/slack/index
+[ms365]: https://claude.com/docs/connectors/microsoft/365
 [mcp]: https://modelcontextprotocol.io
 [cc-changelog]: https://code.claude.com/docs/en/changelog
 [cc-mcp-docs]: https://code.claude.com/docs/en/mcp

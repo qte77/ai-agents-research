@@ -1,23 +1,23 @@
 ---
 title: CC Platform Status Monitoring & Outage Archive
-source: https://status.anthropic.com
+source: https://status.claude.com
 purpose: Real-time and archival monitoring of Claude platform incidents via Statuspage API, webhook integration, and statistical analysis.
 created: 2026-03-17
-updated: 2026-03-20
-validated_links: 2026-03-17
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Adopt
 
 ## What It Is
 
-Automated monitoring of the Claude platform status page (`status.anthropic.com`) to build a structured outage archive and generate statistical analysis. Two collection modes: daily cron poll (reliable baseline) and webhook-driven capture (near-real-time, future enhancement).
+Automated monitoring of the Claude platform status page (`status.claude.com`) to build a structured outage archive and generate statistical analysis. Two collection modes: daily cron poll (reliable baseline) and webhook-driven capture (near-real-time, future enhancement).
 
 ## Statuspage API Endpoints
 
 ### JSON API (Public, No Auth)
 
-All endpoints are under `https://status.anthropic.com/api/v2/`.
+All endpoints are under `https://status.claude.com/api/v2/`.
 
 | Endpoint | Returns |
 |----------|---------|
@@ -58,7 +58,7 @@ All endpoints are under `https://status.anthropic.com/api/v2/`.
 
 ### RSS Feed
 
-`https://status.anthropic.com/history.rss` — chronological incident feed with RFC 2822 dates. Useful for simple feed readers but lacks structured data compared to JSON API.
+`https://status.claude.com/history.rss` — chronological incident feed with RFC 2822 dates. Useful for simple feed readers but lacks structured data compared to JSON API.
 
 ## Webhook Integration
 

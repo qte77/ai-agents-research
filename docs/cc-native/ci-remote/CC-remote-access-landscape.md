@@ -3,8 +3,8 @@ title: CC Remote Access Landscape
 source: https://www.omnara.com, https://cloudcli.ai, https://happy.engineering, https://code.claude.com/docs/en/remote-control, https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Landscape research (informational — not implementation requirements)
@@ -20,17 +20,17 @@ monitoring and steering from phone/web without being desk-bound.
 
 | Aspect | CC Remote Control | Happy Coder | Omnara | CloudCLI | Emdash | DIY (tmux + Tailscale) |
 | ------ | ----------------- | ----------- | ------ | -------- | ------ | ---------------------- |
-| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (7.8k stars) | Multi-agent orchestrator | Self-hosted infrastructure |
+| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (~12.4k–12.8k stars) | Multi-agent orchestrator | Self-hosted infrastructure |
 | **Execution** | Local machine | Local machine | Local + cloud failover | Cloud VMs | Local (git worktrees) | Local machine |
 | **Mobile app** | Claude iOS/Android | iOS, Android, Web | Dedicated iOS app | Browser-based | Web dashboard | Terminal app (Termius, Blink) |
 | **Voice input** | No | Yes | Yes (two-way) | No | No | No |
-| **Offline continuation** | No — pauses | No — pauses | Yes — cloud sandbox | Yes — cloud-native | No — pauses | No — pauses |
-| **Push notifications** | No | Yes | Yes | No | No | No |
+| **Offline continuation** | No — auto-reconnects on wake | No — pauses | Yes — cloud sandbox | Yes — cloud-native | No — pauses | No — pauses |
+| **Push notifications** | Yes | Yes | Yes | No | No | No |
 | **E2E encryption** | TLS (Anthropic) | Yes (TweetNaCl) | No | SSH | N/A | VPN-encrypted |
 | **Multi-agent** | One per instance | Multi-session parallel | Orchestration dashboard | Persistent sessions | Parallel worktrees | Multiple tmux panes |
-| **Pricing** | Free (with CC sub) | Free | Free (previously $20/mo) | Free (infra costs) | Free (open source) | Free (infra costs) |
+| **Pricing** | Free (with CC sub) | Free | Free tier + $9/mo Pro (unlimited) | Free (infra costs) | Free (open source) | Free (infra costs) |
 | **Setup** | `claude remote-control` | `npm i -g happy-coder` | `curl install + omnara` | Docker/cloud setup | npm install | tmux + Tailscale/WireGuard |
-| **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | CC + Codex (provider-agnostic) | Any terminal tool |
+| **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | 25+ agents (provider-agnostic) | Any terminal tool |
 | **Open source** | No (native) | Yes (MIT) | No (archived OSS) | Yes | Yes | N/A |
 | **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Zero external dependency |
 
@@ -40,8 +40,11 @@ monitoring and steering from phone/web without being desk-bound.
 
 Already analyzed in
 [CC-remote-control-analysis.md](CC-remote-control-analysis.md). Built-in,
-zero-cost, zero-setup. Limitation: no offline continuation — laptop must
-stay on and connected.
+zero-cost, zero-setup. Limitation: no offline continuation — if the laptop
+sleeps or the network drops, the session reconnects automatically once the
+machine is back online (network outages tolerated up to ~10 min before the
+session times out); no execution happens while the machine is actually
+asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 
 ### Omnara
 
@@ -65,16 +68,18 @@ stay on and connected.
   ([source][omnara-hiretop])
 - **Localhost previews**: Preview dev server on phone without SSH
   tunnels ([source][omnara-appstore])
-- **Pricing**: Now free. Previously 10 free sessions/month, $20/month
-  unlimited ([source][omnara-hn]). Local runs use your own
-  Claude/Codex tokens
+- **Pricing**: Free (10 agent sessions/month) + Pro ($9/month, unlimited
+  agents) + Enterprise (custom) ([source][omnara-pricing]). Local runs
+  use your own Claude/Codex tokens
 
 ### CloudCLI
 
-- **Open source** (7.8k GitHub stars), cloud or self-hosted dev
-  environments ([source][cloudcli])
-- **Multi-tool**: Works with Claude Code, Cursor, Codex, VS Code via SSH
-  ([source][cloudcli])
+- **Open source** (~12.4k–12.8k GitHub stars for the underlying
+  siteboon/claudecodeui repo), cloud or self-hosted dev environments
+  ([source][cloudcli-gh])
+- **Multi-tool**: Works with five coding agents — Claude Code, Cursor CLI,
+  Codex, Gemini CLI, and OpenCode; VS Code is an access surface (with
+  browser, mobile, SSH), not a separate tool ([source][cloudcli])
 - **Cloud-first by default**: Managed hosting or self-hosted; sessions run
   in VMs, not local machine ([source][cloudcli])
 
@@ -102,10 +107,11 @@ stay on and connected.
 
 - **Multi-agent orchestrator**: Runs numerous coding agents
   simultaneously, each in its own git worktree ([source][emdash])
-- **Provider-agnostic**: Select from AI models and CLIs (CC, Codex)
+- **Provider-agnostic**: Supports 25+ coding agents (Claude Code, Codex,
+  Cursor, Amp, Antigravity, OpenCode, and others) ([source][emdash])
+- **Issue integration**: Assign issues from Linear, Jira, GitHub, Notion,
+  or Asana to agents and observe them working in parallel
   ([source][emdash])
-- **Issue integration**: Assign issues from Linear, GitHub, or Jira to
-  agents and observe them working in parallel ([source][emdash])
 - **Not a remote access tool per se** — more an orchestration layer that
   complements remote access
 
@@ -144,7 +150,7 @@ sleeps mid-session.**
 
 | Option | Risk | Mitigation |
 | ------ | ---- | ---------- |
-| CC Remote Control | Session drops on laptop sleep | Keep laptop on power + prevent sleep during runs |
+| CC Remote Control | Session pauses on laptop sleep/network drop (auto-reconnects on wake; ~10 min outage tolerance) | No always-on requirement; avoid network outages longer than ~10 min |
 | Happy Coder | Relay server dependency (encrypted, but still a hop) | Self-host relay if concerned; code is MIT-licensed |
 | Omnara | Startup risk (3-person team, pivoted once); no E2E encryption | Don't send sensitive code; evaluate stability before adopting |
 | Emdash | Orchestration complexity; community-maintained | Evaluate only when parallel agent runs are a real need |
@@ -187,6 +193,8 @@ Tools that complement any remote access method ([source][zilliz]):
 - [Omnara GitHub (archived)][omnara-gh] — original open-source version
 - [Emdash][emdash] — multi-agent parallel orchestration
 - [CloudCLI][cloudcli] — open-source cloud dev environments
+- [CloudCLI GitHub (siteboon/claudecodeui)][cloudcli-gh] — underlying open-source repo
+- [Omnara pricing][omnara-pricing] — current pricing tiers
 - [CC Cloud Sessions docs][cc-cloud] — Anthropic cloud execution
 - [Zilliz mobile CC guide][zilliz] — comparison + supporting tools
 
@@ -201,7 +209,9 @@ Tools that complement any remote access method ([source][zilliz]):
 [omnara-techmonk]: https://techmonk.economictimes.indiatimes.com/news/ai/omnara-wants-to-put-your-coding-agent-on-your-phone/128286862
 [omnara-hiretop]: https://hiretop.com/blog5/omnara-mobile-voice-interface-for-claude-code/
 [omnara-appstore]: https://apps.apple.com/us/app/omnara-claude-codex-mobile/id6748426727
-[emdash]: https://emdash.dev
+[emdash]: https://emdash.ai/
 [cloudcli]: https://cloudcli.ai
+[cloudcli-gh]: https://github.com/siteboon/claudecodeui
+[omnara-pricing]: https://www.omnara.com/pricing
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web
 [zilliz]: https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
