@@ -2,8 +2,8 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Adopt
@@ -118,11 +118,12 @@ Toggle metric attributes to trade granularity for storage cost. Source: [monitor
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDECODE` | Set by CC | Session guard — set to `1` in shells CC spawns. Clear to enable recursive spawning | [env-vars][env-vars] |
+| `CLAUDE_CONFIG_DIR` | `~/.claude` | Override the configuration directory (settings, hooks, plugins, memory; on Linux/Windows also credentials → per-dir login = one account per dir, enabling concurrent multi-account sessions; macOS credentials stay in Keychain and carry over). **Documented only in the [debug-config guide][debug-config]** — absent from the official env vars list as of 2026-07-23 | [debug-config][debug-config] |
 | `CLAUDE_CODE_TMPDIR` | `/tmp` (Unix) | Override temp directory. CC appends `/claude/` | [env-vars][env-vars] |
 | `CLAUDE_CODE_SIMPLE` | `0` | Minimal mode (set by `--bare` flag). Disables hooks, plugins, MCP, auto memory, CLAUDE.md | [env-vars][env-vars] |
 | `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | (unset) | Return to the original working directory after each Bash command. `1` = reset cwd to project root after each command; unset = cwd persists across Bash calls. **Note**: `=0` behavior is undocumented — only `1` is confirmed. See [tools-reference § Bash tool behavior][tools-ref], [#9359][gh-9359], [#11067][gh-11067] | [env-vars][env-vars], [tools-ref][tools-ref] |
 
-Cross-ref: [CC-recursive-spawning-patterns.md](../agents-skills/CC-recursive-spawning-patterns.md), [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md)
+Cross-ref: [CC-recursive-spawning-patterns.md](../agents-skills/CC-recursive-spawning-patterns.md), [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md), [CC-multi-account-switching-landscape.md](../../cc-community/CC-multi-account-switching-landscape.md) (multi-account patterns on `CLAUDE_CONFIG_DIR`)
 
 ### Runtime-Injected Variables (Not User-Configurable)
 
@@ -332,6 +333,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 |---|---|
 | [CC env vars reference][env-vars] | Official complete list (80+ vars) |
 | [CC settings reference][settings] | `settings.json` keys and `env` block |
+| [CC debug-your-config guide][debug-config] | `CLAUDE_CONFIG_DIR` behavior + per-platform credential storage |
 | [CC monitoring docs][monitoring] | OTel configuration and metrics |
 | [CC statusline docs][statusline] | Statusline JSON schema and examples |
 | CC 2.1.83 `env` output, Codespaces, 2026-03-27 | Runtime-injected vars observation |
@@ -343,6 +345,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [settings]: https://code.claude.com/docs/en/settings
+[debug-config]: https://code.claude.com/docs/en/debug-your-config
 [tools-ref]: https://code.claude.com/docs/en/tools-reference#bash-tool-behavior
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
 [otel-spec]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options
