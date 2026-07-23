@@ -2,15 +2,15 @@
 title: Office Document Skills & MCP Servers
 description: Ecosystem analysis of document generation/manipulation capabilities — Anthropic official skills, knowledge-work plugins, community skills, and MCP servers for docx, xlsx, pptx, and pdf.
 created: 2026-03-26
-updated: 2026-03-26
-validated_links: 2026-03-26
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (2026-03-26)
 
 ## Summary
 
-Four layers of document handling are available for Claude workflows: Anthropic's built-in document skills (docx/xlsx/pptx/pdf), Anthropic's knowledge-work plugins (11 business domain plugins), community CC skills (OOXML editing, batch processing), and standalone MCP servers for direct file manipulation. Together they cover the full office document lifecycle.
+Four layers of document handling are available for Claude workflows: Anthropic's built-in document skills (docx/xlsx/pptx/pdf), Anthropic's knowledge-work plugins (18 business domain plugins), community CC skills (OOXML editing, batch processing), and standalone MCP servers for direct file manipulation. Together they cover the full office document lifecycle.
 
 ## Layer 1: Anthropic Built-in Document Skills
 
@@ -25,11 +25,11 @@ These are the production skills powering Claude.ai, Cowork, and the Skills API. 
 | `pptx` | Yes | Yes | Yes | Template-aware generation (slide masters), OOXML, thumbnails |
 | `pdf` | Yes | Limited | Yes | Form filling, merging, extraction. No full content editing |
 
-**Access**: Skills API (`/v1/skills`), Cowork, Claude.ai. Max 8 skills per request. Models: Sonnet 4.6, Opus 4.6.
+**Access**: Skills API (`/v1/skills`), Cowork, Claude.ai. Max 8 skills per request. Model: a model supporting the code execution tool (current docs exemplify `claude-opus-4-8`).
 
 ## Layer 2: Anthropic Knowledge-Work Plugins
 
-**Source**: [anthropics/knowledge-work-plugins][kw] (verified 2026-06-08 — 18 plugin directories, latest commit 2026-06-08)
+**Source**: [anthropics/knowledge-work-plugins][kw] (verified 2026-07-23 — 18 plugin directories, latest commit 2026-07-23)
 
 18 official open-source plugins for business domain workflows (corrected from prior count of 11; actively maintained with automated SHA-pin bumps):
 
@@ -73,9 +73,11 @@ CC-native SKILL.md files for office document workflows. Mirrors the Anthropic sk
 - CI/CD pipeline integration (automated document generation in builds)
 - Python/JS validation scripts
 
-### jezweb/claude-skills
+**Maintainer note (2026-07-23)**: The repo's README states it was published before Anthropic made these skills public and now points readers to [anthropics/skills](https://github.com/anthropics/skills) (Layer 1) instead, since skills there may be getting updates. Treat this community repo as superseded by Layer 1 for OOXML work.
 
-Pure-JS library approach (`docx`, SheetJS, `pdf-lib`, `pptxgenjs`) for invoices, reports, spreadsheets. Works in Node.js, browsers, and Cloudflare Workers — relevant for serverless document generation.
+### ~~jezweb/claude-skills~~ (no longer office-document relevant)
+
+Repo restructured (verified 2026-07-23) — its current README/description cover Cloudflare/full-stack scaffolding, Shopify, WordPress, and other dev tooling, with no `docx`/SheetJS/`pdf-lib`/`pptxgenjs` office-document-generation content remaining (confirmed via in-repo code search for those terms: zero hits). No longer a recommended option for serverless/CI document generation.
 
 ## Layer 4: MCP Servers for Document Operations
 
@@ -83,7 +85,7 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 
 | Server | Formats | Key Capability | URL |
 |--------|---------|---------------|-----|
-| **Office-Word-MCP-Server** | DOCX | Word document creation/editing | [GongRzhe/Office-Word-MCP-Server](https://github.com/GongRzhe/Office-Word-MCP-Server) |
+| **Office-Word-MCP-Server** | DOCX | Word document creation/editing (archived, unmaintained since 2025-12-31) | [GongRzhe/Office-Word-MCP-Server](https://github.com/GongRzhe/Office-Word-MCP-Server) |
 | **docx-mcp** | DOCX + PDF conversion | Word + PDF format conversion | [hongkongkiwi/docx-mcp](https://github.com/hongkongkiwi/docx-mcp) |
 | **excel-mcp-server** | XLSX | Read/write with formulas | [negokaz/excel-mcp-server](https://github.com/negokaz/excel-mcp-server) |
 | **excel-to-pdf-mcp** | XLSX/Numbers → PDF | LibreOffice-based conversion | [kmexnx/excel-to-pdf-mcp](https://github.com/kmexnx/excel-to-pdf-mcp) |
@@ -99,8 +101,7 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 | Interactive document creation in Cowork | Built-in skills (`docx`, `xlsx`, `pptx`, `pdf`) |
 | Domain-specific business documents | Knowledge-work plugins (Finance, HR, Sales) |
 | CC CLI automation / batch processing | MCP servers + community skills |
-| Serverless / CI document generation | jezweb/claude-skills (pure JS, no dependencies) |
-| Complex OOXML manipulation | tfriedel/claude-office-skills |
+| Complex OOXML manipulation | Built-in skills (Layer 1) — tfriedel/claude-office-skills's own maintainer now redirects here |
 
 ## Cross-References
 
@@ -118,9 +119,9 @@ For the Python-library landscape behind office-document generation (python-docx,
 | Source | Content |
 |---|---|
 | [Anthropic skills][skills] | Official built-in document skills |
-| [Knowledge-work plugins][kw] | 11 business domain plugins |
-| [claude-office-skills][office] | Community OOXML editing skills |
-| [Office-Word-MCP-Server][word] | Word document MCP server |
+| [Knowledge-work plugins][kw] | 18 business domain plugins |
+| [claude-office-skills][office] | Community OOXML editing skills (maintainer now redirects to anthropics/skills) |
+| [Office-Word-MCP-Server][word] | Word document MCP server (archived) |
 | [excel-mcp-server][excel] | Excel MCP server |
 | [document-edit-mcp][docedit] | Document editing MCP server |
 | ~~mcp-server-doccreator~~ | Multi-format document generator (repo removed) |

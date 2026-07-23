@@ -1,11 +1,11 @@
 ---
 title: CC Sandbox Platforms Landscape
-source: https://github.com/alibaba/OpenSandbox, https://e2b.dev, https://sprites.dev, https://code.claude.com/docs/en/sandboxing
+source: https://github.com/alibaba/OpenSandbox, https://e2b.dev, https://fly.io/sprites, https://code.claude.com/docs/en/sandboxing
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 category: landscape
 created: 2026-03-08
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Landscape research (informational — not implementation requirements)
@@ -30,10 +30,10 @@ environments — from self-hosted open-source to managed cloud services.
 | **Cold start** | N/A (local process) | N/A | <800ms | ~150ms | 1-2s (cold), <1s (warm) | Fast (container) |
 | **State** | N/A | N/A | Ephemeral | Ephemeral (24h max) | Persistent + checkpoint/restore (~300ms) | Stateful |
 | **Storage** | Local filesystem | Local filesystem | Container volumes | Ephemeral per session | 100GB persistent NVMe | Persistent |
-| **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go (planned) | Python, JS/TS | REST API | Python, JS/TS |
+| **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go | Python, JS/TS | REST API | Python, JS/TS |
 | **CC integration** | Native | npm package | Documented | Via SDK | Via API | Via SDK |
-| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Open source (core) |
-| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-minute (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Usage-based |
+| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Closed source (legacy OSS repo frozen) |
+| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Usage-based |
 | **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Yes |
 
 ## Platform Details
@@ -51,12 +51,12 @@ entry point.
 
 ### OpenSandbox (Alibaba)
 
-Open-sourced March 2026 under Apache 2.0. 6.9k GitHub stars
+Open-sourced March 2026 under Apache 2.0. ~12.1k GitHub stars (as of 2026-07-23)
 ([source][opensandbox-gh]).
 
 **Architecture** — four-layer modular stack ([source][opensandbox-gh]):
 
-1. **SDKs Layer** — Python, JS/TS, Java/Kotlin, C#/.NET clients
+1. **SDKs Layer** — Python, JS/TS, Java/Kotlin, C#/.NET, Go clients
 2. **Specs Layer** — Sandbox Protocol defining lifecycle + execution APIs
 3. **Runtime Layer** — Docker (local/small) or Kubernetes (distributed)
 4. **Sandbox Instances** — FastAPI lifecycle server + Go execution daemon (`execd`)
@@ -136,8 +136,10 @@ E2B's "rebuild everything each session" overhead.
 ### Daytona
 
 Pivoted to AI code execution in 2026. Container-based with optional enhanced
-isolation. Open-source core with cloud and self-hosted deployment options
-([source][daytona]).
+isolation. Moved its production codebase to closed source as of 2026-06-11,
+citing AI-assisted vulnerability discovery risk; the original open-source repo
+stays public but is frozen, receiving no further updates or releases
+([source][daytona], [source][daytona-closed]).
 
 Less relevant for CC-specific workflows but included for completeness in the
 landscape.
@@ -200,6 +202,7 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 - [Simon Willison on Sprites][sprites-simon]
 - [Sprites deep dive (Medium)][sprites-medium]
 - [Daytona][daytona]
+- [Daytona: going closed source][daytona-closed]
 - [CC Sandboxing docs][cc-sandbox]
 - [Sandbox runtime (open source)][sandbox-runtime]
 - [AI sandbox landscape (Northflank)][northflank]
@@ -210,10 +213,11 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 [e2b]: https://e2b.dev
 [e2b-docs]: https://e2b.dev/docs
 [e2b-gh]: https://github.com/e2b-dev/E2B
-[sprites]: https://sprites.dev
+[sprites]: https://fly.io/sprites
 [sprites-simon]: https://simonwillison.net/2026/Jan/9/sprites-dev/
 [sprites-medium]: https://lewoudar.medium.com/lets-talk-about-fly-io-sprites-aka-stateful-sandboxes-509796942fdd
 [daytona]: https://www.daytona.io
+[daytona-closed]: https://www.daytona.io/dotfiles/updates/daytona-is-going-closed-source
 [cc-sandbox]: https://code.claude.com/docs/en/sandboxing
 [sandbox-runtime]: https://github.com/anthropic-experimental/sandbox-runtime
 [northflank]: https://northflank.com/blog/best-sandboxes-for-coding-agents

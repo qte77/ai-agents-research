@@ -3,8 +3,8 @@ title: CC CLI-Anything Analysis
 source: https://github.com/HKUDS/CLI-Anything
 purpose: Evaluate CLI-Anything as a framework for generating agent-native CLIs from existing software, and its fit relative to .gitmodules, bun scripts, and Makefile recipes.
 created: 2026-03-12
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational — monitor as ecosystem matures)
@@ -12,6 +12,8 @@ validated_links: 2026-03-12
 ## What CLI-Anything Is
 
 CLI-Anything is a framework that transforms any software into an agent-native CLI through automated code analysis and generation ([source][cli-anything]). It bridges the gap between AI agents and professional software that lacks agent-friendly interfaces.
+
+Facts below reflect HKUDS/CLI-Anything, README as of 2026-07-09 (last repo push) — a fast-moving community project without versioned releases.
 
 Available as a CC plugin: `/plugin install cli-anything` ([source][cli-anything]).
 
@@ -38,13 +40,14 @@ CLI-Anything automates a complete development workflow ([source][cli-anything]):
 
 ## Test Results
 
-1,508 passing tests across 11 production applications ([source][cli-anything]):
+2,461 passing tests across roughly 40 harnesses ([source][cli-anything]) — the README's Key Features and Demonstrations sections separately cite "18 major applications":
 
-- **1,073 unit tests** (synthetic data validation)
-- **435 end-to-end tests** (real file/software integration)
+- **1,732 unit tests** (synthetic data validation)
+- **579 end-to-end tests** (real file/software integration)
+- **19 Node.js tests**
 - **100% pass rate**
 
-Tested applications: GIMP (107), Blender (208), Inkscape (202), Audacity (161), LibreOffice (158), OBS Studio (153), Kdenlive (155), Shotcut (154), Zoom (22), Draw.io (138), AnyGen (50).
+Tested applications (subset, still matching the current README): GIMP (107), Blender (208), Inkscape (202), Audacity (161), LibreOffice (158), OBS Studio (153), Kdenlive (155), Shotcut (154), Zoom (22), Draw.io (138), AnyGen (50).
 
 ### Backend Integration Methods
 
@@ -66,14 +69,17 @@ Applications use authentic backends, not UI automation ([source][cli-anything]):
 /plugin marketplace add HKUDS/CLI-Anything
 /plugin install cli-anything
 
-# Generate CLI for a codebase
+# Generate CLI for a codebase (primary entrypoint)
+/cli-anything <software-path>
+
+# Legacy entry form (older builds where /cli-anything isn't recognized)
 /cli-anything:cli-anything <software-path>
 
 # Iterative refinement
 /cli-anything:refine <software-path> [optional-focus]
 ```
 
-Also available for OpenCode (experimental, `.opencode/commands/`) and Codex (`codex-skill/` directory) ([source][cli-anything]).
+Also available for OpenCode (experimental, `.opencode/commands/`), Codex (`codex-skill/` directory), Pi Coding Agent, Goose (Desktop/CLI, experimental/community), Qodercli (community), OpenClaw (community), Hermes (experimental/community), Reasonix (experimental/community), and GitHub Copilot CLI (community) — with Cursor and Windsurf listed as "coming soon" ([source][cli-anything]).
 
 ## Comparison with Existing Tooling
 

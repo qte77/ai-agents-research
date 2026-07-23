@@ -4,8 +4,8 @@ description: Analysis of sandbox friction points in Codespace/devcontainer envir
 source: https://code.claude.com/docs/en/sandboxing, https://code.claude.com/docs/en/settings#sandbox-settings, https://code.claude.com/docs/en/security
 category: analysis
 created: 2026-03-17
-updated: 2026-03-25
-validated_links: 2026-03-17
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -15,6 +15,10 @@ validated_links: 2026-03-17
 CC's Bash sandbox (`bubblewrap` on Linux) adds a second isolation layer inside
 an already-isolated Codespace container, causing repeated friction for
 multi-repo workflows.
+
+Friction points below were reproduced against earlier CC releases (gh-28730
+was filed against v2.1.56); verified current as of Claude Code v2.1.218,
+2026-07-23 unless otherwise noted.
 
 ## Four Friction Points Identified
 
@@ -31,13 +35,21 @@ multi-repo workflows.
 - **`excludedCommands` + `permissions.allow` both required**
   ([source][bjorn-til]): `allow` grants permission to run, `excludedCommands`
   runs unsandboxed. Need BOTH.
-- **Path prefixes silently ignored if wrong** ([source][gh-32287]): `//` =
-  absolute, `~/` = home, `/` = relative to settings file. No error on
-  misconfiguration.
+- **Sandbox filesystem path prefixes differ from Read/Edit rules**
+  ([source][cc-sandboxing]): for `sandbox.filesystem.*`
+  (allowWrite/denyWrite/allowRead/denyRead), `/` = absolute path from
+  filesystem root, `~/` = home directory, `./` or no prefix = project root
+  (project settings) or `~/.claude` (user settings) — standard path
+  conventions. This differs from Read/Edit permission rules, which use
+  `//path` for absolute and `/path` for project-relative — the scheme
+  originally reported here ([source][gh-32287]).
 - **`.claude/skills/` write-denied via `denyWithinAllow`** — intentional CC
   enforcement, not removable via settings.
-- **Trail of Bits recommends disabling CC sandbox entirely** in devcontainers
-  ([source][tob-devcontainer]) — container IS the sandbox.
+- **Trail of Bits devcontainer auto-configures `bypassPermissions` mode**
+  ([source][tob-devcontainer]), not sandbox disablement — it bypasses
+  permission prompts (a distinct CC feature from the Bash sandbox's
+  filesystem/network isolation), reasoning that the container itself is the
+  sandbox.
 - **VS Code IPC escape risk** ([source][maron-docker]): VS Code Dev Containers
   inject IPC socket paths into the container environment. Claude Code (or any
   process) can reconstruct the IPC bridge and escape.
@@ -52,7 +64,7 @@ filesystem isolation; CC provides network exfiltration protection.
   "enabled": true,
   "autoAllowBashIfSandboxed": true,
   "network": {
-    "allowedHosts": ["api.github.com", "raw.githubusercontent.com"]
+    "allowedDomains": ["api.github.com", "raw.githubusercontent.com"]
   },
   "filesystem": {
     "allowWrite": ["/workspaces"]

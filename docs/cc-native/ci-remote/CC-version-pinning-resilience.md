@@ -3,8 +3,8 @@ title: CC Version Pinning & Provider Resilience
 source: https://code.claude.com/docs/en/setup, https://www.npmjs.com/package/@anthropic-ai/claude-code, https://docs.github.com/en/actions/concepts/runners/self-hosted-runners, https://www.vcluster.com/blog/comparing-coder-vs-codespaces-vs-gitpod-vs-devpod
 purpose: Document how to pin Claude Code versions for reproducible CI/CD and container environments, self-hosted runners, cloud dev environments, and resilience against Anthropic API outages or discontinuation.
 created: 2026-03-12
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Reference (actionable configuration guide)
@@ -36,9 +36,9 @@ curl -fsSL https://claude.ai/install.sh | bash
 & ([scriptblock]::Create((irm https://claude.ai/install.ps1))) 2.1.42
 ```
 
-### npm (Deprecated but Useful for Pinning)
+### npm (Advanced Installation)
 
-npm installation is deprecated but still works. It provides the most familiar version pinning for Node.js ecosystems ([source][cc-setup]).
+npm installation is an actively maintained "Advanced installation" method alongside Linux package managers and binary verification. It provides the most familiar version pinning for Node.js ecosystems ([source][cc-setup]). As of v2.1.198, the npm package requires Node.js 22 or later.
 
 ```bash
 npm install -g @anthropic-ai/claude-code@2.1.42
@@ -46,7 +46,7 @@ npm install -g @anthropic-ai/claude-code@2.1.42
 
 Check latest version: `npm view @anthropic-ai/claude-code dist-tags.latest`
 
-**Warning**: Anthropic may drop the npm package in the future. Track [this issue](https://github.com/anthropics/claude-code/issues/24568) for deprecation timeline.
+Upgrade: `npm install -g @anthropic-ai/claude-code@latest`
 
 ### Disable Auto-Updates
 
@@ -239,7 +239,8 @@ Self-hosted runners need outbound HTTPS (443) to these domains ([source][gh-runn
 |---|---|
 | `api.anthropic.com` | Anthropic API (primary) |
 | `claude.ai` | CC installer + auto-updates |
-| `storage.googleapis.com` | CC binary distribution |
+| `downloads.claude.ai` | CC binary distribution: native installer, native auto-updater, and update version checks (primary since v2.1.116) |
+| `storage.googleapis.com` | Install counts and plugin metadata shown in `/plugin`; signed artifact-upload fallback; native installer/auto-updater only on CC versions prior to 2.1.116 |
 | OpenRouter / Bedrock / Vertex endpoints | If using fallback providers |
 
 ### Autoscaling Options
@@ -296,11 +297,14 @@ ENV DISABLE_AUTOUPDATER=1
 
 ## Binary Integrity Verification
 
-SHA256 checksums are published for each release ([source][cc-setup]):
+SHA256 checksums are published for each release at `https://downloads.claude.ai/claude-code-releases/{VERSION}/manifest.json` ([source][cc-setup]):
 
-```text
-https://storage.googleapis.com/claude-code-dist-.../claude-code-releases/{VERSION}/manifest.json
+```bash
+REPO=https://downloads.claude.ai/claude-code-releases
+curl -fsSLO "$REPO/$VERSION/manifest.json"
 ```
+
+For releases from v2.1.89 onward, the manifest also carries a detached GPG signature (fingerprint `31DD DE24 DDFA B679 F42D 7BD2 BAA9 29FF 1A7E CACE`, signer `security@anthropic.com`); earlier releases publish checksums without a detached signature.
 
 Signed binaries: macOS (signed by "Anthropic PBC", Apple notarized), Windows (signed by "Anthropic, PBC").
 

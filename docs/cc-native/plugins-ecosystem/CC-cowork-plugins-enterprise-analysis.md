@@ -3,15 +3,15 @@ title: CC Cowork, Plugins & Enterprise Analysis
 source: https://claude.com/blog/cowork-plugins-across-enterprise, https://claude.com/product/cowork
 purpose: Analysis of Claude's Cowork enterprise platform, plugin architecture, and connector ecosystem for potential relevance to projects using Claude Code.
 created: 2026-03-07
-updated: 2026-03-24
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
-**Status**: Research preview (Cowork desktop app); Plugin architecture in active rollout
+**Status**: Standard feature across paid plans (Cowork); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout
 
 ## What Cowork & Plugins Are
 
-**Cowork** is Claude's agentic desktop application for knowledge work — a local app (Windows/macOS) where users give Claude access to local files and tools, set a task, and step away ([source][cowork-product]). Operates with more agency than Claude Chat: users describe outcomes and cadence, Claude takes action and reports progress ([source][cowork-product]). Available on all paid plans (Max, Team, Enterprise); agent safety is still in development ([source][cowork-product]).
+**Cowork** is Claude's agentic application for knowledge work — available via web, desktop (macOS, Windows x64/arm64, Linux, ChromeOS), and mobile (web/mobile in beta), where users give Claude access to local files and tools, set a task, and step away ([source][cowork-product]). Operates with more agency than Claude Chat: users describe outcomes and cadence, Claude takes action and reports progress ([source][cowork-product]). Available on all paid plans (Pro, Max, Team, Enterprise); agent safety is still in development ([source][cowork-product]).
 
 **Dispatch** enables one continuous conversation with Claude across phone and desktop — start a Cowork task from mobile, continue on desktop, or vice versa. Bridges the gap between mobile Claude app and desktop Cowork for non-coding tasks.
 
@@ -126,7 +126,7 @@ Anthropic's reference collection of production-ready financial services agents a
 
 ## Open Feature Requests
 
-- [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Linux users want Cowork dispatch in CC CLI (mobile→terminal). Currently dispatch is Cowork desktop↔phone only. Alternative: Remote Control (`claude rc`) covers steering from mobile, but lacks dispatch's continuous conversation handoff
+- [x] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Linux users want Cowork dispatch in CC CLI (mobile→terminal). Currently dispatch is Cowork desktop↔phone only. Alternative: Remote Control (`claude rc`) covers steering from mobile, but lacks dispatch's continuous conversation handoff. **Closed 2026-04-17** (stale-bot, `NOT_PLANNED`) — not implemented, closed for inactivity
 
 [dispatch-cli]: https://github.com/anthropics/claude-code/issues/36011
 
@@ -146,5 +146,5 @@ Anthropic's reference collection of production-ready financial services agents a
 [cowork-product]: https://claude.com/product/cowork
 [cowork-blog]: https://claude.com/blog/cowork-plugins-across-enterprise
 [cc-skills]: https://code.claude.com/docs/en/skills
-[sdk-plugins]: https://platform.claude.com/docs/en/agent-sdk/plugins
-[sdk-skills]: https://platform.claude.com/docs/en/agent-sdk/skills
+[sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
+[sdk-skills]: https://code.claude.com/docs/en/agent-sdk/skills

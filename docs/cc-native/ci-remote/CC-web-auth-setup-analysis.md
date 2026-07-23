@@ -1,10 +1,10 @@
 ---
 title: CC Web Setup, Authentication & API Key Usage
-source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup
+source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup, https://code.claude.com/docs/en/web-quickstart
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive usage, and connect remote sessions.
 created: 2026-03-24
-updated: 2026-03-24
-validated_links: 2026-03-24
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research preview (web), GA (CLI auth)
@@ -12,6 +12,8 @@ validated_links: 2026-03-24
 ## Scope
 
 This document covers **authentication and setup** for Claude Code across web, terminal, and headless modes. For cloud VM execution mechanics, environment configuration, network policy, and session handoff details, see [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md). For remote monitoring of local sessions, see [CC-remote-control-analysis.md](CC-remote-control-analysis.md). For print mode pitfalls, see [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md).
+
+**Version gate**: the `--cloud`/`--remote` flag naming, `/web-setup` GitHub connection flow, and authentication precedence sections below are anchored to CC v2.1.190–2.1.217+ (fetched 2026-07-23); the doc's original 2026-03-24 baseline predates these changes.
 
 ## 1. Claude Code on the Web — GitHub Setup
 
@@ -30,7 +32,7 @@ This document covers **authentication and setup** for Claude Code across web, te
 
 ### Connecting GitHub
 
-#### OAuth via claude.ai (Required)
+#### OAuth via claude.ai
 
 The web UI at `claude.ai/code` prompts you to connect your GitHub account via OAuth. This installs the **Claude GitHub App** which provides:
 
@@ -46,15 +48,20 @@ The web UI at `claude.ai/code` prompts you to connect your GitHub account via OA
 
 The GitHub App is installed per-repository or org-wide. You choose which repos to grant access to during installation.
 
-#### No Separate GitHub Token Needed
+#### GitHub Connection — Two Methods
 
-For terminal-initiated web sessions (`claude --remote`), CC uses your existing Claude.ai OAuth session — not a separate GitHub token. The flow:
+GitHub can be connected two ways ([source][cc-web]):
+
+1. **Claude GitHub App via OAuth** — browser-based onboarding at `claude.ai/code`, described above.
+2. **`/web-setup`** — run from the terminal. Its first step is authenticating with the GitHub CLI, `gh auth login`, so it can sync your local `gh` token to your Claude account ([source][cc-web-quickstart]).
+
+The terminal-initiated cloud-session flow:
 
 1. Run `claude` → browser OAuth → logged into Claude.ai
-2. Connect GitHub in `claude.ai/code` settings (one-time)
-3. From terminal: `claude --remote "task description"` creates a cloud session
+2. Connect GitHub via `/web-setup` (`gh auth login` first) or in `claude.ai/code` settings (one-time)
+3. From terminal: `claude --cloud "task description"` creates a cloud session — the older `--remote` spelling still works as a deprecated alias for `--cloud` ([source][cc-web])
 
-**No separate GitHub token or `gh auth login` is needed for CC web sessions.** The Claude GitHub App handles all git operations in the cloud VM through a dedicated proxy with scoped credentials ([source][cc-web]).
+Once connected, the Claude GitHub App handles all git operations in the cloud VM through a dedicated proxy with scoped credentials ([source][cc-web]).
 
 #### GitHub Proxy — How Git Auth Works in Cloud
 
@@ -79,7 +86,8 @@ When multiple credentials are present, CC chooses in this order ([source][cc-aut
 | 2 | `ANTHROPIC_AUTH_TOKEN` env var | LLM gateway/proxy with bearer tokens |
 | 3 | `ANTHROPIC_API_KEY` env var | Direct API access (headless/CI) |
 | 4 | `apiKeyHelper` script | Dynamic/rotating credentials from vault |
-| 5 | Subscription OAuth (`/login`) | Default for Pro/Max/Team/Enterprise |
+| 5 | `CLAUDE_CODE_OAUTH_TOKEN` env var (long-lived token from `claude setup-token`) | CI pipelines where browser login isn't available |
+| 6 | Subscription OAuth (`/login`) | Default for Pro/Max/Team/Enterprise |
 
 **Key insight**: `ANTHROPIC_API_KEY` takes precedence over subscription OAuth once approved. If the key belongs to a disabled org, CC auth fails even if you have a valid subscription. Fix: `unset ANTHROPIC_API_KEY` ([source][cc-auth]).
 
@@ -182,7 +190,7 @@ For rotating keys (e.g., from HashiCorp Vault):
 | -------- | -------- |
 | macOS | Encrypted macOS Keychain |
 | Linux | `~/.claude/.credentials.json` (mode `0600`) |
-| Windows | `~/.claude/.credentials.json` (user profile ACL) |
+| Windows | `%USERPROFILE%\.claude\.credentials.json` (user profile ACL) |
 | Custom | `$CLAUDE_CONFIG_DIR/.credentials.json` |
 
 ## Decision Matrix — Which Auth Method to Use
@@ -212,11 +220,13 @@ For rotating keys (e.g., from HashiCorp Vault):
 - [CC CLI Reference][cc-cli]
 - [CC Setup docs][cc-setup]
 - [CC Security docs][cc-sec]
-- [Anthropic Console][console]
+- [CC Web Quickstart docs][cc-web-quickstart]
+- [Claude Console][console]
 
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-auth]: https://code.claude.com/docs/en/authentication
 [cc-cli]: https://code.claude.com/docs/en/cli-usage
 [cc-setup]: https://code.claude.com/docs/en/setup
 [cc-sec]: https://code.claude.com/docs/en/security
+[cc-web-quickstart]: https://code.claude.com/docs/en/web-quickstart
 [console]: https://platform.claude.com

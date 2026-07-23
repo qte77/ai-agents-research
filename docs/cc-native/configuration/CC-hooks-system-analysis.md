@@ -3,11 +3,11 @@ title: CC Hooks System Analysis
 source: https://code.claude.com/docs/en/hooks
 purpose: Analysis of Claude Code hooks system for automation, quality gates, and headless CC workflow integration.
 created: 2026-03-07
-updated: 2026-03-12
-validated_links: 2026-03-12
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
-**Status**: Generally available (v2.0.41+, extensively evolved through v2.1.71)
+**Status**: Generally available (v1.0.38+, extensively evolved through v2.1.218)
 
 ## What Hooks Are
 
@@ -19,13 +19,13 @@ run locally, outside the sandbox, with full system access.
 
 | Event | Trigger | Since | Key Use Cases |
 | ----- | ------- | ----- | ------------- |
-| `PreToolUse` | Before any tool executes | v2.0.41 | Approval/denial gates, context injection via `additionalContext` (v2.1.9), input modification via `updatedInput` (v2.1.0) |
-| `PostToolUse` | After any tool completes | v2.0.41 | Logging, trace collection, quality checks |
-| `Stop` | Before session ends | v2.0.41 | Cleanup, final validation, re-prompting (Ralph Wiggum pattern) |
-| `SessionStart` | Session begins | v2.0.43 | Repo maintenance, env setup; deferred for ~500ms faster startup (v2.1.47) |
-| `Setup` | Repo initialization | v2.1.13 | One-time repo maintenance tasks |
+| `PreToolUse` | Before any tool executes | v1.0.38 | Approval/denial gates, context injection via `additionalContext` (v2.1.9), input modification via `updatedInput` (v2.1.0) |
+| `PostToolUse` | After any tool completes | v1.0.38 | Logging, trace collection, quality checks |
+| `Stop` | Before session ends | v1.0.38 | Cleanup, final validation, re-prompting (Ralph Wiggum pattern) |
+| `SessionStart` | Session begins | v1.0.62 | Repo maintenance, env setup; deferred for ~500ms faster startup (v2.1.47) |
+| `Setup` | Repo initialization | v2.1.10 | One-time repo maintenance tasks |
 | `PermissionRequest` | User prompted for permission | v2.0.45 | Automatic approval/denial policies (v2.0.54: processes 'always allow') |
-| `SubagentStart` | Subagent spawns | v2.0.43 | Subagent monitoring, `agent_id` and `agent_transcript_path` in stop fields (v2.0.42) |
+| `SubagentStart` | Subagent spawns | v2.0.43 | Subagent monitoring; `agent_id`/`agent_transcript_path` fields added to `SubagentStop` hooks (v2.0.42), not `SubagentStart` |
 | `TeammateIdle` | Agent Teams teammate becomes idle | v2.1.33 | Work redistribution, progress tracking |
 | `TaskCompleted` | Agent Teams task finishes | v2.1.33 | Dependency unblocking, aggregation triggers |
 | `WorktreeCreate` | Git worktree created | v2.1.50 | Environment setup for isolated agents |
@@ -39,19 +39,24 @@ run locally, outside the sandbox, with full system access.
     "PreToolUse": [
       {
         "matcher": "Bash",
-        "command": "echo 'checking bash command'",
-        "once": true
+        "hooks": [
+          { "type": "command", "command": "echo 'checking bash command'" }
+        ]
       }
     ],
     "PostToolUse": [
       {
         "matcher": "*",
-        "command": "/path/to/trace-collector.sh"
+        "hooks": [
+          { "type": "command", "command": "/path/to/trace-collector.sh" }
+        ]
       }
     ],
     "Stop": [
       {
-        "command": "make validate"
+        "hooks": [
+          { "type": "command", "command": "make validate" }
+        ]
       }
     ]
   }
@@ -62,13 +67,13 @@ run locally, outside the sandbox, with full system access.
 
 | Field | Description | Since |
 | ----- | ----------- | ----- |
-| `matcher` | Tool name filter (`*` for all, specific tool name) | v2.0.41 |
-| `command` | Shell command to execute (string form — passed to shell) | v2.0.41 |
+| `matcher` | Tool name filter (`*` for all, specific tool name) | v1.0.38 |
+| `command` | Shell command to execute (string form — passed to shell) | v1.0.38 |
 | `args` | `string[]` exec form — spawns the command directly without a shell, so path placeholders never need quoting. Mutually exclusive with `command`. | v2.1.139 |
-| `continueOnBlock` | `PostToolUse` only. When `true`, a blocking hook result feeds the rejection reason back to Claude as context and continues the turn instead of halting. | v2.1.139 |
-| `once` | Execute only once per session | v2.1.0 |
+| `continueOnBlock` | `PostToolUse` only. When `true`, a blocking hook result feeds the rejection reason back to Claude as context and continues the turn instead of halting. (Not found in current first-party hooks docs' schema as of 2026-07-23 — may be renamed/superseded; current docs describe the equivalent behavior via a hook's returned `decision: "block"`/`reason` and `hookSpecificOutput.additionalContext`. Verify the field name before relying on it.) | v2.1.139 |
+| `once` | Runs once per session, then is removed. Only honored for hooks declared in **skill frontmatter**; ignored in settings files and agent frontmatter (see examples below, which predate this scoping). | v2.1.0 |
 | `model` | Custom model for hook evaluation | v2.0.41 |
-| `tool_use_id` | Available in hook input | v2.0.45 |
+| `tool_use_id` | Available in hook input | v2.0.43 |
 
 ### Hook Return Values
 
@@ -115,14 +120,17 @@ Replace `your-validation-command` with the validation command for your project (
   "hooks": {
     "Stop": [
       {
-        "command": "your-validation-command",
-        "once": true
+        "hooks": [
+          { "type": "command", "command": "your-validation-command" }
+        ]
       }
     ],
     "PostToolUse": [
       {
         "matcher": "Bash",
-        "command": "scripts/trace-hook.sh"
+        "hooks": [
+          { "type": "command", "command": "scripts/trace-hook.sh" }
+        ]
       }
     ]
   }
@@ -130,13 +138,17 @@ Replace `your-validation-command` with the validation command for your project (
 ```
 
 **Recommendation**: Adopt `Stop` hook for validation gates first (low risk,
-high value). Defer `PostToolUse` trace collection until OTel upstream
-limitation ([#9584](https://github.com/anthropics/claude-code/issues/9584)) is
-resolved or artifact-based collection proves insufficient.
+high value). The underlying OTel full-span-logging request that limited
+`PostToolUse` trace collection
+([#2090](https://github.com/anthropics/claude-code/issues/2090), duplicate
+[#9584](https://github.com/anthropics/claude-code/issues/9584)) was closed by
+Anthropic as not planned (2026-01-30) — treat artifact-based collection as the
+durable approach rather than deferring pending an upstream fix.
 
 ## References
 
 - [CC Hooks docs](https://code.claude.com/docs/en/hooks)
+- [CC CHANGELOG.md](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) (version gates for hook events/fields)
 - [CC Settings docs](https://code.claude.com/docs/en/settings)
 - [CC Agent Teams docs](https://code.claude.com/docs/en/agent-teams) (TeammateIdle, TaskCompleted hooks)
 - [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (Agent Teams analysis)
