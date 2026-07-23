@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -31,6 +31,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [DeepAgents (LangChain)](https://github.com/langchain-ai/deepagents) — planning + sub-agent harness. Full analysis: [deepagents-analysis.md](deepagents-analysis.md).
 - [Flue (Astro)](https://github.com/withastro/flue) — durable, sandboxed TypeScript agent framework from the Astro team; **1.0 Beta** (~2026-06-16, Apache-2.0, [flueframework.com](https://www.flueframework.com)). Harness-first model on the **Pi** agent loop (via `@flue/runtime`): **Durable Streams** record every prompt/tool-response/model-choice to an append-only log, so a fresh process resumes from the last checkpoint after a crash or provider timeout. Ships a **just-bash** in-memory sandbox (no Docker/VM) plus a `local()` sandbox; MCP-native and model-agnostic; **channels** ingest events from Slack/Teams/Discord/GitHub/Linear; on Cloudflare Workers each agent becomes a Durable Object (SQLite FS, `runFiber`/`stash`/`onFiberRecovered`). Supports **subagents / task delegation** (swarm-style coordination is not documented in first-party sources); `SuperagenticAI/pyflue` is a community Python port, not first-party.
 - [multica](https://github.com/multica-ai/multica) — source-available platform (modified Apache 2.0: no third-party hosted-service/resale + a frontend logo clause — not OSI open-source) that turns coding-agent CLIs into managed teammates: create issues → assign to an agent or a squad, a local daemon executes and streams progress over WebSocket, with autopilot (cron/webhook) scheduling and a reusable skill library. Integrates 13 agent CLIs (Claude Code, Codex, GitHub Copilot CLI, OpenClaw, OpenCode, Hermes, Gemini, Pi, Cursor Agent, Kimi, Kiro CLI, Antigravity, Qoder CLI); Go + Postgres 17/pgvector backend, Next.js 16 UI. Install `brew install multica-ai/tap/multica` or the `install.sh` script; CLI flows `multica login` → `multica daemon start` → `multica issue create` / `multica workspace switch`. Auth is browser-based via `multica login` — no env vars documented.
+- [sudocode](https://github.com/sudocode-ai/sudocode) — git-native agent orchestrator (Apache-2.0, verified from LICENSE; TypeScript): human requirements live as version-controlled **specs**, agent runtime context as **issues**, linked bidirectionally (blocks / related / parent-child / discovered-from) and persisted as JSONL committed to git with a local SQLite cache. Runs Claude Code / Codex / Cursor (+more via Agent Client Protocol, added v0.1.19) in parallel with dependency-ordered (topological) execution and a kanban-style real-time UI. `npm install -g sudocode`; ships CLI + local server/UI + MCP server. v0.2.0 (2026-03-18); 287★, last push 2026-03-18 (`gh api`, 2026-07-23). Directly comparable to multica above (multi-CLI, issue-driven, local daemon) — sudocode is git-repo-resident and OSS where multica is a source-available managed platform.
 
 ## 2. LLM Orchestration & Routing
 
