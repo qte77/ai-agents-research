@@ -23,11 +23,25 @@
 # first run of each prompts /login for that account; they run concurrently.
 # ─────────────────────────────────────────────────────────────────────────────
 #
-# HELPERS (source this file from ~/.bashrc:  source /path/to/cc-multi-account.sh):
-#   ccp work            # launch CC on the "work" account (first run → /login)
-#   ccp personal        # launch CC on the "personal" account
-#   ccu work            # per-account usage/cost stats (needs: npm i -g ccusage)
-#   ccl                 # list configured profiles
+# TWO WAYS TO USE IT
+#
+# 1. Executed directly (one-off, no setup):
+#      ./cc-multi-account.sh work        # launch CC on the "work" account
+#      ./cc-multi-account.sh usage work  # that account's usage/cost stats
+#      ./cc-multi-account.sh list        # list configured profiles
+#      ./cc-multi-account.sh --help      # this help
+#
+# 2. Sourced (persistent short commands — put in ~/.bashrc):
+#      source /path/to/cc-multi-account.sh
+#    then:
+#      ccp work            # launch CC on the "work" account (first run → /login)
+#      ccp personal        # launch CC on the "personal" account
+#      ccu work            # per-account usage/cost stats (needs: npm i -g ccusage)
+#      ccl                 # list configured profiles
+#
+# Sourcing is required for the short `ccp`/`ccu`/`ccl` commands because the file
+# defines shell functions — running it in a child shell would define them there
+# and discard them on exit.
 
 : "${CC_PROFILE_HOME:=$HOME/.claude-profiles}"   # where per-account dirs live
 
@@ -54,3 +68,19 @@ ccl() {
   echo "profiles in $CC_PROFILE_HOME:"
   find "$CC_PROFILE_HOME" -maxdepth 1 -mindepth 1 -type d -printf '  %f\n' 2>/dev/null || echo "  (none yet)"
 }
+
+# Print the usage header (everything between the shebang and the first blank
+# line after the comment block) — used for --help and bare invocation.
+cch() { sed -n '2,/^$/p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+
+# Dispatch when EXECUTED rather than sourced. Sourcing skips this entirely and
+# just leaves ccp/ccu/ccl defined in your shell.
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+  case "${1:-}" in
+    ""|-h|--help|help) cch; exit 0 ;;
+    list|ls)           ccl ;;
+    usage|stats)       shift; ccu "$@" ;;
+    -*)                echo "unknown option: $1" >&2; echo >&2; cch >&2; exit 2 ;;
+    *)                 ccp "$@" ;;
+  esac
+fi
