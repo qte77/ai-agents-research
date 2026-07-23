@@ -1,6 +1,6 @@
 ---
 title: Corpus update + new-sources arc — backlog drain, fresh mining, stale-fact refresh
-status: approved
+status: done
 issue: 374
 created: 2026-07-23
 updated: 2026-07-23
@@ -93,14 +93,14 @@ claude-multisession (1★, stale), manual alias/direnv gists. Intake items (fold
 ### Phase A — intake (agent-only, one PR per topic batch)
 
 - [x] A1: dup-checks (4/4) + both scouts fired AND reported (2026-07-23; findings persisted above)
-- [ ] A2-B1: cc-community CC tools — parry, Dippy, sudocode, cc-sessions, AB Method +
+- [x] A2-B1: cc-community CC tools — parry, Dippy, sudocode, cc-sessions, AB Method +
       multi-account trio (new landscape, env-vars extend, model-provider cross-ref)
-- [ ] A2-B2: sdlc-lcm papers — Errors-Narratives, Sovereign Execution Brokers, LedgerAgent (new);
+- [x] A2-B2: sdlc-lcm papers — Errors-Narratives, Sovereign Execution Brokers, LedgerAgent (new);
       Every Eval Ever, Contagion Networks (extends)
-- [ ] A2-B3: non-cc + cc-native — MOSS (new), Perplexity Computer (extend), Probe-and-Refine (new)
-- [ ] A2-B4: mined shortlist — owner APPROVED ALL 15 (2026-07-23): T1 (5) + T2 (6) + T3 (1) +
+- [x] A2-B3: non-cc + cc-native — MOSS (new), Perplexity Computer (extend), Probe-and-Refine (new)
+- [x] A2-B4: mined shortlist — owner APPROVED ALL 15 (2026-07-23): T1 (5) + T2 (6) + T3 (1) +
       CC tools C1–C3 (URLs re-resolved from live awesome-claude-code first)
-- [ ] A2-B5: owner URLs (when supplied)
+- [x] A2-B5: owner URLs (when supplied)
 
 **Done-when per source**: first-party verified (license from LICENSE, counts from live README) ·
 Sources table + reference-style links · both subdir README and `cc-native/README.md` counts (where
@@ -108,7 +108,7 @@ applicable) · changelog fragment · `make lint` green · squash-merged.
 
 ### Phase B — corpus update
 
-- [ ] Stale-fact refresh — target cohort identified 2026-07-23: 27 live docs with
+- [x] Stale-fact refresh — target cohort identified 2026-07-23: 27 live docs with
       `validated_links: 2026-03-*` (`git grep -l "validated_links: 2026-03" -- docs/`, minus 2
       `docs/archive/` files which stay frozen). Link liveness is already covered by the weekly
       link-rot monitor — the refresh targets **content drift**. Priority order: CC vendor-behavior
@@ -118,15 +118,38 @@ applicable) · changelog fragment · `make lint` green · squash-merged.
       `plugins-ecosystem/CC-connectors-overview.md` + `CC-chrome-extension-analysis.md`; then the
       remaining cohort. Per doc: re-fetch first-party page, update version gates, bump `updated:`
       (+`validated_links:` if lychee re-run)
-- [ ] Tracker #383/#382: on-device semantic-search landscape (new doc, Technology-Radar verdicts)
-- [ ] Tracker #321: spec-frameworks follow-ups (surgical adds)
+- [x] Tracker #383/#382: on-device semantic-search landscape (new doc, Technology-Radar verdicts)
+- [x] Tracker #321: spec-frameworks follow-ups (surgical adds)
 
 ### Phase C — close-out
 
-- [ ] Graph rebuild: `/graphify` full uniform rebuild (scope `docs/` only) + `make graph-page`,
+- [x] Graph rebuild: `/graphify` full uniform rebuild (scope `docs/` only) + `make graph-page`,
       commit `ui/graph.html` — only if Phase A landed substantial new *concept* content
-- [ ] Advance #374 (check off shipped backlog items; close if drained), advance/close #383, #321
-- [ ] Update this plan `status: done`
+- [x] Advance #374 (check off shipped backlog items; close if drained), advance/close #383, #321
+- [x] Update this plan `status: done`
+
+## Outcome (2026-07-23, arc closed)
+
+**12 PRs merged, zero open.** Arc: #396 · #397 · #399 · #408 (replaced #400) · #401 · #402 · #403 · #404.
+Extras: #405 multi-account script · #406 SCA/DCA landscape · #407 atscale de-link · #409 script CLI
+dispatch. Issues closed by their PRs: **#383**, **#321**.
+
+Delivered: **15 new analysis docs**, ~30 landscape extends, **24 docs refreshed** (~110
+adversarially-verified corrections), the reusable `.claude/workflows/refresh-docs.js`, and a
+**637 → 785-node** graph rebuild (92 communities; gh-pages redeployed 21:50 UTC).
+
+Merge-mechanics learnings worth reusing:
+
+- **Stacked PRs die on squash-merge.** #400 was auto-*closed* when its base branch (#397's) was
+  deleted, and a closed PR whose base is gone cannot be reopened or retargeted. Recovery =
+  rebase the head onto main (dropping the now-squashed base commit) + open a fresh PR (#408).
+- **Octopus integration branches can't be replayed** after their inputs squash-merge. #404 was
+  reset to a single cherry-picked commit (`ui/graph.html` + fragment) on fresh main.
+- **CodeFactor must re-report after every `update-branch`** — serialize as
+  update-branch → wait for CodeFactor+CodeQL → `--admin` merge.
+
+Known follow-up: the 785-node graph predates #406, so `agent-code-analysis-landscape.md` enters
+the corpus graph at the **next full rebuild** — never partial-update (density lopsiding).
 
 ## Standing decisions & watch-outs
 
