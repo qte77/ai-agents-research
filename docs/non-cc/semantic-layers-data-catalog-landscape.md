@@ -3,8 +3,8 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Assess
@@ -27,7 +27,7 @@ Define metrics/dimensions once; query consistently across clients.
 | [Cube][cube] | Apache-2.0 (~20k★) | **MCP server** (hosted, OAuth PKCE) + outbound MCP connectors | Most agent-ready of the group; `claude mcp add` documented |
 | [dbt MetricFlow / Semantic Layer][metricflow] | Apache-2.0 (~1.6k★) | JDBC/GraphQL API; community MCP wrappers only | Engine behind dbt Cloud's Semantic Layer; part of the Open Semantic Interchange effort |
 | [Malloy][malloy] | MIT (Google; ~2.5k★) | None official (one community MCP wrapper) | Semantic *query language* compiling to SQL; VS Code-first |
-| [AtScale][atscale] | Proprietary | Partner [MQO-MCP][atscale-mqo] (typed query grammar) | MQO validates every reference against a live catalog snapshot to block hallucinated SQL — notable agent-safety pattern (early/reference impl) |
+| AtScale (`atscale.com`, homepage dead 2026-07-23 — 404) | Proprietary | Partner [MQO-MCP][atscale-mqo] (typed query grammar) | MQO validates every reference against a live catalog snapshot to block hallucinated SQL — notable agent-safety pattern (early/reference impl) |
 
 ## Catalogs / Metadata / Governance
 
@@ -82,7 +82,7 @@ Together they mark the shift from "query the catalog at runtime" to "pre-loaded,
 | [Cube MCP server docs][cube] | Hosted MCP server, OAuth PKCE, connectors |
 | [dbt MetricFlow][metricflow] | Metrics-layer engine; Open Semantic Interchange |
 | [Malloy][malloy] | Semantic query language |
-| [AtScale][atscale] · [MQO-MCP][atscale-mqo] | Proprietary semantic layer; typed-query MCP pattern |
+| AtScale · [MQO-MCP][atscale-mqo] | Proprietary semantic layer; typed-query MCP pattern (AtScale homepage dead 2026-07-23) |
 | [OpenMetadata][openmetadata] | Catalog with official MCP module |
 | [DataHub][datahub] · [MCP server][datahub-mcp] | Catalog with official MCP server |
 | [Unity Catalog OSS][unity-catalog] | LF open catalog + `unitycatalog-ai` SDK |
@@ -93,7 +93,6 @@ Together they mark the shift from "query the catalog at runtime" to "pre-loaded,
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
 [malloy]: https://github.com/malloydata/malloy
-[atscale]: https://www.atscale.com/
 [atscale-mqo]: https://github.com/joeyen-atscale/mqo-mcp
 [openmetadata]: https://github.com/open-metadata/OpenMetadata
 [datahub]: https://github.com/datahub-project/datahub
