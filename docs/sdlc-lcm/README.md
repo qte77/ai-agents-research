@@ -41,6 +41,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [sovereign-execution-brokers-analysis.md](sovereign-execution-brokers-analysis.md) | Sovereign Execution Brokers: brokered/controlled agent execution (arXiv:2606.20520) |
 | [ledger-state-tool-calling-analysis.md](ledger-state-tool-calling-analysis.md) | LedgerAgent: ledger-state tool-calling for auditable agent actions (arXiv:2606.20529) |
 | [agent-probabilistic-verification-analysis.md](agent-probabilistic-verification-analysis.md) | Efficient and sound probabilistic verification of agent behavior (arXiv:2606.20510) |
+| [agent-code-analysis-landscape.md](agent-code-analysis-landscape.md) | SCA & DCA for AI coding agents: CodeQL/Semgrep-Guardian/garak/AgentSight/VIPER-MCP, GitHub·GitLab·Codeberg CI matrix, agents-as-scanner (Google Blueprint), sandboxing as analysis boundary, OWASP Agentic Top 10 |
 
 ## Framework Grounding
 
