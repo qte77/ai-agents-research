@@ -1,11 +1,11 @@
 ---
 title: CC Memory Tooling Landscape
-purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch.
+purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core.
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -205,6 +205,37 @@ The memory-recall skill runs in a `context: fork` subagent, so intermediate sear
 
 Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) — memsearch as a mobile/remote supporting tool
 
+---
+
+## Roampal Core (roampal-ai)
+
+**Repo**: [roampal-ai/roampal-core][roampal-core] | **PyPI**: [`roampal`][roampal-pypi] | **Stars**: 47 | **Forks**: 7 | **License**: Apache-2.0 | **Version**: 0.5.7 (2026-05-12)
+
+Outcome-based persistent-memory MCP server for Claude Code and OpenCode. Auto-injects contextual memories into coding-assistant sessions and continuously promotes advice that led to good outcomes while demoting advice that didn't, based on per-exchange scoring — a design distinct from the static-recall model of the other tools in this doc.
+
+### Architecture
+
+- **Five memory collections** with distinct lifetimes: `working` (24h), `history` (30 days), `patterns` (persistent), `memory_bank` (permanent identity/preferences), `books` (reference docs)
+- **FastAPI HTTP server** on port 27182 wraps a `UnifiedMemorySystem` backed by ChromaDB, using "TagCascade retrieval" (tags-first + CE rerank); auto-starts on first use with self-healing
+- **Bias-avoiding scoring**: in Claude Code the main LLM scores its own exchanges via a `score_memories` tool invoked through hooks; in OpenCode an independent sidecar makes a separate API call to score silently, avoiding self-assessment bias
+- **MCP tools**: `search_memory`, `add_to_memory_bank`, `update_memory`, `delete_memory`, `score_memories` (Claude Code only), `record_response`
+
+### CC Integration
+
+```bash
+pip install roampal && roampal init   # auto-detects and configures Claude Code / OpenCode
+```
+
+One of exactly two first-class clients alongside OpenCode (the README also states "Cursor compatible," though repo topics list only `claude-code` and `opencode` — the support tier for Cursor is unclear). Stated requirements: Python 3.10+, ~800MB RAM, ~500MB disk, x86-64 with AVX2, no GPU (ONNX Runtime for CPU-only embedding inference).
+
+### Adoption Considerations
+
+**Strengths**: Outcome-based scoring loop (promotes memories tied to good outcomes, demotes ones tied to bad ones) rather than static recall. Fully OSS (Apache-2.0). CPU-only embeddings, no GPU or API key required. Single `pip install` auto-configures detected clients. Active recent release (v0.5.7, 2026-05-12; release notes cite 720 passing tests, including new coverage for stale-timestamp pruning and atomic-write contracts).
+
+**Risks**: No independent or third-party benchmark for the core "good advice promoted / bad advice demoted improves outcomes" claim — unlike ByteRover (LoCoMo) and MemPalace (LongMemEval) above, roampal-core reports no benchmark number. Small community relative to siblings in this doc (47 stars, 7 forks). ChromaDB dependency. Overlaps with CC's built-in memory, ByteRover, Claude-Mem, MemPalace, and MemSearch — pick one.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
 ## Benchmarks
 
 Two long-term-memory benchmarks recur in this space. **Most per-framework numbers are vendor self-reported** — each project's own run on the public dataset, with its own LLM/harness — not produced or audited by the benchmark authors, and not directly comparable across rows. Treat as directional.
@@ -242,6 +273,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 | [claude-mem][claude-mem] · [docs][claude-mem-docs] | Claude Code memory plugin |
 | [MemPalace][mempalace] | Agent memory tool |
 | [memsearch][memsearch] · [CC docs][memsearch-docs] | Zilliz memory search (CC integration) |
+| [roampal-core][roampal-core] · [PyPI][roampal-pypi] | Outcome-based memory MCP server (CC integration) |
 | [LangMem][langmem] · [concepts][langmem-concepts] | LangChain long-term memory |
 | [Mem0][mem0] · [paper][mem0-paper] | Memory layer for agents |
 | [Cognee][cognee] | Memory / knowledge-graph framework |
@@ -262,6 +294,8 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 [longmemeval]: https://github.com/xiaowu0162/LongMemEval
 [memsearch]: https://github.com/zilliztech/memsearch
 [memsearch-docs]: https://zilliztech.github.io/memsearch/platforms/claude-code/
+[roampal-core]: https://github.com/roampal-ai/roampal-core
+[roampal-pypi]: https://pypi.org/project/roampal/
 [coala]: https://arxiv.org/abs/2309.02427
 [langmem]: https://github.com/langchain-ai/langmem
 [langmem-concepts]: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/

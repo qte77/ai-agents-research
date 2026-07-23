@@ -1,12 +1,12 @@
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file-read deduplication, source enrichment, provider management. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
+purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file-read deduplication, source enrichment, provider management, injection scanning, permission auto-approval, session-workflow enforcement. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
 category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -195,6 +195,75 @@ Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-mo
 
 ---
 
+## Parry Guard (vaporif)
+
+**Repo**: [vaporif/parry-guard][parry-guard] | **Stars**: 44 | **License**: MIT (optional Llama Prompt Guard 2 model under a separate Llama Community License) | **Version**: v0.1.5
+
+Rust prompt-injection / secrets / data-exfiltration scanner wired into CC hooks with **local** ML inference plus deterministic checks — no cloud calls at scan time.
+
+### How It Works
+
+1. Six ordered detection layers: Unicode invisible-char/homoglyph/RTL detection → Aho-Corasick known-injection-phrase matching → 40+ secret-pattern regexes → DeBERTa v3 ML classification (256-char chunks, default threshold 0.7) → bash exfiltration detection via tree-sitter AST (network sinks, base64/hex obfuscation, DNS tunneling) → the same source-to-sink analysis across 16 scripting languages
+2. Three hook events: **PreToolUse** (7 ordered checks incl. taint enforcement, CLAUDE.md scanning, exfil/destructive-op/sensitive-path blocking, injection scan of Write/Edit/Bash/MCP input), **PostToolUse** (scans tool *output*, auto-taints the project on hit), **UserPromptSubmit** (audits `.claude/` for dangerous permissions and injected hook scripts)
+3. Fail-closed (undetermined = unsafe); scan cache in `~/.parry-guard/` (~8ms hit vs 70ms+ fresh inference, 30-day TTL)
+
+### Adoption Considerations
+
+- **Claude Code hooks today** — the published v0.1.5 release is Claude-only ("wait for 0.2.0 for Codex support" per its release notes); Codex wiring exists only on unreleased `main`
+- Requires a HuggingFace token: the ProtectAI DeBERTa v3 model is gated (required); Meta's Llama Prompt Guard 2 (`full` mode only) needs separate Meta license approval
+- Latency/speedup numbers are author-self-reported (no independent benchmark); the README itself hedges "early development — bugs and false positives happen"
+- Install: `uvx parry-guard hook`, Nix flake (home-manager module), `cargo install`, or release binaries
+
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — hook mechanism; [agent-frameworks-infrastructure-landscape.md §8](../non-cc/agent-frameworks-infrastructure-landscape.md) — LLM Guard, the library-level (app-side) scanner on the same DeBERTa model family
+
+---
+
+## Dippy (ldayton)
+
+**Repo**: [ldayton/Dippy][dippy] | **Stars**: 242 | **License**: MIT | **Version**: v0.2.7
+
+PreToolUse hook (matcher `Bash`) that statically analyzes shell commands with a hand-written bash parser and **auto-approves** ones classified safe — attacking permission-prompt fatigue from the approve side where Parry Guard attacks it from the block side.
+
+### How It Works
+
+1. Parses the command with the author's own zero-dependency parser (Parable, vendored by pinned commit + sha256 — a deliberate supply-chain pin)
+2. Auto-approves read-only pipelines, chained reads, safe redirects; blocks subshell injection, hidden mutations, cloud-destructive ops
+3. Two-tier config (`~/.dippy/config` global + `.dippy` project root) with directives like `deny python "Use uv run python, which runs in project environment"` — deny rules carry **custom steering messages** that redirect Claude instead of failing silently
+4. Ships a second entry point, `dippy-statusline`
+
+### Adoption Considerations
+
+- Reduces prompts; it is not a security boundary — no published false-allow/false-block rate, only the README's curated approve/block examples
+- The README's "up to 40% faster development" is an unbenchmarked marketing claim — disregard
+- Install via Homebrew tap (`brew tap ldayton/dippy`) or clone; Python ≥3.8, zero runtime dependencies
+
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md)
+
+---
+
+## cc-sessions (GWUDCAP)
+
+**Repo**: [GWUDCAP/cc-sessions][cc-sessions] | **Stars**: 1,550 | **License**: MIT | **Version**: v0.3.6 (2025-10-17; README banner stale at "v0.3.0")
+
+Opinionated session/workflow manager that gates Edit/Write/MultiEdit behind a **Discussion-Alignment-Implementation-Check (DAIC)** protocol, binds task files to git branches, and delegates heavy work to 5 specialized subagents.
+
+### How It Works
+
+1. Edits are blocked until Claude proposes specific todos and the user approves via a trigger phrase (defaults "mek:", "start^:", "finito", "squish" — all remappable via `sessions config triggers`); mid-plan deviation throws the session back to discussion mode
+2. Tasks are markdown files with frontmatter (status/branch/success-criteria); the installer creates matching git branches and blocks edits/commits off the task's assigned branch
+3. Five subagents installed to `.claude/agents/`: context-gathering, logging, code-review, context-refinement, service-documentation — each in its own context window
+4. Dual-packaged with feature parity: npm and PyPI (`npx cc-sessions` / `pipx run cc-sessions`), installed per-repo; updates/uninstalls are backup-first (`.claude/.backup-*`)
+
+### Adoption Considerations
+
+- Highest adoption in this batch (1,550 stars) but **no main-branch commits or releases since 2025-10-17** (~9 months as of 2026-07-23) — maintenance status unclear
+- DAIC overlaps CC's native plan mode conceptually; the differentiator is *enforcement* (hard tool-gating + branch discipline) vs. guidance
+- Same opinionated-workflow niche as GSD (above) — see Comparison
+
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md)
+
+---
+
 ## Detailed Tool Landscapes
 
 Per-tool entries for three categories have moved to focused topic docs; the cross-tool comparison below still covers all of them:
@@ -218,6 +287,9 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Active (4.1K stars, 48 releases) |
 | **Claude-Mem** | Persistent memory + compression | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (45.2K stars, v6.5.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
+| **Parry Guard** | Injection/secrets/exfil scanning | Hooks (PreToolUse + PostToolUse + UserPromptSubmit) | Local ML (DeBERTa v3) + AST/regex layers, fail-closed | Early (44 stars, v0.1.5) |
+| **Dippy** | Permission auto-approval | PreToolUse hook (Bash matcher) | Static bash-AST safe/unsafe classification + steerable deny messages | Active (242 stars, v0.2.7) |
+| **cc-sessions** | Session/workflow enforcement | Hooks + subagents + trigger phrases | DAIC tool-gating, task↔branch binding | Adopted but dormant (1,550 stars, v0.3.6, no commits since 2025-10) |
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
 | **MemSearch** | Persistent memory (cross-agent) | Plugin (hooks + skill, no MCP) | Markdown source-of-truth + Milvus hybrid search | Active (~2K stars, v0.4.7) |
@@ -231,7 +303,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 
-All nineteen address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
+All twenty-two address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -248,6 +320,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
 | [Claude-Mem][claude-mem] | Persistent memory compression system (45.2K stars) |
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
+| [Parry Guard][parry-guard] | CC-hook injection/secrets/exfil scanner, local DeBERTa + AST layers (44 stars, MIT; optional Llama-licensed model; v0.1.5, PyPI-verified) |
+| [Dippy][dippy] | PreToolUse bash auto-approval hook, zero-dep vendored parser (242 stars, MIT, v0.2.7) |
+| [cc-sessions][cc-sessions] | DAIC session/workflow enforcement, npm+PyPI dual-packaged (1,550 stars, MIT, v0.3.6) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -290,6 +365,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
 [cc-switch]: https://github.com/farion1231/cc-switch
+[parry-guard]: https://github.com/vaporif/parry-guard
+[dippy]: https://github.com/ldayton/Dippy
+[cc-sessions]: https://github.com/GWUDCAP/cc-sessions
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn

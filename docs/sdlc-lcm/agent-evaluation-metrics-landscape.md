@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Assess
@@ -288,6 +288,18 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires rubric design and criterion weighting
 - **Reference**: Rubric Rewards for AI Co-Scientists (arXiv:2512.23707)
 
+#### Latent Failure Detection (SIMMER)
+
+- **Definition**: State-machine execution of LLM-generated plans against a symbolic world model to detect failures that pass surface execution but silently undermine the goal
+- **Use Case**: Evaluate LLM planning agents (household/kitchen domain) for silent or irreversible plan failures beyond simple task-completion checks
+- **Components**: Three failure classes — Immediate Failures (precondition violations, observable at execution time), Latent Failures (all preconditions satisfied but consequences manifest later), Irreversible Failures (a latent-failure subset where no subsequent action can restore a valid world state)
+- **Calculation**: `error_free_plans / total_plans`; `plans_with_latent_failures / total_plans`; `irreversible_failures / latent_failures`
+- **Strengths**: Distinguishes silent/delayed failures from immediate ones; world model spans 77 actions, 262 objects, ~46,800 possible interactions grounded in real cooking scripts
+- **Limitations**: Single domain (kitchen/household); benchmark code/data not yet released (conditional on acceptance) as of 2026-07-23
+- **Reference**: SIMMER Benchmark (arXiv:2606.14574)
+- **Finding**: Even frontier models achieve at most 17% error-free plans; up to 56% of plans contain latent failures, most leading to irreversible consequences
+- **Mitigation**: Counterfactual foresight simulation (predicting state changes and self-checking for hazards before committing each action) reduces latent failures by up to 72% and irreversible cases by up to 75%
+
 #### Elicitation Rate
 
 - **Definition**: Percentage of evaluation runs achieving threshold score (≥7/10)
@@ -358,6 +370,16 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires relevance assessment
 - **Reference**: [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
 - **Landscape Reference**: [Letta - Advanced Memory Architecture](../non-cc/agent-frameworks-infrastructure-landscape.md)
+
+#### Streaming Memory Fidelity (StreamMemBench)
+
+- **Definition**: Two-stage streaming evaluation of agent memory systems — Task 1 measures whether an agent correctly uses observed streaming evidence; Task 2 (follow-up) measures whether feedback from Task 1 is incorporated into later assistance responses
+- **Use Case**: Diagnose whether memory systems adapt longitudinally to feedback, not just ingest streaming evidence in the moment
+- **Components**: Four normalized (0-1) diagnostic metrics — Fidelity, Initial evidence use, Feedback incorporation, Followup reuse
+- **Strengths**: Separates one-shot evidence use from longitudinal feedback adaptation; benchmarked across 8 systems (2 RAG baselines + 6 memory systems: mem0, memos, evermemos, memskill, memoryos, a_mem)
+- **Limitations**: No published leaderboard — results require running the repo's own evaluation scripts; dataset-scale figures are repo-README-sourced and not independently re-verified
+- **Reference**: StreamMemBench (arXiv:2606.14571)
+- **Finding**: Current memory systems frequently fail to use observed evidence and don't reliably convert user feedback into improved follow-up behavior
 
 ### Security & Safety Metrics
 
