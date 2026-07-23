@@ -50,6 +50,7 @@ exclude = [
     "blog.jetbrains.com",
     "neptune.ai",
     "openai.com",  # 403 to HEAD on /index/* article URLs
+    "developer.salesforce.com/blogs/2026/04/salesforce-hosted-mcp-servers-are-now-generally-available",  # exact URL only; 403 bot-block, page verified live via WebFetch 2026-07-23 (Salesforce MCP GA cite)
     "code2tutorial.com",  # 404 to HEAD; root may anti-bot — referenced in cc-community landscape
     "techcommunity.microsoft.com",  # 403 to HEAD on /blog/* URLs (anti-bot)
     "datacamp.com",  # 403 to HEAD (anti-bot) on /tutorial/* URLs — referenced in CC-version-pinning-resilience.md
