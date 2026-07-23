@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
@@ -36,6 +36,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | Strands Agents Evaluation | [docs](https://strandsagents.com/docs/user-guide/evals-sdk/quickstart/) | Multi-dimensional agent eval | — |
 | Maxim AI | [site](https://www.getmaxim.ai/) | Simulation + eval + observability | — |
 | Yupp.ai | [site](https://yupp.ai/) | Crowd-sourced model comparison | Bradley-Terry/VIBE, 500+ models |
+| Every Eval Ever | [github](https://github.com/evaleval/every_eval_ever) | Community schema unifying Inspect AI/HELM/lm-evaluation-harness eval outputs into one JSON format | arXiv:2606.14516; backed by Hugging Face, U. Edinburgh, EleutherAI; MIT (code/dataset), paper CC BY 4.0 |
 
 ## 2. Benchmarks
 
