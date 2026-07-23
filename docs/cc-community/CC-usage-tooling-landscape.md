@@ -1,16 +1,16 @@
 ---
 title: CC Usage-Observability Tooling Landscape
-purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor.
+purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor, cc-costline.
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Research (informational)
 
-Tools that measure token usage and cost across coding-agent sessions. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They divide into **retrospective** measurement (CodeBurn cross-agent; ccusage CC/Codex-deep) and **predictive** monitoring (Claude-Code-Usage-Monitor). Where RTK reduces tokens *entering* context, these observe what was actually spent — optimization needs measurement.
+Tools that measure token usage and cost across coding-agent sessions. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They divide into **retrospective** measurement (CodeBurn cross-agent; ccusage CC/Codex-deep), **predictive** monitoring (Claude-Code-Usage-Monitor), and **ambient** in-statusline awareness (cc-costline). Where RTK reduces tokens *entering* context, these observe what was actually spent — optimization needs measurement.
 
 ## CodeBurn (AgentSeal)
 
@@ -174,6 +174,55 @@ Only tool in this category that does **prediction** (not just retrospective meas
 
 Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — Anthropic plan limits and 5-hour windows
 
+---
+
+## cc-costline (Ventuss-OvO)
+
+**Repo**: [Ventuss-OvO/cc-costline][cc-costline] | **Stars**: 27 | **License**: Unlicensed — claimed MIT, no LICENSE file (see [Licensing](#licensing-unresolved) below) | **Version**: package.json 0.5.2 (latest git tag v0.5.0; 0 GitHub Releases published — tag/version mismatch unresolved) | **Stack**: TypeScript, Node.js >=22
+
+Enhanced Claude Code statusline (npm CLI) that adds live cost tracking, 5h/7d usage-limit percentages, rolling 7d/30d spend, and an optional [ccclub](https://github.com/mazzzystar/ccclub) leaderboard rank directly into the CC terminal statusline.
+
+Example statusline output (from the [README][cc-costline]): `14.6k $2.42 · 40% Opus 4.6 / 5h:45% · 7d:8% · 30d:$866 / #2 $67.0` — tokens, cost, context %, model, 5h/7d usage-limit %, rolling-period cost, optional leaderboard rank.
+
+### Installation
+
+```bash
+npm i -g cc-costline
+cc-costline install    # patches ~/.claude/settings.json (statusline command + session-end hooks), preserving existing settings
+```
+
+### Data Sources (Local Cache, No HTTP on Render)
+
+The statusline render path reads three local caches with no network call at render time:
+
+| Cache | Purpose |
+|---|---|
+| `~/.cc-costline/cache.json` | Cost |
+| `/tmp/sl-claude-usage` | Usage-limit percentages |
+| `/tmp/sl-ccclub-rank` | Leaderboard rank (optional) |
+
+Stale caches trigger a detached `cc-costline refresh-bg` subprocess, guarded by a `/tmp/sl-refresh.lock` + 30s throttle.
+
+### Usage-Limit and Cost Calculation
+
+- Usage-limit data comes from Anthropic's own `api.anthropic.com/api/oauth/usage`, reading OAuth credentials from macOS Keychain automatically after `claude login`; detects token rotation to retry with a fresh rate-limit quota (5-min TTL)
+- Local cost calculation uses incremental per-file mtime+size caching (~25ms typical vs ~2s cold scan on 1000+ JSONL files per the README, not independently benchmarked), 2-min TTL
+- Hardcoded per-model pricing table (Opus 4.6/4.5/4.1, Sonnet 4.5/4, Haiku 4.5/3.5) with family-name fallback for unknown models; zero runtime dependencies; tests via `node:test`
+
+### Optional ccclub Integration
+
+Zero-config integration with the separate [ccclub](https://github.com/mazzzystar/ccclub) leaderboard project, polling `ccclub.dev/api/rank` on a 90s TTL; silently omitted if ccclub is not installed.
+
+### Licensing (Unresolved)
+
+**No LICENSE file exists in the repo root** — confirmed via a GitHub API contents listing (2026-07-23) — and GitHub's own repo-level `license` field is `null`. package.json's `license` field and the README's "## License / MIT" prose both claim MIT, but that claim is **unbacked metadata, not a verified license grant**. Absent an actual LICENSE file, the repo defaults to **all-rights-reserved under standard copyright** — the README's "MIT" text does not by itself grant anyone the right to copy, modify, or redistribute the code. This matters directly for adoption: do not vendor, fork, or redistribute cc-costline on the strength of the README claim alone; confirm licensing with the maintainer first.
+
+### Key Differentiator
+
+Where ccusage and CodeBurn analyze *after the fact* and claude-monitor *predicts* window exhaustion, cc-costline embeds spend directly **in the statusline** — 5h/7d usage-limit percentages and rolling 7d/30d cost visible on every prompt, with an optional social leaderboard (ccclub) layered on top. Complementary to, not a replacement for, the retrospective/predictive tools above: cc-costline is glanceable ambient awareness, not a dashboard.
+
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — statusline hook integration point; [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's native session-cost extraction
+
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
@@ -183,7 +232,8 @@ Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-a
 [codeburn-optimize]: https://github.com/getagentseal/codeburn/blob/main/src/optimize.ts
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
+[cc-costline]: https://github.com/Ventuss-OvO/cc-costline
 
 ## Sources
 
-Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor]).
+Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor], [cc-costline][cc-costline]). cc-costline's licensing status (no LICENSE file; GitHub API `license: null`) verified via `gh api repos/Ventuss-OvO/cc-costline/contents`, 2026-07-23.

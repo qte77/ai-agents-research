@@ -2,8 +2,8 @@
 title: "Multi-Agent Systems & Benchmarking Best Practices"
 purpose: Production best practices for multi-agent system development and benchmarking, covering infrastructure, training, and evaluation.
 created: 2026-01-13
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Assess
@@ -67,6 +67,7 @@ validated_links: 2026-06-27
 1. **Outcome validity**: High scores genuinely reflect successful task completion (most critical)
 2. **Real-world scenarios**: Practical tasks (e.g., "book a flight") over abstract puzzles
 3. **Contamination resistance**: Dynamic benchmarks (DynaBench, LiveCodeBench) resist training data leakage and saturation
+   - **Multilingual extension** [2606.20517] Multi-LCB: Extends LiveCodeBench's Python-only problems to 12 languages; evaluating 24 LLMs exposes systematic Python-favoring bias (mean Pass@1 48.2% on Python vs. <29% on Scala) and cross-language ranking instability — Python-only leaderboards mask model rankings that flip on other languages. Residual contamination is still detectable via step-like Pass@1 drops at model training cutoffs
 4. **Appropriate difficulty**: Stratified levels to differentiate capabilities
 5. **Baseline provision**: Clear reference points for comparison
 6. **Reproducibility**: Systematic measurement with ground truth and rigorous rubrics
@@ -105,6 +106,13 @@ validated_links: 2026-06-27
 - Top agents: ~20% success on real tasks vs inflated benchmark scores
 - Discovered 35 zero-days, 17 incomplete patches in actual CVEs
 - Proof-of-concept generation validates genuine capability
+
+**Evaluator Bias Propagation** [2606.20493] Contagion Networks:
+
+- Formal framework measuring how LLM-evaluator preferences propagate across interacting agents in multi-agent LLM systems
+- Contagion coefficient γ (an agent's evaluation strategy shifting toward peers') measured at γ ∈ [0.157, 0.352] across 3 DeepSeek-chat agents with distinct evaluator-preference profiles
+- Mitigation: raising the evaluator committee from k=1 to k=3 cuts contagion by roughly 70% (reported ~69-72%, varying by paper revision)
+- Topology matters: chain communication suppresses propagation; fully-connected topology enables cascading spread once a spectral-radius threshold is crossed
 
 ### 3.3 Consistency Metrics
 
@@ -160,3 +168,13 @@ validated_links: 2026-06-27
 - **Layered defense**: Guardrails and supervisors required (beyond single-layer protection)
 - **Least privilege / Contextual security**: Dynamically restrict available tools and data access based on workflow context/step
 - **Separation of concerns**: Isolate control and data channels where possible
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [2606.20493] Contagion Networks | Evaluator preference/bias propagation across multi-agent LLM systems; evaluator-committee-size and communication-topology mitigations |
+| [2606.20517] Multi-LCB | Extends LiveCodeBench to 12 programming languages; exposes Python-favoring bias and cross-language ranking instability across 24 LLMs |
+
+[2606.20493]: https://arxiv.org/abs/2606.20493
+[2606.20517]: https://arxiv.org/abs/2606.20517
