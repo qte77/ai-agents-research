@@ -110,7 +110,7 @@ jobs:
       model: openai/gpt-4o-mini
       enrich: true
       eval_repo: qte77/gha-rxiv-paper-eval
-      eval_ref: 6a4bb87ea02a9bfbb837fa7d500eec0d9c24172f  # v0.2.2
+      eval_ref: c748a066744876b4ef07ca28cc072f8b41449555  # v0.4.0 — keep in lockstep with the workflow pin above (qte77/gha-rxiv-paper-eval#80)
 
   triage:
     needs: [resolve, eval]
