@@ -37,6 +37,10 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [agent-identity-auth-landscape.md](agent-identity-auth-landscape.md) | Agent identity/auth/personhood: SPIFFE, Entra Agent ID, MCP-OAuth, Okta XAA, AP2 Mandates, World ID, Cloudflare Web Bot Auth |
 | [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) | Agent evaluation metrics survey (task completion, reasoning, safety) |
 | [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md) | Eval frameworks, agentic benchmarks, datasets (companion to the metrics survey) |
+| [agent-silent-failure-taxonomy-analysis.md](agent-silent-failure-taxonomy-analysis.md) | Longitudinal taxonomy of silent failures in a production LLM agent runtime (arXiv:2606.14589) |
+| [sovereign-execution-brokers-analysis.md](sovereign-execution-brokers-analysis.md) | Sovereign Execution Brokers: brokered/controlled agent execution (arXiv:2606.20520) |
+| [ledger-state-tool-calling-analysis.md](ledger-state-tool-calling-analysis.md) | LedgerAgent: ledger-state tool-calling for auditable agent actions (arXiv:2606.20529) |
+| [agent-probabilistic-verification-analysis.md](agent-probabilistic-verification-analysis.md) | Efficient and sound probabilistic verification of agent behavior (arXiv:2606.20510) |
 
 ## Framework Grounding
 

@@ -12,7 +12,10 @@ export const meta = {
            { title: 'Verify', detail: 'adversarially re-check the riskiest claims (license/counts/version)' }],
 }
 
-const urls = (Array.isArray(args) ? args : (args && args.urls) || [])
+// Some harnesses deliver args as a JSON-encoded string — tolerate both shapes.
+let input = args
+if (typeof input === 'string') { try { input = JSON.parse(input) } catch { log('args string is not valid JSON') } }
+const urls = (Array.isArray(input) ? input : (input && input.urls) || [])
   .map(u => (typeof u === 'string' ? { url: u } : u))
   .filter(u => u && u.url)
 

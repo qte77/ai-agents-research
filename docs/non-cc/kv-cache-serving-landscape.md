@@ -3,8 +3,8 @@ title: KV-Cache Serving Landscape — Vendor Prompt Caching & Inference Internal
 purpose: Survey of KV (key-value) cache mechanisms in LLM serving — vendor prompt-caching APIs (Anthropic/OpenAI/Gemini) and open serving-stack internals (paging, prefix reuse, quantization, eviction, architectural sharing, offload/disaggregation).
 category: landscape
 created: 2026-07-08
-updated: 2026-07-08
-validated_links: 2026-07-08
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Reference (informational catalog)
@@ -60,6 +60,12 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
   Hopper/Ada+. **Shipped** production knob. NVFP4 KV emerging on Blackwell.
 - **KIVI** ([arXiv 2402.02750][kivi]), **KVQuant** ([arXiv 2401.18079][kvquant]) — tuning-free 2-bit /
   outlier-aware low-bit for long context. **Research** (not mainline defaults).
+- **UltraQuant / Ultra-TurboQuant** ([arXiv 2606.20474][ultraquant], AMD) — 4-bit K/V for context-heavy
+  agentic serving; Ultra-TQ = optimized rotation+codebook (TurboQuant-derived), UltraQuant = hardware-
+  native FP4 via AMD CDNA4 scaled-MFMA. Vs. vLLM's FP8 KV baseline on AMD MI355X: P50 TTFT 3.47x faster
+  in cache-pressured late rounds (2.3x averaged), 1.63x output throughput — though FP8 stays ahead
+  (0.86x) in early "warm" rounds, so the gain is concentrated in the long-context/high-concurrency
+  regime. **Research** prototype; no public code repo found as of 2026-07-23.
 
 ### Eviction / sparsity (mostly research)
 
@@ -84,6 +90,19 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
   **LMCache** ([repo][lmcache] · [tech report][lmcache-paper]) pluggable tiered KV offload — vLLM's
   standard offload/disagg backend, **shipped**.
 
+### Checkpoint/restore (execution-state migration)
+
+- **Execution-State Capsules / FlashRT** ([arXiv 2606.20537][capsules] · [repo][flashrt], Apache-2.0)
+  — graph-bound checkpoint/restore of the *complete* execution state (KV + recurrent + conv + MTP
+  state + metadata, not just KV) at a committed boundary; CUDA kernels replay captured graph plans
+  over contiguous static buffers with no block-table indirection, an explicit contrast to
+  PagedAttention/RadixAttention. **Physical-AI/robotics-flavored**: validated on Jetson AGX Thor and
+  DGX Spark edge hardware alongside datacenter GPUs, ships production VLA control (Pi0/Pi0.5/GROOT
+  N1.6-N1.7/Pi0-FAST) plus LLM serving (Qwen3.6-27B). TTFT speedup over cold prefill scales 3.9x (2k
+  tokens) to 27x (16k tokens); sub-millisecond GPU-resident snapshot/restore. Positioned as
+  complementary to, not competing with, mainstream high-throughput KV-cache serving. **Research/early**
+  — repo ~3 months old, 448 stars.
+
 ## Current state of the art (2026)
 
 - **Production table stakes:** PagedAttention block memory + exact-prefix caching (vLLM APC / SGLang
@@ -104,10 +123,11 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
 | [OpenAI prompt caching][openai-caching] · [Gemini caching][gemini-caching] | Vendor prefix/context caching |
 | [PagedAttention][paged] · [vLLM APC][vllm-apc] | Paged memory + prefix caching |
 | [SGLang / RadixAttention][sglang] · [docs][radix] | Radix-tree prefix reuse + HiCache |
-| [FP8 KV (vLLM)][vllm-fp8] · [TensorRT-LLM][trtllm-quant] · [KIVI][kivi] · [KVQuant][kvquant] | Quantization |
+| [FP8 KV (vLLM)][vllm-fp8] · [TensorRT-LLM][trtllm-quant] · [KIVI][kivi] · [KVQuant][kvquant] · [UltraQuant][ultraquant] | Quantization |
 | [H2O][h2o] · [StreamingLLM][streamingllm] · [SnapKV][snapkv] · [Scissorhands][scissorhands] | Eviction/sparsity |
 | [MQA][mqa] · [GQA][gqa] · [MLA][mla] · [CLA][cla] | Architectural KV reduction |
 | [DistServe][distserve] · [Mooncake][mooncake] · [LMCache][lmcache] | Offload / disaggregation |
+| [Execution-State Capsules][capsules] · [FlashRT][flashrt] | Checkpoint/restore, physical-AI/robotics serving |
 
 [anthropic-caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 [openai-caching]: https://developers.openai.com/api/docs/guides/prompt-caching
@@ -134,3 +154,6 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
 [mooncake]: https://arxiv.org/abs/2407.00079
 [lmcache]: https://github.com/LMCache/LMCache
 [lmcache-paper]: https://arxiv.org/abs/2510.09665
+[ultraquant]: https://arxiv.org/abs/2606.20474
+[capsules]: https://arxiv.org/abs/2606.20537
+[flashrt]: https://github.com/flashrt-project/FlashRT
