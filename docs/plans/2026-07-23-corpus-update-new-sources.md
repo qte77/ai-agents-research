@@ -1,6 +1,6 @@
 ---
 title: Corpus update + new-sources arc — backlog drain, fresh mining, stale-fact refresh
-status: active
+status: approved
 issue: 374
 created: 2026-07-23
 updated: 2026-07-23
