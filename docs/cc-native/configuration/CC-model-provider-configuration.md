@@ -3,8 +3,8 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-07-05
-validated_links: 2026-07-05
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Reference (actionable configuration guide)
@@ -268,7 +268,7 @@ export ANTHROPIC_AUTH_TOKEN=<cliproxy-key>
 ```
 
 - **Stars / version**: 37.6K stars, v7.2.7 (MIT, Go)
-- **CC story**: wraps `claude` via OAuth account; supports multi-account switching, per-credential circuit breakers, quota management
+- **CC story**: wraps `claude` via OAuth account; supports multi-account switching, per-credential circuit breakers, quota management. Note this is *gateway-level* multi-account (quota harvesting for downstream clients) — for running N interactive CC sessions on N subscription accounts, see [CC-multi-account-switching-landscape.md](../../cc-community/CC-multi-account-switching-landscape.md)
 - **Also routes**: Gemini CLI, Codex, Grok Build, Antigravity — plus OpenAI-compatible upstream relay (e.g. OpenRouter)
 - **Companion GUI**: [EasyCLI][easycli] (Rust/Tauri desktop app)
 

@@ -20,3 +20,4 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 | [CC-compass-mcp-analysis.md](CC-compass-mcp-analysis.md) | Compass MCP: cross-surface task/context bridge (architecture, status, alignment) |
 | [CC-vlm-screen-sharing-landscape.md](CC-vlm-screen-sharing-landscape.md) | VLM + screen-sharing landscape: vision models, local runtimes, image token math, visual-context integration patterns |
 | [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md) | OpenAI Codex→CC plugin (Apache-2.0): slash commands, codex-rescue subagent, Stop-hook review gate, session transfer |
+| [CC-multi-account-switching-landscape.md](CC-multi-account-switching-landscape.md) | Multi-account/profile switching: native `CLAUDE_CONFIG_DIR` mechanism, per-platform credential isolation, claude-swap, claude-code-profiles, claude-multiprofile |
