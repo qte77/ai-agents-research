@@ -2,8 +2,8 @@
 title: "Agent Observability Methods Analysis"
 purpose: Technical analysis of 18 observability platforms and five primary tracing patterns for AI agent behavior.
 created: 2025-08-24
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-07-23
+validated_links: 2026-07-23
 ---
 
 **Status**: Assess
@@ -478,7 +478,6 @@ This emerging pattern addresses the specific challenges of distributed multi-age
 
 **Primary Sources**:
 
-- [Top 5 AI Agent Observability Platforms 2026](https://o-mega.ai/articles/top-5-ai-agent-observability-platforms-the-ultimate-2026-guide)
 - [Microsoft Agent Framework Observability](https://learn.microsoft.com/en-us/semantic-kernel/concepts/enterprise-readiness/observability/)
 - [AgentOps Multi-Agent Tracking](https://research.aimultiple.com/agentic-monitoring/)
 

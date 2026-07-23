@@ -3,7 +3,7 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-06-19
+updated: 2026-07-23
 validated_links: 2026-06-19
 ---
 
@@ -323,7 +323,7 @@ For CLAUDE.md size, import chains, path-scoped rules, auto memory deduplication,
 
 ## Context Engineering Workflow (ACE-FCA)
 
-The ACE-FCA (Advanced Context Engineering — Frequent Compaction Architecture) methodology was introduced by [Dex at hlyr.dev][hlyr-ace] (2025-08-29) as a structured approach to preventing context degradation in long agentic sessions. This repo's [.claude/rules/context-management.md](../../../.claude/rules/context-management.md) encodes this framework — the 40–60% utilization target and the context-quality ranking originate from the hlyr.dev source. It converges with **Anthropic's** canonical first-party framework ([Effective Context Engineering for AI Agents][anthropic-ce], Sept 2025): *write / select / compress / isolate* — this repo's compaction maps to *compress*, subagent isolation to *isolate*.
+The ACE-FCA (Advanced Context Engineering — Frequent Compaction Architecture) methodology was introduced by [Dex at hlyr.dev][hlyr-ace] (2025-08-29) as a structured approach to preventing context degradation in long agentic sessions. This repo's [.claude/rules/context-management.md](../../../.claude/rules/context-management.md) encodes this framework — the 40–60% utilization target and the context-quality ranking originate from the hlyr.dev source. It converges with **Anthropic's** canonical first-party guidance ([Effective Context Engineering for AI Agents][anthropic-ce], 2025-09-29), whose three **long-horizon techniques** map directly onto this repo's practice: *compaction* (this repo's phase-boundary distillation), *sub-agent architectures* returning "condensed, distilled" summaries (this repo's discovery isolation, below), and *structured note-taking* — "notes persisted to memory outside of the context window" — which this repo implements as AGENT_LEARNINGS.md plus the harness auto-memory store. (The oft-cited *write / select / compress / isolate* four-verb taxonomy is **LangChain's**, not Anthropic's — the Anthropic post never uses it; see the correct dual attribution in [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md).)
 
 ### Three-Phase Workflow with Human-Review Gates
 

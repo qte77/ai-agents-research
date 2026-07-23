@@ -5,7 +5,7 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-06-23
+updated: 2026-07-23
 validated_links: 2026-06-23
 ---
 
@@ -29,6 +29,7 @@ Key thesis: *"The moat is not the model, it is the harness."*
 | Progressive Context Compaction | Context compaction in changelogs | `triage/cc-changelog/2026-03-16-changelog-triage.md:113` |
 | Progressive Tool Expansion | Tools inventory (28 public + gated) | `docs/cc-native/configuration/CC-tools-inventory.md` |
 | Command Risk Classification | Sandbox internals | `docs/cc-native/sandboxing/` |
+| "-Engineering" ladder (Flow / Harness / Context / Loop / Spec) | Disciplines synthesis | `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md` §1 |
 
 ## Category 1: Memory and Context (5 patterns)
 
@@ -74,10 +75,13 @@ CC's native implementation of this pattern via the `context: fork` skill frontma
 field (v2.1.0) is documented in depth — including the context-as-stack model, turn-boundary
 rewinding, and a comparison of the four CC forking mechanisms — in
 [CC-skills-adoption-analysis.md][context-fork-section].
-The skills doc also documents "harness engineering" (coined by Viv Trivedy) as a subset of
-"context engineering" (coined by Dex Horthy) for reference.
+The "harness engineering" / "context engineering" / "flow engineering" terminology
+ladder — including AlphaCodium's Flow Engineering (arXiv:2401.08500, GPT-4 CodeContests
+pass@5 19%→44%) and OpenAI's Feb 2026 "Harness Engineering" post — is tracked in
+[agentic-engineering-disciplines-landscape.md §1][disciplines-ladder], not in the skills doc.
 
 [context-fork-section]: CC-skills-adoption-analysis.md#context-fork--mechanics-and-economics
+[disciplines-ladder]: ../../sdlc-lcm/agentic-engineering-disciplines-landscape.md
 
 ## Category 3: Tools and Permissions (3 patterns)
 
