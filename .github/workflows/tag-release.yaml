@@ -17,7 +17,7 @@ on:
 
 permissions:
   contents: write
-  issues: write  # required at workflow startup by reusable notify job (even when unused)
+  issues: write  # estate convention (qte77/qte77#95); unused by this reusable at 613b950
 
 jobs:
   tag:
