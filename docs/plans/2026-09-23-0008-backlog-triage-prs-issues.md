@@ -83,7 +83,7 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~3~~ | ~~#309: tick Phase 2, Phase 3 and "track #308"~~ | agent | Done 2026-09-23; issue stays open for Phase 1 |
 | 4 | Ship `feat/ccsync-and-profile-perms` | owner | PR #446 open (fragment added, shellcheck clean) — merge when CI green |
 | 5 | #417: claude.com 404 removed (#447); recheck ampcode.com on next weekly run | agent | Next weekly report has no ampcode.com error, or it's triaged |
-| 6 | #433: no action needed in this repo for Content-Signal (host-root robots.txt has it); optional subpath `ui/llms.txt` | owner | Decide: add llms.txt (new content) or close #433 with the robots.txt evidence |
+| ~~6~~ | ~~#433: Content-Signal / llms.txt~~ | owner | Done 2026-09-23: closed with evidence — host-root robots.txt already carries Content-Signal; no llms.txt for now |
 | 7 | #254: vibekanban exclude dropped (#447) — sunsetting already documented (2026-06-20) | owner | PR #447 merged |
 | 8 | #438: new cross-session messaging doc (ListAgents, SendMessage, v2.1.224) | agent → owner review | PR open, first-party sourced |
 | 9 | #410: feed.xml trigger per the narrowed decision | agent → owner review | Workflow PR open |
