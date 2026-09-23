@@ -1,3 +1,0 @@
-### Added
-
-- `docs/sdlc-lcm/goal-tracking-attribution-landscape.md`: NEW landscape — the top-down goal→spec→build→learning attribution loop, with the qte77 estate as the worked reference (`qte77/qte77` `goals.json` OKR schema + `cto-handbook-mapping.md`; `liminal-flux-gh-acc` per-run `performance-log.jsonl` tracing + cost gates; `research-ralphy` research→PRD attribution; ralph-loop `prd.json` story tracking) and the commercial OKR/PM baseline (Jira Align, WorkBoard/Quantive, Tability, Productboard, LinearB) it diverges from — none agent-native despite the 2026 MCP-access layer. Status: Assess.
