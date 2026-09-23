@@ -19,8 +19,8 @@ subagents. **Nothing has been merged, closed or deleted yet.** In scope: PRs/iss
   with owner `--admin` squash: #445 (this plan), #446 (ccsync), #447 (link rot, closes #254), #434
   (actions bump), #442, #444, #424, #418, #443. #433 closed with evidence. #309 boxes ticked. No
   open branches remain besides `main`.
-- **Next, in order:** row 19 (screenshot placement) → rows 8–12 pre-stage PRs → row 20 research →
-  one owner sitting for rows 15–16.
+- **Next, in order:** rows 8–10 pre-stage PRs → row 20 research (H list) → rows 12, then 11 → one
+  owner sitting for rows 15–16.
 - **Owner gates:** producthunt lychee exclude, closing #382, deciding #232, #309 scope, and review
   of the pre-stage PRs and screenshot placement table.
 - **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
@@ -116,14 +116,17 @@ Each brief was produced by the triage subagent on 2026-09-23. The spot-checks ma
   plugins-ecosystem 9, ci-remote 8, sessions 7, context-memory 5, sandboxing 5, model-internals 3). List:
   `git grep -l '^\*\*Status\*\*:' -- docs/cc-native/`. Transform per plan 0003. **Default:** split by
   feature subdir. The plan's two special-case files are in `non-cc/` (PR 2).
+  **Advisor verdict (2026-09-23): keep deferred.** The validator checks `status:`, but nothing renders
+  it yet. Build the consumer first (plan 0003 §Priority), so row 11 runs after rows 8–10.
 - **#309 Phase 1 (row 12):** `docs/non-cc/` has 70 docs + README in 9 README sections; 3 docs are
   unindexed (`agents-md-cookbook-analysis.md`, `moss-self-evolving-agent-analysis.md`,
-  `on-device-semantic-search-landscape.md`). Clean merge: Knowledge Mgmt + Context & Memory Infra +
-  on-device search → `memory-kg-rag/` (10). **Defaults for the 3 mapping calls:** Infrastructure (9) →
-  `reference/`; Agents (7) → coding-agent-shaped ones to `coding-agents/`, the rest to `frameworks/`;
-  `visualization/` is too thin (≈1 doc) → fold into `protocols/`. Repoint surface: 60 files outside
-  `non-cc/` (493 occurrences) plus ~40 sibling links; lychee is the backstop. **Default:** one PR per
-  subdir.
+  `on-device-semantic-search-landscape.md`). **Default, per the advisor verdict: mirror the README's
+  existing 9 sections as 9 subdirs** (the "faithful-9" layout already decided in earlier sessions),
+  NOT the issue body's 6. That removes the three mapping calls a 6-way split forces (where
+  Infrastructure goes, how to split Agents, a too-thin `visualization/`), and the README is already
+  the taxonomy readers use. The 3 unindexed docs join their nearest section. Record 6 → 9 on #309.
+  Repoint surface: 60 files outside `non-cc/` (493 occurrences) plus ~40 sibling links; lychee is the
+  backstop. **Default:** one PR per subdir.
 
 ### Screenshot sources (rows 17–20)
 
@@ -141,6 +144,30 @@ against a first-party URL (vendor docs, repo, paper) found from the lead. Workin
 Placement follows CONTRIBUTING's classification rules and prefers extending existing docs.
 Coverage is checked with `git grep`, calibrated against a known term first; hits only in
 `docs/research/rxiv-agentic-papers.md` or `docs/archive/` don't count as coverage.
+
+**Placement results (row 19, 2026-09-23).** 883 in-scope and maybe leads, pre-grouped by GitHub
+repo, arXiv ID or first-party domain, became **682 topics**: 292 extend an existing doc, 73 need a new
+doc, 43 are already covered, and 274 are out of scope. Priority split: 128 H, 194 M, 355 L. The 80
+LinkedIn short links were resolved to their real targets with polyfetch (`lnkd-resolved.tsv`). A
+spot-check of 10 high-priority "new doc" placements found no missed coverage. Files:
+`placement/merged.json` (all topics) and **`placement/h-priority.tsv` (128 H topics; 125 have a
+first-party starting URL)**, both in the working folder above. The 128 H topics by area: non-cc 61,
+sdlc-lcm 30, cc-native 21, cc-community 16. The most-extended targets across all topics are:
+
+| Target doc | Topics |
+|---|---|
+| `docs/non-cc/agent-frameworks-infrastructure-landscape.md` | 61 |
+| `docs/non-cc/semantic-layers-data-catalog-landscape.md` | 18 |
+| `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md` | 16 |
+| `docs/non-cc/web-scraping-extraction-landscape.md` | 15 |
+| `docs/non-cc/llm-routers-gateways-landscape.md` | 10 |
+| `docs/sdlc-lcm/evaluation-data-resources-landscape.md` | 10 |
+
+**Entry rule for row 20:** a topic enters the corpus only if research finds a first-party URL that
+backs the claim. A lead with only LinkedIn/X behind it is dropped, not hedged in. Research in batches
+of topics per target doc (one PR per target), starting with the H list. Fetch JS-rendered,
+bot-blocked or LinkedIn pages with polyfetch (`uv run --directory /workspaces/qte77/polyfetch-scrape
+polyfetch fetch <url> --show-body`) when WebFetch fails.
 
 ## Remaining work
 
@@ -167,8 +194,8 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | 16 | Close #382; decide #232; decide #309 scope (keep vs. split) | owner | Each issue closed or updated with decision |
 | ~~17~~ | ~~Screenshot pass 1: tag 1,433 images in / maybe / out~~ | agent | Done 2026-09-23: `shots-merged.tsv` (spot-checked) |
 | ~~18~~ | ~~Screenshot pass 2: extract URLs, handles, entities, descriptions~~ | agent | Done 2026-09-23: 921 of 929 records (8 missing), 726 URLs (51 truncated); lnkd.in short links resolved to real targets via polyfetch → `lnkd-resolved.tsv` |
-| 19 | Cluster pass-2 leads into distinct topics; `git grep` coverage; propose extend `<doc §>` / new `<path>` / covered / out of scope | agent | Topic → placement table added to this plan's source map for owner review |
-| 20 | Research the owner-approved topics: find and verify a first-party URL for every claim, then extend or create docs | agent → owner review | One PR per topic cluster; every claim cites a first-party source; lint + lychee clean |
+| ~~19~~ | ~~Cluster pass-2 leads into topics; coverage; placement~~ | agent | Done 2026-09-23: 682 topics; results in the Screenshot sources section |
+| 20 | Research the 128 H topics (`h-priority.tsv`), then M on owner request: verify a first-party URL per claim per the entry rule, then extend or create docs | agent → owner review | One PR per target doc; every claim cites a first-party source; lint + lychee clean |
 | 21 | New link rot (Merge gate section): find where `sandbox-runtime/issues/139` moved (4 links in `CC-sandbox-bwrap-host-quirks.md` + the `.gitignore` comment); triage the pwc.com and beyondtrust.com 403s | agent | Links repointed or removed; bot-block excludes proposed to the owner, not added |
 
 ## Unverified
