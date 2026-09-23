@@ -11,6 +11,237 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.8.0] - 2026-09-23
+
+### Added
+
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md` (§1): expanded the **PydanticAI** entry with its new [capabilities system](https://pydantic.dev/articles/pydantic-ai-capabilities) (Jun 2026) — composable instructions + tools + model-settings bundles with **on-demand / deferred loading** (`defer_loading=True`) for token savings, capability-scoped hooks, and the Pydantic AI Gateway + Logfire companions. First-party source.
+- `docs/cc-native/agents-skills/CC-ralph-enhancement-research.md`: new **SantanderAI/ralph** entry under External Pattern Research — Banco Santander AI Lab's multi-CLI Ralph harness (Claude Code / Codex / Gemini / Devin; Apache-2.0, v0.1.0) with live `.ralph/.env` reload, token-exhaustion agent rotation, systemd RAM caps, and project-level distributed skills (`juez` / `maestro`); plus the `ralph-vault-skill` knowledge-vault companion.
+
+- `docs/cc-community/CC-community-tooling-landscape.md`: Google Labs `design.md` — canonical DESIGN.md format spec + `@google/design.md` CLI (lint/diff/export), as the spec behind the awesome-design-md collection.
+- `docs/cc-community/CC-code-tooling-landscape.md`: Qodo (qodo-ai) section — `agents` TOML playbooks, `open-aware` deep-code-research MCP server, and cross-repo code-review governance.
+- `docs/cc-community/CC-memory-tooling-landscape.md`: "memory should change future behavior" design lens (André Lindenberg) in the Memory Taxonomy section.
+- `docs/cc-community/CC-vlm-screen-sharing-landscape.md`: baidu/Unlimited-OCR long-document OCR VLM (edge-of-scope note, deferred to polyfetch-scrape for depth).
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: Tencent Hunyuan UniRL RL post-training framework (thin mention, §5; flagged as training infra, not an agent).
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: Kaggle/Google "The New SDLC With Vibe Coding" whitepaper (vibe-coding ladder) and `cobusgreyling/loop-engineering` (loop-engineering row).
+- `docs/cc-community/CC-vlm-screen-sharing-landscape.md`: opendatalab/MinerU document-extraction tool (alongside Unlimited-OCR; MCP server for Claude Desktop/Cursor), deferred to polyfetch-scrape.
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: Warp agentic development environment (+ Oz cloud-agent orchestration) and the Vstorm PydanticAI full-stack starter template.
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: "factory engineers, not product engineers" framing (Zach Lloyd/Warp) and the Talking AI podcast perspective.
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: LuxTTS TTS voice-cloning model (§6 specialist-models-agents-call-as-tools, flagged not-an-agent).
+- `docs/cc-community/CC-code-tooling-landscape.md`: AI PR-review agents roundup (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge/PR-Agent, Graphite Diamond, Cursor Bugbot, Cubic, Bito, Korbit).
+- `docs/cc-community/CC-community-tooling-landscape.md`: related design source + token standard (Figma Dev Mode MCP, W3C Design Tokens/DTCG, Style Dictionary).
+
+- `docs/non-cc/web-scraping-extraction-landscape.md`: Scrape.do (managed scraping platform — 110M+ proxies, HTML/JSON/XML/MD output, low-cost).
+
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: Pydantic's *The Harness Thesis* + *What Makes a Good Harness* (disclosure / steering axioms) as harness-engineering first-party anchors, and the *Applied GenAI Maturity Model* as an org-adoption governance lens.
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: the `pydantic-ai-harness` capability library (CodeMode / filesystem / shell / provider-adaptive web search; MIT, 595★) in the PydanticAI entry, and EverOS (Markdown-native, local-first memory layer; Apache-2.0, 9.4K★) in §4 Agent Memory.
+
+- `docs/non-cc/hermes-agent-analysis.md`: SimpleX as a Hermes messaging channel (privacy-preserving, no user identifiers; AGPLv3), with a dated note that the channel roster expanded to 27+ platforms at Hermes v0.17.0; integrations-index + SimpleX Chat sources.
+
+- `docs/cc-native/agents-skills/CC-output-verification-analysis.md`: a first-party guide to verifying Claude Code's own agentic outputs — per-mechanism matrix (workflow / team / subagent / plan / memory), hooks as the deterministic backbone (with the non-uniform `exit 2` semantics), `--json-schema` structured-output validation + the `error_max_structured_output_retries` fail signal, the CLAUDE.md-as-user-message memory gotcha, and the DIY (no first-party eval runner) pattern. Closes #320.
+
+- Backfilled a `## Sources` section into the 9 convention-named docs that had neither heading: `CC-code-tooling-landscape`, `CC-usage-tooling-landscape`, `agent-frameworks-infrastructure-landscape`, `agent-observability-methods-analysis`, `deerflow-analysis`, `opensrc-analysis`, `agent-evaluation-metrics-landscape`, `evaluation-data-resources-landscape`, `oss-alm-landscape`. Closes #308.
+
+- `docs/non-cc/spec-driven-frameworks-landscape.md`: standalone SDD-framework comparison (spec-kit 115.9K / OpenSpec 57.1K / BMAD 49.8K / Agent-OS / Kiro / Tessl; gh-verified stars) — the deep-dive promoted from the §3 stub in the agentic-engineering disciplines landscape. Part of #321.
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: added Anthropic's first-party "Effective Context Engineering for AI Agents" (Sept 2025) canonical anchor to the ACE-FCA section (write/select/compress/isolate). Part of #321.
+
+- `docs/non-cc/workflow-frameworks-landscape.md`: agentic workflow framework landscape — Anthropic's 5 "Building Effective Agents" patterns (workflows-vs-agents), a control-flow/durability framework table (gh-verified stars), the durable-execution layer (Temporal / Inngest / Restate, with `(workflow_id, step_id)` idempotency), and an 8-item S0–S2 anti-pattern taxonomy + best-practices checklist. Cross-refs the CC Workflow tool and the agent-frameworks catalog rather than duplicating them. Closes #319.
+
+- `docs/cc-community/CC-community-plugins-landscape.md`: **squid** plugin profile — iusztinpaul's Claude Code agentic-engineering pipeline (5 role subagents Product Architect → SWE → Tester → PR Reviewer → On-Call; ADRs as architectural memory + Tasks Plan as task decomposition; `/scaffold` `/plan` `/implement-night` `/implement-task` `/review` slash commands; env vars: none documented).
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md` (§1): **multica** (multica-ai) — source-available (modified Apache 2.0) multi-agent orchestration platform routing issues to agents/squads across 13 agent CLIs; local daemon + autopilot scheduling, Go + Postgres/pgvector; `multica login` / `daemon start` / `issue create` (browser auth, no env vars).
+- `docs/non-cc/web-scraping-extraction-landscape.md` (Document-Specific Extraction): **olmOCR** (AllenAI) — GPU PDF/image → Markdown/Dolma OCR pipeline on a fine-tuned Qwen2.5-VL 7B; document-ingestion front-end for RAG/knowledge bases; install/CLI/flags captured leanly with upstream link (default model `allenai/olmOCR-2-7B-1025-FP8`).
+- `docs/non-cc/goose-analysis.md`: new **Install, CLI & Configuration** section — `goose session` / `configure` / `update`, install one-liners, and provider/runtime env vars (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GOOGLE_API_KEY`, `GOOSE_VERSION`, `CONFIGURE`); `validated_links` refreshed for the aaif-goose migration.
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: cited **Lenny's Newsletter (AI)** as a practitioner-perspective source on agentic adoption.
+
+- `docs/sdlc-lcm/goal-tracking-attribution-landscape.md`: NEW landscape — the top-down goal→spec→build→learning attribution loop, with the qte77 estate as the worked reference (`qte77/qte77` `goals.json` OKR schema + `cto-handbook-mapping.md`; `liminal-flux-gh-acc` per-run `performance-log.jsonl` tracing + cost gates; `research-ralphy` research→PRD attribution; ralph-loop `prd.json` story tracking) and the commercial OKR/PM baseline (Jira Align, WorkBoard/Quantive, Tability, Productboard, LinearB) it diverges from — none agent-native despite the 2026 MCP-access layer. Status: Assess.
+
+- `docs/non-cc/agentic-enterprise-os-landscape.md`: NEW landscape — the "agentic enterprise OS" pattern across three tiers: enterprise vendor platforms (Salesforce Agentforce 360, Microsoft Copilot Studio + Agent 365, ServiceNow Otto, SAP Joule Studio, Databricks Genie), open-source self-operating workspaces/runtimes (AutoAgent, Odysseus, Goose, multica), and qte77 estate orchestrators (polyforge, office-forge, liminal-flux-gh-acc). Framed honestly against Gartner's "AI agent development platforms" category (not a real "agent OS" category); documents the agent-native goal-attribution gap — none of the enterprise platforms exposes a machine-writable goal schema or per-run cost+outcome attribution, and none has adopted AG-UI. Status: Assess.
+
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md` (§4): **estate file-based compound-learning memory** bullet — plain-Markdown `CLAUDE.md`/`AGENT_LEARNINGS.md`/`LEARNINGS.md` as durable git-versioned agent memory with an explicit promotion path, distilled cross-repo by `learnings-ralphy`; the filesystem-as-memory complement to the graph/vector memory engines.
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md` (§7): new **Graph visualization** subsection — vis-network, D3.js, Cytoscape.js, Sigma.js, Gephi, PyGraphistry/Graphistry, Neo4j Bloom/Browser (licenses verified first-party; this repo's `ui/graph.html` is the vis-network worked example).
+- `docs/non-cc/semantic-layers-data-catalog-landscape.md`: new **Formal Ontologies & Semantic Web** section — RDF/OWL/SKOS/SPARQL/SHACL, open- vs closed-world, and the connect/exclude/enhance framing vs LLM-embedded KGs.
+
+- `.github/workflows/link-rot-monitor.yaml` + a `make check_links_report` target: a weekly scheduled lychee link-check that opens/updates a single `link-rot` tracking issue on broken links and auto-closes it when links are healthy again — catches external link rot proactively (between docs PRs) instead of ambushing the next one. Keeps the custom `lint.yaml` PR gate (per the #141 decision) and reuses the same `lychee.toml`, so excludes/accepts stay single-sourced. Sets `GITHUB_TOKEN` on the lychee step to cut github.com rate-limit false negatives.
+
+- `docs/plans/2026-07-05-status-frontmatter-migration.md` + `docs/handoffs/2026-07-05-status-frontmatter-migration.md`: durable plan + onboarding handoff for #348 (migrate doc `status` into YAML frontmatter, drop the body badge), with a complete source map (grep commands, counts, file:line lists, vocabulary, transform rule) so a future session executes without re-mapping. Migration itself is deferred (YAGNI — nothing reads `status:` yet). Introduces `docs/handoffs/` for cross-session handoff notes.
+
+- `docs/sdlc-lcm/agentic-ai-vulnerability-landscape.md`: new landscape covering the operational agentic-AI vulnerability layer — OWASP AIVSS scoring, MITRE ATLAS (machine-readable threat KB + AI Incident Sharing), vendor discovery/remediation systems (Microsoft MDASH, Vuln.AI), the Berkeley Vulnerability Initiative tracker, and two arXiv attack/defense surveys. Sectioned by epistemic role; cross-linked with `mas-security-framework.md` and `ai-security-governance-analysis.md` (extends, does not duplicate, their MAESTRO/ATLAS/NIST material).
+
+- `docs/non-cc/kv-cache-serving-landscape.md`: new landscape on KV-cache serving — a cross-vendor prompt-caching comparison (Anthropic/OpenAI/Gemini: minimums, TTL, pricing) plus open serving-stack internals (PagedAttention/vLLM, SGLang RadixAttention, FP8/KIVI quantization, H2O/StreamingLLM eviction, GQA/MLA architectural sharing, Mooncake/LMCache offload-disaggregation) with a 2026 state-of-the-art synthesis.
+
+- `docs/cc-community/CC-codex-plugin-cc-analysis.md`: analysis of OpenAI's official Codex→CC plugin (Apache-2.0) — slash commands, `codex-rescue` subagent, `Stop`-hook review gate, background delegation, session transfer; a rival lab building on CC's own extension surface.
+- `docs/plans/2026-07-08-new-sources-batch.md`: durable plan record for the new-sources batch (tracker #374).
+
+- `docs/non-cc/agents-cli-analysis.md`: Google agents-cli — a skill-pack that upskills a coding agent (Claude Code, Antigravity, Codex) to build/evaluate/deploy ADK agents on the Gemini Enterprise Platform (Apache-2.0; v1.0.0 but Pre-GA). Cross-ref'd from the CC-community skills landscape (it installs as a CC skill-pack).
+- `docs/non-cc/agentic-payments-landscape.md`: new landscape on machine-native agent payment rails — x402 (Coinbase → Linux Foundation; HTTP 402; USDC/Base), Google AP2 (Mandates = W3C Verifiable Credentials), Stripe MPP, Fetch.ai — with the Apify x402 case study.
+- `docs/non-cc/karpathy-agentic-coding-analysis.md`: primary-source map of Andrej Karpathy's agentic-coding arc (LLM OS → vibe coding → Software 3.0 / autonomy slider → agentic engineering).
+- `docs/sdlc-lcm/agent-identity-auth-landscape.md`: new landscape on agent identity / authentication / personhood — SPIFFE, Microsoft Entra Agent ID, MCP-OAuth, Okta Cross-App Access, AP2 Mandates, World ID / Humanity Protocol, Cloudflare Web Bot Auth — organized by the authenticate-the-agent / authorize-on-behalf-of-human / personhood axes, plus one-time/JIT permissions. Joins the sdlc-lcm security cluster.
+
+- `docs/plans/2026-07-08-graphify-rebuild-354.md` + `docs/handoffs/2026-07-08-graphify-rebuild-354.md`: execution-ready plan + next-session handoff for the deferred #354 graph rebuild, with a full command/file/source map (graphify runtime, the `--update` flow, `make graph-page` → `ui/graph.html`, gh-pages deploy) so a fresh session runs it without re-gathering context.
+
+- `AGENT_LEARNINGS.md`: two learnings — reconcile git HEAD/issue state vs the conversation summary before executing tracked work in a continued session; and never partial-update a uniformly-built graphify graph (density lopsiding + `build_merge` source_file matching).
+
+- `.claude/skills/adding-research-source/`: a repo-native Claude Code skill (agentskills.io-conformant) codifying this corpus's source-onboarding workflow — first-party research → placement decision tree (cc-native / cc-community / non-cc / sdlc-lcm) → doc conventions → lint → one-PR-per-topic — with an Explore research-subagent brief and a `scripts/batch-sources.workflow.js` batch workflow (parallel research + adversarial verify) for large source drops. `.gitignore` un-ignores this specific skill; other `.claude/skills/` remain plugin-deployed.
+
+- `docs/non-cc/web-scraping-extraction-landscape.md` (Browser Automation): new **Accessibility-tree page representation** subsection — the a11y tree as a third page-representation for LLMs, between raw DOM/HTML and vision/screenshots; ~80–90 % smaller than the DOM and redesign-stable, but an assistive-tech-shaped subset. Includes the Playwright 1.57 `page.accessibility.snapshot()` removal → `aria_snapshot` migration and the Patchright 1.58.2 version gate (`page.locator("body").aria_snapshot()`; no `Page.aria_snapshot` shortcut, no `mode="ai"`).
+- `docs/cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md` (Alternative MCP Options): upgraded the agent-browser tools table with first-party license/language and a **representation** column (accessibility tree vs custom DOM vs pixel), added the previously-absent **Stagehand** (Browserbase, MIT), and a counterexample note for the pixel/screenshot-based agents (Anthropic Computer Use, OpenAI Operator). Licenses verified first-party via GitHub repo metadata (2026-07-10).
+
+- `.github/scripts/lib/doc_status.py` + `.github/scripts/check-doc-status.py`: a stdlib doc-status validator (#348 consumer). Lenient mode (wired into `make lint` via `make check_status`, and a new `status` CI job) checks that any frontmatter `status:` token is in the controlled vocabulary; `--strict` additionally forbids residual body `**Status**:` badges (the doc-level badge in the preamble — an in-section `**Status**:` line describing an upstream project is left alone). Unit tests in `tests/test_doc_status.py`.
+- `.github/workflows/lint.yaml`: added a `tests` job (`make test`) so unit tests gate PRs, and a `status` job (`make check_status`); extended the path triggers to `.github/scripts/**`, `scripts/**`, and `tests/**`.
+
+- `docs/cc-community/CC-multi-account-switching-landscape.md`: multi-account/profile switching for CC — native `CLAUDE_CONFIG_DIR` mechanism (first-party-verified: documented only in the debug-your-config guide; per-platform credential isolation — Linux/Windows per-dir, macOS Keychain carries over), tool table (claude-swap, claude-code-profiles, claude-multiprofile, claude-multisession), disambiguation vs CC Switch (provider mgmt) and CLIProxyAPI (gateway quota harvesting).
+- `docs/plans/2026-07-23-corpus-update-new-sources.md`: durable plan for the 2026-07-23 corpus-update + new-sources arc (backlog drain #374, fresh mining, stale-fact refresh cohort).
+
+- `docs/sdlc-lcm/agent-silent-failure-taxonomy-analysis.md`: arXiv:2606.14589 — longitudinal five-class taxonomy of silent failures from 22 production incident postmortems (CC BY 4.0; artifact repo + PyPI governance engine first-party per the paper's Comments field).
+- `docs/sdlc-lcm/sovereign-execution-brokers-analysis.md`: arXiv:2606.20520 — brokered agent-execution control plane.
+- `docs/sdlc-lcm/ledger-state-tool-calling-analysis.md`: arXiv:2606.20529 — LedgerAgent ledger-state tool-calling.
+- `docs/sdlc-lcm/agent-probabilistic-verification-analysis.md`: arXiv:2606.20510 — efficient and sound probabilistic verification of agent behavior.
+
+- `docs/non-cc/moss-self-evolving-agent-analysis.md`: MOSS (arXiv:2605.22794) — self-evolution via source-level rewriting; CC is one of four pluggable coding-agent providers.
+- `docs/non-cc/agents-md-cookbook-analysis.md`: tool-agnostic AGENTS.md template kit (Taiizor, MIT).
+- `docs/cc-native/context-memory/CC-repo-guidance-probe-refine-analysis.md`: Probe-and-Refine tuning of repo guidance files for coding agents (arXiv:2606.20512).
+- `docs/cc-native/model-internals/CC-code-correctness-hidden-states-analysis.md`: third-party probing research — code correctness linearly decodable pre-generation (arXiv:2606.14530); directory scope widened to include selected third-party interpretability work.
+
+- `docs/non-cc/on-device-semantic-search-landscape.md`: promoted tracker #383's completed research to a durable doc — ternlight (Hold: WASM-only, brute-force O(n), 128-token cap) vs the decoupled Python-native stack (Assess: fastembed/sentence-transformers/model2vec × FAISS/usearch/LanceDB/Chroma/…), sqlite-vec brute-force-only gotcha, multimodal text-first guidance, recommended stack.
+
+- `.claude/workflows/refresh-docs.js`: generalized, args-driven stale-fact refresh workflow (read-only checker per doc + adversarial verifier per correction set); documented in `docs/architecture.md` §Automated Monitors.
+
+- `scripts/cc-multi-account.sh`: helper for running N Claude Code accounts concurrently in one OS via per-account `CLAUDE_CONFIG_DIR` (`ccp`/`ccu`/`ccl` functions + a documented zero-install alias alternative); companion to `docs/cc-community/CC-multi-account-switching-landscape.md`, with per-account usage stats via `ccusage`.
+
+- `docs/sdlc-lcm/agent-code-analysis-landscape.md`: new landscape on static (SCA) and dynamic (DCA) code analysis for AI coding agents — both directions (analysis OF agent code; agents AS scanner). Covers garak (verified probe families), Semgrep Guardian (launch 2026-06-23; unconfirmable rule counts omitted), CodeQL/Bandit/Trivy/agent-audit, AgentSight (eBPF) + VIPER-MCP (hybrid, 106 zero-days/67 CVEs), the agents-as-scanner blueprint (Google Cloud 2026-07-16, −7-day TTE) + VulnAgent-R2/VulnLLM-R, a verified GitHub·GitLab·Codeberg-Forgejo CI matrix (Codeberg confirmed thin), sandboxing-as-analysis-boundary (CC's "no traffic inspection" gap), and the OWASP Top 10 for Agentic Applications 2026 (distinct from MAESTRO/LLM Top 10). Cross-refs the existing vulnerability/governance/MAESTRO docs rather than duplicating.
+
+- `scripts/cc-multi-account.sh`: direct-execution dispatch — `./cc-multi-account.sh <profile>` launches, `list`/`ls` lists profiles, `usage <profile>` shows per-account stats, and `-h`/`--help`/no-args print the usage header (unknown options exit 2 with help on stderr). Sourcing is unchanged and still defines `ccp`/`ccu`/`ccl`; the header now documents both modes and why sourcing is required for the short commands.
+
+- `scripts/cc-multi-account.sh`: `ccsync <profile>` / `ccsync --all` (and `./cc-multi-account.sh sync <profile>`) re-applies the shared `~/.claude/settings.json` to per-account profiles, keeping per-profile UI keys (`CC_PROFILE_KEEP`), backing up to `settings.json.bak`, reporting dropped keys, and never touching `.credentials.json`.
+
+- `docs/plans/2026-09-23-0008-backlog-triage-prs-issues.md`: read-only triage of all open PRs, branches and issues (29 PRs, 10 issues) with a single remaining-work table (gate + done-when per row).
+- `docs/plans/2026-06-11-0001-plugin-rules-codeburn-merge.md`: the untracked 2026-06-11 plugin-rules/CodeBurn handoff promoted to a plan, with a 2026-09-23 status check (not shipped yet).
+
+- `docs/cc-community/CC-multi-account-switching-landscape.md`: "Repo Helper" section for `scripts/cc-multi-account.sh` — executed and sourced commands (incl. `sync` / `ccsync`), the `CC_PROFILE_HOME`, `CC_BASE_SETTINGS` and `CC_PROFILE_KEEP` env vars with defaults, and the settings-drift and `700`-permission behaviour.
+
+### Changed
+
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: cite the companion code repo [VILA-Lab/Dive-into-Claude-Code](https://github.com/VILA-Lab/Dive-into-Claude-Code) for the arXiv 2604.14228 design-space analysis.
+- `docs/cc-community/CC-vlm-screen-sharing-landscape.md`: refresh the **PixelRAG** entry (~3.3k★ → ~4.2k★, v0.3.0).
+- `docs/cc-community/CC-research-agents-landscape.md`: turn the bare `/deep-research` mention in the local-deep-research entry into an actual cross-ref to the bundled-workflow section (reuses the existing anchor).
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: cite the Startup CTO Handbook as the traditional engineering-leadership baseline the agentic disciplines diverge from (Cross-References + Sources), linking the qte77 estate mapping note.
+
+- `docs/cc-community/CC-code-tooling-landscape.md` → `docs/non-cc/code-review-products-landscape.md`: moved the standalone SaaS PR-review roundup (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge/PR-Agent, Graphite Diamond, Cursor Bugbot, Cubic, Bito, Korbit) to a non-CC landscape — they are multi-platform products, not CC integrations. Qodo (`open-aware` MCP + cross-repo review) and Code-Review-Graph stay in the cc-community doc. Closes #326.
+
+- `docs/cc-community/CC-community-tooling-landscape.md` → `docs/non-cc/agent-design-formats-landscape.md`: moved the agent-consumable design-format cluster (awesome-design-md corpus, Google Labs DESIGN.md spec + CLI, and the Figma Dev Mode MCP / W3C token chain) to a non-CC landscape — they are multi-agent formats, not CC integrations. Refreshed stale figures (awesome-design-md 21.8K→93.8K stars; design.md license open→Apache-2.0, 22.1K stars). Claude Code's Figma surface stays cross-referenced via the first-party Figma MCP plugin. Part of #329.
+
+- Relocated mislabeled docs out of `docs/cc-community/` (classification hygiene, #329): the 6-doc MAS/methodology cluster (`mas-design-principles`, `mas-benchmarking-best-practices`, `mas-security-framework`, `ai-security-governance-analysis`, `agent-evaluation-metrics-landscape`, `evaluation-data-resources-landscape`) → `docs/sdlc-lcm/`; `research-agents-landscape` + `repo-to-docs-tools-landscape` → `docs/non-cc/`; `agent-observability-methods-analysis` → `docs/non-cc/` with Claude Code's first-party OTel telemetry extracted to a new `docs/cc-native/configuration/CC-monitoring-telemetry-analysis.md`. All de-`CC-`prefixed; cross-references and directory READMEs updated.
+
+- `docs/cc-community/CC-community-tooling-landscape.md` → new `docs/non-cc/openharness-analysis.md` + `docs/non-cc/opensrc-analysis.md`: moved OpenHarness (HKUDS open Python agent harness) and opensrc (Vercel Labs npm-source fetcher) out of the CC tooling landscape into standalone non-cc analyses — both are agent-agnostic tools, not CC integrations. Refreshed stale stars (OpenHarness 3.3K→14.2K; opensrc 1.5K→2.6K). Comparison table 21→19 tools; READMEs + autoagent cross-ref updated. Layer-5 compression libs and CL4R1T4S intentionally kept in place. Closes #329.
+
+- `CONTRIBUTING.md`: a `## References` section is now accepted as equivalent to `## Sources` (the convention allows either heading).
+
+- `docs/sdlc-lcm/goal-tracking-attribution-landscape.md`: added a **substrate-thread** synthesis (file/graph/vector memory → KG/GraphRAG/visualization → ontology/semantic-layer → goal graph → enterprise-OS) and a bidirectional cross-ref to the new enterprise-OS landscape; corrected liminal-flux to "six action roles across an 8-phase progression".
+- Pass 2 connections wiring: `multi-agent-onboarding-outlook.md` and `agent-frameworks-infrastructure-landscape.md` now cross-ref `ag-ui-protocol-landscape.md` (the MCP / A2A / AG-UI protocol triangle); `codex-cli-analysis.md` and `gemini-cli-analysis.md` now cross-ref the `AGENTS.md`/`GEMINI.md` convergence in `multi-agent-onboarding-outlook.md`; `CC-community-tooling-landscape.md` cross-refs Superpowers from the everything-claude-code entry.
+
+- `Makefile`: hoisted the markdown-lint file list into a single `DOC_LINT_GLOB` variable shared by `check_docs` + `autofix`, and widened it to also lint the root governance docs (`CLAUDE.md`, `AGENTS.md`, `AGENT_LEARNINGS.md`, `AGENT_REQUESTS.md`).
+- `docs/architecture.md`: updated the lint-scope row to match the widened glob, and documented the `uv tool install graphifyy` key-free graphify install path (previously only the side-loaded `GRAPHIFY=` path was noted).
+- `README.md`: added an inbound link to `docs/UserStory.md` (a current requirements doc that was previously unlinked/undiscoverable).
+
+- `docs/non-cc/fastcontext-analysis.md`: flagged **under review** (#362) — Microsoft's upstream `microsoft/fastcontext` repo was removed (GitHub 404); `source:` + `[repo]` repointed to the arXiv paper and a live community fork; the HuggingFace model URL (401 auth-wall on a live page) is excluded in `lychee.toml` pending re-verification.
+
+- `Makefile`: `lint` now runs `check_docs` + `check_actions` before the network-dependent `check_links`, so a transient lychee failure can no longer mask markdownlint/actionlint locally (root cause of a markdownlint error reaching CI in #366).
+- `docs/architecture.md`: corrected the automated-monitor count (three → four), added root `scripts/`/`tests/`/`ui/`/`changelog.d/` to the directory tree, and documented `link-rot-monitor` as a fifth (health, not content) scheduled workflow.
+
+- `lychee.toml`: exclude `ai-incidents.mitre.org` (upstream untrusted SSL cert chain — browser-OK, fails automated verification), cited in the new agentic-AI vulnerability landscape.
+
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: corrected the stale model-dependent minimum cacheable-prefix tiers (Opus 4.8 is **1,024** tokens, not 4,096; added Sonnet 5, Haiku 4.5, Opus 4.7, Fable 5/Mythos 5 — verified against the Anthropic caching docs, 2026-07-08); added a Related section cross-linking the new KV-cache serving landscape and the KV-invalidation gotcha in `CC-model-provider-configuration.md`.
+
+- `docs/non-cc/repo-to-docs-tools-landscape.md`: added OpenWiki (LangChain, MIT) — an agent-oriented repo→docs generator that appends pointers into `AGENTS.md`/`CLAUDE.md`, distinct from human-facing DeepWiki-style tools.
+- `docs/non-cc/agentic-enterprise-os-landscape.md`: added a "company brain" subsection (a synthesis label over agent-memory + KG/ontology + permissioning + write-back; cross-linked to the memory/semantic-layer docs, not a standalone doc).
+- `CONTRIBUTING.md`: Research Workflow now points to `polyfetch-scrape` (fetch dynamic/blocked pages) and `doc-pipeline-engine` (process PDF/Office → text) via `uv run --directory`, alongside the existing `rtk` pointer.
+
+- `docs/plans/2026-07-08-graphify-rebuild-354.md` + its handoffs: marked `done` (the rebuild was executed by PR #379 — 637 nodes, #354 closed) so they no longer read as pending work; steps retained as method reference.
+
+- `ui/graph.html`: rebuilt the published knowledge graph for #354 via key-free `/graphify --update`, incorporating waves 1+2 (agentic-AI security/vulnerability, KV-cache serving, agentic payments, agent identity/auth, Karpathy, Codex-CC/OpenWiki/company-brain tooling). 28 changed `docs/` files re-extracted (semantic subagents, docs-only scope), merged into the 427-node baseline → ~635 published nodes / 752 edges across 105 communities (21 curated legend labels). Finer per-chunk extraction yielded a denser graph than the prior 583, not sparser.
+
+- `docs/cc-native/configuration/CC-env-vars-reference.md`: added `CLAUDE_CONFIG_DIR` (verified zero-coverage gap; noted its absence from the official env-vars list as of 2026-07-23) + cross-ref to the new landscape.
+- `docs/cc-native/configuration/CC-model-provider-configuration.md`: CLIProxyAPI entry now disambiguates gateway-level multi-account from native CLI multi-account sessions.
+- `.claude/skills/adding-research-source/scripts/batch-sources.workflow.js`: tolerate args delivered as a JSON-encoded string (harness stringification made the workflow no-op).
+
+- `docs/cc-community/CC-community-tooling-landscape.md`: added Parry Guard (CC-hook injection/secrets/exfil scanner, local DeBERTa + AST layers; Codex support unreleased-main-only per its own release notes), Dippy (PreToolUse bash auto-approval with steerable deny messages, vendored zero-dep parser), and cc-sessions (DAIC session/workflow enforcement, 1,550★ but dormant since 2025-10) — sections + comparison rows + sources; all facts first-party verified with adversarial re-check (counts/license/version).
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: added sudocode to §1 (git-native spec/issue-graph orchestrator running CC/Codex/Cursor via ACP, Apache-2.0) alongside the comparable multica entry.
+- `docs/non-cc/spec-driven-frameworks-landscape.md`: added AB Method (fractal roadmap→tasks→missions TDD workflow, dual-runtime CC+Codex with runtime-adaptive subagent nesting, v3.7.1) — table row, differ-bullet, sources.
+
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md`: added Every Eval Ever (arXiv:2606.14516).
+- `docs/sdlc-lcm/mas-benchmarking-best-practices.md`: added Contagion Networks (arXiv:2606.20493) + Multi-LCB (arXiv:2606.20517, beside the existing LiveCodeBench mention).
+- `docs/sdlc-lcm/agentic-ai-vulnerability-landscape.md`: added Defensive Misdirection (arXiv:2606.20470) + guardrail-DoS (arXiv:2606.14517; corrected count — 1 surrogate + 8 transfer targets).
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`: added StreamMemBench (arXiv:2606.14571) + SIMMER (arXiv:2606.14574).
+- `docs/sdlc-lcm/README.md`: four new index rows.
+
+- `docs/non-cc/research-agents-landscape.md`: added the Perplexity Computer knowledge-work study (arXiv:2606.07489; fabricated "8,357 users" stat corrected to the paper's actual methodology).
+- `docs/non-cc/kv-cache-serving-landscape.md`: added UltraQuant 4-bit KV caching (arXiv:2606.20474) + Execution-State Capsules/FlashRT checkpoint-restore (arXiv:2606.20537).
+- `docs/non-cc/agent-frameworks-infrastructure-landscape.md`: added MemoryWAM (arXiv:2606.20562) + MAA (arXiv:2606.20475) to §4, H-RePlan (arXiv:2606.20487) to Production Patterns.
+- `docs/cc-community/CC-memory-tooling-landscape.md`: added roampal-core (outcome-based memory MCP server, Apache-2.0).
+- `docs/cc-community/CC-usage-tooling-landscape.md`: added cc-costline (7d/30d spend statusline; NO license file — all-rights-reserved by default).
+- Index updates: `cc-native/README.md` counts (context-memory 5, model-internals 3), both subdir READMEs, `cc-community/README.md` coverage rows.
+
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: corrected a misattribution — the *write/select/compress/isolate* taxonomy is LangChain's, not Anthropic's (the Sept-2025 Anthropic post never uses it); now maps ACE-FCA to Anthropic's actual long-horizon techniques (compaction, sub-agent architectures, structured note-taking → AGENT_LEARNINGS.md + auto-memory).
+- `docs/cc-native/configuration/CC-monitoring-telemetry-analysis.md`: five verified additions (live docs 2026-07-23, versions unpinned) — `CLAUDE_CODE_PROPAGATE_TRACEPARENT` outbound proxy propagation; new Log Events section (`api_refusal`, `permission_mode_changed` + event inventory); new Attribution Chain section (redacted `agent.name`/`skill.name`/`plugin.name`/`marketplace.name`/`mcp_server.name`/`mcp_tool.name` namespace vs plain tool-span attrs); two-tier beta tracing gates (`ENABLE_BETA_TRACING_DETAILED` + endpoint + interactive-CLI org allowlist).
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md`: new "EDD as Methodology" lead section — Anthropic Demystifying-evals (2026-01-09), OpenAI eval-driven guidance, Braintrust/DeepEval term anchors, Husain counterweight; provenance hedged, cross-refs the disciplines landscape.
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: fixed a false internal cross-ref (claimed the skills doc documents "harness engineering (Viv Trivedy)" — zero occurrences there); now points at the disciplines landscape §1 ladder (AlphaCodium Flow Engineering 19%→44% pass@5, OpenAI Harness Engineering Feb 2026) + new cross-ref table row.
+
+Closes #321 (tasks 2–5; task 1 shipped 2026-06-27 via the spec-driven landscape).
+
+- Stale-fact refresh of the 27-doc `validated_links: 2026-03-*` cohort (first `refresh-docs` run, ~50 agents): ~110 adversarially-verified corrections applied across 24 docs (3 clean) — version gates, feature renames, count/roster drift, dead-URL replacements — spanning cc-community (2), agents-skills (1), ci-remote (6), configuration (3), plugins-ecosystem (7), sandboxing (3), sessions (2), non-cc (1); all touched docs bumped to `updated`/`validated_links: 2026-07-23`.
+- `lychee.toml`: exact-URL exclude for the bot-blocking (403) Salesforce MCP-GA blog cite (page verified live via WebFetch 2026-07-23; owner-approved).
+
+- `ui/graph.html`: full uniform knowledge-graph rebuild after the 2026-07-23 arc — **785 nodes / 865 edges / 92 communities** (was 637 nodes), built from the integrated arc content (13 new docs, ~30 extended, 24 refreshed); 120 unchanged files replayed from the extraction cache (uniform density preserved), 95 new/changed files re-extracted via 12 cap-safe subagent chunks.
+
+- `docs/plans/2026-07-23-corpus-update-new-sources.md`: arc closed — `status: done`, all phase items ticked, and an Outcome section recording the 12 merged PRs, delivered totals (15 new docs, ~30 extends, 24 refreshed, 637→785-node graph), and reusable merge-mechanics learnings (stacked PRs auto-close on base deletion; octopus branches can't be replayed after squash; CodeFactor re-reports after every `update-branch`).
+
+- `docs/plans/`: files renamed to `YYYY-MM-DD-NNNN-<slug>.md` (0001–0008, creation order); convention and index updated in `docs/plans/README.md`, inbound links repointed (`AGENT_LEARNINGS.md`, `.github/scripts/lib/doc_status.py`).
+
+- `CONTRIBUTING.md`, `docs/architecture.md`: directory trees now list `cc-multi-account.sh` under `scripts/`.
+
+### Removed
+
+- `docs/handoffs/`: the three handoffs were merged into their plans (0003 status migration, 0005 source expansion, 0006 graphify rebuild) — plans now carry their own onboarding. Dropped the `.claude/handoffs/` `.gitignore` entry.
+
+### Fixed
+
+- Landscape docs: corrected `updated`/`validated_links` to 2026-06-26 (stamped a day early in #325) and cross-linked the AI PR-review "to be repositioned" marker to #326.
+
+- `docs/cc-community/CC-vlm-screen-sharing-landscape.md`: repoint the Unlimited-OCR / MinerU document-extraction cross-refs from `polyfetch-scrape` to the in-repo scraping/extraction single-source-of-truth (`web-scraping-extraction-landscape.md`).
+
+- Stamped `updated`/`validated_links` → 2026-06-27 on the 9 docs relocated by #329 (the 6 MAS docs now in `sdlc-lcm/`, plus `research-agents-landscape`, `repo-to-docs-tools-landscape`, and `agent-observability-methods-analysis` in `non-cc/`) — they were edited and lychee-re-validated on the 27th.
+
+- `docs/non-cc/github-copilot-cli-analysis.md`: repoint the misdirected "AGENTS.md convergence" cross-reference from `CC-skills-adoption-analysis.md` (which has no AGENTS.md content) to `multi-agent-onboarding-outlook.md`, and fold the note into the existing Cross-References entry (removing the redundant duplicate). (#355)
+
+- `CONTRIBUTING.md`: corrected the Directory Structure tree to match reality — added `docs/archive/`, `docs/learnings/`, `docs/cc-native/model-internals/`, root `changelog.d/`, `scripts/`, `ui/`, and `.github/state/`; removed the retired `docs/todo/`. Fixed 3 stale `docs/todo/` prose references to `docs/archive/` (including the incorrect "`docs/todo/` is in `lychee.toml` `exclude_path`" claim — it is `docs/archive/`).
+
+- Link rot (surfaced by #361 lychee, blocking all PRs on `main`): repointed the moved OpenRouter Claude Code integration URL (`/docs/guides/`→`/docs/cookbook/`) in `docs/cc-native/configuration/CC-model-provider-configuration.md`.
+
+- `docs/cc-community/CC-vlm-screen-sharing-landscape.md`: resolved a frontmatter↔badge contradiction (`status: research` but badge `Assess`) — aligned the badge to `Research (informational)`, matching the frontmatter and sibling landscape docs.
+
+- `docs/non-cc/cocoindex-analysis.md`: removed a duplicate `**Status**` line inside the Adoption Decision section.
+- `docs/non-cc/fastcontext-analysis.md`: finalized the #362 note — analysis kept (arXiv paper is authoritative; upstream Microsoft repo removed).
+
+- `docs/cc-native/CC-first-party-docs-index.md`: "Building effective agents" URL 404'd (`platform.claude.com/docs/en/docs/build-with-claude/prompt-engineering/building-effective-agents` — page moved) → repointed to the canonical `https://www.anthropic.com/engineering/building-effective-agents`.
+- `docs/non-cc/amp-analysis.md`: `[amp-pricing]` 404'd (`ampcode.com/pricing` removed) → repointed to `https://ampcode.com/manual`, which now carries the credit/pricing model. These two dead links were failing the repo-wide lychee check on every PR.
+
+- `.github/workflows/rxiv-paper-eval.yaml`: bump `eval_ref` v0.2.2 → v0.4.0, in lockstep with the reusable-workflow pin — the v0.4.0 workflow unconditionally passes `--max-llm-calls`, which the v0.2.2 script rejects (exit 2), leaving the PR-path eval permanently red (bit #390). Upstream skew-guard tracked in qte77/gha-rxiv-paper-eval#80; GitHub Models retirement (2026-07-30) migration tracked in qte77/gha-rxiv-paper-eval#81.
+
+- `docs/non-cc/agent-observability-methods-analysis.md`: removed dead o-mega.ai listicle source (404, article unrecoverable).
+
+- `docs/non-cc/kiro-analysis.md`: de-linked the usage.ai AWS-May-2026 source (dead — redirect loop as of 2026-07-23; retained as plain-text provenance).
+
+- `docs/non-cc/semantic-layers-data-catalog-landscape.md`: de-linked the dead AtScale homepage (`atscale.com` hard-404 on GET+HEAD as of 2026-07-23; kept AtScale as text + the working MQO-MCP GitHub reference).
+
+- `scripts/cc-multi-account.sh`: profile directories are now `chmod 700` — a default umask left them 755, so other local users could read `history.jsonl` and `projects/` transcripts.
+
+- `docs/cc-native/configuration/CC-inline-visuals-analysis.md`: removed the "database architecture diagrams, process flowcharts" example — its only source (a claude.com use-case page) 404s and has no successor on academy.claude.com (#417).
+- `lychee.toml`: dropped the `vibekanban.com` exclude — the SSL cert is valid again and the links pass (#254).
+
+- `.claude/settings.json`: removed the six `Bash(git -C * <subcommand> *)` allow rules. A `*` before the subcommand also matches injected git options such as `-c core.fsmonitor=<script>`, so these auto-approved arbitrary command execution. Read-only git needs no allow rule: Claude Code's built-in read-only command set covers it.
+
+- `docs/cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md`, `CC-sandbox-platforms-landscape.md`, `CC-sandboxing-analysis.md`: `sandbox-runtime` links repointed from `anthropic-experimental/` to `anthropics/sandbox-runtime` (repo moved; issue #139 404'd at the old path).
+
 ## [0.7.0] - 2026-06-23
 
 ### Added
