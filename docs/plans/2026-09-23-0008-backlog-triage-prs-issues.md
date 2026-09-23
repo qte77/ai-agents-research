@@ -14,9 +14,13 @@ subagents. **Nothing has been merged, closed or deleted yet.** In scope: PRs/iss
 
 ## Current status
 
-- **Shipped:** nothing yet — this doc is the plan.
-- **Next, in order:** Phase A rows (agent gate) in the table below, top to bottom → pre-stage the
-  owner-review PRs → one owner sitting (Phase B).
+- **Shipped (2026-09-23):** 16 superseded bot PRs closed; 3 merged local branches deleted; #309
+  boxes ticked; PRs opened — #446 (ccsync), #447 (link-rot #417/#254).
+- **Found while executing:** the 7 community-triage PRs are **not** fully superseded by #443 (2–6
+  items each are missing from it, checked by item key) — held open, row 1b. #433 needs no file in
+  this repo — host-root `qte77.github.io/robots.txt` already carries `Content-Signal` (row 6).
+- **Next, in order:** remaining agent rows below → pre-stage the owner-review PRs → one owner
+  sitting (Phase B).
 - **Owner gates:** bot-PR merges (`--admin` is confirm-before-run in global settings), #434
   decision, producthunt lychee exclude, closing #382, deciding #232, #309 scope.
 - **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
@@ -37,9 +41,9 @@ Each monitor keeps a cumulative state file, so the newest PR in a category conta
 | Category | Newest (merge) | Superseded (close) | State file | Supersession evidence |
 |---|---|---|---|---|
 | changelog-triage | #442 | #413, #419, #423, #427, #430, #435, #439 | `.github/state/native-monitor-state.json` | **Content-verified**: tokens from #413's triage file present in #442 |
-| community-triage | #443 | #415, #421, #425, #428, #431, #436, #440 | `community-monitor-state.json` | Inferred from shared state file — not content-diffed |
-| learnings-aggregation | #444 | #416, #422, #426, #429, #432, #437, #441 | `learnings-aggregator-state.json` | Inferred — not content-diffed |
-| outage-archive | #424 | #414, #420 | `outages.jsonl` / `outage-stats.md` | Inferred (cumulative append) — not content-diffed |
+| community-triage | #443 | **not superseded** — #415, #421, #425, #428, #431, #436, #440 | `community-monitor-state.json` | Item-key check 2026-09-23: each older PR has 2–6 table rows missing from #443 |
+| learnings-aggregation | #444 | #416, #422, #426, #429, #432, #437, #441 | `learnings-aggregator-state.json` | Same 8 files, one-line updates each; #444 carries the latest values |
+| outage-archive | #424 | #414, #420 | `outages.jsonl` / `outage-stats.md` | Item-key check 2026-09-23: every outage `id` in #414/#420 is in #424 |
 | rxiv-paper-triage | #418 | — | rxiv-only files | Sole PR in category |
 | Dependabot actions bump | #434 | — | — | Lint/lychee + rxiv `eval/evaluate` jobs fail. Lychee flakiness is known; rxiv failure *guessed* to be missing secrets on Dependabot PRs — logs not read (`gh run view 34025441955 --log-failed`) |
 
@@ -73,13 +77,14 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 
 | # | Item | Gate | Done-when |
 |---|---|---|---|
-| 1 | Close 23 superseded bot PRs (list in source map) | agent | All 23 closed with a "superseded by #NNN" comment; reopenable |
-| 2 | Delete 3 merged local branches | agent | `git branch` no longer lists them |
-| 3 | #309: tick Phase 2, Phase 3 and "track #308" checkboxes | agent | Checkboxes updated; issue stays open for Phase 1 |
-| 4 | Ship `feat/ccsync-and-profile-perms` | agent | `changelog.d/` fragment added, branch pushed, PR open with green CI |
-| 5 | #417: repoint the claude.com 404; recheck ampcode.com on next weekly run | agent | Lychee clean except approved excludes |
-| 6 | #433: add `ui/robots.txt` + `ui/llms.txt` | agent | Both served at the Pages site root after deploy |
-| 7 | #254: test-run lychee without the vibekanban exclude; flag the sunsetting fact | agent | Exclude removed (passes) or confirmed still needed; stale-fact noted |
+| ~~1~~ | ~~Close superseded changelog/learnings/outage bot PRs~~ | agent | Done 2026-09-23: 16 closed (#413–#439 → #442, #416–#441 → #444, #414/#420 → #424), each verified by item key |
+| 1b | Community-triage PRs #415, #421, #425, #428, #431, #436, #440 | owner | Decide: merge oldest-first, or close accepting the loss of 2–6 items each that #443 lacks |
+| ~~2~~ | ~~Delete 3 merged local branches~~ | agent | Done 2026-09-23 (`git cherry` equivalent before deleting) |
+| ~~3~~ | ~~#309: tick Phase 2, Phase 3 and "track #308"~~ | agent | Done 2026-09-23; issue stays open for Phase 1 |
+| 4 | Ship `feat/ccsync-and-profile-perms` | owner | PR #446 open (fragment added, shellcheck clean) — merge when CI green |
+| 5 | #417: claude.com 404 removed (#447); recheck ampcode.com on next weekly run | agent | Next weekly report has no ampcode.com error, or it's triaged |
+| 6 | #433: no action needed in this repo for Content-Signal (host-root robots.txt has it); optional subpath `ui/llms.txt` | owner | Decide: add llms.txt (new content) or close #433 with the robots.txt evidence |
+| 7 | #254: vibekanban exclude dropped (#447) — sunsetting already documented (2026-06-20) | owner | PR #447 merged |
 | 8 | #438: new cross-session messaging doc (ListAgents, SendMessage, v2.1.224) | agent → owner review | PR open, first-party sourced |
 | 9 | #410: feed.xml trigger per the narrowed decision | agent → owner review | Workflow PR open |
 | 10 | #347: SHA-pinned reusable release workflows | agent → owner review | PR open |
