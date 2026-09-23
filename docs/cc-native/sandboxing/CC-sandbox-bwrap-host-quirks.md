@@ -1,11 +1,11 @@
 ---
 title: CC Sandbox bwrap Host Quirks — Phantom Files and AppArmor Friction
 description: bwrap-on-Linux friction independent of execution context (local, WSL2, Codespaces) — phantom dotfile leakage and AppArmor user-namespace prerequisites.
-source: https://github.com/anthropics/claude-code/issues/17727, https://github.com/anthropics/claude-code/issues/17087, https://github.com/anthropic-experimental/sandbox-runtime/issues/139
+source: https://github.com/anthropics/claude-code/issues/17727, https://github.com/anthropics/claude-code/issues/17087, https://github.com/anthropics/sandbox-runtime/issues/139
 category: analysis
 created: 2026-05-02
-updated: 2026-05-17
-validated_links: 2026-05-17
+updated: 2026-09-23
+validated_links: 2026-09-23
 ---
 
 **Status**: Active upstream bug — `claude-code#17727` open; `claude-code#17087` closed-as-completed but recurring; `sandbox-runtime#139` is the upstream fix tracker.
@@ -71,7 +71,7 @@ The git-internals leak (`HEAD`, `config`, `hooks`, `objects`, `refs` at
 project root) has the same shape: `denyWithinAllow` auto-generation drops the
 `.git/` prefix when resolving against CWD.
 
-Upstream fix tracker: [`anthropic-experimental/sandbox-runtime#139`][sr-139].
+Upstream fix tracker: [`anthropics/sandbox-runtime#139`][sr-139].
 
 ### Side effects (beyond cosmetic git noise)
 
@@ -327,4 +327,4 @@ git show HEAD:<file> > "$TMPDIR/<file>.head"
 [gh-40133]: https://github.com/anthropics/claude-code/issues/40133
 [gh-28730]: https://github.com/anthropics/claude-code/issues/28730
 [gh-53081]: https://github.com/anthropics/claude-code/issues/53081
-[sr-139]: https://github.com/anthropic-experimental/sandbox-runtime/issues/139
+[sr-139]: https://github.com/anthropics/sandbox-runtime/issues/139

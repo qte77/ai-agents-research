@@ -4,8 +4,8 @@ source: https://github.com/alibaba/OpenSandbox, https://e2b.dev, https://fly.io/
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 category: landscape
 created: 2026-03-08
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-23
+validated_links: 2026-09-23
 ---
 
 **Status**: Landscape research (informational — not implementation requirements)
@@ -219,6 +219,6 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 [daytona]: https://www.daytona.io
 [daytona-closed]: https://www.daytona.io/dotfiles/updates/daytona-is-going-closed-source
 [cc-sandbox]: https://code.claude.com/docs/en/sandboxing
-[sandbox-runtime]: https://github.com/anthropic-experimental/sandbox-runtime
+[sandbox-runtime]: https://github.com/anthropics/sandbox-runtime
 [northflank]: https://northflank.com/blog/best-sandboxes-for-coding-agents
 [koyeb]: https://www.koyeb.com/blog/top-sandbox-code-execution-platforms-for-ai-code-execution-2026
