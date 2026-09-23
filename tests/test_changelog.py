@@ -9,6 +9,30 @@ from lib import changelog as cl  # noqa: E402
 
 IDX = {"docs/sandbox.md": frozenset({"sandboxing", "controls", "bash"})}
 
+# Verified shape (WebFetch of https://github.com/anthropics/claude-code/releases.atom,
+# 2026-09-23; corroborated by issue #410's own quoted <id>/<updated> excerpt). Entries
+# below are deliberately out of document order to prove the function sorts, and include
+# one entry whose <id> doesn't end in a parseable version to prove it's skipped.
+FEED_XML = """<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US">
+  <entry>
+    <id>tag:github.com,2008:Repository/937253475/v2.1.278</id>
+    <updated>2026-09-19T03:10:40Z</updated>
+    <title>v2.1.278</title>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/937253475/v2.1.280</id>
+    <updated>2026-09-22T16:38:14Z</updated>
+    <title>v2.1.280</title>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/937253475/not-a-release</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <title>legacy tag</title>
+  </entry>
+</feed>
+"""
+
 
 class VersionTupleTests(unittest.TestCase):
     def test_compares(self):
@@ -38,6 +62,33 @@ class ParseChangelogTests(unittest.TestCase):
         versions = cl.parse_changelog_versions(text)
         self.assertEqual([v for v, _ in versions], ["2.1.80", "2.1.71"])
         self.assertEqual(versions[0][1], ["- Feature A", "- Feature B"])
+
+
+class ParseReleasesFeedTests(unittest.TestCase):
+    def test_extracts_version_id_and_updated(self):
+        entries = cl.parse_releases_feed(FEED_XML)
+        newest = entries[0]
+        self.assertEqual(newest["version"], "2.1.280")
+        self.assertEqual(newest["updated"], "2026-09-22T16:38:14Z")
+        self.assertEqual(
+            newest["id"], "tag:github.com,2008:Repository/937253475/v2.1.280"
+        )
+
+    def test_orders_newest_first_regardless_of_document_order(self):
+        entries = cl.parse_releases_feed(FEED_XML)
+        self.assertEqual([e["version"] for e in entries], ["2.1.280", "2.1.278"])
+
+    def test_skips_entry_without_parseable_version_id(self):
+        entries = cl.parse_releases_feed(FEED_XML)
+        self.assertEqual(len(entries), 2)
+        self.assertNotIn("not-a-release", [e["version"] for e in entries])
+
+    def test_malformed_xml_returns_empty(self):
+        self.assertEqual(cl.parse_releases_feed("<feed><entry><id>oops"), [])
+
+    def test_empty_and_whitespace_return_empty(self):
+        self.assertEqual(cl.parse_releases_feed(""), [])
+        self.assertEqual(cl.parse_releases_feed("   \n\t  "), [])
 
 
 class FindCoveringDocsTests(unittest.TestCase):
@@ -71,6 +122,19 @@ class ReportTests(unittest.TestCase):
         report, has_unc = cl.render_changelog_report([], "2.1.71")
         self.assertIn("No new versions found", report)
         self.assertFalse(has_unc)
+
+    def test_adds_release_date_when_known(self):
+        results = cl.classify_versions([("2.2.0", ["- novel xyzzy thing"])], IDX)
+        report, _ = cl.render_changelog_report(
+            results, "2.1.71", updated_by_version={"2.2.0": "2026-09-22T16:38:14Z"}
+        )
+        self.assertIn("#### v2.2.0 — released 2026-09-22", report)
+
+    def test_omits_release_date_when_unknown(self):
+        results = cl.classify_versions([("2.2.0", ["- novel xyzzy thing"])], IDX)
+        report, _ = cl.render_changelog_report(results, "2.1.71")
+        self.assertIn("#### v2.2.0", report)
+        self.assertNotIn("released", report)
 
 
 if __name__ == "__main__":
