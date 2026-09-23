@@ -3,7 +3,7 @@ title: CC Inline Visuals Analysis
 source: https://claude.com/blog/claude-builds-visuals
 purpose: Analysis of Claude's custom inline visualization capabilities (charts, diagrams, interactive visuals in conversation).
 created: 2026-03-13
-updated: 2026-03-13
+updated: 2026-09-23
 validated_links: 2026-03-13
 ---
 
@@ -43,7 +43,6 @@ Visuals can be saved if needed: copy as image, download as `.svg` or `.html`, or
 - Compound interest — interactive chart with adjustable parameters ([source][engadget])
 - Paper plane folding — step-by-step visual instructions ([source][engadget])
 - Building weight distribution — architectural diagrams ([source][thenewstack])
-- Database architecture diagrams, process flowcharts ([source][usecases])
 
 ### Integration with Connectors
 
@@ -86,4 +85,3 @@ Evolution of "Imagine with Claude" — a temporary experience previewed in Fall 
 [thenewstack]: https://thenewstack.io/anthropics-claude-interactive-visualizations/ "Anthropic's Claude interactive visualizations — The New Stack"
 [opentools]: https://opentools.ai/news/anthropics-claude-ai-unleashes-exciting-inline-visualization-capabilities "Anthropic's Claude AI inline visualization capabilities — OpenTools"
 [connectors]: https://claude.com/blog/interactive-tools-in-claude "Interactive connectors and MCP Apps — Claude"
-[usecases]: https://claude.com/resources/use-cases/visualize-database-architecture "Visualize database architecture — Claude"

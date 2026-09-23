@@ -2,7 +2,7 @@
 title: Plans — Design & Decision Docs
 purpose: Convention for docs/plans/ — durable plan/design docs (the saved output of plan-mode work). GitHub Issues remain the authoritative backlog/roadmap; each plan doc links its tracking issue.
 created: 2026-06-14
-updated: 2026-07-08
+updated: 2026-09-23
 ---
 
 **Status**: Reference (convention)
@@ -20,7 +20,7 @@ updated: 2026-07-08
 
 ## Convention
 
-- **One doc per effort**, named `YYYY-MM-DD-<slug>.md`.
+- **One doc per effort**, named `YYYY-MM-DD-NNNN-<slug>.md` — creation date + a 4-digit sequence (next free number; never reuse or renumber). No separate handoff files: the plan opens with its current status and onboarding.
 - **Link the tracking issue both ways**: the plan doc names its issue in frontmatter (`issue:`) and body; the issue links back to the plan doc.
 - **Plans are not the backlog.** A plan doc explains *how* a tracked task will be done; the issue tracks *whether/when*. Don't list untracked tasks here — open an issue.
 - Frontmatter: `title / status / issue / created / updated`. `status` ∈ `draft` | `approved` | `done` | `superseded`.
@@ -29,8 +29,11 @@ updated: 2026-07-08
 
 | Plan | Status | Issue(s) |
 |---|---|---|
-| [2026-06-14-planning-workflow-and-open-task-triage.md](2026-06-14-planning-workflow-and-open-task-triage.md) | done | #242, #243 |
-| [2026-07-05-status-frontmatter-migration.md](2026-07-05-status-frontmatter-migration.md) | approved | #348 |
-| [2026-07-08-new-sources-batch.md](2026-07-08-new-sources-batch.md) | done | #374 |
-| [2026-07-08-source-expansion-wave2.md](2026-07-08-source-expansion-wave2.md) | done | #374 |
-| [2026-07-08-graphify-rebuild-354.md](2026-07-08-graphify-rebuild-354.md) | done | #354 |
+| [2026-06-11-0001-plugin-rules-codeburn-merge.md](2026-06-11-0001-plugin-rules-codeburn-merge.md) | draft | none yet |
+| [2026-06-14-0002-planning-workflow-and-open-task-triage.md](2026-06-14-0002-planning-workflow-and-open-task-triage.md) | done | #242, #243 |
+| [2026-07-05-0003-status-frontmatter-migration.md](2026-07-05-0003-status-frontmatter-migration.md) | approved | #348 |
+| [2026-07-08-0004-new-sources-batch.md](2026-07-08-0004-new-sources-batch.md) | done | #374 |
+| [2026-07-08-0005-source-expansion-wave2.md](2026-07-08-0005-source-expansion-wave2.md) | done | #374 |
+| [2026-07-08-0006-graphify-rebuild-354.md](2026-07-08-0006-graphify-rebuild-354.md) | done | #354 |
+| [2026-07-23-0007-corpus-update-new-sources.md](2026-07-23-0007-corpus-update-new-sources.md) | done | #374 |
+| [2026-09-23-0008-backlog-triage-prs-issues.md](2026-09-23-0008-backlog-triage-prs-issues.md) | draft | #438, #433, #417, #410, #254, #347, #348, #309, #382, #232 |
