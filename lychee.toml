@@ -88,4 +88,9 @@ exclude = [
     "finance.biggo.com",  # times out in CI (slow news aggregator) — secondary source in codebuddy-analysis.md
     "huggingface.co/microsoft/FastContext-1.0-4B-SFT",  # 401 auth-wall to lychee on a live model page — fastcontext-analysis.md; drop when HF stops 401-ing (see #362)
     "ai-incidents.mitre.org",  # untrusted SSL cert chain (UnknownIssuer) upstream — MITRE AI Incident Sharing, browser-OK; agentic-ai-vulnerability-landscape.md; drop once MITRE fixes the chain
+    # 2026-09-23 — all four return 200 via polyfetch but fail only to lychee (plan 0008 row 21b, owner-approved)
+    "www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf",  # exact URL only; 403 bot-block — agentic-sdlc-patterns.md
+    "www.beyondtrust.com/resources/glossary/just-in-time-access",  # exact URL only; 403 bot-block — agent-identity-auth-landscape.md
+    "www.producthunt.com/products/amp-free",  # exact URL only; 403 bot-block — amp-analysis.md
+    "ampcode.com",  # persistent HTTP/2 protocol error to lychee (same class as epo.org); 200 via polyfetch — amp-analysis.md
 ]
