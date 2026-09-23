@@ -3,7 +3,7 @@ title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 category: landscape
 created: 2026-06-23
-updated: 2026-06-28
+updated: 2026-09-23
 validated_links: 2026-06-28
 ---
 
@@ -89,7 +89,7 @@ A full standalone comparison (`spec-driven-frameworks-landscape.md`) is a natura
 
 ## Reference implementation: open-agentic-coding-harness
 
-qte77's sibling project [open-agentic-coding-harness][oach] implements the whole stack — `ralph-loop` (Layers 2–3: TDD + loop), `claude-code-plugins` (Layer 1: harness), `cc-recursive-team-mode` (Layer 3: teams), `coding-agent-eval` (Layer 4: deterministic EDD), and `LEARNINGS.md` refeeding (Layer 5: compound) — under "faithful adoption + measurability" ("you can't trust a harness you can't measure"). Per cross-repo routing, deep product analysis stays in that repo; here it is cited as the reference implementation of the disciplines above.
+qte77's sibling project [open-agentic-coding-harness][oach] implements the whole stack — `ralph-loop` (Layers 2–3: TDD + loop), `claude-code-plugins` (Layer 1: harness), `cc-recursive-team-mode` (Layer 3: teams), `coding-harness-eval` (Layer 4: deterministic EDD), and `LEARNINGS.md` refeeding (Layer 5: compound) — under "faithful adoption + measurability" ("you can't trust a harness you can't measure"). Per cross-repo routing, deep product analysis stays in that repo; here it is cited as the reference implementation of the disciplines above.
 
 ## Cross-References
 

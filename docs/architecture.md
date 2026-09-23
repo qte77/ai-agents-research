@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-07-23
+updated: 2026-09-23
 ---
 
 ## Architecture: ai-agents-research
@@ -161,7 +161,7 @@ Research from this repository feeds directly into implementation repos:
 | Downstream Repo | Consumes From | Key Docs |
 |---|---|---|
 | [cc-recursive-team-mode](https://github.com/qte77/cc-recursive-team-mode) | `docs/cc-native/agents-skills/`, `docs/cc-native/session-analysis/` | `CC-recursive-spawning-patterns.md`, session artifact schema docs |
-| [coding-agent-eval](https://github.com/qte77/coding-agent-eval) | `docs/cc-native/comparisons/`, `docs/cc-native/features/`, `docs/non-cc/` | Agent feature matrices, invocation method analyses |
+| [coding-harness-eval](https://github.com/qte77/coding-harness-eval) | `docs/cc-native/comparisons/`, `docs/cc-native/features/`, `docs/non-cc/` | Agent feature matrices, invocation method analyses |
 | [multi-tasking-quality-benchmark](https://github.com/qte77/multi-tasking-quality-benchmark) | `docs/cc-native/meta/` | Quality metric methodology docs |
 | [ralph-loop-cc-tdd-wt-vibe-kanban-template](https://github.com/qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template) | `docs/learnings/` | Cross-repo compound learning aggregation (CRLA) — Ralph reads this as `COMPOUND_LEARNINGS_PATH` |
 
@@ -174,7 +174,7 @@ triage/  (raw triage outputs, human-reviewed)
         ↓ (researcher promotes findings)
 docs/cc-native/ or docs/non-cc/ or docs/cc-community/  (structured analyses)
         ↓ (downstream repos consume)
-cc-recursive-team-mode / coding-agent-eval / multi-tasking-quality-benchmark
+cc-recursive-team-mode / coding-harness-eval / multi-tasking-quality-benchmark
 ```
 
 Human review is required at the triage → docs promotion step. Monitors surface content; researchers make adoption decisions.

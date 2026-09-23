@@ -2,7 +2,7 @@
 title: "Karpathy LLM Knowledge Base: Markdown-First Alternative to RAG"
 purpose: Analyse Karpathy's LLM wiki pattern and gap-compare against ai-agents-research
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-09-23
 validated_links: 2026-04-06
 ---
 
@@ -71,7 +71,7 @@ Two real gaps where adoption would compound existing strengths:
 
 This repository already implements the Karpathy pattern's core thesis — structured markdown managed by conventions, with automated ingest and human-curated promotion. The pattern validates the existing architecture rather than replacing it. The two value-add opportunities above are incremental enhancements, not architectural shifts.
 
-The gist's abstract, domain-agnostic framing makes it a useful reference for any qte77 repo adopting a knowledge-base pattern (e.g. `coding-agent-eval` documentation, cross-repo learnings).
+The gist's abstract, domain-agnostic framing makes it a useful reference for any qte77 repo adopting a knowledge-base pattern (e.g. `coding-harness-eval` documentation, cross-repo learnings).
 
 ## Sources
 
