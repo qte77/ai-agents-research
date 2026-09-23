@@ -9,13 +9,7 @@
   "permissions": {
     "allow": [
       "Bash(lychee --config *)",
-      "Bash(markdownlint-cli2 --config *)",
-      "Bash(git -C * log *)",
-      "Bash(git -C * status *)",
-      "Bash(git -C * remote *)",
-      "Bash(git -C * diff *)",
-      "Bash(git -C * show *)",
-      "Bash(git -C * branch *)"
+      "Bash(markdownlint-cli2 --config *)"
     ]
   },
   "enabledPlugins": {
