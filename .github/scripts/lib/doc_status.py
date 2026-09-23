@@ -22,7 +22,7 @@ from dataclasses import dataclass
 # Normalized leading token of the legacy body `**Status**:` badge (kebab-case).
 # Analysis/reference/research docs use the maturity set; plan docs (docs/plans/)
 # add draft|approved|superseded|done. Keep in sync with CONTRIBUTING.md
-# "Frontmatter status" and docs/plans/2026-07-05-status-frontmatter-migration.md.
+# "Frontmatter status" and docs/plans/2026-07-05-0003-status-frontmatter-migration.md.
 DOC_STATUS_VOCAB = frozenset({
     "adopt", "trial", "assess", "hold",
     "research", "reference", "research-preview", "beta",
