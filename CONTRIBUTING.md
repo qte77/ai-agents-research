@@ -137,7 +137,7 @@ ai-agents-research/
     plans/                             # Plan/design docs (durable plan-mode output; backlog = GitHub Issues)
     archive/                           # Retired/superseded docs (excluded from link-checking)
   changelog.d/                         # scriv changelog fragments (collected on release)
-  scripts/                             # Graph-page render + font-fetch helpers (stdlib-only)
+  scripts/                             # Graph-page render + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles)
   ui/                                  # Branded gh-pages site (index.html, graph.html, assets)
   triage/                              # Auto-generated monitor outputs
   .github/                             # CI automation (monitors, scripts, templates)
