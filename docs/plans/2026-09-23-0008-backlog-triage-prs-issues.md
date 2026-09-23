@@ -120,6 +120,23 @@ Each brief was produced by the triage subagent on 2026-09-23. The spot-checks ma
   `non-cc/` (493 occurrences) plus ~40 sibling links; lychee is the backstop. **Default:** one PR per
   subdir.
 
+### Screenshot sources (rows 17–20)
+
+The owner's screenshot dump (`/workspaces/temp/ai-agents-research/`, 1,433 JPGs, 2026-06-24 →
+2026-09-21, mostly LinkedIn/X posts) is mined for **leads**: URLs, handles, tool names and
+descriptions. **Screenshots are never a source.** Every claim that enters the corpus is verified
+against a first-party URL (vendor docs, repo, paper) found from the lead. Working files live
+**outside the repo** (they name people from LinkedIn), at `/workspaces/temp/ai-agents-research-triage/`:
+
+- `shots-merged.tsv` — pass 1 tags: 675 in scope / 241 maybe / 504 out / 9 unreadable / 4 untagged.
+- `detail/chunk-NNN.jsonl` — pass 2 (in scope + maybe + unreadable + untagged = 929 images):
+  `file, scope, urls[], handles[], entities[], description, author, date`, all transcribed as seen;
+  truncated URLs are marked `[truncated]`.
+
+Placement follows CONTRIBUTING's classification rules and prefers extending existing docs.
+Coverage is checked with `git grep`, calibrated against a known term first; hits only in
+`docs/research/rxiv-agentic-papers.md` or `docs/archive/` don't count as coverage.
+
 ## Remaining work
 
 The only list of open work in this plan. Strike a row in the PR that ships it.
@@ -143,12 +160,15 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | 14 | #434: read failed logs, then merge or re-run | owner | Merged or closed with reason |
 | 15 | #417: approve producthunt exclude | owner | Exclude added or rejected |
 | 16 | Close #382; decide #232; decide #309 scope (keep vs. split) | owner | Each issue closed or updated with decision |
+| ~~17~~ | ~~Screenshot pass 1: tag 1,433 images in / maybe / out~~ | agent | Done 2026-09-23: `shots-merged.tsv` (spot-checked) |
+| 18 | Screenshot pass 2: extract URLs, handles, entities, descriptions for the 929 in-scope + maybe images | agent | `detail/chunk-001…038.jsonl` exist, one line per image |
+| 19 | Cluster pass-2 leads into distinct topics; `git grep` coverage; propose extend `<doc §>` / new `<path>` / covered / out of scope | agent | Topic → placement table added to this plan's source map for owner review |
+| 20 | Research the owner-approved topics: find and verify a first-party URL for every claim, then extend or create docs | agent → owner review | One PR per topic cluster; every claim cites a first-party source; lint + lychee clean |
 
 ## Unverified
 
-- Why every PR is `BLOCKED` (ruleset not queried).
-- Supersession of the community, learnings and outage-archive PRs (inferred, not content-diffed).
-- Root cause of #434's rxiv-eval failure.
 - Whether ampcode.com's error persists (one data point).
+- What the ruleset's `code_quality` rule gates.
+- Signature status of #443, #444, #424 and #418 individually (only #442 was queried; same bot, presumed unsigned).
 - vibekanban.com under lychee's own TLS check (only WebFetch tried).
 - gh-pages branch contents (inferred from the workflow step).
