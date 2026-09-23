@@ -4,8 +4,8 @@ description: Analysis of CC sandboxing mechanics, configuration options, securit
 source: https://code.claude.com/docs/en/sandboxing, https://code.claude.com/docs/en/settings#sandbox-settings, https://code.claude.com/docs/en/security
 category: analysis
 created: 2026-03-07
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-23
+validated_links: 2026-09-23
 ---
 
 **Status**: Research (informational)
@@ -297,4 +297,4 @@ bubblewrap/Seatbelt enforcement, see
 [cc-sandboxing]: https://code.claude.com/docs/en/sandboxing
 [cc-sandbox-settings]: https://code.claude.com/docs/en/settings#sandbox-settings
 [cc-security]: https://code.claude.com/docs/en/security
-[sandbox-runtime]: https://github.com/anthropic-experimental/sandbox-runtime
+[sandbox-runtime]: https://github.com/anthropics/sandbox-runtime

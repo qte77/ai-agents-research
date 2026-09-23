@@ -197,7 +197,8 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~18~~ | ~~Screenshot pass 2: extract URLs, handles, entities, descriptions~~ | agent | Done 2026-09-23: 921 of 929 records (8 missing), 726 URLs (51 truncated); lnkd.in short links resolved to real targets via polyfetch → `lnkd-resolved.tsv` |
 | ~~19~~ | ~~Cluster pass-2 leads into topics; coverage; placement~~ | agent | Done 2026-09-23: 682 topics; results in the Screenshot sources section |
 | 20 | Research the 128 H topics (`h-priority.tsv`), then M on owner request: verify a first-party URL per claim per the entry rule, then extend or create docs | agent → owner review | One PR per target doc; every claim cites a first-party source; lint + lychee clean |
-| 21 | New link rot (Merge gate section): find where `sandbox-runtime/issues/139` moved (4 links in `CC-sandbox-bwrap-host-quirks.md` + the `.gitignore` comment); triage the pwc.com and beyondtrust.com 403s | agent | Links repointed or removed; bot-block excludes proposed to the owner, not added |
+| ~~21~~ | ~~Repoint `sandbox-runtime` links~~ | agent | Done 2026-09-23: repo moved to `anthropics/sandbox-runtime` (#139 still open); 5 links in 3 sandboxing docs repointed, lychee clean |
+| 21b | Bot-block excludes: `www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf` (`agentic-sdlc-patterns.md`) and `www.beyondtrust.com/resources/glossary/just-in-time-access` (`agent-identity-auth-landscape.md`). Both return 200 via polyfetch (2026-09-23) and 403 only to lychee | owner | Exact-URL excludes added to `lychee.toml` (Salesforce precedent), or rejected |
 
 ## Unverified
 
