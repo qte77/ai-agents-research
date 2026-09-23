@@ -9,7 +9,8 @@ updated: 2026-09-23
 **Status**: Reference (plan)
 
 Read-only audit of every open PR, every non-main branch and every open issue, run 2026-09-23 by two
-subagents. **Nothing has been merged, closed or deleted yet.** In scope: PRs/issues authored by
+subagents. The Source map tables below are the **snapshot taken at audit start**; what has happened
+since is in Current status and the Remaining work table. In scope: PRs/issues authored by
 `qte77`, GitHub Actions bots and Dependabot (all 29 open PRs and all 10 open issues qualified).
 
 ## Current status
@@ -45,7 +46,7 @@ Each monitor keeps a cumulative state file, so the newest PR in a category conta
 | learnings-aggregation | #444 | #416, #422, #426, #429, #432, #437, #441 | `learnings-aggregator-state.json` | Same 8 files, one-line updates each; #444 carries the latest values |
 | outage-archive | #424 | #414, #420 | `outages.jsonl` / `outage-stats.md` | Item-key check 2026-09-23: every outage `id` in #414/#420 is in #424 |
 | rxiv-paper-triage | #418 | — | rxiv-only files | Sole PR in category |
-| Dependabot actions bump | #434 | — | — | Lint/lychee + rxiv `eval/evaluate` jobs fail. Lychee flakiness is known; rxiv failure *guessed* to be missing secrets on Dependabot PRs — logs not read (`gh run view 34025441955 --log-failed`) |
+| Dependabot actions bump | #434 | — | — | Lint/lychee + rxiv `eval/evaluate` jobs fail. Logs read later: lychee = corpus-wide rot; rxiv = GitHub Models outage (`HTTP 410 … github_models_retirement_brownout`), not missing secrets (see Merge gate) |
 
 ### Branches
 
