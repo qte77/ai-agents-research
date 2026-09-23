@@ -3,14 +3,41 @@ title: Migrate doc status into frontmatter (drop the body badge)
 status: approved
 issue: 348
 created: 2026-07-05
-updated: 2026-07-05
+updated: 2026-09-23
 ---
 
 **Status**: Reference (plan)
 
 Durable plan for **#348** — moving doc maturity from the body `**Status**:` badge into a
 frontmatter `status:` field. **Approved but deferred** (see Priority). This doc carries the full
-context map so a fresh session executes without re-gathering. Handoff: [`docs/handoffs/2026-07-05-status-frontmatter-migration.md`](../handoffs/2026-07-05-status-frontmatter-migration.md).
+context map so a fresh session executes without re-gathering.
+
+## Onboarding — how to run it (merged from the 2026-07-05 handoff)
+
+- **Check it's still YAGNI first:** `git grep 'Status\*\*' -- scripts .github ui Makefile` → expect 0.
+  If nothing reads `status:` yet, consider building the consumer first (see Priority); if the
+  maintainer wants the convention landed regardless, proceed.
+- **Scope reality:** 144 docs. ~52 are clean radar tokens (trivial). **~88 pack license/GA/version/vendor
+  into the badge** — those need the split-and-relocate transform (judgment-y). Don't underestimate this.
+- **Staged — do NOT do one mega-PR:**
+  1. One PR **per `docs/` subdir**, in this order: `cc-native/` → `non-cc/` → `cc-community/` →
+     `sdlc-lcm/`+`plans/` → convention docs (CONTRIBUTING §1/§2 + architecture.md).
+  2. For each subdir, apply the **Transform (per doc)** below. The decorated docs concentrate in
+     `non-cc/` (tool analyses) and `cc-native/plugins-ecosystem|configuration` — **spawn one subagent per
+     subdir** to apply + self-review the split (safer than serial hand-edits at this volume).
+  3. Per PR: changelog fragment; `make lint` + `make test` green; invariants
+     `git grep -c '^\*\*Status\*\*:' <subdir>` → 0 and every ex-badge doc has `^status:`. Admin-merge
+     (signatures) → prune.
+  4. Do the **convention-doc PR last** (CONTRIBUTING §2 rewrite + architecture.md) so the docs match
+     reality only once the corpus is migrated.
+- **Already done (PR that shipped this plan):** fixed the one true frontmatter↔badge mismatch,
+  `CC-vlm-screen-sharing-landscape.md` (badge `Assess` → `Research (informational)`). The other two
+  flagged "mismatches" (`autoagent`, `openviking`) are not bugs — they resolve naturally in the migration.
+- **Gotchas:** **leave** `agent-observability-methods-analysis.md:61` (that `**Status**:` describes an
+  upstream project, not the doc); **remove** the duplicate `cocoindex-analysis.md:59`; **leave**
+  `docs/archive/**` (already `status: archived`); don't add status to the 39 badge-less docs
+  (READMEs/specs/auto-gen). When relocating a badge that contains a ref-style `[link]`, keep the link
+  definition or lychee/markdownlint will flag an orphaned reference.
 
 ## Priority — read first (it's YAGNI today)
 

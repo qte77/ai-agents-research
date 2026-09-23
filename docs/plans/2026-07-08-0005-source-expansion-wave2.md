@@ -3,16 +3,28 @@ title: Source expansion (wave 2) — agents-cli, agentic payments, Karpathy, age
 status: done
 issue: 374
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-09-23
 ---
 
 **Status**: Reference (plan)
 
 Durable record + source map for the **second wave** of new sources added 2026-07-08, ahead of the
 deferred [#354](https://github.com/qte77/ai-agents-research/issues/354) graph rebuild. Wave 1 is
-[2026-07-08-new-sources-batch.md](2026-07-08-new-sources-batch.md); umbrella tracker
-[#374](https://github.com/qte77/ai-agents-research/issues/374). Handoff:
-[../handoffs/2026-07-08-source-expansion.md](../handoffs/2026-07-08-source-expansion.md).
+[2026-07-08-0004-new-sources-batch.md](2026-07-08-0004-new-sources-batch.md); umbrella tracker
+[#374](https://github.com/qte77/ai-agents-research/issues/374).
+
+## Current status (merged from the 2026-07-08 source-expansion handoff)
+
+- **Done (merged):** wave 1 — #372 agentic-AI-vulnerability-landscape · #373 kv-cache-serving-landscape
+  (+ CC-prompt-caching min-token fix) · #375 Codex-CC plugin + OpenWiki + company-brain + CONTRIBUTING
+  polyfetch/doc-pipeline pointer. Wave 2 — the four docs below.
+- **#354 graph rebuild — DONE:** executed by PR #379 (2026-07-10, 637 nodes; #354 closed). Method in
+  [2026-07-08-0006-graphify-rebuild-354.md](2026-07-08-0006-graphify-rebuild-354.md).
+- **Scout backlog** (13 promotable triage/rxiv candidates in #374) — drained by the 2026-07-23 arc,
+  [2026-07-23-0007-corpus-update-new-sources.md](2026-07-23-0007-corpus-update-new-sources.md).
+- **Tooling:** polyfetch-scrape (fetch JS-SPA/blocked pages) and doc-pipeline-engine (PDF/Office →
+  text), both via `uv run --directory` — documented in CONTRIBUTING's Research Workflow.
+- **Pre-existing link-rot** to fix opportunistically: `usage.ai` 301 in `kiro-analysis.md`.
 
 ## What was added (wave 2)
 
@@ -43,5 +55,5 @@ Wave 2 (this PR): the four above. **All of these must be in scope for the #354 r
 
 ## Follow-ups (tracked in #374)
 
-- [ ] **#354 graph rebuild** — see the handoff; `detect_incremental` already shows ~110+ changed files vs a stale manifest → near-full re-extraction (~4-5 semantic subagents).
-- [ ] Scout backlog (13 candidates) — checklist in #374.
+- [x] **#354 graph rebuild** — done, PR #379 (see Current status).
+- [x] Scout backlog (13 candidates) — drained by the 2026-07-23 arc (see Current status).
