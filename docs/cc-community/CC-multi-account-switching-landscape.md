@@ -2,7 +2,7 @@
 title: CC Multi-Account & Profile Switching Landscape
 purpose: How to run multiple Claude Code subscription accounts — concurrently or switched — in one OS environment, via the native CLAUDE_CONFIG_DIR mechanism and community tools built on it.
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-09-23
 validated_links: 2026-07-23
 ---
 
@@ -46,6 +46,38 @@ Note the variable is absent from the [official env vars reference][env-vars] as 
 the debug guide links to that page for it, but only the debug guide documents the behavior.
 Cross-ref: [CC-env-vars-reference.md](../cc-native/configuration/CC-env-vars-reference.md).
 
+## Repo Helper: `scripts/cc-multi-account.sh`
+
+This repo ships [`scripts/cc-multi-account.sh`](../../scripts/cc-multi-account.sh), a small helper
+built on the same `CLAUDE_CONFIG_DIR` mechanism (Linux/WSL2/Codespaces, where credentials live in the
+config dir). You can run it directly or source it for short commands:
+
+| Executed (`./cc-multi-account.sh …`) | Sourced (`source cc-multi-account.sh`) | Does |
+|---|---|---|
+| `<profile>` | `ccp <profile>` | Launch CC with `CLAUDE_CONFIG_DIR=$CC_PROFILE_HOME/<profile>`; first run prompts `/login` |
+| `usage <profile>` | `ccu <profile>` | Per-account usage via `ccusage` (needs `npm i -g ccusage`) |
+| `list` | `ccl` | List configured profiles |
+| `sync <profile>` / `sync --all` | `ccsync <profile>` / `ccsync --all` | Re-apply the shared base settings to one or all profiles |
+| `--help` | `cch` | Print usage |
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `CC_PROFILE_HOME` | `$HOME/.claude-profiles` | Where per-account config dirs live |
+| `CC_BASE_SETTINGS` | `$HOME/.claude/settings.json` | Shared settings that `ccsync` applies to each profile |
+| `CC_PROFILE_KEEP` | `theme preferredNotifChannel agentPushNotifEnabled skipWorkflowUsageWarning` | Keys a profile owns; `ccsync` never overwrites them |
+
+Two behaviours matter:
+
+- **Profiles drift.** `CLAUDE_CONFIG_DIR` relocates the whole config dir, so each profile gets its own
+  `settings.json`, and a new profile starts without your permissions, hooks, plugins or env.
+  `ccsync` merges `CC_BASE_SETTINGS` into the profile while keeping the `CC_PROFILE_KEEP` keys. It
+  backs up to `settings.json.bak`, reports any key it drops, and never touches `.credentials.json`.
+  It is deliberately not a symlink: CC writes to `settings.json`, so concurrent profiles would race
+  on one file, and an atomic tmp-and-rename write silently replaces the symlink with a copy.
+- **Permissions.** `ccp` and `ccsync` set the profile dirs to `700`. Under a default umask, `mkdir -p`
+  leaves them `755`, so other local users could read `history.jsonl` and `projects/` transcripts,
+  even though `.credentials.json` itself is `600`.
+
 ## Tools
 
 | Tool | Mechanism | Concurrent? | Signals (2026-07-23) | License |
@@ -75,6 +107,7 @@ Adjacent categories that look similar but solve different problems:
 |---|---|
 | [CC debug-your-config guide][debug-config] | `CLAUDE_CONFIG_DIR` behavior, per-platform credential storage (primary first-party source) |
 | [CC env vars reference][env-vars] | Confirmed gap: variable not listed (checked 2026-07-23) |
+| [`scripts/cc-multi-account.sh`](../../scripts/cc-multi-account.sh) | Repo helper: commands, env vars, `ccsync` and permission behaviour (source read 2026-09-23) |
 | [claude-swap][claude-swap] | Concurrent multi-account rotation; repo metadata via GitHub API, 2026-07-23 |
 | [claude-code-profiles][cc-profiles] | Profile-switching wrapper; repo metadata via GitHub API, 2026-07-23 |
 | [claude-multiprofile][multiprofile] | CLI + Desktop profile isolation; repo metadata via GitHub API, 2026-07-23 |
