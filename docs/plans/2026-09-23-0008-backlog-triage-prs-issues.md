@@ -1,0 +1,100 @@
+---
+title: Backlog triage — open PRs, branches and issues (2026-09-23)
+status: draft
+issue: 438, 433, 417, 410, 254, 347, 348, 309, 382, 232
+created: 2026-09-23
+updated: 2026-09-23
+---
+
+**Status**: Reference (plan)
+
+Read-only audit of every open PR, every non-main branch and every open issue, run 2026-09-23 by two
+subagents. **Nothing has been merged, closed or deleted yet.** In scope: PRs/issues authored by
+`qte77`, GitHub Actions bots and Dependabot (all 29 open PRs and all 10 open issues qualified).
+
+## Current status
+
+- **Shipped:** nothing yet — this doc is the plan.
+- **Next, in order:** Phase A rows (agent gate) in the table below, top to bottom → pre-stage the
+  owner-review PRs → one owner sitting (Phase B).
+- **Owner gates:** bot-PR merges (`--admin` is confirm-before-run in global settings), #434
+  decision, producthunt lychee exclude, closing #382, deciding #232, #309 scope.
+- **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
+  (invalid env tokens shadow the stored credential).
+- **Watch-outs:**
+  - Squash-merges break ancestry → judge "already landed" by content (`git cherry main <branch>`),
+    not `git branch --merged`.
+  - main requires strict up-to-date branches → merge bot PRs **one at a time**, updating the next
+    branch after each.
+  - All 29 PRs show `BLOCKED`; the reason was **not verified** (ruleset API not queried).
+
+## Source map
+
+### Open PRs (29)
+
+Each monitor keeps a cumulative state file, so the newest PR in a category contains the older ones.
+
+| Category | Newest (merge) | Superseded (close) | State file | Supersession evidence |
+|---|---|---|---|---|
+| changelog-triage | #442 | #413, #419, #423, #427, #430, #435, #439 | `.github/state/native-monitor-state.json` | **Content-verified**: tokens from #413's triage file present in #442 |
+| community-triage | #443 | #415, #421, #425, #428, #431, #436, #440 | `community-monitor-state.json` | Inferred from shared state file — not content-diffed |
+| learnings-aggregation | #444 | #416, #422, #426, #429, #432, #437, #441 | `learnings-aggregator-state.json` | Inferred — not content-diffed |
+| outage-archive | #424 | #414, #420 | `outages.jsonl` / `outage-stats.md` | Inferred (cumulative append) — not content-diffed |
+| rxiv-paper-triage | #418 | — | rxiv-only files | Sole PR in category |
+| Dependabot actions bump | #434 | — | — | Lint/lychee + rxiv `eval/evaluate` jobs fail. Lychee flakiness is known; rxiv failure *guessed* to be missing secrets on Dependabot PRs — logs not read (`gh run view 34025441955 --log-failed`) |
+
+### Branches
+
+| Branch | State | Evidence |
+|---|---|---|
+| `feat/ccsync-and-profile-perms` | local only, 1 commit ahead (506b91e, `scripts/cc-multi-account.sh` +69), no PR | `ls-remote` empty; missing `changelog.d/` fragment |
+| `docs/a11y-tree-and-agent-browser` | local only, content on main | PR #378 merged 2026-07-17; `git cherry` equivalent |
+| `feat/doc-status-validator` | local only, content on main | PR #380 merged 2026-07-17; `git cherry` equivalent |
+| `tmp/graph-replay` | local only, never pushed | content on main via b168436; `git cherry` equivalent |
+
+### Open issues (10), by cluster
+
+| Cluster | Issue | ROI | Feasibility | Gate | Evidence |
+|---|---|---|---|---|---|
+| Docs gaps | #438 ListAgents / cross-session messaging | H | M | agent | Only `ListPeers` in `docs/cc-native/agents-skills/CC-agent-teams-orchestration.md`; owner comment 2026-09-08 widens scope to the whole feature (v2.1.224) |
+| Docs gaps | #433 robots.txt Content-Signal + llms.txt | M | H | agent | No robots/llms file in repo; `.github/workflows/gh-pages.yaml:44` copies `ui/.` to site root |
+| CI/monitors | #417 link-rot report | M | H | agent + owner | claude.com 404 (repoint); ampcode.com HTTP/2 error seen once; producthunt 403 (bot-block → owner-approved exclude) |
+| CI/monitors | #410 feed.xml as changelog-monitor trigger | M | H | agent | Decision narrowed in thread; no `feed.xml` refs in workflows/scripts |
+| CI/monitors | #254 drop vibekanban.com lychee exclude | L | H | agent | Still at `lychee.toml:89`; site now says Vibe Kanban is sunsetting → stale-fact risk in `CC-office-worker-workflows.md` |
+| Release infra | #347 adopt qte77/.github reusable release workflows | M | H | agent | Blocker qte77/.github#33 merged 2026-07-17; `tag-release.yaml` / `publish-release.yaml` / `bump-my-version.yaml` not yet using it |
+| Trackers | #348 status → frontmatter migration | M | H | agent | Validator shipped (#380); 158 body badges remain (excl. `docs/archive/`); plan: [2026-07-05-0003-status-frontmatter-migration.md](2026-07-05-0003-status-frontmatter-migration.md) |
+| Trackers | #309 project restructure | H | M | agent | Phase 2 done (#361), Phase 3 done (topics 14/14), "track #308" done (#308 closed); Phase 1 (`non-cc/` subdivision, 72 flat entries) not started. The "staged" Phase 1 plan referenced in agent memory was **not found** in `docs/plans/` |
+| Close-candidate | #382 semantic-search research | — | — | owner | Downstream azure-doc-workflows#165 closed/completed with the recommended approach |
+| Owner decision | #232 paid automation | — | — | owner | Needs API keys + recurring spend if activated |
+
+## Remaining work
+
+The only list of open work in this plan. Strike a row in the PR that ships it.
+
+| # | Item | Gate | Done-when |
+|---|---|---|---|
+| 1 | Close 23 superseded bot PRs (list in source map) | agent | All 23 closed with a "superseded by #NNN" comment; reopenable |
+| 2 | Delete 3 merged local branches | agent | `git branch` no longer lists them |
+| 3 | #309: tick Phase 2, Phase 3 and "track #308" checkboxes | agent | Checkboxes updated; issue stays open for Phase 1 |
+| 4 | Ship `feat/ccsync-and-profile-perms` | agent | `changelog.d/` fragment added, branch pushed, PR open with green CI |
+| 5 | #417: repoint the claude.com 404; recheck ampcode.com on next weekly run | agent | Lychee clean except approved excludes |
+| 6 | #433: add `ui/robots.txt` + `ui/llms.txt` | agent | Both served at the Pages site root after deploy |
+| 7 | #254: test-run lychee without the vibekanban exclude; flag the sunsetting fact | agent | Exclude removed (passes) or confirmed still needed; stale-fact noted |
+| 8 | #438: new cross-session messaging doc (ListAgents, SendMessage, v2.1.224) | agent → owner review | PR open, first-party sourced |
+| 9 | #410: feed.xml trigger per the narrowed decision | agent → owner review | Workflow PR open |
+| 10 | #347: SHA-pinned reusable release workflows | agent → owner review | PR open |
+| 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
+| 12 | #309 Phase 1: `non-cc/` subdivision plan + first move PR | agent → owner review | Plan committed, PR open, lychee green |
+| 13 | Merge newest bot PRs #442, #443, #444, #424, #418, one at a time | owner | All five merged; branches deleted |
+| 14 | #434: read failed logs, then merge or re-run | owner | Merged or closed with reason |
+| 15 | #417: approve producthunt exclude | owner | Exclude added or rejected |
+| 16 | Close #382; decide #232; decide #309 scope (keep vs. split) | owner | Each issue closed or updated with decision |
+
+## Unverified
+
+- Why every PR is `BLOCKED` (ruleset not queried).
+- Supersession of the community, learnings and outage-archive PRs (inferred, not content-diffed).
+- Root cause of #434's rxiv-eval failure.
+- Whether ampcode.com's error persists (one data point).
+- vibekanban.com under lychee's own TLS check (only WebFetch tried).
+- gh-pages branch contents (inferred from the workflow step).
