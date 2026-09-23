@@ -71,6 +71,55 @@ Each monitor keeps a cumulative state file, so the newest PR in a category conta
 | Close-candidate | #382 semantic-search research | — | — | owner | Downstream azure-doc-workflows#165 closed/completed with the recommended approach |
 | Owner decision | #232 paid automation | — | — | owner | Needs API keys + recurring spend if activated |
 
+### Merge gate (verified 2026-09-23)
+
+Ruleset `13630270` on `main`: the only required status check is **CodeFactor**, plus required
+signatures, linear history and a `code_quality` rule; 0 approvals. The bot PRs show `BLOCKED` because
+their commits are unsigned (#442 head `verified:false, reason:"unsigned"`) → owner `--admin` merge.
+The lychee failures on #445–#447 are corpus-wide rot that none of the three PRs touches. #434's two
+failures are environmental: the same lychee rot, plus a GitHub Models outage (`HTTP 410 …
+github_models_retirement_brownout`).
+
+New rot found in those runs (not yet fixed): `github.com/anthropic-experimental/sandbox-runtime/issues/139`
+404 ×4 in `docs/cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md`; pwc.com PDF 403 in
+`agentic-sdlc-patterns.md`; beyondtrust.com 403 in `agent-identity-auth-landscape.md` (this one was
+already failing on main's 2026-07-23 run).
+
+### Pre-stage briefs (rows 8–12)
+
+Each brief was produced by the triage subagent on 2026-09-23. The spot-checks marked ✓ were re-verified in the main session.
+
+- **#438 (row 8):** first-party source `https://code.claude.com/docs/en/cross-session-messaging` ✓
+  (v2.1.224+ macOS/Linux/WSL2, v2.1.234+ native Windows; sub-gates v2.1.225/232/236/239/247/248/251/271
+  inline) and `https://code.claude.com/docs/en/whats-new/2026-w32` (ship week). Existing coverage:
+  `docs/cc-native/agents-skills/CC-agent-teams-orchestration.md` §"UDS Inbox (Unreleased)" (~L362–395,
+  `ListPeers` row) — keep separate from §"Coordinator Mode (Unreleased)". **Default:** new
+  `docs/cc-native/agents-skills/CC-cross-session-messaging-analysis.md`, plus a cross-ref in the UDS Inbox
+  section correcting its "Unreleased" framing.
+- **#410 (row 9):** the feed is `https://github.com/anthropics/claude-code/releases.atom` (entry `id`
+  `tag:github.com,2008:Repository/937253475/vX.Y.Z`, per-entry `updated`). Touch
+  `.github/workflows/cc-changelog-monitor.yaml:30-35` (add a feed fetch step) and
+  `.github/scripts/lib/changelog.py` (parse `id`/`updated` with stdlib `xml.etree`). Use `id` for
+  dedup/trigger; CHANGELOG.md stays the only content source.
+- **#347 (row 10):** pin `qte77/.github` @ `613b950b4045cc099ca23f8b7344459c3dc22cb3` ✓
+  (`bump-version.yml`, `tag-release.yml`, `publish-release.yml` ✓). Caller overrides: tag-release
+  `version_regex: '^current_version = "(.*)"'` (`pyproject.toml:14` ✓, since the default regex would
+  silently miss); bump-version `collect_scriv: true` + `bump_my_version_pin` (**default** `1.3.0` —
+  currently unpinned); publish-release needs none. Side benefit: the shared bump commits through the
+  API, so its commits are signed.
+- **#348 (row 11):** PR 1 = `docs/cc-native/`, **61 docs** ✓ (configuration 15, agents-skills 9,
+  plugins-ecosystem 9, ci-remote 8, sessions 7, context-memory 5, sandboxing 5, model-internals 3). List:
+  `git grep -l '^\*\*Status\*\*:' -- docs/cc-native/`. Transform per plan 0003. **Default:** split by
+  feature subdir. The plan's two special-case files are in `non-cc/` (PR 2).
+- **#309 Phase 1 (row 12):** `docs/non-cc/` has 70 docs + README in 9 README sections; 3 docs are
+  unindexed (`agents-md-cookbook-analysis.md`, `moss-self-evolving-agent-analysis.md`,
+  `on-device-semantic-search-landscape.md`). Clean merge: Knowledge Mgmt + Context & Memory Infra +
+  on-device search → `memory-kg-rag/` (10). **Defaults for the 3 mapping calls:** Infrastructure (9) →
+  `reference/`; Agents (7) → coding-agent-shaped ones to `coding-agents/`, the rest to `frameworks/`;
+  `visualization/` is too thin (≈1 doc) → fold into `protocols/`. Repoint surface: 60 files outside
+  `non-cc/` (493 occurrences) plus ~40 sibling links; lychee is the backstop. **Default:** one PR per
+  subdir.
+
 ## Remaining work
 
 The only list of open work in this plan. Strike a row in the PR that ships it.
