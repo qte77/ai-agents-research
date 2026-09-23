@@ -18,8 +18,11 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
 - **Shipped (2026-09-23):** 23 superseded bot PRs closed, including the 7 community-triage PRs
   (#415–#440), once every row they alone carried was confirmed present in main's `triage/`. Merged
   with owner `--admin` squash: #445 (this plan), #446 (ccsync), #447 (link rot, closes #254), #434
-  (actions bump), #442, #444, #424, #418, #443. #433 closed with evidence. #309 boxes ticked. No
-  open branches remain besides `main`.
+  (actions bump), #442, #444, #424, #418, #443, then #448–#451 and #453 (plan bookkeeping,
+  permission-rule fix, ccsync docs, sandbox-runtime repoint). **v0.8.0 released** (#454, tag
+  `v0.8.0`, GitHub Release published). #433 closed with evidence; #309 boxes ticked and Phase 1
+  layout commented; #347 scope commented; plan 0001 tracked in #452. No open branches remain
+  besides `main`.
 - **Next, in order:** rows 8–10 pre-stage PRs → row 20 research (H list) → rows 12, then 11 → one
   owner sitting for rows 15–16.
 - **Owner gates:** producthunt lychee exclude, closing #382, deciding #232, #309 scope, and review
@@ -181,7 +184,7 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~2~~ | ~~Delete 3 merged local branches~~ | agent | Done 2026-09-23 (`git cherry` equivalent before deleting) |
 | ~~3~~ | ~~#309: tick Phase 2, Phase 3 and "track #308"~~ | agent | Done 2026-09-23; issue stays open for Phase 1 |
 | ~~4~~ | ~~Ship `feat/ccsync-and-profile-perms`~~ | owner | Done 2026-09-23: #446 merged |
-| 5 | #417: claude.com 404 removed (#447); recheck ampcode.com on next weekly run | agent | Next weekly report has no ampcode.com error, or it's triaged |
+| ~~5~~ | ~~#417: claude.com 404 removed; recheck ampcode.com~~ | agent | Done 2026-09-23: ampcode.com HTTP/2 error recurred (weekly run + full local run) yet returns 200 via polyfetch → lychee incompatibility, moved to 21b |
 | ~~6~~ | ~~#433: Content-Signal / llms.txt~~ | owner | Done 2026-09-23: closed with evidence — host-root robots.txt already carries Content-Signal; no llms.txt for now |
 | ~~7~~ | ~~#254: vibekanban exclude dropped~~ | owner | Done 2026-09-23: #447 merged, #254 closed |
 | 8 | #438: new cross-session messaging doc (ListAgents, SendMessage, v2.1.224) | agent → owner review | PR open, first-party sourced |
@@ -198,7 +201,7 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~19~~ | ~~Cluster pass-2 leads into topics; coverage; placement~~ | agent | Done 2026-09-23: 682 topics; results in the Screenshot sources section |
 | 20 | Research the 128 H topics (`h-priority.tsv`), then M on owner request: verify a first-party URL per claim per the entry rule, then extend or create docs | agent → owner review | One PR per target doc; every claim cites a first-party source; lint + lychee clean |
 | ~~21~~ | ~~Repoint `sandbox-runtime` links~~ | agent | Done 2026-09-23: repo moved to `anthropics/sandbox-runtime` (#139 still open); 5 links in 3 sandboxing docs repointed, lychee clean |
-| 21b | Bot-block excludes: `www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf` (`agentic-sdlc-patterns.md`) and `www.beyondtrust.com/resources/glossary/just-in-time-access` (`agent-identity-auth-landscape.md`). Both return 200 via polyfetch (2026-09-23) and 403 only to lychee | owner | Exact-URL excludes added to `lychee.toml` (Salesforce precedent), or rejected |
+| 21b | Bot-block excludes: `www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf` (`agentic-sdlc-patterns.md`) and `www.beyondtrust.com/resources/glossary/just-in-time-access` (`agent-identity-auth-landscape.md`). Both return 200 via polyfetch (2026-09-23) and 403 only to lychee. Also `ampcode.com` (`amp-analysis.md`): 200 via polyfetch, persistent HTTP/2 protocol error to lychee (same class as the existing `epo.org` exclude). These plus row 15's producthunt 403 are the only failures in a full lychee run (4,440 links, 5 errors) | owner | Exact-URL excludes added to `lychee.toml` (Salesforce precedent), or rejected |
 
 ## Unverified
 
