@@ -14,23 +14,23 @@ subagents. **Nothing has been merged, closed or deleted yet.** In scope: PRs/iss
 
 ## Current status
 
-- **Shipped (2026-09-23):** 16 superseded bot PRs closed; 3 merged local branches deleted; #309
-  boxes ticked; PRs opened — #446 (ccsync), #447 (link-rot #417/#254).
-- **Found while executing:** the 7 community-triage PRs are **not** fully superseded by #443 (2–6
-  items each are missing from it, checked by item key) — held open, row 1b. #433 needs no file in
-  this repo — host-root `qte77.github.io/robots.txt` already carries `Content-Signal` (row 6).
-- **Next, in order:** remaining agent rows below → pre-stage the owner-review PRs → one owner
-  sitting (Phase B).
-- **Owner gates:** bot-PR merges (`--admin` is confirm-before-run in global settings), #434
-  decision, producthunt lychee exclude, closing #382, deciding #232, #309 scope.
+- **Shipped (2026-09-23):** 23 superseded bot PRs closed, including the 7 community-triage PRs
+  (#415–#440), once every row they alone carried was confirmed present in main's `triage/`. Merged
+  with owner `--admin` squash: #445 (this plan), #446 (ccsync), #447 (link rot, closes #254), #434
+  (actions bump), #442, #444, #424, #418, #443. #433 closed with evidence. #309 boxes ticked. No
+  open branches remain besides `main`.
+- **Next, in order:** row 19 (screenshot placement) → rows 8–12 pre-stage PRs → row 20 research →
+  one owner sitting for rows 15–16.
+- **Owner gates:** producthunt lychee exclude, closing #382, deciding #232, #309 scope, and review
+  of the pre-stage PRs and screenshot placement table.
 - **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
   (invalid env tokens shadow the stored credential).
 - **Watch-outs:**
   - Squash-merges break ancestry → judge "already landed" by content (`git cherry main <branch>`),
     not `git branch --merged`.
-  - main requires strict up-to-date branches → merge bot PRs **one at a time**, updating the next
-    branch after each.
-  - All 29 PRs show `BLOCKED`; the reason was **not verified** (ruleset API not queried).
+  - main requires strict up-to-date branches → merge PRs **one at a time**: `gh pr update-branch`,
+    wait for the required CodeFactor check, then `gh pr merge --squash --admin --delete-branch`
+    (the owner's `--admin` gets past required signatures; see Merge gate).
 
 ## Source map
 
@@ -101,12 +101,17 @@ Each brief was produced by the triage subagent on 2026-09-23. The spot-checks ma
   `.github/workflows/cc-changelog-monitor.yaml:30-35` (add a feed fetch step) and
   `.github/scripts/lib/changelog.py` (parse `id`/`updated` with stdlib `xml.etree`). Use `id` for
   dedup/trigger; CHANGELOG.md stays the only content source.
-- **#347 (row 10):** pin `qte77/.github` @ `613b950b4045cc099ca23f8b7344459c3dc22cb3` ✓
-  (`bump-version.yml`, `tag-release.yml`, `publish-release.yml` ✓). Caller overrides: tag-release
-  `version_regex: '^current_version = "(.*)"'` (`pyproject.toml:14` ✓, since the default regex would
-  silently miss); bump-version `collect_scriv: true` + `bump_my_version_pin` (**default** `1.3.0` —
-  currently unpinned); publish-release needs none. Side benefit: the shared bump commits through the
-  API, so its commits are signed.
+- **#347 (row 10), narrowed 2026-09-23 to the estate convention:** the estate convention
+  (`qte77/qte77/docs/doc-structure.md:86-92`) names only the reusable **`tag-release`** and
+  **`publish-release`**, triggered by a human-merged bump PR. It does not name the reusable
+  `bump-version.yml`. So: keep this repo's own `bump-my-version.yaml`, which opens the bump PR for
+  the owner to merge, and replace only `tag-release.yaml` and `publish-release.yaml` with `uses:`
+  calls to `qte77/.github` @ `613b950b4045cc099ca23f8b7344459c3dc22cb3` ✓. Pin with a date comment,
+  as `qte77/qte77` does (`# 2026-MM-DD`): the repo has no tags, so Dependabot can't advance this pin
+  and it needs a manual refresh. Overrides: tag-release `version_regex: '^current_version = "(.*)"'`
+  (`pyproject.toml:14` ✓), because the default regex would silently miss; publish-release needs none.
+  Grant `issues: write` in both callers, even though they don't use it: the reusable notify job needs
+  it at startup (`qte77/qte77` commit `7bdf439`).
 - **#348 (row 11):** PR 1 = `docs/cc-native/`, **61 docs** ✓ (configuration 15, agents-skills 9,
   plugins-ecosystem 9, ci-remote 8, sessions 7, context-memory 5, sandboxing 5, model-internals 3). List:
   `git grep -l '^\*\*Status\*\*:' -- docs/cc-native/`. Transform per plan 0003. **Default:** split by
@@ -144,31 +149,30 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | # | Item | Gate | Done-when |
 |---|---|---|---|
 | ~~1~~ | ~~Close superseded changelog/learnings/outage bot PRs~~ | agent | Done 2026-09-23: 16 closed (#413–#439 → #442, #416–#441 → #444, #414/#420 → #424), each verified by item key |
-| 1b | Community-triage PRs #415, #421, #425, #428, #431, #436, #440 | owner | Decide: merge oldest-first, or close accepting the loss of 2–6 items each that #443 lacks |
+| ~~1b~~ | ~~Community-triage PRs #415, #421, #425, #428, #431, #436, #440~~ | owner | Done 2026-09-23: closed, branches deleted. After #443 and #442 merged, all 6 rows they alone carried are in main's `triage/` |
 | ~~2~~ | ~~Delete 3 merged local branches~~ | agent | Done 2026-09-23 (`git cherry` equivalent before deleting) |
 | ~~3~~ | ~~#309: tick Phase 2, Phase 3 and "track #308"~~ | agent | Done 2026-09-23; issue stays open for Phase 1 |
-| 4 | Ship `feat/ccsync-and-profile-perms` | owner | PR #446 open (fragment added, shellcheck clean) — merge when CI green |
+| ~~4~~ | ~~Ship `feat/ccsync-and-profile-perms`~~ | owner | Done 2026-09-23: #446 merged |
 | 5 | #417: claude.com 404 removed (#447); recheck ampcode.com on next weekly run | agent | Next weekly report has no ampcode.com error, or it's triaged |
 | ~~6~~ | ~~#433: Content-Signal / llms.txt~~ | owner | Done 2026-09-23: closed with evidence — host-root robots.txt already carries Content-Signal; no llms.txt for now |
-| 7 | #254: vibekanban exclude dropped (#447) — sunsetting already documented (2026-06-20) | owner | PR #447 merged |
+| ~~7~~ | ~~#254: vibekanban exclude dropped~~ | owner | Done 2026-09-23: #447 merged, #254 closed |
 | 8 | #438: new cross-session messaging doc (ListAgents, SendMessage, v2.1.224) | agent → owner review | PR open, first-party sourced |
 | 9 | #410: feed.xml trigger per the narrowed decision | agent → owner review | Workflow PR open |
-| 10 | #347: SHA-pinned reusable release workflows | agent → owner review | PR open |
+| 10 | #347: reusable `tag-release` + `publish-release` only (keep own bump workflow) | agent → owner review | PR open; one real tag + publish run succeeds |
 | 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
 | 12 | #309 Phase 1: `non-cc/` subdivision plan + first move PR | agent → owner review | Plan committed, PR open, lychee green |
-| 13 | Merge newest bot PRs #442, #443, #444, #424, #418, one at a time | owner | All five merged; branches deleted |
-| 14 | #434: read failed logs, then merge or re-run | owner | Merged or closed with reason |
+| ~~13~~ | ~~Merge newest bot PRs #442, #443, #444, #424, #418~~ | owner | Done 2026-09-23: all five merged, branches deleted |
+| ~~14~~ | ~~#434: read failed logs, then merge~~ | owner | Done 2026-09-23: failures were environmental (lychee rot, GitHub Models outage); merged |
 | 15 | #417: approve producthunt exclude | owner | Exclude added or rejected |
 | 16 | Close #382; decide #232; decide #309 scope (keep vs. split) | owner | Each issue closed or updated with decision |
 | ~~17~~ | ~~Screenshot pass 1: tag 1,433 images in / maybe / out~~ | agent | Done 2026-09-23: `shots-merged.tsv` (spot-checked) |
-| 18 | Screenshot pass 2: extract URLs, handles, entities, descriptions for the 929 in-scope + maybe images | agent | `detail/chunk-001…038.jsonl` exist, one line per image |
+| ~~18~~ | ~~Screenshot pass 2: extract URLs, handles, entities, descriptions~~ | agent | Done 2026-09-23: 921 of 929 records (8 missing), 726 URLs (51 truncated); lnkd.in short links resolved to real targets via polyfetch → `lnkd-resolved.tsv` |
 | 19 | Cluster pass-2 leads into distinct topics; `git grep` coverage; propose extend `<doc §>` / new `<path>` / covered / out of scope | agent | Topic → placement table added to this plan's source map for owner review |
 | 20 | Research the owner-approved topics: find and verify a first-party URL for every claim, then extend or create docs | agent → owner review | One PR per topic cluster; every claim cites a first-party source; lint + lychee clean |
+| 21 | New link rot (Merge gate section): find where `sandbox-runtime/issues/139` moved (4 links in `CC-sandbox-bwrap-host-quirks.md` + the `.gitignore` comment); triage the pwc.com and beyondtrust.com 403s | agent | Links repointed or removed; bot-block excludes proposed to the owner, not added |
 
 ## Unverified
 
 - Whether ampcode.com's error persists (one data point).
 - What the ruleset's `code_quality` rule gates.
-- Signature status of #443, #444, #424 and #418 individually (only #442 was queried; same bot, presumed unsigned).
-- vibekanban.com under lychee's own TLS check (only WebFetch tried).
 - gh-pages branch contents (inferred from the workflow step).
