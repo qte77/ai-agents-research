@@ -32,8 +32,8 @@ license as `other`/`NOASSERTION` rather than recognizing it as `apache-2.0`.
 No deviation from the standard Apache-2.0 template was found in the decoded
 text, so this reads as a detector-confidence artifact rather than a
 substantive license difference — but it is flagged here because GitHub's
-UI-level license badge will show as unlicensed/other despite the file
-itself being standard Apache-2.0.
+UI-level license badge will show as `Other` despite the file itself being
+standard Apache-2.0.
 
 ## Repo Stats (2026-09-24)
 
