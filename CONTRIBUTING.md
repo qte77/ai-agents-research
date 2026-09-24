@@ -276,5 +276,9 @@ existing CHANGELOG entries. `make changelog_preview` shows the assembled result.
 4. **Publish (optional)** — run the `publish-release` workflow to create a GitHub
    Release with notes extracted from the matching CHANGELOG section.
 
+`tag-release.yaml` and `publish-release.yaml` are thin callers of the estate's reusable
+workflows in `qte77/.github`, pinned to a commit SHA with a date comment. That repo has no
+tags, so Dependabot can't advance the pin: refresh it by hand when the reusable workflows change.
+
 > **Transition note:** `## [Unreleased]` content predating this flow is collected
 > into the first tagged release (`v0.4.0`); from `v0.5.0` onward, use fragments.
