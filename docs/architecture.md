@@ -94,7 +94,7 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 | Community monitor | Community forums, GitHub | `triage/community/` | Monday 10:00 UTC |
 | ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → LLM relevance filter | `triage/rxiv/` | Tuesday 09:00 UTC |
 
-Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key.
+Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key. The CC changelog monitor's trigger uses `releases.atom` entry ids as its dedup ledger, falling back to the scan-doc version cutoff alone when the feed is unavailable — `CHANGELOG.md` stays the sole content source either way (#410).
 
 A fifth scheduled workflow — `link-rot-monitor` (Monday 12:00 UTC) — is a **health** monitor rather than a content monitor: it runs lychee weekly and upserts (then auto-closes) a single `link-rot` issue when external links break. See [Lint Gate](#lint-gate).
 
