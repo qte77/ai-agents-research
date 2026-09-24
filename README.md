@@ -48,7 +48,7 @@ development across the qte77 ecosystem.
 
 - [An Open Agentic Coding Harness](https://qte77.github.io/open-agentic-coding-harness/) — the write-up this catalog feeds
 - [cc-recursive-team-mode](https://github.com/qte77/cc-recursive-team-mode) — recursive CC subprocess spawning, session-artifact research
-- [coding-agent-eval](https://github.com/qte77/coding-agent-eval) — hands-off coding-agent comparison harness
+- [coding-harness-eval](https://github.com/qte77/coding-harness-eval) — hands-off coding-agent comparison harness
 - [multi-tasking-quality-benchmark](https://github.com/qte77/multi-tasking-quality-benchmark) — WakaTime activity vs code-quality correlation
 - [Agents-eval](https://github.com/qte77/Agents-eval) — origin: these analyses began here, to inform a multi-agent evaluation framework
 

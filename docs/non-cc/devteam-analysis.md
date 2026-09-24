@@ -3,7 +3,7 @@ title: agent-era/devteam Analysis
 source: https://github.com/agent-era/devteam
 purpose: Analysis of devteam as a terminal-based multi-agent orchestration tool for parallel coding agent workflows.
 created: 2026-03-20
-updated: 2026-03-20
+updated: 2026-09-24
 ---
 
 **Status**: Active development (MIT licensed, open source)
@@ -73,7 +73,7 @@ devteam
 | Platform | Cross-platform (Node.js) | macOS only (preview) |
 | Cost | Free | JetBrains AI subscription or BYOK |
 
-## Relevance to coding-agent-eval
+## Relevance to coding-harness-eval
 
 **Tier 2** (orchestrator, no headless). Cannot be automated in the harness.
 However, devteam's git worktree pattern directly informs the harness design --
