@@ -1,4 +1,0 @@
-### Added
-
-- `docs/cc-native/agents-skills/CC-cross-session-messaging-analysis.md`: new analysis of Claude Code's first-party cross-session messaging — `ListAgents`/`SendMessage`, `/list-agents` (`/peers`), the delivery/trust model (`crossSessionInbound` accept/hold/refuse, `isolatePeerMachines`), `notify_when_idle`, cross-machine messaging via Remote Control, the inbox socket (`CLAUDE_CODE_MESSAGING_SOCKET`/`CLAUDE_CODE_MESSAGING_TOKEN`), limits, and version gates (v2.1.224 base feature through v2.1.271) cross-checked against the `anthropics/claude-code` CHANGELOG — flags an unreconciled native-Windows gate discrepancy between the docs page (v2.1.234) and the CHANGELOG (v2.1.239). Closes #438.
-- `docs/cc-native/agents-skills/CC-agent-teams-orchestration.md`: currency-pass correction on the "UDS Inbox (Unreleased)" section — the leaked mechanism it described has shipped as the documented cross-session messaging feature; cross-referenced to the new doc.
