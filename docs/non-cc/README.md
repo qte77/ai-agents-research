@@ -148,7 +148,7 @@ The former coding-agent backlog — Cline, opencode, Codebuff, Gemini CLI, Curso
 Antigravity, Kiro, Codex CLI, VS Code Copilot Chat, Devin CLI, Windsurf, Aider,
 Amazon Q, CodeBuddy, Kilo Code, Trae, Kimi Code, Amp, Pi — is now analyzed under
 [Coding Agents & IDEs](#coding-agents--ides) above. See the
-[coding-agent-eval plan](https://github.com/qte77/coding-agent-eval) for the
+[coding-harness-eval plan](https://github.com/qte77/coding-harness-eval) for the
 broader comparison landscape.
 
 **Disambiguation.** [GitHub Copilot CLI](github-copilot-cli-analysis.md)

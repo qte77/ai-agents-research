@@ -3,7 +3,7 @@ title: JetBrains Air Analysis
 source: https://air.dev, https://blog.jetbrains.com/air/2026/03/air-launches-as-public-preview-a-new-wave-of-dev-tooling-built-on-26-years-of-experience/
 purpose: Analysis of JetBrains Air as an agentic development environment for multi-agent orchestration.
 created: 2026-03-20
-updated: 2026-03-20
+updated: 2026-09-24
 ---
 
 **Status**: Public Preview (macOS only, Windows/Linux planned 2026)
@@ -66,13 +66,13 @@ agents rather than writing code itself.
 - Requires JetBrains AI subscription or provider API keys
 - No Anthropic subscription support for BYOK (API key required)
 
-## Relevance to coding-agent-eval
+## Relevance to coding-harness-eval
 
 **Tier 2** (AI IDE / orchestrator, no headless). Air cannot be included in
 the automated harness comparison since it has no CLI or headless mode. However,
 it is relevant as a **competing orchestration pattern** -- Air's multi-agent
 parallel task model with git worktree isolation mirrors what the
-coding-agent-eval harness builds programmatically.
+coding-harness-eval harness builds programmatically.
 
 ## Sources
 
