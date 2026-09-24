@@ -49,10 +49,10 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
   virtual-memory idea one level up from PagedAttention: decouples GPU *virtual* addressing from
   *physical* KV allocation so vLLM (≥v0.8.4) and SGLang (≥v0.4.9) can elastically share one GPU across
   multiple LLM instances with no engine-code changes, plus a frontend router and per-model sleep mode.
-  **Shipped** — v0.1.5 (2026-04-07), 1,484 stars, listed by the project itself as adopted internally at
-  Google, LinkedIn, Intel, AMD, and Red Hat (accessed 2026-09-24). Vendor-reported benchmark: **2–28x
-  TTFT reduction** serving three Llama-3.1-8B instances on one A100-80G under intermittent-peak load,
-  vs. static per-model memory reservation.
+  **Shipped** — v0.1.5 (2026-04-07), 1,484 stars, and listed under the README's own "Trusted and
+  deployed by" logos (Google, LinkedIn, Intel, AMD, Red Hat, and others; accessed 2026-09-24). Vendor-
+  reported benchmark: **2–28x TTFT reduction** serving three Llama-3.1-8B instances on one A100-80G
+  under intermittent-peak load, vs. static per-model memory reservation.
 
 ### Cross-request reuse (prefix caching)
 

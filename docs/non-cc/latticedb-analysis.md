@@ -35,19 +35,14 @@ Cross-vendor comparisons in the README (vs. Neo4j, Kuzu, FAISS, Weaviate, Qdrant
 
 ## Adoption Decision
 
-**Assess.** MIT-licensed, ~9 months old (created 2025-12), with credible self-reported latency numbers for the embedded-single-writer niche it targets (comparable in spirit to the now-archived Kuzu). Worth a pilot for local-first agent-memory or RAG use cases where a single embedded process is acceptable; the low bus factor (4 contributors) and young ecosystem are the main risks to track before depending on it in production.
+**Assess.** MIT-licensed, ~9 months old (created 2025-12), with credible self-reported latency numbers for the embedded-single-writer niche it targets — comparable in spirit to Kuzu, which LatticeDB's own README notes was archived in October 2025. Worth a pilot for local-first agent-memory or RAG use cases where a single embedded process is acceptable; the low bus factor (4 contributors) and young ecosystem are the main risks to track before depending on it in production.
 
 ## Sources
 
 | Source | Content |
 |---|---|
 | [LatticeDB GitHub repo][repo] (README) | Architecture, query language, feature list, benchmark tables, license (accessed 2026-09-24) |
-| [GitHub API — repo metadata][gh-api] | Stars, license, language, created/pushed dates (accessed 2026-09-24) |
-| [GitHub API — latest release][gh-release] | v0.15.0, published 2026-08-29 |
-| [GitHub API — contributors][gh-contrib] | 4 contributors (accessed 2026-09-24) |
+| [jeffhajewski/latticedb][repo] (repo metadata, releases, contributors) | Stars, license, language, created/pushed dates, v0.15.0 release date, 4-contributor count (accessed 2026-09-24 via GitHub API) |
 
 [repo]: https://github.com/jeffhajewski/latticedb
 [site]: https://latticedb.org
-[gh-api]: https://api.github.com/repos/jeffhajewski/latticedb
-[gh-release]: https://github.com/jeffhajewski/latticedb/releases/latest
-[gh-contrib]: https://github.com/jeffhajewski/latticedb/graphs/contributors

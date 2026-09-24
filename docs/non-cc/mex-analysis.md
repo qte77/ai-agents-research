@@ -18,7 +18,7 @@ Stars: 1,705 · License: MIT · Language: TypeScript · Latest release: **v0.8.2
 
 ## Key Differentiator: Human Approval Boundary
 
-Agents are readers and drafters, never publishers. Per the README's own "Human approval boundaries" table: an agent can search/retrieve Wiki or Code Graph evidence, create a checkout-local Inbox draft (a proposed knowledge addition/correction) or Relay draft (a handoff), and preview a bounded change — but publishing an Inbox proposal, approving/rejecting it, and publishing/closing a Relay all require an explicit human action. There is no code path for an agent to write canonical memory unilaterally.
+Per the README's own "Human approval boundaries" table: an agent can search/retrieve Wiki or Code Graph evidence, create a checkout-local Inbox draft (a proposed knowledge addition/correction) or Relay draft (a handoff), and preview a bounded change — but publishing an Inbox proposal, approving/rejecting it, and publishing/closing a Relay all require an explicit human action, bound by signed previews that detect stale or altered plans. This gate is procedural, not a technical lock-out: the README also documents that "ordinary GROW upkeep can still update project knowledge directly" outside the Inbox path, that `mex wiki apply` writes only with an explicit `--apply` flag, and that an "exceptional self-approval flow" exists for a single author. The design is reviewed-by-default, not agent-write-proof.
 
 ## Drift Detection
 
@@ -42,17 +42,14 @@ mex does not upload canonical records, the Graph, the Wiki index, drafts, or Hub
 
 ## Adoption Decision
 
-**Assess.** MIT-licensed, actively maintained (22 contributors, a release as recent as 2026-09-13), and its human-approval-gated write model directly addresses a real risk class — an agent silently "correcting" shared project knowledge — without requiring a hosted service. Requires Node ≥22.5 with SQLite FTS5 support; verify that constraint against your CI/dev images before piloting, and note the Code Graph currently covers only TypeScript/TSX, JavaScript/JSX, Python, and Rust.
+**Assess.** MIT-licensed, actively maintained (22 contributors, a release as recent as 2026-09-13), and its Inbox/Relay review workflow addresses a real risk class — an agent silently "correcting" shared project knowledge — without requiring a hosted service, though the gate is procedural (plan/`--apply`, a self-approval path exists for solo use) rather than an enforced technical restriction. Requires Node ≥22.5 with SQLite FTS5 support; verify that constraint against your CI/dev images before piloting, and note the Code Graph currently covers only TypeScript/TSX, JavaScript/JSX, Python, and Rust.
 
 ## Sources
 
 | Source | Content |
 |---|---|
 | [mex GitHub repo][repo] (README) | Architecture, human-approval model, drift detection, agent integrations, telemetry (accessed 2026-09-24) |
-| [GitHub API — repo metadata][gh-api] | Stars, license, language, created/pushed dates (accessed 2026-09-24) |
-| [GitHub API — latest release][gh-release] | v0.8.2, published 2026-09-13 |
+| [mex-memory/mex][repo] (repo metadata + releases) | Stars, license, language, created/pushed dates, v0.8.2 release date (accessed 2026-09-24 via GitHub API) |
 
 [repo]: https://github.com/mex-memory/mex
 [site]: https://mexmemory.com
-[gh-api]: https://api.github.com/repos/mex-memory/mex
-[gh-release]: https://github.com/mex-memory/mex/releases/latest

@@ -11,14 +11,14 @@ validated_links: 2026-09-24
 
 ## What It Is
 
-FrogNano ("Training a 4B Coding Agent via Online Task Synthesis," [arXiv:2609.07925][arxiv], submitted 2026-09-07) is a 4-billion-parameter coding agent post-trained **exclusively via reinforcement learning** — no distillation from a larger teacher model — on roughly 1,500 synthetic software-engineering (SWE) environments. Its central technique is an **online task-synthesis pipeline**: instead of drawing from a fixed static task set, it generates each new training task calibrated to the current checkpoint's "frontier of learnability," and the paper's central finding is that this calibration matters more than task volume for getting a small model competitive.
+FrogNano ("Training a 4B Coding Agent via Online Task Synthesis," [arXiv:2609.07925][arxiv], submitted 2026-09-07) is a 4-billion-parameter coding agent post-trained **exclusively via reinforcement learning** — no distillation from a larger teacher model — on roughly 1,500 synthetic software-engineering (SWE) environments. Its central technique is an **online task-synthesis pipeline**: instead of drawing from a fixed static task set, it generates each new training task calibrated to the current checkpoint's "frontier of learnability." Per the abstract, the paper's evidence is that competitive small coding agents can be trained on synthetic tasks alone (no distillation), and that this learnability-frontier calibration is important to that result.
 
 Authored by the **Froggy Team at Microsoft Research Montréal** (corresponding author Alessandro Sordoni, `froggy@microsoft.com`), with collaborators whose listed email domains indicate affiliation with Mila (Quebec AI Institute) and UC San Diego — per the arXiv HTML author block (accessed 2026-09-24).
 
 ## How It Works
 
 - **Harness**: FrogNano is trained and evaluated inside **Leaf**, described in the paper as a lightweight coding-agent harness built for this project (confirmed in a benchmark-figure caption: "Qwen3.5-4B\* is calculated using Leaf harness. FrogNano numbers are averaged over three runs."). The same harness loop is used for both training and evaluation.
-- **RL framework**: the paper's citations point to the open-source [`slime`][slime] RL framework (specifically its `coding_agent_rl` example) as infrastructure used for the training runs.
+- **RL framework**: in its harness-design discussion, the paper cites the open-source [`slime`][slime] RL framework's `coding_agent_rl` example (specifically `github.com/THUDM/slime/tree/main/examples/coding_agent_rl`); the paper does not state that FrogNano's own training runs used `slime` directly.
 - **Related, not reused**: the Froggy Team's earlier project [debug-gym][debug-gym] ([arXiv:2503.21557][debug-gym-arxiv]) — an interactive text-based debugging harness (`pdb`-style tool use) — is cited as related prior work, not the harness FrogNano trains in.
 
 ## What's Not Released
@@ -35,7 +35,7 @@ No FrogNano code, model weights, or a public "Leaf" harness release was found on
 |---|---|
 | [arXiv:2609.07925][arxiv] (HTML) | Abstract, training methodology, author affiliations, Leaf-harness mentions (accessed 2026-09-24) |
 | [Froggy Team project page][debug-gym] | Confirms Microsoft Research Montréal affiliation and FrogNano description; no code/weights link found (accessed 2026-09-24) |
-| [`slime` RL framework][slime] | Cited training infrastructure |
+| [`slime` RL framework][slime] | Cited in the paper's harness-design discussion |
 
 [arxiv]: https://arxiv.org/abs/2609.07925
 [debug-gym]: https://microsoft.github.io/debug-gym/

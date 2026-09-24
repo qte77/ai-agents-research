@@ -80,7 +80,7 @@ Assess before adopting: validate independently on SWE-bench or project-specific 
 | [kimi-cli legacy repo][kimi-cli-repo] | Predecessor Python tool (9k stars), wind-down notice, Apache-2.0 license; accessed 2026-06-16 |
 | [MarkTechPost — Kimi Code CLI release][marktechpost-cli] | Third-party coverage of June 2026 TypeScript CLI release; corroborates MIT license and subagent design |
 | [MarkTechPost — K2.7-Code][marktechpost-k27] | K2.7-Code benchmark claims (+21.8% Kimi Code Bench v2, -30% reasoning tokens); vendor-sourced figures |
-| [Anthropic — threat-intelligence report, Sep 2026][anthropic-threat-report-2026-09] | First-party allegation (GTG-16002) that Moonshot proxied ~300k Kimi requests to Claude Opus undisclosed and extracted CoT reasoning traces; accessed 2026-09-24 |
+| [Anthropic — threat-intelligence report, Sep 2026][anthropic-threat-report-2026-09] | First-party allegation (GTG-16002) that Moonshot proxied ~300k Kimi requests to Claude Opus and extracted CoT reasoning traces; Anthropic says it does not know whether customers were notified; accessed 2026-09-24 |
 | [Anthropic — distillation-attacks post, Feb 2026][anthropic-distillation-2026-02] | Earlier, smaller first-party report naming Moonshot in a distinct distillation campaign; accessed 2026-09-24 |
 
 [kimi-code-repo]: https://github.com/MoonshotAI/kimi-code

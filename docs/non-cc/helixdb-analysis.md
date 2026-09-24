@@ -25,17 +25,14 @@ Stars: 6,087 · License: Apache-2.0 · Language: Rust · Latest release: **v3.3.
 
 ## Adoption Decision
 
-**Assess.** Apache-2.0 licensing, 6k+ stars, and an active release cadence (v3.3.0 shipped days before this review) make HelixDB worth evaluating for AI-agent memory or knowledge-graph backends, especially given first-class multi-language SDKs and the `helix chef` agent-handoff flow. Caveats: it is a young (created Nov 2024), single-vendor, YC-backed project with a hosted-Cloud upsell — check the commercial-vs-self-hosted feature split before depending on it for production memory, and no independent (non-vendor) benchmarks were found as of 2026-09-24.
+**Assess.** Apache-2.0 licensing, 6k+ stars, and an active release cadence (v3.3.0 shipped days before this review) make HelixDB worth evaluating for AI-agent memory or knowledge-graph backends, especially given first-class multi-language SDKs and the `helix chef` agent-handoff flow. Caveats: it is a young (created Nov 2024), single-vendor, YC-backed project with a hosted-Cloud upsell — check the commercial-vs-self-hosted feature split before depending on it for production memory. The README itself publishes no performance-benchmark figures; independent benchmarks were not sought in this pass and should be run before a capacity-sensitive deployment.
 
 ## Sources
 
 | Source | Content |
 |---|---|
 | [HelixDB GitHub repo][repo] (README) | Architecture, query model, SDK versions, `helix chef`, Cloud features (accessed 2026-09-24) |
-| [GitHub API — repo metadata][gh-api] | Stars, license, language, created/pushed dates (accessed 2026-09-24) |
-| [GitHub API — latest release][gh-release] | v3.3.0, published 2026-09-20 |
+| [HelixDB/helix-db][repo] (repo metadata + releases) | Stars, license, language, created/pushed dates, v3.3.0 release date (accessed 2026-09-24 via GitHub API) |
 
 [repo]: https://github.com/HelixDB/helix-db
 [site]: https://helix-db.com
-[gh-api]: https://api.github.com/repos/HelixDB/helix-db
-[gh-release]: https://github.com/HelixDB/helix-db/releases/latest

@@ -44,8 +44,7 @@ Per the paper's abstract (self-reported by the authors; no independent third-par
 |---|---|
 | [arXiv:2609.11677][arxiv] (HTML) | Abstract, method description, author affiliations (accessed 2026-09-24) |
 | [cuiyu-ai/Ecdysis][repo] | README (method restatement, repo layout, install/usage), no LICENSE file (accessed 2026-09-24) |
-| [GitHub API — repo metadata][gh-api] | Stars (14), language (Python), created/pushed dates, license field (`null`) (accessed 2026-09-24) |
+| [cuiyu-ai/Ecdysis][repo] (repo metadata) | Stars (14), language (Python), created/pushed dates, no LICENSE file (accessed 2026-09-24 via GitHub API) |
 
 [arxiv]: https://arxiv.org/abs/2609.11677
 [repo]: https://github.com/cuiyu-ai/Ecdysis
-[gh-api]: https://api.github.com/repos/cuiyu-ai/Ecdysis
