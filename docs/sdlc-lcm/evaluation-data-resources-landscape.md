@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
@@ -44,13 +44,13 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 ## 2. Benchmarks
 
-**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [CLEAR](https://arxiv.org/abs/2511.14136) (Cost/Latency/Efficacy/Assurance/Reliability, ρ=0.83 production correlation), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentQuest](https://arxiv.org/abs/2404.06411), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; first open general-agent leaderboard, top 0.73 success @ $8.54/task).
+**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [CLEAR](https://arxiv.org/abs/2511.14136) (Cost/Latency/Efficacy/Assurance/Reliability, ρ=0.83 production correlation), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentQuest](https://arxiv.org/abs/2404.06411), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; first open general-agent leaderboard, top 0.73 success @ $8.54/task), [E-Commerce Bench](https://github.com/QwenLM/E-CommerceBench) (Qwen; 18 LLM agents each run up to four simulated online stores for 365 days on real market data — negotiation, pricing, inventory, fraud detection; 6,886 products/576 suppliers; Apache-2.0; [arXiv:2608.30730](https://arxiv.org/abs/2608.30730)).
 
 **LLM**: [LiveBench](https://livebench.ai/) (contamination-free, monthly; 18 tasks, top models <70%).
 
 **Web agent**: [WebArena](https://arxiv.org/abs/2307.13854), [BrowseComp](https://www.evidentlyai.com/blog/ai-agent-benchmarks) (1,266 multi-hop questions), [BrowserGym](https://arxiv.org/abs/2412.05467), [OSWorld](https://www.evidentlyai.com/blog/ai-agent-benchmarks) (desktop; best agents ~5%), [AppWorld](https://www.evidentlyai.com/blog/ai-agent-benchmarks).
 
-**Code / SWE**: [SWE-EVO](https://arxiv.org/abs/2512.18470) (long-horizon multi-file evolution; 21% resolution vs 65% single-issue), [SciCode](https://arxiv.org/abs/2407.13168).
+**Code / SWE**: [SWE-EVO](https://arxiv.org/abs/2512.18470) (long-horizon multi-file evolution; 21% resolution vs 65% single-issue), [SciCode](https://arxiv.org/abs/2407.13168), [LoopArena](https://github.com/AMAP-ML/LoopArena) (models as runtime *Controllers* directing a fixed coding-agent *Worker* through long-running loops, vs. end-to-end outcome-only scoring; best observed Strict Success Rate 24.69% on full tasks, Apache-2.0; [arXiv:2608.28281](https://arxiv.org/abs/2608.28281)).
 
 **Tool use & info-seeking**: [ToolLLM](https://arxiv.org/abs/2307.16789), [StableToolBench](https://github.com/THUNLP-MT/StableToolBench), [InfoDeepSeek](https://arxiv.org/abs/2505.15872).
 

@@ -2,8 +2,8 @@
 title: "Multi-Agent System Security Framework"
 purpose: OWASP MAESTRO v1.0 threat modeling framework for multi-agent systems — 7 security layers with concrete controls.
 created: 2026-02-09
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -41,6 +41,7 @@ v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guid
 | Unvalidated inputs | Typed models at all component boundaries |
 | Type confusion | ABC/interface contracts enforcing signatures |
 | Logic bugs in coordination | Explicit typed context passing |
+| Hidden-skill exfiltration via task probing ([Daydreaming][daydreaming]) | File-hiding + disclosure-filtering insufficient alone (paper's finding); treat skill files as reconstructable from outputs |
 
 ### Layer 3: Integration
 
@@ -143,3 +144,12 @@ Checklist](mas-design-principles.md#agentplugin-design-checklist).
   Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [ai-security-governance-analysis.md](ai-security-governance-analysis.md)
   — Cross-framework analysis: MAESTRO, MITRE ATLAS, NIST AI RMF, ISO 42001/23894
+- [Daydreaming: Stealing Hidden Agent Skills through Black-Box Task
+  Interaction][daydreaming] — arXiv:2608.26733 (2026-08-27); execution-only
+  attack reconstructing a hidden multi-file agent skill from a victim agent's
+  task outputs alone — 86.8% of original capability recovered (7 skills, 4
+  victim models) using a median of 32 victim calls per skill, even with
+  disclosure defenses enabled; shows file-hiding and disclosure-filtering are
+  insufficient by themselves
+
+[daydreaming]: https://arxiv.org/abs/2608.26733
