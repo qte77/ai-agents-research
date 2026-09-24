@@ -5,8 +5,16 @@ Identifies versions newer than the last scanned version and checks whether
 existing docs cover those features. Pure parsing/coverage/report logic lives in
 lib/changelog.py; this entry point handles file IO and exit codes.
 
+Optionally reads a fetched releases.atom (issue #410) to annotate the report
+with per-version release dates and maintain an id-based dedup ledger in the
+shared monitor state file — CHANGELOG.md remains the sole content source and
+sole trigger (the scanned-version-range cutoff below); the feed never gates
+new_features on its own so a stale/rolled-off ledger can't suppress a real
+finding.
+
 Usage:
-    python changelog-compare.py --changelog PATH --scan-doc PATH --docs-dir PATH [--update-scan-doc]
+    python changelog-compare.py --changelog PATH --scan-doc PATH --docs-dir PATH
+        [--update-scan-doc] [--releases-feed PATH] [--state-file PATH]
 
 Exit codes:
     0 = no new uncovered features
@@ -26,10 +34,15 @@ from lib.changelog import (
     collect_doc_keyword_index,
     extract_scanned_version,
     parse_changelog_versions,
+    parse_releases_feed,
     render_changelog_report,
     version_tuple,
 )
-from lib.monitor_utils import fatal
+from lib.monitor_utils import fatal, load_state, save_state
+
+# Key under which this script's feed-id ledger lives in the shared monitor
+# state file (alongside native-sources-monitor.py's per-source keys).
+_RELEASES_FEED_STATE_KEY = "cc-changelog-releases"
 
 
 def main() -> None:
@@ -45,6 +58,14 @@ def main() -> None:
                         help="Path to docs/ directory to search for coverage")
     parser.add_argument("--update-scan-doc", action="store_true",
                         help="Bump the scan doc frontmatter to the newest changelog version")
+    parser.add_argument("--releases-feed", type=Path, default=None,
+                        help="Path to fetched releases.atom (optional; adds per-version "
+                             "dates to the report and an id-based dedup ledger — does "
+                             "not gate the trigger; CHANGELOG.md stays the content source)")
+    parser.add_argument("--state-file", type=Path,
+                        default=Path(".github/state/native-monitor-state.json"),
+                        help="Path to the shared monitor state file "
+                             "(only used when --releases-feed is given)")
     args = parser.parse_args()
 
     for p in (args.changelog, args.scan_doc, args.docs_dir):
@@ -67,8 +88,34 @@ def main() -> None:
     keyword_index = collect_doc_keyword_index(args.docs_dir)
     print(f"Docs indexed: {len(keyword_index)}", file=sys.stderr)
 
+    updated_by_version: dict[str, str] = {}
+    if args.releases_feed is not None:
+        if args.releases_feed.exists():
+            feed_entries = parse_releases_feed(
+                args.releases_feed.read_text(encoding="utf-8")
+            )
+            updated_by_version = {e["version"]: e["updated"] for e in feed_entries}
+            state = load_state(args.state_file)
+            seen_ids = set(state.get(_RELEASES_FEED_STATE_KEY, []))
+            new_ids = [e["id"] for e in feed_entries if e["id"] not in seen_ids]
+            print(
+                f"Releases feed: {len(feed_entries)} entries, "
+                f"{len(new_ids)} unseen since last state",
+                file=sys.stderr,
+            )
+            state[_RELEASES_FEED_STATE_KEY] = [e["id"] for e in feed_entries]
+            save_state(args.state_file, state)
+        else:
+            print(
+                f"WARNING: releases feed not found at {args.releases_feed} "
+                "— continuing without release dates",
+                file=sys.stderr,
+            )
+
     results = classify_versions(new_versions, keyword_index)
-    report, has_uncovered = render_changelog_report(results, last_scanned)
+    report, has_uncovered = render_changelog_report(
+        results, last_scanned, updated_by_version=updated_by_version or None
+    )
 
     if args.update_scan_doc and new_versions:
         newest = new_versions[0][0]  # already sorted descending
