@@ -25,8 +25,9 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
 - **Shipped (2026-09-24):** #457 (owner-approved lychee excludes, rows 15 + 21b), #458 (reusable
   tag/publish, row 10), #459 (cross-session messaging doc, row 8, closes #438), #460–#478 (row 20:
   18 batch PRs, **123 topics added, 7 dropped**, 33 new docs), #479 (Runtype, owner request).
-- **Next, in order:** index PR for the 33 new docs → v0.9.0 release (also the first real run of
-  #458's reusable tag/publish → closes row 10 / #347) → row 9 (#462, owner a/b/c) → rows 12, then 11.
+- **Shipped (2026-09-24, cont.):** #480 (plan + CONTRIBUTING), #481 (indexes for the 33 new docs + 3
+  previously unindexed), **v0.9.0 released** (#482; first run of the reusable tag/publish → #347 closed).
+- **Next, in order:** row 9 (#462, owner a/b/c) → row 22 follow-ups → rows 12, then 11.
 - **Owner gates:** #462 scope (a/b/c), closing #382, deciding #232, #309 scope, PR #456 (another
   session's `coding-harness-eval` rename).
 - **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
@@ -191,7 +192,7 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~7~~ | ~~#254: vibekanban exclude dropped~~ | owner | Done 2026-09-23: #447 merged, #254 closed |
 | ~~8~~ | ~~#438: cross-session messaging doc~~ | agent → owner review | Done 2026-09-24: #459 merged, #438 closed. Windows gate stated as a conflict (docs v2.1.234 vs CHANGELOG v2.1.239) |
 | 9 | #410: releases.atom trigger | owner | PR #462 open (parser + dates, test-first); owner picks: (a) merge as groundwork, (b) drop the unused ledger, (c) finish the trigger (recommended) |
-| 10 | #347: reusable `tag-release` + `publish-release` only (keep own bump workflow) | agent | #458 merged (contents: write only); done when the v0.9.0 tag + publish runs succeed, then close #347 |
+| ~~10~~ | ~~#347: reusable `tag-release` + `publish-release`~~ | agent | Done 2026-09-24: #458; verified by the v0.9.0 run (tag + publish via reusable workflows); #347 closed |
 | 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
 | 12 | #309 Phase 1: `non-cc/` subdivision plan + first move PR | agent → owner review | Plan committed, PR open, lychee green |
 | ~~13~~ | ~~Merge newest bot PRs #442, #443, #444, #424, #418~~ | owner | Done 2026-09-23: all five merged, branches deleted |
