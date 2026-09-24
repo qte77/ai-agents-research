@@ -49,7 +49,6 @@ Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized mach
 - **[OWL][owl]** — Web Ontology Language: classes, properties, and logical constraints enabling automated inference (open-world assumption — unstated ≠ false).
 - **[SKOS][skos]** — lightweight taxonomy/thesaurus vocabulary (broader/narrower/related) for concept schemes; the pragmatic middle between flat tags and a full OWL ontology.
 - **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above.
-- **[Vault-LD][vault-ld]** — an Apache-2.0 open spec (235★, verified 2026-09-24) that turns a Markdown note vault into linked data: YAML-LD frontmatter plus a shared `@context` file map note metadata to RDF triples, with reference Python converters (`vault_to_rdf.py` / `rdf_to_vault.py`) giving a lossless roundtrip between Markdown and RDF. A concrete, file-based instance of the "connect" pattern below — an ontology-backed `@context` a human edits as prose and a machine reads as a graph, with no database required.
 
 **Open- vs closed-world.** OWL/RDF assume an *open world* (absent ≠ false), which fits the web's incompleteness but makes hard validation awkward; [SHACL][shacl] adds closed-world *shape* constraints for validation. SQL catalogs and most semantic layers above are closed-world — an agent reasoning across both must know which regime applies.
 
@@ -60,6 +59,8 @@ Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized mach
 - **Enhance** — where correctness must be *provable* (compliance, finance, clinical), formal ontologies + SHACL give the deterministic backbone probabilistic LLM KGs lack; the two compose (LLM for recall/extraction, ontology for precision/validation).
 
 This is the formal-semantics counterpart to [The Agent-Native Layer](#the-agent-native-layer) below: Genie Ontology and OKF are the *LLM-native* curation of the same verified business meaning that OWL/SKOS encode *formally*.
+
+**A concrete "connect" instance: Vault-LD.** [Vault-LD][vault-ld] (Apache-2.0, 235★ verified 2026-09-24) is a 2026 third-party spec — not a W3C standard — that turns a Markdown note vault into linked data: YAML-LD frontmatter plus a shared `@context` file map note metadata to RDF triples, with reference Python converters (`vault_to_rdf.py` / `rdf_to_vault.py`) giving a lossless roundtrip between Markdown and RDF. It is a file-based, no-database instance of the connect pattern above — an ontology-backed `@context` a human edits as prose and a machine reads as a graph.
 
 ## The Agent-Native Layer
 

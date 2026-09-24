@@ -21,7 +21,7 @@ Prime Agent is Prime Intellect's open-source, self-improving coding-agent harnes
 
 Two abstractions anchor the design ([repo][repo], [paper][paper]):
 
-- **Recursive Language Model (RLM)** — the model's context is treated as variables and its tools as function calls inside a persistent Python REPL, rather than a flat prompt-and-response loop.
+- **Recursive Language Model (RLM)** — the model's context is treated as variables and its tools as function calls inside a persistent REPL (the harness itself is TypeScript; the RLM abstraction is language-agnostic), rather than a flat prompt-and-response loop.
 - **Continual Harness** — supplemental prompts, histories, memories, and skills persist as durable state across task trajectories instead of resetting each session, while the base system prompt stays immutable.
 
 Supporting mechanisms documented in the repo:
@@ -38,9 +38,9 @@ Worker and kernel processes isolate session lifecycle, but the repo explicitly s
 
 Per the paper ([arXiv:2608.23552][paper], authors Seth Karten, Alex L. Zhang, Kevin Thomas and 8 others, submitted 2026-08):
 
-- ARC-AGI-3 RHAE Best@1 raised from 30% to 95.5% through the harness's refinement loop.
+- ARC-AGI-3 RHAE Best@1 raised from 30% to 95.5% (the paper's abstract reports the number but does not isolate which harness feature drives it).
 - Strong results reported on long-context coding and GPU-kernel-generation tasks.
-- Factorio experiments show continuous technology progression across refinement cycles.
+- On Factorio specifically: "refinement allows for continuous technology progression and dedicated subagents enable parallelized work."
 
 ## Sources
 

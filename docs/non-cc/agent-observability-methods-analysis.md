@@ -486,7 +486,7 @@ This emerging pattern addresses the specific challenges of distributed multi-age
 **Technical Mechanism**: Open-source, self-hosted OTel ingestion and incident-correlation platform aimed at coding-agent-driven production debugging.
 
 - Ingests OpenTelemetry traces, logs, and metrics; groups noisy signals into correlated incidents rather than a raw event stream
-- Exposes an MCP server ("Superlog MCP") a coding agent queries directly — the `superlog-debug` skill lets an agent "pull production telemetry through the Superlog MCP to debug incidents, regressions, and 'how is this behaving in prod right now?' questions" (exact MCP tool count not published in first-party docs as of 2026-09-24)
+- Exposes an MCP server ("Superlog MCP") a coding agent queries directly — the `superlog-debug` skill lets an agent "pull production telemetry through the Superlog MCP to debug incidents, regressions, and 'how is this behaving in prod right now?' questions" (exact MCP tool count not stated in the repo's README or skills repo as of 2026-09-24)
 - Postgres/ClickHouse-backed storage; pluggable agent-runner interface; local-first workspace in the self-hosted community edition, plus a hosted Superlog Cloud tier
 
 **License**: Apache-2.0 (community edition) | **Stars**: 1,452 (verified 2026-09-24)
