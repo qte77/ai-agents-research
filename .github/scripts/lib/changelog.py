@@ -104,6 +104,37 @@ def parse_releases_feed(xml_text: str) -> list[dict[str, str]]:
     return entries
 
 
+def unseen_releases(
+    feed_entries: list[dict[str, str]],
+    seen_ids: set[str],
+    scan_cutoff_version: str,
+) -> list[dict[str, str]]:
+    """Feed entries the monitor hasn't already processed (issue #410 trigger).
+
+    An entry is excluded — treated as already seen — when either its ``id``
+    is already in ``seen_ids`` (the persisted dedup ledger) or its version is
+    at or below ``scan_cutoff_version`` (the scan-doc's already-scanned range
+    end). The cutoff check alone covers two cases the ledger can't:
+
+    - **Bootstrap**: an empty ``seen_ids`` (first run, or a reset ledger)
+      would otherwise make every entry in the feed's rolling window look
+      "unseen" and re-report the changelog's entire existing history.
+    - **Window rollout**: an id that has rolled out of the feed's ~31-entry
+      window is never in ``feed_entries`` to begin with, so it can't be
+      resurfaced by this function — but if the ledger was ever reset, the
+      cutoff (not the ledger) is what keeps an in-window entry at or below
+      it from being re-reported.
+
+    Empty ``feed_entries`` returns ``[]`` — the caller falls back to
+    CHANGELOG.md-cutoff-only comparison when there's no feed data.
+    """
+    cutoff = version_tuple(scan_cutoff_version)
+    return [
+        e for e in feed_entries
+        if e["id"] not in seen_ids and version_tuple(e["version"]) > cutoff
+    ]
+
+
 def collect_doc_keyword_index(docs_dir: Path) -> dict[str, frozenset[str]]:
     """Map each ``*.md`` doc's relative path to its keyword set (filename + H2/H3).
 
