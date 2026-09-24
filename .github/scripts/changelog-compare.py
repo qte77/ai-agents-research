@@ -6,14 +6,18 @@ existing docs cover those features. Pure parsing/coverage/report logic lives in
 lib/changelog.py; this entry point handles file IO and exit codes.
 
 Optionally reads a fetched releases.atom (issue #410) to drive the "which
-versions are new" decision: when the feed parses to at least one entry, the
-feed's per-id dedup ledger (persisted in the shared monitor state file)
-decides which versions to report, with the scan-doc cutoff as a bootstrap /
-window-rollout safety net (see lib.changelog.unseen_releases). When the feed
-is absent, empty, or unparseable, the trigger falls back to the scan-doc
-cutoff alone — the pre-#410 behaviour. Either way CHANGELOG.md remains the
-sole content source, and the ledger is written only after a full, successful
-comparison run (never on a fatal/early exit).
+versions are new" decision: when the feed parses to at least one entry,
+lib.changelog.select_new_versions decides which CHANGELOG.md versions to
+report — a version the feed covers is gated by its per-id dedup ledger
+(persisted in the shared monitor state file) with the scan-doc cutoff as a
+bootstrap / window-rollout safety net; a version the feed doesn't cover at
+all (upstream feed/changelog skew) falls back to the plain cutoff instead of
+being silently dropped — CHANGELOG.md is the full-history backstop. When the
+feed is absent, empty, or unparseable, every version falls back to the
+cutoff — the pre-#410 behaviour. Either way CHANGELOG.md remains the sole
+content source, and the ledger (via lib.changelog.ledger_ids, which excludes
+any feed entry whose version CHANGELOG.md doesn't have yet) is written only
+after a full, successful comparison run (never on a fatal/early exit).
 
 Usage:
     python changelog-compare.py --changelog PATH --scan-doc PATH --docs-dir PATH
@@ -36,11 +40,11 @@ from lib.changelog import (
     classify_versions,
     collect_doc_keyword_index,
     extract_scanned_version,
+    ledger_ids,
     parse_changelog_versions,
     parse_releases_feed,
     render_changelog_report,
-    unseen_releases,
-    version_tuple,
+    select_new_versions,
 )
 from lib.monitor_utils import fatal, load_state, save_state
 
@@ -65,9 +69,11 @@ def main() -> None:
     parser.add_argument("--releases-feed", type=Path, default=None,
                         help="Path to fetched releases.atom (optional; when it parses to "
                              "at least one entry, its id ledger drives the new-versions "
-                             "trigger and its timestamps annotate the report; falls back "
-                             "to the scan-doc cutoff alone otherwise. CHANGELOG.md always "
-                             "stays the content source)")
+                             "trigger for feed-covered versions (cutoff fallback for any "
+                             "version the feed doesn't cover) and its timestamps annotate "
+                             "the report; falls back to the scan-doc cutoff alone when "
+                             "absent/empty/unparseable. CHANGELOG.md always stays the "
+                             "content source)")
     parser.add_argument("--state-file", type=Path,
                         default=Path(".github/state/native-monitor-state.json"),
                         help="Path to the shared monitor state file "
@@ -110,20 +116,23 @@ def main() -> None:
     updated_by_version: dict[str, str] = {e["version"]: e["updated"] for e in feed_entries}
 
     state: dict[str, list[str]] = {}
+    seen_ids: set[str] = set()
     if feed_entries:
         state = load_state(args.state_file)
-        seen_ids: set[str] = set(state.get(_RELEASES_FEED_STATE_KEY, []))
-        unseen = unseen_releases(feed_entries, seen_ids, last_scanned)
-        unseen_versions = {e["version"] for e in unseen}
-        new_versions = [(v, feats) for v, feats in all_versions if v in unseen_versions]
+        seen_ids = set(state.get(_RELEASES_FEED_STATE_KEY, []))
+
+    # select_new_versions reduces to a pure cutoff comparison when
+    # feed_entries is empty (pre-#410 behaviour) and otherwise gates
+    # feed-covered versions by the ledger while falling back to the cutoff
+    # for versions the feed doesn't cover at all (skew safety net).
+    new_versions = select_new_versions(all_versions, feed_entries, seen_ids, last_scanned)
+    if feed_entries:
         print(
-            f"Releases feed: {len(feed_entries)} entries, {len(unseen)} unseen "
-            "— trigger driven by feed ledger",
+            f"Releases feed: {len(feed_entries)} entries — {len(new_versions)} new "
+            "versions (feed ledger, cutoff fallback for feed-uncovered versions)",
             file=sys.stderr,
         )
     else:
-        cutoff = version_tuple(last_scanned)
-        new_versions = [(v, feats) for v, feats in all_versions if version_tuple(v) > cutoff]
         print(f"New versions found (cutoff-only): {len(new_versions)}", file=sys.stderr)
 
     keyword_index = collect_doc_keyword_index(args.docs_dir)
@@ -145,9 +154,12 @@ def main() -> None:
 
     # Persist the ledger only once the comparison has fully succeeded (never
     # on a fatal/early exit above) — "update the ledger only after a
-    # successful comparison run" per #410.
+    # successful comparison run" per #410. ledger_ids excludes any feed
+    # entry whose version CHANGELOG.md doesn't have yet (upstream skew) so a
+    # not-yet-published version is never marked "seen" prematurely.
     if feed_entries:
-        state[_RELEASES_FEED_STATE_KEY] = [e["id"] for e in feed_entries]
+        changelog_versions = {v for v, _ in all_versions}
+        state[_RELEASES_FEED_STATE_KEY] = ledger_ids(feed_entries, changelog_versions)
         save_state(args.state_file, state)
 
     print(report)
