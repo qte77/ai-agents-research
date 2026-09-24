@@ -307,6 +307,7 @@ The Agent Skills standard has achieved broad cross-industry adoption:
 | [SylphAI-Inc/atskills][atskills] (`@skills`) | Alternative protocol | Path-based, no-install skill addressing; paired with the [atskills.one][atskills-hub] hub |
 | [HKUDS/OpenSpace][openspace] | Skill management layer | Evaluates skill quality from task outcomes; MCP/CLI/Python/dashboard access |
 | [GitSkills dataset][gitskills-paper] | Research dataset | 3,797,117 SKILL.md files across 282,200 GitHub repos (July 2026 snapshot) |
+| [AREX-Skill Library][repo-to-skill-repo] ([paper][repo-to-skill-paper]) | Research system + dataset | DisCo distills 5,000+ verified skills from 1,000 widely-used ML repos |
 
 **Key distinction** (from HashiCorp): "MCP is the 'pipe' connecting data to AI;
 Agent Skills are the 'textbooks' of knowledge." These are complementary, not
@@ -348,6 +349,18 @@ repository metadata, content hashes, parsed frontmatter, and commit history — 
 empirical research on how SKILL.md is adopted, reused, and maintained across the
 ecosystem this table surveys.
 
+**Repo-To-Skill (DisCo).** [Chen et al. (2026)][repo-to-skill-paper] distill
+"operational knowledge" out of GitHub repositories — implementation expertise a
+theoretical ML-knowledge-only agent lacks — via a system called DisCo, building the
+**AREX-Skill Library**: 5,000+ verified skills distilled from 1,000 widely-used ML
+repositories, organized across multiple capability families ([code][repo-to-skill-repo],
+Apache-2.0; 308★, `gh api` 2026-09-24). The output format is agent/benchmark-specific,
+not the Anthropic SKILL.md spec this doc otherwise describes, but it is the same
+distill-a-repo-into-a-reusable-skill pattern as the GitSkills dataset above, applied
+generatively rather than observationally: paired with GPT-5.5, the skill-equipped
+agent scored 134.3% higher on MLE-bench and 34.4% higher on PaperBench than an
+unequipped baseline (paper claims; methodology not independently verified).
+
 ## Settings Configuration
 
 Update `.claude/settings.json` to adopt Skills:
@@ -376,3 +389,5 @@ Update `.claude/settings.json` to adopt Skills:
 [openspace]: https://github.com/HKUDS/OpenSpace
 [skillzip-pro-paper]: https://arxiv.org/abs/2608.30785
 [webdev-skills-bench-paper]: https://arxiv.org/abs/2608.23067
+[repo-to-skill-paper]: https://arxiv.org/abs/2609.02749
+[repo-to-skill-repo]: https://github.com/VectorSpaceLab/AREX-Skill
