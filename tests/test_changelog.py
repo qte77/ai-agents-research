@@ -109,17 +109,80 @@ class UnseenReleasesTests(unittest.TestCase):
         result = cl.unseen_releases(self.ENTRIES, set(), "2.1.71")
         self.assertEqual([e["id"] for e in result], ["id-280", "id-278"])
 
-    def test_cutoff_suppresses_ids_no_longer_in_the_feed_window(self):
-        # Ledger reset to empty (e.g. state file lost/rotated) after the ~31-
-        # entry feed window had already rolled past 2.1.278 — that id is not
-        # even in this fixture's ENTRIES, standing in for "rolled off". The
-        # cutoff, not the ledger, is what must stop it (and 2.1.71) from ever
-        # resurfacing.
+    def test_cutoff_suppresses_at_or_below_entries_independent_of_ledger(self):
+        # Even with an empty ledger, the cutoff alone (not the ledger) keeps
+        # 2.1.278 and 2.1.71 from resurfacing — this is what protects a
+        # window-rolled-off id from reappearing after a ledger reset: that id
+        # is no longer in feed_entries at all (so this function never even
+        # sees it), and any in-window sibling at/below the cutoff is still
+        # excluded by the cutoff term below.
         result = cl.unseen_releases(self.ENTRIES, set(), "2.1.278")
         self.assertEqual([e["id"] for e in result], ["id-280"])
 
+    def test_ledger_entry_absent_from_feed_is_a_noop(self):
+        # A ledger that still references an id which has since rolled out of
+        # the feed's ~31-entry window (so it's absent from feed_entries) must
+        # not error or affect entries still present.
+        result = cl.unseen_releases(self.ENTRIES, {"id-999-rolled-off"}, "2.1.0")
+        self.assertEqual(
+            [e["id"] for e in result], ["id-280", "id-278", "id-71"]
+        )
+
     def test_empty_feed_returns_empty(self):
         self.assertEqual(cl.unseen_releases([], set(), "2.1.71"), [])
+
+
+class LedgerIdsTests(unittest.TestCase):
+    def test_keeps_only_ids_whose_version_is_in_changelog(self):
+        # Feed is ahead of CHANGELOG.md (upstream source skew, #410 con #3):
+        # 2.1.281's id must NOT be persisted yet, or once CHANGELOG.md
+        # catches up next run, unseen_releases would find it already "seen"
+        # and permanently drop it without it ever having been reported.
+        entries = [
+            {"version": "2.1.282", "updated": "u", "id": "id-282"},
+            {"version": "2.1.281", "updated": "u", "id": "id-281"},
+        ]
+        result = cl.ledger_ids(entries, {"2.1.282", "2.1.71"})
+        self.assertEqual(result, ["id-282"])
+
+    def test_empty_feed_returns_empty(self):
+        self.assertEqual(cl.ledger_ids([], {"2.1.71"}), [])
+
+
+class SelectNewVersionsTests(unittest.TestCase):
+    ALL_VERSIONS = [
+        ("2.1.282", ["- Feature C"]),
+        ("2.1.281", ["- Feature B"]),
+        ("2.1.71", ["- Old"]),
+    ]
+
+    def test_no_feed_falls_back_to_cutoff_only(self):
+        result = cl.select_new_versions(self.ALL_VERSIONS, [], set(), "2.1.71")
+        self.assertEqual([v for v, _ in result], ["2.1.282", "2.1.281"])
+
+    def test_feed_gap_falls_back_to_cutoff_for_feed_uncovered_version(self):
+        # Feed only has 2.1.282 (skew: 2.1.281 isn't in the feed yet, or ever
+        # — the feed can miss entries). 2.1.281 must still be reported via
+        # the cutoff fallback rather than silently skipped: CHANGELOG.md is
+        # the full-history backstop for exactly this case (#410 con #3).
+        feed = [{"version": "2.1.282", "updated": "u", "id": "id-282"}]
+        result = cl.select_new_versions(self.ALL_VERSIONS, feed, set(), "2.1.71")
+        self.assertEqual([v for v, _ in result], ["2.1.282", "2.1.281"])
+
+    def test_feed_ledger_suppresses_already_seen_version(self):
+        feed = [{"version": "2.1.282", "updated": "u", "id": "id-282"}]
+        result = cl.select_new_versions(
+            self.ALL_VERSIONS, feed, {"id-282"}, "2.1.71"
+        )
+        self.assertEqual([v for v, _ in result], ["2.1.281"])
+
+    def test_feed_ahead_of_changelog_is_ignored(self):
+        # Feed has a version CHANGELOG.md doesn't publish yet — nothing to
+        # report (no content) and it must not affect selection of the
+        # actual changelog versions.
+        feed = [{"version": "2.1.290", "updated": "u", "id": "id-290"}]
+        result = cl.select_new_versions(self.ALL_VERSIONS, feed, set(), "2.1.71")
+        self.assertEqual([v for v, _ in result], ["2.1.282", "2.1.281"])
 
 
 class FindCoveringDocsTests(unittest.TestCase):
