@@ -14,3 +14,4 @@ Official plugins, connectors, Cowork platform, office document skills, business 
 | [CC-channels-analysis.md](CC-channels-analysis.md) | Distribution channels analysis |
 | [CC-chrome-extension-analysis.md](CC-chrome-extension-analysis.md) | Chrome extension capabilities |
 | [CC-web-scraping-plugins-analysis.md](CC-web-scraping-plugins-analysis.md) | Web scraping plugin landscape |
+| [CC-mcp-hardware-standard-analysis.md](CC-mcp-hardware-standard-analysis.md) | Model Hardware Standard (MHS): Anthropic's research-preview spec for AI agents operating physical lab/manufacturing hardware, and its relationship to MCP |
