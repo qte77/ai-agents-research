@@ -26,10 +26,13 @@ access to "what is actually happening on this box right now" for root-cause-anal
 
 Per the [MCP docs][mcp-docs] and [MCP server source][mcp-src] (`src/web/mcp/`):
 
-- **Node/topology discovery** — hardware, OS, versions
+- **Node discovery** — hardware, OS, version info, streaming topology
 - **Metrics discovery** — full-text search across contexts, instances, dimensions, labels
-- **Function discovery & execution** — system functions (processes, network connections,
-  systemd-journal / Windows-event logs); execution requires a **Parent** node
+- **Function discovery** — system functions (`processes`, `network-connections`, `streaming`,
+  `systemd-journal`, `windows-events`, etc.)
+- **Function execution** — run a discovered function on a connected node (verbatim from the docs:
+  "requires Netdata Parent")
+- **Log exploration** — access logs from a connected node (also "requires Netdata Parent")
 - **Alert discovery + history** — active/raised alerts and complete transition logs
 - **Metrics queries** — aggregations with ML-powered anomaly detection
 - **Metrics scoring** — root-cause correlation/weighting across anomalous series

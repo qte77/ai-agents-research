@@ -32,7 +32,7 @@ components, matching the README's description:
 
 - **`gateway/`** — handles API routing between the client application and the selected harness
 - **`runner/`** — executes harnesses inside isolated per-task session workspaces
-- **`ui/`** — a web console (default `:3000`) for inspecting sessions
+- **`ui/`** — a web console (default `:3000`)
 
 A separate **`protocol/`** directory holds the Unified Harness Protocol (UHP) definition (see
 below).
