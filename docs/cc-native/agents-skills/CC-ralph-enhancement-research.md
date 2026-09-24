@@ -3,8 +3,8 @@ title: Ralph Loop Enhancement Research
 source: ralph/scripts/ralph.sh, ralph/README.md, external Ralph pattern research (ralph/README.md is project-specific; see external references below for the general pattern)
 purpose: Identify actionable enhancements to autonomous headless CC development loops (Ralph pattern) based on gap analysis and external pattern research.
 created: 2026-03-07
-updated: 2026-06-23
-validated_links: 2026-06-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational — feeds into iteration planning)
@@ -129,7 +129,7 @@ Key insight: "Context rot" — agent quality degrades as context fills with stal
 - Filesystem as memory (`prd.json` + `progress.txt` + git)
 - Never let the agent compact — start fresh instead
 
-**Relevance**: Already implemented in the Ralph pattern. The loop spawns a fresh `claude -p` per story, using external state files for continuity. This is the recommended approach per Huntley and Anthropic's "effective harnesses" guide ([source][effective-harnesses]).
+**Relevance**: Already implemented in the Ralph pattern. The loop spawns a fresh `claude -p` per story, using external state files for continuity. This is the recommended approach per Huntley and Anthropic's "effective harnesses" guide ([source][effective-harnesses]). Anthropic's [cwc-long-running-agents][cwc-long-running] repo packages the same fresh-context-per-iteration idea as standalone hooks and a subagent — a Default-FAIL evidence contract, a no-Write/Edit "Fresh-Context Evaluator" subagent that grades from a virgin context window, and an agent-maintained `PROGRESS.md` handoff re-read on restart (Apache-2.0, 677★; "example ingredients" from a Code with Claude 2026 take-home station, not maintained).
 
 ### LobeHub Skills Marketplace
 
@@ -171,6 +171,7 @@ A dependency-free, production-minded Ralph loop that drives **four** coding CLIs
 
 - [A Brief History of Ralph][ralph-history-post] — Dex Horthy (hlyr.dev, 2026-01-06); origin, naming, overbaking, Desired State Loops
 - [Effective Harnesses for Long-Running Agents][effective-harnesses] — Anthropic engineering blog
+- [cwc-long-running-agents][cwc-long-running] — Anthropic reference hooks/subagent for long-running agent harnesses (Apache-2.0, 677★)
 - [Ralph Pattern][ghuntley-ralph] — Geoffrey Huntley original post
 - [Ralph Playbook][ralph-playbook] — ClaytonFarr comprehensive guide (853 stars)
 - [Everything Claude Code][ralphinho] — Autonomous loop patterns including Ralphinho
@@ -195,3 +196,4 @@ A dependency-free, production-minded Ralph loop that drives **four** coding CLIs
 [shipyard]: https://shipyard.build/blog/claude-code-ralph-loop/
 [santander-ralph]: https://github.com/SantanderAI/ralph
 [santander-vault]: https://github.com/SantanderAI/ralph-vault-skill
+[cwc-long-running]: https://github.com/anthropics/cwc-long-running-agents

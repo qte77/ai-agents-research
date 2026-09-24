@@ -5,8 +5,8 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-07-08
-validated_links: 2026-07-08
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
@@ -20,6 +20,8 @@ Three tools represent an emerging category of **AI-powered repo-to-documentation
 A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose -- the external analogue to this repo's own [graphify integration](../architecture.md#knowledge-graph-graphify).
 
 A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes docs **for coding agents**, appending pointers into `AGENTS.md`/`CLAUDE.md`, rather than human-browsable wikis.
+
+A sixth entrant, **OpenKB** (VectifyAI), flips the *input*: rather than a GitHub URL, it takes raw **documents** (PDF, Word, Markdown, PowerPoint, HTML, Excel, CSV, URLs) and compiles them once into a persistent, interlinked wiki — the document-corpus sibling of OpenWiki's code-corpus, agent-oriented output.
 
 ## Comparison
 
@@ -117,6 +119,43 @@ A CLI that "writes and maintains documentation for your codebase, **built specif
 
 **Relevance**: the "repo → machine-readable agent context" corner of this space — directly adjacent to CC's own `CLAUDE.md`/`AGENTS.md` conventions, and the agent-oriented contrast to human-facing DeepWiki-style tools.
 
+## OpenKB (VectifyAI)
+
+**URL**: [github.com/VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB) | **Stars**: 4,556 | **License**: Apache-2.0 | **Version**: v0.4.5 (released 2026-07-20)
+
+An open-source CLI that compiles raw **documents** — not code — into a
+structured, interlinked wiki-style knowledge base powered by LLMs, building
+on a concept credited to Andrej Karpathy where "LLMs generate summaries,
+concept pages, and cross-references, all maintained automatically" (per
+README; see also this corpus's own
+[karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md)). It runs in two
+layers: a **Wiki Foundation** that ingests documents (via `markitdown` for
+format conversion, and [PageIndex][pageindex] for long documents — 20+ pages
+— enabling "vectorless, reasoning-based retrieval" instead of a vector
+database) and **Generators** that produce query/chat responses, distilled
+agent skills (for Claude Code, Codex, Gemini), visualizations, and slide
+decks on top of the compiled wiki.
+
+```bash
+pip install openkb
+openkb init
+openkb add document.pdf
+openkb query "What are the main findings?"
+```
+
+It supports PDF, Word, Markdown, PowerPoint, HTML, Excel, CSV, and URLs as
+input; is **OKF-compatible** (Google's Open Knowledge Format — see
+[open-knowledge-format-analysis.md](open-knowledge-format-analysis.md));
+integrates with Obsidian via plain markdown + wikilinks; and ships a local
+web UI (`openkb-web`, `pip install "openkb[web]"`) called the Knowledge
+Workbench.
+
+**Relevance**: OpenKB is the document-input counterpart to OpenWiki's
+code-input — both compile a corpus once into agent-queryable, persistent
+output rather than re-analyzing on every query, and both explicitly target
+coding-agent consumption (skill distillation for Claude Code/Codex/Gemini)
+alongside human browsing.
+
 ## Pattern Analysis
 
 All three doc-generators share a common pipeline:
@@ -156,6 +195,11 @@ Differentiation happens at the output stage:
 - [GitHub: antarixxx/gitsummarize](https://github.com/antarixxx/gitsummarize)
 - [GitHub: egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything)
 - [GitHub: langchain-ai/openwiki](https://github.com/langchain-ai/openwiki)
+- [GitHub: VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB)
+- [GitHub: VectifyAI/PageIndex](https://github.com/VectifyAI/PageIndex)
+- GitHub API `repos/VectifyAI/OpenKB` and `repos/VectifyAI/PageIndex`, accessed 2026-09-24 (stars, license, latest release tag)
+
+[pageindex]: https://github.com/VectifyAI/PageIndex
 
 ## Action Items
 
@@ -163,3 +207,4 @@ Differentiation happens at the output stage:
 - [ ] Test Code2Tutorial on this repository for documentation generation
 - [ ] Monitor GitSummarize API for programmatic integration potential
 - [ ] Benchmark Understand Anything against the graphify integration (graph quality, Karpathy-KB handling, incremental updates)
+- [ ] Evaluate OpenKB's Claude Code skill-distillation output against this repo's own doc corpus as an agent-context source
