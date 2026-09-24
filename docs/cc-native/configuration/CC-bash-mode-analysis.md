@@ -3,8 +3,8 @@ title: CC Bash Mode — CLI `!` Prefix and Dynamic Context Injection in Skills/R
 source: https://code.claude.com/docs/en/interactive-mode, https://code.claude.com/docs/en/skills
 purpose: Document bash mode usage in CLI interactive sessions and dynamic shell execution within skills and rules files.
 created: 2026-03-12
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Adopted (both features are stable and production-ready)
@@ -282,6 +282,19 @@ The `/permissions` command provides interactive visual management, including whi
 
 **Security principle**: Use specific patterns (`Bash(git *:*)`) rather than blanket `Bash(*)`. Configure per-project for isolation ([source][claudelog-bash]).
 
+### Research: Is Bash a Sufficient Tool Interface? (Microsoft/CMU, 2026)
+
+Not a CC feature — an independent empirical study relevant to the tool-interface design choice CC's own bash mode and SDK Bash tool both represent. "Is Bash All You Need? An Empirical Study of Tool Interfaces for Enterprise Digital Worker Agents" (Microsoft Corporation and Carnegie Mellon University, arXiv:2609.11999, submitted 2026-09-10) compares five tool-interface approaches for enterprise agent tasks — plain bash, typed tools, bash+typed tools, bash+persistent agent-synthesized tools, and programmatic tool calling (PTC) — across two benchmarks (TheAgentCompany, APEX-Agents) using Claude Opus 4.8 and GPT-5.5 ([source][bash-study]).
+
+**Findings** ([source][bash-study]):
+
+- Bash-alone outperformed typed tools by 21.8–24.5 percentage points on TheAgentCompany and 4.8–7.4 points on APEX-Agents, while using 19–72% fewer total tokens
+- Combining bash with typed tools, or with persistent agent-synthesized tools, produced no measurable improvement over bash alone
+- PTC used fewer tokens than direct typed calls but generally underperformed bash-only on both quality and efficiency
+- The authors recommend bash-alone where execution can be safely isolated, and PTC only where security/compliance constraints mandate a restricted tool catalog
+
+This is independent third-party evidence for CC's own design bias toward bash as a general-purpose tool interface (both the CLI `!` prefix and the SDK Bash tool documented above), rather than a large typed-tool catalog.
+
 ## References
 
 - [CC Interactive Mode docs][cc-interactive-mode]
@@ -292,6 +305,7 @@ The `/permissions` command provides interactive visual management, including whi
 - [Claudelog — What is Bash Mode?][claudelog-bash]
 - [DEV.to — The `!` prefix every Claude Code user needs][devto-bash-mode]
 - [Snyk — ToxicSkills supply chain research][snyk-toxicskills]
+- [Is Bash All You Need? (arXiv:2609.11999)][bash-study]
 
 [cc-interactive-mode]: https://code.claude.com/docs/en/interactive-mode
 [cc-skills-docs]: https://code.claude.com/docs/en/skills
@@ -301,3 +315,4 @@ The `/permissions` command provides interactive visual management, including whi
 [claudelog-bash]: https://claudelog.com/faqs/what-is-bash-mode/
 [devto-bash-mode]: https://dev.to/rajeshroyal/stop-wasting-tokens-the-prefix-that-every-claude-code-user-needs-to-know-2c6i
 [snyk-toxicskills]: https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/
+[bash-study]: https://arxiv.org/abs/2609.11999

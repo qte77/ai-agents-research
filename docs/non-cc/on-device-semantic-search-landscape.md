@@ -3,8 +3,8 @@ title: On-Device / Local-First Semantic Search Landscape
 purpose: Survey of the embedder + embedded-vector-store stack for local-first semantic search — ternlight (Hold) as trigger, the Python-native scalable alternatives (Assess), and the decouple-the-layers lesson.
 category: landscape
 created: 2026-07-23
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -63,10 +63,22 @@ WASM), no API/GPU. `embed()` → 384-dim (base) / 256-dim (mini); `similar(query
 | [DuckDB `vss`][duckdb-vss] | yes | yes | HNSW (uses usearch) | MIT |
 | [sqlite-vec][sqlite-vec] | yes | yes | ⚠️ **brute-force only today** | Apache-2.0/MIT |
 | [Voy][voy] | yes (WASM) | no (JS) | k-d tree | MIT/Apache-2.0 |
+| [LEANN][leann] | yes (recompute, not store) | yes | HNSW or DiskANN backend | MIT |
 
 **Key gotcha:** `sqlite-vec` is **brute-force only** today — ANN is roadmap, not
 shipped ([asg017/sqlite-vec#25][sqlite-vec-25]). It does **not** buy scale over a
 naive scan. For SQLite-native ANN, use `usearch` or the `Vec1` extension instead.
+
+**LEANN takes a different tack than the rest of Layer B.** Instead of storing every embedding, it
+recomputes them on demand via "graph-based selective recomputation with high-degree preserving
+pruning" — its own README's headline claim (accessed 2026-09-24) is indexing 60 million text
+chunks in 6GB instead of 201GB (a ~97% storage reduction) at comparable accuracy, choosing between
+an HNSW backend (maximum storage savings) or a DiskANN backend (faster search via PQ-based
+traversal). It ships a native MCP server (`leann_mcp`) that plugs into **Claude Code** as a
+semantic-search tool with AST-aware chunking for Python, Java, C#, and TypeScript; on a 30-task
+SWE-Bench Pro sample from ContextBench, LEANN's own README reports the agent reaching 2.1× the
+initial relevant-code recall versus BM25 (24.2% vs. 11.4%) — a first-party, vendor-run benchmark,
+not independently reproduced here.
 
 ## Multimodal (indexing VLM / image outputs) — Assess
 
@@ -113,6 +125,7 @@ residency-aware gate `azure-doc-workflows#165` proposes).
 | [asg017/sqlite-vec#25][sqlite-vec-25] | sqlite-vec ANN = roadmap-only confirmation |
 | [OpenCLIP][openclip] · [SigLIP2][siglip2] · [Azure AI Vision][azure-vision] | Multimodal encoders |
 | [#383][gh-383] (research 2026-07-12) | Original survey + Radar verdicts this doc promotes |
+| [StarTrail-org/LEANN][leann] README | Recompute-not-store design, storage-savings claim, HNSW/DiskANN backends, Claude Code MCP integration, SWE-Bench Pro recall claim; accessed 2026-09-24 |
 
 [ternlight]: https://github.com/soycaporal/ternlight
 [ternlight-demo]: https://ternlight-demo.vercel.app/
@@ -135,3 +148,4 @@ residency-aware gate `azure-doc-workflows#165` proposes).
 [azure-vision]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/concept-image-retrieval
 [gh-383]: https://github.com/qte77/ai-agents-research/issues/383
 [gh-382]: https://github.com/qte77/ai-agents-research/issues/382
+[leann]: https://github.com/StarTrail-org/LEANN

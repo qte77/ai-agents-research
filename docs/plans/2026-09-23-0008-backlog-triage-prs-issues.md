@@ -21,12 +21,15 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
   (actions bump), #442, #444, #424, #418, #443, then #448–#451 and #453 (plan bookkeeping,
   permission-rule fix, ccsync docs, sandbox-runtime repoint). **v0.8.0 released** (#454, tag
   `v0.8.0`, GitHub Release published). #433 closed with evidence; #309 boxes ticked and Phase 1
-  layout commented; #347 scope commented; plan 0001 tracked in #452. No open branches remain
-  besides `main`.
-- **Next, in order:** rows 8–10 pre-stage PRs → row 20 research (H list) → rows 12, then 11 → one
-  owner sitting for rows 15–16.
-- **Owner gates:** producthunt lychee exclude, closing #382, deciding #232, #309 scope, and review
-  of the pre-stage PRs and screenshot placement table.
+  layout commented; #347 scope commented; plan 0001 tracked in #452.
+- **Shipped (2026-09-24):** #457 (owner-approved lychee excludes, rows 15 + 21b), #458 (reusable
+  tag/publish, row 10), #459 (cross-session messaging doc, row 8, closes #438), #460–#478 (row 20:
+  18 batch PRs, **123 topics added, 7 dropped**, 33 new docs), #479 (Runtype, owner request).
+- **Shipped (2026-09-24, cont.):** #480 (plan + CONTRIBUTING), #481 (indexes for the 33 new docs + 3
+  previously unindexed), **v0.9.0 released** (#482; first run of the reusable tag/publish → #347 closed).
+- **Next, in order:** row 9 (#462, owner a/b/c) → row 22 follow-ups → rows 12, then 11.
+- **Owner gates:** #462 scope (a/b/c), closing #382, deciding #232, #309 scope, PR #456 (another
+  session's `coding-harness-eval` rename).
 - **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
   (invalid env tokens shadow the stored credential).
 - **Watch-outs:**
@@ -187,21 +190,22 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~5~~ | ~~#417: claude.com 404 removed; recheck ampcode.com~~ | agent | Done 2026-09-23: ampcode.com HTTP/2 error recurred (weekly run + full local run) yet returns 200 via polyfetch → lychee incompatibility, moved to 21b |
 | ~~6~~ | ~~#433: Content-Signal / llms.txt~~ | owner | Done 2026-09-23: closed with evidence — host-root robots.txt already carries Content-Signal; no llms.txt for now |
 | ~~7~~ | ~~#254: vibekanban exclude dropped~~ | owner | Done 2026-09-23: #447 merged, #254 closed |
-| 8 | #438: new cross-session messaging doc (ListAgents, SendMessage, v2.1.224) | agent → owner review | PR open, first-party sourced |
-| 9 | #410: feed.xml trigger per the narrowed decision | agent → owner review | Workflow PR open |
-| 10 | #347: reusable `tag-release` + `publish-release` only (keep own bump workflow) | agent → owner review | PR open; one real tag + publish run succeeds |
+| ~~8~~ | ~~#438: cross-session messaging doc~~ | agent → owner review | Done 2026-09-24: #459 merged, #438 closed. Windows gate stated as a conflict (docs v2.1.234 vs CHANGELOG v2.1.239) |
+| 9 | #410: releases.atom trigger | owner | PR #462 open (parser + dates, test-first); owner picks: (a) merge as groundwork, (b) drop the unused ledger, (c) finish the trigger (recommended) |
+| ~~10~~ | ~~#347: reusable `tag-release` + `publish-release`~~ | agent | Done 2026-09-24: #458; verified by the v0.9.0 run (tag + publish via reusable workflows); #347 closed |
 | 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
 | 12 | #309 Phase 1: `non-cc/` subdivision plan + first move PR | agent → owner review | Plan committed, PR open, lychee green |
 | ~~13~~ | ~~Merge newest bot PRs #442, #443, #444, #424, #418~~ | owner | Done 2026-09-23: all five merged, branches deleted |
 | ~~14~~ | ~~#434: read failed logs, then merge~~ | owner | Done 2026-09-23: failures were environmental (lychee rot, GitHub Models outage); merged |
-| 15 | #417: approve producthunt exclude | owner | Exclude added or rejected |
+| ~~15~~ | ~~#417: approve producthunt exclude~~ | owner | Done 2026-09-24: #457 (exact-URL exclude) |
 | 16 | Close #382; decide #232; decide #309 scope (keep vs. split) | owner | Each issue closed or updated with decision |
 | ~~17~~ | ~~Screenshot pass 1: tag 1,433 images in / maybe / out~~ | agent | Done 2026-09-23: `shots-merged.tsv` (spot-checked) |
 | ~~18~~ | ~~Screenshot pass 2: extract URLs, handles, entities, descriptions~~ | agent | Done 2026-09-23: 921 of 929 records (8 missing), 726 URLs (51 truncated); lnkd.in short links resolved to real targets via polyfetch → `lnkd-resolved.tsv` |
 | ~~19~~ | ~~Cluster pass-2 leads into topics; coverage; placement~~ | agent | Done 2026-09-23: 682 topics; results in the Screenshot sources section |
-| 20 | Research the 128 H topics (`h-priority.tsv`), then M on owner request: verify a first-party URL per claim per the entry rule, then extend or create docs | agent → owner review | One PR per target doc; every claim cites a first-party source; lint + lychee clean |
+| ~~20~~ | ~~Research the 128 H topics~~ | agent | Done 2026-09-24: #460–#478, 18 disjoint-doc batches; 123 added, 7 dropped (4 without a first-party source, 3 verified but out of batch scope → row 22); 33 new docs; all 70+ cited GitHub repos verified to exist; results at `research/results.json` |
+| 22 | Follow-ups from row 20: the 3 verified-but-unplaced papers (Agent Zero Memory arXiv:2608.29606 → context-memory; HarnessEvolve arXiv:2609.00829 → agent self-evolution; Repo-To-Skill arXiv:2609.02749 → skill tooling); M-priority topics on owner request | agent | Each placed in its target doc with a first-party cite, or dropped with reason |
 | ~~21~~ | ~~Repoint `sandbox-runtime` links~~ | agent | Done 2026-09-23: repo moved to `anthropics/sandbox-runtime` (#139 still open); 5 links in 3 sandboxing docs repointed, lychee clean |
-| 21b | Bot-block excludes: `www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf` (`agentic-sdlc-patterns.md`) and `www.beyondtrust.com/resources/glossary/just-in-time-access` (`agent-identity-auth-landscape.md`). Both return 200 via polyfetch (2026-09-23) and 403 only to lychee. Also `ampcode.com` (`amp-analysis.md`): 200 via polyfetch, persistent HTTP/2 protocol error to lychee (same class as the existing `epo.org` exclude). These plus row 15's producthunt 403 are the only failures in a full lychee run (4,440 links, 5 errors) | owner | Exact-URL excludes added to `lychee.toml` (Salesforce precedent), or rejected |
+| ~~21b~~ | Done 2026-09-24 (#457). Bot-block excludes: `www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf` (`agentic-sdlc-patterns.md`) and `www.beyondtrust.com/resources/glossary/just-in-time-access` (`agent-identity-auth-landscape.md`). Both return 200 via polyfetch (2026-09-23) and 403 only to lychee. Also `ampcode.com` (`amp-analysis.md`): 200 via polyfetch, persistent HTTP/2 protocol error to lychee (same class as the existing `epo.org` exclude). These plus row 15's producthunt 403 are the only failures in a full lychee run (4,440 links, 5 errors) | owner | Exact-URL excludes added to `lychee.toml` (Salesforce precedent), or rejected |
 
 ## Unverified
 

@@ -5,8 +5,8 @@ category: analysis
 version: 2.0.0
 status: completed
 created: 2026-01-11
-updated: 2026-06-19
-validated_links: 2026-06-19
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Date**: 2026-01-11
@@ -62,6 +62,18 @@ SKILL.md uses a three-level loading model, confirmed across the
 | 1 — YAML frontmatter (`name`, `description`) | Always, at session start | ~100 tokens per skill | Discovery metadata used to decide when to invoke the skill |
 | 2 — SKILL.md body | When the skill is invoked | Under 5,000 tokens (target) | Full instructions; recommended cap of 500 lines per [`code.claude.com/docs/en/skills`][cc-skills] and [authoring best practices][skills-best-practices] |
 | 3 — Bundled files (`references/`, `scripts/`, examples) | On demand via Read or Bash | Effectively unlimited until read | Reference docs, utility scripts, templates — zero context cost until accessed |
+
+**Compression research on progressive loading.** [SkillZip Pro][skillzip-pro-paper]
+(Bai et al., 2026) proposes execution-aware compression for progressively-loaded
+skill bundles: compressing only root files misses most of the cost, while
+flattening a bundle destroys the progressive-loading structure. Their method
+instead removes content that is redundant across files while preserving
+cross-file routing, in either a one-shot rebuild or a continual-update mode.
+Reported production results: "38% of skill bundle tokens" and "10.4% of
+end-to-end per-run tokens" removed, while maintaining quality — unsafe
+compression baselines they compare against degraded accuracy noticeably more.
+*(A repository lead at `youtou520131/SkillZip-Pro` returned HTTP 404 on
+2026-09-24; this entry cites the paper only, no code/license claim is made.)*
 
 ### Shared auto-compaction budget
 
@@ -266,6 +278,20 @@ This is valid per the agentskills.io spec (metadata is a free-form map) but mean
 CC may not interpret them as first-class directives. Monitor the upstream fix;
 when shipped, move these fields to top-level.
 
+### Does Skill Injection Help? (WebDev-Skills-Bench)
+
+[Yang & Ding (2026)][webdev-skills-bench-paper] benchmark Agent Skills injection
+for web-development coding tasks — the same SKILL.md format described above,
+evaluated for effect rather than compliance — and find it is frequently
+net-negative: target-skill injection lowered mean Pass@2 by 1.3–4.2%, reduced
+task-completion depth, and raised token cost by 72–394%, with only 17–36% of
+skill-project pairs showing any improvement. They attribute the losses to two
+failure modes — "length-distracted" (disrupted by prompt length alone) and
+"content-misled" (misled by the skill's content) — and report that skill
+rankings transfer weakly across models. Their conclusion: treat a skill as
+hypothesis-specific to one model/project pairing, not as a universally reusable
+asset, and audit per deployment.
+
 ## Ecosystem Context
 
 The Agent Skills standard has achieved broad cross-industry adoption:
@@ -277,11 +303,63 @@ The Agent Skills standard has achieved broad cross-industry adoption:
 | [skills.sh][skills-sh] | Marketplace/registry | Distribution layer; `npx skills add owner/repo` |
 | [Microsoft Agent Framework][ms-skills] | SDK integration | Implements spec via `FileAgentSkillsProvider`; adds code-defined skills |
 | [HashiCorp Agent Skills][hashi-skills] | Domain skill library | Terraform/Packer skills in SKILL.md format |
-| [anthropics/skills][gh-skills] | Reference skills | Official Anthropic skill examples |
+| [anthropics/skills][gh-skills] | Reference skills | Official Anthropic skill examples (177.9k★/21.1k forks, 2026-09-24) |
+| [SylphAI-Inc/atskills][atskills] (`@skills`) | Alternative protocol | Path-based, no-install skill addressing; paired with the [atskills.one][atskills-hub] hub |
+| [HKUDS/OpenSpace][openspace] | Skill management layer | Evaluates skill quality from task outcomes; MCP/CLI/Python/dashboard access |
+| [GitSkills dataset][gitskills-paper] | Research dataset | 3,797,117 SKILL.md files across 282,200 GitHub repos (July 2026 snapshot) |
+| [AREX-Skill Library][repo-to-skill-repo] ([paper][repo-to-skill-paper]) | Research system + dataset | DisCo distills 5,000+ verified skills from 1,000 widely-used ML repos |
 
 **Key distinction** (from HashiCorp): "MCP is the 'pipe' connecting data to AI;
 Agent Skills are the 'textbooks' of knowledge." These are complementary, not
 competing patterns.
+
+**`anthropics/skills` — recent addition.** The repo's `claude-api` reference skill
+now ships a `prompt-audit` procedure (`skills/claude-api/shared/prompt-audit.md`,
+invoked via `/claude-api prompt-audit`) for finding and removing prompt/skill
+instructions tuned to older, less-instruction-following models — framed as
+"every token earns its place"; "make it short" is not the goal. The repo has no
+root `LICENSE` file, so no license is claimed for it here.
+
+**`@skills` — path-based addressing (no install).** [SylphAI-Inc/atskills][atskills]
+(MIT license; a TypeScript protocol core plus a Node.js reference CLI) proposes an
+alternative to the install-then-load model this doc otherwise describes: a skill
+is read directly by path — local, `gh:owner/repo/path`, or via the
+[atskills.one][atskills-hub] hub — and, per the protocol's paper, "reading a skill
+is sufficient to use it, so nothing is installed or made resident"
+([Yin et al., 2026][skills-attention-paper]). The paper frames this as a direct
+response to the same prompt-budget pressure covered in
+[Description budget](#description-budget-always-loaded) above: an install-based
+model forces skills to compete for limited prompt space, leaving most of a large
+library unused. The protocol is integrated into the [AdaL][adal] agent harness,
+whose site advertises "60,000+ agent skills on atskills.one" reachable via the
+`@skills` syntax (AdaL's own count, not independently verified here).
+
+**OpenSpace.** [HKUDS/OpenSpace][openspace] (MIT license, 7,725★ as of 2026-09-24)
+is a "skill management layer" that scores skills by real task outcomes rather than
+description alone, supports controlled skill evolution (FIX/DERIVED/CAPTURED
+updates with independent review and version history), and exposes skills through
+an MCP server, CLI, Python API, or local dashboard — a complementary,
+execution-feedback-driven counterpart to the static progressive-disclosure model
+described earlier in this doc.
+
+**GitSkills dataset.** [Destefanis, Graziotin, Vaccargiu & Ortu (2026)][gitskills-paper]
+scraped **3,797,117** SKILL.md files across **282,200** public GitHub repositories
+(July 2026 snapshot; 1,877,981 distinct file contents) into a SQLite dataset —
+repository metadata, content hashes, parsed frontmatter, and commit history — for
+empirical research on how SKILL.md is adopted, reused, and maintained across the
+ecosystem this table surveys.
+
+**Repo-To-Skill (DisCo).** [Chen et al. (2026)][repo-to-skill-paper] distill
+"operational knowledge" out of GitHub repositories — implementation expertise a
+theoretical ML-knowledge-only agent lacks — via a system called DisCo, building the
+**AREX-Skill Library**: 5,000+ verified skills distilled from 1,000 widely-used ML
+repositories, organized across multiple capability families ([code][repo-to-skill-repo],
+Apache-2.0; 308★, `gh api` 2026-09-24). The output format is agent/benchmark-specific,
+not the Anthropic SKILL.md spec this doc otherwise describes, but it is the same
+distill-a-repo-into-a-reusable-skill pattern as the GitSkills dataset above, applied
+generatively rather than observationally: paired with GPT-5.5, the skill-equipped
+agent scored 134.3% higher on MLE-bench and 34.4% higher on PaperBench than an
+unequipped baseline (paper claims; methodology not independently verified).
 
 ## Settings Configuration
 
@@ -303,3 +381,13 @@ Update `.claude/settings.json` to adopt Skills:
 [hashi-skills]: https://www.hashicorp.com/en/blog/introducing-hashicorp-agent-skills
 [cc-schema-bug]: https://github.com/anthropics/claude-code/issues/25795
 [context-forking-post]: https://www.hlyr.dev/blog/context-forking-to-save-time-trouble-and-tokens
+[atskills]: https://github.com/SylphAI-Inc/atskills
+[atskills-hub]: https://atskills.one
+[adal]: https://adalagent.ai
+[skills-attention-paper]: https://arxiv.org/abs/2608.12610v1
+[gitskills-paper]: https://arxiv.org/abs/2608.10906
+[openspace]: https://github.com/HKUDS/OpenSpace
+[skillzip-pro-paper]: https://arxiv.org/abs/2608.30785
+[webdev-skills-bench-paper]: https://arxiv.org/abs/2608.23067
+[repo-to-skill-paper]: https://arxiv.org/abs/2609.02749
+[repo-to-skill-repo]: https://github.com/VectorSpaceLab/AREX-Skill

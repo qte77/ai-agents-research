@@ -4,8 +4,8 @@ purpose: Assess a tested AGENTS.md template/linter/migrator kit and its claim of
 source: https://github.com/Taiizor/agents-md-cookbook
 platform_scope: [cursor, openai-codex, github-copilot, windsurf, cline, zed, amp, google-jules, opencode, roocode, claude-code]
 created: 2026-07-23
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -17,8 +17,9 @@ AGENTS.md templates, a CI linter (`agents-md-lint`), and a migrator
 (`agents-md-migrate`) that converts an existing `CLAUDE.md`/`.cursorrules`/
 `GEMINI.md`/Copilot/Windsurf/Cline/Aider config into a single AGENTS.md.
 MIT-licensed, single-maintainer ([Taiizor][repo]), v1.0.0 (tagged
-2026-06-14, aliased `v1` for its GitHub Action), last pushed 2026-07-21.
-7 stars, 7 watchers, 0 forks, 0 open issues.
+2026-06-14, aliased `v1` for its GitHub Action), last pushed 2026-08-08.
+19 stars, 19 watchers, 2 forks, 0 open issues (re-verified via GitHub API,
+2026-09-24).
 
 ## Contents and Verification
 
@@ -42,6 +43,29 @@ MIT-licensed, single-maintainer ([Taiizor][repo]), v1.0.0 (tagged
   import) — confirming this doc's `non-cc/` placement over `cc-community/`.
 - License and version were independently re-verified against the LICENSE
   file and `package.json` (root + `packages/linter`) via the GitHub API.
+
+### Field-Study Evidence (Coldtea, Aug 2026)
+
+Independent corroboration for this kit's "100-150 line, command-first"
+template thesis: a [field study of AGENTS.md files][field-study] published
+2026-08-21 by Ohans Emmanuel (Coldtea Engineering) sampled 100 of the 273
+top-1,000 GitHub repositories (by stars, combined 11.4M stars) that carry an
+AGENTS.md file at HEAD — a 27% adoption rate across the top 1,000. Findings
+(regex-based section classification, not independently re-run here):
+
+| Metric | Value |
+|---|---|
+| Adoption (top 1,000 repos) | 27% (273 repos) |
+| Median file length | 1,198 words |
+| Repos with explicit "don't" rules | 86% of sample (784 bullets total) |
+| Must/always/never phrasing | 90% of sample |
+| Testing instructions present | 74% of sample |
+| Commit/PR guidelines present | 79% of sample |
+
+The study frames "orientation and verification" content as roughly half of
+total AGENTS.md word count, with rules-and-boundaries sections alone
+averaging 11.3% — this cookbook's per-template line-count guidance is
+consistent with, though not derived from, this dataset.
 
 ## Corpus Relevance
 
@@ -74,7 +98,8 @@ answer to it.
 | [LICENSE][license] | MIT text, verified via decode against `Copyright (c) 2026 Taiizor` |
 | [package.json][pkg] | Root + `packages/linter` version 1.0.0, `node >=18`, Bun+TS scripts |
 | [COMPATIBILITY.md][compat] | Native-vs-adapter classification (Claude Code = ADAPTER) |
-| GitHub API repo metadata, 2026-07-23 | Stars(7)/watchers(7)/forks(0)/issues(0), dates, v1.0.0 = v1 tag alias |
+| GitHub API repo metadata, 2026-09-24 | Stars(19)/watchers(19)/forks(2)/issues(0), dates, v1.0.0 = v1 tag alias |
+| [Coldtea AGENTS.md field study][field-study] | 100-repo sample stats: adoption, word count, rule-language prevalence |
 
 [agents-standard]: https://agents.md
 [repo]: https://github.com/Taiizor/agents-md-cookbook
@@ -82,3 +107,4 @@ answer to it.
 [pkg]: https://github.com/Taiizor/agents-md-cookbook/blob/main/package.json
 [compat]: https://github.com/Taiizor/agents-md-cookbook/blob/main/COMPATIBILITY.md
 [agentbench]: https://arxiv.org/abs/2602.11988
+[field-study]: https://www.coldtea.ai/blog/agents-md-field-study
