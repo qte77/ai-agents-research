@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
@@ -264,6 +264,67 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
+## TeamAI-CLI (Tencent)
+
+**Repo**: [Tencent/teamai-cli][teamai-cli] | **Stars**: 4,981 | **License**: MIT (Tencent-preambled `LICENSE`; GitHub's detector reports "Other" because of the added copyright header, but the license body is the standard MIT text) | **Version**: v0.25.0 (2026-09-22)
+
+Git-backed shared foundation for a team's AI assets — skills, rules, MCP servers, hooks, docs, and agent config — kept in sync across every teammate's machine and across 15+ agent harnesses (Claude Code, Codex, Cursor, GitHub Copilot CLI, CodeBuddy, WorkBuddy, OpenCode, Pi Coding Agent, OpenClaw, Hermes, DeepSeek Harness, Qoder, Kiro, ZCode, Oh My Pi, and others).
+
+### How It Works
+
+1. A team admin runs `teamai init <git-repo-url>` against a shared repo (any Git host — GitHub, GitLab, GitCode, CNB, TGit, or self-hosted) with write access granted to the team.
+2. Teammates run the same command — project-scoped (default) or `--scope user` — and every AI session then automatically pulls the latest skills, rules, and harness config from that repo.
+3. Three-layer model: **Team Execution** (skills, rules, docs, environment, agents, hooks, MCP, models) feeds **Team Context** (learnings, a codebase graph, a team wiki), which rolls up into **Team Improvement** (usage tracking, session history, a dashboard).
+4. Onboarding is a single skill-install prompt (`Install the teamai skill: .../skills/teamai , load the teamai skill, then set up TeamAI for my team from scratch`), or `npm install -g teamai-cli` for a CLI-first setup.
+
+### Adoption Considerations
+
+**Strengths**: broadest harness coverage in this doc (15+ named CLIs); git-native sync needs no separate server; MIT-licensed with active CI and a fast release cadence (v0.25.0 as of 2026-09-22).
+
+**Risks**: centralizing skills/rules/MCP config in one shared repo makes that repo a single point of failure and drift for the whole team; no independent review of what "learnings" or "codebase graph" capture or retain.
+
+Cross-ref: **CC Switch** section above — TeamAI syncs the *content* a team shares (skills/rules/MCP config); CC Switch manages the *infrastructure* layer (provider/API key) per machine — complementary, not overlapping.
+
+---
+
+## herdr & Zeron (agent session runtimes)
+
+Two entrants in the same niche — a persistent runtime that keeps coding-agent sessions alive independent of the client connection — with different architectures.
+
+### herdr (herdrdev)
+
+**Repo**: [herdrdev/herdr][herdr] | **Stars**: 40,485 | **License**: Apache-2.0 | **Version**: v0.9.1 (2026-09-16)
+
+"the runtime your coding agents live on" — a single-Rust-binary, no-Electron terminal multiplexer and background server built specifically for coding agents.
+
+- **Detach without stopping work**: herdr keeps terminals running in a background server when the client closes or the SSH connection drops; after a server/machine restart it restores the saved layout and can resume supported agent sessions (the original OS processes do not themselves survive the restart)
+- **Multi-machine**: local work and saved SSH machines share one combined agent list with independent reconnects
+- **Status at a glance**: every pane is marked working, blocked, or idle
+- **Agent-native**: agents drive herdr through its own CLI and a socket API — spawning panes, prompting each other, waiting until another agent is genuinely blocked
+- **Runs what you already run**: Claude Code, Codex, Cursor, OpenCode, Grok, and others — "herdr doesn't wrap or replace them; it owns their terminals"
+- Install: `curl -fsSL https://herdr.dev/install.sh | sh`, `brew install herdr`, `mise use -g herdr`, or the Windows PowerShell installer; a plugin marketplace extends panes/workflows
+
+### Zeron (zeronsh)
+
+**Repo**: [zeronsh/zeron][zeron] | **Stars**: 2,195 | **License**: MIT | **Version**: v0.2.85 (2026-09-24)
+
+Local-first engine plus desktop app that controls Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi, and Antigravity sessions, with optional multi-device sync.
+
+- **Local by default**: every device runs its own engine that stores sessions on that device; a fresh install starts in local-only mode with no account or network connection required
+- **Optional sync**: signing in opens a synced workspace so an agent started on one device can be followed or driven from another (e.g. keep a VPS-hosted agent working after closing a laptop); devices signed into the same account get full read/write access to each other's workspace files (`.git` always excluded; gitignored files such as `.env` are exposed only if "Show ignored files" is enabled) — the README itself flags this as a trust boundary, not just a convenience
+- **Live branch diffs and commit graphs** per workspace
+- Install (Linux): `curl -fsSL https://zeron.sh/install.sh | sh` then `zeron status`; macOS/Windows via a desktop release or source build
+
+### Adoption Considerations
+
+**Strengths**: both are free and open source (Apache-2.0, MIT) and agent-agnostic — neither wraps or replaces the underlying CLI, so existing Claude Code hooks/config keep working unmodified. herdr is the more adopted of the two by star count; Zeron's local-first-with-optional-sync model is the more cautious default for anyone wary of always-on cloud session storage.
+
+**Risks**: herdr's "resume supported agent sessions" after a restart does not resurrect the original OS processes — read its session-state docs before relying on it for long unattended runs. Zeron's cross-device sync grants full workspace read/write to every signed-in device on the account; its own README says to sign in only devices trusted with the workspace's full contents, including secrets.
+
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — the CC hook surface both tools sit alongside without replacing
+
+---
+
 ## Detailed Tool Landscapes
 
 Per-tool entries for three categories have moved to focused topic docs; the cross-tool comparison below still covers all of them:
@@ -290,6 +351,9 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **Parry Guard** | Injection/secrets/exfil scanning | Hooks (PreToolUse + PostToolUse + UserPromptSubmit) | Local ML (DeBERTa v3) + AST/regex layers, fail-closed | Early (44 stars, v0.1.5) |
 | **Dippy** | Permission auto-approval | PreToolUse hook (Bash matcher) | Static bash-AST safe/unsafe classification + steerable deny messages | Active (242 stars, v0.2.7) |
 | **cc-sessions** | Session/workflow enforcement | Hooks + subagents + trigger phrases | DAIC tool-gating, task↔branch binding | Adopted but dormant (1,550 stars, v0.3.6, no commits since 2025-10) |
+| **TeamAI-CLI** | Team-shared AI config | Skill + CLI (git-backed shared repo) | Sync skills/rules/MCP/hooks across 15+ harnesses | Active (4,981 stars, v0.25.0) |
+| **herdr** | Agent session runtime | CLI (owns agent terminals + socket API) | Persistent background sessions across disconnect/restart | Active (40,485 stars, v0.9.1) |
+| **Zeron** | Agent session runtime (local-first) | Desktop app + CLI daemon | Local-first sessions, optional multi-device sync | Active (2,195 stars, v0.2.85) |
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
 | **MemSearch** | Persistent memory (cross-agent) | Plugin (hooks + skill, no MCP) | Markdown source-of-truth + Milvus hybrid search | Active (~2K stars, v0.4.7) |
@@ -303,7 +367,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 
-All twenty-two address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
+All twenty-five address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -323,6 +387,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Parry Guard][parry-guard] | CC-hook injection/secrets/exfil scanner, local DeBERTa + AST layers (44 stars, MIT; optional Llama-licensed model; v0.1.5, PyPI-verified) |
 | [Dippy][dippy] | PreToolUse bash auto-approval hook, zero-dep vendored parser (242 stars, MIT, v0.2.7) |
 | [cc-sessions][cc-sessions] | DAIC session/workflow enforcement, npm+PyPI dual-packaged (1,550 stars, MIT, v0.3.6) |
+| [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (4,981 stars, MIT, v0.25.0) |
+| [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (40,485 stars, Apache-2.0, v0.9.1) |
+| [Zeron][zeron] | Local-first coding-agent session engine + desktop control plane, optional multi-device sync (2,195 stars, MIT, v0.2.85) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -368,6 +435,9 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [parry-guard]: https://github.com/vaporif/parry-guard
 [dippy]: https://github.com/ldayton/Dippy
 [cc-sessions]: https://github.com/GWUDCAP/cc-sessions
+[teamai-cli]: https://github.com/Tencent/teamai-cli
+[herdr]: https://github.com/herdrdev/herdr
+[zeron]: https://github.com/zeronsh/zeron
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
