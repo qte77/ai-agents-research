@@ -66,7 +66,7 @@ local hook server does with session data beyond what the README states (local-on
 telemetry).
 
 Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) —
-the PreToolUse/PostToolUse hook-event surface Agent Flow's HTTP hook server consumes.
+the CC hook-event surface Agent Flow's HTTP hook server consumes.
 
 ## Sources
 

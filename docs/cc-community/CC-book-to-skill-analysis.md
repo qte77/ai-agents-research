@@ -36,7 +36,7 @@ Two-stage pipeline:
    optional extractors are installed.
 2. **Generation** — produces a skill billed by the project as following an "Agent Skills" open
    standard: a core `SKILL.md` (frameworks, chapter index), per-chapter files loaded only when
-   queried, plus a glossary, pattern library, and decision cheatsheet.
+   queried, plus a glossary, patterns, and a cheatsheet.
 
 Install: `npx skills add virgiliojr94/book-to-skill`, or a manual clone into `~/.claude/skills/`,
 `~/.copilot/skills/`, or the host's skills directory — one installation registers across every
@@ -64,8 +64,8 @@ conversation turn," versus a smaller 2.4×–15.6× advantage over a manual disc
 **Strengths**: rapid adoption (32.2K stars from a 2026-05-01 repo creation date) with active
 maintenance (pushed 2026-09-22); a reproducible, first-party benchmark methodology rather than a
 bare marketing number; cross-platform skill discovery (one install registers on multiple
-harnesses); MIT-licensed, and the license applies only to the converter/spec, not to source
-documents processed.
+harnesses); MIT-licensed (`LICENSE.md`), though the README itself notes this covers the tool, not
+the books you feed it — "follow the license or terms of the source document."
 
 **Risks**: extraction quality depends on which optional per-format tool is installed (`pdftotext`
 vs. `docling` vs. Calibre for MOBI) — the `--check` flag exists precisely because this varies by

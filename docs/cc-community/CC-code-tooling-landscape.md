@@ -265,7 +265,7 @@ Cross-ref: ast-grep MCP above — structural AST search vs. tgrep's indexed rege
 
 **Repo**: [zvec-ai/zvec-grep][zvec-grep] | **Stars**: 3,752 | **License**: Apache-2.0 | **Version**: v0.2.0 (2026-08-27)
 
-Local-first search layer that unifies ripgrep (exact/regex), BM25 (lexical ranking), and vector search (semantic) behind one interface, "for humans and agents." Built on [zvec](https://github.com/alibaba/zvec) (Alibaba's vector engine); the documented implementation is TypeScript/Node.js ≥22 (npm), with a separate Rust implementation developed in the repo's `rust/` subdirectory.
+Local-first search layer that unifies ripgrep (exact/regex), BM25 (lexical ranking), and vector search (semantic) behind one interface, "for humans and agents." Built on [zvec][zvec] (Alibaba's vector engine); the documented implementation is TypeScript/Node.js ≥22 (npm), with a separate Rust implementation developed in the repo's `rust/` subdirectory.
 
 ### CC Integration (first-party, direct)
 
@@ -281,7 +281,7 @@ Agents are steered to use native grep/rg for exact lookups (a known word, quote,
 
 ### Adoption Considerations
 
-**Strengths**: the only tool in this doc with an explicit, documented Claude Code installer target (not a generic "works with any MCP client" claim); combines exact, lexical, and semantic retrieval in one local index rather than requiring a separate vector DB; broad multi-agent install coverage (8 named harnesses/IDEs).
+**Strengths**: unlike tgrep above (no CC target at all) and ast-grep MCP (manual JSON client config only), zg ships an explicit, documented `--target claude` installer that writes CC's own config files directly; combines exact, lexical, and semantic retrieval in one local index rather than requiring a separate vector DB; broad multi-agent install coverage (8 named harnesses/IDEs).
 
 **Risks**: young (repo created 2026-07-10); the dual TS/Rust implementation is a maintenance surface to watch; no independent benchmark of its own retrieval-quality claims (the repo carries internal `zg-retrieval-metric-review.md` / `zg-retrieval-only-sweqa20-design.md` design docs, not third-party validation).
 
@@ -330,6 +330,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [qodo-crr]: https://docs.qodo.ai/governance/cross-repo-code-review
 [tgrep]: https://github.com/microsoft/tgrep
 [zvec-grep]: https://github.com/zvec-ai/zvec-grep
+[zvec]: https://github.com/alibaba/zvec
 
 ## Sources
 
