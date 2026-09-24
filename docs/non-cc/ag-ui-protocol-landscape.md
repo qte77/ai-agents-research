@@ -2,8 +2,8 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
@@ -136,6 +136,19 @@ Not a protocol — an end-to-end reference implementation:
 
 Supported clients per the repo: Claude Desktop (stdio), Claude Code / HTTP clients, Cursor, Next.js. Uses MCP for tool exposure and HTTP for client communication — **not AG-UI directly**, though the patterns are compatible.
 
+## OpenBot (CopilotKit Governed AI-Coworker Template)
+
+**Repo**: [CopilotKit/openbot][openbot-repo] | **Site**: [copilotkit.ai/openbot][openbot-site]
+
+A self-hosted, open-source template for a governed "AI coworker" platform — distinct from the OpenGenerativeUI demo above, aimed at production deployment with policy enforcement rather than a UI-pattern showcase:
+
+- **Governance**: every tool call passes through a single gateway enforcing a **CEL** (Common Expression Language) policy with fail-closed defaults — a missing policy denies by default, and a broken rule refuses rather than opens access. All permitted, refused, and failed actions are logged for audit.
+- **Isolation**: each AI coworker runs in its own containerized environment (browser, files, workspace volume); credentials are stored write-only and never returned via API.
+- **Framework-agnostic via AG-UI**: any agent speaking AG-UI — LangGraph, Mastra, CrewAI, Pydantic AI, or a custom endpoint — registers and gets its own channel; CopilotKit Intelligence supplies durable thread management.
+- **Stack**: React/Vite frontend, Hono API server, PostgreSQL + pgvector, Docker Compose for local and production deployment.
+
+**License**: MIT | **Stars**: 5,483 (verified 2026-09-24). Ships as a clone-and-customize template, not a managed service.
+
 ## Decision Matrix
 
 | Your need | Use |
@@ -178,6 +191,7 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 | [Oracle Agent Spec + AG-UI (Oracle blog)][oracle-agui] | Three-way alignment announcement |
 | [Microsoft Learn — AG-UI Integration][ms-learn-agui] | Microsoft Agent Framework integration |
 | [CopilotKit/OpenGenerativeUI][ogui-repo] | Reference framework |
+| [CopilotKit/openbot][openbot-repo] · [site][openbot-site] | Governed AI-coworker template — CEL policy gateway, container isolation, AG-UI-agnostic |
 | [Salesforce Agentforce 360][sf-agentforce] | Salesforce protocol strategy (MCP, not AG-UI) |
 | [Devin Desktop FAQ][devin-faq] | "Agent Command Center" framing (Kanban for local + cloud agents) |
 | [Omnara (YC launch)][omnara] | "command center for AI agents: terminal, web, mobile" |
@@ -211,3 +225,5 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [agntcy]: https://agntcy.org/
 [mcp]: https://modelcontextprotocol.io/
 [mcp-changelog]: https://modelcontextprotocol.io/specification/2025-11-25
+[openbot-repo]: https://github.com/CopilotKit/openbot
+[openbot-site]: https://copilotkit.ai/openbot

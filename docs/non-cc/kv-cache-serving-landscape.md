@@ -3,8 +3,8 @@ title: KV-Cache Serving Landscape — Vendor Prompt Caching & Inference Internal
 purpose: Survey of KV (key-value) cache mechanisms in LLM serving — vendor prompt-caching APIs (Anthropic/OpenAI/Gemini) and open serving-stack internals (paging, prefix reuse, quantization, eviction, architectural sharing, offload/disaggregation).
 category: landscape
 created: 2026-07-08
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Reference (informational catalog)
@@ -45,6 +45,14 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
   facto standard, echoed by TensorRT-LLM / SGLang / TGI.
 - **vAttention** ([arXiv 2405.04437][vattention], Microsoft) — CUDA virtual-memory demand paging to
   keep KV contiguous without block indirection. Research/early.
+- **kvcached** ([site][kvcached-site] · [repo][kvcached-repo], Apache-2.0) — applies the OS-style
+  virtual-memory idea one level up from PagedAttention: decouples GPU *virtual* addressing from
+  *physical* KV allocation so vLLM (≥v0.8.4) and SGLang (≥v0.4.9) can elastically share one GPU across
+  multiple LLM instances with no engine-code changes, plus a frontend router and per-model sleep mode.
+  **Shipped** — v0.1.5 (2026-04-07), 1,484 stars, and listed under the README's own "Trusted and
+  deployed by" logos (Google, LinkedIn, Intel, AMD, Red Hat, and others; accessed 2026-09-24). Vendor-
+  reported benchmark: **2–28x TTFT reduction** serving three Llama-3.1-8B instances on one A100-80G
+  under intermittent-peak load, vs. static per-model memory reservation.
 
 ### Cross-request reuse (prefix caching)
 
@@ -122,6 +130,7 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
 | [Anthropic prompt caching][anthropic-caching] | Per-model minimums, TTL, pricing (verified 2026-07-08) |
 | [OpenAI prompt caching][openai-caching] · [Gemini caching][gemini-caching] | Vendor prefix/context caching |
 | [PagedAttention][paged] · [vLLM APC][vllm-apc] | Paged memory + prefix caching |
+| [kvcached][kvcached-repo] · [site][kvcached-site] | OS-style virtual-memory KV manager for elastic multi-LLM GPU sharing |
 | [SGLang / RadixAttention][sglang] · [docs][radix] | Radix-tree prefix reuse + HiCache |
 | [FP8 KV (vLLM)][vllm-fp8] · [TensorRT-LLM][trtllm-quant] · [KIVI][kivi] · [KVQuant][kvquant] · [UltraQuant][ultraquant] | Quantization |
 | [H2O][h2o] · [StreamingLLM][streamingllm] · [SnapKV][snapkv] · [Scissorhands][scissorhands] | Eviction/sparsity |
@@ -135,6 +144,8 @@ exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/
 [paged]: https://arxiv.org/abs/2309.06180
 [vllm]: https://github.com/vllm-project/vllm
 [vattention]: https://arxiv.org/abs/2405.04437
+[kvcached-site]: https://kvcached.org
+[kvcached-repo]: https://github.com/ovg-project/kvcached
 [vllm-apc]: https://docs.vllm.ai/en/latest/features/automatic_prefix_caching.html
 [sglang]: https://arxiv.org/abs/2312.07104
 [radix]: https://github.com/sgl-project/sglang

@@ -3,8 +3,8 @@ title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 category: landscape
 created: 2026-06-23
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -50,6 +50,10 @@ Each rung scaffolds the next; together they describe the environment built *arou
 
 NEW vs current repo coverage: the Anthropic context-engineering and OpenAI harness-engineering first-party anchors, **Flow Engineering** (no current coverage), and the **spec-engineering** landscape (see §3).
 
+**Quantified evidence for the thesis:** [The Harness Effect][harness-effect] (Sayed Ali et al., 32 authors, Jul 2026) shows the orchestration layer — not model choice — dominates agentic cost/quality: holding six foundation models constant (Claude Sonnet 4.6, Gemini 3.1, Gemini Flash 3.5, Qwen 3.6, GLM 5.1, Palmyra X6), a purpose-built "Writer Agent Harness" cut blended cost per task 41% ($0.21→$0.12), with the efficiency gain model-invariant (every model 33–61% cheaper) while quality gains correlated almost perfectly with each model's baseline strength (r=0.99) — direct quantitative support for *Agent = Model + Harness*.
+
+**2026 harness-evolution research cluster:** three Aug–Sep 2026 arXiv papers extend the harness-as-evolvable-artifact line from [HarnessX][harnessx] (composable scaffolding evolved from execution traces) into concrete benchmarking and optimization. **HarnessDev** ([arXiv:2609.01437][harnessdev], Wu et al., Sep 2026) benchmarks whether LLMs can build and iteratively evolve their own execution harness (2,207 instances, 6 LLMs, 4 domains) — generated harnesses beat human-engineered references for writing and ML-experimentation tasks but lag for coding/research, and evolution gains transfer poorly across models. **AutoDesign** ([arXiv:2608.13560][autodesign-paper], [repo][autodesign-repo], Luo et al., Aug 2026, 227★, MIT + third-party-notices addendum) frames design as a long-horizon agentic process and runs "Meta-Harness Optimization" — a meta-harness optimizer that recursively improves a task-specific *DesignHarness* from failure feedback — for +12.4% on academic paper-to-poster generation (78.32 on PosterBench). **RobustSGPO** ([arXiv:2609.09646][robustsgpo], Zhao et al., Sep 2026) controls the search space of semantic-gradient prompt optimization for harness evolution, lifting an AgentX brainstorming workflow's completion rate 60%→80% across 120 tasks. Full harness-as-primitive analysis: [harnessx-analysis.md][harnessx].
+
 ## §2. The "-driven development" ladder
 
 The trajectory is *bounding the unboundable* — from deterministic asserts toward probabilistic-output verification.
@@ -87,9 +91,11 @@ By 2026 every major coding tool shipped an SDD flavor. Stars verified via `gh ap
 
 A full standalone comparison (`spec-driven-frameworks-landscape.md`) is a natural follow-up; this table is the synthesis-level entry.
 
+**Adjacent 2026 developments:** Anthropic's own [The AI-Native SDLC Playbook][anthropic-sdlc] (Aug 2026) operationalizes SDD as a committed artifact chain — "the intent, the spec, the plan, the diff and the review findings are the audit trail" — across six loop stages (Plan/Design/Build/Test/Deploy/Maintain), with a control-band breach in production writing the next `intent.md` to restart the loop. `CLAUDE.md` carries institutional knowledge across sessions; **Skills** encode organizational policy as advisory, reusable constraints; **Hooks** are the deterministic enforcement layer (blocking unsafe edits, gating approvals); **Evals** form the regression suite triggered on config/prompt changes. A human always accepts the spec before build starts, consulting a technical lead for anything the org classes as higher-risk; humans also approve the implementation plan and hold exclusive PR-merge and deploy authorization. In an adjacent domain, [SMART][smart] (Kushnir, Noorbakhsh, Sreedhar et al., Sep 2026) pushes design-docs-as-source past code review into ML systems tooling: an ML performance-modeling repo holds "almost no code," only a DAG of natural-language design docs, and coding sub-agents regenerate the implementation from the docs on each version update — validated against hand-audited reference models including DeepSeek-V3.
+
 ## Reference implementation: open-agentic-coding-harness
 
-qte77's sibling project [open-agentic-coding-harness][oach] implements the whole stack — `ralph-loop` (Layers 2–3: TDD + loop), `claude-code-plugins` (Layer 1: harness), `cc-recursive-team-mode` (Layer 3: teams), `coding-agent-eval` (Layer 4: deterministic EDD), and `LEARNINGS.md` refeeding (Layer 5: compound) — under "faithful adoption + measurability" ("you can't trust a harness you can't measure"). Per cross-repo routing, deep product analysis stays in that repo; here it is cited as the reference implementation of the disciplines above.
+qte77's sibling project [open-agentic-coding-harness][oach] implements the whole stack — `ralph-loop` (Layers 2–3: TDD + loop), `claude-code-plugins` (Layer 1: harness), `cc-recursive-team-mode` (Layer 3: teams), `coding-harness-eval` (Layer 4: deterministic EDD), and `LEARNINGS.md` refeeding (Layer 5: compound) — under "faithful adoption + measurability" ("you can't trust a harness you can't measure"). Per cross-repo routing, deep product analysis stays in that repo; here it is cited as the reference implementation of the disciplines above.
 
 ## Cross-References
 
@@ -109,6 +115,13 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | [OpenAI — Harness Engineering][openai-harness] | Convergent harness definition; Codex throughput evidence |
 | [Pydantic — The Harness Thesis][pydantic-thesis] · [What Makes a Good Harness][pydantic-good-harness] | Harness > model; *disclosure* + *steering* operational axioms |
 | [Pydantic — Applied GenAI Maturity Model][pydantic-maturity] | 5-dimension org-adoption maturity diagnostic |
+| [The Harness Effect (arXiv 2607.06906)][harness-effect] | Orchestration-layer cost/token economics; quantitative *Agent = Model + Harness* evidence |
+| [HarnessX analysis][harnessx] | Composable, trace-evolved harness foundry — the repo's existing harness-evolution coverage |
+| [HarnessDev (arXiv 2609.01437)][harnessdev] | Benchmark: can LLMs build and evolve their own harness? |
+| [AutoDesign (arXiv 2608.13560)][autodesign-paper] · [repo][autodesign-repo] | Meta-harness optimization for long-horizon agentic design |
+| [RobustSGPO (arXiv 2609.09646)][robustsgpo] | Search-space control for agent harness evolution |
+| [Anthropic — The AI-Native SDLC Playbook][anthropic-sdlc] | intent.md→spec.md→plan.md artifact chain; CLAUDE.md/Skills/Hooks/Evals loop |
+| [SMART (arXiv 2609.05364)][smart] | Design-docs-as-source ML performance tool; docs-only repo regenerated by coding sub-agents |
 | [AlphaCodium (arXiv 2401.08500)][alphacodium] | Flow engineering; Itamar Friedman / CodiumAI |
 | [ReAct (arXiv 2210.11610)][react] | Inner-loop foundation |
 | [WalkingLabs learn-harness-engineering][walkinglabs] | 5-subsystem harness model (MIT) |
@@ -156,3 +169,11 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [sdlc-patterns]: agentic-sdlc-patterns.md
 [ralph]: ../cc-native/agents-skills/CC-ralph-enhancement-research.md
 [kiro-doc]: ../non-cc/kiro-analysis.md
+[harness-effect]: https://arxiv.org/abs/2607.06906
+[harnessx]: ../non-cc/harnessx-analysis.md
+[harnessdev]: https://arxiv.org/abs/2609.01437
+[autodesign-paper]: https://arxiv.org/abs/2608.13560
+[autodesign-repo]: https://github.com/Yaxin9Luo/AutoDesign
+[robustsgpo]: https://arxiv.org/abs/2609.09646
+[anthropic-sdlc]: https://claude.com/blog/the-ai-native-sdlc-playbook
+[smart]: https://arxiv.org/abs/2609.05364

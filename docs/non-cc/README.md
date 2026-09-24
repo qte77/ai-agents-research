@@ -10,6 +10,8 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [deerflow-analysis.md](deerflow-analysis.md) | ByteDance DeerFlow (LangGraph) | Yes | Yes (MIT) |
 | [devteam-analysis.md](devteam-analysis.md) | agent-era/devteam (TUI) | No | Yes (MIT) |
 | [omnigent-analysis.md](omnigent-analysis.md) | Omnigent (Databricks/Neon meta-harness; unifies Claude Code, Codex, Pi, custom agents) | Yes | Yes (Apache-2.0) |
+| [qm-analysis.md](qm-analysis.md) | QM (Y Combinator; multiplayer, multi-scope agent harness for Slack + web; harness-agnostic across Pi/OpenCode/Codex/Claude Code) | No | Yes (MIT) |
+| [raven-analysis.md](raven-analysis.md) | Raven (EverMind-AI "harness of harnesses"; multi-agent orchestrator with benchmark-gated self-evolution loop, EverOS memory, SkillForge) | Yes | Yes (Apache-2.0) |
 
 ## Agents
 
@@ -22,6 +24,9 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md) | GitHub Copilot CLI (terminal agent, same harness as Copilot coding agent) | Yes | No (proprietary) |
 | [odysseus-analysis.md](odysseus-analysis.md) | Odysseus (self-hosted all-in-one AI workspace: chat, agents, research, email, calendar) | Yes | Yes (AGPL-3.0) |
 | [databricks-genie-analysis.md](databricks-genie-analysis.md) | Databricks Genie One (agentic data coworker; Genie Ontology semantic graph + Genie Agents) | Partial (Slack/Teams/mobile) | No (proprietary; OSS lakehouse base) |
+| [apache-maka-analysis.md](apache-maka-analysis.md) | Apache Maka (Incubating; local-first, event-sourced agent workspace — "the log is the runtime"; Desktop/TUI/CLI) | Partial | Yes (Apache-2.0; ASF podling, no approved release yet) |
+| [qwenpaw-analysis.md](qwenpaw-analysis.md) | QwenPaw (AgentScope + Qwen; self-hosted personal AI assistant, multi-channel, three-tier memory) | Partial | Yes (Apache-2.0) |
+| [moss-self-evolving-agent-analysis.md](moss-self-evolving-agent-analysis.md) | MOSS (HKGAI, on OpenClaw; self-evolving assistant that rewrites its own TypeScript source via a 7-stage benchmark-gated pipeline) | Yes | Yes (Apache-2.0; OpenClaw vendored MIT) |
 
 ## Coding Agents & IDEs
 
@@ -48,6 +53,9 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [kimi-code-analysis.md](kimi-code-analysis.md) | Kimi Code (Moonshot terminal agent; Kimi K2.7-Code) | Yes | Yes (MIT) |
 | [amp-analysis.md](amp-analysis.md) | Amp (Sourcegraph terminal-first multi-model agent) | Yes | No |
 | [pi-analysis.md](pi-analysis.md) | Pi (minimal terminal coding agent CLI, 15+ providers; Omnigent harness) | Yes | Yes (MIT) |
+| [deepcode-analysis.md](deepcode-analysis.md) | DeepCode (HKUDS; open agentic coding harness, Paper2Code origin, Loop Engineering; CLI/Desktop/Web/TUI) | Partial | Yes (MIT) |
+| [deepseek-harness-analysis.md](deepseek-harness-analysis.md) | DeepSeek Harness (`dsh`; plugin-native "everything-is-a-plugin" harness; developer preview) | Partial | Yes (MIT) |
+| [prime-agent-analysis.md](prime-agent-analysis.md) | Prime Agent (Prime Intellect; self-improving coding harness on the Recursive Language Model abstraction) | Yes | Yes (MIT) |
 
 ## Knowledge Management
 
@@ -67,6 +75,11 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [intro-autonomous-robots-analysis.md](intro-autonomous-robots-analysis.md) | Introduction to Autonomous Robots (open textbook, MIT Press) | Open access |
 | [harnessx-analysis.md](harnessx-analysis.md) | HarnessX — composable/evolvable agent harness foundry (arXiv 2606.14249) | Preprint (code TBD) |
 | [karpathy-agentic-coding-analysis.md](karpathy-agentic-coding-analysis.md) | Karpathy's agentic-coding arc (vibe coding → Software 3.0 / autonomy slider → agentic engineering) | Blog + talks |
+| [ecdysis-analysis.md](ecdysis-analysis.md) | Ecdysis — failure-aggregation training method for self-evolving LLM-agent runtime harnesses (arXiv:2609.11677) | Preprint + reference impl (unlicensed) |
+| [frognano-analysis.md](frognano-analysis.md) | FrogNano — 4B coding agent trained via RL-only online task synthesis (Microsoft Research Montréal, arXiv:2609.07925) | Preprint (no code/weights released) |
+| [shepherd-analysis.md](shepherd-analysis.md) | Shepherd — reversible, Git-like execution traces for meta-agent inspect/fork/replay/revert (arXiv:2605.10913) | Preprint + code (MIT) |
+| [weco-aide-recursive-self-improvement-analysis.md](weco-aide-recursive-self-improvement-analysis.md) | AIDE² — Weco AI's outer-loop-rewrites-inner-loop recursive self-improvement experiment (100 iterations) | Blog + arXiv technical report (no public code) |
+| [poolside-laguna-analysis.md](poolside-laguna-analysis.md) | Poolside Laguna S 2.1 — 118B-MoE frontier agentic-coding model, 1M-token context, long-horizon autonomous coding | Blog (vendor-reported benchmarks; license unstated) |
 
 ## Context & Memory Infrastructure
 
@@ -76,6 +89,11 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [fastcontext-analysis.md](fastcontext-analysis.md) | Microsoft FastContext (Qwen3-4B repo-exploration subagent; parallel READ/GLOB/GREP) | Yes | Yes (MIT) |
 | [cocoindex-analysis.md](cocoindex-analysis.md) | CocoIndex (incremental ETL for AI context/RAG; MCP code-search variant) | Yes | Yes (Apache-2.0) |
 | [opensrc-analysis.md](opensrc-analysis.md) | opensrc (Vercel Labs; fetches npm package source code for agent context) | Yes | Yes (Apache-2.0) |
+| [helixdb-analysis.md](helixdb-analysis.md) | HelixDB (Rust graph-vector database for knowledge graphs and AI-agent memory) | Yes | Yes (Apache-2.0) |
+| [latticedb-analysis.md](latticedb-analysis.md) | LatticeDB (Zig; embedded single-file graph + HNSW vector + BM25 full-text database) | Yes | Yes (MIT) |
+| [mex-analysis.md](mex-analysis.md) | mex (Git-shared, human-approval-gated project memory + drift-detection CLI for coding agents) | Yes | Yes (MIT) |
+| [ripwire-analysis.md](ripwire-analysis.md) | Ripwire (Red Hat Emerging Technologies; deterministic repo-context CLI — call graphs, blast-radius, code-quality) | Yes | Yes (Apache-2.0) |
+| [on-device-semantic-search-landscape.md](on-device-semantic-search-landscape.md) | On-device/local-first semantic search landscape: embedder + embedded-vector-store stack survey | — | Mixed |
 
 ## Infrastructure
 
@@ -90,6 +108,9 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [llm-routers-gateways-landscape.md](llm-routers-gateways-landscape.md) | LLM routers / gateways / aggregators catalog (29 tools: OpenRouter, LiteLLM, Portkey, Bifrost, Vercel/Cloudflare AI Gateway, OpenRouter Fusion) | — | Mixed |
 | [kv-cache-serving-landscape.md](kv-cache-serving-landscape.md) | KV-cache serving: vendor prompt-caching (Anthropic/OpenAI/Gemini) + serving internals (PagedAttention, RadixAttention, quantization, MLA/GQA, offload/disaggregation) | — | Mixed |
 | [semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md) | Semantic-layer + data-catalog substrate for agentic data access (Cube, dbt MetricFlow, Malloy, AtScale, DataHub, OpenMetadata, Unity Catalog, Atlas, Dataplex) — MCP/SDK agent surfaces; cross-refs Genie Ontology + OKF | — | Mixed |
+| [ai-trader-analysis.md](ai-trader-analysis.md) | AI-Trader (ai4trade.ai; agent-native trading-signal platform — root SKILL.md onboarding surface for Claude Code/Codex/Cursor agents) | — | No (no repo/license published) |
+| [corsair-analysis.md](corsair-analysis.md) | Corsair (unified managed-OAuth integration API layer for agents, backends, and multi-tenant dashboards) | Yes | Yes (Apache-2.0) |
+| [auto-agi-compiler-analysis.md](auto-agi-compiler-analysis.md) | AUTO (RightNow AI; compiles deterministic agent-execution spans into sandboxed WASM binaries — "frontier models as interpreters") | Yes | Yes (Apache-2.0) |
 
 ## Frameworks
 
@@ -106,6 +127,8 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [openai-swarm-analysis.md](openai-swarm-analysis.md) | OpenAI Swarm (deprecated educational multi-agent; superseded by Agents SDK) | Yes | Yes (MIT) |
 | [openai-agents-sdk-analysis.md](openai-agents-sdk-analysis.md) | OpenAI Agents SDK (multi-agent: handoffs, guardrails, sessions, tracing; GA successor to Swarm) | Yes | Yes (MIT) |
 | [agents-cli-analysis.md](agents-cli-analysis.md) | Google agents-cli (skill-pack that upskills a coding agent — Claude Code/Antigravity/Codex — to build/eval/deploy ADK agents on Gemini Enterprise) | — | Yes (Apache-2.0) |
+| [nooa-analysis.md](nooa-analysis.md) | NOOA (NVIDIA-NeMo; object-oriented Python agent framework — state/capabilities/prompts as class fields/methods/docstrings) | Yes | Yes (Apache-2.0) |
+| [openrath-analysis.md](openrath-analysis.md) | OpenRath (PyTorch-like multi-agent/multi-session runtime; Session/Sandbox/Memory/Tool/Agent/Workflow abstractions) | Yes | Yes (BSD-3-Clause) |
 
 ## Protocols & Interfaces
 
@@ -115,6 +138,9 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [agentcanvas-analysis.md](agentcanvas-analysis.md) | AgentCanvas — renders Pydantic AI + Logfire execution traces as interactive HTML diagrams (OTel agent observability) |
 | [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) | Survey of 18 OTel observability platforms + 5 tracing patterns for agent behavior (Langfuse, Arize Phoenix, Logfire, …); CC's own first-party telemetry split to cc-native |
 | [agentic-payments-landscape.md](agentic-payments-landscape.md) | Machine-native agent payment rails: x402 (Coinbase/Linux Foundation), Google AP2, Stripe MPP, Fetch.ai |
+| [agent-plugins-standard-analysis.md](agent-plugins-standard-analysis.md) | Agent Plugins — open standard (v1.0.0) for packaging Agent Skills + MCP servers into one cross-client plugin directory format |
+| [agents-md-cookbook-analysis.md](agents-md-cookbook-analysis.md) | agents-md-cookbook — tool-agnostic AGENTS.md template kit (15 stack templates, CI linter, migrator from CLAUDE.md/.cursorrules/etc.) |
+| [programmatic-tool-calling-analysis.md](programmatic-tool-calling-analysis.md) | Programmatic and speculative tool calling (PTC/sPTC) — typed function-stub tool calls vs. JSON schema matching, evaluated across 14 models |
 
 ## Backlog status
 
@@ -122,7 +148,7 @@ The former coding-agent backlog — Cline, opencode, Codebuff, Gemini CLI, Curso
 Antigravity, Kiro, Codex CLI, VS Code Copilot Chat, Devin CLI, Windsurf, Aider,
 Amazon Q, CodeBuddy, Kilo Code, Trae, Kimi Code, Amp, Pi — is now analyzed under
 [Coding Agents & IDEs](#coding-agents--ides) above. See the
-[coding-agent-eval plan](https://github.com/qte77/coding-agent-eval) for the
+[coding-harness-eval plan](https://github.com/qte77/coding-harness-eval) for the
 broader comparison landscape.
 
 **Disambiguation.** [GitHub Copilot CLI](github-copilot-cli-analysis.md)

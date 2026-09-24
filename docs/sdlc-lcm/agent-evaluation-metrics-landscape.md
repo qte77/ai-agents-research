@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -111,6 +111,17 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Directly measures decision-making quality
 - **Limitations**: Requires clear correct/incorrect labels
 - **Reference**: [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+- **Recent Advance**: [When Tools Get in the Way](https://arxiv.org/abs/2609.14157) (Paturi, Kenzhebayev, Sethi, Raina et al., Sep 2026) finds that merely making an *irrelevant* tool available — not misusing it — drops accuracy from 98.2% to 63.5% across six LLMs and 500 query pairs spanning 10 domains; the drop persists even when the tool is rarely called, so it isn't explained by tool misuse alone. A one-sentence scope-aware system instruction recovers most of the lost accuracy.
+
+#### Retrieval-Invoked Actual-Use Effect (RAE)
+
+- **Definition**: Same-task outcome difference between matched skill-enabled and skill-disabled agent runs, computed only over tasks where the agent actually retrieved a skill ("Skill Following")
+- **Use Case**: Distinguish genuine skill-following benefit from aggregate-metric illusions in retrieval-enabled agents
+- **Calculation**: outcome difference between matched skill-retrieved-and-used vs. skill-disabled runs, conditioned on tasks with an actual retrieval event
+- **Strengths**: Exposes cases where a positive aggregate metric coexists with a negative per-retrieval impact
+- **Limitations**: Requires matched task pairs and retrieval-event detection; evaluated on coding/math tasks (e.g. MBPP+) across 17 LLMs
+- **Reference**: [Skill Following: Evaluating Actual Skill Use in Retrieval-Enabled LLM Agents](https://arxiv.org/abs/2609.00549) (Cho & Park, Sep 2026; accepted to EMNLP 2026 Findings)
+- **Finding**: Several models post positive aggregate MBPP+ scores under retrieval while showing *negative* RAE — aggregate metrics can mask retrieval actively harming the tasks where a skill was actually invoked
 
 #### Response Time
 
@@ -350,6 +361,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires trace path definition
 - **Reference**: [OpenTelemetry Specification](https://opentelemetry.io/docs/specs/)
 - **Landscape Reference**: [AgentNeo - Observability Platform](../non-cc/agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Tracely](https://github.com/Jwuthri/Tracely-ai) (MIT, ~1.4k★) — trace-native CI/CD for agents: production traces are auto-clustered into failures, frozen into hermetic regression cases with recorded fixtures, and replayed in CI at $0 to block the PR, without hand-authored eval datasets
 
 #### Error Recovery Rate
 
@@ -370,6 +382,8 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires relevance assessment
 - **Reference**: [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
 - **Landscape Reference**: [Letta - Advanced Memory Architecture](../non-cc/agent-frameworks-infrastructure-landscape.md)
+- **Recent Advance**: The MSCE (Memory-Skill Co-Evolution) framework — [From Memory to Skills](https://arxiv.org/abs/2607.16621) (Tang, Zhang, Zhuang et al., Jul 2026) — converts prior agent experience into callable skills carrying evidence links, applicability boundaries, and reliability estimates, using "reflection-weighted value backfilling" to turn sparse terminal feedback into evidence-calibrated signals for memory/skill evolution; reports strong cross-domain transfer and lifelong-evolution capability
+- **Landscape Reference**: [MemTensor/MemOS](https://github.com/MemTensor/MemOS) (Apache-2.0, 11.6k★) — a self-evolving memory OS (own papers: arXiv:2507.03724, arXiv:2505.22101) with an L1-trace/L2-policy/L3-world-model skill-evolution tier, reporting 35.24% token savings from structured memory reuse
 
 #### Streaming Memory Fidelity (StreamMemBench)
 

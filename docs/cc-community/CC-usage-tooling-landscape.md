@@ -1,20 +1,20 @@
 ---
 title: CC Usage-Observability Tooling Landscape
-purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor, cc-costline.
+purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor, cc-costline, agentacct.
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
 
-Tools that measure token usage and cost across coding-agent sessions. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They divide into **retrospective** measurement (CodeBurn cross-agent; ccusage CC/Codex-deep), **predictive** monitoring (Claude-Code-Usage-Monitor), and **ambient** in-statusline awareness (cc-costline). Where RTK reduces tokens *entering* context, these observe what was actually spent — optimization needs measurement.
+Tools that measure token usage and cost across coding-agent sessions. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They divide into **retrospective** measurement (CodeBurn cross-agent; ccusage CC/Codex-deep; agentacct cross-agent work-intelligence), **predictive** monitoring (Claude-Code-Usage-Monitor), and **ambient** in-statusline awareness (cc-costline). Where RTK reduces tokens *entering* context, these observe what was actually spent — optimization needs measurement.
 
 ## CodeBurn (AgentSeal)
 
-**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 4K | **License**: MIT | **Latest**: Menubar v0.9.0 (2026-04-25) | **Stack**: TypeScript, Node.js 20+
+**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 4K | **License**: MIT | **Latest**: v0.9.25 / Menubar v0.9.25 (2026-09-21, [GitHub Releases][codeburn-releases]; npm registry confirms `codeburn@0.9.25`, corrects the prior "Menubar v0.9.0 (2026-04-25)" note) | **Stack**: TypeScript, Node.js >=22.13.0 (per `package.json` `engines`, corrects the prior "Node.js 20+" note)
 
 Local-first TUI dashboard that tracks AI coding token usage and cost across multiple coding agents. Reads session data directly from disk — no API keys, no proxy ([README][codeburn]).
 
@@ -39,7 +39,8 @@ Per the [README][codeburn]: Claude Code, Claude Desktop, Codex, Cursor, cursor-a
 - **[`codeburn optimize`](https://github.com/getagentseal/codeburn#optimize)** — scans recent sessions for token-waste patterns, grades the setup A–F, and emits copy-paste token/$ fixes ranked by impact (full detector list in [Optimization Rules](#optimization-rules) below)
 - **`codeburn compare`** — side-by-side model performance metrics
 - **`codeburn report -p 30days`** — rolling-window analysis
-- **`codeburn export`** — CSV/JSON across multiple time periods
+- **`codeburn export`** — CSV/JSON across multiple time periods, filterable by `--billing <metered|subscription>` among other flags
+- **`codeburn doctor`** — per-provider detection diagnostics: "paths probed, sessions found, parse health (diagnose empty or wrong numbers)" (confirmed via `codeburn doctor --help`, v0.9.25)
 - **Subscription tracking** — Claude Pro/Max, Cursor Pro
 - **Currency conversion** — 162 ISO 4217 codes
 - **Pricing data** sourced from LiteLLM with 24h cached refresh; hardcoded fallbacks for Claude and GPT-5 to prevent fuzzy-match errors
@@ -85,6 +86,8 @@ Each finding ships estimated token/dollar savings plus copy-paste remediation (`
 
 Where RTK reduces tokens *entering* context and caveman compresses tokens *leaving* the assistant, **CodeBurn observes** what was actually spent — across agents, models, and projects. Complementary to both: optimization needs measurement. Local-first (no API keys, no telemetry) makes it usable in air-gapped or compliance-sensitive environments.
 
+**Blind spot**: CodeBurn's dashboard, `optimize`, and `export` read only local transcripts (`~/.claude/projects/` for Claude), so Chats and Cowork usage are invisible to them and total plan usage is undercounted; its separate `codeburn quota` subcommand queries the provider's live account limit instead and is not subject to this gap. See [CC-session-cost-analysis.md § Shared plan usage across Claude products][cc-session-cost-usage].
+
 Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — caveman (output compression skill); [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's native session-cost extraction via JSONL/jq
 
 ---
@@ -127,6 +130,8 @@ Reads `~/.claude/projects/` JSONL by default; data path is configurable.
 ### Key Differentiator
 
 Where CodeBurn is **multi-agent** (Claude/Codex/Cursor/OpenCode/Copilot in one TUI), ccusage is **CC/Codex-focused** with deeper CC-specific features (cache token split, MCP server, statusline hook). The two are complementary, not redundant: ccusage for CC-deep analysis and in-session queries via MCP; CodeBurn for cross-agent comparison.
+
+**Blind spot**: like CodeBurn's dashboard, ccusage reads only local transcripts (`~/.claude/projects/`), so Chats and Cowork usage are invisible to it too. See [CC-session-cost-analysis.md § Shared plan usage across Claude products][cc-session-cost-usage].
 
 Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — manual JSONL/jq extraction patterns ccusage automates; [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — statusline hook integration point
 
@@ -223,6 +228,53 @@ Where ccusage and CodeBurn analyze *after the fact* and claude-monitor *predicts
 
 Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — statusline hook integration point; [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's native session-cost extraction
 
+---
+
+## agentacct (mikehasa)
+
+**Repo**: [mikehasa/agentacct][agentacct] | **Stars**: 755 | **License**: MIT | **Version**: v0.12.0 (2026-09-23) | **Stack**: Python 3.11+
+
+Local-first "agent work intelligence" TUI/dashboard that breaks each coding-agent task down into
+work steps — tools used, files changed, tests run, checks run, time and tokens spent — rather than
+just a token/cost total. Reads exclusively from each client's local session logs; makes no API
+calls to providers, never stores API keys, and listens only on `127.0.0.1` ([README][agentacct]).
+
+### Supported Agents
+
+Per the [README][agentacct]: Claude Code, Codex, OpenCode, Hermes, DeepSeek Harness, Kimi Code,
+OpenClaw, and Cursor, with per-client coverage varying (a documented coverage matrix).
+
+### Privacy Model
+
+Explicitly excludes prompts, model responses, and transcripts from what it records — only tool
+names, file changes, commands, exit codes, token counts, and recorded step metadata
+([README][agentacct]).
+
+### Dashboard
+
+Recent task activity, token consumption over time, estimated cost, check/test results, and
+per-session timelines; filterable by project or client. "Work receipts" show estimated cost and
+claim coverage per task, with data gaps flagged rather than silently estimated.
+
+### Installation
+
+```bash
+pipx install agentacct
+agentacct onboard   # one-time setup
+agentacct tui        # launch the terminal UI
+```
+
+A native macOS app is also offered. Early alpha per the [README][agentacct].
+
+### Key Differentiator
+
+Where CodeBurn and ccusage report token/dollar totals, agentacct decomposes each task into its
+constituent *work steps* (tools, files, tests, exit codes) — closer to a session work-log than a
+cost meter — while sharing CodeBurn's cross-agent, local-first, no-telemetry design.
+
+Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's
+native session-cost extraction that agentacct's Claude Code coverage reads on top of
+
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
@@ -230,10 +282,13 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 [codeburn]: https://github.com/getagentseal/codeburn
 [codeburn-optimize]: https://github.com/getagentseal/codeburn/blob/main/src/optimize.ts
+[codeburn-releases]: https://github.com/getagentseal/codeburn/releases
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
 [cc-costline]: https://github.com/Ventuss-OvO/cc-costline
+[agentacct]: https://github.com/mikehasa/agentacct
+[cc-session-cost-usage]: ../cc-native/sessions/CC-session-cost-analysis.md#shared-plan-usage-across-claude-products
 
 ## Sources
 
-Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor], [cc-costline][cc-costline]). cc-costline's licensing status (no LICENSE file; GitHub API `license: null`) verified via `gh api repos/Ventuss-OvO/cc-costline/contents`, 2026-07-23.
+Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor], [cc-costline][cc-costline], [agentacct][agentacct]). cc-costline's licensing status (no LICENSE file; GitHub API `license: null`) verified via `gh api repos/Ventuss-OvO/cc-costline/contents`, 2026-07-23. agentacct's stars/license/latest release verified via `gh api repos/mikehasa/agentacct` + `.../releases/latest`, 2026-09-24. CodeBurn's v0.9.25 version bump verified via `registry.npmjs.org/codeburn/latest` metadata and [GitHub Releases][codeburn-releases] (`v0.9.25`, `mac-v0.9.25`, both 2026-09-21); its `plan`, `export --billing`, `quota`, and `doctor` subcommand behavior verified directly against `npx codeburn@0.9.25 --help` / `plan --help` / `export --help` / `quota --help` / `doctor --help` and the [README][codeburn], 2026-09-24.
