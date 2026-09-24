@@ -3,8 +3,8 @@ title: Agent Identity, Authentication & Personhood Landscape
 purpose: Survey of how agents get identity and authorization, and how human-vs-agent is proven — the "who may act, and how is it proven" layer, distinct from CC-local runtime permissions.
 category: landscape
 created: 2026-07-08
-updated: 2026-07-08
-validated_links: 2026-07-08
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -43,6 +43,17 @@ The agent has its own identity, independent of any human.
 - **Privado ID "Know Your Agent" (KYA)** — gives agents a verifiable identity tied to a creator, with
   public reputation (W3C DIDs + ZK verifiable credentials); a SingularityNET trust registry. Bridges
   "is this a human" and "is this agent accountable." [privado.id][privado].
+- **SAM** (`google/sam`, Apache-2.0, 934★, created 2026-04-21, `gh api` 2026-09-24) — a
+  private P2P network giving each agent-adjacent node a verifiable identity, built on two
+  stated principles: "nothing is reachable by default" (a node exposes no services until
+  configured, and policy grants are by service name rather than network address) and
+  "identity comes from your identity provider" (a node enrolls via an OIDC or bootstrap
+  token; `sam-control-plane` turns that into a short-lived, offline-verifiable credential
+  bound to the node's key). `sam-node` runs beside the agent for enrollment + local
+  exposure, `sam-router` relays nodes that cannot connect directly (NAT traversal), and
+  `sam-one` bundles all three for single-machine setups. Pre-1.0 per its own README.
+  ⚠️ The repo's README and GitHub description do not expand "SAM" — treat "Sovereign
+  Agent Mesh" as an unconfirmed gloss, not a first-party name.
 
 ## 2. Authorize the agent on behalf of a human (delegated, scoped, auditable)
 
@@ -110,6 +121,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 | [Microsoft Entra Agent ID][entra] | Agent service-principal identity (GA 2026-04) |
 | [ERC-8004][erc8004] | On-chain trustless-agent identity/reputation (Draft) |
 | [Privado ID — Know Your Agent][privado] | DID + ZK-VC agent identity/reputation |
+| [SAM][sam] (`google/sam`) | P2P agent-network identity/discovery; 934★, Apache-2.0, `gh api` 2026-09-24; acronym unexpanded in repo |
 | [MCP Authorization][mcp-authz] | OAuth 2.1 resource-server model |
 | [Okta Cross-App Access][xaa] | ID-JAG delegated agent authorization |
 | [Google AP2 spec][ap2] | Mandate (W3C VC) authorization chain |
@@ -121,6 +133,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 [entra]: https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id
 [erc8004]: https://eips.ethereum.org/EIPS/eip-8004
 [privado]: https://www.privado.id/blog/privado-know-your-agent
+[sam]: https://github.com/google/sam
 [mcp-authz]: https://modelcontextprotocol.io/specification/draft/basic/authorization
 [xaa]: https://developer.okta.com/blog/2025/09/03/cross-app-access
 [ap2]: https://github.com/google-agentic-commerce/AP2
