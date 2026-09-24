@@ -2,8 +2,8 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -102,6 +102,14 @@ ATLAS expanded to cover AI agents that take autonomous actions:
 - **Credential abuse**: Agents manipulated to exfiltrate API keys via outputs or
   logs
 - **Tool scope creep**: Agent convinced to use tools beyond its operational envelope
+- **Capability laundering via task decomposition**: A weaker, unaligned orchestrator
+  splits a harmful task into benign-looking subproblems and consults a stronger
+  aligned model independently on each, reassembling the results locally — no single
+  interaction trips the aligned model's refusal, so per-turn safety evaluation misses
+  the composed capability ([Russinovich et al., "Divide, Consult, Conquer," arXiv:2609.15383](https://arxiv.org/abs/2609.15383)).
+  Evaluated across GPT-5.5, Claude Opus 4.8, and Grok-4.3 as consultants on CyBench,
+  BountyBench, and CBRN rubric tasks; consultation raised one orchestrator's mean
+  CBRN attack-chain rubric score from 62.3 to 83.1 (of 100)
 
 ### Applicability to Agents-eval (ATLAS)
 
@@ -357,6 +365,23 @@ ISO 42001 + 23894 (certifiable management system + risk methodology)
 | Agent hijacking | AML.T0056 | L7 Orchestration | MEASURE 2.6 | A.6.4 |
 | Evaluation bias | AML.T0043 | L2 Agent Logic | MEASURE 2.5 | A.7.4 |
 
+### Reward-Integrity Instrumentation (BenchShield)
+
+[BenchShield](https://arxiv.org/abs/2609.11028) instruments LLM-agent benchmark
+infrastructure itself against reward hacking — agents that improve their measured
+score by exploiting the evaluation mechanics (AML.T0043 in the table above) rather
+than solving the intended task. It pairs a phase-aware static taint analysis
+(pre-run) with a runtime infrastructure-evidence analysis (post-run), grounded in a
+finite lifecycle model of reward-relevant evaluation events. Validated on
+BenchShield Trajectories, a 456-trajectory human-adjudicated corpus drawn from
+31,000+ public agent runs across three benchmarks, it improved full-chain recall
+from 23-94% to 77-100% over an agentic-hackability-scanner baseline, reached 96%
+accuracy detecting reward hacking from infrastructure-side evidence, and cut
+per-task cost by up to 65%. It operationalizes the NIST MEASURE function ("risks
+analyzed, tracked", §3 above) specifically for evaluation-infrastructure integrity —
+complementary to AgentSeal's scan of agent/MCP *configuration* below, since
+BenchShield instead instruments the *benchmark harness* an agent runs inside.
+
 ## Defensive Tooling
 
 The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](../cc-community/CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
@@ -371,6 +396,33 @@ The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/
 Backed by an MCP Security Registry (6,600+ indexed servers), semantic analysis (MiniLM-L6-v2 embeddings), and payload deobfuscation. It complements MAESTRO's prescriptive controls with an executable check: MAESTRO says *what* to defend; AgentSeal scans *whether* a given skill/MCP setup is exposed — operationalizing the Unified Mapping Table above.
 
 **Adoption caveat**: licensed FSL-1.1-Apache-2.0 (Functional Source License → Apache-2.0 after the change window) — source-available, not OSI-open at release. Review the license window before bundling it into permissively-licensed tooling.
+
+[Microsoft's Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit)
+(MIT, ~6,300 stars) governs agents at the application layer instead of relying on
+prompt-level defenses: "every tool call, message send, and delegation is
+intercepted in deterministic application code before the model's intent reaches the
+wire" (repo README). It ships a YAML/OPA/Cedar policy engine, an immediate kill
+switch, four-tier privilege-ring execution sandboxing, tamper-evident audit
+logging, and a SPIFFE/DID/mTLS zero-trust identity layer; framework-agnostic
+bindings cover AutoGen, LangGraph, CrewAI, and Semantic Kernel, with Python,
+TypeScript, .NET, Rust, and Go SDKs. The README claims coverage of all 10
+categories in what it calls the "OWASP Agentic Top 10" (a separate list from the
+OWASP LLM Top 10 already in the References below), backed by 992 conformance tests
+across 10 formal specifications, and states alignment with NIST AI RMF, the EU AI
+Act, and SOC 2. Install: `pip install "agent-governance-toolkit[full]"` (also
+npm/NuGet/Cargo/Go); a Claude Code plugin registers via
+`/plugin marketplace add microsoft/agent-governance-toolkit`.
+
+Where AgentSeal and the Agent Governance Toolkit act on agent configuration and
+runtime policy, [deepsec](https://github.com/vercel-labs/deepsec) (Vercel Labs,
+Apache-2.0, ~8,000 stars) turns an agent loose on the codebase itself: a security
+harness that combines regex candidate matching with agentic investigation
+(extended-thinking models) to surface vulnerabilities that may have sat unnoticed
+for years. It distributes large scans across machines via Vercel Sandbox, resumes
+interrupted runs without re-scanning completed files, and exports markdown/JSON for
+CI. Install/run: `npx deepsec init`. **Adoption caveat**: the README itself warns
+that full-capability runs on large codebases "can cost thousands of dollars" in
+model usage — cost and duration controls exist but are not the defaults.
 
 ## MCP Ecosystem Security
 
@@ -423,3 +475,7 @@ is not warranted. A lightweight alignment approach:
 - [Google Cloud — Official MCP support for Google services (Dec 2025)](https://cloud.google.com/blog/products/ai-machine-learning/announcing-official-mcp-support-for-google-services)
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents)
 - [AgentSeal (getagentseal)](https://github.com/getagentseal/agentseal) — open-source scanner for agent skills/MCP configs (adversarial prompt probes, MCP poisoning audit)
+- [BenchShield (arXiv:2609.11028)](https://arxiv.org/abs/2609.11028) — model-backed instrumentation for reward integrity in LLM-agent evaluation infrastructure
+- [Divide, Consult, Conquer (arXiv:2609.15383)](https://arxiv.org/abs/2609.15383) — capability laundering via task decomposition across aligned LLMs
+- [Microsoft Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) — open-source policy engine, kill switch, privilege rings, and OWASP Agentic Top 10 coverage for autonomous agents
+- [deepsec (Vercel Labs)](https://github.com/vercel-labs/deepsec) — agent-powered codebase vulnerability scanner
