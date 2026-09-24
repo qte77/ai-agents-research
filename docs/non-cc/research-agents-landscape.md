@@ -4,8 +4,8 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
@@ -19,6 +19,7 @@ Agents that conduct multi-step research and generate research outputs.
 - [DeepResearch (Alibaba-NLP)][deepresearch-alibaba] — 30.5B-param long-horizon information-seeking agent (3.3B active/token, 128K ctx); ReAct + "IterResearch Heavy" modes, on-policy RL. On HF/ModelScope/OpenRouter.
 - [AI-Researcher (HKUDS)][ai-researcher] — NeurIPS 2025 Spotlight; end-to-end literature→manuscript pipeline with a Writer Agent and the Scientist-Bench benchmark ([paper][ai-researcher-paper]).
 - [The AI Scientist v2 (Sakana AI)][ai-scientist-v2] — produced the first peer-review-accepted fully-AI-generated workshop paper (Apr 2025); agentic tree-search + VLM feedback, ~$6–15/paper ([paper][ai-scientist-v2-paper]).
+- [CEDAR (Sakana AI)][cedar] — single-author (Yingtao Tian) method pairing an LLM Editor (variation operator) and LLM Judge (fitness function) with Monte Carlo Tree Search to discover complex dynamical systems meeting user-specified behavioral goals, replacing hand-authored DYNAMO/STELLA-style system models with LLM-generated executable Python; formalized as an MCTS variant with an LLM-parameterized transition kernel and value function; accepted as a talk at ALIFE 2026.
 - [GPT-Researcher][gpt-researcher] — LangGraph multi-agent deep web+local research producing cited long-form reports; STORM-inspired.
 - [STORM / Co-STORM (Stanford)][storm] — multi-perspective knowledge curation generating Wikipedia-style cited articles; 70K+ preview users, FreshWiki/WildSeek datasets.
 - [Agent Laboratory][agent-laboratory] — human-in-the-loop end-to-end research assistant (lit review → experiments → report).
@@ -31,6 +32,9 @@ Agents that conduct multi-step research and generate research outputs.
 - [OpenAI Deep Research][openai-deep-research] — agentic ChatGPT capability; API as `o3-deep-research` ($10/$40 per MTok, 200K ctx, MCP connectors), led HLE at launch.
 - [Gemini Deep Research][gemini-deep-research] — Gemini 3 Pro long-horizon agent via the Interactions API (`deep-research-pro-preview-12-2025`); 46.4% HLE, 66.1% DeepSearchQA, background execution + remote MCP.
 - [AutoScientists (mims-harvard)][autoscientists] — decentralized team of AI agents for long-running computational-science experiments, self-organizing around promising hypotheses; **packaged as Claude Code subagents** coordinating via a local ClawInstitute server (no central planner). BioML-Bench 74.4% mean leaderboard percentile (629★, Python) — the most direct CC-harness tie-in here.
+- [Hyperresearch (jordan-gibbs)][hyperresearch] — Claude Code skill (`/hyperresearch <query>`) running a tier-adaptive 16-step research pipeline: 250+ sources per `premier`-scale run, adversarial citation verification, syndication-independence auditing, and a persistent cross-session vault; the README states it "currently leads the DeepResearch-Bench RACE leaderboard", qualified as "a forward-looking projection from a stratified pilot… third party validation is pending". MIT, 3.5k★.
+- [OpenScience (Synthetic Sciences)][openscience] — open-source AI research workbench: plan → literature search → write/run code → run experiments → write up findings, with 500+ bundled scientific skills (biology/chemistry/physics/ML/data engineering), ChEMBL/UniProt/PubMed/arXiv connectors, and desktop/browser/CLI interfaces; repo ships a `CLAUDE.md` and credits Claude Scientific Writer (K-Dense) among its skill sources. Apache-2.0, 3.6k★.
+- [ScientistTwo (Google Cloud AI Research)][scientisttwo] — autonomous end-to-end research system across six agent groups (Idea Generator → Evaluator → Analyzer → Writer → Peer-Review → Meta-Review); paper reports besting human baselines on 80.4% of 107 evaluated research problems (avg. +25.2% relative improvement) across 86 generated papers in eight AI domains, with 91.9%/72.1% acceptance under its ScholarPeer/Stanford-Agentic-Reviewer simulated reviewers ([paper][scientisttwo-paper]).
 - [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's [`/deep-research`](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research).
 - [local-deep-researcher (langchain-ai)][local-deep-researcher] — **distinct from the above** despite the near-identical name: LangChain's minimal LangGraph *reference* implementation of the search→summarize→reflect loop (Ollama/LMStudio, local-only by default) — the canonical starting pattern, not a full assistant. MIT, ~9.2k★.
 - [dataroom (hanxiao / Jina)][dataroom] — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](pi-analysis.md)); ~168★, new.
@@ -76,6 +80,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 
 | Agent | Overlap with `/deep-research` | Beyond / gap vs the CC workflow | CC-based? |
 |---|---|---|---|
+| **Hyperresearch** | Same fan-out → search → cross-check/cite-verify → cited-report loop, packaged as the CC skill itself | Tier-adaptive 16-step pipeline, 250+ sources/run, adversarial citation audit + syndication-independence check, persistent cross-session vault | **Yes** — is a CC skill (`/hyperresearch`) |
 | **local-deep-research** | Same fan-out → search → cross-check → cited-report loop | Local/offline LLMs, 20+ specialized sources (PubMed/arXiv/SearXNG), persistence + encryption | No (LangGraph; runs Claude as a model option) |
 | **local-deep-researcher** | Same iterative search→summarize→reflect loop | Minimal LangGraph *reference* design; local-only by default; not a full assistant | No (LangGraph reference impl) |
 | **dataroom** | Gathers + cross-checks sources into a structured package | Two-stage local-gather / frontier-synthesize split; Jina CLI tools; no CC tie-in | No (Pi + local LLM) |
@@ -86,7 +91,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 | **STORM / Co-STORM** | Multi-perspective fan-out → cited synthesis | Perspective-simulation step; tuned for Wikipedia-style articles | No |
 | **FutureHouse / PaperQA2** | Retrieval + cross-check, citation-grounded | Scientific-literature RAG (not open web); benchmarked superhuman retrieval | No |
 
-**Takeaway**: CC's `/deep-research` is a general open-web harness; the third-party agents specialize it — local/private (local-deep-research), scientific-corpus (PaperQA2/FutureHouse), or autonomous experimentation (AutoScientists, the one actually built on CC). AutoScientists is the clearest reference design for extending CC's harness toward long-running scientific work.
+**Takeaway**: CC's `/deep-research` is a general open-web harness; the third-party agents specialize it — local/private (local-deep-research), scientific-corpus (PaperQA2/FutureHouse), or autonomous experimentation (AutoScientists). Two of these are actually built on CC: **Hyperresearch** packages a tier-adaptive, citation-audited deep-research pipeline directly as a CC skill — the closest like-for-like extension of the bundled harness — while **AutoScientists** extends the pattern into long-running computational-science experiments via CC subagents.
 
 ## Cross-References
 
@@ -102,6 +107,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 | [DeepResearch (Alibaba-NLP)][deepresearch-alibaba] | Long-horizon information-seeking agent |
 | [AI-Researcher (HKUDS)][ai-researcher] · [paper][ai-researcher-paper] | Literature→manuscript pipeline + Scientist-Bench |
 | [AI Scientist v2 (Sakana AI)][ai-scientist-v2] · [paper][ai-scientist-v2-paper] | Agentic tree-search paper generation |
+| [CEDAR (Sakana AI)][cedar] | LLM-agent MCTS for goal-directed complex-system design |
 | [GPT-Researcher][gpt-researcher] | LangGraph multi-agent deep-research |
 | [STORM / Co-STORM (Stanford)][storm] | Multi-perspective cited-article curation |
 | [Agent Laboratory][agent-laboratory] | Human-in-the-loop research assistant |
@@ -117,6 +123,9 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 | [local-deep-research (LearningCircuit)][local-deep-research] | LLM-agnostic deep-research assistant |
 | [local-deep-researcher (langchain-ai)][local-deep-researcher] | Minimal LangGraph reference impl |
 | [dataroom (hanxiao / Jina)][dataroom] | Local-gather / frontier-synthesize harness |
+| [Hyperresearch (jordan-gibbs)][hyperresearch] | CC skill: 16-step cited-report deep-research pipeline |
+| [OpenScience (Synthetic Sciences)][openscience] | Open-source AI research workbench |
+| [ScientistTwo (Google Cloud AI Research)][scientisttwo] · [paper][scientisttwo-paper] | Autonomous end-to-end research + self-peer-review system |
 | [Perplexity Computer][perplexity-computer] · [paper][perplexity-computer-paper] | Autonomy/efficiency/scope study vs. Search |
 | [Coscientist (CMU, Nature)][coscientist] | GPT-4 chemistry agent (cloud lab) |
 | [ChemCrow][chemcrow] | GPT-4 + 18 chemistry tools |
@@ -149,6 +158,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 [ai-researcher-paper]: https://arxiv.org/abs/2505.18705
 [ai-scientist-v2]: https://github.com/SakanaAI/AI-Scientist-v2
 [ai-scientist-v2-paper]: https://arxiv.org/abs/2504.08066
+[cedar]: https://arxiv.org/abs/2608.06871
 [gpt-researcher]: https://github.com/assafelovic/gpt-researcher
 [storm]: https://github.com/stanford-oval/storm
 [agent-laboratory]: https://github.com/SamuelSchmidgall/AgentLaboratory
@@ -165,6 +175,10 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 [local-deep-research]: https://github.com/LearningCircuit/local-deep-research
 [local-deep-researcher]: https://github.com/langchain-ai/local-deep-researcher
 [dataroom]: https://github.com/hanxiao/dataroom
+[hyperresearch]: https://github.com/jordan-gibbs/hyperresearch
+[openscience]: https://github.com/synthetic-sciences/openscience
+[scientisttwo]: https://scientist-two.github.io
+[scientisttwo-paper]: https://arxiv.org/abs/2609.19644
 [perplexity-computer]: https://research.perplexity.ai/articles/how-ai-agents-reshape-knowledge-work
 [perplexity-computer-paper]: https://arxiv.org/abs/2606.07489
 [coscientist]: https://www.nature.com/articles/s41586-023-06792-0

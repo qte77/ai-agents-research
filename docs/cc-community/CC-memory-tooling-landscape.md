@@ -1,11 +1,11 @@
 ---
 title: CC Memory Tooling Landscape
-purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core.
+purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (ai-memory, claude-reflect, Core, deja-vu, engrim).
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
@@ -36,6 +36,33 @@ Agent memory is conventionally split into four modules ([CoALA][coala], arXiv:23
 Legend: ✓ explicit layer · ~ partial/implicit · — not a documented layer. Mappings are approximate — each project names its tiers differently; only LangMem ships an explicit *procedural* layer.
 
 **Design lens — memory should change future behavior.** Beyond *what is stored*, the test for any of these layers is whether a stored item actually alters a later decision. André Lindenberg frames memory as a first-class component judged by behavior change — a "skillbook" that updates after tasks, failures, and feedback, not a passive transcript (Lindenberg, *Memory should change future behavior*, LinkedIn, 2026). It reframes episodic/procedural memory as the loop that lets an agent compound rather than merely recall — the same write-back-and-reuse intent behind this repo's CRLA/`docs/learnings/` flow.
+
+## ai-memory (akitaonrails)
+
+**Repo**: [akitaonrails/ai-memory][ai-memory] | **Stars**: 8.2K | **License**: MIT | **Version**: 2.4.0
+
+Rust-based cross-agent long-term memory: "Quit Claude Code mid-task, start OpenAI Codex in the same directory, continue without re-explaining the architecture" ([README][ai-memory]). A git-backed Markdown wiki is the source of truth (`wiki/` pages, `raw/` sanitized transcript segments), with a derived SQLite index (FTS5 + local embeddings) for retrieval — the same "plain-text is durable, index is disposable" pattern MemSearch uses below.
+
+### Architecture
+
+- Lifecycle hooks capture observations silently during a session; session-end consolidation writes readable wiki pages
+- Next session gets a bounded briefing plus full-text/entity search over prior sessions
+- Typed, claim-once handoff protocol between agents — the next agent to open the directory gets a structured handoff, not a raw transcript dump
+- Zero-LLM default: full-text search, entity matching, and handoffs work without any API calls; local embedding models are optional
+
+### CC Integration
+
+Registers via MCP. Claude Code is one of "twenty-plus harnesses" sharing the store — Codex, Cursor, Gemini CLI, OpenCode, Grok, Devin, Kimi, Kiro, and more, per the README.
+
+### Adoption Considerations
+
+**Strengths**: Markdown-native (grep-searchable, no binary lock-in), no API key required for core functionality, multi-user/multi-machine with per-user handoffs isolated, access-weighted retention (frequently-used memory decays slower than cold notes).
+
+**Risks**: Overlaps with CC's built-in memory and the other cross-agent tools in this doc — pick one if the need is CC-only. README install instructions are Arch/AUR-centric (`ai-memory-bin` prebuilt, or `ai-memory` built from source); check platform support before adopting elsewhere.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
 
 ## ByteRover CLI (campfirein)
 
@@ -121,6 +148,97 @@ A dedicated observer AI watches each session in real-time, generating searchable
 **Strengths**: Largest community memory solution (45.2K stars), progressive disclosure saves tokens, hybrid search (FTS5 + vector), multi-platform (CC + Gemini CLI), web UI for browsing history, [dedicated docs site][claude-mem-docs].
 
 **Risks**: Heavy dependencies (Bun + uv + Chroma). Overlaps with CC's built-in memory system and ByteRover.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## claude-reflect (BayramAnnakov)
+
+**Repo**: [BayramAnnakov/claude-reflect][claude-reflect] | **Stars**: 1.7K | **License**: MIT | **Version**: 3.2.0
+
+Self-learning Claude Code plugin that "captures corrections and discovers workflow patterns — turning them into permanent memory and reusable skills" ([README][claude-reflect]). Distinct from the session-recall tools in this doc: it targets the taxonomy's *procedural* layer (behavior correction), not episodic/semantic recall.
+
+### Architecture
+
+- **Capture (automatic)**: hooks detect corrections via hybrid regex + AI-powered semantic matching, queuing them with confidence scores
+- **Review (manual)**: `/reflect` presents queued learnings for approval/edit/skip before syncing
+- **Skill discovery**: `/reflect-skills` analyzes session history to find repeating task patterns that could become reusable commands/skills
+- Semantic deduplication consolidates similar entries; can backfill from historical sessions predating install
+
+### CC Integration
+
+Installs via the Claude Code plugin marketplace; hooks auto-configure on install. Syncs learnings to `CLAUDE.md` (global and project-level), `AGENTS.md`, and skill files under `.claude/commands/`.
+
+### Adoption Considerations
+
+**Strengths**: Targets the taxonomy's procedural layer specifically — few other tools in this doc do; human-in-the-loop review before anything is written; can recover pre-install learnings from session history; MIT.
+
+**Risks**: Regex + semantic correction detection can mis-fire on ambiguous phrasing (mitigated, not eliminated, by the manual `/reflect` review step). Writes directly into `CLAUDE.md`/`AGENTS.md`, which needs periodic pruning like any growing instructions file.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## Core (RedPlanetHQ)
+
+**Repo**: [RedPlanetHQ/core][core] | **Stars**: 2K | **License**: AGPL-3.0 | **Version**: 0.7.20
+
+Self-hosted "Personal AI OS" — broader in scope than the other tools in this doc: it indexes email, meetings, GitHub, Linear, Slack, and conversation history into a persistent memory layer, then acts on it via voice, chat, and messaging (WhatsApp/Slack/Telegram) interfaces, not just as a coding-agent sidecar.
+
+### CC Integration
+
+"CORE spins up Claude Code or Codex sessions with the full task context, runs them on your machine or in Docker/Railway, and opens a PR when done. Sessions keep running when your laptop is closed" ([README][core]). It can point at an existing Claude Pro or Codex subscription instead of a separate API key (a "subscription proxy," per the docs).
+
+### Adoption Considerations
+
+**Strengths**: 50+ MCP app connectors (GitHub, Linear, Jira, Slack, Gmail, and others) feed the same memory the coding sessions draw on; self-reported **88.24%** average accuracy on the [LoCoMo benchmark][core-benchmark] across single-hop, multi-hop, open-domain, and temporal reasoning; CASA Tier 2 certified, TLS 1.3 in transit, AES-256 at rest.
+
+**Risks**: AGPL-3.0 — copyleft, not permissive. Self-hosting requires Docker 20.10+/Compose 2.20+ and 4 vCPU/8 GB RAM, a heavier footprint than any other tool in this doc. Coding-agent delegation is one feature among many (task automation, messaging, browser/terminal access) — evaluate it as a full OS, not a drop-in memory layer, if CC memory is the only need.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## deja-vu (vshulcz)
+
+**Repo**: [vshulcz/deja-vu][deja-vu] | **Stars**: 935 | **License**: MIT | **Version**: 0.21.1
+
+Local memory index built from session history already on disk — "one memory shared by Claude Code, Codex, Cursor, Copilot CLI, OpenClaw and 29 more coding agents... including months of sessions from before you installed it" ([README][deja-vu]). A single Go binary; no LLM or embeddings required for core retrieval (optional semantic recall via local Ollama or OpenAI endpoints).
+
+### Architecture
+
+- Local inverted index in `~/.cache/deja`, parsing each agent's existing JSONL/SQLite session stores directly — retroactive, no re-indexing needed for prior history
+- MCP server for tool integration; Claude Code gets automatic session-start recall, captured before compaction discards it
+- Keys and tokens are stripped as the index is built (documented in its [security model][deja-vu-security])
+
+### Adoption Considerations
+
+**Strengths**: Retroactive indexing parses each agent's *existing* on-disk session stores directly, so months of pre-install history become searchable immediately — no separate backfill step (claude-reflect above can also recover pre-install learnings, but only by re-scanning sessions through its own capture pipeline); no LLM or embedding dependency for core full-text search; self-reported **88.1% hit@1 on LongMemEval-S** and **70.5% retrieval hit@1 on LoCoMo**, both reproducible in-repo against the public datasets (see [Benchmarks](#benchmarks) below); millisecond lookups.
+
+**Risks**: Overlaps with CC's built-in memory and every other tool in this doc — pick one. Depends on each agent's own on-disk session format; a harness that changes its log layout could break parsing until deja-vu updates. Pre-1.0 (v0.21.1).
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## engrim (timgordontg)
+
+**Repo**: [timgordontg/engrim][engrim] | **Stars**: 283 | **License**: MIT | **Version**: 1.4.11
+
+Local-first SQLite episodic-memory store aimed at the "200,000-token context window trap": rather than replaying raw transcripts, it distills project memory into "4,000 characters of high-precision, curated episodic working memory" in a single file (`~/.engrim/memory.db`, WAL mode, restrictive POSIX permissions) ([README][engrim]).
+
+### Architecture
+
+- Hybrid retrieval: BM25 full-text search (FTS5) + vector embeddings via `model2vec`
+- Native adapters for seven environments: Claude Code (SessionStart/Stop hooks), Codex CLI (command hooks), Cursor and Windsurf (MCP), GitHub Copilot CLI, OpenCode (plugin + MCP), and Google Antigravity
+- Tracks `origin_agent` provenance per entry, so a team can see which agent/environment contributed a given decision
+
+### Adoption Considerations
+
+**Strengths**: Only tool in this doc with a Google Antigravity adapter (alongside Claude Code, Cursor, Codex CLI, Copilot CLI, OpenCode, and Windsurf — seven environments total); per-entry `origin_agent` provenance lets a team see which agent contributed a given decision; tiny on-disk footprint (single SQLite file); MIT, with an optional commercial variant for teams rather than a required upsell.
+
+**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K and deja-vu's 935). No third-party or public benchmark number, unlike ByteRover/MemPalace/deja-vu.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -247,6 +365,7 @@ Two long-term-memory benchmarks recur in this space. **Most per-framework number
 | Framework | Reported result | Source |
 |---|---|---|
 | MemPalace | 96.6% R@5 (raw mode) | vendor README — see [MemPalace](#mempalace-milla-jovovich) above |
+| deja-vu | 88.1% hit@1 (LongMemEval-S, 470Q cleaned set) | vendor README — see [deja-vu](#deja-vu-vshulcz) above |
 | Mem0 | ~94% accuracy, ~6.8k mean tokens | mem0.ai/research (vendor, 2026) |
 
 ### LOCOMO ([Meta][locomo], arXiv:2402.17753)
@@ -257,6 +376,8 @@ Long conversational memory — QA (single/multi-hop, temporal, open-domain), eve
 |---|---|---|
 | Mem0 | ~92.5 overall; ~7k tokens vs 25k+ full-context; "~90% lower token cost" | [Mem0 paper][mem0-paper] |
 | MemoryOS | +49.11% F1, +46.18% BLEU-1 over baselines | vendor README ([MemoryOS][memoryos]) |
+| Core | 88.24% avg accuracy (single/multi-hop, open-domain, temporal) | vendor README — see [Core](#core-redplanethq) above |
+| deja-vu | 70.5% retrieval hit@1 | vendor README — see [deja-vu](#deja-vu-vshulcz) above |
 
 Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-reported on LOCOMO," not "LOCOMO result."
 
@@ -269,8 +390,13 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 
 | Source | Content |
 |---|---|
+| [ai-memory][ai-memory] | Cross-agent long-term memory (Rust) |
 | [Byterover][byterover] · [paper][byterover-paper] | Agent memory layer (CLI) |
 | [claude-mem][claude-mem] · [docs][claude-mem-docs] | Claude Code memory plugin |
+| [claude-reflect][claude-reflect] | Correction/preference memory plugin for Claude Code |
+| [Core][core] · [benchmark repo][core-benchmark] | Self-hosted personal AI OS with CC/Codex delegation |
+| [deja-vu][deja-vu] · [security model][deja-vu-security] | Cross-agent session-history memory index |
+| [engrim][engrim] | Cross-agent episodic memory store (SQLite) |
 | [MemPalace][mempalace] | Agent memory tool |
 | [memsearch][memsearch] · [CC docs][memsearch-docs] | Zilliz memory search (CC integration) |
 | [roampal-core][roampal-core] · [PyPI][roampal-pypi] | Outcome-based memory MCP server (CC integration) |
@@ -286,10 +412,17 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 | [LongMemEval][longmemeval] | Long-term-memory benchmark |
 | [LOCOMO][locomo] | Long-conversation memory benchmark |
 
+[ai-memory]: https://github.com/akitaonrails/ai-memory
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
 [claude-mem-docs]: https://docs.claude-mem.ai/introduction
+[claude-reflect]: https://github.com/BayramAnnakov/claude-reflect
+[core]: https://github.com/RedPlanetHQ/core
+[core-benchmark]: https://github.com/RedPlanetHQ/core-benchmark
+[deja-vu]: https://github.com/vshulcz/deja-vu
+[deja-vu-security]: https://github.com/vshulcz/deja-vu/blob/main/docs/SECURITY-MODEL.md
+[engrim]: https://github.com/timgordontg/engrim
 [mempalace]: https://github.com/MemPalace/mempalace
 [longmemeval]: https://github.com/xiaowu0162/LongMemEval
 [memsearch]: https://github.com/zilliztech/memsearch

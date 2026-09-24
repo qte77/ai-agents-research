@@ -3,8 +3,8 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-07-23
-validated_links: 2026-06-19
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Generally available (CLAUDE.md); Auto memory enabled by default
@@ -200,6 +200,12 @@ npx skills add humanlayer/skills --skill improve-claude-md
 
 Cross-ref: [CC-reverse-engineering-landscape.md][cc-reverse-eng] — Agiflow section documents the five injection mechanisms including the `<system-reminder>` wrapping of CLAUDE.md; [CC-community-skills-landscape.md][cc-skills-landscape] — claude-code-best-practice open research questions.
 
+#### Do Context Files Actually Help? (arXiv 2607.27250)
+
+A controlled ablation complicates the adherence-optimization advice above. [Khatri (submitted 2026-07-28)][khatri-context-ablation] ran two frontier coding agents (Claude Code, Codex) across 17 real tasks in 3 repositories — 288 evaluated runs — toggling context-file presence. Result: context strategy did not measurably move task correctness on either agent, bounded to ≤10–15 percentage points via equivalence testing; a verification probe found the actual context files "never converts a near-miss to a pass" on either agent. The study attributes failures to implementation skill (feature design, pattern selection, exact wiring) rather than missing repository knowledge, and found large per-agent difficulty variance (Spearman ρ=0.75) that could explain contradictory results in prior single-agent studies.
+
+**Scope note**: this measures end-to-end task *correctness*, not the instruction-*adherence* effects documented above (conditional XML blocks, the foundational/conditional split) — a context file can change which conventions an agent follows without changing whether it solves the task. The two findings answer different questions, not opposing ones.
+
 ### Auto Memory Architecture
 
 ```text
@@ -288,6 +294,23 @@ All gates must pass before a dream runs:
 
 Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST documents Auto-Dream's three-gate trigger and four-phase architecture
 
+## Enterprise Agent Memory Beyond CC
+
+Three first-party references situate CC's memory system against other enterprise agent-memory approaches — useful context, not a like-for-like comparison, since each targets a different product surface.
+
+| System | Scope | Curation | Audit trail |
+| --- | --- | --- | --- |
+| CC (CLAUDE.md + auto memory, above) | Local dev session, per working tree | Manual (human) + Claude-written notes | None (plain markdown files) |
+| [Claude Managed Agents memory stores][cc-managed-mem] | API-hosted agent sessions, per workspace | Manual via API/Console, or a "dreaming" consolidation session | Immutable memory versions, redactable, 30-day retention |
+| [Microsoft Copilot Studio memory][ms-copilot-mem] | Per end-user, per agent | Automatic capture during conversation | User-visible memory portal; auto-deletes after 28 days idle |
+| [Grounding Agent Memory][grounding-agent-mem] (research) | Enterprise agent memory, general | Curator agent re-validates memories against the live environment with read-only tools | N/A — research method, not a shipped system |
+
+**Claude Managed Agents memory stores** (beta header `agent-memory-2026-07-22`) are a distinct Anthropic product from CC's CLAUDE.md/auto memory: a workspace-scoped store of text "memories," mounted as a directory (`/mnt/memory/<slug>/`) inside a Managed Agents session sandbox and read/written with the same file tools the agent uses elsewhere. Up to 8 stores per session, `read_only` or `read_write` access, and every write creates an immutable **memory version** (`memver_...`) — an audit/redaction capability CC's local memory files don't have. Per-store caps of 10,000 memories and 100KB (~25k tokens) per memory keep stores bounded ([source][cc-managed-mem]).
+
+**Microsoft Copilot Studio "Memory"** (preview, GitHub Copilot harness) captures user preferences and context automatically during conversation into a per-user, Microsoft-managed folder, applies it on later turns, and exposes a self-service portal where a user can view or delete what's remembered; unused memories expire after 28 days idle ([source][ms-copilot-mem]).
+
+**Grounding Agent Memory** ([Suresh, Mak, Bhatnagar, Methani, Gutierrez Munoz — Microsoft Corporation, submitted 2026-09-10][grounding-agent-mem]) proposes environment-probing curation: a curator agent validates and refreshes stored memories using read-only tools against the live environment, requiring no model retraining. On the CLBench database-task benchmark it reports pass rate improving from 39% to 73% and pass-discounted reward from 8.60 to 22.60, average queries per question dropping from 8.8 to 4.7, and per-task agent cost falling from $3.38 to $1.68; on a second benchmark (APEX, management consulting) all 18 memory comparisons showed positive results, with tool calls down 16–75%. Results held across Claude Sonnet 4.6 and Opus 4.7. The core idea — validate a memory against ground truth before trusting it — has no direct analog in CC's memory system today, where both CLAUDE.md and auto memory are trusted without runtime verification.
+
 ## Usage Considerations
 
 | Aspect | Notes | Optimization Opportunity |
@@ -375,6 +398,10 @@ Better to have less correct information than more information with errors.
 - [CC Subagent memory][cc-sub]
 - [Getting Claude to Actually Read Your CLAUDE.md][hlyr-claude-md] — hlyr.dev, Dex, 2026-03-17
 - [Advanced Context Engineering for Coding Agents][hlyr-ace] — hlyr.dev, Dex, 2025-08-29
+- ["Do Context Files Help Coding Agents?" (arXiv 2607.27250)][khatri-context-ablation] — Khatri, 2026-07-28; two-agent ablation study
+- [Claude Managed Agents memory][cc-managed-mem] — memory-store feature docs
+- [Microsoft Copilot Studio memory overview][ms-copilot-mem]
+- ["Grounding Agent Memory" (arXiv 2609.11060)][grounding-agent-mem] — Suresh et al., Microsoft, 2026-09-10
 
 [cc-mem]: https://code.claude.com/docs/en/memory
 [cc-skills]: https://code.claude.com/docs/en/skills
@@ -391,3 +418,7 @@ Better to have less correct information than more information with errors.
 [cc-ralph]: ../agents-skills/CC-ralph-enhancement-research.md
 [cc-extended-ctx]: CC-extended-context-analysis.md
 [cc-extended-ctx-degradation]: CC-extended-context-analysis.md#context-quality-degradation
+[khatri-context-ablation]: https://arxiv.org/abs/2607.27250
+[cc-managed-mem]: https://platform.claude.com/docs/en/managed-agents/memory
+[ms-copilot-mem]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/memory-overview
+[grounding-agent-mem]: https://arxiv.org/abs/2609.11060

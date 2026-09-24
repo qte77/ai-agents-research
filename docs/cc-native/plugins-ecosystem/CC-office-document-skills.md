@@ -2,8 +2,8 @@
 title: Office Document Skills & MCP Servers
 description: Ecosystem analysis of document generation/manipulation capabilities — Anthropic official skills, knowledge-work plugins, community skills, and MCP servers for docx, xlsx, pptx, and pdf.
 created: 2026-03-26
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (2026-03-26)
@@ -75,6 +75,16 @@ CC-native SKILL.md files for office document workflows. Mirrors the Anthropic sk
 
 **Maintainer note (2026-07-23)**: The repo's README states it was published before Anthropic made these skills public and now points readers to [anthropics/skills](https://github.com/anthropics/skills) (Layer 1) instead, since skills there may be getting updates. Treat this community repo as superseded by Layer 1 for OOXML work.
 
+### ade-document-processing-skills (LandingAI)
+
+**Repo**: [landing-ai/ade-document-processing-skills][ade-skills] (68 stars, MIT license, verified 2026-09-24)
+
+Vendor-published agent skills teaching coding assistants to call LandingAI's own Agentic Document Extraction (ADE) API — a hosted document-AI service that parses complex real-world documents into structured Markdown/JSON without templates or ML training. The skills follow the Agent Skills convention (`SKILL.md` files) and cover parsing to Markdown, JSON-schema field extraction, page classification, and multi-document batch splitting, plus patterns for batch processing, RAG preparation, and table stitching.
+
+**Supported platforms** (per the repo): Claude Code, Cursor, Roo Code, and any agent following the Agent Skills convention.
+
+**Install**: Claude Code plugin marketplace (`/plugin install`), or manual copy to `.claude/skills/` (project or global scope). The skills guide the agent to write Python/TypeScript code against ADE's REST API or official client libraries — this is a thin agent-skill wrapper around a vendor SaaS API, not a self-contained document-processing engine like Layer 1/2 above.
+
 ### ~~jezweb/claude-skills~~ (no longer office-document relevant)
 
 Repo restructured (verified 2026-07-23) — its current README/description cover Cloudflare/full-stack scaffolding, Shopify, WordPress, and other dev tooling, with no `docx`/SheetJS/`pdf-lib`/`pptxgenjs` office-document-generation content remaining (confirmed via in-repo code search for those terms: zero hits). No longer a recommended option for serverless/CI document generation.
@@ -121,6 +131,7 @@ For the Python-library landscape behind office-document generation (python-docx,
 | [Anthropic skills][skills] | Official built-in document skills |
 | [Knowledge-work plugins][kw] | 18 business domain plugins |
 | [claude-office-skills][office] | Community OOXML editing skills (maintainer now redirects to anthropics/skills) |
+| [ade-document-processing-skills][ade-skills] | Vendor (LandingAI) agent skills for its ADE document-extraction API |
 | [Office-Word-MCP-Server][word] | Word document MCP server (archived) |
 | [excel-mcp-server][excel] | Excel MCP server |
 | [document-edit-mcp][docedit] | Document editing MCP server |
@@ -129,6 +140,7 @@ For the Python-library landscape behind office-document generation (python-docx,
 [skills]: https://github.com/anthropics/skills
 [kw]: https://github.com/anthropics/knowledge-work-plugins
 [office]: https://github.com/tfriedel/claude-office-skills
+[ade-skills]: https://github.com/landing-ai/ade-document-processing-skills
 [word]: https://github.com/GongRzhe/Office-Word-MCP-Server
 [excel]: https://github.com/negokaz/excel-mcp-server
 [docedit]: https://github.com/alejandroBallesterosC/document-edit-mcp

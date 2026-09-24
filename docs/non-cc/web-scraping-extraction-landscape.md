@@ -3,8 +3,8 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-07-10
-validated_links: 2026-07-10
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Reference (informational catalog)
@@ -60,10 +60,13 @@ See [CC Web Scraping Plugins Analysis](../cc-native/plugins-ecosystem/CC-web-scr
 | [Selenium](https://www.selenium.dev/) | Apache-2.0 | None built-in | Cross-browser W3C WebDriver; IDE + Grid |
 | [Puppeteer](https://pptr.dev/) | Apache-2.0 | None built-in | Google's Chrome/Firefox DevTools control (Node) |
 | [Magnitude](https://magnitude.run) | Apache-2.0 | n/a (AI test/automation) | Vision-first: LLM drives the browser via screenshots + pixel coordinates (no selectors); `act()` / `extract()` (Zod schemas); dedicated test runner; Playwright as low-level escape hatch |
+| [Lightpanda](https://lightpanda.io) | AGPL-3.0 | None built-in | Built from scratch in Zig — not a Chromium/WebKit fork; CDP-compatible drop-in for Puppeteer/Playwright |
 
 **When to use what**: Playwright for JS rendering without anti-bot. Patchright or Nodriver when detection is an issue. Botasaurus for the hardest targets. Magnitude when selector maintenance (dynamic UIs, canvas, drag-and-drop) is the pain point and you can afford per-step vision-model cost.
 
 **Magnitude — vision-first, two products from `magnitudedev`.** [Magnitude](https://magnitude.run) (`@magnitudedev/browser-agent` + `magnitude-test`, ~4.1 k stars, TypeScript) drives the browser through a visually-grounded LLM (Claude Sonnet 4 recommended; most non-vision OpenAI/Gemini/Llama models unsupported) and works as an MCP tool in Cline/Cursor/Windsurf — resilient to UI churn that breaks selector-based tools. Do **not** confuse it with [magnitude.dev](https://magnitude.dev), the same org's separate **CLI coding agent** (open-model routing — GLM 5.2 + DeepSeek V4 Flash + Kimi K2.7 Code; pass-through pricing + $5 free credits; license unconfirmed). Selector-based contrast: [CC web-scraping plugins analysis](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) (Playwright MCP).
+
+**Lightpanda — built-from-scratch, not a Chromium fork.** [Lightpanda](https://lightpanda.io) ([repo](https://github.com/lightpanda-io/browser), AGPL-3.0, 35.5k★ verified 2026-09-24) is a headless browser engine written in Zig from scratch — not a Chromium or WebKit fork — targeting automation/crawling/AI workloads rather than human browsing. It speaks the Chrome DevTools Protocol, so it works as a drop-in replacement in existing Puppeteer/Playwright code. Lightpanda's own site reports (vendor benchmark, not independently reproduced here) ~9x faster crawling than Chrome (5s vs 46s) and ~16x lower peak memory (123MB vs 2GB).
 
 ### Accessibility-tree page representation
 
@@ -154,6 +157,7 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 Distinct from the source-specific APIs above: general-purpose OCR/VLM tools that turn arbitrary PDFs and images into LLM-ready text — a document-ingestion front-end for RAG and knowledge bases.
 
 - [olmOCR (AllenAI)](https://github.com/allenai/olmocr) — GPU OCR pipeline converting PDF/PNG/JPEG → Markdown or Dolma JSON via a fine-tuned Qwen2.5-VL 7B model; handles equations, tables, handwriting, multi-column layout and reading-order recovery (<$200 / 1M pages, Apache-2.0). Install `pip install olmocr` (remote inference) or `pip install olmocr[gpu] --extra-index-url https://download.pytorch.org/whl/cu128` for local vLLM (Docker image `alleninstituteforai/olmocr:latest-with-model`). Run `olmocr <workspace> --pdfs … --markdown` — default model `allenai/olmOCR-2-7B-1025-FP8`; point at a remote endpoint with `--server`/`--api_key`, or read/write S3 via `--workspace_profile`/`--pdf_profile` (no env vars; the full ~25-flag reference is in the [repo README](https://github.com/allenai/olmocr)).
+- [Docling Graph (docling-project, IBM-sponsored)](https://github.com/docling-project/docling-graph) — extends [Docling](https://github.com/docling-project/docling) with a knowledge-graph layer: converts PDFs, images and Office files into typed Pydantic objects, then a directed graph (NetworkX, stable node IDs) exportable to CSV or Cypher for a graph database. Extraction schemas are Pydantic models that double as graph structure — auto-generated from example documents (`docling-graph template from-docs`: an LLM proposes classes/relationships, a deterministic renderer writes the code) or compiled directly from an existing OWL/RDFS/SKOS ontology with no LLM involved (`docling-graph template from-ontology`). MIT license, 901★ (verified 2026-09-24), part of the LF AI & Data ecosystem.
 
 | Platform | License/Pricing | Differentiator |
 |----------|----------------|----------------|
