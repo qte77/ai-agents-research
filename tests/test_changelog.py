@@ -91,6 +91,37 @@ class ParseReleasesFeedTests(unittest.TestCase):
         self.assertEqual(cl.parse_releases_feed("   \n\t  "), [])
 
 
+class UnseenReleasesTests(unittest.TestCase):
+    ENTRIES = [
+        {"version": "2.1.280", "updated": "2026-09-22T16:38:14Z", "id": "id-280"},
+        {"version": "2.1.278", "updated": "2026-09-19T03:10:40Z", "id": "id-278"},
+        {"version": "2.1.71", "updated": "2026-01-01T00:00:00Z", "id": "id-71"},
+    ]
+
+    def test_excludes_ids_already_in_seen_ids(self):
+        result = cl.unseen_releases(self.ENTRIES, {"id-280"}, "2.1.0")
+        self.assertNotIn("id-280", [e["id"] for e in result])
+        self.assertIn("id-278", [e["id"] for e in result])
+
+    def test_bootstrap_empty_ledger_excludes_at_or_below_cutoff(self):
+        # Empty ledger (first run) must not re-report the changelog's existing
+        # history — the scan-doc cutoff alone keeps 2.1.71 out.
+        result = cl.unseen_releases(self.ENTRIES, set(), "2.1.71")
+        self.assertEqual([e["id"] for e in result], ["id-280", "id-278"])
+
+    def test_cutoff_suppresses_ids_no_longer_in_the_feed_window(self):
+        # Ledger reset to empty (e.g. state file lost/rotated) after the ~31-
+        # entry feed window had already rolled past 2.1.278 — that id is not
+        # even in this fixture's ENTRIES, standing in for "rolled off". The
+        # cutoff, not the ledger, is what must stop it (and 2.1.71) from ever
+        # resurfacing.
+        result = cl.unseen_releases(self.ENTRIES, set(), "2.1.278")
+        self.assertEqual([e["id"] for e in result], ["id-280"])
+
+    def test_empty_feed_returns_empty(self):
+        self.assertEqual(cl.unseen_releases([], set(), "2.1.71"), [])
+
+
 class FindCoveringDocsTests(unittest.TestCase):
     def test_covered_uncovered_and_noise(self):
         self.assertEqual(
