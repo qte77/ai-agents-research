@@ -2,8 +2,8 @@
 title: "Multi-Agent Systems & Benchmarking Best Practices"
 purpose: Production best practices for multi-agent system development and benchmarking, covering infrastructure, training, and evaluation.
 created: 2026-01-13
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -114,6 +114,22 @@ validated_links: 2026-07-23
 - Mitigation: raising the evaluator committee from k=1 to k=3 cuts contagion by roughly 70% (reported ~69-72%, varying by paper revision)
 - Topology matters: chain communication suppresses propagation; fully-connected topology enables cascading spread once a spectral-radius threshold is crossed
 
+**Verifiable Social Reasoning** [2609.17496] FUSE:
+
+- Multi-agent simulation framework for evaluating LLM-assistant social reasoning in
+  *user-mediated* settings: a target agent with a hidden motive interacts with
+  other agents including one representing "the user", who then consults the
+  evaluated assistant to infer the target's motive — giving verifiable ground truth
+  by construction, unlike prior benchmarks that lack an objective answer for
+  intangible social properties (intentions, motives)
+- Simulation faithfulness validated via a 24,000-annotation human study; released
+  with a 21,000-example dataset and evaluated across 12 LLMs
+- Findings: user mediation compounds the difficulty of social reasoning; models are
+  systematically sensitive to biased user framing; LLMs often need more contextual
+  detail than humans do to reach a correct inference; longer conversations do not
+  reliably improve performance despite more opportunities to ask clarifying
+  questions
+
 ### 3.3 Consistency Metrics
 
 **[2406.12045] τ-bench:**
@@ -143,6 +159,23 @@ validated_links: 2026-07-23
 
 - **League of Exploiters**: Prevents main policy over-specialization, maintains strategy diversity through adversarial training
 - **Architecture**: Auto-regressive action sequences (commands + arguments) used in LLM function calling
+
+**Collective Dynamics** [2608.16578] Physics of Agents:
+
+- Applies a statistical-mechanics formalism — agents stochastically favor lower
+  "social pressure" — to over 10,000 communities of LLM agents that repeatedly
+  exchange messages and revise opinions on objective (math) and subjective
+  (political) questions
+- Three characteristic regimes emerge regardless of the specific community:
+  indifference, polarization, consensus; agents start indifferent and build
+  conviction as they interact
+- On objective questions communication improves collective accuracy; on subjective
+  questions it often drifts group opinion in a consistent direction, an
+  amplification risk for MAS deliberation/voting designs
+- The fitted model predicts individual agent trajectories from initial opinions
+  alone, outperforms standard baselines, and generalizes to unseen community
+  graphs — evidence that collective LLM-agent behavior follows compact,
+  predictable dynamical laws rather than being purely emergent/unpredictable
 
 ## 5. AI Safety & Security
 
@@ -175,6 +208,10 @@ validated_links: 2026-07-23
 |---|---|
 | [2606.20493] Contagion Networks | Evaluator preference/bias propagation across multi-agent LLM systems; evaluator-committee-size and communication-topology mitigations |
 | [2606.20517] Multi-LCB | Extends LiveCodeBench to 12 programming languages; exposes Python-favoring bias and cross-language ranking instability across 24 LLMs |
+| [2609.17496] FUSE | Verifiable multi-agent simulation framework for user-mediated social reasoning eval; 21k-example dataset, 12 LLMs evaluated |
+| [2608.16578] Physics of Agents | Statistical-mechanics model of collective LLM-agent opinion dynamics across 10,000+ simulated communities |
 
 [2606.20493]: https://arxiv.org/abs/2606.20493
 [2606.20517]: https://arxiv.org/abs/2606.20517
+[2609.17496]: https://arxiv.org/abs/2609.17496
+[2608.16578]: https://arxiv.org/abs/2608.16578
