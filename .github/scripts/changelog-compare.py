@@ -5,12 +5,15 @@ Identifies versions newer than the last scanned version and checks whether
 existing docs cover those features. Pure parsing/coverage/report logic lives in
 lib/changelog.py; this entry point handles file IO and exit codes.
 
-Optionally reads a fetched releases.atom (issue #410) to annotate the report
-with per-version release dates and maintain an id-based dedup ledger in the
-shared monitor state file — CHANGELOG.md remains the sole content source and
-sole trigger (the scanned-version-range cutoff below); the feed never gates
-new_features on its own so a stale/rolled-off ledger can't suppress a real
-finding.
+Optionally reads a fetched releases.atom (issue #410) to drive the "which
+versions are new" decision: when the feed parses to at least one entry, the
+feed's per-id dedup ledger (persisted in the shared monitor state file)
+decides which versions to report, with the scan-doc cutoff as a bootstrap /
+window-rollout safety net (see lib.changelog.unseen_releases). When the feed
+is absent, empty, or unparseable, the trigger falls back to the scan-doc
+cutoff alone — the pre-#410 behaviour. Either way CHANGELOG.md remains the
+sole content source, and the ledger is written only after a full, successful
+comparison run (never on a fatal/early exit).
 
 Usage:
     python changelog-compare.py --changelog PATH --scan-doc PATH --docs-dir PATH
@@ -36,6 +39,7 @@ from lib.changelog import (
     parse_changelog_versions,
     parse_releases_feed,
     render_changelog_report,
+    unseen_releases,
     version_tuple,
 )
 from lib.monitor_utils import fatal, load_state, save_state
@@ -59,9 +63,11 @@ def main() -> None:
     parser.add_argument("--update-scan-doc", action="store_true",
                         help="Bump the scan doc frontmatter to the newest changelog version")
     parser.add_argument("--releases-feed", type=Path, default=None,
-                        help="Path to fetched releases.atom (optional; adds per-version "
-                             "dates to the report and an id-based dedup ledger — does "
-                             "not gate the trigger; CHANGELOG.md stays the content source)")
+                        help="Path to fetched releases.atom (optional; when it parses to "
+                             "at least one entry, its id ledger drives the new-versions "
+                             "trigger and its timestamps annotate the report; falls back "
+                             "to the scan-doc cutoff alone otherwise. CHANGELOG.md always "
+                             "stays the content source)")
     parser.add_argument("--state-file", type=Path,
                         default=Path(".github/state/native-monitor-state.json"),
                         help="Path to the shared monitor state file "
@@ -81,36 +87,47 @@ def main() -> None:
     all_versions = parse_changelog_versions(args.changelog.read_text(encoding="utf-8"))
     if not all_versions:
         fatal(f"ERROR: No version sections found in {args.changelog}")
-    cutoff = version_tuple(last_scanned)
-    new_versions = [(v, feats) for v, feats in all_versions if version_tuple(v) > cutoff]
-    print(f"New versions found: {len(new_versions)}", file=sys.stderr)
 
-    keyword_index = collect_doc_keyword_index(args.docs_dir)
-    print(f"Docs indexed: {len(keyword_index)}", file=sys.stderr)
-
-    updated_by_version: dict[str, str] = {}
+    feed_entries: list[dict[str, str]] = []
     if args.releases_feed is not None:
         if args.releases_feed.exists():
             feed_entries = parse_releases_feed(
                 args.releases_feed.read_text(encoding="utf-8")
             )
-            updated_by_version = {e["version"]: e["updated"] for e in feed_entries}
-            state = load_state(args.state_file)
-            seen_ids = set(state.get(_RELEASES_FEED_STATE_KEY, []))
-            new_ids = [e["id"] for e in feed_entries if e["id"] not in seen_ids]
-            print(
-                f"Releases feed: {len(feed_entries)} entries, "
-                f"{len(new_ids)} unseen since last state",
-                file=sys.stderr,
-            )
-            state[_RELEASES_FEED_STATE_KEY] = [e["id"] for e in feed_entries]
-            save_state(args.state_file, state)
+            if not feed_entries:
+                print(
+                    "WARNING: releases feed parsed to no entries "
+                    "— falling back to scan-doc-cutoff-only trigger",
+                    file=sys.stderr,
+                )
         else:
             print(
                 f"WARNING: releases feed not found at {args.releases_feed} "
-                "— continuing without release dates",
+                "— falling back to scan-doc-cutoff-only trigger",
                 file=sys.stderr,
             )
+
+    updated_by_version: dict[str, str] = {e["version"]: e["updated"] for e in feed_entries}
+
+    state: dict[str, list[str]] = {}
+    if feed_entries:
+        state = load_state(args.state_file)
+        seen_ids: set[str] = set(state.get(_RELEASES_FEED_STATE_KEY, []))
+        unseen = unseen_releases(feed_entries, seen_ids, last_scanned)
+        unseen_versions = {e["version"] for e in unseen}
+        new_versions = [(v, feats) for v, feats in all_versions if v in unseen_versions]
+        print(
+            f"Releases feed: {len(feed_entries)} entries, {len(unseen)} unseen "
+            "— trigger driven by feed ledger",
+            file=sys.stderr,
+        )
+    else:
+        cutoff = version_tuple(last_scanned)
+        new_versions = [(v, feats) for v, feats in all_versions if version_tuple(v) > cutoff]
+        print(f"New versions found (cutoff-only): {len(new_versions)}", file=sys.stderr)
+
+    keyword_index = collect_doc_keyword_index(args.docs_dir)
+    print(f"Docs indexed: {len(keyword_index)}", file=sys.stderr)
 
     results = classify_versions(new_versions, keyword_index)
     report, has_uncovered = render_changelog_report(
@@ -125,6 +142,13 @@ def main() -> None:
             print(f"Updated scan doc version range end to {newest}", file=sys.stderr)
         else:
             print(f"WARNING: Could not update version in {args.scan_doc}", file=sys.stderr)
+
+    # Persist the ledger only once the comparison has fully succeeded (never
+    # on a fatal/early exit above) — "update the ledger only after a
+    # successful comparison run" per #410.
+    if feed_entries:
+        state[_RELEASES_FEED_STATE_KEY] = [e["id"] for e in feed_entries]
+        save_state(args.state_file, state)
 
     print(report)
     sys.exit(1 if has_uncovered else 0)
