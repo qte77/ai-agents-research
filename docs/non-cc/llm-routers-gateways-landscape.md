@@ -3,8 +3,8 @@ title: LLM Routers & Gateways Landscape
 source: https://openrouter.ai/
 purpose: Provider-agnostic model routers, hosted aggregators, self-hostable gateways, and model-fusion/ensemble routing tools — a reference catalog verified 2026-06-16.
 created: 2026-06-16
-updated: 2026-06-22
-validated_links: 2026-06-16
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Reference (informational catalog)
@@ -63,6 +63,7 @@ A survey of provider-agnostic LLM routers, API gateways, and model aggregators �
 | Tool | License | Pricing | Models / Providers | Differentiator |
 |---|---|---|---|---|
 | [OpenRouter Fusion](https://openrouter.ai/blog/announcements/fusion-beats-frontier/) | Proprietary (OpenRouter hosted feature) | Sum of all panel model completions; Quality (default) and Budget presets; custom panels supported | Any models on OpenRouter; benchmark panels include Claude Opus 4.8, Fable 5, GPT-5.5, Gemini 3 Flash, Gemini 3.1 Pro, Kimi K2.6, DeepSeek V4 Pro | Dispatches prompt to parallel panel of models + judge synthesizer; single synthesized response; benchmark on DRACO deep-research tasks shows fused panels outperform single frontier models; accessed via `openrouter/fusion` slug or `{"plugins":[{"id":"fusion"}]}` |
+| [Pandora's AI Model Routing Box](https://arxiv.org/abs/2608.20316) | N/A — research paper (Google DeepMind); no reference implementation found | N/A | Framework-agnostic — any pool of heterogeneous specialist/generalist models | arXiv:2608.20316 (2026-08-20/21) formalizes cost/accuracy routing as a Pandora's-Box optimal-search problem under a Gaussian signal model, proposing two policies: **Pandora's Router** (centralized, closed-form value-of-information threshold for when re-querying a costlier, more-accurate estimator is worth it) and **Pandora's Bidder** (decentralized — specialists self-assess confidence and bid for each query). A theoretical alternative to today's classifier-trained routers (e.g. RouteLLM, Not Diamond), not a deployable gateway |
 
 ---
 
@@ -80,6 +81,7 @@ Facts compiled from each tool's first-party page (1p-verified 2026-06-16). No th
 |---|---|
 | [openrouter.ai](https://openrouter.ai/) | OpenRouter platform, model/provider counts |
 | [openrouter.ai/blog/announcements/fusion-beats-frontier/](https://openrouter.ai/blog/announcements/fusion-beats-frontier/) | OpenRouter Fusion benchmark and billing model |
+| [arxiv.org/abs/2608.20316](https://arxiv.org/abs/2608.20316) | Pandora's AI Model Routing Box — Google DeepMind cost/accuracy routing paper; author affiliations verified via arXiv HTML, no code repo found (accessed 2026-09-24) |
 | [github.com/BerriAI/litellm](https://github.com/BerriAI/litellm) | LiteLLM release, license, star count |
 | [portkey.ai/for/claude-code](https://portkey.ai/for/claude-code) | Portkey Claude Code Gateway product |
 | [docs.requesty.ai/integrations/claude-code](https://docs.requesty.ai/integrations/claude-code) | Requesty CC integration |
