@@ -4,8 +4,8 @@ purpose: Static (SCA) and dynamic (DCA) code-analysis for AI coding agents — b
 category: landscape
 status: assess
 created: 2026-07-23
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -108,6 +108,17 @@ until its own repo is checked.
   and AFL++ (fuzzing/DAST) and reportedly outperforms both** on real-world projects,
   discovering zero-days (paper-claimed — a signal that agent detection is now measured
   head-to-head against incumbent SCA/DCA tools, not just used alongside them).
+- **[Specula][specula]** (`specula-org/Specula`, Apache-2.0, 486★, created 2025-06-15,
+  `gh api` 2026-09-24) — an agentic tool that has coding agents write and check **TLA+
+  formal specifications** to find deep bugs in concurrent/distributed system code, a
+  different verification mode from the fuzzing/dataflow tools above. A five-skill
+  pipeline (code analysis → spec generation → harness generation → validation → bug
+  confirmation) has the agent read target source, author a TLA+ model + invariants,
+  run the TLC model checker, and trace any violation back to the source line. Supports
+  Claude Code (Opus 4.8 or Fable), Codex (GPT-5.5/5.6-Sol), Copilot CLI, OpenCode, and
+  Pi as the underlying coding agent; the project maintains a public case-study archive
+  of bugs found in open-source projects, though it does not publish an aggregate
+  precision/recall benchmark in its README.
 
 ## 4. CI-Forge Integration (verified first-party)
 
@@ -168,7 +179,7 @@ synthesis opportunity, not an existing CC feature.
 ## Adoption & Licensing Notes
 
 - **OSS / free**: garak (Apache-2.0), Semgrep OSS engine, Bandit, Trivy, CodeQL (free on
-  public repos), AgentSight/VIPER-MCP (research code).
+  public repos), AgentSight/VIPER-MCP (research code), Specula (Apache-2.0).
 - **Commercial-tiered**: Semgrep Guardian; GitLab DAST / Dependency-Scanning / Duo auto-fix
   (Ultimate); GitHub Advanced Security (private repos); ARMO/Metoro.
 - **Research, not shipped products**: VIPER-MCP, AgentSight, VulnAgent-R2, VulnLLM-R,
@@ -186,6 +197,7 @@ synthesis opportunity, not an existing CC feature.
 | [agent-audit][agent-audit] | Agent-framework static taint analyzer (repo; license unverified) |
 | [AgentSight][agentsight] (arXiv:2508.02736) · [VIPER-MCP][viper] (arXiv:2605.21392) | eBPF boundary tracing; hybrid MCP taint+PoC (106 zero-days/67 CVEs, paper-reported) |
 | [Google Cloud — AI-Assisted Vulnerability Management][gcloud-blueprint] | Agents-as-scanner blueprint, 2026-07-16, −7-day TTE, binary-oracle finding (first-party, single source) |
+| [Specula][specula] (`specula-org/Specula`) | Agentic TLA+ formal-verification bug finder; 486★, Apache-2.0, `gh api` 2026-09-24 |
 | [VulnAgent-R2][vulnagent] (2603.13384) · [VulnLLM-R][vulnllm] (2512.07533) · [ICLR formalization][iclr-formalize] (#10016279) | Agent-based detection papers (arXiv/ICLR-first-party; results paper-claimed) |
 | [OWASP Top 10 for Agentic Applications 2026][owasp-agentic-top10] | Ranked agentic-risk list, 2025-12-09 (distinct from MAESTRO / LLM Top 10; categories not enumerated here) |
 | [GitLab application security][gitlab-appsec] · [GitHub code scanning][gh-codescan] · [Forgejo Actions][forgejo-actions] | CI-forge SCA/DCA capability, verified per forge |
@@ -209,3 +221,4 @@ synthesis opportunity, not an existing CC feature.
 [gitlab-appsec]: https://docs.gitlab.com/user/application_security/
 [gh-codescan]: https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning
 [forgejo-actions]: https://forgejo.org/docs/latest/user/actions/
+[specula]: https://github.com/specula-org/Specula
