@@ -2,8 +2,8 @@
 title: "Agent Observability Methods Analysis"
 purpose: Technical analysis of 18 observability platforms and five primary tracing patterns for AI agent behavior.
 created: 2025-08-24
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -480,6 +480,21 @@ This emerging pattern addresses the specific challenges of distributed multi-age
 
 - [Microsoft Agent Framework Observability](https://learn.microsoft.com/en-us/semantic-kernel/concepts/enterprise-readiness/observability/)
 - [AgentOps Multi-Agent Tracking](https://research.aimultiple.com/agentic-monitoring/)
+
+#### Superlog
+
+**Technical Mechanism**: Open-source, self-hosted OTel ingestion and incident-correlation platform aimed at coding-agent-driven production debugging.
+
+- Ingests OpenTelemetry traces, logs, and metrics; groups noisy signals into correlated incidents rather than a raw event stream
+- Exposes an MCP server ("Superlog MCP") a coding agent queries directly — the `superlog-debug` skill lets an agent "pull production telemetry through the Superlog MCP to debug incidents, regressions, and 'how is this behaving in prod right now?' questions" (exact MCP tool count not stated in the repo's README or skills repo as of 2026-09-24)
+- Postgres/ClickHouse-backed storage; pluggable agent-runner interface; local-first workspace in the self-hosted community edition, plus a hosted Superlog Cloud tier
+
+**License**: Apache-2.0 (community edition) | **Stars**: 1,452 (verified 2026-09-24)
+
+**Primary Sources**:
+
+- [Superlog GitHub Repository](https://github.com/superloglabs/superlog)
+- [Superlog Skills Repository](https://github.com/superloglabs/skills)
 
 ## Technical Implementation Analysis
 
