@@ -4,13 +4,13 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
 
-Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
+Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
 
 ## Graphify (safishamsi)
 
@@ -232,6 +232,63 @@ Cross-ref: complements the persistent-graph tools above (search/rewrite vs navig
 
 ---
 
+## tgrep (microsoft)
+
+**Repo**: [microsoft/tgrep][tgrep] | **Stars**: 3,346 | **License**: MIT | **Version**: v1.0.10 (2026-09-21)
+
+Trigram-indexed grep with a client/server architecture, built to search large codebases locally faster than plain regex scanning. A trigram index narrows each query to candidate files before the regex engine verifies matches, so tgrep skips reading files that cannot match.
+
+### How It Works
+
+- **Server mode** (`tgrep serve .`) builds a hybrid mmap-plus-mutable-overlay index and watches the filesystem asynchronously; clients connect over JSON-RPC 2.0 on a TCP loopback port
+- **Without a server**, `tgrep index .` builds an on-disk index that searches use directly; with neither, tgrep falls back to a full filesystem scan (like plain grep) and warns on stderr
+- **`--no-index`** forces a fresh-disk read when a search must reflect files changed since the last index build
+- **Built into GitHub Copilot CLI** to power its grep searches across large repos
+
+### Performance (self-reported)
+
+Per its own `BENCHMARKS.md` (August 24, 2026 sweep): tgrep beat ripgrep in 17 of 18 repo/platform combinations, with speedups from 0.93× to 51.9×, measured as client/server search latency with the index already built (not indexing time) — no independent benchmark exists.
+
+### Adoption Considerations
+
+**No first-party Claude Code integration.** `install-agent.sh`, the official agent installer, wires only **Codex** and **pi** (`--agent codex,pi`) — it does not target Claude Code as of 2026-09-24. A Claude Code user can still run tgrep as a faster local `grep`/`rg` substitute via Bash, or hand-wire its stdio MCP server into `.mcp.json` the way any other MCP server is added, but neither path is documented or maintained by the project itself.
+
+**Strengths**: a pre-built index makes repeat searches on large repos far faster than a cold ripgrep scan; Microsoft-maintained with active CI and a fast release cadence (v1.0.10 as of 2026-09-21).
+
+**Risks**: the index can lag filesystem changes between refreshes (mitigated by `--no-index` at the cost of speed); the speedup benchmark is self-reported; no CC-native install path.
+
+Cross-ref: ast-grep MCP above — structural AST search vs. tgrep's indexed regex/text search; both are on-demand, with no persistent knowledge graph
+
+---
+
+## zg / zvec-grep (zvec-ai)
+
+**Repo**: [zvec-ai/zvec-grep][zvec-grep] | **Stars**: 3,752 | **License**: Apache-2.0 | **Version**: v0.2.0 (2026-08-27)
+
+Local-first search layer that unifies ripgrep (exact/regex), BM25 (lexical ranking), and vector search (semantic) behind one interface, "for humans and agents." Built on [zvec][zvec] (Alibaba's vector engine); the documented implementation is TypeScript/Node.js ≥22 (npm), with a separate Rust implementation developed in the repo's `rust/` subdirectory.
+
+### CC Integration (first-party, direct)
+
+`zg --install --target claude` configures Claude Code specifically — it manages `~/.claude.json`, `~/.claude/settings.json`, and `~/.claude/CLAUDE.md` (honoring a `CLAUDE_CONFIG_DIR` override), adds a managed `zvec_grep` MCP entry, local MCP tool approval, and search guidance. The same installer also targets Codex, Qwen Code, Qoder, OpenCode, Cursor, GitHub Copilot, and VS Code.
+
+### Default Agent Toolset
+
+| Tool | Use it when |
+|---|---|
+| `zvec_grep_search` | The answer is workspace-grounded and wording/location is unknown, or semantic/fuzzy/relationship/chronology/cross-file synthesis is required |
+
+Agents are steered to use native grep/rg for exact lookups (a known word, quote, filename, key) and `zvec_grep_search` for everything else — the two are complementary, not a full grep replacement.
+
+### Adoption Considerations
+
+**Strengths**: unlike tgrep above (no CC target at all) and ast-grep MCP (manual JSON client config only), zg ships an explicit, documented `--target claude` installer that writes CC's own config files directly; combines exact, lexical, and semantic retrieval in one local index rather than requiring a separate vector DB; broad multi-agent install coverage (8 named harnesses/IDEs).
+
+**Risks**: young (repo created 2026-07-10); the dual TS/Rust implementation is a maintenance surface to watch; no independent benchmark of its own retrieval-quality claims (the repo carries internal `zg-retrieval-metric-review.md` / `zg-retrieval-only-sweqa20-design.md` design docs, not third-party validation).
+
+Cross-ref: cocoindex-code above — the other embeddings-based semantic search tool in this doc; zg adds exact ripgrep + BM25 lexical ranking in the same local index rather than embeddings alone
+
+---
+
 ## Repomix & code2prompt (repository packers)
 
 A distinct sub-category: one-shot **context export** rather than a live MCP graph. Both flatten a repo into a single LLM-ready artifact with token counting, for pasting into a chat or seeding an agent's first turn.
@@ -271,7 +328,10 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [qodo-agents]: https://github.com/qodo-ai/agents
 [qodo-aware]: https://github.com/qodo-ai/open-aware
 [qodo-crr]: https://docs.qodo.ai/governance/cross-repo-code-review
+[tgrep]: https://github.com/microsoft/tgrep
+[zvec-grep]: https://github.com/zvec-ai/zvec-grep
+[zvec]: https://github.com/alibaba/zvec
 
 ## Sources
 
-Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, Repomix, code2prompt).
+Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), Repomix, code2prompt).

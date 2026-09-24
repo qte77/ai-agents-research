@@ -5,8 +5,8 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-07-23
-validated_links: 2026-06-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research (informational)
@@ -127,6 +127,8 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Prompt Patterns catalog](https://www.promptpatterns.dev/)
 - [The Generative Programmer Substack](https://generativeprogrammer.com/)
 - ["Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems" (arXiv 2604.14228)](https://arxiv.org/abs/2604.14228) — academic design-space analysis of CC's source (Liu et al., 2026); companion code: [VILA-Lab/Dive-into-Claude-Code](https://github.com/VILA-Lab/Dive-into-Claude-Code)
+- ["Applying Anthropic Primitives at Large Enterprises: Harness Paradigm for Knowledge Work" (arXiv 2608.20622)](https://arxiv.org/abs/2608.20622) — Salapa, 2026-08-20; harness-as-enterprise-infrastructure position paper
+- ["An Empirical Study of Harness Design for Coding Agents" (arXiv 2609.20804)](https://arxiv.org/abs/2609.20804) — Fan et al. (UMass Amherst / Zoom / Emory / UNC Charlotte), 2026-09-17; 176-setting component ablation study
 
 ## Security-Domain Application: Defending Code Reference Harness
 
@@ -165,6 +167,17 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 - **Subagent + worktree delegation** and append-oriented session management.
 
 It compares CC against a second system ("OpenClaw") to show how deployment context drives divergent architectural choices, and closes with six open design directions. Cross-ref: [CC-reverse-engineering-landscape.md](../../cc-community/CC-reverse-engineering-landscape.md) for the broader source/binary analysis lineage.
+
+### Enterprise Harness-as-Infrastructure Position (arXiv 2608.20622)
+
+[Applying Anthropic Primitives at Large Enterprises: Harness Paradigm for Knowledge Work][salapa-harness] (George Juraj Salapa, submitted 2026-08-20) argues the coding-agent harness should be treated as enterprise infrastructure rather than a coding tool. It converges on three claims from recent work: harnesses suffice at the task level and outperform more elaborate agent architectures on enterprise work; harness choice accounts for more of the variance in benchmark results than model choice does; and the gap between that finding and enterprise adoption is governance, not capability. The proposed architecture — built on a reference harness the paper calls "microcc" — runs one harness unmodified as the backbone across every deployment, so reviewing what gets built collapses to reading its instructions file, via four mechanisms: credential-scoped tooling (one generic request tool plus a scoped credential per backend, instead of hand-built methods), authorization logic kept outside the harness (letting one artifact serve as a cron backbone, a chat-surface engine, and a terminal tool), and registration as a side effect of pushing code (turning an access audit into a text-file review).
+
+### Empirical Study of Harness Design Components (arXiv 2609.20804)
+
+[An Empirical Study of Harness Design for Coding Agents][fan-harness-study] (Fan, Zhang, Ma, Hu, Wang, Song, Liu, Zamani, Wang — UMass Amherst, Zoom Video Communications, Emory University, UNC Charlotte; submitted 2026-09-17) decomposes the harness into individual components instead of treating it as a monolith, evaluating **176 matched settings** — five context-management strategies × four context-window budgets, plus targeted ablations of planning and action space — across four models on two benchmarks. Findings: context management matters more as the context budget shrinks, mainly by preventing overflow failures; rule-based filtering before LLM-based summarization is the most cost-efficient combination; planning scaffolds weaker models but mostly adds cost for stronger ones; and bash-capable models are cheaper with a bash-only interface on command-line tasks, while weaker models do better with predefined tools. Positioned as a modular framework for tailoring harness design to a model's capability and compute budget — an empirical complement to Ibryam's pattern taxonomy and Liu et al.'s design-space analysis above.
+
+[salapa-harness]: https://arxiv.org/abs/2608.20622
+[fan-harness-study]: https://arxiv.org/abs/2609.20804
 
 ## Action Items
 

@@ -3,8 +3,8 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -60,6 +60,8 @@ Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized mach
 
 This is the formal-semantics counterpart to [The Agent-Native Layer](#the-agent-native-layer) below: Genie Ontology and OKF are the *LLM-native* curation of the same verified business meaning that OWL/SKOS encode *formally*.
 
+**A concrete "connect" instance: Vault-LD.** [Vault-LD][vault-ld] (Apache-2.0, 235★ verified 2026-09-24) is a 2026 third-party spec — not a W3C standard — that turns a Markdown note vault into linked data: YAML-LD frontmatter plus a shared `@context` file map note metadata to RDF triples, with reference Python converters (`vault_to_rdf.py` / `rdf_to_vault.py`) giving a lossless roundtrip between Markdown and RDF. It is a file-based, no-database instance of the connect pattern above — an ontology-backed `@context` a human edits as prose and a machine reads as a graph.
+
 ## The Agent-Native Layer
 
 The generic layers above solve the *plumbing* — governed APIs an agent can query. But an agent hitting a raw semantic API still re-derives business meaning on every call (and can still get it wrong). Two efforts go further, and are analyzed in depth elsewhere in this repo:
@@ -68,6 +70,8 @@ The generic layers above solve the *plumbing* — governed APIs an agent can que
 - **[Open Knowledge Format](open-knowledge-format-analysis.md)** — a vendor-neutral, Apache-2.0 spec (Google Cloud, v0.1) for portable "knowledge bundles" (markdown + YAML) with AI agents as first-class consumers — the platform-independent interchange format for that curated context.
 
 Together they mark the shift from "query the catalog at runtime" to "pre-loaded, verified business context the agent can trust."
+
+A complementary research direction formalizes *why* this grounding improves reliability: **[Symbolic Separation][symbolic-separation]** (Davletiyarov, Khan & Bartolini, arXiv:2609.17107, submitted 2026-09-15) lets a deep agent reason freely in natural language but restricts it to *act* on data only through an ontology-constrained Virtual Knowledge Graph with deterministic pre-execution validation — turning a multi-step question into one validated graph traversal instead of LLM-inferred joins. Instantiated as the "Neurosymbolic Deep Analyst" and evaluated on 49.9 TB of supercomputer telemetry against a rigid workflow and a non-symbolic ablation, it raised end-to-end task success from 43% to 86%, eliminated silent data-integrity errors no syntactic check catches, and cut token cost 2.4x — evidence for the agent-native layer's premise from the opposite direction: an *unconstrained* agent over raw telemetry fails multi-step composition, a *symbolically separated* one succeeds.
 
 ## Cross-References
 
@@ -89,6 +93,8 @@ Together they mark the shift from "query the catalog at runtime" to "pre-loaded,
 | [Apache Atlas][atlas] | Hadoop-era governance framework |
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
 | [RDF][rdf] · [OWL][owl] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
+| [Vault-LD][vault-ld] | Markdown-vault-as-linked-data spec; YAML-LD frontmatter + shared `@context`, roundtrip RDF converters |
+| [Symbolic Separation (arXiv:2609.17107)][symbolic-separation] | Ontology-constrained Virtual Knowledge Graph + deterministic pre-execution validation for deep agents over operational telemetry |
 
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
@@ -105,3 +111,5 @@ Together they mark the shift from "query the catalog at runtime" to "pre-loaded,
 [skos]: https://www.w3.org/2004/02/skos/
 [sparql]: https://www.w3.org/TR/sparql11-overview/
 [shacl]: https://www.w3.org/TR/shacl/
+[vault-ld]: https://github.com/The-Knowledge-Graph-Guys/vault-ld
+[symbolic-separation]: https://arxiv.org/abs/2609.17107
