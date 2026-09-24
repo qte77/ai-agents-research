@@ -405,10 +405,12 @@ wire" (repo README). It ships a YAML/OPA/Cedar policy engine, an immediate kill
 switch, four-tier privilege-ring execution sandboxing, tamper-evident audit
 logging, and a SPIFFE/DID/mTLS zero-trust identity layer; framework-agnostic
 bindings cover AutoGen, LangGraph, CrewAI, and Semantic Kernel, with Python,
-TypeScript, .NET, Rust, and Go SDKs. The README claims coverage of all 10
-categories in what it calls the "OWASP Agentic Top 10" (a separate list from the
-OWASP LLM Top 10 already in the References below), backed by 992 conformance tests
-across 10 formal specifications, and states alignment with NIST AI RMF, the EU AI
+TypeScript, .NET, Rust, and Go SDKs. The repo's own compliance badge reports
+7-of-10 categories "Full" and 3 "Partial" against what it calls the "OWASP Agentic
+Top 10" (a separate list from the OWASP LLM Top 10 already in the References
+below) — a more conservative figure than the README's prose elsewhere, which
+claims "all" categories mapped. The toolkit is backed by 992 conformance tests
+across 10 formal specifications and states alignment with NIST AI RMF, the EU AI
 Act, and SOC 2. Install: `pip install "agent-governance-toolkit[full]"` (also
 npm/NuGet/Cargo/Go); a Claude Code plugin registers via
 `/plugin marketplace add microsoft/agent-governance-toolkit`.
@@ -421,8 +423,9 @@ harness that combines regex candidate matching with agentic investigation
 for years. It distributes large scans across machines via Vercel Sandbox, resumes
 interrupted runs without re-scanning completed files, and exports markdown/JSON for
 CI. Install/run: `npx deepsec init`. **Adoption caveat**: the README itself warns
-that full-capability runs on large codebases "can cost thousands of dollars" in
-model usage — cost and duration controls exist but are not the defaults.
+that, run at maximum thinking levels, "scans can cost thousands or even
+tens-of-thousands of dollars for large codebases" — cost and duration controls
+exist but are not the defaults.
 
 ## MCP Ecosystem Security
 
