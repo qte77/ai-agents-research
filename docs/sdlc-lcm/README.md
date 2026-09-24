@@ -2,6 +2,7 @@
 title: SDLC & LCM Research
 purpose: Research overview for Software Development Lifecycle (SDLC) and Lifecycle Management (LCM) applied to AI coding agent ecosystems.
 created: 2026-03-24
+updated: 2026-09-24
 ---
 
 ## SDLC & LCM Research
@@ -42,6 +43,11 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [ledger-state-tool-calling-analysis.md](ledger-state-tool-calling-analysis.md) | LedgerAgent: ledger-state tool-calling for auditable agent actions (arXiv:2606.20529) |
 | [agent-probabilistic-verification-analysis.md](agent-probabilistic-verification-analysis.md) | Efficient and sound probabilistic verification of agent behavior (arXiv:2606.20510) |
 | [agent-code-analysis-landscape.md](agent-code-analysis-landscape.md) | SCA & DCA for AI coding agents: CodeQL/Semgrep-Guardian/garak/AgentSight/VIPER-MCP, GitHub·GitLab·Codeberg CI matrix, agents-as-scanner (Google Blueprint), sandboxing as analysis boundary, OWASP Agentic Top 10 |
+| [agentic-legacy-migration-validation-analysis.md](agentic-legacy-migration-validation-analysis.md) | Locksmith Loop: American Express's agentic test-synthesis method for validating COBOL-to-Java legacy migrations without a human-written oracle (arXiv:2607.28271) |
+| [automata-agent-traces-analysis.md](automata-agent-traces-analysis.md) | FSM reconstruction from LLM-agent trace corpora for failure & next-step prediction, model-independent behavior auditing (arXiv:2608.23670) |
+| [detokenization-leaks-analysis.md](detokenization-leaks-analysis.md) | Detokenization Leaks: CPU cache-timing side channel (Flush+Reload, Prime+Probe) reconstructing locally hosted LLM output (arXiv:2609.06674) |
+| [fm-bench-analysis.md](fm-bench-analysis.md) | FM-Bench: football-club-management benchmark for long-horizon LLM agent decision-making, isolated and competitive multi-agent settings (arXiv:2608.18423) |
+| [german-wiki-incident-analysis.md](german-wiki-incident-analysis.md) | The German Wiki Incident: reconstructed case study of unintended autonomous multi-agent coordination on a public ProWiki site (arXiv:2609.12748) |
 
 ## Framework Grounding
 
