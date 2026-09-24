@@ -7,15 +7,15 @@ updated: 2026-09-23
 validated_links: 2026-09-23
 ---
 
-**Status**: Adopt — on by default with nothing to enable wherever the version/platform gate is met, generally available on every provider since v2.1.248, and inbound is safe-by-default (a session that prompts for permissions delivers messages; a `bypassPermissions` session holds them for approval). The only open item is a version-gate conflict on native Windows (see [Availability](#availability)), which affects when the feature turns on there, not whether it is safe to use once it has.
+**Status**: Adopt — on by default with nothing to enable wherever the version/platform gate is met, same-machine messaging generally available on every provider since v2.1.248 (cross-machine messaging still needs a claude.ai-authenticated Remote Control connection), and inbound is safe-by-default (a session that prompts for permissions delivers messages; a `bypassPermissions` session holds them for approval). The only open item is a version-gate conflict on native Windows (see [Availability](#availability)), which affects when the feature turns on there, not whether it is safe to use once it has.
 
 ## What It Is
 
-Cross-session messaging lets one Claude Code session deliver a plain-text message to another, so a change or finding in one session reaches another session mid-task instead of the user copy-pasting between terminals ([cross-session-messaging][cc-xsm]). Claude discovers reachable sessions with the `ListAgents` tool and delivers with `SendMessage`; a message is text Claude writes for the other session, never the sender's conversation history or files. To move a whole conversation or its context, the docs point at [resuming a session](https://code.claude.com/docs/en/sessions#resume-a-session) instead ([cross-session-messaging][cc-xsm]).
+Cross-session messaging lets one Claude Code session deliver a plain-text message to another, so a change or finding in one session reaches another session mid-task instead of the user copy-pasting between terminals ([cross-session-messaging][cc-xsm]). Claude discovers reachable sessions with the `ListAgents` tool and delivers with `SendMessage`; a message is text Claude writes for the other session, never the sender's conversation history or files. To move a whole conversation or its context, the docs point at [resuming a session][cc-sessions-resume] instead ([cross-session-messaging][cc-xsm]).
 
 The feature shipped in the week-of-2026-08-03 digest as its own headline item, gated at v2.1.224, described there as: "Your Claude Code sessions can now message each other. Claude discovers your other sessions with the `ListAgents` tool and sends with `SendMessage`, either when you ask it to or on its own... Available on macOS and Linux" ([whats-new/2026-w32][cc-w32]).
 
-Claude decides to send a message on its own when it sees the need — for example after a change in one session affects work another session is doing — or the user can ask for one. The documented use cases: handing over a finding, coordinating parallel [worktrees](https://code.claude.com/docs/en/worktrees), getting a status report from long-running work, and messaging across machines ([cross-session-messaging][cc-xsm]).
+Claude decides to send a message on its own when it sees the need — for example after a change in one session affects work another session is doing — or the user can ask for one. The documented use cases: handing over a finding, coordinating parallel [worktrees][cc-worktrees], getting a status report from long-running work, and messaging across machines ([cross-session-messaging][cc-xsm]).
 
 ## `ListAgents` / `SendMessage` and `/list-agents` (`/peers`)
 
@@ -25,7 +25,7 @@ The user never calls `ListAgents` or `SendMessage` directly — the docs are exp
 
 - **This session's own name** (the first line, when present) — the name peers use to message it back.
 - **Subagents** running inside the current session.
-- **Teammates** — this session's own [agent team](https://code.claude.com/docs/en/agent-teams) teammates. Before v2.1.239, teammates didn't appear in the listing, though Claude could already message them by name.
+- **Teammates** — this session's own [agent team](CC-agent-teams-orchestration.md) teammates. Before v2.1.239, teammates didn't appear in the listing, though Claude could already message them by name.
 - **Other local sessions** on the same machine, including background sessions — a session appears only when it binds an [inbox socket](#the-inbox-socket-and-messaging-env-vars).
 - **Cloud sessions**, shown while connected to Remote Control, labeled `cloud`.
 - **Remote Control sessions on other machines**, labeled `Remote Control`; a dropped connection shows as `offline`.
@@ -38,13 +38,13 @@ While the session is connected to Remote Control, `/list-agents` withholds local
 
 | Relationship | Scope | Messaging characteristics |
 |---|---|---|
-| Subagent (this doc's target: independent sessions) | Within a single session | Same `SendMessage` tool, but this page covers messages **between independent sessions**, not subagent messaging |
+| Subagent | Within a single session | Same `SendMessage` tool; in-session messaging, not this page's subject |
 | [Agent team](CC-agent-teams-orchestration.md) teammate | Sessions Claude spawns and supervises as a coordinated team | Structured protocol messages stay within the team; plain-text cross-session messages are a separate channel |
 | Cross-session peer (this doc) | Independent sessions the **user** starts and steers | Plain text only, ~1M-char cap, discovered via `ListAgents`/`/list-agents` |
 
-The docs' own guidance on which feature to reach for: "Use messaging between independent sessions that you start and steer yourself... For a coordinated team of sessions Claude spawns and supervises, use agent teams" ([cross-session-messaging][cc-xsm]). Related, distinct features it also calls out: resuming a session (to continue one conversation or move its context), [agent view](https://code.claude.com/docs/en/agent-view) (to watch/steer many sessions from one place), [Remote Control](https://code.claude.com/docs/en/remote-control) (to steer a session from a phone rather than have sessions message each other), and [channels](https://code.claude.com/docs/en/channels) (to push external events like CI results into a session).
+The docs' own guidance on which feature to reach for: "Use messaging between independent sessions that you start and steer yourself... For a coordinated team of sessions Claude spawns and supervises, use [agent teams](CC-agent-teams-orchestration.md)" ([cross-session-messaging][cc-xsm]). Related, distinct features it also calls out: resuming a session (to continue one conversation or move its context), [agent view][cc-agent-view] (to watch/steer many sessions from one place), [Remote Control][cc-remote-control] (to steer a session from a phone rather than have sessions message each other), and [channels][cc-channels] (to push external events like CI results into a session).
 
-This resolves a framing gap in [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md): that doc's limitation "structured messages cannot be broadcast" is specific to the Agent-Teams protocol-message channel — it does not apply to this plain-text independent-session channel, which is a separate mechanism entirely. See the [correction note](CC-agent-teams-orchestration.md#uds-inbox--inter-session-ipc-unreleased) added there.
+This resolves a framing gap in [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md): a limitation documented there is specific to the Agent-Teams protocol-message channel — it does not apply to this plain-text independent-session channel, which is a separate mechanism entirely (see [Limits](#limits) below). See also the [correction note](CC-agent-teams-orchestration.md#uds-inbox--inter-session-ipc-unreleased) added there.
 
 Same-machine, cross-repo messaging works with no configuration: "two sessions can reach each other only when they can see the same files" — no `team_name`, no worktree config. Each session registers itself in files on disk, so three independent `claude` sessions each `cd`'d into a different git repo on one machine can already reach each other ([cross-session-messaging][cc-xsm]).
 
@@ -52,7 +52,7 @@ Same-machine, cross-repo messaging works with no configuration: "two sessions ca
 
 ### Message delivery mechanics
 
-The receiving Claude reads a message between tool calls during an active turn (a running tool is never interrupted); if the receiving session is idle, Claude Code starts a new turn with the message. An `@` mention of a file or MCP resource inside a message arrives as plain text — Claude Code attaches nothing automatically. Before v2.1.251, an `@` mention that started a new turn did attach the file or resource on the receiving side ([cross-session-messaging][cc-xsm]).
+The receiving Claude reads a message between tool calls during an active turn (a running tool is never interrupted); if the receiving session is idle, Claude Code starts a new turn with the message. An `@` mention of a file or MCP resource inside a message arrives as plain text — Claude Code attaches nothing automatically. Before v2.1.251, an `@` mention that started a new turn did attach the file or resource on the receiving side (docs page only — no distinct CHANGELOG line found for this specific behavior change; see [Availability](#other-stated-gates-docs-page-only-not-independently-changelog-confirmed)) ([cross-session-messaging][cc-xsm]).
 
 Claude Code refuses to send a message (in the sending session, before it leaves) when: it is over the ~1M-character size cap; a rapid burst to the target has exceeded what that session's inbox accepts; the reply-target socket on this machine fails a safety check (e.g., a symlinked target); or the message addresses the sending session's own name.
 
@@ -194,3 +194,8 @@ To check a session, run `/list-agents` (`/peers`): if the command isn't recogniz
 [cc-xsm]: https://code.claude.com/docs/en/cross-session-messaging
 [cc-w32]: https://code.claude.com/docs/en/whats-new/2026-w32
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[cc-sessions-resume]: https://code.claude.com/docs/en/sessions#resume-a-session
+[cc-worktrees]: https://code.claude.com/docs/en/worktrees
+[cc-agent-view]: https://code.claude.com/docs/en/agent-view
+[cc-remote-control]: https://code.claude.com/docs/en/remote-control
+[cc-channels]: https://code.claude.com/docs/en/channels
