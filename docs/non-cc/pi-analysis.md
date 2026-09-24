@@ -3,8 +3,8 @@ title: Pi — Minimal Extensible AI Coding Agent CLI
 source: https://pi.dev/
 purpose: Evaluate Pi as an open-source terminal coding agent harness with multi-provider LLM support and extension-first architecture
 created: 2026-06-16
-updated: 2026-06-16
-validated_links: 2026-06-16
+updated: 2026-09-24
+validated_links: 2026-09-24
 platform_scope: [claude, openai, google, azure, bedrock, groq, mistral, ollama]
 ---
 
@@ -64,6 +64,40 @@ curl -fsSL https://pi.dev/install.sh | sh
 npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 ```
 
+## Fork: omp (oh-my-pi)
+
+[`can1357/oh-my-pi`][omp-gh] ("omp") is a fork of Pi built by Stencil Labs (Can Bölük), described
+in its own README as "the most capable agent surface that ships... complete out of the box, open
+all the way down" (accessed 2026-09-24). It keeps Pi's core vision but adds substantial production
+tooling on top: **60+ LLM providers, 31 built-in tools, 14 LSP operations, and 28 DAP (debugger)
+operations**, plus "~80k lines of Rust core" — the README's own figure, confirming the project has
+grown well beyond a thin TypeScript wrapper around Pi. IDE-adjacent features include LSP-driven
+renames that propagate through re-exports and barrel files, a real debugger backend (`lldb`,
+`dlv`, `debugpy`), subagent fan-out with typed schema validation, persistent Python/Bun execution
+kernels, memory/skills persisted across sessions, and live session sharing (`omp join` or a
+browser link with a QR code).
+
+**Repository facts** (`gh api repos/can1357/oh-my-pi`, accessed 2026-09-24): 33,081 stars, 3,513
+forks, **MIT** license, latest tagged release `v18.3.0` (published 2026-09-24) — substantial
+traction for a fork (Pi itself has ~46k stars, per the Sources above), and the omp repository's
+push history shows continuous daily activity.
+
+**Installation** (accessed 2026-09-24):
+
+```bash
+curl -fsSL https://omp.sh/install | sh          # macOS/Linux
+bun install -g @oh-my-pi/pi-coding-agent        # via Bun (recommended by the README)
+brew install can1357/tap/omp                    # Homebrew
+irm https://omp.sh/install.ps1 | iex             # Windows PowerShell
+```
+
+**Homepage vs. repo framing.** The [omp.sh][omp-site] landing page separately markets an "omp²"
+positioning — a "native Rust core" with Windows-native support requiring no WSL — which is
+consistent with, but more forward-leaning than, the GitHub README's own "~80k lines of Rust core"
+figure and its plain PowerShell/Windows install path. This doc describes the GitHub-repo-documented
+`v18.3.0` release; the omp.sh page's "omp²" framing is noted here as a homepage marketing claim, not
+independently confirmed as a distinct shipped version.
+
 ## Adoption Decision
 
 Pi occupies a well-defined niche: a minimal, transparent, extension-first coding agent for
@@ -100,6 +134,10 @@ the first-party site (not stated, as of 2026-06-16).
 | [omnigent-analysis.md][omnigent-doc] | Pi named as peer harness alongside Claude Code and Codex in Omnigent meta-harness |
 | [DEV.to Pi overview][pi-devto] | Third-party overview of Pi architecture and extensibility |
 | [Dan Saattrup Smart blog][pi-blog] | Practitioner writeup on Pi in Neovim workflow, 2026-06-02 |
+| [can1357/oh-my-pi README][omp-gh] | omp fork description, provider/tool/LSP/DAP counts, Rust-core line count, install commands, accessed 2026-09-24 |
+| [omp.sh][omp-site] | Homepage "omp²" framing (Rust core, no-WSL Windows support) |
+| `gh api repos/can1357/oh-my-pi` | Stars (33,081), forks (3,513), license (MIT), accessed 2026-09-24 |
+| `gh api repos/can1357/oh-my-pi/releases/latest` | Latest tag `v18.3.0`, published 2026-09-24 |
 
 [pi-home]: https://pi.dev/
 [pi-gh]: https://github.com/earendil-works/pi
@@ -108,3 +146,5 @@ the first-party site (not stated, as of 2026-06-16).
 [omnigent-doc]: omnigent-analysis.md
 [pi-devto]: https://dev.to/arshtechpro/pi-the-open-source-ai-coding-agent-you-probably-havent-tried-yet-2h0h
 [pi-blog]: https://www.saattrupdan.com/posts/2026-06-02-agentic-coding-v3-pi
+[omp-gh]: https://github.com/can1357/oh-my-pi
+[omp-site]: https://omp.sh
