@@ -84,9 +84,8 @@ production case studies and independent benchmark evidence.
 ## Action Items
 
 - Watch for post-v2.0.0 production write-ups or independent benchmarks (the paper defers these).
-- If [`openviking-analysis.md`](openviking-analysis.md) or
-  [`open-knowledge-format-analysis.md`](open-knowledge-format-analysis.md) gets a refresh, check
-  whether OpenRath's `openrath[openviking]` extra is documented on the OpenViking side too.
+- If [`openviking-analysis.md`](openviking-analysis.md) gets a refresh, check whether OpenRath's
+  `openrath[openviking]` extra is documented on the OpenViking side too.
 - Re-check license/version at the next `non-cc` refresh pass.
 
 ## Sources

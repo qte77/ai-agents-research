@@ -53,10 +53,15 @@ and Slack integration are separate services/plugins that talk to the core over i
 durability across restarts, `DATABASE_URL` + `SESSION_STORE=postgres` must be set — otherwise
 sessions live only in process memory.
 
-**Deployment.** QM is self-hosted: a user tells their coding agent to deploy
-`github.com/yc-software/qm`, and it follows the repo's own deployment guide (Fly or AWS
-infrastructure). A third-party hosted version is mentioned on `agent37.com` but that is not a
-first-party QM source and is not verified here.
+**Deployment.** QM is self-hosted, not via the source repo but via `qm init`, which materializes a
+deployment directory from the published `@yc-software/qm` npm package into an empty
+organization-owned repo. Per the repo's [`docs/getting-started.md`][qm-deploy-docs] (accessed
+2026-09-24): the operator chooses **Fly.io or AWS** at init time (provider choice is fixed
+thereafter — switching providers means a fresh init), and `qm init` also generates a
+`deployment.md` and a `.codex/skills/deploy-qm/` skill meant to be handed to an agent, which
+confirms the billing account before mutating anything, wires email-gated onboarding, and returns
+the live operational URLs. A third-party hosted version is mentioned on `agent37.com` but that is
+not a first-party QM source and is not verified here.
 
 ## Adoption Decision
 
@@ -83,9 +88,11 @@ and unverified).
 
 | Source | Content |
 |---|---|
-| [yc-software/qm README][qm-gh] | Product description, scopes/features, architecture diagram, deployment instructions |
+| [yc-software/qm README][qm-gh] | Product description, scopes/features, architecture diagram |
+| [`docs/getting-started.md`][qm-deploy-docs] | `qm init` deployment mechanics, Fly.io/AWS provider choice, accessed 2026-09-24 |
 | `gh api orgs/yc-software` | Org display name "Y Combinator" — confirms first-party YC affiliation, accessed 2026-09-24 |
 | `gh api repos/yc-software/qm` | Stars (15,226), forks (1,866), license (MIT), created (2026-07-29), accessed 2026-09-24 |
 | `gh api repos/yc-software/qm/releases/latest` | Latest tag `v0.1.12`, published 2026-09-19, accessed 2026-09-24 |
 
 [qm-gh]: https://github.com/yc-software/qm
+[qm-deploy-docs]: https://github.com/yc-software/qm/blob/main/docs/getting-started.md

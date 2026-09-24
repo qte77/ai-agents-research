@@ -37,7 +37,7 @@ class SupportAgent(Agent):
 The GitHub repository (`NVIDIA-NeMo/labs-OO-Agents`) had 2,235 stars and 302 forks, and its
 license is **Apache 2.0** (confirmed from the repo's `LICENSE` file — the GitHub UI's automatic
 detector reports the ambiguous `NOASSERTION`/"Other" for this repo, so the file was read
-directly). The project's first tagged release is `v0.0.10` (published 2026-09-04, accessed
+directly). The project's latest tagged release is `v0.0.10` (published 2026-09-04, accessed
 2026-09-24), and its repository was created 2026-07-20 — an early-stage, actively pushed project
 (last push 2026-09-24). It ships an accompanying [arXiv paper][nooa-paper] and an
 [NVIDIA developer blog post][nooa-blog] describing "six agent harness capabilities for higher
@@ -81,7 +81,7 @@ node graph, which should make agents easier to unit-test, refactor, and version-
 standard tooling. It is backed by NVIDIA-NeMo Labs and has an arXiv paper and a dedicated
 developer-blog writeup, giving it more research grounding than a typical early hobby project.
 
-Against that: the project is under three months old, its first tagged release is `v0.0.10`
+Against that: the project is under three months old, its latest tagged release is `v0.0.10`
 (pre-1.0), and — like any framework that executes LLM-generated code — it inherits the sandboxing
 burden the README itself flags. No first-party evidence of Claude Code or CC-adjacent tooling
 integration was found as of 2026-09-24. **Assess**, not **Trial**, until the API and release

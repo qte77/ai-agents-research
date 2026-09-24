@@ -78,8 +78,8 @@ kernels, memory/skills persisted across sessions, and live session sharing (`omp
 browser link with a QR code).
 
 **Repository facts** (`gh api repos/can1357/oh-my-pi`, accessed 2026-09-24): 33,081 stars, 3,513
-forks, **MIT** license, latest tagged release `v18.3.0` (published 2026-09-24) — a considerably
-larger community than Pi's own repo star count would suggest for a fork, and the omp repository's
+forks, **MIT** license, latest tagged release `v18.3.0` (published 2026-09-24) — substantial
+traction for a fork (Pi itself has ~46k stars, per the Sources above), and the omp repository's
 push history shows continuous daily activity.
 
 **Installation** (accessed 2026-09-24):
