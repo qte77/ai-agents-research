@@ -3,13 +3,13 @@ title: CC Cloud Sessions (Claude Code on the Web) Analysis
 source: https://code.claude.com/docs/en/claude-code-on-the-web
 purpose: Analysis of Claude Code cloud execution for parallel baseline collection, remote task offloading, and CI-like autonomous runs.
 created: 2026-03-07
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Research preview
 
-**Verified**: code.claude.com docs, 2026-07-23
+**Verified**: code.claude.com docs, 2026-09-24
 
 ## What Claude Code on the Web Is
 
@@ -22,6 +22,7 @@ Run Claude Code tasks on Anthropic-managed cloud VMs via `claude.ai/code` or the
 - **Default image**: Pre-installed Python, Node.js, Ruby, PHP, Java, Go, Rust, C++, PostgreSQL 16, Redis 7.0 ([source][cc-cloud])
 - **Setup scripts**: Bash scripts run before Claude Code launches (install deps, configure tools) ([source][cc-cloud])
 - **Network policy**: Trusted by default (allowlisted domains), configurable to "None", "Full", or "Custom" ([source][cc-cloud])
+- **Self-hosted environments** (public beta, Team/Enterprise, off by default): an Owner can route cloud sessions to infrastructure the org operates instead of Anthropic-managed VMs. A named **environment** groups **runners** — long-lived processes (the self-hosted-CI-runner analogy) that poll Anthropic's control plane, claim queued sessions, clone the repo, and spawn a `claude` child process inside the org's own network. Unavailable for Zero Data Retention orgs. Model inference still calls `api.anthropic.com` directly (no Bedrock/Vertex/Foundry/gateway routing in self-hosted mode) and the conversation transcript still reaches Anthropic for that inference — only the repo checkout, build artifacts, and secrets stay on the org's own hosts ([source][cc-self-hosted])
 - **Diff view**: Review changes inline before creating PR, iterate with comments ([source][cc-cloud])
 - **Session sharing**: Team visibility (Enterprise/Teams) or Public (Max/Pro) ([source][cc-cloud])
 
@@ -122,7 +123,7 @@ cc_run_cloud:
 
 Revisit when:
 
-1. Cloud sessions support custom Docker images or snapshots
+1. Cloud sessions support custom Docker images or snapshots — partially addressed by [self-hosted environments](#key-mechanics) (public beta): a self-hosted runner image can pre-install custom toolchains, but that's a separate opt-in infrastructure commitment, not a snapshot feature of Anthropic-hosted sessions
 2. MCP server forwarding becomes available
 3. Baseline collection needs more parallelism than a local machine can provide
 
@@ -140,11 +141,13 @@ ephemeral vs stateful, checkpoint/restore), see
 ## References
 
 - [CC Cloud Sessions docs][cc-cloud]
+- [CC Self-Hosted Environments docs][cc-self-hosted]
 - [CC Remote Control docs][cc-rc]
 - [CC Hooks docs][cc-hooks]
 - [CC Settings docs][cc-settings]
 
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web
+[cc-self-hosted]: https://code.claude.com/docs/en/self-hosted-environments
 [cc-rc]: https://code.claude.com/docs/en/remote-control
 [cc-hooks]: https://code.claude.com/docs/en/hooks
 [cc-settings]: https://code.claude.com/docs/en/settings

@@ -4,8 +4,8 @@ source: https://github.com/alibaba/OpenSandbox, https://e2b.dev, https://fly.io/
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 category: landscape
 created: 2026-03-08
-updated: 2026-09-23
-validated_links: 2026-09-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Landscape research (informational — not implementation requirements)
@@ -144,6 +144,81 @@ stays public but is frozen, receiving no further updates or releases
 Less relevant for CC-specific workflows but included for completeness in the
 landscape.
 
+### Blaxel
+
+Cloud platform offering isolated microVMs for AI agent code execution that "boot in
+milliseconds and resume in ~25ms" ([source][blaxel]).
+
+**Key characteristics**:
+
+- One dedicated microVM per agent; root filesystem in memory, wiped on destroy
+  ([source][blaxel])
+- Auto-suspends when idle, resumes in ~25ms, with "$0 compute costs on standby"
+  ([source][blaxel-pricing])
+- Persistent state via a distributed filesystem ("Agent Drive") and block-storage
+  volumes, held for as long as needed ([source][blaxel])
+- Outbound firewalling, static IPs, proxy routing, model gateways ([source][blaxel])
+- TypeScript, Python, and Go SDKs ([source][blaxel-docs])
+
+**Pricing**: free tier of $200 credit and 10 concurrent sandboxes; usage-based beyond
+that at $0.0000115/GB RAM-second active compute, $0.20/GB-month snapshot storage,
+$0.045/GB-month image storage; paid tiers raise the sandbox limit to 100,000+
+([source][blaxel-pricing]). License and open-source status are not stated on the
+public site.
+
+**When to use**: Bursty or long-idle agent workloads that need fast resume without
+standby cost — between E2B's ephemeral model and Sprites' always-warm persistence.
+
+### Ephemora Cell
+
+A different layer than the platforms above: a capability-based WebAssembly sandbox
+for executing individual untrusted calls (AI-generated code, MCP tool invocations)
+inside an existing process, not a full VM/container agent environment
+([source][ephemora]).
+
+**Key characteristics** (per the repository README and GitHub metadata, verified
+2026-09-24):
+
+- wasmtime-based, WASI-isolated execution with enforced fuel (CPU), memory, time,
+  and I/O budgets ([source][ephemora])
+- README reports ~0.5ms warm execution, ~3M executions/hour per core, and all 8
+  tested attack vectors blocked (filesystem escape, fork, sockets, threading, etc.)
+  — self-reported, not third-party audited ([source][ephemora])
+- Generates tamper-evident, RFC 8785-canonicalized execution records; listed in the
+  MCP Registry; ships a GitHub Action for gating untrusted PR code ([source][ephemora])
+- 424 tests / 85% coverage per README; Apache-2.0, Python, 42 stars ([source][ephemora])
+
+**When to use**: Sandboxing individual AI-generated function calls or MCP tool
+invocations — complements rather than replaces the VM-level platforms above.
+
+### forkd
+
+Firecracker microVM sandbox runtime built for AI agent fan-out: spawning many
+isolated children from one warmed parent snapshot via copy-on-write memory sharing
+([source][forkd]).
+
+**Key characteristics** (per the repository README and GitHub metadata, verified
+2026-09-24):
+
+- README reports forking 100 microVMs in ~101ms from a warm parent, versus 759ms
+  for a raw Firecracker cold boot — self-reported benchmark ([source][forkd])
+- BRANCH capability pauses a running sandbox and resumes a snapshot in ~150ms; v0.4
+  adds a live BRANCH with a sub-50ms pause window ([source][forkd])
+- v0.5 diff-snapshot chains stack layered snapshots (e.g. numpy, pandas, scikit-learn)
+  without duplicating base images ([source][forkd])
+- Per-child KVM isolation, network namespaces, cgroup memory limits; REST API plus
+  Python/TypeScript SDKs ([source][forkd])
+- Apache-2.0, Rust, 2.9k stars ([source][forkd])
+
+**Maturity**: Alpha. README states core functionality is "in place and exercised by
+25 unit + integration tests" but on-disk formats and API shapes may change before
+1.0; multi-node scheduling and third-party security audits are gaps
+([source][forkd]).
+
+**When to use**: High-parallelism agent fan-out from a common warm base — maps to
+this repo's Fork-Join Parallelism pattern; see
+[CC-agentic-harness-patterns-analysis.md](../agents-skills/CC-agentic-harness-patterns-analysis.md#8-fork-join-parallelism).
+
 ## Ephemeral vs Stateful: The Core Tradeoff
 
 | Model | Platforms | Pros | Cons |
@@ -193,6 +268,10 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 
 ## References
 
+- [Blaxel][blaxel]
+- [Blaxel pricing][blaxel-pricing]
+- [Ephemora Cell (GitHub)][ephemora]
+- [forkd (GitHub)][forkd]
 - [OpenSandbox GitHub][opensandbox-gh]
 - [OpenSandbox announcement (MarkTechPost)][opensandbox-marktechpost]
 - [E2B][e2b]
@@ -208,6 +287,11 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 - [AI sandbox landscape (Northflank)][northflank]
 - [AI sandbox landscape (Koyeb)][koyeb]
 
+[blaxel]: https://blaxel.ai
+[blaxel-pricing]: https://blaxel.ai/pricing
+[blaxel-docs]: https://docs.blaxel.ai/Overview
+[ephemora]: https://github.com/MichaelS1011/ephemora-cell
+[forkd]: https://github.com/deeplethe/forkd
 [opensandbox-gh]: https://github.com/alibaba/OpenSandbox
 [opensandbox-marktechpost]: https://www.marktechpost.com/2026/03/03/alibaba-releases-opensandbox-to-provide-software-developers-with-a-unified-secure-and-scalable-api-for-autonomous-ai-agent-execution/
 [e2b]: https://e2b.dev
