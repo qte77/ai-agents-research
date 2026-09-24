@@ -21,8 +21,8 @@ opaque sequence to be modeled statistically end to end.
 
 ## Method & Results
 
-The FSM is fit per task family from held-out trace data. Reported results across twelve
-datasets (paper-claimed):
+The FSM is fit per task family on a corpus of traces, then evaluated against a held-out
+portion of the trace data. Reported results across twelve datasets (paper-claimed):
 
 - FSMs with **7–43 states** replay held-out trace data at **≥0.997 fitness**.
 - **Held-out AUROC up to 0.94** for failure detection — the FSM's structure alone

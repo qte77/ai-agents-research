@@ -26,8 +26,8 @@ text. Evaluated across multiple datasets, hardware platforms, and model families
 The attack requires the attacker to share a physical machine (or a co-tenant VM with
 cache access) with the process running LLM inference — it is a side channel on the
 **inference host**, not on network traffic or on a remote API. The paper's own
-evaluation targets are **OpenClaw, Llama-3, and Phi-3-mini** — locally-run, open-weight
-model deployments.
+evaluation targets are **OpenClaw, Llama-3, and Phi-3-mini** (per the paper's evaluation
+section) — locally-run, open-weight deployments.
 
 **Claude Code is named once, and is not evaluated.** The introduction lists it as an
 example of the kind of agent framework this threat matters for: "Frameworks such as

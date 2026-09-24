@@ -30,8 +30,9 @@ scale is the harder, under-solved half of the task.
    program behavior between the two languages, checking that COBOL and Java stay in
    lockstep under perturbation rather than only on a fixed input set.
 4. **Locked Paragraphs** — where the agent hits a routing boundary it cannot drive
-   through (e.g. an external call, a queue, an operator-only code path), an analyzer
-   flags the blocking paragraph explicitly rather than silently under-covering it.
+   through, an analyzer flags the blocking paragraph explicitly rather than silently
+   under-covering it. The abstract names the concept but does not enumerate which kinds
+   of boundaries qualify — that detail would need a read of the full paper body.
 
 The loop is deterministic in its acceptance criterion: a migration is validated by
 checking Java output against COBOL output under the same witness inputs, not by an LLM

@@ -113,12 +113,12 @@ until its own repo is checked.
   formal specifications** to find deep bugs in concurrent/distributed system code, a
   different verification mode from the fuzzing/dataflow tools above. A five-skill
   pipeline (code analysis → spec generation → harness generation → validation → bug
-  confirmation) has the agent read target source, author a TLA+ model + invariants,
-  run the TLC model checker, and trace any violation back to the source line. Supports
+  confirmation) has the agent read target source, author a TLA+ model + invariants, run
+  a TLA+ model checker, and trace any violation back to the source line. Supports
   Claude Code (Opus 4.8 or Fable), Codex (GPT-5.5/5.6-Sol), Copilot CLI, OpenCode, and
   Pi as the underlying coding agent; the project maintains a public case-study archive
-  of bugs found in open-source projects, though it does not publish an aggregate
-  precision/recall benchmark in its README.
+  of bugs found in open-source projects — no aggregate precision/recall benchmark was
+  found in the README fetch.
 
 ## 4. CI-Forge Integration (verified first-party)
 
