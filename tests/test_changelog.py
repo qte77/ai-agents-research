@@ -9,6 +9,30 @@ from lib import changelog as cl  # noqa: E402
 
 IDX = {"docs/sandbox.md": frozenset({"sandboxing", "controls", "bash"})}
 
+# Verified shape (WebFetch of https://github.com/anthropics/claude-code/releases.atom,
+# 2026-09-23; corroborated by issue #410's own quoted <id>/<updated> excerpt). Entries
+# below are deliberately out of document order to prove the function sorts, and include
+# one entry whose <id> doesn't end in a parseable version to prove it's skipped.
+FEED_XML = """<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US">
+  <entry>
+    <id>tag:github.com,2008:Repository/937253475/v2.1.278</id>
+    <updated>2026-09-19T03:10:40Z</updated>
+    <title>v2.1.278</title>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/937253475/v2.1.280</id>
+    <updated>2026-09-22T16:38:14Z</updated>
+    <title>v2.1.280</title>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/937253475/not-a-release</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <title>legacy tag</title>
+  </entry>
+</feed>
+"""
+
 
 class VersionTupleTests(unittest.TestCase):
     def test_compares(self):
@@ -38,6 +62,127 @@ class ParseChangelogTests(unittest.TestCase):
         versions = cl.parse_changelog_versions(text)
         self.assertEqual([v for v, _ in versions], ["2.1.80", "2.1.71"])
         self.assertEqual(versions[0][1], ["- Feature A", "- Feature B"])
+
+
+class ParseReleasesFeedTests(unittest.TestCase):
+    def test_extracts_version_id_and_updated(self):
+        entries = cl.parse_releases_feed(FEED_XML)
+        newest = entries[0]
+        self.assertEqual(newest["version"], "2.1.280")
+        self.assertEqual(newest["updated"], "2026-09-22T16:38:14Z")
+        self.assertEqual(
+            newest["id"], "tag:github.com,2008:Repository/937253475/v2.1.280"
+        )
+
+    def test_orders_newest_first_regardless_of_document_order(self):
+        entries = cl.parse_releases_feed(FEED_XML)
+        self.assertEqual([e["version"] for e in entries], ["2.1.280", "2.1.278"])
+
+    def test_skips_entry_without_parseable_version_id(self):
+        entries = cl.parse_releases_feed(FEED_XML)
+        self.assertEqual(len(entries), 2)
+        self.assertNotIn("not-a-release", [e["version"] for e in entries])
+
+    def test_malformed_xml_returns_empty(self):
+        self.assertEqual(cl.parse_releases_feed("<feed><entry><id>oops"), [])
+
+    def test_empty_and_whitespace_return_empty(self):
+        self.assertEqual(cl.parse_releases_feed(""), [])
+        self.assertEqual(cl.parse_releases_feed("   \n\t  "), [])
+
+
+class UnseenReleasesTests(unittest.TestCase):
+    ENTRIES = [
+        {"version": "2.1.280", "updated": "2026-09-22T16:38:14Z", "id": "id-280"},
+        {"version": "2.1.278", "updated": "2026-09-19T03:10:40Z", "id": "id-278"},
+        {"version": "2.1.71", "updated": "2026-01-01T00:00:00Z", "id": "id-71"},
+    ]
+
+    def test_excludes_ids_already_in_seen_ids(self):
+        result = cl.unseen_releases(self.ENTRIES, {"id-280"}, "2.1.0")
+        self.assertNotIn("id-280", [e["id"] for e in result])
+        self.assertIn("id-278", [e["id"] for e in result])
+
+    def test_bootstrap_empty_ledger_excludes_at_or_below_cutoff(self):
+        # Empty ledger (first run) must not re-report the changelog's existing
+        # history — the scan-doc cutoff alone keeps 2.1.71 out.
+        result = cl.unseen_releases(self.ENTRIES, set(), "2.1.71")
+        self.assertEqual([e["id"] for e in result], ["id-280", "id-278"])
+
+    def test_cutoff_suppresses_at_or_below_entries_independent_of_ledger(self):
+        # Even with an empty ledger, the cutoff alone (not the ledger) keeps
+        # 2.1.278 and 2.1.71 from resurfacing — this is what protects a
+        # window-rolled-off id from reappearing after a ledger reset: that id
+        # is no longer in feed_entries at all (so this function never even
+        # sees it), and any in-window sibling at/below the cutoff is still
+        # excluded by the cutoff term below.
+        result = cl.unseen_releases(self.ENTRIES, set(), "2.1.278")
+        self.assertEqual([e["id"] for e in result], ["id-280"])
+
+    def test_ledger_entry_absent_from_feed_is_a_noop(self):
+        # A ledger that still references an id which has since rolled out of
+        # the feed's ~31-entry window (so it's absent from feed_entries) must
+        # not error or affect entries still present.
+        result = cl.unseen_releases(self.ENTRIES, {"id-999-rolled-off"}, "2.1.0")
+        self.assertEqual(
+            [e["id"] for e in result], ["id-280", "id-278", "id-71"]
+        )
+
+    def test_empty_feed_returns_empty(self):
+        self.assertEqual(cl.unseen_releases([], set(), "2.1.71"), [])
+
+
+class LedgerIdsTests(unittest.TestCase):
+    def test_keeps_only_ids_whose_version_is_in_changelog(self):
+        # Feed is ahead of CHANGELOG.md (upstream source skew, #410 con #3):
+        # 2.1.281's id must NOT be persisted yet, or once CHANGELOG.md
+        # catches up next run, unseen_releases would find it already "seen"
+        # and permanently drop it without it ever having been reported.
+        entries = [
+            {"version": "2.1.282", "updated": "u", "id": "id-282"},
+            {"version": "2.1.281", "updated": "u", "id": "id-281"},
+        ]
+        result = cl.ledger_ids(entries, {"2.1.282", "2.1.71"})
+        self.assertEqual(result, ["id-282"])
+
+    def test_empty_feed_returns_empty(self):
+        self.assertEqual(cl.ledger_ids([], {"2.1.71"}), [])
+
+
+class SelectNewVersionsTests(unittest.TestCase):
+    ALL_VERSIONS = [
+        ("2.1.282", ["- Feature C"]),
+        ("2.1.281", ["- Feature B"]),
+        ("2.1.71", ["- Old"]),
+    ]
+
+    def test_no_feed_falls_back_to_cutoff_only(self):
+        result = cl.select_new_versions(self.ALL_VERSIONS, [], set(), "2.1.71")
+        self.assertEqual([v for v, _ in result], ["2.1.282", "2.1.281"])
+
+    def test_feed_gap_falls_back_to_cutoff_for_feed_uncovered_version(self):
+        # Feed only has 2.1.282 (skew: 2.1.281 isn't in the feed yet, or ever
+        # — the feed can miss entries). 2.1.281 must still be reported via
+        # the cutoff fallback rather than silently skipped: CHANGELOG.md is
+        # the full-history backstop for exactly this case (#410 con #3).
+        feed = [{"version": "2.1.282", "updated": "u", "id": "id-282"}]
+        result = cl.select_new_versions(self.ALL_VERSIONS, feed, set(), "2.1.71")
+        self.assertEqual([v for v, _ in result], ["2.1.282", "2.1.281"])
+
+    def test_feed_ledger_suppresses_already_seen_version(self):
+        feed = [{"version": "2.1.282", "updated": "u", "id": "id-282"}]
+        result = cl.select_new_versions(
+            self.ALL_VERSIONS, feed, {"id-282"}, "2.1.71"
+        )
+        self.assertEqual([v for v, _ in result], ["2.1.281"])
+
+    def test_feed_ahead_of_changelog_is_ignored(self):
+        # Feed has a version CHANGELOG.md doesn't publish yet — nothing to
+        # report (no content) and it must not affect selection of the
+        # actual changelog versions.
+        feed = [{"version": "2.1.290", "updated": "u", "id": "id-290"}]
+        result = cl.select_new_versions(self.ALL_VERSIONS, feed, set(), "2.1.71")
+        self.assertEqual([v for v, _ in result], ["2.1.282", "2.1.281"])
 
 
 class FindCoveringDocsTests(unittest.TestCase):
@@ -71,6 +216,19 @@ class ReportTests(unittest.TestCase):
         report, has_unc = cl.render_changelog_report([], "2.1.71")
         self.assertIn("No new versions found", report)
         self.assertFalse(has_unc)
+
+    def test_adds_release_date_when_known(self):
+        results = cl.classify_versions([("2.2.0", ["- novel xyzzy thing"])], IDX)
+        report, _ = cl.render_changelog_report(
+            results, "2.1.71", updated_by_version={"2.2.0": "2026-09-22T16:38:14Z"}
+        )
+        self.assertIn("#### v2.2.0 — released 2026-09-22", report)
+
+    def test_omits_release_date_when_unknown(self):
+        results = cl.classify_versions([("2.2.0", ["- novel xyzzy thing"])], IDX)
+        report, _ = cl.render_changelog_report(results, "2.1.71")
+        self.assertIn("#### v2.2.0", report)
+        self.assertNotIn("released", report)
 
 
 if __name__ == "__main__":

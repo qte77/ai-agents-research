@@ -6,6 +6,12 @@ exit codes), so the parsing, coverage, and report logic is unit-testable.
 from __future__ import annotations
 
 import re
+
+# Reason: xml.etree.ElementTree.fromstring parses a first-party GitHub feed
+# (releases.atom) fetched over HTTPS in CI, not arbitrary/untrusted input;
+# stdlib is the repo convention (CONTRIBUTING.md) and no external entities
+# are resolved here (no DTD/XXE surface in an Atom release feed).
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -16,6 +22,8 @@ _NOISE_ONLY = re.compile(
 )
 _COVERAGE_THRESHOLD = 0.4
 _VERSION_SECTION = re.compile(r"^##\s+\[?(\d+\.\d+\.\d+)\]?", re.MULTILINE)
+_ATOM_NS = {"atom": "http://www.w3.org/2005/Atom"}
+_RELEASE_ID_VERSION = re.compile(r"/v(\d+\.\d+\.\d+)$")
 
 
 def version_tuple(v: str) -> tuple[int, ...]:
@@ -65,6 +73,114 @@ def parse_changelog_versions(text: str) -> list[tuple[str, list[str]]]:
         versions.append((match.group(1), feature_lines))
     versions.sort(key=lambda t: version_tuple(t[0]), reverse=True)
     return versions
+
+
+def parse_releases_feed(xml_text: str) -> list[dict[str, str]]:
+    """Parse a GitHub releases Atom feed into ``[{version, updated, id}]``.
+
+    Trigger/timestamp/dedup source only (issue #410) — CHANGELOG.md remains the
+    sole content source. Returned newest-first by version, mirroring
+    ``parse_changelog_versions``. Entries whose ``<id>`` doesn't end in a
+    parseable ``vX.Y.Z`` (e.g. a non-release tag) are skipped rather than
+    failing the whole parse. Malformed XML or empty/whitespace-only input
+    returns ``[]``.
+    """
+    if not xml_text or not xml_text.strip():
+        return []
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return []
+
+    entries: list[dict[str, str]] = []
+    for entry in root.findall("atom:entry", _ATOM_NS):
+        entry_id = (entry.findtext("atom:id", default="", namespaces=_ATOM_NS) or "").strip()
+        m = _RELEASE_ID_VERSION.search(entry_id)
+        if not m:
+            continue
+        updated = (entry.findtext("atom:updated", default="", namespaces=_ATOM_NS) or "").strip()
+        entries.append({"version": m.group(1), "updated": updated, "id": entry_id})
+    entries.sort(key=lambda e: version_tuple(e["version"]), reverse=True)
+    return entries
+
+
+def unseen_releases(
+    feed_entries: list[dict[str, str]],
+    seen_ids: set[str],
+    scan_cutoff_version: str,
+) -> list[dict[str, str]]:
+    """Feed entries the monitor hasn't already processed (issue #410 trigger).
+
+    An entry is excluded — treated as already seen — when either its ``id``
+    is already in ``seen_ids`` (the persisted dedup ledger) or its version is
+    at or below ``scan_cutoff_version`` (the scan-doc's already-scanned range
+    end). The cutoff check alone covers two cases the ledger can't:
+
+    - **Bootstrap**: an empty ``seen_ids`` (first run, or a reset ledger)
+      would otherwise make every entry in the feed's rolling window look
+      "unseen" and re-report the changelog's entire existing history.
+    - **Window rollout**: an id that has rolled out of the feed's ~31-entry
+      window is never in ``feed_entries`` to begin with, so it can't be
+      resurfaced by this function — but if the ledger was ever reset, the
+      cutoff (not the ledger) is what keeps an in-window entry at or below
+      it from being re-reported.
+
+    Empty ``feed_entries`` returns ``[]`` — the caller falls back to
+    CHANGELOG.md-cutoff-only comparison when there's no feed data.
+    """
+    cutoff = version_tuple(scan_cutoff_version)
+    return [
+        e for e in feed_entries
+        if e["id"] not in seen_ids and version_tuple(e["version"]) > cutoff
+    ]
+
+
+def ledger_ids(
+    feed_entries: list[dict[str, str]], changelog_versions: set[str]
+) -> list[str]:
+    """Feed entry ids safe to persist to the dedup ledger this run.
+
+    Only ids whose version is in ``changelog_versions`` (the versions
+    CHANGELOG.md actually has this run) are kept. A feed entry for a version
+    CHANGELOG.md hasn't published yet (upstream feed/changelog skew, issue
+    #410 con #3) must NOT be marked "seen" now — ``unseen_releases`` excludes
+    any id already in the ledger, so persisting it early would make that
+    version permanently unreportable once CHANGELOG.md does catch up.
+    """
+    return [e["id"] for e in feed_entries if e["version"] in changelog_versions]
+
+
+def select_new_versions(
+    all_versions: list[tuple[str, list[str]]],
+    feed_entries: list[dict[str, str]],
+    seen_ids: set[str],
+    scan_cutoff_version: str,
+) -> list[tuple[str, list[str]]]:
+    """Decide which CHANGELOG.md versions are new (issue #410's trigger).
+
+    CHANGELOG.md is the full-history backstop for feed/changelog skew (#410
+    con #3): a version present in the feed is gated by ``unseen_releases``
+    (ledger + cutoff); a version the feed doesn't cover at all — a feed gap,
+    or one that has rolled out of its ~31-entry window — falls back to the
+    plain cutoff comparison instead of being silently dropped. With an empty
+    ``feed_entries`` this reduces to a pure cutoff comparison (pre-#410
+    behaviour), since every version is then "not covered by the feed".
+
+    Order follows ``all_versions`` (already newest-first).
+    """
+    cutoff = version_tuple(scan_cutoff_version)
+    feed_versions = {e["version"] for e in feed_entries}
+    unseen_versions = {
+        e["version"] for e in unseen_releases(feed_entries, seen_ids, scan_cutoff_version)
+    }
+    selected: list[tuple[str, list[str]]] = []
+    for version, feature_lines in all_versions:
+        if version in feed_versions:
+            if version in unseen_versions:
+                selected.append((version, feature_lines))
+        elif version_tuple(version) > cutoff:
+            selected.append((version, feature_lines))
+    return selected
 
 
 def collect_doc_keyword_index(docs_dir: Path) -> dict[str, frozenset[str]]:
@@ -133,9 +249,16 @@ def classify_versions(
 
 
 def render_changelog_report(
-    results: list[VersionCoverage], last_scanned: str
+    results: list[VersionCoverage],
+    last_scanned: str,
+    updated_by_version: dict[str, str] | None = None,
 ) -> tuple[str, bool]:
-    """Render the markdown report; returns ``(report_text, has_uncovered)``."""
+    """Render the markdown report; returns ``(report_text, has_uncovered)``.
+
+    ``updated_by_version`` (optional) maps a version string to its releases.atom
+    ``<updated>`` timestamp (issue #410) — when a version has a known date, the
+    version heading is annotated with it; CHANGELOG.md has no dates of its own.
+    """
     lines: list[str] = [
         "## Changelog Monitor Report", "",
         f"Last scanned version: **{last_scanned}**",
@@ -157,7 +280,11 @@ def render_changelog_report(
 
     lines += ["### Feature Coverage Details", ""]
     for r in results:
-        lines += [f"#### v{r.version}", ""]
+        updated = (updated_by_version or {}).get(r.version)
+        heading = f"#### v{r.version}"
+        if updated:
+            heading += f" — released {updated.split('T')[0]}"
+        lines += [heading, ""]
         for feat, docs in r.covered:
             lines.append(f"- **[covered]** {feat}")
             lines.append(f"  - Covered by: {', '.join(f'`{d}`' for d in docs[:3])}")

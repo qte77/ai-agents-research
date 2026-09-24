@@ -1,5 +1,8 @@
 # Diffs CC CHANGELOG.md against last scanned version and polls Anthropic blog +
 # GitHub issues/discussions for new Claude Code content not yet covered by docs.
+# Also fetches releases.atom (#410) to annotate the report with per-version
+# release dates and keep an id-based dedup ledger in the shared state file;
+# CHANGELOG.md stays the sole content source and sole trigger.
 # Opens a triage PR when uncovered features are found.
 name: Changelog Monitor
 
@@ -34,6 +37,12 @@ jobs:
             -o /tmp/CC-CHANGELOG.md
           echo "Downloaded $(wc -l < /tmp/CC-CHANGELOG.md) lines"
 
+      - name: Fetch CC releases.atom (dates + dedup ledger only; #410)
+        run: |
+          curl -sSfL "https://github.com/anthropics/claude-code/releases.atom" \
+            -o /tmp/CC-releases.atom \
+            || { echo "::warning::releases.atom fetch failed — continuing without feed dates"; rm -f /tmp/CC-releases.atom; }
+
       - name: Run comparison script
         id: compare
         run: |
@@ -43,6 +52,8 @@ jobs:
             --scan-doc docs/cc-native/configuration/CC-changelog-feature-scan.md \
             --docs-dir docs/cc-native/ \
             --update-scan-doc \
+            --releases-feed /tmp/CC-releases.atom \
+            --state-file .github/state/native-monitor-state.json \
             > /tmp/report.md 2>/tmp/compare-stderr.txt
           EXIT_CODE=$?
           set -e
