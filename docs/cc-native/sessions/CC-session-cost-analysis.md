@@ -2,8 +2,8 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Adopt
@@ -162,6 +162,26 @@ jq -s '[.[] | select(.type == "system" and .subtype == "turn_duration")] |
 
 The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin on each turn, including `cost.total_cost_usd` (session total) and `context_window.*` (current usage). The transcript JSONL is the raw per-turn source. Use statusline for live monitoring; use transcripts for post-hoc analysis.
 
+## Shared plan usage across Claude products
+
+**One limit, three surfaces.** Per the help center: "Note that your usage of all different Claude product surfaces (claude.ai, Claude Code, Claude Desktop) counts towards the same usage limit." Plan size varies: "Different subscription plans (Pro, Max, Team, etc.) have different usage allowances, with paid plans offering higher limits" — but the article gives no concrete figures ([usage-limits][usage-limits]).
+
+**Reset and display.** "Your plan's included usage limit will reset every five hours once you reach it." Usage is tracked via "Usage dashboard: View real-time consumption in Settings > Usage." For paid plans (Pro, Max 5x, Max 20x) with usage credits enabled, "Usage credits apply to both Claude conversations and Claude Code terminal usage. Your combined usage across both interfaces counts toward your limits." ([usage-credits][usage-credits])
+
+**Metering by sign-in method.** ["Models, usage, and limits in Claude Code"][cc-usage-metering] states "How you signed in determines how usage is metered" — but its table names only two flows, not a general subscription-vs-Enterprise split: "Claude Enterprise seat (via `/login`)" gets "A pool of usage included in your organization's plan, reset on a rolling window," while "API key (Console, Bedrock, Vertex, or Microsoft Foundry)" gets "Pay-as-you-go, billed per token to that cloud or Console account. No hard stop; the account is charged for what it uses." The article does not describe a separate row for a personal Pro/Max/Team subscriber signed in via `/login` — that case falls under the shared five-hour plan limit described above ([usage-limits][usage-limits], [usage-credits][usage-credits]) instead of either of this table's two rows.
+
+**Owner observation** (claude.ai Settings > Usage, observed 2026-09-23): the usage page splits usage per product — Claude Code / Chats / Cowork / Other. None of the three help-center articles cited above documents this per-product split; [usage-limits][usage-limits] states only that the three surfaces share one limit, not how the dashboard breaks it out.
+
+**UNVERIFIED**: weekly usage limits and per-plan usage amounts (e.g., token or message counts for Pro/Max/Team). None of the three articles cited above state either.
+
+### Local tools vs plan usage
+
+`/stats` (the owner's `stats='claude /stats'` alias) computes entirely from local transcript `.jsonl` files under `~/.claude/projects/` — no separate output file (see [CC-binary-architecture.md § `/stats` and `/usage` Data Flow][binary-arch]). CodeBurn (`burn='npx codeburn'`) reads the same local transcripts for its dashboard, `optimize`, and `export` commands. Both are therefore blind to Chats and Cowork usage and undercount total plan usage relative to the shared limit described above — see [CC-usage-tooling-landscape.md][usage-tooling] for the full CodeBurn/ccusage comparison.
+
+CodeBurn's dollar figures default to API list-price equivalents, not a live billing figure: "The dollar figure is what your tokens would have cost at API rates. It is not an invoice. The card labels it API-equivalent, not a live provider window." Matching that figure to an actual subscription is opt-in — confirmed directly against CodeBurn v0.9.25's CLI help (`npx codeburn plan --help`, `npx codeburn export --help`): `codeburn plan set <plan-id>` (e.g. `claude-max`) "Show[s] or configure[s] a subscription plan for overage tracking," and `codeburn export --billing <mode>` "Filter[s] by billing mode (metered|subscription)."
+
+CodeBurn's separate `codeburn quota` subcommand is the exception to the transcript-only blind spot: per its `--help`, it reports "Live provider capacity: quota windows for each signed-in coding tool on this machine" by querying the provider directly rather than reading local transcripts — but it still does not appear to break that figure out per product the way the Settings > Usage page above does.
+
 ## Relationship to OTel
 
 The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metric) and `claude_code.token.usage` (by type: input/output/cacheRead/cacheCreation) as time-series metrics. It also exports `api_request` events with per-call cost. Transcripts provide the same data without OTel infrastructure. Use transcripts for local analysis; use OTel for centralized dashboards across teams.
@@ -177,6 +197,11 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 | [Anthropic pricing][pricing] | Official per-model token pricing |
 | [CC settings docs][settings] | `cleanupPeriodDays` transcript retention |
 | CC 2.1.83 transcript inspection, Codespaces, 2026-03-27 | JSONL structure, usage object fields |
+| [How do usage and length limits work?][usage-limits] | Shared usage limit across claude.ai/Claude Code/Claude Desktop; per-plan allowances vary (no figures given) |
+| [Manage usage credits for paid Claude plans][usage-credits] | Five-hour reset timing; Settings > Usage dashboard location; usage credits cover both chat and Claude Code |
+| [Models, usage, and limits in Claude Code][cc-usage-metering] | Sign-in-based metering table: Enterprise seat pool vs API key pay-per-token |
+| claude.ai Settings > Usage, observed 2026-09-23 | Per-product usage split (Claude Code / Chats / Cowork / Other); undocumented in the help-center articles above |
+| CodeBurn v0.9.25 CLI (`--help`, `plan --help`, `export --help`, `quota --help`), 2026-09-24 | `plan`/`export --billing`/`quota` subcommand behavior |
 
 [statusline]: https://code.claude.com/docs/en/statusline
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
@@ -184,3 +209,8 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 [settings]: https://code.claude.com/docs/en/settings
 [gh-9584]: https://github.com/anthropics/claude-code/issues/9584
 [gh-2090]: https://github.com/anthropics/claude-code/issues/2090
+[usage-limits]: https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work
+[usage-credits]: https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans
+[cc-usage-metering]: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
+[binary-arch]: ../configuration/CC-binary-architecture.md#stats-and-usage-data-flow
+[usage-tooling]: ../../cc-community/CC-usage-tooling-landscape.md
