@@ -19,8 +19,9 @@ tool-call surface over shelling out. It targets a specific inefficiency in
 agent-based coding: every cold context orientation otherwise means
 re-reading repository structure from scratch. Ripwire instead produces
 ranked call graphs, blast-radius/impact analysis, and code-quality
-assessments up front. It ships from `redhat-et`, Red Hat's emerging
-technologies organization.
+assessments up front. It ships from the `redhat-et` GitHub organization,
+whose registered name is "Red Hat Emerging Technologies" (per
+`gh api orgs/redhat-et`, accessed 2026-09-24).
 
 ## Key Features (per README, self-reported)
 

@@ -12,8 +12,10 @@ validated_links: 2026-09-24
 ## What It Is
 
 AIDE is Weco AI's autonomous research agent that optimizes code against
-evaluation metrics; the original version won OpenAI's MLE-Bench competition.
-For this experiment the team built **AIDE0**, a simplified version stripped
+evaluation metrics; the blog post states it "previously took first place in
+OpenAI's MLE-Bench" (a machine-learning-engineering agent benchmark, not a
+head-to-head competition event). For this experiment the team built
+**AIDE0**, a simplified version stripped
 of ML-specific features so it generalizes across task families (ML
 engineering, combinatorial optimization, system/harness engineering). Weco's
 blog post ([weco.ai/blog][blog], published 2026-07-14) and a technical
@@ -41,22 +43,25 @@ same cost budget.
 
 ## Reported Results — attributed per source, not blended
 
-The blog post and the arXiv abstract report **different numbers for
-overlapping claims**; both are given here rather than reconciled, per this
-repo's citation rules.
+The blog post and the arXiv abstract report reward-hacking numbers that
+look like the same claim at a glance but are **not** — different task
+families, cited separately below rather than merged, per this repo's
+citation rules.
 
 - **MLE-Bench deltas (blog, verbatim)**: paired by task vs. AIDE0 —
   "+0.053 (p = 0.0024) for AIDE47, +0.042 (p = 0.0041) for AIDE85." No
   numeric deltas for ALE-Bench or WeatherBench 2 were given in the fetched
   text beyond naming them as held-out generalization benchmarks.
-- **Reward-hacking rate, kernel test cases (blog, verbatim)**: "AIDE0
-  reward hacks on 63% of the test cases ... and 34% for AIDE85. Our
-  hand-tuned AIDEhuman only matches AIDE47 at 42%." (AIDE47's own rate was
-  elided in the fetched text and is not stated here.)
-- **Reward-hacking rate (arXiv abstract, paraphrased by the fetch tool, not
-  independently re-quoted)**: reported as dropping from 55% to 32% — a
-  different figure than the blog's kernel-specific 63%→34%, likely a
-  different benchmark scope or aggregate; **not reconciled here**.
+- **Reward-hacking rate, KernelBench (blog, verbatim)**: "AIDE0 reward
+  hacks on 63% of the test cases. The discovered agents hack much less
+  often, 42% for AIDE47 and 34% for AIDE85."
+- **Reward-hacking rate, a separate held-out task family (arXiv abstract,
+  verbatim)**: "the discovered agents also exhibit reduced reward hacking,
+  a property the loop never explicitly optimized for: the rate falls from
+  55% to 32% during the run, 7 percentage points below the human-engineered
+  agent." This is explicitly a **different, held-out task family** from the
+  blog's KernelBench-specific 63%→34%/42% figures — the two are not the
+  same measurement and are not blended here.
 - **Prompt/context compression (blog, verbatim)**: "reduced the prompt size
   by 16×"; elsewhere, "the compression it found averages 16× on the full
   prompt against naive history concatenation."
@@ -78,11 +83,12 @@ repo's citation rules.
 ## Corpus Relevance
 
 This is a single-vendor blog claim paired with a very recent (submitted
-2026-09-22) arXiv technical report, with no independent reproduction found
-and an unreconciled numeric discrepancy between the two first-party sources
-themselves. It belongs alongside this corpus's other "results without a
-released harness" entries (HarnessX) and its self-evolving-harness entries
-(MOSS, Raven) as a comparison point, without itself being adoptable.
+2026-09-22) arXiv technical report, with no independent reproduction found;
+its two first-party sources report similarly-worded but distinct
+reward-hacking figures for different task families, easy to conflate if
+not read carefully. It belongs alongside this corpus's other "results
+without a released harness" entries (HarnessX) and its self-evolving-harness
+entries (MOSS, Raven) as a comparison point, without itself being adoptable.
 
 ## Cross-References
 

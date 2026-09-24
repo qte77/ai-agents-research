@@ -1,7 +1,7 @@
 ---
 title: Shepherd — Programmable Meta-Agents via Reversible Execution Traces
 source: https://arxiv.org/abs/2605.10913
-purpose: Analysis of Shepherd, a Stanford research framework that records agent execution as a reversible, Git-like trace so meta-agents can inspect, fork, replay, and revert runs.
+purpose: Analysis of Shepherd, a research framework that records agent execution as a reversible, Git-like trace so meta-agents can inspect, fork, replay, and revert runs.
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
@@ -12,9 +12,11 @@ validated_links: 2026-09-24
 ## What It Is
 
 Shepherd ([paper][paper], arXiv 2605.10913; code [shepherd-agents/shepherd][repo])
-is a Python runtime, from a Stanford-affiliated team (Simon Yu, Derek Chong,
-Ananjan Nandi, Dilara Soylu, Jiuding Sun, Christopher D. Manning, Weiyan
-Shi), that turns an agent's execution into "a reversible, Git-like trace, so
+is a Python runtime, authored by Simon Yu, Derek Chong, Ananjan Nandi,
+Dilara Soylu, Jiuding Sun, Christopher D. Manning, and Weiyan Shi (per the
+arXiv abstract page; no institutional affiliation is stated on that page or
+in the repo README, so none is claimed here), that turns an agent's
+execution into "a reversible, Git-like trace, so
 meta-agents can observe, fork, replay, and revert any run" (per the repo
 description). Rather than having agents modify files directly, Shepherd
 retains agent outputs as reviewable proposals a user (or a supervising
@@ -41,10 +43,12 @@ trail while preventing unintended changes.
 
 The paper demonstrates three applications: (1) conflict prevention among
 parallel coding agents, reporting pair-coding success improving from 28.8%
-to 54.7%; (2) counterfactual workflow repair, reporting a 12.8-point
-performance improvement; and (3) improved credit assignment in
-reinforcement learning. First submitted 2026-05-11 (v1); most recent
-revision (v3) 2026-06-24.
+to 54.7%; (2) a counterfactual-optimization meta-agent that "repairs agent
+workflows by proposing edits and replaying runs from the point of changed
+behavior, outperforming MetaHarness on Terminal-Bench 2.0 by 12.8% with 58%
+lower wall-clock" (verbatim, arXiv abstract); and (3) improved credit
+assignment in reinforcement learning. First submitted 2026-05-11 (v1); most
+recent revision (v3) 2026-06-24.
 
 ## Installation and Usage
 
@@ -95,7 +99,7 @@ one supported backend, not an exclusive one — hence `non-cc/` placement.
 
 | Source | Content |
 |---|---|
-| [Shepherd arXiv abstract (2605.10913)][paper] | Title, authors, submission/revision dates, abstract — reported results (28.8%→54.7%, 12.8-point improvement) |
+| [Shepherd arXiv abstract (2605.10913)][paper] | Title, authors, submission/revision dates, abstract — reported results (28.8%→54.7% pair-coding success; 12.8% Terminal-Bench 2.0 gain over MetaHarness) |
 | [shepherd-agents/shepherd repo][repo] | README — architecture, permission model, install/usage, platform support, copy-on-write/KV-cache-reuse claim, license |
 | GitHub API `repos/shepherd-agents/shepherd`, accessed 2026-09-24 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
 
