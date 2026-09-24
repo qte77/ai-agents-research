@@ -135,6 +135,54 @@ def unseen_releases(
     ]
 
 
+def ledger_ids(
+    feed_entries: list[dict[str, str]], changelog_versions: set[str]
+) -> list[str]:
+    """Feed entry ids safe to persist to the dedup ledger this run.
+
+    Only ids whose version is in ``changelog_versions`` (the versions
+    CHANGELOG.md actually has this run) are kept. A feed entry for a version
+    CHANGELOG.md hasn't published yet (upstream feed/changelog skew, issue
+    #410 con #3) must NOT be marked "seen" now — ``unseen_releases`` excludes
+    any id already in the ledger, so persisting it early would make that
+    version permanently unreportable once CHANGELOG.md does catch up.
+    """
+    return [e["id"] for e in feed_entries if e["version"] in changelog_versions]
+
+
+def select_new_versions(
+    all_versions: list[tuple[str, list[str]]],
+    feed_entries: list[dict[str, str]],
+    seen_ids: set[str],
+    scan_cutoff_version: str,
+) -> list[tuple[str, list[str]]]:
+    """Decide which CHANGELOG.md versions are new (issue #410's trigger).
+
+    CHANGELOG.md is the full-history backstop for feed/changelog skew (#410
+    con #3): a version present in the feed is gated by ``unseen_releases``
+    (ledger + cutoff); a version the feed doesn't cover at all — a feed gap,
+    or one that has rolled out of its ~31-entry window — falls back to the
+    plain cutoff comparison instead of being silently dropped. With an empty
+    ``feed_entries`` this reduces to a pure cutoff comparison (pre-#410
+    behaviour), since every version is then "not covered by the feed".
+
+    Order follows ``all_versions`` (already newest-first).
+    """
+    cutoff = version_tuple(scan_cutoff_version)
+    feed_versions = {e["version"] for e in feed_entries}
+    unseen_versions = {
+        e["version"] for e in unseen_releases(feed_entries, seen_ids, scan_cutoff_version)
+    }
+    selected: list[tuple[str, list[str]]] = []
+    for version, feature_lines in all_versions:
+        if version in feed_versions:
+            if version in unseen_versions:
+                selected.append((version, feature_lines))
+        elif version_tuple(version) > cutoff:
+            selected.append((version, feature_lines))
+    return selected
+
+
 def collect_doc_keyword_index(docs_dir: Path) -> dict[str, frozenset[str]]:
     """Map each ``*.md`` doc's relative path to its keyword set (filename + H2/H3).
 
