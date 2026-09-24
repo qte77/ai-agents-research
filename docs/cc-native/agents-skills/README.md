@@ -5,6 +5,7 @@ CC agent teams, recursive spawning, skills system, and autonomous loop patterns.
 | Document | Content |
 |----------|---------|
 | [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md) | Agent teams: parallel orchestration, artifact parsing, token cost, UDS Inbox, Coordinator Mode |
+| [CC-cross-session-messaging-analysis.md](CC-cross-session-messaging-analysis.md) | Cross-session messaging: `ListAgents`/`SendMessage`, `/list-agents`, delivery/trust model, `crossSessionInbound`, `isolatePeerMachines`, `notify_when_idle`, cross-machine Remote Control, inbox socket env vars, limits, version gates |
 | [CC-recursive-spawning-patterns.md](CC-recursive-spawning-patterns.md) | Recursive CC subprocess spawning and depth limits |
 | [CC-skills-adoption-analysis.md](CC-skills-adoption-analysis.md) | Skills format adoption, progressive disclosure, auto-discovery, `context: fork` mechanics and economics |
 | [CC-plans-as-skill-rule-templates.md](CC-plans-as-skill-rule-templates.md) | Extracting plans into reusable skills and rules, UltraPlan (research preview) |

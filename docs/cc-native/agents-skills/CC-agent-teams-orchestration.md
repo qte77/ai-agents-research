@@ -4,8 +4,8 @@ source: https://code.claude.com/docs/en/agent-teams
 purpose: Analysis of Claude Code Agent Teams for parallel code review, cross-layer implementation, and adversarial debugging.
 test_run: 2026-02-11 (parallel code review with 3 teammates)
 created: 2026-02-08
-updated: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-09-23
+validated_links: 2026-09-23
 ---
 
 **Status**: Research preview (disabled by default, `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`)
@@ -360,6 +360,8 @@ Each task is tracked in its own JSON file:
 - **Unified approach**: Application-level tracing for the MAS layer, CC artifact files for the orchestration layer; cross-reference by timestamps
 
 ## UDS Inbox — Inter-Session IPC (Unreleased)
+
+> **Correction (2026-09-23)**: this section describes a pre-release mechanism reverse-engineered from a leaked sourcemap. The underlying feature has since shipped, officially documented, as **cross-session messaging** (v2.1.224+) — an independent-session channel distinct from Agent Teams/Coordinator Mode. The shipped tools are **`ListAgents`** and **`SendMessage`** (`ListPeers` below never shipped under that name — it is retained as historical leak-analysis provenance, not current API). See [CC-cross-session-messaging-analysis.md](CC-cross-session-messaging-analysis.md) for the documented feature: delivery/trust model, `crossSessionInbound`, `isolatePeerMachines`, `notify_when_idle`, cross-machine transport, and version gates.
 
 Unix Domain Socket messaging layer for local inter-session communication between CC instances. This is the networking substrate underneath Coordinator Mode and Agent Teams.
 
