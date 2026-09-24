@@ -1,11 +1,11 @@
 ---
 title: Agentic Enterprise OS Landscape
-purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves.
+purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves.
 category: landscape
-platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, self-hosted-oss, claude-code]
+platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, self-hosted-oss, claude-code]
 created: 2026-06-28
-updated: 2026-07-08
-validated_links: 2026-07-08
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Assess
@@ -27,17 +27,21 @@ All are proprietary SaaS; all govern **human-directed** agents (instructions, to
 | **[ServiceNow Otto][servicenow]** | "the AI control tower" | proprietary, cloud-only; bundled into Foundation/Advanced/Prime tiers (Apr 2026) | AI Agent Studio / Orchestrator / Control Tower + Action Fabric (MCP); vendor-neutral ("open to Claude, Copilot, or homegrown agents") |
 | **[SAP Joule Studio 2.0][sap-joule]** | "AI-first development environment" | proprietary; free design-time through 2026 (promotional), production terms TBD | NL goal → PRD + code + tests + multi-agent orchestration *at design time*; part of the SAP Business AI Platform ("the Autonomous Enterprise", Sapphire 2026) |
 | **[Databricks Genie][genie]** | "agentic data coworker" | proprietary managed; OSS lakehouse base (Spark / Delta / Iceberg) | Genie Ontology semantic graph as the persistent context "kernel"; Genie Agents as reusable autonomous workflows |
+| **[Glean Independent Agents][glean]** | "AI coworkers" | not stated in the announcement | Distinct per-agent identity + persistent memory; proactive/event-triggered action (parallel to Copilot Studio's autonomous agents) across Slack/Jira/Teams — still admin-configured, not autonomous goal origination; first instance is the OnCall Assistant (beta) |
+
+**Glean caveat**: added from the announcement blog post alone (2026-06-30). Its MCP support is confirmed first-party (`developers.glean.com/mcp`, IDE/host integrations for Claude Code, Cursor, Codex, and other MCP hosts); its A2A and AG-UI posture were not checked, so this row does not extend the "all interoperate via MCP + A2A, none has adopted AG-UI" line above to Glean — read that line as covering the original five.
 
 **Read carefully.** SAP Joule's "NL goal → PRD + code + tests" is *design-time code generation*, not runtime goal attribution. ServiceNow's "AI Control Tower" is a human-facing governance/observability dashboard, not a machine-readable attribution store. These are governance and authoring surfaces layered over human-set objectives — strong on identity, audit, and control; silent on autonomous goal origination.
 
 ## Tier 2 — Open-source self-operating workspaces & runtimes
 
-The OSS layer gives you the runtime instead of a managed platform. Each already has a dedicated analysis; they are gathered here for the pattern:
+The OSS layer gives you the runtime instead of a managed platform. Most already have a dedicated analysis (HugAgentOS does not yet); they are gathered here for the pattern:
 
 - **[AutoAgent][autoagent]** (HKUDS, MIT) — explicitly an "autonomous Agent Operating System": a self-managing file system, an LLM-powered actionable engine, and self-play customization that generates its own tools and agents at runtime inside a Docker sandbox. The closest literal "agent OS" in this corpus.
 - **[Odysseus][odysseus]** (AGPL-3.0) — self-hosted all-in-one AI workspace (chat, agents, deep research, email, calendar, notes) in one Docker Compose deploy with MCP integration — the breadth-over-depth "operating environment" model.
 - **[Goose][goose]** (AAIF / Linux Foundation, Apache-2.0) — MCP co-creator and reference implementation; extensions *are* MCP servers and ACP handles agent-to-agent/IDE messaging — the protocol-native runtime an agent OS is built on.
 - **multica** (in [agent-frameworks-infrastructure-landscape §1][frameworks]; source-available, modified Apache-2.0 — not OSI) — turns coding-agent CLIs into managed teammates: issues route to an agent or squad, a local daemon executes with autopilot (cron/webhook) scheduling.
+- **[HugAgentOS][hugagentos]** (ZJU-REAL; source-available: Apache-2.0 + Additional Terms — no competing multi-tenant SaaS offering, "Powered by" UI attribution required without a commercial white-label license; not OSI) — self-hosted "AgentOS" combining agentic chat, private RAG knowledge bases, sub-agents, sandboxed code execution, long-term memory, and automation; treats **domain ontology as a control plane** for agent reasoning, decisions, and tool execution — governed concepts/relations/rules/action-contracts, with versioned ontology proposals and audit logs for traceable evolution.
 
 ## Tier 3 — Estate worked examples (the self-operating pattern, built from primitives)
 
@@ -95,8 +99,9 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 | [ServiceNow Otto (newsroom)][servicenow] | "AI control tower"; AI Agent Studio/Orchestrator + Action Fabric (MCP) |
 | [SAP Joule Studio (news)][sap-joule] | "AI-first development environment"; design-time NL→PRD→code→tests |
 | [Databricks Genie analysis][genie] | Agentic data coworker; Genie Ontology context graph |
+| [Glean — "Introducing independent agents"][glean] | AI coworker agents; independent identity, memory, proactive action |
 | Gartner — 2026 Hype Cycle for Agentic AI (gartner.com; bot-blocked, not link-checked) | First-party anchor for the formal category "AI agent development platforms" |
-| [AutoAgent][autoagent] · [Odysseus][odysseus] · [Goose][goose] · [multica][frameworks] | OSS self-operating workspaces / runtimes (in-corpus analyses) |
+| [AutoAgent][autoagent] · [Odysseus][odysseus] · [Goose][goose] · [multica][frameworks] · [HugAgentOS][hugagentos] | OSS self-operating workspaces / runtimes (in-corpus analyses + HugAgentOS repo) |
 | [polyforge-orchestrator][polyforge] · [office-forge-orchestrator][office-forge] · [liminal-flux-gh-acc][liminal] | qte77 estate self-operating orchestrators (public repos) |
 
 [agentforce]: https://www.salesforce.com/news/stories/agentforce-operations-announcement/
@@ -104,6 +109,8 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [copilot-studio]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio
 [servicenow]: https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-Otto-creates-the-unified-AI-experience-for-the-enterprise/default.aspx
 [sap-joule]: https://news.sap.com/2026/05/new-joule-studio-enterprise-scale-agentic-development/
+[glean]: https://www.glean.com/blog/introducing-independent-agents
+[hugagentos]: https://github.com/ZJU-REAL/HugAgentOS
 [polyforge]: https://github.com/qte77/polyforge-orchestrator
 [office-forge]: https://github.com/qte77/office-forge-orchestrator
 [liminal]: https://github.com/qte77/liminal-flux-gh-acc
