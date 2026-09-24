@@ -2,6 +2,8 @@
 title: Agentic SDLC Patterns
 purpose: Emerging lifecycle patterns for AI agent-driven development.
 created: 2026-03-24
+updated: 2026-09-24
+validated_links: 2026-09-24
 sources:
   - https://www.epam.com/insights/ai/blogs/agentic-development-lifecycle-explained
   - https://techcommunity.microsoft.com/blog/appsonazureblog/an-ai-led-sdlc-building-an-end-to-end-agentic-software-development-lifecycle-wit/4491896
@@ -64,6 +66,19 @@ review comments lead to code fixes (Atlassian RovoDev).
 **qte77 mapping:** RAPID pipeline + Ralph prd.json already spec-driven.
 Gap: no automated spec-change -> agent-trigger pipeline.
 
+**SpecShip** (`aws-samples/sample-specship`, MIT, 252 stars, created 2026-07-10,
+`gh api` 2026-09-24) is AWS Samples' own instance of the SDD pattern: a five-stage
+pipeline (brownfield recon -> plan, with market research -> TDD build -> adversarial
+validation -> ship with PR + changelog) packaged as a "Kiro Power" -- a reusable skill
+package for the Kiro agent-orchestration platform. Its quality gate is the "human
+review shifts from code to specs" idea made concrete: the builder agent cannot judge
+its own code, so seven independent validator subagents (code review, security, browser
+QA, design, alignment, load testing) run in parallel with typed verdicts before a
+milestone is accepted, on top of failing-tests-first TDD. Installed via a single
+`./install.sh` that auto-detects dependencies (superpowers, gstack, Playwright MCP) and
+copies steering files to `~/.kiro/steering/`; runs guided (pauses for plan approval) or
+autonomous (end-to-end).
+
 ## 4. Agent-First Developer Toolchain (Amplify Partners)
 
 Traditional SDLC artifacts reimagined as coordination layers for agents.
@@ -89,3 +104,11 @@ Traditional SDLC artifacts reimagined as coordination layers for agents.
 1. Codify Observe+Correct as formal phases (extend maintain)
 2. Gate predicates agents can evaluate programmatically
 3. Phase inference from repo artifacts (SDD alignment)
+
+## Sources
+
+| Source | Content |
+|---|---|
+| [SpecShip][specship] (`aws-samples/sample-specship`) | Kiro Power SDD workflow; 252★, MIT, `gh api` 2026-09-24 |
+
+[specship]: https://github.com/aws-samples/sample-specship
