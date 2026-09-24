@@ -3,7 +3,8 @@ title: First-Party Anthropic Interpretability & Safety Research Index
 source: anthropic.com/research
 purpose: Curated index of Anthropic's first-party research publications relevant to model internals, interpretability, safety classifiers, sycophancy, reasoning faithfulness, and alignment steering.
 created: 2026-04-05
-validated_links: 2026-04-05
+updated: 2026-09-24
+validated_links: 2026-09-24
 ---
 
 **Status**: Reference (source index)
@@ -53,6 +54,13 @@ validated_links: 2026-04-05
 | Circuits Updates (September 2024) | [paper][circuits-updates] | Progress on multi-hop reasoning, planning, and CoT faithfulness circuits |
 | Interpretability Dreams | [paper][interp-dreams] | Vision for interpretability research direction and its role in AI safety |
 | The Engineering Challenges of Scaling Interpretability | [paper][scaling-interp] | Technical challenges applying dictionary learning and circuit analysis at scale |
+| Evaluating and Improving LLM Self-Modeling | [paper][self-modeling] | Tests whether models can accurately predict how prompt changes would change their own outputs ("self-modeling"); current models are modest and inconsistent at this, especially on counterfactual reasoning about their own decisions. A synthetic-data RL training pipeline improved self-modeling across three open-source model families, but the gains "may not arise from privileged access to the model's internal decision process" — better self-modeling isn't shown to reflect genuine introspection. arXiv:2608.30980 (2026-08-31); co-authored by Rowan Wang (Anthropic) and Siqi Zeng (Anthropic Fellows Program) |
+
+## Agent Autonomy & Deployment
+
+| Publication | URL | Key Finding |
+|-------------|-----|-------------|
+| Measuring Agent Autonomy | [research][agent-autonomy] | Anthropic's analysis of millions of real Claude Code and public-API sessions to characterize autonomy as an emergent, measurable property of deployment (not a fixed model attribute). The 99.9th-percentile turn duration nearly doubled (under 25 min → over 45 min) between Oct 2025 and Jan 2026; experienced users both auto-approve more (20%→40%) and interrupt more often, consistent with active monitoring rather than abdication; Claude Code asks clarifying questions on complex tasks more than 2x as often as humans interrupt it; software engineering is 50% of tool calls, with healthcare/finance/cybersecurity usage still limited; 80% of observed actions have safeguards, 73% involve a human, and 0.8% are irreversible. Published 2026-02-18 |
 
 ## Cross-References
 
@@ -80,3 +88,5 @@ validated_links: 2026-04-05
 [circuits-updates]: https://www.anthropic.com/research/circuits-updates-sept-2024
 [interp-dreams]: https://www.anthropic.com/research/interpretability-dreams
 [scaling-interp]: https://www.anthropic.com/research/engineering-challenges-interpretability
+[self-modeling]: https://arxiv.org/abs/2608.30980
+[agent-autonomy]: https://www.anthropic.com/research/measuring-agent-autonomy
