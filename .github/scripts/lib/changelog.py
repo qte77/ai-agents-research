@@ -6,6 +6,12 @@ exit codes), so the parsing, coverage, and report logic is unit-testable.
 from __future__ import annotations
 
 import re
+
+# Reason: xml.etree.ElementTree.fromstring parses a first-party GitHub feed
+# (releases.atom) fetched over HTTPS in CI, not arbitrary/untrusted input;
+# stdlib is the repo convention (CONTRIBUTING.md) and no external entities
+# are resolved here (no DTD/XXE surface in an Atom release feed).
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -16,6 +22,8 @@ _NOISE_ONLY = re.compile(
 )
 _COVERAGE_THRESHOLD = 0.4
 _VERSION_SECTION = re.compile(r"^##\s+\[?(\d+\.\d+\.\d+)\]?", re.MULTILINE)
+_ATOM_NS = {"atom": "http://www.w3.org/2005/Atom"}
+_RELEASE_ID_VERSION = re.compile(r"/v(\d+\.\d+\.\d+)$")
 
 
 def version_tuple(v: str) -> tuple[int, ...]:
@@ -65,6 +73,35 @@ def parse_changelog_versions(text: str) -> list[tuple[str, list[str]]]:
         versions.append((match.group(1), feature_lines))
     versions.sort(key=lambda t: version_tuple(t[0]), reverse=True)
     return versions
+
+
+def parse_releases_feed(xml_text: str) -> list[dict[str, str]]:
+    """Parse a GitHub releases Atom feed into ``[{version, updated, id}]``.
+
+    Trigger/timestamp/dedup source only (issue #410) — CHANGELOG.md remains the
+    sole content source. Returned newest-first by version, mirroring
+    ``parse_changelog_versions``. Entries whose ``<id>`` doesn't end in a
+    parseable ``vX.Y.Z`` (e.g. a non-release tag) are skipped rather than
+    failing the whole parse. Malformed XML or empty/whitespace-only input
+    returns ``[]``.
+    """
+    if not xml_text or not xml_text.strip():
+        return []
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return []
+
+    entries: list[dict[str, str]] = []
+    for entry in root.findall("atom:entry", _ATOM_NS):
+        entry_id = (entry.findtext("atom:id", default="", namespaces=_ATOM_NS) or "").strip()
+        m = _RELEASE_ID_VERSION.search(entry_id)
+        if not m:
+            continue
+        updated = (entry.findtext("atom:updated", default="", namespaces=_ATOM_NS) or "").strip()
+        entries.append({"version": m.group(1), "updated": updated, "id": entry_id})
+    entries.sort(key=lambda e: version_tuple(e["version"]), reverse=True)
+    return entries
 
 
 def collect_doc_keyword_index(docs_dir: Path) -> dict[str, frozenset[str]]:
@@ -133,9 +170,16 @@ def classify_versions(
 
 
 def render_changelog_report(
-    results: list[VersionCoverage], last_scanned: str
+    results: list[VersionCoverage],
+    last_scanned: str,
+    updated_by_version: dict[str, str] | None = None,
 ) -> tuple[str, bool]:
-    """Render the markdown report; returns ``(report_text, has_uncovered)``."""
+    """Render the markdown report; returns ``(report_text, has_uncovered)``.
+
+    ``updated_by_version`` (optional) maps a version string to its releases.atom
+    ``<updated>`` timestamp (issue #410) — when a version has a known date, the
+    version heading is annotated with it; CHANGELOG.md has no dates of its own.
+    """
     lines: list[str] = [
         "## Changelog Monitor Report", "",
         f"Last scanned version: **{last_scanned}**",
@@ -157,7 +201,11 @@ def render_changelog_report(
 
     lines += ["### Feature Coverage Details", ""]
     for r in results:
-        lines += [f"#### v{r.version}", ""]
+        updated = (updated_by_version or {}).get(r.version)
+        heading = f"#### v{r.version}"
+        if updated:
+            heading += f" — released {updated.split('T')[0]}"
+        lines += [heading, ""]
         for feat, docs in r.covered:
             lines.append(f"- **[covered]** {feat}")
             lines.append(f"  - Covered by: {', '.join(f'`{d}`' for d in docs[:3])}")
