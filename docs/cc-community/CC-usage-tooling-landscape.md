@@ -14,7 +14,7 @@ Tools that measure token usage and cost across coding-agent sessions. Split out 
 
 ## CodeBurn (AgentSeal)
 
-**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 4K | **License**: MIT | **Latest**: Menubar v0.9.0 (2026-04-25) | **Stack**: TypeScript, Node.js 20+
+**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 4K | **License**: MIT | **Latest**: v0.9.25 / Menubar v0.9.25 (2026-09-21, [GitHub Releases][codeburn-releases]; npm registry confirms `codeburn@0.9.25`, corrects the prior "Menubar v0.9.0 (2026-04-25)" note) | **Stack**: TypeScript, Node.js >=22.13.0 (per `package.json` `engines`, corrects the prior "Node.js 20+" note)
 
 Local-first TUI dashboard that tracks AI coding token usage and cost across multiple coding agents. Reads session data directly from disk — no API keys, no proxy ([README][codeburn]).
 
@@ -39,7 +39,8 @@ Per the [README][codeburn]: Claude Code, Claude Desktop, Codex, Cursor, cursor-a
 - **[`codeburn optimize`](https://github.com/getagentseal/codeburn#optimize)** — scans recent sessions for token-waste patterns, grades the setup A–F, and emits copy-paste token/$ fixes ranked by impact (full detector list in [Optimization Rules](#optimization-rules) below)
 - **`codeburn compare`** — side-by-side model performance metrics
 - **`codeburn report -p 30days`** — rolling-window analysis
-- **`codeburn export`** — CSV/JSON across multiple time periods
+- **`codeburn export`** — CSV/JSON across multiple time periods, filterable by `--billing <metered|subscription>` among other flags
+- **`codeburn doctor`** — per-provider detection diagnostics: "paths probed, sessions found, parse health (diagnose empty or wrong numbers)" (confirmed via `codeburn doctor --help`, v0.9.25)
 - **Subscription tracking** — Claude Pro/Max, Cursor Pro
 - **Currency conversion** — 162 ISO 4217 codes
 - **Pricing data** sourced from LiteLLM with 24h cached refresh; hardcoded fallbacks for Claude and GPT-5 to prevent fuzzy-match errors
@@ -85,6 +86,8 @@ Each finding ships estimated token/dollar savings plus copy-paste remediation (`
 
 Where RTK reduces tokens *entering* context and caveman compresses tokens *leaving* the assistant, **CodeBurn observes** what was actually spent — across agents, models, and projects. Complementary to both: optimization needs measurement. Local-first (no API keys, no telemetry) makes it usable in air-gapped or compliance-sensitive environments.
 
+**Blind spot**: CodeBurn's dashboard, `optimize`, and `export` read only local transcripts (`~/.claude/projects/` for Claude), so Chats and Cowork usage are invisible to them and total plan usage is undercounted; its separate `codeburn quota` subcommand queries the provider's live account limit instead and is not subject to this gap. See [CC-session-cost-analysis.md § Shared plan usage across Claude products][cc-session-cost-usage].
+
 Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — caveman (output compression skill); [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's native session-cost extraction via JSONL/jq
 
 ---
@@ -127,6 +130,8 @@ Reads `~/.claude/projects/` JSONL by default; data path is configurable.
 ### Key Differentiator
 
 Where CodeBurn is **multi-agent** (Claude/Codex/Cursor/OpenCode/Copilot in one TUI), ccusage is **CC/Codex-focused** with deeper CC-specific features (cache token split, MCP server, statusline hook). The two are complementary, not redundant: ccusage for CC-deep analysis and in-session queries via MCP; CodeBurn for cross-agent comparison.
+
+**Blind spot**: like CodeBurn's dashboard, ccusage reads only local transcripts (`~/.claude/projects/`), so Chats and Cowork usage are invisible to it too. See [CC-session-cost-analysis.md § Shared plan usage across Claude products][cc-session-cost-usage].
 
 Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — manual JSONL/jq extraction patterns ccusage automates; [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — statusline hook integration point
 
@@ -277,11 +282,13 @@ native session-cost extraction that agentacct's Claude Code coverage reads on to
 
 [codeburn]: https://github.com/getagentseal/codeburn
 [codeburn-optimize]: https://github.com/getagentseal/codeburn/blob/main/src/optimize.ts
+[codeburn-releases]: https://github.com/getagentseal/codeburn/releases
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
 [cc-costline]: https://github.com/Ventuss-OvO/cc-costline
 [agentacct]: https://github.com/mikehasa/agentacct
+[cc-session-cost-usage]: ../cc-native/sessions/CC-session-cost-analysis.md#shared-plan-usage-across-claude-products
 
 ## Sources
 
-Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor], [cc-costline][cc-costline], [agentacct][agentacct]). cc-costline's licensing status (no LICENSE file; GitHub API `license: null`) verified via `gh api repos/Ventuss-OvO/cc-costline/contents`, 2026-07-23. agentacct's stars/license/latest release verified via `gh api repos/mikehasa/agentacct` + `.../releases/latest`, 2026-09-24.
+Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor], [cc-costline][cc-costline], [agentacct][agentacct]). cc-costline's licensing status (no LICENSE file; GitHub API `license: null`) verified via `gh api repos/Ventuss-OvO/cc-costline/contents`, 2026-07-23. agentacct's stars/license/latest release verified via `gh api repos/mikehasa/agentacct` + `.../releases/latest`, 2026-09-24. CodeBurn's v0.9.25 version bump verified via `registry.npmjs.org/codeburn/latest` metadata and [GitHub Releases][codeburn-releases] (`v0.9.25`, `mac-v0.9.25`, both 2026-09-21); its `plan`, `export --billing`, `quota`, and `doctor` subcommand behavior verified directly against `npx codeburn@0.9.25 --help` / `plan --help` / `export --help` / `quota --help` / `doctor --help` and the [README][codeburn], 2026-09-24.
