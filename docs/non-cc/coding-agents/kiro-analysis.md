@@ -106,7 +106,7 @@ Credits reset monthly; unused credits do not roll over. Overage billing is disab
 
 ## Cross-References
 
-- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — peer terminal/IDE coding agent with comparable autonomy controls and MCP extensibility; contrast instruction-file approach (copilot-instructions.md) vs Kiro's steering system
+- [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — peer terminal/IDE coding agent with comparable autonomy controls and MCP extensibility; contrast instruction-file approach (copilot-instructions.md) vs Kiro's steering system
 
 ## Sources
 
@@ -134,4 +134,4 @@ Credits reset monthly; unused credits do not roll over. Overage billing is disab
 [kiro-changelog]: https://kiro.dev/changelog/
 [constellation]: https://www.constellationr.com/insights/news/aws-launches-kiro-ide-powered-ai-agents
 [aws-kiro-ga]: https://aws.amazon.com/blogs/aws/aws-weekly-roundup-how-to-join-aws-reinvent-2025-plus-kiro-ga-and-lots-of-launches-nov-24-2025
-[github-copilot-cli-analysis]: agents/github-copilot-cli-analysis.md
+[github-copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md

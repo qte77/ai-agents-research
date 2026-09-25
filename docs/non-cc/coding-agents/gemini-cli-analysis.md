@@ -65,7 +65,7 @@ server support, configured in `~/.gemini/settings.json`.
 
 Project-specific behavior was customizable via `GEMINI.md` files (analogous to
 `CLAUDE.md` in Claude Code), loaded at session start to inject system-level
-instructions. Conversation checkpointing and token caching were also supported. The cross-agent convergence of these instruction files (`AGENTS.md` / `GEMINI.md` / `CLAUDE.md`) is covered in [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md).
+instructions. Conversation checkpointing and token caching were also supported. The cross-agent convergence of these instruction files (`AGENTS.md` / `GEMINI.md` / `CLAUDE.md`) is covered in [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md).
 
 ### Headless / scripting mode
 
@@ -142,4 +142,4 @@ guarantees for paying users.
 [gcfa-faqs]: https://developers.google.com/gemini-code-assist/resources/faqs
 [antigravity-discussion]: https://github.com/google-gemini/gemini-cli/discussions/27274
 [techtimes]: https://www.techtimes.com/articles/317056/20260523/google-accepted-6000-gemini-cli-contributions-then-closed-tool-enterprise-only.htm
-[copilot-cli-analysis]: agents/github-copilot-cli-analysis.md
+[copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md

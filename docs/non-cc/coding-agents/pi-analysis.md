@@ -143,7 +143,7 @@ the first-party site (not stated, as of 2026-06-16).
 [pi-gh]: https://github.com/earendil-works/pi
 [pi-new-home]: https://pi.dev/news/2026/5/7/pi-has-a-new-home
 [pi-pypi]: https://pypi.org/project/pi-coding-agent/
-[omnigent-doc]: orchestrators/omnigent-analysis.md
+[omnigent-doc]: ../orchestrators/omnigent-analysis.md
 [pi-devto]: https://dev.to/arshtechpro/pi-the-open-source-ai-coding-agent-you-probably-havent-tried-yet-2h0h
 [pi-blog]: https://www.saattrupdan.com/posts/2026-06-02-agentic-coding-v3-pi
 [omp-gh]: https://github.com/can1357/oh-my-pi

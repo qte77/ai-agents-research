@@ -164,7 +164,7 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 
 | Product | Self-description (first-party) | What it actually is |
 |---|---|---|
-| Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](../windsurf-analysis.md#agent-command-center) |
+| Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](../coding-agents/windsurf-analysis.md#agent-command-center) |
 | [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer — full analysis: [CC-remote-access-landscape.md](../../cc-native/ci-remote/CC-remote-access-landscape.md#omnara) |
 | [flightdeckhq/flightdeck][flightdeck] | "observability and control plane for production and coding agents" | Observability dashboard |
 | [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" | Task-loop TUI — see [CC-ralph-enhancement-research.md](../../cc-native/agents-skills/CC-ralph-enhancement-research.md) |

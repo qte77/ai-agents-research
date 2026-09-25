@@ -168,7 +168,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [eval-data]: evaluation-data-resources-landscape.md
 [sdlc-patterns]: agentic-sdlc-patterns.md
 [ralph]: ../cc-native/agents-skills/CC-ralph-enhancement-research.md
-[kiro-doc]: ../non-cc/kiro-analysis.md
+[kiro-doc]: ../non-cc/coding-agents/kiro-analysis.md
 [harness-effect]: https://arxiv.org/abs/2607.06906
 [harnessx]: ../non-cc/reference/harnessx-analysis.md
 [harnessdev]: https://arxiv.org/abs/2609.01437

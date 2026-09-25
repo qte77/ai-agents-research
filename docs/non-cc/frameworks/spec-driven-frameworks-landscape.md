@@ -21,7 +21,7 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 | [Fission-AI/OpenSpec][openspec] | 57.1K | MIT | Proposal → Apply → Archive | change-proposal centric; no MCP/keys required |
 | [bmadcode/BMAD-METHOD][bmad] | 49.8K | MIT | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec |
 | [buildermethods/agent-os][agent-os] | 5.0K | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
-| [kirodotdev/Kiro][kiro-repo] | 3.9K | proprietary | requirements → design → tasks "waves" | full IDE; spec phase is mandatory — see [kiro-analysis.md](../kiro-analysis.md) |
+| [kirodotdev/Kiro][kiro-repo] | 3.9K | proprietary | requirements → design → tasks "waves" | full IDE; spec phase is mandatory — see [kiro-analysis.md](../coding-agents/kiro-analysis.md) |
 | Tessl (`tile`) | ~41 | MIT | "spec-as-source" | the spec, not the code, is the maintained artifact; main framework closed-beta |
 | [ayoubben18/ab-method][ab-method] | 180 | MIT | grill → roadmap → tasks → missions (TDD) | fractal structure; opt-in-silent critic agents bracket implementation; dual-runtime CC + Codex (v3.7.1; stars via `gh api`, 2026-07-23) |
 
@@ -41,7 +41,7 @@ SDD is the *what* (machine-readable spec → plan → tasks → implement); **ED
 ## Cross-References
 
 - [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md) — the §3 synthesis entry this doc expands; the full disciplines + methodologies stack
-- [kiro-analysis.md](../kiro-analysis.md) — Kiro's spec-driven IDE in depth
+- [kiro-analysis.md](../coding-agents/kiro-analysis.md) — Kiro's spec-driven IDE in depth
 
 ## Sources
 

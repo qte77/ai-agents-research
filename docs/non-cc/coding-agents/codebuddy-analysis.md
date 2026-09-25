@@ -96,7 +96,7 @@ Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabili
 
 ## Cross-References
 
-- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — closest structural peer: terminal coding agent with MCP, parallel agents, plan/autopilot modes
+- [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — closest structural peer: terminal coding agent with MCP, parallel agents, plan/autopilot modes
 
 ## Sources
 
@@ -119,4 +119,4 @@ Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabili
 [codebuddy-pricing-news]: https://finance.biggo.com/news/vQ5Y050BtCxy99G5l4m1
 [codebuddy-review]: https://skywork.ai/blog/tencent-codebuddy-a-new-kind-of-ai-coding-partner/
 [codebuddy-eeworld]: https://en.eeworld.com.cn/mp/QbitAI/a407551.jspx
-[github-copilot-cli-analysis]: agents/github-copilot-cli-analysis.md
+[github-copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md

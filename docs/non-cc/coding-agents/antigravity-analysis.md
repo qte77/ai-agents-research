@@ -52,7 +52,7 @@ For teams already invested in the Google Cloud/Firebase stack and comfortable wi
 - [ ] Benchmark Browser Subagent against Playwright-based agents for UI verification workflows
 - [ ] Assess Antigravity SDK against the existing agent harness if MCP integration is a priority
 - [ ] Monitor pricing finalisation — free tier rate limits refresh every ~5 hours; paid tiers under active change (access date: 2026-06-16)
-- [ ] Compare with [GitHub Copilot CLI](agents/github-copilot-cli-analysis.md) for terminal-centric agentic workflows
+- [ ] Compare with [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md) for terminal-centric agentic workflows
 
 ## Sources
 

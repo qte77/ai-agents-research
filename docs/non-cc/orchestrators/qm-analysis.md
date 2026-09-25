@@ -21,8 +21,8 @@ company: each person and each shared "room" (channel/project) gets its own scope
 keychain view, permissions, crons, web apps, and durable sandbox (per the [README][qm-gh],
 accessed 2026-09-24). It is **harness-agnostic** at the model-loop layer: "Pi, OpenCode, Codex, and
 Claude Code all drive the same core, so a deployment isn't tied to any single vendor" — see
-[`pi-analysis.md`](../pi-analysis.md), [`opencode-analysis.md`](../opencode-analysis.md),
-[`codex-cli-analysis.md`](../codex-cli-analysis.md) for those individually.
+[`pi-analysis.md`](../coding-agents/pi-analysis.md), [`opencode-analysis.md`](../coding-agents/opencode-analysis.md),
+[`codex-cli-analysis.md`](../coding-agents/codex-cli-analysis.md) for those individually.
 
 **Repository facts** (`gh api repos/yc-software/qm`, accessed 2026-09-24): 15,226 stars, 1,866
 forks, **MIT** license, created 2026-07-29, latest tagged release `v0.1.12` (published

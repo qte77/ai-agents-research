@@ -162,4 +162,4 @@ ready to trial. Gate full adoption on desktop GA and production mileage reports.
 [release]: https://github.com/sst/opencode/releases/tag/v1.17.7
 [models-dev]: https://models.dev
 [sst]: https://sst.dev
-[gh-copilot-cli]: agents/github-copilot-cli-analysis.md
+[gh-copilot-cli]: ../agents/github-copilot-cli-analysis.md
