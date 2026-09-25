@@ -36,11 +36,9 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
   1. ~~Cross-repo link fix~~ — done: `qte77/polyfetch-scrape` `docs/scraping-landscape.md:11` already
      points at `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md` on its `main`
      (verified 2026-09-25). It was the only hit in a scan of 104 local estate clones.
-  2. **Release v0.10.0** (minor: 93 doc URLs under `docs/non-cc/` moved — call it out in the release
-     notes): run the local gate (`make check_docs check_status check_actions test`) → dispatch
-     `bump-my-version` (minor) → merge the release PR → confirm the `tag-release` run → dispatch
-     `publish-release` with `tag=v0.10.0`.
-  3. Row 12b (#309 remainder: DeepWiki + CocoIndex dup resolution, `docs/_topics/` hubs).
+  2. ~~Release v0.10.0~~ — done 2026-09-25: #500 (URL-move notice fragment) → #501 (release PR) →
+     tag `v0.10.0` → GitHub Release published with the moved-URL notice.
+  3. Row 12c (#309 remainder: the 5 `docs/_topics/` hubs). Row 12b (dedup) shipped.
   4. Row 23 (full graph rebuild; `ui/graph.html` `source_file` metadata still shows old flat paths —
      metadata only, no broken links).
   5. Row 11 (#348) stays deferred until something consumes `status:`.
@@ -216,7 +214,8 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~10~~ | ~~#347: reusable `tag-release` + `publish-release`~~ | agent | Done 2026-09-24: #458; verified by the v0.9.0 run (tag + publish via reusable workflows); #347 closed |
 | 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
 | ~~12~~ | ~~#309 Phase 1: `non-cc/` subdivision~~ | agent | Done 2026-09-25: #489 (tested move tool + Orchestrators) + #490–#497 (one PR per section); 93 docs in 9 subdirs mirroring the README sections; all relative links rewritten, lychee offline 0 errors every step; tool/map removed after use (recoverable from 7179e0a) |
-| 12b | #309 Phase 1 remainder: resolve DeepWiki + CocoIndex duplication (one canonical analysis + landscape pointer); add `docs/_topics/` cross-subject hub indexes | agent | Both dups resolved with inbound links repointed; hub pages exist and are linked from README |
+| ~~12b~~ | ~~#309 Phase 1 remainder: resolve DeepWiki + CocoIndex duplication~~ | agent | Done 2026-09-25 (this PR): DeepWiki — landscape entry trimmed to a pointer, its unique facts moved into `deepwiki-analysis.md`. CocoIndex — the cc-community `cocoindex-code` entry stays canonical for the CLI (CC integration surface); `cocoindex-analysis.md` drops its duplicated cocoindex-code stats/specifics (which had drifted: v0.2.35 vs v0.2.36, 1.9k vs 2.2k) and keeps the engine + a pointer |
+| 12c | #309 Phase 1 remainder: `docs/_topics/` cross-subject hub indexes (memory, knowledge-graphs, rag, code-tooling, visualization) — pointer tables only | agent | 5 hubs exist, linked from README + architecture/CONTRIBUTING trees; add-source skill says to add a hub row |
 | 23 | Full knowledge-graph rebuild (row 20 added 123 topics + 33 docs; also refreshes the stale `source_file` metadata in `ui/graph.html` after the restructure) | agent | Uniform full rebuild via `/graphify` → `make graph-page` → Pages deploy; node count reported |
 | ~~13~~ | ~~Merge newest bot PRs #442, #443, #444, #424, #418~~ | owner | Done 2026-09-23: all five merged, branches deleted |
 | ~~14~~ | ~~#434: read failed logs, then merge~~ | owner | Done 2026-09-23: failures were environmental (lychee rot, GitHub Models outage); merged |

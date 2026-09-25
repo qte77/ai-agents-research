@@ -5,7 +5,7 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-09-24
+updated: 2026-09-25
 validated_links: 2026-09-24
 ---
 
@@ -43,16 +43,7 @@ A sixth entrant, **OpenKB** (VectifyAI), flips the *input*: rather than a GitHub
 **Maker**: [Cognition Labs](https://cognition.ai) (the company behind Devin AI)
 **Full analysis**: [deepwiki-analysis.md](deepwiki-analysis.md)
 
-AI indexes an entire GitHub repository and generates hierarchical wiki-style documentation with:
-
-- Table of contents with subsections and cross-links
-- Mermaid-format architecture diagrams (flowcharts, dependency graphs, lifecycle hierarchies)
-- Source file references with GitHub links including line ranges
-- Conversational interface ("talk to the docs")
-
-100+ pre-indexed major repos: VSCode (183k stars), HuggingFace Transformers (158k), Playwright, etc.
-
-**Depth example**: For VSCode, it documents multi-process architecture, IPC channel tables, service registration patterns, lifecycle phases, CLI modes, and environment variables.
+Indexes a whole GitHub repository into a hierarchical, diagram-backed reference wiki with chat Q&A. Features, configuration, tiers and the adoption decision live in the full analysis.
 
 ## Code2Tutorial (The-Pocket)
 
