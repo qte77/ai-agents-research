@@ -98,6 +98,6 @@ Related context-management approaches are catalogued in
 [repo]: https://github.com/Cirius1792/fastcontext
 [paper]: https://arxiv.org/abs/2606.14066
 [hf]: https://huggingface.co/microsoft/FastContext-1.0-4B-SFT
-[memory]: ../cc-native/context-memory/CC-memory-system-analysis.md
-[spawning]: ../cc-native/agents-skills/CC-recursive-spawning-patterns.md
-[ctxmem]: ../cc-native/context-memory/README.md
+[memory]: ../../cc-native/context-memory/CC-memory-system-analysis.md
+[spawning]: ../../cc-native/agents-skills/CC-recursive-spawning-patterns.md
+[ctxmem]: ../../cc-native/context-memory/README.md

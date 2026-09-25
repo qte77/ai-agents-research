@@ -183,4 +183,4 @@ an internal agent experiment before committing to it as a standard.
 [repo]: https://github.com/GoogleCloudPlatform/knowledge-catalog
 [genie-blog]: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
 [karpathy]: karpathy-llm-kb-analysis.md
-[openviking]: ../openviking-analysis.md
+[openviking]: ../context-memory/openviking-analysis.md

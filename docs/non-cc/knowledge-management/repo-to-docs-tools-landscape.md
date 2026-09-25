@@ -184,7 +184,7 @@ Differentiation happens at the output stage:
 | AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](../../cc-community/CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
 | llms.txt documentation standard | [CC-llms-txt-analysis.md](../../cc-native/context-memory/CC-llms-txt-analysis.md) |
 | Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](../../cc-community/CC-community-skills-landscape.md) |
-| OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../openviking-analysis.md) |
+| OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../context-memory/openviking-analysis.md) |
 
 ## Sources
 

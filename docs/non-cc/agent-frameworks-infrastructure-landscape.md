@@ -107,7 +107,7 @@ Non-LLM foundation models an agent invokes as a *tool* for one narrow capability
 
 ## 7. RAG & Retrieval Infrastructure
 
-Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; this section is how agents *retrieve* over corpora. Tool facts verified first-party 2026-06-20; star counts are GitHub-rendered (approximate). For incremental code/RAG ETL see [cocoindex-analysis.md](cocoindex-analysis.md); for a filesystem-first retrieval contrast see [openviking-analysis.md](openviking-analysis.md).
+Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; this section is how agents *retrieve* over corpora. Tool facts verified first-party 2026-06-20; star counts are GitHub-rendered (approximate). For incremental code/RAG ETL see [cocoindex-analysis.md](context-memory/cocoindex-analysis.md); for a filesystem-first retrieval contrast see [openviking-analysis.md](context-memory/openviking-analysis.md).
 
 **Pipeline taxonomy**: Naive RAG (index→retrieve→read, single-hop) → Advanced RAG (pre/post-retrieval transforms) → Modular RAG (interoperable, multi-hop) → **Agentic RAG** (the agent plans retrieval, reflects, and calls tools). Survey: [Singh et al. 2025, arXiv:2501.09136](https://arxiv.org/abs/2501.09136).
 
