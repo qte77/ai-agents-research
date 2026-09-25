@@ -133,6 +133,7 @@ ai-agents-research/
       <section>/                       # 9 subdirs mirroring non-cc/README.md sections: orchestrators, agents, coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols
     cc-community/                      # Community skills, plugins, tooling, CLAUDE.md patterns
     sdlc-lcm/                          # SDLC/lifecycle management specs
+    _topics/                           # Cross-subject hub indexes (memory, knowledge-graphs, rag, code-tooling, visualization); pointers only
     learnings/                         # Cross-repo compound learnings hub (CRLA write-back target)
     research/                          # Auto-generated cumulative rxiv agentic-AI paper index
     plans/                             # Plan/design docs (durable plan-mode output; backlog = GitHub Issues)
