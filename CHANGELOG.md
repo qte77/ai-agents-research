@@ -11,6 +11,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.10.0] - 2026-09-25
+
+### Changed
+
+- `scripts/restructure_links.py`, `docs/non-cc/.restructure-map.tsv`, `docs/non-cc/orchestrators/`: #309 Phase 1, step 1 of the `docs/non-cc/` faithful-9 subdir restructure. Added a stdlib-only, typed move-and-rewrite tool that repoints every relative markdown link repo-wide when docs move (inline links, reference-style definitions, anchors kept, fenced code blocks left alone), backed by a generated filename-to-subdir mapping file for all 93 `docs/non-cc/` docs. Used it to move the smallest section, Orchestrators (6 docs: `air-`, `deerflow-`, `devteam-`, `omnigent-`, `qm-`, `raven-analysis.md`), into `docs/non-cc/orchestrators/`, updating `docs/non-cc/README.md`'s index and every inbound cross-reference. The remaining 8 sections (Agents, Coding Agents & IDEs, Knowledge Management, Reference & Background, Context & Memory Infrastructure, Infrastructure, Frameworks, Protocols & Interfaces) move in follow-up PRs using the same tool.
+
+- `docs/non-cc/knowledge-management/`: moved the 6 knowledge management docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 2).
+
+- `docs/non-cc/protocols/`: moved the 7 protocols docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 3).
+
+- `docs/non-cc/reference/`: moved the 8 reference docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 4).
+
+- `docs/non-cc/context-memory/`: moved the 9 context memory docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 5).
+
+- `docs/non-cc/agents/`: moved the 10 agents docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 6).
+
+- `docs/non-cc/infrastructure/`: moved the 12 infrastructure docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 7).
+
+- `docs/non-cc/frameworks/`: moved the 13 frameworks docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 8).
+
+- `docs/non-cc/coding-agents/`: moved the 22 coding agents docs into their own subdirectory with `scripts/restructure_links.py`; all relative links repo-wide rewritten (#309 Phase 1 step 9).
+
+- `CONTRIBUTING.md`, `docs/architecture.md`: directory trees list the 9 `docs/non-cc/<section>/` subdirs.
+- `.claude/skills/adding-research-source/SKILL.md`: new non-cc docs go into the `docs/non-cc/<section>/` subdir that matches their README section.
+
+- **Breaking for inbound links:** all 93 `docs/non-cc/*.md` URLs moved to `docs/non-cc/<section>/*.md` (9 section subdirs: orchestrators, agents, coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols; #489–#498). GitHub does not redirect moved files, so update any external link or bookmark to the new path. The section index is `docs/non-cc/README.md`.
+
+### Removed
+
+- `scripts/restructure_links.py`, `tests/test_restructure_links.py`, `docs/non-cc/.restructure-map.tsv`: one-off #309 Phase 1 move tooling, removed after all 9 moves (#489–#497). Recoverable from commit `7179e0a`.
+
 ## [0.9.1] - 2026-09-25
 
 ### Added
