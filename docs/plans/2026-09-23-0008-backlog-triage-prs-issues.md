@@ -3,7 +3,7 @@ title: Backlog triage — open PRs, branches and issues (2026-09-23)
 status: draft
 issue: 438, 433, 417, 410, 254, 347, 348, 309, 382, 232
 created: 2026-09-23
-updated: 2026-09-23
+updated: 2026-09-25
 ---
 
 **Status**: Reference (plan)
@@ -33,11 +33,9 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
   docs now in `docs/non-cc/<section>/` (9 README-section subdirs); lychee offline 0 errors every step;
   tool removed (recoverable from `7179e0a`); add-source skill + CONTRIBUTING/architecture trees updated.
 - **Next, in order (START HERE in a fresh session):**
-  1. **Cross-repo link fix (found 2026-09-25):** `qte77/polyfetch-scrape` `docs/scraping-landscape.md:11`
-     links `…/ai-agents-research/blob/main/docs/non-cc/web-scraping-extraction-landscape.md` (404 now)
-     → repoint to `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md`. Do it in a
-     polyfetch-scrape-scoped session/subagent (estate rule). It was the only hit in a scan of 104
-     local estate clones (`git grep` for `ai-agents-research/(blob|tree)/…/docs/non-cc/<file>.md`).
+  1. ~~Cross-repo link fix~~ — done: `qte77/polyfetch-scrape` `docs/scraping-landscape.md:11` already
+     points at `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md` on its `main`
+     (verified 2026-09-25). It was the only hit in a scan of 104 local estate clones.
   2. **Release v0.10.0** (minor: 93 doc URLs under `docs/non-cc/` moved — call it out in the release
      notes): run the local gate (`make check_docs check_status check_actions test`) → dispatch
      `bump-my-version` (minor) → merge the release PR → confirm the `tag-release` run → dispatch
@@ -223,7 +221,7 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~13~~ | ~~Merge newest bot PRs #442, #443, #444, #424, #418~~ | owner | Done 2026-09-23: all five merged, branches deleted |
 | ~~14~~ | ~~#434: read failed logs, then merge~~ | owner | Done 2026-09-23: failures were environmental (lychee rot, GitHub Models outage); merged |
 | ~~15~~ | ~~#417: approve producthunt exclude~~ | owner | Done 2026-09-24: #457 (exact-URL exclude) |
-| 16 | Close #382; decide #232; decide #309 scope (keep vs. split) | owner | Each issue closed or updated with decision |
+| ~~16~~ | ~~Close #382; decide #232; decide #309 scope (keep vs. split)~~ | owner | Done 2026-09-24/25: #382 and #232 closed; #309 kept as one tracker (Phase 1 executed in place, #489–#498) |
 | ~~17~~ | ~~Screenshot pass 1: tag 1,433 images in / maybe / out~~ | agent | Done 2026-09-23: `shots-merged.tsv` (spot-checked) |
 | ~~18~~ | ~~Screenshot pass 2: extract URLs, handles, entities, descriptions~~ | agent | Done 2026-09-23: 921 of 929 records (8 missing), 726 URLs (51 truncated); lnkd.in short links resolved to real targets via polyfetch → `lnkd-resolved.tsv` |
 | ~~19~~ | ~~Cluster pass-2 leads into topics; coverage; placement~~ | agent | Done 2026-09-23: 682 topics; results in the Screenshot sources section |
