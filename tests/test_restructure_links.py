@@ -15,7 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-import restructure_links as rl  # noqa: E402
+import restructure_links as rl
 
 # A single conceptual move used across most tests: the "Orchestrators" section
 # moving from docs/non-cc/ into docs/non-cc/orchestrators/.
