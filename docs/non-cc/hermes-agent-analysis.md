@@ -100,7 +100,7 @@ on multi-channel deployment but different architecture.
 ## Cross-References
 
 - [goclaw-analysis.md](goclaw-analysis.md) — also multi-channel agent platform (Go, different architecture)
-- [deerflow-analysis.md](deerflow-analysis.md) — general-purpose agent harness (LangGraph, no messaging channels)
+- [deerflow-analysis.md](orchestrators/deerflow-analysis.md) — general-purpose agent harness (LangGraph, no messaging channels)
 - [CC-community-skills-landscape.md](../cc-community/CC-community-skills-landscape.md) — CC skill creation (manual vs Hermes autonomous)
 
 ## Sources

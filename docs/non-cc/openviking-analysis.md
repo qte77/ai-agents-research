@@ -23,7 +23,7 @@ OpenViking is an open-source **context database** for AI agents that replaces fl
 
 | Topic | Existing Analysis | File |
 |-------|------------------|------|
-| ByteDance agent tooling | DeerFlow analysis | `docs/non-cc/deerflow-analysis.md` |
+| ByteDance agent tooling | DeerFlow analysis | `docs/non-cc/orchestrators/deerflow-analysis.md` |
 | Tiered memory patterns | CC memory system (Auto-Dream) | `docs/cc-native/context-memory/CC-memory-system-analysis.md` |
 | Context management | ByteRover 5-tier retrieval | `docs/cc-community/CC-community-tooling-landscape.md:181-219` |
 | Harness pattern: Tiered Memory | Ibryam pattern #3 | `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md` |
