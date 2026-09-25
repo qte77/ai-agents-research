@@ -124,7 +124,7 @@ product.
 
 ## Cross-References
 
-- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — proprietary peer with fixed subscription model; useful cost comparison baseline
+- [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — proprietary peer with fixed subscription model; useful cost comparison baseline
 
 ## Sources
 

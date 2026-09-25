@@ -23,7 +23,7 @@ in a remote VM with Playbooks, Secrets, Knowledge, video recordings, and PR
 completion. The `/handoff` command bridges the two: start locally, then
 escalate to cloud when the task grows. The cloud surface — including its GitHub
 Actions integration — is covered in
-[CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md).
+[CC-github-actions-analysis.md](../../cc-native/ci-remote/CC-github-actions-analysis.md).
 
 **Devin Desktop** (formerly Windsurf/Cascade) is a separate surface: a full
 IDE with an agent manager. The CLI is pure terminal; Desktop is GUI-first. The
@@ -136,9 +136,9 @@ evaluate against your existing subscriptions before adding a new vendor.
 
 ## Cross-References
 
-- [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md) — autonomous cloud Devin via GitHub Actions (the `/handoff` destination)
-- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — peer terminal agent; compare permission models and headless support
-- [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) — per-agent config-file and onboarding comparison
+- [CC-github-actions-analysis.md](../../cc-native/ci-remote/CC-github-actions-analysis.md) — autonomous cloud Devin via GitHub Actions (the `/handoff` destination)
+- [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — peer terminal agent; compare permission models and headless support
+- [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md) — per-agent config-file and onboarding comparison
 
 ## Sources
 
@@ -156,5 +156,5 @@ evaluate against your existing subscriptions before adding a new vendor.
 [devin-cli-cmds]: https://docs.devin.ai/cli/essential-commands.md
 [devin-billing]: https://docs.devin.ai/admin/billing/self-serve.md
 [devin-desktop-blog]: https://devin.ai/blog/windsurf-is-now-devin-desktop/
-[copilot-cli-doc]: agents/github-copilot-cli-analysis.md
+[copilot-cli-doc]: ../agents/github-copilot-cli-analysis.md
 [search-result]: https://terminaltrove.com/ai-coding-agents/devin-for-terminal/

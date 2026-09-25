@@ -61,8 +61,8 @@ forks, **MIT** license, created 2026-08-21, latest tagged release `v0.1.1` (publ
 - A standalone `spec-ptc-daemon` runs the same shadow-and-store logic out of process over a
   Unix socket, for harnesses that cannot embed the library directly.
 - The repo ships reference wrappers for **Claude Code** (as a `PreToolUse` hook), **OpenCode**,
-  and **Pi-mono** (see [`pi-analysis.md`](../pi-analysis.md),
-  [`opencode-analysis.md`](../opencode-analysis.md)), and links Claude's own
+  and **Pi-mono** (see [`pi-analysis.md`](../coding-agents/pi-analysis.md),
+  [`opencode-analysis.md`](../coding-agents/opencode-analysis.md)), and links Claude's own
   [programmatic tool calling docs][claude-ptc-docs] as the underlying PTC pattern it speculates
   on top of.
 

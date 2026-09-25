@@ -97,4 +97,4 @@ Codebuff occupies a similar terminal-agent niche to [GitHub Copilot CLI][copilot
 [readme-models]: https://github.com/CodebuffAI/codebuff/blob/main/README.md
 [readme-sdk]: https://github.com/CodebuffAI/codebuff/blob/main/README.md
 [openrouter]: https://openrouter.ai/
-[copilot-ref]: agents/github-copilot-cli-analysis.md
+[copilot-ref]: ../agents/github-copilot-cli-analysis.md

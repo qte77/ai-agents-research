@@ -52,7 +52,7 @@ data-flow consideration, not a fit for key-free/offline workflows.
 
 Cross-ref: [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) ·
 [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) ·
-[codex-cli-analysis.md](../non-cc/codex-cli-analysis.md)
+[codex-cli-analysis.md](../non-cc/coding-agents/codex-cli-analysis.md)
 
 ## Sources
 

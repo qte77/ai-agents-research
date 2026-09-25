@@ -34,28 +34,28 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
-| [cline-analysis.md](cline-analysis.md) | Cline (autonomous coding agent; VS Code, CLI, SDK) | Yes | Yes (Apache-2.0) |
-| [opencode-analysis.md](opencode-analysis.md) | opencode (terminal agent; TUI + headless CLI, 75+ providers) | Yes | Yes (MIT) |
-| [codebuff-analysis.md](codebuff-analysis.md) | Codebuff (terminal agent; multi-agent orchestration, OpenRouter) | Yes | Yes (Apache-2.0) |
-| [gemini-cli-analysis.md](gemini-cli-analysis.md) | Gemini CLI (Google; free tier ends 2026-06-18 → enterprise-only) — **Hold** | Yes | Yes (Apache-2.0) |
-| [cursor-analysis.md](cursor-analysis.md) | Cursor (GUI AI editor, VS Code fork; Composer agent + CLI) | Partial | No |
-| [antigravity-analysis.md](antigravity-analysis.md) | Google Antigravity (agent-first IDE + CLI; preview) | Partial | No |
-| [kiro-analysis.md](kiro-analysis.md) | Kiro (AWS spec-driven agentic IDE) | Partial | No |
-| [codex-cli-analysis.md](codex-cli-analysis.md) | OpenAI Codex CLI (terminal agent; sandbox, headless CI) | Partial | Yes (Apache-2.0) |
-| [vscode-copilot-chat-analysis.md](vscode-copilot-chat-analysis.md) | VS Code Copilot Chat (GA agent mode) | No | Yes (MIT) |
-| [devin-cli-analysis.md](devin-cli-analysis.md) | Devin CLI (Cognition; local agent + cloud handoff) | Partial | No |
-| [windsurf-analysis.md](windsurf-analysis.md) | Windsurf (now Devin Desktop; Cognition-acquired) | No | No |
-| [aider-analysis.md](aider-analysis.md) | Aider (OSS terminal pair-programmer; git-native, multi-LLM) | Yes | Yes (Apache-2.0) |
-| [amazon-q-developer-analysis.md](amazon-q-developer-analysis.md) | Amazon Q Developer (CLI + IDE; deprecated 2026-04-30 → Kiro) — **Hold** | Partial | Yes (Apache-2.0 / MIT CLI) |
-| [codebuddy-analysis.md](codebuddy-analysis.md) | CodeBuddy (Tencent Cloud AI coding agent; IDE + CLI) | Yes | No |
-| [kilo-code-analysis.md](kilo-code-analysis.md) | Kilo Code (OSS agentic coding; VS Code/JetBrains/CLI, 500+ models) | Yes | Yes (MIT) |
-| [trae-analysis.md](trae-analysis.md) | Trae (ByteDance VS Code-based agentic IDE) | No | No |
-| [kimi-code-analysis.md](kimi-code-analysis.md) | Kimi Code (Moonshot terminal agent; Kimi K2.7-Code) | Yes | Yes (MIT) |
-| [amp-analysis.md](amp-analysis.md) | Amp (Sourcegraph terminal-first multi-model agent) | Yes | No |
-| [pi-analysis.md](pi-analysis.md) | Pi (minimal terminal coding agent CLI, 15+ providers; Omnigent harness) | Yes | Yes (MIT) |
-| [deepcode-analysis.md](deepcode-analysis.md) | DeepCode (HKUDS; open agentic coding harness, Paper2Code origin, Loop Engineering; CLI/Desktop/Web/TUI) | Partial | Yes (MIT) |
-| [deepseek-harness-analysis.md](deepseek-harness-analysis.md) | DeepSeek Harness (`dsh`; plugin-native "everything-is-a-plugin" harness; developer preview) | Partial | Yes (MIT) |
-| [prime-agent-analysis.md](prime-agent-analysis.md) | Prime Agent (Prime Intellect; self-improving coding harness on the Recursive Language Model abstraction) | Yes | Yes (MIT) |
+| [cline-analysis.md](coding-agents/cline-analysis.md) | Cline (autonomous coding agent; VS Code, CLI, SDK) | Yes | Yes (Apache-2.0) |
+| [opencode-analysis.md](coding-agents/opencode-analysis.md) | opencode (terminal agent; TUI + headless CLI, 75+ providers) | Yes | Yes (MIT) |
+| [codebuff-analysis.md](coding-agents/codebuff-analysis.md) | Codebuff (terminal agent; multi-agent orchestration, OpenRouter) | Yes | Yes (Apache-2.0) |
+| [gemini-cli-analysis.md](coding-agents/gemini-cli-analysis.md) | Gemini CLI (Google; free tier ends 2026-06-18 → enterprise-only) — **Hold** | Yes | Yes (Apache-2.0) |
+| [cursor-analysis.md](coding-agents/cursor-analysis.md) | Cursor (GUI AI editor, VS Code fork; Composer agent + CLI) | Partial | No |
+| [antigravity-analysis.md](coding-agents/antigravity-analysis.md) | Google Antigravity (agent-first IDE + CLI; preview) | Partial | No |
+| [kiro-analysis.md](coding-agents/kiro-analysis.md) | Kiro (AWS spec-driven agentic IDE) | Partial | No |
+| [codex-cli-analysis.md](coding-agents/codex-cli-analysis.md) | OpenAI Codex CLI (terminal agent; sandbox, headless CI) | Partial | Yes (Apache-2.0) |
+| [vscode-copilot-chat-analysis.md](coding-agents/vscode-copilot-chat-analysis.md) | VS Code Copilot Chat (GA agent mode) | No | Yes (MIT) |
+| [devin-cli-analysis.md](coding-agents/devin-cli-analysis.md) | Devin CLI (Cognition; local agent + cloud handoff) | Partial | No |
+| [windsurf-analysis.md](coding-agents/windsurf-analysis.md) | Windsurf (now Devin Desktop; Cognition-acquired) | No | No |
+| [aider-analysis.md](coding-agents/aider-analysis.md) | Aider (OSS terminal pair-programmer; git-native, multi-LLM) | Yes | Yes (Apache-2.0) |
+| [amazon-q-developer-analysis.md](coding-agents/amazon-q-developer-analysis.md) | Amazon Q Developer (CLI + IDE; deprecated 2026-04-30 → Kiro) — **Hold** | Partial | Yes (Apache-2.0 / MIT CLI) |
+| [codebuddy-analysis.md](coding-agents/codebuddy-analysis.md) | CodeBuddy (Tencent Cloud AI coding agent; IDE + CLI) | Yes | No |
+| [kilo-code-analysis.md](coding-agents/kilo-code-analysis.md) | Kilo Code (OSS agentic coding; VS Code/JetBrains/CLI, 500+ models) | Yes | Yes (MIT) |
+| [trae-analysis.md](coding-agents/trae-analysis.md) | Trae (ByteDance VS Code-based agentic IDE) | No | No |
+| [kimi-code-analysis.md](coding-agents/kimi-code-analysis.md) | Kimi Code (Moonshot terminal agent; Kimi K2.7-Code) | Yes | Yes (MIT) |
+| [amp-analysis.md](coding-agents/amp-analysis.md) | Amp (Sourcegraph terminal-first multi-model agent) | Yes | No |
+| [pi-analysis.md](coding-agents/pi-analysis.md) | Pi (minimal terminal coding agent CLI, 15+ providers; Omnigent harness) | Yes | Yes (MIT) |
+| [deepcode-analysis.md](coding-agents/deepcode-analysis.md) | DeepCode (HKUDS; open agentic coding harness, Paper2Code origin, Loop Engineering; CLI/Desktop/Web/TUI) | Partial | Yes (MIT) |
+| [deepseek-harness-analysis.md](coding-agents/deepseek-harness-analysis.md) | DeepSeek Harness (`dsh`; plugin-native "everything-is-a-plugin" harness; developer preview) | Partial | Yes (MIT) |
+| [prime-agent-analysis.md](coding-agents/prime-agent-analysis.md) | Prime Agent (Prime Intellect; self-improving coding harness on the Recursive Language Model abstraction) | Yes | Yes (MIT) |
 
 ## Knowledge Management
 

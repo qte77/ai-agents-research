@@ -25,8 +25,8 @@ to the 'Pre-GA Offerings Terms'… available 'as is'"). Treat the 1.0 as a versi
 guarantee.
 
 It is distinct from everything already in the corpus: not a coding agent (unlike
-[gemini-cli-analysis.md](../gemini-cli-analysis.md), which is **Hold**), not a host IDE (unlike
-[antigravity-analysis.md](../antigravity-analysis.md), a *named host* for agents-cli), and a level up
+[gemini-cli-analysis.md](../coding-agents/gemini-cli-analysis.md), which is **Hold**), not a host IDE (unlike
+[antigravity-analysis.md](../coding-agents/antigravity-analysis.md), a *named host* for agents-cli), and a level up
 from the one-line **Google ADK** entry in
 [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md). ADK is
 the agent *framework*; agents-cli is the lifecycle tooling around it.
@@ -59,7 +59,7 @@ plugin ([../cc-community/CC-codex-plugin-cc-analysis.md](../../cc-community/CC-c
 which delegates *between* agents; agents-cli instead *upskills* the host agent for ADK work.
 
 Cross-ref: [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) (Google ADK) ·
-[gemini-cli-analysis.md](../gemini-cli-analysis.md) · [antigravity-analysis.md](../antigravity-analysis.md)
+[gemini-cli-analysis.md](../coding-agents/gemini-cli-analysis.md) · [antigravity-analysis.md](../coding-agents/antigravity-analysis.md)
 
 ## Sources
 

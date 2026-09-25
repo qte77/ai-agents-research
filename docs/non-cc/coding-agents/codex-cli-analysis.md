@@ -14,7 +14,7 @@ platform_scope: [openai, cli, vscode, cursor, windsurf]
 
 Codex CLI is OpenAI's open-source, locally-running coding agent for the terminal. It ships as a single binary (written primarily in Rust) that opens a full-screen TUI, reads and edits code in the current working directory, executes shell commands, and streams model responses — all with a two-layer safety model (sandbox + approval policy). The repository ([github.com/openai/codex][gh-codex]) reached 91 k GitHub stars and version 0.140.0 as of 2026-06-15.
 
-This doc covers the **terminal agent** only. The cloud Codex environment — a hosted, sandboxed execution layer used by the GitHub Actions integration — is a separate product and is covered in [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md).
+This doc covers the **terminal agent** only. The cloud Codex environment — a hosted, sandboxed execution layer used by the GitHub Actions integration — is a separate product and is covered in [CC-github-actions-analysis.md](../../cc-native/ci-remote/CC-github-actions-analysis.md).
 
 ## How It Works
 
@@ -68,7 +68,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 - **Subagent parallelisation**: explicit fan-out for parallel subtasks (extra token cost)
 - **MCP support**: connect STDIO or streaming-HTTP MCP servers via `config.toml`; launched automatically
 - **Session resume**: `codex resume` restores prior conversation and repository state
-- **AGENTS.md**: honours `AGENTS.md` files for custom per-project instructions ([agents-md][agents-md]); cross-agent convergence of this convention is tracked in [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md)
+- **AGENTS.md**: honours `AGENTS.md` files for custom per-project instructions ([agents-md][agents-md]); cross-agent convergence of this convention is tracked in [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)
 - **Shell completions**: bash, zsh, fish
 
 ### Authentication and access
@@ -85,7 +85,7 @@ Codex CLI is **Trial**. The two-layer sandbox + approval model, headless `codex 
 
 For teams already on OpenAI/ChatGPT Enterprise, this is an immediately viable terminal agent. For CC-native workflows, the primary value is as a reference model for headless sandboxing and approval-policy design.
 
-See also [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) for a comparable terminal coding agent from GitHub/Microsoft.
+See also [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) for a comparable terminal coding agent from GitHub/Microsoft.
 
 ## Action Items
 

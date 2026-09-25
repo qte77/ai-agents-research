@@ -158,7 +158,7 @@ cross-session memory or cloud sandbox.
 
 ## Cross-References
 
-- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — proprietary terminal peer;
+- [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — proprietary terminal peer;
   comparison point for subscription vs bring-your-own-key models
 
 ## Sources
@@ -179,4 +179,4 @@ cross-session memory or cloud sandbox.
 [aider-leaderboard]: https://aider.chat/docs/leaderboards/
 [aider-history]: https://aider.chat/HISTORY.html
 [aider-repomap]: https://aider.chat/docs/repomap.html
-[copilot-cli-analysis]: agents/github-copilot-cli-analysis.md
+[copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md

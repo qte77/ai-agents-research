@@ -72,7 +72,7 @@ consistent with, though not derived from, this dataset.
 No prior coverage — `git grep` across `docs/` for `agents-md-cookbook`,
 `Taiizor`, `agents-md-lint`, `agents-md-migrate` returns zero hits. The only
 tangential mention of AGENTS.md itself is
-[opencode-analysis.md](../opencode-analysis.md) (~L93-95, 138, 147), which
+[opencode-analysis.md](../coding-agents/opencode-analysis.md) (~L93-95, 138, 147), which
 covers it only as opencode's own context-seeding file — not this cookbook.
 
 This kit is a concrete tooling instance of the convergence trend traced in
