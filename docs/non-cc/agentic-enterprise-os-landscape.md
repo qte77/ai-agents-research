@@ -120,4 +120,4 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [odysseus]: odysseus-analysis.md
 [goose]: goose-analysis.md
 [frameworks]: agent-frameworks-infrastructure-landscape.md
-[ag-ui]: ag-ui-protocol-landscape.md
+[ag-ui]: protocols/ag-ui-protocol-landscape.md

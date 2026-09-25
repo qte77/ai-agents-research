@@ -86,7 +86,7 @@ The `/rename invoices`, `/rename offers`, `/rename mails` pattern — dedicated 
 | **Tmux-Orchestrator** | OSS | CC | 24/7 autonomous agents with self-scheduled check-ins, multi-project coordination | [Jedward23/Tmux-Orchestrator](https://github.com/Jedward23/Tmux-Orchestrator) |
 | **claude-conductor** | OSS | CC | Multi-agent via `claude -p` in tmux with MCP server integration (filesystem, Slack, Atlassian) | [lancejames221b/claude-conductor](https://github.com/lancejames221b/claude-conductor) |
 
-*Naming note: several agent-management surfaces adopt cockpit / "command center" / "HUD" framing — see the [Agent Control-Surface Naming landscape](../non-cc/ag-ui-protocol-landscape.md#agent-control-surface-naming-2026) for the verified taxonomy and the live-generative-UI gap.*
+*Naming note: several agent-management surfaces adopt cockpit / "command center" / "HUD" framing — see the [Agent Control-Surface Naming landscape](../non-cc/protocols/ag-ui-protocol-landscape.md#agent-control-surface-naming-2026) for the verified taxonomy and the live-generative-UI gap.*
 
 ### Vibe Kanban (Sunsetting — Apache-2.0, ~27k stars)
 

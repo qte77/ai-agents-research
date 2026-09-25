@@ -134,13 +134,13 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 
 | Document | Scope |
 |---|---|
-| [ag-ui-protocol-landscape.md](ag-ui-protocol-landscape.md) | AG-UI (Agent-User Interaction protocol), A2UI (Google declarative generative-UI spec), OpenGenerativeUI (CopilotKit reference framework); 2026 ecosystem adoption + Salesforce non-adoption note |
-| [agentcanvas-analysis.md](agentcanvas-analysis.md) | AgentCanvas — renders Pydantic AI + Logfire execution traces as interactive HTML diagrams (OTel agent observability) |
-| [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) | Survey of 18 OTel observability platforms + 5 tracing patterns for agent behavior (Langfuse, Arize Phoenix, Logfire, …); CC's own first-party telemetry split to cc-native |
-| [agentic-payments-landscape.md](agentic-payments-landscape.md) | Machine-native agent payment rails: x402 (Coinbase/Linux Foundation), Google AP2, Stripe MPP, Fetch.ai |
-| [agent-plugins-standard-analysis.md](agent-plugins-standard-analysis.md) | Agent Plugins — open standard (v1.0.0) for packaging Agent Skills + MCP servers into one cross-client plugin directory format |
-| [agents-md-cookbook-analysis.md](agents-md-cookbook-analysis.md) | agents-md-cookbook — tool-agnostic AGENTS.md template kit (15 stack templates, CI linter, migrator from CLAUDE.md/.cursorrules/etc.) |
-| [programmatic-tool-calling-analysis.md](programmatic-tool-calling-analysis.md) | Programmatic and speculative tool calling (PTC/sPTC) — typed function-stub tool calls vs. JSON schema matching, evaluated across 14 models |
+| [ag-ui-protocol-landscape.md](protocols/ag-ui-protocol-landscape.md) | AG-UI (Agent-User Interaction protocol), A2UI (Google declarative generative-UI spec), OpenGenerativeUI (CopilotKit reference framework); 2026 ecosystem adoption + Salesforce non-adoption note |
+| [agentcanvas-analysis.md](protocols/agentcanvas-analysis.md) | AgentCanvas — renders Pydantic AI + Logfire execution traces as interactive HTML diagrams (OTel agent observability) |
+| [agent-observability-methods-analysis.md](protocols/agent-observability-methods-analysis.md) | Survey of 18 OTel observability platforms + 5 tracing patterns for agent behavior (Langfuse, Arize Phoenix, Logfire, …); CC's own first-party telemetry split to cc-native |
+| [agentic-payments-landscape.md](protocols/agentic-payments-landscape.md) | Machine-native agent payment rails: x402 (Coinbase/Linux Foundation), Google AP2, Stripe MPP, Fetch.ai |
+| [agent-plugins-standard-analysis.md](protocols/agent-plugins-standard-analysis.md) | Agent Plugins — open standard (v1.0.0) for packaging Agent Skills + MCP servers into one cross-client plugin directory format |
+| [agents-md-cookbook-analysis.md](protocols/agents-md-cookbook-analysis.md) | agents-md-cookbook — tool-agnostic AGENTS.md template kit (15 stack templates, CI linter, migrator from CLAUDE.md/.cursorrules/etc.) |
+| [programmatic-tool-calling-analysis.md](protocols/programmatic-tool-calling-analysis.md) | Programmatic and speculative tool calling (PTC/sPTC) — typed function-stub tool calls vs. JSON schema matching, evaluated across 14 models |
 
 ## Backlog status
 

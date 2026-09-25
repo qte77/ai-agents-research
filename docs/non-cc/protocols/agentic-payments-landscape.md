@@ -15,9 +15,9 @@ autonomous multi-agent systems: *agent hits a paywall → wallet authorizes → 
 resource*. The corpus had **zero** coverage of this before (only a one-line Fetch.ai mention); this doc
 catalogs the emerging, competing standards. It is tightly coupled to **agent identity/authentication**
 (a payer needs a verifiable identity) — see
-[../sdlc-lcm/agent-identity-auth-landscape.md](../sdlc-lcm/agent-identity-auth-landscape.md) (AP2's
+[../sdlc-lcm/agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md) (AP2's
 Mandates *are* the authorization primitive) and the security angle in
-[../sdlc-lcm/agentic-ai-vulnerability-landscape.md](../sdlc-lcm/agentic-ai-vulnerability-landscape.md).
+[../sdlc-lcm/agentic-ai-vulnerability-landscape.md](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md).
 
 ## The standards
 
@@ -55,14 +55,14 @@ the API/Actor layer, not (yet) inside MCP tool calls.
 cryptographically prove a purchase was human-authorized ([AP2 repo][ap2]). It is payment-method-agnostic
 (it rides on top of a rail rather than being one). Because Mandates are the "authorize on behalf of a
 human" primitive, AP2 sits at the seam of payments and **agent identity/auth** — see
-[../sdlc-lcm/agent-identity-auth-landscape.md](../sdlc-lcm/agent-identity-auth-landscape.md).
+[../sdlc-lcm/agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md).
 
 ### Stripe MPP & Fetch.ai
 
 **Stripe's Machine Payments Protocol (MPP)** appears as x402's named alternative in the Apify RFC
 above — a competing rail from the traditional-payments incumbent; not independently characterized here.
 **Fetch.ai uAgents** already appears as a one-line mention in
-[agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md)
+[agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md)
 (blockchain-integrated agents with on-chain payments via Agentverse).
 
 ## Why it matters / takeaways
@@ -73,7 +73,7 @@ above — a competing rail from the traditional-payments incumbent; not independ
 - **Crypto vs card rails split:** x402 is USDC/Base (onchain); AP2/MPP aim payment-method-agnostic /
   card-inclusive. Watch which agent frameworks adopt which.
 - **Distinct from human-account SaaS billing:** this is *not* Claude Code calling a Stripe MCP server
-  on a human's account (see [../cc-native/plugins-ecosystem/CC-business-api-integrations.md](../cc-native/plugins-ecosystem/CC-business-api-integrations.md)) — it's the agent itself as the payer.
+  on a human's account (see [../cc-native/plugins-ecosystem/CC-business-api-integrations.md](../../cc-native/plugins-ecosystem/CC-business-api-integrations.md)) — it's the agent itself as the payer.
 - **Assess:** early, standards-in-flux, crypto-settlement caveats. Track x402/AP2 releases; revisit as
   MCP-level payment gating (deferred in #626) reappears.
 

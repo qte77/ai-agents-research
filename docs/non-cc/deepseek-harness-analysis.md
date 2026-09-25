@@ -34,8 +34,8 @@ in the README.
 
 ## Corpus Relevance
 
-Complements [agent-plugins-standard-analysis.md](agent-plugins-standard-analysis.md)
-(this batch) and [agents-md-cookbook-analysis.md](agents-md-cookbook-analysis.md)'s
+Complements [agent-plugins-standard-analysis.md](protocols/agent-plugins-standard-analysis.md)
+(this batch) and [agents-md-cookbook-analysis.md](protocols/agents-md-cookbook-analysis.md)'s
 coverage of the wider plugin/config-portability trend: DeepSeek Harness is a
 single-vendor "everything-is-a-plugin" runtime (plugins extend `dsh` itself,
 discoverable via the `dsh-plugin` GitHub topic), not a cross-vendor packaging

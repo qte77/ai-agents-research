@@ -101,7 +101,7 @@ definitions, use cases, and primary research references for each metric.
 
 ### Agent Performance Metrics
 
-*See also: [evaluation frameworks & benchmarks](evaluation-data-resources-landscape.md) and [observability platforms](../non-cc/agent-observability-methods-analysis.md)*
+*See also: [evaluation frameworks & benchmarks](evaluation-data-resources-landscape.md) and [observability platforms](../non-cc/protocols/agent-observability-methods-analysis.md)*
 
 #### Tool Selection Accuracy
 
@@ -149,7 +149,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Quantifies workflow efficiency, identifies optimization opportunities
 - **Limitations**: Requires determination of optimal path
 - **Reference**: [WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854)
-- **Landscape Reference**: [Arize Phoenix - Path Metrics](../non-cc/agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix - Path Metrics](../non-cc/protocols/agent-observability-methods-analysis.md)
 
 #### Tool Call Accuracy
 
@@ -159,7 +159,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Direct measure of agent competency with tools
 - **Limitations**: Requires clear success/failure definitions
 - **Reference**: [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
-- **Landscape Reference**: [Arize Phoenix - LLM-as-a-Judge Templates](../non-cc/agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix - LLM-as-a-Judge Templates](../non-cc/protocols/agent-observability-methods-analysis.md)
 
 #### Behavioral Fingerprint Profile
 
@@ -194,7 +194,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Measures workflow optimization effectiveness
 - **Limitations**: Requires classification of step types
 - **Reference**: Multi-agent coordination in distributed systems
-- **Landscape Reference**: [Arize Phoenix - Path Metrics](../non-cc/agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix - Path Metrics](../non-cc/protocols/agent-observability-methods-analysis.md)
 
 #### Centrality Measures
 
@@ -260,7 +260,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Quantifies multi-agent coordination effectiveness
 - **Limitations**: Requires handoff event detection and context comparison
 - **Reference**: Arize Phoenix Multi-Agent Evaluation
-- **Landscape Reference**: [Arize Phoenix](../non-cc/agent-observability-methods-analysis.md)
+- **Landscape Reference**: [Arize Phoenix](../non-cc/protocols/agent-observability-methods-analysis.md)
 
 #### Semantic Outcome
 
@@ -350,7 +350,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ### Observability-Based Metrics
 
-*See also: [Observability & Monitoring Platforms](../non-cc/agent-observability-methods-analysis.md)*
+*See also: [Observability & Monitoring Platforms](../non-cc/protocols/agent-observability-methods-analysis.md)*
 
 #### Trace Coverage
 
@@ -360,7 +360,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Validates observability completeness
 - **Limitations**: Requires trace path definition
 - **Reference**: [OpenTelemetry Specification](https://opentelemetry.io/docs/specs/)
-- **Landscape Reference**: [AgentNeo - Observability Platform](../non-cc/agent-observability-methods-analysis.md)
+- **Landscape Reference**: [AgentNeo - Observability Platform](../non-cc/protocols/agent-observability-methods-analysis.md)
 - **Landscape Reference**: [Tracely](https://github.com/Jwuthri/Tracely-ai) (MIT, ~1.4k★) — trace-native CI/CD for agents: production traces are auto-clustered into failures, frozen into hermetic regression cases with recorded fixtures, and replayed in CI at $0 to block the PR, without hand-authored eval datasets
 
 #### Error Recovery Rate
@@ -455,7 +455,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 ### Observability Tool Integration
 
-*For detailed technical analysis, see [Observability & Monitoring Platforms](../non-cc/agent-observability-methods-analysis.md)*
+*For detailed technical analysis, see [Observability & Monitoring Platforms](../non-cc/protocols/agent-observability-methods-analysis.md)*
 
 - **Pydantic Logfire**: First-party PydanticAI instrumentation via `logfire.instrument_pydantic_ai()` with OTel-based tracing
 - **Comet Opik**: OpenTelemetry-compatible spans with local deployment

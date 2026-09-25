@@ -48,7 +48,7 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 
 ### Omnara
 
-*Markets itself as a "command center for AI agents" — see the [agent control-surface naming landscape](../../non-cc/ag-ui-protocol-landscape.md#agent-control-surface-naming-2026) for how that framing compares across the category.*
+*Markets itself as a "command center for AI agents" — see the [agent control-surface naming landscape](../../non-cc/protocols/ag-ui-protocol-landscape.md#agent-control-surface-naming-2026) for how that framing compares across the category.*
 
 - **YC S25 startup** (San Francisco, 3-person team) ([source][omnara-yc])
 - **Pivoted**: Original open-source CLI wrapper (`omnara-ai/omnara`,

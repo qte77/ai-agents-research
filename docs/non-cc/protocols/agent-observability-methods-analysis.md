@@ -16,7 +16,7 @@ This analysis examines the specific technical mechanisms used by 18 observabilit
 
 **Key Developments**: Six new tools added (Braintrust, Maxim AI, AgentOps, Datadog LLM Observability, Pydantic Logfire, otel-tui), six existing tools received major feature updates (Langfuse v2 APIs, MLflow TypeScript support, Arize Phoenix continuous releases, enhanced multi-agent observability across platforms).
 
-**See**: [agent-frameworks-infrastructure-landscape.md](../non-cc/agent-frameworks-infrastructure-landscape.md)
+**See**: [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md)
 
 ## Key Features of the Analysis
 
@@ -39,7 +39,7 @@ This analysis examines the specific technical mechanisms used by 18 observabilit
 
 ## Claude Code (First-Party OTel Integration)
 
-Claude Code's own first-party OTel telemetry — span hierarchy, distributed-trace propagation, privacy-default gates, and metric cardinality controls — now lives in [CC-monitoring-telemetry-analysis.md](../cc-native/configuration/CC-monitoring-telemetry-analysis.md). The OTel-native backends catalogued below can ingest CC's OTLP output directly (Logfire advertises a "zero-config" Claude Code path via its MCP server).
+Claude Code's own first-party OTel telemetry — span hierarchy, distributed-trace propagation, privacy-default gates, and metric cardinality controls — now lives in [CC-monitoring-telemetry-analysis.md](../../cc-native/configuration/CC-monitoring-telemetry-analysis.md). The OTel-native backends catalogued below can ingest CC's OTLP output directly (Logfire advertises a "zero-config" Claude Code path via its MCP server).
 
 ## OpenTelemetry GenAI Semantic Conventions (2025-2026)
 
@@ -629,4 +629,4 @@ The observability landscape continues rapid evolution toward standardization (Op
 
 ## Sources
 
-Each of the 18 platforms cites its official docs/repo inline across the five tracing-pattern sections above. Claude Code's own first-party OTel telemetry is documented separately in [CC-monitoring-telemetry-analysis.md](../cc-native/configuration/CC-monitoring-telemetry-analysis.md).
+Each of the 18 platforms cites its official docs/repo inline across the five tracing-pattern sections above. Claude Code's own first-party OTel telemetry is documented separately in [CC-monitoring-telemetry-analysis.md](../../cc-native/configuration/CC-monitoring-telemetry-analysis.md).

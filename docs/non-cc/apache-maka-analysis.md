@@ -48,7 +48,7 @@ verification).
 
 No directly comparable "local-first agent workspace with an event-sourced,
 append-only runtime log" is tracked elsewhere in this corpus.
-[agent-observability-methods-analysis.md](agent-observability-methods-analysis.md)
+[agent-observability-methods-analysis.md](protocols/agent-observability-methods-analysis.md)
 covers a different layer — SaaS/OTel tracing add-ons for cloud-hosted
 agents — rather than a local execution log that *is* the runtime record.
 

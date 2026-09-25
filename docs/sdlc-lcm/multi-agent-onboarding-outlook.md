@@ -98,7 +98,7 @@ agents. No architectural changes needed to support Kiro-like workflows.
 | **ACP** | IBM | Enterprise governance | Compliance/audit (Phase 3) |
 | **AG-UI** | Community | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
 
-The frontend / agent / tool **protocol triangle** (AG-UI · A2A · MCP) is mapped in detail in [ag-ui-protocol-landscape.md](../non-cc/ag-ui-protocol-landscape.md).
+The frontend / agent / tool **protocol triangle** (AG-UI · A2A · MCP) is mapped in detail in [ag-ui-protocol-landscape.md](../non-cc/protocols/ag-ui-protocol-landscape.md).
 
 ## Summary
 

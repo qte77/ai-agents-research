@@ -21,7 +21,7 @@ general* get identity/authorization, and how is human-vs-agent distinguished."
 It joins the security cluster: [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md)
 (vuln scoring/discovery), [ai-security-governance-analysis.md](ai-security-governance-analysis.md)
 (governance frameworks), [mas-security-framework.md](mas-security-framework.md) (MAESTRO). It is also
-the substrate under [../non-cc/agentic-payments-landscape.md](../non-cc/agentic-payments-landscape.md)
+the substrate under [../non-cc/protocols/agentic-payments-landscape.md](../non-cc/protocols/agentic-payments-landscape.md)
 — x402 needs a payer identity; AP2's Mandates *are* the "authorize on behalf of a human" instance of
 this topic.
 
@@ -66,7 +66,7 @@ The agent has its own identity, independent of any human.
   [okta.com][xaa].
 - **Google AP2 Mandates** — AP2's core primitive is the **Mandate**, a W3C Verifiable Credential;
   Intent → Cart → Payment Mandate chain, ECDSA/P-256-signed, cryptographically proving a purchase was
-  human-authorized. A trust/authorization layer feeding [agentic payments](../non-cc/agentic-payments-landscape.md).
+  human-authorized. A trust/authorization layer feeding [agentic payments](../non-cc/protocols/agentic-payments-landscape.md).
   [AP2 repo][ap2].
 
 ## 3. Personhood & the bot-vs-authorized-agent distinction
@@ -109,7 +109,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 - **Personhood is now infrastructure, not research:** World ID's scale + Cloudflare's Sept-15-2026
   default bot policy give the human-vs-agent line real commercial/legal weight.
 - **Identity underpins payments:** AP2 Mandates and x402 payer identities make this doc a prerequisite
-  read for [../non-cc/agentic-payments-landscape.md](../non-cc/agentic-payments-landscape.md).
+  read for [../non-cc/protocols/agentic-payments-landscape.md](../non-cc/protocols/agentic-payments-landscape.md).
 - **Assess:** standards are early and fragmented (OAuth-vs-workload-identity-vs-onchain), several EIPs
   Draft, one vendor already rebranding. Track MCP-OAuth, Entra Agent ID, and Web Bot Auth adoption.
 
