@@ -81,7 +81,7 @@ depth with each service may vary.
 ## Cross-References
 
 - [karpathy-llm-kb-analysis.md](knowledge-management/karpathy-llm-kb-analysis.md) — markdown-first knowledge management (different approach)
-- [openviking-analysis.md](openviking-analysis.md) — filesystem-based context DB (structural similarity)
+- [openviking-analysis.md](context-memory/openviking-analysis.md) — filesystem-based context DB (structural similarity)
 
 ## Sources
 

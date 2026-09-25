@@ -157,7 +157,7 @@ Cross-ref: Graphify and Code-Review-Graph above — same code→graph category; 
 
 **Repo**: [cocoindex-io/cocoindex-code][cocoindex-code] | **Stars**: 2.2K | **License**: Apache-2.0 | **Version**: v0.2.36 (2026-06-19)
 
-A lightweight embedded **semantic code-search** CLI (`ccc`) built on the Rust [CocoIndex](../non-cc/cocoindex-analysis.md) engine — natural-language queries over a codebase with a self-reported ~70% token saving vs file reading. tree-sitter AST chunking across 28+ languages, embeddings via local SentenceTransformers or 100+ providers (LiteLLM), incremental re-indexing of changed files only, and LMDB embedded storage (no external service).
+A lightweight embedded **semantic code-search** CLI (`ccc`) built on the Rust [CocoIndex](../non-cc/context-memory/cocoindex-analysis.md) engine — natural-language queries over a codebase with a self-reported ~70% token saving vs file reading. tree-sitter AST chunking across 28+ languages, embeddings via local SentenceTransformers or 100+ providers (LiteLLM), incremental re-indexing of changed files only, and LMDB embedded storage (no external service).
 
 ### CC Integration
 
@@ -169,7 +169,7 @@ A lightweight embedded **semantic code-search** CLI (`ccc`) built on the Rust [C
 
 **Strengths**: embeddings-based *semantic* search (vs the typed-graph approach of codebase-memory-mcp / Code-Review-Graph); embedded + incremental; a thin agent-integration layer over CocoIndex's Rust core. **Risks**: ~70% token-saving is self-reported (no independent benchmark); early stage (v0.x); embedding quality/cost depends on the chosen provider.
 
-Cross-ref: [cocoindex-analysis.md](../non-cc/cocoindex-analysis.md) — the parent CocoIndex ETL/indexing engine; codebase-memory-mcp above — embedded typed-graph alternative
+Cross-ref: [cocoindex-analysis.md](../non-cc/context-memory/cocoindex-analysis.md) — the parent CocoIndex ETL/indexing engine; codebase-memory-mcp above — embedded typed-graph alternative
 
 ---
 

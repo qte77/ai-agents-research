@@ -109,10 +109,10 @@ residency-aware gate `azure-doc-workflows#165` proposes).
 
 ## Cross-References
 
-- [CC-memory-tooling-landscape.md](../cc-community/CC-memory-tooling-landscape.md) —
+- [CC-memory-tooling-landscape.md](../../cc-community/CC-memory-tooling-landscape.md) —
   CC-side persistent-memory tools (several embed + retrieve internally; this doc
   covers the underlying local stack)
-- [agent-frameworks-infrastructure-landscape.md §7](agent-frameworks-infrastructure-landscape.md)
+- [agent-frameworks-infrastructure-landscape.md §7](../agent-frameworks-infrastructure-landscape.md)
   — RAG & retrieval infrastructure (hosted/managed side)
 
 ## Sources

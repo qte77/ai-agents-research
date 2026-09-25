@@ -85,15 +85,15 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
-| [openviking-analysis.md](openviking-analysis.md) | ByteDance OpenViking (filesystem-based context DB) | Yes | Yes (AGPL-3.0) |
-| [fastcontext-analysis.md](fastcontext-analysis.md) | Microsoft FastContext (Qwen3-4B repo-exploration subagent; parallel READ/GLOB/GREP) | Yes | Yes (MIT) |
-| [cocoindex-analysis.md](cocoindex-analysis.md) | CocoIndex (incremental ETL for AI context/RAG; MCP code-search variant) | Yes | Yes (Apache-2.0) |
-| [opensrc-analysis.md](opensrc-analysis.md) | opensrc (Vercel Labs; fetches npm package source code for agent context) | Yes | Yes (Apache-2.0) |
-| [helixdb-analysis.md](helixdb-analysis.md) | HelixDB (Rust graph-vector database for knowledge graphs and AI-agent memory) | Yes | Yes (Apache-2.0) |
-| [latticedb-analysis.md](latticedb-analysis.md) | LatticeDB (Zig; embedded single-file graph + HNSW vector + BM25 full-text database) | Yes | Yes (MIT) |
-| [mex-analysis.md](mex-analysis.md) | mex (Git-shared, human-approval-gated project memory + drift-detection CLI for coding agents) | Yes | Yes (MIT) |
-| [ripwire-analysis.md](ripwire-analysis.md) | Ripwire (Red Hat Emerging Technologies; deterministic repo-context CLI — call graphs, blast-radius, code-quality) | Yes | Yes (Apache-2.0) |
-| [on-device-semantic-search-landscape.md](on-device-semantic-search-landscape.md) | On-device/local-first semantic search landscape: embedder + embedded-vector-store stack survey | — | Mixed |
+| [openviking-analysis.md](context-memory/openviking-analysis.md) | ByteDance OpenViking (filesystem-based context DB) | Yes | Yes (AGPL-3.0) |
+| [fastcontext-analysis.md](context-memory/fastcontext-analysis.md) | Microsoft FastContext (Qwen3-4B repo-exploration subagent; parallel READ/GLOB/GREP) | Yes | Yes (MIT) |
+| [cocoindex-analysis.md](context-memory/cocoindex-analysis.md) | CocoIndex (incremental ETL for AI context/RAG; MCP code-search variant) | Yes | Yes (Apache-2.0) |
+| [opensrc-analysis.md](context-memory/opensrc-analysis.md) | opensrc (Vercel Labs; fetches npm package source code for agent context) | Yes | Yes (Apache-2.0) |
+| [helixdb-analysis.md](context-memory/helixdb-analysis.md) | HelixDB (Rust graph-vector database for knowledge graphs and AI-agent memory) | Yes | Yes (Apache-2.0) |
+| [latticedb-analysis.md](context-memory/latticedb-analysis.md) | LatticeDB (Zig; embedded single-file graph + HNSW vector + BM25 full-text database) | Yes | Yes (MIT) |
+| [mex-analysis.md](context-memory/mex-analysis.md) | mex (Git-shared, human-approval-gated project memory + drift-detection CLI for coding agents) | Yes | Yes (MIT) |
+| [ripwire-analysis.md](context-memory/ripwire-analysis.md) | Ripwire (Red Hat Emerging Technologies; deterministic repo-context CLI — call graphs, blast-radius, code-quality) | Yes | Yes (Apache-2.0) |
+| [on-device-semantic-search-landscape.md](context-memory/on-device-semantic-search-landscape.md) | On-device/local-first semantic search landscape: embedder + embedded-vector-store stack survey | — | Mixed |
 
 ## Infrastructure
 

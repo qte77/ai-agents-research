@@ -20,7 +20,7 @@ than reindexing everything on every run. The project self-describes as targeting
 A companion project, [cocoindex-code][cocoindex-code-gh], is a lightweight, embedded
 AST-based semantic code-search CLI built on the same engine. It targets the code-search
 use case specifically, integrating with coding agents (Claude Code, Codex, Cursor) via
-MCP servers or Skills — cataloged in [CC-code-tooling-landscape.md](../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io).
+MCP servers or Skills — cataloged in [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io).
 
 **Core repo**: Apache 2.0 | Rust (50%) + Python (50%) | 10.3k stars | v1.0.10 (2026-06-14)
 **cocoindex-code**: Apache 2.0 | Python (98%) | ~2.2k stars | v0.2.36 (2026-06-19)
