@@ -14,7 +14,7 @@ A markdown-first knowledge management pattern where the LLM acts as author, edit
 
 ## Architecture
 
-![Three-layer architecture comparison](images/karpathy-llm-kb-architecture.svg)
+![Three-layer architecture comparison](../images/karpathy-llm-kb-architecture.svg)
 
 Three immutable layers:
 
@@ -26,7 +26,7 @@ Three immutable layers:
 
 ### Operations Cycle
 
-![Operations cycle: Ingest-Query-Lint](images/karpathy-llm-kb-workflow.svg)
+![Operations cycle: Ingest-Query-Lint](../images/karpathy-llm-kb-workflow.svg)
 
 | Operation | Description |
 |---|---|
@@ -86,8 +86,8 @@ The gist's abstract, domain-agnostic framing makes it a useful reference for any
 [x-post]: https://x.com/karpathy/status/2039805659525644595
 [x-followup]: https://x.com/karpathy/status/2040470801506541998
 [techbuddies]: https://www.techbuddies.io/2026/04/04/inside-karpathys-llm-knowledge-base-a-markdown-first-alternative-to-rag-for-autonomous-archives/
-[monitors]: ../../.github/workflows/cc-changelog-monitor.yaml
-[contributing]: ../../CONTRIBUTING.md
-[arch]: ../architecture.md
-[mlint]: ../../.markdownlint.json
-[changelog]: ../../CHANGELOG.md
+[monitors]: ../../../.github/workflows/cc-changelog-monitor.yaml
+[contributing]: ../../../CONTRIBUTING.md
+[arch]: ../../architecture.md
+[mlint]: ../../../.markdownlint.json
+[changelog]: ../../../CHANGELOG.md

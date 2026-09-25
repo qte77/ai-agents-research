@@ -92,7 +92,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 - [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) — metric definitions these tools/benchmarks measure
 - [agent-observability-methods-analysis.md](../non-cc/agent-observability-methods-analysis.md) — tracing/observability platforms (LangWatch, Evidently, Braintrust full entries)
-- [research-agents-landscape.md](../non-cc/research-agents-landscape.md) — research/discovery agents
+- [research-agents-landscape.md](../non-cc/knowledge-management/research-agents-landscape.md) — research/discovery agents
 - [agent-frameworks-infrastructure-landscape.md](../non-cc/agent-frameworks-infrastructure-landscape.md) — agent frameworks & memory infrastructure
 
 ## Sources

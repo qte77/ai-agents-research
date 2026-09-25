@@ -17,7 +17,7 @@ Three tools represent an emerging category of **AI-powered repo-to-documentation
 
 **Relevance to agent workflows**: These tools can serve as context sources for coding agents -- pre-generated documentation reduces the need for expensive runtime codebase analysis. The repo-to-docs pattern also overlaps with the `llms.txt` standard and context engineering approaches documented in this repository.
 
-A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose -- the external analogue to this repo's own [graphify integration](../architecture.md#knowledge-graph-graphify).
+A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose -- the external analogue to this repo's own [graphify integration](../../architecture.md#knowledge-graph-graphify).
 
 A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes docs **for coding agents**, appending pointers into `AGENTS.md`/`CLAUDE.md`, rather than human-browsable wikis.
 
@@ -79,7 +79,7 @@ Published examples: [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-C
 
 **URL**: [github.com/egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything) | **Stars**: 57.4k | **License**: MIT | **Stack**: TypeScript (originally by Lum1104)
 
-Unlike the doc-*generators* in this landscape, Understand Anything emits an **interactive knowledge graph** -- files, functions, classes, and dependencies as color-coded, navigable nodes -- the external analogue to this repo's own [graphify integration](../architecture.md#knowledge-graph-graphify).
+Unlike the doc-*generators* in this landscape, Understand Anything emits an **interactive knowledge graph** -- files, functions, classes, and dependencies as color-coded, navigable nodes -- the external analogue to this repo's own [graphify integration](../../architecture.md#knowledge-graph-graphify).
 
 Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, call graphs) plus LLMs for semantic summaries and architecture classification, run through a **5-agent pipeline** (scanner -> analyzer -> architecture-mapper -> tour-builder -> reviewer) in parallel, with incremental updates.
 
@@ -180,11 +180,11 @@ Differentiation happens at the output stage:
 
 | Topic | File |
 |-------|------|
-| Knowledge graphs from code (CC-integrated) | [CC-community-tooling-landscape.md — Graphify](../cc-community/CC-community-tooling-landscape.md#graphify-safishamsi) |
-| AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](../cc-community/CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
-| llms.txt documentation standard | [CC-llms-txt-analysis.md](../cc-native/context-memory/CC-llms-txt-analysis.md) |
-| Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](../cc-community/CC-community-skills-landscape.md) |
-| OpenViking L0/L1/L2 tiering | [openviking-analysis.md](openviking-analysis.md) |
+| Knowledge graphs from code (CC-integrated) | [CC-community-tooling-landscape.md — Graphify](../../cc-community/CC-community-tooling-landscape.md#graphify-safishamsi) |
+| AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](../../cc-community/CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
+| llms.txt documentation standard | [CC-llms-txt-analysis.md](../../cc-native/context-memory/CC-llms-txt-analysis.md) |
+| Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](../../cc-community/CC-community-skills-landscape.md) |
+| OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../openviking-analysis.md) |
 
 ## Sources
 

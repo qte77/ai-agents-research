@@ -56,7 +56,7 @@ found as of 2026-09-24.
 
 **Assess.** The benchmark numbers (where comparable to other models tracked in this corpus, e.g.
 via [`devin-cli-analysis.md`](devin-cli-analysis.md) or
-[`research-agents-landscape.md`](research-agents-landscape.md)) are competitive, and the
+[`research-agents-landscape.md`](knowledge-management/research-agents-landscape.md)) are competitive, and the
 sub-nine-week train-to-launch cycle and 1M-token context are notable. However: all performance
 claims are vendor-reported with no independent benchmark run found, the license terms are not
 concretely stated ("open-weight" is a marketing term, not a license name), and there is no
