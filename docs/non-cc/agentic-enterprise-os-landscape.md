@@ -61,7 +61,7 @@ graph, permissioned at query time) → act (agents read/act/write outcomes back)
 technology** but a *synthesis* of layers this repo already tracks — agent-memory infrastructure
 ([agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) §4),
 knowledge-graph/GraphRAG + informal ontology
-([semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md)) — plus
+([semantic-layers-data-catalog-landscape.md](infrastructure/semantic-layers-data-catalog-landscape.md)) — plus
 retrieval-time permissioning and a write-back loop, applied org-wide.
 
 Two of the four canonical sources are vendor marketing (a LinkedIn "context graph" pitch; a

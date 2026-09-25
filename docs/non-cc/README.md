@@ -99,18 +99,18 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
-| [insforge-analysis.md](insforge-analysis.md) | InsForge (backend platform for agentic development) | Yes | Yes (Apache-2.0) |
-| [goclaw-analysis.md](goclaw-analysis.md) | GoClaw (multi-tenant agent gateway, Go, 7 channels) | Yes | Yes (CC BY-NC 4.0) |
-| [searxng-analysis.md](searxng-analysis.md) | SearXNG (self-hostable metasearch for agent web-search) | Yes | Yes (AGPL-3.0) |
-| [web-scraping-extraction-landscape.md](web-scraping-extraction-landscape.md) | Scraping / crawling / extraction tool catalog (SSOT; HTTP clients, browser automation, AI-native scrapers, search APIs, managed platforms, doc extraction, anti-bot) | — | Mixed |
-| [code-review-products-landscape.md](code-review-products-landscape.md) | Standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge, Graphite, Cursor Bugbot, Cubic, Bito, Korbit); multi-platform, not CC-specific | — | Mixed |
-| [agent-design-formats-landscape.md](agent-design-formats-landscape.md) | Agent-consumable design formats (awesome-design-md corpus; Google Labs DESIGN.md spec + CLI; Figma/W3C token chain); multi-platform, not CC-specific | — | Mixed |
-| [llm-routers-gateways-landscape.md](llm-routers-gateways-landscape.md) | LLM routers / gateways / aggregators catalog (29 tools: OpenRouter, LiteLLM, Portkey, Bifrost, Vercel/Cloudflare AI Gateway, OpenRouter Fusion) | — | Mixed |
-| [kv-cache-serving-landscape.md](kv-cache-serving-landscape.md) | KV-cache serving: vendor prompt-caching (Anthropic/OpenAI/Gemini) + serving internals (PagedAttention, RadixAttention, quantization, MLA/GQA, offload/disaggregation) | — | Mixed |
-| [semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md) | Semantic-layer + data-catalog substrate for agentic data access (Cube, dbt MetricFlow, Malloy, AtScale, DataHub, OpenMetadata, Unity Catalog, Atlas, Dataplex) — MCP/SDK agent surfaces; cross-refs Genie Ontology + OKF | — | Mixed |
-| [ai-trader-analysis.md](ai-trader-analysis.md) | AI-Trader (ai4trade.ai; agent-native trading-signal platform — root SKILL.md onboarding surface for Claude Code/Codex/Cursor agents) | — | No (no repo/license published) |
-| [corsair-analysis.md](corsair-analysis.md) | Corsair (unified managed-OAuth integration API layer for agents, backends, and multi-tenant dashboards) | Yes | Yes (Apache-2.0) |
-| [auto-agi-compiler-analysis.md](auto-agi-compiler-analysis.md) | AUTO (RightNow AI; compiles deterministic agent-execution spans into sandboxed WASM binaries — "frontier models as interpreters") | Yes | Yes (Apache-2.0) |
+| [insforge-analysis.md](infrastructure/insforge-analysis.md) | InsForge (backend platform for agentic development) | Yes | Yes (Apache-2.0) |
+| [goclaw-analysis.md](infrastructure/goclaw-analysis.md) | GoClaw (multi-tenant agent gateway, Go, 7 channels) | Yes | Yes (CC BY-NC 4.0) |
+| [searxng-analysis.md](infrastructure/searxng-analysis.md) | SearXNG (self-hostable metasearch for agent web-search) | Yes | Yes (AGPL-3.0) |
+| [web-scraping-extraction-landscape.md](infrastructure/web-scraping-extraction-landscape.md) | Scraping / crawling / extraction tool catalog (SSOT; HTTP clients, browser automation, AI-native scrapers, search APIs, managed platforms, doc extraction, anti-bot) | — | Mixed |
+| [code-review-products-landscape.md](infrastructure/code-review-products-landscape.md) | Standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, Sourcery, Qodo Merge, Graphite, Cursor Bugbot, Cubic, Bito, Korbit); multi-platform, not CC-specific | — | Mixed |
+| [agent-design-formats-landscape.md](infrastructure/agent-design-formats-landscape.md) | Agent-consumable design formats (awesome-design-md corpus; Google Labs DESIGN.md spec + CLI; Figma/W3C token chain); multi-platform, not CC-specific | — | Mixed |
+| [llm-routers-gateways-landscape.md](infrastructure/llm-routers-gateways-landscape.md) | LLM routers / gateways / aggregators catalog (29 tools: OpenRouter, LiteLLM, Portkey, Bifrost, Vercel/Cloudflare AI Gateway, OpenRouter Fusion) | — | Mixed |
+| [kv-cache-serving-landscape.md](infrastructure/kv-cache-serving-landscape.md) | KV-cache serving: vendor prompt-caching (Anthropic/OpenAI/Gemini) + serving internals (PagedAttention, RadixAttention, quantization, MLA/GQA, offload/disaggregation) | — | Mixed |
+| [semantic-layers-data-catalog-landscape.md](infrastructure/semantic-layers-data-catalog-landscape.md) | Semantic-layer + data-catalog substrate for agentic data access (Cube, dbt MetricFlow, Malloy, AtScale, DataHub, OpenMetadata, Unity Catalog, Atlas, Dataplex) — MCP/SDK agent surfaces; cross-refs Genie Ontology + OKF | — | Mixed |
+| [ai-trader-analysis.md](infrastructure/ai-trader-analysis.md) | AI-Trader (ai4trade.ai; agent-native trading-signal platform — root SKILL.md onboarding surface for Claude Code/Codex/Cursor agents) | — | No (no repo/license published) |
+| [corsair-analysis.md](infrastructure/corsair-analysis.md) | Corsair (unified managed-OAuth integration API layer for agents, backends, and multi-tenant dashboards) | Yes | Yes (Apache-2.0) |
+| [auto-agi-compiler-analysis.md](infrastructure/auto-agi-compiler-analysis.md) | AUTO (RightNow AI; compiles deterministic agent-execution spans into sandboxed WASM binaries — "frontier models as interpreters") | Yes | Yes (Apache-2.0) |
 
 ## Frameworks
 

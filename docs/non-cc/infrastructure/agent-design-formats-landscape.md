@@ -21,7 +21,7 @@ a **format spec + CLI** (Google Labs `design.md`) — plus the upstream Figma �
 token chain that feeds them.
 
 For Claude Code's own design surface, see the first-party
-[Figma MCP plugin](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md#figma-mcp).
+[Figma MCP plugin](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md#figma-mcp).
 
 ## awesome-design-md (VoltAgent)
 
@@ -53,7 +53,7 @@ A new artifact type: design systems encoded for LLM consumption rather than huma
 
 **Gap**: No public tooling for generating DESIGN.md from arbitrary sites — extraction appears manual/internal.
 
-Cross-ref: [CC-domain-claudemd-showcase.md](../cc-community/CC-domain-claudemd-showcase.md) — CLAUDE.md as domain controller, analogous pattern
+Cross-ref: [CC-domain-claudemd-showcase.md](../../cc-community/CC-domain-claudemd-showcase.md) — CLAUDE.md as domain controller, analogous pattern
 
 ## DESIGN.md format spec + CLI (Google Labs)
 
@@ -76,8 +76,8 @@ DESIGN.md sits downstream of two adjacent pieces. **Source of truth:** the [Figm
 
 ## Cross-References
 
-- [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — the CC dev-tooling landscape this cluster moved out of
-- [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md#figma-mcp) — Claude Code's first-party Figma MCP plugin (design-to-code)
+- [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) — the CC dev-tooling landscape this cluster moved out of
+- [CC-official-plugins-landscape.md](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md#figma-mcp) — Claude Code's first-party Figma MCP plugin (design-to-code)
 
 ## Sources
 
@@ -88,7 +88,7 @@ DESIGN.md sits downstream of two adjacent pieces. **Source of truth:** the [Figm
 | [Figma Dev Mode MCP server][figma-mcp] | Feeds Figma design context to coding agents (Claude Code/Copilot/Cursor/Windsurf); beta |
 | [W3C Design Tokens (DTCG)][dtcg] · [Style Dictionary][style-dictionary] | Design-token interchange standard (first stable spec Oct 2025) + Amazon's token transformer (v4 DTCG support) |
 
-Moved here from [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) on 2026-06-27 (tracked in [#329](https://github.com/qte77/ai-agents-research/issues/329)) — agent-consumable design formats are multi-agent, not CC-specific.
+Moved here from [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) on 2026-06-27 (tracked in [#329](https://github.com/qte77/ai-agents-research/issues/329)) — agent-consumable design formats are multi-agent, not CC-specific.
 
 [awesome-design-md]: https://github.com/VoltAgent/awesome-design-md
 [google-design-md]: https://github.com/google-labs-code/design.md

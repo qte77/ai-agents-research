@@ -84,8 +84,8 @@ goes versus conventional APIs. Skills library is early (12 stars).
 
 ## Cross-References
 
-- [autoagent-analysis.md](autoagent-analysis.md) — AutoAgent also provides agent infrastructure (different layer)
-- [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — CC ecosystem tools
+- [autoagent-analysis.md](../autoagent-analysis.md) — AutoAgent also provides agent infrastructure (different layer)
+- [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) — CC ecosystem tools
 
 ## Sources
 

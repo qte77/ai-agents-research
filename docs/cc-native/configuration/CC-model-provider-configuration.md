@@ -328,7 +328,7 @@ export ANTHROPIC_AUTH_TOKEN=<requesty-api-key>
 
 #### Hosted CC-Integrated Gateways (Portkey · Martian · Vercel · Zuplo · RelayPlane)
 
-Five more hosted gateways document explicit Claude Code support — set `ANTHROPIC_BASE_URL` (plus the gateway's auth token) and CC routes through them. To avoid duplicating the catalog, provider breadth, licensing, and pricing for these (and ~30 more routers/gateways) live in [llm-routers-gateways-landscape.md](../../non-cc/llm-routers-gateways-landscape.md); the **CC-specific config** is below (each verified against the gateway's own CC docs, 2026-06-22):
+Five more hosted gateways document explicit Claude Code support — set `ANTHROPIC_BASE_URL` (plus the gateway's auth token) and CC routes through them. To avoid duplicating the catalog, provider breadth, licensing, and pricing for these (and ~30 more routers/gateways) live in [llm-routers-gateways-landscape.md](../../non-cc/infrastructure/llm-routers-gateways-landscape.md); the **CC-specific config** is below (each verified against the gateway's own CC docs, 2026-06-22):
 
 | Gateway | CC config | First-party CC doc |
 |---|---|---|
@@ -412,7 +412,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [CC-models-reference.md](CC-models-reference.md) — Fable 5 model card + free-tier/OSS provider reference table
 - [CC-cli-reference.md](CC-cli-reference.md) — canonical flag definitions (`--model`, `--effort`, `--fallback-model`, `--betas`)
 - [CC-env-vars-reference.md](CC-env-vars-reference.md) — env var reference for `ANTHROPIC_MODEL`, `CLAUDE_CODE_EFFORT_LEVEL`, etc.
-- [llm-routers-gateways-landscape.md](../../non-cc/llm-routers-gateways-landscape.md) — authoritative provider-agnostic router/gateway catalog (license, pricing, model breadth) for the gateways above and ~30 more; this doc holds only their CC-specific config
+- [llm-routers-gateways-landscape.md](../../non-cc/infrastructure/llm-routers-gateways-landscape.md) — authoritative provider-agnostic router/gateway catalog (license, pricing, model breadth) for the gateways above and ~30 more; this doc holds only their CC-specific config
 
 ## References
 

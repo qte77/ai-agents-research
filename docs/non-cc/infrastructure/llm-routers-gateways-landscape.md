@@ -11,7 +11,7 @@ validated_links: 2026-09-24
 
 ## What It Is
 
-A survey of provider-agnostic LLM routers, API gateways, and model aggregators — tools that sit between an AI client and one or more inference backends to add routing, failover, cost control, and observability. Unlike Claude Code-specific proxies (see [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md)), the tools here are general-purpose: they serve any SDK, agent framework, or coding-agent harness that speaks OpenAI-compatible or Anthropic-compatible APIs. Several entries — OpenRouter and LiteLLM in particular — also appear in the CC-routing doc as Claude Code integration targets; those cross-references are noted inline. Entries are organized into three groups: open/self-hostable gateways, hosted aggregators, and model-fusion/ensemble routing.
+A survey of provider-agnostic LLM routers, API gateways, and model aggregators — tools that sit between an AI client and one or more inference backends to add routing, failover, cost control, and observability. Unlike Claude Code-specific proxies (see [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md)), the tools here are general-purpose: they serve any SDK, agent framework, or coding-agent harness that speaks OpenAI-compatible or Anthropic-compatible APIs. Several entries — OpenRouter and LiteLLM in particular — also appear in the CC-routing doc as Claude Code integration targets; those cross-references are noted inline. Entries are organized into three groups: open/self-hostable gateways, hosted aggregators, and model-fusion/ensemble routing.
 
 ---
 
@@ -110,4 +110,4 @@ Facts compiled from each tool's first-party page (1p-verified 2026-06-16). No th
 | [github.com/glama-ai/lightport](https://github.com/glama-ai/lightport) | Lightport license, providers |
 | [github.com/lm-sys/RouteLLM](https://github.com/lm-sys/RouteLLM) | RouteLLM paper/OSS router |
 
-Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — OpenRouter and LiteLLM appear there as Claude Code integration targets, and the five hosted CC-integrated gateways here (Portkey, Martian, Vercel AI Gateway, Zuplo, RelayPlane) are back-ported there with their Claude Code `ANTHROPIC_BASE_URL` config. This landscape stays the authoritative catalog (license/pricing/breadth); the CC doc holds only the CC-specific setup.
+Cross-ref: [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md) — OpenRouter and LiteLLM appear there as Claude Code integration targets, and the five hosted CC-integrated gateways here (Portkey, Martian, Vercel AI Gateway, Zuplo, RelayPlane) are back-ported there with their Claude Code `ANTHROPIC_BASE_URL` config. This landscape stays the authoritative catalog (license/pricing/breadth); the CC doc holds only the CC-specific setup.

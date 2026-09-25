@@ -335,7 +335,7 @@ Per-tool entries for three categories have moved to focused topic docs; the cros
 
 Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec + CLI) has moved to a non-CC home — multi-agent, not CC-specific:
 
-- [agent-design-formats-landscape.md](../non-cc/agent-design-formats-landscape.md) — agent-consumable design formats (incl. the CC-supported Figma Dev Mode MCP context)
+- [agent-design-formats-landscape.md](../non-cc/infrastructure/agent-design-formats-landscape.md) — agent-consumable design formats (incl. the CC-supported Figma Dev Mode MCP context)
 
 ## Comparison
 

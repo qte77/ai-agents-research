@@ -105,5 +105,5 @@ one supported backend, not an exclusive one — hence `non-cc/` placement.
 
 [paper]: https://arxiv.org/abs/2605.10913
 [repo]: https://github.com/shepherd-agents/shepherd
-[kv-cache]: ../kv-cache-serving-landscape.md
+[kv-cache]: ../infrastructure/kv-cache-serving-landscape.md
 [harnessx]: harnessx-analysis.md

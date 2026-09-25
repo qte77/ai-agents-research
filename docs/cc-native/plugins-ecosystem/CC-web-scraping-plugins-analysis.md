@@ -428,7 +428,7 @@ Beyond Firecrawl and Playwright MCP, several agent-browser tools are worth notin
 | [browser-use][browser-use-gh] | MIT (Python) | Custom numbered-DOM map (**not** the native a11y tree) | ~10K tokens/page | Complex autonomous form-filling |
 | PinchTab | unverified | unverified | ~800 tokens/page (best) | Daily lightweight browsing |
 
-**Counterexamples (not a11y-tree-based):** Anthropic Computer Use and OpenAI Operator drive the browser from **screenshots + pixel coordinates**, not structured element data — no dependency on the page exposing a clean a11y tree, at higher token/latency cost. For the raw-library API behind the accessibility-tree representation (Playwright 1.57 `aria_snapshot`, Patchright version gate), see the [scraping-landscape catalog](../../non-cc/web-scraping-extraction-landscape.md#accessibility-tree-page-representation).
+**Counterexamples (not a11y-tree-based):** Anthropic Computer Use and OpenAI Operator drive the browser from **screenshots + pixel coordinates**, not structured element data — no dependency on the page exposing a clean a11y tree, at higher token/latency cost. For the raw-library API behind the accessibility-tree representation (Playwright 1.57 `aria_snapshot`, Patchright version gate), see the [scraping-landscape catalog](../../non-cc/infrastructure/web-scraping-extraction-landscape.md#accessibility-tree-page-representation).
 
 ## Actionable Recommendations
 

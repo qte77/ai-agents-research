@@ -139,7 +139,7 @@ Slug is a CC-internal auto-generated session display name (e.g., `stateful-dream
 This doc is the **CC client / session-economics** view of Anthropic prompt caching. For the
 cross-vendor prompt-caching comparison (OpenAI, Gemini) and the underlying serving-engine KV-cache
 internals (PagedAttention, RadixAttention, quantization, offload/disaggregation), see
-[kv-cache-serving-landscape.md](../../non-cc/kv-cache-serving-landscape.md). For the KV-cache
+[kv-cache-serving-landscape.md](../../non-cc/infrastructure/kv-cache-serving-landscape.md). For the KV-cache
 invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`), see
 [CC-model-provider-configuration.md](../configuration/CC-model-provider-configuration.md).
 
