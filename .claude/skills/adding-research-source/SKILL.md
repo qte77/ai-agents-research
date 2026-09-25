@@ -23,7 +23,10 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
 2. **Place it** (decision tree):
    - Anthropic-native CC feature/internals → `docs/cc-native/<subdir>/CC-<topic>-analysis.md`
    - CC-**exclusive** community plugin/tool (CC is THE surface) → `docs/cc-community/CC-<topic>-analysis.md`
-   - Cross-vendor tool/protocol/infra (CC = one of many) → `docs/non-cc/<topic>-analysis.md|-landscape.md`
+   - Cross-vendor tool/protocol/infra (CC = one of many) → `docs/non-cc/<section>/<topic>-analysis.md|-landscape.md`,
+     where `<section>` is the subdir matching its `docs/non-cc/README.md` section (orchestrators, agents,
+     coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols);
+     add the index row under that section
    - Security / governance / identity / lifecycle → `docs/sdlc-lcm/<topic>-landscape.md`
    - **Extend, don't create** when a landscape already covers the area (dup-check with `git grep`);
      synthesis labels (e.g. "company brain") → extend, never standalone. Spans both dirs → deeper

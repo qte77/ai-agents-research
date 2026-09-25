@@ -29,6 +29,7 @@ ai-agents-research/
 │   │   └── sessions/          # Session lifecycle, artifacts, schemas
 │   ├── cc-community/          # Community skills, tooling, CLAUDE.md patterns
 │   ├── non-cc/                # Non-CC coding agents (JetBrains Air, DeerFlow, Goose, ...)
+│   │   └── <section>/         # 9 subdirs mirroring non-cc/README.md sections (orchestrators, agents, coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols)
 │   ├── sdlc-lcm/              # SDLC + product lifecycle management specs
 │   ├── learnings/             # Cross-repo compound learnings hub (CRLA write-back target)
 │   │   └── per-repo/          # Per-repo pattern distillations

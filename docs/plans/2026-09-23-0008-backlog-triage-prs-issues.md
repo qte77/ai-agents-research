@@ -195,7 +195,9 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~9~~ | ~~#410: releases.atom trigger~~ | agent | Done 2026-09-24: #462 (option c, owner default): feed-covered versions gated by the id ledger, CHANGELOG cutoff fallback for feed gaps; 84 → 102 tests; main() complexity kept at B (8) for CodeFactor; #410 closed |
 | ~~10~~ | ~~#347: reusable `tag-release` + `publish-release`~~ | agent | Done 2026-09-24: #458; verified by the v0.9.0 run (tag + publish via reusable workflows); #347 closed |
 | 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
-| 12 | #309 Phase 1: `non-cc/` subdivision plan + first move PR | agent → owner review | Plan committed, PR open, lychee green |
+| ~~12~~ | ~~#309 Phase 1: `non-cc/` subdivision~~ | agent | Done 2026-09-25: #489 (tested move tool + Orchestrators) + #490–#497 (one PR per section); 93 docs in 9 subdirs mirroring the README sections; all relative links rewritten, lychee offline 0 errors every step; tool/map removed after use (recoverable from 7179e0a) |
+| 12b | #309 Phase 1 remainder: resolve DeepWiki + CocoIndex duplication (one canonical analysis + landscape pointer); add `docs/_topics/` cross-subject hub indexes | agent | Both dups resolved with inbound links repointed; hub pages exist and are linked from README |
+| 23 | Full knowledge-graph rebuild (row 20 added 123 topics + 33 docs; also refreshes the stale `source_file` metadata in `ui/graph.html` after the restructure) | agent | Uniform full rebuild via `/graphify` → `make graph-page` → Pages deploy; node count reported |
 | ~~13~~ | ~~Merge newest bot PRs #442, #443, #444, #424, #418~~ | owner | Done 2026-09-23: all five merged, branches deleted |
 | ~~14~~ | ~~#434: read failed logs, then merge~~ | owner | Done 2026-09-23: failures were environmental (lychee rot, GitHub Models outage); merged |
 | ~~15~~ | ~~#417: approve producthunt exclude~~ | owner | Done 2026-09-24: #457 (exact-URL exclude) |
