@@ -94,7 +94,7 @@ cadence stabilize past `v0.x`.
 - Read the [arXiv paper][nooa-paper] for the underlying evaluation methodology behind the "six
   agent harness capabilities" claim in the blog post — not yet independently assessed here.
 - Compare NOOA's typed-class agent model against
-  [`agent-design-formats-landscape.md`](infrastructure/agent-design-formats-landscape.md) if/when this repo
+  [`agent-design-formats-landscape.md`](../infrastructure/agent-design-formats-landscape.md) if/when this repo
   extends that landscape doc.
 
 ## Sources

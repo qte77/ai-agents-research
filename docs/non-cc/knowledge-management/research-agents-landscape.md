@@ -10,7 +10,7 @@ validated_links: 2026-09-24
 
 **Status**: Research (informational)
 
-Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
+Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
 
 ## 1. Autonomous Research Agents
 
@@ -95,7 +95,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 
 ## Cross-References
 
-- [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md) — agent frameworks, orchestration, memory infrastructure
+- [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md) — agent frameworks, orchestration, memory infrastructure
 - [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md) — evaluation frameworks, benchmarks, datasets
 - [rxiv-agentic-papers.md](../../research/rxiv-agentic-papers.md) — agentic-AI research papers (auto-generated pipeline)
 - [CC-dynamic-workflows-analysis.md § Bundled Workflow: /deep-research](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research) — CC's first-party deep-research harness these agents map to

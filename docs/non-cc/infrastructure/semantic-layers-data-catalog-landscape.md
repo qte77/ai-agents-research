@@ -77,7 +77,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 
 - [databricks-genie-analysis.md](../agents/databricks-genie-analysis.md) — Genie One agentic data coworker + Genie Ontology (the agent-native semantic graph)
 - [open-knowledge-format-analysis.md](../knowledge-management/open-knowledge-format-analysis.md) — OKF portable knowledge-bundle spec
-- [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md) — §7 RAG & retrieval infrastructure agents call as tools
+- [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md) — §7 RAG & retrieval infrastructure agents call as tools
 
 ## Sources
 

@@ -62,7 +62,7 @@ human" primitive, AP2 sits at the seam of payments and **agent identity/auth** â
 **Stripe's Machine Payments Protocol (MPP)** appears as x402's named alternative in the Apify RFC
 above â€” a competing rail from the traditional-payments incumbent; not independently characterized here.
 **Fetch.ai uAgents** already appears as a one-line mention in
-[agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md)
+[agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md)
 (blockchain-integrated agents with on-chain payments via Agentverse).
 
 ## Why it matters / takeaways

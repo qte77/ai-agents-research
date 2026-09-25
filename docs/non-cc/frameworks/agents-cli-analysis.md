@@ -25,8 +25,8 @@ to the 'Pre-GA Offerings Terms'… available 'as is'"). Treat the 1.0 as a versi
 guarantee.
 
 It is distinct from everything already in the corpus: not a coding agent (unlike
-[gemini-cli-analysis.md](gemini-cli-analysis.md), which is **Hold**), not a host IDE (unlike
-[antigravity-analysis.md](antigravity-analysis.md), a *named host* for agents-cli), and a level up
+[gemini-cli-analysis.md](../gemini-cli-analysis.md), which is **Hold**), not a host IDE (unlike
+[antigravity-analysis.md](../antigravity-analysis.md), a *named host* for agents-cli), and a level up
 from the one-line **Google ADK** entry in
 [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md). ADK is
 the agent *framework*; agents-cli is the lifecycle tooling around it.
@@ -55,11 +55,11 @@ et al.* to specialize them for a target platform, rather than building yet anoth
 names **Claude Code as a first-class host**, a data point on cross-vendor skill portability. Not
 something to adopt (it's Google-Cloud/ADK-specific and Pre-GA), but worth tracking as the pattern of
 "agent-building tooling delivered as portable skills" matures. Contrast with the OpenAI Codex→CC
-plugin ([../cc-community/CC-codex-plugin-cc-analysis.md](../cc-community/CC-codex-plugin-cc-analysis.md)),
+plugin ([../cc-community/CC-codex-plugin-cc-analysis.md](../../cc-community/CC-codex-plugin-cc-analysis.md)),
 which delegates *between* agents; agents-cli instead *upskills* the host agent for ADK work.
 
 Cross-ref: [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) (Google ADK) ·
-[gemini-cli-analysis.md](gemini-cli-analysis.md) · [antigravity-analysis.md](antigravity-analysis.md)
+[gemini-cli-analysis.md](../gemini-cli-analysis.md) · [antigravity-analysis.md](../antigravity-analysis.md)
 
 ## Sources
 

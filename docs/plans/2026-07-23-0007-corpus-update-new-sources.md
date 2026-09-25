@@ -29,7 +29,7 @@ flagged items hit only the auto-generated `docs/research/rxiv-agentic-papers.md`
 | Dippy (auto-approve safe bash) | new/extend | `docs/cc-community/` |
 | sudocode (agent-orchestration DSL) | new/extend | `docs/cc-community/` |
 | cc-sessions (production session tool) | new/extend | `docs/cc-community/` |
-| AB Method | **extend** | `docs/non-cc/spec-driven-frameworks-landscape.md` |
+| AB Method | **extend** | `docs/non-cc/frameworks/spec-driven-frameworks-landscape.md` |
 | MOSS (arXiv 2605.22794) | new | `docs/non-cc/` |
 | When Errors Become Narratives (2606.14589) | new | `docs/sdlc-lcm/` |
 | Sovereign Execution Brokers (2606.20520) | new | `docs/sdlc-lcm/` |
@@ -57,9 +57,9 @@ zero-coverage (index stubs in `rxiv-agentic-papers.md` don't count as coverage).
 | T1.2 | Defensive Misdirection vs automated attacks (2606.20470) | extend `sdlc-lcm/agentic-ai-vulnerability-landscape.md` |
 | T1.3 | DoS on LLM Agent Guardrails (2606.14517) | extend `sdlc-lcm/agentic-ai-vulnerability-landscape.md` |
 | T1.4 | Code-Correctness Signals in Hidden States (2606.14530) | `cc-native/model-internals/` |
-| T1.5 | Hierarchical Recovery, Cross-Device Agents (2606.20487) | extend `non-cc/agent-frameworks-infrastructure-landscape.md` |
-| T2.1 | MemoryWAM (2606.20562) | `non-cc/agent-frameworks-infrastructure-landscape.md` |
-| T2.2 | Marginal Advantage Accumulation (2606.20475) | `non-cc/agent-frameworks-infrastructure-landscape.md` |
+| T1.5 | Hierarchical Recovery, Cross-Device Agents (2606.20487) | extend `non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` |
+| T2.1 | MemoryWAM (2606.20562) | `non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` |
+| T2.2 | Marginal Advantage Accumulation (2606.20475) | `non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` |
 | T2.3 | StreamMemBench (2606.14571) | extend `sdlc-lcm/agent-evaluation-metrics-landscape.md` |
 | T2.4 | UltraQuant 4-bit KV caching (2606.20474) | extend `non-cc/infrastructure/kv-cache-serving-landscape.md` |
 | T2.5 | Multi-LCB / LiveCodeBench multi-lang (2606.20517) | extend `sdlc-lcm/mas-benchmarking-best-practices.md` |

@@ -30,7 +30,7 @@ deferred [#354](https://github.com/qte77/ai-agents-research/issues/354) graph re
 
 | Doc | Home | Anchor sources (first-party) |
 |---|---|---|
-| `non-cc/agents-cli-analysis.md` | non-cc / Frameworks | github.com/google/agents-cli; google.github.io/agents-cli (Apache-2.0, v1.0.0 Pre-GA) |
+| `non-cc/frameworks/agents-cli-analysis.md` | non-cc / Frameworks | github.com/google/agents-cli; google.github.io/agents-cli (Apache-2.0, v1.0.0 Pre-GA) |
 | `non-cc/protocols/agentic-payments-landscape.md` | non-cc / Protocols & Interfaces | github.com/coinbase/x402; blog.apify.com/introducing-x402-agentic-payments; docs.apify.com/platform/integrations/x402; apify/apify-mcp-server#626; github.com/google-agentic-commerce/AP2 |
 | `non-cc/reference/karpathy-agentic-coding-analysis.md` | non-cc / Reference & Background | karpathy.bearblog.dev (menugen, year-in-review-2025, sequoia-ascent-2026); YT `LCEmiRjPEtQ`; YC Library "software-is-changing-again" |
 | `sdlc-lcm/agent-identity-auth-landscape.md` | sdlc-lcm (security cluster) | spiffe.io; learn.microsoft.com Entra Agent ID; eips.ethereum.org/EIPS/eip-8004; privado.id; modelcontextprotocol.io authz; developer.okta.com XAA; github.com/google-agentic-commerce/AP2; world.org; humanity.org; blog.cloudflare.com web-bot-auth + pay-per-crawl; beyondtrust.com JIT; code.claude.com/docs/en/permissions |

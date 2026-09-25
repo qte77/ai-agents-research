@@ -164,7 +164,7 @@ sdlc-lcm 30, cc-native 21, cc-community 16. The most-extended targets across all
 
 | Target doc | Topics |
 |---|---|
-| `docs/non-cc/agent-frameworks-infrastructure-landscape.md` | 61 |
+| `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` | 61 |
 | `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md` | 18 |
 | `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md` | 16 |
 | `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md` | 15 |

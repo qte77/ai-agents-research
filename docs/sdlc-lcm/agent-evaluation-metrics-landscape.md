@@ -184,7 +184,7 @@ definitions, use cases, and primary research references for each metric.
 
 ### Multi-Agent Coordination Metrics
 
-*See also: [Graph Analysis & Network Tools](evaluation-data-resources-landscape.md) and [Agent Frameworks](../non-cc/agent-frameworks-infrastructure-landscape.md)*
+*See also: [Graph Analysis & Network Tools](evaluation-data-resources-landscape.md) and [Agent Frameworks](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md)*
 
 #### Step Efficiency
 
@@ -227,7 +227,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Quantifies load balancing effectiveness
 - **Limitations**: Doesn't account for task complexity differences
 - **Reference**: Multi-agent coordination in distributed systems (coordination metrics)
-- **Landscape Reference**: [Agent Frameworks](../non-cc/agent-frameworks-infrastructure-landscape.md)
+- **Landscape Reference**: [Agent Frameworks](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md)
 
 ### Production Framework Metrics
 
@@ -381,7 +381,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Strengths**: Measures memory system effectiveness
 - **Limitations**: Requires relevance assessment
 - **Reference**: [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
-- **Landscape Reference**: [Letta - Advanced Memory Architecture](../non-cc/agent-frameworks-infrastructure-landscape.md)
+- **Landscape Reference**: [Letta - Advanced Memory Architecture](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md)
 - **Recent Advance**: The MSCE (Memory-Skill Co-Evolution) framework — [From Memory to Skills](https://arxiv.org/abs/2607.16621) (Tang, Zhang, Zhuang et al., Jul 2026) — converts prior agent experience into callable skills carrying evidence links, applicability boundaries, and reliability estimates, using "reflection-weighted value backfilling" to turn sparse terminal feedback into evidence-calibrated signals for memory/skill evolution; reports strong cross-domain transfer and lifelong-evolution capability
 - **Landscape Reference**: [MemTensor/MemOS](https://github.com/MemTensor/MemOS) (Apache-2.0, 11.6k★) — a self-evolving memory OS (own papers: arXiv:2507.03724, arXiv:2505.22101) with an L1-trace/L2-policy/L3-world-model skill-evolution tier, reporting 35.24% token savings from structured memory reuse
 

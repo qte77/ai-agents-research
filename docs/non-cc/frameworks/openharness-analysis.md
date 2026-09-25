@@ -44,8 +44,8 @@ OpenHarness (HKUDS) is an **open-source Python agent harness framework** — inf
 ## Cross-References
 
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — orchestration frameworks catalog (LangGraph, CrewAI, PydanticAI, …)
-- [harnessx-analysis.md](reference/harnessx-analysis.md) — harness-evolution research (adjacent)
-- [agentic-engineering-disciplines-landscape.md](../sdlc-lcm/agentic-engineering-disciplines-landscape.md) — harness engineering ("the model doesn't change — the harness does")
+- [harnessx-analysis.md](../reference/harnessx-analysis.md) — harness-evolution research (adjacent)
+- [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md) — harness engineering ("the model doesn't change — the harness does")
 
 ## Sources
 
