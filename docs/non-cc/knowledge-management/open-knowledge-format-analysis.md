@@ -119,7 +119,7 @@ portable bundles, Genie Ontology via a live graph. They are not strictly
 competitors: Genie Ontology exposes its context as an MCP server, so an OKF
 bundle could serve as a portable export/interchange format for a
 Genie-Ontology-grounded workspace. Full analysis:
-[databricks-genie-analysis.md](databricks-genie-analysis.md).
+[databricks-genie-analysis.md](../databricks-genie-analysis.md).
 
 ## Adoption Decision
 
@@ -183,4 +183,4 @@ an internal agent experiment before committing to it as a standard.
 [repo]: https://github.com/GoogleCloudPlatform/knowledge-catalog
 [genie-blog]: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
 [karpathy]: karpathy-llm-kb-analysis.md
-[openviking]: openviking-analysis.md
+[openviking]: ../openviking-analysis.md

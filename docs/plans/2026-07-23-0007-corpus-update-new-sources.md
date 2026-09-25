@@ -37,7 +37,7 @@ flagged items hit only the auto-generated `docs/research/rxiv-agentic-papers.md`
 | Every Eval Ever (2606.14516) | **extend** | `docs/sdlc-lcm/evaluation-data-resources-landscape.md` |
 | Contagion Networks (2606.20493) | **extend** | `docs/sdlc-lcm/mas-benchmarking-best-practices.md` |
 | Probe-and-Refine Tuning (2606.20512) | new | `docs/cc-native/context-memory/` |
-| Perplexity Computer study (2606.07489) | **extend** | `docs/non-cc/research-agents-landscape.md` |
+| Perplexity Computer study (2606.07489) | **extend** | `docs/non-cc/knowledge-management/research-agents-landscape.md` |
 
 "new/extend" for CC tools: default is extending
 `docs/cc-community/CC-community-tooling-landscape.md`; a standalone

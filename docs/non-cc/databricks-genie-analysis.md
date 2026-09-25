@@ -84,7 +84,7 @@ for enterprise data-agent grounding. Trade-offs:
   posts, **not** an official pricing page, so treat as provisional.
 
 Cross-ref: [omnigent-analysis.md](orchestrators/omnigent-analysis.md) (Databricks/Neon
-meta-harness), [open-knowledge-format-analysis.md](open-knowledge-format-analysis.md)
+meta-harness), [open-knowledge-format-analysis.md](knowledge-management/open-knowledge-format-analysis.md)
 (OKF vs Genie Ontology — open portable format vs proprietary managed graph for
 the same data-agent-grounding problem), and [rowboat-analysis.md](rowboat-analysis.md)
 (comparable AI-coworker / knowledge-graph pattern).

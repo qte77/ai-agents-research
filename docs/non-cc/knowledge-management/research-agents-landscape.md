@@ -10,7 +10,7 @@ validated_links: 2026-09-24
 
 **Status**: Research (informational)
 
-Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../sdlc-lcm/evaluation-data-resources-landscape.md).
+Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
 
 ## 1. Autonomous Research Agents
 
@@ -35,9 +35,9 @@ Agents that conduct multi-step research and generate research outputs.
 - [Hyperresearch (jordan-gibbs)][hyperresearch] — Claude Code skill (`/hyperresearch <query>`) running a tier-adaptive 16-step research pipeline: 250+ sources per `premier`-scale run, adversarial citation verification, syndication-independence auditing, and a persistent cross-session vault; the README states it "currently leads the DeepResearch-Bench RACE leaderboard", qualified as "a forward-looking projection from a stratified pilot… third party validation is pending". MIT, 3.5k★.
 - [OpenScience (Synthetic Sciences)][openscience] — open-source AI research workbench: plan → literature search → write/run code → run experiments → write up findings, with 500+ bundled scientific skills (biology/chemistry/physics/ML/data engineering), ChEMBL/UniProt/PubMed/arXiv connectors, and desktop/browser/CLI interfaces; repo ships a `CLAUDE.md` and credits Claude Scientific Writer (K-Dense) among its skill sources. Apache-2.0, 3.6k★.
 - [ScientistTwo (Google Cloud AI Research)][scientisttwo] — autonomous end-to-end research system across six agent groups (Idea Generator → Evaluator → Analyzer → Writer → Peer-Review → Meta-Review); paper reports besting human baselines on 80.4% of 107 evaluated research problems (avg. +25.2% relative improvement) across 86 generated papers in eight AI domains, with 91.9%/72.1% acceptance under its ScholarPeer/Stanford-Agentic-Reviewer simulated reviewers ([paper][scientisttwo-paper]).
-- [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's [`/deep-research`](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research).
+- [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's [`/deep-research`](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research).
 - [local-deep-researcher (langchain-ai)][local-deep-researcher] — **distinct from the above** despite the near-identical name: LangChain's minimal LangGraph *reference* implementation of the search→summarize→reflect loop (Ollama/LMStudio, local-only by default) — the canonical starting pattern, not a full assistant. MIT, ~9.2k★.
-- [dataroom (hanxiao / Jina)][dataroom] — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](pi-analysis.md)); ~168★, new.
+- [dataroom (hanxiao / Jina)][dataroom] — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](../pi-analysis.md)); ~168★, new.
 - [Perplexity Computer][perplexity-computer] — Perplexity's general-purpose autonomous agent orchestrator (launched Feb 2026, MCP tool/connector calls; follows 2025's Comet browser agent). HBS+Perplexity production-data study ([paper][perplexity-computer-paper], Feb 27–May 27, 2026; 10,000 matched query pairs drawn from a pool of 100,000 dual-product users, multiple pairs per user permitted) finds 26min of autonomous machine work per session vs. 33s for Search, 55% lower per-query dissatisfaction (1.3% vs. 2.9%), -87%/-94% time/cost vs. Search+human workflows (79–92%/87–96% across 18 occupational domains), and +38% knowledge-domain scope per query (2.40 vs. 1.74 domains).
 
 **Domain-specific science agents**: [Coscientist (CMU, Nature)][coscientist] — GPT-4 chemistry agent driving cloud-lab experiments; [ChemCrow][chemcrow] — GPT-4 + 18 chemistry tools; [BioPlanner][bioplanner] — biology protocol generation (BIOPROT, 9K+ protocols); [BioChatter][biochatter] — privacy-preserving biomedical conversational-AI framework.
@@ -71,12 +71,12 @@ Literature search, paper analysis, and discovery (assistive, not autonomous cond
 
 ## 4. Research Support Frameworks
 
-- [Paper2Agent][paper2agent] — converts a paper + codebase into an interactive **MCP-server agent** (auto-generated, test-refined); integrates with Claude Code. Cross-ref: [ai-security-governance-analysis.md § MCP Ecosystem Security](../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) for MCP-server hardening.
+- [Paper2Agent][paper2agent] — converts a paper + codebase into an interactive **MCP-server agent** (auto-generated, test-refined); integrates with Claude Code. Cross-ref: [ai-security-governance-analysis.md § MCP Ecosystem Security](../../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) for MCP-server hardening.
 - [PaperQA2][paperqa2] — superhuman scientific-literature RAG (beats PhD/postdoc on LitQA2); powers WikiCrow and ContraCrow ([paper][paperqa2-paper]).
 
 ## Mapping to the CC `/deep-research` Harness
 
-Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research): fan-out web searches across angles → fetch + cross-check sources → vote per claim → cited report (unsupported claims dropped). How the deep-research-style agents above relate to that pattern:
+Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research): fan-out web searches across angles → fetch + cross-check sources → vote per claim → cited report (unsupported claims dropped). How the deep-research-style agents above relate to that pattern:
 
 | Agent | Overlap with `/deep-research` | Beyond / gap vs the CC workflow | CC-based? |
 |---|---|---|---|
@@ -95,10 +95,10 @@ Claude Code ships one bundled workflow, [`/deep-research`](../cc-native/agents-s
 
 ## Cross-References
 
-- [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — agent frameworks, orchestration, memory infrastructure
-- [evaluation-data-resources-landscape.md](../sdlc-lcm/evaluation-data-resources-landscape.md) — evaluation frameworks, benchmarks, datasets
-- [rxiv-agentic-papers.md](../research/rxiv-agentic-papers.md) — agentic-AI research papers (auto-generated pipeline)
-- [CC-dynamic-workflows-analysis.md § Bundled Workflow: /deep-research](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research) — CC's first-party deep-research harness these agents map to
+- [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md) — agent frameworks, orchestration, memory infrastructure
+- [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md) — evaluation frameworks, benchmarks, datasets
+- [rxiv-agentic-papers.md](../../research/rxiv-agentic-papers.md) — agentic-AI research papers (auto-generated pipeline)
+- [CC-dynamic-workflows-analysis.md § Bundled Workflow: /deep-research](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research) — CC's first-party deep-research harness these agents map to
 
 ## Sources
 

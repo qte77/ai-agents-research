@@ -12,7 +12,7 @@ validated_links: 2026-07-08
 
 A curated map of Andrej Karpathy's **agentic-coding** thinking as it evolved 2023→2026 — distinct from
 his LLM-wiki/knowledge-base artifact already covered in
-[karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md). The through-line: the programmer as an
+[karpathy-llm-kb-analysis.md](knowledge-management/karpathy-llm-kb-analysis.md). The through-line: the programmer as an
 **orchestrator of fallible agents** on a controllable **autonomy dial**, not a code author. It grounds
 the discipline framing in [../sdlc-lcm/agentic-engineering-disciplines-landscape.md](../sdlc-lcm/agentic-engineering-disciplines-landscape.md).
 
@@ -60,7 +60,7 @@ the discipline framing in [../sdlc-lcm/agentic-engineering-disciplines-landscape
 - CC-as-first-convincing-agent is a notable outside validation of this corpus's CC focus.
 
 Cross-ref: [../sdlc-lcm/agentic-engineering-disciplines-landscape.md](../sdlc-lcm/agentic-engineering-disciplines-landscape.md) ·
-[karpathy-llm-kb-analysis.md](karpathy-llm-kb-analysis.md)
+[karpathy-llm-kb-analysis.md](knowledge-management/karpathy-llm-kb-analysis.md)
 
 ## Sources
 
