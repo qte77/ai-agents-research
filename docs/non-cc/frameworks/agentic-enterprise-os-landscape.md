@@ -61,7 +61,7 @@ graph, permissioned at query time) → act (agents read/act/write outcomes back)
 technology** but a *synthesis* of layers this repo already tracks — agent-memory infrastructure
 ([agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) §4),
 knowledge-graph/GraphRAG + informal ontology
-([semantic-layers-data-catalog-landscape.md](infrastructure/semantic-layers-data-catalog-landscape.md)) — plus
+([semantic-layers-data-catalog-landscape.md](../infrastructure/semantic-layers-data-catalog-landscape.md)) — plus
 retrieval-time permissioning and a write-back loop, applied org-wide.
 
 Two of the four canonical sources are vendor marketing (a LinkedIn "context graph" pitch; a
@@ -114,10 +114,10 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [polyforge]: https://github.com/qte77/polyforge-orchestrator
 [office-forge]: https://github.com/qte77/office-forge-orchestrator
 [liminal]: https://github.com/qte77/liminal-flux-gh-acc
-[goal-attr]: ../sdlc-lcm/goal-tracking-attribution-landscape.md
-[genie]: agents/databricks-genie-analysis.md
+[goal-attr]: ../../sdlc-lcm/goal-tracking-attribution-landscape.md
+[genie]: ../agents/databricks-genie-analysis.md
 [autoagent]: autoagent-analysis.md
-[odysseus]: agents/odysseus-analysis.md
-[goose]: agents/goose-analysis.md
+[odysseus]: ../agents/odysseus-analysis.md
+[goose]: ../agents/goose-analysis.md
 [frameworks]: agent-frameworks-infrastructure-landscape.md
-[ag-ui]: protocols/ag-ui-protocol-landscape.md
+[ag-ui]: ../protocols/ag-ui-protocol-landscape.md

@@ -114,6 +114,6 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 [disciplines]: agentic-engineering-disciplines-landscape.md
 [sdlc-patterns]: agentic-sdlc-patterns.md
 [oss-alm]: oss-alm-landscape.md
-[enterprise-os]: ../non-cc/agentic-enterprise-os-landscape.md
-[frameworks]: ../non-cc/agent-frameworks-infrastructure-landscape.md
+[enterprise-os]: ../non-cc/frameworks/agentic-enterprise-os-landscape.md
+[frameworks]: ../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md
 [semantic]: ../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md

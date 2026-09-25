@@ -214,7 +214,7 @@ Rust prompt-injection / secrets / data-exfiltration scanner wired into CC hooks 
 - Latency/speedup numbers are author-self-reported (no independent benchmark); the README itself hedges "early development — bugs and false positives happen"
 - Install: `uvx parry-guard hook`, Nix flake (home-manager module), `cargo install`, or release binaries
 
-Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — hook mechanism; [agent-frameworks-infrastructure-landscape.md §8](../non-cc/agent-frameworks-infrastructure-landscape.md) — LLM Guard, the library-level (app-side) scanner on the same DeBERTa model family
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — hook mechanism; [agent-frameworks-infrastructure-landscape.md §8](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md) — LLM Guard, the library-level (app-side) scanner on the same DeBERTa model family
 
 ---
 

@@ -116,19 +116,19 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
-| [simpleagents-analysis.md](simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
-| [autoagent-analysis.md](autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
-| [deepagents-analysis.md](deepagents-analysis.md) | langchain-ai/deepagents (deep-agents: planning + subagents + virtual FS, on LangGraph) | Yes | Yes (MIT) |
-| [openharness-analysis.md](openharness-analysis.md) | HKUDS/OpenHarness (open Python agent harness; 10 subsystems, CC-convention compatible, multi-provider) | Yes | Yes (MIT) |
-| [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) | Landscape catalog: orchestration frameworks, LLM routing, memory infrastructure, agent models | — | Mixed |
-| [agentic-enterprise-os-landscape.md](agentic-enterprise-os-landscape.md) | "Agentic enterprise OS" landscape: vendor platforms (Agentforce 360, M365 Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie) + OSS self-operating workspaces (AutoAgent, Odysseus, Goose, multica) + estate orchestrators; the agent-native goal-attribution gap | — | Mixed |
-| [workflow-frameworks-landscape.md](workflow-frameworks-landscape.md) | Agentic workflow frameworks: Anthropic's 5 patterns, durable execution (Temporal/Inngest/Restate), 8 anti-patterns; the workflows-vs-agents distinction | — | Mixed |
-| [spec-driven-frameworks-landscape.md](spec-driven-frameworks-landscape.md) | Spec-driven development frameworks (spec-kit, OpenSpec, BMAD, Agent-OS, Kiro, Tessl); standalone deep-dive behind the disciplines §3 synthesis | — | Mixed |
-| [openai-swarm-analysis.md](openai-swarm-analysis.md) | OpenAI Swarm (deprecated educational multi-agent; superseded by Agents SDK) | Yes | Yes (MIT) |
-| [openai-agents-sdk-analysis.md](openai-agents-sdk-analysis.md) | OpenAI Agents SDK (multi-agent: handoffs, guardrails, sessions, tracing; GA successor to Swarm) | Yes | Yes (MIT) |
-| [agents-cli-analysis.md](agents-cli-analysis.md) | Google agents-cli (skill-pack that upskills a coding agent — Claude Code/Antigravity/Codex — to build/eval/deploy ADK agents on Gemini Enterprise) | — | Yes (Apache-2.0) |
-| [nooa-analysis.md](nooa-analysis.md) | NOOA (NVIDIA-NeMo; object-oriented Python agent framework — state/capabilities/prompts as class fields/methods/docstrings) | Yes | Yes (Apache-2.0) |
-| [openrath-analysis.md](openrath-analysis.md) | OpenRath (PyTorch-like multi-agent/multi-session runtime; Session/Sandbox/Memory/Tool/Agent/Workflow abstractions) | Yes | Yes (BSD-3-Clause) |
+| [simpleagents-analysis.md](frameworks/simpleagents-analysis.md) | CraftsMan-Labs/SimpleAgents (Rust LLM SDK) | Yes | Yes (Apache-2.0) |
+| [autoagent-analysis.md](frameworks/autoagent-analysis.md) | HKUDS/AutoAgent (zero-code agent OS) | Yes | Yes (MIT) |
+| [deepagents-analysis.md](frameworks/deepagents-analysis.md) | langchain-ai/deepagents (deep-agents: planning + subagents + virtual FS, on LangGraph) | Yes | Yes (MIT) |
+| [openharness-analysis.md](frameworks/openharness-analysis.md) | HKUDS/OpenHarness (open Python agent harness; 10 subsystems, CC-convention compatible, multi-provider) | Yes | Yes (MIT) |
+| [agent-frameworks-infrastructure-landscape.md](frameworks/agent-frameworks-infrastructure-landscape.md) | Landscape catalog: orchestration frameworks, LLM routing, memory infrastructure, agent models | — | Mixed |
+| [agentic-enterprise-os-landscape.md](frameworks/agentic-enterprise-os-landscape.md) | "Agentic enterprise OS" landscape: vendor platforms (Agentforce 360, M365 Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie) + OSS self-operating workspaces (AutoAgent, Odysseus, Goose, multica) + estate orchestrators; the agent-native goal-attribution gap | — | Mixed |
+| [workflow-frameworks-landscape.md](frameworks/workflow-frameworks-landscape.md) | Agentic workflow frameworks: Anthropic's 5 patterns, durable execution (Temporal/Inngest/Restate), 8 anti-patterns; the workflows-vs-agents distinction | — | Mixed |
+| [spec-driven-frameworks-landscape.md](frameworks/spec-driven-frameworks-landscape.md) | Spec-driven development frameworks (spec-kit, OpenSpec, BMAD, Agent-OS, Kiro, Tessl); standalone deep-dive behind the disciplines §3 synthesis | — | Mixed |
+| [openai-swarm-analysis.md](frameworks/openai-swarm-analysis.md) | OpenAI Swarm (deprecated educational multi-agent; superseded by Agents SDK) | Yes | Yes (MIT) |
+| [openai-agents-sdk-analysis.md](frameworks/openai-agents-sdk-analysis.md) | OpenAI Agents SDK (multi-agent: handoffs, guardrails, sessions, tracing; GA successor to Swarm) | Yes | Yes (MIT) |
+| [agents-cli-analysis.md](frameworks/agents-cli-analysis.md) | Google agents-cli (skill-pack that upskills a coding agent — Claude Code/Antigravity/Codex — to build/eval/deploy ADK agents on Gemini Enterprise) | — | Yes (Apache-2.0) |
+| [nooa-analysis.md](frameworks/nooa-analysis.md) | NOOA (NVIDIA-NeMo; object-oriented Python agent framework — state/capabilities/prompts as class fields/methods/docstrings) | Yes | Yes (Apache-2.0) |
+| [openrath-analysis.md](frameworks/openrath-analysis.md) | OpenRath (PyTorch-like multi-agent/multi-session runtime; Session/Sandbox/Memory/Tool/Agent/Workflow abstractions) | Yes | Yes (BSD-3-Clause) |
 
 ## Protocols & Interfaces
 

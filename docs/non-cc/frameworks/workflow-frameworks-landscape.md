@@ -11,7 +11,7 @@ validated_links: 2026-06-27
 
 ## What It Is
 
-The external agentic-**workflow** framework landscape plus the workflows-vs-agents distinction. It complements Claude Code's own [Workflow tool](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md) and the broader [agent-frameworks catalog](agent-frameworks-infrastructure-landscape.md) (which lists the orchestration frameworks). What this doc adds: the **pattern vocabulary**, the **durable-execution** layer, and an **anti-pattern taxonomy**.
+The external agentic-**workflow** framework landscape plus the workflows-vs-agents distinction. It complements Claude Code's own [Workflow tool](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md) and the broader [agent-frameworks catalog](agent-frameworks-infrastructure-landscape.md) (which lists the orchestration frameworks). What this doc adds: the **pattern vocabulary**, the **durable-execution** layer, and an **anti-pattern taxonomy**.
 
 ## Workflows vs agents (Anthropic's 5 patterns)
 
@@ -71,9 +71,9 @@ The core primitive is idempotency on a stable **`(workflow_id, step_id)`** key �
 
 ## Cross-References
 
-- [CC-dynamic-workflows-analysis.md](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md) — Claude Code's own Workflow tool (these patterns in a deterministic JS script)
+- [CC-dynamic-workflows-analysis.md](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md) — Claude Code's own Workflow tool (these patterns in a deterministic JS script)
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — §1 orchestration frameworks, §8 output validation / guardrails
-- [agentic-engineering-disciplines-landscape.md](../sdlc-lcm/agentic-engineering-disciplines-landscape.md) — flow / loop engineering as disciplines
+- [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md) — flow / loop engineering as disciplines
 
 ## Sources
 

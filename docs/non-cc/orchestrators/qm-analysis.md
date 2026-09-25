@@ -69,7 +69,7 @@ not a first-party QM source and is not verified here.
 sandbox/permissions/memory) is a genuinely different shape than the single-user assistants and
 single-team-channel bots more commonly covered in this corpus, and its harness-agnostic core (same
 runtime driving Pi, OpenCode, Codex, or Claude Code) is a concrete multi-harness design worth
-comparing against [`agent-frameworks-infrastructure-landscape.md`](../agent-frameworks-infrastructure-landscape.md).
+comparing against [`agent-frameworks-infrastructure-landscape.md`](../frameworks/agent-frameworks-infrastructure-landscape.md).
 Star growth is exceptional for a two-month-old repo, though that on its own is not evidence of
 production maturity — no independent case studies were found as of 2026-09-24, and the project is
 self-hosted with no first-party managed-hosting offering (the `agent37.com` listing is third-party

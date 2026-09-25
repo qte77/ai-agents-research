@@ -162,7 +162,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [oach]: https://qte77.github.io/open-agentic-coding-harness/
 [workflows]: ../cc-native/agents-skills/CC-dynamic-workflows-analysis.md
 [harness-patterns]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md
-[frameworks]: ../non-cc/agent-frameworks-infrastructure-landscape.md
+[frameworks]: ../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md
 [observability]: ../non-cc/protocols/agent-observability-methods-analysis.md
 [memory]: ../cc-native/context-memory/CC-memory-system-analysis.md
 [eval-data]: evaluation-data-resources-landscape.md

@@ -10,7 +10,7 @@ validated_links: 2026-09-24
 
 **Status**: Research (informational)
 
-Persistent-memory tools for Claude Code. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). For non-CC memory *infrastructure* (Mem0, Zep/Graphiti, Cognee, LangMem, A-MEM), see [agent-frameworks-infrastructure-landscape.md § Agent Memory Infrastructure](../non-cc/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure). CC's native memory: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md).
+Persistent-memory tools for Claude Code. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). For non-CC memory *infrastructure* (Mem0, Zep/Graphiti, Cognee, LangMem, A-MEM), see [agent-frameworks-infrastructure-landscape.md § Agent Memory Infrastructure](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure). CC's native memory: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md).
 
 ## Memory Taxonomy
 
@@ -384,7 +384,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
-- [agent-frameworks-infrastructure-landscape.md](../non-cc/agent-frameworks-infrastructure-landscape.md) — non-CC memory infrastructure (Mem0, Zep, Cognee, LangMem)
+- [agent-frameworks-infrastructure-landscape.md](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md) — non-CC memory infrastructure (Mem0, Zep, Cognee, LangMem)
 
 ## Sources
 
@@ -432,7 +432,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 [coala]: https://arxiv.org/abs/2309.02427
 [langmem]: https://github.com/langchain-ai/langmem
 [langmem-concepts]: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/
-[non-cc-mem]: ../non-cc/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure
+[non-cc-mem]: ../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure
 [mem0]: https://github.com/mem0ai/mem0
 [mem0-paper]: https://arxiv.org/abs/2504.19413
 [cognee]: https://github.com/topoteretes/cognee

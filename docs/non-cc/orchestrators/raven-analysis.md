@@ -100,5 +100,5 @@ third-party benchmark reproduction was found.
 | GitHub API `repos/EverMind-AI/Raven`, accessed 2026-09-24 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
 
 [repo]: https://github.com/EverMind-AI/Raven
-[everos]: ../agent-frameworks-infrastructure-landscape.md
+[everos]: ../frameworks/agent-frameworks-infrastructure-landscape.md
 [moss]: ../agents/moss-self-evolving-agent-analysis.md

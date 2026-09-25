@@ -21,7 +21,7 @@ The key framing from [the Databricks blog][databricks-blog]: a meta-harness oper
 individual agent frameworks, enabling agents "to become interoperable parts of a richer system" rather
 than siloed tools.
 
-Cross-ref: [Agent Frameworks & Infrastructure Landscape](../agent-frameworks-infrastructure-landscape.md)
+Cross-ref: [Agent Frameworks & Infrastructure Landscape](../frameworks/agent-frameworks-infrastructure-landscape.md)
 
 ## How It Works
 

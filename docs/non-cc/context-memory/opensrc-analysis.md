@@ -49,7 +49,7 @@ Complements the context-management stack from a different angle: source-fetchers
 
 ## Cross-References
 
-- [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md) — agent context/memory infrastructure
+- [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md) — agent context/memory infrastructure
 - [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) — the CC dev-tooling stack (RTK, Boucle) opensrc complements
 
 ## Sources

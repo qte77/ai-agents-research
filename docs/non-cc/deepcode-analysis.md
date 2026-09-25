@@ -41,8 +41,8 @@ components for Desktop) · created 2025-05-14 · 16 tagged releases, latest
 ## Corpus Relevance
 
 Same HKUDS lab as three other tools already tracked in this corpus:
-[autoagent-analysis.md](autoagent-analysis.md) (AutoAgent),
-[openharness-analysis.md](openharness-analysis.md) (OpenHarness), and
+[autoagent-analysis.md](frameworks/autoagent-analysis.md) (AutoAgent),
+[openharness-analysis.md](frameworks/openharness-analysis.md) (OpenHarness), and
 `docs/cc-native/agents-skills/CC-cli-anything-analysis.md` (CLI-Anything).
 `autoagent-analysis.md`'s own "Monitor HKUDS lab output" tracking row does
 not yet list DeepCode — out of scope to edit from this doc, noted here for

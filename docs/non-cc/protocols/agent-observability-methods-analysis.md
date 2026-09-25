@@ -16,7 +16,7 @@ This analysis examines the specific technical mechanisms used by 18 observabilit
 
 **Key Developments**: Six new tools added (Braintrust, Maxim AI, AgentOps, Datadog LLM Observability, Pydantic Logfire, otel-tui), six existing tools received major feature updates (Langfuse v2 APIs, MLflow TypeScript support, Arize Phoenix continuous releases, enhanced multi-agent observability across platforms).
 
-**See**: [agent-frameworks-infrastructure-landscape.md](../agent-frameworks-infrastructure-landscape.md)
+**See**: [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md)
 
 ## Key Features of the Analysis
 
