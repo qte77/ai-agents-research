@@ -130,6 +130,7 @@ ai-agents-research/
       model-internals/README.md        # Model-level interpretability research
       examples/                        # Working config/script examples
     non-cc/                            # Non-CC agents (JetBrains Air, DeerFlow, etc.)
+      <section>/                       # 9 subdirs mirroring non-cc/README.md sections: orchestrators, agents, coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols
     cc-community/                      # Community skills, plugins, tooling, CLAUDE.md patterns
     sdlc-lcm/                          # SDLC/lifecycle management specs
     learnings/                         # Cross-repo compound learnings hub (CRLA write-back target)
