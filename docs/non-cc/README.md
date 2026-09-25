@@ -72,14 +72,14 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 
 | Document | Topic | Access |
 |---|---|---|
-| [intro-autonomous-robots-analysis.md](intro-autonomous-robots-analysis.md) | Introduction to Autonomous Robots (open textbook, MIT Press) | Open access |
-| [harnessx-analysis.md](harnessx-analysis.md) | HarnessX — composable/evolvable agent harness foundry (arXiv 2606.14249) | Preprint (code TBD) |
-| [karpathy-agentic-coding-analysis.md](karpathy-agentic-coding-analysis.md) | Karpathy's agentic-coding arc (vibe coding → Software 3.0 / autonomy slider → agentic engineering) | Blog + talks |
-| [ecdysis-analysis.md](ecdysis-analysis.md) | Ecdysis — failure-aggregation training method for self-evolving LLM-agent runtime harnesses (arXiv:2609.11677) | Preprint + reference impl (unlicensed) |
-| [frognano-analysis.md](frognano-analysis.md) | FrogNano — 4B coding agent trained via RL-only online task synthesis (Microsoft Research Montréal, arXiv:2609.07925) | Preprint (no code/weights released) |
-| [shepherd-analysis.md](shepherd-analysis.md) | Shepherd — reversible, Git-like execution traces for meta-agent inspect/fork/replay/revert (arXiv:2605.10913) | Preprint + code (MIT) |
-| [weco-aide-recursive-self-improvement-analysis.md](weco-aide-recursive-self-improvement-analysis.md) | AIDE² — Weco AI's outer-loop-rewrites-inner-loop recursive self-improvement experiment (100 iterations) | Blog + arXiv technical report (no public code) |
-| [poolside-laguna-analysis.md](poolside-laguna-analysis.md) | Poolside Laguna S 2.1 — 118B-MoE frontier agentic-coding model, 1M-token context, long-horizon autonomous coding | Blog (vendor-reported benchmarks; license unstated) |
+| [intro-autonomous-robots-analysis.md](reference/intro-autonomous-robots-analysis.md) | Introduction to Autonomous Robots (open textbook, MIT Press) | Open access |
+| [harnessx-analysis.md](reference/harnessx-analysis.md) | HarnessX — composable/evolvable agent harness foundry (arXiv 2606.14249) | Preprint (code TBD) |
+| [karpathy-agentic-coding-analysis.md](reference/karpathy-agentic-coding-analysis.md) | Karpathy's agentic-coding arc (vibe coding → Software 3.0 / autonomy slider → agentic engineering) | Blog + talks |
+| [ecdysis-analysis.md](reference/ecdysis-analysis.md) | Ecdysis — failure-aggregation training method for self-evolving LLM-agent runtime harnesses (arXiv:2609.11677) | Preprint + reference impl (unlicensed) |
+| [frognano-analysis.md](reference/frognano-analysis.md) | FrogNano — 4B coding agent trained via RL-only online task synthesis (Microsoft Research Montréal, arXiv:2609.07925) | Preprint (no code/weights released) |
+| [shepherd-analysis.md](reference/shepherd-analysis.md) | Shepherd — reversible, Git-like execution traces for meta-agent inspect/fork/replay/revert (arXiv:2605.10913) | Preprint + code (MIT) |
+| [weco-aide-recursive-self-improvement-analysis.md](reference/weco-aide-recursive-self-improvement-analysis.md) | AIDE² — Weco AI's outer-loop-rewrites-inner-loop recursive self-improvement experiment (100 iterations) | Blog + arXiv technical report (no public code) |
+| [poolside-laguna-analysis.md](reference/poolside-laguna-analysis.md) | Poolside Laguna S 2.1 — 118B-MoE frontier agentic-coding model, 1M-token context, long-horizon autonomous coding | Blog (vendor-reported benchmarks; license unstated) |
 
 ## Context & Memory Infrastructure
 
