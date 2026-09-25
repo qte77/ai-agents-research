@@ -12,9 +12,9 @@ validated_links: 2026-07-08
 
 A curated map of Andrej Karpathy's **agentic-coding** thinking as it evolved 2023→2026 — distinct from
 his LLM-wiki/knowledge-base artifact already covered in
-[karpathy-llm-kb-analysis.md](knowledge-management/karpathy-llm-kb-analysis.md). The through-line: the programmer as an
+[karpathy-llm-kb-analysis.md](../knowledge-management/karpathy-llm-kb-analysis.md). The through-line: the programmer as an
 **orchestrator of fallible agents** on a controllable **autonomy dial**, not a code author. It grounds
-the discipline framing in [../sdlc-lcm/agentic-engineering-disciplines-landscape.md](../sdlc-lcm/agentic-engineering-disciplines-landscape.md).
+the discipline framing in [../sdlc-lcm/agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md).
 
 > **Sourcing note:** the blog posts ([bearblog][menugen]) and the talks (YouTube / YC Library) are
 > first-party. The essay-tweets (vibe-coding coinage, LLM OS) are cited **by date**; x.com returns
@@ -52,15 +52,15 @@ the discipline framing in [../sdlc-lcm/agentic-engineering-disciplines-landscape
 
 - **The autonomy slider + "keep AI on a leash"** is the conceptual backbone of this repo's harness and
   permission-model analyses (agent-mode gating, worktree isolation, approval loops) —
-  [../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
+  [../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md).
 - **"Build for agents too"** anticipates the `llms.txt` / `AGENTS.md` / machine-readable-docs thread
   (and OpenWiki-style agent-context tooling) cataloged elsewhere in the corpus.
 - **"Agentic engineering as a discipline"** is the same thesis the estate's SDLC docs operationalize —
   spec-driven, eval-looped, review-gated agent work.
 - CC-as-first-convincing-agent is a notable outside validation of this corpus's CC focus.
 
-Cross-ref: [../sdlc-lcm/agentic-engineering-disciplines-landscape.md](../sdlc-lcm/agentic-engineering-disciplines-landscape.md) ·
-[karpathy-llm-kb-analysis.md](knowledge-management/karpathy-llm-kb-analysis.md)
+Cross-ref: [../sdlc-lcm/agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md) ·
+[karpathy-llm-kb-analysis.md](../knowledge-management/karpathy-llm-kb-analysis.md)
 
 ## Sources
 

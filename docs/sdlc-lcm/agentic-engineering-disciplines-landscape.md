@@ -170,7 +170,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [ralph]: ../cc-native/agents-skills/CC-ralph-enhancement-research.md
 [kiro-doc]: ../non-cc/kiro-analysis.md
 [harness-effect]: https://arxiv.org/abs/2607.06906
-[harnessx]: ../non-cc/harnessx-analysis.md
+[harnessx]: ../non-cc/reference/harnessx-analysis.md
 [harnessdev]: https://arxiv.org/abs/2609.01437
 [autodesign-paper]: https://arxiv.org/abs/2608.13560
 [autodesign-repo]: https://github.com/Yaxin9Luo/AutoDesign

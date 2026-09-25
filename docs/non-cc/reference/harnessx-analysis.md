@@ -56,5 +56,5 @@ The conceptual contribution — treating harness components as typed primitives 
 | [HarnessX arXiv abstract (2606.14249)][paper] | Title, authors, submission date, abstract, architecture, benchmark results, license, code availability — accessed 2026-06-16 |
 
 [paper]: https://arxiv.org/abs/2606.14249
-[harness-patterns]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md
-[dynamic-workflows]: ../cc-native/agents-skills/CC-dynamic-workflows-analysis.md
+[harness-patterns]: ../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md
+[dynamic-workflows]: ../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md
