@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.11.0] - 2026-09-25
+
+### Added
+
+- `docs/_topics/`: cross-subject topic hubs (memory, knowledge graphs, RAG, code tooling, visualization) that point at docs and sections across `cc-native/`, `cc-community/`, `non-cc/` and `sdlc-lcm/`; linked from `README.md` (#309).
+
+### Changed
+
+- `docs/non-cc/knowledge-management/repo-to-docs-tools-landscape.md`, `deepwiki-analysis.md`: the DeepWiki landscape entry is now a pointer; its unique facts moved into the full analysis (#309).
+- `docs/non-cc/context-memory/cocoindex-analysis.md`: dropped the duplicated `cocoindex-code` stats and specifics, which had drifted inside the file; `cc-community/CC-code-tooling-landscape.md` is the canonical `cocoindex-code` entry (#309).
+
+- `CONTRIBUTING.md`, `docs/architecture.md`: directory trees list `docs/_topics/`.
+- `.claude/skills/adding-research-source/SKILL.md`: new docs on a hub subject get a row in the matching `docs/_topics/` hub.
+
 ## [0.10.0] - 2026-09-25
 
 ### Changed
