@@ -17,16 +17,16 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
-| [goose-analysis.md](goose-analysis.md) | Goose (AAIF; MCP co-creator, reference impl) | Yes | Yes (Apache-2.0) |
-| [feynman-analysis.md](feynman-analysis.md) | Companion AI Feynman (research agent, multi-agent investigation) | Yes | Yes (MIT) |
-| [hermes-agent-analysis.md](hermes-agent-analysis.md) | Nous Research Hermes (self-improving, multi-platform, 43K stars) | Yes | Yes (MIT) |
-| [rowboat-analysis.md](rowboat-analysis.md) | Rowboat (AI coworker, knowledge graph from comms) | No | Yes (Apache-2.0) |
-| [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md) | GitHub Copilot CLI (terminal agent, same harness as Copilot coding agent) | Yes | No (proprietary) |
-| [odysseus-analysis.md](odysseus-analysis.md) | Odysseus (self-hosted all-in-one AI workspace: chat, agents, research, email, calendar) | Yes | Yes (AGPL-3.0) |
-| [databricks-genie-analysis.md](databricks-genie-analysis.md) | Databricks Genie One (agentic data coworker; Genie Ontology semantic graph + Genie Agents) | Partial (Slack/Teams/mobile) | No (proprietary; OSS lakehouse base) |
-| [apache-maka-analysis.md](apache-maka-analysis.md) | Apache Maka (Incubating; local-first, event-sourced agent workspace — "the log is the runtime"; Desktop/TUI/CLI) | Partial | Yes (Apache-2.0; ASF podling, no approved release yet) |
-| [qwenpaw-analysis.md](qwenpaw-analysis.md) | QwenPaw (AgentScope + Qwen; self-hosted personal AI assistant, multi-channel, three-tier memory) | Partial | Yes (Apache-2.0) |
-| [moss-self-evolving-agent-analysis.md](moss-self-evolving-agent-analysis.md) | MOSS (HKGAI, on OpenClaw; self-evolving assistant that rewrites its own TypeScript source via a 7-stage benchmark-gated pipeline) | Yes | Yes (Apache-2.0; OpenClaw vendored MIT) |
+| [goose-analysis.md](agents/goose-analysis.md) | Goose (AAIF; MCP co-creator, reference impl) | Yes | Yes (Apache-2.0) |
+| [feynman-analysis.md](agents/feynman-analysis.md) | Companion AI Feynman (research agent, multi-agent investigation) | Yes | Yes (MIT) |
+| [hermes-agent-analysis.md](agents/hermes-agent-analysis.md) | Nous Research Hermes (self-improving, multi-platform, 43K stars) | Yes | Yes (MIT) |
+| [rowboat-analysis.md](agents/rowboat-analysis.md) | Rowboat (AI coworker, knowledge graph from comms) | No | Yes (Apache-2.0) |
+| [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) | GitHub Copilot CLI (terminal agent, same harness as Copilot coding agent) | Yes | No (proprietary) |
+| [odysseus-analysis.md](agents/odysseus-analysis.md) | Odysseus (self-hosted all-in-one AI workspace: chat, agents, research, email, calendar) | Yes | Yes (AGPL-3.0) |
+| [databricks-genie-analysis.md](agents/databricks-genie-analysis.md) | Databricks Genie One (agentic data coworker; Genie Ontology semantic graph + Genie Agents) | Partial (Slack/Teams/mobile) | No (proprietary; OSS lakehouse base) |
+| [apache-maka-analysis.md](agents/apache-maka-analysis.md) | Apache Maka (Incubating; local-first, event-sourced agent workspace — "the log is the runtime"; Desktop/TUI/CLI) | Partial | Yes (Apache-2.0; ASF podling, no approved release yet) |
+| [qwenpaw-analysis.md](agents/qwenpaw-analysis.md) | QwenPaw (AgentScope + Qwen; self-hosted personal AI assistant, multi-channel, three-tier memory) | Partial | Yes (Apache-2.0) |
+| [moss-self-evolving-agent-analysis.md](agents/moss-self-evolving-agent-analysis.md) | MOSS (HKGAI, on OpenClaw; self-evolving assistant that rewrites its own TypeScript source via a 7-stage benchmark-gated pipeline) | Yes | Yes (Apache-2.0; OpenClaw vendored MIT) |
 
 ## Coding Agents & IDEs
 
@@ -151,7 +151,7 @@ Amazon Q, CodeBuddy, Kilo Code, Trae, Kimi Code, Amp, Pi — is now analyzed und
 [coding-harness-eval plan](https://github.com/qte77/coding-harness-eval) for the
 broader comparison landscape.
 
-**Disambiguation.** [GitHub Copilot CLI](github-copilot-cli-analysis.md)
+**Disambiguation.** [GitHub Copilot CLI](agents/github-copilot-cli-analysis.md)
 (analyzed above) and *Devin CLI* are interactive terminal agents. They share
 branding — but not surface — with the *GitHub Copilot Coding Agent* (cloud;
 assign an issue, it opens a PR) and *autonomous Devin*, which are covered

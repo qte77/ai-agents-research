@@ -101,4 +101,4 @@ third-party benchmark reproduction was found.
 
 [repo]: https://github.com/EverMind-AI/Raven
 [everos]: ../agent-frameworks-infrastructure-landscape.md
-[moss]: ../moss-self-evolving-agent-analysis.md
+[moss]: ../agents/moss-self-evolving-agent-analysis.md

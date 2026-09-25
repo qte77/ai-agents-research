@@ -142,4 +142,4 @@ guarantees for paying users.
 [gcfa-faqs]: https://developers.google.com/gemini-code-assist/resources/faqs
 [antigravity-discussion]: https://github.com/google-gemini/gemini-cli/discussions/27274
 [techtimes]: https://www.techtimes.com/articles/317056/20260523/google-accepted-6000-gemini-cli-contributions-then-closed-tool-enterprise-only.htm
-[copilot-cli-analysis]: github-copilot-cli-analysis.md
+[copilot-cli-analysis]: agents/github-copilot-cli-analysis.md

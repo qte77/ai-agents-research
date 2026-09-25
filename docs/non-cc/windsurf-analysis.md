@@ -147,7 +147,7 @@ Hold final adoption until the Cognition/Windsurf integration trajectory stabiliz
 
 ## Cross-References
 
-- [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md) — terminal-native alternative; compare for headless/CI workflows
+- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — terminal-native alternative; compare for headless/CI workflows
 
 ## Sources
 
@@ -164,4 +164,4 @@ Hold final adoption until the Cognition/Windsurf integration trajectory stabiliz
 [devin-pricing]: https://devin.ai/pricing
 [nxcode-acquisition]: https://www.nxcode.io/resources/news/cognition-windsurf-acquisition-swe-1-5-codemaps-2026
 [windsurf-redirect]: https://windsurf.com/
-[github-copilot-cli-analysis]: github-copilot-cli-analysis.md
+[github-copilot-cli-analysis]: agents/github-copilot-cli-analysis.md

@@ -53,7 +53,7 @@ maintained project, and the AgentScope/Alibaba backing gives it institutional we
 other framework-backed assistants in this corpus. The three-tier memory design (working context +
 verbatim history + an evolving Markdown knowledge base via ReMe) is a concrete, inspectable memory
 architecture worth comparing against memory tooling already tracked in
-[`../cc-community/CC-memory-tooling-landscape.md`](../cc-community/CC-memory-tooling-landscape.md).
+[`../cc-community/CC-memory-tooling-landscape.md`](../../cc-community/CC-memory-tooling-landscape.md).
 
 Against that: QwenPaw is tightly coupled to the Qwen model family and the DingTalk/Lark/WeChat
 channel ecosystem, which are China-market-centric integrations with less direct overlap with this

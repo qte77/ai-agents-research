@@ -80,7 +80,7 @@ than alternatives (2.4K stars vs Hermes 43K).
 
 ## Cross-References
 
-- [hermes-agent-analysis.md](hermes-agent-analysis.md) — also multi-platform agent with messaging channels
+- [hermes-agent-analysis.md](agents/hermes-agent-analysis.md) — also multi-platform agent with messaging channels
 - [deerflow-analysis.md](orchestrators/deerflow-analysis.md) — general-purpose agent harness (different deployment model)
 
 ## Sources

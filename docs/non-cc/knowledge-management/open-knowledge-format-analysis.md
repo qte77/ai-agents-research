@@ -119,7 +119,7 @@ portable bundles, Genie Ontology via a live graph. They are not strictly
 competitors: Genie Ontology exposes its context as an MCP server, so an OKF
 bundle could serve as a portable export/interchange format for a
 Genie-Ontology-grounded workspace. Full analysis:
-[databricks-genie-analysis.md](../databricks-genie-analysis.md).
+[databricks-genie-analysis.md](../agents/databricks-genie-analysis.md).
 
 ## Adoption Decision
 

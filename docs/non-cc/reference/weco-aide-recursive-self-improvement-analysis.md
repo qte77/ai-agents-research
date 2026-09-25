@@ -110,4 +110,4 @@ entries (MOSS, Raven) as a comparison point, without itself being adoptable.
 [paper]: https://arxiv.org/abs/2609.26457
 [aideml]: https://github.com/WecoAI/aideml
 [harnessx]: harnessx-analysis.md
-[moss]: ../moss-self-evolving-agent-analysis.md
+[moss]: ../agents/moss-self-evolving-agent-analysis.md

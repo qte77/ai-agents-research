@@ -77,7 +77,7 @@ not an internal CC feature.
 
 ## Cross-References
 
-- [goclaw-analysis.md](goclaw-analysis.md) — GoClaw is OpenClaw's Go-based
+- [goclaw-analysis.md](../goclaw-analysis.md) — GoClaw is OpenClaw's Go-based
   successor; MOSS instead extends the original TypeScript OpenClaw with
   autonomous self-rewriting, giving two divergent evolutions of the same
   lineage.
