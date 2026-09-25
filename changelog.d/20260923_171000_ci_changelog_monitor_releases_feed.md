@@ -1,3 +1,0 @@
-### Changed
-
-- `.github/scripts/lib/changelog.py`, `.github/scripts/changelog-compare.py`, `.github/workflows/cc-changelog-monitor.yaml`: the changelog monitor now fetches `claude-code`'s `releases.atom` and, when it parses successfully, uses its per-id dedup ledger (`.github/state/native-monitor-state.json`, key `cc-changelog-releases`) to decide which feed-covered versions are new and to annotate each with its release date; the scan-doc version-range cutoff acts as the bootstrap/window-rollout safety net and as the fallback for any version the feed doesn't cover — a feed/changelog skew gap, or the feed being unavailable entirely. `CHANGELOG.md` remains the sole content source in both paths (#410).
