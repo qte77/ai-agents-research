@@ -21,8 +21,8 @@ company: each person and each shared "room" (channel/project) gets its own scope
 keychain view, permissions, crons, web apps, and durable sandbox (per the [README][qm-gh],
 accessed 2026-09-24). It is **harness-agnostic** at the model-loop layer: "Pi, OpenCode, Codex, and
 Claude Code all drive the same core, so a deployment isn't tied to any single vendor" — see
-[`pi-analysis.md`](pi-analysis.md), [`opencode-analysis.md`](opencode-analysis.md),
-[`codex-cli-analysis.md`](codex-cli-analysis.md) for those individually.
+[`pi-analysis.md`](../pi-analysis.md), [`opencode-analysis.md`](../opencode-analysis.md),
+[`codex-cli-analysis.md`](../codex-cli-analysis.md) for those individually.
 
 **Repository facts** (`gh api repos/yc-software/qm`, accessed 2026-09-24): 15,226 stars, 1,866
 forks, **MIT** license, created 2026-07-29, latest tagged release `v0.1.12` (published
@@ -69,7 +69,7 @@ not a first-party QM source and is not verified here.
 sandbox/permissions/memory) is a genuinely different shape than the single-user assistants and
 single-team-channel bots more commonly covered in this corpus, and its harness-agnostic core (same
 runtime driving Pi, OpenCode, Codex, or Claude Code) is a concrete multi-harness design worth
-comparing against [`agent-frameworks-infrastructure-landscape.md`](agent-frameworks-infrastructure-landscape.md).
+comparing against [`agent-frameworks-infrastructure-landscape.md`](../agent-frameworks-infrastructure-landscape.md).
 Star growth is exceptional for a two-month-old repo, though that on its own is not evidence of
 production maturity — no independent case studies were found as of 2026-09-24, and the project is
 self-hosted with no first-party managed-hosting offering (the `agent37.com` listing is third-party
