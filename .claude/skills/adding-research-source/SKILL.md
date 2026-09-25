@@ -28,6 +28,8 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
      coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols);
      add the index row under that section
    - Security / governance / identity / lifecycle → `docs/sdlc-lcm/<topic>-landscape.md`
+   - Whatever the bucket: if the doc is about memory, knowledge graphs, RAG, code tooling or
+     visualization, add a row to the matching `docs/_topics/<hub>.md` (pointer + one line, no content)
    - **Extend, don't create** when a landscape already covers the area (dup-check with `git grep`);
      synthesis labels (e.g. "company brain") → extend, never standalone. Spans both dirs → deeper
      analysis in one, cross-ref from the other.

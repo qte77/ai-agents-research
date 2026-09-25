@@ -22,7 +22,7 @@ follows one structure: **What it is → How it works → Adoption decision → A
 - **Cross-repo learnings** and an auto-generated cumulative index of agentic-AI papers
 - **Self-currency** — four cron monitors open triage PRs when upstream sources change
 
-Full directory map and the monitor pipeline live in [`docs/architecture.md`](docs/architecture.md); the research goals and user stories are in [`docs/UserStory.md`](docs/UserStory.md); browse the analyses under [`docs/`](docs/).
+Full directory map and the monitor pipeline live in [`docs/architecture.md`](docs/architecture.md); the research goals and user stories are in [`docs/UserStory.md`](docs/UserStory.md); browse the analyses under [`docs/`](docs/), or by subject (memory, knowledge graphs, RAG, code tooling, visualization) via the [topic hubs](docs/_topics/README.md).
 
 ## How
 

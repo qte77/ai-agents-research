@@ -38,7 +38,8 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
      (verified 2026-09-25). It was the only hit in a scan of 104 local estate clones.
   2. ~~Release v0.10.0~~ — done 2026-09-25: #500 (URL-move notice fragment) → #501 (release PR) →
      tag `v0.10.0` → GitHub Release published with the moved-URL notice.
-  3. Row 12c (#309 remainder: the 5 `docs/_topics/` hubs). Row 12b (dedup) shipped.
+  3. ~~Rows 12b + 12c~~ — done 2026-09-25: #502 (DeepWiki/CocoIndex dedup) + the topic-hubs PR
+     (`docs/_topics/`, 5 hubs). #309 Phase 1 complete.
   4. Row 23 (full graph rebuild; `ui/graph.html` `source_file` metadata still shows old flat paths —
      metadata only, no broken links).
   5. Row 11 (#348) stays deferred until something consumes `status:`.
@@ -215,7 +216,7 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
 | ~~12~~ | ~~#309 Phase 1: `non-cc/` subdivision~~ | agent | Done 2026-09-25: #489 (tested move tool + Orchestrators) + #490–#497 (one PR per section); 93 docs in 9 subdirs mirroring the README sections; all relative links rewritten, lychee offline 0 errors every step; tool/map removed after use (recoverable from 7179e0a) |
 | ~~12b~~ | ~~#309 Phase 1 remainder: resolve DeepWiki + CocoIndex duplication~~ | agent | Done 2026-09-25 (this PR): DeepWiki — landscape entry trimmed to a pointer, its unique facts moved into `deepwiki-analysis.md`. CocoIndex — the cc-community `cocoindex-code` entry stays canonical for the CLI (CC integration surface); `cocoindex-analysis.md` drops its duplicated cocoindex-code stats/specifics (which had drifted: v0.2.35 vs v0.2.36, 1.9k vs 2.2k) and keeps the engine + a pointer |
-| 12c | #309 Phase 1 remainder: `docs/_topics/` cross-subject hub indexes (memory, knowledge-graphs, rag, code-tooling, visualization) — pointer tables only | agent | 5 hubs exist, linked from README + architecture/CONTRIBUTING trees; add-source skill says to add a hub row |
+| ~~12c~~ | ~~#309 Phase 1 remainder: `docs/_topics/` cross-subject hub indexes~~ | agent | Done 2026-09-25 (this PR): `docs/_topics/` README + 5 hubs (memory, knowledge-graphs, rag, code-tooling, visualization), pointer tables only, anchors verified; linked from README + architecture/CONTRIBUTING trees; add-source skill says to add a hub row |
 | 23 | Full knowledge-graph rebuild (row 20 added 123 topics + 33 docs; also refreshes the stale `source_file` metadata in `ui/graph.html` after the restructure) | agent | Uniform full rebuild via `/graphify` → `make graph-page` → Pages deploy; node count reported |
 | ~~13~~ | ~~Merge newest bot PRs #442, #443, #444, #424, #418~~ | owner | Done 2026-09-23: all five merged, branches deleted |
 | ~~14~~ | ~~#434: read failed logs, then merge~~ | owner | Done 2026-09-23: failures were environmental (lychee rot, GitHub Models outage); merged |

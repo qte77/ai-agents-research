@@ -31,6 +31,7 @@ ai-agents-research/
 │   ├── non-cc/                # Non-CC coding agents (JetBrains Air, DeerFlow, Goose, ...)
 │   │   └── <section>/         # 9 subdirs mirroring non-cc/README.md sections (orchestrators, agents, coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols)
 │   ├── sdlc-lcm/              # SDLC + product lifecycle management specs
+│   ├── _topics/               # Cross-subject hub indexes (memory, knowledge-graphs, rag, code-tooling, visualization); pointers only
 │   ├── learnings/             # Cross-repo compound learnings hub (CRLA write-back target)
 │   │   └── per-repo/          # Per-repo pattern distillations
 │   ├── research/              # Auto-generated cumulative agentic-AI paper index (rxiv eval)
