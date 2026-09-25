@@ -323,7 +323,7 @@ class RewriteMarkdownLinksTests(unittest.TestCase):
 
 
 class LoadMovesTsvTests(unittest.TestCase):
-    def test_parses_tsv_ignoring_header_and_comments(self, tmp_write=None):
+    def test_parses_tsv_ignoring_header_and_comments(self):
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp) / "moves.tsv"
