@@ -3,7 +3,7 @@ title: DeepWiki — Auto-Generated Browsable Wikis and Chat Q&A for GitHub Repos
 source: https://deepwiki.com/
 purpose: Evaluate DeepWiki (Cognition / Devin) as a repo-to-docs tool for the ai-agents-research context
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-09-25
 validated_links: 2026-06-16
 ---
 
@@ -34,6 +34,16 @@ DeepWiki ingests a repository and produces:
   summaries, organized in parent-child relationships.
 - **Chat Q&A** — a conversational interface ("Ask Devin") that answers natural-language
   questions using the generated wiki as context for enhanced code search.
+
+The repo-to-docs landscape survey (created 2026-04-06; moved here 2026-09-25, not re-verified)
+also recorded:
+
+- A table of contents with subsections and cross-links.
+- Mermaid-format architecture diagrams (flowcharts, dependency graphs, lifecycle hierarchies).
+- Source-file references as GitHub links that include line ranges.
+- 100+ pre-indexed major repos, e.g. VSCode, HuggingFace Transformers and Playwright. For
+  VSCode, the wiki covers the multi-process architecture, IPC channel tables, service
+  registration patterns, lifecycle phases, CLI modes and environment variables.
 
 Developers can steer generation via a `.devin/wiki.json` configuration file placed in the
 repository root. Accepted fields (per the Devin docs, fetched 2026-06-16):

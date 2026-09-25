@@ -3,7 +3,7 @@ title: CocoIndex — Incremental Indexing Engine for AI/RAG Pipelines
 source: https://github.com/cocoindex-io/cocoindex
 purpose: Evaluate CocoIndex as an incremental ETL/indexing layer for AI agent context ingestion and RAG pipelines.
 created: 2026-06-16
-updated: 2026-06-20
+updated: 2026-09-25
 validated_links: 2026-06-16
 ---
 
@@ -20,12 +20,13 @@ than reindexing everything on every run. The project self-describes as targeting
 A companion project, [cocoindex-code][cocoindex-code-gh], is a lightweight, embedded
 AST-based semantic code-search CLI built on the same engine. It targets the code-search
 use case specifically, integrating with coding agents (Claude Code, Codex, Cursor) via
-MCP servers or Skills — cataloged in [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io).
+MCP servers or Skills. Its stats, features and CC integration are cataloged in
+[CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io)
+(the canonical entry for cocoindex-code); this analysis covers the core engine.
 
 **Core repo**: Apache 2.0 | Rust (50%) + Python (50%) | 10.3k stars | v1.0.10 (2026-06-14)
-**cocoindex-code**: Apache 2.0 | Python (98%) | ~2.2k stars | v0.2.36 (2026-06-19)
 
-(Core counts/version as fetched 2026-06-16; cocoindex-code refreshed 2026-06-20.)
+(Core counts/version as fetched 2026-06-16.)
 
 ## How It Works
 
@@ -48,12 +49,6 @@ video/audio transcripts, blob stores.
 **Target stores**: vector databases, relational databases, data warehouses, graph
 databases, message queues.
 
-**cocoindex-code specifics**: AST-based semantic search across 28+ programming
-languages with zero-config setup. Local embeddings via SentenceTransformers or 100+
-cloud providers via LiteLLM. Incremental re-indexing (only changed files). The repo
-claims approximately 70% token reduction when integrated with Claude Code as an MCP
-server (not independently verified by this analysis).
-
 ## Adoption Decision
 
 CocoIndex addresses a real gap in the agent-research toolchain: keeping indexed context
@@ -62,9 +57,8 @@ the integration barrier for existing Python-based research workflows.
 
 The cocoindex-code variant is directly relevant to the repo's CC-native work: it
 provides MCP-compatible semantic code search that complements Claude Code's built-in
-file tools. At v1.0.10 (core) and v0.2.35 (code), the projects are past early
-prototyping but the 1.x release cadence (v1.0.10 in June 2026) suggests still-active
-API surface churn.
+file tools. At v1.0.10, the core is past early prototyping, but the 1.x release cadence
+(v1.0.10 in June 2026) suggests the API surface is still changing.
 
 **Trade-offs:**
 
@@ -92,15 +86,15 @@ than competing.
       document ingestion needs (connectors: file system, PDFs).
 - [ ] Track v1.x release notes for breaking API changes before committing to a
       dependency.
-- [ ] Revisit star trajectory and issue velocity at next quarterly review (current:
-      10.3k core, 1.9k code as of 2026-06-16).
+- [ ] Revisit star trajectory and issue velocity at next quarterly review (core:
+      10.3k as of 2026-06-16).
 
 ## Sources
 
 | Source | Content |
 |---|---|
 | [CocoIndex core repo][cocoindex-gh] | Stars, license, language split, version, features, architecture |
-| [cocoindex-code repo][cocoindex-code-gh] | Stars, version, AST search, MCP integration, token claim, language |
+| [cocoindex-code repo][cocoindex-code-gh] | Companion code-search CLI + MCP integration (details in CC-code-tooling-landscape) |
 | [CocoIndex website][cocoindex-web] | Value proposition, connector/target-store list, incremental architecture overview |
 
 [cocoindex-gh]: https://github.com/cocoindex-io/cocoindex
