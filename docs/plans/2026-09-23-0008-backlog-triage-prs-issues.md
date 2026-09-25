@@ -28,9 +28,31 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
 - **Shipped (2026-09-24, cont.):** #480 (plan + CONTRIBUTING), #481 (indexes for the 33 new docs + 3
   previously unindexed), **v0.9.0 released** (#482; first run of the reusable tag/publish → #347 closed).
 - **Shipped (2026-09-24, owner defaults):** #462 (row 9, closes #410), #484 (coding-harness-eval rename, supersedes #456), #485 (row 22), #486 (shared plan usage + local-tool blind spots); closed #382 and #232; opened qte77/.github#44 (tag reusable workflows) and analyze-stock-kpi#413 (longs/shorts decision).
-- **Next, in order:** rows 12 (#309 faithful-9), then 11 (#348, deferred until a status consumer exists).
-- **Owner gates:** #462 scope (a/b/c), closing #382, deciding #232, #309 scope, PR #456 (another
-  session's `coding-harness-eval` rename).
+- **Shipped (2026-09-25):** **v0.9.1 released** (#488). #309 Phase 1 `non-cc/` subdivision:
+  #489 (tested move tool + Orchestrators) + #490–#497 (one PR per section) + #498 wrap-up — all 93
+  docs now in `docs/non-cc/<section>/` (9 README-section subdirs); lychee offline 0 errors every step;
+  tool removed (recoverable from `7179e0a`); add-source skill + CONTRIBUTING/architecture trees updated.
+- **Next, in order (START HERE in a fresh session):**
+  1. **Cross-repo link fix (found 2026-09-25):** `qte77/polyfetch-scrape` `docs/scraping-landscape.md:11`
+     links `…/ai-agents-research/blob/main/docs/non-cc/web-scraping-extraction-landscape.md` (404 now)
+     → repoint to `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md`. Do it in a
+     polyfetch-scrape-scoped session/subagent (estate rule). It was the only hit in a scan of 104
+     local estate clones (`git grep` for `ai-agents-research/(blob|tree)/…/docs/non-cc/<file>.md`).
+  2. **Release v0.10.0** (minor: 93 doc URLs under `docs/non-cc/` moved — call it out in the release
+     notes): run the local gate (`make check_docs check_status check_actions test`) → dispatch
+     `bump-my-version` (minor) → merge the release PR → confirm the `tag-release` run → dispatch
+     `publish-release` with `tag=v0.10.0`.
+  3. Row 12b (#309 remainder: DeepWiki + CocoIndex dup resolution, `docs/_topics/` hubs).
+  4. Row 23 (full graph rebuild; `ui/graph.html` `source_file` metadata still shows old flat paths —
+     metadata only, no broken links).
+  5. Row 11 (#348) stays deferred until something consumes `status:`.
+- **Owner gates:** none blocking. Owner-default decisions were applied 2026-09-24 (#462 option c,
+  #382/#232 closed, #456 superseded by #484). External decisions live elsewhere:
+  `qte77/.github#44` (tag the reusable workflows), `analyze-stock-kpi#413` (longs/shorts).
+- **Helpers (outside the repo, persistent):** `/workspaces/temp/ai-agents-research-triage/merge_gated.py
+  <PR…>` (update-branch → wait all checks → lychee re-run once → `--admin` squash; stops on failures);
+  never keep working files in `/tmp` (wiped on restart). `--admin` does NOT bypass a failing
+  CodeFactor — fix the finding (usually complexity; `uvx radon cc` run outside the repo).
 - **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
   (invalid env tokens shadow the stored credential).
 - **Watch-outs:**
