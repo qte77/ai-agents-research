@@ -313,7 +313,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
 - [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo-to-docs-tools-landscape.md) — repo-to-docs generators
-- [code-review-products-landscape.md](../non-cc/code-review-products-landscape.md) — standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, …) moved out of this doc per #326
+- [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) — standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, …) moved out of this doc per #326
 
 [graphify]: https://github.com/safishamsi/graphify
 [code-review-graph]: https://github.com/tirth8205/code-review-graph

@@ -24,7 +24,7 @@ coverage-map). Routing verified against existing coverage to extend/cross-ref ra
 | PR | Deliverable |
 |---|---|
 | #372 | NEW `sdlc-lcm/agentic-ai-vulnerability-landscape.md` — operational vuln layer: OWASP AIVSS, MITRE ATLAS (+ AI Incident Sharing), Microsoft MDASH/Vuln.AI, Berkeley Vulnerability Initiative, 2 arXiv surveys. Cross-links (not dup) the MAESTRO/governance docs. |
-| #373 | NEW `non-cc/kv-cache-serving-landscape.md` — cross-vendor prompt-caching (Anthropic/OpenAI/Gemini) + serving internals (PagedAttention, RadixAttention, quantization, GQA/MLA, Mooncake/LMCache). Fixed a stale fact in `CC-prompt-caching-behavior.md` (Opus 4.8 min = 1,024, not 4,096). |
+| #373 | NEW `non-cc/infrastructure/kv-cache-serving-landscape.md` — cross-vendor prompt-caching (Anthropic/OpenAI/Gemini) + serving internals (PagedAttention, RadixAttention, quantization, GQA/MLA, Mooncake/LMCache). Fixed a stale fact in `CC-prompt-caching-behavior.md` (Opus 4.8 min = 1,024, not 4,096). |
 | this | NEW `cc-community/CC-codex-plugin-cc-analysis.md`; EXTEND `repo-to-docs-tools-landscape.md` (OpenWiki) + `agentic-enterprise-os-landscape.md` (company brain); CONTRIBUTING polyfetch/doc-pipeline pointer; this plan. |
 
 ## Placement decisions (rationale)

@@ -19,7 +19,7 @@ which is why they live here rather than in the cc-community tooling docs.
 
 For CC-*integrated* code-review tooling — Qodo's `open-aware` MCP server +
 cross-repo review, and the Code-Review-Graph AST/blast-radius MCP tool — see
-[CC-code-tooling-landscape.md](../cc-community/CC-code-tooling-landscape.md).
+[CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md).
 
 ## Products
 
@@ -38,12 +38,12 @@ These overlap heavily; the differentiators are codebase-context depth (Greptile'
 
 ## Cross-References
 
-- [CC-code-tooling-landscape.md](../cc-community/CC-code-tooling-landscape.md) — CC-integrated code-review tooling: Qodo (`open-aware` MCP + cross-repo review) and Code-Review-Graph (AST blast-radius MCP)
-- [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
+- [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md) — CC-integrated code-review tooling: Qodo (`open-aware` MCP + cross-repo review) and Code-Review-Graph (AST blast-radius MCP)
+- [CC-official-plugins-landscape.md](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
 
 ## Sources
 
 Each product links to its first-party page inline in the list above. Moved here from
-[CC-code-tooling-landscape.md](../cc-community/CC-code-tooling-landscape.md) on
+[CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md) on
 2026-06-27 (tracked in [#326](https://github.com/qte77/ai-agents-research/issues/326)),
 where the roundup was flagged as out-of-scope for a `cc-community` doc.

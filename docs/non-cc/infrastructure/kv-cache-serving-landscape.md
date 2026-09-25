@@ -14,11 +14,11 @@ is managed, reused, compressed, and offloaded across LLM serving. Two layers: (1
 prompt-caching APIs** a Claude Code / agent consumer bills against, and (2) the **serving-engine
 internals** underneath them.
 
-This complements [../cc-native/context-memory/CC-prompt-caching-behavior.md](../cc-native/context-memory/CC-prompt-caching-behavior.md),
+This complements [../cc-native/context-memory/CC-prompt-caching-behavior.md](../../cc-native/context-memory/CC-prompt-caching-behavior.md),
 which covers Anthropic prompt caching from the **CC client / session-economics** angle only (what CC
 sends, hit-rate, cost). This doc adds the **cross-vendor comparison** and the **serving mechanism**
 that doc doesn't. See also the KV-cache-invalidation gotcha for self-hosted backends in
-[../cc-native/configuration/CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md)
+[../cc-native/configuration/CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md)
 (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`).
 
 ## 1. Vendor prompt-caching APIs (KV reuse as a billing/latency feature)
@@ -34,7 +34,7 @@ prefix match only — no semantic/fuzzy matching. Cache **read** is ~90% cheaper
 
 Anthropic's per-model minimums verified against the [prompt-caching docs][anthropic-caching]
 (2026-07-08); Bedrock differs (Fable 5 / Mythos 5 = 1,024 there). CC itself uses the 5-min tier
-exclusively — see [CC-prompt-caching-behavior.md](../cc-native/context-memory/CC-prompt-caching-behavior.md).
+exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memory/CC-prompt-caching-behavior.md).
 
 ## 2. Serving-engine internals
 

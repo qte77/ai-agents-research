@@ -61,7 +61,7 @@ zero-coverage (index stubs in `rxiv-agentic-papers.md` don't count as coverage).
 | T2.1 | MemoryWAM (2606.20562) | `non-cc/agent-frameworks-infrastructure-landscape.md` |
 | T2.2 | Marginal Advantage Accumulation (2606.20475) | `non-cc/agent-frameworks-infrastructure-landscape.md` |
 | T2.3 | StreamMemBench (2606.14571) | extend `sdlc-lcm/agent-evaluation-metrics-landscape.md` |
-| T2.4 | UltraQuant 4-bit KV caching (2606.20474) | extend `non-cc/kv-cache-serving-landscape.md` |
+| T2.4 | UltraQuant 4-bit KV caching (2606.20474) | extend `non-cc/infrastructure/kv-cache-serving-landscape.md` |
 | T2.5 | Multi-LCB / LiveCodeBench multi-lang (2606.20517) | extend `sdlc-lcm/mas-benchmarking-best-practices.md` |
 | T2.6 | SIMMER latent-planning-failure bench (2606.14574) | `sdlc-lcm/agent-evaluation-metrics-landscape.md` |
 | T3.1 | Execution-State Capsules (2606.20537) | `non-cc/` (robotics-flavored, low priority) |

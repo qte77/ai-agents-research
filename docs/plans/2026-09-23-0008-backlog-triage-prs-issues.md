@@ -165,10 +165,10 @@ sdlc-lcm 30, cc-native 21, cc-community 16. The most-extended targets across all
 | Target doc | Topics |
 |---|---|
 | `docs/non-cc/agent-frameworks-infrastructure-landscape.md` | 61 |
-| `docs/non-cc/semantic-layers-data-catalog-landscape.md` | 18 |
+| `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md` | 18 |
 | `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md` | 16 |
-| `docs/non-cc/web-scraping-extraction-landscape.md` | 15 |
-| `docs/non-cc/llm-routers-gateways-landscape.md` | 10 |
+| `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md` | 15 |
+| `docs/non-cc/infrastructure/llm-routers-gateways-landscape.md` | 10 |
 | `docs/sdlc-lcm/evaluation-data-resources-landscape.md` | 10 |
 
 **Entry rule for row 20:** a topic enters the corpus only if research finds a first-party URL that
