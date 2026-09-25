@@ -90,7 +90,7 @@ for our own agent integrations regardless of the video domain.
 [author]: https://github.com/calesthio
 [showcase]: CC-domain-claudemd-showcase.md
 [connectors]: ../cc-native/plugins-ecosystem/CC-connectors-overview.md
-[agui]: ../non-cc/ag-ui-protocol-landscape.md
+[agui]: ../non-cc/protocols/ag-ui-protocol-landscape.md
 [palmier]: https://github.com/palmier-io/palmier-pro
 [palmier-yc]: https://www.ycombinator.com/companies/palmier
 [palmier-org]: https://github.com/palmier-io

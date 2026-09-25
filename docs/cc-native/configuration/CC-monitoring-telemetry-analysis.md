@@ -11,7 +11,7 @@ validated_links: 2026-07-23
 
 ## What It Is
 
-Claude Code is itself an OTel-instrumented client. Enabling `CLAUDE_CODE_ENABLE_TELEMETRY=1` emits metrics (time series) and logs/events via standard OTLP; distributed tracing is available in beta via `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER`. This makes every OTel-native backend a candidate CC observability backend out of the box. Source: [Claude Code — Monitoring usage][cc-monitoring] (first-party). Extracted from the broader [agent-observability-methods-analysis.md](../../non-cc/agent-observability-methods-analysis.md) platform catalog so CC's own telemetry surface has a first-party home.
+Claude Code is itself an OTel-instrumented client. Enabling `CLAUDE_CODE_ENABLE_TELEMETRY=1` emits metrics (time series) and logs/events via standard OTLP; distributed tracing is available in beta via `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER`. This makes every OTel-native backend a candidate CC observability backend out of the box. Source: [Claude Code — Monitoring usage][cc-monitoring] (first-party). Extracted from the broader [agent-observability-methods-analysis.md](../../non-cc/protocols/agent-observability-methods-analysis.md) platform catalog so CC's own telemetry surface has a first-party home.
 
 ## Span Hierarchy (Beta Traces)
 
@@ -73,7 +73,7 @@ Toggle metric attributes to trade granularity for storage cost:
 ## Cross-References
 
 - [CC-env-vars-reference.md § OpenTelemetry Exporter Configuration](CC-env-vars-reference.md#opentelemetry-exporter-configuration) — the full OTel exporter env-var surface
-- [agent-observability-methods-analysis.md](../../non-cc/agent-observability-methods-analysis.md) — third-party observability platforms that ingest CC's OTel output (Logfire's "zero-config CC" path is CC→Logfire-as-MCP-server, not Logfire parsing CC's OTel)
+- [agent-observability-methods-analysis.md](../../non-cc/protocols/agent-observability-methods-analysis.md) — third-party observability platforms that ingest CC's OTel output (Logfire's "zero-config CC" path is CC→Logfire-as-MCP-server, not Logfire parsing CC's OTel)
 
 ## Sources
 

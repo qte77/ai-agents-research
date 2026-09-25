@@ -59,7 +59,7 @@ The **model ↔ tools** leg ([modelcontextprotocol.io][mcp]). Spec revisions are
 - **Elicitation enhancements** — enum schemas (single/multi-select), URL-mode elicitation; plus **tool calling in sampling** (`tools` / `toolChoice`).
 - **Icon metadata** for tools/resources/prompts; **JSON Schema 2020-12** as the default dialect; formalized governance + SDK tiering.
 
-(The prior 2025-06-18 revision introduced elicitation, structured tool output, OAuth Resource-Server classification, and removed JSON-RPC batching.) Cross-ref: [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) — CC's MCP connector surface.
+(The prior 2025-06-18 revision introduced elicitation, structured tool output, OAuth Resource-Server classification, and removed JSON-RPC batching.) Cross-ref: [CC-connectors-overview.md](../../cc-native/plugins-ecosystem/CC-connectors-overview.md) — CC's MCP connector surface.
 
 ## AG-UI (Agent-User Interaction Protocol)
 
@@ -156,7 +156,7 @@ A self-hosted, open-source template for a governed "AI coworker" platform — di
 | Stream agent events to any frontend | **AG-UI** (protocol) |
 | Agent emits structured UI widgets | **A2UI** spec over AG-UI |
 | End-to-end demo with generative HTML components | **OpenGenerativeUI** (reference) |
-| Claude Code observability over agent-user interactions | Use AG-UI-compatible backend + OTel (see [CC-monitoring-telemetry-analysis.md](../cc-native/configuration/CC-monitoring-telemetry-analysis.md)) |
+| Claude Code observability over agent-user interactions | Use AG-UI-compatible backend + OTel (see [CC-monitoring-telemetry-analysis.md](../../cc-native/configuration/CC-monitoring-telemetry-analysis.md)) |
 
 ## Agent Control-Surface Naming (2026)
 
@@ -164,11 +164,11 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 
 | Product | Self-description (first-party) | What it actually is |
 |---|---|---|
-| Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](windsurf-analysis.md#agent-command-center) |
-| [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer — full analysis: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md#omnara) |
+| Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](../windsurf-analysis.md#agent-command-center) |
+| [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer — full analysis: [CC-remote-access-landscape.md](../../cc-native/ci-remote/CC-remote-access-landscape.md#omnara) |
 | [flightdeckhq/flightdeck][flightdeck] | "observability and control plane for production and coding agents" | Observability dashboard |
-| [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" | Task-loop TUI — see [CC-ralph-enhancement-research.md](../cc-native/agents-skills/CC-ralph-enhancement-research.md) |
-| [Vibe Kanban][vibe-kanban] | kanban board (sunsetting) | Orchestrator board — see [CC-office-worker-workflows.md](../cc-community/CC-office-worker-workflows.md) |
+| [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" | Task-loop TUI — see [CC-ralph-enhancement-research.md](../../cc-native/agents-skills/CC-ralph-enhancement-research.md) |
+| [Vibe Kanban][vibe-kanban] | kanban board (sunsetting) | Orchestrator board — see [CC-office-worker-workflows.md](../../cc-community/CC-office-worker-workflows.md) |
 
 **The positioning gap.** All of the above are **orchestration-board or observability** surfaces. None is a *live generative-UI* surface — one where the agent streams and renders UI components in real time. That capability is precisely what the AG-UI + A2UI + OpenGenerativeUI stack on this page provides, and **not** what the "command center" products do. So the cockpit/HUD naming space is crowding with board/observability tools, while the live-generative-UI cockpit position remains largely unoccupied under those labels.
 
@@ -177,7 +177,7 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 ## Cross-References
 
 - [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) — OTel observability patterns (AG-UI events can be modeled as OTel spans)
-- [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) — MCP connector landscape (the model↔tool leg of the Protocol Triangle)
+- [CC-connectors-overview.md](../../cc-native/plugins-ecosystem/CC-connectors-overview.md) — MCP connector landscape (the model↔tool leg of the Protocol Triangle)
 
 ## Sources
 

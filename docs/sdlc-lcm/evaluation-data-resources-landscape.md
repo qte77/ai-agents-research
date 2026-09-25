@@ -18,7 +18,7 @@ The tools below serve **eval-driven development (EDD)** — evals authored *befo
 
 ## 1. Evaluation & Testing Frameworks
 
-Observability-first platforms with strong eval features — **LangWatch, Evidently AI, Braintrust** — have full entries in [agent-observability-methods-analysis.md](../non-cc/agent-observability-methods-analysis.md); not duplicated here.
+Observability-first platforms with strong eval features — **LangWatch, Evidently AI, Braintrust** — have full entries in [agent-observability-methods-analysis.md](../non-cc/protocols/agent-observability-methods-analysis.md); not duplicated here.
 
 | Tool | Link | Focus | Notable |
 |---|---|---|---|
@@ -91,7 +91,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 ## Cross-References
 
 - [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) — metric definitions these tools/benchmarks measure
-- [agent-observability-methods-analysis.md](../non-cc/agent-observability-methods-analysis.md) — tracing/observability platforms (LangWatch, Evidently, Braintrust full entries)
+- [agent-observability-methods-analysis.md](../non-cc/protocols/agent-observability-methods-analysis.md) — tracing/observability platforms (LangWatch, Evidently, Braintrust full entries)
 - [research-agents-landscape.md](../non-cc/knowledge-management/research-agents-landscape.md) — research/discovery agents
 - [agent-frameworks-infrastructure-landscape.md](../non-cc/agent-frameworks-infrastructure-landscape.md) — agent frameworks & memory infrastructure
 
