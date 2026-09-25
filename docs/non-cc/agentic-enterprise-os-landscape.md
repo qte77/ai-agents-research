@@ -115,9 +115,9 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [office-forge]: https://github.com/qte77/office-forge-orchestrator
 [liminal]: https://github.com/qte77/liminal-flux-gh-acc
 [goal-attr]: ../sdlc-lcm/goal-tracking-attribution-landscape.md
-[genie]: databricks-genie-analysis.md
+[genie]: agents/databricks-genie-analysis.md
 [autoagent]: autoagent-analysis.md
-[odysseus]: odysseus-analysis.md
-[goose]: goose-analysis.md
+[odysseus]: agents/odysseus-analysis.md
+[goose]: agents/goose-analysis.md
 [frameworks]: agent-frameworks-infrastructure-landscape.md
 [ag-ui]: protocols/ag-ui-protocol-landscape.md

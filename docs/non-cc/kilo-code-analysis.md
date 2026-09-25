@@ -120,4 +120,4 @@ free-tier + BYOK path is immediately low-risk to trial.
 [kilo-gateway]: https://kilo.ai/docs
 [release]: https://github.com/Kilo-Org/kilocode/releases/tag/v7.3.46
 [pkg-json]: https://github.com/Kilo-Org/kilocode/blob/main/package.json
-[copilot-cli]: github-copilot-cli-analysis.md
+[copilot-cli]: agents/github-copilot-cli-analysis.md

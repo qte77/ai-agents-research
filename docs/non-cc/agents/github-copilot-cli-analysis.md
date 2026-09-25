@@ -19,7 +19,7 @@ the **same agentic harness** as GitHub's Copilot coding agent," so the two share
 behavior but are **different surfaces**: this is the interactive local terminal
 agent; the [Copilot coding agent][copilot-agent] is the autonomous cloud product
 that opens PRs from assigned issues (covered separately under
-[CI automation](../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape)).
+[CI automation](../../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape)).
 
 **Key distinction vs OSS peers** (Aider, Kilo Code, OpenCode): Copilot CLI is
 **proprietary** and gated on a Copilot subscription, but reuses an org's existing
@@ -53,7 +53,7 @@ Select via `/agent` or `--agent=<name>`.
 | LSP | `~/.copilot/lsp-config.json` (user) or `.github/lsp.json` (repo) |
 
 Note the instruction file is `copilot-instructions.md`, **not `AGENTS.md`** — a
-portability gap vs the AGENTS.md convergence ([multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md)).
+portability gap vs the AGENTS.md convergence ([multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)).
 
 ### Permissions, sandboxing, autonomy
 
@@ -107,15 +107,15 @@ off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 - **Disambiguate** in any agent comparison: CLI (local, interactive) vs coding
   agent (cloud, issue→PR) — same harness, different surface.
 - **Factor the config gap** (`copilot-instructions.md` ≠ `AGENTS.md`) into
-  multi-agent onboarding ([multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md)).
+  multi-agent onboarding ([multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)).
 - **Flag the license** when comparing against OSS peers — adoption is reversible
   only at the subscription level, not the code level.
 
 ## Cross-References
 
-- [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape) — the Copilot **coding agent** (cloud) it shares a harness with
-- [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) — the AGENTS.md/GEMINI.md convergence + per-agent config-file comparison (`copilot-instructions.md` ≠ `AGENTS.md`)
-- [CC-community-tooling-landscape.md](../cc-community/CC-community-tooling-landscape.md) — multi-agent tooling (CC Switch, CodeBurn) that targets Copilot; `~/.copilot` session data
+- [CC-github-actions-analysis.md](../../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape) — the Copilot **coding agent** (cloud) it shares a harness with
+- [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md) — the AGENTS.md/GEMINI.md convergence + per-agent config-file comparison (`copilot-instructions.md` ≠ `AGENTS.md`)
+- [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) — multi-agent tooling (CC Switch, CodeBurn) that targets Copilot; `~/.copilot` session data
 
 ## Sources
 

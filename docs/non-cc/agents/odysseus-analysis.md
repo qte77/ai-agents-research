@@ -101,7 +101,7 @@ adoption.
 ## Cross-References
 
 - [rowboat-analysis.md](rowboat-analysis.md) — alternative all-in-one AI coworker (Apache-2.0, knowledge-graph focus)
-- [openviking-analysis.md](context-memory/openviking-analysis.md) — filesystem-based context DB for agents (structural contrast)
+- [openviking-analysis.md](../context-memory/openviking-analysis.md) — filesystem-based context DB for agents (structural contrast)
 
 ## Sources
 

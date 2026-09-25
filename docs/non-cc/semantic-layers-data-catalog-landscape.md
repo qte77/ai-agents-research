@@ -66,7 +66,7 @@ This is the formal-semantics counterpart to [The Agent-Native Layer](#the-agent-
 
 The generic layers above solve the *plumbing* — governed APIs an agent can query. But an agent hitting a raw semantic API still re-derives business meaning on every call (and can still get it wrong). Two efforts go further, and are analyzed in depth elsewhere in this repo:
 
-- **[Databricks Genie Ontology](databricks-genie-analysis.md#genie-ontology)** — a persistent, authority-ranked context graph (metric definitions, joins, synonyms, business logic) built from query history + workplace apps, **MCP-exposed** so external agents consume the same verified context instead of re-deriving it per query.
+- **[Databricks Genie Ontology](agents/databricks-genie-analysis.md#genie-ontology)** — a persistent, authority-ranked context graph (metric definitions, joins, synonyms, business logic) built from query history + workplace apps, **MCP-exposed** so external agents consume the same verified context instead of re-deriving it per query.
 - **[Open Knowledge Format](knowledge-management/open-knowledge-format-analysis.md)** — a vendor-neutral, Apache-2.0 spec (Google Cloud, v0.1) for portable "knowledge bundles" (markdown + YAML) with AI agents as first-class consumers — the platform-independent interchange format for that curated context.
 
 Together they mark the shift from "query the catalog at runtime" to "pre-loaded, verified business context the agent can trust."
@@ -75,7 +75,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 
 ## Cross-References
 
-- [databricks-genie-analysis.md](databricks-genie-analysis.md) — Genie One agentic data coworker + Genie Ontology (the agent-native semantic graph)
+- [databricks-genie-analysis.md](agents/databricks-genie-analysis.md) — Genie One agentic data coworker + Genie Ontology (the agent-native semantic graph)
 - [open-knowledge-format-analysis.md](knowledge-management/open-knowledge-format-analysis.md) — OKF portable knowledge-bundle spec
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — §7 RAG & retrieval infrastructure agents call as tools
 

@@ -142,7 +142,7 @@ scale locks into Anysphere's cloud infrastructure.
 
 ## Cross-References
 
-- [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md) — terminal-native coding agent peer; stronger headless/CI story; same agentic harness as GitHub Copilot coding agent
+- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — terminal-native coding agent peer; stronger headless/CI story; same agentic harness as GitHub Copilot coding agent
 
 ## Sources
 
@@ -159,4 +159,4 @@ scale locks into Anysphere's cloud infrastructure.
 [cursor-agent-docs]: https://cursor.com/docs/agent
 [cursor-cli-docs]: https://cursor.com/docs/cli
 [cursor-changelog]: https://cursor.com/changelog
-[copilot-cli-analysis]: github-copilot-cli-analysis.md
+[copilot-cli-analysis]: agents/github-copilot-cli-analysis.md

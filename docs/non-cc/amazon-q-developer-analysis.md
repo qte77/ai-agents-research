@@ -28,7 +28,7 @@ The CLI has already been rebranded: the [AWS docs CLI page][q-cli-page] now read
 features exclusively in Kiro. Existing installations continue to work through the
 support window, but all forward investment is in [kiro.dev][kiro-dev].
 
-Compare: [GitHub Copilot CLI](github-copilot-cli-analysis.md), the closest
+Compare: [GitHub Copilot CLI](agents/github-copilot-cli-analysis.md), the closest
 actively-maintained proprietary CLI peer.
 
 ## How It Works
@@ -101,7 +101,7 @@ individual AWS builders. Open-source CLI (Apache-2.0 + MIT) was community-forkab
 available. The successor (Kiro) is a closed-source, proprietary product — teams
 adopting Q Developer today are on a forced migration path with no OSS fallback
 from the upstream repo. Bedrock-only model lock-in contrasts with multi-provider
-peers (see [GitHub Copilot CLI](github-copilot-cli-analysis.md)'s `/model` switch).
+peers (see [GitHub Copilot CLI](agents/github-copilot-cli-analysis.md)'s `/model` switch).
 
 ## Action Items
 

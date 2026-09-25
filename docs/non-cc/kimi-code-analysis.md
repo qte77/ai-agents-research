@@ -90,6 +90,6 @@ Assess before adopting: validate independently on SWE-bench or project-specific 
 [moonshot-privacy]: https://www.moonshot.ai/
 [marktechpost-cli]: https://www.marktechpost.com/2026/06/06/moonshot-ai-releases-kimi-code-cli-a-terminal-ai-coding-agent-built-in-typescript-for-next-gen-agents/
 [marktechpost-k27]: https://www.marktechpost.com/2026/06/12/moonshot-ai-releases-kimi-k2-7-code-a-coding-model-reporting-21-8-on-kimi-code-bench-v2-over-k2-6/
-[copilot-cli-crossref]: github-copilot-cli-analysis.md
+[copilot-cli-crossref]: agents/github-copilot-cli-analysis.md
 [anthropic-threat-report-2026-09]: https://www.anthropic.com/threat-intelligence-report-september-2026
 [anthropic-distillation-2026-02]: https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks

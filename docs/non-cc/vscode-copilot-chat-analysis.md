@@ -114,4 +114,4 @@ New Pro/Pro+/Max/Student sign-ups paused 2026-04-20; Business paused
 [gh-plans]: https://docs.github.com/en/copilot/get-started/plans
 [vscode-setup]: https://code.visualstudio.com/docs/copilot/setup
 [mcp]: https://modelcontextprotocol.io
-[copilot-cli-doc]: github-copilot-cli-analysis.md
+[copilot-cli-doc]: agents/github-copilot-cli-analysis.md

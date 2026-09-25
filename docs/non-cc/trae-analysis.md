@@ -116,4 +116,4 @@ context with clear Microsoft privacy commitments and enterprise audit controls.
 [vibecoding]: https://vibecoding.app/blog/trae-review
 [devradar]: https://devradar-dev.github.io/open-research/ai-tools/trae/
 [mcp-spec]: https://modelcontextprotocol.io/
-[copilot-cli-ref]: github-copilot-cli-analysis.md
+[copilot-cli-ref]: agents/github-copilot-cli-analysis.md

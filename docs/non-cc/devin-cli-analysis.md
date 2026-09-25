@@ -137,7 +137,7 @@ evaluate against your existing subscriptions before adding a new vendor.
 ## Cross-References
 
 - [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md) — autonomous cloud Devin via GitHub Actions (the `/handoff` destination)
-- [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md) — peer terminal agent; compare permission models and headless support
+- [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) — peer terminal agent; compare permission models and headless support
 - [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) — per-agent config-file and onboarding comparison
 
 ## Sources
@@ -156,5 +156,5 @@ evaluate against your existing subscriptions before adding a new vendor.
 [devin-cli-cmds]: https://docs.devin.ai/cli/essential-commands.md
 [devin-billing]: https://docs.devin.ai/admin/billing/self-serve.md
 [devin-desktop-blog]: https://devin.ai/blog/windsurf-is-now-devin-desktop/
-[copilot-cli-doc]: github-copilot-cli-analysis.md
+[copilot-cli-doc]: agents/github-copilot-cli-analysis.md
 [search-result]: https://terminaltrove.com/ai-coding-agents/devin-for-terminal/

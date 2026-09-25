@@ -72,8 +72,8 @@ dependency (not widely adopted). AlphaXiv integration may limit paper coverage.
 
 ## Cross-References
 
-- [deerflow-analysis.md](orchestrators/deerflow-analysis.md) — general-purpose super agent (LangGraph)
-- [CC-community-skills-landscape.md](../cc-community/CC-community-skills-landscape.md) — agent-skills `/review` for code (different domain)
+- [deerflow-analysis.md](../orchestrators/deerflow-analysis.md) — general-purpose super agent (LangGraph)
+- [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — agent-skills `/review` for code (different domain)
 
 ## Sources
 

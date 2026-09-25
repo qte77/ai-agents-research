@@ -71,4 +71,4 @@ Considerations: JetBrains support is early access. Enterprise features (fine-gra
 [vscode-marketplace]: https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev
 [cli-release]: https://github.com/cline/cline/releases/tag/cli-v3.0.24
 [license]: https://github.com/cline/cline/blob/main/LICENSE
-[copilot-cli-doc]: github-copilot-cli-analysis.md
+[copilot-cli-doc]: agents/github-copilot-cli-analysis.md

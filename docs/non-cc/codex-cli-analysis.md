@@ -85,7 +85,7 @@ Codex CLI is **Trial**. The two-layer sandbox + approval model, headless `codex 
 
 For teams already on OpenAI/ChatGPT Enterprise, this is an immediately viable terminal agent. For CC-native workflows, the primary value is as a reference model for headless sandboxing and approval-policy design.
 
-See also [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md) for a comparable terminal coding agent from GitHub/Microsoft.
+See also [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) for a comparable terminal coding agent from GitHub/Microsoft.
 
 ## Action Items
 
