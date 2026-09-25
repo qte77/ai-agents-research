@@ -32,6 +32,9 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
   #489 (tested move tool + Orchestrators) + #490–#497 (one PR per section) + #498 wrap-up — all 93
   docs now in `docs/non-cc/<section>/` (9 README-section subdirs); lychee offline 0 errors every step;
   tool removed (recoverable from `7179e0a`); add-source skill + CONTRIBUTING/architecture trees updated.
+- **Shipped (2026-09-25, cont.):** **v0.10.0 released** (#500, #501; moved-URL notice). #502
+  (DeepWiki/CocoIndex dedup), #503 (`docs/_topics/` hubs) → **#309 closed**. #504 opened for the
+  graph rebuild (#505). **v0.11.0 released** (#506). UserStory browse-by-subject story (this PR).
 - **Next, in order (START HERE in a fresh session):**
   1. ~~Cross-repo link fix~~ — done: `qte77/polyfetch-scrape` `docs/scraping-landscape.md:11` already
      points at `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md` on its `main`
