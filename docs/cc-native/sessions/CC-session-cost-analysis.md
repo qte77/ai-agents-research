@@ -172,6 +172,16 @@ The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin o
 
 **Owner observation** (claude.ai Settings > Usage, observed 2026-09-23): the usage page splits usage per product — Claude Code / Chats / Cowork / Other. None of the three help-center articles cited above documents this per-product split; [usage-limits][usage-limits] states only that the three surfaces share one limit, not how the dashboard breaks it out.
 
+**Fable models: a sub-cap, not a separate pool.** Per [Claude Fable models on your plan][fable-plan] (help center, modified 2026-09-02):
+
+- **Max, and premium Team / seat-based Enterprise seats:** "You can use up to 50% of your weekly usage limits on Fable models at no extra cost. They draw from your plan's regular weekly usage limits and use them faster than other Claude models."
+  - So Fable usage fills both the Fable bar and the general weekly pool. Switching to Fable does not preserve the general pool.
+  - Past the 50% Fable cap: "keep using Fable models with usage credits, or switch to another Claude model."
+- **Pro, and standard Team / seat-based Enterprise seats:** Fable "aren't included in your plan's usage limits" and run on pay-as-you-go usage credits.
+- **Usage-based Enterprise and the API:** billed at standard API rates.
+- **History:** the earlier "up to 50% at no extra cost" promotion for Fable 5 ended 2026-07-19. Fable 5 and 5.1 now "work the same way on your plan."
+- **CC version gates:** Fable 5 needs CC v2.1.170+, Fable 5.1 needs v2.1.255+.
+
 **Limit resets (redeemable).** Separate from the automatic five-hour and weekly refills, "Limit resets are given occasionally to eligible plans, and set your usage limits back to full when you choose to use one." Per [What is a limit reset?][limit-reset] (help center, modified 2026-09-22):
 
 - "Depending on the limit reset shown, either your five-hour session limit or your weekly usage limit go back to full right away. Your weekly limits still reset on their usual day and time."
@@ -209,6 +219,7 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 | [How do usage and length limits work?][usage-limits] | Shared usage limit across claude.ai/Claude Code/Claude Desktop; per-plan allowances vary (no figures given) |
 | [Manage usage credits for paid Claude plans][usage-credits] | Five-hour reset timing; Settings > Usage dashboard location; usage credits cover both chat and Claude Code |
 | [Models, usage, and limits in Claude Code][cc-usage-metering] | Sign-in-based metering table: Enterprise seat pool vs API key pay-per-token |
+| [Claude Fable models on your plan][fable-plan] | Fable 50% weekly sub-cap drawing from the regular weekly limits (Max/premium); usage credits on Pro/standard; CC version gates |
 | [What is a limit reset?][limit-reset] | Redeemable limit resets: which limit they refill, expiry, "Reset for free" flow, no button in CC terminal/IDE |
 | [Claude Code CHANGELOG][cc-changelog] (through 2.1.283, checked 2026-09-27) | No reset-redemption entry; auto-continue at limit reset (2.1.234, 2.1.271) |
 | claude.ai Settings > Usage (German UI), observed 2026-09-27 | Resets section text (conflicts with the help-center article on which limits a reset refills) |
@@ -225,6 +236,7 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 [usage-credits]: https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans
 [cc-usage-metering]: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
 [limit-reset]: https://support.claude.com/en/articles/17007452-what-is-a-limit-reset
+[fable-plan]: https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [binary-arch]: ../configuration/CC-binary-architecture.md#stats-and-usage-data-flow
 [usage-tooling]: ../../cc-community/CC-usage-tooling-landscape.md
