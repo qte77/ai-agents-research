@@ -2,8 +2,8 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-27
+validated_links: 2026-09-27
 ---
 
 **Status**: Adopt
@@ -172,7 +172,16 @@ The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin o
 
 **Owner observation** (claude.ai Settings > Usage, observed 2026-09-23): the usage page splits usage per product — Claude Code / Chats / Cowork / Other. None of the three help-center articles cited above documents this per-product split; [usage-limits][usage-limits] states only that the three surfaces share one limit, not how the dashboard breaks it out.
 
-**UNVERIFIED**: weekly usage limits and per-plan usage amounts (e.g., token or message counts for Pro/Max/Team). None of the three articles cited above state either.
+**Limit resets (redeemable).** Separate from the automatic five-hour and weekly refills, "Limit resets are given occasionally to eligible plans, and set your usage limits back to full when you choose to use one." Per [What is a limit reset?][limit-reset] (help center, modified 2026-09-22):
+
+- "Depending on the limit reset shown, either your five-hour session limit or your weekly usage limit go back to full right away. Your weekly limits still reset on their usual day and time."
+- It can be used before a limit is reached and "can't [be] undo[ne]." An expiry, if any, is shown in Settings > Usage. It "doesn't refund extra usage you've already been billed for or change your usage credit balance," and it is lost on downgrade or cancellation before use.
+- To redeem it, go to Settings > Usage on the web or in Claude Desktop → "Reset for free" in the **Resets** section; the same button appears on the limit-reached message. The button "isn't currently available on Claude Mobile or in Claude Code in your terminal or IDE," but because limits are shared, a reset also refills Claude Code.
+- The article does not name which plans are "eligible." The Claude Code CHANGELOG (through 2.1.283, checked 2026-09-27) has no entry for redeeming a reset. Related CC behavior is limited to resuming automatically when a limit resets: sessions (CC v2.1.234+, toggle in `/config`: "Continue automatically at usage limit") and dynamic workflows (CC v2.1.271+).
+
+**Owner observation** (claude.ai Settings > Usage, German UI, observed 2026-09-27): the Resets section reads, in translation, "A reset refills your 5-hour and weekly limits when you use it. Your week keeps its usual reset day. You currently have no resets." This conflicts with the article, which says a given reset refills *either* the five-hour *or* the weekly limit. Treat the article as authoritative until Anthropic reconciles the two.
+
+**UNVERIFIED**: per-plan usage amounts (e.g., token or message counts for Pro/Max/Team) and the weekly limit's size. None of the articles cited above state either; [limit-reset][limit-reset] confirms that a weekly usage limit exists.
 
 ### Local tools vs plan usage
 
@@ -200,6 +209,9 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 | [How do usage and length limits work?][usage-limits] | Shared usage limit across claude.ai/Claude Code/Claude Desktop; per-plan allowances vary (no figures given) |
 | [Manage usage credits for paid Claude plans][usage-credits] | Five-hour reset timing; Settings > Usage dashboard location; usage credits cover both chat and Claude Code |
 | [Models, usage, and limits in Claude Code][cc-usage-metering] | Sign-in-based metering table: Enterprise seat pool vs API key pay-per-token |
+| [What is a limit reset?][limit-reset] | Redeemable limit resets: which limit they refill, expiry, "Reset for free" flow, no button in CC terminal/IDE |
+| [Claude Code CHANGELOG][cc-changelog] (through 2.1.283, checked 2026-09-27) | No reset-redemption entry; auto-continue at limit reset (2.1.234, 2.1.271) |
+| claude.ai Settings > Usage (German UI), observed 2026-09-27 | Resets section text (conflicts with the help-center article on which limits a reset refills) |
 | claude.ai Settings > Usage, observed 2026-09-23 | Per-product usage split (Claude Code / Chats / Cowork / Other); undocumented in the help-center articles above |
 | CodeBurn v0.9.25 CLI (`--help`, `plan --help`, `export --help`, `quota --help`), 2026-09-24 | `plan`/`export --billing`/`quota` subcommand behavior |
 
@@ -212,5 +224,7 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 [usage-limits]: https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work
 [usage-credits]: https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans
 [cc-usage-metering]: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
+[limit-reset]: https://support.claude.com/en/articles/17007452-what-is-a-limit-reset
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [binary-arch]: ../configuration/CC-binary-architecture.md#stats-and-usage-data-flow
 [usage-tooling]: ../../cc-community/CC-usage-tooling-landscape.md
