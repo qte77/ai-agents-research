@@ -2,7 +2,7 @@
 title: Plans — Design & Decision Docs
 purpose: Convention for docs/plans/ — durable plan/design docs (the saved output of plan-mode work). GitHub Issues remain the authoritative backlog/roadmap; each plan doc links its tracking issue.
 created: 2026-06-14
-updated: 2026-09-27
+updated: 2026-09-28
 ---
 
 **Status**: Reference (convention)
@@ -37,4 +37,4 @@ updated: 2026-09-27
 | [2026-07-08-0006-graphify-rebuild-354.md](2026-07-08-0006-graphify-rebuild-354.md) | done | #354 |
 | [2026-07-23-0007-corpus-update-new-sources.md](2026-07-23-0007-corpus-update-new-sources.md) | done | #374 |
 | [2026-09-23-0008-backlog-triage-prs-issues.md](2026-09-23-0008-backlog-triage-prs-issues.md) | draft | #438, #433, #417, #410, #254, #347, #348, #309, #382, #232 |
-| [2026-09-27-0009-focus-shared-memory-context.md](2026-09-27-0009-focus-shared-memory-context.md) | draft | #509, #504 |
+| [2026-09-27-0009-focus-shared-memory-context.md](2026-09-27-0009-focus-shared-memory-context.md) | draft | #509, #504, #515, #516, #517 |

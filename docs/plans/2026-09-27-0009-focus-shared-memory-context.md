@@ -1,9 +1,9 @@
 ---
 title: Focus arc — shared, versionable, traceable memory, context, skills and harness
 status: draft
-issue: 509, 504
+issue: 509, 504, 515, 516, 517
 created: 2026-09-27
-updated: 2026-09-27
+updated: 2026-09-28
 ---
 
 **Status**: Reference (plan)
@@ -14,10 +14,14 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
 
 ## Current status
 
-- **Shipped:** nothing yet. This plan and #509 were opened 2026-09-27. The previous arc
+- **Shipped:** this plan and #509 (opened 2026-09-27). The previous arc
   ([plan 0008](2026-09-23-0008-backlog-triage-prs-issues.md)) left one open row, the graph rebuild (#504);
   it is folded into row G below.
-- **Next, in order (START HERE):** rows R → C → B, then the S rows one subject at a time, then Y, G, Z.
+  - Row I (2026-09-28): the second screenshot batch is ingested (see Source map). Leads only; nothing
+    is committed yet.
+  - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
+- **Next, in order (START HERE):** rows R → C → B (B now includes the row-I leads), then the S rows one
+  subject at a time (J1–J3 go with S6/S3), then Y, G, Z.
 - **The loop, per row:** new branch `<type>/<slug>` → write → `make check_docs check_status` (+ `test` if
   code) → lychee (offline for relative links, online for new URLs) → PR → gated admin squash
   (`/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>`) → strike the row in the same PR.
@@ -71,6 +75,36 @@ hands-off offloaded tasks.
   Its accuracy claims (91.7%, 0.0% fabricated) and the "Agentic Memory Index" (hosted on `x402oracle.com`)
   are self-reported and unverified. Benchmark anchors: LongMemEval (arXiv 2410.10813), LoCoMo (arXiv 2402.17753).
 
+### Screenshot batch 2 (row I, 2026-09-28)
+
+- **Input:** 87 new screenshots, 2026-09-21 to 2026-09-28, in `/workspaces/temp/screenshots/`.
+- **Method:** 5 extraction agents (about 3 min each) tagged scope and focus subjects and pulled URLs.
+- **Results:** `/workspaces/temp/ai-agents-research-triage/batch2/out-*.tsv`, deduped into
+  `batch2/merged.json`, each lead flagged `in_old_triage` / `in_corpus`.
+- **Scope:** 61 Y, 14 M, 12 N.
+- **Leads by subject.** Unmarked leads have no corpus hit by name. "partial" = mentioned once, no own
+  entry. All are unverified until researched first-party.
+  - **Memory:** aru-labs/lossless-memory, tigerless-labs/agent-memory, JITMEM (Salesforce paper),
+    volotat/mini-AGI, WeKnora, Mitosis Labs (queued above).
+  - **Ontology:** aws/context-ontology-accelerator (already in the batch-1 triage); an unnamed
+    "semantic model / enterprise context layer" post.
+  - **Graphs/RAG:** run-llama/liteparse, WeKnora, RuVector (partial), BrainAPI (BSL-1.1).
+  - **Skills and plugins:**
+    - Skills: SkillLift (paper + repo), NVlabs/Skill2Env, microsoft/SkillOpt (partial), a "coding agents
+      are strong prompt optimizers" paper.
+    - Plugins: Xpert plugins.
+  - **Harness:**
+    - Repos and tools: trycua/cua, NVIDIA/OpenShell, BitMiracle-AI/Dormice (E2B), tigerless-labs/autoharness
+      (partial), yetone/magpie, vllm-project/semantic-router (partial), google/ax (Agent Substrate),
+      Contrastive-LM/CLM.
+    - Papers and courses: ModularRSI and RRSI (self-improving harness papers), "Learn Harness Engineering".
+    - Jev ecosystem (abide, laya, Jev-as-a-Judge, UFA): see #515–#517.
+  - **Long-running:** RIVER (Salesforce/CMU, terminal agents), PrimeScientist, Self-Organizing Agent Teams,
+    EvolveTrade, an agent-server comparison paper (arXiv 2609.21081: Agno AgentOS, LangGraph Agent
+    Server), Kitaru/Opik on Modal.
+  - **Already covered:** Raven/EverOS (`raven-analysis.md`), Shepherd (`shepherd-analysis.md`),
+    CopilotKit/AG-UI, E2B, Modal. These only need a refresh if a lead adds a new fact.
+
 ## Graph system decision (row G)
 
 The current graph (`ui/graph.html`, last full rebuild #404: 785 nodes) comes from graphify. Graphify
@@ -93,6 +127,10 @@ systems on the rubric.
 
 | # | Item | Gate | Done-when |
 |---|---|---|---|
+| ~~I~~ | ~~Ingest screenshot batch 2 (87 images)~~ | agent | Done 2026-09-28 (this PR): extracted + deduped to `batch2/merged.json`; leads listed in the Source map; feeds row B |
+| J1 | #515: Jev (TypeSafe) analysis page: system-one classifier as a pre-CI code-change gate (feelings pilot results); fills the `agentic-sdlc-patterns.md` "no review agent" gap | agent | Page merged (status Trial), gap row repointed, #515 closed |
+| J2 | #516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers | agent | §8 extended, #516 closed |
+| J3 | #517: Jev ecosystem scout batch (abide, jev-ultrafast, laya, probably), scored on the rubric | agent | Entries merged (extend existing pages first), #517 closed |
 | R | Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/` | agent | Merged; linked from `docs/_topics/README.md` |
 | C | Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks | agent | Gap list in this plan; 5 new hubs merged, anchors verified |
 | B | Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects | agent | Ranked list in this plan; off-focus items marked dropped with a reason |
