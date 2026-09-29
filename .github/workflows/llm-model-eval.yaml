@@ -30,6 +30,13 @@ on:
         description: "Comma-separated name:max_tokens generation configs."
         type: string
         default: "strict:4,relaxed:64"
+      prompt_variant:
+        description: "System prompt variant (default = production prompt)."
+        type: choice
+        default: default
+        options:
+          - default
+          - no-borderline-yes
 
 permissions:
   contents: read
@@ -71,10 +78,12 @@ jobs:
           MODELS: ${{ inputs.models }}
           WEEKS: ${{ inputs.weeks }}
           CONFIGS: ${{ inputs.configs }}
+          PROMPT_VARIANT: ${{ inputs.prompt_variant }}
         run: |
           set -euo pipefail
           python3 .github/scripts/eval-relevance-models.py \
             --models "$MODELS" --weeks "$WEEKS" --configs "$CONFIGS" \
+            --prompt-variant "$PROMPT_VARIANT" \
             --out llm-model-eval-output
 
       - name: Append summary to step summary
