@@ -1,7 +1,7 @@
 ---
 title: Focus arc — shared, versionable, traceable memory, context, skills and harness
-status: draft
-issue: 509, 504, 515, 516, 517, 527
+status: approved
+issue: 509, 504, 515, 516, 517, 527, 348
 created: 2026-09-27
 updated: 2026-09-29
 ---
@@ -20,11 +20,11 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Row I (2026-09-28): the second screenshot batch is ingested (see Source map). Leads only; nothing
     is committed yet.
   - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
-  - Row R (#526) and row B (this PR) shipped. #527 tracks the paper-eval and issue-triage workflows,
+  - Row R (#526) and row B (#528) shipped. #527 tracks the paper-eval and issue-triage workflows,
     dead since GitHub Models was retired on 2026-07-30.
 - **Next, in order (START HERE, 2026-09-29):** R and B are done.
   1. **Row C:** score the existing docs against the [rubric](../sdlc-lcm/agent-substrate-rubric.md) and add
-     4 hubs (skills, plugins, harness, long-running) plus context.
+     5 hubs (context, skills, plugins, harness, long-running).
   2. **S1 → S6:** one subject per PR, working from the P1 table in "Ranked backlog". Research each lead
      first-party; delegate the fetching to subagents (at most about 3 large landscapes per brief, results
      written to disk). J1–J3 go with S6/S3.
@@ -37,14 +37,19 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     native, and a Jev classifier backend. The specs are posted on qte77/gha-rxiv-paper-eval#81 and
     qte77/gha-issue-triage#110.
   - The fix happens in those repos, in their own sessions.
-  - Owner gate: add the chosen provider secret here, then bump the pins.
+  - The owner added secret `CF_WORKERS_AI_TOKEN` and variable `LLM_BASE_URL` on 2026-09-29.
+    - The token has `Workers AI - Read` only; Cloudflare's docs say a custom token needs Read + Edit
+      to run models.
+    - A dispatch-only workflow comparing three Workers AI models against the retired model's verdicts is
+      being built. Its preflight job reports whether the token can run models.
+  - Remaining owner step: bump the pins once upstream ships.
   - Meanwhile no new rxiv papers arrive, which does not block the S rows.
 - **The loop, per row:** new branch `<type>/<slug>` → write → `make check_docs check_status` (+ `test` if
   code) → lychee (offline for relative links, online for new URLs) → PR → gated admin squash
   (`/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>`) → strike the row in the same PR.
 - **Owner gates:**
   - The graph-system decision (row G) has a default, below.
-  - The provider secret for #527 (off-plan).
+  - #527 (off-plan): the provider secret was added 2026-09-29; the token may need `Workers AI - Edit`.
 
   Nothing else is gated.
 - **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`. When WebFetch
@@ -150,7 +155,8 @@ LICENSE file during research.
 
 | Lead | Row | Existing coverage | What to research |
 |---|---|---|---|
-| `x.com/typesafeai` (not linked: X returns 403 to lychee) | J1 (#515) | none | Jev use cases; X blocks bots, so use polyfetch. Treat every use case there as an **external, unconfirmed** claim, not as TypeSafe's own. Cite it as confirmed only if docs.typesafe.ai states it; otherwise label it unconfirmed or drop it (owner rule, 2026-09-29) |
+| `x.com/typesafeai` (not linked: X returns 403 to lychee) | J1 (#515) | none | Jev use cases. X blocks fetching, including polyfetch's patchright tier (403, 2026-09-29), so the owner pastes post text instead. Treat every use case there as an **external, unconfirmed** claim, not as TypeSafe's own. Cite it as confirmed only if docs.typesafe.ai states it; otherwise label it unconfirmed or drop it (owner rule, 2026-09-29) |
+| `x.com/openadevs/status/2105003318917697873` (not linked; X returns 403) | J3 (#517) | none | System-1/Jev post; content unknown until the owner pastes it. External, unconfirmed claim (owner rule) |
 | [aaif.io](https://aaif.io/) | S5 | only as Goose's foundation (`non-cc/agents/goose-analysis.md`) | The Agentic AI Foundation itself: governance, hosted projects, relevance to skills/plugins standards |
 | [github.com/OperatingSystem-1](https://github.com/OperatingSystem-1) | S1, S5, S6 | none (Mitosis Labs, queued above) | S1: Cortex memory. S5: `mitosis-agent-plugin`, `mitosis-memory-skills`. S6: `openclaw-operator`, `mcp-git-coord` |
 | [github.com/coleam00](https://github.com/coleam00) (Cole Medin) | S4, S5, S6 | none | S6: `Archon` ("open-source harness builder for AI coding", MIT). S4: `context-engineering-intro` (MIT). S5: `excalidraw-diagram-skill` (no license on GitHub) |
@@ -178,6 +184,10 @@ LICENSE file during research.
 - **P1 checks:** every P1 GitHub repo was checked to exist on 2026-09-29. Licenses are from GitHub
   metadata. arXiv ids marked "derived" in the TSV came from a stated id, not a visible link; confirm
   them when researching.
+- **Promoted 2026-09-29 (owner):** J3 became the single system-1 decision-model batch. CLM/CLM-8B,
+  GLiNER2.5-Decide, RuVector and Jev-as-a-Judge moved to P1 (from P2/P3). BioDecision-4B stays a one-line
+  domain example. JevK5 and Semlf are only comparison names in the Fastino post; add them only if a source
+  turns up. The table therefore has 47 rows: 42 ranked P1, the owner-added arXiv 2608.11095, and these 4.
 - **Owner qualifiers kept:** tysoncung is P3 (low); driceroland/Search is P2 (only if its README shows
   agent use).
 
@@ -185,7 +195,7 @@ LICENSE file during research.
 |---|---|---|
 | S1 | OperatingSystem-1 / Mitosis Labs: Cortex memory | <https://github.com/OperatingSystem-1> |
 | S1 | AgentiCow (ruvnet; copy-on-write branching for agent vector memory) | <https://github.com/ruvnet/agenticow> |
-| S1 | Beads / bd (gastownhall; dependency-aware task graph tracker for agents, Dolt-backed per n | <https://github.com/gastownhall/beads> |
+| S1 | Beads / bd (gastownhall; dependency-aware task graph tracker for agents, Dolt-backed per the screenshot note) | <https://github.com/gastownhall/beads> |
 | S1 | WMT: Weighted Memory Tree (arXiv 2608.20631) | <https://arxiv.org/abs/2608.20631v1> |
 | S1 | lossless-memory (aru-labs; lossless long-term memory, never summarizes) | <https://github.com/aru-labs/lossless-memory> |
 | S1 | JITMEM: Just-in-Time Memory (Salesforce AI Research, arXiv 2609.27334) | <https://arxiv.org/abs/2609.27334> |
@@ -217,7 +227,7 @@ LICENSE file during research.
 | S6 | NVIDIA OpenShell (safe runtime for agent fleets) | <https://github.com/NVIDIA/OpenShell> |
 | S6 | OrcaReplay (record/replay/fork debugging of coding-agent runs) | <https://github.com/Continuum-AI-Corp/OrcaReplay> |
 | S6 | RRSI (Google; regularized recursive self-improvement of agent harnesses) | <https://github.com/google-research/rrsi> |
-| J1 | TypeSafe / Jev (system-one classifier; pre-CI code-change gate; x.com/typesafeai use cases | <https://docs.typesafe.ai/> |
+| J1 | TypeSafe / Jev (system-one classifier; pre-CI code-change gate; x.com/typesafeai use cases as external claims) | <https://docs.typesafe.ai/> |
 | J1 | alibaba/open-code-review (hybrid deterministic + LLM code review) | <https://github.com/alibaba/open-code-review> |
 | J3 | jaredpalmer/kev (Jev-like decision models on Qwen, self-trainable) | <https://github.com/jaredpalmer/kev> |
 | J3 | probably (Jev ecosystem) | <https://github.com/southpolesteve/probably> |
@@ -225,6 +235,10 @@ LICENSE file during research.
 | J3 | jev-ultrafast (browser-use fast browser agent) | <https://github.com/browser-use/jev-ultrafast> |
 | J3 | abide (coldteadotai; catches AGENTS.md rule violations) | <https://github.com/coldteadotai/abide> |
 | J3 | jevgrep (dzhng; small decision model for code-context search) | <https://github.com/dzhng/jevgrep> |
+| J3 | CLM / CLM-8B (Contrastive-LM; "System One" model scoring agent actions in embedding space; CLM-8B on a Qwen3-8B encoder per a post) | <https://github.com/Contrastive-LM/CLM> |
+| J3 | GLiNER2.5-Decide (Fastino Labs; 340M open-weight encoder decision model, per its announcement post) | — (find the first-party page) |
+| J3 | RuVector (ruvnet; local decision models, vs-Jev latency claims in an ad) | <https://github.com/ruvnet/RuVector> |
+| J3 | Jev-as-a-Judge (CMU; accept when confident, escalate when unsure; arXiv id derived from a DAIR.AI link) | <https://arxiv.org/abs/2609.26550> |
 | S4 | Paper: "Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (owner-requested 2026-09-29, via AlphaSignal) | <https://arxiv.org/abs/2608.11095> |
 
 ## Graph system decision (row G)
@@ -249,14 +263,14 @@ systems on the rubric.
 
 | # | Item | Gate | Done-when |
 |---|---|---|---|
-| ~~I~~ | ~~Ingest screenshot batch 2 (87 images)~~ | agent | Done 2026-09-28 (this PR): extracted + deduped to `batch2/merged.json`; leads listed in the Source map; feeds row B |
-| ~~I2~~ | ~~Ingest screenshot batch 3 (20 images)~~ | agent | Done 2026-09-29 (this PR): `batch3/merged.json`; leads in the Source map; feeds row B; jevgrep added to #517 |
+| ~~I~~ | ~~Ingest screenshot batch 2 (87 images)~~ | agent | Done 2026-09-28 (#521): extracted + deduped to `batch2/merged.json`; leads listed in the Source map; feeds row B |
+| ~~I2~~ | ~~Ingest screenshot batch 3 (20 images)~~ | agent | Done 2026-09-29 (#522): `batch3/merged.json`; leads in the Source map; feeds row B; jevgrep added to #517 |
 | J1 | #515: Jev (TypeSafe) analysis page: system-one classifier as a pre-CI code-change gate (feelings pilot results); fills the `agentic-sdlc-patterns.md` "no review agent" gap | agent | Page merged (status Trial), gap row repointed, #515 closed |
 | J2 | #516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers | agent | §8 extended, #516 closed |
-| J3 | #517: Jev ecosystem scout batch (abide, jev-ultrafast, laya, probably), scored on the rubric | agent | Entries merged (extend existing pages first), #517 closed |
-| ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (this PR): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
+| J3 | #517: system-1 decision models + Jev ecosystem, scored on the rubric. Models: Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector (BioDecision-4B as a one-line domain example). Tools: abide, jev-ultrafast, probably, jevgrep. Paper: Jev-as-a-Judge | agent | Entries merged (extend existing pages first; §8 of the frameworks landscape already lists Llama Guard and Bespoke-MiniCheck as classifiers), #517 closed |
+| ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (#526): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
 | C | Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks | agent | Gap list in this plan; 5 new hubs merged, anchors verified |
-| ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (this PR): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
+| ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
 | S1 | Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors) | agent | One PR, first-party verified, rubric-scored |
 | S2 | Research batch: ontology | agent | Same as S1 |
 | S3 | Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G) | agent | Same as S1 |
@@ -265,4 +279,5 @@ systems on the rubric.
 | S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | Same as S1 |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
+| D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11) | owner | Deferred until something consumes `status:`; then migration PR 1 of ~5 with the validator passing |
 | Z | Close-out: README/UserStory focus statements, CHANGELOG, release | agent | Release published; #509 closed |
