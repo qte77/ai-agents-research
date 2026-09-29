@@ -1,7 +1,7 @@
 ---
 title: Focus arc — shared, versionable, traceable memory, context, skills and harness
 status: draft
-issue: 509, 504, 515, 516, 517
+issue: 509, 504, 515, 516, 517, 527
 created: 2026-09-27
 updated: 2026-09-29
 ---
@@ -20,6 +20,8 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Row I (2026-09-28): the second screenshot batch is ingested (see Source map). Leads only; nothing
     is committed yet.
   - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
+  - Row R (#526) and row B (this PR) shipped. #527 tracks the paper-eval and issue-triage workflows,
+    dead since GitHub Models was retired on 2026-07-30.
 - **Next, in order (START HERE):** rows R → C → B (B now includes the row-I leads), then the S rows one
   subject at a time (J1–J3 go with S6/S3), then Y, G, Z.
 - **The loop, per row:** new branch `<type>/<slug>` → write → `make check_docs check_status` (+ `test` if
@@ -141,7 +143,69 @@ LICENSE file during research.
 | probably, laya, jev-ultrafast | J3 (#517) | none | Already in #517; owner re-confirmed 2026-09-29 |
 | [driceroland/Search](https://github.com/driceroland/Search) | S6 (check relevance) | none | Described as "a small, fast WebKit browser for macOS" (MIT); no agent angle in the description. Include only if its README shows agent use |
 | [paperclipai/paperclip](https://github.com/paperclipai/paperclip) | S6 | none | "The open-source app everyone uses to manage agents at work" (MIT); agent management and long-running orchestration |
+| [alphasignal.ai](https://alphasignal.ai/) and its article [What belongs in AGENTS.md, design docs and tests](https://alphasignal.ai/news/what-belongs-in-agents-md-design-docs-and-tests) | S4 | none | AlphaSignal is a news digest, so use it as a lead source, not as a citation. The article (Akruti Acharya, 2026-09-29) summarizes arXiv 2608.11095 ("Why Does CLAUDE.md Keep Growing?"). Cite the paper; the article's own framing ("instruction file as a best-effort cache") is secondary. Target: `cc-native/context-memory/CC-repo-guidance-probe-refine-analysis.md` or `CC-memory-system-analysis.md` |
 | [github.com/runtypelabs](https://github.com/runtypelabs) | S5, S6 | Runtype bullet in `agent-frameworks-infrastructure-landscape.md` | S5: `skills` (official agent skills). S6: `hermes-runtype-otel` (OTel export of agent turns), `persona`. Extend the existing entry; no new page |
+
+### Ranked backlog (row B, 2026-09-29)
+
+- **Method:** a subagent merged 280 open batch-1 topics, 75 batch-2 leads, 16 batch-3 leads and the
+  owner-requested leads. It deduplicated them by entity and ranked them against the 8 subjects. It
+  fetched nothing from the web; coverage is a `git grep` check only.
+- **Result:** 320 leads — 42 P1, 66 P2, 39 P3, 173 DROP (58 already covered with nothing new, the rest
+  off-focus).
+- **Full list** (P2/P3/DROP with reasons): `/workspaces/temp/ai-agents-research-triage/rowB/ranked.tsv`
+  and `summary.md`. These are local working files, not in the repo.
+- **P1 checks:** every P1 GitHub repo was checked to exist on 2026-09-29. Licenses are from GitHub
+  metadata. arXiv ids marked "derived" in the TSV came from a stated id, not a visible link; confirm
+  them when researching.
+- **Owner qualifiers kept:** tysoncung is P3 (low); driceroland/Search is P2 (only if its README shows
+  agent use).
+
+| Row | Lead | First-party URL |
+|---|---|---|
+| S1 | OperatingSystem-1 / Mitosis Labs: Cortex memory | <https://github.com/OperatingSystem-1> |
+| S1 | AgentiCow (ruvnet; copy-on-write branching for agent vector memory) | <https://github.com/ruvnet/agenticow> |
+| S1 | Beads / bd (gastownhall; dependency-aware task graph tracker for agents, Dolt-backed per n | <https://github.com/gastownhall/beads> |
+| S1 | WMT: Weighted Memory Tree (arXiv 2608.20631) | <https://arxiv.org/abs/2608.20631v1> |
+| S1 | lossless-memory (aru-labs; lossless long-term memory, never summarizes) | <https://github.com/aru-labs/lossless-memory> |
+| S1 | JITMEM: Just-in-Time Memory (Salesforce AI Research, arXiv 2609.27334) | <https://arxiv.org/abs/2609.27334> |
+| S1 | agent-memory (tigerless-labs; long-term memory runtime for Claude Code/Codex) | <https://github.com/tigerless-labs/agent-memory> |
+| S2 | Ontology Atlas (wlsdks; markdown-graph, MCP-native, local-first ontology workbench) | <https://github.com/wlsdks/ontology-atlas> |
+| S2 | open-ontologies (Rust MCP server for RDF/OWL/SHACL, Oxigraph) | <https://github.com/fabio-rovai/open-ontologies> |
+| S2 | EvoOntology (ruc-datalab; MCP-exposed self-evolving ontology layer, arXiv 2609.15779) | <https://github.com/ruc-datalab/EvoOntology> |
+| S2 | AWS context-ontology-accelerator (governed ontology KGs via MCP/SPARQL) | <https://github.com/aws/context-ontology-accelerator> |
+| S3 | SSTorytime (markburgess; Semantic Spacetime Postgres graph via MCP) | <https://github.com/markburgess/SSTorytime> |
+| S3 | Omnigraph (ModernRelay; git-branching multi-agent graph DB) | <https://github.com/ModernRelay/omnigraph> |
+| S3 | Semantica (graph-native accountable decision infrastructure) | <https://github.com/semantica-agi/semantica> |
+| S4 | coleam00/context-engineering-intro | <https://github.com/coleam00/context-engineering-intro> |
+| S5 | Agentic AI Foundation (aaif.io) + Goose donation | <https://aaif.io/> |
+| S5 | OperatingSystem-1: mitosis-agent-plugin + mitosis-memory-skills | <https://github.com/OperatingSystem-1> |
+| S5 | coleam00/excalidraw-diagram-skill | <https://github.com/coleam00/excalidraw-diagram-skill> |
+| S5 | coleam00/skills repo + drive-screen skill | <https://github.com/coleam00/skills> |
+| S5 | cloudflare/security-audit-skill | <https://github.com/cloudflare/security-audit-skill> |
+| S5 | runtypelabs/skills (official agent skills) | <https://github.com/runtypelabs> |
+| S5 | WikiSkill (arXiv 2608.27454; persistent wiki skill evolution) | <https://arxiv.org/abs/2608.27454> |
+| S5 | AutoTailor (MSR; auto-constructs compact MCP tool set, arXiv 2609.13548) | <https://arxiv.org/abs/2609.13548> |
+| S5 | SkillLift (Fudan; learned rubrics for skill self-evolution, arXiv 2609.15396) | <https://github.com/WalteR-MittY-pro/SkillLift> |
+| S5 | NVlabs Skill2Env (collective agent skills to RL environments) | <https://github.com/NVlabs/Skill2Env> |
+| S6 | OperatingSystem-1: openclaw-operator + mcp-git-coord | <https://github.com/OperatingSystem-1> |
+| S6 | coleam00/Archon (open-source harness builder for AI coding) | <https://github.com/coleam00/Archon> |
+| S6 | HarnessRouter (refresh stars + release only) | <https://github.com/HarnessRouter/harnessrouter> |
+| S6 | paperclipai/paperclip (multi-agent orchestration app) | <https://github.com/paperclipai/paperclip> |
+| S6 | runtypelabs: hermes-runtype-otel + persona | <https://github.com/runtypelabs> |
+| S6 | Google AX / Agent Substrate (agentexecutor.io) + Celesto critique | <https://github.com/google/ax> |
+| S6 | NVIDIA OpenShell (safe runtime for agent fleets) | <https://github.com/NVIDIA/OpenShell> |
+| S6 | OrcaReplay (record/replay/fork debugging of coding-agent runs) | <https://github.com/Continuum-AI-Corp/OrcaReplay> |
+| S6 | RRSI (Google; regularized recursive self-improvement of agent harnesses) | <https://github.com/google-research/rrsi> |
+| J1 | TypeSafe / Jev (system-one classifier; pre-CI code-change gate; x.com/typesafeai use cases | <https://docs.typesafe.ai/> |
+| J1 | alibaba/open-code-review (hybrid deterministic + LLM code review) | <https://github.com/alibaba/open-code-review> |
+| J3 | jaredpalmer/kev (Jev-like decision models on Qwen, self-trainable) | <https://github.com/jaredpalmer/kev> |
+| J3 | probably (Jev ecosystem) | <https://github.com/southpolesteve/probably> |
+| J3 | laya (non-autoregressive System 1 decision engine) | <https://github.com/NandhaKishorM/laya> |
+| J3 | jev-ultrafast (browser-use fast browser agent) | <https://github.com/browser-use/jev-ultrafast> |
+| J3 | abide (coldteadotai; catches AGENTS.md rule violations) | <https://github.com/coldteadotai/abide> |
+| J3 | jevgrep (dzhng; small decision model for code-context search) | <https://github.com/dzhng/jevgrep> |
+| S4 | Paper: "Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (owner-requested 2026-09-29, via AlphaSignal) | <https://arxiv.org/abs/2608.11095> |
 
 ## Graph system decision (row G)
 
@@ -172,7 +236,7 @@ systems on the rubric.
 | J3 | #517: Jev ecosystem scout batch (abide, jev-ultrafast, laya, probably), scored on the rubric | agent | Entries merged (extend existing pages first), #517 closed |
 | ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (this PR): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
 | C | Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks | agent | Gap list in this plan; 5 new hubs merged, anchors verified |
-| B | Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects | agent | Ranked list in this plan; off-focus items marked dropped with a reason |
+| ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (this PR): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
 | S1 | Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors) | agent | One PR, first-party verified, rubric-scored |
 | S2 | Research batch: ontology | agent | Same as S1 |
 | S3 | Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G) | agent | Same as S1 |
