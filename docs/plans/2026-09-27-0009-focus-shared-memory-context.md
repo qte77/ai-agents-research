@@ -122,6 +122,15 @@ hands-off offloaded tasks.
   - **Repeats from batch 2:** OpenMuse / CopilotKit.
   - **Off-focus (M):** Pydantic AI realtime, Netflix GenRec, Anthropic for Startups posts.
 
+### Owner-requested leads (2026-09-29, for the next research run)
+
+| Lead | Row | Existing coverage | What to research |
+|---|---|---|---|
+| `x.com/typesafeai` (not linked: X returns 403 to lychee) | J1 (#515) | none | Jev use cases; X blocks bots, so use polyfetch. Vendor claims until confirmed first-party |
+| [aaif.io](https://aaif.io/) | S5 | only as Goose's foundation (`non-cc/agents/goose-analysis.md`) | The Agentic AI Foundation itself: governance, hosted projects, relevance to skills/plugins standards |
+| [github.com/OperatingSystem-1](https://github.com/OperatingSystem-1) | S1, S5, S6 | none (Mitosis Labs, queued above) | S1: Cortex memory. S5: `mitosis-agent-plugin`, `mitosis-memory-skills`. S6: `openclaw-operator`, `mcp-git-coord` |
+| [github.com/runtypelabs](https://github.com/runtypelabs) | S5, S6 | Runtype bullet in `agent-frameworks-infrastructure-landscape.md` | S5: `skills` (official agent skills). S6: `hermes-runtype-otel` (OTel export of agent turns), `persona`. Extend the existing entry; no new page |
+
 ## Graph system decision (row G)
 
 The current graph (`ui/graph.html`, last full rebuild #404: 785 nodes) comes from graphify. Graphify
@@ -152,12 +161,12 @@ systems on the rubric.
 | R | Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/` | agent | Merged; linked from `docs/_topics/README.md` |
 | C | Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks | agent | Gap list in this plan; 5 new hubs merged, anchors verified |
 | B | Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects | agent | Ranked list in this plan; off-focus items marked dropped with a reason |
-| S1 | Research batch: memory (incl. Mitosis Labs, benchmark anchors) | agent | One PR, first-party verified, rubric-scored |
+| S1 | Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors) | agent | One PR, first-party verified, rubric-scored |
 | S2 | Research batch: ontology | agent | Same as S1 |
 | S3 | Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G) | agent | Same as S1 |
 | S4 | Research batch: context | agent | Same as S1 |
-| S5 | Research batch: skills + plugins | agent | Same as S1 |
-| S6 | Research batch: harness + long-running hands-off offloaded tasks | agent | Same as S1 |
+| S5 | Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads) | agent | Same as S1 |
+| S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | Same as S1 |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
 | Z | Close-out: README/UserStory focus statements, CHANGELOG, release | agent | Release published; #509 closed |
