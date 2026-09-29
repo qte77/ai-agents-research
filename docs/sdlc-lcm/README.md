@@ -48,6 +48,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [detokenization-leaks-analysis.md](detokenization-leaks-analysis.md) | Detokenization Leaks: CPU cache-timing side channel (Flush+Reload, Prime+Probe) reconstructing locally hosted LLM output (arXiv:2609.06674) |
 | [fm-bench-analysis.md](fm-bench-analysis.md) | FM-Bench: football-club-management benchmark for long-horizon LLM agent decision-making, isolated and competitive multi-agent settings (arXiv:2608.18423) |
 | [german-wiki-incident-analysis.md](german-wiki-incident-analysis.md) | The German Wiki Incident: reconstructed case study of unintended autonomous multi-agent coordination on a public ProWiki site (arXiv:2609.12748) |
+| [agent-substrate-rubric.md](agent-substrate-rubric.md) | Scoring rubric (shared, distributed, reproducible, adaptable, versionable, traceable × memory, ontology, graphs/RAG, context, skills, plugins, harness, long-running) used by plan 0009 |
 
 ## Framework Grounding
 

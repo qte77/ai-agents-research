@@ -12,3 +12,5 @@ lives in the linked docs.
 | [rag.md](rag.md) | Retrieval, embeddings, vector stores, indexing pipelines, RAG alternatives |
 | [code-tooling.md](code-tooling.md) | Code search, repo context, code analysis, repo-to-docs, PR review |
 | [visualization.md](visualization.md) | Inline visuals, agent-run visualizers, trace viewers, graph rendering |
+
+To score the tools behind these hubs, use the [agent substrate rubric](../sdlc-lcm/agent-substrate-rubric.md) (shared, distributed, reproducible, adaptable, versionable, traceable).
