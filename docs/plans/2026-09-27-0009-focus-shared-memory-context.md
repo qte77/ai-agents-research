@@ -43,6 +43,13 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     - A dispatch-only workflow comparing three Workers AI models against the retired model's verdicts is
       being built. Its preflight job reports whether the token can run models.
   - Remaining owner step: bump the pins once upstream ships.
+  - Model eval results (runs 36636408073, 36638845095, 36647107365; details on #527):
+    - **Llama 3.1 8B:** agreement 58.4%; without the "prefer YES" sentence, 64.0%.
+    - **Qwen3 30B:** 47.2% (at 1024 tokens; it needs about 1k reasoning tokens).
+    - **Gemma 4 26B:** 54.8% (also at 1024 tokens; about 1k reasoning tokens, and slow).
+
+    All three over-accept, so none replaces gpt-4o-mini yet. Next candidates: a larger instruct model,
+    or the Jev classifier with a calibrated threshold.
   - Meanwhile no new rxiv papers arrive, which does not block the S rows.
 - **The loop, per row:** new branch `<type>/<slug>` → write → `make check_docs check_status` (+ `test` if
   code) → lychee (offline for relative links, online for new URLs) → PR → gated admin squash
@@ -242,6 +249,37 @@ LICENSE file during research.
 | J3 | RuVector (ruvnet; local decision models, vs-Jev latency claims in an ad) | <https://github.com/ruvnet/RuVector> |
 | J3 | Jev-as-a-Judge (CMU; accept when confident, escalate when unsure; arXiv id derived from a DAIR.AI link) | <https://arxiv.org/abs/2609.26550> |
 | S4 | Paper: "Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (owner-requested 2026-09-29, via AlphaSignal) | <https://arxiv.org/abs/2608.11095> |
+
+## Research run: subagent brief (rows C and S1–S6)
+
+Run each batch as one subagent in an isolated worktree (files only; the main session reviews, commits
+and merges). Rows C and S1 can run in parallel. A first attempt on 2026-09-29 was stopped before writing
+anything, so the owner could start the run in a clean session. Every brief states:
+
+- **Guardrails:** no commit, push or PR; no skills, no subagents, no `.claude/` or settings edits.
+  - Bash `grep`, `find`, `cat`, `ls`, `head`, `tail`, `curl` and `wget` are denied: use `git grep`,
+    `git ls-files`, python3 and Read/Write/Edit.
+  - Prefix gh/git network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`.
+  - When WebFetch fails or paraphrases, use polyfetch `--show-body`.
+- **Read first:** `CONTRIBUTING.md`, the [rubric](../sdlc-lcm/agent-substrate-rubric.md), this plan's
+  leads tables, and the existing home docs of the subject (Source map above, `docs/_topics/`).
+- **Research rules:**
+  - First-party only; license from the LICENSE file; counts from the live repo, dated.
+  - Vendor numbers are "self-reported"; social posts are external claims (owner rule).
+  - `git grep` for duplicates first, then extend existing entries. Add a new page only when a full
+    analysis is warranted.
+- **Per lead:** 3–8 lines of substance plus a rubric table (six scores, one evidence link each,
+  `scored <date>`), and a pointer row in the matching `docs/_topics/` hub.
+- **Housekeeping:** bump `updated:`; add every URL to the Sources table and link definitions; add one
+  changelog fragment per batch.
+- **Verify:** `make check_docs check_status` plus lychee offline and online on every edited file.
+- **Reply:** per lead, the destination (file and section), license, a one-line finding, the rubric row,
+  and anything dropped with the reason. No file contents.
+- **Row C only:** create the 5 hubs (context, skills, plugins, harness, long-running) in the existing
+  hub format, with every anchor checked against a real heading. Link them from the `_topics` index and
+  from the rubric's Subjects table. Write the coverage map and gap list to
+  `/workspaces/temp/research-0009/row-c-gap-list.md` (docs × properties, `file:line` evidence, top 10
+  gaps), then copy the top 10 into this plan.
 
 ## Graph system decision (row G)
 
