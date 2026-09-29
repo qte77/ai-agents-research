@@ -22,12 +22,31 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
   - Row R (#526) and row B (this PR) shipped. #527 tracks the paper-eval and issue-triage workflows,
     dead since GitHub Models was retired on 2026-07-30.
-- **Next, in order (START HERE):** rows R → C → B (B now includes the row-I leads), then the S rows one
-  subject at a time (J1–J3 go with S6/S3), then Y, G, Z.
+- **Next, in order (START HERE, 2026-09-29):** R and B are done.
+  1. **Row C:** score the existing docs against the [rubric](../sdlc-lcm/agent-substrate-rubric.md) and add
+     4 hubs (skills, plugins, harness, long-running) plus context.
+  2. **S1 → S6:** one subject per PR, working from the P1 table in "Ranked backlog". Research each lead
+     first-party; delegate the fetching to subagents (at most about 3 large landscapes per brief, results
+     written to disk). J1–J3 go with S6/S3.
+  3. **Then:** Y, G, Z.
+
+  S1 can start in parallel with C; it only needs the rubric.
+- **Side track (not a plan row):** #527. The paper-eval and issue-triage workflows have been dead since
+  GitHub Models was retired on 2026-07-30.
+  - The owner chose OpenAI-compatible providers (OpenRouter, Cerebras, Cloudflare Workers AI), Anthropic
+    native, and a Jev classifier backend. The specs are posted on qte77/gha-rxiv-paper-eval#81 and
+    qte77/gha-issue-triage#110.
+  - The fix happens in those repos, in their own sessions.
+  - Owner gate: add the chosen provider secret here, then bump the pins.
+  - Meanwhile no new rxiv papers arrive, which does not block the S rows.
 - **The loop, per row:** new branch `<type>/<slug>` → write → `make check_docs check_status` (+ `test` if
   code) → lychee (offline for relative links, online for new URLs) → PR → gated admin squash
   (`/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>`) → strike the row in the same PR.
-- **Owner gates:** the graph-system decision (row G) has a default, below. Nothing else is gated.
+- **Owner gates:**
+  - The graph-system decision (row G) has a default, below.
+  - The provider secret for #527 (off-plan).
+
+  Nothing else is gated.
 - **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`. When WebFetch
   paraphrases or fails, use polyfetch: `uv run --directory /workspaces/qte77/polyfetch-scrape polyfetch fetch --show-body <url>`.
 - **Watch-outs:**
