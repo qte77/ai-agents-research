@@ -1,9 +1,9 @@
 ---
 title: Backlog triage — open PRs, branches and issues (2026-09-23)
-status: draft
+status: done
 issue: 438, 433, 417, 410, 254, 347, 348, 309, 382, 232
 created: 2026-09-23
-updated: 2026-09-25
+updated: 2026-09-29
 ---
 
 **Status**: Reference (plan)
@@ -46,7 +46,7 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
   4. Row 23 → migrated to plan 0009 row G (was: tracked in #504 (full graph rebuild; `ui/graph.html` has 311 old flat `source_file`
      paths — metadata only, no broken links). Owner decision 2026-09-25: run it in a fresh session
      via `/graphify`, not unattended here (about 60–80 extraction subagents)).
-  5. Row 11 (#348) stays deferred until something consumes `status:`.
+  5. Row 11 (#348) migrated to plan 0009 row D1 (deferred). This arc is closed; continue in plan 0009.
 - **Owner gates:** none blocking. Owner-default decisions were applied 2026-09-24 (#462 option c,
   #382/#232 closed, #456 superseded by #484). External decisions live elsewhere:
   `qte77/.github#44` (tag the reusable workflows), `analyze-stock-kpi#413` (longs/shorts).
@@ -217,7 +217,7 @@ The only list of open work in this plan. Strike a row in the PR that ships it.
 | ~~8~~ | ~~#438: cross-session messaging doc~~ | agent → owner review | Done 2026-09-24: #459 merged, #438 closed. Windows gate stated as a conflict (docs v2.1.234 vs CHANGELOG v2.1.239) |
 | ~~9~~ | ~~#410: releases.atom trigger~~ | agent | Done 2026-09-24: #462 (option c, owner default): feed-covered versions gated by the id ledger, CHANGELOG cutoff fallback for feed gaps; 84 → 102 tests; main() complexity kept at B (8) for CodeFactor; #410 closed |
 | ~~10~~ | ~~#347: reusable `tag-release` + `publish-release`~~ | agent | Done 2026-09-24: #458; verified by the v0.9.0 run (tag + publish via reusable workflows); #347 closed |
-| 11 | #348: migration PR 1 of ~5 (one subdir) | agent → owner review | PR open, validator passes |
+| ~~11~~ | ~~#348: migration PR 1 of ~5 (one subdir)~~ | — | Migrated 2026-09-29 to [plan 0009](2026-09-27-0009-focus-shared-memory-context.md) row D1 (still deferred) |
 | ~~12~~ | ~~#309 Phase 1: `non-cc/` subdivision~~ | agent | Done 2026-09-25: #489 (tested move tool + Orchestrators) + #490–#497 (one PR per section); 93 docs in 9 subdirs mirroring the README sections; all relative links rewritten, lychee offline 0 errors every step; tool/map removed after use (recoverable from 7179e0a) |
 | ~~12b~~ | ~~#309 Phase 1 remainder: resolve DeepWiki + CocoIndex duplication~~ | agent | Done 2026-09-25 (this PR): DeepWiki — landscape entry trimmed to a pointer, its unique facts moved into `deepwiki-analysis.md`. CocoIndex — the cc-community `cocoindex-code` entry stays canonical for the CLI (CC integration surface); `cocoindex-analysis.md` drops its duplicated cocoindex-code stats/specifics (which had drifted: v0.2.35 vs v0.2.36, 1.9k vs 2.2k) and keeps the engine + a pointer |
 | ~~12c~~ | ~~#309 Phase 1 remainder: `docs/_topics/` cross-subject hub indexes~~ | agent | Done 2026-09-25 (this PR): `docs/_topics/` README + 5 hubs (memory, knowledge-graphs, rag, code-tooling, visualization), pointer tables only, anchors verified; linked from README + architecture/CONTRIBUTING trees; add-source skill says to add a hub row |
