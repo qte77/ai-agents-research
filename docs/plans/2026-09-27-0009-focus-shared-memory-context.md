@@ -126,7 +126,7 @@ hands-off offloaded tasks.
 
 | Lead | Row | Existing coverage | What to research |
 |---|---|---|---|
-| `x.com/typesafeai` (not linked: X returns 403 to lychee) | J1 (#515) | none | Jev use cases; X blocks bots, so use polyfetch. Vendor claims until confirmed first-party |
+| `x.com/typesafeai` (not linked: X returns 403 to lychee) | J1 (#515) | none | Jev use cases; X blocks bots, so use polyfetch. Treat every use case there as an **external, unconfirmed** claim, not as TypeSafe's own. Cite it as confirmed only if docs.typesafe.ai states it; otherwise label it unconfirmed or drop it (owner rule, 2026-09-29) |
 | [aaif.io](https://aaif.io/) | S5 | only as Goose's foundation (`non-cc/agents/goose-analysis.md`) | The Agentic AI Foundation itself: governance, hosted projects, relevance to skills/plugins standards |
 | [github.com/OperatingSystem-1](https://github.com/OperatingSystem-1) | S1, S5, S6 | none (Mitosis Labs, queued above) | S1: Cortex memory. S5: `mitosis-agent-plugin`, `mitosis-memory-skills`. S6: `openclaw-operator`, `mcp-git-coord` |
 | [github.com/runtypelabs](https://github.com/runtypelabs) | S5, S6 | Runtype bullet in `agent-frameworks-infrastructure-landscape.md` | S5: `skills` (official agent skills). S6: `hermes-runtype-otel` (OTel export of agent turns), `persona`. Extend the existing entry; no new page |
