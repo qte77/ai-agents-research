@@ -170,7 +170,7 @@ systems on the rubric.
 | J1 | #515: Jev (TypeSafe) analysis page: system-one classifier as a pre-CI code-change gate (feelings pilot results); fills the `agentic-sdlc-patterns.md` "no review agent" gap | agent | Page merged (status Trial), gap row repointed, #515 closed |
 | J2 | #516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers | agent | §8 extended, #516 closed |
 | J3 | #517: Jev ecosystem scout batch (abide, jev-ultrafast, laya, probably), scored on the rubric | agent | Entries merged (extend existing pages first), #517 closed |
-| R | Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/` | agent | Merged; linked from `docs/_topics/README.md` |
+| ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (this PR): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
 | C | Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks | agent | Gap list in this plan; 5 new hubs merged, anchors verified |
 | B | Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects | agent | Ranked list in this plan; off-focus items marked dropped with a reason |
 | S1 | Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors) | agent | One PR, first-party verified, rubric-scored |
