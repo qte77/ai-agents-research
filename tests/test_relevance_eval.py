@@ -43,6 +43,24 @@ class ParseVerdictTests(unittest.TestCase):
         self.assertEqual(rl.parse_verdict(raw, strip_think=True), "UNPARSEABLE")
 
 
+class PromptVariantTests(unittest.TestCase):
+    def test_default_variant_matches_production_prompt(self):
+        msgs = rl.build_messages("agents", "T", "cs.AI", "A")
+        self.assertEqual(msgs[0]["content"], rl.DEFAULT_RELEVANCE_PROMPT.format(topic="agents"))
+
+    def test_no_borderline_yes_variant_drops_only_the_bias_sentence(self):
+        msgs = rl.build_messages("agents", "T", "cs.AI", "A", variant="no-borderline-yes")
+        system = msgs[0]["content"]
+        self.assertNotIn("prefer YES", system)
+        # Everything else in the production prompt is kept verbatim.
+        self.assertTrue(rl.DEFAULT_RELEVANCE_PROMPT.format(topic="agents").startswith(system))
+        self.assertIn("provided the methodology is transferable.", system)
+
+    def test_unknown_variant_raises(self):
+        with self.assertRaises(KeyError):
+            rl.build_messages("agents", "T", "cs.AI", "A", variant="nope")
+
+
 class BuildLabelledSetTests(unittest.TestCase):
     def test_caps_labels_and_normalizes_category_and_title(self):
         csv_text = CSV_HEADER + CSV_ROWS

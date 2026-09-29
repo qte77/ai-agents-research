@@ -41,6 +41,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.monitor_utils import load_jsonl  # noqa: E402
 from lib.relevance_eval import (  # noqa: E402
+    PROMPT_VARIANTS,
     build_labelled_set,
     build_messages,
     compute_metrics,
@@ -79,6 +80,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--models", default=DEFAULT_MODELS, help="Comma-separated Workers AI model ids.")
     p.add_argument("--weeks", default=DEFAULT_WEEKS, help="Comma-separated ISO weeks (arxiv 2026 feed).")
     p.add_argument("--configs", default=DEFAULT_CONFIGS, help="Comma-separated name:max_tokens configs.")
+    p.add_argument(
+        "--prompt-variant", default="default", choices=sorted(PROMPT_VARIANTS),
+        help="System prompt variant (default = production prompt).",
+    )
     p.add_argument("--out", default="output", help="Output directory for results.jsonl + summary.md.")
     p.add_argument("--preflight", action="store_true", help="One tiny call to check token permissions, then exit.")
     p.add_argument("--dry-run", action="store_true", help="Build + print per-week dataset counts only; no API calls.")
@@ -215,10 +220,11 @@ def _call_with_retry(model: str, messages: list[dict], max_tokens: int) -> tuple
 
 
 def _record_call(
-    model: str, config_name: str, row: dict, max_tokens: int, strip_think: bool, topic: str
+    model: str, config_name: str, row: dict, max_tokens: int, strip_think: bool, topic: str,
+    variant: str = "default",
 ) -> dict:
     """Run one relevance call and return its full result record."""
-    messages = build_messages(topic, row["title"], row["category"], row["abstract"])
+    messages = build_messages(topic, row["title"], row["category"], row["abstract"], variant=variant)
     body, latency, err = _call_with_retry(model, messages, max_tokens)
     base = {
         "model": model, "config": config_name, "id": row["id"], "label": row["label"],
@@ -246,7 +252,7 @@ def _record_call(
 
 def _run_model_config(
     model: str, config_name: str, max_tokens: int, weeks: list[str],
-    datasets: dict[str, list[dict]], topic: str, out_f,
+    datasets: dict[str, list[dict]], topic: str, out_f, variant: str = "default",
 ) -> list[dict]:
     """Run every row for one model x config across all weeks; stream to ``out_f``."""
     # Reason: only the literal "strict" config reproduces production's raw
@@ -257,7 +263,7 @@ def _run_model_config(
     records = []
     for week in weeks:
         for row in datasets[week]:
-            rec = _record_call(model, config_name, row, max_tokens, strip_think, topic)
+            rec = _record_call(model, config_name, row, max_tokens, strip_think, topic, variant)
             rec["week"] = week
             out_f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             out_f.flush()
@@ -265,11 +271,13 @@ def _run_model_config(
     return records
 
 
-def _write_summary(out_dir: Path, metrics_table: list[dict]) -> None:
+def _write_summary(out_dir: Path, metrics_table: list[dict], variant: str = "default") -> None:
     lines = [
         "# Relevance-filter model comparison",
         "",
         "Labels are the retired GitHub Models gpt-4o-mini verdicts, not ground truth.",
+        "",
+        f"Prompt variant: `{variant}`.",
         "",
         "Agreement % denominator is total calls per model x config "
         "(an unparseable call counts against agreement, not excluded from it).",
@@ -290,17 +298,17 @@ def _write_summary(out_dir: Path, metrics_table: list[dict]) -> None:
 
 def _run_full_eval(
     models: list[str], configs: list[tuple[str, int]], weeks: list[str],
-    datasets: dict[str, list[dict]], topic: str, out_dir: Path,
+    datasets: dict[str, list[dict]], topic: str, out_dir: Path, variant: str = "default",
 ) -> None:
     metrics_table: list[dict] = []
     with (out_dir / "results.jsonl").open("w") as f:
         for model in models:
             for config_name, max_tokens in configs:
-                records = _run_model_config(model, config_name, max_tokens, weeks, datasets, topic, f)
+                records = _run_model_config(model, config_name, max_tokens, weeks, datasets, topic, f, variant)
                 metrics = compute_metrics(records)
                 metrics_table.append({"model": model, "config": config_name, "metrics": metrics})
                 print(f"{model} / {config_name}: {metrics}", file=sys.stderr)
-    _write_summary(out_dir, metrics_table)
+    _write_summary(out_dir, metrics_table, variant)
 
 
 def run_preflight(model: str) -> int:
@@ -335,7 +343,7 @@ def run_preflight(model: str) -> int:
         print(
             "FAIL: token lacks inference permission — create a token via the "
             "dashboard's 'Create a Workers AI API Token' template "
-            "(Workers AI Read + Edit).",
+            "(docs say Workers AI Read + Edit; Read alone worked on 2026-09-29).",
             file=sys.stderr,
         )
         return 3
@@ -362,7 +370,7 @@ def main() -> int:
 
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
-    _run_full_eval(models, configs, weeks, datasets, topic, out_dir)
+    _run_full_eval(models, configs, weeks, datasets, topic, out_dir, args.prompt_variant)
     print(f"Done. Wrote {out_dir / 'results.jsonl'} and {out_dir / 'summary.md'}", file=sys.stderr)
     return 0
 
