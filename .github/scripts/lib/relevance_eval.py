@@ -31,6 +31,15 @@ DEFAULT_RELEVANCE_PROMPT = (
     "When borderline, prefer YES if methodology is transferable."
 )
 
+_BORDERLINE_SENTENCE = " When borderline, prefer YES if methodology is transferable."
+
+# Reason: named variants (not free text) keep workflow inputs injection-safe.
+# "no-borderline-yes" tests whether the bias sentence drives false accepts (#527).
+PROMPT_VARIANTS = {
+    "default": DEFAULT_RELEVANCE_PROMPT,
+    "no-borderline-yes": DEFAULT_RELEVANCE_PROMPT.replace(_BORDERLINE_SENTENCE, ""),
+}
+
 _THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)
 _UNCLOSED_THINK_RE = re.compile(r"<think>", re.IGNORECASE)
 
@@ -68,9 +77,14 @@ def parse_verdict(raw: str | None, *, strip_think: bool = False) -> str:
     return "YES" if text.upper().startswith("YES") else "NO"
 
 
-def build_messages(topic: str, title: str, category: str, abstract: str) -> list[dict[str, str]]:
-    """Build the chat messages exactly as production ``is_relevant`` does."""
-    system_prompt = DEFAULT_RELEVANCE_PROMPT.format(topic=topic)
+def build_messages(
+    topic: str, title: str, category: str, abstract: str, *, variant: str = "default"
+) -> list[dict[str, str]]:
+    """Build the chat messages as production ``is_relevant`` does (``variant="default"``).
+
+    Raises ``KeyError`` for an unknown ``variant`` (see ``PROMPT_VARIANTS``).
+    """
+    system_prompt = PROMPT_VARIANTS[variant].format(topic=topic)
     user_prompt = f"Title: {title}\nCategory: {category}\n\nAbstract: {abstract or '(unavailable)'}"
     return [
         {"role": "system", "content": system_prompt},
