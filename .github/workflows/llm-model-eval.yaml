@@ -1,0 +1,94 @@
+---
+name: LLM model eval (relevance filter)
+
+# One-off model-comparison eval for the paper relevance filter. GitHub
+# Models was retired 2026-07-30, killing rxiv-paper-eval's LLM backend
+# (reusable action qte77/gha-rxiv-paper-eval v0.4.0). This workflow
+# reproduces that retired pipeline's relevance-classification prompt and
+# parsing against three Cloudflare Workers AI models and scores each
+# against the retired model's OWN verdicts — labels, NOT ground truth (see
+# the generated summary.md). Manual, owner-run comparison; not scheduled.
+#
+# Secrets/vars used (see .github/scripts/eval-relevance-models.py):
+#   secrets.CF_WORKERS_AI_TOKEN — Workers AI API token
+#   vars.LLM_BASE_URL           — https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1
+#   vars.RXIV_TOPIC             — same topic rxiv-paper-eval.yaml uses (falls
+#                                  back to the script's own copy if unset)
+
+on:
+  workflow_dispatch:
+    inputs:
+      models:
+        description: "Comma-separated Workers AI model ids to compare."
+        type: string
+        default: "@cf/meta/llama-3.1-8b-instruct-fp8,@cf/qwen/qwen3-30b-a3b-fp8,@cf/google/gemma-4-26b-a4b-it"
+      weeks:
+        description: "Comma-separated ISO weeks (arxiv 2026 feed) to evaluate."
+        type: string
+        default: "22,23,24,25,30"
+      configs:
+        description: "Comma-separated name:max_tokens generation configs."
+        type: string
+        default: "strict:4,relaxed:64"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: llm-model-eval
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    name: Verify CF Workers AI token can call inference
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Preflight call
+        env:
+          CF_WORKERS_AI_TOKEN: ${{ secrets.CF_WORKERS_AI_TOKEN }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          MODELS: ${{ inputs.models }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/eval-relevance-models.py \
+            --models "$MODELS" --preflight
+
+  eval:
+    name: Run model comparison eval
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Run eval
+        env:
+          CF_WORKERS_AI_TOKEN: ${{ secrets.CF_WORKERS_AI_TOKEN }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          RXIV_TOPIC: ${{ vars.RXIV_TOPIC }}
+          MODELS: ${{ inputs.models }}
+          WEEKS: ${{ inputs.weeks }}
+          CONFIGS: ${{ inputs.configs }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/eval-relevance-models.py \
+            --models "$MODELS" --weeks "$WEEKS" --configs "$CONFIGS" \
+            --out llm-model-eval-output
+
+      - name: Append summary to step summary
+        if: always()
+        run: |
+          set -euo pipefail
+          if [ -f llm-model-eval-output/summary.md ]; then
+            cat llm-model-eval-output/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload eval output
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: llm-model-eval-output
+          path: llm-model-eval-output/
+          retention-days: 30
