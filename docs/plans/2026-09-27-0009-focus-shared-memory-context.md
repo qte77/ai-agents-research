@@ -3,7 +3,7 @@ title: Focus arc — shared, versionable, traceable memory, context, skills and 
 status: draft
 issue: 509, 504, 515, 516, 517
 created: 2026-09-27
-updated: 2026-09-28
+updated: 2026-09-29
 ---
 
 **Status**: Reference (plan)
@@ -105,6 +105,23 @@ hands-off offloaded tasks.
   - **Already covered:** Raven/EverOS (`raven-analysis.md`), Shepherd (`shepherd-analysis.md`),
     CopilotKit/AG-UI, E2B, Modal. These only need a refresh if a lead adds a new fact.
 
+### Screenshot batch 3 (row I2, 2026-09-29)
+
+- **Input:** 20 new screenshots, 2026-09-28 18:22 to 2026-09-29 18:27.
+- **Method:** 2 extraction agents. Results in `batch3/out-*.tsv`, deduped into `batch3/merged.json`.
+- **Scope:** 10 Y, 6 M, 4 N.
+- **New leads.** Repo existence and license are from GitHub metadata, 2026-09-29; everything else is
+  unverified.
+  - **Harness:**
+    - google-research/rrsi (Apache-2.0): upgrades batch 2's RRSI paper lead with a repo.
+    - Orchestrator.inc ("AO", agent IDE / meta harness).
+    - A Critical-State RL paper (Salesforce, arXiv 2609.24985).
+  - **Plugins/MCP:** the Hex-Rays IDA MCP server (IDA Nexus, Code Mode); jtaoufik/tiger (MIT,
+    git-native API client with an MCP server).
+  - **Context/code search:** dzhng/jevgrep (MIT; added to #517); Sonar Vortex.
+  - **Repeats from batch 2:** OpenMuse / CopilotKit.
+  - **Off-focus (M):** Pydantic AI realtime, Netflix GenRec, Anthropic for Startups posts.
+
 ## Graph system decision (row G)
 
 The current graph (`ui/graph.html`, last full rebuild #404: 785 nodes) comes from graphify. Graphify
@@ -128,6 +145,7 @@ systems on the rubric.
 | # | Item | Gate | Done-when |
 |---|---|---|---|
 | ~~I~~ | ~~Ingest screenshot batch 2 (87 images)~~ | agent | Done 2026-09-28 (this PR): extracted + deduped to `batch2/merged.json`; leads listed in the Source map; feeds row B |
+| ~~I2~~ | ~~Ingest screenshot batch 3 (20 images)~~ | agent | Done 2026-09-29 (this PR): `batch3/merged.json`; leads in the Source map; feeds row B; jevgrep added to #517 |
 | J1 | #515: Jev (TypeSafe) analysis page: system-one classifier as a pre-CI code-change gate (feelings pilot results); fills the `agentic-sdlc-patterns.md` "no review agent" gap | agent | Page merged (status Trial), gap row repointed, #515 closed |
 | J2 | #516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers | agent | §8 extended, #516 closed |
 | J3 | #517: Jev ecosystem scout batch (abide, jev-ultrafast, laya, probably), scored on the rubric | agent | Entries merged (extend existing pages first), #517 closed |
