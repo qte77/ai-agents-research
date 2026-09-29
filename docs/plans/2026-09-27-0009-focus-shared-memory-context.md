@@ -124,11 +124,23 @@ hands-off offloaded tasks.
 
 ### Owner-requested leads (2026-09-29, for the next research run)
 
+Licenses and descriptions come from GitHub repo metadata (2026-09-29); confirm each license against its
+LICENSE file during research.
+
 | Lead | Row | Existing coverage | What to research |
 |---|---|---|---|
 | `x.com/typesafeai` (not linked: X returns 403 to lychee) | J1 (#515) | none | Jev use cases; X blocks bots, so use polyfetch. Treat every use case there as an **external, unconfirmed** claim, not as TypeSafe's own. Cite it as confirmed only if docs.typesafe.ai states it; otherwise label it unconfirmed or drop it (owner rule, 2026-09-29) |
 | [aaif.io](https://aaif.io/) | S5 | only as Goose's foundation (`non-cc/agents/goose-analysis.md`) | The Agentic AI Foundation itself: governance, hosted projects, relevance to skills/plugins standards |
 | [github.com/OperatingSystem-1](https://github.com/OperatingSystem-1) | S1, S5, S6 | none (Mitosis Labs, queued above) | S1: Cortex memory. S5: `mitosis-agent-plugin`, `mitosis-memory-skills`. S6: `openclaw-operator`, `mcp-git-coord` |
+| [github.com/coleam00](https://github.com/coleam00) (Cole Medin) | S4, S5, S6 | none | S6: `Archon` ("open-source harness builder for AI coding", MIT). S4: `context-engineering-intro` (MIT). S5: `excalidraw-diagram-skill` (no license on GitHub) |
+| [alibaba/open-code-review](https://github.com/alibaba/open-code-review) | J1, S6 | none | Hybrid deterministic + LLM code review (Apache-2.0). Goes with the "no review agent" gap (#515) and `code-review-products-landscape.md` |
+| [github.com/tysoncung](https://github.com/tysoncung) | S5 (low) | none | Personal account; `notion-agent-hub` (MIT) and `awesome-vibe-coding` (CC0) are the only agent-related repos. Low priority unless the owner names a specific repo |
+| [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) | S5 | none | Coding-agent skill for multi-phase security audits with "independently verified, machine-readable findings" (MIT); scores high on traceable |
+| [HarnessRouter/harnessrouter](https://github.com/HarnessRouter/harnessrouter) | S6 (refresh) | `cc-community/CC-harnessrouter-analysis.md` (updated 2026-09-24) | Refresh stars and release only; score on the rubric |
+| [jaredpalmer/kev](https://github.com/jaredpalmer/kev) | J3 (#517) | none | "Jev-like family of decision models" on Qwen, self-trainable (Apache-2.0); open-weights alternative to Jev next to Laya |
+| probably, laya, jev-ultrafast | J3 (#517) | none | Already in #517; owner re-confirmed 2026-09-29 |
+| [driceroland/Search](https://github.com/driceroland/Search) | S6 (check relevance) | none | Described as "a small, fast WebKit browser for macOS" (MIT); no agent angle in the description. Include only if its README shows agent use |
+| [paperclipai/paperclip](https://github.com/paperclipai/paperclip) | S6 | none | "The open-source app everyone uses to manage agents at work" (MIT); agent management and long-running orchestration |
 | [github.com/runtypelabs](https://github.com/runtypelabs) | S5, S6 | Runtype bullet in `agent-frameworks-infrastructure-landscape.md` | S5: `skills` (official agent skills). S6: `hermes-runtype-otel` (OTel export of agent turns), `persona`. Extend the existing entry; no new page |
 
 ## Graph system decision (row G)
