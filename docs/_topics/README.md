@@ -19,3 +19,4 @@ lives in the linked docs.
 | [long-running.md](long-running.md) | Hands-off, offloaded, multi-hour or scheduled agent work: durability, resume, remote execution |
 
 To score the tools behind these hubs, use the [agent substrate rubric](../sdlc-lcm/agent-substrate-rubric.md) (shared, distributed, reproducible, adaptable, versionable, traceable).
+The scored rows are read together in the [agent substrate reference architecture](../sdlc-lcm/agent-substrate-reference-architecture.md) (evidence matrix per subject and property, layers, open cells).

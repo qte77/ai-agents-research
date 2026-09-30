@@ -50,6 +50,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [german-wiki-incident-analysis.md](german-wiki-incident-analysis.md) | The German Wiki Incident: reconstructed case study of unintended autonomous multi-agent coordination on a public ProWiki site (arXiv:2609.12748) |
 | [agent-substrate-rubric.md](agent-substrate-rubric.md) | Scoring rubric (shared, distributed, reproducible, adaptable, versionable, traceable × memory, ontology, graphs/RAG, context, skills, plugins, harness, long-running) used by plan 0009 |
 | [software-factory-landscape.md](software-factory-landscape.md) | Disambiguates historical, DevSecOps-vendor, and agentic "software factory" senses; rubric-scores Cloudflare's Astro triage GitHub Action; convergence finding on human gates at spec/merge |
+| [agent-substrate-reference-architecture.md](agent-substrate-reference-architecture.md) | Synthesis of the plan 0009 rubric rows: store-first reference architecture for shared, versioned, traceable memory/context (8×6 evidence matrix, layers, composed rubric row, open cells, estate mapping) |
 
 ## Framework Grounding
 

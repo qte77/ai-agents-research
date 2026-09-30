@@ -70,6 +70,7 @@ The eight subjects of the arc. The `_topics` hubs index existing coverage for ea
 | [Plan 0009][plan] | Arc scope, subjects and remaining-work rows that use this rubric |
 | [#509][plan-issue] | Tracking issue for the arc |
 | [`docs/_topics/`](../_topics/README.md) | Existing subject hubs |
+| [agent-substrate-reference-architecture.md](agent-substrate-reference-architecture.md) | Synthesis of every scored row into one reference architecture (evidence matrix, composed rubric row, open cells) |
 | [CONTRIBUTING.md](../../CONTRIBUTING.md) | First-party citation rules the evidence column follows |
 
 [plan]: ../plans/2026-09-27-0009-focus-shared-memory-context.md
