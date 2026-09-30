@@ -57,7 +57,8 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   least partly filled.
   1. **J1–J3** (#515–#517): the Jev and system-1 decision-model rows, in the same subagent-brief pattern.
      Leads are in "Ranked backlog" (J rows); the X leads stay deferred.
-  2. **Then:** Y (synthesis), G (graph system, default C confirmed by S3), Z (close-out).
+  2. **Then:** Y (synthesis), G (graph system, default C confirmed by S3), D1 (frontmatter `status:`,
+     folded in 2026-09-30: G's structural graph is the first consumer of `status:`), Z (close-out).
 - **Out of scope (deferred by the owner, 2026-09-29):** the dead paper-eval / issue-triage workflows
   (GitHub Models retirement). Everything about them lives in #527 and upstream
   gha-rxiv-paper-eval#81 / gha-issue-triage#110, not in this plan.
@@ -356,5 +357,5 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 | ~~S6~~ | ~~Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`)~~ | agent | Done 2026-09-30 (#546): 11 leads placed, 2 new pages (OpenShell, OrcaReplay), gaps 7–9 filled |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
-| D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11) | owner | Deferred until something consumes `status:`; then migration PR 1 of ~5 with the validator passing |
+| D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11). Folded into this arc on 2026-09-30, after G: the structural graph (option B) uses doc status as a node attribute, so it is the consumer the deferral waited for | agent (after G) | Migration PRs (~5) with the `check_status` validator passing, G's module reading `status:` from frontmatter, #348 closed |
 | Z | Close-out: README/UserStory focus statements, CHANGELOG, release | agent | Release published; #509 closed |
