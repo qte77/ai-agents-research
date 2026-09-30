@@ -13,5 +13,12 @@ Agent memory across the corpus. Pointers only; see [the hub index](README.md).
 | [helixdb-analysis.md](../non-cc/context-memory/helixdb-analysis.md) | Graph-vector database positioned for agent memory | non-cc |
 | [qwenpaw-analysis.md](../non-cc/agents/qwenpaw-analysis.md) | Personal assistant with a three-tier memory design | non-cc |
 | [goclaw-analysis.md § 3-Tier Memory](../non-cc/infrastructure/goclaw-analysis.md#3-tier-memory-system) | Three-tier memory system | non-cc |
+| [mitosis-cortex-analysis.md](../non-cc/context-memory/mitosis-cortex-analysis.md) | Mitosis Labs Cortex — hosted per-team knowledge-graph memory, rubric-scored | non-cc |
+| [CC-memory-tooling-landscape.md § agent-memory](../cc-community/CC-memory-tooling-landscape.md#agent-memory-tigerless-labs) | agent-memory (tigerless-labs) — markdown-native long-term memory shared by Claude Code, Codex, Hermes, rubric-scored | cc-community |
+| [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | AgentiCow (copy-on-write vector memory branching), rubric-scored | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | Beads / bd (Dolt-backed distributed agent task/memory graph), rubric-scored | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | lossless-memory (never-summarize, timestamp-first personal memory), rubric-scored | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | Weighted Memory Tree (arXiv 2608.20631) and JITMEM (arXiv 2609.27334) — memory-curation papers, rubric-scored | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | Sumanth077/Hands-On-AI-Engineering `research_assistant_with_memory` — worked example, no license | non-cc |
 
 Related hubs: [knowledge-graphs.md](knowledge-graphs.md), [rag.md](rag.md).

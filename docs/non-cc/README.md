@@ -94,6 +94,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [mex-analysis.md](context-memory/mex-analysis.md) | mex (Git-shared, human-approval-gated project memory + drift-detection CLI for coding agents) | Yes | Yes (MIT) |
 | [ripwire-analysis.md](context-memory/ripwire-analysis.md) | Ripwire (Red Hat Emerging Technologies; deterministic repo-context CLI — call graphs, blast-radius, code-quality) | Yes | Yes (Apache-2.0) |
 | [on-device-semantic-search-landscape.md](context-memory/on-device-semantic-search-landscape.md) | On-device/local-first semantic search landscape: embedder + embedded-vector-store stack survey | — | Mixed |
+| [mitosis-cortex-analysis.md](context-memory/mitosis-cortex-analysis.md) | Mitosis Labs Cortex (hosted per-team knowledge-graph memory; kNN + full-text + graph fusion, no LLM at query time) | Yes | No (hosted; engine closed, MIT client skills separate) |
 
 ## Infrastructure
 

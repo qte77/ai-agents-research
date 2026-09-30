@@ -1,11 +1,11 @@
 ---
 title: CC Memory Tooling Landscape
-purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (ai-memory, claude-reflect, Core, deja-vu, engrim).
+purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, Core, deja-vu, engrim).
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Research (informational)
@@ -36,6 +36,50 @@ Agent memory is conventionally split into four modules ([CoALA][coala], arXiv:23
 Legend: ✓ explicit layer · ~ partial/implicit · — not a documented layer. Mappings are approximate — each project names its tiers differently; only LangMem ships an explicit *procedural* layer.
 
 **Design lens — memory should change future behavior.** Beyond *what is stored*, the test for any of these layers is whether a stored item actually alters a later decision. André Lindenberg frames memory as a first-class component judged by behavior change — a "skillbook" that updates after tasks, failures, and feedback, not a passive transcript (Lindenberg, *Memory should change future behavior*, LinkedIn, 2026). It reframes episodic/procedural memory as the loop that lets an agent compound rather than merely recall — the same write-back-and-reuse intent behind this repo's CRLA/`docs/learnings/` flow.
+
+## agent-memory (tigerless-labs)
+
+**Repo**: [tigerless-labs/agent-memory][agent-memory] | **Stars**: 1,692 | **License**: MIT | **Version**: 0.1.0 (README badge; no tagged GitHub release as of 2026-09-30, `gh api` — install from a checkout, no PyPI package yet)
+
+Long-term memory runtime pitched as "the two lines" of prior memory architecture in one store: a retrieval engine (ranking, links-as-graph) indexing a plain markdown filesystem the agent can still `ls`/`grep` directly. Markdown files are the single source of truth; the SQLite/FTS5 index beside them is a deletable cache.
+
+### Architecture
+
+- **Three read tracks**: deterministic `MEMORY.md` injection at session start; BM25 recall over FTS5 (optional vector plugin fused by RRF); the plain directory tree as a last resort
+- **Path-then-level retrieval**: `mem recall` returns an L0 index (abstract, path, anchor, score); the agent opens a hit at `outline`, `abstract`, or `full` depth, or `mem trace <name>` for the cited raw messages
+- **Validity-interval versioning**: each memory carries `valid_from`/optional `invalid_at`; `mem correct`, `mem supersede`, and `mem merge` don't destroy history — replaced/deleted files stay in the store for `recall --as-of <date>` and `trace`
+- **Schema-driven types**: one schema file per memory type under `schemas/`; `config.toml` holds every tunable and refuses an unknown knob at load
+- **Sleep-time Manage layer with authority tiers**: an unattended pass may add/update; deletion only ever arrives as a proposal a human confirms
+- **No LLM client in the library**: zero API keys required for core read/write; judgment is borrowed from the host agent's own CLI, so every write stays visible in that agent's transcript
+
+### CC Integration
+
+Claude Code and Codex CLI (and "anything else that can run a shell command") share one store via `mem`/`mem-mcp`/`mem-hook` binaries built with `uv sync --all-packages`. The README's own benchmark claims **"one store, three hosts"**: all 9 ordered writer/reader pairs across Claude Code, Codex CLI, and Hermes passed — what one host's shell writes, another's `mem recall` finds, specifics intact (self-reported, `docs/experiments.md` and `experiments/` ship with the source for independent replay).
+
+### Adoption Considerations
+
+**Strengths**: cross-agent sharing that ships its own replayable experiment ledger rather than only a headline number; `rm -rf .index/ && mem rebuild` losing zero knowledge is "enforced by a test, not promised in a doc" (per the README); validity-interval versioning (`--as-of`, supersede-not-overwrite) is more thorough than most peers in this doc; no LLM/API-key dependency for core operation.
+
+**Risks**: pre-1.0 (v0.1.0), no PyPI package — install from a git checkout; its own self-reported LongMemEval-S comparison (52.9% pooled accuracy vs. 35.8% for a "MemCore W2" baseline and 5.8% with no memory, 120 episodes, Haiku 4.5 host, Sonnet 5 judge) is explicitly flagged by the README itself as **not comparable to published LongMemEval scores** — the haystack is bounded to 12 sessions per episode, so treat it as a write-strategy study, not a benchmark result. Overlaps with CC's built-in memory and every other cross-agent tool in this doc — pick one.
+
+### Rubric
+
+Scored 2026-09-30, evidence from the [README][agent-memory] unless noted.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| yes | no | yes | yes | yes | yes |
+
+- **Shared — yes**: "one store, three hosts" — all 9 writer/reader pairs across Claude Code, Codex CLI, and Hermes pass.
+- **Distributed — no**: a local directory (`~/agent-memory-store` by default); no multi-machine sync or remote service is documented, only multi-agent access to one local store.
+- **Reproducible — yes**: "files are the truth; every index is a rebuildable cache" — `rm -rf .index/ && mem rebuild` is asserted to lose zero knowledge, "enforced by a test."
+- **Adaptable — yes**: one schema file per memory type under `schemas/`, plus a fully tunable `config.toml` that refuses unknown keys.
+- **Versionable — yes**: `valid_from`/`invalid_at` validity intervals; `correct`/`supersede`/`merge`/`delete` preserve prior state for `recall --as-of` and `trace` rather than overwriting it.
+- **Traceable — yes**: `mem trace <name>` returns cited raw messages; an append-only `archive/provenance/` keeps distillation evidence "forever."
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
 
 ## ai-memory (akitaonrails)
 
@@ -390,6 +434,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 
 | Source | Content |
 |---|---|
+| [agent-memory][agent-memory] | Long-term memory runtime for Claude Code/Codex/Hermes (README, `gh api`, 2026-09-30) |
 | [ai-memory][ai-memory] | Cross-agent long-term memory (Rust) |
 | [Byterover][byterover] · [paper][byterover-paper] | Agent memory layer (CLI) |
 | [claude-mem][claude-mem] · [docs][claude-mem-docs] | Claude Code memory plugin |
@@ -412,6 +457,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 | [LongMemEval][longmemeval] | Long-term-memory benchmark |
 | [LOCOMO][locomo] | Long-conversation memory benchmark |
 
+[agent-memory]: https://github.com/tigerless-labs/agent-memory
 [ai-memory]: https://github.com/akitaonrails/ai-memory
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
