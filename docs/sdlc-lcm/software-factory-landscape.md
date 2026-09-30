@@ -197,7 +197,9 @@ HumanLayer's separate approval-gate SDK),
 [CC-memory-system-analysis.md § Context Engineering Workflow (ACE-FCA)](../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca)
 (HumanLayer/Dex's other, unrelated ACE-FCA post),
 [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md)
-(HumanLayer's approval-gate SDK in harness terms).
+(HumanLayer's approval-gate SDK in harness terms),
+[CC-community-tooling-landscape.md § human-review](../cc-community/CC-community-tooling-landscape.md#human-review-petergyang)
+(a concrete tool for the spec-review gate: comments on the artifact go straight back to the agent).
 
 [wp-sf]: https://en.wikipedia.org/wiki/Software_factory
 [lockheed]: https://www.lockheedmartin.com/en-us/capabilities/digital-transformation/software-factory.html
