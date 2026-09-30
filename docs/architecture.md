@@ -120,6 +120,8 @@ An optional graphify knowledge graph maps the corpus — concepts, cross-documen
 
 **Deterministic base graph (plan 0009 row G, option C):** `make graph-data` runs `.github/scripts/build-doc-graph.py`, a stdlib-only builder backed by the unit-tested `lib/doc_graph.py`. It writes `ui/doc-graph.json` with doc nodes (bucket, status, title), external-domain nodes, and `link` / `hub` / `cites` edges, each carrying the line numbers it occurs on. The same corpus always gives byte-identical JSON, with no LLM involved. Link validity stays with lychee. The Pages deploy regenerates the JSON from `docs/` on every push that touches docs, the builder or the workflow, and the file is never committed, so it cannot drift. It is rendered at `/doc-graph.html` (`ui/doc-graph.html`, using the vendored vis-network): docs as dots, topic hubs as diamonds, cited domains as squares (hidden by default), with search and a details panel. graphify stays an optional concept overlay at `/graph.html`.
 
+**Build metadata:** every page shows the release version (`pyproject.toml`), last-modified date and commit link. The deploy writes `build.json` with `scripts/build-site-info.py` (pure logic in `pages_build.site_info`), and `ui/build-info.js` renders it. The graphify page reports the commit that last changed `ui/graph.html`, which is its real rebuild date. The deploy injects that page's tag into the published copy only, so that history stays accurate.
+
 **Live site:** <https://qte77.github.io/ai-agents-research/> — a branded EyeRest landing page (`index.html`) linking to the knowledge graph at `/graph.html`. After a rebuild, run `make graph-page`, then commit & push — the gh-pages workflow deploys.
 
 ### Published site (gh-pages)
