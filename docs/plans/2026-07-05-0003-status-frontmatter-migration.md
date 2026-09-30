@@ -1,12 +1,12 @@
 ---
 title: Migrate doc status into frontmatter (drop the body badge)
-status: approved
+status: done
 issue: 348
 created: 2026-07-05
-updated: 2026-09-23
+updated: 2026-09-30
 ---
 
-Durable plan for **#348** — moving doc maturity from the body `**Status**:` badge into a
+**Done 2026-09-30** in plan 0009 row D1 (#562, #563, #565 and the conventions PR): every badge migrated, strict mode on. Durable plan for **#348** — moving doc maturity from the body `**Status**:` badge into a
 frontmatter `status:` field. **Approved but deferred** (see Priority). This doc carries the full
 context map so a fresh session executes without re-gathering.
 

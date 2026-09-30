@@ -15,9 +15,11 @@ purpose: One-line purpose statement
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 validated_links: YYYY-MM-DD
+status: assess
 ---
 ```
 
+- `status` — the doc's maturity token (see §2); the single source of status, read by `make check_status` and the doc graph
 - `validated_links` — date when URLs in the doc were last checked
 - `updated` — date of last content edit
 - **No `sources:` key in frontmatter** — sources belong in the Sources section at the end
@@ -26,22 +28,20 @@ Optional fields: `source` (primary URL the doc is based on), `category`, `test_r
 
 **Frontmatter must be on line 1.** No HTML comments (`<!-- -->`) before the opening `---` — this breaks markdownlint's frontmatter parser and causes false MD041/MD003 errors.
 
-### 2. Status Badge
+### 2. Frontmatter status
 
-Immediately after frontmatter:
-
-```markdown
-**Status**: Adopt
-```
+Status lives only in the frontmatter `status:` field (#348). There is no body `**Status**:` badge; `make check_status` runs in strict mode and fails on one.
 
 Values (Technology Radar convention):
 
 | Status | Meaning |
 |---|---|
-| **Adopt** | Validated, recommended for use |
-| **Trial** | Worth pursuing, needs more validation |
-| **Assess** | Worth exploring, not yet validated |
-| **Hold** | Not recommended or deprecated |
+| `adopt` | Validated, recommended for use |
+| `trial` | Worth pursuing, needs more validation |
+| `assess` | Worth exploring, not yet validated |
+| `hold` | Not recommended or deprecated |
+
+Other tokens in use (`research`, `reference`, `generally-available`, `beta`, …; plans: `draft`/`approved`/`done`/`superseded`) are listed in `VOCAB` in [`.github/scripts/lib/doc_status.py`](.github/scripts/lib/doc_status.py), the one authoritative list. Extra maturity detail (license, version, availability) goes on a `**Details:**` line right after the frontmatter.
 
 ### 3. Body
 

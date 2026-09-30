@@ -72,18 +72,7 @@ This format ensures each doc is directly actionable, not just descriptive.
 
 ## Frontmatter Conventions
 
-All documents carry YAML frontmatter:
-
-```yaml
----
-title: <Descriptive title>
-description: <One-line summary>
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-Optional fields: `category`, `version`, `tags`, `source`.
+All documents carry YAML frontmatter, including the doc's `status:` (there is no body status badge). The spec lives in [CONTRIBUTING.md §1–§2](../CONTRIBUTING.md#1-frontmatter); `make check_status` enforces the status part.
 
 ## Automated Monitors
 

@@ -32,7 +32,7 @@ status: reference
 |---|---|---|
 | [2026-06-11-0001-plugin-rules-codeburn-merge.md](2026-06-11-0001-plugin-rules-codeburn-merge.md) | draft | none yet |
 | [2026-06-14-0002-planning-workflow-and-open-task-triage.md](2026-06-14-0002-planning-workflow-and-open-task-triage.md) | done | #242, #243 |
-| [2026-07-05-0003-status-frontmatter-migration.md](2026-07-05-0003-status-frontmatter-migration.md) | approved | #348 |
+| [2026-07-05-0003-status-frontmatter-migration.md](2026-07-05-0003-status-frontmatter-migration.md) | done | #348 |
 | [2026-07-08-0004-new-sources-batch.md](2026-07-08-0004-new-sources-batch.md) | done | #374 |
 | [2026-07-08-0005-source-expansion-wave2.md](2026-07-08-0005-source-expansion-wave2.md) | done | #374 |
 | [2026-07-08-0006-graphify-rebuild-354.md](2026-07-08-0006-graphify-rebuild-354.md) | done | #354 |
