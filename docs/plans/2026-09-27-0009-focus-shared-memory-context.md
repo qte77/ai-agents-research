@@ -143,8 +143,8 @@ LICENSE file during research.
 
 | Lead | Row | Existing coverage | What to research |
 |---|---|---|---|
-| `x.com/typesafeai` (not linked: X returns 403 to lychee) | J1 (#515) | none | Jev use cases. X blocks fetching, including polyfetch's patchright tier (403, 2026-09-29), so the owner pastes post text instead. Treat every use case there as an **external, unconfirmed** claim, not as TypeSafe's own. Cite it as confirmed only if docs.typesafe.ai states it; otherwise label it unconfirmed or drop it (owner rule, 2026-09-29) |
-| `x.com/openadevs/status/2105003318917697873` (not linked; X returns 403) | J3 (#517) | none | System-1/Jev post; content unknown until the owner pastes it. External, unconfirmed claim (owner rule) |
+| ~~`x.com/typesafeai` (not linked: X returns 403 to lychee)~~ | J1 (#515) | none | **Deferred by the owner (2026-09-30):** X blocks every fetch route (WebFetch, all polyfetch tiers, oEmbed returns 402). Resume only from owner-provided screenshots or pasted text |
+| ~~`x.com/openadevs/status/2105003318917697873` (not linked; X returns 403)~~ | J3 (#517) | none | **Deferred by the owner (2026-09-30):** X blocks every fetch route (WebFetch, all polyfetch tiers, oEmbed returns 402). Resume only from owner-provided screenshots or pasted text |
 | [aaif.io](https://aaif.io/) | S5 | only as Goose's foundation (`non-cc/agents/goose-analysis.md`) | The Agentic AI Foundation itself: governance, hosted projects, relevance to skills/plugins standards |
 | [github.com/OperatingSystem-1](https://github.com/OperatingSystem-1) | S1, S5, S6 | none (Mitosis Labs, queued above) | S1: Cortex memory. S5: `mitosis-agent-plugin`, `mitosis-memory-skills`. S6: `openclaw-operator`, `mcp-git-coord` |
 | [github.com/coleam00](https://github.com/coleam00) (Cole Medin) | S4, S5, S6 | none | S6: `Archon` ("open-source harness builder for AI coding", MIT). S4: `context-engineering-intro` (MIT). S5: `excalidraw-diagram-skill` (no license on GitHub) |
@@ -217,7 +217,7 @@ LICENSE file during research.
 | S6 | NVIDIA OpenShell (safe runtime for agent fleets) | <https://github.com/NVIDIA/OpenShell> |
 | S6 | OrcaReplay (record/replay/fork debugging of coding-agent runs) | <https://github.com/Continuum-AI-Corp/OrcaReplay> |
 | S6 | RRSI (Google; regularized recursive self-improvement of agent harnesses) | <https://github.com/google-research/rrsi> |
-| J1 | TypeSafe / Jev (system-one classifier; pre-CI code-change gate; x.com/typesafeai use cases as external claims) | <https://docs.typesafe.ai/> |
+| J1 | TypeSafe / Jev (system-one classifier; pre-CI code-change gate; x.com use cases deferred) | <https://docs.typesafe.ai/> |
 | J1 | alibaba/open-code-review (hybrid deterministic + LLM code review) | <https://github.com/alibaba/open-code-review> |
 | J3 | jaredpalmer/kev (Jev-like decision models on Qwen, self-trainable) | <https://github.com/jaredpalmer/kev> |
 | J3 | probably (Jev ecosystem) | <https://github.com/southpolesteve/probably> |
