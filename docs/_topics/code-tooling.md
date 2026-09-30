@@ -12,7 +12,8 @@ only; see [the hub index](README.md).
 | [aider-analysis.md § repo map](../non-cc/coding-agents/aider-analysis.md#codebase-mapping-repo-map) | Aider's repo map | non-cc |
 | [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo-to-docs-tools-landscape.md) | Tools that generate docs from a repository | non-cc |
 | [deepwiki-analysis.md](../non-cc/knowledge-management/deepwiki-analysis.md) | DeepWiki: repo wikis with chat Q&A | non-cc |
-| [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) | Standalone AI PR-review products | non-cc |
+| [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) | Standalone AI PR-review products; open-code-review (hybrid deterministic + LLM, rubric-scored) | non-cc |
+| [jev-analysis.md](../non-cc/infrastructure/jev-analysis.md) | Jev (TypeSafe) system-one classifier as a pre-CI code-review gate, rubric-scored; measured qte77/feelings pilot | non-cc |
 | [agent-code-analysis-landscape.md](../sdlc-lcm/agent-code-analysis-landscape.md) | Static and dynamic code analysis for and by coding agents | sdlc-lcm |
 
 Related hubs: [rag.md](rag.md), [knowledge-graphs.md](knowledge-graphs.md).

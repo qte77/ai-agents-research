@@ -240,7 +240,7 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 
 - [Instructor](https://github.com/567-labs/instructor) — wraps any LLM call, validates the response against a Pydantic model, and re-prompts on validation failure (MIT). Thinnest provider-agnostic retrofit; no constrained decoding.
 - [Outlines](https://github.com/dottxt-ai/outlines) — constrained decoding via finite-state machines over the model vocabulary: guarantees JSON-schema / regex / grammar conformance *during* generation (Apache-2.0); requires local or served model access.
-- [BAML](https://github.com/BoundaryML/baml) — schema-as-contract DSL with Schema-Aligned Parsing (post-hoc, tolerant of markdown/CoT preambles), compiled to typed functions in several languages (Apache-2.0). Fits contract-first pipelines even when a model lacks native tool-calling.
+- [BAML](https://github.com/BoundaryML/baml) — schema-as-contract DSL with Schema-Aligned Parsing (post-hoc, tolerant of markdown/CoT preambles), compiled to typed functions in several languages (Apache-2.0). Fits contract-first pipelines even when a model lacks native tool-calling. Its [`feelings`][baml-feelings] demo repo (no LICENSE file as of 2026-09-30 — [issue #1][baml-feelings-issue1] asks for one, still open — treat as all-rights-reserved) extends every type with `.feels()`, `.how()`, `.matches<T>()`, `.judge<T>()`, `.fill<T>()` and `.ask()`, backed by TypeSafe's Jev ([jev-analysis.md](../infrastructure/jev-analysis.md)); `.fill<T>()` sends one request per class, not per field ([BAML/Jev blog post][baml-jev-blog]).
 - [Guidance](https://github.com/guidance-ai/guidance) — grammar-constrained generation interleaving prompt control flow with sampling (MIT); local/vLLM backends.
 - [Pydantic AI](https://github.com/pydantic/pydantic-ai) / [Marvin](https://github.com/PrefectHQ/marvin) — agent frameworks that validate outputs against Pydantic models by construction, with auto-retry on mismatch (MIT / Apache-2.0).
 
@@ -250,6 +250,25 @@ Validation is the post-generation sibling of retrieval (§7): enforcing that age
 - [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) — Colang DSL for dialog-flow rails (topicality, jailbreak, self-check input/output) that models full conversation state, not just single-turn I/O (NVIDIA).
 - [LLM Guard](https://github.com/protectai/llm-guard) — provider-agnostic input/output scanners: PII anonymization, prompt-injection classifiers, toxicity, secrets detection (MIT).
 - **Safety classifiers** — Llama Guard / ShieldGemma are fine-tuned hazard-taxonomy classifiers run as a pre/post filter (Llama / Gemma community licenses, use restrictions); Lakera Guard is the hosted closed-source equivalent.
+
+### Decision models (typed yes/no, choice, score)
+
+A third validator shape, distinct from schema conformance and safety filtering: a cheap
+typed decision about the output (yes/no, a choice among options, or a rubric score) that
+code branches on directly, backed by a probability rather than free text.
+
+- [Jev (TypeSafe AI)](../infrastructure/jev-analysis.md) — hosted "System One" classifier
+  returning a probability for a yes/no (`noul`), a distribution plus confidence for
+  `choice`, or a rubric score for `score`; see the linked analysis for pricing, limits,
+  and the qte77/feelings measured pre-CI code-review-gate pilot. It ranks changes well,
+  but its threshold needs setting per codebase — a fixed 0.70 cutoff wrongly flagged
+  23–30% of clean changes on a codebase it wasn't tuned on, vs. 1.7% on the ones it was.
+- [Laya](https://github.com/NandhaKishorM/laya) — open-weight (Apache-2.0)
+  non-autoregressive alternative; its README claims its answer payload is
+  schema-identical to Jev's (`choice`/`score`/`noul` plus a token-usage block), so an
+  existing Jev client can repoint its base URL. Full entry:
+  [#517](https://github.com/qte77/ai-agents-research/issues/517) (system-1 decision
+  models and the Jev ecosystem).
 
 ### Verification / fact-checking
 
@@ -306,8 +325,17 @@ Runtype entry (§1) — first-party pages read 2026-09-24:
 | `npm view @runtypelabs/cli license`, 2026-09-24 (no URL) | CLI package licensed Apache-2.0; platform/runtime licence not found |
 | [runtypelabs/skills README][runtype-skills-readme] | Official agent skills repo, MIT, lint/smoke-test publishing gate (checked 2026-09-30) |
 | [hermes-runtype-otel README][runtype-hermes-otel] · [persona README][runtype-persona] | Hermes OTel trace exporter (MIT) and chat widget (MIT); checked 2026-09-30 |
+| [BoundaryML/feelings][baml-feelings] · [issue #1][baml-feelings-issue1] | `.feels()`/`.fill<T>()` blanket-interface demo; no LICENSE file, confirmed again 2026-09-30 |
+| [BAML/Jev blog post][baml-jev-blog] | One-request-per-class behavior for `.fill<T>()`, confirmed 2026-09-30 |
+| [Jev analysis][jev-page] | Pricing, limits, and the qte77/feelings measured review-gate pilot |
+| [Laya][laya] | Open-weight, schema-compatible alternative to Jev; Apache-2.0 confirmed 2026-09-30 |
 
 [runtype-vendor]: https://runtype.com/
+[jev-page]: ../infrastructure/jev-analysis.md
+[laya]: https://github.com/NandhaKishorM/laya
 [runtype-skills-readme]: https://github.com/runtypelabs/skills
 [runtype-hermes-otel]: https://github.com/runtypelabs/hermes-runtype-otel
 [runtype-persona]: https://github.com/runtypelabs/persona
+[baml-feelings]: https://github.com/BoundaryML/feelings
+[baml-feelings-issue1]: https://github.com/BoundaryML/feelings/issues/1
+[baml-jev-blog]: https://boundaryml.com/blog/typesafe-ai-jev
