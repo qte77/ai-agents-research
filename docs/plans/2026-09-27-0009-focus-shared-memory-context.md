@@ -39,7 +39,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     current memory docs, so context gaps 1–4 are partly filled: Shared, Versionable and Traceable are
     partial, and Distributed is a sourced no (auto memory is machine-local). Still open: whether the ACE-FCA
     phase artifacts are git-tracked.
-  - Row S5 (2026-09-30): a new `non-cc/frameworks/agent-skill-evolution-research-landscape.md` (WikiSkill,
+  - Row S5 (#545, 2026-09-30): a new `non-cc/frameworks/agent-skill-evolution-research-landscape.md` (WikiSkill,
     AutoTailor, SkillLift, Skill2Env). coleam00's skills and Cloudflare's security-audit-skill go in the
     community skills landscape; the excalidraw skill has no license. The Mitosis plugin is recorded as a working
     Agent Plugins implementation, runtypelabs/skills extends the Runtype bullet, and AAIF gets a governance
@@ -344,7 +344,7 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 | ~~S2~~ | ~~Research batch: ontology~~ | agent | Done 2026-09-30 (#542): 4 leads rubric-scored in the semantic-layers landscape, 1 dropped (no source) |
 | ~~S3~~ | ~~Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G)~~ | agent | Done 2026-09-30 (#543): 5 platforms plus the 3 row-G systems rubric-scored in frameworks §7 |
 | ~~S4~~ | ~~Research batch: context~~ | agent | Done 2026-09-30 (#544): 3 leads plus the CLAUDE.md/auto-memory substrate rubric-scored in `CC-memory-system-analysis.md` |
-| ~~S5~~ | ~~Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads)~~ | agent | Done 2026-09-30: 10 leads rubric-scored, 1 new page (skill-evolution landscape), gap 10 partly filled |
+| ~~S5~~ | ~~Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads)~~ | agent | Done 2026-09-30 (#545): 10 leads rubric-scored, 1 new page (skill-evolution landscape), gap 10 partly filled |
 | S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | One PR, first-party verified, rubric-scored |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
