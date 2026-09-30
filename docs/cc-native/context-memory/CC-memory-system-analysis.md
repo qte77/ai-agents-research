@@ -392,7 +392,7 @@ Each phase produces a **durable markdown artifact** before the next phase begins
 | Planning | `plan.md` | Approach rationale, step sequence, tradeoffs |
 | Implementation | `implement.md` | Completed steps, current state, blockers |
 
-Human review gates are ordered by downstream leverage: reviewing research first catches misframing before it propagates into planning and code. A wrong plan costs more to fix than a wrong research note.
+Human review gates are ordered by downstream leverage: reviewing research first catches misframing before it propagates into planning and code. A wrong plan costs more to fix than a wrong research note. A concrete tool for the gate itself: [human-review (petergyang)](../../cc-community/CC-community-tooling-landscape.md#human-review-petergyang) turns Google-Doc-style comments on the artifact into feedback the agent picks up directly, batched, rather than retyped as chat.
 
 ### Frequent Intentional Compaction
 

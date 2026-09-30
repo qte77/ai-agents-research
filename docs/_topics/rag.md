@@ -5,7 +5,7 @@ see [the hub index](README.md).
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
-| [agent-frameworks-infrastructure-landscape.md § 7](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#7-rag--retrieval-infrastructure) | RAG and retrieval infrastructure catalog: embedding models, vector databases, RAG evaluation | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § 7](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#7-rag--retrieval-infrastructure) | RAG and retrieval infrastructure catalog: embedding models, vector databases, RAG evaluation, document parsing (LiteParse, LlamaParse) | non-cc |
 | [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms) | Graph DBs and hybrid RAG/agent/wiki platforms built for agent/MCP access, rubric-scored: SSTorytime, Omnigraph, Semantica, WeKnora, BrainAPI | non-cc |
 | [agent-frameworks-infrastructure-landscape.md § GraphRAG family](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-family) | Microsoft GraphRAG and LightRAG rubric-scored (Reproducible/Versionable) for the row-G graph-system decision; Cognee's row-G rubric is in § Agent Memory Infrastructure | non-cc |
 | [cocoindex-analysis.md](../non-cc/context-memory/cocoindex-analysis.md) | Incremental indexing engine for RAG pipelines | non-cc |

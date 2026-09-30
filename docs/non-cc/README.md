@@ -27,6 +27,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [apache-maka-analysis.md](agents/apache-maka-analysis.md) | Apache Maka (Incubating; local-first, event-sourced agent workspace — "the log is the runtime"; Desktop/TUI/CLI) | Partial | Yes (Apache-2.0; ASF podling, no approved release yet) |
 | [qwenpaw-analysis.md](agents/qwenpaw-analysis.md) | QwenPaw (AgentScope + Qwen; self-hosted personal AI assistant, multi-channel, three-tier memory) | Partial | Yes (Apache-2.0) |
 | [moss-self-evolving-agent-analysis.md](agents/moss-self-evolving-agent-analysis.md) | MOSS (HKGAI, on OpenClaw; self-evolving assistant that rewrites its own TypeScript source via a 7-stage benchmark-gated pipeline) | Yes | Yes (Apache-2.0; OpenClaw vendored MIT) |
+| [openresearch-analysis.md](agents/openresearch-analysis.md) | OpenResearch (alphaXiv; local-first, git-native workspace turning coding agents into autonomous research/experiment agents) | Yes | Yes (MIT) |
 
 ## Coding Agents & IDEs
 
