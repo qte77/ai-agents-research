@@ -81,7 +81,8 @@ CORPUS = {
         "[y](../b/y.md#one) [y again](../b/y.md) [gh](https://github.com/o/r)\n"
         "[outside](../../../CONTRIBUTING.md)\n"
     ),
-    "docs/non-cc/b/y.md": "# Y\n\n**Status**: Assess\n\nback to [x](../a/x.md)\n",
+    # Real docs put the badge in the preamble, before the first heading (doc_status semantics).
+    "docs/non-cc/b/y.md": "**Status**: Assess\n\n# Y\n\nback to [x](../a/x.md)\n",
     "docs/_topics/memory.md": "# Topic Hub: Memory\n\n| [x](../non-cc/a/x.md) | row |\n",
 }
 
