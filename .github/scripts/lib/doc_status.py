@@ -7,9 +7,9 @@ unit-testable.
 Two checks, gated by ``strict``:
 
 * **lenient** (default) — if a doc declares a frontmatter ``status:``, its value
-  must be in the controlled vocabulary. A missing ``status:`` is allowed (the
-  corpus is mid-migration; badge-less READMEs/specs never get one).
-* **strict** — additionally, no doc may keep a body ``**Status**:`` *badge*. The
+  must be in the controlled vocabulary. A missing ``status:`` is allowed
+  (READMEs, specs and auto-generated files never get one).
+* **strict** (``make check_status``, since the #348 migration finished) — additionally, no doc may keep a body ``**Status**:`` *badge*. The
   badge is the doc-level line in the preamble (before the first heading); a
   ``**Status**:`` line under a later section describes something else and is left
   alone (see ``agent-observability-methods-analysis.md``).

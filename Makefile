@@ -272,8 +272,8 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 	fi
 	actionlint -color
 
-check_status: ## Validate doc frontmatter status: tokens (lenient; #348)
-	$(PYTHON) .github/scripts/check-doc-status.py
+check_status: ## Validate doc frontmatter status: tokens; no body badges (strict; #348)
+	$(PYTHON) .github/scripts/check-doc-status.py --strict
 
 lint: check_docs check_status check_actions check_links ## Run all linters (markdown + status + actions first; flaky link check last so it can't mask them)
 
