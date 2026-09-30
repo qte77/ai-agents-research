@@ -7,9 +7,8 @@ platform_scope: [claude-code, codex]
 created: 2026-07-08
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

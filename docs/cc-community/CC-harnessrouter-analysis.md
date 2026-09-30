@@ -5,10 +5,9 @@ purpose: Unified multi-harness API for AI coding-agent backends (Codex, Claude C
 created: 2026-09-24
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 platform_scope: [claude-code, codex, hermes, deepseek-harness, pi]
 ---
-
-**Status**: Assess
 
 ## What It Is
 

@@ -8,8 +8,6 @@ updated: 2026-09-30
 validated_links: 2026-09-30
 ---
 
-**Status**: Research (informational)
-
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
 
 ## 1. Multi-Agent Orchestration Frameworks

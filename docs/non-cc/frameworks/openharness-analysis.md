@@ -5,9 +5,8 @@ purpose: Analysis of HKUDS OpenHarness — an open-source Python agent harness f
 created: 2026-06-27
 updated: 2026-06-27
 validated_links: 2026-06-27
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

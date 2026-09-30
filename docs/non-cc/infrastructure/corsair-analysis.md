@@ -5,9 +5,8 @@ source: https://github.com/corsairdev/corsair
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: trial
 ---
-
-**Status**: Trial
 
 ## What It Is
 

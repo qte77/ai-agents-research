@@ -4,9 +4,8 @@ purpose: Survey open-weight, research, and independent alternatives to TypeSafe'
 created: 2026-09-30
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

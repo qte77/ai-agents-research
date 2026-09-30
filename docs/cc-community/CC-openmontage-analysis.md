@@ -5,10 +5,9 @@ purpose: Analyze OpenMontage's CLAUDE.md-as-domain-controller architecture (and 
 created: 2026-06-22
 updated: 2026-06-22
 validated_links: 2026-06-22
+status: trial
 platform_scope: [claude-code, cursor, copilot, windsurf, codex]
 ---
-
-**Status**: Trial
 
 ## What It Is
 

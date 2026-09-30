@@ -9,8 +9,6 @@ updated: 2026-09-30
 validated_links: 2026-09-30
 ---
 
-**Status**: Research (informational)
-
 ## RTK (Rust Token Killer)
 
 Rust-based CLI proxy that intercepts shell command outputs and compresses them before they enter the LLM context window. Integrates transparently with Claude Code via hooks ([rtk-repo][rtk-repo]).

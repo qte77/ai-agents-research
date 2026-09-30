@@ -6,9 +6,8 @@ platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sa
 created: 2026-06-28
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

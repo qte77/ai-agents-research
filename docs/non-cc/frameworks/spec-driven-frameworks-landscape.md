@@ -5,9 +5,8 @@ category: landscape
 created: 2026-06-27
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## What It Is
 

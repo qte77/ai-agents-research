@@ -5,9 +5,8 @@ purpose: Production-ready Python framework for building multi-agent workflows wi
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: trial
 ---
-
-**Status**: Trial
 
 ## What It Is
 

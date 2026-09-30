@@ -5,10 +5,9 @@ purpose: Netdata's built-in MCP server for incident-time infrastructure queries 
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 platform_scope: [claude-code, claude-desktop, cursor, vs-code, jetbrains, gemini-cli, codex-cli, crush, opencode]
 ---
-
-**Status**: Assess
 
 ## What It Is
 

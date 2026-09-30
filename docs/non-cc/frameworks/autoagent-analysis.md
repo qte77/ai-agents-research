@@ -9,7 +9,7 @@ updated: 2026-04-06
 validated_links: 2026-04-06
 ---
 
-**Status**: Open-source (MIT), active development by HKU Data Science Lab
+**Details:** Open-source (MIT), active development by HKU Data Science Lab
 
 ## What It Is
 

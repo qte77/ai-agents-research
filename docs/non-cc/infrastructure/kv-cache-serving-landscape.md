@@ -5,9 +5,10 @@ category: landscape
 created: 2026-07-08
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: reference
 ---
 
-**Status**: Reference (informational catalog)
+**Details:** informational catalog
 
 How the **KV cache** — the per-token key/value tensors that make autoregressive decoding tractable —
 is managed, reused, compressed, and offloaded across LLM serving. Two layers: (1) the **vendor

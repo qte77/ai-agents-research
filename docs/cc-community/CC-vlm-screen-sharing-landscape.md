@@ -9,8 +9,6 @@ updated: 2026-06-26
 validated_links: 2026-06-26
 ---
 
-**Status**: Research (informational)
-
 ## What It Is
 
 This doc surveys the option space for giving Claude Code visual context from a user's screen — either via Claude's own vision API or by running a small local Vision Language Model (VLM) and forwarding its text output. It is a **neutral catalogue**, not a recommendation. Readers pick a point on the tradeoff curve based on their token budget, privacy constraints, platform, and latency tolerance.

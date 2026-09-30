@@ -6,9 +6,10 @@ platform_scope: [telegram, discord, slack, zalo, feishu, whatsapp]
 created: 2026-04-09
 updated: 2026-06-28
 validated_links: 2026-06-28
+status: source-available
 ---
 
-**Status**: Source-available (CC BY-NC 4.0 — non-commercial), active development
+**Details:** Source-available (CC BY-NC 4.0 — non-commercial), active development
 
 ## What It Is
 

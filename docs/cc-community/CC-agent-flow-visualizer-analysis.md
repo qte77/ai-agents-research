@@ -7,9 +7,8 @@ platform_scope: [claude-code, codex]
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: trial
 ---
-
-**Status**: Trial
 
 ## What It Is
 
