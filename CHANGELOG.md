@@ -74,10 +74,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `README.md`, `docs/UserStory.md`: the topic-hub subject list now names the five hubs added in plan 0009 row C (context, skills, plugins, harness, long-running tasks).
 
-### Dropped
-
-- An unnamed "semantic model / enterprise context layer" post (from screenshot batch 2) had no identifiable first-party source and was omitted rather than cited as a stand-in.
-
 ## [0.11.0] - 2026-09-25
 
 ### Added
