@@ -5,9 +5,8 @@ category: analysis
 created: 2026-06-27
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

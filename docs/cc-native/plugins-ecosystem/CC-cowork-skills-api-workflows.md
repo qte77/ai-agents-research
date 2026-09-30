@@ -4,9 +4,10 @@ source: https://platform.claude.com/docs/en/build-with-claude/skills-guide, http
 purpose: API-level analysis of Cowork, Skills API, Chrome extension, and CC Web for programmatic workflow creation, GitHub integration, and multi-repo orchestration.
 created: 2026-03-18
 updated: 2026-03-18
+status: research
 ---
 
-**Status**: Research (API analysis + community tooling survey)
+**Details:** API analysis + community tooling survey
 
 ## Scope
 

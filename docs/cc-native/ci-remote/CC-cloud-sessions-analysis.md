@@ -5,9 +5,8 @@ purpose: Analysis of Claude Code cloud execution for parallel baseline collectio
 created: 2026-03-07
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: research-preview
 ---
-
-**Status**: Research preview
 
 **Verified**: code.claude.com docs, 2026-09-24
 

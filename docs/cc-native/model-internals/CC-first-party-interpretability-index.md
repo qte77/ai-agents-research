@@ -5,9 +5,10 @@ purpose: Curated index of Anthropic's first-party research publications relevant
 created: 2026-04-05
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: reference
 ---
 
-**Status**: Reference (source index)
+**Details:** source index
 
 ## Sycophancy Mechanisms
 

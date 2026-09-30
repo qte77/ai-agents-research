@@ -5,9 +5,10 @@ purpose: Analysis of cloud-native scheduled tasks for recurring autonomous work 
 created: 2026-03-24
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: available
 ---
 
-**Status**: Available (all CC Web users — Pro, Max, Team, Enterprise). Vendor marks the underlying feature as **research preview** — behavior, limits, and API surface may change.
+**Details:** Available (all CC Web users — Pro, Max, Team, Enterprise). Vendor marks the underlying feature as **research preview** — behavior, limits, and API surface may change.
 
 > **Note**: Anthropic renamed this feature to **Routines** (canonical page: [routines][cc-sched], H1 "Automate work with routines"). A routine now supports three trigger types — Schedule, API (HTTP POST to a per-routine `/fire` endpoint), and GitHub event (PR/release webhooks) — not only recurring schedules. This doc covers only the **Schedule-trigger** subset of Routines.
 

@@ -4,9 +4,8 @@ purpose: Analysis of Anthropic's Model Hardware Standard research preview — a 
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

@@ -4,9 +4,8 @@ source: https://code.claude.com/docs/en/sub-agents, https://github.com/anthropic
 purpose: Analysis of recursive claude -p invocation patterns, the CLAUDECODE=1 session guard, and spawning method trade-offs for autonomous agent orchestration.
 created: 2026-03-17
 updated: 2026-03-17
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## What Recursive Spawning Is
 

@@ -4,9 +4,8 @@ source: https://code.claude.com/docs/en/settings, https://code.claude.com/docs/e
 purpose: Analysis of --dangerously-skip-permissions flag, permission modes, team inheritance, and safer alternatives for headless/CI execution.
 created: 2026-03-17
 updated: 2026-03-17
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## What `--dangerously-skip-permissions` Does
 

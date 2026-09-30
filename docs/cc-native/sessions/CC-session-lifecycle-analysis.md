@@ -4,9 +4,8 @@ purpose: Analysis of session creation, naming, persistence, /resume discovery, a
 created: 2026-03-27
 updated: 2026-04-13
 validated_links: 2026-04-13
+status: research
 ---
-
-**Status**: Research
 
 ## What It Is
 

@@ -5,9 +5,10 @@ purpose: Evaluate the Claude Chrome extension for potential relevance to CC-base
 created: 2026-03-07
 updated: 2026-03-12
 validated_links: 2026-03-12
+status: beta
 ---
 
-**Status**: Beta (all paid plans)
+**Details:** all paid plans
 
 ## What It Is
 

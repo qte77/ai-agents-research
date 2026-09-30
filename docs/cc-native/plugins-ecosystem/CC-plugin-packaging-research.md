@@ -5,9 +5,8 @@ purpose: Evaluate packaging project skills, agents, and rules as a CC Plugin —
 created: 2026-03-07
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: research
 ---
-
-**Status**: Research (informational — not implementation requirements)
 
 ## Context
 

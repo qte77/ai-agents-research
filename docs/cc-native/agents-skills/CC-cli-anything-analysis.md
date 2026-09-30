@@ -5,9 +5,10 @@ purpose: Evaluate CLI-Anything as a framework for generating agent-native CLIs f
 created: 2026-03-12
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: research
 ---
 
-**Status**: Research (informational — monitor as ecosystem matures)
+**Details:** informational — monitor as ecosystem matures
 
 ## What CLI-Anything Is
 

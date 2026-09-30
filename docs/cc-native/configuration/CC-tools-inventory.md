@@ -4,9 +4,8 @@ purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and co
 created: 2026-03-27
 updated: 2026-06-22
 validated_links: 2026-06-22
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

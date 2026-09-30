@@ -4,9 +4,8 @@ purpose: Analysis of Claude Code CLI binary and VS Code extension internals — 
 created: 2026-03-29
 updated: 2026-04-13
 validated_links: 2026-04-13
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## What It Is
 

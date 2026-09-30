@@ -9,8 +9,6 @@ updated: 2026-09-24
 validated_links: 2026-09-24
 ---
 
-**Status**: Research (informational)
-
 ## Summary
 
 Bilgin Ibryam (author of [Kubernetes Patterns](https://k8spatterns.com/), O'Reilly) reverse-engineered the March 31 2026 Claude Code source leak into 12 reusable **harness-level** design patterns. These are architectural primitives at the agent runtime layer -- distinct from model-level or prompt-level patterns. Published April 5 2026 as a follow-up to his [Practical Lessons From the Claude Code Leak](https://generativeprogrammer.com/p/practical-lessons-from-the-claude) (April 3 2026).

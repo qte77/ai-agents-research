@@ -4,9 +4,8 @@ purpose: How Anthropic's server-side prompt caching works in CC sessions — wha
 created: 2026-03-27
 updated: 2026-07-08
 validated_links: 2026-07-08
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

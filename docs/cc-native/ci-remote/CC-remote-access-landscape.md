@@ -5,9 +5,8 @@ purpose: Comparison of remote access options for monitoring and steering Claude 
 created: 2026-03-07
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: research
 ---
-
-**Status**: Landscape research (informational — not implementation requirements)
 
 ## Problem Statement
 

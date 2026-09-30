@@ -5,9 +5,10 @@ purpose: Document bash mode usage in CLI interactive sessions and dynamic shell 
 created: 2026-03-12
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: adopt
 ---
 
-**Status**: Adopted (both features are stable and production-ready)
+**Details:** both features are stable and production-ready
 
 ## Overview
 

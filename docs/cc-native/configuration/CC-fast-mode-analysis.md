@@ -5,9 +5,10 @@ purpose: Analysis of Claude Code Fast Mode for potential adoption within CC-base
 created: 2026-02-17
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: research-preview
 ---
 
-**Status**: Research preview (pricing and availability may change)
+**Details:** pricing and availability may change
 
 ## What Fast Mode Is
 

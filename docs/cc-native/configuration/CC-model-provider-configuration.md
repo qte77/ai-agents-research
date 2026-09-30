@@ -5,9 +5,10 @@ purpose: Reference for configuring CC with alternative models, endpoints, API ke
 created: 2026-03-07
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: reference
 ---
 
-**Status**: Reference (actionable configuration guide)
+**Details:** actionable configuration guide
 
 ## Model Selection
 

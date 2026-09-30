@@ -6,9 +6,10 @@ test_run: 2026-02-11 (parallel code review with 3 teammates)
 created: 2026-02-08
 updated: 2026-09-23
 validated_links: 2026-09-23
+status: research-preview
 ---
 
-**Status**: Research preview (disabled by default, `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`)
+**Details:** disabled by default, `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
 
 ## What Agent Teams Offer
 

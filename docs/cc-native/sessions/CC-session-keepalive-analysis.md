@@ -5,9 +5,8 @@ purpose: Actionable techniques to keep CC sessions alive on local machines, in c
 created: 2026-03-25
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## Three Kill Vectors
 

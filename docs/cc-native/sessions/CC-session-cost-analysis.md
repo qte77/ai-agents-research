@@ -4,9 +4,8 @@ purpose: Extract per-session cost and token usage from CC transcript files using
 created: 2026-03-27
 updated: 2026-09-27
 validated_links: 2026-09-27
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

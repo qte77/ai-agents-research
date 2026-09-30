@@ -4,9 +4,8 @@ purpose: Single canonical reference for all claude CLI flags, subcommands, and c
 created: 2026-04-13
 updated: 2026-06-11
 validated_links: 2026-06-11
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

@@ -5,9 +5,8 @@ purpose: Real-time and archival monitoring of Claude platform incidents via Stat
 created: 2026-03-17
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

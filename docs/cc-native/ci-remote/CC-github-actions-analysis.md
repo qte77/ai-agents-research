@@ -5,9 +5,8 @@ purpose: Evaluate Claude Code GitHub Actions for PR automation, code review, iss
 created: 2026-03-12
 updated: 2026-06-22
 validated_links: 2026-06-22
+status: research
 ---
-
-**Status**: Research (informational — not implementation requirements)
 
 ## What It Is
 

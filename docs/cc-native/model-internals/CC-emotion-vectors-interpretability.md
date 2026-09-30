@@ -4,9 +4,10 @@ source: https://www.anthropic.com/research/emotion-concepts-function
 purpose: Analysis of Anthropic's emotion-concept interpretability research and its operational implications for CC deployment, monitoring, and behavioral steering.
 created: 2026-04-04
 validated_links: 2026-04-04
+status: research
 ---
 
-**Status**: Research analysis (interpretability with CC-operational relevance)
+**Details:** interpretability with CC-operational relevance
 
 ## Overview
 

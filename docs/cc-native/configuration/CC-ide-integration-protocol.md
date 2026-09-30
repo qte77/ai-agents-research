@@ -4,9 +4,8 @@ description: WebSocket-based MCP protocol between Claude Code CLI and IDE extens
 created: 2026-04-04
 updated: 2026-04-04
 validated_links: 2026-04-04
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## What It Is
 

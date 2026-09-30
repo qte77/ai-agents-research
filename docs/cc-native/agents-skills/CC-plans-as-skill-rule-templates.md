@@ -8,8 +8,6 @@ updated: 2026-04-05
 validated_links: 2026-04-05
 ---
 
-**Status**: Research (informational)
-
 ## Summary
 
 Claude Code's plan mode produces structured plan files that serve as reviewable implementation proposals. This document analyzes plan file anatomy, plan mode mechanics, and three reuse patterns: plans as skill input, plans as skill templates, and plan-to-rule extraction.

@@ -6,9 +6,8 @@ category: analysis
 created: 2026-03-07
 updated: 2026-09-23
 validated_links: 2026-09-23
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## Summary
 

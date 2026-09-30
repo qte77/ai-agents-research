@@ -4,9 +4,8 @@ description: Undocumented NDJSON event format for --output-format stream-json, i
 created: 2026-04-04
 updated: 2026-04-04
 validated_links: 2026-04-04
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## What It Is
 
