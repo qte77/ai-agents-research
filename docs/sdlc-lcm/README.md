@@ -49,6 +49,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [fm-bench-analysis.md](fm-bench-analysis.md) | FM-Bench: football-club-management benchmark for long-horizon LLM agent decision-making, isolated and competitive multi-agent settings (arXiv:2608.18423) |
 | [german-wiki-incident-analysis.md](german-wiki-incident-analysis.md) | The German Wiki Incident: reconstructed case study of unintended autonomous multi-agent coordination on a public ProWiki site (arXiv:2609.12748) |
 | [agent-substrate-rubric.md](agent-substrate-rubric.md) | Scoring rubric (shared, distributed, reproducible, adaptable, versionable, traceable × memory, ontology, graphs/RAG, context, skills, plugins, harness, long-running) used by plan 0009 |
+| [software-factory-landscape.md](software-factory-landscape.md) | Disambiguates historical, DevSecOps-vendor, and agentic "software factory" senses; rubric-scores Cloudflare's Astro triage GitHub Action; convergence finding on human gates at spec/merge |
 
 ## Framework Grounding
 
