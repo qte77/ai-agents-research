@@ -11,6 +11,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.12.0] - 2026-09-30
+
+### Added
+
+- `docs/cc-native/sessions/CC-session-cost-analysis.md`: redeemable limit resets (help-center article 17007452): refills the five-hour *or* the weekly limit; redeemed via Settings > Usage → "Reset for free", with no button in the CC terminal or IDE. Also records the in-app UI text, which conflicts with the article (it says a reset refills *both* limits), and CC's auto-continue at limit reset (v2.1.234+, v2.1.271+).
+
+- `docs/cc-native/sessions/CC-session-cost-analysis.md`: Fable models on subscription plans (help-center article 15424964). On Max and premium seats, Fable has a 50% weekly sub-cap that also draws from the regular weekly limits; on Pro and standard seats it runs on usage credits. Adds the CC version gates (Fable 5: v2.1.170+, Fable 5.1: v2.1.255+).
+
+- `docs/sdlc-lcm/agent-substrate-rubric.md`: a single scoring rubric for the plan 0009 research. It scores shared, distributed, reproducible, adaptable, versionable and traceable across memory, ontology, graphs/RAG, context, skills, plugins, harness and long-running tasks, with evidence rules and a per-tool table format. Linked from the `sdlc-lcm` index and `docs/_topics/`.
+
+- `.github/workflows/llm-model-eval.yaml`, `.github/scripts/eval-relevance-models.py`, `.github/scripts/lib/relevance_eval.py`: one-off `workflow_dispatch` eval comparing three Cloudflare Workers AI models (`@cf/meta/llama-3.1-8b-instruct-fp8`, `@cf/qwen/qwen3-30b-a3b-fp8`, `@cf/google/gemma-4-26b-a4b-it`) against the retired GitHub Models gpt-4o-mini verdicts for the rxiv-paper-eval relevance filter, now that GitHub Models has been retired (2026-07-30). Reproduces the retired pipeline's exact prompt/parsing (`qte77/gha-rxiv-paper-eval` v0.4.0 `eval_papers.py`) over weeks 22/23/24/25/30, under `strict`/`relaxed` generation configs, with a preflight step that detects an under-scoped Workers AI token (401/403) before burning the full run.
+
+- `.github/scripts/lib/relevance_eval.py`, `eval-relevance-models.py`, `.github/workflows/llm-model-eval.yaml`: `prompt_variant` choice input (`default` | `no-borderline-yes`). The new variant drops only the production prompt's "When borderline, prefer YES" sentence, to test whether it drives false accepts (#527). The summary records the variant.
+
+- `docs/_topics/context.md`, `docs/_topics/skills.md`, `docs/_topics/plugins.md`, `docs/_topics/harness.md`, `docs/_topics/long-running.md`: 5 new topic hubs completing the plan 0009 agent substrate rubric's 8-subject coverage. Linked from `docs/_topics/README.md` and the rubric's Subjects table.
+
+- `docs/non-cc/context-memory/mitosis-cortex-analysis.md`: analysis of Mitosis Labs' hosted Cortex memory system (kNN + full-text + one-hop graph fusion, no LLM at query time, per-team isolation), rubric-scored against `sdlc-lcm/agent-substrate-rubric.md`; flags that the plan's cited "Agentic Memory Index" benchmark site moved from `x402oracle.com` to `verginglabs.com` with a different overall score.
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § 4: AgentiCow (copy-on-write vector memory branching), Beads/bd (Dolt-backed distributed agent memory/task graph), lossless-memory (timestamp-first, never-summarize personal memory), the Weighted Memory Tree and JITMEM papers, and a worked-example pointer to Sumanth077/Hands-On-AI-Engineering — all rubric-scored.
+- `docs/cc-community/CC-memory-tooling-landscape.md`: agent-memory (tigerless-labs), a markdown-native long-term memory runtime shared by Claude Code, Codex CLI and Hermes, rubric-scored.
+- `docs/_topics/memory.md`, `docs/non-cc/README.md`: pointer rows for the above.
+
+- `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md` § Formal Ontologies: a new "Agent-native ontology tools (2026 MCP wave)" subsection covering Ontology Atlas (git-versioned Markdown ontology, MCP-native), open-ontologies (Rust MCP server, Lean-4-certified plan/apply/rollback), EvoOntology (self-evolving ontology layer for data agents, arXiv:2609.15779), and AWS context-ontology-accelerator (namespace-RBAC, AWS CDK-deployed semantic context platform) — all rubric-scored against `sdlc-lcm/agent-substrate-rubric.md`. The AWS accelerator's namespace-scoped RBAC and CDK microservice deployment are the first `Shared`/`Distributed` = `yes` evidence in the ontology docs.
+- `docs/_topics/knowledge-graphs.md`: a pointer row for the new subsection.
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § 7: a new "Agent-native graph & hybrid RAG platforms" subsection — SSTorytime (Postgres graph via MCP), Omnigraph (git-branching multi-agent lakehouse graph), Semantica (graph-native decision infrastructure), WeKnora (Tencent RAG/agent/wiki platform), and BrainAPI (event-centric graph memory, BSL-1.1) — all rubric-scored, adding first Shared evidence (Omnigraph, WeKnora score `yes`) to the Graphs/RAG subject; Reproducible remains largely open (only SSTorytime documents an LLM-free ingestion path).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § 7 intro: LiteParse (run-llama), a local LLM-free PDF/document parser that feeds RAG ingestion.
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § 4/§ 7: rubric rows for Microsoft GraphRAG, LightRAG and Cognee (row G graph-system decision), plus a Sumanth077/Hands-On-AI-Engineering pointer to its `agentic_rag_system` example.
+- `docs/_topics/rag.md`: pointer rows for the above.
+
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: four new subsections, all rubric-scored against `sdlc-lcm/agent-substrate-rubric.md` and fetched first-party 2026-09-30 — "CLAUDE.md Growth and Catastrophic Remembering (arXiv 2608.11095)" (empirical instruction-file bloat study, cross-referenced to CC's own stripped maintainer HTML comments), "Practitioner Template: context-engineering-intro" (coleam00's MIT-licensed PRP starter template, 13.9k★), "A Non-CC Comparison: Topic-Label Gating (TrackPoint)" (vendor pattern compared to CC's MEMORY.md-index/topic-file split; self-reported, unverified), and "Scored on the Agent Substrate Rubric" (CC's CLAUDE.md/auto memory system scored from a fresh fetch of `code.claude.com/docs/en/memory` — Shared and Versionable move to `partial`, Distributed to a sourced `no`, Traceable to `partial` via the `InstructionsLoaded` hook and `/doctor prompt-audit`). Partly fills plan-0009 Context coverage gaps 1–4; the ACE-FCA phase artifacts (`research.md`/`plan.md`/`implement.md`) named in gap 4 stay unresolved since no first-party source states they are git-tracked.
+- `docs/_topics/context.md`: 3 new pointer rows for the above.
+
+- `docs/non-cc/protocols/agent-plugins-standard-analysis.md`: a "Concrete implementation: Mitosis Memory (`mitosis-agent-plugin`)" section — the Agent Plugins 1.0.0 open standard's first confirmed client implementation found in this corpus (Mitosis Labs' MIT-licensed `mitosis-agent-plugin` + `mitosis-memory-skills`, bundling a remote MCP server with seven memory skills across four clients), rubric-scored, with the "no confirmed client implementations" hedge updated accordingly. Cross-linked from `mitosis-cortex-analysis.md`.
+- `docs/non-cc/agents/goose-analysis.md`: an "Agentic AI Foundation (AAIF): governance and hosted projects" section — the foundation's 8 working groups and 6 hosted projects (MCP, AGENTS.md, agentgateway, A2A, Agent Router, Goose), and why its relevance to skills/plugins standards is indirect (via MCP and AGENTS.md, not a dedicated skills/plugin spec — that's the separate Agent Plugins standard).
+- `docs/cc-community/CC-community-skills-landscape.md`: new entries for `coleam00/skills` (34-skill PIV loop + hooks, MIT), `coleam00/excalidraw-diagram-skill` (no LICENSE file — confirmed via the GitHub contents API), and `cloudflare/security-audit-skill` (six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest Traceable score in the set), all rubric-scored.
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § 1: extended the existing Runtype bullet with `runtypelabs/skills` (official platform + tool-design skills, MIT), rubric-scored.
+- `docs/non-cc/frameworks/agent-skill-evolution-research-landscape.md` (new page): four skill-construction/evolution research efforts — WikiSkill (arXiv:2608.27454), AutoTailor (arXiv:2609.13548), SkillLift (arXiv:2609.15396 + `WalteR-MittY-pro/SkillLift`, MIT), and NVlabs Skill2Env (Apache-2.0) — each rubric-scored, with `n/a` used where a property doesn't apply to a research paper.
+- `docs/cc-native/plugins-ecosystem/CC-plugin-packaging-research.md` § 5: closes coverage gap 10 (Plugins · Reproducible) — Claude Code's plugin manifest `version` field and marketplace `ref`/`sha`/`sha256` source pinning, quoted from the current first-party manifest and marketplace references, with a rubric table for the packaging system itself (Reproducible scored `partial`: the pinning primitive exists but is opt-in).
+- `docs/_topics/skills.md` and `docs/_topics/plugins.md`: pointer rows for all of the above.
+- Considered and not added: `github.com/tysoncung` (personal account; its only two agent-adjacent repos, `notion-agent-hub` MIT and `awesome-vibe-coding` CC0-1.0, are a small Notion/MCP hub and a generic curated list, neither skills/plugins-specific) and "Xpert plugins" (a batch-2 screenshot lead with no identifiable first-party source).
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §1: four new rubric-scored entries fetched first-party 2026-09-30 — Archon (coleam00, MIT, "the first open-source harness builder for AI coding"), Paperclip (paperclipai, MIT, org-chart agent-team orchestration), AX (google/ax, Apache-2.0, Kubernetes-style declarative agent orchestrator built on Agent Substrate), and OperatingSystem-1's harness tools (`mcp-git-coord` — no LICENSE file despite the README's own "MIT" claim — plus `openclaw-operator`, confirmed to be a dormant fork of `stubbi/openclaw-operator`, not original work; the entry cross-refs `goclaw-analysis.md`, confirming against `openclaw.ai` that this is the same OpenClaw platform GoClaw reimplements, not a different product).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §4: the existing `Sumanth077/Hands-On-AI-Engineering` bullet now also names `self_evolving_code_review_agent` and `multi_agent_coding_assistant` as harness-relevant examples (one-line mention, no rubric, per the bullet's existing precedent).
+- `docs/non-cc/infrastructure/nvidia-openshell-analysis.md` (new page): NVIDIA OpenShell — kernel-enforced, formally-verified policy runtime for agent fleets (Apache-2.0, 11,079★), rubric-scored. Indexed in `docs/non-cc/README.md`.
+- `docs/non-cc/reference/orcareplay-analysis.md` (new page): OrcaReplay — record/replay/fork debugger for coding-agent runs with byte-for-byte deterministic offline replay (Apache-2.0 code / CC BY 4.0 trace spec, 268★), rubric-scored. Direct first-party evidence filling plan-0009 gaps 7 (Long-running · Traceable) and 8 (Long-running · Reproducible). Indexed in `docs/non-cc/README.md`.
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: two new subsections — RRSI (google-research/rrsi, Apache-2.0, code available; git-worktree-per-candidate harness versioning fills gap 9, Harness · Versionable) and ROFT (arXiv 2609.35741, CC BY 4.0, paper only, no code URL found).
+- `docs/cc-community/CC-harnessrouter-analysis.md`: refreshed stars (2,496 → 2,789) and latest release (`v0.23.11` → `v0.26.16`), and a new rubric section scored against `sdlc-lcm/agent-substrate-rubric.md`.
+- `docs/_topics/harness.md`: 5 new pointer rows (HarnessRouter, the frameworks-landscape §1 orchestration tools, OpenShell, OrcaReplay, the RRSI/ROFT comparison).
+- `docs/_topics/long-running.md`: 2 new pointer rows (OrcaReplay; google/ax `suspend`/`resume` + Paperclip heartbeat agents).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §1: the Runtype entry gains `runtypelabs/hermes-runtype-otel` (MIT, per-turn OTel traces from Hermes, rubric-scored) and `runtypelabs/persona` (MIT chat widget, unscored UI layer).
+
+### Changed
+
+- `docs/UserStory.md`: added the browse-by-subject story (`docs/_topics/` hubs) and updated success criterion 1 to the `docs/non-cc/<section>/` layout plus the hub-row step.
+
+- `docs/sdlc-lcm/agent-substrate-rubric.md`: Subjects table now points Skills, Plugins, Harness and Long-running at their new hubs instead of "hub planned, row C"; Context now also links `context.md`.
+
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: `updated`/`validated_links` bumped to 2026-09-30.
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`, `docs/cc-community/CC-harnessrouter-analysis.md`, `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: `updated`/`validated_links` bumped to 2026-09-30.
+
+- `README.md`, `docs/UserStory.md`: the topic-hub subject list now names the five hubs added in plan 0009 row C (context, skills, plugins, harness, long-running tasks).
+
 ## [0.11.0] - 2026-09-25
 
 ### Added
