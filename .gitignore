@@ -56,3 +56,4 @@ lychee-report.md
 
 # Structural doc graph data (make graph-data); rebuilt by the Pages deploy, never committed
 ui/doc-graph.json
+ui/build.json

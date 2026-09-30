@@ -22,6 +22,9 @@ on:
       - ".github/scripts/build-doc-graph.py"
       - ".github/scripts/lib/doc_graph.py"
       - ".github/scripts/lib/doc_status.py"
+      - "scripts/pages_build.py"
+      - "scripts/build-site-info.py"
+      - "pyproject.toml"
       - ".github/workflows/gh-pages.yaml"
   workflow_dispatch:
 
@@ -42,6 +45,8 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0  # build-site-info needs history for the graph's own last commit
 
       - name: Assemble _site
         run: |
@@ -53,6 +58,11 @@ jobs:
       # every deploy — no LLM, stdlib only, never committed, so it cannot drift.
       - name: Build structural doc graph
         run: python3 .github/scripts/build-doc-graph.py --out _site/doc-graph.json
+
+      # Version (pyproject), deploy commit + date, and graph.html's own last commit,
+      # shown on every page by ui/build-info.js. Uses only local git history.
+      - name: Build site info
+        run: python3 scripts/build-site-info.py --out _site/build.json --graph _site/graph.html
 
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  # v6.0.0
 
