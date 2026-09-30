@@ -145,6 +145,8 @@ single sitting, then let the agent resume once gates clear. Neither side cites t
 is a convergence of practice, not a derivation — suggestive that the gate placement is not merely a house
 style, though four sources are not proof.
 
+André Lindenberg's *From Loops to Graphs* (LinkedIn, 2026-07-25; `linkedin.com/pulse/from-loops-graphs-andré-lindenberg-m8jae`) names this same convergence from the opposite direction — "graph engineering" as the industry term for wiring already-loop-shaped agents into exactly the graph these four sources each ship — with the full ladder-rung treatment in [agentic-engineering-disciplines-landscape.md §1][disciplines-graph].
+
 **Design lens.** An owner-surfaced opinion sharpens the stakes: rUv (Reuven Cohen), in a 2026-09-29
 LinkedIn post (`linkedin.com/posts/reuvencohen_there-is-no-moat-anything-you-can-build-ugcPost-7510686171975458816-6I5W`,
 short link `lnkd.in/p/eB5D2kMw`; written as plain text, not a link — LinkedIn blocks lychee), argues that
@@ -215,3 +217,4 @@ HumanLayer's separate approval-gate SDK),
 [triagebot-repo]: https://github.com/withastro/triagebot-action
 [flue]: https://flueframework.com/
 [hlyr-ace-xref]: ../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
+[disciplines-graph]: agentic-engineering-disciplines-landscape.md
