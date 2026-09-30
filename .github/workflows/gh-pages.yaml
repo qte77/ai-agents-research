@@ -4,8 +4,10 @@ name: Deploy GitHub Pages
 # EyeRest-restyled ui/graph.html) via the GitHub Pages API — same pattern as the
 # sibling repos analyze-stock-kpi and paperverse (no gh-pages branch).
 #
-# The knowledge graph stays local/interactive (key-free, no LLM in CI): rebuild
-# it, run `make graph-page` to render + restyle into ui/graph.html, then commit.
+# The graphify concept graph stays local/interactive (key-free, no LLM in CI):
+# rebuild it, run `make graph-page` to render + restyle into ui/graph.html, then
+# commit. The deterministic structural graph (ui/doc-graph.html) is different:
+# its data is rebuilt from docs/ right here on every deploy.
 # Fonts (ui/assets/fonts/) and vis-network (ui/vendor/) are committed, so this
 # workflow just assembles ui/ and deploys.
 #
@@ -16,6 +18,10 @@ on:
     branches: [main]
     paths:
       - "ui/**"
+      - "docs/**"
+      - ".github/scripts/build-doc-graph.py"
+      - ".github/scripts/lib/doc_graph.py"
+      - ".github/scripts/lib/doc_status.py"
       - ".github/workflows/gh-pages.yaml"
   workflow_dispatch:
 
@@ -42,6 +48,11 @@ jobs:
           set -euo pipefail
           mkdir -p _site
           cp -r ui/. _site/
+
+      # Deterministic structural graph (plan 0009 row G): regenerated from docs/ on
+      # every deploy — no LLM, stdlib only, never committed, so it cannot drift.
+      - name: Build structural doc graph
+        run: python3 .github/scripts/build-doc-graph.py --out _site/doc-graph.json
 
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  # v6.0.0
 
