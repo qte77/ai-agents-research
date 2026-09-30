@@ -5,9 +5,8 @@ purpose: Evaluate DeepWiki (Cognition / Devin) as a repo-to-docs tool for the ai
 created: 2026-06-16
 updated: 2026-09-25
 validated_links: 2026-06-16
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

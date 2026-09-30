@@ -6,9 +6,8 @@ platform_scope: [cli]
 created: 2026-06-16
 updated: 2026-06-28
 validated_links: 2026-06-28
+status: hold
 ---
-
-**Status**: Hold
 
 ## What It Is
 

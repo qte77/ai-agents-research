@@ -5,9 +5,8 @@ purpose: Assess Amazon Q Developer as a CLI and IDE coding agent, including its 
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: hold
 ---
-
-**Status**: Hold
 
 ## What It Is
 

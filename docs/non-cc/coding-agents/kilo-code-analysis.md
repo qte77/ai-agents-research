@@ -6,9 +6,10 @@ platform_scope: [vscode, jetbrains, cli, cloud, slack]
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: trial
 ---
 
-**Status**: Trial | **License**: MIT (repo-confirmed; kilo.ai website states Apache-2.0 — MIT is authoritative per `LICENSE` and `package.json` as of 2026-06-16) | **Version**: v7.3.46 (2026-06-15) | **Stars**: 20.1k (2026-06-16)
+**Details:** **License**: MIT (repo-confirmed; kilo.ai website states Apache-2.0 — MIT is authoritative per `LICENSE` and `package.json` as of 2026-06-16) | **Version**: v7.3.46 (2026-06-15) | **Stars**: 20.1k (2026-06-16)
 
 ## What It Is
 

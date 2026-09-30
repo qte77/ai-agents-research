@@ -5,9 +5,8 @@ category: landscape
 created: 2026-07-23
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 > Promoted from tracker [#383][gh-383] (research completed there 2026-07-12; durable
 > doc requested in the 2026-07-23 corpus-update arc). [#382][gh-382] tracks how this

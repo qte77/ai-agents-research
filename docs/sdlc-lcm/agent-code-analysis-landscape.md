@@ -8,8 +8,6 @@ updated: 2026-09-24
 validated_links: 2026-09-24
 ---
 
-**Status**: Assess
-
 ## What It Is
 
 Two analysis modes bound a non-deterministic coding agent: **static code analysis (SCA)**

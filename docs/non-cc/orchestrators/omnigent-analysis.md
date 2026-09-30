@@ -5,10 +5,9 @@ purpose: Evaluate Omnigent as a meta-harness layer for unifying Claude Code, Cod
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: assess
 platform_scope: [claude-code, codex, pi, custom-agents, openai-agents]
 ---
-
-**Status**: Assess
 
 ## What It Is
 

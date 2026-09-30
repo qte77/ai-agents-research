@@ -5,10 +5,9 @@ purpose: Track Opennote as an AI-native edtech product with open agent SDKs and 
 created: 2026-06-20
 updated: 2026-06-20
 validated_links: 2026-06-20
+status: assess
 platform_scope: [web, google-drive, notion, api-sdk]
 ---
-
-**Status**: Assess
 
 ## What It Is
 

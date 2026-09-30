@@ -5,9 +5,8 @@ purpose: Assess OKF as an interchange format for agent knowledge bundles in the 
 created: 2026-06-16
 updated: 2026-06-20
 validated_links: 2026-06-20
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

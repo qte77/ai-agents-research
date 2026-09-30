@@ -5,10 +5,9 @@ purpose: Assess Databricks Genie One and its Genie Ontology semantic layer as an
 created: 2026-06-20
 updated: 2026-06-20
 validated_links: 2026-06-20
+status: trial
 platform_scope: [databricks, slack, microsoft-teams, ios, android, mcp]
 ---
-
-**Status**: Trial
 
 ## What It Is
 

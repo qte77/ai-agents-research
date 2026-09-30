@@ -5,9 +5,8 @@ purpose: Analysis of Cortex, Mitosis Labs' hosted knowledge-graph memory system 
 created: 2026-09-30
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

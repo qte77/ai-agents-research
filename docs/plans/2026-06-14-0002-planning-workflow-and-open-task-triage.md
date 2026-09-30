@@ -6,7 +6,7 @@ created: 2026-06-14
 updated: 2026-06-14
 ---
 
-**Status**: Done — establishes the `docs/plans/` convention and triages the session's untracked open tasks into GitHub Issues.
+**Details:** establishes the `docs/plans/` convention and triages the session's untracked open tasks into GitHub Issues.
 
 ## Context
 

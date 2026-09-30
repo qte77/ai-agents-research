@@ -5,9 +5,8 @@ purpose: Analysis of Google Antigravity as an agent-first IDE and agentic develo
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

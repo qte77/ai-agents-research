@@ -5,9 +5,8 @@ category: landscape
 created: 2026-07-08
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 The **identity / authorization / personhood** layer for agents: *who is allowed to act, on whose
 authority, and how is human-vs-agent proven.* This is a different axis from two things already in the

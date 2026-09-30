@@ -4,9 +4,8 @@ purpose: Disambiguates three unrelated meanings of "software factory" — histor
 created: 2026-09-30
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

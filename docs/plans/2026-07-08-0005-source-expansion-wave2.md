@@ -6,8 +6,6 @@ created: 2026-07-08
 updated: 2026-09-23
 ---
 
-**Status**: Reference (plan)
-
 Durable record + source map for the **second wave** of new sources added 2026-07-08, ahead of the
 deferred [#354](https://github.com/qte77/ai-agents-research/issues/354) graph rebuild. Wave 1 is
 [2026-07-08-0004-new-sources-batch.md](2026-07-08-0004-new-sources-batch.md); umbrella tracker

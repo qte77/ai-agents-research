@@ -4,9 +4,10 @@ purpose: One scoring rubric (6 properties × 8 subjects) for judging agent memor
 created: 2026-09-29
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: reference
 ---
 
-**Status**: Reference (method)
+**Details:** method
 
 ## What It Is
 

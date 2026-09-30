@@ -4,9 +4,10 @@ source: https://air.dev, https://blog.jetbrains.com/air/2026/03/air-launches-as-
 purpose: Analysis of JetBrains Air as an agentic development environment for multi-agent orchestration.
 created: 2026-03-20
 updated: 2026-09-24
+status: public-preview
 ---
 
-**Status**: Public Preview (macOS only, Windows/Linux planned 2026)
+**Details:** macOS only, Windows/Linux planned 2026
 
 ## What It Is
 

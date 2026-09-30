@@ -9,7 +9,7 @@ updated: 2026-04-06
 validated_links: 2026-04-06
 ---
 
-**Status**: Open-source (AGPL-3.0), active development by ByteDance/Volcengine
+**Details:** Open-source (AGPL-3.0), active development by ByteDance/Volcengine
 
 ## What It Is
 

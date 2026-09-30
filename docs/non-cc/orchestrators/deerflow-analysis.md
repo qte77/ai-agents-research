@@ -5,9 +5,10 @@ purpose: Analysis of DeerFlow as an open-source super agent harness for research
 created: 2026-03-25
 updated: 2026-06-28
 validated_links: 2026-06-28
+status: open-source
 ---
 
-**Status**: Open-source (MIT), active development by ByteDance
+**Details:** Open-source (MIT), active development by ByteDance
 
 ## What It Is
 

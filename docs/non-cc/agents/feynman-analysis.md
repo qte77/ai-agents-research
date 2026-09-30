@@ -5,9 +5,10 @@ purpose: Analysis of Feynman as an open-source terminal-based AI research agent 
 created: 2026-04-09
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: open-source
 ---
 
-**Status**: Open-source (MIT), active development by [Companion AI][feynman-site]
+**Details:** Open-source (MIT), active development by [Companion AI][feynman-site]
 
 ## What It Is
 

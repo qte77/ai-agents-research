@@ -4,9 +4,8 @@ purpose: OWASP MAESTRO v1.0 threat modeling framework for multi-agent systems â€
 created: 2026-02-09
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 Based on [OWASP MAESTRO
 v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)

@@ -5,9 +5,8 @@ category: landscape
 created: 2026-07-08
 updated: 2026-07-08
 validated_links: 2026-07-08
+status: research
 ---
-
-**Status**: Research (informational)
 
 **Machine-native payment rails** let an autonomous agent discover a paid tool/API, pay for it, and use
 it — with no human provisioning a key per purchase. This is the "agent economics" plumbing beneath

@@ -5,10 +5,9 @@ purpose: Evaluate Codex CLI as an interactive and headless terminal coding agent
 created: 2026-06-16
 updated: 2026-06-28
 validated_links: 2026-06-28
+status: trial
 platform_scope: [openai, cli, vscode, cursor, windsurf]
 ---
-
-**Status**: Trial
 
 ## What It Is
 

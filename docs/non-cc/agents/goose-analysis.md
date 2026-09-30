@@ -5,9 +5,10 @@ purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF
 created: 2026-04-05
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
 
-**Status**: Assess (open-source, active, architecturally significant)
+**Details:** open-source, active, architecturally significant
 
 ## What It Is
 

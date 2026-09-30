@@ -5,9 +5,10 @@ purpose: Analysis of Amp (Sourcegraph spinoff) as a terminal-first agentic codin
 created: 2026-06-16
 updated: 2026-07-10
 validated_links: 2026-06-16
+status: trial
 ---
 
-**Status**: Trial | **GA**: May 7, 2026 (public launch; free tier since Oct 15, 2025) | **Vendor**: Amp Frontier Corporation (spun out of Sourcegraph, Dec 2, 2025) | **License**: Proprietary (closed source) | No markup on provider API prices for individuals
+**Details:** **GA**: May 7, 2026 (public launch; free tier since Oct 15, 2025) | **Vendor**: Amp Frontier Corporation (spun out of Sourcegraph, Dec 2, 2025) | **License**: Proprietary (closed source) | No markup on provider API prices for individuals
 
 ## What It Is
 

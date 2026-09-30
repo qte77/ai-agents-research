@@ -4,9 +4,8 @@ purpose: Disambiguates the agent-interoperability "Protocol Triangle" — fronte
 created: 2026-04-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## Summary
 

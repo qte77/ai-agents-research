@@ -6,9 +6,8 @@ platform_scope: [claude-code, openai-codex, deepseek-tui, opencode]
 created: 2026-07-23
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 
