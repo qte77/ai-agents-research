@@ -101,6 +101,9 @@ classifier API, not a persistent store, so **Shared** and **Versionable** are ma
 - [agentic-sdlc-patterns.md § 4][sdlc-4] — the "no review agent" gap this pilot fills
 - [agent-frameworks-infrastructure-landscape.md § 8][frameworks-8] — BAML's `feelings`
   (`.fill<T>()`) integration with Jev, and Laya as the open-weight alternative
+- [system-1-decision-models-landscape.md](../reference/system-1-decision-models-landscape.md) —
+  open-weight and research alternatives (Laya, kev, CLM, GLiNER2.5-Decide, RuVector) and tools built on
+  Jev (probably, abide, jev-ultrafast, jevgrep)
 
 ## Sources
 

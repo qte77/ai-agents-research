@@ -16,8 +16,8 @@ generates prose an application then parses back into a branch, a system-one mode
 short state (a ticket, a diff, a page) in a single forward pass, returning a calibrated
 probability and nothing else. There is no free text, so there is nothing to hallucinate, and the
 call is far cheaper and faster than a reasoning-model round trip. Jev itself is TypeSafe's hosted
-model ([docs.typesafe.ai][typesafe]); it is not analyzed as its own page here — that page is
-tracked separately (plan 0009 row J1, issue [#515][issue-515]).
+model ([docs.typesafe.ai][typesafe]); its API, pricing and a measured pre-CI review-gate pilot
+are analyzed in [jev-analysis.md](../infrastructure/jev-analysis.md).
 
 September 2026 saw a wave of open-weight, research, and independent projects that reproduce or
 build on Jev's interface (the entries below), tracked as [issue #517][issue-517] / plan row J3.
@@ -253,7 +253,6 @@ style-adversarial pairs and reference-free prose.
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
 [typesafe]: https://docs.typesafe.ai/
-[issue-515]: https://github.com/qte77/ai-agents-research/issues/515
 [issue-517]: https://github.com/qte77/ai-agents-research/issues/517
 [frameworks-8]: ../frameworks/agent-frameworks-infrastructure-landscape.md#8-output-validation-guardrails--verification
 [laya]: https://github.com/NandhaKishorM/laya
