@@ -118,6 +118,8 @@ The rxiv triage job additionally runs `markdownlint-cli2` against the assembled 
 
 An optional graphify knowledge graph maps the corpus — concepts, cross-document references, and community structure — for navigation and gap-finding. It is **on-demand only**: no hooks or `CLAUDE.md` mandates run it automatically (that per-tool-call overhead was deliberately removed), so it adds no cost to normal sessions. Build output (`graphify-out/`) is gitignored; the EyeRest-restyled copy is committed to `ui/graph.html` and published to GitHub Pages by the deploy workflow.
 
+**Deterministic base graph (plan 0009 row G, option C):** `make graph-data` runs `.github/scripts/build-doc-graph.py`, a stdlib-only builder backed by the unit-tested `lib/doc_graph.py`. It writes `ui/doc-graph.json` with doc nodes (bucket, status, title), external-domain nodes, and `link` / `hub` / `cites` edges, each carrying the line numbers it occurs on. The same corpus always gives byte-identical JSON, with no LLM involved. Link validity stays with lychee. Rendering it and regenerating it in CI are the next steps (#504). graphify becomes an optional concept overlay on top.
+
 **Live site:** <https://qte77.github.io/ai-agents-research/> — a branded EyeRest landing page (`index.html`) linking to the knowledge graph at `/graph.html`. After a rebuild, run `make graph-page`, then commit & push — the gh-pages workflow deploys.
 
 ### Published site (gh-pages)

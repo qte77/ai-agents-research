@@ -231,6 +231,7 @@ make lint        # run lychee + markdownlint-cli2 over the full repo
 make autofix     # mechanical markdownlint --fix pass
 make test        # unit tests for src/ + .github/scripts/lib/ modules (stdlib unittest)
 make graph-page  # rebuild + restyle the knowledge graph into committed ui/graph.html (then commit to publish)
+make graph-data  # deterministic structural doc graph (docs, domains, link/hub/cites edges) into ui/doc-graph.json — no LLM
 make help        # list all recipes grouped by section
 ```
 
