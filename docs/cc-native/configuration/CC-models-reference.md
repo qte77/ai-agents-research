@@ -5,9 +5,10 @@ purpose: Descriptive reference for the newest Claude model (Fable 5) and a snaps
 created: 2026-06-14
 updated: 2026-06-22
 validated_links: 2026-06-22
+status: reference
 ---
 
-**Status**: Reference (descriptive). For *how to configure* CC against these models/providers (env vars, endpoints, gateways), see [CC-model-provider-configuration.md](CC-model-provider-configuration.md).
+**Details:** Reference (descriptive). For *how to configure* CC against these models/providers (env vars, endpoints, gateways), see [CC-model-provider-configuration.md](CC-model-provider-configuration.md).
 
 ## Claude Fable 5 (newest model)
 

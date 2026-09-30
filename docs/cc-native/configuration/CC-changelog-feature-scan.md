@@ -5,9 +5,10 @@ purpose: Identify actionable CC features from recent releases (v2.1.0–2.1.283)
 created: 2026-03-07
 updated: 2026-04-06
 validated_links: 2026-04-06
+status: research
 ---
 
-**Status**: Research (informational — feeds into adoption plan)
+**Details:** informational — feeds into adoption plan
 
 ## [2026-03-07]
 

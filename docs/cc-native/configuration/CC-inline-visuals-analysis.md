@@ -5,9 +5,10 @@ purpose: Analysis of Claude's custom inline visualization capabilities (charts, 
 created: 2026-03-13
 updated: 2026-09-23
 validated_links: 2026-03-13
+status: beta
 ---
 
-**Status**: Beta (March 12, 2026) — all plans including free tier
+**Details:** Beta (March 12, 2026) — all plans including free tier
 
 **Scope**: Claude.ai web + desktop app feature (server-side). Not a Claude Code CLI feature — no CC version required. Tracked here because it's an Anthropic platform capability relevant to CC research context.
 

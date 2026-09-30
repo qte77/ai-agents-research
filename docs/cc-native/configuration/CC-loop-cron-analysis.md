@@ -4,9 +4,10 @@ source: https://code.claude.com/docs/en/slash-commands (inferred), gist by @sorr
 purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches. Includes empirical finding that /loop accepts syntax in -p mode but exits after first iteration.
 created: 2026-03-17
 updated: 2026-04-23
+status: generally-available
 ---
 
-**Status**: Generally available (v2.1.71+, feature gate `tengu_kairos_cron`)
+**Details:** v2.1.71+, feature gate `tengu_kairos_cron`
 
 ## What `/loop` Is
 

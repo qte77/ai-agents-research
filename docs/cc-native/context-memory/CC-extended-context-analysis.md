@@ -5,9 +5,10 @@ purpose: Analysis of 1M token extended context window for cost planning and head
 created: 2026-03-07
 updated: 2026-06-19
 validated_links: 2026-06-19
+status: beta
 ---
 
-**Status**: Beta (features, pricing, and availability may change)
+**Details:** features, pricing, and availability may change
 
 ## What It Is
 

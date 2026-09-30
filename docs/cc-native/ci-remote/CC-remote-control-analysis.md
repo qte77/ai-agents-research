@@ -5,9 +5,10 @@ purpose: Analysis of Claude Code Remote Control for mobile monitoring of long-ru
 created: 2026-03-07
 updated: 2026-06-07
 validated_links: 2026-06-07
+status: research-preview
 ---
 
-**Status**: Research preview (all plans; off by default on Team/Enterprise until an admin enables the Remote Control toggle) ([source][cc-rc])
+**Details:** Research preview (all plans; off by default on Team/Enterprise until an admin enables the Remote Control toggle) ([source][cc-rc])
 
 ## What Remote Control Is
 

@@ -5,9 +5,10 @@ purpose: Analysis of Claude Code's first-party cross-session messaging — indep
 created: 2026-09-23
 updated: 2026-09-23
 validated_links: 2026-09-23
+status: adopt
 ---
 
-**Status**: Adopt — on by default with nothing to enable wherever the version/platform gate is met, same-machine messaging generally available on every provider since v2.1.248 (cross-machine messaging still needs a claude.ai-authenticated Remote Control connection), and inbound is safe-by-default (a session that prompts for permissions delivers messages; a `bypassPermissions` session holds them for approval). The only open item is a version-gate conflict on native Windows (see [Availability](#availability)), which affects when the feature turns on there, not whether it is safe to use once it has.
+**Details:** on by default with nothing to enable wherever the version/platform gate is met, same-machine messaging generally available on every provider since v2.1.248 (cross-machine messaging still needs a claude.ai-authenticated Remote Control connection), and inbound is safe-by-default (a session that prompts for permissions delivers messages; a `bypassPermissions` session holds them for approval). The only open item is a version-gate conflict on native Windows (see [Availability](#availability)), which affects when the feature turns on there, not whether it is safe to use once it has.
 
 ## What It Is
 

@@ -6,9 +6,8 @@ category: landscape
 created: 2026-03-08
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: research
 ---
-
-**Status**: Landscape research (informational — not implementation requirements)
 
 ## Problem Statement
 

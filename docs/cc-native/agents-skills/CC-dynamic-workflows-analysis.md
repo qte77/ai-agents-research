@@ -5,9 +5,10 @@ purpose: Document Claude Code's dynamic workflow orchestration tool, the ultraco
 created: 2026-06-11
 updated: 2026-06-22
 validated_links: 2026-06-22
+status: trial
 ---
 
-**Status**: Trial (GA since CC v2.1.154; paid plans + API/Bedrock/Vertex/Foundry)
+**Details:** GA since CC v2.1.154; paid plans + API/Bedrock/Vertex/Foundry
 
 ## What It Is
 

@@ -5,9 +5,10 @@ purpose: Document how to pin Claude Code versions for reproducible CI/CD and con
 created: 2026-03-12
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: reference
 ---
 
-**Status**: Reference (actionable configuration guide)
+**Details:** actionable configuration guide
 
 ## Context
 

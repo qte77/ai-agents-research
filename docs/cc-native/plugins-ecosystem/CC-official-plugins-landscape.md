@@ -5,9 +5,10 @@ purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this 
 created: 2026-03-12
 updated: 2026-06-11
 validated_links: 2026-06-11
+status: reference
 ---
 
-**Status**: Reference (living catalog — update as ecosystem evolves)
+**Details:** living catalog — update as ecosystem evolves
 
 ## Overview
 

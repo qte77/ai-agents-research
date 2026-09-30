@@ -4,9 +4,10 @@ source: empirical testing (cc-recursive-team-mode integration tests, 2026-03-23)
 purpose: Document undocumented requirements and pitfalls when using claude -p for headless/CI execution.
 created: 2026-03-23
 updated: 2026-03-23
+status: verified
 ---
 
-**Status**: Verified (CC v2.1.81)
+**Details:** CC v2.1.81
 
 ## 1. `stream-json` Requires `--verbose` in `-p` Mode
 

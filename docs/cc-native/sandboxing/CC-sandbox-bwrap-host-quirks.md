@@ -6,9 +6,10 @@ category: analysis
 created: 2026-05-02
 updated: 2026-09-23
 validated_links: 2026-09-23
+status: reference
 ---
 
-**Status**: Active upstream bug — `claude-code#17727` open; `claude-code#17087` closed-as-completed but recurring; `sandbox-runtime#139` is the upstream fix tracker.
+**Details:** Active upstream bug — `claude-code#17727` open; `claude-code#17087` closed-as-completed but recurring; `sandbox-runtime#139` is the upstream fix tracker.
 
 ## Scope
 

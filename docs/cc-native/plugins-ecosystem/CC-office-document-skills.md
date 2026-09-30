@@ -4,9 +4,10 @@ description: Ecosystem analysis of document generation/manipulation capabilities
 created: 2026-03-26
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: research
 ---
 
-**Status**: Research (2026-03-26)
+**Details:** 2026-03-26
 
 ## Summary
 

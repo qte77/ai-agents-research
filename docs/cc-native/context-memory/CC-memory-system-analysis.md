@@ -5,9 +5,10 @@ purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) 
 created: 2026-03-07
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: generally-available
 ---
 
-**Status**: Generally available (CLAUDE.md); Auto memory enabled by default
+**Details:** Generally available (CLAUDE.md); Auto memory enabled by default
 
 ## What the Memory System Is
 

@@ -5,9 +5,8 @@ purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claud
 created: 2026-03-12
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: research
 ---
-
-**Status**: Research (informational — not implementation requirements)
 
 ## Context
 

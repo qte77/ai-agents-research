@@ -4,9 +4,8 @@ purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant 
 created: 2026-03-27
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

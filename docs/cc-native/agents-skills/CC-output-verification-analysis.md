@@ -5,9 +5,8 @@ category: analysis
 created: 2026-06-27
 updated: 2026-06-27
 validated_links: 2026-06-27
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

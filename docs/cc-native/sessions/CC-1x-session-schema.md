@@ -4,9 +4,8 @@ purpose: Reference for the CC 1.x session JSONL wire format -- directory layout,
 created: 2026-04-23
 updated: 2026-04-23
 validated_links: 2026-04-23
+status: research
 ---
-
-**Status**: Research
 
 ## What It Is
 

@@ -5,9 +5,10 @@ purpose: Analysis of Claude Code channels for pushing external events into runni
 created: 2026-03-24
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: research-preview
 ---
 
-**Status**: Research preview (v2.1.80+, allowlisted plugins only)
+**Details:** v2.1.80+, allowlisted plugins only
 
 ## What Channels Are
 
