@@ -3,8 +3,8 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Generally available (CLAUDE.md); Auto memory enabled by default
@@ -164,6 +164,16 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 | Deep `@` import chains | Increases token cost | Audit total imported size; keep chain under 400 total lines |
 | Duplicate auto memory vs manual learnings | Stale or contradicting patterns | Periodic deduplication review |
 
+### CLAUDE.md Growth and Catastrophic Remembering (arXiv 2608.11095)
+
+["Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding"][claude-md-growth] (Chakrabarti, submitted 2026-08-11, CC BY 4.0) gives the "CLAUDE.md > 200 lines" anti-pattern above an empirical mechanism and a cheap fix. The paper traces unbounded instruction-file growth to **imperfect recall**: appending an instruction is always cheap, but once the rationale for an existing one is forgotten, deleting it without risking a correctness regression costs O(2^|D|) — nobody can tell which of the accumulated instructions interact to guard against a past failure, so instructions only accumulate. Mining 247,694 instruction lifetimes across 1,867 repositories, the paper reports that agentic-coding instruction files **triple over their lifetime (+226%)**, gain **+4.9 net instructions per commit**, and show deletion resistance that grows with age (log-hazard -0.032/commit). The proposed fix is minimal: attaching a short rationale comment to each instruction removed **99.3% of excess growth** in controlled runs (+211.3% -> +1.4%) and improved real-world instruction-following by up to **23.1%**. This converges with a first-party CC mechanism: [maintainer HTML comments][cc-mem] (`<!-- ... -->`) in CLAUDE.md are preserved for a human reading the file directly but stripped before injection into context — the same "keep the rationale, don't pay its token cost every session" trade the paper's fix makes. No code or dataset repository is linked from the abstract page.
+
+**Rubric** (scored 2026-09-30): a research paper, not a shipped tool — most properties are n/a.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| n/a (a finding about instruction files, not a shared store) [paper][claude-md-growth] | n/a (no deployed system described) [paper][claude-md-growth] | no data (no code or dataset link on the abstract page) [paper][claude-md-growth] | n/a (an empirical finding, not a configurable tool) [paper][claude-md-growth] | n/a (arXiv preprint; no runtime state to version) [paper][claude-md-growth] | n/a (single-paper finding; not a system with an audit trail) [paper][claude-md-growth] |
+
 ### Instruction Adherence Patterns
 
 CC injects CLAUDE.md content wrapped in a `<system-reminder>` tag — [observed via API interception][cc-reverse-eng] and documented in the Agiflow prompt-augmentation analysis. The `<system-reminder>` framing signals to the model that the content is optionally relevant rather than unconditionally binding. As the file grows, instruction adherence degrades: instructions buried deeper in a large file are less reliably followed than those at the top.
@@ -199,6 +209,16 @@ npx skills add humanlayer/skills --skill improve-claude-md
 ```
 
 Cross-ref: [CC-reverse-engineering-landscape.md][cc-reverse-eng] — Agiflow section documents the five injection mechanisms including the `<system-reminder>` wrapping of CLAUDE.md; [CC-community-skills-landscape.md][cc-skills-landscape] — claude-code-best-practice open research questions.
+
+#### Practitioner Template: context-engineering-intro
+
+[coleam00/context-engineering-intro][cei] (MIT — verified from the repo's LICENSE file, Copyright 2025 Cole Medin; 13,893 stars, last pushed 2026-03-16, both verified 2026-09-30) takes a construction-first angle on the same problem the fixes above treat reactively: instead of restructuring an existing CLAUDE.md, it is a starter template built around a **PRP (Product Requirements Prompt)** workflow — write a feature request in `INITIAL.md`, run a `/generate-prp` command (in `.claude/commands/`) to produce a research-backed implementation blueprint under `PRPs/`, then `/execute-prp` to implement it against built-in validation gates, drawing on an `examples/` folder of code patterns and a project-wide `CLAUDE.md` of global rules. Its own framing — "Context Engineering is 10x better than prompt engineering and 100x better than vibe coding" — is a marketing claim the repo ships no benchmark for. The `INITIAL.md` -> PRP -> execute-with-validation sequence independently converges on the same "write the plan down as a durable artifact before executing it" shape as this doc's own [ACE-FCA three-phase workflow](#context-engineering-workflow-ace-fca) below (Research -> Planning -> Implementation).
+
+**Rubric** (scored 2026-09-30):
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| n/a (a one-time scaffolding template, not a running multi-user store; any sharing happens through the project's own git repo, not a feature of the template) [repo][cei] | n/a (a local CLI/template; no deployed service) [repo][cei] | no data (`/generate-prp` names no pinned model or deterministic settings for its research step) [repo][cei] | yes (CLAUDE.md, INITIAL.md, and the PRP commands are all plain files a user edits or replaces) [repo][cei] | yes (CLAUDE.md, INITIAL.md, and every generated PRP are markdown files meant to be committed to the project's own git history) [repo][cei] | partial (a PRP is meant to carry "research-backed" context and validation gates alongside the change, but nothing enforces that its citations stay accurate over time) [repo][cei] |
 
 #### Do Context Files Actually Help? (arXiv 2607.27250)
 
@@ -239,6 +259,16 @@ Or: `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` env var. Toggle via `/memory` command in
 #### Auditing
 
 Auto memory files are plain markdown — edit or delete at any time. Run `/memory` to browse loaded files, toggle auto memory, and open the memory folder ([source][cc-mem]).
+
+#### A Non-CC Comparison: Topic-Label Gating (TrackPoint)
+
+The MEMORY.md-index / topic-file split above is a variant of a broader pattern — keep labels resident, gate the content behind a fetch — that appears outside CC too. [TrackPoint's "Semantic Reasoning"][trackpoint-sr] (Jay Shah, updated 2026-09-29) applies the same shape to a voice-AI agent: it "is told which topics it holds knowledge about... but not the details," and fetches a topic's content only once the conversation reaches it, so that "information nobody asked for never enters the conversation." The vendor frames this as the inverse of RAG — RAG fetches *more* to answer a question; this holds content *back* by default until asked — rather than a variant of it. Their own comparison is a small internal test: 18 role-play conversations (9 standard vs. 9 with the pattern applied, three restricted facts per persona) in which 0-of-9 conversations leaked a restricted detail with the pattern applied vs. 3-of-9 without, and near-identical direct-question accuracy (25/27 vs 24/27). This is self-reported, unreplicated, and unaccompanied by a published architecture, paper, or repository — nothing independently verifies that the mechanism, rather than some other difference between the two conditions, produced the reported gap. Their [live demo][trackpoint-demo] offers voice role-plays but discloses no internals, so it corroborates nothing about the claims either.
+
+**Rubric** (scored 2026-09-30): a vendor blog post describing a product feature, not a released tool.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| n/a (a single-agent voice-product feature, not a shared multi-agent store) [blog][trackpoint-sr] | no data (no deployment architecture disclosed) [blog][trackpoint-sr] | no data (no repository, pinned model, or retrieval mechanism published) [blog][trackpoint-sr] | no data (architecture undisclosed beyond the "topic label vs. content" framing) [blog][trackpoint-sr] | no data (undisclosed) [blog][trackpoint-sr] | no data (a self-reported 18-conversation internal test with no independent verification and no published audit trail linking a given response to which topic was retrieved) [blog][trackpoint-sr] |
 
 ### Key Behaviors
 
@@ -390,6 +420,16 @@ When information is imperfect, the quality hierarchy determines what to drop ([s
 
 Better to have less correct information than more information with errors.
 
+## Scored on the Agent Substrate Rubric
+
+CC's CLAUDE.md + auto memory system, scored 2026-09-30 against the [agent substrate rubric][rubric] using only the fetches above ([code.claude.com/docs/en/memory][cc-mem], 2026-09-30). This targets the gaps the plan-0009 coverage map found in the corpus's context docs — no dedicated evidence for Shared, Distributed, Versionable or Traceable outside the hubs.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| partial [cc-mem][cc-mem] (Project-scope CLAUDE.md is documented "Shared with: Team members via source control," and `.claude/rules/` supports symlinking a shared rules directory into multiple projects — but sharing is git's own mechanism, with no CC-native concurrent-write or merge semantics of its own) | no [cc-mem][cc-mem] ("Auto memory is machine-local... Files are not shared across machines or cloud environments"; a managed-policy CLAUDE.md is push-deployed via MDM/Group Policy to many machines, not synced live across them) | no data [cc-mem][cc-mem] (nothing pins a model or deterministic setting for what auto memory decides to write; CLAUDE.md content is human-authored, not pipeline-generated) | yes [cc-mem][cc-mem] (`.claude/rules/` path-scoping, the managed/user/project/local scope hierarchy, `claudeMdExcludes`, and the CLAUDE.md/AGENTS.md dual-format read all change behavior without a rewrite) | partial [cc-mem][cc-mem] (CLAUDE.md and rules files are plain markdown "shared with your team through version control" in practice, i.e. git-tracked — but CC has no native diff/snapshot/rollback feature over memory content itself; auto memory's `modified` ISO-8601 frontmatter field, requiring **CC v2.1.214+**, is the only built-in lineage marker) | partial [cc-mem][cc-mem] (the `InstructionsLoaded` hook logs exactly which CLAUDE.md/rules files loaded, when and why, and `/doctor prompt-audit`, requiring **CC v2.1.283+**, reports on stale or conflicting instructions — but nothing cites *which* instruction drove a given model output) |
+
+This **partly** fills 4 of the plan's "Coverage gaps" (Context): Shared and Versionable move from no-hit to `partial`, Distributed moves from no-hit to a sourced `no`, and Traceable moves from no-hit to `partial` via the `InstructionsLoaded` hook and `/doctor prompt-audit`. This scores CC's CLAUDE.md/auto-memory substrate as a whole — it does **not** resolve gap 4's original named object, the [ACE-FCA phase artifacts](#context-engineering-workflow-ace-fca) (`research.md`/`plan.md`/`implement.md`): no first-party source (Anthropic's or hlyr.dev's) states that those specific files are git-tracked or diffable, so that narrower claim stays open. The [context-engineering-intro][cei] and [arXiv 2608.11095][claude-md-growth] entries above are independent secondary evidence for Versionable (git-committed guidance files) and for the growth dynamics Adaptable/Traceable scores above are silent on.
+
 ## References
 
 - [CC Memory docs][cc-mem]
@@ -402,6 +442,10 @@ Better to have less correct information than more information with errors.
 - [Claude Managed Agents memory][cc-managed-mem] — memory-store feature docs
 - [Microsoft Copilot Studio memory overview][ms-copilot-mem]
 - ["Grounding Agent Memory" (arXiv 2609.11060)][grounding-agent-mem] — Suresh et al., Microsoft, 2026-09-10
+- ["Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (arXiv 2608.11095)][claude-md-growth] — Chakrabarti, submitted 2026-08-11
+- [coleam00/context-engineering-intro][cei] — MIT-licensed CLAUDE.md/PRP starter template, 13.9k★ (verified 2026-09-30)
+- [TrackPoint "Semantic Reasoning"][trackpoint-sr] — Jay Shah, updated 2026-09-29; vendor blog on topic-label context gating
+- [Agent substrate rubric][rubric] — six-property scoring rubric applied to CC's memory system above
 
 [cc-mem]: https://code.claude.com/docs/en/memory
 [cc-skills]: https://code.claude.com/docs/en/skills
@@ -422,3 +466,8 @@ Better to have less correct information than more information with errors.
 [cc-managed-mem]: https://platform.claude.com/docs/en/managed-agents/memory
 [ms-copilot-mem]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/memory-overview
 [grounding-agent-mem]: https://arxiv.org/abs/2609.11060
+[claude-md-growth]: https://arxiv.org/abs/2608.11095
+[cei]: https://github.com/coleam00/context-engineering-intro
+[trackpoint-sr]: https://www.trackpoint.ai/blogs/semantic-reasoning
+[trackpoint-demo]: https://www.trackpoint.ai/demo
+[rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
