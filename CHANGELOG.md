@@ -11,6 +11,136 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.13.0] - 2026-09-30
+
+### Added
+
+- `docs/non-cc/protocols/openai-apps-plugins-analysis.md`: OpenAI's current unified ChatGPT + Codex plugin system compared against CC plugin packaging and the Agent Plugins standard — manifest (`plugin.json`/`mcp.json` declaring the Agent Plugins v1.0.0 schema, a confirmed shipped implementation by a TSC member), the three things named "marketplace" (universal reviewed directory, unreviewed local/repo/personal catalogs, and the unrelated OpenAI Marketplace partner/procurement program), pinning (a per-plugin lockfile with an unfilled integrity placeholder in the one shipped example inspected, daily unversioned MCP-server rescans), the two-stage automated + human review pipeline, and the one-directional CC-to-OpenAI plugin conversion path. Keeps the 2023 ChatGPT plugins beta and the 2024 GPT Store apart as legacy eras from the current system. Rubric-scored against `sdlc-lcm/agent-substrate-rubric.md`.
+- `docs/_topics/plugins.md`, `docs/non-cc/README.md`: pointer rows for the new page.
+
+- `docs/sdlc-lcm/software-factory-landscape.md`: disambiguates three unrelated senses of "software factory" — the historical Japanese-industrial and Microsoft (Greenfield & Short, 2004) lineages, DevSecOps-vendor framing (Lockheed Martin, VMware, self-reported), and the agentic-AI sense (CircleCI, Augment Code, freeCodeCamp, the `ai-that-works` episode cluster, HumanLayer's `wsff.md` dissent, and Cloudflare's Astro issue-triage production case). Rubric-scores Cloudflare's `triagebot-action` GitHub Action; the `ai-that-works` episodes and Flue are cited as sources, not scored, for lack of a verifiable shipped artefact. Includes a convergence finding (independent sources keep human gates at spec/merge) and a design lens pairing it with this repo's own unattended-execution phase discipline and an owner-surfaced "fluid software" opinion (rUv, LinkedIn, cited as plain text).
+- `docs/sdlc-lcm/README.md`, `docs/_topics/long-running.md`: pointer rows for the new page.
+
+- `docs/non-cc/agents/openresearch-analysis.md`: new analysis of OpenResearch (alphaXiv) — a local-first, git-native workspace turning Claude Code/Codex/OpenCode/Cursor/Google Antigravity into autonomous research/experiment agents, running anywhere (local/SSH/Slurm/Kubernetes/Ray/HF Jobs/Modal/Tinker); rubric-scored; cross-linked both ways with `feynman-analysis.md` (same alphaXiv paper-discovery backend, separate product). Indexed in `docs/non-cc/README.md` and `docs/_topics/harness.md` (plan 0009 row K7).
+- `docs/cc-community/CC-community-tooling-landscape.md`: `human-review` (petergyang) — a visual HTML/Markdown review skill that batches Google-Doc-style comments/edits back to the waiting agent, rubric-scored and added to the Comparison table and Sources; cross-linked from the ACE-FCA human-review-gate section of `CC-memory-system-analysis.md` (plan 0009 row K8).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §2: Intent-Router (angel291592) — an intent-compiler skill that converges a vague request into a typed, evidence-backed `IntentSpec` before handoff to a router/agent/workflow, positioned upstream of Jev/Laya-style typed decisions, rubric-scored (plan 0009 row K3).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §7: LlamaParse (LlamaIndex) — the hosted, proprietary document-parsing API LiteParse's own README contrasts itself with (four parsing tiers, bounding-box grounding, version-pinned reproducibility), rubric-scored next to the LiteParse entry (plan 0009 row K1).
+
+- `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md` § Agent-native ontology
+  tools: rubric-scores **Utopia** (deeplethe, Apache-2.0), a bottom-up bitemporal ontology platform
+  whose `docs/decisions/` folder documents real extraction failures (reversed edges, transitive-
+  closure explosions) behind its append-only correction ledger; cross-references and adds
+  CHANGELOG-verified compliance-bug evidence (silent empty causal chains, a SHACL validator
+  matching no data, dropped RDF provenance metadata — all from Semantica's own v0.6.7 release) for
+  the already-documented Semantica entry (§7 of `agent-frameworks-infrastructure-landscape.md`),
+  plus the EU AI Act Article 12 record-keeping deadline (now 2027-12-02 for Annex III).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § 4 Agent Memory
+  Infrastructure: rubric-scores **HydraDB** (AGPL-3.0), an object-store-native distributed graph
+  database trading RAM ($65–146/GB-mo) for S3-compatible storage (~$0.023/GB-mo) via a
+  compare-and-swap writer lease fenced by SlateDB write epochs. § 1: adds a first-party-verified
+  addendum (Cordis DI framework's "spatiotemporal composability" paper, the `.agents/notes/`
+  decision-record tree) to the existing DeepSeek Harness (`dsh`) profile in
+  `docs/non-cc/coding-agents/deepseek-harness-analysis.md`, cross-referenced rather than duplicated.
+- `docs/cc-community/CC-community-tooling-landscape.md` § abide: adds complementary,
+  independently-verified migration-validation evidence — SWE Refactor Bench (arXiv:2608.23564,
+  520 agent migrations, the "Blindness" failure mode), the GAO-25-107795 federal legacy-system
+  report, and FreshBrew (arXiv:2510.04852) — cross-referencing the corpus's existing American
+  Express Locksmith Loop analysis (`docs/sdlc-lcm/agentic-legacy-migration-validation-analysis.md`)
+  rather than restating it.
+- Design-lens citations throughout from André Lindenberg's *Artificial Engineering* newsletter
+  (five issues: *The Change of Mind Is Information*, *Audit the Auditor*, *The Graph Doesn't Need
+  RAM Anymore*, *Everything Is a Plugin, Proven*, *Complete and Correct*), cited as opinion/design
+  framing only — every factual claim traces to its own primary source (repo, CHANGELOG, arXiv
+  abstract, or GAO report), independently re-verified rather than taken from the article's own
+  numbers.
+- `docs/_topics/knowledge-graphs.md`, `docs/_topics/memory.md`, `docs/_topics/harness.md`: pointer
+  rows/updates for the new entries above.
+
+- `docs/non-cc/infrastructure/jev-analysis.md`: Jev (TypeSafe AI) "System One" decision model — question types (`noul`/`choice`/`score`), pricing and limits, and the qte77/feelings measured pilot using it as a pre-CI code-review gate (184 labelled changes, 78% catch rate / 1.7% false-positive rate at the shipped 0.70 threshold, roughly 70x faster than the fastest and 80x cheaper than the cheapest Claude model tested, a held-out-codebase threshold-transfer failure, and the reword lesson that cut one question's false positives from 6.7% to 0%), rubric-scored against `sdlc-lcm/agent-substrate-rubric.md`.
+- `docs/non-cc/infrastructure/code-review-products-landscape.md`: open-code-review (Alibaba; Apache-2.0), a hybrid deterministic-pipeline + LLM-agent PR reviewer, rubric-scored.
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § 8: a new "Decision models (typed yes/no, choice, score)" sub-list (Jev, and Laya as the open-weight, schema-compatible alternative), and a `.feels()`/`.fill<T>()` sentence extending the BAML bullet.
+- `docs/_topics/code-tooling.md`, `docs/non-cc/README.md`: pointer rows for the new Jev page and the open-code-review addition.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: new landscape page surveying open-weight and research alternatives to TypeSafe's Jev — Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector, the JEV-as-a-Judge paper (CMU, arXiv:2609.26550), plus lighter mentions of probably, JevK5, and SemIf — all rubric-scored against the agent substrate rubric. Indexed in `docs/non-cc/README.md` and `docs/_topics/harness.md` (plan 0009 row J3, #517).
+- `docs/cc-community/CC-community-tooling-landscape.md`: `abide` (coldteadotai) — AGENTS.md rule enforcement via a per-edit/turn Jev decision-model question, across Claude Code, Codex, and OpenCode.
+- `docs/cc-community/CC-code-tooling-landscape.md`: `jevgrep` (dzhng) — a question-driven code-search CLI that uses Jev to judge file/declaration relevance for a coding agent.
+
+- `.github/scripts/lib/doc_graph.py` + `tests/test_doc_graph.py`: deterministic structural doc graph (plan 0009 row G, option B; #504), built test-first. Doc nodes with bucket, status (via `doc_status`) and title; external-domain nodes; aggregated `link` / `hub` / `cites` edges with line numbers; code fences ignored; `docs/archive/` excluded; byte-identical JSON regardless of input order.
+- `.github/scripts/build-doc-graph.py` and `make graph-data`: write the graph to `ui/doc-graph.json` (no LLM, stdlib only).
+
+- `ui/doc-graph.html`: live structural doc graph page (plan 0009 row G slice 2; #504) rendering the deterministic `doc-graph.json` with the vendored vis-network, in EyeRest tokens. Docs are dots, topic hubs diamonds, cited domains squares (toggle, hidden by default), with search, a details panel and a GitHub link per doc. Linked from the landing page and the README.
+
+- `ui/build-info.js`, `scripts/build-site-info.py`, `pages_build.read_version` / `site_info` (test-first): every page shows the release version, last-modified date and commit link from a deploy-time `build.json`. The knowledge graph shows its own last-rebuild commit and date, not the deploy's. The deploy injects the tag into the published copy only, so `ui/graph.html`'s history still dates the real rebuild.
+
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md` § 1 "-engineering" ladder: new
+  **Graph engineering** row (Hamel Husain's coining post, verified via Turing Post's independent
+  account and its debunking of viral Microsoft/Stanford/Anthropic misattribution) plus two design-lens
+  paragraphs — graph engineering as the wiring already present in shipped software factories, and
+  three 2026 data points on the Harness-engineering Verification axiom's cost: Dan Shapiro's
+  five-levels framework, METR's RCT (developers estimated 20% faster, measured 19% slower), Faros
+  AI's telemetry (+242.7% incidents/PR, +54% bugs/developer, re-verified at source), **Specula**
+  (arXiv:2607.25333 — 48 projects, 249 bugs/207 new/68 confirmed/24 fixed, $19–168 median $57,
+  93%/47% Sonnet-4.6/Haiku-4.5 spec quality, all figures pulled directly from the paper PDF), and
+  **Bend 2** (Apache-2.0, 23,165★, README-quoted proof-gating mechanism) against Martin Kleppmann's
+  seL4 formal-verification cost anchor (8,700 LOC / 20 person-years / 200,000 Isabelle lines), and
+  SysMoBench's own SIGOPS write-up (~46%/41% conformance/invariant aggregate + 3 named LLM modeling
+  failure modes). All quotes and figures verified against their primary source (arXiv PDF, `gh api`
+  repo/README fetch, vendor's own published page) in this same session, including two corrections
+  made after an adversarial advisor pass: Shapiro's Level 3/4 quotes were re-fetched verbatim rather
+  than taken from the newsletter's paraphrase, and Bend's mechanism description was re-grounded in
+  its own README instead of the newsletter's framing.
+- `docs/sdlc-lcm/software-factory-landscape.md` § (c): one-sentence cross-reference tying the
+  graph-engineering framing to the existing four-source human-gate convergence already documented
+  there.
+- `docs/_topics/harness.md`: one pointer row for the new Graph-engineering/Verification-axiom
+  content above.
+- Design-lens citations from André Lindenberg's *Artificial Engineering* newsletter (four issues:
+  *From Loops to Graphs*, *The Most Expensive Rung on the Ladder*, *The Half We Don't Budget For*,
+  *Laws Instead of Diffs*), cited as opinion/design framing only — every factual claim traces to its
+  own primary source (arXiv abstract/PDF, `gh api`, a vendor's own published telemetry, or a named
+  blog post), independently re-verified rather than taken from the article's own numbers.
+
+- `docs/sdlc-lcm/agent-substrate-reference-architecture.md` (plan 0009 row Y): synthesis of the 61
+  rubric rows across 21 corpus docs into one store-first reference architecture for shared, versioned,
+  traceable agent memory and context — the argument (Reproducible as the discriminating property; the
+  model as a client of a version-controlled store), an 8-subject × 6-property evidence matrix with every
+  cell linked to its scored row, five layers (store, propose→gate→commit write path, share, trace, human
+  gates at spec and merge), a composed rubric row, the census-confirmed open cells, and a mapping of the
+  layers to qte77 estate repos already described in the corpus. Adds no new facts and re-scores nothing.
+- `docs/sdlc-lcm/README.md`, `docs/sdlc-lcm/agent-substrate-rubric.md` (Sources), `docs/_topics/README.md`:
+  one pointer row/line each to the new page.
+
+### Changed
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §4: extended the Sumanth077/Hands-On-AI-Engineering bullet with `ai_agents/grounded_document_agent` (LlamaParse-backed, citation-grounded local PDF Q&A example).
+- `docs/_topics/rag.md`: extended the existing § 7 hub row to name document parsing (LiteParse, LlamaParse).
+- `docs/_topics/harness.md`: added hub rows for OpenResearch, Intent-Router, and human-review.
+
+- `docs/sdlc-lcm/agentic-sdlc-patterns.md`: repointed the "Gap: no review agent" row to the new Jev analysis page (still Trial, not adopted).
+
+- `docs/cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md`: added `jev-ultrafast` (browser-use) to the Alternative MCP Options table — a decision-model-driven browser agent, distinct from browser-use itself.
+- `docs/non-cc/protocols/agents-md-cookbook-analysis.md`: cross-linked `abide` from the Coldtea field-study section (same maker).
+- `docs/cc-community/CC-codex-plugin-cc-analysis.md`: cross-linked `abide` as the same one-agent-gates-another Stop-hook pattern applied to rule enforcement rather than code review.
+- `docs/_topics/plugins.md`, `docs/_topics/code-tooling.md`: extended existing hub rows to name `jev-ultrafast` and `jevgrep`.
+
+- `.github/workflows/gh-pages.yaml`: the deploy now builds `doc-graph.json` from `docs/` (stdlib, no LLM) and also runs on changes to `docs/**` and the graph builder. The JSON is gitignored and never committed.
+
+- `docs/cc-native/**`: doc status moved from the body `**Status**:` badge into a frontmatter `status:` token (63 docs, #348). Any extra badge text (license, version, availability) moves to a `**Details:**` line in the same place. Two badges without a vocabulary word get a default token and keep the full badge text as Details: `CC-sandbox-bwrap-host-quirks.md` → `reference`, `CC-cowork-plugins-enterprise-analysis.md` → `generally-available`.
+
+- `docs/sdlc-lcm/**`, `docs/plans/**`, `docs/non-cc/{agents,coding-agents,context-memory,knowledge-management,orchestrators,protocols}/**`: doc status moved from the body `**Status**:` badge into frontmatter `status:` (95 docs, #348), extra badge text kept as a `**Details:**` line. Plans keep their existing `status:` (draft/approved/done); their `Reference (plan)` label badge is dropped.
+
+- `docs/non-cc/{frameworks,infrastructure,reference}/**`, `docs/cc-community/**`: doc status moved from the body `**Status**:` badge into frontmatter `status:` (56 docs, #348). This completes the corpus migration: `check-doc-status.py --strict` now reports 0 residual badges.
+
+- `CONTRIBUTING.md` §1–§2: doc status lives only in frontmatter `status:`. §2 "Status Badge" is replaced by "Frontmatter status", which points to `VOCAB` in `.github/scripts/lib/doc_status.py` as the one list of tokens. Extra detail goes on a `**Details:**` line (#348).
+- `Makefile` `check_status`: now runs `--strict`, so CI (`lint.yaml`) fails on any body `**Status**:` badge.
+- `docs/architecture.md` "Frontmatter Conventions": now points to CONTRIBUTING §1–§2 instead of keeping its own copy, which had drifted (`description:` vs `purpose:`).
+- `.claude/skills/adding-research-source`: writes `status:` in frontmatter instead of a badge.
+- `docs/plans/2026-07-05-0003-status-frontmatter-migration.md`: marked done.
+
+- `README.md`: new "Current focus" bullet linking the agent substrate rubric and the reference architecture (plan 0009, #509).
+- `docs/UserStory.md`: adds the arc's user story (tools scored on one six-property rubric). The constraints now match the repo: stdlib doc tooling (validators, doc graph) is in scope, and CI documentation validation is no longer listed as out of scope.
+- `docs/plans/2026-09-27-0009-focus-shared-memory-context.md`: arc closed; every row shipped or dropped.
+
 ## [0.12.0] - 2026-09-30
 
 ### Added
