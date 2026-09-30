@@ -11,9 +11,9 @@ status: assess
 ## What It Is
 
 [OpenResearch][openresearch] is a **local-first workspace for research agents and autoresearch**
-from alphaXiv — the paper-discovery service [Feynman][feynman-analysis] also uses for search — but
-OpenResearch itself is a separate desktop app and CLI, not a shared backend with Feynman; the
-[about page][openresearch-about] frames alphaXiv only as "a prior project by the same team." It
+from the team behind alphaXiv, the paper-discovery service [Feynman][feynman-analysis] uses for
+search: its [about page][openresearch-about] opens "We started alphaXiv with a belief that research
+communication was broken." OpenResearch itself is a separate desktop app and CLI. It
 turns Claude Code, Codex, OpenCode, Cursor, or Google Antigravity into research agents that "review
 literature, develop hypotheses, run experiments, and produce research artifacts," keeping every
 project, conversation, experiment, run, log, and artifact on the user's own machine ([README][openresearch]).
@@ -32,8 +32,8 @@ capabilities such as organizations and managed compute" ([README][openresearch])
 
 `orx install-skills` installs the OpenResearch skill into supported coding agents. Core CLI
 surface: `orx projects`, `orx project view`, `orx runs`, `orx logs`, `orx exp run`, `orx discover
-keyword <query>`, `orx paper <arxiv-id-or-doi>` — the last two are the visible alphaXiv link,
-paper discovery and lookup by arXiv id or DOI ([README][openresearch]).
+keyword <query>`, `orx paper <arxiv-id-or-doi>` — the last two cover paper discovery and lookup by arXiv id or DOI;
+the README does not name the service behind them ([README][openresearch]).
 
 ### Reproducibility and evidence
 
@@ -104,8 +104,8 @@ and not reproducible in the way the underlying code commits are.
 
 ## Cross-References
 
-- [feynman-analysis.md](feynman-analysis.md) — Companion AI's research agent; shares alphaXiv as
-  its paper-discovery backend, but is a separate product from OpenResearch
+- [feynman-analysis.md](feynman-analysis.md) — Companion AI's research agent, which uses alphaXiv for
+  paper search; a separate product from OpenResearch
 - [orcareplay-analysis.md](../reference/orcareplay-analysis.md) — another git/commit-oriented
   reproducibility approach for agent runs, applied to coding-agent replay rather than research
   experiments
@@ -115,7 +115,7 @@ and not reproducible in the way the underlying code commits are.
 | Source | Content |
 |---|---|
 | [OpenResearch repo][openresearch] | README: architecture, platforms, run-anywhere compute targets, security note, telemetry |
-| [OpenResearch about page][openresearch-about] | Positioning vs. alphaXiv (prior project, not a shared backend) |
+| [OpenResearch about page][openresearch-about] | Team origin ("We started alphaXiv…"); local CLI plus remote compute |
 | [`gh api` languages][openresearch-langs] | Language breakdown (Rust core, TypeScript/JS UI) |
 | [Linux docs][openresearch-linux-docs] | glibc 2.35+ requirement |
 | [Windows docs][openresearch-windows-docs] | Git for Windows prerequisite |

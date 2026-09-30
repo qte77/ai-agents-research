@@ -35,7 +35,9 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
      analysis in one, cross-ref from the other.
 3. **Write** per CONTRIBUTING: frontmatter (`title/purpose/created/updated/validated_links/status`; no
    body status badge), body sections, a **Sources table with reference-style links**, cross-refs. Hedge unverified
-   claims; flag weak/secondary sources explicitly.
+   claims; flag weak/secondary sources explicitly. State each claim at the level its evidence shows,
+   *documented* / *announced* / *shipped* / *observed*, and never let a headline sentence claim more than
+   the caveat below it.
 4. **Index + changelog:** add the subdir README row (+ `cc-native/README` count for cc-native docs);
    add a `changelog.d/<ts>_<slug>.md` fragment.
 5. **Lint:** `make check_docs` (run it **directly** — `make lint` aborts at the lychee flake before
@@ -51,7 +53,9 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
 > version/stars/date; 5–7 concrete first-party facts; one line on why it matters for an AI-agents / CC
 > corpus. Then **coverage check**: `git grep -il '<name>'` in `docs/` — already covered? closest doc?
 > Recommend placement (subdir + new-vs-extend) per the tree above. Calibrate grep on a term you know
-> exists. **Flag anything you can't source first-party.** Return prose + compact blocks, no raw dumps.
+> exists. **Flag anything you can't source first-party.** Put text in quotation marks only if it
+> appears verbatim at the source. End with a **strongest claims** list: every superlative, "confirmed",
+> "only" or bolded claim, each with its one piece of evidence. Return prose + compact blocks, no raw dumps.
 
 ## Batch mode (>~4 sources at once)
 
@@ -63,6 +67,10 @@ write/ship each per steps 3–6. Needs explicit user opt-in (workflows spawn man
 
 - **Verify first-party** — this discipline caught real errors: stale KV min-token numbers, license/count
   drift, AP2/Humanity URL rot. A subagent's "fact" is advisory until re-checked.
+- **Review the strongest claims first.** Subagents overclaim: in plan 0009, a docs page became a
+  "confirmed shipped implementation", four sources became a "structural property", a paraphrase was
+  put in quotation marks, and a synthesis presented dead workflows as live. Open the source for each
+  superlative before merging; for a claim about a live system, check that it is still live.
 - **One PR per topic**; don't mix content additions with reformatting.
 - **Don't over-place** — the cc-vs-non-cc line is judgment. When genuinely unsure, ask the user rather
   than guess (placement calls get challenged: *opus-in-non-cc*, *firecrawl-in-cc-native*, *agents-cli-within-cc*).

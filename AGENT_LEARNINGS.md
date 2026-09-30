@@ -13,6 +13,18 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
 
 ## Learned Patterns
 
+### Research subagents overclaim — review the strongest claims at source
+
+- **Context**: Merging docs written by research or synthesis subagents (worktree lanes, Fable synthesis).
+- **Problem**: In plan 0009 (2026-09-30), five claims were stronger than their evidence, and none was flagged by the lane:
+  - a docs page became a "confirmed shipped implementation" (K5), although the same page said no example used it;
+  - four agreeing sources became a "structural property" (K6);
+  - a paraphrase was put in quotation marks, and a backend relationship was inferred (K7, which then spread into the Feynman cross-link and the plan);
+  - a composed rubric row read as all `yes` (Y);
+  - dead workflows were presented as live (Y, from a stale corpus doc).
+- **Solution**: Briefs require claims at their evidence level (documented / announced / shipped / observed), verbatim-only quotes, and a closing "strongest claims" list. The reviewer opens the source for each item on that list before merging, and checks that live-system claims are still live. All three are in the [`adding-research-source` skill](.claude/skills/adding-research-source/SKILL.md). The workspace claim-verification rule (`/workspaces/.claude/rules/claim-verification.md`) names the underlying failure modes: hedge decay, assertion from partial evidence, stale aggregate views.
+- **References**: PRs #559, #561, #568; the OpenResearch fix in this entry's PR.
+
 ### Continued sessions: reconcile git HEAD vs the conversation summary before executing tracked work
 
 - **Context**: A long/continued session whose summary predates recent merges.
