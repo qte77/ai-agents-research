@@ -1,7 +1,7 @@
 ---
 title: Focus arc — shared, versionable, traceable memory, context, skills and harness
 status: approved
-issue: 509, 504, 515, 516, 517, 527, 348
+issue: 509, 504, 515, 516, 517, 348
 created: 2026-09-27
 updated: 2026-09-29
 ---
@@ -20,8 +20,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Row I (2026-09-28): the second screenshot batch is ingested (see Source map). Leads only; nothing
     is committed yet.
   - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
-  - Row R (#526) and row B (#528) shipped. #527 tracks the paper-eval and issue-triage workflows,
-    dead since GitHub Models was retired on 2026-07-30.
+  - Row R (#526) and row B (#528) shipped.
 - **Next, in order (START HERE, 2026-09-29):** R and B are done.
   1. **Row C:** score the existing docs against the [rubric](../sdlc-lcm/agent-substrate-rubric.md) and add
      5 hubs (context, skills, plugins, harness, long-running).
@@ -31,32 +30,14 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   3. **Then:** Y, G, Z.
 
   S1 can start in parallel with C; it only needs the rubric.
-- **Side track (not a plan row):** #527. The paper-eval and issue-triage workflows have been dead since
-  GitHub Models was retired on 2026-07-30.
-  - The owner chose OpenAI-compatible providers (OpenRouter, Cerebras, Cloudflare Workers AI), Anthropic
-    native, and a Jev classifier backend. The specs are posted on qte77/gha-rxiv-paper-eval#81 and
-    qte77/gha-issue-triage#110.
-  - The fix happens in those repos, in their own sessions.
-  - The owner added secret `CF_WORKERS_AI_TOKEN` and variable `LLM_BASE_URL` on 2026-09-29.
-    - The token has `Workers AI - Read` only; Cloudflare's docs say a custom token needs Read + Edit
-      to run models.
-    - A dispatch-only workflow comparing three Workers AI models against the retired model's verdicts is
-      being built. Its preflight job reports whether the token can run models.
-  - Remaining owner step: bump the pins once upstream ships.
-  - Model eval results (runs 36636408073, 36638845095, 36647107365; details on #527):
-    - **Llama 3.1 8B:** agreement 58.4%; without the "prefer YES" sentence, 64.0%.
-    - **Qwen3 30B:** 47.2% (at 1024 tokens; it needs about 1k reasoning tokens).
-    - **Gemma 4 26B:** 54.8% (also at 1024 tokens; about 1k reasoning tokens, and slow).
-
-    All three over-accept, so none replaces gpt-4o-mini yet. Next candidates: a larger instruct model,
-    or the Jev classifier with a calibrated threshold.
-  - Meanwhile no new rxiv papers arrive, which does not block the S rows.
+- **Out of scope (deferred by the owner, 2026-09-29):** the dead paper-eval / issue-triage workflows
+  (GitHub Models retirement). Everything about them lives in #527 and upstream
+  gha-rxiv-paper-eval#81 / gha-issue-triage#110, not in this plan.
 - **The loop, per row:** new branch `<type>/<slug>` → write → `make check_docs check_status` (+ `test` if
   code) → lychee (offline for relative links, online for new URLs) → PR → gated admin squash
   (`/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>`) → strike the row in the same PR.
 - **Owner gates:**
   - The graph-system decision (row G) has a default, below.
-  - #527 (off-plan): the provider secret was added 2026-09-29; the token may need `Workers AI - Edit`.
 
   Nothing else is gated.
 - **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`. When WebFetch
