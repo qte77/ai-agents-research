@@ -116,7 +116,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
 - **Next, in order (START HERE, 2026-09-30):** R, B, C, S1–S6, J1–J3 and G are done; all 10 coverage gaps are
   at least partly filled. The owner added K1–K5 on 2026-09-30 (leads in "Owner-requested leads").
   1. **K5**: OpenAI apps, plugins, GPT Store and marketplace (plugins subject; also informs gap 10).
-  2. **K6**: software factory, the richest input for Y (see its lead row).
+  2. ~~**K6**~~: done 2026-09-30 (`sdlc-lcm/software-factory-landscape.md`); feeds Y (human gates at spec and merge).
   3. **K1 + K3 + K4 + K7 + K8** as one small batch: LlamaParse + `grounded_document_agent`, intent-router, the ai-engg-book, OpenResearch, human-review.
   4. **K2**: *Artificial Engineering* newsletter triage (LinkedIn; owner-gated if every fetch route is blocked).
   5. **D1** (#348, frontmatter `status:`; G's graph reads status through `doc_status`, so D1 changes only that
@@ -467,7 +467,7 @@ parser): `cd <scratch> && uvx radon cc -s -a <abs-path>`. CodeFactor is the requ
 | K3 | angel291592/intent-router (owner, 2026-09-30) | agent | Entry placed and rubric-scored, or dropped with a reason |
 | K4 | Daily Dose of DS AI engineering book (owner, 2026-09-30) | agent | Short reference entry with its license, or dropped with a reason |
 | K5 | OpenAI apps, plugins, GPT Store and marketplace (owner, 2026-09-30) | agent | Comparison page (or extension) merged, rubric-scored, current vs legacy separated, `gpts-openai.com` marked unofficial |
-| K6 | Software factory: historical, DevSecOps and agentic meanings (owner, 2026-09-30) | agent | Concept page (or extension) in `sdlc-lcm/` merged; the three meanings kept apart; agentic implementations rubric-scored; vendor framing marked self-reported |
+| ~~K6~~ | ~~Software factory: historical, DevSecOps and agentic meanings (owner, 2026-09-30)~~ | agent | Done 2026-09-30: `sdlc-lcm/software-factory-landscape.md` (Assess), three meanings kept apart; only triagebot-action rubric-scored (the ai-that-works episodes ship no code, Flue has no repo); no LICENSE on ai-that-works, `wsff.md` or triagebot-action |
 | K7 | OpenResearch desktop app, alphaXiv (owner, 2026-09-30) | agent | Entry in `non-cc/agents/` with its license and rubric row, cross-linked with Feynman, or dropped with a reason |
 | K8 | petergyang/human-review: human review gate tool (owner, 2026-09-30) | agent | Entry in the community tooling landscape with its license and rubric row, cross-linked from the ACE-FCA gate section, or dropped with a reason |
 | D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11). Folded into this arc on 2026-09-30, after G: the structural graph (option B) uses doc status as a node attribute, so it is the consumer the deferral waited for | agent (after G) | Migration PRs (~5) with the `check_status` validator passing, G's module reading `status:` from frontmatter, #348 closed |
