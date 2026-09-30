@@ -276,7 +276,39 @@ edit — an outage or missing key fails open (the edit goes through unchecked, l
 the confirmation numbers above are a small, self-selected replay with an unnamed reviewer, not a
 published methodology or dataset.
 
-Cross-ref: [agents-md-cookbook-analysis.md § Field-Study Evidence](../non-cc/protocols/agents-md-cookbook-analysis.md#field-study-evidence-coldtea-aug-2026) — Coldtea Engineering's own AGENTS.md field study, which abide's rule-enforcement product builds on; [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md) — the same one-agent-gates-another Stop-hook pattern, applied there to code review rather than rule enforcement; [system-1-decision-models-landscape.md](../non-cc/reference/system-1-decision-models-landscape.md) — the wider system-1 decision-model landscape Jev belongs to
+### Complementary Verification Evidence (Complete and Correct, 2026-09)
+
+Abide narrows one question in a legacy-code rewrite — "did this edit break a rule the team already
+wrote down" — but that is only one piece of the larger "is it complete, is it correct" evidence a
+migration needs. Three sources not otherwise in this corpus, verified first-party:
+
+- **[SWE Refactor Bench][swe-refactor-bench]** (arXiv:2608.23564) ran 520 agent-driven,
+  whole-repository stack migrations across 8 frontier models through a three-stage protocol (old
+  stack removed → existing tests pass → 6 independent agents hunt for a hidden behavioral
+  difference): only 28 of 520 runs (5.4%) pass all three stages. The paper names **Blindness** — an
+  agent that keeps or copies the original implementation so a green test suite reports success
+  without actually migrating anything — as a dominant failure mode a green suite alone cannot catch.
+- **GAO-25-107795** (`gao.gov/products/gao-25-107795`; plain text because gao.gov returns 403 to lychee) puts the US federal government's most critical legacy systems at
+  23–60 years old, and states that "as of February 2025, agencies have completed three of the 10"
+  modernizations GAO flagged in 2019 — the slow-review backdrop that per-edit rule enforcement and
+  migration benchmarks are both trying to relieve.
+- **[FreshBrew][freshbrew]** (arXiv:2510.04852) is a second, independent migration benchmark testing
+  AI agents' Java-to-JDK-17 modernization across 228 repositories — further evidence that
+  build/test-suite compliance and true modernization completeness are two different measurements.
+
+American Express's own COBOL→Java parity harness (the **Locksmith Loop**: a deterministic oracle
+comparing COBOL and generated Java under identical inputs, reaching 91.90% branch coverage on an
+internal production-like program with no human intervention) is analyzed in depth elsewhere in this
+repo and not restated here: [agentic-legacy-migration-validation-analysis.md](../sdlc-lcm/agentic-legacy-migration-validation-analysis.md).
+
+Design lens — Lindenberg's *Complete and Correct* argues the rules worth checking in a migration are
+business rules recovered from the legacy code, each traced back to the line it came from; Abide's
+committed `.abide/rubric.json` gives that same traceability for a written-down engineering rule, but
+by its own design "sets aside rules a diff alone can't settle, and much legacy knowledge is that
+kind" (Lindenberg, *Complete and Correct*, LinkedIn, 2026-09-26;
+`linkedin.com/pulse/complete-correct-andré-lindenberg-wukfe`).
+
+Cross-ref: [agents-md-cookbook-analysis.md § Field-Study Evidence](../non-cc/protocols/agents-md-cookbook-analysis.md#field-study-evidence-coldtea-aug-2026) — Coldtea Engineering's own AGENTS.md field study, which abide's rule-enforcement product builds on; [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md) — the same one-agent-gates-another Stop-hook pattern, applied there to code review rather than rule enforcement; [system-1-decision-models-landscape.md](../non-cc/reference/system-1-decision-models-landscape.md) — the wider system-1 decision-model landscape Jev belongs to; [agentic-legacy-migration-validation-analysis.md](../sdlc-lcm/agentic-legacy-migration-validation-analysis.md) — American Express's Locksmith Loop, the deterministic-oracle counterpart for the "is it correct" half of the same migration problem
 
 ---
 
@@ -483,6 +515,10 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Parry Guard][parry-guard] | CC-hook injection/secrets/exfil scanner, local DeBERTa + AST layers (44 stars, MIT; optional Llama-licensed model; v0.1.5, PyPI-verified) |
 | [Dippy][dippy] | PreToolUse bash auto-approval hook, zero-dep vendored parser (242 stars, MIT, v0.2.7) |
 | [abide][abide] | AGENTS.md rule enforcement via a Jev decision-model question per rule, per edit/turn, across Claude Code/Codex/OpenCode (457 stars, MIT) |
+| [SWE Refactor Bench (arXiv:2608.23564)][swe-refactor-bench] | 520 agent migrations, 3-stage verification, "Blindness" failure mode (abstract fetched 2026-09-30) |
+| GAO-25-107795 (`gao.gov/products/gao-25-107795`) | Federal legacy-system age (23–60 yrs) and 2019-modernization completion status (fetched 2026-09-30) |
+| [FreshBrew (arXiv:2510.04852)][freshbrew] | Java-to-JDK-17 agent migration benchmark, 228 repositories (abstract fetched 2026-09-30) |
+| André Lindenberg — *Complete and Correct* (LinkedIn, 2026-09-26; `linkedin.com/pulse/complete-correct-andré-lindenberg-wukfe`) | Design lens: recovered business rules as the unit a migration rubric should check (LinkedIn — not link-checked) |
 | [cc-sessions][cc-sessions] | DAIC session/workflow enforcement, npm+PyPI dual-packaged (1,550 stars, MIT, v0.3.6) |
 | [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (4,981 stars, MIT, v0.25.0) |
 | [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (40,485 stars, Apache-2.0, v0.9.1) |
@@ -534,6 +570,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [dippy]: https://github.com/ldayton/Dippy
 [abide]: https://github.com/coldteadotai/abide
 [typesafe-jev]: https://docs.typesafe.ai/
+[swe-refactor-bench]: https://arxiv.org/abs/2608.23564
+[freshbrew]: https://arxiv.org/abs/2510.04852
 [cc-sessions]: https://github.com/GWUDCAP/cc-sessions
 [teamai-cli]: https://github.com/Tencent/teamai-cli
 [herdr]: https://github.com/herdrdev/herdr

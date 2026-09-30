@@ -20,5 +20,6 @@ Agent memory across the corpus. Pointers only; see [the hub index](README.md).
 | [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | lossless-memory (never-summarize, timestamp-first personal memory), rubric-scored | non-cc |
 | [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | Weighted Memory Tree (arXiv 2608.20631) and JITMEM (arXiv 2609.27334) — memory-curation papers, rubric-scored | non-cc |
 | [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | Sumanth077/Hands-On-AI-Engineering `research_assistant_with_memory` — worked example, no license | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | HydraDB (object-store-native distributed graph database; RAM-cost ceiling removed via S3-backed storage + disposable query caches), rubric-scored | non-cc |
 
 Related hubs: [knowledge-graphs.md](knowledge-graphs.md), [rag.md](rag.md).

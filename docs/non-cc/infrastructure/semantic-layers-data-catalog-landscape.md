@@ -64,7 +64,7 @@ This is the formal-semantics counterpart to [The Agent-Native Layer](#the-agent-
 
 ### Agent-native ontology tools (2026 MCP wave)
 
-Four 2026 tools expose an ontology as an MCP surface for coding agents — the same "connect the agent to governed meaning" goal as Genie Ontology and OKF above, but scoped to a single ontology store rather than a whole platform. Scored 2026-09-30 against the [agent substrate rubric][rubric].
+Five 2026 tools expose an ontology as an MCP surface for coding agents — the same "connect the agent to governed meaning" goal as Genie Ontology and OKF above, but scoped to a single ontology store rather than a whole platform. Scored 2026-09-30 against the [agent substrate rubric][rubric].
 
 **[Ontology Atlas][ontology-atlas]** (MIT, 139★, pushed 2026-09-28) keeps a project's ontology as an `atlas/` folder of Markdown (`project`/`domain`/`capability`/`element`/`document` frontmatter types) that a desktop app, CLI, and MCP server read directly from disk — "local-first... no Atlas backend, account, or telemetry." Multiple coding agents (Claude Code, Codex, Cursor, Antigravity) connect via one MCP button each, and every proposed change to the ontology arrives as a Markdown diff a human reviews in Git before it lands, with unknowns surfaced as unknown rather than papered over. An `.ontology-atlas/llm-audit.jsonl` log records every model/provider transfer.
 
@@ -98,7 +98,21 @@ Four 2026 tools expose an ontology as an MCP surface for coding agents — the s
 
 `scored 2026-09-30`
 
-These four give the [agent substrate rubric][rubric] its first ontology-doc evidence for **Shared** and **Distributed**, both previously unscored here: `open-ontologies` and `Ontology Atlas` are `partial` on both, `AWS context-ontology-accelerator` is `yes` on both, and `EvoOntology` stays `no data`/`no` — a single-session plugin with no shared-store or multi-machine claim.
+**[Utopia][utopia]** (DeepLethe; Apache-2.0, 7,972★, `gh api` 2026-09-30) is a single-binary (Rust + Postgres) "enterprise world model" that builds a **bitemporal knowledge graph** bottom-up from ingested documents rather than a hand-authored top-down ontology — its own README asks readers not to call it "an open-source take on Palantir," framing itself instead as "a different route to enterprise intelligence, built bottom up from knowledge governance to trustworthy decisions and simulation." A new knowledge base starts from one of five bundled vocabulary packs (schema.org, W3C Org, PROV-O, FOAF, IOF Core); a phrase is promoted to a relation only once it recurs across at least two documents, and every fact carries two clocks — `valid_from`/`valid_to` for when it held in the world, `recorded_at`/`invalidated_at` for when the system learned it — because corrections never overwrite, they supersede: "the change of mind is information" (verbatim from the project's own [`docs/decisions/README.md`][utopia-decisions] conventions). That `docs/decisions/` folder records real failures behind the design: decision [0012][utopia-0012] found 102 of 130 checkable facts written backwards under a naive domain/range check (schema.org's `employee(organization→person)` inverted to "Elon Musk employee Microsoft"), verdict "an empty predicate is honest silence; a reversed edge is a confident error." An MCP server exposes each knowledge base's read tools (facts-as-of-a-date, graph paths, "what changed last week") to Claude Desktop, Cursor and other clients with fine-grained permissions; anything an agent wants to record goes to a human review queue first.
+
+Design lens — Lindenberg's *The Change of Mind Is Information* treats Utopia's bitemporal ledger as evidence that a four-week-old open-source project can already do "the knowledge half" of an ontology platform priced in the seven figures, provided it takes correction as seriously as its own decision records show — a reversed or superseded fact is never silently fixed in place, it is superseded and kept (Lindenberg, *The Change of Mind Is Information*, LinkedIn, 2026-09-05; `linkedin.com/pulse/change-mind-information-andré-lindenberg-uvcue`). That reframes **Versionable**/**Traceable** as properties a bottom-up ontology earns through its correction history, not just its schema.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| partial [README][utopia] (an MCP server "for every knowledge base" lets multiple agent clients — Claude Desktop, Cursor, Workbuddy — connect with fine-grained permissions, but writes funnel through one human review queue; no multi-writer concurrency documented) | no [README][utopia] ("One Rust binary and one Postgres... nothing else to run" — single-node deployment, no cluster/replica documented) | partial [README][utopia] · [decisions/README.md][utopia-decisions] (a term must recur in ≥2 documents before promotion to a relation — a deterministic gate — but the underlying LLM extraction itself is not pinned/seeded) | yes [README][utopia] (five swappable vocabulary packs at knowledge-base creation; ontology axioms are user-editable) | yes [decisions/README.md][utopia-decisions] ("a correction inserts a new row that supersedes the old one, because the change of mind is information"; every fact carries `valid_from`/`valid_to` + `recorded_at`/`invalidated_at`) | yes [README][utopia] · [decision 0012][utopia-0012] (Turtle/JSON-LD export with intervals; `docs/decisions/` records real extraction failures with verdicts, e.g. "102 of 130 checkable facts were written backwards") |
+
+`scored 2026-09-30`
+
+These five give the [agent substrate rubric][rubric] its first ontology-doc evidence for **Shared** and **Distributed**, both previously unscored here: `open-ontologies` and `Ontology Atlas` are `partial` on both, `AWS context-ontology-accelerator` is `yes` on both, `EvoOntology` stays `no data`/`no` — a single-session plugin with no shared-store or multi-machine claim — and `Utopia` is `partial`/`no` (one shared knowledge base behind an MCP server, gated through a single human review queue; single-binary deployment, no cluster documented).
+
+**Semantica's decision-graph audit trail** is a candidate for this same "ontology as MCP surface" pattern; its full profile (decision-as-graph-node, PROV-O lineage, bi-temporal facts, point-in-time snapshots) lives elsewhere in this corpus and is not restated here: [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms][semantica-frameworks]. Two facts add to that profile. Timing matters here: [EU AI Act Article 12][ai-act-12] requires high-risk systems to "technically allow for the automatic recording of events... over their lifetime," and the currently amended Act sets that deadline at 2027-12-02 for Annex III systems (2028-08-02 for Annex I) — later than the original date Lindenberg's issue cites, which this entry could not independently re-verify against a primary pre-amendment source. Semantica's own [CHANGELOG][semantica-changelog] is harder evidence than the audit-trail pitch itself: v0.6.7 (2026-08-28) fixed `get_causal_chain()` silently returning an empty chain whenever a causal edge used the analyzer's present-tense vocabulary (`causes`/`influences`/`precedes`) rather than the canonical uppercase form — "silent, and in the dangerous direction for a compliance trace," in the project's own words — fixed a `SHACLGenerator` that produced shapes matching no data so `pySHACL` reported `conforms: True` on plainly violating input, and fixed every RDF export path except JSON-LD silently dropping an entity's source document, page, extractor and reviewer.
+
+Design lens — Lindenberg's *Audit the Auditor* treats a CHANGELOG, not a README pitch, as the real evidence a decision-audit-trail tool is used in earnest: "an audit trail does not fail by crashing; it fails by giving a reassuring answer" (Lindenberg, *Audit the Auditor*, LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`).
 
 ## The Agent-Native Layer
 
@@ -137,7 +151,12 @@ A complementary research direction formalizes *why* this grounding improves reli
 | [open-ontologies README][open-ontologies] | Rust MCP server, Lean-4-certified ontology plan/apply/rollback; MIT license and star count verified 2026-09-30 |
 | [EvoOntology README][evoontology] · [arXiv:2609.15779][evoontology-paper] | Self-evolving ontology layer for data agents; MIT license and star count verified 2026-09-30 |
 | [AWS context-ontology-accelerator README][coa] · [ontology-engine README][coa-engine] | Namespace-RBAC, AWS CDK-deployed semantic context platform; Apache-2.0 license and star count verified 2026-09-30 |
-| [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the four ontology tools above |
+| [Utopia README][utopia] · [decisions/README.md][utopia-decisions] · [decision 0012][utopia-0012] | Bottom-up bitemporal ontology platform; Apache-2.0 license and star count verified 2026-09-30 (`gh api`) |
+| [Semantica CHANGELOG][semantica-changelog] | v0.6.7 (2026-08-28) fixes verified against the changelog text: empty causal chain, SHACL false-conforms, dropped RDF provenance metadata |
+| [EU AI Act Article 12 explainer][ai-act-12] | Record-keeping requirement text and the amended Annex III deadline (2027-12-02) |
+| André Lindenberg — *The Change of Mind Is Information* (LinkedIn, 2026-09-05; `linkedin.com/pulse/change-mind-information-andré-lindenberg-uvcue`) | Design lens: bitemporal correction as the cheap starting point for an agent-facing ontology (LinkedIn — not link-checked) |
+| André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
+| [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
 
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
@@ -162,4 +181,10 @@ A complementary research direction formalizes *why* this grounding improves reli
 [evoontology-paper]: https://arxiv.org/abs/2609.15779
 [coa]: https://github.com/aws/context-ontology-accelerator
 [coa-engine]: https://github.com/aws/context-ontology-accelerator/tree/main/packages/ontology-engine
+[utopia]: https://github.com/deeplethe/utopia
+[utopia-decisions]: https://github.com/deeplethe/utopia/blob/dev/docs/decisions/README.md
+[utopia-0012]: https://github.com/deeplethe/utopia/blob/dev/docs/decisions/0012-the-ontology-is-a-contract-not-a-suggestion.md
+[semantica-frameworks]: ../frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms
+[semantica-changelog]: https://github.com/semantica-agi/semantica/blob/main/CHANGELOG.md
+[ai-act-12]: https://artificialintelligenceact.eu/article/12/
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
