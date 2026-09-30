@@ -115,7 +115,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     **pass on the live Pages site**. #504 closed.
 - **Next, in order (START HERE, 2026-09-30):** R, B, C, S1–S6, J1–J3 and G are done; all 10 coverage gaps are
   at least partly filled. The owner added K1–K5 on 2026-09-30 (leads in "Owner-requested leads").
-  1. **K5**: OpenAI apps, plugins, GPT Store and marketplace (plugins subject; also informs gap 10).
+  1. ~~**K5**~~: done 2026-09-30 (`non-cc/protocols/openai-apps-plugins-analysis.md`).
   2. ~~**K6**~~: done 2026-09-30 (`sdlc-lcm/software-factory-landscape.md`); feeds Y (human gates at spec and merge).
   3. ~~**K1 + K3 + K4 + K7 + K8**~~: done 2026-09-30 (K4 dropped: no reachable source).
   4. **K2**: *Artificial Engineering* newsletter triage (LinkedIn; owner-gated if every fetch route is blocked).
@@ -466,7 +466,7 @@ parser): `cd <scratch> && uvx radon cc -s -a <abs-path>`. CodeFactor is the requ
 | K2 | *Artificial Engineering* newsletter triage and the rUv "no moat / fluid software" post as design lenses (owner, 2026-09-30) | agent → owner if blocked | Lead list on disk; high-priority issues cited as design lenses; or recorded owner-gated if LinkedIn blocks every route |
 | ~~K3~~ | ~~angel291592/intent-router (owner, 2026-09-30)~~ | agent | Done 2026-09-30: frameworks §2 entry, rubric-scored (MIT, v1.2.0); an intent compiler upstream of Jev/Laya, cross-linked |
 | ~~K4~~ | ~~Daily Dose of DS AI engineering book (owner, 2026-09-30)~~ | agent | Dropped 2026-09-30: the repo has no license and holds only a landing page; the book sits behind an email signup, and the WikiSkill citation could not be found on any reachable page |
-| K5 | OpenAI apps, plugins, GPT Store and marketplace (owner, 2026-09-30) | agent | Comparison page (or extension) merged, rubric-scored, current vs legacy separated, `gpts-openai.com` marked unofficial |
+| ~~K5~~ | ~~OpenAI apps, plugins, GPT Store and marketplace (owner, 2026-09-30)~~ | agent | Done 2026-09-30: `non-cc/protocols/openai-apps-plugins-analysis.md`, rubric-scored; the 2023 plugins, the 2024 GPT Store and the current plugins kept apart; three different "marketplaces" separated. OpenAI documents the Agent Plugins schema as its format, but no example plugin uses it yet. Gap 10: pinning is opt-in, and the lockfile has placeholder hashes. `openai/plugins` has no license. `platform.openai.com` is login-gated, so it is cited only via public docs |
 | ~~K6~~ | ~~Software factory: historical, DevSecOps and agentic meanings (owner, 2026-09-30)~~ | agent | Done 2026-09-30: `sdlc-lcm/software-factory-landscape.md` (Assess), three meanings kept apart; only triagebot-action rubric-scored (the ai-that-works episodes ship no code, Flue has no repo); no LICENSE on ai-that-works, `wsff.md` or triagebot-action |
 | ~~K7~~ | ~~OpenResearch desktop app, alphaXiv (owner, 2026-09-30)~~ | agent | Done 2026-09-30: `non-cc/agents/openresearch-analysis.md` (Assess, MIT), cross-linked with Feynman; a separate product that also uses alphaXiv for paper lookup |
 | ~~K8~~ | ~~petergyang/human-review: human review gate tool (owner, 2026-09-30)~~ | agent | Done 2026-09-30: community tooling landscape entry (MIT, v0.8.2), rubric-scored, linked from the ACE-FCA gate section; the K6 cross-link follows in the main session |
