@@ -10,7 +10,7 @@ Extension packaging: plugins, MCP servers, marketplaces across the corpus. Point
 | [CC-cowork-plugins-enterprise-analysis.md](../cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) | Cowork plugin architecture and enterprise distribution | cc-native |
 | [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) | Claude Connectors (Google, Slack, Microsoft 365) | cc-native |
 | [CC-mcp-hardware-standard-analysis.md](../cc-native/plugins-ecosystem/CC-mcp-hardware-standard-analysis.md) | MCP hardware standard research preview | cc-native |
-| [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) | Firecrawl and Playwright MCP plugins | cc-native |
+| [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) | Firecrawl and Playwright MCP plugins; alternative browser-agent tools incl. jev-ultrafast (decision-model-driven action selection) | cc-native |
 | [CC-community-plugins-landscape.md](../cc-community/CC-community-plugins-landscape.md) | Community plugin catalogs (awesome-claude-code, awesome-claude-code-plugins) | cc-community |
 | [CC-plugin-packaging-research.md § 5](../cc-native/plugins-ecosystem/CC-plugin-packaging-research.md) | Version pinning and reproducible installs (manifest `version`; marketplace `ref`/`sha`/`sha256`) | cc-native |
 | [agent-plugins-standard-analysis.md § Concrete implementation](../non-cc/protocols/agent-plugins-standard-analysis.md#concrete-implementation-mitosis-memory-mitosis-agent-plugin) | Agent Plugins open standard (v1.0.0); a concrete cross-client implementation (Mitosis) | non-cc |

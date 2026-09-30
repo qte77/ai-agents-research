@@ -5,8 +5,8 @@ purpose: Analysis of OpenAI's official Claude Code plugin that delegates to Code
 category: analysis
 platform_scope: [claude-code, codex]
 created: 2026-07-08
-updated: 2026-07-08
-validated_links: 2026-07-08
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Assess
@@ -52,7 +52,10 @@ data-flow consideration, not a fit for key-free/offline workflows.
 
 Cross-ref: [CC-community-plugins-landscape.md](CC-community-plugins-landscape.md) ·
 [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) ·
-[codex-cli-analysis.md](../non-cc/coding-agents/codex-cli-analysis.md)
+[codex-cli-analysis.md](../non-cc/coding-agents/codex-cli-analysis.md) ·
+[CC-community-tooling-landscape.md § abide](CC-community-tooling-landscape.md#abide-coldteadotai) —
+the same one-agent-gates-another Stop-hook pattern, applied to AGENTS.md rule enforcement
+(a decision-model question per rule) rather than code review
 
 ## Sources
 

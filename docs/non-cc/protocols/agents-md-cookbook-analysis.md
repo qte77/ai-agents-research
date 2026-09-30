@@ -4,8 +4,8 @@ purpose: Assess a tested AGENTS.md template/linter/migrator kit and its claim of
 source: https://github.com/Taiizor/agents-md-cookbook
 platform_scope: [cursor, openai-codex, github-copilot, windsurf, cline, zed, amp, google-jules, opencode, roocode, claude-code]
 created: 2026-07-23
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Assess
@@ -67,6 +67,12 @@ total AGENTS.md word count, with rules-and-boundaries sections alone
 averaging 11.3% — this cookbook's per-template line-count guidance is
 consistent with, though not derived from, this dataset.
 
+Coldtea Engineering also ships [abide][abide], a hooks-based tool that enforces individual
+AGENTS.md rules at edit/turn time in Claude Code, Codex, and OpenCode by asking TypeSafe's Jev
+decision model one typed question per rule — the enforcement counterpart to this field study's
+measurement of what rules repositories actually write. See
+[CC-community-tooling-landscape.md § abide][abide-analysis].
+
 ## Corpus Relevance
 
 No prior coverage — `git grep` across `docs/` for `agents-md-cookbook`,
@@ -100,6 +106,7 @@ answer to it.
 | [COMPATIBILITY.md][compat] | Native-vs-adapter classification (Claude Code = ADAPTER) |
 | GitHub API repo metadata, 2026-09-24 | Stars(19)/watchers(19)/forks(2)/issues(0), dates, v1.0.0 = v1 tag alias |
 | [Coldtea AGENTS.md field study][field-study] | 100-repo sample stats: adoption, word count, rule-language prevalence |
+| [abide][abide] | Coldtea's own AGENTS.md rule-enforcement tool (cross-ref) |
 
 [agents-standard]: https://agents.md
 [repo]: https://github.com/Taiizor/agents-md-cookbook
@@ -108,3 +115,5 @@ answer to it.
 [compat]: https://github.com/Taiizor/agents-md-cookbook/blob/main/COMPATIBILITY.md
 [agentbench]: https://arxiv.org/abs/2602.11988
 [field-study]: https://www.coldtea.ai/blog/agents-md-field-study
+[abide]: https://github.com/coldteadotai/abide
+[abide-analysis]: ../../cc-community/CC-community-tooling-landscape.md#abide-coldteadotai

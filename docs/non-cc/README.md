@@ -81,6 +81,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [weco-aide-recursive-self-improvement-analysis.md](reference/weco-aide-recursive-self-improvement-analysis.md) | AIDE² — Weco AI's outer-loop-rewrites-inner-loop recursive self-improvement experiment (100 iterations); also covers RRSI (Google, code available) and ROFT (arXiv 2609.35741, paper only) | Blog + arXiv technical report (no public code) |
 | [poolside-laguna-analysis.md](reference/poolside-laguna-analysis.md) | Poolside Laguna S 2.1 — 118B-MoE frontier agentic-coding model, 1M-token context, long-horizon autonomous coding | Blog (vendor-reported benchmarks; license unstated) |
 | [orcareplay-analysis.md](reference/orcareplay-analysis.md) | OrcaReplay — record/replay/fork debugger for coding-agent runs, byte-for-byte deterministic offline replay | Repo + docs (Apache-2.0 code / CC BY 4.0 trace spec) |
+| [system-1-decision-models-landscape.md](reference/system-1-decision-models-landscape.md) | System-1 decision models landscape — open-weight/research alternatives to TypeSafe's Jev (Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector, JevK5, SemIf) plus the JEV-as-a-Judge paper (CMU); rubric-scored | Repos + papers (Mixed: Apache-2.0/MIT open weights, one research-only model) |
 
 ## Context & Memory Infrastructure
 
