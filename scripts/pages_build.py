@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import re
+import tomllib
 
 # -- Fonts -------------------------------------------------------------------
 # Self-hosted Inter + JetBrains Mono (latin woff2), fetched on demand into
@@ -98,7 +99,38 @@ def restyle_graph(html: str) -> str:
     )
     if _BRAND_HEAD not in html:
         html = html.replace("</head>", _BRAND_HEAD + "</head>", 1)
+    if _BUILD_INFO_TAG not in html:
+        html = html.replace("</body>", _BUILD_INFO_TAG + "\n</body>", 1)
     return html
+
+
+# -- Build metadata ------------------------------------------------------------
+# The Pages deploy writes build.json (scripts/build-site-info.py); ui/build-info.js
+# shows version, last-modified date and commit link on each page. The graphify page
+# is rebuilt locally, so it reports the commit that last changed ui/graph.html,
+# not the deploy commit.
+_BUILD_INFO_TAG = '<script src="build-info.js" data-artifact="graph" defer></script>'
+
+
+def read_version(pyproject_text: str) -> str | None:
+    """Release version from ``[tool.bumpversion] current_version``, or ``None``."""
+    data = tomllib.loads(pyproject_text)
+    return data.get("tool", {}).get("bumpversion", {}).get("current_version")
+
+
+def _commit(sha: str | None, date: str | None, repo_url: str) -> dict | None:
+    if not sha:
+        return None
+    return {"commit": sha, "short": sha[:7], "date": (date or "")[:10],
+            "url": f"{repo_url}/commit/{sha}"}
+
+
+def site_info(version: str | None, commit: str, commit_date: str,
+              graph_commit: str | None, graph_date: str | None, repo_url: str) -> dict:
+    """Metadata for build.json: release version, deploy commit, and the graph's own commit."""
+    return {"version": version,
+            "site": _commit(commit, commit_date, repo_url),
+            "graph": _commit(graph_commit, graph_date, repo_url)}
 
 
 # -- Graph node pruning -------------------------------------------------------

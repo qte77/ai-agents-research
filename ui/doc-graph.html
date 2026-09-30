@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Structural doc graph · ai-agents-research</title>
+  <meta name="description" content="Deterministic structural graph of the ai-agents-research docs: docs, topic hubs, cited domains and the links between them." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "system";
+  </script>
+  <style>
+    body { display: flex; flex-direction: column; height: 100vh; }
+    .bar {
+      display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--unit) * 2);
+      padding: var(--unit) calc(var(--unit) * 2); border-bottom: 1px solid var(--border);
+      background: var(--surface); font-size: 0.875rem;
+    }
+    .bar h1 { font-size: 1rem; margin-right: auto; }
+    .bar label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .bar input { accent-color: var(--primary); } /* brand: no browser-default blue controls */
+    .bar input[type="search"] {
+      background: var(--bg); color: var(--text); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 4px 8px; font: inherit;
+    }
+    .stage { flex: 1; display: flex; min-height: 0; }
+    /* min-height: 0 lets the canvas shrink with its flex parent; without it the stacked
+       phone layout feeds a ResizeObserver loop (vis canvas grows its own container). */
+    #graph { flex: 1; min-width: 0; min-height: 0; position: relative; }
+    #info {
+      width: 300px; flex-shrink: 0; overflow-y: auto; padding: calc(var(--unit) * 2);
+      border-left: 1px solid var(--border); font-size: 0.875rem; color: var(--text-muted);
+    }
+    #info h2 { font-size: 1rem; margin: 0 0 var(--unit); color: var(--text); }
+    #info dt { font-weight: 600; color: var(--text); }
+    #info dd { margin: 0 0 var(--unit); overflow-wrap: anywhere; }
+    @media (max-width: 720px) {
+      .stage { flex-direction: column; }
+      #info { width: auto; max-height: 35vh; border-left: 0; border-top: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <h1><a href="index.html">ai-agents-research</a> · structural doc graph</h1>
+    <input id="search" type="search" placeholder="Find a doc…" aria-label="Find a doc" />
+    <label><input id="domains" type="checkbox" /> Show cited domains</label>
+    <select id="theme" aria-label="Color theme">
+      <option value="system">System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+  <div class="stage">
+    <div id="graph" role="img" aria-label="Doc graph"></div>
+    <aside id="info">
+      <h2>How to read this</h2>
+      <p>Dots are docs; diamonds are topic hubs; squares are cited external domains (hidden by default).
+        Edges are real links in the docs. Built by <code>make graph-data</code> without an LLM, so the
+        same docs always give the same graph.</p>
+      <p id="stats"></p>
+      <p>Click a node for details.</p>
+    </aside>
+  </div>
+  <script src="vendor/vis-network.min.js"></script>
+  <script src="build-info.js" defer></script>
+  <script>
+    (function () {
+      var REPO = "https://github.com/qte77/ai-agents-research/blob/main/";
+      var sel = document.getElementById("theme");
+      sel.value = localStorage.getItem("theme") || "system";
+
+      function token(name) {
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      }
+      function el(tag, text) {
+        var e = document.createElement(tag);
+        e.textContent = text;
+        return e;
+      }
+      function nodeStyle(n) {
+        if (n.type === "domain") {
+          return { shape: "square", size: 5, color: token("--text-muted") };
+        }
+        var hub = n.bucket === "_topics";
+        return { shape: hub ? "diamond" : "dot", size: hub ? 14 : 8,
+                 color: hub ? token("--text") : token("--primary") };
+      }
+
+      fetch("doc-graph.json").then(function (r) {
+        if (!r.ok) { throw new Error("HTTP " + r.status); }
+        return r.json();
+      }).then(render).catch(function (err) {
+        var info = document.getElementById("info");
+        info.textContent = "";
+        info.appendChild(el("h2", "Graph data not available"));
+        info.appendChild(el("p", "doc-graph.json could not be loaded (" + err.message +
+          "). Run `make graph-data`, then serve ui/ (for example `make preview`)."));
+      });
+
+      function render(data) {
+        var byId = {};
+        data.nodes.forEach(function (n) { byId[n.id] = n; });
+        var nodes = new vis.DataSet(data.nodes.map(function (n) {
+          var s = nodeStyle(n);
+          return { id: n.id, label: n.type === "domain" ? n.title : "", title: n.title,
+                   shape: s.shape, size: s.size, color: s.color, hidden: n.type === "domain" };
+        }));
+        var edges = new vis.DataSet(data.edges.map(function (e, i) {
+          return { id: i, from: e.source, to: e.target, hidden: e.kind === "cites",
+                   arrows: e.kind === "cites" ? "" : "to", kind: e.kind };
+        }));
+        var docs = data.nodes.filter(function (n) { return n.type === "doc"; }).length;
+        document.getElementById("stats").textContent = docs + " docs, " +
+          (data.nodes.length - docs) + " domains, " + data.edges.length + " edges.";
+
+        var network = new vis.Network(document.getElementById("graph"), { nodes: nodes, edges: edges }, {
+          physics: { solver: "forceAtlas2Based", stabilization: { iterations: 200 } },
+          edges: { color: { color: token("--border"), highlight: token("--primary") }, width: 1, smooth: false },
+          nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
+          interaction: { hover: true, tooltipDelay: 120 }
+        });
+
+        network.on("click", function (params) {
+          if (params.nodes.length) { showNode(byId[params.nodes[0]], data.edges); }
+        });
+
+        document.getElementById("domains").addEventListener("change", function (ev) {
+          var show = ev.target.checked;
+          nodes.update(data.nodes.filter(function (n) { return n.type === "domain"; })
+            .map(function (n) { return { id: n.id, hidden: !show }; }));
+          edges.update(edges.get({ filter: function (e) { return e.kind === "cites"; } })
+            .map(function (e) { return { id: e.id, hidden: !show }; }));
+        });
+
+        document.getElementById("search").addEventListener("change", function (ev) {
+          var q = ev.target.value.trim().toLowerCase();
+          var hit = q && data.nodes.find(function (n) {
+            return n.type === "doc" && (n.id.toLowerCase().indexOf(q) >= 0 ||
+              String(n.title).toLowerCase().indexOf(q) >= 0);
+          });
+          if (hit) {
+            network.selectNodes([hit.id]);
+            network.focus(hit.id, { scale: 1.2, animation: true });
+            showNode(hit, data.edges);
+          }
+        });
+      }
+
+      function showNode(n, allEdges) {
+        var info = document.getElementById("info");
+        info.textContent = "";
+        info.appendChild(el("h2", n.title));
+        var dl = document.createElement("dl");
+        function row(k, v) { dl.appendChild(el("dt", k)); dl.appendChild(el("dd", v)); }
+        var inbound = allEdges.filter(function (e) { return e.target === n.id; }).length;
+        var outbound = allEdges.filter(function (e) { return e.source === n.id; }).length;
+        if (n.type === "doc") {
+          row("Path", n.id);
+          row("Bucket", n.bucket);
+          row("Status", n.status || "none");
+        } else {
+          row("Domain", n.title);
+        }
+        row("Links in / out", inbound + " / " + outbound);
+        info.appendChild(dl);
+        if (n.type === "doc") {
+          var a = el("a", "Open on GitHub →");
+          a.href = REPO + n.id;
+          info.appendChild(a);
+        }
+      }
+
+      sel.addEventListener("change", function () {
+        localStorage.setItem("theme", sel.value);
+        document.documentElement.dataset.theme = sel.value;
+        location.reload();
+      });
+    })();
+  </script>
+</body>
+</html>

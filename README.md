@@ -7,7 +7,7 @@
 [![Lint](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml/badge.svg)](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/qte77/ai-agents-research/badge)](https://www.codefactor.io/repository/github/qte77/ai-agents-research)
 
-**Live:** [knowledge graph](https://qte77.github.io/ai-agents-research/graph.html) · [site](https://qte77.github.io/ai-agents-research/)
+**Live:** [knowledge graph](https://qte77.github.io/ai-agents-research/graph.html) · [structural doc graph](https://qte77.github.io/ai-agents-research/doc-graph.html) · [site](https://qte77.github.io/ai-agents-research/)
 
 ## What
 
