@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Research (informational)
@@ -241,6 +241,45 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
+## abide (coldteadotai)
+
+**Repo**: [coldteadotai/abide][abide] | **Stars**: 457 | **License**: MIT (confirmed against
+`LICENSE`) | **Version**: latest tag v0.0.4, no GitHub Release (pushed 2026-09-29, `gh api` 2026-09-30)
+
+Hooks into Claude Code, Codex, and OpenCode to catch AGENTS.md/CLAUDE.md rules that no linter can
+check — "never let a raw error reach a user," "don't create premature abstractions" — and has the
+agent repair the break in the same turn. On every edit (or turn, for rules that only make sense
+against a whole diff) it asks [Jev][typesafe-jev], TypeSafe's decision model, one typed question
+per rule and gets a calibrated probability back; Jev sees only the rule and the diff, never the
+conversation, so edit 200 is checked the same as edit 1. A committed, human-readable
+`.abide/rubric.json` holds the compiled rules, each tagged with the exact instruction-file line it
+came from, so a wrong verdict is a rule to rewrite rather than a black box.
+
+### Measured vs. the project's own claims
+
+The README reports a replay of **93 real Claude Code sessions (1,256 edits, 147 turns) in two
+repos against their own AGENTS.md**, for 22 cents: Jev flagged 39 edits and 15 turns, and an
+**unnamed** independent reviewer confirmed **10 of those 39** edit-level catches and **11 of those
+15** turn-level catches. The often-quoted "1 in 13 turns break a rule" and "300 ms per check, a
+tenth of a cent per turn" figures come from this same self-run replay (dated 2026-09-18, direct to
+TypeSafe pricing) — not an independent benchmark. "Up to 100× cheaper" than an ordinary LLM call is
+the project's own arithmetic (a typed question needs no free-text generation to parse).
+
+### Adoption Considerations
+
+**Strengths**: works across three agents (Claude Code, Codex, OpenCode) from one `npx` install;
+per-repo `.abide/rubric.json` is auditable and repo-portable; `abide calibrate`/`abide tune` give a
+documented path for fixing rules that never fire, rather than silently ignoring them.
+
+**Risks**: depends on a TypeSafe (or Vercel AI Gateway) API key and third-party inference for every
+edit — an outage or missing key fails open (the edit goes through unchecked, logged as a miss);
+the confirmation numbers above are a small, self-selected replay with an unnamed reviewer, not a
+published methodology or dataset.
+
+Cross-ref: [agents-md-cookbook-analysis.md § Field-Study Evidence](../non-cc/protocols/agents-md-cookbook-analysis.md#field-study-evidence-coldtea-aug-2026) — Coldtea Engineering's own AGENTS.md field study, which abide's rule-enforcement product builds on; [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md) — the same one-agent-gates-another Stop-hook pattern, applied there to code review rather than rule enforcement; [system-1-decision-models-landscape.md](../non-cc/reference/system-1-decision-models-landscape.md) — the wider system-1 decision-model landscape Jev belongs to
+
+---
+
 ## cc-sessions (GWUDCAP)
 
 **Repo**: [GWUDCAP/cc-sessions][cc-sessions] | **Stars**: 1,550 | **License**: MIT | **Version**: v0.3.6 (2025-10-17; README banner stale at "v0.3.0")
@@ -350,6 +389,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
 | **Parry Guard** | Injection/secrets/exfil scanning | Hooks (PreToolUse + PostToolUse + UserPromptSubmit) | Local ML (DeBERTa v3) + AST/regex layers, fail-closed | Early (44 stars, v0.1.5) |
 | **Dippy** | Permission auto-approval | PreToolUse hook (Bash matcher) | Static bash-AST safe/unsafe classification + steerable deny messages | Active (242 stars, v0.2.7) |
+| **abide** | AGENTS.md rule enforcement | Hooks (Claude Code, Codex, OpenCode) | Per-edit/turn Jev decision-model question per rule, agent self-repairs | Early (457 stars, v0.0.4) |
 | **cc-sessions** | Session/workflow enforcement | Hooks + subagents + trigger phrases | DAIC tool-gating, task↔branch binding | Adopted but dormant (1,550 stars, v0.3.6, no commits since 2025-10) |
 | **TeamAI-CLI** | Team-shared AI config | Skill + CLI (git-backed shared repo) | Sync skills/rules/MCP/hooks across 15+ harnesses | Active (4,981 stars, v0.25.0) |
 | **herdr** | Agent session runtime | CLI (owns agent terminals + socket API) | Persistent background sessions across disconnect/restart | Active (40,485 stars, v0.9.1) |
@@ -386,6 +426,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
 | [Parry Guard][parry-guard] | CC-hook injection/secrets/exfil scanner, local DeBERTa + AST layers (44 stars, MIT; optional Llama-licensed model; v0.1.5, PyPI-verified) |
 | [Dippy][dippy] | PreToolUse bash auto-approval hook, zero-dep vendored parser (242 stars, MIT, v0.2.7) |
+| [abide][abide] | AGENTS.md rule enforcement via a Jev decision-model question per rule, per edit/turn, across Claude Code/Codex/OpenCode (457 stars, MIT) |
 | [cc-sessions][cc-sessions] | DAIC session/workflow enforcement, npm+PyPI dual-packaged (1,550 stars, MIT, v0.3.6) |
 | [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (4,981 stars, MIT, v0.25.0) |
 | [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (40,485 stars, Apache-2.0, v0.9.1) |
@@ -434,6 +475,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [cc-switch]: https://github.com/farion1231/cc-switch
 [parry-guard]: https://github.com/vaporif/parry-guard
 [dippy]: https://github.com/ldayton/Dippy
+[abide]: https://github.com/coldteadotai/abide
+[typesafe-jev]: https://docs.typesafe.ai/
 [cc-sessions]: https://github.com/GWUDCAP/cc-sessions
 [teamai-cli]: https://github.com/Tencent/teamai-cli
 [herdr]: https://github.com/herdrdev/herdr

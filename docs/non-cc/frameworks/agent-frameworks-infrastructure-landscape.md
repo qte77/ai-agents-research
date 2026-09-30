@@ -263,7 +263,7 @@ code branches on directly, backed by a probability rather than free text.
   and the qte77/feelings measured pre-CI code-review-gate pilot. It ranks changes well,
   but its threshold needs setting per codebase — a fixed 0.70 cutoff wrongly flagged
   23–30% of clean changes on a codebase it wasn't tuned on, vs. 1.7% on the ones it was.
-- [Laya](https://github.com/NandhaKishorM/laya) — open-weight (Apache-2.0)
+- [Laya](https://github.com/NandhaKishorM/laya) ([full entry](../reference/system-1-decision-models-landscape.md#laya-nandhakishorm)) — open-weight (Apache-2.0)
   non-autoregressive alternative; its README claims its answer payload is
   schema-identical to Jev's (`choice`/`score`/`noul` plus a token-usage block), so an
   existing Jev client can repoint its base URL. Full entry:

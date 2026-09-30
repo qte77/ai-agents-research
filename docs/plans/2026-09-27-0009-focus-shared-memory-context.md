@@ -60,12 +60,16 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     1 of 59 clean flagged, about 70x faster at p95 and 80x cheaper than Claude; the threshold does not transfer
     to yt-dlp, 23–30% false flags). alibaba/open-code-review (Apache-2.0) is in the code-review landscape.
     BoundaryML/feelings still has no LICENSE file. §8 now lists decision models (Jev, Laya).
-- **Next, in order (START HERE, 2026-09-30):** R, B, C, S1–S6, J1 and J2 are done; all 10 coverage gaps are at
+  - Row J3 (2026-09-30): a new `non-cc/reference/system-1-decision-models-landscape.md` covers Laya, kev, CLM,
+    GLiNER2.5-Decide, RuVector, BioDecision-4B, JEV-as-a-Judge (arXiv 2609.26550, CMU), probably, JevK5 and
+    SemIf. abide goes in the community tooling landscape (the maker's own replay: a reviewer confirmed 10 of
+    Jev's 39 flagged edits), jev-ultrafast in web-scraping and jevgrep in code-tooling. The pages are
+    cross-linked with the Jev page. Unconfirmed claims were dropped: CLM's Stanford/NVIDIA credit, and
+    probably as the inspiration for feelings.
+- **Next, in order (START HERE, 2026-09-30):** R, B, C, S1–S6 and J1–J3 are done; all 10 coverage gaps are at
   least partly filled.
-  1. **J3** (#517): the system-1 decision-model row, in the same subagent-brief pattern (in flight).
-     Leads are in "Ranked backlog" (J rows); the X leads stay deferred.
-  2. **Then:** Y (synthesis), G (graph system, default C confirmed by S3), D1 (frontmatter `status:`,
-     folded in 2026-09-30: G's structural graph is the first consumer of `status:`), Z (close-out).
+  1. **Y** (synthesis), then **G** (graph system, default C confirmed by S3), **D1** (frontmatter `status:`,
+     after G: G's structural graph is its first consumer), and **Z** (close-out).
 - **Out of scope (deferred by the owner, 2026-09-29):** the dead paper-eval / issue-triage workflows
   (GitHub Models retirement). Everything about them lives in #527 and upstream
   gha-rxiv-paper-eval#81 / gha-issue-triage#110, not in this plan.
@@ -212,7 +216,7 @@ LICENSE file during research.
   them when researching.
 - **Promoted 2026-09-29 (owner):** J3 became the single system-1 decision-model batch. CLM/CLM-8B,
   GLiNER2.5-Decide, RuVector and Jev-as-a-Judge moved to P1 (from P2/P3). BioDecision-4B stays a one-line
-  domain example. JevK5 and Semlf are only comparison names in the Fastino post; add them only if a source
+  domain example. JevK5 and SemIf (spelled "Semlf" here earlier) are only comparison names in the Fastino post; add them only if a source
   turns up. The table therefore has 47 rows: 42 ranked P1, the owner-added arXiv 2608.11095, and these 4.
 - **Owner qualifiers kept:** tysoncung is P3 (low); driceroland/Search is P2 (only if its README shows
   agent use).
@@ -359,7 +363,7 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 | ~~I2~~ | ~~Ingest screenshot batch 3 (20 images)~~ | agent | Done 2026-09-29 (#522): `batch3/merged.json`; leads in the Source map; feeds row B; jevgrep added to #517 |
 | ~~J1~~ | ~~#515: Jev (TypeSafe) analysis page: system-one classifier as a pre-CI code-change gate (feelings pilot results); fills the `agentic-sdlc-patterns.md` "no review agent" gap~~ | agent | Done 2026-09-30: `non-cc/infrastructure/jev-analysis.md` (Trial), gap row repointed, open-code-review added; #515 closed by the PR |
 | ~~J2~~ | ~~#516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers~~ | agent | Done 2026-09-30: §8 BAML feelings sentence and a decision-models sub-list (Jev, Laya); #516 closed by the PR |
-| J3 | #517: system-1 decision models + Jev ecosystem, scored on the rubric. Models: Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector (BioDecision-4B as a one-line domain example). Tools: abide, jev-ultrafast, probably, jevgrep. Paper: Jev-as-a-Judge | agent | Entries merged (extend existing pages first; §8 of the frameworks landscape already lists Llama Guard and Bespoke-MiniCheck as classifiers), #517 closed |
+| ~~J3~~ | ~~#517: system-1 decision models + Jev ecosystem, scored on the rubric. Models: Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector (BioDecision-4B as a one-line domain example). Tools: abide, jev-ultrafast, probably, jevgrep. Paper: Jev-as-a-Judge~~ | agent | Done 2026-09-30: new `non-cc/reference/system-1-decision-models-landscape.md` (models, tools, paper, JevK5, SemIf); abide, jev-ultrafast and jevgrep extend existing docs; #517 closed |
 | ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (#526): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
 | ~~C~~ | ~~Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks~~ | agent | Done 2026-09-30 (#540): 5 hubs in `docs/_topics/`, linked from the hub index and the rubric; top-10 gaps under "Coverage gaps" |
 | ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |

@@ -3,8 +3,8 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-07-10
-validated_links: 2026-07-10
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -426,7 +426,18 @@ Beyond Firecrawl and Playwright MCP, several agent-browser tools are worth notin
 | [Chrome DevTools MCP][chrome-devtools-mcp-gh] (Google) | Apache-2.0 (TS) | A11y-tree snapshot over raw CDP | ~10K tokens/page | Raw DevTools access; perf traces |
 | [Stagehand][stagehand-gh] (Browserbase) | MIT (TS + Python) | Accessibility tree + DOM hybrid | n/a | `act()`/`extract()`/`observe()` over a browser |
 | [browser-use][browser-use-gh] | MIT (Python) | Custom numbered-DOM map (**not** the native a11y tree) | ~10K tokens/page | Complex autonomous form-filling |
+| [jev-ultrafast][jev-ultrafast-gh] (browser-use) | MIT (Python) | Indexed element table (operations + targets), no a11y tree | n/a — one [Jev][typesafe-jev-web] decision request per step, not a token-cost model | Fast, cheap DOM-action selection with no per-step LLM reasoning |
 | PinchTab | unverified | unverified | ~800 tokens/page (best) | Daily lightweight browsing |
+
+**jev-ultrafast** is a separate browser-use project, not a browser-use option/flag: each step asks
+TypeSafe's Jev decision model to pick an operation (`CLICK`, `TYPE_TEXT`, `SELECT`, `SCROLL_UP`,
+`SCROLL_DOWN`, `WAIT`, `DONE`, `BLOCKED`) and a target from the current element table in one
+request; a small LLM writes text only when the operation is `TYPE_TEXT`. Its own README reports a
+Google Flights search completed in 7.1 s end-to-end and a 25% median task-time reduction over its
+prior non-decision-model version, but hedges this is "three repeats of one task on one browser
+profile, not a general reliability benchmark." It is not open-weight — it is a client of the
+hosted Jev API plus a hosted text LLM (OpenRouter). See the wider comparison in
+[system-1-decision-models-landscape.md § Tools built on Jev][decision-models-landscape].
 
 **Counterexamples (not a11y-tree-based):** Anthropic Computer Use and OpenAI Operator drive the browser from **screenshots + pixel coordinates**, not structured element data — no dependency on the page exposing a clean a11y tree, at higher token/latency cost. For the raw-library API behind the accessibility-tree representation (Playwright 1.57 `aria_snapshot`, Patchright version gate), see the [scraping-landscape catalog](../../non-cc/infrastructure/web-scraping-extraction-landscape.md#accessibility-tree-page-representation).
 
@@ -466,6 +477,7 @@ For the Python-library landscape behind web crawling and source connectors (poly
 - [Chrome DevTools MCP (GitHub)][chrome-devtools-mcp-gh]
 - [Stagehand (GitHub)][stagehand-gh]
 - [browser-use (GitHub)][browser-use-gh]
+- [jev-ultrafast (GitHub)][jev-ultrafast-gh]
 - [CC Plugins Docs][cc-plugins-docs]
 - [CC WebFetch Docs][cc-webfetch-docs]
 - [WebFetch API Docs][webfetch-api-docs]
@@ -499,6 +511,9 @@ For the Python-library landscape behind web crawling and source connectors (poly
 [chrome-devtools-mcp-gh]: https://github.com/ChromeDevTools/chrome-devtools-mcp
 [stagehand-gh]: https://github.com/browserbase/stagehand
 [browser-use-gh]: https://github.com/browser-use/browser-use
+[jev-ultrafast-gh]: https://github.com/browser-use/jev-ultrafast
+[typesafe-jev-web]: https://docs.typesafe.ai/
+[decision-models-landscape]: ../../non-cc/reference/system-1-decision-models-landscape.md#tools-built-on-jev
 [cc-plugins-docs]: https://code.claude.com/docs/en/plugins
 [cc-webfetch-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool
 [simonwillison-til]: https://til.simonwillison.net/claude-code/playwright-mcp-claude-code

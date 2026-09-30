@@ -4,8 +4,8 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Research (informational)
@@ -289,6 +289,45 @@ Cross-ref: cocoindex-code above — the other embeddings-based semantic search t
 
 ---
 
+## jevgrep (dzhng)
+
+**Repo**: [dzhng/jevgrep][jevgrep] | **Stars**: 1,848 | **License**: MIT (confirmed against
+`LICENSE`) | **Version**: latest tag v0.7.0, latest GitHub Release v0.6.0 (provider selection requires 0.3.0+), pushed 2026-09-29
+(`gh api`, 2026-09-30)
+
+A CLI (`jg`) that answers a natural-language question about a repository ("Where is
+authentication checked before a request reaches a handler?") with a compact file list, selected
+source excerpts with line references, and declaration/call locations — a starting point for a
+coding agent, not a generated answer. It uses [Jev][typesafe-jev-code] to judge relevance across
+folders, files, and declarations; a bundled agent skill (`jg skill`, via the
+[Vercel `skills` CLI][skills-cli]) teaches Claude Code, Codex, and OpenCode to call it. Declaration
+parsing covers Python, TypeScript/JavaScript, Go, and Rust; other text falls back to a generic
+mode. Requires a key for Vercel AI Gateway, TypeSafe, OpenRouter, OpenCode Zen, or a custom
+TypeSafe-compatible endpoint.
+
+### What jevgrep measured
+
+Its own ten-task SWE-bench comparison (frozen package, exact public skill): both with and without
+jevgrep, **8 of 10 tasks solved**; total agent cost fell from $7.62 to $5.44, a measured 28.6%
+reduction (rounded to "~30%" in its README banner), excluding Jev's own cost. A later rerun that
+*includes* Jev's cost reports 25.8% lower total cost at the same 8/10 solve rate. These are the
+project's own single-run measurements, not an independent replication, and the README says so:
+"single-run observations do not establish statistical equivalence or a speed improvement."
+
+### Adoption Considerations
+
+**Strengths**: ships an installable agent skill rather than requiring hand-written prompting
+instructions; supports five provider backends, so it is not locked to a single paid API; default
+filtering excludes hidden/dependency/binary/credential files from what it sends to Jev.
+
+**Risks**: still young (repo created 2026-09-26); the only reported comparison is a 10-task SWE-bench
+sample; depends on Jev (or an alternative provider) for every relevance judgment, so an outage or
+missing key blocks the search rather than degrading gracefully.
+
+Cross-ref: [system-1-decision-models-landscape.md § Tools built on Jev][decision-models-landscape-code]
+
+---
+
 ## Repomix & code2prompt (repository packers)
 
 A distinct sub-category: one-shot **context export** rather than a live MCP graph. Both flatten a repo into a single LLM-ready artifact with token counting, for pasting into a chat or seeding an agent's first turn.
@@ -331,7 +370,11 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [tgrep]: https://github.com/microsoft/tgrep
 [zvec-grep]: https://github.com/zvec-ai/zvec-grep
 [zvec]: https://github.com/alibaba/zvec
+[jevgrep]: https://github.com/dzhng/jevgrep
+[typesafe-jev-code]: https://docs.typesafe.ai/
+[skills-cli]: https://github.com/vercel-labs/skills
+[decision-models-landscape-code]: ../non-cc/reference/system-1-decision-models-landscape.md#tools-built-on-jev
 
 ## Sources
 
-Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), Repomix, code2prompt).
+Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), jevgrep, Repomix, code2prompt).
