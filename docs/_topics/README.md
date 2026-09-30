@@ -12,5 +12,10 @@ lives in the linked docs.
 | [rag.md](rag.md) | Retrieval, embeddings, vector stores, indexing pipelines, RAG alternatives |
 | [code-tooling.md](code-tooling.md) | Code search, repo context, code analysis, repo-to-docs, PR review |
 | [visualization.md](visualization.md) | Inline visuals, agent-run visualizers, trace viewers, graph rendering |
+| [context.md](context.md) | What enters the context window: repo context, compression, retrieval-for-context |
+| [skills.md](skills.md) | Packaged agent capabilities (SKILL.md and equivalents), distribution and optimization |
+| [plugins.md](plugins.md) | Extension packaging: plugins, MCP servers, marketplaces |
+| [harness.md](harness.md) | The loop around the model: orchestration, tools, sandboxes, self-improving harnesses |
+| [long-running.md](long-running.md) | Hands-off, offloaded, multi-hour or scheduled agent work: durability, resume, remote execution |
 
 To score the tools behind these hubs, use the [agent substrate rubric](../sdlc-lcm/agent-substrate-rubric.md) (shared, distributed, reproducible, adaptable, versionable, traceable).

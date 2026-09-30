@@ -2,8 +2,8 @@
 title: Agent Substrate Rubric — Shared, Versionable, Traceable Memory, Context and Harness
 purpose: One scoring rubric (6 properties × 8 subjects) for judging agent memory, ontology, graphs/RAG, context, skills, plugins, harness and long-running offloaded tasks.
 created: 2026-09-29
-updated: 2026-09-29
-validated_links: 2026-09-29
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Reference (method)
@@ -41,11 +41,11 @@ The eight subjects of the arc. The `_topics` hubs index existing coverage for ea
 | Memory | Persistent agent memory: stores, extraction, consolidation, recall | [memory.md](../_topics/memory.md) |
 | Ontology | Schemas, semantic layers, formal ontologies, knowledge formats | [knowledge-graphs.md](../_topics/knowledge-graphs.md) |
 | Graphs/RAG/hybrid | Knowledge graphs, vector/full-text/graph retrieval, indexing pipelines | [knowledge-graphs.md](../_topics/knowledge-graphs.md), [rag.md](../_topics/rag.md) |
-| Context | What enters the context window: repo context, compression, retrieval-for-context | [code-tooling.md](../_topics/code-tooling.md) (partial) |
-| Skills | Packaged agent capabilities (SKILL.md and equivalents), their distribution and optimization | — (hub planned, row C) |
-| Plugins | Extension packaging: plugins, MCP servers, marketplaces | — (hub planned, row C) |
-| Harness | The loop around the model: orchestration, tools, sandboxes, self-improving harnesses | — (hub planned, row C) |
-| Long-running | Hands-off, offloaded, multi-hour or scheduled agent work: durability, resume, remote execution | — (hub planned, row C) |
+| Context | What enters the context window: repo context, compression, retrieval-for-context | [context.md](../_topics/context.md), [code-tooling.md](../_topics/code-tooling.md) |
+| Skills | Packaged agent capabilities (SKILL.md and equivalents), their distribution and optimization | [skills.md](../_topics/skills.md) |
+| Plugins | Extension packaging: plugins, MCP servers, marketplaces | [plugins.md](../_topics/plugins.md) |
+| Harness | The loop around the model: orchestration, tools, sandboxes, self-improving harnesses | [harness.md](../_topics/harness.md) |
+| Long-running | Hands-off, offloaded, multi-hour or scheduled agent work: durability, resume, remote execution | [long-running.md](../_topics/long-running.md) |
 
 ## How to score
 

@@ -3,7 +3,7 @@ title: Focus arc — shared, versionable, traceable memory, context, skills and 
 status: approved
 issue: 509, 504, 515, 516, 517, 348
 created: 2026-09-27
-updated: 2026-09-29
+updated: 2026-09-30
 ---
 
 **Status**: Reference (plan)
@@ -21,15 +21,12 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     is committed yet.
   - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
   - Row R (#526) and row B (#528) shipped.
-- **Next, in order (START HERE, 2026-09-29):** R and B are done.
-  1. **Row C:** score the existing docs against the [rubric](../sdlc-lcm/agent-substrate-rubric.md) and add
-     5 hubs (context, skills, plugins, harness, long-running).
-  2. **S1 → S6:** one subject per PR, working from the P1 table in "Ranked backlog". Research each lead
-     first-party; delegate the fetching to subagents (at most about 3 large landscapes per brief, results
-     written to disk). J1–J3 go with S6/S3.
-  3. **Then:** Y, G, Z.
-
-  S1 can start in parallel with C; it only needs the rubric.
+  - Row C (#540, 2026-09-30): 5 new hubs and the coverage gaps (see "Coverage gaps" below).
+- **Next, in order (START HERE, 2026-09-30):** R, B and C are done.
+  1. **S1 → S6:** one subject per PR, working from the P1 table in "Ranked backlog" and the "Coverage
+     gaps" list. Research each lead first-party; delegate the fetching to subagents (at most about 3
+     large landscapes per brief, results written to disk). J1–J3 go with S6/S3.
+  2. **Then:** Y, G, Z.
 - **Out of scope (deferred by the owner, 2026-09-29):** the dead paper-eval / issue-triage workflows
   (GitHub Models retirement). Everything about them lives in #527 and upstream
   gha-rxiv-paper-eval#81 / gha-issue-triage#110, not in this plan.
@@ -231,6 +228,30 @@ LICENSE file during research.
 | J3 | Jev-as-a-Judge (CMU; accept when confident, escalate when unsure; arXiv id derived from a DAIR.AI link) | <https://arxiv.org/abs/2609.26550> |
 | S4 | Paper: "Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (owner-requested 2026-09-29, via AlphaSignal) | <https://arxiv.org/abs/2608.11095> |
 
+### Coverage gaps (row C, 2026-09-30)
+
+- **Method:** the docs in the Source map were scored against the rubric using `git grep` sweeps per
+  property, then read in context. "No hit" means the patterns found nothing, not proven absence.
+- **Full map** (docs × properties with `file:line` evidence): `/workspaces/temp/research-0009/row-c-gap-list.md`
+  (a local working file, not in the repo).
+- **Top 10 gaps** (subject · property · why · row that fills it):
+  1. Context · Shared: no dedicated context doc outside the hubs, and no shared or team-context evidence (S4)
+  2. Context · Distributed: same root cause (S4)
+  3. Context · Traceable: nothing ties context-window content back to an audit trail (S4)
+  4. Context · Versionable: the ACE-FCA phase artifacts (`CC-memory-system-analysis.md:357-363`) are durable
+     files but are never described as git-tracked or diffable (S4)
+  5. Ontology · Shared: no hit in the 3 ontology docs (S2)
+  6. Ontology · Distributed: no hit in the 3 ontology docs (S2)
+  7. Long-running · Traceable: no audit-trail language in the cloud-session, scheduled-task or keepalive docs (S6)
+  8. Long-running · Reproducible: only environment-snapshot caching (a speed feature); nothing about a
+     deterministic rebuild (S6)
+  9. Harness · Versionable: the harness-pattern, dynamic-workflow and Ralph docs never discuss versioning
+     the harness's own state (S6)
+  10. Plugins · Reproducible: the packaging docs cover manifests, versions and caching, but not pinned or
+      deterministic rebuilds (S5)
+- **Also noted:** `databricks-genie-analysis.md` has no hit on any of the 6 properties. Graphs/RAG/hybrid has
+  no hit on Shared or Reproducible (S3).
+
 ## Research run: subagent brief (rows C and S1–S6)
 
 Run each batch as one subagent in an isolated worktree (files only; the main session reviews, commits
@@ -290,7 +311,7 @@ systems on the rubric.
 | J2 | #516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers | agent | §8 extended, #516 closed |
 | J3 | #517: system-1 decision models + Jev ecosystem, scored on the rubric. Models: Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector (BioDecision-4B as a one-line domain example). Tools: abide, jev-ultrafast, probably, jevgrep. Paper: Jev-as-a-Judge | agent | Entries merged (extend existing pages first; §8 of the frameworks landscape already lists Llama Guard and Bespoke-MiniCheck as classifiers), #517 closed |
 | ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (#526): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
-| C | Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks | agent | Gap list in this plan; 5 new hubs merged, anchors verified |
+| ~~C~~ | ~~Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks~~ | agent | Done 2026-09-30 (#540): 5 hubs in `docs/_topics/`, linked from the hub index and the rubric; top-10 gaps under "Coverage gaps" |
 | ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
 | S1 | Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors) | agent | One PR, first-party verified, rubric-scored |
 | S2 | Research batch: ontology | agent | Same as S1 |
