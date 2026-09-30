@@ -4,9 +4,10 @@ description: End-to-end office workflow patterns (invoices, documents, email, fi
 created: 2026-03-26
 updated: 2026-07-23
 validated_links: 2026-07-23
+status: research
 ---
 
-**Status**: Research (2026-03-26)
+**Details:** 2026-03-26
 
 ## Summary
 

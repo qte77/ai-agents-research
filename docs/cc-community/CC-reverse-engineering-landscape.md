@@ -4,9 +4,8 @@ purpose: Survey of community tools, blogs, and trackers that reverse engineer Cl
 created: 2026-03-29
 updated: 2026-06-16
 validated_links: 2026-04-05
+status: research
 ---
-
-**Status**: Research (informational)
 
 ## What It Is
 

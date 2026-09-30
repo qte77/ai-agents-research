@@ -5,9 +5,8 @@ purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, li
 created: 2026-06-22
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
-
-**Status**: Assess
 
 ## Why Agents Need This
 

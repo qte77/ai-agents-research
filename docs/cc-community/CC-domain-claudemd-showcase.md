@@ -8,8 +8,6 @@ updated: 2026-07-23
 validated_links: 2026-07-23
 ---
 
-**Status**: Research (informational)
-
 ## Summary
 
 The dna-claude-analysis repo demonstrates CLAUDE.md used not as coding instructions but as a **domain-specific pipeline controller** — orchestrating 17 Python scripts for genome analysis through conversational interaction. This pattern generalizes: CLAUDE.md can define multi-script workflows for any domain where a non-developer needs to run analysis pipelines and explore results interactively.

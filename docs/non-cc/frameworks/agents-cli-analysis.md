@@ -7,9 +7,8 @@ platform_scope: [claude-code, antigravity, codex, google-adk]
 created: 2026-07-08
 updated: 2026-07-08
 validated_links: 2026-07-08
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

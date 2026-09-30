@@ -5,9 +5,8 @@ purpose: Evaluate Poolside's Laguna S 2.1 as a frontier agentic-coding model for
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

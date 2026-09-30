@@ -8,8 +8,6 @@ updated: 2026-09-24
 validated_links: 2026-09-24
 ---
 
-**Status**: Research (informational)
-
 Tools that measure token usage and cost across coding-agent sessions. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They divide into **retrospective** measurement (CodeBurn cross-agent; ccusage CC/Codex-deep; agentacct cross-agent work-intelligence), **predictive** monitoring (Claude-Code-Usage-Monitor), and **ambient** in-statusline awareness (cc-costline). Where RTK reduces tokens *entering* context, these observe what was actually spent — optimization needs measurement.
 
 ## CodeBurn (AgentSeal)

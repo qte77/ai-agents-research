@@ -5,9 +5,8 @@ source: https://ai4trade.ai/SKILL.md
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

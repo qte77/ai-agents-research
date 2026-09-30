@@ -5,9 +5,8 @@ purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report,
 created: 2026-09-24
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

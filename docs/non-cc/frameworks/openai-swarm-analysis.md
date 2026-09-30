@@ -5,9 +5,8 @@ purpose: Analysis of OpenAI Swarm as a deprecated educational multi-agent orches
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: hold
 ---
-
-**Status**: Hold
 
 ## What It Is
 

@@ -5,9 +5,10 @@ purpose: Single-source-of-truth catalog of scraping, crawling, and extraction to
 created: 2026-04-23
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: reference
 ---
 
-**Status**: Reference (informational catalog)
+**Details:** informational catalog
 
 ## What It Is
 

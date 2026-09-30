@@ -6,9 +6,8 @@ category: analysis
 created: 2026-07-08
 updated: 2026-07-08
 validated_links: 2026-07-08
+status: research
 ---
-
-**Status**: Research (informational)
 
 A curated map of Andrej Karpathy's **agentic-coding** thinking as it evolved 2023→2026 — distinct from
 his LLM-wiki/knowledge-base artifact already covered in

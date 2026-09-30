@@ -8,8 +8,6 @@ updated: 2026-06-28
 validated_links: 2026-06-28
 ---
 
-**Status**: Research (informational)
-
 ## Summary
 
 Multiple community projects have reimplemented or deconstructed Claude Code's architecture following the March 2026 npm sourcemap exposure. These range from cleanroom educational rebuilds to direct forks of leaked source. This landscape doc catalogs them with provenance classification to guide citation decisions.

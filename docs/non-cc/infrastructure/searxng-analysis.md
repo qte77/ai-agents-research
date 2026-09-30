@@ -5,9 +5,8 @@ purpose: Analysis of SearXNG as a self-hostable privacy-respecting metasearch en
 created: 2026-06-13
 updated: 2026-06-13
 validated_links: 2026-06-13
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

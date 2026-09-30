@@ -5,9 +5,10 @@ purpose: Provider-agnostic model routers, hosted aggregators, self-hostable gate
 created: 2026-06-16
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: reference
 ---
 
-**Status**: Reference (informational catalog)
+**Details:** informational catalog
 
 ## What It Is
 

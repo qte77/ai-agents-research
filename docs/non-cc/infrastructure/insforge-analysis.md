@@ -6,9 +6,10 @@ platform_scope: [claude-code, cursor, mcp-generic]
 created: 2026-04-09
 updated: 2026-04-09
 validated_links: 2026-04-09
+status: open-source
 ---
 
-**Status**: Open-source (Apache-2.0), active development
+**Details:** Open-source (Apache-2.0), active development
 
 ## What It Is
 

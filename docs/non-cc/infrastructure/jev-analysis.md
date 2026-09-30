@@ -4,9 +4,8 @@ purpose: What Jev is (question types, pricing, limits) and the qte77/feelings me
 created: 2026-09-30
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: trial
 ---
-
-**Status**: Trial
 
 ## What It Is
 

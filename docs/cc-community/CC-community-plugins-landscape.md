@@ -8,8 +8,6 @@ updated: 2026-06-28
 validated_links: 2026-06-28
 ---
 
-**Status**: Research (informational)
-
 ## Summary
 
 Two community-maintained catalogs serve complementary roles: awesome-claude-code is a broad curated resource list (~100-200+ entries across 9 categories), while awesome-claude-code-plugins is a structured plugin registry (~136 installable plugins across 13 categories with marketplace format). Together they represent the community ecosystem around Claude Code extensions.
