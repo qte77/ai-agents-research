@@ -78,6 +78,12 @@ class RestyleGraphTests(unittest.TestCase):
         # Republishing a refreshed graph must not double-inject head content.
         self.assertEqual(pages_build.restyle_graph(self.out), self.out)
 
+    def test_build_info_script_injected_once_as_graph_artifact(self):
+        # The graph page shows its own last-rebuilt commit/date, not the deploy's.
+        tag = '<script src="build-info.js" data-artifact="graph" defer></script>'
+        self.assertEqual(self.out.count(tag), 1)
+        self.assertLess(self.out.index(tag), self.out.index("</body>"))
+
 
 SAMPLE_GRAPH = """<html><body>
 <script>
@@ -119,6 +125,49 @@ class FilterGraphDataTests(unittest.TestCase):
 
     def test_idempotent(self):
         self.assertEqual(pages_build.filter_graph_data(self.out), self.out)
+
+
+PYPROJECT = """[project]
+name = "x"
+
+[tool.bumpversion]
+current_version = "0.12.0"
+parse = "(?P<major>\\\\d+)"
+"""
+
+
+class ReadVersionTests(unittest.TestCase):
+    def test_reads_bumpversion_current_version(self):
+        self.assertEqual(pages_build.read_version(PYPROJECT), "0.12.0")
+
+    def test_none_when_missing(self):
+        self.assertIsNone(pages_build.read_version('[project]\nname = "x"\n'))
+
+
+class SiteInfoTests(unittest.TestCase):
+    def setUp(self):
+        self.info = pages_build.site_info(
+            version="0.12.0",
+            commit="a" * 40, commit_date="2026-09-30T14:18:14+00:00",
+            graph_commit="b" * 40, graph_date="2026-09-25T20:06:30+02:00",
+            repo_url="https://github.com/qte77/ai-agents-research",
+        )
+
+    def test_site_fields(self):
+        self.assertEqual(self.info["version"], "0.12.0")
+        self.assertEqual(self.info["site"], {
+            "commit": "a" * 40, "short": "aaaaaaa", "date": "2026-09-30",
+            "url": "https://github.com/qte77/ai-agents-research/commit/" + "a" * 40,
+        })
+
+    def test_graph_carries_its_own_last_rebuild_commit(self):
+        self.assertEqual(self.info["graph"]["short"], "bbbbbbb")
+        self.assertEqual(self.info["graph"]["date"], "2026-09-25")
+
+    def test_graph_is_none_when_never_committed(self):
+        info = pages_build.site_info("0.12.0", "a" * 40, "2026-09-30T00:00:00Z", None, None,
+                                     "https://github.com/o/r")
+        self.assertIsNone(info["graph"])
 
 
 class IsWoff2Tests(unittest.TestCase):
