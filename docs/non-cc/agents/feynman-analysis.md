@@ -75,7 +75,7 @@ dependency (not widely adopted). AlphaXiv integration may limit paper coverage.
 
 - [deerflow-analysis.md](../orchestrators/deerflow-analysis.md) — general-purpose super agent (LangGraph)
 - [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — agent-skills `/review` for code (different domain)
-- [openresearch-analysis.md](openresearch-analysis.md) — separate alphaXiv product (local-first, git-native research workspace) that shares alphaXiv's paper-discovery backend with Feynman
+- [openresearch-analysis.md](openresearch-analysis.md) — local-first, git-native research workspace from the team that started alphaXiv (the paper search Feynman uses); a separate product that does not document which service backs its paper commands
 
 ## Sources
 
