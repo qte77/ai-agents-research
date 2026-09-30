@@ -38,4 +38,4 @@ status: reference
 | [2026-07-08-0006-graphify-rebuild-354.md](2026-07-08-0006-graphify-rebuild-354.md) | done | #354 |
 | [2026-07-23-0007-corpus-update-new-sources.md](2026-07-23-0007-corpus-update-new-sources.md) | done | #374 |
 | [2026-09-23-0008-backlog-triage-prs-issues.md](2026-09-23-0008-backlog-triage-prs-issues.md) | done | #438, #433, #417, #410, #254, #347, #348, #309, #382, #232 |
-| [2026-09-27-0009-focus-shared-memory-context.md](2026-09-27-0009-focus-shared-memory-context.md) | approved | #509, #504, #515, #516, #517, #348 |
+| [2026-09-27-0009-focus-shared-memory-context.md](2026-09-27-0009-focus-shared-memory-context.md) | done | #509, #504, #515, #516, #517, #348 |
