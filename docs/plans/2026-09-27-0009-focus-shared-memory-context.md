@@ -45,7 +45,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     Agent Plugins implementation, runtypelabs/skills extends the Runtype bullet, and AAIF gets a governance
     section in `goose-analysis.md`. Gap 10 is partly filled: plugin sources can pin a `sha`, and archives a
     `sha256`, but pinning is opt-in, so Reproducible is partial. tysoncung and "Xpert plugins" were dropped.
-  - Row S6 (2026-09-30): new pages for NVIDIA OpenShell and OrcaReplay. Archon, Paperclip, Google AX and the
+  - Row S6 (#546, 2026-09-30): new pages for NVIDIA OpenShell and OrcaReplay. Archon, Paperclip, Google AX and the
     OperatingSystem-1 tools go in frameworks §1, and RRSI and ROFT in the recursive-self-improvement analysis.
     HarnessRouter is refreshed and scored, and the Runtype entry gains `hermes-runtype-otel` (scored) and
     `persona` (unscored UI). Gaps 7 and 8 are filled by OrcaReplay's byte-for-byte offline replay and its
@@ -353,7 +353,7 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 | ~~S3~~ | ~~Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G)~~ | agent | Done 2026-09-30 (#543): 5 platforms plus the 3 row-G systems rubric-scored in frameworks §7 |
 | ~~S4~~ | ~~Research batch: context~~ | agent | Done 2026-09-30 (#544): 3 leads plus the CLAUDE.md/auto-memory substrate rubric-scored in `CC-memory-system-analysis.md` |
 | ~~S5~~ | ~~Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads)~~ | agent | Done 2026-09-30 (#545): 10 leads rubric-scored, 1 new page (skill-evolution landscape), gap 10 partly filled |
-| ~~S6~~ | ~~Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`)~~ | agent | Done 2026-09-30: 11 leads placed, 2 new pages (OpenShell, OrcaReplay), gaps 7–9 filled |
+| ~~S6~~ | ~~Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`)~~ | agent | Done 2026-09-30 (#546): 11 leads placed, 2 new pages (OpenShell, OrcaReplay), gaps 7–9 filled |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
 | D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11) | owner | Deferred until something consumes `status:`; then migration PR 1 of ~5 with the validator passing |
