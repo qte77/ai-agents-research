@@ -33,8 +33,8 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
    - **Extend, don't create** when a landscape already covers the area (dup-check with `git grep`);
      synthesis labels (e.g. "company brain") → extend, never standalone. Spans both dirs → deeper
      analysis in one, cross-ref from the other.
-3. **Write** per CONTRIBUTING: frontmatter (`title/purpose/created/updated/validated_links` + status
-   badge), body sections, a **Sources table with reference-style links**, cross-refs. Hedge unverified
+3. **Write** per CONTRIBUTING: frontmatter (`title/purpose/created/updated/validated_links/status`; no
+   body status badge), body sections, a **Sources table with reference-style links**, cross-refs. Hedge unverified
    claims; flag weak/secondary sources explicitly.
 4. **Index + changelog:** add the subdir README row (+ `cc-native/README` count for cc-native docs);
    add a `changelog.d/<ts>_<slug>.md` fragment.
