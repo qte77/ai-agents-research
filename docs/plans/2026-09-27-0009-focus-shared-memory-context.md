@@ -29,8 +29,12 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Row S2 (#542, 2026-09-30): 4 ontology tools scored in `semantic-layers-data-catalog-landscape.md`
     § Agent-native ontology tools. This partly fills gaps 5 and 6: the AWS accelerator scores yes on
     Shared and Distributed. The unnamed "semantic model" post was dropped because it has no source.
-- **Next, in order (START HERE, 2026-09-30):** R, B, C, S1 and S2 are done.
-  1. **S3 → S6:** one subject per PR, working from the P1 table in "Ranked backlog" and the "Coverage
+  - Row S3 (2026-09-30): a new frameworks-landscape §7 subsection on agent-native graph and hybrid RAG
+    platforms (SSTorytime, Omnigraph, Semantica, WeKnora, BrainAPI, which is BSL-1.1). GraphRAG,
+    LightRAG and Cognee are scored for row G (see below). The Shared gap is filled (Omnigraph and
+    WeKnora score yes); Reproducible stays open, with no clean yes.
+- **Next, in order (START HERE, 2026-09-30):** R, B, C, S1, S2 and S3 are done.
+  1. **S4 → S6:** one subject per PR, working from the P1 table in "Ranked backlog" and the "Coverage
      gaps" list. Research each lead first-party; delegate the fetching to subagents (at most about 3
      large landscapes per brief, results written to disk). J1–J3 go with S6/S3.
   2. **Then:** Y, G, Z.
@@ -308,6 +312,10 @@ subagents. Its output is not deterministic. That conflicts with this arc's own "
 optional concept overlay. Re-scope #504 to "build B, then overlay". Revisit D after S3 scores those
 systems on the rubric.
 
+**S3 result (2026-09-30):** GraphRAG, LightRAG and Cognee all extract with an unpinned LLM. None
+scores yes on Reproducible or Versionable, and all three are `no data` on Traceable. GraphRAG's README
+also says it is "largely in maintenance mode". Option D offers nothing over B, so the default C stands.
+
 ## Remaining work
 
 | # | Item | Gate | Done-when |
@@ -322,7 +330,7 @@ systems on the rubric.
 | ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
 | ~~S1~~ | ~~Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors)~~ | agent | Done 2026-09-30 (#541): 9 leads placed and rubric-scored, 1 new page (Mitosis Cortex) |
 | ~~S2~~ | ~~Research batch: ontology~~ | agent | Done 2026-09-30 (#542): 4 leads rubric-scored in the semantic-layers landscape, 1 dropped (no source) |
-| S3 | Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G) | agent | One PR, first-party verified, rubric-scored |
+| ~~S3~~ | ~~Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G)~~ | agent | Done 2026-09-30: 5 platforms plus the 3 row-G systems rubric-scored in frameworks §7 |
 | S4 | Research batch: context | agent | One PR, first-party verified, rubric-scored |
 | S5 | Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads) | agent | One PR, first-party verified, rubric-scored |
 | S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | One PR, first-party verified, rubric-scored |
