@@ -53,6 +53,9 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     `mcp-git-coord` has no LICENSE file, even though its README says MIT. `openclaw-operator` is a dormant fork.
     The Celesto critique of AX and driceroland/Search were dropped: the critique has no first-party source,
     and Search has no agent angle.
+  - Milestone close (2026-09-30): the README and UserStory hub lists were updated (#547), D1 was folded in
+    after G (#548), and **v0.12.0 was released** (#549, tag `v0.12.0`, GitHub Release published). Progress
+    comments went on #509, #504 and #348.
 - **Next, in order (START HERE, 2026-09-30):** R, B, C and S1–S6 are done; all 10 coverage gaps are at
   least partly filled.
   1. **J1–J3** (#515–#517): the Jev and system-1 decision-model rows, in the same subagent-brief pattern.
@@ -293,8 +296,13 @@ anything, so the owner could start the run in a clean session. Every brief state
 - **Guardrails:** no commit, push or PR; no skills, no subagents, no `.claude/` or settings edits.
   - Bash `grep`, `find`, `cat`, `ls`, `head`, `tail`, `curl` and `wget` are denied: use `git grep`,
     `git ls-files`, python3 and Read/Write/Edit.
-  - Prefix gh/git network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`.
+  - Prefix gh/git network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`. In a worktree, call git as `\git`
+    if the shell hook rewrites or blocks it.
   - When WebFetch fails or paraphrases, use polyfetch `--show-body`.
+  - Name the files each parallel batch must not edit (the plan file, sibling batches' home docs and
+    hubs). The main session strikes rows and edits the plan itself.
+  - Write edits to disk as you go: a batch interrupted by a session restart (S6, 2026-09-30) kept
+    nothing it had only drafted.
 - **Read first:** `CONTRIBUTING.md`, the [rubric](../sdlc-lcm/agent-substrate-rubric.md), this plan's
   leads tables, and the existing home docs of the subject (Source map above, `docs/_topics/`).
 - **Research rules:**
@@ -305,7 +313,9 @@ anything, so the owner could start the run in a clean session. Every brief state
 - **Per lead:** 3–8 lines of substance plus a rubric table (six scores, one evidence link each,
   `scored <date>`), and a pointer row in the matching `docs/_topics/` hub.
 - **Housekeeping:** bump `updated:`; add every URL to the Sources table and link definitions; add one
-  changelog fragment per batch.
+  changelog fragment per batch, using only the `[tool.scriv]` categories (Added, Changed, Deprecated,
+  Removed, Fixed, Security). A `### Dropped` section came up in 3 of the 7 batches on 2026-09-30, and
+  one reached the v0.12.0 release PR. Dropped leads go in the reply only, never in docs or the changelog.
 - **Verify:** `make check_docs check_status` plus lychee offline and online on every edited file.
 - **Reply:** per lead, the destination (file and section), license, a one-line finding, the rubric row,
   and anything dropped with the reason. No file contents.
