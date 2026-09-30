@@ -19,7 +19,8 @@ CLI ([Mitosis developer docs][mitosis-docs], fetched 2026-09-30). Cortex itself 
 docs give no license, no self-hosting path, and no public source repository for the memory engine. The
 `OperatingSystem-1` org does publish MIT-licensed **client-side** integrations that connect an agent to a user's
 Cortex — `mitosis-agent-plugin` (MCP server + seven memory skills) and `mitosis-memory-skills` — analyzed for the
-skills/plugins subject (S5), not here; `openclaw-operator` and `mcp-git-coord` go to the harness subject (S6).
+skills/plugins subject (S5) in [agent-plugins-standard-analysis.md § Concrete implementation][mitosis-plugin-entry],
+not here; `openclaw-operator` and `mcp-git-coord` go to the harness subject (S6).
 
 ## Architecture
 
@@ -94,3 +95,4 @@ Scored 2026-09-30, evidence from the developer docs unless noted.
 [verginglabs]: https://verginglabs.com/
 [cc-mem-benchmarks]: ../../cc-community/CC-memory-tooling-landscape.md#benchmarks
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
+[mitosis-plugin-entry]: ../protocols/agent-plugins-standard-analysis.md#concrete-implementation-mitosis-memory-mitosis-agent-plugin

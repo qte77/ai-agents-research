@@ -35,6 +35,26 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [sudocode](https://github.com/sudocode-ai/sudocode) — git-native agent orchestrator (Apache-2.0, verified from LICENSE; TypeScript): human requirements live as version-controlled **specs**, agent runtime context as **issues**, linked bidirectionally (blocks / related / parent-child / discovered-from) and persisted as JSONL committed to git with a local SQLite cache. Runs Claude Code / Codex / Cursor (+more via Agent Client Protocol, added v0.1.19) in parallel with dependency-ordered (topological) execution and a kanban-style real-time UI. `npm install -g sudocode`; ships CLI + local server/UI + MCP server. v0.2.0 (2026-03-18); 287★, last push 2026-03-18 (`gh api`, 2026-07-23). Directly comparable to multica above (multi-CLI, issue-driven, local daemon) — sudocode is git-repo-resident and OSS where multica is a source-available managed platform.
 - [Runtype](https://runtype.com/) — hosted AI product development platform to build, test, deploy and monitor AI capabilities in user-facing products ([docs][runtype-what-is]). **Flows** are sequential, step-typed workflows (prompt / transform / conditional / loop / fetch-url / record steps); **Agents** autonomously select tools and sequence calls; both are versioned, publishable, and manageable as code. **Products** bundle Flows/Agents/Records/Tools and expose them through **Surfaces** — chat widget, REST API (auto-generated OpenAPI), Slack, Discord, email, SMS, iMessage, webhook, Chrome, MCP server, and Agent-to-Agent (A2A) ([docs][runtype-surfaces]). **Evals** compare model/prompt configurations against shared test inputs; execution logs and an audit trail support debugging. Model access is platform keys (no provider account needed) or **BYOK**, multi-provider (OpenAI, Anthropic, Google, xAI, …) (vendor site, 2026-09-24). **Claude Code integration**: `npx -y @runtypelabs/cli@latest onboard` configures a hosted MCP server (`https://api.runtype.com/v1/mcp/protocol`, Standard and Code-Mode variants) for Claude Code, Cursor, Codex, Gemini CLI, OpenCode and VS Code, installing Claude Code skills and completing OAuth via `claude mcp login runtype` ([docs][runtype-coding-agents]); a Claude Desktop `.mcpb` extension is offered separately ([docs][runtype-mcp-server]). **Self-hosting (BYOC)** requires the Enterprise plan: exported Flows/Agents run via the `@runtypelabs/runtime` package on Cloudflare Workers, Google Cloud Run, Node.js or Vercel, but model execution, memory, crawling, email and search still call back to the hosted platform ([docs][runtype-self-hosting]). **Pricing** (billing page, 2026-09-24): Launch is free ($0 pay-as-you-go, 14-day trial, $5 signup credit, no BYOK); Team is $399/mo or $3,999/yr with BYOK and $50/mo rollover inference credits; Enterprise is custom-priced and adds self-hosting/SLA ([docs][runtype-billing]). Licence / open-source status of the core platform is **not stated in first-party docs (checked 2026-09-24)**; the GitHub org [`runtypelabs`](https://github.com/runtypelabs) publishes satellite projects (`skills`, `persona`) rather than the platform itself, and the `@runtypelabs/cli` onboarding package is separately listed Apache-2.0 on npm (checked 2026-09-24) — that covers only the CLI, not the hosted platform; `@runtypelabs/runtime` (the BYOC export package referenced in the self-hosting docs) is not published on the public npm registry (404, checked 2026-09-24), so no licence could be checked for it either.
 
+**`runtypelabs/skills`** (checked 2026-09-30): "Official agent skills for the Runtype platform — install
+them in Claude Code, Cursor, Copilot, and 35+ other AI coding agents" ([README][runtype-skills-readme]),
+MIT-licensed (`gh api`, confirmed against the repo's `LICENSE` file). Two families: **Runtype platform**
+skills (`runtype`, `runtype-build-product`, `runtype-admin`, `runtype-persona`,
+`runtype-external-agents`, `runtype-templates`, `runtype-sdk-marathon`) that operate the hosted platform
+above, and **Tool design** skills (`tool-design` plus six focused guides —
+interface/output/errors/execution/composition/security) that are framework-agnostic guidance for
+designing *any* agent's tool schemas, independent of Runtype itself. Installs via `npx skills add
+runtypelabs/skills` or per-skill with `--skill <name>`; the repo runs its own lint
+(`scripts/lint-skills.mjs`) checking frontmatter, description length, "forbidden internal URLs, common
+secret leaks, semantic guardrails for drift-prone claims," plus a smoke test that "copies each skill
+into an isolated install directory and confirms standalone metadata and local references still
+resolve" — both run "before publishing" per the README.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data [README][runtype-skills-readme] (single-agent skill install; no multi-agent shared-store semantics documented) | no [README][runtype-skills-readme] (skills are local files per install; the `runtype` and `runtype-admin` skills reach the hosted platform, but that's the platform's own distribution, not the skill repo's) | partial [README][runtype-skills-readme] (`lint-skills.mjs` and `smoke-install-skills.mjs` are deterministic checks that gate publishing, but no pinned model/version governs the skills' own authored content) | yes [README][runtype-skills-readme] (documented `SKILL.md` authoring convention; "Create a directory under `skills/`" — anyone can add a skill following the same schema) | yes [README][runtype-skills-readme] (git-hosted; installed via `npx skills add`, versioned by the source repo) | no data [README][runtype-skills-readme] (no invocation-level audit trail; the lint/smoke tests audit the *package*, not what a skill does at runtime) |
+
+`scored 2026-09-30`
+
 ## 2. LLM Orchestration & Routing
 
 - [LangChain](https://github.com/langchain-ai/langchain) — broad LLM app framework, 100+ integrations (MIT).
@@ -260,5 +280,7 @@ Runtype entry (§1) — first-party pages read 2026-09-24:
 | [Billing and plans][runtype-billing] | Launch/Team/Enterprise pricing tiers |
 | [github.com/runtypelabs](https://github.com/runtypelabs) | Org exists; publishes satellite repos, not the core platform |
 | `npm view @runtypelabs/cli license`, 2026-09-24 (no URL) | CLI package licensed Apache-2.0; platform/runtime licence not found |
+| [runtypelabs/skills README][runtype-skills-readme] | Official agent skills repo, MIT, lint/smoke-test publishing gate (checked 2026-09-30) |
 
 [runtype-vendor]: https://runtype.com/
+[runtype-skills-readme]: https://github.com/runtypelabs/skills
