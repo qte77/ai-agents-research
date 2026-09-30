@@ -3,8 +3,8 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Assess
@@ -62,6 +62,44 @@ This is the formal-semantics counterpart to [The Agent-Native Layer](#the-agent-
 
 **A concrete "connect" instance: Vault-LD.** [Vault-LD][vault-ld] (Apache-2.0, 235★ verified 2026-09-24) is a 2026 third-party spec — not a W3C standard — that turns a Markdown note vault into linked data: YAML-LD frontmatter plus a shared `@context` file map note metadata to RDF triples, with reference Python converters (`vault_to_rdf.py` / `rdf_to_vault.py`) giving a lossless roundtrip between Markdown and RDF. It is a file-based, no-database instance of the connect pattern above — an ontology-backed `@context` a human edits as prose and a machine reads as a graph.
 
+### Agent-native ontology tools (2026 MCP wave)
+
+Four 2026 tools expose an ontology as an MCP surface for coding agents — the same "connect the agent to governed meaning" goal as Genie Ontology and OKF above, but scoped to a single ontology store rather than a whole platform. Scored 2026-09-30 against the [agent substrate rubric][rubric].
+
+**[Ontology Atlas][ontology-atlas]** (MIT, 139★, pushed 2026-09-28) keeps a project's ontology as an `atlas/` folder of Markdown (`project`/`domain`/`capability`/`element`/`document` frontmatter types) that a desktop app, CLI, and MCP server read directly from disk — "local-first... no Atlas backend, account, or telemetry." Multiple coding agents (Claude Code, Codex, Cursor, Antigravity) connect via one MCP button each, and every proposed change to the ontology arrives as a Markdown diff a human reviews in Git before it lands, with unknowns surfaced as unknown rather than papered over. An `.ontology-atlas/llm-audit.jsonl` log records every model/provider transfer.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| partial [README][ontology-atlas] ("MCP — one button per agent," no documented write-concurrency model) | partial [README][ontology-atlas] ("local-first... no Atlas backend"; cross-machine sync is via git push/pull only) | no data [README][ontology-atlas] (ontology content is human/agent-curated, not a deterministic extraction pipeline) | yes [README][ontology-atlas] ("Extensions are files a git diff shows you"; one-button MCP support across 4 agent clients) | yes [README][ontology-atlas] ("Your disk is the database; Git is the history"; History screen shows exact diffs) | yes [README][ontology-atlas] (wiki pages cite sources; code-evidence paths on every node; llm-audit.jsonl) |
+
+`scored 2026-09-30`
+
+**[open-ontologies][open-ontologies]** (MIT, 544★, pushed 2026-09-29) is a Rust MCP server (Oxigraph 0.5 for RDF/SPARQL 1.1) built around one loop — `plan` a change to a production OWL/SHACL ontology, `apply` it, watch for `drift`, `certify` what the engine derived, `rollback` if wrong — and it backs every claim with a Lean-4-checked certificate: "two tab-separated files… An auditor, months later… [runs] the same command, on the archived files. That auditor does not need an instance of this software." The free engine is explicitly single-user: "The engine does not give you a place for the evidence" — a shared, multi-reviewer store is upsold to the proprietary hosted `tesseractsemantics.com`, not shipped in the OSS binary. `rmcp` serves MCP over streamable HTTP, so one running server can, in principle, take connections from more than one client over a network.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| partial [README][open-ontologies] (HTTP-transport MCP server can serve multiple clients, but the README states the OSS engine has no shared evidence store — that's the paid "for teams" tier) | partial [README][open-ontologies] ("`rmcp` for MCP over streamable HTTP" — a remote-reachable single node, not a documented multi-node deployment) | yes [README][open-ontologies] (Lean 4 v4.33.1 proof checker, pinned Oxigraph 0.5/Rust 1.85+, a `docs/determinism.md` page, "lost zero conclusions out of 2,583 differences") | yes [README][open-ontologies] (plugin marketplace; `--features embeddings,plugins,sql` build flags; alignment/crosswalk module) | yes [README][open-ontologies] (explicit plan/apply/drift/rollback loop over the ontology's own state) | yes [README][open-ontologies] (proof certificates re-checkable "months later… with no installation"; SQLite lineage store) |
+
+`scored 2026-09-30`
+
+**[EvoOntology][evoontology]** (ruc-datalab; MIT, 539★, pushed 2026-09-29; [arXiv:2609.15779][evoontology-paper]) is a self-evolving Ontology Layer for data agents, installed as a Claude Code or Codex plugin. A builder constructs a typed semantic graph (Terms/Mappings/Constraints/**Evidence** node families) grounded against the workload; an evolution agent proposes bounded updates and only "publishes a Candidate when paired evaluation shows a reproducible improvement over its Parent," else retains the Parent — a named `ontology_v0` → `ontology_vN+1` lifecycle. The repo layout labels its own store "Deterministic core." Reported gains (BIRD, DDR-Bench, InsightBench, four-backbone subset) are the authors' own benchmark, so treat as self-reported pending independent replication.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data [README][evoontology] (single Claude Code/Codex session per ontology; no multi-agent concurrent-write semantics documented) | no [README][evoontology] (SQLite-backed local store; "read-only task replay" is local, not a network/cluster deployment) | yes [README][evoontology] (`evoontology/` labelled "Deterministic core"; gated Candidate-vs-Parent evaluation on fixed data/agent/decoding settings) | yes [README][evoontology] ("Continuous Self-Evolution" adapts Content/Schema/Tool layers without a rewrite; Claude Code + Codex plugins) | yes [README][evoontology] (named `ontology_v0`/`ontology_vN+1` versions; reject retains the prior Parent) | yes [README][evoontology] (dedicated Evidence node family; proposals verified against raw sources before commit) |
+
+`scored 2026-09-30`
+
+**[AWS context-ontology-accelerator][coa]** (Apache-2.0, 885★, pushed 2026-09-29) is a full semantic-context platform following a **Scan → Model → Serve** pipeline: ingest sources, induce an OWL 2 ontology (Bedrock Claude for concept extraction, Bedrock Cohere Embed v4 for grounding-ontology similarity, HermiT/ELK + OntoQA + OoPS! for three-tier validation), then serve it to agents via a Virtual Knowledge Graph (Ontop) over SPARQL and an MCP server. Access is namespace-isolated with RBAC: per-namespace roles (owner, maintainer, data-steward, data-analyst) plus cross-namespace `platform-admin`/`platform-viewer` roles — the clearest **Shared** evidence in this ontology set. It deploys as AWS CDK-provisioned microservices (control-plane, data-layer, ontology-engine, metric-service, vkg, mcp-server, context-manager), not a single local process. The repo is published as a **read-only mirror**: "We are not accepting pull requests at this time."
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| yes [README][coa] (namespace-isolated RBAC: owner/maintainer/data-steward/data-analyst plus cross-namespace platform-admin/platform-viewer roles) | yes [README][coa] (AWS CDK per-service stacks — control-plane, data-layer, ontology-engine, metric-service, vkg, mcp-server, context-manager — each independently deployed) | partial [ontology-engine README][coa-engine] (HermiT/ELK reasoners and OntoQA/OoPS! validation are deterministic; concept-extraction LLM "Amazon Bedrock Claude" has no pinned model ID) | yes [README][coa] (pluggable induction strategies; Athena federation connectors incl. a reference connector and Databricks) | no data [ontology-engine README][coa-engine] (a `proposals.py` review workflow gates changes, but no documented snapshot/diff/rollback of ontology state) | yes [ontology-engine README][coa-engine] (grounds against named foundational ontologies — Schema.org, Dublin Core, PROV-O, FOAF, FIBO — via three-tier formal validation reports) |
+
+`scored 2026-09-30`
+
+These four give the [agent substrate rubric][rubric] its first ontology-doc evidence for **Shared** and **Distributed**, both previously unscored here: `open-ontologies` and `Ontology Atlas` are `partial` on both, `AWS context-ontology-accelerator` is `yes` on both, and `EvoOntology` stays `no data`/`no` — a single-session plugin with no shared-store or multi-machine claim.
+
 ## The Agent-Native Layer
 
 The generic layers above solve the *plumbing* — governed APIs an agent can query. But an agent hitting a raw semantic API still re-derives business meaning on every call (and can still get it wrong). Two efforts go further, and are analyzed in depth elsewhere in this repo:
@@ -95,6 +133,11 @@ A complementary research direction formalizes *why* this grounding improves reli
 | [RDF][rdf] · [OWL][owl] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
 | [Vault-LD][vault-ld] | Markdown-vault-as-linked-data spec; YAML-LD frontmatter + shared `@context`, roundtrip RDF converters |
 | [Symbolic Separation (arXiv:2609.17107)][symbolic-separation] | Ontology-constrained Virtual Knowledge Graph + deterministic pre-execution validation for deep agents over operational telemetry |
+| [Ontology Atlas README][ontology-atlas] | MCP-native, git-versioned Markdown ontology; MIT license and star count verified 2026-09-30 |
+| [open-ontologies README][open-ontologies] | Rust MCP server, Lean-4-certified ontology plan/apply/rollback; MIT license and star count verified 2026-09-30 |
+| [EvoOntology README][evoontology] · [arXiv:2609.15779][evoontology-paper] | Self-evolving ontology layer for data agents; MIT license and star count verified 2026-09-30 |
+| [AWS context-ontology-accelerator README][coa] · [ontology-engine README][coa-engine] | Namespace-RBAC, AWS CDK-deployed semantic context platform; Apache-2.0 license and star count verified 2026-09-30 |
+| [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the four ontology tools above |
 
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
@@ -113,3 +156,10 @@ A complementary research direction formalizes *why* this grounding improves reli
 [shacl]: https://www.w3.org/TR/shacl/
 [vault-ld]: https://github.com/The-Knowledge-Graph-Guys/vault-ld
 [symbolic-separation]: https://arxiv.org/abs/2609.17107
+[ontology-atlas]: https://github.com/wlsdks/ontology-atlas
+[open-ontologies]: https://github.com/fabio-rovai/open-ontologies
+[evoontology]: https://github.com/ruc-datalab/EvoOntology
+[evoontology-paper]: https://arxiv.org/abs/2609.15779
+[coa]: https://github.com/aws/context-ontology-accelerator
+[coa-engine]: https://github.com/aws/context-ontology-accelerator/tree/main/packages/ontology-engine
+[rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
