@@ -26,8 +26,11 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     (`non-cc/context-memory/mitosis-cortex-analysis.md`); the other leads extend existing landscapes.
     Cortex is closed and hosted, with no public repo. `x402oracle.com` now redirects to `verginglabs.com`,
     which shows an index of 92.0, not 91.7% (the page records the discrepancy).
-- **Next, in order (START HERE, 2026-09-30):** R, B, C and S1 are done.
-  1. **S2 → S6:** one subject per PR, working from the P1 table in "Ranked backlog" and the "Coverage
+  - Row S2 (2026-09-30): 4 ontology tools scored in `semantic-layers-data-catalog-landscape.md`
+    § Agent-native ontology tools. This partly fills gaps 5 and 6: the AWS accelerator scores yes on
+    Shared and Distributed. The unnamed "semantic model" post was dropped because it has no source.
+- **Next, in order (START HERE, 2026-09-30):** R, B, C, S1 and S2 are done.
+  1. **S3 → S6:** one subject per PR, working from the P1 table in "Ranked backlog" and the "Coverage
      gaps" list. Research each lead first-party; delegate the fetching to subagents (at most about 3
      large landscapes per brief, results written to disk). J1–J3 go with S6/S3.
   2. **Then:** Y, G, Z.
@@ -318,11 +321,11 @@ systems on the rubric.
 | ~~C~~ | ~~Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks~~ | agent | Done 2026-09-30 (#540): 5 hubs in `docs/_topics/`, linked from the hub index and the rubric; top-10 gaps under "Coverage gaps" |
 | ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
 | ~~S1~~ | ~~Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors)~~ | agent | Done 2026-09-30 (#541): 9 leads placed and rubric-scored, 1 new page (Mitosis Cortex) |
-| S2 | Research batch: ontology | agent | One PR, first-party verified, rubric-scored |
-| S3 | Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G) | agent | Same as S1 |
-| S4 | Research batch: context | agent | Same as S1 |
-| S5 | Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads) | agent | Same as S1 |
-| S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | Same as S1 |
+| ~~S2~~ | ~~Research batch: ontology~~ | agent | Done 2026-09-30: 4 leads rubric-scored in the semantic-layers landscape, 1 dropped (no source) |
+| S3 | Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G) | agent | One PR, first-party verified, rubric-scored |
+| S4 | Research batch: context | agent | One PR, first-party verified, rubric-scored |
+| S5 | Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads) | agent | One PR, first-party verified, rubric-scored |
+| S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | One PR, first-party verified, rubric-scored |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
 | D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11) | owner | Deferred until something consumes `status:`; then migration PR 1 of ~5 with the validator passing |
