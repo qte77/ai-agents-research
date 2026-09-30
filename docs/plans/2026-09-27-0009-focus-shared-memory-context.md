@@ -1,6 +1,6 @@
 ---
 title: Focus arc — shared, versionable, traceable memory, context, skills and harness
-status: approved
+status: done
 issue: 509, 504, 515, 516, 517, 348
 created: 2026-09-27
 updated: 2026-09-30
@@ -117,7 +117,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   2. ~~**K6**~~: done 2026-09-30 (`sdlc-lcm/software-factory-landscape.md`); feeds Y (human gates at spec and merge).
   3. ~~**K1 + K3 + K4 + K7 + K8**~~: done 2026-09-30 (K4 dropped: no reachable source).
   4. ~~**K2**~~: done 2026-09-30 (#564, #566).
-  5. ~~**D1**~~: done 2026-09-30 (strict mode on). ~~**Y**~~: done 2026-09-30. Next: **Z** (close-out and release; defaults in its row).
+  5. ~~**D1**~~, ~~**Y**~~, ~~**Z**~~: done 2026-09-30. **The arc is closed**: nothing is open in the Remaining work table.
 - **Browser checks** for any UI change: the patchright scripts are in the session scratchpad and are not committed.
   Patchright drops console events and runs locators in an isolated world. Read state with
   `evaluate(..., isolated_context=False)`, install an error collector after DOM load (`add_init_script` closes the
@@ -468,4 +468,4 @@ parser): `cd <scratch> && uvx radon cc -s -a <abs-path>`. CodeFactor is the requ
 | ~~K7~~ | ~~OpenResearch desktop app, alphaXiv (owner, 2026-09-30)~~ | agent | Done 2026-09-30: `non-cc/agents/openresearch-analysis.md` (Assess, MIT), cross-linked with Feynman; a separate product that also uses alphaXiv for paper lookup |
 | ~~K8~~ | ~~petergyang/human-review: human review gate tool (owner, 2026-09-30)~~ | agent | Done 2026-09-30: community tooling landscape entry (MIT, v0.8.2), rubric-scored, linked from the ACE-FCA gate section; the K6 cross-link follows in the main session |
 | ~~D1~~ | ~~#348: move reader-facing `status` into frontmatter (from plan 0008 row 11)~~ | agent (after G) | Done 2026-09-30: 214 docs migrated in #562 (cc-native), #563 (sdlc-lcm, plans, 6 non-cc folders), #565 (rest). A tested one-off transform put the badge token in `status:` and extra text on a `**Details:**` line. This PR rewrites CONTRIBUTING §1–§2, points `architecture.md` and the `adding-research-source` skill at it, and switches `make check_status` to `--strict`. G's graph already read frontmatter first. Two decide-by-default tokens (owner may override): bwrap quirks → `reference`, Cowork enterprise → `generally-available` |
-| Z | Close-out: README/UserStory focus statements, CHANGELOG, release | agent | Release published; #509 closed. Decide-by-default (owner may override): README gets a focus bullet linking the Y page; `UserStory.md` constraints are amended to match reality ("Markdown-only" and "CI/CD for documentation validation out of scope" are no longer true: stdlib doc tooling and a strict `check_status` gate CI); one user story for this arc; minor bump 0.12.0 → 0.13.0 |
+| ~~Z~~ | ~~Close-out: README/UserStory focus statements, CHANGELOG, release~~ | agent | Done 2026-09-30: README focus bullet (rubric + reference architecture); `UserStory.md` gains the arc's user story, and its constraints now match reality (stdlib doc tooling in scope, CI validation no longer out of scope). v0.13.0 is cut by the `bump-my-version` workflow right after this PR; #509 closed |
