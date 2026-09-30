@@ -29,7 +29,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Row S2 (#542, 2026-09-30): 4 ontology tools scored in `semantic-layers-data-catalog-landscape.md`
     § Agent-native ontology tools. This partly fills gaps 5 and 6: the AWS accelerator scores yes on
     Shared and Distributed. The unnamed "semantic model" post was dropped because it has no source.
-  - Row S3 (2026-09-30): a new frameworks-landscape §7 subsection on agent-native graph and hybrid RAG
+  - Row S3 (#543, 2026-09-30): a new frameworks-landscape §7 subsection on agent-native graph and hybrid RAG
     platforms (SSTorytime, Omnigraph, Semantica, WeKnora, BrainAPI, which is BSL-1.1). GraphRAG,
     LightRAG and Cognee are scored for row G (see below). The Shared gap is filled (Omnigraph and
     WeKnora score yes); Reproducible stays open, with no clean yes.
@@ -330,7 +330,7 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 | ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
 | ~~S1~~ | ~~Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors)~~ | agent | Done 2026-09-30 (#541): 9 leads placed and rubric-scored, 1 new page (Mitosis Cortex) |
 | ~~S2~~ | ~~Research batch: ontology~~ | agent | Done 2026-09-30 (#542): 4 leads rubric-scored in the semantic-layers landscape, 1 dropped (no source) |
-| ~~S3~~ | ~~Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G)~~ | agent | Done 2026-09-30: 5 platforms plus the 3 row-G systems rubric-scored in frameworks §7 |
+| ~~S3~~ | ~~Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G)~~ | agent | Done 2026-09-30 (#543): 5 platforms plus the 3 row-G systems rubric-scored in frameworks §7 |
 | S4 | Research batch: context | agent | One PR, first-party verified, rubric-scored |
 | S5 | Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads) | agent | One PR, first-party verified, rubric-scored |
 | S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | One PR, first-party verified, rubric-scored |
