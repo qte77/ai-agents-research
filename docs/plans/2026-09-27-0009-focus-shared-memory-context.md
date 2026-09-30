@@ -21,7 +21,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     is committed yet.
   - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
   - Row R (#526) and row B (#528) shipped.
-  - Row C (2026-09-30): 5 new hubs and the coverage gaps (see "Coverage gaps" below).
+  - Row C (#540, 2026-09-30): 5 new hubs and the coverage gaps (see "Coverage gaps" below).
 - **Next, in order (START HERE, 2026-09-30):** R, B and C are done.
   1. **S1 → S6:** one subject per PR, working from the P1 table in "Ranked backlog" and the "Coverage
      gaps" list. Research each lead first-party; delegate the fetching to subagents (at most about 3
@@ -311,7 +311,7 @@ systems on the rubric.
 | J2 | #516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers | agent | §8 extended, #516 closed |
 | J3 | #517: system-1 decision models + Jev ecosystem, scored on the rubric. Models: Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector (BioDecision-4B as a one-line domain example). Tools: abide, jev-ultrafast, probably, jevgrep. Paper: Jev-as-a-Judge | agent | Entries merged (extend existing pages first; §8 of the frameworks landscape already lists Llama Guard and Bespoke-MiniCheck as classifiers), #517 closed |
 | ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (#526): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
-| ~~C~~ | ~~Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks~~ | agent | Done 2026-09-30: 5 hubs in `docs/_topics/`, linked from the hub index and the rubric; top-10 gaps under "Coverage gaps" |
+| ~~C~~ | ~~Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks~~ | agent | Done 2026-09-30 (#540): 5 hubs in `docs/_topics/`, linked from the hub index and the rubric; top-10 gaps under "Coverage gaps" |
 | ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
 | S1 | Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors) | agent | One PR, first-party verified, rubric-scored |
 | S2 | Research batch: ontology | agent | Same as S1 |
