@@ -147,6 +147,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [agentic-payments-landscape.md](protocols/agentic-payments-landscape.md) | Machine-native agent payment rails: x402 (Coinbase/Linux Foundation), Google AP2, Stripe MPP, Fetch.ai |
 | [agent-plugins-standard-analysis.md](protocols/agent-plugins-standard-analysis.md) | Agent Plugins — open standard (v1.0.0) for packaging Agent Skills + MCP servers into one cross-client plugin directory format |
 | [agents-md-cookbook-analysis.md](protocols/agents-md-cookbook-analysis.md) | agents-md-cookbook — tool-agnostic AGENTS.md template kit (15 stack templates, CI linter, migrator from CLAUDE.md/.cursorrules/etc.) |
+| [openai-apps-plugins-analysis.md](protocols/openai-apps-plugins-analysis.md) | OpenAI's unified ChatGPT + Codex plugin system (manifest, marketplace, pinning, review) vs. CC plugin packaging and the Agent Plugins standard; keeps the 2023 plugins beta and 2024 GPT Store legacy eras apart; rubric-scored |
 | [programmatic-tool-calling-analysis.md](protocols/programmatic-tool-calling-analysis.md) | Programmatic and speculative tool calling (PTC/sPTC) — typed function-stub tool calls vs. JSON schema matching, evaluated across 14 models |
 
 ## Backlog status

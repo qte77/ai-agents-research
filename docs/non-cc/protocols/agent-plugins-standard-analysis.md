@@ -97,6 +97,12 @@ format" problem this standard targets, now with one worked example.
   above is about the *standard's own site*, which still lists no
   adopters/implementers page. A third-party implementation now exists (see
   above) — the standard has real-world usage the site itself doesn't surface.
+- **Update 2026-09-30 (OpenAI)**: OpenAI, a TSC member, now documents the
+  standard as its packaging format: new ChatGPT/Codex plugins should declare the
+  Agent Plugins `$schema` in a root `plugin.json`, with `.codex-plugin/plugin.json` kept
+  as a compatibility fallback. That is documented support, not yet observed adoption:
+  none of OpenAI's own example plugins declares the schema. See
+  [openai-apps-plugins-analysis.md](openai-apps-plugins-analysis.md#manifest).
 
 ## Sources
 
