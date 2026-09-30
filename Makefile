@@ -11,7 +11,7 @@ endif
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
 	check_links check_links_report check_docs check_status check_actions autofix lint test \
-	graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
+	graph-data graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
 	changelog_new changelog_preview changelog_release \
 	help
 .DEFAULT_GOAL := help
@@ -287,6 +287,9 @@ test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/p
 # Query/navigate ops are free (no LLM). Building needs an extraction model: the
 # /graphify skill (key-free, uses the Claude Code session) or `graphify extract`
 # with an API key. Config (GRAPHIFY / GRAPHIFY_BACKEND / PYTHON) is at the top.
+
+graph-data: ## Build the deterministic structural doc graph into ui/doc-graph.json (no LLM, stdlib)
+	$(PYTHON) .github/scripts/build-doc-graph.py
 
 graph-build: ## Headless full rebuild (AST + semantic) — needs an LLM backend API key
 	$(GRAPHIFY) extract . --backend $(GRAPHIFY_BACKEND)
