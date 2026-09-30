@@ -22,7 +22,7 @@ project, conversation, experiment, run, log, and artifact on the user's own mach
 
 ### Architecture
 
-Rust-core desktop app (Tauri-style; ~74% Rust by byte count) with a TypeScript/React dashboard,
+Rust-core desktop app (Tauri-style; ~70% Rust by byte count) with a TypeScript/React dashboard,
 plus a `orx` CLI ([`gh api` languages][openresearch-langs], 2026-09-30). `orx up` starts a local
 service bound to `127.0.0.1:4791` with a local SQLite store; creating a project or launching a run
 does not publish anything, and an `openresearch.sh` account is required only for "service-owned
@@ -87,7 +87,7 @@ Scored 2026-09-30 against the [agent substrate rubric][rubric].
 | Dimension | Assessment |
 |---|---|
 | **Use case** | Turning an existing coding agent into an autonomous research/experiment loop, with reproducible, git-native experiment lineage |
-| **Runtime** | Local Rust/Tauri desktop app + `orx` CLI; local SQLite store by default |
+| **Runtime** | Local Rust desktop app (Tauri-style: tao/wry/gtk, not the Tauri framework) + `orx` CLI; local SQLite store by default |
 | **Compute** | Local, SSH, Slurm, Kubernetes, Ray, Hugging Face Jobs, Modal, Tinker, or managed OpenResearch compute |
 | **Maturity** | Active: 6,259★/398 forks, v0.2.14, pushed 2026-09-30 (`gh api`, 2026-09-30); GitHub Trending #1 Repository of the Day |
 | **License** | MIT (LICENSE file confirmed, `gh api` 2026-09-30) |

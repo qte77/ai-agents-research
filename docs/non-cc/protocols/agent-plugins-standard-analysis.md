@@ -68,7 +68,7 @@ namespaces for Cursor, Grok Build, and Claude Code (`.claude-plugin/`). It bundl
 (`https://mitosislabs.ai/api/mcp`, OAuth 2.0 + PKCE, dynamically registered per client — "there is no
 API key to paste") with seven skills (`mitosis-memory-skills`, MIT, 1★, pushed 2026-08-17:
 `memory-connect`, `memory-manifest`, `memory-ask`, `memory-recall`, `memory-remember`,
-`memory-ingest`, `memory-status`) that each "prefer the MCP tool when present and fall back to the
+`memory-ingest`, `memory-status`) that each "prefers the MCP tool when present and falls back to the
 `mi` CLI... when it is not" — the same skill runs whether or not the plugin's MCP server is loaded.
 The repo runs a CI check (`node scripts/validate.mjs`) that "validates both manifests against their
 published JSON Schemas and parses the YAML frontmatter of every `SKILL.md`" — this is the Agent

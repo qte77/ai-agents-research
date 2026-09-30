@@ -48,7 +48,7 @@ a controlled A/B.
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| no [README][laya] (self-hosted, single-process serving; no documented multi-writer store) | no data [README][laya] (a self-hosted HTTP server; no cluster/sync deployment documented) | yes [README][laya] (three pinned Hugging Face checkpoints, deterministic forward pass, no LLM generation step) | yes [README][laya] (a `Router` swaps checkpoints per request; a JS/TS SDK and third-party projects like `stuntd` train new heads on the frozen encoder) | yes [HF org][laya-hf] (checkpoints are versioned Hugging Face repos with tags) | partial [README][laya] (returns calibrated probabilities and usage counts per call, but its own Jev comparisons are explicitly unmeasured, not an audit trail) |
+| no [README][laya] (self-hosted, single-process serving; no documented multi-writer store) | no data [README][laya] (a self-hosted HTTP server; no cluster/sync deployment documented) | yes [README][laya] (three Hugging Face checkpoints, unpinned by default (`LAYA_REVISION` and per-checkpoint SHA-256 maps allow pinning), deterministic forward pass, no LLM generation step) | yes [README][laya] (a `Router` swaps checkpoints per request; a JS/TS SDK and third-party projects like `stuntd` train new heads on the frozen encoder) | yes [HF org][laya-hf] (checkpoints are commit-addressable Hugging Face repos; `laya` and `laya-multilingual` carry no Hub tags as of 2026-09-30, and the README's quickstart loads `main` by default — `LAYA_REVISION` and per-checkpoint SHA-256 maps allow pinning) | partial [README][laya] (returns calibrated probabilities and usage counts per call, but its own Jev comparisons are explicitly unmeasured, not an audit trail) |
 
 `scored 2026-09-30`
 
@@ -60,10 +60,11 @@ a controlled A/B.
 A family of decision models on Qwen3.5/Qwen3.8 (0.8B, 4B, 9B, 27B) you can run pretrained or
 train yourself. Its API matches TypeSafe's System One, so the TypeSafe Python SDK works against a
 local Kev server unchanged (`base_url` repoint only). Unlike Laya, kev **ran Jev itself** on its
-own development and test sets (a `Jev | Hosted | 0.857 / –` row in its comparison table) — but
+own development sets (a `Jev | Hosted | 0.857 / –` row in its comparison table — the README
+states Jev was only run on the development sets, never the held-out test sets) — but
 hedges the comparison in its own words: **"We don't know what Jev was trained on, so this isn't a
 controlled comparison of the two architectures."** On "new sources" (data Kev never trained on),
-Kev-27B lands within a point of Jev (0.848 vs 0.857) and Kev-4B/9B within four points. Release
+Kev-27B lands within a point of Jev (0.851 vs 0.857) and Kev-4B/9B within four points. Release
 weights ship with SHA-256 checksums and a frozen eval-suite dataset on Hugging Face
 (`jaredpalmer/kev-suites`); a `kev-finetune` coding-agent skill runs an end-to-end fine-tune on
 Modal from your own labelled examples (about $1/run on an H100 for Kev-4B).
@@ -90,7 +91,7 @@ trajectories. Self-reported: on par with Jev across computer-use, gaming, and to
 at up to 9× lower latency, and — with lightweight fine-tuning — a new verifier SOTA on
 Terminal-Bench 2.1 (87.6%) and DeepSWE (81.6%). **Correction to the plan's lead**: a social post
 credited Stanford and NVIDIA for this work; neither institution appears in the README, its
-citation block (five individual co-author names, no affiliations given), or the license file — that
+citation block (seven individual co-author names, no affiliations given), or the license file — that
 credit is unconfirmed and is dropped here rather than repeated.
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
@@ -174,9 +175,9 @@ its own home elsewhere in this corpus; this section is a pointer, not a duplicat
   block that samples judgment probabilities. The interpreter is real (it executes the program;
   it does not ask an LLM to interpret it), and runs (`--save`/`--replay`) record the input and
   every model output so a run replays offline, with no model call and no credentials, rejecting
-  any mismatched or incomplete recording. The plan named this repo for a one-line mention on the
-  Jev analysis page (issue #515); that page is a parallel batch's page — a pointer belongs there
-  at merge, and this entry stands in until then.
+  any mismatched or incomplete recording. [jev-analysis.md](../infrastructure/jev-analysis.md)
+  already cross-references this page for probably (see its Cross-References section) — this page
+  is probably's home in the corpus, not a placeholder.
 
   | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
   |---|---|---|---|---|---|

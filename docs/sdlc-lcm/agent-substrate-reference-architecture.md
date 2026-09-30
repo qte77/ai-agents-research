@@ -23,21 +23,22 @@ shows the best score found and one row at that score. The linked section lists t
 
 ## The argument: store first, model as client
 
-**Reproducible is the discriminating property.** Ten of the 61 rows score `yes` on it, in three shapes:
+**Reproducible is the discriminating property.** Nine of the 61 rows score `yes` on it, in three shapes:
 
 1. **No LLM in the write path.** [agent-memory][memtool] ("files are the truth; every index is a
    rebuildable cache"), [AgentiCow][fw4] (copy-on-write reads), [Beads][fw4] (Dolt is commit-addressed),
-   [lossless-memory][fw4] (indexes rebuild from raw logs), [open-ontologies][ont] (Lean-checked
-   certificates, pinned Oxigraph) and [EvoOntology][ont] ("Deterministic core").
+   [lossless-memory][fw4] (indexes rebuild from raw logs) and [open-ontologies][ont] (Lean-checked
+   certificates, pinned Oxigraph).
 2. **LLM output recorded, then replayed.** [OrcaReplay][orca] ("Reproduce the run byte-for-byte with no
    model called").
-3. **Model pinned by checksum or ID.** [Laya][laya] (three pinned checkpoints, one deterministic forward
-   pass, no generation step), [kev][kev] (SHA-256-checksummed release weights, a frozen eval suite) and
+3. **Model pinned by checksum or ID.** [Laya][laya] (checkpoints pinnable by revision and SHA-256, though
+   unpinned by default; one deterministic forward pass, no generation step), [kev][kev] (SHA-256-checksummed release weights, a frozen eval suite) and
    [SkillLift][skilllift] (endpoint-configured models, pinned runtime requirements, checked-in results).
 
 Everywhere an unpinned LLM writes into the store, the score stops at `partial` or `no`: [Omnigraph][fw7p],
 [Semantica][fw7p], [Cognee][fw4], [LightRAG][fw7g], [HydraDB][fw4], [LlamaParse][fw7], the [AWS
-context-ontology-accelerator][ont], [Archon and AX][fw1] and the [RRSI][rrsi] proposer are `partial`;
+context-ontology-accelerator][ont], [EvoOntology][ont] (its evolution runs on several unpinned LLM
+backbones), [Archon and AX][fw1] and the [RRSI][rrsi] proposer are `partial`;
 [GraphRAG][fw7g], [WeKnora][fw7p] and [BrainAPI][fw7p] are `no`; [Paperclip][fw1] is `no data`. This is
 also why the plan's [graph-system decision][plan-g] kept a deterministic base graph and treats LLM
 extraction as an overlay.
@@ -130,7 +131,7 @@ The census confirms these gaps; each is stated with the best score the rows reac
 - **Open (no row reaches `partial`).** Context·Distributed — CC auto memory is "machine-local", the
   other three context rows are `n/a` or `no data` ([ccmem][ccmem]). Context·Reproducible — all four rows
   `no data`. Skills·Shared — the six repo rows are `no data`, the two paper rows `n/a` ([skills
-  landscape][skl-cole], [skill-evolution][skilllift]). Skills·Distributed — `no` or `n/a` throughout.
+  landscape][skl-cole], [skill-evolution][skilllift], runtypelabs/skills in [frameworks §1][fw1]). Skills·Distributed — `no` or `n/a` throughout.
 - **Partial ceiling (no `yes` anywhere).** Graphs·Reproducible — seven rows `partial`, three `no`:
   extraction or embedding runs an unpinned LLM (GraphRAG, LightRAG, Cognee, Omnigraph, Semantica,
   WeKnora, BrainAPI), or no pinned rebuild is documented (HydraDB, SSTorytime; LlamaParse pins only

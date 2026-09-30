@@ -20,7 +20,7 @@ three question types, verified at [docs.typesafe.ai/api][typesafe-api] on 2026-0
 | `choice` | Pick one option from a list | `choice` (highest-probability option), `probabilities` (every option, sums to 1), `confidence` |
 | `score` | Score the state on a rubric | `score` (probability-weighted, can land between levels), `legend`, `probabilities`, `confidence` |
 
-TypeSafe's own fit guidance: Jev works best for "atomic questions, composed in code" —
+TypeSafe's own fit guidance: Jev works best for atomic questions, composed in code —
 well-scoped, single-factor evaluations. For a complex decision, decompose it into several
 atomic questions and combine the results in application logic, rather than asking Jev to
 weigh multiple factors in one call.
@@ -34,8 +34,9 @@ relying on these; TypeSafe states its own limits "can change without notice":
 - Input tokens cost $0.042 per million ($42 per billion); output tokens are free.
 - 64k tokens per request (the `state` plus every question combined); 32k tokens for the
   `state` plus the single longest question.
-- Rate limits: 100k tokens/second and 40 requests/second, but "adjusting dynamically...
-  the limits above can change without notice while we [serve] a very large volume of demand."
+- Rate limits: 100k tokens/second and 40 requests/second, but "Rate limits are adjusting
+  dynamically. We are serving a very large volume of demand, and the limits above can change
+  without notice while we do."
 
 ## Measured: Pre-CI Code-Change Gate
 
