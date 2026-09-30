@@ -3,7 +3,7 @@ title: User Story - ai-agents-research
 description: User stories for systematic coding agent research, comparison, and feature triage
 category: requirements
 created: 2026-03-22
-updated: 2026-09-25
+updated: 2026-09-30
 version: 1.0.0
 ---
 
@@ -28,7 +28,7 @@ Maintain a living knowledge base of coding agent capabilities, CC internals, and
 - As a researcher, I want to update the feature comparison matrix so that cross-agent capability differences are visible at a glance.
 - As a researcher, I want to document CC session artifacts and orchestration patterns so that downstream repos (cc-recursive-team-mode, coding-harness-eval) have accurate reference material.
 - As a researcher, I want weekly ArXiv preprints filtered by an AI-agent relevance prompt so that I see only papers worth promoting to `docs/` without manually scanning the firehose.
-- As a reader, I want to browse by subject (memory, knowledge graphs, RAG, code tooling, visualization) across the CC-relationship buckets so that I find every related doc without knowing which bucket it lives in.
+- As a reader, I want to browse by subject (memory, knowledge graphs, RAG, code tooling, visualization, context, skills, plugins, harness, long-running tasks) across the CC-relationship buckets so that I find every related doc without knowing which bucket it lives in.
 
 ## Success Criteria
 
