@@ -3,8 +3,8 @@ title: Feynman Research Agent Analysis
 source: https://github.com/getcompanion-ai/feynman
 purpose: Analysis of Feynman as an open-source terminal-based AI research agent with multi-agent investigation workflows.
 created: 2026-04-09
-updated: 2026-04-09
-validated_links: 2026-04-09
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Open-source (MIT), active development by [Companion AI][feynman-site]
@@ -74,6 +74,7 @@ dependency (not widely adopted). AlphaXiv integration may limit paper coverage.
 
 - [deerflow-analysis.md](../orchestrators/deerflow-analysis.md) — general-purpose super agent (LangGraph)
 - [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — agent-skills `/review` for code (different domain)
+- [openresearch-analysis.md](openresearch-analysis.md) — separate alphaXiv product (local-first, git-native research workspace) that shares alphaXiv's paper-discovery backend with Feynman
 
 ## Sources
 

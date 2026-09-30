@@ -117,7 +117,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   at least partly filled. The owner added K1–K5 on 2026-09-30 (leads in "Owner-requested leads").
   1. **K5**: OpenAI apps, plugins, GPT Store and marketplace (plugins subject; also informs gap 10).
   2. ~~**K6**~~: done 2026-09-30 (`sdlc-lcm/software-factory-landscape.md`); feeds Y (human gates at spec and merge).
-  3. **K1 + K3 + K4 + K7 + K8** as one small batch: LlamaParse + `grounded_document_agent`, intent-router, the ai-engg-book, OpenResearch, human-review.
+  3. ~~**K1 + K3 + K4 + K7 + K8**~~: done 2026-09-30 (K4 dropped: no reachable source).
   4. **K2**: *Artificial Engineering* newsletter triage (LinkedIn; owner-gated if every fetch route is blocked).
   5. **D1** (#348, frontmatter `status:`; G's graph reads status through `doc_status`, so D1 changes only that
      module and the docs), then **Y** (synthesis) and **Z** (close-out and release).
@@ -462,13 +462,13 @@ parser): `cd <scratch> && uvx radon cc -s -a <abs-path>`. CodeFactor is the requ
 | ~~S6~~ | ~~Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`)~~ | agent | Done 2026-09-30 (#546): 11 leads placed, 2 new pages (OpenShell, OrcaReplay), gaps 7–9 filled |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | ~~G~~ | ~~Graph system: default C (deterministic graph module + optional graphify overlay); closes #504~~ | owner decision → agent | Done 2026-09-30: slice 1 (#553, module and tests) and slice 2 (#554, page, deploy step and build metadata; checked on the live site); #504 closed |
-| K1 | LlamaParse (hosted parser) + `grounded_document_agent` example (owner, 2026-09-30) | agent | LlamaParse entry next to LiteParse in frameworks §7, rubric-scored; the example as one clause on the existing bullet |
+| ~~K1~~ | ~~LlamaParse (hosted parser) + `grounded_document_agent` example (owner, 2026-09-30)~~ | agent | Done 2026-09-30: LlamaParse in frameworks §7 next to LiteParse, rubric-scored (hosted, no license stated; client SDK `llama_cloud_services` MIT); the example is one clause on the §4 bullet |
 | K2 | *Artificial Engineering* newsletter triage and the rUv "no moat / fluid software" post as design lenses (owner, 2026-09-30) | agent → owner if blocked | Lead list on disk; high-priority issues cited as design lenses; or recorded owner-gated if LinkedIn blocks every route |
-| K3 | angel291592/intent-router (owner, 2026-09-30) | agent | Entry placed and rubric-scored, or dropped with a reason |
-| K4 | Daily Dose of DS AI engineering book (owner, 2026-09-30) | agent | Short reference entry with its license, or dropped with a reason |
+| ~~K3~~ | ~~angel291592/intent-router (owner, 2026-09-30)~~ | agent | Done 2026-09-30: frameworks §2 entry, rubric-scored (MIT, v1.2.0); an intent compiler upstream of Jev/Laya, cross-linked |
+| ~~K4~~ | ~~Daily Dose of DS AI engineering book (owner, 2026-09-30)~~ | agent | Dropped 2026-09-30: the repo has no license and holds only a landing page; the book sits behind an email signup, and the WikiSkill citation could not be found on any reachable page |
 | K5 | OpenAI apps, plugins, GPT Store and marketplace (owner, 2026-09-30) | agent | Comparison page (or extension) merged, rubric-scored, current vs legacy separated, `gpts-openai.com` marked unofficial |
 | ~~K6~~ | ~~Software factory: historical, DevSecOps and agentic meanings (owner, 2026-09-30)~~ | agent | Done 2026-09-30: `sdlc-lcm/software-factory-landscape.md` (Assess), three meanings kept apart; only triagebot-action rubric-scored (the ai-that-works episodes ship no code, Flue has no repo); no LICENSE on ai-that-works, `wsff.md` or triagebot-action |
-| K7 | OpenResearch desktop app, alphaXiv (owner, 2026-09-30) | agent | Entry in `non-cc/agents/` with its license and rubric row, cross-linked with Feynman, or dropped with a reason |
-| K8 | petergyang/human-review: human review gate tool (owner, 2026-09-30) | agent | Entry in the community tooling landscape with its license and rubric row, cross-linked from the ACE-FCA gate section, or dropped with a reason |
+| ~~K7~~ | ~~OpenResearch desktop app, alphaXiv (owner, 2026-09-30)~~ | agent | Done 2026-09-30: `non-cc/agents/openresearch-analysis.md` (Assess, MIT), cross-linked with Feynman; a separate product that also uses alphaXiv for paper lookup |
+| ~~K8~~ | ~~petergyang/human-review: human review gate tool (owner, 2026-09-30)~~ | agent | Done 2026-09-30: community tooling landscape entry (MIT, v0.8.2), rubric-scored, linked from the ACE-FCA gate section; the K6 cross-link follows in the main session |
 | D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11). Folded into this arc on 2026-09-30, after G: the structural graph (option B) uses doc status as a node attribute, so it is the consumer the deferral waited for | agent (after G) | Migration PRs (~5) with the `check_status` validator passing, G's module reading `status:` from frontmatter, #348 closed |
 | Z | Close-out: README/UserStory focus statements, CHANGELOG, release | agent | Release published; #509 closed |

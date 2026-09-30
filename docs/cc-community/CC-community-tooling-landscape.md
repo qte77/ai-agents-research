@@ -364,6 +364,61 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
+## human-review (petergyang)
+
+**Repo**: [petergyang/human-review][human-review] | **Stars**: 1,302 | **License**: MIT (confirmed
+against `LICENSE`; the README's own "## License" section also states MIT) | **Version**: v0.8.2
+(`gh api` 2026-09-30), pushed 2026-09-17
+
+A visual editor for HTML and Markdown files, installed as a `/human-review` skill (Claude Code,
+Codex, ChatGPT, or any coding agent with skill support): open a file or a `localhost` URL, make
+direct text/list/link/image edits and drag-reorder blocks in the browser, or leave Google-Doc-style
+comments anchored to exact text, an image, a chart, or a section, then click **Send** to batch
+every edit and comment back to the waiting agent in one message instead of a long chat instruction.
+Runs entirely local via a bundled CLI/server (`cli.js`/`server.js`/`sdk.js`) — "Everything runs on
+your computer. Human Review doesn't require an account, cloud service, database, or API key." In
+Claude Code the agent waits in the background and picks up feedback the moment Send is clicked; in
+Codex and other agents it picks it up on its next turn or a follow-up message. Feedback left but
+never sent is preserved for the next open (Restore or Discard); a `SKILL.md` teaches the agent the
+review protocol.
+
+### How It Works
+
+- Install: paste `Install the /human-review skill globally from https://github.com/petergyang/human-review`
+  into any agent, or `npx -y human-review setup --global`
+- Open: `/human-review (your file)` for a static HTML/Markdown file, or `/human-review (localhost URL)`
+  for a running app
+- Edits: bold/italic text, bulleted/numbered lists (Tab/Shift+Tab indent), links (⌘K), image
+  resize/move/paste, whole-block drag-reorder, element deletion with Undo
+- Comments: select a phrase, click an image/chart/section, or edit an already-sent comment (a
+  reworded comment reaches the agent on the next Send)
+- HTML files auto-save direct edits/resizes locally (Discard/Revert all restores them); Markdown
+  and localhost reviews apply only once the batch is sent
+
+### Adoption Considerations
+
+**Strengths**: fills the exact gap the ACE-FCA human-review-gate pattern in this repo names but
+doesn't itself tool (see cross-ref below); zero infrastructure (no account/cloud/DB/API key);
+comments are anchored, batched feedback rather than a typed chat instruction, giving the agent the
+same one-comment-one-meaning precision a code review gives; agent-agnostic (any harness with skill
+support).
+
+**Risks**: young project (no stated release cadence beyond git tags; last push 2026-09-17);
+comments/edits are local browser state for the current review session, not a persisted
+cross-session audit trail — closing the tab without Send discards unsent Markdown/localhost
+feedback (HTML direct edits persist to disk regardless); single-reviewer design, not a
+multi-reviewer/concurrent-comment tool.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no [README][human-review] (one reviewer's browser session per review; no multi-user concurrent-comment semantics documented) | no [README][human-review] (local CLI/server only — "everything runs on your computer," no sync or remote-access feature) | n/a [README][human-review] (a UI/feedback-relay tool, not a state-rebuild target) | yes [README][human-review] (works across "Claude Code, Codex, or your favorite coding agent" via a documented `SKILL.md` protocol) | no [README][human-review] (feedback is applied to the file and then cleared from the review session; no independent history of past reviews) | yes [README][human-review] (comments are anchored to the exact text/element and delivered as a discrete, attributable batch the agent applies) |
+
+`scored 2026-09-30`
+
+Cross-ref: [CC-memory-system-analysis.md § Three-Phase Workflow with Human-Review Gates](../cc-native/context-memory/CC-memory-system-analysis.md#three-phase-workflow-with-human-review-gates) — human-review is a concrete tool for the review gates that section describes conceptually
+
+---
+
 ## Detailed Tool Landscapes
 
 Per-tool entries for three categories have moved to focused topic docs; the cross-tool comparison below still covers all of them:
@@ -406,8 +461,9 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **CodeBurn** | Token-usage observability (cross-agent) | CLI (reads on-disk session data) | Cross-agent dashboard, 13 task categories, optimize/compare | Active (4K stars) |
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
+| **human-review** | Visual review + feedback relay | Skill (any agent with skill support) | Google-Doc-style comments/edits batched to the waiting agent | Active (1,302 stars, v0.8.2) |
 
-All twenty-five address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
+All twenty-six address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -431,6 +487,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (4,981 stars, MIT, v0.25.0) |
 | [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (40,485 stars, Apache-2.0, v0.9.1) |
 | [Zeron][zeron] | Local-first coding-agent session engine + desktop control plane, optional multi-device sync (2,195 stars, MIT, v0.2.85) |
+| [human-review][human-review] | Visual HTML/Markdown review — comments and edits batched to the waiting agent (1,302 stars, MIT, v0.8.2) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -481,6 +538,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [teamai-cli]: https://github.com/Tencent/teamai-cli
 [herdr]: https://github.com/herdrdev/herdr
 [zeron]: https://github.com/zeronsh/zeron
+[human-review]: https://github.com/petergyang/human-review
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
