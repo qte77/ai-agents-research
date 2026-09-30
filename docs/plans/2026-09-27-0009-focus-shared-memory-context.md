@@ -12,6 +12,43 @@ Tracking issue: [#509](https://github.com/qte77/ai-agents-research/issues/509). 
 **shared, distributed, reproducible, adaptable, versionable and traceable** memory, ontology,
 graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off offloaded tasks.
 
+## Handoff (START HERE)
+
+1. **Reconcile first.** Compare `git log -5`, `gh pr list` and the Remaining work table: this plan may lag the
+   last merges (AGENT_LEARNINGS, "reconcile git HEAD"). Prefix every `gh`/`git` network call with
+   `env -u GH_TOKEN -u GITHUB_TOKEN`.
+2. **Read, in this order:** this block → [Remaining work](#remaining-work) (the only list of open work) → the K rows
+   in [Owner-requested leads](#owner-requested-leads-2026-09-29-for-the-next-research-run) → [Research run:
+   subagent brief](#research-run-subagent-brief-rows-c-and-s1s6) → the [Code map](#code-map-for-code-rows-d1-y-z).
+   Nothing else needs re-mapping.
+3. **Launch the research lanes in parallel, as one message with several `Agent` calls, each
+   `isolation: "worktree"`.** Paste the subagent brief into every prompt and add the lane's file fence below.
+   Each lane may edit only its own files; the main session owns the plan file and `docs/_topics/README.md`.
+
+   | Lane | Rows | Owns (writes only these) | Must not touch |
+   |---|---|---|---|
+   | A | K5 OpenAI apps/plugins/GPT Store | a new `docs/non-cc/protocols/` page (or `CC-plugin-packaging-research.md` §5 if extending), `docs/_topics/plugins.md`, `docs/non-cc/README.md` protocols row | sdlc-lcm/, frameworks landscape |
+   | B | K6 software factory | a new `docs/sdlc-lcm/` concept page, `docs/sdlc-lcm/README.md`, `docs/_topics/long-running.md` | plugins/, frameworks landscape, cc-community/ |
+   | C | K1 + K3 + K4 + K7 + K8 | `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` (§2, §4, §7), `docs/non-cc/agents/` (OpenResearch next to `feynman-analysis.md`), `docs/cc-community/CC-community-tooling-landscape.md`, `docs/_topics/rag.md`, `docs/_topics/harness.md`, `docs/non-cc/README.md` agents row | sdlc-lcm/, plugins/ |
+
+   Two lanes both need a row in `docs/non-cc/README.md` (A and C), so the second PR rebases on the first. That is a
+   one-line conflict; resolve it in the main session. Changelog fragments must have distinct timestamps per lane.
+   After A, B and C merge, the main session adds the cross-links between them (K8 to the K6 page).
+4. **Then, sequentially:** K2 (LinkedIn: probe the fetch first; owner-gated if every route is blocked), **D1**
+   (code, main session, strict TDD, see the Code map), **Y** (synthesis, cites the S/J/K docs, adds no new facts),
+   **Z** (close-out, then release via the `bump-my-version` workflow → merge the release PR → `publish-release`).
+5. **Per lane, the main session:**
+   - Saves the subagent's report to disk immediately.
+   - Re-checks licenses, counts and quotes at source.
+   - Commits by topic on `<type>/<slug>`, rebases, and strikes the row in the same PR.
+   - Runs `make test check_docs check_status check_actions` plus lychee offline.
+   - Opens the PR and merges with `/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>`.
+   - **Closes the issues by hand**: the gated squash drops `Closes #N`.
+   - Removes the worktree with `git worktree remove -f -f` (finished agents leave it locked) and deletes the branches.
+   - A stopped subagent is resumed with `SendMessage` to its agent id; check its worktree first.
+6. **UI changes** (D1 does not touch ui/, but anything that does): run the patchright checks locally and against the live
+   Pages site (see the Code map), with 0 console errors, at desktop and phone sizes, light and dark.
+
 ## Current status
 
 - **Shipped:** this plan and #509 (opened 2026-09-27). The previous arc
@@ -381,6 +418,29 @@ systems on the rubric.
 **S3 result (2026-09-30):** GraphRAG, LightRAG and Cognee all extract with an unpinned LLM. None
 scores yes on Reproducible or Versionable, and all three are `no data` on Traceable. GraphRAG's README
 also says it is "largely in maintenance mode". Option D offers nothing over B, so the default C stands.
+
+## Code map (for code rows: D1, Y, Z)
+
+| Path | What it is | Touch for |
+|---|---|---|
+| `.github/scripts/lib/doc_status.py` | Pure status parsing: `frontmatter_status`, `preamble_badge`, `check_doc` and the `VOCAB` token set. The one place status is read | **D1**: after migration, frontmatter becomes the source and the badge the fallback; `strict` mode forbids residual badges |
+| `.github/scripts/check-doc-status.py`, `make check_status` | Thin CLI for the validator; skips `docs/archive/` | D1: flip to `--strict` once the migration is done |
+| `tests/test_doc_status.py` | Unit tests for `doc_status` | D1: write RED first |
+| `.github/scripts/lib/doc_graph.py`, `tests/test_doc_graph.py` | Deterministic structural graph (#553); `doc_status()` normalizes badges and reads frontmatter first | D1 needs no change here, since it reads through `doc_status` (verify with the tests) |
+| `.github/scripts/build-doc-graph.py`, `make graph-data` | Writes `ui/doc-graph.json` (gitignored) | — |
+| `scripts/pages_build.py`, `tests/test_pages_build.py` | `restyle_graph` (injects the build-info tag, idempotent), `filter_graph_data`, `read_version`, `site_info` | Z: nothing (the version comes from `pyproject.toml`) |
+| `scripts/build-site-info.py` | Writes `build.json` at deploy time; `--graph` tags the published `graph.html` only | — |
+| `ui/doc-graph.html`, `ui/build-info.js`, `ui/index.html`, `ui/style.css` (EyeRest tokens, no raw hex, no blue) | Pages site | UI changes: run the checks below |
+| `.github/workflows/gh-pages.yaml` | Deploy: builds `doc-graph.json` and `build.json` (`fetch-depth: 0`); triggers on `ui/**`, `docs/**`, builders, `pyproject.toml` | — |
+| `pyproject.toml` `[tool.bumpversion]`, `[tool.scriv]` | Version single source of truth; scriv categories Added/Changed/Deprecated/Removed/Fixed/Security | Z: `bump-my-version` workflow (`bump_type` input) → release PR (check the CHANGELOG for non-scriv headings) → `tag-release` (automatic) → `publish-release` (`tag` input) |
+| `docs/sdlc-lcm/agent-substrate-rubric.md` | The rubric (6 properties × 8 subjects, evidence rules) | Y: score the reference architecture against it |
+| `/workspaces/temp/ai-agents-research-triage/merge_gated.py` | Gated admin squash (waits for CI, stops on new lychee failures) | every PR |
+| `/workspaces/temp/research-0009/e2e-scripts/e2e_doc_graph.py`, `e2e_build_info.py` | Patchright browser checks. Run with `uv run --directory /workspaces/qte77/polyfetch-scrape python <script> <base-url> <out-dir>`; Chromium via `polyfetch doctor --fix` | UI changes (locally and against `https://qte77.github.io/ai-agents-research`) |
+| `/workspaces/temp/research-0009/*-notes.md`, `/workspaces/temp/ai-agents-research-triage/` | Subagent notes and the screenshot and backlog triage data (local, not in the repo) | lead lookups |
+
+Make targets: `make test` (stdlib unittest, 137 tests), `check_docs`, `check_status`, `check_actions`, `check_links`,
+`graph-data`, `graph-page`, `preview`. radon runs only from outside the repo (`pyproject.toml` breaks its config
+parser): `cd <scratch> && uvx radon cc -s -a <abs-path>`. CodeFactor is the required check and fails on complexity.
 
 ## Remaining work
 
