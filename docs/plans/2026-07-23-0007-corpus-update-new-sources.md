@@ -6,8 +6,6 @@ created: 2026-07-23
 updated: 2026-07-23
 ---
 
-**Status**: Reference (plan)
-
 Two workstreams decided 2026-07-23: (1) **add new sources** from three channels — the
 [#374](https://github.com/qte77/ai-agents-research/issues/374) scout backlog, fresh triage/rxiv
 mining, owner-supplied URLs; (2) **update the corpus** — stale-fact refresh + open trackers

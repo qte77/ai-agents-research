@@ -6,8 +6,6 @@ created: 2026-06-11
 updated: 2026-09-23
 ---
 
-**Status**: Reference (plan)
-
 Two coupled enhancements, first captured as a local session handoff on 2026-06-11 (merged here
 2026-09-23): (1) make `ai-agents-research` (aar) consume its rules from `claude-code-plugins` instead of
 its own `.claude/rules/`; (2) merge CodeBurn's [`optimize`][codeburn] disciplines into the best-fit

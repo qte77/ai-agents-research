@@ -6,8 +6,6 @@ created: 2026-07-05
 updated: 2026-09-23
 ---
 
-**Status**: Reference (plan)
-
 Durable plan for **#348** — moving doc maturity from the body `**Status**:` badge into a
 frontmatter `status:` field. **Approved but deferred** (see Priority). This doc carries the full
 context map so a fresh session executes without re-gathering.

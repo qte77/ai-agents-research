@@ -6,8 +6,6 @@ created: 2026-07-08
 updated: 2026-07-08
 ---
 
-**Status**: Reference (plan)
-
 Durable record of the 2026-07-08 new-sources batch — analysis docs added to the corpus ahead of the
 [#354](https://github.com/qte77/ai-agents-research/issues/354) graph rebuild, so the regenerated graph
 reflects real new content. Tracker: [#374](https://github.com/qte77/ai-agents-research/issues/374).

@@ -5,9 +5,8 @@ purpose: OSS terminal coding agent with git-native workflow and multi-LLM suppor
 created: 2026-06-16
 updated: 2026-06-22
 validated_links: 2026-06-22
+status: adopt
 ---
-
-**Status**: Adopt
 
 ## What It Is
 

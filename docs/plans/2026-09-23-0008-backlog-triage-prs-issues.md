@@ -6,8 +6,6 @@ created: 2026-09-23
 updated: 2026-09-29
 ---
 
-**Status**: Reference (plan)
-
 Read-only audit of every open PR, every non-main branch and every open issue, run 2026-09-23 by two
 subagents. The Source map tables below are the **snapshot taken at audit start**; what has happened
 since is in Current status and the Remaining work table. In scope: PRs/issues authored by

@@ -6,9 +6,10 @@ platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email, simplex
 created: 2026-04-09
 updated: 2026-06-28
 validated_links: 2026-06-28
+status: open-source
 ---
 
-**Status**: Open-source (MIT), active development by [Nous Research][nous] | **Version**: v0.17.0
+**Details:** Open-source (MIT), active development by [Nous Research][nous] | **Version**: v0.17.0
 
 ## What It Is
 

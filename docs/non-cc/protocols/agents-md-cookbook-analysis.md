@@ -6,9 +6,8 @@ platform_scope: [cursor, openai-codex, github-copilot, windsurf, cline, zed, amp
 created: 2026-07-23
 updated: 2026-09-30
 validated_links: 2026-09-30
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

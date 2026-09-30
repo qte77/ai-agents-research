@@ -5,9 +5,8 @@ purpose: Evaluate AgentCanvas as an observability/debugging tool for Pydantic AI
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

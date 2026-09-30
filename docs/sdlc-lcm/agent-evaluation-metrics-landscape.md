@@ -4,9 +4,8 @@ purpose: Survey of agent evaluation metrics and methodologies — task completio
 created: 2025-10-05
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 <!-- markdownlint-disable MD024 no-duplicate-heading -->
 

@@ -6,9 +6,10 @@ platform_scope: [terminal, desktop, ide, web, headless]
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: trial
 ---
 
-**Status**: Trial | **License**: MIT | **Latest release**: v1.17.7 (2026-06-14) | **Stars**: ~175 k (anomalyco/opencode, 2026-06-16)
+**Details:** **License**: MIT | **Latest release**: v1.17.7 (2026-06-14) | **Stars**: ~175 k (anomalyco/opencode, 2026-06-16)
 
 ## What It Is
 

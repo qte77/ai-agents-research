@@ -5,9 +5,10 @@ purpose: Analysis of Kiro, AWS's spec-driven agentic IDE, as a coding agent plat
 created: 2026-06-16
 updated: 2026-07-23
 validated_links: 2026-06-16
+status: trial
 ---
 
-**Status**: Trial | **Vendor**: Amazon Web Services | **License**: Proprietary (AWS Customer Agreement) | **Preview**: 2025-07-14 | **GA**: 2025-11-17 | **CLI version**: 2.7.0 (2026-06-12) | Requires AWS Builder ID
+**Details:** **Vendor**: Amazon Web Services | **License**: Proprietary (AWS Customer Agreement) | **Preview**: 2025-07-14 | **GA**: 2025-11-17 | **CLI version**: 2.7.0 (2026-06-12) | Requires AWS Builder ID
 
 ## What It Is
 

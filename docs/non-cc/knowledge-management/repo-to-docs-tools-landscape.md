@@ -9,8 +9,6 @@ updated: 2026-09-25
 validated_links: 2026-09-24
 ---
 
-**Status**: Research (informational)
-
 ## Summary
 
 Three tools represent an emerging category of **AI-powered repo-to-documentation generators**: DeepWiki (by Cognition/Devin) produces wiki-style reference docs with architecture diagrams, Code2Tutorial (by The-Pocket/PocketFlow) generates chapter-based educational tutorials, and GitSummarize (indie open-source) produces multi-level summaries via URL rewrite. All take a GitHub URL as input and produce structured natural-language documentation.

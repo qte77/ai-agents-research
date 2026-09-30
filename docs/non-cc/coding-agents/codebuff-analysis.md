@@ -5,9 +5,8 @@ purpose: Evaluate Codebuff as an open-source, terminal-based multi-agent coding 
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

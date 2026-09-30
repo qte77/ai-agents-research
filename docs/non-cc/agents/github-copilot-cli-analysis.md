@@ -6,9 +6,10 @@ platform_scope: [cli, cloud]
 created: 2026-06-11
 updated: 2026-06-28
 validated_links: 2026-06-28
+status: proprietary
 ---
 
-**Status**: Proprietary ([custom license][copilot-cli-license], no derivatives) | **GA**: 2026-02-25 | **Version**: v1.0.61 (2026-06-09) | requires active Copilot subscription
+**Details:** Proprietary ([custom license][copilot-cli-license], no derivatives) | **GA**: 2026-02-25 | **Version**: v1.0.61 (2026-06-09) | requires active Copilot subscription
 
 ## What It Is
 

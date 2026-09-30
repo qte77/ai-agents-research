@@ -5,9 +5,10 @@ purpose: Analysis of Cursor as a GUI-first AI code editor with agentic composer 
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: trial
 ---
 
-**Status**: Trial | **Proprietary** (no open-source license stated) | **GA**: actively shipping | **Version**: 3.7 (2026-06-05) | **Vendor**: Anysphere, Inc.
+**Details:** **Proprietary** (no open-source license stated) | **GA**: actively shipping | **Version**: 3.7 (2026-06-05) | **Vendor**: Anysphere, Inc.
 
 ## What It Is
 

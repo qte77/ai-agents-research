@@ -4,9 +4,8 @@ purpose: Analyse Karpathy's LLM wiki pattern and gap-compare against ai-agents-r
 created: 2026-04-06
 updated: 2026-09-24
 validated_links: 2026-04-06
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

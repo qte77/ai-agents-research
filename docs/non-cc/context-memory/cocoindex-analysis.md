@@ -5,9 +5,8 @@ purpose: Evaluate CocoIndex as an incremental ETL/indexing layer for AI agent co
 created: 2026-06-16
 updated: 2026-09-25
 validated_links: 2026-06-16
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

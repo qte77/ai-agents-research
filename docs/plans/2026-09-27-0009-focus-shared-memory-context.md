@@ -6,8 +6,6 @@ created: 2026-09-27
 updated: 2026-09-30
 ---
 
-**Status**: Reference (plan)
-
 Tracking issue: [#509](https://github.com/qte77/ai-agents-research/issues/509). This arc refocuses the corpus on
 **shared, distributed, reproducible, adaptable, versionable and traceable** memory, ontology,
 graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off offloaded tasks.

@@ -4,9 +4,8 @@ purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU
 created: 2026-03-01
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 Analysis of four frameworks applicable to the Agents-eval multi-agent evaluation
 system (PydanticAI-based MAS evaluating academic papers via LLM providers).

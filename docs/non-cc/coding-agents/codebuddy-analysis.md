@@ -5,9 +5,8 @@ purpose: Analysis of CodeBuddy as a Tencent Cloud AI coding agent spanning IDE p
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

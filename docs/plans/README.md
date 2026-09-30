@@ -3,9 +3,10 @@ title: Plans — Design & Decision Docs
 purpose: Convention for docs/plans/ — durable plan/design docs (the saved output of plan-mode work). GitHub Issues remain the authoritative backlog/roadmap; each plan doc links its tracking issue.
 created: 2026-06-14
 updated: 2026-09-28
+status: reference
 ---
 
-**Status**: Reference (convention)
+**Details:** convention
 
 `docs/plans/` holds **plan / design / decision docs** — the durable output of a plan-mode (or design) session for a non-trivial effort. It is **not** a task list or a roadmap.
 

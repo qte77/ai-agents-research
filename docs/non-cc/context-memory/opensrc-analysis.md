@@ -5,9 +5,8 @@ purpose: Analysis of vercel-labs/opensrc — a CLI that fetches npm package sour
 created: 2026-06-27
 updated: 2026-06-27
 validated_links: 2026-06-27
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

@@ -5,9 +5,8 @@ category: landscape
 created: 2026-06-23
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

@@ -6,9 +6,8 @@ platform_scope: [claude-code, cursor, windsurf, gemini-cli]
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

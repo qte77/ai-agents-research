@@ -6,9 +6,10 @@ platform_scope: [cli, cloud]
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: trial
 ---
 
-**Status**: Trial | **GA**: ~April 2026 | **Vendor**: Cognition AI | **License**: Proprietary | requires Devin account (free tier available)
+**Details:** **GA**: ~April 2026 | **Vendor**: Cognition AI | **License**: Proprietary | requires Devin account (free tier available)
 
 ## What It Is
 

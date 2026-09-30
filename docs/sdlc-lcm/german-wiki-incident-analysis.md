@@ -5,9 +5,8 @@ source: https://arxiv.org/abs/2609.12748
 created: 2026-09-24
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: assess
 ---
-
-**Status**: Assess
 
 ## What It Is
 

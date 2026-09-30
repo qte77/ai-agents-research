@@ -5,9 +5,10 @@ purpose: Analysis of Windsurf as an agentic IDE product — acquired by Cognitio
 created: 2026-06-16
 updated: 2026-06-16
 validated_links: 2026-06-16
+status: trial
 ---
 
-**Status**: Trial | **Proprietary** (No open-source license) | **GA**: as Windsurf (pre-acquisition); as Devin Desktop: June 2, 2026 | **Owner**: Cognition AI (acquired December 2025)
+**Details:** **Proprietary** (No open-source license) | **GA**: as Windsurf (pre-acquisition); as Devin Desktop: June 2, 2026 | **Owner**: Cognition AI (acquired December 2025)
 
 ## What It Is
 

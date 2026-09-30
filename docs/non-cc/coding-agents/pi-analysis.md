@@ -5,10 +5,9 @@ purpose: Evaluate Pi as an open-source terminal coding agent harness with multi-
 created: 2026-06-16
 updated: 2026-09-24
 validated_links: 2026-09-24
+status: trial
 platform_scope: [claude, openai, google, azure, bedrock, groq, mistral, ollama]
 ---
-
-**Status**: Trial
 
 ## What It Is
 
