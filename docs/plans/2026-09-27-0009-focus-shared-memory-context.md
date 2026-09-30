@@ -66,9 +66,12 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     Jev's 39 flagged edits), jev-ultrafast in web-scraping and jevgrep in code-tooling. The pages are
     cross-linked with the Jev page. Unconfirmed claims were dropped: CLM's Stanford/NVIDIA credit, and
     probably as the inspiration for feelings.
+  - Row G, slice 1 (2026-09-30): `lib/doc_graph.py` was built test-first (20 tests: RED, then GREEN), with
+    `make graph-data` writing `ui/doc-graph.json`. On the real corpus that is 261 docs, 470 domains and 1,940
+    edges, byte-identical across runs. Status comes from the shared `doc_status`, so D1 only changes that module.
 - **Next, in order (START HERE, 2026-09-30):** R, B, C, S1–S6 and J1–J3 are done; all 10 coverage gaps are at
   least partly filled.
-  1. **Y** (synthesis), then **G** (graph system, default C confirmed by S3), **D1** (frontmatter `status:`,
+  1. **G slice 2** (render the structural graph and regenerate it in CI; closes #504), then **Y** (synthesis), **D1** (frontmatter `status:`,
      after G: G's structural graph is its first consumer), and **Z** (close-out).
 - **Out of scope (deferred by the owner, 2026-09-29):** the dead paper-eval / issue-triage workflows
   (GitHub Models retirement). Everything about them lives in #527 and upstream
@@ -374,6 +377,6 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 | ~~S5~~ | ~~Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads)~~ | agent | Done 2026-09-30 (#545): 10 leads rubric-scored, 1 new page (skill-evolution landscape), gap 10 partly filled |
 | ~~S6~~ | ~~Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`)~~ | agent | Done 2026-09-30 (#546): 11 leads placed, 2 new pages (OpenShell, OrcaReplay), gaps 7–9 filled |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
-| G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
+| G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Slice 1 done 2026-09-30 (module + tests, `make graph-data`). Still to do: render `ui/doc-graph.json` into the site and regenerate it in CI; then #504 closed |
 | D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11). Folded into this arc on 2026-09-30, after G: the structural graph (option B) uses doc status as a node attribute, so it is the consumer the deferral waited for | agent (after G) | Migration PRs (~5) with the `check_status` validator passing, G's module reading `status:` from frontmatter, #348 closed |
 | Z | Close-out: README/UserStory focus statements, CHANGELOG, release | agent | Release published; #509 closed |
