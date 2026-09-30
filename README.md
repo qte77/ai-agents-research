@@ -19,6 +19,7 @@ follows one structure: **What it is → How it works → Adoption decision → A
 - **Non-CC agents & infrastructure** — JetBrains Air, DeerFlow, Goose, Codex, Devin, frameworks, orchestrators
 - **Community ecosystem** — skills, plugins, tooling, domain-specific CLAUDE.md patterns
 - **SDLC / lifecycle management** — agentic SDLC patterns, OSS ALM landscape
+- **Current focus: a shared, versioned, traceable agent substrate** — memory, ontology, graphs/RAG, context, skills, plugins, harness and long-running tasks, scored on one [rubric](docs/sdlc-lcm/agent-substrate-rubric.md) and synthesized into a [reference architecture](docs/sdlc-lcm/agent-substrate-reference-architecture.md)
 - **Cross-repo learnings** and an auto-generated cumulative index of agentic-AI papers
 - **Self-currency** — four cron monitors open triage PRs when upstream sources change
 

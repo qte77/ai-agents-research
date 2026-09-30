@@ -28,6 +28,7 @@ Maintain a living knowledge base of coding agent capabilities, CC internals, and
 - As a researcher, I want to update the feature comparison matrix so that cross-agent capability differences are visible at a glance.
 - As a researcher, I want to document CC session artifacts and orchestration patterns so that downstream repos (cc-recursive-team-mode, coding-harness-eval) have accurate reference material.
 - As a researcher, I want weekly ArXiv preprints filtered by an AI-agent relevance prompt so that I see only papers worth promoting to `docs/` without manually scanning the firehose.
+- As a researcher, I want tools for agent memory, context, skills, plugins and harnesses scored on one rubric (shared, distributed, reproducible, adaptable, versionable, traceable) so that I can see which properties the field already delivers and which are still open.
 - As a reader, I want to browse by subject (memory, knowledge graphs, RAG, code tooling, visualization, context, skills, plugins, harness, long-running tasks) across the CC-relationship buckets so that I find every related doc without knowing which bucket it lives in.
 
 ## Success Criteria
@@ -39,7 +40,7 @@ Maintain a living knowledge base of coding agent capabilities, CC internals, and
 
 ## Constraints
 
-- Markdown-only (no code implementation)
+- Markdown corpus; code is limited to stdlib tooling that validates the docs and builds the doc graph (`.github/scripts/`, `scripts/`, tested with `make test`)
 - Follows existing doc hierarchy (cc-native/, non-cc/, community/, triage/)
 - Analysis format: What it is → How it works → Adoption decision → Action items
 - Four automated monitors maintain currency via GitHub Actions (CC status, CC changelog + native sources, community, ArXiv paper eval)
@@ -47,6 +48,5 @@ Maintain a living knowledge base of coding agent capabilities, CC internals, and
 ## Out of Scope
 
 - Automated triage without human review
-- CI/CD for documentation validation
-- Code implementation (this is a research-only repo)
+- Product code (this is a research-only repo; tooling serves the corpus only)
 - Agent benchmarking (that's coding-harness-eval's job)
