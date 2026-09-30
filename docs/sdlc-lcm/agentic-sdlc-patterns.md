@@ -2,8 +2,8 @@
 title: Agentic SDLC Patterns
 purpose: Emerging lifecycle patterns for AI agent-driven development.
 created: 2026-03-24
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 sources:
   - https://www.epam.com/insights/ai/blogs/agentic-development-lifecycle-explained
   - https://techcommunity.microsoft.com/blog/appsonazureblog/an-ai-led-sdlc-building-an-end-to-end-agentic-software-development-lifecycle-wit/4491896
@@ -88,7 +88,7 @@ Traditional SDLC artifacts reimagined as coordination layers for agents.
 | IDE | Agent workspace | Claude Code |
 | VCS branches | Agent task boundaries | Polyforge, Ralph worktrees |
 | CI/CD | Continuous validation | Gap: manual `make validate` |
-| Code review | Agent review + human oversight | Gap: no review agent |
+| Code review | Agent review + human oversight | [Jev pre-CI gate](../non-cc/infrastructure/jev-analysis.md) (Trial — measured, not adopted) |
 
 ## Synthesis
 

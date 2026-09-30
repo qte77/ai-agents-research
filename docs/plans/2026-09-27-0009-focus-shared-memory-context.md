@@ -56,9 +56,13 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Milestone close (2026-09-30): the README and UserStory hub lists were updated (#547), D1 was folded in
     after G (#548), and **v0.12.0 was released** (#549, tag `v0.12.0`, GitHub Release published). Progress
     comments went on #509, #504 and #348.
-- **Next, in order (START HERE, 2026-09-30):** R, B, C and S1–S6 are done; all 10 coverage gaps are at
+  - Rows J1 + J2 (2026-09-30): the Jev page is Trial and checked against the pilot's own data (78% caught,
+    1 of 59 clean flagged, about 70x faster at p95 and 80x cheaper than Claude; the threshold does not transfer
+    to yt-dlp, 23–30% false flags). alibaba/open-code-review (Apache-2.0) is in the code-review landscape.
+    BoundaryML/feelings still has no LICENSE file. §8 now lists decision models (Jev, Laya).
+- **Next, in order (START HERE, 2026-09-30):** R, B, C, S1–S6, J1 and J2 are done; all 10 coverage gaps are at
   least partly filled.
-  1. **J1–J3** (#515–#517): the Jev and system-1 decision-model rows, in the same subagent-brief pattern.
+  1. **J3** (#517): the system-1 decision-model row, in the same subagent-brief pattern (in flight).
      Leads are in "Ranked backlog" (J rows); the X leads stay deferred.
   2. **Then:** Y (synthesis), G (graph system, default C confirmed by S3), D1 (frontmatter `status:`,
      folded in 2026-09-30: G's structural graph is the first consumer of `status:`), Z (close-out).
@@ -353,8 +357,8 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 |---|---|---|---|
 | ~~I~~ | ~~Ingest screenshot batch 2 (87 images)~~ | agent | Done 2026-09-28 (#521): extracted + deduped to `batch2/merged.json`; leads listed in the Source map; feeds row B |
 | ~~I2~~ | ~~Ingest screenshot batch 3 (20 images)~~ | agent | Done 2026-09-29 (#522): `batch3/merged.json`; leads in the Source map; feeds row B; jevgrep added to #517 |
-| J1 | #515: Jev (TypeSafe) analysis page: system-one classifier as a pre-CI code-change gate (feelings pilot results); fills the `agentic-sdlc-patterns.md` "no review agent" gap | agent | Page merged (status Trial), gap row repointed, #515 closed |
-| J2 | #516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers | agent | §8 extended, #516 closed |
+| ~~J1~~ | ~~#515: Jev (TypeSafe) analysis page: system-one classifier as a pre-CI code-change gate (feelings pilot results); fills the `agentic-sdlc-patterns.md` "no review agent" gap~~ | agent | Done 2026-09-30: `non-cc/infrastructure/jev-analysis.md` (Trial), gap row repointed, open-code-review added; #515 closed by the PR |
+| ~~J2~~ | ~~#516: extend §8 Output Validation with BAML feelings (`.feels`/`.fill`) and probability-returning classifiers~~ | agent | Done 2026-09-30: §8 BAML feelings sentence and a decision-models sub-list (Jev, Laya); #516 closed by the PR |
 | J3 | #517: system-1 decision models + Jev ecosystem, scored on the rubric. Models: Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector (BioDecision-4B as a one-line domain example). Tools: abide, jev-ultrafast, probably, jevgrep. Paper: Jev-as-a-Judge | agent | Entries merged (extend existing pages first; §8 of the frameworks landscape already lists Llama Guard and Bespoke-MiniCheck as classifiers), #517 closed |
 | ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (#526): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
 | ~~C~~ | ~~Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks~~ | agent | Done 2026-09-30 (#540): 5 hubs in `docs/_topics/`, linked from the hub index and the rubric; top-10 gaps under "Coverage gaps" |

@@ -3,8 +3,8 @@ title: AI PR-Review Products — Tool Landscape
 purpose: Catalog of standalone SaaS PR-review products (multi-platform GitHub/GitLab review bots), distinct from Claude Code-integrated review tooling.
 category: landscape
 created: 2026-06-27
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Research (informational)
@@ -34,12 +34,35 @@ cross-repo review, and the Code-Review-Graph AST/blast-radius MCP tool — see
 - [Bito](https://bito.ai/) — codebase-aware AI Code Review Agent for GitHub/GitLab/Bitbucket (SaaS).
 - [Korbit](https://www.korbit.ai/) — AI review across GitHub/GitLab/Bitbucket with bug explanations and auto-generated PR descriptions (SaaS).
 
-These overlap heavily; the differentiators are codebase-context depth (Greptile's graph index), OSS vs SaaS (PR-Agent is the lone Apache-2.0 option), and agent/MCP reach (Greptile, CodeRabbit, Sourcery). The structural/AST counterpart (Code-Review-Graph) and cross-repo review (Qodo) are CC-integrated tooling — see Cross-References.
+These overlap heavily; the differentiators are codebase-context depth (Greptile's graph
+index), OSS vs SaaS (PR-Agent and open-code-review, below, are the Apache-2.0
+open-source options), and agent/MCP reach (Greptile, CodeRabbit, Sourcery). The
+structural/AST counterpart (Code-Review-Graph) and cross-repo review (Qodo) are
+CC-integrated tooling — see Cross-References.
+
+### Hybrid deterministic + LLM review
+
+Unlike the pure-LLM products above, [open-code-review][open-code-review] (Alibaba;
+Apache-2.0, 42,772★, `gh api` 2026-09-30) reads Git diffs and combines a **deterministic
+pipeline** — file selection, "smart file bundling" that fans large changesets out to
+isolated sub-agents, and fine-grained rule matching by file type — with an **LLM agent**
+for the judgment calls, via any OpenAI- or Anthropic-compatible model. It runs as a
+self-hosted CLI, Docker image, or GitHub Action, or in a delegation mode where an existing
+coding agent (Claude Code, Codex, Cursor, Kimi Code, OpenCode, QCA Forward) performs the
+review; a session viewer records and replays past runs. Scored 2026-09-30 against the
+[agent substrate rubric][rubric]:
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data ([README][open-code-review] — one CLI/Action invocation per review; no documented multi-user concurrent-write model) | partial ([README][open-code-review] — sub-agents run concurrently per bundle within one review, and it deploys as a GitHub Action, but no multi-node cluster is documented) | partial ([README][open-code-review] — file selection and rule matching are deterministic, but the LLM-agent review pass uses a configurable, unpinned OpenAI/Anthropic-compatible backend) | yes ([README][open-code-review] — pluggable LLM providers, GitHub/GitLab/GitFlic CI/Gerrit integrations, and six coding-agent delegation modes) | no data ([README][open-code-review] — rule configs are file-based, but no git-versioned snapshot/diff/rollback workflow is documented) | partial ([README][open-code-review] — a session viewer records and replays reviews with comment marking/filtering, but comments don't cite sources beyond the diff itself) |
+
+`scored 2026-09-30`
 
 ## Cross-References
 
 - [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md) — CC-integrated code-review tooling: Qodo (`open-aware` MCP + cross-repo review) and Code-Review-Graph (AST blast-radius MCP)
 - [CC-official-plugins-landscape.md](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
+- [jev-analysis.md](jev-analysis.md) — a cheap classifier-model gate rather than an LLM-review bot; comparable in that both are automatable pre-merge checks, but Jev answers narrow typed questions instead of writing review comments
 
 ## Sources
 
@@ -47,3 +70,11 @@ Each product links to its first-party page inline in the list above. Moved here 
 [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md) on
 2026-06-27 (tracked in [#326](https://github.com/qte77/ai-agents-research/issues/326)),
 where the roundup was flagged as out-of-scope for a `cc-community` doc.
+
+| Source | Content |
+|---|---|
+| [open-code-review README][open-code-review] | Hybrid deterministic + LLM-agent architecture, deployment modes, license and star count verified 2026-09-30 |
+| [Agent substrate rubric][rubric] | Six-property scoring rubric applied above |
+
+[open-code-review]: https://github.com/alibaba/open-code-review
+[rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
