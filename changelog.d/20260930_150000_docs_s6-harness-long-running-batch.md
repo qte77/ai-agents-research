@@ -1,0 +1,15 @@
+### Added
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §1: four new rubric-scored entries fetched first-party 2026-09-30 — Archon (coleam00, MIT, "the first open-source harness builder for AI coding"), Paperclip (paperclipai, MIT, org-chart agent-team orchestration), AX (google/ax, Apache-2.0, Kubernetes-style declarative agent orchestrator built on Agent Substrate), and OperatingSystem-1's harness tools (`mcp-git-coord` — no LICENSE file despite the README's own "MIT" claim — plus `openclaw-operator`, confirmed to be a dormant fork of `stubbi/openclaw-operator`, not original work; the entry cross-refs `goclaw-analysis.md`, confirming against `openclaw.ai` that this is the same OpenClaw platform GoClaw reimplements, not a different product).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §4: the existing `Sumanth077/Hands-On-AI-Engineering` bullet now also names `self_evolving_code_review_agent` and `multi_agent_coding_assistant` as harness-relevant examples (one-line mention, no rubric, per the bullet's existing precedent).
+- `docs/non-cc/infrastructure/nvidia-openshell-analysis.md` (new page): NVIDIA OpenShell — kernel-enforced, formally-verified policy runtime for agent fleets (Apache-2.0, 11,079★), rubric-scored. Indexed in `docs/non-cc/README.md`.
+- `docs/non-cc/reference/orcareplay-analysis.md` (new page): OrcaReplay — record/replay/fork debugger for coding-agent runs with byte-for-byte deterministic offline replay (Apache-2.0 code / CC BY 4.0 trace spec, 268★), rubric-scored. Direct first-party evidence filling plan-0009 gaps 7 (Long-running · Traceable) and 8 (Long-running · Reproducible). Indexed in `docs/non-cc/README.md`.
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: two new subsections — RRSI (google-research/rrsi, Apache-2.0, code available; git-worktree-per-candidate harness versioning fills gap 9, Harness · Versionable) and ROFT (arXiv 2609.35741, CC BY 4.0, paper only, no code URL found).
+- `docs/cc-community/CC-harnessrouter-analysis.md`: refreshed stars (2,496 → 2,789) and latest release (`v0.23.11` → `v0.26.16`), and a new rubric section scored against `sdlc-lcm/agent-substrate-rubric.md`.
+- `docs/_topics/harness.md`: 5 new pointer rows (HarnessRouter, the frameworks-landscape §1 orchestration tools, OpenShell, OrcaReplay, the RRSI/ROFT comparison).
+- `docs/_topics/long-running.md`: 2 new pointer rows (OrcaReplay; google/ax `suspend`/`resume` + Paperclip heartbeat agents).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §1: the Runtype entry gains `runtypelabs/hermes-runtype-otel` (MIT, per-turn OTel traces from Hermes, rubric-scored) and `runtypelabs/persona` (MIT chat widget, unscored UI layer).
+
+### Changed
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`, `docs/cc-community/CC-harnessrouter-analysis.md`, `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: `updated`/`validated_links` bumped to 2026-09-30.

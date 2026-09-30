@@ -45,11 +45,19 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
     Agent Plugins implementation, runtypelabs/skills extends the Runtype bullet, and AAIF gets a governance
     section in `goose-analysis.md`. Gap 10 is partly filled: plugin sources can pin a `sha`, and archives a
     `sha256`, but pinning is opt-in, so Reproducible is partial. tysoncung and "Xpert plugins" were dropped.
-- **Next, in order (START HERE, 2026-09-30):** R, B, C and S1–S5 are done.
-  1. **S6:** one subject per PR, working from the P1 table in "Ranked backlog" and the "Coverage
-     gaps" list. Research each lead first-party; delegate the fetching to subagents (at most about 3
-     large landscapes per brief, results written to disk). J1–J3 go with S6/S3.
-  2. **Then:** Y, G, Z.
+  - Row S6 (#546, 2026-09-30): new pages for NVIDIA OpenShell and OrcaReplay. Archon, Paperclip, Google AX and the
+    OperatingSystem-1 tools go in frameworks §1, and RRSI and ROFT in the recursive-self-improvement analysis.
+    HarnessRouter is refreshed and scored, and the Runtype entry gains `hermes-runtype-otel` (scored) and
+    `persona` (unscored UI). Gaps 7 and 8 are filled by OrcaReplay's byte-for-byte offline replay and its
+    tool-call capture, and gap 9 by RRSI, where every accepted harness edit is a git commit.
+    `mcp-git-coord` has no LICENSE file, even though its README says MIT. `openclaw-operator` is a dormant fork.
+    The Celesto critique of AX and driceroland/Search were dropped: the critique has no first-party source,
+    and Search has no agent angle.
+- **Next, in order (START HERE, 2026-09-30):** R, B, C and S1–S6 are done; all 10 coverage gaps are at
+  least partly filled.
+  1. **J1–J3** (#515–#517): the Jev and system-1 decision-model rows, in the same subagent-brief pattern.
+     Leads are in "Ranked backlog" (J rows); the X leads stay deferred.
+  2. **Then:** Y (synthesis), G (graph system, default C confirmed by S3), Z (close-out).
 - **Out of scope (deferred by the owner, 2026-09-29):** the dead paper-eval / issue-triage workflows
   (GitHub Models retirement). Everything about them lives in #527 and upstream
   gha-rxiv-paper-eval#81 / gha-issue-triage#110, not in this plan.
@@ -345,7 +353,7 @@ also says it is "largely in maintenance mode". Option D offers nothing over B, s
 | ~~S3~~ | ~~Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G)~~ | agent | Done 2026-09-30 (#543): 5 platforms plus the 3 row-G systems rubric-scored in frameworks §7 |
 | ~~S4~~ | ~~Research batch: context~~ | agent | Done 2026-09-30 (#544): 3 leads plus the CLAUDE.md/auto-memory substrate rubric-scored in `CC-memory-system-analysis.md` |
 | ~~S5~~ | ~~Research batch: skills + plugins (incl. AAIF, runtypelabs `skills`, Mitosis plugin/skills; see Owner-requested leads)~~ | agent | Done 2026-09-30 (#545): 10 leads rubric-scored, 1 new page (skill-evolution landscape), gap 10 partly filled |
-| S6 | Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`) | agent | One PR, first-party verified, rubric-scored |
+| ~~S6~~ | ~~Research batch: harness + long-running hands-off offloaded tasks (incl. `hermes-runtype-otel`, `openclaw-operator`, `mcp-git-coord`)~~ | agent | Done 2026-09-30 (#546): 11 leads placed, 2 new pages (OpenShell, OrcaReplay), gaps 7–9 filled |
 | Y | Synthesis: reference architecture for a shared, versioned, traceable memory/context layer, mapped to estate repos | agent | Merged in `sdlc-lcm/`; cites the S-row docs, adds no new facts |
 | G | Graph system: default C (deterministic graph module + optional graphify overlay); closes #504 | owner decision → agent | Module + tests merged; `ui/graph.html` rebuilt in CI; #504 closed |
 | D1 | #348: move reader-facing `status` into frontmatter (from plan 0008 row 11) | owner | Deferred until something consumes `status:`; then migration PR 1 of ~5 with the validator passing |

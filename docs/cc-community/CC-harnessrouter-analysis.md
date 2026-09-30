@@ -3,8 +3,8 @@ title: HarnessRouter Analysis
 source: https://github.com/HarnessRouter/harnessrouter
 purpose: Unified multi-harness API for AI coding-agent backends (Codex, Claude Code, Hermes, DeepSeek Harness, Pi) — architecture, protocol, and fit with this corpus's agent-integration research.
 created: 2026-09-24
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 platform_scope: [claude-code, codex, hermes, deepseek-harness, pi]
 ---
 
@@ -17,9 +17,9 @@ API that lets an application drive multiple AI coding-agent backends (**harnesse
 bespoke integration per backend. Per the repo description and README, it unifies **Codex, Claude
 Code, Hermes, Pi, and DSH (DeepSeek Harness)**, with individual harness CLIs installing
 automatically on first launch. It ships as **HarnessRouter Community Edition**, self-hosted under
-**Apache-2.0** ([`gh api repos/HarnessRouter/harnessrouter`][repo], verified 2026-09-24: license
-`Apache-2.0`, 2,496 stars, latest release `v0.23.11` (2026-09-23), repo created 2026-08-09,
-actively pushed same day as this check). The repo's own description calls it "the self-hosted,
+**Apache-2.0** ([`gh api repos/HarnessRouter/harnessrouter`][repo], re-verified 2026-09-30: license
+`Apache-2.0`, 2,789 stars (up from 2,496 on 2026-09-24), latest release `v0.26.16` (2026-09-30),
+repo created 2026-08-09, pushed 2026-09-30). The repo's own description calls it "the self-hosted,
 Apache-2.0 edition of the unified interface for agent harnesses," implying a separate hosted tier;
 a managed **HarnessRouter Cloud** offering is described on the project's marketing site
 ([harnessrouter.ai][site]), whose specifics are marketing-only and out of scope for the
@@ -53,6 +53,14 @@ traces, and OpenAI Responses API compatibility. UHP is the thing worth tracking 
 it is an attempt at the same "one contract, many backends" problem that CC's own
 [model-provider gateway layer][gateway-doc] solves for *model* routing, but one layer up, at the
 *harness/CLI* level.
+
+## Rubric
+
+Scored 2026-09-30 against the [agent-substrate-rubric.md](../sdlc-lcm/agent-substrate-rubric.md) (subject: harness), evidence from the [README][repo] and [UHP protocol description][repo]:
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data (single-user Docker deployment documented; no multi-user session-sharing semantics found) | partial (the gateway/runner/ui split and per-task session workspaces support one self-hosted node; no multi-node clustering documented) | no data (harness versions are pinned by the underlying CLI installs, but no lockfile or deterministic-rebuild path is documented for HarnessRouter itself) | yes (UHP is an explicit abstraction layer — new harnesses plug in behind the same protocol, per the "one contract, many backends" design) | no data (tagged releases exist for the router itself, but per-session/per-task state versioning is not documented) | partial (UHP's "structured error handling with execution traces" gives per-task traces, but no cross-session audit log is documented) |
 
 ## Adoption Decision
 
