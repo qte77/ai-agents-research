@@ -78,8 +78,9 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [ecdysis-analysis.md](reference/ecdysis-analysis.md) | Ecdysis — failure-aggregation training method for self-evolving LLM-agent runtime harnesses (arXiv:2609.11677) | Preprint + reference impl (unlicensed) |
 | [frognano-analysis.md](reference/frognano-analysis.md) | FrogNano — 4B coding agent trained via RL-only online task synthesis (Microsoft Research Montréal, arXiv:2609.07925) | Preprint (no code/weights released) |
 | [shepherd-analysis.md](reference/shepherd-analysis.md) | Shepherd — reversible, Git-like execution traces for meta-agent inspect/fork/replay/revert (arXiv:2605.10913) | Preprint + code (MIT) |
-| [weco-aide-recursive-self-improvement-analysis.md](reference/weco-aide-recursive-self-improvement-analysis.md) | AIDE² — Weco AI's outer-loop-rewrites-inner-loop recursive self-improvement experiment (100 iterations) | Blog + arXiv technical report (no public code) |
+| [weco-aide-recursive-self-improvement-analysis.md](reference/weco-aide-recursive-self-improvement-analysis.md) | AIDE² — Weco AI's outer-loop-rewrites-inner-loop recursive self-improvement experiment (100 iterations); also covers RRSI (Google, code available) and ROFT (arXiv 2609.35741, paper only) | Blog + arXiv technical report (no public code) |
 | [poolside-laguna-analysis.md](reference/poolside-laguna-analysis.md) | Poolside Laguna S 2.1 — 118B-MoE frontier agentic-coding model, 1M-token context, long-horizon autonomous coding | Blog (vendor-reported benchmarks; license unstated) |
+| [orcareplay-analysis.md](reference/orcareplay-analysis.md) | OrcaReplay — record/replay/fork debugger for coding-agent runs, byte-for-byte deterministic offline replay | Repo + docs (Apache-2.0 code / CC BY 4.0 trace spec) |
 
 ## Context & Memory Infrastructure
 
@@ -112,6 +113,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [ai-trader-analysis.md](infrastructure/ai-trader-analysis.md) | AI-Trader (ai4trade.ai; agent-native trading-signal platform — root SKILL.md onboarding surface for Claude Code/Codex/Cursor agents) | — | No (no repo/license published) |
 | [corsair-analysis.md](infrastructure/corsair-analysis.md) | Corsair (unified managed-OAuth integration API layer for agents, backends, and multi-tenant dashboards) | Yes | Yes (Apache-2.0) |
 | [auto-agi-compiler-analysis.md](infrastructure/auto-agi-compiler-analysis.md) | AUTO (RightNow AI; compiles deterministic agent-execution spans into sandboxed WASM binaries — "frontier models as interpreters") | Yes | Yes (Apache-2.0) |
+| [nvidia-openshell-analysis.md](infrastructure/nvidia-openshell-analysis.md) | NVIDIA OpenShell (kernel-enforced, formally-verified policy runtime for fleets of autonomous agents) | Yes | Yes (Apache-2.0) |
 
 ## Frameworks
 

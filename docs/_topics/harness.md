@@ -13,5 +13,10 @@ Pointers only; see [the hub index](README.md).
 | [CC-cross-session-messaging-analysis.md](../cc-native/agents-skills/CC-cross-session-messaging-analysis.md) | First-party cross-session messaging between independent sessions | cc-native |
 | [CC-output-verification-analysis.md](../cc-native/agents-skills/CC-output-verification-analysis.md) | Verifying agentic outputs via hooks, schemas, headless asserts | cc-native |
 | [CC-cli-anything-analysis.md](../cc-native/agents-skills/CC-cli-anything-analysis.md) | Generating agent-native CLIs from existing software | cc-native |
+| [CC-harnessrouter-analysis.md](../cc-community/CC-harnessrouter-analysis.md) | Unified multi-harness API (Codex, Claude Code, Hermes, DSH, Pi) via the Unified Harness Protocol | cc-community |
+| [agent-frameworks-infrastructure-landscape.md §1](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#1-multi-agent-orchestration-frameworks) | Orchestration/harness-builder tools: Archon (deterministic YAML workflow harness), Paperclip (agent-team org-chart orchestration), google/ax (Kubernetes-style declarative agent runtime), OperatingSystem-1 (`mcp-git-coord` multi-agent git coordination) | non-cc |
+| [nvidia-openshell-analysis.md](../non-cc/infrastructure/nvidia-openshell-analysis.md) | Kernel-enforced, formally-verified policy runtime for agent fleets | non-cc |
+| [orcareplay-analysis.md](../non-cc/reference/orcareplay-analysis.md) | Record/replay/fork debugger for coding-agent runs; deterministic offline replay | non-cc |
+| [weco-aide-recursive-self-improvement-analysis.md](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md) | Self-improving-harness comparison: AIDE², RRSI (git-worktree versioned harness search), ROFT (retrospection fine-tuning, no harness versioning) | non-cc |
 
 Related hubs: [skills.md](skills.md), [plugins.md](plugins.md), [long-running.md](long-running.md).
