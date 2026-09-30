@@ -4,15 +4,15 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-06-19
-validated_links: 2026-06-19
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Research (informational)
 
 ## Summary
 
-Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI.
+Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set).
 
 ## gstack (Garry Tan)
 
@@ -451,6 +451,65 @@ Where gstack locks cognitive *modes*, pm-skills delivers domain *frameworks*, su
 
 Cross-ref: Dispatch (above) fans out *work* to background agents; `/agent-watchdog` instead *audits* another agent's work — different layers of the multi-agent pattern. [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format these install into.
 
+## coleam00 (Cole Medin): skills and excalidraw-diagram-skill
+
+**Repo**: [coleam00/skills][coleam00-skills] | **Stars**: 646 | **License**: MIT | pushed 2026-09-17
+
+34 skills — "straight out of my `.claude/skills/` folder" — built around one loop the author runs on
+nearly every ticket: **prime → plan → implement → validate → review → commit → PR** (the PIV loop),
+plus meta-skills for building more of your own skills (`skills-create`, `rules-create-global`,
+`rules-check-drift`, `ablate-ai-layer` — strips a rule, reruns the same task, diffs the two). Installs
+as a Claude Code plugin (`/plugin marketplace add coleam00/skills`, namespaced `/skills:piv-implement`,
+~4,400 tokens of always-on description text) or as editable files via `npx skills add coleam00/skills`
+(75+ agents). Ships six copy-in **hooks** alongside the skills — block secrets access, refuse `rm -rf`,
+enforce declared file coupling, log every tool call, inject git state at session start, block finishing
+while tests are red — with the explicit framing "a rule *asks* the agent to behave. A hook
+**guarantees** it." The `drive-screen` skill (under "Tools") does real desktop control — focus a
+window, type, paste, click, screenshot — on Windows, macOS, and Linux.
+
+**Repo**: [coleam00/excalidraw-diagram-skill][excalidraw-skill] | **Stars**: 4,903 | **License**: none
+found — the repo ships no `LICENSE` file and GitHub's own license detector returns `null`; only
+`.gitignore`, `README.md`, `SKILL.md`, and `references/` are present (checked via the GitHub contents
+API, 2026-09-30). A single skill that generates `.excalidraw` JSON diagrams designed to "argue, not
+display" — a depth-assessment step, a research mandate for technical diagrams (look up real event/API
+names before drawing), a visual-pattern library (fan-out, convergence, tree, timeline, assembly line),
+and a mandatory render-view-fix loop (`uv run python render_excalidraw.py`) that reads the rendered PNG
+back before declaring the diagram done.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data [README][coleam00-skills] (single-user `.claude/skills/` install; no multi-agent write-concurrency documented) | no [README][coleam00-skills] (local skill files or a single plugin-cache copy; no server/sync component) | n/a [README][coleam00-skills] (skills are static Markdown procedures, not a generated/extracted artifact — "reproducible rebuild" doesn't apply) | yes [README][coleam00-skills] ("Each skill is a plain markdown file you can read in two minutes, disagree with, and edit") | yes [README][coleam00-skills] (plugin installs are git-versioned via the marketplace repo; `git clone` + copy is a documented install path) | partial [README][coleam00-skills] (`piv-review-pr` posts a severity-ranked review to GitHub; no audit trail for skill *invocations* themselves) |
+
+`scored 2026-09-30`
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data [SKILL.md][excalidraw-skill] (single-user `.claude/skills/` install; no multi-agent write-concurrency documented) | no [SKILL.md][excalidraw-skill] (local skill file; no server/sync component) | n/a [SKILL.md][excalidraw-skill] (a static procedure, not a generated/extracted artifact — "reproducible rebuild" doesn't apply) | yes [SKILL.md][excalidraw-skill] ("All colors and brand-specific styles live in one file: `references/color-palette.md`... To make this skill produce diagrams in your own brand style, edit `color-palette.md`" — a documented config/extension point, not a rewrite) | yes [SKILL.md][excalidraw-skill] (plain-file, git-hosted; no license, but the source itself is version-controlled) | no data [SKILL.md][excalidraw-skill] (no logging of what it renders; the render-view-fix loop is a quality check, not an audit trail) |
+
+`scored 2026-09-30`
+
+## cloudflare/security-audit-skill
+
+**Repo**: [cloudflare/security-audit-skill][cf-sec-audit] | **Stars**: 23,302 | **License**: MIT |
+pushed 2026-09-14
+
+A coding-agent skill that runs a structured six-phase security audit — reconnaissance, coverage-led
+hunting, candidate validation, structured output, independent record verification, target-neutral
+reporting — and "seeded Cloudflare's vulnerability discovery harness" described in
+[Cloudflare's own blog post][cf-blog]. Every finding lands in one of three verdicts (`confirmed`,
+`needs_validation`, `rejected`) validated against a JSON schema by a zero-dependency validator that
+"runs in CI on every push"; **adversarial validation** is a named design principle — "the agent that
+checks a finding is never the agent that found it." A `coverage-ledger.json` tracks what was checked
+(not just what was found), and multiple runs against the same repo are additive: "the skill uses prior
+ledgers and findings to target gaps, revalidate changed source, and carry forward current-source
+evidence."
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data [README][cf-sec-audit] (single coding-agent session per audit run; no multi-agent shared-store semantics documented) | no [README][cf-sec-audit] (runs inside one coding agent's local sandbox; no remote/cluster deployment) | partial [README][cf-sec-audit] (the `.cjs` validators are deterministic, zero-dependency; the hunting/validation phases themselves are LLM sub-agent calls with no pinned model) | yes [README][cf-sec-audit] (13 hunting-class reference files cover different target types — web, cloud, client-side, supply-chain, binary — swappable per audit scope) | yes [README][cf-sec-audit] (per-repo `coverage-ledger.json` and `findings.json` are additive across runs, so state accumulates rather than resets) | yes [README][cf-sec-audit] (`confirmed` verdicts carry "a complete source trace and bounded observed result"; independent-verifier re-checks before a finding is finalized) |
+
+`scored 2026-09-30`
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -475,6 +534,10 @@ Cross-ref: Dispatch (above) fans out *work* to background agents; `/agent-watchd
 | [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
 | [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
 | [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
+| [coleam00/skills][coleam00-skills] | 34-skill PIV-loop set + meta-skills + hooks (646 stars, MIT) |
+| [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (4,903 stars, no license file) |
+| [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (23,302 stars, MIT) |
+| [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -487,3 +550,8 @@ Cross-ref: Dispatch (above) fans out *work* to background agents; `/agent-watchd
 [caveman]: https://github.com/JuliusBrussee/caveman
 [last30days]: https://github.com/mvanhorn/last30days-skill
 [builderio-skills]: https://github.com/BuilderIO/skills
+[coleam00-skills]: https://github.com/coleam00/skills
+[excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
+[cf-sec-audit]: https://github.com/cloudflare/security-audit-skill
+[cf-blog]: https://blog.cloudflare.com/build-your-own-vulnerability-harness
+[rubric]: ../sdlc-lcm/agent-substrate-rubric.md

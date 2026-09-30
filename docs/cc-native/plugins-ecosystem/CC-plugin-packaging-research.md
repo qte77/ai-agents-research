@@ -3,8 +3,8 @@ title: CC Plugin Packaging Research
 source: https://code.claude.com/docs/en/agent-sdk/plugins, https://code.claude.com/docs/en/plugins
 purpose: Evaluate packaging project skills, agents, and rules as a CC Plugin — including migration from repo-local configuration to a plugin-based integration.
 created: 2026-03-07
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Research (informational — not implementation requirements)
@@ -263,6 +263,40 @@ fields. This is the recommended baseline ([source][cc-plugins-official]):
 }
 ```
 
+### 5. Version Pinning for Reproducible Installs
+
+Plan 0009's coverage gap list flagged "Plugins · Reproducible" as unscored: the
+packaging docs cover manifests and versions but, as of that gap analysis, not
+whether a rebuild is deterministic. Checked directly against the current
+manifest and marketplace references ([source][plugin-manifest-ref],
+[source][plugin-marketplace-ref]):
+
+- **`plugin.json` `version`**: "Setting it pins the plugin to that version
+  until you change it" — but this pin is inert for a plugin with a `command`
+  source, one from a marketplace hosted on claude.ai, or one loaded in place
+  from a local-directory marketplace ([source][plugin-manifest-ref]).
+- **Marketplace entry `ref`/`sha`** (on `github`, `url`, and `git-subdir`
+  plugin sources): `ref` is a branch or tag ("defaults to the repository's
+  default branch" — mutable); `sha` is "a full 40-character lowercase commit
+  SHA." Setting both makes Claude Code check out `sha`, and "installation
+  succeeds even if the branch or tag named by `ref` has since been deleted
+  upstream, as long as the commit is still reachable" ([source][plugin-marketplace-ref]).
+- **`archive` plugin source `sha256`**: pins the source to a content digest —
+  "Claude Code refuses a download that doesn't match" ([source][plugin-marketplace-ref]).
+
+So the reproducibility primitive exists (commit-SHA and content-hash pinning),
+but it is opt-in per marketplace entry: the default `ref`-only or bare-`version`
+path is a mutable pointer, not a deterministic rebuild. A marketplace that
+never sets `sha`/`sha256` gives no stronger guarantee than "same branch name,"
+which can silently move.
+
+**Rubric** (`scored 2026-09-30`, CC's plugin/marketplace packaging system as
+shipped):
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| partial [docs][plugin-manifest-ref] (project scope shares plugin *enablement* via committed `.claude/settings.json`, but "each collaborator still installs it on their own machine" — the plugin artifact itself isn't a shared store) | no [docs][plugin-manifest-ref] (plugins install per-machine into `~/.claude/plugins/`; "a cloud session... doesn't load the plugins in your local settings" — explicitly not cross-machine) | partial [docs][plugin-marketplace-ref] (`sha`/`sha256` pinning exists but is opt-in; default `ref`/`version` alone is a mutable pointer) | yes [docs][plugin-manifest-ref] (`dependencies`, `userConfig`, swappable MCP/LSP servers) | yes [docs][plugin-marketplace-ref] (git-backed marketplace sources; `renames` map tracks plugin history) | no data [docs][plugin-manifest-ref] (install/update events aren't logged with an audit trail in the docs reviewed) |
+
 ## Actionable Recommendation
 
 ### Immediate (Tier 1)
@@ -296,6 +330,8 @@ This is YAGNI until a second project needs these skills.
 - [Plugin Structure skill][plugin-structure] — community plugin scaffolding guide
 - [Skill Development skill][skill-dev] — SKILL.md authoring best practices
 - [CC Memory docs][cc-mem] — CLAUDE.md and rules (repo-local patterns)
+- [Plugin manifest reference][plugin-manifest-ref] — `plugin.json` fields, `version` pinning semantics
+- [Marketplace reference][plugin-marketplace-ref] — `marketplace.json` fields, `ref`/`sha`/`sha256` source pinning
 
 [sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
 [cc-plugins]: https://code.claude.com/docs/en/plugins
@@ -303,4 +339,6 @@ This is YAGNI until a second project needs these skills.
 [plugin-structure]: https://claude-plugins.dev/skills/@anthropics/claude-plugins-official/plugin-structure
 [skill-dev]: https://lobehub.com/skills/sjnims-plugin-dev-skill-development
 [cc-mem]: https://code.claude.com/docs/en/memory
+[plugin-manifest-ref]: https://code.claude.com/docs/en/plugins/manifest-reference
+[plugin-marketplace-ref]: https://code.claude.com/docs/en/plugins/marketplace-reference
 [cc-plugins-official]: https://github.com/anthropics/claude-plugins-official

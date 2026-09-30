@@ -3,8 +3,8 @@ title: Goose Analysis
 source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Assess (open-source, active, architecturally significant)
@@ -81,6 +81,45 @@ curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download
 | MCP Apps | Not supported | Reference client |
 | Language | TypeScript (Bun) | Rust + TypeScript |
 
+## Agentic AI Foundation (AAIF): governance and hosted projects
+
+Researched 2026-09-30 for plan 0009's skills/plugins standards row (S5); the plan's prior coverage of
+AAIF was only this doc's mention of it as Goose's steward. Per the foundation's own site, AAIF is "the
+neutral and open foundation built on transparency, collaboration, and standardization to advance the
+public interest in agentic AI innovation" ([AAIF homepage][aaif-home], fetched 2026-09-30) — a Linux
+Foundation project, consistent with the [formation announcement][aaif] already cited above.
+
+**Governance**: eight working groups — Accuracy & Reliability, Agentic Commerce, Governance/Risk/
+Regulatory Alignment, Identity & Trust, Observability & Traceability, Security & Privacy,
+Workflows & Process Integration, and Taxonomy & Landscape ([AAIF homepage][aaif-home]). The homepage
+does not publish charters, membership lists, or decision-making rules for these groups beyond naming
+them.
+
+**Hosted projects** ([AAIF projects page][aaif-projects], fetched 2026-09-30 — the homepage itself
+names no specific projects): six in total, including Goose; the other five —
+
+- **Model Context Protocol (MCP)** — "a protocol for seamless integration between LLM applications and external data sources"
+- **AGENTS.md** — "a simple, open format for guiding coding agents"
+- **agentgateway** — "secure, scalable connections between AI agents, models, tools, and APIs across ecosystems"
+- **Agent2Agent (A2A)** — agent-to-agent communication and task exchange across platforms
+- **Agent Router** — "an open source AI gateway built on Envoy that connects applications to models and MCP tools"
+
+**Relevance to skills/plugins standards**: indirect, not direct. AAIF hosts no dedicated Agent-Skills
+or plugin-packaging specification of its own — the [Agent Plugins standard][agent-plugins] (v1.0.0,
+packaging Skills + MCP servers) is a separate, unaffiliated effort with its own Technical Steering
+Committee (Amazon, Cursor, Microsoft, OpenAI, Vercel), not an AAIF project. AAIF's relevance to this
+arc's Skills/Plugins subject runs through the two protocols it *does* host: **MCP** is the transport
+plugins wrap (Goose's own "extensions = MCP servers" design, above, is the clearest example), and
+**AGENTS.md** is the adjacent open format for the instructions layer plugins and skills sit beside.
+Agent Router and agentgateway are infrastructure for routing agent traffic to models/tools, not for
+packaging agent capabilities themselves.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| yes [AAIF homepage][aaif-home], [projects][aaif-projects] (a standards body by construction: multiple companies' engineers co-govern the same 6 hosted specs through named working groups) | n/a [AAIF homepage][aaif-home] (AAIF is a governance foundation, not a running system — "distributed" as defined by the rubric doesn't apply to an org) | n/a [AAIF projects][aaif-projects] (no software artifact of AAIF's own to rebuild; its hosted projects, e.g. MCP, are scored in their own docs) | yes [AAIF homepage][aaif-home] (working-group structure is the documented mechanism for the specs to evolve without a unilateral rewrite) | no data [AAIF projects][aaif-projects] (the specs it hosts are git-versioned in their own repos; no stated versioning of AAIF's own governance decisions) | no data [AAIF homepage][aaif-home] (no published decision log, meeting minutes, or working-group output found on the homepage) |
+
+`scored 2026-09-30`
+
 ## Relevance to qte77
 
 - **MCP research**: Goose is the canonical example of ground-up MCP-native design — compare with CC's bolt-on MCP bridge for protocol design insights
@@ -98,6 +137,9 @@ curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download
 | [Goose moves to AAIF][goose-move] | April 2026 relocation from block/goose |
 | [MCP Apps blog][mcp-apps] | Goose as reference MCP Apps client |
 | [Goose install & CLI docs][install] | Install, CLI commands, provider env vars |
+| [AAIF homepage][aaif-home] | Governance (8 working groups), foundation framing (fetched 2026-09-30) |
+| [AAIF projects page][aaif-projects] | 6 hosted projects including Goose: MCP, AGENTS.md, agentgateway, A2A, Agent Router (fetched 2026-09-30) |
+| [Agent Plugins standard][agent-plugins] | Cross-ref: the skills/plugin-packaging standard AAIF does *not* host |
 
 [repo]: https://github.com/aaif-goose/goose
 [arch]: https://goose-docs.ai/
@@ -106,3 +148,6 @@ curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download
 [goose-move]: https://goose-docs.ai/blog/2026/04/07/goose-moves-to-aaif/
 [mcp-apps]: https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/
 [install]: https://goose-docs.ai/docs/getting-started/installation
+[aaif-home]: https://aaif.io/
+[aaif-projects]: https://aaif.io/projects
+[agent-plugins]: ../protocols/agent-plugins-standard-analysis.md

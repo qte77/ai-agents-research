@@ -3,8 +3,8 @@ title: Agent Plugins — Cross-Vendor Portable Plugin Standard
 purpose: Assess the Agent Plugins open standard for packaging Agent Skills and MCP servers across AI agent clients
 source: https://agent-plugins.org
 created: 2026-09-24
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-09-30
+validated_links: 2026-09-30
 ---
 
 **Status**: Assess
@@ -57,12 +57,46 @@ the instructions-file layer (AGENTS.md vs. CLAUDE.md vs. `.cursorrules`):
 Agent Plugins targets the same "one vendor, one format" problem one layer
 down, at packaged Skills/MCP servers rather than prose config files.
 
+## Concrete implementation: Mitosis Memory (`mitosis-agent-plugin`)
+
+Found 2026-09-30, updating the "no confirmed client implementations" note below. [Mitosis
+Labs][mitosis-plugin] (org [`OperatingSystem-1`][mitosis-org], analyzed for its Cortex memory product
+in [mitosis-cortex-analysis.md][mitosis-cortex]) ships `mitosis-agent-plugin` (MIT, 0★, pushed
+2026-09-20) as a real Agent Plugins 1.0.0 package: "The plugin ships two manifests so the same
+directory loads in clients that implement either format" — `plugin.json`/`mcp.json` at the Agent
+Plugins 1.0.0 paths (read by VS Code, GitHub Copilot, Kiro, and Cursor) alongside client-specific
+namespaces for Cursor, Grok Build, and Claude Code (`.claude-plugin/`). It bundles a remote MCP server
+(`https://mitosislabs.ai/api/mcp`, OAuth 2.0 + PKCE, dynamically registered per client — "there is no
+API key to paste") with seven skills (`mitosis-memory-skills`, MIT, 1★, pushed 2026-08-17:
+`memory-connect`, `memory-manifest`, `memory-ask`, `memory-recall`, `memory-remember`,
+`memory-ingest`, `memory-status`) that each "prefer the MCP tool when present and fall back to the
+`mi` CLI... when it is not" — the same skill runs whether or not the plugin's MCP server is loaded.
+The repo runs a CI check (`node scripts/validate.mjs`) that "validates both manifests against their
+published JSON Schemas and parses the YAML frontmatter of every `SKILL.md`" — this is the Agent
+Plugins side of the reproducibility question the standard's own repo leaves open (its spec is
+versioned; a given implementer's manifest validity is not, absent a check like this one).
+
+This is TSC-adjacent evidence, not a TSC-member client shipping support: none of Amazon, Cursor,
+Microsoft, OpenAI, or Vercel is the author here. It's a third-party vendor building a memory plugin
+*to* the open standard, across four clients from one source tree — exactly the "one vendor, one
+format" problem this standard targets, now with one worked example.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| yes [README][mitosis-plugin] (multiple clients — VS Code, Cursor, Grok Build, Claude Code — read the same manifests and the same remote MCP server) | partial [README][mitosis-plugin] (remote MCP server is centrally hosted and reachable from any client; the plugin package itself is copied per-install, not synced) | partial [README][mitosis-plugin] (CI validates manifest schemas and SKILL.md frontmatter on every push — deterministic *packaging* — but the memory content the MCP server serves depends on Mitosis's own ingest pipeline, scored `no` in [mitosis-cortex-analysis.md][mitosis-cortex]) | yes [README][mitosis-plugin] (two manifests cover four client formats from one source tree; skills fall back from MCP tool to CLI transparently) | yes [README][mitosis-plugin] (MIT-licensed source in git; skills also published standalone at [`mitosis-memory-skills`][mitosis-skills]) | partial [README][mitosis-plugin] (`cortex_ask` "returns a cited block," but the plugin/skill layer itself has no install- or invocation-level audit trail) |
+
+`scored 2026-09-30`
+
 ## Unverifiable / Hedged
 
 - No confirmed client implementations (Claude Code or otherwise) were found
   on the site; TSC membership is not evidence of a shipped integration.
 - Adoption, download, or real-world usage figures are not published anywhere
   on the site or in the spec repo.
+- **Update 2026-09-30**: the "no confirmed client implementations" statement
+  above is about the *standard's own site*, which still lists no
+  adopters/implementers page. A third-party implementation now exists (see
+  above) — the standard has real-world usage the site itself doesn't surface.
 
 ## Sources
 
@@ -72,7 +106,14 @@ down, at packaged Skills/MCP servers rather than prose config files.
 | [agent-plugins-spec repo][repo] | Spec source, README |
 | [LICENSE.md][license] | Dual CC BY 4.0 / Apache-2.0 licensing statement |
 | GitHub API repo metadata, 2026-09-24 | Stars(1,325)/forks(74)/issues(18), dates, license detection |
+| [mitosis-agent-plugin README][mitosis-plugin] | Concrete Agent Plugins 1.0.0 implementation, MCP server, skills, CI validation (fetched via GitHub contents API, 2026-09-30) |
+| [mitosis-memory-skills README][mitosis-skills] | Standalone skills publication, MIT license (fetched via GitHub contents API, 2026-09-30) |
+| [mitosis-cortex-analysis.md][mitosis-cortex] | The memory product this plugin connects to; Reproducible scoring cross-ref |
 
 [site]: https://agent-plugins.org
 [repo]: https://github.com/agentplugins/agent-plugins-spec
 [license]: https://github.com/agentplugins/agent-plugins-spec/blob/main/LICENSE.md
+[mitosis-plugin]: https://github.com/OperatingSystem-1/mitosis-agent-plugin
+[mitosis-skills]: https://github.com/OperatingSystem-1/mitosis-memory-skills
+[mitosis-org]: https://github.com/OperatingSystem-1
+[mitosis-cortex]: ../context-memory/mitosis-cortex-analysis.md

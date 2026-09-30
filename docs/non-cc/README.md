@@ -130,6 +130,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [agents-cli-analysis.md](frameworks/agents-cli-analysis.md) | Google agents-cli (skill-pack that upskills a coding agent — Claude Code/Antigravity/Codex — to build/eval/deploy ADK agents on Gemini Enterprise) | — | Yes (Apache-2.0) |
 | [nooa-analysis.md](frameworks/nooa-analysis.md) | NOOA (NVIDIA-NeMo; object-oriented Python agent framework — state/capabilities/prompts as class fields/methods/docstrings) | Yes | Yes (Apache-2.0) |
 | [openrath-analysis.md](frameworks/openrath-analysis.md) | OpenRath (PyTorch-like multi-agent/multi-session runtime; Session/Sandbox/Memory/Tool/Agent/Workflow abstractions) | Yes | Yes (BSD-3-Clause) |
+| [agent-skill-evolution-research-landscape.md](frameworks/agent-skill-evolution-research-landscape.md) | Agent skill evolution research (WikiSkill, AutoTailor, SkillLift, NVlabs Skill2Env); rubric-scored | — | Mixed |
 
 ## Protocols & Interfaces
 
