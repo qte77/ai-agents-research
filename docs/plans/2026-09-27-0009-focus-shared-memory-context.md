@@ -22,7 +22,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - Jev: another session filed #515–#517. My duplicates #518–#520 are closed.
   - Row R (#526) and row B (#528) shipped.
   - Row C (#540, 2026-09-30): 5 new hubs and the coverage gaps (see "Coverage gaps" below).
-  - Row S1 (2026-09-30): all 9 memory leads placed. Mitosis Cortex has its own page
+  - Row S1 (#541, 2026-09-30): all 9 memory leads placed. Mitosis Cortex has its own page
     (`non-cc/context-memory/mitosis-cortex-analysis.md`); the other leads extend existing landscapes.
     Cortex is closed and hosted, with no public repo. `x402oracle.com` now redirects to `verginglabs.com`,
     which shows an index of 92.0, not 91.7% (the page records the discrepancy).
@@ -317,7 +317,7 @@ systems on the rubric.
 | ~~R~~ | ~~Rubric doc (6 properties × 8 subjects, evidence rules), placed in `sdlc-lcm/`~~ | agent | Done 2026-09-29 (#526): `docs/sdlc-lcm/agent-substrate-rubric.md`, indexed in `sdlc-lcm/README.md` and linked from `docs/_topics/README.md` |
 | ~~C~~ | ~~Coverage map: score the existing docs in the source map against the rubric; add hubs for context, skills, plugins, harness and long-running tasks~~ | agent | Done 2026-09-30 (#540): 5 hubs in `docs/_topics/`, linked from the hub index and the rubric; top-10 gaps under "Coverage gaps" |
 | ~~B~~ | ~~Re-rank the backlog (screenshot topics + rxiv index) against the 8 subjects~~ | agent | Done 2026-09-29 (#528): 320 leads → 42 P1 (table in "Ranked backlog"), full list in `rowB/ranked.tsv`. The rxiv index was not re-ranked: the paper-eval workflow has produced nothing since 2026-07-28 (#527) |
-| ~~S1~~ | ~~Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors)~~ | agent | Done 2026-09-30: 9 leads placed and rubric-scored, 1 new page (Mitosis Cortex) |
+| ~~S1~~ | ~~Research batch: memory (incl. Mitosis Labs / OperatingSystem-1, benchmark anchors)~~ | agent | Done 2026-09-30 (#541): 9 leads placed and rubric-scored, 1 new page (Mitosis Cortex) |
 | S2 | Research batch: ontology | agent | One PR, first-party verified, rubric-scored |
 | S3 | Research batch: graphs/RAG/hybrid (incl. GraphRAG, LightRAG, Cognee for row G) | agent | Same as S1 |
 | S4 | Research batch: context | agent | Same as S1 |
