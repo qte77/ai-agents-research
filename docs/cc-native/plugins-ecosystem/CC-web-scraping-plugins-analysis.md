@@ -432,9 +432,11 @@ Beyond Firecrawl and Playwright MCP, several agent-browser tools are worth notin
 TypeSafe's Jev decision model to pick an operation (`CLICK`, `TYPE_TEXT`, `SELECT`, `SCROLL_UP`,
 `SCROLL_DOWN`, `WAIT`, `DONE`, `BLOCKED`) and a target from the current element table in one
 request; a small LLM writes text only when the operation is `TYPE_TEXT`. Its own README reports a
-Google Flights search completed in 7.1 s end-to-end and a 25% median task-time reduction over its
-prior non-decision-model version, but hedges this is "three repeats of one task on one browser
-profile, not a general reliability benchmark." It is not open-weight — it is a client of the
+Google Flights search completed in 7.1 s from first prediction to the accepted DONE choice (browser
+setup, initial navigation and independent post-run verification are excluded from the clock) and a
+25% median task-time reduction over an earlier, unoptimized build of jev-ultrafast itself (both
+versions already used TypeSafe's Jev decision model and Mercury), but hedges this is "three repeats
+of one task on one browser profile, not a general reliability benchmark." It is not open-weight — it is a client of the
 hosted Jev API plus a hosted text LLM (OpenRouter). See the wider comparison in
 [system-1-decision-models-landscape.md § Tools built on Jev][decision-models-landscape].
 

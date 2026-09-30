@@ -28,9 +28,9 @@ This doc keeps three OpenAI eras apart, since the source list mixes them:
 | Current | Unified ChatGPT + Codex plugin system (`plugin.json` + `mcp.json`, reviewed public directory) | **Current.** This doc's subject |
 
 The "Apps SDK" name from the source list survives only as identifiers inside the current system —
-an MCP-connection ID is literally `plugin_asdk_app_...`, the domain-verification path is
-`/.well-known/openai-apps-challenge`, and an org role is "Apps Management Write" ([submission
-guide][submission]) — not as a separately branded product.
+an MCP-connection ID is literally `plugin_asdk_app_...` ([build-plugins][build-plugins]), the
+domain-verification path is `/.well-known/openai-apps-challenge`, and an org role is "Apps
+Management Write" ([submission guide][submission]) — not as a separately branded product.
 
 ## Manifest
 
@@ -50,8 +50,8 @@ A portable manifest declares the Agent Plugins schema directly:
 Plugins schema... OpenAI also accepts legacy and Claude-compatible manifests, but new packages
 should use this format" ([Package your plugin][build-plugins]). OpenAI-specific presentation, MCP
 registration and hooks go under an `extensions.com.openai` object in that same root manifest; a
-separate `.codex-plugin/plugin.json` is "optional: compatibility fallback" when that object is
-absent. `mcp.json` likewise declares the Agent Plugins MCP schema
+separate `.codex-plugin/plugin.json` "is optional and serves as a compatibility fallback when that
+object is absent." `mcp.json` likewise declares the Agent Plugins MCP schema
 (`https://agent-plugins.org/schemas/1.0.0/mcp.schema.json`).
 
 **This is documented first-party support for the Agent Plugins standard by a Technical Steering
@@ -65,7 +65,7 @@ In practice the example repo has not caught up to this guidance: every one of th
 in [openai/plugins][gh-plugins] (checked via `plugins/notion`, 2026-09-30) ships only
 `.codex-plugin/plugin.json` at its root — no root `plugin.json` — even though the docs describe that
 manifest as the "compatibility fallback," not the primary path. The example repo's own README still
-calls `.codex-plugin/plugin.json` the "required plugin manifest."
+describes `.codex-plugin/plugin.json` as "a required ... manifest."
 
 ## Distribution — three things named "marketplace"
 
@@ -98,7 +98,8 @@ Directory").
 
 ## Versioning and pinning (the topic's open Reproducible question)
 
-[`agent-substrate-rubric.md`][rubric]'s coverage-gap list scored CC's own packaging docs
+[Plan 0009][plan0009]'s Top-10 coverage-gap list (gap 10) flagged Plugins · Reproducible as open;
+[CC-plugin-packaging-research.md][cc-plugin-packaging]'s own rubric scores CC's packaging docs
 partial-Reproducible (sha/sha256 pinning exists, opt-in). OpenAI's current system shows the same
 shape, with more concrete detail once you look inside a shipped package:
 
@@ -120,8 +121,10 @@ shape, with more concrete detail once you look inside a shipped package:
   package — the lock was not regenerated when the manifest was bumped.
 - **OpenAI's own official catalog doesn't exercise the pinned path**: the curated marketplace
   shipped in the same repo, `.agents/plugins/marketplace.json` ([source][gh-marketplace], fetched
-  2026-09-30), lists all 11+ entries with `"source": "local"` — none use `git`/`sha`/`npm` sources,
-  so OpenAI's own reference marketplace gives no example of the pin actually being used.
+  2026-09-30), lists 65 entries: 62 use `"source": "local"`, but 3 (`crowdstrike-falcon-foundry`,
+  `crowdstrike-falcon-fusion` as `"source": "url"`; `qodo` as `"source": "git-subdir"`) point at
+  external git repos. None of those three sets a `ref`/`sha` pin field, so the marketplace still
+  gives no example of the pin actually being exercised — but the catalog is not all-`local`.
 - **The published-directory path is the least reproducible of all**: "After initial publication,
   changes to your MCP server are picked up automatically, and eligible updates go live once they
   pass automated checks. There's no need to upload a new plugin ZIP" ([submission][submission]) — a
@@ -173,9 +176,9 @@ OpenAI][submit-claude], that reads CC's own formats: `.claude-plugin/plugin.json
 manifest for a direct Claude archive upload. The portal converts it to
 `.codex-plugin/plugin.json`"), rejects `.claude-plugin/marketplace.json` as non-portable ("A
 skills-only upload excludes MCP server configuration, and you can't submit an existing MCP server
-integration by reference"), maps CC's `commands/`/`agents/` to skills, and sets
-`CLAUDE_PLUGIN_ROOT`/`CLAUDE_PLUGIN_DATA` alongside `PLUGIN_ROOT`/`PLUGIN_DATA` for hook-script
-compatibility. It states plainly: **"Claude marketplace listings and approvals don't transfer."**
+integration by reference"), maps CC's `commands/`/`agents/` to skills; separately,
+[build-plugins][build-plugins] documents that Codex sets `CLAUDE_PLUGIN_ROOT`/`CLAUDE_PLUGIN_DATA`
+alongside `PLUGIN_ROOT`/`PLUGIN_DATA` for hook-script compatibility. It states plainly: **"Claude marketplace listings and approvals don't transfer."**
 Nothing in CC's own plugin docs ([CC-plugin-packaging-research.md][cc-plugin-packaging]) describes
 the reverse — CC does not ingest a Codex-format `.codex-plugin/plugin.json` package.
 
@@ -195,7 +198,7 @@ the reverse — CC does not ingest a Codex-format `.codex-plugin/plugin.json` pa
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| yes [concepts-plugins] ("ChatGPT and Codex share one universal plugin directory... people can discover the same listing from supported surfaces in either product") | partial [build-plugins] (published MCP servers must be public HTTPS endpoints reachable from any client, but the installed plugin artifact itself is cached per-machine at `~/.codex/plugins/cache/...`, and "installing a plugin on the web doesn't deploy" bundled hook scripts) | partial [build-plugins, submission, gh-notion-lock] (sha/exact-version pinning exists opt-in; the one shipped lockfile inspected has an unfilled integrity placeholder and a stale `pluginVersion`; OpenAI's own official marketplace catalog uses only unpinned `local` sources; published MCP servers are rescanned daily independent of the manifest version) | yes [build-plugins, submit-claude] (`extensions.com.openai` namespace, `.codex-plugin` compat fallback, skills-only/MCP-only/both shapes, a documented CC-plugin conversion path) | yes [build-plugins, submission] (semver `version` field; git-backed marketplace sources; "Update your published plugin... creates a package version with its own checks and review outcome") | partial [submission] ("Held update" vs "Live definition" diffing per MCP tool, required release notes per submission, email-recorded review/appeal history — publisher-facing lifecycle traceability, not an end-user-facing citation trail) |
+| yes [concepts-plugins] ("ChatGPT and Codex share one universal plugin directory... people can discover the same listing from supported surfaces in either product") | partial [build-plugins] (published MCP servers must be public HTTPS endpoints reachable from any client, but the installed plugin artifact itself is cached per-machine at `~/.codex/plugins/cache/...`, and "installing a plugin on the web doesn't deploy" bundled hook scripts) | partial [build-plugins, submission, gh-notion-lock] (sha/exact-version pinning exists opt-in; the one shipped lockfile inspected has an unfilled integrity placeholder and a stale `pluginVersion`; OpenAI's own official marketplace catalog is mostly unpinned `local` sources, and the 3 of 65 git-backed entries set no `ref`/`sha` pin either; published MCP servers are rescanned daily independent of the manifest version) | yes [build-plugins, submit-claude] (`extensions.com.openai` namespace, `.codex-plugin` compat fallback, skills-only/MCP-only/both shapes, a documented CC-plugin conversion path) | yes [build-plugins, submission] (semver `version` field; git-backed marketplace sources; "Update your published plugin... creates a package version with its own checks and review outcome") | partial [submission] ("Held update" vs "Live definition" diffing per MCP tool, required release notes per submission, email-recorded review/appeal history — publisher-facing lifecycle traceability, not an end-user-facing citation trail) |
 
 `scored 2026-09-30`
 
@@ -234,10 +237,11 @@ the reverse — CC does not ingest a Codex-format `.codex-plugin/plugin.json` pa
 | GitHub API repo metadata, 2026-09-30 | `openai/plugins`: 7,241 stars / 937 forks / 37 open issues, created 2026-03-04, pushed 2026-09-28, `license: null`, no root LICENSE file |
 | [`plugins/notion/.codex-plugin/plugin.json`][gh-notion-manifest] | Live example manifest; per-package `"license": "MIT"` field, no accompanying LICENSE file |
 | [`plugins/notion/plugin.lock.json`][gh-notion-lock] | Real per-skill commit-`ref` pinning; unfilled `integrity` placeholder; stale `pluginVersion` vs. the live manifest |
-| [`.agents/plugins/marketplace.json`][gh-marketplace] | OpenAI's own curated example marketplace; all entries use unpinned `local` sources |
+| [`.agents/plugins/marketplace.json`][gh-marketplace] | OpenAI's own curated example marketplace; 62 of 65 entries use unpinned `local` sources, the other 3 are git-backed but unpinned |
 | [CC-plugin-packaging-research.md § 5][cc-plugin-packaging] | CC's own manifest/marketplace/pinning system, same rubric, scored 2026-09-30 |
 | [agent-plugins-standard-analysis.md][agent-plugins] | The Agent Plugins open standard OpenAI's manifest declares; TSC membership vs. shipped implementation |
 | [agent-substrate-rubric.md][rubric] | Scoring method and the Plugins-topic coverage gap this doc extends with a second vendor |
+| [Plan 0009][plan0009] | Top-10 coverage-gap list (gap 10: Plugins · Reproducible) |
 
 Pages under `developers.openai.com/plugins/` and `learn.chatgpt.com/docs/` were fetched as their
 Markdown twin (`.md` suffix) via polyfetch, 2026-09-30, per that site's own documented convention
@@ -259,3 +263,4 @@ Markdown twin (`.md` suffix) via polyfetch, 2026-09-30, per that site's own docu
 [cc-plugin-packaging]: ../../cc-native/plugins-ecosystem/CC-plugin-packaging-research.md
 [agent-plugins]: agent-plugins-standard-analysis.md
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
+[plan0009]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md

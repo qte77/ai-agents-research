@@ -15,7 +15,8 @@ agentic-SDLC research ([agentic-sdlc-patterns.md](agentic-sdlc-patterns.md)).
 
 ## (a) Historical: two industrial lineages
 
-**Japanese industrial movement.** Hitachi coined the term in 1969 with its Hitachi Software Works,
+**Japanese industrial movement.** Hitachi was the first company to adopt the term, in 1969 with its
+Hitachi Software Works,
 followed by System Development Corporation (1975), then NEC, Toshiba and Fujitsu (1976–1977). Cusumano's
 framework traces six phases from the mid-1960s to the late 1980s — basic organization, technology
 standardization, process mechanization, then refinement — applying manufacturing-style reuse and
@@ -42,8 +43,8 @@ marketing framing, not independent evidence.
 **Lockheed Martin** describes its "Software Factory" as a DevSecOps-driven engineering operation for
 aerospace and defense, embedding security at every stage, using Kubernetes containerization, GitOps
 (version-controlled IaC with automated rollback) and microservices, demonstrated on F-35 software
-upgrades, Cognitive Mission System Products and the SmartSat platform. Its own framing claims builds "in
-minutes rather than days" — unverified, self-reported ([Lockheed Martin][lockheed]).
+upgrades, Cognitive Mission System Products and the SmartSat platform. Its own framing claims builds "systems in
+minutes, not days" — unverified, self-reported ([Lockheed Martin][lockheed]).
 
 **VMware/Broadcom**'s `vmware.com/topics/software-factory` page is a client-rendered single-page app — the
 server response is an empty `<div id="root">` with no static body text, so only the page's own
@@ -63,9 +64,9 @@ targeted checks, then full independent verification before merge), test intellig
 change-scoped testing), short-lived OIDC auth and least-privilege secrets, and CI feedback agents can
 read directly through an API (a CircleCI MCP server and CLI) ([CircleCI][circleci]).
 
-**Augment Code**'s guide defines an agentic software factory as "an AI-driven delivery system in which
-agents write, test, and ship code inside a pipeline whose specifications and merge approvals stay under
-human control," identifying verification as "the factory's binding constraint." Its five stages — Intake,
+**Augment Code**'s guide defines an agentic software factory as "an agentic software-delivery operating
+model in which AI agents write, test, and ship code inside a pipeline whose specifications and merge
+approvals stay under human control," identifying verification as "the factory's binding constraint." Its five stages — Intake,
 Specification (human-approved before coding: "reviewing a plan takes minutes. Reviewing a 2,000-line pull
 request built on a misread requirement takes days"), Build (isolated parallel agent environments),
 Verification (automated + human judgment), Shipping (human-owned governance and audit trail) — keep human
@@ -80,8 +81,9 @@ Explore→Story→Brief→Build→Test→Validate→PR with human approval after
 stages ([freeCodeCamp][fcc]).
 
 **The `ai-that-works` episodes are conversations, not shipped code.** Each of the four episode
-directories (`github.com/ai-that-works/ai-that-works`) contains only `README.md`, `email.md`, `meta.md`
-and `transcript.txt` — no source files. The repo itself carries no LICENSE file
+directories (`github.com/ai-that-works/ai-that-works`) also contains an `email.json` (plus, in two of
+the four, a stray `Untitled` file or a `whiteboard-1.png` image) alongside `README.md`, `email.md`,
+`meta.md` and `transcript.txt` — no source/code files. The repo itself carries no LICENSE file
 (`license: null` via the GitHub API, verified 2026-09-30), so nothing here is reusable beyond citation.
 Read as design-lens sources, self-reported claims flagged:
 
@@ -126,8 +128,9 @@ a preview build via `pkg.pr.new`, posts findings to the issue, and opens a PR on
 Reported result (first-party operator observation, not a benchmark): open issues fell from over 200 to
 roughly 30, on track for the repository's first zero-open-issue month in 5+ years. Cloudflare generalized
 the pipeline into two artefacts: **Flue**, described on its own site as "The Open Agent Framework" for
-durable, resumable TypeScript agents — no GitHub repository or license could be found for it as of
-2026-09-30, so it is cited as a vendor claim only, not rubric-scored; and **triagebot-action**
+durable, resumable TypeScript agents — its own site links a public GitHub repo
+([`github.com/withastro/flue`][flue-repo], Apache-2.0, ~8,400 stars as of 2026-09-30); unlike
+triagebot-action it has not yet been rubric-scored here; and **triagebot-action**
 (`github.com/withastro/triagebot-action`), a real, forkable GitHub Action other teams have adopted — no
 LICENSE file (`license: null`, 220 stars, last pushed 2026-08-28), rubric-scored below
 ([Cloudflare][cf-astro]).
@@ -145,7 +148,10 @@ single sitting, then let the agent resume once gates clear. Neither side cites t
 is a convergence of practice, not a derivation — suggestive that the gate placement is not merely a house
 style, though four sources are not proof.
 
-André Lindenberg's *From Loops to Graphs* (LinkedIn, 2026-07-25; `linkedin.com/pulse/from-loops-graphs-andré-lindenberg-m8jae`) names this same convergence from the opposite direction — "graph engineering" as the industry term for wiring already-loop-shaped agents into exactly the graph these four sources each ship — with the full ladder-rung treatment in [agentic-engineering-disciplines-landscape.md §1][disciplines-graph].
+André Lindenberg's *From Loops to Graphs* (LinkedIn, 2026-07-25; `linkedin.com/pulse/from-loops-graphs-andré-lindenberg-m8jae`) names this same convergence from the opposite direction — "graph engineering", a weeks-old and
+contested coinage (not an established industry term; see the ladder-rung entry's own hedge) for wiring
+already-loop-shaped agents into exactly the graph these four sources each ship — with the full
+ladder-rung treatment in [agentic-engineering-disciplines-landscape.md §1][disciplines-graph].
 
 **Design lens.** An owner-surfaced opinion sharpens the stakes: rUv (Reuven Cohen), in a 2026-09-29
 LinkedIn post (`linkedin.com/posts/reuvencohen_there-is-no-moat-anything-you-can-build-ugcPost-7510686171975458816-6I5W`,
@@ -162,8 +168,8 @@ legible.
 
 Scored 2026-09-30, first-party sources only, tool as shipped (rubric method:
 [agent-substrate-rubric.md](agent-substrate-rubric.md)). Only artefacts with independently verifiable
-code are scored — the `ai-that-works` episodes and Flue are cited above as sources, not scored here, for
-lack of a verifiable shipped artefact.
+code are scored — the `ai-that-works` episodes are cited above as sources, not scored here, for lack of
+a verifiable shipped artefact; Flue has one (see above) but has not yet been rubric-scored here.
 
 | Tool | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|---|
@@ -189,7 +195,8 @@ lack of a verifiable shipped artefact.
 | `gh api repos/humanlayer/advanced-context-engineering-for-coding-agents/commits?path=wsff.md`, 2026-09-30 | First commit 2026-07-22 (publish date); `contents/LICENSE` 404 (no license) |
 | [Cloudflare: Astro issue triage][cf-astro] | Concrete production case; Flue and triagebot-action, published 2026-08-04 |
 | `gh api repos/withastro/triagebot-action`, 2026-09-30 | `license: null`, 220 stars, pushed 2026-08-28 |
-| [flueframework.com][flue] | Vendor claim only — no GitHub repo or license found |
+| [flueframework.com][flue] | Vendor claim; site links a public GitHub repo |
+| [github.com/withastro/flue][flue-repo] | Apache-2.0, ~8,400 stars (`gh api`, 2026-09-30); not yet rubric-scored here |
 | [agent-substrate-rubric.md](agent-substrate-rubric.md) | Rubric method used above |
 
 Cross-refs: [agentic-sdlc-patterns.md](agentic-sdlc-patterns.md) (the "no review agent" gap this
@@ -216,5 +223,6 @@ HumanLayer's separate approval-gate SDK),
 [cf-astro]: https://blog.cloudflare.com/astro-issue-triage/
 [triagebot-repo]: https://github.com/withastro/triagebot-action
 [flue]: https://flueframework.com/
+[flue-repo]: https://github.com/withastro/flue
 [hlyr-ace-xref]: ../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
 [disciplines-graph]: agentic-engineering-disciplines-landscape.md

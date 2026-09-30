@@ -495,8 +495,9 @@ A coding-agent skill that runs a structured six-phase security audit — reconna
 hunting, candidate validation, structured output, independent record verification, target-neutral
 reporting — and "seeded Cloudflare's vulnerability discovery harness" described in
 [Cloudflare's own blog post][cf-blog]. Every finding lands in one of three verdicts (`confirmed`,
-`needs_validation`, `rejected`) validated against a JSON schema by a zero-dependency validator that
-"runs in CI on every push"; **adversarial validation** is a named design principle — "the agent that
+`needs_validation`, `rejected`) validated against a JSON schema by a zero-dependency validator that the
+orchestrating agent runs at each audit phase — not in CI; **adversarial validation** is a named
+design principle — "the agent that
 checks a finding is never the agent that found it." A `coverage-ledger.json` tracks what was checked
 (not just what was found), and multiple runs against the same repo are additive: "the skill uses prior
 ledgers and findings to target gaps, revalidate changed source, and carry forward current-source
