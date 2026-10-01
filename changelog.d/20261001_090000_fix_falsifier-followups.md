@@ -1,0 +1,4 @@
+### Fixed
+
+- `docs/non-cc/agents/goose-analysis.md`: the AAIF governance paragraph and rubric cells now follow the published [AAIF charter](https://github.com/aaif/foundation/blob/main/foundation-charter.pdf), board and Technical Committee pages. #545 had said no charter or decision process is published, and the #572 correction repeated it, but the charter is in the `aaif/foundation` repo. It names a Governing Board, a Technical Committee and a TSC per hosted project. Shared and Adaptable stay `partial` with corrected reasons; Versionable goes `no data` → `partial` (the charter is in git, as a single PDF).
+- `docs/non-cc/protocols/ag-ui-protocol-landscape.md`: removed a third-party "see also" link (salesforceben.com) that blocks every fetch route and has no archive copy; the first-party Salesforce sources beside it remain.
