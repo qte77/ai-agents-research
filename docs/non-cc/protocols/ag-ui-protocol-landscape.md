@@ -2,7 +2,7 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-09-24
+updated: 2026-10-01
 validated_links: 2026-09-24
 status: research
 ---
@@ -109,7 +109,7 @@ Scale signals (as reported by [CopilotKit][ag-ui-copilotkit]): 9K+ GitHub stars,
 
 ### Non-Adopters (as of 2026-04-24)
 
-- **Salesforce Agentforce 360** — not listed on the [ag-ui README][ag-ui-repo] integrations. Salesforce's own [Agentforce 360 announcements][sf-agentforce] emphasize **MCP via MuleSoft** and the proprietary **MuleSoft Agent Fabric** for cross-platform agent discovery (spanning Agentforce + Amazon Bedrock + Google Vertex AI + Microsoft Copilot Studio). Frontend strategy is "Headless 360" (API/MCP/CLI exposure), not a frontend interaction protocol. See [Salesforce Ben — ISV expansion (Mar 2026)][sf-ben] and [Agentforce 360 for AWS][sf-aws].
+- **Salesforce Agentforce 360** — not listed on the [ag-ui README][ag-ui-repo] integrations. Salesforce's own [Agentforce 360 announcements][sf-agentforce] emphasize **MCP via MuleSoft** and the proprietary **MuleSoft Agent Fabric** for cross-platform agent discovery (spanning Agentforce + Amazon Bedrock + Google Vertex AI + Microsoft Copilot Studio). Frontend strategy is "Headless 360" (API/MCP/CLI exposure), not a frontend interaction protocol. See [Agentforce 360 for AWS][sf-aws].
 
 ## A2UI (Agent-to-UI — Declarative Generative UI)
 
@@ -211,7 +211,6 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [ogui-repo]: https://github.com/CopilotKit/OpenGenerativeUI
 [ogui-site]: https://opengenerativeui.copilotkit.ai/
 [sf-agentforce]: https://www.salesforce.com/agentforce/what-is-new/
-[sf-ben]: https://www.salesforceben.com/salesforce-opens-agentforce-360-to-isvs-so-partners-can-build-and-distribute-ai-agents/
 [sf-aws]: https://www.salesforce.com/news/stories/agentforce-360-for-aws-announcement/
 [devin-faq]: https://docs.devin.ai/desktop/devin-desktop-faq
 [omnara]: https://www.ycombinator.com/launches/OCT-omnara-the-first-command-center-for-ai-agents-terminal-web-and-mobile
