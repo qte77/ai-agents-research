@@ -3,7 +3,7 @@ title: Goose Analysis
 source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
-updated: 2026-09-30
+updated: 2026-10-01
 validated_links: 2026-09-30
 status: assess
 ---
@@ -90,11 +90,18 @@ neutral and open foundation built on transparency, collaboration, and standardiz
 public interest in agentic AI innovation" ([AAIF homepage][aaif-home], fetched 2026-09-30) — a Linux
 Foundation project, consistent with the [formation announcement][aaif] already cited above.
 
-**Governance**: eight working groups — Accuracy & Reliability, Agentic Commerce, Governance/Risk/
-Regulatory Alignment, Identity & Trust, Observability & Traceability, Security & Privacy,
-Workflows & Process Integration, and Taxonomy & Landscape ([AAIF homepage][aaif-home]). The homepage
-does not publish charters, membership lists, or decision-making rules for these groups beyond naming
-them.
+**Governance**: the [AAIF charter][aaif-charter] (a PDF in the `aaif/foundation` repo, "Amended July 29,
+2026") puts a Governing Board in charge. The board approves new projects "in consultation with the
+Technical Committee", and "Each Technical Project shall have a TSC, which shall be responsible for the
+technical direction" of that project, whose governance "is as set forth in the charter for that
+project". The site lists the [Governing Board][aaif-board] (chair from AWS; members from Google,
+Microsoft, OpenAI, Cloudflare, Anthropic and others), the [Technical Committee][aaif-tc] (chair from
+Anthropic, co-chair from Microsoft; members from Block, OpenAI, Google, Cloudflare and others) and
+tiered [membership][aaif-members], where voting rights and board seats depend on the tier. Eight
+working groups are named on the [homepage][aaif-home] (Accuracy & Reliability, Agentic Commerce,
+Governance/Risk/Regulatory Alignment, Identity & Trust, Observability & Traceability, Security &
+Privacy, Workflows & Process Integration, Taxonomy & Landscape). The site does not list the members of
+each hosted project's TSC, and publishes no board minutes or decision log (all checked 2026-10-01).
 
 **Hosted projects** ([AAIF projects page][aaif-projects], fetched 2026-09-30 — the homepage itself
 names no specific projects): six in total, including Goose; the other five —
@@ -117,7 +124,7 @@ packaging agent capabilities themselves.
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| partial [AAIF homepage][aaif-home], [projects][aaif-projects] (8 working groups are named, but no charter, membership, or decision process ties them to governing the 6 hosted specs — see the governance paragraph above) | n/a [AAIF homepage][aaif-home] (AAIF is a governance foundation, not a running system — "distributed" as defined by the rubric doesn't apply to an org) | n/a [AAIF projects][aaif-projects] (no software artifact of AAIF's own to rebuild; its hosted projects, e.g. MCP, are scored in their own docs) | partial [AAIF homepage][aaif-home] (8 working groups are named, but no charter, membership, or decision process ties them to evolving the hosted specs — see the governance paragraph above) | no data [AAIF projects][aaif-projects] (the specs it hosts are git-versioned in their own repos; no stated versioning of AAIF's own governance decisions) | no data [AAIF homepage][aaif-home] (no published decision log, meeting minutes, or working-group output found on the homepage) |
+| partial [charter][aaif-charter], [board][aaif-board] (foundation-level decisions are shared across member companies on the board and the Technical Committee, but each hosted spec's technical direction sits with its own TSC, whose members the site does not list) | n/a [AAIF homepage][aaif-home] (AAIF is a governance foundation, not a running system — "distributed" as defined by the rubric doesn't apply to an org) | n/a [AAIF projects][aaif-projects] (no software artifact of AAIF's own to rebuild; its hosted projects, e.g. MCP, are scored in their own docs) | partial [charter][aaif-charter] (the board can establish committees and approve new projects without a rewrite; how each spec changes is set by that project's own charter and TSC, not documented on the AAIF site) | partial [charter][aaif-charter] (the charter itself is in git, but as a single PDF commit, so amendments are not diffable; the hosted specs are git-versioned in their own repos; governance decisions are not versioned) | no data [charter][aaif-charter] (the charter requires the chair to submit board minutes for approval, but no minutes or decision log are published on the site or in `aaif/foundation`) |
 
 `scored 2026-09-30`
 
@@ -138,7 +145,8 @@ packaging agent capabilities themselves.
 | [Goose moves to AAIF][goose-move] | April 2026 relocation from block/goose |
 | [MCP Apps blog][mcp-apps] | Goose as reference MCP Apps client |
 | [Goose install & CLI docs][install] | Install, CLI commands, provider env vars |
-| [AAIF homepage][aaif-home] | Governance (8 working groups), foundation framing (fetched 2026-09-30) |
+| [AAIF homepage][aaif-home] | Working groups, foundation framing (fetched 2026-09-30) |
+| [AAIF charter][aaif-charter], [board][aaif-board], [Technical Committee][aaif-tc], [members][aaif-members] | Governance: board, Technical Committee, per-project TSCs, membership tiers (checked 2026-10-01) |
 | [AAIF projects page][aaif-projects] | 6 hosted projects including Goose: MCP, AGENTS.md, agentgateway, A2A, Agent Router (fetched 2026-09-30) |
 | [Agent Plugins standard][agent-plugins] | Cross-ref: the skills/plugin-packaging standard AAIF does *not* host |
 
@@ -151,4 +159,8 @@ packaging agent capabilities themselves.
 [install]: https://goose-docs.ai/docs/getting-started/installation
 [aaif-home]: https://aaif.io/
 [aaif-projects]: https://aaif.io/projects
+[aaif-charter]: https://github.com/aaif/foundation/blob/main/foundation-charter.pdf
+[aaif-board]: https://aaif.io/board
+[aaif-tc]: https://aaif.io/tc
+[aaif-members]: https://aaif.io/members
 [agent-plugins]: ../protocols/agent-plugins-standard-analysis.md
