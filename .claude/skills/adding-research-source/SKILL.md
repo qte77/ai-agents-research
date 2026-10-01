@@ -71,6 +71,10 @@ write/ship each per steps 3–6. Needs explicit user opt-in (workflows spawn man
   "confirmed shipped implementation", four sources became a "structural property", a paraphrase was
   put in quotation marks, and a synthesis presented dead workflows as live. Open the source for each
   superlative before merging; for a claim about a live system, check that it is still live.
+- **Absence claims need a site-wide check.** "No repo", "no charter" or "no license" checked
+  against one page is not evidence: plan 0009 got Flue's repo and AAIF's charter wrong this way, and
+  a falsifier and its verifier repeated the AAIF error. Before writing "no X", check the site's
+  navigation, its GitHub org and the linked repos.
 - **One PR per topic**; don't mix content additions with reformatting.
 - **Don't over-place** — the cc-vs-non-cc line is judgment. When genuinely unsure, ask the user rather
   than guess (placement calls get challenged: *opus-in-non-cc*, *firecrawl-in-cc-native*, *agents-cli-within-cc*).

@@ -23,7 +23,11 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
   - a composed rubric row read as all `yes` (Y);
   - dead workflows were presented as live (Y, from a stale corpus doc).
 - **Solution**: Briefs require claims at their evidence level (documented / announced / shipped / observed), verbatim-only quotes, and a closing "strongest claims" list. The reviewer opens the source for each item on that list before merging, and checks that live-system claims are still live. All three are in the [`adding-research-source` skill](.claude/skills/adding-research-source/SKILL.md). The workspace claim-verification rule (`/workspaces/.claude/rules/claim-verification.md`) names the underlying failure modes: hedge decay, assertion from partial evidence, stale aggregate views.
-- **References**: PRs #559, #561, #568; the OpenResearch fix in this entry's PR.
+- **Follow-up (2026-10-01)**: a claim-falsifier pass (643 claims, 43 confirmed findings, fixed in #572) showed that checkers err too:
+  - a corpus-mismatch finding counted only the docs it was given and missed a row elsewhere (a verifier agreed);
+  - two absence claims were wrong because only one page was checked: Flue "has no repo" (K6), and AAIF "publishes no charter" (written in #545, then repeated by the falsifier's correction and its verifier).
+  Review a correction like any other claim: check absence site-wide and corpus counts against the full corpus. Fixed in #573; the skill guardrail now says so.
+- **References**: PRs #559, #561, #568, #571–#573.
 
 ### Continued sessions: reconcile git HEAD vs the conversation summary before executing tracked work
 
