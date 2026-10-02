@@ -3,8 +3,8 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-10-02
+validated_links: 2026-10-02
 status: generally-available
 ---
 
@@ -281,7 +281,7 @@ The MEMORY.md-index / topic-file split above is a variant of a broader pattern �
 - **Sensitive instruction preservation**: As of v2.1.139, the compaction prompt explicitly asks the model to preserve sensitive user instructions carried in the conversation. This reduces the risk of security-relevant directives (e.g., credential handling rules, output filtering instructions) being dropped during mid-session compaction.
 - **`InstructionsLoaded` hook**: Log exactly which instruction files load, when, and why — useful for debugging path-specific rules ([source][cc-mem])
 - **First-time trust**: CC shows approval dialog for external `@` imports on first encounter in a project ([source][cc-mem])
-- **AGENTS.md**: CC reads `CLAUDE.md`, not `AGENTS.md` — import (`@AGENTS.md`) or symlink it so both agents share one instruction source; `/init` folds an existing `AGENTS.md` (and `.cursorrules` / `.windsurfrules`) into the generated CLAUDE.md ([source][cc-mem])
+- **AGENTS.md**: as of CC v2.1.277+, Claude reads a repository's `AGENTS.md` directly. The default (**Project instructions** = `claude-md-or-agents-md`) reads `AGENTS.md` only where the working directory and its ancestors hold no `CLAUDE.md`/`CLAUDE.local.md` of their own; `claude-md-and-agents-md` loads both, `claude-md` ignores `AGENTS.md`, and `managed-only` drops both the project's own files. This ships as a built-in mod (`cc-plugin-agents-md`), not engine code — see [AGENTS.md Support as a Mod](../plugins-ecosystem/CC-mods-function-hooks-analysis.md#agentsmd-support-as-a-mod) ([source][cc-mem]). Before v2.1.277, or wherever the mod can't load, the older workaround still applies: import (`@AGENTS.md`) or symlink it so both agents share one instruction source; `/init` folds an existing `AGENTS.md` (and `.cursorrules`/`.windsurfrules`) into the generated CLAUDE.md
 
 ## Auto-Dream — Background Memory Consolidation (Feature-Flagged)
 
@@ -421,6 +421,15 @@ When information is imperfect, the quality hierarchy determines what to drop ([s
 
 Better to have less correct information than more information with errors.
 
+### Are the ACE-FCA Phase Artifacts Git-Tracked? (Confirmed Open)
+
+Checked 2026-10-02, re-fetching both of ACE-FCA's first-party sources directly rather than relying on this doc's own earlier paraphrase: neither states that the phase artifacts (`research.md`/`plan.md`/`implement.md`) are committed to git, diffable, or otherwise version-controlled.
+
+- **hlyr.dev** ([Advanced Context Engineering for Coding Agents][hlyr-ace], the methodology's own source) mentions "commit messages for intentional compaction" and names worktrees for one step of the workflow, but explicitly defers the storage question itself: "How we manage/share the markdown files - I will skip this part for brevity but feel free to launch a claude session in humanlayer/humanlayer and ask how the 'thoughts tool' works." That is a stated non-answer, not a yes.
+- **Anthropic's own canonical post** ([Effective Context Engineering for AI Agents][anthropic-ce]) describes structured note-taking as files persisted "outside the context window," giving a `NOTES.md` file and Claude Code's own to-do list as examples — but it says nothing about git-tracking, diffing, or version control for any phase artifact.
+
+**Confirmed open**: no first-party source makes the git-tracked/diffable claim; this doc's [rubric row below](#scored-on-the-agent-substrate-rubric) already flags the same gap for the named `research.md`/`plan.md`/`implement.md` files specifically (as distinct from the CLAUDE.md/auto-memory substrate it does score).
+
 ## Scored on the Agent Substrate Rubric
 
 CC's CLAUDE.md + auto memory system, scored 2026-09-30 against the [agent substrate rubric][rubric] using only the fetches above ([code.claude.com/docs/en/memory][cc-mem], 2026-09-30). This targets the gaps the plan-0009 coverage map found in the corpus's context docs — no dedicated evidence for Shared, Distributed, Versionable or Traceable outside the hubs.
@@ -429,7 +438,19 @@ CC's CLAUDE.md + auto memory system, scored 2026-09-30 against the [agent substr
 |---|---|---|---|---|---|
 | partial [cc-mem][cc-mem] (Project-scope CLAUDE.md is documented "Shared with: Team members via source control," and `.claude/rules/` supports symlinking a shared rules directory into multiple projects — but sharing is git's own mechanism, with no CC-native concurrent-write or merge semantics of its own) | no [cc-mem][cc-mem] ("Auto memory is machine-local... Files are not shared across machines or cloud environments"; a managed-policy CLAUDE.md is push-deployed via MDM/Group Policy to many machines, not synced live across them) | no data [cc-mem][cc-mem] (nothing pins a model or deterministic setting for what auto memory decides to write; CLAUDE.md content is human-authored, not pipeline-generated) | yes [cc-mem][cc-mem] (`.claude/rules/` path-scoping, the managed/user/project/local scope hierarchy, `claudeMdExcludes`, and the CLAUDE.md/AGENTS.md dual-format read all change behavior without a rewrite) | partial [cc-mem][cc-mem] (CLAUDE.md and rules files are plain markdown "shared with your team through version control" in practice, i.e. git-tracked — but CC has no native diff/snapshot/rollback feature over memory content itself; auto memory's `modified` ISO-8601 frontmatter field, requiring **CC v2.1.214+**, is the only built-in lineage marker) | partial [cc-mem][cc-mem] (the `InstructionsLoaded` hook logs exactly which CLAUDE.md/rules files loaded, when and why, and `/doctor prompt-audit`, requiring **CC v2.1.283+**, reports on stale or conflicting instructions — but nothing cites *which* instruction drove a given model output) |
 
-This **partly** fills 4 of the plan's "Coverage gaps" (Context): Shared and Versionable move from no-hit to `partial`, Distributed moves from no-hit to a sourced `no`, and Traceable moves from no-hit to `partial` via the `InstructionsLoaded` hook and `/doctor prompt-audit`. This scores CC's CLAUDE.md/auto-memory substrate as a whole — it does **not** resolve gap 4's original named object, the [ACE-FCA phase artifacts](#context-engineering-workflow-ace-fca) (`research.md`/`plan.md`/`implement.md`): no first-party source (Anthropic's or hlyr.dev's) states that those specific files are git-tracked or diffable, so that narrower claim stays open. The [context-engineering-intro][cei] and [arXiv 2608.11095][claude-md-growth] entries above are independent secondary evidence for Versionable (git-committed guidance files) and for the growth dynamics Adaptable/Traceable scores above are silent on.
+This **partly** fills 4 of the plan's "Coverage gaps" (Context): Shared and Versionable move from no-hit to `partial`, Distributed moves from no-hit to a sourced `no`, and Traceable moves from no-hit to `partial` via the `InstructionsLoaded` hook and `/doctor prompt-audit`. This scores CC's CLAUDE.md/auto-memory substrate as a whole — it does **not** resolve gap 4's original named object, the [ACE-FCA phase artifacts](#context-engineering-workflow-ace-fca) (`research.md`/`plan.md`/`implement.md`): no first-party source (Anthropic's or hlyr.dev's) states that those specific files are git-tracked or diffable, so that narrower claim stays open (re-checked above, 2026-10-02). The [context-engineering-intro][cei] and [arXiv 2608.11095][claude-md-growth] entries above are independent secondary evidence for Versionable (git-committed guidance files) and for the growth dynamics Adaptable/Traceable scores above are silent on.
+
+**Follow-up 2026-10-02 (plan 0010, row M1 — not a re-score):** the "dual-format read" cited in Adaptable above is no longer the import/symlink workaround it was when scored — CC now reads `AGENTS.md` directly by default (v2.1.277+), as a built-in mod with four selectable modes (see the updated AGENTS.md bullet in [Key Behaviors](#key-behaviors) above, and [CC-mods-function-hooks-analysis.md](../plugins-ecosystem/CC-mods-function-hooks-analysis.md)). This strengthens the existing Adaptable evidence; it does not by itself change any of this row's six scores. Formal re-scoring of this row is Phase C row R1 — per the hard rule against editing an existing rubric row in Phase A, the table above is unchanged.
+
+### AGENTS.md as a Cross-Agent Instruction File (New Row)
+
+Scored separately from the CLAUDE.md/auto-memory row above, because AGENTS.md is a convention several coding agents read (not a CC-specific store) and because CC's own support for it changed materially on 2026-10-02 (see the updated bullet in [Key Behaviors](#key-behaviors)). Scored 2026-10-02 from the current [code.claude.com/docs/en/memory][cc-mem] page only.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data (no CONTRIBUTING file, PR template, or README section documents a contribution flow for a generic `AGENTS.md`-adopting repo; `cc-mem`'s "Shared with: Team members via source control" [cc-mem][cc-mem] names only that it lives in git, which this rubric's rule 6 treats as insufficient on its own for `partial`) | no data (same reason as Shared) | no data (human-authored markdown; nothing pins a model or deterministic process for its content) | yes [cc-mem][cc-mem] (four selectable **Project instructions** modes — `claude-md-or-agents-md` (default), `claude-md-and-agents-md`, `claude-md`, `managed-only` — change which files load with no rewrite) | partial [cc-mem][cc-mem] (the same table row documenting CLAUDE.md's project scope also covers `AGENTS.md` — "Shared with: Team members via source control," i.e. git-tracked markdown — but CC has no diff/snapshot/rollback feature of its own over instruction-file content) | partial [cc-mem][cc-mem] (`/doctor prompt-audit` "covers your CLAUDE.md, CLAUDE.local.md, and AGENTS.md files" — but the `InstructionsLoaded` hook, CLAUDE.md's main Traceable evidence above, explicitly "Don't fire" for an `AGENTS.md` read through the **Project instructions** setting, a documented gap CLAUDE.md doesn't have) |
+
+The mod mechanism itself (function hooks) is scored separately in [CC-mods-function-hooks-analysis.md](../plugins-ecosystem/CC-mods-function-hooks-analysis.md#scored-on-the-agent-substrate-rubric).
 
 ## References
 

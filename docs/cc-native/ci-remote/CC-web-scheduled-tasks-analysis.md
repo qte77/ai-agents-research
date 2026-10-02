@@ -3,8 +3,8 @@ title: CC Web Scheduled Tasks — Cloud Recurring Automation
 source: https://code.claude.com/docs/en/routines
 purpose: Analysis of cloud-native scheduled tasks for recurring autonomous work without local machine dependency.
 created: 2026-03-24
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-10-02
+validated_links: 2026-10-02
 status: available
 ---
 
@@ -83,6 +83,16 @@ Tasks may run a few minutes after scheduled time (consistent offset per task).
 
 **Use cloud scheduled tasks for recurring autonomous work that should run reliably without your machine. Use Desktop scheduled tasks when you need local files/tools. Use `/loop` for quick polling within a session.**
 
+## Scored on the Agent Substrate Rubric
+
+Routines (the Schedule-trigger subset this doc covers), scored 2026-10-02 against the [agent substrate rubric][rubric] from the current [Routines][cc-sched] docs, re-fetched this date. This fills a long-running coverage gap plan 0009 named: no rubric row existed for scheduled tasks. Distributed reuses the evidence already scored for [cloud sessions][cloud-sessions-rubric], since every routine run executes as one.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no [cc-sched][cc-sched] ("Routines belong to your individual claude.ai account. They are not shared with teammates, and their runs count against your account's usage and limits") | yes [cloud-sessions-rubric][cloud-sessions-rubric] (every run executes as a cloud session, on the same Anthropic-managed or self-hosted runner-fleet infrastructure scored there) | no [cc-sched][cc-sched] (the creation form has "a model selector," and "Claude uses the selected model on every run" — a named model, not a pinned snapshot id; the rubric's own guidance treats LLM-driven work with no fixed model/version as `no`, not `no data`) | yes [cc-sched][cc-sched] ("change the name, prompt, schedule, repos, environment, connectors, or any of the routine's triggers" at any time, with no rebuild) | partial [cc-sched][cc-sched] (every run's session is retained and reviewable — deleting a routine "removes task; past run sessions remain" — but the routine's own prompt/config has no revision history or rollback of its own) | partial [cc-sched][cc-sched] (each run is a full, reviewable session, and the CLI can read a run's log to "explain what happened, including tool errors, permission denials, and the final result" on request — but "a green status... does not mean the task in your prompt succeeded," so nothing short of opening the transcript closes the loop) |
+
+No stale prose was found elsewhere in this doc against the current docs (trigger types, frequency options, minimum one-hour interval, and the scheduling-options comparison table all still match).
+
 ## See Also
 
 - [CC-cloud-sessions-analysis.md](CC-cloud-sessions-analysis.md) — cloud VM execution model (shared infrastructure)
@@ -95,7 +105,10 @@ Tasks may run a few minutes after scheduled time (consistent offset per task).
 - [CC Web Scheduled Tasks docs][cc-sched]
 - [CC Cloud Environment docs][cc-cloud]
 - [CC Desktop Scheduled Tasks docs][cc-desktop]
+- [Agent Substrate Rubric][rubric]
 
 [cc-sched]: https://code.claude.com/docs/en/routines
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web#the-cloud-environment
 [cc-desktop]: https://code.claude.com/docs/en/desktop-scheduled-tasks
+[rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
+[cloud-sessions-rubric]: CC-cloud-sessions-analysis.md#scored-on-the-agent-substrate-rubric

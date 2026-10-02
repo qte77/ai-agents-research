@@ -6,6 +6,7 @@ Extension packaging: plugins, MCP servers, marketplaces across the corpus. Point
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) | Official CC plugin ecosystem catalog and adoption guidance | cc-native |
+| [CC-mods-function-hooks-analysis.md](../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md) | Mods (function hooks): in-process event handlers that redraw or rewrite Claude Code, shipped as plugins; the built-in AGENTS.md and `/diff` mods | cc-native |
 | [CC-plugin-packaging-research.md](../cc-native/plugins-ecosystem/CC-plugin-packaging-research.md) | Plugin structure, manifest, packaging vs repo-local config | cc-native |
 | [CC-cowork-plugins-enterprise-analysis.md](../cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) | Cowork plugin architecture and enterprise distribution | cc-native |
 | [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) | Claude Connectors (Google, Slack, Microsoft 365) | cc-native |

@@ -5,6 +5,7 @@ Official plugins, connectors, Cowork platform, office document skills, business 
 | Document | Content |
 |----------|---------|
 | [CC-official-plugins-landscape.md](CC-official-plugins-landscape.md) | Official plugin ecosystem and marketplace |
+| [CC-mods-function-hooks-analysis.md](CC-mods-function-hooks-analysis.md) | Mods (function hooks): in-process event handlers, the `$` API, governance, built-in AGENTS.md/diff mods |
 | [CC-connectors-overview.md](CC-connectors-overview.md) | MCP connectors: Google, GitHub, Slack, M365, Excel/PowerPoint add-ins |
 | [CC-office-document-skills.md](CC-office-document-skills.md) | Document generation: Anthropic skills, knowledge-work plugins, community skills, MCP servers |
 | [CC-business-api-integrations.md](CC-business-api-integrations.md) | Business MCP servers: Stripe, Xero, QuickBooks, HubSpot, Salesforce, NetSuite, USPTO |

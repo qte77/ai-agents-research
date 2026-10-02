@@ -3,8 +3,8 @@ title: CC Official Plugins Landscape
 source: https://www.firecrawl.dev/blog/best-claude-code-plugins, https://code.claude.com/docs/en/plugins
 purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this research repo, and provide adoption guidance per plugin.
 created: 2026-03-12
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-10-02
+validated_links: 2026-10-02
 status: reference
 ---
 
@@ -132,6 +132,41 @@ mcp__context7__get-library-docs \
 
 **Fit assessment**: **Adopt if using Linear for project management.** Enables issue-driven development without leaving CC. The auto-status-update (mark in-progress when starting work) reduces context switching. Not relevant if using GitHub Issues, Jira, or other PM tools.
 
+### Code Modernization
+
+**What it does**: Guided, command-driven modernization of a legacy codebase: an assessment, an interactive dependency/data-flow map, business rules mined as Given/When/Then cards with `file:line` citations, a phased plan a person approves, then a same-version uplift, a rewrite, or a clean-architecture rebuild — each followed by an independent proof step that computes a PROVEN / PARTLY PROVEN / NOT PROVEN verdict per module from files a script parses itself, not from the model's own report ([source][cm-readme]).
+
+**Installation**: `/plugin install code-modernization@claude-plugins-official`
+
+**Author / version / license**: Anthropic; version 1.0.0; Apache 2.0, verified from the plugin's own `LICENSE` file, not marketing copy ([source][cm-plugin-json], [source][cm-license]).
+
+**How it works** — 9 commands, each writing only to `analysis/<name>/` or `modernized/` and never editing the legacy source (a `.claude/settings.json` deny rule the plugin's own `preflight` step checks for) ([source][cm-readme]):
+
+| Step | Command | Output |
+|---|---|---|
+| 0 | `modernize` | `INTENT.md` — the front door every later command reads |
+| 1 | `modernize-preflight` | Five person-answered questions, a build smoke test, missing-source check |
+| 2–4 | `modernize-assess`, `-map`, `-extract-rules` | Assessment, dependency/data-flow map, business-rule cards |
+| 4b | `modernize-review` | A person confirms or corrects flagged rules |
+| 5 | `modernize-brief` | The phased plan — **nothing is built before a person approves it** |
+| 6 | `uplift` / `transform` / `reimagine` | The build, by the chosen track |
+| 7 | `modernize-verify` | The independent proof, one verdict per module |
+| 8 | `modernize-harden` | A security scan with a reviewed, hand-applied patch |
+
+**Proof, not self-report**: `modernize-verify` re-runs the full test suite from a clean build, re-runs old and new code on the same inputs with a script comparing every byte (a declared tolerance for floating-point output), invents at least ten new inputs nobody used, and requires a deliberate one-line "canary" break to prove the tests can fail before trusting them. `scripts/proof_pack.py` computes the verdict from those result files; "every verdict is computed again from current evidence each time; none is carried over from an earlier run" ([source][cm-readme]).
+
+**What it has been tried on**: the README lists real, headless, public-codebase runs with their own numbers — AWS CardDemo (COBOL→Java), Eclipse Jetty (Java 8→17, 946/996 matching tests on both versions), osCommerce (PHP→Python/FastAPI), AngularJS RealWorld, JPetStore, beets (Python 2→3), Spring PetClinic, Redmine/eShop/Jenkins, NetHack/KISS FFT/BSD numbers, and a deliberately booby-trapped codebase whose planted prompt-injection attempts were logged and never acted on ([source][cm-readme]). These are the plugin's own self-reported runs, not independently reproduced here.
+
+**Telemetry**: whole-number usage counts only (which command ran, how far a system got, OS/python status, failure-kind codes) through Claude Code's own telemetry setting — nothing is sent when that is off — and separately switchable via the plugin's own **Usage counts** option or `CODE_MODERNIZATION_TELEMETRY=0` ([source][cm-readme]).
+
+**Fit assessment**: **Adopt for a scoped legacy-modernization pilot, not a whole-estate migration** — the README itself says to start with one module or unit. The proof step (re-run-from-clean, adversarial new inputs, a required canary) stands out: it targets exactly the "passes the tests someone wrote, differs on the ones nobody wrote" failure mode other migration tooling in this corpus doesn't check for. See [code-migration-kit-with-claude-code][cm-related] for a lower-level prompt/template toolkit Anthropic ships separately for the same problem space.
+
+**Rubric** (scored 2026-10-02, from the plugin's own README, CHANGELOG, LICENSE, and `.claude-plugin/plugin.json`):
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data (no CONTRIBUTING file or PR template found in `claude-plugins-official`; its README's own "Contributing" section documents a submission flow for `external_plugins/` only — `code-modernization` is an internal plugin, "developed by Anthropic team members," with no equivalent external contribution flow documented) | no data (same reason as Shared) | yes [cm-readme][cm-readme] (verdicts are computed by `scripts/proof_pack.py` from result files the tool re-derives every run — "every verdict is computed again from current evidence each time; none is carried over" — a deterministic, script-checked pipeline, not an LLM self-report) | yes [cm-plugin-json][cm-plugin-json] (six `userConfig` options — `system`, `track`, `panel`, `xray`, `commandPrefix`, `legacyDir`, `telemetry` — change behavior with no code edit) | partial [cm-readme][cm-readme] ("the commands never commit to your repository, so commit `analysis/` and `modernized/` yourself" — the plugin's outputs are explicitly meant to be git-tracked, but nothing in the plugin commits or versions them itself) | yes [cm-readme][cm-readme] (business rules cite `file:line` in the legacy source; the proof step's masked fields, accepted differences, and verdicts are all listed in the output rather than asserted; a booby-trapped test codebase's planted instructions were "listed in the report" rather than silently followed) |
+
 ## Applicability Decision Framework
 
 | Project Type | Recommended Plugins | Skip |
@@ -156,7 +191,7 @@ The repository has a two-tier structure: `plugins/` (35 Anthropic-internal plugi
 
 **LSP language servers** (13): `clangd-lsp`, `csharp-lsp`, `gopls-lsp`, `jdtls-lsp`, `kotlin-lsp`, `lua-lsp`, `php-lsp`, `pyright-lsp`, `ruby-lsp`, `rust-analyzer-lsp`, `swift-lsp`, `typescript-lsp` — per-language LSP integrations; install the one matching your stack.
 
-**Dev workflow** (13): `agent-sdk-dev`, `claude-code-setup`, `claude-md-management`, `code-modernization`, `code-simplifier`, `commit-commands`, `feature-dev`, `hookify`, `mcp-server-dev`, `mcp-tunnels`, `playground`, `plugin-dev`, `pr-review-toolkit` — scaffolding, migration, hook authoring, MCP development, and PR tooling.
+**Dev workflow** (13): `agent-sdk-dev`, `claude-code-setup`, `claude-md-management`, [`code-modernization`](#code-modernization), `code-simplifier`, `commit-commands`, `feature-dev`, `hookify`, `mcp-server-dev`, `mcp-tunnels`, `playground`, `plugin-dev`, `pr-review-toolkit` — scaffolding, migration, hook authoring, MCP development, and PR tooling.
 
 **Session & reporting** (2): `session-report`, `skill-creator` — session summaries and guided skill authoring.
 
@@ -216,6 +251,9 @@ These plugins have full analysis elsewhere in this repo:
 - [CC Bash Mode Analysis](../configuration/CC-bash-mode-analysis.md)
 - [CC Web Scraping Plugins Analysis](CC-web-scraping-plugins-analysis.md)
 - [CC Plugin Packaging Research](CC-plugin-packaging-research.md)
+- [code-modernization plugin README][cm-readme]
+- [code-modernization plugin.json][cm-plugin-json]
+- [code-modernization LICENSE][cm-license]
 
 [firecrawl-blog]: https://www.firecrawl.dev/blog/best-claude-code-plugins
 [cc-plugins]: https://code.claude.com/docs/en/plugins
@@ -231,3 +269,7 @@ These plugins have full analysis elsewhere in this repo:
 [cuttlesoft]: https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/
 [design-cowork]: https://claude.com/plugins/design
 [labs-design]: https://www.anthropic.com/news/claude-design-anthropic-labs
+[cm-readme]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/README.md
+[cm-plugin-json]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/.claude-plugin/plugin.json
+[cm-license]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/LICENSE
+[cm-related]: https://github.com/anthropics/code-migration-kit-with-claude-code
