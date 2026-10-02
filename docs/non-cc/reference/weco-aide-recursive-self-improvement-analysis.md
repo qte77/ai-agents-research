@@ -1,10 +1,10 @@
 ---
 title: AIDE² — Weco AI's Recursive Self-Improvement Experiment
 source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
-purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family.
+purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus two further harness-subject entries, FineEnvs multi-harness RL training and the agentic meta-reasoning paper.
 created: 2026-09-24
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-10-02
+validated_links: 2026-10-02
 status: assess
 ---
 
@@ -147,6 +147,106 @@ weights, or seed information found — the paper reports results, not a rebuild 
 weights are not described as snapshotted, diffable, or rolled back); Traceable: no data (no audit-trail
 or lineage mechanism is described for the retrospective explanations themselves).
 
+## FineEnvs: Training a Small Model Across Agent Harnesses (added 2026-10-02)
+
+[The multi-harness RL guide][fineenvs-space] is a Hugging Face Space (`sdk: docker`, canonical id
+`FineEnvs/multi-harness-rl`; the `AdithyaSK/...` URL in earlier notes redirects here) published by the
+same maintainer as [github.com/adithya-s-k/FineEnvs][fineenvs-repo], which its own README names as the
+companion repo ("Source lives in FineEnvs under `content/articles/multi-harness-rl/`"). The GitHub repo
+is **Apache-2.0** (confirmed via `gh api repos/adithya-s-k/FineEnvs`: 278 stars, 37 forks, created
+2026-05-01, pushed 2026-10-02). The Space's own `LICENSE` file is separate and reads "Copyright (c) 2024
+Thibaud Frere" under **CC BY 4.0** — inherited from the [research-article-template][template] scaffold
+the article is built on; the README itself attributes "the source code and technical implementation" to
+that template, so this CC BY 4.0 grant most plausibly covers the article's prose/template boilerplate,
+not the Apache-2.0 training code in the companion repo. This split is stated here rather than resolved,
+since neither page says explicitly which license governs FineEnvs' own added article text.
+
+The Space card tags `openenv`, `harbor`, `grpo`, `trl`; the article chapters (`why-multi-harness.mdx`,
+`training.mdx`), fetched directly, confirm each is load-bearing rather than decorative. On **OpenEnv**
+(verbatim): "We built this on OpenEnv ..., around a capture proxy that sits between the harness and the
+model. Every call the agent makes passes through the proxy, which records the prompt and completion
+tokens as the model saw and produced them, with their log probabilities." On **Harbor** (verbatim): "the
+Harbor integration serves Harbor's containerized tasks as OpenEnv environments, so the harness and the
+sandbox become settings you choose per rollout." On the training recipe (verbatim): "Async GRPO
+[@shao2024deepseekmath] in TRL for 1,000 steps," run across the harnesses **OpenCode, Claude Code, Codex
+and Mini-SWE-Agent**, "each GRPO group of eight rollouts uses one of the four harnesses."
+
+The reported experiment trained [LFM2.5-2.6B][lfm-model] on 1,000 SmolDataEnvs tasks, once in OpenCode
+alone and once across the four harnesses, on "Two H100s per run on the Hugging Face cluster, and one
+E2B sandbox per rollout." The headline result (verbatim, `conclusions.mdx`): "LFM2.5-2.6B went from
+42.2% to 54.2% pass@1, with gains under all four harnesses," and the multi-harness model "used 31% fewer
+tool calls on held-out tasks that both it and the base model solved, with savings under every harness,"
+while the OpenCode-only run scored best only inside OpenCode (58% vs. 50% for multi-harness). The
+authors' own hedge (verbatim): "These are small experiments on one task family, with one seed per setup
+and unequal data and compute exposure. They support the gains over the base model, but do not establish
+a general ranking of harness mixes." A separate verbatim reproducibility caveat: "The reported LFM runs
+used Harbor for both policies and E2B sandboxes. The current tutorial uses Daytona and includes native
+OpenCode as a separate comparison, so it is not an exact replay of those historical runs."
+
+This is a different kind of harness-level intervention from RRSI, ROFT and AIDE² above: instead of
+evolving the harness's own code or a model's weights, it trains one model to work across several
+*unmodified* harnesses, using harness diversity itself — not a search or rewrite loop — as the training
+signal.
+
+**Rubric** (scored 2026-10-02, [article][fineenvs-space] + [repo][fineenvs-repo]): Shared: partial (the
+Space's documented review mode lets allow-listed reviewers — the `REVIEWERS` list — comment on and
+suggest edits to the article, one JSON thread file each, with only the owner able to accept or reject; a
+defined but gated multi-writer flow; the companion repo's `CONTRIBUTING.md` also documents a PR flow
+("open a PR adding a new numbered project folder"), which is rubric rule 6's cited contribution flow);
+Distributed: partial ("Two H100s per run on the Hugging Face cluster" plus a per-rollout E2B/Daytona
+sandbox, and `REPRODUCE.md` documents HF Jobs and Slurm instructions — multi-machine by design, though
+the published Space itself runs as one Docker container); Reproducible: partial (models and the training
+recipe are named and version-linked — LFM2.5-2.6B, Async GRPO in TRL — and a `REPRODUCE.md` exists, but
+the authors state the current tutorial "is not an exact replay" of the reported runs, training draws on
+async/stale weights, and each run used "one seed"); Adaptable: yes (harness, sandbox and trainer are each
+a per-rollout setting, per the Harbor-integration quote above, and the guide itself demonstrates swapping
+all three — E2B vs. Daytona sandboxes, OpenCode-only vs. four-harness training); Versionable: yes
+(training code is in a git repo, and the derived dataset is published and versioned on the Hub as
+[SmolDataEnvs-multiharness-sft][sft-dataset]); Traceable: yes (the capture proxy records "the prompt and
+completion tokens as the model saw and produced them, with their log probabilities," and a published
+`reward-group-audit.json` (linked in-text as `/data/reward-group-audit.json`, served by the running
+Space) is reported, verbatim, to have "found no formula mismatches and no bonus on wrong answers").
+
+## Agentic Meta-Reasoning: An Inference-Time Harness Controller (added 2026-10-02)
+
+[arXiv 2609.38147][meta-reasoning], "Thinking Before Thinking: Scaling Agentic Inference Through
+Meta-Reasoning" (Dahal, Bakhtin, Cohen, Chen, Wu, Fergus, Yih, Synnaeve, Salakhutdinov, Arora, Weston,
+Goyal; submitted 2026-09-29), is a **paper-only** entry: the abstract page lists no code repository, no
+project page, and no author affiliation (checked 2026-10-02 — the page's only metadata field beyond
+authors and abstract is `Subjects: Artificial Intelligence (cs.AI)`; no `Comments:` field is present).
+No affiliation is stated anywhere on the page, so none is given here.
+
+Per the abstract (verbatim): it introduces "agentic meta-reasoning, an inference-time harness that makes
+[control] choices an explicit and structured reasoning process. Workers carry out the task-level
+computation, while a controller consolidates what the run has established, explores next options,
+assesses what each option is worth under the remaining budget, and dispatches the chosen work with
+context drawn from persistent memory. Between decisions the controller carries only a compact account of
+the run rather than replaying its full history."
+
+Reported results (verbatim, self-reported — no independent reproduction found): "On ProgramBench, which
+tests long-horizon agentic capability through program reconstruction, meta-reasoning achieves 71.5% with
+GPT-5.5 against 58.0% for Codex; with Opus 4.8 it achieves 67.2% against 65.5% for Claude Code. On the
+other benchmarks, spanning abstract reasoning, multi-domain long-horizon reasoning, and proof generation,
+it gains between 3.6 and 4.2 points over direct control, averaged across three frontier models." The
+abstract hedges its own result: "its overhead can hurt at small budgets."
+
+This bears on two subjects in the arc: it is a harness (an inference-time control loop evaluated against
+"production coding agents and research harnesses," including Claude Code and Codex, as baselines), and
+its "compact account of the run" plus "context drawn from persistent memory" is a context-management
+design — a compaction/resumption strategy for long-running agent work. It does not join RRSI/ROFT's
+"evolve the loop" family: the controller is a runtime component the paper describes running *within* an
+agent session, not a search process that edits or retrains the harness itself.
+
+**Rubric** (scored 2026-10-02, [arXiv abstract][meta-reasoning]; paper only, no code found. Shared and
+Distributed are `n/a` because a single-session controller makes them meaningless (rubric rule 5);
+properties that would need a shipped artifact are `no data`): Shared: n/a (a single-run controller directing workers within one session, not a
+multi-agent shared store); Distributed: n/a (an inference-time technique over one model session; no
+deployed multi-machine service is described); Reproducible: no data (no code, model/version pins, or seeds
+are published); Adaptable: no data (no extension points are documented; paper only); Versionable: no data (no published artifact to version); Traceable: no data (the
+abstract's "artifact-graph analysis" of run reuse gestures at lineage, but nothing on the abstract page
+confirms it as an exposed, citable trace rather than an internal post-hoc analysis the authors ran for
+the paper).
+
 ## Cross-References
 
 - [harnessx-analysis.md][harnessx] — the same "paper claims ahead of public
@@ -169,6 +269,10 @@ or lineage mechanism is described for the retrospective explanations themselves)
 | `gh api repos/google-research/rrsi`, 2026-09-30 | License (Apache-2.0), stars (977), forks (80), created/pushed dates |
 | [arXiv 2609.24972 — RRSI paper][rrsi-paper] | Title, submission date (2026-09-21 per the repo's own update note) — accessed 2026-09-30 |
 | [arXiv 2609.35741 — ROFT abstract page][roft-paper] | Title, authors, submission date (2026-09-28), license (CC BY 4.0), method summary, reported solve-rate figures, confirmation that no code URL is given — accessed 2026-09-30 |
+| [FineEnvs multi-harness-rl Space][fineenvs-space] | Space metadata (`sdk: docker`, tags), README (companion-repo pointer, review-mode mechanism), `LICENSE` file (CC BY 4.0, copyright Thibaud Frere) — accessed 2026-10-02 |
+| `app/src/content/chapters/why-multi-harness.mdx`, `training.mdx`, `conclusions.mdx` (fetched raw from the Space) | Verbatim method description (OpenEnv capture proxy, Harbor integration, GRPO/TRL recipe), experiment setup, reported results and authors' own hedges — accessed 2026-10-02 |
+| [adithya-s-k/FineEnvs repo][fineenvs-repo] | Companion training code; `gh api` confirms license (Apache-2.0), 278 stars, 37 forks, created 2026-05-01, pushed 2026-10-02 — accessed 2026-10-02 |
+| [arXiv 2609.38147 abstract page][meta-reasoning] | Title, full author list (12), submission date (2026-09-29), full abstract verbatim, subject (cs.AI), confirmation of no code link/project page/affiliation field — accessed 2026-10-02 |
 
 [blog]: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 [paper]: https://arxiv.org/abs/2609.26457
@@ -178,3 +282,9 @@ or lineage mechanism is described for the retrospective explanations themselves)
 [rrsi-repo]: https://github.com/google-research/rrsi
 [rrsi-paper]: https://arxiv.org/abs/2609.24972
 [roft-paper]: https://arxiv.org/abs/2609.35741
+[fineenvs-space]: https://huggingface.co/spaces/FineEnvs/multi-harness-rl
+[fineenvs-repo]: https://github.com/adithya-s-k/FineEnvs
+[template]: https://huggingface.co/spaces/tfrere/research-article-template
+[lfm-model]: https://huggingface.co/LiquidAI/LFM2.5-2.6B
+[sft-dataset]: https://huggingface.co/datasets/FineEnvs/SmolDataEnvs-multiharness-sft
+[meta-reasoning]: https://arxiv.org/abs/2609.38147
