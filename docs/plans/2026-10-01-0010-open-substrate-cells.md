@@ -75,7 +75,7 @@ section.
 - **Lead backlog:** `/workspaces/temp/ai-agents-research-triage/rowB/ranked.tsv` (local). The leads kept
   below are the only ones that target an open cell. The rest of the P2 "context" leads (HEADROOM, Lynkr,
   pxpipe, context trimming) are about context *size*, which fills none of these cells.
-- **Owner leads (2026-10-02), for rows M1–M3.** Existence checked 2026-10-02; content not yet verified.
+- **Owner leads (2026-10-02), for rows M1–M4.** Existence checked 2026-10-02; content not yet verified.
   - First-party (Anthropic GitHub):
     - `github.com/anthropics/claude-code/tree/main/mods/agents-md` (contains `.claude-plugin`, `README.md`, `hooks`, `tests`);
     - `github.com/anthropics/claude-plugins-official/tree/main/plugins/code-modernization`.
@@ -86,6 +86,7 @@ section.
     - `www.explainx.ai/blog/claude-code-agents-md-support-2026`
     - `www.mindstudio.ai/blog/claude-code-mods-agents-md`
   - For row M3: `huggingface.co/spaces/AdithyaSK/multi-harness-rl` resolves to `FineEnvs/multi-harness-rl` (cite the canonical id). Per its own Space card: "The ultimate guide to multi-harness RL", "Train open models with RL inside real agent harnesses"; tags openenv, harbor, grpo, trl; created 2026-08-31.
+  - For row M4: arXiv 2609.38147, "Thinking Before Thinking: Scaling Agentic Inference Through Meta-Reasoning" (submitted 2026-09-29; Dahal, Bakhtin, Cohen, Chen, Wu, Fergus, Yih, Synnaeve). Per its abstract, an inference-time harness whose controller decides what to build on, restart or stop, and "carries only a compact account of the run" with context "from persistent memory". Its benchmark numbers are the authors' own (self-reported). Not in the corpus.
   - Existing coverage: the CLAUDE.md/AGENTS.md dual-format read in `CC-memory-system-analysis.md` (its context rubric row); `code-modernization` as a name only in `CC-official-plugins-landscape.md` (Dev workflow list); mods: none.
 
 ## Remaining work
@@ -101,6 +102,7 @@ section.
 | M1 | Claude Code mods and native AGENTS.md support (owner leads above). AGENTS.md is a cross-agent instruction file, so it bears on context·Shared. The `mods/agents-md` directory suggests the support ships as a mod: verify, don't assume | agent (Phase A) | First-party description of how CC reads AGENTS.md and what a mod is; extends `CC-memory-system-analysis.md` and a plugins-ecosystem doc (new page only if mods warrant one); the context row re-checked; mods rubric-scored |
 | M2 | `code-modernization` official plugin (owner lead above) | agent (Phase A) | The `CC-official-plugins-landscape.md` entry extended from its own README and LICENSE, rubric-scored |
 | M3 | Multi-harness RL guide (FineEnvs Space, owner lead above). Harness subject, next to the self-improving-harness entries (RRSI and the RSI analysis); it fills no open cell, so it runs after L1–L3 | agent (Phase A) | Placed in the harness docs from the Space's own content and any linked code (license from the LICENSE file), rubric-scored, or dropped with the reason |
+| M4 | Agentic meta-reasoning paper (arXiv 2609.38147, owner lead above). Harness and long-running subjects; its compact run state also bears on context. Fills no open cell, so it runs after L1–L3 | agent (Phase A) | Placed in the harness docs (next to RRSI) from the paper itself; code checked if linked (license from the LICENSE file); rubric-scored, with benchmarks marked self-reported |
 | C0 | Rubric calibration for static artifacts (decision above) | owner (Phase B) | Decision recorded in the rubric's "How to score" section |
 | T1 | Commit the census as `.github/scripts/lib/doc_census.py` with tests and a make target, so the Y matrix can be regenerated | owner (Phase B), default yes | Module plus RED-first tests merged; on current main it finds all scored rows (61 at plan time) and reproduces every cell of the reference architecture's evidence matrix |
 | R1 | Re-score the 12 context and skills rows under C0 (split mixed rows) | agent (Phase C, after C0) | Rows updated with evidence |
