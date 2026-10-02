@@ -2,7 +2,7 @@
 title: Agent Substrate Rubric — Shared, Versionable, Traceable Memory, Context and Harness
 purpose: One scoring rubric (6 properties × 8 subjects) for judging agent memory, ontology, graphs/RAG, context, skills, plugins, harness and long-running offloaded tasks.
 created: 2026-09-29
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: reference
 ---
@@ -60,8 +60,15 @@ The eight subjects of the arc. The `_topics` hubs index existing coverage for ea
 
 3. Score the tool as shipped (default or documented configuration), not as it could be extended.
 4. Date the scoring (`scored YYYY-MM-DD`). Re-score on a major version change.
-5. Where the subject makes a property meaningless (for example "distributed" for a local CLI skill), write
+5. Where the subject makes a property meaningless (for example "distributed" for a research paper), write
    `n/a` with a one-line reason.
+6. **Static artifacts in git** (skill repos, instruction files such as CLAUDE.md or AGENTS.md, plugin and
+   ontology files) are scored on how they are governed and synced, not on runtime concurrency. A git repo
+   with a documented contribution flow is `partial` on Shared (git merge is the defined concurrency) and
+   `partial` on Distributed (git remotes sync across machines, comparable to the third-party-drive example
+   above). `yes` needs more than git, such as a native multi-writer store. When one row mixes a git-hosted
+   artifact with a runtime store (for example CLAUDE.md with machine-local auto memory), split it into two
+   rows. Decided 2026-10-02 ([plan 0010, C0][plan-0010]); the owner may override.
 
 ## Sources
 
@@ -69,9 +76,11 @@ The eight subjects of the arc. The `_topics` hubs index existing coverage for ea
 |---|---|
 | [Plan 0009][plan] | Arc scope, subjects and remaining-work rows that use this rubric |
 | [#509][plan-issue] | Tracking issue for the arc |
+| [Plan 0010][plan-0010] | Decision C0: scoring static artifacts in git (rule 6) |
 | [`docs/_topics/`](../_topics/README.md) | Existing subject hubs |
 | [agent-substrate-reference-architecture.md](agent-substrate-reference-architecture.md) | Synthesis of every scored row into one reference architecture (evidence matrix, composed rubric row, open cells) |
 | [CONTRIBUTING.md](../../CONTRIBUTING.md) | First-party citation rules the evidence column follows |
 
 [plan]: ../plans/2026-09-27-0009-focus-shared-memory-context.md
 [plan-issue]: https://github.com/qte77/ai-agents-research/issues/509
+[plan-0010]: ../plans/2026-10-01-0010-open-substrate-cells.md#decision-c0-calibrate-the-rubric-for-static-artifacts-owner-gate
