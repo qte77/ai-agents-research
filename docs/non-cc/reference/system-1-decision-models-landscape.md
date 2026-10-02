@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, and independent alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric.
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -46,6 +46,8 @@ measured here (no TypeSafe API access)."** Every Laya number in its own comparis
 from `Router().predict(...)` actually running; every Jev number is someone else's publication, not
 a controlled A/B.
 
+`subject: harness`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | no [README][laya] (self-hosted, single-process serving; no documented multi-writer store) | no data [README][laya] (a self-hosted HTTP server; no cluster/sync deployment documented) | yes [README][laya] (three Hugging Face checkpoints, unpinned by default (`LAYA_REVISION` and per-checkpoint SHA-256 maps allow pinning), deterministic forward pass, no LLM generation step) | yes [README][laya] (a `Router` swaps checkpoints per request; a JS/TS SDK and third-party projects like `stuntd` train new heads on the frozen encoder) | yes [HF org][laya-hf] (checkpoints are commit-addressable Hugging Face repos; `laya` and `laya-multilingual` carry no Hub tags as of 2026-09-30, and the README's quickstart loads `main` by default — `LAYA_REVISION` and per-checkpoint SHA-256 maps allow pinning) | partial [README][laya] (returns calibrated probabilities and usage counts per call, but its own Jev comparisons are explicitly unmeasured, not an audit trail) |
@@ -68,6 +70,8 @@ Kev-27B lands within a point of Jev (0.851 vs 0.857) and Kev-4B/9B within four p
 weights ship with SHA-256 checksums and a frozen eval-suite dataset on Hugging Face
 (`jaredpalmer/kev-suites`); a `kev-finetune` coding-agent skill runs an end-to-end fine-tune on
 Modal from your own labelled examples (about $1/run on an H100 for Kev-4B).
+
+`subject: harness`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -94,6 +98,8 @@ credited Stanford and NVIDIA for this work; neither institution appears in the R
 citation block (seven individual co-author names, no affiliations given), or the license file — that
 credit is unconfirmed and is dropped here rather than repeated.
 
+`subject: harness`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | no [README][clm] (self-hosted encoder + head server; no multi-writer store) | no data [README][clm] (two local server processes — a pooling encoder and the CLM API — not a documented multi-node deployment) | partial [README][clm] (the 8B checkpoint and code are Apache-2.0 and versioned on Hugging Face, but the 60M/30M/1M training corpora are described, not released, so the training pipeline itself can't be rebuilt) | yes [README][clm] (a documented fine-tuning path onto agentic coding verifiers reaches a new reported SOTA) | yes [HF][clm-hf] (weights are a versioned Hugging Face repo) | partial [README][clm] (usage/latency are reported per call; benchmark numbers are the project's own, not independently replicated) |
@@ -114,6 +120,8 @@ GLiNER2.5-Decide leading with a 60.1% average across 17 datasets, ahead of JevK5
 (56.4%), GLiFormer (49.0%), and Laya (46.6%) — with Fastino's **own** caveat quoted verbatim:
 **"This is an internal benchmark, not JevBench, and JevK5 is an open reproduction rather than
 TypeSafe's Jev."** No training-data statement is given in either source.
+
+`subject: harness`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -138,6 +146,8 @@ decision engine reports 4–10 ms p95 latency at 77.3–84.0% department accurac
 replay reference at 231 ms p95 and 85.3% accuracy. The README states its own limits plainly:
 these are "workload-specific measurements, not a universal speed or quality guarantee," and "the
 default hash embedder is a test double... not calibrated for production decisions."
+
+`subject: harness`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -178,6 +188,8 @@ its own home elsewhere in this corpus; this section is a pointer, not a duplicat
   any mismatched or incomplete recording. [jev-analysis.md](../infrastructure/jev-analysis.md)
   already cross-references this page for probably (see its Cross-References section) — this page
   is probably's home in the corpus, not a placeholder.
+
+  `subject: harness`
 
   | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
   |---|---|---|---|---|---|
@@ -220,6 +232,8 @@ code, and logic." With a threshold frozen in advance, the accept/escalate cascad
 more accurate than GPT-6 on 1,610 held-out pairs at 41% of its fee," and in a pre-specified live
 test on two new workloads "matches GPT-6's accuracy exactly." Confidence-based routing weakens on
 style-adversarial pairs and reference-free prose.
+
+`subject: harness`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

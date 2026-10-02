@@ -171,6 +171,8 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 
 **Rubric** (scored 2026-09-30): a research paper, not a shipped tool — most properties are n/a.
 
+`subject: context`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | n/a (a finding about instruction files, not a shared store) [paper][claude-md-growth] | n/a (no deployed system described) [paper][claude-md-growth] | no data (no code or dataset link on the abstract page) [paper][claude-md-growth] | n/a (an empirical finding, not a configurable tool) [paper][claude-md-growth] | n/a (arXiv preprint; no runtime state to version) [paper][claude-md-growth] | n/a (single-paper finding; not a system with an audit trail) [paper][claude-md-growth] |
@@ -216,6 +218,8 @@ Cross-ref: [CC-reverse-engineering-landscape.md][cc-reverse-eng] — Agiflow sec
 [coleam00/context-engineering-intro][cei] (MIT — verified from the repo's LICENSE file, Copyright 2025 Cole Medin; 13,893 stars, last pushed 2026-03-16, both verified 2026-09-30) takes a construction-first angle on the same problem the fixes above treat reactively: instead of restructuring an existing CLAUDE.md, it is a starter template built around a **PRP (Product Requirements Prompt)** workflow — write a feature request in `INITIAL.md`, run a `/generate-prp` command (in `.claude/commands/`) to produce a research-backed implementation blueprint under `PRPs/`, then `/execute-prp` to implement it against built-in validation gates, drawing on an `examples/` folder of code patterns and a project-wide `CLAUDE.md` of global rules. Its own framing — "Context Engineering is 10x better than prompt engineering and 100x better than vibe coding" — is a marketing claim the repo ships no benchmark for. The `INITIAL.md` -> PRP -> execute-with-validation sequence independently converges on the same "write the plan down as a durable artifact before executing it" shape as this doc's own [ACE-FCA three-phase workflow](#context-engineering-workflow-ace-fca) below (Research -> Planning -> Implementation).
 
 **Rubric** (scored 2026-09-30):
+
+`subject: context`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -266,6 +270,8 @@ Auto memory files are plain markdown — edit or delete at any time. Run `/memor
 The MEMORY.md-index / topic-file split above is a variant of a broader pattern — keep labels resident, gate the content behind a fetch — that appears outside CC too. [TrackPoint's "Semantic Reasoning"][trackpoint-sr] (Jay Shah, updated 2026-09-29) applies the same shape to a voice-AI agent: it "is told which topics it holds knowledge about... but not the details," and fetches a topic's content only once the conversation reaches it, so that "information nobody asked for never enters the conversation." The vendor frames this as the inverse of RAG — RAG fetches *more* to answer a question; this holds content *back* by default until asked — rather than a variant of it. Their own comparison is a small internal test: 18 role-play conversations (9 standard vs. 9 with the pattern applied, three restricted facts per persona) in which 0-of-9 conversations leaked a restricted detail with the pattern applied vs. 3-of-9 without, and near-identical direct-question accuracy (25/27 vs 24/27). This is self-reported, unreplicated, and unaccompanied by a published architecture, paper, or repository — nothing independently verifies that the mechanism, rather than some other difference between the two conditions, produced the reported gap. Their [live demo][trackpoint-demo] offers voice role-plays but discloses no internals, so it corroborates nothing about the claims either.
 
 **Rubric** (scored 2026-09-30): a vendor blog post describing a product feature, not a released tool.
+
+`subject: context`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -436,11 +442,15 @@ CC's instruction and memory system, scored against the [agent substrate rubric][
 
 **CLAUDE.md** (managed, user, project and local scopes), re-scored 2026-10-02:
 
+`subject: context`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | partial [cc-mem][cc-mem] (the scopes table documents project-scope CLAUDE.md as "Shared with: Team members via source control", which rule 6 accepts as the cited flow for a vendor instruction-file mechanism; sharing uses git's merge semantics, not a CC-native concurrent store) | partial [cc-mem][cc-mem] (project-scope files sync across machines through the team's git remote; a managed-policy CLAUDE.md is push-deployed to machines rather than synced live) | no data [cc-mem][cc-mem] (human-authored content; nothing pins a model or pipeline) | yes [cc-mem][cc-mem] (`.claude/rules/` path-scoping, the managed/user/project/local scope hierarchy, `claudeMdExcludes`, and the Project instructions modes change behavior without a rewrite) | partial [cc-mem][cc-mem] (project-scope files live in git, which the rubric counts; user, local and managed scopes do not, and CC adds no snapshot or rollback of its own) | partial [cc-mem][cc-mem] (the `InstructionsLoaded` hook logs which CLAUDE.md and rules files loaded and why, and `/doctor prompt-audit` (CC v2.1.283+) reports stale or conflicting instructions, but nothing links an instruction to a given output) |
 
 **Auto memory** (`~/.claude/projects/<project>/memory/`), scored 2026-10-02:
+
+`subject: memory`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -451,6 +461,8 @@ Together these **partly** fill the plan-0009 context gaps: context·Shared and c
 ### AGENTS.md as a Cross-Agent Instruction File (New Row)
 
 Scored separately from CLAUDE.md, because AGENTS.md is a convention several coding agents read, not a CC-specific store. Scored 2026-10-02 from the current [code.claude.com/docs/en/memory][cc-mem] page and re-scored the same day under rule 6 (plan 0010, R1).
+
+`subject: context`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

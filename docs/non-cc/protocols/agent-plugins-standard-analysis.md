@@ -3,7 +3,7 @@ title: Agent Plugins — Cross-Vendor Portable Plugin Standard
 purpose: Assess the Agent Plugins open standard for packaging Agent Skills and MCP servers across AI agent clients
 source: https://agent-plugins.org
 created: 2026-09-24
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -79,6 +79,8 @@ This is TSC-adjacent evidence, not a TSC-member client shipping support: none of
 Microsoft, OpenAI, or Vercel is the author here. It's a third-party vendor building a memory plugin
 *to* the open standard, across four clients from one source tree — exactly the "one vendor, one
 format" problem this standard targets, now with one worked example.
+
+`subject: plugins`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

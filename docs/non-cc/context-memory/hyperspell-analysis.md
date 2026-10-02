@@ -47,6 +47,8 @@ those cells.
 Scored 2026-10-02, evidence from [hyperspell.com][hyperspell-home] unless noted. Subject: **Memory** (see
 placement note above).
 
+`subject: memory`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | no data [hyperspell.com][hyperspell-home] (describes a per-company knowledge model multiple agents can query, but no concurrency/locking semantics are documented — the rubric's own trap: "a hosted SaaS alone is not 'shared' if each user gets an isolated silo," and nothing here rules that reading) | no data [hyperspell.com][hyperspell-home] (a hosted SaaS with no self-hosting path or deployment architecture disclosed) | no data [hyperspell.com][hyperspell-home] (describes continuous, query-reinforced synthesis — an unpinned, evolving process — with no pinned model/version or rebuild path stated) | no data [hyperspell.com][hyperspell-home] (no schema/plugin/extension mechanism documented beyond "connect your tools") | no data [hyperspell.com][hyperspell-home] (no snapshot/diff/rollback of the context graph documented) | no data [hyperspell.com][hyperspell-home] (no citation or audit-trail mechanism documented for what the agent reads) |

@@ -41,6 +41,8 @@ not as the supported production distribution."
 
 Scored 2026-10-02, evidence from the docs/README unless noted.
 
+`subject: memory`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | no data [docs][redis-iris-docs] (per-agent session/long-term stores; no multi-agent concurrent-read/write semantics documented) | no data [docs][redis-iris-docs] (deployable on Redis Cloud or self-managed, but no cross-machine sync/clustering is documented specifically for Agent Memory) | no data [docs][redis-iris-docs] (long-term memory extraction is described but no pinned model/version is named) | partial [docs][redis-iris-docs] (two-tier model with configurable TTL and a documented direct-write API for bulk import, but no plugin/schema-extension point beyond that) | no data [docs][redis-iris-docs] (no snapshot/diff/rollback of memory state documented) | no data [docs][redis-iris-docs] (no citation or audit-trail mechanism documented for what a recalled memory is based on) |
@@ -60,6 +62,8 @@ MariaDB, AWS Aurora) and the Redis store.
 ### Rubric (Context Retriever — Context subject)
 
 Scored 2026-10-02, evidence from [Redis Iris docs][redis-iris-docs] unless noted.
+
+`subject: context`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

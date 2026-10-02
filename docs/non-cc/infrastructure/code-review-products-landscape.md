@@ -3,7 +3,7 @@ title: AI PR-Review Products — Tool Landscape
 purpose: Catalog of standalone SaaS PR-review products (multi-platform GitHub/GitLab review bots), distinct from Claude Code-integrated review tooling.
 category: landscape
 created: 2026-06-27
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: research
 ---
@@ -50,6 +50,8 @@ self-hosted CLI, Docker image, or GitHub Action, or in a delegation mode where a
 coding agent (Claude Code, Codex, Cursor, Kimi Code, OpenCode, QCA Forward) performs the
 review; a session viewer records and replays past runs. Scored 2026-09-30 against the
 [agent substrate rubric][rubric]:
+
+`subject: harness`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

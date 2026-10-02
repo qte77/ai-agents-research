@@ -2,7 +2,7 @@
 title: Jev (TypeSafe AI) — System-One Decision Model
 purpose: What Jev is (question types, pricing, limits) and the qte77/feelings measured pilot using it as a pre-CI code-review gate.
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: trial
 ---
@@ -87,6 +87,8 @@ own outcome — fall back to the slower path, never treat a block as a verdict.
 
 Scored against the [agent substrate rubric][rubric]. Jev is a stateless per-request
 classifier API, not a persistent store, so **Shared** and **Versionable** are marked `n/a`.
+
+`subject: harness`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

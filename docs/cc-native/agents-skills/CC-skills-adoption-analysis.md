@@ -371,6 +371,8 @@ Anthropic's Help Center article ["Provision and manage skills for your organizat
 
 Scored 2026-10-02 (plan 0010, R1) on the [agent substrate rubric](../../sdlc-lcm/agent-substrate-rubric.md):
 
+`subject: skills`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | yes [article][org-skills] (members share skills peer-to-peer, to groups or organization-wide, and owners review submissions: a defined multi-writer flow) | yes [article][org-skills] (a hosted organization library whose skills also load in Claude Code on members' machines) | partial [article][org-skills] (users stay on the currently approved version until a new one is approved; no user-side pinning or rebuild is documented) | yes [article][org-skills] (group scoping through plugins, a publishing policy, per-user toggles and `syncClaudeAiSkills` change behavior without a rewrite) | partial [article][org-skills] (each update is reviewed with "what changed since the currently published version", but no rollback is documented) | partial [article][org-skills] (the audit log and Compliance API record share events, not skill contents) |

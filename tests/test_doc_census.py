@@ -61,6 +61,25 @@ class ParseTests(unittest.TestCase):
         self.assertEqual((rows[0].heading, rows[0].scores["Distributed"], rows[0].subject),
                          ("triagebot", "yes", "long-running"))
 
+    def test_two_tables_in_one_section_take_their_nearest_tag(self):
+        doc = ("## Scored\n\n`subject: context`\n\n" + HEADER + "| yes | yes | yes | yes | yes | yes |\n"
+               "\n`subject: memory`\n\n" + HEADER + "| no | no | no | no | no | no |\n")
+        rows = dc.parse_rows("docs/f.md", doc)
+        self.assertEqual([r.subject for r in rows], ["context", "memory"])
+
+    def test_tag_after_the_table_is_used_when_none_precedes_it(self):
+        doc = "## Tool G\n\n" + HEADER + "| yes | yes | yes | yes | yes | yes |\n\n`scored 2026-09-30 · subject: plugins`\n"
+        r = dc.parse_rows("docs/g.md", doc)[0]
+        self.assertEqual((r.subject, r.scored), ("plugins", "2026-09-30"))
+
+    def test_consecutive_bullets_do_not_bleed_into_each_other(self):
+        bullet = ("- [{n}](https://x) text. **Rubric** (subject: memory, scored 2026-09-30): Shared: {v} (a); "
+                  "Distributed: {v} (b); Reproducible: {v} (c); Adaptable: {v} (d); Versionable: {v} (e); "
+                  "Traceable: {v} (f).\n")
+        doc = "## Memory\n\n" + bullet.format(n="One", v="yes") + bullet.format(n="Two", v="no")
+        rows = dc.parse_rows("docs/h.md", doc)
+        self.assertEqual([r.scores["Distributed"] for r in rows], ["yes", "no"])
+
     def test_heading_is_recorded(self):
         self.assertEqual(dc.parse_rows("docs/a.md", TABLE_DOC)[0].heading, "Tool A")
 

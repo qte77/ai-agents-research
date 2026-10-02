@@ -3,7 +3,7 @@ title: Goose Analysis
 source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
-updated: 2026-10-01
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -121,6 +121,8 @@ plugins wrap (Goose's own "extensions = MCP servers" design, above, is the clear
 **AGENTS.md** is the adjacent open format for the instructions layer plugins and skills sit beside.
 Agent Router and agentgateway are infrastructure for routing agent traffic to models/tools, not for
 packaging agent capabilities themselves.
+
+`subject: plugins`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

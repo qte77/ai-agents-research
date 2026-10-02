@@ -4,7 +4,7 @@ purpose: Persistent cross-session memory tools that integrate with Claude Code â
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 ---
 
@@ -63,6 +63,8 @@ Claude Code and Codex CLI (and "anything else that can run a shell command") sha
 ### Rubric
 
 Scored 2026-09-30, evidence from the [README][agent-memory] unless noted.
+
+`subject: memory`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

@@ -3,7 +3,7 @@ title: Mitosis Cortex Analysis
 source: https://mitosislabs.ai/developers
 purpose: Analysis of Cortex, Mitosis Labs' hosted knowledge-graph memory system for AI agents, scored against the plan-0009 agent-substrate rubric.
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -58,6 +58,8 @@ comparable to vendor self-reports scored against those datasets.
 ## Rubric
 
 Scored 2026-09-30, evidence from the developer docs unless noted.
+
+`subject: memory`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

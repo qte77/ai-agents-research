@@ -112,7 +112,7 @@ make it directly relevant to this arc's harness gaps rather than just a sibling 
   critic receive are plain files" (README, verbatim) — a per-edit lineage record, not just aggregate
   benchmark numbers.
 
-**Rubric** (scored 2026-09-30, [README][rrsi-repo]): Shared: n/a (a single research harness's own
+**Rubric** (subject: harness, scored 2026-09-30, [README][rrsi-repo]): Shared: n/a (a single research harness's own
 evolution loop, not a multi-agent shared store); Distributed: no data (the search runs against
 benchmark harnesses; no multi-machine sync is documented); Reproducible: partial (the policy, proposer,
 analyst and critic models are pinned by name in `rrsi.json`, and accepted edits are commits, but the
@@ -140,7 +140,7 @@ there is no artifact analogous to RRSI's per-edit commit history. No corpus entr
 ModularRSI or Skill Self-Play (both named in this arc's backlog research); nothing is claimed about them
 here.
 
-**Rubric** (scored 2026-09-30, [arXiv abstract][roft-paper]): Shared: n/a (a single-agent training
+**Rubric** (subject: harness, scored 2026-09-30, [arXiv abstract][roft-paper]): Shared: n/a (a single-agent training
 method); Distributed: n/a (a training procedure, not a deployed system); Reproducible: no (no code,
 weights, or seed information found — the paper reports results, not a rebuild path); Adaptable: no data
 (the abstract does not describe extension points beyond the method itself); Versionable: no (fine-tuned
@@ -188,7 +188,7 @@ evolving the harness's own code or a model's weights, it trains one model to wor
 *unmodified* harnesses, using harness diversity itself — not a search or rewrite loop — as the training
 signal.
 
-**Rubric** (scored 2026-10-02, [article][fineenvs-space] + [repo][fineenvs-repo]): Shared: partial (the
+**Rubric** (subject: harness, scored 2026-10-02, [article][fineenvs-space] + [repo][fineenvs-repo]): Shared: partial (the
 Space's documented review mode lets allow-listed reviewers — the `REVIEWERS` list — comment on and
 suggest edits to the article, one JSON thread file each, with only the owner able to accept or reject; a
 defined but gated multi-writer flow; the companion repo's `CONTRIBUTING.md` also documents a PR flow
@@ -237,7 +237,7 @@ design — a compaction/resumption strategy for long-running agent work. It does
 "evolve the loop" family: the controller is a runtime component the paper describes running *within* an
 agent session, not a search process that edits or retrains the harness itself.
 
-**Rubric** (scored 2026-10-02, [arXiv abstract][meta-reasoning]; paper only, no code found. Shared and
+**Rubric** (subject: harness, scored 2026-10-02, [arXiv abstract][meta-reasoning]; paper only, no code found. Shared and
 Distributed are `n/a` because a single-session controller makes them meaningless (rubric rule 5);
 properties that would need a shipped artifact are `no data`): Shared: n/a (a single-run controller directing workers within one session, not a
 multi-agent shared store); Distributed: n/a (an inference-time technique over one model session; no

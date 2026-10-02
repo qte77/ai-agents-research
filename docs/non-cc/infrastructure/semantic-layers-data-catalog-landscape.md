@@ -3,7 +3,7 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -67,6 +67,8 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 
 **[Ontology Atlas][ontology-atlas]** (MIT, 139★, pushed 2026-09-28) keeps a project's ontology as an `atlas/` folder of Markdown (`project`/`domain`/`capability`/`element`/`document` frontmatter types) that a desktop app, CLI, and MCP server read directly from disk — "local-first... no Atlas backend, account, or telemetry." Multiple coding agents (Claude Code, Codex, Cursor, Antigravity) connect via one MCP button each, and every proposed change to the ontology arrives as a Markdown diff a human reviews in Git before it lands, with unknowns surfaced as unknown rather than papered over. An `.ontology-atlas/llm-audit.jsonl` log records every model/provider transfer.
 
+`subject: ontology`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | partial [README][ontology-atlas] ("MCP — one button per agent," no documented write-concurrency model) | partial [README][ontology-atlas] ("local-first... no Atlas backend"; cross-machine sync is via git push/pull only) | no data [README][ontology-atlas] (ontology content is human/agent-curated, not a deterministic extraction pipeline) | yes [README][ontology-atlas] ("Extensions are files a git diff shows you"; one-button MCP support across 4 agent clients) | yes [README][ontology-atlas] ("Your disk is the database; Git is the history"; History screen shows exact diffs) | yes [README][ontology-atlas] (wiki pages cite sources; code-evidence paths on every node; llm-audit.jsonl) |
@@ -74,6 +76,8 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 `scored 2026-09-30`
 
 **[open-ontologies][open-ontologies]** (MIT, 544★, pushed 2026-09-29) is a Rust MCP server (Oxigraph 0.5 for RDF/SPARQL 1.1) built around one loop — `plan` a change to a production OWL/SHACL ontology, `apply` it, watch for `drift`, `certify` what the engine derived, `rollback` if wrong — and it backs every claim with a Lean-4-checked certificate: "two tab-separated files… An auditor, months later… [runs] the same command, on the archived files. That auditor does not need an instance of this software." The free engine is explicitly single-user: "The engine does not give you a place for the evidence" — a shared, multi-reviewer store is upsold to the proprietary hosted `tesseractsemantics.com`, not shipped in the OSS binary. `rmcp` serves MCP over streamable HTTP, so one running server can, in principle, take connections from more than one client over a network.
+
+`subject: ontology`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -83,6 +87,8 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 
 **[EvoOntology][evoontology]** (ruc-datalab; MIT, 539★, pushed 2026-09-29; [arXiv:2609.15779][evoontology-paper]) is a self-evolving Ontology Layer for data agents, installed as a Claude Code or Codex plugin. A builder constructs a typed semantic graph (Terms/Mappings/Constraints/**Evidence** node families) grounded against the workload; an evolution agent proposes bounded updates and will "publish a Candidate only when paired evaluation shows a reproducible improvement over its Parent," else retains the Parent — a named `ontology_v0` → `ontology_vN+1` lifecycle. The repo layout labels its own store "Deterministic core." Reported gains (BIRD, DDR-Bench, InsightBench, four-backbone subset) are the authors' own benchmark, so treat as self-reported pending independent replication.
 
+`subject: ontology`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | no data [README][evoontology] (single Claude Code/Codex session per ontology; no multi-agent concurrent-write semantics documented) | no [README][evoontology] (SQLite-backed local store; "read-only task replay" is local, not a network/cluster deployment) | partial [README][evoontology] (gated Candidate-vs-Parent evaluation on fixed data/agent/decoding settings, but the builder/evolution backbone LLM is demonstrably swappable — four backbones shown — not pinned, despite the repo layout labelling `evoontology/` "Deterministic core") | yes [README][evoontology] ("Continuous Self-Evolution" adapts Content/Schema/Tool layers without a rewrite; Claude Code + Codex plugins) | yes [README][evoontology] (named `ontology_v0`/`ontology_vN+1` versions; reject retains the prior Parent) | yes [README][evoontology] (dedicated Evidence node family; proposals verified against raw sources before commit) |
@@ -90,6 +96,8 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 `scored 2026-09-30`
 
 **[AWS context-ontology-accelerator][coa]** (Apache-2.0, 885★, pushed 2026-09-29) is a full semantic-context platform following a **Scan → Model → Serve** pipeline: ingest sources, induce an OWL 2 ontology (Bedrock Claude for concept extraction, Bedrock Cohere Embed v4 for grounding-ontology similarity, HermiT/ELK + OntoQA + OoPS! for three-tier validation), then serve it to agents via a Virtual Knowledge Graph (Ontop) over SPARQL and an MCP server. Access is namespace-isolated with RBAC: per-namespace roles (owner, maintainer, data-steward, data-analyst) plus cross-namespace `platform-admin`/`platform-viewer` roles — the clearest **Shared** evidence in this ontology set. It deploys as AWS CDK-provisioned microservices (control-plane, data-layer, ontology-engine, metric-service, vkg, mcp-server, context-manager), not a single local process. The repo is published as a **read-only mirror**: "We are not accepting pull requests at this time."
+
+`subject: ontology`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -100,6 +108,8 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 **[Utopia][utopia]** (DeepLethe; Apache-2.0, 7,972★, `gh api` 2026-09-30) is a single-binary (Rust + Postgres) "enterprise world model" that builds a **bitemporal knowledge graph** bottom-up from ingested documents rather than a hand-authored top-down ontology — its own README asks readers not to call it "an open-source take on Palantir," framing itself instead as "a different route to enterprise intelligence, built bottom up from knowledge governance to trustworthy decisions and simulation." A new knowledge base starts from one of five bundled vocabulary packs (schema.org, W3C Org, PROV-O, FOAF, IOF Core); a phrase is promoted to a relation only once it recurs across at least two documents, and every fact carries two clocks — `valid_from`/`valid_to` for when it held in the world, `recorded_at`/`invalidated_at` for when the system learned it — because corrections never overwrite, they supersede: "the change of mind is information" (verbatim from the project's own [`docs/decisions/README.md`][utopia-decisions] conventions). That `docs/decisions/` folder records real failures behind the design: decision [0012][utopia-0012] found 102 of 130 checkable facts written backwards under a naive domain/range check (schema.org's `employee(organization→person)` inverted to "Elon Musk employee Microsoft"), verdict "an empty predicate is honest silence; a reversed edge is a confident error." An MCP server exposes each knowledge base's read tools (facts-as-of-a-date, graph paths, "what changed last week") to Claude Desktop, Cursor and other clients with fine-grained permissions; anything an agent wants to record goes to a human review queue first.
 
 Design lens — Lindenberg's *The Change of Mind Is Information* treats Utopia's bitemporal ledger as evidence that a four-week-old open-source project can already do "the knowledge half" of an ontology platform priced in the seven figures, provided it takes correction as seriously as its own decision records show — a reversed or superseded fact is never silently fixed in place, it is superseded and kept (Lindenberg, *The Change of Mind Is Information*, LinkedIn, 2026-09-05; `linkedin.com/pulse/change-mind-information-andré-lindenberg-uvcue`). That reframes **Versionable**/**Traceable** as properties a bottom-up ontology earns through its correction history, not just its schema.
+
+`subject: ontology`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
