@@ -55,7 +55,7 @@ def rank(token: str) -> int:
 
 
 def _token(cell: str) -> str:
-    m = _TOKEN.match(cell.strip())
+    m = _TOKEN.match(cell.strip().lstrip("*_"))  # a score may be written in bold or italics
     return m.group(1).lower() if m else "no data"
 
 

@@ -2,7 +2,7 @@
 title: Agent Substrate Reference Architecture — a Shared, Versioned, Traceable Memory and Context Layer
 purpose: Synthesis of the plan 0009 rubric rows into one store-first reference architecture for shared, versioned, traceable agent memory and context, with each cell linked to its scored row and the layers mapped to qte77 estate repos.
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: reference
 ---
@@ -15,15 +15,16 @@ The [plan 0009][plan] arc scored 61 tools, papers and systems across 21 corpus d
 [agent substrate rubric][rubric] (a census of every dated rubric row, taken 2026-09-30). This page
 reads those rows as one architecture: which properties the field already delivers, which component
 delivers each, and what no scored row delivers yet. Every cell below links the doc section that holds
-the original score; nothing is re-scored here. Subjects were assigned per row in the census; the three
-docs that declare a subject (HarnessRouter, OpenShell, OrcaReplay) keep theirs.
+the original score; nothing is re-scored here. [Plan 0010][plan-0010] (2026-10-02) extended the census to
+75 rows in 28 docs. Every row now declares its subject with a `subject:` tag (rubric rule 4), and
+`make census` regenerates the matrix below from the corpus.
 
 Reading rule for the tables: a cell is `open` when no row of that subject reaches `partial`; otherwise it
 shows the best score found and one row at that score. The linked section lists the rest.
 
 ## The argument: store first, model as client
 
-**Reproducible is the discriminating property.** Nine of the 61 rows score `yes` on it, in three shapes:
+**Reproducible is the discriminating property.** Nine of the 75 rows score `yes` on it, in three shapes:
 
 1. **No LLM in the write path.** [agent-memory][memtool] ("files are the truth; every index is a
    rebuildable cache"), [AgentiCow][fw4] (copy-on-write reads), [Beads][fw4] (Dolt is commit-addressed),
@@ -61,9 +62,9 @@ Best score per subject and property, one exemplar row each, derived from the cen
 | Memory | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] |
 | Ontology | yes — [AWS context-ontology-accelerator][ont] | yes — [AWS context-ontology-accelerator][ont] | yes — [open-ontologies][ont] | yes — [AWS context-ontology-accelerator][ont] | yes — [open-ontologies][ont] | yes — [AWS context-ontology-accelerator][ont] |
 | Graphs/RAG/hybrid | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | partial — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] |
-| Context | partial — [CC CLAUDE.md + auto memory][ccmem] | open (best: no) | open (best: no data) | yes — [CC CLAUDE.md + auto memory][ccmem] | yes — [context-engineering-intro][cei] | partial — [CC CLAUDE.md + auto memory][ccmem] |
-| Skills | open (best: no data) | open (best: no) (rows score no or n/a) | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] |
-| Plugins | yes — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] |
+| Context | partial — [Redis Iris Context Retriever][redis-ctx]; [CLAUDE.md][ccmem] under rule 6 | partial — [Redis Iris Context Retriever][redis-ctx]; [CLAUDE.md][ccmem] under rule 6 | open (best: no data) | yes — [CLAUDE.md][ccmem] | yes — [context-engineering-intro][cei] | partial — [CLAUDE.md][ccmem] |
+| Skills | yes — [org skill provisioning][orgskills] | yes — [org skill provisioning][orgskills] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] |
+| Plugins | yes — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | yes — [Code Modernization][codemod] |
 | Harness | yes — [OpenShell][openshell] | yes — [OpenShell][openshell] | yes — [Laya][laya] (decision-model rows; harness loops reach partial) | yes — [OpenShell][openshell] | yes — [Paperclip][fw1] | yes — [OpenShell][openshell] |
 | Long-running | partial — [OpenResearch][openresearch] | yes — [OpenResearch][openresearch] | yes — [OrcaReplay][orca] (local replay; Distributed is no) | yes — [OrcaReplay][orca] | yes — [OrcaReplay][orca] | yes — [OrcaReplay][orca] |
 
@@ -126,27 +127,35 @@ distributed.
 
 ## What stays open
 
-The census confirms these gaps; each is stated with the best score the rows reach.
+`make census` confirms these gaps; each is stated with the best score the rows reach.
 
-- **Open (no row reaches `partial`).** Context·Distributed — CC auto memory is "machine-local", the
-  other three context rows are `n/a` or `no data` ([ccmem][ccmem]). Context·Reproducible — all four rows
-  `no data`. Skills·Shared — the six repo rows are `no data`, the two paper rows `n/a` ([skills
-  landscape][skl-cole], [skill-evolution][skilllift], runtypelabs/skills in [frameworks §1][fw1]). Skills·Distributed — `no` or `n/a` throughout.
-- **Partial ceiling (no `yes` anywhere).** Graphs·Reproducible — seven rows `partial`, three `no`:
-  extraction or embedding runs an unpinned LLM (GraphRAG, LightRAG, Cognee, Omnigraph, Semantica,
-  WeKnora, BrainAPI), or no pinned rebuild is documented (HydraDB, SSTorytime; LlamaParse pins only
-  opt-in) ([§7][fw7p], [plan row G][plan-g]).
-  Plugins·Reproducible — pinning exists but is opt-in in [CC][ccplug] (`sha`/`sha256`) and undermined in
-  [OpenAI's system][oaiplug] (placeholder integrity hashes, daily server-side rescans). Plugins·Distributed
-  and Plugins·Traceable — `partial` at best. Context·Shared and Context·Traceable — `partial` via
-  [CC CLAUDE.md][ccmem] and [context-engineering-intro][cei]. Long-running·Shared — `partial` via
-  [OpenResearch][openresearch].
+- **Plan 0010 outcome for the four cells plan 0009 left open** (2026-10-02):
+  - *Context·Shared* and *Context·Distributed*: **filled by new evidence** at `partial`. [Redis Iris's
+    Context Retriever][redis-ctx] shares business context "across all agents" and syncs it from source
+    databases "within seconds". Rubric rule 6 also lifts [CLAUDE.md][ccmem] and AGENTS.md to `partial`
+    on both.
+  - *Skills·Shared* and *Skills·Distributed*: **filled by new evidence** at `yes`. [Organization-level
+    skill provisioning][orgskills] lets owners and members share skills across a Claude organization,
+    and those skills load in Claude Code.
+  - *Context·Reproducible*: **confirmed open**. All six context rows are `no data`: CLAUDE.md,
+    AGENTS.md, Redis Iris's Context Retriever, context-engineering-intro, the CLAUDE.md-growth paper and
+    TrackPoint. Of the
+    plan's leads for this cell, ReContext was dropped as a training-free inference method rather than a
+    context layer.
+
+  No cell was closed by calibration alone. Rule 6 additionally lifted CLAUDE.md, AGENTS.md and
+  runtypelabs/skills to `partial`.
+- **Partial ceiling (no `yes` anywhere).** Graphs·Reproducible: extraction or embedding runs an unpinned
+  LLM (GraphRAG, LightRAG, Cognee, Omnigraph, Semantica, WeKnora, BrainAPI), or no pinned rebuild is
+  documented (HydraDB, SSTorytime; LlamaParse pins only opt-in) ([§7][fw7p], [plan row G][plan-g]).
+  Plugins·Reproducible: pinning is opt-in in [CC][ccplug] (`sha`/`sha256`) and undermined in [OpenAI's
+  system][oaiplug] (placeholder integrity hashes, daily server-side rescans); [Code
+  Modernization][codemod]'s proof step is deterministic but its agent steps run on an unpinned model.
+  Plugins·Distributed, Context·Traceable and Long-running·Shared: `partial` at best.
 - **Qualified `yes`.** Long-running·Reproducible holds only on one box ([OrcaReplay][orca]);
   Harness·Reproducible only for decision models, not loops (matrix caveat above).
 - **Narrower claim still open.** Whether the [ACE-FCA phase artifacts][acefca] are git-tracked or
-  diffable has no first-party source ([ccmem][ccmem]).
-- **Unscored.** CC cloud sessions and scheduled tasks have no rubric row in the corpus (plan
-  [coverage gaps][plan-gaps] 7–8 name them; no census row comes from the sessions or ci-remote docs).
+  diffable has no first-party source (re-checked 2026-10-02, [ccmem][ccmem]).
 
 ## Estate mapping
 
@@ -231,6 +240,10 @@ corpus's own: shared, distributed context and skills.
 [laya]: ../non-cc/reference/system-1-decision-models-landscape.md#laya-nandhakishorm
 [kev]: ../non-cc/reference/system-1-decision-models-landscape.md#kev-jaredpalmer
 [ccmem]: ../cc-native/context-memory/CC-memory-system-analysis.md#scored-on-the-agent-substrate-rubric
+[redis-ctx]: ../non-cc/context-memory/redis-iris-analysis.md#context-retriever
+[orgskills]: ../cc-native/agents-skills/CC-skills-adoption-analysis.md#organization-level-skill-provisioning-claude-team-and-enterprise
+[codemod]: ../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md#code-modernization
+[plan-0010]: ../plans/2026-10-01-0010-open-substrate-cells.md
 [cei]: ../cc-native/context-memory/CC-memory-system-analysis.md#practitioner-template-context-engineering-intro
 [acefca]: ../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
 [skilllift]: ../non-cc/frameworks/agent-skill-evolution-research-landscape.md#skilllift
