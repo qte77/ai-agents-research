@@ -98,6 +98,8 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [ripwire-analysis.md](context-memory/ripwire-analysis.md) | Ripwire (Red Hat Emerging Technologies; deterministic repo-context CLI — call graphs, blast-radius, code-quality) | Yes | Yes (Apache-2.0) |
 | [on-device-semantic-search-landscape.md](context-memory/on-device-semantic-search-landscape.md) | On-device/local-first semantic search landscape: embedder + embedded-vector-store stack survey | — | Mixed |
 | [mitosis-cortex-analysis.md](context-memory/mitosis-cortex-analysis.md) | Mitosis Labs Cortex (hosted per-team knowledge-graph memory; kNN + full-text + graph fusion, no LLM at query time) | Yes | No (hosted; engine closed, MIT client skills separate) |
+| [hyperspell-analysis.md](context-memory/hyperspell-analysis.md) | Hyperspell (hosted company-data memory platform; ingests Slack/email/drive/CRM into a per-company knowledge model) | Yes | No (hosted; MIT client SDKs only) |
+| [redis-iris-analysis.md](context-memory/redis-iris-analysis.md) | Redis Iris (AI context-engine suite: LangCache, Agent Memory, Context Retriever, Data Integration) | Yes | Partial (self-managed option; Agent Memory's OSS impl `redis/agent-memory-server` is Apache-2.0) |
 
 ## Infrastructure
 
