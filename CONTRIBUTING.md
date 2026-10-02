@@ -232,6 +232,7 @@ make autofix     # mechanical markdownlint --fix pass
 make test        # unit tests for src/ + .github/scripts/lib/ modules (stdlib unittest)
 make graph-page  # rebuild + restyle the knowledge graph into committed ui/graph.html (then commit to publish)
 make graph-data  # deterministic structural doc graph (docs, domains, link/hub/cites edges) into ui/doc-graph.json — no LLM
+make census      # rubric evidence matrix from every scored row's subject: tag (8 subjects × 6 properties) — no LLM
 make help        # list all recipes grouped by section
 ```
 

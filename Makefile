@@ -11,7 +11,7 @@ endif
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
 	check_links check_links_report check_docs check_status check_actions autofix lint test \
-	graph-data graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
+	graph-data census graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
 	changelog_new changelog_preview changelog_release \
 	help
 .DEFAULT_GOAL := help
@@ -290,6 +290,9 @@ test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/p
 
 graph-data: ## Build the deterministic structural doc graph into ui/doc-graph.json (no LLM, stdlib)
 	$(PYTHON) .github/scripts/build-doc-graph.py
+
+census: ## Print the rubric evidence matrix from every scored row in docs/ (needs subject: tags; stdlib)
+	$(PYTHON) .github/scripts/build-doc-census.py
 
 graph-build: ## Headless full rebuild (AST + semantic) — needs an LLM backend API key
 	$(GRAPHIFY) extract . --backend $(GRAPHIFY_BACKEND)
