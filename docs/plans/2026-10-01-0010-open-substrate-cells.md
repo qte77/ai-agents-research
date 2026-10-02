@@ -1,6 +1,6 @@
 ---
 title: Close or confirm the four open substrate cells
-status: draft
+status: approved
 issue: 576
 created: 2026-10-01
 updated: 2026-10-02
@@ -14,7 +14,7 @@ skills·Distributed**.
 
 ## Current status
 
-- **Shipped:** nothing yet. This plan is a `draft`: no research lane runs until the owner approves it.
+- **Shipped:** plan approved 2026-10-02 (owner: "proceed" on #577). C0 was decided by default the same day and is recorded as [rubric](../sdlc-lcm/agent-substrate-rubric.md#how-to-score) rule 6; the owner may override it.
 - **Why calibration comes first:** the four cells rest mostly on `no data` and `n/a`, not on a measured
   `no`. Context has only 4 scored rows, and skills·Shared is `no data` on six git-hosted skill repos. Part
   of the gap may be definitional (row C0), so research lanes run on the cells that calibration cannot
@@ -29,7 +29,7 @@ skills·Distributed**.
 - **The loop, per row:** branch `<type>/<slug>` → write → `make check_docs check_status` → lychee (offline,
   plus online for new URLs) → PR → `/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>` →
   strike the row in the same PR, and close issues by hand (the gated squash drops `Closes #N`).
-- **Owner gates:** C0 (rubric calibration, default below) and T1 (census module, default yes).
+- **Owner gates:** T1 (census module, default yes). C0 is decided (default applied, overridable).
 - **Access:** nothing new. The existing `gh` credential and polyfetch cover every row.
 - **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`; polyfetch for
   blocked pages: `uv run --directory /workspaces/qte77/polyfetch-scrape polyfetch fetch --show-body <url>`.
@@ -103,8 +103,8 @@ section.
 | M2 | `code-modernization` official plugin (owner lead above) | agent (Phase A) | The `CC-official-plugins-landscape.md` entry extended from its own README and LICENSE, rubric-scored |
 | M3 | Multi-harness RL guide (FineEnvs Space, owner lead above). Harness subject, next to the self-improving-harness entries (RRSI and the RSI analysis); it fills no open cell, so it runs after L1–L3 | agent (Phase A) | Placed in the harness docs from the Space's own content and any linked code (license from the LICENSE file), rubric-scored, or dropped with the reason |
 | M4 | Agentic meta-reasoning paper (arXiv 2609.38147, owner lead above). Harness and long-running subjects; its compact run state also bears on context. Fills no open cell, so it runs after L1–L3 | agent (Phase A) | Placed in the harness docs (next to RRSI) from the paper itself; code checked if linked (license from the LICENSE file); rubric-scored, with benchmarks marked self-reported |
-| C0 | Rubric calibration for static artifacts (decision above) | owner (Phase B) | Decision recorded in the rubric's "How to score" section |
+| ~~C0~~ | ~~Rubric calibration for static artifacts (decision above)~~ | owner (Phase B) | Done 2026-10-02: the default is recorded as rubric rule 6 ("How to score"), and rule 5's example changed from a local CLI skill to a research paper so the two rules agree; the owner may override |
 | T1 | Commit the census as `.github/scripts/lib/doc_census.py` with tests and a make target, so the Y matrix can be regenerated | owner (Phase B), default yes | Module plus RED-first tests merged; on current main it finds all scored rows (61 at plan time) and reproduces every cell of the reference architecture's evidence matrix |
 | R1 | Re-score the 12 context and skills rows under C0 (split mixed rows) | agent (Phase C, after C0) | Rows updated with evidence |
-| Y2 | Update the reference architecture: matrix, "What stays open", and the arc done-when state for each cell | agent (Phase C, last) | Each of the four cells is marked filled, confirmed open, or re-scored |
+| Y2 | Update the reference architecture: matrix, "What stays open", and the arc done-when state for each cell. A cell closed only by re-scoring under rule 6 is labelled **"closed by calibration"**, not "filled by new evidence" | agent (Phase C, last) | Each of the four cells is marked filled, confirmed open, or closed by calibration |
 | Z | Close-out: changelog, release, close #576 | agent | Release published, #576 closed |
