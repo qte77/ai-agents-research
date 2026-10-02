@@ -59,7 +59,10 @@ The eight subjects of the arc. The `_topics` hubs index existing coverage for ea
    | yes [src] | partial [src] | no data | yes [src] | no [src] | partial [src] |
 
 3. Score the tool as shipped (default or documented configuration), not as it could be extended.
-4. Date the scoring (`scored YYYY-MM-DD`). Re-score on a major version change.
+4. Date the scoring and name its subject next to the table or inside the inline `**Rubric**` parentheses:
+   `scored YYYY-MM-DD · subject: <memory|ontology|graphs-rag|context|skills|plugins|harness|long-running>`.
+   `make census` builds the evidence matrix from these tags; an untagged row is listed but left out of the
+   matrix. Re-score on a major version change.
 5. Where the subject makes a property meaningless (for example "distributed" for a research paper), write
    `n/a` with a one-line reason.
 6. **Static artifacts in git** (skill repos, instruction files such as CLAUDE.md or AGENTS.md, plugin and
