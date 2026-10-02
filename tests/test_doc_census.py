@@ -80,6 +80,11 @@ class ParseTests(unittest.TestCase):
         rows = dc.parse_rows("docs/h.md", doc)
         self.assertEqual([r.scores["Distributed"] for r in rows], ["yes", "no"])
 
+    def test_bold_or_italic_score_is_read(self):
+        doc = "## Tool H\n\n`subject: context`\n\n" + HEADER + "| **partial** [d][d] (x) | *yes* (y) | no | no | no | no |\n"
+        r = dc.parse_rows("docs/h2.md", doc)[0]
+        self.assertEqual((r.scores["Shared"], r.scores["Distributed"]), ("partial", "yes"))
+
     def test_heading_is_recorded(self):
         self.assertEqual(dc.parse_rows("docs/a.md", TABLE_DOC)[0].heading, "Tool A")
 
