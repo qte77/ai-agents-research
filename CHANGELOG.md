@@ -11,6 +11,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.14.0] - 2026-10-02
+
+### Added
+
+- `docs/cc-native/ci-remote/CC-cloud-sessions-analysis.md`, `CC-web-scheduled-tasks-analysis.md`: dated agent-substrate-rubric rows, scored 2026-10-02 from current Anthropic docs (plan 0010, rows U1/U2).
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: a confirmed-open answer on whether ACE-FCA's `research.md`/`plan.md`/`implement.md` phase artifacts are git-tracked (row A1), and a new rubric row scoring `AGENTS.md` itself as a cross-agent instruction file (row M1).
+- `docs/cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md`: new doc — Claude Code mods (function hooks): the `$` API, governance, and the built-in `AGENTS.md`/`diff` mods, rubric-scored (row M1).
+- `docs/cc-native/plugins-ecosystem/CC-official-plugins-landscape.md`: a full `code-modernization` plugin entry (from its own README/LICENSE/plugin.json), rubric-scored (row M2).
+- `docs/_topics/plugins.md`: hub row for the new mods doc.
+
+- `docs/non-cc/context-memory/redis-iris-analysis.md`: new doc. Redis Iris's Context Retriever is the first corpus row to score `partial` on context·Shared and context·Distributed (both previously fully open); Agent Memory scored separately under the memory subject.
+- `docs/non-cc/context-memory/hyperspell-analysis.md`: new doc. Hyperspell checked as a context lead (plan 0010, row L1); classified as memory instead — context cells unaffected.
+- `docs/cc-community/CC-community-skills-landscape.md`: stevesolun/ctx added and rubric-scored (plan 0010, row L3); does not fill skills·Shared or skills·Distributed.
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`: ACM (arXiv:2608.11166) added and rubric-scored (plan 0010, row L3); does not fill skills·Shared or skills·Distributed.
+
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: two new harness-subject entries (plan 0010 rows M3–M4). FineEnvs multi-harness RL (HF Space `FineEnvs/multi-harness-rl` + Apache-2.0 companion repo `adithya-s-k/FineEnvs`): trains one small model across unmodified OpenCode/Claude Code/Codex/Mini-SWE-Agent harnesses via an OpenEnv capture proxy, Harbor-served sandboxed tasks, and Async GRPO in TRL; rubric-scored. Agentic meta-reasoning (arXiv 2609.38147, "Thinking Before Thinking"): an inference-time controller harness over worker agents with a compact persistent-memory run state; paper only, no code found, scored accordingly.
+- `docs/_topics/harness.md`, `docs/non-cc/README.md`: extended the existing `weco-aide-recursive-self-improvement-analysis.md` row descriptions for the two new entries above.
+
+- `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`: a section and rubric row on organization-level skill provisioning (Claude Team and Enterprise), from Anthropic's Help Center article. Shared and Distributed are `yes`: the first corpus row to reach `yes` on those skills cells.
+
+- `.github/scripts/lib/doc_census.py`, `.github/scripts/build-doc-census.py`, `make census`: a tested, stdlib-only census of every agent-substrate rubric row in `docs/`. It reads both formats (six-column tables, including indented ones and ones with a leading `Tool` column, and inline `**Rubric**` paragraphs) and prints the 8 × 6 evidence matrix. Open cells read "open (best: no data)" or "open (best: no)" (plan 0010, T1).
+
+### Changed
+
+- `docs/sdlc-lcm/agent-substrate-rubric.md`: new scoring rule 6 (plan 0010, decision C0). Static artifacts in git (skill repos, CLAUDE.md/AGENTS.md, plugin and ontology files) are scored on how they are governed and synced: `partial` on Shared and Distributed when the repo has a documented contribution flow. Rows that mix a git-hosted artifact with a runtime store are split. Rule 5's example is now a research paper, so the two rules agree. Owner may override.
+- `docs/plans/2026-10-01-0010-open-substrate-cells.md`: plan 0010 approved (#576).
+
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: corrected the `AGENTS.md` bullet in Key Behaviors — CC now reads `AGENTS.md` directly by default (v2.1.277+) as a built-in mod, superseding the older import/symlink-only description.
+
+- `docs/_topics/context.md`, `docs/_topics/memory.md`, `docs/_topics/skills.md`, `docs/non-cc/README.md`: new rows for the above.
+
+- `docs/sdlc-lcm/agent-substrate-rubric.md` rule 6: for a vendor's instruction-file mechanism (CLAUDE.md, AGENTS.md), the vendor's documented team sharing through source control counts as the cited flow (plan 0010, R1).
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: the mixed CLAUDE.md + auto memory row is split into two rows, and the AGENTS.md row is re-scored under rule 6.
+- Skills and context rows re-scored under rule 6: runtypelabs/skills is `partial` (documented PR flow); coleam00/skills, the excalidraw skill, Cloudflare's security-audit skill and context-engineering-intro are `no data` (no documented contribution flow, full repo tree checked).
+
+- `docs/sdlc-lcm/agent-substrate-rubric.md` rule 4: scored rows name their subject with a `subject:` tag next to the date; `make census` builds the matrix from these tags and lists untagged rows separately.
+
+- Every scored rubric row in `docs/` (75 rows in 25 docs) now carries a `subject:` tag, so `make census` regenerates the reference architecture's evidence matrix from the corpus (plan 0010, T1 part 2).
+- `.github/scripts/lib/doc_census.py`: a table takes its nearest `subject:` tag, so two tables under one heading can have different subjects. An inline row ends where the next list item starts, and the first score per property wins.
+
+- `docs/sdlc-lcm/agent-substrate-reference-architecture.md`: the evidence matrix and "What stays open" now reflect plan 0010 (75 rows, 28 docs). context·Shared and context·Distributed are `partial` (Redis Iris's Context Retriever; CLAUDE.md under rule 6). skills·Shared and skills·Distributed are `yes` (organization-level skill provisioning). plugins·Traceable is `yes` (Code Modernization). context·Reproducible is confirmed open. `make census` reproduces all 48 cells.
+
+### Fixed
+
+- `docs/cc-native/plugins-ecosystem/CC-official-plugins-landscape.md`: Code Modernization's Reproducible score goes `yes` → `partial`. The proof step is deterministic, but the analysis and rewrite run as agents with no pinned model (the rubric's "pinned code but unpinned model" case).
+
+- `.github/scripts/lib/doc_census.py`: a score written in bold or italics (`**partial**`) is now read correctly instead of falling back to `no data`.
+
 ## [0.13.1] - 2026-10-01
 
 ### Fixed
