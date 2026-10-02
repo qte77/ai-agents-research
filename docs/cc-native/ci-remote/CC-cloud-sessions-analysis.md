@@ -3,8 +3,8 @@ title: CC Cloud Sessions (Claude Code on the Web) Analysis
 source: https://code.claude.com/docs/en/claude-code-on-the-web
 purpose: Analysis of Claude Code cloud execution for parallel baseline collection, remote task offloading, and CI-like autonomous runs.
 created: 2026-03-07
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-02
+validated_links: 2026-10-02
 status: research-preview
 ---
 
@@ -126,6 +126,16 @@ Revisit when:
 2. MCP server forwarding becomes available
 3. Baseline collection needs more parallelism than a local machine can provide
 
+## Scored on the Agent Substrate Rubric
+
+Claude Code on the Web, scored 2026-10-02 against the [agent substrate rubric][rubric] from the current [Claude Code on the Web][cc-cloud] and [Self-Hosted Environments][cc-self-hosted] docs, re-fetched this date (not from this doc's own prose, which predates both). This fills a long-running coverage gap plan 0009 named: no rubric row existed for cloud sessions.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| partial [cc-cloud][cc-cloud] (a session can be set to Team or Public visibility so other people open it, leave inline diff comments that reach Claude, and review it — but "recipients see the latest state when they open the link, but their view doesn't update in real time," and a self-hosted runner "serves one owner at a time," so there is no concurrent multi-writer session) | yes [cc-self-hosted][cc-self-hosted] (a self-hosted environment runs sessions on a fleet of runners across hosts the org operates, with an optional autoscaling orchestrator that starts and retires runners as sessions queue; Anthropic-hosted sessions likewise each get an isolated VM, with several running in parallel) | partial [cc-self-hosted][cc-self-hosted] (a self-hosted org "build[s] and maintain[s] the runner image" sessions run on — a pinned, reproducible build the org controls — but the default Anthropic-managed image's own version isn't exposed to the user, only cached for about 7 days) | yes [cc-cloud][cc-cloud] (network-access level, environment variables, and the setup script are all swappable per environment with no session rewrite; self-hosted adds lifecycle hooks, on-demand runners, and per-session credential wrapper scripts) | partial [cc-cloud][cc-cloud] (a session's code changes push to a `claude/`-prefixed branch and are reviewed as a diff against git — versioned — but the environment's own configuration, such as env vars and the setup script, is UI state, not a git-tracked file) | partial [cc-cloud][cc-cloud] (the diff view computes per-file diffs "from raw git blob content," and Auto-fix "explains what was done in the session" for each PR event — but the one audit trail is the session transcript itself, not a structured log citing which instruction produced which change) |
+
+No stale prose was found elsewhere in this doc against the current docs (GitHub-optional cloud sessions, `--cloud`/`--remote` aliasing, network access levels, self-hosted beta status, and the security/isolation claims all still match).
+
 ## See Also
 
 For canonical CLI flag definitions (`--cloud` (formerly `--remote`), `--teleport`, `--permission-mode`), see [CC-cli-reference.md](../configuration/CC-cli-reference.md).
@@ -144,9 +154,11 @@ ephemeral vs stateful, checkpoint/restore), see
 - [CC Remote Control docs][cc-rc]
 - [CC Hooks docs][cc-hooks]
 - [CC Settings docs][cc-settings]
+- [Agent Substrate Rubric][rubric]
 
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-self-hosted]: https://code.claude.com/docs/en/self-hosted-environments
 [cc-rc]: https://code.claude.com/docs/en/remote-control
 [cc-hooks]: https://code.claude.com/docs/en/hooks
 [cc-settings]: https://code.claude.com/docs/en/settings
+[rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
