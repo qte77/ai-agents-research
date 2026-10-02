@@ -474,11 +474,15 @@ names before drawing), a visual-pattern library (fan-out, convergence, tree, tim
 and a mandatory render-view-fix loop (`uv run python render_excalidraw.py`) that reads the rendered PNG
 back before declaring the diagram done.
 
+`subject: skills`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | no data [README][coleam00-skills] (rule 6: a git-hosted static artifact with no documented contribution flow; full repo tree checked 2026-10-02, no CONTRIBUTING file or PR template) | no data [README][coleam00-skills] (rule 6: a git-hosted static artifact with no documented contribution flow; full repo tree checked 2026-10-02, no CONTRIBUTING file or PR template) | n/a [README][coleam00-skills] (skills are static Markdown procedures, not a generated/extracted artifact — "reproducible rebuild" doesn't apply) | yes [README][coleam00-skills] ("Each skill is a plain markdown file you can read in two minutes, disagree with, and edit") | yes [README][coleam00-skills] (plugin installs are git-versioned via the marketplace repo; `git clone` + copy is a documented install path) | partial [README][coleam00-skills] (`piv-review-pr` posts a severity-ranked review to GitHub; no audit trail for skill *invocations* themselves) |
 
 `scored 2026-09-30`
+
+`subject: skills`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -502,6 +506,8 @@ checks a finding is never the agent that found it." A `coverage-ledger.json` tra
 (not just what was found), and multiple runs against the same repo are additive: "the skill uses prior
 ledgers and findings to target gaps, revalidate changed source, and carry forward current-source
 evidence."
+
+`subject: skills`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -528,6 +534,8 @@ from — not a publishing registry agents install from directly (compare [skills
 catalogued in [CC-skills-adoption-analysis.md][cc-skills-adoption] as the distribution-layer registry).
 Nothing in the README documents org-level or team provisioning, a shared/central write path, or
 cross-machine sync — it is a single-operator local CLI reading a static shipped or user-supplied graph.
+
+`subject: skills`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

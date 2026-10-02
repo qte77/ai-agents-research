@@ -3,7 +3,7 @@ title: OpenResearch Analysis
 source: https://github.com/alphaXiv/OpenResearch
 purpose: Evaluate OpenResearch as a local-first, git-native workspace that turns coding agents into autonomous research/experiment agents.
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -77,6 +77,8 @@ prompts/paths/tokens/emails); `orx telemetry off` disables it, and source/dev bu
 ## Rubric
 
 Scored 2026-09-30 against the [agent substrate rubric][rubric].
+
+`subject: long-running`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

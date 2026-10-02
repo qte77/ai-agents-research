@@ -3,7 +3,7 @@ title: CC Plugin Packaging Research
 source: https://code.claude.com/docs/en/agent-sdk/plugins, https://code.claude.com/docs/en/plugins
 purpose: Evaluate packaging project skills, agents, and rules as a CC Plugin — including migration from repo-local configuration to a plugin-based integration.
 created: 2026-03-07
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: research
 ---
@@ -291,6 +291,8 @@ which can silently move.
 
 **Rubric** (`scored 2026-09-30`, CC's plugin/marketplace packaging system as
 shipped):
+
+`subject: plugins`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

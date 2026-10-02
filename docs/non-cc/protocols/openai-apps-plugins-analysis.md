@@ -3,7 +3,7 @@ title: OpenAI Apps, Plugins and the GPT Store — Manifest, Marketplace and Revi
 purpose: Compare OpenAI's current unified ChatGPT + Codex plugin system against CC plugin packaging and the Agent Plugins standard, and answer the plugins-topic Reproducible question for a second first-party vendor
 source: https://developers.openai.com/plugins
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -195,6 +195,8 @@ the reverse — CC does not ingest a Codex-format `.codex-plugin/plugin.json` pa
 
 `scored 2026-09-30`, OpenAI's current unified ChatGPT + Codex plugin system as shipped (per
 [agent-substrate-rubric.md][rubric]):
+
+`subject: plugins`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

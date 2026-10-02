@@ -5,7 +5,7 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 ---
 
@@ -438,6 +438,8 @@ comments/edits are local browser state for the current review session, not a per
 cross-session audit trail — closing the tab without Send discards unsent Markdown/localhost
 feedback (HTML direct edits persist to disk regardless); single-reviewer design, not a
 multi-reviewer/concurrent-comment tool.
+
+`subject: harness`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|

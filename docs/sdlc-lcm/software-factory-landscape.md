@@ -2,7 +2,7 @@
 title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-02
 validated_links: 2026-09-30
 status: assess
 ---
@@ -170,6 +170,8 @@ Scored 2026-09-30, first-party sources only, tool as shipped (rubric method:
 [agent-substrate-rubric.md](agent-substrate-rubric.md)). Only artefacts with independently verifiable
 code are scored — the `ai-that-works` episodes are cited above as sources, not scored here, for lack of
 a verifiable shipped artefact; Flue has one (see above) but has not yet been rubric-scored here.
+
+`subject: long-running`
 
 | Tool | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|---|

@@ -32,6 +32,8 @@ effectively across models and model families," and that smaller models with evol
 "outperform substantially larger models without them" — all self-reported, no independent replication
 found.
 
+`subject: skills`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | n/a [paper][wikiskill] (research method, not a shipped multi-user system) | n/a [paper][wikiskill] (no deployment artifact to run across machines) | no data [paper][wikiskill] (no code repository linked from the abstract page, so rebuildability can't be checked either way) | yes [paper][wikiskill] (the wiki is explicitly designed to accumulate and be built on by later skill updates) | no data [paper][wikiskill] (no stated mechanism for snapshotting or rolling back the wiki's state) | partial [paper][wikiskill] (the wiki records *why* a skill changed — provenance for the update, not a citation trail for a given output) |
@@ -56,6 +58,8 @@ self-reported, single-benchmark.
 This is a **tool-set curation** method — it produces MCP APIs, not `SKILL.md` procedures — so it is as
 relevant to the Plugins subject as to Skills; see
 [docs/_topics/plugins.md](../../_topics/plugins.md).
+
+`subject: skills`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
@@ -84,6 +88,8 @@ winning "all six model × benchmark combinations," +8.8–24.2pp over the one-sh
 40–70% less token cost than SkillOpt/CoEvoSkills baselines — self-reported by the repo's own
 `scripts/plot_readme_figures.py`, not independently replicated.
 
+`subject: skills`
+
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
 | no data [README][skilllift] (single evaluation pipeline per run; no multi-agent shared-rubric-store semantics documented) | no [README][skilllift] (Docker containers run locally per benchmark task; no cluster/remote deployment claim) | yes [README][skilllift] (env-driven model endpoints in `.env`, algorithm-knob YAML profiles selected by `--param-profile`, pinned Python 3.11+/Docker requirements, and figures regenerated from checked-in `RESULTS` data, not screenshots) | yes [README][skilllift] (bounded-edits diff engine constrains how skills change; new baselines register as CLI methods alongside `skilllift`) | yes [README][skilllift] (git-hosted with `CITATION.cff`; every skill revision is a validated unified diff, an inherently versioned edit) | yes [README][skilllift] ("fully auditable per-round records"; the rubric's own criteria are the traceable evaluation surface for why a candidate was accepted or rejected) |
@@ -102,6 +108,8 @@ and a reference solution per skill, retaining only tasks with `retained_tasks >=
 scored against) — the inverse direction from SkillLift/WikiSkill/AutoTailor, which evolve skills from
 task performance. Requires a Codex CLI login and Docker; `--resume` makes batch generation over
 `SkillHub/skills/` restartable.
+
+`subject: skills`
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
