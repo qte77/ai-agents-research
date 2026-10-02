@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-10-02
+validated_links: 2026-10-02
 ---
 
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
@@ -79,6 +79,28 @@ SSE backend. It is a UI layer rather than a harness, so it is not scored.
 - [DeepSeek Harness (dsh)](https://github.com/deepseek-ai/deepseek-harness) — full profile: [deepseek-harness-analysis.md](../coding-agents/deepseek-harness-analysis.md); cross-ref: [CC-harnessrouter-analysis.md](../../cc-community/CC-harnessrouter-analysis.md) already names DSH among the harnesses it unifies. Additions confirmed first-party since that profile (`gh api`/repo fetch, 2026-09-30): the underlying [Cordis](https://github.com/cordiverse/cordis) DI framework's "spatiotemporal composability" paper is now independently fetched rather than cited only from dsh's own README (arXiv:2608.25512, MIT, 8,923★); the repo's `.agents/notes/{proposed,implemented,rejected,archived}` directory tree is a real, structurally-confirmed agent-written decision-record practice — a rejected proposal is kept on file specifically while its rationale "prevents a tempting, meaningful mistake" (`.agents/notes/README.md`, verbatim), so a later agent that rediscovers the same idea meets the reason it died instead of relitigating it.
 
 Design lens — Lindenberg's *Everything Is a Plugin, Proven* reads this decision-record discipline, not the plugin architecture itself, as the transferable practice: once a team accepts its codebase "is developed primarily by coding agents," the consequence is that "agents follow enforced gates far more reliably than prose conventions," so review conventions get encoded as exit codes and rejected ideas carry their own falsifying evidence rather than being re-litigated (Lindenberg, *Everything Is a Plugin, Proven*, LinkedIn, 2026-08-15; `linkedin.com/pulse/everything-plugin-proven-andré-lindenberg-gamle`).
+
+- **ACM — Agentic Configuration Management** ([arXiv:2608.11166][acm-paper], Quessada-Vial, PwC; submitted
+  2026-08-11, v2 2026-09-02) is a framework-independent governance reference model, not a running tool: it
+  treats "agents, prompts, skills, composite subsystems, tools, language models, policies, assurance
+  evidence, [and] runtime observations" uniformly as typed, immutably-versioned "Agentic Configuration
+  Items" (ACIs) projected onto a canonical Configuration Graph, with a documented Python reference
+  implementation adapting LangGraph, CrewAI, and the OpenAI Agents SDK (27 governance scenarios, 9
+  impact-propagation cases, self-reported). Checked (plan 0010, row L3) as a possible skills·Shared/
+  skills·Distributed lead: **it does not fill either cell.** Per the paper itself, skills get "no distinct
+  metamodel specialization, governance rules, or operationalization guidance" versus any other ACI type,
+  and distributed deployment is explicitly out of scope — "ACM provides a common semantic representation...
+  Runtime execution and distributed deployment remain the responsibility of underlying frameworks." The
+  reference repo, [`audreyqvial/ACM`][acm-repo], has a LICENSE file containing only a copyright line and an
+  `SPDX-License-Identifier: Apache-2.0` header (no full license text), 0★/0 forks, and a single
+  `acm-project-scaffold` directory — a paper supplement, not a working multi-user system (`gh api`,
+  2026-10-02).
+
+  | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+  |---|---|---|---|---|---|
+  | no data [paper][acm-paper] (concurrent/multi-user access to the Configuration Graph is never addressed; "the Configuration Graph is treated as a static analytical structure rather than a live collaborative workspace") | n/a [paper][acm-paper] (explicitly delegated to "underlying frameworks" — the paper states no mechanism "for synchronizing governance state across machines or services") | partial [paper][acm-paper] (baselines "reference specific immutable revisions, ensuring that the complete configuration can be reconstructed deterministically" as a design principle, but the reference repo is an unreleased scaffold, not a runnable rebuild) | yes [paper][acm-paper] (framework-independent by design — adapters for LangGraph, CrewAI, and OpenAI Agents SDK are its own evaluation) | yes [paper][acm-paper] ("every modification shall produce a new governed revision while preserving previous versions"; immutable revisions and baselines are the paper's central mechanism) | partial [paper][acm-paper] (runtime provenance is a named design principle, but no concrete lineage mechanism is specified beyond the principle itself) |
+
+  `scored 2026-10-02`
 
 ## 2. LLM Orchestration & Routing
 
@@ -390,3 +412,13 @@ HydraDB (§4) and DeepSeek Harness (§1) additions — first-party checked 2026-
 [baml-feelings]: https://github.com/BoundaryML/feelings
 [baml-feelings-issue1]: https://github.com/BoundaryML/feelings/issues/1
 [baml-jev-blog]: https://boundaryml.com/blog/typesafe-ai-jev
+
+ACM entry (§1) — checked 2026-10-02 (plan 0010, row L3):
+
+| Source | Content |
+|---|---|
+| [arXiv:2608.11166][acm-paper] | Abstract, design principles, scope limits (distributed deployment delegated to frameworks, skills given no distinct treatment) |
+| [`audreyqvial/ACM`][acm-repo] | LICENSE file content (read directly), repo metadata (`gh api`, 2026-10-02) |
+
+[acm-paper]: https://arxiv.org/abs/2608.11166
+[acm-repo]: https://github.com/audreyqvial/ACM

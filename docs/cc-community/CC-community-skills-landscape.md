@@ -4,13 +4,13 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-10-02
+validated_links: 2026-10-02
 ---
 
 ## Summary
 
-Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set).
+Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/MCP/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell.
 
 ## gstack (Garry Tan)
 
@@ -509,6 +509,33 @@ evidence."
 
 `scored 2026-09-30`
 
+## stevesolun/ctx
+
+**Repo**: [stevesolun/ctx][ctx-repo] | **Stars**: 587 | **Forks**: 69 | **License**: MIT | pushed 2026-08-31,
+created 2026-04-08 (`gh api`, 2026-10-02)
+
+Checked as a lead for skills·Shared/skills·Distributed (plan 0010, row L3). Installs as `pip install
+claude-ctx`; the README's own framing is "Repo-aware recommendations for skills, agents, MCP servers, and
+model harnesses. Use your own inventory or the shipped 79,958-node graph with 68,494 skills, 467 agents,
+10,790 MCPs, and 207 harnesses." `ctx-init --graph` installs that pre-built runtime graph; the recommender
+then watches a repo's stack/workflow signals and proposes a capped bundle of skills/agents/MCP servers to
+load (and unloads ones that stop matching). The same repository also ships **CTX Fit**, a separate
+cost-optimization feature ("finds the cheapest AI coding setup that actually works on your repo" — this is
+the GitHub repo's own short description field, distinct from the recommender README quoted above).
+
+The bundled 79,958-node graph functions as a *consumer-side catalog* of skills/agents/MCPs the tool reads
+from — not a publishing registry agents install from directly (compare [skills.sh][skills-sh-xref], already
+catalogued in [CC-skills-adoption-analysis.md][cc-skills-adoption] as the distribution-layer registry).
+Nothing in the README documents org-level or team provisioning, a shared/central write path, or
+cross-machine sync — it is a single-operator local CLI reading a static shipped or user-supplied graph.
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| no data [README][ctx-repo] (a single-operator local recommender; no multi-user or multi-agent shared-store semantics documented) | no [README][ctx-repo] (a local pip-installed CLI reading a pre-built, shipped graph; no sync or remote service documented) | no data [README][ctx-repo] (the shipped graph is a static artifact, but no build/version pinning for how it or its recommendations are generated is documented) | yes [README][ctx-repo] ("Use your own inventory or the shipped... graph" — the data source is swappable without a rewrite) | yes [README][ctx-repo] (MIT, git-hosted, versioned pip package `claude-ctx`) | no data [README][ctx-repo] (no audit log of what was recommended, loaded, or unloaded is documented) |
+
+`scored 2026-10-02`. **This does not fill skills·Shared or skills·Distributed** — both stay at the scores
+above, consistent with every other row in this doc's census.
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -537,6 +564,7 @@ evidence."
 | [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (4,903 stars, no license file) |
 | [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (23,302 stars, MIT) |
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
+| [stevesolun/ctx][ctx-repo] | Skill/agent/MCP/harness recommender over a bundled graph (587 stars, MIT; `gh api` 2026-10-02) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -553,4 +581,7 @@ evidence."
 [excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
 [cf-sec-audit]: https://github.com/cloudflare/security-audit-skill
 [cf-blog]: https://blog.cloudflare.com/build-your-own-vulnerability-harness
+[ctx-repo]: https://github.com/stevesolun/ctx
+[skills-sh-xref]: https://skills.sh/
+[cc-skills-adoption]: ../cc-native/agents-skills/CC-skills-adoption-analysis.md#ecosystem-context
 [rubric]: ../sdlc-lcm/agent-substrate-rubric.md

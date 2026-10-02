@@ -2,8 +2,8 @@
 title: Agent Skill Evolution Research Landscape
 purpose: Survey research (papers and reference repos) on constructing, evolving, and transferring agent skills and tool sets — as distinct from the packaging/distribution landscapes in cc-community and cc-native.
 created: 2026-09-30
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-10-02
+validated_links: 2026-10-02
 status: assess
 ---
 
@@ -114,7 +114,7 @@ task performance. Requires a Codex CLI login and Docker; `--resume` makes batch 
 - [docs/_topics/skills.md](../../_topics/skills.md) — topic hub pointer
 - [docs/_topics/plugins.md](../../_topics/plugins.md) — AutoTailor's MCP tool-set angle
 - [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — distribution-side skill libraries (coleam00, cloudflare, superpowers, …)
-- [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — `runtypelabs/skills`, the adjacent distribution-side entry for this research batch
+- [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — `runtypelabs/skills`, the adjacent distribution-side entry for this research batch; also ACM (§1), a general agentic-configuration-governance paper that names "skills" as one of several configuration-item types it covers but gives it no distinct treatment (checked and found not to fill the skills·Shared/Distributed open cells, plan 0010 row L3)
 
 ## Sources
 

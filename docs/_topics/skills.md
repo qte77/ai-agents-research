@@ -14,5 +14,7 @@ corpus. Pointers only; see [the hub index](README.md).
 | [agent-frameworks-infrastructure-landscape.md § 1](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md) | `runtypelabs/skills` — official Runtype platform + tool-design skills | non-cc |
 | [agent-skill-evolution-research-landscape.md](../non-cc/frameworks/agent-skill-evolution-research-landscape.md) | Skill-construction/evolution research: WikiSkill, AutoTailor, SkillLift, NVlabs Skill2Env | non-cc |
 | [goose-analysis.md § AAIF](../non-cc/agents/goose-analysis.md#agentic-ai-foundation-aaif-governance-and-hosted-projects) | Agentic AI Foundation governance/hosted-projects; relevance to skill standards is indirect (no dedicated AAIF skills spec) | non-cc |
+| [CC-community-skills-landscape.md § stevesolun/ctx](../cc-community/CC-community-skills-landscape.md#stevesolunctx) | Local skill/agent/MCP/harness recommender over a bundled graph; checked for skills·Shared/Distributed, does not fill either cell | cc-community |
+| [agent-frameworks-infrastructure-landscape.md § 1](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#1-multi-agent-orchestration-frameworks) | ACM (Agentic Configuration Management, arXiv:2608.11166) — general agentic-config governance paper naming "skills" as one configuration-item type with no distinct treatment; checked for skills·Shared/Distributed, does not fill either cell | non-cc |
 
 Related hubs: [plugins.md](plugins.md), [harness.md](harness.md).

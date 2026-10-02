@@ -17,5 +17,6 @@ patterns across the corpus. Pointers only; see [the hub index](README.md).
 | [fastcontext-analysis.md](../non-cc/context-memory/fastcontext-analysis.md) | Dedicated repo-exploration subagent | non-cc |
 | [ripwire-analysis.md](../non-cc/context-memory/ripwire-analysis.md) | Deterministic repo-context CLI for coding agents | non-cc |
 | [opensrc-analysis.md](../non-cc/context-memory/opensrc-analysis.md) | Fetches dependency source code into agent context | non-cc |
+| [redis-iris-analysis.md § Context Retriever](../non-cc/context-memory/redis-iris-analysis.md#context-retriever) | Auto-generated MCP tools over business data, shared read access across agents; first row to score `partial` on context·Shared and context·Distributed (plan 0010) | non-cc |
 
 Related hubs: [memory.md](memory.md), [code-tooling.md](code-tooling.md), [rag.md](rag.md).
