@@ -33,6 +33,8 @@ _PROP = re.compile(r"\b(" + "|".join(PROPERTIES) + r"):\s*(no data|n/a|partial|y
 _SUBJECT = re.compile(r"subject:\s*([a-z][a-z/-]*)")
 _SCORED = re.compile(r"scored (\d{4}-\d{2}-\d{2})", re.IGNORECASE)
 _HEADING = re.compile(r"^#{1,6}\s+(.*?)\s*$")
+# A new block: list item, table row or heading. An inline row ends where one starts.
+_BLOCK = re.compile(r"^\s*(?:[-*+]\s|\d+[.)]\s|\||#)")
 
 
 @dataclass(frozen=True)
@@ -71,6 +73,15 @@ def _meta(text: str) -> tuple[str | None, str | None]:
     return (subject.group(1) if subject else None), (scored.group(1) if scored else None)
 
 
+def _nearest(lines: list[str], pattern: re.Pattern, above: range, below: range) -> str | None:
+    """First match scanning upward from the table, else downward after it (same section only)."""
+    for j in (*above, *below):
+        m = pattern.search(lines[j])
+        if m:
+            return m.group(1)
+    return None
+
+
 def _table_rows(path: str, lines: list[str]) -> list[Row]:
     rows = []
     for i, line in enumerate(lines):
@@ -79,9 +90,14 @@ def _table_rows(path: str, lines: list[str]) -> list[Row]:
             continue
         has_tool = header.group(1) is not None
         heading, start, end = _section(lines, i)
-        subject, scored = _meta("\n".join(lines[start:end]))
+        last = i + 2
+        while last < len(lines) and lines[last].lstrip().startswith("|"):
+            last += 1
+        above, below = range(i - 1, start - 1, -1), range(last, end)
+        subject = _nearest(lines, _SUBJECT, above, below)
+        scored = _nearest(lines, _SCORED, above, below)
         j = i + 2  # skip the |---| separator
-        while j < len(lines) and lines[j].lstrip().startswith("|"):
+        while j < last:
             cells = lines[j].strip().strip("|").split(" | ")
             name = cells.pop(0).strip() if has_tool else heading
             if len(cells) == len(PROPERTIES):
@@ -97,9 +113,12 @@ def _inline_rows(path: str, lines: list[str]) -> list[Row]:
         k = line.find("**Rubric**")
         if k < 0:
             continue
-        end = next((j for j in range(i, len(lines)) if not lines[j].strip()), len(lines))
+        end = next((j for j in range(i + 1, len(lines))
+                    if not lines[j].strip() or _BLOCK.match(lines[j])), len(lines))
         para = " ".join(lines[i:end])[k:]
-        scores = {p.capitalize(): t.lower() for p, t in _PROP.findall(para)}
+        scores: dict = {}
+        for prop, token in _PROP.findall(para):
+            scores.setdefault(prop.capitalize(), token.lower())  # first score per property wins
         if set(scores) != set(PROPERTIES):
             continue
         heading, _, _ = _section(lines, i)
