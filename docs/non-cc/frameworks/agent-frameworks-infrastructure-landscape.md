@@ -49,7 +49,7 @@ resolve" — both run "before publishing" per the README.
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| no data [README][runtype-skills-readme] (single-agent skill install; no multi-agent shared-store semantics documented) | no [README][runtype-skills-readme] (skills are local files per install; the `runtype` and `runtype-admin` skills reach the hosted platform, but that's the platform's own distribution, not the skill repo's) | partial [README][runtype-skills-readme] (`lint-skills.mjs` and `smoke-install-skills.mjs` are deterministic checks that gate publishing, but no pinned model/version governs the skills' own authored content) | yes [README][runtype-skills-readme] (documented `SKILL.md` authoring convention; "Create a directory under `skills/`" — anyone can add a skill following the same schema) | yes [README][runtype-skills-readme] (git-hosted; installed via `npx skills add`, versioned by the source repo) | no data [README][runtype-skills-readme] (no invocation-level audit trail; the lint/smoke tests audit the *package*, not what a skill does at runtime) |
+| partial [CONTRIBUTING][runtype-skills-contributing] (rule 6: a git-hosted skills repo whose CONTRIBUTING.md documents a pull-request flow, "Open a pull request with a clear description of what the skill does"; re-scored 2026-10-02) | partial [CONTRIBUTING][runtype-skills-contributing] (rule 6: the same documented flow; skills sync across machines through the git remote and the per-skill install) | partial [README][runtype-skills-readme] (`lint-skills.mjs` and `smoke-install-skills.mjs` are deterministic checks that gate publishing, but no pinned model/version governs the skills' own authored content) | yes [README][runtype-skills-readme] (documented `SKILL.md` authoring convention; "Create a directory under `skills/`" — anyone can add a skill following the same schema) | yes [README][runtype-skills-readme] (git-hosted; installed via `npx skills add`, versioned by the source repo) | no data [README][runtype-skills-readme] (no invocation-level audit trail; the lint/smoke tests audit the *package*, not what a skill does at runtime) |
 
 `scored 2026-09-30`
 
@@ -386,6 +386,7 @@ Runtype entry (§1) — first-party pages read 2026-09-24:
 | [github.com/runtypelabs](https://github.com/runtypelabs) | Org exists; publishes satellite repos, not the core platform |
 | `npm view @runtypelabs/cli license`, 2026-09-24 (no URL) | CLI package licensed Apache-2.0; platform/runtime licence not found |
 | [runtypelabs/skills README][runtype-skills-readme] | Official agent skills repo, MIT, lint/smoke-test publishing gate (checked 2026-09-30) |
+| [runtypelabs/skills CONTRIBUTING.md][runtype-skills-contributing] | Documented pull-request contribution flow (rule-6 evidence, checked 2026-10-02) |
 | [hermes-runtype-otel README][runtype-hermes-otel] · [persona README][runtype-persona] | Hermes OTel trace exporter (MIT) and chat widget (MIT); checked 2026-09-30 |
 | [BoundaryML/feelings][baml-feelings] · [issue #1][baml-feelings-issue1] | `.feels()`/`.fill<T>()` blanket-interface demo; no LICENSE file, confirmed again 2026-09-30 |
 | [BAML/Jev blog post][baml-jev-blog] | One-request-per-class behavior for `.fill<T>()`, confirmed 2026-09-30 |
@@ -407,6 +408,7 @@ HydraDB (§4) and DeepSeek Harness (§1) additions — first-party checked 2026-
 [jev-page]: ../infrastructure/jev-analysis.md
 [laya]: https://github.com/NandhaKishorM/laya
 [runtype-skills-readme]: https://github.com/runtypelabs/skills
+[runtype-skills-contributing]: https://github.com/runtypelabs/skills/blob/main/CONTRIBUTING.md
 [runtype-hermes-otel]: https://github.com/runtypelabs/hermes-runtype-otel
 [runtype-persona]: https://github.com/runtypelabs/persona
 [baml-feelings]: https://github.com/BoundaryML/feelings

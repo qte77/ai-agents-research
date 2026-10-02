@@ -68,7 +68,9 @@ The eight subjects of the arc. The `_topics` hubs index existing coverage for ea
    `partial` on Distributed (git remotes sync across machines, comparable to the third-party-drive example
    above). `yes` needs more than git, such as a native multi-writer store. When one row mixes a git-hosted
    artifact with a runtime store (for example CLAUDE.md with machine-local auto memory), split it into two
-   rows. Decided 2026-10-02 ([plan 0010, C0][plan-0010]); the owner may override.
+   rows. For a vendor's instruction-file mechanism (CLAUDE.md, AGENTS.md), which lives inside the user's
+   repo rather than being a repo itself, the vendor's own documentation of team sharing through source
+   control is the cited flow. Decided 2026-10-02 ([plan 0010, C0 and R1][plan-0010]); the owner may override.
 
 ## Sources
 

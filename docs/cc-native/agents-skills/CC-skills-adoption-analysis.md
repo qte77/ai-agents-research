@@ -5,7 +5,7 @@ category: analysis
 version: 2.0.0
 status: completed
 created: 2026-01-11
-updated: 2026-09-24
+updated: 2026-10-02
 validated_links: 2026-09-24
 ---
 
@@ -360,6 +360,23 @@ generatively rather than observationally: paired with GPT-5.5, the skill-equippe
 agent scored 134.3% higher on MLE-bench and 34.4% higher on PaperBench than an
 unequipped baseline (paper claims; methodology not independently verified).
 
+## Organization-Level Skill Provisioning (Claude Team and Enterprise)
+
+Anthropic's Help Center article ["Provision and manage skills for your organization"][org-skills] (accessed 2026-10-02; the page carries no absolute date) describes how "organization owners can provision skills for everyone in their organization, and how to scope skills to specific groups using plugins". It is available on Team and Enterprise plans:
+
+- an uploaded skill "becomes available to everyone in your organization", and "Provisioned skills also load in Claude Code for users who sign in with their Claude account" (opt out with `syncClaudeAiSkills` set to `false` in Claude Code managed settings);
+- Enterprise plans can give skills to "only some users by bundling them into a plugin and assigning that plugin to a group";
+- when publishing requires review, "an owner approves each submission before it's published, and every later version goes through the same review"; reviewers see, "For an update, what changed since the currently published version"; and "Until then, users stay on the currently approved version";
+- "Skill sharing events are captured in the audit log and Compliance API", but "The audit log doesn't capture the contents of shared skills or plugins—only the share event itself."
+
+Scored 2026-10-02 (plan 0010, R1) on the [agent substrate rubric](../../sdlc-lcm/agent-substrate-rubric.md):
+
+| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
+|---|---|---|---|---|---|
+| yes [article][org-skills] (members share skills peer-to-peer, to groups or organization-wide, and owners review submissions: a defined multi-writer flow) | yes [article][org-skills] (a hosted organization library whose skills also load in Claude Code on members' machines) | partial [article][org-skills] (users stay on the currently approved version until a new one is approved; no user-side pinning or rebuild is documented) | yes [article][org-skills] (group scoping through plugins, a publishing policy, per-user toggles and `syncClaudeAiSkills` change behavior without a rewrite) | partial [article][org-skills] (each update is reviewed with "what changed since the currently published version", but no rollback is documented) | partial [article][org-skills] (the audit log and Compliance API record share events, not skill contents) |
+
+This is the first scored row in the corpus to reach `yes` on skills·Shared and skills·Distributed, and it is first-party evidence, not a rule-6 calibration.
+
 ## Settings Configuration
 
 Update `.claude/settings.json` to adopt Skills:
@@ -376,6 +393,7 @@ Update `.claude/settings.json` to adopt Skills:
 [skills-pdf]: https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf
 [gh-skills]: https://github.com/anthropics/skills/tree/main/skills
 [skills-sh]: https://skills.sh/
+[org-skills]: https://support.claude.com/en/articles/13119606
 [ms-skills]: https://learn.microsoft.com/en-us/agent-framework/agents/skills
 [hashi-skills]: https://www.hashicorp.com/en/blog/introducing-hashicorp-agent-skills
 [cc-schema-bug]: https://github.com/anthropics/claude-code/issues/25795
