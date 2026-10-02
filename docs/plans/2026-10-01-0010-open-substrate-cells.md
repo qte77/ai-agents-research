@@ -1,6 +1,6 @@
 ---
 title: Close or confirm the four open substrate cells
-status: approved
+status: done
 issue: 576
 created: 2026-10-01
 updated: 2026-10-02
@@ -14,6 +14,7 @@ skills·Distributed**.
 
 ## Current status
 
+- **Arc closed 2026-10-02.** Every row is shipped or dropped. Outcome: context·Shared and context·Distributed `partial`, skills·Shared and skills·Distributed `yes` (all from new evidence), context·Reproducible confirmed open; `make census` regenerates the matrix.
 - **Shipped:** plan approved 2026-10-02 (owner: "proceed" on #577). C0 was decided by default the same day and is recorded as [rubric](../sdlc-lcm/agent-substrate-rubric.md#how-to-score) rule 6; the owner may override it.
 - **Why calibration comes first:** the four cells rest mostly on `no data` and `n/a`, not on a measured
   `no`. Context has only 4 scored rows, and skills·Shared is `no data` on six git-hosted skill repos. Part
@@ -107,4 +108,4 @@ section.
 | ~~T1~~ | ~~Commit the census as `.github/scripts/lib/doc_census.py` with tests and a make target, so the Y matrix can be regenerated. **Decided by default:** each row's subject is declared in the doc as a `subject:` tag next to its score (rubric rule 4), not kept in a side file; untagged rows are reported, never guessed~~ | owner (Phase B), default yes | Done 2026-10-02: module and tests in #582 (14 tests after part 2). All 75 scored rows are tagged; `make census` reproduces 44 of the reference architecture's 48 cells. The other 4 differ because of evidence added since Y, and are recorded by Y2: context·Distributed, skills·Shared, skills·Distributed, plugins·Traceable. Code Modernization's Reproducible was also corrected `yes` → `partial` (unpinned agent steps) |
 | ~~R1~~ | ~~Re-score the 12 context and skills rows under C0/rule 6 (split mixed rows), and add a row for Anthropic's org-level skill provisioning (`support.claude.com/en/articles/13119606`, found by L3, quotes checked 2026-10-02) to the skills docs~~ | agent (Phase C, after C0) | Done 2026-10-02. **CLAUDE.md row split** into CLAUDE.md (Shared and Distributed `partial` under rule 6) and auto memory (Distributed `no`, machine-local). **AGENTS.md:** Shared and Distributed `partial`, Versionable `yes`. **Rule 6 clarified:** for an instruction-file mechanism, the vendor's documented team sharing via source control is the cited flow. **runtypelabs/skills** is `partial` (CONTRIBUTING documents a PR flow). Four git-hosted artifacts with no flow are `no data`: coleam00/skills, the excalidraw skill, Cloudflare's security-audit skill, context-engineering-intro. SkillLift and Skill2Env are tools, not static artifacts, so rule 6 does not apply and their scores are unchanged; papers and TrackPoint are unchanged. **New row:** org-level skill provisioning, Shared and Distributed `yes` (first-party) |
 | ~~Y2~~ | ~~Update the reference architecture: matrix, "What stays open", and the arc done-when state for each cell. A cell closed only by re-scoring under rule 6 is labelled **"closed by calibration"**, not "filled by new evidence"~~ | agent (Phase C, last) | Done 2026-10-02: context·Shared and context·Distributed **filled by new evidence** at `partial` (Redis Iris's Context Retriever), also lifted by rule 6 (CLAUDE.md, AGENTS.md). skills·Shared and skills·Distributed **filled by new evidence** at `yes` (org skill provisioning). context·Reproducible **confirmed open** (all six context rows `no data`; ReContext dropped). No cell was closed by calibration alone. `make census` reproduces all 48 cells; a parser bug that read `**partial**` as `no data` was fixed on the way |
-| Z | Close-out: changelog, release, close #576 | agent | Release published, #576 closed |
+| ~~Z~~ | ~~Close-out: changelog, release, close #576~~ | agent | Done 2026-10-02: plan marked done; v0.14.0 is cut by the `bump-my-version` workflow right after this PR; #576 closed |
