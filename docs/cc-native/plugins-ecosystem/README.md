@@ -16,3 +16,4 @@ Official plugins, connectors, Cowork platform, office document skills, business 
 | [CC-chrome-extension-analysis.md](CC-chrome-extension-analysis.md) | Chrome extension capabilities |
 | [CC-web-scraping-plugins-analysis.md](CC-web-scraping-plugins-analysis.md) | Web scraping plugin landscape |
 | [CC-mcp-hardware-standard-analysis.md](CC-mcp-hardware-standard-analysis.md) | Model Hardware Standard (MHS): Anthropic's research-preview spec for AI agents operating physical lab/manufacturing hardware, and its relationship to MCP |
+| [CC-claude-science-analysis.md](CC-claude-science-analysis.md) | Claude Science: desktop AI workbench for scientists — sandboxed runs, provenance-recorded artifacts, reviewer, remote compute |
