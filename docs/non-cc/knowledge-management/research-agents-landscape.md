@@ -4,8 +4,8 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-03
+validated_links: 2026-10-03
 ---
 
 Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
@@ -44,6 +44,7 @@ Agents that conduct multi-step research and generate research outputs.
 
 - [MatterGen (Microsoft)][mattergen] — diffusion generative model for inorganic-materials design with multi-property conditioning (CIF output).
 - [MatterSim (Microsoft)][mattersim] — M3GNet deep-learning atomistic simulator across elements/temperatures/pressures (1M and 5M variants).
+- [Polaron][polaron] — "The intelligence layer for materials science": three models over microstructure images — Segmentation ("Identify and quantify the features that matter in microscopy data"), Reconstruction ("From 2D images to 3D volumes") and Design (explore "microstructural design scenarios"). Commercial; Imperial College spinout per [Imperial][polaron-imperial]. Use case: materials characterisation from microscopy, where MatterGen/MatterSim work from atomic structure.
 
 ## 3. Research Discovery & Analysis Platforms
 
@@ -71,6 +72,13 @@ Literature search, paper analysis, and discovery (assistive, not autonomous cond
 
 - [Paper2Agent][paper2agent] — converts a paper + codebase into an interactive **MCP-server agent** (auto-generated, test-refined); integrates with Claude Code. Cross-ref: [ai-security-governance-analysis.md § MCP Ecosystem Security](../../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) for MCP-server hardening.
 - [PaperQA2][paperqa2] — superhuman scientific-literature RAG (beats PhD/postdoc on LitQA2); powers WikiCrow and ContraCrow ([paper][paperqa2-paper]).
+- [Claude Science (Anthropic)][claude-science] — first-party desktop workbench: Claude runs Python/R/shell in a sandbox and saves "versioned artifacts with a full provenance record", with a reviewer that checks claims against the execution record. Beta. Full analysis: [CC-claude-science-analysis.md](../../cc-native/plugins-ecosystem/CC-claude-science-analysis.md).
+
+## 5. Research Communities
+
+Not tools: groups that coordinate work on a research use case.
+
+- [AIDDA Institute][aidda] — "Institute for AI Driven Discovery of Algorithms": "Coordinating research, knowledge sharing, and networking around AI-driven algorithm discovery" through speaker events and working groups. Its site names AlphaEvolve, CodeEvolve, OpenEvolve and ShinkaEvolve; committee members include developers of CodeEvolve and OpenEvolve. Use case: autoresearch on algorithms, the same loop as [autoresearch (Karpathy)][autoresearch] applied to algorithm discovery.
 
 ## Mapping to the CC `/deep-research` Harness
 
@@ -150,6 +158,9 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 | [Ai2 Scholar QA][ai2-scholar-qa] | Allen Institute research Q&A |
 | [Paper2Agent][paper2agent] | Paper+codebase → MCP-server agent |
 | [PaperQA2][paperqa2] · [paper][paperqa2-paper] | Superhuman scientific-literature RAG |
+| [Claude Science (Anthropic)][claude-science] | First-party AI workbench for scientists |
+| [Polaron][polaron] · [Imperial news][polaron-imperial] | Microstructure segmentation, 2D→3D reconstruction, design; Imperial spinout |
+| [AIDDA Institute][aidda] | AI-driven algorithm discovery community |
 
 [deepresearch-alibaba]: https://github.com/Alibaba-NLP/DeepResearch/
 [ai-researcher]: https://github.com/HKUDS/AI-Researcher
@@ -208,3 +219,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 [paper2agent]: https://arxiv.org/abs/2509.06917
 [paperqa2]: https://github.com/Future-House/paper-qa
 [paperqa2-paper]: https://arxiv.org/abs/2312.07559
+[claude-science]: https://claude.com/docs/claude-science/overview
+[polaron]: https://polaron.ai/
+[polaron-imperial]: https://www.imperial.ac.uk/news/250657/ai-spinout-polaron-accelerate-design-advanced/
+[aidda]: https://algorithmdiscovery.org/
