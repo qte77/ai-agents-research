@@ -4,9 +4,12 @@
 # auto-labels, and posts a single sticky summary comment that is edited
 # in place on re-runs.
 #
-# Backend defaults to GitHub Models via the workflow's GITHUB_TOKEN —
-# `permissions: models: read` is the load-bearing line. No external API
-# key required.
+# Provider: Cloudflare Workers AI via its OpenAI-compatible endpoint
+# (GitHub Models was retired 2026-07-30, #527). api_base + llm-api-key
+# select the backend; GH_TOKEN is only used for gh CLI issue/label calls,
+# never as the LLM bearer. No `models: read` permission is needed with a
+# non-GitHub-Models provider. Needs repo secret CF_WORKERS_AI_TOKEN and
+# variable LLM_BASE_URL (https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1).
 name: issue-triage
 
 on:
@@ -16,7 +19,6 @@ on:
 permissions:
   contents: read
   issues: write
-  models: read
 
 concurrency:
   # One in-flight triage per issue so a quick edit doesn't race with the
@@ -29,6 +31,9 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-      - uses: qte77/gha-issue-triage@4a07dd23bdd6bafc625bce6430f0aa5990fc327d  # v0.3.0
+      - uses: qte77/gha-issue-triage@1bf71f215a70a9b19f228e1c190aaf578baa6a59  # v0.4.0
         with:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          llm-api-key: ${{ secrets.CF_WORKERS_AI_TOKEN }}
+          MODEL: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+          api_base: ${{ vars.LLM_BASE_URL }}
