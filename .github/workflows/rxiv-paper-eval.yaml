@@ -158,8 +158,10 @@ jobs:
               d = json.loads(line)
               ex = d.get("extracted", {})
               # Blank line below heading and around lists is required
-              # (MD022 / MD032).
-              print(f"### {d.get('title', '(no title)')}")
+              # (MD022 / MD032). Trailing heading punctuation is stripped
+              # (MD026): titles like "... Get the Code!" failed the lint.
+              title = d.get("title", "(no title)").rstrip(".,;:!。，；：！ ") or "(no title)"
+              print(f"### {title}")
               print()
               doi = d.get("doi", "")
               if doi:
