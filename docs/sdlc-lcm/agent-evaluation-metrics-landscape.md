@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-04
+validated_links: 2026-10-04
 status: assess
 ---
 
@@ -439,6 +439,15 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires adversarial testing framework
 - **Reference**: BadScientist (Agents4Science 2025)
 - **Mitigation**: Implement adversarial robustness validation and meta-evaluation to detect manipulation
+
+#### Verbalized Confidence Calibration (Brier)
+
+- **Definition**: How well a model's stated confidence ("I am 80% confident…") matches how often it is right, scored with the Brier score (mean squared error between stated probability and outcome; lower is better)
+- **Use Case**: Decide when an agent's answer can be acted on without review, and when it should abstain or escalate
+- **Calculation**: `mean((confidence - correct)^2)` over questions, `correct` ∈ {0, 1}; elicited by prompting, so no logit access is needed
+- **Reference values**: [ConfidenceBench (arXiv:2607.20526)](https://arxiv.org/abs/2607.20526), 15 frontier LLMs on 200 private questions: best 0.103 (Claude Opus 4.6, Gemini 3.1 Pro Preview), calibrated-random baseline 0.1875, worst reported 0.367 (Gemini 3.1 Flash-Lite); "the most accurate model is not the best-calibrated"
+- **Training for it**: [ConfTuner (arXiv:2508.18847, NeurIPS 2025)](https://arxiv.org/abs/2508.18847) fine-tunes with a "tokenized Brier score", proved a proper scoring rule, needing no ground-truth confidence labels; reports gains in calibration, self-correction and model cascades ([code](https://github.com/liushiliushi/ConfTuner))
+- **Limitations**: calibrated belief does not mean calibrated action. [Aggarwal (arXiv:2608.27167)](https://arxiv.org/abs/2608.27167): across 12 frontier models, commitment on a provably unpredictable question "rises from 6.5% to 54.0% as evidence is escalated", and a fully fabricated evidence panel lifts it "from 24.5% to 36.8%", statistically indistinguishable from genuine data (37.6%), while stated probabilities "barely move". The act/don't-act gate is trainable (a 3B model fine-tuned on 540 synthetic cases) but fails under rigid response formats ([code + data](https://github.com/Pranav-1100/confidence-calibration-evaluation)). Measure the decision, not only the stated probability.
 
 ## Implementation Frameworks
 

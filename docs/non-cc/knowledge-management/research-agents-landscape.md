@@ -4,8 +4,8 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-03
-validated_links: 2026-10-03
+updated: 2026-10-04
+validated_links: 2026-10-04
 ---
 
 Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
@@ -30,6 +30,7 @@ Agents that conduct multi-step research and generate research outputs.
 - [OpenAI Deep Research][openai-deep-research] — agentic ChatGPT capability; API as `o3-deep-research` ($10/$40 per MTok, 200K ctx, MCP connectors), led HLE at launch.
 - [Gemini Deep Research][gemini-deep-research] — Gemini 3 Pro long-horizon agent via the Interactions API (`deep-research-pro-preview-12-2025`); 46.4% HLE, 66.1% DeepSearchQA, background execution + remote MCP.
 - [AutoScientists (mims-harvard)][autoscientists] — decentralized team of AI agents for long-running computational-science experiments, self-organizing around promising hypotheses; **packaged as Claude Code subagents** coordinating via a local ClawInstitute server (no central planner). BioML-Bench 74.4% mean leaderboard percentile (629★, Python) — the most direct CC-harness tie-in here.
+- [RankEvolve][rankevolve] — auto-research framework for evolving generative ranking models. An "Executable Operating Protocol (EOP)" declares phases, gates, branches and loops, and the runtime enforces the compiled state machine; a "meta-meta-harness" composes whole coding-agent products, "including Claude Code and Codex", as nodes that review and repair each other's work. Authors report all-oracle execution accuracy rising from 45.8% (best single product) to 62.5% (paired +16.7 points, 95% CI [6.6, 26.7]) in a budget-matched evaluation, and a knowledge layer that carries findings, "including negative results", across iterations. Paper only (Sep 2026; no code link on the abstract page).
 - [Hyperresearch (jordan-gibbs)][hyperresearch] — Claude Code skill (`/hyperresearch <query>`) running a tier-adaptive 16-step research pipeline: 250+ sources per `premier`-scale run, adversarial citation verification, syndication-independence auditing, and a persistent cross-session vault; the README states it "currently leads the DeepResearch-Bench RACE leaderboard", qualified as "a forward-looking projection from a stratified pilot… third party validation is pending". MIT, 3.5k★.
 - [OpenScience (Synthetic Sciences)][openscience] — open-source AI research workbench: plan → literature search → write/run code → run experiments → write up findings, with 500+ bundled scientific skills (biology/chemistry/physics/ML/data engineering), ChEMBL/UniProt/PubMed/arXiv connectors, and desktop/browser/CLI interfaces; repo ships a `CLAUDE.md` and credits Claude Scientific Writer (K-Dense) among its skill sources. Apache-2.0, 3.6k★.
 - [ScientistTwo (Google Cloud AI Research)][scientisttwo] — autonomous end-to-end research system across six agent groups (Idea Generator → Evaluator → Analyzer → Writer → Peer-Review → Meta-Review); paper reports besting human baselines on 80.4% of 107 evaluated research problems (avg. +25.2% relative improvement) across 86 generated papers in eight AI domains, with 91.9%/72.1% acceptance under its ScholarPeer/Stanford-Agentic-Reviewer simulated reviewers ([paper][scientisttwo-paper]).
@@ -129,6 +130,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 | [local-deep-research (LearningCircuit)][local-deep-research] | LLM-agnostic deep-research assistant |
 | [local-deep-researcher (langchain-ai)][local-deep-researcher] | Minimal LangGraph reference impl |
 | [dataroom (hanxiao / Jina)][dataroom] | Local-gather / frontier-synthesize harness |
+| [RankEvolve][rankevolve] | Multi-agent auto-research harness composing coding-agent products |
 | [Hyperresearch (jordan-gibbs)][hyperresearch] | CC skill: 16-step cited-report deep-research pipeline |
 | [OpenScience (Synthetic Sciences)][openscience] | Open-source AI research workbench |
 | [ScientistTwo (Google Cloud AI Research)][scientisttwo] · [paper][scientisttwo-paper] | Autonomous end-to-end research + self-peer-review system |
@@ -184,6 +186,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 [local-deep-research]: https://github.com/LearningCircuit/local-deep-research
 [local-deep-researcher]: https://github.com/langchain-ai/local-deep-researcher
 [dataroom]: https://github.com/hanxiao/dataroom
+[rankevolve]: https://arxiv.org/abs/2609.39551
 [hyperresearch]: https://github.com/jordan-gibbs/hyperresearch
 [openscience]: https://github.com/synthetic-sciences/openscience
 [scientisttwo]: https://scientist-two.github.io
