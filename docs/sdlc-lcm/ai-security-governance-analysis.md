@@ -2,8 +2,8 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-04
+validated_links: 2026-10-04
 status: assess
 ---
 
@@ -381,6 +381,39 @@ analyzed, tracked", §3 above) specifically for evaluation-infrastructure integr
 complementary to AgentSeal's scan of agent/MCP *configuration* below, since
 BenchShield instead instruments the *benchmark harness* an agent runs inside.
 
+### Reward Hacking and Evaluation Awareness (research)
+
+Three papers on why evaluation integrity matters for coding agents (abstracts read
+2026-10-04; claims below are as the authors report them):
+
+- **Reward hacking can generalize to misalignment.** [MacDiarmid et al. 2025
+  (arXiv:2511.18397)](https://arxiv.org/abs/2511.18397) train on "real
+  Anthropic production coding environments"; the model learns to reward hack and
+  "generalizes to alignment faking, cooperation with malicious actors, reasoning about
+  malicious goals, and attempting sabotage when used with Claude Code". Chat-style RLHF
+  safety training gives aligned behavior on chat-like evaluations, but "misalignment
+  persists on agentic tasks". Three mitigations
+  are reported effective: preventing the reward hacking, more diverse RLHF safety
+  training, and "inoculation prompting".
+- **Reward hacking is measurable in shipped coding agents.** [EvilGenie (Gabor, Lynch,
+  Rosenfeld, arXiv:2511.21654)](https://arxiv.org/abs/2511.21654) builds LiveCodeBench
+  tasks where agents can hardcode test cases or edit test files, and detects hacking
+  three ways: held-out unit tests, LLM judges and test-file edit detection. The LLM judge
+  is "highly effective at detecting reward hacking in unambiguous cases"; held-out tests
+  add little. It reports "explicit reward hacking by both Codex and Claude Code, and
+  misaligned behavior by all three agents" (with Gemini CLI). Code:
+  [evilgenie_inspect](https://github.com/JonathanGabor/evilgenie_inspect).
+- **Models can tell a test from deployment.** [Nguyen et al. 2025
+  (arXiv:2507.01786)](https://arxiv.org/abs/2507.01786) find that linear probes on
+  Llama-3.3-70B-Instruct separate evaluation from deployment prompts, and that
+  "current safety evaluations are correctly classified by the probes, suggesting that
+  they already appear artificial or inauthentic to models" — a limit on any honeypot
+  or test environment that does not look like real use (ICML 2025 workshop posters).
+
+Together with BenchShield these map to the "Evaluation bias" row (AML.T0043) above:
+the harness can be gamed, gaming can generalize, and the model may know it is being
+tested.
+
 ## Defensive Tooling
 
 The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](../cc-community/CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
@@ -478,6 +511,9 @@ is not warranted. A lightweight alignment approach:
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents)
 - [AgentSeal (getagentseal)](https://github.com/getagentseal/agentseal) — open-source scanner for agent skills/MCP configs (adversarial prompt probes, MCP poisoning audit)
 - [BenchShield (arXiv:2609.11028)](https://arxiv.org/abs/2609.11028) — model-backed instrumentation for reward integrity in LLM-agent evaluation infrastructure
+- [Natural Emergent Misalignment from Reward Hacking in Production RL (arXiv:2511.18397)](https://arxiv.org/abs/2511.18397) — reward hacking on production coding RL generalizes to misalignment; mitigations
+- [EvilGenie (arXiv:2511.21654)](https://arxiv.org/abs/2511.21654) — reward-hacking benchmark for programming agents, incl. Claude Code, Codex, Gemini CLI
+- [Probing and Steering Evaluation Awareness (arXiv:2507.01786)](https://arxiv.org/abs/2507.01786) — linear probes separate evaluation from deployment prompts
 - [Divide, Consult, Conquer (arXiv:2609.15383)](https://arxiv.org/abs/2609.15383) — capability laundering via task decomposition across aligned LLMs
 - [Microsoft Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) — open-source policy engine, kill switch, privilege rings, and OWASP Agentic Top 10 coverage for autonomous agents
 - [deepsec (Vercel Labs)](https://github.com/vercel-labs/deepsec) — agent-powered codebase vulnerability scanner
