@@ -14,7 +14,7 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 - **Approved 2026-10-06** (owner: "proceed" on #600). O1 decided by default the same day: gap-driven
   scoring (overridable). Coverage of every lead was checked on 2026-10-06 with a calibrated
   `git grep` over `docs/` (archive excluded); the result is in the table's *Coverage* column.
-- **Next, in order:** Z (release), then B1 (one week per day). F1, N1–N5, E1, K1, P1 and L1 shipped 2026-10-06. O2 is owner-only.
+- **Next:** B1 (one arXiv week per day). Z released v0.15.0 on 2026-10-06. F1, N1–N5, E1, K1, P1 and L1 shipped 2026-10-06. O2 is owner-only.
 - **Arc done-when:** every row is shipped (PR number), dropped (reason), or deferred (gate + reason).
 - **The loop, per row:** branch `<type>/<slug>` → write → `make check_docs check_status` → lychee on changed
   files → PR → `/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>` → strike the row in the same PR;
@@ -67,7 +67,7 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 | ~~O1~~ | ~~Scoring policy for new tools~~ | n/a | owner | Decided by default 2026-10-06: **gap-driven** — score only when a tool could change a reference-architecture cell (owner may override) |
 | O2 | `qte77/gha-issue-triage` `self-triage.yml` has no LLM secret | n/a | owner | Owner adds a secret there; default: leave until then |
 | B1 | Backfill arXiv weeks W31–W39 (the eval state stops at W30; W40 ran 2026-10-06): one `rxiv-paper-eval` dispatch per day with `week=<n>`, never two on one day | n/a | agent | `.github/state/rxiv-paper-eval-state.json` lists W31–W40 and each triage PR is reviewed |
-| Z | Release: collect the pending `changelog.d/` fragments (#587, #589, #590–#592) plus this arc's | n/a | agent | `bump-my-version` run, release PR merged, tag + GitHub Release published |
+| ~~Z~~ | ~~Release: collect the pending `changelog.d/` fragments (#587, #589, #590–#592) plus this arc's~~ | n/a | agent | Done 2026-10-06: v0.15.0 released (#608, tag + GitHub Release) |
 
 **Deferred (not rows):** #588 held leads (Originator, Serova, C3) — waiting on first-party evidence;
 plan 0001 (#452) — unchanged; upstream `gha-rxiv-paper-eval` leftovers (dispatch and example workflows still on
