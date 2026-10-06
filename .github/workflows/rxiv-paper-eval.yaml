@@ -13,7 +13,7 @@ on:
   # monitors.
   schedule:
     - cron: "0 9 * * 2"
-  # Self-runs on PRs editing the workflow itself, capped at 5 papers to keep
+  # Self-runs on PRs editing the workflow itself, capped at 5 LLM calls to keep
   # workflow-edit runs cheap. Dependabot PRs are skipped (see `if:` on eval):
   # Dependabot runs get no repo secrets, so the LLM call cannot authenticate.
   # The triage job is also skipped on pull_request triggers (see `if:` below).
@@ -35,10 +35,10 @@ on:
         description: "ISO year (YYYY). Empty = current."
         type: string
         default: ""
-      max_papers:
-        description: "Cap rows sent to the LLM. 0 = no cap."
+      max_llm_calls:
+        description: "Papers sent to the LLM per week, ranked by topic-keyword overlap. 0 = all."
         type: string
-        default: "50"
+        default: "100"
 
 permissions:
   contents: read
@@ -108,7 +108,10 @@ jobs:
       categories: ${{ vars.RXIV_CATEGORIES || '' }}
       year: ${{ needs.resolve.outputs.year }}
       week: ${{ needs.resolve.outputs.week }}
-      max_papers: ${{ github.event_name == 'pull_request' && 5 || fromJSON(inputs.max_papers || '50') }}
+      # Rank the whole week by topic-keyword overlap and send the top N to the LLM
+      # (plan 0011 S1). max_papers used to take the first N rows in feed order.
+      max_papers: 0
+      max_llm_calls: ${{ github.event_name == 'pull_request' && 5 || fromJSON(inputs.max_llm_calls || '100') }}
       model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
       api_base: ${{ vars.LLM_BASE_URL }}
       enrich: true
