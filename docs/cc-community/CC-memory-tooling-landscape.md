@@ -1,11 +1,11 @@
 ---
 title: CC Memory Tooling Landscape
-purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, Core, deja-vu, engrim).
+purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, Core, deja-vu, engrim, Operator Memory).
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-10-06
+validated_links: 2026-10-06
 ---
 
 Persistent-memory tools for Claude Code. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). For non-CC memory *infrastructure* (Mem0, Zep/Graphiti, Cognee, LangMem, A-MEM), see [agent-frameworks-infrastructure-landscape.md § Agent Memory Infrastructure](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure). CC's native memory: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md).
@@ -369,6 +369,78 @@ Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-acce
 
 ---
 
+## Operator Memory (aerovato)
+
+**Repo**: [aerovato/operator-memory][operator-memory] | **Stars**: 359 | **License**: BSD-3-Clause |
+**Version**: Operator Helper `helper@v1.8.0` (repo release tags, `gh api`, 2026-10-06)
+
+Cross-agent "self-improving context engine for coding agents" (repo description field, verbatim) built
+on canonical Markdown documents rather than vector/embedding recall. The README states every session
+runs the same loop: *"1. **Consult** — the agent starts from your Brain: instructions, codebase index,
+specs, guides. 2. **Build** — the agent does normal development work, informed by that knowledge.
+3. **Update** — the agent records what changed: new specs, decisions, standards, lessons."* A listed
+feature: *"Zero Infrastructure — No background agents, no embeddings, no vector database, no model
+configuration."*
+
+### Architecture
+
+- **Three storage tiers**: `.operator/` (private, machine-local project knowledge), `.operator-shared/`
+  (project knowledge committed with the repo), `~/.operator/user/` (personal rules/knowledge reused
+  across projects)
+- Canonical files are updated in place by the agent itself as part of ordinary work; retrieval at
+  session start is a Claude Code **hook** (`packages/claude-code/hooks/hooks.json`, described in its
+  own metadata as "Operator Memory preamble injection" — checked via the GitHub contents API,
+  2026-10-06), not a background service or MCP server. `docs/architecture.md` states session start is
+  "a small, deterministic orientation... Nothing is ranked, guessed, or retrieved by similarity" — the
+  *retrieval* path is deterministic; the *content* of the Brain is still authored by whichever agent/
+  model is running the session, with "no model configuration" pinned anywhere
+- Installed via the `@aerovato/operator-helper` npm package (global install), then a per-harness
+  `operator-helper install <harness>` step; slash commands `/operator:user-init` (once) and
+  `/operator:project-init` (per project) scaffold the three tiers
+
+### CC Integration
+
+The README's own harness table lists three support tiers. Claude Code (CLI + Desktop) is one of five
+marked **Fully Supported** (🟢), alongside Codex (CLI + Desktop), OpenCode V2, Pi, and DeepSeek Harness;
+OpenCode V1 is **Supported, Legacy** (🟡) and Kiro is **Supported** (🟡, not "fully") — seven harnesses
+across three tiers, not seven at the same tier. Six of the eight `packages/` directories carry
+independent GitHub release tags (`codex@`, `deepseek@`, `helper@`, `opencode@`, `opencode-v2@`, `pi@` —
+36 tags total, `gh api`, 2026-10-06); `claude-code` and `core` have directories but no tags of their
+own, and Kiro — the lowest support tier — has no `packages/` directory at all (`gh api` contents
+listing, 2026-10-06).
+
+### Adoption Considerations
+
+**Strengths**: BSD-3-Clause (permissive); Markdown-native and git-trackable, so the knowledge store is
+diffable/reviewable like code; "Zero Infrastructure" — no embeddings, vector DB, or model config to
+stand up; six of eight harness packages carry independent release tags, suggesting active, scoped
+maintenance; the private/shared/personal tiers map onto a team's actual read/write boundaries without
+extra config.
+
+**Risks**: small community relative to peers in this doc (359 stars vs. deja-vu's 935 or ai-memory's
+8.2K); only 5 of 7 listed harnesses are "Fully Supported" — OpenCode V1 and Kiro carry a lower support
+tier per the README's own table; no pinned-model or deterministic-rebuild claim is documented for the
+Update step itself — only the retrieval/orientation path is stated to be deterministic, not the Brain's
+content generation (the agent authoring the Markdown each session is whichever model the harness is
+running, unpinned). Overlaps with CC's built-in memory and every other cross-agent tool in this
+doc — pick one.
+
+**No rubric row.** This arc's one open substrate cell is **context·Reproducible**
+([agent-substrate-reference-architecture.md][sub-arch]). Operator Memory's Brain content is authored by
+the session's own (unpinned) agent/model — no checksum, pinned version, or rebuild-from-source command
+is documented for that write step — the same shape as CLAUDE.md/AGENTS.md, which the reference
+architecture already holds at `no data` on Reproducible. A more generous reading could call the
+*retrieval* path `partial` (deterministic orientation, no ranking or embeddings, per
+`docs/architecture.md`), since Reproducible's trap example is specifically "LLM extraction with no
+fixed model/version"; Operator Memory has no extraction step at all for reads. Flagging this reading
+explicitly for the owner to override under O1 — as scored here, it does not move the open cell, so no
+row is added.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) —
+CC's native memory for comparison.
+
+---
+
 ## Roampal Core (roampal-ai)
 
 **Repo**: [roampal-ai/roampal-core][roampal-core] | **PyPI**: [`roampal`][roampal-pypi] | **Stars**: 47 | **Forks**: 7 | **License**: Apache-2.0 | **Version**: 0.5.7 (2026-05-12)
@@ -445,6 +517,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 | [MemPalace][mempalace] | Agent memory tool |
 | [memsearch][memsearch] · [CC docs][memsearch-docs] | Zilliz memory search (CC integration) |
 | [roampal-core][roampal-core] · [PyPI][roampal-pypi] | Outcome-based memory MCP server (CC integration) |
+| [operator-memory][operator-memory] | Self-improving context engine / cross-agent memory (README, `gh api` tags, 2026-10-06) |
 | [LangMem][langmem] · [concepts][langmem-concepts] | LangChain long-term memory |
 | [Mem0][mem0] · [paper][mem0-paper] | Memory layer for agents |
 | [Cognee][cognee] | Memory / knowledge-graph framework |
@@ -475,6 +548,8 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 [memsearch-docs]: https://zilliztech.github.io/memsearch/platforms/claude-code/
 [roampal-core]: https://github.com/roampal-ai/roampal-core
 [roampal-pypi]: https://pypi.org/project/roampal/
+[operator-memory]: https://github.com/aerovato/operator-memory
+[sub-arch]: ../sdlc-lcm/agent-substrate-reference-architecture.md#what-stays-open
 [coala]: https://arxiv.org/abs/2309.02427
 [langmem]: https://github.com/langchain-ai/langmem
 [langmem-concepts]: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/
