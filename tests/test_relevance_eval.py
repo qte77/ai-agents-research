@@ -64,6 +64,11 @@ class PromptVariantTests(unittest.TestCase):
         self.assertIn("When unsure, answer NO.", system)
         self.assertTrue(system.startswith("You are a relevance classifier. Reply with a single token: YES or NO."))
 
+    def test_production_workflow_uses_the_agent_strict_prompt_verbatim(self):
+        # Reason: the consumer workflow carries a copy of the prompt; this keeps one source of truth.
+        workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/rxiv-paper-eval.yaml").read_text()
+        self.assertIn(f'relevance_prompt: "{rl.AGENT_STRICT_PROMPT}"', workflow)
+
     def test_unknown_variant_raises(self):
         with self.assertRaises(KeyError):
             rl.build_messages("agents", "T", "cs.AI", "A", variant="nope")
