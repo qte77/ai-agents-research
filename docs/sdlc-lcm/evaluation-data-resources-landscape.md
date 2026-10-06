@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-06
+validated_links: 2026-10-06
 ---
 
 Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
@@ -43,6 +43,8 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 ## 2. Benchmarks
 
 **General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [CLEAR](https://arxiv.org/abs/2511.14136) (Cost/Latency/Efficacy/Assurance/Reliability, ρ=0.83 production correlation), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentQuest](https://arxiv.org/abs/2404.06411), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; first open general-agent leaderboard, top 0.73 success @ $8.54/task), [E-Commerce Bench](https://github.com/QwenLM/E-CommerceBench) (Qwen; 18 LLM agents each run up to four simulated online stores for 365 days on real market data — negotiation, pricing, inventory, fraud detection; 6,886 products/576 suppliers; Apache-2.0; [arXiv:2608.30730](https://arxiv.org/abs/2608.30730)).
+
+**Reward hacking (coding agents)**: [EvilGenie](https://arxiv.org/abs/2511.21654) (LiveCodeBench tasks where agents can hardcode tests or edit test files; detection via held-out tests, LLM judges and test-file edits; covers Claude Code, Codex, Gemini CLI). Context: [ai-security-governance-analysis.md § Reward Hacking](ai-security-governance-analysis.md#reward-hacking-and-evaluation-awareness-research).
 
 **LLM**: [LiveBench](https://livebench.ai/) (contamination-free, monthly; 18 tasks, top models <70%).
 

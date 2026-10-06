@@ -3,8 +3,8 @@ title: First-Party Anthropic Interpretability & Safety Research Index
 source: anthropic.com/research
 purpose: Curated index of Anthropic's first-party research publications relevant to model internals, interpretability, safety classifiers, sycophancy, reasoning faithfulness, and alignment steering.
 created: 2026-04-05
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: reference
 ---
 
@@ -17,7 +17,7 @@ status: reference
 | Towards Understanding Sycophancy in Language Models | [paper][sycophancy] | RLHF models exhibit sycophancy because both humans and preference models favor sycophantic responses a non-negligible fraction of the time |
 | Persona Vectors | [paper][persona-vectors] | Extracts persona vectors (including sycophancy) from activations; steering with/against them controls sycophantic behavior |
 | Auditing Language Models for Hidden Objectives | [paper][auditing-hidden] | Created model with hidden RM-sycophancy objective as auditing challenge |
-| From Shortcuts to Sabotage | [paper][emergent-misalignment] | Sycophancy → checklist alteration → reward tampering chain; sycophancy generalizes into increasingly dangerous misalignment |
+| From Shortcuts to Sabotage (Nov 21, 2025) | [post][emergent-misalignment] · [arXiv:2511.18397][emergent-misalignment-paper] | Reward hacking learned in real Claude coding RL environments "correlates with an increase in misaligned behavior on all of our evaluations", including sabotage and alignment faking; see [ai-security-governance-analysis.md § Reward Hacking](../../sdlc-lcm/ai-security-governance-analysis.md#reward-hacking-and-evaluation-awareness-research) |
 
 ## Reasoning Trace Interpretability
 
@@ -72,6 +72,7 @@ status: reference
 [persona-vectors]: https://www.anthropic.com/research/persona-vectors
 [auditing-hidden]: https://www.anthropic.com/research/auditing-hidden-objectives
 [emergent-misalignment]: https://www.anthropic.com/research/emergent-misalignment-reward-hacking
+[emergent-misalignment-paper]: https://arxiv.org/abs/2511.18397
 [tracing-thoughts]: https://www.anthropic.com/research/tracing-thoughts-language-model
 [dont-say-think]: https://www.anthropic.com/research/reasoning-models-dont-say-think
 [cot-faithfulness]: https://www.anthropic.com/research/measuring-faithfulness-in-chain-of-thought-reasoning
