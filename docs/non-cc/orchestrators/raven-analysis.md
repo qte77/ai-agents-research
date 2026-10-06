@@ -4,8 +4,8 @@ source: https://github.com/EverMind-AI/Raven
 purpose: Analysis of Raven, EverMind's "harness of harnesses" — a multi-agent orchestrator with a benchmark-gated self-evolution loop and pluggable third-party coding-agent backends.
 platform_scope: [claude-code, github-copilot, qwen-code]
 created: 2026-09-24
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: assess
 ---
 
@@ -81,6 +81,31 @@ folds in memory (EverOS) and a large skill catalog (SkillForge). Its
 self-evolution claims rest entirely on the vendor's own README; no
 third-party benchmark reproduction was found.
 
+## arXiv Technical Report (added 2026-10-06)
+
+EverMind AI also submitted a technical report, [arXiv 2609.33439][raven-paper] (submitted 2026-09-27,
+sole author/affiliation listed as "EverMind AI"), which formalizes the README's architecture rather than
+adding a new one. Per the abstract (verbatim): "We introduce Raven, The Harness of Harnesses, an
+open-source multi-agent ecosystem that automatically constructs and evolves modular harnesses for
+specific models and domains, treating each executable model–harness pair as a composable unit of
+intelligence." It restates four of the README's five components in different terms — Host Agent
+(decomposes goals, matches subtasks, coordinates dependencies, integrates results), "a host archive and
+EverOS" (experience preservation), "Skill Forge" (reusable procedures), and "constructs and evolves
+modular harnesses" (≈ Evolver) — but does not mention Proactivity (event monitoring and scheduled
+execution) anywhere in the abstract. It also adds a theoretical claim not in the README:
+"Our theory establishes sufficient conditions for such composition to expand reliable task coverage
+beyond that of the available individual agents under a shared resource budget."
+
+**On the performance claim — not overclaimed here.** The abstract's closing sentence states (verbatim):
+"On complex and long-horizon tasks, Raven significantly outperforms the state-of-the-art agent systems,
+pushing the frontier of composable agentic intelligence." Checked directly on the abstract page
+(2026-10-06): **no numeric benchmark results, task names, or baseline systems are given anywhere in the
+abstract** — "significantly outperforms" is an unquantified claim with no accompanying number, consistent
+with this page's existing note that "no third-party benchmark reproduction was found." The paper does not
+strengthen the evidence level of Raven's self-evolution or performance claims beyond what the README
+already asserted; it adds a theoretical framing (composability conditions) that the README does not
+state.
+
 ## Cross-References
 
 - [agent-frameworks-infrastructure-landscape.md — EverOS][everos] — the
@@ -97,7 +122,9 @@ third-party benchmark reproduction was found.
 |---|---|
 | [EverMind-AI/Raven repo][repo] | README — architecture, components, install methods, built-in agents, third-party integrations, license |
 | GitHub API `repos/EverMind-AI/Raven`, accessed 2026-09-24 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
+| [arXiv 2609.33439 abstract page][raven-paper] | Title, author/affiliation ("EverMind AI"), submission date (2026-09-27), full abstract verbatim, confirmation of no numeric results in the abstract — accessed 2026-10-06 |
 
 [repo]: https://github.com/EverMind-AI/Raven
 [everos]: ../frameworks/agent-frameworks-infrastructure-landscape.md
 [moss]: ../agents/moss-self-evolving-agent-analysis.md
+[raven-paper]: https://arxiv.org/abs/2609.33439
