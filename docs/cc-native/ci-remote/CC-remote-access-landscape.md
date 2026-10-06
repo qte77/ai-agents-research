@@ -3,8 +3,8 @@ title: CC Remote Access Landscape
 source: https://www.omnara.com, https://cloudcli.ai, https://happy.engineering, https://code.claude.com/docs/en/remote-control, https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: research
 ---
 
@@ -124,6 +124,16 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
   mobile ("terminal on a phone screen is nobody's idea of a good time"
   ([source][zilliz]))
 - **Already possible**: No new tooling needed if tmux is available
+- **Productized packaging — Tailnet Preview**: [elsheppo/tailnet-preview][tailnet-preview] (MIT,
+  confirmed against `LICENSE`; 1★, created and pushed 2026-09-23, no tagged release; `gh api`,
+  2026-10-06) packages this Tailscale pattern for *web preview* rather than terminal access: it
+  gives a local dev server (bound to `127.0.0.1`) a stable link over Tailscale Serve — not
+  Funnel — viewable from another device the tailnet already trusts, with saved routes and
+  viewport sizes, similar in spirit to Omnara's "Localhost previews" above but self-hosted. It
+  ships as an agent skill: its README states "the default installer location makes the included
+  agent skill available to Codex" (installing to `$CODEX_HOME/skills/tailnet-preview`); Claude
+  Code is never named in the README. Narrower than, and not a replacement for, the DIY row above —
+  a packaged complement for the web-preview use case, tied to Codex specifically
 
 ## Workflow Fit by Use Case
 
@@ -196,6 +206,7 @@ Tools that complement any remote access method ([source][zilliz]):
 - [Omnara pricing][omnara-pricing] — current pricing tiers
 - [CC Cloud Sessions docs][cc-cloud] — Anthropic cloud execution
 - [Zilliz mobile CC guide][zilliz] — comparison + supporting tools
+- [Tailnet Preview][tailnet-preview] — MIT, README/LICENSE read 2026-10-06; Codex agent-skill tie-in
 
 [cc-rc]: https://code.claude.com/docs/en/remote-control
 [happy]: https://happy.engineering
@@ -212,5 +223,6 @@ Tools that complement any remote access method ([source][zilliz]):
 [cloudcli]: https://cloudcli.ai
 [cloudcli-gh]: https://github.com/siteboon/claudecodeui
 [omnara-pricing]: https://www.omnara.com/pricing
+[tailnet-preview]: https://github.com/elsheppo/tailnet-preview
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web
 [zilliz]: https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
