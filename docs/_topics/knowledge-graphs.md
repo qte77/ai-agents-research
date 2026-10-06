@@ -15,6 +15,6 @@ see [the hub index](README.md).
 | [databricks-genie-analysis.md § Genie Ontology](../non-cc/agents/databricks-genie-analysis.md#genie-ontology) | Enterprise semantic graph behind Genie | non-cc |
 | [open-knowledge-format-analysis.md](../non-cc/knowledge-management/open-knowledge-format-analysis.md) | OKF: agent-readable knowledge-bundle standard | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Formal Ontologies](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#formal-ontologies--semantic-web) | Formal ontologies and the semantic web | non-cc |
-| [semantic-layers-data-catalog-landscape.md § Agent-native ontology tools](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#agent-native-ontology-tools-2026-mcp-wave) | Ontology Atlas, open-ontologies, EvoOntology, AWS context-ontology-accelerator, Utopia — MCP-exposed ontology stores, rubric-scored | non-cc |
+| [semantic-layers-data-catalog-landscape.md § Agent-native ontology tools](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#agent-native-ontology-tools-2026-mcp-wave) | Ontology Atlas, open-ontologies, EvoOntology, AWS context-ontology-accelerator, Utopia — MCP-exposed ontology stores, rubric-scored; plus three paper-only self-evolving-ontology systems (OaK, SciToolAgent-Evo, Evo-DKD) | non-cc |
 
 Related hubs: [memory.md](memory.md), [rag.md](rag.md), [visualization.md](visualization.md).
