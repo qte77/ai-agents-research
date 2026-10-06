@@ -133,9 +133,10 @@ repo can.
   control to approximate coordinated decoding in a single-stream mode" — the paper's own headline
   architecture (dual decoders) was not actually run as described; self-reported results only.
 
-Other candidates found during this search (EvoGraph-R1, "LLM Change Agent", a graph-engineering survey, the
-unrelated "Ontology Access Kit"/`oaklib`) were rejected as out of scope for this section; see the lane
-report for the one-line reason on each.
+Rejected as out of scope for this section (searched 2026-10-06): EvoGraph-R1 (arXiv:2607.12764) evolves a
+GraphRAG hypergraph, not an ontology schema; "LLM Change Agent" is a human-driven CLI, not autonomous; "Graph
+Engineering in the Era of LLM Agents" (arXiv:2608.21156) is a survey, not a system; `oaklib` (Ontology Access
+Kit) is an unrelated static library that only shares the "OaK" name.
 
 **[AWS context-ontology-accelerator][coa]** (Apache-2.0, 885★, pushed 2026-09-29) is a full semantic-context platform following a **Scan → Model → Serve** pipeline: ingest sources, induce an OWL 2 ontology (Bedrock Claude for concept extraction, Bedrock Cohere Embed v4 for grounding-ontology similarity, HermiT/ELK + OntoQA + OoPS! for three-tier validation), then serve it to agents via a Virtual Knowledge Graph (Ontop) over SPARQL and an MCP server. Access is namespace-isolated with RBAC: per-namespace roles (owner, maintainer, data-steward, data-analyst) plus cross-namespace `platform-admin`/`platform-viewer` roles — the clearest **Shared** evidence in this ontology set. It deploys as AWS CDK-provisioned microservices (control-plane, data-layer, ontology-engine, metric-service, vkg, mcp-server, context-manager), not a single local process. The repo is published as a **read-only mirror**: "We are not accepting pull requests at this time."
 
