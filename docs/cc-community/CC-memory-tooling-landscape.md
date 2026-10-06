@@ -425,15 +425,14 @@ content generation (the agent authoring the Markdown each session is whichever m
 running, unpinned). Overlaps with CC's built-in memory and every other cross-agent tool in this
 doc — pick one.
 
-**No rubric row.** This arc's one open substrate cell is **context·Reproducible**
+**No rubric row.** The one open cell in the agent-substrate matrix is **context·Reproducible**
 ([agent-substrate-reference-architecture.md][sub-arch]). Operator Memory's Brain content is authored by
 the session's own (unpinned) agent/model — no checksum, pinned version, or rebuild-from-source command
 is documented for that write step — the same shape as CLAUDE.md/AGENTS.md, which the reference
 architecture already holds at `no data` on Reproducible. A more generous reading could call the
 *retrieval* path `partial` (deterministic orientation, no ranking or embeddings, per
 `docs/architecture.md`), since Reproducible's trap example is specifically "LLM extraction with no
-fixed model/version"; Operator Memory has no extraction step at all for reads. Flagging this reading
-explicitly for the owner to override under O1 — as scored here, it does not move the open cell, so no
+fixed model/version"; Operator Memory has no extraction step at all for reads. Under the gap-driven scoring policy this reading is noted, not scored — as assessed here, it does not move the open cell, so no
 row is added.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) —
