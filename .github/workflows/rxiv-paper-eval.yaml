@@ -157,10 +157,17 @@ jobs:
             echo ""
             python3 - <<'PY'
           import json, pathlib
+          seen = set()
           for line in pathlib.Path("eval-output/extracts.jsonl").read_text().splitlines():
               if not line.strip():
                   continue
               d = json.loads(line)
+              # The feed can repeat a paper in one week (W26: AgentX, MedGuards);
+              # a repeated heading fails MD024. The index builder dedups the same way.
+              ident = (d.get("doi") or "").strip() or d.get("title", "")
+              if ident in seen:
+                  continue
+              seen.add(ident)
               ex = d.get("extracted", {})
               # Blank line below heading and around lists is required
               # (MD022 / MD032). Trailing heading punctuation is stripped
