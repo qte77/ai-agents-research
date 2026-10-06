@@ -11,6 +11,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.15.0] - 2026-10-06
+
+### Added
+
+- `docs/cc-native/plugins-ecosystem/CC-claude-science-analysis.md`: Claude Science, Anthropic's desktop AI workbench for scientists (sandbox, provenance-recorded artifacts, reviewer, plans, platform discrepancy across sources).
+- `docs/non-cc/knowledge-management/research-agents-landscape.md`: Polaron (materials from microscopy, §2), Claude Science (§1, beside OpenScience), and a new §5 Research Communities with the AIDDA Institute (AI-driven algorithm discovery).
+
+- `docs/sdlc-lcm/ai-security-governance-analysis.md`: Reward Hacking and Evaluation Awareness — MacDiarmid et al. (arXiv:2511.18397), EvilGenie (arXiv:2511.21654), Nguyen et al. (arXiv:2507.01786).
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`: Verbalized Confidence Calibration (Brier) metric — ConfidenceBench (arXiv:2607.20526), ConfTuner (arXiv:2508.18847), Aggarwal (arXiv:2608.27167).
+- `docs/non-cc/knowledge-management/research-agents-landscape.md`: RankEvolve (arXiv:2609.39551), multi-agent auto-research harness.
+
+- `docs/cc-community/CC-community-skills-landscape.md`: cathrynlavery/diagram-design — editorial diagram-generation skill for Claude Code, Codex, GitHub Copilot, Factory Droid, and Pi (43,595 stars, MIT; 44 diagram types by live file count, README tagline says 42).
+- `docs/cc-community/CC-memory-tooling-landscape.md`: Operator Memory (aerovato) — cross-agent "self-improving context engine" storing specs/decisions/lessons as git-tracked Markdown across `.operator/`, `.operator-shared/`, and `~/.operator/user/` (359 stars, BSD-3-Clause).
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md` + `docs/non-cc/infrastructure/jev-analysis.md`: pg-jev (realZachi/pg-jev) — PostgreSQL extension exposing Jev as SQL functions; added to the "Tools built on Jev" and ecosystem lists.
+- `docs/cc-native/ci-remote/CC-remote-access-landscape.md`: Tailnet Preview (elsheppo/tailnet-preview) — Tailscale-based web-preview tool with a Codex agent-skill tie-in, added to the DIY (tmux + Tailscale/SSH) section.
+
+- `docs/non-cc/knowledge-management/karpathy-llm-kb-analysis.md`: CorpusMap (arXiv:2609.37226), entity-page navigation layer for agentic search over document corpora.
+- `docs/non-cc/orchestrators/raven-analysis.md`: Raven's arXiv technical report (arXiv:2609.33439), compared against the README (no numeric results in the abstract).
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: ActiveSaddler (arXiv:2610.00906), curriculum-driven harness optimization; Sharpening Tax (arXiv:2610.01509), RL post-training coverage-loss critique; FineEnvs' cited-papers list resolved from its Space bibliography.
+- `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md`: three self-evolving-ontology papers — OaK (arXiv:2608.22974), SciToolAgent-Evo (arXiv:2607.28692), Evo-DKD (arXiv:2507.21438) — added alongside EvoOntology; not rubric-scored (no code, no open-cell impact).
+
+- Cross-links: EvilGenie in the benchmarks list, Brier metric ↔ system-1 decision models, Claude Science ↔ bubblewrap quirks; `_topics/harness.md` and `_topics/long-running.md` rows.
+
+- `docs/_topics/`: hub rows for diagram-design (visualization), Operator Memory (memory), Raven (harness) and the remote-access landscape (long-running); harness, rag and knowledge-graphs rows now name ActiveSaddler, Sharpening Tax, CorpusMap and the self-evolving-ontology papers.
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: link to the Brier calibration metric.
+
+- `.github/scripts/lib/relevance_eval.py`: `agent-strict` prompt variant for `llm-model-eval.yaml`, with a unit test that keeps the production workflow's prompt identical to it.
+
+### Changed
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`: refreshed the one-line Haystack entry with its current self-description, license/star count, and `v3.3.0` version gate.
+
+### Fixed
+
+- `.github/workflows/issue-triage.yaml`: issue triage runs again. GitHub Models was retired on 2026-07-30, so the action now calls Cloudflare Workers AI (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`) through `qte77/gha-issue-triage` v0.4.0 (`api_base` + `llm-api-key`). `permissions: models: read` is no longer needed (#527).
+
+- `.github/workflows/rxiv-paper-eval.yaml`: the weekly arXiv eval runs again. GitHub Models was retired on 2026-07-30, so the eval now calls Cloudflare Workers AI (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`) through `qte77/gha-rxiv-paper-eval` v0.5.0 (`api_base` + `llm-api-key`). Dependabot PRs skip the eval, since they get no repo secrets (#527).
+
+- `docs/sdlc-lcm/agent-code-analysis-landscape.md`: corrected the stale "secondary source" / "unverified" SkillSpector mentions to cross-link the first-party-verified entry in `agentic-ai-vulnerability-landscape.md`.
+
+- `docs/cc-native/plugins-ecosystem/CC-claude-science-analysis.md`: export, sharing and replay are now documented from the artifacts and multiple-computers pages (the earlier "sources don't say" was wrong); the platform table is a dated timeline from the changelog, not a disagreement; Pro auto-review is off by default.
+- `docs/sdlc-lcm/ai-security-governance-analysis.md`: MacDiarmid et al. first impart reward-hacking knowledge before RL; the subsection no longer frames all three papers as about coding agents.
+- `docs/cc-native/model-internals/CC-first-party-interpretability-index.md`: the "From Shortcuts to Sabotage" row described a different paper's chain; it now states the post's own finding and links arXiv:2511.18397.
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`: ConfidenceBench's 0.367 is no longer called "worst"; notes the benchmark cannot be re-run independently.
+- `docs/non-cc/knowledge-management/research-agents-landscape.md`: Claude Science moved to §1 beside OpenScience; AIDDA's unsourced "same loop as autoresearch" removed.
+
+- `.github/workflows/rxiv-paper-eval.yaml`: the weekly arXiv eval uses an agent-strict relevance prompt (#594). On weeks 22–30 with Llama 3.3 70B, agreement with the earlier labels rose from 46.0% to 83.6% and false accepts fell from 135 to 16; most remaining disagreements were non-agent papers the old labels had accepted.
+
 ## [0.14.0] - 2026-10-02
 
 ### Added

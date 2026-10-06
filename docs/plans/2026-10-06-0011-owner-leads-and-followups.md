@@ -14,7 +14,7 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 - **Approved 2026-10-06** (owner: "proceed" on #600). O1 decided by default the same day: gap-driven
   scoring (overridable). Coverage of every lead was checked on 2026-10-06 with a calibrated
   `git grep` over `docs/` (archive excluded); the result is in the table's *Coverage* column.
-- **Next, in order:** Phase A agent rows (F1 → N1–N5 → E1 → K1 → P1 → L1) → Phase B (owner: O1, O2) → Z.
+- **Next:** B1 (one arXiv week per day). Z released v0.15.0 on 2026-10-06. F1, N1–N5, E1, K1, P1 and L1 shipped 2026-10-06. O2 is owner-only.
 - **Arc done-when:** every row is shipped (PR number), dropped (reason), or deferred (gate + reason).
 - **The loop, per row:** branch `<type>/<slug>` → write → `make check_docs check_status` → lychee on changed
   files → PR → `/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>` → strike the row in the same PR;
@@ -55,18 +55,19 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 | Row | Item | Coverage | Gate | Done when |
 |---|---|---|---|---|
 | ~~F1~~ | ~~Apply Fable's review: Claude Science provenance/export facts (artifacts, multiple-computers, changelog pages) and platform timeline; MacDiarmid priming step; Nguyen "coding agents" framing; interpretability-index row 20 (2511.18397 vs 2024 sycophancy paper); "worst reported"; AIDDA↔autoresearch inference; Pro auto-review default; hub rows (`harness`, `long-running`) and cross-links (bwrap quirks, system-1 ↔ Brier, EvilGenie ↔ benchmarks); move Claude Science beside OpenScience~~ | n/a | agent | Done 2026-10-06 (#601). system-1 → Brier back-link left to lane B (that file is fenced to it); all other items applied, re-read at source 2026-10-06 |
-| N1 | diagram-design | none | agent | Entry with licence/stars from `gh api`, `platform_scope`, visualization hub row |
-| N2 | operator-memory | none | agent | Entry placed per skill tree; rubric row only if O1 says it could change a cell (context·Reproducible is open) |
-| N3 | pg-jev | none | agent | Licence read from `LICENSE`; added to system-1 + Jev ecosystem lists |
-| N4 | tailnet-preview | none | agent | Added with an agent tie-in from its README, or dropped with the reason in this row |
-| N5 | Papers 2609.37226, 2609.33439, 2610.00906, 2610.01509 | none | agent | Each added at its use-case home from the abstract page (verbatim quotes only); Raven paper cited in `raven-analysis.md` |
-| E1 | Existing-coverage refresh: FineEnvs cited papers; Haystack beyond one line; SkillSpector stale hedge | partial | agent | Cited papers listed or added; Haystack entry reflects current README; line 185 corrected |
-| K1 | Keyword sweep "self-evolving ontology" beyond EvoOntology | EvoOntology only | agent | Sources found are added or listed as rejected with reasons |
-| P1 | rxiv relevance precision (#594): tighten prompt and/or model, test via `llm-model-eval.yaml` against the #527 labels, rerun W38 | n/a | agent | Spot-checked rerun accepts only agent-relevant papers; #593/#599 regenerated or closed; #594 closed |
-| L1 | Link rot #598 (`tuleap.com/comparisons/` 503) | n/a | agent | Rechecked; repointed if persistent, else left to auto-close |
+| ~~N1~~ | ~~diagram-design~~ | none | agent | Done 2026-10-06 (#605): `CC-community-skills-landscape.md`, visualization hub row; 44 type references vs the tagline's 42; not scored (no skills cell can move) |
+| ~~N2~~ | ~~operator-memory~~ | none | agent | Done 2026-10-06 (#605): `CC-memory-tooling-landscape.md`, memory hub row; not scored (Brain content written by an unpinned agent, so context·Reproducible does not move) |
+| ~~N3~~ | ~~pg-jev~~ | none | agent | Done 2026-10-06 (#603): PostgreSQL License (detector reads NOASSERTION); system-1 + Jev ecosystem lists |
+| ~~N4~~ | ~~tailnet-preview~~ | none | agent | Done 2026-10-06 (#603): added to `CC-remote-access-landscape.md` § DIY; its README ties the skill to Codex, not Claude Code |
+| ~~N5~~ | ~~Papers 2609.37226, 2609.33439, 2610.00906, 2610.01509~~ | none | agent | Done 2026-10-06 (#602): CorpusMap → `karpathy-llm-kb-analysis.md`; Raven paper → `raven-analysis.md`; ActiveSaddler + Sharpening Tax → `weco-aide-…-analysis.md`; hub rows |
+| ~~E1~~ | ~~Existing-coverage refresh: FineEnvs cited papers; Haystack beyond one line; SkillSpector stale hedge~~ | partial | agent | Done 2026-10-06: FineEnvs cited papers (#602; 20 arXiv IDs, one already in the corpus); Haystack refreshed and SkillSpector hedge fixed (#603) |
+| ~~K1~~ | ~~Keyword sweep "self-evolving ontology" beyond EvoOntology~~ | EvoOntology only | agent | Done 2026-10-06 (#602): OaK, SciToolAgent-Evo, Evo-DKD added (all paper-only); four rejects stated in the doc |
+| ~~P1~~ | ~~rxiv relevance precision (#594): tighten prompt and/or model, test via `llm-model-eval.yaml` against the #527 labels, rerun W38~~ | n/a | agent | Done 2026-10-06 (#604): agent-strict prompt (70B, W22–30: 83.6% vs 46.0% agreement, 16 vs 135 false accepts); #593/#599 closed; W40 rerun accepted 6/50, all agent papers (#606); #594 closed |
+| ~~L1~~ | ~~Link rot #598 (`tuleap.com/comparisons/` 503)~~ | n/a | agent | Done 2026-10-06, no change: the link passes again (lychee); #598 auto-closes on the next scheduled run |
 | ~~O1~~ | ~~Scoring policy for new tools~~ | n/a | owner | Decided by default 2026-10-06: **gap-driven** — score only when a tool could change a reference-architecture cell (owner may override) |
 | O2 | `qte77/gha-issue-triage` `self-triage.yml` has no LLM secret | n/a | owner | Owner adds a secret there; default: leave until then |
-| Z | Release: collect the pending `changelog.d/` fragments (#587, #589, #590–#592) plus this arc's | n/a | agent | `bump-my-version` run, release PR merged, tag + GitHub Release published |
+| B1 | Backfill arXiv weeks W31–W39 (the eval state stops at W30; W40 ran 2026-10-06): one `rxiv-paper-eval` dispatch per day with `week=<n>`, never two on one day | n/a | agent | `.github/state/rxiv-paper-eval-state.json` lists W31–W40 and each triage PR is reviewed |
+| ~~Z~~ | ~~Release: collect the pending `changelog.d/` fragments (#587, #589, #590–#592) plus this arc's~~ | n/a | agent | Done 2026-10-06: v0.15.0 released (#608, tag + GitHub Release) |
 
 **Deferred (not rows):** #588 held leads (Originator, Serova, C3) — waiting on first-party evidence;
 plan 0001 (#452) — unchanged; upstream `gha-rxiv-paper-eval` leftovers (dispatch and example workflows still on

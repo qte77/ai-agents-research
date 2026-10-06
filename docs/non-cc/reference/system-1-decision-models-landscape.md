@@ -27,6 +27,8 @@ Bespoke-MiniCheck — are cross-referenced rather than repeated; see
 Every score below follows the [agent substrate rubric][rubric]; licenses are confirmed against
 each repository's own `LICENSE` file, not GitHub's license-detection metadata alone.
 
+Whether an act/abstain decision can be trusted is a calibration question; for the Brier-score metric and why stated confidence and committed action can diverge, see [agent-evaluation-metrics-landscape.md § Verbalized Confidence Calibration](../../sdlc-lcm/agent-evaluation-metrics-landscape.md#verbalized-confidence-calibration-brier).
+
 ## Laya (NandhaKishorM)
 
 **Repo**: [NandhaKishorM/laya][laya] | **License**: Apache-2.0 (confirmed against `LICENSE`) |

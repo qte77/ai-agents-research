@@ -15,3 +15,4 @@ the corpus. Pointers only; see [the hub index](README.md).
 
 Related hubs: [harness.md](harness.md).
 | [CC-claude-science-analysis.md](../cc-native/plugins-ecosystem/CC-claude-science-analysis.md) | Claude Science: remote jobs on SSH/Slurm hosts or Modal GPUs; sessions pause and resume at usage limits | cc-native |
+| [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) | Monitoring and steering long-running CC sessions from phone or web (Remote Control, Happy Coder, Omnara, CloudCLI, Emdash, DIY tmux + Tailscale incl. Tailnet Preview) | cc-native |
