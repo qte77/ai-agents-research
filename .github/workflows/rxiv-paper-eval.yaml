@@ -98,9 +98,11 @@ jobs:
     with:
       server: ${{ inputs.server || vars.RXIV_SERVER || 'arxiv' }}
       topic: ${{ vars.RXIV_TOPIC || 'LLM-based autonomous agents, tool use and function calling, multi-agent coordination, agentic evaluation and benchmarking, and LLM reasoning and planning' }}
-      # Use the script's DEFAULT_RELEVANCE_PROMPT (its "methodology transferable"
-      # language already covers AI-agent methodology papers across domains).
-      relevance_prompt: ""
+      # Agent-strict prompt (#594): the upstream default's "transferable methodology"
+      # clause admitted almost any ML paper (70B: 46% agreement, 135 false accepts on
+      # W22-30 vs 83.6% / 16 with this prompt). Kept verbatim in sync with
+      # AGENT_STRICT_PROMPT in .github/scripts/lib/relevance_eval.py by a unit test.
+      relevance_prompt: "You are a relevance classifier. Reply with a single token: YES or NO. Answer YES only if the paper's main contribution is about: {topic}. That means it builds, trains, evaluates or analyses agents or reasoning systems driven by large language models (tool use, function calling, multi-agent coordination, planning, agent benchmarks or agent safety). Answer NO for general machine-learning methods (optimizers, architectures, sampling, clustering, vision or speech models) without an LLM-agent focus, for robotics or control work without an LLM agent, and for applications of machine learning in other fields. When unsure, answer NO."
       # No-op for arxiv (no Category column in feed CSV); only meaningful if
       # dispatching biorxiv/medrxiv runs.
       categories: ${{ vars.RXIV_CATEGORIES || '' }}
