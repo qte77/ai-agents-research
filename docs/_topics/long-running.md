@@ -14,3 +14,4 @@ the corpus. Pointers only; see [the hub index](README.md).
 | [software-factory-landscape.md](../sdlc-lcm/software-factory-landscape.md) | Cloudflare's nightly, GHA-hosted issue-triage pipeline (reproduce/diagnose/verify/fix) as a hands-off long-running agent workflow | sdlc-lcm |
 
 Related hubs: [harness.md](harness.md).
+| [CC-claude-science-analysis.md](../cc-native/plugins-ecosystem/CC-claude-science-analysis.md) | Claude Science: remote jobs on SSH/Slurm hosts or Modal GPUs; sessions pause and resume at usage limits | cc-native |
