@@ -2,8 +2,8 @@
 title: "Karpathy LLM Knowledge Base: Markdown-First Alternative to RAG"
 purpose: Analyse Karpathy's LLM wiki pattern and gap-compare against ai-agents-research
 created: 2026-04-06
-updated: 2026-09-24
-validated_links: 2026-04-06
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: assess
 ---
 
@@ -72,6 +72,36 @@ This repository already implements the Karpathy pattern's core thesis — struct
 
 The gist's abstract, domain-agnostic framing makes it a useful reference for any qte77 repo adopting a knowledge-base pattern (e.g. `coding-harness-eval` documentation, cross-repo learnings).
 
+## Related Research: CorpusMap — Entity Pages as a Navigation Layer (added 2026-10-06)
+
+[CorpusMap][corpusmap-paper] ("Follow the Entities: A Corpus Map for Agentic Search," Jeong, Jauhar,
+Hwang, Nam; arXiv 2609.37226, submitted 2026-09-29; no author affiliations shown on the abstract page) is
+a first-party research instance of the same entity-page idea this doc's Wiki layer uses ("Compiled
+summaries, **entity pages**, cross-refs," row above) — but built for multi-document agentic search rather
+than a personal/team knowledge base. Per the abstract (verbatim): "when the corpus is exposed only as a
+flat collection of files, a relevant document gives no indication of how it relates to others, so the
+agent must rediscover these relationships for every query... To address this, we introduce CorpusMap, a
+navigation layer that organizes the corpus around its recurring entities... CorpusMap represents each
+recurring entity as an Entity Page that aggregates information about it and links to every document that
+refers to it, forming a graph between entities and documents that the agent can traverse." A key
+distinction from Karpathy's pattern: CorpusMap's entity pages are "constructed offline by resolving
+mentions of the same entity across documents, [so] its links are shared across queries rather than
+rediscovered repeatedly at inference time" — the same "compiled once, reused many times" argument this
+doc's gap analysis makes for the wiki layer vs. raw RAG.
+
+Reported evaluation (verbatim, self-reported, no independent reproduction found): "Using 7 different
+models with 3 benchmark datasets, we show that CorpusMap improves both evidence discovery and answer
+quality over raw-corpus agentic search while using fewer tokens on average, and further outperforms 4
+alternative navigation layers." **No numeric deltas are given in the abstract** — the claim is relative
+and qualitative only, checked directly on the abstract page (2026-10-06). This is cited here as academic
+validation of the entity-page navigation concept, not as evidence about this repository's own wiki
+pattern; CorpusMap targets agentic search over a static document corpus, not LLM-authored compilation
+into a persistent wiki.
+
+Not rubric-scored: CorpusMap is a search-navigation technique, not a memory/context store, and does not
+touch the open Context·Reproducible cell in
+[agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md).
+
 ## Sources
 
 | Source | Content |
@@ -80,6 +110,7 @@ The gist's abstract, domain-agnostic framing makes it a useful reference for any
 | [Karpathy X post (original)][x-post] | Original announcement with scale numbers (~100 articles, ~400 K words) |
 | [Karpathy X post (follow-up)][x-followup] | Follow-up noting viral response, links to gist |
 | [TechBuddies analysis][techbuddies] | Third-party deep-dive with RAG comparison table |
+| [arXiv 2609.37226 abstract page][corpusmap-paper] | Title, authors, submission date (2026-09-29), full abstract verbatim, confirmation of no numeric deltas in the abstract — accessed 2026-10-06 |
 
 [gist]: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
 [x-post]: https://x.com/karpathy/status/2039805659525644595
@@ -90,3 +121,4 @@ The gist's abstract, domain-agnostic framing makes it a useful reference for any
 [arch]: ../../architecture.md
 [mlint]: ../../../.markdownlint.json
 [changelog]: ../../../CHANGELOG.md
+[corpusmap-paper]: https://arxiv.org/abs/2609.37226
