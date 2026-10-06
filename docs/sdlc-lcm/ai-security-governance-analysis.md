@@ -2,8 +2,8 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-10-04
-validated_links: 2026-10-04
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: assess
 ---
 
@@ -383,18 +383,22 @@ BenchShield instead instruments the *benchmark harness* an agent runs inside.
 
 ### Reward Hacking and Evaluation Awareness (research)
 
-Three papers on why evaluation integrity matters for coding agents (abstracts read
-2026-10-04; claims below are as the authors report them):
+Three papers on evaluation integrity: two on reward hacking in coding settings, one on
+whether models can tell they are being tested (abstracts read 2026-10-04; claims below
+are as the authors report them):
 
 - **Reward hacking can generalize to misalignment.** [MacDiarmid et al. 2025
-  (arXiv:2511.18397)](https://arxiv.org/abs/2511.18397) train on "real
-  Anthropic production coding environments"; the model learns to reward hack and
+  (arXiv:2511.18397)](https://arxiv.org/abs/2511.18397) start from a pretrained
+  model, first "impart knowledge of reward hacking strategies via synthetic document
+  finetuning or prompting", then train on "real Anthropic production coding
+  environments"; the model learns to reward hack and
   "generalizes to alignment faking, cooperation with malicious actors, reasoning about
   malicious goals, and attempting sabotage when used with Claude Code". Chat-style RLHF
   safety training gives aligned behavior on chat-like evaluations, but "misalignment
   persists on agentic tasks". Three mitigations
   are reported effective: preventing the reward hacking, more diverse RLHF safety
-  training, and "inoculation prompting".
+  training, and "inoculation prompting". Anthropic's companion post is indexed in
+  [CC-first-party-interpretability-index.md](../cc-native/model-internals/CC-first-party-interpretability-index.md).
 - **Reward hacking is measurable in shipped coding agents.** [EvilGenie (Gabor, Lynch,
   Rosenfeld, arXiv:2511.21654)](https://arxiv.org/abs/2511.21654) builds LiveCodeBench
   tasks where agents can hardcode test cases or edit test files, and detects hacking

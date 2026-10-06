@@ -35,9 +35,24 @@ _BORDERLINE_SENTENCE = " When borderline, prefer YES if methodology is transfera
 
 # Reason: named variants (not free text) keep workflow inputs injection-safe.
 # "no-borderline-yes" tests whether the bias sentence drives false accepts (#527).
+# Reason: the production prompt was written for a non-agent topic; its "transferable
+# methodology" clause admits almost any ML paper for an agents topic (#594).
+AGENT_STRICT_PROMPT = (
+    "You are a relevance classifier. Reply with a single token: YES or NO. "
+    "Answer YES only if the paper's main contribution is about: {topic}. "
+    "That means it builds, trains, evaluates or analyses agents or reasoning systems "
+    "driven by large language models (tool use, function calling, multi-agent "
+    "coordination, planning, agent benchmarks or agent safety). "
+    "Answer NO for general machine-learning methods (optimizers, architectures, "
+    "sampling, clustering, vision or speech models) without an LLM-agent focus, for "
+    "robotics or control work without an LLM agent, and for applications of machine "
+    "learning in other fields. When unsure, answer NO."
+)
+
 PROMPT_VARIANTS = {
     "default": DEFAULT_RELEVANCE_PROMPT,
     "no-borderline-yes": DEFAULT_RELEVANCE_PROMPT.replace(_BORDERLINE_SENTENCE, ""),
+    "agent-strict": AGENT_STRICT_PROMPT,
 }
 
 _THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)

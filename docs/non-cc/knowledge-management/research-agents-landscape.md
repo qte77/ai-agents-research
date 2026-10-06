@@ -4,8 +4,8 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-04
-validated_links: 2026-10-04
+updated: 2026-10-06
+validated_links: 2026-10-06
 ---
 
 Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
@@ -33,6 +33,7 @@ Agents that conduct multi-step research and generate research outputs.
 - [RankEvolve][rankevolve] — auto-research framework for evolving generative ranking models. An "Executable Operating Protocol (EOP)" declares phases, gates, branches and loops, and the runtime enforces the compiled state machine; a "meta-meta-harness" composes whole coding-agent products, "including Claude Code and Codex", as nodes that review and repair each other's work. Authors report all-oracle execution accuracy rising from 45.8% (best single product) to 62.5% (paired +16.7 points, 95% CI [6.6, 26.7]) in a budget-matched evaluation, and a knowledge layer that carries findings, "including negative results", across iterations. Paper only (Sep 2026; no code link on the abstract page).
 - [Hyperresearch (jordan-gibbs)][hyperresearch] — Claude Code skill (`/hyperresearch <query>`) running a tier-adaptive 16-step research pipeline: 250+ sources per `premier`-scale run, adversarial citation verification, syndication-independence auditing, and a persistent cross-session vault; the README states it "currently leads the DeepResearch-Bench RACE leaderboard", qualified as "a forward-looking projection from a stratified pilot… third party validation is pending". MIT, 3.5k★.
 - [OpenScience (Synthetic Sciences)][openscience] — open-source AI research workbench: plan → literature search → write/run code → run experiments → write up findings, with 500+ bundled scientific skills (biology/chemistry/physics/ML/data engineering), ChEMBL/UniProt/PubMed/arXiv connectors, and desktop/browser/CLI interfaces; repo ships a `CLAUDE.md` and credits Claude Scientific Writer (K-Dense) among its skill sources. Apache-2.0, 3.6k★.
+- [Claude Science (Anthropic)][claude-science] — first-party desktop workbench, the same shape as OpenScience above: Claude runs Python/R/shell in a sandbox and saves "versioned artifacts with a full provenance record", with a reviewer that checks claims against the execution record. Beta. Full analysis: [CC-claude-science-analysis.md](../../cc-native/plugins-ecosystem/CC-claude-science-analysis.md).
 - [ScientistTwo (Google Cloud AI Research)][scientisttwo] — autonomous end-to-end research system across six agent groups (Idea Generator → Evaluator → Analyzer → Writer → Peer-Review → Meta-Review); paper reports besting human baselines on 80.4% of 107 evaluated research problems (avg. +25.2% relative improvement) across 86 generated papers in eight AI domains, with 91.9%/72.1% acceptance under its ScholarPeer/Stanford-Agentic-Reviewer simulated reviewers ([paper][scientisttwo-paper]).
 - [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's [`/deep-research`](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research).
 - [local-deep-researcher (langchain-ai)][local-deep-researcher] — **distinct from the above** despite the near-identical name: LangChain's minimal LangGraph *reference* implementation of the search→summarize→reflect loop (Ollama/LMStudio, local-only by default) — the canonical starting pattern, not a full assistant. MIT, ~9.2k★.
@@ -73,13 +74,12 @@ Literature search, paper analysis, and discovery (assistive, not autonomous cond
 
 - [Paper2Agent][paper2agent] — converts a paper + codebase into an interactive **MCP-server agent** (auto-generated, test-refined); integrates with Claude Code. Cross-ref: [ai-security-governance-analysis.md § MCP Ecosystem Security](../../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) for MCP-server hardening.
 - [PaperQA2][paperqa2] — superhuman scientific-literature RAG (beats PhD/postdoc on LitQA2); powers WikiCrow and ContraCrow ([paper][paperqa2-paper]).
-- [Claude Science (Anthropic)][claude-science] — first-party desktop workbench: Claude runs Python/R/shell in a sandbox and saves "versioned artifacts with a full provenance record", with a reviewer that checks claims against the execution record. Beta. Full analysis: [CC-claude-science-analysis.md](../../cc-native/plugins-ecosystem/CC-claude-science-analysis.md).
 
 ## 5. Research Communities
 
 Not tools: groups that coordinate work on a research use case.
 
-- [AIDDA Institute][aidda] — "Institute for AI Driven Discovery of Algorithms": "Coordinating research, knowledge sharing, and networking around AI-driven algorithm discovery" through speaker events and working groups. Its site names AlphaEvolve, CodeEvolve, OpenEvolve and ShinkaEvolve; committee members include developers of CodeEvolve and OpenEvolve. Use case: autoresearch on algorithms, the same loop as [autoresearch (Karpathy)][autoresearch] applied to algorithm discovery.
+- [AIDDA Institute][aidda] — "Institute for AI Driven Discovery of Algorithms": "Coordinating research, knowledge sharing, and networking around AI-driven algorithm discovery" through speaker events and working groups. Its site names AlphaEvolve, CodeEvolve, OpenEvolve and ShinkaEvolve; committee members include developers of CodeEvolve and OpenEvolve. Use case: AI-driven discovery of algorithms (an institute, not a tool).
 
 ## Mapping to the CC `/deep-research` Harness
 
