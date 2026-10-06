@@ -3,8 +3,8 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: assess
 ---
 
@@ -95,6 +95,47 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 
 `scored 2026-09-30`
 
+**Related self-evolving-ontology research (paper-only, added 2026-10-06).** Three further 2025–2026
+papers propose autonomous/dynamic ontology updating for agents, found via web and arXiv search beyond
+EvoOntology above. None of the three abstract pages links a code repository; a GitHub repo search
+(`gh search repos`, 2026-10-06) for each paper's own name found nothing matching for "Evo-DKD" or
+"ontology-as-a-kernel"/"OaK" (zero results both), and for "SciToolAgent" found only the *predecessor*,
+non-Evo project — [HICAI-ZJU/SciToolAgent][scitoolagent-repo] (428 stars) — which this entry does not
+claim is the Evo variant's code; no repository confirmed as SciToolAgent-Evo's own was found. None is
+rubric-scored here — the arc's gap-driven policy reserves new scored rows for sources that could move an
+open cell in
+[agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md) (the
+only open cell is Context·Reproducible; these are Ontology-subject and would not move it even if scored),
+and a system with no code cannot be scored on this rubric's evidence terms the way EvoOntology's shipped
+repo can.
+
+- **[OaK][oak-paper]** ("Toward Effective and Reliable LLM Agents via Dynamic Ontology," Zhang, Sun, Yang,
+  Cui, Guo, Hu; arXiv 2608.22974, submitted 2026-08-24) builds a task-oriented ontology and its knowledge
+  graph from task requirements and training data, then iteratively refines both using judge feedback. Per
+  the abstract (verbatim): "an ontology that appears semantically plausible may not contain the relational
+  structures needed for actual decision making... OaK constructs an ontology and its knowledge graph,
+  generates task-adaptation functions for graph reasoning, and uses judge feedback to iteratively refine
+  both." Evaluated on TravelPlanner, CRMArenaPro and ToolQA; self-reported gains only, no independent
+  reproduction found.
+- **[SciToolAgent-Evo][scitoolagent-paper]** ("an ontology-aware self-evolving agent for open-world
+  scientific tool acquisition," Tang, Zhou, Wang, Ding, Zhang, Chen; arXiv 2607.28692, submitted
+  2026-07-30) evolves a *tool-graph* ontology rather than a domain/business ontology: "Once a novel tool is
+  acquired, its scientific ontology is completed online for seamless integration into the known graph"
+  (verbatim). It introduces its own benchmark, OpenSciToolBench ("900 realistic tasks across four
+  difficulty levels"); narrower in scope than EvoOntology (tool metadata, not general domain semantics).
+- **[Evo-DKD][evodkd-paper]** ("Dual-Knowledge Decoding for Autonomous Ontology Evolution in Large Language
+  Models," Raman, Aravindh R, Ragav; arXiv 2507.21438, submitted 2025-07-29) proposes two parallel decoding
+  streams — one proposing ontology edits, one producing natural-language justifications — coordinated by a
+  gating mechanism, in "a closed reasoning loop: proposed ontology edits are validated... and then
+  injected into the knowledge base." **Weaker than the other two on implementation evidence**: the authors
+  state, verbatim, "due to GPU constraints, we simulate the dual-decoder behavior using prompt-based mode
+  control to approximate coordinated decoding in a single-stream mode" — the paper's own headline
+  architecture (dual decoders) was not actually run as described; self-reported results only.
+
+Other candidates found during this search (EvoGraph-R1, "LLM Change Agent", a graph-engineering survey, the
+unrelated "Ontology Access Kit"/`oaklib`) were rejected as out of scope for this section; see the lane
+report for the one-line reason on each.
+
 **[AWS context-ontology-accelerator][coa]** (Apache-2.0, 885★, pushed 2026-09-29) is a full semantic-context platform following a **Scan → Model → Serve** pipeline: ingest sources, induce an OWL 2 ontology (Bedrock Claude for concept extraction, Bedrock Cohere Embed v4 for grounding-ontology similarity, HermiT/ELK + OntoQA + OoPS! for three-tier validation), then serve it to agents via a Virtual Knowledge Graph (Ontop) over SPARQL and an MCP server. Access is namespace-isolated with RBAC: per-namespace roles (owner, maintainer, data-steward, data-analyst) plus cross-namespace `platform-admin`/`platform-viewer` roles — the clearest **Shared** evidence in this ontology set. It deploys as AWS CDK-provisioned microservices (control-plane, data-layer, ontology-engine, metric-service, vkg, mcp-server, context-manager), not a single local process. The repo is published as a **read-only mirror**: "We are not accepting pull requests at this time."
 
 `subject: ontology`
@@ -166,6 +207,10 @@ A complementary research direction formalizes *why* this grounding improves reli
 | André Lindenberg — *The Change of Mind Is Information* (LinkedIn, 2026-09-05; `linkedin.com/pulse/change-mind-information-andré-lindenberg-uvcue`) | Design lens: bitemporal correction as the cheap starting point for an agent-facing ontology (LinkedIn — not link-checked) |
 | André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
+| [OaK abstract page][oak-paper] | Task-oriented ontology-as-a-kernel method, judge-feedback refinement loop, TravelPlanner/CRMArenaPro/ToolQA results, confirmation of no code link — accessed 2026-10-06 |
+| [SciToolAgent-Evo abstract page][scitoolagent-paper] | Self-evolving tool-graph ontology for scientific tool acquisition, OpenSciToolBench benchmark, confirmation of no code link — accessed 2026-10-06 |
+| [Evo-DKD abstract page][evodkd-paper] | Dual-decoder ontology-evolution method and its own "simulated due to GPU constraints" limitation, confirmation of no code link — accessed 2026-10-06 |
+| `gh search repos` for "SciToolAgent", "Evo-DKD", "ontology-as-a-kernel"/"OaK", 2026-10-06 | Confirms no code repo for Evo-DKD or OaK; finds only the non-Evo predecessor SciToolAgent repo (428★, HICAI-ZJU) |
 
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
@@ -197,3 +242,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 [semantica-changelog]: https://github.com/semantica-agi/semantica/blob/main/CHANGELOG.md
 [ai-act-12]: https://artificialintelligenceact.eu/article/12/
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
+[oak-paper]: https://arxiv.org/abs/2608.22974
+[scitoolagent-paper]: https://arxiv.org/abs/2607.28692
+[evodkd-paper]: https://arxiv.org/abs/2507.21438
+[scitoolagent-repo]: https://github.com/HICAI-ZJU/SciToolAgent
