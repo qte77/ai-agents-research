@@ -4,8 +4,8 @@ purpose: Static (SCA) and dynamic (DCA) code-analysis for AI coding agents — b
 category: landscape
 status: assess
 created: 2026-07-23
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-06
+validated_links: 2026-10-06
 ---
 
 ## What It Is
@@ -54,9 +54,12 @@ agent-written code. Announced **2026-06-23** ([official blog][guardian-blog]). _
 rule-pack names/counts circulating on aggregator sites ("27/122/186 rules") are **not
 confirmed on any first-party Semgrep source** and are omitted here._
 
-`SkillSpector` (audits agent **Skills** for vulnerabilities) is a further agent-specific
-static analyzer, but its coverage here is from a secondary writeup — treat as unverified
-until its own repo is checked.
+[SkillSpector][skillspector] (NVIDIA, Apache-2.0) is a further agent-specific static analyzer: a
+two-stage (static + optional LLM) scanner for AI-agent skills (Claude Code, Codex CLI, Gemini CLI,
+MCP) across 71 vulnerability patterns. First-party-verified (repo and `LICENSE` read directly,
+19,514★ as of `gh api`, 2026-10-06) — the full write-up, with its research-basis figures and
+Verified Skills pipeline role, is at
+[agentic-ai-vulnerability-landscape.md § NVIDIA SkillSpector][skillspector-vuln].
 
 ## 2. Dynamic Analysis (DCA) — observing agent behavior at runtime
 
@@ -182,8 +185,9 @@ synthesis opportunity, not an existing CC feature.
   (Ultimate); GitHub Advanced Security (private repos); ARMO/Metoro.
 - **Research, not shipped products**: VIPER-MCP, AgentSight, VulnAgent-R2, VulnLLM-R,
   CodeMender (not public at time of Google's post).
-- **Unverified**: agent-audit license; SkillSpector (secondary source); Forgejo-Actions
-  portability of GitHub-marketplace security actions.
+- **Unverified**: agent-audit license; Forgejo-Actions portability of GitHub-marketplace
+  security actions. SkillSpector is now first-party-verified (Apache-2.0, 19,514★, `gh api`
+  2026-10-06) — see [agentic-ai-vulnerability-landscape.md § NVIDIA SkillSpector][skillspector-vuln].
 
 ## Sources
 
@@ -199,6 +203,7 @@ synthesis opportunity, not an existing CC feature.
 | [VulnAgent-R2][vulnagent] (2603.13384) · [VulnLLM-R][vulnllm] (2512.07533) · [ICLR formalization][iclr-formalize] (#10016279) | Agent-based detection papers (arXiv/ICLR-first-party; results paper-claimed) |
 | [OWASP Top 10 for Agentic Applications 2026][owasp-agentic-top10] | Ranked agentic-risk list, 2025-12-09 (distinct from MAESTRO / LLM Top 10; categories not enumerated here) |
 | [GitLab application security][gitlab-appsec] · [GitHub code scanning][gh-codescan] · [Forgejo Actions][forgejo-actions] | CI-forge SCA/DCA capability, verified per forge |
+| [NVIDIA/SkillSpector][skillspector] | Repo, LICENSE (Apache-2.0), star count (`gh api`, 2026-10-06) — moved from "unverified secondary source" to first-party |
 
 [iclr-formalize]: https://iclr.cc/virtual/2026/10016279
 [codeql]: https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning-with-codeql
@@ -220,3 +225,5 @@ synthesis opportunity, not an existing CC feature.
 [gh-codescan]: https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning
 [forgejo-actions]: https://forgejo.org/docs/latest/user/actions/
 [specula]: https://github.com/specula-org/Specula
+[skillspector]: https://github.com/NVIDIA/SkillSpector
+[skillspector-vuln]: agentic-ai-vulnerability-landscape.md#nvidia-skillspector--agent-skill-security-scanner
