@@ -266,7 +266,9 @@ jobs:
         if: steps.dedup.outputs.unchanged != 'true'
         uses: ./.github/actions/create-triage-pr
         with:
-          branch-prefix: chore/rxiv-paper-triage
+          # Week key in the branch name: runs for different weeks on one day no longer
+          # collide on a date-only branch (CONTRIBUTING § Auto-generated content).
+          branch-prefix: chore/rxiv-paper-triage-${{ steps.key.outputs.key }}
           report-dest: triage/rxiv/papers
           extra-files: >-
             .github/state/rxiv-paper-eval-state.json
