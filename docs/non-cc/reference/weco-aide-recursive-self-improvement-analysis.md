@@ -222,9 +222,9 @@ for:
   vs. agent-owns-the-loop distinction, and for its own reported SWE-bench Verified gain (41.8%→56.4%).
 - [Yu et al., "OpenForgeRL"][fe-yu] (arXiv:2607.21557) — the closest sibling work; `basics.mdx` calls it
   "the strongest multi-harness results published so far."
-- [KwaiKAT Team, "KAT-Coder-V2.5 Technical Report"][fe-kwaikat] (arXiv:2607.05471) — `basics.mdx` quotes it
-  verbatim for the central claim that a model trained on one harness "learns not 'how to solve the task'
-  but 'how to solve the task under that particular harness's interface conventions.'"
+- [KwaiKAT Team, "KAT-Coder-V2.5 Technical Report"][fe-kwaikat] (arXiv:2607.05471) — `why-multi-harness.mdx`
+  quotes it verbatim for the central claim that a model trained on one harness "learns not 'how to solve
+  the task' but 'how to solve the task under that particular harness's interface conventions.'"
 - [Peng et al., "Orchard"][fe-peng] (arXiv:2605.15040) — cited for measuring cross-harness skill transfer.
 - [Poolside, "Laguna M.1/XS.2 Technical Report"][fe-poolside] (arXiv:2605.27605) — cited for training data
   that deliberately includes trajectories from external harnesses to encourage generalization.
@@ -234,9 +234,10 @@ for:
   ... in TRL for 1,000 steps," already quoted verbatim above in this doc's FineEnvs section).
 - [Kwon et al., "Efficient Memory Management... (vLLM)"][fe-kwon] (arXiv:2309.06180) — the inference server
   used to serve rollouts.
-- [Jiménez et al., "SWE-bench"][fe-jimenez] (arXiv:2310.06770), [Merrill et al., "Terminal-Bench"][fe-merrill]
-  (arXiv:2601.11868) and [Deng et al., "SWE-Bench Pro"][fe-deng] (arXiv:2509.16941) — the benchmark families
-  the article's harnesses (and Harbor) are evaluated under.
+- [Jiménez et al., "SWE-bench"][fe-jimenez] (arXiv:2310.06770) and [Merrill et al., "Terminal-Bench"][fe-merrill]
+  (arXiv:2601.11868) — the two benchmark families Harbor's own integration is built against.
+- [Deng et al., "SWE-Bench Pro"][fe-deng] (arXiv:2509.16941) — cited in `training.mdx` for a per-harness
+  model score ("Claude Opus 4.5 scores 45.9% on SWE-bench Pro"), not as a Harbor-evaluated benchmark.
 - Model technical reports cited for how each names/handles harnesses in its own benchmark reporting:
   [Kimi K2][fe-kimik2] (arXiv:2507.20534), [Kimi K3][fe-kimik3] (arXiv:2607.24653),
   [Qwen3-Coder-Next][fe-qwen] (arXiv:2603.00729) and [DeepSeek-V3.2][fe-deepseekv32] (arXiv:2512.02556).
@@ -349,13 +350,18 @@ single-shot accuracy." No code repository or project page was found on the abstr
 2026-10-06), matching the "results published, code not yet released" pattern this corpus already tracks
 for HarnessX, AIDE² and ROFT above.
 
-Why this belongs in this doc rather than being a harness-search entry of its own: ROFT fine-tunes a base
-model on its own retrospectives and reports gains without discussing coverage loss; Sharpening Tax is
-first-party evidence that the fine-tuning/post-training step ROFT and similar methods rely on carries a
-coverage cost that a harness-level choice (more test-time sampling, PTGS) can partly recover — a direct
-counterpoint to treating post-training as a free way to move capability off the harness and into the
-model. Not rubric-scored: this is a diagnostic finding and a sampling technique, not a shipped harness or
-memory/context system, and it does not touch the open Context·Reproducible cell in
+Why this belongs in this doc rather than being a harness-search entry of its own: Sharpening Tax is
+first-party evidence that *RL* post-training can cost agentic solution coverage even while raising
+single-shot accuracy — relevant context for reading any "we fine-tuned/post-trained the model and it got
+better" claim in this family. ROFT (above) is explicitly RL-free ("no RL, no external instruction
+signal"), so whether ROFT's retrospection-based SFT pays the same tax is **not tested by this paper** and
+is not claimed here. The two papers' mitigations also sit at different layers, not a harness-vs-model
+substitution: PTGS is itself "applied during RL training" (a training-time sampler, per the abstract),
+while the base finding — a frozen, non-post-trained model plus "a light inference harness" can match or
+beat its post-trained counterpart given enough test-time budget — is the inference-side comparison point
+worth reading alongside RRSI/ROFT's harness-time and training-time interventions. Not rubric-scored: this
+is a diagnostic finding and a training-time sampling technique, not a shipped harness or memory/context
+system, and it does not touch the open Context·Reproducible cell in
 [agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md).
 
 ## Cross-References

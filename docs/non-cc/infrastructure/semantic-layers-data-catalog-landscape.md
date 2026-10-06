@@ -99,9 +99,10 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 papers propose autonomous/dynamic ontology updating for agents, found via web and arXiv search beyond
 EvoOntology above. None of the three abstract pages links a code repository; a GitHub repo search
 (`gh search repos`, 2026-10-06) for each paper's own name found nothing matching for "Evo-DKD" or
-"ontology-as-a-kernel"/"OaK" (zero results both), and for "SciToolAgent" found only the *predecessor*,
-non-Evo project — [HICAI-ZJU/SciToolAgent][scitoolagent-repo] (428 stars) — which this entry does not
-claim is the Evo variant's code; no repository confirmed as SciToolAgent-Evo's own was found. None is
+"ontology-as-a-kernel"/"OaK" (zero results both), and for "SciToolAgent" found only a same-named, non-Evo
+project — [HICAI-ZJU/SciToolAgent][scitoolagent-repo] (428 stars) — whose relationship to the Evo paper
+(same research group? an earlier version?) is not stated on either page, so it is not claimed here as the
+Evo variant's code; no repository confirmed as SciToolAgent-Evo's own was found. None is
 rubric-scored here — the arc's gap-driven policy reserves new scored rows for sources that could move an
 open cell in
 [agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md) (the
@@ -210,7 +211,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 | [OaK abstract page][oak-paper] | Task-oriented ontology-as-a-kernel method, judge-feedback refinement loop, TravelPlanner/CRMArenaPro/ToolQA results, confirmation of no code link — accessed 2026-10-06 |
 | [SciToolAgent-Evo abstract page][scitoolagent-paper] | Self-evolving tool-graph ontology for scientific tool acquisition, OpenSciToolBench benchmark, confirmation of no code link — accessed 2026-10-06 |
 | [Evo-DKD abstract page][evodkd-paper] | Dual-decoder ontology-evolution method and its own "simulated due to GPU constraints" limitation, confirmation of no code link — accessed 2026-10-06 |
-| `gh search repos` for "SciToolAgent", "Evo-DKD", "ontology-as-a-kernel"/"OaK", 2026-10-06 | Confirms no code repo for Evo-DKD or OaK; finds only the non-Evo predecessor SciToolAgent repo (428★, HICAI-ZJU) |
+| `gh search repos` for "SciToolAgent", "Evo-DKD", "ontology-as-a-kernel"/"OaK", 2026-10-06 | Confirms no code repo for Evo-DKD or OaK; finds only a same-named, non-Evo SciToolAgent repo (428★, HICAI-ZJU) whose relation to the Evo paper is unstated |
 
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
