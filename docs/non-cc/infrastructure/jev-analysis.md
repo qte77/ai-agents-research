@@ -2,8 +2,8 @@
 title: Jev (TypeSafe AI) — System-One Decision Model
 purpose: What Jev is (question types, pricing, limits) and the qte77/feelings measured pilot using it as a pre-CI code-review gate.
 created: 2026-09-30
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: trial
 ---
 
@@ -105,7 +105,7 @@ classifier API, not a persistent store, so **Shared** and **Versionable** are ma
   (`.fill<T>()`) integration with Jev, and Laya as the open-weight alternative
 - [system-1-decision-models-landscape.md](../reference/system-1-decision-models-landscape.md) —
   open-weight and research alternatives (Laya, kev, CLM, GLiNER2.5-Decide, RuVector) and tools built on
-  Jev (probably, abide, jev-ultrafast, jevgrep)
+  Jev (probably, abide, jev-ultrafast, jevgrep, pg-jev)
 
 ## Sources
 

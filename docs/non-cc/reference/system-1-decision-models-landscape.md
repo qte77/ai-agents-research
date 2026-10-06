@@ -2,8 +2,8 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, and independent alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric.
 created: 2026-09-30
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: assess
 ---
 
@@ -167,8 +167,9 @@ validated for patient care**. One line only, per this batch's scope — no rubri
 
 ## Tools built on Jev
 
-Four projects call Jev (or an alternative decision model) as one step in a larger tool. Each has
-its own home elsewhere in this corpus; this section is a pointer, not a duplicate.
+Five projects call Jev (or an alternative decision model) as one step in a larger tool. Three have
+their own home elsewhere in this corpus and this section only points to them; probably and pg-jev
+have none yet, so their full entries live here.
 
 - **abide** (coldteadotai) — asks Jev one question per AGENTS.md rule on every coding-agent edit or
   turn and has the agent repair a break. See
@@ -178,6 +179,23 @@ its own home elsewhere in this corpus; this section is a pointer, not a duplicat
   [CC-web-scraping-plugins-analysis.md § Alternative MCP Options][jevultrafast-home].
 - **jevgrep** (dzhng) — a code-search CLI that uses Jev to judge file/declaration relevance to a
   natural-language question. See [CC-code-tooling-landscape.md § jevgrep][jevgrep-home].
+- **pg-jev** (realZachi) — **Repo**: [realZachi/pg-jev][pg-jev] | **License**: PostgreSQL License
+  (confirmed against `LICENSE`; GitHub's license detector reports `NOASSERTION` — the file itself is
+  the OSI-approved PostgreSQL License text verbatim, not a bespoke or missing license, and the
+  README's own badge reads "license-PostgreSQL") | **Stars**: 976, created 2026-09-17, pushed
+  2026-10-03, one release `v0.2.1` (2026-10-03) (`gh api`, 2026-10-06). A PostgreSQL extension
+  (`CREATE EXTENSION jev CASCADE`) that exposes `jev()`/`jev_prob()`/`jev_choice()`/`jev_score()` as
+  ordinary SQL functions, so a plain-language condition composes with `WHERE`, `JOIN`, `GROUP BY`
+  and `ORDER BY`. Per its README: it batches 20 rows into one shared Jev `state` with one typed
+  question per row (batches of 40/80 rows measured 92–98%/77–94% correct against ground truth,
+  vs. 100% at 20), caches answers per row/question for the backend session, and needs PostgreSQL
+  14–17 with `plpython3u` and superuser — so it does not run on Supabase, Neon, or RDS. Ships an
+  agent skill (`npx skills add realZachi/pg-jev`) that the README names as installable by "Claude
+  Code, Codex, Cursor or any other skill-aware agent." This page is pg-jev's home in the corpus, not
+  a placeholder. No rubric row: it is a SQL wrapper around Jev's existing decision-model API, not a
+  new decision-model architecture, so it cannot bear on any open rubric cell (gap-driven scoring,
+  plan 0011 row O1).
+
 - **probably** (southpolesteve) — **Repo**: [southpolesteve/probably][probably] | **License**: MIT
   (confirmed against `LICENSE`) | **Stars**: 12, pushed 2026-09-19 (`gh api`, 2026-09-30). An
   experimental toy programming language whose `if value feels "description"` branches ask Jev
@@ -256,6 +274,7 @@ style-adversarial pairs and reference-free prose.
 | [RuVector][ruvector] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [BioDecision-4B][biodecision] | Hugging Face model card |
 | [probably][probably] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
+| [pg-jev][pg-jev] | README, LICENSE, releases (fetched via GitHub contents/API, 2026-10-06) |
 | [JevK5][jevk5] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [JevBench v1.4][jevbench] | Third-party leaderboard cited by JevK5's own README |
 | [SemIf-OpenJev][semif] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
@@ -285,6 +304,7 @@ style-adversarial pairs and reference-free prose.
 [jevultrafast-home]: ../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#alternative-mcp-options-brief
 [jevgrep-home]: ../../cc-community/CC-code-tooling-landscape.md#jevgrep-dzhng
 [probably]: https://github.com/southpolesteve/probably
+[pg-jev]: https://github.com/realZachi/pg-jev
 [jevk5]: https://github.com/allebee/jevk5
 [jevbench]: https://github.com/fstandhartinger/jevbench
 [semif]: https://github.com/TheoLeeCJ/SemIf-OpenJev
