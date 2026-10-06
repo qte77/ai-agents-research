@@ -180,9 +180,10 @@ have none yet, so their full entries live here.
 - **jevgrep** (dzhng) — a code-search CLI that uses Jev to judge file/declaration relevance to a
   natural-language question. See [CC-code-tooling-landscape.md § jevgrep][jevgrep-home].
 - **pg-jev** (realZachi) — **Repo**: [realZachi/pg-jev][pg-jev] | **License**: PostgreSQL License
-  (confirmed against `LICENSE`; GitHub's license detector reports `NOASSERTION` — the file itself is
-  the OSI-approved PostgreSQL License text verbatim, not a bespoke or missing license, and the
-  README's own badge reads "license-PostgreSQL") | **Stars**: 976, created 2026-09-17, pushed
+  (confirmed against `LICENSE`; GitHub's license detector reports `NOASSERTION` — the file matches
+  the [OSI's PostgreSQL License template][osi-pgl] with its `$ORGANISATION` placeholder generalized
+  to "the copyright holders" rather than a bespoke or missing license, and the README's own badge
+  reads "license-PostgreSQL") | **Stars**: 976, created 2026-09-17, pushed
   2026-10-03, one release `v0.2.1` (2026-10-03) (`gh api`, 2026-10-06). A PostgreSQL extension
   (`CREATE EXTENSION jev CASCADE`) that exposes `jev()`/`jev_prob()`/`jev_choice()`/`jev_score()` as
   ordinary SQL functions, so a plain-language condition composes with `WHERE`, `JOIN`, `GROUP BY`
@@ -275,6 +276,7 @@ style-adversarial pairs and reference-free prose.
 | [BioDecision-4B][biodecision] | Hugging Face model card |
 | [probably][probably] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [pg-jev][pg-jev] | README, LICENSE, releases (fetched via GitHub contents/API, 2026-10-06) |
+| [OSI PostgreSQL License template][osi-pgl] | Compared verbatim against pg-jev's `LICENSE` file, 2026-10-06 |
 | [JevK5][jevk5] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [JevBench v1.4][jevbench] | Third-party leaderboard cited by JevK5's own README |
 | [SemIf-OpenJev][semif] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
@@ -305,6 +307,7 @@ style-adversarial pairs and reference-free prose.
 [jevgrep-home]: ../../cc-community/CC-code-tooling-landscape.md#jevgrep-dzhng
 [probably]: https://github.com/southpolesteve/probably
 [pg-jev]: https://github.com/realZachi/pg-jev
+[osi-pgl]: https://opensource.org/license/postgresql
 [jevk5]: https://github.com/allebee/jevk5
 [jevbench]: https://github.com/fstandhartinger/jevbench
 [semif]: https://github.com/TheoLeeCJ/SemIf-OpenJev

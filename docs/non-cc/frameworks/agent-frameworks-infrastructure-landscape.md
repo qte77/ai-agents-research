@@ -116,9 +116,10 @@ Design lens — Lindenberg's *Everything Is a Plugin, Proven* reads this decisio
   production-ready LLM applications," designing "modular pipelines and agent workflows with
   explicit control over retrieval, routing, memory, and generation" (both phrases quoted
   verbatim). Apache-2.0 (confirmed via `gh api`); 26,681★; latest release `v3.3.0` (2026-10-01).
-  Same underlying architecture as the original one-line entry (Python pipelines/components for
-  RAG, semantic search, and agents) — only the positioning language has shifted toward
-  "context-engineered."
+  Its README still describes Python pipelines/components for RAG, semantic search, and agents, as
+  the original one-line entry did; "context-engineered" is new framing in the repo's own
+  description, not a verified architecture change — no release-notes diff was done to confirm
+  what, if anything, changed under that label.
 - [DSPy (Stanford)](https://github.com/stanfordnlp/dspy) — "programming, not prompting": modules + optimizers auto-tune prompts/weights; v3.1 (Jan 2026), Agenspy adds MCP/A2A.
 - [Restack](https://github.com/restackio) — event-driven, durable agent backend with task queues (Apache-2.0).
 - **Routers, gateways & aggregators** now live in a dedicated catalog → [llm-routers-gateways-landscape.md](../infrastructure/llm-routers-gateways-landscape.md) (29 provider-agnostic tools: OpenRouter, Withmartian/Martian, LiteLLM, Portkey, Mammouth, Requesty, Helicone, Vercel/Cloudflare AI Gateway, OpenRouter Fusion, …). CC-side routing config: [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md).
