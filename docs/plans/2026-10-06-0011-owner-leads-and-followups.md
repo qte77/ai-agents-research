@@ -14,7 +14,7 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 - **Approved 2026-10-06** (owner: "proceed" on #600). O1 decided by default the same day: gap-driven
   scoring (overridable). Coverage of every lead was checked on 2026-10-06 with a calibrated
   `git grep` over `docs/` (archive excluded); the result is in the table's *Coverage* column.
-- **Next:** B1 (one arXiv week per day). Z released v0.15.0 on 2026-10-06. F1, N1–N5, E1, K1, P1 and L1 shipped 2026-10-06. O2 is owner-only.
+- **Next:** N6, N7, J1 (research), S1 then B1 (backfill, after O3). Z released v0.15.0 on 2026-10-06. W31 was backfilled on the old selection (#611). F1, N1–N5, E1, K1, P1 and L1 shipped 2026-10-06. O2 is owner-only.
 - **Arc done-when:** every row is shipped (PR number), dropped (reason), or deferred (gate + reason).
 - **The loop, per row:** branch `<type>/<slug>` → write → `make check_docs check_status` → lychee on changed
   files → PR → `/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>` → strike the row in the same PR;
@@ -48,6 +48,10 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 | [jevgrep](https://github.com/dzhng/jevgrep) | covered (`CC-code-tooling-landscape.md § jevgrep`) |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector) | covered (`agentic-ai-vulnerability-landscape.md`); `agent-code-analysis-landscape.md:185` still calls it "secondary source" — stale |
 | Fable review findings (2026-10-04) | `CC-claude-science-analysis.md:30–42`, `ai-security-governance-analysis.md` (reward-hacking subsection), `agent-evaluation-metrics-landscape.md` (Brier metric), `research-agents-landscape.md` (AIDDA line, Claude Science placement), `cc-native/model-internals/CC-first-party-interpretability-index.md:20` |
+| arXiv [2610.02525](https://arxiv.org/abs/2610.02525) MIRA, "Learning What to Investigate Next: Meta-Reasoning for Long-Horizon Research Agents" (2026-10-01, no code link) | extend the meta-reasoning section of `non-cc/reference/weco-aide-recursive-self-improvement-analysis.md` (plan 0010 M4) |
+| [TencentCloud/Octop](https://github.com/TencentCloud/Octop) (MIT, 7.4k★, v1.0.2b6, "A smarter, self-hosted AI assistant — multi-user, multi-agent.") | not covered (the plan 0007 hit is "Octopus"); placement per the skill's tree — likely `non-cc/agents/` or `non-cc/orchestrators/` |
+| Jev and similar system-1 models, by use case: model routing; guardrails (block, grant); tool-call gating; reranking (query, probability); LLM output evals and scores; confidence gate (act, confirm, HITL) | `non-cc/reference/system-1-decision-models-landscape.md` (alternatives) and `non-cc/infrastructure/jev-analysis.md` (Jev); routing, guardrails, gating, judging and confidence have scattered mentions, reranking and HITL escalation have none; Brier metric in `sdlc-lcm/agent-evaluation-metrics-landscape.md` |
+| rxiv weekly selection | `rxiv-paper-eval.yaml` passes `max_papers: 50` ("Capped to first 50" of ~2,200, feed order); upstream v0.5.0 offers `max_llm_calls` (rank by topic-keyword overlap, send top N) |
 | rxiv relevance filter | consumer `.github/workflows/rxiv-paper-eval.yaml` (`relevance_prompt`, `model`); upstream `qte77/gha-rxiv-paper-eval` v0.5.0; model-eval harness `.github/workflows/llm-model-eval.yaml` |
 
 ## Remaining work
@@ -66,7 +70,12 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 | ~~L1~~ | ~~Link rot #598 (`tuleap.com/comparisons/` 503)~~ | n/a | agent | Done 2026-10-06, no change: the link passes again (lychee); #598 auto-closes on the next scheduled run |
 | ~~O1~~ | ~~Scoring policy for new tools~~ | n/a | owner | Decided by default 2026-10-06: **gap-driven** — score only when a tool could change a reference-architecture cell (owner may override) |
 | O2 | `qte77/gha-issue-triage` `self-triage.yml` has no LLM secret | n/a | owner | Owner adds a secret there; default: leave until then |
-| B1 | Backfill arXiv weeks W31–W39 (the eval state stops at W30; W40 ran 2026-10-06): one `rxiv-paper-eval` dispatch per day with `week=<n>`, never two on one day | n/a | agent | `.github/state/rxiv-paper-eval-state.json` lists W31–W40 and each triage PR is reviewed |
+| N6 | arXiv 2610.02525 MIRA | none | agent | Added to the meta-reasoning section from the abstract page (verbatim quotes only); hub row if the harness hub lacks it |
+| N7 | TencentCloud/Octop | none | agent | Entry with licence from `LICENSE`, stars/version from `gh api`, architecture from README/docs; placed per the skill's tree; hub row |
+| J1 | Use-case map for Jev and similar models: model routing, guardrails (block/grant), tool-call gating, reranking (query, probability), LLM output evals/scores, confidence gate (act/confirm/HITL) | partial | agent | One "Use cases" section in `system-1-decision-models-landscape.md`: per use case, which tools document it (first-party, evidence level), the decision shape (labels, probability, threshold) and the failure mode; gaps stated as gaps; links to the Brier metric. No new rubric rows (O1) |
+| S1 | rxiv selection: replace `max_papers: 50` (first 50 in feed order) with `max_papers: 0` + `max_llm_calls: <cap>` (keyword-ranked) | n/a | agent | Workflow updated; one run shows "ranked" selection in the log; triage reviewed |
+| B1 | Backfill missing arXiv weeks after S1: W26–W29, W33–W39 (11), then rerun W31 and W40 on the ranked selection. W32 is absent from the feed (`gha-rxiv-feed-action` has no `32.csv`) — not backfillable. Serial: run → review titles → merge triage PR → next (each PR rebuilds the full index) | partial (W31, W40 done on first-50) | agent | State file lists W26–W31 and W33–W40; each triage PR reviewed |
+| O3 | Backfill parameters | n/a | owner | **Defaults:** cap `max_llm_calls: 100` per week; skip W11–W20 (before the pipeline started); serial per-week PRs, not a matrix workflow |
 | ~~Z~~ | ~~Release: collect the pending `changelog.d/` fragments (#587, #589, #590–#592) plus this arc's~~ | n/a | agent | Done 2026-10-06: v0.15.0 released (#608, tag + GitHub Release) |
 
 **Deferred (not rows):** #588 held leads (Originator, Serova, C3) — waiting on first-party evidence;
