@@ -40,4 +40,4 @@ status: reference
 | [2026-09-23-0008-backlog-triage-prs-issues.md](2026-09-23-0008-backlog-triage-prs-issues.md) | done | #438, #433, #417, #410, #254, #347, #348, #309, #382, #232 |
 | [2026-09-27-0009-focus-shared-memory-context.md](2026-09-27-0009-focus-shared-memory-context.md) | done | #509, #504, #515, #516, #517, #348 |
 | [2026-10-01-0010-open-substrate-cells.md](2026-10-01-0010-open-substrate-cells.md) | done | #576 |
-| [2026-10-06-0011-owner-leads-and-followups.md](2026-10-06-0011-owner-leads-and-followups.md) | draft | — |
+| [2026-10-06-0011-owner-leads-and-followups.md](2026-10-06-0011-owner-leads-and-followups.md) | approved | #600 |

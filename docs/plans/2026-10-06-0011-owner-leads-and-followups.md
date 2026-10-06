@@ -1,6 +1,6 @@
 ---
 title: Owner leads (2026-10-06) and post-0010 follow-ups
-status: draft
+status: approved
 created: 2026-10-06
 updated: 2026-10-06
 ---
@@ -11,14 +11,15 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 
 ## Current status
 
-- **Draft, waiting on owner approval.** Coverage of every lead was checked on 2026-10-06 with a calibrated
+- **Approved 2026-10-06** (owner: "proceed" on #600). O1 decided by default the same day: gap-driven
+  scoring (overridable). Coverage of every lead was checked on 2026-10-06 with a calibrated
   `git grep` over `docs/` (archive excluded); the result is in the table's *Coverage* column.
 - **Next, in order:** Phase A agent rows (F1 → N1–N5 → E1 → K1 → P1 → L1) → Phase B (owner: O1, O2) → Z.
 - **Arc done-when:** every row is shipped (PR number), dropped (reason), or deferred (gate + reason).
 - **The loop, per row:** branch `<type>/<slug>` → write → `make check_docs check_status` → lychee on changed
   files → PR → `/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>` → strike the row in the same PR;
   close issues by hand (the gated squash drops `Closes #N`).
-- **Owner gates:** O1 (scoring policy), O2 (`gha-issue-triage` secret). Both have defaults; neither blocks Phase A.
+- **Owner gates:** O2 (`gha-issue-triage` secret). O1 is decided (default applied, overridable).
 - **Access:** nothing new. The existing `gh` credential and polyfetch cover every row; Cloudflare Workers AI
   (`secrets.CF_WORKERS_AI_TOKEN`, `vars.LLM_BASE_URL`) already serves P1.
 - **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`; polyfetch for blocked
@@ -63,7 +64,7 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 | K1 | Keyword sweep "self-evolving ontology" beyond EvoOntology | EvoOntology only | agent | Sources found are added or listed as rejected with reasons |
 | P1 | rxiv relevance precision (#594): tighten prompt and/or model, test via `llm-model-eval.yaml` against the #527 labels, rerun W38 | n/a | agent | Spot-checked rerun accepts only agent-relevant papers; #593/#599 regenerated or closed; #594 closed |
 | L1 | Link rot #598 (`tuleap.com/comparisons/` 503) | n/a | agent | Rechecked; repointed if persistent, else left to auto-close |
-| O1 | Scoring policy for new tools | n/a | owner | Owner picks; **default: gap-driven** (score only when a tool could change a reference-architecture cell) |
+| ~~O1~~ | ~~Scoring policy for new tools~~ | n/a | owner | Decided by default 2026-10-06: **gap-driven** — score only when a tool could change a reference-architecture cell (owner may override) |
 | O2 | `qte77/gha-issue-triage` `self-triage.yml` has no LLM secret | n/a | owner | Owner adds a secret there; default: leave until then |
 | Z | Release: collect the pending `changelog.d/` fragments (#587, #589, #590–#592) plus this arc's | n/a | agent | `bump-my-version` run, release PR merged, tag + GitHub Release published |
 
