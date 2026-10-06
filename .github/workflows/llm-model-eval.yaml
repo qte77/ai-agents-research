@@ -37,6 +37,7 @@ on:
         options:
           - default
           - no-borderline-yes
+          - agent-strict
 
 permissions:
   contents: read

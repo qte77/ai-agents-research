@@ -1,10 +1,10 @@
 ---
 title: AIDE² — Weco AI's Recursive Self-Improvement Experiment
 source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
-purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus two further harness-subject entries, FineEnvs multi-harness RL training and the agentic meta-reasoning paper.
+purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus further harness-subject entries, FineEnvs multi-harness RL training, the agentic meta-reasoning paper, ActiveSaddler's curriculum-driven harness optimization, and the Sharpening Tax critique of RL post-training for agentic coverage.
 created: 2026-09-24
-updated: 2026-10-02
-validated_links: 2026-10-02
+updated: 2026-10-06
+validated_links: 2026-10-06
 status: assess
 ---
 
@@ -207,6 +207,51 @@ completion tokens as the model saw and produced them, with their log probabiliti
 `reward-group-audit.json` (linked in-text as `/data/reward-group-audit.json`, served by the running
 Space) is reported, verbatim, to have "found no formula mismatches and no bonus on wrong answers").
 
+### Papers the article cites (added 2026-10-06)
+
+The Space's `app/src/content/bibliography.bib` (fetched raw, 2026-10-06) lists **35 entries** (20 of them
+carrying an arXiv `eprint`); the article's six chapters (`basics.mdx`, `introduction.mdx`, `openenv.mdx`,
+`why-multi-harness.mdx`, `training.mdx`, `conclusions.mdx`, all fetched raw) cite most of these by `@key`
+in the running text. The load-bearing ones — the article's own sibling multi-harness-training literature
+and the benchmarks/algorithms its method depends on — are, one line each on what the article uses each
+for:
+
+- [Zhang et al., "Stop Comparing LLM Agents Without Disclosing the Harness"][fe-zhang] (arXiv:2605.23950) — the
+  harness-disclosure position paper `basics.mdx` opens with to define what a harness is.
+- [He et al., "Agent Lightning v1.0"][fe-he] (arXiv:2608.17528) — cited for the training-engine-owns-the-loop
+  vs. agent-owns-the-loop distinction, and for its own reported SWE-bench Verified gain (41.8%→56.4%).
+- [Yu et al., "OpenForgeRL"][fe-yu] (arXiv:2607.21557) — the closest sibling work; `basics.mdx` calls it
+  "the strongest multi-harness results published so far."
+- [KwaiKAT Team, "KAT-Coder-V2.5 Technical Report"][fe-kwaikat] (arXiv:2607.05471) — `why-multi-harness.mdx`
+  quotes it verbatim for the central claim that a model trained on one harness "learns not 'how to solve
+  the task' but 'how to solve the task under that particular harness's interface conventions.'"
+- [Peng et al., "Orchard"][fe-peng] (arXiv:2605.15040) — cited for measuring cross-harness skill transfer.
+- [Poolside, "Laguna M.1/XS.2 Technical Report"][fe-poolside] (arXiv:2605.27605) — cited for training data
+  that deliberately includes trajectories from external harnesses to encourage generalization.
+- [Xu et al., "Polar"][fe-xu] (arXiv:2605.24220) — "Agentic RL on Any Harness at Scale"; its converter code is
+  vendored into the article's own Harbor-to-OpenEnv bridge.
+- [Shao et al., "DeepSeekMath" (GRPO)][fe-shao] (arXiv:2402.03300) — the training algorithm used ("Async GRPO
+  ... in TRL for 1,000 steps," already quoted verbatim above in this doc's FineEnvs section).
+- [Kwon et al., "Efficient Memory Management... (vLLM)"][fe-kwon] (arXiv:2309.06180) — the inference server
+  used to serve rollouts.
+- [Jiménez et al., "SWE-bench"][fe-jimenez] (arXiv:2310.06770) and [Merrill et al., "Terminal-Bench"][fe-merrill]
+  (arXiv:2601.11868) — the two benchmark families Harbor's own integration is built against.
+- [Deng et al., "SWE-Bench Pro"][fe-deng] (arXiv:2509.16941) — cited in `training.mdx` for a per-harness
+  model score ("Claude Opus 4.5 scores 45.9% on SWE-bench Pro"), not as a Harbor-evaluated benchmark.
+- Model technical reports cited for how each names/handles harnesses in its own benchmark reporting:
+  [Kimi K2][fe-kimik2] (arXiv:2507.20534), [Kimi K3][fe-kimik3] (arXiv:2607.24653),
+  [Qwen3-Coder-Next][fe-qwen] (arXiv:2603.00729) and [DeepSeek-V3.2][fe-deepseekv32] (arXiv:2512.02556).
+
+**Already in the corpus:** `git grep` across `docs/` for all 20 arXiv IDs in the bibliography (the
+cited-in-text subset above plus the remainder, including arXiv:2504.00698 / Cohere Command A, which is in
+the bibliography but not confirmed cited in the six chapters' running text) found exactly one hit:
+arXiv:2402.03300 (DeepSeekMath/GRPO) also appears in
+[kv-cache-serving-landscape.md](../infrastructure/kv-cache-serving-landscape.md) (checked 2026-10-06). The
+other 19 IDs are not cited elsewhere in this corpus — this is the first time any of them is named here.
+Not rubric-scored: these are citations *within* an already-covered article, not new standalone systems,
+and none bears on the open Context·Reproducible cell in
+[agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md).
+
 ## Agentic Meta-Reasoning: An Inference-Time Harness Controller (added 2026-10-02)
 
 [arXiv 2609.38147][meta-reasoning], "Thinking Before Thinking: Scaling Agentic Inference Through
@@ -247,6 +292,78 @@ abstract's "artifact-graph analysis" of run reuse gestures at lineage, but nothi
 confirms it as an exposed, citable trace rather than an internal post-hoc analysis the authors ran for
 the paper).
 
+## ActiveSaddler: Automated Curriculum Learning for Harness Optimization (added 2026-10-06)
+
+[ActiveSaddler][activesaddler] ("ActiveSaddler: Automated Curriculum Learning for Agent Harness
+Optimization," Park, Kim, Zhang, Han, Gao, Park, Yao, Fu, Nallipogu, Lin, Rühle; arXiv 2610.00906,
+submitted 2026-10-01; project page [autosaddler-projectpage.github.io/activesaddler][activesaddler-page])
+targets the training-scenario side of harness optimization rather than the harness-edit side RRSI and
+AIDE² cover. Per the abstract (verbatim): "existing methods primarily optimize how the harness is updated
+while largely fixing which training scenarios generate the feedback that drives those updates... we
+formulate this missing dimension of harness optimization as an automated curriculum learning problem."
+ActiveSaddler "models the evolving curriculum as a non-stationary bandit with dynamically instantiated
+optimization targets," abstracting recurring failures into reusable "failure-pattern arms" and balancing
+revisiting known weaknesses against exploring new ones as the harness itself changes under optimization.
+
+Reported result (verbatim, self-reported, no independent reproduction found): "Experiments on GAIA2 and
+Terminal-Bench 2.0 show that ActiveSaddler consistently discovers stronger harnesses, improving test
+Pass@1 by 4.4 and 7.5 percentage points over the same harness optimizer using a scenario order fixed
+before optimization, respectively." The comparison is against "the same harness optimizer" with a fixed
+curriculum — i.e., the reported gain is attributable to the curriculum layer alone, holding the
+underlying optimizer constant. The project page links a real code repository,
+[microsoft/AutoSaddler][autosaddler-repo] (branch `feat/activesaddler`) — confirmed via `gh api`
+(2026-10-06): **MIT license**, 237 stars, 18 forks, created 2026-05-11, pushed 2026-10-04. This is
+code-available, unlike AIDE² and ROFT above.
+
+This sits alongside RRSI, ROFT and AIDE² in the "evolve the loop around a frozen model" family, but at a
+different layer again: RRSI edits the harness's prompts/tools/control-flow, ROFT fine-tunes weights on
+self-generated retrospectives, and ActiveSaddler instead adapts *which training scenarios* drive whichever
+harness-optimization loop sits underneath it — a curriculum wrapper, not a competing harness-edit method.
+Not rubric-scored here: per the arc's gap-driven policy, this doesn't touch the open Context·Reproducible
+cell in
+[agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md), and
+Harness already has scored rows elsewhere in the corpus.
+
+## Sharpening Tax: A Caution on Post-Training for Agentic Coverage (added 2026-10-06)
+
+[Sharpening Tax in Post-Training][sharpening-tax] (Oh, Zeng, Qi, Zhmoginov, Lei, He, Phan, Kang,
+Mirhoseini, Li; arXiv 2610.01509, submitted 2026-10-01) is not a harness-optimization method but a
+caution relevant to the same "where should capability live" question RRSI and ROFT raise from the
+harness/training-time sides respectively. Full abstract (verbatim): "An emerging hypothesis about
+reinforcement learning (RL) post-training of large language models (LLMs) is that it merely sharpens
+existing behaviors of a base model, improving single-shot accuracy at the cost of solution coverage.
+Although this trade-off has been observed in math and coding tasks, it need not extend to agentic tasks,
+where multi-turn tool use and interaction may require capabilities newly acquired during post-training.
+Our surprising finding is that pre-trained LLMs, equipped with a light inference harness, can serve as
+capable agents. Despite far lower accuracy (pass@1), they often surpass their post-trained counterparts in
+solution coverage (pass@K) given a sufficient test-time budget. We further analyze the underlying
+mechanism and show that post-training pushes tasks toward two extremes, always solved or never solved, and
+thereby improves sampling efficiency and consistency at the cost of solution coverage. To measure this
+cost, we propose Sharpening Tax, a diagnostic metric that quantifies the loss in test-time scalability
+after post-training. Across 14 base/post-trained model pairs from four families and three agentic
+benchmarks (42 cases in total), the tax is prevalent in most settings, can be estimated from a few
+rollouts, and correlates well with other metrics. Finally, we present posterior-tempered group sampling
+(PTGS), a simple plug-and-play Bayesian sampler that adapts the sampling temperature per prompt to its
+estimated difficulty. Applied during RL training in two agentic environments, PTGS pays a smaller tax than
+the fixed-temperature baseline, solving more tasks under repeated sampling while also improving
+single-shot accuracy." No code repository or project page was found on the abstract page (checked
+2026-10-06), matching the "results published, code not yet released" pattern this corpus already tracks
+for HarnessX, AIDE² and ROFT above.
+
+Why this belongs in this doc rather than being a harness-search entry of its own: Sharpening Tax is
+first-party evidence that *RL* post-training can cost agentic solution coverage even while raising
+single-shot accuracy — relevant context for reading any "we fine-tuned/post-trained the model and it got
+better" claim in this family. ROFT (above) is explicitly RL-free ("no RL, no external instruction
+signal"), so whether ROFT's retrospection-based SFT pays the same tax is **not tested by this paper** and
+is not claimed here. The two papers' mitigations also sit at different layers, not a harness-vs-model
+substitution: PTGS is itself "applied during RL training" (a training-time sampler, per the abstract),
+while the base finding — a frozen, non-post-trained model plus "a light inference harness" can match or
+beat its post-trained counterpart given enough test-time budget — is the inference-side comparison point
+worth reading alongside RRSI/ROFT's harness-time and training-time interventions. Not rubric-scored: this
+is a diagnostic finding and a training-time sampling technique, not a shipped harness or memory/context
+system, and it does not touch the open Context·Reproducible cell in
+[agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md).
+
 ## Cross-References
 
 - [harnessx-analysis.md][harnessx] — the same "paper claims ahead of public
@@ -273,6 +390,12 @@ the paper).
 | `app/src/content/chapters/why-multi-harness.mdx`, `training.mdx`, `conclusions.mdx` (fetched raw from the Space) | Verbatim method description (OpenEnv capture proxy, Harbor integration, GRPO/TRL recipe), experiment setup, reported results and authors' own hedges — accessed 2026-10-02 |
 | [adithya-s-k/FineEnvs repo][fineenvs-repo] | Companion training code; `gh api` confirms license (Apache-2.0), 278 stars, 37 forks, created 2026-05-01, pushed 2026-10-02 — accessed 2026-10-02 |
 | [arXiv 2609.38147 abstract page][meta-reasoning] | Title, full author list (12), submission date (2026-09-29), full abstract verbatim, subject (cs.AI), confirmation of no code link/project page/affiliation field — accessed 2026-10-02 |
+| `app/src/content/bibliography.bib` (fetched raw from the FineEnvs Space) | Full 28-entry BibTeX bibliography resolving the article's `@key` citations to titles/authors/arXiv IDs — accessed 2026-10-06 |
+| `app/src/content/chapters/basics.mdx`, `introduction.mdx`, `openenv.mdx` (fetched raw from the Space) | In-text `@key` citation usage confirming which bibliography entries the article actually cites — accessed 2026-10-06 |
+| [arXiv 2610.00906 abstract page][activesaddler] | Title, full author list (11), submission date (2026-10-01), full abstract verbatim, Comments field (project website + code URL), confirmation of GAIA2/Terminal-Bench 2.0 Pass@1 deltas — accessed 2026-10-06 |
+| [ActiveSaddler project page][activesaddler-page] | Confirms a linked GitHub repo (microsoft/AutoSaddler, branch `feat/activesaddler`) — accessed 2026-10-06 |
+| `gh api repos/microsoft/AutoSaddler`, 2026-10-06 | License (MIT), stars (237), forks (18), created/pushed dates |
+| [arXiv 2610.01509 abstract page][sharpening-tax] | Title, full author list (10), submission date (2026-10-01), full abstract verbatim, Sharpening Tax and PTGS definitions verbatim, confirmation of no code/project link — accessed 2026-10-06 |
 
 [blog]: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 [paper]: https://arxiv.org/abs/2609.26457
@@ -288,3 +411,23 @@ the paper).
 [lfm-model]: https://huggingface.co/LiquidAI/LFM2.5-2.6B
 [sft-dataset]: https://huggingface.co/datasets/FineEnvs/SmolDataEnvs-multiharness-sft
 [meta-reasoning]: https://arxiv.org/abs/2609.38147
+[activesaddler]: https://arxiv.org/abs/2610.00906
+[activesaddler-page]: https://autosaddler-projectpage.github.io/activesaddler/
+[autosaddler-repo]: https://github.com/microsoft/AutoSaddler/tree/feat/activesaddler
+[sharpening-tax]: https://arxiv.org/abs/2610.01509
+[fe-zhang]: https://arxiv.org/abs/2605.23950
+[fe-he]: https://arxiv.org/abs/2608.17528
+[fe-yu]: https://arxiv.org/abs/2607.21557
+[fe-peng]: https://arxiv.org/abs/2605.15040
+[fe-poolside]: https://arxiv.org/abs/2605.27605
+[fe-xu]: https://arxiv.org/abs/2605.24220
+[fe-shao]: https://arxiv.org/abs/2402.03300
+[fe-kwon]: https://arxiv.org/abs/2309.06180
+[fe-jimenez]: https://arxiv.org/abs/2310.06770
+[fe-merrill]: https://arxiv.org/abs/2601.11868
+[fe-kwaikat]: https://arxiv.org/abs/2607.05471
+[fe-deng]: https://arxiv.org/abs/2509.16941
+[fe-kimik2]: https://arxiv.org/abs/2507.20534
+[fe-kimik3]: https://arxiv.org/abs/2607.24653
+[fe-qwen]: https://arxiv.org/abs/2603.00729
+[fe-deepseekv32]: https://arxiv.org/abs/2512.02556

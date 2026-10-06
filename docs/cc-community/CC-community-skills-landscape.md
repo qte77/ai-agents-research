@@ -4,13 +4,13 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-10-02
-validated_links: 2026-10-02
+updated: 2026-10-06
+validated_links: 2026-10-06
 ---
 
 ## Summary
 
-Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/MCP/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell.
+Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/MCP/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell. A fifth addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi).
 
 ## gstack (Garry Tan)
 
@@ -490,6 +490,64 @@ back before declaring the diagram done.
 
 `scored 2026-09-30`
 
+## cathrynlavery/diagram-design
+
+**Repo**: [cathrynlavery/diagram-design][diagram-design] | **Stars**: 43,595 | **Forks**: 2,820 |
+**License**: MIT | pushed 2026-10-06 (`gh api`, 2026-10-06)
+
+A Claude Code skill and multi-host Agent-Skills plugin, distinct from the single-renderer
+excalidraw-diagram-skill above: it targets five hosts out of the box. The repo's own description field:
+*"Editorial diagram design for Claude Code, Codex, GitHub Copilot, Factory Droid, and Pi. 42 diagram
+types. Self-contained HTML + SVG. No shadows. No Mermaid slop."* Each diagram renders to a
+dependency-free HTML+SVG file (no JS, no shadows). The description field says "42 diagram types"; a
+live count of `skills/diagram-design/references/type-*.md` files (`gh api`, 2026-10-06) returns
+**44** — architecture, flowchart, sequence, ER, swimlane, Gantt, scatter, treemap and Wardley among
+them, plus (per the README's own 2.5.10 changelog note, verbatim) *"ten more layout grammars —
+Sankey, fishbone, Wardley map, kanban, user journey, deployment, dependency graph, UML class, story
+map, and database schema."* The 42-vs-44 gap is most likely post-description additions
+(`type-architecture-delta.md`, `type-axonometric-plan.md`); cite the live count, not the tagline.
+
+### Installation (per host)
+
+| Host | Command |
+|---|---|
+| Claude Code | `/plugin marketplace add cathrynlavery/diagram-design` |
+| Codex | `codex plugin marketplace add cathrynlavery/diagram-design` |
+| GitHub Copilot | `copilot plugin marketplace add cathrynlavery/diagram-design` |
+| Factory Droid | `droid plugin marketplace add https://github.com/cathrynlavery/diagram-design` |
+| Pi | `pi install https://github.com/cathrynlavery/diagram-design` |
+| Kiro | Import the Agent Skill from the repo's `skills/diagram-design` subdirectory URL |
+| OpenCode | Symlink or copy `skills/diagram-design/` into `.opencode/skills/` |
+
+### Design Philosophy
+
+States "No Figma. No generic rounded boxes. No 30-minute color-picking sessions." (README). Fixed
+styling constraints: one accent color with 1–2 focal elements per diagram, three typefaces (Instrument
+Serif / Geist / Geist Mono), 1px hairlines, no shadows, max 10px border-radius, and coordinates/widths
+kept divisible by 4 to avoid an AI-generated look. A brand-onboarding step extracts colors/fonts from a
+target website; a separate import path redraws existing draw.io/Mermaid/Excalidraw diagrams at a chosen
+fidelity (faithful/balanced/simplified); exports to PNG, SVG, HTML, or diagram-block JSON.
+
+### Adoption Considerations
+
+**Strengths**: five first-class host integrations plus a documented import/symlink path for two more;
+MIT; 44 diagram types (live count) in one skill is a broader surface than any single-purpose diagram
+tool in this doc (excalidraw-diagram-skill above covers one renderer); dependency-free HTML+SVG output
+opens offline in a browser with no server or JS runtime.
+
+**Risks**: fast-moving (repo created 2026-04-16, still pushing commits as of 2026-10-06) — installs are
+explicitly unpinned-by-design on two hosts ("Droid tracks Git plugins by commit rather than the
+manifest's display version"; "the unpinned Git install is intentional" for Pi, per the README), so a
+team pinning exact output needs to track upstream commits itself; "Official builds come only from this
+repository" (README) names LittleMight as the sole official publisher, implying unofficial-copy risk
+for any other listing; the fixed house style (fonts/colors/grid) trades flexibility for consistency,
+which may not suit every brand; overlaps with excalidraw-diagram-skill and any Mermaid-based workflow
+for teams already standardized on one of those.
+
+Cross-ref: [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) —
+native skills format this installs into. See [visualization.md](../_topics/visualization.md) for this
+corpus's other diagram/visualization tools.
+
 ## cloudflare/security-audit-skill
 
 **Repo**: [cloudflare/security-audit-skill][cf-sec-audit] | **Stars**: 23,302 | **License**: MIT |
@@ -573,6 +631,7 @@ above, consistent with every other row in this doc's census.
 | [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (23,302 stars, MIT) |
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
 | [stevesolun/ctx][ctx-repo] | Skill/agent/MCP/harness recommender over a bundled graph (587 stars, MIT; `gh api` 2026-10-02) |
+| [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (43,595 stars, MIT; `gh api` 2026-10-06) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -590,6 +649,7 @@ above, consistent with every other row in this doc's census.
 [cf-sec-audit]: https://github.com/cloudflare/security-audit-skill
 [cf-blog]: https://blog.cloudflare.com/build-your-own-vulnerability-harness
 [ctx-repo]: https://github.com/stevesolun/ctx
+[diagram-design]: https://github.com/cathrynlavery/diagram-design
 [skills-sh-xref]: https://skills.sh/
 [cc-skills-adoption]: ../cc-native/agents-skills/CC-skills-adoption-analysis.md#ecosystem-context
 [rubric]: ../sdlc-lcm/agent-substrate-rubric.md

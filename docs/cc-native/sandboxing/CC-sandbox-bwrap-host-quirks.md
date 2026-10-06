@@ -307,6 +307,9 @@ git show HEAD:<file> > "$TMPDIR/<file>.head"
   permission bypass patterns
 - [CC-sandbox-platforms-landscape.md](CC-sandbox-platforms-landscape.md) —
   external sandbox platforms
+- [CC-claude-science-analysis.md](../plugins-ecosystem/CC-claude-science-analysis.md) —
+  Claude Science also sandboxes with bubblewrap on Linux (0.8.0+); its 0.1.43 release
+  fixed breakage from a bubblewrap security update
 
 ## References
 
