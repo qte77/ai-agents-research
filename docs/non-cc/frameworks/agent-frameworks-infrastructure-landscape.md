@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-02
-validated_links: 2026-10-02
+updated: 2026-10-06
+validated_links: 2026-10-06
 ---
 
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
@@ -111,7 +111,14 @@ Design lens — Lindenberg's *Everything Is a Plugin, Proven* reads this decisio
 ## 2. LLM Orchestration & Routing
 
 - [LangChain](https://github.com/langchain-ai/langchain) — broad LLM app framework, 100+ integrations (MIT).
-- [Haystack (deepset)](https://github.com/deepset-ai/haystack) — production RAG/pipeline framework (Apache-2.0).
+- [Haystack (deepset)][haystack] — refreshed 2026-10-06 (`gh api`): now pitched by the repo's own
+  description as an "open-source AI orchestration framework for building context-engineered,
+  production-ready LLM applications," designing "modular pipelines and agent workflows with
+  explicit control over retrieval, routing, memory, and generation" (both phrases quoted
+  verbatim). Apache-2.0 (confirmed via `gh api`); 26,681★; latest release `v3.3.0` (2026-10-01).
+  Same underlying architecture as the original one-line entry (Python pipelines/components for
+  RAG, semantic search, and agents) — only the positioning language has shifted toward
+  "context-engineered."
 - [DSPy (Stanford)](https://github.com/stanfordnlp/dspy) — "programming, not prompting": modules + optimizers auto-tune prompts/weights; v3.1 (Jan 2026), Agenspy adds MCP/A2A.
 - [Restack](https://github.com/restackio) — event-driven, durable agent backend with task queues (Apache-2.0).
 - **Routers, gateways & aggregators** now live in a dedicated catalog → [llm-routers-gateways-landscape.md](../infrastructure/llm-routers-gateways-landscape.md) (29 provider-agnostic tools: OpenRouter, Withmartian/Martian, LiteLLM, Portkey, Mammouth, Requesty, Helicone, Vercel/Cloudflare AI Gateway, OpenRouter Fusion, …). CC-side routing config: [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md).
@@ -431,6 +438,16 @@ ACM entry (§1) — checked 2026-10-02 (plan 0010, row L3):
 |---|---|
 | [arXiv:2608.11166][acm-paper] | Abstract, design principles, scope limits (distributed deployment delegated to frameworks, skills given no distinct treatment) |
 | [`audreyqvial/ACM`][acm-repo] | LICENSE file content (read directly), repo metadata (`gh api`, 2026-10-02) |
+
+Haystack refresh (§2) — first-party checked 2026-10-06 (plan 0011, row E1):
+
+| Source | Content |
+|---|---|
+| [deepset-ai/haystack][haystack] | Repo description (self-description quote), license (Apache-2.0), star count (26,681), `gh api` 2026-10-06 |
+| [Haystack `v3.3.0` release][haystack-release] | Version gate: latest release `v3.3.0`, published 2026-10-01 |
+
+[haystack]: https://github.com/deepset-ai/haystack
+[haystack-release]: https://github.com/deepset-ai/haystack/releases/tag/v3.3.0
 
 [acm-paper]: https://arxiv.org/abs/2608.11166
 [acm-repo]: https://github.com/audreyqvial/ACM
