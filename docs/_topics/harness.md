@@ -27,3 +27,5 @@ Pointers only; see [the hub index](README.md).
 | [agentic-engineering-disciplines-landscape.md §1](../sdlc-lcm/agentic-engineering-disciplines-landscape.md) | Graph-engineering ladder rung (wiring loop-shaped agents into a topology) + Harness-engineering Verification-axiom evidence: Specula (agentic TLA+ trace/invariant verifier, 249 bugs/48 projects) and Bend 2 (proof-gated compiler, rejects an edit without a machine-checked correctness proof) | sdlc-lcm |
 
 Related hubs: [skills.md](skills.md), [plugins.md](plugins.md), [long-running.md](long-running.md).
+| [research-agents-landscape.md §1](../non-cc/knowledge-management/research-agents-landscape.md#1-autonomous-research-agents) | RankEvolve: an Executable Operating Protocol enforces a compiled state machine while Claude Code and Codex review and repair each other's work (paper only) | non-cc |
+| [CC-claude-science-analysis.md](../cc-native/plugins-ecosystem/CC-claude-science-analysis.md) | Claude Science: Anthropic's sandboxed science workbench with per-version provenance (code, execution log, environment) and a reviewer that checks claims against the run | cc-native |
