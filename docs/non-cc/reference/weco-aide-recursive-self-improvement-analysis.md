@@ -1,10 +1,10 @@
 ---
 title: AIDE² — Weco AI's Recursive Self-Improvement Experiment
 source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
-purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus further harness-subject entries, FineEnvs multi-harness RL training, the agentic meta-reasoning paper, ActiveSaddler's curriculum-driven harness optimization, and the Sharpening Tax critique of RL post-training for agentic coverage.
+purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus further harness-subject entries, FineEnvs multi-harness RL training, the agentic meta-reasoning paper, ActiveSaddler's curriculum-driven harness optimization, the Sharpening Tax critique of RL post-training for agentic coverage, and MIRA's meta-reasoning architecture for long-horizon research agents.
 created: 2026-09-24
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-10-09
+validated_links: 2026-10-09
 status: assess
 ---
 
@@ -292,6 +292,42 @@ abstract's "artifact-graph analysis" of run reuse gestures at lineage, but nothi
 confirms it as an exposed, citable trace rather than an internal post-hoc analysis the authors ran for
 the paper).
 
+## MIRA: Meta-Reasoning for Long-Horizon Research Agents (added 2026-10-09)
+
+[arXiv 2610.02525][mira] ("Learning What to Investigate Next: Meta-Reasoning for Long-Horizon Research
+Agents," Samanta, Efroni, Sajda, Hassani, Goyal; submitted 2026-10-01) introduces **MIRA** — the abstract
+spells this out as "Meta-reasoning for Iterative Research Agents" — a hierarchical research-agent
+architecture that separates an outer-loop meta-reasoner, which decides what to investigate next, from an
+inner-loop executor that carries out the chosen investigation. The abstract reports gains "in theorem
+proving and open-ended neural-architecture research" without policy training for the base version, and
+separately describes training a generative critic to forecast remaining return at decision boundaries,
+which initializes **MIRA-AC**, an actor-critic that learns meta-reasoning decisions "across four
+autoresearch environments" (the four are not named in the abstract). The abstract gives no numeric
+results — no percentages, scores, or named benchmarks — for either domain, and states no author
+affiliation anywhere on the page (checked 2026-10-09).
+
+**No code repository or project page was found.** The abstract page carries no `Comments:` field and no
+code link (checked 2026-10-09); a GitHub repository search for "MIRA meta-reasoning research agents"
+returned zero matches, and the only GitHub hits for "MIRA-AC meta-reasoning" are third-party
+paper-tracking and digest repos (e.g. a skill summary, a literature-vault entry, a daily AI-news digest),
+not an author-published implementation. This matches the "results published, code not yet released"
+pattern this doc already tracks for HarnessX, AIDE², ROFT and Sharpening Tax above.
+
+Compared with this doc's [Agentic Meta-Reasoning entry](#agentic-meta-reasoning-an-inference-time-harness-controller-added-2026-10-02)
+(arXiv 2609.38147, above): both split a decision-making controller from task-executing workers, and both
+carry forward a compressed account of the run rather than replaying full history — MIRA via "partial
+states" scored at decision boundaries, the other paper via a "compact account of the run." They differ in
+scope and training: MIRA is scoped to long-horizon *research* tasks specifically (theorem proving,
+neural-architecture search) and its controller decides what to investigate next, whereas the other paper's
+controller is a general inference-time harness evaluated against production coding agents and research
+harnesses; MIRA also adds a trained actor-critic variant (MIRA-AC), where the other paper's controller is
+described as purely inference-time. Neither paper publishes code.
+
+Not rubric-scored: a research-agent meta-reasoning controller is subject harness or long-running, not
+context, so per this arc's gap-driven policy it cannot close the open context·Reproducible cell in
+[agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md) —
+and the paper gives no reproducibility evidence (no code, model pins, or seeds) to score regardless.
+
 ## ActiveSaddler: Automated Curriculum Learning for Harness Optimization (added 2026-10-06)
 
 [ActiveSaddler][activesaddler] ("ActiveSaddler: Automated Curriculum Learning for Agent Harness
@@ -396,6 +432,8 @@ system, and it does not touch the open Context·Reproducible cell in
 | [ActiveSaddler project page][activesaddler-page] | Confirms a linked GitHub repo (microsoft/AutoSaddler, branch `feat/activesaddler`) — accessed 2026-10-06 |
 | `gh api repos/microsoft/AutoSaddler`, 2026-10-06 | License (MIT), stars (237), forks (18), created/pushed dates |
 | [arXiv 2610.01509 abstract page][sharpening-tax] | Title, full author list (10), submission date (2026-10-01), full abstract verbatim, Sharpening Tax and PTGS definitions verbatim, confirmation of no code/project link — accessed 2026-10-06 |
+| [arXiv 2610.02525 abstract page][mira] | Title, full author list (5), submission date (2026-10-01), MIRA/MIRA-AC method description, confirmation of no numeric results, no affiliation, and no Comments/code field on the page — accessed 2026-10-09 |
+| `gh api search/repositories` + `search/code`, 2026-10-09 | GitHub-wide absence check for a MIRA code repository — zero repository matches; code-search hits are third-party paper-tracking/digest repos, not an author implementation |
 
 [blog]: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 [paper]: https://arxiv.org/abs/2609.26457
@@ -415,6 +453,7 @@ system, and it does not touch the open Context·Reproducible cell in
 [activesaddler-page]: https://autosaddler-projectpage.github.io/activesaddler/
 [autosaddler-repo]: https://github.com/microsoft/AutoSaddler/tree/feat/activesaddler
 [sharpening-tax]: https://arxiv.org/abs/2610.01509
+[mira]: https://arxiv.org/abs/2610.02525
 [fe-zhang]: https://arxiv.org/abs/2605.23950
 [fe-he]: https://arxiv.org/abs/2608.17528
 [fe-yu]: https://arxiv.org/abs/2607.21557
