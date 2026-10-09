@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-09-24
+updated: 2026-10-09
 validated_links: 2026-09-24
 status: reference
 ---
@@ -104,6 +104,8 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 | [Diffbot](https://www.diffbot.com/) | SaaS | From $299/mo | CV-based auto-extraction; Knowledge Graph API |
 
 **When to use what**: Crawl4AI for free local LLM-ready output. Firecrawl for managed/enterprise. Jina for lightweight HTML→Markdown.
+
+**Firecrawl Universal Scrape** (announced 2026-10-08, [Firecrawl blog](https://www.firecrawl.dev/blog/universal-scrape)): the `/scrape` endpoint now also returns third-party provider data, bringing "more of the data your agents need into the `/scrape` endpoint you already use". Provider calls go through Alexandria, Firecrawl's provider layer, via an `alexandria` object (`provider`, `capability`, `options`); the post says "Alexandria has more than 200 providers", of which Universal Scrape works with "a growing selection", e.g. Apollo, FullEnrich and Data Legion (people and companies), Fiscal.ai and Benzinga (financial data), Particle (podcasts). Provider calls are "billed in Firecrawl credits at each tool's listed price"; some providers need an org admin to accept their terms first. The post states no GA/beta status. Our reading (not a Firecrawl claim): this moves Firecrawl from scraper toward data broker; the same API key now reaches paid third-party datasets, so budget and data-licensing review belong with the integration.
 
 ## Search APIs
 
