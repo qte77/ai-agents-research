@@ -32,7 +32,7 @@ own set of "experts" (agents), each with its own workspace, model providers, cha
 jobs. Isolation is enforced per database row rather than per process: every request is
 JWT-authenticated and resolved to a `User`, and `agents.user_id` is checked against the caller (with
 an admin bypass) through a single global agent-manager registry — the architecture doc states this
-single-registry design is meant "to keep admin tooling and cross-user diagnostics simple."
+single registry "keeps admin tooling (`/api/admin/*`) and cross-user diagnostics simple."
 
 **Agent orchestration.** The layering is `OctopServer` → per-user `HarnessAgentManager` → per-agent
 `AgentRuntime` (runtime, an `HarnessProcessor` entry point, a channel manager, a cron manager); web
