@@ -2,8 +2,8 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, and independent alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric.
 created: 2026-09-30
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-10-09
+validated_links: 2026-10-09
 status: assess
 ---
 
@@ -28,6 +28,144 @@ Every score below follows the [agent substrate rubric][rubric]; licenses are con
 each repository's own `LICENSE` file, not GitHub's license-detection metadata alone.
 
 Whether an act/abstain decision can be trusted is a calibration question; for the Brier-score metric and why stated confidence and committed action can diverge, see [agent-evaluation-metrics-landscape.md § Verbalized Confidence Calibration](../../sdlc-lcm/agent-evaluation-metrics-landscape.md#verbalized-confidence-calibration-brier).
+
+## Use cases
+
+Where this corpus finds a system-1 decision model actually wired into an agent loop, by use
+case — each bullet sourced to the tool's own README, docs, or paper where noted `(documented)`
+or `(shipped)`, or to an existing, already-verified corpus analysis of one. Jev's own docs
+(re-fetched 2026-10-09) stay mostly generic about downstream use — except for confidence-gated
+action (§6 below), which [docs.typesafe.ai/confidence][typesafe-confidence] documents directly.
+Fastino's [GLiNER2.5-Decide announcement][gliner-blog] independently names several of these use
+cases under its own bolded labels, quoted verbatim per use case.
+
+### 1. Model routing
+
+**Decision shape**: a discrete choice among destinations/models, with a probability and
+confidence per choice.
+
+- [GLiNER2.5-Decide][gliner-blog] (documented) — its own "Model routing" bullet: "Route requests
+  by destination, complexity, or escalation level and return the selected route with
+  probabilities and confidence scores."
+- [RouteLLM][routellm-home] and [Not Diamond][notdiamond-home] (shipped) — classifier-trained
+  per-query routers, already cataloged in
+  [llm-routers-gateways-landscape.md § Open / Self-Hostable Gateways][llm-routers-open] and
+  [§ Hosted Aggregators][llm-routers-hosted]; cross-referenced here, not duplicated. Neither uses
+  a `noul`/`choice`/`score` API.
+- **Gap**: re-checked 2026-10-09 — `docs.typesafe.ai`'s home, `/api`, and `/models` pages name no
+  use case that selects *between other LLMs*; the only "routing" sentence found is in `/models`
+  § Language support ("pay close attention to Confidence when routing" non-English content), a
+  caution about Jev's own accuracy, not model selection. The corpus entries above for Laya, kev,
+  CLM, and RuVector likewise describe no router-to-other-LLMs use. The nearest matches already in
+  this doc are narrower: Laya's `Router` class picks among Laya's *own* three checkpoints (not
+  other LLMs), and RuVector's decision layer classifies support tickets into a fixed department
+  label set (77.3–84.0% accuracy) rather than routing between models.
+
+### 2. Guardrails (block / grant)
+
+**Decision shape**: a binary accept/reject (`noul`), or a hazard-category `choice`.
+
+- [GLiNER2.5-Decide][gliner-blog] (documented) — its own "Guardrails" bullet: "Evaluate safety,
+  harm type, and escalation together, extracting harmful spans verbatim. Apply constraints when
+  combinations of answers would be contradictory."
+- Established safety classifiers and policy engines (shipped) — Llama Guard, ShieldGemma,
+  Guardrails AI, NeMo Guardrails, LLM Guard; see
+  [agent-frameworks-infrastructure-landscape.md § Guardrails / policy][guardrails-policy].
+- [abide][abide-home] (shipped) — asks Jev one typed question per AGENTS.md rule on every edit
+  or turn and has the agent repair the break in the same turn.
+- Jev's own pre-CI pilot (observed) — [jev-analysis.md § Measured: Pre-CI Code-Change Gate][jev-pilot]:
+  caught 78% of flawed changes at a 1.7% false-positive rate on the repos it was tuned on, but a
+  fixed threshold wrongly flagged 23–30% of clean changes on a held-out codebase.
+- **Failure mode**: fail open, not closed. Abide's own README documents no fallback behavior for
+  an outage or missing key (re-checked 2026-10-09; the fail-open risk is this corpus's own
+  analysis in [CC-community-tooling-landscape.md § abide][abide-home], not an abide-stated
+  guarantee); Jev's own design guidance is to [run it non-blocking][jev-wrong]
+  (jev-analysis.md § Build for When It's Wrong).
+
+### 3. Tool-call gating
+
+**Decision shape**: a `choice` among a fixed action/tool vocabulary (what GLiNER2.5-Decide and
+jev-ultrafast document), distinct from an allow/deny verdict on an already-formed call (what
+Adrian documents).
+
+- [jev-ultrafast][jevultrafast-home] (shipped) — each step asks Jev to pick an operation
+  (`CLICK`, `TYPE_TEXT`, `SELECT`, `SCROLL_UP`, `SCROLL_DOWN`, `WAIT`, `DONE`, `BLOCKED`) and a
+  target, replacing per-step LLM reasoning with one typed decision. Its own hedge: "three repeats
+  of one task on one browser profile, not a general reliability benchmark."
+- [GLiNER2.5-Decide][gliner-blog] (documented) — its own "Tool calling" and "Browser and computer
+  use" bullets: "Select from a permitted set of tools and capture arguments from the request as
+  structured records" and "Evaluate the current state to select the next action. Represent the
+  action, target, and parameters as a structured record."
+- [Secure Agentics Adrian][adrian-home] (shipped, not Jev-family — a bundled local Gemma
+  classifier, not a `noul`/`choice`/`score` API) — the clearest first-party match for gating a
+  *proposed* call rather than picking one: per its README, "every tool call is classified in real
+  time, with risky actions blocked or held for your approval."
+- **Gap**: no Jev-family model's own docs describe a classic approve/deny gate on an
+  already-formed tool call — the Jev-family examples above pick *which* action to take, a related
+  but distinct decision shape from Adrian's gate.
+
+### 4. Reranking (by query, by probability)
+
+**Decision shape**: sort candidates by a returned score or probability.
+
+- Dedicated cross-encoder rerankers (shipped) — Cohere Rerank, bge-reranker-v2-m3, Qwen3-Reranker,
+  mxbai-rerank, FlashRank, rerankers, Voyage/ZeroEntropy/Contextual/Jina; see
+  [agent-frameworks-infrastructure-landscape.md § Rerankers][rerankers]. None use the typed
+  `noul`/`choice`/`score` interface this page tracks.
+- [jevgrep][jevgrep-home] (shipped) — the closest system-1-family match: its README states it
+  uses Jev "to judge relevance across folders, files, and declarations," ranking results by that
+  judgment rather than running a dedicated cross-encoder.
+- [GLiNER2.5-Decide][gliner-blog] (documented) — its "Context pruning" bullet is the nearest
+  related capability, but is not reranking: "Decide which information in the context is relevant
+  and return the exact character spans associated with that decision" marks relevance within one
+  context rather than sorting a candidate list.
+- **Gap**: re-checked 2026-10-09 — neither Jev's docs nor Fastino's announcement names
+  query-document reranking; no model in this landscape documents sorting retrieved candidates by
+  probability as a worked use case. **Failure mode**: not measured by any system-1 model here;
+  see the Rerankers entries above for cross-encoder latency/calibration trade-offs instead.
+
+### 5. LLM output evals and scores (judge)
+
+**Decision shape**: a `score`/`choice` probability over a rubric, or an accept/escalate verdict on
+another model's output.
+
+- [GLiNER2.5-Decide][gliner-blog] (documented) — its own "LLM-as-a-judge" bullet: "Express rubric
+  criteria as categorical or ordinal questions and return selected values with probability
+  distributions and confidence scores."
+- [JEV-as-a-Judge (arXiv:2609.26550)][jaaj] (documented — a research paper, no released code or
+  dataset) — a decision-only judge that "comes within three points of GPT-6 wherever a verdict
+  can be read off the text, at 0.36% of its fee."
+- Free-text LLM-as-a-judge metrics (documented) — G-Eval, TRUE, and others; see
+  [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics].
+  These score generated prose, not a typed decision.
+- **Failure mode**: per the paper's own abstract (re-checked 2026-10-09), the approach "falls
+  behind where the verdict must be derived, as in math, code, and logic," and "Confidence routing
+  weakens on style-adversarial pairs and reference-free prose."
+
+### 6. Confidence gate (act / confirm / human-in-the-loop escalation)
+
+**Decision shape**: a confidence/probability threshold splits the outcome into act, confirm, or
+escalate-to-human.
+
+- Jev itself (documented) — [docs.typesafe.ai/confidence][typesafe-confidence] (re-fetched
+  2026-10-09) names this pattern directly as "Three paths for using confidence in your code":
+  **High confidence** — "Act automatically. The model has a clear read and you can proceed
+  without human involvement." **Medium confidence** — "you might ask the user to confirm, flag
+  for review, or gather more information before acting." **Low confidence** — "Do not act. Route
+  to a human, request clarification, or fall back to a different system." A worked code example
+  calls `route_to_human(user_message)` below a 0.5 threshold.
+- [kev][kev] (shipped) — its own README reports a per-size Brier-score table ("Brier: New
+  Sources") against held-out data, the calibration evidence a confidence gate needs; see
+  [agent-evaluation-metrics-landscape.md § Verbalized Confidence Calibration (Brier)][brier] for
+  what the score means and why it can diverge from the act/abstain decision itself ("Calibrated
+  Enough to Know, Not Calibrated to Act" — Aggarwal, arXiv:2608.27167).
+- [Secure Agentics Adrian][adrian-home] (shipped) — classifies every tool call and, per
+  [agentic-ai-vulnerability-landscape.md § Secure Agentics Adrian][adrian-home], can intervene
+  in-flight (alert, hold for human review, or block) — a three-way act/confirm/escalate gate.
+- [JEV-as-a-Judge][jaaj] (documented) — accepts when confident, escalates to a reasoning judge
+  when unsure: "0.9 points more accurate than GPT-6 on 1,610 held-out pairs at 41% of its fee."
+- **Failure mode**: treat an uncertain or blocked signal as its own outcome, never as a verdict —
+  see [jev-analysis.md § Build for When It's Wrong][jev-wrong].
 
 ## Laya (NandhaKishorM)
 
@@ -286,6 +424,15 @@ style-adversarial pairs and reference-free prose.
 | [agent-frameworks-infrastructure-landscape.md §8][frameworks-8] | Existing classifier/output-validation coverage, cross-referenced not repeated |
 | [Plan 0009][plan] | Lead list (J3 / issue #517) and rubric scope for this batch |
 | [Issue #517][issue-517] | Batch scope, proposed placements, owner corrections |
+| [GLiNER2.5-Decide announcement][gliner-blog] | Use-case bullets ("Model routing," "Tool calling," "Browser and computer use," "Guardrails," "LLM-as-a-judge") re-fetched verbatim, 2026-10-09 |
+| [docs.typesafe.ai][typesafe] (home, `/api`, `/models`) | Re-checked 2026-10-09 for a model-selection routing claim; none found |
+| [docs.typesafe.ai/confidence][typesafe-confidence] | Re-fetched verbatim 2026-10-09: the "Three paths for using confidence in your code" act/confirm/escalate pattern |
+| [Secure Agentics Adrian README][adrian-gh] | Tool-call classification and block/hold-for-approval behavior, re-fetched verbatim via `gh api`, 2026-10-09 |
+| [agentic-ai-vulnerability-landscape.md § Secure Agentics Adrian][adrian-home] | Existing corpus analysis of Adrian's act/confirm/escalate intervention modes, cross-referenced not repeated |
+| [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics] | Free-text judge metrics, cross-referenced not repeated |
+| [agent-frameworks-infrastructure-landscape.md § Guardrails / policy][guardrails-policy] | Safety-classifier/guardrail tools, cross-referenced not repeated |
+| [agent-frameworks-infrastructure-landscape.md § Rerankers][rerankers] | Dedicated cross-encoder rerankers, cross-referenced not repeated |
+| [llm-routers-gateways-landscape.md][llm-routers-open] | RouteLLM / Not Diamond classifier-trained routers, cross-referenced not repeated |
 
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
@@ -314,3 +461,16 @@ style-adversarial pairs and reference-free prose.
 [jevbench]: https://github.com/fstandhartinger/jevbench
 [semif]: https://github.com/TheoLeeCJ/SemIf-OpenJev
 [jaaj]: https://arxiv.org/abs/2609.26550
+[typesafe-confidence]: https://docs.typesafe.ai/confidence
+[jev-pilot]: ../infrastructure/jev-analysis.md#measured-pre-ci-code-change-gate
+[jev-wrong]: ../infrastructure/jev-analysis.md#build-for-when-its-wrong
+[guardrails-policy]: ../frameworks/agent-frameworks-infrastructure-landscape.md#guardrails--policy
+[rerankers]: ../frameworks/agent-frameworks-infrastructure-landscape.md#rerankers
+[llm-routers-open]: ../infrastructure/llm-routers-gateways-landscape.md#open--self-hostable-gateways
+[llm-routers-hosted]: ../infrastructure/llm-routers-gateways-landscape.md#hosted-aggregators
+[routellm-home]: https://github.com/lm-sys/RouteLLM
+[notdiamond-home]: https://www.notdiamond.ai/
+[judge-metrics]: ../../sdlc-lcm/agent-evaluation-metrics-landscape.md#llm-as-a-judge-quality-assessment
+[brier]: ../../sdlc-lcm/agent-evaluation-metrics-landscape.md#verbalized-confidence-calibration-brier
+[adrian-home]: ../../sdlc-lcm/agentic-ai-vulnerability-landscape.md#secure-agentics-adrian--open-source-runtime-agent-monitor
+[adrian-gh]: https://github.com/secureagentics/Adrian
