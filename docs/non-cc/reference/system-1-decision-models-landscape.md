@@ -52,6 +52,17 @@ confidence per choice.
   [llm-routers-gateways-landscape.md § Open / Self-Hostable Gateways][llm-routers-open] and
   [§ Hosted Aggregators][llm-routers-hosted]; cross-referenced here, not duplicated. Neither uses
   a `noul`/`choice`/`score` API.
+- Practitioner report (self-reported, not independently verified) — Muhammad Waseem Panhwar's
+  LinkedIn post of 2026-10-08 (plain text, LinkedIn blocks link checkers:
+  `linkedin.com/posts/panhwerwaseem_i-just-put-a-web-crawler-inside-claude-share-7513930132773068801-9uVv`)
+  describes Jev as the cheap first stage of a cascade: "crawler → jev asks 8 questions → grok 4.7
+  reads only what changed → claude writes the fix → i approve". A nightly crawl of 1,860 pages
+  (docs, changelogs and pricing of 37 tools) gets 8 typed questions per page ("did it change, yes
+  or no. does it touch my setup, pick one. how urgent, score 1 to 10"); the author reports
+  "14,880 decisions, done in 11.2 seconds for $0.29", with "1,791 pages ... dropped by code, no
+  model call at all. 55 go to grok 4.7. 11 reach claude. 3 come to me". This is routing by
+  escalation rather than by model choice: Jev's answers decide whether a costlier model sees the
+  page at all, and a human still approves "anything that touches my keys or my money" (§6).
 - **Gap**: re-checked 2026-10-09 — `docs.typesafe.ai`'s home, `/api`, and `/models` pages name no
   use case that selects *between other LLMs*; the only "routing" sentence found is in `/models`
   § Language support ("pay close attention to Confidence when routing" non-English content), a
