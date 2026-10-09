@@ -1,11 +1,11 @@
 ---
 title: Agentic Enterprise OS Landscape
-purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves.
+purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves.
 category: landscape
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, self-hosted-oss, claude-code]
 created: 2026-06-28
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-09
+validated_links: 2026-10-09
 status: assess
 ---
 
@@ -41,6 +41,7 @@ The OSS layer gives you the runtime instead of a managed platform. Most already 
 - **[Goose][goose]** (AAIF / Linux Foundation, Apache-2.0) — MCP co-creator and reference implementation; extensions *are* MCP servers and ACP handles agent-to-agent/IDE messaging — the protocol-native runtime an agent OS is built on.
 - **multica** (in [agent-frameworks-infrastructure-landscape §1][frameworks]; source-available, modified Apache-2.0 — not OSI) — turns coding-agent CLIs into managed teammates: issues route to an agent or squad, a local daemon executes with autopilot (cron/webhook) scheduling.
 - **[HugAgentOS][hugagentos]** (ZJU-REAL; source-available: Apache-2.0 + Additional Terms — no competing multi-tenant SaaS offering, "Powered by" UI attribution required without a commercial white-label license; not OSI) — self-hosted "AgentOS" combining agentic chat, private RAG knowledge bases, sub-agents, sandboxed code execution, long-term memory, and automation; treats **domain ontology as a control plane** for agent reasoning, decisions, and tool execution — governed concepts/relations/rules/action-contracts, with versioned ontology proposals and audit logs for traceable evolution.
+- **[Octop][octop]** (TencentCloud, MIT) — self-hosted multi-user, multi-agent assistant: one admin account serves a household or small team, each user's "experts" (agents) isolated per database row inside a single Python process (no queue, no separate worker); an **AgentTeams (Beta)** coordinator schedules multiple experts on multi-step work, and outbound ACP delegates coding tasks to Claude Code, OpenCode, CodeBuddy, and Codex.
 
 ## Tier 3 — Estate worked examples (the self-operating pattern, built from primitives)
 
@@ -84,7 +85,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 ## Cross-References
 
 - [goal-tracking-attribution-landscape.md][goal-attr] — the agent-native goal/attribution loop these platforms do not close
-- [databricks-genie-analysis.md][genie] · [autoagent-analysis.md][autoagent] · [odysseus-analysis.md][odysseus] · [goose-analysis.md][goose] — per-tool deep dives
+- [databricks-genie-analysis.md][genie] · [autoagent-analysis.md][autoagent] · [odysseus-analysis.md][odysseus] · [goose-analysis.md][goose] · [octop-analysis.md][octop] — per-tool deep dives
 - [agent-frameworks-infrastructure-landscape.md][frameworks] — multica + the broader orchestration catalog
 - [ag-ui-protocol-landscape.md][ag-ui] — the AG-UI protocol none of these enterprise platforms adopt
 
@@ -100,7 +101,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 | [Databricks Genie analysis][genie] | Agentic data coworker; Genie Ontology context graph |
 | [Glean — "Introducing independent agents"][glean] | AI coworker agents; independent identity, memory, proactive action |
 | Gartner — 2026 Hype Cycle for Agentic AI (gartner.com; bot-blocked, not link-checked) | First-party anchor for the formal category "AI agent development platforms" |
-| [AutoAgent][autoagent] · [Odysseus][odysseus] · [Goose][goose] · [multica][frameworks] · [HugAgentOS][hugagentos] | OSS self-operating workspaces / runtimes (in-corpus analyses + HugAgentOS repo) |
+| [AutoAgent][autoagent] · [Odysseus][odysseus] · [Goose][goose] · [multica][frameworks] · [HugAgentOS][hugagentos] · [Octop][octop] | OSS self-operating workspaces / runtimes (in-corpus analyses + HugAgentOS repo) |
 | [polyforge-orchestrator][polyforge] · [office-forge-orchestrator][office-forge] · [liminal-flux-gh-acc][liminal] | qte77 estate self-operating orchestrators (public repos) |
 
 [agentforce]: https://www.salesforce.com/news/stories/agentforce-operations-announcement/
@@ -110,6 +111,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [sap-joule]: https://news.sap.com/2026/05/new-joule-studio-enterprise-scale-agentic-development/
 [glean]: https://www.glean.com/blog/introducing-independent-agents
 [hugagentos]: https://github.com/ZJU-REAL/HugAgentOS
+[octop]: ../agents/octop-analysis.md
 [polyforge]: https://github.com/qte77/polyforge-orchestrator
 [office-forge]: https://github.com/qte77/office-forge-orchestrator
 [liminal]: https://github.com/qte77/liminal-flux-gh-acc
