@@ -96,6 +96,17 @@ classifier API, not a persistent store, so **Shared** and **Versionable** are ma
 
 `scored 2026-09-30`
 
+## Competition
+
+By October 2026, major vendors shipped their own Jev-style typed-decision APIs: OpenAI's
+Decisions API (`gpt-6-luna`) and Perplexity's Decisions API / open-weight `pplx-decider` (Apache
+2.0, Qwen3.8-27B-based). Perplexity's own card claims pplx-decider v1.1 beats Jev on a
+third-party, community-run "Decision Index" leaderboard (61.56 vs. 57.9) — a figure the landscape
+doc could only partly reconcile against that board's own live data. See
+[system-1-decision-models-landscape.md § OpenAI Decisions API][s1-openai] and
+[§ Perplexity pplx-decider][s1-pplx] for details, including a self-reported, unverified LinkedIn
+leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark.
+
 ## Cross-References
 
 - [code-review-products-landscape.md](code-review-products-landscape.md) — SaaS PR-review
@@ -120,6 +131,7 @@ classifier API, not a persistent store, so **Shared** and **Versionable** are ma
 | [qte77/feelings pilot plan][feelings-plan] | Reword-lesson and WAF-block measurements |
 | [BoundaryML/feelings][feelings-upstream] | Upstream repo the pilot forked |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied above |
+| [system-1-decision-models-landscape.md § OpenAI Decisions API][s1-openai] / [§ Perplexity pplx-decider][s1-pplx] | Major-vendor Jev-style competitors (Oct 2026); Decision Index benchmark and the self-reported Panahi leaderboard, cross-referenced not repeated |
 
 [typesafe-home]: https://docs.typesafe.ai/
 [typesafe-api]: https://docs.typesafe.ai/api
@@ -130,4 +142,6 @@ classifier API, not a persistent store, so **Shared** and **Versionable** are ma
 [feelings-plan]: https://github.com/qte77/feelings/blob/main/docs/plans/2026-09-23-0001-jev-coding-gate-pilot.md
 [sdlc-4]: ../../sdlc-lcm/agentic-sdlc-patterns.md#4-agent-first-developer-toolchain-amplify-partners
 [frameworks-8]: ../frameworks/agent-frameworks-infrastructure-landscape.md#8-output-validation-guardrails--verification
+[s1-openai]: ../reference/system-1-decision-models-landscape.md#openai-decisions-api-gpt-6-luna
+[s1-pplx]: ../reference/system-1-decision-models-landscape.md#perplexity-pplx-decider
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
