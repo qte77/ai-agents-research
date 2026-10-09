@@ -24,5 +24,6 @@ Agent memory across the corpus. Pointers only; see [the hub index](README.md).
 | [hyperspell-analysis.md](../non-cc/context-memory/hyperspell-analysis.md) | Hyperspell (hosted company-data memory platform; marketed as "context" but scored as memory), rubric-scored | non-cc |
 | [redis-iris-analysis.md § Agent Memory](../non-cc/context-memory/redis-iris-analysis.md#agent-memory) | Redis Iris's Agent Memory service (two-tier session/long-term store; OSS impl `redis/agent-memory-server`, Apache-2.0), rubric-scored | non-cc |
 | [CC-memory-tooling-landscape.md § Operator Memory](../cc-community/CC-memory-tooling-landscape.md#operator-memory-aerovato) | Operator Memory (aerovato): cross-agent context engine storing specs, decisions and lessons as git-tracked Markdown in private, shared and personal tiers | cc-community |
+| [octop-analysis.md](../non-cc/agents/octop-analysis.md) | Octop (TencentCloud): self-hosted multi-user assistant; claimed hierarchical-recall memory, LangGraph SQLite checkpointer | non-cc |
 
 Related hubs: [knowledge-graphs.md](knowledge-graphs.md), [rag.md](rag.md).
