@@ -1,6 +1,6 @@
 ---
 title: Owner leads (2026-10-06) and post-0010 follow-ups
-status: approved
+status: done
 created: 2026-10-06
 updated: 2026-10-09
 ---
@@ -14,7 +14,7 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 - **Approved 2026-10-06** (owner: "proceed" on #600). O1 decided by default the same day: gap-driven
   scoring (overridable). Coverage of every lead was checked on 2026-10-06 with a calibrated
   `git grep` over `docs/` (archive excluded); the result is in the table's *Coverage* column.
-- **Next:** B1 (backfill, one week at a time). N6, N7, J1 and S1 shipped. Z released v0.15.0 on 2026-10-06. W31 was backfilled on the old selection (#611). F1, N1–N5, E1, K1, P1 and L1 shipped 2026-10-06. O2 is owner-only.
+- **Arc closed 2026-10-09.** Every row shipped or deferred; see the table and the deferred list. Also shipped as owner leads outside the table: Firecrawl Universal Scrape (#631) and a practitioner Jev cascade (#632).
 - **Arc done-when:** every row is shipped (PR number), dropped (reason), or deferred (gate + reason).
 - **The loop, per row:** branch `<type>/<slug>` → write → `make check_docs check_status` → lychee on changed
   files → PR → `/workspaces/temp/ai-agents-research-triage/merge_gated.py <PR>` → strike the row in the same PR;
@@ -69,16 +69,15 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 | ~~P1~~ | ~~rxiv relevance precision (#594): tighten prompt and/or model, test via `llm-model-eval.yaml` against the #527 labels, rerun W38~~ | n/a | agent | Done 2026-10-06 (#604): agent-strict prompt (70B, W22–30: 83.6% vs 46.0% agreement, 16 vs 135 false accepts); #593/#599 closed; W40 rerun accepted 6/50, all agent papers (#606); #594 closed |
 | ~~L1~~ | ~~Link rot #598 (`tuleap.com/comparisons/` 503)~~ | n/a | agent | Done 2026-10-06, no change: the link passes again (lychee); #598 auto-closes on the next scheduled run |
 | ~~O1~~ | ~~Scoring policy for new tools~~ | n/a | owner | Decided by default 2026-10-06: **gap-driven** — score only when a tool could change a reference-architecture cell (owner may override) |
-| O2 | `qte77/gha-issue-triage` `self-triage.yml` has no LLM secret | n/a | owner | Owner adds a secret there; default: leave until then |
 | ~~N6~~ | ~~arXiv 2610.02525 MIRA~~ | none | agent | Done 2026-10-09 (#623): MIRA section in `weco-aide-…-analysis.md`; no code found; not scored |
 | ~~N7~~ | ~~TencentCloud/Octop~~ | none | agent | Done 2026-10-09 (#623): new `non-cc/agents/octop-analysis.md` (MIT, v1.0.2b6), Tier 2 of the enterprise-OS landscape; not scored |
 | ~~J1~~ | ~~Use-case map for Jev and similar models: model routing, guardrails (block/grant), tool-call gating, reranking (query, probability), LLM output evals/scores, confidence gate (act/confirm/HITL)~~ | partial | agent | Done 2026-10-09 (#625): § Use cases in `system-1-decision-models-landscape.md`; gaps stated: no system-1 model documents LLM routing or query-document reranking; Jev documents an act/confirm/escalate confidence gate |
 | ~~S1~~ | ~~rxiv selection: replace `max_papers: 50` (first 50 in feed order) with `max_papers: 0` + `max_llm_calls: <cap>` (keyword-ranked)~~ | n/a | agent | Done 2026-10-06 (#614): `max_papers: 0` + `max_llm_calls: 100`; ranked selection confirmed in the run log; #615 dedups repeated feed rows |
-| B1 | Backfill missing arXiv weeks after S1: W26–W29, W33–W39 (11), then rerun W31 and W40 on the ranked selection. W32 is absent from the feed (`gha-rxiv-feed-action` has no `32.csv`) — not backfillable. Serial: run → review titles → merge triage PR → next (each PR rebuilds the full index) | partial (W31, W40 done on first-50) | agent | State file lists W26–W31 and W33–W40; each triage PR reviewed |
-| O3 | Backfill parameters | n/a | owner | **Defaults:** cap `max_llm_calls: 100` per week; skip W11–W20 (before the pipeline started); serial per-week PRs, not a matrix workflow |
+| ~~B1~~ | ~~Backfill missing arXiv weeks after S1: W26–W29, W33–W39 (11), then rerun W31 and W40 on the ranked selection. W32 is absent from the feed (`gha-rxiv-feed-action` has no `32.csv`) — not backfillable. Serial: run → review titles → merge triage PR → next (each PR rebuilds the full index)~~ | partial (W31, W40 done on first-50) | agent | Done 2026-10-09: W26–W29 (#616–#619), W33 (#620), W34 (#621), W35 (#624), W36 (#627), W37 (#628), W38 (#629), W39 (#630); reruns W31 (#633, 77 accepted vs 7 on first-50) and W40 (#634, 84 vs 6). State lists W21–W40 except W32; index 909 papers. Fixes found on the way: #610 (week-keyed branch), #615 (repeated feed rows) |
+| ~~O3~~ | ~~Backfill parameters~~ | n/a | owner | Decided 2026-10-06 by the owner: cap 100 per week; serial per-week PRs. W11–W20 not decided → deferred (below) |
 | ~~Z~~ | ~~Release: collect the pending `changelog.d/` fragments (#587, #589, #590–#592) plus this arc's~~ | n/a | agent | Done 2026-10-06: v0.15.0 released (#608, tag + GitHub Release) |
 
-**Deferred (not rows):** #588 held leads (Originator, Serova, C3) — waiting on first-party evidence;
+**Deferred (not rows):** O2 — `qte77/gha-issue-triage` `self-triage.yml` needs an LLM secret (owner gate; until then it posts "GitHub Models retired" comments in that repo); backfill of arXiv W11–W20 (owner decision; the feed has them, the pipeline started at W21; about 2 hours of serial runs); JevSpawn (arXiv 2610.00437) surfaced in the W40 triage — a candidate for the system-1 use-case map, not yet researched; #588 held leads (Originator, Serova, C3) — waiting on first-party evidence;
 plan 0001 (#452) — unchanged; upstream `gha-rxiv-paper-eval` leftovers (dispatch and example workflows still on
 GitHub Models; issues #76, #79, #80) — tracked there; AlphaEvolve-family coverage gap (Fable, 2026-10-04) —
 candidate for the next arc.
