@@ -1,0 +1,3 @@
+### Added
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: a "Use cases" section organizing the system-1 decision-model landscape by six agent-pipeline use cases — model routing, guardrails, tool-call gating, reranking, LLM output evals/judging, and confidence-gated human-in-the-loop escalation — each sourced to a first-party README/docs/paper, with explicit gap notes for reranking and model routing (no corpus Jev-family model documents either). Re-fetched GLiNER2.5-Decide's own announcement and Secure Agentics Adrian's README verbatim to source four of the six use cases directly. `docs/non-cc/infrastructure/jev-analysis.md` gets a one-line pointer to the new section.
