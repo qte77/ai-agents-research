@@ -1,0 +1,7 @@
+### Added
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: new "October 2026: major vendors ship Jev-style decision models" section with sub-sections for the **OpenAI Decisions API** (`gpt-6-luna`; public beta per the guide/changelog, "limited preview" per the one-day-later DevDay recap — all three first-party pages quoted) and **Perplexity pplx-decider** (Apache-2.0 open weights on Hugging Face plus a hosted Decisions API using Jev's own `noul`/`choice`/`score` vocabulary; resolves the model card's "private repository" wording against the Hugging Face API's live `gated: false`/`private: false` metadata; documents the community-run, not Perplexity-run, "Decision Index" benchmark). Adds first-party Perplexity cookbook examples to § Use cases: an action-gate cookbook that is this corpus's first documented approve/deny gate on an already-formed tool call for a Jev-style model, a browser-agent next-action cookbook, a ticket-triage routing cookbook, and a citation-accuracy grounding check cross-referenced from the judge use case. Narrows (without closing) the model-routing gap now that OpenAI and Perplexity both name "routing" as a use case. Records the self-reported, unverified Maziyar Panahi LinkedIn leaderboard (24 models, 669 clinical decisions) that triggered this update, including a site-wide check showing the leaderboard itself is not publicly published.
+
+### Changed
+
+- `docs/non-cc/infrastructure/jev-analysis.md`: new short "Competition" section pointing to the new OpenAI/Perplexity sections.

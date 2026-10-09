@@ -1,6 +1,6 @@
 ---
 title: System-1 Decision Models Landscape
-purpose: Survey open-weight, research, and independent alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric.
+purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
 updated: 2026-10-09
 validated_links: 2026-10-09
@@ -47,6 +47,18 @@ confidence per choice.
 - [GLiNER2.5-Decide][gliner-blog] (documented) — its own "Model routing" bullet: "Route requests
   by destination, complexity, or escalation level and return the selected route with
   probabilities and confidence scores."
+- [OpenAI Decisions API][openai-decisions-guide] (documented) — its own guide names the use case:
+  "Use those answers to classify content, route requests, and prioritize work in your
+  application." Its own worked example, "Route a customer complaint," asks one `choice` question
+  ("Which department should handle this complaint?") over four options
+  (`billing`/`technical`/`shipping`/`other`) — routing to a department, the same shape already
+  noted below for RuVector, not a worked example of choosing between LLMs.
+- [Perplexity Decisions API][pplx-ticket-triage] (documented) — its own ticket-triage cookbook
+  feeds three questions (a `noul`, a seven-option `choice`, and a `score`) per support ticket into
+  threshold logic that sorts tickets into `escalate`/`review`/`queue`/`auto_reply`/`close`; only
+  `escalate` tickets are then handed to a *second*, more capable system (the Agent API) for an
+  investigation plan — escalation-based routing to one fixed downstream system, the same pattern
+  already described above for the Panhwar cascade, not a choice among several candidate models.
 - [RouteLLM][routellm-home] and [Not Diamond][notdiamond-home] (shipped) — classifier-trained
   per-query routers, already cataloged in
   [llm-routers-gateways-landscape.md § Open / Self-Hostable Gateways][llm-routers-open] and
@@ -63,14 +75,19 @@ confidence per choice.
   model call at all. 55 go to grok 4.7. 11 reach claude. 3 come to me". This is routing by
   escalation rather than by model choice: Jev's answers decide whether a costlier model sees the
   page at all, and a human still approves "anything that touches my keys or my money" (§6).
-- **Gap**: re-checked 2026-10-09 — `docs.typesafe.ai`'s home, `/api`, and `/models` pages name no
-  use case that selects *between other LLMs*; the only "routing" sentence found is in `/models`
-  § Language support ("pay close attention to Confidence when routing" non-English content), a
-  caution about Jev's own accuracy, not model selection. The corpus entries above for Laya, kev,
-  CLM, and RuVector likewise describe no router-to-other-LLMs use. The nearest matches already in
-  this doc are narrower: Laya's `Router` class picks among Laya's *own* three checkpoints (not
-  other LLMs), and RuVector's decision layer classifies support tickets into a fixed department
-  label set (77.3–84.0% accuracy) rather than routing between models.
+- **Gap, narrowed but not closed**: re-checked 2026-10-09 — `docs.typesafe.ai`'s home, `/api`, and
+  `/models` pages name no use case that selects *between other LLMs*; the only "routing" sentence
+  found is in `/models` § Language support ("pay close attention to Confidence when routing"
+  non-English content), a caution about Jev's own accuracy, not model selection. The corpus
+  entries above for Laya, kev, CLM, and RuVector likewise describe no router-to-other-LLMs use.
+  Two major vendors now name "routing" as a use case for their own Jev-style APIs — OpenAI's guide
+  and Perplexity's cookbook, both above — but both worked examples route to a fixed internal label
+  set (a department, or an escalate/review/queue/auto_reply/close bucket), not to a choice among
+  several candidate models. No system-1 decision model checked in this corpus, vendor or
+  independent, documents selecting *which model* should answer a request. The nearest matches
+  already in this doc are narrower still: Laya's `Router` class picks among Laya's *own* three
+  checkpoints (not other LLMs), and RuVector's decision layer classifies support tickets into a
+  fixed department label set (77.3–84.0% accuracy) rather than routing between models.
 
 ### 2. Guardrails (block / grant)
 
@@ -111,9 +128,33 @@ Adrian documents).
   classifier, not a `noul`/`choice`/`score` API) — the clearest first-party match for gating a
   *proposed* call rather than picking one: per its README, "every tool call is classified in real
   time, with risky actions blocked or held for your approval."
-- **Gap**: no Jev-family model's own docs describe a classic approve/deny gate on an
-  already-formed tool call — the Jev-family examples above pick *which* action to take, a related
-  but distinct decision shape from Adrian's gate.
+- [Perplexity Decisions API][pplx-action-gate] (documented) — Perplexity, not a Jev-family clone,
+  is the first entry in this corpus to document this gap's exact pattern for *any* Jev-style
+  (`noul`/`choice`/`score`) model: an agent proposes a function call (its example is
+  `schedule_payment`), `pplx-decider-v1.1-27b` scores three `noul` questions about it (policy
+  compliance, record match, reversibility), and application code applies ordered thresholds to
+  allow, ask a human, or block. Per the cookbook: "Only your code allows, asks about, or blocks
+  anything." It hedges its own thresholds as "starting points, not validated production values."
+- [Perplexity Decisions API][pplx-browser-agent] (documented) — its own browser-agent cookbook
+  documents the *pick-next-action* shape instead (alongside jev-ultrafast and GLiNER2.5-Decide
+  above): six questions (`noul`/`choice`/`score`) per step choose click/dismiss/scroll/stop; "the
+  model never clicks anything," and ordered thresholds in application code turn probabilities into
+  the action. Its own measurement: "Our runs took 16 to 22 seconds, most of it page loads and the
+  1.5 second pause per decision" over a 5-step run.
+- OpenAI's DevDay 2026 recap (announced, not documented in its own technical guide) — only the
+  recap names a fourth use case: "get back answers they can use to classify content, route
+  requests, or choose an agent's next action." No worked example of choosing a next action appears
+  in the Decisions API guide itself, so treat this as an announced, not yet documented, use case.
+- **Gap, now partly filled**: this Gap originally found no *Jev-family* model's own docs (Jev
+  itself, plus its open-weight/independent clones: Laya, kev, CLM, RuVector, GLiNER2.5-Decide,
+  JevK5, SemIf) describing a classic approve/deny gate on an already-formed tool call. As of
+  2026-10-09, Perplexity's action-gate cookbook above is the first first-party documentation of
+  that exact pattern for a Jev-style (`noul`/`choice`/`score`) model — but it's Perplexity's own
+  cookbook, not a Jev-family model's docs, so the gap for the Jev-family proper is unchanged.
+  Every other entry in this section, Jev-family and vendor alike, still mostly picks *which*
+  action to take rather than gating one already formed (jev-ultrafast, GLiNER2.5-Decide,
+  Perplexity's own browser-agent cookbook, OpenAI's announced-only "next action") — a related but
+  distinct decision shape from Adrian's and Perplexity's action-gate pattern.
 
 ### 4. Reranking (by query, by probability)
 
@@ -146,6 +187,15 @@ another model's output.
 - [JEV-as-a-Judge (arXiv:2609.26550)][jaaj] (documented — a research paper, no released code or
   dataset) — a decision-only judge that "comes within three points of GPT-6 wherever a verdict
   can be read off the text, at 0.36% of its fee."
+- [Perplexity Decisions API][pplx-answer-gate] (documented, hedged by the source itself) — its own
+  citation-accuracy cookbook scores whether cited passages support each sentence of another
+  model's generated answer, using one `checkable` `noul` question plus a `supports_N`/
+  `contradicts_N` `noul` pair per cited passage; fixed probability cutoffs then label each
+  sentence `supported`/`weak`/`contradicted`/`unsupported`/`uncited`/`not_checkable`.
+  The page itself never uses the term "LLM-as-a-judge," and states plainly: "Each probability is
+  the model's estimate of how well the snippets you sent support the sentence" and this "is not
+  proof that the sentence is true" — a grounding check on another model's output, not a rubric
+  verdict on its quality.
 - Free-text LLM-as-a-judge metrics (documented) — G-Eval, TRUE, and others; see
   [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics].
   These score generated prose, not a typed decision.
@@ -177,6 +227,182 @@ escalate-to-human.
   when unsure: "0.9 points more accurate than GPT-6 on 1,610 held-out pairs at 41% of its fee."
 - **Failure mode**: treat an uncertain or blocked signal as its own outcome, never as a verdict —
   see [jev-analysis.md § Build for When It's Wrong][jev-wrong].
+
+## October 2026: major vendors ship Jev-style decision models
+
+Trigger: a 2026-10-08 LinkedIn post by Maziyar Panahi (self-reported, not independently
+verified — plain text, LinkedIn blocks link checkers:
+`linkedin.com/posts/maziyarpanahi_someone-just-open-sourced-a-better-jev-share-7513969858003439616-8dc6`),
+headlined "Someone just open-sourced a better Jev," reported that OpenAI's GPT-6 Luna (via its
+Decisions API) and Perplexity's pplx-decider v1.1 topped his leaderboard of 24 "Jev-style" models
+scored on 669 clinical decisions across "triage, clinical notes, eligibility criteria and ICD-10
+coding." (That OpenAI and Perplexity now *ship* their own Jev-style decision APIs is this corpus's
+own conclusion from the first-party docs below, not Panahi's claim.) Quoted verbatim: "pplx-decider
+v1.1 (Perplexity): 643 of 669 right
+(96.1%), the top score. All 669 decisions cost 1.7 cents through an API, less than any other model
+on the board, and under Apache-2.0 a hospital can run it on its own servers." The same post:
+"GPT-6 Luna (OpenAI), through its new Decisions API: 637 of 669, tied at #1, and the only top model
+with zero severe misses"; "Mistral Large 4: 617 of 669, also zero severe misses, and the best
+triage score on the board (238 of 240)"; and "Jev 1.13, at 345 ms a decision." Mistral Large 4
+appears on the post only as a scored entrant on the leaderboard, not as a vendor shipping its own
+Jev-style decision API — this corpus found no first-party Mistral page describing one, so it gets
+no section here.
+
+**The leaderboard does not appear to be publicly published.** The post itself links only to the
+`perplexity-ai/pplx-decider-v1.1-27b` model card, not to a scoreboard page, and names no host for
+the "board" the author says he ranked 24 models on. Checked 2026-10-09: the post's own 7 comments
+contain no link to one either — one commenter asks for per-model cost/time stats and examples,
+another asks whether severe misses cluster by task, and neither gets a reply in the thread; a
+Hugging Face Spaces query scoped to the author
+(`huggingface.co/api/spaces?author=MaziyarPanahi`, no search filter) returns his full list of 12
+Spaces, none naming Jev, decisions, triage, or clinical; the first page of his Hugging Face
+profile (huggingface.co/MaziyarPanahi, 2,817 models / 53 datasets / 20 collections — a subset, not
+the full profile) surfaces no matching Space, dataset, or model either; his GitHub profile
+(github.com/MaziyarPanahi, first page of 43 repositories) lists none; and two web searches for the
+leaderboard and for "pplx-decider" with "669" found no independent page describing it. Treat every
+number quoted above as the author's self-report, not an independently reproduced result.
+
+### OpenAI Decisions API (GPT-6 Luna)
+
+**First-party**: [Decisions API guide][openai-decisions-guide] · [API reference —
+`decisions.create`][openai-decisions-ref] · [DevDay 2026 recap][openai-devday] · [API
+changelog][openai-changelog]
+
+A dedicated `POST /v1/decisions` endpoint (documented) that "evaluates text, images, or both and
+returns typed answers... about 10x faster than the Responses API" — OpenAI's own equivalent of
+Jev's typed-decision interface, built on a single supported model, `gpt-6-luna`. A request sets
+`model`, `input` (a text string, or messages mixing text and inline base64 images — **not**
+`evidence`), and `questions` (each with a `type` of `predicate`, `choice`, or `score`, a unique
+`name`, `instructions`, and, for `choice`/`score`, a `choices`/ordered-`levels` list); the response
+returns one `answers[]` entry per question — a `probability` for `predicate`; a `choice` plus
+`probabilities` and `confidence` for `choice`; a probability-weighted `score` plus `confidence`
+for `score` — plus `usage.input_tokens` (verified against the worked request/response example on
+the API reference page, 2026-10-09). A fourth outcome, `refusal`, is handled explicitly in the
+guide's own SDK code samples (not shown on the reference page itself).
+
+**Status — three first-party pages, three different words, within 72 hours**: the
+[Decisions API guide][openai-decisions-guide] (checked 2026-10-09) states: "The Decisions API is
+in public beta, and we expect to GA in the coming weeks." The [API changelog][openai-changelog]'s
+Oct 6, 2026 entry agrees on the stage: "Released the Decisions API in beta with `gpt-6-luna`." The
+[DevDay 2026 recap][openai-devday] (dated Oct 6–7, 2026 — the page carries both timestamps) uses
+different wording for the same release: "Available in limited preview today with a broad release
+planned in the coming days."
+
+**Stated use cases (documented, guide)**: "Use those answers to classify content, route requests,
+and prioritize work in your application." The guide's own worked example, "Route a customer
+complaint," asks one `choice` question over four department options
+(`billing`/`technical`/`shipping`/`other`) — see § Use cases → Model routing above for why this
+does not close that section's gap. Its "Score against a rubric" section documents the `score`
+type generically; its own worked example scores package-damage and ticket-urgency levels, not
+another model's generated output, so this corpus does not count it toward the judge use case
+either.
+
+**Stated use case (announced, DevDay recap only)**: "get back answers they can use to classify
+content, route requests, or choose an agent's next action." This phrase appears only in the DevDay
+recap, not in the technical guide, and no worked example of it is shown in either page — see
+§ Use cases → Tool-call gating above.
+
+**Pricing (documented)**: "input costs $0.10 per 1M tokens. You pay only for input tokens: there
+are no cache-read, cache-write, or output-token charges" (guide, checked 2026-10-09). Regional
+processing premiums and long-context multipliers can apply; the Decisions API supports Zero Data
+Retention and HIPAA use for eligible customers, with data residency in the US and EEA/Switzerland.
+
+**Leaderboard placement (self-reported, not independently verified)**: see § October 2026 above —
+Panahi's post reports GPT-6 Luna, through the Decisions API, scoring "637 of 669... tied at #1,
+and the only top model with zero severe misses" on the unpublished 669-decision clinical
+benchmark.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
+could change an open cell in the rubric's evidence census. This entry doesn't, so none is added
+here.
+
+### Perplexity pplx-decider
+
+**First-party**: [Hugging Face model card (v1.1)][pplx-decider-hf] · [HF API model
+metadata][pplx-decider-api] · [Decisions API quickstart][pplx-quickstart] · [Decisions API
+pricing][pplx-pricing] · [API changelog][pplx-changelog] · [Decision Index Space][decision-index-space]
+
+Perplexity ships `pplx-decider` two ways: as an Apache-2.0, open-weight checkpoint on Hugging Face
+you can self-host, and as a hosted model behind Perplexity's own "Decisions API" — the same model
+family under one name, reachable at `POST https://api.perplexity.ai/v1/decisions`. The hosted API
+uses Jev's own type vocabulary verbatim: `noul`, `choice`, `score` (OpenAI's API, above, renames
+the binary type `predicate` instead) — the closest naming match to Jev of any hosted entry in this
+landscape (the open-weight card's own Markdown only shows `choice` in a usage snippet; its text
+doesn't use the word `noul`). The hosted request shape, per the [quickstart][pplx-quickstart]
+(checked 2026-10-09): `model`,
+`state` (text, JSON, or images — up to 262,144 input tokens, 1–128 questions per request), and
+`questions`, each a `noul` (yes/no), `choice` (1–255 named options), or `score` (2–10 ordered
+levels). The open-weight card describes the same architecture from the other side: a
+`Qwen/Qwen3.8-27B` base fine-tuned into the "native decision-checkpoint layout" — the stock
+`Qwen3_5Model` backbone plus a separate `readout.safetensors` file, a BF16 `[255, 5120]` decision
+head rather than a full-vocabulary `lm_head` — 26B parameters in BF16; `DecisionModel.predict`
+applies a saved calibration temperature and returns probabilities over the candidate answers
+(verified against the model card and the HF API's `siblings` file list, 2026-10-09).
+
+**Pricing (documented) — a price cut, not a conflict**: the [pricing page][pplx-pricing] (checked
+2026-10-09) lists both `pplx-decider-v1.1-27b` and `pplx-decider-v1-27b` at $0.02 per 1M input
+tokens, free output, no per-request fee. The [changelog][pplx-changelog] explains why both read
+the same: the "New: Decisions API" entry originally priced `pplx-decider-v1-27b` at "$0.04 per
+million tokens," and the later "pplx-decider-v1.1-27b replaces v1" entry states "Input now costs
+$0.02 per million tokens, down from $0.04," with "requests that still use the older v1 name" kept
+working "at the same $0.02 rate." Neither changelog entry uses the words beta, preview, or GA, so
+this corpus found no first-party release-stage label for Perplexity's Decisions API (contrast
+OpenAI's explicit "public beta," above).
+
+**Benchmark (documented; the card's figures don't fully match the board it cites)**: the v1.1 card
+reports its own "Decision Index" score — 61.56 overall against Jev's 57.9 (v1 scored 56.4), "now
+outperforms Jev by more than 3.5 points." Per category, v1.1 trails Jev on Knowledge (48.18 vs.
+51.4) and leads on Language (69.45 vs. 62.0), Retrieval (61.26 vs. 55.4), Tools (78.88 vs. 75.1,
+though v1 scored higher at 79.3), and Arts (44.66 vs. 37.7); the card states the overall figure
+uses the suite's own weighting, not a plain average. The card links the
+[Decision Index Space][decision-index-space] (`multimodalart/jev-decision-index`, 550 likes as of
+2026-10-09, over 100 linked model repos), which describes itself as "Unofficial and
+community-maintained; not affiliated with TypeSafe AI" — a public, community-run leaderboard
+combining "20% public benchmarks" (37 benchmarks across five chance-corrected areas), "50% private
+tests of the same skills," and "30% private tasks from new domains," with the private components
+never published. Both models do have live entries on the board's own data file (checked
+2026-10-09): Jev's `public_skill`/`frozen_scores.balanced_skill` of 57.96 is a near-exact match for
+the card's "57.9," and the per-category `skill` values for both Jev and pplx-decider-v1.1 match
+the card exactly on Retrieval and Tools (55.4/55.42 and 75.1/75.09 for Jev; 61.26/61.26 and
+78.88/78.88 for v1.1) but run 1.4–3.8 points off the card on Knowledge, Language, and Arts for
+*both* models. The board's own headline score for v1.1 (`scores.balanced_skill` 62.75,
+`frozen_scores.balanced_skill`/`public_skill` 62.25) does not match the card's "61.56" either. The
+entry is real and the two sources agree closely on two of five categories, but this corpus could
+not fully reconcile the remaining numbers from the data available — treat "61.56 vs. 57.9" as the
+card's own stated comparison, not a figure independently confirmed against the board's current
+state.
+
+**Access — resolving the card's own wording (documented + observed, corrects the card)**: the
+card's usage section states a reader needs "authenticated Hugging Face access to this private
+repository." This is inconsistent with the repository's live state: the Hugging Face API
+([`huggingface.co/api/models/perplexity-ai/pplx-decider-v1.1-27b`][pplx-decider-api], checked
+2026-10-09) reports `"gated": false`, `"private": false`, 1,072 downloads, and lists all 11
+safetensors shards, `LICENSE`/`NOTICE`, and the full training source tree as downloadable
+`siblings`. A web search also surfaced an OpenRouter listing page for the same checkpoint
+(`openrouter.ai/perplexity/pplx-decider-v1.1-27b`) — unverified here, since a direct fetch of that
+URL 404'd on 2026-10-09; not relied on for this claim. The card's "private repository" sentence
+reads as stale
+wording from an earlier internal release, not the current access state; the weights are public
+and downloadable without authentication. Separately, the model page's "isn't deployed by any
+Inference Provider" banner is Hugging Face's own standard widget placeholder for any model without
+a configured serving partner — platform UI text, not a Perplexity statement; it does not appear
+anywhere in the card's own raw Markdown.
+
+**Documented use cases (hosted API cookbooks)**: Perplexity's own cookbook pages apply
+`pplx-decider` to patterns already tracked by this doc's § Use cases — ticket triage (routing,
+above), gating an agent's proposed function call before it runs (tool-call gating, above),
+driving a browser step by step (tool-call gating, above), and scoring whether cited passages
+support a generated sentence (judge, above) — each cross-referenced from its matching use case
+rather than repeated here.
+
+**Leaderboard placement (self-reported, not independently verified)**: see § October 2026 above —
+Panahi's post reports: "pplx-decider v1.1 (Perplexity): 643 of 669 right (96.1%), the top score.
+All 669 decisions cost 1.7 cents through an API, less than any other model on the board, and under
+Apache-2.0 a hospital can run it on its own servers."
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
+could change an open cell in the rubric's evidence census. This entry doesn't, so none is added
+here.
 
 ## Laya (NandhaKishorM)
 
@@ -415,6 +641,22 @@ style-adversarial pairs and reference-free prose.
 
 | Source | Content |
 |---|---|
+| Maziyar Panahi, LinkedIn post, 2026-10-08 (plain text, no link: `linkedin.com/posts/maziyarpanahi_someone-just-open-sourced-a-better-jev-share-7513969858003439616-8dc6`) | Trigger for this section; self-reported 24-model/669-decision clinical leaderboard, fetched verbatim via polyfetch 2026-10-09; post and its 7 comments checked for a leaderboard link (none found) |
+| Hugging Face Spaces API, `?author=MaziyarPanahi` | Author's full Space list (12), checked 2026-10-09 for a leaderboard match (none found) |
+| [OpenAI Decisions API guide][openai-decisions-guide] | Request/response shape, status ("public beta"), pricing, use cases; fetched 2026-10-09 |
+| [OpenAI Decisions API reference — `decisions.create`][openai-decisions-ref] | Worked request/response example (`model`/`input`/`questions`, `answers`/`usage`); fetched 2026-10-09 |
+| [OpenAI DevDay 2026 recap][openai-devday] | "Limited preview" status wording (differs from the guide/changelog) and the "agent's next action" use case; published 2026-10-07, fetched 2026-10-09 |
+| [OpenAI API changelog][openai-changelog] | Oct 6, 2026 "Released the Decisions API in beta" entry |
+| [pplx-decider-v1.1-27b (Hugging Face)][pplx-decider-hf] | Model card: architecture, Decision Index scores, access wording |
+| [pplx-decider-v1.1-27b (HF API)][pplx-decider-api] | `gated`/`private`/`siblings` metadata resolving the card's "private repository" wording, checked 2026-10-09 |
+| [Perplexity Decisions API quickstart][pplx-quickstart] | Hosted request shape (`state`/`questions`/`noul`/`choice`/`score`), limits; fetched 2026-10-09 |
+| [Perplexity Decisions API pricing][pplx-pricing] | Current $0.02/1M input-token rate for both model names; fetched 2026-10-09 |
+| [Perplexity API changelog][pplx-changelog] | v1 → v1.1 price-cut history ($0.04 → $0.02); fetched 2026-10-09 |
+| [Jev Decision Index (Hugging Face Space)][decision-index-space] | Confirms the benchmark is community-run ("not affiliated with TypeSafe AI"); its own `data/index.json` has live entries for both Jev and pplx-decider-v1.1, partially but not fully reconciling the model card's cited numbers; checked 2026-10-09 |
+| [Perplexity Decisions API — ticket-triage cookbook][pplx-ticket-triage] | Routing worked example (escalate/review/queue/auto_reply/close) |
+| [Perplexity Decisions API — action-gate cookbook][pplx-action-gate] | Approve/deny gate on a proposed `schedule_payment` call |
+| [Perplexity Decisions API — browser-agent cookbook][pplx-browser-agent] | Next-action selection (click/dismiss/scroll/stop) with measured per-step latency |
+| [Perplexity Decisions API — answer-gate (citation-accuracy) cookbook][pplx-answer-gate] | Citation/grounding verification of another model's generated sentences |
 | [Laya][laya] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [Laya (Hugging Face org)][laya-hf] | Checkpoint versioning |
 | [kev][kev] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
@@ -484,4 +726,18 @@ style-adversarial pairs and reference-free prose.
 [judge-metrics]: ../../sdlc-lcm/agent-evaluation-metrics-landscape.md#llm-as-a-judge-quality-assessment
 [brier]: ../../sdlc-lcm/agent-evaluation-metrics-landscape.md#verbalized-confidence-calibration-brier
 [adrian-home]: ../../sdlc-lcm/agentic-ai-vulnerability-landscape.md#secure-agentics-adrian--open-source-runtime-agent-monitor
+[openai-decisions-guide]: https://developers.openai.com/api/docs/guides/decisions
+[openai-decisions-ref]: https://developers.openai.com/api/reference/resources/decisions/methods/create
+[openai-devday]: https://openai.com/index/devday-2026-recap/
+[openai-changelog]: https://developers.openai.com/api/docs/changelog
+[pplx-decider-hf]: https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b
+[pplx-decider-api]: https://huggingface.co/api/models/perplexity-ai/pplx-decider-v1.1-27b
+[pplx-quickstart]: https://docs.perplexity.ai/docs/decisions/quickstart
+[pplx-pricing]: https://docs.perplexity.ai/docs/getting-started/pricing
+[pplx-changelog]: https://docs.perplexity.ai/docs/resources/changelog
+[decision-index-space]: https://huggingface.co/spaces/multimodalart/jev-decision-index
+[pplx-ticket-triage]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-ticket-triage/README
+[pplx-action-gate]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-action-gate/README
+[pplx-browser-agent]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-browser-agent/README
+[pplx-answer-gate]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-answer-gate/README
 [adrian-gh]: https://github.com/secureagentics/Adrian
