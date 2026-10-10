@@ -2,8 +2,8 @@
 title: Jev (TypeSafe AI) — System-One Decision Model
 purpose: What Jev is (question types, pricing, limits) and the qte77/feelings measured pilot using it as a pre-CI code-review gate.
 created: 2026-09-30
-updated: 2026-10-09
-validated_links: 2026-10-09
+updated: 2026-10-10
+validated_links: 2026-10-10
 status: trial
 ---
 
@@ -43,25 +43,30 @@ relying on these; TypeSafe states its own limits "can change without notice":
 [qte77/feelings][feelings-fork], a fork of [BoundaryML/feelings][feelings-upstream] (its
 BAML `.fill<T>()` side is covered in [§8 of the frameworks landscape][frameworks-8]),
 tested Jev as a cheap pre-CI review gate. The numbers below are read from the fork's own
-`site/data/results.json` and `ytdlp.json`, not the page's summary prose — both files and
-the [results page][feelings-results] are first-party for the *pilot's own measurements*,
-not for Jev itself.
+`site/data/results.json` and `ytdlp.json` (generated 2026-10-07, after the P5 rerun in
+[feelings#45][feelings-p5], which removed a new-file cue from the flawed fixtures), not the
+page's summary prose — both files and the [results page][feelings-results] are first-party
+for the *pilot's own measurements*, not for Jev itself. The run before P5 reported
+78% caught, 1 of 59 clean flagged and 23–30% held-out false flags; removing the cue is the
+only fixture change between the two runs.
 
 - **184 labelled changes, four public qte77 repos** (59 clean, 125 flawed), scored with
   four `noul` questions per change (scope creep, unused abstraction, duplicated code,
-  weakened tests). Per-question ROC-AUC ranged 0.89–0.99.
-- **At the shipped 0.70 threshold:** caught 78% of the flawed changes and wrongly flagged
-  1 of the 59 clean ones (1.7%), in a p95 of about 0.3 s (278 ms) and about $0.0001 per
-  check (per-call cost $0.0001165).
-- **Against Claude on the same changes and questions:** Haiku 4.5 averaged 0.90 ROC-AUC
-  and wrongly flagged 12% (11.9%); Sonnet 5 averaged 0.96; Opus 5.5 averaged 0.97 and
-  caught 98%. Jev ran about 70x faster than the fastest Claude tested (Opus, 19.1 s p95)
-  and about 80x cheaper than the cheapest (Haiku, $0.0092/check).
+  weakened tests). Per-question ROC-AUC ranged 0.84–0.99 (the unused-abstraction question is
+  the weakest, 0.84).
+- **At the shipped 0.70 threshold:** caught 76% of the flawed changes (95% CI 68–83%) and
+  wrongly flagged 2 of the 59 clean ones (3.4%, 95% CI 0–8.5%), in a p95 of about 0.3 s
+  (287 ms) and about $0.0001 per check (per-call cost $0.000116). With 59 clean changes the
+  false-flag rate is too small a sample to pin down.
+- **Against Claude on the same changes and questions:** Haiku 4.5 averaged 0.91 ROC-AUC
+  and wrongly flagged 12% (11.9%); Sonnet 5 averaged 0.95; Opus 5.5 averaged 0.97 and
+  caught 98%. Jev ran about 67x faster than the fastest Claude tested (Opus, 19.2 s p95)
+  and about 51x cheaper than the cheapest (Haiku, $0.0059/check).
 - **BAML vs. the plain Python SDK:** identical requests; the two setups' per-question AUC
-  never differed by more than 0.0165 ("within 0.02").
+  never differed by more than 0.0035.
 - **Held-out codebase (yt-dlp, 120 changes):** the ranking mostly held (per-question AUC
-  0.82–0.99), but the fixed 0.70 threshold did not transfer — it wrongly flagged 23–30% of
-  clean changes (vs. 1.7% on the repos it was tuned on). Each codebase needs its own setting.
+  0.77–0.99), but the fixed 0.70 threshold did not transfer — it wrongly flagged 23% of
+  clean changes (vs. 3.4% on the repos it was tuned on). Each codebase needs its own setting.
 - **Lesson — ask about what is *in the input*.** "Does this change add ... that is used
   only once?" needs whole-codebase knowledge Jev doesn't have. Rewording it to "...that
   nothing else in the diff uses?" — answerable from the diff alone — cut that question's
@@ -139,6 +144,7 @@ leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark
 [feelings-fork]: https://github.com/qte77/feelings
 [feelings-upstream]: https://github.com/BoundaryML/feelings
 [feelings-results]: https://qte77.github.io/feelings/
+[feelings-p5]: https://github.com/qte77/feelings/pull/45
 [feelings-plan]: https://github.com/qte77/feelings/blob/main/docs/plans/2026-09-23-0001-jev-coding-gate-pilot.md
 [sdlc-4]: ../../sdlc-lcm/agentic-sdlc-patterns.md#4-agent-first-developer-toolchain-amplify-partners
 [frameworks-8]: ../frameworks/agent-frameworks-infrastructure-landscape.md#8-output-validation-guardrails--verification
