@@ -11,6 +11,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.16.0] - 2026-10-10
+
+### Added
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: new "October 2026: major vendors ship Jev-style decision models" section with sub-sections for the **OpenAI Decisions API** (`gpt-6-luna`; public beta per the guide/changelog, "limited preview" per the one-day-later DevDay recap — all three first-party pages quoted) and **Perplexity pplx-decider** (Apache-2.0 open weights on Hugging Face plus a hosted Decisions API using Jev's own `noul`/`choice`/`score` vocabulary; resolves the model card's "private repository" wording against the Hugging Face API's live `gated: false`/`private: false` metadata; documents the community-run, not Perplexity-run, "Decision Index" benchmark). Adds first-party Perplexity cookbook examples to § Use cases: an action-gate cookbook that is this corpus's first documented approve/deny gate on an already-formed tool call for a Jev-style model, a browser-agent next-action cookbook, a ticket-triage routing cookbook, and a citation-accuracy grounding check cross-referenced from the judge use case. Narrows (without closing) the model-routing gap now that OpenAI and Perplexity both name "routing" as a use case. Records the self-reported, unverified Maziyar Panahi LinkedIn leaderboard (24 models, 669 clinical decisions) that triggered this update, including a site-wide check showing the leaderboard itself is not publicly published.
+
+- `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md`: Firecrawl Universal Scrape (2026-10-08) — `/scrape` extended to third-party provider data through the Alexandria provider layer.
+
+- `docs/_topics/harness.md`: the system-1 row names the OpenAI Decisions API and Perplexity pplx-decider.
+
+- `docs/_topics/`: hub rows for MIRA and the system-1 use-case map (harness) and Octop (memory).
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: § Use cases › Model routing — a self-reported practitioner cascade (Jev triage → Grok 4.7 → Claude → human approval) from a 2026-10-08 LinkedIn post.
+
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: MIRA (arXiv:2610.02525), a hierarchical meta-reasoner/executor split for long-horizon research agents (theorem proving, neural-architecture research) with a trained actor-critic variant (MIRA-AC); compared against the doc's existing agentic-meta-reasoning entry; no code repository found (checked abstract page and GitHub); not rubric-scored (no open-cell impact).
+- `docs/non-cc/agents/octop-analysis.md`: Octop (TencentCloud, MIT) — self-hosted multi-user, multi-agent assistant: single-process LangGraph harness, per-row user/agent isolation, AgentTeams (Beta) coordinator, hierarchical-recall memory with a LangGraph SQLite checkpointer, and outbound ACP delegation to Claude Code, OpenCode, CodeBuddy, and Codex.
+- `docs/non-cc/frameworks/agentic-enterprise-os-landscape.md`: Octop added to Tier 2's open-source self-operating workspaces, alongside AutoAgent, Odysseus, Goose, multica, and HugAgentOS.
+- `docs/non-cc/README.md`: Octop row added to the Agents table.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: a "Use cases" section organizing the system-1 decision-model landscape by six agent-pipeline use cases — model routing, guardrails, tool-call gating, reranking, LLM output evals/judging, and confidence-gated human-in-the-loop escalation — each sourced to a first-party README/docs/paper, with explicit gap notes for reranking and model routing (no corpus Jev-family model documents either). Re-fetched GLiNER2.5-Decide's own announcement and Secure Agentics Adrian's README verbatim to source four of the six use cases directly. `docs/non-cc/infrastructure/jev-analysis.md` gets a one-line pointer to the new section.
+
+### Changed
+
+- `.github/workflows/rxiv-paper-eval.yaml`: each week's papers are ranked by topic-keyword overlap and the top 100 go to the LLM (`max_llm_calls`), instead of the first 50 rows in feed order (`max_papers`). The dispatch input is now `max_llm_calls` (default 100).
+
+- `docs/non-cc/infrastructure/jev-analysis.md`: new short "Competition" section pointing to the new OpenAI/Perplexity sections.
+
+### Fixed
+
+- `.github/workflows/rxiv-paper-eval.yaml`: the triage branch now includes the week key (`chore/rxiv-paper-triage-<server>-<year>-W<week>-<date>`), so runs for different weeks on the same day no longer collide; `CONTRIBUTING.md` states the remaining rule (one run at a time, merge each triage PR before the next).
+
+- `.github/workflows/rxiv-paper-eval.yaml`: the triage report skips papers the feed lists twice in one week; the repeated headings failed markdownlint MD024 and stopped the W26 backfill.
+
+- `docs/non-cc/infrastructure/jev-analysis.md` (and the two docs that repeat it): the qte77/feelings pre-CI gate numbers now come from the post-P5 run (feelings#45): 76% caught, 2 of 59 clean flagged (3.4%), 23% held-out false flags, about 67x faster and 51x cheaper than Claude; the earlier figures predated the removal of a new-file cue.
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: pplx-decider's "61.56 vs 57.9" is reconciled — it is Decision Index edition 0.2.1, reproduced from the published area weights; edition 0.3's `balanced_skill` blends in private tests and is not comparable. The Panahi leaderboard note now flags the unexplained "tied at #1" and the "42% less" claim (52% at published prices).
+
 ## [0.15.0] - 2026-10-06
 
 ### Added
