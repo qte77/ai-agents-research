@@ -1,11 +1,13 @@
 ---
 title: Decision models first across the qte77 GitHub Actions estate
-status: draft
+status: approved
 created: 2026-10-10
 updated: 2026-10-10
 ---
 
-## Handoff (start here)
+Tracking issue: #652.
+
+## Current status
 
 **What this arc is:**
 
@@ -13,14 +15,14 @@ updated: 2026-10-10
 - A generative LLM, Cloudflare Workers AI through an OpenAI-compatible `api_base`, is used **only for free text** and as the fallback.
 - One shared `decide()` lives in `qte77/.github/actions/decide/`.
 
-**Status:** draft. **The owner approves it first** ("proceed" → set `status: approved`); no lanes start before then. Nothing here is built yet. One thing is already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0.
+**Status:** **approved 2026-10-10** (owner: "proceed" on #651). Already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0. Phase A lanes L1, L3 (G1 only), L4 and L5 started 2026-10-10; L2 pre-stages its PRs and merges after K0. K0 is pre-staged: `/workspaces/temp/ai-agents-research-triage/set_keys.sh` (see the K0 row).
 
 **How to run it:**
 
 1. Reconcile: `git log`, `gh pr list`, and the gate rows below. The plan may be stale; check before acting.
-2. Run **Phase A** as parallel lanes. Each lane is a subagent with `isolation: worktree`, briefed with the lane's file fence (Lanes table). The main session never edits a lane's files.
-3. Sibling repos are edited **in their own repo**: the subagent's working directory is that repo's clone under `/workspaces/qte77/<repo>`, and it follows that repo's CLAUDE.md/AGENTS.md/CONTRIBUTING.md. The worktree requirement applies there too: `git -C <repo> worktree add`.
-4. The main session reviews each lane's PR **at source** (strongest claims, test run), merges, and strikes the row **in the same PR or right after**.
+2. Run **Phase A** as parallel lanes. Each lane is a subagent in its own worktree, briefed with the lane's file fence (Lanes table). Lanes open PRs but never merge. The main session never edits a lane's files.
+3. Worktrees: for ai-agents-research lanes, the Agent tool's `isolation: worktree`. For sibling repos, the main session first runs `git -C /workspaces/qte77/<repo> worktree add <path> -b <branch>` and points the brief at that path; the lane follows that repo's CLAUDE.md/AGENTS.md/CONTRIBUTING.md. Finished worktrees: `git worktree remove -f -f`.
+4. The main session reviews each lane's PR **at source** (strongest claims, test run) and merges. For an ai-agents-research lane, it pushes the row strike onto the lane's PR branch before merging (same PR). A sibling-repo row is struck in the ai-agents-research PR that records the merge.
 5. Phase B is one owner sitting (K0). Phase C activates (C1 to P2).
 
 **Rules for every lane:**
@@ -146,18 +148,23 @@ updated: 2026-10-10
 |---|---|---|---|
 | L1 | D0 | qte77/.github | `actions/decide/**`, `tests/decide/**`, `pyproject.toml`, `.github/workflows/test-decide.yml`, `CHANGELOG.md` |
 | L2 | C1 | the 7 consumer repos (one worktree each, sequential inside the lane) | `.github/workflows/issue-triage.yaml` only |
-| L3 | G1 + H1 | ai-agents-research | `.github/scripts/**`, `.github/workflows/llm-model-eval.yaml`, `tests/**`, `triage/gold/**` (new) |
-| L4 | D1 | ai-agents-research | `docs/non-cc/reference/system-1-decision-models-landscape.md`, one changelog fragment |
-| L5 | W12 | qte77/gha-rxiv-feed-action | `data/arxiv/2026/12.csv` (via its workflow) |
+| L3 | G1 + H1 | ai-agents-research | `.github/scripts/**`, `.github/workflows/llm-model-eval.yaml`, `tests/**`, `triage/gold/**` (new), `changelog.d/*_gold-sets.md` |
+| L4 | D1 | ai-agents-research | `docs/non-cc/reference/system-1-decision-models-landscape.md`, `changelog.d/*_decision-1.md` |
+| L5 | W12 | qte77/gha-rxiv-feed-action | `data/arxiv/2026/12.csv` (via its workflow; deletion via PR, never a direct push to main) |
 
-L1–L5 run in parallel. P1 and P2 start after L1 merges (they pin its SHA) and after H1, which sets thresholds. E1 runs after P1.
+L1, L3 (G1), L4 and L5 run in parallel. L2 opens its PRs in Phase A and merges them after K0. H1 needs the K0 Jev key. P1 and P2 start after L1 merges (they pin its SHA) and after H1, which sets thresholds. E1 runs after P1.
+
+Lane notes:
+
+- **L1:** the Jev request body in the map was read from the SDK wrapper. Verify the raw request shape (docs.typesafe.ai, or how `typesafe-sdk==0.7.1` in the feelings venv builds it) before writing `test_jev.py`. Keep `.github`'s `validate.yml` green.
+- **L3 (G1):** papers come from the top-100 ranked pool of `triage/rxiv/data/arxiv-2026-W40.jsonl`; issues from repos with past triage comments (ai-agents-research since 2026-10-04, gha-issue-triage self-triage). The existing `label` fields are gpt-4o-mini verdicts and are never ground truth. The second pass is a separate blind labeller that the main session spawns; disagreements are reconciled with written rationale.
 
 ## Remaining work
 
 | Row | Item | Gate | Done when |
 |---|---|---|---|
-| T0 | Tracking issue in ai-agents-research; link it in this plan's frontmatter | agent | Issue exists, linked both ways |
-| K0 | Create 4 keys (Jev + CF per use case) into one local file; agent sets `TYPESAFE_API_KEY` + `CF_WORKERS_AI_TOKEN` in each repo, then deletes the file. `LLM_BASE_URL` secret already set (10 repos) | owner | `gh secret list` shows both secrets in every target repo |
+| ~~T0~~ | ~~Tracking issue in ai-agents-research, linked from this plan~~ | agent | Shipped: #652 (PR #651) |
+| K0 | Create 4 keys (Jev + CF per use case) into one local file; the agent runs the pre-staged `/workspaces/temp/ai-agents-research-triage/set_keys.sh <file>` (sets `TYPESAFE_API_KEY` + `CF_WORKERS_AI_TOKEN` per the key table via stdin, prints nothing secret), then deletes the file. `LLM_BASE_URL` secret already set (10 repos) | owner | `gh secret list` shows both secrets in every target repo |
 | D0 | `decide` action in qte77/.github, TDD per the map | agent (L1) | `test-decide.yml` green; README documents schema, bands, secrets |
 | C1 | 7 consumer PRs (pin + CF inputs + drop `models: read`); switch gha-issue-triage self-triage and ai-agents-research to `secrets.LLM_BASE_URL`, delete the variables | agent (L2), after K0 | One test issue per consumer gets a triage comment; self-triage run green |
 | G1 | Gold sets: ~60 issues (from past triage comments) + 100 papers (W40 ranked pool), agent-labelled from title/body/abstract, with an independent second pass on disagreements | agent (L3) | `triage/gold/*.jsonl` committed with label rationale; owner spot-check optional |
@@ -166,12 +173,13 @@ L1–L5 run in parallel. P1 and P2 start after L1 merges (they pin its SHA) and 
 | P2 | gha-rxiv-paper-eval: `is_relevant` → `noul` via `decide()` as #58's first registry entry; fix `eval-papers-dispatch.yaml` | agent (sibling), after D0 + H1 | Release tag; ai-agents-research bumped; Jev ≥ 83.6% agreement with fewer false accepts on G1 |
 | D1 | Microsoft Decision-1 in the system-1 landscape (Azure catalog: GA, Qwen3.5-9B base; licence/pricing from first-party pages) | agent (L4) | Section merged; owner may veto |
 | E1 | Estate convention doc in qte77/.github: decision first, defaults, secret names, escalation bands | agent, after P1 | Merged; linked from the 4 model-using READMEs |
+| Q1 | qte77/qte77: drop the stale `models: read` in `repo-registry.yml`, retire the GitHub Models icon in README (#31) | agent, after E1 | PR merged in qte77/qte77; #31 updated |
 | W12 | Regenerate W12 in gha-rxiv-feed-action (#206), then backfill W12 here | agent (L5) | `12.csv` has 9 columns with abstracts; W12 triage PR merged |
 
 **Loop (not rows):** weekly bot triage PRs (changelog/community/learnings) await owner review.
 
-**Deferred:**
+**Deferred** (gate: owner; reason):
 
-- gha-ai-changelog and gha-repo-index ports (note on #45 / #20);
-- OpenAI Decisions and Perplexity adapters (beta, no key);
-- Laya self-hosting.
+- gha-ai-changelog and gha-repo-index ports: no consumer found / AI off by default (owner, 2026-10-10). Note only on #45 / #20.
+- OpenAI Decisions and Perplexity adapters: beta APIs and no key.
+- Laya self-hosting: no use case yet.
