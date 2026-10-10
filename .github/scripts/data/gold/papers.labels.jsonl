@@ -28,7 +28,7 @@
 {"id": "2609.37853", "label": true, "confidence": "low", "rationale": "Framework for developing and evaluating autonomous, adaptive social-interaction agents driven by LLMs."}
 {"id": "2609.37968", "label": true, "confidence": "high", "rationale": "LLM coding agents that search over and modify their own instructions/tools via recorded self-improvement experience."}
 {"id": "2609.38028", "label": false, "confidence": "low", "rationale": "Dataset/benchmark of passenger natural-language instructions evaluated against language-conditioned driving models; no agent tool-use, planning or coordination architecture."}
-{"id": "2609.38078", "label": false, "confidence": "low", "rationale": "Robot-manipulation harness connecting a general-purpose VLM directly to control; explicitly avoids coding agents/tool frameworks as unnecessary complexity."}
+{"id": "2609.38078", "label": false, "confidence": "low", "rationale": "Robot-manipulation harness connecting a general-purpose VLM directly to control; explicitly avoids coding agents/tool frameworks as unnecessary complexity. Reconciled: pass 2 said YES; split resolved to NO by the criterion's 'When unsure, answer NO'."}
 {"id": "2609.38270", "label": true, "confidence": "high", "rationale": "Attack on LLM-powered multi-agent recommender systems exploiting their collaborative-reflection mechanism; agent-security focus."}
 {"id": "2609.38335", "label": true, "confidence": "high", "rationale": "Benchmarks LLM coding agents on end-to-end repository generation and analyses agent trajectories."}
 {"id": "2609.38345", "label": true, "confidence": "high", "rationale": "Infrastructure for programmable collaboration and controllable runtime specifically in multi-agent coding systems."}
@@ -59,7 +59,7 @@
 {"id": "2609.39566", "label": true, "confidence": "low", "rationale": "Builds and trains a tool-use agent (CASE) with agentic RL for autonomous evidence-seeking, even though the application domain is clinical imaging."}
 {"id": "2609.39777", "label": true, "confidence": "high", "rationale": "Benchmarks multi-agent coordination strategies among LLM-based specialist agents for graph learning."}
 {"id": "2609.39903", "label": true, "confidence": "high", "rationale": "Benchmark and harness for VLM-based computer-use agents operating professional scientific software."}
-{"id": "2609.40048", "label": false, "confidence": "low", "rationale": "Primarily a video-temporal-grounding accuracy technique; the agentic framing improves a VLM's tool orchestration but the measured contribution is video QA accuracy, not agent behavior."}
+{"id": "2609.40048", "label": false, "confidence": "low", "rationale": "Primarily a video-temporal-grounding accuracy technique; the agentic framing improves a VLM's tool orchestration but the measured contribution is video QA accuracy, not agent behavior. Reconciled: pass 2 said YES; split resolved to NO by the criterion's 'When unsure, answer NO'."}
 {"id": "2609.40269", "label": false, "confidence": "high", "rationale": "Classical Multi-Agent Path Finding under map uncertainty using Gaussian belief propagation; no LLM is involved."}
 {"id": "2609.40284", "label": true, "confidence": "high", "rationale": "Standardized benchmark specifically for the speed/efficiency of LLM-driven computer-use agents."}
 {"id": "2609.40306", "label": true, "confidence": "low", "rationale": "Self-evolving robot-agent harness coupling semantic (language) reasoning with physical execution and capability revision."}
@@ -86,7 +86,7 @@
 {"id": "2610.02206", "label": true, "confidence": "low", "rationale": "Benchmark for translating natural-language intent into executable tool invocations (CLI commands), fitting the tool-use/function-calling criterion."}
 {"id": "2610.02255", "label": false, "confidence": "low", "rationale": "Multi-agent collaborative time-series forecasting framework; no LLM is mentioned, reading as a general multi-agent ML system for a forecasting application."}
 {"id": "2610.02376", "label": true, "confidence": "high", "rationale": "Agentic platform in which LLM-based agents compose typed tools and encode recurring hardware-software co-design workflows."}
-{"id": "2610.02451", "label": false, "confidence": "low", "rationale": "Primarily a VLM-based wildfire-monitoring and reporting tool; the multi-agent memory system is in service of report accuracy, not agent-behavior research."}
+{"id": "2610.02451", "label": false, "confidence": "low", "rationale": "Primarily a VLM-based wildfire-monitoring and reporting tool; the multi-agent memory system is in service of report accuracy, not agent-behavior research. Reconciled: pass 2 said YES; split resolved to NO by the criterion's 'When unsure, answer NO'."}
 {"id": "2610.02480", "label": true, "confidence": "low", "rationale": "Multi-agent LLM system (Proposer/Actor) built and optimized end-to-end for generating faithful explanations."}
 {"id": "2610.02554", "label": false, "confidence": "high", "rationale": "Offline multi-agent reinforcement learning (MARL) framework; no LLM is involved."}
 {"id": "2610.02563", "label": true, "confidence": "high", "rationale": "Benchmark for LLM agents performing agentic programming and exploration in a game engine."}
@@ -95,6 +95,6 @@
 {"id": "2610.02972", "label": false, "confidence": "high", "rationale": "Bayesian-routing system between two LLM sizes for CV screening; no tool use, planning, or multi-agent coordination."}
 {"id": "2610.02994", "label": true, "confidence": "high", "rationale": "Directly studies and improves LLM agents' ability to detect and recover from mid-task failures."}
 {"id": "2610.03029", "label": false, "confidence": "high", "rationale": "LLM-based prompting framework for gene-set annotation; no agent, tool-use, or multi-agent component."}
-{"id": "2610.03099", "label": false, "confidence": "low", "rationale": "Primarily an e-commerce cross-video reasoning benchmark; the agentic tool-selection method is a technique to raise video-QA accuracy, not the object of study."}
+{"id": "2610.03099", "label": false, "confidence": "low", "rationale": "Primarily an e-commerce cross-video reasoning benchmark; the agentic tool-selection method is a technique to raise video-QA accuracy, not the object of study. Reconciled: pass 2 said YES; split resolved to NO by the criterion's 'When unsure, answer NO'."}
 {"id": "2610.03153", "label": true, "confidence": "high", "rationale": "Evolving benchmark for runtime security risks of LLM-plus-harness workspace agents (Claude Code, Codex, OpenClaw)."}
 {"id": "2610.03213", "label": true, "confidence": "high", "rationale": "Studies oversight of tool-equipped AI agents via small-language-model relevance classifiers over MCP tool calls."}

@@ -12,8 +12,10 @@ knowledge of this pass's verdicts:
 - `<set>.items.jsonl` — `{id, source, title, text, context}`, **no labels**.
 - `<set>.labels.jsonl` — `{id, label: true|false, confidence: "high"|"low", rationale}`.
 
-**Labeller:** agent pass 1 (2026-10-10). **A blind second pass + reconciliation follows** (row
-H1); do not read these labels before doing that pass.
+**Labellers:** agent pass 1 and an independent blind agent pass 2 (both 2026-10-10). Pass 2
+saw only the items files and the two criterion sources; its raw verdicts are kept in
+`<set>.labels.pass2.jsonl`. `<set>.labels.jsonl` holds the **reconciled** labels (see
+[Second pass and reconciliation](#second-pass-and-reconciliation)).
 
 ## Set 1 — papers (`papers.items.jsonl` / `papers.labels.jsonl`)
 
@@ -91,7 +93,7 @@ reverse. Two of the 9 are clean false-accepts rather than boundary calls — `26
 `2610.02255` (a multi-agent time-series-forecasting framework, no LLM anywhere). The remaining
 seam is VLM-driven multi-agent systems applied to a vision-centric task (video, images, robot
 perception) — the criterion's "driven by large language models" vs. "vision ... models" clauses
-pull in opposite directions there, and is worth flagging explicitly to the second labeller.
+pull in opposite directions there. This is where the second pass disagreed (below).
 
 ## Set 2 — issues (`issues.items.jsonl` / `issues.labels.jsonl`)
 
@@ -146,7 +148,21 @@ itself the honest finding here.
 | High confidence | 56 |
 | Low confidence | 6 (all 6 `vlm-toolkit` issues — that repo has no repo description set, so the primary scope signal this pass was told to use is absent; the label itself is still inferred confidently from the issue content, which is unambiguously VLM-toolkit-internal) |
 
-**Caveat:** with only 3 negatives, and all 3 from one repo's deliberate fixtures, this set is far
-better suited to measuring false-accept behavior than false-reject behavior, and is not a
-population-representative sample of "how often do owner issue trackers contain off-topic
-issues" — it is a worst-case-recall probe plus a large true-negative-free relevance check.
+**Caveat:** with only 3 negatives, all from one repo's deliberate fixtures, this set measures
+false rejects (relevant issues scored irrelevant) well but false accepts hardly at all, and any
+AUC on it has a very wide interval. It is not a population-representative sample of off-topic
+issues. Use the paper set for false-accept behaviour.
+
+## Second pass and reconciliation
+
+| Set | Agreement | Disagreements |
+|---|---|---|
+| Papers | 96 / 100 | `2609.38078`, `2609.40048`, `2610.02451`, `2610.03099` |
+| Issues | 62 / 62 | none |
+
+All four paper disagreements are pass 1 NO (low) vs pass 2 YES (medium), on the seam flagged
+above: a VLM-driven agentic or tool-using system whose measured contribution is a vision task
+(robot control, video grounding, wildfire reporting, cross-video QA). They were reconciled to
+**NO** by the criterion's own tie-break, "When unsure, answer NO": a split between two labellers
+is the unsure case. Each keeps `confidence: "low"` and a rationale noting the split. Final paper
+counts are unchanged: 77 YES / 23 NO.

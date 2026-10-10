@@ -1,0 +1,62 @@
+{"id": "ai-agents-research#652", "label": true, "confidence": "high", "rationale": "The repo's own tracking issue for its current research plan (decision models across the estate)."}
+{"id": "ai-agents-research#622", "label": true, "confidence": "high", "rationale": "Directly requests a factual update to a doc already in this research corpus."}
+{"id": "ai-agents-research#594", "label": true, "confidence": "high", "rationale": "Bug in this repo's own rxiv-paper-eval relevance-filter pipeline."}
+{"id": "ai-agents-research#588", "label": true, "confidence": "high", "rationale": "Research leads held back pending first-party evidence before adding to this repo's corpus."}
+{"id": "ai-agents-research#576", "label": true, "confidence": "high", "rationale": "This repo's own research arc to close open cells in its reference architecture."}
+{"id": "ai-agents-research#527", "label": true, "confidence": "high", "rationale": "CI failures in this repo's own research-pipeline GitHub Actions."}
+{"id": "ai-agents-research#520", "label": true, "confidence": "high", "rationale": "Proposes new corpus coverage (Jev ecosystem tools) directly within this repo's research scope."}
+{"id": "ai-agents-research#519", "label": true, "confidence": "high", "rationale": "Proposes extending an existing doc section in this repo's corpus."}
+{"id": "ai-agents-research#518", "label": true, "confidence": "high", "rationale": "Proposes a new analysis page for this repo's AI-agent research corpus."}
+{"id": "ai-agents-research#517", "label": true, "confidence": "high", "rationale": "Proposes new corpus coverage (same Jev ecosystem) within this repo's research scope."}
+{"id": "gha-issue-triage#110", "label": true, "confidence": "high", "rationale": "Root-cause bug report for this action's default LLM backend going dead."}
+{"id": "gha-issue-triage#109", "label": true, "confidence": "high", "rationale": "Bug report for this action's core LLM relevance-scoring step failing."}
+{"id": "gha-issue-triage#100", "label": true, "confidence": "high", "rationale": "Proposes adopting shared release workflows for this repo's own release process."}
+{"id": "gha-issue-triage#98", "label": true, "confidence": "high", "rationale": "README structure fixes for this specific repo."}
+{"id": "gha-issue-triage#93", "label": true, "confidence": "high", "rationale": "Feature request for how this action's auto-labeling creates labels."}
+{"id": "gha-issue-triage#80", "label": true, "confidence": "high", "rationale": "Refactor of this action's own env-var configuration handling."}
+{"id": "gha-issue-triage#71", "label": true, "confidence": "high", "rationale": "Refactor of this action's own label vocabulary/classification logic."}
+{"id": "gha-issue-triage#68", "label": true, "confidence": "high", "rationale": "Decision to remove an integration path from this action's own docs."}
+{"id": "agentic-job-offer-to-application-kit#427", "label": true, "confidence": "high", "rationale": "New discovery adapter directly extending this kit's job-lead discovery feature."}
+{"id": "agentic-job-offer-to-application-kit#425", "label": true, "confidence": "medium", "rationale": "Agent-readiness checks applied to this repo's own hosted GitHub Pages site."}
+{"id": "agentic-job-offer-to-application-kit#417", "label": true, "confidence": "high", "rationale": "Core application-flow feature (prefill without auto-submit) within this kit's scope."}
+{"id": "agentic-job-offer-to-application-kit#414", "label": true, "confidence": "high", "rationale": "Data-integrity issue in the evidence library this kit uses to tailor applications."}
+{"id": "agentic-job-offer-to-application-kit#393", "label": true, "confidence": "high", "rationale": "Evaluates a typed-LLM-function tool for this kit's own future architecture."}
+{"id": "agentic-job-offer-to-application-kit#392", "label": true, "confidence": "high", "rationale": "Core feature: deterministic grounding/honesty evaluation of generated application packs."}
+{"id": "agentic-job-offer-to-application-kit#391", "label": true, "confidence": "high", "rationale": "Core feature: config-driven pack-coverage policy for this kit."}
+{"id": "agentic-job-offer-to-application-kit#390", "label": true, "confidence": "high", "rationale": "Packaging decision for this repo's own pipeline as a plugin."}
+{"id": "agentic-job-offer-to-application-kit#389", "label": true, "confidence": "high", "rationale": "Extracting a core feature (evidence grounding) of this kit into a standalone plugin."}
+{"id": "agentic-job-offer-to-application-kit#388", "label": true, "confidence": "high", "rationale": "This repo's own release-cut tracking issue."}
+{"id": "analyze-stock-kpi#446", "label": true, "confidence": "high", "rationale": "Audit of this repo's own backtest feature (prices, rebalance dates, metrics)."}
+{"id": "analyze-stock-kpi#426", "label": true, "confidence": "high", "rationale": "UX bugs in this repo's own dashboard UI."}
+{"id": "analyze-stock-kpi#419", "label": true, "confidence": "high", "rationale": "Core backtest classification logic fix for this repo."}
+{"id": "analyze-stock-kpi#418", "label": true, "confidence": "high", "rationale": "Core backtest data-caching infrastructure for this repo."}
+{"id": "analyze-stock-kpi#417", "label": true, "confidence": "high", "rationale": "UX issue in this repo's own universe table UI."}
+{"id": "analyze-stock-kpi#416", "label": true, "confidence": "high", "rationale": "Doc-maintenance issue for this repo's llms.txt template."}
+{"id": "analyze-stock-kpi#415", "label": true, "confidence": "high", "rationale": "Build issue breaking this repo's own local preview charts."}
+{"id": "analyze-stock-kpi#413", "label": true, "confidence": "high", "rationale": "Core screener-logic decision for this repo's own candidate lists."}
+{"id": "cc-senses-plugin#135", "label": true, "confidence": "high", "rationale": "Proposes adopting shared release workflows for this repo's own release process."}
+{"id": "cc-senses-plugin#133", "label": true, "confidence": "high", "rationale": "README structure fixes for this specific repo."}
+{"id": "cc-senses-plugin#124", "label": true, "confidence": "high", "rationale": "Security-linting adoption for this repo's own code."}
+{"id": "cc-senses-plugin#123", "label": true, "confidence": "high", "rationale": "Performance problem with this plugin's own default VLM engine."}
+{"id": "cc-senses-plugin#122", "label": true, "confidence": "high", "rationale": "New skill proposal directly within this plugin's screen-vision feature family."}
+{"id": "cc-senses-plugin#121", "label": true, "confidence": "high", "rationale": "Core feature: a new vision engine for this plugin's /see command."}
+{"id": "cc-senses-plugin#120", "label": true, "confidence": "high", "rationale": "UX bug in this plugin's own CLI error handling."}
+{"id": "cc-senses-plugin#119", "label": true, "confidence": "high", "rationale": "Core feature: screen-capture backend reliability for this plugin."}
+{"id": "claude-code-plugins#213", "label": true, "confidence": "high", "rationale": "CI bug in this repo's own docs-deployment workflow."}
+{"id": "claude-code-plugins#207", "label": true, "confidence": "high", "rationale": "Stale-rule fix for a rule file shipped by this plugin marketplace."}
+{"id": "claude-code-plugins#206", "label": true, "confidence": "medium", "rationale": "Agent-readiness checks applied to this repo's own hosted docs site."}
+{"id": "claude-code-plugins#203", "label": true, "confidence": "medium", "rationale": "Persistence gap for Claude Code state consumed by this marketplace's cc-meta plugin; infra-adjacent but tied to an in-repo plugin."}
+{"id": "claude-code-plugins#199", "label": true, "confidence": "high", "rationale": "Proposes a new capability for this marketplace's own cc-meta plugin."}
+{"id": "claude-code-plugins#192", "label": true, "confidence": "high", "rationale": "Promotes a cross-repo learning into a shared rule/skill for this marketplace."}
+{"id": "claude-code-plugins#190", "label": true, "confidence": "high", "rationale": "Tracking issue for a new skill within this marketplace's security-audit plugin."}
+{"id": "claude-code-plugins#188", "label": true, "confidence": "high", "rationale": "New skill proposal for this marketplace's security-audit plugin."}
+{"id": "vlm-toolkit#17", "label": true, "confidence": "high", "rationale": "Tests for this repo's own core image-processing functions (repo description missing, but content is unambiguous)."}
+{"id": "vlm-toolkit#16", "label": true, "confidence": "high", "rationale": "Architecture decision (YAGNI-gated) for this repo's own capture abstraction."}
+{"id": "vlm-toolkit#15", "label": true, "confidence": "high", "rationale": "Core public-API extension for this repo's own VLMEngine/Detector classes."}
+{"id": "vlm-toolkit#14", "label": true, "confidence": "high", "rationale": "This repo's own first release-tagging issue."}
+{"id": "vlm-toolkit#13", "label": true, "confidence": "high", "rationale": "Repo tooling (Makefile targets) for this project itself."}
+{"id": "vlm-toolkit#12", "label": true, "confidence": "high", "rationale": "Core test-scaffolding issue for this repo's own contract tests."}
+{"id": "CellPlateVision-Prototype#8", "label": true, "confidence": "high", "rationale": "This repo's own final roadmap milestone (real-lab validation)."}
+{"id": "gha-issue-triage#34", "label": false, "confidence": "high", "rationale": "Absurd, unrelated 'hyperspace drive' request with no connection to an issue-triage GitHub Action; reads as a synthetic test case."}
+{"id": "gha-issue-triage#33", "label": false, "confidence": "high", "rationale": "Incoherent, content-free 'go to Mars' request with no connection to repo scope; reads as a synthetic test case."}
+{"id": "gha-issue-triage#30", "label": false, "confidence": "high", "rationale": "Incoherent, content-free 'go to Moon' request with no connection to repo scope; reads as a synthetic test case."}
