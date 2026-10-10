@@ -41,3 +41,4 @@ status: reference
 | [2026-09-27-0009-focus-shared-memory-context.md](2026-09-27-0009-focus-shared-memory-context.md) | done | #509, #504, #515, #516, #517, #348 |
 | [2026-10-01-0010-open-substrate-cells.md](2026-10-01-0010-open-substrate-cells.md) | done | #576 |
 | [2026-10-06-0011-owner-leads-and-followups.md](2026-10-06-0011-owner-leads-and-followups.md) | done | #600 |
+| [2026-10-10-0012-decision-models-estate.md](2026-10-10-0012-decision-models-estate.md) | draft | — |
