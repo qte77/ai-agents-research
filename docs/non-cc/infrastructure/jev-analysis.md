@@ -123,6 +123,12 @@ leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark
   open-weight and research alternatives (Laya, kev, CLM, GLiNER2.5-Decide, RuVector) and tools built on
   Jev (probably, abide, jev-ultrafast, jevgrep, pg-jev), organized by use case (routing, guardrails,
   tool-call gating, reranking, judge/eval, confidence gate) in its § Use cases
+- [system-1-decision-models-landscape.md § Paper: JevSpawn][s1-jevspawn] — a research paper
+  (arXiv:2610.00437) whose default pipeline runs on Qwen3.8-27B, not Jev, but which measures a
+  "TypeSafe Jev variant" that swaps the real Jev API in for its own scorer: roughly comparable
+  task quality across eight benchmark tasks, but "1.4 to 2.1 times" the latency of the paper's own
+  scorer on every task — the corpus's first measured (not self-reported) latency comparison of
+  Jev itself inside an agent's next-action loop
 
 ## Sources
 
@@ -137,6 +143,7 @@ leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark
 | [BoundaryML/feelings][feelings-upstream] | Upstream repo the pilot forked |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied above |
 | [system-1-decision-models-landscape.md § OpenAI Decisions API][s1-openai] / [§ Perplexity pplx-decider][s1-pplx] | Major-vendor Jev-style competitors (Oct 2026); Decision Index benchmark and the self-reported Panahi leaderboard, cross-referenced not repeated |
+| [system-1-decision-models-landscape.md § Paper: JevSpawn][s1-jevspawn] | Measured Jev-as-scorer latency/quality comparison from an independent research paper (arXiv:2610.00437), cross-referenced not repeated |
 
 [typesafe-home]: https://docs.typesafe.ai/
 [typesafe-api]: https://docs.typesafe.ai/api
@@ -150,4 +157,5 @@ leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark
 [frameworks-8]: ../frameworks/agent-frameworks-infrastructure-landscape.md#8-output-validation-guardrails--verification
 [s1-openai]: ../reference/system-1-decision-models-landscape.md#openai-decisions-api-gpt-6-luna
 [s1-pplx]: ../reference/system-1-decision-models-landscape.md#perplexity-pplx-decider
+[s1-jevspawn]: ../reference/system-1-decision-models-landscape.md#paper-jevspawn-fudan-sjtu-shanghai-innovation-institute
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md

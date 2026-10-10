@@ -141,6 +141,13 @@ Adrian documents).
   model never clicks anything," and ordered thresholds in application code turn probabilities into
   the action. Its own measurement: "Our runs took 16 to 22 seconds, most of it page loads and the
   1.5 second pause per decision" over a 5-step run.
+- [JevSpawn (arXiv:2610.00437)][jevspawn-paper] (documented — a research paper, code released) —
+  relaxes this section's own premise that the action vocabulary is "a fixed action/tool
+  vocabulary": per its abstract, Jev-style models "offer fast probabilistic predictions over
+  finite fields, but require those fields to be specified in advance," so JevSpawn instead infers
+  a per-branch, compositional finite action space from natural-language task context rather than
+  taking a developer-predefined one. See § Paper: JevSpawn below for the method, benchmarks, and
+  its relationship to Jev (which it extends conceptually, not a dependency it runs on by default).
 - OpenAI's DevDay 2026 recap (announced, not documented in its own technical guide) — only the
   recap names a fourth use case: "get back answers they can use to classify content, route
   requests, or choose an agent's next action." No worked example of choosing a next action appears
@@ -644,6 +651,74 @@ style-adversarial pairs and reference-free prose.
 
 `scored 2026-09-30`
 
+## Paper: JevSpawn (Fudan, SJTU, Shanghai Innovation Institute)
+
+**Paper**: [arXiv:2610.00437][jevspawn-paper] — "JevSpawn: Adaptive Agentic Inference through
+Compositional Action Spaces" (Haoyang Su, Weiran Huang). The paper's own affiliation block lists
+three institutions — Fudan University, Shanghai Jiao Tong University, and Shanghai Innovation
+Institute (the last listed twice) — without a per-author mapping recoverable from the rendered
+page. Submitted 30 Sep 2026; v1 is the only version as of 2026-10-10. Code released at
+[github.com/Hoyant-Su/JevSpawn][jevspawn-repo].
+
+**Relation to Jev — established from the paper's own text, not assumed**: JevSpawn extends the
+Jev-style finite-field interface rather than running on Jev by default. Its abstract states
+(quoted verbatim): "Jev-style models offer fast probabilistic predictions over finite fields, but
+require those fields to be specified in advance. This requirement limits autonomous task solving,
+where the available actions must be derived from natural language instructions and adapted
+through interaction." Its own experimental setup states "JevSpawn and the seven agent baselines
+use Qwen3.8-27B as the pretrained policy" — Qwen, not Jev, is the default scorer. The paper
+separately measures a "TypeSafe Jev variant," defined in its own appendix as one that "uses API
+model jev-1.13.0 for finite scoring and Qwen for declarations and text generation" — the real Jev
+API substituted for JevSpawn's own scoring step, benchmarked head-to-head against the default and
+seven other agent baselines, not merely named. The repository's README repeats this as one of
+three reported configurations: "**TypeSafe Jev** — JevSpawn with API-based finite scoring,"
+with a public entry point at `src/jev_spawn/api.py` (`gh api`, 2026-10-10).
+
+**What it is (documented)**: a compositional policy that infers a per-branch finite action space
+— named fields with permitted values, plus a renderer turning a complete field assignment into an
+executable action — from natural-language task context, instead of taking a developer-predefined
+vocabulary. A bounded beam of candidate field assignments is scored by joint probability using
+shared-prefix batched evaluation; each candidate runs in its own copy of the environment,
+observations update branch history, the top-ranked branch is kept, its declaration can be
+revised, and earlier branches stay available for backtracking. No additional training is used.
+
+**Benchmarks (documented — eight tasks, five suites; figures from the paper's own Table 1/Table
+2, which the repository README republishes unchanged)**: PPNL, Maze and Grid report success
+rates (0–1); LightsOut, RushHour, Sokoban, 2048 and Nullify report benchmark rewards/scores,
+against seven agent baselines (LATS, LLMCompiler, AgentPrune, HiAgent, FoldAgent, DyFlow,
+LatentMAS). Selected results, JevSpawn (default, Qwen-scored) vs. the strongest *other* baseline
+per column:
+
+- Maze 0.960 (tied with the TypeSafe Jev variant) vs. FoldAgent 0.520.
+- Grid 0.950 vs. FoldAgent 0.730.
+- 2048 score 305.120 vs. LLMCompiler 5.000.
+- Nullify reward 0.210 vs. HiAgent/FoldAgent 0.090 (tied).
+- Latency: 40.91 s on Maze and 40.58 s on Grid, against the fastest other baseline on each column
+  (AgentPrune 47.91 s on Maze; FoldAgent 61.44 s on Grid).
+- **Not a universal win, by the paper's own numbers**: AgentPrune scores highest on PPNL (0.956
+  vs. JevSpawn's 0.950), RushHour (0.453 vs. 0.390) and Sokoban (0.790 vs. 0.150); LLMCompiler
+  (13.61 s) and HiAgent (16.25 s) both beat JevSpawn's own 21.88 s latency on PPNL.
+
+**Jev-as-scorer, measured (documented)**: swapping the real Jev API in for JevSpawn's own Qwen
+scorer gives mixed, roughly comparable task quality across the eight columns — the TypeSafe Jev
+variant scores higher on PPNL (0.955 vs. 0.950), LightsOut (0.660 vs. 0.610) and Sokoban (0.250
+vs. 0.150), ties on Maze (0.960 each), and trails on Grid (0.930 vs. 0.950), RushHour (0.290 vs.
+0.390), 2048 (296.000 vs. 305.120) and Nullify (0.170 vs. 0.210) — but costs more latency on every
+one of the eight tasks: per the paper's own text, "The TypeSafe Jev variant takes 1.4 to 2.1 times
+as long as Qwen scoring across all eight tasks, including API communication."
+
+**Code and license (documented + observed)**: the abstract states "Code is available at
+`https://github.com/Hoyant-Su/JevSpawn`," confirmed public (`gh api`, 2026-10-10: 5 stars, 1 fork,
+Python, pushed 2026-10-02). No `LICENSE` file exists in the repository root, and its README states
+no license terms (checked 2026-10-10) — treat the code as unlicensed, not open-source, until the
+author adds one. A GitHub search for "JevSpawn" (`gh api search/repositories`, 2026-10-10) returns
+only this repository and the same author's `JevSpawn_web_demo` companion demo — no unrelated or
+competing project shares the name.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
+could change an open cell in the rubric's evidence census. This entry doesn't, so none is added
+here.
+
 ## Sources
 
 | Source | Content |
@@ -682,6 +757,9 @@ style-adversarial pairs and reference-free prose.
 | [JevBench v1.4][jevbench] | Third-party leaderboard cited by JevK5's own README |
 | [SemIf-OpenJev][semif] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [JEV-as-a-Judge (arXiv:2609.26550)][jaaj] | Abstract page (verbatim, fetched 2026-09-30) |
+| [JevSpawn (arXiv:2610.00437)][jevspawn-paper] | Abstract (arXiv Atom API, verbatim) and HTML full text (jev-1.13.0/Qwen3.8-27B setup, Table 1/2 figures, code-availability sentence); fetched 2026-10-10 |
+| [JevSpawn (GitHub)][jevspawn-repo] | README (same Table 1/2, "TypeSafe Jev — API-based finite scoring" wording, entry point `src/jev_spawn/api.py`), root contents (no `LICENSE`); fetched via `gh api`, 2026-10-10 |
+| GitHub code search, `q=JevSpawn` | Absence-of-collision check: 2 results, both Hoyant-Su's own repos; checked 2026-10-10 |
 | [agent-frameworks-infrastructure-landscape.md §8][frameworks-8] | Existing classifier/output-validation coverage, cross-referenced not repeated |
 | [Plan 0009][plan] | Lead list (J3 / issue #517) and rubric scope for this batch |
 | [Issue #517][issue-517] | Batch scope, proposed placements, owner corrections |
@@ -722,6 +800,8 @@ style-adversarial pairs and reference-free prose.
 [jevbench]: https://github.com/fstandhartinger/jevbench
 [semif]: https://github.com/TheoLeeCJ/SemIf-OpenJev
 [jaaj]: https://arxiv.org/abs/2609.26550
+[jevspawn-paper]: https://arxiv.org/abs/2610.00437
+[jevspawn-repo]: https://github.com/Hoyant-Su/JevSpawn
 [typesafe-confidence]: https://docs.typesafe.ai/confidence
 [jev-pilot]: ../infrastructure/jev-analysis.md#measured-pre-ci-code-change-gate
 [jev-wrong]: ../infrastructure/jev-analysis.md#build-for-when-its-wrong
