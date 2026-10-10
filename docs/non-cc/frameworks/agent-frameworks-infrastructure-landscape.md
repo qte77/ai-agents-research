@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-10-10
+validated_links: 2026-10-10
 ---
 
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
@@ -338,7 +338,7 @@ code branches on directly, backed by a probability rather than free text.
   `choice`, or a rubric score for `score`; see the linked analysis for pricing, limits,
   and the qte77/feelings measured pre-CI code-review-gate pilot. It ranks changes well,
   but its threshold needs setting per codebase — a fixed 0.70 cutoff wrongly flagged
-  23–30% of clean changes on a codebase it wasn't tuned on, vs. 1.7% on the ones it was.
+  23% of clean changes on a codebase it wasn't tuned on, vs. 3.4% on the ones it was.
 - [Laya](https://github.com/NandhaKishorM/laya) ([full entry](../reference/system-1-decision-models-landscape.md#laya-nandhakishorm)) — open-weight (Apache-2.0)
   non-autoregressive alternative; its README claims its answer payload is
   schema-identical to Jev's (`choice`/`score`/`noul` plus a token-usage block), so an

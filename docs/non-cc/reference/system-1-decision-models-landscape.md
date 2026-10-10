@@ -2,8 +2,8 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-10-09
-validated_links: 2026-10-09
+updated: 2026-10-10
+validated_links: 2026-10-10
 status: assess
 ---
 
@@ -102,8 +102,8 @@ confidence per choice.
 - [abide][abide-home] (shipped) — asks Jev one typed question per AGENTS.md rule on every edit
   or turn and has the agent repair the break in the same turn.
 - Jev's own pre-CI pilot (observed) — [jev-analysis.md § Measured: Pre-CI Code-Change Gate][jev-pilot]:
-  caught 78% of flawed changes at a 1.7% false-positive rate on the repos it was tuned on, but a
-  fixed threshold wrongly flagged 23–30% of clean changes on a held-out codebase.
+  caught 76% of flawed changes at a 3.4% false-positive rate (2 of 59) on the repos it was tuned
+  on, but a fixed threshold wrongly flagged 23% of clean changes on a held-out codebase.
 - **Failure mode**: fail open, not closed. Abide's own README documents no fallback behavior for
   an outage or missing key (re-checked 2026-10-09; the fail-open risk is this corpus's own
   analysis in [CC-community-tooling-landscape.md § abide][abide-home], not an abide-stated
@@ -250,7 +250,8 @@ no section here.
 
 **The leaderboard does not appear to be publicly published.** The post itself links only to the
 `perplexity-ai/pplx-decider-v1.1-27b` model card, not to a scoreboard page, and names no host for
-the "board" the author says he ranked 24 models on. Checked 2026-10-09: the post's own 7 comments
+the "board" the author says he ranked 24 models on. Checked 2026-10-09 (7 comments then; 40 on 2026-10-10, of which the 9 visible without
+sign-in were read): the post's comments
 contain no link to one either — one commenter asks for per-model cost/time stats and examples,
 another asks whether severe misses cluster by task, and neither gets a reply in the thread; a
 Hugging Face Spaces query scoped to the author
@@ -259,8 +260,17 @@ Spaces, none naming Jev, decisions, triage, or clinical; the first page of his H
 profile (huggingface.co/MaziyarPanahi, 2,817 models / 53 datasets / 20 collections — a subset, not
 the full profile) surfaces no matching Space, dataset, or model either; his GitHub profile
 (github.com/MaziyarPanahi, first page of 43 repositories) lists none; and two web searches for the
-leaderboard and for "pplx-decider" with "669" found no independent page describing it. Treat every
-number quoted above as the author's self-report, not an independently reproduced result.
+leaderboard and for "pplx-decider" with "669" found no independent page describing it. A 2026-10-10 sweep of his Hugging Face models and datasets by last
+modified found two related uploads (the `ModernJEV-Decide-Preview` model and the
+`AgentToolDecisions-180K` dataset), both about agent tool-routing, not clinical decisions, and
+neither mentions 669 decisions or the models above. Two parts of the post do not check out on
+their own terms: GPT-6 Luna's 637 is "tied at #1" with pplx-decider's 643, which the post calls
+"the top score", and the tie rule is not given; and "costs 42% less per decision" than Jev does
+not follow from the published per-token prices (pplx-decider [$0.02 per 1M input
+tokens][pplx-pricing], Jev $0.042 per 1M per [docs.typesafe.ai/models][typesafe-models]), which
+give 52% less at equal token counts. Because one miss zeroes every decision in a patient message,
+"643 of 669 right" is a clustered score, not per-item accuracy. Treat every number quoted above as
+the author's self-report, not an independently reproduced result.
 
 ### OpenAI Decisions API (GPT-6 Luna)
 
@@ -349,28 +359,25 @@ working "at the same $0.02 rate." Neither changelog entry uses the words beta, p
 this corpus found no first-party release-stage label for Perplexity's Decisions API (contrast
 OpenAI's explicit "public beta," above).
 
-**Benchmark (documented; the card's figures don't fully match the board it cites)**: the v1.1 card
-reports its own "Decision Index" score — 61.56 overall against Jev's 57.9 (v1 scored 56.4), "now
-outperforms Jev by more than 3.5 points." Per category, v1.1 trails Jev on Knowledge (48.18 vs.
-51.4) and leads on Language (69.45 vs. 62.0), Retrieval (61.26 vs. 55.4), Tools (78.88 vs. 75.1,
-though v1 scored higher at 79.3), and Arts (44.66 vs. 37.7); the card states the overall figure
-uses the suite's own weighting, not a plain average. The card links the
-[Decision Index Space][decision-index-space] (`multimodalart/jev-decision-index`, 550 likes as of
-2026-10-09, over 100 linked model repos), which describes itself as "Unofficial and
-community-maintained; not affiliated with TypeSafe AI" — a public, community-run leaderboard
-combining "20% public benchmarks" (37 benchmarks across five chance-corrected areas), "50% private
-tests of the same skills," and "30% private tasks from new domains," with the private components
-never published. Both models do have live entries on the board's own data file (checked
-2026-10-09): Jev's `public_skill`/`frozen_scores.balanced_skill` of 57.96 is a near-exact match for
-the card's "57.9," and the per-category `skill` values for both Jev and pplx-decider-v1.1 match
-the card exactly on Retrieval and Tools (55.4/55.42 and 75.1/75.09 for Jev; 61.26/61.26 and
-78.88/78.88 for v1.1) but run 1.4–3.8 points off the card on Knowledge, Language, and Arts for
-*both* models. The board's own headline score for v1.1 (`scores.balanced_skill` 62.75,
-`frozen_scores.balanced_skill`/`public_skill` 62.25) does not match the card's "61.56" either. The
-entry is real and the two sources agree closely on two of five categories, but this corpus could
-not fully reconcile the remaining numbers from the data available — treat "61.56 vs. 57.9" as the
-card's own stated comparison, not a figure independently confirmed against the board's current
-state.
+**Benchmark (documented; reconciled 2026-10-10)**: the v1.1 card reports its own "Decision Index"
+score — 61.56 overall against Jev's 57.9 (v1 scored 56.4), "now outperforms Jev by more than 3.5
+points." Per category, v1.1 trails Jev on Knowledge (48.18 vs. 51.4) and leads on Language (69.45
+vs. 62.0), Retrieval (61.26 vs. 55.4), Tools (78.88 vs. 75.1, though v1 scored higher at 79.3), and
+Arts (44.66 vs. 37.7). The card links the [Decision Index Space][decision-index-space]
+(`multimodalart/jev-decision-index`), which describes itself as "Unofficial and
+community-maintained; not affiliated with TypeSafe AI". The card's figures are the board's
+**edition 0.2.1** numbers: applying that edition's published area weights
+([`data/methodology-v0.2.1.json`][decision-index-methodology]: knowledge 0.2585, language 0.2585,
+retrieval 0.2002, tools 0.1828, arts 0.10) to the card's own category scores gives 61.557 for v1.1
+and 57.903 for Jev, and Jev's and v1's category scores match
+[`data/index-v0.2.1.json`][decision-index-v021] (generated 2026-09-28) to two decimals; v1.1 has no
+entry in that edition. The board moved to edition 0.3 on 2026-10-06, a day after the card's
+release commit. Its current [`data/index.json`][decision-index-current] reports two different
+overall numbers: `public_skill` (v1.1 62.25, Jev 57.96), the public-benchmark figure comparable
+to the card, and `balanced_skill` (v1.1 62.75), which also blends in the private tests ("50% private
+tests of the same skills," "30% private tasks from new domains") and is not comparable to the
+card. The card and the board are consistent; the gap between 61.56 and 62.25 comes from category
+scores moving between editions. Checked against the Space at commit `f4ecd9f7`, 2026-10-10.
 
 **Access — resolving the card's own wording (documented + observed, corrects the card)**: the
 card's usage section states a reader needs "authenticated Hugging Face access to this private
@@ -653,6 +660,7 @@ style-adversarial pairs and reference-free prose.
 | [Perplexity Decisions API pricing][pplx-pricing] | Current $0.02/1M input-token rate for both model names; fetched 2026-10-09 |
 | [Perplexity API changelog][pplx-changelog] | v1 → v1.1 price-cut history ($0.04 → $0.02); fetched 2026-10-09 |
 | [Jev Decision Index (Hugging Face Space)][decision-index-space] | Confirms the benchmark is community-run ("not affiliated with TypeSafe AI"); its own `data/index.json` has live entries for both Jev and pplx-decider-v1.1, partially but not fully reconciling the model card's cited numbers; checked 2026-10-09 |
+| Decision Index data at Space commit `f4ecd9f7`: [methodology v0.2.1][decision-index-methodology] · [index v0.2.1][decision-index-v021] · [current index][decision-index-current] | Area weights and edition 0.2.1 scores that reproduce the card's 61.56 / 57.9; edition 0.3 `public_skill` vs `balanced_skill` (checked 2026-10-10) |
 | [Perplexity Decisions API — ticket-triage cookbook][pplx-ticket-triage] | Routing worked example (escalate/review/queue/auto_reply/close) |
 | [Perplexity Decisions API — action-gate cookbook][pplx-action-gate] | Approve/deny gate on a proposed `schedule_payment` call |
 | [Perplexity Decisions API — browser-agent cookbook][pplx-browser-agent] | Next-action selection (click/dismiss/scroll/stop) with measured per-step latency |
@@ -733,8 +741,12 @@ style-adversarial pairs and reference-free prose.
 [pplx-decider-hf]: https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b
 [pplx-decider-api]: https://huggingface.co/api/models/perplexity-ai/pplx-decider-v1.1-27b
 [pplx-quickstart]: https://docs.perplexity.ai/docs/decisions/quickstart
+[typesafe-models]: https://docs.typesafe.ai/models
 [pplx-pricing]: https://docs.perplexity.ai/docs/getting-started/pricing
 [pplx-changelog]: https://docs.perplexity.ai/docs/resources/changelog
+[decision-index-methodology]: https://huggingface.co/spaces/multimodalart/jev-decision-index/resolve/f4ecd9f76093e73560d25fc5a9bd316f17326790/data/methodology-v0.2.1.json
+[decision-index-v021]: https://huggingface.co/spaces/multimodalart/jev-decision-index/resolve/f4ecd9f76093e73560d25fc5a9bd316f17326790/data/index-v0.2.1.json
+[decision-index-current]: https://huggingface.co/spaces/multimodalart/jev-decision-index/resolve/f4ecd9f76093e73560d25fc5a9bd316f17326790/data/index.json
 [decision-index-space]: https://huggingface.co/spaces/multimodalart/jev-decision-index
 [pplx-ticket-triage]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-ticket-triage/README
 [pplx-action-gate]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-action-gate/README
