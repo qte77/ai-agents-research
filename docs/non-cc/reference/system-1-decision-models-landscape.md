@@ -88,13 +88,13 @@ confidence per choice.
   nearest matches already in this doc are narrower still: Laya's `Router` class picks among Laya's
   *own* three checkpoints (not other LLMs), and RuVector's decision layer classifies support
   tickets into a fixed department label set (77.3–84.0% accuracy) rather than routing between
-  models. A third vendor now *names* the exact pattern, without a worked example either: Microsoft's
-  own Learn how-to for Decision-1 (below) lists "Model, tool, or agent selection: Choose the
+  models. A third vendor, Microsoft, now *names* the exact pattern, without a worked example
+  either: its own Learn how-to for Decision-1 (below) lists "Model, tool, or agent selection: Choose the
   component that should handle a request" as a common use case, and its Command Line launch blog
   suggests, under "Consider trying out the following" (not a worked example), "Model routing:
   Evaluate an incoming request and select the best model for the task based on quality, cost, and
-  latency requirements." The gap narrows again — a third first-party page naming model-selection
-  by name — but stays open for a worked example.
+  latency requirements." The gap narrows again — a third vendor naming model-selection by name —
+  but stays open for a worked example.
 
 ### 2. Guardrails (block / grant)
 
@@ -460,7 +460,8 @@ include "Explicit abstention: Supports options such as 'cannot tell' when the su
 insufficient" and a 32,768-token context window ("Single-pass scoring... over inputs of up to 32K
 tokens").
 
-**Status — a third first-party conflict, same pattern as OpenAI's above**: Microsoft's own
+**Status — three first-party statements, two different stages, the OpenAI pattern again**:
+Microsoft's own
 [Tech Community launch blog][msft-decision1-blog] (2026-10-09, byline Saumil-Shrivastava) states:
 "Now available in public preview, Microsoft-Decision-1 is a decision model built on Qwen3.5-9B..."
 The [Foundry catalog page][msft-decision1-catalog] for the same model disagrees, in both its
@@ -477,10 +478,13 @@ post-trained by Microsoft" (catalog) — confirmed independently by the
 single-pass decision scoring and will soon rebase it on other models, including Microsoft AI (MAI)
 and OpenAI." Training data: "publicly available datasets subject to Microsoft's Open Data process,
 plus synthetic data created by the team" (catalog), whose own `trainingDataDate` field reads
-"October 2026" — the same month as the launch, quoted as given rather than interpreted. Unlike
-every other entry in this landscape, Microsoft-Decision-1 has no released weights and no
-GitHub/Hugging Face repository to check a `LICENSE` file against — it is hosted-only. The
-catalog's own license field reads `"license","custom"`; no open-source license applies.
+"October 2026" — the same month as the launch, quoted as given rather than interpreted. Like
+OpenAI's Decisions API above — and unlike Perplexity's open-weight `pplx-decider` checkpoint —
+Microsoft-Decision-1 has no released weights to check a `LICENSE` file against: none of the four
+first-party pages above links or names a repository, and a Hugging Face API query scoped to the
+`microsoft` org (`?author=microsoft&search=decision`) returns an empty list (checked 2026-10-10) —
+hosted-only. The catalog's own license field reads `"license","custom"`; no open-source license
+applies.
 
 **Pricing (documented, two first-party pages agree, checked 2026-10-10)**: both the
 [Tech Community blog][msft-decision1-blog]'s pricing table and the
@@ -508,11 +512,11 @@ score over the same 36 benchmarks — is the one number the prose never states, 
 favor Microsoft-Decision-1: Jev 1.13.0 ranks first at 93.7, Quyet-1.0-Large second at 93.1,
 Microsoft-Decision-1 third at 92.2, ahead only of Surogate Rune (91.8), H2O-Lightning-4B (91.8),
 GPT-6 Luna Decisions (89.9), and deck-31B (83.5). The post's own "Appendix: Models benchmarked"
-names six of these seven models by source link (Quyet-1.0-Large, Surogate Rune 26B-A4B, GPT-6 Luna
-Decisions, deck-31B, H2O-Lightning-4B, Strands-Decider 2B) — Jev is not in that list, even though
+names six of the seven comparison models by source link — all but Jev (Quyet-1.0-Large, Surogate
+Rune 26B-A4B, GPT-6 Luna Decisions, deck-31B, H2O-Lightning-4B, Strands-Decider 2B) — even though
 an editor's note on the same post states "This post was updated from the original to add
 benchmarks for Jev on accuracy and calibration," and Jev's numbers do appear in the charts; the
-appendix itself was not updated to match. Safety (documented): "We tested Microsoft-Decision-1 on
+appendix does not list Jev. Safety (documented): "We tested Microsoft-Decision-1 on
 5,250 requests across 11 benchmarks, covering harmful content, jailbreak attempts, and prompt
 injection, and found that the model successfully refused harmful behavior while retaining a high
 degree of utility." Robustness (documented): "Microsoft-Decision-1 changes its decision on 1.3% of
