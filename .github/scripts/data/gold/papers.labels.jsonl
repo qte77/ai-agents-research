@@ -1,0 +1,100 @@
+{"id": "2609.35316", "label": false, "confidence": "low", "rationale": "Main contribution is a general AI-reliability-engineering framework (FMEA, TEVV, NIST AI RMF); its worked cases are a CNN and an autonomous vehicle, not LLM agents, and agentic conduct is only one of four failure categories."}
+{"id": "2610.00980", "label": true, "confidence": "high", "rationale": "Introduces and evaluates runtime coordination among LLM-driven multi-agent AI-scientist systems (Agent Laboratory, EvoScientist, ARK)."}
+{"id": "2609.39777", "label": true, "confidence": "high", "rationale": "Benchmarks multi-agent coordination strategies among LLM-based specialist agents for graph learning."}
+{"id": "2609.39566", "label": true, "confidence": "low", "rationale": "Builds and trains a tool-use agent (CASE) with agentic RL for autonomous evidence-seeking, even though the application domain is clinical imaging."}
+{"id": "2609.38335", "label": true, "confidence": "high", "rationale": "Benchmarks LLM coding agents on end-to-end repository generation and analyses agent trajectories."}
+{"id": "2609.37022", "label": false, "confidence": "high", "rationale": "Classical multi-agent reinforcement learning (Dec-POMDP) for hospital patient flow; no LLM agent is involved."}
+{"id": "2609.35596", "label": true, "confidence": "high", "rationale": "Benchmark for safety/misalignment risk arising specifically from self-evolving LLM agents."}
+{"id": "2609.35336", "label": true, "confidence": "low", "rationale": "Multi-agent LLM framework with tool use and planning for chemistry problem solving; the agent methodology, not the chemistry, is the stated contribution."}
+{"id": "2609.35255", "label": true, "confidence": "high", "rationale": "Taxonomy/survey of LLM agents equipped with workflow harnesses for data-science tasks."}
+{"id": "2609.34930", "label": true, "confidence": "high", "rationale": "Benchmarks the planning lifecycle of tool-calling LLM agents."}
+{"id": "2609.34683", "label": true, "confidence": "low", "rationale": "Benchmark suite specifically for agentic LLM inference performance, explicitly framed as an agent benchmark."}
+{"id": "2609.34492", "label": true, "confidence": "low", "rationale": "Benchmark for LLM agents' autonomous evidence retrieval and reasoning, applied to power-system data."}
+{"id": "2610.02569", "label": true, "confidence": "high", "rationale": "Resource-authorization defense for autonomous coding agents; an agent-safety contribution."}
+{"id": "2610.02563", "label": true, "confidence": "high", "rationale": "Benchmark for LLM agents performing agentic programming and exploration in a game engine."}
+{"id": "2610.02480", "label": true, "confidence": "low", "rationale": "Multi-agent LLM system (Proposer/Actor) built and optimized end-to-end for generating faithful explanations."}
+{"id": "2610.01618", "label": true, "confidence": "high", "rationale": "Proposes an evaluation methodology treating LLM agents as configurable systems and studies agent configuration choices directly."}
+{"id": "2610.01364", "label": true, "confidence": "low", "rationale": "Compares LLM-based multi-agent architectures (orchestrator/peer-to-peer/monolithic) coordinating smart-manufacturing control."}
+{"id": "2610.00437", "label": true, "confidence": "high", "rationale": "Introduces a compositional policy for adaptive, token-efficient agentic inference in LLM agents."}
+{"id": "2609.40048", "label": false, "confidence": "low", "rationale": "Primarily a video-temporal-grounding accuracy technique; the agentic framing improves a VLM's tool orchestration but the measured contribution is video QA accuracy, not agent behavior."}
+{"id": "2609.39146", "label": true, "confidence": "high", "rationale": "Benchmark for the security of multi-agent LLM debate under adversarial attacks."}
+{"id": "2609.38891", "label": true, "confidence": "high", "rationale": "Addresses planner-actor coordination failures in long-horizon LLM agentic tasks."}
+{"id": "2609.38867", "label": true, "confidence": "high", "rationale": "Benchmark for voice interfaces conveying instructions to LLM-based computer-use agents."}
+{"id": "2609.38661", "label": true, "confidence": "high", "rationale": "Self-evolving orchestration framework for LLM-based multi-agent tool-using systems."}
+{"id": "2609.38660", "label": true, "confidence": "low", "rationale": "Self-evolving multi-agent LLM system (dynamic router, Mixture-of-Agents) for subtitle translation; the agent architecture is the stated contribution."}
+{"id": "2609.38652", "label": true, "confidence": "high", "rationale": "Benchmark suite for agentic-AI task success, latency and cost on personal devices."}
+{"id": "2609.36879", "label": true, "confidence": "high", "rationale": "Agentic framework for detecting malicious Agent Skills using compact LLMs; agent-security focus."}
+{"id": "2609.36556", "label": true, "confidence": "high", "rationale": "First refreshable anomaly-detection benchmark specifically for LLM-based multi-agent systems."}
+{"id": "2609.35965", "label": true, "confidence": "low", "rationale": "Formalizes and benchmarks multi-robot Vision-and-Language Navigation coordinated by an explicit LLM-based subtask scheduler (TRISS), though the task itself is robotic navigation."}
+{"id": "2609.35606", "label": false, "confidence": "low", "rationale": "Primary contribution is a benchmark for automated theorem-proving/proof discovery in theoretical CS; an agent-workflow comparison is a secondary analysis axis, not the main object of study."}
+{"id": "2609.35936", "label": false, "confidence": "high", "rationale": "Communication-theory tutorial for multi-agent embodied systems; no LLM is involved."}
+{"id": "2609.34974", "label": true, "confidence": "high", "rationale": "Runtime defense protecting LLM-based Web agents from deceptive-interface manipulation; agent-safety focus."}
+{"id": "2609.34971", "label": true, "confidence": "high", "rationale": "Directly studies and mitigates tool-schema bias in the behavior of LLM agents."}
+{"id": "2609.34682", "label": true, "confidence": "low", "rationale": "Autonomous framework in which agents distill and reuse skills from execution trajectories to improve visual reasoning; agent self-improvement is the stated contribution."}
+{"id": "2609.34491", "label": true, "confidence": "low", "rationale": "Multi-agent LLM system that decouples molecular-design reasoning from search-state management via specialized agents."}
+{"id": "2609.34247", "label": true, "confidence": "high", "rationale": "Dual-system LLM agent architecture (fast voice interaction + deliberative tool-using agent) for full-duplex voice assistants."}
+{"id": "2610.03213", "label": true, "confidence": "high", "rationale": "Studies oversight of tool-equipped AI agents via small-language-model relevance classifiers over MCP tool calls."}
+{"id": "2610.03153", "label": true, "confidence": "high", "rationale": "Evolving benchmark for runtime security risks of LLM-plus-harness workspace agents (Claude Code, Codex, OpenClaw)."}
+{"id": "2610.03099", "label": false, "confidence": "low", "rationale": "Primarily an e-commerce cross-video reasoning benchmark; the agentic tool-selection method is a technique to raise video-QA accuracy, not the object of study."}
+{"id": "2610.03029", "label": false, "confidence": "high", "rationale": "LLM-based prompting framework for gene-set annotation; no agent, tool-use, or multi-agent component."}
+{"id": "2610.02994", "label": true, "confidence": "high", "rationale": "Directly studies and improves LLM agents' ability to detect and recover from mid-task failures."}
+{"id": "2610.02972", "label": false, "confidence": "high", "rationale": "Bayesian-routing system between two LLM sizes for CV screening; no tool use, planning, or multi-agent coordination."}
+{"id": "2610.02627", "label": true, "confidence": "low", "rationale": "Evaluates robustness of tool-using LLM agents (plus a RAG baseline) to variation in how requests are phrased."}
+{"id": "2610.02554", "label": false, "confidence": "high", "rationale": "Offline multi-agent reinforcement learning (MARL) framework; no LLM is involved."}
+{"id": "2610.02451", "label": false, "confidence": "low", "rationale": "Primarily a VLM-based wildfire-monitoring and reporting tool; the multi-agent memory system is in service of report accuracy, not agent-behavior research."}
+{"id": "2610.02376", "label": true, "confidence": "high", "rationale": "Agentic platform in which LLM-based agents compose typed tools and encode recurring hardware-software co-design workflows."}
+{"id": "2610.02206", "label": true, "confidence": "low", "rationale": "Benchmark for translating natural-language intent into executable tool invocations (CLI commands), fitting the tool-use/function-calling criterion."}
+{"id": "2610.02202", "label": false, "confidence": "low", "rationale": "Primary contribution is an information-retrieval benchmark for paper-inspiration discovery; agentic search is one of several retrieval baselines compared, not the object of study."}
+{"id": "2610.01939", "label": true, "confidence": "low", "rationale": "Studies reducing LLM-agent call/token overhead for a VLM-driven robot agent's action planning."}
+{"id": "2610.01887", "label": true, "confidence": "low", "rationale": "Couples an evolutionary heuristic-design loop with an explicit two-agent (Reasoner/Coder) LLM workflow."}
+{"id": "2610.01768", "label": true, "confidence": "low", "rationale": "Demonstrates a covert-exfiltration attack that specifically abuses an LLM agent's web-fetching tool capability; agent/tool-use security."}
+{"id": "2610.01093", "label": true, "confidence": "low", "rationale": "Grounds an LLM-based agent's natural-language planning in a hierarchical task-and-motion-planning framework for spacecraft operations."}
+{"id": "2610.01042", "label": true, "confidence": "high", "rationale": "Introduces a controlled framework for auditing communication behavior specifically within LLM multi-agent systems."}
+{"id": "2610.01027", "label": true, "confidence": "low", "rationale": "Legal research assistant whose core contribution is a multi-agent workflow decomposing and synthesizing complex legal research tasks."}
+{"id": "2610.01017", "label": true, "confidence": "high", "rationale": "Introduces a label-free cost framework for optimizing multi-agent LLM workflow construction and execution, with an explicit multi-agent-coordination benchmark."}
+{"id": "2610.00949", "label": true, "confidence": "high", "rationale": "Studies how supervised fine-tuning on agent trajectories trades off new tool-using capability against retained capability."}
+{"id": "2610.00905", "label": true, "confidence": "high", "rationale": "Empirical study of practitioner-reported issues, causes and fixes specifically in open-source LLM-based multi-agent systems."}
+{"id": "2610.00885", "label": true, "confidence": "low", "rationale": "Agent-harness design for auditable coding-agent-driven formal proof development and verification."}
+{"id": "2610.00854", "label": true, "confidence": "low", "rationale": "Benchmark explicitly evaluating VLM agents' task-planning and manipulation capability as robot generalists."}
+{"id": "2610.00705", "label": false, "confidence": "high", "rationale": "Meta multi-agent reinforcement learning (Markov games) for autonomous driving; no LLM agent is involved."}
+{"id": "2610.00648", "label": true, "confidence": "high", "rationale": "Benchmark for AI coding agents performing long-horizon agentic reasoning on production incident response."}
+{"id": "2610.02255", "label": false, "confidence": "low", "rationale": "Multi-agent collaborative time-series forecasting framework; no LLM is mentioned, reading as a general multi-agent ML system for a forecasting application."}
+{"id": "2610.00613", "label": true, "confidence": "high", "rationale": "Studies spatial reasoning and tool discovery/use by an LLM serving as a high-level agent orchestrator."}
+{"id": "2610.00557", "label": true, "confidence": "high", "rationale": "Controlled comparison of LLM-planner/LLM-executor autonomous red-team agents against RL-based agents across cyber environments."}
+{"id": "2609.40306", "label": true, "confidence": "low", "rationale": "Self-evolving robot-agent harness coupling semantic (language) reasoning with physical execution and capability revision."}
+{"id": "2609.40284", "label": true, "confidence": "high", "rationale": "Standardized benchmark specifically for the speed/efficiency of LLM-driven computer-use agents."}
+{"id": "2609.40269", "label": false, "confidence": "high", "rationale": "Classical Multi-Agent Path Finding under map uncertainty using Gaussian belief propagation; no LLM is involved."}
+{"id": "2609.39903", "label": true, "confidence": "high", "rationale": "Benchmark and harness for VLM-based computer-use agents operating professional scientific software."}
+{"id": "2609.39559", "label": false, "confidence": "high", "rationale": "Classical Multi-Agent Path Finding post-optimization via exact decomposition/ILP; no LLM is involved."}
+{"id": "2609.39450", "label": true, "confidence": "high", "rationale": "Tool-call authorization defense specifically for LLM-based agents against skill-injection attacks; agent-safety focus."}
+{"id": "2609.39420", "label": false, "confidence": "low", "rationale": "Primary contribution is specializing an LLM for algorithmic-trading code generation via pretraining/SFT; agentic evaluation is a secondary measurement, not the object of study."}
+{"id": "2609.39378", "label": false, "confidence": "high", "rationale": "Benchmark for VLM perception of human tool use in egocentric video; not about LLM-agent tool use."}
+{"id": "2609.39297", "label": true, "confidence": "high", "rationale": "Reputation-based aggregation system defending LLM-powered multi-agent debate against malicious agents."}
+{"id": "2609.39284", "label": true, "confidence": "high", "rationale": "Capability-grounded benchmark specifically for skill-evolution harnesses in autonomous coding agents."}
+{"id": "2609.39207", "label": true, "confidence": "low", "rationale": "Self-evolving agent system connecting a general-purpose coding agent to robot sensing/execution/persistent experience."}
+{"id": "2609.39154", "label": true, "confidence": "high", "rationale": "DAG-based multi-agent framework (Orchestrator/Executor roles) for deep-research planning, with an explicit agent-architecture training signal."}
+{"id": "2609.39105", "label": false, "confidence": "high", "rationale": "Classical model-based trajectory-planning framework for off-road vehicles; no LLM agent is involved."}
+{"id": "2609.39101", "label": true, "confidence": "low", "rationale": "New agent-learning paradigm (retrospective world modeling) studied directly on VLM agents' policy-learning behavior."}
+{"id": "2609.39066", "label": true, "confidence": "low", "rationale": "Agentic tool-augmented multi-turn reasoning framework integrating 22 specialized forensic tools for image-forgery detection; the tool-use agent architecture is the stated contribution."}
+{"id": "2609.38805", "label": true, "confidence": "high", "rationale": "Studies explicit behavioral trajectory diversity in RL-based post-training specifically for LLM agents."}
+{"id": "2609.38798", "label": true, "confidence": "high", "rationale": "LLM-based graph agents trained via GRPO to explore and reason over knowledge graphs through tool interactions."}
+{"id": "2609.38766", "label": true, "confidence": "low", "rationale": "Tool-using scientific-reasoning agent system with a controller and read-only evidence tools; the agent architecture is the stated contribution."}
+{"id": "2609.38743", "label": true, "confidence": "low", "rationale": "Develops a multi-step retrieval tool specifically to remove a bottleneck in LLM agents' visual agentic search."}
+{"id": "2609.38482", "label": true, "confidence": "high", "rationale": "Decentralized architecture paper for scalable, fault-tolerant LLM-based multi-agent systems."}
+{"id": "2609.38473", "label": false, "confidence": "low", "rationale": "Controlled comparison of RAG retrieval-pipeline designs for scientific QA; an agentic tool-call pipeline is one of six compared baselines, not the object of study."}
+{"id": "2609.38411", "label": true, "confidence": "high", "rationale": "Introduces a formal framework for auditing loss-of-control incidents and safety evaluations specifically in autonomous agents."}
+{"id": "2609.38345", "label": true, "confidence": "high", "rationale": "Infrastructure for programmable collaboration and controllable runtime specifically in multi-agent coding systems."}
+{"id": "2609.38078", "label": false, "confidence": "low", "rationale": "Robot-manipulation harness connecting a general-purpose VLM directly to control; explicitly avoids coding agents/tool frameworks as unnecessary complexity."}
+{"id": "2609.38028", "label": false, "confidence": "low", "rationale": "Dataset/benchmark of passenger natural-language instructions evaluated against language-conditioned driving models; no agent tool-use, planning or coordination architecture."}
+{"id": "2609.37968", "label": true, "confidence": "high", "rationale": "LLM coding agents that search over and modify their own instructions/tools via recorded self-improvement experience."}
+{"id": "2609.37853", "label": true, "confidence": "low", "rationale": "Framework for developing and evaluating autonomous, adaptive social-interaction agents driven by LLMs."}
+{"id": "2609.37849", "label": true, "confidence": "high", "rationale": "LLM-based agent autonomously optimizing scientific software performance end to end."}
+{"id": "2609.37773", "label": false, "confidence": "low", "rationale": "Figure-centric multimodal QA benchmark for interpreting scientific literature; 'scientific agents' is aspirational framing for the broader AIVC vision, not the evaluated object."}
+{"id": "2609.37686", "label": true, "confidence": "high", "rationale": "Benchmark for autonomous agents operating professional engineering software end to end across the design loop."}
+{"id": "2609.37658", "label": true, "confidence": "high", "rationale": "Benchmark for LLM agents on enterprise-level interactive strategic reasoning and decision-making."}
+{"id": "2609.37655", "label": false, "confidence": "low", "rationale": "Data-generation framework synthesizing spatial VQA training data via multi-agent coding as an implementation detail; the object of study is MLLM spatial-reasoning training data, not agent behavior."}
+{"id": "2609.38270", "label": true, "confidence": "high", "rationale": "Attack on LLM-powered multi-agent recommender systems exploiting their collaborative-reflection mechanism; agent-security focus."}
+{"id": "2609.37590", "label": true, "confidence": "high", "rationale": "Training-free context-compression framework evaluated across agentic benchmarks (tool-calling, web, multi-turn dialogue) for LLM agents."}
+{"id": "2609.37567", "label": true, "confidence": "high", "rationale": "Topology-concealment defense specifically for LLM-based multi-agent system communication structure."}
+{"id": "2609.37311", "label": true, "confidence": "high", "rationale": "Recommendation agents that autonomously perceive, reason over and act on user preferences, with a memory mechanism for long-context agent reasoning."}
+{"id": "2609.37053", "label": true, "confidence": "high", "rationale": "Benchmark for multimodal GUI agents operating professional materials-science software."}
