@@ -74,14 +74,24 @@ rule:
 | High confidence | 61 |
 | Low confidence (boundary judgment calls — see rationale per item) | 39 |
 
-**Observed, for context only (not used while labelling — the committed file's accept/reject split
-was never consulted before or during the label pass):** this pass agrees with the production
-agent-strict run (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`) on 89/100 of this exact pool. 9
-disagreements are this pass rejecting a paper production accepted (mostly VLM/vision-agent or
-domain-application borderline cases); 2 are the reverse. The recurring seam is VLM-driven
-multi-agent systems applied to a vision-centric task (video, images, robot perception) — the
-criterion's "driven by large language models" vs. "vision ... models" clauses pull in opposite
-directions there, and is worth flagging explicitly to the second labeller.
+**Partial-exposure disclosure:** before the top-100 pool was reconstructed, 21 of its DOIs were
+already seen (title + abstract, while inspecting `arxiv-2026-W40.jsonl`'s schema) with the prior
+knowledge that all of them were production-accepted — that file holds only accepted papers, so
+anything read from it carries that label. All 21 ended up inside the reconstructed 100 and were
+then labelled individually like the other 79; one of them (`2609.40048`) was still labelled NO
+despite the known prior accept, so this was not pure rubber-stamping, but it is a real,
+disclosed deviation from a fully blind pass on exactly those 21 items. The other 63 accepted DOIs
+and all 16 rejected ones were not identified until after every one of the 100 had been labelled.
+
+**Observed, for context only (comparison run only after labelling completed):** this pass agrees
+with the production agent-strict run (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`) on 89/100 of
+this exact pool. 9 disagreements are this pass rejecting a paper production accepted; 2 are the
+reverse. Two of the 9 are clean false-accepts rather than boundary calls — `2609.35936`
+(a wireless-communication tutorial for embodied multi-agent systems, no LLM anywhere) and
+`2610.02255` (a multi-agent time-series-forecasting framework, no LLM anywhere). The remaining
+seam is VLM-driven multi-agent systems applied to a vision-centric task (video, images, robot
+perception) — the criterion's "driven by large language models" vs. "vision ... models" clauses
+pull in opposite directions there, and is worth flagging explicitly to the second labeller.
 
 ## Set 2 — issues (`issues.items.jsonl` / `issues.labels.jsonl`)
 
@@ -107,11 +117,13 @@ ninth repo.)
 
 For each repo: `gh issue list --state all --limit 100 --json number,title,body,url,author`
 (bot-authored issues, i.e. `github-actions`/`dependabot`, excluded), then the first N by GitHub's
-default most-recently-updated ordering: 10 for `ai-agents-research`, `gha-issue-triage` and
-`agentic-job-offer-to-application-kit`; 8 for `analyze-stock-kpi`, `cc-senses-plugin` and
-`claude-code-plugins`; 6 for `vlm-toolkit`; 1 for `CellPlateVision-Prototype` (its only issue).
-That gave 59 items, **all of them relevant** — every sampled issue was the owner's own in-scope
-project-management item (bug/feature/docs/chore).
+default most-recently-updated ordering: 10 for `ai-agents-research` and
+`agentic-job-offer-to-application-kit`; 8 for `gha-issue-triage`, `analyze-stock-kpi`,
+`cc-senses-plugin` and `claude-code-plugins`; 6 for `vlm-toolkit`; 1 for
+`CellPlateVision-Prototype` (its only issue). That gave 59 items, **all of them relevant** — every
+sampled issue was an in-scope project item (bug/feature/docs/chore) for its repo. Most are
+owner-authored; a few (`gha-issue-triage#109`, and several in `agentic-job-offer-to-application-kit`
+and `claude-code-plugins#199`) are from other contributors but are equally in-scope.
 
 Because a gold set with no negatives can't measure false-accept, all 401 issue titles across the
 8 repos (not just the sampled 59) were scanned for anything else irrelevant before accepting that
