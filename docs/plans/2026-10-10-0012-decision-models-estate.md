@@ -15,7 +15,7 @@ Tracking issue: #652.
 - A generative LLM, Cloudflare Workers AI through an OpenAI-compatible `api_base`, is used **only for free text** and as the fallback.
 - One shared `decide()` lives in `qte77/.github/actions/decide/`.
 
-**Status:** **approved 2026-10-10** (owner: "proceed" on #651). Already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0. Phase A lanes L1, L3 (G1 only), L4 and L5 started 2026-10-10; L2 pre-stages its PRs and merges after K0. K0 is pre-staged: `/workspaces/temp/ai-agents-research-triage/set_keys.sh` (see the K0 row).
+**Status:** **approved 2026-10-10** (owner: "proceed" on #651). Already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0. Phase A lanes L1, L3 (G1 only), L4 and L5 started 2026-10-10. Shipped: D1 (#653), G1 (#654), W12 (gha-rxiv-feed-action #207, #209, #210; #655). L1's PR qte77/.github#45 awaits the owner's merge; L2 pre-stages its PRs and merges after K0. K0 is pre-staged: `/workspaces/temp/ai-agents-research-triage/set_keys.sh` (see the K0 row).
 
 **How to run it:**
 
@@ -148,7 +148,7 @@ Tracking issue: #652.
 |---|---|---|---|
 | L1 | D0 | qte77/.github | `actions/decide/**`, `tests/decide/**`, `pyproject.toml`, `.github/workflows/test-decide.yml`, `CHANGELOG.md` |
 | L2 | C1 | the 7 consumer repos (one worktree each, sequential inside the lane) | `.github/workflows/issue-triage.yaml` only |
-| L3 | G1 + H1 | ai-agents-research | `.github/scripts/**`, `.github/workflows/llm-model-eval.yaml`, `tests/**`, `triage/gold/**` (new), `changelog.d/*_gold-sets.md` |
+| L3 | G1 + H1 | ai-agents-research | `.github/scripts/**`, `.github/workflows/llm-model-eval.yaml`, `tests/**`, `.github/scripts/data/gold/**` (new; `triage/` is bot-only per CONTRIBUTING), `changelog.d/*_gold-sets.md` |
 | L4 | D1 | ai-agents-research | `docs/non-cc/reference/system-1-decision-models-landscape.md`, `changelog.d/*_decision-1.md` |
 | L5 | W12 | qte77/gha-rxiv-feed-action | `data/arxiv/2026/12.csv` (via its workflow; deletion via PR, never a direct push to main) |
 
@@ -167,14 +167,14 @@ Lane notes:
 | K0 | Create 4 keys (Jev + CF per use case) into one local file; the agent runs the pre-staged `/workspaces/temp/ai-agents-research-triage/set_keys.sh <file>` (sets `TYPESAFE_API_KEY` + `CF_WORKERS_AI_TOKEN` per the key table via stdin, prints nothing secret), then deletes the file. `LLM_BASE_URL` secret already set (10 repos) | owner | `gh secret list` shows both secrets in every target repo |
 | D0 | `decide` action in qte77/.github, TDD per the map | agent (L1) | `test-decide.yml` green; README documents schema, bands, secrets |
 | C1 | 7 consumer PRs (pin + CF inputs + drop `models: read`); switch gha-issue-triage self-triage and ai-agents-research to `secrets.LLM_BASE_URL`, delete the variables | agent (L2), after K0 | One test issue per consumer gets a triage comment; self-triage run green |
-| G1 | Gold sets: ~60 issues (from past triage comments) + 100 papers (W40 ranked pool), agent-labelled from title/body/abstract, with an independent second pass on disagreements | agent (L3) | `triage/gold/*.jsonl` committed with label rationale; owner spot-check optional |
+| ~~G1~~ | ~~Gold sets: 62 issues + 100 papers (W40 ranked pool), two agent passes~~ | agent (L3) | Shipped: #654, `.github/scripts/data/gold/`. Papers 77/23 (96/100 pass agreement; 4 splits reconciled to NO), issues 59/3 (3 negatives are planted fixtures: weak for false accepts). Owner spot-check optional |
 | H1 | Jev runner in the eval harness: AUC + bootstrap CI, Brier, threshold sweep (port feelings `metrics.py`); compare Jev vs Llama-70B agent-strict on G1 | agent (L3), after K0 | Report artifact; recommended `hi` threshold per use case |
 | P1 | gha-issue-triage port: all six fields via `decide()`, LLM only for `reasoning` in the middle band; shadow mode (probabilities in the comment, no labels) → labels at the H1 threshold; defaults off GitHub Models | agent (sibling), after D0 + H1 | Release tag; consumers bumped; tests mocked per adapter |
 | P2 | gha-rxiv-paper-eval: `is_relevant` → `noul` via `decide()` as #58's first registry entry; fix `eval-papers-dispatch.yaml` | agent (sibling), after D0 + H1 | Release tag; ai-agents-research bumped; Jev ≥ 83.6% agreement with fewer false accepts on G1 |
 | ~~D1~~ | ~~Microsoft Decision-1 in the system-1 landscape~~ | agent (L4) | Shipped: #653. Same `state` + `noul`/`choice`/`score` shape as Jev at `<endpoint>/providers/microsoft/v1/systemone` (optional `criteria`, `api-key` header), so a later `decide()` adapter is cheap; not built (YAGNI) |
 | E1 | Estate convention doc in qte77/.github: decision first, defaults, secret names, escalation bands | agent, after P1 | Merged; linked from the 4 model-using READMEs |
 | Q1 | qte77/qte77: drop the stale `models: read` in `repo-registry.yml`, retire the GitHub Models icon in README (#31) | agent, after E1 | PR merged in qte77/qte77; #31 updated |
-| W12 | Regenerate W12 in gha-rxiv-feed-action (#206), then backfill W12 here | agent (L5) | `12.csv` has 9 columns with abstracts; W12 triage PR merged |
+| ~~W12~~ | ~~Regenerate W12 in gha-rxiv-feed-action (#206), then backfill W12 here~~ | agent (L5) | Shipped: feed #207 (delete), #209 (fix: OR'd topics now grouped before the `submittedDate` range; the date path had bounded only the last category), #210 (2,875 rows, 9 columns); triage #655 (87 relevant) |
 
 **Loop (not rows):** weekly bot triage PRs (changelog/community/learnings) await owner review.
 
