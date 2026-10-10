@@ -83,11 +83,18 @@ confidence per choice.
   Two major vendors now name "routing" as a use case for their own Jev-style APIs — OpenAI's guide
   and Perplexity's cookbook, both above — but both worked examples route to a fixed internal label
   set (a department, or an escalate/review/queue/auto_reply/close bucket), not to a choice among
-  several candidate models. No system-1 decision model checked in this corpus, vendor or
-  independent, documents selecting *which model* should answer a request. The nearest matches
-  already in this doc are narrower still: Laya's `Router` class picks among Laya's *own* three
-  checkpoints (not other LLMs), and RuVector's decision layer classifies support tickets into a
-  fixed department label set (77.3–84.0% accuracy) rather than routing between models.
+  several candidate models. Still no system-1 decision model checked in this corpus, vendor or
+  independent, *ships a worked example* of selecting which model should answer a request. The
+  nearest matches already in this doc are narrower still: Laya's `Router` class picks among Laya's
+  *own* three checkpoints (not other LLMs), and RuVector's decision layer classifies support
+  tickets into a fixed department label set (77.3–84.0% accuracy) rather than routing between
+  models. A third vendor now *names* the exact pattern, without a worked example either: Microsoft's
+  own Learn how-to for Decision-1 (below) lists "Model, tool, or agent selection: Choose the
+  component that should handle a request" as a common use case, and its Command Line launch blog
+  suggests, under "Consider trying out the following" (not a worked example), "Model routing:
+  Evaluate an incoming request and select the best model for the task based on quality, cost, and
+  latency requirements." The gap narrows again — a third first-party page naming model-selection
+  by name — but stays open for a worked example.
 
 ### 2. Guardrails (block / grant)
 
@@ -161,7 +168,11 @@ Adrian documents).
   Every other entry in this section, Jev-family and vendor alike, still mostly picks *which*
   action to take rather than gating one already formed (jev-ultrafast, GLiNER2.5-Decide,
   Perplexity's own browser-agent cookbook, OpenAI's announced-only "next action") — a related but
-  distinct decision shape from Adrian's and Perplexity's action-gate pattern.
+  distinct decision shape from Adrian's and Perplexity's action-gate pattern. Microsoft's catalog
+  page for Decision-1 (below) names the approve/deny pattern too — "Agent guardrails: Evaluate
+  proposed agent actions or tool calls before an integrating application permits execution" — but,
+  like OpenAI's announced-only mention, ships no worked example to match Perplexity's cookbook; the
+  Jev-family-proper gap is still unchanged.
 
 ### 4. Reranking (by query, by probability)
 
@@ -179,9 +190,13 @@ Adrian documents).
   and return the exact character spans associated with that decision" marks relevance within one
   context rather than sorting a candidate list.
 - **Gap**: re-checked 2026-10-09 — neither Jev's docs nor Fastino's announcement names
-  query-document reranking; no model in this landscape documents sorting retrieved candidates by
-  probability as a worked use case. **Failure mode**: not measured by any system-1 model here;
-  see the Rerankers entries above for cross-encoder latency/calibration trade-offs instead.
+  query-document reranking; no model in this landscape ships a worked example of sorting retrieved
+  candidates by probability. Microsoft names a related capability for Decision-1 (below) without a
+  worked example either: the catalog's "Search and document relevance: Judge whether search
+  results or documents are relevant to a supplied question or task" and the Learn how-to's
+  "Ranking and prioritization: Order incidents, leads, search results, or review queues by an
+  application-defined scale." **Failure mode**: not measured by any system-1 model here; see the
+  Rerankers entries above for cross-encoder latency/calibration trade-offs instead.
 
 ### 5. LLM output evals and scores (judge)
 
@@ -243,8 +258,10 @@ verified — plain text, LinkedIn blocks link checkers:
 headlined "Someone just open-sourced a better Jev," reported that OpenAI's GPT-6 Luna (via its
 Decisions API) and Perplexity's pplx-decider v1.1 topped his leaderboard of 24 "Jev-style" models
 scored on 669 clinical decisions across "triage, clinical notes, eligibility criteria and ICD-10
-coding." (That OpenAI and Perplexity now *ship* their own Jev-style decision APIs is this corpus's
-own conclusion from the first-party docs below, not Panahi's claim.) Quoted verbatim: "pplx-decider
+coding." (That OpenAI, Perplexity, and — one day later — Microsoft now *ship* their own Jev-style
+decision APIs is this corpus's own conclusion from the first-party docs below, not Panahi's claim;
+Microsoft-Decision-1 launched 2026-10-09, after this post, and is not among the 24 models on his
+board — see § Microsoft-Decision-1 below.) Quoted verbatim: "pplx-decider
 v1.1 (Perplexity): 643 of 669 right
 (96.1%), the top score. All 669 decisions cost 1.7 cents through an API, less than any other model
 on the board, and under Apache-2.0 a hospital can run it on its own servers." The same post:
@@ -417,6 +434,130 @@ Apache-2.0 a hospital can run it on its own servers."
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
 could change an open cell in the rubric's evidence census. This entry doesn't, so none is added
 here.
+
+### Microsoft-Decision-1 (Microsoft Foundry)
+
+**First-party**: [Microsoft Tech Community launch blog][msft-decision1-blog] · [Microsoft Foundry
+model catalog][msft-decision1-catalog] · [Microsoft Command Line blog][msft-decision1-cmdline] ·
+[Microsoft Learn how-to][msft-decision1-learn]
+
+Released 2026-10-09 — one day after Panahi's leaderboard post above, so it is not among the 24
+models that post scored, and gets no leaderboard-placement paragraph here. Per the
+[Foundry catalog][msft-decision1-catalog] (checked 2026-10-10): "Microsoft-Decision-1 is a
+decision-scoring model: given a situation and a question with a fixed set of answer options, it
+returns a calibrated probability for each option instead of generated text." It uses Jev's own
+type vocabulary verbatim — `noul`, `choice`, `score` — per the [Learn how-to][msft-decision1-learn]'s
+own table: a `noul` question returns "a probability from 0 through 1"; a `choice` question returns
+"one selected option and the probability for each option"; a `score` question returns "a value on
+an ordered scale and the probability for each level," where "the returned score is the
+probability-weighted average of the level indexes." The wire shape (verified against the how-to's
+worked `curl` example and the launch blog's Python sample, both identical): `POST
+<foundry-resource-endpoint>/providers/microsoft/v1/systemone`, body `{"model": <deployment-name>,
+"state": <text-or-JSON>, "questions": {<name>: {"type": "noul"|"choice"|"score", "instructions":
+…, "criteria": …}}}`, response `{"answers": {<name>: {"type": …, …}}}` — the path literally ends
+`/v1/systemone`, the same path Laya's self-hosted server exposes (above). Catalog capabilities
+include "Explicit abstention: Supports options such as 'cannot tell' when the supplied evidence is
+insufficient" and a 32,768-token context window ("Single-pass scoring... over inputs of up to 32K
+tokens").
+
+**Status — a third first-party conflict, same pattern as OpenAI's above**: Microsoft's own
+[Tech Community launch blog][msft-decision1-blog] (2026-10-09, byline Saumil-Shrivastava) states:
+"Now available in public preview, Microsoft-Decision-1 is a decision model built on Qwen3.5-9B..."
+The [Foundry catalog page][msft-decision1-catalog] for the same model disagrees, in both its
+rendered badge and its own embedded page state: "Lifecycle Generally available (GA)" (rendered UI)
+and `"lifecycle","Generally Available"` (the page's own JSON). The catalog's License tab, however,
+still points at Azure's generic preview terms: `licenseDescription`: "Use of this Azure Direct
+Model is subject to supplemental Terms of Use for Microsoft Azure"
+(`azure.microsoft.com/.../support/legal/preview-supplemental-terms/`) — not resolved here, quoted
+as found on both pages.
+
+**Base model and license (documented)**: "It is built on Alibaba's open-weight Qwen3.5-9B and
+post-trained by Microsoft" (catalog) — confirmed independently by the
+[Command Line blog][msft-decision1-cmdline]'s own words: "we post trained Qwen3.5-9B for fast,
+single-pass decision scoring and will soon rebase it on other models, including Microsoft AI (MAI)
+and OpenAI." Training data: "publicly available datasets subject to Microsoft's Open Data process,
+plus synthetic data created by the team" (catalog), whose own `trainingDataDate` field reads
+"October 2026" — the same month as the launch, quoted as given rather than interpreted. Unlike
+every other entry in this landscape, Microsoft-Decision-1 has no released weights and no
+GitHub/Hugging Face repository to check a `LICENSE` file against — it is hosted-only. The
+catalog's own license field reads `"license","custom"`; no open-source license applies.
+
+**Pricing (documented, two first-party pages agree, checked 2026-10-10)**: both the
+[Tech Community blog][msft-decision1-blog]'s pricing table and the
+[Command Line blog][msft-decision1-cmdline] state input costs "$0.042" per "1M" tokens with output
+free ("Output tokens are free"), for both US and EU Datazone deployments (GlobalStandard's price
+isn't shown on either page) — identical to Jev's own $0.042 per 1M per
+[docs.typesafe.ai/models][typesafe-models], already cited above.
+
+**Benchmark (self-reported, Microsoft's own numbers — including chart data the post's own prose
+never states)**: the [Command Line blog][msft-decision1-cmdline]'s prose states Microsoft-Decision-1
+"achieved the highest accuracy in our 36-benchmark comparison, spanning nearly 150,000 questions
+across benchmarks kept blind from training," and was "the fastest measured: 2.5 times quicker than
+H2O-Lightning-4B v1.1, the runner-up, and 35 times quicker than GPT-6 Sol" (P50). The post's own
+interactive charts — rendered client-side from data embedded in the page, not shown in the prose;
+decoded from the page's own embedded iframe payloads, 2026-10-10 — give the per-model numbers
+behind that claim. Average accuracy over the 36 benchmarks: Microsoft-Decision-1 83.5%, Jev 1.13.0
+82.3%, Quyet-1.0-Large 81.9% ("#1 on JevBench"), Surogate Rune 26B-A4B 79.7%, GPT-6 Luna Decisions
+79.4%, deck-31B 77.8%, H2O-Lightning-4B 77.2%, Strands-Decider 2B 54.8% (footnoted "AWS · 23 of 36
+benchmarks" — a partial run, not comparable). P50/P95 latency in ms: Microsoft-Decision-1 85/125,
+H2O-Lightning-4B v1.1 210/—, Jev 1.13.0 240/—, GPT-6 Luna Decisions 300/—, Quyet-1.0-Large 380/—,
+Surogate Rune 26B-A4B 380/—, deck-31B 400/—, GPT-6 Sol 3010/— (a latency reference only, not
+ranked for accuracy). So the prose's "runner-up" is a *latency* ranking (H2O-Lightning-4B, at 210
+ms); on accuracy, Jev is the closest competitor, 1.2 points behind. A fourth chart — calibration
+score over the same 36 benchmarks — is the one number the prose never states, and it does not
+favor Microsoft-Decision-1: Jev 1.13.0 ranks first at 93.7, Quyet-1.0-Large second at 93.1,
+Microsoft-Decision-1 third at 92.2, ahead only of Surogate Rune (91.8), H2O-Lightning-4B (91.8),
+GPT-6 Luna Decisions (89.9), and deck-31B (83.5). The post's own "Appendix: Models benchmarked"
+names six of these seven models by source link (Quyet-1.0-Large, Surogate Rune 26B-A4B, GPT-6 Luna
+Decisions, deck-31B, H2O-Lightning-4B, Strands-Decider 2B) — Jev is not in that list, even though
+an editor's note on the same post states "This post was updated from the original to add
+benchmarks for Jev on accuracy and calibration," and Jev's numbers do appear in the charts; the
+appendix itself was not updated to match. Safety (documented): "We tested Microsoft-Decision-1 on
+5,250 requests across 11 benchmarks, covering harmful content, jailbreak attempts, and prompt
+injection, and found that the model successfully refused harmful behavior while retaining a high
+degree of utility." Robustness (documented): "Microsoft-Decision-1 changes its decision on 1.3% of
+perturbations on average with zero flips when option descriptions are paraphrased or when options
+are reversed or shuffled," across eight paraphrase/reorder perturbations of the same request.
+
+**Internal case study — two Microsoft posts, two different numbers for what reads as the same
+study**: the [Tech Community blog][msft-decision1-blog] states "Xbox Research used
+Microsoft-Decision-1 to categorize more than 10,000 pieces of open-ended feedback into
+researcher-defined themes, reporting quality competitive with GPT-5 while running 80–100 times
+faster." The [Command Line blog][msft-decision1-cmdline], describing what otherwise reads as the
+same study (same "more than 10,000" feedback items, same "sort... into a fixed set of themes
+established by researchers"), names a different comparator and multiplier: "competitive on quality
+with GPT-6 Sol while running over 14 times faster and 200 times less expensive." Command Line's
+own chart data (decoded, 2026-10-10) gives a per-game breakdown against GPT-6 Sol across three
+datasets — Racing Title (753 reviews), First-Person Shooter (341 reviews), Studio Livestream (1,030
+posts): mean ms per item 159/188/143 for Microsoft-Decision-1 vs. 2,800/2,600/2,600 for GPT-6 Sol
+(14–18x faster), and $0.009/$0.005/$0.013 vs. $1.83/$1.03/$2.92 per run (roughly 212–223x cheaper)
+— consistent with Command Line's own "14 times faster... 200 times less expensive," but neither
+source gives a number reconciling with Tech Community's separately-stated 80–100x/GPT-5 figure;
+the two posts simply name different comparator models for what appears to be one study. Neither
+multiplier is independently verified here.
+
+**Documented use cases, cross-referenced to the sections above**: the catalog lists capabilities
+quoted verbatim: "AI and agent evaluation: Grades AI responses and proposed agent actions against
+supplied criteria or rubrics" and "Groundedness evaluation: Assesses responses against evidence
+provided in the input" (§5 Judge, above); "Agent guardrails: Evaluate proposed agent actions or
+tool calls before an integrating application permits execution" (§3 Tool-call gating, above —
+named, no worked example, the same gap this doc tracks for the Jev family); "Safety and guardrail
+checks: Supports content-safety flagging and application-defined thresholds" (§2 Guardrails,
+above); "Search and document relevance: Judge whether search results or documents are relevant to
+a supplied question or task" (§4 Reranking, above — named, not a worked sort-by-probability
+example); "Confidence-based automation: Automate high-confidence outcomes and escalate
+low-confidence or ambiguous outcomes for additional review" (§6 Confidence gate, above). The
+[Learn how-to][msft-decision1-learn]'s own "Common use cases" list separately names "Model, tool,
+or agent selection: Choose the component that should handle a request" (§1 Model routing, above);
+the [Command Line blog][msft-decision1-cmdline] states a more specific version of the same idea,
+but only as a suggestion ("Consider trying out the following"), not a worked example: "Model
+routing: Evaluate an incoming request and select the best model for the task based on quality,
+cost, and latency requirements."
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
+could change an open cell in the rubric's evidence census. Microsoft-Decision-1 is hosted-only,
+like OpenAI's and Perplexity's own APIs above, so this entry doesn't change that census; none is
+added here.
 
 ## Laya (NandhaKishorM)
 
@@ -740,6 +881,10 @@ here.
 | [Perplexity Decisions API — action-gate cookbook][pplx-action-gate] | Approve/deny gate on a proposed `schedule_payment` call |
 | [Perplexity Decisions API — browser-agent cookbook][pplx-browser-agent] | Next-action selection (click/dismiss/scroll/stop) with measured per-step latency |
 | [Perplexity Decisions API — answer-gate (citation-accuracy) cookbook][pplx-answer-gate] | Citation/grounding verification of another model's generated sentences |
+| [Microsoft Tech Community launch blog][msft-decision1-blog] | Author (Saumil-Shrivastava), "public preview" status wording, pricing table, Xbox Research case study (GPT-5 comparator, 80–100x); fetched via polyfetch 2026-10-10 |
+| [Microsoft Foundry model catalog — Microsoft-Decision-1][msft-decision1-catalog] | "Lifecycle Generally available (GA)" (rendered + embedded JSON), base model, `licenseDescription`, capabilities/use-case bullets, 32,768-token context, `trainingDataDate`; fetched via polyfetch 2026-10-10 |
+| [Microsoft Command Line blog — Decision-1 launch][msft-decision1-cmdline] | Base model, pricing, benchmark prose + embedded chart data (accuracy/latency/calibration over 36 benchmarks, decoded from base64 iframe payloads), appendix model list, editor's note, Xbox Research case study (GPT-6 Sol comparator, 14–18x/212–223x per-game breakdown), safety/robustness testing; fetched via polyfetch 2026-10-10 |
+| [Microsoft Learn how-to — Microsoft-Decision-1][msft-decision1-learn] | Wire shape (`POST …/providers/microsoft/v1/systemone`), question-type table (`noul`/`choice`/`score`), deployment types, use cases, limitations; fetched via WebFetch 2026-10-10 |
 | [Laya][laya] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [Laya (Hugging Face org)][laya-hf] | Checkpoint versioning |
 | [kev][kev] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
@@ -833,3 +978,7 @@ here.
 [pplx-browser-agent]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-browser-agent/README
 [pplx-answer-gate]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-answer-gate/README
 [adrian-gh]: https://github.com/secureagentics/Adrian
+[msft-decision1-blog]: https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-microsoft-decision-1-in-microsoft-foundry-for-decision-and-classific/4562742
+[msft-decision1-catalog]: https://ai.azure.com/catalog/models/Microsoft-Decision-1
+[msft-decision1-cmdline]: https://commandline.microsoft.com/microsoft-decision-1-model-foundry/
+[msft-decision1-learn]: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision
