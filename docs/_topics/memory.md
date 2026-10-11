@@ -11,6 +11,7 @@ Agent memory across the corpus. Pointers only; see [the hub index](README.md).
 | [openviking-analysis.md](../non-cc/context-memory/openviking-analysis.md) | Filesystem-based context database with memory extraction | non-cc |
 | [mex-analysis.md](../non-cc/context-memory/mex-analysis.md) | Git-shared, human-approved project memory for coding agents | non-cc |
 | [helixdb-analysis.md](../non-cc/context-memory/helixdb-analysis.md) | Graph-vector database positioned for agent memory | non-cc |
+| [minigraf-analysis.md](../non-cc/context-memory/minigraf-analysis.md) | Embedded bi-temporal Datalog graph database pitched as agent memory; cited third-party agent-memory demo is the maintainer's own project | non-cc |
 | [qwenpaw-analysis.md](../non-cc/agents/qwenpaw-analysis.md) | Personal assistant with a three-tier memory design | non-cc |
 | [goclaw-analysis.md § 3-Tier Memory](../non-cc/infrastructure/goclaw-analysis.md#3-tier-memory-system) | Three-tier memory system | non-cc |
 | [mitosis-cortex-analysis.md](../non-cc/context-memory/mitosis-cortex-analysis.md) | Mitosis Labs Cortex — hosted per-team knowledge-graph memory, rubric-scored | non-cc |

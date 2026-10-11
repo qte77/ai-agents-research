@@ -12,6 +12,7 @@ see [the hub index](README.md).
 | [on-device-semantic-search-landscape.md](../non-cc/context-memory/on-device-semantic-search-landscape.md) | Local-first embedders and embedded vector stores | non-cc |
 | [latticedb-analysis.md](../non-cc/context-memory/latticedb-analysis.md) | Embedded graph + vector + full-text database | non-cc |
 | [helixdb-analysis.md](../non-cc/context-memory/helixdb-analysis.md) | Graph-vector database | non-cc |
+| [minigraf-analysis.md](../non-cc/context-memory/minigraf-analysis.md) | Embedded bi-temporal Datalog graph database; pairs with vector stores for the GraphRAG pattern | non-cc |
 | [openviking-analysis.md § vs Vector DB / RAG](../non-cc/context-memory/openviking-analysis.md#comparison-with-traditional-vector-db--rag) | Filesystem context database compared with classic RAG | non-cc |
 | [karpathy-llm-kb-analysis.md](../non-cc/knowledge-management/karpathy-llm-kb-analysis.md) | Markdown-first knowledge base as an alternative to RAG; also CorpusMap (arXiv:2609.37226, entity pages as a navigation layer for agentic search) | non-cc |
 | [web-scraping-extraction-landscape.md](../non-cc/infrastructure/web-scraping-extraction-landscape.md) | Scraping and extraction tools that feed RAG pipelines | non-cc |
