@@ -1,10 +1,10 @@
 ---
 title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
-purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio), and LLM gateway proxies.
+purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-10-11
+validated_links: 2026-10-11
 status: reference
 ---
 
@@ -193,6 +193,23 @@ ANTHROPIC_BASE_URL=http://127.0.0.1:8080 \
 ANTHROPIC_API_KEY="" \
 claude
 ```
+
+#### Strata
+
+[Strata][strata] runs `Qwen3.8-Flash-Next` locally (NVIDIA/AMD GPU, 12GB+ VRAM, Windows/Linux,
+one-click installer) and documents the exact CC env var for its Anthropic-compatible endpoint
+verbatim in its own README: "Apps that use Anthropic's API: `http://127.0.0.1:8080/v1/messages`
+(Claude Code: `ANTHROPIC_BASE_URL=http://127.0.0.1:8080`)" ([source][strata]).
+
+```bash
+# After the Strata installer starts the engine on 127.0.0.1:8080
+ANTHROPIC_BASE_URL=http://127.0.0.1:8080 \
+claude
+```
+
+- Also exposes an OpenAI-compatible endpoint at `/v1` for non-Anthropic clients, and `/v1/responses` for Codex CLI and other OpenAI Responses API clients.
+- Ships a separate MCP server (`tools/strata_mcp.py`, stdlib-only Python) that lets an agent **manage** Strata itself — install, start, stop, check VRAM/logs, recommend a model size for the host's hardware — via `claude mcp add strata -- python3 /path/to/Strata/tools/strata_mcp.py`. This is setup/ops tooling, not an inference-serving MCP tool; the Anthropic-compatible HTTP endpoint above is what Claude Code actually talks to for inference.
+- MIT, 21,540 stars, 2,037 forks (`gh api`, 2026-10-11); created 2026-09-24 — 17 days old at time of writing, so no independent track record yet.
 
 #### LM Studio & Other OpenAI-Compatible Servers
 
@@ -424,6 +441,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [OpenRouter — Claude Code Integration][openrouter]
 - [Ollama — Claude Code with Anthropic API Compatibility][ollama-claude]
 - [llama.cpp — Anthropic Messages API][llamacpp-anthropic]
+- [Strata — README (local Qwen3.8-Flash-Next engine, Anthropic/OpenAI-compatible endpoints)][strata]
 - [LiteLLM — Claude Code with Non-Anthropic Models][litellm]
 - [claude-code-proxy (GitHub)][cc-proxy]
 - [Olla — Multi-Backend Proxy][olla]
@@ -451,6 +469,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [openrouter]: https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration
 [ollama-claude]: https://ollama.com/blog/claude
 [llamacpp-anthropic]: https://huggingface.co/blog/ggml-org/anthropic-messages-api-in-llamacpp
+[strata]: https://github.com/Niko1221/Strata
 [litellm]: https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models
 [cc-proxy]: https://github.com/fuergaosi233/claude-code-proxy
 [olla]: https://thushan.github.io/olla/integrations/frontend/claude-code/
