@@ -25,8 +25,8 @@ Pointers only; see [the hub index](README.md).
 | [agent-frameworks-infrastructure-landscape.md §2 (Intent-Router)](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#2-llm-orchestration--routing) | Intent-Router: intent-compiler skill that converges a vague request into a typed, evidence-backed IntentSpec before handoff to a router/agent/workflow — the layer upstream of Jev/Laya-style typed decisions | non-cc |
 | [CC-community-tooling-landscape.md § human-review](../cc-community/CC-community-tooling-landscape.md#human-review-petergyang) | human-review: visual HTML/Markdown review skill batching Google-Doc-style comments/edits back to the waiting agent — a concrete tool for the ACE-FCA human-review gate | cc-community |
 | [agentic-engineering-disciplines-landscape.md §1](../sdlc-lcm/agentic-engineering-disciplines-landscape.md) | Graph-engineering ladder rung (wiring loop-shaped agents into a topology) + Harness-engineering Verification-axiom evidence: Specula (agentic TLA+ trace/invariant verifier, 249 bugs/48 projects) and Bend 2 (proof-gated compiler, rejects an edit without a machine-checked correctness proof) | sdlc-lcm |
-
-Related hubs: [skills.md](skills.md), [plugins.md](plugins.md), [long-running.md](long-running.md).
 | [research-agents-landscape.md §1](../non-cc/knowledge-management/research-agents-landscape.md#1-autonomous-research-agents) | RankEvolve: an Executable Operating Protocol enforces a compiled state machine while Claude Code and Codex review and repair each other's work (paper only) | non-cc |
 | [CC-claude-science-analysis.md](../cc-native/plugins-ecosystem/CC-claude-science-analysis.md) | Claude Science: Anthropic's sandboxed science workbench with per-version provenance (code, execution log, environment) and a reviewer that checks claims against the run | cc-native |
 | [raven-analysis.md](../non-cc/orchestrators/raven-analysis.md) | Raven (EverMind): "harness of harnesses" orchestrator with a benchmark-gated self-evolution loop; its paper (arXiv:2609.33439) reports no numbers | non-cc |
+
+Related hubs: [skills.md](skills.md), [plugins.md](plugins.md), [long-running.md](long-running.md).
