@@ -3,8 +3,8 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-10-09
-validated_links: 2026-09-24
+updated: 2026-10-11
+validated_links: 2026-10-11
 status: reference
 ---
 
@@ -62,12 +62,15 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 | [Puppeteer](https://pptr.dev/) | Apache-2.0 | None built-in | Google's Chrome/Firefox DevTools control (Node) |
 | [Magnitude](https://magnitude.run) | Apache-2.0 | n/a (AI test/automation) | Vision-first: LLM drives the browser via screenshots + pixel coordinates (no selectors); `act()` / `extract()` (Zod schemas); dedicated test runner; Playwright as low-level escape hatch |
 | [Lightpanda](https://lightpanda.io) | AGPL-3.0 | None built-in | Built from scratch in Zig — not a Chromium/WebKit fork; CDP-compatible drop-in for Puppeteer/Playwright |
+| [moli](https://github.com/lexmount/moli) | MIT/Apache-2.0 (dual) | None built-in | Built from scratch in Rust — not a Chromium fork; CLI/CDP/WebDriver Classic/BiDi from one binary; ships agent "skills" (`moli-webfetch`, `moli-websearch`) |
 
 **When to use what**: Playwright for JS rendering without anti-bot. Patchright or Nodriver when detection is an issue. Botasaurus for the hardest targets. Magnitude when selector maintenance (dynamic UIs, canvas, drag-and-drop) is the pain point and you can afford per-step vision-model cost.
 
 **Magnitude — vision-first, two products from `magnitudedev`.** [Magnitude](https://magnitude.run) (`@magnitudedev/browser-agent` + `magnitude-test`, ~4.1 k stars, TypeScript) drives the browser through a visually-grounded LLM (Claude Sonnet 4 recommended; most non-vision OpenAI/Gemini/Llama models unsupported) and works as an MCP tool in Cline/Cursor/Windsurf — resilient to UI churn that breaks selector-based tools. Do **not** confuse it with [magnitude.dev](https://magnitude.dev), the same org's separate **CLI coding agent** (open-model routing — GLM 5.2 + DeepSeek V4 Flash + Kimi K2.7 Code; pass-through pricing + $5 free credits; license unconfirmed). Selector-based contrast: [CC web-scraping plugins analysis](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) (Playwright MCP).
 
 **Lightpanda — built-from-scratch, not a Chromium fork.** [Lightpanda](https://lightpanda.io) ([repo](https://github.com/lightpanda-io/browser), AGPL-3.0, 35.5k★ verified 2026-09-24) is a headless browser engine written in Zig from scratch — not a Chromium or WebKit fork — targeting automation/crawling/AI workloads rather than human browsing. It speaks the Chrome DevTools Protocol, so it works as a drop-in replacement in existing Puppeteer/Playwright code. Lightpanda's own site reports (vendor benchmark, not independently reproduced here) ~9x faster crawling than Chrome (5s vs 46s) and ~16x lower peak memory (123MB vs 2GB).
+
+**moli — also built from scratch, Rust instead of Zig.** [moli](https://github.com/lexmount/moli) (dual MIT/Apache-2.0 — confirmed by opening and reading both `LICENSE-MIT` and `LICENSE-APACHE` directly; GitHub's single-value repo API field reports only Apache-2.0; 16,369★, created 2026-08-10, verified 2026-10-11) is a standalone headless-browser kernel built in Rust — not a Chromium or WebKit fork — as a workspace of 95 `moli-*` top-level directories (`moli-dom`, `moli-layout`, `moli-css-parse`, `moli-renderer-v8`, `moli-protocol-cdp`, `moli-protocol-webdriver-bidi`, among others; count confirmed from the repo's own root directory listing, not from `[workspace] members` in `Cargo.toml`). It defaults to `LayoutPolicy::Mock` — reading DOM/style state directly, with no layout or paint — and only runs real layout/screenshots when `--layout` is passed — its own "structure first, pixels on demand" design. One binary serves CDP, WebDriver Classic, and WebDriver BiDi (no separate ChromeDriver/geckodriver), and the repo ships three installable agent skills (`github.com/lexmount/moli/tree/main/skills`: `moli-cdp-server`, `moli-webfetch`, `moli-websearch`) that an agent installs to drive it directly. On Lexmount's own benchmark suite (vendor-authored, not independently reproduced here), moli's README reports beating Lightpanda on both a 192-URL mixed public-web crawl (103 useful pages / 53.6% success vs. Lightpanda's 85 / 44.3%) and the 1,308-task Lexbench-Headless-Browser suite (81.9% vs. Lightpanda's 53.3%, against Chrome's 99.8% reference). Moli is Lexmount's open-source engine; Lexmount Browser is a separate managed cloud layer built on top, and the open-source browser is fully usable standalone.
 
 ### Accessibility-tree page representation
 
