@@ -8,8 +8,8 @@
 # (GitHub Models was retired 2026-07-30, #527). api_base + llm-api-key
 # select the backend; GH_TOKEN is only used for gh CLI issue/label calls,
 # never as the LLM bearer. No `models: read` permission is needed with a
-# non-GitHub-Models provider. Needs repo secret CF_WORKERS_AI_TOKEN and
-# variable LLM_BASE_URL (https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1).
+# non-GitHub-Models provider. Needs repo secrets CF_WORKERS_AI_TOKEN and
+# LLM_BASE_URL (https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1).
 name: issue-triage
 
 on:
@@ -36,4 +36,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           llm-api-key: ${{ secrets.CF_WORKERS_AI_TOKEN }}
           MODEL: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
-          api_base: ${{ vars.LLM_BASE_URL }}
+          api_base: ${{ secrets.LLM_BASE_URL }}

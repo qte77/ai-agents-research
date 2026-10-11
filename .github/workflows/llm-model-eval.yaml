@@ -11,7 +11,7 @@ name: LLM model eval (relevance filter)
 #
 # Secrets/vars used (see .github/scripts/eval-relevance-models.py):
 #   secrets.CF_WORKERS_AI_TOKEN — Workers AI API token
-#   vars.LLM_BASE_URL           — https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1
+#   secrets.LLM_BASE_URL        — https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1
 #   vars.RXIV_TOPIC             — same topic rxiv-paper-eval.yaml uses (falls
 #                                  back to the script's own copy if unset)
 
@@ -56,7 +56,7 @@ jobs:
       - name: Preflight call
         env:
           CF_WORKERS_AI_TOKEN: ${{ secrets.CF_WORKERS_AI_TOKEN }}
-          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           MODELS: ${{ inputs.models }}
         run: |
           set -euo pipefail
@@ -74,7 +74,7 @@ jobs:
       - name: Run eval
         env:
           CF_WORKERS_AI_TOKEN: ${{ secrets.CF_WORKERS_AI_TOKEN }}
-          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           RXIV_TOPIC: ${{ vars.RXIV_TOPIC }}
           MODELS: ${{ inputs.models }}
           WEEKS: ${{ inputs.weeks }}
