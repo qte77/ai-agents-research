@@ -2,8 +2,8 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-10-10
-validated_links: 2026-10-10
+updated: 2026-10-11
+validated_links: 2026-10-11
 status: assess
 ---
 
@@ -189,14 +189,22 @@ Adrian documents).
   related capability, but is not reranking: "Decide which information in the context is relevant
   and return the exact character spans associated with that decision" marks relevance within one
   context rather than sorting a candidate list.
-- **Gap**: re-checked 2026-10-09 — neither Jev's docs nor Fastino's announcement names
-  query-document reranking; no model in this landscape ships a worked example of sorting retrieved
-  candidates by probability. Microsoft names a related capability for Decision-1 (below) without a
-  worked example either: the catalog's "Search and document relevance: Judge whether search
-  results or documents are relevant to a supplied question or task" and the Learn how-to's
-  "Ranking and prioritization: Order incidents, leads, search results, or review queues by an
-  application-defined scale." **Failure mode**: not measured by any system-1 model here; see the
-  Rerankers entries above for cross-encoder latency/calibration trade-offs instead.
+- [Cloudflare Clef][clef-blog] (self-reported, narrows but doesn't close this gap) — the launch
+  blog's own 10-benchmark table reports nDCG@10 on two retrieval-ranking benchmarks: ToolRet (Clef
+  69.19, Clef-flash 66.43, vs. Jev 65.28) and BRIGHT (Clef 45.91, Clef-flash 39.26, vs. Jev 47.52,
+  a Jev win) — the first Jev-style model in this doc measured on a ranking metric. A benchmark
+  score is not a worked example of sorting a retrieved candidate list in an application, so this
+  narrows the gap on evidence, not on use; see § Cloudflare Clef below.
+- **Gap, narrowed but not closed**: re-checked 2026-10-11 — neither Jev's docs nor Fastino's
+  announcement names query-document reranking, and Clef's own nDCG@10 numbers above are a
+  benchmark score, not a worked example; no model in this landscape ships a worked example of
+  sorting retrieved candidates by probability. Microsoft names a related capability for
+  Decision-1 (below) without a worked example either: the catalog's "Search and document
+  relevance: Judge whether search results or documents are relevant to a supplied question or
+  task" and the Learn how-to's "Ranking and prioritization: Order incidents, leads, search
+  results, or review queues by an application-defined scale." **Failure mode**: not measured by
+  any system-1 model here beyond Clef's own nDCG@10 figures above; see the Rerankers entries
+  above for cross-encoder latency/calibration trade-offs instead.
 
 ### 5. LLM output evals and scores (judge)
 
@@ -258,10 +266,13 @@ verified — plain text, LinkedIn blocks link checkers:
 headlined "Someone just open-sourced a better Jev," reported that OpenAI's GPT-6 Luna (via its
 Decisions API) and Perplexity's pplx-decider v1.1 topped his leaderboard of 24 "Jev-style" models
 scored on 669 clinical decisions across "triage, clinical notes, eligibility criteria and ICD-10
-coding." (That OpenAI, Perplexity, and — one day later — Microsoft now *ship* their own Jev-style
-decision APIs is this corpus's own conclusion from the first-party docs below, not Panahi's claim;
-Microsoft-Decision-1 launched 2026-10-09, after this post, and is not among the 24 models on his
-board — see § Microsoft-Decision-1 below.) Quoted verbatim: "pplx-decider
+coding." (That OpenAI, Perplexity, Microsoft, and Cloudflare now *ship* their own Jev-style decision
+APIs is this corpus's own conclusion from the first-party docs below, not Panahi's claim.
+Cloudflare's Clef and Clef-flash launched 2026-10-01, a week *before* this post, and
+Microsoft-Decision-1 launched 2026-10-09, one day *after* it; neither is named among the 24 models
+on Panahi's board — but that board is unpublished (below), so this corpus cannot tell whether Clef
+was scored and simply didn't place, or wasn't entered at all — see § Cloudflare Clef and
+§ Microsoft-Decision-1 below.) Quoted verbatim: "pplx-decider
 v1.1 (Perplexity): 643 of 669 right
 (96.1%), the top score. All 669 decisions cost 1.7 cents through an API, less than any other model
 on the board, and under Apache-2.0 a hospital can run it on its own servers." The same post:
@@ -563,6 +574,114 @@ could change an open cell in the rubric's evidence census. Microsoft-Decision-1 
 like OpenAI's and Perplexity's own APIs above, so this entry doesn't change that census; none is
 added here.
 
+### Cloudflare Clef (Workers AI)
+
+**First-party**: [10-01 changelog][clef-changelog-1001] · [10-09 changelog][clef-changelog-1009] ·
+[launch blog][clef-blog] · [Clef model page][clef-model-page] · [Clef-flash model
+page][clef-flash-model-page] · [Workers AI pricing][workers-ai-pricing] · [HF model card —
+Clef][clef-hf] · [HF model card — Clef-flash][clef-flash-hf]
+
+Launched 2026-10-01 — a week before Panahi's leaderboard post above, and not among its 24 models
+(see § October 2026 above). Cloudflare ships Clef two ways on its own infrastructure: as two
+hosted Workers AI models, `@cf/cloudflare/clef` (27B) and `@cf/cloudflare/clef-flash` (9B), and as
+open weights on Hugging Face. Per the launch blog, Clef "follows the System One API" — Jev's own
+`noul`/`choice`/`score` question vocabulary verbatim — so "you can switch an existing Jev
+integration to Clef by changing the endpoint and model." The Workers AI binding call is
+`env.AI.run("@cf/cloudflare/clef", { model, state, questions })`; the REST equivalent is `POST
+https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef` with a
+bearer token. Both take the same body: `model` (`"clef"` or `"clef-flash"`), `state` (text or
+structured data), `questions` (1–64 entries, each `noul`/`choice`/`score`), and an optional
+`images` array (up to four PNG/JPEG/WebP images, billed as input tokens) — confirmed against both
+model pages, 2026-10-11.
+
+**Base model and license (documented)**: both HF cards (checked 2026-10-11) state "Released under
+the Apache-2.0 license." Clef post-trains `Qwen/Qwen3.8-27B` (including its vision encoder) with a
+small "joint schema head" transformer that scores every option of every question in one forward
+pass; Clef-flash post-trains `Qwen/Qwen3.5-9B` the same way. Clef's 27B base is the same checkpoint
+family as Perplexity's `pplx-decider-v1.1-27b` above — both cards independently name
+`Qwen/Qwen3.8-27B` — two vendors converging on the same base model.
+
+**Context, and a mid-month change (documented)**: at launch (10-01), both models carried a 64K
+hosted context window — the launch blog states "our model has a 64k context window (compared to
+Jev's 32k)." Jev's own docs give two numbers for the same model, though: "64k tokens per request;
+32k tokens for `state` plus the longest question" ([docs.typesafe.ai/models][typesafe-models],
+re-checked 2026-10-11) — the blog's comparison uses Jev's narrower, single-question figure, not
+its per-request total. On 10-09, Cloudflare cut Clef-flash's *hosted* context to 24,576 tokens to
+help fund the price cut below — "only 0.24% of requests exceed 24K input tokens" — while Clef
+keeps its 65,536-token hosted window; Clef-flash's self-hosted Hugging Face weights are unchanged
+and "support up to 256K tokens" per the 10-09 changelog (which states no corresponding self-hosted
+figure for Clef). Both model pages (checked 2026-10-11) confirm the current hosted figures: Clef
+65,536 tokens, Clef-flash 24,576 tokens.
+
+**Pricing (documented, checked 2026-10-11; the pricing page is marked "Last updated Oct 9,
+2026")**: `clef` $0.240, `clef-flash` $0.038, `clef-omni` (below) $0.150 — all per 1M input tokens,
+with no output-token charge ("Clef models do not charge for output tokens," per the Clef-flash
+model page). The 10-09 changelog states Clef-flash "now costs $0.038 per million input tokens,
+down from $0.090, which makes it cheaper than Jev" — true against Jev's own $0.042/1M figure
+already cited above for Microsoft-Decision-1, though the changelog itself never states Jev's
+price. Clef's own $0.240 is roughly 5.7× Jev's rate; Cloudflare does not state what Clef cost
+before 10-09, only that Clef-flash's price changed.
+
+**Benchmarks (self-reported, mixed — not a clean sweep)**: the launch blog's own 10-benchmark
+table has Clef and Clef-flash ahead of Jev on most rows shown (e.g. BFCL case-exact 98.47/98.76
+vs. 95.75; BANKING77 macro-F1 94.20/90.93 vs. 79.74; home-appliance case-exact 82.95/97.73 vs.
+52.27), but Jev leads two of the ten: When2Call accuracy (80.97 vs. 72.37/65.58) and BRIGHT
+nDCG@10 (47.52 vs. 45.91/39.26 — see § Use cases → Reranking above). The model page's own summary:
+"across 10 decision benchmarks, a Clef model scores highest on 7" — this corpus did not recount
+that tally itself (the "other open decision models" in the comparison aren't named in the public
+table). The HF cards run a wider comparison the blog's table omits — Cloudflare's own "Decision
+Index" reproduction — and there Jev clearly leads on general-reasoning rows: GPQA Diamond 78.3 vs.
+Clef's 48.0, MMLU-Pro 82.7 vs. 65.9, BBH 92.9 vs. 73.7. The blog separately claims Clef "is
+currently the leader when evaluated against the Jev Decision Index," but both HF cards label this
+same table "our internal run" (one card: "our internal run of the Decision Index 0.2.1 suite") —
+a self-run reproduction, not a submission to the public [Decision Index Space][decision-index-space]
+already cited above for Perplexity. A partial, non-exhaustive search of that Space's current
+`index.json` (roughly 40% of its 1.6M-character file sampled across its length, 2026-10-11) found
+no `clef` entry, consistent with "internal run," but the file was not checked exhaustively.
+
+On Typesafe's own four workflow evals, the blog reports Clef/Clef-flash beating Jev on three of
+four: invoice processing (64.7/57.1 vs. 61.8), customer service (76.3/77.0 vs. 76.0), and security
+incidents (62.9/61.7 vs. 61.7) — but trailing on agent trace observability (68.5/69.8 vs. 71.6).
+Jev's own measured median latency on Cloudflare's bench, 524.1 ms, is a third first-party figure
+for Jev's speed in this doc, alongside Panahi's 345 ms and Microsoft's 240 ms P50 above — three
+vendors' own measurements, not reconciled here. Clef and Clef-flash measured 209.3 ms and 38.8 ms
+median respectively against that same 524.1 ms Jev figure (Cloudflare's own "2.5x" and "13x
+faster" claims); the same table places two other decision models already in this corpus ahead of
+Clef-flash on raw median latency — Laya at 5.8 ms and Kev-9B at 51.4 ms — with the blog conceding
+Clef beats "the decision models on latency except for Laya."
+
+**clef-omni (documented, launched 2026-10-09)**: a third model, `@cf/cloudflare/clef-omni`, adds
+audio (WAV/MP3) and video (MP4/WebM) input to Clef's text/image inputs, passed as base64 data URLs
+in `audio`, `videos`, and `images` fields; "a video's soundtrack is aligned with its frames, so the
+model can reason over what is seen and heard at the same time." It runs a 30B-parameter
+mixture-of-experts backbone with 3B active parameters — no base-model name is given on either
+first-party page. Confirmed public on Hugging Face
+(`huggingface.co/api/models/Cloudflare/clef-omni`, checked 2026-10-11: `license: apache-2.0`,
+`pipeline_tag: image-text-to-text`, full safetensors shards listed) — hosted *and* self-hostable,
+unlike OpenAI's and Microsoft's APIs above. Measured latency: "text takes about 20 ms, image or
+audio under 100 ms, and a 21-second video with sound about 300 ms." It leads the Clef family on
+BANKING77 (94.8 macro-F1), CLINC150+OOS (97.7 macro-F1), and Amazon ESCI (57.8 macro-F1); priced at
+$0.150 per 1M input tokens with a 64K-token hosted context window.
+
+**Serving speedup via SGLang (documented, 2026-10-09)**: the same changelog reports Clef "now
+returns decisions up to 2x faster" on Workers AI with unchanged model weights, crediting part of
+the gain to moving serving to SGLang: "Clef support is coming to SGLang in version 0.5.22,"
+linking a pull request this corpus confirmed merged (`sgl-project/sglang#42721`, checked via `gh
+api`, 2026-10-11) — its own title, "[Model] Support Clef and Clef-Flash decision models on
+/v1/systemone," serves Clef over the same wire path Laya's and Microsoft Foundry's servers already
+expose in this doc (see § Train your own below for a fourth). Cloudflare's "0.5.22" version claim
+was not separately checked against an SGLang release. Measured median-latency gains: 1.7× at ~800
+tokens, 2.0× at ~3,400 tokens, 1.7× at ~16,000 tokens.
+
+**RL fine-tuning design-partner service (announced)**: alongside the 10-01 launch, Cloudflare is
+"offering a service to help customers fine-tune Clef to suit their workloads with our hands-on FDE
+team," with a later self-serve platform planned; interested customers can sign up as design
+partners via an interest-form link on the blog (not reproduced here).
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
+could change an open cell in the rubric's evidence census. Like OpenAI's, Perplexity's, and
+Microsoft's own entries above, this one doesn't, so none is added here.
+
 ## Laya (NandhaKishorM)
 
 **Repo**: [NandhaKishorM/laya][laya] | **License**: Apache-2.0 (confirmed against `LICENSE`) |
@@ -614,6 +733,84 @@ Modal from your own labelled examples (about $1/run on an H100 for Kev-4B).
 | no [README][kev] (self-hosted single server; no documented multi-writer semantics) | no data [README][kev] (self-hosted HTTP server; scale-to-zero deploy is one endpoint, not a cluster) | yes [README][kev] (SHA-256-checksummed release weights, a frozen eval-suite dataset, and model cards with the full training recipe per size) | yes [README][kev] (`kev-finetune` skill fine-tunes any released checkpoint on your own data, fits a new temperature, and deploys) | yes [HF org][kev-hf] (Hub tags keep earlier checkpoint versions; GitHub releases carry checksummed weights) | partial [README][kev] (returns calibrated probabilities per typed question and reports Brier scores against held-out sets; no per-answer citation mechanism) |
 
 `scored 2026-09-30`
+
+## Train your own: Unsloth decision-model training
+
+**First-party**: [release v0.1.904-beta][unsloth-release-0.1.904] · [training
+guide][unsloth-decision-guide] · [example notebook][unsloth-decision-notebook] · [local serving
+docs][unsloth-decision-laya-serving] · [dataset: LocalLLaMA/typed-decisions][typed-decisions-dataset]
+
+Not a new decision-model architecture but a **training path**: Unsloth's v0.1.904-beta release
+(2026-10-07, titled "Train your own Decision model") adds two classes, `FastDecisionModel` and
+`DecisionTrainer`, that turn an ordinary base LLM into a Jev-style typed-decision model. Per the
+guide's own framing: "A small head, the same design as Cloudflare's Clef [above], looks at the
+LLM's output over each question and option" — the same joint-schema-head pattern Cloudflare's own
+Clef cards describe (§ Cloudflare Clef above), built generically over whichever base the user
+fine-tunes rather than Cloudflare's fixed Qwen3.8-27B/Qwen3.5-9B pair. Supported bases per the
+guide: Qwen3.5 (0.8B/2B/4B), Qwen3.8, Llama 3.2 3B, and Gemma 4 E4B ("other LLMs that Unsloth can
+fine-tune should work the same way").
+
+**Method (documented, notebook + release)**: the example notebook
+([`Qwen3_5_(4B)-Decision.ipynb`][unsloth-decision-notebook]) loads `unsloth/Qwen3.5-4B`
+4-bit-quantized (`load_in_4bit = True`) with LoRA adapters (`r = 16`, `lora_alpha = 16`) — the
+release notes label this combination "QLoRA" ("Train any text or vision LLM as a Jev-style
+decision model using QLoRA"), though the notebook's own text never uses that word, only "LoRA
+adapters" and "4 bit quantization." `DecisionTrainer(model=model, processing_class=tokenizer,
+train_dataset=train_items, eval_dataset=eval_items, args=TrainingArguments(...))` trains the new
+decision head and LoRA weights together on `LocalLLaMA/typed-decisions`
+(`state`/`questions`/`gold` rows); a quick run (`max_steps = 60`) is swapped for a full run
+(`num_train_epochs = 2`, `max_steps` removed) for production fine-tunes.
+`FastDecisionModel.predict(model, tokenizer, state, questions)` takes the same
+`state`/`questions`/`criteria` shape as Clef and Jev (`noul` takes no criteria; `choice` takes a
+dict of option names to descriptions; `score` takes an ordered list of levels) and returns an
+`answer` plus a `probabilities` dict per question. `FastDecisionModel.calibrate(model, tokenizer,
+eval_items)` fits a temperature so that, per the notebook, "an answer given with 90% confidence is
+right about 90% of the time," reporting an `ece` (calibration error) score.
+
+**Reported numbers — two different runs, kept separate**: the notebook's own quick run reports
+"about 30% accuracy" before training, "75% to 78%" on the test split after 60 steps, and "80% to
+84% held-out accuracy and an `ece` of 0.02 to 0.06"; a full 70-step/2-epoch run reaches 78% test
+accuracy in 25 minutes on an A100. The separate training guide reports a different, larger
+3,000-row test (2,000 `typed-decisions` rows plus 500 each from BANKING77 and CLINC150) across
+five base models: Qwen3.5-0.8B (36%→73% on typed-decisions, 78% held-out, 4GB VRAM, 42 min),
+Qwen3.5-2B (33%→78%, 81% held-out, 8GB, 40 min), Llama 3.2 3B (79% held-out, 4.1GB, 30 min), Gemma
+4 E4B (77% held-out, 14.4GB, 49 min), and a fine-tuned Laya checkpoint (77% held-out, 2.5GB, 10
+min) — plus a separate quick-try figure for Qwen3.5-4B, "76% in 10 minutes on an L4" at `max_steps
+= 60`. Treat the notebook's and the guide's numbers as different runs on different data, not one
+result restated.
+
+**Dataset (documented)**: [`LocalLLaMA/typed-decisions`][typed-decisions-dataset] is
+Apache-2.0-licensed and tagged `Synthetic` (no prose on the card states its generation method). It
+has 5 configs — `agent_trace_observability`, `customer_service`, `invoice_processing`,
+`security_incidents`, and the combined `all` — with each of the four workflow configs split 300
+train / 100 test rows (confirmed per-config via the Hugging Face Datasets Server API, 2026-10-11);
+`all` combines them into 1,200 train / 400 test rows (1.6k total), matching the card's own "all
+(1.6k rows)" label.
+
+**Serving the trained model (documented)**: `UNSLOTH_SYSTEMONE_MODEL=/path/to/merged/model
+unsloth studio -H 0.0.0.0 -p 8888` serves a fine-tuned model behind the same local
+TypeSafe-compatible endpoint Unsloth already exposes for Laya (above): `POST
+http://localhost:8888/v1/systemone`, `model` resolving to `laya`/`default`/`jev-latest` (or a
+specific checkpoint name such as `laya-multilingual`), and the `typesafe-sdk` Python client
+pointed at it via `TYPESAFE_BASE_URL=http://localhost:8888` — the fourth distinct
+`/v1/systemone`-path server in this doc, after Laya's own server, Microsoft Foundry's hosted one,
+and the sglang PR serving Cloudflare's Clef (§ Cloudflare Clef above). The docs flag one migration
+caveat verbatim: "`confidence` uses a different formula [from Jev's], so a threshold tuned on Jev
+won't transfer; threshold on `probabilities` instead." A link inside the notebook's own closing
+cell — "read our guide" at the path `docs/models/decision-model-training` — 404s (checked
+2026-10-11: "The URL `models/decision-model-training` does not exist"); the guide cited above
+(`/docs/basics/train-your-own-decision-model-with-unsloth`) is the page that actually exists.
+
+**License (observed, three different licenses in one project)**: the `unslothai/unsloth`
+repository's root `LICENSE` is Apache-2.0 (confirmed by fetching its content via `gh api`,
+2026-10-11); the Decision API server lives under `studio/`, whose own `studio/LICENSE.AGPL-3.0`
+file is the GNU AGPLv3 (confirmed the same way) — so the training library and the local serving
+app it ships carry different copyleft terms. The example notebook carries a third, separate
+license: its own first markdown cell states "This notebook is licensed [LGPL-3.0]."
+
+No rubric row: this is a training path layered on an existing serving app (Laya's own server,
+scored above) and existing base models, not a new decision-model architecture of its own — the
+same reasoning this doc already applies to pg-jev and probably.
 
 ## CLM / CLM-8B (Contrastive-LM)
 
@@ -889,6 +1086,24 @@ here.
 | [Microsoft Foundry model catalog — Microsoft-Decision-1][msft-decision1-catalog] | "Lifecycle Generally available (GA)" (rendered + embedded JSON), base model, `licenseDescription`, capabilities/use-case bullets, 32,768-token context, `trainingDataDate`; fetched via polyfetch 2026-10-10 |
 | [Microsoft Command Line blog — Decision-1 launch][msft-decision1-cmdline] | Base model, pricing, benchmark prose + embedded chart data (accuracy/latency/calibration over 36 benchmarks, decoded from base64 iframe payloads), appendix model list, editor's note, Xbox Research case study (GPT-6 Sol comparator, 14–18x/212–223x per-game breakdown), safety/robustness testing; fetched via polyfetch 2026-10-10 |
 | [Microsoft Learn how-to — Microsoft-Decision-1][msft-decision1-learn] | Wire shape (`POST …/providers/microsoft/v1/systemone`), question-type table (`noul`/`choice`/`score`), deployment types, use cases, limitations; fetched via WebFetch 2026-10-10 |
+| [Cloudflare changelog — Clef launch (10-01)][clef-changelog-1001] | Model sizes, System One API, licence, HF repos, latency/benchmark tables, RL fine-tuning service; fetched 2026-10-11 |
+| [Cloudflare changelog — Clef-omni (10-09)][clef-changelog-1009] | clef-omni launch (audio/video), Clef-flash price cut and hosted context-window change, Clef SGLang speedup; fetched 2026-10-11 |
+| [Cloudflare blog — Clef launch][clef-blog] | Full launch narrative: base models, context-window comparison to Jev, latency/benchmark/workflow-eval tables, RL design-partner service; fetched 2026-10-11 |
+| [Workers AI model page — Clef][clef-model-page] | Hosted context window (65,536 tokens), API call shape (binding + REST), body keys, pricing; fetched 2026-10-11 |
+| [Workers AI model page — Clef-flash][clef-flash-model-page] | Hosted context window (24,576 tokens), pricing, API parameters; fetched 2026-10-11 |
+| [Workers AI pricing page][workers-ai-pricing] | Current per-model input-token prices for clef/clef-flash/clef-omni, page marked "Last updated Oct 9, 2026"; fetched 2026-10-11 |
+| [Hugging Face model card — Cloudflare/clef][clef-hf] | License, base model (`Qwen/Qwen3.8-27B`), architecture, Decision Index comparison table including general-reasoning rows; fetched 2026-10-11 |
+| [Hugging Face model card — Cloudflare/clef-flash][clef-flash-hf] | License, base model (`Qwen/Qwen3.5-9B`), architecture, Decision Index comparison table; fetched 2026-10-11 |
+| Hugging Face API, `models/Cloudflare/clef-omni` | Confirms clef-omni is public (`license: apache-2.0`), lists weight files; checked 2026-10-11 |
+| Hugging Face Space data, `multimodalart/jev-decision-index/data/index.json` | Partial (~40%) search for a `clef` entry — none found, consistent with the HF cards' own "internal run" label; checked 2026-10-11 |
+| `sgl-project/sglang` PR #42721 | Confirms Cloudflare's SGLang-support PR is real and merged, and its own title names the `/v1/systemone` path; checked via `gh api`, 2026-10-11 |
+| [Unsloth decision-model example notebook][unsloth-decision-notebook] | `FastDecisionModel`/`DecisionTrainer` usage, 4-bit+LoRA setup, `calibrate()`/`predict()` shapes, reported accuracy/ECE numbers, LGPL-3.0 notebook license, dead guide link; fetched 2026-10-11 |
+| [Unsloth guide — train your own decision model][unsloth-decision-guide] | "Same design as Cloudflare's Clef" framing, supported base models, 3,000-row accuracy table, training hardware/time, `UNSLOTH_SYSTEMONE_MODEL` serving; fetched 2026-10-11 |
+| [Unsloth docs — Laya/Jev-API local serving][unsloth-decision-laya-serving] | `/v1/systemone` local endpoint, model-name aliases, `typesafe-sdk` config via `TYPESAFE_BASE_URL`; fetched 2026-10-11 |
+| [Unsloth release v0.1.904-beta][unsloth-release-0.1.904] | "Train your own Decision model" release notes, QLoRA wording, `FastDecisionModel` PR title; published 2026-10-07, fetched 2026-10-11 |
+| [LocalLLaMA/typed-decisions dataset][typed-decisions-dataset] | License (Apache-2.0), row counts (1.6k total), `Synthetic` tag; fetched 2026-10-11 |
+| Hugging Face Datasets Server API, `typed-decisions` `/info` | Per-config train/test row counts for all 5 configs (300/100 each workflow config); checked 2026-10-11 |
+| `unslothai/unsloth` repo `LICENSE` and `studio/LICENSE.AGPL-3.0` | Confirmed Apache-2.0 (root) and AGPL-3.0 (`studio/`, where the Decision API server lives) via `gh api` content fetch, 2026-10-11 |
 | [Laya][laya] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [Laya (Hugging Face org)][laya-hf] | Checkpoint versioning |
 | [kev][kev] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
@@ -986,3 +1201,16 @@ here.
 [msft-decision1-catalog]: https://ai.azure.com/catalog/models/Microsoft-Decision-1
 [msft-decision1-cmdline]: https://commandline.microsoft.com/microsoft-decision-1-model-foundry/
 [msft-decision1-learn]: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision
+[clef-changelog-1001]: https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/
+[clef-changelog-1009]: https://developers.cloudflare.com/changelog/post/2026-10-09-clef-omni-workers-ai/
+[clef-blog]: https://blog.cloudflare.com/clef-decision-models/
+[clef-model-page]: https://developers.cloudflare.com/workers-ai/models/clef/
+[clef-flash-model-page]: https://developers.cloudflare.com/workers-ai/models/clef-flash/
+[workers-ai-pricing]: https://developers.cloudflare.com/workers-ai/platform/pricing/
+[clef-hf]: https://huggingface.co/Cloudflare/clef
+[clef-flash-hf]: https://huggingface.co/Cloudflare/clef-flash
+[unsloth-decision-notebook]: https://github.com/unslothai/notebooks/blob/main/nb/Qwen3_5_(4B)-Decision.ipynb
+[unsloth-decision-guide]: https://unsloth.ai/docs/basics/train-your-own-decision-model-with-unsloth
+[unsloth-decision-laya-serving]: https://unsloth.ai/docs/models/decision-laya.md
+[unsloth-release-0.1.904]: https://github.com/unslothai/unsloth/releases/tag/v0.1.904-beta
+[typed-decisions-dataset]: https://huggingface.co/datasets/LocalLLaMA/typed-decisions
