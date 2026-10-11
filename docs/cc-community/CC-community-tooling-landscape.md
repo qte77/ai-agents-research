@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-10-11
+validated_links: 2026-10-11
 ---
 
 ## RTK (Rust Token Killer)
@@ -362,11 +362,14 @@ Two entrants in the same niche — a persistent runtime that keeps coding-agent 
 
 ### herdr (herdrdev)
 
-**Repo**: [herdrdev/herdr][herdr] | **Stars**: 40,485 | **License**: Apache-2.0 | **Version**: v0.9.1 (2026-09-16)
+**Repo**: [herdrdev/herdr][herdr] | **Stars**: 43,400 | **Forks**: 3,422 | **License**: Apache-2.0 |
+**Version**: v0.9.3 (2026-09-29, a hotfix for the same-day v0.9.2 feature release) (`gh api`,
+2026-10-11; stats were 40,485 stars / v0.9.1 as of 2026-09-16)
 
 "the runtime your coding agents live on" — a single-Rust-binary, no-Electron terminal multiplexer and background server built specifically for coding agents.
 
 - **Detach without stopping work**: herdr keeps terminals running in a background server when the client closes or the SSH connection drops; after a server/machine restart it restores the saved layout and can resume supported agent sessions (the original OS processes do not themselves survive the restart)
+- **Self-reported resume** (v0.9.2, 2026-09-29): agents can report their own resume command, so herdr reopens their exact session after a server restart with no built-in per-agent integration needed; self-reported agents clear once their pane is back at an idle shell ([herdr.dev/docs/add-herdr-support][herdr-agent-support])
 - **Multi-machine**: local work and saved SSH machines share one combined agent list with independent reconnects
 - **Status at a glance**: every pane is marked working, blocked, or idle
 - **Agent-native**: agents drive herdr through its own CLI and a socket API — spawning panes, prompting each other, waiting until another agent is genuinely blocked
@@ -479,7 +482,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **abide** | AGENTS.md rule enforcement | Hooks (Claude Code, Codex, OpenCode) | Per-edit/turn Jev decision-model question per rule, agent self-repairs | Early (457 stars, v0.0.4) |
 | **cc-sessions** | Session/workflow enforcement | Hooks + subagents + trigger phrases | DAIC tool-gating, task↔branch binding | Adopted but dormant (1,550 stars, v0.3.6, no commits since 2025-10) |
 | **TeamAI-CLI** | Team-shared AI config | Skill + CLI (git-backed shared repo) | Sync skills/rules/MCP/hooks across 15+ harnesses | Active (4,981 stars, v0.25.0) |
-| **herdr** | Agent session runtime | CLI (owns agent terminals + socket API) | Persistent background sessions across disconnect/restart | Active (40,485 stars, v0.9.1) |
+| **herdr** | Agent session runtime | CLI (owns agent terminals + socket API) | Persistent background sessions across disconnect/restart | Active (43,400 stars, v0.9.3) |
 | **Zeron** | Agent session runtime (local-first) | Desktop app + CLI daemon | Local-first sessions, optional multi-device sync | Active (2,195 stars, v0.2.85) |
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
@@ -521,7 +524,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | André Lindenberg — *Complete and Correct* (LinkedIn, 2026-09-26; `linkedin.com/pulse/complete-correct-andré-lindenberg-wukfe`) | Design lens: recovered business rules as the unit a migration rubric should check (LinkedIn — not link-checked) |
 | [cc-sessions][cc-sessions] | DAIC session/workflow enforcement, npm+PyPI dual-packaged (1,550 stars, MIT, v0.3.6) |
 | [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (4,981 stars, MIT, v0.25.0) |
-| [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (40,485 stars, Apache-2.0, v0.9.1) |
+| [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (43,400 stars, Apache-2.0, v0.9.3; `gh api` 2026-10-11) |
 | [Zeron][zeron] | Local-first coding-agent session engine + desktop control plane, optional multi-device sync (2,195 stars, MIT, v0.2.85) |
 | [human-review][human-review] | Visual HTML/Markdown review — comments and edits batched to the waiting agent (1,302 stars, MIT, v0.8.2) |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
@@ -575,6 +578,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [cc-sessions]: https://github.com/GWUDCAP/cc-sessions
 [teamai-cli]: https://github.com/Tencent/teamai-cli
 [herdr]: https://github.com/herdrdev/herdr
+[herdr-agent-support]: https://herdr.dev/docs/add-herdr-support/
 [zeron]: https://github.com/zeronsh/zeron
 [human-review]: https://github.com/petergyang/human-review
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure

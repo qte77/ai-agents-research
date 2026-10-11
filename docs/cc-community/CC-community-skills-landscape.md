@@ -4,13 +4,13 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-10-11
+validated_links: 2026-10-11
 ---
 
 ## Summary
 
-Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/MCP/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell. A fifth addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi).
+Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/MCP/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell. A fifth addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi). A sixth addition (2026-10-11, also not rubric-scored — a new diagram/illustration row does not move a filled skills census cell): wheresryan22/anatomy, a Claude Code Agent Skill that turns a technical idea into an audited, interactive isometric SVG/WebGL/3D figure of a real machine.
 
 ## gstack (Garry Tan)
 
@@ -548,6 +548,67 @@ Cross-ref: [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills
 native skills format this installs into. See [visualization.md](../_topics/visualization.md) for this
 corpus's other diagram/visualization tools.
 
+## wheresryan22/anatomy
+
+**Repo**: [wheresryan22/anatomy][anatomy] | **Stars**: 3,109 | **Forks**: 235 | **License**: MIT
+(confirmed by reading the `LICENSE` file — "MIT License / Copyright (c) 2026 Ryan") | created
+2026-10-08, pushed 2026-10-11 (`gh api`, 2026-10-11) — 3 days old.
+
+A Claude Code [Agent Skill][cc-skills-doc] — a plain folder with a
+`SKILL.md` at its root, not a plugin — that has Claude invent a real physical machine whose mechanism
+*is* the technical idea being explained, then builds that machine as a crafted isometric figure. The
+repo's own description field: "A Claude Code skill that turns a technical idea into a detailed,
+interactive isometric figure of a real machine. It makes SVG with optional WebGL shaders and 3D, for
+docs, articles and landing pages." Example prompt (README): `/anatomy explain how a token bucket rate
+limiter works, interactive`.
+
+### What It Outputs
+
+Three kinds of figure sharing one drawing kit and isometric camera (README, "What it makes"):
+
+| Kind | What it is |
+|---|---|
+| **SVG** | The core — solid isometric parts with four-tone shading, shipped as a standalone HTML page, a lone `.svg` file, or React/Next.js components |
+| **SVG + WebGL** | A shader canvas sandwiched between back/front SVG layers, for fire, water, steam, or glow that flat lines can't draw — the SVG still reads without WebGL |
+| **3D** (beta) | Parts that physically turn — re-projected and re-shaded every frame by the kit's own rules |
+
+### Install
+
+Four paths in, all installing the same `SKILL.md` folder — no plugin marketplace:
+
+| Path | Command | Installs to |
+|---|---|---|
+| skills CLI, user-level | `npx skills add wheresryan22/anatomy -g -a claude-code` | `~/.claude/skills/anatomy` |
+| skills CLI, project-level | `npx skills add wheresryan22/anatomy` | `.claude/skills/anatomy` |
+| git clone | `git clone https://github.com/wheresryan22/anatomy.git .claude/skills/anatomy` | either path |
+| ZIP download | unpack, rename to `anatomy`, move into the skills folder | `~/.claude/skills/anatomy` |
+
+Zero npm dependencies — Node's built-in modules only (React 18+ is needed only for the optional React
+output).
+
+### Self-Verification Loop
+
+`kit/audit.mjs` proves the geometry (nothing passes through anything, every pipe/cable end sits on a
+mount, overlaps draw in depth order); `scripts/capture.mjs` and `scripts/drive.mjs` then screenshot the built
+figure in headless Chrome, and the skill instructs Claude to read every PNG it produces before
+declaring the figure done — the same render-view-fix discipline as `coleam00/excalidraw-diagram-skill`
+above, with a geometric proof step added on top.
+
+### Adoption Considerations
+
+**Strengths**: zero dependencies; MIT; self-contained output (static HTML/SVG, no server or API key);
+a concrete audit-plus-visual-verification loop rather than a one-shot render.
+
+**Risks**: very new (3 days old at time of writing) with no independent usage signal beyond platform
+stars; "slow on purpose" per its own README (a full build-plus-audit cycle can take minutes; a full 3D
+orbit audit takes 15–20 minutes for 30 parts); the 3D mode is explicitly beta — "proved on its example
+and one test figure, not yet on a production figure" (README).
+
+Cross-ref: `coleam00/excalidraw-diagram-skill` and `cathrynlavery/diagram-design` above — same
+diagram/illustration-generation category, but anatomy's isometric-machine metaphor and audited 3D
+geometry are a different rendering approach from either. See
+[visualization.md](../_topics/visualization.md) for this corpus's other diagram/visualization tools.
+
 ## cloudflare/security-audit-skill
 
 **Repo**: [cloudflare/security-audit-skill][cf-sec-audit] | **Stars**: 23,302 | **License**: MIT |
@@ -632,6 +693,7 @@ above, consistent with every other row in this doc's census.
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
 | [stevesolun/ctx][ctx-repo] | Skill/agent/MCP/harness recommender over a bundled graph (587 stars, MIT; `gh api` 2026-10-02) |
 | [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (43,595 stars, MIT; `gh api` 2026-10-06) |
+| [wheresryan22/anatomy][anatomy] | Isometric interactive figure-generation Agent Skill, audited geometry + screenshot verification loop (3,109 stars, MIT; `gh api` 2026-10-11) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -650,6 +712,8 @@ above, consistent with every other row in this doc's census.
 [cf-blog]: https://blog.cloudflare.com/build-your-own-vulnerability-harness
 [ctx-repo]: https://github.com/stevesolun/ctx
 [diagram-design]: https://github.com/cathrynlavery/diagram-design
+[anatomy]: https://github.com/wheresryan22/anatomy
+[cc-skills-doc]: https://code.claude.com/docs/en/skills
 [skills-sh-xref]: https://skills.sh/
 [cc-skills-adoption]: ../cc-native/agents-skills/CC-skills-adoption-analysis.md#ecosystem-context
 [rubric]: ../sdlc-lcm/agent-substrate-rubric.md
