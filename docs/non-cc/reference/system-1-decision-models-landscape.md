@@ -127,6 +127,21 @@ Adrian documents).
   (`CLICK`, `TYPE_TEXT`, `SELECT`, `SCROLL_UP`, `SCROLL_DOWN`, `WAIT`, `DONE`, `BLOCKED`) and a
   target, replacing per-step LLM reasoning with one typed decision. Its own hedge: "three repeats
   of one task on one browser profile, not a general reliability benchmark."
+- [typesafe-computer-use][tcu-home] (shipped) — a macOS (Windows "experimental") computer-use
+  agent, nicknamed "jev" by its own README, that drives the real mouse and keyboard toward a
+  plain-English goal. Per its own design principle, "the classifier picks, code decides facts,
+  and the writer only writes free text": each step feeds OCR of the frontmost window, the
+  accessibility tree, and code-computed facts (date deltas, the focused field, repeated-label
+  rows, actions already tried) to the real, hosted TypeSafe Jev model, which answers three
+  `Choice` questions — action kind, item, site — before a separate writer model (Anthropic by
+  default, swappable to any OpenAI-compatible endpoint) produces free text for a field or the
+  final answer and "never picks an action." Its own cost/latency table — "measured on the same
+  screenshot and goal, one decision each," a single maintainer's single-task measurement (the
+  repo's sole `LICENSE` copyright holder is its author, Aaron Levin) rather than an independently
+  reproduced benchmark — reports $0.0002 vs. $0.032 per decision against "Claude Opus 5, bare
+  screenshot" (155x cheaper) and 0.13–0.38s vs. 5.2s model latency (14x–40x faster). README's own
+  hedge: "Beta. This is under heavy development. Expect rough edges... It drives your real mouse
+  and keyboard, so start with a dry run."
 - [GLiNER2.5-Decide][gliner-blog] (documented) — its own "Tool calling" and "Browser and computer
   use" bullets: "Select from a permitted set of tools and capture arguments from the request as
   structured records" and "Evaluate the current state to select the next action. Represent the
@@ -166,8 +181,9 @@ Adrian documents).
   that exact pattern for a Jev-style (`noul`/`choice`/`score`) model — but it's Perplexity's own
   cookbook, not a Jev-family model's docs, so the gap for the Jev-family proper is unchanged.
   Every other entry in this section, Jev-family and vendor alike, still mostly picks *which*
-  action to take rather than gating one already formed (jev-ultrafast, GLiNER2.5-Decide,
-  Perplexity's own browser-agent cookbook, OpenAI's announced-only "next action") — a related but
+  action to take rather than gating one already formed (jev-ultrafast, typesafe-computer-use,
+  GLiNER2.5-Decide, Perplexity's own browser-agent cookbook, OpenAI's announced-only "next
+  action") — a related but
   distinct decision shape from Adrian's and Perplexity's action-gate pattern. Microsoft's catalog
   page for Decision-1 (below) names the approve/deny pattern too — "Agent guardrails: Evaluate
   proposed agent actions or tool calls before an integrating application permits execution" — but,
@@ -900,7 +916,7 @@ validated for patient care**. One line only, per this batch's scope — no rubri
 
 ## Tools built on Jev
 
-Five projects call Jev (or an alternative decision model) as one step in a larger tool. Three have
+Six projects call Jev (or an alternative decision model) as one step in a larger tool. Four have
 their own home elsewhere in this corpus and this section only points to them; probably and pg-jev
 have none yet, so their full entries live here.
 
@@ -912,6 +928,9 @@ have none yet, so their full entries live here.
   [CC-web-scraping-plugins-analysis.md § Alternative MCP Options][jevultrafast-home].
 - **jevgrep** (dzhng) — a code-search CLI that uses Jev to judge file/declaration relevance to a
   natural-language question. See [CC-code-tooling-landscape.md § jevgrep][jevgrep-home].
+- **typesafe-computer-use** (awlevin) — a macOS computer-use agent whose per-step
+  action-selection loop asks the real, hosted TypeSafe Jev model three `Choice` questions (action
+  kind, item, site). See § Use cases → Tool-call gating above.
 - **pg-jev** (realZachi) — **Repo**: [realZachi/pg-jev][pg-jev] | **License**: PostgreSQL License
   (confirmed against `LICENSE`; GitHub's license detector reports `NOASSERTION` — the file matches
   the [OSI's PostgreSQL License template][osi-pgl] with its `$ORGANISATION` placeholder generalized
@@ -967,6 +986,63 @@ batch (neither was in the original lead list); light treatment only, per this ba
   affiliated with or endorsed by TypeSafe" and not a reproduction of Jev's own model or training.
   Multiple community backends (CUDA, Apple Silicon MLX/MPS, CPU via llama.cpp). The project
   spells its name **SemIf** (its repository and Fastino's announcement agree).
+
+## AnyJev (nokia-applied-research)
+
+**Repo**: [nokia-applied-research/AnyJev][anyjev] | **License**: Apache-2.0 (confirmed against
+`LICENSE`) | **Stars**: 1,183 / 144 forks, created 2026-09-21, pushed 2026-10-07 (`gh api`,
+2026-10-11)
+
+Turns any open causal LM into a Jev-style decision model two ways. Per the README's own author
+block, nine co-authors span Nokia (Sunnyvale, CA), Tencent Hunyuan, and the Hong Kong Polytechnic
+University; a companion arXiv technical report — [arXiv:2610.00831][anyjev-paper], "AnyJev
+Technical Report," submitted 30 Sep 2026 (v1), same nine authors — is cited from the README's own
+citation block, confirmed here only for its title, authors, and submission date (this corpus's
+fetch of the abstract page could not reproduce its text verbatim, so no figures or quotes from the
+paper are repeated here; the README's own numbers, below, are the first-party source for this
+entry). **Training-free** (`Decider`, level `L0`): reads a typed decision from any
+HF-transformers/vLLM/SGLang/llama.cpp backend's own next-token distribution, with no training and
+no labels,
+debiasing option-order and label-prior effects by averaging over cyclic rotations of the option
+list, with a rotation-budget stopping rule calibrated against its own full-cycle answer rather than
+against held-out labels. **Self-distilled** (`Tacit`): five Hugging Face checkpoints (1.7B–9B, on
+Qwen3/Qwen3.5 bases; `Tacit-9B` confirmed public and ungated via the Hugging Face API, 2026-10-11)
+trained by self-distillation to answer in one forward pass what the model reaches by reasoning,
+with `adaptive=True` escalating a capped share of low-confidence decisions back to chain-of-thought.
+Per the README, verbatim: "Not affiliated with TypeSafe AI or Jev."
+
+**API shape vs. System One (documented, from the README's own code samples)**: the two entry
+points differ. `Decider.decide(state, [Question.choice(...), ...])` takes one `state` plus a
+**list** of named `Question` objects, with answers returned keyed by name — the same
+multiple-question-per-call shape as the `state`+`questions` vocabulary this doc tracks for
+Jev/Clef/Microsoft-Decision-1/Perplexity's hosted API above, just expressed as Python objects
+rather than one JSON body. `Tacit.decide(state, question, options)` and the HTTP gateway's `POST
+/v1/decide` instead take one `state` plus a single `question` and `options` list per call
+(`{"state", "question", "options"}`), with multiple items batched via `decide_batch([...])` or
+`{"items": [...]}` rather than one multi-question request — a narrower, per-item shape for the
+self-distilled path. Per the README, the gateway "listens on 127.0.0.1 and has no authentication
+of its own." The README is not internally consistent on its own type vocabulary: the
+`Tacit`/gateway code sample uses `kind` values `choice` (default), `yes_no`, and `score`, while the
+project's own roadmap line reads "`choice`, `noul` and `score` from one prefill" — `yes_no` and
+`noul` naming the same binary type in two places of the same document; both are reported here, not
+resolved (the same kind of same-document inconsistency this doc already notes for OpenAI's
+`predicate`, above).
+
+**Numbers (self-reported — the README's own words: "Every number in this README is read from
+committed JSON," not independently reproduced here)**: on Qwen3-8B/BANKING77 20-way (300 test
+items), going from raw logits to L0: order-flip rate 0.230 → 0.073, accuracy 0.747 → 0.803,
+calibration error (ECE) 0.240 → 0.184, share auto-decidable at ≤5% error 7.7% → 46.3%. The rotation
+budget reads ~7.2 of 18 rotations at a "certified" 1% disagreement vs. the full cycle, for 2.2x more
+decisions/sec on vLLM and 2.3x–2.7x on transformers, "with accuracy unchanged." Tacit accuracy on
+the third-party [JevBench][jevbench] public set (231 items) and the `bev-decision` test split
+(46,320 items), one-forward-pass vs. adaptive (escalated share in parentheses): Tacit-9B 0.823 /
+0.887 (15.2%) and 0.727 / 0.755 (18.1%); Tacit-4B 0.723 / 0.758 (14.3%) and 0.663 / 0.704 (17.8%);
+Tacit-8B 0.736 and 0.663 (adaptive not yet run); Tacit-2B 0.671 and 0.626 (adaptive not yet run);
+Tacit-1.7B 0.619 and 0.598 (adaptive not yet run) — the README's own roadmap marks escalation
+results for Tacit-8B/2B/1.7B "come next."
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
+change an open cell in the rubric's evidence census. This entry doesn't, so none is added here.
 
 ## Paper: JEV-as-a-Judge (CMU)
 
@@ -1120,6 +1196,8 @@ here.
 | [JevK5][jevk5] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [JevBench v1.4][jevbench] | Third-party leaderboard cited by JevK5's own README |
 | [SemIf-OpenJev][semif] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
+| [AnyJev][anyjev] | README, LICENSE (fetched via GitHub contents API, 2026-10-11); `gh api` repo metadata (stars/forks/dates); Hugging Face API check on `morriszjm/Tacit-9B` (public, ungated, Apache-2.0), 2026-10-11 |
+| [AnyJev Technical Report (arXiv:2610.00831)][anyjev-paper] | Abstract page: title, authors, submission date (30 Sep 2026, v1) verified; abstract text not reproducible verbatim from this fetch, so not quoted or cited for figures; fetched 2026-10-11 |
 | [JEV-as-a-Judge (arXiv:2609.26550)][jaaj] | Abstract page (verbatim, fetched 2026-09-30) |
 | [JevSpawn (arXiv:2610.00437)][jevspawn-paper] | Abstract (arXiv Atom API, verbatim) and HTML full text (jev-1.13.0/Qwen3.8-27B setup, Table 1/2 figures, code-availability sentence); fetched 2026-10-10 |
 | [JevSpawn (GitHub)][jevspawn-repo] | README (same Table 1/2, "TypeSafe Jev — API-based finite scoring" wording, entry point `src/jev_spawn/api.py`), root contents (no `LICENSE`); fetched via `gh api`, 2026-10-10 |
@@ -1132,6 +1210,7 @@ here.
 | [docs.typesafe.ai/confidence][typesafe-confidence] | Re-fetched verbatim 2026-10-09: the "Three paths for using confidence in your code" act/confirm/escalate pattern |
 | [Secure Agentics Adrian README][adrian-gh] | Tool-call classification and block/hold-for-approval behavior, re-fetched verbatim via `gh api`, 2026-10-09 |
 | [agentic-ai-vulnerability-landscape.md § Secure Agentics Adrian][adrian-home] | Existing corpus analysis of Adrian's act/confirm/escalate intervention modes, cross-referenced not repeated |
+| [typesafe-computer-use][tcu-home] | README, LICENSE (fetched via GitHub contents API, 2026-10-11); `gh api` repo metadata (stars/forks/dates); architecture description and cost/latency table |
 | [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics] | Free-text judge metrics, cross-referenced not repeated |
 | [agent-frameworks-infrastructure-landscape.md § Guardrails / policy][guardrails-policy] | Safety-classifier/guardrail tools, cross-referenced not repeated |
 | [agent-frameworks-infrastructure-landscape.md § Rerankers][rerankers] | Dedicated cross-encoder rerankers, cross-referenced not repeated |
@@ -1157,12 +1236,15 @@ here.
 [abide-home]: ../../cc-community/CC-community-tooling-landscape.md#abide-coldteadotai
 [jevultrafast-home]: ../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#alternative-mcp-options-brief
 [jevgrep-home]: ../../cc-community/CC-code-tooling-landscape.md#jevgrep-dzhng
+[tcu-home]: https://github.com/awlevin/typesafe-computer-use
 [probably]: https://github.com/southpolesteve/probably
 [pg-jev]: https://github.com/realZachi/pg-jev
 [osi-pgl]: https://opensource.org/license/postgresql
 [jevk5]: https://github.com/allebee/jevk5
 [jevbench]: https://github.com/fstandhartinger/jevbench
 [semif]: https://github.com/TheoLeeCJ/SemIf-OpenJev
+[anyjev]: https://github.com/nokia-applied-research/AnyJev
+[anyjev-paper]: https://arxiv.org/abs/2610.00831
 [jaaj]: https://arxiv.org/abs/2609.26550
 [jevspawn-paper]: https://arxiv.org/abs/2610.00437
 [jevspawn-repo]: https://github.com/Hoyant-Su/JevSpawn
