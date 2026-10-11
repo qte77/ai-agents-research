@@ -15,7 +15,7 @@ Tracking issue: #652.
 - A generative LLM, Cloudflare Workers AI through an OpenAI-compatible `api_base`, is used **only for free text** and as the fallback.
 - One shared `decide()` lives in `qte77/.github/actions/decide/`.
 
-**Status:** **approved 2026-10-10** (owner: "proceed" on #651). Already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0. Phase A lanes L1, L3 (G1 only), L4 and L5 started 2026-10-10. Shipped: D1 (#653), G1 (#654), W12 (gha-rxiv-feed-action #207, #209, #210; #655). L1's PR qte77/.github#45 awaits the owner's merge; L2 pre-stages its PRs and merges after K0. K0 is pre-staged: `/workspaces/temp/ai-agents-research-triage/set_keys.sh` (see the K0 row).
+**Status:** **approved 2026-10-10** (owner: "proceed" on #651). Already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0. Phase A lanes L1, L3 (G1 only), L4 and L5 started 2026-10-10. Shipped: D1 (#653), G1 (#654), owner lead Cloudflare Clef + Unsloth decision training in the landscape (#657; on Clef's own card Jev leads on GPQA, MMLU-Pro, BBH, When2Call and BRIGHT, so H1 must test our tasks), W12 (gha-rxiv-feed-action #207, #209, #210; #655). L1's PR qte77/.github#45 awaits the owner's merge; L2 pre-stages its PRs and merges after K0. K0 is pre-staged: `/workspaces/temp/ai-agents-research-triage/set_keys.sh` (see the K0 row).
 
 **How to run it:**
 
