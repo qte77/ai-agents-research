@@ -2,7 +2,7 @@
 title: Decision models first across the qte77 GitHub Actions estate
 status: approved
 created: 2026-10-10
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
 Tracking issue: #652.
@@ -64,6 +64,7 @@ Tracking issue: #652.
 4. **Recheck relevance with Jev** (H1) on gold sets labelled by the agent (G1). Owner spot-check of ~20 items is optional.
 5. **Deferred:** gha-ai-changelog (no consumer found) and gha-repo-index (AI off by default). Leave only a short note on their issues.
 6. **Target wire shape:** TypeSafe's `state` + `noul` (also used by Perplexity and Laya). OpenAI `/v1/decisions` (`input` + `predicate`) is mapped later and not built now.
+7. **Cloudflare Clef as a decision backend (agent default, 2026-10-11; owner may override).** Cloudflare shipped Clef (27B) and Clef-flash (9B) on Workers AI on 2026-10-01: the same System One shape as Jev, open weights (Apache-2.0), and Clef-flash at $0.038 per 1M input tokens vs Jev's $0.042 (Cloudflare changelog 2026-10-09). The estate's existing `CF_WORKERS_AI_TOKEN` reaches it, so it needs no new vendor key. Default: add a `clef` backend to `decide()` (D2) and let H1 pick the primary backend per use case from the gold sets. Jev stays the default until H1 reports. Unsloth's train-your-own path (Clef head + QLoRA, v0.1.904-beta) is the self-hosted option if the hosted models fall short.
 
 ## Code, file and source map
 
@@ -81,7 +82,8 @@ Tracking issue: #652.
 
 - Call: `decide(state: str, questions: [{name, type: predicate|choice|score, instructions, choices?, levels?}], backend="jev"|"cf") -> {name: {value, probability|confidence|None, source}}`.
 - **Jev:** `POST https://api.typesafe.ai/v1/systemone`, body `{model:"jev-1.13.0", state, questions:{name:{type:"noul", instructions}}}`. A `noul` comes back as a float probability. predicate maps to `noul`; Jev also supports `choice` and `score`.
-- **Cloudflare fallback:** `POST {LLM_BASE_URL}/chat/completions` with model `@cf/meta/llama-3.3-70b-instruct-fp8-fast`, asking for a constrained JSON answer. `confidence=None`.
+- **Cloudflare Clef (D2):** `POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/cloudflare/clef-flash` (or `clef`), Bearer `CF_WORKERS_AI_TOKEN`, body `{model:"clef-flash"|"clef", state, questions}` (1–64 questions, optional `images`); response `{model, answers, usage}`. Context 24,576 tokens for clef-flash. Source: developers.cloudflare.com/workers-ai/models/clef-flash/. The account id is the one inside the `LLM_BASE_URL` secret.
+- **Cloudflare LLM fallback:** `POST {LLM_BASE_URL}/chat/completions` with model `@cf/meta/llama-3.3-70b-instruct-fp8-fast`, asking for a constrained JSON answer. `confidence=None`.
 - **Gate:**
   - probability ≥ `hi` or ≤ 1−`hi`: act;
   - middle band: review, with LLM text if needed;
@@ -168,7 +170,8 @@ Lane notes:
 | D0 | `decide` action in qte77/.github, TDD per the map | agent (L1) | `test-decide.yml` green; README documents schema, bands, secrets |
 | C1 | 7 consumer PRs (pin + CF inputs + drop `models: read`); switch gha-issue-triage self-triage and ai-agents-research to `secrets.LLM_BASE_URL`, delete the variables | agent (L2), after K0 | One test issue per consumer gets a triage comment; self-triage run green |
 | ~~G1~~ | ~~Gold sets: 62 issues + 100 papers (W40 ranked pool), two agent passes~~ | agent (L3) | Shipped: #654, `.github/scripts/data/gold/`. Papers 77/23 (96/100 pass agreement; 4 splits reconciled to NO), issues 59/3 (3 negatives are planted fixtures: weak for false accepts). Owner spot-check optional |
-| H1 | Jev runner in the eval harness: AUC + bootstrap CI, Brier, threshold sweep (port feelings `metrics.py`); compare Jev vs Llama-70B agent-strict on G1 | agent (L3), after K0 | Report artifact; recommended `hi` threshold per use case |
+| D2 | `clef` backend in `decide()` (qte77/.github), TDD, mocked like the Jev adapter; README lists both | agent, after D0 merges | Tests green; one manual live call with the repo's `CF_WORKERS_AI_TOKEN` returns a probability |
+| H1 | Decision runner in the eval harness: AUC + bootstrap CI, Brier, threshold sweep (port feelings `metrics.py`); compare Jev, Clef, Clef-flash and Llama-70B agent-strict on G1; pick the primary backend per use case | agent (L3), Clef part after D2, Jev part after K0 | Report artifact; recommended `hi` threshold per use case |
 | P1 | gha-issue-triage port: all six fields via `decide()`, LLM only for `reasoning` in the middle band; shadow mode (probabilities in the comment, no labels) → labels at the H1 threshold; defaults off GitHub Models | agent (sibling), after D0 + H1 | Release tag; consumers bumped; tests mocked per adapter |
 | P2 | gha-rxiv-paper-eval: `is_relevant` → `noul` via `decide()` as #58's first registry entry; fix `eval-papers-dispatch.yaml` | agent (sibling), after D0 + H1 | Release tag; ai-agents-research bumped; Jev ≥ 83.6% agreement with fewer false accepts on G1 |
 | ~~D1~~ | ~~Microsoft Decision-1 in the system-1 landscape~~ | agent (L4) | Shipped: #653. Same `state` + `noul`/`choice`/`score` shape as Jev at `<endpoint>/providers/microsoft/v1/systemone` (optional `criteria`, `api-key` header), so a later `decide()` adapter is cheap; not built (YAGNI) |
