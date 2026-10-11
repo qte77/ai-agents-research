@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-10-11
+validated_links: 2026-10-11
 status: assess
 ---
 
@@ -180,6 +180,7 @@ definitions, use cases, and primary research references for each metric.
 - **Reference**: [2602.22953] General Agent Evaluation / Exgentic (IBM Research, Feb 2026)
 - **Example**: SmolAgents + Claude Opus 4.5 = 0.66 success at $4.39/task vs OpenAI MCP + Claude Opus 4.5 = 0.73 success at $8.54/task — 2× cost for 11% success gain
 - **Application**: Use during framework selection for PeerRead batch evaluation to identify the cost-performance knee point
+- **Recent Advance**: ["What Does a Harness Buy? Tokens, Mostly"](https://arxiv.org/abs/2610.04433) (Liu & Han, Oct 2026; code and data: [github.com/YangzeLiu/what-does-a-harness-buy](https://github.com/YangzeLiu/what-does-a-harness-buy), MIT, confirmed live 2026-10-11) holds the model fixed and varies the harness instead — five models across Claude Code, mini-SWE-agent, and OpenCode on SWE-bench Verified. On the full 447-task pool, Claude Code and mini-SWE-agent score within ~5 points of each other; OpenCode is the only harness whose effect clearly exceeds run-to-run noise, trailing by up to 9 points. But cost per task differs by up to 3x across harnesses at the same model/tasks/prices — the gap comes mainly from the fixed system-prompt-plus-tool-schema preamble sent at the first call, scaled by step count. The paper's own framing: "What is rarely measured is how much the harness itself moves the score when the model is held fixed" — reinforcing this metric's core point that harness/framework choice is predominantly a **cost** lever, not a capability one. Also argues 45-task benchmark pools detect a 13-point gap only about half the time, so small claimed harness-score deltas may not be statistically resolvable at common benchmark sizes (self-reported findings; not independently re-run here).
 
 ### Multi-Agent Coordination Metrics
 
