@@ -3,8 +3,8 @@ title: Agentic Payments Landscape — Machine-Native Payment Rails for Agents
 purpose: Survey of emerging agent-to-machine payment protocols (x402, Google AP2, Stripe MPP) that let autonomous agents pay for API/tool access without a human in the loop per transaction.
 category: landscape
 created: 2026-07-08
-updated: 2026-07-08
-validated_links: 2026-07-08
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: research
 ---
 
@@ -25,6 +25,7 @@ Mandates *are* the authorization primitive) and the security angle in
 | **x402** | Coinbase-originated → **Linux Foundation** | HTTP `402` challenge/response; signed payment header | USDC on **Base** (EIP-3009 / Permit2) | Live, 20k+ payable endpoints (Apify) |
 | **Google AP2** | Google (`google-agentic-commerce`) | **Mandates** (W3C VC): Intent→Cart→Payment, ECDSA/P-256 — an authorization layer, not a rail | Payment-method-agnostic | Early (v0.2.0, 2026-04-28) |
 | **Stripe MPP** | Stripe (Machine Payments Protocol) | Named as x402's alternative in an Apify MCP RFC | (not verified here) | Emerging |
+| **ACP** (Agentic Commerce Protocol — disambiguation below) | **OpenAI + Stripe** | Programmatic buyer→agent→business commerce flows | Stripe Shared Payment Token (underlying rail not specified) | Live (ChatGPT is first implementing platform) |
 | **Fetch.ai uAgents** | Fetch.ai (Agentverse) | On-chain agent payments | On-chain | Shipped (niche) |
 
 ### x402 (the anchor)
@@ -64,11 +65,57 @@ above — a competing rail from the traditional-payments incumbent; not independ
 [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md)
 (blockchain-integrated agents with on-chain payments via Agentverse).
 
+### ACP (Agentic Commerce Protocol) — disambiguation
+
+**ACP** in this document means the **Agentic Commerce Protocol** ([agenticcommerce.dev][acp]), built
+by **Stripe and OpenAI**: "An open standard for programmatic commerce flows between buyers, AI
+agents, and businesses," stated as "open source and community-designed" under **Apache-2.0**
+([source][acp]). OpenAI is its first implementing AI platform, via ChatGPT; Stripe is its first
+compatible payment processor, through its Shared Payment Token ([source][acp]). No version number or
+date is stated on the protocol's own site.
+
+**This is a different protocol from the corpus's other "ACP" entries**, which share only the
+three-letter acronym: the **Agent Client Protocol** (the IDE↔agent protocol implemented by Goose,
+Zed, and most coding-agent docs in this corpus — e.g.
+[goose-analysis.md § ACP](../agents/goose-analysis.md#acp-agent-client-protocol)) and the **Agent
+Connect Protocol** (IBM, archived 2026-04 — see
+[ag-ui-protocol-landscape.md](ag-ui-protocol-landscape.md)). Any future edit adding "ACP" to this
+corpus should disambiguate explicitly, as done here.
+
+### Lightsage payments tracker
+
+[Lightsage's Agent Experience Arena — Payments][lightsage-payments] is a live, numbered adoption
+tracker for the protocols above, plus one more (**UCP**, left unexpanded below): **"The Arena
+separates public readiness from proof that a payment completed"** ([source][lightsage-payments]). As
+observed 2026-10-15: **2,369 companies** in the directory (score version `agent-payments-v7`; only
+the Top 100 shown on-page, the rest in a linked JSON), **0 rated "Sandbox-verified or stronger,"** and
+the #1-ranked company, **Telnyx**, at **84/100 overall readiness** and **48/100 payment readiness**
+(signals: x402, UCP, ACP, mcp, openapi) — the highest payment-readiness score on the page. Lightsage
+itself ranks #23 (overall readiness 55, payment readiness 0). Last-scanned dates on the visible Top
+100 run Aug 20–Oct 8 (year not stated on the page).
+
+Scoring, per the [methodology page][lightsage-payments-methodology]: **overall readiness = 70% agent
+access + 30% payment readiness**, through an 8-level evidence ladder — *Not evaluated → Support
+claimed → Payment signal detected → Unpaid challenge validated → Sandbox verified → Live verified →
+Multi-payer verified → Certified*. The ladder's own top tier is self-referential ("Certified: Lightsage
+has reviewed reproducible evidence and the result remains within its validity window") — i.e. Lightsage
+verifies its own results, not an independent auditor — and the page states "Public scans never
+authorize payments."
+
+**UCP remains unexpanded here.** Lightsage's own FAQ gives only usage guidance — "Pick UCP when the
+goal is direct buying from AI surfaces such as Google AI Mode or Gemini" (vs. "Pick ACP when the main
+integration is agentic checkout: product feed or cart discovery") — not a first-party definition from
+an originating vendor. Do not expand the acronym in this corpus without that source.
+
 ## Why it matters / takeaways
 
 - **New primitive, moving fast:** foundation governance (x402), a Google entrant (AP2), and a Stripe
   entrant (MPP) all within ~one quarter — autonomous agent-to-service payment is consolidating from
   research into rails.
+- **A third-party readiness tracker now exists:** Lightsage's payments Arena scores real-world
+  adoption of x402/MPP/UCP/ACP/AP2 across 2,369 companies — useful as an external signal, though it is
+  self-scored by its own operator with no independent audit, and 0 companies clear its top evidence
+  tier as of 2026-10-15.
 - **Crypto vs card rails split:** x402 is USDC/Base (onchain); AP2/MPP aim payment-method-agnostic /
   card-inclusive. Watch which agent frameworks adopt which.
 - **Distinct from human-account SaaS billing:** this is *not* Claude Code calling a Stripe MCP server
@@ -84,9 +131,14 @@ above — a competing rail from the traditional-payments incumbent; not independ
 | [Apify: introducing x402][x402-apify-blog] · [Apify x402 docs][x402-apify-docs] | Live x402 integration + case study |
 | [apify-mcp-server#626][x402-mcp-issue] | Closed RFC: MCP-level payment gating (x402 + Stripe MPP) |
 | [google-agentic-commerce/AP2][ap2] | Google Agent Payments Protocol (v0.2.0) |
+| [agenticcommerce.dev][acp] | Agentic Commerce Protocol (ACP) home — OpenAI + Stripe |
+| [Lightsage Agent Experience Arena — Payments][lightsage-payments] · [methodology][lightsage-payments-methodology] | Live cross-protocol payment-readiness tracker (2,369 companies) |
 
 [x402-repo]: https://github.com/coinbase/x402
 [x402-apify-blog]: https://blog.apify.com/introducing-x402-agentic-payments/
 [x402-apify-docs]: https://docs.apify.com/platform/integrations/x402
 [x402-mcp-issue]: https://github.com/apify/apify-mcp-server/issues/626
 [ap2]: https://github.com/google-agentic-commerce/AP2
+[acp]: https://agenticcommerce.dev
+[lightsage-payments]: https://lightsage.com/agent-experience-arena/payments
+[lightsage-payments-methodology]: https://lightsage.com/agent-experience-arena/payments/methodology
