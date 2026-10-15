@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-10-15
+validated_links: 2026-10-15
 ---
 
 Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
@@ -66,6 +66,26 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Leaderboards**: SciArena, Berkeley Function-Calling, Chatbot Arena, GAIA, WebDev Arena, MiniWoB++.
 
+**Agent-readiness scoring (websites/APIs)**: a new, two-vendor category — `git grep` for `ora.ai`,
+`lightsage`, and "agent readiness"/"agent experience arena" across `docs/` returns zero hits before
+this entry. [Ora][ora] (by era labs) scores how a website or MCP-server endpoint works for AI agents,
+pairing a numeric score with a letter grade on its leaderboard (e.g. "96A+", "91A", "77B" — A+/A/B
+observed, no C example seen); it self-styles "The standard for agent experience" and ships a CLI
+(`npx ax audit <domain>`). Self-reported on its own [research page][ora-research] (checked
+2026-10-15): 119,373 sites scanned, an ecosystem-average score of 42/100 (the score-distribution chart
+covers a 108,814-site subset of that total), and 5% of sites rated B or above. No pricing or company
+details (team, funding, founding date) appear on the homepage or research page checked; access is
+waitlist-gated. [Lightsage][lightsage], "the Agent-Led Growth Platform for software companies," runs a
+comparable **[Agent Experience Arena][lightsage-arena]** — self-reported, Lightsage's own methodology,
+discovery-data snapshot dated 2026-06-13 — ranking 132 developer tools on a 50/50 blend of a
+*discovery score* ("how often coding agents surface a tool when asked to solve tasks in its category")
+and a *usability score* (averaged API/CLI/MCP integration results from Lightsage's companion
+**[DevTool Arena][lightsage-devtool]**; its Claude Code view alone covered 185 companies across 44
+categories as observed 2026-10-15, with no stated total across other agent views). Neither page states
+an exact prompt/run count behind the discovery or usability scores, nor a founder, team, or funding for
+either vendor — these are a first, not-yet-independently-audited example of the category; revisit as a
+standalone landscape if a third vendor appears.
+
 ## 3. Datasets
 
 | Dataset | Link | Content | Size |
@@ -97,7 +117,15 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 ## Sources
 
-Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. EDD-methodology sources:
+Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. Agent-readiness-scoring sources (checked 2026-10-15):
+
+[ora]: https://ora.ai
+[ora-research]: https://ora.ai/research
+[lightsage]: https://lightsage.com
+[lightsage-arena]: https://lightsage.com/agent-experience-arena
+[lightsage-devtool]: https://lightsage.com/leaderboard/claudecode/api
+
+EDD-methodology sources:
 
 [anthropic-evals]: https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
 [openai-evals]: https://developers.openai.com/api/docs/guides/evaluation-best-practices
