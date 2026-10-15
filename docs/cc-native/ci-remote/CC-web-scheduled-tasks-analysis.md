@@ -12,7 +12,7 @@ status: available
 
 > **Note**: Anthropic renamed this feature to **Routines** (canonical page: [routines][cc-sched], H1 "Automate work with routines"). A routine now supports three trigger types — Schedule, API (HTTP POST to a per-routine `/fire` endpoint), and GitHub event (PR/release webhooks) — not only recurring schedules. This doc covers only the **Schedule-trigger** subset of Routines.
 >
-> **URL-slug trap, found 2026-10-15**: the old `scheduled-tasks` URL slug this doc's title echoes has been repurposed. `https://code.claude.com/docs/en/scheduled-tasks` is now Anthropic's page for the **session-scoped `/loop` command and its `CronCreate`/`CronList`/`CronDelete` tools** — a different, local feature, covered in [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md) — not the cloud Routines this doc covers. Follow the `routines` URL, not `scheduled-tasks`, for the content below.
+> **URL-slug trap, found 2026-10-15**: this doc's own title ("CC Web Scheduled Tasks") makes `https://code.claude.com/docs/en/scheduled-tasks` (no `web-` prefix) look like its canonical URL, but it currently is **not** — fetching it directly shows that URL is Anthropic's page for the **session-scoped `/loop` command and its `CronCreate`/`CronList`/`CronDelete` tools**, a different, local feature covered in [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md). (This doc's own `source:` has read `web-scheduled-tasks`, then `routines`, across its history — never bare `scheduled-tasks` — so whether that exact slug ever pointed at the cloud feature is unconfirmed; only its *current* content, re-checked today, is the finding here.) Follow the `routines` URL, not `scheduled-tasks`, for the content below.
 
 ## What It Is
 
