@@ -2,7 +2,7 @@
 title: Decision models first across the qte77 GitHub Actions estate
 status: approved
 created: 2026-10-10
-updated: 2026-10-12
+updated: 2026-10-15
 ---
 
 Tracking issue: #652.
@@ -177,6 +177,11 @@ Lane notes:
 | ~~D1~~ | ~~Microsoft Decision-1 in the system-1 landscape~~ | agent (L4) | Shipped: #653. Same `state` + `noul`/`choice`/`score` shape as Jev at `<endpoint>/providers/microsoft/v1/systemone` (optional `criteria`, `api-key` header), so a later `decide()` adapter is cheap; not built (YAGNI) |
 | E1 | Estate convention doc in qte77/.github: decision first, defaults, secret names, escalation bands | agent, after P1 | Merged; linked from the 4 model-using READMEs |
 | ~~N1~~ | ~~Owner leads 2026-10-11 (28 links), folded in four lanes~~ | agent | Shipped: F3 #662 (anatomy skill, herdr refresh, Strata: documents `ANTHROPIC_BASE_URL` for Claude Code), F1 #663 (AnyJev: self-hosted Apache-2.0 Jev-style decider, an H1 candidate next to Jev and Clef; typesafe-computer-use), F4 #664 (moli, uber/ADR, IdeaScientist, harness-cost paper under the cost-performance metric, new rea and minigraf docs), F2 #666 (OpenRig, TrueForge, AECP, MemoType/TriMEM, GraphJin). Held and skipped leads: see Deferred |
+| N2 | Usage and token optimization (owner leads 2026-10-14/15, incl. a ChatGPT transcript treated as leads only, `/workspaces/temp/leads-2026-10-14/`): usage-limit best practices (support 9797557), Claude Code wrap-up allowance (17040437), cache-TTL controls (`promptCacheTtl`, `CLAUDE_CODE_PROMPT_CACHE_TTL` v2.1.242+, `ENABLE_PROMPT_CACHING_1H`, `FORCE_PROMPT_CACHING_5M`), `-p` result-JSON jq, `--resume`/`--continue`/`--fork-session`. Lane G1; fence `CC-prompt-caching-behavior.md`, `CC-session-cost-analysis.md`, `CC-cli-reference.md`, `CC-env-vars-reference.md`; re-verify the caching doc's existing TTL claims. The owner's $0.63 / 93.8% run goes in only with a Claude Code version | agent | PR merged; every claim first-party |
+| N3 | Org Console API key for headless Claude Code and the platform admin it touches: authentication + select a workspace, workspaces, service accounts, rate limits, Usage & Cost API, API data retention, AUP (verbatim, pointer only), and one line each where they bear on agents for Batch, Files, Agent Skills API, Playground, connectors marketplace. Console pages under `platform.claude.com/settings/*` and `/usage/limits` are login-only: describe them only from docs. Cite `/docs/en/` pages. Lane G2; at most one new doc or an extension of `CC-web-auth-setup-analysis.md`, no hubs | agent | PR merged; no inferred console UI |
+| N4 | Refresh Claude Code feature docs against live pages: mods overview (`CC-mods-function-hooks-analysis.md`), channels, scheduled tasks, slash commands as they touch those docs; add new pages to `CC-first-party-docs-index.md`. Lane G3; change only what differs | agent | PR merged; `validated_links` bumped |
+| N5 | Claude Code goals (`code.claude.com/docs/en/goal`; verify the page exists first). Lane G4; new `CC-goal-*.md` or extension, no hubs | agent | PR merged |
+| N6 | Hub and README rows for docs new in N2–N5; strike N2–N5 | agent, after N2–N5 | One PR merged |
 | Q1 | qte77/qte77: drop the stale `models: read` in `repo-registry.yml`, retire the GitHub Models icon in README (#31) | agent, after E1 | PR merged in qte77/qte77; #31 updated |
 | ~~W12~~ | ~~Regenerate W12 in gha-rxiv-feed-action (#206), then backfill W12 here~~ | agent (L5) | Shipped: feed #207 (delete), #209 (fix: OR'd topics now grouped before the `submittedDate` range; the date path had bounded only the last category), #210 (2,875 rows, 9 columns); triage #655 (87 relevant) |
 
