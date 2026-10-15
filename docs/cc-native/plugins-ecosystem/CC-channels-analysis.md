@@ -3,12 +3,12 @@ title: CC Channels — Push Events via Telegram, Discord, iMessage
 source: https://code.claude.com/docs/en/channels, https://code.claude.com/docs/en/channels-reference
 purpose: Analysis of Claude Code channels for pushing external events into running sessions via MCP server plugins.
 created: 2026-03-24
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: research-preview
 ---
 
-**Details:** v2.1.80+, allowlisted plugins only
+**Details:** v2.1.80+ (earlier research finding — the current channels and channels-reference pages, re-checked 2026-10-15, no longer state a minimum version), allowlisted plugins only. Neither `--channels` nor `--dangerously-load-development-channels` appears in `claude --help` while the feature is in preview, though both flags work.
 
 ## What Channels Are
 
@@ -52,8 +52,8 @@ claude --dangerously-load-development-channels server:my-webhook
 
 - **Sender allowlist**: only paired/approved IDs can push messages; others silently dropped
 - **Per-session opt-in**: `--channels` flag required each session; being in `.mcp.json` is not enough
-- **Permission relay**: allowlisted senders can approve/deny tool use remotely (if channel declares capability); CC v2.1.211+ sanitizes the relayed prompt's `description`/`input_preview` fields
-- **Enterprise**: disabled by default on Team/Enterprise; admin enables via `channelsEnabled` managed setting
+- **Permission relay**: allowlisted senders can approve/deny tool use remotely, if the channel declares the `claude/channel/permission` capability and Claude Code registered it as a channel for the session (CC v2.1.234+ sends permission requests only to servers registered as channels for the session). CC v2.1.211+ sanitizes the relayed `description`/`input_preview` fields (neutralizes direction-override/invisible characters, folds whitespace, elides text over 3,500 code points); CC v2.1.234+ additionally masks recognizable credential tokens (API keys, personal access tokens) as `[REDACTED]` in both fields, and relays `(value unserializable)` in place of an `input_preview` field it can't serialize safely. Before v2.1.234, Claude Code treated an explicit `false` for the permission capability the same as declaring it.
+- **Enterprise**: blocked by default on claude.ai Team and Enterprise until an Owner enables `channelsEnabled`; permitted by default for Anthropic Console API-key authentication unless that organization deploys managed settings; Pro/Max users without an organization skip these checks entirely and opt in per session with `--channels`
 
 ### Requirements
 
@@ -68,6 +68,8 @@ claude --dangerously-load-development-channels server:my-webhook
 - **Session must be open** — events don't arrive when session is closed
 - **No cloud support** — channels push into local sessions, not web sessions
 - **Permission pauses** — if Claude hits a permission prompt while away, session pauses unless using `--dangerously-skip-permissions` or channel has permission relay
+- **Non-interactive mode (`-p`) disables some tools** — multiple-choice questions and plan-mode approval are disabled under `-p` so the session never stalls waiting for input; `--dangerously-load-development-channels` is also ignored under `-p` and the Agent SDK, since it requires an interactive confirmation prompt
+- **v2 MCP client protocol gap** — on the v2 MCP client runtime, Claude Code doesn't register a channel server that negotiates protocol revision `2026-07-28`, so a channel can silently fail to register for that reason alone
 
 ## How Channels Compare
 
