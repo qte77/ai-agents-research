@@ -63,15 +63,15 @@ Three entry points:
 | Weekdays | Daily, skipping Saturday/Sunday |
 | Weekly | Once/week on specified day and time |
 
-Tasks may run a few minutes after scheduled time (consistent offset per task).
+A run can start several minutes after its scheduled time — the live page gives no fixed/deterministic offset for routines (that "consistent, deterministic delay" wording belongs to Desktop scheduled tasks, a different feature, and this doc previously borrowed it in error). If timing on the hour matters, the docs suggest picking a time a few minutes past the hour, e.g. 9:07 instead of 9:00, to start closer to on-time.
 
 ### One-off Runs
 
 A schedule trigger can also fire a routine a single time at a specific future timestamp instead of recurring, e.g. `/schedule tomorrow at 9am, summarize yesterday's merged PRs` or `/schedule in 2 weeks, open a cleanup PR that removes the feature flag`. After it fires, the trigger auto-disables and the web UI marks the routine **Ran**; editing the routine with a new one-off time re-arms it. One-off runs count against the same hourly limits as other scheduled runs (below).
 
-### Usage Limits (new 2026-10-15)
+### Usage Limits
 
-Separately from subscription usage, each way of starting a run has its own hourly cap: scheduled runs (including one-off runs) are capped at 100/hour per account; **Run now**, API fires, and re-arming a one-off routine share a 30/hour cap per routine; **Run now** and re-arming are also capped at 100/hour per account; and API fires are capped at 100/hour per account, counted separately from **Run now**. None of these caps has overage — a run over the limit waits or fails until the window resets. If a GitHub connection goes missing or expires, a routine skips runs for up to 72 hours before it turns itself off; reconnecting GitHub within that window resumes it automatically.
+Found 2026-10-15, not previously in this doc. Separately from subscription usage, each way of starting a run has its own hourly cap: scheduled runs (including one-off runs) are capped at 100/hour per account; **Run now**, API fires, and re-arming a one-off routine share a 30/hour cap per routine; **Run now** and re-arming are also capped at 100/hour per account; and API fires are capped at 100/hour per account, counted separately from **Run now**. None of these caps has overage — a run over the limit waits or fails until the window resets. If a GitHub connection goes missing or expires, a routine skips runs for up to 72 hours before it turns itself off; reconnecting GitHub within that window resumes it automatically.
 
 ### Managing Tasks
 
