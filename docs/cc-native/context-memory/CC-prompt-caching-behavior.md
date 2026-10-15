@@ -59,7 +59,7 @@ Source: [prompt caching docs][caching], "How cache lookback works" section
 
 ### Minimum cacheable prefix
 
-The cacheable prefix is model-dependent (re-verified against the [caching docs][caching], 2026-10-15):
+The cacheable prefix is model-dependent (re-verified against the [caching docs][caching], 2026-10-15). On the Claude API, Claude Platform on AWS, Google Cloud, and Microsoft Foundry:
 
 | Minimum tokens | Models |
 |---|---|
@@ -68,11 +68,11 @@ The cacheable prefix is model-dependent (re-verified against the [caching docs][
 | 2,048 | Opus 4.7, Mythos Preview |
 | 4,096 | Opus 4.6, Opus 4.5, Haiku 4.5 |
 
-A prefix shorter than the minimum silently skips caching: no error, just `cache_creation_input_tokens: 0`. Per the current docs, "these minimums apply on every platform where each model is available."
+A prefix shorter than the minimum silently skips caching: no error, just `cache_creation_input_tokens: 0`. The [caching docs][caching] state "these minimums apply on every platform where each model is available," but that sentence's scope is the four platforms named in its own lead-in (Claude API, Claude Platform on AWS, Google Cloud, Microsoft Foundry) — it does not cover Bedrock, which the same docs point elsewhere for: [AWS's own Bedrock documentation][bedrock-caching].
 
-**Corrected 2026-10-15**: this doc previously claimed Bedrock uses a different (1,024-token) minimum for Fable 5 / Mythos 5. That contradicts the verbatim "every platform" statement above — removed as stale/unverified.
+**Corrected 2026-10-15**: this doc previously claimed Bedrock uses a different (1,024-token) minimum for Fable 5 / Mythos 5. [AWS's Bedrock prompt-caching docs][bedrock-caching] (its "Supported models, Regions, and explicit caching limits" table) list Claude Fable 5.1, Mythos 5.1, Fable 5, and Mythos 5 — along with Opus 5.5/5, Sonnet 5.5, and Haiku 5.5 — at a 512-token minimum per cache checkpoint on Bedrock too, the same figure as the other platforms. (Bedrock's 1,024-token minimum applies to Opus 4.8 and Sonnet 5/4.6/4.5/3.7/3.5v2, not to Fable/Mythos.) Removed the stale claim on that basis.
 
-Source: [prompt caching docs][caching], "Cache limitations" section
+Source: [prompt caching docs][caching], "Cache limitations" section; [AWS Bedrock prompt-caching docs][bedrock-caching], "Supported models, Regions, and explicit caching limits" table (accessed 2026-10-15)
 
 ## CC-Specific Caching Behavior
 
@@ -198,7 +198,7 @@ Source: [CC prompt-caching docs][cc-caching], "Actions that invalidate the cache
 
 In CC, the cache is effectively scoped to one machine and directory — the system prompt embeds auto-memory paths, and the conversation opens with an announcement of the working directory, platform, shell, and OS version. Two sessions in different directories therefore build different prefixes and miss each other's cache. Sessions run in **parallel** in the *same* directory build matching prefixes and read each other's cache; **sequential** sessions in the same directory share the prefix only when the git status snapshot taken at startup matches, since each conversation also carries the branch and recent commits from that snapshot.
 
-The underlying API cache is broader than CC's own scoping: caches are isolated between organizations, and — on the Claude API, Claude Platform on AWS, and Microsoft Foundry — between workspaces within an organization; Bedrock and Google Cloud's Agent Platform use organization-level isolation only.
+The underlying API cache is broader than CC's own scoping: caches are isolated between organizations, and — on the Claude API, Claude Platform on AWS, and Microsoft Foundry — between workspaces within an organization; per the platform docs, "Bedrock and Google Cloud use organization-level isolation only" (code.claude.com elsewhere calls this same Google product "Google Cloud's Agent Platform" — same product, different doc family's naming).
 
 Source: [CC prompt-caching docs][cc-caching], "Cache scope" section; [prompt caching docs][caching], "Cache storage and sharing" section
 
@@ -233,6 +233,7 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | [CC prompt-caching docs][cc-caching] | CC-specific TTL buckets, choose-the-TTL precedence, disable vars, cache scope, actions that invalidate/keep the cache (accessed 2026-10-15) |
 | [CC env vars reference][cc-env-vars] | `CLAUDE_CODE_PROMPT_CACHE_TTL`, `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`, `FORCE_PROMPT_CACHING_5M`, `ENABLE_PROMPT_CACHING_1H`, `DISABLE_PROMPT_CACHING*` (accessed 2026-10-15) |
 | CC 2.1.83, session `9f7de296`, Codespaces, 2026-03-27 | Cache warmup curve, 96.3% hit rate — predates the TTL-bucket model (CC v2.1.242+) described above |
+| [AWS Bedrock prompt-caching docs][bedrock-caching] | Per-model minimum cacheable prefix on Bedrock specifically (Fable/Mythos 5.x = 512 tokens, same as other platforms) (accessed 2026-10-15) |
 
 [caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 [pricing]: https://platform.claude.com/docs/en/about-claude/pricing
@@ -240,3 +241,4 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 [cc-caching]: https://code.claude.com/docs/en/prompt-caching
 [cc-env-vars]: https://code.claude.com/docs/en/env-vars
 [settings-ref]: https://code.claude.com/docs/en/settings-reference
+[bedrock-caching]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html
