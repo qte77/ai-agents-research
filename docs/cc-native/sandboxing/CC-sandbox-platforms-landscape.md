@@ -4,8 +4,8 @@ source: https://github.com/alibaba/OpenSandbox, https://e2b.dev, https://fly.io/
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 category: landscape
 created: 2026-03-08
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: research
 ---
 
@@ -22,18 +22,18 @@ environments — from self-hosted open-source to managed cloud services.
 
 ## Platform Comparison
 
-| Aspect | CC Built-in | `sandbox-runtime` | OpenSandbox (Alibaba) | E2B | Sprites.dev (fly.io) | Daytona |
-| ------ | ----------- | ------------------ | --------------------- | --- | -------------------- | ------- |
-| **Type** | Local (OS-level) | Local (npm package) | Self-hosted (Docker/K8s) | Cloud SaaS | Cloud SaaS | Cloud / self-hosted |
-| **Isolation** | bubblewrap (Linux), Seatbelt (macOS) | Same as CC built-in | gVisor, Kata, Firecracker | Firecracker microVM | Firecracker microVM | Container (optional enhanced) |
-| **Cold start** | N/A (local process) | N/A | <800ms | ~150ms | 1-2s (cold), <1s (warm) | Fast (container) |
-| **State** | N/A | N/A | Ephemeral | Ephemeral (24h max) | Persistent + checkpoint/restore (~300ms) | Stateful |
-| **Storage** | Local filesystem | Local filesystem | Container volumes | Ephemeral per session | 100GB persistent NVMe | Persistent |
-| **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go | Python, JS/TS | REST API | Python, JS/TS |
-| **CC integration** | Native | npm package | Documented | Via SDK | Via API | Via SDK |
-| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Closed source (legacy OSS repo frozen) |
-| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Usage-based |
-| **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Yes |
+| Aspect | CC Built-in | `sandbox-runtime` | OpenSandbox (Alibaba) | E2B | Sprites.dev (fly.io) | Maritime | Daytona |
+| ------ | ----------- | ------------------ | --------------------- | --- | -------------------- | -------- | ------- |
+| **Type** | Local (OS-level) | Local (npm package) | Self-hosted (Docker/K8s) | Cloud SaaS | Cloud SaaS | Cloud SaaS | Cloud / self-hosted |
+| **Isolation** | bubblewrap (Linux), Seatbelt (macOS) | Same as CC built-in | gVisor, Kata, Firecracker | Firecracker microVM | Firecracker microVM | Firecracker microVM (dedicated per agent) | Container (optional enhanced) |
+| **Cold start** | N/A (local process) | N/A | <800ms | ~150ms | 1-2s (cold), <1s (warm) | ~0.5s new machine; ~0.6s sleep-wake (self-reported) | Fast (container) |
+| **State** | N/A | N/A | Ephemeral | Ephemeral (24h max) | Persistent + checkpoint/restore (~300ms) | Persistent (`/data` only); idle sleeps free | Stateful |
+| **Storage** | Local filesystem | Local filesystem | Container volumes | Ephemeral per session | 100GB persistent NVMe | `/data` directory (size not stated) | Persistent |
+| **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go | Python, JS/TS | REST API | TypeScript, Python, CLI (`maritime-cli`), REST | Python, JS/TS |
+| **CC integration** | Native | npm package | Documented | Via SDK | Via API | `claude_code` template or custom Docker image | Via SDK |
+| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Not stated; ToS retains all rights, no licence published | Closed source (legacy OSS repo frozen) |
+| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Free (3/1) – $500/mo Scale (500/60); Enterprise custom | Usage-based |
+| **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Not stated | Yes |
 
 ## Platform Details
 
@@ -168,6 +168,40 @@ public site.
 **When to use**: Bursty or long-idle agent workloads that need fast resume without
 standby cost — between E2B's ephemeral model and Sprites' always-warm persistence.
 
+### Maritime
+
+Cloud hosting for persistent AI agents, each running in its own Firecracker microVM with its own
+kernel. Operated by **Maritime AI, Inc.** (Delaware governing law), per its
+[terms of service][maritime-terms] — the name also appears in the copyright footers of the
+[pricing][maritime-pricing] and [startups][maritime-startups] pages ("© 2026 Maritime AI, Inc. All
+rights reserved"), though not on the homepage ([source][maritime]). Section 8 of the terms states
+"Maritime retains all rights, title, and interest in and to the Service... including all software,
+infrastructure, documentation, trademarks, and other intellectual property" — no licence is
+published ([source][maritime-terms]).
+
+**Key characteristics**:
+
+- Only the `/data` directory is persistent — it survives sleep, restart, and redeploy; the rest of
+  the filesystem is disposable. New machines report booting in ~0.5s, and sleeping (idle) agents
+  wake in ~0.6s on a message, webhook, or cron trigger — both self-reported, not independently timed
+  ([source][maritime]).
+- CLI (`maritime-cli`, Node ≥20.12), TypeScript (`maritime-sdk`) and Python (`maritime`) SDKs, a REST
+  API, and ready-made templates (openclaw, hermes, zeroclaw, claude_code, codex, dsh) or any Docker
+  container ([source][maritime]).
+- Paid plans add optional headful Linux desktops per machine, viewable over VNC and controllable via
+  MCP or REST ([source][maritime]).
+
+**Pricing** (flat monthly; sleeping machines are free and don't count toward the awake limit):
+Free $0 (3 machines/1 awake), Starter $20/mo (20/5), Growth $100/mo (100/25), Scale $500/mo
+(500/60), Dedicated $5,000/mo (5,000/500), Enterprise custom ([source][maritime-pricing]). A
+"Maritime for Startups" program matches spend up to $5,000 (or $10,000 via a partner
+accelerator/fund); grants are stated as discretionary, with credits carrying no cash value
+([source][maritime-startups]).
+
+**When to use**: Same product category as Sprites.dev and Blaxel above — per-agent Firecracker
+microVMs with auto-sleep/wake and a persistent disk — but aimed at long-running conversational
+agents triggered by messages/webhooks/cron, rather than at code-execution sandboxes.
+
 ### Ephemora Cell
 
 A different layer than the platforms above: a capability-based WebAssembly sandbox
@@ -269,6 +303,10 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 
 - [Blaxel][blaxel]
 - [Blaxel pricing][blaxel-pricing]
+- [Maritime][maritime]
+- [Maritime pricing][maritime-pricing]
+- [Maritime terms of service][maritime-terms]
+- [Maritime for Startups][maritime-startups]
 - [Ephemora Cell (GitHub)][ephemora]
 - [forkd (GitHub)][forkd]
 - [OpenSandbox GitHub][opensandbox-gh]
@@ -289,6 +327,10 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 [blaxel]: https://blaxel.ai
 [blaxel-pricing]: https://blaxel.ai/pricing
 [blaxel-docs]: https://docs.blaxel.ai/Overview
+[maritime]: https://maritime.sh
+[maritime-pricing]: https://maritime.sh/pricing
+[maritime-terms]: https://maritime.sh/terms
+[maritime-startups]: https://maritime.sh/startups
 [ephemora]: https://github.com/MichaelS1011/ephemora-cell
 [forkd]: https://github.com/deeplethe/forkd
 [opensandbox-gh]: https://github.com/alibaba/OpenSandbox

@@ -2,8 +2,8 @@
 title: CC First-Party Documentation Index
 purpose: Canonical Anthropic URLs for CC, Agent SDK, Anthropic SDK, API, and best practices.
 created: 2026-03-28
-updated: 2026-07-10
-validated_links: 2026-06-11
+updated: 2026-10-15
+validated_links: 2026-10-15
 ---
 
 ## CC First-Party Documentation Index
@@ -27,7 +27,17 @@ validated_links: 2026-06-11
 | Agent Teams | <https://code.claude.com/docs/en/agent-teams> |
 | MCP integration | <https://code.claude.com/docs/en/mcp> |
 | Plugins reference | <https://code.claude.com/docs/en/plugins-reference> |
+| Mods overview | <https://code.claude.com/docs/en/plugins/mods/overview> |
+| Mods admin (manage for an org) | <https://code.claude.com/docs/en/plugins/mods/admin> |
+| Mods reference | <https://code.claude.com/docs/en/plugins/mods/reference> |
 | Channels | <https://code.claude.com/docs/en/channels> |
+| Channels reference (build your own) | <https://code.claude.com/docs/en/channels-reference> |
+| Slash commands | <https://code.claude.com/docs/en/slash-commands> |
+| Goal (`/goal`) | <https://code.claude.com/docs/en/goal> |
+| Scheduled tasks (`/loop`, local) | <https://code.claude.com/docs/en/scheduled-tasks> |
+| Routines (cloud scheduling) | <https://code.claude.com/docs/en/routines> |
+| Desktop scheduled tasks | <https://code.claude.com/docs/en/desktop-scheduled-tasks> |
+| Hooks reference | <https://code.claude.com/docs/en/hooks> |
 | Chrome extension | <https://code.claude.com/docs/en/chrome> |
 | Docs map (LLM sitemap) | <https://code.claude.com/docs/en/claude_code_docs_map.md> |
 | LLMs.txt | <https://code.claude.com/docs/llms.txt> |

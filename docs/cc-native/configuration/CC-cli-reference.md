@@ -2,8 +2,8 @@
 title: CC CLI Reference
 purpose: Single canonical reference for all claude CLI flags, subcommands, and constraints. Other docs cross-ref here for flag definitions.
 created: 2026-04-13
-updated: 2026-06-11
-validated_links: 2026-06-11
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: adopt
 ---
 
@@ -48,6 +48,18 @@ For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools
 | `--from-pr` | Resume sessions linked to a GitHub PR by number or URL | — | [cli-ref][cli-ref] |
 | `--session-id` | Use a specific UUID for the session | Must be valid UUID | [cli-ref][cli-ref] |
 | `--no-session-persistence` | Don't save session to disk | `--print` only | [cli-ref][cli-ref] |
+
+### Resume vs. continue vs. fork-session
+
+| Flag | Scope | Key behavior |
+|---|---|---|
+| `-c`, `--continue` | Most recent session in the current directory | Skips sessions created with `claude -p`/the Agent SDK and sessions whose first prompt was `/loop` — unless you also pass `-p`: `claude -p --continue` includes `-p`, SDK, and `/loop` sessions too. Opens a finished [background session](https://code.claude.com/docs/en/agent-view) (v2.1.257+), but not one still running. Includes sessions that added the current directory with `/add-dir` |
+| `-r`, `--resume` | A session by ID, name, or an absolute transcript path; opens the picker with no argument | ID search covers the current project directory and its git worktrees, then every other project on this machine (before v2.1.223, only the current project + its worktrees). Resuming a *running* background session attaches this terminal to it via `claude attach` instead of loading the transcript (before v2.1.285, Claude Code refused and printed the `claude attach` command to run instead) |
+| `--fork-session` | Combines with `--resume` or `--continue` | Creates a new session ID (and transcript) instead of reusing the original — the original session is left unchanged on disk and stays in the session picker. The forked process starts *without* the "allow for this session" permission grants the original process held, so you re-approve them there. A session that ended in plan mode does **not** resume in plan mode when combined with `--fork-session` |
+
+**A fork does not isolate the working directory.** Sessions are tied to a project directory, not copied along with the session. Neither the CLI reference nor the [sessions guide][sessions-doc] describes `--fork-session` — or the interactive `/branch` command that wraps the same mechanism — as creating a new directory or file copy; only the session identity (ID, transcript, permission grants) forks, and the new session still operates on the same working directory and files as the original. Directory isolation is a separate, explicit mechanism: [`--worktree`/`-w`](#agent--worktree-flags), which starts the session in its own git worktree.
+
+Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed session restores" and "Branch a session" sections
 
 **Analysis**: [CC-session-lifecycle-analysis.md](../sessions/CC-session-lifecycle-analysis.md)
 
@@ -194,12 +206,14 @@ For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools
 | Source | Content |
 |---|---|
 | [CC CLI reference][cli-ref] | Authoritative flag and subcommand documentation |
+| [CC sessions guide][sessions-doc] | `--fork-session`/`/branch` behavior, what a resumed session restores, working-directory scoping (accessed 2026-10-15) |
 | [CC settings][settings] | `settings.json` keys, permission rules |
 | [CC env vars][env-vars] | Environment variables reference |
 | [CC tools reference][tools-ref] | Built-in tool descriptions and permissions |
 | `claude --help` (Opus 4.6, 2026-04-13) | Runtime flag listing (subset of full reference) |
 
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
+[sessions-doc]: https://code.claude.com/docs/en/sessions
 [auth]: https://code.claude.com/docs/en/authentication
 [auto-mode]: https://code.claude.com/docs/en/permission-modes#eliminate-prompts-with-auto-mode
 [permission-modes]: https://code.claude.com/docs/en/permission-modes
