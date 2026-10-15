@@ -657,8 +657,9 @@ no `clef` entry, consistent with "internal run," but the file was not checked ex
 *different*, independently-run benchmark — Artificial Analysis's unrelated "Decision Index," below
 — does score Clef, Clef-Flash, and Clef-Omni directly: all three land in the bottom half of its
 eleven decision models, with Clef itself below Jev (48.61 vs. 57.50). See § Artificial Analysis
-Decision Index below; this is not a reproduction or rebuttal of the "internal run" claim above, a
-different benchmark on different eval sets.
+Decision Index below; this corpus did not check the two benchmarks for eval-set overlap, so this is
+not treated as a reproduction or rebuttal of the "internal run" claim above, only a separately-run
+benchmark with its own result.
 
 On Typesafe's own four workflow evals, the blog reports Clef/Clef-flash beating Jev on three of
 four: invoice processing (64.7/57.1 vs. 61.8), customer service (76.3/77.0 vs. 76.0), and security
@@ -714,8 +715,8 @@ second publish or edit date). Billed as "the first thinking decision model," GLi
 Lightweight Decision Engine," per the blog's own expansion) is adaptive rather than single-pass:
 per the post, it "first produces a fast probability distribution, then allocates additional
 reasoning when the leading result is uncertain" — reasoning that happens *inside* GLiDE's own call
-("thinking tokens count against the same window"), unlike AnyJev's `Tacit.adaptive` or
-JEV-as-a-Judge above, both of which escalate to a *separate* model or judge from outside rather than
+("thinking tokens count against the same window"), unlike AnyJev's `Tacit` with `adaptive=True` or
+JEV-as-a-Judge below, both of which escalate to a *separate* model or judge from outside rather than
 reasoning within the decision call itself. Fastino's own 2026-10-14 roundup, "Decision Models
 Explained," lists GLiNER2.5-Decide and GLiDE as two separate rows in its own "Top decision models in
 2026" table — GLiNER2.5-Decide: "Compact English classifier for supplied labels, routing, tagging,
@@ -758,7 +759,7 @@ return a free-text one-sentence explanation alongside the typed answer, togglabl
 `x_celeris: {explain: true}` request flag that is not part of Jev's own vocabulary — the launch
 post's own description is "It returns a reason with each response," and separately notes
 explanations are available "on request," so this corpus does not read that as every call producing
-one automatically, and found no first-party claim that this is unique among hosted decision models.
+one automatically; the launch post itself makes no uniqueness claim about this feature.
 The API is System-One-shaped at `POST https://inference.celeris.ai/celeris-1-decision/v1/systemone`
 — the docs state it "follows the systemone convention, so existing clients can point to the Celeris
 base URL" — plus an OpenAI-Decisions-API-shaped `POST /v1/decisions` on the same model; images are
@@ -784,7 +785,7 @@ above, this one doesn't, so none is added here.
 ### d1 (Liquid AI)
 
 **First-party**: [hosted-API launch blog][liquid-d1-blog] · [open-weight launch
-blog][liquid-d1-open-blog] · [Hugging Face model card — d1-3b][liquid-d1-hf]
+blog][liquid-d1-open-blog] · [Hugging Face model card — d1-3B][liquid-d1-hf]
 
 Liquid AI shipped d1 in two stages. The hosted API (2026-10-05 blog) is "our first decision model,"
 answering `noul`/`choice`/`score` questions (`noul`: "a yes/no question, answered with a
@@ -797,18 +798,18 @@ sentence: "last week's experimental release" made d1 "the first model to rival J
 decisions."
 
 The open-weight release (2026-10-07 blog) ships two self-hostable checkpoints on Hugging Face:
-`LiquidAI/d1-3b` (3.12B parameters, a SigLIP2 NaFlex vision encoder of about 400M, 32,768-token
+`LiquidAI/d1-3B` (3.12B parameters, a SigLIP2 NaFlex vision encoder of about 400M, 32,768-token
 context, built on `LFM2.5-VL-3B`) and the audio-capable `LiquidAI/d1-omni-600M` (600M, an "early
 research release," no benchmarks reported for it on the blog). Both are called "Open-weight":
-"Download, fine-tune, and deploy without restrictions" — but the d1-3b model card's own license
+"Download, fine-tune, and deploy without restrictions" — but the d1-3B model card's own license
 field reads `lfm1.0`, a custom Liquid license tagged `other` on Hugging Face's own API metadata
 (not a recognized standard identifier; `gated: false`, checked 2026-10-15); treat "without
-restrictions" as the vendor's own characterization, not a statement about license terms. Measured latency, d1-3b,
+restrictions" as the vendor's own characterization, not a statement about license terms. Measured latency, d1-3B,
 one question: 8 ms (NVIDIA RTX 4090), 9 ms (AMD MI325X), 30 ms (Apple M5 Pro), 16–50 ms across three
 Jetson boards.
 
 **Benchmark (documented, model card, on the *community* Decision Index, not the Artificial
-Analysis one below)**: d1-3b scores 48.57 overall on "Decision Index 0.2.1" (the same community
+Analysis one below)**: d1-3B scores 48.57 overall on "Decision Index 0.2.1" (the same community
 benchmark cited above for Perplexity and GLiDE) — sub-scores Knowledge 23.8, Language 56.4,
 Retrieval 52.8, Tools 74.5, Arts 36.3 — well below both Jev's 57.9 and GLiDE's self-reported 64.81
 on that same community index. d1-omni-600M scores 15.95 on the same index.
@@ -935,15 +936,19 @@ all absent, alongside BioDecision-4B and the Jev-family tooling (abide, jev-ultr
 typesafe-computer-use, pg-jev, probably). The eleven scored are exactly: TypeSafe's Jev, three
 major-vendor Jev-style APIs already in this doc (OpenAI's GPT-6 Luna Decisions, Microsoft-Decision-1,
 and Perplexity's pplx-decider, branded here "Decider v1.1 27B"), Cloudflare's three Clef variants,
-and the four vendor models new to this doc above (GLiDE, Celeris-1 Decision, d1, Mercury Decide). A
-future Artificial Analysis run could add any of the absent names; this corpus found no
-request-to-add mechanism that would change this list retroactively.
+and the four vendor models new to this doc above (GLiDE, Celeris-1 Decision, d1, Mercury Decide).
+This full 26-entry list comes from the leaderboard's own embedded data, not a sample. The launch
+article publishes a contact address for requesting a decision model be added
+(`decision-models@artificialanalysis.ai`), so any of the absent names above could appear in a
+future run; this corpus did not check what that process actually requires.
 
 **A contrast worth flagging, not resolved here**: GLiDE's own launch post (above) reports a 64.81
 score on the *community* Decision Index, 6.90 points above Jev's 57.91 on that same board. On this
 *separate* Artificial Analysis index, GLiDE scores 53.91 — below Jev's 57.50, the opposite ranking.
-The two benchmarks share no eval sets, so neither figure contradicts the other on its own terms;
-this corpus states both, dated and sourced, rather than reconciling them into one number.
+The two benchmarks are composed differently (the community index's own 38 benchmarks vs. Artificial
+Analysis's four named evals), and this corpus did not check the two for eval-set overlap, so neither
+figure is shown here as contradicting the other; this corpus states both, dated and sourced, rather
+than reconciling them into one number.
 
 ## Laya (NandhaKishorM)
 
@@ -1469,8 +1474,8 @@ here.
 | [Celeris API docs — Decisions][celeris-decisions-docs] | API shape (`/v1/systemone` + `/v1/decisions`), `x_celeris` explain/image extensions, no license/context-window/self-hosting stated; fetched via WebFetch 2026-10-15 |
 | [Celeris pricing page][celeris-pricing] | $0.04/1M input tokens, free output; fetched via WebFetch 2026-10-15 |
 | [Liquid AI blog — d1 hosted API][liquid-d1-blog] | Hosted `d1` launch: question types, API shape, pricing, "first model to rival Jev" sentence; fetched via WebFetch 2026-10-15 |
-| [Liquid AI blog — open d1][liquid-d1-open-blog] | d1-3b/d1-omni-600M release: modalities, "without restrictions" wording, per-device latency table; fetched via WebFetch 2026-10-15 |
-| [Hugging Face model card — LiquidAI/d1-3b][liquid-d1-hf] | License tag (`lfm1.0`, HF-API `other`), parameters, architecture, Decision Index 0.2.1 sub-scores; fetched via WebFetch 2026-10-15 |
+| [Liquid AI blog — open d1][liquid-d1-open-blog] | d1-3B/d1-omni-600M release: modalities, "without restrictions" wording, per-device latency table; fetched via WebFetch 2026-10-15 |
+| [Hugging Face model card — LiquidAI/d1-3B][liquid-d1-hf] | License tag (`lfm1.0`, HF-API `other`), parameters, architecture, Decision Index 0.2.1 sub-scores; fetched via WebFetch 2026-10-15 |
 | [Inception Labs docs — Decisions (Mercury Decide)][inception-decide-docs] | API shape (`/v1/decisions`, `noul`/`choice`/`score`), homepage card description, no streaming/tool-calling; fetched via WebFetch 2026-10-15 |
 | [Inception Labs docs — Models & Pricing][inception-pricing] | $0.02/1M input (50% off $0.04), free output, no context-window figure; fetched via WebFetch 2026-10-15 |
 | Inception Labs blog index + homepage | Confirms no dedicated Mercury Decide blog post; the only homepage link is an OpenRouter banner; checked 2026-10-15 |
