@@ -71,8 +71,13 @@ above — a competing rail from the traditional-payments incumbent; not independ
 by **Stripe and OpenAI**: "An open standard for programmatic commerce flows between buyers, AI
 agents, and businesses," stated as "open source and community-designed" under **Apache-2.0**
 ([source][acp]). OpenAI is its first implementing AI platform, via ChatGPT; Stripe is its first
-compatible payment processor, through its Shared Payment Token ([source][acp]). No version number or
-date is stated on the protocol's own site.
+compatible payment processor, through its Shared Payment Token ([source][acp]). No version number is
+stated on the protocol's overview page, but its [changelog][acp-changelog] lists dated releases:
+**2025-09-29** (initial release of the Agentic Checkout and Delegate Payment specs), **2025-12-12**
+(breaking changes to fulfillment fields/pricing), and **2026-01-30** (capability negotiation, a
+payment-handlers framework — breaking — plus an extensions framework and an optional discount
+extension). Clients are required to send a dated `API-Version` request header (e.g.
+`API-Version: 2025-12-12`) ([source][acp-changelog]).
 
 **This is a different protocol from the corpus's other "ACP" entries**, which share only the
 three-letter acronym: the **Agent Client Protocol** (the IDE↔agent protocol implemented by Goose,
@@ -132,6 +137,7 @@ an originating vendor. Do not expand the acronym in this corpus without that sou
 | [apify-mcp-server#626][x402-mcp-issue] | Closed RFC: MCP-level payment gating (x402 + Stripe MPP) |
 | [google-agentic-commerce/AP2][ap2] | Google Agent Payments Protocol (v0.2.0) |
 | [agenticcommerce.dev][acp] | Agentic Commerce Protocol (ACP) home — OpenAI + Stripe |
+| [ACP changelog][acp-changelog] | Dated releases (2025-09-29, 2025-12-12, 2026-01-30) + `API-Version` header |
 | [Lightsage Agent Experience Arena — Payments][lightsage-payments] · [methodology][lightsage-payments-methodology] | Live cross-protocol payment-readiness tracker (2,369 companies) |
 
 [x402-repo]: https://github.com/coinbase/x402
@@ -140,5 +146,6 @@ an originating vendor. Do not expand the acronym in this corpus without that sou
 [x402-mcp-issue]: https://github.com/apify/apify-mcp-server/issues/626
 [ap2]: https://github.com/google-agentic-commerce/AP2
 [acp]: https://agenticcommerce.dev
+[acp-changelog]: https://agenticcommerce.dev/docs/changelog
 [lightsage-payments]: https://lightsage.com/agent-experience-arena/payments
 [lightsage-payments-methodology]: https://lightsage.com/agent-experience-arena/payments/methodology

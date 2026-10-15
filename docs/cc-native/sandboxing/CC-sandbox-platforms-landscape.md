@@ -31,7 +31,7 @@ environments — from self-hosted open-source to managed cloud services.
 | **Storage** | Local filesystem | Local filesystem | Container volumes | Ephemeral per session | 100GB persistent NVMe | `/data` directory (size not stated) | Persistent |
 | **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go | Python, JS/TS | REST API | TypeScript, Python, CLI (`maritime-cli`), REST | Python, JS/TS |
 | **CC integration** | Native | npm package | Documented | Via SDK | Via API | `claude_code` template or custom Docker image | Via SDK |
-| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Not stated (proprietary) | Closed source (legacy OSS repo frozen) |
+| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Not stated; ToS retains all rights, no licence published | Closed source (legacy OSS repo frozen) |
 | **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Free (3/1) – $500/mo Scale (500/60); Enterprise custom | Usage-based |
 | **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Not stated | Yes |
 
@@ -171,8 +171,13 @@ standby cost — between E2B's ephemeral model and Sprites' always-warm persiste
 ### Maritime
 
 Cloud hosting for persistent AI agents, each running in its own Firecracker microVM with its own
-kernel. Operated by **Maritime AI, Inc.** (Delaware governing law), confirmed via its
-[terms of service][maritime-terms] — not stated on any marketing page ([source][maritime]).
+kernel. Operated by **Maritime AI, Inc.** (Delaware governing law), per its
+[terms of service][maritime-terms] — the name also appears in the copyright footers of the
+[pricing][maritime-pricing] and [startups][maritime-startups] pages ("© 2026 Maritime AI, Inc. All
+rights reserved"), though not on the homepage ([source][maritime]). Section 8 of the terms states
+"Maritime retains all rights, title, and interest in and to the Service... including all software,
+infrastructure, documentation, trademarks, and other intellectual property" — no licence is
+published ([source][maritime-terms]).
 
 **Key characteristics**:
 

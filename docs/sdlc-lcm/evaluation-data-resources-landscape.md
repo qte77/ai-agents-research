@@ -71,9 +71,12 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 this entry. [Ora][ora] (by era labs) scores how a website or MCP-server endpoint works for AI agents,
 pairing a numeric score with a letter grade on its leaderboard (e.g. "96A+", "91A", "77B" — A+/A/B
 observed, no C example seen); it self-styles "The standard for agent experience" and ships a CLI
-(`npx ax audit <domain>`). Self-reported on its own [research page][ora-research] (checked
-2026-10-15): 119,373 sites scanned, an ecosystem-average score of 42/100 (the score-distribution chart
-covers a 108,814-site subset of that total), and 5% of sites rated B or above. No pricing or company
+(`npx ax audit <domain>`). Self-reported on its own [research page][ora-research], which runs off a
+continuously-updating counter — re-checked twice in one day (2026-10-15) and already different each
+time: as last observed, 119,906 sites scanned, an ecosystem-average score of 42/100 (the
+score-distribution chart covers a 109,293-site subset of that total), and 5% of sites rated B or
+above. Treat the sites-scanned/subset figures as a moving snapshot, not a fixed count. No pricing or
+company
 details (team, funding, founding date) appear on the homepage or research page checked; access is
 waitlist-gated. [Lightsage][lightsage], "the Agent-Led Growth Platform for software companies," runs a
 comparable **[Agent Experience Arena][lightsage-arena]** — self-reported, Lightsage's own methodology,
