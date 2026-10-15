@@ -655,8 +655,9 @@ already cited above for Perplexity. A partial, non-exhaustive search of that Spa
 `index.json` (roughly 40% of its 1.6M-character file sampled across its length, 2026-10-11) found
 no `clef` entry, consistent with "internal run," but the file was not checked exhaustively. A
 *different*, independently-run benchmark — Artificial Analysis's unrelated "Decision Index," below
-— does score Clef, Clef-Flash, and Clef-Omni directly: all three land in the bottom half of its
-eleven decision models, with Clef itself below Jev (48.61 vs. 57.50). See § Artificial Analysis
+— does score Clef, Clef-Flash, and Clef-Omni directly: as of this corpus's latest check, Clef ranks
+10th of the 13 decision models the index tracks and Clef-Omni ranks last (13th), with Clef itself
+below both tracked Jev versions (48.61 vs. 57.50/57.07). See § Artificial Analysis
 Decision Index below; this corpus did not check the two benchmarks for eval-set overlap, so this is
 not treated as a reproduction or rebuttal of the "internal run" claim above, only a separately-run
 benchmark with its own result.
@@ -775,8 +776,9 @@ Brier, vs. Jev's 0.731 / 0.380) and a narrower "typed-decisions" split (0.765 / 
 0.736 / 0.149), with the post's own words: it "wins 17 of the 22 datasets." Measured median
 latency (one question, from AWS us-east-1, a region neither Celeris nor Jev serves — the post notes
 every figure therefore includes a cross-region network path): 67 ms, against Perplexity 122 ms,
-Mercury Decide 147 ms, Jev 135 ms, and gpt-6-luna 110 ms. Pricing: $0.04 per 1M input tokens
-(confirmed on the separate pricing page), output and explanations both free.
+Mercury Decide 147 ms, Jev 135 ms, and gpt-6-luna 110 ms. Pricing, confirmed on the separate
+pricing page: $0.04 per 1M input tokens (input and cached input both priced the same), output free
+— the pricing page itself never uses the word "explanations."
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
 change an open cell in the rubric's evidence census. Like the other October 2026 vendor entries
@@ -785,7 +787,8 @@ above, this one doesn't, so none is added here.
 ### d1 (Liquid AI)
 
 **First-party**: [hosted-API launch blog][liquid-d1-blog] · [open-weight launch
-blog][liquid-d1-open-blog] · [Hugging Face model card — d1-3B][liquid-d1-hf]
+blog][liquid-d1-open-blog] · [d1-ultra launch blog][liquid-d1-ultra-blog] · [Hugging Face model card
+— d1-3B][liquid-d1-hf]
 
 Liquid AI shipped d1 in two stages. The hosted API (2026-10-05 blog) is "our first decision model,"
 answering `noul`/`choice`/`score` questions (`noul`: "a yes/no question, answered with a
@@ -814,6 +817,20 @@ benchmark cited above for Perplexity and GLiDE) — sub-scores Knowledge 23.8, L
 Retrieval 52.8, Tools 74.5, Arts 36.3 — well below both Jev's 57.9 and GLiDE's self-reported 64.81
 on that same community index. d1-omni-600M scores 15.95 on the same index.
 
+**d1-ultra (documented, blog, released 2026-10-15 — the same day this entry was last checked)**: a
+third, larger d1 variant, "d1-ultra: Introducing the World's Best Decision Model," built on "a
+larger open-weight model" than d1 (the blog does not name it) with Liquid-specific customizations;
+the blog reports no parameter count, license, or context window. Hosted-only via the same
+`/decisions/v1/systemone` endpoint (model name `d1-ultra`), $0.042 per 1M input tokens, images
+billed the same way as d1; "coming soon to Vercel and OpenRouter." The blog's own benchmark claims,
+against "112 unique evaluations": d1-ultra "outperforms Jev 1.14 across all tasks" and, on the
+*Artificial Analysis* Decision Index specifically, "outperforms all other decision models... by at
+least 8 points" — both self-reported, with no absolute scores given in the blog's own text (the
+charts are images). This roughly matches what this corpus independently found on Artificial
+Analysis's live leaderboard: d1-ultra at 65.25, 7.75 points above the next-highest tracked model
+(Jev 1.13 at 57.50) — see § Artificial Analysis Decision Index below for the full table, where
+d1-ultra also leads on non-hallucination rate, tool calling, and classification.
+
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
 change an open cell in the rubric's evidence census. As with Perplexity's own open-weight
 pplx-decider above, shipping open weights doesn't by itself trigger a row for an entry in this
@@ -824,20 +841,23 @@ October 2026 vendor grouping; this one doesn't change an open cell either, so no
 **First-party**: [API docs][inception-decide-docs] · [pricing][inception-pricing]
 
 Inception Labs — maker of the Mercury diffusion-LLM family — ships Mercury Decide as a hosted
-decision endpoint with no dedicated launch blog post of its own on `inceptionlabs.ai/blog` (checked
-2026-10-15: the site's homepage links the model only via an "Introducing Mercury Decide" banner
-pointing to its OpenRouter listing, not to a first-party post); the model's first-party home is
-instead a docs page, `docs.inceptionlabs.ai/capabilities/decisions`, whose own homepage card
-describes it: "Classify, route, and score with typed decisions and probabilities." Per that docs
-page, Mercury Decide answers at `POST /v1/decisions` — OpenAI's endpoint naming, not Jev's
-`/v1/systemone` path — taking a `state` plus a map of named `noul`/`choice`/`score` questions
-(Jev's own type names, unlike OpenAI's `predicate`) and returning per-type answers (`noul`: a 0–1
-probability; `choice`: the top option plus `probabilities` and `confidence`; `score`: a
-probability-weighted average level, `legend`, `probabilities`, `confidence`). It does not support
-streaming or tool calling. Pricing, confirmed on two first-party pages: "$0.02 per million input
-tokens (50% off the regular $0.04 price)," output free (reported in `usage` but not charged). No
-context-window figure, parameter count, license, or benchmark number appears on either first-party
-page (checked 2026-10-15) — both leave a blank or a dash where one would go.
+decision endpoint with no dedicated launch blog post and no mention at all on `inceptionlabs.ai`'s
+own homepage or blog index (re-checked 2026-10-15: neither page names "Decide," "Mercury Decide,"
+or a decision model anywhere; the homepage's one OpenRouter link is for a different product, Mercury
+2.5 preview). The model's only first-party page this corpus found is a docs page,
+`docs.inceptionlabs.ai/capabilities/decisions`, whose own navigation card describes it: "Classify,
+route, and score with typed decisions and probabilities." Per that docs page, Mercury Decide
+answers at `POST /v1/decisions` — OpenAI's endpoint naming, not Jev's `/v1/systemone` path — taking
+a `state` plus a map of named `noul`/`choice`/`score` questions (Jev's own type names, unlike
+OpenAI's `predicate`) and returning per-type answers (`noul`: a 0–1 probability; `choice`: the top
+option plus `probabilities` and `confidence`; `score`: a probability-weighted average level,
+`legend`, `probabilities`, `confidence`). It does not support streaming or tool calling. Pricing, on
+that same page: "Mercury Decide costs $0.02 per million input tokens (50% off the regular $0.04
+price)," output free (reported in `usage` but not charged); the separate
+`docs.inceptionlabs.ai/get-started/models` pricing table independently shows the same $0.04→$0.02
+input figure for Mercury Decide, in table form rather than this exact sentence. No context-window
+figure, parameter count, license, or benchmark number appears on either page (checked 2026-10-15) —
+both leave a blank or a dash where one would go.
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
 change an open cell in the rubric's evidence census. Like the other October 2026 vendor entries
@@ -872,79 +892,107 @@ option." The page labels
 this "Version 1.0," described only as "October 2026 to current"; it states no rule for when a v1.1
 might follow.
 
-**Scores (documented — both the 2026-10-13 launch article and the live leaderboard's own embedded
-data, fetched via polyfetch 2026-10-15; the two agree within normal rounding, e.g. Jev 57.50 live
-vs. "58" at launch, so this corpus treats them as the same index at two points in time, not a
-methodology change)**. All 11 decision models the index currently scores, sorted by index score,
-cost and latency from the live data (`$` = cost per **million tasks**, derived from the page's own
-per-task cost field; `ms` = median time per task):
+**Scores — this is a live, changing leaderboard, not a fixed launch-day snapshot (documented +
+observed)**: the 2026-10-13 launch article's rounded figures (e.g. "Jev 1.13" at 58) matched this
+corpus's first read of the live leaderboard on 2026-10-15 morning within normal rounding. A second
+fetch the same day, prompted by an external fact-check of this section, found the live leaderboard
+had changed again in the hours between: **Jev 1.14** and **d1-ultra** (Liquid AI, launched the same
+day — see § d1 above) had both been added, and Mercury Decide's own measured cost had moved from
+roughly $30/1M tasks to $15/1M tasks. Every number below is this corpus's most recent read, via
+`polyfetch` against the page's own embedded JSON, dated **2026-10-15 (afternoon)**; treat any of it
+as liable to move again on a later check.
 
-| Decision model | Host (per AA) | Index | Omniscience acc. | Non-hallucination | HLE-MultiChoice | When2Call | WildGuardTest | $/1M tasks | ms |
-|---|---|---|---|---|---|---|---|---|---|
-| Jev 1.13 | TypeSafe | 57.50 | 34.6 | 35.2 | 20.9 | 80.7 | 93.6 | $42 | 127 |
-| GLiDE | Fastino | 53.91 | 36.4 | 16.4 | 10.5 | 83.7 | 95.1 | $119 | 217 |
-| Microsoft-Decision-1 | OpenRouter | 53.76 | 28.2 | 39.8 | 10.9 | 81.9 | 88.2 | $31 | 207 |
-| Decider v1.1 27B (pplx-decider) | Perplexity | 53.06 | 39.8 | 13.3 | 15.4 | 76.5 | 93.8 | $17 | 170 |
-| Mercury Decide | Inception | 52.72 | 35.0 | 32.0 | 10.1 | 79.3 | 88.0 | $30 | 500 |
-| Celeris-1 Decision | Celeris | 52.29 | 37.8 | 0.0 | 13.3 | 83.7 | 93.3 | $32 | 63 |
-| d1 | Liquid AI | 50.29 | 41.0 | 1.7 | 11.5 | 77.4 | 90.9 | $30 | 299 |
-| Clef | Cloudflare | 48.61 | 39.0 | 4.3 | 11.1 | 71.0 | 90.7 | $199 | 309 |
-| GPT-6 Luna (Decisions) | OpenAI | 48.49 | 40.6 | 10.1 | 11.7 | 74.1 | 82.8 | $79 | 168 |
-| Clef-Flash | Cloudflare | 45.81 | 32.6 | 2.7 | 10.3 | 64.4 | 90.9 | $32 | 298 |
-| Clef-Omni | Cloudflare | 44.26 | 36.0 | 1.6 | 9.0 | 62.1 | 87.2 | $123 | 172 |
+The index currently tracks **13 decision models**, not 11. Artificial Analysis's own page data
+includes an explicit `defaultSlugs` list (13 slugs: 11 decision models plus the article's own two
+named LLM baselines) that the page uses to pre-select which rows its charts show without the viewer
+toggling anything; this corpus reads that list as Artificial Analysis's own definition of a
+"default" view, not an inference from the UI. The default 11 decision models exclude exactly two of
+the 13 tracked: **Jev 1.13** (superseded in the default view by the newer Jev 1.14, though 1.13
+still scores marginally higher) and **Clef-Flash**. All 13, sorted by index score, with the default-
+view column sourced from `defaultSlugs` directly (`$` = cost per **million tasks**; `ms` = median
+time per task):
 
-Every row is a *new* run by Artificial Analysis itself, not a number carried over from the model's
-own section above; see those sections (§ OpenAI Decisions API, § Perplexity pplx-decider,
-§ Microsoft-Decision-1, § Cloudflare Clef, and the four new entries above) for each model's own
-pricing/license/API details, not repeated here. Note the host column: Artificial Analysis runs
-Microsoft-Decision-1 through **OpenRouter**, not Microsoft Foundry directly — the only one of the
-eleven not benchmarked against its own first-party endpoint.
+| Decision model | Host (per AA) | In default 11? | Index | Omniscience acc. | Non-hallucination | HLE-MultiChoice | When2Call | WildGuardTest | $/1M tasks | ms |
+|---|---|---|---|---|---|---|---|---|---|---|
+| d1-ultra | Liquid AI | yes | 65.25 | 31.6 | 84.5 | 15.0 | 92.6 | 95.4 | $32 | 93 |
+| **Jev 1.13** | TypeSafe | **no** | 57.50 | 34.6 | 35.2 | 20.9 | 80.7 | 93.6 | $42 | 127 |
+| Jev 1.14 | TypeSafe | yes | 57.07 | 33.8 | 37.2 | 18.9 | 80.8 | 93.1 | $42 | 78 |
+| GLiDE | Fastino | yes | 53.91 | 36.4 | 16.4 | 10.5 | 83.7 | 95.1 | $119 | 217 |
+| Microsoft-Decision-1 | OpenRouter | yes | 53.76 | 28.2 | 39.8 | 10.9 | 81.9 | 88.2 | $31 | 207 |
+| Decider v1.1 27B (pplx-decider) | Perplexity | yes | 53.06 | 39.8 | 13.3 | 15.4 | 76.5 | 93.8 | $17 | 170 |
+| Mercury Decide | Inception | yes | 52.72 | 35.0 | 32.0 | 10.1 | 79.3 | 88.0 | $15 | 500 |
+| Celeris-1 Decision | Celeris | yes | 52.29 | 37.8 | 0.0 | 13.3 | 83.7 | 93.3 | $32 | 63 |
+| d1 | Liquid AI | yes | 50.29 | 41.0 | 1.7 | 11.5 | 77.4 | 90.9 | $30 | 299 |
+| Clef | Cloudflare | yes | 48.61 | 39.0 | 4.3 | 11.1 | 71.0 | 90.7 | $199 | 309 |
+| GPT-6 Luna (Decisions) | OpenAI | yes | 48.49 | 40.6 | 10.1 | 11.7 | 74.1 | 82.8 | $79 | 168 |
+| **Clef-Flash** | Cloudflare | **no** | 45.81 | 32.6 | 2.7 | 10.3 | 64.4 | 90.9 | $32 | 298 |
+| Clef-Omni | Cloudflare | yes | 44.26 | 36.0 | 1.6 | 9.0 | 62.1 | 87.2 | $123 | 172 |
 
-**Per-eval leaders among decision models (computed from the table above)**: reasoning
-(HLE-MultiChoice) — Jev 1.13; knowledge accuracy (AA-Omniscience-Decision) — d1; non-hallucination
-rate — Microsoft-Decision-1 (39.8), then Jev (35.2), then Mercury Decide (32.0); tool calling
-(When2Call) — Celeris-1 Decision and GLiDE, tied (83.7); classification (WildGuardTest) — GLiDE
-(95.1). Cost spans $17 (Decider v1.1 27B) to $199 per million tasks (Clef); latency spans 63 ms
-(Celeris-1 Decision) to 500 ms (Mercury Decide).
+By this ranking, **Clef sits 10th of 13** and **Clef-Omni 13th of 13**. Every row is a *new* run by
+Artificial Analysis itself, not a number carried over from the model's own section above; see those
+sections (§ OpenAI Decisions API, § Perplexity pplx-decider, § Microsoft-Decision-1, § Cloudflare
+Clef, and the four new entries above) for each model's own pricing/license/API details, not
+repeated here. Note the host column: Artificial Analysis runs Microsoft-Decision-1 through
+**OpenRouter**, not Microsoft Foundry directly — the only one of the 13 not benchmarked against its
+own first-party endpoint.
+
+**Per-eval leaders among all 13 decision models (computed from the table above — the launch
+article's own per-eval-leader claims predate d1-ultra and Jev 1.14, and no longer hold)**: reasoning
+(HLE-MultiChoice) — Jev 1.13 (20.9), with Jev 1.14 a close second (18.9);
+knowledge accuracy (AA-Omniscience-Decision) — d1 (41.0), unchanged by the new entries;
+non-hallucination rate — **d1-ultra (84.5)**, more than double the next-highest (Microsoft-Decision-1,
+39.8); tool calling (When2Call) — **d1-ultra (92.6)**, ahead of the previously-tied Celeris-1
+Decision/GLiDE (83.7 each); classification (WildGuardTest) — **d1-ultra (95.4)**, narrowly ahead of
+GLiDE (95.1). Cost spans **$15 (Mercury Decide)** to $199 per million tasks (Clef) — Mercury Decide,
+not Decider v1.1 27B ($17), is now the cheapest of the 13, per this corpus's most recent fetch;
+latency spans 63 ms (Celeris-1 Decision) to 500 ms (Mercury Decide), unchanged.
 
 **LLM baselines (not decision models — prompted to answer the same questions as structured JSON)**:
-of the 15 language-model configurations the index separately tracks (26 models in all, decision
-models plus LLMs), the launch article names two explicitly: **Claude Haiku 5.5 (Low)** scores 61 at
-launch (60.59 live), 3 points above Jev, at $184/1M tasks and 1.4 s; **GPT-6 Luna (Low)** scores 55
-at launch (55.18 live), below Jev, at $131/1M tasks and 1.5 s. The live leaderboard's own data shows
-most of the other 13 LLM configurations it tracks (across Claude Haiku/Opus and GPT-6/6.1 effort
-levels) also scoring above Jev's 57.50 — so "beats Jev" is not rare among LLM baselines on this
-index, only among the eleven decision models. Both of the article's two named baselines cost
-roughly 3–4x Jev's $42 and run an order of magnitude slower (Jev: 127 ms) — the same speed/cost
-trade-off this doc's § Use cases and vendor sections already document for Jev-style models vs. full
-LLM calls, now measured by a third party on a shared eval set instead of each vendor's own
-benchmark.
+of the 15 language-model configurations the index separately tracks (28 models in all now, 13
+decision models plus 15 LLMs), the launch article names two explicitly: **Claude Haiku 5.5 (Low)**
+scores 61 at launch (60.59 on this corpus's latest fetch), above both Jev versions, at $184/1M tasks
+and 1.4 s; **GPT-6 Luna (Low)** scores 55 at launch (55.18 latest), below both Jev versions, at
+$131/1M tasks and 1.5 s. The live leaderboard's own data shows most of the other 13 LLM
+configurations it tracks (across Claude Haiku/Opus and GPT-6/6.1 effort levels) also scoring above
+both Jev scores — so "beats Jev" is not rare among LLM baselines on this index, only among most of
+the 13 decision models (d1-ultra now being the exception). Both of the article's two named baselines
+cost roughly 3–4x Jev's $42 and run an order of magnitude slower (Jev 1.13: 127 ms) — the same
+speed/cost trade-off this doc's § Use cases and vendor sections already document for Jev-style
+models vs. full LLM calls, now measured by a third party on a shared eval set instead of each
+vendor's own benchmark.
 
-**Calibration (documented, article, re-checked verbatim 2026-10-15)**: under the heading "Decision
-models are overconfident," the article states "across almost all probability levels, accuracy
-falls below that probability for all decision models," but "most decision models are relatively
-well-calibrated on When2Call (tool calling) and WildGuardTest" (classification). Separately:
-"Calibration for language models coming soon" — not yet published. The calibration
-chart's own legend lists nine entries: Jev 1.13, GLiDE, Microsoft-Decision-1, Decider v1.1 27B,
-Mercury Decide, Celeris-1 Decision, d1, Clef, and GPT-6 Luna (Decisions) — Clef-Flash and Clef-Omni
-are scored in the main table above but not broken out on the calibration chart.
+**Calibration (documented, article — this part of the article is a frozen launch-day snapshot, not
+re-run since; re-checked verbatim 2026-10-15)**: under the heading "Decision models are
+overconfident," the article states "across almost all probability levels, accuracy falls below
+that probability for all decision models," but "most decision models are relatively well-calibrated
+on When2Call (tool calling) and WildGuardTest" (classification). Separately: "Calibration for
+language models coming soon" — not yet published. The calibration chart's own legend still lists
+only the nine decision models tracked at launch: Jev 1.13, GLiDE, Microsoft-Decision-1, Decider
+v1.1 27B, Mercury Decide, Celeris-1 Decision, d1, Clef, and GPT-6 Luna (Decisions) — neither
+Clef-Flash/Clef-Omni (not in the launch-day default view) nor d1-ultra/Jev 1.14 (added to the live
+leaderboard after launch, see § Scores above) appear here; this corpus found no indication the
+article's own charts have been refreshed to match the live leaderboard.
 
 **Coverage — which corpus models this index does and doesn't include (checked 2026-10-15)**: of the
 independent/open-weight projects covered earlier in this doc, none appear on the Artificial
 Analysis Decision Index — Laya, kev, CLM, RuVector, GLiNER2.5-Decide, JevK5, SemIf, and AnyJev are
 all absent, alongside BioDecision-4B and the Jev-family tooling (abide, jev-ultrafast, jevgrep,
-typesafe-computer-use, pg-jev, probably). The eleven scored are exactly: TypeSafe's Jev, three
-major-vendor Jev-style APIs already in this doc (OpenAI's GPT-6 Luna Decisions, Microsoft-Decision-1,
-and Perplexity's pplx-decider, branded here "Decider v1.1 27B"), Cloudflare's three Clef variants,
-and the four vendor models new to this doc above (GLiDE, Celeris-1 Decision, d1, Mercury Decide).
-This full 26-entry list comes from the leaderboard's own embedded data, not a sample. The launch
-article publishes a contact address for requesting a decision model be added
+typesafe-computer-use, pg-jev, probably). The 13 currently scored are exactly: TypeSafe's two Jev
+versions, Liquid AI's two (d1 and d1-ultra), three major-vendor Jev-style APIs already in this doc
+(OpenAI's GPT-6 Luna Decisions, Microsoft-Decision-1, and Perplexity's pplx-decider, branded here
+"Decider v1.1 27B"), Cloudflare's three Clef variants, and GLiDE/Celeris-1 Decision/Mercury Decide
+(the remaining three of the four vendor models new to this doc above). This full 28-entry list (13
+decision models + 15 LLM configurations) comes from the live leaderboard's own embedded data, not a
+sample — a larger total than the 26 this corpus's first read found two fetches earlier the same day,
+since the live page added two decision models in between. The launch article publishes a contact
+address for requesting a decision model be added
 (`decision-models@artificialanalysis.ai`), so any of the absent names above could appear in a
 future run; this corpus did not check what that process actually requires.
 
 **A contrast worth flagging, not resolved here**: GLiDE's own launch post (above) reports a 64.81
 score on the *community* Decision Index, 6.90 points above Jev's 57.91 on that same board. On this
-*separate* Artificial Analysis index, GLiDE scores 53.91 — below Jev's 57.50, the opposite ranking.
+*separate* Artificial Analysis index, GLiDE scores 53.91 — below either tracked Jev version (57.50
+for 1.13, 57.07 for 1.14), the opposite ranking.
 The two benchmarks are composed differently (the community index's own 38 benchmarks vs. Artificial
 Analysis's four named evals), and this corpus did not check the two for eval-set overlap, so neither
 figure is shown here as contradicting the other; this corpus states both, dated and sourced, rather
@@ -1478,10 +1526,11 @@ here.
 | [Hugging Face model card — LiquidAI/d1-3B][liquid-d1-hf] | License tag (`lfm1.0`, HF-API `other`), parameters, architecture, Decision Index 0.2.1 sub-scores; fetched via WebFetch 2026-10-15 |
 | [Inception Labs docs — Decisions (Mercury Decide)][inception-decide-docs] | API shape (`/v1/decisions`, `noul`/`choice`/`score`), homepage card description, no streaming/tool-calling; fetched via WebFetch 2026-10-15 |
 | [Inception Labs docs — Models & Pricing][inception-pricing] | $0.02/1M input (50% off $0.04), free output, no context-window figure; fetched via WebFetch 2026-10-15 |
-| Inception Labs blog index + homepage | Confirms no dedicated Mercury Decide blog post; the only homepage link is an OpenRouter banner; checked 2026-10-15 |
-| [Artificial Analysis — Decision Index launch article][aa-decision-index-article] | Launch date, composition (four 25%-weighted evals), call-format quote, launch-time scores, per-eval leaders, cost/speed ranges, calibration summary, model/baseline counts; fetched via WebFetch 2026-10-15 |
+| Inception Labs blog index + homepage | Re-checked 2026-10-15: confirms no dedicated Mercury Decide blog post and no mention of it anywhere on the homepage; the homepage's one OpenRouter link is for Mercury 2.5 preview, not Mercury Decide (corrects this PR's own earlier, wrong claim of a "Mercury Decide" banner) |
+| [Liquid AI blog — d1-ultra][liquid-d1-ultra-blog] | d1-ultra launch (2026-10-15, same day as this check): base-model framing, pricing, API shape, self-reported "outperforms Jev 1.14" and "at least 8 points" above other models on the Artificial Analysis Decision Index; fetched via WebFetch 2026-10-15 |
+| [Artificial Analysis — Decision Index launch article][aa-decision-index-article] | Launch date, composition (four 25%-weighted evals), call-format quote, launch-time scores, per-eval leaders, cost/speed ranges, calibration summary, model/baseline counts (a frozen 2026-10-13 snapshot — re-checked 2026-10-15 and found unchanged: still shows only Jev 1.13, no d1-ultra/Jev 1.14); fetched via WebFetch 2026-10-15 |
 | [Artificial Analysis — Decision Index methodology][aa-decision-index-methodology] | Eval weights and dataset filtering detail, non-hallucination-rate formula, versioning ("Version 1.0... October 2026 to current"); fetched via WebFetch 2026-10-15 |
-| [Artificial Analysis — Decision Index live leaderboard][aa-decision-index-leaderboard] | Full per-model scores (11 decision models + 15 LLM configurations), cost-per-task, latency, calibration-chart legend, extracted from the page's own embedded JSON data; fetched via polyfetch 2026-10-15 |
+| [Artificial Analysis — Decision Index live leaderboard][aa-decision-index-leaderboard] | Full per-model scores, cost-per-task, latency, extracted directly from the page's own embedded JSON (`contestants` array and `defaultSlugs` field — the latter is this corpus's source for which 11 of the 13 decision models AA treats as its own "default" view); fetched via polyfetch **twice** 2026-10-15 (morning: 11 decision models; afternoon, after an external fact-check: 13 — Jev 1.14 and Liquid AI's new d1-ultra had been added live, and Mercury Decide's own measured cost had changed, in between) |
 
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
@@ -1570,6 +1619,7 @@ here.
 [celeris-pricing]: https://docs.celeris.ai/pricing
 [liquid-d1-blog]: https://www.liquid.ai/blog/d1-decision-model
 [liquid-d1-open-blog]: https://www.liquid.ai/blog/d1-open
+[liquid-d1-ultra-blog]: https://www.liquid.ai/blog/d1-ultra
 [liquid-d1-hf]: https://huggingface.co/LiquidAI/d1-3B
 [inception-decide-docs]: https://docs.inceptionlabs.ai/capabilities/decisions
 [inception-pricing]: https://docs.inceptionlabs.ai/get-started/models
