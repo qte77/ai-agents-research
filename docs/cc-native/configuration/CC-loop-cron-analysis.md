@@ -60,13 +60,13 @@ These tools are available to the model within the session but are not exposed
 as user-facing slash commands beyond `/loop`; ask Claude in natural language
 ("what scheduled tasks do I have?", "cancel the deploy check job") to reach them indirectly.
 
-### Durable vs session-only jobs — revised 2026-10-15, supersedes the original finding below
+### Durable vs session-only jobs — revised 2026-10-15, evidence is mixed, not a clean supersession
 
 This doc originally reported, from @anthropic-ai/claude-code@2.1.88 cli.js
 decompilation (2026-03-31), that `CronCreate` took an undocumented `durable: true`
 parameter gating whether a job survived a CC restart, with the `/loop` skill
 creating session-only jobs by default. **The current first-party page describes a
-different model, with no `durable` parameter at all** ([source][cc-sched-loop]):
+different default, with no `durable` parameter named** ([source][cc-sched-loop]):
 
 - Tasks are session-scoped, but on `--resume`/`--continue`, Claude Code restores
   **every** task scheduled with `CronCreate` by default, **except**: recurring
@@ -74,18 +74,25 @@ different model, with no `durable` parameter at all** ([source][cc-sched-loop]):
   fire time has passed, and a **self-paced `/loop`** specifically (which is never
   restored — run `/loop` again to restart it). Background Bash and Monitor tasks
   are never restored on resume, either.
-- With [feature-flag fetching][feature-flags] turned **off**, Claude Code stores
-  a task in the project's `.claude/scheduled_tasks.json` (returns an error instead
-  of scheduling if `.claude` or that file is a symlink); a saved task only runs
-  in the project folder where it was created — copying the file into a new
-  worktree lists the tasks there but doesn't run them.
+- With [feature-flag fetching][feature-flags] turned **off**, Claude Code
+  "stores a task **you asked to keep across sessions**" in the project's
+  `.claude/scheduled_tasks.json` (quoted verbatim, [source][cc-sched-loop] —
+  returns an error instead of scheduling if `.claude` or that file is a symlink);
+  a saved task only runs in the project folder where it was created — copying the
+  file into a new worktree lists the tasks there but doesn't run them.
 
 Whether a `durable: true`-style opt-in still exists as an internal, undocumented
-`CronCreate` parameter is **unverified** at this 2026-10-15 re-check: the public
-page simply doesn't mention one, and describes resume-restoration as the default
-for everything but self-paced loops and expired/past-due tasks. Treat the original
-gist-based finding as superseded by the officially documented behavior above
-unless re-confirmed against a current build.
+`CronCreate` parameter is **unverified** at this 2026-10-15 re-check, and the
+evidence is mixed rather than cleanly superseding the original finding: resume-
+restoration is now documented as the *default* for everything but self-paced
+loops and expired/past-due tasks, which is new and not what the gist-based
+finding described — but the page's own phrase "a task **you asked to keep
+across sessions**" (quoted above) still implies *some* distinct, opt-in form of
+cross-session persistence, under a name and mechanism the public page doesn't
+specify. Read the two bullets above as: ordinary resume-restoration no longer
+needs an opt-in, but the page leaves room for a separate, still-undocumented
+"keep across sessions" request that may be what the gist's `durable: true` named.
+Re-confirm against a current build before relying on either reading.
 
 [feature-flags]: https://code.claude.com/docs/en/env-vars#features-that-need-feature-flag-fetching
 
@@ -189,7 +196,7 @@ for security implications.
 
 | Feature | `/loop` | Ralph (`claude -p` loop) | GitHub Actions |
 |---|---|---|---|
-| State persistence | Session-scoped; restored on `--resume`/`--continue` except a self-paced loop, expired recurring tasks, and past-due one-shot tasks (see [Durable vs session-only jobs](#durable-vs-session-only-jobs--revised-2026-10-15-supersedes-the-original-finding-below) above) | External files (prd.json, git) | Workflow artifacts |
+| State persistence | Session-scoped; restored on `--resume`/`--continue` except a self-paced loop, expired recurring tasks, and past-due one-shot tasks (see [Durable vs session-only jobs](#durable-vs-session-only-jobs--revised-2026-10-15-evidence-is-mixed-not-a-clean-supersession) above) | External files (prd.json, git) | Workflow artifacts |
 | Context management | Single accumulating context | Fresh context per iteration | Fresh per run |
 | TDD enforcement | None | Built-in | Custom |
 | Story dependencies | None | `depends:` in prd.json | `needs:` in workflow |
@@ -244,7 +251,7 @@ for GitHub Actions integration.
 | Source | Content |
 |---|---|
 | [Run prompts on a schedule][cc-sched-loop] | Official first-party page (found 2026-10-15): self-paced loops, `loop.md`, `CronCreate`/`CronList`/`CronDelete`/`ScheduleWakeup`, resume-restore rules, 7-day expiry, `CLAUDE_CODE_DISABLE_CRON`, skill-invocation reach rules |
-| gist by @sorrycc (v2.1.71 cli.js decompilation) | Original `/loop` internals, feature gate, and the `durable: true` claim this doc's 2026-10-15 pass found unsupported by the current first-party page |
+| gist by @sorrycc (v2.1.71 cli.js decompilation) | Original `/loop` internals, feature gate, and the `durable: true` claim this doc's 2026-10-15 pass found only partly corroborated — see [Durable vs session-only jobs](#durable-vs-session-only-jobs--revised-2026-10-15-evidence-is-mixed-not-a-clean-supersession) |
 | [Official agent teams docs](https://code.claude.com/docs/en/agent-teams) | Permission inheritance for recurring tasks |
 
 [cc-sched-loop]: https://code.claude.com/docs/en/scheduled-tasks
