@@ -2,8 +2,8 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-10-11
-validated_links: 2026-10-11
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: assess
 ---
 
@@ -653,7 +653,12 @@ same table "our internal run" (one card: "our internal run of the Decision Index
 a self-run reproduction, not a submission to the public [Decision Index Space][decision-index-space]
 already cited above for Perplexity. A partial, non-exhaustive search of that Space's current
 `index.json` (roughly 40% of its 1.6M-character file sampled across its length, 2026-10-11) found
-no `clef` entry, consistent with "internal run," but the file was not checked exhaustively.
+no `clef` entry, consistent with "internal run," but the file was not checked exhaustively. A
+*different*, independently-run benchmark — Artificial Analysis's unrelated "Decision Index," below
+— does score Clef, Clef-Flash, and Clef-Omni directly: all three land in the bottom half of its
+eleven decision models, with Clef itself below Jev (48.61 vs. 57.50). See § Artificial Analysis
+Decision Index below; this is not a reproduction or rebuttal of the "internal run" claim above, a
+different benchmark on different eval sets.
 
 On Typesafe's own four workflow evals, the blog reports Clef/Clef-flash beating Jev on three of
 four: invoice processing (64.7/57.1 vs. 61.8), customer service (76.3/77.0 vs. 76.0), and security
@@ -697,6 +702,248 @@ partners via an interest-form link on the blog (not reproduced here).
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
 could change an open cell in the rubric's evidence census. Like OpenAI's, Perplexity's, and
 Microsoft's own entries above, this one doesn't, so none is added here.
+
+### GLiDE (Fastino Labs)
+
+**First-party**: [Fastino launch blog][fastino-glide-blog] · [Fastino decision-models
+comparison][fastino-decision-models-explained] — cross-ref [GLiNER2.5-Decide above][gliner-blog]
+
+Published 2026-09-30 (the launch post's own `<time datetime="2026-09-30">` tag; its page template's
+separate, unrelated Framer build timestamp reads 2026-10-15, which this corpus does not read as a
+second publish or edit date). Billed as "the first thinking decision model," GLiDE ("Generalized
+Lightweight Decision Engine," per the blog's own expansion) is adaptive rather than single-pass:
+per the post, it "first produces a fast probability distribution, then allocates additional
+reasoning when the leading result is uncertain" — reasoning that happens *inside* GLiDE's own call
+("thinking tokens count against the same window"), unlike AnyJev's `Tacit.adaptive` or
+JEV-as-a-Judge above, both of which escalate to a *separate* model or judge from outside rather than
+reasoning within the decision call itself. Fastino's own 2026-10-14 roundup, "Decision Models
+Explained," lists GLiNER2.5-Decide and GLiDE as two separate rows in its own "Top decision models in
+2026" table — GLiNER2.5-Decide: "Compact English classifier for supplied labels, routing, tagging,
+and operational decisions" (Apache 2.0 weights); GLiDE: "Additional reasoning when the initial
+decision is uncertain, while returning structured answers" (Hosted API) — with no sentence anywhere
+in either post stating a lineage between the two; this corpus treats them as separate products, not
+a version of one another. The API "conforms to the System One model schema" at
+`https://api.fastino.ai/v1/systemone`, model id `fastino/glide`, with a 40,000-token context window
+("GLiDE's context window spans 40k tokens"); oversized requests are rejected. Unlike GLiNER2.5-Decide,
+the launch post gives no license and no Hugging Face link — checked against the Fastino Hugging
+Face org page (2026-10-15): none of its 16 listed models is named GLiDE, so this corpus treats it as
+hosted-API-only. Pricing is not stated on the post itself (it points to Fastino's own docs).
+
+**Benchmark (self-reported, on the *community* Decision Index, not the Artificial Analysis one
+below)**: "GLiDE achieves a score of 64.81, leading Jev's published score of 57.91 by 6.90 skill
+points" on "Decision Index 0.2.1" — the same `multimodalart/jev-decision-index` community
+benchmark already cited above for Perplexity's pplx-decider — run with the Space's own scorer but
+not submitted to it: "GLiDE has not been added to the public leaderboard, where submissions to
+version 0.2.1 are currently paused." Per-area: "Tools and Automation: 83.5 vs 75.1, a lead of 8.4
+skill points" and "Knowledge and Reasoning: 62.9 vs 51.4, a lead of 11.5 skill points"; overall, "it
+outperforms Jev across all five evaluation areas and on 31 of 38 benchmarks." Jev is the only other
+model named in the post's comparisons. See § Artificial Analysis Decision Index below for GLiDE's
+score on an unrelated, independently-run benchmark that gives a materially different result.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
+change an open cell in the rubric's evidence census. Like the other October 2026 vendor entries
+above, this one doesn't, so none is added here.
+
+### Celeris-1 Decision (Celeris Labs)
+
+**First-party**: [launch post][celeris-decision-blog] · [API docs][celeris-decisions-docs] ·
+[pricing][celeris-pricing]
+
+Celeris (LinkedIn company name "Celeris Labs") describes itself as "Building the world's fastest
+language models, powered by diffusion" — its flagship Celeris-1 is a diffusion LLM, not an
+autoregressive one; Celeris-1 Decision, launched 2026-10-08, is the diffusion-based decision model
+built on that base, described in the launch post as "a diffusion language model built for typed
+decisions" that answers "questions about text or images with probabilities" (API docs). It can
+return a free-text one-sentence explanation alongside the typed answer, togglable via an
+`x_celeris: {explain: true}` request flag that is not part of Jev's own vocabulary — the launch
+post's own description is "It returns a reason with each response," and separately notes
+explanations are available "on request," so this corpus does not read that as every call producing
+one automatically, and found no first-party claim that this is unique among hosted decision models.
+The API is System-One-shaped at `POST https://inference.celeris.ai/celeris-1-decision/v1/systemone`
+— the docs state it "follows the systemone convention, so existing clients can point to the Celeris
+base URL" — plus an OpenAI-Decisions-API-shaped `POST /v1/decisions` on the same model; images are
+supported via `x_celeris.images`. On license and weights, the launch post is explicit: "There are
+no open weights and no fine-tuning in this release." No context-window figure or self-hosting
+option is stated anywhere in Celeris's own docs or launch post (checked 2026-10-15).
+
+**Benchmark (self-reported, Celeris's own "decision-benching harness")**: the launch post's own
+table, run with one scorer across providers, has Celeris-1 Decision leading Perplexity's
+pplx-decider-v1.1-27b, Inception's Mercury Decide, Jev 1.13.0, and OpenAI's gpt-6-luna on both
+accuracy and Brier score across the full jev-bench (22 datasets, 3,210 items: 0.800 accuracy / 0.272
+Brier, vs. Jev's 0.731 / 0.380) and a narrower "typed-decisions" split (0.765 / 0.079, vs. Jev's
+0.736 / 0.149), with the post's own words: it "wins 17 of the 22 datasets." Measured median
+latency (one question, from AWS us-east-1, a region neither Celeris nor Jev serves — the post notes
+every figure therefore includes a cross-region network path): 67 ms, against Perplexity 122 ms,
+Mercury Decide 147 ms, Jev 135 ms, and gpt-6-luna 110 ms. Pricing: $0.04 per 1M input tokens
+(confirmed on the separate pricing page), output and explanations both free.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
+change an open cell in the rubric's evidence census. Like the other October 2026 vendor entries
+above, this one doesn't, so none is added here.
+
+### d1 (Liquid AI)
+
+**First-party**: [hosted-API launch blog][liquid-d1-blog] · [open-weight launch
+blog][liquid-d1-open-blog] · [Hugging Face model card — d1-3b][liquid-d1-hf]
+
+Liquid AI shipped d1 in two stages. The hosted API (2026-10-05 blog) is "our first decision model,"
+answering `noul`/`choice`/`score` questions (`noul`: "a yes/no question, answered with a
+probability between 0 and 1") "in one forward pass" and "without generating any tokens," at `POST
+https://api.liquid.ai/decisions/v1/systemone` — the page states no explicit System-One-compatibility
+claim, but the path and `state`/`questions` body shape match this doc's vocabulary. Text decisions
+take "200 to 300 ms." Pricing: $0.04 per 1M input tokens, images billed at "1.5 tokens per
+32×32-pixel patch." The blog's only comparison to this doc's base model is one unquantified
+sentence: "last week's experimental release" made d1 "the first model to rival Jev on text
+decisions."
+
+The open-weight release (2026-10-07 blog) ships two self-hostable checkpoints on Hugging Face:
+`LiquidAI/d1-3b` (3.12B parameters, a SigLIP2 NaFlex vision encoder of about 400M, 32,768-token
+context, built on `LFM2.5-VL-3B`) and the audio-capable `LiquidAI/d1-omni-600M` (600M, an "early
+research release," no benchmarks reported for it on the blog). Both are called "Open-weight":
+"Download, fine-tune, and deploy without restrictions" — but the d1-3b model card's own license
+field reads `lfm1.0`, a custom Liquid license tagged `other` on Hugging Face's own API metadata
+(not a recognized standard identifier; `gated: false`, checked 2026-10-15); treat "without
+restrictions" as the vendor's own characterization, not a statement about license terms. Measured latency, d1-3b,
+one question: 8 ms (NVIDIA RTX 4090), 9 ms (AMD MI325X), 30 ms (Apple M5 Pro), 16–50 ms across three
+Jetson boards.
+
+**Benchmark (documented, model card, on the *community* Decision Index, not the Artificial
+Analysis one below)**: d1-3b scores 48.57 overall on "Decision Index 0.2.1" (the same community
+benchmark cited above for Perplexity and GLiDE) — sub-scores Knowledge 23.8, Language 56.4,
+Retrieval 52.8, Tools 74.5, Arts 36.3 — well below both Jev's 57.9 and GLiDE's self-reported 64.81
+on that same community index. d1-omni-600M scores 15.95 on the same index.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
+change an open cell in the rubric's evidence census. As with Perplexity's own open-weight
+pplx-decider above, shipping open weights doesn't by itself trigger a row for an entry in this
+October 2026 vendor grouping; this one doesn't change an open cell either, so none is added here.
+
+### Mercury Decide (Inception Labs)
+
+**First-party**: [API docs][inception-decide-docs] · [pricing][inception-pricing]
+
+Inception Labs — maker of the Mercury diffusion-LLM family — ships Mercury Decide as a hosted
+decision endpoint with no dedicated launch blog post of its own on `inceptionlabs.ai/blog` (checked
+2026-10-15: the site's homepage links the model only via an "Introducing Mercury Decide" banner
+pointing to its OpenRouter listing, not to a first-party post); the model's first-party home is
+instead a docs page, `docs.inceptionlabs.ai/capabilities/decisions`, whose own homepage card
+describes it: "Classify, route, and score with typed decisions and probabilities." Per that docs
+page, Mercury Decide answers at `POST /v1/decisions` — OpenAI's endpoint naming, not Jev's
+`/v1/systemone` path — taking a `state` plus a map of named `noul`/`choice`/`score` questions
+(Jev's own type names, unlike OpenAI's `predicate`) and returning per-type answers (`noul`: a 0–1
+probability; `choice`: the top option plus `probabilities` and `confidence`; `score`: a
+probability-weighted average level, `legend`, `probabilities`, `confidence`). It does not support
+streaming or tool calling. Pricing, confirmed on two first-party pages: "$0.02 per million input
+tokens (50% off the regular $0.04 price)," output free (reported in `usage` but not charged). No
+context-window figure, parameter count, license, or benchmark number appears on either first-party
+page (checked 2026-10-15) — both leave a blank or a dash where one would go.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
+change an open cell in the rubric's evidence census. Like the other October 2026 vendor entries
+above, this one doesn't, so none is added here.
+
+## Artificial Analysis Decision Index (third-party benchmark, launched 2026-10-13)
+
+[Artificial Analysis][aa-decision-index-article] — a vendor-neutral AI-model-benchmarking firm, not
+a decision-model vendor itself — launched its own "Decision Index" on 2026-10-13, independently
+scoring decision models (and, separately, ordinary LLMs prompted to answer the same typed
+questions) on four evals it already runs. **This is not the same benchmark as the community
+"Decision Index" cited several times above** (the Hugging Face Space
+`multimodalart/jev-decision-index`, editions 0.2.1/0.3, used by Perplexity's pplx-decider card,
+Fastino's GLiDE post, and Liquid AI's d1 card): that one is run by an unaffiliated third party on
+its own curated eval mix; Artificial Analysis's is run by a separate commercial benchmarking firm on
+its own four named evals, launched a week after the community index's edition 0.3 (2026-10-06,
+above).
+The near-identical name is coincidental — this corpus never adds the two together or treats one as
+validating the other.
+
+**Composition (documented, methodology page, checked 2026-10-15)**: "a weighted average of" four
+evals, 25% each — **AA-Omniscience-Decision** (500 private questions, five options each including
+"I don't know"; accuracy 12.5% + non-hallucination rate 12.5%, where non-hallucination rate is
+100 × (1 − the share of wrong-not-"I-don't-know" answers among all incorrect ones)); **HLE-MultiChoice**
+(513 of Humanity's Last Exam's 2,500 questions, text-only multiple-choice, reasoning);
+**When2Call** (3,423 of NVIDIA's 3,652 tool-calling tasks, ambiguous ones removed, tool-calling
+accuracy); **WildGuardTest** (835 of Ai2's 1,725 rows, kept only where all three annotators agreed,
+safety classification, average F1). Call format, quoted verbatim: "Decision models choose from a
+fixed set of options, with a probability for each, in one call" — ordinary LLMs instead answer
+"with a structured output that names the option it chose, so it gives no probability for each
+option." The page labels
+this "Version 1.0," described only as "October 2026 to current"; it states no rule for when a v1.1
+might follow.
+
+**Scores (documented — both the 2026-10-13 launch article and the live leaderboard's own embedded
+data, fetched via polyfetch 2026-10-15; the two agree within normal rounding, e.g. Jev 57.50 live
+vs. "58" at launch, so this corpus treats them as the same index at two points in time, not a
+methodology change)**. All 11 decision models the index currently scores, sorted by index score,
+cost and latency from the live data (`$` = cost per **million tasks**, derived from the page's own
+per-task cost field; `ms` = median time per task):
+
+| Decision model | Host (per AA) | Index | Omniscience acc. | Non-hallucination | HLE-MultiChoice | When2Call | WildGuardTest | $/1M tasks | ms |
+|---|---|---|---|---|---|---|---|---|---|
+| Jev 1.13 | TypeSafe | 57.50 | 34.6 | 35.2 | 20.9 | 80.7 | 93.6 | $42 | 127 |
+| GLiDE | Fastino | 53.91 | 36.4 | 16.4 | 10.5 | 83.7 | 95.1 | $119 | 217 |
+| Microsoft-Decision-1 | OpenRouter | 53.76 | 28.2 | 39.8 | 10.9 | 81.9 | 88.2 | $31 | 207 |
+| Decider v1.1 27B (pplx-decider) | Perplexity | 53.06 | 39.8 | 13.3 | 15.4 | 76.5 | 93.8 | $17 | 170 |
+| Mercury Decide | Inception | 52.72 | 35.0 | 32.0 | 10.1 | 79.3 | 88.0 | $30 | 500 |
+| Celeris-1 Decision | Celeris | 52.29 | 37.8 | 0.0 | 13.3 | 83.7 | 93.3 | $32 | 63 |
+| d1 | Liquid AI | 50.29 | 41.0 | 1.7 | 11.5 | 77.4 | 90.9 | $30 | 299 |
+| Clef | Cloudflare | 48.61 | 39.0 | 4.3 | 11.1 | 71.0 | 90.7 | $199 | 309 |
+| GPT-6 Luna (Decisions) | OpenAI | 48.49 | 40.6 | 10.1 | 11.7 | 74.1 | 82.8 | $79 | 168 |
+| Clef-Flash | Cloudflare | 45.81 | 32.6 | 2.7 | 10.3 | 64.4 | 90.9 | $32 | 298 |
+| Clef-Omni | Cloudflare | 44.26 | 36.0 | 1.6 | 9.0 | 62.1 | 87.2 | $123 | 172 |
+
+Every row is a *new* run by Artificial Analysis itself, not a number carried over from the model's
+own section above; see those sections (§ OpenAI Decisions API, § Perplexity pplx-decider,
+§ Microsoft-Decision-1, § Cloudflare Clef, and the four new entries above) for each model's own
+pricing/license/API details, not repeated here. Note the host column: Artificial Analysis runs
+Microsoft-Decision-1 through **OpenRouter**, not Microsoft Foundry directly — the only one of the
+eleven not benchmarked against its own first-party endpoint.
+
+**Per-eval leaders among decision models (computed from the table above)**: reasoning
+(HLE-MultiChoice) — Jev 1.13; knowledge accuracy (AA-Omniscience-Decision) — d1; non-hallucination
+rate — Microsoft-Decision-1 (39.8), then Jev (35.2), then Mercury Decide (32.0); tool calling
+(When2Call) — Celeris-1 Decision and GLiDE, tied (83.7); classification (WildGuardTest) — GLiDE
+(95.1). Cost spans $17 (Decider v1.1 27B) to $199 per million tasks (Clef); latency spans 63 ms
+(Celeris-1 Decision) to 500 ms (Mercury Decide).
+
+**LLM baselines (not decision models — prompted to answer the same questions as structured JSON)**:
+of the 15 language-model configurations the index separately tracks (26 models in all, decision
+models plus LLMs), the launch article names two explicitly: **Claude Haiku 5.5 (Low)** scores 61 at
+launch (60.59 live), 3 points above Jev, at $184/1M tasks and 1.4 s; **GPT-6 Luna (Low)** scores 55
+at launch (55.18 live), below Jev, at $131/1M tasks and 1.5 s. The live leaderboard's own data shows
+most of the other 13 LLM configurations it tracks (across Claude Haiku/Opus and GPT-6/6.1 effort
+levels) also scoring above Jev's 57.50 — so "beats Jev" is not rare among LLM baselines on this
+index, only among the eleven decision models. Both of the article's two named baselines cost
+roughly 3–4x Jev's $42 and run an order of magnitude slower (Jev: 127 ms) — the same speed/cost
+trade-off this doc's § Use cases and vendor sections already document for Jev-style models vs. full
+LLM calls, now measured by a third party on a shared eval set instead of each vendor's own
+benchmark.
+
+**Calibration (documented, article, re-checked verbatim 2026-10-15)**: under the heading "Decision
+models are overconfident," the article states "across almost all probability levels, accuracy
+falls below that probability for all decision models," but "most decision models are relatively
+well-calibrated on When2Call (tool calling) and WildGuardTest" (classification). Separately:
+"Calibration for language models coming soon" — not yet published. The calibration
+chart's own legend lists nine entries: Jev 1.13, GLiDE, Microsoft-Decision-1, Decider v1.1 27B,
+Mercury Decide, Celeris-1 Decision, d1, Clef, and GPT-6 Luna (Decisions) — Clef-Flash and Clef-Omni
+are scored in the main table above but not broken out on the calibration chart.
+
+**Coverage — which corpus models this index does and doesn't include (checked 2026-10-15)**: of the
+independent/open-weight projects covered earlier in this doc, none appear on the Artificial
+Analysis Decision Index — Laya, kev, CLM, RuVector, GLiNER2.5-Decide, JevK5, SemIf, and AnyJev are
+all absent, alongside BioDecision-4B and the Jev-family tooling (abide, jev-ultrafast, jevgrep,
+typesafe-computer-use, pg-jev, probably). The eleven scored are exactly: TypeSafe's Jev, three
+major-vendor Jev-style APIs already in this doc (OpenAI's GPT-6 Luna Decisions, Microsoft-Decision-1,
+and Perplexity's pplx-decider, branded here "Decider v1.1 27B"), Cloudflare's three Clef variants,
+and the four vendor models new to this doc above (GLiDE, Celeris-1 Decision, d1, Mercury Decide). A
+future Artificial Analysis run could add any of the absent names; this corpus found no
+request-to-add mechanism that would change this list retroactively.
+
+**A contrast worth flagging, not resolved here**: GLiDE's own launch post (above) reports a 64.81
+score on the *community* Decision Index, 6.90 points above Jev's 57.91 on that same board. On this
+*separate* Artificial Analysis index, GLiDE scores 53.91 — below Jev's 57.50, the opposite ranking.
+The two benchmarks share no eval sets, so neither figure contradicts the other on its own terms;
+this corpus states both, dated and sourced, rather than reconciling them into one number.
 
 ## Laya (NandhaKishorM)
 
@@ -1215,6 +1462,21 @@ here.
 | [agent-frameworks-infrastructure-landscape.md § Guardrails / policy][guardrails-policy] | Safety-classifier/guardrail tools, cross-referenced not repeated |
 | [agent-frameworks-infrastructure-landscape.md § Rerankers][rerankers] | Dedicated cross-encoder rerankers, cross-referenced not repeated |
 | [llm-routers-gateways-landscape.md][llm-routers-open] | RouteLLM / Not Diamond classifier-trained routers, cross-referenced not repeated |
+| [Fastino launch blog — GLiDE][fastino-glide-blog] | What GLiDE is, API shape, context window, license/HF-link absence, community Decision Index 0.2.1 comparison to Jev (overall, per-area, 31-of-38 tally), exact publish-date `<time>` tag vs. unrelated Framer build timestamp; fetched via WebFetch + polyfetch 2026-10-15 |
+| [Fastino blog — "Decision Models Explained"][fastino-decision-models-explained] | "Top decision models in 2026" comparison table listing GLiNER2.5-Decide and GLiDE as separate rows with no stated lineage; fetched via polyfetch 2026-10-15 (WebFetch returned no body text for this page) |
+| Hugging Face, `fastino` org model listing | Confirms GLiDE has no public weights (16 listed models, none named GLiDE); checked 2026-10-15 |
+| [Celeris-1 Decision launch post][celeris-decision-blog] | What it is, diffusion architecture, explanation feature, jev-bench/typed-decisions accuracy+Brier table vs. Perplexity/Mercury Decide/Jev/gpt-6-luna, latency table; fetched via WebFetch 2026-10-15 |
+| [Celeris API docs — Decisions][celeris-decisions-docs] | API shape (`/v1/systemone` + `/v1/decisions`), `x_celeris` explain/image extensions, no license/context-window/self-hosting stated; fetched via WebFetch 2026-10-15 |
+| [Celeris pricing page][celeris-pricing] | $0.04/1M input tokens, free output; fetched via WebFetch 2026-10-15 |
+| [Liquid AI blog — d1 hosted API][liquid-d1-blog] | Hosted `d1` launch: question types, API shape, pricing, "first model to rival Jev" sentence; fetched via WebFetch 2026-10-15 |
+| [Liquid AI blog — open d1][liquid-d1-open-blog] | d1-3b/d1-omni-600M release: modalities, "without restrictions" wording, per-device latency table; fetched via WebFetch 2026-10-15 |
+| [Hugging Face model card — LiquidAI/d1-3b][liquid-d1-hf] | License tag (`lfm1.0`, HF-API `other`), parameters, architecture, Decision Index 0.2.1 sub-scores; fetched via WebFetch 2026-10-15 |
+| [Inception Labs docs — Decisions (Mercury Decide)][inception-decide-docs] | API shape (`/v1/decisions`, `noul`/`choice`/`score`), homepage card description, no streaming/tool-calling; fetched via WebFetch 2026-10-15 |
+| [Inception Labs docs — Models & Pricing][inception-pricing] | $0.02/1M input (50% off $0.04), free output, no context-window figure; fetched via WebFetch 2026-10-15 |
+| Inception Labs blog index + homepage | Confirms no dedicated Mercury Decide blog post; the only homepage link is an OpenRouter banner; checked 2026-10-15 |
+| [Artificial Analysis — Decision Index launch article][aa-decision-index-article] | Launch date, composition (four 25%-weighted evals), call-format quote, launch-time scores, per-eval leaders, cost/speed ranges, calibration summary, model/baseline counts; fetched via WebFetch 2026-10-15 |
+| [Artificial Analysis — Decision Index methodology][aa-decision-index-methodology] | Eval weights and dataset filtering detail, non-hallucination-rate formula, versioning ("Version 1.0... October 2026 to current"); fetched via WebFetch 2026-10-15 |
+| [Artificial Analysis — Decision Index live leaderboard][aa-decision-index-leaderboard] | Full per-model scores (11 decision models + 15 LLM configurations), cost-per-task, latency, calibration-chart legend, extracted from the page's own embedded JSON data; fetched via polyfetch 2026-10-15 |
 
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
@@ -1296,3 +1558,16 @@ here.
 [unsloth-decision-laya-serving]: https://unsloth.ai/docs/models/decision-laya.md
 [unsloth-release-0.1.904]: https://github.com/unslothai/unsloth/releases/tag/v0.1.904-beta
 [typed-decisions-dataset]: https://huggingface.co/datasets/LocalLLaMA/typed-decisions
+[fastino-glide-blog]: https://fastino.ai/blog/introducing-glide-the-first-thinking-decision-model
+[fastino-decision-models-explained]: https://fastino.ai/blog/decision-models-explained
+[celeris-decision-blog]: https://celeris.ai/celeris-1-decision
+[celeris-decisions-docs]: https://docs.celeris.ai/decisions
+[celeris-pricing]: https://docs.celeris.ai/pricing
+[liquid-d1-blog]: https://www.liquid.ai/blog/d1-decision-model
+[liquid-d1-open-blog]: https://www.liquid.ai/blog/d1-open
+[liquid-d1-hf]: https://huggingface.co/LiquidAI/d1-3B
+[inception-decide-docs]: https://docs.inceptionlabs.ai/capabilities/decisions
+[inception-pricing]: https://docs.inceptionlabs.ai/get-started/models
+[aa-decision-index-article]: https://artificialanalysis.ai/articles/artificial-analysis-decision-index
+[aa-decision-index-methodology]: https://artificialanalysis.ai/methodology/decision-index
+[aa-decision-index-leaderboard]: https://artificialanalysis.ai/evaluations/artificial-analysis-decision-index
