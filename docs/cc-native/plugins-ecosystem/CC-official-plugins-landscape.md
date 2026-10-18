@@ -3,8 +3,8 @@ title: CC Official Plugins Landscape
 source: https://www.firecrawl.dev/blog/best-claude-code-plugins, https://code.claude.com/docs/en/plugins
 purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this research repo, and provide adoption guidance per plugin.
 created: 2026-03-12
-updated: 2026-10-02
-validated_links: 2026-10-02
+updated: 2026-10-18
+validated_links: 2026-10-18
 status: reference
 ---
 
@@ -67,18 +67,40 @@ mcp__context7__get-library-docs \
 
 **Installation**: `/plugin install code-review@claude-plugins-official`
 
-**Usage**: Run `/code-review` on a PR branch.
+**Author / version**: Boris Cherny; version 1.0.0, from the plugin's own README and `.claude-plugin/plugin.json` ([source][cr-plugin-json], [source][cr-plugin-readme]).
 
-**How it works**:
+**Usage**: the plugin ships its own `commands/code-review.md` command file, also named `code-review` (frontmatter `description: Code review a pull request`). Because a plugin command is namespaced as `/plugin-name:command-name`, it runs alongside — not in place of — the bundled `/code-review` command documented in [§ `/code-review` command and ultrareview](#code-review-command-and-ultrareview): `claude plugin list` confirms `code-review@claude-plugins-official` is installed here, and the available-skills list (CC 2.1.302, Codespaces, 2026-10-18) carries both `code-review` (the bundled command, long description) and `code-review:code-review` ("Code review a pull request" — this plugin's own description) as separate entries, so the plugin's review runs as `/code-review:code-review`, not bare `/code-review`.
 
-- Spawns parallel review agents, each focused on a specific concern (quality, security, tests, types)
-- Each agent scores findings with confidence levels
-- Results aggregated into a structured review summary
-- Flags potential bugs, edge cases, and missing test coverage
+**How it works** ([source][cr-plugin-readme]): a GitHub-PR-only reviewer, requiring the `gh` CLI — distinct from the bundled command, which also reviews a local diff, branch, or path with no GitHub dependency.
 
-**Fit assessment**: **Moderate adopt.** Complements the existing `/review` skill pattern. The multi-agent scoring approach aligns with the parallel review pattern documented in [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md). Consider using alongside project-specific review skills for defense-in-depth.
+- Skips closed, draft, trivial, or already-reviewed PRs
+- Gathers `CLAUDE.md` guideline files from the repository
+- Launches 4 parallel agents: 2 for CLAUDE.md-compliance auditing, 1 scanning for obvious bugs in the diff, 1 analyzing git blame/history for context
+- Scores each issue 0–100 for confidence and filters out anything below 80
+- Posts a single review comment with the surviving (≥80-confidence) issues, linking each to `file#Lstart-Lend` at the full commit SHA
+
+**Fit assessment**: **Moderate adopt.** The multi-agent scoring approach aligns with the parallel review pattern documented in [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md). Consider using alongside the bundled `/code-review` (and `ultrareview` for higher-stakes changes) for defense-in-depth — the two don't conflict since they run under different command names.
 
 **Interaction with CC's bash layer**: The plugin's review agents use CC's Bash tool ([source][sdk-bash]) to run linters, type checkers, and test suites as part of their analysis. The persistent bash session (245 input tokens per tool use) means agents can chain `git diff`, `ruff check`, and `pyright` in sequence while maintaining working directory state.
+
+### /code-review command and ultrareview
+
+**Not a plugin.** `/code-review` is a [bundled skill][code-review-local] — built into Claude Code itself, available on any plan, with no `/plugin install` step and no `SKILL.md` on disk to edit. Verified against the live [code-review-local][code-review-local], [ultrareview][ultrareview], and [code-review (managed)][code-review-managed] pages (CC 2.1.302, Codespaces, 2026-10-18). Three distinct offerings share the "code review" name; don't conflate them:
+
+| | Bundled `/code-review` | `code-review@claude-plugins-official` plugin | Managed [Code Review][code-review-managed] service |
+|---|---|---|---|
+| What it is | Built into Claude Code | Marketplace plugin (above) | GitHub App + Anthropic-hosted pipeline |
+| Invocation | `/code-review` (alias `/review`) | `/code-review:code-review` (namespaced) | Automatic on PR activity, or `@claude review` comment |
+| Targets | Diff, PR, branch, or path | GitHub PR only | GitHub PR only |
+| Who can use it | Anyone, any plan | Anyone who installs the plugin | Team/Enterprise orgs, once an Owner turns it on |
+| Depth control | Effort level `low`–`max`, or `ultra` | 4-agent pipeline, confidence≥80 threshold (editable in the command file) | Quick / Standard / Deep review level |
+| Reads `REVIEW.md` | No | Not documented in its README | Yes |
+
+**What `/code-review` does**: reviews the current diff, a PR, a branch, or a path for correctness bugs (plus reuse/simplification/efficiency cleanup, depending on model and effort level), and reports findings in the conversation; `--fix` applies them, `--comment` posts them to the GitHub PR or GitLab MR. It follows the project's `CLAUDE.md` but does not read `REVIEW.md` (that file configures the managed service below). `/review` is an alias since **CC v2.1.223**; before that it was a separate single-pass read-only GitHub-PR reviewer. The command was named **`/simplify`** before **CC v2.1.147**; `/simplify` still exists as a narrower, correctness-blind cleanup command. Full targets table, effort levels, and flags: [CC-tools-inventory.md § `/code-review`, `/review`, `/simplify`, and ultrareview](../configuration/CC-tools-inventory.md#code-review-review-simplify-and-ultrareview).
+
+**`ultrareview`** (`/code-review ultra`, alias `/ultrareview`) escalates to a **research-preview** cloud review. "Ultrareview is a deep code review that runs as a cloud session on Anthropic's infrastructure." It launches a fleet of reviewer agents whose findings are independently reproduced and verified before they're reported — higher signal than the local review's effort-level scaling, at the cost of a cloud round trip. It is **user-started only**: Claude never launches it on its own, and a scheduled `/code-review` task never escalates to `ultra`. It bills against usage credits once the three free runs on Pro and Max are used, "typically $5 to $25 in usage credits depending on the size of the change". "A review typically takes 15 to 25 minutes." A branch review defaults to up to 500 changed files / 8,000 changed lines; a PR review targets a `github.com` PR number. It is unavailable on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, Zero Data Retention, and HIPAA-configured orgs (falls back to a local review in those cases), and organizations using customer-managed encryption keys (CMEK) can't run it at all — no automatic fallback is documented for CMEK. Details: [CC-tools-inventory.md § ultrareview](../configuration/CC-tools-inventory.md#code-review-review-simplify-and-ultrareview).
+
+**Fit assessment**: **Adopt by default for `/code-review`** — it needs no install and runs on any plan, so there's no reason not to use it alongside, or instead of, the `code-review@claude-plugins-official` plugin above. **Escalate to `ultrareview` selectively** for substantial, pre-merge changes, given its cost and ~15–25 minute turnaround; it is not a substitute for the fast local loop. Adopt the managed [Code Review][code-review-managed] service separately if this org is on Team/Enterprise and wants review to run automatically on every PR without a local session.
 
 ### Security Guidance
 
@@ -256,6 +278,12 @@ These plugins have full analysis elsewhere in this repo:
 - [code-modernization plugin README][cm-readme]
 - [code-modernization plugin.json][cm-plugin-json]
 - [code-modernization LICENSE][cm-license]
+- [CC code-review-local docs][code-review-local] — bundled `/code-review` command: targets, effort, flags, `/review`/`/simplify` alias history
+- [CC ultrareview docs][ultrareview] — ultrareview scope, billing, limits, platform restrictions, research-preview status
+- [CC code-review (managed) docs][code-review-managed] — the separate GitHub-App PR-review service (Team/Enterprise)
+- [code-review plugin README][cr-plugin-readme] — 4-agent / confidence-scoring architecture, author, version
+- [code-review plugin.json][cr-plugin-json] — plugin manifest (name, description, author)
+- CC 2.1.302, this session, 2026-10-18 — observed that the installed `code-review` plugin's skill is listed separately as `code-review:code-review` alongside the bundled `code-review` skill
 
 [firecrawl-blog]: https://www.firecrawl.dev/blog/best-claude-code-plugins
 [cc-plugins]: https://code.claude.com/docs/en/plugins
@@ -275,3 +303,8 @@ These plugins have full analysis elsewhere in this repo:
 [cm-plugin-json]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/.claude-plugin/plugin.json
 [cm-license]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/LICENSE
 [cm-related]: https://github.com/anthropics/code-migration-kit-with-claude-code
+[code-review-local]: https://code.claude.com/docs/en/code-review-local
+[ultrareview]: https://code.claude.com/docs/en/ultrareview
+[code-review-managed]: https://code.claude.com/docs/en/code-review
+[cr-plugin-readme]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-review/README.md
+[cr-plugin-json]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-review/.claude-plugin/plugin.json
