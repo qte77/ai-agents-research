@@ -22,3 +22,12 @@
   plus a detailed subsection covering targets, effort levels, flags, alias/rename version gates,
   and ultrareview's scope, billing, limits, and platform restrictions — verified against the live
   `code-review-local`, `ultrareview`, and `commands` pages (CC 2.1.302).
+- `docs/cc-native/plugins-ecosystem/CC-official-plugins-landscape.md`: corrected the code-review
+  plugin's author/version attribution — an independent fact-check of this PR found the two
+  first-party files disagree: `.claude-plugin/plugin.json` names the author "Anthropic" and has
+  no version field, while the README's own `## Author`/`## Version` sections give "Boris Cherny"
+  and "1.0.0". Both are now cited to the file that actually states them.
+- `docs/cc-native/configuration/CC-loop-cron-analysis.md` (coordinator-requested follow-up, not an
+  owner-approved fence widening): replaced the three stale `/review-pr 1234` example-target
+  mentions (lines 20, 39, 185) with `/code-review 1234`, a documented target form. Bumped
+  `updated:`/`validated_links:` to 2026-10-18.

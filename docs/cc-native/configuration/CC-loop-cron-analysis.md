@@ -3,8 +3,8 @@ title: CC /loop Command and Cron System Analysis
 source: https://code.claude.com/docs/en/scheduled-tasks, gist by @sorrycc (v2.1.71 cli.js decompilation), empirical testing (cc-recursive-team-mode, 2026-03-23)
 purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches. Includes empirical finding that /loop accepts syntax in -p mode but exits after first iteration.
 created: 2026-03-17
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-18
+validated_links: 2026-10-18
 status: generally-available
 ---
 
@@ -17,7 +17,7 @@ Built-in slash command (a [bundled skill][bundled-skills]) that schedules recurr
 
 ```text
 /loop 5m check if the deployment finished
-/loop 20m /review-pr 1234
+/loop 20m /code-review 1234
 /loop 1h run make test and report results
 /loop check the build every 2 hours
 ```
@@ -36,7 +36,7 @@ This supersedes this doc's earlier claim of a flat **"default interval: 10 minut
 - **Max**: 50 scheduled jobs per session (unchanged, re-confirmed 2026-10-15)
 - **Feature gate**: `tengu_kairos_cron` — see the Details line above
 - **Self-paced loops appear in the task list** like any fixed-interval one, so `CronList`/cancellation work the same way; they're also subject to the 7-day expiry below
-- **`/loop 20m /review-pr 1234`-style skill re-runs** only execute skills Claude is [allowed to invoke on its own][skill-invocation]; built-in commands (`/permissions`, `/model`, `/clear`), `disable-model-invocation: true` skills, skills withheld by a `skillOverrides` setting or a `Skill` deny rule, and MCP prompts (`/mcp__server__name`) instead reach Claude as plain text on a scheduled fire
+- **`/loop 20m /code-review 1234`-style skill re-runs** only execute skills Claude is [allowed to invoke on its own][skill-invocation]; built-in commands (`/permissions`, `/model`, `/clear`), `disable-model-invocation: true` skills, skills withheld by a `skillOverrides` setting or a `Skill` deny rule, and MCP prompts (`/mcp__server__name`) instead reach Claude as plain text on a scheduled fire
 - A session with the [Monitor tool available][monitor-tool] may use it directly for a dynamic `/loop` request instead of polling — streaming a background script's output back is often more token-efficient and responsive than re-running a prompt on an interval
 
 ### Customize the default prompt with `loop.md`
@@ -182,7 +182,7 @@ configuration:
 # Start interactive session with no permission checks
 claude --dangerously-skip-permissions
 # Inside session:
-/loop 5m /review-pr 1234
+/loop 5m /code-review 1234
 /loop 10m run make test and fix any failures
 /loop 1h check CI status and report
 ```

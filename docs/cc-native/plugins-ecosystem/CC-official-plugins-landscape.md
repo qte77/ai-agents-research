@@ -67,7 +67,7 @@ mcp__context7__get-library-docs \
 
 **Installation**: `/plugin install code-review@claude-plugins-official`
 
-**Author / version**: Boris Cherny; version 1.0.0, from the plugin's own README and `.claude-plugin/plugin.json` ([source][cr-plugin-json], [source][cr-plugin-readme]).
+**Author / version**: the two first-party files disagree. `.claude-plugin/plugin.json` lists the author as "Anthropic" (`support@anthropic.com`) and has no version field ([source][cr-plugin-json]); the README's own `## Author` / `## Version` sections instead give "Boris Cherny (`boris@anthropic.com`)" and "1.0.0" ([source][cr-plugin-readme]).
 
 **Usage**: the plugin ships its own `commands/code-review.md` command file, also named `code-review` (frontmatter `description: Code review a pull request`). Because a plugin command is namespaced as `/plugin-name:command-name`, it runs alongside — not in place of — the bundled `/code-review` command documented in [§ `/code-review` command and ultrareview](#code-review-command-and-ultrareview): `claude plugin list` confirms `code-review@claude-plugins-official` is installed here, and the available-skills list (CC 2.1.302, Codespaces, 2026-10-18) carries both `code-review` (the bundled command, long description) and `code-review:code-review` ("Code review a pull request" — this plugin's own description) as separate entries, so the plugin's review runs as `/code-review:code-review`, not bare `/code-review`.
 
