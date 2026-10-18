@@ -2,8 +2,8 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-09-27
-validated_links: 2026-09-27
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: adopt
 ---
 
@@ -157,6 +157,48 @@ jq -s '[.[] | select(.type == "system" and .subtype == "turn_duration")] |
   }' <transcript.jsonl>
 ```
 
+## CLI `-p --output-format json` Result Fields
+
+A different data source from the transcript JSONL above: `claude -p "<prompt>" --output-format json` prints a single JSON result object to stdout when the run finishes. Per the [TypeScript Agent SDK reference][ts-sdk-ref] (`SDKResultMessage`, which the CLI's own result object matches) and the [cost-tracking docs][cost-tracking], the documented fields include:
+
+| Field | Type | Notes |
+|---|---|---|
+| `session_id` | string | |
+| `duration_ms` | number | Wall-clock duration of the run |
+| `duration_api_ms` | number | Time spent in API calls specifically |
+| `num_turns` | number | Agentic turn count |
+| `total_cost_usd` | number | Cumulative **client-side estimate**, not a billing figure |
+| `usage` | object | Main-agent-loop usage only — excludes subagent/auxiliary calls |
+| `modelUsage` | object, `{ [modelName]: ModelUsage }` | Per-model totals **including** subagent and auxiliary-call (e.g. compaction, workflow-agent) usage — prefer this over `usage` for whole-tree token/cost accounting |
+| `result` | string | Final response text (success subtype only) |
+| `is_error` | boolean | |
+| `permission_denials` | array | |
+
+`usage` and `modelUsage` both nest `cache_creation_input_tokens` and `cache_read_input_tokens` alongside `input_tokens`/`output_tokens`, matching the transcript fields documented above.
+
+### jq recipe over `-p` JSON (documented fields only)
+
+```bash
+claude -p "your prompt" --output-format json | jq '{
+  session_id: .session_id,
+  num_turns: .num_turns,
+  duration_ms: .duration_ms,
+  duration_api_ms: .duration_api_ms,
+  total_cost_usd: .total_cost_usd,
+  usage: {
+    input_tokens: .usage.input_tokens,
+    output_tokens: .usage.output_tokens,
+    cache_creation_input_tokens: .usage.cache_creation_input_tokens,
+    cache_read_input_tokens: .usage.cache_read_input_tokens
+  },
+  by_model: .modelUsage
+}'
+```
+
+`--continue`/`--resume` report the **whole conversation's** totals on `total_cost_usd` and `modelUsage` — earlier runs' spend included, since CC v2.1.277 (before that, a session resumed through the SDK or `claude -p` started its totals at zero per call). `usage` is per-turn in streaming-input mode; read the latest result rather than summing across results. Both figures remain client-side estimates that can drift from the actual bill; for authoritative billing, use the Usage and Cost API or the Claude Console Usage page.
+
+Source: [TypeScript Agent SDK reference][ts-sdk-ref], `SDKResultMessage` type; [cost-tracking docs][cost-tracking]; [headless docs][headless]
+
 ## Relationship to Statusline
 
 The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin on each turn, including `cost.total_cost_usd` (session total) and `context_window.*` (current usage). The transcript JSONL is the raw per-turn source. Use statusline for live monitoring; use transcripts for post-hoc analysis.
@@ -192,6 +234,21 @@ The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin o
 
 **UNVERIFIED**: per-plan usage amounts (e.g., token or message counts for Pro/Max/Team) and the weekly limit's size. None of the articles cited above state either; [limit-reset][limit-reset] confirms that a weekly usage limit exists.
 
+**General usage-limit best practices (claude.ai, not CC-specific).** Per [Usage limit best practices][usage-best-practices] (help center, accessed 2026-10-15), the factors it lists as affecting limits are message length, file-attachment size, conversation length, tool use (e.g. Research and web search), model choice, effort level, artifacts, and multi-step tasks. Its prompt-level tips — plan ahead ("Planning helps reduce the number of back-and-forth messages needed"), be specific, batch related requests into one message, review before sending, and reuse context already in the conversation instead of repeating it — are written for claude.ai chat generally, not Claude Code specifically. "Caching" in that article refers to **claude.ai Projects** ("Content in projects is cached and counts less against your limits when reused," expiring after inactivity) — a different mechanism from CC's own prompt caching (see [CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md)). The article has no Claude-Code-specific section; it links to "Models, usage, and limits in Claude Code" (already cited above as [cc-usage-metering][cc-usage-metering]) by title only.
+
+**Claude Code wrap-up allowance.** Per [What is the Claude Code wrap-up allowance?][wrap-up-allowance] (help center, accessed 2026-10-15): if a response is already in progress when a session hits its five-hour limit, CC may keep working briefly past the limit to reach a reasonable stopping point, shown as "Usage limit reached · wrapping up." It applies only to a response already running — a *new* message sent after the limit doesn't qualify.
+
+Frequency, verbatim:
+
+- **Pro**: *"Up to once per weekly usage period, whether or not the full allowance is used that time."*
+- **Max and Team (Premium seats)**: *"When you reach a five-hour usage limit, within your weekly limit."*
+
+It counts toward the weekly limit without increasing it, and the response ends when it completes, the allowance runs out, or it's interrupted; if usage credits are enabled, the included allowance is used first and the response then continues on credits at standard rates, subject to any spend limit.
+
+What it is not, verbatim (from separate sentences, not a single stitched quote): *"The Wrap-Up Allowance is not a credit, promotional credit, or usage credit."* *"It has no cash value and is not transferable."* *"It can't be exchanged or refunded."* *"It can't be requested, saved, or carried over to a later response or usage period."* Anthropic may change, pause, or discontinue it at any time without notice.
+
+Eligibility requires all of: Pro, Max, or a Team plan with a Premium seat, in good standing; **CC v2.1.277 or later**, signed in with a Claude account (not an API key, a third-party cloud provider, or claude.ai chats); an unpublished minimum account/organization age; and inclusion in a gradual rollout.
+
 ### Local tools vs plan usage
 
 `/stats` (the owner's `stats='claude /stats'` alias) computes entirely from local transcript `.jsonl` files under `~/.claude/projects/` — no separate output file (see [CC-binary-architecture.md § `/stats` and `/usage` Data Flow][binary-arch]). CodeBurn (`burn='npx codeburn'`) reads the same local transcripts for its dashboard, `optimize`, and `export` commands. Both are therefore blind to Chats and Cowork usage and undercount total plan usage relative to the shared limit described above — see [CC-usage-tooling-landscape.md][usage-tooling] for the full CodeBurn/ccusage comparison.
@@ -224,6 +281,11 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 | claude.ai Settings > Usage (German UI), observed 2026-09-27 | Resets section text (conflicts with the help-center article on which limits a reset refills) |
 | claude.ai Settings > Usage, observed 2026-09-23 | Per-product usage split (Claude Code / Chats / Cowork / Other); undocumented in the help-center articles above |
 | CodeBurn v0.9.25 CLI (`--help`, `plan --help`, `export --help`, `quota --help`), 2026-09-24 | `plan`/`export --billing`/`quota` subcommand behavior |
+| [Usage limit best practices][usage-best-practices] | General claude.ai usage-limit factors and prompt-level best practices; not CC-specific (accessed 2026-10-15) |
+| [Claude Code wrap-up allowance][wrap-up-allowance] | Wrap-up allowance mechanics, frequency by plan, eligibility (CC v2.1.277+), what it is and isn't (accessed 2026-10-15) |
+| [TypeScript Agent SDK reference][ts-sdk-ref] | `SDKResultMessage` field names and types (`total_cost_usd`, `usage`, `modelUsage`, `duration_api_ms`, `num_turns`, …) (accessed 2026-10-15) |
+| [Track cost and usage][cost-tracking] | `usage` vs `modelUsage` vs `total_cost_usd` scope, subagent accounting, cross-call accumulation since CC v2.1.277 (accessed 2026-10-15) |
+| [Headless / Agent SDK docs][headless] | `-p --output-format json` usage, `--continue`/`--resume` cost reporting (accessed 2026-10-15) |
 
 [statusline]: https://code.claude.com/docs/en/statusline
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
@@ -239,3 +301,8 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [binary-arch]: ../configuration/CC-binary-architecture.md#stats-and-usage-data-flow
 [usage-tooling]: ../../cc-community/CC-usage-tooling-landscape.md
+[usage-best-practices]: https://support.claude.com/en/articles/9797557-usage-limit-best-practices
+[wrap-up-allowance]: https://support.claude.com/en/articles/17040437-claude-code-wrap-up-allowance
+[ts-sdk-ref]: https://code.claude.com/docs/en/agent-sdk/typescript#sdkresultmessage
+[cost-tracking]: https://code.claude.com/docs/en/agent-sdk/cost-tracking
+[headless]: https://code.claude.com/docs/en/headless

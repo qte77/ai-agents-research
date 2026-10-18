@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-10-11
-validated_links: 2026-10-11
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: assess
 ---
 
@@ -181,6 +181,7 @@ definitions, use cases, and primary research references for each metric.
 - **Example**: SmolAgents + Claude Opus 4.5 = 0.66 success at $4.39/task vs OpenAI MCP + Claude Opus 4.5 = 0.73 success at $8.54/task — 2× cost for 11% success gain
 - **Application**: Use during framework selection for PeerRead batch evaluation to identify the cost-performance knee point
 - **Recent Advance**: ["What Does a Harness Buy? Tokens, Mostly"](https://arxiv.org/abs/2610.04433) (Liu & Han, Oct 2026; code and data: [github.com/YangzeLiu/what-does-a-harness-buy](https://github.com/YangzeLiu/what-does-a-harness-buy), MIT, confirmed live 2026-10-11) holds the model fixed and varies the harness instead — five models across Claude Code, mini-SWE-agent, and OpenCode on SWE-bench Verified. On the full 447-task pool, Claude Code and mini-SWE-agent score within ~5 points of each other; OpenCode is the only harness whose effect clearly exceeds run-to-run noise, trailing by up to 9 points. But cost per task differs by up to 3x across harnesses at the same model/tasks/prices — the gap comes mainly from the fixed system-prompt-plus-tool-schema preamble sent at the first call, scaled by step count. The paper's own framing: "What is rarely measured is how much the harness itself moves the score when the model is held fixed" — reinforcing this metric's core point that harness/framework choice is predominantly a **cost** lever, not a capability one. Also argues 45-task benchmark pools detect a 13-point gap only about half the time, so small claimed harness-score deltas may not be statistically resolvable at common benchmark sizes (self-reported findings; not independently re-run here).
+- **Landscape Reference**: [Artificial Analysis Coding Agent Index](https://artificialanalysis.ai/agents/coding-agents) (v1.5, confirmed 2026-10-15, [methodology](https://artificialanalysis.ai/methodology/coding-agents-benchmarking)) is a live, continuously-updated cross-vendor implementation of this same performance/cost/execution-time triad — 40 coding-agent variants (14 shown by default), scored on three component benchmarks: DeepSWE v1.1 (113 software-engineering tasks, Datacurve), Terminal-Bench 4.0 (66 agentic terminal-use tasks, Laude Institute), and SWE-Atlas-QnA (124 technical-QA tasks, Scale AI). The same operator's [Endpoint Accuracy Index](https://artificialanalysis.ai/methodology/endpoint-accuracy-index) (v1.0) weights **BFCL v4-500** (a 500-task Berkeley Function Calling Leaderboard subset, 3 repeats) at 33% for tool-use accuracy — a second first-party agentic benchmark with its own methodology page. Both self-reported by the operator (an independent benchmarking company, per its own site), not independently re-run here. (Scope note: Artificial Analysis's separate **Decision Index** is out of scope for this entry — tracked instead against [system-1-decision-models-landscape.md](../non-cc/reference/system-1-decision-models-landscape.md).)
 
 ### Multi-Agent Coordination Metrics
 

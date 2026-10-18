@@ -2,8 +2,8 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-10-15
+validated_links: 2026-10-15
 status: adopt
 ---
 
@@ -45,6 +45,24 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | (model context size) | Override context capacity in tokens for compaction calculations | [env-vars][env-vars] |
 
 Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md), [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md)
+
+### Prompt Caching
+
+Each TTL-selection variable takes `5m` or `1h` only and requires CC v2.1.242+; CC ignores any other value. Added 2026-10-15 — see [CC-prompt-caching-behavior.md][cc-caching-behavior] for the full precedence order and the request-bucket table these variables feed into.
+
+| Variable | Default | Purpose | Source |
+|---|---|---|---|
+| `CLAUDE_CODE_PROMPT_CACHE_TTL` | (per-bucket default) | Prompt-cache TTL for the **main conversation** bucket (interactive turns, `-p` runs, Agent SDK turns). Takes precedence over the `promptCacheTtl` setting and over `ENABLE_PROMPT_CACHING_1H`; `FORCE_PROMPT_CACHING_5M` overrides it. v2.1.242+ | [env-vars][env-vars], [cc-caching][cc-caching] |
+| `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL` | (per-bucket default) | Prompt-cache TTL for everything **outside** the main conversation (subagents, workflows, background work). Takes precedence over the `subagentPromptCacheTtl` setting and over `ENABLE_PROMPT_CACHING_1H`; `FORCE_PROMPT_CACHING_5M` overrides it. The API bills 1-hour cache writes at a higher rate. v2.1.242+ | [env-vars][env-vars] |
+| `ENABLE_PROMPT_CACHING_1H` | `0` | Request a 1-hour TTL instead of the 5-minute default, for both buckets. Mainly for API-key / Bedrock / Google Cloud Agent Platform / Microsoft Foundry / Claude Platform on AWS users — a Claude subscription within included usage already gets the 1-hour TTL automatically on the main conversation. Lower precedence than the two `CLAUDE_CODE_*_PROMPT_CACHE_TTL` variables above | [env-vars][env-vars] |
+| `ENABLE_PROMPT_CACHING_1H_BEDROCK` | — | Deprecated; use `ENABLE_PROMPT_CACHING_1H` | [env-vars][env-vars] |
+| `FORCE_PROMPT_CACHING_5M` | `0` | Force the 5-minute TTL for **both** buckets, overriding every other TTL control (both `CLAUDE_CODE_*_PROMPT_CACHE_TTL` variables, `ENABLE_PROMPT_CACHING_1H`, and the `promptCacheTtl`/`subagentPromptCacheTtl` settings). Useful for debugging cache behavior or overriding a longer TTL set in managed settings | [env-vars][env-vars] |
+| `DISABLE_PROMPT_CACHING` | `0` | Disable prompt caching for all models (takes precedence over the per-model variables below) | [env-vars][env-vars] |
+| `DISABLE_PROMPT_CACHING_HAIKU` / `_SONNET` / `_OPUS` / `_FABLE` | `0` | Disable prompt caching for the default Haiku / Sonnet / Opus model, or for Fable models. `_HAIKU` covers the main conversation too only on CC v2.1.283+ | [env-vars][env-vars] |
+
+The matching `settings.json` keys — `promptCacheTtl` (main conversation) and `subagentPromptCacheTtl` (everything else) — take the same `5m`/`1h` values and sit one precedence level below their env-var counterparts. See the [settings reference][settings-ref] (`#promptcachettl`, `#subagentpromptcachettl`).
+
+Cross-ref: [CC-prompt-caching-behavior.md][cc-caching-behavior]
 
 ### Traffic & Telemetry
 
@@ -332,6 +350,8 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 |---|---|
 | [CC env vars reference][env-vars] | Official complete list (80+ vars) |
 | [CC settings reference][settings] | `settings.json` keys and `env` block |
+| [CC prompt-caching docs][cc-caching] | TTL-selection variables, precedence order, disable variables (accessed 2026-10-15) |
+| [CC settings reference][settings-ref] | `promptCacheTtl` / `subagentPromptCacheTtl` setting keys (accessed 2026-10-15) |
 | [CC debug-your-config guide][debug-config] | `CLAUDE_CONFIG_DIR` behavior + per-platform credential storage |
 | [CC monitoring docs][monitoring] | OTel configuration and metrics |
 | [CC statusline docs][statusline] | Statusline JSON schema and examples |
@@ -344,6 +364,9 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [settings]: https://code.claude.com/docs/en/settings
+[settings-ref]: https://code.claude.com/docs/en/settings-reference
+[cc-caching]: https://code.claude.com/docs/en/prompt-caching
+[cc-caching-behavior]: ../context-memory/CC-prompt-caching-behavior.md
 [debug-config]: https://code.claude.com/docs/en/debug-your-config
 [tools-ref]: https://code.claude.com/docs/en/tools-reference#bash-tool-behavior
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
