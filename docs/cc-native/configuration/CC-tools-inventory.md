@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-10-18
+validated_links: 2026-10-18
 status: adopt
 ---
 
@@ -111,13 +111,14 @@ Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 
 ## Slash Commands (CC 2.1.87, Binary String Extraction)
 
-Commands extracted via `grep -oP` from CLI binary. **Documented** commands are linked; **undocumented** are marked.
+Commands extracted via `grep -oP` from CLI binary. **Documented** commands are linked; **undocumented** are marked. The `/code-review`, `/review`, `/simplify`, and `/ultrareview` rows below were re-verified against the live docs at CC 2.1.302, 2026-10-18 — they are current, not binary-extracted.
 
 ### Documented
 
 | Command | Purpose | Source |
 |---|---|---|
 | `/clear` | Clear conversation | [cli-ref][cli-ref] |
+| `/code-review` | Review the current diff, a PR, a branch, or a path for correctness bugs; `ultra` escalates to a cloud multi-agent review. Alias: `/review`. Formerly named `/simplify` before v2.1.147. See [details below](#code-review-review-simplify-and-ultrareview) | [commands][commands], [code-review-local][code-review-local] |
 | `/commit` | Commit staged changes | [cli-ref][cli-ref] |
 | `/config` | Open interactive config panel (`.claude.json` prefs) | [cli-ref][cli-ref] |
 | `/exit` | Exit session | [cli-ref][cli-ref] |
@@ -129,11 +130,41 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/loop` | Run on recurring interval | [cli-ref][cli-ref] |
 | `/mcp` | Manage MCP servers | [mcp-docs][mcp-docs] |
 | `/model` | Switch model | [model-config][model-config] |
-| `/review-pr` | Review pull request | [cli-ref][cli-ref] |
 | `/remote-control`, `/rc` | Enable Remote Control on current session | [remote-control][remote-control] |
 | `/remote-env` | Configure default remote environment for `--remote` web sessions | [commands][commands] |
+| `/review` | Alias of `/code-review` (CC v2.1.223+). Before v2.1.223 it was a separate, single-pass, read-only review of a GitHub PR by number | [commands][commands], [code-review-local][code-review-local] |
 | `/schedule` | Manage scheduled remote agents | [remote-control][remote-control] |
+| `/simplify` | Reviews changed code for reuse/simplification/efficiency/abstraction-level cleanup via 4 parallel agents and applies the fixes; does not look for correctness bugs (use `/code-review` for that). Former name of `/code-review` before v2.1.147 | [commands][commands] |
 | `/status` | Show session status | [cli-ref][cli-ref] |
+| `/ultrareview` | Alias of `/code-review ultra`, once ultrareview is available to the account — a deep, multi-agent review in a cloud sandbox. Research preview. See [details below](#code-review-review-simplify-and-ultrareview) | [commands][commands], [ultrareview][ultrareview] |
+
+#### `/code-review`, `/review`, `/simplify`, and ultrareview
+
+Verified against the live [code-review-local][code-review-local], [ultrareview][ultrareview], and [commands][commands] pages, cross-checked with `claude plugin list` and the Claude Code CHANGELOG (CC 2.1.302, Codespaces, 2026-10-18). For the separate marketplace plugin (`code-review@claude-plugins-official`, namespaced `/code-review:code-review`) and the managed GitHub PR service, see [CC-official-plugins-landscape.md § `/code-review` command and ultrareview][plugins-code-review] — all three are distinct from the bundled command below.
+
+**`/code-review` targets** — with no target, it reviews the branch's commits ahead of its upstream branch plus any uncommitted changes (or against `main`, or the previous commit, when there's no upstream):
+
+| To review | Type |
+|---|---|
+| Current branch + uncommitted changes (default) | `/code-review` |
+| Last 15 commits | `/code-review HEAD~15..HEAD` |
+| One branch against another | `/code-review main...my-feature` |
+| A single commit (`abc1234`) | `/code-review abc1234^..abc1234` |
+| A PR by number | `/code-review 1234` |
+| A file or directory path | `/code-review src/auth` |
+
+**Effort and flags**: an [effort level][model-config] (`low` through `max`) trades confidence for coverage; the level typed last is reused across sessions (not for `ultra`, and not remembered from a non-interactive `-p` run). `--fix` applies findings to the working tree; `--comment` posts them as GitHub inline comments or a single GitLab merge-request note (GitLab requires CC v2.1.257+); `--max-findings <n>|all|default` caps the findings count (CC v2.1.288+); `--post` preselects posting an `ultra` GitHub-PR review's findings to the PR (CC v2.1.227+). The review runs as a background subagent by default (foreground with `-p`, with `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1`, or when run again while one is in progress; ran inline before CC v2.1.218).
+
+**Aliases and renames**: `/review` is an alias of `/code-review` since **CC v2.1.223**; before that it was a separate, single-pass, read-only review of a GitHub PR by number (and from v2.1.186–v2.1.201 ran the same multi-agent engine as `/code-review medium`). The command was named **`/simplify`** before **CC v2.1.147**, when it applied fixes by default; `/simplify` still exists today as a separate, narrower command — 4 parallel agents reviewing reuse, simplification, efficiency, and abstraction level, with no correctness-bug check.
+
+**`ultrareview`** (`/code-review ultra`, alias `/ultrareview` once available to the account) is a **research preview**: "Ultrareview is a research preview feature. The feature, pricing, and availability may change based on feedback." It launches a fleet of reviewer agents as a cloud session on Anthropic's infrastructure, with every finding independently reproduced and verified. "A review typically takes 15 to 25 minutes."
+
+- **User-started only**: the command runs only when invoked as `/code-review ultra` — Claude does not start it on its own. A scheduled task never launches the cloud review (schedule `/code-review` without `ultra`). `claude -p '/code-review ultra'` launches the cloud review and exits before the findings arrive, so it does not return findings; the documented CI/script route is the `claude ultrareview` subcommand, which blocks until the review finishes and prints findings to stdout — but only when a human or script invokes it directly: when Claude runs that subcommand itself (e.g. via the Bash tool), Claude Code refuses the whole-repository-fallback case.
+- **Targets**: no argument compares the current branch to the repository's default branch (plus uncommitted/staged changes); a branch name, commit id, or tag can replace the default-branch base; a `github.com` PR number (also `#1234`, `PR 1234`, or a pasted URL) reviews that PR instead. The docs document these three target forms plus a free-text note attached to a branch review; **a file or directory path is not among them** (unlike plain `/code-review`, which does support a path target).
+- **Diff handling**: refuses an empty diff (names what it compared against and suggests a fix); reviews the whole repository only on a first commit (after an interactive confirmation; refuses untracked files) or when there is no merge base (again gated on interactive confirmation or the `claude ultrareview` subcommand's own consent).
+- **Limits**: a branch review defaults to up to 500 changed files and 8,000 changed lines; the exact values can change, and a refusal names the ones in effect.
+- **Billing**: bills against usage credits, not plan-included usage. Pro and Max each get three free runs as a one-time, non-refreshing allotment; after that, "typically $5 to $25 in usage credits depending on the size of the change". A run counts once the cloud session starts, even if stopped early or failed.
+- **Platform/compliance restrictions**: unavailable on Amazon Bedrock, Google Cloud's Agent Platform, and Microsoft Foundry, and to organizations with Zero Data Retention or the HIPAA configuration applied — in those cases `/code-review ultra` runs a local review instead. "Organizations that use customer-managed encryption keys (CMEK) can't run ultrareview." For CMEK, unlike the other four cases, there is no stated automatic local fallback — the docs say to run `/code-review` directly.
 
 ### Undocumented (String Extraction)
 
@@ -147,7 +178,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/commit-push-pr` | Combined commit+push+PR workflow | String extraction, CC 2.1.87 |
 | `/issue` | Create/reference GitHub issue | String extraction, CC 2.1.87 |
 
-| `/ultrareview` | Unknown — enhanced review? | String extraction, CC 2.1.87 |
+`/ultrareview` was listed here as an undocumented string-extraction finding ("Unknown — enhanced review?", CC 2.1.87). It is now documented: see the [Documented](#documented) table and [details below](#code-review-review-simplify-and-ultrareview).
 
 ## Configuration Surface (CC 2.1.87)
 
@@ -293,10 +324,16 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | CC 2.1.185, Codespaces, 2026-06-22 | `WebFetch` default User-Agent + bot-block status codes (observed) |
 | [ZhangHanDong /btw gist][btw-gist] | `/btw` command analysis |
 | [CLAURST README][claurst] | Internal/gated tool registry, feature flags |
+| [CC code-review-local docs][code-review-local] | `/code-review` targets, effort levels, flags, `/review`/`/simplify` alias history |
+| [CC ultrareview docs][ultrareview] | Ultrareview scope, billing, limits, platform restrictions, research-preview status |
+| CC 2.1.302, Codespaces, 2026-10-18 | CLI commands and reference pages re-verified live for this pass; `claude plugin list` and CHANGELOG search cross-checked the `/code-review` plugin and `/review-pr` disposition |
 
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
 [commands]: https://code.claude.com/docs/en/commands
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
+[code-review-local]: https://code.claude.com/docs/en/code-review-local
+[ultrareview]: https://code.claude.com/docs/en/ultrareview
+[plugins-code-review]: ../plugins-ecosystem/CC-official-plugins-landscape.md#code-review-command-and-ultrareview
 [settings]: https://code.claude.com/docs/en/settings
 [permissions]: https://code.claude.com/docs/en/permissions#tool-specific-permission-rules
 [data-usage]: https://code.claude.com/docs/en/data-usage
