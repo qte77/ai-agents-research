@@ -13,14 +13,14 @@
     ]
   },
   "enabledPlugins": {
-    "commit-helper@qte77-claude-code-utils": true,
-    "docs-governance@qte77-claude-code-utils": true,
-    "python-dev@qte77-claude-code-utils": true,
-    "tdd-core@qte77-claude-code-utils": true,
-    "gha-dev@qte77-claude-code-utils": true
+    "commit-helper@qte77-claude-code-plugins": true,
+    "docs-governance@qte77-claude-code-plugins": true,
+    "python-dev@qte77-claude-code-plugins": true,
+    "tdd-core@qte77-claude-code-plugins": true,
+    "gha-dev@qte77-claude-code-plugins": true
   },
   "extraKnownMarketplaces": {
-    "qte77-claude-code-utils": {
+    "qte77-claude-code-plugins": {
       "source": {
         "source": "github",
         "repo": "qte77/claude-code-plugins"
