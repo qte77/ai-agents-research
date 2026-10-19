@@ -15,19 +15,16 @@ Tracking issue: [#452][issue].
 
 ## Current status (2026-10-19)
 
-- **Done (phase 1, not yet merged):**
-  - `~/.claude/rules/` (= `/workspaces/.claude-files/rules/`) holds symlinks to the SoT for
-    context-management, compound-learning, core-principles and unattended-execution.
-  - The duplicate copies in `/workspaces/.claude/rules/` and `/workspaces/qte77/.claude/rules/` are
-    deleted.
-  - [#689][pr689] removes aar's three copies.
-  - A fresh session (CC 2.1.303) loads each rule once: the 4 SoT symlinks, plus external-input,
-    claim-verification, documentation-hierarchy and read-discipline from their current homes.
-- **Open PRs:** [claude-code-plugins#251][pr1] (adds read-discipline, external-input,
-  claim-verification to the SoT) · [#688][pr688] (canonical marketplace key) · [#689][pr689] · this
-  plan's PR.
-- **Next, in order:** owner merges → row 4 (phase 2) → row 6 (corpus update). Row 5 waits on a
-  gha-issue-triage change.
+- **Done 2026-10-19 (phases 1 + 2):**
+  - `~/.claude/rules/` (= `/workspaces/.claude-files/rules/`) holds 7 per-file symlinks into the SoT:
+    claim-verification, compound-learning, context-management, core-principles, external-input,
+    read-discipline, unattended-execution.
+  - Every other copy is gone: `/workspaces/.claude/rules/` is empty;
+    `/workspaces/qte77/.claude/rules/` keeps only documentation-hierarchy; aar has no `.claude/rules/`
+    files ([#689][pr689] + the phase-2 PR).
+  - Merged: [claude-code-plugins#251][pr1], [#688][pr688], [#689][pr689], #687 (this plan).
+  - A fresh session (CC 2.1.303) loads each of the 8 rules exactly once.
+- **Next:** row 6 (corpus update). Row 5 waits on a gha-issue-triage change; row 7 is the owner's.
 - **Backup** of every rules folder, CLAUDE.md/AGENTS.md and settings file before the change:
   `/workspaces/temp/claude-config-backup-2026-10-19/` (none of these folders are in git).
 
@@ -76,8 +73,8 @@ Tracking issue: [#452][issue].
 |---|---|---|---|
 | ~~1~~ | ~~Open a tracking issue; confirm scope (default a)~~ | owner | Done: #452 (2026-09-23); scope (a) confirmed 2026-10-19 |
 | ~~2~~ | ~~PR 1 — read-discipline (+ external-input, claim-verification) into the plugin SoT~~ | agent | Done 2026-10-19: [claude-code-plugins#251][pr1]; `make check_sync`/`validate`/`lint_md` green |
-| 3 | Merge claude-code-plugins#251 (plain `--squash`), #688, #689 and this plan's PR (`--admin`) | owner | Merged |
-| 4 | Phase 2: `git pull --ff-only` the plugins clone, symlink read-discipline, external-input and claim-verification into `~/.claude/rules/`, delete `/workspaces/.claude/rules/{external-input,claim-verification}.md`, then a PR in aar that deletes `.claude/rules/read-discipline.md` and repoints its links (`AGENT_LEARNINGS.md:66` and the `/workspaces/.claude/rules/` path in its first entry) | agent | Fresh headless session lists each rule exactly once |
+| ~~3~~ | ~~Merge claude-code-plugins#251, #688, #689 and this plan's PR~~ | owner | Done 2026-10-19: all merged (#687 is this plan's PR) |
+| ~~4~~ | ~~Phase 2: symlink read-discipline, external-input and claim-verification into `~/.claude/rules/`, delete the `/workspaces/.claude/rules/` copies, drop aar's `read-discipline.md` and repoint `AGENT_LEARNINGS.md`~~ | agent | Done 2026-10-19 (#691): fresh headless session lists each rule once |
 | 5 | AGENTS.md-only: make gha-issue-triage `_load_repo_context()` fall back to `AGENTS.md`; then delete `/workspaces/AGENTS.md` + `/workspaces/qte77/AGENTS.md` (check no repo under `/workspaces` relies on them) and aar's `CLAUDE.md` symlink. **Default:** gha-issue-triage PR first | agent (owner merges) | Fresh session loads aar's AGENTS.md once; triage still gets repo context |
 | 6 | Corpus: add the verified behaviour above to `CC-memory-system-analysis.md` (parent rules observed, AGENTS.md native read, settings precedence — fixes `CC-tools-inventory.md:240` "Precedence unclear") | agent | Doc PR merged, lint + lychee green |
 | 7 | Parent settings files `/workspaces/.claude/settings*.json` and `/workspaces/qte77/.claude/settings*.json` are used only when CC starts in those folders. **Default:** keep | owner | Keep/delete recorded in #452 |
