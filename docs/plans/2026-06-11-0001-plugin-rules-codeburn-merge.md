@@ -15,7 +15,7 @@ plugin(s). Tracking issue: [#452][issue] (open since 2026-09-23).
 
 - **Approved 2026-10-19** by the owner ("do it now") with the defaults below: scope (a), no
   core-principles change.
-- **PR 1 (claude-code-plugins) in flight** — see the remaining-work table.
+- **PR 1 open:** [claude-code-plugins#251][pr1], CI green, awaiting owner merge (plain `--squash`).
 - **PR 2 (aar)** waits on PR 1's merge (its done-when needs the published plugin) and on the owner
   decision in row 5.
 - **Owner gates:** row 5 decision; both merges.
@@ -92,7 +92,7 @@ plugin(s). Tracking issue: [#452][issue] (open since 2026-09-23).
 | # | Item | Gate | Done-when |
 |---|---|---|---|
 | ~~1~~ | ~~Open a tracking issue; confirm scope (default a)~~ | owner | Done: #452 (2026-09-23); scope (a) confirmed 2026-10-19 |
-| 2 | PR 1 — read-discipline into plugin SoT + symlinks + version bumps | agent | PR open, `make check_sync` + `make validate` + `make lint_md` green, CI green |
+| ~~2~~ | ~~PR 1 — read-discipline into plugin SoT + symlinks + version bumps~~ | agent | Done 2026-10-19: [claude-code-plugins#251][pr1] open, workspace-setup 1.7.0 / workspace-sandbox 1.5.0, all three make targets + CI green |
 | 3 | Merge PR 1 | owner | Merged |
 | 4 | PR 2 — enable `workspace-setup` in aar, drop superseded local rules | agent | Fresh session deploys the rules + read-once hook |
 | 5 | Decide how aar tracks plugin-deployed rules: enabling `workspace-setup` adds `ci-status-checks.md` + `unattended-execution.md` as untracked files, and deleted local rules come back untracked. **Default:** gitignore the plugin-owned rule files by name (committed copies never refresh under copy-if-not-exists, so they would drift again) | owner | Choice recorded in #452 |
@@ -121,3 +121,4 @@ plugin(s). Tracking issue: [#452][issue] (open since 2026-09-23).
 
 [codeburn]: https://github.com/getagentseal/codeburn#optimize
 [issue]: https://github.com/qte77/ai-agents-research/issues/452
+[pr1]: https://github.com/qte77/claude-code-plugins/pull/251
