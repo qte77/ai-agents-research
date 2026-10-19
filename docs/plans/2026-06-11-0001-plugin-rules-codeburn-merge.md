@@ -1,111 +1,92 @@
 ---
-title: Plugin-source aar's rules + merge CodeBurn optimize disciplines
-status: draft
-issue: none
+title: One copy per rule — user-level rules from the claude-code-plugins SoT + CodeBurn read discipline
+status: approved
+issue: "#452"
 created: 2026-06-11
-updated: 2026-09-23
+updated: 2026-10-19
 ---
 
-Two coupled enhancements, first captured as a local session handoff on 2026-06-11 (merged here
-2026-09-23): (1) make `ai-agents-research` (aar) consume its rules from `claude-code-plugins` instead of
-its own `.claude/rules/`; (2) merge CodeBurn's [`optimize`][codeburn] disciplines into the best-fit
-plugin(s). **No tracking issue exists yet** — open one before executing (plans are not the backlog).
+First captured as a local session handoff on 2026-06-11 (merged here 2026-09-23). The original goal was
+(1) to source aar's rules from `claude-code-plugins` instead of its own `.claude/rules/`, and (2) to
+merge CodeBurn's [`optimize`][codeburn] disciplines into the best-fit plugin. **Redesigned 2026-10-19
+by the owner:** every shared rule loads **once, at user level**, from `~/.claude/rules/` symlinked into
+the versioned `claude-code-plugins/.claude/rules/` SoT. Repos keep only rules specific to themselves.
+Tracking issue: [#452][issue].
 
-## Current status (verified 2026-09-23)
+## Current status (2026-10-19)
 
-- **Not shipped.** `claude-code-plugins/.claude/rules/` has compound-learning, context-management,
-  core-principles, plugin-versioning, skill-authoring — **no `read-discipline.md`**; the
-  `workspace-setup` plugin symlinks only three of those. aar's `.claude/settings.json` does not enable
-  `workspace-setup`.
-- **Next, in order:** confirm scope with the owner (OPEN below) → PR 1 (claude-code-plugins) → PR 2 (aar).
-- **Owner gates:** scope choice; merges (signed-commit ruleset → owner `gh pr merge --admin --squash --delete-branch`).
-- **Re-verify before executing:** the rule-drift facts below are from 2026-06-11 and have likely moved.
+- **Done (phase 1, not yet merged):**
+  - `~/.claude/rules/` (= `/workspaces/.claude-files/rules/`) holds symlinks to the SoT for
+    context-management, compound-learning, core-principles and unattended-execution.
+  - The duplicate copies in `/workspaces/.claude/rules/` and `/workspaces/qte77/.claude/rules/` are
+    deleted.
+  - [#689][pr689] removes aar's three copies.
+  - A fresh session (CC 2.1.303) loads each rule once: the 4 SoT symlinks, plus external-input,
+    claim-verification, documentation-hierarchy and read-discipline from their current homes.
+- **Open PRs:** [claude-code-plugins#251][pr1] (adds read-discipline, external-input,
+  claim-verification to the SoT) · [#688][pr688] (canonical marketplace key) · [#689][pr689] · this
+  plan's PR.
+- **Next, in order:** owner merges → row 4 (phase 2) → row 6 (corpus update). Row 5 waits on a
+  gha-issue-triage change.
+- **Backup** of every rules folder, CLAUDE.md/AGENTS.md and settings file before the change:
+  `/workspaces/temp/claude-config-backup-2026-10-19/` (none of these folders are in git).
 
 ## Source map
 
-- Plugins (source of truth): `/workspaces/qte77/claude-code-plugins`.
-- Consumer: `/workspaces/qte77/ai-agents-research` (`.claude/rules/`).
+- Rules SoT: `/workspaces/qte77/claude-code-plugins/.claude/rules/` (local clone; user-level rules follow
+  **whatever that clone has checked out** — do branch work there only in worktrees).
+- User rules: `~/.claude/rules` → `/workspaces/.claude-files/rules/` (per-file symlinks; don't link
+  the folder — ci-status-checks, plugin-versioning and skill-authoring must not load everywhere).
+- Stays in place: `/workspaces/qte77/.claude/rules/documentation-hierarchy.md` (qte77-only scope,
+  owner 2026-10-19).
+- aar: `.claude/rules/read-discipline.md` (until row 4), `AGENTS.md:16` (Rules line),
+  `CLAUDE.md` → symlink to `AGENTS.md`.
+- Issue triage reads `README.md` + `CLAUDE.md` from the checkout: `qte77/gha-issue-triage`
+  `src/relevance.py` `_load_repo_context()`.
 - CodeBurn optimize source: [getagentseal/codeburn#optimize][codeburn].
 
-### How the plugin rules work (verified 2026-06-11)
+### Verified behaviour (CC 2.1.303, Codespaces, 2026-10-19)
 
-- **SoT = `claude-code-plugins/.claude/rules/`** (real files).
-- `workspace-setup/rules/` and `workspace-sandbox/rules/` are **symlinks** →
-  `../../../.claude/rules/<name>.md`, so both plugins' rule layers stay identical.
-- `make sync` (`sync_rules`) is a **no-op** (symlinks auto-reflect SoT); `make check_sync` verifies.
-  Adding a rule = add the SoT file + symlink it into both plugins.
-- `workspace-setup` deploys `rules/*.md → .claude/rules/` via a SessionStart hook
-  (**copy-if-not-exists**) and ships a **read-once PreToolUse hook** — CodeBurn's "re-read files"
-  pattern, already implemented.
-- The two plugins differ ONLY in settings (base vs sandbox), setup script and metadata
-  (`plugin.json`, `README.md`, `hooks/hooks.json`).
-
-### Rule drift, aar vs plugin SoT (as of 2026-06-11 — re-check)
-
-- `context-management.md`: identical.
-- `core-principles.md`: differ — plugin more current (AHA + Clarity); aar uniquely names
-  "Prevent Incoherence" + "Resolve Ambiguity".
-- `compound-learning.md`: differ — plugin canonical (plugin-promotion model incl. `make sync` +
-  version bump); aar's is stale.
-- `read-discipline.md`: unique to aar; already reframed for a docs corpus + cites CodeBurn `#optimize`.
-  **This is the artifact to migrate.**
+- **Observed, not documented:** `.claude/rules/` in parent folders (`/workspaces`, `/workspaces/qte77`)
+  load into repo sessions. The [memory docs][cc-mem] name only the project's and `~/.claude/rules/`.
+- **Observed:** a symlink in `~/.claude/rules/` pointing outside the working directory loads with no
+  approval prompt in a headless run.
+- **Documented** ([settings][cc-settings]): `.claude/settings.json` is read from the session's primary
+  working directory; parent-folder settings files are not used in repo sessions.
+- **Documented** ([memory][cc-mem]): CC v2.1.277+ reads `AGENTS.md` natively, but "only when you have
+  no `CLAUDE.md` in your working directory or above it", and then loads every `AGENTS.md` in the
+  working directory and above.
 
 ## Decisions made
 
 - **CodeBurn is mostly diagnostic.** Only read:edit + re-read + lean-instruction-files translate to
-  agent rules; the rest (unused MCP, ghost skills, session cost) is CodeBurn the tool's job, not
-  always-loaded rules.
-- **read-discipline → `workspace-setup` + `workspace-sandbox`** (SoT + symlinks), backed by the
-  existing read-once hook.
-- **docs-governance earns ONE pattern:** "keep context-loaded instruction files lean" → a line in
-  `enforcing-doc-hierarchy`.
-- **`BASH_MAX_OUTPUT_LENGTH`** default → `workspace-setup/settings/settings-base.json` (optional).
-- **aar adopts the plugin's canonical core-principles + compound-learning.** Optional: fold aar's
-  "Prevent Incoherence"/"Resolve Ambiguity" into SoT core-principles.
-
-## OPEN — confirm with the owner before implementing
-
-- **Scope:** (a) minimal = read-discipline only; (b) + docs-governance "lean files" line;
-  (c) + `BASH_MAX_OUTPUT_LENGTH` settings default; (d) + a cc-meta "audit-setup-waste" skill mirroring
-  `codeburn optimize`. **Default: (a).**
-- Whether to include the optional core-principles enhancement. **Default: no.**
-
-## Implementation
-
-### PR 1 — claude-code-plugins
-
-1. Add `read-discipline.md` to SoT `.claude/rules/` (content from aar's `.claude/rules/read-discipline.md`).
-2. Symlink into both plugins:
-   `ln -s ../../../.claude/rules/read-discipline.md plugins/workspace-setup/rules/read-discipline.md`
-   (same for `workspace-sandbox`).
-3. `make check_sync` + `make lint_md` (or `make validate`).
-4. **Bump `version`** in both plugins' `.claude-plugin/plugin.json` AND root
-   `.claude-plugin/marketplace.json` — entries must match (SoT `plugin-versioning.md` rule).
-5. Update `workspace-setup/README.md` deployed-rules list.
-6. (if scoped) docs-governance `enforcing-doc-hierarchy` line and its version bump; settings-base
-   BASH default and its version bump.
-7. Open the PR.
-
-### PR 2 — ai-agents-research
-
-1. Add `workspace-setup` to `.claude/settings.json` `enabledPlugins`.
-2. Remove the local `.claude/rules/` copies the plugin will own, so the SessionStart hook deploys the
-   canonical versions (copy-if-not-exists won't overwrite).
-3. Verify on a fresh session that the hook deploys the rules + the read-once hook.
+  agent rules. Scope (a) only (owner, 2026-10-19): read-discipline.
+- **One home per shared rule: `~/.claude/rules/` as symlinks into the plugins SoT** (owner,
+  2026-10-19). This replaces the original PR 2 (enable `workspace-setup` in aar), which would have put
+  per-repo copies back.
+- **Consequence:** cloud sessions, GHA runs and other machines don't get user-level rules.
+- **Shared rules follow the plugin SoT text** (core-principles, compound-learning).
+- **documentation-hierarchy stays in `/workspaces/qte77/.claude/rules/`** (qte77-only scope).
+- **external-input and claim-verification** go into the SoT unchanged (SoT-only; no plugin deploys them).
+- **AGENTS.md-only:** approved, but gated on row 5.
 
 ## Remaining work
 
 | # | Item | Gate | Done-when |
 |---|---|---|---|
-| 1 | Open a tracking issue; confirm scope (default a) | owner | Issue exists, scope recorded in it |
-| 2 | PR 1 — read-discipline into plugin SoT + symlinks + version bumps | agent | PR open, `make check_sync` + `make validate` green |
-| 3 | PR 2 — enable `workspace-setup` in aar, drop superseded local rules | agent | Fresh session deploys the rules + read-once hook |
-| 4 | Merge both PRs | owner | Merged |
+| ~~1~~ | ~~Open a tracking issue; confirm scope (default a)~~ | owner | Done: #452 (2026-09-23); scope (a) confirmed 2026-10-19 |
+| ~~2~~ | ~~PR 1 — read-discipline (+ external-input, claim-verification) into the plugin SoT~~ | agent | Done 2026-10-19: [claude-code-plugins#251][pr1]; `make check_sync`/`validate`/`lint_md` green |
+| 3 | Merge claude-code-plugins#251 (plain `--squash`), #688, #689 and this plan's PR (`--admin`) | owner | Merged |
+| 4 | Phase 2: `git pull --ff-only` the plugins clone, symlink read-discipline, external-input and claim-verification into `~/.claude/rules/`, delete `/workspaces/.claude/rules/{external-input,claim-verification}.md`, then a PR in aar that deletes `.claude/rules/read-discipline.md` and repoints its links (`AGENT_LEARNINGS.md:66` and the `/workspaces/.claude/rules/` path in its first entry) | agent | Fresh headless session lists each rule exactly once |
+| 5 | AGENTS.md-only: make gha-issue-triage `_load_repo_context()` fall back to `AGENTS.md`; then delete `/workspaces/AGENTS.md` + `/workspaces/qte77/AGENTS.md` (check no repo under `/workspaces` relies on them) and aar's `CLAUDE.md` symlink. **Default:** gha-issue-triage PR first | agent (owner merges) | Fresh session loads aar's AGENTS.md once; triage still gets repo context |
+| 6 | Corpus: add the verified behaviour above to `CC-memory-system-analysis.md` (parent rules observed, AGENTS.md native read, settings precedence — fixes `CC-tools-inventory.md:240` "Precedence unclear") | agent | Doc PR merged, lint + lychee green |
+| 7 | Parent settings files `/workspaces/.claude/settings*.json` and `/workspaces/qte77/.claude/settings*.json` are used only when CC starts in those folders. **Default:** keep | owner | Keep/delete recorded in #452 |
 
 ## Gotchas
 
-- aar `main` requires signed commits; the sandbox can't sign → owner `gh pr merge --admin --squash --delete-branch`
-  (rebase merges disabled). Check whether `claude-code-plugins` has the same ruleset before pushing (unverified).
+- aar `main` requires signed commits; the sandbox can't sign → owner `gh pr merge --admin --squash --delete-branch`.
+- `claude-code-plugins` `main` also requires signatures but has **no bypass actors**; GitHub's squash
+  commit is verified, so a plain `gh pr merge --squash` works (no `--admin`). Required check: CodeFactor.
 - Prefix gh/git with `env -u GH_TOKEN -u GITHUB_TOKEN` (invalid env tokens shadow the stored credential).
 - Plugin version must match between `plugin.json` and `marketplace.json` or CI fails.
 - Never edit a plugin `rules/*.md` directly — they are symlinks; edit the SoT `.claude/rules/`.
@@ -116,7 +97,16 @@ plugin(s). **No tracking issue exists yet** — open one before executing (plans
 | Source | Content |
 |---|---|
 | [CodeBurn optimize][codeburn] | Token-waste patterns the disciplines come from |
+| [CC memory docs][cc-mem] | Rules locations, symlinks, AGENTS.md native read (v2.1.277+) |
+| [CC settings docs][cc-settings] | Settings scopes and precedence |
+| [#452][issue] | Tracking issue |
 | Local session handoff, 2026-06-11 | Original notes (merged here, local copy removed) |
-| Repo inspection, 2026-09-23 | Current-status check of both repos |
+| CC 2.1.303, Codespaces, 2026-10-19 | Headless probe + loaded-rules listing (observations above) |
 
 [codeburn]: https://github.com/getagentseal/codeburn#optimize
+[cc-mem]: https://code.claude.com/docs/en/memory
+[cc-settings]: https://code.claude.com/docs/en/settings
+[issue]: https://github.com/qte77/ai-agents-research/issues/452
+[pr1]: https://github.com/qte77/claude-code-plugins/pull/251
+[pr688]: https://github.com/qte77/ai-agents-research/pull/688
+[pr689]: https://github.com/qte77/ai-agents-research/pull/689
