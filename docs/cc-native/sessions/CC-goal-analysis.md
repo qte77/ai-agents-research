@@ -3,8 +3,8 @@ title: CC /goal Command Analysis
 source: https://code.claude.com/docs/en/goal
 purpose: Analysis of the /goal command, the session-scoped completion-condition loop that keeps Claude working across turns until a model-evaluated condition is met — its evaluation mechanism, lifecycle, version gates, and relation to other long-running-session approaches in this corpus.
 created: 2026-10-15
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-19
+validated_links: 2026-10-19
 status: generally-available
 ---
 
@@ -196,6 +196,87 @@ managed settings — in each case "the command tells you why instead of silently
 - Only four specific failure classes clear the goal outright; everything else retries or
   pauses rather than failing permanently or retrying forever.
 
+## Using `/goal` With Plan Files
+
+**Design pattern, not tested.** This corpus has not run `/goal` against a plan file. Mechanism
+claims below cite the [goal docs][goal-docs] and [hooks reference][hooks-ref] (both read
+2026-10-19); the pattern itself is our composition.
+
+### Division of labour
+
+A plan file (a remaining-work table with a gate and a done-when per row) and `/goal` solve
+different halves of a long-running job:
+
+| | Plan file | `/goal` |
+|---|---|---|
+| Lifetime | Across sessions, PRs and machines (in git) | One session; `/clear` removes it, resume resets turn count and timer |
+| Holds | What is open, who can do it, how to verify it | One completion condition, judged after each turn |
+| Judged by | The next session or a reviewer | The small fast model, from the transcript only |
+
+The plan stays the north star; `/goal` keeps one session working toward the agent-gated part of it
+without a prompt per turn. That is also why the plan, not the goal, has to carry the state: nothing
+in `/goal` survives `/clear` or a new session.
+
+### Writing the condition
+
+The docs' checklist for a durable condition is "One measurable end state", "A stated check" and
+"Constraints that matter". Applied to a plan file:
+
+- **Name the file, don't paste it.** The condition is capped at 4,000 characters; a path plus a
+  rule ("every agent-gated row is struck") stays short and survives plan edits.
+- **Scope to rows the agent can finish.** Owner- or data-gated rows can never become met inside the
+  session, so a "plan done" condition either loops or gets judged impossible. Say explicitly that
+  only owner/data rows remaining counts as met.
+- **Make the evidence visible.** The evaluator "doesn't run commands or read files independently",
+  so the condition must tell Claude what to print: the table's unstruck rows, and each PR's state
+  and checks.
+- **Use the agent-level done-when.** Where a merge is owner-gated, the agent's end state is "PR
+  open, CI green", not "merged".
+- **Add constraints and a bound.** Forbidden actions (no `--admin`, no edits outside the plan's
+  scope) and a turn or time clause, e.g. `or stop after 40 turns`.
+
+Template:
+
+```text
+/goal Every agent-gated row in the remaining-work table of docs/plans/<plan>.md is
+struck with a PR number, and each such PR is merged or open with CI green. Prove it in
+your final turn by printing the table's unstruck rows (only owner/data rows may remain)
+and `gh pr view <N> --json state,statusCheckRollup` for each PR. Owner- and data-gated
+rows are out of scope. Never use --admin. Or stop after 40 turns.
+```
+
+### Failure modes to plan for
+
+- **Compaction.** The evaluator judges the conversation, and the docs don't say how much evidence
+  from before a compaction it still sees. Ask for the evidence again in the final turn.
+- **Permission prompts.** `/goal` doesn't change permission mode; unattended runs need
+  [auto mode][auto-mode-config].
+- **Subagent lanes.** A running subagent or background shell defers evaluation to the next turn
+  that ends with nothing running; past 30 minutes a check-in starts (see Lifecycle above).
+- **Plan edits mid-run.** A row added to the table during the run widens the goal, because the
+  condition points at the file. Keep plan edits to striking rows.
+- **Headless runs.** `claude -p "/goal …"` runs to completion in one invocation; use
+  `--output-format stream-json --verbose` to see progress.
+
+### Deterministic alternative: a command Stop hook
+
+`/goal` is a model judging prose. A Stop hook of type `command` can run a script instead, for
+example one that parses the remaining-work table and blocks while unstruck agent-gated rows remain.
+Per the [hooks reference][hooks-ref]:
+
+- Exit code 2 on Stop "Prevents Claude from stopping, continues the conversation", and "Claude
+  receives the stderr message as the explanation for why it should continue"; JSON
+  `"decision": "block"` with a required `reason` does the same.
+- Stop input includes `stop_hook_active`, which "is `true` when Claude Code is already continuing as
+  a result of a stop hook" — check it to avoid blocking on a condition that will never resolve.
+- An 8-continuation cap ends the turn after eight consecutive blocks; the count resets whenever
+  Claude calls a tool (`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` raises it).
+
+Trade-off: the hook is exact and lives in settings (every session in scope), but it only checks
+what the script can parse — a struck row, not whether the work behind it is right. `/goal` judges
+looser conditions but only from what Claude printed. The two combine: the same table-parsing
+script can be the "stated check" a `/goal` condition tells Claude to run and print.
+
 ## Relation to Long-Running / Unattended-Session Work in This Corpus
 
 - [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md) — `/loop`'s own
@@ -217,7 +298,8 @@ transcript. This workspace's own unattended-execution rule (a local operating co
 part of this repo) instead persists state as a plan file with a per-item done-when, so
 progress and gating survive outside any single session or model call. This is a design-lens
 comparison only — not a claim that one supersedes the other — since the rule's plan-file
-discipline targets multi-PR arcs, while `/goal` targets a single session's turn loop.
+discipline targets multi-PR arcs, while `/goal` targets a single session's turn loop. How the two
+combine is in [Using `/goal` With Plan Files](#using-goal-with-plan-files).
 
 ## Sources
 
@@ -225,6 +307,7 @@ discipline targets multi-PR arcs, while `/goal` targets a single session's turn 
 |---|---|
 | [code.claude.com/docs/en/goal][goal-docs] | `/goal` command: mechanism, lifecycle, requirements, limitations |
 | [CC CHANGELOG][changelog-raw] (v2.1.139, v2.1.143, v2.1.234, v2.1.236, v2.1.239, v2.1.246, v2.1.269, v2.1.274) | Version gates for `/goal`'s introduction and subsequent lifecycle fixes |
+| [CC hooks reference][hooks-ref] | Stop hook blocking (exit 2 / `decision: "block"`), `stop_hook_active`, continuation cap |
 
 [goal-docs]: https://code.claude.com/docs/en/goal
 [changelog-raw]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
@@ -232,3 +315,4 @@ discipline targets multi-PR arcs, while `/goal` targets a single session's turn 
 [model-config]: https://code.claude.com/docs/en/model-config
 [auto-mode-config]: https://code.claude.com/docs/en/auto-mode-config
 [env-vars]: https://code.claude.com/docs/en/env-vars
+[hooks-ref]: https://code.claude.com/docs/en/hooks
