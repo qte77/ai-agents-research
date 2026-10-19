@@ -81,8 +81,8 @@ plugin(s). Tracking issue: [#452][issue] (open since 2026-09-23).
 
 ### PR 2 — ai-agents-research
 
-1. Add `"workspace-setup@qte77-claude-code-utils": true` to `.claude/settings.json` `enabledPlugins`
-   (aar's marketplace alias for `qte77/claude-code-plugins`; matches the working entries).
+1. Add `"workspace-setup@qte77-claude-code-plugins": true` to `.claude/settings.json` `enabledPlugins`
+   (the canonical marketplace name; aar's stale `qte77-claude-code-utils` alias is fixed in #688).
 2. Apply the row 5 decision for `.claude/rules/`, removing the local copies the plugin now owns
    (copy-if-not-exists won't overwrite them).
 3. Verify on a fresh session that the hook deploys the rules + the read-once hook.
