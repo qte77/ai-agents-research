@@ -196,53 +196,52 @@ managed settings — in each case "the command tells you why instead of silently
 - Only four specific failure classes clear the goal outright; everything else retries or
   pauses rather than failing permanently or retrying forever.
 
-## Using `/goal` With Plan Files
+## Pairing `/goal` With a Persistent Task List
 
-**Design pattern, not tested.** This corpus has not run `/goal` against a plan file. Mechanism
+**Design pattern, not tested.** This corpus has not run `/goal` against a task file. Mechanism
 claims below cite the [goal docs][goal-docs] and [hooks reference][hooks-ref] (both read
 2026-10-19); the pattern itself is our composition.
 
 ### Division of labour
 
-A plan file (a remaining-work table with a gate and a done-when per row) and `/goal` solve
-different halves of a long-running job:
+Long jobs usually have a durable task list: a plan file, a backlog doc, an issue queue. It and
+`/goal` solve different halves of the job:
 
-| | Plan file | `/goal` |
+| | Persistent task list | `/goal` |
 |---|---|---|
-| Lifetime | Across sessions, PRs and machines (in git) | One session; `/clear` removes it, resume resets turn count and timer |
-| Holds | What is open, who can do it, how to verify it | One completion condition, judged after each turn |
+| Lifetime | Across sessions and machines (in git or a tracker) | One session; `/clear` removes it, resume resets turn count and timer |
+| Holds | What is open and how to verify each item | One completion condition, judged after each turn |
 | Judged by | The next session or a reviewer | The small fast model, from the transcript only |
 
-The plan stays the north star; `/goal` keeps one session working toward the agent-gated part of it
-without a prompt per turn. That is also why the plan, not the goal, has to carry the state: nothing
-in `/goal` survives `/clear` or a new session.
+The list stays the long-lived source of truth; `/goal` keeps one session working through it without
+a prompt per turn. The list has to carry the state, because nothing in `/goal` survives `/clear` or a
+new session.
 
 ### Writing the condition
 
 The docs' checklist for a durable condition is "One measurable end state", "A stated check" and
-"Constraints that matter". Applied to a plan file:
+"Constraints that matter". Applied to a task list:
 
-- **Name the file, don't paste it.** The condition is capped at 4,000 characters; a path plus a
-  rule ("every agent-gated row is struck") stays short and survives plan edits.
-- **Scope to rows the agent can finish.** Owner- or data-gated rows can never become met inside the
-  session, so a "plan done" condition either loops or gets judged impossible. Say explicitly that
-  only owner/data rows remaining counts as met.
+- **Name the file, don't paste it.** The condition is capped at 4,000 characters; a path plus a rule
+  ("every open item is done") stays short and survives edits to the list.
+- **Scope to items Claude can finish.** Items that wait on a person or on outside data can never
+  become met inside the session, so a "list done" condition either loops or gets judged impossible.
+  Say which items are out of scope, and that only those remaining counts as met.
 - **Make the evidence visible.** The evaluator "doesn't run commands or read files independently",
-  so the condition must tell Claude what to print: the table's unstruck rows, and each PR's state
-  and checks.
-- **Use the agent-level done-when.** Where a merge is owner-gated, the agent's end state is "PR
-  open, CI green", not "merged".
-- **Add constraints and a bound.** Forbidden actions (no `--admin`, no edits outside the plan's
-  scope) and a turn or time clause, e.g. `or stop after 40 turns`.
+  so the condition must tell Claude what to print: the remaining open items, and the test or build
+  result for each finished one.
+- **Pick an end state Claude can reach.** If a human approves the last step (a merge, a deploy),
+  the session's end state is the step before it, e.g. "change ready for review, tests green".
+- **Add constraints and a bound.** Forbidden actions and a turn or time clause, e.g.
+  `or stop after 40 turns`.
 
-Template:
+Generic template:
 
 ```text
-/goal Every agent-gated row in the remaining-work table of docs/plans/<plan>.md is
-struck with a PR number, and each such PR is merged or open with CI green. Prove it in
-your final turn by printing the table's unstruck rows (only owner/data rows may remain)
-and `gh pr view <N> --json state,statusCheckRollup` for each PR. Owner- and data-gated
-rows are out of scope. Never use --admin. Or stop after 40 turns.
+/goal Every open item in <task-file> that doesn't wait on a person is done and
+verified. Prove it in your final turn by printing the items still open (only ones that
+wait on a person may remain) and the output of <check-command>. Don't touch items
+outside that list. Or stop after 40 turns.
 ```
 
 ### Failure modes to plan for
@@ -251,18 +250,18 @@ rows are out of scope. Never use --admin. Or stop after 40 turns.
   from before a compaction it still sees. Ask for the evidence again in the final turn.
 - **Permission prompts.** `/goal` doesn't change permission mode; unattended runs need
   [auto mode][auto-mode-config].
-- **Subagent lanes.** A running subagent or background shell defers evaluation to the next turn
-  that ends with nothing running; past 30 minutes a check-in starts (see Lifecycle above).
-- **Plan edits mid-run.** A row added to the table during the run widens the goal, because the
-  condition points at the file. Keep plan edits to striking rows.
+- **Subagents.** A running subagent or background shell defers evaluation to the next turn that
+  ends with nothing running; past 30 minutes a check-in starts (see Lifecycle above).
+- **Edits to the list mid-run.** An item added during the run widens the goal, because the condition
+  points at the file.
 - **Headless runs.** `claude -p "/goal …"` runs to completion in one invocation; use
   `--output-format stream-json --verbose` to see progress.
 
 ### Deterministic alternative: a command Stop hook
 
 `/goal` is a model judging prose. A Stop hook of type `command` can run a script instead, for
-example one that parses the remaining-work table and blocks while unstruck agent-gated rows remain.
-Per the [hooks reference][hooks-ref]:
+example one that parses the task list and blocks while open items remain. Per the
+[hooks reference][hooks-ref]:
 
 - Exit code 2 on Stop "Prevents Claude from stopping, continues the conversation", and "Claude
   receives the stderr message as the explanation for why it should continue"; JSON
@@ -273,9 +272,9 @@ Per the [hooks reference][hooks-ref]:
   Claude calls a tool (`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` raises it).
 
 Trade-off: the hook is exact and lives in settings (every session in scope), but it only checks
-what the script can parse — a struck row, not whether the work behind it is right. `/goal` judges
-looser conditions but only from what Claude printed. The two combine: the same table-parsing
-script can be the "stated check" a `/goal` condition tells Claude to run and print.
+what the script can parse, not whether the work behind an item is right. `/goal` judges looser
+conditions but only from what Claude printed. The two combine: the same parsing script can be the
+"stated check" a `/goal` condition tells Claude to run and print.
 
 ## Relation to Long-Running / Unattended-Session Work in This Corpus
 
@@ -299,7 +298,7 @@ part of this repo) instead persists state as a plan file with a per-item done-wh
 progress and gating survive outside any single session or model call. This is a design-lens
 comparison only — not a claim that one supersedes the other — since the rule's plan-file
 discipline targets multi-PR arcs, while `/goal` targets a single session's turn loop. How the two
-combine is in [Using `/goal` With Plan Files](#using-goal-with-plan-files).
+combine is in [Pairing `/goal` With a Persistent Task List](#pairing-goal-with-a-persistent-task-list).
 
 ## Sources
 
