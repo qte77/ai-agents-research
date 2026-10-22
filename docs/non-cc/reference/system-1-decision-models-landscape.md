@@ -2,8 +2,8 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-22
+validated_links: 2026-10-22
 status: assess
 ---
 
@@ -1216,9 +1216,9 @@ validated for patient care**. One line only, per this batch's scope — no rubri
 
 ## Tools built on Jev
 
-Six projects call Jev (or an alternative decision model) as one step in a larger tool. Four have
-their own home elsewhere in this corpus and this section only points to them; probably and pg-jev
-have none yet, so their full entries live here.
+Seven projects call Jev (or an alternative decision model) as one step in a larger tool. Four have
+their own home elsewhere in this corpus and this section only points to them; probably, pg-jev and
+jev-browser have none yet, so their full entries live here.
 
 - **abide** (coldteadotai) — asks Jev one question per AGENTS.md rule on every coding-agent edit or
   turn and has the agent repair a break. See
@@ -1267,6 +1267,39 @@ have none yet, so their full entries live here.
   | n/a [README][probably] (a single-user CLI/language, not a multi-agent store) | n/a [README][probably] (a local interpreter; no deployment target) | partial [README][probably] (`--replay` deterministically reproduces a prior run from its saved effect tape, but a live run's model outputs are not themselves pinned/reproducible) | no data [README][probably] (no plugin/backend extension point beyond the two built-in provider adapters) | no [README][probably] (recordings are individual JSON files, not a versioned store) | yes [README][probably] (a saved run's every judgment, generated text, and random draw is inspectable in its recording) |
 
   `scored 2026-09-30`
+
+- **jev-browser** (jkudish) — **Repo**: [jkudish/jev-browser][jev-browser] | **License**: MIT
+  (confirmed against `LICENSE`) | **Stars**: 341, created 2026-09-17, pushed 2026-10-21, latest
+  release `v0.8.9` (2026-10-21) (`gh api`, 2026-10-22). A browser-use tool: given a task and a URL,
+  it drives a headless Chromium (Playwright) while Jev "picks one action per step from the page's
+  clickable, typeable, and selectable elements, and scores how likely it is that the goal is met or
+  the run is stuck." Per its README, "Code owns the loop: budgets, recovery, stop gates" — the same
+  pick-next-action shape as jev-ultrafast, with Jev's goal-met probability doubling as the stop
+  condition. Runs as an MCP server, a CLI or a library; the README gives MCP setup for Claude
+  Code, Codex, OpenCode and Amp. Needs Node.js 22+; TypeSafe direct is the default Jev transport.
+  Its README's examples are self-reported (e.g. Wikipedia Coffee → Espresso "in about 4 seconds,
+  for $0.0016"), and two sources disagree on form filling: the README lists "Filled a contact
+  form and stopped without submitting it", while the community list awesome-jev (below) reports
+  from its own container run that "Every typing step presses Enter, so filling a contact form
+  submits it" (neither states the version tested). A fork exists at MrJev/jev-browser (stale since
+  2026-09-19); cite upstream. No rubric row: an application of Jev's existing API, not a new
+  decision-model architecture (gap-driven scoring, plan 0011 row O1).
+
+**Community catalogs.** Two CC0-licensed awesome lists track the Jev ecosystem and are useful
+discovery sources for this section; both describe their entries' numbers as author-reported, so
+treat them as leads to verify, not evidence:
+
+- [cobanov/awesome-jev][awesome-jev-cobanov] — 575 stars (`gh api`, 2026-10-22); per its README the
+  catalog reached 155 entries after "20 source-reviewed integrations", grouped into provider,
+  framework, browser/computer-use, context/compaction and evaluation sections. MrJev/awesome-jev-1
+  is a stale fork of it (pushed 2026-09-20 only).
+- [MrJev/awesome-jev][awesome-jev-mrjev] — 17 stars; its README states "597 entries · every one
+  checked to actually call Jev", sets a written bar (Jev central, 10+ stars, it runs) and says it
+  "is not affiliated with or endorsed by TypeSafe AI." Adds two tables found nowhere else: "What
+  We Found Running These" (issues its maintainers report from running tools in containers — e.g.
+  the jev-browser form-submit finding above) and "Running Without Jev" (which tools accept a
+  non-Jev endpoint, checked by the maintainers). The account behind it (MrJev, created
+  2026-09-18) does not say who runs it; 17 of its 18 public repos are forks.
 
 ## Also found: JevK5 and SemIf
 
@@ -1555,6 +1588,9 @@ here.
 [tcu-home]: https://github.com/awlevin/typesafe-computer-use
 [probably]: https://github.com/southpolesteve/probably
 [pg-jev]: https://github.com/realZachi/pg-jev
+[jev-browser]: https://github.com/jkudish/jev-browser
+[awesome-jev-cobanov]: https://github.com/cobanov/awesome-jev
+[awesome-jev-mrjev]: https://github.com/MrJev/awesome-jev
 [osi-pgl]: https://opensource.org/license/postgresql
 [jevk5]: https://github.com/allebee/jevk5
 [jevbench]: https://github.com/fstandhartinger/jevbench
