@@ -4,8 +4,8 @@ description: Survey of community plugin catalogs — awesome-claude-code (curate
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-10-22
+validated_links: 2026-10-22
 ---
 
 ## Summary
@@ -253,6 +253,26 @@ npx skills add iusztinpaul/squid
 
 [openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) — an **official OpenAI** plugin (Apache-2.0, ~26.9k★, v1.0.6) that runs Codex from inside a CC session for review or task delegation. Notable for building entirely on CC's own extension surface: slash commands (`/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:transfer`, …), a `codex-rescue` subagent, and a **`Stop`-hook review gate** that can block Claude's response when Codex flags issues; plus background delegation and full session transfer. A rival lab productizing cross-agent delegation on CC primitives. Full analysis: [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md).
 
+## Community Mod Catalogs
+
+Mods — plugins whose JavaScript/TypeScript handlers run inside Claude Code and can draw UI (first-party
+coverage: [CC-mods-function-hooks-analysis.md](../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md))
+— gained community catalogs within weeks of becoming default-on in v2.1.287. Checked 2026-10-22; none of
+these is Anthropic's.
+
+| Catalog | What it is | Licence / size | Notes |
+|---|---|---|---|
+| [claude-mods.com][mods-dir] | Mod directory; labels itself "Unofficial directory" | No licence stated; "278 mods listed" | Operator not named on the page |
+| [OneWave-AI/claude-code-mods][onewave] | 11 mods (README: "Eleven mods"; repo description says ten): burn-meter, launch-codes, session-wrapped, boss-fight, code-pet, inner-monologue, sportscaster, agent-narrator, swarm, agent-race, inbox-alerts | MIT; 23★, created 2026-10-02 | Self-described "Anthropic Partner Network firm" (unverified). `inbox-alerts` "Polls Gmail, Slack, and Google Calendar every two minutes through the claude.ai connectors" |
+| [whyashthakker/awesome-claude-code-mods][awesome-mods] | 50-mod collection, introduced by its author's [explainx.ai post][explainx-mods] (Yash Thakker, 2026-10-03) | MIT; 88★, created 2026-10-03 | Claims "50 of 50 pass strict validation" (unverified) |
+| [ruvnet field guide (gist)][ruvnet-mods] | "Claude Code Mods: a field guide" — how-to, no mod code | No licence stated | Partly outdated: tells readers to `export CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1`, which "Claude Code v2.1.287 and later ignores" per the [first-party docs][mods-overview-cc]. Its own advice: "Grep them before you trust any guide, this one included." |
+
+**Install-path caution.** OneWave, the explainx post and the ruvnet gist all suggest adding
+`CLAUDE_CODE_PLUGIN_DIRS` to the `env` block of `~/.claude/settings.json`, which loads those mod
+directories into *every* session (the explainx post itself says it "could not verify end to end in the
+app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our advice is to prefer the per-session
+`--plugin-dir` or a marketplace install, and run `claude plugin validate` on a mod before trusting it.
+
 ## Ecosystem Observations
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
@@ -275,8 +295,16 @@ npx skills add iusztinpaul/squid
 | [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
 | [squid][squid] | Agentic engineering pipeline plugin (5-agent; ADR memory + Tasks Plan task decomposition) |
 | [squid writeup][squid-writeup] | Author's setup rationale (decodingai) |
+| [claude-mods.com][mods-dir] · [OneWave-AI/claude-code-mods][onewave] · [awesome-claude-code-mods][awesome-mods] · [explainx.ai post][explainx-mods] · [ruvnet gist][ruvnet-mods] | Community mod catalogs and guides (checked 2026-10-22) |
+| [Mods overview][mods-overview-cc] | First-party: "Mods aren't sandboxed"; `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` ignored from v2.1.287 |
 
 [ponytail]: https://github.com/DietrichGebert/ponytail
+[mods-dir]: https://claude-mods.com/
+[onewave]: https://github.com/OneWave-AI/claude-code-mods
+[awesome-mods]: https://github.com/whyashthakker/awesome-claude-code-mods
+[explainx-mods]: https://www.explainx.ai/blog/awesome-claude-code-mods-50-open-source-mods-install-guide-2026
+[ruvnet-mods]: https://gist.github.com/ruvnet/a485e930b148185197fc53fd38b429ea
+[mods-overview-cc]: https://code.claude.com/docs/en/plugins/mods/overview
 [squid]: https://github.com/iusztinpaul/squid
 [squid-writeup]: https://www.decodingai.com/p/squid-my-agentic-coding-setup-may-2026
 [acc]: https://github.com/hesreallyhim/awesome-claude-code
