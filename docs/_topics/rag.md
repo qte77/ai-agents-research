@@ -15,6 +15,7 @@ see [the hub index](README.md).
 | [minigraf-analysis.md](../non-cc/context-memory/minigraf-analysis.md) | Embedded bi-temporal Datalog graph database; pairs with vector stores for the GraphRAG pattern | non-cc |
 | [openviking-analysis.md § vs Vector DB / RAG](../non-cc/context-memory/openviking-analysis.md#comparison-with-traditional-vector-db--rag) | Filesystem context database compared with classic RAG | non-cc |
 | [karpathy-llm-kb-analysis.md](../non-cc/knowledge-management/karpathy-llm-kb-analysis.md) | Markdown-first knowledge base as an alternative to RAG; also CorpusMap (arXiv:2609.37226, entity pages as a navigation layer for agentic search) | non-cc |
+| [onyx-analysis.md](../non-cc/knowledge-management/onyx-analysis.md) | Self-hostable company knowledge layer: permission-aware hybrid index over 50+ apps, served to chat, agents and MCP clients | non-cc |
 | [web-scraping-extraction-landscape.md](../non-cc/infrastructure/web-scraping-extraction-landscape.md) | Scraping and extraction tools that feed RAG pipelines | non-cc |
 | [CC-code-tooling-landscape.md § cocoindex-code](../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io) | Embeddings-based semantic code search for CC | cc-community |
 
