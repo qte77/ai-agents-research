@@ -57,6 +57,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [pi-analysis.md](coding-agents/pi-analysis.md) | Pi (minimal terminal coding agent CLI, 15+ providers; Omnigent harness) | Yes | Yes (MIT) |
 | [deepcode-analysis.md](coding-agents/deepcode-analysis.md) | DeepCode (HKUDS; open agentic coding harness, Paper2Code origin, Loop Engineering; CLI/Desktop/Web/TUI) | Partial | Yes (MIT) |
 | [deepseek-harness-analysis.md](coding-agents/deepseek-harness-analysis.md) | DeepSeek Harness (`dsh`; plugin-native "everything-is-a-plugin" harness; developer preview) | Partial | Yes (MIT) |
+| [goal-loops-landscape.md](coding-agents/goal-loops-landscape.md) | Goal loops across coding agents (`/goal` in Codex, Antigravity, Kiro, Copilot CLI, Cursor; VS Code Advanced Autopilot; Stop-style hooks) | n/a | n/a |
 | [prime-agent-analysis.md](coding-agents/prime-agent-analysis.md) | Prime Agent (Prime Intellect; self-improving coding harness on the Recursive Language Model abstraction) | Yes | Yes (MIT) |
 
 ## Knowledge Management
