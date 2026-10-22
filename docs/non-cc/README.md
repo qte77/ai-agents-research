@@ -66,6 +66,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 |---|---|---|---|
 | [karpathy-llm-kb-analysis.md](knowledge-management/karpathy-llm-kb-analysis.md) | Karpathy LLM Knowledge Base (markdown-first wiki) | Yes | Gist only |
 | [deepwiki-analysis.md](knowledge-management/deepwiki-analysis.md) | DeepWiki (Cognition/Devin auto-generated repo wikis + chat Q&A) | No (hosted) | No |
+| [onyx-analysis.md](knowledge-management/onyx-analysis.md) | Onyx (DanswerAI, Inc.; self-hostable company knowledge/context layer: 50+ connectors, agentic RAG, MCP server for coding agents) | Yes (self-host) | Open core (MIT + `ee/` Enterprise License) |
 | [repo-to-docs-tools-landscape.md](knowledge-management/repo-to-docs-tools-landscape.md) | Repo-to-docs AI tools catalog (DeepWiki, Code2Tutorial, GitSummarize, Understand Anything); multi-platform | — | Mixed |
 | [research-agents-landscape.md](knowledge-management/research-agents-landscape.md) | Research/discovery agents catalog (STORM, GPT-Researcher, Elicit, FutureHouse, OpenScholar, PaperQA2) + mapping to CC's /deep-research harness | — | Mixed |
 | [open-knowledge-format-analysis.md](knowledge-management/open-knowledge-format-analysis.md) | Open Knowledge Format (Google Cloud agent-readable data-catalog spec, v0.1) | — (spec) | Yes (Apache-2.0) |
