@@ -3,8 +3,8 @@ title: CC /goal Command Analysis
 source: https://code.claude.com/docs/en/goal
 purpose: Analysis of the /goal command, the session-scoped completion-condition loop that keeps Claude working across turns until a model-evaluated condition is met — its evaluation mechanism, lifecycle, version gates, and relation to other long-running-session approaches in this corpus.
 created: 2026-10-15
-updated: 2026-10-19
-validated_links: 2026-10-19
+updated: 2026-10-22
+validated_links: 2026-10-22
 status: generally-available
 ---
 
@@ -255,7 +255,8 @@ outside that list. Or stop after 40 turns.
 - **Edits to the list mid-run.** An item added during the run widens the goal, because the condition
   points at the file.
 - **Headless runs.** `claude -p "/goal …"` runs to completion in one invocation; use
-  `--output-format stream-json --verbose` to see progress.
+  `--output-format stream-json --verbose` to see progress, and set a permission mode — see
+  [Offloading and Batch Runs](#offloading-and-batch-runs).
 
 ### Deterministic alternative: a command Stop hook
 
@@ -275,6 +276,49 @@ Trade-off: the hook is exact and lives in settings (every session in scope), but
 what the script can parse, not whether the work behind an item is right. `/goal` judges looser
 conditions but only from what Claude printed. The two combine: the same parsing script can be the
 "stated check" a `/goal` condition tells Claude to run and print.
+
+## Offloading and Batch Runs
+
+Read 2026-10-22 from the [headless][headless], [cloud sessions][cloud-web] and
+[routines][routines] docs. Where a combination is ours rather than documented, it says so.
+
+- **Headless needs a permission mode.** "With Claude Code v2.1.302 or later, `claude -p` runs start
+  in Manual mode when nothing sets a permission mode", and there "a call that needs approval is
+  denied unless something approves it, such as a `PermissionRequest` hook or a
+  `--permission-prompt-tool`." Since `/goal` doesn't change permission mode, an unattended
+  `claude -p "/goal …"` needs one set, e.g. `--permission-mode auto`, plus `--permission-prompts none`
+  "when nobody is available to answer permission prompts" (v2.1.259+), or a narrow `--allowedTools`.
+- **Exit status can't tell outcomes apart.** The headless page documents exit 0 on success, non-zero
+  when the run fails, and 143 on SIGTERM — nothing that separates "goal met" from "judged impossible"
+  or "stopped by the bound in the condition". A batch runner should parse the stream-json output, or
+  have the condition's final turn print a marker it can grep (our composition).
+- **Batches are one goal per process.** Only one goal is active per session (see Setting, Checking,
+  Clearing above), so a batch is many
+  `claude -p` processes, ideally one per git worktree so their edits don't collide (our
+  composition; not documented as a pattern for `/goal`).
+- **Cloud sessions and routines don't mention `/goal`.** The cloud page says "Cloud sessions support
+  built-in commands that produce text output" without naming `/goal`, and the goal page's only
+  cloud mention is the auth-failure carve-out above. `--cloud` is the current offload flag ("The older
+  `--remote` spelling still works as a deprecated alias for `--cloud`"). Running a goal in a cloud
+  session is therefore untested here. Routines are the same: the page doesn't name `/goal`, and warns
+  that "A green status in the run list means the session started and exited without an
+  infrastructure error. It does not mean the work your prompt describes succeeded." — so a routine's
+  prompt has to carry its own completion check either way.
+
+### From goal to spec to PR
+
+Anthropic's [best practices][best-practices] already describe the chain this section's pattern
+plugs into: the heading "Explore first, then plan, then code"; a spec step ("Keep interviewing until
+we've covered everything, then write a complete spec to SPEC.md."); and, for the run itself, "set the
+check as a `/goal` condition", because "The `/goal` and Stop hook versions are what let an unattended
+run finish correctly without you." Planning locally and executing in a cloud session is covered in
+[CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
+
+Composed into one chain (ours): an objective → a spec or plan file → one `claude -p "/goal …"` per
+spec item (permission mode set, one worktree each) that ends at "PR open, checks green" → a report
+built from the PRs, not from exit codes. How this repo's own estate wires objectives to plans and
+PRs is out of scope here; the vendor-neutral comparison of goal features is in
+[goal-loops-landscape.md](../../non-cc/coding-agents/goal-loops-landscape.md).
 
 ## Relation to Long-Running / Unattended-Session Work in This Corpus
 
@@ -307,6 +351,10 @@ combine is in [Pairing `/goal` With a Persistent Task List](#pairing-goal-with-a
 | [code.claude.com/docs/en/goal][goal-docs] | `/goal` command: mechanism, lifecycle, requirements, limitations |
 | [CC CHANGELOG][changelog-raw] (v2.1.139, v2.1.143, v2.1.234, v2.1.236, v2.1.239, v2.1.246, v2.1.269, v2.1.274) | Version gates for `/goal`'s introduction and subsequent lifecycle fixes |
 | [CC hooks reference][hooks-ref] | Stop hook blocking (exit 2 / `decision: "block"`), `stop_hook_active`, continuation cap |
+| [CC headless docs][headless] | Manual-mode default for `claude -p` (v2.1.302+), permission flags, exit codes |
+| [CC cloud sessions docs][cloud-web] | Supported commands in cloud sessions; `--remote` → `--cloud` |
+| [CC routines docs][routines] | What a green run status does and doesn't mean |
+| [CC best practices][best-practices] | Explore → plan → code, SPEC.md, `/goal` / Stop hook as the unattended completion gate |
 
 [goal-docs]: https://code.claude.com/docs/en/goal
 [changelog-raw]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
@@ -315,3 +363,7 @@ combine is in [Pairing `/goal` With a Persistent Task List](#pairing-goal-with-a
 [auto-mode-config]: https://code.claude.com/docs/en/auto-mode-config
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [hooks-ref]: https://code.claude.com/docs/en/hooks
+[headless]: https://code.claude.com/docs/en/headless
+[cloud-web]: https://code.claude.com/docs/en/claude-code-on-the-web
+[routines]: https://code.claude.com/docs/en/routines
+[best-practices]: https://code.claude.com/docs/en/best-practices
