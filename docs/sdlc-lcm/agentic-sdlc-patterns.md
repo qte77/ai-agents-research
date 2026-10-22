@@ -2,7 +2,7 @@
 title: Agentic SDLC Patterns
 purpose: Emerging lifecycle patterns for AI agent-driven development.
 created: 2026-03-24
-updated: 2026-09-30
+updated: 2026-10-22
 validated_links: 2026-09-30
 sources:
   - https://www.epam.com/insights/ai/blogs/agentic-development-lifecycle-explained
@@ -37,6 +37,20 @@ A lifecycle for systems where LLMs are core product behavior, not just assistant
 
 **qte77 mapping:** Ralph = Build+Evaluate, RAPID = Define+Evaluate.
 Gap: no formal Observe+Correct phases (post-deployment feedback loop).
+
+**Practitioner variant — artifacts as the loop (opinion, 2026-10-22).** A LinkedIn post by Rakesh
+Gohel (plain-text URL, LinkedIn blocks link checks:
+linkedin.com/posts/rakeshgohel01_aiagents-agenticai-generativeai-activity-7519013305848315904-i4rL)
+frames ADLC as a loop where "every stage commits an artifact the next stage reads": an intent file,
+skills, `CLAUDE.md`, hooks and continuous evals, with "the chain of commits" becoming the audit trail and
+"Guardrails run as hooks, not as habits." Its Maintain stage speaks to the gap above — "A production
+alert writes a new intent.md and flows back through the pipeline with no human in the invocation
+path" — an Observe→Correct step expressed as repository artifacts. **Caution:** with no human in that
+path, alert and log text becomes an instruction to the agent, so a crafted error message is a prompt
+injection that can end in a deploy (two replies to the post make this point). Keep a human or a
+validated-schema gate between an alert and a new intent file. No data or sources; the post links to
+the author's commercial "governing AI agents" offer, and its claim that Anthropic uses the term
+"AI-native SDLC" is unverified here.
 
 ## 2. Agentic SDLC (Microsoft/GitLab/PwC)
 
