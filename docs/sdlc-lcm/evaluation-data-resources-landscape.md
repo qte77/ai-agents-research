@@ -64,6 +64,21 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Multimodal/general**: [GAIA2](https://openreview.net/forum?id=9gw03JpKK4) (async environments, ~42% best pass@1).
 
+**Domain: clinical speech-to-text (vendor-run)**: [Omi Health's medical STT benchmark][omi-bench]
+scores speech-to-text accuracy and latency on medical speech, batch and realtime. It is not an agent
+or clinical-reasoning benchmark, but it is the input layer for voice-driven clinical agents and
+scribes. The page states "Omi-run evaluation. Same recordings and scorer for every model" on "1,513
+English recordings, 7.2 hours" (edition "2026-10-18.1 (extends 2026-09-26.1)"), with metrics for
+medical word error, drug-name errors and dose/unit matches. Omi's own model tops its own tables —
+batch medical WER 0.87%, "Lowest among 19 tested APIs", and 1 drug-term error in 442, ahead of Voxtral
+Small Transcribe 3 at 1.04% — and Omi sells that model as a hosted API ([home][omi-home]: "Start with 25
+free hours"), so this is a vendor scoring itself. The page doesn't say where the 1,513 recordings come
+from or whether they are released. The open scorer repo, [Omi-Health/medical-STT-eval][omi-repo] (MIT),
+uses a different, public set — 57 PriMock57 consultations, "Reference transcripts derived from PriMock57
+under CC BY 4.0" — and its own 42-model leaderboard (updated 2026-04-29) doesn't include Omi's model.
+The page's own caveat: "Scores describe the tested configurations, not clinical safety; small
+differences do not establish statistical significance." Checked 2026-10-22.
+
 **Leaderboards**: SciArena, Berkeley Function-Calling, Chatbot Arena, GAIA, WebDev Arena, MiniWoB++.
 
 **Agent-readiness scoring (websites/APIs)**: a new, two-vendor category — `git grep` for `ora.ai`,
@@ -146,6 +161,9 @@ not as evidence, and cite them rather than copying scores.
 
 Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. Agent-readiness-scoring sources (checked 2026-10-15; DevTool Arena and Lightsage re-checked 2026-10-22):
 
+[omi-bench]: https://omi.health/benchmark
+[omi-home]: https://omi.health/
+[omi-repo]: https://github.com/Omi-Health/medical-STT-eval
 [ora]: https://ora.ai
 [ora-research]: https://ora.ai/research
 [lightsage]: https://lightsage.com
