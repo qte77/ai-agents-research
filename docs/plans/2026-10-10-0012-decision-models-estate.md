@@ -195,7 +195,7 @@ Lane notes:
 | R6 | Goal → KR loop gaps in qte77/qte77: KR `eval:` and the `/goal` condition are unlinked; no `/goal` session can close a KR (merge is owner-gated, by design); nothing triggers `goal_rollup.py`; `goals.md` doesn't name the plan `NNN`. **Default:** a doc-only proposal in `docs/goals.md`, no automation yet | agent (sibling), owner merges | PR in qte77/qte77 merged |
 | R7 | Marketplace product SEO/ASO (server-rendered pages, schema.org listings, city × service pages, app-store listing) | owner | Owner names the product repo; the plan goes there, linking this repo's research |
 | R8 | DevTool Arena change monitor. **Default:** none — re-check by hand per docs refresh (no data licence, conflict of interest, repo rule against copying external data) | owner | Owner keeps the default, or asks for a monthly changelog-hash monitor that only opens an issue |
-| R9 | Microsoft 365 agent research: no PR or issue found in this repo (nearest: qte77/__azure-doc-workflows#544) | owner | Owner says where it went, or asks for a research lane |
+| ~~R9~~ | ~~Microsoft 365 agent research~~ | owner | Shipped: #704 (`microsoft-365-copilot-analysis.md`, falsified 2026-10-23: 23/25 confirmed, none wrong; incl. guardrails for SharePoint/M365 agent skills); spec/parity split to #708; follow-ups (drift job, webinar) in #705 |
 | R10 | GPG signing for qte77/qte77 failed on 2026-10-22 ("No secret key"; worked earlier the same week) | owner | Codespaces trusted-repos setting checked; a signed commit succeeds |
 | ~~R11~~ | ~~`/focus` (focus view) and `viewMode` from the first-party commands reference~~ | agent | Shipped: this PR (row in `CC-tools-inventory.md` § Slash Commands; `viewMode` values/default not yet verified verbatim) |
 
