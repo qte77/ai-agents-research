@@ -14,6 +14,6 @@ Official plugins, connectors, Cowork platform, office document skills, business 
 | [CC-plugin-packaging-research.md](CC-plugin-packaging-research.md) | Plugin packaging formats and distribution |
 | [CC-channels-analysis.md](CC-channels-analysis.md) | Distribution channels analysis |
 | [CC-chrome-extension-analysis.md](CC-chrome-extension-analysis.md) | Chrome extension capabilities |
-| [CC-web-scraping-plugins-analysis.md](CC-web-scraping-plugins-analysis.md) | Web scraping plugin landscape |
+| [CC-web-scraping-plugins-analysis.md](CC-web-scraping-plugins-analysis.md) | Web tools: optional Parallel Search MCP, Firecrawl, Playwright, and built-in tools |
 | [CC-mcp-hardware-standard-analysis.md](CC-mcp-hardware-standard-analysis.md) | Model Hardware Standard (MHS): Anthropic's research-preview spec for AI agents operating physical lab/manufacturing hardware, and its relationship to MCP |
 | [CC-claude-science-analysis.md](CC-claude-science-analysis.md) | Claude Science: desktop AI workbench for scientists — sandboxed runs, provenance-recorded artifacts, reviewer, remote compute |

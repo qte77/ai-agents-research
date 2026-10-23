@@ -1,16 +1,18 @@
 ---
-title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
+title: CC Web Tools — Parallel Search, Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
-purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
+purpose: Evaluate optional search, extraction, and browser MCP tools in Claude Code alongside built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-10-17
+validated_links: 2026-10-17
 status: research
 ---
 
 ## Context
 
 Claude Code provides built-in web tools (WebSearch, WebFetch) for basic web access. Two prominent MCP plugins — **Firecrawl** and **Playwright** — extend these capabilities significantly. This analysis evaluates when each option is the right tool and whether the plugins justify their setup cost over the built-in tools.
+
+[Parallel Search MCP](#parallel-search-mcp) adds an optional hosted search-and-read path for public-web research, with no account or API key needed for its free tier.
 
 ## CC Plugin vs Raw MCP Server
 
@@ -86,6 +88,45 @@ WebSearch and WebFetch are a **pair**: WebSearch *discovers* (result blocks — 
 | HTTP → HTTPS upgrade | Plain-HTTP URLs are auto-upgraded before fetch | [system prompt][cc-system-prompts] |
 
 WebSearch adds two of its own: **US-only** region-locking (the API `web_search` tool exposes a `user_location` parameter; the Claude Code built-in does not), and **domain filtering as the only operator** (`allowed_domains` / `blocked_domains`; no other query operators beyond the search string). Both per the [web search tool][websearch-api-docs] docs.
+
+## Parallel Search MCP
+
+### What It Is
+
+[Parallel Search MCP][parallel-search-mcp] is a hosted HTTP MCP service exposing `web_search` for source discovery and `web_fetch` for reading selected URLs as markdown. Anonymous searches use **Fast mode** with server-managed settings; this is an optional retrieval tool, not a change to Claude Code's built-in web tools. Service details below were checked on 2026-10-17 ([source][parallel-search-mcp]).
+
+### Setup and Use
+
+With Claude Code installed, run from the project where you want the connection:
+
+```bash
+claude mcp list
+# If parallel-search is not already configured:
+claude mcp add --transport http --scope local parallel-search https://search.parallel.ai/mcp
+claude mcp get parallel-search
+```
+
+The [local scope][cc-mcp-local] keeps the entry private to this project in your user configuration; it does not create a committed `.mcp.json`. Existing MCP entries remain configured. In an interactive Claude Code session, use `/mcp` to confirm the connection ([setup][parallel-search-mcp], [server management][cc-mcp-manage]).
+
+Try a source-checking task, for example:
+
+> Use the parallel-search server's web_search to find the current official FastAPI response-model documentation. If the excerpts are insufficient, use its web_fetch on the selected official URL. Explain a minimal response-model example and cite the source.
+
+`web_search` takes an `objective` and `search_queries`; `web_fetch` takes `urls` and can focus excerpts with an `objective` and the original search queries. Fetch defaults to excerpts; request `full_content` only when complete page markdown is needed, since it can exceed the client's output limit ([tool parameters][parallel-search-mcp]).
+
+To remove this optional connection, run from the same project:
+
+```bash
+claude mcp remove parallel-search --scope local
+```
+
+### Adoption Decision and Limits
+
+**Trial for public-web source research:** use search excerpts to select relevant pages, fetch more detail when needed, and check the cited originals. Retain the existing built-in tools for quick lookups and [Playwright MCP](#playwright-mcp-server) for interactive browser workflows.
+
+- Anonymous `/mcp` access is free at lower rate limits, intended for exploration and light use. For higher limits, the same endpoint accepts a Bearer API key; `/mcp-oauth` requires authentication and supports OAuth sign-in ([installation][parallel-search-mcp]).
+- Anonymous search settings are server-managed; connection-level search overrides require authentication and do not affect `web_fetch` ([configuration][parallel-search-mcp]).
+- Fetch accepts up to 20 HTTP/HTTPS URLs per call. Excerpts are capped to roughly 25,000 characters per tool call; full content can be much larger ([limits][parallel-search-mcp]).
 
 ## Firecrawl MCP Server
 
@@ -377,6 +418,11 @@ For event scraping across multiple sites:
 - No extra setup desired
 - Content is static and publicly accessible
 
+### Use Parallel Search MCP When
+
+- Researching public-web sources with an optional, keyless search-and-read connection
+- Following selected search results for more detail; see [setup and limits](#parallel-search-mcp)
+
 ### Use Firecrawl MCP When
 
 - **Batch scraping** multiple URLs or crawling entire sites
@@ -465,6 +511,9 @@ For the Python-library landscape behind web crawling and source connectors (poly
 
 ### First-Party
 
+- [Parallel Search MCP: setup, tools, authentication, and limits][parallel-search-mcp]
+- [Claude Code MCP: local scope][cc-mcp-local]
+- [Claude Code MCP: managing servers][cc-mcp-manage]
 - [Firecrawl MCP Docs][firecrawl-mcp-docs]
 - [Firecrawl MCP Server (GitHub)][firecrawl-mcp-gh]
 - [Firecrawl Claude Plugin (Marketplace)][firecrawl-plugin]
@@ -496,6 +545,9 @@ For the Python-library landscape behind web crawling and source connectors (poly
 - [Built-in vs MCP search comparison][apiyi-comparison]
 - [Zyte: Claude skills vs MCP vs Web Scraping Copilot][zyte-comparison]
 
+[parallel-search-mcp]: https://docs.parallel.ai/integrations/mcp/search-mcp
+[cc-mcp-local]: https://code.claude.com/docs/en/mcp#local-scope
+[cc-mcp-manage]: https://code.claude.com/docs/en/mcp#managing-your-servers
 [firecrawl-mcp-docs]: https://docs.firecrawl.dev/mcp-server
 [firecrawl-mcp-gh]: https://github.com/firecrawl/firecrawl-mcp-server
 [firecrawl-plugin]: https://claude.com/plugins/firecrawl
