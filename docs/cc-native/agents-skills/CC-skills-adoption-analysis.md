@@ -5,8 +5,8 @@ category: analysis
 version: 2.0.0
 status: completed
 created: 2026-01-11
-updated: 2026-10-02
-validated_links: 2026-09-24
+updated: 2026-10-23
+validated_links: 2026-10-23
 ---
 
 **Date**: 2026-01-11
@@ -239,6 +239,15 @@ Gemini CLI, OpenAI Codex, Roo Code, and others.
 | `metadata` | No | Arbitrary key-value map |
 | `allowed-tools` | No | Space-delimited pre-approved tools (experimental) |
 
+Re-confirmed against the live specification on 2026-10-21 — the only tool-related frontmatter
+field remains `allowed-tools`, still marked Experimental; no field named `tools` exists.
+
+The specification's optional package directories are exactly `scripts/`, `references/`, and
+`assets/` — there is **no spec-defined `evals/` directory**. (The skill-creator plugin documented
+for Claude Code "stores prompts, input files, and expected behavior in `evals/evals.json` inside the
+skill directory", in "its own `evals/evals.json` format" per [code.claude.com/docs/en/skills][cc-skills]
+— a plugin convention, not part of the open specification.)
+
 ### 2. Claude Code Extensions (top-level frontmatter)
 
 CC extends the standard with additional fields documented at
@@ -311,6 +320,19 @@ The Agent Skills standard has achieved broad cross-industry adoption:
 **Key distinction** (from HashiCorp): "MCP is the 'pipe' connecting data to AI;
 Agent Skills are the 'textbooks' of knowledge." These are complementary, not
 competing patterns.
+
+### Claude Code vs. OpenAI Codex CLI — SKILL.md / MCP / AGENTS.md parity
+
+Both CLIs document skill-based extensibility under the same open specification and a native MCP
+client, but diverge sharply on the cross-agent AGENTS.md convention — cross-referencing the
+existing docs that already cover each leg, rather than duplicating their content:
+
+| Surface | Claude Code | OpenAI Codex CLI |
+|---|---|---|
+| Native project-context file | `CLAUDE.md` | `AGENTS.md` |
+| AGENTS.md support | **ADAPTER** — needs a symlink or `@AGENTS.md` import ([agents-md-cookbook-analysis.md:38–42][agents-md-cookbook]) | **NATIVE** reader ([agents-md-cookbook-analysis.md:38–42][agents-md-cookbook]; [codex-cli-analysis.md:70][codex-cli]) |
+| Skill format | SKILL.md, open Agent Skills spec (see the ecosystem table above) | SKILL.md, open Agent Skills spec; a listed adopter in the same table |
+| MCP | Native MCP client | Native MCP client — "connect STDIO or streaming-HTTP MCP servers via `config.toml`" ([codex-cli-analysis.md:68][codex-cli]) |
 
 **`anthropics/skills` — recent addition.** The repo's `claude-api` reference skill
 now ships a `prompt-audit` procedure (`skills/claude-api/shared/prompt-audit.md`,
@@ -390,6 +412,8 @@ Update `.claude/settings.json` to adopt Skills:
 
 [agentskills-spec]: https://agentskills.io/specification
 [cc-skills]: https://code.claude.com/docs/en/skills
+[agents-md-cookbook]: ../../non-cc/protocols/agents-md-cookbook-analysis.md
+[codex-cli]: ../../non-cc/coding-agents/codex-cli-analysis.md
 [skills-overview]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
 [skills-best-practices]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
 [skills-pdf]: https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf
