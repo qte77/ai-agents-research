@@ -1,9 +1,9 @@
 ---
-title: Microsoft 365 Copilot — Fact-Check of Self-Described Capabilities
-purpose: Challenge-pass fact-check of an AI assistant's self-description and a practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365) against first-party documentation, as of 2026-10-21.
+title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
+purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365) against first-party documentation, as of 2026-10-21.
 created: 2026-10-21
 updated: 2026-10-23
-validated_links: 2026-10-21
+validated_links: 2026-10-23
 status: assess
 ---
 
@@ -21,7 +21,7 @@ string applies to "Microsoft 365 Copilot" as a whole. See [Timeline](#timeline) 
 
 ## TL;DR
 
-- Most self-described capabilities held up under a first-party challenge pass: of 85 Microsoft
+- Most claims tested held up under a first-party challenge pass: of 85 Microsoft
   365 Copilot-ecosystem claims tested against vendor documentation, 47 were fully supported and
   24 were partly right (true core, wrong or unconfirmed detail). Only 3 were flatly wrong, and 11
   could not be settled either way — absent from the pages checked, or sourced only to non-vendor
@@ -62,19 +62,14 @@ vs. Double Key Encryption) where they intersect with this family, eight recurrin
 operational/automation scenarios assessed against the same vendor documentation, and a
 numbers-free pointer to each surface's current pricing page.
 
-**Explicitly out of scope here**, because it is about the open Agent Skills specification and
-Claude Code/Codex parity rather than this product family: the `agentskills.io` specification
-(frontmatter fields, package directories, naming convention) and the Claude Code ↔ OpenAI Codex
-CLI comparison. Those facts are folded into
-[CC-skills-adoption-analysis.md][cc-skills-doc] instead, to avoid duplicating content
-across docs.
+**Explicitly out of scope here:** the open Agent Skills specification itself and coding-agent
+comparisons (Claude Code, Codex CLI) — see [CC-skills-adoption-analysis.md][cc-skills-doc].
 
 ## Method
 
-Claims entering this pass came from two kinds of input: an AI assistant's self-description of
-this product family, and a practitioner how-to guide covering hands-on setup and governance
-steps. Neither is treated as a source — a vendor self-description, whether from an AI assistant
-or a how-to author, is itself an unverified **claim**, not evidence. Each claim was run through a
+Claims entering this pass came from unverified secondary input — a product description and a
+practitioner how-to guide covering hands-on setup and governance steps. Neither is treated as a
+source: each statement in them is an unverified **claim**, not evidence. Each claim was run through a
 challenge pass: fetch the vendor's own current documentation directly, quote the load-bearing
 sentence verbatim with the page's own displayed date, and assign two independent labels.
 
@@ -97,9 +92,9 @@ presented below in their confirmed, positive framing: Copilot Studio's bring-you
 feature explicitly excludes the GPT-5 family (see [Timeline](#timeline)); publishing a
 Foundry-hosted agent into Microsoft 365 Copilot moves its data under Microsoft 365's own
 compliance terms (see [Outside-in control](#outside-in-control-publishing-moves-the-compliance-boundary));
-and Microsoft Foundry's model catalog documents a dedicated non-generative "Decision" model for
-classification, routing, ranking, grading, and model/tool/agent-selection use cases (see
-[Timeline](#timeline)). A second, later adversarial pass on this same evidence base tightened a
+and Microsoft Foundry documents a dedicated non-generative decision model (covered in
+[system-1-decision-models-landscape.md § Microsoft-Decision-1](../reference/system-1-decision-models-landscape.md#microsoft-decision-1-microsoft-foundry),
+not repeated here). A second, later adversarial pass on this same evidence base tightened a
 further set of rows toward the vendor's exact wording — most visibly the Agent 365/SharePoint
 Skills non-coverage framing, the Flex Routing default-on cutover, and the Package Management
 API's licence-and-preview split, all reflected in the sections below — without changing any
@@ -107,24 +102,9 @@ verdict or bucket.
 
 ## Results
 
-This fact-check pass covered 93 claims in total. Of those, **85 are specific to the Microsoft 365
-Copilot ecosystem** and are this doc's own subset (the table below); **7** are about the open
-Agent Skills specification and the Claude Code ↔ OpenAI Codex CLI comparison and are reported
-instead in [CC-skills-adoption-analysis.md][cc-skills-doc] (2 refuted, 3 partly, 2 supported); and
-**1 further claim** — a `PLAN.md` memory-file-convention attribution checked against the same two
-coding-agent CLIs, refuted — belongs to neither this product family nor the open-specification/
-parity comparison and is not carried into either doc's deliverables (tracked only as a count here
-and in the companion issue's notes). 85 + 7 + 1 = 93.
-
-**All 93 claims, by verdict and bucket:**
-
-| Verdict | checked | not-checked | checked-absent | secondary-only | **Total** |
-|---|---|---|---|---|---|
-| refuted | 6 | — | — | — | **6** |
-| partly | 27 | — | — | — | **27** |
-| supported | 49 | — | — | — | **49** |
-| unverifiable | — | 2 | 6 | 3 | **11** |
-| **Total** | **82** | **2** | **6** | **3** | **93** |
+This fact-check pass covered **85 claims specific to the Microsoft 365 Copilot ecosystem**. Claims
+about the open Agent Skills specification and coding-agent parity from the same input are covered
+in [CC-skills-adoption-analysis.md][cc-skills-doc] instead.
 
 **The 85 Microsoft 365 Copilot-ecosystem claims below, by verdict and bucket:**
 
@@ -138,8 +118,8 @@ and in the companion issue's notes). 85 + 7 + 1 = 93.
 
 The three in-scope claims that were flatly wrong: a claim that Microsoft's Agent Framework SDK and
 Foundry portal don't support structured, schema-constrained outputs is wrong — the SDK supports it
-via a `ResponseFormat` property and the portal exposes a native per-step JSON-Schema output-format
-control [agent-framework-structured-outputs]; a claim that two distinct Microsoft 365 billing
+via a `ResponseFormat` property [agent-framework-structured-outputs], and the Foundry workflow designer
+lets an agent step return output in a **JSON Schema** text format [foundry-workflow]; a claim that two distinct Microsoft 365 billing
 products (Copilot Credits and a separate pay-as-you-go product) share the same spending-cap
 behavior is also wrong — they are two different features on two different documentation pages
 [credits-overview]; and a tenant-configuration-monitoring capability for Entra (sometimes called
@@ -166,9 +146,14 @@ for why that one is also a case study in "not found" versus "refuted").
   MIT, PnP community; the repository calls itself "not official Microsoft documentation"). The GA
   announcement lists a "SharePoint skills library" among its resources, but its link target could
   not be read, so whether the two are the same is **unconfirmed** [sp-ga-2026-09-25].
+- Skills run on a model Microsoft chooses: "Copilot in SharePoint currently runs on a
+  Microsoft-managed reasoning model from OpenAI. Microsoft selects and manages the model, and the
+  specific model might change over time" — and "You don't need to configure a model to use Copilot
+  in SharePoint" [sp-get-started]. Unlike Copilot Studio, there is no model choice here, so none of
+  the Claude/residency detail below applies to SharePoint Skills themselves.
 - The documented skills panel has three categories — personal, site, and built-in. The word
   "enterprise" does not appear anywhere on the canonical documentation page, re-checked on two
-  separate fetches: a fourth "enterprise" category some self-descriptions claim is not documented.
+  separate fetches: a fourth "enterprise" category sometimes claimed is not documented.
 - Built-in lifecycle skills help with "creating, checking, and improving skills," and the vendor
   names exactly one of them explicitly ("Create skill"); no fixed public roster confirms literal
   identifiers like `init` beyond that [sp-skills].
@@ -308,6 +293,13 @@ but serves the same posts through its board RSS feed.
   xAI, or Mistral; in the product's regional-availability table, Anthropic's rows are tagged "GA
   (cross-geo)" in the Europe column while some other vendors' rows read plain "GA" in the same
   column [copilot-model-select].
+- Turning external models on takes two switches, not one: admins must "Turn on external models in
+  Power Platform admin center for the environment or the environment group" **and** "Allow access
+  to each external model provider in the Microsoft 365 admin center" [copilot-model-select].
+- Government clouds: "As of July 22, 2026, a new setting is available in the Microsoft 365 admin
+  center that allows non-federal customers in Government Community Cloud (GCC) to use Anthropic
+  models"; Anthropic models "aren't available for federal customers in GCC or for any customers in
+  GCC High and Department of Defense (DoD) environments" [eudb-subprocessor].
 - Separately, Microsoft introduced a Microsoft 365 admin center setting on 2026-04-03 letting
   EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft
   365 apps — an opt-in setting, off by default, with no preview label on the page documenting it
@@ -350,6 +342,12 @@ assessment should confirm the path actually in use per workload before relying o
 
 A direct Anthropic API relationship — outside this Microsoft-integrated family entirely — is a
 fourth, separate path with its own terms and is not covered by any of the three above.
+
+**Which posture applies is per model, not per vendor.** The same page says "for certain
+organizations, Fable 5.1 is available with Anthropic acting as a subprocessor", with no retention of
+customer content, while "Anthropic models with Data Retention (such as Fable 5.0)" are "off by
+default for all scenarios" [eudb-subprocessor]. Check the posture of the exact model in use, not
+"Claude" in general.
 
 ### Encryption: Customer Key vs. Double Key Encryption
 
@@ -397,16 +395,41 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-09-30 (passed) | Copilot in SharePoint GA rollout begins | GA, rolling out | [sp-get-started] |
 | 2026-09-30 (passed) | "Copilot in OneDrive becomes generally available September 30." | GA | [sp-ga-2026-09-25] |
 | 2026-10-01 (passed) | Product blog: quick access to skills; example of "a custom skill that defines company-specific terms such as 'PII.'" | blog announcement | [sp-whats-new-2026-10] |
-| 2026-10-07 (passed) | Foundry model catalog documents the Microsoft-Decision typed-decision model for classification/routing/ranking/grading/model-or-agent-selection | documented | [foundry-decision-model] |
 | March → April CY2026 (passed, per roadmap feed) | Package Management API preview → GA | mixed — list/get read GA-shaped, 4 mutation operations (update/block/unblock/reassign) still preview | [RM502875][rm-package-api] |
 | April → May CY2026 (per roadmap feed) | Roadmap feed for Copilot in SharePoint's custom-skills capability — the same Skills mechanism as the 2026-09-30 GA row above — states preview beginning April CY2026 and GA May CY2026, tagged "Launched"/"General Availability"; the same feed entry still also carries a "Preview" category tag. This is the feed's own tracked milestone for the Skills capability specifically — a separate data point from the product-wide 2026-09-30 rollout above, sourced from a different page; neither date supersedes the other here | GA per roadmap feed (feed also tags Preview) | [RM559800][rm-sp-custom-skills] |
 | 2026-04-03 (passed) | Microsoft 365 admin center setting introduced, letting EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft 365 apps | GA setting (opt-in, off by default, no preview label) | [eudb-subprocessor] |
 | May CY2026 (passed) | Legacy Graph beta agent-registry API begins being replaced by the Agent 365-branded registry API | superseded | [agent-registry-beta] |
 | October CY2026, per roadmap feed (in progress — this is the current month) | Structured document generation reaches GA | roadmap-stated GA; 3 automation-connector actions still preview | [RM545896][rm-docgen] |
+| 2026-07-22 (passed) | Microsoft 365 admin center setting lets non-federal GCC customers use Anthropic models (not GCC federal, GCC High or DoD) | GA setting | [eudb-subprocessor] |
+| 2026-10-15 (passed) | Copilot Studio retires GPT-5.3 Chat and GPT-5.4 Reasoning (replacement "GPT Chat Latest"; extension available) | retired | [copilot-model-select] |
+| 2026-10-31 (upcoming) | Copilot Studio retires GPT-5.5 Chat — no extension available | retiring | [copilot-model-select] |
+| 2026-11-12 (upcoming) | Copilot Studio retires GPT-4.1, GPT-4.1 Mini, GPT-5 Chat, GPT-5 Auto and GPT-5 Reasoning (extension available); FedRAMP tenants and regions where cross-geo movement is restricted keep GPT-4.1 and GPT-5 | retiring | [copilot-model-select] |
 | 2026-11-01 (upcoming) | Preview-era PowerShell opt-in parameters for Copilot in SharePoint stop being honored | retiring | [sp-get-started] |
 | 2026-12-01 (upcoming) | Microsoft Foundry's visual workflow designer and in-portal execution retire; YAML-defined workflows keep running as hosted agents under Microsoft Agent Framework | preview feature, partial retirement | [foundry-workflow] |
 | ongoing, per roadmap feed | A unified "Workflows" app for Teams + SharePoint automation menus | GA per roadmap feed | [RM491632][rm-workflows-app] |
 | — | Copilot Studio's bring-your-own-model feature for prompt-tool nodes explicitly excludes the GPT-5 family and later models | current, no preview label found | [byom-prompts] |
+
+## Guardrails for SharePoint and Microsoft 365 agent skills
+
+Our recommendations, not Microsoft's, for anyone writing a SharePoint skill or a Copilot Studio
+agent that answers questions about Microsoft 365 features (licensing, availability, limits). They
+come from the failure modes this pass kept running into, and can be written into the skill's own
+instructions:
+
+- **Silence is not a "no."** If the docs the agent searched don't mention a feature or limit, it
+  should say "not documented in the pages checked", never "not supported". Only a page that states
+  the opposite justifies a "no".
+- **Say how sure, and why.** Pair every answer with how it was checked — found on a Microsoft page,
+  searched and not found, only in community or partner content, or not checked — so a reader can
+  tell "nobody looked" from "looked and found nothing".
+- **Don't stretch a quote.** A sentence about one product, plan or region doesn't prove the same
+  for the whole family. State the narrower scope the source supports.
+- **A product description is a claim.** Text from another assistant, a how-to or marketing copy is
+  input to check against Microsoft's documentation, not evidence by itself.
+- **Dates come from the roadmap item itself.** For preview, GA or retirement dates, use the
+  per-item Microsoft 365 Roadmap feed (`microsoft.com/microsoft-365/RoadmapFeatureRSS/<id>`) or the
+  product's own Learn page, not a mirror site or search snippet — they can disagree, and the
+  vendor's item is what it commits to.
 
 ## Operational Scenarios
 
@@ -496,16 +519,6 @@ coverage):
   application (directionally consistent with the confirmed "skills can't connect to external
   systems" boundary above, but not independently targeted against a vendor page).
 
-### Self-reported tool inventory — flagged separately
-
-> **Self-reported, not documented by Microsoft.** An AI assistant's self-reported inventory of
-> roughly 100 internal tool names, organized into grouped namespaces, was checked against
-> Microsoft's own API reference pages and found nowhere; no vendor-documented API surface at that
-> level of granularity exists for any product in this family. Separately, the same assistant's
-> own later tool-inventory output in the same working session did not match its earlier
-> self-report — a second, independent reason to treat the original figure as self-reported, not
-> documented by Microsoft.
-
 ## Adoption Decision
 
 | Dimension | Assessment |
@@ -518,7 +531,7 @@ coverage):
 | Maturity | Mixed: core Skills, Agent 365, and Work IQ are GA; several adjacent automation hooks (document-generation connectors, Package Management API mutations, the BYO MCP registry) remain preview |
 
 **Strengths:** The core SharePoint Skills and Agent 365 mechanics documented here are confirmed,
-quote-backed, and dated — most of what the self-description and how-to got right, they got right.
+quote-backed, and dated — most of what the inputs got right, they got right.
 Agent 365 is a real, working attempt at a single cross-product governance surface for agents.
 
 **Risks:** Skills and the declarative-agent "custom skills" feature share a name but not a
@@ -533,7 +546,7 @@ this doc's `validated_links` date.
 
 ## Action Items
 
-- Re-run this challenge pass on a cadence — a drift job is tracked separately — since several
+- Re-run this challenge pass on a cadence — a drift job is tracked in #705 — since several
   cited pages carry near-term dates that will go stale quickly.
 - Before building against SharePoint Skills, confirm the live tenant's Agent Assets library URL
   segment directly; Microsoft's documented display name and conceptual path both use a space, but
@@ -556,11 +569,14 @@ this doc's `validated_links` date.
 - [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md) — the
   Tier-1 Copilot Studio landscape row this doc extends with model-choice, BYO-MCP, residency, and
   governance detail
-- [CC-skills-adoption-analysis.md][cc-skills-doc] — the Agent Skills open-specification facts (no
-  `evals/` directory, `allowed-tools` marked Experimental) and the Claude Code ↔ OpenAI Codex CLI
-  parity table from the same fact-check pass
-- A private example repository (linked once public) — a worked-example harness implementing this
-  doc's challenge-pass method end to end
+- [CC-skills-adoption-analysis.md][cc-skills-doc] — the open Agent Skills specification that
+  SharePoint's SKILL.md-style skills resemble
+- [system-1-decision-models-landscape.md § Microsoft-Decision-1](../reference/system-1-decision-models-landscape.md#microsoft-decision-1-microsoft-foundry)
+  — Foundry's decision model, covered there
+- [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md) — Entra Agent
+  ID, the identity layer under Agent 365 and Copilot Studio agents
+- [CC-memory-system-analysis.md](../../cc-native/context-memory/CC-memory-system-analysis.md) —
+  compares Copilot Studio memory (28-day auto-delete) with Claude Code's memory model
 
 ## Sources
 
@@ -579,12 +595,11 @@ this doc's `validated_links` date.
 | [Claude in Microsoft Foundry][claude-foundry] | Deployment types, absence of an EU-region type |
 | [Claude in Microsoft Foundry — Data, privacy, and security][claude-foundry-privacy] | Processor role, hosting-option processing-location split |
 | [Microsoft Foundry — Publish an agent to Copilot][foundry-publish-copilot] | Residency-boundary shift on publish |
-| [Microsoft Foundry — Workflows (preview)][foundry-workflow] | December 2026 retirement, YAML continuity |
+| [Microsoft Foundry — Workflows (preview)][foundry-workflow] | December 2026 retirement, YAML continuity, JSON Schema output format per agent step |
 | [Microsoft Agent Framework — Structured outputs][agent-framework-structured-outputs] | Refutes a "no structured output support" claim |
 | [Microsoft 365 Copilot — Usage-based billing credits setup][credits-setup] | No default numeric spending limit |
 | [Microsoft 365 Copilot — Usage-based billing overview][credits-overview] | Auto-enrollment of new services; distinct pay-as-you-go product |
 | [Microsoft Copilot Studio — Bring your own model for prompts][byom-prompts] | GPT-5 family excluded |
-| [Microsoft Foundry — Microsoft-Decision model how-to][foundry-decision-model] | Typed-decision model, documented use cases |
 | [Microsoft Copilot Studio — Select agent model][copilot-model-select] | Anthropic/xAI/Mistral support, cross-geo tagging |
 | [Microsoft 365 Copilot — Copilot APIs overview][copilot-apis-overview] | Licensing distinct from the general-purpose Graph API |
 | [Microsoft Purview — Customer Key overview][customer-key] | Customer Key coverage including Copilot interactions |
@@ -630,11 +645,9 @@ this doc's `validated_links` date.
 | [Track message center tasks in Planner][mc-planner-sync] | Message center → Planner one-way sync |
 | [View service health][service-health] | Service health notification channels |
 | [Microsoft 365 Roadmap RSS feed][roadmap-rss] | Full-roadmap RSS 2.0 feed |
-| [pnp/sharepoint-skills][pnp-skills] (secondary — prior art, not evidence) | SKILL.md sample catalog and Agent Assets path conventions |
-| [ShareGate — "Skills in SharePoint: What IT Pros Need to Know"][sharegate-skills] (secondary — prior art, not evidence) | The most complete published governance checklist for SharePoint Skills specifically |
-| [Catrinescu & Madelung — "Governing SharePoint Skills and Agents" webinar][governing-sp-skills-webinar] (secondary — prior art, not evidence) | Maps each governance control to the area it governs |
-| A private example repository (linked once public) | Example harness implementing this doc's challenge-pass method |
-| Companion blog post — URL TBD, not yet published | Publishes after this PR merges; cross-link once live |
+| [pnp/sharepoint-skills][pnp-skills] (secondary — prior art, not evidence) | "Skills for Copilot in SharePoint": MIT community catalog in the [PnP][pnp-home] org (Microsoft 365 & Power Platform community); says it is "not official Microsoft documentation". SKILL.md samples and Agent Assets path conventions |
+| [ShareGate — "Skills in SharePoint: What IT pros need to know"][sharegate-skills] (secondary — prior art, not evidence) | By Jasper Oosterveld, 2026-10-13. [ShareGate][sharegate-about] is "developed by Workleap Technologies" and sells Microsoft 365 migration and governance tools (ShareGate Migrate, ShareGate Protect) — a vendor with a stake in governance advice. Governance checklist for SharePoint Skills |
+| ["Governing SharePoint Skills and Agents: What Admins Need to Know" webinar][governing-sp-skills-webinar] (secondary — prior art, not evidence) | Free webinar, 2026-11-12 (upcoming), presented by [Vlad Catrinescu][catrinescu-about] ("Microsoft MVP and MCT · Pluralsight Author") and [Drew Madelung][madelung-profile] ("Director, Microsoft Solutions at Protiviti"); [registration][governing-sp-skills-reg]. Maps each governance control to the area it governs |
 
 [sp-skills]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-skills
 [sp-get-started]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started
@@ -655,7 +668,6 @@ this doc's `validated_links` date.
 [credits-setup]: https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-copilot-credits-setup
 [credits-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-overview-copilot-credits
 [byom-prompts]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts
-[foundry-decision-model]: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision
 [copilot-model-select]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-select-agent-model
 [copilot-apis-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-apis-overview
 [customer-key]: https://learn.microsoft.com/en-us/purview/customer-key-overview
@@ -703,4 +715,9 @@ this doc's `validated_links` date.
 [roadmap-rss]: https://www.microsoft.com/releasecommunications/api/v2/m365/rss
 [sharegate-skills]: https://sharegate.com/blog/skills-in-sharepoint-what-it-pros-need-to-know
 [governing-sp-skills-webinar]: https://vladtalkstech.com/microsoft-events-and-discount-codes/governing-sharepoint-skills-agents-webinar/
+[governing-sp-skills-reg]: https://vladtalks.com/Governing-SharePoint-Skills-Agents
+[catrinescu-about]: https://vladtalkstech.com/about/
+[madelung-profile]: https://drewmadelung.com
+[sharegate-about]: https://sharegate.com/about
+[pnp-home]: https://pnp.github.io/
 [cc-skills-doc]: ../../cc-native/agents-skills/CC-skills-adoption-analysis.md
