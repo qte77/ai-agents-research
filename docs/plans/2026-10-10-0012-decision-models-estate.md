@@ -2,7 +2,7 @@
 title: Decision models first across the qte77 GitHub Actions estate
 status: approved
 created: 2026-10-10
-updated: 2026-10-22
+updated: 2026-10-24
 ---
 
 Tracking issue: #652.
@@ -190,7 +190,7 @@ Lane notes:
 | R1 | GEO/AEO for AI search: AI-crawler controls (robots.txt user agents, Cloudflare AI Crawl Control), refresh `CC-llms-txt-analysis.md` (updated 2026-06-22); a new discoverability landscape if nothing fits | agent | PR merged; claims first-party and falsified like #696 |
 | R2 | Agent-ready businesses: NLWeb, schema.org for agents, consumer MCP connectors (e.g. Checkatrade's Claude connector), OAuth for agents; refresh the Ora entry | agent | PR merged; extends `evaluation-data-resources-landscape.md` / `agent-identity-auth-landscape.md` where they fit |
 | R3 | A2A refresh (corpus pins v1.0.1, 2026-05) and "agent marketing" / agent-facing storefronts | agent | PR merged; `ag-ui-protocol-landscape.md` § A2A current |
-| R4 | Vendor docs missing their goal features: `codex-cli-analysis.md`, `cursor-analysis.md`, `antigravity-analysis.md`, `vscode-copilot-chat-analysis.md`, `github-copilot-cli-analysis.md`; `kiro-analysis.md` still says "autopilot" (now `/autonomous on`, v2.31.0) | agent | Each doc points to `goal-loops-landscape.md`; Kiro wording current |
+| ~~R4~~ | ~~Vendor docs missing their goal features~~ | agent | Shipped: this PR (Goal Loop sections in codex-cli, cursor, antigravity, vscode-copilot-chat, github-copilot-cli; Kiro `/autonomous on` + `/goal` facts), all from the 2026-10-22 verified vendor pass |
 | R5 | Visa Trusted Agent Protocol next to Web Bot Auth in `agent-identity-auth-landscape.md` (only cross-referenced from the payments doc so far) | agent | Section added, RFC 9421 and the sample repo cited |
 | R6 | Goal → KR loop gaps in qte77/qte77: KR `eval:` and the `/goal` condition are unlinked; no `/goal` session can close a KR (merge is owner-gated, by design); nothing triggers `goal_rollup.py`; `goals.md` doesn't name the plan `NNN`. **Default:** a doc-only proposal in `docs/goals.md`, no automation yet | agent (sibling), owner merges | PR in qte77/qte77 merged |
 | R7 | Marketplace product SEO/ASO (server-rendered pages, schema.org listings, city × service pages, app-store listing) | owner | Owner names the product repo; the plan goes there, linking this repo's research |
