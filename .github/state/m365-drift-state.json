@@ -1,0 +1,18 @@
+{
+  "https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started": {
+    "quote": "You don't need to configure a model to use Copilot in SharePoint",
+    "ms_date": "2026-09-25T00:00:00Z"
+  },
+  "https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-select-agent-model": {
+    "quote": "Allow access to each external model provider in the Microsoft 365 admin center",
+    "ms_date": "2026-10-22T00:00:00Z"
+  },
+  "https://learn.microsoft.com/en-us/copilot/microsoft-365/connect-to-ai-subprocessor": {
+    "quote": "Anthropic models with Data Retention",
+    "ms_date": "2026-09-18T00:00:00Z"
+  },
+  "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow": {
+    "quote": "Microsoft Foundry is retiring workflows on December 1, 2026.",
+    "ms_date": "2026-07-31T00:00:00Z"
+  }
+}
