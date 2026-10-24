@@ -116,6 +116,17 @@ off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 - **Flag the license** when comparing against OSS peers — adoption is reversible
   only at the subscription level, not the code level.
 
+## Goal Loop
+
+Checked 2026-10-22 against the vendor's own docs; compared across agents in
+[goal-loops-landscape.md](../coding-agents/goal-loops-landscape.md).
+
+The CLI lists `/goal [OBJECTIVE]` in the same row as `/autopilot [OBJECTIVE]`; "Without an objective,
+autopilot infers intent from context", and `--max-ai-credits N` caps spend
+([command reference][goal-copilot-cmds]). The page doesn't say who judges completion. An `agentStop`
+hook "can block and force continuation"; "After 8 consecutive block continuations, the CLI overrides
+the hook and ends the turn anyway" ([hooks][goal-copilot-hooks]).
+
 ## Cross-References
 
 - [github-copilot-cloud-agent-analysis.md](github-copilot-cloud-agent-analysis.md) — the cloud agent, automations, MCP config, instructions and code review
@@ -142,3 +153,5 @@ off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 [copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent
 [copilot-cli-instructions]: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
 [copilot-cli-use]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
+[goal-copilot-cmds]: https://docs.github.com/en/copilot/reference/cli-command-reference
+[goal-copilot-hooks]: https://docs.github.com/en/copilot/reference/hooks-configuration

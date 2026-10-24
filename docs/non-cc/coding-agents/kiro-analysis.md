@@ -3,7 +3,7 @@ title: Kiro Analysis
 source: https://kiro.dev/
 purpose: Analysis of Kiro, AWS's spec-driven agentic IDE, as a coding agent platform distinct from conversational AI coding assistants.
 created: 2026-06-16
-updated: 2026-07-23
+updated: 2026-10-24
 validated_links: 2026-06-16
 status: trial
 ---
@@ -62,6 +62,13 @@ Steering files (`.kiro/steering/*.md`) provide persistent markdown guidance that
 Kiro supports [MCP (Model Context Protocol)][kiro-mcp] servers enabled via Settings (Cmd+, / Ctrl+,). The **AWS Documentation MCP server** is the highlighted first-party example, providing inline access to AWS docs from within the IDE. Additional MCP servers extend Kiro's tool surface with external services and knowledge bases.
 
 ### Autopilot Mode
+
+> **Update 2026-10-22:** the CLI's autonomous mode is now `/autonomous on` (v2.31.0, 2026-10-13:
+> "Run /autonomous on in a local V3 session…", [CLI changelog][kiro-cli-changelog]). Kiro's `/goal`
+> has the agent write its own checks — "The agent derives acceptance criteria from your goal
+> statement" — and "By default, the agent runs up to 5 iterations — increase this with --max"
+> ([goal command][kiro-goal-doc]). Compared across agents in
+> [goal-loops-landscape.md](goal-loops-landscape.md).
 
 An **autopilot** mode (equivalent to "yolo" in peers) allows fully autonomous task execution without per-action approval. The `/goal` command (added CLI 2.7.0, 2026-06-12) enables iterative task completion with built-in verification loops. **Queue Steering** (`Ctrl+S`) allows mid-turn course corrections without stopping the agent.
 
@@ -136,3 +143,5 @@ Credits reset monthly; unused credits do not roll over. Overage billing is disab
 [constellation]: https://www.constellationr.com/insights/news/aws-launches-kiro-ide-powered-ai-agents
 [aws-kiro-ga]: https://aws.amazon.com/blogs/aws/aws-weekly-roundup-how-to-join-aws-reinvent-2025-plus-kiro-ga-and-lots-of-launches-nov-24-2025
 [github-copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md
+[kiro-cli-changelog]: https://kiro.dev/changelog/cli/
+[kiro-goal-doc]: https://kiro.dev/docs/cli/chat/goal
