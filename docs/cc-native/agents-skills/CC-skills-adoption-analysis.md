@@ -5,7 +5,7 @@ category: analysis
 version: 2.0.0
 status: completed
 created: 2026-01-11
-updated: 2026-10-23
+updated: 2026-10-24
 validated_links: 2026-10-23
 ---
 
@@ -321,18 +321,9 @@ The Agent Skills standard has achieved broad cross-industry adoption:
 Agent Skills are the 'textbooks' of knowledge." These are complementary, not
 competing patterns.
 
-### Claude Code vs. OpenAI Codex CLI — SKILL.md / MCP / AGENTS.md parity
-
-Both CLIs document skill-based extensibility under the same open specification and a native MCP
-client, but diverge sharply on the cross-agent AGENTS.md convention — cross-referencing the
-existing docs that already cover each leg, rather than duplicating their content:
-
-| Surface | Claude Code | OpenAI Codex CLI |
-|---|---|---|
-| Native project-context file | `CLAUDE.md` | `AGENTS.md` |
-| AGENTS.md support | **ADAPTER** — needs a symlink or `@AGENTS.md` import ([agents-md-cookbook-analysis.md:38–42][agents-md-cookbook]) | **NATIVE** reader ([agents-md-cookbook-analysis.md:38–42][agents-md-cookbook]; [codex-cli-analysis.md:70][codex-cli]) |
-| Skill format | SKILL.md, open Agent Skills spec (see the ecosystem table above) | SKILL.md, open Agent Skills spec; a listed adopter in the same table |
-| MCP | Native MCP client | Native MCP client — "connect STDIO or streaming-HTTP MCP servers via `config.toml`" ([codex-cli-analysis.md:68][codex-cli]) |
+AGENTS.md support differs by agent even where SKILL.md support is shared (Claude Code needs an
+adapter; Codex CLI reads it natively): see the compatibility matrix in
+[agents-md-cookbook-analysis.md][agents-md-cookbook].
 
 **`anthropics/skills` — recent addition.** The repo's `claude-api` reference skill
 now ships a `prompt-audit` procedure (`skills/claude-api/shared/prompt-audit.md`,
@@ -413,7 +404,6 @@ Update `.claude/settings.json` to adopt Skills:
 [agentskills-spec]: https://agentskills.io/specification
 [cc-skills]: https://code.claude.com/docs/en/skills
 [agents-md-cookbook]: ../../non-cc/protocols/agents-md-cookbook-analysis.md
-[codex-cli]: ../../non-cc/coding-agents/codex-cli-analysis.md
 [skills-overview]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
 [skills-best-practices]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
 [skills-pdf]: https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf
