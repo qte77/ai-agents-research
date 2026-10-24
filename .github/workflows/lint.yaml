@@ -67,6 +67,8 @@ jobs:
         run: make setup_lychee
 
       - name: Run lychee
+        env:
+          GITHUB_TOKEN: ${{ github.token }}  # lychee authenticates github.com links (avoids 503 throttling); same as link-rot-monitor.yaml and lychee-action's default
         run: make check_links
 
   actions:
