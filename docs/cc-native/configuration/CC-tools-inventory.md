@@ -2,7 +2,7 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-10-18
+updated: 2026-10-24
 validated_links: 2026-10-18
 status: adopt
 ---
@@ -124,6 +124,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/exit` | Exit session | [cli-ref][cli-ref] |
 | `/fast` | Toggle fast mode | [fast-mode][fast-mode] |
 | `/feedback` | Submit feedback | [cli-ref][cli-ref] |
+| `/focus` | Toggle the focus view: only the last prompt, a one-line tool-call summary with edit diffstats (also counting subagents launched and collapsing finished background-task notifications), and the final response. Fullscreen rendering only. The choice persists across sessions; the [`viewMode`][settings-ref-viewmode] setting (`"default"`, `"verbose"` or `"focus"`; allowed in any settings file; default unset, so `verbose` and the last `/focus` choice apply) overrides it. From a Remote Control client, `/focus [on\|off]` applies to the current session only (v2.1.281+). The VS Code extension has its own Focus view toggle, independent of `viewMode`. Introducing version not stated in the docs. Verified 2026-10-23; `viewMode` 2026-10-24 | [commands][commands], [settings-ref-viewmode][settings-ref-viewmode] |
 | `/goal` | Set a completion condition; Claude keeps working across turns until it is met. Works in interactive, `-p`, and Remote Control modes. Shows elapsed time, turns, and token usage as a live overlay panel. (v2.1.139) | CHANGELOG v2.1.139 |
 | `/login` | Authenticate | [cli-ref][cli-ref] |
 | `/logout` | Sign out | [cli-ref][cli-ref] |
@@ -335,6 +336,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 [ultrareview]: https://code.claude.com/docs/en/ultrareview
 [plugins-code-review]: ../plugins-ecosystem/CC-official-plugins-landscape.md#code-review-command-and-ultrareview
 [settings]: https://code.claude.com/docs/en/settings
+[settings-ref-viewmode]: https://code.claude.com/docs/en/settings-reference#viewmode
 [permissions]: https://code.claude.com/docs/en/permissions#tool-specific-permission-rules
 [data-usage]: https://code.claude.com/docs/en/data-usage
 [vs-code]: https://code.claude.com/docs/en/vs-code

@@ -27,7 +27,7 @@ Each coding agent reads a different config file for project context:
 | Windsurf | `.windsurf/rules/*.md` | Markdown |
 | Kiro | `.kiro/steering/*.md` | Markdown |
 | Gemini CLI / Antigravity | `GEMINI.md` | Markdown |
-| GitHub Copilot | `.github/copilot-instructions.md` | Markdown |
+| GitHub Copilot | `.github/copilot-instructions.md`; also reads `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` (github.com and CLI, checked 2026-10-24 — see [github-copilot-cloud-agent-analysis.md](../non-cc/agents/github-copilot-cloud-agent-analysis.md#repository-custom-instructions)) | Markdown |
 | OpenAI Codex | `AGENTS.md` | Markdown |
 | General | `llms.txt` | Plain text |
 

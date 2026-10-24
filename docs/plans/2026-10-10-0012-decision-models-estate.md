@@ -2,7 +2,7 @@
 title: Decision models first across the qte77 GitHub Actions estate
 status: approved
 created: 2026-10-10
-updated: 2026-10-18
+updated: 2026-10-22
 ---
 
 Tracking issue: #652.
@@ -15,7 +15,7 @@ Tracking issue: #652.
 - A generative LLM, Cloudflare Workers AI through an OpenAI-compatible `api_base`, is used **only for free text** and as the fallback.
 - One shared `decide()` lives in `qte77/.github/actions/decide/`.
 
-**Status:** **approved 2026-10-10** (owner: "proceed" on #651). Already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0. Phase A lanes L1, L3 (G1 only), L4 and L5 started 2026-10-10. Shipped: D1 (#653), G1 (#654), owner lead Cloudflare Clef + Unsloth decision training in the landscape (#657; on Clef's own card Jev leads on GPQA, MMLU-Pro, BBH, When2Call and BRIGHT, so H1 must test our tasks), W12 (gha-rxiv-feed-action #207, #209, #210; #655). L1's PR qte77/.github#45 awaits the owner's merge; L2 pre-stages its PRs and merges after K0. K0 is pre-staged: `/workspaces/temp/ai-agents-research-triage/set_keys.sh` (see the K0 row).
+**Status:** **approved 2026-10-10** (owner: "proceed" on #651). Already done: on 2026-10-10 `LLM_BASE_URL` was set as a repo **secret** in the 10 repos listed under K0. Phase A lanes L1, L3 (G1 only), L4 and L5 started 2026-10-10. Shipped: D1 (#653), G1 (#654), owner lead Cloudflare Clef + Unsloth decision training in the landscape (#657; on Clef's own card Jev leads on GPQA, MMLU-Pro, BBH, When2Call and BRIGHT, so H1 must test our tasks), W12 (gha-rxiv-feed-action #207, #209, #210; #655). L1's PR qte77/.github#45 awaits the owner's merge; L2 pre-stages its PRs and merges after K0. K0 is pre-staged: `/workspaces/temp/ai-agents-research-triage/set_keys.sh` (see the K0 row). **2026-10-22:** owner leads N9 shipped; new research rows R1–R6 (agent) and owner rows R7–R10 added. Next agent work while D0 is deferred: R1–R5. Research notes: `/workspaces/temp/goal-research-2026-10-22/findings.md`.
 
 **How to run it:**
 
@@ -186,6 +186,18 @@ Lane notes:
 | ~~N8~~ | ~~`/code-review` and ultrareview from first-party docs~~ | agent | Shipped: #683 (tools inventory rows + section, official-plugins three-way table, `/review-pr` example fixed). Falsification: 13 of 14 claims confirmed; the plugin author/version attribution was corrected before merge |
 | Q1 | qte77/qte77: drop the stale `models: read` in `repo-registry.yml`, retire the GitHub Models icon in README (#31) | agent, after E1 | PR merged in qte77/qte77; #31 updated |
 | ~~W12~~ | ~~Regenerate W12 in gha-rxiv-feed-action (#206), then backfill W12 here~~ | agent (L5) | Shipped: feed #207 (delete), #209 (fix: OR'd topics now grouped before the `submittedDate` range; the date path had bounded only the last category), #210 (2,875 rows, 9 columns); triage #655 (87 relevant) |
+| ~~N9~~ | ~~Owner leads 2026-10-19 – 2026-10-22~~ | agent | Shipped: #690 + #694 (`/goal` paired with a task list; goal loops across coding agents; `claude -p` needs a permission mode from v2.1.302), qte77/qte77 #194 + #197 (Phase A with `/goal`, headless permission fix), qte77/qte77 #195 (one plan file per arc), #693 (jev-browser, awesome-jev catalogs), #695 (DevTool Arena / Lightsage refresh, conflict-of-interest note), #696 (agent payment protocols: MPP, L402, UCP, Visa, Mastercard; 32/33 claims survived falsification), #697 (Omi Health medical STT benchmark), #698 (Onyx), #699 (OpenUI), #700 (ADLC artifact loop, prompt-injection caution), #701 (mods refresh + community catalogs). Pricing/positioning posts routed to qte77/agentic-market-research-to-gtm#21 |
+| R1 | GEO/AEO for AI search: AI-crawler controls (robots.txt user agents, Cloudflare AI Crawl Control), refresh `CC-llms-txt-analysis.md` (updated 2026-06-22); a new discoverability landscape if nothing fits | agent | PR merged; claims first-party and falsified like #696 |
+| R2 | Agent-ready businesses: NLWeb, schema.org for agents, consumer MCP connectors (e.g. Checkatrade's Claude connector), OAuth for agents; refresh the Ora entry | agent | PR merged; extends `evaluation-data-resources-landscape.md` / `agent-identity-auth-landscape.md` where they fit |
+| R3 | A2A refresh (corpus pins v1.0.1, 2026-05) and "agent marketing" / agent-facing storefronts | agent | PR merged; `ag-ui-protocol-landscape.md` § A2A current |
+| R4 | Vendor docs missing their goal features: `codex-cli-analysis.md`, `cursor-analysis.md`, `antigravity-analysis.md`, `vscode-copilot-chat-analysis.md`, `github-copilot-cli-analysis.md`; `kiro-analysis.md` still says "autopilot" (now `/autonomous on`, v2.31.0) | agent | Each doc points to `goal-loops-landscape.md`; Kiro wording current |
+| R5 | Visa Trusted Agent Protocol next to Web Bot Auth in `agent-identity-auth-landscape.md` (only cross-referenced from the payments doc so far) | agent | Section added, RFC 9421 and the sample repo cited |
+| R6 | Goal → KR loop gaps in qte77/qte77: KR `eval:` and the `/goal` condition are unlinked; no `/goal` session can close a KR (merge is owner-gated, by design); nothing triggers `goal_rollup.py`; `goals.md` doesn't name the plan `NNN`. **Default:** a doc-only proposal in `docs/goals.md`, no automation yet | agent (sibling), owner merges | PR in qte77/qte77 merged |
+| R7 | Marketplace product SEO/ASO (server-rendered pages, schema.org listings, city × service pages, app-store listing) | owner | Owner names the product repo; the plan goes there, linking this repo's research |
+| R8 | DevTool Arena change monitor. **Default:** none — re-check by hand per docs refresh (no data licence, conflict of interest, repo rule against copying external data) | owner | Owner keeps the default, or asks for a monthly changelog-hash monitor that only opens an issue |
+| ~~R9~~ | ~~Microsoft 365 agent research~~ | owner | Shipped: #704 (`microsoft-365-copilot-analysis.md`, falsified 2026-10-23: 23/25 confirmed, none wrong; incl. guardrails for SharePoint/M365 agent skills); spec/parity split to #708; follow-ups (drift job, webinar) in #705 |
+| R10 | GPG signing for qte77/qte77 failed on 2026-10-22 ("No secret key"; worked earlier the same week) | owner | Codespaces trusted-repos setting checked; a signed commit succeeds |
+| ~~R11~~ | ~~`/focus` (focus view) and `viewMode` from the first-party commands reference~~ | agent | Shipped: this PR (row in `CC-tools-inventory.md` § Slash Commands; `viewMode` values/default not yet verified verbatim) |
 
 **Loop (not rows):** weekly bot triage PRs (changelog/community/learnings) await owner review.
 
@@ -194,4 +206,5 @@ Lane notes:
 - gha-ai-changelog and gha-repo-index ports: no consumer found / AI off by default (owner, 2026-10-10). Note only on #45 / #20.
 - OpenAI Decisions and Perplexity adapters: beta APIs and no key.
 - Laya self-hosting: no use case yet.
+- Owner leads 2026-10-22, not folded here: the positioning and founder-mental-model LinkedIn posts (opinion, lead funnels; listed in qte77/agentic-market-research-to-gtm#21); MrJev's `awesome-jev-1` and `jev-browser` (stale forks — upstream cited in #693).
 - Owner leads 2026-10-11, held: helix-foundry (4 days old, no agent surface of its own), MIMESIS 2610.09484 (placement unclear), CLIFT 2610.06829 (calibration-adjacent, no fitting section yet), the CAD blog behind lnkd.in/emArvKmz (one self-reported case, no code). Skipped: WeKnora (already covered, 2026-09-30), fastapi/asyncer and openRigProject/openRig (no agent angle; the latter is ham-radio software, unrelated to mvschwarz/openrig), 2610.07907 (no agent angle, its repo 404s), manglekuo.com / tfl.manglekuo.com (personal portfolio). The Unsloth decision notebook and a duplicate 2610.07907 were already handled (#657).

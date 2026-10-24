@@ -3,7 +3,7 @@ title: CC Remote Access Landscape
 source: https://www.omnara.com, https://cloudcli.ai, https://happy.engineering, https://code.claude.com/docs/en/remote-control, https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
-updated: 2026-10-06
+updated: 2026-10-23
 validated_links: 2026-10-06
 status: research
 ---
@@ -66,7 +66,9 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 - **Voice**: Two-way voice coding mode for hands-free interaction
   ([source][omnara-hiretop])
 - **Localhost previews**: Preview dev server on phone without SSH
-  tunnels ([source][omnara-appstore])
+  tunnels — *unverified as of 2026-10-23*: the only source was the iOS
+  App Store listing, which now returns 404, and Omnara's site and README
+  no longer mention an iOS app
 - **Pricing**: Free (10 agent sessions/month) + Pro ($9/month, unlimited
   agents) + Enterprise (custom) ([source][omnara-pricing]). Local runs
   use your own Claude/Codex tokens
@@ -218,7 +220,6 @@ Tools that complement any remote access method ([source][zilliz]):
 [omnara-hn]: https://news.ycombinator.com/item?id=44878650
 [omnara-techmonk]: https://techmonk.economictimes.indiatimes.com/news/ai/omnara-wants-to-put-your-coding-agent-on-your-phone/128286862
 [omnara-hiretop]: https://hiretop.com/blog5/omnara-mobile-voice-interface-for-claude-code/
-[omnara-appstore]: https://apps.apple.com/us/app/omnara-claude-codex-mobile/id6748426727
 [emdash]: https://emdash.ai/
 [cloudcli]: https://cloudcli.ai
 [cloudcli-gh]: https://github.com/siteboon/claudecodeui

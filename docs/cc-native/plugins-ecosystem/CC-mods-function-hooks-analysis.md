@@ -3,12 +3,12 @@ title: CC Mods (Function Hooks) Analysis
 source: https://code.claude.com/docs/en/plugins/mods/overview, https://code.claude.com/docs/en/plugins/mods/admin, https://code.claude.com/docs/en/plugins/mods/reference, https://code.claude.com/docs/en/plugins/mods/create
 purpose: Analysis of Claude Code mods — in-process JavaScript/TypeScript event handlers, shipped as plugins, that redraw or rewrite how Claude Code behaves — for extensibility, governance, and the agent substrate rubric.
 created: 2026-10-02
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-22
+validated_links: 2026-10-22
 status: generally-available
 ---
 
-**Details:** Requires Claude Code v2.1.287+ in the terminal (v2.1.286+ in the Desktop app's Code tab); on by default. Re-verified against [mods-overview][mods-overview], [mods-admin][mods-admin], [mods-reference][mods-reference], and [mods-create][mods-create] 2026-10-15; the mods reference page itself is current "as of v2.1.290."
+**Details:** Requires Claude Code v2.1.287+ in the terminal (v2.1.286+ in the Desktop app's Code tab; "Yes, with extension version 2.1.299 or later" in VS Code; "A session that doesn't fetch feature flags, such as one on Amazon Bedrock, needs 2.1.304 or later" — [source][mods-overview], 2026-10-22); on by default. Re-verified against [mods-overview][mods-overview], [mods-admin][mods-admin], [mods-reference][mods-reference], and [mods-create][mods-create] 2026-10-15; the mods reference page itself is current "as of v2.1.290."
 
 ## What a Mod Is
 
@@ -44,9 +44,11 @@ One of Claude Code's own built-in mods, listed in `/plugin` as `cc-plugin-agents
 
 ### The Other Built-In Mods, and a Sample Set
 
-The `/plugin` Installed tab's **Built-in** group now lists six mods, confirmed 2026-10-15 ([source][mods-overview]): `cc-plugin-agents-md` (covered above), `cc-plugin-diff` (the `/diff` pane), `cc-plugin-sec-default` (the governance guard, covered above), `cc-plugin-telemetry` (sends the analytics records Claude Code and its built-in mods log), and two not previously documented in this corpus pass — `cc-plugin-plugin-authoring` ("Gives Claude the `plugin-authoring` skill for writing mods. It holds a skill and no mod code," on by default "unless Anthropic has turned installed mods off remotely") and `cc-plugin-you-should-know` (the ["You should know"](https://code.claude.com/docs/en/interactive-mode#you-should-know-suggestions) feature: "a side agent shows a note above the prompt when it finds something you might have missed," off until the user turns it on). Of the six, only `diff`, `agents-md`, `sec-default`, and `telemetry` have public source under [`mods/`][gh-mods-dir] per the overview's own list, which says only that "the source of *some* of these mods is public" ([source][mods-overview]) — it doesn't itself say the other two lack source. Checked directly 2026-10-15 (`gh api repos/anthropics/claude-code/contents/mods`): the `mods/` directory holds exactly `README.md`, `agents-md/`, `diff/`, `sec-default/`, `telemetry/`, `tsconfig.json`, and `types/` — no `plugin-authoring/` or `you-should-know/` directory, confirming the absence directly rather than inferring it from the overview's silence.
+The `/plugin` Installed tab's **Built-in** group now lists six mods, confirmed 2026-10-15 ([source][mods-overview]): `cc-plugin-agents-md` (covered above), `cc-plugin-diff` (the `/diff` pane), `cc-plugin-sec-default` (the governance guard, covered above), `cc-plugin-telemetry` (sends the analytics records Claude Code and its built-in mods log), and two not previously documented in this corpus pass — `cc-plugin-plugin-authoring` ("Gives Claude the `plugin-authoring` skill for writing mods. It holds a skill and no mod code," on by default "unless Anthropic has turned installed mods off remotely") and `cc-plugin-you-should-know` (the ["You should know"](https://code.claude.com/docs/en/interactive-mode#you-should-know-suggestions) feature: "a side agent shows a note above the prompt when it finds something you might have missed," off until the user turns it on). Of the six, only `diff`, `agents-md`, `sec-default`, and `telemetry` have public source under [`mods/`][gh-mods-dir] per the overview's own list, which says only that "the source of *some* of these mods is public" ([source][mods-overview]) — it doesn't itself say the other two lack source. Checked directly 2026-10-15 (`gh api repos/anthropics/claude-code/contents/mods`): the `mods/` directory holds exactly `README.md`, `agents-md/`, `diff/`, `sec-default/`, `telemetry/`, `tsconfig.json`, and `types/` — no `plugin-authoring/` or `you-should-know/` directory, confirming the absence directly rather than inferring it from the overview's silence. Re-checked 2026-10-22: same contents, last changed 2026-10-20 ("chore: Update mods/"). **Licence:** this source is published, not open-sourced — the repo's root [`LICENSE.md`][gh-license] reads "© Anthropic PBC. All rights reserved. Use is subject to Anthropic's Commercial Terms of Service." Read it as reference code, not as code to fork.
 
 Anthropic's own tutorial for writing a mod ([claude.dev, Addy Osmani, 2026-10-01][claudedev-mods-blog]) walks through three sample mods shared, unsupported, in the `claude-code/mods` directory of a separate `claude-code-playground` repository ([source][mods-overview]): `token-weather` (a context-window forecast band above the prompt), `blast-radius` (holds a destructive Bash command — `rm -rf`, `git reset --hard`, a force push — in a pane with Proceed/Cancel until approved), and `replay-theater` (a `/replay` command that steps through a turn's file edits as a diff). None of the three is an official product; they are worked examples, and Anthropic's own docs link the same three from [the mods overview page][mods-overview].
+
+claude.dev (tagline: "Sharing tips, tricks, and POVs from Anthropic's developers.") also runs a [mods showcase][claudedev-mods] — "Small TypeScript functions that ship inside Claude Code plugins. They hook its events, change what it does, and draw their own UI in the terminal." — listing the three samples, the built-in `/diff`, AGENTS.md and sec-default mods, and one community mod, **Next steps** by Thariq Shihipar, installed with `claude plugin install next-steps@claude-community`. The site states no owner in its footer; the tagline and its links to the `anthropics` GitHub org are the only signals. Community catalogs outside Anthropic are covered in [CC-community-plugins-landscape.md § Community Mod Catalogs](../../cc-community/CC-community-plugins-landscape.md#community-mod-catalogs).
 
 ## Scored on the Agent Substrate Rubric
 
@@ -76,6 +78,8 @@ No CONTRIBUTING file, PR template, or README "how to contribute" section was fou
 | `gh api repos/anthropics/claude-code/contents/mods`, 2026-10-15 | Lists the `mods/` directory's actual contents — confirms `plugin-authoring` and `you-should-know` have no source directory there, used above instead of inferring absence from the overview's silence |
 | [Getting started with Claude Code mods][claudedev-mods-blog] | Anthropic's own tutorial (claude.dev), Addy Osmani, 2026-10-01; three worked sample mods |
 | [CC-plugin-packaging-research.md §5][packaging-pinning] | Marketplace version-pinning mechanics (`ref`/`sha`/`sha256`), reused for Reproducible above |
+| [anthropics/claude-code `LICENSE.md`][gh-license] | "All rights reserved" — the `mods/` source is published, not open source |
+| [claude.dev mods showcase][claudedev-mods] | Samples, built-ins and the community "Next steps" mod (`next-steps@claude-community`) |
 
 [mods-overview]: https://code.claude.com/docs/en/plugins/mods/overview
 [mods-admin]: https://code.claude.com/docs/en/plugins/mods/admin
@@ -88,3 +92,5 @@ No CONTRIBUTING file, PR template, or README "how to contribute" section was fou
 [issue-91870]: https://github.com/anthropics/claude-code/issues/91870
 [claudedev-mods-blog]: https://claude.dev/blog/getting-started-with-claude-code-mods/
 [packaging-pinning]: CC-plugin-packaging-research.md#5-version-pinning-for-reproducible-installs
+[gh-license]: https://github.com/anthropics/claude-code/blob/main/LICENSE.md
+[claudedev-mods]: https://claude.dev/mods/
