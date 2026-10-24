@@ -13,6 +13,14 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
 
 ## Learned Patterns
 
+### Rotating github.com 503s in the link check mean lychee is unauthenticated
+
+- **Context**: CI `Link check (lychee)` failing on a *different* github.com URL each run (503 or timeout), on links the PR never touched.
+- **Problem**: Treated for months as host flakiness (re-run until green). On 2026-10-24 every run failed this way, blocking eight PRs. Root cause: `lint.yaml` ran `make check_links` without a token, so ~2,800 links' github.com requests were unauthenticated and throttled. `link-rot-monitor.yaml` and the shared `lint-md-links.yml` (lychee-action defaults `token` to `github.token`) were already authenticated, which is why they passed.
+- **Solution**: Pass `GITHUB_TOKEN: ${{ github.token }}` to any step that runs the lychee binary (`--github-token`, env `GITHUB_TOKEN`). Shipped in #721. Occasional single 5xx can still happen; re-run only when every failure is a 5xx/timeout, never past a 4xx.
+- **Related — green runs that did nothing**: the W42 paper triage (2026-10-20) finished green with every relevance call failing on HTTP 401 (expired token), so no PR appeared and nobody noticed. A job whose whole batch fails must exit non-zero (plan 0012 row R12); new monitors guard this (the M365 drift monitor fails on "changed but empty report").
+- **References**: #721, #720, plan 0012 rows K0 and R12.
+
 ### Research subagents overclaim — review the strongest claims at source
 
 - **Context**: Merging docs written by research or synthesis subagents (worktree lanes, Fable synthesis).
