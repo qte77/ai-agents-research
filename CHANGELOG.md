@@ -11,6 +11,490 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.17.0] - 2026-10-24
+
+### Added
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: Microsoft-Decision-1 (Microsoft
+  Foundry, released 2026-10-09) — a Qwen3.5-9B-based decision-scoring model using Jev's own
+  `noul`/`choice`/`score` vocabulary over a `/v1/systemone` endpoint. Flags a status conflict
+  between the launch blog ("public preview") and the Foundry catalog ("Generally available (GA)"),
+  and a second conflict between two Microsoft blogs' numbers for the same Xbox Research case study
+  (GPT-5/80–100x vs. GPT-6 Sol/14x). Decodes the launch post's embedded chart data to recover
+  per-model accuracy/latency/calibration figures its own prose omits — on calibration,
+  Microsoft-Decision-1 ranks third behind Jev and Quyet-1.0-Large. Narrows (without closing) the
+  model-routing, tool-call-gating, and reranking gaps in § Use cases.
+
+- `.github/scripts/data/gold/`: two independently-labelled gold sets for relevance decisions
+  (plan 0012 row G1) — 100 arXiv papers under the agent-strict criterion
+  (`AGENT_STRICT_PROMPT` in `.github/scripts/lib/relevance_eval.py`), reconstructed exactly from
+  the production top-100 candidate pool, and 62 GitHub issues across 8 qte77 repos under the
+  inverse of `gha-issue-triage`'s `irrelevant` predicate. Each set ships an unlabelled items file
+  plus a labels file, labeller "agent pass 1"; a blind second pass and reconciliation follow.
+
+- `docs/_topics/harness.md`: the system-1 row names the JevSpawn paper.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: JevSpawn (arXiv:2610.00437,
+  Fudan/SJTU/Shanghai Innovation Institute) — a compositional-action-space agent policy that
+  extends the Jev-style finite-field interface (fields inferred per branch, not predefined); its
+  default pipeline runs on Qwen3.8-27B, not Jev, but the paper measures a "TypeSafe Jev variant"
+  head-to-head against it across eight benchmark tasks: roughly comparable task quality but
+  "1.4 to 2.1 times" the latency on every task. Code released, no `LICENSE` file. Added to
+  § Use cases › Tool-call gating.
+- `docs/non-cc/infrastructure/jev-analysis.md`: one-line Cross-References pointer to the new
+  JevSpawn section — the corpus's first measured (not self-reported) latency/quality comparison
+  of Jev itself inside an agent's next-action loop.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: Cloudflare Clef / Clef-flash /
+  clef-omni (Workers AI, launched 2026-10-01/10-09) as a fourth major-vendor Jev-style decision
+  model, and Unsloth's "train your own decision model" path (`FastDecisionModel`/`DecisionTrainer`,
+  v0.1.904-beta) as a new "Train your own" section connecting Clef's head design, Laya's local
+  serving, and the `LocalLLaMA/typed-decisions` dataset. Reconciles Clef's launch blog claim of
+  leading "the Jev Decision Index" against its own HF cards' "internal run" label, and the blog's
+  10-benchmark table against the cards' wider table where Jev leads on general-reasoning rows
+  (GPQA Diamond, MMLU-Pro, BBH). Narrows (without closing) the §4 Reranking gap with Clef's own
+  nDCG@10 numbers on ToolRet and BRIGHT.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: AnyJev (nokia-applied-research —
+  Nokia/Tencent Hunyuan/HK PolyU, Apache-2.0, arXiv:2610.00831) as a new open-weight Jev-family
+  entry — training-free `Decider`/`L0` plus self-distilled `Tacit` checkpoints and a `POST
+  /v1/decide` gateway, with its `state`+`questions`/`state`+`question` API shape compared against
+  the System One vocabulary and its benchmark numbers marked self-reported — and
+  typesafe-computer-use (awlevin, MIT) in §3 Tool-call gating as a macOS computer-use agent driven
+  by the real, hosted TypeSafe Jev model, with its cost/latency table flagged as a single
+  maintainer's single-task measurement.
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`: five sources (plan 0012
+  row N1) — OpenRig (YAML-defined persistent agent teams over Claude Code/Codex, with Pi/Oh My Pi
+  as a documented third runtime) and TrueForge (open-source agent harness benchmarked against
+  Claude Managed Agents and deepagents, no figures in its own README) in §1; AECP
+  (arXiv:2610.06481, artifact-exclusive multi-agent communication, cross-ref'd to
+  `mas-security-framework.md`'s Layer 1 prompt-injection mitigation) in §1; MemoType/TriMEM
+  (arXiv:2610.11573, typed memory-retrieval routing) as a sibling to the Weighted Memory
+  Tree/JITMEM cluster in §4; and GraphJin (GraphQL + MCP governed data access for agents, since
+  2019 — explicitly flagged as data access, not a knowledge graph) in §7's agent-native graph
+  platforms. Disambiguates `mvschwarz/openrig` from the unrelated `openRigProject/openRig`
+  ham-radio repo.
+
+- `docs/cc-community/CC-community-skills-landscape.md`: `wheresryan22/anatomy`, a Claude Code Agent
+  Skill (`SKILL.md`, no plugin marketplace) that turns a technical idea into an audited, interactive
+  isometric SVG/WebGL/3D figure of a real machine (MIT, 3,109 stars, 3 days old).
+- `docs/cc-native/configuration/CC-model-provider-configuration.md`: a `#### Strata` entry under
+  Local Models — a local Qwen3.8-Flash-Next inference engine that documents a Claude Code
+  `ANTHROPIC_BASE_URL` setup for its Anthropic-compatible endpoint verbatim in its own README (MIT,
+  21,540 stars), plus a separate setup/ops MCP server distinct from the inference endpoint.
+
+- `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md`: moli (lexmount; from-scratch
+  Rust headless-browser kernel for AI agents, dual MIT/Apache-2.0, CLI/CDP/WebDriver Classic/BiDi,
+  agent skills) next to the Lightpanda entry, with moli's own vendor-reported benchmark comparison
+  against Lightpanda.
+- `docs/sdlc-lcm/agentic-ai-vulnerability-landscape.md`: Uber ADR (Agentic AI Detection and Response;
+  Apache-2.0, open source, MLSys 2026 Industry Track paper arXiv:2605.17380) as a new row and
+  subsection alongside Secure Agentics Adrian and Microsoft MDASH; production-deployment and
+  benchmark figures marked self-reported.
+- `docs/non-cc/knowledge-management/research-agents-landscape.md`: IdeaScientist (arXiv:2610.04074),
+  an RL-trained gap-finding/innovation/report-writing agent pipeline for research ideation, as a new
+  §1 bullet.
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`: "What Does a Harness Buy? Tokens, Mostly"
+  (arXiv:2610.04433) under the Cost-Performance Efficiency (Pareto) metric — holding the model fixed
+  across Claude Code/mini-SWE-agent/OpenCode on SWE-bench Verified, harness choice barely moves score
+  but changes cost per task by up to 3x; new `docs/_topics/harness.md` row for this doc.
+- `docs/non-cc/infrastructure/rea-analysis.md` (new doc): REA (morluto/rea), an MCP server/CLI giving
+  coding agents reverse-engineering tools for native binaries, JS/Electron apps, .NET assemblies and
+  websites; MIT, multi-agent (Claude Code, Codex, Cursor, Gemini CLI, Grok Build). No existing
+  landscape fit its subject (reverse-engineering third-party software, not CC internals or
+  agent-code security scanning), so this is a new standalone doc.
+- `docs/non-cc/context-memory/minigraf-analysis.md` (new doc): Minigraf, an embedded bi-temporal
+  Datalog graph database (Rust/Python/WASM/mobile, dual MIT/Apache-2.0) pitched as agent memory;
+  notes that its cited "third-party" agent-memory demo is the maintainer's own project (same name in
+  the LICENSE-MIT copyright and the Maven Java/JVM group ID). Added to all three
+  `docs/_topics/{knowledge-graphs,memory,rag}.md` hubs following the HelixDB/LatticeDB convention.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: the Artificial Analysis Decision
+  Index v1.0 (third-party benchmark, launched 2026-10-13) — composition (four 25%-weighted evals:
+  AA-Omniscience-Decision, HLE-MultiChoice, When2Call, WildGuardTest), the full 13-decision-model
+  comparison table (cost, latency, sub-scores) reconciled against the live leaderboard's own
+  embedded data (including its own `defaultSlugs` field, which distinguishes AA's "default" 11 from
+  the 2 it excludes — Jev 1.13 and Clef-Flash), per-eval leaders, LLM baselines (Claude Haiku 5.5
+  Low, GPT-6 Luna Low), and calibration notes from the launch article's own frozen snapshot.
+  Explicitly distinguishes this from the unrelated community "Decision Index"
+  (`multimodalart/jev-decision-index`) already cited for Perplexity's pplx-decider, Fastino's
+  GLiDE, and Liquid AI's d1. Adds four decision models new to this corpus, named in the AA legend:
+  GLiDE (Fastino Labs, a separate "thinking" model distinct from GLiNER2.5-Decide, confirmed via
+  Fastino's own comparison-table post), Celeris-1 Decision (Celeris Labs, diffusion-based, hosted
+  only — "no open weights and no fine-tuning in this release"), d1 (Liquid AI, hosted + open-weight
+  `d1-3B`/`d1-omni-600M` under a custom `lfm1.0` license, plus the same-day `d1-ultra` launch, now
+  the index's top scorer), and Mercury Decide (Inception Labs, hosted-only, documented only at
+  `docs.inceptionlabs.ai`, no mention on the company's own homepage or blog). Flags a contrast
+  between GLiDE's self-reported lead over Jev on the community index (64.81 vs. 57.91) and its
+  materially different, lower score on the independent AA index (53.91, below either tracked Jev
+  version).
+
+- `docs/cc-native/sandboxing/CC-sandbox-platforms-landscape.md`: Maritime (Maritime AI, Inc.,
+  Delaware) — Firecracker-microVM hosting for persistent agents — as a new column in the Platform
+  Comparison table and a subsection alongside Blaxel/forkd; boot/wake timings and pricing marked
+  self-reported.
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md`: Ora (era labs) and Lightsage as the first
+  two vendors in a new "agent-readiness scoring for websites/APIs" category in §2 Benchmarks —
+  Ora's site-scan research numbers and Lightsage's Agent Experience Arena/DevTool Arena method and
+  sample size, both marked self-reported and dated.
+- `docs/non-cc/protocols/agentic-payments-landscape.md`: Lightsage's Agent Experience Arena —
+  Payments as a live adoption tracker for x402/MPP/UCP/ACP/AP2 (2,369 companies, 0
+  sandbox-verified-or-better); adds ACP (Agentic Commerce Protocol, OpenAI + Stripe,
+  agenticcommerce.dev) as a new protocol row with an explicit disambiguation from the corpus's other
+  "ACP" usages (Agent Client Protocol, Agent Connect Protocol). UCP left unexpanded — no first-party
+  definition found.
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`: Artificial Analysis's Coding Agent Index
+  (v1.5) and Endpoint Accuracy Index (BFCL v4-500 tool-use weighting) as a Landscape Reference under
+  the Cost-Performance Efficiency (Pareto) metric — both have first-party methodology pages; the
+  Decision Index is explicitly out of scope here (tracked separately against
+  system-1-decision-models-landscape.md).
+
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: CC's request-bucket TTL model (main
+  conversation vs. everything else), the `promptCacheTtl`/`subagentPromptCacheTtl` settings and
+  `CLAUDE_CODE_PROMPT_CACHE_TTL`/`CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`/`FORCE_PROMPT_CACHING_5M`/
+  `ENABLE_PROMPT_CACHING_1H` env vars with their precedence order, the `DISABLE_PROMPT_CACHING*`
+  variables, a concise "actions that invalidate vs. keep the cache" summary, and a Cache Scope section
+  (plan 0012 row N2).
+- `docs/cc-native/configuration/CC-env-vars-reference.md`: new Prompt Caching subsection for the same
+  TTL-selection and disable variables, cross-ref'd to the caching-behavior doc.
+- `docs/cc-native/configuration/CC-cli-reference.md`: a `--resume` vs. `--continue` vs. `--fork-session`
+  comparison table, including that a fork does not isolate the working directory (only the session
+  identity forks — directory isolation is `--worktree`/`-w`).
+- `docs/cc-native/sessions/CC-session-cost-analysis.md`: documented `SDKResultMessage` fields for
+  `-p --output-format json` (`total_cost_usd`, `usage`, `modelUsage`, `duration_api_ms`, `num_turns`, …)
+  with a jq recipe over those fields only; general claude.ai usage-limit best practices (flagged as not
+  CC-specific); the Claude Code wrap-up allowance (CC v2.1.277+, Pro/Max/Team-Premium eligibility,
+  frequency, and what it is and isn't).
+
+- `docs/cc-native/ci-remote/CC-web-auth-setup-analysis.md`: extends §3 (plan 0012 row N3/lane G2) with
+  the Claude Console platform-admin surface a headless org API key touches — the two unrelated quota
+  systems (claude.ai weekly/five-hour pool vs. Console pay-as-you-go) and the auto-created Claude Code
+  workspace that bridges them; the three API key types (personal, service account, legacy workspace);
+  the `anthropic-workspace-id` header requirement for a multi-workspace key, its 400 error, and the
+  `ANTHROPIC_CUSTOM_HEADERS` (CC v2.1.227+) workaround since Claude Code has no native workspace-id
+  flag for a plain Console key; why claude.ai connectors go dark under API-key auth, quoting the CC MCP
+  docs directly; org-level rate limits and spend caps (Start/Build/Scale/Custom tiers) distinct from the
+  claude.ai weekly pool; the Usage and Cost Admin API; API data retention for Claude Code (ZDR scope,
+  the 6-year server-side transcript retention vs. the local `cleanupPeriodDays` setting, HIPAA
+  exclusion); a pointer-only, verbatim-quoted citation of the Usage Policy's agentic-use clause; and
+  one-line notes on Batch processing, the Files API, the Agent Skills API, the Playground, and the
+  connectors/plugins marketplace. All claims verified first-party against `platform.claude.com/docs/en/`
+  and `code.claude.com/docs/en/` pages fetched 2026-10-15.
+
+- `docs/cc-native/sessions/CC-goal-analysis.md`: the `/goal` command — a session-scoped
+  completion-condition loop wrapping a prompt-based Stop hook, evaluated by the small fast
+  model after every turn. Covers the evaluator's transcript-only visibility, resume/compaction
+  lifecycle, the four unrecoverable-error classes vs. retry/pause for everything else,
+  background-work-deferred evaluation and check-in cadence, and version gates from `/goal`'s
+  introduction (v2.1.139) through v2.1.274, cross-verified against the CC CHANGELOG. Notes two
+  undocumented absences (no stated plan gate; no documented `/goal`-inside-a-subagent behavior)
+  rather than inferring them. Cross-links `/loop`, hooks, session-keepalive, and scheduled-tasks
+  coverage already in the corpus, plus a one-line design-lens comparison to this workspace's
+  unattended-execution rule.
+
+- `docs/cc-native/plugins-ecosystem/CC-official-plugins-landscape.md`: a new "`/code-review`
+  command and ultrareview" section, next to the existing `code-review@claude-plugins-official`
+  plugin entry — the bundled `/code-review` command (any plan, no install, alias `/review` since
+  v2.1.223, formerly named `/simplify` before v2.1.147), `ultrareview`/`/code-review ultra`
+  (research-preview cloud review: 3 free runs on Pro/Max then typically $5–$25, typically 15–25
+  minutes, 500-file/8,000-line defaults, Bedrock/Agent Platform/Foundry/ZDR/HIPAA fall back to a
+  local review, CMEK can't run it), and the separate managed GitHub PR "Code Review" service
+  (Team/Enterprise, Quick/Standard/Deep). Corrected the plugin entry's usage line: because plugin
+  commands are namespaced, the installed plugin runs as `/code-review:code-review`, not bare
+  `/code-review` — confirmed via `claude plugin list` and this session's own skill list (CC
+  2.1.302) alongside the plugin's README (4-agent confidence-scoring architecture, author Boris
+  Cherny, v1.0.0).
+
+- `docs/cc-native/sessions/CC-goal-analysis.md`: "Pairing `/goal` With a Persistent Task List".
+  A durable task list (plan file, backlog, issue queue) holds the work across sessions, and `/goal`
+  drives one session through it. Covers how to write the condition (name the file, scope to items
+  Claude can finish, make the evidence visible, pick a reachable end state, bound it), failure modes
+  (compaction, permission mode, subagents, mid-run list edits, headless runs), and a command Stop
+  hook as the deterministic alternative (exit 2 / `decision: "block"`, `stop_hook_active`,
+  8-continuation cap). Labelled as a design pattern, not tested.
+
+- `docs/non-cc/coding-agents/goal-loops-landscape.md`: goal loops across coding agents — `/goal` in
+  Codex, Antigravity, Kiro, Copilot CLI and Cursor, VS Code Advanced Autopilot, and Stop-style hooks
+  in Codex, Copilot CLI, Antigravity, Devin, Cursor and Amp. Compares who judges completion (a
+  separate model in Claude Code and VS Code; the agent itself in Codex, Antigravity and Kiro; not
+  stated for Cursor and Copilot) and the bounds. Every cell fetched first-party and re-checked by an
+  adversarial pass, 2026-10-22.
+- `docs/cc-native/sessions/CC-goal-analysis.md`: "Offloading and Batch Runs" — `claude -p` starts in
+  Manual mode from v2.1.302, so an unattended goal needs a permission mode; exit codes don't separate
+  met/impossible/bounded; one goal per process for batches; cloud sessions and routines don't mention
+  `/goal`; Anthropic's explore → spec → `/goal` guidance.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md` § Tools built on Jev: jkudish/jev-browser
+  (MIT, v0.8.9) — Playwright browser-use where Jev picks each action and scores goal-met/stuck, with
+  the README's and awesome-jev's conflicting form-submit claims both recorded; plus the two CC0
+  community catalogs cobanov/awesome-jev and MrJev/awesome-jev as discovery sources (MrJev states it
+  is not affiliated with TypeSafe AI; its awesome-jev-1 and jev-browser repos are stale forks, so
+  upstream is cited).
+- `docs/non-cc/infrastructure/jev-analysis.md`: cross-reference updated.
+
+- `docs/cc-community/CC-community-plugins-landscape.md` § Community Mod Catalogs: claude-mods.com
+  (unofficial, 278 mods), OneWave-AI/claude-code-mods (MIT, 11 mods incl. a Gmail/Slack/Calendar
+  poller), whyashthakker/awesome-claude-code-mods (MIT, 50 mods, via explainx.ai) and ruvnet's field
+  guide (partly outdated) — with a caution against loading unreviewed, unsandboxed mods into every
+  session via `CLAUDE_CODE_PLUGIN_DIRS`.
+
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md` § Benchmarks: Omi Health's medical
+  speech-to-text benchmark (edition 2026-10-18.1; 1,513 recordings) as a vendor-run, self-scored entry —
+  Omi's own model leads and is sold as an API, the recordings' source and release status aren't stated,
+  and the open MIT scorer repo uses a different public set (PriMock57, CC BY 4.0) whose leaderboard
+  excludes Omi's model.
+
+- `docs/non-cc/knowledge-management/onyx-analysis.md`: Onyx (onyx-dot-app; DanswerAI, Inc.) — open-core
+  company knowledge/context layer (MIT outside `ee/`), 50+ connectors, agentic RAG, deep research,
+  custom agents, and an MCP server for Claude Code/Codex/OpenCode; v4.9.2. Records its unbenchmarked
+  "cheaper than MCP search" claim and the curl-pipe-bash installer as watch-outs. Indexed in
+  `docs/non-cc/README.md` and `docs/_topics/rag.md`.
+
+- `docs/cc-native/configuration/CC-tools-inventory.md` § Slash Commands: `/focus` — toggles the focus view
+  (last prompt, one-line tool-call summary with diffstats, final response; fullscreen only), persisted
+  across sessions and overridable with the `viewMode` setting; `/focus [on|off]` from Remote Control
+  (v2.1.281+). Plan 0012 row R11.
+
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md`: new analysis doc — a first-party fact-check
+  and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint Skills and
+  structured document generation, Microsoft Copilot Studio model selection and BYO MCP, Work IQ,
+  Microsoft Agent 365 governance/licensing/APIs, the EU Data Boundary/Flex Routing/Multi-Geo residency
+  story including Claude-on-Foundry's own lack of an EU Data Zone deployment type, Claude's
+  contractual postures across this family, and a documented Customer-Key-vs-Double-Key-Encryption
+  trade-off for Copilot access). 85 claims split by verdict × bucket (3 refuted, 24 partly, 47
+  supported, 11 unverifiable); disambiguates "Microsoft 365 Copilot" from GitHub Copilot and
+  separates "Copilot in SharePoint Skills" from "custom skills in declarative agents". Adds a
+  vendor-sourced feasibility table for eight operational/automation scenarios, a numbers-free
+  pricing pointer, "Lockdown limits", a change-feed table, and **guardrails for SharePoint and
+  Microsoft 365 agent skills**. Verified 2026-10-23 by an independent falsifier (23 of 25
+  load-bearing claims confirmed verbatim, none wrong) and enriched with the SharePoint model note,
+  two-step external-model gating, the GCC Anthropic opt-in, per-model Claude postures and the
+  Copilot Studio model-retirement dates.
+- `docs/non-cc/README.md`: Agents-table row for the new doc.
+- `docs/_topics/skills.md`: hub row for Copilot in SharePoint Skills (non-cc bucket).
+
+- `docs/non-cc/infrastructure/ai-crawlers-discoverability-landscape.md`: AI crawler tokens and what each
+  controls (training / search / user-triggered fetch), which ones may ignore robots.txt (OpenAI ChatGPT-User,
+  Perplexity-User), Cloudflare AI Crawl Control, pay per crawl (closed beta, HTTP 402) and Content Signals
+  (`use=` key), and Google's and Bing's first-party guidance for AI answers. Plan 0012 row R1.
+
+- `docs/non-cc/infrastructure/code-review-products-landscape.md`: GitHub Copilot code review (GA; ruleset
+  auto-review, AI credits + Actions minutes, shared read-only MCP config), pointing to the cloud-agent doc.
+
+- `docs/non-cc/agents/github-copilot-cloud-agent-analysis.md`: Copilot on github.com — cloud agent,
+  automations (launched 2026-06-02; schedule/issue/PR triggers; not in public repos), MCP config
+  (GitHub + Playwright MCP on by default, `COPILOT_MCP_` secrets, no OAuth remotes, tools only),
+  repository instructions incl. `AGENTS.md`/`CLAUDE.md`/`GEMINI.md`, automatic code review (ruleset
+  rule, AI credits + Actions minutes, external-licence setting) and responsible-use mitigations;
+  github/github-mcp-server (MIT, v2.0.3). 19/19 claims confirmed by an independent falsifier.
+
+- `.github/workflows/m365-drift-monitor.yaml` + `.github/scripts/m365-drift-monitor.py` +
+  `.github/scripts/lib/m365_drift.py`: weekly monitor that checks the Microsoft Learn pages cited
+  by the Microsoft 365 Copilot doc for an `ms.date` change or a vanished stored quote, upserting a
+  single `m365-drift` tracking issue for a human to triage (#705). Watch list + last-seen state in
+  `.github/state/m365-drift-state.json`; refreshed state commits via the shared `create-triage-pr`
+  action, same as the other state-backed monitors.
+
+- `.github/state/m365-drift-state.json`: two dated seeds for the M365 drift monitor (#705) — the
+  Copilot Studio retirement-table rows for GPT-5.5 Chat (2026-10-31) and GPT-4.1 / GPT-5
+  (2026-11-12). Each is a `#fragment` key on the `authoring-select-agent-model` page, so the
+  monitor flags the row when it vanishes or changes; the fragment is not sent on fetch.
+
+### Changed
+
+- `docs/cc-community/CC-community-tooling-landscape.md`: refreshed herdr's stale stats (40,485 →
+  43,400 stars, v0.9.1 → v0.9.3) in all three places it is recorded, and added the v0.9.2
+  self-reported-resume capability (agents can now self-report their resume command) alongside the
+  existing session-restart risk note, which still stands — the original OS processes still do not
+  survive a restart.
+
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: corrected two stale claims found while
+  re-verifying against the live docs — CC does **not** use the 5-minute ephemeral cache exclusively (it
+  requests a 1-hour TTL by default on a Claude subscription within plan usage for the main conversation);
+  and the claimed Bedrock exception for the Fable 5/Mythos 5 minimum cacheable prefix is contradicted by
+  the current docs ("these minimums apply on every platform"), so it was removed. The minimum-cacheable-
+  prefix table was also refreshed to include newer models (Opus 5.5, Opus 5, Sonnet 5.5, Haiku 5.5, Fable
+  5.1, Mythos 5.1), all at 512 tokens.
+
+- `docs/cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md`: refreshed against the live
+  mods overview/admin/reference/create pages (2026-10-15) — fixed two verbatim-quote drifts (the
+  settings-hooks comparison sentence; the Versionable rubric cell's unsupported "GitHub repo with a
+  marketplace file" quote, re-sourced to `mods/create`), documented the two built-in mods added since
+  the last pass (`cc-plugin-plugin-authoring`, `cc-plugin-you-should-know`, for six total), and added
+  the guard's `allowModsToOverrideDenyRules`/`allowManagedHooksOnly`/`disableAllHooks` options.
+- `docs/cc-native/plugins-ecosystem/CC-channels-analysis.md`: refreshed against the live channels and
+  channels-reference pages (2026-10-15) — added the v2.1.234+ permission-relay gates (credential
+  masking, registered-channel-only relay, `(value unserializable)`), the Console-API-key-org default,
+  the `-p`-mode tool restrictions, and the v2 MCP client protocol-revision registration gap; the
+  `v2.1.80+` version gate is now labeled as an earlier, unconfirmed finding since the current pages
+  state no minimum version.
+- `docs/cc-native/ci-remote/CC-web-scheduled-tasks-analysis.md`: refreshed against the live Routines
+  page (2026-10-15) — added one-off scheduled runs, the per-trigger hourly usage limits, the 72-hour
+  GitHub-reconnect grace window, and two comparison-table rows (Permission prompts, Customizable
+  schedule); removed an unverifiable "Allow unrestricted" branch-permission toggle claim; fixed the
+  Adaptable rubric cell's verbatim quote and softened the Versionable cell's unsupported "past run
+  sessions remain" claim; clarified that the URL slug `scheduled-tasks` now belongs to a *different*
+  feature (`/loop`, covered in `CC-loop-cron-analysis.md`), not this doc's Routines.
+- `docs/cc-native/configuration/CC-loop-cron-analysis.md`: substantially refreshed — this feature now
+  has an official first-party page (`code.claude.com/docs/en/scheduled-tasks`) superseding most of the
+  doc's original gist/cli.js-decompilation and empirical sourcing. Corrected the "default interval: 10
+  minutes" claim (no such default; an omitted interval now means Claude self-paces 1 min–1 h) and the
+  "`durable: true`" persistence claim (the current page describes resume-restoration as the default
+  for all `CronCreate` tasks except a self-paced loop and expired/past-due tasks, with no such
+  parameter documented). Added self-paced loops, `loop.md`, the `ScheduleWakeup` tool, Monitor-tool
+  integration, skill-invocation reach rules on a scheduled fire, `CLAUDE_CODE_DISABLE_CRON`, the
+  `Esc`-to-stop a self-paced loop, and the documented session-backgrounding workaround for the
+  session-bound limitation. Added the missing `validated_links` frontmatter field.
+- `docs/cc-native/CC-first-party-docs-index.md`: added rows for `plugins/mods/overview`,
+  `plugins/mods/admin`, `plugins/mods/reference`, `channels-reference`, `slash-commands`, `goal`,
+  `scheduled-tasks`, `routines`, `desktop-scheduled-tasks`, and `hooks` (reference), found while
+  navigating the docs for this refresh.
+
+- `docs/cc-native/configuration/CC-tools-inventory.md`: replaced the stale `/ultrareview` row
+  ("Unknown — enhanced review?") and a stale `/review-pr` row (which cited `cli-ref` for a command
+  absent from that reference, the live `commands` page, and the full Claude Code CHANGELOG, v0.2.21
+  through v2.1.302) with verified `/code-review`, `/review`, `/simplify`, and `/ultrareview` rows,
+  plus a detailed subsection covering targets, effort levels, flags, alias/rename version gates,
+  and ultrareview's scope, billing, limits, and platform restrictions — verified against the live
+  `code-review-local`, `ultrareview`, and `commands` pages (CC 2.1.302).
+- `docs/cc-native/plugins-ecosystem/CC-official-plugins-landscape.md`: corrected the code-review
+  plugin's author/version attribution — an independent fact-check of this PR found the two
+  first-party files disagree: `.claude-plugin/plugin.json` names the author "Anthropic" and has
+  no version field, while the README's own `## Author`/`## Version` sections give "Boris Cherny"
+  and "1.0.0". Both are now cited to the file that actually states them.
+- `docs/cc-native/configuration/CC-loop-cron-analysis.md` (coordinator-requested follow-up, not an
+  owner-approved fence widening): replaced the three stale `/review-pr 1234` example-target
+  mentions (lines 20, 39, 185) with `/code-review 1234`, a documented target form. Bumped
+  `updated:`/`validated_links:` to 2026-10-18.
+
+- `AGENTS.md`: the Rules line says where the shared rules come from, and that cloud, GHA and
+  other-machine sessions don't get them.
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: the context-management link points
+  at the plugins SoT.
+
+- `docs/sdlc-lcm/agentic-sdlc-patterns.md` § ADLC: practitioner variant where each stage commits an
+  artifact the next reads (intent file, skills, `CLAUDE.md`, hooks), with a production alert writing a
+  new intent file to close the Observe→Correct gap — plus a caution that an alert path with no human
+  turns log text into agent instructions (prompt injection). Opinion source, plain-text LinkedIn URL.
+
+- `docs/non-cc/protocols/agentic-payments-landscape.md`: agent payment protocols refresh. New sections
+  for Stripe MPP (Machine Payments Protocol, co-authored with Tempo; HTTP 402; cards via SPTs and
+  stablecoins; serves x402 clients too), L402 (Lightning Labs; macaroon + invoice preimage; TLS
+  warning), UCP (Universal Commerce Protocol, Apache-2.0, built on AP2) with Shopify's UCP-compliant
+  MCP servers, and the card networks (Visa Intelligent Commerce and Connect pilot, Visa Trusted Agent
+  Protocol, Mastercard Agent Pay and Agentic Tokens). AP2 release history, Lightsage re-check (2,370
+  companies), takeaways and the comparison table updated. 33 claims re-checked by an independent
+  falsification pass (32 confirmed, 1 overstated and corrected); Mastercard's exact launch date stays
+  unverified.
+
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md` § Agent-readiness scoring: DevTool Arena
+  re-checked 2026-10-22 — now at devtoolarena.com, operator "API-Rex, Inc., doing business as
+  Lightsage"; 11 boards across 7 agents (`llms.txt`), Claude Code API board 187 companies / 45
+  categories; new discoverability view (46 use cases × 5 prompts, 19 agent/model columns); no dates,
+  method or data licence on the boards, changelog as the only dated record. Adds a conflict-of-interest
+  note (Lightsage sells $100–$1,000/month plans to the companies it ranks; submissions collect contact
+  details) and Lightsage's "Agent-Led Growth" framing as vendor terminology. Scores are cited, not copied.
+
+- `docs/non-cc/README.md`, `docs/_topics/long-running.md`: index rows for the new landscape.
+
+- `docs/cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md`: VS Code (2.1.299+) and
+  Bedrock (2.1.304+) version gates; `mods/` re-checked (last change 2026-10-20) and its licence noted —
+  "© Anthropic PBC. All rights reserved", so published source, not open source; the claude.dev mods
+  showcase and the community `next-steps@claude-community` mod.
+
+- `docs/non-cc/protocols/ag-ui-protocol-landscape.md`: OpenUI (Thesys, MIT, 13k★) — a generative-UI
+  payload language (OpenUI Lang) plus React/Vue/Svelte/Angular renderers that streams over AG-UI and
+  ships an A2UI v1.0 client; self-reported "up to 67% fewer tokens than JSON". New section, decision-matrix
+  row and source.
+
+- `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`: re-confirmed against the live Agent
+  Skills specification that `allowed-tools` is the only tool-related field (Experimental) and that
+  the optional package directories are `scripts/`, `references/` and `assets/` — no `evals/`; the
+  skill-creator plugin's `evals/evals.json` is a plugin convention. Adds a Claude Code ↔ OpenAI Codex
+  CLI SKILL.md / MCP / AGENTS.md parity table. Split out of #704.
+
+- `docs/non-cc/protocols/ag-ui-protocol-landscape.md` § A2A: status re-checked 2026-10-24 — v1.0.1 still
+  latest, AAIF Growth Stage, nine-seat TSC (Bloomberg added), A2A CLI, unreleased `dev-1.1` work
+  (`SendLiveMessage`, AI Catalog discovery), and vendors still on v0.x naming (Copilot Studio, AgentCore SDK pin;
+  ADK Experimental). Plan 0012 row R3.
+- `docs/non-cc/frameworks/agentic-enterprise-os-landscape.md`: Copilot Studio "A2A GA" scoped to the standard
+  harness (GitHub Copilot harness is preview) and sourced to the what's-new page.
+- `docs/non-cc/protocols/agentic-payments-landscape.md`: new "Merchant feeds" section — what OpenAI (ACP feed),
+  Google (Merchant Center native commerce, UCP) and Shopify (Agentic Storefronts) ask merchants to provide.
+
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md`: Ora refreshed (127,521 sites, average 43, 6% B+,
+  2026-10-24); new "Making a business agent-ready" paragraph — Google needs no special markup or schema for
+  AI features, NLWeb (MIT, now `nlweb-ai/NLWeb`), Checkatrade's Claude connector. Plan 0012 row R2.
+- `docs/sdlc-lcm/agent-identity-auth-landscape.md`: MCP authorization updated to the 2026-07-28 revision
+  (RFC 8707 audience binding, DCR deprecated for Client ID Metadata Documents) plus Claude connector
+  directory requirements (R2); Visa Trusted Agent Protocol next to Web Bot Auth (R5).
+
+- `docs/cc-native/context-memory/CC-llms-txt-analysis.md`: llms.txt v2 (2026-08-10) — context-expansion
+  tooling dropped, Optional sections no longer carry mechanical semantics, `page.md`, Markdown alternate
+  links; Google needs no AI text files.
+- `docs/non-cc/README.md`: index row for the new landscape.
+
+- `docs/non-cc/agents/github-copilot-cli-analysis.md`: the CLI now reads `AGENTS.md`/`CLAUDE.md`/
+  `GEMINI.md` (the "not AGENTS.md" gap is closed) and is billed in GitHub AI Credits, not premium requests.
+- `docs/sdlc-lcm/multi-agent-onboarding-outlook.md`: Copilot row notes AGENTS.md/CLAUDE.md/GEMINI.md.
+- `docs/cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md`: Playwright MCP licence/release,
+  on by default in Copilot cloud agent, README security and CLI+skills notes.
+- `docs/non-cc/README.md`: index row for the new doc.
+
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md`: removed the ShareGate article and the
+  "Governing SharePoint Skills and Agents" webinar (vladtalkstech.com, drewmadelung.com) from the
+  Sources table and their link definitions (owner, 2026-10-24); no claim in the body cited them.
+
+- `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md`: moli fit verdict — not a Patchright
+  replacement (no Python API, no stealth goal, installer-script distribution, vendor-only fidelity numbers);
+  facts re-checked at source 2026-10-24. Closes #665.
+
+- `docs/architecture.md`: Automated Monitors lists the M365 drift monitor (#720); Lint Gate notes lychee
+  is authenticated with the workflow token (#721).
+- `docs/plans/2026-10-10-0012-decision-models-estate.md`: C1 and K0 brought current (gha-issue-triage#115
+  merged; the 2026-10-22 token re-set); R6 struck (qte77#198); N10 records the 2026-10-23/24 work; new rows
+  R12 (all-failed paper triage must fail), R13 (GitHub changelog monitor, owner), R14 (polyforge leftovers).
+- `AGENT_LEARNINGS.md`: rotating github.com 503s = unauthenticated lychee; green runs that did nothing.
+
+- Goal-loop facts (verified 2026-10-22) added to `codex-cli-analysis.md`, `cursor-analysis.md`,
+  `antigravity-analysis.md`, `vscode-copilot-chat-analysis.md` and `github-copilot-cli-analysis.md`, each
+  pointing to `goal-loops-landscape.md`; `kiro-analysis.md` notes `/autonomous on` (CLI v2.31.0) and its
+  `/goal` defaults. Plan 0012 row R4.
+
+- `docs/cc-native/configuration/CC-tools-inventory.md`: `/focus` row now gives `viewMode`'s values
+  (`"default"`, `"verbose"`, `"focus"`), scope (any settings file) and default (unset), verified against
+  the settings reference 2026-10-24.
+
+### Removed
+
+- `.claude/rules/context-management.md`, `compound-learning.md`, `core-principles.md`: the shared
+  estate rules now load once, at user level, from `~/.claude/rules/` symlinked to the
+  claude-code-plugins rules SoT (plan 0001). Repo sessions on this machine loaded them up to four
+  times, in three versions of core-principles.
+
+- `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`: the Claude Code ↔ OpenAI Codex CLI
+  parity table (added in #708) — every row repeated facts already in `agents-md-cookbook-analysis.md`,
+  `codex-cli-analysis.md` or the ecosystem table above it; replaced by a one-line pointer to the
+  AGENTS.md compatibility matrix (owner, 2026-10-24). The spec re-check stays.
+
+### Fixed
+
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`: Tracely link moved to `jwuthri-cloud/Tracely-ai`
+  (the original `Jwuthri/Tracely-ai` returns 404); star count refreshed.
+- `docs/cc-native/ci-remote/CC-remote-access-landscape.md`: Omnara's iOS App Store listing returns 404 and
+  the site no longer mentions an iOS app — link removed, the claim it sourced marked unverified.
+
+- `docs/non-cc/infrastructure/jev-analysis.md`: feelings v0.10.0 figures re-read from `results.json`/
+  `ytdlp.json` at the tag — Opus 5.5 averaged 0.96 ROC-AUC (was 0.97), yt-dlp per-question AUC 0.76–0.99
+  across both Jev runners (was 0.77); adds the Claude-baseline harness disclosure (tool-less `claude -p`)
+  and a measurement caveat on cue leakage in mutation-built benchmarks. Closes #622.
+
+- `.github/workflows/lint.yaml`: the "Run lychee" step now passes `GITHUB_TOKEN: ${{ github.token }}` so
+  lychee authenticates its github.com requests (`--github-token`, env `GITHUB_TOKEN`). Without it, CI link
+  checks failed on rotating github.com 503s under throttling. Matches `link-rot-monitor.yaml` and the
+  shared `lint-md-links.yml` (lychee-action defaults `token` to `github.token`); the custom workflow from #141 is kept.
+
 ## [0.16.0] - 2026-10-10
 
 ### Added
