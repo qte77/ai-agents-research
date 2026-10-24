@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-09-24
+updated: 2026-10-24
 ---
 
 ## Architecture: ai-agents-research
@@ -89,6 +89,12 @@ Each monitor commits its state-fingerprint file in `.github/state/` alongside th
 
 A fifth scheduled workflow — `link-rot-monitor` (Monday 12:00 UTC) — is a **health** monitor rather than a content monitor: it runs lychee weekly and upserts (then auto-closes) a single `link-rot` issue when external links break. See [Lint Gate](#lint-gate).
 
+A sixth — `m365-drift-monitor` (Monday 13:00 UTC, added 2026-10-24, #720) — is also a health monitor: it
+re-fetches the Microsoft Learn pages the Microsoft 365 Copilot doc relies on, compares each page's
+`ms.date` and checks the doc's stored quote is still present, and upserts a single `m365-drift` issue
+on any change or failed fetch (no page text is copied). Its state file is refreshed through a triage
+PR like the content monitors (#705).
+
 **On-demand refresh (session-driven, not CI):** `.claude/workflows/refresh-docs.js` is a Claude Code Workflow-tool script (companion to the `adding-research-source` skill's `batch-sources` workflow) that re-verifies a given list of docs against their first-party sources — one read-only checker agent per doc plus an adversarial verifier per proposed correction set — and returns a corrections list the session then applies. The link-rot monitor guards URL *liveness*; `refresh-docs` guards claim *currency* (version gates, counts, renamed features). First run: the 2026-07-23 stale-cohort refresh (27 docs with `validated_links: 2026-03-*`).
 
 ## Lint Gate
@@ -98,7 +104,7 @@ Three lint jobs run on every PR touching docs, workflows, or actions:
 | Job | Tool | Scope |
 |---|---|---|
 | Markdown lint | `markdownlint-cli2` | root governance docs (`README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CLAUDE.md`, `AGENTS.md`, `AGENT_LEARNINGS.md`, `AGENT_REQUESTS.md`) + `docs/**/*.md` |
-| Link check | `lychee` | repo-wide (configured via `lychee.toml`) |
+| Link check | `lychee` | repo-wide (configured via `lychee.toml`); github.com requests authenticated with the workflow `GITHUB_TOKEN` (#721) |
 | Action lint | `actionlint` (+ `shellcheck` on the runner) | `.github/workflows/**`, `.github/actions/**` |
 
 The rxiv triage job additionally runs `markdownlint-cli2` against the assembled would-be PR content (with the action's H1 prepend simulated) and fails the job before opening a triage PR if the output is md-dirty.
