@@ -4,8 +4,8 @@ description: Analysis of the llms.txt standard, Anthropic's documentation surfac
 source: https://llmstxt.org/, https://platform.claude.com/llms.txt, https://code.claude.com/docs/llms.txt
 category: analysis
 created: 2026-03-07
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: stable
 ---
 
@@ -21,6 +21,17 @@ HTML/JS/nav boilerplate for LLMs to process efficiently.
 A project can implement llms.txt via GitHub workflows and a curated template (see example below).
 
 ## Specification (llmstxt.org)
+
+> **v2 update (re-checked 2026-10-24).** llmstxt.org now says "This is v2 of the proposal, updated
+> based on what I learned from two years of adoption" (modified August 10, 2026). Per its
+> [changes page][llms-changes]: "The context-expansion tooling is no longer part of the proposal"
+> (so `llms_txt2ctx` and the `llms-ctx*.txt` outputs below are v1-only); Optional sections "no longer
+> carry mechanical semantics"; `page.md` is allowed alongside `page.html.md`; and pages can point to
+> their Markdown version with `rel="alternate" type="text/markdown"`. No AI search operator documents
+> reading llms.txt — Google says the opposite: "You don't need to create new machine readable files,
+> AI text files, or markup to appear in these features" ([AI features][llms-google]). Crawler and
+> robots.txt controls are in
+> [ai-crawlers-discoverability-landscape.md](../../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md).
 
 ### Required Structure
 
@@ -48,7 +59,8 @@ Optional body content (no headings)
 - Blockquote summary provides key context for understanding the rest
 - Body content: any markdown except headings (paragraphs, lists, etc.)
 - H2 sections contain file lists: `- [name](url): description`
-- `## Optional` has semantic meaning: tools may skip it for shorter context
+- `## Optional` had semantic meaning in v1 (tools may skip it for shorter context); in v2 it no
+  longer carries mechanical semantics
 - Designed for on-demand/inference-time use, not crawling or training
 
 ### File Naming and Location
@@ -57,14 +69,15 @@ Optional body content (no headings)
 | ---- | ------- |
 | `/llms.txt` | Primary index at site root |
 | `/llms-full.txt` | Expanded version with all pages |
-| `page.html.md` | Markdown version of individual pages |
-| `llms-ctx.txt` | Generated expanded context (no URLs) |
-| `llms-ctx-full.txt` | Generated expanded context (with URLs) |
+| `page.html.md` (or `page.md`, v2) | Markdown version of individual pages |
+| `llms-ctx.txt` | Generated expanded context (no URLs) — v1 tooling, dropped in v2 |
+| `llms-ctx-full.txt` | Generated expanded context (with URLs) — v1 tooling, dropped in v2 |
 
 ### Relationship to Other Standards
 
 - **robots.txt**: Governs crawler access; llms.txt provides content context
-  (complementary)
+  (complementary) — per-crawler tokens in
+  [ai-crawlers-discoverability-landscape.md](../../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md)
 - **sitemap.xml**: Lists all indexable pages; llms.txt curates a focused,
   LLM-sized subset
 
@@ -200,4 +213,9 @@ This is a meaningful generalization of the spec's intent: the `llms-full.txt` ar
 - [platform.claude.com/llms-full.txt](https://platform.claude.com/llms-full.txt) — full API docs
 - [code.claude.com/docs/llms.txt](https://code.claude.com/docs/llms.txt) — CC docs index
 - [HuggingScience](https://huggingscience.co/) — curated AI-for-science catalog shipping `/llms-full.txt`
-- `llms_txt2ctx` — CLI tool to expand llms.txt into a flat context file
+- `llms_txt2ctx` — CLI tool to expand llms.txt into a flat context file (v1; "no longer part of the proposal" in v2)
+- [llmstxt.org changes][llms-changes] — v2 changes (checked 2026-10-24)
+- [Google — AI features and your website][llms-google] — no special files needed for AI Overviews / AI Mode
+
+[llms-changes]: https://llmstxt.org/changes.html
+[llms-google]: https://developers.google.com/search/docs/appearance/ai-features
