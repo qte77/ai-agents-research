@@ -3,8 +3,8 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-10-11
-validated_links: 2026-10-11
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: reference
 ---
 
@@ -71,6 +71,16 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 **Lightpanda — built-from-scratch, not a Chromium fork.** [Lightpanda](https://lightpanda.io) ([repo](https://github.com/lightpanda-io/browser), AGPL-3.0, 35.5k★ verified 2026-09-24) is a headless browser engine written in Zig from scratch — not a Chromium or WebKit fork — targeting automation/crawling/AI workloads rather than human browsing. It speaks the Chrome DevTools Protocol, so it works as a drop-in replacement in existing Puppeteer/Playwright code. Lightpanda's own site reports (vendor benchmark, not independently reproduced here) ~9x faster crawling than Chrome (5s vs 46s) and ~16x lower peak memory (123MB vs 2GB).
 
 **moli — also built from scratch, Rust instead of Zig.** [moli](https://github.com/lexmount/moli) (dual MIT/Apache-2.0 — confirmed by opening and reading both `LICENSE-MIT` and `LICENSE-APACHE` directly; GitHub's single-value repo API field reports only Apache-2.0; 16,369★, created 2026-08-10, verified 2026-10-11) is a standalone headless-browser kernel built in Rust — not a Chromium or WebKit fork — as a workspace of 95 `moli-*` top-level directories (`moli-dom`, `moli-layout`, `moli-css-parse`, `moli-renderer-v8`, `moli-protocol-cdp`, `moli-protocol-webdriver-bidi`, among others; count confirmed from the repo's own root directory listing, not from `[workspace] members` in `Cargo.toml`). It defaults to `LayoutPolicy::Mock` — reading DOM/style state directly, with no layout or paint — and only runs real layout/screenshots when `--layout` is passed — its own "structure first, pixels on demand" design. One binary serves CDP, WebDriver Classic, and WebDriver BiDi (no separate ChromeDriver/geckodriver), and the repo ships three installable agent skills (`github.com/lexmount/moli/tree/main/skills`: `moli-cdp-server`, `moli-webfetch`, `moli-websearch`) that an agent installs to drive it directly. On Lexmount's own benchmark suite (vendor-authored, not independently reproduced here), moli's README reports beating Lightpanda on both a 192-URL mixed public-web crawl (103 useful pages / 53.6% success vs. Lightpanda's 85 / 44.3%) and the 1,308-task Lexbench-Headless-Browser suite (81.9% vs. Lightpanda's 53.3%, against Chrome's 99.8% reference). Moli is Lexmount's open-source engine; Lexmount Browser is a separate managed cloud layer built on top, and the open-source browser is fully usable standalone.
+
+**Fit as a Patchright replacement (verdict, re-checked 2026-10-24): no.** Evaluated as a drop-in for Patchright in a Python fetch toolkit (polyfetch-scrape, [#665](https://github.com/qte77/ai-agents-research/issues/665)):
+
+- **No Python API.** The README offers "the CLI, CDP, WebDriver Classic, or WebDriver BiDi" only, so a Python stack would attach over CDP (e.g. Playwright's `connect_over_cdp()`) rather than import a library.
+- **No anti-detection goal.** Patchright exists to hide automation leaks; moli's README never mentions stealth, and the one related item is a closed issue, [lexmount/moli#371](https://github.com/lexmount/moli/issues/371) ("stealth(renderer): expose Chromium `window.chrome` surface").
+- **Distribution:** a prebuilt binary through an installer script piped into the shell (`moli-installer.sh | sh`), not a PyPI or npm package. The README lists Linux, macOS and Windows; musl/Alpine is unverified.
+- **Fidelity is the vendor's own number:** 81.9% vs Chrome's 99.8% on Lexmount's Lexbench-Headless-Browser, not independently reproduced.
+- **Moving fast:** 20,397★ and `v1.1.19` (2026-10-21) as of this check, so expect API churn.
+
+At most an optional, experimental CDP backend for low-fidelity, structure-first crawling, and only after a spike shows that console and network events, full-page screenshots and typed input work over `connect_over_cdp()`.
 
 ### Accessibility-tree page representation
 

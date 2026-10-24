@@ -3,8 +3,8 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: research
 ---
 
@@ -191,6 +191,8 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 ### What It Is
 
 Microsoft's official MCP server that provides full browser automation using Playwright. Interacts with pages through structured accessibility snapshots — no vision model needed. **Runs a local Chromium process** on your machine — no cloud service, no API key, no credit cost. Optional remote mode via `--port` for Docker/server setups, or `--cdp-endpoint` to attach to an existing browser ([source][playwright-mcp-gh]).
+
+**2026-10-24:** Apache-2.0, 38,557★, latest release `v0.0.83` (2026-09-28) (`gh api`). It is one of the two MCP servers "enabled by default" for GitHub's Copilot cloud agent ([github-copilot-cloud-agent-analysis.md § MCP servers](../../non-cc/agents/github-copilot-cloud-agent-analysis.md#mcp-servers)). Its README now states "Playwright MCP is not a security boundary" and that "Modern coding agents increasingly favor CLI–based workflows exposed as SKILLs over MCP" ([source][playwright-mcp-gh]).
 
 ### Setup
 

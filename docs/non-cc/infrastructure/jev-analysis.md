@@ -2,8 +2,8 @@
 title: Jev (TypeSafe AI) — System-One Decision Model
 purpose: What Jev is (question types, pricing, limits) and the qte77/feelings measured pilot using it as a pre-CI code-review gate.
 created: 2026-09-30
-updated: 2026-10-10
-validated_links: 2026-10-10
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: trial
 ---
 
@@ -59,19 +59,29 @@ only fixture change between the two runs.
   (287 ms) and about $0.0001 per check (per-call cost $0.000116). With 59 clean changes the
   false-flag rate is too small a sample to pin down.
 - **Against Claude on the same changes and questions:** Haiku 4.5 averaged 0.91 ROC-AUC
-  and wrongly flagged 12% (11.9%); Sonnet 5 averaged 0.95; Opus 5.5 averaged 0.97 and
+  and wrongly flagged 12% (11.9%); Sonnet 5 averaged 0.95; Opus 5.5 averaged 0.96 and
   caught 98%. Jev ran about 67x faster than the fastest Claude tested (Opus, 19.2 s p95)
-  and about 51x cheaper than the cheapest (Haiku, $0.0059/check).
+  and about 51x cheaper than the cheapest (Haiku, $0.0059/check). **How Claude was called:** one
+  tool-less model call per change — `claude -p` with `--tools ""`, `--safe-mode`, a replaced
+  system prompt and a JSON schema ([`eval/claude_gate.py` at v0.10.0][feelings-claude-gate];
+  disclosure tracked in [feelings#43][feelings-43]). That measures the models, not Claude Code
+  working as an agent, so agent-harness effects don't apply to this comparison.
 - **BAML vs. the plain Python SDK:** identical requests; the two setups' per-question AUC
   never differed by more than 0.0035.
 - **Held-out codebase (yt-dlp, 120 changes):** the ranking mostly held (per-question AUC
-  0.77–0.99), but the fixed 0.70 threshold did not transfer — it wrongly flagged 23% of
+  0.76–0.99 across both Jev runners; scope creep and unused abstraction fell below 0.80), but the fixed 0.70 threshold did not transfer — it wrongly flagged 23% of
   clean changes (vs. 3.4% on the repos it was tuned on). Each codebase needs its own setting.
 - **Lesson — ask about what is *in the input*.** "Does this change add ... that is used
   only once?" needs whole-codebase knowledge Jev doesn't have. Rewording it to "...that
   nothing else in the diff uses?" — answerable from the diff alone — cut that question's
   false-positive rate from 6.7% to 0% on the same 60-fixture set and raised its AUC from
   0.921 to 0.939 ([pilot plan][feelings-plan]).
+
+**Measurement caveat.** Benchmarks built by inserting flaws can leak how the flaws were built:
+here, flawed examples first added their unused abstraction as a *new file*, and Jev partly scored
+that shape instead of the flaw. Removing the cue (the P5 rerun above) is an ablation worth
+copying for any mutation-built benchmark: change how the flaw is inserted and check the scores
+hold.
 
 ## When It Fits, and When It Doesn't
 
@@ -121,8 +131,10 @@ leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark
   (`.fill<T>()`) integration with Jev, and Laya as the open-weight alternative
 - [system-1-decision-models-landscape.md](../reference/system-1-decision-models-landscape.md) —
   open-weight and research alternatives (Laya, kev, CLM, GLiNER2.5-Decide, RuVector) and tools built on
-  Jev (probably, abide, jev-ultrafast, jevgrep, pg-jev), organized by use case (routing, guardrails,
-  tool-call gating, reranking, judge/eval, confidence gate) in its § Use cases
+  Jev (probably, abide, jev-ultrafast, jevgrep, pg-jev, jev-browser), organized by use case (routing,
+  guardrails, tool-call gating, reranking, judge/eval, confidence gate) in its § Use cases; its
+  § Tools built on Jev also lists the two community awesome-jev catalogs (cobanov, MrJev) as
+  discovery sources
 - [system-1-decision-models-landscape.md § Paper: JevSpawn][s1-jevspawn] — a research paper
   (arXiv:2610.00437) whose default pipeline runs on Qwen3.8-27B, not Jev, but which measures a
   "TypeSafe Jev variant" that swaps the real Jev API in for its own scorer: roughly comparable
@@ -152,6 +164,8 @@ leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark
 [feelings-upstream]: https://github.com/BoundaryML/feelings
 [feelings-results]: https://qte77.github.io/feelings/
 [feelings-p5]: https://github.com/qte77/feelings/pull/45
+[feelings-claude-gate]: https://github.com/qte77/feelings/blob/v0.10.0/eval/claude_gate.py
+[feelings-43]: https://github.com/qte77/feelings/issues/43
 [feelings-plan]: https://github.com/qte77/feelings/blob/main/docs/plans/2026-09-23-0001-jev-coding-gate-pilot.md
 [sdlc-4]: ../../sdlc-lcm/agentic-sdlc-patterns.md#4-agent-first-developer-toolchain-amplify-partners
 [frameworks-8]: ../frameworks/agent-frameworks-infrastructure-landscape.md#8-output-validation-guardrails--verification

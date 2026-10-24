@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-22
+validated_links: 2026-10-22
 ---
 
 Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
@@ -64,6 +64,21 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Multimodal/general**: [GAIA2](https://openreview.net/forum?id=9gw03JpKK4) (async environments, ~42% best pass@1).
 
+**Domain: clinical speech-to-text (vendor-run)**: [Omi Health's medical STT benchmark][omi-bench]
+scores speech-to-text accuracy and latency on medical speech, batch and realtime. It is not an agent
+or clinical-reasoning benchmark, but it is the input layer for voice-driven clinical agents and
+scribes. The page states "Omi-run evaluation. Same recordings and scorer for every model" on "1,513
+English recordings, 7.2 hours" (edition "2026-10-18.1 (extends 2026-09-26.1)"), with metrics for
+medical word error, drug-name errors and dose/unit matches. Omi's own model tops its own tables —
+batch medical WER 0.87%, "Lowest among 19 tested APIs", and 1 drug-term error in 442, ahead of Voxtral
+Small Transcribe 3 at 1.04% — and Omi sells that model as a hosted API ([home][omi-home]: "Start with 25
+free hours"), so this is a vendor scoring itself. The page doesn't say where the 1,513 recordings come
+from or whether they are released. The open scorer repo, [Omi-Health/medical-STT-eval][omi-repo] (MIT),
+uses a different, public set — 57 PriMock57 consultations, "Reference transcripts derived from PriMock57
+under CC BY 4.0" — and its own 42-model leaderboard (updated 2026-04-29) doesn't include Omi's model.
+The page's own caveat: "Scores describe the tested configurations, not clinical safety; small
+differences do not establish statistical significance." Checked 2026-10-22.
+
 **Leaderboards**: SciArena, Berkeley Function-Calling, Chatbot Arena, GAIA, WebDev Arena, MiniWoB++.
 
 **Agent-readiness scoring (websites/APIs)**: a new, two-vendor category — `git grep` for `ora.ai`,
@@ -83,11 +98,35 @@ comparable **[Agent Experience Arena][lightsage-arena]** — self-reported, Ligh
 discovery-data snapshot dated 2026-06-13 — ranking 132 developer tools on a 50/50 blend of a
 *discovery score* ("how often coding agents surface a tool when asked to solve tasks in its category")
 and a *usability score* (averaged API/CLI/MCP integration results from Lightsage's companion
-**[DevTool Arena][lightsage-devtool]**; its Claude Code view alone covered 185 companies across 44
-categories as observed 2026-10-15, with no stated total across other agent views). Neither page states
-an exact prompt/run count behind the discovery or usability scores, nor a founder, team, or funding for
-either vendor — these are a first, not-yet-independently-audited example of the category; revisit as a
-standalone landscape if a third vendor appears.
+**[DevTool Arena][lightsage-devtool]**). Neither page states an exact prompt/run count behind the
+discovery or usability scores, nor a founder, team, or funding for either vendor (Lightsage's legal
+operator is named below) — these are a first,
+not-yet-independently-audited example of the category; revisit as a standalone landscape if a third
+vendor appears.
+
+*DevTool Arena (re-checked 2026-10-22).* It now lives at devtoolarena.com, and Lightsage's
+[terms][lightsage-terms] name the operator: "API-Rex, Inc., doing business as Lightsage" (last updated
+October 13, 2026). Its [`llms.txt`][devtoolarena-llms] lists 11 boards across 7 agents: Claude Code and
+Codex each have API, CLI and MCP boards; Muse, Gemini, Grok, Cursor and Kilo Code have API boards only.
+The Claude Code API board shows 187 companies in 45 categories. Each board's intro names what it
+compares (for API: "integration scores, documentation discoverability, tool calls, errors, cost, and
+runtime"), but no board carries a date or a published method, and the site states no licence for the
+data. A separate [discoverability view][devtoolarena-disc] "ranks developer APIs by whether coding agents
+discover and recommend them for controlled benchmark prompts" (46 use cases, 5 prompts each, 19
+agent/model columns; undated). Its [changelog][devtoolarena-changelog] is the only dated record: newest
+entry October 21, 2026, and it logs scoring fixes (2 June: Nimble's Codex boards corrected "after
+documentation/help text was counted as tool errors").
+
+**Conflict of interest.** Lightsage sells to the companies it ranks: "Lightsage helps developer tools and
+API companies get discovered, recommended, and used by AI coding agents" ([about][lightsage-about]), with
+plans from $100 to $1,000 per month plus custom enterprise ([pricing][lightsage-pricing]), and the free
+arena [submission form][devtoolarena-add] asks for "Company and contact details for follow-up." No page
+says paying customers are ranked differently — this is an incentive to note, not evidence of
+manipulation. Lightsage's name for the goal it sells is
+"[Agent-Led Growth][lightsage-alg]" — "a go-to-market strategy for earning discovery, recommendation, and
+successful product use through AI agents", split into discoverability, usability and analytics
+(vendor framing; the page cites no data and names no author or date). Use the boards as leads to check,
+not as evidence, and cite them rather than copying scores.
 
 ## 3. Datasets
 
@@ -120,13 +159,24 @@ standalone landscape if a third vendor appears.
 
 ## Sources
 
-Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. Agent-readiness-scoring sources (checked 2026-10-15):
+Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. Agent-readiness-scoring sources (checked 2026-10-15; DevTool Arena and Lightsage re-checked 2026-10-22):
 
+[omi-bench]: https://omi.health/benchmark
+[omi-home]: https://omi.health/
+[omi-repo]: https://github.com/Omi-Health/medical-STT-eval
 [ora]: https://ora.ai
 [ora-research]: https://ora.ai/research
 [lightsage]: https://lightsage.com
 [lightsage-arena]: https://lightsage.com/agent-experience-arena
-[lightsage-devtool]: https://lightsage.com/leaderboard/claudecode/api
+[lightsage-devtool]: https://devtoolarena.com/claudecode/api
+[lightsage-terms]: https://lightsage.com/terms
+[lightsage-about]: https://lightsage.com/about
+[lightsage-pricing]: https://lightsage.com/pricing
+[lightsage-alg]: https://lightsage.com/resources/what-is-agent-led-growth
+[devtoolarena-llms]: https://devtoolarena.com/llms.txt
+[devtoolarena-disc]: https://devtoolarena.com/discoverability
+[devtoolarena-changelog]: https://devtoolarena.com/changelog
+[devtoolarena-add]: https://devtoolarena.com/add.md
 
 EDD-methodology sources:
 

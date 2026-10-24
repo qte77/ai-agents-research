@@ -3,7 +3,7 @@ title: OpenAI Codex CLI (Terminal Agent)
 source: https://github.com/openai/codex
 purpose: Evaluate Codex CLI as an interactive and headless terminal coding agent, distinct from the cloud Codex environment.
 created: 2026-06-16
-updated: 2026-06-28
+updated: 2026-10-24
 validated_links: 2026-06-28
 status: trial
 platform_scope: [openai, cli, vscode, cursor, windsurf]
@@ -92,6 +92,18 @@ See also [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.
 - Track whether OpenAI exposes a free or lower-cost access tier (not stated as of 2026-06-16).
 - Compare AGENTS.md instruction surface to CC's CLAUDE.md/hooks after both stabilise.
 
+## Goal Loop
+
+Checked 2026-10-22 against the vendor's own docs; compared across agents in
+[goal-loops-landscape.md](goal-loops-landscape.md).
+
+Codex ships `/goal` in the app, IDE extension and CLI — out of experimental on 2026-05-21
+([changelog][goal-codex-changelog]). The agent judges completion itself: it "will stop running when
+it's confident it has reached the stopping condition" ([follow goals][goal-codex-follow]); objectives
+"must be non-empty and at most 4,000 characters", with `/goal pause`, `/goal resume` and
+`/goal clear` ([commands][goal-codex-cmds]). No turn or time bound is documented, so set one yourself.
+A `Stop` hook can return `"decision": "block"` to force another turn ([hooks][goal-codex-hooks]).
+
 ## Sources
 
 | Source | Content |
@@ -109,3 +121,7 @@ See also [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.
 [features]: https://developers.openai.com/codex/cli/features
 [cli-ref]: https://developers.openai.com/codex/cli/reference
 [agents-md]: https://developers.openai.com/codex/guides/agents-md
+[goal-codex-changelog]: https://learn.chatgpt.com/docs/changelog
+[goal-codex-follow]: https://learn.chatgpt.com/use-cases/follow-goals
+[goal-codex-cmds]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
+[goal-codex-hooks]: https://learn.chatgpt.com/docs/hooks
