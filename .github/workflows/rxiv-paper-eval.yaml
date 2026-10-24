@@ -94,7 +94,7 @@ jobs:
   eval:
     needs: resolve
     if: ${{ github.actor != 'dependabot[bot]' }}
-    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@6097eb9981c76014793eb7e468e1aec00f56e12f  # v0.5.0
+    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@4a53dcedbba03d8bd88f84fc6a1a752e373027c9  # v0.5.1
     with:
       server: ${{ inputs.server || vars.RXIV_SERVER || 'arxiv' }}
       topic: ${{ vars.RXIV_TOPIC || 'LLM-based autonomous agents, tool use and function calling, multi-agent coordination, agentic evaluation and benchmarking, and LLM reasoning and planning' }}
@@ -116,7 +116,7 @@ jobs:
       api_base: ${{ vars.LLM_BASE_URL }}
       enrich: true
       eval_repo: qte77/gha-rxiv-paper-eval
-      eval_ref: 6097eb9981c76014793eb7e468e1aec00f56e12f  # v0.5.0 — keep in lockstep with the workflow pin above (qte77/gha-rxiv-paper-eval#80)
+      eval_ref: 4a53dcedbba03d8bd88f84fc6a1a752e373027c9  # v0.5.1 — keep in lockstep with the workflow pin above (qte77/gha-rxiv-paper-eval#80)
     secrets:
       llm-api-key: ${{ secrets.CF_WORKERS_AI_TOKEN }}
 
