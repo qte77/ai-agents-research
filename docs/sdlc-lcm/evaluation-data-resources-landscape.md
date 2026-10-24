@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-22
-validated_links: 2026-10-22
+updated: 2026-10-24
+validated_links: 2026-10-24
 ---
 
 Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
@@ -90,7 +90,9 @@ observed, no C example seen); it self-styles "The standard for agent experience"
 continuously-updating counter — re-checked twice in one day (2026-10-15) and already different each
 time: as last observed, 119,906 sites scanned, an ecosystem-average score of 42/100 (the
 score-distribution chart covers a 109,293-site subset of that total), and 5% of sites rated B or
-above. Treat the sites-scanned/subset figures as a moving snapshot, not a fixed count. No pricing or
+above. Re-checked 2026-10-24: "127,521 sites scanned", "The ecosystem average sits at 43 out of 100",
+"6% rank B or above" (chart subset 116,037). Treat the sites-scanned/subset figures as a moving snapshot,
+not a fixed count. No pricing or
 company
 details (team, funding, founding date) appear on the homepage or research page checked; access is
 waitlist-gated. [Lightsage][lightsage], "the Agent-Led Growth Platform for software companies," runs a
@@ -127,6 +129,27 @@ manipulation. Lightsage's name for the goal it sells is
 successful product use through AI agents", split into discoverability, usability and analytics
 (vendor framing; the page cites no data and names no author or date). Use the boards as leads to check,
 not as evidence, and cite them rather than copying scores.
+
+**Making a business agent-ready (checked 2026-10-24).** Scorers aside, what the platforms themselves
+ask for is short:
+
+- **No special markup for AI search.** Google: "There are no additional requirements to appear in AI
+  Overviews or AI Mode, nor other special optimizations necessary", and "There's also no special
+  schema.org structured data that you need to add" ([AI features][google-ai-features], updated
+  2025-12-10). schema.org documents nothing agent-specific; an AI-agent representation proposal
+  ([schemaorg#4786][schemaorg-4786]) is still open.
+- **Natural-language endpoints over existing data.** [NLWeb][nlweb] (MIT; moved from `microsoft/NLWeb`
+  to `nlweb-ai/NLWeb`; 6,259★; no releases or tags; last push 2026-08-11) turns a site's
+  schema.org/RSS data into an `ask` endpoint: "It returns responses in JSON using Schema.org", and
+  "Every NLWeb instance also acts as an MCP server (and soon A2A)". Microsoft announced it on
+  2025-05-19, crediting R.V. Guha ([announcement][nlweb-announce]).
+- **A connector agents can call.** Consumer marketplaces now ship MCP connectors: Checkatrade's
+  Claude connector — "Find trusted local tradespeople and book fixed-price jobs — without leaving
+  Claude" — is "Made by Checkatrade", Anthropic-verified, added July 2026, with tools
+  `findTradespeopleV1` and `bookExpressJobV1` ([directory listing][checkatrade-connector]). Directory
+  connectors are remote servers using OAuth 2.0 for authenticated services, with read-only/destructive
+  hints on every tool; requirements and the MCP authorization model are in
+  [agent-identity-auth-landscape.md § 2](agent-identity-auth-landscape.md#2-authorize-the-agent-on-behalf-of-a-human-delegated-scoped-auditable).
 
 ## 3. Datasets
 
@@ -165,6 +188,11 @@ Each framework, benchmark, and dataset links to its first-party page (repo / Hug
 [omi-home]: https://omi.health/
 [omi-repo]: https://github.com/Omi-Health/medical-STT-eval
 [ora]: https://ora.ai
+[google-ai-features]: https://developers.google.com/search/docs/appearance/ai-features
+[schemaorg-4786]: https://github.com/schemaorg/schemaorg/issues/4786
+[nlweb]: https://github.com/nlweb-ai/NLWeb
+[nlweb-announce]: https://news.microsoft.com/source/features/company-news/introducing-nlweb-bringing-conversational-interfaces-directly-to-the-web/
+[checkatrade-connector]: https://claude.com/connectors/checkatrade
 [ora-research]: https://ora.ai/research
 [lightsage]: https://lightsage.com
 [lightsage-arena]: https://lightsage.com/agent-experience-arena
