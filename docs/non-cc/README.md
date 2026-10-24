@@ -22,6 +22,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [hermes-agent-analysis.md](agents/hermes-agent-analysis.md) | Nous Research Hermes (self-improving, multi-platform, 43K stars) | Yes | Yes (MIT) |
 | [rowboat-analysis.md](agents/rowboat-analysis.md) | Rowboat (AI coworker, knowledge graph from comms) | No | Yes (Apache-2.0) |
 | [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) | GitHub Copilot CLI (terminal agent, same harness as Copilot coding agent) | Yes | No (proprietary) |
+| [github-copilot-cloud-agent-analysis.md](agents/github-copilot-cloud-agent-analysis.md) | GitHub Copilot on github.com: cloud agent, automations (schedule/issue/PR triggers), MCP config (GitHub + Playwright MCP by default), AGENTS.md/CLAUDE.md instructions, automatic code review | No (hosted) | No (proprietary) |
 | [odysseus-analysis.md](agents/odysseus-analysis.md) | Odysseus (self-hosted all-in-one AI workspace: chat, agents, research, email, calendar) | Yes | Yes (AGPL-3.0) |
 | [databricks-genie-analysis.md](agents/databricks-genie-analysis.md) | Databricks Genie One (agentic data coworker; Genie Ontology semantic graph + Genie Agents) | Partial (Slack/Teams/mobile) | No (proprietary; OSS lakehouse base) |
 | [apache-maka-analysis.md](agents/apache-maka-analysis.md) | Apache Maka (Incubating; local-first, event-sourced agent workspace — "the log is the runtime"; Desktop/TUI/CLI) | Partial | Yes (Apache-2.0; ASF podling, no approved release yet) |
