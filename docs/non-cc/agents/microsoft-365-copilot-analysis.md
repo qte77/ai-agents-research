@@ -2,7 +2,7 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365) against first-party documentation, as of 2026-10-21.
 created: 2026-10-21
-updated: 2026-10-23
+updated: 2026-10-24
 validated_links: 2026-10-23
 status: assess
 ---
@@ -646,8 +646,6 @@ this doc's `validated_links` date.
 | [View service health][service-health] | Service health notification channels |
 | [Microsoft 365 Roadmap RSS feed][roadmap-rss] | Full-roadmap RSS 2.0 feed |
 | [pnp/sharepoint-skills][pnp-skills] (secondary — prior art, not evidence) | "Skills for Copilot in SharePoint": MIT community catalog in the [PnP][pnp-home] org (Microsoft 365 & Power Platform community); says it is "not official Microsoft documentation". SKILL.md samples and Agent Assets path conventions |
-| [ShareGate — "Skills in SharePoint: What IT pros need to know"][sharegate-skills] (secondary — prior art, not evidence) | By Jasper Oosterveld, 2026-10-13. [ShareGate][sharegate-about] is "developed by Workleap Technologies" and sells Microsoft 365 migration and governance tools (ShareGate Migrate, ShareGate Protect) — a vendor with a stake in governance advice. Governance checklist for SharePoint Skills |
-| ["Governing SharePoint Skills and Agents: What Admins Need to Know" webinar][governing-sp-skills-webinar] (secondary — prior art, not evidence) | Free webinar, 2026-11-12 (upcoming), presented by [Vlad Catrinescu][catrinescu-about] ("Microsoft MVP and MCT · Pluralsight Author") and [Drew Madelung][madelung-profile] ("Director, Microsoft Solutions at Protiviti"); [registration][governing-sp-skills-reg]. Maps each governance control to the area it governs |
 
 [sp-skills]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-skills
 [sp-get-started]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started
@@ -713,11 +711,5 @@ this doc's `validated_links` date.
 [pp-environments]: https://learn.microsoft.com/en-us/power-platform/admin/environments-overview
 [service-health]: https://learn.microsoft.com/en-us/microsoft-365/enterprise/view-service-health
 [roadmap-rss]: https://www.microsoft.com/releasecommunications/api/v2/m365/rss
-[sharegate-skills]: https://sharegate.com/blog/skills-in-sharepoint-what-it-pros-need-to-know
-[governing-sp-skills-webinar]: https://vladtalkstech.com/microsoft-events-and-discount-codes/governing-sharepoint-skills-agents-webinar/
-[governing-sp-skills-reg]: https://vladtalks.com/Governing-SharePoint-Skills-Agents
-[catrinescu-about]: https://vladtalkstech.com/about/
-[madelung-profile]: https://drewmadelung.com
-[sharegate-about]: https://sharegate.com/about
 [pnp-home]: https://pnp.github.io/
 [cc-skills-doc]: ../../cc-native/agents-skills/CC-skills-adoption-analysis.md
