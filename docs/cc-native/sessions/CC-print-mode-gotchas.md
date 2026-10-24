@@ -3,7 +3,8 @@ title: CC Print Mode Gotchas
 source: empirical testing (cc-recursive-team-mode integration tests, 2026-03-23)
 purpose: Document undocumented requirements and pitfalls when using claude -p for headless/CI execution.
 created: 2026-03-23
-updated: 2026-03-23
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: verified
 ---
 
@@ -79,6 +80,18 @@ working directory content rather than using CLI flags. Run PLAIN tests from a
 directory without `.claude/`, and ENHANCED tests from a directory with `.claude/`.
 This is the most reliable approach.
 
+## 4. Unattended Headless Lanes (2026-10-24)
+
+Observations from running `claude -p` as an unattended/scripted lane, distinct from the interactive-session gotchas above.
+
+**Project allow rules wait for workspace trust.** Running `claude -p` in a repository prints a line such as "Ignoring N permissions.allow entries from .claude/settings.json: this workspace has not been trusted…" (CC 2.1.310, Codespaces, 2026-10-24). This matches documented behavior, not a bug: Claude Code applies a project's `permissions.allow` rules and `permissions.additionalDirectories` entries only after the workspace trust dialog is accepted for that folder, and "Claude Code shows the trust dialog in interactive sessions only. A `claude -p` run or an SDK session never shows it" ([source][cc-permissions]). A headless lane that needs those allow rules must get trust some other way — e.g. a prior interactive run in the same checkout, or starting from an already-trusted configuration home — not by committing more rules to the project file.
+
+**A stale `GH_TOKEN`/`GITHUB_TOKEN` shadows a working `gh` login.** When either variable is set in the environment but stale or scoped wrong, `gh` calls inside a headless run fail GitHub operations even though `gh auth login` succeeds outside that environment (CC 2.1.310, Codespaces, 2026-10-24). Strip them for the child process: `env -u GH_TOKEN -u GITHUB_TOKEN claude -p …`.
+
+**`--permission-prompts none` exists in 2.1.310.** Confirmed directly against `claude --help` (CC 2.1.310, 2026-10-24), verbatim: `--permission-prompts <target>  Who answers permission prompts with --print: "host" (the SDK host or --permission-prompt-tool) or "none"`. Paired with `--permission-mode auto` (also a valid `--help`-listed choice), a `-p` run can avoid waiting on any permission prompt at all.
+
+**A `/goal` headless run can report `success` with an empty `result`.** A `claude -p` run driving [`/goal`](CC-goal-analysis.md) ended with `subtype: success` and an empty `result` field even after it had shipped PRs (CC 2.1.310, Codespaces, 2026-10-24). Read the PRs or the session transcript to confirm what happened — the `result` field in the `stream-json`/`json` output is not a reliable completion summary for this flow.
+
 ## Summary Table
 
 See [CC-cli-reference.md](../configuration/CC-cli-reference.md) for canonical flag definitions. This table covers behavioral gotchas only.
@@ -89,3 +102,15 @@ See [CC-cli-reference.md](../configuration/CC-cli-reference.md) for canonical fl
 | `--bare` | Skip all project config | Breaks OAuth/keychain auth |
 | `--setting-sources user` | Skip project settings only | Can cause hangs (inconsistent) |
 | `--verbose` | Enable verbose output | Required for stream-json in `-p` mode |
+| `--permission-prompts none` | Skip permission prompts in `-p` mode | Pair with `--permission-mode auto` for a fully unattended run |
+
+## Sources
+
+| Source | Content |
+|---|---|
+| CC 2.1.81, empirical testing, 2026-03-23 | Original findings (§1–3): `stream-json`/`--verbose`, `--bare` auth, `--setting-sources` hangs |
+| [CC permissions docs][cc-permissions] | "Project allow rules and workspace trust" — confirms `permissions.allow` rules wait for the trust dialog, which a `claude -p` run never shows |
+| CC 2.1.310, Codespaces, 2026-10-24 | Owner observations (§4): workspace-trust warning text, stale `GH_TOKEN`/`GITHUB_TOKEN`, and `/goal` reporting an empty `result` |
+| CC 2.1.310, `claude --help`, 2026-10-24 | `--permission-prompts` and `--permission-mode auto` flag text, confirmed directly against this version |
+
+[cc-permissions]: https://code.claude.com/docs/en/permissions#project-allow-rules-and-workspace-trust
