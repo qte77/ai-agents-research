@@ -4,8 +4,8 @@ purpose: Survey of the "agentic enterprise OS" pattern — the operating-environ
 category: landscape
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, self-hosted-oss, claude-code]
 created: 2026-06-28
-updated: 2026-10-09
-validated_links: 2026-10-09
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: assess
 ---
 
@@ -22,7 +22,7 @@ All are proprietary SaaS; all govern **human-directed** agents (instructions, to
 | Platform | Vendor framing | Commercial model | Notable |
 |---|---|---|---|
 | **[Salesforce Agentforce 360][agentforce]** | "digital labor" platform | proprietary; Flex Credits (~$0.10/action) + per-conversation + per-user editions | Agent Builder / Agent Script / Voice on the Einstein engine; the [LLM Open Connector spec][einstein] (Apache-2.0) is the only OSS-adjacent piece; MCP + A2A, no AG-UI |
-| **[Microsoft Copilot Studio][copilot-studio]** (+ Agent 365) | "platform for building and managing agents" | proprietary; in M365 Copilot ($30/user/mo) or Azure pay-as-you-go credits | declarative + autonomous (event-triggered) agents; Agent 365 is the governance control plane; A2A GA; legacy Bot Framework (MIT) being archived |
+| **[Microsoft Copilot Studio][copilot-studio]** (+ Agent 365) | "platform for building and managing agents" | proprietary; in M365 Copilot ($30/user/mo) or Azure pay-as-you-go credits | declarative + autonomous (event-triggered) agents; Agent 365 is the governance control plane; A2A GA for the standard harness (April 2026), preview for the GitHub Copilot harness ([what's new][copilot-studio-whats-new]); legacy Bot Framework (MIT) being archived |
 | **[ServiceNow Otto][servicenow]** | "the AI control tower" | proprietary, cloud-only; bundled into Foundation/Advanced/Prime tiers (Apr 2026) | AI Agent Studio / Orchestrator / Control Tower + Action Fabric (MCP); vendor-neutral ("open to Claude, Copilot, or homegrown agents") |
 | **[SAP Joule Studio 2.0][sap-joule]** | "AI-first development environment" | proprietary; free design-time through 2026 (promotional), production terms TBD | NL goal → PRD + code + tests + multi-agent orchestration *at design time*; part of the SAP Business AI Platform ("the Autonomous Enterprise", Sapphire 2026) |
 | **[Databricks Genie][genie]** | "agentic data coworker" | proprietary managed; OSS lakehouse base (Spark / Delta / Iceberg) | Genie Ontology semantic graph as the persistent context "kernel"; Genie Agents as reusable autonomous workflows |
@@ -107,6 +107,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [agentforce]: https://www.salesforce.com/news/stories/agentforce-operations-announcement/
 [einstein]: https://github.com/salesforce/einstein-platform
 [copilot-studio]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio
+[copilot-studio-whats-new]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new
 [servicenow]: https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-Otto-creates-the-unified-AI-experience-for-the-enterprise/default.aspx
 [sap-joule]: https://news.sap.com/2026/05/new-joule-studio-enterprise-scale-agentic-development/
 [glean]: https://www.glean.com/blog/introducing-independent-agents
