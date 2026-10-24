@@ -3,7 +3,7 @@ title: Cursor AI Code Editor Analysis
 source: https://cursor.com/
 purpose: Analysis of Cursor as a GUI-first AI code editor with agentic composer and a secondary headless CLI.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-10-24
 validated_links: 2026-06-16
 status: trial
 ---
@@ -141,6 +141,16 @@ scale locks into Anysphere's cloud infrastructure.
   (`local.customTools`, JSONL persistence) as an alternative to bespoke
   orchestration layers.
 
+## Goal Loop
+
+Checked 2026-10-22 against the vendor's own docs; compared across agents in
+[goal-loops-landscape.md](goal-loops-landscape.md).
+
+Cursor added `/goal`: "Use /goal to give the agent a long-lived objective to work towards until it's
+fully complete" ([changelog 2026-08-19][goal-cursor-changelog]). The page doesn't say who judges
+completion or what bounds it. Separately, a `stop` hook can submit a `followup_message` as the next
+user message, up to `loop_limit` (default 5) times ([hooks][goal-cursor-hooks]).
+
 ## Cross-References
 
 - [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — terminal-native coding agent peer; stronger headless/CI story; same agentic harness as GitHub Copilot coding agent
@@ -161,3 +171,5 @@ scale locks into Anysphere's cloud infrastructure.
 [cursor-cli-docs]: https://cursor.com/docs/cli
 [cursor-changelog]: https://cursor.com/changelog
 [copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md
+[goal-cursor-changelog]: https://cursor.com/changelog/08-19-26
+[goal-cursor-hooks]: https://cursor.com/docs/agent/hooks

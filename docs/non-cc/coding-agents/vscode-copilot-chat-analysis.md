@@ -3,7 +3,7 @@ title: VS Code Copilot Chat (Agent Mode) Analysis
 source: https://github.com/microsoft/vscode-copilot-chat
 purpose: Analysis of VS Code Copilot Chat extension with focus on agent mode for autonomous multi-file coding tasks.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-10-24
 validated_links: 2026-06-16
 status: adopt
 ---
@@ -96,6 +96,16 @@ New Pro/Pro+/Max/Student sign-ups paused 2026-04-20; Business paused
 - Track [microsoft/vscode][vscode-main] for agent mode improvements (development moved from archived repo)
 - Assess credit consumption of agent mode sessions against chosen plan's monthly allowance
 
+## Goal Loop
+
+Checked 2026-10-22 against the vendor's own docs; compared across agents in
+[goal-loops-landscape.md](goal-loops-landscape.md).
+
+VS Code 1.124 adds **Advanced Autopilot**, inside the "Autopilot (Preview)" section: "a small utility
+model reads a transcript of the chat and decides whether the task is done", and "Autopilot loops a
+maximum of three times before it stops" ([release notes][goal-vscode-124]) — a separate judge model,
+like Claude Code's `/goal`.
+
 ## Sources
 
 | Source | Content |
@@ -114,3 +124,4 @@ New Pro/Pro+/Max/Student sign-ups paused 2026-04-20; Business paused
 [vscode-setup]: https://code.visualstudio.com/docs/copilot/setup
 [mcp]: https://modelcontextprotocol.io
 [copilot-cli-doc]: ../agents/github-copilot-cli-analysis.md
+[goal-vscode-124]: https://code.visualstudio.com/updates/v1_124
