@@ -7,6 +7,14 @@
     "quote": "Allow access to each external model provider in the Microsoft 365 admin center",
     "ms_date": "2026-10-22T00:00:00Z"
   },
+  "https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-select-agent-model#gpt-5-5-chat-retirement-2026-10-31": {
+    "quote": "GPT-5.5 Chat Standard GPT Chat Latest October 31, 2026 No",
+    "ms_date": "2026-10-22T00:00:00Z"
+  },
+  "https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-select-agent-model#gpt-4-1-gpt-5-retirements-2026-11-12": {
+    "quote": "GPT-4.1 Standard GPT Chat Latest November 12, 2026 Yes",
+    "ms_date": "2026-10-22T00:00:00Z"
+  },
   "https://learn.microsoft.com/en-us/copilot/microsoft-365/connect-to-ai-subprocessor": {
     "quote": "Anthropic models with Data Retention",
     "ms_date": "2026-09-18T00:00:00Z"
