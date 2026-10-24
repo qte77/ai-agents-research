@@ -2,8 +2,8 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-10-22
-validated_links: 2026-10-22
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: research
 ---
 
@@ -34,6 +34,27 @@ Core primitives ([spec][a2a-spec]):
 - **Transport** — JSON-RPC 2.0 over HTTP(S); SSE for streaming; gRPC for high-throughput. v1.0.0 modernized auth to OAuth 2.0 (PKCE / device code).
 
 Complementary to MCP, not competing: "encapsulating an agent as a simple [tool] is fundamentally limiting" ([spec][a2a-spec]) — MCP is agent↔tools, A2A is agent↔agent.
+
+**Status, re-checked 2026-10-24:**
+
+- **Release:** `v1.0.1` (published 2026-05-28) is still the latest GitHub release; its notes include
+  "prefer `application/a2a+json` in HTTP binding" ([releases][a2a-releases]). The spec site still shows
+  "**Latest Released Version** `1.0.0`" ([spec][a2a-spec]).
+- **Governance:** A2A was "accepted as a Growth Stage project at the Agentic AI Foundation (AAIF)"
+  ([2026-08-27][a2a-aaif]), and its technical steering committee now "has nine seats" — Bloomberg was
+  added on 2026-10-20 ([GOVERNANCE.md][a2a-governance]).
+- **Tooling:** an A2A CLI to "discover, message, and manage agents from your terminal"
+  ([2026-10-01][a2a-cli]).
+- **In progress, not released** (merged to the `dev-1.1` branch): `SendLiveMessage` for bidirectional
+  interaction ([#2153][a2a-2153], 2026-10-19), and an AI Catalog at `/.well-known/ai-catalog.json` "as the
+  preferred discovery mechanism, while keeping `/.well-known/agent-card.json` as a valid option"
+  ([#2240][a2a-2240], 2026-10-21).
+- **Vendors lag the spec:** Copilot Studio's A2A page still points to "`/.well-known/agent.json`" and
+  uses `"method": "message/send"` (v0.x naming) ([Copilot Studio][a2a-copilot-studio]); AWS Bedrock
+  AgentCore runs A2A servers on port 9000 with Agent Cards at `/.well-known/agent-card.json` and SigV4 or
+  OAuth 2.0, but its sample pins `a2a-sdk[all]~=0.3.26` ([AgentCore][a2a-agentcore]); Google ADK's A2A
+  support is badged "Experimental" ([ADK][a2a-adk]). Check which protocol version an integration
+  actually speaks before relying on v1 features.
 
 ## AGNTCY ("Internet of Agents")
 
@@ -243,6 +264,15 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [vibe-kanban]: https://www.vibekanban.com/
 [a2a]: https://a2a-protocol.org/
 [a2a-spec]: https://a2a-protocol.org/latest/specification/
+[a2a-releases]: https://github.com/a2aproject/A2A/releases
+[a2a-aaif]: https://a2a-protocol.org/latest/blog/2026/08/27/a-new-chapter-for-a2a-joining-the-agentic-ai-foundation/
+[a2a-governance]: https://github.com/a2aproject/A2A/blob/main/GOVERNANCE.md
+[a2a-cli]: https://a2a-protocol.org/latest/blog/2026/10/01/introducing-a2a-cli/
+[a2a-2153]: https://github.com/a2aproject/A2A/pull/2153
+[a2a-2240]: https://github.com/a2aproject/A2A/pull/2240
+[a2a-copilot-studio]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/add-agent-agent-to-agent
+[a2a-agentcore]: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-a2a.html
+[a2a-adk]: https://adk.dev/a2a/
 [agntcy]: https://agntcy.org/
 [mcp]: https://modelcontextprotocol.io/
 [mcp-changelog]: https://modelcontextprotocol.io/specification/2025-11-25

@@ -3,8 +3,8 @@ title: Agentic Payments Landscape — Machine-Native Payment Rails for Agents
 purpose: Survey of emerging agent payment protocols and rails (x402, Google AP2, Stripe MPP, L402, ACP, UCP, Visa and Mastercard agent programmes) that let autonomous agents pay for API/tool access or buy goods without a human in the loop per transaction.
 category: landscape
 created: 2026-07-08
-updated: 2026-10-22
-validated_links: 2026-10-22
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: research
 ---
 
@@ -123,6 +123,27 @@ feature is live). The page doesn't mention ACP.
   release on a newer product (Agent Pay for Machines) says it "builds on Mastercard's Agent Pay program,
   introduced in 2025" ([release][mc-ap4m]). The exact launch date and any US-wide rollout claim could
   not be confirmed first-party (mastercard.com blocked most automated fetches on 2026-10-22).
+
+### Merchant feeds: what agent storefronts ask merchants for
+
+Before an agent can pay, it has to find and trust the product. The three biggest agent-commerce
+surfaces each publish what they need (checked 2026-10-24):
+
+- **OpenAI (ChatGPT, ACP):** a structured product feed whose required fields are `item_id`, `title`,
+  `description`, `url`, `brand`, `seller_name`, `image_url`, `availability` and `price`; eligibility
+  flags include `is_eligible_search` and `is_eligible_checkout`, and "Checkout requires a separately
+  enabled integration" ([feed spec][openai-feed]). The page says nothing about how products are ranked.
+- **Google (Gemini, AI Mode, UCP):** `native_commerce` opts listings into the "Buy Now" flow and
+  `checkout_eligibility` "dictates whether the "Buy" button is displayed for a specific item"
+  ([Merchant Center][google-native-commerce]); UCP checkout prep requires that "You must include return
+  cost, return speed (window), and a link to the full policy" ([UCP guide][google-ucp-merchant], last
+  updated 2026-10-02).
+- **Shopify (Agentic Storefronts):** merchants should focus on "complete and well-structured product
+  information in Shopify Catalog" (Shopify Help Center, plain text because it blocks link checkers:
+  help.shopify.com/en/manual/online-sales-channels/agentic-storefronts/products).
+
+None of these is "marketing to agents" in the persuasion sense: each asks for complete, structured,
+accurate data plus clear policies, and leaves ranking unexplained.
 
 ### Fetch.ai
 
@@ -247,3 +268,6 @@ above.
 [visa-tap-repo]: https://github.com/visa/trusted-agent-protocol
 [mc-guide]: https://developer.mastercard.com/merchant-cloud/documentation/tutorials-and-guides/agentic-commerce-guide/22/
 [mc-ap4m]: https://www.mastercard.com/us/en/news-and-trends/press/2026/june/mastercard-launches-agent-pay-for-machines.html
+[openai-feed]: https://developers.openai.com/commerce/specs/feed
+[google-native-commerce]: https://support.google.com/merchants/answer/17251586
+[google-ucp-merchant]: https://developers.google.com/merchant/ucp/guides/overview/merchant-center
