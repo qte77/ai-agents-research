@@ -3,8 +3,8 @@ title: Agent Identity, Authentication & Personhood Landscape
 purpose: Survey of how agents get identity and authorization, and how human-vs-agent is proven — the "who may act, and how is it proven" layer, distinct from CC-local runtime permissions.
 category: landscape
 created: 2026-07-08
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: assess
 ---
 
@@ -59,6 +59,13 @@ The agent has its own identity, independent of any human.
 - **MCP Authorization (OAuth 2.1)** — MCP servers act as OAuth 2.1 **resource servers** validating
   tokens from an external authorization server; MUST implement RFC 9728 (Protected Resource Metadata),
   PKCE mandatory. Delegated human authority, not a durable agent identity. [modelcontextprotocol.io][mcp-authz].
+  Current revision (2026-07-28, re-checked 2026-10-24): "Authorization is **OPTIONAL** for MCP
+  implementations"; clients "**MUST** implement Resource Indicators for OAuth 2.0 as defined in RFC
+  8707", and servers "**MUST NOT** accept or transit any other tokens" — tokens are bound to the one
+  server they were issued for. "Dynamic Client Registration is deprecated and retained for backwards
+  compatibility" in favour of Client ID Metadata Documents. Anthropic's connector directory adds its
+  own bar: "use OAuth 2.0 for authenticated services", and every tool carries a `title` and a
+  `readOnlyHint` or `destructiveHint` ([submission requirements][claude-connector-submission]).
 - **Okta Cross-App Access (XAA) / Auth for GenAI** — an OAuth/OIDC extension using the IETF
   "Identity Assertion Authorization Grant" (ID-JAG); an enterprise IdP mediates agent-to-app and
   app-to-app connections, replacing long-lived API keys with real-time, revocable delegation + audit.
@@ -84,6 +91,12 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
   (e.g. `anthropic.com/.well-known/http-message-signatures-directory`); requests are signed per-origin
   and verified server-side — cryptographic proof of *which* bot, replacing spoofable UA/IP. AWS WAF
   added support Nov 2025; OpenAI signs Operator requests this way. [blog.cloudflare.com][webbotauth].
+- **Visa Trusted Agent Protocol (TAP)** — Visa's version of the same idea for commerce: introduced
+  2025-10-14 and "available today in the Visa Developer Center and GitHub", built on "cryptographic
+  standards (RFC9421)" so merchants can tell legitimate agents from bots
+  ([announcement][visa-tap-release] · [overview][visa-tap-overview] · sample
+  [visa/trusted-agent-protocol][visa-tap-repo]). Identity, not payment — the payment side is in
+  [agentic-payments-landscape.md § Card networks](../non-cc/protocols/agentic-payments-landscape.md#card-networks-visa-and-mastercard).
 - **Pay-or-authenticate (pay-per-crawl)** — repurposes HTTP 402: a crawler must both **pay** and
   **authenticate** (via Web Bot Auth) to proceed — a literal fusion of the identity and payment axes.
   [blog.cloudflare.com][paypercrawl].
@@ -126,6 +139,8 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 | [Google AP2 spec][ap2] | Mandate (W3C VC) authorization chain |
 | [World ID][worldid] · [Humanity Protocol][humanity] | Proof-of-personhood credentials |
 | [Cloudflare Web Bot Auth][webbotauth] · [pay-per-crawl][paypercrawl] | Signed agents; 402+auth fusion |
+| [Visa TAP release][visa-tap-release] · [overview][visa-tap-overview] · [repo][visa-tap-repo] | Visa's RFC 9421 signed-agent protocol (verified 2026-10-22) |
+| [Claude connector submission][claude-connector-submission] | Directory OAuth and tool-annotation requirements (checked 2026-10-24) |
 | [JIT / ZSP][jit] · [CC permissions][cc-perms] | Ephemeral perms; CC local rule-gate anchor |
 
 [spiffe]: https://spiffe.io/docs/latest/spire-about/spire-concepts/
@@ -133,7 +148,11 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 [erc8004]: https://eips.ethereum.org/EIPS/eip-8004
 [privado]: https://www.privado.id/blog/privado-know-your-agent
 [sam]: https://github.com/google/sam
-[mcp-authz]: https://modelcontextprotocol.io/specification/draft/basic/authorization
+[mcp-authz]: https://modelcontextprotocol.io/specification/latest/basic/authorization
+[visa-tap-release]: https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.21716.html
+[visa-tap-overview]: https://developer.visa.com/capabilities/trusted-agent-protocol/overview
+[visa-tap-repo]: https://github.com/visa/trusted-agent-protocol
+[claude-connector-submission]: https://claude.com/docs/connectors/building/submission
 [xaa]: https://developer.okta.com/blog/2025/09/03/cross-app-access
 [ap2]: https://github.com/google-agentic-commerce/AP2
 [worldid]: https://world.org/world-id
