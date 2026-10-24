@@ -2,8 +2,8 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-10-01
-validated_links: 2026-09-24
+updated: 2026-10-22
+validated_links: 2026-10-22
 status: research
 ---
 
@@ -148,6 +148,27 @@ A self-hosted, open-source template for a governed "AI coworker" platform — di
 
 **License**: MIT | **Stars**: 5,483 (verified 2026-09-24). Ships as a clone-and-customize template, not a managed service.
 
+## OpenUI (Thesys — Generative UI Language and Renderers)
+
+**Repo**: [thesysdev/openui][openui-repo] | **License**: MIT ("Copyright (c) 2011-2024 Thesys Inc.") |
+**Stars**: 13,061, created 2024-12-02 (`gh api`, 2026-10-22). Released as per-package versions, not one
+product version.
+
+Where A2UI is a widget spec, OpenUI is a **payload language plus renderers**: "a full-stack,
+framework-agnostic Generative UI framework built around a compact, streaming-first language"
+([README][openui-repo]). You define the allowed components (props typed with Zod), OpenUI generates
+the system prompt from that library, the model streams **OpenUI Lang**, and a renderer draws the UI
+progressively "as tokens arrive", in React, Vue, Svelte or Angular, or from a CDN/iframe bundle.
+
+It rides on the protocols above rather than replacing them: `@openuidev/langchain` provides "Agent
+transformer and server helpers that stream OpenUI through AG-UI", and `@openuidev/a2ui` is a
+"Framework-agnostic A2UI v1.0 protocol client with an optional React renderer" carrying OpenUI Lang
+component payloads. The README claims OpenUI Lang uses "up to 67% fewer tokens than JSON" — a
+self-reported benchmark from the vendor (its [`benchmarks/`][openui-repo] folder), not independently checked.
+Thesys monetizes around it: `@openuidev/observability-cloud` ships events to "OpenUI Gateway" for
+"Hosted observability in the Thesys console". OpenUI is one more occupant of the live-generative-UI
+position described under § Agent Control-Surface Naming below.
+
 ## Decision Matrix
 
 | Your need | Use |
@@ -155,6 +176,7 @@ A self-hosted, open-source template for a governed "AI coworker" platform — di
 | Stream agent events to any frontend | **AG-UI** (protocol) |
 | Agent emits structured UI widgets | **A2UI** spec over AG-UI |
 | End-to-end demo with generative HTML components | **OpenGenerativeUI** (reference) |
+| Model streams UI restricted to your own component library, any frontend framework | **OpenUI** (OpenUI Lang over AG-UI or A2UI) |
 | Claude Code observability over agent-user interactions | Use AG-UI-compatible backend + OTel (see [CC-monitoring-telemetry-analysis.md](../../cc-native/configuration/CC-monitoring-telemetry-analysis.md)) |
 
 ## Agent Control-Surface Naming (2026)
@@ -191,6 +213,7 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 | [Microsoft Learn — AG-UI Integration][ms-learn-agui] | Microsoft Agent Framework integration |
 | [CopilotKit/OpenGenerativeUI][ogui-repo] | Reference framework |
 | [CopilotKit/openbot][openbot-repo] · [site][openbot-site] | Governed AI-coworker template — CEL policy gateway, container isolation, AG-UI-agnostic |
+| [thesysdev/openui][openui-repo] | OpenUI Lang, renderers, AG-UI and A2UI packages, self-reported token benchmark |
 | [Salesforce Agentforce 360][sf-agentforce] | Salesforce protocol strategy (MCP, not AG-UI) |
 | [Devin Desktop FAQ][devin-faq] | "Agent Command Center" framing (Kanban for local + cloud agents) |
 | [Omnara (YC launch)][omnara] | "command center for AI agents: terminal, web, mobile" |
@@ -225,3 +248,4 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [mcp-changelog]: https://modelcontextprotocol.io/specification/2025-11-25
 [openbot-repo]: https://github.com/CopilotKit/openbot
 [openbot-site]: https://copilotkit.ai/openbot
+[openui-repo]: https://github.com/thesysdev/openui

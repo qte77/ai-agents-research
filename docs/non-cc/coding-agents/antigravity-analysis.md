@@ -3,7 +3,7 @@ title: Google Antigravity Analysis
 source: https://antigravity.google/
 purpose: Analysis of Google Antigravity as an agent-first IDE and agentic development platform announced at Google I/O 2026.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-10-24
 validated_links: 2026-06-16
 status: assess
 ---
@@ -53,6 +53,16 @@ For teams already invested in the Google Cloud/Firebase stack and comfortable wi
 - [ ] Monitor pricing finalisation — free tier rate limits refresh every ~5 hours; paid tiers under active change (access date: 2026-06-16)
 - [ ] Compare with [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md) for terminal-centric agentic workflows
 
+## Goal Loop
+
+Checked 2026-10-22 against the vendor's own docs; compared across agents in
+[goal-loops-landscape.md](goal-loops-landscape.md).
+
+Antigravity has `/goal`: "The goal ends only when the agent declares it complete", and "there's no
+iteration cap"; "Only one goal is active at a time in a conversation" ([goal command][goal-ag-goal]).
+With no cap, set your own bound. A `Stop` hook can return `decision: "continue"` to re-enter the
+execution loop ([hooks][goal-ag-hooks]).
+
 ## Sources
 
 | Source | Content |
@@ -71,3 +81,5 @@ For teams already invested in the Google Cloud/Firebase stack and comfortable wi
 [fossforce]: https://fossforce.com/2026/05/gemini-clis-short-life-and-googles-antigravity-bait-and-switch/
 [antigravity]: https://antigravity.google/
 [gemini-cli-fossforce]: https://fossforce.com/2026/05/gemini-clis-short-life-and-googles-antigravity-bait-and-switch/
+[goal-ag-goal]: https://antigravity.google/docs/commands/goal/
+[goal-ag-hooks]: https://antigravity.google/docs/hooks

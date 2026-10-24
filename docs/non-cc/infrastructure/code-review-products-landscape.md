@@ -3,8 +3,8 @@ title: AI PR-Review Products — Tool Landscape
 purpose: Catalog of standalone SaaS PR-review products (multi-platform GitHub/GitLab review bots), distinct from Claude Code-integrated review tooling.
 category: landscape
 created: 2026-06-27
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: research
 ---
 
@@ -32,6 +32,7 @@ cross-repo review, and the Code-Review-Graph AST/blast-radius MCP tool — see
 - [Cubic](https://www.cubic.dev/) — YC-backed AI review plus whole-codebase bug scanning; GitHub app + IDE, one-click fixes, custom rules (SaaS).
 - [Bito](https://bito.ai/) — codebase-aware AI Code Review Agent for GitHub/GitLab/Bitbucket (SaaS).
 - [Korbit](https://www.korbit.ai/) — AI review across GitHub/GitLab/Bitbucket with bug explanations and auto-generated PR descriptions (SaaS).
+- [GitHub Copilot code review](https://docs.github.com/en/copilot/concepts/agent-capabilities/agent-powered-workflows-and-operations/code-review) — built into GitHub, generally available; requested by hand or automatically via a branch-ruleset rule, billed in AI credits plus GitHub Actions minutes, and shares the repository's MCP config with the Copilot cloud agent (read-only tools only). Details: [github-copilot-cloud-agent-analysis.md § Automatic code review](../agents/github-copilot-cloud-agent-analysis.md#automatic-code-review).
 
 These overlap heavily; the differentiators are codebase-context depth (Greptile's graph
 index), OSS vs SaaS (open-code-review, below, is Apache-2.0; PR-Agent is MIT-licensed —
