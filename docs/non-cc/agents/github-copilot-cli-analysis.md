@@ -4,8 +4,8 @@ source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface.
 platform_scope: [cli, cloud]
 created: 2026-06-11
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: proprietary
 ---
 
@@ -19,7 +19,8 @@ runs commands, reviews changes, and remembers across sessions. It is "powered by
 the **same agentic harness** as GitHub's Copilot coding agent," so the two share
 behavior but are **different surfaces**: this is the interactive local terminal
 agent; the [Copilot coding agent][copilot-agent] is the autonomous cloud product
-that opens PRs from assigned issues (covered separately under
+that opens PRs from assigned issues (covered in
+[github-copilot-cloud-agent-analysis.md](github-copilot-cloud-agent-analysis.md) and under
 [CI automation](../../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape)).
 
 **Key distinction vs OSS peers** (Aider, Kilo Code, OpenCode): Copilot CLI is
@@ -49,12 +50,14 @@ Select via `/agent` or `--agent=<name>`.
 |---|---|
 | MCP servers | GitHub MCP server preconfigured; add via `/mcp add` → `mcp-config.json` |
 | Custom agents | Markdown profiles at `~/.copilot/agents`, `.github/agents`, `.github-private/agents` |
-| Instructions | `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md` |
+| Instructions | `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md`, `AGENTS.md`, `CLAUDE.md` (also `.claude/CLAUDE.md`), `GEMINI.md`, plus `$HOME/.copilot/` and `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` ([custom instructions][copilot-cli-instructions]) |
 | Settings | `settings.json` in `~/.copilot` (override path via `COPILOT_HOME`) |
 | LSP | `~/.copilot/lsp-config.json` (user) or `.github/lsp.json` (repo) |
 
-Note the instruction file is `copilot-instructions.md`, **not `AGENTS.md`** — a
-portability gap vs the AGENTS.md convergence ([multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)).
+**Updated 2026-10-24:** the CLI now reads `AGENTS.md`, `CLAUDE.md` and `GEMINI.md` alongside
+`copilot-instructions.md` ([custom instructions][copilot-cli-instructions]), so the earlier
+portability gap against the AGENTS.md convergence
+([multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)) is closed.
 
 ### Permissions, sandboxing, autonomy
 
@@ -69,8 +72,10 @@ the run to the cloud coding-agent backend.
 `/resume` (or `--resume` / `--continue`) restores sessions with automatic context
 compression and **cross-session repository memory**; `/usage`, `/context`,
 `/compact` manage the window. Auth via `/login` or a fine-grained PAT with the
-**Copilot Requests** permission set through `GH_TOKEN` / `GITHUB_TOKEN`. Each
-prompt consumes one premium request against the monthly quota.
+**Copilot Requests** permission set through `GH_TOKEN` / `GITHUB_TOKEN`. Usage is
+billed in GitHub AI Credits — `/usage` shows "The amount of GitHub AI Credits used in the current
+session" ([using the CLI][copilot-cli-use]); "premium requests" no longer appear on the CLI or
+billing pages checked 2026-10-24.
 
 ### Install and invoke
 
@@ -88,7 +93,7 @@ prompt consumes one premium request against the monthly quota.
 | **Permission model** | Preview-every-action → plan/autopilot → `--yolo`; local/cloud sandbox |
 | **Maturity** | GA 2026-02-25, actively released (v1.0.61) |
 | **License** | **Proprietary** — no modification, no standalone redistribution |
-| **Cost** | Copilot Pro / Pro+ / Business / Enterprise; 1 premium request per prompt |
+| **Cost** | Copilot Pro / Pro+ / Business / Enterprise; usage billed in GitHub AI Credits |
 
 **Strengths**: Same agentic harness as the Copilot coding agent — consistent
 behavior across CLI and cloud. Reuses existing GitHub auth, billing, and MCP
@@ -96,9 +101,8 @@ server (lowest onboarding friction for orgs already on Copilot). Strong
 permission/sandbox model. Multi-provider model choice.
 
 **Risks**: **Proprietary license** — cannot fork, embed, or self-host (unlike
-Aider/Kilo/OpenCode). Subscription + per-prompt premium-request quota.
-Business/Enterprise use requires admin enablement. `copilot-instructions.md`
-instead of `AGENTS.md` adds a config surface in multi-agent shops. PAT auth keys
+Aider/Kilo/OpenCode). Subscription + AI-credit allowance.
+Business/Enterprise use requires admin enablement. PAT auth keys
 off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 
 ## Action Items
@@ -107,15 +111,16 @@ off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
   Business/Enterprise — no new vendor, reuses GitHub identity and billing.
 - **Disambiguate** in any agent comparison: CLI (local, interactive) vs coding
   agent (cloud, issue→PR) — same harness, different surface.
-- **Factor the config gap** (`copilot-instructions.md` ≠ `AGENTS.md`) into
-  multi-agent onboarding ([multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)).
+- **Reuse an existing `AGENTS.md`** in multi-agent repos — the CLI reads it, so a separate
+  `copilot-instructions.md` is optional ([multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)).
 - **Flag the license** when comparing against OSS peers — adoption is reversible
   only at the subscription level, not the code level.
 
 ## Cross-References
 
+- [github-copilot-cloud-agent-analysis.md](github-copilot-cloud-agent-analysis.md) — the cloud agent, automations, MCP config, instructions and code review
 - [CC-github-actions-analysis.md](../../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape) — the Copilot **coding agent** (cloud) it shares a harness with
-- [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md) — the AGENTS.md/GEMINI.md convergence + per-agent config-file comparison (`copilot-instructions.md` ≠ `AGENTS.md`)
+- [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md) — the AGENTS.md/GEMINI.md convergence + per-agent config-file comparison
 - [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) — multi-agent tooling (CC Switch, CodeBurn) that targets Copilot; `~/.copilot` session data
 
 ## Sources
@@ -126,6 +131,8 @@ off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 | [Copilot CLI docs][copilot-cli-docs] | Agents, slash commands, config files, sandboxing, auth |
 | [Copilot CLI overview][copilot-cli-overview] | Capabilities, autopilot, LSP, quota |
 | [GA changelog 2026-02-25][copilot-cli-ga] | GA date, eligible plans, headline features |
+| [Copilot CLI custom instructions][copilot-cli-instructions] | Instruction files incl. AGENTS.md / CLAUDE.md / GEMINI.md (checked 2026-10-24) |
+| [Using Copilot CLI][copilot-cli-use] | AI Credits in `/usage` (checked 2026-10-24) |
 
 [copilot-cli-repo]: https://github.com/github/copilot-cli
 [copilot-cli-license]: https://github.com/github/copilot-cli/blob/main/LICENSE.md
@@ -133,3 +140,5 @@ off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 [copilot-cli-overview]: https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview
 [copilot-cli-ga]: https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/
 [copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent
+[copilot-cli-instructions]: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+[copilot-cli-use]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
