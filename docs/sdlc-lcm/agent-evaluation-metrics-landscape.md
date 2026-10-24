@@ -2,7 +2,7 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-10-15
+updated: 2026-10-23
 validated_links: 2026-10-15
 status: assess
 ---
@@ -362,7 +362,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires trace path definition
 - **Reference**: [OpenTelemetry Specification](https://opentelemetry.io/docs/specs/)
 - **Landscape Reference**: [AgentNeo - Observability Platform](../non-cc/protocols/agent-observability-methods-analysis.md)
-- **Landscape Reference**: [Tracely](https://github.com/Jwuthri/Tracely-ai) (MIT, ~1.4k★) — trace-native CI/CD for agents: production traces are auto-clustered into failures, frozen into hermetic regression cases with recorded fixtures, and replayed in CI at $0 to block the PR, without hand-authored eval datasets
+- **Landscape Reference**: [Tracely](https://github.com/jwuthri-cloud/Tracely-ai) (MIT, 1,156★ on 2026-10-23; republished under `jwuthri-cloud` on 2026-10-11 — the original `Jwuthri/Tracely-ai` returns 404) — trace-native CI/CD for agents: production traces are auto-clustered into failures, frozen into hermetic regression cases with recorded fixtures, and replayed in CI at $0 to block the PR, without hand-authored eval datasets
 
 #### Error Recovery Rate
 

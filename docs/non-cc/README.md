@@ -22,6 +22,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [hermes-agent-analysis.md](agents/hermes-agent-analysis.md) | Nous Research Hermes (self-improving, multi-platform, 43K stars) | Yes | Yes (MIT) |
 | [rowboat-analysis.md](agents/rowboat-analysis.md) | Rowboat (AI coworker, knowledge graph from comms) | No | Yes (Apache-2.0) |
 | [github-copilot-cli-analysis.md](agents/github-copilot-cli-analysis.md) | GitHub Copilot CLI (terminal agent, same harness as Copilot coding agent) | Yes | No (proprietary) |
+| [github-copilot-cloud-agent-analysis.md](agents/github-copilot-cloud-agent-analysis.md) | GitHub Copilot on github.com: cloud agent, automations (schedule/issue/PR triggers), MCP config (GitHub + Playwright MCP by default), AGENTS.md/CLAUDE.md instructions, automatic code review | No (hosted) | No (proprietary) |
 | [odysseus-analysis.md](agents/odysseus-analysis.md) | Odysseus (self-hosted all-in-one AI workspace: chat, agents, research, email, calendar) | Yes | Yes (AGPL-3.0) |
 | [databricks-genie-analysis.md](agents/databricks-genie-analysis.md) | Databricks Genie One (agentic data coworker; Genie Ontology semantic graph + Genie Agents) | Partial (Slack/Teams/mobile) | No (proprietary; OSS lakehouse base) |
 | [apache-maka-analysis.md](agents/apache-maka-analysis.md) | Apache Maka (Incubating; local-first, event-sourced agent workspace — "the log is the runtime"; Desktop/TUI/CLI) | Partial | Yes (Apache-2.0; ASF podling, no approved release yet) |
@@ -29,6 +30,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [moss-self-evolving-agent-analysis.md](agents/moss-self-evolving-agent-analysis.md) | MOSS (HKGAI, on OpenClaw; self-evolving assistant that rewrites its own TypeScript source via a 7-stage benchmark-gated pipeline) | Yes | Yes (Apache-2.0; OpenClaw vendored MIT) |
 | [openresearch-analysis.md](agents/openresearch-analysis.md) | OpenResearch (alphaXiv; local-first, git-native workspace turning coding agents into autonomous research/experiment agents) | Yes | Yes (MIT) |
 | [octop-analysis.md](agents/octop-analysis.md) | Octop (TencentCloud; self-hosted multi-user, multi-agent assistant — single-process LangGraph harness, AgentTeams Beta coordinator, outbound ACP delegation to Claude Code/OpenCode/CodeBuddy/Codex) | Yes | Yes (MIT) |
+| [microsoft-365-copilot-analysis.md](agents/microsoft-365-copilot-analysis.md) | Microsoft 365 Copilot (Copilot in SharePoint Skills, Copilot Studio, Work IQ, Agent 365 governance, contractual postures, operational scenarios, guardrails for agent skills; first-party fact-check + practitioner how-to) | No (hosted) | No (proprietary) |
 
 ## Coding Agents & IDEs
 
