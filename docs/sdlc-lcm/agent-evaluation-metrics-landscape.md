@@ -2,7 +2,7 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-10-23
+updated: 2026-10-26
 validated_links: 2026-10-15
 status: assess
 ---
@@ -87,6 +87,7 @@ definitions, use cases, and primary research references for each metric.
 - **Strengths**: Critical for academic accuracy, prevents misinformation
 - **Limitations**: Difficult to define ground truth, context-dependent
 - **Reference**: [Survey of Hallucination in Natural Language Generation](https://arxiv.org/abs/2202.03629)
+- **Vendor statement**: Anthropic's help center calls this "hallucinating" information, "a byproduct of some of the current limitations of frontier Generative AI models", names outdated training data and quotes that "look authoritative or sound convincing, but are not grounded in fact" as examples, and tells users to review Claude's cited sources rather than rely on Claude "as a singular source of truth" ([Anthropic Help Center, read 2026-10-26](https://support.claude.com/en/articles/8525154-claude-is-providing-incorrect-or-misleading-responses-what-s-going-on)). A user-facing FAQ with no rates or mechanisms — useful only as the vendor's own acknowledgement.
 
 #### Context Relevance
 
