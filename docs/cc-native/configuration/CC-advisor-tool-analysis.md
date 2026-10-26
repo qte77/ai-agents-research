@@ -13,6 +13,8 @@ status: beta
 
 The advisor tool is a beta Anthropic API feature (beta header `advisor-tool-2026-03-01`, tool `type: "advisor_20260301"`, `name: "advisor"`) that lets a faster **executor model** pause mid-generation and consult a stronger **advisor model**, inside a single `/v1/messages` request. The advisor receives the executor's full transcript — system prompt, tool definitions, prior turns and tool results, and the text produced so far in the current turn — runs under its own Anthropic-supplied system prompt, and "runs without tools and without context management." Its thinking blocks are dropped before the result returns; "only the advice text reaches the executor" ([advisor-tool-api]). Claude Code exposes the same mechanism as the `/advisor` slash command, layered on top of this API tool ([advisor-cc]).
 
+The advisor "fits long, multi-step tasks where most turns are routine but plan quality determines the outcome" — large refactors, debugging sessions where an error keeps recurring, and tasks that benefit from an independent check before being declared done ([advisor-cc]).
+
 ## API mechanics
 
 ### How a call happens
@@ -68,6 +70,12 @@ Setting `CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1` disables the advisor entirely: `/ad
 **Caching interaction**: toggling `/advisor` mid-session does not invalidate the main model's prompt cache (unlike switching models) — the cached prefix stays intact, and the advisor's returned guidance is cached as part of the transcript on later turns. The advisor model's own read of the conversation is never cached: "each advisor call processes the full transcript anew, with no reuse between calls" ([advisor-cc]). Claude Code does not expose the API tool's own `max_uses`/`max_tokens`/`caching` parameters as settings.
 
 **Fable billing & billing split**: on plans where Fable usage bills to usage credits, selecting Fable as the advisor needs a one-time consent (given via `/model fable`); before that consent, Claude Code silently skips attaching Fable as the advisor rather than erroring. With API billing, advisor tokens bill at the advisor model's own rates; on subscription plans, advisor usage counts toward the plan's usage limits, except a Fable advisor still bills to usage credits.
+
+**What you see during a session**: the transcript shows an `Advising` line with the advisor model name while the call is in progress. On completion it reports one of three outcomes: `Reviewed` (press `Ctrl+O` to read the guidance), `Advisor declined to advise on this request` (reason via `Ctrl+O` if given), or `Advisor unavailable (<error_code>)`. Claude generally follows the advisor's guidance but surfaces a conflict rather than following it unconditionally when its own evidence — a failed step, contradicting file contents — disagrees with a specific claim.
+
+**Common model pairings** (a curated subset of the API's compatibility table, per the Claude Code docs): Sonnet main + Opus advisor (escalate planning, ambiguous failures, and completion checks); Sonnet main + Fable advisor (needs Fable access); Haiku main + Opus advisor (lowest-cost main with strong planning, costing more than Haiku alone but less than switching the main model up); Opus main + Opus advisor (independent check for high-stakes work); Fable main + Fable advisor (the ceiling pairing — Claude Code doesn't apply an Opus or Sonnet advisor to a Fable main model); Sonnet main + Sonnet advisor (a cheap check for routine oversights).
+
+**Compare with related features**: the advisor runs at decision points Claude itself chooses, mid-task. `opusplan` instead runs the stronger model only during plan mode (subject to the account's `availableModels` allowlist), then switches to Sonnet for execution. A subagent with its own `model` set runs the stronger model for the entire delegated subtask. `/model` switches the main model outright, from the next request onward. See [CC-model-provider-configuration.md](CC-model-provider-configuration.md) for `opusplan` and subagent model selection.
 
 ## Platform availability (unresolved conflict)
 
