@@ -2,8 +2,8 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-26
+validated_links: 2026-10-26
 status: adopt
 ---
 
@@ -198,7 +198,7 @@ Note: Runtime-injected vars (`CLAUDE_CODE_SSE_PORT`, `SANDBOX_RUNTIME`, etc.) re
 
 ## Undocumented Variables (Binary String Extraction)
 
-The following variables were extracted from the CC 2.1.87 CLI binary via `strings` / `grep -boa`. They are **not listed** in the [official env vars reference][env-vars]. Presence in the binary does not guarantee functionality — some may be deprecated, internal-only, or feature-gated.
+The following variables were extracted from the CC 2.1.87 CLI binary via `strings` / `grep -boa`. Most are **not listed** in the [official env vars reference][env-vars] (one exception is noted below). Presence in the binary does not guarantee functionality — some may be deprecated, internal-only, or feature-gated.
 
 **Method**: `grep -oP 'CLAUDE_CODE_[A-Z_]+' <binary> | sort -u` against `/home/vscode/.local/share/claude/versions/2.1.87` ([frr-build][frr-build]).
 
@@ -225,7 +225,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | Disable adaptive thinking | String extraction, CC 2.1.87 |
-| `CLAUDE_CODE_DISABLE_ADVISOR_TOOL` | Disable advisor tool | String extraction, CC 2.1.87 |
+| `CLAUDE_CODE_DISABLE_ADVISOR_TOOL` | Disables the advisor tool entirely — `/advisor` becomes unavailable, any configured `advisorModel` is ignored, and `--advisor` is accepted but has no effect | Documented: [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) |
 | `CLAUDE_CODE_DISABLE_ATTACHMENTS` | Disable file attachments | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | Disable background tasks | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_DISABLE_CLAUDE_MDS` | Disable CLAUDE.md loading | String extraction, CC 2.1.87 |

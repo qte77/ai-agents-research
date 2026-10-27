@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-10-24
-validated_links: 2026-10-18
+updated: 2026-10-26
+validated_links: 2026-10-26
 status: adopt
 ---
 
@@ -111,12 +111,13 @@ Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 
 ## Slash Commands (CC 2.1.87, Binary String Extraction)
 
-Commands extracted via `grep -oP` from CLI binary. **Documented** commands are linked; **undocumented** are marked. The `/code-review`, `/review`, `/simplify`, and `/ultrareview` rows below were re-verified against the live docs at CC 2.1.302, 2026-10-18 — they are current, not binary-extracted.
+Commands extracted via `grep -oP` from CLI binary. **Documented** commands are linked; **undocumented** are marked. The `/code-review`, `/review`, `/simplify`, and `/ultrareview` rows below were re-verified against the live docs at CC 2.1.302, 2026-10-18; the `/advisor` row was added from the live docs, 2026-10-26 — none of these five are binary-extracted.
 
 ### Documented
 
 | Command | Purpose | Source |
 |---|---|---|
+| `/advisor` | Set or clear the advisor model (`/advisor off`) that the advisor tool — a server-executed API tool — consults mid-task; see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) | [advisor-cc][advisor-cc] |
 | `/clear` | Clear conversation | [cli-ref][cli-ref] |
 | `/code-review` | Review the current diff, a PR, a branch, or a path for correctness bugs; `ultra` escalates to a cloud multi-agent review. Alias: `/review`. Formerly named `/simplify` before v2.1.147. See [details below](#code-review-review-simplify-and-ultrareview) | [commands][commands], [code-review-local][code-review-local] |
 | `/commit` | Commit staged changes | [cli-ref][cli-ref] |
@@ -191,7 +192,7 @@ Written by `/config` panel and UI interactions. Located at `~/.claude/.claude.js
 
 | Key | Type | `/config` Label | Source |
 |---|---|---|---|
-| `fastMode` | boolean | Fast mode (Opus 4.6 only) | `/config` panel observation |
+| `fastMode` | boolean | Fast mode (Opus 5.5, Opus 5, Opus 4.8 as of 2026-10-26 — see [CC-fast-mode-analysis.md](CC-fast-mode-analysis.md)) | `/config` panel observation; [fast-mode docs](https://code.claude.com/docs/en/fast-mode) |
 | `respectGitignore` | boolean | Respect .gitignore in file picker | `/config` panel observation |
 | `theme` | string | Theme | `/config` panel observation |
 | `editorMode` | string | (not shown) | File observation |
@@ -208,6 +209,8 @@ Written by `/config` panel and UI interactions. Located at `~/.claude/.claude.js
 ### Layer 2: `settings.json` — Declarative Behavior Config
 
 80+ keys for permissions, hooks, plugins, model, env, statusLine, etc. Documented at [settings][settings]. Written by `/settings` (update-config skill) or manually.
+
+Includes `advisorModel`, the persistent default for the advisor tool — a server-executed API tool, not a local setting; see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md).
 
 Cross-ref: [CC-env-vars-reference.md](CC-env-vars-reference.md), [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md)
 
@@ -328,7 +331,9 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | [CC code-review-local docs][code-review-local] | `/code-review` targets, effort levels, flags, `/review`/`/simplify` alias history |
 | [CC ultrareview docs][ultrareview] | Ultrareview scope, billing, limits, platform restrictions, research-preview status |
 | CC 2.1.302, Codespaces, 2026-10-18 | CLI commands and reference pages re-verified live for this pass; `claude plugin list` and CHANGELOG search cross-checked the `/code-review` plugin and `/review-pr` disposition |
+| [CC advisor docs][advisor-cc] | `/advisor` command and `advisorModel` setting (accessed 2026-10-26); see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) |
 
+[advisor-cc]: https://code.claude.com/docs/en/advisor
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
 [commands]: https://code.claude.com/docs/en/commands
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
