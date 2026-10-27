@@ -88,7 +88,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 | `--max-turns` | Limit agentic turns; exits with error when reached | `--print` only | [cli-ref][cli-ref] |
 | `--max-budget-usd` | Maximum dollar spend before stopping | `--print` only | [cli-ref][cli-ref] |
 | `--betas` | Beta headers for API requests | API key users only | [cli-ref][cli-ref] |
-| `--advisor` | Set the advisor model for a single session, overriding the `advisorModel` setting | Hidden — not listed in `claude --help`; exits at launch if the main model or requested advisor doesn't support the pairing | [advisor-cc][advisor-cc] |
+| `--advisor` | Set the advisor model for a single session, overriding the `advisorModel` setting | Hidden — not listed in `claude --help`. Exits at launch if the main model can't use the advisor or the requested model can't act as one; a valid advisor that ranks below the main model instead starts the session without it | [advisor-cc][advisor-cc] |
 
 **Analysis**: [CC-model-provider-configuration.md](CC-model-provider-configuration.md), [CC-fast-mode-analysis.md](CC-fast-mode-analysis.md), [CC-session-cost-analysis.md](../sessions/CC-session-cost-analysis.md), [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md)
 

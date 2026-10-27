@@ -111,7 +111,7 @@ Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 
 ## Slash Commands (CC 2.1.87, Binary String Extraction)
 
-Commands extracted via `grep -oP` from CLI binary. **Documented** commands are linked; **undocumented** are marked. The `/code-review`, `/review`, `/simplify`, and `/ultrareview` rows below were re-verified against the live docs at CC 2.1.302, 2026-10-18 — they are current, not binary-extracted.
+Commands extracted via `grep -oP` from CLI binary. **Documented** commands are linked; **undocumented** are marked. The `/code-review`, `/review`, `/simplify`, and `/ultrareview` rows below were re-verified against the live docs at CC 2.1.302, 2026-10-18; the `/advisor` row was added from the live docs, 2026-10-26 — none of these five are binary-extracted.
 
 ### Documented
 
@@ -331,6 +331,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | [CC code-review-local docs][code-review-local] | `/code-review` targets, effort levels, flags, `/review`/`/simplify` alias history |
 | [CC ultrareview docs][ultrareview] | Ultrareview scope, billing, limits, platform restrictions, research-preview status |
 | CC 2.1.302, Codespaces, 2026-10-18 | CLI commands and reference pages re-verified live for this pass; `claude plugin list` and CHANGELOG search cross-checked the `/code-review` plugin and `/review-pr` disposition |
+| [CC advisor docs][advisor-cc] | `/advisor` command and `advisorModel` setting (accessed 2026-10-26); see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) |
 
 [advisor-cc]: https://code.claude.com/docs/en/advisor
 [tools-ref]: https://code.claude.com/docs/en/tools-reference

@@ -198,7 +198,7 @@ Note: Runtime-injected vars (`CLAUDE_CODE_SSE_PORT`, `SANDBOX_RUNTIME`, etc.) re
 
 ## Undocumented Variables (Binary String Extraction)
 
-The following variables were extracted from the CC 2.1.87 CLI binary via `strings` / `grep -boa`. They are **not listed** in the [official env vars reference][env-vars]. Presence in the binary does not guarantee functionality — some may be deprecated, internal-only, or feature-gated.
+The following variables were extracted from the CC 2.1.87 CLI binary via `strings` / `grep -boa`. Most are **not listed** in the [official env vars reference][env-vars] (one exception is noted below). Presence in the binary does not guarantee functionality — some may be deprecated, internal-only, or feature-gated.
 
 **Method**: `grep -oP 'CLAUDE_CODE_[A-Z_]+' <binary> | sort -u` against `/home/vscode/.local/share/claude/versions/2.1.87` ([frr-build][frr-build]).
 
