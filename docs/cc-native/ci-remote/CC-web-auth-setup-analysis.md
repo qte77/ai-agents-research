@@ -1,10 +1,10 @@
 ---
 title: CC Web Setup, Authentication & API Key Usage
-source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup, https://code.claude.com/docs/en/web-quickstart, https://platform.claude.com/docs/en/manage-claude/authentication, https://platform.claude.com/docs/en/manage-claude/workspaces, https://platform.claude.com/docs/en/api/rate-limits, https://platform.claude.com/docs/en/manage-claude/usage-cost-api, https://platform.claude.com/docs/en/manage-claude/api-and-data-retention
+source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup, https://code.claude.com/docs/en/web-quickstart, https://platform.claude.com/docs/en/manage-claude/authentication, https://platform.claude.com/docs/en/manage-claude/workspaces, https://platform.claude.com/docs/en/api/rate-limits, https://platform.claude.com/docs/en/manage-claude/usage-cost-api, https://platform.claude.com/docs/en/manage-claude/api-and-data-retention, https://platform.claude.com/docs/en/api/overview, https://code.claude.com/docs/en/settings
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive usage, connect remote sessions, and the Claude Console platform-admin surface (workspaces, rate limits, cost reporting, data retention) a headless org API key touches.
 created: 2026-03-24
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: research-preview
 ---
 
@@ -88,9 +88,14 @@ When multiple credentials are present, CC chooses in this order ([source][cc-aut
 | 3 | `ANTHROPIC_API_KEY` env var | Direct API access (headless/CI) |
 | 4 | `apiKeyHelper` script | Dynamic/rotating credentials from vault |
 | 5 | `CLAUDE_CODE_OAUTH_TOKEN` env var (long-lived token from `claude setup-token`) | CI pipelines where browser login isn't available |
-| 6 | Subscription OAuth (`/login`) | Default for Pro/Max/Team/Enterprise |
+| 6 | Anthropic profile and federation credentials (`ANTHROPIC_PROFILE` / Workload Identity Federation) | `ant auth login` profiles and WIF token exchange — ranks here only when selected via `ANTHROPIC_PROFILE` or the WIF federation variables; an unnamed/active profile otherwise ranks below `/login` |
+| 7 | Subscription OAuth (`/login`) | Default for Pro/Max/Team/Enterprise |
+
+Re-fetched 2026-10-24: the live precedence list now has these 7 entries, up from 6 at the doc's last check — the new "Anthropic profile and federation credentials" entry (row 6) is the only addition ([source][cc-auth]).
 
 **Key insight**: `ANTHROPIC_API_KEY` takes precedence over subscription OAuth once approved. If the key belongs to a disabled org, CC auth fails even if you have a valid subscription. Fix: `unset ANTHROPIC_API_KEY` ([source][cc-auth]).
+
+**The `-p` nuance**: in interactive mode you're prompted once to approve or decline a detected `ANTHROPIC_API_KEY`, and the choice is remembered. In non-interactive mode there's no such prompt — per the docs, verbatim: "In non-interactive mode (`-p`), the key is always used when present." ([source][cc-auth]) Consequence: a key merely present in a headless run's environment silently moves that run from subscription billing to Console API billing, with no approval step to catch it — `unset ANTHROPIC_API_KEY` before a `-p` run that should stay on the subscription.
 
 **Web sessions always use subscription credentials** — `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` in the sandbox environment do not override them ([source][cc-auth]).
 
@@ -113,6 +118,14 @@ claude auth login --email user@example.com
 claude auth status        # JSON output
 claude auth status --text # Human-readable
 ```
+
+### Confirming Which Credential Is Active, and Scoping a Key to Headless Only
+
+**Observations** (CC 2.1.310, Codespaces, 2026-10-24): with `ANTHROPIC_API_KEY` set, `claude -p` prints a line stating that claude.ai connectors are disabled because `ANTHROPIC_API_KEY` or another auth source is set and takes precedence over the claude.ai login (see [claude.ai Connectors Go Dark Under API-Key Auth](#claudeai-connectors-go-dark-under-api-key-auth) below for the general rule). The `--output-format json` result reports a `total_cost_usd` field, with every `modelUsage.*.costBasis` entry reading `"list"`, on both a subscription session and an API-key session — this is a client-side list-price estimate, not a billing record read back from the Console. In one run, the API key was billed but the Console's own usage page (`platform.claude.com/usage`) showed no token usage after 30+ minutes; this is a single observation with an unknown cause, noted here as such rather than as a general behavior.
+
+**Confirming org/workspace at the HTTP layer**: the Claude API's response headers name the organization and workspace a request resolved to — `request-id`, `anthropic-organization-id`, and `anthropic-workspace-id` (`wrkspc_`-prefixed) ([source][console-api-overview]). On the request side, the same page's authentication-headers table states the `anthropic-workspace-id` request header is "Required with an API key that isn't scoped to a workspace. Optional for other API keys." ([source][console-api-overview]) — consistent with the workspace-header requirement in [§ Select a Workspace](#select-a-workspace--the-anthropic-workspace-id-header) below. Claude Code's own `ANTHROPIC_WORKSPACE_ID` variable is documented only for [Workload Identity Federation][console-workspaces] token exchange ([source][cc-env-vars]) — it is not a general-purpose way to set the header for a plain Console key; don't claim more than the docs state.
+
+**A headless-only key, without touching interactive sessions**: pass the helper through `--settings` on the `claude -p` invocation itself, rather than a settings file every session reads: `claude -p --settings '{"apiKeyHelper": "<cmd>"}'`. `--settings` applies for that one session and "can set any key your user settings file can set" ([source][cc-settings]); `apiKeyHelper` is one such key ([source][cc-auth]). This composition follows from the two pages but was not tested end-to-end — mark it as such. There is no documented `*_API_KEY_FILE` environment variable in the full [env vars reference][cc-env-vars] (checked 2026-10-24).
 
 ## 3. API Key for Non-Interactive / Headless Usage
 
@@ -316,6 +329,8 @@ One line each, where they bear on running agents against a Console key:
 - [Console Rate limits docs][console-ratelimits]
 - [Console Usage and Cost API docs][console-usagecost]
 - [Console API and Data Retention docs][console-retention]
+- [Console API overview docs][console-api-overview]
+- [CC Settings docs][cc-settings]
 - [Console Batch Processing docs][console-batch]
 - [Console Files API docs][console-files]
 - [Console Agent Skills overview][console-skills]
@@ -337,6 +352,8 @@ One line each, where they bear on running agents against a Console key:
 [console-ratelimits]: https://platform.claude.com/docs/en/api/rate-limits
 [console-usagecost]: https://platform.claude.com/docs/en/manage-claude/usage-cost-api
 [console-retention]: https://platform.claude.com/docs/en/manage-claude/api-and-data-retention
+[console-api-overview]: https://platform.claude.com/docs/en/api/overview
+[cc-settings]: https://code.claude.com/docs/en/settings
 [console-batch]: https://platform.claude.com/docs/en/build-with-claude/batch-processing
 [console-files]: https://platform.claude.com/docs/en/build-with-claude/files
 [console-skills]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview

@@ -3,8 +3,8 @@ title: CC Cross-Session Messaging
 source: https://code.claude.com/docs/en/cross-session-messaging
 purpose: Analysis of Claude Code's first-party cross-session messaging — independent sessions you start and steer yourself message each other, distinct from agent-team/subagent mailboxes.
 created: 2026-09-23
-updated: 2026-09-23
-validated_links: 2026-09-23
+updated: 2026-10-24
+validated_links: 2026-10-24
 status: adopt
 ---
 
@@ -111,6 +111,8 @@ Requires v2.1.236+ in both sessions. Only the Claude in a main conversation can 
 
 Claude attaches `notify_when_idle` to `SendMessage`'s input, either bundled with a message or standalone (standalone, it subscribes without starting a turn or spending tokens in the watched session, and fires immediately if that session is already idle). "Idle" means the watched session finished a turn with nothing queued. The notice is one-shot — sent once, no polling either direction — and if none arrives within 12 hours Claude Code drops the subscription and tells Claude so it stops waiting. Each side's inbound controls apply to the notice like a message: `refuse` on either side means nothing arrives (and the subscription silently expires after 12 hours); `hold` on either side delivers the notice with less detail (the watched session omits its one-line status; the asking session shows the notice in the transcript without delivering it to Claude) ([cross-session-messaging][cc-xsm]).
 
+**Observed notice wording** (CC 2.1.310, Codespaces, 2026-10-24): the watched session's own notice of the subscription read, verbatim: "A process claiming the address `uds:/tmp/cc-socks/<pid>.sock` asked to be told when this session is next idle — it will get one automated status notice; a one-line status detail is included only if that address is registered to the same process in the session registry (a same-user process can register itself)." This ties the one-line status detail to a session-registry check on the subscribing side's claimed address — a mechanism the 2026-09-23 docs-page text above doesn't describe; it is additive to, not a correction of, that text.
+
 ## Cross-Machine Messaging Via Remote Control
 
 Where a message goes determines how it travels:
@@ -184,6 +186,18 @@ The docs page also states, without a distinct CHANGELOG line found for it: befor
 
 To check a session, run `/list-agents` (`/peers`): if the command isn't recognized, the session lacks the feature (check `claude --version` first); if it works but a send doesn't arrive, the cause is narrower — a deny rule, the receiver's inbound controls, a missing Remote Control connection, or an `offline` target ([cross-session-messaging][cc-xsm]).
 
+## In Practice (2026-10-24)
+
+Observations from using this feature across sessions, not documented behavior:
+
+- Ask a peer what it is already working on before handing it more work — a status check costs less than a conflicting assignment.
+- Send information and let decisions stay with that session's own user; a cross-session message is not consent from anyone.
+- Verify a peer's factual claims at the source before relaying them — a peer can be wrong or working from stale state, the same as any other input.
+- An idle notice can describe a state that has already changed by the time it arrives; treat it as a point-in-time signal, not a live status.
+- Session names change after a container restart, so a name used to address a peer in one session may not resolve in the next.
+- A headless `claude -p -n <name>` run shows up in `/list-agents` like any other session — don't mistake it for an interactive peer and message it expecting a reply.
+- A peer running in a different permission mode may hold a message for its own user's approval rather than delivering it; a sent message is not a received one.
+
 ## Sources
 
 | Source | Content |
@@ -191,6 +205,7 @@ To check a session, run `/list-agents` (`/peers`): if the command isn't recogniz
 | [CC cross-session messaging][cc-xsm] | Full feature description: tools, delivery/trust model, `notify_when_idle`, cross-machine transport, inbox socket + env vars, limits, availability |
 | [CC what's new — 2026-w32][cc-w32] | Ship-week digest confirming v2.1.224 headline gate and macOS/Linux initial availability |
 | [anthropics/claude-code CHANGELOG][cc-changelog] | Version-gate verification for v2.1.224, .225, .232, .236, .239, .247, .248, .271; surfaces the native-Windows gate discrepancy (page: v2.1.234, CHANGELOG: v2.1.239) |
+| CC 2.1.310, Codespaces, 2026-10-24 | Owner observations: `notify_when_idle` notice wording, and the "In Practice" peer-messaging notes above |
 
 [cc-xsm]: https://code.claude.com/docs/en/cross-session-messaging
 [cc-w32]: https://code.claude.com/docs/en/whats-new/2026-w32
