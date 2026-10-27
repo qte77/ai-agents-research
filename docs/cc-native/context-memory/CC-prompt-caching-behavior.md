@@ -53,7 +53,7 @@ From the [caching docs][caching]:
 
 ### 20-block lookback window
 
-The server checks at most 20 block positions backward from the breakpoint, counting the breakpoint itself as the first position. If the prior cache entry is beyond 20 blocks back, it's a miss even if the prefix is identical. On the Claude API, a run of consecutive `tool_use` blocks counts as a single position in that count, and so does a run of consecutive `tool_result` blocks — so a turn with many parallel tool calls doesn't by itself push the previous request's cache entry outside the window.
+The server checks at most 20 block positions backward from the breakpoint. If the prior cache entry is beyond 20 blocks back, it's a miss even if the prefix is identical. The [prompt caching docs][caching] additionally describe a run of consecutive `tool_use` blocks, and separately a run of consecutive `tool_result` blocks, as each counting toward that limit as a single position — so a turn with many parallel tool calls would not by itself push the previous request's cache entry outside the window. *(This additional detail reflects a model-mediated extraction of the page made in this session, not raw page text read directly — re-confirm the exact mechanism before treating it as settled.)*
 
 Source: [prompt caching docs][caching], "How cache lookback works" section
 
@@ -68,7 +68,7 @@ The cacheable prefix is model-dependent (re-verified against the [caching docs][
 | 2,048 | Opus 4.7, Mythos Preview |
 | 4,096 | Opus 4.6, Opus 4.5, Haiku 4.5 |
 
-A prefix shorter than the minimum silently skips caching: no error, just `cache_creation_input_tokens: 0`. The [caching docs][caching] state "these minimums apply on every platform where each model is available," but that sentence's scope is the four platforms named in its own lead-in (Claude API, Claude Platform on AWS, Google Cloud, Microsoft Foundry) — it does not cover Bedrock, which the same docs point elsewhere for: [AWS's own Bedrock documentation][bedrock-caching].
+A prefix shorter than the minimum silently skips caching: no error, just `cache_creation_input_tokens: 0`. The [caching docs][caching] state "these minimums apply on every platform where each model is available," but that sentence's scope is the four platforms named in its own lead-in (Claude API, Claude Platform on AWS, Google Cloud, Microsoft Foundry) — it does not cover Bedrock, which the same docs point elsewhere for: [AWS's own Bedrock documentation][bedrock-caching]. (A 2026-10-26 check via model-mediated extraction of the page — not raw text — did not surface a change to this sentence; treat that check as a lead, not a re-confirmation at the same standard as the other re-verified facts in this doc.)
 
 **Corrected 2026-10-15**: this doc previously claimed Bedrock uses a different (1,024-token) minimum for Fable 5 / Mythos 5. [AWS's Bedrock prompt-caching docs][bedrock-caching] (its "Supported models, Regions, and explicit caching limits" table) list Claude Fable 5.1, Mythos 5.1, Fable 5, and Mythos 5 — along with Opus 5.5/5, Sonnet 5.5, and Haiku 5.5 — at a 512-token minimum per cache checkpoint on Bedrock too, the same figure as the other platforms. (Bedrock's 1,024-token minimum applies to Opus 4.8 and Sonnet 5/4.6/4.5/3.7/3.5v2, not to Fable/Mythos.) Removed the stale claim on that basis.
 
@@ -76,18 +76,23 @@ Source: [prompt caching docs][caching], "Cache limitations" section; [AWS Bedroc
 
 ### Breakpoints, TTL lifetime, and other platform facts
 
-Re-verified against the [prompt caching docs][caching] (accessed 2026-10-26):
+Re-verified against the [prompt caching docs][caching] (accessed 2026-10-26). The first group below was read directly from fetched page text. The second group was obtained only via a model-mediated extraction of the page (direct network fetch was unavailable in this session) and is paraphrased rather than quoted for that reason — re-confirm against raw text before quoting it directly.
+
+**Read directly from page text:**
 
 - **Up to 4 cache breakpoints**: "You can define up to 4 cache breakpoints (using `cache_control` parameters) in your prompt."
-- **Automatic caching uses one of those 4 slots**: "When used together, the automatic cache breakpoint uses one of the 4 available breakpoint slots" — so combining automatic and explicit breakpoints in the same request leaves at most 3 slots for explicit ones.
-- **Mixing TTLs requires an ordering**: "Cache entries with longer TTL must appear before shorter TTLs (that is, a 1-hour cache entry must appear before any 5-minute cache entries)."
 - **Lifetime is measured from request start, not response end**: the TTL clock starts "from the start of the request that writes or reads the cache entry, not from the end of its response," so time spent generating a long response eats into the window available for a follow-up request to hit the cache.
-- **Cache hits and rate limits**: the docs give "improve your rate limit utilization, because cache hits are not deducted against your rate limit" as a reason to use the 1-hour cache — the sentence states this for cache hits generally (it isn't phrased as unique to the 1-hour tier), in the "When to use the 1-hour cache" guidance.
 - **ZDR-eligible**: "Prompt caching (both automatic and explicit) is ZDR eligible. Anthropic does not store the raw text of your prompts or Claude's responses."
 - **No manual clear**: "Currently, there's no way to manually clear the cache. Cached prefixes automatically expire after a minimum of 5 minutes of inactivity."
 - **Caching + Batches API is best-effort**: "it is possible to use prompt caching with your Batches API requests. However, because asynchronous batch requests can be processed concurrently and in any order, cache hits are provided on a best-effort basis." See also [CC-session-cost-analysis.md § Message Batches API](../sessions/CC-session-cost-analysis.md#message-batches-api) for the batch-pricing side of this.
 
-Source: [prompt caching docs][caching], "How many cache breakpoints can I use?", "Do I need multiple cache breakpoints...", "1-hour cache duration", "When does the cache lifetime start?", "Can I manually clear the cache?", "Can I use prompt caching with the Batches API?", and "Data retention" FAQ/body sections (accessed 2026-10-26)
+**Extraction-only — re-confirm before quoting:**
+
+- Automatic caching is reported to use one of the 4 available breakpoint slots when combined with explicit breakpoints, leaving at most 3 slots for explicit ones.
+- Mixing TTLs is reported to require an ordering: a 1-hour cache entry must appear before any 5-minute cache entries in the same request.
+- The docs reportedly give improved rate-limit utilization — because cache hits aren't deducted against the rate limit — as a reason to use the 1-hour cache; the sentence appears to describe cache hits generally, not something unique to the 1-hour tier.
+
+Source: [prompt caching docs][caching], "How many cache breakpoints can I use?", "When does the cache lifetime start?", "Can I manually clear the cache?", "Can I use prompt caching with the Batches API?", and "Data retention" FAQ/body sections, read directly (accessed 2026-10-26); automatic-caching slot usage, TTL ordering, and the rate-limit sentence via model-mediated extraction, not raw text (accessed 2026-10-26)
 
 ## CC-Specific Caching Behavior
 
@@ -211,30 +216,30 @@ Source: [CC prompt-caching docs][cc-caching], "Actions that invalidate the cache
 
 ### API-level invalidation (platform docs)
 
-The list above is CC's own framing. The underlying [prompt caching docs][caching] "What invalidates the cache" table (accessed 2026-10-26) documents the same mechanism one level down, at the Messages API:
+The list above is CC's own framing. The underlying [prompt caching docs][caching] also document cache invalidation one level down, at the Messages API, in a "What invalidates the cache" table. **Sourcing note**: direct network fetch of this page was unavailable in this session; the table's content below was obtained via a model-mediated extraction (WebFetch) rather than read as raw page text, so it is paraphrased rather than quoted and should be re-confirmed against raw text before being cited as a direct quote:
 
-- **Tool definitions**: "Modifying tool definitions (names, descriptions, parameters) invalidates the entire cache."
-- **Web search toggle**: "Enabling/disabling web search modifies the system prompt."
-- **Citations toggle**: "Enabling/disabling citations modifies the system prompt."
-- **Speed setting**: "Switching between `speed: "fast"` and standard speed... invalidates system and message caches."
-- **Tool choice**: "Changes to the `tool_choice` parameter only affect message blocks."
-- **Images**: "Adding/removing images anywhere in the prompt affects message blocks."
-- **Thinking parameters**: "The thinking configuration (mode, and `budget_tokens` in extended mode) is rendered into the prompt, so changing it always invalidates message blocks; tool and system caches are also invalidated on models that render the configuration ahead of them."
-- **Effort setting**: "Changing the `output_config.effort` value always invalidates message blocks, with the same model-specific effect on tool and system caches as thinking parameters. Setting effort explicitly to the model's default is equivalent to omitting it and does not invalidate. On models that support per-message effort, an effort change carried in a `role: "system"` message inside `messages` leaves the cached prefix intact."
-- **Non-tool results passed to requests with thinking**: on Opus 4.5+, Sonnet 4.6+, and Haiku 5.5, thinking blocks are preserved by default so the cache stays valid; on earlier Opus/Sonnet models and Haiku through 4.5, previously-cached thinking blocks (and anything cached after them) are stripped.
-- **Dropped thinking blocks**: on Fable 5.1, Mythos 5.1, Opus 5.5, Sonnet 5.5, or Haiku 5.5, if the API drops a thinking block that isn't preserved on that request, the cached prefix changes from that block's position onward on that request; blocks the receiving model can read and passes back unchanged keep the cache intact.
+- **Tool definitions**: modifying tool definitions (names, descriptions, parameters) is reported to invalidate the entire cache.
+- **Web search toggle**: enabling/disabling web search modifies the system prompt.
+- **Citations toggle**: enabling/disabling citations modifies the system prompt.
+- **Speed setting**: switching between `speed: "fast"` and standard speed is reported to invalidate system and message caches.
+- **Tool choice**: changes to the `tool_choice` parameter are reported to affect only message blocks.
+- **Images**: adding/removing images anywhere in the prompt is reported to affect message blocks.
+- **Thinking parameters**: the thinking configuration (mode, and `budget_tokens` in extended mode) is rendered into the prompt, so changing it is reported to always invalidate message blocks, and can also invalidate tool/system caches on models that render the configuration ahead of them.
+- **Effort setting**: changing `output_config.effort` is reported to always invalidate message blocks, with the same model-specific effect on tool/system caches as thinking parameters; setting it explicitly to the model's default reportedly does not invalidate; on models that support per-message effort, an effort change carried in a per-message `role: "system"` entry reportedly leaves the cached prefix intact.
+- **Non-tool results passed to requests with thinking**: on Opus 4.5+, Sonnet 4.6+, and Haiku 5.5, thinking blocks are reportedly preserved by default so the cache stays valid; on earlier Opus/Sonnet models and Haiku through 4.5, previously-cached thinking blocks (and anything cached after them) are reportedly stripped.
+- **Dropped thinking blocks**: on Fable 5.1, Mythos 5.1, Opus 5.5, Sonnet 5.5, or Haiku 5.5, if the API drops a thinking block that isn't preserved on that request, the cached prefix is reported to change from that block's position onward on that request; blocks the receiving model can read and pass back unchanged reportedly keep the cache intact.
 
-**Conflict — recorded, not resolved:** the API-level row above states plainly that changing `output_config.effort` "always invalidates message blocks" ([prompt caching docs][caching], "What invalidates the cache" section, accessed 2026-10-26). The CC-specific list in the parent section instead states that CC's own effort-level changes mid-session do **not** invalidate "on Opus 5.5/Sonnet 5.5/Haiku 5.5/Fable 5.1 with an API key or Claude subscription" ([CC prompt-caching docs][cc-caching], "Actions that invalidate the cache" section, accessed 2026-10-15). Both are first-party Anthropic sources, from different doc families (platform.claude.com vs. code.claude.com) and different access dates. This doc keeps both claims rather than picking one; a plausible but **unconfirmed** reconciliation is that CC's effort control on those four models routes through the per-message `role: "system"` mechanism the API page separately carves out as cache-safe, rather than the request-level `output_config.effort` field the "always invalidates" sentence describes — the CC docs don't state this, so treat it as an open question.
+**Conflict — recorded, not resolved:** the effort-setting row above is reported to state that changing `output_config.effort` always invalidates message blocks ([prompt caching docs][caching], "What invalidates the cache" section — extraction-only, see sourcing note above, accessed 2026-10-26). The CC-specific list in the parent section instead states that CC's own effort-level changes mid-session do **not** invalidate "on Opus 5.5/Sonnet 5.5/Haiku 5.5/Fable 5.1 with an API key or Claude subscription" ([CC prompt-caching docs][cc-caching], "Actions that invalidate the cache" section, accessed 2026-10-15 — this claim predates this session and is unaffected by the sourcing note above). Both are first-party Anthropic sources, from different doc families (platform.claude.com vs. code.claude.com) and different access dates. This doc keeps both claims rather than picking one or resolving the discrepancy.
 
-Source: [prompt caching docs][caching], "What invalidates the cache" section (accessed 2026-10-26)
+Source: [prompt caching docs][caching], "What invalidates the cache" section — content obtained via model-mediated extraction, not raw text (accessed 2026-10-26); treat as a lead to re-confirm, not a settled quote
 
 ## Cache Scope
 
 In CC, the cache is effectively scoped to one machine and directory — the system prompt embeds auto-memory paths, and the conversation opens with an announcement of the working directory, platform, shell, and OS version. Two sessions in different directories therefore build different prefixes and miss each other's cache. Sessions run in **parallel** in the *same* directory build matching prefixes and read each other's cache; **sequential** sessions in the same directory share the prefix only when the git status snapshot taken at startup matches, since each conversation also carries the branch and recent commits from that snapshot.
 
-The underlying API cache is broader than CC's own scoping. Per the prompt caching docs' "Cache storage and sharing" section (requoted 2026-10-26, this is no longer verbatim what the doc previously quoted): "Caches are isolated between organizations. Different organizations never share caches, even if they use identical prompts. Caches are also isolated by workspace within an organization on the Claude API, Claude Platform on AWS, and Microsoft Foundry; Bedrock and Claude Models on Google Cloud (Google managed) use organization-level isolation only." The "(Google managed)" qualifier implies a split within "Google Cloud": the Google-managed surface gets organization-level isolation (grouped with Bedrock), while **Claude Models on Google Cloud (Anthropic managed) is not named in either list** — it most plausibly falls under the first (workspace-level) group by the same logic as Claude Platform on AWS, but the docs don't say so explicitly, so treat that specific inference as unverified. (code.claude.com elsewhere calls this same Google product "Google Cloud's Agent Platform" — same product, different doc family's naming.)
+The underlying API cache is broader than CC's own scoping. The sentence this doc previously quoted here is no longer verbatim against the current prompt caching docs. Requoted 2026-10-26 from the FAQ "How does prompt caching handle privacy and data separation?" (read directly from fetched page text, not a model-mediated extraction): "On the Claude API, Claude Platform on AWS, and Microsoft Foundry, caches are isolated by workspace within an organization. On Bedrock and Claude Models on Google Cloud (Google managed), caches are isolated by organization. In every case, caches are never shared across organizations, even for identical prompts." The "(Google managed)" qualifier implies a split within "Google Cloud": the Google-managed surface gets organization-level isolation (grouped with Bedrock), while **Claude Models on Google Cloud (Anthropic managed) is not named in either list** — it most plausibly falls under the first (workspace-level) group by the same logic as Claude Platform on AWS, but the docs don't say so explicitly, so treat that specific inference as unverified. (code.claude.com elsewhere calls this same Google product "Google Cloud's Agent Platform" — same product, different doc family's naming.)
 
-Source: [CC prompt-caching docs][cc-caching], "Cache scope" section; [prompt caching docs][caching], "Cache storage and sharing" section
+Source: [CC prompt-caching docs][cc-caching], "Cache scope" section; [prompt caching docs][caching], FAQ "How does prompt caching handle privacy and data separation?" section (read directly, accessed 2026-10-26)
 
 ## Slug (CC-Internal)
 
@@ -261,7 +266,7 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 
 | Source | Content |
 |---|---|
-| [Prompt caching docs][caching] | What's cached, prefix matching, breakpoints, TTL, per-model cache-hit multipliers, minimum cacheable prefix per model, cache storage/sharing, "What invalidates the cache" table, FAQ (lifetime start, manual clear, ZDR, rate limits, Batches interaction) (re-verified 2026-10-26) |
+| [Prompt caching docs][caching] | What's cached, prefix matching, breakpoints, TTL, minimum cacheable prefix per model, cache isolation, lifetime start, manual clear, ZDR, Batches interaction — read directly from fetched page text (re-verified 2026-10-26); the "What invalidates the cache" table and a few other items noted inline were obtained via model-mediated extraction only, not raw text, and are flagged as such in the body |
 | [Pricing docs][pricing] | Per-model cache write/read rates, including the 0.025x/0.05x/0.1x cache-hit multiplier tiers (accessed 2026-10-26) |
 | [API messages docs][api] | Usage object fields (`cache_read_input_tokens`, `cache_creation_input_tokens`) |
 | [CC prompt-caching docs][cc-caching] | CC-specific TTL buckets, choose-the-TTL precedence, disable vars, cache scope, actions that invalidate/keep the cache (accessed 2026-10-15) |
