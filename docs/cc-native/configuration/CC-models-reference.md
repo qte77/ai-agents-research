@@ -1,32 +1,60 @@
 ---
 title: CC Models & Free-Tier Provider Reference
 source: https://platform.claude.com/docs/en/about-claude/models/overview, https://platform.claude.com/docs/en/about-claude/pricing
-purpose: Descriptive reference for the newest Claude model (Fable 5) and a snapshot of free-tier / OSS inference providers — the model/provider facts behind CC-model-provider-configuration.md.
+purpose: Descriptive reference for CC's primary agentic model (Claude Fable 5), the current per-model pricing table, and a snapshot of free-tier / OSS inference providers — the model/provider facts behind CC-model-provider-configuration.md.
 created: 2026-06-14
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-10-26
+validated_links: 2026-10-26
 status: reference
 ---
 
 **Details:** Reference (descriptive). For *how to configure* CC against these models/providers (env vars, endpoints, gateways), see [CC-model-provider-configuration.md](CC-model-provider-configuration.md).
 
-## Claude Fable 5 (newest model)
+## Claude Fable 5 (CC's primary agentic model)
 
-Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released model, built for complex, long-running agentic work — is selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. Generally available on the Claude API and major clouds since 2026-06-09 ([source][fable5-intro]).
+Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released model, built for complex, long-running agentic work — is selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. Generally available on the Claude API and major clouds since 2026-06-09 ([source][fable5-intro]). **Claude Fable 5.1 and Claude Mythos 5.1 are newer still**, but limited to organizations verified through Anthropic's verification programs, such as the Cyber Verification Program ([source][models-pricing]).
 
 | Property | Value |
 | -------- | ----- |
 | Model ID | `claude-fable-5` |
 | Context / max output | 1M tokens (default) / 128K tokens ([source][models-overview]) |
-| Pricing | $10 / $50 per MTok (input / output) — above Opus-tier's $5 / $25 ([source][models-pricing]) |
+| Pricing | $10 / MTok input, $50 / MTok output — see the full current per-model table below ([source][models-pricing]) |
 | Thinking | Adaptive only, always on (`thinking: disabled` unsupported); tune depth with `CLAUDE_CODE_EFFORT_LEVEL` / effort `low`–`xhigh`/`max` ([source][fable5-intro]) |
 
 CC-relevant caveats ([source][fable5-intro]):
 
-- **New tokenizer** (introduced with Opus 4.7, shared with Opus 4.8): the same text is roughly 1×–1.35× the tokens of pre-4.7 models (varies by content) — re-baseline cost and `CLAUDE_CODE_MAX_OUTPUT_TOKENS` expectations. Token counts are roughly unchanged when moving between Opus 4.7/4.8 and Fable 5.
+- **New tokenizer** (introduced with Opus 4.7, shared with Opus 4.8): the same text is roughly 1×–1.35× the tokens of pre-4.7 models (varies by content) — re-baseline cost and `CLAUDE_CODE_MAX_OUTPUT_TOKENS` expectations. Token counts are roughly unchanged when moving between Opus 4.7/4.8 and Fable 5. The [pricing page][models-pricing] independently describes this same newer tokenizer (Claude 4.7 and later models, and Claude Mythos Preview) as producing "approximately 30% more tokens for the same text" than the tokenizer used by Claude Sonnet 4.6 and earlier models — a second, corroborating source for the same effect.
 - **`refusal` stop reason**: safety classifiers may decline a request as a successful HTTP 200 (not an error); plan for refusal handling and fallback to another model.
 - **30-day data retention required** — not available to zero-data-retention orgs.
 - **CC plan access** (per the in-product `/model` notice, 2026-06): included in Claude plan limits through 2026-06-22; from 2026-06-22 it continues via usage credits.
+
+## Model Pricing (current lineup)
+
+Per-model USD pricing from the [pricing page][models-pricing] (accessed 2026-10-26), all rates per million tokens (MTok):
+
+| Model | Input | 5m cache write | 1h cache write | Cache hit | Output |
+| --- | --- | --- | --- | --- | --- |
+| Claude Fable 5.1 | $10 | $12.50 | $20 | $0.25 (0.025x) | $50 |
+| Claude Mythos 5.1 (limited availability) | $10 | $12.50 | $20 | $0.25 (0.025x) | $50 |
+| Claude Fable 5 | $10 | $12.50 | $20 | $1 (0.1x) | $50 |
+| Claude Mythos 5 (limited availability) | $10 | $12.50 | $20 | $1 (0.1x) | $50 |
+| Claude Opus 5.5 | $4 | $5 | $8 | $0.20 (0.05x) | $20 |
+| Claude Opus 5 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
+| Claude Opus 4.8 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
+| Claude Opus 4.7 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
+| Claude Opus 4.6 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
+| Claude Opus 4.5 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
+| Claude Sonnet 5.5 | $2 | $2.50 | $4 | $0.10 (0.05x) | $10 |
+| Claude Sonnet 5 | $2 | $2.50 | $4 | $0.20 (0.1x) | $10 |
+| Claude Sonnet 4.6 | $3 | $3.75 | $6 | $0.30 (0.1x) | $15 |
+| Claude Sonnet 4.5 | $3 | $3.75 | $6 | $0.30 (0.1x) | $15 |
+| Claude Haiku 5.5 (≤100,000-token prompts) | $0.10 | $0.125 | $0.20 | $0.01 (0.1x) | $0.50 |
+| Claude Haiku 5.5 (>100,000-token prompts) | $0.50 | $0.625 | $1 | $0.05 (0.1x) | $2.50 |
+| Claude Haiku 4.5 | $1 | $1.25 | $2 | $0.10 (0.1x) | $5 |
+
+Cache-hit multiplier is 0.025x base input on Fable 5.1/Mythos 5.1, 0.05x on Opus 5.5/Sonnet 5.5, and the standard 0.1x on every other model above.
+
+**Claude Sonnet 5's $2/$10 per-MTok input/output price is now the standard rate, not introductory pricing.** Per the pricing page's footnote, this rate was "announced at launch as introductory pricing through August 31, 2026, is now the standard price. The previously scheduled increase to $3/$15 per million input/output tokens on September 1, 2026 will not occur."
 
 ## Free-Tier & OSS Provider Reference
 

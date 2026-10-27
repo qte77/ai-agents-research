@@ -4,8 +4,8 @@ description: Survey of community reimplementations and educational deconstructio
 category: landscape
 status: research
 created: 2026-04-04
-updated: 2026-06-28
-validated_links: 2026-06-28
+updated: 2026-10-26
+validated_links: 2026-10-26
 ---
 
 ## Summary
@@ -67,7 +67,7 @@ Two-phase clean-room project by Kuber Mehta: (1) an AI agent analyzed the leaked
 ### Additional Coverage
 
 - **40+ tool registry** including internal-only tools (ConfigTool, TungstenTool, SuggestBackgroundPRTool) and feature-gated tools — cross-ref: [CC-tools-inventory.md](../cc-native/configuration/CC-tools-inventory.md)
-- **15 API beta headers** including unreleased: `redact-thinking`, `afk-mode`, `advisor-tool`, `token-efficient-tools`
+- **15 API beta headers** including unreleased: `redact-thinking`, `afk-mode`, `advisor-tool`, `token-efficient-tools` — `advisor-tool` has since shipped as the beta header `advisor-tool-2026-03-01`; see [CC-advisor-tool-analysis.md](../cc-native/configuration/CC-advisor-tool-analysis.md)
 - **12 compile-time feature flags** (PROACTIVE, KAIROS, DAEMON, BRIDGE_MODE, VOICE_MODE, COORDINATOR_MODE, BUDDY, etc.)
 - **Upcoming models**: Capybara v2 (with fast tier, 1M context), Opus 4.7, Sonnet 4.8 referenced in code
 - **System prompt architecture**: `SYSTEM_PROMPT_DYNAMIC_BOUNDARY` marker splitting static (cacheable) vs dynamic (per-user) sections
