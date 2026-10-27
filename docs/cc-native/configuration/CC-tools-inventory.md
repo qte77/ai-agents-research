@@ -192,7 +192,7 @@ Written by `/config` panel and UI interactions. Located at `~/.claude/.claude.js
 
 | Key | Type | `/config` Label | Source |
 |---|---|---|---|
-| `fastMode` | boolean | Fast mode (Opus 4.6 only) | `/config` panel observation |
+| `fastMode` | boolean | Fast mode (Opus 5.5, Opus 5, Opus 4.8 as of 2026-10-26 — see [CC-fast-mode-analysis.md](CC-fast-mode-analysis.md)) | `/config` panel observation; [fast-mode docs](https://code.claude.com/docs/en/fast-mode) |
 | `respectGitignore` | boolean | Respect .gitignore in file picker | `/config` panel observation |
 | `theme` | string | Theme | `/config` panel observation |
 | `editorMode` | string | (not shown) | File observation |
