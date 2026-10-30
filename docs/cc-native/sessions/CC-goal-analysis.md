@@ -198,9 +198,10 @@ managed settings — in each case "the command tells you why instead of silently
 
 ## Pairing `/goal` With a Persistent Task List
 
-**Design pattern, not tested.** This corpus has not run `/goal` against a task file. Mechanism
-claims below cite the [goal docs][goal-docs] and [hooks reference][hooks-ref] (both read
-2026-10-19); the pattern itself is our composition.
+**Design pattern, since run in batch.** Mechanism claims below cite the [goal docs][goal-docs] and
+[hooks reference][hooks-ref] (both read 2026-10-19); the pattern itself is our composition. What
+two batch runs against task files showed is in
+[Measured: headless batch runs](#measured-headless-batch-runs-2026-10-24-and-2026-10-29).
 
 ### Division of labour
 
@@ -300,10 +301,34 @@ Read 2026-10-22 from the [headless][headless], [cloud sessions][cloud-web] and
   built-in commands that produce text output" without naming `/goal`, and the goal page's only
   cloud mention is the auth-failure carve-out above. `--cloud` is the current offload flag ("The older
   `--remote` spelling still works as a deprecated alias for `--cloud`"). Running a goal in a cloud
-  session is therefore untested here. Routines are the same: the page doesn't name `/goal`, and warns
+  session is therefore untested here; the one cloud observation is in the measured section below.
+  Routines are the same: the page doesn't name `/goal`, and warns
   that "A green status in the run list means the session started and exited without an
   infrastructure error. It does not mean the work your prompt describes succeeded." — so a routine's
   prompt has to carry its own completion check either way.
+
+### Measured: headless batch runs (2026-10-24 and 2026-10-29)
+
+Two batches ran the task-list pattern above: one `claude -p "/goal …"` process per repository, each
+in its own worktree, with `--permission-mode auto --permission-prompts none`, `--output-format json`
+and a condition naming a task file plus a report file to write. 20 processes ran on 2026-10-24 and
+17 on 2026-10-29.
+
+- **Result metadata never said whether the goal was met.** All 17 runs of the second batch ended
+  with `"subtype": "success"` and `"terminal_reason": "completed"`, whatever was left undone. This
+  confirms the exit-status point above in practice: the verdict came from the report file and the
+  PRs' check states, not from the process.
+- **The final message is not a reliable report.** It was empty in 5 of 20 runs in the first batch
+  and 8 of 17 in the second. Make the condition require a report file as well as a final-turn
+  printout.
+- **Denied calls don't end the run.** The result JSON lists `permission_denials`. There were 0 to
+  12 per run in the second batch, and every run still finished. Read the list afterwards: each
+  denial is a step the session worked around or skipped.
+- **Cloud, one observation (2026-10-28).** In a 13-session cloud wave, 5 sessions whose first
+  message was a `/goal` longer than 4,000 characters (the brief and the task rows together) sat
+  idle and never worked a row. A single test session started without `/goal` did work. Whether a
+  short `/goal` behaves normally in a cloud session was not settled. Send the full brief as the
+  first message and keep the condition short.
 
 ### From goal to spec to PR
 
