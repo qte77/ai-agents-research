@@ -107,15 +107,16 @@ def main() -> int:
             print("  SKIP: no AGENT_LEARNINGS.md", file=sys.stderr)
             continue
 
-        rendered = render_file(args.owner, repo, content)
-        fingerprint = hashlib.sha256(rendered.encode("utf-8")).hexdigest()[:16]
+        # Reason: hash the upstream content, not the rendered file, whose
+        # `updated:` date would make every run look like a change.
+        fingerprint = hashlib.sha256(normalize_upstream(content).encode("utf-8")).hexdigest()[:16]
 
         if state.get(repo) == fingerprint:
             print("  SKIP: unchanged", file=sys.stderr)
             continue
 
         target = target_dir / f"{stem}.md"
-        target.write_text(rendered, encoding="utf-8")
+        target.write_text(render_file(args.owner, repo, content), encoding="utf-8")
         state[repo] = fingerprint
         updated.append(f"{repo} -> {target}")
         print(f"  UPDATED: {target}", file=sys.stderr)
