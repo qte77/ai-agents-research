@@ -2,8 +2,8 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-10-26
+validated_links: 2026-10-26
 status: adopt
 ---
 
@@ -64,6 +64,21 @@ Additional fields on assistant messages: `.message.model` (e.g., `claude-opus-4-
 
 These fields match the [OTel `api_request` event attributes][monitoring] (`input_tokens`, `output_tokens`, `cache_read_tokens`, `cache_creation_tokens`, `cost_usd`, `model`).
 
+## Price Modifiers Exposed by the Usage Object
+
+The `speed` and `inference_geo` fields shown above aren't just telemetry — each corresponds to a real pricing multiplier on the [pricing page][pricing] (accessed 2026-10-26). For the base per-model rate table these modifiers multiply, see [CC-models-reference.md § Model Pricing][models-reference-pricing] (not duplicated here).
+
+- **`speed: "fast"`** — [Fast mode][fast-mode] premium pricing, available for Claude Opus 5.5, Claude Opus 5, and Claude Opus 4.8 (research preview for the latter two): Opus 5.5 is $8/MTok input, $40/MTok output; Opus 5 and Opus 4.8 are $10/MTok input, $50/MTok output. Fast mode pricing "is not available with the Batch API" and applies across the full context window, including requests over 200k input tokens. It stacks with prompt-caching and data-residency multipliers ("apply on top of fast mode pricing").
+- **`inference_geo: "us"`** — a 1.1x multiplier on all token pricing categories (input, output, cache writes, cache reads) for Claude 4.6 and later models. "Earlier models do not support the `inference_geo` parameter and always use standard pricing; requests that include the parameter on these models return a 400 error." `inference_geo: "global"` (the default) uses standard pricing.
+- **Cloud regional endpoints** — Bedrock and Claude Models on Google Cloud (Google managed) regional/multi-region endpoints for Claude Sonnet 4.5+, Haiku 4.5+, and Opus 4.5+ models "include a 10 percent premium over global endpoints." On Claude in Microsoft Foundry, the Azure "US Data Zone Standard" deployment type applies the same 1.1x multiplier as `inference_geo: "us"` rather than this separate 10% figure.
+- **Long-context pricing** — Claude 4.6+ models (except Haiku 5.5) and Claude Mythos Preview bill the full 1M-token context window at standard per-token rates (a 900k-token request costs the same per token as a 9k-token one). Claude Haiku 5.5 is the exception: it is priced by prompt length, with a request whose prompt (including cache reads and cache writes) exceeds 100,000 tokens billed at the higher per-request tier shown in [CC-models-reference.md][models-reference-pricing]; each request is priced on its own.
+- **Stacking rules** — per the pricing page: prompt-caching multipliers "stack with other pricing modifiers, including the Batch API discount and data residency"; "Batch API and prompt caching discounts can be combined"; fast-mode pricing stacks with both caching and data-residency multipliers. The Batch API discount and cloud-platform (CCU) pricing do **not** apply to Claude Managed Agents sessions (see below).
+- **Tool-use overhead tokens** — every request with `tools` present adds a per-model tool-use system-prompt token count (listed on the pricing page, not duplicated here) on top of normal input/output tokens, plus tokens for the `tools` parameter itself and any `tool_use`/`tool_result` blocks. Specific server tools carry their own usage-based charges:
+  - **Web search**: $10 USD per 1,000 searches, plus standard token costs for search-generated content; each search counts once regardless of result count; an errored search is not billed.
+  - **Web fetch**: no additional charge beyond standard token costs for the fetched content.
+  - **Code execution**: free of the per-hour charge when used alongside `web_search_20260209`+ or `web_fetch_20260209`+ in the same request. Otherwise it is billed by execution time with a 5-minute minimum per execution; each organization gets 1,550 free container-hours/month, and usage beyond that is $0.05 USD per container-hour. If files are attached to the request, execution time is billed even when the tool isn't called, because files are preloaded onto the container.
+- **Claude Managed Agents** — billed on tokens (standard per-model rates, with prompt-caching and `inference_geo` multipliers applying identically) plus a session-runtime SKU of **$0.08 USD per session-hour**, metered to the millisecond and accruing only while session status is `running` (not `idle`, `rescheduling`, or `terminated`). Session runtime "replaces the code execution container-hour billing model" for these sessions — no separate container-hour charge on top of it.
+
 ## Cost Extraction Recipes
 
 ### Single session summary
@@ -82,15 +97,7 @@ jq -s '[.[] | select(.type == "assistant" and .message.usage)] |
 
 ### Cost estimate (Opus 4.6 pricing)
 
-Pricing from the [official pricing page][pricing] (accessed 2026-03-27):
-
-| Token type | Opus 4.6 | Sonnet 4.6 | Haiku 4.5 |
-|---|---|---|---|
-| Base input | $5/MTok | $3/MTok | $1/MTok |
-| 5m cache write | $6.25/MTok (1.25x) | $3.75/MTok | $1.25/MTok |
-| 1h cache write | $10/MTok (2x) | $6/MTok | $2/MTok |
-| Cache read (hit) | $0.50/MTok (0.1x) | $0.30/MTok | $0.10/MTok |
-| Output | $25/MTok | $15/MTok | $5/MTok |
+The worked jq recipe below uses Opus 4.6's per-model rates ($5/MTok input, $6.25/MTok 5m cache write, $10/MTok 1h cache write, $0.50/MTok cache read, $25/MTok output), captured from the [official pricing page][pricing] on 2026-03-27, as an illustrative example. For the current rate on any model — including the newer Fable/Mythos 5.x, Opus 5.x, and Sonnet/Haiku 5.x lines — substitute the matching row from [CC-models-reference.md § Model Pricing][models-reference-pricing] rather than this one example (not duplicated here).
 
 **Note**: The transcript `cache_creation` sub-object distinguishes `ephemeral_5m_input_tokens` from `ephemeral_1h_input_tokens`, enabling precise cost calculation per cache tier.
 
@@ -263,13 +270,29 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 
 **Note**: CC now has a "Traces (beta)" feature exporting distributed trace spans (`claude_code.interaction`, `claude_code.llm_request`, `claude_code.tool`, etc.), enabled via `CLAUDE_CODE_ENABLE_TELEMETRY=1` + `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER` (CC v2.1.216+, [monitoring docs][monitoring]). Upstream issues [#9584][gh-9584] and [#2090][gh-2090], which had requested this capability, are now closed. See also [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (OTel section).
 
+## Message Batches API
+
+The Message Batches API runs large request volumes asynchronously. This section is deliberately bounded to the billing/limits facts that bear on cost accounting; see the [batch processing docs][batch] for the full guide. For ZDR eligibility specifically, Batches is **not** ZDR-eligible per [CC-web-auth-setup-analysis.md § Adjacent Platform Building Blocks for Agents][web-auth-batch] (not edited by this pass; that doc's claim stands as-is).
+
+- **Discount**: "All usage is charged at 50 percent of the standard API prices" — both input and output tokens.
+- **Size limit**: a batch is "limited to either 100,000 Message requests or 256 MB in size, whichever is reached first."
+- **24-hour expiry**: results become available once every request has completed or after 24 hours, whichever comes first; "batches expire if processing does not complete within 24 hours."
+- **Result retention**: "Batch results are available for 29 days after creation. After that, you can still view the Batch, but its results will no longer be available for download."
+- **Billing by result type**: `errored`, `canceled`, and `expired` requests are each documented as "You will not be billed for these requests." Only `succeeded` requests are billed.
+- **Result ordering**: "Batch results can be returned in any order, and may not match the ordering of requests when the batch was created." Match results to requests via `custom_id`, never position.
+- **Unsupported batch parameters** (return a validation error): `stream: true`, `speed` (Fast mode), `fallbacks` (server-side fallback), and `max_tokens: 0` (cache pre-warming) — per the batch processing docs' own parameter table.
+- **Caching + batches**: cache hits are best-effort because batch requests process "concurrently and in any order" — "Users typically experience cache hit rates ranging from 30 percent to 98 percent, depending on their traffic patterns." The docs' tip: write a shared prefix to the 1-hour cache with one request first, then submit the rest, since batches commonly take longer than the 5-minute cache's lifetime.
+- **Rate limits**: "Usage of the Batches API does not affect rate limits in the Messages API" — Batches has its own, separate HTTP-request and in-flight-request limits instead.
+- **`output-300k-2026-03-24` beta**: raises the batch `max_tokens` cap to 300,000, "available on the Message Batches API only, not the synchronous Messages API." Supported models: Claude Opus 5.5, Opus 5, Opus 4.8, Opus 4.7, Opus 4.6, Sonnet 5.5, Sonnet 5, Sonnet 4.6, and Haiku 5.5. Supported platforms: the Claude API (first-party) and Claude Platform on AWS; "not currently available on Amazon Bedrock, Claude Models on Google Cloud (Google managed), or Microsoft Foundry."
+
 ## Sources
 
 | Source | Content |
 |---|---|
 | [CC statusline docs][statusline] | Statusline JSON schema (full field list) |
 | [CC monitoring docs][monitoring] | OTel metrics, events, cost tracking |
-| [Anthropic pricing][pricing] | Official per-model token pricing |
+| [Anthropic pricing][pricing] | Official per-model token pricing; fast mode, data-residency, long-context, tool-use, and Managed Agents pricing modifiers (accessed 2026-10-26) |
+| [Anthropic batch processing][batch] | Message Batches API discount, limits, unsupported parameters, caching interaction, rate limits, `output-300k-2026-03-24` beta (accessed 2026-10-26) |
 | [CC settings docs][settings] | `cleanupPeriodDays` transcript retention |
 | CC 2.1.83 transcript inspection, Codespaces, 2026-03-27 | JSONL structure, usage object fields |
 | [How do usage and length limits work?][usage-limits] | Shared usage limit across claude.ai/Claude Code/Claude Desktop; per-plan allowances vary (no figures given) |
@@ -289,7 +312,7 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 
 [statusline]: https://code.claude.com/docs/en/statusline
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
-[pricing]: https://platform.claude.com/docs/en/docs/about-claude/pricing
+[pricing]: https://platform.claude.com/docs/en/about-claude/pricing
 [settings]: https://code.claude.com/docs/en/settings
 [gh-9584]: https://github.com/anthropics/claude-code/issues/9584
 [gh-2090]: https://github.com/anthropics/claude-code/issues/2090
@@ -306,3 +329,7 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 [ts-sdk-ref]: https://code.claude.com/docs/en/agent-sdk/typescript#sdkresultmessage
 [cost-tracking]: https://code.claude.com/docs/en/agent-sdk/cost-tracking
 [headless]: https://code.claude.com/docs/en/headless
+[batch]: https://platform.claude.com/docs/en/build-with-claude/batch-processing
+[fast-mode]: https://platform.claude.com/docs/en/build-with-claude/fast-mode
+[models-reference-pricing]: ../configuration/CC-models-reference.md#model-pricing-current-lineup
+[web-auth-batch]: ../ci-remote/CC-web-auth-setup-analysis.md#adjacent-platform-building-blocks-for-agents
