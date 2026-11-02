@@ -93,4 +93,5 @@ exclude = [
     "www.beyondtrust.com/resources/glossary/just-in-time-access",  # exact URL only; 403 bot-block — agent-identity-auth-landscape.md
     "www.producthunt.com/products/amp-free",  # exact URL only; 403 bot-block — amp-analysis.md
     "ampcode.com",  # persistent HTTP/2 protocol error to lychee (same class as epo.org); 200 via polyfetch — amp-analysis.md
+    "www.constellationr.com/insights/news/aws-launches-kiro-ide-powered-ai-agents",  # exact URL only; 403 bot-block to CI runners since 2026-10-30, 200 from a local lychee run 2026-11-02 — kiro-analysis.md
 ]
