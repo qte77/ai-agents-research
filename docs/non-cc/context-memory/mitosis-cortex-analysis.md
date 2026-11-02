@@ -3,8 +3,8 @@ title: Mitosis Cortex Analysis
 source: https://mitosislabs.ai/developers
 purpose: Analysis of Cortex, Mitosis Labs' hosted knowledge-graph memory system for AI agents, scored against the plan-0009 agent-substrate rubric.
 created: 2026-09-30
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-11-02
+validated_links: 2026-11-02
 status: assess
 ---
 
@@ -46,7 +46,7 @@ to see where each memory system works well and where it fails... No provider pay
 scores" ([Verging Labs][verginglabs], fetched 2026-09-30). That self-description is the site's own marketing copy,
 not verified evidence of independence — no team, affiliation, or "about" page was found to corroborate it.
 
-The live page currently shows **Mitosis Cortex ranked 6th** with an Agentic Memory Index of **92.0 (86.6–95.4 CI)**
+On 2026-09-30 the live page showed **Mitosis Cortex ranked 6th** with an Agentic Memory Index of **92.0 (86.6–95.4 CI)**
 and a **0.0% fabrication rate** in its failure-mode breakdown (`data-v-fabrication="0.00"`), at a stated cost of
 $270.05 per 1,000 questions ([Verging Labs][verginglabs], fetched 2026-09-30). The 0.0% fabrication figure matches
 the plan's lead; the 92.0 overall index is close to, but not identical to, the plan's cited 91.7% — plausibly
@@ -86,14 +86,14 @@ Scored 2026-09-30, evidence from the developer docs unless noted.
 | [OperatingSystem-1 org profile][org] | Org name, description, blog URL (via `gh api`, 2026-09-30) |
 | [Mitosis developer docs][mitosis-docs] | Architecture, ingest/query model, isolation model, adaptability mechanism (fetched via polyfetch `--show-body`, 2026-09-30) |
 | [Mitosis Labs homepage][mitosis-home] | Product framing (data sources connected, "living knowledge graph") |
-| [Verging Labs][verginglabs] | Third-party "Agentic Memory Index" benchmark listing Mitosis Cortex (fetched via polyfetch `--show-body`, 2026-09-30) |
+| [Verging Labs (archived 2026-10-12)][verginglabs] | Third-party "Agentic Memory Index" benchmark listing Mitosis Cortex (fetched via polyfetch `--show-body`, 2026-09-30). Live `verginglabs.com` returns 404 as of 2026-11-02; the Wayback snapshot still shows the Mitosis listing and the $270.05 cost |
 | [CC-memory-tooling-landscape.md § Benchmarks][cc-mem-benchmarks] | LongMemEval/LoCoMo comparison anchors (not the same benchmark as Verging Labs) |
 | [Plan 0009][plan] | Original lead, 91.7%/0.0% claim, x402oracle.com URL (2026-09-29) |
 
 [org]: https://github.com/OperatingSystem-1
 [mitosis-docs]: https://mitosislabs.ai/developers
 [mitosis-home]: https://mitosislabs.ai/
-[verginglabs]: https://verginglabs.com/
+[verginglabs]: https://web.archive.org/web/20261012002133/https://verginglabs.com/
 [cc-mem-benchmarks]: ../../cc-community/CC-memory-tooling-landscape.md#benchmarks
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
 [mitosis-plugin-entry]: ../protocols/agent-plugins-standard-analysis.md#concrete-implementation-mitosis-memory-mitosis-agent-plugin

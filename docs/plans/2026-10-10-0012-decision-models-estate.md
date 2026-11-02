@@ -2,7 +2,7 @@
 title: Decision models first across the qte77 GitHub Actions estate
 status: approved
 created: 2026-10-10
-updated: 2026-10-24
+updated: 2026-10-26
 ---
 
 Tracking issue: #652.
@@ -201,6 +201,7 @@ Lane notes:
 | ~~R12~~ | ~~gha-rxiv-paper-eval: an all-failed relevance batch must fail the job (W42, 2026-10-20)~~ | agent (sibling), owner merges | Shipped: gha-rxiv-paper-eval#85 (the >50 % check divided by the category count, 3,065, instead of the 100 capped calls; RED test proven) → v0.5.1 (#86, `4a53dce`); pin bumped here in this PR |
 | R13 | GitHub changelog (github.blog/changelog) is not monitored; Copilot/Actions/agent changes reach the corpus only via owner leads. **Default:** none — revisit if Copilot coverage grows | owner | Owner keeps the default or asks for a weekly monitor filtered to Copilot/Actions/agents |
 | ~~R14~~ | ~~polyforge-orchestrator leftover `contribute` preset mentions~~ | agent (sibling) | Shipped: polyforge-orchestrator#93 (load-workspace-repos.sh, repos.conf, subagent-dispatch.md; `contributions.json` history left as-is) |
+| ~~N11~~ | ~~Owner leads 2026-10-26: Anthropic help-center hallucination article, advisor tool, batch processing, prompt caching, fast mode, pricing~~ | agent | Shipped: #732 (fast mode refresh: Opus 5.5, API `speed`, 2x pricing), #733 (hallucination article cited in evaluation metrics), #734 (new `CC-advisor-tool-analysis.md` + cross-refs), this PR (#735: price table, Message Batches section, caching invalidation table). Platform-availability conflicts between the API and Claude Code pages (fast mode, advisor) and the effort-invalidates-cache statements are recorded, not resolved |
 | ~~R11~~ | ~~`/focus` (focus view) and `viewMode` from the first-party commands reference~~ | agent | Shipped: this PR (row in `CC-tools-inventory.md` § Slash Commands; `viewMode` values/default not yet verified verbatim) |
 
 **Loop (not rows):** weekly bot triage PRs (changelog/community/learnings) await owner review.
