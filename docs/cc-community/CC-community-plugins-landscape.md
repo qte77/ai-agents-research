@@ -4,8 +4,8 @@ description: Survey of community plugin catalogs — awesome-claude-code (curate
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-10-22
-validated_links: 2026-10-22
+updated: 2026-11-02
+validated_links: 2026-11-02
 ---
 
 ## Summary
@@ -136,7 +136,7 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 | [Traves-Theberge/Wake-Word][wake-word] | Picovoice Porcupine | Electron app: "Hey Claude" wake-word → launch Claude CLI | Active |
 | [mbailey/voicemode][tts-voice] | Whisper (local) | MCP server: 2-way voice (STT + Kokoro TTS), webrtcvad silence detection | Active |
 | [SergeyKirk/hey-claude][hey-claude] | Picovoice Porcupine | macOS: always-on "Hey Claude" → execute via Claude Code | Active |
-| [bacharyehya/talk-to-claude][talk-to-claude] | Various | MCP: wake-word activated voice conversations | Active |
+| bacharyehya/talk-to-claude (`github.com/bacharyehya/talk-to-claude`, 404 as of 2026-11-02 — repo removed; retained for provenance) | Various | MCP: wake-word activated voice conversations | Removed |
 
 **Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. Community projects fill these gaps but require separate installation.
 
@@ -329,4 +329,3 @@ app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our
 [claude-stt]: https://github.com/jarrodwatts/claude-stt
 [wake-word]: https://github.com/Traves-Theberge/Wake-Word
 [hey-claude]: https://github.com/SergeyKirk/hey-claude
-[talk-to-claude]: https://github.com/bacharyehya/talk-to-claude
