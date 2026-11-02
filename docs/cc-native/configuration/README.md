@@ -19,3 +19,4 @@ CC configuration features: hooks, model routing, execution modes.
 | [CC-ide-integration-protocol.md](CC-ide-integration-protocol.md) | WebSocket-based MCP protocol between the CC CLI and IDE extensions: discovery, auth, transport |
 | [CC-inline-visuals-analysis.md](CC-inline-visuals-analysis.md) | Claude's inline visualization capabilities (charts, diagrams, interactive visuals in conversation) |
 | [CC-changelog-feature-scan.md](CC-changelog-feature-scan.md) | Actionable features from recent CC releases (v2.1.0–2.1.168) not yet covered by other analysis docs |
+| [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) | Advisor tool: API beta mechanics (params, model pairing, billing), Claude Code `/advisor` surface, platform-availability conflict |
