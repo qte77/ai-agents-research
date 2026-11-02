@@ -247,6 +247,10 @@ Run `make lint` against any PR that touches docs before requesting review. `lych
 - **Branch naming**: `<type>/<short-slug>` (e.g., `docs/otel-and-ag-ui-research`, `ci/cache-lychee-binary`)
 - **Merge policy**: squash-merge to main; delete the remote branch on merge. Squash breaks ancestry, so the local branch must be force-deleted (`git branch -D`) afterward
 - **Track follow-up work as GitHub issues**, not in-doc TODOs (e.g., `#123` for the `gha-md-lychee` extraction)
+- **Working on a tool you write about?** Great, we'd love your input. Just mention in the PR if you work for, or are paid by, the vendor. The most helpful contributions are an issue suggesting coverage, or a PR that adds a row or section to an existing comparison, backed by first-party sources. Please don't retitle or re-index existing docs around a single tool, or set a doc's `status`. We keep those neutral and decide them ourselves. When we adopt your idea, a maintainer writes it up in the repo's own words and verifies it at source, and we credit your PR or issue by link.
+- **Signed commits, please.** `main` only accepts signed commits, so a branch with unsigned ones can't be merged. GitHub's guide to [signing commits][gh-signing] shows how.
+
+[gh-signing]: https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits
 
 ## Release & Changelog
 
