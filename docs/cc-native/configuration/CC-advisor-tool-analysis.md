@@ -2,8 +2,8 @@
 title: CC Advisor Tool Analysis
 purpose: First-party analysis of Anthropic's advisor tool — a server-executed API beta that lets an executor model consult a stronger advisor model mid-request — and its Claude Code /advisor surface.
 created: 2026-10-26
-updated: 2026-10-26
-validated_links: 2026-10-26
+updated: 2026-11-08
+validated_links: 2026-11-08
 status: beta
 ---
 
@@ -40,7 +40,7 @@ There is no conversation-level cap built into the tool: "the advisor tool has no
 
 ### Pairing summary
 
-"The advisor must be Claude Sonnet 4.6 or a more capable model, and it must be at least as capable as the executor" — models of equal capability (e.g. Opus 4.7 and Opus 4.8) can advise each other. An invalid pair returns `400 invalid_request_error` naming the unsupported combination ([advisor-tool-api]). The published compatibility table has 14 executor rows; Claude Haiku 4.5 appears only in the executor column and never in any advisor column — it can call the advisor but the table never lists it as one, consistent with the Sonnet-4.6-or-above floor. Seven newer executors (Sonnet 5.5, Fable 5.1, Mythos 5.1, Opus 5.5, Opus 5, Fable 5, Mythos 5) "pair only with advisors that return the encrypted form, so on those executors the advice text isn't readable in the response" — their accepted advisors return `advisor_redacted_result` (`encrypted_content`) rather than the plaintext `advisor_result` (`text`) that e.g. `claude-opus-4-8` returns.
+"The advisor must be Claude Sonnet 4.6 or a more capable model, and it must be at least as capable as the executor" — models of equal capability (e.g. Opus 4.7 and Opus 4.8) can advise each other. An invalid pair returns `400 invalid_request_error` naming the unsupported combination ([advisor-tool-api]). The published compatibility table has 12 executor entries covering 14 models (Fable 5.1/Mythos 5.1 and Fable 5/Mythos 5 share entries). The floor is capability, not model family: Claude Haiku 5.5 is an accepted advisor for Haiku 5.5, Sonnet 5, Opus 4.6, Sonnet 4.6 and Haiku 4.5 executors, while Claude Haiku 4.5 appears only as an executor (table read 2026-11-08). Seven newer executors (Sonnet 5.5, Fable 5.1, Mythos 5.1, Opus 5.5, Opus 5, Fable 5, Mythos 5) "pair only with advisors that return the encrypted form, so on those executors the advice text isn't readable in the response" — their accepted advisors return `advisor_redacted_result` (`encrypted_content`) rather than the plaintext `advisor_result` (`text`) that e.g. `claude-opus-4-8` returns. Eight advisors (those seven plus Haiku 5.5) return the encrypted form; every other advisor model returns plaintext.
 
 ### Errors
 
@@ -77,14 +77,14 @@ Setting `CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1` disables the advisor entirely: `/ad
 
 **Compare with related features**: the advisor runs at decision points Claude itself chooses, mid-task. `opusplan` instead runs the stronger model only during plan mode (subject to the account's `availableModels` allowlist), then switches to Sonnet for execution. A subagent with its own `model` set runs the stronger model for the entire delegated subtask. `/model` switches the main model outright, from the next request onward. See [CC-model-provider-configuration.md](CC-model-provider-configuration.md) for `opusplan` and subagent model selection.
 
-## Platform availability (unresolved conflict)
+## Platform availability
 
-The two first-party pages disagree on **Claude Platform on AWS** (both accessed 2026-10-26):
+Read 2026-11-08:
 
-- **API docs** ([advisor-tool-api]): "The advisor tool is available in beta on the Claude API, on Claude Platform on AWS, and on Claude Models on Google Cloud (Anthropic managed). It is not currently available on Amazon Bedrock, Claude Models on Google Cloud (Google managed), or Microsoft Foundry."
-- **Claude Code docs** ([advisor-cc]): "The advisor tool is experimental and requires the Anthropic API. It is not available on Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, or Microsoft Foundry."
+- **API** ([advisor-tool-api]): "The advisor tool is available in beta on the Claude API, on Claude Platform on AWS, and on Claude Models on Google Cloud (Anthropic managed)." Amazon Bedrock, Google-managed Google Cloud and Microsoft Foundry are not listed. (On 2026-10-26 the page also said "It is not currently available on Amazon Bedrock, Claude Models on Google Cloud (Google managed), or Microsoft Foundry"; that sentence has since been removed.)
+- **Claude Code** ([advisor-cc]): "It is not available on Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, or Microsoft Foundry."
 
-The API page lists Claude Platform on AWS as supported; the Claude Code page lists it as unsupported. Both agree Amazon Bedrock and Microsoft Foundry are unsupported. Left unresolved here — re-check once one page updates.
+These don't conflict. Claude Platform on AWS supports the tool at the API level, but Claude Code's provider page for it says "Client-side features that Claude Code turns on through Anthropic's feature-flag service are off by default, and the advisor tool isn't available" ([cc-cpoaws]). Direct Messages API callers on Claude Platform on AWS can use the advisor; Claude Code users there cannot. (Claude Code enables the advisor through a fetched feature flag, per [advisor-cc]; the provider page puts the two facts side by side without saying "because", so the causal link is an inference.)
 
 ## Gotchas
 
@@ -92,16 +92,18 @@ The API page lists Claude Platform on AWS as supported; the Claude Code page lis
 - **No conversation-level cap exists anywhere in the API** — `max_uses` is per-request only; client-side counting is the one lever for a conversation-level budget.
 - **LLM gateways**: through `ANTHROPIC_BASE_URL`, advisor availability depends on whether the gateway forwards the request intact to the Anthropic API.
 - **Encrypted advice is silent**: on the seven newer executors that only pair with redacted-result advisors, the advice still steers the executor — it is simply unreadable, whether inspecting the API response directly or reading a Claude Code transcript with `Ctrl+O`.
-- **Haiku 4.5 asymmetry**: it can trigger the advisor as an executor but never appears as anyone's advisor in the compatibility table — a consequence of, not a separately stated exception to, the Sonnet-4.6-floor rule.
+- **Haiku 4.5 asymmetry**: it can call the advisor as an executor but is never listed as an advisor. The API table implies it through the capability floor; the Claude Code docs state it outright: "Haiku 4.5 can call the advisor but can't act as one" ([advisor-cc]). Haiku 5.5, by contrast, does act as an advisor.
 
 ## Sources
 
 | Source | Content |
 |---|---|
 | [Advisor tool — Claude API docs][advisor-tool-api] | Tool schema, pairing table, billing/usage accounting, streaming, caching, platform availability (accessed 2026-10-26) |
+| [Claude Code on Claude Platform on AWS][cc-cpoaws] | Advisor unavailable in Claude Code on that provider; feature-flag features off by default (accessed 2026-11-08) |
 | [Escalate hard decisions with the advisor tool — Claude Code docs][advisor-cc] | `/advisor` command, `advisorModel` setting, `--advisor` flag, version gates, disable env var, cache interaction (accessed 2026-10-26) |
 
 Cross-ref: [CC-tools-inventory.md](CC-tools-inventory.md), [CC-cli-reference.md](CC-cli-reference.md), [CC-env-vars-reference.md](CC-env-vars-reference.md), [CC-model-provider-configuration.md](CC-model-provider-configuration.md) (opusplan/subagent comparison), [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) (leaked `advisor-tool` beta header)
 
 [advisor-tool-api]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool
 [advisor-cc]: https://code.claude.com/docs/en/advisor
+[cc-cpoaws]: https://code.claude.com/docs/en/claude-platform-on-aws

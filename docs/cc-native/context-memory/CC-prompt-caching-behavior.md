@@ -2,7 +2,7 @@
 title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economics
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
-updated: 2026-10-26
+updated: 2026-11-08
 validated_links: 2026-10-26
 status: adopt
 ---
@@ -225,9 +225,9 @@ The list above is CC's own framing. The [prompt caching docs][caching] document 
 
 Two exceptions in the table's own text bear on CC: "Setting effort explicitly to the model's default is equivalent to omitting it and does not invalidate," and "On models that support per-message effort, an effort change carried in a `role: "system"` message inside `messages` leaves the cached prefix intact." Likewise, on Fable 5.1, Mythos 5.1, Fable 5, Mythos 5, Opus 5.5, Opus 4.8, Opus 5, Sonnet 5.5 and Haiku 5.5 a new system instruction can be appended as a `{"role": "system"}` message without invalidating the system or message caches (not on Sonnet 5), and the `inline-tools-2026-09-15` beta lets a tool be added mid-conversation without editing `tools`.
 
-**Two statements, both kept:** the API table says an `output_config.effort` change "always invalidates message blocks"; the CC list above says CC's mid-session effort changes don't invalidate on Opus 5.5/Sonnet 5.5/Haiku 5.5/Fable 5.1 ([CC prompt-caching docs][cc-caching], accessed 2026-10-15). The per-message-effort exception is a plausible mechanism for CC's behaviour, but neither page says CC uses it — that link is an inference, not documented.
+**Effort: the two statements reconcile.** The API table says a top-level `output_config.effort` change "always invalidates message blocks", with the per-message exception above. The CC list says CC's mid-session effort changes keep the cache on Opus 5.5/Sonnet 5.5/Haiku 5.5/Fable 5.1 with an API key or Claude subscription ([CC prompt-caching docs][cc-caching]). CC uses exactly that exception: "On Opus 5.5, Sonnet 5.5, Haiku 5.5, and Fable 5.1, a beta header pairs with `output_config.effort` on `role: "system"` entries, either a system message or an entry with empty content" ([CC gateway guide][cc-gateway], "Beta header and body field pairs", accessed 2026-11-08). The [effort docs][effort] name that beta `mid-conversation-output-config-2026-07-01` and list per-message effort on Fable 5.1, Mythos 5.1, Opus 5.5, Opus 5, Sonnet 5.5 and Haiku 5.5 on the Claude API (fewer models on other platforms), so CC's list is a subset. Where CC doesn't send the per-message field — Bedrock, Google Cloud's Agent Platform, a Claude apps gateway, `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`, or a HIPAA configuration — an effort change invalidates as on other models ([CC prompt-caching docs][cc-caching], [CC gateway guide][cc-gateway]).
 
-Source: [prompt caching docs][caching], "What invalidates the cache" section and the notes after it (raw page text, accessed 2026-10-26)
+Source: [prompt caching docs][caching], "What invalidates the cache" section and the notes after it (raw page text, accessed 2026-10-26); [CC gateway guide][cc-gateway] and [effort docs][effort] (accessed 2026-11-08)
 
 ## Cache Scope
 
@@ -263,6 +263,8 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | Source | Content |
 |---|---|
 | [Prompt caching docs][caching] | What's cached, prefix matching, breakpoints, TTL, minimum cacheable prefix per model, cache isolation, lifetime start, manual clear, ZDR, Batches interaction, API-level invalidation table — raw page text, re-verified 2026-10-26 |
+| [CC LLM gateway guide][cc-gateway] | Per-turn effort via `output_config.effort` on `role: "system"` entries (accessed 2026-11-08) |
+| [Effort docs][effort] | Per-message effort beta, header, supported models (accessed 2026-11-08) |
 | [Pricing docs][pricing] | Per-model cache write/read rates, including the 0.025x/0.05x/0.1x cache-hit multiplier tiers (accessed 2026-10-26) |
 | [API messages docs][api] | Usage object fields (`cache_read_input_tokens`, `cache_creation_input_tokens`) |
 | [CC prompt-caching docs][cc-caching] | CC-specific TTL buckets, choose-the-TTL precedence, disable vars, cache scope, actions that invalidate/keep the cache (accessed 2026-10-15) |
@@ -277,3 +279,5 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 [cc-env-vars]: https://code.claude.com/docs/en/env-vars
 [settings-ref]: https://code.claude.com/docs/en/settings-reference
 [bedrock-caching]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html
+[cc-gateway]: https://code.claude.com/docs/en/llm-gateway-protocol
+[effort]: https://platform.claude.com/docs/en/build-with-claude/effort
