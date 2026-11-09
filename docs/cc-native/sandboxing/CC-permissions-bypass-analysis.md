@@ -3,7 +3,7 @@ title: CC Permissions Bypass Analysis
 source: https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/security
 purpose: Analysis of --dangerously-skip-permissions flag, permission modes, team inheritance, and safer alternatives for headless/CI execution.
 created: 2026-03-17
-updated: 2026-03-17
+updated: 2026-11-09
 status: research
 ---
 
@@ -58,9 +58,10 @@ the risk:
 {
   "permissions": {
     "allow": [
-      "Bash(make *)",
-      "Bash(git *)",
-      "Bash(uv run *)",
+      "Bash(make test)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(uv run pytest *)",
       "Write",
       "Edit"
     ]
@@ -69,7 +70,11 @@ the risk:
 ```
 
 This auto-approves listed patterns while still prompting for unlisted actions
-(e.g., network requests, MCP tool calls).
+(e.g., network requests, MCP tool calls). Name the subcommand before the `*`:
+`Bash(git *)` or `Bash(make *)` would approve every git or make invocation, including
+injected options such as `git -c core.fsmonitor=<script> …`, and Claude Code warns at
+startup about allow rules with a `*` before the subcommand
+([permissions docs](https://code.claude.com/docs/en/permissions#wildcard-patterns)).
 
 ## Auto Mode Hard-Deny Rules (v2.1.136)
 

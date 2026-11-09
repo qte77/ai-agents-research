@@ -3,8 +3,8 @@ title: CC Bash Mode — CLI `!` Prefix and Dynamic Context Injection in Skills/R
 source: https://code.claude.com/docs/en/interactive-mode, https://code.claude.com/docs/en/skills
 purpose: Document bash mode usage in CLI interactive sessions and dynamic shell execution within skills and rules files.
 created: 2026-03-12
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: adopt
 ---
 
@@ -269,9 +269,9 @@ The `Bash(pattern:*)` syntax is configured via a `permissions.allow` / `permissi
 {
   "permissions": {
     "allow": [
-      "Bash(git *:*)",
-      "Bash(npm run:*)",
-      "Bash(make *:*)"
+      "Bash(git log *)",
+      "Bash(npm run *)",
+      "Bash(make lint)"
     ]
   }
 }
@@ -281,7 +281,7 @@ The legacy `~/.claude.json` → `projects.<path>.allowedTools` structure is outd
 
 The `/permissions` command provides interactive visual management, including which `settings.json` file each rule comes from ([source][cc-permissions]). Tab completion (v2.0.10+) mirrors standard terminal behavior ([source][claudelog-bash]).
 
-**Security principle**: Use specific patterns (`Bash(git *:*)`) rather than blanket `Bash(*)`. Configure per-project for isolation ([source][claudelog-bash]).
+**Security principle**: "Put the `*` after the subcommand": `Bash(git log *)` "allows only `git log` commands, and `Bash(git *)` allows every git command". A `*` before the subcommand also matches injected options such as `git -c core.fsmonitor=<script> diff main`, and Claude Code warns at startup about such allow rules ([source][cc-permissions]). The `:*` suffix is an equivalent trailing wildcard but "is only recognized at the end of a pattern"; a colon anywhere else is a literal character. Read-only commands, including "read-only forms of `git`", need no allow rule. Configure per-project for isolation ([source][claudelog-bash]).
 
 ### Research: Is Bash a Sufficient Tool Interface? (Microsoft/CMU, 2026)
 
