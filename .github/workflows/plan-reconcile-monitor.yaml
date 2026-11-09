@@ -1,0 +1,83 @@
+---
+name: Plan reconcile monitor
+
+# Weekly `make reconcile`: checks every PR/issue cited in the newest plan's remaining-work table
+# against GitHub and opens/updates a single `plan-drift` issue when a row disagrees (e.g. a
+# "blocked" row whose PR merged weeks ago). Auto-closes the issue once every row agrees again.
+# Catches stale rows between sessions; sessions still run `make reconcile` themselves first.
+# Cited repos must be public for the workflow token to read them; a reference in a private repo
+# shows up as "could not check".
+
+on:
+  schedule:
+    - cron: '0 14 * * 1'  # Mon 14:00 UTC — free slot (others run 09/10/11/12/13)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: plan-reconcile
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    name: Plan rows vs live state + issue upsert
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      # Reason: if gh can't authenticate, every reference reads as "could not check" and the
+      # run would file a misleading drift issue. Fail the job instead.
+      - name: Preflight gh access
+        run: gh api "repos/${{ github.repository }}" --jq .full_name
+
+      - name: Reconcile plan rows
+        id: reconcile
+        run: |
+          set +e
+          python3 .github/scripts/plan-reconcile.py > reconcile.txt 2>&1  # = make reconcile
+          echo "ec=$?" >> "$GITHUB_OUTPUT"
+          cat reconcile.txt
+
+      - name: Upsert or resolve plan-drift issue
+        env:
+          EC: ${{ steps.reconcile.outputs.ec }}
+        run: |
+          set -euo pipefail
+          # A report always starts with "Plan:"; anything else (no plan, no table) is a tooling error.
+          if [ "$EC" != "0" ] && ! grep -q '^Plan:' reconcile.txt; then
+            echo "::error::plan-reconcile failed without a report — not filing an issue"
+            exit 1
+          fi
+          gh label create plan-drift --color D93F0B \
+            --description "Plan rows disagree with live PR/issue state (auto-managed by plan-reconcile-monitor)" \
+            2>/dev/null || true
+          num="$(gh issue list --state open --label plan-drift --json number --jq '.[0].number // empty')"
+          if [ "$EC" != "0" ]; then
+            {
+              echo "The weekly \`make reconcile\` found plan rows that disagree with the live state of the PRs/issues they cite. Auto-generated; edited in place on each run."
+              echo
+              echo "**To resolve:** update or strike the flagged rows in the plan (in the PR that discovers them). Write a reference that doesn't decide its row in backticks so the check skips it. This issue auto-closes when every row agrees."
+              echo
+              echo '```text'
+              cat reconcile.txt
+              echo '```'
+            } > issue-body.md
+            if [ -n "$num" ]; then
+              gh issue edit "$num" --body-file issue-body.md
+              echo "Updated existing issue #$num"
+            else
+              gh issue create --title "Plan rows disagree with live state (weekly reconcile)" \
+                --label plan-drift --body-file issue-body.md
+            fi
+          elif [ -n "$num" ]; then
+            gh issue comment "$num" --body "Every plan row agrees with live state as of $(date -u '+%Y-%m-%d %H:%M UTC') — auto-closing."
+            gh issue close "$num"
+            echo "Closed resolved issue #$num"
+          else
+            echo "All rows agree and no open plan-drift issue — nothing to do."
+          fi
