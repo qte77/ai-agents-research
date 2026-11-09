@@ -2,8 +2,8 @@
 title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economics
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
-updated: 2026-11-08
-validated_links: 2026-10-26
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: adopt
 ---
 
@@ -155,6 +155,15 @@ Each cache hit resets the active TTL's timer at no additional cost, whichever TT
 
 This means active sessions keep the cache warm indefinitely — each turn resets the clock.
 
+### Idle compaction (before the cache expires)
+
+The other side of the TTL: a session you step away from loses its cache, and the next message would reprocess the whole prefix at full input price. Since v2.1.299 Claude Code compacts such a session first. The [changelog][cc-changelog] entry: "a 200K+ token conversation left idle for about 54 minutes is compacted before its one-hour prompt cache expires, so your next message doesn't reprocess it all." The terminal then shows a notice such as "Compacted while idle, before the prompt cache expired · turn off with "idleCompaction": false in settings.json" (owner observation, 2026-11-09).
+
+- **Setting:** `idleCompaction` in any settings file, default `true`. Per the [settings reference][settings-ref]: "Idle compaction compacts a long conversation that you've stepped away from. Your next message then sends a summary instead of the whole conversation." The key "requires Claude Code v2.1.290 or later. On an earlier version, which ignores this key, turn off `autoCompactEnabled` to stop idle compaction."
+- **Threshold:** `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` changes the 200K-token minimum (changelog, 2.1.299).
+- **Where it runs:** terminal from 2.1.299; `/config` gained an "Idle compaction" toggle in 2.1.302; 2.1.314 added it to VS Code and Claude Desktop's Code tab (there, "the summary is used on your next message if the prompt cache has expired") and extended it to "subscribers with telemetry turned off, and on Bedrock, Vertex, Foundry and LLM gateways once the one-hour prompt cache is on"; 2.1.318 "Fixed idle compaction replacing a conversation with a reply that was not a summary."
+- **Trade-off:** the next turn is cheaper (a summary instead of a full cache rebuild of 200K+ tokens), but it continues from a summary, so detail from the conversation can be lost exactly as with `/compact`. Turn it off for sessions where you need the full transcript after a break, and see [CC-extended-context-analysis.md](CC-extended-context-analysis.md) for compaction in general.
+
 ### Cache warmup curve
 
 Observed in session `9f7de296` (CC 2.1.83, 281 turns):
@@ -269,6 +278,8 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | [API messages docs][api] | Usage object fields (`cache_read_input_tokens`, `cache_creation_input_tokens`) |
 | [CC prompt-caching docs][cc-caching] | CC-specific TTL buckets, choose-the-TTL precedence, disable vars, cache scope, actions that invalidate/keep the cache (accessed 2026-10-15) |
 | [CC env vars reference][cc-env-vars] | `CLAUDE_CODE_PROMPT_CACHE_TTL`, `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`, `FORCE_PROMPT_CACHING_5M`, `ENABLE_PROMPT_CACHING_1H`, `DISABLE_PROMPT_CACHING*` (accessed 2026-10-15) |
+| [CC changelog][cc-changelog] | Idle compaction: 2.1.299 (terminal, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`), 2.1.302 (`/config` row), 2.1.314 (VS Code, Desktop, gateways), 2.1.318 (fix) (read 2026-11-09) |
+| [Settings reference][settings-ref] | `idleCompaction` description, default `true`, v2.1.290+ (read 2026-11-09) |
 | CC 2.1.83, session `9f7de296`, Codespaces, 2026-03-27 | Cache warmup curve, 96.3% hit rate — predates the TTL-bucket model (CC v2.1.242+) described above |
 | [AWS Bedrock prompt-caching docs][bedrock-caching] | Per-model minimum cacheable prefix on Bedrock specifically (Fable/Mythos 5.x = 512 tokens, same as other platforms) (accessed 2026-10-15) |
 
@@ -281,3 +292,4 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 [bedrock-caching]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html
 [cc-gateway]: https://code.claude.com/docs/en/llm-gateway-protocol
 [effort]: https://platform.claude.com/docs/en/build-with-claude/effort
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md

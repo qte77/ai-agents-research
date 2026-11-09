@@ -3,8 +3,8 @@ title: CC Extended Context Window (1M) Analysis
 source: https://code.claude.com/docs/en/model-config#extended-context
 purpose: Analysis of 1M token extended context window for cost planning and headless CC workflow usage.
 created: 2026-03-07
-updated: 2026-06-19
-validated_links: 2026-06-19
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: beta
 ---
 
@@ -90,6 +90,8 @@ The 200K threshold is the key cost boundary. Monitor context usage via
 `/cost` or the status line (`context_window.used/remaining_percentage`).
 For headless autonomous runs, `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` prevents
 accidental long-context charges.
+
+Idle sessions: since v2.1.299 Claude Code compacts a 200K+ token conversation left idle for about 54 minutes, before its one-hour prompt cache expires (`idleCompaction`, default on). See [CC-prompt-caching-behavior.md § Idle compaction](CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires).
 
 ## Context Quality Degradation
 
