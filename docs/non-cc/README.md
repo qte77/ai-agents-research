@@ -61,6 +61,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [deepseek-harness-analysis.md](coding-agents/deepseek-harness-analysis.md) | DeepSeek Harness (`dsh`; plugin-native "everything-is-a-plugin" harness; developer preview) | Partial | Yes (MIT) |
 | [goal-loops-landscape.md](coding-agents/goal-loops-landscape.md) | Goal loops across coding agents (`/goal` in Codex, Antigravity, Kiro, Copilot CLI, Cursor; VS Code Advanced Autopilot; Stop-style hooks) | n/a | n/a |
 | [prime-agent-analysis.md](coding-agents/prime-agent-analysis.md) | Prime Agent (Prime Intellect; self-improving coding harness on the Recursive Language Model abstraction) | Yes | Yes (MIT) |
+| [zed-analysis.md](coding-agents/zed-analysis.md) | Zed (Rust editor; Zed Agent, external agents incl. Claude Agent SDK over ACP, terminal threads; ACP spec) | No | Yes (GPL-3.0-or-later + Apache-2.0) |
 
 ## Knowledge Management
 

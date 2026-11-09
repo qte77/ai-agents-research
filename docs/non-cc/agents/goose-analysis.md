@@ -4,7 +4,7 @@ source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
 updated: 2026-10-02
-validated_links: 2026-09-30
+validated_links: 2026-11-09
 status: assess
 ---
 
@@ -51,6 +51,8 @@ Goose implements ACP bidirectionally:
 - **As client**: delegates to external ACP agents, passing extensions as MCP servers
 
 This is comparable to CC's WebSocket IDE protocol but uses a different standard ([source][arch]).
+
+For the ACP spec itself and the main ACP host, see [zed-analysis.md](../coding-agents/zed-analysis.md#agent-client-protocol-acp).
 
 ## Install, CLI & Configuration
 
