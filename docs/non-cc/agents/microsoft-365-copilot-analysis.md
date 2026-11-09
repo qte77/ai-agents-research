@@ -2,8 +2,8 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365) against first-party documentation, as of 2026-10-21.
 created: 2026-10-21
-updated: 2026-10-24
-validated_links: 2026-10-23
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: assess
 ---
 
@@ -279,7 +279,7 @@ but serves the same posts through its board RSS feed.
 
 - Anthropic models deployed in Microsoft 365 Copilot, Researcher, Copilot Studio, Power Platform,
   and Copilot in Microsoft 365 apps "are currently excluded from the EU Data Boundary," and
-  "customers within the EU Data Boundary and customers in the UK have Anthropic models disabled by
+  "Customers within the EU Data Boundary and customers in the UK have Claude models disabled by
   default" [eudb-subprocessor] — two separate facts, not one: the exclusion itself is outright, not
   a default that can be toggled from inside the boundary; the disablement is the separate,
   opt-in-able default for in-scope customers.
@@ -297,12 +297,19 @@ but serves the same posts through its board RSS feed.
   Power Platform admin center for the environment or the environment group" **and** "Allow access
   to each external model provider in the Microsoft 365 admin center" [copilot-model-select].
 - Government clouds: "As of July 22, 2026, a new setting is available in the Microsoft 365 admin
-  center that allows non-federal customers in Government Community Cloud (GCC) to use Anthropic
-  models"; Anthropic models "aren't available for federal customers in GCC or for any customers in
-  GCC High and Department of Defense (DoD) environments" [eudb-subprocessor].
+  center that allows non-federal customers in Government Community Cloud (GCC) to use Claude
+  models"; Claude models "aren't available for federal customers in GCC or for any customers in
+  GCC High and Department of Defense (DoD) environments" [eudb-subprocessor]. "They're also not
+  available in other sovereign clouds."
 - Separately, Microsoft introduced a Microsoft 365 admin center setting on 2026-04-03 letting
   EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft
   365 apps — an opt-in setting, off by default, with no preview label on the page documenting it
+  [eudb-subprocessor].
+- Outside those regions the default is the opposite: "Microsoft enables Claude models on by default
+  for most customers in commercial cloud (excluding EU/EFTA and UK)." EU, EFTA and UK
+  organizations that "previously opted in to use Claude models under Anthropic's separate
+  commercial terms and data processing agreement" now "need to opt in again"; the toggle starts
+  **Off**. The page (revised 2026-11-04) gives no date or reason for the re-opt-in
   [eudb-subprocessor].
 - **Stated here as plainly as the Microsoft-side gaps above:** Claude's own hosting on Microsoft
   Foundry has the same shape of limitation. Claude is available only in a **Global Standard** or a
@@ -336,8 +343,10 @@ assessment should confirm the path actually in use per workload before relying o
    models are labeled 'Anthropic models with Data Retention'" clause excludes this separately
    opted-in variant from the Microsoft Product Terms and Data Protection Addendum that otherwise
    apply to posture 2, and separately documents that Anthropic, not Microsoft, "stores most inputs
-   and outputs for up to 30 days before deleting them" (longer if flagged by Anthropic's own
-   trust-and-safety classifiers) [eudb-subprocessor]. The page does not itself name which of
+   and outputs for up to 30 days before deleting them"; if Anthropic's trust-and-safety classifiers
+   flag a potential Usage Policy violation, content may be kept "for up to two years and trust and
+   safety classification scores for up to seven years" [eudb-subprocessor]. The page names Claude
+   Fable 5 and Claude Mythos 5 as examples of these Data Retention models. The page does not itself name which of
    Anthropic's own terms then governs this variant.
 
 A direct Anthropic API relationship — outside this Microsoft-integrated family entirely — is a
@@ -590,7 +599,7 @@ this doc's `validated_links` date.
 | [Microsoft 365 Copilot — Package Management API overview][package-api] | GA-shaped reads vs. preview writes, licence requirement |
 | [Microsoft Graph — agentRegistry (beta) resource][agent-registry-beta] | Legacy API replacement notice |
 | [Microsoft Graph — UTCM/TCM authentication setup][utcm-setup] | Public preview, service-principal (app-only) authentication |
-| [Microsoft 365 Copilot — Connect to AI subprocessor][eudb-subprocessor] | Anthropic EU Data Boundary exclusion, subprocessor/Data-Retention postures, EU/EFTA/UK admin setting |
+| [Claude models from Anthropic in Microsoft Online Services][eudb-subprocessor] (page revised 2026-11-04, re-read 2026-11-09) | Anthropic EU Data Boundary exclusion, subprocessor/Data-Retention postures, EU/EFTA/UK admin setting and re-opt-in, commercial-cloud default on, retention periods |
 | [Microsoft 365 Copilot — Flex routing][flex-routing] | Default-on cutover date, older-tenant guidance, Multi-Geo scope |
 | [Claude in Microsoft Foundry][claude-foundry] | Deployment types, absence of an EU-region type |
 | [Claude in Microsoft Foundry — Data, privacy, and security][claude-foundry-privacy] | Processor role, hosting-option processing-location split |
