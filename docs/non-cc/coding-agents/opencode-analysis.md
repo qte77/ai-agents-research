@@ -4,8 +4,8 @@ source: https://github.com/sst/opencode
 purpose: Analysis of opencode as a provider-agnostic, open-source terminal coding agent with TUI, desktop, and headless modes.
 platform_scope: [terminal, desktop, ide, web, headless]
 created: 2026-06-16
-updated: 2026-06-16
-validated_links: 2026-06-16
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: trial
 ---
 
@@ -103,6 +103,7 @@ aligned with the emerging cross-editor AGENTS.md standard.
 - **Image input**: drag-and-drop images into the terminal to include visual
   references (design mockups, screenshots) in the prompt.
 - **`/share`**: publishes a session as a shareable link for async team review.
+- **Rune (announced, not shipped):** Anomaly, the company behind opencode, is building [Rune][rune], an MIT-licensed native GPU-rendered Rust UI framework (no releases yet, 2026-11-09). Its plan calls recreating OpenCode Desktop in Rune "the flagship test", and every Rune app can run headless so an agent can render it to PNG, dump the element tree and drive it with scripted input. Whether OpenCode Desktop will move to it is not stated as shipped.
 
 ### Install
 
@@ -152,6 +153,7 @@ ready to trial. Gate full adoption on desktop GA and production mileage reports.
 | [opencode.ai/docs/cli][cli-doc] | `opencode run`, `serve`, `web`, `attach`, `--format json`; accessed 2026-06-16 |
 | [GitHub release v1.17.7][release] | Plugin architecture, ACP shell, MCP workspace roots; 2026-06-14 |
 | [GitHub Copilot CLI analysis][gh-copilot-cli] | Proprietary peer comparison |
+| [anomalyco/rune][rune] | README, PLAN.md, LICENSE (MIT), no releases; `gh api` 2026-11-09 |
 
 [gh-repo]: https://github.com/sst/opencode
 [home]: https://opencode.ai/
@@ -164,3 +166,4 @@ ready to trial. Gate full adoption on desktop GA and production mileage reports.
 [models-dev]: https://models.dev
 [sst]: https://sst.dev
 [gh-copilot-cli]: ../agents/github-copilot-cli-analysis.md
+[rune]: https://github.com/anomalyco/rune
