@@ -3,8 +3,8 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-10-19
-validated_links: 2026-10-02
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: generally-available
 ---
 
@@ -98,6 +98,8 @@ paths:
 - **No paths field**: Rules without `paths` load unconditionally at launch
 - **Subdirectory CLAUDE.md**: Files in subdirectories load on-demand when Claude reads files there — not at launch ([source][cc-mem])
 - **User-level rules**: Personal rules in `~/.claude/rules/` apply to every project; loaded before project rules (lower priority) ([source][cc-mem])
+- **Rules in parent directories (observed, not documented)**: the docs name only the project's `.claude/rules/` (searched recursively) and `~/.claude/rules/`; unlike `CLAUDE.md`, which "loads ... from your current working directory and every directory above it", no parent-directory loading is documented for rules ([source][cc-mem]). Observed anyway: `.claude/rules/` in parent folders of a repo (e.g. `/workspaces`, `/workspaces/qte77`) loaded into sessions started in the repo (CC 2.1.303, Codespaces, 2026-10-19). Don't rely on it; it may change.
+- **Project settings come from the working directory, not parent folders**: "Claude Code reads the shared `.claude/settings.json` from the session's primary working directory, so to use a file committed at the repository root, start Claude Code there." The local `.claude/settings.local.json` is read at the git repository root when you start in a subdirectory ([settings][cc-settings-files]). Precedence between the files: see [CC-tools-inventory.md § Overlap Between Layers](../configuration/CC-tools-inventory.md#overlap-between-layers) and [CC-env-vars-reference.md § Configuration Methods](../configuration/CC-env-vars-reference.md#configuration-methods).
 
 #### Symlinks for Cross-Project Sharing
 
@@ -112,6 +114,8 @@ ln -s ~/company-standards/security.md .claude/rules/security.md
 ```
 
 Circular symlinks are detected and handled gracefully ([source][cc-mem]).
+
+"Claude Code treats a symlink whose target is outside your working directory like an external import": such rules "don't load until you approve external imports for the project" ([source][cc-mem]). Observed exception: per-file symlinks in `~/.claude/rules/` pointing into a separate clone outside the working directory loaded with no approval prompt in a headless run (CC 2.1.303, Codespaces, 2026-10-19). The documented sentence is in the project-rules section, so user-level symlinks may simply be out of its scope; unverified.
 
 ### Monorepo Management
 
@@ -490,6 +494,7 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 [cc-mem]: https://code.claude.com/docs/en/memory
 [cc-skills]: https://code.claude.com/docs/en/skills
 [cc-settings]: https://code.claude.com/docs/en/settings
+[cc-settings-files]: https://code.claude.com/docs/en/settings#settings-files-and-who-they-affect
 [cc-sub]: https://code.claude.com/docs/en/sub-agents#enable-persistent-memory
 [piebald-dream]: https://github.com/Piebald-AI/claude-code-system-prompts/blob/main/system-prompts/agent-prompt-dream-memory-consolidation.md
 [hlyr-claude-md]: https://www.hlyr.dev/blog/stop-claude-from-ignoring-your-claude-md
