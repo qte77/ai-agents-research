@@ -2,7 +2,8 @@
 """Monitor the Microsoft Learn pages cited by the Microsoft 365 Copilot doc.
 
 Checks whether each watched page's `ms.date` meta value or stored verbatim
-quote has drifted since the last run. The watch list (url + quote) lives in
+quote has drifted since the last run, and whether an entry's optional `due`
+date (YYYY-MM-DD, a dated event the doc predicts) has passed. The watch list (url + quote) lives in
 the state file itself; pure extraction/diff/report logic lives in
 lib/m365_drift.py.
 
@@ -11,14 +12,21 @@ Usage:
 
 Exit codes:
     0 = no drift, no fetch failures
-    1 = drift found and/or a page could not be checked
+    1 = drift found, a due date passed, and/or a page could not be checked
 """
 import argparse
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.m365_drift import diff_entries, extract_ms_date, quote_present, render_report
+from lib.m365_drift import (
+    build_new_state,
+    diff_entries,
+    extract_ms_date,
+    quote_present,
+    render_report,
+)
 from lib.monitor_utils import fetch_text, load_state, save_state
 
 DEFAULT_STATE_FILE = Path(".github/state/m365-drift-state.json")
@@ -60,17 +68,11 @@ def main() -> None:
 
     observations = [observe(url, entry["quote"]) for url, entry in prev_state.items()]
 
-    diffs = diff_entries(prev_state, observations)
+    today = datetime.now(UTC).date()
+    diffs = diff_entries(prev_state, observations, today=today)
     print(render_report(diffs))
 
-    new_state = {
-        obs["url"]: {
-            "quote": obs["quote"],
-            "ms_date": obs["ms_date"] if obs["error"] is None else prev_state[obs["url"]].get("ms_date"),
-        }
-        for obs in observations
-    }
-    save_state(args.state_file, new_state)
+    save_state(args.state_file, build_new_state(prev_state, observations))
     print(f"State saved to {args.state_file}", file=sys.stderr)
 
     sys.exit(1 if diffs else 0)
