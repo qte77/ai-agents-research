@@ -3,8 +3,8 @@ title: OpenResearch Analysis
 source: https://github.com/alphaXiv/OpenResearch
 purpose: Evaluate OpenResearch as a local-first, git-native workspace that turns coding agents into autonomous research/experiment agents.
 created: 2026-09-30
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: assess
 ---
 
@@ -61,9 +61,9 @@ other users on that host can reach it" ([README][openresearch]).
 ### Platforms
 
 - **macOS 11+** — signed with a Developer ID and notarized by Apple; the primary download path
-- **Windows** — beta, requires [Git for Windows][openresearch-windows-docs]; the installer isn't
+- **Windows** — beta, requires [Git for Windows][openresearch-install]; the installer isn't
   code-signed yet, so Windows shows an unsigned-app warning
-- **Linux** — AppImage for x86_64 or aarch64, needs glibc 2.35+ ([Linux docs][openresearch-linux-docs]);
+- **Linux** — AppImage for x86_64 or aarch64, needs glibc 2.35+ ([install docs][openresearch-install]);
   `linux/OpenResearch.desktop` in the repo is Linux launcher packaging (a `.desktop` entry), not a
   separate platform feature
 - **CLI-only install** (`curl -LsSf https://openresearch.sh/install.sh | sh`) is unsigned — device-
@@ -119,13 +119,11 @@ and not reproducible in the way the underlying code commits are.
 | [OpenResearch repo][openresearch] | README: architecture, platforms, run-anywhere compute targets, security note, telemetry |
 | [OpenResearch about page][openresearch-about] | Team origin ("We started alphaXiv…"); local CLI plus remote compute |
 | [`gh api` languages][openresearch-langs] | Language breakdown (Rust core, TypeScript/JS UI) |
-| [Linux docs][openresearch-linux-docs] | glibc 2.35+ requirement |
-| [Windows docs][openresearch-windows-docs] | Git for Windows prerequisite |
+| [Install docs][openresearch-install] | Git for Windows prerequisite; glibc 2.35+ on Linux (the repo's `docs/` folder was removed 2026-11-06, #918) |
 
 [openresearch]: https://github.com/alphaXiv/OpenResearch
 [openresearch-about]: https://openresearch.sh/about
 [openresearch-langs]: https://api.github.com/repos/alphaXiv/OpenResearch/languages
-[openresearch-linux-docs]: https://github.com/alphaXiv/OpenResearch/blob/main/docs/linux.md
-[openresearch-windows-docs]: https://github.com/alphaXiv/OpenResearch/blob/main/docs/windows.md
+[openresearch-install]: https://openresearch.sh/docs/install
 [feynman-analysis]: feynman-analysis.md
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md

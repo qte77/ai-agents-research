@@ -3,8 +3,8 @@ title: Agentic Payments Landscape — Machine-Native Payment Rails for Agents
 purpose: Survey of emerging agent payment protocols and rails (x402, Google AP2, Stripe MPP, L402, ACP, UCP, Visa and Mastercard agent programmes) that let autonomous agents pay for API/tool access or buy goods without a human in the loop per transaction.
 category: landscape
 created: 2026-07-08
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: research
 ---
 
@@ -107,7 +107,7 @@ feature is live). The page doesn't mention ACP.
 ### Card networks: Visa and Mastercard
 
 - **Visa Intelligent Commerce** was [announced 2025-04-30][visa-vic], with partners "including
-  Anthropic, IBM, Microsoft, Mistral AI, OpenAI, Perplexity, Stripe and Samsung"; the release is written
+  Anthropic, IBM, Microsoft, Mistral AI, OpenAI, Perplexity, Samsung, Stripe and more"; the release is written
   in the future tense. **Intelligent Commerce Connect**, "part of the Visa Intelligent Commerce
   portfolio", was "Currently in pilot with select partners including Aldar, AWS, Diddo, Highnote, Mesh,
   Payabli, Sumvin" as of [2026-04-08][visa-connect], and that release names the Trusted Agent Protocol,
@@ -261,7 +261,7 @@ above.
 [l402-overview]: https://docs.lightning.engineering/the-lightning-network/l402
 [ucp]: https://ucp.dev
 [shopify-agents]: https://shopify.dev/docs/agents
-[visa-vic]: https://corporate.visa.com/en/sites/visa-perspectives/newsroom/new-era-of-commerce-ai-stablecoins.html
+[visa-vic]: https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.21361.html
 [visa-connect]: https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.22276.html
 [visa-tap]: https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.21716.html
 [visa-tap-dev]: https://developer.visa.com/capabilities/trusted-agent-protocol/overview

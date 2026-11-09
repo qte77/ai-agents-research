@@ -3,8 +3,8 @@ title: Tencent Cloud CodeBuddy Analysis
 source: https://www.codebuddy.ai/
 purpose: Analysis of CodeBuddy as a Tencent Cloud AI coding agent spanning IDE plugin, standalone IDE, and CLI surfaces.
 created: 2026-06-16
-updated: 2026-06-16
-validated_links: 2026-06-16
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: assess
 ---
 
@@ -106,7 +106,6 @@ Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabili
 | [Release notes][codebuddy-release-notes] | Version 4.9.5 (2026-04-15); Agents mode, Skills, MCP, sandbox |
 | [CLI launch article (aibase.com)][codebuddy-cli-news] | CLI agent description, WeChat ecosystem scope, September 2025 launch |
 | [Enterprise price hike (BigGo Finance)][codebuddy-pricing-news] | May 2026 RMB pricing changes (+100–154%); plan names |
-| [Skywork.ai review][codebuddy-review] | Craft Mode detail, Hunyuan model, IDE plugin setup, free availability note |
 | [EEWorld / QbitAI article][codebuddy-eeworld] | v2.0 Plan Mode, ACP protocol, SDK, sandbox, Skills — fetched 2026-06-16 (page returned empty; facts corroborated via WebSearch) |
 
 [codebuddy-home]: https://www.codebuddy.ai/
@@ -116,6 +115,5 @@ Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabili
 [codebuddy-jetbrains]: https://plugins.jetbrains.com/plugin/24379-tencent-cloud-codebuddy
 [codebuddy-cli-news]: https://www.aibase.com/news/21148
 [codebuddy-pricing-news]: https://finance.biggo.com/news/vQ5Y050BtCxy99G5l4m1
-[codebuddy-review]: https://skywork.ai/blog/tencent-codebuddy-a-new-kind-of-ai-coding-partner/
 [codebuddy-eeworld]: https://en.eeworld.com.cn/mp/QbitAI/a407551.jspx
 [github-copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md

@@ -5,7 +5,6 @@ created: 2026-03-24
 sources:
   - https://ai.google.dev/gemini-api/docs/coding-agents
   - https://dev.to/madeburo/ai-context-management-across-claude-cursor-kiro-gemini-and-custom-agents-2n1f
-  - https://lushbinary.com/blog/ai-coding-agents-comparison-cursor-windsurf-claude-copilot-kiro-2026/
   - https://particula.tech/blog/agents-md-ai-coding-agent-configuration
 ---
 
