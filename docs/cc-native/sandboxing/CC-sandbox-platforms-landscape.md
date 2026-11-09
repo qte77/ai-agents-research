@@ -4,8 +4,8 @@ source: https://github.com/alibaba/OpenSandbox, https://e2b.dev, https://fly.io/
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 category: landscape
 created: 2026-03-08
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: research
 ---
 
@@ -209,8 +209,8 @@ for executing individual untrusted calls (AI-generated code, MCP tool invocation
 inside an existing process, not a full VM/container agent environment
 ([source][ephemora]).
 
-**Key characteristics** (per the repository README and GitHub metadata, verified
-2026-09-24):
+**Key characteristics** (per the README of the PyPI release v1.0.4.2, re-checked 2026-11-09; the
+GitHub repository the doc first cited returns 404 since at least 2026-11-09):
 
 - wasmtime-based, WASI-isolated execution with enforced fuel (CPU), memory, time,
   and I/O budgets ([source][ephemora])
@@ -218,8 +218,10 @@ inside an existing process, not a full VM/container agent environment
   tested attack vectors blocked (filesystem escape, fork, sockets, threading, etc.)
   — self-reported, not third-party audited ([source][ephemora])
 - Generates tamper-evident, RFC 8785-canonicalized execution records; listed in the
-  MCP Registry; ships a GitHub Action for gating untrusted PR code ([source][ephemora])
-- 424 tests / 85% coverage per README; Apache-2.0, Python, 42 stars ([source][ephemora])
+  MCP Registry; the README advertises a GitHub Action for gating untrusted PR code, but that
+  Action lived in the now-missing GitHub repository ([source][ephemora])
+- README badges report 440 passing tests and 86% coverage; Apache-2.0 (PyPI classifier), Python
+  ([source][ephemora])
 
 **When to use**: Sandboxing individual AI-generated function calls or MCP tool
 invocations — complements rather than replaces the VM-level platforms above.
@@ -307,7 +309,7 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 - [Maritime pricing][maritime-pricing]
 - [Maritime terms of service][maritime-terms]
 - [Maritime for Startups][maritime-startups]
-- [Ephemora Cell (GitHub)][ephemora]
+- [Ephemora Cell (PyPI v1.0.4.2)][ephemora]
 - [forkd (GitHub)][forkd]
 - [OpenSandbox GitHub][opensandbox-gh]
 - [OpenSandbox announcement (MarkTechPost)][opensandbox-marktechpost]
@@ -331,7 +333,7 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 [maritime-pricing]: https://maritime.sh/pricing
 [maritime-terms]: https://maritime.sh/terms
 [maritime-startups]: https://maritime.sh/startups
-[ephemora]: https://github.com/MichaelS1011/ephemora-cell
+[ephemora]: https://pypi.org/project/ephemora-cell/1.0.4.2/
 [forkd]: https://github.com/deeplethe/forkd
 [opensandbox-gh]: https://github.com/alibaba/OpenSandbox
 [opensandbox-marktechpost]: https://www.marktechpost.com/2026/03/03/alibaba-releases-opensandbox-to-provide-software-developers-with-a-unified-secure-and-scalable-api-for-autonomous-ai-agent-execution/
