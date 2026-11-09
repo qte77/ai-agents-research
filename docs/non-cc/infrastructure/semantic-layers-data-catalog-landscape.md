@@ -48,6 +48,7 @@ Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized mach
 - **[OWL][owl]** — Web Ontology Language: classes, properties, and logical constraints enabling automated inference (open-world assumption — unstated ≠ false).
 - **[SKOS][skos]** — lightweight taxonomy/thesaurus vocabulary (broader/narrower/related) for concept schemes; the pragmatic middle between flat tags and a full OWL ontology.
 - **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above.
+- **[JSON-LD][json-ld]** — "a JSON-based format to serialize Linked Data" (JSON-LD 1.1, W3C Recommendation 2020-07-16). It is "designed to be usable directly as JSON, with no knowledge of RDF", and also "usable as RDF" with tools like SPARQL. For agents it is the form they meet most: [schema.org][schema-org-gs] markup can be written in Microdata, RDFa or JSON-LD, and Google Search recommends JSON-LD "in most cases", embedded in a `<script>` tag of the page ([Google structured data][google-sd]). Whether such markup helps AI answers is disputed; see [ai-crawlers-discoverability-landscape.md](ai-crawlers-discoverability-landscape.md). [YAML-LD][yaml-ld] (a W3C Working Draft, 2026-10-24) "applies JSON-LD's data model and processing model to YAML"; Vault-LD below uses it in note frontmatter.
 
 **Open- vs closed-world.** OWL/RDF assume an *open world* (absent ≠ false), which fits the web's incompleteness but makes hard validation awkward; [SHACL][shacl] adds closed-world *shape* constraints for validation. SQL catalogs and most semantic layers above are closed-world — an agent reasoning across both must know which regime applies.
 
@@ -200,7 +201,8 @@ A complementary research direction formalizes *why* this grounding improves reli
 | [Unity Catalog OSS][unity-catalog] | LF open catalog + `unitycatalog-ai` SDK |
 | [Apache Atlas][atlas] | Hadoop-era governance framework |
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
-| [RDF][rdf] · [OWL][owl] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
+| [RDF][rdf] · [OWL][owl] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
+| [schema.org getting started][schema-org-gs] · [Google structured data intro][google-sd] | schema.org syntaxes (Microdata, RDFa, JSON-LD); Google's JSON-LD recommendation and `<script>` embedding (read 2026-11-09) |
 | [Vault-LD][vault-ld] | Markdown-vault-as-linked-data spec; YAML-LD frontmatter + shared `@context`, roundtrip RDF converters |
 | [Symbolic Separation (arXiv:2609.17107)][symbolic-separation] | Ontology-constrained Virtual Knowledge Graph + deterministic pre-execution validation for deep agents over operational telemetry |
 | [Ontology Atlas README][ontology-atlas] | MCP-native, git-versioned Markdown ontology; MIT license and star count verified 2026-09-30 |
@@ -234,6 +236,10 @@ A complementary research direction formalizes *why* this grounding improves reli
 [skos]: https://www.w3.org/2004/02/skos/
 [sparql]: https://www.w3.org/TR/sparql11-overview/
 [shacl]: https://www.w3.org/TR/shacl/
+[json-ld]: https://www.w3.org/TR/json-ld11/
+[yaml-ld]: https://www.w3.org/TR/yaml-ld/
+[schema-org-gs]: https://schema.org/docs/gs.html
+[google-sd]: https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
 [vault-ld]: https://github.com/The-Knowledge-Graph-Guys/vault-ld
 [symbolic-separation]: https://arxiv.org/abs/2609.17107
 [ontology-atlas]: https://github.com/wlsdks/ontology-atlas
