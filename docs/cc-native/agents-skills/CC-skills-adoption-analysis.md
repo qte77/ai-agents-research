@@ -5,7 +5,7 @@ category: analysis
 version: 2.0.0
 status: completed
 created: 2026-01-11
-updated: 2026-10-24
+updated: 2026-11-09
 validated_links: 2026-10-23
 ---
 
@@ -311,7 +311,7 @@ The Agent Skills standard has achieved broad cross-industry adoption:
 | [skills.sh][skills-sh] | Marketplace/registry | Distribution layer; `npx skills add owner/repo` |
 | [Microsoft Agent Framework][ms-skills] | SDK integration | Implements spec via `FileAgentSkillsProvider`; adds code-defined skills |
 | [HashiCorp Agent Skills][hashi-skills] | Domain skill library | Terraform/Packer skills in SKILL.md format |
-| [anthropics/skills][gh-skills] | Reference skills | Official Anthropic skill examples (177.9k★/21.1k forks, 2026-09-24) |
+| [anthropics/skills][gh-skills] | Reference skills | Official Anthropic skills: 19 skill folders, also a Claude Code plugin marketplace (190.3k★/22.4k forks, 2026-11-09) |
 | [SylphAI-Inc/atskills][atskills] (`@skills`) | Alternative protocol | Path-based, no-install skill addressing; paired with the [atskills.one][atskills-hub] hub |
 | [HKUDS/OpenSpace][openspace] | Skill management layer | Evaluates skill quality from task outcomes; MCP/CLI/Python/dashboard access |
 | [GitSkills dataset][gitskills-paper] | Research dataset | 3,797,117 SKILL.md files across 282,200 GitHub repos (July 2026 snapshot) |
@@ -329,8 +329,18 @@ adapter; Codex CLI reads it natively): see the compatibility matrix in
 now ships a `prompt-audit` procedure (`skills/claude-api/shared/prompt-audit.md`,
 invoked via `/claude-api prompt-audit`) for finding and removing prompt/skill
 instructions tuned to older, less-instruction-following models — framed as
-"every token earns its place"; "make it short" is not the goal. The repo has no
-root `LICENSE` file, so no license is claimed for it here.
+"every token earns its place"; "make it short" is not the goal.
+
+**`anthropics/skills` — layout and licensing (checked 2026-11-09).** The repo has
+19 skill folders under `skills/`. Its `.claude-plugin/marketplace.json`
+(`anthropic-agent-skills`) groups them into five plugins: `document-skills` (docx,
+pdf, pptx, xlsx), `example-skills` (12 skills), `claude-api`, `academy-guide` and
+`discernment-nudge`. `spec/agent-skills-spec.md` now only points to the
+[agentskills.io specification][agentskills-spec]. There is still no root `LICENSE`
+file; licensing is per skill. On 2026-11-06 the four Office skills moved from a
+proprietary license to Apache 2.0 ([commit 2c5958e][gh-skills-apache]), and the
+README now calls them "also open source (Apache 2.0)". `doc-coauthoring` ships
+only a `SKILL.md`, with no license file.
 
 **`@skills` — path-based addressing (no install).** [SylphAI-Inc/atskills][atskills]
 (MIT license; a TypeScript protocol core plus a Node.js reference CLI) proposes an
@@ -408,6 +418,7 @@ Update `.claude/settings.json` to adopt Skills:
 [skills-best-practices]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
 [skills-pdf]: https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf
 [gh-skills]: https://github.com/anthropics/skills/tree/main/skills
+[gh-skills-apache]: https://github.com/anthropics/skills/commit/2c5958e
 [skills-sh]: https://skills.sh/
 [org-skills]: https://support.claude.com/en/articles/13119606
 [ms-skills]: https://learn.microsoft.com/en-us/agent-framework/agents/skills

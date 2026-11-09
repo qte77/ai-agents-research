@@ -2,7 +2,7 @@
 title: Office Document Skills & MCP Servers
 description: Ecosystem analysis of document generation/manipulation capabilities — Anthropic official skills, knowledge-work plugins, community skills, and MCP servers for docx, xlsx, pptx, and pdf.
 created: 2026-03-26
-updated: 2026-09-24
+updated: 2026-11-09
 validated_links: 2026-09-24
 status: research
 ---
@@ -15,7 +15,7 @@ Four layers of document handling are available for Claude workflows: Anthropic's
 
 ## Layer 1: Anthropic Built-in Document Skills
 
-**Source**: [anthropics/skills](https://github.com/anthropics/skills) (source-available, 2026-03-26)
+**Source**: [anthropics/skills](https://github.com/anthropics/skills). The four skills were source-available under a proprietary license until 2026-11-06, when Anthropic moved them to Apache 2.0 ([commit 2c5958e](https://github.com/anthropics/skills/commit/2c5958e)). Install in Claude Code with `/plugin marketplace add anthropics/skills`, then `/plugin install document-skills@anthropic-agent-skills`.
 
 These are the production skills powering Claude.ai, Cowork, and the Skills API. Documented in detail in [CC-cowork-skills-api-workflows.md](CC-cowork-skills-api-workflows.md#anthropic-document-skill-capabilities-2026-03-26).
 
