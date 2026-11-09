@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-10-22
+updated: 2026-11-09
 validated_links: 2026-10-22
 status: assess
 ---
@@ -1216,7 +1216,7 @@ validated for patient care**. One line only, per this batch's scope — no rubri
 
 ## Tools built on Jev
 
-Seven projects call Jev (or an alternative decision model) as one step in a larger tool. Four have
+Eight projects call Jev (or an alternative decision model) as one step in a larger tool. Five have
 their own home elsewhere in this corpus and this section only points to them; probably, pg-jev and
 jev-browser have none yet, so their full entries live here.
 
@@ -1231,6 +1231,11 @@ jev-browser have none yet, so their full entries live here.
 - **typesafe-computer-use** (awlevin) — a macOS computer-use agent whose per-step
   action-selection loop asks the real, hosted TypeSafe Jev model three `Choice` questions (action
   kind, item, site). See § Use cases → Tool-call gating above.
+- **jev-desktop** (vercel-labs/agent-desktop) — a skill in the agent-desktop repo that drives a
+  desktop app from one plain-language goal through TypeSafe's hosted Jev, "without ever reading the
+  accessibility tree" in the agent's own context; needs a repo clone (its scripts "ship in no installed package") and
+  a `TYPESAFE_API_KEY`. See
+  [web-scraping-extraction-landscape.md § Accessibility-tree page representation][agentdesktop-home].
 - **pg-jev** (realZachi) — **Repo**: [realZachi/pg-jev][pg-jev] | **License**: PostgreSQL License
   (confirmed against `LICENSE`; GitHub's license detector reports `NOASSERTION` — the file matches
   the [OSI's PostgreSQL License template][osi-pgl] with its `$ORGANISATION` placeholder generalized
@@ -1582,6 +1587,7 @@ here.
 [agenticow]: https://github.com/ruvnet/agenticow
 [agenticow-xref]: ../frameworks/agent-frameworks-infrastructure-landscape.md
 [biodecision]: https://huggingface.co/lighteternal/biodecision-tev1-4b
+[agentdesktop-home]: ../infrastructure/web-scraping-extraction-landscape.md#accessibility-tree-page-representation
 [abide-home]: ../../cc-community/CC-community-tooling-landscape.md#abide-coldteadotai
 [jevultrafast-home]: ../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#alternative-mcp-options-brief
 [jevgrep-home]: ../../cc-community/CC-code-tooling-landscape.md#jevgrep-dzhng

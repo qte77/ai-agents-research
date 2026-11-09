@@ -4,7 +4,7 @@ purpose: Persistent cross-session memory tools that integrate with Claude Code �
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-06
+updated: 2026-11-09
 validated_links: 2026-10-06
 ---
 
@@ -137,17 +137,17 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## Claude-Mem (thedotmack / Alex Newman)
 
-**Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 45.2K | **License**: Apache-2.0 | **Version**: 6.5.0
+**Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 115.2K (`gh api`, 2026-11-09) | **License**: Apache-2.0 | **Version**: v15.13.0 (2026-11-09)
 
-Persistent memory compression system for Claude Code. Automatically captures everything Claude does during coding sessions, compresses it with AI, and injects relevant context back into future sessions for continuity.
+Persistent memory compression system, started for Claude Code and now cross-agent. A second "observer" agent turns the session's tool activity into observations and summaries, and the next session starts with a short index that pulls in details only when needed. The README says it "Works with Claude Code, Codex, Cursor, OpenCode and 11 more agents", and that Copilot CLI, Goose, Roo Code and Warp can search the memory but their sessions aren't recorded. Placement stays here because the hook, plugin and MCP surface is the analysis focus (see [CONTRIBUTING § Classification](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc)).
 
 ### Architecture
 
 | Component | Purpose |
 |-----------|---------|
-| **Lifecycle Hooks** (5) | SessionStart, UserPromptSubmit, PostToolUse, Stop, SessionEnd |
-| **Worker Service** | Express API on port 37777, managed by Bun runtime, includes web viewer UI |
-| **SQLite Storage** | Sessions, observations, summaries with FTS5 full-text search |
+| **Lifecycle Hooks** (9 on Claude Code) | Setup, SessionStart, UserPromptSubmit, PreToolUse, PostToolUse, PostToolUseFailure, Stop, SubagentStop, SessionEnd; one adapter per agent in `src/cli/adapters/` |
+| **Worker Service** | Local HTTP worker managed by Bun; per-user default port `37700 + (uid % 100)` (`CLAUDE_MEM_WORKER_PORT` overrides), memory viewer at `/viewer` ([configuration][claude-mem-config]) |
+| **SQLite Storage** | `~/.claude-mem/claude-mem.db`: sessions, observations, summaries with FTS5 full-text search; cloud sync is opt-in |
 | **Chroma Vector DB** | Hybrid semantic/keyword search |
 | **MCP Tools** | 3-layer progressive disclosure workflow |
 
@@ -176,22 +176,23 @@ npx claude-mem install                          # CLI install
 - Automatic context injection into new sessions
 - `<private>` tags for content exclusion
 - Citation system referencing past observations by ID
-- Web viewer UI at localhost:37777
-- Notification integrations (Telegram, Discord, Slack)
+- Web viewer UI at `/viewer` on the worker port
+- Observer model: the hosted "claude-mem observer" (30-day trial at a checkout page), your own OpenRouter or Gemini key, or your Anthropic plan
+- Real-time observation feeds to Telegram, Discord and Slack, now described only in the OpenClaw installer path
 
 ### Live Observer Architecture
 
 A dedicated observer AI watches each session in real-time, generating searchable observations with before-and-after context — capturing causality and decision chains, not just snapshots. Observations are auto-categorized by type (decisions, bugfixes, features, discoveries) and queryable by file path or semantic concept (e.g., "decisions about token refresh").
 
-### RAD Protocol (Coming Soon)
+### RAD Protocol (announced earlier, not in the current README)
 
-**Real-Time Agent Data** — an open protocol standardizing how AI agents capture and retrieve working memory. Positioned as a counterpart to RAG (Retrieval Augmented Generation). Hook-based architecture for temporal awareness.
+**Real-Time Agent Data** — an open protocol for how AI agents capture and retrieve working memory, announced as a counterpart to RAG. The README no longer mentions it (checked 2026-11-09); whether it was dropped or moved is unverified.
 
 ### Adoption Considerations
 
-**Strengths**: Largest community memory solution (45.2K stars), progressive disclosure saves tokens, hybrid search (FTS5 + vector), multi-platform (CC + Gemini CLI), web UI for browsing history, [dedicated docs site][claude-mem-docs].
+**Strengths**: 115.2K stars (2026-11-09), progressive disclosure saves tokens, hybrid search (FTS5 + vector), cross-agent adapters, web UI for browsing history, [dedicated docs site][claude-mem-docs].
 
-**Risks**: Heavy dependencies (Bun + uv + Chroma). Overlaps with CC's built-in memory system and ByteRover.
+**Risks**: Heavy dependencies (Bun + uv + Chroma). Overlaps with CC's built-in memory system and ByteRover. The README states "Anonymous usage analytics are on by default" (`npx claude-mem telemetry disable` turns them off). The hosted observer and cloud sync are paid or opt-in services next to the Apache-2.0 core.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -508,7 +509,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 | [agent-memory][agent-memory] | Long-term memory runtime for Claude Code/Codex/Hermes (README, `gh api`, 2026-09-30) |
 | [ai-memory][ai-memory] | Cross-agent long-term memory (Rust) |
 | [Byterover][byterover] · [paper][byterover-paper] | Agent memory layer (CLI) |
-| [claude-mem][claude-mem] · [docs][claude-mem-docs] | Claude Code memory plugin |
+| [claude-mem][claude-mem] · [docs][claude-mem-docs] · [configuration][claude-mem-config] | Cross-agent memory plugin (README, releases, `gh api`, 2026-11-09) |
 | [claude-reflect][claude-reflect] | Correction/preference memory plugin for Claude Code |
 | [Core][core] · [benchmark repo][core-benchmark] | Self-hosted personal AI OS with CC/Codex delegation |
 | [deja-vu][deja-vu] · [security model][deja-vu-security] | Cross-agent session-history memory index |
@@ -534,6 +535,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
+[claude-mem-config]: https://github.com/thedotmack/claude-mem/blob/main/docs/public/configuration.mdx
 [claude-mem-docs]: https://docs.claude-mem.ai/introduction
 [claude-reflect]: https://github.com/BayramAnnakov/claude-reflect
 [core]: https://github.com/RedPlanetHQ/core
