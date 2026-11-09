@@ -3,8 +3,8 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: assess
 ---
 
@@ -162,6 +162,10 @@ Design lens — Lindenberg's *The Change of Mind Is Information* treats Utopia's
 
 These five give the [agent substrate rubric][rubric] its first ontology-doc evidence for **Shared** and **Distributed**, both previously unscored here: `open-ontologies` and `Ontology Atlas` are `partial` on both, `AWS context-ontology-accelerator` is `yes` on both, `EvoOntology` stays `no data`/`no` — a single-session plugin with no shared-store or multi-machine claim — and `Utopia` is `partial`/`no` (one shared knowledge base behind an MCP server, gated through a single human review queue; single-binary deployment, no cluster documented).
 
+**[NVIDIA Auto Ontology][auto-ontology]** (Apache-2.0, 10.8k★, `gh api` 2026-11-09; version 1.2.0 in `pyproject.toml` and the Helm chart, no GitHub release or PyPI package) is the relational, SQL-only member of this wave. Its README sums it up as three stages: "it generates an ontology, people certify it, and the agent answers questions from it." An ingestion service reads database schemas, profiles columns, extracts business terms table by table, infers joins and bridge tables, and suggests reusable SQL expressions from query history; terms, relationships and SQL attributes are stored "in Postgres, with embeddings in pgvector". People then test, refine and certify that draft. At question time a text-to-SQL agent retrieves certified terms, writes SQL, checks filter values and the query against the database, repairs it when a check fails, and returns the answer with its SQL; when the candidates can't support a query it says the question can't be answered. There is no RDF, OWL or SPARQL layer: the "graph" is the term/relationship graph shown in its UI. Agents reach it through a read-only MCP server, where "every call runs with that user's permissions", plus a CLI and REST API. Inference defaults to NVIDIA NIM, and an optional KumoRFM route for predictive questions uploads the connected tables to that hosted service. Two cautions from the README: the backend trusts a user ID the frontend forwards in a header, and the ingestion endpoints "have no authentication of their own", so only the web app's port should be exposed; and the project "is currently not accepting external contributions."
+
+Not rubric-scored, for the same reason as the paper-only entries above: it is Ontology-subject and could not move the reference architecture's one open cell (Context·Reproducible).
+
 **Semantica's decision-graph audit trail** is a candidate for this same "ontology as MCP surface" pattern; its full profile (decision-as-graph-node, PROV-O lineage, bi-temporal facts, point-in-time snapshots) lives elsewhere in this corpus and is not restated here: [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms][semantica-frameworks]. Two facts add to that profile. Timing matters here: [EU AI Act Article 12][ai-act-12] requires high-risk systems to "technically allow for the automatic recording of events (logs) over the lifetime of the system," and the currently amended Act sets that deadline at 2027-12-02 for Annex III systems (2028-08-02 for Annex I) — later than the original date Lindenberg's issue cites, which this entry could not independently re-verify against a primary pre-amendment source. Semantica's own [CHANGELOG][semantica-changelog] is harder evidence than the audit-trail pitch itself: v0.6.7 (2026-08-28) fixed `get_causal_chain()` silently returning an empty chain whenever a causal edge used the analyzer's present-tense vocabulary (`causes`/`influences`/`precedes`) rather than the canonical uppercase form — "silent, and in the dangerous direction for a compliance trace," in the project's own words — fixed a `SHACLGenerator` that produced shapes matching no data so `pySHACL` reported `conforms: True` on plainly violating input, and fixed every RDF export path except JSON-LD silently dropping an entity's source document, page, extractor and reviewer.
 
 Design lens — Lindenberg's *Audit the Auditor* treats a CHANGELOG, not a README pitch, as the real evidence a decision-audit-trail tool is used in earnest: "an audit trail does not fail by crashing; it fails by giving a reassuring answer" (Lindenberg, *Audit the Auditor*, LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`).
@@ -173,7 +177,7 @@ The generic layers above solve the *plumbing* — governed APIs an agent can que
 - **[Databricks Genie Ontology](../agents/databricks-genie-analysis.md#genie-ontology)** — a persistent, authority-ranked context graph (metric definitions, joins, synonyms, business logic) built from query history + workplace apps, **MCP-exposed** so external agents consume the same verified context instead of re-deriving it per query.
 - **[Open Knowledge Format](../knowledge-management/open-knowledge-format-analysis.md)** — a vendor-neutral, Apache-2.0 spec (Google Cloud, v0.1) for portable "knowledge bundles" (markdown + YAML) with AI agents as first-class consumers — the platform-independent interchange format for that curated context.
 
-Together they mark the shift from "query the catalog at runtime" to "pre-loaded, verified business context the agent can trust."
+Together they mark the shift from "query the catalog at runtime" to "pre-loaded, verified business context the agent can trust." [NVIDIA Auto Ontology](#agent-native-ontology-tools-2026-mcp-wave) is an open-source, self-hosted take on the same idea: an LLM-drafted, human-certified business ontology over relational sources, built partly from query history and exposed over MCP.
 
 A complementary research direction formalizes *why* this grounding improves reliability: **[Symbolic Separation][symbolic-separation]** (Davletiyarov, Khan & Bartolini, arXiv:2609.17107, submitted 2026-09-15) lets a deep agent reason freely in natural language but restricts it to *act* on data only through an ontology-constrained Virtual Knowledge Graph with deterministic pre-execution validation — turning a multi-step question into one validated graph traversal instead of LLM-inferred joins. Instantiated as the "Neurosymbolic Deep Analyst" and evaluated on 49.9 TB of supercomputer telemetry against a rigid workflow and a non-symbolic ablation, it raised end-to-end task success from 43% to 86%, eliminated silent data-integrity errors no syntactic check catches, and cut token cost 2.4x — evidence for the agent-native layer's premise from the opposite direction: an *unconstrained* agent over raw telemetry fails multi-step composition, a *symbolically separated* one succeeds.
 
@@ -208,6 +212,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 | [EU AI Act Article 12 explainer][ai-act-12] | Record-keeping requirement text and the amended Annex III deadline (2027-12-02) |
 | André Lindenberg — *The Change of Mind Is Information* (LinkedIn, 2026-09-05; `linkedin.com/pulse/change-mind-information-andré-lindenberg-uvcue`) | Design lens: bitemporal correction as the cheap starting point for an agent-facing ontology (LinkedIn — not link-checked) |
 | André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
+| [NVIDIA Auto Ontology README][auto-ontology] | Generate/certify/answer stages, Postgres + pgvector store, read-only MCP server, NIM default, KumoRFM route, ingestion-auth caution; Apache-2.0 LICENSE, `pyproject.toml` 1.2.0; `gh api` 2026-11-09 |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
 | [OaK abstract page][oak-paper] | Task-oriented ontology-as-a-kernel method, judge-feedback refinement loop, TravelPlanner/CRMArenaPro/ToolQA results, confirmation of no code link — accessed 2026-10-06 |
 | [SciToolAgent-Evo abstract page][scitoolagent-paper] | Self-evolving tool-graph ontology for scientific tool acquisition, OpenSciToolBench benchmark, confirmation of no code link — accessed 2026-10-06 |
@@ -244,6 +249,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 [semantica-changelog]: https://github.com/semantica-agi/semantica/blob/main/CHANGELOG.md
 [ai-act-12]: https://artificialintelligenceact.eu/article/12/
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
+[auto-ontology]: https://github.com/NVIDIA/auto-ontology
 [oak-paper]: https://arxiv.org/abs/2608.22974
 [scitoolagent-paper]: https://arxiv.org/abs/2607.28692
 [evodkd-paper]: https://arxiv.org/abs/2507.21438

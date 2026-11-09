@@ -3,8 +3,8 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: reference
 ---
 
@@ -85,6 +85,8 @@ At most an optional, experimental CDP backend for low-fidelity, structure-first 
 ### Accessibility-tree page representation
 
 A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/screenshots (Magnitude, above): the browser's **accessibility (a11y) tree** — a semantic role/name view that runs ~80–90 % smaller than the raw DOM and stays stable across visual redesigns, at the cost of being an assistive-tech-shaped subset (decorative / non-interactive nodes are pruned — not a full-fidelity extraction of body text). It is the representation the agent-browser MCP tools converge on; see the [CC web-scraping plugins analysis](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for the MCP-level framing (Playwright MCP, Chrome DevTools MCP).
+
+**Desktop counterpart: agent-desktop.** The same accessibility-tree approach now covers native desktop apps. [vercel-labs/agent-desktop][agent-desktop] (Apache-2.0, v1.2.0 released 2026-11-05) is a Rust CLI and C library that "gives an AI agent computer use without screenshots or pixel matching": it reads a desktop app's accessibility tree through the OS API (AX API on macOS 13+, UI Automation on Windows 10 1809+, AT-SPI on Ubuntu 24.04+) and returns JSON with a ref per element, which the agent then clicks or types on. "The loop lives in your agent; agent-desktop has no model inside." Ref actions are headless by default (no pointer movement or focus change; `--headed` allows physical input), and refs are bound to the snapshot they came from, so a changed UI returns an error instead of a wrong click. Agents use it as a CLI, as a skill (`npx skills add https://github.com/vercel-labs/agent-desktop --skill agent-desktop`), or since v1.2.0 through `agent-desktop mcp`. Its own AGENTS.md draws the line with the browser tool: "It does not automate web pages (use agent-browser)." The README warns that snapshots, clipboard reads and screenshots can contain private desktop content. Screenshot-based computer use (Anthropic's computer-use tool) is the contrasting approach; see the [CC web-scraping plugins analysis](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md). A decision-model variant, the repo's `jev-desktop` skill, is listed under [system-1-decision-models-landscape.md § Tools built on Jev](../reference/system-1-decision-models-landscape.md#tools-built-on-jev).
 
 **Version-gate before relying on the API — it moved recently.** Playwright removed `page.accessibility.snapshot()` in [1.57](https://playwright.dev/docs/release-notes) (it now points to Axe for a11y *testing*); the LLM-facing replacement is `aria_snapshot` (role/name YAML). The [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) 1.58.2 pin exposes only `page.locator("body").aria_snapshot()` (signature `aria_snapshot(*, timeout) -> str`) — no `Page.aria_snapshot` shortcut and no `mode="ai"` option (the AI-optimised snapshot with `[ref=e2]` element refs is a newer upstream Playwright feature, absent from this pin). Re-check against the pinned version before use.
 
@@ -244,3 +246,4 @@ Need LLM-ready output?
 Each tool links to its first-party page inline in the tables above. This catalog was migrated from [polyfetch-scrape's `scraping-landscape.md`][polyfetch] (origin 2026-04-23, content snapshot 2026-04-26); see that repo for empirical probe results specific to its fallback chain.
 
 [polyfetch]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
+[agent-desktop]: https://github.com/vercel-labs/agent-desktop
