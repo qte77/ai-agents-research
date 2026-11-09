@@ -3,8 +3,8 @@ title: CC Print Mode Gotchas
 source: empirical testing (cc-recursive-team-mode integration tests, 2026-03-23)
 purpose: Document undocumented requirements and pitfalls when using claude -p for headless/CI execution.
 created: 2026-03-23
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: verified
 ---
 
@@ -86,7 +86,7 @@ Observations from running `claude -p` as an unattended/scripted lane, distinct f
 
 **Project allow rules wait for workspace trust.** Running `claude -p` in a repository prints a line such as "Ignoring N permissions.allow entries from .claude/settings.json: this workspace has not been trusted…" (CC 2.1.310, Codespaces, 2026-10-24). This matches documented behavior, not a bug: Claude Code applies a project's `permissions.allow` rules and `permissions.additionalDirectories` entries only after the workspace trust dialog is accepted for that folder, and "Claude Code shows the trust dialog in interactive sessions only. A `claude -p` run or an SDK session never shows it" ([source][cc-permissions]). A headless lane that needs those allow rules must get trust some other way — e.g. a prior interactive run in the same checkout, or starting from an already-trusted configuration home — not by committing more rules to the project file.
 
-**A stale `GH_TOKEN`/`GITHUB_TOKEN` shadows a working `gh` login.** When either variable is set in the environment but stale or scoped wrong, `gh` calls inside a headless run fail GitHub operations even though `gh auth login` succeeds outside that environment (CC 2.1.310, Codespaces, 2026-10-24). Strip them for the child process: `env -u GH_TOKEN -u GITHUB_TOKEN claude -p …`.
+**A stale `GH_TOKEN`/`GITHUB_TOKEN` shadows a working `gh` login.** When either variable is set in the environment but stale or scoped wrong, `gh` calls inside a headless run fail GitHub operations even though `gh auth login` succeeds outside that environment (CC 2.1.310, Codespaces, 2026-10-24). Strip them only around the `gh` and git network calls inside the run (`env -u GH_TOKEN -u GITHUB_TOKEN gh …`), not from the whole `claude -p` process: other tooling may need `GITHUB_TOKEN`. In Codespaces the commit signer does — with it stripped, `git commit` fails with `gpg: skipped "GitHub <noreply@github.com>": No secret key` (observed 2026-10-29). Tell the agent to prefix its own network calls; don't bake the prefix into a committed allow rule.
 
 **`--permission-prompts none` exists in 2.1.310.** Confirmed directly against `claude --help` (CC 2.1.310, 2026-10-24), verbatim: `--permission-prompts <target>  Who answers permission prompts with --print: "host" (the SDK host or --permission-prompt-tool) or "none"`. Paired with `--permission-mode auto` (also a valid `--help`-listed choice), a `-p` run can avoid waiting on any permission prompt at all.
 
