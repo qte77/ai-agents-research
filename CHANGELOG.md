@@ -11,6 +11,185 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.18.0] - 2026-11-09
+
+### Added
+
+- `docs/cc-native/configuration/CC-advisor-tool-analysis.md`: first-party coverage of Anthropic's
+  advisor tool — the `advisor_20260301` API beta (`advisor-tool-2026-03-01` header) that lets an
+  executor model consult a stronger advisor mid-request — covering tool parameters, model
+  pairing, billing/usage accounting, the Claude Code `/advisor` surface, and an unresolved
+  platform-availability conflict between the API and Claude Code docs on Claude Platform on AWS.
+- `docs/cc-native/configuration/CC-env-vars-reference.md`: `CLAUDE_CODE_DISABLE_ADVISOR_TOOL` is
+  now documented (was binary string-extraction only).
+- `docs/cc-native/configuration/CC-tools-inventory.md`: `/advisor` slash command and
+  `advisorModel` settings.json key.
+- `docs/cc-native/configuration/CC-cli-reference.md`: `--advisor` hidden CLI flag.
+- `docs/cc-community/CC-community-reimplementations-landscape.md`: note that the leaked
+  `advisor-tool` beta header shipped as `advisor-tool-2026-03-01`.
+
+- `docs/cc-native/sessions/CC-session-cost-analysis.md`: documented the price modifiers the usage object already
+  exposes (`speed`/fast mode, `inference_geo`, cloud regional-endpoint premiums, long-context and Haiku 5.5
+  prompt-length pricing, discount-stacking rules, tool-use overhead tokens, and Claude Managed Agents'
+  $0.08/session-hour rate), and added a bounded Message Batches API section (discount, limits, unsupported
+  parameters, best-effort caching, rate-limit exemption, `output-300k-2026-03-24` beta).
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: added the platform-level facts missing from the
+  doc (4-breakpoint limit, automatic caching's breakpoint slot, TTL-ordering rule, lifetime start, ZDR eligibility,
+  no manual clear, best-effort caching with Batches) and a sibling "API-level invalidation" subsection next to the
+  existing Claude Code invalidation list, recording — without resolving — a conflict between the API docs
+  ("effort" changes always invalidate) and the Claude Code docs (no invalidation on the 5.5-series models).
+
+- `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md`: NVIDIA Auto Ontology
+  (Apache-2.0) — LLM-drafted, human-certified business ontology over relational sources in
+  Postgres + pgvector, SQL-only text-to-SQL agent, read-only MCP server; ingestion-auth caution; not
+  rubric-scored (gap-driven policy). Hub row in `docs/_topics/knowledge-graphs.md`.
+- `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md`: agent-desktop (vercel-labs,
+  Apache-2.0, v1.2.0) as the desktop counterpart of accessibility-tree browser automation — OS a11y
+  APIs on macOS/Windows/Linux, headless refs, skill + MCP server. `jev-desktop` skill listed under
+  Tools built on Jev in `system-1-decision-models-landscape.md`.
+
+- `docs/cc-community/CC-community-tooling-landscape.md`: TokenEconomizer (microsoft, Apache-2.0,
+  v0.1.0, arXiv:2610.22732) — cross-session cost control via plugin hooks (micro-skills, tool pruning,
+  loop guard); new layer 6 in the Token-Waste Reduction Stack and a Comparison row.
+
+- `docs/non-cc/infrastructure/microsoft-mxc-analysis.md`: Microsoft MXC (Execution Containers; MIT,
+  v1.0 GA 2026-10-07) — cross-platform sandbox SDK for agent-generated code: AppContainer/WFP process
+  container on Windows, Bubblewrap on Linux, Seatbelt on macOS; closed, deny-by-default JSON policy;
+  Enforcement/Learning/Permissive modes; Required telemetry in the 1.1.0-alpha contract. Claude Code
+  support is a Microsoft announcement only. Indexed in `docs/non-cc/README.md`; linked from
+  `CC-sandboxing-analysis.md` (Windows row) and `nvidia-openshell-analysis.md`.
+
+- `docs/non-cc/coding-agents/zed-analysis.md`: Zed as an agent host — Zed Agent, external agents over
+  ACP (Claude Agent runs the Claude Agent SDK via `agentclientprotocol/claude-agent-acp`), terminal
+  threads, the ACP configuration boundary, ACP spec status (stable protocol version 1), Zeta edit
+  predictions; GPL-3.0-or-later + Apache-2.0. Indexed in `docs/non-cc/README.md`; linked from Goose's
+  ACP section.
+
+### Changed
+
+- `docs/cc-native/ci-remote/CC-web-auth-setup-analysis.md`: refreshed the authentication precedence
+  table to 7 entries (was 6), adding "Anthropic profile and federation credentials" between
+  `CLAUDE_CODE_OAUTH_TOKEN` and subscription OAuth; added the docs' own `-p`-mode nuance ("the key is
+  always used when present", no approval prompt); new subsection on confirming which org/workspace a
+  key resolves to via response headers, and on scoping an `apiKeyHelper` key to headless runs only.
+
+- `docs/cc-native/agents-skills/CC-cross-session-messaging-analysis.md`: added the observed
+  `notify_when_idle` notice wording (session-registry check for the one-line status detail) and a
+  new "In Practice" section of peer-messaging observations.
+
+- `docs/cc-native/sessions/CC-print-mode-gotchas.md`: new "Unattended Headless Lanes" section —
+  project `permissions.allow` rules waiting on workspace trust (never shown in `-p`), a stale
+  `GH_TOKEN`/`GITHUB_TOKEN` shadowing `gh` auth, the `--permission-prompts none` flag, and a `/goal`
+  headless run reporting success with an empty `result`. Also adds the file's first `## Sources`
+  section.
+
+- `.github/workflows/rxiv-paper-eval.yaml`: pinned gha-rxiv-paper-eval v0.5.1, so a weekly run whose
+  every relevance call fails (as W42 did on an expired token) now fails the job instead of ending
+  green with no triage PR.
+
+- `docs/cc-native/configuration/CC-models-reference.md`: replaced the stale "Fable 5 (newest model)" framing and
+  "Opus-tier $5/$25" comparison with the current per-model price table (Fable/Mythos 5.1 and 5, Opus 5.5 down
+  through 4.5, Sonnet 5.5/5/4.6/4.5, Haiku 5.5's two prompt-length tiers, Haiku 4.5) from the pricing page, and
+  noted Sonnet 5's $2/$10 per-MTok rate is now standard, not introductory.
+- `docs/cc-native/sessions/CC-session-cost-analysis.md`: fixed a doubled `docs/` segment in the pricing-page link;
+  replaced the duplicated Opus/Sonnet/Haiku 4.6 price table with a pointer to CC-models-reference.md.
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: replaced the flat 0.1x cache-hit multiplier with
+  the per-model tiers (0.025x Fable/Mythos 5.1, 0.05x Opus/Sonnet 5.5, 0.1x others); requoted the Bedrock/Google
+  Cloud cache-isolation sentence, which was no longer verbatim against the current prompt-caching docs.
+
+- `docs/cc-native/configuration/CC-fast-mode-analysis.md`: refreshed against the Claude Code and API
+  fast-mode pages (2026-10-26) — Opus 5.5 (GA on the API) / Opus 5 / Opus 4.8 supported, Opus 4.7
+  removed; Claude Code default history (v2.1.154 / v2.1.219 / v2.1.280); API `speed` parameter, beta
+  header, rate-limit headers and 429 behaviour vs Claude Code's auto-fallback; fast = exactly 2x
+  standard price; no Batch API / Priority Tier; VS Code toggle; the two pages' platform lists
+  recorded side by side.
+- `docs/cc-native/configuration/CC-tools-inventory.md`: `fastMode` row no longer says "Opus 4.6 only".
+
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`: Hallucination Detection now cites Anthropic's
+  help-center article on incorrect or misleading responses (vendor acknowledgement, verbatim quotes,
+  read 2026-10-26).
+
+- `docs/cc-native/sessions/CC-goal-analysis.md`: new "Measured: headless batch runs" section from
+  two batches of `claude -p "/goal …"` runs against task files (20 runs on 2026-10-24, 17 on
+  2026-10-29). Every run's result metadata read `success`/`completed` whether or not the goal was
+  met, the final message was empty in 13 of 37 runs, `permission_denials` were recorded without
+  ending any run, and a cloud `/goal` over 4,000 characters left the session idle. The task-list
+  pattern is no longer marked untested.
+
+- `CONTRIBUTING.md`: Commit & PR asks vendor-affiliated contributors to disclose the affiliation, keeps existing doc
+  titles, index rows and `status` maintainer-owned, and states that `main` requires signed commits.
+
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: the effort-vs-cache "two statements"
+  are reconciled — Claude Code's gateway guide documents that CC sends per-turn effort as
+  `output_config.effort` on `role: "system"` entries (the API's per-message-effort exception, beta
+  `mid-conversation-output-config-2026-07-01`).
+- `docs/cc-native/configuration/CC-fast-mode-analysis.md`: platform lists reconciled (Google Cloud's
+  Agent Platform is the Google-managed product, not the Anthropic-managed one; Foundry fast mode is
+  API-only, not in Claude Code); Opus 4.8 fast mode deprecated 2026-10-30, removal 2026-11-30; both
+  pages now label Opus 5.5 available; Ultra plan name; status `available`.
+- `docs/cc-native/configuration/CC-advisor-tool-analysis.md`: platform "conflict" resolved (Claude Code
+  disables the advisor on Claude Platform on AWS; the API page dropped its not-available sentence);
+  compatibility table is 12 entries / 14 models; Haiku 5.5 is an accepted advisor; Haiku 4.5's
+  executor-only role is stated in the Claude Code docs.
+
+- `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`: `anthropics/skills` refreshed (19 skill
+  folders, five-plugin `anthropic-agent-skills` marketplace, spec moved to agentskills.io, per-skill
+  licensing, 190.3k★ on 2026-11-09).
+- `docs/cc-native/plugins-ecosystem/CC-office-document-skills.md`: the docx/pdf/pptx/xlsx skills moved
+  from a proprietary license to Apache 2.0 on 2026-11-06; marketplace install commands added.
+
+- `docs/cc-community/CC-memory-tooling-landscape.md`: Claude-Mem refreshed to v15.13.0 / 115.2K stars —
+  cross-agent adapters, 9 Claude Code hook events, per-user worker port `37700 + (uid % 100)`, hosted
+  observer option, telemetry on by default; RAD protocol no longer in the README; unsourced
+  "largest community memory solution" claim dropped.
+
+- `docs/non-cc/coding-agents/deepseek-harness-analysis.md`: dsh-superagent prototype (MIT, 2026-10-31) —
+  a proactive one-repository coding agent bundled for DeepSeek Harness: GitHub/Feishu triggers,
+  router + per-Ticket worker sessions, 5 s / 30 min execution limits, no sandbox (runs as the operator's
+  OS user); press-reported article figures left out (no first-party copy).
+- `docs/plans/2026-10-10-0012-decision-models-estate.md`: N12 (owner leads 2026-11-09) shipped.
+
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md`: re-read the Microsoft "Claude models from
+  Anthropic" page after its 2026-11-04 revision (drift report #749) — quotes now say "Claude models";
+  added the commercial-cloud default-on statement, the EU/EFTA/UK re-opt-in requirement, the
+  sovereign-cloud exclusion, and the two-year / seven-year retention for flagged Data Retention content.
+
+- `docs/non-cc/coding-agents/opencode-analysis.md`: Anomaly's Rune UI framework (MIT, pre-release;
+  recreating OpenCode Desktop is its announced flagship test).
+
+### Fixed
+
+- `.github/scripts/learnings-aggregator.py`: change detection now hashes the upstream
+  `AGENT_LEARNINGS.md` instead of the rendered mirror, whose `updated:` date changed every run, so
+  the weekly job no longer opens a date-only PR. The first run after this lands rewrites the state
+  file once.
+
+- `docs/cc-community/CC-community-plugins-landscape.md`: unlinked `bacharyehya/talk-to-claude`, whose repo
+  now returns 404, so the repo-wide link check passes again.
+- `docs/non-cc/context-memory/mitosis-cortex-analysis.md`: `verginglabs.com` now returns 404; the Verging
+  Labs citation points to its 2026-10-12 Wayback snapshot instead.
+- `lychee.toml`: excluded the one Constellation Research article cited in `kiro-analysis.md`; it returns
+  403 to CI runners but loads normally elsewhere.
+
+- `docs/cc-native/configuration/CC-env-vars-reference.md`: configuration precedence was wrong —
+  environment variables aren't a settings level, `--settings` is the only command-line level, and a
+  settings `env` block overrides the same variable exported in the shell in most sessions; listed the
+  variables project/local files can't set. `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` no longer claims a
+  documented ~95 % default.
+- `docs/cc-native/examples/settings.json`: eight `Bash(git:<sub>:*)` rules matched nothing (`:*` works
+  only at the end of a pattern) — including the `git push` deny and `git commit` ask; rewritten as
+  `Bash(git push *)` etc., read-only git allows dropped (built-in read-only set).
+- `docs/cc-native/configuration/CC-bash-mode-analysis.md`, `docs/cc-native/sandboxing/CC-permissions-bypass-analysis.md`:
+  stopped recommending `Bash(git *:*)` / `Bash(git *)` / `Bash(make *)`; the permissions docs say to put
+  the `*` after the subcommand (a leading `*` also matches injected options such as `git -c`).
+- `docs/cc-native/configuration/CC-tools-inventory.md`: "Precedence unclear" answered for
+  `respectGitignore`; the `fastMode` `.claude.json` cell and the VS Code key marked unverified.
+- `CC-remote-control-analysis.md`, `CC-model-provider-configuration.md`: `.claude/settings.local.json`
+  isn't automatically gitignored when created by hand; three dead settings-page anchors repointed.
+- `docs/cc-native/sessions/CC-print-mode-gotchas.md` (observation, 2026-10-29): strip
+  `GH_TOKEN`/`GITHUB_TOKEN` per `gh`/git network call, not for the whole `claude -p` process — the
+  Codespaces commit signer needs `GITHUB_TOKEN`.
+
 ## [0.17.0] - 2026-10-24
 
 ### Added
