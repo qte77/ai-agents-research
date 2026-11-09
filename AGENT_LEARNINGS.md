@@ -13,6 +13,12 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
 
 ## Learned Patterns
 
+### A merge refused with "Required status check CodeFactor is expected" means the branch is behind
+
+- **Context**: Merging PRs here past the signed-commit rule (owner-approved), several PRs in a row.
+- **Problem**: `main` requires CodeFactor on an up-to-date head (`strict_required_status_checks_policy`). After one PR merges the others are behind, and the merge is refused even though CodeFactor was green on the old head. GitHub's `mergeable_state` lags and can still read `clean` or `unknown` right after a merge, so checking it doesn't help.
+- **Solution**: compare the PR head against `main` (`gh api repos/<o>/<r>/compare/main...<head>` → `behind_by`). If it's behind, update the branch, wait for CodeFactor on the new head, then merge. Unsigned bot commits (weekly triage PRs) merge the same way; no owner-signed commit is needed. Recurred on #725, #733, #735, #745, #752–#760.
+
 ### Rotating github.com 503s in the link check mean lychee is unauthenticated
 
 - **Context**: CI `Link check (lychee)` failing on a *different* github.com URL each run (503 or timeout), on links the PR never touched.
@@ -43,6 +49,8 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
 - **Problem**: The session built a full plan to "execute the #354 graph rebuild" when it was already done (PR #379, 637 nodes, #354 closed) — wasted effort and nearly re-ran a completed rebuild.
 - **Solution**: Before executing any tracked/deferred work in a continued session, reconcile the *actual* state — `git log`, the tracking issue's open/closed state, and key artifacts (e.g. `graphify-out/graph.json` node count) — against what the summary claims. On mismatch, surface it; don't act on the stale model.
 - **References**: [docs/plans/2026-07-08-0006-graphify-rebuild-354.md](docs/plans/2026-07-08-0006-graphify-rebuild-354.md), PR #379.
+- **Recurrence (2026-11-09)**: plan 0012 kept the gate D0 (qte77/.github#45) and five consumer PRs (C1) as "blocked" for two weeks after the owner merged all six on 2026-10-24. Every session copied the state forward from its summary and only listed this repo's open PRs, so PRs in other repos were never re-read. Also stale: a closed foreign PR still listed as pending, and a signing problem that had since been fixed.
+- **Solution (now tooled)**: `make reconcile` (`.github/scripts/plan-reconcile.py`) reads the newest plan's remaining-work table, looks up every cited PR/issue (any repo) through `gh`, and flags rows whose text disagrees with live state. Run it before reporting anything as open or blocked; fix a stale row in the PR that discovers it. Write a reference that doesn't decide its row in backticks so the check skips it. #766, and this PR.
 
 ### graphify: never partial-update a uniformly-built graph
 

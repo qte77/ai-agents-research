@@ -280,6 +280,9 @@ lint: check_docs check_status check_actions check_links ## Run all linters (mark
 test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/pages_build modules)
 	$(PYTHON) -m unittest discover -s tests -v
 
+reconcile: ## Check the newest plan's remaining-work rows against live PR/issue state (needs an authenticated gh)
+	$(PYTHON) .github/scripts/plan-reconcile.py
+
 
 # MARK: GRAPH
 
