@@ -22,7 +22,7 @@ release of the pending changelog fragments. Plans 0009 and 0010 are closed; this
 - **Owner gates:** O2 (`gha-issue-triage` secret). O1 is decided (default applied, overridable).
 - **Access:** nothing new. The existing `gh` credential and polyfetch cover every row; Cloudflare Workers AI
   (`secrets.CF_WORKERS_AI_TOKEN`, `vars.LLM_BASE_URL`) already serves P1.
-- **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`; polyfetch for blocked
+- **Commands:** unset stale `GH_TOKEN`/`GITHUB_TOKEN` for `gh`/git network commands only; polyfetch for blocked
   pages: `uv run --directory /workspaces/qte77/polyfetch-scrape polyfetch fetch --show-body <url>`.
 - **Watch-outs:** follow [`adding-research-source`](../../.claude/skills/adding-research-source/SKILL.md)
   (evidence levels, verbatim quotes, strongest-claims list, site-wide checks for absence claims). Rubric rows only

@@ -30,9 +30,9 @@ Tracking issue: #652.
 - **No links or cross-references to qte77/ai-agents-research** in any other repo's issues, PRs or docs (owner rule, 2026-10-10).
 - **Strict TDD:** failing tests first.
 - Each repo's own validate/lint/test target must be green before pushing.
-- Prefix `gh`/`git` with `env -u GH_TOKEN -u GITHUB_TOKEN`.
+- In this devcontainer, stale `GH_TOKEN`/`GITHUB_TOKEN` variables shadow the stored `gh` credential; unset them for `gh`/git network commands only, never for commits.
 - **Secrets are never printed;** set them via stdin.
-- **Merging:** commits can't be GPG-signed in this sandbox. Use `gh pr merge --squash --admin` only when the signature rule is the sole blocker; never use it past a failing check. In ai-agents-research use `/workspaces/temp/ai-agents-research-triage/merge_retry.sh <PR>`.
+- **Merging:** commits can't be GPG-signed in this sandbox. The owner's bypass of the signature rule is used only when that rule is the sole blocker, never past a failing check; the branch must be up to date with `main` first (see AGENT_LEARNINGS).
 - Briefs forbid skills, `.claude/` edits and spawning sub-subagents.
 
 **Owner gates:** K0 (create keys). Everything else defaults as decided below; the owner may override.

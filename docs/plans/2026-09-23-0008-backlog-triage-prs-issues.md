@@ -15,7 +15,7 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
 
 - **Shipped (2026-09-23):** 23 superseded bot PRs closed, including the 7 community-triage PRs
   (#415–#440), once every row they alone carried was confirmed present in main's `triage/`. Merged
-  with owner `--admin` squash: #445 (this plan), #446 (ccsync), #447 (link rot, closes #254), #434
+  by the owner, squash past the signature rule: #445 (this plan), #446 (ccsync), #447 (link rot, closes #254), #434
   (actions bump), #442, #444, #424, #418, #443, then #448–#451 and #453 (plan bookkeeping,
   permission-rule fix, ccsync docs, sandbox-runtime repoint). **v0.8.0 released** (#454, tag
   `v0.8.0`, GitHub Release published). #433 closed with evidence; #309 boxes ticked and Phase 1
@@ -49,17 +49,16 @@ since is in Current status and the Remaining work table. In scope: PRs/issues au
   #382/#232 closed, #456 superseded by #484). External decisions live elsewhere:
   `qte77/.github#44` (tag the reusable workflows), `analyze-stock-kpi#413` (longs/shorts).
 - **Helpers (outside the repo, persistent):** `/workspaces/temp/ai-agents-research-triage/merge_gated.py
-  <PR…>` (update-branch → wait all checks → lychee re-run once → `--admin` squash; stops on failures);
-  never keep working files in `/tmp` (wiped on restart). `--admin` does NOT bypass a failing
+  <PR…>` (update-branch → wait all checks → lychee re-run once → squash past the signature rule; stops on failures);
+  never keep working files in `/tmp` (wiped on restart). Bypassing the signature rule does NOT get past a failing
   CodeFactor — fix the finding (usually complexity; `uvx radon cc` run outside the repo).
-- **Commands:** prefix every `gh`/`git` network call with `env -u GH_TOKEN -u GITHUB_TOKEN`
-  (invalid env tokens shadow the stored credential).
+- **Commands:** In this devcontainer, stale `GH_TOKEN`/`GITHUB_TOKEN` variables shadow the stored `gh` credential; unset them for `gh`/git network commands only, never for commits.
 - **Watch-outs:**
   - Squash-merges break ancestry → judge "already landed" by content (`git cherry main <branch>`),
     not `git branch --merged`.
   - main requires strict up-to-date branches → merge PRs **one at a time**: `gh pr update-branch`,
-    wait for the required CodeFactor check, then `gh pr merge --squash --admin --delete-branch`
-    (the owner's `--admin` gets past required signatures; see Merge gate).
+    wait for the required CodeFactor check, then squash-merge
+    (the owner's bypass gets past required signatures; see Merge gate).
 
 ## Source map
 
@@ -104,7 +103,7 @@ Each monitor keeps a cumulative state file, so the newest PR in a category conta
 
 Ruleset `13630270` on `main`: the only required status check is **CodeFactor**, plus required
 signatures, linear history and a `code_quality` rule; 0 approvals. The bot PRs show `BLOCKED` because
-their commits are unsigned (#442 head `verified:false, reason:"unsigned"`) → owner `--admin` merge.
+their commits are unsigned (#442 head `verified:false, reason:"unsigned"`) → the owner merges past the signature rule.
 The lychee failures on #445–#447 are corpus-wide rot that none of the three PRs touches. #434's two
 failures are environmental: the same lychee rot, plus a GitHub Models outage (`HTTP 410 …
 github_models_retirement_brownout`).
