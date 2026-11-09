@@ -127,6 +127,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [corsair-analysis.md](infrastructure/corsair-analysis.md) | Corsair (unified managed-OAuth integration API layer for agents, backends, and multi-tenant dashboards) | Yes | Yes (Apache-2.0) |
 | [auto-agi-compiler-analysis.md](infrastructure/auto-agi-compiler-analysis.md) | AUTO (RightNow AI; compiles deterministic agent-execution spans into sandboxed WASM binaries — "frontier models as interpreters") | Yes | Yes (Apache-2.0) |
 | [nvidia-openshell-analysis.md](infrastructure/nvidia-openshell-analysis.md) | NVIDIA OpenShell (kernel-enforced, formally-verified policy runtime for fleets of autonomous agents) | Yes | Yes (Apache-2.0) |
+| [microsoft-mxc-analysis.md](infrastructure/microsoft-mxc-analysis.md) | Microsoft MXC (Execution Containers; policy-driven sandbox SDK for agent code — AppContainer/Seatbelt/Bubblewrap, deny-by-default JSON policy; Claude Code support announced by Microsoft only) | Yes | Yes (MIT) |
 | [rea-analysis.md](infrastructure/rea-analysis.md) | REA (MCP server + CLI giving coding agents reverse-engineering tools for native binaries, JS/Electron apps, .NET assemblies, websites; multi-agent — Claude Code, Codex, Cursor, Gemini CLI, Grok Build) | Yes | Yes (MIT) |
 
 ## Frameworks

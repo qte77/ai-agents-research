@@ -3,8 +3,8 @@ title: NVIDIA OpenShell Analysis
 source: https://github.com/NVIDIA/OpenShell
 purpose: Analysis of OpenShell, NVIDIA's kernel-enforced, formally-verified policy runtime for fleets of autonomous AI agents.
 created: 2026-09-30
-updated: 2026-09-30
-validated_links: 2026-09-30
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: assess
 ---
 
@@ -69,6 +69,7 @@ this check; re-assess once the project accumulates real-world incident reports.
   (Archon, Paperclip, google/ax) that OpenShell's sandboxing model complements rather than replaces.
 - [goclaw-analysis.md](goclaw-analysis.md), [corsair-analysis.md](corsair-analysis.md) — other
   self-hosted agent-infrastructure platforms in this corpus, at comparable analysis granularity.
+- [microsoft-mxc-analysis.md](microsoft-mxc-analysis.md) — Microsoft's MXC sandbox, into which NVIDIA says it has integrated OpenShell (Microsoft blog, 2026-10-07).
 
 ## Sources
 
