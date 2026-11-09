@@ -1,10 +1,10 @@
 ---
 title: CC Model & Provider Configuration
-source: https://code.claude.com/docs/en/settings#environment-variables, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
+source: https://code.claude.com/docs/en/env-vars, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-10-11
-validated_links: 2026-10-11
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: reference
 ---
 
@@ -80,7 +80,7 @@ export ANTHROPIC_AUTH_TOKEN="<openrouter-api-key>"
 export ANTHROPIC_API_KEY=""  # must be explicitly empty
 ```
 
-Or in `.claude/settings.local.json` (project-level, git-ignored):
+Or in `.claude/settings.local.json` (project-level; this file holds a key, so make sure git ignores it — Claude Code adds it to your global git excludes only once it has written the file itself; a file you create by hand needs a `.gitignore` entry, [source](https://code.claude.com/docs/en/settings#keep-personal-settings-out-of-a-repository)):
 
 ```json
 {
@@ -463,7 +463,7 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - [OpenCode + Infomaniak AI Tools setup (janikvonrotz)][infomaniak-opencode]
 - [n8n community — add Infomaniak AI language model][infomaniak-n8n]
 
-[cc-settings]: https://code.claude.com/docs/en/settings#environment-variables
+[cc-settings]: https://code.claude.com/docs/en/env-vars
 [cc-effort]: https://code.claude.com/docs/en/model-config#adjust-effort-level
 [cc-ultrathink]: https://code.claude.com/docs/en/model-config#use-ultrathink-for-one-off-deep-reasoning
 [openrouter]: https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration
