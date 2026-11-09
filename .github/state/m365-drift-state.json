@@ -13,7 +13,8 @@
   },
   "https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-select-agent-model#gpt-4-1-gpt-5-retirements-2026-11-12": {
     "quote": "GPT-4.1 Standard GPT Chat Latest November 12, 2026 Yes",
-    "ms_date": "2026-10-22T00:00:00Z"
+    "ms_date": "2026-10-22T00:00:00Z",
+    "due": "2026-11-12"
   },
   "https://learn.microsoft.com/en-us/copilot/microsoft-365/connect-to-ai-subprocessor": {
     "quote": "Anthropic models with Data Retention",
@@ -21,6 +22,15 @@
   },
   "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow": {
     "quote": "Microsoft Foundry is retiring workflows on December 1, 2026.",
-    "ms_date": "2026-07-31T00:00:00Z"
+    "ms_date": "2026-07-31T00:00:00Z",
+    "due": "2026-12-01"
+  },
+  "https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started#powershell-retirement-2026-11-01": {
+    "quote": "Existing settings are honored until November 1, 2026",
+    "ms_date": "2026-09-25T00:00:00Z"
+  },
+  "https://www.microsoft.com/microsoft-365/RoadmapFeatureRSS/545896": {
+    "quote": "GA date: October CY2026",
+    "ms_date": null
   }
 }
