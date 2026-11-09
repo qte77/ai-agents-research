@@ -33,6 +33,7 @@ Doc tooling installs user-locally (zero sudo, into `~/.local/bin`) and runs thro
 make setup_all   # lychee + Node.js + markdownlint-cli2 + actionlint + shellcheck
 make lint        # links (lychee) + markdown (markdownlint-cli2) + actions (actionlint)
 make test        # stdlib unit tests for scripts/ + .github/scripts/lib/ modules
+make reconcile   # newest plan's open rows vs live PR/issue state (needs an authenticated gh)
 make help        # all recipes, grouped by section
 ```
 
