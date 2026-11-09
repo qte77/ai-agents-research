@@ -27,7 +27,7 @@ backdoor system resources to gain network access ([source][cc-security]).
 | macOS | Seatbelt (built-in) | Works out of the box |
 | Linux/WSL2 | bubblewrap + socat | `make setup_sandbox` or `sudo apt-get install bubblewrap socat` |
 | WSL1 | Not supported | bubblewrap requires WSL2 kernel features |
-| Windows | Not supported | not supported (use WSL2); no first-party statement on native support |
+| Windows | Not supported | not supported (use WSL2); no first-party statement on native support. Microsoft lists Claude Code among agents that "will be releasing support" for its MXC sandbox (announcement only, unconfirmed by Anthropic): [microsoft-mxc-analysis.md](../../non-cc/infrastructure/microsoft-mxc-analysis.md) |
 
 ([source][cc-sandboxing])
 
