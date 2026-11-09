@@ -2,8 +2,8 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-10-26
-validated_links: 2026-10-26
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: adopt
 ---
 
@@ -41,7 +41,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 |---|---|---|---|
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | `0` | Prevent extended context window (stays at 200K) | [env-vars][env-vars] |
 | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | `0` | Remove built-in git workflow instructions from context | [env-vars][env-vars] |
-| `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | ~95 | Auto-compaction trigger threshold (% of context window). Official docs say ~95%; observed triggers at ~78-85% ([#18264][gh-18264], [#18241][gh-18241]) | [env-vars][env-vars] |
+| `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | (built-in default) | Percentage (1-100) of the auto-compact window at which compaction triggers. It can only lower the threshold: "values above the default percentage are ignored". The docs give no default number (checked 2026-11-09); observed triggers at ~78-85% ([#18264][gh-18264], [#18241][gh-18241]) | [env-vars][env-vars] |
 | `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | (model context size) | Override context capacity in tokens for compaction calculations | [env-vars][env-vars] |
 
 Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md), [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md)
@@ -165,12 +165,15 @@ Cross-ref: [CC-memory-system-analysis.md](../context-memory/CC-memory-system-ana
 
 ## Configuration Methods
 
-Variables can be set via (in priority order, per [settings docs][settings]):
+Variables can be set in the shell (`export VAR=value` before launching `claude`) or in an `env` block in a settings file. Per the [settings docs][settings-precedence], "Environment variables aren't a level in this stack": an `env` block "is an ordinary key and follows the levels above", so when several settings files set the same variable, the highest-precedence file wins:
 
-1. **Managed settings** (highest) — cannot be overridden
-2. **CLI flags** — `--model`, `--effort`, etc.
-3. **Shell environment** — `export VAR=value` before launching `claude`
-4. **`settings.json` `env` block** — persistent per-project or user-level
+1. **Managed settings** (highest)
+2. **`--settings <file-or-json>`** for one session (the only command-line level; other flags such as `--model` "aren't part of this stack")
+3. **`.claude/settings.local.json`**
+4. **`.claude/settings.json`**
+5. **`~/.claude/settings.json`**
+
+Against the shell, the settings value wins: "When the same variable is set in both your shell and a settings file `env` block, the settings file value applies in most sessions" ([env-vars precedence][env-vars-precedence]). Project and local settings can't set some variables at all, such as `CLAUDE_CONFIG_DIR`, `HOME`, the claude.ai sign-in variables (`CLAUDE_CODE_OAUTH_TOKEN` and related) and the OpenTelemetry exporter variables (only off values such as `none` or `0` apply from those files); set those in the shell, user or managed settings (see the `env` entry in the [settings reference][settings-ref-env]).
 
 See [examples/settings.json](../examples/settings.json) for a working `env` block.
 
@@ -364,6 +367,9 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [settings]: https://code.claude.com/docs/en/settings
+[settings-precedence]: https://code.claude.com/docs/en/settings#settings-precedence
+[env-vars-precedence]: https://code.claude.com/docs/en/env-vars#precedence
+[settings-ref-env]: https://code.claude.com/docs/en/settings-reference#env
 [settings-ref]: https://code.claude.com/docs/en/settings-reference
 [cc-caching]: https://code.claude.com/docs/en/prompt-caching
 [cc-caching-behavior]: ../context-memory/CC-prompt-caching-behavior.md
