@@ -3,8 +3,8 @@ title: CC Remote Control Analysis
 source: https://code.claude.com/docs/en/remote-control
 purpose: Analysis of Claude Code Remote Control for mobile monitoring of long-running CC sessions and cross-device session continuity.
 created: 2026-03-07
-updated: 2026-06-07
-validated_links: 2026-06-07
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: research-preview
 ---
 
@@ -125,7 +125,7 @@ These env vars **break the Remote Control eligibility check** and cause "Remote 
 
 This preserves most traffic reduction while keeping Remote Control functional. Omit `DISABLE_TELEMETRY` — that's the specific flag that blocks the eligibility check.
 
-**Per-project override**: If `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` is set globally in `~/.claude/settings.json`, override it at project level in `.claude/settings.local.json` (gitignored):
+**Per-project override**: If `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` is set globally in `~/.claude/settings.json`, override it at project level in `.claude/settings.local.json` (Claude Code adds that file to your global git excludes the first time it writes it; if you create it by hand, add it to `.gitignore` yourself, [source][cc-settings-local]):
 
 ```json
 {
@@ -140,7 +140,7 @@ This preserves most traffic reduction while keeping Remote Control functional. O
 
 Project-level env vars override user-level per [settings scope precedence][cc-settings].
 
-Source: [CC settings — configuration scopes][cc-settings]
+Source: [CC settings — settings precedence][cc-settings]
 
 Cross-ref: [CC-env-vars-reference.md](../configuration/CC-env-vars-reference.md) for full variable definitions
 
@@ -198,9 +198,10 @@ loop_remote:
 [cc-rc-start]: https://code.claude.com/docs/en/remote-control#start-a-remote-control-session
 [cc-rc-troubleshoot]: https://code.claude.com/docs/en/remote-control#troubleshooting
 [cc-netcfg]: https://code.claude.com/docs/en/network-config
-[cc-settings-files]: https://code.claude.com/docs/en/settings#settings-files
+[cc-settings-files]: https://code.claude.com/docs/en/settings#settings-files-and-who-they-affect
+[cc-settings-local]: https://code.claude.com/docs/en/settings#keep-personal-settings-out-of-a-repository
 [cc-rc-guide]: https://claudefa.st/blog/guide/development/remote-control-guide "Claude Code Remote Control: Complete Setup Guide"
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-cli]: https://code.claude.com/docs/en/cli-reference
 [cc-sec]: https://code.claude.com/docs/en/security
-[cc-settings]: https://code.claude.com/docs/en/settings#configuration-scopes
+[cc-settings]: https://code.claude.com/docs/en/settings#settings-precedence

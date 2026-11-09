@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-10-26
-validated_links: 2026-10-26
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: adopt
 ---
 
@@ -238,10 +238,10 @@ Cross-ref: [CC-env-vars-reference.md](CC-env-vars-reference.md), [CC-hooks-syste
 
 | Key | `.claude.json` | `settings.json` | `claudeCode.*` |
 |---|---|---|---|
-| `fastMode` | Yes | Yes | No |
-| `respectGitignore` | Yes | Yes | Yes (`claudeCode.respectGitIgnore`) |
+| `fastMode` | Unverified | Yes | No |
+| `respectGitignore` | Yes (fallback) | Yes | Unverified (`claudeCode.respectGitIgnore`) |
 
-Precedence unclear. Behavior observed: `/config` panel writes to `.claude.json`; `settings.json` keys may override at runtime.
+Per the [settings reference](https://code.claude.com/docs/en/settings-reference) (checked 2026-11-09), both keys have Scope "Any file", so they follow the normal settings-file precedence. For `respectGitignore`: "When no settings file sets it, Claude Code falls back to `respectGitignore` in `~/.claude.json`, which the `/config` toggle writes." For `fastMode`, "Running `/fast` writes `fastMode: true` to `~/.claude/settings.json`"; the entry does not mention `~/.claude.json`, so the earlier "Yes" in that column is unverified. Neither key is a "Global config" key (those "apply only from `~/.claude.json`"). The VS Code `claudeCode.respectGitIgnore` setting is not on these pages; its relation to the CLI key is unverified.
 
 Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md)
 
