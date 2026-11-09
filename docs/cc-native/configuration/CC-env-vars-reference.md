@@ -42,6 +42,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | `0` | Prevent extended context window (stays at 200K) | [env-vars][env-vars] |
 | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | `0` | Remove built-in git workflow instructions from context | [env-vars][env-vars] |
 | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | (built-in default) | Percentage (1-100) of the auto-compact window at which compaction triggers. It can only lower the threshold: "values above the default percentage are ignored". The docs give no default number (checked 2026-11-09); observed triggers at ~78-85% ([#18264][gh-18264], [#18241][gh-18241]) | [env-vars][env-vars] |
+| `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` | 200000 | Minimum conversation size for idle compaction (compacting a session left idle for about 54 minutes, before its one-hour prompt cache expires); turn the feature off with `"idleCompaction": false` in settings. v2.1.299+ ([changelog][gh-changelog-cc]); see [CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires) | [env-vars][env-vars] |
 | `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | (model context size) | Override context capacity in tokens for compaction calculations | [env-vars][env-vars] |
 
 Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md), [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md)
@@ -388,3 +389,4 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 [re-landscape]: ../../cc-community/CC-reverse-engineering-landscape.md
 [frr-build]: https://www.frr.dev/posts/claude-code-native-build-bun/
 [claudecode-nvim]: https://github.com/coder/claudecode.nvim
+[gh-changelog-cc]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
