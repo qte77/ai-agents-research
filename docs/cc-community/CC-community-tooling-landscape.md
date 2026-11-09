@@ -1,11 +1,11 @@
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file-read deduplication, source enrichment, provider management, injection scanning, permission auto-approval, session-workflow enforcement. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
+purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file-read deduplication, cross-session cost control, source enrichment, provider management, injection scanning, permission auto-approval, session-workflow enforcement. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
 category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-10-11
+updated: 2026-11-09
 validated_links: 2026-10-11
 ---
 
@@ -46,6 +46,7 @@ A layered approach to keeping context in Claude's ~75k-token "smart zone" via de
 | **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); independently verified zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
 | **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity | See [CC-community-skills-landscape.md][skills-landscape] | Output-side only; does not reduce tool or shell output |
 | **5 — Context/prompt compression (library)** | Prune low-information tokens from the prompt before the model call — [LLMLingua][llmlingua] (perplexity-based; LLMLingua-2 is task-agnostic and 3–6× faster) and [Selective Context][selective-context] (self-information pruning). *Adjacent mechanism:* [semantic-router][semantic-router] skips the LLM call entirely for recognized intents (routing, not compression) | [LLMLingua][llmlingua] · [Selective Context][selective-context] · [semantic-router][semantic-router] | General-purpose libraries, **not CC-native** — wire in upstream via a model gateway/proxy or PreToolUse hook; Selective Context effectively unmaintained (last release 2024) |
+| **6 — Cross-session learned control** | Learns per repository which tools go unused, which facts the agent keeps rediscovering and when a turn loops, then prunes tools, injects facts or redirects | [TokenEconomizer](#tokeneconomizer-microsoft) | Early (v0.1.0); savings figures are the authors' own; tool pruning edits `.claude/settings.local.json` |
 
 Layer 1 cross-ref: [CC-changelog-feature-scan.md](../cc-native/configuration/CC-changelog-feature-scan.md) — env var inventory.
 Layer 2 cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — PostToolUse hook mechanism.
@@ -160,6 +161,29 @@ PreToolUse hook that deduplicates file reads within a session. When Claude reque
 Default mode is **warn** (logs but does not block) to avoid conflicts with the Edit tool, which requires a preceding Read. Switch to **block** mode after validating it doesn't break your edit workflow.
 
 Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — PreToolUse hook mechanism Boucle relies on
+
+---
+
+## TokenEconomizer (microsoft)
+
+**Repo**: [microsoft/TokenEconomizer][tokeneconomizer] | **License**: Apache-2.0 | **Version**: v0.1.0 (2026-10-26) | **Paper**: [arXiv:2610.22732][tokeneconomizer-paper]
+
+A hook plugin from UC Berkeley, Microsoft Research and Microsoft Security that learns from earlier sessions in the same repository and uses that to cut repeated token cost in later ones. It changes nothing in the agent or its model; it works through the agent's hooks and settings. Every other tool in the [Token-Waste Reduction Stack](#token-waste-reduction-stack) acts within one call or one session; this one carries what it learned across sessions.
+
+| Mechanism | What it does | Default |
+|---|---|---|
+| **Micro-skills** | A fact-proposer model drafts repository facts from repeated failures; confirmed facts are injected at session start | Off (the proposer adds model calls) |
+| **Tool pruning** | A tool unused over *p* = 10 prompts across at least *m* = 2 sessions, or over *s* = 5 sessions, is left out through the agent's own settings (on Claude Code: single tools, written to `.claude/settings.local.json`) | On |
+| **Loop guard** | When a turn keeps hitting the same failures, a judge model at confidence ≥ 0.7 adds at most one redirect note; the README says "it never stops a turn itself" | On |
+
+- **Claude Code integration**: plugin hooks for SessionStart, UserPromptSubmit, PostToolUse, PostToolUseFailure, Stop and SessionEnd (`plugin/hooks/hooks.json`). Installed from a local clone with `claude plugin marketplace add "$PWD/TokenEconomizer"`, then `claude plugin install tokeneconomizer@tokeneconomizer`. Supported Claude Code versions are 2.1.300 to 2.1.310; older ones are "not supported".
+- **Other agents**: Codex, GitHub Copilot CLI and Pi are supported; opencode, Cursor Agent, Grok Build, Hermes Agent and Antigravity CLI are experimental. Tool pruning writes to each agent's own settings, so it removes single tools on Claude Code but whole MCP servers on Copilot CLI.
+- **Costs and data**: its own model calls (proposer, judge, redirect) run through the user's agent on the same plan, need no separate API key, and are counted in its reports. What it learns stays in `~/.tokeneconomizer`.
+- **Reported results** (by the authors, not independently replicated): on SWE-Bench tasks, "18.4–30.9% lower mean cost" across five agent–model combinations, cheaper in all 30 repository × combination cells, and Pass@1 up in 4 of 5.
+
+**Caution:** tool pruning writes to `.claude/settings.local.json`. Review what it writes before enabling it on a repository whose settings other people rely on.
+
+Cross-ref: [CC-usage-tooling-landscape.md](CC-usage-tooling-landscape.md) (measurement layer); [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) (the hook events it uses)
 
 ---
 
@@ -474,8 +498,9 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Active (v1.30.0, rapid iteration) |
 | **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
 | **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
+| **TokenEconomizer** | Cross-session cost control | Plugin hooks (6 events) + `settings.local.json` | Micro-skills, tool pruning, loop guard learned per repository | Early (v0.1.0, Apache-2.0) |
 | **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Active (4.1K stars, 48 releases) |
-| **Claude-Mem** | Persistent memory + compression | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (45.2K stars, v6.5.0) |
+| **Claude-Mem** | Persistent memory + compression (cross-agent) | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (115.2K stars, v15.13.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
 | **Parry Guard** | Injection/secrets/exfil scanning | Hooks (PreToolUse + PostToolUse + UserPromptSubmit) | Local ML (DeBERTa v3) + AST/regex layers, fail-closed | Early (44 stars, v0.1.5) |
 | **Dippy** | Permission auto-approval | PreToolUse hook (Bash matcher) | Static bash-AST safe/unsafe classification + steerable deny messages | Active (242 stars, v0.2.7) |
@@ -498,7 +523,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 | **human-review** | Visual review + feedback relay | Skill (any agent with skill support) | Google-Doc-style comments/edits batched to the waiting agent | Active (1,302 stars, v0.8.2) |
 
-All twenty-seven address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
+All twenty-eight address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
 
@@ -511,9 +536,10 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [GSD repository][gsd-repo] | Meta-prompting + context engineering framework |
 | [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
 | [Boucle-framework][boucle] | Read-once file deduplication hook |
+| [TokenEconomizer][tokeneconomizer] · [paper][tokeneconomizer-paper] | Cross-session cost control plugin: README, `plugin/hooks/hooks.json`, v0.1.0 release (Apache-2.0; read 2026-11-09) |
 | [ByteRover CLI][byterover] | Portable memory layer for coding agents (MCP, context trees) |
 | [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
-| [Claude-Mem][claude-mem] | Persistent memory compression system (45.2K stars) |
+| [Claude-Mem][claude-mem] | Persistent memory compression system, cross-agent (115.2K stars, v15.13.0; `gh api` 2026-11-09) |
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
 | [Parry Guard][parry-guard] | CC-hook injection/secrets/exfil scanner, local DeBERTa + AST layers (44 stars, MIT; optional Llama-licensed model; v0.1.5, PyPI-verified) |
 | [Dippy][dippy] | PreToolUse bash auto-approval hook, zero-dep vendored parser (242 stars, MIT, v0.2.7) |
@@ -565,6 +591,8 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [gsd-1466]: https://github.com/gsd-build/get-shit-done/issues/1466
 [ecc]: https://github.com/affaan-m/everything-claude-code
 [boucle]: https://github.com/Bande-a-Bonnot/Boucle-framework
+[tokeneconomizer]: https://github.com/microsoft/TokenEconomizer
+[tokeneconomizer-paper]: https://arxiv.org/abs/2610.22732
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
