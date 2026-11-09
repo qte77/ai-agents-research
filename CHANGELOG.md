@@ -11,6 +11,82 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.19.0] - 2026-11-09
+
+### Added
+
+- `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`: idle compaction — Claude Code compacts
+  a 200K+ token session left idle for about 54 minutes before its one-hour prompt cache expires
+  (`idleCompaction`, default on, v2.1.290+ setting; feature history 2.1.299–2.1.318 from the
+  changelog). New env var row `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` in `CC-env-vars-reference.md`;
+  cross-link from `CC-extended-context-analysis.md`.
+
+- `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md`: JSON-LD 1.1 in the Formal
+  Ontologies section (W3C Recommendation; JSON form of Linked Data, usable as RDF), why agents meet it
+  (schema.org markup, Google's JSON-LD recommendation), and YAML-LD (W3C Working Draft) behind Vault-LD.
+
+- `.github/scripts/lib/m365_drift.py`, `.github/scripts/m365-drift-monitor.py`: a watched entry may carry
+  an optional `due` date (YYYY-MM-DD); the weekly M365 drift monitor now flags it once that date has
+  passed, even when the page's `ms.date` and quote are unchanged (the 2026-10-31 retirement went
+  unflagged). The state file keeps extra fields across runs (`build_new_state`). Tests in
+  `tests/test_m365_drift.py` (8 new). Closes the remaining #705 items.
+
+- `make reconcile` (`.github/scripts/plan-reconcile.py`, `.github/scripts/lib/plan_reconcile.py`,
+  `tests/test_plan_reconcile.py`, 13 tests): reads the newest plan's remaining-work table, looks up
+  every cited PR/issue in any repo through `gh`, and flags open rows whose PRs are all merged/closed,
+  struck rows with an open reference, and references it could not check. References in backticks are
+  treated as context. Documented in `CONTRIBUTING.md`; plan 0012's "How to run it" now starts with it.
+- `AGENT_LEARNINGS.md`: the stale-gate recurrence (D0/C1 merged 2026-10-24, read as blocked until
+  2026-11-09) and the update-branch-before-merge pattern.
+
+- `.github/workflows/plan-reconcile-monitor.yaml`: weekly `make reconcile` (Monday 14:00 UTC) that
+  opens or updates a single `plan-drift` issue while any row of the newest plan disagrees with the
+  live state of the PRs/issues it cites, and closes it once every row agrees. A failed `gh`
+  preflight fails the job instead of filing an issue. Documented in `docs/architecture.md`,
+  `AGENT_LEARNINGS.md` and plan 0012.
+
+- `docs/cc-native/agents-skills/CC-dynamic-workflows-analysis.md`: "Collecting results" — where a
+  workflow run's run record and journal land on disk, what each holds per run outcome, and why a
+  `completed` run can still miss agents (observed CC 2.1.316/2.1.319, undocumented; #743).
+
+### Changed
+
+- `.github/state/m365-drift-state.json`: `due` dates on the 2026-11-12 and 2026-12-01 entries; new
+  watched quotes for the 2026-11-01 PowerShell retirement and the structured-document-generation GA
+  roadmap feed.
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md`: the 2026-10-31, 2026-11-01 and October GA
+  timeline rows marked passed, with what the pages said on 2026-11-09 (none confirms the event).
+
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: rules in parent folders load in practice
+  but are undocumented (observed CC 2.1.303); symlinked rules outside the working directory are
+  documented as external imports needing approval, with an observed headless exception for
+  `~/.claude/rules/`; project settings files are read from the working directory (local file: git
+  root). Plan 0001 row 6 done.
+
+- `docs/plans/2026-10-10-0012-decision-models-estate.md`: cross-repo references made explicit
+  (C1, P2, Q1), history references marked as context; R10 struck (qte77/qte77 commits verified since
+  2026-11-02).
+
+- Plans 0001, 0007–0012 and the `adding-research-source` skill: merge-bypass flags and token-unset
+  command prefixes reworded in plain language (owner rule 2026-11-09: no operator commands in public
+  files).
+
+- `docs/cc-native/configuration/CC-tools-inventory.md`: `idleCompaction` listed among the settings-file
+  keys, linking to the idle-compaction section of the prompt-caching doc.
+
+- `docs/architecture.md`, `README.md`, `docs/UserStory.md`: `make reconcile` (plan rows vs live
+  PR/issue state) and the M365 drift monitor's `due` dates documented; the workflows line in the
+  directory map now lists the health monitors, release and Pages workflows.
+
+### Fixed
+
+- Dead links from the link-rot report (#748): Ephemora Cell now cites its PyPI v1.0.4.2 release (GitHub
+  repo gone; test/coverage figures corrected to the README badges, star count dropped);
+  OpenResearch platform requirements cite openresearch.sh/docs/install (repo `docs/` removed);
+  Visa Intelligent Commerce cites Visa's 2025-04-30 press release (partner quote corrected); the
+  unsourced Skywork review (CodeBuddy) and Lushbinary frontmatter source were removed — no claim
+  depended on them alone.
+
 ## [0.18.0] - 2026-11-09
 
 ### Added
