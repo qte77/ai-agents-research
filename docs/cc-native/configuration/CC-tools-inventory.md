@@ -210,6 +210,8 @@ Written by `/config` panel and UI interactions. Located at `~/.claude/.claude.js
 
 80+ keys for permissions, hooks, plugins, model, env, statusLine, etc. Documented at [settings][settings]. Written by `/settings` (update-config skill) or manually.
 
+Includes `idleCompaction` (default `true`, v2.1.290+): compacts a long session left idle before its prompt cache expires; see [CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires).
+
 Includes `advisorModel`, the persistent default for the advisor tool — a server-executed API tool, not a local setting; see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md).
 
 Cross-ref: [CC-env-vars-reference.md](CC-env-vars-reference.md), [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md)
