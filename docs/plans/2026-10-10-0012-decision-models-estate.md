@@ -19,7 +19,7 @@ Tracking issue: #652.
 
 **How to run it:**
 
-1. Reconcile: run `make reconcile` (flags rows whose cited PRs/issues disagree with their live state, including PRs in other repos), then `git log` and `gh pr list`. Never report a row as open or blocked without checking it in the same session. Write a reference that doesn't decide its row (history, a tracker that stays open) in backticks, so the check skips it.
+1. Reconcile: run `make reconcile` (flags rows whose cited PRs/issues disagree with their live state, including PRs in other repos), then `git log` and `gh pr list`. Never report a row as open or blocked without checking it in the same session. Write a reference that doesn't decide its row (history, a tracker that stays open) in backticks, so the check skips it. It also runs weekly in CI and keeps a `plan-drift` issue open while any row disagrees.
 2. Run **Phase A** as parallel lanes. Each lane is a subagent in its own worktree, briefed with the lane's file fence (Lanes table). Lanes open PRs but never merge. The main session never edits a lane's files.
 3. Worktrees: for ai-agents-research lanes, the Agent tool's `isolation: worktree`. For sibling repos, the main session first runs `git -C /workspaces/qte77/<repo> worktree add <path> -b <branch>` and points the brief at that path; the lane follows that repo's CLAUDE.md/AGENTS.md/CONTRIBUTING.md. Finished worktrees: `git worktree remove -f -f`.
 4. The main session reviews each lane's PR **at source** (strongest claims, test run) and merges. For an ai-agents-research lane, it pushes the row strike onto the lane's PR branch before merging (same PR). A sibling-repo row is struck in the ai-agents-research PR that records the merge.
