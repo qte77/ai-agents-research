@@ -4,6 +4,7 @@ Run: python3 -m unittest discover -s tests
 """
 import sys
 import unittest
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / ".github" / "scripts"))
@@ -154,6 +155,80 @@ class RenderReportTests(unittest.TestCase):
         self.assertIn("Could not check", report)
         self.assertIn("HTTP 503", report)
         self.assertNotIn("Quote still present", report)
+
+
+class DueDateTests(unittest.TestCase):
+    """A watched entry may carry a `due` date (YYYY-MM-DD) for a dated event the doc predicts.
+
+    The page's ms.date and quote can stay unchanged after a retirement date passes, so the
+    monitor must flag the passed date itself (#705).
+    """
+
+    def _prev(self, due):
+        entry = {"quote": "Q", "ms_date": "2026-09-25T00:00:00Z"}
+        if due is not None:
+            entry["due"] = due
+        return {"https://x": entry}
+
+    def _obs_unchanged(self):
+        return [{"url": "https://x", "quote": "Q", "ms_date": "2026-09-25T00:00:00Z",
+                 "quote_found": True, "error": None}]
+
+    def test_passed_due_date_flagged_even_when_page_unchanged(self):
+        diffs = md.diff_entries(self._prev("2026-11-01"), self._obs_unchanged(),
+                                today=date(2026, 11, 9))
+        self.assertEqual(len(diffs), 1)
+        self.assertTrue(diffs[0]["due_passed"])
+        self.assertEqual(diffs[0]["due"], "2026-11-01")
+        self.assertFalse(diffs[0]["fetch_failed"])
+
+    def test_due_date_today_counts_as_passed(self):
+        diffs = md.diff_entries(self._prev("2026-11-09"), self._obs_unchanged(),
+                                today=date(2026, 11, 9))
+        self.assertEqual(len(diffs), 1)
+        self.assertTrue(diffs[0]["due_passed"])
+
+    def test_future_due_date_not_flagged(self):
+        diffs = md.diff_entries(self._prev("2026-12-01"), self._obs_unchanged(),
+                                today=date(2026, 11, 9))
+        self.assertEqual(diffs, [])
+
+    def test_no_due_date_keeps_old_behaviour(self):
+        diffs = md.diff_entries(self._prev(None), self._obs_unchanged(),
+                                today=date(2026, 11, 9))
+        self.assertEqual(diffs, [])
+
+    def test_passed_due_date_kept_on_fetch_failure(self):
+        obs = [{"url": "https://x", "quote": "Q", "ms_date": None,
+                "quote_found": None, "error": "HTTP 503"}]
+        diffs = md.diff_entries(self._prev("2026-11-01"), obs, today=date(2026, 11, 9))
+        self.assertEqual(len(diffs), 1)
+        self.assertTrue(diffs[0]["fetch_failed"])
+        self.assertTrue(diffs[0]["due_passed"])
+
+    def test_report_names_the_passed_date(self):
+        diffs = md.diff_entries(self._prev("2026-11-01"), self._obs_unchanged(),
+                                today=date(2026, 11, 9))
+        report = md.render_report(diffs)
+        self.assertIn("2026-11-01", report)
+        self.assertIn("has passed", report)
+        self.assertIn("Quote still present: yes", report)
+
+
+class BuildNewStateTests(unittest.TestCase):
+    def test_keeps_due_and_updates_ms_date(self):
+        prev = {"https://x": {"quote": "Q", "ms_date": "old", "due": "2026-11-01"}}
+        obs = [{"url": "https://x", "quote": "Q", "ms_date": "new",
+                "quote_found": True, "error": None}]
+        self.assertEqual(md.build_new_state(prev, obs),
+                         {"https://x": {"quote": "Q", "ms_date": "new", "due": "2026-11-01"}})
+
+    def test_fetch_failure_keeps_previous_ms_date(self):
+        prev = {"https://x": {"quote": "Q", "ms_date": "old"}}
+        obs = [{"url": "https://x", "quote": "Q", "ms_date": None,
+                "quote_found": None, "error": "HTTP 503"}]
+        self.assertEqual(md.build_new_state(prev, obs),
+                         {"https://x": {"quote": "Q", "ms_date": "old"}})
 
 
 if __name__ == "__main__":

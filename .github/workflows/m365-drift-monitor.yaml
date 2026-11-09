@@ -2,7 +2,8 @@
 name: M365 Drift Monitor
 
 # Weekly check of the Microsoft Learn pages cited by the Microsoft 365 Copilot
-# doc for `ms.date` changes or vanished quotes, upserting a single
+# doc for `ms.date` changes, vanished quotes or a passed `due` date (an entry's
+# optional YYYY-MM-DD for a dated event the doc predicts), upserting a single
 # `m365-drift` tracking issue for a human to triage (#705). Mirrors
 # link-rot-monitor's single-issue upsert; the refreshed state file is
 # committed via the shared create-triage-pr action (main requires signed
