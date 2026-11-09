@@ -44,7 +44,7 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
    markdownlint) then `make check_links`. A URL you added that 404s/bot-blocks → *propose* a
    `lychee.toml` exclude with a note; never admin-merge past a broken link you introduced.
 6. **Ship:** branch `<type>/<slug>`; **commit by topic** (doc, then index/meta); PR; green CI → owner
-   `gh pr merge --squash --admin` (lychee not required — merge past *pre-existing* rot only) → prune.
+   squash-merge past the signed-commit rule, owner-approved (lychee is not required — merge past *pre-existing* rot only) → prune.
 
 ## Research-subagent brief (dispatch verbatim; one per source or tight cluster)
 
