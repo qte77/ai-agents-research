@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-10-24
+updated: 2026-11-09
 ---
 
 ## Architecture: ai-agents-research
@@ -47,9 +47,9 @@ ai-agents-research/
 ├── ui/                        # Branded gh-pages site (index.html, graph.html, assets)
 ├── changelog.d/               # scriv changelog fragments (collected on release)
 └── .github/
-    ├── workflows/             # 4 content-monitor crons + link-rot monitor + lint workflow
+    ├── workflows/             # content-monitor crons, link-rot + m365-drift health monitors, lint, release, Pages
     ├── actions/               # Composite actions (create-triage-pr)
-    ├── scripts/               # Monitor scripts + shared lib/monitor_utils.py
+    ├── scripts/               # Monitor scripts, plan-reconcile.py + shared lib/
     └── state/                 # Per-monitor fingerprint files (committed)
 ```
 
@@ -57,6 +57,7 @@ ai-agents-research/
 
 - **Backlog / roadmap** — [GitHub Issues](https://github.com/qte77/ai-agents-research/issues) are the single source of truth for planned and deferred work (per #191; the former static `docs/TODO.md` was retired to avoid CHANGELOG/issue duplication).
 - **Design docs** — `docs/plans/` holds durable plan/design docs (the saved output of plan-mode work); each links its tracking issue. See [docs/plans/README.md](plans/README.md).
+- **Plan vs live state** — `make reconcile` (`.github/scripts/plan-reconcile.py`) checks every PR/issue cited in the newest plan's remaining-work table, in any repo, and flags rows whose text disagrees with GitHub (#768). Run it before reporting what is open or blocked.
 - **Landed work** — `CHANGELOG.md` `[Unreleased]` records what has merged.
 
 ## Analysis Format Convention
@@ -92,8 +93,9 @@ A fifth scheduled workflow — `link-rot-monitor` (Monday 12:00 UTC) — is a **
 A sixth — `m365-drift-monitor` (Monday 13:00 UTC, added 2026-10-24, #720) — is also a health monitor: it
 re-fetches the Microsoft Learn pages the Microsoft 365 Copilot doc relies on, compares each page's
 `ms.date` and checks the doc's stored quote is still present, and upserts a single `m365-drift` issue
-on any change or failed fetch (no page text is copied). Its state file is refreshed through a triage
-PR like the content monitors (#705).
+on any change or failed fetch (no page text is copied). An entry may also carry a `due` date (YYYY-MM-DD)
+for a dated event the doc predicts; once it passes, the entry is reported even if the page is unchanged
+(#764). Its state file is refreshed through a triage PR like the content monitors (#705).
 
 **On-demand refresh (session-driven, not CI):** `.claude/workflows/refresh-docs.js` is a Claude Code Workflow-tool script (companion to the `adding-research-source` skill's `batch-sources` workflow) that re-verifies a given list of docs against their first-party sources — one read-only checker agent per doc plus an adversarial verifier per proposed correction set — and returns a corrections list the session then applies. The link-rot monitor guards URL *liveness*; `refresh-docs` guards claim *currency* (version gates, counts, renamed features). First run: the 2026-07-23 stale-cohort refresh (27 docs with `validated_links: 2026-03-*`).
 
