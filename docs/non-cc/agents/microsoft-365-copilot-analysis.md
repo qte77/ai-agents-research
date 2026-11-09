@@ -408,12 +408,12 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | April → May CY2026 (per roadmap feed) | Roadmap feed for Copilot in SharePoint's custom-skills capability — the same Skills mechanism as the 2026-09-30 GA row above — states preview beginning April CY2026 and GA May CY2026, tagged "Launched"/"General Availability"; the same feed entry still also carries a "Preview" category tag. This is the feed's own tracked milestone for the Skills capability specifically — a separate data point from the product-wide 2026-09-30 rollout above, sourced from a different page; neither date supersedes the other here | GA per roadmap feed (feed also tags Preview) | [RM559800][rm-sp-custom-skills] |
 | 2026-04-03 (passed) | Microsoft 365 admin center setting introduced, letting EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft 365 apps | GA setting (opt-in, off by default, no preview label) | [eudb-subprocessor] |
 | May CY2026 (passed) | Legacy Graph beta agent-registry API begins being replaced by the Agent 365-branded registry API | superseded | [agent-registry-beta] |
-| October CY2026, per roadmap feed (in progress — this is the current month) | Structured document generation reaches GA | roadmap-stated GA; 3 automation-connector actions still preview | [RM545896][rm-docgen] |
+| October CY2026, per roadmap feed (month passed; checked 2026-11-09 the feed still reads "GA date: October CY2026" and carries both the "General Availability" and "Preview" tags, so GA is not confirmed) | Structured document generation reaches GA | roadmap-stated GA; 3 automation-connector actions still preview | [RM545896][rm-docgen] |
 | 2026-07-22 (passed) | Microsoft 365 admin center setting lets non-federal GCC customers use Anthropic models (not GCC federal, GCC High or DoD) | GA setting | [eudb-subprocessor] |
 | 2026-10-15 (passed) | Copilot Studio retires GPT-5.3 Chat and GPT-5.4 Reasoning (replacement "GPT Chat Latest"; extension available) | retired | [copilot-model-select] |
-| 2026-10-31 (upcoming) | Copilot Studio retires GPT-5.5 Chat — no extension available | retiring | [copilot-model-select] |
+| 2026-10-31 (passed; the Learn page was unchanged on 2026-11-09, so the retirement is not confirmed there) | Copilot Studio retires GPT-5.5 Chat — no extension available | retiring | [copilot-model-select] |
 | 2026-11-12 (upcoming) | Copilot Studio retires GPT-4.1, GPT-4.1 Mini, GPT-5 Chat, GPT-5 Auto and GPT-5 Reasoning (extension available); FedRAMP tenants and regions where cross-geo movement is restricted keep GPT-4.1 and GPT-5 | retiring | [copilot-model-select] |
-| 2026-11-01 (upcoming) | Preview-era PowerShell opt-in parameters for Copilot in SharePoint stop being honored | retiring | [sp-get-started] |
+| 2026-11-01 (passed; on 2026-11-09 the Learn page still says existing settings "are honored until November 1, 2026" in future tense, so the retirement is not confirmed there) | Preview-era PowerShell opt-in parameters for Copilot in SharePoint stop being honored | retiring | [sp-get-started] |
 | 2026-12-01 (upcoming) | Microsoft Foundry's visual workflow designer and in-portal execution retire; YAML-defined workflows keep running as hosted agents under Microsoft Agent Framework | preview feature, partial retirement | [foundry-workflow] |
 | ongoing, per roadmap feed | A unified "Workflows" app for Teams + SharePoint automation menus | GA per roadmap feed | [RM491632][rm-workflows-app] |
 | — | Copilot Studio's bring-your-own-model feature for prompt-tool nodes explicitly excludes the GPT-5 family and later models | current, no preview label found | [byom-prompts] |
@@ -550,8 +550,9 @@ single control plane will not see them there. The EU residency story has gaps on
 side (Anthropic excluded from the EU Data Boundary outright, and off by default for in-scope
 customers) and the Anthropic side (no EU Data Zone on Foundry) — plan around both, not just one. Customer Key and Double Key Encryption have opposite effects on Copilot
 access — confirm which one actually protects a given workload before assuming either. Several
-cited pages carry near-term dates (2026-11-01, 2026-12-01) that will be in the past within weeks of
-this doc's `validated_links` date.
+cited pages carry dates that have passed or will soon (2026-10-31, 2026-11-01, 2026-11-12,
+2026-12-01); the drift monitor now flags an entry once its `due` date passes, so each one gets
+re-checked even when Microsoft leaves the page unchanged.
 
 ## Action Items
 
