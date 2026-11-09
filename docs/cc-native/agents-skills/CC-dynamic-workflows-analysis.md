@@ -3,8 +3,8 @@ title: CC Dynamic Workflows, Ultracode & deep-research
 source: https://code.claude.com/docs/en/workflows
 purpose: Document Claude Code's dynamic workflow orchestration tool, the ultracode effort setting, and the bundled /deep-research workflow, with first-party sourcing.
 created: 2026-06-11
-updated: 2026-06-22
-validated_links: 2026-06-22
+updated: 2026-11-09
+validated_links: 2026-11-09
 status: trial
 ---
 
@@ -95,6 +95,22 @@ Dynamic workflows run on **every** Claude Code surface — interactive CLI, Desk
 - **The primitives are headless-capable.** Subagents run and are awaited as above; **user-invoked skills and custom commands work in `-p`** since **v2.1.181** (put `/skill-name` in the prompt string) — but built-in interactive-dialog commands (e.g. `/login`) are not ([headless][cc-headless]).
 - **SDK control.** From the Agent SDK, workflows and their subagents are driven programmatically (the `agents` option, hook callbacks, and `ultracode` via `--settings` or a control request — see [Ultracode](#ultracode-effort-setting)).
 
+### Collecting results (observed, undocumented)
+
+Neither file below is in the public docs, so names and fields may change between releases. Observed on CC 2.1.316 (2026-11-02, a 201-batch headless run; [#743][issue-743]) and re-checked on 2.1.319 (2026-11-09). Each run leaves two files under `~/.claude/projects/<cwd-slug>/<session-id>/`:
+
+- `workflows/<runId>.json`: the run record, with `status`, `args`, `logs`, `totalTokens`, `agentCount`, `durationMs` and the script's return value in `result`. It is written for interactive and headless runs.
+- `subagents/workflows/<runId>/journal.jsonl`: one line per agent event (`started` with its label, then `result` or `failed`), appended as agents finish.
+
+| Run outcome | Run record | Journal |
+| --- | --- | --- |
+| Completed | `status: completed`, full `result` | all agent results |
+| Some agents timed out | still `completed`; `logs` name them (e.g. `failed: Request timed out`) | `failed` entries |
+| Stopped by the `-p` wait limit | `status: killed`, `result: null` | finished agents only |
+| Container stopped | no record | finished agents only |
+
+So a `completed` run can still be missing agents: a collector should check coverage against its inputs, and fall back to the journal when the run record is missing or `killed`. A `-p` run cut off by the wait limit prints "Background tasks still running 10m after the last turn ... stopping them" on stderr.
+
 **Bottom line:** workflows work in the SDK, headless `-p`, *and* interactive — the only headless caveats are that background agents are awaited (10-min default cap) and `--bare` requires passing skills/hooks/MCP explicitly.
 
 ## Observability & tracing
@@ -137,6 +153,7 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 | [Agent SDK overview][cc-agent-sdk] | Workflows on the SDK surface |
 | [Headless mode][cc-headless] | `-p` skills/subagents/hooks behavior, `--bare`, background-agent wait cap |
 | [Monitoring usage][cc-monitoring] | OTel signals (metrics/logs GA, traces beta), per-subagent span nesting, `gen_ai.*` attributes |
+| [#743][issue-743] · runtime observation (CC 2.1.316, 2026-11-02; re-checked CC 2.1.319, Codespaces, 2026-11-09) | On-disk run record + journal layout per run outcome (undocumented) |
 | [Tools reference — WebSearch][cc-tools-ref] | `/deep-research` dependency |
 
 [cc-workflows]: https://code.claude.com/docs/en/workflows
@@ -150,3 +167,4 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 [cc-headless]: https://code.claude.com/docs/en/headless
 [cc-monitoring]: https://code.claude.com/docs/en/monitoring-usage
 [cc-tools-ref]: https://code.claude.com/docs/en/tools-reference#websearch-tool-behavior
+[issue-743]: https://github.com/qte77/ai-agents-research/issues/743
