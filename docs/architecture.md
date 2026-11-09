@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-10-24
+updated: 2026-11-09
 ---
 
 ## Architecture: ai-agents-research
