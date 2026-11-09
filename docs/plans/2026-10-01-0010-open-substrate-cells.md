@@ -32,7 +32,7 @@ skills·Distributed**.
   strike the row in the same PR, and close issues by hand (the gated squash drops `Closes #N`).
 - **Owner gates:** T1 (census module, default yes). C0 is decided (default applied, overridable).
 - **Access:** nothing new. The existing `gh` credential and polyfetch cover every row.
-- **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`; polyfetch for
+- **Commands:** unset stale `GH_TOKEN`/`GITHUB_TOKEN` for `gh`/git network commands only; polyfetch for
   blocked pages: `uv run --directory /workspaces/qte77/polyfetch-scrape polyfetch fetch --show-body <url>`.
 - **Watch-outs:** briefs follow the guardrails in
   [`adding-research-source`](../../.claude/skills/adding-research-source/SKILL.md): evidence levels, verbatim

@@ -144,7 +144,7 @@ Merge-mechanics learnings worth reusing:
 - **Octopus integration branches can't be replayed** after their inputs squash-merge. #404 was
   reset to a single cherry-picked commit (`ui/graph.html` + fragment) on fresh main.
 - **CodeFactor must re-report after every `update-branch`** — serialize as
-  update-branch → wait for CodeFactor+CodeQL → `--admin` merge.
+  update-branch → wait for CodeFactor+CodeQL → owner merge past the signature rule.
 
 Known follow-up: the 785-node graph predates #406, so `agent-code-analysis-landscape.md` enters
 the corpus graph at the **next full rebuild** — never partial-update (density lopsiding).
@@ -157,4 +157,4 @@ the corpus graph at the **next full rebuild** — never partial-update (density 
 - Verify subagent findings with own `git grep` + `Read` before acting (read-discipline).
 - Never fire two same-day `rxiv-paper-eval` dispatches (CONTRIBUTING).
 - Lychee flakes: known intermittents (skywork.ai, cohere.com/rerank) — do not add excludes.
-- Merge routine: squash-merge; owner `--admin` for signature gate; serialize via update-branch.
+- Merge routine: squash-merge; the owner merges past the signature gate; serialize via update-branch.

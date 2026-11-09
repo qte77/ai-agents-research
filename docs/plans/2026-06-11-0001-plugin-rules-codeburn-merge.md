@@ -82,10 +82,10 @@ Tracking issue: [#452][issue].
 
 ## Gotchas
 
-- aar `main` requires signed commits; the sandbox can't sign → owner `gh pr merge --admin --squash --delete-branch`.
+- aar `main` requires signed commits; the sandbox can't sign → the owner squash-merges past the signature rule.
 - `claude-code-plugins` `main` also requires signatures but has **no bypass actors**; GitHub's squash
-  commit is verified, so a plain `gh pr merge --squash` works (no `--admin`). Required check: CodeFactor.
-- Prefix gh/git with `env -u GH_TOKEN -u GITHUB_TOKEN` (invalid env tokens shadow the stored credential).
+  commit is verified, so a plain squash merge works, with no bypass. Required check: CodeFactor.
+- In this devcontainer, stale `GH_TOKEN`/`GITHUB_TOKEN` variables shadow the stored `gh` credential; unset them for `gh`/git network commands only, never for commits.
 - Plugin version must match between `plugin.json` and `marketplace.json` or CI fails.
 - Never edit a plugin `rules/*.md` directly — they are symlinks; edit the SoT `.claude/rules/`.
 - Lint: aar uses `make lint` (markdownlint-cli2 + lychee); the plugins repo uses `make lint_md` / `make validate`.

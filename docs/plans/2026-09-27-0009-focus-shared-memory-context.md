@@ -13,8 +13,8 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
 ## Handoff (START HERE)
 
 1. **Reconcile first.** Compare `git log -5`, `gh pr list` and the Remaining work table: this plan may lag the
-   last merges (AGENT_LEARNINGS, "reconcile git HEAD"). Prefix every `gh`/`git` network call with
-   `env -u GH_TOKEN -u GITHUB_TOKEN`.
+   last merges (AGENT_LEARNINGS, "reconcile git HEAD"). Stale `GH_TOKEN`/`GITHUB_TOKEN`
+   variables shadow the stored `gh` credential; unset them for `gh`/git network commands only.
 2. **Read, in this order:** this block → [Remaining work](#remaining-work) (the only list of open work) → the K rows
    in [Owner-requested leads](#owner-requested-leads-2026-09-29-for-the-next-research-run) → [Research run:
    subagent brief](#research-run-subagent-brief-rows-c-and-s1s6) → the [Code map](#code-map-for-code-rows-d1-y-z).
@@ -132,7 +132,7 @@ graphs/RAG/hybrid, context, skills, plugins, harness, and long-running hands-off
   - The graph-system decision (row G) has a default, below.
 
   Nothing else is gated.
-- **Commands:** prefix `gh`/`git` network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`. When WebFetch
+- **Commands:** unset stale `GH_TOKEN`/`GITHUB_TOKEN` for `gh`/git network commands only. When WebFetch
   paraphrases or fails, use polyfetch: `uv run --directory /workspaces/qte77/polyfetch-scrape polyfetch fetch --show-body <url>`.
 - **Watch-outs:**
   - First-party only. Mark vendor benchmark numbers as self-reported.
@@ -365,7 +365,7 @@ anything, so the owner could start the run in a clean session. Every brief state
 - **Guardrails:** no commit, push or PR; no skills, no subagents, no `.claude/` or settings edits.
   - Bash `grep`, `find`, `cat`, `ls`, `head`, `tail`, `curl` and `wget` are denied: use `git grep`,
     `git ls-files`, python3 and Read/Write/Edit.
-  - Prefix gh/git network calls with `env -u GH_TOKEN -u GITHUB_TOKEN`. In a worktree, call git as `\git`
+  - Unset stale `GH_TOKEN`/`GITHUB_TOKEN` for gh/git network commands only. In a worktree, call git as `\git`
     if the shell hook rewrites or blocks it.
   - When WebFetch fails or paraphrases, use polyfetch `--show-body`.
   - Name the files each parallel batch must not edit (the plan file, sibling batches' home docs and
