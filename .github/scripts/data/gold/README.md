@@ -166,3 +166,11 @@ above: a VLM-driven agentic or tool-using system whose measured contribution is 
 **NO** by the criterion's own tie-break, "When unsure, answer NO": a split between two labellers
 is the unsure case. Each keeps `confidence: "low"` and a rationale noting the split. Final paper
 counts are unchanged: 77 YES / 23 NO.
+
+## Used by
+
+[`eval-decision-models.py`](../../eval-decision-models.py) (workflow `decision-model-eval.yaml`, manual)
+asks each item's question of a decision model through `decide()` from qte77/.github and reports
+ROC-AUC (papers only), Brier and a `hi` threshold sweep. Its states use the same inputs the
+labellers had: title + abstract for papers; repo description + title + body for issues (plan 0012
+row H1).

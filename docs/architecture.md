@@ -47,7 +47,7 @@ ai-agents-research/
 ├── ui/                        # Branded gh-pages site (index.html, graph.html, assets)
 ├── changelog.d/               # scriv changelog fragments (collected on release)
 └── .github/
-    ├── workflows/             # content-monitor crons, link-rot, m365-drift + plan-reconcile health monitors, lint, release, Pages
+    ├── workflows/             # content-monitor crons, link-rot, m365-drift + plan-reconcile health monitors, manual model evals, lint, release, Pages
     ├── actions/               # Composite actions (create-triage-pr)
     ├── scripts/               # Monitor scripts, plan-reconcile.py + shared lib/
     └── state/                 # Per-monitor fingerprint files (committed)
