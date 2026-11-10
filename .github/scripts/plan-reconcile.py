@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.plan_reconcile import assess, extract_refs, remaining_rows
+from lib.plan_reconcile import assess, extract_refs, remaining_rows, unchecked_open_rows
 
 PLANS_DIR = Path("docs/plans")
 DEFAULT_REPO = "qte77/ai-agents-research"
@@ -75,6 +75,10 @@ def main() -> None:
         print(f"- {row.row_id} ({status}): {flag} [{cited}]")
     if not flagged:
         print("All rows agree with live state.")
+    unchecked = unchecked_open_rows(rows, args.repo)
+    if unchecked:
+        # Reason: informational only — these rows cite no PR/issue, so check them by hand.
+        print(f"Open rows with no PR/issue to check (verify by hand): {', '.join(unchecked)}")
     sys.exit(1 if flagged else 0)
 
 
