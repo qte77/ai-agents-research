@@ -97,3 +97,11 @@ def assess(row: Row, states: dict[tuple[str, int], str | None], default_repo: st
         names = ", ".join(f"{repo}#{num}" for (repo, num) in refs if states[(repo, num)] == "open")
         return f"struck, but {names} is still open"
     return ""
+
+
+def unchecked_open_rows(rows: list[Row], default_repo: str) -> list[str]:
+    """IDs of open rows that cite no checkable PR/issue, so the check can't tell if they're stale.
+
+    Plan 0012's D2 named its repo but no PR number and read "next" for two weeks after it merged.
+    """
+    return [r.row_id for r in rows if not r.struck and not extract_refs(r.text, default_repo)]

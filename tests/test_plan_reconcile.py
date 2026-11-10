@@ -100,5 +100,16 @@ class AssessTests(unittest.TestCase):
         self.assertIn("could not check", flag)
 
 
+class UncheckedOpenRowsTests(unittest.TestCase):
+    def test_open_rows_without_checkable_refs_are_listed(self):
+        rows = pr.remaining_rows(PLAN)
+        # Q1 has no reference; T0 is struck; D0/C1/K0 each cite at least one checkable ref.
+        self.assertEqual(pr.unchecked_open_rows(rows, "qte77/ai-agents-research"), ["Q1"])
+
+    def test_refs_only_in_code_spans_count_as_unchecked(self):
+        rows = [pr.Row(row_id="H1", struck=False, text="| H1 | after `qte77/.github#47` | agent | x |")]
+        self.assertEqual(pr.unchecked_open_rows(rows, "qte77/ai-agents-research"), ["H1"])
+
+
 if __name__ == "__main__":
     unittest.main()
