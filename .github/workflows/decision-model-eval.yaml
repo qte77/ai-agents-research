@@ -1,0 +1,81 @@
+---
+name: Decision model eval (G1 gold sets)
+
+# Plan 0012 row H1: run decision models (Cloudflare Clef via the shared `decide()` action code,
+# later TypeSafe Jev) over the G1 gold sets in .github/scripts/data/gold/ and report ROC-AUC,
+# Brier and a `hi` threshold sweep (.github/scripts/eval-decision-models.py). Manual, owner- or
+# agent-run comparison; not scheduled. Fails when a model answers no item at all.
+#
+# Secrets used (read by decide() from the environment):
+#   secrets.CF_WORKERS_AI_TOKEN — Workers AI API token (clef backend)
+#   secrets.LLM_BASE_URL        — https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1
+#   secrets.TYPESAFE_API_KEY    — TypeSafe key (jev backend; unset until plan 0012 K0)
+
+on:
+  workflow_dispatch:
+    inputs:
+      models:
+        description: "Comma-separated backend:model pairs (clef:clef-flash, clef:clef, jev:jev-1.13.0)."
+        type: string
+        default: "clef:clef-flash,clef:clef"
+      sets:
+        description: "Comma-separated gold sets (papers, issues)."
+        type: string
+        default: "papers,issues"
+      limit:
+        description: "First N items per set (0 = all)."
+        type: string
+        default: "0"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: decision-model-eval
+  cancel-in-progress: false
+
+jobs:
+  eval:
+    name: Run decision models on the gold sets
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Check out the decide action (qte77/.github)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          repository: qte77/.github
+          ref: 43ad1211e962f82fab823377dcc7272054d8196c  # main 2026-11-10 (clef backend since #47)
+          path: decide-src
+          persist-credentials: false
+
+      - name: Run eval
+        env:
+          CF_WORKERS_AI_TOKEN: ${{ secrets.CF_WORKERS_AI_TOKEN }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          MODELS: ${{ inputs.models }}
+          SETS: ${{ inputs.sets }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/eval-decision-models.py \
+            --decide-dir decide-src/actions/decide \
+            --models "$MODELS" --sets "$SETS" --limit "$LIMIT" \
+            --out decision-eval-output
+
+      - name: Append summary to step summary
+        if: always()
+        run: |
+          if [ -f decision-eval-output/summary.md ]; then
+            cat decision-eval-output/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload eval output
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
+        with:
+          name: decision-eval-output
+          path: decision-eval-output/
+          retention-days: 30
