@@ -1,9 +1,12 @@
 # Provider: Cloudflare Workers AI via its OpenAI-compatible endpoint
 # (GitHub Models was retired 2026-07-30, #527). The reusable workflow posts to
 # `${api_base}/chat/completions` with the `llm-api-key` secret; GITHUB_TOKEN is
-# still used for the feed fetch. Needs repo secret CF_WORKERS_AI_TOKEN and
-# variable LLM_BASE_URL (https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1).
-# The script treats >50% failed LLM calls as a broken run (exit 2). The triage
+# still used for the feed fetch. Needs repo secrets CF_WORKERS_AI_TOKEN and
+# LLM_BASE_URL (https://api.cloudflare.com/client/v4/accounts/<id>/ai/v1), passed
+# as reusable-workflow secrets so the account id stays out of logs. Relevance goes
+# through the decide() gate first (Clef), with the chat call as fallback.
+# The script treats >50% failed LLM calls as a broken run (exit 2) and a feed
+# week with 0 rows as an error (exit 3). The triage
 # job is skipped when the eval returns zero relevant papers, so empty PRs never
 # land.
 name: rxiv weekly eval
@@ -97,7 +100,7 @@ jobs:
   eval:
     needs: resolve
     if: ${{ github.actor != 'dependabot[bot]' }}
-    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@4a53dcedbba03d8bd88f84fc6a1a752e373027c9  # v0.5.1
+    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@59b27ed5fe615f5d148fb891e9dc3a829ec3959b  # v0.6.0
     with:
       server: ${{ inputs.server || vars.RXIV_SERVER || 'arxiv' }}
       topic: ${{ vars.RXIV_TOPIC || 'LLM-based autonomous agents, tool use and function calling, multi-agent coordination, agentic evaluation and benchmarking, and LLM reasoning and planning' }}
@@ -116,12 +119,21 @@ jobs:
       max_papers: 0
       max_llm_calls: ${{ github.event_name == 'pull_request' && 5 || fromJSON(inputs.max_llm_calls || '100') }}
       model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
-      api_base: ${{ vars.LLM_BASE_URL }}
       enrich: true
+      # Relevance asks a decision model first (plan 0012 P2): Clef 27B, hi 0.75 from the H1
+      # gold-set run; the uncertain band and any escalation fall back to the chat call above.
+      # Same agent-strict criterion minus the chat reply-format sentence, kept in sync with
+      # AGENT_STRICT_PROMPT by a unit test.
+      decide_enabled: true
+      decide_backend: clef
+      decide_model: clef
+      decide_hi: "0.75"
+      decide_instructions: "Answer YES only if the paper's main contribution is about: {topic}. That means it builds, trains, evaluates or analyses agents or reasoning systems driven by large language models (tool use, function calling, multi-agent coordination, planning, agent benchmarks or agent safety). Answer NO for general machine-learning methods (optimizers, architectures, sampling, clustering, vision or speech models) without an LLM-agent focus, for robotics or control work without an LLM agent, and for applications of machine learning in other fields. When unsure, answer NO."
       eval_repo: qte77/gha-rxiv-paper-eval
-      eval_ref: 4a53dcedbba03d8bd88f84fc6a1a752e373027c9  # v0.5.1 — keep in lockstep with the workflow pin above (qte77/gha-rxiv-paper-eval#80)
+      eval_ref: 59b27ed5fe615f5d148fb891e9dc3a829ec3959b  # v0.6.0 — keep in lockstep with the workflow pin above (qte77/gha-rxiv-paper-eval#80)
     secrets:
       llm-api-key: ${{ secrets.CF_WORKERS_AI_TOKEN }}
+      llm-api-base: ${{ secrets.LLM_BASE_URL }}
 
   triage:
     needs: [resolve, eval]

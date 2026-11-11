@@ -84,7 +84,7 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 | CC status monitor | Anthropic status page | `triage/status-monitor/` | Monday 09:00 UTC |
 | CC changelog + native sources | CC release notes + GH issues/discussions + Anthropic blog | `triage/cc-changelog/` | Monday 09:00 UTC |
 | Community monitor | Community forums, GitHub | `triage/community/` | Monday 10:00 UTC |
-| ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → LLM relevance filter | `triage/rxiv/` | Tuesday 09:00 UTC |
+| ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → decision-model relevance gate (Clef via `decide()`), chat-LLM fallback for uncertain papers | `triage/rxiv/` | Tuesday 09:00 UTC |
 
 Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key. The CC changelog monitor's trigger uses `releases.atom` entry ids as its dedup ledger for feed-covered versions, falling back to the scan-doc version cutoff for any version the feed doesn't cover (a gap, or the feed being unavailable entirely) — `CHANGELOG.md` stays the sole content source either way (#410).
 
