@@ -9,7 +9,8 @@
   "permissions": {
     "allow": [
       "Bash(lychee --config *)",
-      "Bash(markdownlint-cli2 --config *)"
+      "Bash(markdownlint-cli2 --config *)",
+      "ListAgents"
     ]
   },
   "enabledPlugins": {
