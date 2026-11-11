@@ -3,7 +3,7 @@ title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
 updated: 2026-11-11
-validated_links: 2026-10-22
+validated_links: 2026-11-11
 status: assess
 ---
 
@@ -242,6 +242,14 @@ another model's output.
   the model's estimate of how well the snippets you sent support the sentence" and this "is not
   proof that the sentence is true" — a grounding check on another model's output, not a rubric
   verdict on its quality.
+- [JevEval (DeepEval)][jeveval-blog] (documented, no benchmarks given) — a DeepEval metric that
+  separates roles: "you define the logic, Jev makes the decisions, and DeepEval does the
+  calculation." Three typed question kinds (Noul/Score/Choice) compose into a rubric score by
+  fixed math, not a model-generated verdict — "the equation is fixed, inspectable, and the same on
+  every run" — with a `ConversationalJevEval` variant applying the same pattern to multi-turn
+  transcripts. The post's own framing: "language tasks should stay with language models, while
+  bounded decisions should go to a model built to decide." It gives no accuracy numbers or
+  comparison to free-text judges; its only worked example is a single tool-faithfulness metric.
 - Free-text LLM-as-a-judge metrics (documented) — G-Eval, TRUE, and others; see
   [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics].
   These score generated prose, not a typed decision.
@@ -530,7 +538,8 @@ decoded from the page's own embedded iframe payloads, 2026-10-10 — give the pe
 behind that claim. Average accuracy over the 36 benchmarks: Microsoft-Decision-1 83.5%, Jev 1.13.0
 82.3%, Quyet-1.0-Large 81.9% ("#1 on JevBench"), Surogate Rune 26B-A4B 79.7%, GPT-6 Luna Decisions
 79.4%, deck-31B 77.8%, H2O-Lightning-4B 77.2%, Strands-Decider 2B 54.8% (footnoted "AWS · 23 of 36
-benchmarks" — a partial run, not comparable). P50/P95 latency in ms: Microsoft-Decision-1 85/125,
+benchmarks" — a partial run, not comparable; full entry at § Strands Decider (AWS / Strands Labs)
+below). P50/P95 latency in ms: Microsoft-Decision-1 85/125,
 H2O-Lightning-4B v1.1 210/—, Jev 1.13.0 240/—, GPT-6 Luna Decisions 300/—, Quyet-1.0-Large 380/—,
 Surogate Rune 26B-A4B 380/—, deck-31B 400/—, GPT-6 Sol 3010/— (a latency reference only, not
 ranked for accuracy). So the prose's "runner-up" is a *latency* ranking (H2O-Lightning-4B, at 210
@@ -897,6 +906,39 @@ No rubric row: under this corpus's gap-driven scoring policy, a new row is added
 change an open cell in the rubric's evidence census. Like the other October 2026 vendor entries
 above, this one doesn't, so none is added here.
 
+### Strands Decider (AWS / Strands Labs)
+
+**First-party**: [launch blog][strands-decider-blog] · [GitHub repo][strands-decider-gh] ·
+[Hugging Face model card][strands-decider-hf] | **License**: Apache-2.0 (confirmed against the
+repo's own `LICENSE` and the model card's `license` field) | created 2026-09-29, pushed
+2026-11-11, 1,100 stars / 128 forks (`gh api`, 2026-11-11)
+
+AWS's Strands Labs — the experimental arm of the open-source Strands Agents SDK — open-sourced
+Strands Decider on 2026-10-01 (documented, launch blog, re-fetched 2026-11-11): "a pre-trained LLM
+torso (Qwen3.5-2B)" with its LM head removed and replaced by a pointer head that scores the
+caller's own options, fine-tuned as a rank-16 LoRA adapter — confirmed on the Hugging Face model
+card (`peft`/`lora` tags, `base_model:adapter:Qwen/Qwen3.5-2B-Base`, ~234 MB of stored weights,
+not a full 2B-parameter checkpoint). The `strands-decider` CLI (`pip install strands-decider`)
+answers `choice`/`noul`/`score` questions and can run as a server exposing `POST
+/v1/systemone` — the same wire path Laya, Microsoft Foundry, and Unsloth's local server already
+answer in this doc (§ Train your own and § Serving without training, below). The README's own
+calibration claim, sourced to its own [`evaluation/results.md`][strands-decider-results]: "On
+short classification tasks it has never seen, answers at a confidence of 0.9 or more are right
+about 95% of the time." That file's own release checks report the shipped checkpoint
+(`strands-decider-2B-qwen3.5-v1-2610`, itself a **soup** of three LoRA training runs) at 180/231 on
+the third-party [JevBench][jevbench] public set (Brier 0.280, ECE 0.072); it contains no comparison
+to Jev itself. Four companion checkpoints on Gemma 4 bases (E2B/E4B/12B/26B-A4B) ship the same
+pointer-head recipe.
+
+**Dropped**: this entry's lead — a social post — claimed Amazon replaced Claude Sonnet 4.6 with
+Strands Decider for support-ticket labelling. Neither the launch blog nor the GitHub README
+mentions Claude, Sonnet, or any named production deployment; the blog's only routing example is
+choosing which team should handle a support message, kept abstract. This corpus found no
+first-party source for the replacement claim and does not repeat it.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
+change an open cell in the rubric's evidence census; this entry doesn't, so none is added here.
+
 ## Artificial Analysis Decision Index (third-party benchmark, launched 2026-10-13)
 
 [Artificial Analysis][aa-decision-index-article] — a vendor-neutral AI-model-benchmarking firm, not
@@ -1059,6 +1101,45 @@ a controlled A/B.
 
 `scored 2026-09-30`
 
+## Vega (Nandakishor M)
+
+**Repo**: [NandhaKishorM/vegaml][vegaml] | **License**: Apache-2.0 (confirmed against `LICENSE`) |
+**Stars**: 301 / 36 forks, created 2026-10-09, pushed 2026-11-09 (`gh api`, 2026-11-11)
+
+Vega is the architecture Laya's own author moved to next, documented in a companion paper,
+"From Laya to Vega: Open Non-Autoregressive Decision Models with Calibrated Probabilities"
+(Nandakishor M and Anjali M; Preprints.org, DOI `10.20944/preprints202611.0781.v1`, posted
+2026-11-09, CC BY 4.0 — plain text, not linked: the host's Akamai bot-check returns 403 to both a
+plain fetch and lychee, on two separate checks; read via `polyfetch` headed/patchright 2026-11-11).
+Where Laya is one model that answers directly, Vega freezes an
+instruction-tuned LLM as a **reader** and trains a separate, tiny **engine** (14M–31M parameters)
+on the reader's hidden states: each answer option becomes a Gaussian well in a learned
+64-dimensional energy landscape, the question "drops a particle" with an initial position and
+momentum, and the answer is read from Boltzmann occupancy along a damped trajectory — a physics
+readout, not a classification head.
+
+Per the `vegaml` package itself (PyPI and the GitHub repo above, same author): the default
+**vega-U** configuration is one 14.3M-parameter engine shared across frozen readers from 0.8B to
+27B (Qwen3.5-0.8B/4B, Qwen3.8-27B, `gemma-3-1b-it` named on the package page), with new readers
+attachable by "a closed-form port fit on unlabelled text," no retraining of the engine itself. An
+earlier, simpler release — "classic vega" — shipped two fixed-size checkpoints instead of the
+frozen-reader design: **0.8B and 4B**, each the engine trained jointly with its own backbone
+(confirmed in the README's own comparison table; this corrects the lead for this entry, which
+rounded the smaller size to "0.88B"). Serving: `vegaml[serve]` runs `vegaml-serve`, exposing `POST
+/v1/decide` — a different path from the `/v1/systemone` convention Laya, Microsoft Foundry,
+Strands Decider, and Unsloth's local server use elsewhere in this doc (§ Train your own and
+§ Serving without training, below).
+
+**Dropped**: this entry's lead — a social post — claimed Vega's wins were measured against "hosted
+Jev 1.13.0." Jev and TypeSafe are named nowhere in the preprint's own abstract, the `vegaml` PyPI
+page, or its GitHub README; the only named comparison in any of the three is to CWMI (Sharma et
+al., 2025). This corpus found no first-party Jev comparison for Vega and does not repeat the
+claim.
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
+could change an open cell in the rubric's evidence census; this entry doesn't, so none is added
+here.
+
 ## kev (jaredpalmer)
 
 **Repo**: [jaredpalmer/kev][kev] | **License**: Apache-2.0 (confirmed against `LICENSE`) |
@@ -1162,6 +1243,36 @@ No rubric row: this is a training path layered on an existing serving app (Laya'
 scored above) and existing base models, not a new decision-model architecture of its own — the
 same reasoning this doc already applies to pg-jev and probably.
 
+## Serving without training: Hugging Face `transformers serve` and Ollama
+
+Two more first-party `/v1/systemone` servers surfaced during this batch (checked 2026-11-11),
+beyond the four the Unsloth section above counted as of 2026-10-11 (Laya's own server, Microsoft
+Foundry's hosted one, the sglang PR serving Cloudflare's Clef, and Unsloth's local server):
+
+- **Hugging Face `transformers serve`** (documented) — the `main`/unreleased docs for the
+  `transformers serve` CLI list `/v1/systemone` as a REST endpoint alongside `/v1/chat/completions`
+  and the rest: "`/v1/systemone` answers typed questions (choice, score, yes/no) with a probability
+  for every allowed answer." Its own worked example sends `model: "Qwen/Qwen2.5-1.5B-Instruct"` — an
+  ordinary chat-template LLM with no decision-head training — and the docs state plainly: "The
+  model scores the allowed answers without generating text, in one forward pass per prompt." That
+  makes it **training-free** in the same sense as AnyJev's `Decider`/`L0` mode above (§ AnyJev):
+  neither needs a purpose-trained checkpoint; both read option-logit probabilities off a stock
+  model's own distribution. **Version gate**: this endpoint is absent from the latest tagged
+  release's docs (`v5.14.0`, checked 2026-11-11 — only `/v1/chat/completions`, `/v1/completions`,
+  `/v1/responses`, `/v1/audio/transcriptions`, `/v1/models`, and `/load_model` are listed there); it
+  exists only on the `main` branch's docs as of this check, so treat it as unreleased, not shipped.
+- **Ollama** (documented, Ollama's own 2026-09-29 blog post) — "This new API is available as of
+  Ollama 0.35 by using the new `/v1/systemone` endpoint," shipped with two named decision models:
+  **nimble**, a 9B open-source model from Bespoke Labs, and **tev1**/**tev1:0.8b**, 4B and 0.8B
+  models from Together AI — the same Tev1 recipe this doc's § Domain example: BioDecision-4B
+  already credits to Together AI, below. Ollama reports Nimble 9B averaging 91 ms per decision on
+  an M5 Max MacBook Pro. (`edgextract`, § Tools built on Jev below, calls this same endpoint with
+  `tev1` as its default local decision model.)
+
+No rubric row for either: both are serving paths over existing models (one training-free, one
+Ollama's own packaging), not new decision-model architectures — the same reasoning this doc
+already applies to pg-jev and probably.
+
 ## CLM / CLM-8B (Contrastive-LM)
 
 **Repo**: [Contrastive-LM/CLM][clm] | **License**: Apache-2.0, code and weights (confirmed against
@@ -1248,11 +1359,65 @@ the model card does not claim to be "the first open System-1 model for biomedici
 is dropped. The card's own license is research-only use, and it states explicitly it is **not
 validated for patient care**. One line only, per this batch's scope — no rubric.
 
+## Drex (Nace.AI)
+
+**Repo**: [nace-ai/drex-decision-models][drex-gh] | **License**: Apache-2.0 for the runtime/docs
+repo itself (confirmed against `LICENSE`) — the model weights carry their own, different licenses,
+below | **Stars**: 136 / 20 forks, created 2026-10-09, pushed 2026-11-09 (`gh api`, 2026-11-11)
+
+**First-party**: [technical report, arXiv:2611.07854][drex-paper] · [Hugging Face org][drex-hf] ·
+[product page][drex-product]
+
+Nace.AI's "Towards Foundation Decision Models: Drex" (Dhankhar, Amantay, Datbayev, Akhmetov, Shah,
+Ubaidullayev, Saparkhan, Baha, and Saparov; submitted 2026-11-05, revised 2026-11-09) introduces a
+family of four decision models, 8B–35B parameters, that read a state plus caller-supplied options
+and return a probability distribution over them in one pass, with no autoregressive decoding. Per
+the abstract (documented, verbatim): the flagship, Max, "sets a new state of the art among the
+decision models we compare" on what the paper calls "Decision Index 0.4.1" — "67.52 on the public
+suite vs. 60.70 for Jev 1.14.0." This corpus could not confirm whether "Decision Index 0.4.1" is a
+later edition of the community-run Hugging Face Space (`multimodalart/jev-decision-index`,
+editions 0.2.1/0.3, already tracked above) or a separate benchmark — the "public suite" wording
+echoes that Space's own `public_skill` terminology, but the Space itself reports no edition number
+on a 2026-11-11 check, so this corpus states the paper's own number rather than resolving which
+index it is. **Not** the Artificial Analysis Decision Index tracked above — see that section's own
+warning against conflating similarly-named boards; Drex appears on neither as of this corpus's
+2026-10-15 read of that index.
+
+**License and openness (observed, mixed within the family)**: the abstract states "All four models
+are open source," which this corpus does not repeat as a blanket claim. The
+`nace-ai/drex-decision-models` GitHub repo (runtime, docs, and model pages) is Apache-2.0 for its
+own code, confirmed against its `LICENSE` file — that covers the runtime, not the weights. The
+vendor's own product page (`nace.ai/drex`, fetched 2026-11-11) states the flagship, Drex Max, has
+"No open weights." Drex 2.0 (35B total parameters, ~3B active per token, a mixture-of-experts build
+on `Qwen/Qwen3.6-35B-A3B` with a **Kev pointer head** — see § kev above) is the open-weight
+release; its Hugging Face model card gives the weights' own license as a custom **"NACE AI OPEN
+RAIL-M LICENSE (MODIFIED)"** (confirmed by fetching that model repo's own `LICENSE` file): a
+modified Open RAIL-M grant, "freely accessible to downstream users, including for commercial use,
+by individuals and smaller organizations below the thresholds in Attachment A" — not an OSI
+license, despite the code repo's separate Apache-2.0 tag. A different checkpoint in the same
+family, `drex-dlm` (built on `nvidia/Efficient-DLM-8B`), carries yet another license,
+`cc-by-nc-4.0` (non-commercial only), per its own Hugging Face tags. Thirty-six model repos are
+public under the `nace-ai` Hugging Face org as of 2026-11-11 (checked via the Hugging Face API),
+spanning the Drex family, GGUF/MLX quantizations, and unrelated base-model ports.
+
+**Benchmark (self-reported, vendor's own product page, fetched 2026-11-11)**: on a *different*
+pair of benchmarks the page names "Decision Bench" and "DecideBench" — not the paper's "Decision
+Index 0.4.1" above, stated as found rather than reconciled — Drex Max leads Jev 1.14 on Decision
+Bench (94.2 vs. 92.3) and DecideBench-item (99.0 vs. 98.0) at lower median latency (172 ms vs.
+196 ms) and lower cost ($0.03 vs. $0.042 per 1,000 decisions); Jev 1.14 leads on MMLU-Pro (82.1 vs.
+75.2) and HLE (19.4 vs. 18.2). Against two frontier LLMs the same page shows "for reference" and
+states are "not scored on the Public Decision Index" (GPT-6 Sol, Claude Opus 5.5), Drex Max is far
+cheaper and faster but trails on JevBench (93.9 vs. 99.1/100.0) and general knowledge (MMLU-Pro
+75.2 vs. 93.0/94.0).
+
+No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
+change an open cell in the rubric's evidence census; this entry doesn't, so none is added here.
+
 ## Tools built on Jev
 
-Eight projects call Jev (or an alternative decision model) as one step in a larger tool. Five have
-their own home elsewhere in this corpus and this section only points to them; probably, pg-jev and
-jev-browser have none yet, so their full entries live here.
+Ten projects call Jev (or an alternative decision model) as one step in a larger tool. Five have
+their own home elsewhere in this corpus and this section only points to them; probably, pg-jev,
+jev-browser, OntoSmith, and edgextract have none yet, so their full entries live here.
 
 - **abide** (coldteadotai) — asks Jev one question per AGENTS.md rule on every coding-agent edit or
   turn and has the agent repair a break. See
@@ -1323,6 +1488,37 @@ jev-browser have none yet, so their full entries live here.
   submits it" (neither states the version tested). A fork exists at MrJev/jev-browser (stale since
   2026-09-19); cite upstream. No rubric row: an application of Jev's existing API, not a new
   decision-model architecture (gap-driven scoring, plan 0011 row O1).
+
+- **OntoSmith** (Dongbumlee) — **Repo**: [Dongbumlee/ontosmith][ontosmith] | **License**: MIT
+  (confirmed against `LICENSE`) | **Stars**: 270 / 27 forks, created 2026-10-22, pushed
+  2026-11-11 (`gh api`, 2026-11-11). An ontology-driven knowledge-graph builder: a human approves a
+  typed schema (entity/relation types with definitions and boundary examples) up front, then
+  "models propose, Jev judges, only judged facts are written" — every written triple keeps its
+  evidence span and provenance. Per its own CLI output, the judge's score (`p_true`) is explicitly
+  "a score to sort and threshold by, not a calibrated probability" — the README's own hedge against
+  reading it as Jev's calibrated output directly. Needs Neo4j for a live build;
+  `profile`/`inspect`/`validate` run keyless against shipped example artefacts. This page is
+  OntoSmith's home in the corpus, not a placeholder. No rubric row: an application of an existing
+  decision model, not a new architecture (gap-driven scoring, plan 0011 row O1).
+
+- **edgextract** (raphaelmansuy) — **Repo**: [raphaelmansuy/edgextract][edgextract] |
+  **License**: Apache-2.0 (confirmed against `LICENSE`) | **Stars**: 143 / 14 forks, created
+  2026-10-03, pushed 2026-11-01 (`gh api`, 2026-11-11). Turns markdown into a knowledge graph under
+  a YAML ontology the caller writes: "Your code proposes names. Your ontology says which kinds and
+  links are legal. A small local decision model answers one closed yes-or-no question at a time."
+  Every candidate name and link goes to Ollama's `POST /v1/systemone` (§ Serving without training,
+  above) with its default model `tev1` — the same Together AI Tev1 recipe this doc's § Domain
+  example: BioDecision-4B already covers, not a separate decision model. A caller-set cutoff keeps,
+  queues for review, or drops each answer. Its own zero-shot CoNLL04 comparison (288 test
+  sentences) reports, against a chat model prompted for JSON (Mistral Small) on the same unseen
+  sentences: comparable name-F1 (0.690 vs. 0.643) and higher links-F1 (0.388 vs. 0.330), while the
+  README's own prose separately states "the closed decision keeps far fewer wrong links than the
+  chat model (links precision 0.41 against 0.27; 218 wrong links kept against 504)." Its own
+  "Honest limits" section states plainly: "We do not claim anything about hosted-Jev calibration."
+  A browser build (Rust compiled to WASM) runs the same pipeline client-side against a WebGPU ONNX
+  build of Tev1. This page is edgextract's home in the corpus, not a placeholder. No rubric row: an
+  application of an existing decision model, not a new architecture (gap-driven scoring, plan 0011
+  row O1).
 
 **Community catalogs.** Two CC0-licensed awesome lists track the Jev ecosystem and are useful
 discovery sources for this section; both describe their entries' numbers as author-reported, so
@@ -1604,6 +1800,24 @@ here.
 | [Artificial Analysis — Decision Index launch article][aa-decision-index-article] | Launch date, composition (four 25%-weighted evals), call-format quote, launch-time scores, per-eval leaders, cost/speed ranges, calibration summary, model/baseline counts (a frozen 2026-10-13 snapshot — re-checked 2026-10-15 and found unchanged: still shows only Jev 1.13, no d1-ultra/Jev 1.14); fetched via WebFetch 2026-10-15 |
 | [Artificial Analysis — Decision Index methodology][aa-decision-index-methodology] | Eval weights and dataset filtering detail, non-hallucination-rate formula, versioning ("Version 1.0... October 2026 to current"); fetched via WebFetch 2026-10-15 |
 | [Artificial Analysis — Decision Index live leaderboard][aa-decision-index-leaderboard] | Full per-model scores, cost-per-task, latency, extracted directly from the page's own embedded JSON (`contestants` array and `defaultSlugs` field — the latter is this corpus's source for which 11 of the 13 decision models AA treats as its own "default" view); fetched via polyfetch **twice** 2026-10-15 (morning: 11 decision models; afternoon, after an external fact-check: 13 — Jev 1.14 and Liquid AI's new d1-ultra had been added live, and Mercury Decide's own measured cost had changed, in between) |
+| [Strands Decider launch blog][strands-decider-blog] | Launch date (2026-10-01), 2B/Qwen3.5-2B-Base/LoRA architecture, Strands Labs framing, no Claude/Sonnet mention; fetched via WebFetch 2026-11-11 |
+| [strands-labs/strands-decider][strands-decider-gh] | README (CLI, `/v1/systemone` server, vision), `LICENSE` (Apache-2.0), `evaluation/results.md` (JevBench 180/231, Brier/ECE, soup methodology); fetched via `gh api`, 2026-11-11 |
+| [Hugging Face API — strands-decider-2B-qwen3.5-v1-2610][strands-decider-hf] | `license: apache-2.0`, `peft`/`lora` tags, `base_model:adapter:Qwen/Qwen3.5-2B-Base`, storage size (~234 MB); fetched via WebFetch 2026-11-11 |
+| [Hugging Face docs — `transformers serve` (main)][transformers-serve-main] | `/v1/systemone` endpoint listing and worked example (`Qwen/Qwen2.5-1.5B-Instruct`), "scores the allowed answers without generating text" wording; fetched via WebFetch 2026-11-11 |
+| [Hugging Face docs — `transformers serve` (v5.14.0)][transformers-serve-v5140] | Confirms `/v1/systemone` is absent from the latest tagged release's docs (version gate); fetched via WebFetch 2026-11-11 |
+| [Ollama blog — decision-model support][ollama-systemone-blog] | Ollama 0.35 (2026-09-29), `/v1/systemone` endpoint, nimble (Bespoke Labs, 9B) and tev1/tev1:0.8b (Together AI) models, M5 Max latency figure; fetched via WebFetch 2026-11-11 |
+| [DeepEval blog — introducing JevEval][jeveval-blog] | JevEval metric design (Noul/Score/Choice, fixed math, `ConversationalJevEval`), no benchmark numbers; fetched via WebFetch 2026-11-11 |
+| [arXiv:2611.07854 — Towards Foundation Decision Models: Drex][drex-paper] | Title, authors, submission/revision dates, abstract text ("All four models are open source", Decision Index 0.4.1 vs. Jev 1.14.0 comparison); fetched via WebFetch 2026-11-11 |
+| [nace-ai/drex-decision-models][drex-gh] | `LICENSE` (Apache-2.0, runtime/docs repo) via `gh api`; repo metadata (stars/forks/dates); checked 2026-11-11 |
+| Hugging Face API, `models?author=nace-ai` | 36 public model repos, licenses (`other`/`cc-by-nc-4.0`), base models, arXiv tag; checked 2026-11-11 |
+| [Hugging Face model card — nace-ai/drex-v2.0][drex-v2-hf] | Architecture (35B MoE, ~3B active, Kev pointer head), `LICENSE` file text ("NACE AI OPEN RAIL-M LICENSE (MODIFIED)"); fetched via WebFetch 2026-11-11 |
+| [nace.ai/drex product page][drex-product] | Drex Max "No open weights" statement, Decision Bench/DecideBench tables vs. Jev 1.14 and frontier LLMs, GitHub/Hugging Face links; fetched via WebFetch 2026-11-11 |
+| Preprints.org manuscript `10.20944/preprints202611.0781.v1` — "From Laya to Vega" (plain text, not linked: Akamai bot-check returns 403 to both a plain fetch and lychee) | Authors (Nandakishor M, Anjali M), posted date (2026-11-09), CC BY 4.0 license, abstract (Laya 421M/33ms recap; Vega 14M–31M engine, energy-landscape readout, vega-U 0.8B–27B readers); fetched via `polyfetch` headed/patchright (plain WebFetch and the `curl_cffi` tier were both blocked by the same challenge), 2026-11-11 |
+| [NandhaKishorM/vegaml][vegaml] | `LICENSE` (Apache-2.0) via `gh api`; repo metadata (stars/forks/dates); checked 2026-11-11 |
+| [PyPI — vegaml][vegaml-pypi] | Author credit, vega-U default/readers (0.8B–27B), "classic vega" 0.8B/4B checkpoints, `POST /v1/decide` serving path, CWMI-only comparison (no Jev mention); fetched via WebFetch 2026-11-11 |
+| [NandhaKishorM/vegaml readme][vegaml] | Confirms zero mentions of "Jev" in the full README (`grep -ci jev`, 2026-11-11) |
+| [Dongbumlee/ontosmith][ontosmith] | README ("Jev judges what is true enough to write", `p_true` caveat), `LICENSE` (MIT); fetched via `gh api`, 2026-11-11 |
+| [raphaelmansuy/edgextract][edgextract] | README (YAML ontology, Ollama `/v1/systemone`, default model `tev1`, CoNLL04 comparison table, "Honest limits"), `LICENSE` (Apache-2.0); fetched via `gh api`, 2026-11-11 |
 
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
@@ -1705,3 +1919,20 @@ here.
 [aa-decision-index-article]: https://artificialanalysis.ai/articles/artificial-analysis-decision-index
 [aa-decision-index-methodology]: https://artificialanalysis.ai/methodology/decision-index
 [aa-decision-index-leaderboard]: https://artificialanalysis.ai/evaluations/artificial-analysis-decision-index
+[strands-decider-blog]: https://strandsagents.com/blog/introducing-strands-decider/
+[strands-decider-gh]: https://github.com/strands-labs/strands-decider
+[strands-decider-hf]: https://huggingface.co/StrandsAgents/strands-decider-2B-qwen3.5-v1-2610
+[strands-decider-results]: https://github.com/strands-labs/strands-decider/blob/main/evaluation/results.md
+[transformers-serve-main]: https://huggingface.co/docs/transformers/main/en/serve-cli/serving
+[transformers-serve-v5140]: https://huggingface.co/docs/transformers/v5.14.0/serve-cli/serving
+[ollama-systemone-blog]: https://ollama.com/blog/ollama-now-supports-jev-style-decision-models
+[jeveval-blog]: https://deepeval.com/blog/introducing-jev-as-a-judge
+[drex-paper]: https://arxiv.org/abs/2611.07854
+[drex-gh]: https://github.com/nace-ai/drex-decision-models
+[drex-hf]: https://huggingface.co/nace-ai
+[drex-v2-hf]: https://huggingface.co/nace-ai/drex-v2.0
+[drex-product]: https://nace.ai/drex
+[vegaml]: https://github.com/NandhaKishorM/vegaml
+[vegaml-pypi]: https://pypi.org/project/vegaml/
+[ontosmith]: https://github.com/Dongbumlee/ontosmith
+[edgextract]: https://github.com/raphaelmansuy/edgextract
