@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-11-09
+updated: 2026-11-11
 validated_links: 2026-10-22
 status: assess
 ---
@@ -700,6 +700,40 @@ tokens, 2.0× at ~3,400 tokens, 1.7× at ~16,000 tokens.
 "offering a service to help customers fine-tune Clef to suit their workloads with our hands-on FDE
 team," with a later self-serve platform planned; interested customers can sign up as design
 partners via an interest-form link on the blog (not reproduced here).
+
+**Observed on this repo's gold sets (2026-11-10, one run)**: [`decision-model-eval.yaml`][decision-eval-wf]
+ran both hosted models through the estate's shared `decide()` gate (`clef` backend, REST
+`/ai/run`) over the two G1 [gold sets][gold-sets]: 100 arXiv
+papers asked the agent-strict relevance question, and 62 issues from qte77 repositories asked
+"is this issue relevant to its repository". All 324 calls returned a probability: no escalations,
+no retries. Median wall time per call from a GitHub-hosted runner was 0.21–0.23 s for Clef-flash
+and 0.32–0.34 s for Clef. These are network round trips, not comparable with the vendor's
+model-side latency figures above.
+
+| Set | Model | Accuracy at 0.5 | Brier | ROC-AUC (95% bootstrap CI) | Recommended `hi` (coverage) |
+|---|---|---|---|---|---|
+| Papers (77 yes / 23 no) | Clef-flash | 0.85 | 0.089 | 0.958 (0.916–0.987) | 0.80 (0.79) |
+| Papers | Clef | 0.91 | 0.061 | 0.970 (0.930–0.995) | 0.75 (0.90) |
+| Issues (59 yes / 3 no) | Clef-flash | 0.935 | 0.071 | not reported | 0.70 (0.85) |
+| Issues | Clef | 0.984 | 0.009 | not reported | 0.50 (1.00) |
+
+"Recommended `hi`" applies a rule fixed before the run. It is the smallest threshold in 0.50–0.95
+whose acted answers (probability ≥ `hi` or ≤ 1 − `hi`) are wrong at most 5% of the time;
+everything in between goes to review. On papers, Clef at `hi` 0.75 acts on 90 of 100 with 3 false
+accepts and 1 false reject. The production chat-model call it would replace (Llama 3.3 70B,
+agent-strict prompt) agreed with the gold labelling pass on 89 of 100, per the gold-set README.
+
+Read these numbers with four limits:
+
+- **In-sample.** `hi` was picked on the same items it is reported on.
+- **Agent labels.** The labels come from two agent passes, not human annotation.
+- **One week of papers.** The paper set is one week's top-100 ranked pool.
+- **Issue negatives.** The issue set's only 3 negatives are planted test fixtures, so it measures
+  false rejects, not false accepts. That is why no AUC is reported for it, and why the issue
+  threshold is not a deployable setting.
+
+On these sets, Clef beats Clef-flash on every metric. Its input price is about 6× higher; the
+pricing paragraph above has the rates. Jev was not run: no TypeSafe key was configured.
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
 could change an open cell in the rubric's evidence census. Like OpenAI's, Perplexity's, and
@@ -1508,6 +1542,7 @@ here.
 | [Workers AI pricing page][workers-ai-pricing] | Current per-model input-token prices for clef/clef-flash/clef-omni, page marked "Last updated Oct 9, 2026"; fetched 2026-10-11 |
 | [Hugging Face model card — Cloudflare/clef][clef-hf] | License, base model (`Qwen/Qwen3.8-27B`), architecture, Decision Index comparison table including general-reasoning rows; fetched 2026-10-11 |
 | [Hugging Face model card — Cloudflare/clef-flash][clef-flash-hf] | License, base model (`Qwen/Qwen3.5-9B`), architecture, Decision Index comparison table; fetched 2026-10-11 |
+| [`decision-model-eval.yaml`][decision-eval-wf] run 42847138765 over the [G1 gold sets][gold-sets], GitHub Actions, 2026-11-10 | Observed Clef and Clef-flash calibration on this repo's 100-paper and 62-issue gold sets (accuracy, Brier, ROC-AUC, threshold sweep); runtime observation |
 | Hugging Face API, `models/Cloudflare/clef-omni` | Confirms clef-omni is public (`license: apache-2.0`), lists weight files; checked 2026-10-11 |
 | Hugging Face Space data, `multimodalart/jev-decision-index/data/index.json` | Partial (~40%) search for a `clef` entry — none found, consistent with the HF cards' own "internal run" label; checked 2026-10-11 |
 | `sgl-project/sglang` PR #42721 | Confirms Cloudflare's SGLang-support PR is real and merged, and its own title names the `/v1/systemone` path; checked via `gh api`, 2026-10-11 |
@@ -1649,6 +1684,8 @@ here.
 [workers-ai-pricing]: https://developers.cloudflare.com/workers-ai/platform/pricing/
 [clef-hf]: https://huggingface.co/Cloudflare/clef
 [clef-flash-hf]: https://huggingface.co/Cloudflare/clef-flash
+[decision-eval-wf]: ../../../.github/workflows/decision-model-eval.yaml
+[gold-sets]: ../../../.github/scripts/data/gold/README.md
 [unsloth-decision-notebook]: https://github.com/unslothai/notebooks/blob/main/nb/Qwen3_5_(4B)-Decision.ipynb
 [unsloth-decision-guide]: https://unsloth.ai/docs/basics/train-your-own-decision-model-with-unsloth
 [unsloth-decision-laya-serving]: https://unsloth.ai/docs/models/decision-laya.md
