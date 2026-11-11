@@ -69,6 +69,16 @@ class PromptVariantTests(unittest.TestCase):
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/rxiv-paper-eval.yaml").read_text()
         self.assertIn(f'relevance_prompt: "{rl.AGENT_STRICT_PROMPT}"', workflow)
 
+    def test_production_workflow_gives_decide_the_same_criterion(self):
+        # Reason: the decision-model path must judge papers by the agent-strict criterion too;
+        # it gets the prompt without the chat reply-format sentence (as calibrated in H1).
+        from lib.decision_eval import _REPLY_FORMAT
+
+        workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/rxiv-paper-eval.yaml").read_text()
+        criterion = rl.AGENT_STRICT_PROMPT.removeprefix(_REPLY_FORMAT)
+        self.assertIn(f'decide_instructions: "{criterion}"', workflow)
+        self.assertIn("decide_enabled: true", workflow)
+
     def test_unknown_variant_raises(self):
         with self.assertRaises(KeyError):
             rl.build_messages("agents", "T", "cs.AI", "A", variant="nope")
