@@ -933,11 +933,14 @@ the third-party [JevBench][jevbench] public set (Brier 0.280, ECE 0.072); it con
 to Jev itself. Four companion checkpoints on Gemma 4 bases (E2B/E4B/12B/26B-A4B) ship the same
 pointer-head recipe.
 
-**Dropped**: this entry's lead — a social post — claimed Amazon replaced Claude Sonnet 4.6 with
-Strands Decider for support-ticket labelling. Neither the launch blog nor the GitHub README
-mentions Claude, Sonnet, or any named production deployment; the blog's only routing example is
-choosing which team should handle a support message, kept abstract. This corpus found no
-first-party source for the replacement claim and does not repeat it.
+**Production case (self-reported, 2026-11-09)**: a later [Strands blog post][strands-decider-sonnet-blog]
+by two Amazon engineers says they replaced Claude Sonnet 4.6 with Strands Decider for labelling
+tickets into about 20 categories in an internal Amazon ticketing system, and that it "performed
+just as well *at 98% less cost*". The post says they moved from the 2B model to a Gemma 4 E4B build of
+Decider after a test set favoured it, tuned the confidence threshold before applying a label, and
+served it on SageMaker. These figures are the vendor's own and were not reproduced here.
+(Correction 2026-11-11: an earlier version of this entry called the Sonnet claim unsourced after
+checking only the launch blog and README; the source is this later post.)
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
 change an open cell in the rubric's evidence census; this entry doesn't, so none is added here.
@@ -1804,6 +1807,7 @@ here.
 | [Artificial Analysis — Decision Index methodology][aa-decision-index-methodology] | Eval weights and dataset filtering detail, non-hallucination-rate formula, versioning ("Version 1.0... October 2026 to current"); fetched via WebFetch 2026-10-15 |
 | [Artificial Analysis — Decision Index live leaderboard][aa-decision-index-leaderboard] | Full per-model scores, cost-per-task, latency, extracted directly from the page's own embedded JSON (`contestants` array and `defaultSlugs` field — the latter is this corpus's source for which 11 of the 13 decision models AA treats as its own "default" view); fetched via polyfetch **twice** 2026-10-15 (morning: 11 decision models; afternoon, after an external fact-check: 13 — Jev 1.14 and Liquid AI's new d1-ultra had been added live, and Mercury Decide's own measured cost had changed, in between) |
 | [Strands Decider launch blog][strands-decider-blog] | Launch date (2026-10-01), 2B/Qwen3.5-2B-Base/LoRA architecture, Strands Labs framing, no Claude/Sonnet mention; fetched via WebFetch 2026-11-11 |
+| [Strands blog — replacing Sonnet 4.6 with Strands Decider][strands-decider-sonnet-blog] | 2026-11-09 Amazon ticket-labelling case: Sonnet 4.6 replaced, "98% less cost", Gemma 4 E4B build, threshold tuning, SageMaker serving (self-reported); read from the post's source in `strands-agents/harness-sdk` 2026-11-11 |
 | [strands-labs/strands-decider][strands-decider-gh] | README (CLI, `/v1/systemone` server, vision), `LICENSE` (Apache-2.0), `evaluation/results.md` (JevBench 180/231, Brier/ECE, soup methodology); fetched via `gh api`, 2026-11-11 |
 | [Hugging Face API — strands-decider-2B-qwen3.5-v1-2610][strands-decider-hf] | `license: apache-2.0`, `peft`/`lora` tags, `base_model:adapter:Qwen/Qwen3.5-2B-Base`, storage size (~234 MB); fetched via WebFetch 2026-11-11 |
 | [Hugging Face docs — `transformers serve` (main)][transformers-serve-main] | `/v1/systemone` endpoint listing and worked example (`Qwen/Qwen2.5-1.5B-Instruct`), "scores the allowed answers without generating text" wording; fetched via WebFetch 2026-11-11 |
@@ -1923,6 +1927,7 @@ here.
 [aa-decision-index-methodology]: https://artificialanalysis.ai/methodology/decision-index
 [aa-decision-index-leaderboard]: https://artificialanalysis.ai/evaluations/artificial-analysis-decision-index
 [strands-decider-blog]: https://strandsagents.com/blog/introducing-strands-decider/
+[strands-decider-sonnet-blog]: https://strandsagents.com/blog/amazon-saves-millions-replacing-sonnet-with-strands-decider/
 [strands-decider-gh]: https://github.com/strands-labs/strands-decider
 [strands-decider-hf]: https://huggingface.co/StrandsAgents/strands-decider-2B-qwen3.5-v1-2610
 [strands-decider-results]: https://github.com/strands-labs/strands-decider/blob/main/evaluation/results.md

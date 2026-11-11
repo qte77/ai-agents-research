@@ -4,7 +4,7 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-11
+updated: 2026-11-11
 validated_links: 2026-10-11
 ---
 
@@ -23,6 +23,7 @@ Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Re
 - [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) — lightweight provider-agnostic agents with handoffs, guardrails, tracing (Mar 2025).
 - [Google ADK](https://github.com/google/adk-python) — LLM/Workflow/Custom agents with built-in eval + MCP; deploys to Vertex AI Agent Engine (Apr 2025).
 - [AWS Agent Squad](https://github.com/awslabs/agent-squad) — intent-classification query routing across agents, Python + TypeScript.
+- [Strands Agents (AWS)][strands-site] — AWS's open-source, model-driven agent SDK for Python and TypeScript (Apache-2.0, from the repo's `LICENSE.APACHE`; 9.2k★, `gh api` 2026-11-11). It runs in your own process with no hosted control plane. Its README lists "First-class support for Amazon Bedrock, Anthropic, OpenAI, and Gemini", plus more providers, and says "MCP, streaming, multi-agent patterns, and structured output are all built in". The docs also cover A2A and the agents-as-tools, swarm, graph and workflow patterns. The Python and TypeScript SDKs now share one monorepo, [`strands-agents/harness-sdk`][strands-repo]. It is the original `sdk-python` repo renamed (same 2025-05-14 creation date; references were switched in PR #2618, merged 2026-06-05), and `sdk-typescript` is archived. Latest releases are python v1.64.0 and typescript v1.24.0 (2026-11-04). Since 2026-09-21 it also ships **Strands harness**, a fully assembled general-purpose agent you run locally or deploy. Its [launch post][strands-harness-blog] claims, self-reported, that it "costs 28% less" than other harnesses with the same Claude or GPT models across six benchmarks, and that with Fable 5 it "cost 77% less than Claude Code" and scored higher on Terminal-Bench 2.1. Around the SDK: a separate [Strands Evals][strands-evals] framework; Amazon Bedrock AgentCore as one deployment target (AWS says AgentCore runs agents "built on any framework"); a Strands plugin for Claude Code, Codex and Cursor; and the experimental Strands Labs org, which ships [Strands Decider](../reference/system-1-decision-models-landscape.md) among other projects. AG-UI support is a community-tier, Python-only docs page (CopilotKit), not a core feature.
 - [Swarms](https://github.com/kyegomez/swarms) — enterprise swarm orchestration (hierarchical/parallel/graph), Apache-2.0.
 - [Fetch.ai uAgents](https://github.com/fetchai/uAgents) — blockchain-integrated autonomous agents with on-chain payments (Agentverse).
 - [DeerFlow (ByteDance)](https://github.com/bytedance/deer-flow) — LangGraph super-agent harness with Markdown skills + sandboxed execution. Full analysis: [deerflow-analysis.md](../orchestrators/deerflow-analysis.md).
@@ -418,6 +419,15 @@ code branches on directly, backed by a probability rather than free text.
 
 Each framework / tool entry cites its repo or docs inline (reference-style and inline links above); framework stars were `gh api`-verified at the snapshot dates noted in the relevant sections.
 
+Strands Agents entry (§1) — first-party sources read 2026-11-11:
+
+| Source | Content |
+|---|---|
+| [strandsagents.com][strands-site] | Product family (SDK, harness, Evals, Labs), model providers, multi-agent and A2A docs, AgentCore deploy page, AG-UI community page |
+| [`strands-agents/harness-sdk` repo][strands-repo] | README (providers, built-ins, Claude Code/Codex/Cursor plugin), `LICENSE.APACHE`, releases, PR #2618 (repository references switched to `harness-sdk`), archived `sdk-typescript`; `gh api` |
+| [Strands harness launch post][strands-harness-blog] | 2026-09-21 launch; self-reported cost/benchmark comparisons with Claude Code and Codex |
+| [`strands-agents/evals` repo][strands-evals] | Separate Apache-2.0 evaluation framework |
+
 Runtype entry (§1) — first-party pages read 2026-09-24:
 
 | Source | Content |
@@ -501,3 +511,7 @@ checked 2026-10-11 (plan 0012, row N1):
 [openrigproject-gh]: https://github.com/openRigProject/openRig
 [trueforge-gh]: https://github.com/truefoundry/trueforge
 [graphjin-gh]: https://github.com/dosco/graphjin
+[strands-site]: https://strandsagents.com
+[strands-repo]: https://github.com/strands-agents/harness-sdk
+[strands-harness-blog]: https://strandsagents.com/blog/introducing-strands-harness/
+[strands-evals]: https://github.com/strands-agents/evals
