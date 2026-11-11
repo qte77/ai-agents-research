@@ -710,26 +710,28 @@ tokens, 2.0× at ~3,400 tokens, 1.7× at ~16,000 tokens.
 team," with a later self-serve platform planned; interested customers can sign up as design
 partners via an interest-form link on the blog (not reproduced here).
 
-**Observed on this repo's gold sets (2026-11-10, one run)**: [`decision-model-eval.yaml`][decision-eval-wf]
-ran both hosted models through the estate's shared `decide()` gate (`clef` backend, REST
-`/ai/run`) over the two G1 [gold sets][gold-sets]: 100 arXiv
+**Observed on this repo's gold sets (Clef 2026-11-10, Jev 2026-11-11; one run each)**: [`decision-model-eval.yaml`][decision-eval-wf]
+ran both hosted Clef models, and then TypeSafe's `jev-1.13.0`, through the estate's shared `decide()` gate (`clef` backend via the REST
+`/ai/run` path; `jev` backend via TypeSafe's `/v1/systemone`) over the two G1 [gold sets][gold-sets]: 100 arXiv
 papers asked the agent-strict relevance question, and 62 issues from qte77 repositories asked
-"is this issue relevant to its repository". All 324 calls returned a probability: no escalations,
-no retries. Median wall time per call from a GitHub-hosted runner was 0.21–0.23 s for Clef-flash
-and 0.32–0.34 s for Clef. These are network round trips, not comparable with the vendor's
+"is this issue relevant to its repository". All 486 calls returned a probability: no escalations,
+no retries. Median wall time per call from a GitHub-hosted runner was 0.21–0.23 s for Clef-flash,
+0.32–0.34 s for Clef and 0.14–0.15 s for Jev. These are network round trips, not comparable with the vendor's
 model-side latency figures above.
 
 | Set | Model | Accuracy at 0.5 | Brier | ROC-AUC (95% bootstrap CI) | Recommended `hi` (coverage) |
 |---|---|---|---|---|---|
 | Papers (77 yes / 23 no) | Clef-flash | 0.85 | 0.089 | 0.958 (0.916–0.987) | 0.80 (0.79) |
 | Papers | Clef | 0.91 | 0.061 | 0.970 (0.930–0.995) | 0.75 (0.90) |
+| Papers | Jev 1.13.0 | 0.92 | 0.055 | 0.968 (0.921–0.997) | 0.70 (0.91) |
 | Issues (59 yes / 3 no) | Clef-flash | 0.935 | 0.071 | not reported | 0.70 (0.85) |
 | Issues | Clef | 0.984 | 0.009 | not reported | 0.50 (1.00) |
+| Issues | Jev 1.13.0 | 1.00 | 0.009 | not reported | 0.50 (1.00) |
 
 "Recommended `hi`" applies a rule fixed before the run. It is the smallest threshold in 0.50–0.95
 whose acted answers (probability ≥ `hi` or ≤ 1 − `hi`) are wrong at most 5% of the time;
 everything in between goes to review. On papers, Clef at `hi` 0.75 acts on 90 of 100 with 3 false
-accepts and 1 false reject. The production chat-model call it would replace (Llama 3.3 70B,
+accepts and 1 false reject; Jev at the same `hi` acts on 91 with 3 false accepts and none rejected. The production chat-model call it would replace (Llama 3.3 70B,
 agent-strict prompt) agreed with the gold labelling pass on 89 of 100, per the gold-set README.
 
 Read these numbers with four limits:
@@ -741,8 +743,9 @@ Read these numbers with four limits:
   false rejects, not false accepts. That is why no AUC is reported for it, and why the issue
   threshold is not a deployable setting.
 
-On these sets, Clef beats Clef-flash on every metric. Its input price is about 6× higher; the
-pricing paragraph above has the rates. Jev was not run: no TypeSafe key was configured.
+On these sets, Clef beats Clef-flash on every metric, and Clef and Jev are within the bootstrap
+intervals of each other on papers; one week of 100 papers can't separate them. Clef's input price is
+about 6× Clef-flash's and about 6× Jev's ($0.042 per 1M); the pricing paragraph above has the rates.
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
 could change an open cell in the rubric's evidence census. Like OpenAI's, Perplexity's, and
@@ -1738,7 +1741,7 @@ here.
 | [Workers AI pricing page][workers-ai-pricing] | Current per-model input-token prices for clef/clef-flash/clef-omni, page marked "Last updated Oct 9, 2026"; fetched 2026-10-11 |
 | [Hugging Face model card — Cloudflare/clef][clef-hf] | License, base model (`Qwen/Qwen3.8-27B`), architecture, Decision Index comparison table including general-reasoning rows; fetched 2026-10-11 |
 | [Hugging Face model card — Cloudflare/clef-flash][clef-flash-hf] | License, base model (`Qwen/Qwen3.5-9B`), architecture, Decision Index comparison table; fetched 2026-10-11 |
-| [`decision-model-eval.yaml`][decision-eval-wf] run 42847138765 over the [G1 gold sets][gold-sets], GitHub Actions, 2026-11-10 | Observed Clef and Clef-flash calibration on this repo's 100-paper and 62-issue gold sets (accuracy, Brier, ROC-AUC, threshold sweep); runtime observation |
+| [`decision-model-eval.yaml`][decision-eval-wf] runs 42847138765 (2026-11-10) and 43101398070 (2026-11-11) over the [G1 gold sets][gold-sets], GitHub Actions | Observed Clef, Clef-flash and Jev 1.13.0 calibration on this repo's 100-paper and 62-issue gold sets (accuracy, Brier, ROC-AUC, threshold sweep); runtime observation |
 | Hugging Face API, `models/Cloudflare/clef-omni` | Confirms clef-omni is public (`license: apache-2.0`), lists weight files; checked 2026-10-11 |
 | Hugging Face Space data, `multimodalart/jev-decision-index/data/index.json` | Partial (~40%) search for a `clef` entry — none found, consistent with the HF cards' own "internal run" label; checked 2026-10-11 |
 | `sgl-project/sglang` PR #42721 | Confirms Cloudflare's SGLang-support PR is real and merged, and its own title names the `/v1/systemone` path; checked via `gh api`, 2026-10-11 |
