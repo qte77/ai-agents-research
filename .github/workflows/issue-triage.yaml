@@ -31,9 +31,13 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-      - uses: qte77/gha-issue-triage@f7254d606bd002343b73190706b46f43b645f912  # v0.5.0
+      - uses: qte77/gha-issue-triage@c3af11492ee575e64641e18bef7f0f6898143279  # v0.6.0
         with:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           llm-api-key: ${{ secrets.CF_WORKERS_AI_TOKEN }}
           MODEL: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
           api_base: ${{ secrets.LLM_BASE_URL }}
+          # Shadow mode (plan 0012 P1): also ask the decision-shaped questions through
+          # decide() (Clef) and add value/probability/band to the comment. Never sets
+          # labels; collects calibration data on real issues before any threshold is used.
+          decide-shadow: "true"
