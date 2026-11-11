@@ -3,8 +3,8 @@ title: CC Plugin Packaging Research
 source: https://code.claude.com/docs/en/agent-sdk/plugins, https://code.claude.com/docs/en/plugins
 purpose: Evaluate packaging project skills, agents, and rules as a CC Plugin — including migration from repo-local configuration to a plugin-based integration.
 created: 2026-03-07
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-11-11
+validated_links: 2026-11-11
 status: research
 ---
 
@@ -328,7 +328,7 @@ This is YAGNI until a second project needs these skills.
 - [Agent SDK Plugins docs][sdk-plugins] — plugin loading and structure
 - [CC Plugins docs][cc-plugins] — full plugin development guide
 - [CC Plugins reference][cc-plugins-ref] — technical specs and schemas
-- [Plugin Structure skill][plugin-structure] — community plugin scaffolding guide
+- [Plugin Structure skill][plugin-structure] — plugin scaffolding guide, `plugin-dev` plugin in Anthropic's official marketplace (moved from a claude-plugins.dev mirror that now returns 402, 2026-11-11)
 - [Skill Development skill][skill-dev] — SKILL.md authoring best practices
 - [CC Memory docs][cc-mem] — CLAUDE.md and rules (repo-local patterns)
 - [Plugin manifest reference][plugin-manifest-ref] — `plugin.json` fields, `version` pinning semantics
@@ -337,7 +337,7 @@ This is YAGNI until a second project needs these skills.
 [sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
 [cc-plugins]: https://code.claude.com/docs/en/plugins
 [cc-plugins-ref]: https://code.claude.com/docs/en/plugins-reference
-[plugin-structure]: https://claude-plugins.dev/skills/@anthropics/claude-plugins-official/plugin-structure
+[plugin-structure]: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/plugin-structure
 [skill-dev]: https://lobehub.com/skills/sjnims-plugin-dev-skill-development
 [cc-mem]: https://code.claude.com/docs/en/memory
 [plugin-manifest-ref]: https://code.claude.com/docs/en/plugins/manifest-reference
