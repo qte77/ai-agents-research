@@ -72,9 +72,12 @@ jobs:
           # Otherwise resolve the newest week the feed ACTUALLY has, so a feed
           # that lags the calendar week doesn't 404 the eval. Try the target
           # year, then fall back to the prior year (early-January boundary).
+          # Skip files under 1 KB: since 2026-11-02 the feed seeds a header-only
+          # CSV (~71 bytes) for the new week on Monday, and picking it loaded 0
+          # papers on 2026-11-10 while the full W45 file went unevaluated.
           latest_week() {
             gh api "repos/${FEED_REPO}/contents/data/${SERVER}/$1" \
-              --jq '[.[].name | select(endswith(".csv")) | rtrimstr(".csv")] | sort_by(tonumber) | last // empty' \
+              --jq '[.[] | select((.name | endswith(".csv")) and .size > 1024) | .name | rtrimstr(".csv")] | sort_by(tonumber) | last // empty' \
               2>/dev/null || true
           }
           year="${YEAR_INPUT:-$(date -u +%G)}"
@@ -84,7 +87,7 @@ jobs:
             week="$(latest_week "$year")"
           fi
           if [ -z "$week" ]; then
-            echo "::error::No feed CSVs found for ${SERVER} in ${FEED_REPO}"
+            echo "::error::No non-empty feed CSVs found for ${SERVER} in ${FEED_REPO}"
             exit 1
           fi
           echo "Resolved latest available feed week: ${year} W${week}"
