@@ -2,8 +2,8 @@
 """Run decision models over the G1 gold sets and report calibration (plan 0012 row H1).
 
 Calls `decide()` from a checkout of qte77/.github (`actions/decide/decide.py`) once per gold item
-and model, then writes `records.jsonl` and `summary.md`: ROC-AUC with a bootstrap interval and
-Brier score (papers only; the issue set has 3 negatives), accuracy at 0.5, and a sweep of the
+and model, then writes `records.jsonl` and `summary.md`: Brier score, accuracy at 0.5, ROC-AUC with a
+bootstrap interval (papers only; the issue set has 3 negatives), and a sweep of the
 `hi` threshold with the recommended value per set. Pure scoring lives in lib/decision_eval.py.
 
 Credentials come from the environment, as `decide()` reads them: CF_WORKERS_AI_TOKEN and
@@ -99,7 +99,7 @@ def summarize(set_name: str, model_key: str, records: list[dict]) -> tuple[list[
         ci_text = "n/a" if ci is None else f"{fmt(ci[0])}–{fmt(ci[1])}"
         lines.append(f"ROC-AUC: {fmt(roc_auc(probs, labels))} (95% bootstrap CI {ci_text}).")
     else:
-        lines.append("ROC-AUC not reported: 3 negatives, all planted fixtures (see data/gold/README.md).")
+        lines.append(f"ROC-AUC not reported: {negatives} negatives, too few to rank (see data/gold/README.md).")
     rows = sweep(probs, labels, GRID)
     best = recommend_hi(rows, MAX_ERROR_RATE)
     lines.append(
