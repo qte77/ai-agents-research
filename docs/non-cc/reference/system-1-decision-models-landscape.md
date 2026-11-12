@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-11-11
+updated: 2026-11-12
 validated_links: 2026-11-11
 status: assess
 ---
@@ -243,8 +243,8 @@ another model's output.
   proof that the sentence is true" — a grounding check on another model's output, not a rubric
   verdict on its quality.
 - [JevEval (DeepEval)][jeveval-blog] (documented, no benchmarks given) — a DeepEval metric that
-  separates roles: "you define the logic, Jev makes the decisions, and DeepEval does the
-  calculation." Three typed question kinds (Noul/Score/Choice) compose into a rubric score by
+  separates roles: "You define the logic, Jev makes the decisions, and DeepEval calculates the
+  score." Three typed question kinds (Noul/Score/Choice) compose into a rubric score by
   fixed math, not a model-generated verdict — "the equation is fixed, inspectable, and the same on
   every run" — with a `ConversationalJevEval` variant applying the same pattern to multi-turn
   transcripts. The post's own framing: "language tasks should stay with language models, while
@@ -745,7 +745,7 @@ Read these numbers with four limits:
 
 On these sets, Clef beats Clef-flash on every metric, and Clef and Jev are within the bootstrap
 intervals of each other on papers; one week of 100 papers can't separate them. Clef's input price is
-about 6× Clef-flash's and about 6× Jev's ($0.042 per 1M); the pricing paragraph above has the rates.
+about 6× Clef-flash's and roughly 5.7× Jev's ($0.042 per 1M); the pricing paragraph above has the rates.
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
 could change an open cell in the rubric's evidence census. Like OpenAI's, Perplexity's, and
@@ -1513,8 +1513,10 @@ jev-browser, OntoSmith, and edgextract have none yet, so their full entries live
   a YAML ontology the caller writes: "Your code proposes names. Your ontology says which kinds and
   links are legal. A small local decision model answers one closed yes-or-no question at a time."
   Every candidate name and link goes to Ollama's `POST /v1/systemone` (§ Serving without training,
-  above) with its default model `tev1` — the same Together AI Tev1 recipe this doc's § Domain
-  example: BioDecision-4B already covers, not a separate decision model. A caller-set cutoff keeps,
+  above). Its own "Honest limits" section states the library's default model is `nimble` (Bespoke
+  Labs' 9B model, § Serving without training above); the quickstart and its published CoNLL04 run
+  below both pass `tev1` explicitly — the same Together AI Tev1 recipe this doc's § Domain example:
+  BioDecision-4B already covers, not a separate decision model. A caller-set cutoff keeps,
   queues for review, or drops each answer. Its own zero-shot CoNLL04 comparison (288 test
   sentences) reports, against a chat model prompted for JSON (Mistral Small) on the same unseen
   sentences: comparable name-F1 (0.690 vs. 0.643) and higher links-F1 (0.388 vs. 0.330), while the

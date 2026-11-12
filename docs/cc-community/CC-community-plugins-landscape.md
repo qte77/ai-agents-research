@@ -332,9 +332,10 @@ step (`$.session.usage()`) and persists one thing between sessions — the name 
 per project folder (`$.store`), so it can flag a model change — confirmed by a read of
 `hooks/register.tsx` on 2026-11-12.
 
-**Privacy claim**: its README and `PRIVACY.md` state, verbatim, that the mod "makes no network
-requests, reads no files, runs no processes, calls no model and adds nothing to the conversation."
-This is self-reported; a read of `hooks/register.tsx` and `hooks/map.ts` (2026-11-12) found no calls
+**Privacy claim**: its README states, verbatim, that the mod "makes no network requests, reads no
+files, runs no processes, calls no model and adds nothing to the conversation"; `PRIVACY.md` makes
+the same claims across separate bullets, in different wording. This is self-reported; a read of
+`hooks/register.tsx` and `hooks/map.ts` (2026-11-12) found no calls
 to network, filesystem, process-spawn or model namespaces — consistent with the claim, but a source
 read is not an independent audit. The same README also states the counterweight any mod carries by
 design: it "is handed every call's whole input, including command lines and the text written to
@@ -345,7 +346,7 @@ own access, so this scoping is enforced by the mod's own code, not by a sandbox.
 
 **Caution**: very young (created 2026-11-09) with a fast-moving CHANGELOG — 0.3.6 through 0.5.1 all
 land on 2026-11-11, including one feature (a Hooks-station row) removed in 0.4.0 for an unnamed plugin
-catalogue's verification rule, then restored in 0.5.1 — so no settled track record yet. The README
+catalogue's verification rule, then restored in 0.5.0 — so no settled track record yet. The README
 itself flags the update-trust model: a marketplace added from this repo follows its `main` branch, "so
 an update brings whatever is there: read the diff before updating if that matters to you."
 
