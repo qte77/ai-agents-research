@@ -5,8 +5,8 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-11
-validated_links: 2026-10-11
+updated: 2026-11-12
+validated_links: 2026-11-12
 ---
 
 ## RTK (Rust Token Killer)
@@ -540,6 +540,54 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
+## cogit (erensrtky)
+
+**Repo**: [erensrtky/cogit][cogit] | **Stars**: 122★/13 forks (`gh api`, 2026-11-12) | **License**:
+MIT | Created 2026-10-27 — two weeks old at this check
+
+"Git for the intent behind agent-written code" (README). cogit runs as a Claude Code plugin,
+through Claude Code hooks, recording every message you send the agent as a *thought commit*: the
+question, the outcome, the decisions made and the options rejected, and which earlier message it
+continues. A `Thought:` trailer on each code commit ties it back to that record, so `cogit why`,
+`cogit blame` and `cogit show <sha>` can walk from any line of code back to the reason it exists.
+A background small model writes the record as you work — by default it never interrupts the
+agent — and, on an "Economical" setting, the author's own measurement puts the cost "under 2 cents
+per 20 messages."
+
+### How It Integrates With Claude Code
+
+- Install: `npm install -g @cogit/cli`, then in Claude Code, `/plugin install cogit --marketplace
+  erensrtky/cogit`.
+- Needs Claude Code 2.1.275+ and a git repository; works through Claude Code's own hook system so
+  the record is written live, "not reconstructed from the diff afterwards" (README). Single-agent:
+  the README states it "works with Claude Code today," with no other harness documented.
+- `cogit open .` renders the recorded sessions as a git-graph-style map (branches, decisions, a
+  "Your turn" inbox); `cogit pr` writes a pull-request description from the recorded decisions and
+  rejected options rather than the raw chat, and `--install-action` adds a GitHub Action that posts
+  it on every PR.
+
+### Scope and Data
+
+The README is explicit about what cogit is not: not agent memory (OpenViking, Mem0 — those help
+the agent recall; cogit helps the human understand), not a token saver, not a code map (that's
+Graphify, cross-ref above), not an orchestrator, and not an AI review bot. It runs locally with no
+server or account; sharing the record with a team is opt-in per `cogit init`, and when enabled it
+pushes to the project's own repository outside normal branches rather than appearing in a pull
+request or `git status`. Key and token patterns in recorded messages are redacted, and `cogit
+prune` deletes old sessions.
+
+### Adoption Considerations
+
+**Strengths**: ties commits to the reasoning behind them without relying on the diff alone;
+cheap-by-design background recording; local-first with explicit, opt-in team sharing.
+
+**Risks**: brand-new (two weeks old), 122 stars, single-maintainer, Claude-Code-only today — no
+independent verification of the recorded-record accuracy was found.
+
+Not rubric-scored yet.
+
+---
+
 ## Detailed Tool Landscapes
 
 Per-tool entries for three categories have moved to focused topic docs; the cross-tool comparison below still covers all of them:
@@ -617,6 +665,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Zeron][zeron] | Local-first coding-agent session engine + desktop control plane, optional multi-device sync (2,195 stars, MIT, v0.2.85) |
 | [human-review][human-review] | Visual HTML/Markdown review — comments and edits batched to the waiting agent (1,302 stars, MIT, v0.8.2) |
 | [Plannotator repository][plannotator] | README (integrations, privacy, sharing), `hooks.json`, `LICENSE-MIT`/`LICENSE-APACHE`, v0.28.61 release; `gh api` 2026-11-11 |
+| [cogit repository][cogit] | README (thought commits, scope, sharing), MIT `LICENSE`; `gh api` 2026-11-12 |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -674,6 +723,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [zeron]: https://github.com/zeronsh/zeron
 [human-review]: https://github.com/petergyang/human-review
 [plannotator]: https://github.com/backnotprop/plannotator
+[cogit]: https://github.com/erensrtky/cogit
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
