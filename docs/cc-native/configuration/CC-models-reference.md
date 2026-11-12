@@ -1,10 +1,10 @@
 ---
 title: CC Models & Free-Tier Provider Reference
 source: https://platform.claude.com/docs/en/about-claude/models/overview, https://platform.claude.com/docs/en/about-claude/pricing
-purpose: Descriptive reference for CC's primary agentic model (Claude Fable 5), the current per-model pricing table, and a snapshot of free-tier / OSS inference providers — the model/provider facts behind CC-model-provider-configuration.md.
+purpose: Descriptive reference for CC's primary agentic model (Claude Fable 5, superseded by Claude Fable 5.2), the current per-model pricing table, and a snapshot of free-tier / OSS inference providers — the model/provider facts behind CC-model-provider-configuration.md.
 created: 2026-06-14
-updated: 2026-10-26
-validated_links: 2026-10-26
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: reference
 ---
 
@@ -12,7 +12,11 @@ status: reference
 
 ## Claude Fable 5 (CC's primary agentic model)
 
-Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released model, built for complex, long-running agentic work — is selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. Generally available on the Claude API and major clouds since 2026-06-09 ([source][fable5-intro]). **Claude Fable 5.1 and Claude Mythos 5.1 are newer still**, but limited to organizations verified through Anthropic's verification programs, such as the Cyber Verification Program ([source][models-pricing]).
+Claude Fable 5 (`claude-fable-5`) — Anthropic's most capable widely released model, built for complex, long-running agentic work — is selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. Generally available on the Claude API and major clouds since 2026-06-09 ([source][fable5-intro]).
+
+**Claude Fable 5.2** (`claude-fable-5-2`) has since superseded it as Anthropic's current flagship, listed first under "Latest models" on the models overview page — "now the default Fable model," per the CC changelog, selectable via `/model` or `ANTHROPIC_MODEL=claude-fable-5-2` as of **CC v2.1.321+** ([source][changelog]). The models page recommends it "for demanding reasoning and long-horizon agentic work, or when your evals on Claude Opus 5.5 at higher effort still fall short" ([source][models-overview]). **Claude Mythos 5.2** ships alongside it but — like Mythos 5 and 5.1 before it — stays limited-availability, gated behind Anthropic's verification programs such as the Cyber Verification Program ([source][models-pricing]); Fable 5.1 and 5.2 are both generally available, not limited.
+
+Anthropic's announcement ([source][fable52-intro], 2026-11-09) frames Fable 5.2 as "a step above Opus 5.5 in almost all the capabilities we evaluated." Figures stated directly in the post's text (not read off its comparison table, whose column alignment this doc does not reproduce): a RoboDojo Sim score of 64.9% at Max effort (vs. 27.6% for Fable 5.1 and 29.8% for GPT-6 Astra), a BenchCAD 2.1 score of 83.5 at Max effort (vs. 65.3 for Opus 5.5 and 44.4 for Fable 5.1), and — for Mythos 5.2 — "10.2% more vulnerabilities than Opus 5.5 and 14.4% more than Mythos 5.1" on its internal CVE-rediscovery benchmark. The post's own table also lines Fable 5.2 up against GPT-6 Astra and Gemini 4 Carbon on a wider benchmark set; read it directly for that full matrix.
 
 | Property | Value |
 | -------- | ----- |
@@ -34,6 +38,8 @@ Per-model USD pricing from the [pricing page][models-pricing] (accessed 2026-10-
 
 | Model | Input | 5m cache write | 1h cache write | Cache hit | Output |
 | --- | --- | --- | --- | --- | --- |
+| Claude Fable 5.2 | $8 | $10 | $16 | $0.20 (0.025x) | $40 |
+| Claude Mythos 5.2 (limited availability) | $8 | $10 | $16 | $0.20 (0.025x) | $40 |
 | Claude Fable 5.1 | $10 | $12.50 | $20 | $0.25 (0.025x) | $50 |
 | Claude Mythos 5.1 (limited availability) | $10 | $12.50 | $20 | $0.25 (0.025x) | $50 |
 | Claude Fable 5 | $10 | $12.50 | $20 | $1 (0.1x) | $50 |
@@ -52,7 +58,7 @@ Per-model USD pricing from the [pricing page][models-pricing] (accessed 2026-10-
 | Claude Haiku 5.5 (>100,000-token prompts) | $0.50 | $0.625 | $1 | $0.05 (0.1x) | $2.50 |
 | Claude Haiku 4.5 | $1 | $1.25 | $2 | $0.10 (0.1x) | $5 |
 
-Cache-hit multiplier is 0.025x base input on Fable 5.1/Mythos 5.1, 0.05x on Opus 5.5/Sonnet 5.5, and the standard 0.1x on every other model above.
+Cache-hit multiplier is 0.025x base input on Fable 5.2/Mythos 5.2/Fable 5.1/Mythos 5.1, 0.05x on Opus 5.5/Sonnet 5.5, and the standard 0.1x on every other model above.
 
 **Claude Sonnet 5's $2/$10 per-MTok input/output price is now the standard rate, not introductory pricing.** Per the pricing page's footnote, this rate was "announced at launch as introductory pricing through August 31, 2026, is now the standard price. The previously scheduled increase to $3/$15 per million input/output tokens on September 1, 2026 will not occur."
 
@@ -91,9 +97,13 @@ Snapshot of inference providers with free or trial tiers — useful when routing
 ## References
 
 - [Anthropic — Introducing Claude Fable 5 & Mythos 5][fable5-intro]
+- [Anthropic — Introducing Claude Fable 5.2 & Mythos 5.2][fable52-intro]
 - [Anthropic — Models Overview][models-overview]
 - [Anthropic — Pricing][models-pricing]
+- [Claude Code CHANGELOG.md][changelog] — `v2.1.321` adds `claude-fable-5-2` as the default Fable model
 
 [fable5-intro]: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
+[fable52-intro]: https://www.anthropic.com/news/claude-fable-and-mythos-5-2
 [models-overview]: https://platform.claude.com/docs/en/about-claude/models/overview
 [models-pricing]: https://platform.claude.com/docs/en/about-claude/pricing
+[changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
