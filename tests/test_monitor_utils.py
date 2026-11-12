@@ -5,6 +5,8 @@ wrappers and are not imported here). Stdlib `unittest`, no deps.
 
 Run: python3 -m unittest discover -s tests
 """
+import contextlib
+import io
 import sys
 import tempfile
 import unittest
@@ -141,6 +143,57 @@ class BuildReportTests(unittest.TestCase):
         entries = [{"name": f"E{i}", "heading": "", "description": ""} for i in range(35)]
         report, _ = mu.build_report([self._result(entries)], "T", "x.py")
         self.assertIn("_... and 5 more entries._", report)
+
+    def test_skipped_source_is_named_with_reason(self):
+        skipped = {**self._result([]), "name": "reddit", "skipped": "REDDIT_CLIENT_ID not set"}
+        report, has_new = mu.build_report([self._result([]), skipped], "T", "x.py")
+        self.assertFalse(has_new)
+        self.assertIn("Sources skipped: **1** (reddit)", report)
+        self.assertIn("- Skipped: REDDIT_CLIENT_ID not set", report)
+        self.assertNotIn("- Entries fetched: 0", report.split("### reddit")[1])
+
+    def test_no_skipped_line_when_all_sources_ran(self):
+        report, _ = mu.build_report([self._result([])], "T", "x.py")
+        self.assertNotIn("skipped", report.lower())
+
+
+class RunMonitorSkipTests(unittest.TestCase):
+    def test_skipped_source_reported_and_its_state_kept(self):
+        def fetch(source):
+            if source["name"] == "gated":
+                raise mu.SourceSkipped("TOKEN not set")
+            return [{"name": "Fresh subagent topic", "url": "u1", "description": ""}]
+
+        sources = [{"name": "open", "description": "d"}, {"name": "gated", "description": "d"}]
+        with tempfile.TemporaryDirectory() as tmp:
+            docs = Path(tmp) / "docs"
+            docs.mkdir()
+            state_file = Path(tmp) / "state.json"
+            mu.save_state(state_file, {"gated": ["keep-me"]})
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as cm:
+                    mu.run_monitor(sources, fetch, docs, state_file, "R", "x.py")
+            self.assertEqual(cm.exception.code, 1)  # "open" still found new content
+            self.assertIn("Sources skipped: **1** (gated)", out.getvalue())
+            self.assertIn("- Skipped: TOKEN not set", out.getvalue())
+            self.assertEqual(mu.load_state(state_file)["gated"], ["keep-me"])
+
+    def test_failed_fetch_reported_as_skipped_without_error_text(self):
+        def fetch(_source):
+            raise OSError("secret-ish detail http://example.invalid")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            docs = Path(tmp) / "docs"
+            docs.mkdir()
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as cm:
+                    mu.run_monitor([{"name": "down", "description": "d"}], fetch, docs,
+                                   Path(tmp) / "state.json", "R", "x.py")
+            self.assertEqual(cm.exception.code, 0)
+            self.assertIn("- Skipped: fetch failed (OSError)", out.getvalue())
+            self.assertNotIn("secret-ish", out.getvalue())
 
 
 if __name__ == "__main__":

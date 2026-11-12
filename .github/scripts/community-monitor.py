@@ -26,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.community_sources import extract_html_entries, extract_markdown_entries
-from lib.monitor_utils import fatal, fetch_text, run_monitor
+from lib.monitor_utils import SourceSkipped, fatal, fetch_text, run_monitor
 
 SOURCES: list[dict[str, str]] = [
     {
@@ -66,13 +66,12 @@ SOURCES: list[dict[str, str]] = [
 _USER_AGENT = "cc-community-monitor/1.0"
 
 
-def _require_env(source_name: str, *names: str) -> list[str] | None:
-    """Return the env values for ``names``, or None (with a WARNING) if any is unset."""
+def _require_env(*names: str) -> list[str]:
+    """Return the env values for ``names``; raise SourceSkipped if any is unset."""
     values = [os.environ.get(n, "") for n in names]
-    if all(values):
-        return values
-    print(f"WARNING: Skipping {source_name} — {'/'.join(names)} not set", file=sys.stderr)
-    return None
+    if not all(values):
+        raise SourceSkipped(f"{'/'.join(names)} not set")
+    return values
 
 
 def _reddit_access_token(client_id: str, client_secret: str) -> str:
@@ -132,15 +131,14 @@ def fetch_x_tweets(url: str, bearer_token: str) -> list[dict[str, str]]:
 def fetch_and_extract_source(source: dict[str, str]) -> list[dict[str, str]]:
     """Fetch and extract entries from a source, handling auth requirements.
 
-    Skips with a WARNING (returning []) when required credentials are unset.
+    Raises SourceSkipped when required credentials are unset, so the report
+    names the source as skipped instead of showing it as empty.
     """
     auth = source.get("auth", "none")
     if auth == "reddit":
-        creds = _require_env(source["name"], "REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET")
-        return fetch_reddit(source["url"], *creds) if creds else []
+        return fetch_reddit(source["url"], *_require_env("REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET"))
     if auth == "x_bearer":
-        creds = _require_env(source["name"], "X_BEARER_TOKEN")
-        return fetch_x_tweets(source["url"], creds[0]) if creds else []
+        return fetch_x_tweets(source["url"], _require_env("X_BEARER_TOKEN")[0])
 
     content = fetch_text(source["url"])
     if source["type"] == "markdown":

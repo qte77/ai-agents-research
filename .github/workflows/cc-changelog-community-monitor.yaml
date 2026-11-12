@@ -43,6 +43,11 @@ jobs:
 
           cat /tmp/monitor-stderr.txt >&2
 
+          # Show the report (incl. sources skipped for unset credentials) in the
+          # run summary, and each skip as an annotation, so green doesn't hide them (#726)
+          sed -n 's/^WARNING: Skipping \(.*\)$/::warning::Skipped source: \1/p' /tmp/monitor-stderr.txt
+          cat /tmp/report.md >> "$GITHUB_STEP_SUMMARY"
+
           if [ $EXIT_CODE -eq 1 ]; then
             echo "new_content=true" >> "$GITHUB_OUTPUT"
           elif [ $EXIT_CODE -eq 0 ]; then
