@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-11-09
-validated_links: 2026-11-09
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: adopt
 ---
 
@@ -82,6 +82,7 @@ Documented and empirically observed behaviors researchers should know before rel
 - **Two caches, not one.** A ~15-minute self-cleaning **content cache** is documented in the tool's Anthropic-authored description (per-URL, holds fetched body). A separate **5-minute per-hostname safety-preflight cache** is documented in [data-usage][data-usage] (caches domain-allow decisions, not content). Don't conflate them when reasoning about cache hits.
 - **Default User-Agent is a bot token, not a browser.** `WebFetch` sends `Claude-User (claude-code/<version>; +https://support.anthropic.com/)` — observed as `Claude-User (claude-code/2.1.185; +https://support.anthropic.com/)` (`CC 2.1.185, Codespaces, 2026-06-22`, cross-verified against `postman-echo.com/headers` and `ifconfig.me/ua`). There is **no override**: no `User-Agent` parameter (per the minimal-schema note above) and no documented env var. CC identifies itself honestly (no browser spoofing), which is exactly why anti-bot WAFs reject it.
 - **Bot-block behavior is bimodal.** WAF-protected hosts return HTTP `403` to the bot UA; separately, a CC-side denylist refuses some hosts before any request leaves (`Claude Code is unable to fetch from <host>`). A `403` here means *the bot UA was rejected*, not necessarily a dead link — verify in a browser before adding a host to `lychee.toml` excludes.
+- **Account-email guardrail on outbound tool calls, evolving across versions.** Separately from the fixed `WebFetch` UA string above, the CC `CHANGELOG.md` records a distinct check on network requests from web/shell tool calls: **v2.1.317** "Added a check that asks before a web or shell tool call sends your account email address to the network"; **v2.1.321** "Changed the account email check to refuse only a shell command that holds your email and names a User-Agent, without asking, so other commands and scheduled runs no longer stop at its prompt" ([source][changelog]). A still-**open** GitHub issue, [claude-code#107757][issue-107757] (filed 2026-11-05, reporter-stated version 2.1.318, labels `bug`/`platform:macos`/`area:tools`/`area:security`), reports the account's email being sent "in the `User-Agent` request header while conducting web searches" without the user's permission; the changelog entries above describe the surrounding guardrail's documented behavior but do not state that they were a response to this issue.
 
 Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 
@@ -334,9 +335,13 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | [CC ultrareview docs][ultrareview] | Ultrareview scope, billing, limits, platform restrictions, research-preview status |
 | CC 2.1.302, Codespaces, 2026-10-18 | CLI commands and reference pages re-verified live for this pass; `claude plugin list` and CHANGELOG search cross-checked the `/code-review` plugin and `/review-pr` disposition |
 | [CC advisor docs][advisor-cc] | `/advisor` command and `advisorModel` setting (accessed 2026-10-26); see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) |
+| [Claude Code CHANGELOG.md][changelog] | `v2.1.317`/`v2.1.321` account-email-in-outbound-request guardrail, read in full via `gh api repos/anthropics/claude-code/git/blobs/<sha>`, 2026-11-12 (the contents API refuses this file over 1 MB) |
+| `gh api repos/anthropics/claude-code/issues/107757`, 2026-11-12 | Open issue reporting the account email sent in a `User-Agent` header during web searches |
 
 [advisor-cc]: https://code.claude.com/docs/en/advisor
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
+[changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[issue-107757]: https://github.com/anthropics/claude-code/issues/107757
 [commands]: https://code.claude.com/docs/en/commands
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
 [code-review-local]: https://code.claude.com/docs/en/code-review-local

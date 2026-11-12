@@ -14,6 +14,32 @@ Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLM
 
 The tools below serve **eval-driven development (EDD)** — evals authored *before* the agent capability they measure, then used as the iteration oracle. The term has **no single coiner** (see the provenance-uncertain framing in [agentic-engineering-disciplines-landscape.md §2](agentic-engineering-disciplines-landscape.md)); it is used in parallel by first parties and tool vendors: Anthropic's [Demystifying evals for AI agents][anthropic-evals] (2026-01-09) names the practice directly — "build evals to define planned capabilities before agents can fulfill them, then iterate", "owning and iterating on evaluations should be as routine as maintaining unit tests" — and frames eval-task definition as a stress-test of whether requirements are concrete enough to build. OpenAI's [evaluation best-practices guidance][openai-evals] recommends "adopting eval-driven development … evaluating early and often" and draws the BDD analogy (specify behavior before implementing). Vendors [Braintrust][braintrust-edd] and [DeepEval][deepeval-edd] each market the exact term ("define success early and build toward it … use the eval scores as your oracle"). Counterweight: [Hamel Husain's practitioner essay][husain-evals] cautions against blind eval-first — discover real failure modes, *then* encode them as evals. This section names the methodology; the disciplines landscape holds the full "-driven-development" stack.
 
+### Operationalizing EDD: `/claude-api build-eval` and `/claude-api hillclimb`
+
+claude.dev — Anthropic's own developer blog, though the post itself never states the publisher by name;
+it links `anthropics/skills` and an Anthropic engineering post, which is the only signal tying it to
+Anthropic (same hedge this corpus already applies to claude.dev in
+[CC-mods-function-hooks-analysis.md][mods-claudedev]) — published "Automating eval design and
+hillclimbing with Claude" (Lance Martin, 2026-09-28), which gives the `claude-api` skill two commands
+that operationalize the EDD loop above inside Claude Code itself ([source][claude-api-hillclimb]):
+
+- **`/claude-api build-eval`**: "Claude interviews you, builds the eval inside your codebase, and pauses
+  for approval at specific points." It samples inputs in order (production transcripts, bug
+  reports/tickets, 5–10 hand-written cases, then codebase-synthesized cases), proposes the cheapest
+  grader that fits (programmatic or LLM-as-judge), runs a baseline with a confidence interval, and checks
+  grader consistency (does the verdict change on a repeat run of the same output) and noise (timeouts,
+  API errors), warning if the baseline is already ~95%+.
+- **`/claude-api hillclimb`**: iterates against a built eval. Claude "splits the evaluation set at random
+  into test and train," then each round "reads the previous round's train transcripts and proposes one
+  change as a patch" to an editable surface the user picks (system prompt, skills, tool descriptions,
+  model/effort, harness code). If train improves but test is flat, Claude suspects overfitting and
+  reverts; a regression also reverts; only a patch that improves both is kept. The workflow "leaves your
+  code at the version that did best on the test set."
+
+**Self-reported result**: Anthropic ran this on its own `claude-api` skill, starting from a 66.1% eval
+score and reaching 87.9% (Figure 9 in the post) through intermediate checkpoints reported in the text as
+74%, 77%, 80%, and ~88%.
+
 ## 1. Evaluation & Testing Frameworks
 
 Observability-first platforms with strong eval features — **LangWatch, Evidently AI, Braintrust** — have full entries in [agent-observability-methods-analysis.md](../non-cc/protocols/agent-observability-methods-analysis.md); not duplicated here.
@@ -213,3 +239,5 @@ EDD-methodology sources:
 [braintrust-edd]: https://www.braintrust.dev/articles/eval-driven-development
 [deepeval-edd]: https://deepeval.com/blog/eval-driven-development
 [husain-evals]: https://hamel.dev/blog/posts/evals
+[claude-api-hillclimb]: https://claude.dev/blog/automating-eval-design-and-hillclimbing/
+[mods-claudedev]: ../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md#the-other-built-in-mods-and-a-sample-set

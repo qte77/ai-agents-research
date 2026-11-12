@@ -3,8 +3,8 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-11-09
-validated_links: 2026-11-09
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: generally-available
 ---
 
@@ -291,7 +291,7 @@ The MEMORY.md-index / topic-file split above is a variant of a broader pattern �
 - **Sensitive instruction preservation**: As of v2.1.139, the compaction prompt explicitly asks the model to preserve sensitive user instructions carried in the conversation. This reduces the risk of security-relevant directives (e.g., credential handling rules, output filtering instructions) being dropped during mid-session compaction.
 - **`InstructionsLoaded` hook**: Log exactly which instruction files load, when, and why — useful for debugging path-specific rules ([source][cc-mem])
 - **First-time trust**: CC shows approval dialog for external `@` imports on first encounter in a project ([source][cc-mem])
-- **AGENTS.md**: as of CC v2.1.277+, Claude reads a repository's `AGENTS.md` directly. The default (**Project instructions** = `claude-md-or-agents-md`) reads `AGENTS.md` only where the working directory and its ancestors hold no `CLAUDE.md`/`CLAUDE.local.md` of their own; `claude-md-and-agents-md` loads both, `claude-md` ignores `AGENTS.md`, and `managed-only` drops both the project's own files. This ships as a built-in mod (`cc-plugin-agents-md`), not engine code — see [AGENTS.md Support as a Mod](../plugins-ecosystem/CC-mods-function-hooks-analysis.md#agentsmd-support-as-a-mod) ([source][cc-mem]). Before v2.1.277, or wherever the mod can't load, the older workaround still applies: import (`@AGENTS.md`) or symlink it so both agents share one instruction source; `/init` folds an existing `AGENTS.md` (and `.cursorrules`/`.windsurfrules`) into the generated CLAUDE.md
+- **AGENTS.md**: as of CC v2.1.277+, Claude reads a repository's `AGENTS.md` directly. The default (**Project instructions** = `claude-md-or-agents-md`) reads `AGENTS.md` only where the working directory and its ancestors hold no `CLAUDE.md`/`CLAUDE.local.md` of their own; `claude-md-and-agents-md` loads both, `claude-md` ignores `AGENTS.md`, and `managed-only` drops both the project's own files. This ships as a built-in mod (`cc-plugin-agents-md`), not engine code — see [AGENTS.md Support as a Mod](../plugins-ecosystem/CC-mods-function-hooks-analysis.md#agentsmd-support-as-a-mod) ([source][cc-mem]). Before v2.1.277, or wherever the mod can't load, the older workaround still applies: import (`@AGENTS.md`) or symlink it so both agents share one instruction source; `/init` folds an existing `AGENTS.md` (and `.cursorrules`/`.windsurfrules`) into the generated CLAUDE.md. The `v2.1.277` CHANGELOG entry itself reads, verbatim: "Added AGENTS.md support: in a project with no CLAUDE.md, Claude Code reads AGENTS.md instead; change it under 'Project instructions' in `/config`" ([source][changelog]) — confirming both the fallback condition and the `/config` toggle location independently of the memory docs page.
 
 ## Auto-Dream — Background Memory Consolidation (Feature-Flagged)
 
@@ -490,8 +490,10 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 - [coleam00/context-engineering-intro][cei] — MIT-licensed CLAUDE.md/PRP starter template, 13.9k★ (verified 2026-09-30)
 - [TrackPoint "Semantic Reasoning"][trackpoint-sr] — Jay Shah, updated 2026-09-29; vendor blog on topic-label context gating
 - [Agent substrate rubric][rubric] — six-property scoring rubric applied to CC's memory system above
+- [Claude Code CHANGELOG.md][changelog] — `v2.1.277`'s own AGENTS.md-fallback bullet, read in full via `gh api repos/anthropics/claude-code/git/blobs/<sha>`, 2026-11-12 (contents API refuses this file over 1 MB)
 
 [cc-mem]: https://code.claude.com/docs/en/memory
+[changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [cc-skills]: https://code.claude.com/docs/en/skills
 [cc-settings]: https://code.claude.com/docs/en/settings
 [cc-settings-files]: https://code.claude.com/docs/en/settings#settings-files-and-who-they-affect

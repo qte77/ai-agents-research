@@ -2,8 +2,8 @@
 title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
-updated: 2026-10-02
-validated_links: 2026-09-30
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
@@ -135,6 +135,19 @@ triagebot-action it has not yet been rubric-scored here; and **triagebot-action*
 LICENSE file (`license: null`, 220 stars, last pushed 2026-08-28), rubric-scored below
 ([Cloudflare][cf-astro]).
 
+**Anthropic's own source-control migration — the vendor's own internal case.** Published 2026-10-13
+(updated 2026-10-15): Anthropic's engineering blog reports that daily merged code changes to its monorepo
+rose from "around 2,500 code changes merged per day" in May 2026 to "over 30,000 per day" by September
+2026, and that it fully migrated the monorepo off git, in five months, to an in-house version control
+system called **Scion**. The post frames this as the same bottleneck shift the sources above argue for —
+"the limit moved from writing code to the surrounding systems" — naming source control, builds, and CI
+as the parts "built for human scale" that could not keep up once agents, not humans, were generating most
+of the diffs; it also cites on the order of 25 million code checkouts per day for CI. Alongside Scion,
+Anthropic built a code-review surface (**Antique**) and a source-control IAM system in the same window.
+Scion is explicitly scoped as a monorepo-specific replacement, not a general git substitute, and no
+rubric row is added here: this is vendor-reported internal tooling with no independently verifiable
+shipped artefact (unlike triagebot-action above) ([Anthropic][anthropic-scion]).
+
 ### The convergence — and why it matters
 
 Four independent sources (CircleCI, Augment Code, freeCodeCamp, and HumanLayer's own dissent) land on the
@@ -196,6 +209,7 @@ a verifiable shipped artefact; Flue has one (see above) but has not yet been rub
 | [wsff.md, HumanLayer][wsff] | "Why Software Factories Fail" — dissent on lights-off automation |
 | `gh api repos/humanlayer/advanced-context-engineering-for-coding-agents/commits?path=wsff.md`, 2026-09-30 | First commit 2026-07-22 (publish date); `contents/LICENSE` 404 (no license) |
 | [Cloudflare: Astro issue triage][cf-astro] | Concrete production case; Flue and triagebot-action, published 2026-08-04 |
+| [Anthropic: Redesigning source control][anthropic-scion] | Vendor-reported internal case: Scion/Antique, 2,500→30,000 merges/day, published 2026-10-13 |
 | `gh api repos/withastro/triagebot-action`, 2026-09-30 | `license: null`, 220 stars, pushed 2026-08-28 |
 | [flueframework.com][flue] | Vendor claim; site links a public GitHub repo |
 | [github.com/withastro/flue][flue-repo] | Apache-2.0, ~8,400 stars (`gh api`, 2026-09-30); not yet rubric-scored here |
@@ -226,5 +240,6 @@ HumanLayer's separate approval-gate SDK),
 [triagebot-repo]: https://github.com/withastro/triagebot-action
 [flue]: https://flueframework.com/
 [flue-repo]: https://github.com/withastro/flue
+[anthropic-scion]: https://www.anthropic.com/engineering/redesigning-source-control
 [hlyr-ace-xref]: ../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
 [disciplines-graph]: agentic-engineering-disciplines-landscape.md
