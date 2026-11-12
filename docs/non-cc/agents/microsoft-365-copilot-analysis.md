@@ -238,7 +238,7 @@ and package capabilities that agents can use" [manifest-1-9]. That is the open s
 covered in [CC-skills-adoption-analysis.md][cc-skills-doc], not a Microsoft-only format; SharePoint
 Skills' own documentation (item 1 above) is silent on that standard, a further point of difference
 between items 1 and 2, not similarity. The manifest page gives the `agent_skills` element no preview
-marker — unlike the manifest's own Worker agent object two sections later on the same page,
+marker — unlike the manifest's own Worker agent object, several sections earlier on the same page,
 explicitly flagged "This capability is in preview" [manifest-1-9] — a pattern consistent with, but
 not itself a stated claim of, general availability. **This resolves what the mechanism is; it does
 not resolve the GA-by-date claim**, which still has no vendor page naming both the specific feature
@@ -513,7 +513,8 @@ not" [new-copilot-blog]. **Autopilot was previously called Scout** — confirmed
 blog, not only in secondary coverage: "Autopilot, previously called Scout, is your digital
 teammate" [new-copilot-blog]. Home and Code began rolling out to Frontier "in the coming weeks";
 Autopilot expanded to private preview "at the end of the month" (September 2026) [new-copilot-blog].
-The same post puts Copilot Managed Runtime (below) into public preview.
+The same post states Copilot Managed Runtime (below) "is now in preview and will also be accessible
+inside Code" [new-copilot-blog]. The same-day Copilot Studio post calls it "public preview": "Today, we’re introducing Microsoft Copilot Managed Runtime into public preview" [managed-runtime-blog].
 
 This particular announcement never names Claude or Anthropic: it describes Code as "powered by the
 same underlying technology as GitHub Copilot" and says "frontier models like Astra and Fable all
@@ -539,8 +540,9 @@ to Copilot Managed Runtime" [code-use].
 "Copilot Managed Runtime hosts Microsoft 365 line-of-business **applications** that automatically
 inherit organizational governance, security, and compliance controls from the moment they're
 created" [managed-runtime-overview] (2026-10-05, updated 2026-11-06) — it hosts **apps**, never
-described as an agent runtime on any page checked here. "This is a preview feature" on every page
-in this cluster [managed-runtime-overview].
+described as an agent runtime on any page checked here. Every page in this cluster carries a
+preview notice — "This is a preview feature" on three of them [managed-runtime-overview], worded
+as "This feature is in preview" on the security page [managed-runtime-security].
 
 "All four paths produce the same kind of artifact: an app that runs in Copilot Managed Runtime"
 [managed-runtime-overview]:
@@ -587,8 +589,8 @@ one) not detailed further here:
 | Harness | Product | What it is | Status |
 |---|---|---|---|
 | GitHub Copilot harness → renamed Microsoft Copilot harness | Microsoft Copilot Studio | One of several Studio harnesses (see above); Microsoft's own billing documentation records this one's rename directly: "Apps are built with the Microsoft Copilot harness (formerly the GitHub Copilot harness)" [managed-runtime-licensing-faq] (2026-11-10) — though Studio's own Memory feature page for this harness, last touched 2026-10-21, still titles itself "Memory (GitHub Copilot) (preview)" and hasn't yet picked up the new name [studio-memory] | Mixed GA/preview by sub-feature |
-| Microsoft Copilot harness (Foundry) | Microsoft Foundry prompt agents | "An optional managed runtime for prompt agents. Foundry operates the harness and its execution environment" [foundry-copilot-harness] (2026-11-04); five harness tools (file read/write, shell, web, subagents) plus skills "referenced at the top level of the prompt agent definition" [foundry-copilot-harness] | Public preview |
-| Foundry hosted agents (no "harness" name used) | Microsoft Foundry | "Hosted agents are containerized agentic AI applications that run on Agent Service" [foundry-hosted-agents] (2026-11-09); bring your own framework (Agent Framework, LangGraph, Semantic Kernel) | No preview banner or GA statement on the Learn concept page itself; the separate azure.microsoft.com product page calls hosted agents "a managed runtime for running agent code in Azure" and "a session-isolated managed runtime with autoscaling and zero idle cost" [foundry-agent-service-product] — marketing-page wording only, not repeated on the Learn concept or FAQ pages fetched here |
+| Microsoft Copilot harness (Foundry) | Microsoft Foundry prompt agents | "[A]n optional managed runtime for prompt agents. Foundry operates the harness and its execution environment" [foundry-copilot-harness] (2026-11-04); five harness tools (file read/write, shell, web, subagents) plus skills "referenced at the top level of the prompt agent definition" [foundry-copilot-harness] | Public preview |
+| Foundry hosted agents (no "harness" name used) | Microsoft Foundry | "Hosted agents are containerized agentic AI applications that run on Agent Service" [foundry-hosted-agents] (2026-11-09); bring your own framework (Agent Framework, LangGraph, Semantic Kernel) | No preview banner or GA statement on the Learn concept page itself; the separate azure.microsoft.com product page calls hosted agents "a managed runtime for running agent code in Azure" and "a session-isolated managed runtime with autoscaling and zero idle cost" [foundry-agent-service-product] — marketing-page wording only, not repeated on the Learn concept page fetched here |
 
 The Foundry "Copilot harness" and "Copilot Managed Runtime" (above) are also two different things
 that both get called a "managed runtime" by Microsoft on different pages — the Foundry one runs
@@ -601,7 +603,8 @@ same thing as either "Microsoft Copilot harness" above.
 
 A declarative agent "provide[s] a goal-directed conversational experience that's powered by
 Microsoft 365 Copilot" [da-overview] (2026-09-30), built with low-code **Agent Builder** or pro-code
-**Visual Studio/Visual Studio Code with the Microsoft 365 Agents Toolkit** [da-overview]. Hosting:
+**Visual Studio/Visual Studio Code with the Microsoft 365 Agents Toolkit** [da-agents-overview].
+Hosting:
 "Use Copilot's orchestrator and foundation model. No additional hosting is required"
 [da-agents-overview]. Its actions ("1-10 objects that identify plugins that provide actions") are
 API plugins [manifest-1-9]; the overview page separately notes that "a plugin can include or
@@ -665,8 +668,8 @@ multi-step questions by acting as a deep research assistant" [faq-researcher] (2
 
 | Approach | Hosting | Tooling | Models |
 |---|---|---|---|
-| Declarative agent | "Use Copilot's orchestrator and foundation model. No additional hosting is required" [da-agents-overview] | Agent Builder (low-code) or Agents Toolkit/Visual Studio/VS Code (pro-code) [da-overview] | Copilot's own orchestrator/model only |
-| Custom engine agent | "Require additional hosting outside of Microsoft 365, typically with cloud services such as Azure, at an additional cost" [da-agents-overview]; requires manifest 1.21+ [cea-overview] | Copilot Studio (low-code), or the Microsoft 365 Agents SDK / Teams SDK / Microsoft Foundry (pro-code) [cea-overview] | "Can be created using Copilot Studio, the Microsoft 365 Agents SDK, Teams SDK or Microsoft Foundry" [cea-overview] — bring your own |
+| Declarative agent | "Use Copilot's orchestrator and foundation model. No additional hosting is required" [da-agents-overview] | Agent Builder (low-code) or Agents Toolkit/Visual Studio/VS Code (pro-code) [da-agents-overview] | Copilot's own orchestrator/model only |
+| Custom engine agent | "Require additional hosting outside of Microsoft 365, typically with cloud services such as Azure, at an additional cost" [da-agents-overview]; requires manifest 1.21+ [cea-overview] | Copilot Studio (low-code), or the Microsoft 365 Agents SDK / Teams SDK / Microsoft Foundry (pro-code) [cea-overview] | "[c]an be created using Copilot Studio, the Microsoft 365 Agents SDK, Teams SDK or Microsoft Foundry" [cea-overview] — bring your own |
 
 - **Microsoft 365 Agents SDK:** "a development framework for building conversational agents," in
   C#/.NET 8, JavaScript/Node 18+, and Python 3.9–3.11; "The SDK is AI-agnostic by design"
@@ -676,8 +679,8 @@ multi-step questions by acting as a deep research assistant" [faq-researcher] (2
   tooling, and notifications to an agent built elsewhere. It explicitly lists "the Claude Agent SDK"
   alongside LangChain, Microsoft Agent Framework, Semantic Kernel, and the OpenAI Agents SDK as a
   "framework or runtime" it can sit beside [agent365-sdk], and ships a dedicated npm package,
-  `@microsoft/agents-a365-tooling-extensions-claude`, that "enables seamless integration of MCP tool
-  servers with Anthropic's Claude" [agent365-sdk].
+  `@microsoft/agents-a365-tooling-extensions-claude`, that "enables seamless integration of MCP
+  (Model Context Protocol) tool servers with Anthropic's Claude" [agent365-sdk].
 - **Agent Store:** "Members of your organization can use agents that are available at no additional
   cost from the Agent Store," which lists agents "built by Microsoft," "built by your
   organization," and those "popular within your organization" [agent-store-admin] (2026-04-07,
@@ -717,10 +720,10 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-03-30 (passed) | Copilot Cowork "available via the Frontier program" | Frontier | [cowork-frontier-blog] |
 | 2026-06-16 (passed) | Copilot Cowork reaches GA "to all Microsoft 365 Copilot tenants worldwide in tier-1 languages" | GA | [cowork-whats-new] |
 | August 2026 (passed) | Cowork local Edge browsing moves from Frontier to general availability | GA | [cowork-whats-new] |
-| 2026-09-25 (passed) | Blog: "the new Copilot" — Home, Copilot Code, Autopilot (Autopilot "previously called Scout"); Copilot Managed Runtime enters public preview | announced / preview | [new-copilot-blog] |
+| 2026-09-25 (passed) | Blog: "the new Copilot" — Home, Copilot Code, Autopilot (Autopilot "previously called Scout"); Copilot Managed Runtime enters preview (this post says "now in preview"; the same-day Copilot Studio post by David Blyth calls it "public preview" [managed-runtime-blog]) | announced / preview | [new-copilot-blog] |
 | 2026-09-30 (passed) | Declarative agent manifest schema 1.9 adds top-level `agent_skills` (SKILL.md, Agent Skills standard, max 8) and the `Fabric` capability | documented schema addition, no preview marker | [manifest-1-9] |
-| 2026-10-01 (passed) | Copilot Code enters Frontier preview; application card names Claude Opus/Sonnet/Haiku plus Microsoft-hosted GPT models | Frontier preview | [code-use], [code-app-card] |
-| 2026-10-05 (passed) | Microsoft Copilot Managed Runtime documented in public preview | preview | [managed-runtime-overview] |
+| 2026-10-01 (passed) | Copilot Code documented as Frontier preview (page's own `ms.date`, not a stated entry date); application card names Claude Opus/Sonnet/Haiku plus Microsoft-hosted GPT models | Frontier preview | [code-use], [code-app-card] |
+| 2026-10-05 (passed) | Microsoft Copilot Managed Runtime documented in preview (Learn: "This is a preview feature") | preview | [managed-runtime-overview] |
 | — | Copilot Studio's bring-your-own-model feature for prompt-tool nodes explicitly excludes the GPT-5 family and later models | current, no preview label found | [byom-prompts] |
 
 ## Guardrails for SharePoint and Microsoft 365 agent skills
@@ -994,6 +997,7 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Copilot Cowork — now available in Frontier][cowork-frontier-blog] | Frontier availability date |
 | [Copilot Cowork — GA announcement][cowork-ga-blog] | GA model list, PayGo credit rate, vendor cost comparison |
 | [The new Copilot: Home, Code and Autopilot][new-copilot-blog] | Autopilot/Scout rename, Managed Runtime preview, UBB models |
+| [Copilot Studio blog — Copilot Managed Runtime][managed-runtime-blog] | David Blyth, 2026-09-25: Managed Runtime host and SDK "introduced in public preview" |
 | [Use Copilot Code (Frontier)][code-use] | Local/cloud execution, Managed Runtime publishing |
 | [Copilot Code — application card][code-app-card] | Model list (Claude + GPT), subprocessor posture, entitlement metering |
 | [What is Copilot Managed Runtime (preview)][managed-runtime-overview] | Four build paths, apps-not-agents framing |
@@ -1090,6 +1094,7 @@ re-checked even when Microsoft leaves the page unchanged.
 [cowork-frontier-blog]: https://www.microsoft.com/en-us/copilot/blog/2026/03/30/copilot-cowork-now-available-in-frontier/
 [cowork-ga-blog]: https://www.microsoft.com/en-us/copilot/blog/2026/06/16/copilot-cowork-is-now-generally-available/
 [new-copilot-blog]: https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/
+[managed-runtime-blog]: https://www.microsoft.com/en-us/copilot/blog/copilot-studio/build-where-you-want-run-with-confidence-now-microsoft-hosts-and-manages-the-code-created-by-copilot/
 [code-use]: https://learn.microsoft.com/en-us/copilot/code/use-code
 [code-app-card]: https://learn.microsoft.com/en-us/copilot/code/responsible-ai/copilot-code-application-card
 [managed-runtime-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot-managed-runtime/?view=o365-worldwide

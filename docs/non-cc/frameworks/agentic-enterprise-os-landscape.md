@@ -45,7 +45,7 @@ Microsoft's own Learn pages:
   only the separate marketing product page calls hosted agents "a managed runtime for running
   agent code in Azure" and "a session-isolated managed runtime with autoscaling and zero idle
   cost" [foundry-agent-service] — **GA status is unverified**, confirmed only as marketing-page
-  wording, not repeated on the Learn concept or FAQ pages checked.
+  wording, not repeated on the Learn concept page checked.
 
 Full three-way harness disambiguation (Copilot Studio's renamed harness, Foundry's Copilot harness,
 and Foundry hosted agents) is in
