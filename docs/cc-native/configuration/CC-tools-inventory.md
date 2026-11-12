@@ -133,6 +133,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/loop` | Run on recurring interval | [cli-ref][cli-ref] |
 | `/mcp` | Manage MCP servers | [mcp-docs][mcp-docs] |
 | `/model` | Switch model | [model-config][model-config] |
+| `/powerup` | Interactive lessons that teach Claude Code features with animated demos (v2.1.90; its tour was still referenced in v2.1.232). Verified in the CHANGELOG 2026-11-12 | CHANGELOG v2.1.90 |
 | `/remote-control`, `/rc` | Enable Remote Control on current session | [remote-control][remote-control] |
 | `/remote-env` | Configure default remote environment for `--remote` web sessions | [commands][commands] |
 | `/review` | Alias of `/code-review` (CC v2.1.223+). Before v2.1.223 it was a separate, single-pass, read-only review of a GitHub PR by number | [commands][commands], [code-review-local][code-review-local] |
