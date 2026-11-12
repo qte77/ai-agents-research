@@ -26,6 +26,14 @@ DEFAULT_NOISE: set[str] = {
 }
 
 
+class SourceSkipped(Exception):
+    """Raised by a ``fetch_fn`` when a source can't run (e.g. its credentials are unset).
+
+    ``run_monitor`` names the source and the reason in the report instead of
+    counting it as a source that returned nothing.
+    """
+
+
 def fatal(message: str, code: int = 2) -> NoReturn:
     """Print an error to stderr and exit with ``code`` (default 2)."""
     print(message, file=sys.stderr)
@@ -149,6 +157,10 @@ def build_report(
         "",
     ]
 
+    skipped = [r["name"] for r in source_results if r.get("skipped")]
+    if skipped:
+        lines += [f"Sources skipped: **{len(skipped)}** ({', '.join(skipped)})", ""]
+
     total_new = 0
     for result in source_results:
         total_new += len(result["new_entries"])
@@ -167,6 +179,14 @@ def build_report(
 def _render_source_section(result: dict) -> list[str]:
     """Render one source's markdown section (header, counts, optional table)."""
     new_entries = result["new_entries"]
+    if result.get("skipped"):
+        return [
+            f"### {result['name']}",
+            "",
+            f"- Source: {result['description']}",
+            f"- Skipped: {result['skipped']}",
+            "",
+        ]
     lines = [
         f"### {result['name']}",
         "",
@@ -259,6 +279,18 @@ def run_monitor(
             result, fingerprints = _process_source(
                 source, fetch_fn, set(state.get(name, [])), doc_keywords
             )
+        except SourceSkipped as e:
+            # Reason: keep the source's previous state so enabling it later
+            # doesn't re-report everything it already showed.
+            print(f"WARNING: Skipping {name} — {e}", file=sys.stderr)
+            source_results.append({
+                "name": name,
+                "description": source["description"],
+                "total": 0,
+                "new_entries": [],
+                "skipped": str(e),
+            })
+            continue
         except Exception as e:
             print(f"WARNING: Failed to fetch {name}: {e}", file=sys.stderr)
             source_results.append({
