@@ -514,7 +514,7 @@ blog, not only in secondary coverage: "Autopilot, previously called Scout, is yo
 teammate" [new-copilot-blog]. Home and Code began rolling out to Frontier "in the coming weeks";
 Autopilot expanded to private preview "at the end of the month" (September 2026) [new-copilot-blog].
 The same post states Copilot Managed Runtime (below) "is now in preview and will also be accessible
-inside Code" [new-copilot-blog] — this page doesn't use the word "public" for that status.
+inside Code" [new-copilot-blog]. The same-day Copilot Studio post calls it "public preview": "Today, we’re introducing Microsoft Copilot Managed Runtime into public preview" [managed-runtime-blog].
 
 This particular announcement never names Claude or Anthropic: it describes Code as "powered by the
 same underlying technology as GitHub Copilot" and says "frontier models like Astra and Fable all
@@ -720,10 +720,10 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-03-30 (passed) | Copilot Cowork "available via the Frontier program" | Frontier | [cowork-frontier-blog] |
 | 2026-06-16 (passed) | Copilot Cowork reaches GA "to all Microsoft 365 Copilot tenants worldwide in tier-1 languages" | GA | [cowork-whats-new] |
 | August 2026 (passed) | Cowork local Edge browsing moves from Frontier to general availability | GA | [cowork-whats-new] |
-| 2026-09-25 (passed) | Blog: "the new Copilot" — Home, Copilot Code, Autopilot (Autopilot "previously called Scout"); Copilot Managed Runtime enters preview (the blog says "now in preview," not "public preview") | announced / preview | [new-copilot-blog] |
+| 2026-09-25 (passed) | Blog: "the new Copilot" — Home, Copilot Code, Autopilot (Autopilot "previously called Scout"); Copilot Managed Runtime enters preview (this post says "now in preview"; the same-day Copilot Studio post by David Blyth calls it "public preview" [managed-runtime-blog]) | announced / preview | [new-copilot-blog] |
 | 2026-09-30 (passed) | Declarative agent manifest schema 1.9 adds top-level `agent_skills` (SKILL.md, Agent Skills standard, max 8) and the `Fabric` capability | documented schema addition, no preview marker | [manifest-1-9] |
 | 2026-10-01 (passed) | Copilot Code documented as Frontier preview (page's own `ms.date`, not a stated entry date); application card names Claude Opus/Sonnet/Haiku plus Microsoft-hosted GPT models | Frontier preview | [code-use], [code-app-card] |
-| 2026-10-05 (passed) | Microsoft Copilot Managed Runtime documented in preview | preview | [managed-runtime-overview] |
+| 2026-10-05 (passed) | Microsoft Copilot Managed Runtime documented in preview (Learn: "This is a preview feature") | preview | [managed-runtime-overview] |
 | — | Copilot Studio's bring-your-own-model feature for prompt-tool nodes explicitly excludes the GPT-5 family and later models | current, no preview label found | [byom-prompts] |
 
 ## Guardrails for SharePoint and Microsoft 365 agent skills
@@ -997,6 +997,7 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Copilot Cowork — now available in Frontier][cowork-frontier-blog] | Frontier availability date |
 | [Copilot Cowork — GA announcement][cowork-ga-blog] | GA model list, PayGo credit rate, vendor cost comparison |
 | [The new Copilot: Home, Code and Autopilot][new-copilot-blog] | Autopilot/Scout rename, Managed Runtime preview, UBB models |
+| [Copilot Studio blog — Copilot Managed Runtime][managed-runtime-blog] | David Blyth, 2026-09-25: Managed Runtime host and SDK "introduced in public preview" |
 | [Use Copilot Code (Frontier)][code-use] | Local/cloud execution, Managed Runtime publishing |
 | [Copilot Code — application card][code-app-card] | Model list (Claude + GPT), subprocessor posture, entitlement metering |
 | [What is Copilot Managed Runtime (preview)][managed-runtime-overview] | Four build paths, apps-not-agents framing |
@@ -1093,6 +1094,7 @@ re-checked even when Microsoft leaves the page unchanged.
 [cowork-frontier-blog]: https://www.microsoft.com/en-us/copilot/blog/2026/03/30/copilot-cowork-now-available-in-frontier/
 [cowork-ga-blog]: https://www.microsoft.com/en-us/copilot/blog/2026/06/16/copilot-cowork-is-now-generally-available/
 [new-copilot-blog]: https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/
+[managed-runtime-blog]: https://www.microsoft.com/en-us/copilot/blog/copilot-studio/build-where-you-want-run-with-confidence-now-microsoft-hosts-and-manages-the-code-created-by-copilot/
 [code-use]: https://learn.microsoft.com/en-us/copilot/code/use-code
 [code-app-card]: https://learn.microsoft.com/en-us/copilot/code/responsible-ai/copilot-code-application-card
 [managed-runtime-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot-managed-runtime/?view=o365-worldwide
