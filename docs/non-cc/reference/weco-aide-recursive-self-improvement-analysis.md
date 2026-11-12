@@ -441,8 +441,8 @@ same "recursive self-improvement" framing to a different substrate again: distri
 infrastructure rather than an inference-time agent harness. A five-stage agentic workflow locks a fixed
 task contract to curb reward hacking, profiles baseline performance, co-optimizes launch settings and
 code patches, and logs results to a cross-hardware experience bank; the authors describe it as "a
-two-level self-improvement loop: online revision within runs and experience distillation across
-clusters." Across four single/multi-node dense and MoE workloads they report up to a 2.75x speedup and
+two-level Recursive Self-Improvement loop" that works by "revising priors online within runs and
+distilling experience across clusters." Across four single/multi-node dense and MoE workloads they report up to a 2.75x speedup and
 raising mean Model FLOPs Utilization from 17.4% to 30.0%. Code is at
 [TokenRhythm/InfraRSI][infrarsi-repo] (`gh api` shows no license file, 40★/1 fork, created 2026-11-08).
 Not rubric-scored: infra-optimization RSI rather than an agent-task harness, but the same "where does
