@@ -130,7 +130,7 @@ Scale signals (as reported by [CopilotKit][ag-ui-copilotkit]): 9K+ GitHub stars,
 
 ### Non-Adopters (as of 2026-04-24)
 
-- **Salesforce Agentforce 360** — not listed on the [ag-ui README][ag-ui-repo] integrations. Salesforce's own [Agentforce 360 announcements][sf-agentforce] emphasize **MCP via MuleSoft** and the proprietary **MuleSoft Agent Fabric** for cross-platform agent discovery (spanning Agentforce + Amazon Bedrock + Google Vertex AI + Microsoft Copilot Studio). Frontend strategy is "Headless 360" (API/MCP/CLI exposure), not a frontend interaction protocol. See [Agentforce 360 for AWS][sf-aws].
+- **Salesforce Agentforce 360** — not listed on the [ag-ui README][ag-ui-repo] integrations. Salesforce's own [Agentforce 360 announcements][sf-agentforce] emphasize **MCP via MuleSoft** and the proprietary **MuleSoft Agent Fabric** for cross-platform agent discovery (spanning Agentforce + Amazon Bedrock + Google Vertex AI + Microsoft Copilot Studio). Frontend strategy is "Headless 360" (API/MCP/CLI exposure), not a frontend interaction protocol. See [Agentforce 360 for AWS][sf-aws]. Whether Agentforce Agents themselves have *direct* A2A support is unsettled across Salesforce's own documentation: an architecture recipe and MuleSoft's own A2A-bridge guide both premise "no direct A2A support on Agentforce Agents," while Salesforce's own Agentforce interoperability guide calls "Agentforce A2A Outbound... the native way for Agentforce agents to collaborate directly with a third party agent" — see [salesforce-agentforce-analysis.md][sf-agentforce-analysis] for the full first-party breakdown of this contradiction.
 
 ## A2UI (Agent-to-UI — Declarative Generative UI)
 
@@ -256,6 +256,7 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [ogui-site]: https://opengenerativeui.copilotkit.ai/
 [sf-agentforce]: https://www.salesforce.com/agentforce/what-is-new/
 [sf-aws]: https://www.salesforce.com/news/stories/agentforce-360-for-aws-announcement/
+[sf-agentforce-analysis]: ../agents/salesforce-agentforce-analysis.md
 [devin-faq]: https://docs.devin.ai/desktop/devin-desktop-faq
 [omnara]: https://www.ycombinator.com/launches/OCT-omnara-the-first-command-center-for-ai-agents-terminal-web-and-mobile
 [flightdeck]: https://github.com/flightdeckhq/flightdeck

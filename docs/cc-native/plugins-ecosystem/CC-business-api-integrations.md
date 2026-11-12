@@ -2,7 +2,7 @@
 title: Business API & MCP Server Integrations
 description: Landscape of business-oriented MCP servers for Claude Code — payments, accounting, CRM, ERP, legal/IP, and universal hubs. First-party and official sources prioritized.
 created: 2026-03-26
-updated: 2026-07-23
+updated: 2026-11-12
 validated_links: 2026-07-23
 status: research
 ---
@@ -79,6 +79,7 @@ No public MCP server found (2026-03-26). Accountable is a German freelancer acco
 - Enterprise, Unlimited, and Developer editions
 - Salesforce's own native [Hosted MCP Servers][sf-ga] reached General Availability 2026-04-29 (piloted spring 2025, beta Oct 2025), available to every Enterprise Edition org and above
 - Auth: OAuth 2.0
+- For the Agentforce platform side of this same MCP surface (the Agentforce Registry's per-tool MCP server registration and risk assessment, Security Center's separate tenant-wide MCP Risk Score, MuleSoft Agent Fabric, Claude via Amazon Bedrock inside the Salesforce trust boundary, pricing) see [salesforce-agentforce-analysis.md][sf-agentforce-analysis]
 
 ## ERP
 
@@ -194,3 +195,4 @@ claude mcp add --transport http composio "<YOUR_MCP_URL>" --headers "X-API-Key:Y
 [netsuite-tools]: https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/article_0902023508.html
 [patent]: https://github.com/riemannzeta/patent_mcp_server
 [sf-ga]: https://developer.salesforce.com/blogs/2026/04/salesforce-hosted-mcp-servers-are-now-generally-available
+[sf-agentforce-analysis]: ../../non-cc/agents/salesforce-agentforce-analysis.md
