@@ -139,10 +139,11 @@ LICENSE file (`license: null`, 220 stars, last pushed 2026-08-28), rubric-scored
 (updated 2026-10-15): Anthropic's engineering blog reports that daily merged code changes to its monorepo
 rose from "around 2,500 code changes merged per day" in May 2026 to "over 30,000 per day" by September
 2026, and that it fully migrated the monorepo off git, in five months, to an in-house version control
-system called **Scion**. The post frames this as the same bottleneck shift the sources above argue for —
-"the limit moved from writing code to the surrounding systems" — naming source control, builds, and CI
-as the parts "built for human scale" that could not keep up once agents, not humans, were generating most
-of the diffs; it also cites on the order of 25 million code checkouts per day for CI. Alongside Scion,
+system called **Scion**. The post frames this as the same bottleneck shift the sources above argue for,
+stating "The bottleneck, now, is all of the developer infrastructure built for human scale: source
+control, builds, and CI" — infrastructure that could not keep up once agents, not humans, were
+generating most of the diffs; it also cites on the order of 25 million code checkouts per day for CI.
+Alongside Scion,
 Anthropic built a code-review surface (**Antique**) and a source-control IAM system in the same window.
 Scion is explicitly scoped as a monorepo-specific replacement, not a general git substitute, and no
 rubric row is added here: this is vendor-reported internal tooling with no independently verifiable

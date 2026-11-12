@@ -545,22 +545,23 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 **Repo**: [erensrtky/cogit][cogit] | **Stars**: 122★/13 forks (`gh api`, 2026-11-12) | **License**:
 MIT | Created 2026-10-27 — two weeks old at this check
 
-"Git for the intent behind agent-written code" (README). cogit runs as a Claude Code plugin,
-through Claude Code hooks, recording every message you send the agent as a *thought commit*: the
-question, the outcome, the decisions made and the options rejected, and which earlier message it
-continues. A `Thought:` trailer on each code commit ties it back to that record, so `cogit why`,
-`cogit blame` and `cogit show <sha>` can walk from any line of code back to the reason it exists.
-A background small model writes the record as you work — by default it never interrupts the
-agent — and, on an "Economical" setting, the author's own measurement puts the cost "under 2 cents
-per 20 messages."
+"Git for the intent behind agent-written code" (README). cogit runs as a plugin in Claude Code or
+Codex CLI, through the host agent's own hooks, recording every message you send the agent as a
+*thought commit*: the question, the outcome, the decisions made and the options rejected, and
+which earlier message it continues. A `Thought:` trailer on each code commit ties it back to that
+record, so `cogit why`, `cogit blame` and `cogit show <sha>` can walk from any line of code back to
+the reason it exists. A background small model writes the record as you work — by default it never
+interrupts the agent — and, on an "Economical" setting, the author's own measurement puts the cost
+"under 2 cents per 20 messages."
 
-### How It Integrates With Claude Code
+### How It Integrates With Claude Code and Codex
 
 - Install: `npm install -g @cogit/cli`, then in Claude Code, `/plugin install cogit --marketplace
   erensrtky/cogit`.
-- Needs Claude Code 2.1.275+ and a git repository; works through Claude Code's own hook system so
-  the record is written live, "not reconstructed from the diff afterwards" (README). Single-agent:
-  the README states it "works with Claude Code today," with no other harness documented.
+- Needs Node 22.13+, a git repository, and Claude Code 2.1.275+ or Codex CLI 0.167+; works through
+  the host agent's own hook system so the record is written live, "not reconstructed from the diff
+  afterwards" (README). The README documents two harnesses today — Claude Code and Codex CLI, each
+  with its own install command below — not Claude Code alone.
 - `cogit open .` renders the recorded sessions as a git-graph-style map (branches, decisions, a
   "Your turn" inbox); `cogit pr` writes a pull-request description from the recorded decisions and
   rejected options rather than the raw chat, and `--install-action` adds a GitHub Action that posts

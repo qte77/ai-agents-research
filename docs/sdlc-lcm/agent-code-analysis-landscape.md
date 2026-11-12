@@ -146,7 +146,8 @@ Verified Skills pipeline role, is at
   Markdown, JSON and SARIF. Integrates with Claude Code and Codex directly (either
   can start a review or act as reviewer); Cursor, Cline and Goose can start a review
   but need Claude Code or Codex installed to act as the reviewer. A git pre-push
-  hook and an MCP code-graph server ("who calls this function") round it out.
+  hook and an MCP code-graph server (answers questions about the code, "such as who calls a
+  function") round it out.
   **Caveat**: the optional Bearer CLI integration uses the Elastic License 2.0,
   which the project's own README describes as not open source — a mixed-license
   surface to check before bundling.

@@ -489,9 +489,9 @@ result is signed into a hash chain held by a signer process the agent cannot rea
 modeled explicitly on Certificate Transparency (independent witnesses cosign the
 log), with an open file format and verifiers in Python, TypeScript and Go. A run
 exports as one `.tkb` file that anyone can verify offline, including in a browser,
-and the README's own demo shows an agent editing both its own log and a copy of
-Tracekit's record to hide a deletion — verification fails at the exact record that
-was altered. The project reports (self-reported, from its own README) 8-of-8 tamper
+and the README's own demo shows a copy of a verified run tampered with — the
+downloaded script's logged "deny" decision rewritten to "allow" — where verification
+then fails at the exact record that was altered. The project reports (self-reported, from its own README) 8-of-8 tamper
 attacks caught across 480 trials, 840-of-840 harmful tool calls stopped across 11
 classes (1 false alarm in 890), and under 1ms added per call (0.91ms at p99). It
 documents mappings to the EU AI Act, ISO/IEC 42001, NIST AI RMF and OWASP for
