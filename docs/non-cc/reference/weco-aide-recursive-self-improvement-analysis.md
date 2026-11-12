@@ -1,10 +1,10 @@
 ---
 title: AIDE² — Weco AI's Recursive Self-Improvement Experiment
 source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
-purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus further harness-subject entries, FineEnvs multi-harness RL training, the agentic meta-reasoning paper, ActiveSaddler's curriculum-driven harness optimization, the Sharpening Tax critique of RL post-training for agentic coverage, and MIRA's meta-reasoning architecture for long-horizon research agents.
+purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus further harness-subject entries, FineEnvs multi-harness RL training, the agentic meta-reasoning paper, ActiveSaddler's curriculum-driven harness optimization, the Sharpening Tax critique of RL post-training for agentic coverage, MIRA's meta-reasoning architecture for long-horizon research agents, and four more RSI-family papers: Harness² (verifier-free recursive harnessing), RSI-Dojo (agents automating LLM post-training), InfraRSI (RSI for training infrastructure), and Self-HPO (alternating harness/policy optimization).
 created: 2026-09-24
-updated: 2026-10-09
-validated_links: 2026-10-09
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
@@ -384,7 +384,10 @@ estimated difficulty. Applied during RL training in two agentic environments, PT
 the fixed-temperature baseline, solving more tasks under repeated sampling while also improving
 single-shot accuracy." No code repository or project page was found on the abstract page (checked
 2026-10-06), matching the "results published, code not yet released" pattern this corpus already tracks
-for HarnessX, AIDE² and ROFT above.
+for HarnessX, AIDE² and ROFT above. **Update (2026-11-12): no longer accurate.** A repo now exists —
+[changdaeoh/sharpening-tax][sharpening-tax-repo] ("Official codebase for the paper \"Sharpening Tax in
+Post-Training\""), created 2026-09-30, 35★/3 forks as of this check, licensed CC BY-NC 4.0 per its
+`LICENSE` file, with a project page at [changdaeoh.github.io/sharpening-tax][sharpening-tax-page].
 
 Why this belongs in this doc rather than being a harness-search entry of its own: Sharpening Tax is
 first-party evidence that *RL* post-training can cost agentic solution coverage even while raising
@@ -399,6 +402,64 @@ worth reading alongside RRSI/ROFT's harness-time and training-time interventions
 is a diagnostic finding and a training-time sampling technique, not a shipped harness or memory/context
 system, and it does not touch the open Context·Reproducible cell in
 [agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md).
+
+## Harness² — Recursive Agent Harnessing Without Verifiers (added 2026-11-12)
+
+[Harness²: Recursive Agent Harnessing for an Open World][harness2] (Xu, Chen, CuiZhu, Dalvi Mishra, Ming,
+Yu, Han, Lee, Pfister; arXiv 2610.14224, submitted 2026-10-09) tackles the same "evolve the harness, not
+just the model" problem as AIDE²/RRSI above, but for open-world deployment, where test tasks are unseen
+at design time and no ground-truth verifier exists. It recurses at two levels: task-level recursion
+refines a single task's harness through a verifier-free "Propose-Probe-Compose" step, and
+harnessing-level recursion distills experience from those edits into a continual-improvement harness for
+future tasks. Across three professional benchmarks (WorkBuddy-Bench, JobBench, LAB) the authors report a
+single task-level step improving GLM-5 and Gemini 3.5 Flash over their base harnesses by up to 11.5, 4.5,
+and 11.8 points respectively, with further gains as the per-task recursion budget grows. Code is released
+at [google-research/harness2][harness2-repo] (Apache-2.0 per the repo's own license badge; `gh api` shows
+23,469★/2,355 forks as of 2026-11-12 — a striking count one month after the repo's 2026-10-06 creation,
+flagged here rather than taken at face value; not a fork, and the README matches the paper). Not
+rubric-scored: a paper-plus-code entry alongside the other verifier-free harness methods above, not yet
+independently assessed against the agent substrate axes.
+
+## RSI-Dojo — Teaching Agents to Automate LLM Post-Training (added 2026-11-12)
+
+[Training LLM Agents to Automate LLM Post-Training with RSI-Dojo][rsi-dojo] (Gao, Yu, Yin, Shi, Cai, He,
+Lyu; arXiv 2611.03698, submitted 2026-10-29) moves RSI one layer up from the harness-edit methods above:
+instead of an agent editing its own harness, RSI-Dojo teaches an agent to perform LLM *post-training*
+itself. The authors built RSI-Craft, a pipeline that mines research papers into 281 seed executable
+post-training environments, then fine-tune Qwen3.5-9B and Qwen3.6-35B-A3B on frontier-model trajectories
+filtered by rubric and outcome. The resulting models gain 8.74 and 16.87 points respectively on the
+authors' own PostTrainBench, with the 35B-A3B variant (29.95 PostTrainBench, 53.29 PostTrainBench-Lite)
+reported as comparable to the frontier models GLM-5.2 and GPT-5.5. No code repository or project page was
+found on the abstract page (checked 2026-11-12). Not rubric-scored: a training-time RSI method, not a
+shipped harness.
+
+## InfraRSI — Recursive Self-Improvement for Training Infrastructure (added 2026-11-12)
+
+[InfraRSI: Harnessing Recursive Self-Improvement for Training Infrastructure][infrarsi] (InfraRSI Team,
+Tian, Mei, Yuan, Xu, Li, Dai, Han, Chen, Wang, Wang; arXiv 2611.11558, submitted 2026-11-08) applies the
+same "recursive self-improvement" framing to a different substrate again: distributed LLM training
+infrastructure rather than an inference-time agent harness. A five-stage agentic workflow locks a fixed
+task contract to curb reward hacking, profiles baseline performance, co-optimizes launch settings and
+code patches, and logs results to a cross-hardware experience bank; the authors describe it as "a
+two-level self-improvement loop: online revision within runs and experience distillation across
+clusters." Across four single/multi-node dense and MoE workloads they report up to a 2.75x speedup and
+raising mean Model FLOPs Utilization from 17.4% to 30.0%. Code is at
+[TokenRhythm/InfraRSI][infrarsi-repo] (`gh api` shows no license file, 40★/1 fork, created 2026-11-08).
+Not rubric-scored: infra-optimization RSI rather than an agent-task harness, but the same "where does
+self-improvement happen" question this doc otherwise tracks.
+
+## Self-HPO — Alternating Harness and Policy Optimization (added 2026-11-12)
+
+[Self-Evolving Coding Agents via Harness-Policy Optimization][self-hpo] (Wei, Yao, Peng, Wang, Wu, Cheng,
+Meng, Gao; arXiv 2610.22791, submitted 2026-10-16) alternates two steps rather than optimizing harness or
+policy alone: an H-step where the current policy proposes harness revisions from its own failures, and a
+P-step where RL updates the policy under the selected harness, with unsolved tasks feeding the next
+H-step. Across three coding benchmarks the authors report raising Qwen3.5-35B-A3B's average resolve rate
+from 57.8% to 64.8% over harness-only and policy-only baselines, with gains extending out-of-distribution
+and a further boost when a stronger external model proposes the harness. Code and checkpoints are
+released at [MSR-Orchard/Self-HPO][self-hpo-repo] (confirmed by the repo's own arXiv:2610.22791 badge;
+MIT, 65★/4 forks, created 2026-10-10) and [huggingface.co/self-hpo][self-hpo-hf]. Not rubric-scored: a
+second harness-plus-policy co-optimization method alongside AIDE²/RRSI above.
 
 ## Cross-References
 
@@ -434,6 +495,16 @@ system, and it does not touch the open Context·Reproducible cell in
 | [arXiv 2610.01509 abstract page][sharpening-tax] | Title, full author list (10), submission date (2026-10-01), full abstract verbatim, Sharpening Tax and PTGS definitions verbatim, confirmation of no code/project link — accessed 2026-10-06 |
 | [arXiv 2610.02525 abstract page][mira] | Title, full author list (5), submission date (2026-10-01), MIRA/MIRA-AC method description, confirmation of no numeric results, no affiliation, and no Comments/code field on the page — accessed 2026-10-09 |
 | `gh api search/repositories` + `search/code`, 2026-10-09 | GitHub-wide absence check for a MIRA code repository — zero repository matches; code-search hits are third-party paper-tracking/digest repos, not an author implementation |
+| `gh api repos/changdaeoh/sharpening-tax` + `contents/LICENSE`, 2026-11-12 | Confirms a code repo now exists (created 2026-09-30, 35★/3 forks, CC BY-NC 4.0 per `LICENSE`), correcting the 2026-10-06 "no code" note above |
+| [arXiv 2610.14224 abstract page][harness2] | Title, full author list (9), submission date (2026-10-09), full abstract, reported per-benchmark point gains — accessed 2026-11-12 |
+| [google-research/harness2 README][harness2-repo] | Confirms the repo matches the paper (wordmark, arXiv/website/license badges) |
+| `gh api repos/google-research/harness2`, 2026-11-12 | License (Apache-2.0), stars (23,469), forks (2,355), not a fork, created 2026-10-06, pushed 2026-11-02 |
+| [arXiv 2611.03698 abstract page][rsi-dojo] | Title, full author list (7), submission date (2026-10-29), full abstract, RSI-Craft/PostTrainBench figures, confirmation of no code/project link — accessed 2026-11-12 |
+| [arXiv 2611.11558 abstract page][infrarsi] | Title, full author list (11), submission date (2026-11-08), full abstract, Comments field (project page + code URL) — accessed 2026-11-12 |
+| `gh api repos/TokenRhythm/InfraRSI`, 2026-11-12 | No license file detected, stars (40), forks (1), created/pushed dates |
+| [arXiv 2610.22791 abstract page][self-hpo] | Title, full author list (8), submission date (2026-10-16), full abstract, reported resolve-rate figures — accessed 2026-11-12 |
+| [MSR-Orchard/Self-HPO README][self-hpo-repo] | Confirms the repo via its own arXiv:2610.22791 badge |
+| `gh api repos/MSR-Orchard/Self-HPO`, 2026-11-12 | License (MIT), stars (65), forks (4), created/pushed dates |
 
 [blog]: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 [paper]: https://arxiv.org/abs/2609.26457
@@ -456,6 +527,16 @@ system, and it does not touch the open Context·Reproducible cell in
 [mira]: https://arxiv.org/abs/2610.02525
 [fe-zhang]: https://arxiv.org/abs/2605.23950
 [fe-he]: https://arxiv.org/abs/2608.17528
+[sharpening-tax-repo]: https://github.com/changdaeoh/sharpening-tax
+[sharpening-tax-page]: https://changdaeoh.github.io/sharpening-tax
+[harness2]: https://arxiv.org/abs/2610.14224
+[harness2-repo]: https://github.com/google-research/harness2
+[rsi-dojo]: https://arxiv.org/abs/2611.03698
+[infrarsi]: https://arxiv.org/abs/2611.11558
+[infrarsi-repo]: https://github.com/TokenRhythm/InfraRSI
+[self-hpo]: https://arxiv.org/abs/2610.22791
+[self-hpo-repo]: https://github.com/MSR-Orchard/Self-HPO
+[self-hpo-hf]: https://huggingface.co/self-hpo
 [fe-yu]: https://arxiv.org/abs/2607.21557
 [fe-peng]: https://arxiv.org/abs/2605.15040
 [fe-poolside]: https://arxiv.org/abs/2605.27605
