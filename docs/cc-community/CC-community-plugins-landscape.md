@@ -291,6 +291,64 @@ directories into *every* session (the explainx post itself says it "could not ve
 app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our advice is to prefer the per-session
 `--plugin-dir` or a marketplace install, and run `claude plugin validate` on a mod before trusting it.
 
+## Notable Plugin Profile: lot-map (Live Session Map Mod)
+
+**Repo**: [alexeyw/lot-map][lot-map] | **License**: MIT (LICENSE file, "Copyright (c) 2026 Aleksei
+Volodin") | **Stars**: 407★/45 forks (`gh api`, 2026-11-12) | **Category**: Agent observability /
+visualization
+
+lot-map is a concrete example of a [mod](../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md)
+(`hooks/hooks.json` → `{"modules": ["./register.tsx"]}`, the mod file layout documented above) rather
+than an external app: it draws a live node-map in a pane beside the chat, with tool calls, model
+steps, hooks, skills and subagents each sending a pulse from a centre node (default label "CLAUDE")
+out to one of ten "stations" — You, Model, Memory, Files, Shell, Network, Browser, Agents, Skills,
+Hooks — as they happen; a spoke thickens the more its station is used, and a fading route line traces
+the last few hops. Its own README: "Built and tested on Claude Code 2.1.321 on macOS; users report it
+working on Windows as well" (mods require CC v2.1.287+, per the native-feature doc above). The README's
+own demo GIF is explicitly "a made-up session replayed through the mod's own drawing code," not a
+captured real run.
+
+**Basics** (first-party, `gh api`, 2026-11-12): repo created 2026-11-09, last pushed 2026-11-12 — a
+3-day-old repo already at 407★/45 forks; `plugin.json` reports version 0.5.1; no GitHub Releases or
+tags exist, so version history lives only in `CHANGELOG.md` and `plugin.json`, not GitHub Releases.
+`plugin.json`'s `userConfig.language` options list six languages (`en`, `ru`, `es`, `fr`, `de`, `it`);
+the GitHub repo short description says "in five languages" — a stale count against the live
+`plugin.json`.
+
+**Install**: `/plugin install lot-map --marketplace alexeyw/lot-map`. The pane opens by itself when a
+session starts; in a terminal it needs at least 144 columns and draws text only, otherwise `/lot-map`
+opens it.
+
+**How it integrates with CC**: it hooks the session's start, prompts, turns, model steps, tool calls,
+skills and compaction, plus three settings-hook events — `PreToolUse` (reads whether a settings hook
+refused, asked permission, or took a moment on a call), and `UserPromptSubmit`/`SessionStart` (reads
+context a settings hook added). Per its README, verbatim: "Each of its hooks passes the event on as it
+came and returns what came back as it was: it changes no input, no result, no context and no
+permission decision, and makes none of its own." This is a read-only observation layer built on the
+native Mods mechanism above — a contrast with [Agent Flow](CC-agent-flow-visualizer-analysis.md),
+which captures the same kind of session activity from *outside* the process, via an HTTP hook server
+and Codex rollout-file tailing. It also asks Claude Code for context-window usage after each model
+step (`$.session.usage()`) and persists one thing between sessions — the name of the model last used
+per project folder (`$.store`), so it can flag a model change — confirmed by a read of
+`hooks/register.tsx` on 2026-11-12.
+
+**Privacy claim**: its README and `PRIVACY.md` state, verbatim, that the mod "makes no network
+requests, reads no files, runs no processes, calls no model and adds nothing to the conversation."
+This is self-reported; a read of `hooks/register.tsx` and `hooks/map.ts` (2026-11-12) found no calls
+to network, filesystem, process-spawn or model namespaces — consistent with the claim, but a source
+read is not an independent audit. The same README also states the counterweight any mod carries by
+design: it "is handed every call's whole input, including command lines and the text written to
+files," and takes only short labels from that (a file's last two path segments, a URL's host, a shell
+command's name, never a full command line or file contents) — per the native Mods docs above, "a mod
+can read and write your files, start processes, and make network requests" with the installing user's
+own access, so this scoping is enforced by the mod's own code, not by a sandbox.
+
+**Caution**: very young (created 2026-11-09) with a fast-moving CHANGELOG — 0.3.6 through 0.5.1 all
+land on 2026-11-11, including one feature (a Hooks-station row) removed in 0.4.0 for an unnamed plugin
+catalogue's verification rule, then restored in 0.5.1 — so no settled track record yet. The README
+itself flags the update-trust model: a marketplace added from this repo follows its `main` branch, "so
+an update brings whatever is there: read the diff before updating if that matters to you."
+
 ## Ecosystem Observations
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
@@ -317,6 +375,7 @@ app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our
 | [google/elephant-goldfish-model][egm] (README + `gh api`, 2026-11-12) | Elephant/Goldfish drafter-reviewer spec-review plugin |
 | [claude-mods.com][mods-dir] · [OneWave-AI/claude-code-mods][onewave] · [awesome-claude-code-mods][awesome-mods] · [explainx.ai post][explainx-mods] · [ruvnet gist][ruvnet-mods] | Community mod catalogs and guides (checked 2026-10-22) |
 | [Mods overview][mods-overview-cc] | First-party: "Mods aren't sandboxed"; `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` ignored from v2.1.287 |
+| [alexeyw/lot-map][lot-map] (README, LICENSE, PRIVACY.md, CHANGELOG.md, `plugin.json`, `hooks/register.tsx`, `hooks/map.ts` + `gh api`, 2026-11-12) | Live session-map mod: repo stats, license, install, hooked events, privacy claims, source read for network/fs/process calls |
 
 [ponytail]: https://github.com/DietrichGebert/ponytail
 [mods-dir]: https://claude-mods.com/
@@ -348,6 +407,7 @@ app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our
 [moonshine]: https://github.com/moonshine-ai/moonshine
 [whispercpp]: https://github.com/ggml-org/whisper.cpp
 [vosk]: https://alphacephei.com/vosk/
+[lot-map]: https://github.com/alexeyw/lot-map
 [claude-stt]: https://github.com/jarrodwatts/claude-stt
 [wake-word]: https://github.com/Traves-Theberge/Wake-Word
 [hey-claude]: https://github.com/SergeyKirk/hey-claude
