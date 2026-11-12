@@ -10,7 +10,15 @@
     "allow": [
       "Bash(lychee --config *)",
       "Bash(markdownlint-cli2 --config *)",
-      "ListAgents"
+      "ListAgents",
+      "Bash(lychee *)",
+      "Bash(actionlint *)",
+      "Bash(npm view *)",
+      "Bash(make test)",
+      "Bash(make lint)",
+      "Bash(make check_docs)",
+      "Bash(make check_links)",
+      "Bash(make reconcile)"
     ]
   },
   "enabledPlugins": {
