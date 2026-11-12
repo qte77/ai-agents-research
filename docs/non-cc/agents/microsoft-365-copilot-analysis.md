@@ -11,8 +11,9 @@ status: assess
 in SharePoint, Microsoft Copilot Studio, Work IQ, and Microsoft Agent 365 — plus six more added in a
 2026-11-12 pass: Copilot Cowork, the new Copilot (Home/Copilot Code/Autopilot), Copilot Managed
 Runtime, declarative agents, Researcher/Analyst, and the build-path SDKs — each at its own GA/preview
-stage; no single version string applies to "Microsoft 365 Copilot" as a whole. See
-[Timeline](#timeline) below.
+stage; no single version string applies to "Microsoft 365 Copilot" as a whole. A separate
+[Training and certification](#training-and-certification) section, added the same day, covers the
+agent-relevant Microsoft credentials. See [Timeline](#timeline) below.
 
 > **Disambiguation.** "Microsoft 365 Copilot" (this doc) is a third, unrelated "Copilot" brand —
 > not GitHub Copilot CLI and not the GitHub Copilot coding agent, which are disambiguated from
@@ -811,6 +812,52 @@ surface:
 Re-check all of the above directly before using any number for a budget or a contract — none of
 them are reproduced here.
 
+## Training and certification
+
+**As of 2026-11-12.** The table below covers the Microsoft 365/Azure/Foundry credentials most
+relevant to building, administering, or leading adoption of agents in this family — fetched
+directly from each credential's own Microsoft Learn page, not from Microsoft's PDF certification
+poster. The poster (`aka.ms/traincertposter` / `aka.ms/CertificationsPoster`) lags Learn and disagrees with it
+on at least one status (see the AI-500 row below) and still shows retired exam codes (PL-200,
+AZ-500) that Learn's own retirement page confirms are gone — it is cited here only as a discovery
+aid, never as a status source.
+
+| Exam / credential | What it covers | Level / role | Status (as of 2026-11-12) | Microsoft Learn |
+|---|---|---|---|---|
+| **AB-900** — Copilot and Agent Administration Fundamentals | Support, secure, and protect an AI-enabled Microsoft 365 environment; basic admin tasks for Copilot and agents | Beginner / Administrator | GA; page last updated 2026-10-14 | [Credential page][ab-900] |
+| **AB-620** — AI Agent Builder Associate | Build, extend, and integrate custom agents in Copilot Studio — multi-agent solutions, MCP, Agent2Agent (A2A), computer-using agents, enterprise knowledge sources | Intermediate (Associate) / App Maker, Developer | GA; the exam content itself "is in the process of being updated to the GHCP harness. It should be updated by December 18" [ab-620] | [Credential page][ab-620] |
+| **AB-100** — Agentic AI Business Solutions Architect Expert | Architect agentic-first, multi-agent business solutions across Dynamics 365, Power Platform, Copilot Studio, and Microsoft Foundry; requires the AB-100 exam plus one prerequisite Associate certification (the listed options include AB-620, AB-410, AI-103, and AI-300) | Expert / Solution Architect | GA; Learn states "Updates to the AB-100 exam are coming on November 16, 2026" [ab-100] | [Credential page][ab-100] |
+| **AB-730** — AI Business Professional | Use generative-AI productivity tools (Microsoft 365 Copilot, Copilot Cowork, pre-built agents, Work IQ) to drive business outcomes without coding | Beginner / Administrator, Business User | GA; page last updated 2026-10-20 | [Credential page][ab-730] |
+| **AB-731** — AI Transformation Leader | Recognize AI-transformation opportunities and lead AI adoption using Microsoft 365 Copilot and Foundry Tools, without coding | Beginner / Business Leader | GA; page last updated 2026-07-22 | [Credential page][ab-731] |
+| **AI-103** — Azure AI Apps and Agents Developer Associate | Design, develop, and deploy Azure AI and agentic solutions in Python using Microsoft Foundry — generative AI/agentic solutions, computer vision, text analysis, information extraction | Intermediate (Associate) / AI Engineer, Developer | GA | [Credential page][ai-103] |
+| **AI-500** — Multi-Agent AI Solutions Expert | Design, build, and optimize scalable, production-ready multi-agent AI systems; orchestration via Microsoft Agent Framework, Model Context Protocol, RAG, and LangGraph; requires the AI-103 (Azure AI Apps and Agents Developer Associate) credential as a prerequisite | Expert / AI Engineer, Solution Architect, Developer | GA per Learn's own credential page, which carries no "(beta)" marker. The certification poster PDF labels the same credential "(Beta)" instead — a poster/Learn disagreement resolved here in Learn's favor, per the note above | [Credential page][ai-500] |
+| **SC-500** — Cloud and AI Security Engineer Associate | Design, implement, and manage end-to-end security controls across Azure, hybrid, and AI-enabled environments, including securing AI solutions | Intermediate (Associate) / Security Engineer | GA; the page itself notes "The Practice Assessment for this exam is not currently available" | [Credential page][sc-500] |
+
+**2026 retirements, checked against Learn directly.** Learn's own
+[credential-retirement page][cred-retirement] confirms three exact retirement dates. The pairings
+AI-102 → AI-103, PL-200 → AB-410 and AZ-500 → SC-500 circulate as replacements (attributed to
+Microsoft Partner Center announcements, which this pass did not check), but **no Learn page for any of the six certifications below names the other as a
+replacement or successor**:
+
+- **AI-102** (Microsoft Certified: Azure AI Engineer Associate) retired **June 30, 2026**
+  [cred-retirement]; its own page adds only "This certification and the renewal assessment are
+  retired" [ai-102-cert], naming no successor. AI-103's own page likewise names no predecessor.
+  Treat "AI-102 → AI-103" as unconfirmed on Learn.
+- **PL-200** (Microsoft Certified: Power Platform Functional Consultant Associate) retired
+  **August 31, 2026** [cred-retirement] [pl-200-cert]. AB-410 (Microsoft Certified: Intelligent
+  Applications Builder Associate) is listed only as one of several Associate-level prerequisite
+  options on AB-100's page [ab-100] — neither its own page nor PL-200's names the other as a
+  replacement. Treat "PL-200 → AB-410" the same way: unconfirmed on Learn.
+- **AZ-500** (Microsoft Certified: Azure Security Engineer Associate) retired **August 31, 2026**
+  [cred-retirement] [az-500-cert]; SC-500's own page names no predecessor either. Treat
+  "AZ-500 → SC-500" the same way: unconfirmed on Learn.
+
+Separately, two Microsoft Applied Skills scenarios in this same agent-building space retired on
+dates Learn's own page confirms: "Create agents in Microsoft Copilot Studio" on **July 8, 2026**,
+and "Extend Microsoft 365 Copilot with declarative agents by using Visual Studio Code" on
+**April 15, 2026** [cred-retirement] — both narrower, scenario-based credentials rather than the
+certification exams in the table above.
+
 ## What We Did Not Check
 
 Separate from `checked` results, two further buckets record what this pass could not settle:
@@ -1022,6 +1069,19 @@ re-checked even when Microsoft leaves the page unchanged.
 | [What is the Microsoft 365 Agents SDK][m365-agents-sdk] | AI-agnostic framework, supported languages |
 | [Microsoft Agent 365 SDK overview][agent365-sdk] | "Doesn't build agents", Claude Agent SDK peer listing, Claude tooling package |
 | [Agents admin guide for Microsoft 365][agent-store-admin] | Agent Store definition |
+| [AB-900 — Copilot and Agent Administration Fundamentals][ab-900] | GA, level, last-updated date, overview |
+| [AB-620 — AI Agent Builder Associate][ab-620] | GA, level, GHCP-harness update note (verbatim, by December 18) |
+| [AB-100 — Agentic AI Business Solutions Architect Expert][ab-100] | Expert level, prerequisite list, November 16 2026 update note (verbatim) |
+| [AB-730 — AI Business Professional][ab-730] | Beginner level, last-updated date, overview |
+| [AB-731 — AI Transformation Leader][ab-731] | Beginner level, last-updated date, overview |
+| [AI-103 — Azure AI Apps and Agents Developer Associate][ai-103] | Associate level, last-updated date, overview |
+| [AI-500 — Multi-Agent AI Solutions Expert][ai-500] | Expert level, AI-103 prerequisite, no "(beta)" marker (contra poster) |
+| [SC-500 — Cloud and AI Security Engineer Associate][sc-500] | Associate level, last-updated date, no practice assessment yet |
+| [Credential retirement — Microsoft Learn][cred-retirement] | Authoritative retirement dates for AI-102, PL-200, AZ-500, and two Applied Skills scenarios; no successor named for any |
+| [Azure AI Engineer Associate (retired)][ai-102-cert] | AI-102 retirement notice, no successor named |
+| [Power Platform Functional Consultant Associate (retired)][pl-200-cert] | PL-200 retirement date, no successor named |
+| [Azure Security Engineer Associate (retired)][az-500-cert] | AZ-500 retirement date, no successor named |
+| [Certification poster (PDF)][cert-poster-pdf] | Discovery aid only — not cited for any status in the table above; still shows retired codes (PL-200, AZ-500) and labels AI-500 "(Beta)", contradicted by Learn |
 
 [sp-skills]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-skills
 [sp-get-started]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started
@@ -1119,3 +1179,16 @@ re-checked even when Microsoft leaves the page unchanged.
 [m365-agents-sdk]: https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/agents-sdk-overview
 [agent365-sdk]: https://learn.microsoft.com/en-us/microsoft-agent-365/developer/agent-365-sdk
 [agent-store-admin]: https://learn.microsoft.com/en-us/microsoft-365/copilot/agent-essentials/m365-agents-admin-guide
+[ab-900]: https://learn.microsoft.com/en-us/credentials/certifications/copilot-and-agent-administration-fundamentals/
+[ab-620]: https://learn.microsoft.com/en-us/credentials/certifications/ai-agent-builder-associate/
+[ab-100]: https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-business-solutions-architect/
+[ab-730]: https://learn.microsoft.com/en-us/credentials/certifications/ai-business-professional/
+[ab-731]: https://learn.microsoft.com/en-us/credentials/certifications/ai-transformation-leader/
+[ai-103]: https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-apps-and-agents-developer-associate/
+[ai-500]: https://learn.microsoft.com/en-us/credentials/certifications/multi-agent-ai-solutions-expert/
+[sc-500]: https://learn.microsoft.com/en-us/credentials/certifications/cloud-and-ai-security-engineer-associate/
+[cred-retirement]: https://learn.microsoft.com/en-us/credentials/support/credential-retirement
+[ai-102-cert]: https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/
+[pl-200-cert]: https://learn.microsoft.com/en-us/credentials/certifications/power-platform-functional-consultant-associate/
+[az-500-cert]: https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/
+[cert-poster-pdf]: https://arch-center.azureedge.net/Credentials/Certification-Poster_en-us.pdf
