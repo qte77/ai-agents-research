@@ -2,9 +2,15 @@
 name: Decision model eval (G1 gold sets)
 
 # Plan 0012 row H1: run decision models (Cloudflare Clef via the shared `decide()` action code,
-# later TypeSafe Jev) over the G1 gold sets in .github/scripts/data/gold/ and report ROC-AUC,
-# Brier and a `hi` threshold sweep (.github/scripts/eval-decision-models.py). Manual, owner- or
-# agent-run comparison; not scheduled. Fails when a model answers no item at all.
+# TypeSafe Jev) over the G1 gold sets in .github/scripts/data/gold/ and report ROC-AUC,
+# Brier and a `hi` threshold sweep (.github/scripts/eval-decision-models.py). Fails when a model
+# answers no item at all.
+#
+# Plan 0013 row A7 (drift check): also runs monthly on the full gold sets with the three pinned
+# models, compares with .github/scripts/data/gold/baseline.json (the 2026-11-10/11 runs) and opens
+# or updates one `decision-drift` issue when ROC-AUC drops by more than 0.03 or the recommended
+# `hi` moves by 0.05 or more; it closes the issue when a later run is back within bounds. A manual
+# run shows the same comparison in its summary but never touches the issue (it may use --limit).
 #
 # Secrets used (read by decide() from the environment):
 #   secrets.CF_WORKERS_AI_TOKEN — Workers AI API token (clef backend)
@@ -12,6 +18,8 @@ name: Decision model eval (G1 gold sets)
 #   secrets.TYPESAFE_API_KEY    — TypeSafe key (jev backend; unset until plan 0012 K0)
 
 on:
+  schedule:
+    - cron: '0 15 1 * *'  # 1st of each month, 15:00 UTC
   workflow_dispatch:
     inputs:
       models:
@@ -29,6 +37,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: decision-model-eval
@@ -55,15 +64,17 @@ jobs:
           CF_WORKERS_AI_TOKEN: ${{ secrets.CF_WORKERS_AI_TOKEN }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
-          MODELS: ${{ inputs.models }}
-          SETS: ${{ inputs.sets }}
-          LIMIT: ${{ inputs.limit }}
+          # Reason: inputs are empty on a schedule; the scheduled run covers every baseline model.
+          MODELS: ${{ inputs.models || 'clef:clef-flash,clef:clef,jev:jev-1.13.0' }}
+          SETS: ${{ inputs.sets || 'papers,issues' }}
+          LIMIT: ${{ inputs.limit || '0' }}
         run: |
           set -euo pipefail
           python3 .github/scripts/eval-decision-models.py \
             --decide-dir decide-src/actions/decide \
             --models "$MODELS" --sets "$SETS" --limit "$LIMIT" \
-            --out decision-eval-output
+            --out decision-eval-output \
+            --baseline .github/scripts/data/gold/baseline.json
 
       - name: Append summary to step summary
         if: always()
@@ -79,3 +90,38 @@ jobs:
           name: decision-eval-output
           path: decision-eval-output/
           retention-days: 30
+
+      - name: Upsert or resolve the decision-drift issue
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          # The eval step writes drift.md (empty = no drift); without it there is no comparison.
+          if [ ! -f decision-eval-output/drift.md ]; then
+            echo "::error::no drift.md — the eval did not finish; not touching the issue"
+            exit 1
+          fi
+          gh label create decision-drift --color D93F0B \
+            --description "Decision models drifted from the gold-set baseline (auto-managed by decision-model-eval)" \
+            2>/dev/null || true
+          num="$(gh issue list --state open --label decision-drift --json number --jq '.[0].number // empty')"
+          if [ -s decision-eval-output/drift.md ]; then
+            {
+              echo "The monthly decision-model eval moved away from the baseline in \`.github/scripts/data/gold/baseline.json\` (plan 0013 row A7). Auto-generated; edited in place on each run. Run: $RUN_URL"
+              echo
+              cat decision-eval-output/drift.md
+              echo
+              echo "**To resolve:** check the run's summary; if the change is real, re-check \`hi\` in the consumers before moving the baseline."
+            } > issue-body.md
+            if [ -n "$num" ]; then
+              gh issue edit "$num" --body-file issue-body.md
+            else
+              gh issue create --title "Decision models drifted from the gold-set baseline" \
+                --label decision-drift --body-file issue-body.md
+            fi
+          elif [ -n "$num" ]; then
+            gh issue comment "$num" --body "Back within the baseline bounds as of $(date -u '+%Y-%m-%d') ($RUN_URL) — auto-closing."
+            gh issue close "$num"
+          fi

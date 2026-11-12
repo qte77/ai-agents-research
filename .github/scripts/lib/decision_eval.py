@@ -166,3 +166,32 @@ def recommend_hi(rows: list[dict], max_error_rate: float) -> dict | None:
         if row["acted"] and row["error_rate"] <= max_error_rate:
             return row
     return None
+
+
+def compare_to_baseline(
+    current: dict[str, dict],
+    baseline: dict[str, dict],
+    auc_drop: float = 0.03,
+    hi_move: float = 0.05,
+) -> list[str]:
+    """Drift findings for each ``set/backend:model`` key present in both runs (plan 0013 row A7).
+
+    Flags an ROC-AUC drop above ``auc_drop`` and a recommended ``hi`` that moved by ``hi_move`` or
+    more, or that no longer exists. Brier is reported elsewhere but never flagged: it has no agreed
+    threshold.
+    """
+    findings = []
+    for key in sorted(current.keys() & baseline.keys()):
+        now, base = current[key], baseline[key]
+        if now["auc"] is not None and base["auc"] is not None and base["auc"] - now["auc"] > auc_drop:
+            findings.append(f"{key}: ROC-AUC fell from {base['auc']:.3f} to {now['auc']:.3f}")
+        if base["recommended_hi"] is None:
+            continue
+        if now["recommended_hi"] is None:
+            findings.append(f"{key}: no hi meets the rule now (baseline {base['recommended_hi']:.2f})")
+        # Reason: the sweep grid steps by 0.05, so compare with a small tolerance for float error.
+        elif abs(now["recommended_hi"] - base["recommended_hi"]) >= hi_move - 1e-9:
+            findings.append(
+                f"{key}: recommended hi moved from {base['recommended_hi']:.2f} to {now['recommended_hi']:.2f}"
+            )
+    return findings

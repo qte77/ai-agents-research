@@ -124,3 +124,54 @@ class TransientTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CompareToBaselineTests(unittest.TestCase):
+    BASE = {
+        "papers/clef:clef": {"auc": 0.970, "brier": 0.061, "recommended_hi": 0.75},
+        "issues/clef:clef": {"auc": None, "brier": 0.009, "recommended_hi": 0.50},
+    }
+
+    def test_no_findings_within_tolerance(self):
+        current = {
+            "papers/clef:clef": {"auc": 0.950, "brier": 0.070, "recommended_hi": 0.75},
+            "issues/clef:clef": {"auc": None, "brier": 0.010, "recommended_hi": 0.50},
+        }
+        self.assertEqual(de.compare_to_baseline(current, self.BASE), [])
+
+    def test_auc_drop_above_tolerance_is_flagged(self):
+        current = {"papers/clef:clef": {"auc": 0.930, "brier": 0.061, "recommended_hi": 0.75}}
+        findings = de.compare_to_baseline(current, self.BASE)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("papers/clef:clef", findings[0])
+        self.assertIn("0.970", findings[0])
+        self.assertIn("0.930", findings[0])
+
+    def test_hi_move_of_a_step_and_more_is_flagged(self):
+        current = {"papers/clef:clef": {"auc": 0.970, "brier": 0.061, "recommended_hi": 0.85}}
+        findings = de.compare_to_baseline(current, self.BASE)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("hi", findings[0])
+
+    def test_hi_lost_is_flagged(self):
+        current = {"issues/clef:clef": {"auc": None, "brier": 0.2, "recommended_hi": None}}
+        findings = de.compare_to_baseline(current, self.BASE)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("no hi meets the rule", findings[0])
+
+    def test_brier_alone_is_never_flagged(self):
+        current = {"papers/clef:clef": {"auc": 0.970, "brier": 0.300, "recommended_hi": 0.75}}
+        self.assertEqual(de.compare_to_baseline(current, self.BASE), [])
+
+    def test_keys_missing_on_either_side_are_skipped(self):
+        current = {"papers/jev:jev-1.13.0": {"auc": 0.5, "brier": 0.3, "recommended_hi": None}}
+        self.assertEqual(de.compare_to_baseline(current, self.BASE), [])
+
+
+class BaselineFileTests(unittest.TestCase):
+    def test_committed_baseline_has_the_metric_keys(self):
+        path = Path(__file__).resolve().parents[1] / ".github" / "scripts" / "data" / "gold" / "baseline.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        self.assertIn("papers/clef:clef", data["metrics"])
+        for entry in data["metrics"].values():
+            self.assertTrue({"auc", "brier", "recommended_hi"} <= set(entry))

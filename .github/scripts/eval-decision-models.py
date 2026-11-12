@@ -2,16 +2,18 @@
 """Run decision models over the G1 gold sets and report calibration (plan 0012 row H1).
 
 Calls `decide()` from a checkout of qte77/.github (`actions/decide/decide.py`) once per gold item
-and model, then writes `records.jsonl` and `summary.md`: Brier score, accuracy at 0.5, ROC-AUC with a
-bootstrap interval (papers only; the issue set has 3 negatives), and a sweep of the
-`hi` threshold with the recommended value per set. Pure scoring lives in lib/decision_eval.py.
+and model, then writes `records.jsonl`, `metrics.json` and `summary.md`: Brier score, accuracy at
+0.5, ROC-AUC with a bootstrap interval (papers only; the issue set has 3 negatives), and a sweep of
+the `hi` threshold with the recommended value per set. With `--baseline`, it also compares the
+metrics with a committed baseline and writes the drift findings to `drift.md` (empty when none).
+Pure scoring lives in lib/decision_eval.py.
 
 Credentials come from the environment, as `decide()` reads them: CF_WORKERS_AI_TOKEN and
 LLM_BASE_URL for the `clef` backend, TYPESAFE_API_KEY for `jev`.
 
 Usage:
     python eval-decision-models.py --decide-dir DIR [--models clef:clef-flash,clef:clef]
-        [--sets papers,issues] [--limit N] [--out DIR]
+        [--sets papers,issues] [--limit N] [--out DIR] [--baseline FILE]
 
 Exit codes: 0 = report written; 1 = a model answered no item at all (auth or endpoint failure).
 """
@@ -28,6 +30,7 @@ from lib.decision_eval import (
     PAPER_QUESTION,
     bootstrap_ci,
     brier,
+    compare_to_baseline,
     is_transient,
     issue_state,
     load_gold,
@@ -77,8 +80,8 @@ def fmt(value, digits: int = 3) -> str:
     return "n/a" if value is None else f"{value:.{digits}f}"
 
 
-def summarize(set_name: str, model_key: str, records: list[dict]) -> tuple[list[str], int]:
-    """Markdown lines for one set x model, and the number of answered items."""
+def summarize(set_name: str, model_key: str, records: list[dict]) -> tuple[list[str], dict]:
+    """Markdown lines for one set x model, and its metrics (``answered`` = items with a probability)."""
     answered = [r for r in records if r["probability"] is not None]
     probs = [r["probability"] for r in answered]
     labels = [r["label"] for r in answered]
@@ -88,20 +91,25 @@ def summarize(set_name: str, model_key: str, records: list[dict]) -> tuple[list[
         f"Items {len(records)} ({negatives} negative), answered {len(answered)}, "
         f"escalated {len(records) - len(answered)}."
     )
+    metrics = {"answered": len(answered), "escalated": len(records) - len(answered),
+               "accuracy": None, "brier": None, "auc": None, "auc_ci": None, "recommended_hi": None}
     if not answered:
         errors = sorted({r["error"] or "" for r in records})[:3]
         lines += ["", f"No answers. Errors: {errors}", ""]
-        return lines, 0
+        return lines, metrics
     accuracy = sum((p >= 0.5) == y for p, y in zip(probs, labels, strict=True)) / len(probs)
-    lines.append(f"Accuracy at 0.5: {fmt(accuracy)}. Brier: {fmt(brier(probs, labels))}.")
+    metrics["accuracy"], metrics["brier"] = accuracy, brier(probs, labels)
+    lines.append(f"Accuracy at 0.5: {fmt(accuracy)}. Brier: {fmt(metrics['brier'])}.")
     if set_name == "papers":
         ci = bootstrap_ci(roc_auc, probs, labels, n=BOOTSTRAP_N, seed=SEED)
         ci_text = "n/a" if ci is None else f"{fmt(ci[0])}–{fmt(ci[1])}"
-        lines.append(f"ROC-AUC: {fmt(roc_auc(probs, labels))} (95% bootstrap CI {ci_text}).")
+        metrics["auc"], metrics["auc_ci"] = roc_auc(probs, labels), ci
+        lines.append(f"ROC-AUC: {fmt(metrics['auc'])} (95% bootstrap CI {ci_text}).")
     else:
         lines.append(f"ROC-AUC not reported: {negatives} negatives, too few to rank (see data/gold/README.md).")
     rows = sweep(probs, labels, GRID)
     best = recommend_hi(rows, MAX_ERROR_RATE)
+    metrics["recommended_hi"] = None if best is None else best["hi"]
     lines.append(
         "Recommended hi: "
         + ("none meets the rule" if best is None else f"{best['hi']} (coverage {fmt(best['coverage'], 2)})")
@@ -118,7 +126,31 @@ def summarize(set_name: str, model_key: str, records: list[dict]) -> tuple[list[
             f"{row['false_rejects']} | {fmt(row['coverage'], 2)} | {fmt(row['error_rate'], 2)} |"
         )
     lines.append("")
-    return lines, len(answered)
+    return lines, metrics
+
+
+def baseline_section(metrics: dict[str, dict], baseline_path: Path) -> tuple[list[str], list[str]]:
+    """Markdown comparison with the committed baseline, and the drift findings."""
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))["metrics"]
+    findings = compare_to_baseline(metrics, baseline)
+    lines = [
+        "## Compared with the baseline",
+        "",
+        f"Baseline: `{baseline_path.name}`. Flags: ROC-AUC drop above 0.03; recommended `hi` moving by "
+        "0.05 or more, or no longer met. Brier is shown, not flagged.",
+        "",
+        "| Set / model | ROC-AUC (baseline → now) | Brier (baseline → now) | hi (baseline → now) |",
+        "|---|---|---|---|",
+    ]
+    for key in sorted(metrics.keys() & baseline.keys()):
+        b, m = baseline[key], metrics[key]
+        lines.append(
+            f"| {key} | {fmt(b['auc'])} → {fmt(m['auc'])} | {fmt(b['brier'])} → {fmt(m['brier'])} | "
+            f"{fmt(b['recommended_hi'], 2)} → {fmt(m['recommended_hi'], 2)} |"
+        )
+    lines += ["", "**Drift:** none." if not findings else "**Drift:**", ""]
+    lines += [*[f"- {f}" for f in findings], ""] if findings else []
+    return lines, findings
 
 
 def main() -> None:
@@ -128,6 +160,7 @@ def main() -> None:
     parser.add_argument("--sets", default="papers,issues", help="gold sets, comma-separated")
     parser.add_argument("--limit", type=int, default=0, help="first N items per set (0 = all)")
     parser.add_argument("--out", type=Path, default=Path("decision-eval-output"))
+    parser.add_argument("--baseline", type=Path, help="baseline.json to compare with (writes drift.md)")
     args = parser.parse_args()
 
     decide = load_decide(args.decide_dir)
@@ -148,6 +181,7 @@ def main() -> None:
         "",
     ]
     failed = []
+    metrics: dict[str, dict] = {}
     with (args.out / "records.jsonl").open("w", encoding="utf-8") as out:
         for set_name in sets:
             build_state, question = SETS[set_name]
@@ -173,11 +207,17 @@ def main() -> None:
                     }
                     records.append(record)
                     out.write(json.dumps(record) + "\n")
-                lines, answered = summarize(set_name, f"{backend}:{model}", records)
+                lines, metrics[f"{set_name}/{backend}:{model}"] = summarize(set_name, f"{backend}:{model}", records)
                 summary += lines
                 print("\n".join(lines))
-                if not answered:
+                if not metrics[f"{set_name}/{backend}:{model}"]["answered"]:
                     failed.append(f"{set_name}/{backend}:{model}")
+    (args.out / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
+    if args.baseline:
+        lines, findings = baseline_section(metrics, args.baseline)
+        summary += lines
+        print("\n".join(lines))
+        (args.out / "drift.md").write_text("".join(f"- {f}\n" for f in findings), encoding="utf-8")
     (args.out / "summary.md").write_text("\n".join(summary) + "\n", encoding="utf-8")
     if failed:
         sys.exit(f"ERROR: no answers at all for {', '.join(failed)}")
