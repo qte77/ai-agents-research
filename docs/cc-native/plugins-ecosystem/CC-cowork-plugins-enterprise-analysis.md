@@ -3,8 +3,8 @@ title: CC Cowork, Plugins & Enterprise Analysis
 source: https://claude.com/blog/cowork-plugins-across-enterprise, https://claude.com/product/cowork
 purpose: Analysis of Claude's Cowork enterprise platform, plugin architecture, and connector ecosystem for potential relevance to projects using Claude Code.
 created: 2026-03-07
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: generally-available
 ---
 
@@ -125,6 +125,31 @@ Anthropic's reference collection of production-ready financial services agents a
 
 [fin-svc]: https://github.com/anthropics/financial-services
 
+## Vertical Cowork Plugins (Advisor & Nonprofit Audiences)
+
+Two further first-party Cowork plugins, distinct from the generic templates and the institutional
+financial-services collection above:
+
+**Claude for Financial Advisors** — a Cowork plugin for individual registered investment advisers,
+originally published 2026-09-14 and updated with more connectors by 2026-10-27. Nine connectors ship
+bundled with the plugin (BlackRock, Charles Schwab, Addepar, Envestnet, iCapital, Orion, Wealthbox,
+Wealth.com, Zocks); advisors choose which to connect during guided setup in Cowork. Eight workflow
+skills: advisor onboarding, alternative-investments brief, compliance and AI policy, estate and tax
+brief, portfolio rebalance review, post-meeting notes and follow-up, pre-meeting prep, and prospect
+intake. The page recommends an Enterprise plan for the audit logs RIAs need for recordkeeping
+([source][fa-blog]).
+
+**Claude for Nonprofits plugin** — announced 2026-10-26, built with a ~30-organization Design Partner
+Circle spanning small regional teams to international groups. Installed automatically, at no additional
+cost, for nonprofits already on Team or Enterprise plans. Three skill areas: extending a team (marketing,
+hiring, board/leadership support), setting up Claude responsibly (mapping where an organization keeps
+its records, checking a task against its AI policy), and funding the mission (finding funders/grants,
+evaluating RFPs, drafting proposals and reports, donor relationship upkeep). This plugin is distinct from
+the original Claude for Nonprofits *program* (discounted Claude access plus the Blackbaud/Candid/Benevity
+connectors, launched 2025-12-02): the 2026-10-26 announcement's own text does not mention Cowork, unlike
+the Financial Advisors plugin above, which is explicitly installed from "the plugin browser" inside
+Cowork ([source][np-blog]).
+
 ## Open Feature Requests
 
 - [x] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Linux users want Cowork dispatch in CC CLI (mobile→terminal). Currently dispatch is Cowork desktop↔phone only. Alternative: Remote Control (`claude rc`) covers steering from mobile, but lacks dispatch's continuous conversation handoff. **Closed 2026-04-17** (stale-bot, `NOT_PLANNED`) — not implemented, closed for inactivity
@@ -140,12 +165,16 @@ Anthropic's reference collection of production-ready financial services agents a
 
 - [Cowork product page][cowork-product]
 - [Cowork & Plugins announcement][cowork-blog]
+- [Claude for Financial Advisors][fa-blog]
+- [Expanding Claude for Nonprofits][np-blog]
 - [CC Skills docs][cc-skills]
 - [Agent SDK Plugins docs][sdk-plugins]
 - [Agent SDK Skills docs][sdk-skills]
 
 [cowork-product]: https://claude.com/product/cowork
 [cowork-blog]: https://claude.com/blog/cowork-plugins-across-enterprise
+[fa-blog]: https://claude.com/blog/claude-for-financial-advisors
+[np-blog]: https://claude.com/blog/expanding-claude-for-nonprofits
 [cc-skills]: https://code.claude.com/docs/en/skills
 [sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
 [sdk-skills]: https://code.claude.com/docs/en/agent-sdk/skills

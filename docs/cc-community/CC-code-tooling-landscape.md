@@ -8,7 +8,7 @@ updated: 2026-11-12
 validated_links: 2026-11-12
 ---
 
-Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
+Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg, XERJ) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
 
 ## Graphify (safishamsi)
 
@@ -50,6 +50,54 @@ Multi-platform: `--platform codex`, `opencode`, `claw`, `droid`, `trae`.
 **Risks**: LLM-dependent for semantic pass (cost scales with repo size). PyPI package name is `graphifyy` (doubled y). Early stage relative to star count.
 
 Cross-ref: [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo-to-docs-tools-landscape.md) — complementary repo-to-docs generators
+
+---
+
+## AxiomCode Graph (AxiomCodeAI)
+
+**Repo**: [AxiomCodeAI/axiomcodegraph][axiomcode] | **Stars**: 609 | **License**: FSL-1.1-Apache-2.0 (Functional Source License — free for internal use, non-commercial research/education and professional services; converts to Apache-2.0 two years after each version's release; **not** an OSI-approved open-source license while under FSL, despite the repo topic list including "open-source"-adjacent framing) | **Version**: npm `@axiomcode/code-graph`, `gh api` 2026-11-12
+
+Builds a codebase knowledge graph from **formal methods** rather than tree-sitter syntax matching: each call edge is resolved from the receiver's declared/inferred type "the way the compiler does" — scored against Java bytecode and the TypeScript type checker — instead of guessed from a name match. Supports Java, TypeScript and Python (stable); JavaScript and C# (beta).
+
+### Benchmarks (self-reported against named competitors, README, `gh api` 2026-11-12)
+
+On 748 held-out Defects4J bugs, the tests AxiomCode selects from source include every bug-revealing test for 94.9% of bugs (best tree-sitter-based competitor in the same table, "GitNexus": 61.5%; Graphify: 48.7%; Code-Review-Graph: 21.9%). Call-to-declaration linking accuracy scored against ground truth (five open-source projects per language): 96.5% (Java, vs. bytecode) and 88.8% (TypeScript, vs. the type checker), against 78.9%/65.1% for the next-best tool in the same table. The README also claims "up to 50% fewer tool calls to explore a new codebase."
+
+### CC Integration
+
+Repo topics list `claude-code`, `codex`, `cursor`, `antigravity`, `gemini`, `mcp` — an installable CLI/MCP server exposing the graph for impact/blast-radius queries, call paths and cross-file coverage.
+
+### Adoption Considerations
+
+**Strengths**: the only tool in this doc that resolves calls from a compiler-equivalent type signal rather than syntax matching, with accuracy gains that hold up against five named competitors on an independent benchmark (Defects4J); actively maintained (pushed 2026-11-09, created 2026-08-22).
+
+**Risks**: **FSL, not a standard permissive license** — production use that competes with AxiomCode's own offering is restricted until each release's two-year Apache-2.0 conversion date; JavaScript/C# support is beta; young project relative to its star count; only Java and TypeScript have independent ground truth for the headline benchmark.
+
+Cross-ref: Graphify and Code-Review-Graph below — AxiomCode Graph's own benchmark names both as comparators; Graphicle below — a different Graphify-lineage competitor
+
+---
+
+## Graphicle (Graphicle-AI)
+
+**Repo**: [Graphicle-AI/graphicle][graphicle] | **Stars**: 561 | **License**: Apache-2.0 | **Version**: v0.1.11 (README benchmark label), `gh api` 2026-11-12
+
+A Rust port of Graphify's code-graph engine, explicitly credited as such — "Graphify, ported to Rust. Plus memory... Graphicle is not affiliated with Graphify Labs" (README) — with an added agent-memory layer in the same binary. Maps a repository into a code graph and "remembers your project's docs, decisions and past agent sessions," giving cited excerpts (file + line) from both.
+
+### Benchmarks (self-reported, `docs/benchmarks.md`, against named Graphify version)
+
+Graphicle 0.1.11 vs. Graphify 0.9.100, one machine: first build of Kubernetes v1.37.1 (code-only graph) in 1 min 14s vs. 29 min 18s (23.9×); across 13 codebases, 3.4–23.9× less build time in 34 of 39 measurements (Graphify was faster only on no-change incremental updates, where it "now stops early"). On agent memory (LoCoMo-10, pre-release build, one open model — Qwen3.8-27B — as every system's reader/judge): 87.7 accuracy, level with Hindsight 0.10.2 (87.3) and above Mem0 OSS 2.2.1 (81.9), at ~12 model calls per conversation against 160 (Hindsight) and 332 (Mem0).
+
+### CC Integration
+
+`graphicle setup` indexes the repo, builds the graph, and auto-connects Claude Code, Cursor, Codex, VS Code and Claude Desktop — one MCP server per agent; Claude Code additionally gets five tools and session capture, plus an `AGENTS.md` section and git hooks that keep the graph current after every commit.
+
+### Adoption Considerations
+
+**Strengths**: direct, benchmarked lineage from Graphify with a stated large speed advantage on both first build and incremental updates; folds agent memory into the same binary instead of requiring a second tool; `graphicle disconnect` reverses every file `setup` touched, with backups.
+
+**Risks**: pre-1.0 (v0.1.11), very young (created 2026-10-14); all benchmark numbers are the vendor's own, against named-version competitors it chose, and the memory comparison uses a single open model as reader/judge for every system including competitors (disclosed, not independently confirmed); overlaps directly with Graphify, and for the memory half with every cross-agent memory tool in [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) — pick one per role.
+
+Cross-ref: [Graphify](#graphify-safishamsi) above — the engine Graphicle ports; [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) — cross-agent memory tools, for the memory half of Graphicle's scope
 
 ---
 
@@ -287,6 +335,30 @@ Cross-ref: cocoindex-code above — the other embeddings-based semantic search t
 
 ---
 
+## XERJ (xerj-org)
+
+**Repo**: [xerj-org/xerj][xerj] | **Stars**: 18,868 (GitHub's Trendshift badges label it "#1 Rust Repository of the Day/Week") | **License**: Apache-2.0 | **Version**: v1.0.0-rc.101 (README, `gh api` 2026-11-12)
+
+Local-first, Elasticsearch-API-compatible search engine and MCP server: one Rust binary indexes code, docs, logs, JSONL/CSV and PDFs for BM25 full-text, vector and hybrid search. Its flagship coding-agent use case is **reference coding** — `xerj autoindex` clones and indexes the open-source repos closest to a task so a coding agent reuses how they solved the same problem instead of writing from memory.
+
+### CC Integration
+
+`xerj init` wires Claude Code and Cursor directly (MCP + an installed skill), one command. Also exposes an MCP recipe for agent memory (`/memory`) and a batch-search tool (`xerj_batch_search`).
+
+### Benchmarks
+
+The README's own "controlled study" reports a 2.7× cut in a coding agent's output tokens on a reference-coding task at the same 16/16 solve rate, plus "roughly 5x in everyday work" from field reports. The README does not state, and this doc did not independently verify, the more specific claim (from the social post that queued this entry) that the gain holds only on libraries the agent hasn't seen before and disappears on popular/well-known code. A separate, optional small model, **XERJ Query-1** (off by default), answers questions by running a short program over facts the user wrote into the store rather than retrieving-then-generating; on the project's own 160-question test it reports 1 wrong answer (124 right, 35 declined) vs. 9–15 for "RAG with Opus 5.5," at a self-reported $42 vs. $13,400–$694,000 per million questions. Query-1's training/eval data are not public, so this number can't be independently replicated.
+
+### Adoption Considerations
+
+**Strengths**: Elasticsearch-compatible API lowers migration friction for teams already on that query shape; single binary, no JVM; default embedder is lexical/offline, with an opt-in ~90MB neural embedder; explicit `xerj init` path for Claude Code and Cursor.
+
+**Risks**: very young (repo created 2026-06-30) for an 18.8k-star project — the Trendshift badges corroborate a real, fast-growing GitHub trend rather than confirming the count is organic, but adoption/maturity signals (issue backlog, release cadence) are worth checking independently; XERJ Query-1's accuracy claim can't be replicated without its training/eval data; the "no gain on popular code" nuance is unverified against the README.
+
+Cross-ref: [zg / zvec-grep](#zg--zvec-grep-zvec-ai) above — the other hybrid lexical+vector search tool with a first-party Claude Code installer; [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) — for XERJ's agent-memory recipe specifically
+
+---
+
 ## jevgrep (dzhng)
 
 **Repo**: [dzhng/jevgrep][jevgrep] | **Stars**: 1,848 | **License**: MIT (confirmed against
@@ -361,6 +433,9 @@ The project's own README distinguishes itself from two similar tools it names di
 - [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) — standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, …) moved out of this doc per #326
 
 [graphify]: https://github.com/safishamsi/graphify
+[axiomcode]: https://github.com/AxiomCodeAI/axiomcodegraph
+[graphicle]: https://github.com/Graphicle-AI/graphicle
+[xerj]: https://github.com/xerj-org/xerj
 [code-review-graph]: https://github.com/tirth8205/code-review-graph
 [codebase-memory-mcp]: https://github.com/DeusData/codebase-memory-mcp
 [codebase-memory-mcp-docs]: https://deusdata.github.io/codebase-memory-mcp/
@@ -386,4 +461,4 @@ The project's own README distinguishes itself from two similar tools it names di
 
 ## Sources
 
-Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), jevgrep, Repomix, code2prompt, Floorplan).
+Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt, Floorplan).

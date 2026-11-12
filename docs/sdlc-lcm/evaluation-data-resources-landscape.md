@@ -4,8 +4,8 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-12
+validated_links: 2026-11-12
 ---
 
 Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
@@ -13,6 +13,32 @@ Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLM
 ## Why This Catalog Exists: EDD as Methodology
 
 The tools below serve **eval-driven development (EDD)** — evals authored *before* the agent capability they measure, then used as the iteration oracle. The term has **no single coiner** (see the provenance-uncertain framing in [agentic-engineering-disciplines-landscape.md §2](agentic-engineering-disciplines-landscape.md)); it is used in parallel by first parties and tool vendors: Anthropic's [Demystifying evals for AI agents][anthropic-evals] (2026-01-09) names the practice directly — "build evals to define planned capabilities before agents can fulfill them, then iterate", "owning and iterating on evaluations should be as routine as maintaining unit tests" — and frames eval-task definition as a stress-test of whether requirements are concrete enough to build. OpenAI's [evaluation best-practices guidance][openai-evals] recommends "adopting eval-driven development … evaluating early and often" and draws the BDD analogy (specify behavior before implementing). Vendors [Braintrust][braintrust-edd] and [DeepEval][deepeval-edd] each market the exact term ("define success early and build toward it … use the eval scores as your oracle"). Counterweight: [Hamel Husain's practitioner essay][husain-evals] cautions against blind eval-first — discover real failure modes, *then* encode them as evals. This section names the methodology; the disciplines landscape holds the full "-driven-development" stack.
+
+### Operationalizing EDD: `/claude-api build-eval` and `/claude-api hillclimb`
+
+claude.dev — Anthropic's own developer blog, though the post itself never states the publisher by name;
+it links `anthropics/skills` and an Anthropic engineering post, which is the only signal tying it to
+Anthropic (same hedge this corpus already applies to claude.dev in
+[CC-mods-function-hooks-analysis.md][mods-claudedev]) — published "Automating eval design and
+hillclimbing with Claude" (Lance Martin, 2026-09-28), which gives the `claude-api` skill two commands
+that operationalize the EDD loop above inside Claude Code itself ([source][claude-api-hillclimb]):
+
+- **`/claude-api build-eval`**: "Claude interviews you, builds the eval inside your codebase, and pauses
+  for approval at specific points." It samples inputs in order (production transcripts, bug
+  reports/tickets, 5–10 hand-written cases, then codebase-synthesized cases), proposes the cheapest
+  grader that fits (programmatic or LLM-as-judge), runs a baseline with a confidence interval, and checks
+  grader consistency (does the verdict change on a repeat run of the same output) and noise (timeouts,
+  API errors), warning if the baseline is already ~95%+.
+- **`/claude-api hillclimb`**: iterates against a built eval. Claude "splits the evaluation set at random
+  into test and train," then each round "reads the previous round's train transcripts and proposes one
+  change as a patch" to an editable surface the user picks (system prompt, skills, tool descriptions,
+  model/effort, harness code). If train improves but test is flat, Claude suspects overfitting and
+  reverts; a regression also reverts; only a patch that improves both is kept. The workflow "leaves your
+  code at the version that did best on the test set."
+
+**Self-reported result**: Anthropic ran this on its own `claude-api` skill, starting from a 66.1% eval
+score and reaching 87.9% (Figure 9 in the post) through intermediate checkpoints reported in the text as
+74%, 77%, 80%, and ~88%.
 
 ## 1. Evaluation & Testing Frameworks
 
@@ -42,7 +68,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 ## 2. Benchmarks
 
-**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [CLEAR](https://arxiv.org/abs/2511.14136) (Cost/Latency/Efficacy/Assurance/Reliability, ρ=0.83 production correlation), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentQuest](https://arxiv.org/abs/2404.06411), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; first open general-agent leaderboard, top 0.73 success @ $8.54/task), [E-Commerce Bench](https://github.com/QwenLM/E-CommerceBench) (Qwen; 18 LLM agents each run up to four simulated online stores for 365 days on real market data — negotiation, pricing, inventory, fraud detection; 6,886 products/576 suppliers; Apache-2.0; [arXiv:2608.30730](https://arxiv.org/abs/2608.30730)).
+**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [CLEAR](https://arxiv.org/abs/2511.14136) (Cost/Latency/Efficacy/Assurance/Reliability, ρ=0.83 production correlation), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentQuest](https://arxiv.org/abs/2404.06411), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; first open general-agent leaderboard, top 0.73 success @ $8.54/task), [E-Commerce Bench](https://github.com/QwenLM/E-CommerceBench) (Qwen; 18 LLM agents each run up to four simulated online stores for 365 days on real market data — negotiation, pricing, inventory, fraud detection; 6,886 products/576 suppliers; Apache-2.0; [arXiv:2608.30730](https://arxiv.org/abs/2608.30730)), [LifeVal](https://arxiv.org/abs/2611.06687) (Yang, Proehl, Bharadwaj, Fan, Cole, Kim, Brown, Thacker, Glaese, Patwardhan; Nov 2026 — 148 personalized agentic consumer-task categories, derived from a >3,800-respondent willingness-to-pay survey cross-checked against two national time-use studies; each task is written from real conversation histories/reference files by an expertise-gated creator and passed through 3+ rounds of human QC; no code link on the abstract page), [MiniCorp](https://arxiv.org/abs/2610.05912) (Zeng, Dai, Li, Shin, Zhang, Lu, He, Wang, Chang; Oct 2026 — an office simulator where agents collectively run an e-commerce company: external market mechanics plus an internal world where agent decisions feed back into market outcomes, with checkpointing for replay under counterfactual decisions; no code link on the abstract page).
 
 **Reward hacking (coding agents)**: [EvilGenie](https://arxiv.org/abs/2511.21654) (LiveCodeBench tasks where agents can hardcode tests or edit test files; detection via held-out tests, LLM judges and test-file edits; covers Claude Code, Codex, Gemini CLI). Context: [ai-security-governance-analysis.md § Reward Hacking](ai-security-governance-analysis.md#reward-hacking-and-evaluation-awareness-research).
 
@@ -213,3 +239,5 @@ EDD-methodology sources:
 [braintrust-edd]: https://www.braintrust.dev/articles/eval-driven-development
 [deepeval-edd]: https://deepeval.com/blog/eval-driven-development
 [husain-evals]: https://hamel.dev/blog/posts/evals
+[claude-api-hillclimb]: https://claude.dev/blog/automating-eval-design-and-hillclimbing/
+[mods-claudedev]: ../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md#the-other-built-in-mods-and-a-sample-set

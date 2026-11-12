@@ -160,6 +160,7 @@ definitions, use cases, and primary research references for each metric.
 - **Limitations**: Requires clear success/failure definitions
 - **Reference**: [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
 - **Landscape Reference**: [Arize Phoenix - LLM-as-a-Judge Templates](../non-cc/protocols/agent-observability-methods-analysis.md)
+- **Recent Advance**: [Tool-Calling LLM Agents Under Realistic MCP Faults: Scale Does Not Purchase Fault Tolerance](https://arxiv.org/abs/2610.32555) (Iannillo, Owotogbe, Natella, Avallone, Kudryavtseva, Kumara; accepted NeurIPS 2026, Oct 2026) introduces MCP-Injector, fault-injection middleware for the MCP tool-call path, calibrated against 57,240 issue/PR threads mined from 1,774 open-source MCP repositories. Across a 1,350-cell experiment (two gpt-oss model sizes × three agent stacks × three fault conditions), permanent-heavy faults drop task-completion quality from 8.08 to 3.23 out of 10 (~60%), and the larger 120B model does not tolerate faults better than the 20B model (completion rate 91.1% vs. 95.6%, difference not statistically clear) — the authors' conclusion is that agent-framework error handling, not model scale, drives tool-call reliability. Code and data: [gitlab.com/uniluxembourg/snt/sedan/papers/mcp-injector](https://gitlab.com/uniluxembourg/snt/sedan/papers/mcp-injector) (archived at [Zenodo](https://doi.org/10.5281/zenodo.23573765)).
 
 #### Behavioral Fingerprint Profile
 
@@ -282,6 +283,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires multiple evaluation methods
 - **Reference**: Self-Improving LLM Evals (Arize), TEAM-PHI (Agents4Science 2025)
 - **Recent Advance**: TEAM-PHI demonstrates multi-LLM evaluator consensus through majority voting matches supervised evaluation without costly expert annotations
+- **Recent Advance**: [DUET: Co-Evolving Solver and Grader Agents](https://arxiv.org/abs/2610.04087) (Gao, Pal, Henley, Radhakrishna, Soares; Oct 2026) frames the grader as something to optimize jointly with the solver rather than hold fixed: each round selects training tasks, runs the solver, scores outcomes with the grader, then revises both agents with a tool-using update module. The authors report gains for both agents across four agent benchmarks, outperforming baselines that optimize only the solver against a fixed grader — first-party evidence that evaluator alignment degrades as the agent it scores keeps changing, and that re-optimizing the evaluator alongside it is one fix. No code repository was found on the abstract page (checked 2026-11-12).
 
 #### Fix Rate
 
