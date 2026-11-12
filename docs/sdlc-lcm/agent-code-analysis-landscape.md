@@ -4,8 +4,8 @@ purpose: Static (SCA) and dynamic (DCA) code-analysis for AI coding agents — b
 category: landscape
 status: assess
 created: 2026-07-23
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-11-12
+validated_links: 2026-11-12
 ---
 
 ## What It Is
@@ -120,6 +120,36 @@ Verified Skills pipeline role, is at
   Pi as the underlying coding agent; the project maintains a public case-study archive
   of bugs found in open-source projects — no aggregate precision/recall benchmark was
   found in the README fetch.
+- **[Grim Prompter](https://github.com/jmanico/grim-prompter)** (MIT, 416★/35 forks,
+  created 2026-10-28, `gh api` 2026-11-12, by Manicode Security) — a threat-modeling
+  prompt library for coding agents: point Claude Code, Codex or any agent at a repo
+  with `/threat-model quick api` or `/threat-model deep web` and it produces a
+  threat model tied to that code, backed by 36 architecture workflows and 29
+  method/analysis prompts (STRIDE, LINDDUN, PASTA). Output lands under a new
+  `threat-model/` folder: `SYSTEM_UNDER_REVIEW.md` (scope, evidence, assumptions,
+  inspected and skipped files), `report.md` (findings, mitigations, verification
+  plans), and JSON stage-handoff artifacts; deep runs add a six-stage pipeline and a
+  `DATA_INVENTORY.md` for privacy passes. The runbook requires file-and-line
+  citations for every finding and keeps builds/tests/installs/network access behind
+  explicit authorization. **Caveat**: a brand-new repo (two weeks old at this
+  check) — no independent review of finding quality was found.
+- **[OpenQodex](https://github.com/openqodex/openqodex)** (Apache-2.0, 1,094★/80
+  forks, created 2026-10-02, `gh api` 2026-11-12) — a pre-push review pipeline that
+  pairs conventional scanners with agent-as-reviewer. A `scan` pass (no model) runs
+  the scanners matching the changed files — including gitleaks, semgrep,
+  osv-scanner, brakeman, rubocop and kubeconform — and keeps only findings on
+  changed lines. Separate Claude Code or Codex processes then act as **finder**
+  (propose candidate issues with a quoted line as evidence, checked against the
+  actual code) and **verifier** (confirm or refute each scanner finding and each
+  finder candidate, with a reason); scripts confirm every scanner finding was
+  answered and every changed line was reviewed. Reports are written as HTML,
+  Markdown, JSON and SARIF. Integrates with Claude Code and Codex directly (either
+  can start a review or act as reviewer); Cursor, Cline and Goose can start a review
+  but need Claude Code or Codex installed to act as the reviewer. A git pre-push
+  hook and an MCP code-graph server ("who calls this function") round it out.
+  **Caveat**: the optional Bearer CLI integration uses the Elastic License 2.0,
+  which the project's own README describes as not open source — a mixed-license
+  surface to check before bundling.
 
 ## 4. CI-Forge Integration (verified first-party)
 

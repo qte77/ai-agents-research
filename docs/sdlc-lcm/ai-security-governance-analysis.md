@@ -2,8 +2,8 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-10-06
-validated_links: 2026-10-06
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
@@ -462,6 +462,56 @@ CI. Install/run: `npx deepsec init`. **Adoption caveat**: the README itself warn
 that, run at maximum thinking levels, "scans can cost thousands or even
 tens-of-thousands of dollars for large codebases" — cost and duration controls
 exist but are not the defaults.
+
+Three more tools act at the moment a tool call happens, rather than on the written code:
+
+[Stroq](https://github.com/AGGIB/Stroq) (Apache-2.0, 242★/20 forks, `gh api`
+2026-11-12) is a local security platform for coding-agent sessions: native hooks for
+Claude Code, Cursor, Codex CLI, GitHub Copilot CLI, Windsurf and Antigravity (plus an
+OpenClaw plugin and a stdio MCP proxy) judge every tool call before it runs, denying
+`curl | sh` and outbound calls that carry a known secret and asking first when a
+command repeats text the agent just read. `stroq replay` re-runs this policy against
+existing session transcripts (including sessions recorded before Stroq was
+installed) and `stroq sent` reports which of the machine's own credentials appeared
+in agent sessions and where they went — "sent to another company," "seen by the AI,"
+or "blocked before it ran" — naming key names, never values. `stroq attack` replays
+36 attacks from public reports and synthetic cells against the installed policy in a
+throwaway home directory. No account, no telemetry, no outbound network calls from
+the hooks themselves. **Caveat, from its own docs**: "it is a filter, not a
+sandbox" — matching is text-level, so a command the model writes from scratch
+rather than copies does not trace back to a source, and old/rotated/unknown secret
+values can be missed by `sent`.
+
+[Tracekit](https://github.com/Cygnux-Labs/Tracekit) (MIT, 646★/88 forks, created
+2026-09-26, `gh api` 2026-11-12; PyPI `tracekit-ai`) takes the same tool-call
+interception point and adds a tamper-evident record: every call, decision and
+result is signed into a hash chain held by a signer process the agent cannot reach,
+modeled explicitly on Certificate Transparency (independent witnesses cosign the
+log), with an open file format and verifiers in Python, TypeScript and Go. A run
+exports as one `.tkb` file that anyone can verify offline, including in a browser,
+and the README's own demo shows an agent editing both its own log and a copy of
+Tracekit's record to hide a deletion — verification fails at the exact record that
+was altered. The project reports (self-reported, from its own README) 8-of-8 tamper
+attacks caught across 480 trials, 840-of-840 harmful tool calls stopped across 11
+classes (1 false alarm in 890), and under 1ms added per call (0.91ms at p99). It
+documents mappings to the EU AI Act, ISO/IEC 42001, NIST AI RMF and OWASP for
+auditors. **Caveat, stated directly in its own CLI output**: in the default
+single-machine setup "the agent can reach the signing key, so it could have
+rewritten the record" — the tamper-evidence guarantee requires the production
+deployment, where the signer runs as a separate service the agent cannot reach.
+
+[devvm](https://github.com/devvmhq/devvm) (MIT, 561★/28 forks, created 2026-11-06 —
+six days old at this check) takes a coarser approach: one Lima-backed VM per
+project, built from the project's own files (a `package.json` pulls in Node, etc.),
+with Claude Code, Codex, opencode and pi runnable inside it, each VM mounting only
+that project's folder at the same path as the host. New VMs default to an allowlist
+network tier, and the project's own secrets (a GitHub token, a Claude Code token)
+stay on the host machine rather than being copied into the VM. A `--clone` mode goes
+further: the VM works on its own clone of the repo, so nothing inside it can touch
+the host's working tree or `.git` until the result is fetched back and reviewed.
+**Adoption caveat**: six days old as of this check, with no independent security
+review found; the project's own docs concede "no sandbox closes every gap" and ask
+users to read its safety guide before trusting a VM with a project.
 
 ## MCP Ecosystem Security
 
