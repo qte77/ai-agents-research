@@ -79,7 +79,7 @@ No public MCP server found (2026-03-26). Accountable is a German freelancer acco
 - Enterprise, Unlimited, and Developer editions
 - Salesforce's own native [Hosted MCP Servers][sf-ga] reached General Availability 2026-04-29 (piloted spring 2025, beta Oct 2025), available to every Enterprise Edition org and above
 - Auth: OAuth 2.0
-- For the Agentforce platform side of this same MCP surface (Agentforce Registry, risk-scored third-party MCP server registration, MuleSoft Agent Fabric, Claude via Amazon Bedrock inside the Salesforce trust boundary, pricing) see [salesforce-agentforce-analysis.md][sf-agentforce-analysis]
+- For the Agentforce platform side of this same MCP surface (the Agentforce Registry's per-tool MCP server registration and risk assessment, Security Center's separate tenant-wide MCP Risk Score, MuleSoft Agent Fabric, Claude via Amazon Bedrock inside the Salesforce trust boundary, pricing) see [salesforce-agentforce-analysis.md][sf-agentforce-analysis]
 
 ## ERP
 
