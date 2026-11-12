@@ -4,7 +4,7 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-10-11
+updated: 2026-11-12
 validated_links: 2026-10-11
 ---
 
@@ -39,6 +39,7 @@ Agents that conduct multi-step research and generate research outputs.
 - [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's [`/deep-research`](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research).
 - [local-deep-researcher (langchain-ai)][local-deep-researcher] — **distinct from the above** despite the near-identical name: LangChain's minimal LangGraph *reference* implementation of the search→summarize→reflect loop (Ollama/LMStudio, local-only by default) — the canonical starting pattern, not a full assistant. MIT, ~9.2k★.
 - [dataroom (hanxiao / Jina)][dataroom] — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](../coding-agents/pi-analysis.md)); ~168★, new.
+- [Épi: Towards a Persistent, Self-Improving Agent for Autonomous Research][epi] — Huang, Xu, Luo, Liu, Li, Wang, Song, Ramos, Xie, Isayev, Liang, Dziri, Sun, Gao, Liu, Sra, Zhang, Pentland & Chen (19 authors; arXiv:2610.24944, submitted 2026-10; affiliations not listed on the abstract page). An autonomous research agent that "sustains investigations across model sessions and evolves its methods through accumulated experience," combining **hierarchical memory**, persistent research history, branching, and independent review by a fixed verifier — the abstract gives no structural detail on the memory hierarchy itself. Evaluated on mathematical/research problems (numerical bounds, constructions, a computer-assisted proof) and, via its coding variant Épi-turbo, on FrontierOR operations-research tasks. Self-reported: 120 record-setting results (20 numerical-bound records across 12 families, 100 construction records across 8 families), an n-queens-constant interval ~84× narrower than prior work, a quartic Feigenbaum-attractor-dimension interval >3.6M× narrower, exact dual certificates ruling out a sharp Cohn-Elkies bound in dimensions 10–11, a computer-assisted proof of Tuza's conjecture for a restricted split-graph case, and Épi-turbo scoring 5.4 points higher than Codex on 30 FrontierOR tasks at 64% of its model cost (same underlying model/reasoning effort) (paper claims; methodology not independently verified; no code repository found on the abstract page as of 2026-11-12).
 - [Perplexity Computer][perplexity-computer] — Perplexity's general-purpose autonomous agent orchestrator (launched Feb 2026, MCP tool/connector calls; follows 2025's Comet browser agent). HBS+Perplexity production-data study ([paper][perplexity-computer-paper], Feb 27–May 27, 2026; 10,000 matched query pairs drawn from a pool of 100,000 dual-product users, multiple pairs per user permitted) finds 26min of autonomous machine work per session vs. 33s for Search, 55% lower per-query dissatisfaction (1.3% vs. 2.9%), -87%/-94% time/cost vs. Search+human workflows (79–92%/87–96% across 18 occupational domains), and +38% knowledge-domain scope per query (2.40 vs. 1.74 domains).
 
 **Domain-specific science agents**: [Coscientist (CMU, Nature)][coscientist] — GPT-4 chemistry agent driving cloud-lab experiments; [ChemCrow][chemcrow] — GPT-4 + 18 chemistry tools; [BioPlanner][bioplanner] — biology protocol generation (BIOPROT, 9K+ protocols); [BioChatter][biochatter] — privacy-preserving biomedical conversational-AI framework.
@@ -188,6 +189,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 [local-deep-research]: https://github.com/LearningCircuit/local-deep-research
 [local-deep-researcher]: https://github.com/langchain-ai/local-deep-researcher
 [dataroom]: https://github.com/hanxiao/dataroom
+[epi]: https://arxiv.org/abs/2610.24944
 [ideascientist]: https://arxiv.org/abs/2610.04074
 [rankevolve]: https://arxiv.org/abs/2609.39551
 [hyperresearch]: https://github.com/jordan-gibbs/hyperresearch
