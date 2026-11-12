@@ -5,7 +5,7 @@ category: landscape
 status: research
 created: 2026-06-14
 updated: 2026-11-12
-validated_links: 2026-09-30
+validated_links: 2026-11-12
 ---
 
 Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg, XERJ) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
@@ -418,6 +418,14 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 
 **Use when**: you want a deterministic, whole-repo snapshot for a one-off question, an agent's first turn, or a non-CC LLM — no server to run. **Prefer the graph/LSP tools above** (codebase-memory-mcp, graphify, Serena) for repeated, large-codebase work, where re-sending a packed corpus every turn would blow the context budget. Repomix's `--compress` and these packers are complementary to RTK (output-side) and Boucle (read dedup), both in the [main tooling landscape](CC-community-tooling-landscape.md).
 
+## Floorplan (haydenschmitty)
+
+**Repo**: [haydenschmitty/floorplan][floorplan] | **Stars**: 3,682★/299 forks (`gh api`, 2026-11-12) | **License**: MIT | **Version**: 0.7.3
+
+A different category from the graph/LSP/search/packer tools above: Floorplan asks Claude Code or Codex to read a codebase and draw an **interactive, zoomable visual map** — parts, files and web requests, each given a plain-English name, with every connection shown, including requests that cross from a frontend repo to a backend repo. It runs locally, updates incrementally (re-reading only what changed), and exports a map as one self-contained HTML file. Two features go beyond mapping: a **Health check** that flags classic AI-assisted-app mistakes (secrets committed to code, open Supabase tables, permissive Firebase rules, fakeable Stripe webhooks, sign-in-less endpoints) with a ready-to-paste fix per finding, and a **Recent work** view that highlights exactly which map nodes the agent's last changes touched and why. It can also draw a **blueprint** — the same map shape, dashed to mark it as a plan — from a PRD or spec for work not yet built.
+
+The project's own README distinguishes itself from two similar tools it names directly: [Archify][archify] (any of 10 diagram types, including non-code processes, for Claude Code/Codex/Cursor/OpenCode) and [Understand Anything][understand-anything] (a full code knowledge graph down to functions, for Claude Code/Codex/Cursor/Copilot/Gemini CLI) — Floorplan's own framing is "understand and check an app you own" versus "draw a diagram" (Archify) or "study a large codebase function by function" (Understand Anything); it positions itself as complementary to both rather than a replacement. **Caveat**: at two weeks old (created 2026-10-27) this is an early-stage project with no independent review found.
+
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
@@ -447,7 +455,10 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 [typesafe-jev-code]: https://docs.typesafe.ai/
 [skills-cli]: https://github.com/vercel-labs/skills
 [decision-models-landscape-code]: ../non-cc/reference/system-1-decision-models-landscape.md#tools-built-on-jev
+[floorplan]: https://github.com/haydenschmitty/floorplan
+[archify]: https://github.com/tt-a1i/archify
+[understand-anything]: https://github.com/Egonex-AI/Understand-Anything
 
 ## Sources
 
-Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt).
+Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt, Floorplan).

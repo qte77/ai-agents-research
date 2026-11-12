@@ -4,8 +4,8 @@ description: Survey of community plugin catalogs — awesome-claude-code (curate
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-11-02
-validated_links: 2026-11-02
+updated: 2026-11-12
+validated_links: 2026-11-12
 ---
 
 ## Summary
@@ -144,7 +144,7 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 
 **Repo**: [AgriciDaniel/claude-seo][claude-seo] | **Homepage**: [claude-seo.md][claude-seo-site] | **License**: MIT | **CC version**: 1.0.33+ (plugin install) | **Category**: Marketing Growth
 
-Representative example of the Marketing Growth category. Per the [repo README][claude-seo-readme] (commit dated 2026-04-14, repo pushed 2026-04-15), the plugin ships **23 skill directories, 17 subagent definitions, and 3 extensions** (DataForSEO, Firecrawl, Banana) exposed through a single `/seo` command with ~27 subcommands. (GitHub short description still advertises "19 sub-skills, 12 subagents" — the README is authoritative; verified against the `skills/` and `agents/` directory listings via `gh api` on 2026-04-23.) Selected subcommands:
+Representative example of the Marketing Growth category. Per the [repo README][claude-seo-readme], the plugin now ships **26 sub-skills and 19 specialist subagents**, with 9 optional extensions (up from 3) adding live SEO data sources, exposed through a single `/seo` command. **Refreshed 2026-11-12** (`gh api`): 28,262★/3,649 forks, last pushed 2026-11-11 — up sharply from the 2026-04-15 snapshot this section originally recorded (23 skill directories, 17 subagents, 3 extensions). The repo's own README now states this 26/19 count directly, so the earlier "GitHub short description undercounts the README" discrepancy no longer applies. Selected subcommands:
 
 | Command | Purpose |
 |---------|---------|
@@ -249,6 +249,24 @@ npx skills add iusztinpaul/squid
 
 **Notable pattern**: the ADR layer (architectural memory) and the Tasks Plan (feature → task decomposition) make squid a worked example of memory + goal-tracking *inside* a CC pipeline — threads picked up in the deferred agentic-memory / goal-attribution research. Relevant to [CC-agent-teams-orchestration](../cc-native/agents-skills/CC-agent-teams-orchestration.md).
 
+## Notable Plugin Profile: Impeccable (pbakaus — Design, Cross-Agent)
+
+**Repo**: [pbakaus/impeccable][impeccable] | **License**: Apache-2.0 | **Stars**: 108,300★/6,438 forks (`gh api`, 2026-11-12) | **Category**: Design review
+
+Impeccable is a "design vocabulary for your coding agent" — 24 slash commands grouped into Steer (`bolder`, `quieter`, `distill`, `colorize`, `typeset`, `layout`, `animate`, `delight`, `overdrive`), Review (`critique`, `audit`), Finish (`polish`, `harden`, `clarify`, `adapt`, `optimize`, `onboard`), and Iterate-live (`live`, `generate`), plus `shape`/`init`/`document`/`extract` for setup. Its own framing: each command "loads a playbook written for that one move and points it at one target," addressing the recurring "AI slop" look (Inter font, purple-to-blue gradients, cards nested in cards) that shows up "across models and projects" when an agent is given no design direction. A **62-rule, no-LLM detector** (`npx impeccable detect`) catches pattern tells plus accessibility/contrast issues on a rendered page, runs in CI with `--github` annotations, and backs a design hook that scans every UI file an agent edits before it calls the work done.
+
+Explicitly cross-agent, not CC-exclusive: works with Claude Code, Cursor, Codex CLI, GitHub Copilot, Devin, Replit Agent, Gemini CLI, Grok Build, OpenCode, Google Antigravity, Kiro, Trae, Rovo Dev, Qoder, Mistral Vibe, Pi, Hermes Agent, DeepSeek Harness and Veto, each with its own skills-folder path documented in the README; a Chrome extension overlays the same findings on any live page. **Claude Code install**: `/plugin marketplace add pbakaus/impeccable`, then `/plugin install impeccable@pbakaus-impeccable` (or `npx impeccable install`, which detects installed tools and offers the hook).
+
+**Caveat**: "Live mode" apply can fall back to running the `codex` or `claude` CLI with `--dangerously-bypass-approvals-and-sandbox` / `--permission-mode bypassPermissions` and the user's inherited environment when no live session is polling — the README itself flags this as a step worth reviewing before using live mode in an unfamiliar repo.
+
+## Notable Plugin Profile: Elephant-Goldfish Model (Google — Design/Spec Review, Cross-Agent)
+
+**Repo**: [google/elephant-goldfish-model][egm] | **License**: Apache-2.0 | **Stars**: 17,685★/1,322 forks (`gh api`, 2026-11-12) | **Category**: Spec review
+
+EGM pairs two agent roles for spec-driven work: "Elephant," a context-holding drafter that keeps the project's context and drafts a specification, and "Goldfish," a fresh-context reviewer that examines the draft and its referenced source material without the drafting conversation — "Design with an elephant. Review with a goldfish," per the README. A human still makes the architectural trade-offs and approves the specification before implementation. Skills cover brainstorm, draft, resolve, bootstrap, review, review-loop and drift-report; if the host agent cannot spin up a genuinely fresh subagent context for the Goldfish step, EGM stops the review rather than fake it.
+
+Not CC-exclusive — Claude Code is one of four installable surfaces: `claude plugin marketplace add google/elephant-goldfish-model` then `claude plugin install egm@egm`, alongside Codex CLI, Antigravity CLI, and a separate ChatGPT/Codex-desktop plugin listing. The README states plainly that EGM is "not an officially supported Google product." Conceptually the same shape as the fresh-context-reviewer pattern this corpus has already noted elsewhere (independent verification by an agent with no memory of the authoring conversation), here applied to specs rather than diffs.
+
 ## Notable Plugin Profile: codex-plugin-cc (OpenAI Codex → CC delegation)
 
 [openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) — an **official OpenAI** plugin (Apache-2.0, ~26.9k★, v1.0.6) that runs Codex from inside a CC session for review or task delegation. Notable for building entirely on CC's own extension surface: slash commands (`/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:transfer`, …), a `codex-rescue` subagent, and a **`Stop`-hook review gate** that can block Claude's response when Codex flags issues; plus background delegation and full session transfer. A rival lab productizing cross-agent delegation on CC primitives. Full analysis: [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md).
@@ -295,6 +313,8 @@ app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our
 | [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
 | [squid][squid] | Agentic engineering pipeline plugin (5-agent; ADR memory + Tasks Plan task decomposition) |
 | [squid writeup][squid-writeup] | Author's setup rationale (decodingai) |
+| [pbakaus/impeccable][impeccable] (README + `gh api`, 2026-11-12) | Design-vocabulary plugin: commands, 62-rule detector, cross-agent install table |
+| [google/elephant-goldfish-model][egm] (README + `gh api`, 2026-11-12) | Elephant/Goldfish drafter-reviewer spec-review plugin |
 | [claude-mods.com][mods-dir] · [OneWave-AI/claude-code-mods][onewave] · [awesome-claude-code-mods][awesome-mods] · [explainx.ai post][explainx-mods] · [ruvnet gist][ruvnet-mods] | Community mod catalogs and guides (checked 2026-10-22) |
 | [Mods overview][mods-overview-cc] | First-party: "Mods aren't sandboxed"; `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` ignored from v2.1.287 |
 
@@ -307,6 +327,8 @@ app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our
 [mods-overview-cc]: https://code.claude.com/docs/en/plugins/mods/overview
 [squid]: https://github.com/iusztinpaul/squid
 [squid-writeup]: https://www.decodingai.com/p/squid-my-agentic-coding-setup-may-2026
+[impeccable]: https://github.com/pbakaus/impeccable
+[egm]: https://github.com/google/elephant-goldfish-model
 [acc]: https://github.com/hesreallyhim/awesome-claude-code
 [accp]: https://github.com/ccplugins/awesome-claude-code-plugins
 [claude-seo]: https://github.com/AgriciDaniel/claude-seo
