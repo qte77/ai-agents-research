@@ -515,11 +515,14 @@ teammate" [new-copilot-blog]. Home and Code began rolling out to Frontier "in th
 Autopilot expanded to private preview "at the end of the month" (September 2026) [new-copilot-blog].
 The same post puts Copilot Managed Runtime (below) into public preview.
 
-This particular announcement makes **no mention of Claude or Anthropic**: it describes Code as
-"powered by the same underlying technology as GitHub Copilot" and says "frontier models like Astra
-and Fable all run on" usage-based billing [new-copilot-blog] — read "Fable" here as Microsoft's own
-frontier-model brand name; Copilot Code's own application card (below) names Claude and GPT models
-specifically, and the two pages describe different layers rather than contradicting each other.
+This particular announcement never names Claude or Anthropic: it describes Code as "powered by the
+same underlying technology as GitHub Copilot" and says "frontier models like Astra and Fable all
+run on" usage-based billing [new-copilot-blog]. "Fable" here is the Claude Fable family named
+explicitly elsewhere in this doc — Cowork's own what's-new log lists "Claude Fable 5 (Preview)"
+[cowork-whats-new], and the EU Data Boundary section above names "Claude Fable 5" and "Claude
+Mythos 5" [eudb-subprocessor] — so this announcement does reference an Anthropic model, just
+without saying so by vendor name. Copilot Code's own application card (below) does name Claude and
+GPT models specifically, for its own surface.
 
 **Copilot Code** (Frontier preview): "Copilot Code builds working software from your description,"
 "provided under Microsoft Product Terms," requiring the Frontier preview program [code-use]
@@ -546,7 +549,7 @@ in this cluster [managed-runtime-overview].
 |---|---|---|
 | Cowork (app builder skill) | Business users describing an app in chat | Requires Frontier; "On by default through Frontier program" once onboarded, otherwise unavailable [managed-runtime-admin] |
 | Microsoft Copilot Studio | Makers wanting more control | On by default [managed-runtime-admin] |
-| Copilot Code | Business users and pro developers | Same Frontier gate as Copilot Code itself [managed-runtime-overview] |
+| Copilot Code | Business users and pro developers | Same Frontier gate as Copilot Code itself [code-use] |
 | SDK/CLI (`@microsoft/managed-apps`, `ms` CLI) | Pro-code developers | Off by default; admin-enabled per environment [managed-runtime-admin] |
 
 - **Sandboxed iframe:** "App code runs inside a sandboxed iframe within the managed host. This
@@ -574,17 +577,25 @@ for how all of these relate.
 
 ### Three things called "harness"
 
-Three Microsoft surfaces use the word "harness" for materially different things:
+Microsoft documents "harness" on three separate product surfaces, each with its own mechanics
+below. **Whether the two "Microsoft Copilot harness" entries (Copilot Studio's and Foundry's)
+share an implementation is not stated on either page** — Microsoft names both the same thing
+without confirming or denying a shared implementation, and Copilot Studio itself has at least two
+other harnesses (a "standard" one and, per the Memory page, a separate "Customer Conversation"
+one) not detailed further here:
 
 | Harness | Product | What it is | Status |
 |---|---|---|---|
-| Standard / GitHub Copilot harness → renamed Microsoft Copilot harness | Microsoft Copilot Studio | Studio's own agent-authoring and execution engine; Microsoft's own billing documentation records the rename directly: "Apps are built with the Microsoft Copilot harness (formerly the GitHub Copilot harness)" [managed-runtime-licensing-faq] (2026-11-10) — though Studio's own Memory feature page, last touched 2026-10-21, still titles itself "Memory (GitHub Copilot) (preview)" and hasn't yet picked up the new name [studio-memory] | Mixed GA/preview by sub-feature |
+| GitHub Copilot harness → renamed Microsoft Copilot harness | Microsoft Copilot Studio | One of several Studio harnesses (see above); Microsoft's own billing documentation records this one's rename directly: "Apps are built with the Microsoft Copilot harness (formerly the GitHub Copilot harness)" [managed-runtime-licensing-faq] (2026-11-10) — though Studio's own Memory feature page for this harness, last touched 2026-10-21, still titles itself "Memory (GitHub Copilot) (preview)" and hasn't yet picked up the new name [studio-memory] | Mixed GA/preview by sub-feature |
 | Microsoft Copilot harness (Foundry) | Microsoft Foundry prompt agents | "An optional managed runtime for prompt agents. Foundry operates the harness and its execution environment" [foundry-copilot-harness] (2026-11-04); five harness tools (file read/write, shell, web, subagents) plus skills "referenced at the top level of the prompt agent definition" [foundry-copilot-harness] | Public preview |
 | Foundry hosted agents (no "harness" name used) | Microsoft Foundry | "Hosted agents are containerized agentic AI applications that run on Agent Service" [foundry-hosted-agents] (2026-11-09); bring your own framework (Agent Framework, LangGraph, Semantic Kernel) | No preview banner or GA statement on the Learn concept page itself; the separate azure.microsoft.com product page calls hosted agents "a managed runtime for running agent code in Azure" and "a session-isolated managed runtime with autoscaling and zero idle cost" [foundry-agent-service-product] — marketing-page wording only, not repeated on the Learn concept or FAQ pages fetched here |
 
 The Foundry "Copilot harness" and "Copilot Managed Runtime" (above) are also two different things
 that both get called a "managed runtime" by Microsoft on different pages — the Foundry one runs
-*prompt agents*, Managed Runtime hosts *line-of-business apps*.
+*prompt agents*, Managed Runtime hosts *line-of-business apps*. Separately, the 2026-09-25 blog
+describes Copilot Code as "powered by the same underlying technology as GitHub Copilot"
+[new-copilot-blog]; no page fetched in this pass confirms or denies whether that technology is the
+same thing as either "Microsoft Copilot harness" above.
 
 ### Declarative agents
 
@@ -593,7 +604,8 @@ Microsoft 365 Copilot" [da-overview] (2026-09-30), built with low-code **Agent B
 **Visual Studio/Visual Studio Code with the Microsoft 365 Agents Toolkit** [da-overview]. Hosting:
 "Use Copilot's orchestrator and foundation model. No additional hosting is required"
 [da-agents-overview]. Its actions ("1-10 objects that identify plugins that provide actions") are
-API plugins [manifest-1-9]; the overview page separately notes an agent "can include or reference...
+API plugins [manifest-1-9]; the overview page separately notes that "a plugin can include or
+reference an agent with other supported capabilities, such as skills, Copilot connectors, or
 MCP-based tools" [da-overview].
 
 **Manifest schema 1.9** (2026-09-30, updated 2026-10-22) lists 15 capability object types: Web
@@ -616,18 +628,19 @@ for what this does and doesn't resolve.
   content are licensed-only, while Web search and Code interpreter are available to all
   [da-prerequisites] (2026-11-06). "Usage billing applies to agents grounded in tenant data, while
   agents grounded in public data or instructions are free to use" [da-prerequisites].
-- **API plugins and MCP-based tools:** actions reference "1-10 objects that identify plugins"
-  [manifest-1-9]; separately, "a plugin can include or reference an agent with other supported
-  capabilities, such as skills, Copilot connectors, or MCP-based tools" [da-overview].
+- **API plugins:** an agent's `actions` property holds "1-10 objects that identify plugins" that
+  provide its actions [manifest-1-9] — the MCP-based-tools quote above is from the same overview
+  page, describing the plugin side of that same relationship.
 - **Licensing/billing pointer:** see [Microsoft 365 Copilot licensing][m365-copilot-pricing] and
   [da-prerequisites] for the current per-capability licence table; not reproduced here per
   [Pricing](#pricing).
 
 ### Researcher and Analyst
 
-Researcher "is designed for deeper reasoning of your tasks," handling "complex, multi-step
-questions" with source-cited reports, distinct from standard Copilot chat [researcher-agent]
-(ms.date 2026-02-19).
+Researcher "is designed for deeper reasoning of your tasks," distinct from standard Copilot chat
+[researcher-agent] (2026-02-19). A companion FAQ page describes it as "designed to tackle complex,
+multi-step questions by acting as a deep research assistant" [faq-researcher] (2025-10-31, updated
+2026-11-04).
 
 - **Usage cap:** "A maximum of 25 queries per user per month" [faq-researcher] (2025-10-31, updated
   2026-11-04) — stated for Researcher specifically on this page; whether Analyst shares the same cap
