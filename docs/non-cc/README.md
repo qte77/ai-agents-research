@@ -31,6 +31,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [openresearch-analysis.md](agents/openresearch-analysis.md) | OpenResearch (alphaXiv; local-first, git-native workspace turning coding agents into autonomous research/experiment agents) | Yes | Yes (MIT) |
 | [octop-analysis.md](agents/octop-analysis.md) | Octop (TencentCloud; self-hosted multi-user, multi-agent assistant — single-process LangGraph harness, AgentTeams Beta coordinator, outbound ACP delegation to Claude Code/OpenCode/CodeBuddy/Codex) | Yes | Yes (MIT) |
 | [microsoft-365-copilot-analysis.md](agents/microsoft-365-copilot-analysis.md) | Microsoft 365 Copilot (Copilot in SharePoint Skills, Copilot Studio, Work IQ, Agent 365 governance, contractual postures, operational scenarios, guardrails for agent skills; first-party fact-check + practitioner how-to) | No (hosted) | No (proprietary) |
+| [skill-recorder-analysis.md](agents/skill-recorder-analysis.md) | Microsoft Skill Recorder (desktop app; records or imports a screen session, reconstructs it via the GitHub Copilot CLI into a reusable Skill or scheduled Automation for Scout/Cowork/Copilot Studio) | No (desktop) | Yes (MIT) |
 
 ## Coding Agents & IDEs
 

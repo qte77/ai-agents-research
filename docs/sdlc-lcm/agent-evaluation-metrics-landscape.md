@@ -2,8 +2,8 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-10-26
-validated_links: 2026-10-15
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
@@ -463,6 +463,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **DeepEval**: 30+ LLM-as-a-judge metrics with pytest integration
 - **Braintrust Agent Evaluation**: Architecture-specific assessment with custom scorers
 - **Google ADK Evaluation**: Trajectory analysis with multi-turn conversation testing
+- **[Waza](https://github.com/microsoft/waza)** (Microsoft, Go CLI, MIT): authors repository/CLI/MCP eval scenarios for agent workflows, skills and custom agents, runs graded trials and inspects the evidence behind each grade; a published-binary release line (`v0.40.1` as of `gh api` 2026-11-12) plus CI-regression-gate guides, and an azd extension with its own separately versioned release line. The README is explicit that several features (a logical execution-attempt embedding API, a checkpoint-embedding preview, public submission commands) are documented but not yet in an installed binary — check `waza --version` against the feature/platform matrix before relying on a specific capability.
 
 ### Observability Tool Integration
 
