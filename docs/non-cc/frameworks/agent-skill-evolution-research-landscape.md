@@ -2,20 +2,22 @@
 title: Agent Skill Evolution Research Landscape
 purpose: Survey research (papers and reference repos) on constructing, evolving, and transferring agent skills and tool sets — as distinct from the packaging/distribution landscapes in cc-community and cc-native.
 created: 2026-09-30
-updated: 2026-10-02
-validated_links: 2026-10-02
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
 ## What It Is
 
-Four 2026 research efforts on the *mechanics* of agent skills — how a skill is authored, tested,
+Six 2026 research efforts on the *mechanics* of agent skills — how a skill is authored, tested,
 evolved, or compiled — rather than how it is packaged or distributed (see
 [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) and
 [CC-skills-adoption-analysis.md](../../cc-native/agents-skills/CC-skills-adoption-analysis.md) for the
-distribution side). Scored 2026-09-30 against the [agent substrate rubric][rubric]. None of the four
-ships a Claude Code integration; they are general agent-harness research (WildClawBench/SkillsBench run
-on OpenClaw and OpenHands harnesses, not CC).
+distribution side). The first four were scored 2026-09-30 against the [agent substrate rubric][rubric];
+Adaptive Skill Granularity and Skill++ (added 2026-11-12) are batch-triage additions, not rubric-scored.
+None of the six ships a Claude Code integration — Skill++'s routing gains do carry over to the Codex CLI
+agent harness, but that is not CC — and they are general agent-harness research (WildClawBench/SkillsBench
+run on OpenClaw and OpenHands harnesses, not CC).
 
 ## WikiSkill
 
@@ -117,6 +119,51 @@ task performance. Requires a Codex CLI login and Docker; `--resume` makes batch 
 
 `scored 2026-09-30`
 
+## Adaptive Skill Granularity (added 2026-11-12)
+
+**Paper**: [arXiv:2610.31461][adaptive-skill] — "Adaptive Skill Granularity for Coding Agents: Runtime
+Routing and Macro-to-Micro Recovery" (Zhang, Jiang, Wang, Zhou; submitted 2026-10-22). No code
+repository or project page was found on the abstract page. A repo named in the lead that surfaced this
+paper (`Jayceon-3/Adaptive-Skill-Agent`) contains Chinese-language design notes outlining a similar
+granularity-routing method, but names neither this paper nor its arXiv ID and isn't confirmed as the
+authors' own, so it is not cited here.
+
+Argues that prior skill-evolution work (including the four entries above) studies skills *before*
+execution — retrieval, composition, synthesis — and that for coding agents the *runtime* choice matters
+just as much: a task can be solved with primitive tool calls, a macro skill, or a hybrid that falls back
+from macro to primitives on mismatch. The authors frame granularity as an action-abstraction policy
+driven by task structure, execution state, and macro-skill failures, pairing a feature-based granularity
+controller with a finite-state recovery executor. In a deterministic coding-agent evaluation using
+verifier-defined success/cost/process metrics, fixed macro execution was efficient when it applied but
+brittle on mismatch, while runtime routing plus explicit macro-to-micro recovery improved robustness —
+self-reported, no independent replication found.
+
+`subject: skills`
+
+Not rubric-scored: a batch-triage addition (paper only, no confirmed code artifact); score if promoted
+to a dedicated analysis.
+
+## Skill++ (added 2026-11-12)
+
+**Paper**: [arXiv:2611.00544][skillpp] — "Skill++: Towards Lifelong Agents via Routing-Aware Skill
+Refinement" (Zhang, Liang, Wu, Chen, Fan, Liu, Ma, Yuan, Wang, Min, Zheng, Liu, Yu; submitted
+2026-10-31). No code repository or project page was found on the abstract page.
+
+Frames a growing skill library as a lifelong, class-incremental routing problem: a router selects
+skills from name-plus-description alone, so a new skill similar to an older one can silently displace
+it at routing time even though the older skill's body never changed. Skill++ rewrites only the
+incoming skill's name and description — no router training, no labeled data — so the rewritten text
+states what the skill supports, how it differs from its closest predecessor, and what related work it
+excludes. On a library grown to 731 skills over ten sessions, the authors report selecting all required
+skills for 76.3% of queries versus 36.4% with the original metadata, across three benchmarks and five
+LLM routers, with gains carrying over to the Codex CLI agent harness — self-reported, no independent
+replication found.
+
+`subject: skills`
+
+Not rubric-scored: a batch-triage addition (paper only, no confirmed code artifact); score if promoted
+to a dedicated analysis.
+
 ## Cross-References
 
 - [docs/_topics/skills.md](../../_topics/skills.md) — topic hub pointer
@@ -134,6 +181,8 @@ task performance. Requires a Codex CLI login and Docker; `--resume` makes batch 
 | [WalteR-MittY-pro/SkillLift][skilllift] | README (fetched via GitHub contents API, 2026-09-30), MIT license, repo metadata |
 | [NVlabs/Skill2Env][skill2env] | README (fetched via GitHub contents API, 2026-09-30), Apache-2.0 license, repo metadata |
 | [Plan 0009][plan] | Lead list and rubric scope for this batch |
+| [Adaptive Skill Granularity (arXiv:2610.31461)][adaptive-skill] | Abstract, method summary; confirms no Comments/code field on the page — accessed 2026-11-12 |
+| [Skill++ (arXiv:2611.00544)][skillpp] | Abstract, method summary, 731-skill/10-session routing figures — accessed 2026-11-12 |
 
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
@@ -144,3 +193,5 @@ task performance. Requires a Codex CLI login and Docker; `--resume` makes batch 
 [skill2env]: https://github.com/NVlabs/Skill2Env
 [agentskills-org]: https://agentskills.io
 [harbor]: https://harborframework.com
+[adaptive-skill]: https://arxiv.org/abs/2610.31461
+[skillpp]: https://arxiv.org/abs/2611.00544
