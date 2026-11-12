@@ -325,7 +325,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 Single static Rust binary that turns records (JSONL, JSON, CSV/TSV, SQLite, or any database CLI's output) into a ranked full-text (FTS5 + BM25) index, so an agent gets "the few records that answer the question" instead of grepping raw history ([README][leviathan]). A separate, opt-in **memory** mode lives in its own SQLite file: the agent `remember`s one claim at a time keyed so a later write replaces rather than contradicts the old value, and `recall` returns only what fits a token budget.
 
-### Benchmarks (self-reported, synthetic maintenance-log dataset, `docs/BENCHMARKS.md`)
+### Benchmarks (self-reported, synthetic maintenance-log dataset, `docs/BENCHMARKS.md` and `docs/MEMORY.md`)
 
 | At 1M records (678 MB) | Leviathan | best grep strategy |
 |---|---:|---:|
@@ -341,7 +341,7 @@ Both tables are the project's own methodology on one synthetic dataset — "noth
 
 ### CC Integration
 
-CLI + skill (`skills/leviathan` and `skills/leviathan-memory`, copied into `~/.claude/skills/`, costs 0 tokens until used) or an optional MCP server (`leviathan mcp`, five read-only stdio tools). `leviathan wrap claude --memory --hooks --rules --apply` configures tools, a session-start briefing and an always-on rule specifically for Claude Code; `leviathan wrap` also targets Codex, Cursor, Gemini CLI, Windsurf and 20 more. `leviathan memory import ~/.claude/projects/<project>/memory/MEMORY.md` migrates an existing CC memory file in.
+CLI + skill (`skills/leviathan` and `skills/leviathan-memory`, copied into `~/.claude/skills/`, costs 0 tokens until used) or an optional MCP server (`leviathan mcp`, five read-only stdio tools). `leviathan wrap claude --memory --hooks --rules --apply` configures tools, a session-start briefing and an always-on rule specifically for Claude Code; `leviathan wrap` also targets Codex, Cursor, Gemini CLI, Windsurf and the rest of the 24 agents the README lists. `leviathan memory import ~/.claude/projects/<project>/memory/MEMORY.md` migrates an existing CC memory file in.
 
 ### Adoption Considerations
 
