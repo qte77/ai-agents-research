@@ -33,6 +33,8 @@ Maintain a living knowledge base of coding agent capabilities, CC internals, and
 
 - As a maintainer, I want each plan's open rows checked against the live state of the PRs and issues they cite, so that a merged blocker is never reported as open (`make reconcile`).
 - As a maintainer, I want a monitored vendor page flagged once a dated event it announces has passed, even if the page itself is unchanged, so that retirements and GA dates get re-checked.
+- As a maintainer, I want the decision models re-run monthly on the gold sets and compared with a committed baseline, so that a model or endpoint change that degrades the paper filter is flagged before it skews the weekly triage.
+- As a maintainer, I want a monitor source that didn't run (missing credentials, failed fetch) named in its report, so that a green run never hides a dead source.
 
 ## Success Criteria
 
