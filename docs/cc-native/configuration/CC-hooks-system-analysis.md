@@ -3,7 +3,7 @@ title: CC Hooks System Analysis
 source: https://code.claude.com/docs/en/hooks
 purpose: Analysis of Claude Code hooks system for automation, quality gates, and headless CC workflow integration.
 created: 2026-03-07
-updated: 2026-07-23
+updated: 2026-11-11
 validated_links: 2026-07-23
 status: generally-available
 ---
@@ -83,6 +83,7 @@ Hooks can return JSON to influence CC behavior:
 - **`additionalContext`**: Inject context into the agent's next turn (PreToolUse, v2.1.9)
 - **`updatedInput`**: Modify tool input with ask decision (PreToolUse, v2.1.0)
 - **Approval/denial**: PermissionRequest hooks can auto-approve or auto-deny (v2.0.45)
+  - Community example: [Plannotator](../../cc-community/CC-community-tooling-landscape.md#plannotator-backnotprop) hooks `PermissionRequest` on `ExitPlanMode` to open the plan for human review in the browser before Claude may leave plan mode
 
 ### HTTP Hooks (v2.1.63+)
 
