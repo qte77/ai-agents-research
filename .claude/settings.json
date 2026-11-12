@@ -18,7 +18,12 @@
       "Bash(make lint)",
       "Bash(make check_docs)",
       "Bash(make check_links)",
-      "Bash(make reconcile)"
+      "Bash(make reconcile)",
+      "Bash(make check_status)",
+      "Bash(make check_actions)",
+      "Bash(make help)",
+      "Bash(make census)",
+      "Bash(shellcheck *)"
     ]
   },
   "enabledPlugins": {
