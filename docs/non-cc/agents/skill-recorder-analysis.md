@@ -8,11 +8,11 @@ validated_links: 2026-11-12
 status: assess
 ---
 
-**Details:** MIT; 5,760★/654 forks; created 2026-07-29, last pushed 2026-11-04 (`gh api`,
-2026-11-12). Note: the repo's one-line GitHub description says the GitHub **Copilot SDK**; the
-README's own body text says the **Copilot CLI** does the reconstruction, and ships with the app —
-the README is treated as authoritative per this corpus's convention of preferring body text over
-a short description.
+**Details:** MIT; 5,762★/654 forks (re-checked 2026-11-12, up from 5,760★); created 2026-07-29,
+last pushed 2026-11-04 (`gh api`, re-confirmed 2026-11-12 — no new push since). Note: the repo's
+one-line GitHub description says the GitHub **Copilot SDK**; the README's own body text says the
+**Copilot CLI** does the reconstruction, and ships with the app — the README is treated as
+authoritative per this corpus's convention of preferring body text over a short description.
 
 ## What It Is
 
@@ -27,9 +27,14 @@ one step generates either a **Skill** (a `SKILL.md` procedure an agent runs on d
 generalizes from one example — recording one form submission can teach the agent to submit "all of
 them."
 
-The generated Skills and Automations are built for **Microsoft's own agent surfaces** — the README
-names Microsoft Autopilots such as Scout, Microsoft Copilot Cowork, and Copilot Studio as the
-consumers — which is why this entry sits beside, rather than inside,
+The generated Skills and Automations are built for **Microsoft's own agent surfaces** — but this is
+sourced to the repo's one-line GitHub **description** ("builds a reusable Skill or Automation for
+Microsoft Autopilots like Scout, Microsoft Copilot Cowork, or Copilot Studio"), not to the README
+body: re-checked 2026-11-12, the README text itself never names Scout, Cowork, Copilot Studio, or
+"Autopilot" anywhere, so which surfaces actually consume its output is **unconfirmed by the
+README**, only by the shorter, less authoritative description field (see this corpus's own
+preference for body text over description, noted above). This is still why this entry sits beside,
+rather than inside,
 [microsoft-365-copilot-analysis.md](microsoft-365-copilot-analysis.md): Skill Recorder is the
 authoring tool that *produces* skills for that family's surfaces, not a Copilot-in-SharePoint or
 Agent 365 feature itself.
@@ -57,28 +62,33 @@ cloud call). Debug exports carry the same private data as the live session they 
 Distributed as a **source release**, not a prebuilt binary: one command (copied from the specific
 GitHub release page, not a generic template) downloads a pinned Node.js runtime and builds the
 exact release commit locally, producing a "Skill Recorder (Source)" app. Requires a GitHub account
-with Copilot access; the Copilot CLI ships with the app. macOS is the primary target; Windows 11
-(x64/ARM64) is also supported.
+with Copilot access; the Copilot CLI ships with the app. The README states "macOS is the primary
+target. Windows 11 (x64 and ARM64) is supported too" — but the README's own install steps (re-read
+2026-11-12) direct users to the release page to pick either **"Windows 11 x64 or ARM64"** or
+**"macOS or Ubuntu"**, and separately say to open "Terminal on macOS or Ubuntu" to run the copied
+command — so, per the README itself, Ubuntu/Linux shares the macOS install path even though the
+README's one-line platform summary doesn't name it alongside macOS and Windows.
 
 ## Adoption Decision
 
 **Assess.** MIT-licensed and genuinely novel in mechanism (reconstruct-then-generalize from a
 single demonstrated session, rather than hand-written skill prompts), but entirely tied to GitHub
-Copilot as the reconstruction engine and to Microsoft's own Autopilot/Cowork/Copilot Studio
-surfaces as the consumer of its output — no Claude Code or other third-party agent integration is
-documented. Young project (created 2026-07-29); the memory-use and import-limit figures in its own
-README are explicitly self-reported single-platform measurements (Windows ARM64), not independent
-benchmarks.
+Copilot as the reconstruction engine; which surfaces consume its output is sourced only to the
+repo's GitHub description (Microsoft Autopilot/Cowork/Copilot Studio), not confirmed in the README
+body — no Claude Code or other third-party agent integration is documented anywhere in either.
+Young project (created 2026-07-29); the memory-use and import-limit figures in its own README are
+explicitly self-reported single-platform measurements (Windows ARM64), not independent benchmarks.
 
 ## Cross-References
 
-- [microsoft-365-copilot-analysis.md](microsoft-365-copilot-analysis.md) — the Copilot Studio/Cowork/Scout surfaces Skill Recorder's output targets
+- [microsoft-365-copilot-analysis.md](microsoft-365-copilot-analysis.md) — the Copilot Studio/Cowork/Scout surfaces named in Skill Recorder's GitHub description as its output's targets (unconfirmed by the README itself)
 
 ## Sources
 
 | Source | Content |
 |---|---|
-| [microsoft/skill-recorder README][repo] | Capture/import mechanism, privacy boundary, install path, limits |
-| [microsoft/skill-recorder][repo] `gh api` metadata + `/license` | MIT, 5,760★/654 forks, created 2026-07-29, pushed 2026-11-04 |
+| [microsoft/skill-recorder README][repo] | Capture/import mechanism, privacy boundary, install path, limits; re-read 2026-11-12, including the Ubuntu/Linux-sharing-macOS install path and the absence of "Scout"/"Cowork"/"Copilot Studio"/"Autopilot"/"Claude"/"Anthropic" anywhere in the body text |
+| [microsoft/skill-recorder][repo] `gh api` metadata + `/license` | MIT, 5,762★/654 forks, created 2026-07-29, pushed 2026-11-04 (re-checked 2026-11-12) |
+| [microsoft/skill-recorder][repo] GitHub description field | Sole source for the Scout/Cowork/Copilot Studio consumer-surface claim and for "Copilot SDK" |
 
 [repo]: https://github.com/microsoft/skill-recorder

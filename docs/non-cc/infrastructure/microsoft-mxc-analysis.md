@@ -4,12 +4,13 @@ source: https://github.com/microsoft/mxc
 purpose: Analysis of Microsoft's MXC, a cross-platform, policy-driven sandbox SDK for running agent-generated code and tools, with a Windows-native process container.
 platform_scope: [windows, linux, macos]
 created: 2026-11-09
-updated: 2026-11-09
-validated_links: 2026-11-09
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
-**Details:** MIT; v1.0.0 GA 2026-10-07, latest v1.0.1 (2026-10-17); 3,116★; read 2026-11-09.
+**Details:** MIT; v1.0.0 GA 2026-10-07, latest v1.0.1 (2026-10-17, unchanged); 3,132★ (re-checked
+2026-11-12, up from 3,116★).
 
 ## What It Is
 
@@ -37,7 +38,7 @@ For this corpus its main interest is Windows: Claude Code's own sandbox has no n
 
 ## Agent Support (announced by Microsoft)
 
-The blog says agents and frameworks "already support MXC, including GitHub Copilot, OpenClaw, OpenAI Codex", Replit, LM Studio and Unsloth AI, and that "Many others will be releasing support for MXC: Anthropic Claude Code", along with Box, Egnyte, Heidi Health, Hermes Agent, Manus, Perplexity, Raycast and Simular. Neither the README nor the docs name any agent. **Claude Code support is a Microsoft announcement only**; no Anthropic source was found (2026-11-09). NVIDIA, per the blog, "has integrated OpenShell into MXC", adding its own file, inference, network and credential controls (see [nvidia-openshell-analysis.md](nvidia-openshell-analysis.md)).
+The blog says agents and frameworks "already support MXC, including GitHub Copilot, OpenClaw, OpenAI Codex", Replit, LM Studio and Unsloth AI, and that "Many others will be releasing support for MXC: Anthropic Claude Code", along with Box, Egnyte, Heidi Health, Hermes Agent, Manus, Perplexity, Raycast and Simular. Neither the README nor the docs name any agent. **Claude Code support is a Microsoft announcement only**; re-checked 2026-11-12 against the blog post (unchanged — Claude Code is still listed only among those who "will be releasing support," not among those confirmed already supporting it) and against the full text of Claude Code's own sandboxing documentation, which describes macOS/Linux/WSL2 support and contains no mention of MXC or a native-Windows sandbox; still no Anthropic-side source found. NVIDIA, per the blog, "has integrated OpenShell into MXC", adding its own file, inference, network and credential controls (see [nvidia-openshell-analysis.md](nvidia-openshell-analysis.md)).
 
 ## Caveats
 
@@ -59,13 +60,15 @@ The blog says agents and frameworks "already support MXC, including GitHub Copil
 | Source | Content |
 |---|---|
 | [Windows Developer blog, 2026-10-07][blog] | GA announcement, backend table, Enforcement/Learning/Permissive modes, agent support lists, OpenShell integration, Intune plan, Windows 365 GA |
-| [microsoft/mxc README][repo] | Name, backends per platform, experimental flags, audit-mode warning, telemetry; `gh api` (MIT `LICENSE.md`, releases v1.0.0 2026-10-07 / v1.0.1 2026-10-17, 3,116★), 2026-11-09 |
+| [microsoft/mxc README][repo] | Name, backends per platform, experimental flags, audit-mode warning, telemetry; `gh api` (MIT `LICENSE.md`, releases v1.0.0 2026-10-07 / v1.0.1 2026-10-17 — no newer release as of re-check, 3,132★), re-read 2026-11-12 |
 | [Containment policy 1.0.0][mxc-policy] | Stable contract status, closed JSON request, network deny defaults |
 | [Process-container networking][mxc-networking] | WFP-based network enforcement on Windows |
 | [OS-version support][mxc-os] | Minimum Windows 11 builds per backend |
+| [Claude Code — Sandboxing][code-sandboxing] | Confirms no native-Windows sandbox and no mention of MXC, re-checked 2026-11-12 |
 
 [blog]: https://blogs.windows.com/windowsdeveloper/2026/10/07/microsoft-execution-containers-policy-driven-containment-for-ai-agents/
 [repo]: https://github.com/microsoft/mxc
 [mxc-policy]: https://github.com/microsoft/mxc/blob/main/docs/containment-policy/1.0.0/policy.md
 [mxc-networking]: https://github.com/microsoft/mxc/blob/main/docs/backends/process-container/networking.md
 [mxc-os]: https://github.com/microsoft/mxc/blob/main/docs/backends/process-container/os-version-support.md
+[code-sandboxing]: https://code.claude.com/docs/en/sandboxing
