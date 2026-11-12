@@ -70,7 +70,7 @@ its own first-party date and status.
 First-party research pass on **2026-11-12**: Salesforce's own press releases, developer docs
 (`developer.salesforce.com`), Salesforce Help (`help.salesforce.com`), the architecture
 reference site (`architect.salesforce.com`), the `salesforce/agentscript` GitHub repository, and the
-2026-08-18 Flex Credits Rate Card PDF. `developer.salesforce.com` and `help.salesforce.com` serve a
+2026-11-03 Flex Credits Rate Card PDF (the 2026-08-18 card it supersedes is cited for comparison). `developer.salesforce.com` and `help.salesforce.com` serve a
 JS-rendered shell to a plain fetch; pages under those hosts were rendered with
 [polyfetch-scrape][polyfetch]'s Patchright tier and the extracted text greped for the relevant
 passage. Covers: Agentforce 360 and its component products; Claude's placement inside the Salesforce
