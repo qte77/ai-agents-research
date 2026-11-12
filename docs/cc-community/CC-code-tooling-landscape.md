@@ -420,7 +420,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 
 ## Floorplan (haydenschmitty)
 
-**Repo**: [haydenschmitty/floorplan][floorplan] | **Stars**: 3,682★/299 forks (`gh api`, 2026-11-12) | **License**: MIT | **Version**: 0.7.3
+**Repo**: [haydenschmitty/floorplan][floorplan] | **Stars**: 3,682★/299 forks (`gh api`, 2026-11-12) | **License**: MIT | **Version**: 0.8.0 (`plugin.json`/`CHANGELOG.md`, checked 2026-11-12)
 
 A different category from the graph/LSP/search/packer tools above: Floorplan asks Claude Code or Codex to read a codebase and draw an **interactive, zoomable visual map** — parts, files and web requests, each given a plain-English name, with every connection shown, including requests that cross from a frontend repo to a backend repo. It runs locally, updates incrementally (re-reading only what changed), and exports a map as one self-contained HTML file. Two features go beyond mapping: a **Health check** that flags classic AI-assisted-app mistakes (secrets committed to code, open Supabase tables, permissive Firebase rules, fakeable Stripe webhooks, sign-in-less endpoints) with a ready-to-paste fix per finding, and a **Recent work** view that highlights exactly which map nodes the agent's last changes touched and why. It can also draw a **blueprint** — the same map shape, dashed to mark it as a plan — from a PRD or spec for work not yet built.
 

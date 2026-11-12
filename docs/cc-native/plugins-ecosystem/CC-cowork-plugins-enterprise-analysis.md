@@ -11,8 +11,8 @@ status: generally-available
 **Details:** Standard feature across paid plans (Cowork); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout
 
 > **Disambiguation.** This doc covers Anthropic's own **Cowork**. **Microsoft Copilot Cowork** is a
-> different, Microsoft-branded product that Microsoft says it built "integrat[ing] the technology
-> behind Claude Cowork" into Microsoft 365 Copilot — a separate product with its own model list,
+> different, Microsoft-branded product that Microsoft says it "integrated the technology behind
+> Claude Cowork into Microsoft 365 Copilot" — a separate product with its own model list,
 > billing, and GA date (June 2026), not Anthropic's Cowork. See
 > [microsoft-365-copilot-analysis.md § Microsoft Copilot Cowork][ms-cowork] for the first-party
 > fact-check.
