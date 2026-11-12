@@ -817,10 +817,10 @@ them are reproduced here.
 **As of 2026-11-12.** The table below covers the Microsoft 365/Azure/Foundry credentials most
 relevant to building, administering, or leading adoption of agents in this family — fetched
 directly from each credential's own Microsoft Learn page, not from Microsoft's PDF certification
-poster. The poster (`aka.ms/traincertposter` / `aka.ms/CertificationsPoster`) lags Learn and
-disagrees with it on at least one status (see the AI-500 row) and carries two different "last
-updated" strings on the same document ("LAST UPDATED JULY 2026" in one footer line, "LAST UPDATED
-AUG" in another) — it is cited here only as a discovery aid, never as a status source.
+poster. The poster (`aka.ms/traincertposter` / `aka.ms/CertificationsPoster`) lags Learn and disagrees with it
+on at least one status (see the AI-500 row below) and still shows retired exam codes (PL-200,
+AZ-500) that Learn's own retirement page confirms are gone — it is cited here only as a discovery
+aid, never as a status source.
 
 | Exam / credential | What it covers | Level / role | Status (as of 2026-11-12) | Microsoft Learn |
 |---|---|---|---|---|
@@ -1081,7 +1081,7 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Azure AI Engineer Associate (retired)][ai-102-cert] | AI-102 retirement notice, no successor named |
 | [Power Platform Functional Consultant Associate (retired)][pl-200-cert] | PL-200 retirement date, no successor named |
 | [Azure Security Engineer Associate (retired)][az-500-cert] | AZ-500 retirement date, no successor named |
-| [Certification poster (PDF)][cert-poster-pdf] | Discovery aid only — not cited for any status in the table above; inconsistent "last updated" footer strings, AI-500 "(Beta)" label contradicted by Learn |
+| [Certification poster (PDF)][cert-poster-pdf] | Discovery aid only — not cited for any status in the table above; still shows retired codes (PL-200, AZ-500) and labels AI-500 "(Beta)", contradicted by Learn |
 
 [sp-skills]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-skills
 [sp-get-started]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started
