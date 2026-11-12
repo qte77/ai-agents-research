@@ -10,6 +10,13 @@ status: generally-available
 
 **Details:** Standard feature across paid plans (Cowork); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout
 
+> **Disambiguation.** This doc covers Anthropic's own **Cowork**. **Microsoft Copilot Cowork** is a
+> different, Microsoft-branded product that Microsoft says it built "integrat[ing] the technology
+> behind Claude Cowork" into Microsoft 365 Copilot — a separate product with its own model list,
+> billing, and GA date (June 2026), not Anthropic's Cowork. See
+> [microsoft-365-copilot-analysis.md § Microsoft Copilot Cowork][ms-cowork] for the first-party
+> fact-check.
+
 ## What Cowork & Plugins Are
 
 **Cowork** is Claude's agentic application for knowledge work — available via web, desktop (macOS, Windows x64/arm64, Linux, ChromeOS), and mobile (web/mobile in beta), where users give Claude access to local files and tools, set a task, and step away ([source][cowork-product]). Operates with more agency than Claude Chat: users describe outcomes and cadence, Claude takes action and reports progress ([source][cowork-product]). Available on all paid plans (Pro, Max, Team, Enterprise); agent safety is still in development ([source][cowork-product]).
@@ -160,6 +167,8 @@ Cowork ([source][np-blog]).
 
 - [CC-channels-analysis.md](CC-channels-analysis.md) — push events from Telegram/Discord/iMessage into CC sessions
 - [CC-chrome-extension-analysis.md](CC-chrome-extension-analysis.md) — browser automation in Cowork workflows
+- [microsoft-365-copilot-analysis.md § Microsoft Copilot Cowork][ms-cowork] — the disambiguated,
+  Microsoft-branded "Cowork" that is not this product
 
 ## References
 
@@ -178,3 +187,4 @@ Cowork ([source][np-blog]).
 [cc-skills]: https://code.claude.com/docs/en/skills
 [sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
 [sdk-skills]: https://code.claude.com/docs/en/agent-sdk/skills
+[ms-cowork]: ../../non-cc/agents/microsoft-365-copilot-analysis.md#microsoft-copilot-cowork-ga-june-2026

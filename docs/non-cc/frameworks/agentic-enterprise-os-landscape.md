@@ -4,8 +4,8 @@ purpose: Survey of the "agentic enterprise OS" pattern — the operating-environ
 category: landscape
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, self-hosted-oss, claude-code]
 created: 2026-06-28
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
@@ -22,13 +22,34 @@ All are proprietary SaaS; all govern **human-directed** agents (instructions, to
 | Platform | Vendor framing | Commercial model | Notable |
 |---|---|---|---|
 | **[Salesforce Agentforce 360][agentforce]** | "digital labor" platform | proprietary; Flex Credits (~$0.10/action) + per-conversation + per-user editions | Agent Builder / Agent Script / Voice on the Einstein engine; the [LLM Open Connector spec][einstein] (Apache-2.0) is the only OSS-adjacent piece; MCP + A2A, no AG-UI |
-| **[Microsoft Copilot Studio][copilot-studio]** (+ Agent 365) | "platform for building and managing agents" | proprietary; in M365 Copilot ($30/user/mo) or Azure pay-as-you-go credits | declarative + autonomous (event-triggered) agents; Agent 365 is the governance control plane; A2A GA for the standard harness (April 2026), preview for the GitHub Copilot harness ([what's new][copilot-studio-whats-new]); legacy Bot Framework (MIT) being archived |
+| **[Microsoft Copilot Studio][copilot-studio]** (+ Agent 365) | "platform for building and managing agents" | proprietary; in M365 Copilot ($30/user/mo) or Azure pay-as-you-go credits | declarative + autonomous (event-triggered) agents; Agent 365 is the governance control plane; A2A GA for the standard harness (April 2026), preview for the GitHub Copilot harness, now itself being renamed the Microsoft Copilot harness ([what's new][copilot-studio-whats-new]) — a same-named "Copilot harness", documented separately from Microsoft Foundry's own "Copilot harness" and "managed runtime" (whether they share an implementation is not stated on either page) — see the caveat below; legacy Bot Framework (MIT) being archived |
 | **[ServiceNow Otto][servicenow]** | "the AI control tower" | proprietary, cloud-only; bundled into Foundation/Advanced/Prime tiers (Apr 2026) | AI Agent Studio / Orchestrator / Control Tower + Action Fabric (MCP); vendor-neutral ("open to Claude, Copilot, or homegrown agents") |
 | **[SAP Joule Studio 2.0][sap-joule]** | "AI-first development environment" | proprietary; free design-time through 2026 (promotional), production terms TBD | NL goal → PRD + code + tests + multi-agent orchestration *at design time*; part of the SAP Business AI Platform ("the Autonomous Enterprise", Sapphire 2026) |
 | **[Databricks Genie][genie]** | "agentic data coworker" | proprietary managed; OSS lakehouse base (Spark / Delta / Iceberg) | Genie Ontology semantic graph as the persistent context "kernel"; Genie Agents as reusable autonomous workflows |
 | **[Glean Independent Agents][glean]** | "AI coworkers" | not stated in the announcement | Distinct per-agent identity + persistent memory; proactive/event-triggered action (parallel to Copilot Studio's autonomous agents) across Slack/Jira/Teams — still admin-configured, not autonomous goal origination; first instance is the OnCall Assistant (beta) |
 
 **Glean caveat**: added from the announcement blog post alone (2026-06-30). Its MCP support is confirmed first-party (`developers.glean.com/mcp`, IDE/host integrations for Claude Code, Cursor, Codex, and other MCP hosts); its A2A and AG-UI posture were not checked, so this row does not extend the "all interoperate via MCP + A2A, none has adopted AG-UI" line above to Glean — read that line as covering the original five.
+
+**Microsoft Foundry "managed runtime" caveat (2026-11-12)**: Microsoft Foundry uses "managed
+runtime" for two further, Copilot-Studio-unrelated things, each verified first-party against
+Microsoft's own Learn pages:
+
+- **Foundry Copilot harness** (public preview) — "an optional managed runtime for prompt agents.
+  Foundry operates the harness and its execution environment" [foundry-copilot-harness]
+  (2026-11-04). It is a same-named "Copilot harness," documented separately from the Copilot
+  Studio one in the table above — whether they share an implementation is not stated on either
+  page.
+- **Foundry hosted agents** — "containerized agentic AI applications that run on Agent Service,"
+  bring-your-own framework (Agent Framework, LangGraph, Semantic Kernel) [foundry-hosted-agents]
+  (2026-11-09). The Learn concept page states no preview or GA status for this feature at all;
+  only the separate marketing product page calls hosted agents "a managed runtime for running
+  agent code in Azure" and "a session-isolated managed runtime with autoscaling and zero idle
+  cost" [foundry-agent-service] — **GA status is unverified**, confirmed only as marketing-page
+  wording, not repeated on the Learn concept or FAQ pages checked.
+
+Full three-way harness disambiguation (Copilot Studio's renamed harness, Foundry's Copilot harness,
+and Foundry hosted agents) is in
+[microsoft-365-copilot-analysis.md § Three things called "harness"][m365-copilot-harness].
 
 **Read carefully.** SAP Joule's "NL goal → PRD + code + tests" is *design-time code generation*, not runtime goal attribution. ServiceNow's "AI Control Tower" is a human-facing governance/observability dashboard, not a machine-readable attribution store. These are governance and authoring surfaces layered over human-set objectives — strong on identity, audit, and control; silent on autonomous goal origination.
 
@@ -101,6 +122,9 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 | [Databricks Genie analysis][genie] | Agentic data coworker; Genie Ontology context graph |
 | [Glean — "Introducing independent agents"][glean] | AI coworker agents; independent identity, memory, proactive action |
 | Gartner — 2026 Hype Cycle for Agentic AI (gartner.com; bot-blocked, not link-checked) | First-party anchor for the formal category "AI agent development platforms" |
+| [Use the Microsoft Copilot harness with prompt agents][foundry-copilot-harness] | Foundry's own "Copilot harness" — a different thing from Copilot Studio's harness |
+| [Hosted agents in Foundry Agent Service][foundry-hosted-agents] | Foundry hosted agents — containerized, bring-your-own-framework; no stated preview/GA status |
+| [Microsoft Foundry Agent Service (product page)][foundry-agent-service] | Marketing-page-only "managed runtime" wording for hosted agents |
 | [AutoAgent][autoagent] · [Odysseus][odysseus] · [Goose][goose] · [multica][frameworks] · [HugAgentOS][hugagentos] · [Octop][octop] | OSS self-operating workspaces / runtimes (in-corpus analyses + HugAgentOS repo) |
 | [polyforge-orchestrator][polyforge] · [office-forge-orchestrator][office-forge] · [liminal-flux-gh-acc][liminal] | qte77 estate self-operating orchestrators (public repos) |
 
@@ -123,3 +147,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [goose]: ../agents/goose-analysis.md
 [frameworks]: agent-frameworks-infrastructure-landscape.md
 [ag-ui]: ../protocols/ag-ui-protocol-landscape.md
+[foundry-copilot-harness]: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/use-tools-skills-copilot-harness
+[foundry-hosted-agents]: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents
+[foundry-agent-service]: https://azure.microsoft.com/en-us/products/ai-foundry/agent-service
+[m365-copilot-harness]: ../agents/microsoft-365-copilot-analysis.md#three-things-called-harness
