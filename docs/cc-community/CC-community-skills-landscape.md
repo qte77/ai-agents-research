@@ -4,7 +4,7 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-10-11
+updated: 2026-11-12
 validated_links: 2026-10-11
 ---
 
@@ -451,9 +451,11 @@ Cross-ref: Dispatch (above) fans out *work* to background agents; `/agent-watchd
 
 ## coleam00 (Cole Medin): skills and excalidraw-diagram-skill
 
-**Repo**: [coleam00/skills][coleam00-skills] | **Stars**: 646 | **License**: MIT | pushed 2026-09-17
+**Repo**: [coleam00/skills][coleam00-skills] | **Stars**: 736 | **License**: MIT | pushed 2026-11-10 (`gh api`, 2026-11-12)
 
-34 skills — "straight out of my `.claude/skills/` folder" — built around one loop the author runs on
+The author, Cole Medin, also maintains the Archon workflow engine ([agent-frameworks-infrastructure-landscape.md §1](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#1-multi-agent-orchestration-frameworks)) and publishes on AI coding agents on his [YouTube channel][cole-youtube].
+
+34 skills when first reviewed (39 skill folders under `.claude/skills/` on 2026-11-12) — "Straight out of my `.claude/skills/` folder" — built around one loop the author runs on
 nearly every ticket: **prime → plan → implement → validate → review → commit → PR** (the PIV loop),
 plus meta-skills for building more of your own skills (`skills-create`, `rules-create-global`,
 `rules-check-drift`, `ablate-ai-layer` — strips a rule, reruns the same task, diffs the two). Installs
@@ -465,7 +467,7 @@ while tests are red — with the explicit framing "a rule *asks* the agent to be
 **guarantees** it." The `drive-screen` skill (under "Tools") does real desktop control — focus a
 window, type, paste, click, screenshot — on Windows, macOS, and Linux.
 
-**Repo**: [coleam00/excalidraw-diagram-skill][excalidraw-skill] | **Stars**: 4,903 | **License**: none
+**Repo**: [coleam00/excalidraw-diagram-skill][excalidraw-skill] | **Stars**: 5,240 (2026-11-12) | **License**: none
 found — the repo ships no `LICENSE` file and GitHub's own license detector returns `null`; only
 `.gitignore`, `README.md`, `SKILL.md`, and `references/` are present (checked via the GitHub contents
 API, 2026-09-30). A single skill that generates `.excalidraw` JSON diagrams designed to "argue, not
@@ -687,8 +689,9 @@ above, consistent with every other row in this doc's census.
 | [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
 | [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
 | [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
-| [coleam00/skills][coleam00-skills] | 34-skill PIV-loop set + meta-skills + hooks (646 stars, MIT) |
-| [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (4,903 stars, no license file) |
+| [coleam00/skills][coleam00-skills] | PIV-loop skill set + meta-skills + hooks (736 stars, MIT, 2026-11-12) |
+| [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (5,240 stars, no license file, 2026-11-12) |
+| [Cole Medin on YouTube][cole-youtube] | Author's channel (AI agents and coding assistants); linked for context, not cited for facts |
 | [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (23,302 stars, MIT) |
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
 | [stevesolun/ctx][ctx-repo] | Skill/agent/MCP/harness recommender over a bundled graph (587 stars, MIT; `gh api` 2026-10-02) |
@@ -708,6 +711,7 @@ above, consistent with every other row in this doc's census.
 [builderio-skills]: https://github.com/BuilderIO/skills
 [coleam00-skills]: https://github.com/coleam00/skills
 [excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
+[cole-youtube]: https://www.youtube.com/@ColeMedin
 [cf-sec-audit]: https://github.com/cloudflare/security-audit-skill
 [cf-blog]: https://blog.cloudflare.com/build-your-own-vulnerability-harness
 [ctx-repo]: https://github.com/stevesolun/ctx
