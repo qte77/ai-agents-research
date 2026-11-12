@@ -4,7 +4,9 @@
   decision model is `nimble` (Bespoke Labs), not `tev1` — the entry had the quickstart's explicit
   `--model tev1` and the README's actual stated default backwards. The JevEval (DeepEval) quote
   is corrected to the source's own wording and capitalization ("You define the logic, Jev makes
-  the decisions, and DeepEval calculates the score," not "does the calculation").
+  the decisions, and DeepEval calculates the score," not "does the calculation"). The gold-set
+  pricing comparison ("about 6× Jev's") is corrected to match the doc's own earlier pricing
+  paragraph ("roughly 5.7×" — Clef is 5.7× Jev's rate, not 6×; 6× was only true of Clef-flash).
 - `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`: the Strands Agents entry
   quoted AWS's AgentCore page as saying agents are "built on any framework" — that exact phrase
   appears nowhere on AgentCore's marketing or FAQ pages. Replaced with the page's actual hero-text
