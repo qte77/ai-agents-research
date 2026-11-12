@@ -31,5 +31,6 @@ Agent memory across the corpus. Pointers only; see [the hub index](README.md).
 | [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | Kortix CompanyOS (shared company memory in a multiplayer agent harness, Elastic License 2.0) and MemoProAgent/MemoProBench (graph-organized memory for proactive-assistant timing, paper only) | non-cc |
 | [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | ReHarness (arXiv 2610.12668) — backward-revised harness state for agentic continual learning, paper only | non-cc |
 | [research-agents-landscape.md § 1](../non-cc/knowledge-management/research-agents-landscape.md#1-autonomous-research-agents) | Épi (arXiv 2610.24944) — persistent research agent with hierarchical memory, paper only | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | WikiTrace (arXiv 2611.14320) — evidence-linked memory (insight → compilation → raw trajectory) reduces memory-induced degradation, rubric-scored, code released | non-cc |
 
 Related hubs: [knowledge-graphs.md](knowledge-graphs.md), [rag.md](rag.md).
