@@ -130,7 +130,7 @@ Scale signals (as reported by [CopilotKit][ag-ui-copilotkit]): 9K+ GitHub stars,
 
 ### Non-Adopters (as of 2026-04-24)
 
-- **Salesforce Agentforce 360** — not listed on the [ag-ui README][ag-ui-repo] integrations. Salesforce's own [Agentforce 360 announcements][sf-agentforce] emphasize **MCP via MuleSoft** and the proprietary **MuleSoft Agent Fabric** for cross-platform agent discovery (spanning Agentforce + Amazon Bedrock + Google Vertex AI + Microsoft Copilot Studio). Frontend strategy is "Headless 360" (API/MCP/CLI exposure), not a frontend interaction protocol. See [Agentforce 360 for AWS][sf-aws].
+- **Salesforce Agentforce 360** — not listed on the [ag-ui README][ag-ui-repo] integrations. Salesforce's own [Agentforce 360 announcements][sf-agentforce] emphasize **MCP via MuleSoft** and the proprietary **MuleSoft Agent Fabric** for cross-platform agent discovery (spanning Agentforce + Amazon Bedrock + Google Vertex AI + Microsoft Copilot Studio). Frontend strategy is "Headless 360" (API/MCP/CLI exposure), not a frontend interaction protocol. See [Agentforce 360 for AWS][sf-aws]. Agentforce Agents themselves document no *direct* A2A support ("In the absence of direct A2A support on Agentforce Agents" — Salesforce's own architecture recipe); MuleSoft Agent Fabric's Agent Governance layer is the documented MCP+A2A path instead — see [salesforce-agentforce-analysis.md][sf-agentforce-analysis] for the full first-party breakdown.
 
 ## A2UI (Agent-to-UI — Declarative Generative UI)
 
@@ -256,6 +256,7 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [ogui-site]: https://opengenerativeui.copilotkit.ai/
 [sf-agentforce]: https://www.salesforce.com/agentforce/what-is-new/
 [sf-aws]: https://www.salesforce.com/news/stories/agentforce-360-for-aws-announcement/
+[sf-agentforce-analysis]: ../agents/salesforce-agentforce-analysis.md
 [devin-faq]: https://docs.devin.ai/desktop/devin-desktop-faq
 [omnara]: https://www.ycombinator.com/launches/OCT-omnara-the-first-command-center-for-ai-agents-terminal-web-and-mobile
 [flightdeck]: https://github.com/flightdeckhq/flightdeck

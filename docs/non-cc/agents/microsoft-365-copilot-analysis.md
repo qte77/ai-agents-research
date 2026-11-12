@@ -923,6 +923,12 @@ re-checked even when Microsoft leaves the page unchanged.
   ID, the identity layer under Agent 365 and Copilot Studio agents
 - [CC-memory-system-analysis.md](../../cc-native/context-memory/CC-memory-system-analysis.md) —
   compares Copilot Studio memory (28-day auto-delete) with Claude Code's memory model
+- [salesforce-agentforce-analysis.md](salesforce-agentforce-analysis.md) — the comparable
+  first-party fact-check for Salesforce Agentforce 360; both this doc's Claude-on-Foundry/subprocessor
+  postures and that doc's Claude-via-Amazon-Bedrock trust boundary place Claude behind a
+  vendor-operated boundary with a different contractual shape, and both apply the same
+  "documented silence is not a stated exclusion" caveat to a residency question (the EU Data
+  Boundary here, the Hyperforce EU Operating Zone there)
 
 ## Sources
 
