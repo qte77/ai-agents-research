@@ -231,7 +231,7 @@ doc, and only items 1 and 2 above share any naming-conflation risk with each oth
 
 **Update (2026-11-12).** The *mechanism* behind item 2 is now vendor-documented, separately from
 the GA-by-date claim above, which remains unconfirmed. Declarative agent manifest schema 1.9
-(2026-09-30, updated 2026-10-22) adds a top-level `agent_skills` property — "a list of objects that
+(2026-09-30, updated 2026-10-22) adds a top-level `agent_skills` property — "[a] list of objects that
 reference skill directories containing a `SKILL.md` file," capped at eight entries — and states
 that "Agent Skills follow the Agent Skills standard, which provides a standardized way to define
 and package capabilities that agents can use" [manifest-1-9]. That is the open specification
@@ -511,8 +511,10 @@ from Cowork: "Home is your new starting point... Code lets everyone build their 
 And Autopilot is a persistent, proactive and personal agent that keeps working even when you're
 not" [new-copilot-blog]. **Autopilot was previously called Scout** — confirmed on Microsoft's own
 blog, not only in secondary coverage: "Autopilot, previously called Scout, is your digital
-teammate" [new-copilot-blog]. Home and Code began rolling out to Frontier "in the coming weeks";
-Autopilot expanded to private preview "at the end of the month" (September 2026) [new-copilot-blog].
+teammate" [new-copilot-blog]. Home and Code were slated to start rolling out to Frontier "in the
+coming weeks"; Autopilot was slated to expand to private preview "at the end of the month"
+(September 2026) [new-copilot-blog] — the cited post announces both, rather than confirming either
+had shipped.
 The same post states Copilot Managed Runtime (below) "is now in preview and will also be accessible
 inside Code" [new-copilot-blog]. The same-day Copilot Studio post calls it "public preview": "Today, we’re introducing Microsoft Copilot Managed Runtime into public preview" [managed-runtime-blog].
 
@@ -607,7 +609,7 @@ Microsoft 365 Copilot" [da-overview] (2026-09-30), built with low-code **Agent B
 Hosting:
 "Use Copilot's orchestrator and foundation model. No additional hosting is required"
 [da-agents-overview]. Its actions ("1-10 objects that identify plugins that provide actions") are
-API plugins [manifest-1-9]; the overview page separately notes that "a plugin can include or
+API plugins [manifest-1-9]; the overview page separately notes that "[a] plugin can include or
 reference an agent with other supported capabilities, such as skills, Copilot connectors, or
 MCP-based tools" [da-overview].
 
