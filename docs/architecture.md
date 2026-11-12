@@ -86,6 +86,8 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 | Community monitor | Community forums, GitHub | `triage/community/` | Monday 10:00 UTC |
 | ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → decision-model relevance gate (Clef via `decide()`), chat-LLM fallback for uncertain papers | `triage/rxiv/` | Tuesday 09:00 UTC |
 
+A content source whose credentials are unset (the community monitor's Reddit and X sources) or whose fetch fails is listed as skipped, with the reason, in the report, the triage PR and the run summary (#811).
+
 Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key. The CC changelog monitor's trigger uses `releases.atom` entry ids as its dedup ledger for feed-covered versions, falling back to the scan-doc version cutoff for any version the feed doesn't cover (a gap, or the feed being unavailable entirely) — `CHANGELOG.md` stays the sole content source either way (#410).
 
 A fifth scheduled workflow — `link-rot-monitor` (Monday 12:00 UTC) — is a **health** monitor rather than a content monitor: it runs lychee weekly and upserts (then auto-closes) a single `link-rot` issue when external links break. See [Lint Gate](#lint-gate).
@@ -98,6 +100,8 @@ for a dated event the doc predicts; once it passes, the entry is reported even i
 (#764). Its state file is refreshed through a triage PR like the content monitors (#705).
 
 A seventh — `plan-reconcile-monitor` (Monday 14:00 UTC) — runs `make reconcile` weekly and upserts (then auto-closes) a single `plan-drift` issue when a row of the newest plan disagrees with the live state of the PRs/issues it cites, so a merged blocker can't stay "blocked" between sessions. It fails the job, rather than filing an issue, when `gh` can't authenticate.
+
+An eighth — `decision-model-eval` (1st of each month, 15:00 UTC; also manual) — is a drift check for the decision models (plan 0013 row A7): it reruns both G1 gold sets with Clef, Clef-flash and Jev 1.13.0, writes `metrics.json`, compares with the committed `.github/scripts/data/gold/baseline.json` (ROC-AUC drop above 0.03, or a recommended `hi` moving by 0.05 or more; Brier shown, not flagged) and upserts (then auto-closes) a single `decision-drift` issue. Manual runs show the same comparison in the run summary without touching the issue. A manual run on 2026-11-12 reproduced the Clef and Clef-flash baseline exactly.
 
 **On-demand refresh (session-driven, not CI):** `.claude/workflows/refresh-docs.js` is a Claude Code Workflow-tool script (companion to the `adding-research-source` skill's `batch-sources` workflow) that re-verifies a given list of docs against their first-party sources — one read-only checker agent per doc plus an adversarial verifier per proposed correction set — and returns a corrections list the session then applies. The link-rot monitor guards URL *liveness*; `refresh-docs` guards claim *currency* (version gates, counts, renamed features). First run: the 2026-07-23 stale-cohort refresh (27 docs with `validated_links: 2026-03-*`).
 
