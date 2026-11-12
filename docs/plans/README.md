@@ -2,7 +2,7 @@
 title: Plans — Design & Decision Docs
 purpose: Convention for docs/plans/ — durable plan/design docs (the saved output of plan-mode work). GitHub Issues remain the authoritative backlog/roadmap; each plan doc links its tracking issue.
 created: 2026-06-14
-updated: 2026-09-28
+updated: 2026-11-12
 status: reference
 ---
 
@@ -30,7 +30,7 @@ status: reference
 
 | Plan | Status | Issue(s) |
 |---|---|---|
-| [2026-06-11-0001-plugin-rules-codeburn-merge.md](2026-06-11-0001-plugin-rules-codeburn-merge.md) | draft | none yet |
+| [2026-06-11-0001-plugin-rules-codeburn-merge.md](2026-06-11-0001-plugin-rules-codeburn-merge.md) | done | #452 |
 | [2026-06-14-0002-planning-workflow-and-open-task-triage.md](2026-06-14-0002-planning-workflow-and-open-task-triage.md) | done | #242, #243 |
 | [2026-07-05-0003-status-frontmatter-migration.md](2026-07-05-0003-status-frontmatter-migration.md) | done | #348 |
 | [2026-07-08-0004-new-sources-batch.md](2026-07-08-0004-new-sources-batch.md) | done | #374 |
@@ -41,4 +41,5 @@ status: reference
 | [2026-09-27-0009-focus-shared-memory-context.md](2026-09-27-0009-focus-shared-memory-context.md) | done | #509, #504, #515, #516, #517, #348 |
 | [2026-10-01-0010-open-substrate-cells.md](2026-10-01-0010-open-substrate-cells.md) | done | #576 |
 | [2026-10-06-0011-owner-leads-and-followups.md](2026-10-06-0011-owner-leads-and-followups.md) | done | #600 |
-| [2026-10-10-0012-decision-models-estate.md](2026-10-10-0012-decision-models-estate.md) | approved | #652 |
+| [2026-10-10-0012-decision-models-estate.md](2026-10-10-0012-decision-models-estate.md) | done | #652 |
+| [2026-11-12-0013-followups-after-0012.md](2026-11-12-0013-followups-after-0012.md) | approved | #800 |

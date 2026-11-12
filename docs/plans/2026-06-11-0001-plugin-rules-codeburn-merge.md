@@ -1,9 +1,9 @@
 ---
 title: One copy per rule — user-level rules from the claude-code-plugins SoT + CodeBurn read discipline
-status: approved
+status: done
 issue: "#452"
 created: 2026-06-11
-updated: 2026-11-09
+updated: 2026-11-12
 ---
 
 First captured as a local session handoff on 2026-06-11 (merged here 2026-09-23). The original goal was
@@ -75,9 +75,9 @@ Tracking issue: [#452][issue].
 | ~~2~~ | ~~PR 1 — read-discipline (+ external-input, claim-verification) into the plugin SoT~~ | agent | Done 2026-10-19: [claude-code-plugins#251][pr1]; `make check_sync`/`validate`/`lint_md` green |
 | ~~3~~ | ~~Merge claude-code-plugins#251, #688, #689 and this plan's PR~~ | owner | Done 2026-10-19: all merged (#687 is this plan's PR) |
 | ~~4~~ | ~~Phase 2: symlink read-discipline, external-input and claim-verification into `~/.claude/rules/`, delete the `/workspaces/.claude/rules/` copies, drop aar's `read-discipline.md` and repoint `AGENT_LEARNINGS.md`~~ | agent | Done 2026-10-19 (#691): fresh headless session lists each rule once |
-| 5 | AGENTS.md-only: make gha-issue-triage `_load_repo_context()` fall back to `AGENTS.md`; then delete `/workspaces/AGENTS.md` + `/workspaces/qte77/AGENTS.md` (check no repo under `/workspaces` relies on them) and aar's `CLAUDE.md` symlink. **Default:** gha-issue-triage PR first | agent (owner merges) | Fresh session loads aar's AGENTS.md once; triage still gets repo context |
+| ~~5~~ | ~~AGENTS.md-only: make gha-issue-triage `_load_repo_context()` fall back to `AGENTS.md`; then delete `/workspaces/AGENTS.md` + `/workspaces/qte77/AGENTS.md` (check no repo under `/workspaces` relies on them) and aar's `CLAUDE.md` symlink. **Default:** gha-issue-triage PR first~~ | agent (owner merges) | Moved to [plan 0013](2026-11-12-0013-followups-after-0012.md) row A2 (2026-11-12) |
 | ~~6~~ | ~~Corpus: add the verified behaviour above to `CC-memory-system-analysis.md` (parent rules observed, AGENTS.md native read, settings precedence — fixes `CC-tools-inventory.md:240` "Precedence unclear")~~ | agent | Done 2026-11-09: `CC-tools-inventory.md` precedence answered in #758; parent-folder rules (observed), user-level symlink behaviour and settings-file locations added to `CC-memory-system-analysis.md` in this PR; AGENTS.md native read was already covered there |
-| 7 | Parent settings files `/workspaces/.claude/settings*.json` and `/workspaces/qte77/.claude/settings*.json` are used only when CC starts in those folders. **Default:** keep | owner | Keep/delete recorded in #452 |
+| ~~7~~ | ~~Parent settings files `/workspaces/.claude/settings*.json` and `/workspaces/qte77/.claude/settings*.json` are used only when CC starts in those folders. **Default:** keep~~ | owner | Closed 2026-11-12 with the default: keep |
 | ~~8~~ | ~~Merge [qte77/qte77#196][qte77-196]: drops qte77's local copies of compound-learning, context-management, core-principles and unattended-execution (two were older than the SoT), repoints its 9 links and the `AGENTS.md` Rules line~~ | owner | Done 2026-10-19: merged; a fresh headless session on qte77 `main` lists each of the 8 rules once |
 
 ## Gotchas
