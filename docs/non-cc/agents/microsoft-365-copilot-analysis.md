@@ -829,20 +829,20 @@ aid, never as a status source.
 | **AB-100** — Agentic AI Business Solutions Architect Expert | Architect agentic-first, multi-agent business solutions across Dynamics 365, Power Platform, Copilot Studio, and Microsoft Foundry; requires the AB-100 exam plus one prerequisite Associate certification (the listed options include AB-620, AB-410, AI-103, and AI-300) | Expert / Solution Architect | GA; Learn states "Updates to the AB-100 exam are coming on November 16, 2026" [ab-100] | [Credential page][ab-100] |
 | **AB-730** — AI Business Professional | Use generative-AI productivity tools (Microsoft 365 Copilot, Copilot Cowork, pre-built agents, Work IQ) to drive business outcomes without coding | Beginner / Administrator, Business User | GA; page last updated 2026-10-20 | [Credential page][ab-730] |
 | **AB-731** — AI Transformation Leader | Recognize AI-transformation opportunities and lead AI adoption using Microsoft 365 Copilot and Foundry Tools, without coding | Beginner / Business Leader | GA; page last updated 2026-07-22 | [Credential page][ab-731] |
-| **AI-103** — Azure AI Apps and Agents Developer Associate | Design, develop, and deploy Azure AI and agentic solutions in Python using Microsoft Foundry — generative AI/agentic solutions, computer vision, text analysis, information extraction | Intermediate (Associate) / AI Engineer, Developer | GA; page last updated 2026-11-05 | [Credential page][ai-103] |
-| **AI-500** — Multi-Agent AI Solutions Expert | Design, build, and optimize scalable, production-ready multi-agent AI systems; orchestration via Microsoft Agent Framework, Model Context Protocol, RAG, and LangGraph; requires the AI-103 (Azure AI Apps and Agents Developer Associate) credential as a prerequisite | Expert / AI Engineer, Solution Architect, Developer | GA per Learn's own credential and catalog pages — neither carries a "(beta)" marker there; page last updated 2026-09-29. The certification poster PDF labels the same credential "(Beta)" instead — a poster/Learn disagreement resolved here in Learn's favor, per the note above | [Credential page][ai-500] |
-| **SC-500** — Cloud and AI Security Engineer Associate | Design, implement, and manage end-to-end security controls across Azure, hybrid, and AI-enabled environments, including securing AI solutions | Intermediate (Associate) / Security Engineer | GA; page last updated 2026-09-25; the page itself notes "The Practice Assessment for this exam is not currently available" | [Credential page][sc-500] |
+| **AI-103** — Azure AI Apps and Agents Developer Associate | Design, develop, and deploy Azure AI and agentic solutions in Python using Microsoft Foundry — generative AI/agentic solutions, computer vision, text analysis, information extraction | Intermediate (Associate) / AI Engineer, Developer | GA | [Credential page][ai-103] |
+| **AI-500** — Multi-Agent AI Solutions Expert | Design, build, and optimize scalable, production-ready multi-agent AI systems; orchestration via Microsoft Agent Framework, Model Context Protocol, RAG, and LangGraph; requires the AI-103 (Azure AI Apps and Agents Developer Associate) credential as a prerequisite | Expert / AI Engineer, Solution Architect, Developer | GA per Learn's own credential page, which carries no "(beta)" marker. The certification poster PDF labels the same credential "(Beta)" instead — a poster/Learn disagreement resolved here in Learn's favor, per the note above | [Credential page][ai-500] |
+| **SC-500** — Cloud and AI Security Engineer Associate | Design, implement, and manage end-to-end security controls across Azure, hybrid, and AI-enabled environments, including securing AI solutions | Intermediate (Associate) / Security Engineer | GA; the page itself notes "The Practice Assessment for this exam is not currently available" | [Credential page][sc-500] |
 
-**2026 retirements named in the lead notes, checked against Learn directly.** Learn's own
-[credential-retirement page][cred-retirement] confirms three exact retirement dates, but — contrary
-to the lead notes' "replaces" framing, which traces to Microsoft Partner Center announcements, not
-Learn — **no Learn page for any of the six certifications below names the other as a
+**2026 retirements, checked against Learn directly.** Learn's own
+[credential-retirement page][cred-retirement] confirms three exact retirement dates. The pairings
+AI-102 → AI-103, PL-200 → AB-410 and AZ-500 → SC-500 circulate as replacements (attributed to
+Microsoft Partner Center announcements, which this pass did not check), but **no Learn page for any of the six certifications below names the other as a
 replacement or successor**:
 
 - **AI-102** (Microsoft Certified: Azure AI Engineer Associate) retired **June 30, 2026**
   [cred-retirement]; its own page adds only "This certification and the renewal assessment are
   retired" [ai-102-cert], naming no successor. AI-103's own page likewise names no predecessor.
-  Treat "AI-102 → AI-103" as a Partner Center claim, not a Learn-confirmed succession.
+  Treat "AI-102 → AI-103" as unconfirmed on Learn.
 - **PL-200** (Microsoft Certified: Power Platform Functional Consultant Associate) retired
   **August 31, 2026** [cred-retirement] [pl-200-cert]. AB-410 (Microsoft Certified: Intelligent
   Applications Builder Associate) is listed only as one of several Associate-level prerequisite

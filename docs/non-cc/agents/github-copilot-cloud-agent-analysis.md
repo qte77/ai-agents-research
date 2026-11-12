@@ -131,7 +131,7 @@ distinct, current credential rather than relying on a secondary source:
   catalog as of 2026-11-12, with its own credential page — this is the agentic-development
   credential named on Microsoft's certification poster, independently confirmed first-party here
   rather than taken on the poster's word. It "demonstrate[s] deep expertise in deploying,
-  operating, integrating, and governing AI agents in production SDLC workflows... ensuring
+  operating, integrating, and governing AI agents in production SDLC workflows, ensuring
   reliability, safety, and speed with GitHub as the control plane" [gh-600-cert] (Intermediate
   level), assessed across six domains: preparing agent architecture and SDLC processes;
   implementing tool use and environment interaction; managing memory, state, and execution;
