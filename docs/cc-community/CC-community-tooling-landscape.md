@@ -5,7 +5,7 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-09
+updated: 2026-11-11
 validated_links: 2026-10-11
 ---
 
@@ -476,6 +476,68 @@ multi-reviewer/concurrent-comment tool.
 
 Cross-ref: [CC-memory-system-analysis.md § Three-Phase Workflow with Human-Review Gates](../cc-native/context-memory/CC-memory-system-analysis.md#three-phase-workflow-with-human-review-gates) — human-review is a concrete tool for the review gates that section describes conceptually
 
+## Plannotator (backnotprop)
+
+**Repo**: [backnotprop/plannotator][plannotator] | **Stars**: 10,062 | **License**: MIT or Apache-2.0
+at your option (`LICENSE-MIT` + `LICENSE-APACHE`; the README says "Dual-licensed under Apache 2.0
+or MIT at your option"; GitHub's API shows only Apache-2.0) | **Version**: v0.28.61 (2026-11-10),
+created 2025-12-28 (`gh api` 2026-11-11)
+
+A "local, browser-based review surface for AI coding agents" (README). When the agent finishes a
+plan, a diff, or a Markdown/HTML document, Plannotator opens it in the browser. You annotate it,
+approve or deny, and the structured feedback goes back to the agent; the next round shows a plan
+diff. Same job as human-review above, built around plan mode rather than a skill.
+
+### How It Integrates With Claude Code
+
+- Installed as a plugin: `/plugin marketplace add backnotprop/plannotator`, then
+  `/plugin install plannotator@plannotator`.
+- Its `hooks.json` registers three hooks:
+  - **`PermissionRequest`** on `ExitPlanMode` runs `plannotator` (timeout 345,600 s). Plan review
+    therefore needs no command: the plan opens when Claude asks to leave plan mode.
+  - **`PreToolUse`** on `EnterPlanMode` runs `plannotator improve-context`.
+  - **`SessionStart`** on `compact` prints its Inbox reminder.
+- The plugin also loads a hooks module (`mod/register.ts`). Per the README, on Claude Code
+  2.1.287 or newer this makes review non-blocking: "Claude ends its turn and your decision arrives
+  later as a message" (turn it off with `PLANNOTATOR_CLAUDE_MOD=0`). A worked example of a mod:
+  [CC-mods-function-hooks-analysis.md](../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md).
+- Slash commands: `/plannotator-annotate` (file, folder or URL), `/plannotator-last` (the agent's
+  last message) and `/plannotator-review` (the uncommitted diff, or a GitHub PR / GitLab MR).
+
+### Beyond Claude Code
+
+The README names ten harnesses: Claude Code, Codex, Copilot CLI, Gemini CLI, OpenCode, Kiro,
+Droid, Amp, DeepSeek Harness and Pi. Plan interception depends on each harness's hooks; on Droid
+it is "Commands only, no plan interception yet". A Plannotator Inbox lets agents leave questions
+and files while they keep working, over plugins or MCP.
+
+### Data and Sharing
+
+- "Plannotator does not collect usage telemetry or analytics" (README). Plans, diffs and
+  annotations stay local by default; network use is opt-in (URL fetching, your own GitHub/GitLab
+  CLI, an AI provider you configure, sharing). The app checks GitHub for the latest release when
+  it loads.
+- Link sharing: large shares are encrypted with AES-256-GCM before upload and the server stores
+  only ciphertext. The README says link sharing "is moving to deprecated support". Its
+  replacement for team sharing, **Workspaces**, is "a separate hosted product", so the local
+  storage model does not apply there. No price is published; the product site describes a
+  waitlist (not read verbatim).
+
+### Adoption Considerations
+
+**Strengths**: hooks into the plan-mode exit itself, so every plan gets a review step with no
+command to remember; deny-with-feedback and plan diffs between rounds; ten harnesses; local by
+default with no telemetry; widely adopted (10k stars, against human-review's 1.3k).
+
+**Risks**: the non-blocking flow depends on a recent Claude Code version and on hooks modules,
+and was not tested here; team sharing is moving to a hosted product with no published terms; a
+fast release cadence (v0.28.61 within eleven months) means behaviour can shift between installs.
+
+Not rubric-scored yet.
+
+Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md)
+(`PermissionRequest`), and the human-review gate pattern above.
+
 ---
 
 ## Detailed Tool Landscapes
@@ -522,6 +584,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
 | **human-review** | Visual review + feedback relay | Skill (any agent with skill support) | Google-Doc-style comments/edits batched to the waiting agent | Active (1,302 stars, v0.8.2) |
+| **Plannotator** | Plan/diff review + feedback relay | Plugin: `PermissionRequest` hook on `ExitPlanMode` + hooks module | Browser annotation, approve/deny with structured feedback; plan diffs between rounds | Active (10,062 stars, v0.28.61) |
 
 All twenty-eight address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
@@ -553,6 +616,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (43,400 stars, Apache-2.0, v0.9.3; `gh api` 2026-10-11) |
 | [Zeron][zeron] | Local-first coding-agent session engine + desktop control plane, optional multi-device sync (2,195 stars, MIT, v0.2.85) |
 | [human-review][human-review] | Visual HTML/Markdown review — comments and edits batched to the waiting agent (1,302 stars, MIT, v0.8.2) |
+| [Plannotator repository][plannotator] | README (integrations, privacy, sharing), `hooks.json`, `LICENSE-MIT`/`LICENSE-APACHE`, v0.28.61 release; `gh api` 2026-11-11 |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -609,6 +673,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [herdr-agent-support]: https://herdr.dev/docs/add-herdr-support/
 [zeron]: https://github.com/zeronsh/zeron
 [human-review]: https://github.com/petergyang/human-review
+[plannotator]: https://github.com/backnotprop/plannotator
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
