@@ -23,7 +23,7 @@ its own first-party date and status.
 - **The "masking disabled for agents" claim is correct and not actually in conflict with anything.**
   Salesforce's own help article states plainly: "pattern-based and field-based data masking for
   large language models (LLMs) is disabled for agents" [masking-agents]. A 2025-06-10 Salesforce
-  blog post explains the scope: masking stays on for out-of-the-box features (Service Replies, Work
+  blog post explains the scope: masking stays on for out-of-the-box features (Service Replies, Field
   Summaries) and for prompt templates run *directly* through Prompt Builder or Flow — it turns off
   only when that same template is invoked *through an agent action* [masking-blog] [masking-agents].
   This holds even when the model is Claude running inside the Salesforce trust boundary: "Data
@@ -43,16 +43,23 @@ its own first-party date and status.
   full table on the *same page*, read the same day, don't agree with each other. Treat the
   single-model framing as probably stale, not as the current admin-UI truth. Not resolved further in
   this pass — see [Unverified](#what-this-pass-did-not-settle).
-- **Agentforce Agents do not have direct A2A protocol support**, per Salesforce's own architecture
-  recipe: "In the absence of direct A2A support on Agentforce Agents" [agentic-patterns] — the
-  documented path for agent-to-agent interop is the separately-branded MuleSoft Agent Fabric, whose
-  Agent Governance layer does name both MCP and the Agent2Agent (A2A) protocol explicitly
-  [mulesoft-fabric]. This corrects an earlier internal research note that read an undated architect
-  page as claiming "both an A2A client and a server."
-- **The Flex Credits Rate Card cited here is dated "Updated as of August 18, 2026"** [rate-card] —
-  Salesforce publishes a new dated PDF at the same URL pattern periodically (a web search surfaced
-  later-dated copies at the same path); re-check the current file before quoting any multiplier in a
-  budget. See [Pricing](#pricing-flex-credits-rate-card-as-of-2026-08-18).
+- **Salesforce's own documentation disagrees with itself on whether Agentforce agents have direct
+  A2A support.** An architect.salesforce.com recipe states, as its premise, "In the absence of
+  direct A2A support on Agentforce Agents" [agentic-patterns], and MuleSoft's own A2A-bridge
+  documentation agrees: "Salesforce Agentforce agents and Microsoft Copilot Studio agents, aren't
+  A2A-compliant on their own" [a2a-bridge]. But Salesforce's own Agentforce interoperability guide
+  contradicts both: "Agentforce A2A Outbound is the native way for Agentforce agents to collaborate
+  directly with a third party agent," and "A2A Inbound allows external third-party agents to
+  natively call upon the specialized skills and data of an Agentforce agent" [interop-guide]. None of
+  the three pages carries a date or a GA/preview/beta label. **Presented here as an open
+  contradiction inside Salesforce's own documentation, not resolved in this pass** — see
+  [Unverified](#what-this-pass-did-not-settle).
+- **The Flex Credits Rate Card cited here is the 2026-11-03 version** ("Updated as of November 3,
+  2026" [rate-card]), which supersedes the 2026-08-18 version an earlier draft of this doc cited
+  [rate-card-aug]; the multipliers common to both are unchanged, but November adds new rows (IT/HR
+  Employee Agent Resolutions, a Sales category, a Slack Workspace section) — see
+  [Pricing](#pricing-flex-credits-rate-card-as-of-2026-11-03). Salesforce republishes this PDF at the
+  same URL pattern periodically; re-check the current file before quoting any multiplier in a budget.
 - **The Hyperforce EU Operating Zone's own pages do not name Agentforce** anywhere this pass checked
   — not a stated exclusion, just a documented silence (see
   [EU Operating Zone](#eu-operating-zone-hyperforce)), the same "absence, not refutation" shape the
@@ -101,7 +108,7 @@ here.
   grounded in company data and governance" [sf-360-ga].
 - **Data 360** — "now activates a company's data, structured or unstructured, to give every agent
   business context" [sf-360-ga]; billed with its own volume-tiered Flex Credit multipliers (see
-  [Pricing](#pricing-flex-credits-rate-card-as-of-2026-08-18)).
+  [Pricing](#pricing-flex-credits-rate-card-as-of-2026-11-03)).
 - **Headless 360** — announced 2026-04-15 [sf-headless360] (third-party event coverage ties this to
   TrailblazerDX (TDX) 2026, not independently confirmed on the press page itself): exposes
   Salesforce capability "as an API, MCP tool, or CLI command" [sf-headless360], bundling "more than
@@ -136,10 +143,12 @@ against competing vendors' integration depth in this pass.**
 - **"Salesforce in Claude"** — the reverse direction, Salesforce inside Anthropic's own Claude
   surface — ships "a Plugin with 37 prebuilt sales skills, including meeting prep, deal health
   review, and pipeline review," letting sellers "work with live revenue data and take governed
-  actions from within Claude" [claudeforce]. Status, quoted verbatim: "Salesforce in Claude is
-  available to select pilot customers now and expects to launch in open beta in September 2026"
-  [claudeforce] — pilot at announcement time, open beta still a forward-looking date on the same
-  page.
+  actions from within Claude" [claudeforce]. Salesforce's own 2026-08-26 announcement put it at
+  pilot stage, quoted verbatim: "Salesforce in Claude is available to select pilot customers now and
+  expects to launch in open beta in September 2026" [claudeforce]. **Anthropic's own page confirms
+  that beta shipped on schedule.** Dated 2026-09-15, it states: "Today we are releasing Salesforce in
+  Claude in beta," and describes its reach more broadly than "select pilot customers": "Salesforce in
+  Claude is available in beta on all paid Claude plans" [claude-in-claude].
 
 **The model catalog is bigger than the simple admin toggle suggests.** Salesforce's developer docs
 describe a simple binary at the org level: "The Salesforce Default model option for Agentforce is a
@@ -203,14 +212,26 @@ launch coverage from 2025 claimed an October 2025 GA for the Registry and Broker
 that is secondary coverage, not confirmed on the first-party page fetched here — **flagged
 unconfirmed**, not asserted.
 
-**A2A correction.** Despite MuleSoft Agent Fabric's own A2A references, Agentforce Agents themselves
-do not have direct A2A support documented: an architect.salesforce.com recipe for connecting agents
-states "In the absence of direct A2A support on Agentforce Agents" [agentic-patterns] as its premise
-for recommending a MuleSoft connector workaround to expose an agent as an A2A server. A prior internal
-research note read an undated page in this same family as claiming Agentforce supports "both an A2A
-client and a server" — that reading is not supported by the recipe page checked here, which states
-the opposite as its starting premise. Whether a different page states full native A2A support was not
-checked further in this pass.
+**A2A: Salesforce's own documentation disagrees with itself.** MuleSoft Agent Fabric's component
+descriptions above name the A2A protocol explicitly, but whether *Agentforce Agents themselves* have
+direct A2A support is not settled across Salesforce's own first-party pages checked in this pass:
+
+- An architect.salesforce.com recipe for connecting agents states, as its premise, "In the absence
+  of direct A2A support on Agentforce Agents" [agentic-patterns], and recommends a MuleSoft connector
+  workaround to expose an agent as an A2A server instead.
+- MuleSoft's own A2A-bridge documentation agrees with that premise: "Salesforce Agentforce agents and
+  Microsoft Copilot Studio agents, aren't A2A-compliant on their own" [a2a-bridge]. For Agentforce
+  specifically, "the Bridge translates A2A to the Agentforce Agent API" [a2a-bridge] — and on that
+  path, "The Agentforce API doesn't support push notifications" [a2a-bridge].
+- Salesforce's own Agentforce interoperability guide contradicts both of the above: "Agentforce A2A
+  Outbound is the native way for Agentforce agents to collaborate directly with a third party agent"
+  [interop-guide], and, for the reverse direction, "A2A Inbound allows external third-party agents to
+  natively call upon the specialized skills and data of an Agentforce agent" [interop-guide].
+
+None of the three pages carries a publication date or a GA/preview/beta label for the A2A capability
+itself. **This is presented here as an unresolved contradiction inside Salesforce's own
+documentation, in both directions, not as a settled fact** — see
+[Unverified](#what-this-pass-did-not-settle).
 
 ## Agent Script and Agentforce DX
 
@@ -244,13 +265,15 @@ orgs, but this pass found no dedicated first-party "rollback" command for agent 
 control and re-deploying an earlier committed version is the documented recovery path (see also
 [Best Practices](#best-practices-agent-development-lifecycle) on agent versioning).
 
-## Pricing: Flex Credits Rate Card (as of 2026-08-18)
+## Pricing: Flex Credits Rate Card (as of 2026-11-03)
 
-The cited rate card PDF states "Updated as of August 18, 2026" on its own last page [rate-card].
-**A web search in this pass surfaced later-dated copies of the same document at the same URL
-pattern** (e.g., an 2026-08-31 and a 2026-11-3 filename) — re-check the current file at
-`salesforce.com/.../agentforce/Flex-Credits-Rate-Card-<date>.pdf` before quoting any multiplier in a
-budget; the figures below are a dated snapshot, not a standing price.
+The cited rate card PDF now states "Updated as of November 3, 2026" on its own last page
+[rate-card]. An earlier draft of this doc cited the 2026-08-18 version of the same document
+[rate-card-aug]; the multipliers the two versions share are unchanged, but the November version adds
+several rows not present in August (listed below). **Salesforce republishes this PDF at the same URL
+pattern periodically** (`salesforce.com/.../agentforce/Flex-Credits-Rate-Card-<date>.pdf`) — re-check
+the current file before quoting any multiplier in a budget; the figures below are a dated snapshot,
+not a standing price.
 
 | Category | Usage type | Production multiplier | Sandbox multiplier |
 |---|---|---|---|
@@ -261,20 +284,35 @@ budget; the figures below are a dated snapshot, not a standing price.
 | Salesforce-enabled foundational LLMs | Standard Prompts | 4 | 4 |
 | Salesforce-enabled foundational LLMs | Advanced Prompts | 16 | 16 |
 | Service | Help Agent Resolutions | 400 | 0 |
+| Service | IT and HR Employee Agent Resolutions *(new since August)* | 400 | 0 |
+| Sales | Customer Engagement / Leads Worked *(new since August)* | 400 | 320 |
 | Speech Foundations | Speech to Text (per hour) | 150 | 150 |
 | Speech Foundations | Text to Speech (per 1M chars) | 6,000 | 6,000 |
 | Speech Foundations | Translation (per 1M chars) | 4,000 | 4,000 |
-| Customer 360 Platform | Record Operation (CRUD) / Process Invocation | TBA | TBA |
+| Customer 360 Platform | Headless Platform Interaction *(collapses two prior TBA rows)* | TBA | — |
 | Personalization | Personalization Decisioning (per 1K decisions) | 100 | 100 |
+| Slack Workspace *(new since August)* | Slackbot Standard Action | 40 (flat, per workspace) | — |
+| Slack Workspace *(new since August)* | Slackbot Advanced Action | 200 (flat, per workspace) | — |
 
-All figures from [rate-card]. Data 360 billing uses a separate, four-tier volume schedule (Base tier
-up to 300k credits, down to a Tier 4 rate after 12.5M credits/month) across ten usage types (Prep,
-Unification, Segmentation, Activation, Zero-Copy Sharing-Out, Queries, Unstructured/Intelligent
-Processing, Streaming/Real-Time Pipeline, Code Extension) — see the rate card directly for the full
-table [rate-card]; not reproduced here in full to avoid a second point of drift from the source.
-Footnote 2 on the card restricts the "Salesforce-enabled foundational LLMs" row to "Agentforce 1
-Edition Customers and Agentforce for Sales/Service/Industries Customers and any other Products that
-no longer use Einstein Requests" [rate-card].
+All figures from [rate-card]. **New since the August 2026 version**: "IT and HR Employee Agent
+Resolutions," at the same 400/0 rate as the existing Help Agent Resolutions row; a new Sales
+category, "Customer Engagement / Leads Worked" (400 production / 320 sandbox); a new Slack Workspace
+section, billed "per Slack Workspace" [rate-card], with a flat "Slackbot Standard Action" multiplier
+of 40 and "Slackbot Advanced Action" at 200 (not split by production/sandbox); and the Customer 360
+Platform section, which the August version listed as two separate TBA rows (Salesforce Record
+Operation / CRUD, and Salesforce Process Invocation), is collapsed in November into a single
+"Headless Platform Interaction" row, still TBA [rate-card].
+
+Data 360 billing uses a separate, four-tier volume schedule (Base tier up to 300k credits, down to a
+Tier 4 rate after 12.5M credits/month) across **eleven** usage types — Prep, Unification,
+Segmentation, Activation, Zero-Copy Sharing-Out, Queries, Unstructured Processing, Intelligent
+Processing, Streaming Pipeline, Real-Time Pipeline, and Code Extension [rate-card] (an earlier draft
+of this doc undercounted these as "ten" by compressing two pairs — Unstructured/Intelligent
+Processing and Streaming/Real-Time Pipeline — into one list item each; corrected here). See the rate
+card directly for the full per-tier table; not reproduced here in full to avoid a second point of
+drift from the source. Footnote 2 on the card restricts the "Salesforce-enabled foundational LLMs"
+row to "Agentforce 1 Edition Customers and Agentforce for Sales/Service/Industries Customers and any
+other Products that no longer use Einstein Requests" [rate-card].
 
 **Current list prices**, from Salesforce's own pricing page, accessed 2026-11-12 [agentforce-pricing]:
 
@@ -286,20 +324,26 @@ no longer use Einstein Requests" [rate-card].
 - **Agentforce User License**: "$5" USD/user/month (requires Flex Credits) [agentforce-pricing].
 - **Agentforce Coworker User License**: "$50" USD/user/month [agentforce-pricing].
 - Salesforce Foundations: "$0" [agentforce-pricing].
+- **Flex Credits and Conversations cannot both be used in the same org.** The pricing page's own FAQ
+  states this directly — question: "Can I use both Flex Credits and conversation pricing at the same
+  time?"; answer: "No. Flex Credits and Conversations will not be supported in the same org."
+  [agentforce-pricing]. An earlier draft of this doc dropped this claim as unverified; it is restored
+  here, confirmed verbatim at source.
 
 The pricing page fetched in this pass lists included credits only for Max Edition (2.75M/org/year);
 it does not state separate included-credit figures for other editions. Earlier research notes cited
 differing historical figures (1M for an "Agentforce 1" edition, 2.5M on a regional page) — **neither
-was independently re-verified at source in this pass**; treat them as unconfirmed. A claim that the
-$2/conversation plan "is not combinable with Flex Credits in one org" was in prior research notes but
-was not found on the pricing page fetched here — **dropped as unverified**.
+was independently re-verified at source in this pass**; treat them as unconfirmed.
 
 ## EU Operating Zone (Hyperforce)
 
-The Hyperforce EU Operating Zone is a paid, separately licensed add-on. Its own FAQ page states
-scope only generically: "includes a select set of products and features that have been vetted to
-meet the offering's strict obligations" [eu-oz-1], and a product page adds: "These products span
-Sales Cloud, Service Cloud, the Salesforce Platform, industries, and more" [eu-oz-2].
+The Hyperforce EU Operating Zone is a paid, separately licensed add-on, now branded on its own FAQ
+page's main heading simply as "Hyperforce Operating Zone" (the page's original
+`data-residence-eu-oz` URL now redirects to a `public-cloud-infrastructure/operating-zone` path,
+updated in the citation here [eu-oz-1]). That FAQ states scope only generically: "includes a select
+set of products and features that have been vetted to meet the offering's strict obligations"
+[eu-oz-1], and a product page adds: "These products span Sales Cloud, Service Cloud, the Salesforce
+Platform, industries, and more" [eu-oz-2].
 
 **Neither EU Operating Zone page checked in this pass names "Agentforce" or "Agentforce 360
 Platform"** as included, and neither states which cloud infrastructure provider (AWS or otherwise)
@@ -393,8 +437,10 @@ Dated milestones independently fetched and quoted in this pass:
 | 2026-04-15 | Headless 360 announced (60+ MCP tools, 30+ coding skills) | [sf-headless360] |
 | 2026-07-13 (week of) | New agents can only be created in the new Agentforce Builder; legacy agents keep running | [builder-migration] |
 | 2026-08-26 | Claudeforce: Claude as Atlas reasoning model, default for Vibes/Coworker/Slack, via Bedrock inside the trust boundary; "Salesforce in Claude" plugin (37 skills) pilot | [claudeforce] |
-| 2026-08-18 | Flex Credits Rate Card, the version cited in this doc, "Updated as of August 18, 2026" | [rate-card] |
+| 2026-08-18 | Flex Credits Rate Card, an earlier version this doc previously cited, "Updated as of August 18, 2026" | [rate-card-aug] |
+| 2026-09-15 | Anthropic's own page confirms "Salesforce in Claude" shipped in beta "on all paid Claude plans" | [claude-in-claude] |
 | 2026-10-13 | Winter '27 (264) release post; MCP Risk Score in Security Center; "all features are GA unless otherwise noted" | [winter27-blog] |
+| 2026-11-03 | Flex Credits Rate Card, the version cited in this doc, "Updated as of November 3, 2026" | [rate-card] |
 
 **Earlier milestones carried from prior secondary research notes, not independently re-fetched in
 this pass** — presented for orientation only, each unconfirmed at first-party source here: Agentforce
@@ -413,10 +459,11 @@ four as background context, not as verified facts of this analysis.
 | MuleSoft Agent Fabric (Registry/Broker/Governance/Visualizer) | Documented on an undated architect.salesforce.com page [mulesoft-fabric] | No GA/preview/beta label on the page itself; third-party 2025 launch coverage claims October 2025 GA for Registry+Broker — **secondary-only, unconfirmed here** |
 | Agentforce Registry (Setup MCP registration, Risk Assessment panel) | Documented in an undated API Catalog ConnectAPI guide [mcp-registry] | No GA/preview/beta label on the page fetched |
 | MCP Risk Score (Security Center) | Winter '27 (264) release post, 2026-10-13 [winter27-blog] | Stated GA per the release's blanket "GA unless otherwise noted" policy [winter27-blog]; not individually re-checked for an exception |
-| Claude via Amazon Bedrock inside the Salesforce Trust Boundary | 2025-10-14 [sf-anthropic-1014] | A 2026-11-12 web search surfaced two regional copies of the same 2025-10-14 announcement disagreeing in tense — one past-tense ("available today for select customers"), one forward-looking ("currently under development") — **not independently fetched and compared in full in this pass**; flagged, not resolved |
-| Claudeforce / "Salesforce in Claude" (37 prebuilt skills) | 2026-08-26 [claudeforce] | Pilot customers now; "expects to launch in open beta in September 2026" [claudeforce] — a forward date on the announcement's own page |
+| Claude via Amazon Bedrock inside the Salesforce Trust Boundary | 2025-10-14 [sf-anthropic-1014] | Mixed by sub-scope, on a single page, directly fetched and re-checked: "Agentforce powered by Anthropic is available today for select customers" and "Claude and Slack bi-directional integrations are available today" [sf-anthropic-1014] — but "the new collaboration on regulated industry solutions and the Agentforce 360 integration for Claude are currently under development, with more details on availability to be shared in the coming months" [sf-anthropic-1014]. One announcement, two sub-scopes at different maturity — not two disagreeing copies, as an earlier draft of this doc framed it |
+| Claudeforce / "Salesforce in Claude" (37 prebuilt skills) | 2026-08-26 [claudeforce] | Pilot customers at announcement; "expects to launch in open beta in September 2026" [claudeforce] — confirmed shipped on schedule by Anthropic's own 2026-09-15 page: "Today we are releasing Salesforce in Claude in beta," "available in beta on all paid Claude plans" [claude-in-claude] |
 | Data masking disabled for agent actions | Standing documented behavior, traced to "last year" (2024) by a 2025-06-10 post [masking-blog] | Current and documented [masking-agents] [masking-blog] — not a conflict once the agent-action vs. direct-template scope is applied |
-| Direct A2A protocol support on Agentforce Agents | n/a | **Not supported**, per the premise of Salesforce's own agentic-patterns recipe page: "In the absence of direct A2A support on Agentforce Agents" [agentic-patterns]; MuleSoft Agent Fabric's Agent Governance layer is the documented A2A/MCP path instead [mulesoft-fabric] |
+| Direct A2A protocol support on Agentforce Agents | n/a | **Contradicted across Salesforce's own documentation.** The agentic-patterns recipe ("In the absence of direct A2A support on Agentforce Agents" [agentic-patterns]) and MuleSoft's own A2A-bridge doc ("aren't A2A-compliant on their own" [a2a-bridge]) agree there is no native support; Salesforce's own Agentforce interoperability guide calls "Agentforce A2A Outbound... the native way for Agentforce agents to collaborate directly with a third party agent" and describes a native Inbound path too [interop-guide]. None of the three pages carries a date or status label — unresolved, not settled |
+| Flex Credits vs. Conversations combinability | n/a | Settled: "No. Flex Credits and Conversations will not be supported in the same org" [agentforce-pricing] — restored after an earlier draft of this doc dropped it as unverified |
 
 ## What this pass did not settle
 
@@ -441,8 +488,12 @@ four as background context, not as verified facts of this analysis.
 - **Dreamforce 2026 product statuses** (Koa GA timing, long-horizon agents/"Hunter," Agent Optimizer,
   Superagent, AI Skills, third-party orchestration) — out of scope for this pass; see
   [Scope](#scope).
-- **The "$2/conversation not combinable with Flex Credits in one org" detail** — not found on the
-  pricing page fetched in this pass [agentforce-pricing]; dropped.
+- **Direct A2A protocol support on Agentforce Agents** — Salesforce's own documentation disagrees
+  with itself (see [A2A](#agentforce-registry-and-mulesoft-agent-fabric) above): the agentic-patterns
+  recipe [agentic-patterns] and MuleSoft's own A2A-bridge doc [a2a-bridge] both premise "no direct A2A
+  support," while the Agentforce interoperability guide [interop-guide] calls Outbound "the native
+  way" and describes a native Inbound path too. None of the three pages carries a date or status
+  label. Left as an open contradiction, not resolved either way in this pass.
 
 ## Cross-References
 
@@ -452,7 +503,8 @@ four as background context, not as verified facts of this analysis.
   Salesforce row should cite the dated rate card here rather than restate a snapshot figure on its own.
 - [ag-ui-protocol-landscape.md](../protocols/ag-ui-protocol-landscape.md) — covers Salesforce's
   non-adoption of AG-UI in favor of an MCP/MuleSoft-centered strategy; this doc adds the MuleSoft
-  Agent Fabric component breakdown and the direct-A2A-support correction behind that strategy.
+  Agent Fabric component breakdown and the A2A contradiction inside Salesforce's own documentation
+  behind that strategy.
 - [CC-business-api-integrations.md § Salesforce](../../cc-native/plugins-ecosystem/CC-business-api-integrations.md)
   — Salesforce's own Hosted MCP Servers reaching GA 2026-04-29, from the Claude Code integration
   angle; this doc covers the same registry/MCP surface from the Agentforce platform side.
@@ -478,15 +530,19 @@ four as background context, not as verified facts of this analysis.
 | [Agentforce DX guide][agent-dx] | CLI/VS Code workflow; agents as metadata; retrieve/deploy/activate/test |
 | [MuleSoft Agent Fabric deep dive][mulesoft-fabric] | Agent Registry/Broker/Governance/Visualizer component descriptions; MCP + A2A |
 | [Agentic patterns recipe][agentic-patterns] | "In the absence of direct A2A support on Agentforce Agents" |
+| [MuleSoft A2A bridge guide][a2a-bridge] | "Salesforce Agentforce agents ... aren't A2A-compliant on their own"; bridge mechanics; no push notifications |
+| [Agentforce interoperability guide][interop-guide] | "Agentforce A2A Outbound is the native way..."; A2A Inbound description — contradicts the two sources above |
 | [Manage external MCP servers (API Catalog ConnectAPI)][mcp-registry] | Agentforce Registry mechanics; tool-poisoning security warning; allowlist sync states |
 | [Winter '27 platform release post][winter27-blog] | 2026-10-13; MCP Risk Score; "264" release numbering; blanket GA policy |
-| [Flex Credits Rate Card, 08.18.2026][rate-card] | Full multiplier table; "Updated as of August 18, 2026" |
-| [Agentforce pricing page][agentforce-pricing] | Current list prices, accessed 2026-11-12 |
-| [Hyperforce EU Operating Zone FAQ][eu-oz-1] | "select set of products and features ... vetted"; no Agentforce/cloud-provider statement |
+| [Flex Credits Rate Card, 11.3.2026][rate-card] | Full multiplier table; "Updated as of November 3, 2026"; new rows vs. the August version |
+| [Flex Credits Rate Card, 08.18.2026 (superseded)][rate-card-aug] | The earlier version this doc previously cited as primary |
+| [Agentforce pricing page][agentforce-pricing] | Current list prices, accessed 2026-11-12; Flex Credits/Conversations non-combinability FAQ |
+| [Hyperforce Operating Zone FAQ][eu-oz-1] | "select set of products and features ... vetted"; no Agentforce/cloud-provider statement (URL redirected since original fetch) |
 | [Hyperforce EU Operating Zone product page][eu-oz-2] | Product-scope statement: "Sales Cloud, Service Cloud, the Salesforce Platform, industries, and more" |
 | [Data Masking Limitations in Agentforce (Salesforce Help)][masking-agents] | Verbatim masking-disabled-for-agents statement and trust-boundary clause |
 | [LLM data masking blog, 2025-06-10][masking-blog] | Scope split: agent actions vs. direct prompt templates/out-of-the-box features |
 | [Agent Development Lifecycle][adlc] | Five-phase ADLC; sandbox testing, Git versioning, canary rollout, explicit activation |
+| ["Salesforce in Claude" (Anthropic), 2026-09-15][claude-in-claude] | Confirms beta shipped: "available in beta on all paid Claude plans" |
 | [polyfetch-scrape USING.md][polyfetch] | Fetch tooling used for JS-rendered `developer.salesforce.com` / `help.salesforce.com` pages |
 
 [sf-360-ga]: https://www.salesforce.com/news/press-releases/2025/10/13/agentic-enterprise-announcement/
@@ -500,13 +556,17 @@ four as background context, not as verified facts of this analysis.
 [agent-dx]: https://developer.salesforce.com/docs/ai/agentforce/guide/agent-dx.html
 [mulesoft-fabric]: https://architect.salesforce.com/fundamentals/mulesoft-agent-fabric-deep-dive
 [agentic-patterns]: https://architect.salesforce.com/fundamentals/agentic-patterns
+[a2a-bridge]: https://docs.mulesoft.com/general/exp-services-create-a2a-bridge
+[interop-guide]: https://www.salesforce.com/agentforce/resources/interoperability-guide/
 [mcp-registry]: https://developer.salesforce.com/docs/platform/api-catalog-connectapi/guide/manage-external-mcp-servers.html
 [winter27-blog]: https://www.salesforce.com/blog/platform-winter-27-release/
-[rate-card]: https://www.salesforce.com/en-us/wp-content/uploads/sites/4/assets/pdf/agentforce/Flex-Credits-Rate-Card-08.18.2026.pdf
+[rate-card]: https://www.salesforce.com/en-us/wp-content/uploads/sites/4/assets/pdf/agentforce/Flex-Credits-Rate-Card-11.3.2026.pdf
+[rate-card-aug]: https://www.salesforce.com/en-us/wp-content/uploads/sites/4/assets/pdf/agentforce/Flex-Credits-Rate-Card-08.18.2026.pdf
 [agentforce-pricing]: https://www.salesforce.com/agentforce/pricing/
-[eu-oz-1]: https://www.salesforce.com/platform/data-residence-eu-oz/
+[eu-oz-1]: https://www.salesforce.com/platform/public-cloud-infrastructure/operating-zone/
 [eu-oz-2]: https://salesforce.com/eu/products/platform/hyperforce/hyperforce-eu-oz
 [masking-agents]: https://help.salesforce.com/s/articleView?id=ai.agent_trust_data_masking.htm&type=5
 [masking-blog]: https://www.salesforce.com/blog/llm-data-masking/
 [adlc]: https://architect.salesforce.com/fundamentals/agent-development-lifecycle
+[claude-in-claude]: https://claude.com/resources/articles/salesforce-in-claude
 [polyfetch]: https://github.com/qte77/polyfetch-scrape
