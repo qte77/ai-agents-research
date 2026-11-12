@@ -11,5 +11,6 @@ Visual output, agent-run visualizers and graph rendering across the corpus. Poin
 | [agent-frameworks-infrastructure-landscape.md § Graph visualization](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graph-visualization) | Graph-rendering libraries | non-cc |
 | [architecture.md § Knowledge Graph](../architecture.md#knowledge-graph-graphify) | How this repo renders its corpus graph page | repo |
 | [CC-community-skills-landscape.md § cathrynlavery/diagram-design](../cc-community/CC-community-skills-landscape.md#cathrynlaverydiagram-design) | diagram-design: editorial HTML+SVG diagram skill for Claude Code, Codex, Copilot, Droid and Pi (44 type references; its tagline says 42) | cc-community |
+| [CC-community-plugins-landscape.md § Notable Plugin Profile: lot-map](../cc-community/CC-community-plugins-landscape.md#notable-plugin-profile-lot-map-live-session-map-mod) | lot-map: a Claude Code mod drawing a live node-map pane of tool calls, hooks, subagents and skills as they happen | cc-community |
 
 Related hubs: [knowledge-graphs.md](knowledge-graphs.md).
