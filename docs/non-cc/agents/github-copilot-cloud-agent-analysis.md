@@ -2,16 +2,18 @@
 title: GitHub Copilot Cloud Agent Analysis
 purpose: Analysis of Copilot on github.com — the cloud agent, its automations, MCP server configuration, repository custom instructions, automatic code review and the responsible-use mitigations — as the cloud counterpart to the Copilot CLI.
 created: 2026-10-24
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-12
+validated_links: 2026-11-12
 status: assess
 ---
 
 **Details:** Proprietary, GitHub-hosted. Automations launched 2026-06-02 ([changelog][cl-automations]);
 Copilot code review is generally available, Copilot approvals are public preview
 ([code review concepts][cr-concepts]). Every claim below was fetched first-party on 2026-10-24 and
-re-checked by an independent falsification pass (19 of 19 confirmed, none wrong). The terminal
-agent is covered separately in [github-copilot-cli-analysis.md](github-copilot-cli-analysis.md).
+re-checked by an independent falsification pass (19 of 19 confirmed, none wrong); the
+[GitHub certifications](#github-certifications) rows were added and fetched first-party on
+2026-11-12. The terminal agent is covered separately in
+[github-copilot-cli-analysis.md](github-copilot-cli-analysis.md).
 
 ## What It Is
 
@@ -110,6 +112,41 @@ Per [responsible use of agents][responsible]:
 - For code review, suggested code "may appear to be valid but may not actually be semantically or
   syntactically correct", so a human still reviews suggestions before accepting them.
 
+## GitHub certifications
+
+Two GitHub-branded credentials on Microsoft Learn's certification catalog cover the skills this
+doc's surfaces exercise — fetched first-party on 2026-11-12, including a check of Microsoft
+Learn's catalog API (`/api/catalog/?type=certifications`) to confirm GH-600 actually exists as a
+distinct, current credential rather than relying on a secondary source:
+
+- **GH-300 — GitHub Copilot**: "evaluates your skill in using the AI-driven code completion tool
+  in various programming languages, certifying your capability to optimize software development
+  workflows efficiently" [gh-300-cert] (Intermediate level; page last updated 2026-08-07). Assessed
+  skills include "Use GitHub Copilot responsibly", Copilot features across plans, "Understand
+  GitHub Copilot data and architecture", prompt engineering, and "Configure privacy, content
+  exclusions, and safeguards" [gh-300-cert]. The page flags an ongoing transition: "GitHub is
+  transitioning to Microsoft's recertification process... all GitHub certifications that expire
+  before the new recertification process is available will be extended by 6 months" [gh-300-cert].
+- **GH-600 — GitHub Certified: Agentic AI Developer**: present on Microsoft Learn's certification
+  catalog as of 2026-11-12, with its own credential page — this is the agentic-development
+  credential named on Microsoft's certification poster, independently confirmed first-party here
+  rather than taken on the poster's word. It "demonstrate[s] deep expertise in deploying,
+  operating, integrating, and governing AI agents in production SDLC workflows... ensuring
+  reliability, safety, and speed with GitHub as the control plane" [gh-600-cert] (Intermediate
+  level), assessed across six domains: preparing agent architecture and SDLC processes;
+  implementing tool use and environment interaction; managing memory, state, and execution;
+  evaluation, error analysis, and tuning; orchestrating multi-agent coordination; and implementing
+  guardrails and accountability [gh-600-cert]. Neither the catalog listing nor the credential page
+  carries a "(beta)" marker for GH-600 — a real contrast with two other 2026 GitHub/agentic
+  credentials that the same catalog listing marks explicitly, verbatim, as beta: "GitHub Certified:
+  Agentic AI Business Professional (beta)" and "Microsoft Certified: Agentic DevOps Engineer Expert
+  (beta)" [learn-catalog-api].
+
+Neither certification maps one-to-one onto this doc's own scope (automations, MCP configuration,
+code review): GH-300 tests general Copilot usage, GH-600 tests agent-development practice across
+the SDLC. Both are listed here because this doc's cloud-agent and code-review surfaces exercise the
+skills either one assesses.
+
 ## Watch-outs
 
 - **Agent-aimed text in the sources.** GitHub's docs pages, a sample cloud-agent onboarding prompt
@@ -135,6 +172,9 @@ Per [responsible use of agents][responsible]:
 | [Code review concepts][cr-concepts] | GA status, billing attribution, external licences |
 | [Responsible use of agents][responsible] | Default-branch protection, firewall, limitations |
 | `gh api repos/github/github-mcp-server`, 2026-10-24 | Stars, licence, latest release |
+| [GH-300 — GitHub Copilot (certification)][gh-300-cert] | Exam scope, level, recertification-transition note |
+| [GH-600 — GitHub Certified: Agentic AI Developer (certification)][gh-600-cert] | Exam scope, level, six assessed domains, no beta marker |
+| [Microsoft Learn certification catalog API][learn-catalog-api] | Confirms GH-600 exists as a distinct current credential; two sibling credentials explicitly marked "(beta)" for contrast |
 
 [surfaces]: https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/copilot-surfaces/copilot-on-github
 [automations]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/create-automations
@@ -146,3 +186,6 @@ Per [responsible use of agents][responsible]:
 [cr-config]: https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review
 [cr-concepts]: https://docs.github.com/en/copilot/concepts/agent-capabilities/agent-powered-workflows-and-operations/code-review
 [responsible]: https://docs.github.com/en/copilot/responsible-use/agents
+[gh-300-cert]: https://learn.microsoft.com/en-us/credentials/certifications/github-copilot/
+[gh-600-cert]: https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-developer/
+[learn-catalog-api]: https://learn.microsoft.com/api/catalog/?type=certifications
