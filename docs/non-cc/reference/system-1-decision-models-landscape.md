@@ -745,7 +745,7 @@ Read these numbers with four limits:
 
 On these sets, Clef beats Clef-flash on every metric, and Clef and Jev are within the bootstrap
 intervals of each other on papers; one week of 100 papers can't separate them. Clef's input price is
-about 6× Clef-flash's and about 6× Jev's ($0.042 per 1M); the pricing paragraph above has the rates.
+about 6× Clef-flash's and roughly 5.7× Jev's ($0.042 per 1M); the pricing paragraph above has the rates.
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it
 could change an open cell in the rubric's evidence census. Like OpenAI's, Perplexity's, and
