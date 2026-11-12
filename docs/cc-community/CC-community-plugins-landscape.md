@@ -309,7 +309,7 @@ own demo GIF is explicitly "a made-up session replayed through the mod's own dra
 captured real run.
 
 **Basics** (first-party, `gh api`, 2026-11-12): repo created 2026-11-09, last pushed 2026-11-12 — a
-3-day-old repo already at 407★/45 forks; `plugin.json` reports version 0.5.0; no GitHub Releases or
+3-day-old repo already at 407★/45 forks; `plugin.json` reports version 0.5.1; no GitHub Releases or
 tags exist, so version history lives only in `CHANGELOG.md` and `plugin.json`, not GitHub Releases.
 `plugin.json`'s `userConfig.language` options list six languages (`en`, `ru`, `es`, `fr`, `de`, `it`);
 the GitHub repo short description says "in five languages" — a stale count against the live
@@ -343,9 +343,9 @@ command's name, never a full command line or file contents) — per the native M
 can read and write your files, start processes, and make network requests" with the installing user's
 own access, so this scoping is enforced by the mod's own code, not by a sandbox.
 
-**Caution**: very young (created 2026-11-09) with a fast-moving CHANGELOG — 0.3.6 through 0.5.0 all
+**Caution**: very young (created 2026-11-09) with a fast-moving CHANGELOG — 0.3.6 through 0.5.1 all
 land on 2026-11-11, including one feature (a Hooks-station row) removed in 0.4.0 for an unnamed plugin
-catalogue's verification rule, then restored in 0.5.0 — so no settled track record yet. The README
+catalogue's verification rule, then restored in 0.5.1 — so no settled track record yet. The README
 itself flags the update-trust model: a marketplace added from this repo follows its `main` branch, "so
 an update brings whatever is there: read the diff before updating if that matters to you."
 
