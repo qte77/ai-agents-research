@@ -55,13 +55,13 @@ Cross-ref: [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo
 
 ## AxiomCode Graph (AxiomCodeAI)
 
-**Repo**: [AxiomCodeAI/axiomcodegraph][axiomcode] | **Stars**: 609 | **License**: FSL-1.1-Apache-2.0 (Functional Source License — free for internal use, non-commercial research/education and professional services; converts to Apache-2.0 two years after each version's release; **not** an OSI-approved open-source license while under FSL, despite the repo topic list including "open-source"-adjacent framing) | **Version**: npm `@axiomcode/code-graph`, `gh api` 2026-11-12
+**Repo**: [AxiomCodeAI/axiomcodegraph][axiomcode] | **Stars**: 609 | **License**: FSL-1.1-Apache-2.0 (Functional Source License — free for internal use, non-commercial research/education and professional services; converts to Apache-2.0 two years after each version's release; **not** an OSI-approved open-source license while under FSL) | **Version**: npm `@axiomcode/code-graph`, `gh api` 2026-11-12
 
 Builds a codebase knowledge graph from **formal methods** rather than tree-sitter syntax matching: each call edge is resolved from the receiver's declared/inferred type "the way the compiler does" — scored against Java bytecode and the TypeScript type checker — instead of guessed from a name match. Supports Java, TypeScript and Python (stable); JavaScript and C# (beta).
 
 ### Benchmarks (self-reported against named competitors, README, `gh api` 2026-11-12)
 
-On 748 held-out Defects4J bugs, the tests AxiomCode selects from source include every bug-revealing test for 94.9% of bugs (best tree-sitter-based competitor in the same table, "GitNexus": 61.5%; Graphify: 48.7%; Code-Review-Graph: 21.9%). Call-to-declaration linking accuracy scored against ground truth (five open-source projects per language): 96.5% (Java, vs. bytecode) and 88.8% (TypeScript, vs. the type checker), against 78.9%/65.1% for the next-best tool in the same table. The README also claims "up to 50% fewer tool calls to explore a new codebase."
+On 748 held-out Defects4J bugs, the tests AxiomCode selects from source include every bug-revealing test for 94.9% of bugs (best tree-sitter-based competitor in the same table, "GitNexus": 61.5%; Graphify: 48.7%; Code-Review-Graph: 21.9%). Call-to-declaration linking accuracy scored against ground truth (five open-source projects per language): 96.5% (Java, vs. bytecode) and 88.8% (TypeScript, vs. the type checker), against the next-best tool in each row of the same table: GitNexus at 78.9% for Java, Code-Review-Graph at 71.6% for TypeScript (GitNexus trails on TypeScript, at 65.1%). The README also claims "up to 50% fewer tool calls to explore a new codebase."
 
 ### CC Integration
 
@@ -69,7 +69,7 @@ Repo topics list `claude-code`, `codex`, `cursor`, `antigravity`, `gemini`, `mcp
 
 ### Adoption Considerations
 
-**Strengths**: the only tool in this doc that resolves calls from a compiler-equivalent type signal rather than syntax matching, with accuracy gains that hold up against five named competitors on an independent benchmark (Defects4J); actively maintained (pushed 2026-11-09, created 2026-08-22).
+**Strengths**: the only precomputed-graph tool in this doc that resolves calls from a compiler-equivalent type signal rather than syntax matching (Serena, below, also avoids syntax matching, but via a live LSP server rather than a precomputed graph), with accuracy gains that hold up against five named competitors on an independent benchmark (Defects4J); actively maintained (pushed 2026-11-09, created 2026-08-22).
 
 **Risks**: **FSL, not a standard permissive license** — production use that competes with AxiomCode's own offering is restricted until each release's two-year Apache-2.0 conversion date; JavaScript/C# support is beta; young project relative to its star count; only Java and TypeScript have independent ground truth for the headline benchmark.
 
