@@ -2,7 +2,7 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-10-24
+updated: 2026-11-11
 validated_links: 2026-10-24
 status: research
 ---
@@ -120,7 +120,7 @@ Confirmed integrations per the [ag-ui README][ag-ui-repo] and [CopilotKit AG-UI 
 |---|---|---|
 | **Google ADK** | [ag-ui README][ag-ui-repo] | Native integration — ADK agents collaborate via AG-UI |
 | **Microsoft Agent Framework** | [Microsoft Learn — AG-UI Integration][ms-learn-agui] | Official docs page; CopilotKit supplies UI components |
-| **AWS Strands Agents / Bedrock AgentCore** | [ag-ui README][ag-ui-repo] | Dedicated AG-UI endpoint in AgentCore + FAST template pattern (March 2026) |
+| **AWS Strands Agents / Bedrock AgentCore** | [ag-ui README][ag-ui-repo] | Dedicated AG-UI endpoint in AgentCore + FAST template pattern (March 2026), per the AG-UI README. Strands' own docs list AG-UI only as a community-tier, Python-only integration page (checked 2026-11-11); the TypeScript version is still an open PR |
 | **Oracle Agent Spec** | [Oracle blog — Agent Spec + AG-UI][oracle-agui] (March 2026) | Three-way alignment with Oracle + CopilotKit + Google (AG-UI + A2UI) |
 | **LangGraph**, **CrewAI** | [ag-ui README][ag-ui-repo] | Origin partnerships |
 | **Mastra**, **Pydantic AI**, **Agno**, **LlamaIndex**, **AG2**, **Langroid** | [ag-ui README][ag-ui-repo] | Framework integrations |
