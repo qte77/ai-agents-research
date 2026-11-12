@@ -169,8 +169,18 @@ counts are unchanged: 77 YES / 23 NO.
 
 ## Used by
 
-[`eval-decision-models.py`](../../eval-decision-models.py) (workflow `decision-model-eval.yaml`, manual)
+[`eval-decision-models.py`](../../eval-decision-models.py) (workflow `decision-model-eval.yaml`, manual and monthly)
 asks each item's question of a decision model through `decide()` from qte77/.github and reports
 ROC-AUC (papers only), Brier and a `hi` threshold sweep. Its states use the same inputs the
 labellers had: title + abstract for papers; repo description + title + body for issues (plan 0012
 row H1).
+
+### Baseline and the monthly drift check
+
+[`baseline.json`](baseline.json) holds the metrics of the first full runs (Clef and Clef-flash
+2026-11-10, Jev 1.13.0 2026-11-11; plan 0012 row H1). On the 1st of each month the workflow reruns
+both sets with those three models and compares (plan 0013 row A7): an ROC-AUC drop above 0.03 or a
+recommended `hi` moving by 0.05 or more opens or updates one `decision-drift` issue. Brier is shown
+but not flagged. The thresholds are a starting point: the baseline is a single run per model, so
+run-to-run noise isn't measured yet, and the `hi` grid steps by 0.05, so any step counts. Move the
+baseline only on purpose (a model or `decide()` bump, a gold-set change), in the same PR.
