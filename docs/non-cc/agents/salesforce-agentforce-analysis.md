@@ -102,7 +102,8 @@ here.
 - **Data 360** — "now activates a company's data, structured or unstructured, to give every agent
   business context" [sf-360-ga]; billed with its own volume-tiered Flex Credit multipliers (see
   [Pricing](#pricing-flex-credits-rate-card-as-of-2026-08-18)).
-- **Headless 360** — announced 2026-04-15, coinciding with TrailblazerDX (TDX) 2026: exposes
+- **Headless 360** — announced 2026-04-15 [sf-headless360] (third-party event coverage ties this to
+  TrailblazerDX (TDX) 2026, not independently confirmed on the press page itself): exposes
   Salesforce capability "as an API, MCP tool, or CLI command" [sf-headless360], bundling "more than
   60 new MCP tools and 30+ preconfigured coding skills" [sf-headless360] (the release's own appendix
   headline totals these as "100+ new tools and skills" [sf-headless360]). The announcement labels its
@@ -389,7 +390,7 @@ Dated milestones independently fetched and quoted in this pass:
 |---|---|---|
 | 2025-10-13 | Agentforce 360 reaches general availability | [sf-360-ga] |
 | 2025-10-14 | Anthropic/Salesforce regulated-industries expansion; "first LLM provider fully integrated within the Salesforce trust boundary" | [sf-anthropic-1014] |
-| 2026-04-15 | Headless 360 announced (60+ MCP tools, 30+ coding skills), coinciding with TDX 2026 | [sf-headless360] |
+| 2026-04-15 | Headless 360 announced (60+ MCP tools, 30+ coding skills) | [sf-headless360] |
 | 2026-07-13 (week of) | New agents can only be created in the new Agentforce Builder; legacy agents keep running | [builder-migration] |
 | 2026-08-26 | Claudeforce: Claude as Atlas reasoning model, default for Vibes/Coworker/Slack, via Bedrock inside the trust boundary; "Salesforce in Claude" plugin (37 skills) pilot | [claudeforce] |
 | 2026-08-18 | Flex Credits Rate Card, the version cited in this doc, "Updated as of August 18, 2026" | [rate-card] |
