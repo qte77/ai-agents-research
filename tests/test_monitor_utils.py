@@ -179,6 +179,22 @@ class RunMonitorSkipTests(unittest.TestCase):
             self.assertIn("- Skipped: TOKEN not set", out.getvalue())
             self.assertEqual(mu.load_state(state_file)["gated"], ["keep-me"])
 
+    def test_failed_fetch_reported_as_skipped_without_error_text(self):
+        def fetch(_source):
+            raise OSError("secret-ish detail http://example.invalid")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            docs = Path(tmp) / "docs"
+            docs.mkdir()
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as cm:
+                    mu.run_monitor([{"name": "down", "description": "d"}], fetch, docs,
+                                   Path(tmp) / "state.json", "R", "x.py")
+            self.assertEqual(cm.exception.code, 0)
+            self.assertIn("- Skipped: fetch failed (OSError)", out.getvalue())
+            self.assertNotIn("secret-ish", out.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()

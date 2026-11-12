@@ -293,11 +293,14 @@ def run_monitor(
             continue
         except Exception as e:
             print(f"WARNING: Failed to fetch {name}: {e}", file=sys.stderr)
+            # Reason: name the exception type only; its message can carry URLs or
+            # server text that doesn't belong in a committed report.
             source_results.append({
                 "name": name,
                 "description": source["description"],
                 "total": 0,
                 "new_entries": [],
+                "skipped": f"fetch failed ({type(e).__name__})",
             })
             continue
 
