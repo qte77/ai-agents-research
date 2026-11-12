@@ -1,0 +1,12 @@
+{
+  "source": "decision-model-eval.yaml runs 42847138765 (Clef, 2026-11-10) and 43101398070 (Jev, 2026-11-11); numbers as reported in docs/non-cc/reference/system-1-decision-models-landscape.md",
+  "decide_ref": "qte77/.github 43ad1211e962f82fab823377dcc7272054d8196c",
+  "metrics": {
+    "papers/clef:clef-flash": {"accuracy": 0.85, "brier": 0.089, "auc": 0.958, "auc_ci": [0.916, 0.987], "recommended_hi": 0.80},
+    "papers/clef:clef": {"accuracy": 0.91, "brier": 0.061, "auc": 0.970, "auc_ci": [0.930, 0.995], "recommended_hi": 0.75},
+    "papers/jev:jev-1.13.0": {"accuracy": 0.92, "brier": 0.055, "auc": 0.968, "auc_ci": [0.921, 0.997], "recommended_hi": 0.70},
+    "issues/clef:clef-flash": {"accuracy": 0.935, "brier": 0.071, "auc": null, "auc_ci": null, "recommended_hi": 0.70},
+    "issues/clef:clef": {"accuracy": 0.984, "brier": 0.009, "auc": null, "auc_ci": null, "recommended_hi": 0.50},
+    "issues/jev:jev-1.13.0": {"accuracy": 1.0, "brier": 0.009, "auc": null, "auc_ci": null, "recommended_hi": 0.50}
+  }
+}
