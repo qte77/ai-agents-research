@@ -18,5 +18,7 @@ see [the hub index](README.md).
 | [onyx-analysis.md](../non-cc/knowledge-management/onyx-analysis.md) | Self-hostable company knowledge layer: permission-aware hybrid index over 50+ apps, served to chat, agents and MCP clients | non-cc |
 | [web-scraping-extraction-landscape.md](../non-cc/infrastructure/web-scraping-extraction-landscape.md) | Scraping and extraction tools that feed RAG pipelines | non-cc |
 | [CC-code-tooling-landscape.md § cocoindex-code](../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io) | Embeddings-based semantic code search for CC | cc-community |
+| [CC-code-tooling-landscape.md § XERJ](../cc-community/CC-code-tooling-landscape.md#xerj-xerj-org) | XERJ: Elasticsearch-compatible search engine/MCP server for code, docs and RAG, first-party Claude Code installer | cc-community |
+| [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms) | RAGFlow (agent-native RAG database, Knowledge Compilation) and Carrel (ontology-augmented hybrid retrieval) | non-cc |
 
 Related hubs: [memory.md](memory.md), [knowledge-graphs.md](knowledge-graphs.md), [code-tooling.md](code-tooling.md).
