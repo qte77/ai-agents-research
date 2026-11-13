@@ -23,7 +23,13 @@
       "Bash(make check_actions)",
       "Bash(make help)",
       "Bash(make census)",
-      "Bash(shellcheck *)"
+      "Bash(shellcheck *)",
+      "Bash(~/.local/bin/lychee *)",
+      "Bash(gh run watch *)",
+      "Bash(gh secret list *)",
+      "Bash(gh search prs *)",
+      "Bash(gh label list *)",
+      "mcp__plugin_cloudflare_cloudflare-docs__search_cloudflare_documentation"
     ]
   },
   "enabledPlugins": {
