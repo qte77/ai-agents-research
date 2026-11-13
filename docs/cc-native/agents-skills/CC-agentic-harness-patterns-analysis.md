@@ -5,8 +5,8 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-11-13
+validated_links: 2026-11-13
 ---
 
 ## Summary
@@ -148,9 +148,10 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 
 **Shipped CC skills**: `/quickstart`, `/threat-model`, `/vuln-scan`, `/triage`, `/patch`, `/customize`
 
-**Companion products**: [Claude Security][claude-security] (managed hosted product for multi-project vuln discovery with false-positive reduction); Glasswing partnership (security team collaboration program).
+**Companion products**: [Claude Security][claude-security] (managed hosted product for multi-project vuln discovery with false-positive reduction); [Project Glasswing][glasswing], announced 2026-04-07, an Anthropic initiative with named launch partners (AWS, Apple, Microsoft, the Linux Foundation and others) to secure critical software using the gated Claude Mythos Preview. On 2026-10-06 Anthropic launched an expanded Cyber Verification Program with three access tiers and said existing Glasswing members "will transition to the Specialized Access tier".
 
 [dcrh]: https://github.com/anthropics/defending-code-reference-harness
+[glasswing]: https://www.anthropic.com/glasswing
 [claude-security]: https://claude.com/product/claude-security
 [skill-issue-post]: https://www.hlyr.dev/blog/skill-issue-harness-engineering-for-coding-agents
 [humanlayer]: https://www.humanlayer.dev/
