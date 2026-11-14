@@ -33,8 +33,9 @@ tokens="${tokens_in}/${tokens_out}"
 
 # Subtract autocompact buffer to get TRUE usable space
 # Priority: env var > observed default (16.5%)
-if [ -n "$CLAUDE_AUTOCOMPACT_PCT_OVERRIDE" ]; then
-    AUTOCOMPACT_BUFFER_PCT=$(awk "BEGIN {print 100 - $CLAUDE_AUTOCOMPACT_PCT_OVERRIDE}")
+# Numeric check first, then pass the value with -v: never interpolate an env var into awk program text.
+if [[ "${CLAUDE_AUTOCOMPACT_PCT_OVERRIDE:-}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+    AUTOCOMPACT_BUFFER_PCT=$(awk -v p="$CLAUDE_AUTOCOMPACT_PCT_OVERRIDE" 'BEGIN {print 100 - p}')
 else
     # Docs claim CLAUDE_AUTOCOMPACT_PCT_OVERRIDE default is 95% (5% buffer),
     # but /context shows 16.5% buffer and compaction triggers at ~78-85% (issues #18264, #18241).
