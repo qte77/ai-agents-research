@@ -2,7 +2,7 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-11-12
+updated: 2026-11-14
 validated_links: 2026-11-12
 status: assess
 ---
@@ -478,7 +478,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Arize Phoenix**: Path convergence metrics with LLM-as-a-judge templates
 - **Langfuse**: Comprehensive prompt management with evaluation integration
 - **AgentNeo**: Decorator-based tracing with SQLite storage
-- **TruLens**: RAG Triad metrics with multi-step workflow assessment
+- **TruLens**: RAG Triad metrics plus seven agent evaluators (logical consistency, execution efficiency, plan adherence, plan quality, tool selection, tool calling, tool quality) over OpenTelemetry traces, and an `MCP` span type for tool calls. Its README reports that the Agent GPA judge caught 267 of 281 human-annotated errors on TRAIL/GAIA, against 55% for a baseline trace judge ([arXiv:2510.08847][agent-gpa]; vendor result). MIT, v2.16.0 (2026-10-19). Created by TruEra; [trulens.org][trulens-org] says Snowflake has maintained it since the acquisition ([README][trulens])
 
 ### Graph Analysis Integration
 
@@ -496,3 +496,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 ## Sources
 
 Metric definitions are sourced from the research papers and tool docs cited inline throughout; the implementing frameworks, benchmarks, and datasets are catalogued in [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md).
+
+[trulens]: https://github.com/truera/trulens
+[trulens-org]: https://www.trulens.org/
+[agent-gpa]: https://arxiv.org/abs/2510.08847

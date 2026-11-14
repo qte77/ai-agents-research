@@ -331,7 +331,7 @@ Graph-centric infrastructure built around agent access patterns (MCP, multi-agen
 ### RAG evaluation
 
 - [RAGAs](https://github.com/explodinggradients/ragas) — reference-free metrics (faithfulness, answer relevancy, context precision/recall) via LLM-as-judge (Apache-2.0; [arXiv:2309.15217](https://arxiv.org/abs/2309.15217)).
-- [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with agentic evaluators (MIT).
+- [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with seven agentic evaluators and an MCP span type; maintained by Snowflake since its TruEra acquisition (MIT). Detail: [agent-evaluation-metrics-landscape.md](../../sdlc-lcm/agent-evaluation-metrics-landscape.md).
 - [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
 
 ### Graph visualization
