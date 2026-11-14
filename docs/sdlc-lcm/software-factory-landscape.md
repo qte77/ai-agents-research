@@ -2,8 +2,8 @@
 title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
-updated: 2026-11-12
-validated_links: 2026-11-12
+updated: 2026-11-14
+validated_links: 2026-11-14
 status: assess
 ---
 
@@ -104,7 +104,7 @@ Read as design-lens sources, self-reported claims flagged:
   $400K over three months after restructuring around agents and a plan-do-verify loop) and Cole Murray
   (maintainer of "Open Inspect," described as an open-source background-agent system deployed at
   companies with up to 500 engineers; no repository link is given in the episode)
-  ([ep. #73][aiw-4]).
+  ([ep. #73][aiw-4]). A public repo of that name exists, [`open-inspect/background-agents`][open-inspect], but the episode does not link it, so tying the two together is our inference.
 
 **HumanLayer's dissent: "Why Software Factories Fail" (`wsff.md`, Dex Horthy).** First published
 2026-07-22 in `github.com/humanlayer/advanced-context-engineering-for-coding-agents` (also unlicensed —
@@ -148,6 +148,17 @@ Anthropic built a code-review surface (**Antique**) and a source-control IAM sys
 Scion is explicitly scoped as a monorepo-specific replacement, not a general git substitute, and no
 rubric row is added here: this is vendor-reported internal tooling with no independently verifiable
 shipped artefact (unlike triagebot-action above) ([Anthropic][anthropic-scion]).
+
+**The 2026 company wave: named in-house or open-sourced pipelines.** Several companies now describe a named agent pipeline for their own code, each first-party (fetched 2026-11-14):
+
+- **Stripe Minions**: "Stripe’s homegrown coding agents. They’re fully unattended and built to one-shot tasks." Stripe reports "over a thousand pull requests merged each week" that are "completely minion-produced", and adds that they are human-reviewed; the agent loop runs on a fork of Block’s goose ([Stripe][minions]).
+- **Ramp Inspect** (2026-10-27): in the past month "99% of our engineering, design, and product teams used Inspect, and Inspect now accounts for 74% of merged PRs" ([Ramp][inspect]). An unaffiliated open-source take, `open-inspect/background-agents` (MIT), describes itself as "inspired by Ramp’s Inspect" ([repo][open-inspect]).
+- **WorkOS Horizon** (2026-05-06): "an internal code factory" that spawns long-running agent sessions in a cloud sandbox on external events; "no code gets merged without explicit human approval" ([WorkOS][horizon]).
+- **OpenAI Symphony**: an open-source orchestrator that "turns a project-management board like Linear into a control plane for coding agents"; OpenAI writes that among some teams "we saw the number of landed PRs increase by 500% in the first three weeks" ([OpenAI][symphony]; [`openai/symphony`][symphony-repo], Apache-2.0).
+- **Delinea (StrongDM) Software Factory**: agents "generate code, validate it against real-world behavior, and iterate until it converges, without hand-tuning or human review" — "validation replaces code review" ([Delinea][delinea]). Delinea announced its acquisition of StrongDM on 2026-03-05 ([press release][delinea-news]). Its agent spec is open: [`strongdm/attractor`][attractor] (Apache-2.0), "a non-interactive Coding Agent sufficient for use in a Software Factory".
+- **Templates**: Vercel Labs’ [`eve-software-factory-template`][eve] (MIT) describes itself only as "Meet Foreman, an eve Software Factory"; its README was not reviewed here.
+
+Vocabulary differs: only Delinea and Vercel’s template use "software factory"; WorkOS says "code factory", and Stripe, Ramp and OpenAI use neither. Only Delinea claims validation replaces human review; Stripe, Ramp and WorkOS keep a human reviewer. The productivity figures are each company’s own, unaudited.
 
 ### The convergence — and why it matters
 
@@ -208,6 +219,12 @@ a verifiable shipped artefact; Flue has one (see above) but has not yet been rub
 | [ai-that-works ep. #73, "Hands-On with Real Builders"][aiw-4] | Practitioner interviews, self-reported metrics |
 | `gh api repos/ai-that-works/ai-that-works`, 2026-09-30 | Confirms `license: null` for the ai-that-works repo |
 | [wsff.md, HumanLayer][wsff] | "Why Software Factories Fail" — dissent on lights-off automation |
+| [Stripe: Minions][minions] | Unattended one-shot coding agents; >1,000 merged PRs/week, human-reviewed |
+| [Ramp: Introducing Inspect][inspect] | Collaborative coding agent; 74% of merged PRs (self-reported, 2026-10-27) |
+| [WorkOS: Project Horizon][horizon] | "Internal code factory"; human approval before merge (2026-05-06) |
+| [OpenAI: Symphony][symphony] · [`openai/symphony`][symphony-repo] | Board-driven agent orchestrator; +500% landed PRs on some teams (self-reported) |
+| [Delinea: Software Factory][delinea] · [acquisition][delinea-news] · [`strongdm/attractor`][attractor] | Validation instead of code review; StrongDM acquired by Delinea (announced 2026-03-05) |
+| [`vercel-labs/eve-software-factory-template`][eve] · [`open-inspect/background-agents`][open-inspect] | Factory template; open-source background-agent system |
 | `gh api repos/humanlayer/advanced-context-engineering-for-coding-agents/commits?path=wsff.md`, 2026-09-30 | First commit 2026-07-22 (publish date); `contents/LICENSE` 404 (no license) |
 | [Cloudflare: Astro issue triage][cf-astro] | Concrete production case; Flue and triagebot-action, published 2026-08-04 |
 | [Anthropic: Redesigning source control][anthropic-scion] | Vendor-reported internal case: Scion/Antique, 2,500→30,000 merges/day, published 2026-10-13 |
@@ -244,3 +261,13 @@ HumanLayer's separate approval-gate SDK),
 [anthropic-scion]: https://www.anthropic.com/engineering/redesigning-source-control
 [hlyr-ace-xref]: ../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
 [disciplines-graph]: agentic-engineering-disciplines-landscape.md
+[minions]: https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents
+[inspect]: https://ramp.com/blog/introducing-inspect
+[open-inspect]: https://github.com/open-inspect/background-agents
+[horizon]: https://workos.com/blog/project-horizon
+[symphony]: https://openai.com/index/open-source-codex-orchestration-symphony/
+[symphony-repo]: https://github.com/openai/symphony
+[delinea]: https://delinea.com/blog/the-delinea-software-factory-building-software-with-ai
+[delinea-news]: https://delinea.com/news/delinea-acquires-strongdm-to-secure-ai-with-continuous-authorization
+[attractor]: https://github.com/strongdm/attractor
+[eve]: https://github.com/vercel-labs/eve-software-factory-template
