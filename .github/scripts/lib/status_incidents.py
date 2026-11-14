@@ -10,7 +10,9 @@ from datetime import datetime, timezone
 
 from .monitor_utils import parse_iso
 
-STATUSPAGE_BASE = "https://status.anthropic.com"
+# Reason: status.anthropic.com has returned 403 to the weekly runner since 2026-08-24;
+# status.claude.com serves the same Statuspage API.
+STATUSPAGE_BASE = "https://status.claude.com"
 
 
 def compute_duration(started_at: str, resolved_at: str | None) -> int | None:

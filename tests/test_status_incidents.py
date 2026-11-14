@@ -40,7 +40,7 @@ class NormalizeIncidentTests(unittest.TestCase):
     def test_started_at_falls_back_and_url_default(self):
         rec = si.normalize_incident({"id": "x", "created_at": "2026-01-01T00:00:00Z"})
         self.assertEqual(rec["started_at"], "2026-01-01T00:00:00Z")
-        self.assertEqual(rec["url"], "https://status.anthropic.com/incidents/x")
+        self.assertEqual(rec["url"], "https://status.claude.com/incidents/x")
 
 
 class NormalizeWebhookTests(unittest.TestCase):
