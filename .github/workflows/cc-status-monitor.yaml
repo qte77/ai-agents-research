@@ -43,7 +43,14 @@ jobs:
             ARGS+=(--webhook-payload /tmp/webhook-payload.json)
           fi
           python .github/scripts/status-collector.py "${ARGS[@]}"
-          echo "changed=$( [ $? -eq 1 ] && echo true || echo false )" >> "$GITHUB_OUTPUT"
+          EXIT_CODE=$?
+          # 0 = no change, 1 = archive updated; anything else is a fetch/script error.
+          # Fail loudly so a blocked API can't stay green (it did for 12 weeks).
+          if [ "$EXIT_CODE" -gt 1 ]; then
+            echo "::error::status-collector.py failed (exit $EXIT_CODE)"
+            exit "$EXIT_CODE"
+          fi
+          echo "changed=$( [ $EXIT_CODE -eq 1 ] && echo true || echo false )" >> "$GITHUB_OUTPUT"
 
       - name: Generate statistics
         if: steps.collect.outputs.changed == 'true'
