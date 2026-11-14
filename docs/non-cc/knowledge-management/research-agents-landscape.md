@@ -4,7 +4,7 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-12
+updated: 2026-11-14
 validated_links: 2026-10-11
 ---
 
@@ -102,6 +102,8 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 
 **Takeaway**: CC's `/deep-research` is a general open-web harness; the third-party agents specialize it — local/private (local-deep-research), scientific-corpus (PaperQA2/FutureHouse), or autonomous experimentation (AutoScientists). Two of these are actually built on CC: **Hyperresearch** packages a tier-adaptive, citation-audited deep-research pipeline directly as a CC skill — the closest like-for-like extension of the bundled harness — while **AutoScientists** extends the pattern into long-running computational-science experiments via CC subagents.
 
+**Field evidence on agent search behaviour.** [Agentic Search in the Wild][agentic-search-wild] (Ning, Coelho et al., CMU and Lisbon; arXiv 2601.17617, accepted at SIGIR 2026) analyses 14.44M search requests in 3.97M sessions that external agent clients sent to the DeepResearchGym search API (June–December 2025). Nearly half (47.77%) of sessions are a single query. In fact-seeking ("Declarative") sessions, repeated queries rise to 42.68% by step 9, a candidate stall signal. A new metric, CTAR, finds that 54.35% of newly introduced query terms already appear in earlier retrieved evidence. The authors flag that the logs carry no success labels and no client-side prompts or memory, so these are behaviour patterns, not quality results. For a `/deep-research`-style loop they point at repetition-aware stopping and carrying evidence across steps. The anonymized logs are on [Hugging Face][agentic-search-logs] (CC-BY-4.0).
+
 ## Cross-References
 
 - [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md) — agent frameworks, orchestration, memory infrastructure
@@ -114,6 +116,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 | Source | Content |
 |---|---|
 | [DeepResearch (Alibaba-NLP)][deepresearch-alibaba] | Long-horizon information-seeking agent |
+| [Agentic Search in the Wild (arXiv 2601.17617)][agentic-search-wild] · [logs][agentic-search-logs] | SIGIR 2026 log study of agent search sessions; CC-BY-4.0 dataset |
 | [AI-Researcher (HKUDS)][ai-researcher] · [paper][ai-researcher-paper] | Literature→manuscript pipeline + Scientist-Bench |
 | [AI Scientist v2 (Sakana AI)][ai-scientist-v2] · [paper][ai-scientist-v2-paper] | Agentic tree-search paper generation |
 | [CEDAR (Sakana AI)][cedar] | LLM-agent MCTS for goal-directed complex-system design |
@@ -231,3 +234,5 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 [polaron]: https://polaron.ai/
 [polaron-imperial]: https://www.imperial.ac.uk/news/250657/ai-spinout-polaron-accelerate-design-advanced/
 [aidda]: https://algorithmdiscovery.org/
+[agentic-search-wild]: https://arxiv.org/abs/2601.17617
+[agentic-search-logs]: https://huggingface.co/datasets/cx-cmu/deepresearchgym-agentic-search-logs
