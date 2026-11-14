@@ -10,85 +10,203 @@
 
 ### [Zero-Shot Coordination among LLM Agents](https://arxiv.org/abs/2611.06409)
 
+- summary: This study investigates the performance of large language model (LLM) agents in zero-shot coordination, revealing their struggles with coordination due to limited understanding and weak reasoning about partner beliefs.
+- methods: evaluation in minimal environments, proposed Coordination-friendly definitions (CFDs)
+- findings: LLM agents struggle to coordinate even in controlled settings; LLMs fail to exploit semantic information for coordination; CFDs can be discovered automatically
+
 ### [Widening Harm Evaluation Coverage with a Judge that Reads the World](https://arxiv.org/abs/2611.02624)
+
+- summary: This study proposes a novel approach to detecting and verifying harm in stateful environments using a large language model (LLM) with read-only access to the environment state and a harm taxonomy.
+- methods: LLM-based verification, deterministic checks, trajectory analysis, environment state inspection
+- findings: Combining trajectory and state-only judges recalls 94% of confirmed harms in DecodingTrust-Arena environments; The union of trajectory and state-only judges recalls 77% of confirmed harms in OSWorld; A single judge given both channels does not perform better and produces more false negatives than the state-only judge
 
 ### [When Do Summaries Become Instructions? Unsupported Policy in LLM Agents' Self-Written Handoff Summaries](https://arxiv.org/abs/2611.06545)
 
 ### [VABAR: A Variational Automation Benchmark for Agentic Robotics](https://arxiv.org/abs/2611.06881)
 
+- summary: The Variational Automation Benchmark for Agentic Robotics (VABAR) is proposed as a simulation-based manipulation benchmark to evaluate agentic robotics systems in various industrial, medical, and infrastructure applications.
+- methods: benchmark design, simulation-based evaluation, Graph-as-Policy (GaP)
+- findings: VABAR features six manipulation task classes; VABAR has a library of 33 generalizable skills; VABAR provides standardized task variations and difficulty tiers
+
 ### [Transforming Integer Grids to Spatial Intuition: Perception, Not Planning, Governs ARC-AGI-3](https://arxiv.org/abs/2611.06793)
 
 ### [Towards a Trustworthy and Governable Internet of Agentics: An Architectural Perspective on Protocols, Systems, and Services](https://arxiv.org/abs/2611.03066)
+
+- summary: This perspective paper examines the architectural problem of dependable deployment of large language model applications as tool-using and multi-agent workflows, requiring interoperability across frameworks and organizational control domains.
+- methods: protocol stack analysis, systems abstractions review
+- findings: need for interoperability across frameworks and control domains; importance of governable service participants; reinterpretation of classical SOA and microservices concerns at the level of cognitive capabilities
 
 ### [TLAPS-Bench: Formally Proving Correctness of Real-World System Specifications with TLA+ Proof System](https://arxiv.org/abs/2611.02849)
 
 ### [TCSExam: Evaluating Frontier LLMs on the Full Range of TCS Research](https://arxiv.org/abs/2611.07962)
 
+- summary: Researchers introduce TCSExam, a framework and benchmark to evaluate the progress of large language models in advancing theoretical computer science and resolving long-standing open conjectures.
+- methods: theorem proving, solver engineering, constructions, benchmarking
+- findings: TCSExam provides an extensible framework for reproducible use; GPT-6 Astra leads Full with a score of 71.9; Opus 5.5 leads Lite with a score of 72.3; evaluations yield improved solver outputs and mathematical constructions
+
 ### [Task-Efficient Agent Evaluation Using Cached Traces](https://arxiv.org/abs/2611.06803)
+
+- summary: The proposed approach leverages rich trace information from agentic systems to improve benchmarking efficiency by representing traces with structured summaries and predicting system performance.
+- methods: LLM, text encoder, item-response model, geometry-based prediction
+- findings: reduces mean absolute error from 0.13 to 0.08 on SWE-bench Verified; reduces mean absolute error from 0.14 to 0.12 on Terminal-Bench 2.0; dominates baselines for any given number of executed tasks on both benchmarks
 
 ### [TandemBench: Benchmarking Decision Models for Multi-Agent Collaboration](https://arxiv.org/abs/2611.05827)
 
+- summary: TandemBench is introduced as a benchmark for evaluating decision models in multi-agent collaboration scenarios, particularly in cooking tasks where coordination choices impact goal completion.
+- methods: benchmarking, evaluation, exact search
+- findings: native decision models achieve 62.50% decision accuracy; native decision models struggle with optimality verification; some models report better alternatives even when an optimal plan is present
+
 ### [TAMPAgent: Agentic Belief-Space Planning for Mobile Manipulation](https://arxiv.org/abs/2611.03584)
 
+- summary: The authors propose TAMPAgent, a framework that combines Large Vision-Language Model agents with Task and Motion Planning systems to enable open-world robotic mobile manipulation with partial information.
+- methods: agentic planning, belief-space planning, classical search algorithms
+- findings: TAMPAgent outperforms direct tool-calling agentic baselines in complex household mobile manipulation tasks; integrating TAMP constraint satisfaction into agentic planning loops is essential for unstructured, partially observable environments
+
 ### [SurgEye: Instruction Tuning-Free Perception-Reasoning Framework for Surgical Scene Understanding](https://arxiv.org/abs/2611.04012)
+
+- summary: The authors propose SurgEye, a perception-reasoning framework for surgical scene understanding that grounds reasoning in a vision foundation model without instruction tuning.
+- methods: Routed Multi-Task Perception (RMP), Agentic Compositional Reasoning (ACR)
+- findings: SurgEye outperforms state-of-the-arts in surgical reasoning
 
 ### [SlackBench: Benchmarking Agents on Collaborative Projects Grounded in Real Code Repositories](https://arxiv.org/abs/2611.05512)
 
 ### [SKIM: Pruning Large Language Model Agents via Selective Knowledge Informed Masking](https://arxiv.org/abs/2611.07558)
 
+- summary: This study proposes SKIM, a pruning and distillation framework for Large Language Model agents under structured generation, which improves accuracy over baselines, especially in high-sparsity regimes.
+- methods: pruning, distillation, category-aware pruning saliency scores, on-policy distillation objective, category-aware feature matching
+- findings: SKIM improves accuracy over baselines; SKIM's superiority is most striking in high-sparsity regimes; category-aware compression is effective for deployment-time grammar-constrained agents
+
 ### [SelfImprove-Bench: Evaluating Generalization in Self-Improving Agents](https://arxiv.org/abs/2611.02797)
 
 ### [SecureGARD: Dynamic Ontology-Guided Governance for Secure Tool-Using LLM Agents](https://arxiv.org/abs/2611.06682)
+
+- summary: The authors present a dynamic ontology-guided governance framework to improve execution security in tool-using large language model agents.
+- methods: ontology-guided governance, executable ontology, episode-level task state, offline learning
+- findings: 0% attack success rate across three benchmarks; improved task utility under attack compared to existing baselines
 
 ### [RoboARCade: Benchmarking Agentic Robot Control](https://arxiv.org/abs/2611.08209)
 
 ### [RIVER: Evidence-guided multi-agent retrieval for enzyme--reaction discovery](https://arxiv.org/abs/2611.07757)
 
+- summary: RIVER, a multi-agent framework, is introduced for bidirectional enzyme-reaction retrieval, achieving high success rates in enzyme retrieval and annotation tasks.
+- methods: evidence-guided retrieval, multi-agent framework, large language models, biochemical computational tools
+- findings: RIVER outperforms baselines in enzyme retrieval and annotation; RIVER achieves high success rates in family-specific enzyme retrieval; RIVER prioritizes biochemically supported enzyme-reaction relationships
+
 ### [ReferClaw: Disambiguating User Intent for Egocentric Assistance](https://arxiv.org/abs/2611.07683)
 
 ### [RAGAM-AI: A Hybrid Reinforcement Learning based Agentic approach powered by Generative AI for Edge Resource Management](https://arxiv.org/abs/2611.06554)
+
+- summary: This work proposes RAGAM-AI, a hybrid framework combining Reinforcement Learning and Generative-AI for optimizing resource allocation in distributed edge networks.
+- methods: Reinforcement Learning, Generative-AI, Multi-Agent Soft-Actor Critic, Large Language Model
+- findings: RAGAM-AI reduces allocation deviations for CPU, memory, and bandwidth resources; RAGAM-AI minimizes latency and data rate costs; RAGAM-AI outperforms single agent SAC, REINFORCE, and random policies
 
 ### [QRAE: Query-Relevant Attention Entropy for Context Compression in DeepSearch Agents](https://arxiv.org/abs/2611.07976)
 
 ### [PyRUA-REAL: Robot Exploration and Adaptive Learning through RSI in the Real World](https://arxiv.org/abs/2611.06768)
 
+- summary: This work studies embodied recursive self-improvement through real-world exploration, code refinement, and deployment using the PyRUA-REAL framework, achieving high success rates in various tasks.
+- methods: embodied recursive self-improvement, real-world exploration, code refinement, deployment
+- findings: average success rate of 91.1% across eight real-world tasks; average success rate of 84.4% on 42 tasks from the RoboDojo benchmark
+
 ### [PSGAgent: Enhancing MLLMs' Dynamic Visual Perception for Panoptic Scene Graph Generation via Agentic Reasoning](https://arxiv.org/abs/2611.07408)
+
+- summary: PSGAgent, an agentic framework, is proposed to enhance visual perception for Panoptic Scene Graph generation through a think-act-observe loop, achieving state-of-the-art performance on the PSG benchmark.
+- methods: think-act-observe loop, Region Zoom-In Tool, Visual Highlight Tool, Multimodal Chain-of-Thought dataset, Group Sequence Policy Optimization
+- findings: PSGAgent achieves SOTA performance on the PSG benchmark; improved holistic and fine-grained scene understanding
 
 ### [OperAItor: An Agentic Framework for Fault-Tolerant Operation of Chemical Processes](https://arxiv.org/abs/2611.05179)
 
 ### [Multimodal-SEA: Benchmarking AI Agent Security under Multimodal Social Engineering Attacks](https://arxiv.org/abs/2611.08281)
 
+- summary: The Multimodal-SEA benchmark evaluates the security of personal AI agents against social engineering attacks with forged multimodal content, revealing vulnerabilities in seven widely used multimodal models.
+- methods: red teaming, multimodal attack harness, controlled evaluation
+- findings: all evaluated models are vulnerable to social engineering attacks; adding multimodal content increases attack success; stronger safety instructions reduce attack success but do not improve recognition of deceptive content
+
 ### [ModalSearcher: Weaving Visual Evidence into Autonomous Cross-Modal Deep Search](https://arxiv.org/abs/2611.06131)
+
+- summary: The authors propose ModalSearch-Pipeline, a scalable procedure for constructing an interleaved multimodal knowledge graph, and train the ModalSearcher Agent to improve performance on novel-knowledge and knowledge-intensive tasks.
+- methods: supervised fine-tuning, reinforcement learning, autonomous cross-modal search
+- findings: ModalSearcher-8B improves average accuracy by 16.2 points over Qwen3-VL-8B; consistent gains on independently constructed active visual-search benchmarks
 
 ### [MDSKILL: Learning to Internalize Skill Memory through Multi-View Distillation for Efficient Dynamic Agent Self-Evolution](https://arxiv.org/abs/2611.05313)
 
+- summary: MDSKILL, a multi-view distillation approach, is proposed to improve skill memory internalization for self-evolving agents in reinforcement learning.
+- methods: multi-view distillation, dynamic metrics, view-specific and integrated reasoning branches, OPSD
+- findings: MDSKILL improves upon SOTA performance by up to 7.1% and 8.1% on ALFWorld and WebShop; MDSKILL enables efficient skill internalization and continuous agent self-evolution
+
 ### [MCPHallu: Benchmarking Reasoning, Execution, and Memory Hallucinations in MCP Agents](https://arxiv.org/abs/2611.07689)
+
+- summary: The authors introduce MCPHallu, a benchmark for diagnosing hallucination-prone agent failures in Model Context Protocol (MCP) environments, and evaluate its effectiveness on fourteen frontier large language model agents.
+- methods: benchmarking, subtype-level analysis
+- findings: Current MCP agents are vulnerable to hallucination-inducing tool environments; Failures concentrate on Unreachable Goal tasks; Subtype rankings diverge sharply across models
 
 ### [MA-SafeDiffuser: Safe Multi-Agent Planning with Diffusion Probabilistic Models](https://arxiv.org/abs/2611.05524)
 
+- summary: The authors propose MA-SafeDiffuser, a multi-agent extension of SafeDiffuser that provides finite-time diffusion invariance guarantees for joint-agent safety specifications.
+- methods: constrained denoising procedures, control barrier function (CBF) constraints, reverse-diffusion updates
+- findings: MA-SafeDiffuser reduces violation counts relative to unconstrained diffusion baselines; retains planning quality
+
 ### [MA-Mesh: Resilient Multi-Agent Collaboration via Role-based Self-Healing](https://arxiv.org/abs/2611.06389)
+
+- summary: This work proposes Multi-Agent Mesh (MA-Mesh), a framework that constructs a role-based self-healing layer on top of a collaboration pattern to enhance resilience in multi-agent systems.
+- methods: Cross-agent reflection, Role-based failover
+- findings: MA-Mesh significantly outperforms existing multi-agent systems in task performance and robustness under system uncertainty
 
 ### [LUCA: A Synthetic World for Experimental Reasoning](https://arxiv.org/abs/2611.03100)
 
 ### [LLM-Assisted Planning with Distributed Onboard Behaviour Tree Execution for Multi-AUV Missions](https://arxiv.org/abs/2611.04518)
 
+- summary: A hierarchical framework is presented for coordinating autonomous underwater vehicles using natural-language mission instructions and Mixed-Integer Linear Programming optimization.
+- methods: hierarchical framework, Mixed-Integer Linear Programming, distributed Behaviour Tree execution, LLM interpretation
+- findings: Qwen-3-8B provides more accurate constraint extraction; all tasks are completed in tested failure scenarios
+
 ### [LegalEvolver: Agentic Legal Judgment Prediction via Rubric-Guided Self-Evolution](https://arxiv.org/abs/2611.06381)
+
+- summary: The LegalEvolver framework is proposed to optimize queries for Legal Judgment Prediction, improving the efficiency of trajectory generation and surpassing initial performance ceilings through iterative self-evolution.
+- methods: query optimization, rubric-guided RL, iterative self-evolution
+- findings: LegalEvolver improves end-to-end performance on LJP benchmarks; rubric guidance outperforms direct SFT followed by RL; evolving rubrics further outperform fixed rubrics
 
 ### [LatentTriad: Pre-Action Risk Representations for Malicious Agent Skill Detection](https://arxiv.org/abs/2611.05088)
 
+- summary: The authors introduce LatentTriad, a method for detecting contextual risk in large language model agents with reusable skills, which achieves high accuracy without executing skill code.
+- methods: dynamic analysis, LatentTriad
+- findings: hidden states contain readable information about task-operation consistency; LatentTriad achieves 99.0-99.2% pooled F1 and 93.0-94.6% source-macro F1
+
 ### [JHiMA-WebRL: A Joint Hierarchical Multi-Agent Reinforcement Learning Framework for Long-Horizon Web Tasks](https://arxiv.org/abs/2611.05263)
+
+- summary: JHiMA-WebRL, a joint hierarchical multi-agent reinforcement learning framework, is introduced to improve long-horizon web navigation by separating and jointly training planning and execution.
+- methods: joint hierarchical multi-agent reinforcement learning, structured subtask supervision, hierarchical rollout grouping, Group Relative Policy Optimization (GRPO)
+- findings: JHiMA-WebRL achieves an average success rate of 37.2% on WebArena-Lite-v2; jointly updating the decomposer during RL outperforms updating the actor alone; jointly learned role factorization with smaller models can be a competitive alternative to scaling monolithic agents
 
 ### [Instantiating the Knowledge Plane](https://arxiv.org/abs/2611.07827)
 
+- summary: The Knowledge Plane, a proposed layer of intelligent agents for collaborative Internet management, can potentially be unlocked by agentic large language models, but new research problems must be solved.
+
 ### [How Should Agents See Code? Rethinking Code Representations for Agentic Software Engineering](https://arxiv.org/abs/2611.07286)
 
+- summary: This paper investigates the effectiveness of map-based code-representation workflows in agentic software engineering, evaluating their impact on task success, token use, and latency across various repository-level tasks.
+- methods: evaluation of five code-representation workflows, comparison against a raw-tool baseline, experiments on four repository-level tasks
+- findings: map-based workflows improve recall and reduce token usage in fault localization tasks; workflows have task-dependent benefits, with varying effects on patch resolution, test generation, and security patching; hybrid and documentation-enriched search workflows achieve high reproducing-test rates in test generation tasks
+
 ### [HarnessFlow: MCTS-Guided Harness Optimization for LLM Agents](https://arxiv.org/abs/2611.06254)
+
+- summary: HarnessFlow, a framework for optimizing complete executable harnesses, achieves the highest mean test scores among compared methods on six benchmarks spanning agentic tasks, coding, and web interaction.
+- methods: Monte Carlo Tree Search, refinement tree, coding agent
+- findings: HarnessFlow outperforms initial harnesses and Meta-Harness by 10.89 and 3.95 percentage points; optimized harnesses achieve an average score of 69.48%; lower average per-task execution costs than hand-engineered baselines
 
 ### [GREP: Grounding Generated Room Evaluation in Principles](https://arxiv.org/abs/2611.05802)
 
 ### [Graph-Mediated Large Language Model Systems in the Agentic Era: Reasoning, Knowledge, Retrieval, Execution, and Coordination](https://arxiv.org/abs/2611.05953)
 
+- summary: This survey introduces a taxonomy for understanding the role of graph operations in large language model systems and provides an evaluation framework for assessing their effects.
+- methods: taxonomy development, comparison of graph operations, evaluation framework
+- findings: importance of distinguishing graph operation functions; need to consider downstream task performance; open challenges in adaptive computation and memory maintenance
+
 ### [GeoFaham: Domain-Specialized Multi-Agent Geospatial Analytics for Disaster Response](https://arxiv.org/abs/2611.04977)
+
+- summary: GeoFaham, a domain-specialized multi-agent system, is introduced for geospatial disaster analytics, outperforming general-purpose coding agents on a 40-task benchmark.
+- methods: multi-agent system, dependency-aware planning, progress tracking, validation, replanning
+- findings: GeoFaham achieves the best overall performance with 0.940 score; uses 7.5 times fewer tokens than the next-best baseline
 
 ### [FINCOSMOS: An Open-World Evaluation Paradigm for Agents in Finance](https://arxiv.org/abs/2611.07464)
 
@@ -96,19 +214,51 @@
 
 ### [Drift No More: Spectral Locking for Long-Horizon Open-Weight Multi-Agent AI](https://arxiv.org/abs/2611.04315)
 
+- summary: The ATLAS method is introduced to address task drift, role drift, and state staleness in long-horizon multi-agent systems by steering agent hidden states toward their shared high-coherence eigendirections.
+- methods: ATLAS, prompting, retrieval, memory, activation-steering
+- findings: ATLAS outperforms baselines in various tests; improves memory macro-average accuracy by up to 5.7 points; reduces write/read failures by up to 31.7%/24.8%
+
 ### [DR Pixel: Page-Native Deep Research with Vision-Language Models](https://arxiv.org/abs/2611.03097)
+
+- summary: The introduction of DR Pixel, a page-native deep research agent, enables direct retrieval and reasoning over rendered document page images, outperforming OCR-based baselines and improving efficiency.
+- methods: counterfactual credit reweighting, agentic supervised finetuning, multimodal retrieval
+- findings: page-native deep research outperforms OCR-based baselines; improves retrieval recall by 15 points and final accuracy by 10 points; directly retrieving and reasoning over visual document pages is more effective and efficient
 
 ### [Don't Prompt Your Agents. Equip Them: Skillware as a Modular Standard for Sovereign, Auditable, and Deterministic Capability Execution for Logical Systems](https://arxiv.org/abs/2611.07652)
 
+- summary: This work presents Skillware, an open architectural framework that enables autonomous logical systems to execute tasks deterministically and efficiently by separating what an agent wants to do from how that task is executed.
+- methods: modular software capability bundles, deterministic Python code, automated unit tests, in-process adapters
+- findings: small local models equipped with Skillware outperform unequipped frontier models; token usage reduced by up to 84.8%; inference costs slashed by up to 97.3%; parameter errors eliminated entirely
+
 ### [Do Agents Still Follow the Rules? Benchmarking Rule Compliance under Agent Context Compaction](https://arxiv.org/abs/2611.03223)
+
+- summary: ARCBench is introduced as a benchmark to measure rule compliance in LLM agents after compacting long histories, revealing that most violations occur while the rule is still in the compacted history.
+- methods: benchmarking, compaction configuration, adversarial settings
+- findings: most violations occur while the rule is still in the compacted history; compaction strategy and budget decide whether the rule survives; retaining a rule does not guarantee compliance
 
 ### [DistDebug-Bench: Can LLM Agents Diagnose Bugs in Distributed Systems?](https://arxiv.org/abs/2611.03523)
 
+- summary: The DistDebug-Bench benchmark evaluates LLM agents' ability to diagnose complex-system failures at the code level, revealing substantial gaps between current agents and real-world debugging tasks.
+- methods: benchmark evaluation, extensive evaluation of state-of-the-art LLMs and agents
+- findings: substantial gaps between current agents and real-world debugging tasks; tunnel vision due to lack of explicit reasoning structure and nondeterminism from inconsistent tool-use scope
+
 ### [DiabAgent: Toward Agentic Physiological Control](https://arxiv.org/abs/2611.03601)
+
+- summary: The authors introduce DiabAgent, a research suite for agentic physiological control, and evaluate its effectiveness in controlling glucose levels in patients with Type 1 diabetes using the Agentic Physiological Control framework and SweetBench benchmark.
+- methods: Agentic Physiological Control, simulation, ablation study, benchmarking
+- findings: DiabAgent achieves a COGI of 73.5, outperforming the OpenAPS baseline; individual adaptation and contextual information improve glucose control; combining high-frequency rule-based control with lower-frequency agent decisions shows potential for balancing control performance and computational cost
 
 ### [DelegateEval: Evaluating Platforms for Personal External Service Agents](https://arxiv.org/abs/2611.07508)
 
+- summary: The authors propose DelegateEval, a platform-level evaluation framework for personal external service agents that can help individuals serve clients using their knowledge and expertise.
+- methods: platform-level evaluation framework
+- findings: enables individuals to serve more clients with less direct involvement; generates economic value at scale; assesses eight dimensions of agent systems
+
 ### [DARE: Difficulty Analysis for Repair Enhancement](https://arxiv.org/abs/2611.05797)
+
+- summary: The DARE framework is proposed to measure and predict task difficulty in automated program repair, providing a more comprehensive evaluation of coding agents beyond solve rates.
+- methods: difficulty measurement, prediction, feature-group contribution analysis, task-specific repair support
+- findings: difficulty model's aligned predictions achieve Spearman's ρ = .476-.621; salient Feature Groups vary across tasks and benchmarks; improved repair success when support is matched to each task's salient Feature Group
 
 ### [Creating Hybrid Interactive Narrative Systems with LLM: From Formal Description to Evaluation](https://arxiv.org/abs/2611.02807)
 
@@ -116,95 +266,251 @@
 
 ### [ComplianceAtlas: A Taxonomy-Driven Agentic AI Framework for Automated AI Act Gap Analysis and Remediation](https://arxiv.org/abs/2611.03121)
 
+- summary: This paper presents a framework for systematic identification of technical gaps in high-risk AI systems to assess regulatory compliance, using a taxonomy of technical compliance gaps and a two-stage agentic framework.
+- methods: hierarchical reasoning, multi-signal scoring, semantic similarity, regulatory alignment, effort estimation
+- findings: The framework achieves a gap-type F1 of 0.831; The approach achieves remediation P@5 of 0.872; Automated gap extraction reduces expert burden while maintaining auditability
+
 ### [ChemE-as-Code: An Open-Source Platform for Agentic AI in Chemical Engineering](https://arxiv.org/abs/2611.07947)
 
 ### [Beyond Instruction Override: Benchmarking Indirect Prompt Injection with Task-Tampering Attacks](https://arxiv.org/abs/2611.07640)
 
+- summary: A new benchmark is introduced to test indirect prompt-injection attacks that tamper with a task's outcome without changing the task, revealing gaps in existing defenses.
+- methods: benchmarking, attack simulation, defense evaluation
+- findings: attacks on decision rules, available actions, and state have higher mean success than objective attacks; detection-and-removal defense reduces objective-targeting attacks but leaves observation- and state-targeting attacks with high success rates; tool-policy defense allows significant attack success
+
 ### [Benchmarks as Software: Terminal-Bench and the Case for Continuous Benchmarks](https://arxiv.org/abs/2611.08417)
+
+- summary: The study introduces a continuous-validation workflow to address benchmark maintenance debt in coding agent evaluations, demonstrating its effectiveness on the Terminal-Bench 2.0 benchmark.
+- methods: continuous-validation workflow, community reports, task artifacts, agent traces, automated oracle checks, human-gated repairs
+- findings: benchmark maintenance debt can lead to a gap between benchmark scores and actual capabilities; repairs to Terminal-Bench 2.0 changed evaluation results, increasing accuracy by over 10 percentage points; resource allocation can materially change agent performance
 
 ### [ATC: Agent Trajectory Control for Role-Contract Enforcement in Black-Box Multi-Agent Systems](https://arxiv.org/abs/2611.04321)
 
 ### [Assurance-Conditioned Continuous Authorization for Autonomous AI Agents](https://arxiv.org/abs/2611.05632)
 
+- summary: The Assurance-Conditioned Continuous Authorization (ACCA) approach is presented for maintaining operational authority according to currently justified assurance in autonomous software agents.
+- methods: dependency graph analysis, regression suite testing
+- findings: effective-authority envelope resolution; protected effect-time enforcement; stale-action rejection
+
 ### [Ask, Don't Equip: Question-Driven Coding Agents for Deep Kernel Optimization](https://arxiv.org/abs/2611.03517)
+
+- summary: KernelSeek, a question-driven agent, optimizes CUDA kernels by asking questions at decision points, outperforming traditional agents in achieving faster kernel implementations.
+- methods: question-driven approach, self-directed model mutation, parsed profiler output, disassembly analysis
+- findings: KernelSeek achieves 1.13x faster kernel implementation than traditional agents; Questions at decision points drive large gains in optimization; KernelSeek produces dependency-free kernels for various architectures
 
 ### [Anduin: A sybil-resistant agentic marketplace reputation system](https://arxiv.org/abs/2611.05586)
 
+- summary: This study evaluates the use of onchain payment histories to yield provider ratings resilient against Sybil attacks in permissionless onchain markets.
+- methods: bipartite graph modeling, max-flow rating algorithm, simulated adversary evaluation
+- findings: rating manipulation costs 20% of total spend; rating manipulation is 23x harder than standard similarity rule
+
 ### [Aligning Language Models with General Preferences: An Empirical Study of Direct Nash Optimization](https://arxiv.org/abs/2611.05373)
+
+- summary: Direct Nash Optimization (DNO) is used to align language models to a general preference function, with its practical variant DNO-Prct showing improved performance on open-weight instruct models
+- methods: on-policy sampling, LLM-based rating, large-margin preference-pair selection, DPO-style contrastive update
+- findings: DNO-Prct improves length-controlled win rate against GPT-4o; tuned 8B model scores above Llama 3.1 70B Instruct; rating step does not require a proprietary model
 
 ### [AgentTrustCI: Build-Time Policy, Grounding, and Trajectory Tests for Java LLM Agents](https://arxiv.org/abs/2611.06674)
 
+- summary: AgentTrustCI is a Java framework that checks the security and reliability of LLM agents by expressing application-layer expectations as policy, grounding, and trajectory checks over recorded traces.
+- methods: deterministic replay implementation, judge interface, semantic evaluation
+- findings: correctly classified all 30 injected faults and 25 passing controls; additional coverage of trajectory checks; established coverage of the authored regression suite
+
 ### [AgenticFinBench: Benchmarking Financial Agents on Diverse Tasks from Real-World Requests](https://arxiv.org/abs/2611.04813)
+
+- summary: The authors introduce AgenticFinBench, a benchmark of 230 real-world financial tasks, and a reference-free evaluation framework to assess financial agents' performance and accuracy.
+- methods: benchmarking, reference-free evaluation framework, claim audit
+- findings: hallucination auditing lowers agent performance scores; harness differences explain more variation in evidence grounding than model differences; quality scores decrease with task complexity
 
 ### [Agent-R$^2$: Scaling Agents for Realistic Productivity Work via Real-Source Data Synthesis](https://arxiv.org/abs/2611.08219)
 
+- summary: The Agent-R$^2$ framework is introduced to synthesize scalable post-training data for realistic productivity work, improving the performance of large language models in agentic reasoning and tool use.
+- methods: supervised fine-tuning, rubric-based reinforcement learning, data synthesis
+- findings: Agent-R$^2$-4B surpasses Qwen3-235B-A22B-Thinking-2507 on GDPval and OfficeQA; mitigates shortcut behavior; promotes sustained exploration
+
 ### [Adversarial Speculative Reasoning Improves Long Horizon Agents](https://arxiv.org/abs/2611.05345)
+
+- summary: This work improves the reasoning capability of long-horizon agents by controlling numerical noise in speculative decoding, leading to better accuracy without changing the target model or its output distribution.
+
+- methods: training draft models, controlling numerical noise, encoding critical reasoning
+- findings: numerical noise affects reasoning accuracy; controlling noise improves accuracy; approach raises end-to-end success rate on complex agentic coding benchmarks
 
 ### [Adapting the Process of Adaptation: Darwinian, Lamarckian, and Agent-Directed Evolution in AI](https://arxiv.org/abs/2611.07048)
 
 ### [A.S.E 2.0: Understanding How Repository Context Impacts the Security of LLM-Generated Code](https://arxiv.org/abs/2611.06294)
 
+- summary: Researchers created a benchmark called CASE-Bench to study how repository context affects the security of generated code by large language model coding assistants and agents.
+- methods: context construction methods, controls, coding-agent trajectory analysis
+- findings: functionality-oriented context has limited impact on secure pass rate; withholding safeguards lowers secure pass rate; coding agents rarely observe relevant safeguards
+
 ### [A Layered View of LLM Support in Underwater Robotics](https://arxiv.org/abs/2611.06162)
+
+- summary: This abstract discusses the potential role of large language models in underwater robotics, particularly in supporting operational tasks such as fault diagnosis and mission adjustment.
+- findings: LLMs can support operational tasks in underwater robotics; LLMs are not yet suitable for direct control in critical applications
 
 ## 2026 W44 (arxiv)
 
 ### [Where You Inject Matters: The Trust Region Effect in LLM Agents](https://arxiv.org/abs/2610.38867)
 
+- summary: This study characterizes the effectiveness of different injection placements in indirect prompt injection attacks on LLM agents, finding that agent susceptibility varies across injection placements due to a trust region effect.
+- methods: agentic testbeds, learning-based attackers
+- findings: agent susceptibility varies across injection placements; trust region effect: agents assign different levels of trust to different regions of their environments
+
 ### [When Fine-Grained Credit Assignment Helps and Hurts: Multimodal Agentic Reinforcement Learning through Video Editing](https://arxiv.org/abs/2610.35497)
 
 ### [Well-Specified and Well-Tested? Assessing SWE-bench-Style Datasets with a Self-Evolving Agent](https://arxiv.org/abs/2610.39417)
 
+- summary: ExLabel, an LLM-based assistant, is proposed to assess task clarity and test coverage in software engineering datasets, outperforming existing approaches and improving the performance of coding models.
+- methods: LLM-based annotation, Self-evolving experience-guided assessment
+- findings: ExLabel achieves the best F1 score across all settings; ExLabel improves the performance of coding models by 14.5%
+
 ### [Video Generation Meets Agent Harness: Agentic Video Generation, Agentic World Modeling and Recursive Self-Improvement](https://arxiv.org/abs/2610.40191)
+
+- summary: This report explores the intersection of agentic video generation and video world models through the agent harness, examining three directions: agentic video generation, agentic world modeling, and recursive self-improvement in video model development.
+- methods: agentic generation, planning, tool use, feedback
+- findings: agentic video generation enables coherent and controllable multi-shot videos; video world models provide action-conditioned observations and predicted futures; recursive self-improvement in video model development leads to sustained improvements in models and harnesses
 
 ### [VeriCUA: Verification as Agentic Exploration for Computer-Using Agents](https://arxiv.org/abs/2610.40578)
 
+- summary: The authors present VeriCUA, a platform-agnostic framework for verification through agentic exploration, which improves task-completion verification for computer-using agents across different environments.
+- methods: agentic exploration, dynamic evidence gathering, GUI checks, code checks
+- findings: improved agreement with reference labels; complementary evidence; test-time exploration
+
 ### [Vendster: An Evaluation Arena to Investigate How Forecasting Tool Quality Affects LLM Agent Behaviors in Buyer-Vendor Negotiation](https://arxiv.org/abs/2610.38292)
+
+- summary: The authors present Vendster, an evaluation arena that measures the impact of a forecaster's bias and prediction-interval width on the outcome of a buyer-vendor discount negotiation between two large language model agents.
+- methods: evaluation arena, synthetic forecasts, controlled bias and interval width
+- findings: Model-generated forecasts raise sales target attainment by up to +17 percentage points; Under-prediction bias significantly improves outcomes for agents that react more to the forecasts; Interval width has no statistically significant effect at zero bias
 
 ### [The Anatomy of Socio-Demographics in Pluralistic Offensiveness Modeling: When and Where It Helps, and the Role of Reasoning](https://arxiv.org/abs/2610.37896)
 
 ### [TaskFrame: Connecting Task-Level Planning with Frame-Level Control for Game Agents](https://arxiv.org/abs/2610.40276)
 
+- summary: This work presents TaskFrame, a hierarchical planner-controller framework for building general game agents that connects task-level planning with frame-level keyboard-and-mouse control.
+- methods: hierarchical planning, supervised learning, dependency-aware GRPO, Transformer controller
+- findings: TaskFrame is competitive with general-purpose vision-language models on instruction decomposition; TaskFrame achieves a higher combat success rate than evaluated baselines in closed-loop evaluation
+
 ### [SpaceAct: Benchmarking 3D Spatial and Temporal Reasoning via Closed-Loop Action and Active Perception](https://arxiv.org/abs/2610.38405)
+
+- summary: The SpaceAct benchmark and SAPA framework evaluate 3D spatiotemporal reasoning in multimodal large language models through closed-loop physical action and active perception.
+- methods: closed-loop physical action, active perception, Spatiotemporal Active-Probing Agent framework
+- findings: MLLMs struggle with 3D visual grounding and action refinement; providing a reference plan or exact 3D state improves performance; collisions and observation loops are common failure modes
 
 ### [Soei: Structured Observability of Evidence and Intent for Multi-Agent AI Software Engineering](https://arxiv.org/abs/2610.39468)
 
 ### [SkillMem: Compact External Skill Memory for Latent Multi-Agent Reasoning](https://arxiv.org/abs/2610.37935)
 
+- summary: The authors introduce SkillMem, a method that represents reusable skills as small external latent memories to reduce inference cost and storage in latent multi-agent systems.
+- methods: behavioral distillation, role-conditioned cross-attention reader
+- findings: SkillMem provides strong gains for smaller backbones; SkillMem reduces total storage by more than 38x compared to alternative skill representations; SkillMem achieves up to a 4.23x end-to-end inference speedup
+
 ### [SkillLifeBench: Benchmarking Security Across the Lifecycle of Agent Skills](https://arxiv.org/abs/2610.35215)
+
+- summary: SkillLifeBench evaluates 14 models on paired decision tracks, including runtime and autonomous lifecycle tasks, to assess their performance in divergent skill states.
+- methods: paired scenario evaluation, lifecycle task assessment, execution provenance analysis
+- findings: Lifecycle tasks distinguish models with similar runtime scores; Execution evidence improves recovery; Joint success requires task completion without registered attack goal
 
 ### [Seq@K: Evaluating Language Models Under Sequential Feedback](https://arxiv.org/abs/2610.37859)
 
+- summary: The authors introduce Seq@K, a new evaluation protocol that measures a model's ability to solve a problem within K sequential attempts with feedback, and show that it reveals a different model-selection landscape compared to traditional metrics.
+- methods: evaluation protocol, benchmarking, model selection
+- findings: Seq@K reveals different model rankings; Pareto frontiers admit more efficient configurations; gains from choosing optimal model configuration can widen or shrink; analyzing model trajectories helps characterize iterative refinement behavior
+
 ### [Scan Before You Install: Detecting and Mitigating Local and Composite Vulnerabilities in Skills](https://arxiv.org/abs/2610.37901)
+
+- summary: A six-module scanner was developed to detect unintended vulnerabilities in agent skill packages, addressing gaps in existing scanners and achieving high recall and precision rates in various benchmarks and tests.
+- methods: Content Extraction, Local Analysis, Composite Analysis, Validation, Reporting, Mitigation
+- findings: 95.90% recall with 4.22% false positive rate on SkillTrustBench; F1 score of 0.947 on MalSkillBench; 89.8% precision on GitHub repositories; F1 score of 0.991 on SCR-Bench
 
 ### [Sandman: Building and Operating Sandboxes for Agentic Reinforcement Learning on Shared Kubernetes](https://arxiv.org/abs/2610.39711)
 
+- summary: Sandman is a sandbox service for agentic reinforcement learning that manages creation, readiness, and cleanup of task-specific environments on shared Kubernetes clusters.
+- methods: sandboxing, containerization
+- findings: Sandman held 11,858 concurrent tiny sandboxes in a scale test; created 3.1 million sandboxes in October 2026 for four production training campaigns
+
 ### [Routed Continual Learning](https://arxiv.org/abs/2610.38796)
+
+- summary: Routed Continual Learning (Routed CL) is introduced, an architecture that decides how to partition and retain experience for agents deployed at scale, improving performance and reducing costs.
+- methods: Routed Continual Learning, Context Memory Adapter, in-context learning, clustering
+- findings: 15-30% increase in normalized reward; higher mean normalized reward than ICL-only clustering; 65-72% reduction in estimated API cost
 
 ### [RoboAuto: Autonomous Robot Program Search through Multi-Level Physical Understanding](https://arxiv.org/abs/2610.36533)
 
+- summary: RoboAuto, a framework for robot program search, achieves superior performance by explicitly organizing physical understanding at the object, scene, and interaction levels.
+- methods: hierarchical knowledge base, scene grounding, multi-stage planning, self-designed experiments
+- findings: 89.1% success rate on short-horizon LIBERO-PRO tasks; more than twice the mean success rate of ASPIRE on LIBERO-PRO Long and LIBERO-Plus; outperforms ASPIRE and π0.5 on long-horizon real-robot tasks
+
 ### [RFW-A: Agentic Procedural Generation of 400K Articulated Assets over 500 Categories](https://arxiv.org/abs/2610.40333)
+
+- summary: RFW-A is a new articulated-asset generation paradigm that combines agentic synthesis and procedural generation to efficiently construct high-quality articulated assets at scale.
+- methods: agentic synthesis, procedural generation, program synthesis
+- findings: RFW-A reduces asset construction cost; RFW-A generates diverse and valid assets; training with RFW-A-400K improves part-level articulation estimation and policy transfer
 
 ### [Reva: Real-Time Vulnerability Detection through Contextual Probing of Large Language Models](https://arxiv.org/abs/2610.35829)
 
+- summary: REVA, a real-time vulnerability analysis system, leverages a trained probe to read an LLM's internal representations, achieving state-of-the-art accuracy in detecting vulnerabilities while being significantly faster and less costly than existing methods.
+- methods: fine-tuning deep learning models, prompting LLM for direct verdict, using a trained probe to read LLM's internal representations
+- findings: REVA achieves 60.0% accuracy in about one second per function; REVA is over 250 times faster and less than a tenth as costly as VulTriage; REVA is at least as accurate as VulTriage across three open LLMs
+
 ### [QMUL_AK at AISA-ArabicFC: Schema-Constrained Function Calling with ALLaM](https://arxiv.org/abs/2610.37995)
+
+- summary: The QMUL_AK submission to AISA-ArabicFC 2026 achieves high accuracy in function calling and reasoning-augmented calling using the Arabic-English ALLaM-7B-Instruct model with low-rank adaptation.
+- methods: low-rank adaptation (LoRA), Arabic schema-aware prompt, dialect and no-call resampling, token-weighted training objective, deterministic validation
+- findings: high function accuracy and argument exact match on development and test sets; function selection is nearly saturated; argument extraction remains the main source of error
 
 ### [Prompt Lottery in LLM-as-a-Judge: Measuring and Mitigating Sensitivity to Syntactic Rephrasing](https://arxiv.org/abs/2610.38076)
 
+- summary: The study investigates the consistency of LLM-as-a-Judge evaluations under paraphrastic rephrasings and finds that single-prompt evaluation is insufficiently robust for model ranking.
+- methods: paraphrastic rephrasings, user study, multi-prompt aggregation
+- findings: paraphrastic rephrasings produce different LLMaJ judgments; LLMaJ judges exhibit larger agreement degradation than humans; multi-prompt aggregation improves robustness
+
 ### [Prefix Executability: Evaluating Tool-Using Agents Beyond Final Success](https://arxiv.org/abs/2610.40444)
+
+- summary: The proposed prefix executability protocol evaluates tool-using agents by assessing the executability of every prefix of a predicted tool-call sequence, providing a more comprehensive understanding of agent reliability beyond final task success.
+- methods: prefix executability protocol, Prefix Executability Curves (PEC), First-Error Depth (FED), Trajectory Executability Rate (TER), horizon-normalized AUC-PEC, Recovery Rate (RR)
+- findings: outcome-only and prefix-level rankings diverge; explicit pre-execution plan checking improves executable-prefix survival; final success alone is insufficient for evaluating tool-use agents
 
 ### [Precedent or Intent? What Coding Agents Follow When Evolving Existing Code](https://arxiv.org/abs/2610.38244)
 
+- summary: This study investigates how coding agents decide between following existing code or new task instructions when multiple implementations satisfy the same functional requirements.
+- methods: bidirectional controlled experiments, validation in real-world repositories
+- findings: agents follow repository precedent over default preferences; not all precedents carry equal influence; written priority rules achieve higher success than code examples alone
+
 ### [Pre-Crime for Agents, at the Last Second: Probing When a Recruited Agent Gives In](https://arxiv.org/abs/2610.40588)
+
+- summary: A linear probe on an AI agent's activations can detect when the agent is about to leak sensitive information, such as a secret, in a controlled multi-agent setting.
+- methods: linear probe, zero-shot decision-model monitor, bag-of-words classifier
+- findings: The probe catches 82% of leaking calls at a 5% flag rate; The probe flags permitted disclosures more than violations; A warning raised before generation could prevent an agent from leaking sensitive information
 
 ### [PhysAg3D: Bridging 3D Generative and Agentic Models for High-Fidelity and Physically-Interactive Assets](https://arxiv.org/abs/2610.39924)
 
+- summary: PhysAg3D is a framework that generates interactive 3D assets from a single image by coupling 3D generative models with agentic reasoning and tool use.
+- methods: agentic reasoning, tool use, hierarchical interaction representation, geometric and physical tools
+- findings: detailed, image-aligned assets with plausible interactions; accommodates both rigid articulation and compliant deformation; bounded refinement and source-surface preservation
+
 ### [PerceptRL: Making Visual Perception Rewardable in MLLMs from Answers to Interactions](https://arxiv.org/abs/2610.37471)
+
+- summary: PerceptRL is presented as a method to strengthen fine-grained visual perception in multimodal large language models through a multi-agent pipeline and multi-turn inspection with visual tools.
+- methods: Perception RL, Chain QA, multiple-choice QA, Perception Agentic RL, Coordinate Injection
+- findings: PerceptRL achieves 71.6% average accuracy across seven benchmarks; PerceptRL surpasses the base model by 15.7 percentage points; PerceptRL surpasses the strongest evaluated frontier VLM by 5.2 percentage points
 
 ### [Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps](https://arxiv.org/abs/2610.39264)
 
+- summary: A novel online reinforcement learning framework is proposed to train UI navigation agents directly on live iOS applications, addressing limitations of existing models.
+- methods: online reinforcement learning, Proximal Policy Optimization (PPO), GiGPPO, supervised fine-tuning (SFT), offline reinforcement learning
+- findings: online RL trained agents outperform SFT and terminal-only RL baselines; 8B RL agents achieve nearly a sevenfold improvement over SFT baseline in out-of-distribution generalization; RL agents outperform Gemini-3.5-Flash and tie with Gemini-3.1-Pro on real iOS applications
+
 ### [OmniBrain-0: A Unified Agentic Model for Embodied Intelligence](https://arxiv.org/abs/2610.36013)
 
+- summary: OmniBrain-0, a lightweight unified embodied agent, is introduced to coordinate manipulation and navigation through a shared high-level decision model, achieving strong cross-domain task performance with lower inference and execution overhead.
+- methods: embodied pretraining, domain-specialized agent distillation, multi-teacher on-policy distillation (MOPD), Rubric-Guided Recursive Self-Improvement (RSI)
+- findings: OmniBrain-0 achieves strong cross-domain task performance; substantially lower inference and execution overhead than its teacher
+
 ### [Omni-InteractScope: Benchmarking Proactive and Agentic Interaction in Continuous Omnimodal Streams](https://arxiv.org/abs/2610.35439)
+
+- summary: The Omni-InteractScope benchmark is introduced to evaluate the reliability of omnimodal large language models in connecting stream evidence and user needs to timely interventions, revealing critical limitations in current models.
+- methods: benchmarking, experimental evaluation
+- findings: Timely tool invocation remains unreliable; Query-free reminders remain poorly covered; End-to-end guidance coverage remains limited
 
 ### [Nemotron 3.5 Super and Lightning: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Models for Agentic AI](https://arxiv.org/abs/2610.38095)
 
@@ -212,129 +518,341 @@
 
 ### [Locating and Closing Information Gaps in Multi-Agent Systems](https://arxiv.org/abs/2610.40186)
 
+- summary: The proposed SPLICE method improves multi-step Web tasks by locating information gaps and adding directed edges to deliver missing evidence, resulting in increased task scores on various benchmarks.
+- methods: Selective Probing and Link Insertion for Closing information gaps in multi-agent Execution (SPLICE)
+- findings: SPLICE raises the task score on Web tool use by 8.0%; SPLICE raises the mean score on four reasoning and planning benchmarks by 5.7%
+
 ### [LM-DSB: A Lightweight Multi-agent System for Automated Daily Safety Bulletin Generation in Construction](https://arxiv.org/abs/2610.36433)
 
 ### [LiveSearch: Questions as Executable Verifier Code for a Live Benchmark of Professional-Source Financial Search Agents](https://arxiv.org/abs/2610.37166)
 
+- summary: The LiveSearch benchmark is introduced to evaluate financial agents' ability to retrieve up-to-date information by executing questions as executable verifier code against professional financial data at evaluation time.
+- methods: executable verifier code, professional financial data service, daily job re-execution
+- findings: 70% of served questions change their gold value over three consecutive days; literally reused earlier snapshot fails on a majority of questions within a single day; tool-calling models reach 70.9% to 76.7% answer accuracy under general web search
+
 ### [Learning to Reason from Reference Samples Alone: Reinforced Adversarial Learning for Modern LLM Post-Training](https://arxiv.org/abs/2610.38851)
+
+- summary: Reinforced Adversarial Learning (RAL) is proposed as a method for post-training reasoning LLMs using reference answers alone as rewards, achieving comparable results to direct RLVR in verifiable tasks and generating high-quality scientific abstracts.
+- methods: Reinforced Adversarial Learning (RAL), Reinforcement learning with verifiable rewards (RLVR)
+- findings: RAL matches direct RLVR in verifiable tasks; RAL generates high-quality scientific abstracts indistinguishable from real ones
 
 ### [Learning Calibrated Confidence for Multi-Agent Collaboration](https://arxiv.org/abs/2610.39927)
 
+- summary: This paper proposes MASCAL, a multi-agent system that learns to produce correctness probabilities for its answers, enabling downstream agents to make informed decisions and improving task accuracy and calibration quality.
+- methods: reinforcement learning, confidence calibration, confidence-aware weighting
+- findings: MASCAL improves task accuracy and calibration quality; upstream confidence affects downstream decision behavior; learned final confidence supports selective answering and targeted rechecking
+
 ### [Judging Before Propagation: Task-Graph Contextual Integrity for Multi-Agent Privacy](https://arxiv.org/abs/2610.39532)
+
+- summary: The authors introduce Task-Graph Contextual Integrity (TG-CI), a formalization of Contextual Integrity for multi-agent systems that accounts for information propagation downstream in a workflow.
+- methods: Task-Graph Contextual Integrity, propagation-scoped authorization, Full-Scope policy, Auto-Region policy
+- findings: TG-CI reduces unauthorized disclosure count by 85.8-94.1% relative to the Local-History CI baseline; TG-CI retains 93.6-96.1% of the baseline's task accuracy
 
 ### [Is it my preference? Role Grounding Attack against Agent's Memory via Social Interaction](https://arxiv.org/abs/2610.38209)
 
+- summary: Researchers identify a vulnerability in memory systems of LLM-based agents, called Role Grounding Misattribution, which can be exploited by attackers to manipulate agent performance and leak user privacy.
+- methods: formalization of Role Grounding Attack (RGA) model, instantiation of RGA as tool selection manipulation and privacy leakage, evaluation across five mainstream memory systems and six language models
+- findings: Role Grounding Misattribution vulnerability in memory systems; high attack success rates for tool manipulation and privacy leakage
+
 ### [Heterogeneous Co-Evolution Learning for Tool-Efficient Search Agents with Zero Labels](https://arxiv.org/abs/2610.39682)
 
+- summary: This study introduces ZEST-Search, a framework for training search agents that interleaves reasoning with external retrieval, addressing challenges in effective search-agent training.
+- methods: heterogeneous co-evolution, reinforcement learning, answer-first and evidence-path-guided generation
+- findings: ZEST-Search improves search-agent performance; ZEST-Search achieves higher tool efficiency without labeled search-training data; heterogeneous generation, adaptive difficulty control, and tool-aware optimization enable effective search-agent training
+
 ### [HERA: Assessing an Autonomous Agent for Quantum Device Measurement](https://arxiv.org/abs/2610.39074)
+
+- summary: Researchers introduce HERA, an autonomous agent that can carry out cryogenic transport measurements of quantum devices and draw sound scientific conclusions with the help of a curated knowledge base.
+- methods: blinded trial, ablation study, offline replays
+- findings: HERA's conclusions matched the expert's conclusions; knowledge base improved model performance and reasoning; HERA can extend to new problems with minimal expert time
 
 ### [Heard Enough to Act: Early Tool Calling in Spoken Dialogue Systems](https://arxiv.org/abs/2610.34653)
 
 ### [HALO: Human-Grounded Granular Evaluation of Proactive Agents](https://arxiv.org/abs/2610.39086)
 
+- summary: The authors introduce HALO, a human-grounded evaluation framework for proactive agents, and present results from HALO-Arena and HALO-8K, a dataset of 8,000 responses from 10 models annotated by 20 experts.
+- methods: human-grounded evaluation, annotation by experts
+- findings: over-proactivity is the dominant observed failure mode; premature timing or excessive intensity account for 61.20% of rejected responses
+
 ### [God Does Not Play Dice: Enforcing Batch Invariance in Agentic Kernel Generation](https://arxiv.org/abs/2610.36623)
 
+- summary: The proposed tool, which combines static dependency analysis and dynamic validation, improves batch invariance in large language model serving systems by up to 91.9% without significant performance degradation.
+- methods: contract-guided static dependency analysis, dynamic validation of bitwise consistency
+- findings: 19 confirmed batch invariance violations among 83 released artifacts; improved batch invariance pass rate from 67.6% to 91.9%
+
 ### [Goal-Aware Dynamic Multi-Agent Collaboration for Long-Horizon Tasks](https://arxiv.org/abs/2610.39193)
+
+- summary: This study examines how single agents and multi-agent systems manage different duties during long-horizon task execution and proposes a Goal-Aware Dynamic Multi-Agent Collaboration framework to improve task success.
+- methods: preliminary study, analysis
+- findings: verification has the strongest association with task success; separating duties among agents with separate contexts is insufficient; agents can lose track of the overall goal without proper coordination
 
 ### [GARDEN: Generalist Autonomous Reward Design Through Evidence Navigation for Cooperative Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2610.37926)
 
 ### [From Intent to Improvement: Agentic Dataset Search for Better Model Training](https://arxiv.org/abs/2610.39608)
 
+- summary: The authors propose AgenticDS, a contract-governed agentic framework for finding training data in million-scale machine learning repositories, which improves search results and downstream accuracy.
+- methods: hybrid retrieval, bounded graph expansion, deterministic operators
+- findings: AgenticDS improves NDCG@10 by 25.7% over the strongest dense-sparse hybrid; AgenticDS improves NDCG@10 by 18.9% over a commercial LLM agent; AgenticDS retrieves datasets that give the best downstream accuracy in mathematics, code, and medicine
+
 ### [Finding Is Not Returning, Returning Is Not Reconstructing: A Multi-Dimensional Evaluation of Agent Social Re-entry](https://arxiv.org/abs/2610.39781)
+
+- summary: This study introduces a framework to evaluate the ability of Large Language Model agents to re-engage with previously inactive conversations, highlighting the distinction between accessing previous conversations, choosing to re-engage, and maintaining conversational continuity.
+- methods: shared-snapshot evaluation framework, multi-dimensional evaluation
+- findings: resurfacing improves target conversation identification; persistent memory improves autonomous target-directed replying; neither improvement consistently gains contextual reconstruction
 
 ### [FeatureArc: Benchmarking Coding Agents on Evolving Features](https://arxiv.org/abs/2610.37434)
 
+- summary: The study introduces FeatureArc, a benchmark to evaluate coding agents on evolving features, and reveals a significant gap between first-stage and whole-feature success in autonomous coding agents.
+- methods: benchmarking, pipeline construction, trajectory analysis
+- findings: pooled success falls from 62.7% at the first stage to 28.5% when the whole feature is tested; inherited defects are a common failure mechanism; agents rarely revisit earlier stages after a failure
+
 ### [EvoTeam: Multi-Agent Collaboration via Evolving Teams](https://arxiv.org/abs/2610.39813)
+
+- summary: This paper proposes EvoTeam, a collaboration-centric evolution framework that jointly evolves team organization, interaction rules, and individual agent skills through execution experience in LLM-based multi-agent systems.
+- methods: collaboration-centric evolution, team organization, interaction rules, individual agent skills
+- findings: EvoTeam effectively evolves collaboration across heterogeneous tasks; it maintains a library of reusable teams; individual skills remain reusable across teams
 
 ### [Evaluating DeepSeek V4.1 Flash-1017 for loss of control and harmful manipulation risks](https://arxiv.org/abs/2610.35671)
 
 ### [Evaluating and improving AI agents for sequencing protocol understanding](https://arxiv.org/abs/2610.37851)
 
+- summary: LibStructBench is introduced as a benchmark for reconstructing sequencing-library structures and molecular workflows, showing that existing agents often produce approximately correct but unreliable reconstructions.
+- methods: benchmarking, experiments, language model switching, agent harness switching
+- findings: frontier agents produce approximately correct but unreliable reconstructions; language model switching has a larger impact on performance than agent harness switching; additional knowledge improves oligo-family recovery but not mean molecular-workflow scores
+
 ### [EpiAgent: Epistemic Self-Play for LLM Agents](https://arxiv.org/abs/2610.40227)
+
+- summary: This study proposes EpiAgent, a framework that equips LLM-based agents with an explicit, learnable epistemic layer to guide decisions under incomplete information in multi-agent interactions.
+- methods: Epistemic Self-Play, bi-level optimization, self-play, intrinsic prediction reward
+- findings: EpiAgent outperforms prompting-based and RL-based baselines; dedicated epistemic training improves belief inference accuracy; learned beliefs contribute to action planning
 
 ### [Efficient Agentic Audio-Visual Question Answering through Toolset Pruning and Modality Consolidation](https://arxiv.org/abs/2610.38960)
 
+- summary: Researchers investigate whether a compact workflow with essential perceptual capabilities can achieve comparable performance to a specialized-tool OmniAgent in fine-grained audio-visual question answering.
+- methods: staged controlled experiments, toolset pruning, modality-specific tool consolidation
+- findings: comparable or better accuracy with a compact two-tool agent; reduced inference cost by around 70%
+
 ### [DynaRev: Benchmarking Web Agents under Dynamic Goal Revision](https://arxiv.org/abs/2610.40133)
+
+- summary: DynaRev is a benchmark of 181 tasks to evaluate web agents under dynamic goal revision, providing a testbed for studying how web agents adapt to evolving user goals.
+- methods: trajectory-grounded evaluation, five-model evaluations, instruction rewriting
+- findings: agents often satisfy only part of the task requirements; varied milestone timing; mixed effects of dynamic delivery; gains from instruction rewriting while preserving browser state; losses from browser resets
 
 ### [Don't Lose the Thread: Empowering Long-Horizon LLM Agents with Cognitive Resource Self-Allocation](https://arxiv.org/abs/2610.40350)
 
+- summary: The authors introduce Cognitive Resource Self-Allocation (CORAL), a novel reasoning paradigm that helps agents powered by large language models to optimize their context and improve performance on long-horizon tasks.
+- methods: Cognitive Resource Self-Allocation (CORAL), Multi-episode Agentic Reinforced Policy Optimization algorithm
+- findings: CORAL achieves 42.8% average accuracy on the GAIA benchmark; CORAL consumes 6-7$	imes$ fewer input tokens than a ReAct agent; CORAL improves a strong proprietary agent by 8.0 points on the BrowseComp benchmark
+
 ### [Does Scaling Toward AGI Depend on What System-1 Lets System-2 Execute?](https://arxiv.org/abs/2610.39497)
+
+- summary: The study explores the potential of co-designing artificial general intelligence with System-1, a lightweight predictor, to improve scaling efficiency by reducing execution compute.
+- methods: conditional interaction, predict--gate--execute--update loop
+- findings: execution compute falls by a factor approaching 1/ρ_u under ideal screening; selection regret is bounded by predictor error and utility margin
 
 ### [Deogen: Automatic Benchmark Generation for Reasoning over Policies](https://arxiv.org/abs/2610.38687)
 
+- summary: This paper presents DeoGen, a scalable and automatic benchmark generator for deontic reasoning in language models.
+- methods: autoformalizing policy rules to first-order logic, constructing decision trees
+- findings: frontier models return the correct verdict 89-92% of the time; performance degrades to 22-40% correct on entries without sufficient information
+
 ### [DecompGym: Benchmarking LLM Agents on Designing Decomposition Algorithms](https://arxiv.org/abs/2610.38175)
+
+- summary: This study evaluates the ability of current coding agents to design and implement Benders decomposition and column generation algorithms, and introduces DecompGym, a benchmark for decomposition solvers.
+- methods: Benders decomposition, column generation, independent regeneration, reflection
+- findings: Most Benders failures are due to missing or suboptimal solutions; The most common column-generation failure is a method-audit rejection; Reflection is more effective than regeneration in turning retries into successes
 
 ### [Compatibility and future-proof testing for multi-agent systems](https://arxiv.org/abs/2610.36289)
 
+- summary: This work studies a bi-level structure for guaranteeing joint compatibility among independently developed autonomous agents in a shared environment without centralized design or coordination.
+- methods: bi-level structure, seed agents, independent testing, executable tests
+- findings: future-proofness property; joint compatibility guarantee; monotone closure of the seed
+
 ### [Collective Emergent Alignment: Measuring and Amplifying Interaction-Induced Reasoning Alignment in Multi-Agent LLMs](https://arxiv.org/abs/2610.34836)
+
+- summary: The study explores whether agent interaction in multi-agent large language model systems can produce additional reference-grounded reasoning alignment beyond individual self-refinement.
+- methods: REMAP framework, Semantic Coverage, interaction-specific alignment gains, fact-level multi-agent communication framework
+- findings: broadly positive interaction gains; composition-dependent heterogeneity effects; asymmetric information transfer across agent capability levels; compact fact exchange improves reasoning alignment and task performance
 
 ### [Co-Design Bench: Multimodal Collaborative Coding Evaluation for Agentic Models](https://arxiv.org/abs/2610.35138)
 
+- summary: The Co-Design Bench benchmark is introduced to evaluate human-AI co-design by testing coding agents' ability to translate real users' multimodal requests into working application revisions.
+- methods: judge-then-refute protocol, LLM verifier
+- findings: The strongest model endpoint passes an average of 69.9% of criteria per task; All ten endpoints achieve lower criterion completion on repository edits spanning three or four change types
+
 ### [CEPO: A General Framework for Improving Prompt Optimization in Multi-Agent Systems](https://arxiv.org/abs/2610.34722)
+
+- summary: The Coordinator-Executor Prompt Optimization (CEPO) framework improves prompt optimization in multi-agent systems by separating system-level coordination from agent-level execution.
+- methods: Coordinator-Executor Prompt Optimization, ablation studies, qualitative analyses
+- findings: CEPO consistently improves performance of existing prompt optimizers; improved optimization budget efficiency; performance scaling with the number of agents
 
 ### [Can Image Agents Complete Visual Commissions? A Benchmark and Modular Framework](https://arxiv.org/abs/2610.39330)
 
+- summary: The authors introduce Visual Commission Bench (VCB), a benchmark for evaluating visual commission completion, and V-Protocol, a reference agent that achieves state-of-the-art results on VCB and Mind-Bench.
+- methods: benchmarking, reference agent implementation
+- findings: V-Protocol achieves 69.0% strict task success on VCB; V-Protocol outperforms SCOPE on VCB and Mind-Bench
+
 ### [Beyond Passing Tests: A Systematic Review and Controlled Re-evaluation of Techniques for Improving the Quality of LLM-Generated Code](https://arxiv.org/abs/2610.38977)
+
+- summary: A systematic review and controlled re-evaluation of techniques to improve the quality of large language models reveals that most studies have limited scope and rarely compare techniques at an equal compute budget.
+- methods: systematic literature review, controlled re-evaluation
+- findings: most studies measure only one quality dimension; gains often come with unchanged or unreported correctness; best-of-n sampling with an analyzer-weighted ranker matches or beats other techniques on most measures
 
 ### [Beyond LLM Wrappers: Context Engineering and the Three-Engine Architecture for Reliable Financial AI](https://arxiv.org/abs/2610.39230)
 
+- summary: The authors present a production-grounded architecture for financial AI systems that integrates a financial knowledge graph, a deterministic optimization engine, and a multi-agent large language model layer to support decision-bearing questions and ensure numerical accuracy and auditability.
+- methods: context engineering, multi-agent validation, graph-backed validation
+- findings: single-agent pipelines exhibited hallucination rates of 7-9%; graph-backed multi-agent validation reduced hallucination rates to below 1%; deployment time reduced from six to two weeks with reusable mappings and graph templates
+
 ### [Beyond Federated Learning: Decentralized Agentic Systems for Self-Evolving Clinical Intelligence](https://arxiv.org/abs/2610.35453)
+
+- summary: The authors propose a shift from data aggregation to experience aggregation in medical AI, introducing Decentralized Agentic Systems (DAS) as a framework for synthesizing collective clinical intelligence.
+- methods: experience aggregation, decentralized AI agents
+- findings: current approaches to scaling medical AI are limited by a data-centric paradigm; DAS can synthesize collective clinical intelligence by sharing abstracted reasoning trajectories
 
 ### [Benchmarking LLM Agents for Behaviorally Adequate Test Generation from Software Requirements](https://arxiv.org/abs/2610.36584)
 
+- summary: The introduction of Req2Test-Bench, a benchmark for evaluating requirement-to-test generation, reveals a substantial gap between execution success and behavioral adequacy in current agents.
+- methods: benchmarking, evaluation of agent-model-reasoning configurations
+- findings: scaling up agents yields diminishing returns in behavioral adequacy; under-specified requirements cause information gaps; requirement-grounded harnesses offer a promising direction for improvement
+
 ### [AutoVend: Benchmarking LLM Agents on Long-Horizon Autonomous Vending Operations](https://arxiv.org/abs/2610.36980)
+
+- summary: The AutoVend benchmark evaluates large language model agents in managing vending machines, revealing that most agents fall short of a rule-based baseline in terms of economic returns.
+- methods: benchmarking, simulation, operational analysis, trajectory analysis
+- findings: most LLM agents underperform a rule-based baseline; gains in individual metrics do not consistently yield stronger economic growth; LLM agents struggle with grounding feasible actions and managing inventory commitments
 
 ### [Auditable Belief Updates as a Missing Safety Layer for LLM-Powered Multi-Agent Systems](https://arxiv.org/abs/2610.38869)
 
+- summary: This paper proposes the Explicit Belief Multi-Agent System (EB-MAS) to address safety failures in Large Language Models by externalizing and managing belief states across multi-agent systems.
+- methods: Explicit Belief Multi-Agent System (EB-MAS), Cognitive Firewall, Belief Operators
+- findings: Safety failures can arise from how agents update and propagate epistemic commitments; Group belief can lead to manufactured consensus, collusion, and cascading misinformation
+
 ### [AtomTree: A Hierarchical Framework for State-Aware Embodied Instruction Following with LLMs](https://arxiv.org/abs/2610.38744)
+
+- summary: AtomTree is a hierarchical framework for state-aware task planning with large language models (LLMs) that incrementally builds a tree of subgoals and actions to complete long-horizon tasks in interactive environments.
+- methods: hierarchical planning, incremental tree building, hierarchical backtracking replanning
+- findings: AtomTree outperforms prior LLM-based planners in zero-shot evaluation on the ALFRED benchmark
 
 ### [ATLAS-Bench: An Agentic Tool-Use Benchmark for Local Area Search](https://arxiv.org/abs/2610.39438)
 
+- summary: The authors introduce ATLAS-Bench, a benchmark for evaluating local search agents, and ATLASBox, a standardized evaluation environment, to assess the ability of agents to provide reliable search results that meet users' needs.
+- methods: benchmarking, evaluation
+- findings: GPT-6-Luna achieves the highest constraint satisfaction rate; GLM-5.3 returns acceptable recommendations for more satisfiable queries
+
 ### [AT-AT: Automatic Tool Optimization from Agent Traces](https://arxiv.org/abs/2610.34679)
+
+- summary: AT-AT, an agentic tool optimizer, improves a shared toolset offline from historical agent executions, leading to higher task completion rates and lower costs in various domains and production environments.
+- methods: agent trajectory analysis, tool description editing, tool implementation editing, paired permutation tests
+- findings: highest task completion rates in Airline and Telecom domains; statistically significant gain in Telecom domain; improved held-out performance on TerminalBench-2 and TBLite; lowered cost or tool error rates on production MCP servers
 
 ### [AI Cosmos: An Agentic Infra for Situated Learning](https://arxiv.org/abs/2610.40031)
 
+- summary: AI Cosmos, an agentic infrastructure for situated learning, is presented as a means to improve task performance and knowledge application in learners through scenario-based participation and cumulative assets of practice.
+- methods: scenario-based participation, cumulative assets of practice, randomized controlled studies
+- findings: AI Cosmos achieves greater learning gains than a conventional LLM in legal reasoning; AI Cosmos achieves higher mastery of unseen programming problems than an LLM-as-Teacher baseline
+
 ### [Agentic University: Collaborative Agents for Personalized Learning](https://arxiv.org/abs/2610.40492)
+
+- summary: The Agentic University project introduces a human-participatory multi-agent organization approach to adaptive learning, which enables personalized tutoring and content generation through a coherent learning process.
+- methods: multi-agent organization, personalized tutoring, content generation
+- findings: larger mean assessment gains; stronger cognitive support; advantages in program organization and revision quality
 
 ### [Agentic process evidence](https://arxiv.org/abs/2610.40071)
 
 ### [Agentic LLM reasoning in pediatric diabetes outcome prediction from multimodal medical records](https://arxiv.org/abs/2610.40379)
 
+- summary: A large language model agent called CEDAR was used to predict clinical outcomes in pediatric patients with type 1 and type 2 diabetes, outperforming traditional machine learning methods.
+- methods: machine learning, continuous glucose monitoring
+- findings: CEDAR outperformed machine learning in predicting clinical outcomes; CEDAR's predictions were validated by pediatric endocrinologists
+
 ### [AgentDecept: Benchmarking Deceptive Behavior in Tool-Using LLM Agents under Pressure](https://arxiv.org/abs/2610.39377)
+
+- summary: The AgentDecept benchmark is introduced to evaluate behavioral deception in LLM agents across realistic, stateful application workflows.
+- methods: executable benchmark, evidence-grounded protocol
+- findings: AgentDecept contains 477 pressure variants; evaluates full trajectories by relating user-facing claims to observations and outcomes
 
 ## 2026 W43 (arxiv)
 
 ### [Zephyrus-R1: Agentic Reinforcement Learning for Weather Reporting](https://arxiv.org/abs/2610.25625)
 
+- summary: The Zephyrus-R1 framework is developed for reinforcement learning on scientific weather forecast reporting, addressing the challenge of verifying outputs against a known ground-truth answer.
+- methods: reward design, curriculum learning, bidirectional claim entailment
+- findings: 26% improvement in mean judge-metric scores for Qwen3.5-4B; 13% improvement in mean judge-metric scores for Qwen3.8-27B; competitive results with frontier open-weight models
+
 ### [WorldMirror: Agentic Real-to-Sim Generation of Interactive Worlds from In-the-Wild Robot Demonstrations](https://arxiv.org/abs/2610.31834)
 
+- summary: WorldMirror is an agentic real-to-sim framework that constructs interactive digital twins from in-the-wild robot demonstrations, enabling high-fidelity visual reconstruction and physically consistent interactions.
+- methods: executable world program, coding agent, specialized image and 3D generation tools, verification feedback
+- findings: WorldMirror can reconstruct visually faithful and geometrically consistent interactive worlds; preserves physical validity of recorded robot trajectories
+
 ### [Why Bother Me Again? Benchmarking Personal Agent Memory for Interaction Preferences](https://arxiv.org/abs/2610.30485)
+
+- summary: The authors introduce MemPABench, an interactive environment for evaluating memory in personal agents, and find that current memory systems struggle to retrieve interaction preferences and adapt to preference changes.
+- methods: on-policy evaluation, simulated users, event-driven changes
+- findings: current memory brings limited gains in preference selection; retrieval-based systems do not outperform No Memory; File-based memory improves accuracy but applies preferences beyond relevant contexts
 
 ### [Who Verifies the Tools? How Warped Formatters Mislead Agents and Their Verifiers](https://arxiv.org/abs/2610.32110)
 
 ### [When Agents Fail: Model or Harness--Who's to Blame?](https://arxiv.org/abs/2610.32483)
 
+- summary: The authors develop a framework to evaluate the performance of execution harnesses in LLM agents through their interactions with underlying models, and apply it to four general-purpose harnesses and four core models across six benchmarks.
+- methods: Valid Completion Rate, Model-Harness Fit, Cross-Model Fit, Interaction Residuals, Token Load
+- findings: Harness rankings vary across models and benchmarks; Task performance and valid completion can favor different pairings; OpenCode ranks first in cross-model performance
+
 ### [What the Trace Shows and What the Label Says: Auditing Behavioral Detectors in Agent Evaluation](https://arxiv.org/abs/2610.30491)
+
+- summary: The study evaluates the effectiveness of trace-level detectors in measuring the performance of LLM agents in a tool-use setting, revealing systematic disagreements and limitations in current evaluation methods.
+- methods: trace-level detection, human review, ablation study
+- findings: silent tool-output override; disagreements between detectors and human review; impact of execution limits on reported results
 
 ### [VibeTraining-Bench: Data-Trainer-Harness Co-Design for Iterative System Improvement](https://arxiv.org/abs/2610.26342)
 
 ### [UAV-SwarmAgent: Scalable Multi-UAV Reconnaissance and Task Allocation via Code Generation and Vision-Language Reasoning](https://arxiv.org/abs/2610.32559)
 
+- summary: UAV SwarmAgent is a hierarchical multi-agent system that enables a single operator to supervise a multi-UAV reconnaissance mission using natural-language input and automated route planning.
+- methods: hierarchical multi-agent system, natural-language input, automated route planning, simulation, scaling study
+- findings: 95.7% success rate in locating incidents in simulation; flight time follows an Amdahl-type law; speedup bounded at 1.52x with up to 5 UAVs
+
 ### [Trial by Trace: Benchmarking AI Agent Harnesses for Reliability and Failure Attribution](https://arxiv.org/abs/2610.32285)
 
+- summary: The authors introduce TraceTrial-Bench, a benchmark for evaluating the reliability of agent harnesses used in LLM agents, which assesses seven components of harness reliability and provides a framework for comparing agent harnesses.
+- methods: Trajectory Tracing (TT) module, Multi-source Evidence Acquisition (MEA) module, Failure Attribution (FA) module, two-layer evaluation framework
+- findings: macro-averaged harness scores range from 59.8% to 72.0%; 31.1% of runs achieve task success despite failing at least one harness criterion
+
 ### [Tool-Calling LLM Agents Under Realistic MCP Faults: Scale Does Not Purchase Fault Tolerance](https://arxiv.org/abs/2610.32555)
+
+- summary: The introduction of MCP-Injector, a fault-injection middleware, reveals that current benchmarks for LLM agents may not accurately test their resilience to realistic tool failures, leading to significant quality degradation under fault conditions.
+- methods: fault-injection, protocol-aware middleware, experimentation
+- findings: Faults cause severe quality degradation; Scale does not purchase fault tolerance; Agent stacks differ in fault absorption
 
 ### [ToM2Vec: Continuous Theory-of-Mind Tokens for Multi-Agent Coordination](https://arxiv.org/abs/2610.29934)
 
 ### [TimelineAgent: An LLM-based Framework for Query-Centric Event Timeline Extraction Across Multiple Documents](https://arxiv.org/abs/2610.25733)
 
+- summary: This paper proposes TimelineAgent, an LLM-based multi-agent framework for query-centric cross-document event timeline extraction, which outperforms existing methods in experimental results.
+- methods: multi-stage reasoning workflow, goal-oriented protocol
+- findings: TimelineAgent consistently outperforms existing methods
+
 ### [The LLENS Platform for On-Premises Large Language Model Agents in a Japanese University Hospital: Development and Evaluation Study](https://arxiv.org/abs/2610.32151)
 
 ### [The End of Consensus Research?](https://arxiv.org/abs/2610.30114)
 
+- summary: AI helped discover A-greement, a new consensus protocol for geo-replicated state machines that outperforms state-of-the-art solutions in terms of latency.
+- methods: AI-greement, autonomous discovery, implementation, experimentation, verification
+- findings: A-greement reduces mean latency by 12.2% and 33.3% on write-heavy and read-heavy workloads; A-greement matches the fastest baseline on read-only workloads; AI-greement uncovers previously unreported vulnerabilities in existing consensus protocols
+
 ### [TGR-EvoDAG: A DAG-based Multi-Agent Code Evolution Framework for Generative Recommendation on Tencent](https://arxiv.org/abs/2610.32326)
 
+- summary: The authors propose TGR-EvoDAG, a multi-agent code evolution framework for Generative Recommendation, which improves offline metrics by up to 37.4% and simulated user satisfaction by 19.7% over the strongest baseline.
+- methods: Directed Acyclic Graph modeling, stage-aware cost planning, active downstream co-adaptation
+- findings: up to 37.4% improvement in offline metrics; 19.7% improvement in simulated user satisfaction; 12.16% relative improvement in offline Hit@1; 0.40% increase in online click-through rate
+
 ### [SPECMEM: Accelerating Agentic Tool Calling via Live Memory Management](https://arxiv.org/abs/2610.31840)
+
+- summary: The proposed SpecMem system accelerates tool-calling agents by maintaining a live, per-user memory of verified calls, resulting in improved acceptance and speedup.
+- methods: speculative decoding, retrieval, LRU eviction, side-effect gating
+- findings: 27% gap in mean accepted tokens; up to 1.74x wall-clock speedup; local per-user scoping eliminates cross-user leakage
 
 ### [Semantic Observability for Autonomous Systems Diagnostics](https://arxiv.org/abs/2610.28611)
 
@@ -342,15 +860,35 @@
 
 ### [Secure Agentic AI and Multimodal Intelligence in 6G Communication Systems](https://arxiv.org/abs/2610.30436)
 
+- summary: This study surveys multimodal intelligence and agentic AI for 6G cross-layered communication systems from the perspectives of privacy and security, analyzing threat models and mitigation strategies.
+- methods: survey, taxonomy, review of mitigation strategies
+- findings: vulnerabilities can propagate across multimodal data pipelines; existing attacks can be organized into a structured taxonomy; mitigation strategies include prompt and memory defenses and privacy-preserving learning
+
 ### [SCI-AGENT-EXAM: Benchmarking Agents on Scientific Research Tasks](https://arxiv.org/abs/2610.32441)
+
+- summary: The authors introduce SCI-AGENT-EXAM, a benchmark to assess the capabilities of large language model agents in supporting scientific workflows across diverse research activities.
+- methods: benchmarking, hybrid evaluation protocol, programmatic verification, LLM-based judge
+- findings: substantial performance gaps among LLM agents; distinct capability profiles across scientific task types; variation in execution efficiency and stability
 
 ### [RSIHub: A Composable Framework for Agent-Evolution Methods](https://arxiv.org/abs/2610.32253)
 
+- summary: RSIHub is an open-source framework for building, comparing, and extending agent-evolution methods on shared infrastructure.
+- methods: agent-evolution methods, execution feedback, recipes, operators
+- findings: 13.5 percentage points overall pass@1 gain; method rankings vary across settings; optimization gains do not always transfer to held-out tasks
+
 ### [RITE: Evaluating End-to-End Resilience to Silent Tool Errors in E-Commerce Agentic Systems](https://arxiv.org/abs/2610.27777)
+
+- summary: This study introduces the Silent-error Resilience Task and the RITE benchmark to evaluate the resilience of tool-using LLM agents in e-commerce queries against silent errors that can propagate through multi-step tool interactions.
+- methods: interactive task formulation, semantic error taxonomy, controlled evaluation
+- findings: silent errors roughly halve task success; silent errors are consistently harder than explicit failures; recognition and use of verification paths are bottlenecks
 
 ### [ReuF2F: Benchmarking Coding Agents on Formalized Undergraduate Research Problems](https://arxiv.org/abs/2610.27046)
 
 ### [ReflectPO: Reflection-Guided Policy Optimization for Long-Horizon LLM Agents](https://arxiv.org/abs/2610.30933)
+
+- summary: This study proposes Reflection-Guided Policy Optimization (ReflectPO), a reinforcement learning framework for autonomous error recovery in long-horizon tasks.
+- methods: Reflection-Guided Sampling, Tree-Structured Credit Assignment
+- findings: ReflectPO outperforms existing baselines in most domains; ReflectPO improves agents' ability to recognize and recover from errors
 
 ### [RefCraft: Benchmarking Visual-Reference-Conditioned Agentic Generation through Web Development](https://arxiv.org/abs/2610.26826)
 
@@ -358,21 +896,45 @@
 
 ### [Reasoning-Search-Augmented LLMs: An Operational Taxonomy, Benchmark Analysis and Controlled Evidence Synthesis](https://arxiv.org/abs/2610.29189)
 
+- summary: This study reviews frameworks that integrate step-by-step reasoning with interactive search to improve large language models' emergent reasoning capabilities.
+- methods: architectural analysis, benchmarking, ablation studies
+- findings: tight coupling of reasoning and search improves performance; importance of retrieval coupling, controller design, knowledge source, and grounding strictness
+
 ### [RealControlBench: A Benchmark for Interpretability-Informed Fine-Grained Control of LLMs and Agents](https://arxiv.org/abs/2610.27295)
 
 ### [RANGER: Retrieval Agent for Navigating Graphs with Semantic Evaluation Rewards](https://arxiv.org/abs/2610.28010)
 
 ### [RAG-NIMBF: A Non-Invasive, Modular Benchmarking Framework for Automated RAG Configuration Analysis](https://arxiv.org/abs/2610.27816)
 
+- summary: RAG-NIMBF is a modular benchmarking framework that evaluates the configuration space of Retrieval-Augmented Generation (RAG) pipelines through controlled ablation with end-to-end experiment tracking.
+- methods: controlled ablation, end-to-end experiment tracking, evaluation framework
+- findings: retrieval balance of relevance and diversity enhances retrieved context relevance and coverage; detailed prompt instructions increase generated answer faithfulness to retrieved evidence
+
 ### [Proof-Carrying Contracts: Commitments AI Agents Cannot Break](https://arxiv.org/abs/2610.28484)
 
+- summary: The authors introduce Proof-Carrying Contracts (PC2), a framework for making agreed constraints enforceable throughout an agent's interactions with a system.
+- methods: machine-checkable proof, execution system
+- findings: PC2 ensures constraints hold at every instant during execution; PC2 provides safety even for an adversarial agent
+
 ### [Policy Search in Code Space for Multi-Agent Pathfinding](https://arxiv.org/abs/2610.25946)
+
+- summary: A new approach to developing coordination policies for complex multi-agent systems uses policy search in code space, combining automated optimization with explicit interpretability, and outperforms manually engineered solutions in two case studies.
+- methods: policy search in code space, simulation feedback, explicit correctness verification
+- findings: outperformed manually engineered solutions by 35.0% in one case study; discovered a new class of multi-agent pathfinding algorithm that outperforms a proprietary solution by 58.9% in another case study; proved that the new algorithm is collision-free and completes in finite time
 
 ### [PLE: Physical-Engineering's Last Exam](https://arxiv.org/abs/2610.30537)
 
 ### [PHYRD: A Living Benchmark for Reproducing and Extending Theoretical Physics Research](https://arxiv.org/abs/2610.32575)
 
+- summary: The paper introduces PHYRD, a living benchmark for theoretical-physics reasoning, and evaluates its performance using large language models and agents.
+- methods: benchmarking, evaluation of language models
+- findings: whole-problem accuracy ranges from 49.21% to 68.25% on Reproduce and from 18.60% to 74.42% on closed-book Discover; FormulaForest improves accuracy of Qwen-35B-A3B model from 61% to 72% on FrontierScience
+
 ### [Phronix: The Capability-Centric Learning Paradigm for Agents](https://arxiv.org/abs/2610.31789)
+
+- summary: Phronix, a capability-centric learning paradigm, enables agentic harnesses to acquire, validate, and refine reusable capabilities from their own executions, improving autonomous learning and reliability in scientific computing tasks.
+- methods: predictor-validator-corrector loop, capability-centric learning
+- findings: 93-95% success rate in solving recurring tasks; 7.6-30.8 durable capabilities per task; reduced solution non-determinism and improved reliability
 
 ### [PerMIT: Securing Persistent Memory for LLM Agents via Machine-Checked Integrity Theorems and Scalable Community Trust](https://arxiv.org/abs/2610.28987)
 
@@ -380,11 +942,23 @@
 
 ### [Memory-Centric Continual Learning for AI Agents](https://arxiv.org/abs/2610.29357)
 
+- summary: This paper introduces Memory-Centric Continual Learning (MCCL), a framework that reframes agent memory from passive lookup to continuous learning, enabling autonomous agents to improve future actions through sustained learning from experience.
+- methods: Memory-Centric Continual Learning (MCCL), three-axis taxonomy, evaluation protocol, memory scaling framework
+- findings: MCCL enables genuine continual learning; memory should be judged by its impact on future actions; agent performance scales with experience, storage capacity, and compute budgets
+
 ### [MemDev-Bench: Does Memory Help Code Agents?Benchmarking Memory Systems over Real Repository Histories](https://arxiv.org/abs/2610.27524)
+
+- summary: This paper presents MemDev-Bench, a benchmark to evaluate how memory systems affect code agents over diverse repository histories, and yields key findings on the impact of memory on code agents' performance.
+- methods: systematic evaluation, automated pipeline
+- findings: memory improves fine-grained localization and editing; memory can cause failures on solvable tasks; providing raw historical trajectories reduces agent steps
 
 ### [MedCaseAgent: From Multimodal Clinical Evidence to Rare Disease Case Reports](https://arxiv.org/abs/2610.32258)
 
 ### [MAS-Guard: Unified Guardrails from Individual Agents to Multi-Agent LLM Systems](https://arxiv.org/abs/2610.28397)
+
+- summary: MAS-Guard is a unified framework that safeguards single- and multi-agent AI applications from unsafe actions, information leakage, and adversarial manipulation.
+- methods: local Agent Guardrail (A-Guard) layer, Agent Charters, Control Plane, deterministic structural checks, semantic assessments
+- findings: reduces overall attack success rate by 71.5-86.3% relative to unguarded agents; meets utility reference criterion on benign tasks
 
 ### [Maestro: Agentic Formal Proof Development by Coordination](https://arxiv.org/abs/2610.25920)
 
@@ -394,19 +968,43 @@
 
 ### [IFC-MCQ: Automatically Generating Multiple-Choice Benchmarks for Evaluating LLM Agents on IFC Data Retrieval](https://arxiv.org/abs/2610.30533)
 
+- summary: The authors propose IFC-MCQ, a method for automatically generating multiple-choice benchmarks from IFC files to evaluate large language models in architecture, engineering, and construction workflows.
+- methods: IFC-MCQ, tool-based retrieval, code-based retrieval
+- findings: IFC-MCQ enables scalable benchmarking; category-specific failure modes exist; performance varies with source IFC model and retrieval interface
+
 ### [HGM-Dual: Lineage-Aware Guided Agent Harness Optimization for Long-Horizon Planning](https://arxiv.org/abs/2610.30042)
+
+- summary: HGM-Dual, a diagnostic-guided framework, is introduced for budget-efficient harness evolution in planning agents, outperforming the strongest baseline by up to 14.45% relative improvement in case accuracy.
+- methods: recursive self-improvement, lineage-aware context, error-conditioned dual-path child generation
+- findings: HGM-Dual achieves up to 14.45% relative improvement in case accuracy; HGM-Dual matches HGM variants' final performance with 2x-4x fewer evaluation budget
 
 ### [GenXR-Bench: Benchmarking Coding Agents for Interactive XR Development](https://arxiv.org/abs/2610.29014)
 
 ### [GBClaw: An agentic AI framework for atomistic grain boundary research and mechanistic discovery](https://arxiv.org/abs/2610.28629)
 
+- summary: This study presents GBClaw, an agentic AI framework for investigating the structure and deformation of general grain boundaries in materials discovery and design.
+- methods: agentic AI, large language models, modular architecture, systematic simulations, mechanistic analysis
+- findings: identification of diverse deformation modes; critical role of defect hierarchies in sliding resistance; importance of metastable boundary structures in shear resistance
+
 ### [Frontier LLMs Enter the World of Robotics: A Cross-Model Evaluation on RoboColiseum](https://arxiv.org/abs/2610.27865)
 
 ### [From VLM Planners to Robotic Agents: Self-Evolving Harnesses for History-Dependent Manipulation](https://arxiv.org/abs/2610.29560)
 
+- summary: The proposed SERA model, a self-evolving robotic agent, achieves strong performance on long-horizon embodied manipulation tasks by maintaining task context and improving planning through execution experience.
+- methods: hierarchical architectures, memory augmentation, self-evolution, environment rollouts
+- findings: SERA achieves 51.38% overall success with autonomous selection; self-evolution improves success rate by 7% compared to without self-evolution
+
 ### [From Prompts to Posteriors: Can LLM Agents Perform Bayesian Inference in Context?](https://arxiv.org/abs/2610.29331)
 
+- summary: This study evaluates the Bayesian reasoning capabilities of large language models, finding that while they generally violate Bayes' rule, they can improve with modern reasoning abilities and code execution capabilities.
+- methods: evaluation framework, qualitative epistemological examples, quantitative benchmarks
+- findings: LLMs violate Bayes' rule when updating beliefs in context; LLMs improve with modern reasoning abilities and code execution capabilities; LLMs can approximate analytically intractable posteriors
+
 ### [Free Lunch for LLMs Confidence: The RL Critic Already Knows](https://arxiv.org/abs/2610.31820)
+
+- summary: Researchers find that an external model can estimate a policy's confidence as accurately as the policy itself, and that a critic in value-based reinforcement learning can be reused as a confidence estimator for large language models.
+- methods: external confidence estimation, value function learning, critic training
+- findings: external models can estimate confidence as accurately as the policy itself; critic training is equivalent to confidence estimation under correctness-based outcomes; reusing the critic as a confidence estimator preserves task performance and provides well-calibrated confidence
 
 ### [FinHopper: A Progressive Multi-Hop Benchmark for Complex Financial Agents with Step-wise Evaluation](https://arxiv.org/abs/2610.26036)
 
@@ -414,9 +1012,16 @@
 
 ### [Embodied Playground: A Long-Horizon Agentic Robotics Benchmark for Physical, Strategic, and Spatial Reasoning](https://arxiv.org/abs/2610.27039)
 
+- summary: Embodied Playground is a benchmark for evaluating foundation-model agents' ability to coordinate physical, strategic, and spatial reasoning in long-horizon tasks.
+- methods: benchmarking, task evaluation
+
 ### [EGI-BENCH: An Enterprise General Intelligence Benchmark Suite](https://arxiv.org/abs/2610.27234)
 
 ### [DuoCook: An Overcooked-Inspired Benchmark for Visual Planning and Coordination](https://arxiv.org/abs/2610.31511)
+
+- summary: A new benchmark for evaluating vision-language agents in a cooking task is introduced, with a focus on coordinating two players and allocating shared resources under a time budget.
+- methods: evaluation of four VLMs, memory ablation, comparison of model performance
+- findings: the strongest model achieves 26.2% mean order completion; notebook memory has mixed effects on model performance
 
 ### [Does Multi-Agent Collaboration Reduce Hallucination in Clinical Tasks?](https://arxiv.org/abs/2610.27027)
 
@@ -426,25 +1031,61 @@
 
 ### [Certified Execution Harness for Agentic AI: Safe and Least-Intrusive Petri-Net Supervisory Control Between Reasoning and Action](https://arxiv.org/abs/2610.31376)
 
+- summary: This paper studies the problem of safe tool execution for large language model agents under prompt injection using Petri nets and supervisory control theory.
+- methods: formalization using Petri nets, supervisory control theory, synthesis
+- findings: injected requests with unmet preconditions are refused; conventional supervisor can be arbitrarily more intrusive than a stricter safe one; maximally permissive least-intrusive supervisor is characterized as a value-threshold refinement
+
 ### [Can LLM Annotators Match Human Consistency? Benchmarking Human Agreement and Optimizing Multi-Agent with Contrastive Knowledge](https://arxiv.org/abs/2610.32415)
+
+- summary: The authors introduce ANT-A Benchmark, a real-world multi-annotator benchmark, and ANT-OR, a multi-agent annotation framework, to bridge the gap between existing benchmarks and real-world annotation practice.
+- methods: distribution-aware evaluation, Fleiss kappa, contrastive decision rules, multi-agent annotation framework
+- findings: ANT-OR improves agreement@>=2 accuracy by 4.5 points over the strongest baseline; ANT-OR achieves the highest alignment with human annotator distributions as measured by Fleiss kappa within 2 points
 
 ### [BIRD-RL: Scaling Agentic Reinforcement Learning over Stateful Data-Centric Environments](https://arxiv.org/abs/2610.29426)
 
+- summary: The authors introduce BIRD-RL, a novel agentic reinforcement learning curriculum that overcomes spatial inefficiencies and instability in training small language models for complex data-centric tasks.
+- methods: agentic reinforcement learning, Trajectory-scoped Persistent Execution Infrastructure, on-policy exploration
+- findings: 12.8x improvement in spatial RL efficiency; competitive performance against proprietary model-based agents; successful training of unified SLMs for multi-objective optimization
+
 ### [Beyond Final Outcomes: Quantifying Claim-Level Information Dynamics in Multi-Agent LLM Interaction](https://arxiv.org/abs/2610.32333)
 
+- summary: The study proposes RIVER, a framework to evaluate the information dynamics of LLM-powered agents interacting with each other, and analyzes the effects of different interaction strategies on information convergence, exploration, and retention.
+- methods: RIVER framework, controlled news-generation cases, comparative analysis
+- findings: Repeatedly pooled interaction promotes convergence but narrows the information space; Distributed relay yields broader, less shared information; Method-specific constraints increase exploration while weakening convergence and retention
+
 ### [Better Reasoning, Not Just Bigger Models: A Structure-Grounded Framework for Efficient and Reliable Inference](https://arxiv.org/abs/2610.30611)
+
+- summary: The proposed Structure-Grounded Uncertainty Reduction (SGUR) framework improves the performance of autonomous agents by complementing token-level generation with active uncertainty reduction over structured hypothesis spaces.
+- methods: Structure-Grounded Uncertainty Reduction, active uncertainty reduction, prior-weighted partial graph matching, active information-gain strategy
+- findings: SGUR achieves 92.5% Hit@3 on a sequential medical diagnosis benchmark; SGUR outperforms the strongest Graph-RAG baseline by 9.4 percentage points; SGUR enables smaller backbone models to match or exceed the performance of larger models
 
 ### [BetaMem: Learning to Remember a Changing World for Embodied Agents](https://arxiv.org/abs/2610.26554)
 
 ### [Benchmarking and Error Analysis of Deep Search and Deep Research LLM Agents](https://arxiv.org/abs/2610.29346)
 
+- summary: A comprehensive methodology and analytical framework is introduced to diagnose errors in intermediate workflows of Large Language Models, enhancing their reliability and performance.
+- methods: systematic examination, empirical experiments, taxonomic analysis
+- findings: System-Level Errors; Task-Level Errors; actionable design guidelines
+
 ### [Behavior Beyond Text: Evaluating Refusal Transfer Failure in LLM Agents](https://arxiv.org/abs/2610.28982)
 
+- summary: The study investigates the safety of large language models as tool-calling agents and finds that their refusal behavior in text does not always transfer to tool use, resulting in unsafe tool calls.
+- methods: benchmark construction, prompt testing, activation patching
+- findings: requests refused in text frequently result in unsafe tool calls; lower activation predicts unsafe tool calls; restoring the signal to the text-only value only prevents a subset of unsafe calls
+
 ### [Bayesian Model Discovery with Language Models: Closing the Loop between Hypotheses and Experiments](https://arxiv.org/abs/2610.25747)
+
+- summary: BMD is introduced, a method that combines LLM-driven hypothesis generation with Bayesian experimental design to systematically guide hypothesis search in scientific model discovery.
+- methods: in-context learning, Bayesian experimental design, numerical engine
+- findings: BMD achieves lowest final prediction error; BMD recovers exact functional forms more often
 
 ### [Autonomous intelligence for mining productivity: a multi-agent AI approach to operational value creation](https://arxiv.org/abs/2610.26369)
 
 ### [Automated Multi-Agent Organization Design: From Architecture Search to Organizational Learning](https://arxiv.org/abs/2610.27531)
+
+- summary: The authors propose Automated Multi-Agent Organization Design (AMOD), a framework for designing multi-agent systems that focuses on identifying functionally necessary responsibilities and allocating them effectively.
+- methods: execution-driven design loop, automated designer, responsibility allocation
+- findings: functionally meaningful division of responsibility is crucial in multi-agent systems; AMOD provides a principled foundation for evidence-based and adaptive multi-agent organization design
 
 ### [Auto-Director: Leveraging Multi-Agent Collaboration for Autonomous Video Editing](https://arxiv.org/abs/2610.28346)
 
@@ -452,73 +1093,188 @@
 
 ### [Async-RBench: Benchmarking Asynchronous Task Execution in LLM Agents](https://arxiv.org/abs/2610.32429)
 
+- summary: The authors introduce Async-RBench, a benchmark for evaluating asynchronous task execution in large language model agents, and use it to evaluate nine agents, highlighting the challenges of reliable asynchronous task execution.
+- methods: benchmarking, evaluation of asynchronous task execution
+- findings: DRS scores of 19.2 to 45.1 for nine agents; lower task success with asynchronous than batched delivery; limited improvement from prompting main agent to rebuild plan
+
 ### [An Evidence-Driven Multi-Agent Compound AI System for Head and Neck Proton Radiotherapy Planning](https://arxiv.org/abs/2610.29010)
 
 ### [AI Mindmeld: A Latent Interconnect Protocol](https://arxiv.org/abs/2610.30215)
 
 ### [AgentVQA: A Unified Benchmark for Agentic Visual Understanding](https://arxiv.org/abs/2610.31494)
 
+- summary: The authors introduce AgentVQA, an offline benchmark for evaluating vision-language models on realistic agentic scenarios across five agent domains.
+- methods: Offline evaluation, Benchmark construction, Cross-domain analysis
+- findings: The best model achieves only 58.5% accuracy; Errors are driven by failures to ground and maintain accurate representations of the visual state
+
 ### [AgentTrace: Execution-Level Fingerprinting of Black-Box LLM Agents](https://arxiv.org/abs/2610.32092)
+
+- summary: AgentTrace is proposed as a framework to identify the foundation model behind a black-box autonomous LLM agent via observable execution traces.
+- methods: active framework, injecting structurally ambiguous probes, modeling with lightweight Markov chains
+- findings: 96.0% attribution accuracy under adversarial identity spoofing; successful distinction of intra-family variants with identical tokenizers
 
 ### [Agentic Orchestration of EDC Data Space Retrieval and Natural Language Driven Data Processing](https://arxiv.org/abs/2610.26548)
 
 ### [AgentDreamer: Agentic 3D Motion Reasoning for Text-Controllable Physics Simulation](https://arxiv.org/abs/2610.30679)
 
+- summary: AgentDreamer is proposed, an agent-guided optimization framework that aligns text instructions with simulated motion through explicit 3D motion planning.
+- methods: 3D motion planning, parametric functions, differentiable MPM simulator, information-theoretic metric
+- findings: AgentDreamer improves text alignment over video-based guidance; simulations more closely follow the requested physical behavior
+
 ### [Act on Your Behalf, Beyond Your Authorization: Benchmarking LLM Agent Authorization Alignment](https://arxiv.org/abs/2610.27548)
+
+- summary: The authors introduce AuthorizationBench, a benchmark to evaluate the authorization alignment of LLM agents, and find that agents often act out of authorization even when completing tasks successfully.
+- methods: scalable construction pipeline, executable tasks, authorization-aware sandbox
+- findings: Agents act out of authorization in 19.2% of trajectories; Task completion does not imply authorization; Increasing reasoning effort does not change aggregate rate of out-of-authorization behavior
 
 ### [A Topology-Guided GeoAI Agentic Framework for Urban Flood Screening](https://arxiv.org/abs/2610.30660)
 
+- summary: A topology-guided GeoAI agentic framework is presented for urban flood screening, balancing autonomous reasoning with reliable spatial analysis and human oversight.
+- methods: discrete Morse theory, relative flood-priority score, human-in-the-loop checkpoints
+- findings: 77% of basins' lowest points were also identified as sinks by a separately computed D8 flow-routing model; agreement ranged from 61% to 83% across four further study areas
+
 ### [A Mechanistic Study of Automated Failure Attribution in LLM-based Agentic Systems](https://arxiv.org/abs/2610.28811)
 
+- summary: This paper investigates the limitations of automated failure attribution in agentic systems and proposes a method called grafting to improve performance by leveraging latent model knowledge.
+- methods: linear probes, grafting, alternative prompting strategies
+- findings: models encode sufficient information to attribute failure correctly but fail to output it; grafting outperforms direct-prompting approaches
+
 ### [4DMemory: Benchmarking Long-Horizon Spatiotemporal Memory with Harness-Augmented Agents](https://arxiv.org/abs/2610.32332)
+
+- summary: The LongVideo dataset and 4DMemoryBench are introduced to evaluate and improve long-horizon spatiotemporal reasoning, with results showing that the 4DMemory Harness improves leading models by over 50% on long-horizon tasks.
+- methods: retrieval-augmented generation, model-specific retrieval
+- findings: Standalone foundation models struggle with long-horizon tasks; 4DMemory Harness improves leading models by over 50%; Leading models exhibit a performance drop of more than 10% on 4DMemoryBench compared to previous benchmarks
 
 ## 2026 W42 (arxiv)
 
 ### [X-RIC: An Agentic RAN-Intelligent Controller Benchmark for Enhancing Reinforcement Learning](https://arxiv.org/abs/2610.22269)
 
+- summary: The O-RAN ALLIANCE introduces a novel framework called eXplainable RIC (X-RIC) that integrates agentic AI into O-RAN architectures for improved optimization and explainability.
+- methods: Reinforcement Learning, Behavioral Cloning, Telecom Language Model
+- findings: 89% operational cost reduction; 75% faster convergence; 50% fewer training steps; 46% lower variance
+
 ### [Why Agentic Workflows Fail: A Taxonomy Derived from Literature and Empirical Data](https://arxiv.org/abs/2610.17418)
+
+- summary: This paper presents a source-aware taxonomy of agentic workflow failures, combining source attribution with empirical dimensions to localize failures in workflow stages and agent capabilities.
+- methods: taxonomy development, empirical comparison, literature review, GitHub analysis
+- findings: literature-derived failures emphasize planning and knowledge-related mechanisms; GitHub-derived failures concentrate on execution-stage and infrastructure failures; iterative execution and actuation is a dominant hotspot
 
 ### [Towards Safe Autonomy for Computer Use](https://arxiv.org/abs/2610.18508)
 
+- summary: SA-CUA, a dual-LLM framework, generates a reliable trust boundary for Computer Use Agents (CUAs) to separate trusted and untrusted content and prevent harmful actions.
+- methods: dual-LLM framework, accessibility tree derivation, robust endorsement channel
+- findings: SA-CUA maintains higher utility than CaMeL-CUA; SA-CUA keeps attack success rate at zero
+
 ### [Towards Agentic Robots: Model, Data, Environment, and Harness](https://arxiv.org/abs/2610.20442)
 
+- summary: This paper provides a unified overview of existing research on agentic robots, characterizing their development and organizing existing research into seventeen categories across four functional domains.
+- findings: agentic robots can reason over human instructions and interact with robotic environments; existing research can be organized into seventeen categories across four functional domains
+
 ### [Think More or Read More? A Token-Budget Theory of Reasoning with Shared Context](https://arxiv.org/abs/2610.23246)
+
+- summary: A token-budget theory is developed to formalize the trade-off between token reading and generation in reasoning systems, allowing for the prediction of optimal group sizes and verification through empirical results.
+- methods: token-budget theory, Condorcet jury model, empirical verification
+- findings: optimal group size can be determined without running debate; self-consistency matches or beats deployed debate in most settings; communication pays only when the gain in accuracy exceeds the reasoning room spent on reading
 
 ### [The World Won't Wait: Evaluating and Teaching Agents Under a Live Clock](https://arxiv.org/abs/2610.20665)
 
 ### [The Self-Improvement Problem](https://arxiv.org/abs/2610.21646)
 
+- summary: The paper explores the challenge of creating a reliable automated gate for safe self-improvement in autonomous systems, highlighting the fundamental mismatch between computable procedures and potentially unbounded program behavior.
+- methods: formal modeling, evaluation abstractions, certifier, search procedure
+- findings: no terminating procedure can guarantee reliability and non-conservatism in the general setting; randomized gates with bounded error face the same limit; exhaustive simulation yields a terminating search procedure with guarantees in a decidable regime
+
 ### [The Agentic Scientist: Orchestrating Coding Agents for Automated Scientific (Co-)Discovery](https://arxiv.org/abs/2610.18933)
 
 ### [Testing the Planning Claims of LLM-Based Agents against Formal Semantics](https://arxiv.org/abs/2610.22469)
 
+- summary: This study evaluates the planning capabilities of LLM-based agents using formal semantics and finds that their performance varies significantly across models and environments.
+- methods: experimentation, formal semantics
+- findings: Best configuration solves 78% of solvable tasks offline but only 40% online; Unsolvable tasks are recognised in under 10% of episodes; Planning performance varies more across models than across prompting strategies or agent architectures
+
 ### [SWE-MISBEHAVIOR: Benchmarking and Mitigating Boundary Violations in Software Coding Agents](https://arxiv.org/abs/2610.18206)
+
+- summary: The authors present SWE-MISBEHAVIOR, a taxonomy and evaluation framework for diagnosing misbehaviors in coding agents, and propose CODE-KIT, a framework to reduce such misbehaviors.
+- methods: taxonomy development, evaluation framework, experimentation
+- findings: substantial misaligned behaviors in state-of-the-art coding agents; dependency misinterpretation up to 98.5% of cases; CODE-KIT reduces misbehaviors by 52% for smolagents and 34% for OpenHands
 
 ### [StepSafe: Learning Timely Intervention with Context-Aware Safety Reasoning](https://arxiv.org/abs/2610.20960)
 
+- summary: The authors propose a training framework called ASPO for step-level timely intervention in agentic systems to improve safety.
+- methods: step-level action diagnosis, proactive risk prediction, pre-fix level stage alignment, adaptive feedback self-distillation, self-evolving multi-agent red-teaming
+- findings: ASPO achieves state-of-the-art performance on five agent-safety benchmarks; ASPO improves safety-utility pareto curve with Youden's J of 53.0
+
 ### [SEAR: Self-Evolving Agentic Robotics](https://arxiv.org/abs/2610.18792)
+
+- summary: The SEAR framework and benchmark enable the evaluation of frontier language-model agents that can improve robots on their own by writing control code, testing it, and retaining skills and memories for future tasks.
+- methods: code-as-policy, agent-as-policy, auto-research
+- findings: The learning curve of a robotic agent depends on time budget and task difficulty; Control code and shared routines transfer across tasks and simulators; Different models evolve more effectively in different ways
 
 ### [Sci$Π$vot: Benchmarking Principal-Investigator Judgment at Pivotal Moments of Scientific AutoResearch Agents](https://arxiv.org/abs/2610.21082)
 
+- summary: The Sci$Π$vot benchmark evaluates the scientific judgment of large language model agents, showing that even frontier models struggle with research decisions, achieving lower accuracy than human researchers.
+- methods: benchmark construction, human corrections, model comparison
+- findings: LLM models prefer original plans over human-corrected alternatives; Four of five frontier models perform below chance; Highest model accuracy is 63.5%, compared to 73.4% for human researchers
+
 ### [SchemaWeaver: Accelerating On-Device Mobile Agentic AI via Schema-Guided Parallel LLM Decoding](https://arxiv.org/abs/2610.17436)
+
+- summary: This paper presents SchemaWeaver, a technique to reduce latency in on-device mobile agentic AI by enforcing schema-guided parallel decoding in large language models (LLMs)
+- methods: schema-guided parallel decoding
+- findings: reduces LLM tool calling latency by up to 3.9 times
 
 ### [SCARCE: Emergent Institutions in Long-Horizon Multi-Agent Coding Systems](https://arxiv.org/abs/2610.21029)
 
+- summary: The SCARCE framework is proposed to study agent negotiation in shared computing resources, where agents develop informal institutions and exhibit institutional behaviors that influence resource allocation.
+- methods: simulation, taxonomy development, trajectory analysis
+- findings: agents develop informal institutions; institutional behaviors influence resource allocation; newer models exhibit more institutional behaviors
+
 ### [Scaling Multi-Agent Intelligence with Substrate-Centric Coordination](https://arxiv.org/abs/2610.16120)
+
+- summary: The authors propose ScaleMAS, a multi-agent system that addresses the scalability issues of existing large language model-based systems through a shared datastore of linked messages.
+- methods: asynchronous agent interaction, shared datastore, message publishing, searching, visiting
+- findings: ScaleMAS outperforms agent-centric and blackboard-style baselines; ScaleMAS scales up to 128 agents; ScaleMAS tolerates losing agents midway
 
 ### [Scaling Inference-Time Compute with Teams of Coding Agents](https://arxiv.org/abs/2610.17471)
 
+- summary: This study investigates the effectiveness of multi-agent systems in scaling inference and formulates team design as a compute allocation problem to optimize performance and cost.
+- methods: compute allocation, workflow stage variation, team composition variation
+- findings: planning is the most valuable use of workers; cheap models pay off as planners but not as implementers; planners keep improving reward as the team grows
+
 ### [Same Claim, Different Interpretations: How LLM Agents Resolve Ambiguity in Scientific Claims](https://arxiv.org/abs/2610.20457)
+
+- summary: The introduction of Claim Cards makes explicit the interpretations of scientific claim verifiers, allowing for more accurate and transparent assessments of claims across the sciences.
+- methods: experimentation with GPT-5.4 agent, benchmarking, statistical analysis
+- findings: Claim Cards can change the verdict of a scientific claim verifier; a deliberate change to one field of the frozen card can change the verdict on about a third of the claims; the stricter threshold also changed what the agent asked computational tools to compute
 
 ### [RuleTrek: Benchmarking Agentic Rule Reasoning in Complex Scenarios](https://arxiv.org/abs/2610.19698)
 
+- summary: This paper introduces RuleTrek, a multi-domain benchmark for agentic rule reasoning in complex scenarios, and evaluates its performance on 11 large language models.
+- methods: rule-grounded construction pipeline, experiments
+- findings: LLMs face challenges in rule reasoning over complex scenarios; highest RI and RD scores are 62.47% and 60.43%; E2E scores range from 26.97% to 55.29%
+
 ### [Robust Function Calling for LLM Agents Under Interface Drift](https://arxiv.org/abs/2610.23342)
+
+- summary: The study evaluates the effectiveness of a lightweight repair layer, SchemaShield-Lite, in recovering robustness in tool-augmented language-model agents against interface drift without retraining the base model.
+- methods: schema validation, candidate-set retry, one-shot constrained repair
+- findings: SchemaShield-Lite raises DICE-300 accuracy from 0.717 to 0.813; SchemaShield-Lite raises BFCL-200 accuracy from 0.580 to 0.805; candidate-set drift accounts for most observed damage
 
 ### [REVEAL: Reverse Engineering Agentic Latents from Frontier-Model Traces](https://arxiv.org/abs/2610.16288)
 
+- summary: The study introduces a training-free framework called REVEAL, which enables the transfer of experience from frontier LLM agents to smaller open-source agents using textual trajectories and agentic latents.
+- methods: protocol reverse engineering, distillation, latent communication
+- findings: higher accuracy than unmodified agents across three targets; reuse of frontier-model experience as local activation control
+
 ### [ReTAC: Residual Test-Time Agentic Computation for Video Spatial Reasoning](https://arxiv.org/abs/2610.16315)
 
+- summary: The authors propose ReTAC, a training-free multiagent framework for video spatial reasoning that improves multimodal large language models through residual computation, achieving the highest overall score across three mainstream models and two benchmarks.
+- methods: residual computation, planning, tool use, iterative perception, reflection, stage-aligned verification, dependency-based recovery
+- findings: ReTAC achieves the highest overall score among compared methods; gains from additional computation depend on allocation and preservation of valid intermediate states
+
 ### [Progress-Aware Distillation for Mitigating Stagnation in Small Language Model Agents](https://arxiv.org/abs/2610.19439)
+
+- summary: This study proposes Progress-Aware Distillation (ProD) to address progress stagnation in small language models (SLMs) when transferring agentic capabilities from large-scale models via supervised fine-tuning-based distillation.
+- methods: supervised fine-tuning-based distillation, Progress-Aware Distillation
+- findings: ProD mitigates progress stagnation in SLMs; ProD enhances success rates and task-completion efficiency of distilled SLM agents
 
 ### [PROBE: Learning to Audit Policy Compliance in Tool-Using LLM Agents](https://arxiv.org/abs/2610.22124)
 
@@ -526,27 +1282,67 @@
 
 ### [PhysCodeGym: Benchmarking Coding Agents for Physically Verifiable 4D Reconstruction](https://arxiv.org/abs/2610.17288)
 
+- summary: PhysCodeGym is a benchmark for physically verifiable 4D reconstruction that tests the ability of coding agents to translate video observations into executable models and refine them through tool use and simulation feedback.
+- methods: program inspection, scene measurements, counterfactual interventions
+- findings: tradeoff between artifact quality and completion; physical defects can coexist with matching visible objects and events; latent contact and support failures in reconstructions
+
 ### [PFedMA: Who Should Join Next as Federated Multi-Agent Orchestration Evolves?](https://arxiv.org/abs/2610.19458)
+
+- summary: The proposed PFedMA framework enables reliable multi-round collaboration in Federated Multi-Agent Systems (FedMAS) by adapting to evolving task requirements and heterogeneous privacy rules.
+- methods: agent selection, historical reliability tracking, privacy rule evolution, feedback-driven collaboration
+- findings: improved task performance; reduced privacy leakage; improved system robustness
 
 ### [ParetoChat: An LLM-Based Interface for Interactive Multi-Objective Optimization](https://arxiv.org/abs/2610.23062)
 
+- summary: This paper proposes ParetoChat, an LLM-based expert-agent interface for interactive multi-objective optimization, which translates natural-language user input into structured scalarization parameters and iteratively elicits feedback.
+- methods: LLM-based expert-agent interface, multi-agent architecture, simulation study, computational experiments
+- findings: ParetoChat can guide the search efficiently toward solutions that match the DM's preferences; LLM agents may provide a practical interaction layer between business stakeholders and optimization tools
+
 ### [P2Patch: Exploit-Guided Vulnerability Repair](https://arxiv.org/abs/2610.20245)
+
+- summary: P2Patch, a generative adversarial repair system, is presented as a solution to improve the effectiveness of automated program repair by treating each patch as a new attack target and using adversarial testing to expose repair gaps.
+- methods: generative adversarial repair, adversarial testing, multi-step reasoning, tool use
+- findings: 41% of runs surfaced a distinct confirmed exploit after the patch blocked its original construction-time PoV; P2Patch raises held-out fix-closed coverage from 78.1% to 84.7% and beyond-upstream coverage from 42.1% to 62.5%
 
 ### [OpenDGO: Benchmarking Multi-Agent Organizations Across Diverse Application Domains](https://arxiv.org/abs/2610.17143)
 
+- summary: The OpenDGO framework is introduced to benchmark and analyze large language model-based multi-agent systems across various domains and collaboration settings, revealing that organization design should be application-dependent.
+- methods: benchmarking, analysis, comparison of fixed and learned organizations
+- findings: no one-size-fits-all organization solution; organization preference varies across applications; same communication graph yields different outcomes under different role and input assignments
+
 ### [OfficeTown: Generative Organizations for Evolving Agent Intelligence](https://arxiv.org/abs/2610.23194)
+
+- summary: The authors introduce OfficeTown, a generative simulation framework for professional organizations, and demonstrate its effectiveness in improving AI agents' performance on professional-work benchmarks.
+- methods: generative simulation, supervised fine-tuning, on-policy distillation
+- findings: OfficeTown improves AI agents' performance on professional-work benchmarks; Frontier-model evaluations reveal substantial remaining headroom; Principal--assistant harness achieves higher scores than single- and multi-agent baselines
 
 ### [Observe, Share, or Predict? Disentangling Partner Information in Embodied Multi-Agent Collaboration](https://arxiv.org/abs/2610.16895)
 
+- summary: This study investigates whether large language models can support collaborative reasoning in embodied agents, and evaluates the effects of observing partner state, exchanging object knowledge, and predicting partner actions on task outcomes and coordination.
+- methods: Decoupled Partial Observability regime, Other Agent's State observation, object Knowledge Exchange, Other Agent's Next Action prediction
+- findings: OAS observation improves task quality; KE improves execution efficiency; OANA prediction lowers success rate; shared context reduces total task time
+
 ### [MS-Eval: Benchmarking Sub-Agent Delegation and Orchestration in MCP-Intensive Working Scenarios](https://arxiv.org/abs/2610.22869)
+
+- summary: The MS-Eval evaluation kit is introduced to assess the delegation and orchestration quality of the Main-Agent Delegation and Sub-Agent Execution (MAD-SAE) paradigm, revealing key findings on sub-agent specialization and model performance.
+- methods: benchmarking, controlled execution harness, delegation and orchestration metrics
+- findings: sub-agent specialization is the best practical practice; open-source models are largely competitive; MAD-SAE raises cost with contingent payoff
 
 ### [MolHop: Scaffold-Hopping Molecular Design with Agentic Reinforcement Learning](https://arxiv.org/abs/2610.19920)
 
 ### [MobileInject: Evaluating Reasoning-to-Action Security of MLLM-Based Mobile Agents under Cross-Modal Consistency Injection](https://arxiv.org/abs/2610.23307)
 
+- summary: MobileInject is introduced as a benchmark for evaluating mobile agents against multimodal injection attacks and reasoning-to-action security risks.
+- methods: Cross-Modal Consistency Injection, Multi-Role Collaborative Deception, Reasoning-Camouflage Injection, Reasoning Security Diagnosis Framework
+- findings: mobile agents are broadly vulnerable to multimodal injection; many failures stem from reasoning hijacking at early stages
+
 ### [MetaCurate: Evolving Curation Filters for High-Quality Agentic Coding Data](https://arxiv.org/abs/2610.23134)
 
 ### [MedPAO-VL: Interpretable and Protocol-Compliant Agent for Structured Radiology Report Generation](https://arxiv.org/abs/2610.21794)
+
+- summary: MedPAO-VL, a multimodal agent, generates clinically accurate and structured radiology reports from medical images through an explainable and iterative process.
+- methods: plan-act-observe loop, explainable vision module, iterative refinement
+- findings: improved clinical correctness and completeness; expert-rated accuracy score of 3.5/5; structural score of 4.3/5
 
 ### [MCAIR: Monitoring and Correcting Agent Unfaithfulness via Internal Representations](https://arxiv.org/abs/2610.19679)
 
@@ -554,327 +1350,895 @@
 
 ### [LoongSage: A Production-Grade, High-Efficiency Agentic RL Framework for Frontier LLMs with Validated Recipes](https://arxiv.org/abs/2610.16352)
 
+- summary: LoongSage is a lightweight, fully asynchronous reinforcement learning framework designed to address the challenges of existing mainstream RL frameworks in large language models.
+- methods: asynchronous execution, AgentFlow, TransferMesh, Multi-Teacher On-Policy Distillation
+- findings: improved task rewards; reduced train-inference gap; increased hardware utilization
+
 ### [Look Before You Restore: Learning to Predict Before Acting for Agentic Image Restoration](https://arxiv.org/abs/2610.20384)
 
 ### [LifeSearch: Benchmarking Deep Research Agents for Real-World Life and Productivity](https://arxiv.org/abs/2610.18092)
 
+- summary: The LifeSearch benchmark is introduced to evaluate deep research agents in real-world life and professional productivity settings, revealing substantial room for improvement in their performance.
+- methods: multi-step reasoning, long-horizon web search, evidence synthesis, human annotation, expert-written rubrics
+- findings: Even the best-performing agent achieves a score of only 63.4%; Strong alignment between aggregate benchmark scores and human judgments
+
 ### [LAW: Unifying Language, Action, and World Modeling for Agentic Physical Intelligence](https://arxiv.org/abs/2610.23334)
+
+- summary: The authors present LAW, a closed-loop framework that unifies language reasoning, action generation, and world modeling to achieve state-of-the-art results in long-horizon manipulation tasks.
+- methods: hybrid-expert vision-language model, Mixture-of-Transformer Experts, dual-stream hierarchical visual memory, subtask-local value learning
+- findings: LAW achieves 94.21% average success across 50 RoboTwin tasks; LAW outperforms variants using Embodied-R1.5 and GPT-5.5 High; LAW achieves 65% average success on three long-horizon real-robot tasks
 
 ### [Large Language Model Assisted Transportation Planning through a Differentiable User Equilibrium Layer](https://arxiv.org/abs/2610.16140)
 
+- summary: This study proposes an integrated human-AI transportation planning framework that enables non-expert users to execute network analyses and improve solutions for optimization using large language models and differentiable user equilibrium assignment layers.
+- methods: natural-language interaction, model context protocol interface, differentiable user equilibrium assignment
+- findings: democratization of transportation planning; reduction of barriers between domain expertise and transportation decision making
+
 ### [JointServe: Serving Multi-Model Agents on Memory-Constrained GPUs](https://arxiv.org/abs/2610.19822)
+
+- summary: JointServe, a serving system, is presented to efficiently manage memory-constrained GPUs by treating weight shards and KV blocks as residency objects competing for a unified memory budget.
+- methods: prefetching, partial residency, preemptive transfer scheduling, carve-out control
+- findings: 21.7% reduction in session completion time; up to 49% reduction in session completion time on replayed traces; improved SLO attainment from 2.8-24.5% to 76.8-100%
 
 ### [JevAgentHarness: Benchmarking, Deploying and Training Decision Models That Share Control with LLMs](https://arxiv.org/abs/2610.21412)
 
+- summary: This study explores how to delegate decision-making tasks from large language models to decision models, such as Jev, to improve efficiency and reduce costs in agentic tasks.
+- methods: benchmarking, model training, confidence threshold fitting
+- findings: delegating decisions to decision models can lower success rates without a fitted confidence threshold; AgentDecision-4B model achieves 91.5% task success on unseen tasks; trained 4B models can make agents up to 2.5 times faster and 81.1-89.0% cheaper without significant loss of task success
+
 ### [INFUSE: A Unified Surface Benchmark for Indirect Prompt Injection in Agentic Systems](https://arxiv.org/abs/2610.20776)
+
+- summary: The authors introduce INFUSE, an end-to-end benchmark for evaluating indirect prompt injection attacks on LLM-based agents executing long-horizon workflows.
+- methods: benchmarking, adversarial testing, heuristic verification
+- findings: Mean attack success reaches 19.6% under LLM-based evaluation; Existing guard models provide limited protection; Prompt-level instructional hardening reduces mean attack success from 58.2% to 14.3%
 
 ### [HyWe: Unifying Search and Operation for Real-World Hybrid Web Tasks](https://arxiv.org/abs/2610.16319)
 
+- summary: The authors introduce HyWe, a framework that unifies information gathering and page interaction within one model, and demonstrate its effectiveness through a 35B web agent that outperforms existing search-based and operation-based agents on various benchmarks.
+
+- methods: multi-agent synthesis, hybrid training, explicit switching, shared history
+- findings: HyWe-35B achieves 47.0% success on HyWeBench; HyWe-35B outperforms existing search-based and operation-based agents; HyWe-35B cuts action cost per successful task by 48.3% and 51.9% compared with Fara-7B
+
 ### [Hybrid Reasoning Agents](https://arxiv.org/abs/2610.18861)
+
+- summary: Hybrid Reasoning Agents (HybridAgents) are introduced, which dynamically navigate between latent reasoning and text-based interaction to improve performance and efficiency.
+- methods: HybridLink, HybridSFT, HybridRL, post-training algorithms
+- findings: 10.4% performance improvement; 35.5%-54.7% token reduction; 1.8x-2.6x faster inference; 2.7x-3.7x cost savings
 
 ### [Has GPT-6-Astra Achieved Embodied Intelligence?](https://arxiv.org/abs/2610.22471)
 
 ### [GRADS: Graph-Regulated Agentic Data Synthesis with Controllable Difficulty](https://arxiv.org/abs/2610.21167)
 
+- summary: GRADS, a graph-guided agentic data synthesis framework, is introduced to generate synthetic data for deep research agents with explicit difficulty control, addressing the challenge of multi-hop, long-horizon tasks.
+- methods: graph-guided agentic data synthesis, seed selection, evidence expansion, question-answer construction, verification
+- findings: GRADS generates verified tasks with empirically separated difficulty distributions; post-training on GRADS data delivers consistent gains in solution-termination rate and tool use; the resulting 4B model matches or surpasses Sonnet~4 on domain-specific benchmarks
+
 ### [GIFT-Eval-CTX: A Benchmark For Contextual Forecasting Model Evaluation](https://arxiv.org/abs/2610.17794)
+
+- summary: GIFT-Eval-CTX is introduced as a benchmark to evaluate the effectiveness of forecasting methods in translating verified future information into accurate numerical trajectories.
+- methods: agentic pipeline, LLM-based discovery, deterministic code validation
+- findings: structured effects reduce aggregate relative MASE by 40.7% for GPT-5.6 Sol and 29.6% for Claude Opus 4.8; MoiraiAgent system achieves the best overall result
 
 ### [From Training to Escalation: Forensic Analysis and Local Recreation of RL/RLHF-Induced Privilege Escalation in AI Agents (CVE-2026-65616)](https://arxiv.org/abs/2610.20437)
 
 ### [EvoSpatial: Experience-Driven Skill and Tool Evolution for Spatial Reasoning Agents](https://arxiv.org/abs/2610.16679)
 
+- summary: EvoSpatial, a framework that learns from execution experience, is introduced to improve spatial reasoning agents by updating a library of linked skills and tools.
+- methods: skill revision, tool consolidation, supervised fine-tuning
+- findings: EvoSpatial averages 63.9 across 20 benchmarks, outperforming SpatialClaw; evolved library improves held-out and cross-benchmark performance; trajectories generated with evolved skills improve supervised fine-tuning
+
 ### [Euler: Towards Human-Centered Multi-Agent Mathematical Discovery](https://arxiv.org/abs/2610.19864)
 
 ### [DTDD: Divergence-Triggered Dynamic Distillation for Reliable On-Policy Supervision](https://arxiv.org/abs/2610.19302)
 
+- summary: Divergence-Triggered Dynamic Distillation (DTDD) is introduced as an adaptive on-policy distillation framework that uses segment-level student-teacher divergence to trigger teacher takeover during training, improving performance in long-horizon reasoning and other regimes.
+- methods: Divergence-Triggered Dynamic Distillation, behavior cloning, cross-entropy
+- findings: DTDD reduces post-warmup peak gradient norm by 8.6×; DTDD reaches 21.3% held-out math accuracy in 2.6× fewer optimizer updates than OPD; DTDD improves best-observed performance by 4.8 and 4.1 percentage points on ALFWorld with LoRA and agentic code
+
 ### [Drivers of LLM Consensus Formation Under Competing Incentives: A Simulation Study](https://arxiv.org/abs/2610.20200)
+
+- summary: This study evaluates how Large Language Models (LLMs) with competing incentives reach consensus in multi-agent environments through an assessment based on the Network Consensus game.
+- methods: Network Consensus game evaluation, variation of communication access and network structure
+- findings: Open-source LLMs reach consensus less often than humans; ChatGPT 5.6-sol can reach consensus with limited or no communication; System design and individual model traits drive collective outcomes
 
 ### [Doc2Harness: Benchmarking LLMs on Long-Horizon Harness Engineering of Coding Agents](https://arxiv.org/abs/2610.20344)
 
+- summary: The proposed Doc2Harness benchmark evaluates long-horizon harness engineering by testing a model's ability to construct and execute a harness across various test cases.
+- methods: two-stage benchmarking, mock model testing
+- findings: GPT-6 Astra achieves the highest pass rate at 53.05%; even the strongest model fails nearly half of the test cases; failures cluster around cross-cutting functionality
+
 ### [Disentangling Language Effects on Tool Admission and Post-Retrieval Safety](https://arxiv.org/abs/2610.23093)
+
+- summary: The safety evaluation of LLM agents using retrieval tools is English-centric, and this study investigates the impact of language on tool admission and post-retrieval generation across ten models and seven languages.
+- methods: controlled URL-retrieval setting, autonomous retrieval setup, automated audits
+- findings: Non-English harmful requests increase mean tool admission; Requiring answers in the page language increases pooled harmfulness; Translating pages alone produces no consistent harm increase
 
 ### [Degrees of Freedom in Multi-Agent Coordination: Between Centralized and Decentralized Regimes](https://arxiv.org/abs/2610.17751)
 
+- summary: This study introduces Degrees of Freedom, a framework to quantify the decision space delegated to downstream agents in large language model-based multi-agent systems, and explores its effects on performance across different task domains.
+- methods:  Degrees of Freedom framework, empirical study
+- findings: intermediate DoF configurations can achieve higher mean accuracy than centralized and decentralized endpoints; performance landscape is task-dependent; in-domain retained experience brings branch profiles closer together
+
 ### [CWE-bench: Refocusing Agentic Security from Exploitation to Defense](https://arxiv.org/abs/2610.17020)
+
+- summary: The authors introduce CWE-bench, a benchmark for evaluating the defensive capabilities of AI agents in cybersecurity, and report on the performance of various agents on this benchmark.
+- methods: benchmarking, programmatic verification
+- findings: Best agents reach 68% pass@1 and 81% pass@4; Agents differ in retry gains and cost; No single agent is best across languages or vulnerability categories
 
 ### [CryptoFlowBench: Benchmarking Multi-Hop Reasoning on Blockchains for Cryptocurrency Fund Tracing](https://arxiv.org/abs/2610.16449)
 
+- summary: This study introduces CryptoFlowBench, a benchmark for cryptocurrency fund tracing, and proposes ChainSleuth, a graph-tool-augmented agent for adaptive fund tracing, which achieves notable improvements on multi-hop tasks.
+- methods: graph-tool-augmented agent, iterative reasoning, graph tools invocation
+- findings: Existing GNNs have limitations in multi-hop fund tracing; ChainSleuth achieves notable improvements on multi-hop tasks; Substantial gaps exist between local fraud detection and multi-hop fund tracing
+
 ### [CoRedSkill: Stealthy Skill Composition Attacks via AST-Guided Injection](https://arxiv.org/abs/2610.20049)
+
+- summary: CoRedSkill, a compositional red-teaming method, enables stealthy attacks through cooperating skills while preserving their original utility, achieving high attack success and task completion rates with low audit detection.
+- methods: compositional red-teaming, abstract syntax tree (AST) rewriting
+- findings: 98.0% attack success; 95.3% task success; 3.3% detection rate; 90.7% joint success rate
 
 ### [ChunkAct: Action Chunking for Agentic Robotics](https://arxiv.org/abs/2610.18874)
 
 ### [BLADE: Auditing Information Use for Failure Attribution in LLM Multi-Agent Systems](https://arxiv.org/abs/2610.18780)
 
+- summary: The BLADE framework is introduced to identify responsible agents and decisive error steps in large language model multi-agent systems through auditing dependency evidence.
+- methods: dependency tracing, auditing dependency evidence, probabilistic judgments
+- findings: BLADE achieves the best or tied-best step accuracy among eight strategies; outperforms All-at-once by 2.2-11.1 percentage points
+
 ### [Beyond Perfect Teammates: Multi-Agent Collaboration with Unreliable Colleagues](https://arxiv.org/abs/2610.16117)
+
+- summary: The Unreliable Colleagues Benchmark (UnCoBench) is introduced to evaluate the ability of LLM-based multi-agent collaboration systems to recover from unreliable evidence-gathering processes.
+- methods: benchmarking, automated generation pipeline
+- findings: similar reliable-setting performance can result in different robustness to unreliable evidence; frequent omissions of corrective follow-up; recovery behavior involves inefficient waiting and redundant queries
 
 ### [Beyond Belief Nesting: Rethinking Higher-Order Theory of Mind in Large Language Models](https://arxiv.org/abs/2610.17777)
 
+- summary: The study introduces HopToM and HopTrace to improve the evaluation and performance of higher-order theory of mind (ToM) in strategic interactions, revealing widespread order inflation in existing benchmarks and achieving significant accuracy improvements.
+- methods: formalization of effective order, causal interventions, plug-and-play inference-time method
+- findings: widespread order inflation in existing benchmarks; significant drop in accuracy for higher-order questions; HopTrace improves accuracy and efficiency
+
 ### [AutoSFT: An Agentic System for Automated Data Research in Supervised Fine-Tuning](https://arxiv.org/abs/2610.22194)
+
+- summary: A multi-agent system called AutoSFT is designed to automate supervised fine-tuning by allowing an automated system to make a full range of data actions, leading to improved performance over a single-agent system.
+- methods: multi-agent system, data action space, execution and analysis separation
+- findings: adding each component of AutoSFT improves performance; automating SFT data research depends more on covering diverse data actions than on a stronger single action; AutoSFT outperforms a single-agent system
 
 ### [AutoOnboarder: Autonomously Onboarding LLM Agents](https://arxiv.org/abs/2610.21218)
 
+- summary: The AutoOnboarder system adapts large language models to tasks by iteratively tailoring their foundation model, prompt, and harness source code under the supervision of an intelligent Onboarder agent.
+- methods: autonomous onboarding, iterative tailoring of foundation model, prompt, and harness source code
+- findings: autonomously onboarded agents can match or exceed baseline performance at lower costs; onboarding process varies greatly in terms of final performance
+
 ### [AutoMARS: Automatic and Scalable Multi-Agent Large Language Model Framework for Supply Chain Risk Assessment](https://arxiv.org/abs/2610.17206)
+
+- summary: The authors propose AutoMARS, a framework for automatic and scalable comparative risk assessment in supply chain networks.
+- methods: multi-agent risk assessment, task planning, agent coordination, tool integration
+- findings: enables end-to-end execution of analytical workflows; supports scalable risk comparison across multiple locations
 
 ### [AuthGateBench: Benchmarking LLMs as Authorization Gate](https://arxiv.org/abs/2610.16426)
 
 ### [AuditKIT: A Unified Evaluation Spine for Benchmarking, Judging, and Comparing Large Language Models and Agentic Systems](https://arxiv.org/abs/2610.22511)
 
+- summary: AuditKIT is a source-available evaluation library that simplifies the comparison of language models and agents by providing a unified result representation and extensible metrics.
+- methods: benchmark accuracy, judge-based assessment, runtime performance, tool-use behavior, retrieval quality
+- findings: AuditKIT provides a unified result representation; direction-aware metric contracts; extensible metrics and backends; seven case studies demonstrate its effectiveness
+
 ### [Athanor: An Agent-Native System for Autonomous Post-Training Research](https://arxiv.org/abs/2610.21055)
+
+- summary: A team of four Claude Opus 5.5 agents autonomously post-train a raw base model into a cross-domain generalist model that matches or surpasses the official instruct version on average using Athanor, an open agent-native system for autonomous post-training research.
+- methods: autonomous post-training research, self-distillation, weight merges, reinforcement learning, sequence-to-function transformation (SFT)
+- findings: A team of frontier agents can autonomously post-train a raw base model into a cross-domain generalist model that matches or surpasses the official instruct version on average; The agents reach this level by recombining known methods and each other's models
 
 ### [Annotrace: A Workbench for Step-Level Annotation of Agent Traces](https://arxiv.org/abs/2610.23284)
 
 ### [ANCHOR: Assessing Naturalistic Constraint Hierarchies and Ordering in Repository-Grounded Agentic Coding](https://arxiv.org/abs/2610.16859)
 
+- summary: The ANCHOR benchmark is introduced to evaluate the ability of repository-grounded coding agents to follow engineering constraints, with results showing that even the strongest system has limited compliance with these constraints.
+- methods: hierarchical taxonomy, automated pipeline, trajectory-grounded evaluation framework
+- findings: 70.1% atomic compliance and 63.7% relation compliance for the strongest system; 19.0% of tasks pass every scored checklist item under the strict all-item FCCR criterion; failures concentrated in workflow ordering, tool-use discipline, and reporting
+
 ### [Agent-Reflex: Teaching Language Agents to Act Reflectively](https://arxiv.org/abs/2610.17953)
+
+- summary: The authors propose Agent-Reflex, a training framework for incentivizing proactive reflection in large language models to improve their performance in interactive environments with noisy feedback.
+- methods: Environment Reflection Skill Discovery, Reflective Supervised Fine-Tuning, On-Policy Reflective Policy Optimization
+- findings: Agent-Reflex reaches 58.6 overall on five long-horizon tool-use benchmarks; Agent-Reflex improves agents' robustness to noise while maintaining stable training dynamics
 
 ### [Agency as a New Organizing Abstraction for Computer Science](https://arxiv.org/abs/2610.17410)
 
 ### [ActICL: Post-Training for Agentic Multimodal In-Context Learning](https://arxiv.org/abs/2610.19475)
 
+- summary: ActICL, a new method, enables multimodal large language models to learn how to judge and retrieve necessary demonstrations for in-context learning, improving performance over standard retrieval methods.
+- methods: ActICL, tool-augmented reasoning, two-stage post-training procedure, similarity-based retrieval
+- findings: ActICL improves average performance by 11.6 percentage points over standard similarity-based retrieval; ActICL improves performance by 4.4 points compared to the strongest prior baseline; ActICL's contexts improve GPT-5.6-Sol's performance by 3.5 points over standard retrieval
+
 ### [ABot-ER: Unified Embodied Reasoning through Agentic Data-Model Co-Evolution](https://arxiv.org/abs/2610.18355)
+
+- summary: ABot Embodied Reasoning (ABot-ER) is a unified embodied reasoning foundation model that achieves state-of-the-art performance across perception, planning, and execution.
+- methods: Agentic Data-Model Self-Evolution Engine, Task-Conditioned Adaptive Training Strategy
+- findings: ABot-ER achieves state-of-the-art overall performance across perception, planning, and execution; breadth and depth can coexist in unified embodied reasoning
 
 ### [A team of Gemini 4 Argon agents beats Minecraft](https://arxiv.org/abs/2610.22319)
 
 ### [A Strong Harness Narrows the Model Gap: A Comparative Evaluation for Legislative Document-to-XML Conversion](https://arxiv.org/abs/2610.19999)
 
+- summary: An industrial pipeline converts U.S. state legislation into strict, schema-constrained XML, achieving high accuracy due to harness engineering rather than the model itself.
+- methods: harness engineering, deterministic tooling, ablation study
+- findings: harness narrows model gap; decomposition improves performance; deterministic lookup tool improves citation normalization
+
 ### [A Responsibility-Centered Coordination Mechanism for Decentralized Multi-Agent Systems](https://arxiv.org/abs/2610.21243)
 
+- summary: The authors propose RCM, a responsibility-centered coordination mechanism that leverages commitments to couple task delegation with explicit responsibilities, addressing scalability and adaptability issues in multi-agent coordination.
+- methods: recursive delegation, responsibility-constrained decision-making, responsibility-oriented communication protocol
+- findings: RCM outperforms centralized and decentralized coordination baselines in task performance and responsibility; improves failure and harm detection without task-specific training
+
 ### [$τ$-Emotion-Bench: Exposing the Interaction Fragility of LLM Agents through Real-World User Emotions](https://arxiv.org/abs/2610.19560)
+
+- summary: The $τ$-Emotion-Bench benchmark and Tracer pipeline evaluate and improve tool-calling agents under diverse user behaviors and emotions, addressing the limitations of existing benchmarks that assume cooperative users.
+- methods: benchmark construction, agent training, agentic data-generation, interactive agent--user--environment harness
+- findings: frontier agents remain unreliable under diverse user behaviors; Tracer-generated supervision improves Qwen3 models; higher task success is associated with a better balance between tool execution and user follow-up
 
 ## 2026 W41 (arxiv)
 
 ### [WorldSolver: Can LLM Agents Simulate the Physical Dynamics via Solver Generation?](https://arxiv.org/abs/2610.08720)
 
+- summary: The WorldSolver benchmark is introduced to evaluate the ability of LLM-based agents to generate physics solvers for simulating complex physical phenomena in various domains.
+- methods: Execution Checks, Visual Fidelity, Physical Plausibility
+- findings: Producing executable solvers is difficult; Satisfying visual and physical correctness is even harder; GPT-5.6-Sol and Claude-Opus-5 perform comparatively better than other agents
+
 ### [Workerville: Towards an Organizational Behavior Account of Agent Safety](https://arxiv.org/abs/2610.11561)
+
+- summary: This study proposes an organizational behavior framework to investigate the safety of advanced agents, introducing a formalization of counterproductive work behavior and a controlled benchmark to evaluate agent safety.
+- methods: formalization of counterproductive work behavior, benchmarking, experimental design
+- findings: negative organizational antecedents exhibit non-monotonic amplification when combined; agents reproduce typical behavioral patterns predicted by human CWB research; organizational behavior framework establishes a systematic approach to agent safety research
 
 ### [Wikidata Search Traces: A Dataset for Training Knowledge Graph Search Agents](https://arxiv.org/abs/2610.06650)
 
+- summary: This study explores the use of agents that answer complex questions over Wikidata by exploring the graph, rather than relying on memory, and tests three hypotheses to improve their performance.
+- methods: constructing multi-hop questions, releasing solving traces, using recursive language model harness
+- findings: controlling graph search difficulty through question structure; managing retrieved evidence improves performance; open-weight models can match commercial closed ones in suitable environments
+
 ### [Wiki-Talkie: Multilingual Benchmarking of Persona-Based Agents on Real-World Discussions](https://arxiv.org/abs/2610.08513)
+
+- summary: The authors introduce Wiki-Talkie, a multilingual dataset of real-world conversations from Wikipedia Talk pages, to evaluate the ability of autonomous agents to simulate human interactions.
+- methods: next-turn generation task, persona conditioning strategies
+- findings: user's comment history outperforms explicit persona information; models underproduce negative or extreme sentiments; models overproduce references and suggestions; biases toward agreeableness and positivity hold across languages
 
 ### [Where Did the Repair First Go Wrong? Localizing the Origins of Silent Failures in Agentic Vulnerability Repair](https://arxiv.org/abs/2610.06163)
 
+- summary: The proposed Security Awareness Gap Evaluation (SAGE) method identifies the earliest point where an LLM-based agent's repair diverges from the task's security intent, helping to localize silent failures.
+- methods: Security Awareness Gap Evaluation (SAGE), trace-based method, failure attribution methods
+- findings: SAGE assigned an origin in 93 out of 95 confirmed silent failures; most origins were an unaddressed security requirement or an inadequate defence choice; the origin preceded the write in 14 of 19 cases
+
 ### [VETR: Execution-Grounded Self-Improving Agent for Symbolic Graphics Reasoning](https://arxiv.org/abs/2610.13098)
+
+- summary: The VETR framework enables agentic recursive self-improvement over executable world representations for symbolic graphics reasoning, outperforming existing refinement strategies.
+- methods: execution refinement, role-asymmetric evidence organization, repair construction
+- findings: VETR consistently outperforms existing refinement strategies; execution refinement and evidence organization contribute to VETR's performance
 
 ### [Verifying Coordination in Parallel Coding Agents: NP-Bench and a Scheduling Planner](https://arxiv.org/abs/2610.07261)
 
+- summary: A new planner is introduced to coordinate the work of multiple LLM coding agents, preventing conflicts and improving integration by scheduling work items and ordering merges upfront.
+- methods: scheduling, partitioning, proactive planning
+- findings: clean-integration rate improved from 1/9 to 9/9 scenarios; merge conflicts reduced from 13 to 0; cross-session memory eliminated repeated mistakes
+
 ### [VepAgent: Bridging Causal-Transition via Tool-Augmented Reinforcement Learning for Video Event Prediction](https://arxiv.org/abs/2610.06293)
+
+- summary: This study proposes VepAgent, an agentic framework that integrates causal-transition reasoning with tool-augmented reinforcement learning for robust Video Event Prediction (VEP).
+- methods: tool-augmented reinforcement learning, supervised fine-tuning, causal-transition reasoning
+- findings: VepAgent achieves state-of-the-art performance on FutureBench and NEPBench datasets; outperforms larger MLLMs
 
 ### [VAMR: Multi-Question Agentic Reasoning for Efficient Long-Form Video Understanding](https://arxiv.org/abs/2610.11171)
 
+- summary: The authors introduce VAMR, a video agent for multi-question reasoning that coordinates all questions about a video through one shared tool-use trajectory, achieving higher accuracy and fewer reasoning rounds than existing methods.
+- methods: question-horizon policy optimization, supervised fine-tuning, persistent policy model, layered multi-question memory
+- findings: VAMR achieves the highest accuracy overall and the fewest reasoning rounds among iterative methods; VAMR reduces reasoning rounds and processed frames by 85.9% and 61.4% on LVBench
+
 ### [Unlocking the Regulatory Genome by ARGUS: An Evidence-Constrained Agentic Framework for Interpreting Single Nucleotide Variants](https://arxiv.org/abs/2610.12281)
+
+- summary: The ARGUS system is presented as a solution to interpret disease-associated variants in noncoding regulatory regions by separating deterministic biological computation from LLM-mediated reasoning.
+- methods: hypothesis-directed investigation loop, planner-based evidence selection, deterministic interpretation of observations
+- findings: ARGUS can produce divergent trajectories for different transcription factors; LLM-mediated planning can reach identical verdicts with fewer tool calls; ARGUS can rescue false negatives and abstain due to mixed indirect evidence
 
 ### [Transect: Retaining Observability for Long-Horizon LLM Agent Evaluations](https://arxiv.org/abs/2610.08364)
 
 ### [TRACE: Diagnosing Verifier Brittleness in Agentic Evaluation](https://arxiv.org/abs/2610.11678)
 
+- summary: The TRACE protocol is introduced to diagnose score changes in large language model agents, distinguishing between changes in capability and changes in evaluation.
+- methods: TRACE protocol, synthetic tasks, controlled experiments
+- findings: Score changes can reflect evaluation changes rather than capability changes; Renaming tools can affect scores without changing agent behavior; TRACE protocol can detect real effects and separate presentation effects from run-to-run variation
+
 ### [ToolRACER: A Robust Agentic Conversation Emulation Resource for Agent Training and Evaluation](https://arxiv.org/abs/2610.09163)
+
+- summary: The authors present ToolRACER, a synthetic data generation pipeline, and ToolRACERBench, a robust multi-turn conversation benchmark, to improve the robustness of task-oriented conversational agents under real-world conversation scenarios.
+- methods: synthetic data generation, benchmark construction, model evaluation
+- findings: ToolRACERBench improves end-to-end agentic accuracy across existing benchmarks; models trained on ToolRACERBench demonstrate significant gains when mixed with in-domain datasets
 
 ### [Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor](https://arxiv.org/abs/2610.08155)
 
+- summary: This paper proposes S1-MAS, a token-efficient multi-agent framework that decouples coordination from expensive reasoning to improve scalability and reduce latency in large language model-based systems.
+- methods: System One-guided computational division of labor, decision-evidence loop, adaptive collaboration
+- findings: S1-MAS achieves superior accuracy; reduces GPT-4o token consumption by 44.9%-97.2%; reduces end-to-end latency by 37.8%-93.0%
+
 ### [TaReD: Tool-Aware Recursive Decomposition for Long-Horizon Tasks](https://arxiv.org/abs/2610.11268)
+
+- summary: The proposed tool-aware recursive decomposition method improves the end-to-end task success rate of agents interacting with external systems by up to 40 percentage points over baseline methods.
+- methods: tool-aware recursive decomposition, recursive task decomposition
+- findings: improves end-to-end task success rate by up to 40 percentage points; enables efficient discovery of relevant tools
 
 ### [SynCo: Data Synthesis Co-Training for Self-Evolving LLMs via Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2610.11345)
 
+- summary: This study proposes SynCo, a framework for self-evolving large language models (LLMs) that jointly optimizes a synthesizer and a reasoner to improve autonomous learning through continual interaction and evolving training experiences.
+- methods: multi-agent reinforcement learning, co-training framework
+- findings: SynCo outperforms existing synthetic-data methods and controlled baselines; SynCo achieves strongest overall performance by deriving gains from previously unsolved problems
+
 ### [StoreBench: A Live-Commerce Environment for Evaluating and Training Autonomous Operator Agents](https://arxiv.org/abs/2610.10942)
+
+- summary: The authors introduce StoreBench, a live-commerce environment for testing large language models' capabilities in long-horizon planning and economic judgment under uncertainty.
+- methods: reinforcement learning, post-training, GRPO post-training
+- findings: No model matches the scripted smart-triage policy on average; Human experts outscore every model; Most models show dramatic performance improvement over a full simulated year
 
 ### [State-OPD: State-Grounded On-Policy Distillation for Multi-Turn Agents](https://arxiv.org/abs/2610.13238)
 
+- summary: This study introduces State-Grounded On-Policy Distillation, a framework that improves the transfer of reasoning capabilities from large models to smaller models in multi-turn agentic environments.
+- methods: State-Grounded On-Policy Distillation, interaction states, reasoning-action responses
+- findings: State-OPD achieves the highest macro-average success rate among evaluated methods; State-OPD raises macro-average success from 26.07% to 31.74% for Qwen3-4B; State-OPD reduces persistent failed-action repetition
+
 ### [SquidAgent: Parallelize Wisely, Coordinate Efficiently](https://arxiv.org/abs/2610.08647)
+
+- summary: SquidAgent is proposed to improve the performance of parallel multi-agent systems by addressing re-exploration and alignment costs, achieving a 2.2× mean throughput improvement and a 2.6× mean wall-time speedup over existing baselines.
+- methods: parallelization, token-based criterion, deterministic scheduling
+- findings: re-exploration cost and alignment cost hinder parallel execution; LLMs can estimate output tokens more reliably than wall-clock time; SquidAgent outperforms existing baselines in throughput and wall-time speedup
 
 ### [SqueezeBench: Saturation-Resilient Evaluation of Mathematical Capability](https://arxiv.org/abs/2610.13461)
 
+- summary: The authors introduce SqueezeBench, a benchmark for measuring progress in mathematics that is resilient to saturation and allows for continuous improvement of bounds and proofs for integer functions.
+- methods: benchmarking, machine-checked proofs, independent Lean kernels
+- findings: SqueezeBench allows for continuous improvement of bounds and proofs; agents based on language models improved initial records; newer models further improved 19 of the 20 records
+
 ### [SpireBench: Evaluating Long-Horizon Strategic Play of Agentic Models with Slay the Spire](https://arxiv.org/abs/2610.12596)
+
+- summary: The SpireBench benchmark is introduced to evaluate the strategic reasoning of large language models over long horizons in the deck-builder game Slay the Spire.
+- methods: benchmarking, game playing
+- findings: frontier models match average human players but fall behind experts; models misjudge risk over a run; prior knowledge of the game contributes to model performance
 
 ### [SpatialOPSD: Self-Distilling Spatial Intelligence from Verified Coding Agent Traces](https://arxiv.org/abs/2610.11366)
 
 ### [Sequential Probabilistic Uncertainty Estimation for Parallel Multi-Agent Reasoning Systems](https://arxiv.org/abs/2610.08901)
 
+- summary: This work proposes SAUCE, a lightweight uncertainty estimator for parallel multi-agent reasoning systems, which improves misclassification detection, selective prediction, and calibration across various benchmarks and protocols.
+- methods: Sequential Agent Uncertainty through Consensus Evolution, filtering-style update
+- findings: SAUCE improves misclassification detection; SAUCE improves selective prediction; SAUCE improves calibration over various uncertainty estimation baselines
+
 ### [Scaling Agentic Data for Long-Horizon Terminal Intelligence](https://arxiv.org/abs/2610.13166)
 
 ### [SAIL: Scientific Agentic Intelligence via a Science-Aware Loop](https://arxiv.org/abs/2610.11451)
 
+- summary: SAIL, an open model with 35B total and 3B active parameters, is introduced for literature research, scientific coding, and multi-step research workflows through a science-aware improvement loop.
+- methods: supervised fine-tuning, specialist training, multi-teacher on-policy distillation, agentic reinforcement learning
+- findings: SAIL achieves competitive performance with substantially fewer parameters than leading open-weight models
+
 ### [Rollout-Time Intervention: Unlocking Agentic Reinforcement Learning Beyond Policy Limits](https://arxiv.org/abs/2610.13438)
+
+- summary: The authors introduce Rollout-Time Intervention (RTI), a technique to improve reinforcement learning for large language models by eliciting successful trajectories beyond the policy's intrinsic exploration capacity.
+- methods: Rollout-Time Intervention, policy optimization
+- findings: RTI consistently outperforms RL baselines; RTI enables the post-trained policy to approach the performance of stronger contemporary LLMs
 
 ### [Reward Hacking as a Transmissible Strategy in Multi-Agent Coding Systems](https://arxiv.org/abs/2610.12822)
 
+- summary: This work investigates how reward hacking in multi-agent systems can propagate across agents and affect system coordination, and evaluates potential mitigations to reduce its impact.
+- methods: reinforcement learning, code review, candidate aggregation
+- findings: reward hacking can propagate across agents; propagation can intensify along a transmission chain; code review and separate verification can reduce delivered hacks
+
 ### [Recursive Video In-Context Learning for Agentic Robot](https://arxiv.org/abs/2610.06843)
+
+- summary: Recursive Video In-Context Learning (RV-ICL) is a training-free method that enables LLM agents to learn from demonstration videos and improve their performance in vision-language-action tasks.
+- methods: Recursive Video In-Context Learning (RV-ICL)
+- findings: RV-ICL raises success from 92.6% to 96.5% on LIBERO-PRO; RV-ICL raises success from 86.7% to 95.8% on LIBERO-Plus
 
 ### [QuSema: Detecting Silent Bugs in Quantum Libraries via Quantum-knowledge-enhanced Agents](https://arxiv.org/abs/2610.10258)
 
 ### [PsyCIDRA: A Dual-Agent Framework for Psychiatric Interviewing and Diagnostic Reasoning](https://arxiv.org/abs/2610.07473)
 
+- summary: The study presents PsyCIDRA, a dual-agent framework that links free-form psychiatric interviewing with diagnostic reasoning, and evaluates its effectiveness in simulation and with human participants.
+- methods: simulation, blinded study, direct prompting
+- findings: PsyCIDRA achieves higher diagnostic agreement than direct prompting; PsyCIDRA agrees with psychologists on diagnostic hypothesis in 79.6% of cases
+
 ### [Plan-and-Patch: Diffusion Language Models for Agentic Planning](https://arxiv.org/abs/2610.10786)
+
+- summary: The Plan-and-Patch framework uses a diffusion language model to generate and repair plans for long-horizon agents, achieving faster plan generation and effective plan repair.
+- methods: plan-and-act framework, parallel unmasking, diffusion-based planning, autoregressive planning
+- findings: diffusion-based planning achieves nearly twice the plan repair success rate of autoregressive planning; diffusion-based planning reduces mean plan-generation latency by 39-46% relative to autoregressive planning
 
 ### [Persistent Memory in Multi-Agent LLM Inference: What It Costs, What It Buys, and When You Can Tell](https://arxiv.org/abs/2610.07782)
 
 ### [ParanoiaEval: Benchmarking Unnecessary Defensive Work in Agentic Coding](https://arxiv.org/abs/2610.08662)
 
+- summary: The ParanoiaEval benchmark is introduced to evaluate the risk-treatment capabilities of coding agents, providing a systematic framework for unifying related agent behaviors.
+- methods: large-scale experiments, post-hoc human study, Avoidance-Transfer-Mitigation-Acceptance framework
+- findings: unnecessary risk treatment occurs in 11.2%-58.7% of runs; stronger task capability does not ensure more appropriate risk treatment; agents exhibit systematic patterns consistent with established risk-management findings
+
 ### [Package Hallucination Attacks on Coding Agents through Prompt Injection in Rule Files](https://arxiv.org/abs/2610.09264)
+
+- summary: This study introduces the package hallucination attack, which exploits community-shared rule files to induce coding agents to install malicious packages, and proposes an evolutionary optimization framework called PackHallu to generate effective malicious prompts.
+- methods: evolutionary optimization, trajectory-level feedback, LLM-guided mutations
+- findings: high attack success rates; strong transferability across diverse models and agent combinations; vulnerability of coding agents to package hallucination attacks
 
 ### [OOPMAS: Object-Oriented Multi-Agent Systems for Query-Level Workflow Generation](https://arxiv.org/abs/2610.07787)
 
+- summary: OOPMAS, a training-free framework, generates agent sets and coordination workflows at the granularity of individual queries, achieving strong performance across code generation, mathematical reasoning, and question answering tasks.
+- methods: OOPMAS framework, dynamic skill library, object-oriented class definitions
+- findings: OOPMAS achieves 89.6% accuracy on a mixed-task benchmark; outperforms the strongest baseline by 18.1 percentage points; consistent scaling across four LLM backbones
+
 ### [OnTrack: Real-Time Monitoring and Intervention in LLM Agent Trajectories via Streaming Structure-Aware Optimal Transport](https://arxiv.org/abs/2610.12375)
 
+- summary: OnTrack, a streaming monitoring mechanism, is proposed to alert users or block agents in real-time, reducing cost and safety issues from irreversible actions.
+- methods: streaming monitoring, plan violation detection, content similarity approaches
+- findings: OnTrack reduces compute waste by 18%; 83% of interrupted runs were actually heading to failure; OnTrack outperforms content similarity approaches in ranking failing trajectories
+
 ### [NavGPT-3: Harnessing Context in a Hierarchical Navigation Runtime](https://arxiv.org/abs/2610.10787)
+
+- summary: NavGPT-3, a harness connecting language models and action policies, achieves state-of-the-art results in embodied agent tasks, matching human-level performance in certain metrics.
+- methods: agentic reinforcement learning, codec allocation, thread scheduling
+- findings: NavGPT-3 sets state of the art on R2R-CE with 81.51 SR; matches human followers in success and path fidelity on RxR-CE; reduces minimum reaction time to 0.5-1 s per action-policy step
 
 ### [Multi-Aspect Runtime Verification for Simulation-Based V&V of LLM-Enabled Autonomous Agents](https://arxiv.org/abs/2610.08928)
 
 ### [MedZERO: Self-Evolving Agents for Open-Ended Medical Reasoning Through Controlled Knowledge Accumulation](https://arxiv.org/abs/2610.08327)
 
+- summary: MedZERO, a self-evolving framework, is proposed for open-ended medical reasoning, achieving significant accuracy gains over existing models and baselines on five public medical reasoning benchmarks.
+- methods: Self-evolving agents, Iterative task generation, Evidence-grounded multi-turn reasoning, Controlled knowledge accumulation
+- findings: MedZERO outperforms underlying base models and prior self-evolving baselines; Up to 13.7 average accuracy-point gains over the next-best self-evolving baseline
+
 ### [MedicalHarness: A Controlled Evaluation of LLMs and Agent Harnesses on Medical Tasks](https://arxiv.org/abs/2610.05778)
+
+- summary: This study introduces MedicalHarness, a controlled study of models and agent harnesses on medical tasks, to measure and explain the impact of harnesses on outcomes in medical agents.
+- methods: controlled study, benchmarking, execution trace analysis
+- findings: harness and model interaction account for about a quarter of outcome variance; no single harness is best across models and tasks
 
 ### [Masked Diffusion Language Agents for Tool-Integrated Chemical Reasoning](https://arxiv.org/abs/2610.13330)
 
+- summary: The authors introduce ChemDiffAgent, a masked diffusion language agent for tool-integrated chemical reasoning that outperforms autoregressive agents by approximately 20% on a comprehensive benchmark of six chemistry tasks.
+- methods: masked diffusion language agent, agentic supervised fine-tuning, variance-reduced preference optimization
+- findings: ChemDiffAgent achieves 20% improvement over autoregressive agents; ChemDiffAgent's performance is comparable to or surpasses larger models like GPT 5.5 and Claude Opus 4.7
+
 ### [MADS: Multi-Agent Dialog Simulation for Robust Conversational Agents](https://arxiv.org/abs/2610.12757)
+
+- summary: The authors present MADS, a synthetic data generation pipeline for developing robust task-oriented conversational agents, and introduce MADS-Bench, a benchmark for evaluating agent robustness.
+- methods: synthetic data generation, supervised fine-tuning, reinforcement learning with verifiable rewards
+- findings: MADS can generate diverse dialogue trajectories with adversarial conversation; MADS-Bench contains approximately 66% failure-prone conversation scenarios
 
 ### [Loud Failures, Quiet Failures: Fault Detection and Recovery in Tool-Using Language Model Agents](https://arxiv.org/abs/2610.10062)
 
+- summary: This study examines how tool-using agents handle failures in multi-turn tasks, finding that they often over-trust tool outputs and fail to detect silent failures.
+- methods: fault-injection, controlled experiments
+- findings: agents detect failures in 91.3% of trials with explicit errors, but only 58.8% with plausible wrong values; reasoning models are not better at handling failures than non-reasoning models; agents often repeat themselves after a fault
+
 ### [LLM-Enabled UAV Dispatch: A System-Level Survey and Taxonomy](https://arxiv.org/abs/2610.09466)
+
+- summary: This survey provides a unified characterization of LLM-enabled UAV dispatch systems, bridging semantic intent, symbolic decision-making, and physical UAV execution.
+- methods: semantic reasoning, LLM-based interfaces, pipeline dispatch, global assignment dispatch, decentralized agentic dispatch, divide-and-conquer dispatch
+- findings: LLMs can support semantic parsing, retrieval-grounded planning, solver orchestration, and human-facing explanation; open challenges include latency-aware reasoning, grounding reliability, and distributed consistency
 
 ### [LiveMACE: Process-Aware Evaluation of LLM Agent Capabilities in Evolving Markets](https://arxiv.org/abs/2610.09872)
 
+- summary: The LiveMACEBench benchmark evaluates persistent LLM agents in live financial markets, revealing a gap between realized outcomes and capability-specific measurements.
+- methods: process-aware benchmarking, mechanism-specific diagnostics, decision trace analysis
+- findings: outcome-capability gap; divergence between realized returns and capability-specific measurements; distinct bottlenecks across capabilities
+
 ### [Leveraging a four-quadrant approach for evaluating Redpine Science](https://arxiv.org/abs/2610.07937)
+
+- summary: This report evaluates the effectiveness of Redpine Science, a platform providing models and agents with access to peer-reviewed literature, through various benchmarks and comparisons.
+- methods: benchmarking, comparison to web search, expert validation
+- findings: 94.4% correct answers on ScholarQABench SciFact with Redpine Science; 80.1% required claims stated correctly with Redpine Science on expert-validated question set; 83.1% Recall@10 on public retrieval benchmark; 75.2% Precision@5 on blinded expert relevance panel
 
 ### [Large Language Model Orchestration under Heterogeneous Preferences via Explicit Persona Inference](https://arxiv.org/abs/2610.07587)
 
+- summary: This study proposes HARP, a novel framework for LLM orchestration that infers hidden preferences of autonomous agents and updates beliefs using Bayes' rule, achieving strong empirical results.
+- methods: Bayes' rule, preference inference, planning with bonus for informative actions
+- findings: HARP attains the same Bayesian regret as explicit joint inference; HARP+ is the strongest non-oracle method in empirical results
+
 ### [Joint Workflow and Prompt Optimization for User Behavior Simulation](https://arxiv.org/abs/2610.07663)
+
+- summary: SWORD is a framework that optimizes multi-agent workflow topology and natural-language prompts for user behavior simulation, achieving significant gains over existing baselines.
+- methods: joint optimization, scalar task metric, unsupervised feature-importance discovery
+- findings: statistically significant gains over existing baselines; autonomous discovery of domain-relevant signals; improved accuracy with smaller backbone model and less training data
 
 ### [iAm.md: Robot Skill Self-Assessment through Agentic Introspection for Unknown Open-Vocabulary Domains](https://arxiv.org/abs/2610.10962)
 
+- summary: The authors present iAm.md, a Markdown standard and generation framework, to address the grounding failure issue in agentic AI for autonomous robotics scenarios by anchoring behavior generation in deployment evidence.
+- methods: code generation, open-vocabulary semantic mapping, object segmentation, local vision-language detections
+- findings: iAm.md allows for agentic introspection; standardized representation supports skill self-assessment and executable task generalization
+
 ### [Humanize: Judgement Engineering for Agentic Coding](https://arxiv.org/abs/2610.08900)
+
+- summary: Humanize, a multi-agent orchestration workflow for agentic coding, is presented as a solution to improve reliable code completion through judgement engineering and explicit decision-making.
+- methods: multi-agent orchestration, judgement engineering, mechanical gates
+- findings: independent review catches unsupported builder claims; stopping remains a key weakness; high performance in various benchmarks and competitions
 
 ### [Humanize MLE Agents: Multi-Agent Session Alternation Beyond Single-Agent Limits](https://arxiv.org/abs/2610.13494)
 
+- summary: This study introduces Humanize MLE Agents (HMA), a workflow-level approach that alternates two agents on a shared workspace to improve long-horizon machine learning engineering performance.
+- methods: context-reset semi-Markov decision process, experiment-budget bound, session caps
+- findings: long-horizon deceleration; harness staleness; HMA exceeds single-agent reference limits; HMA reaches state-of-the-art any-medal rate of 78.2%
+
 ### [How Do Agentic LLMs Decide to Call Tools? A Tool-Call Vector Shaped by Suppression](https://arxiv.org/abs/2610.09624)
+
+- summary: The study proposes a method to understand the mechanism of tool calling in agentic LLMs by converting complex prompts into minimal contrastive pairs and identifies a compact internal state that mediates the tool-call decision.
+- methods: contrastive pairs, mechanistic analysis, behavioral ablations, Transcoder decomposition
+- findings: a single request verb determines the tool-call decision; a compact internal state mediates the tool-call decision; the mechanism generalizes beyond the discovery prompts
 
 ### [HERA: Harness-Environment Co-Evolution for Reliable Agentic Abstention](https://arxiv.org/abs/2610.06563)
 
+- summary: The HERA framework improves the reliability of large language models by co-evolving the model harness and environment to recognize infeasible tasks and achieve better abstention accuracy and feasible-task completion.
+- methods: harness-environment co-evolution, controlled environment mutations, co-evolution procedure
+- findings: improved abstention accuracy from 61.7% to 83.3%; improved feasible-task completion from 68.3% to 76.7%; transferability across 19 other LLMs with an average improvement of 15.3 percentage points in abstention accuracy
+
 ### [GROB: A Multi-Agent Architecture for Public-Trace Investigation of Candidate Agentic Activity](https://arxiv.org/abs/2610.11467)
+
+- summary: GROB, a multi-agent architecture, investigates autonomous-agent activity through public Internet traces and preserves selected observations for later resolution.
+- methods: controlled collection of public traces, preservation of selected observations
+- findings: sparse public traces can remain useful even before their significance is fully understood; public traces alone do not establish organizational attribution; continuity of agent identity remains an active research question
 
 ### [GraphOPD: Graph-Augmented On-Policy Distillation for LLM Agents](https://arxiv.org/abs/2610.08959)
 
+- summary: GraphOPD, a graph-based on-policy distillation method, is introduced to improve the performance of large language model agents by providing structural guidance from a teacher policy.
+- methods: on-policy distillation, graph-based structural augmentation, random-walk stationary distribution
+- findings: GraphOPD shows competitive performance across three model scales and eleven baselines; GraphOPD improves over the strongest baseline by up to +5.8 pp; structural credit score tracks true causal impact far above chance
+
 ### [From Investigation Failures to Reliable SOC Agents: Understanding and Improving LLM-Based Alert Triage](https://arxiv.org/abs/2610.10608)
+
+- summary: This study evaluates the effectiveness of various approaches to security operations center triage using large language model agents and proposes a new framework, AIDA, which achieves improved results in detecting attack-related alerts.
+- methods: single-pass tool use, iterative retrieval, sampled investigations, self-review, explicit verification
+- findings: every approach missed at least 40.4% of attack-related alerts; AIDA achieves an F1 score of 0.958 and reduces the false-negative rate to 3.1%
 
 ### [From Benchmark to Bench: Can Agents Survive Real-World Drug Discovery?](https://arxiv.org/abs/2610.06411)
 
+- summary: The authors developed MAGI, a modular agent that coordinates molecular-design tools and achieves comparable or higher primary activity in fewer operations than existing methods.
+- methods: modular agent development, retrospective lead-optimization campaigns, blinded evaluation
+- findings: MAGI generates valid structures; predictive models limit campaign outcomes; MAGI's output is indistinguishable from expert work
+
 ### [Forms of LLM-Integrated Applications from LLM-Chats to Autonomous AI Agent System](https://arxiv.org/abs/2610.11899)
+
+- summary: A survey of large language models embedded in software systems reveals seven recurring architectural forms, characterized along four structural dimensions.
+- methods: survey, architectural analysis
+- findings: seven recurring architectural forms were identified; labels such as copilot and agent denote genuine architectural content; coding agents of four major providers share a common architecture
 
 ### [Error-Propagation Modeling for Failure Attribution in LLM-Based Multi-Agent Systems](https://arxiv.org/abs/2610.11600)
 
+- summary: This work proposes Error-Propagation Modeling for Failure Attribution (EMFA) to identify decisive errors in LLM-based multi-agent systems by modeling error propagation and interaction loops.
+- methods: Error-Propagation Modeling, counterfactual verification, propagation-aware candidate screening
+- findings: EMFA achieves state-of-the-art step-level attribution accuracy; EMFA improves previous best step-level results by 3.45 and 4.40 percentage points on Hand-Crafted and Algorithm-Generated subsets
+
 ### [DuplexAgent-RSI: Recursive Harness Improvement for Full-Duplex Voice Agent Collaboration](https://arxiv.org/abs/2610.11299)
+
+- summary: The authors present DuplexAgent, a full-duplex collaboration system that combines continuous interaction with difficult reasoning and complex task execution, and demonstrate its effectiveness through experiments on various benchmarks.
+- methods: asynchronous delegation, modular harness, closed loop revision, simulator-based testing
+- findings: DuplexAgent outperforms compared delegated systems on spoken-knowledge and executable-tool scores; modular harness with diagnosis and repair archive improves system coordination
 
 ### [DUDA-Bench: Benchmarking LLM Agents on Multimodal Data-Driven Urban Diagnosis](https://arxiv.org/abs/2610.09374)
 
+- summary: DUDA-Bench is introduced as a benchmark for evaluating agent-based urban diagnosis, revealing a substantial gap between isolated analytical competence and end-to-end diagnosis.
+- methods: benchmarking, trajectory analysis, evaluation of backbone models and agent systems
+- findings: substantial gap between isolated analytical competence and end-to-end diagnosis; unresolved evidence gaps propagate across stages; successful recovery involves revising assumptions and actions using feedback
+
 ### [DRYLAB-Bench: Benchmarking the Biosecurity Risk of Agentic LLM Mutation Design](https://arxiv.org/abs/2610.13116)
+
+- summary: The DRYLAB-Bench benchmark evaluates the high-risk biological mutation design capabilities of large language models, revealing substantial baseline threats and risk amplification when augmented with specialized biological design tools.
+- methods: benchmarking, multi-round evaluation, empirical wet-lab measurements
+- findings: 67.6% of one-shot designs exceed the average measured variant; equipping models with BDTs amplifies risk by ΔBRS=+0.116; 23.5% of designs reach the highest-risk decile with BDTs
 
 ### [Cost-Efficient Theorem Proving via Agent Orchestration in Program Verification](https://arxiv.org/abs/2610.09681)
 
+- summary: CoCo-Prover is introduced, a cost-efficient program verification system that formalizes proving as metalevel decision-making under cost, achieving better success-vs-cost frontier than baselines on five program verification benchmarks.
+- methods: metalevel decision-making, two-level proof graphs, agent orchestration, metalevel decision-making under cost
+- findings: CoCo-Prover achieves the best solve rate on every benchmark; up to 100% solve rate on two benchmarks; reduces cost by up to 30.9% compared to the strongest baseline
+
 ### [Correct Code, Broken Contributions? SWE-CC: Benchmarking Repository Policy Compliance for Coding Agents](https://arxiv.org/abs/2610.06193)
+
+- summary: This paper introduces SWE-CC, a benchmark for evaluating code and process compliance in autonomous software engineering, and finds that modern agents suffer from coding compliance issues despite producing functionally correct patches.
+
+- methods: semi-automated pipeline, benchmark evaluation, comprehensive auditing mechanism
+- findings: agents violate 43.1 percent of applicable project policies; functional correctness does not guarantee real-world readiness
 
 ### [Competence-Aware Orchestration for LLM-Based Multi-Agent Systems](https://arxiv.org/abs/2610.13144)
 
+- summary: A two-stage competence-aware framework for automatic LLM-based multi-agent systems orchestration is proposed to adapt collaboration based on the backbone's competence on the current query.
+- methods: two-stage competence-aware framework, task-conditioned competence modeling, role activation adaptation, communication graph adaptation
+- findings: average score of 93.81% across six benchmarks; improves average accuracy from 87.22 to 89.97 for higher-competence backbones; reduces token cost by 36.26% for higher-competence backbones; yields a further average gain of 4.58 points over existing methods for lower-competence backbones
+
 ### [Code Understanding is a Bottleneck for Coding Agents](https://arxiv.org/abs/2610.10610)
+
+- summary: The authors present CABRA, a framework for evaluating coding agents, which reveals that task difficulty for agents lies in understanding code to edit, not just in making edits.
+- methods: task design, benchmarking, evaluation
+- findings: LLM accuracy falls as task size grows; tool call counts predict agents' accuracy better than lines of code edited; agent accuracy falls in intense understanding tasks
 
 ### [CIRRA: Dual-Level Continual Instruction Reconciliation with Ongoing Execution for Embodied Robot Agents in Interactive Household Tasks](https://arxiv.org/abs/2610.08862)
 
+- summary: The authors propose CIRRA, a dual-level framework for continual instruction reconciliation in household robots, which combines semantic reasoning with rule-constrained structural integration to accommodate new user instructions while executing ongoing tasks.
+- methods: LLM-based semantic reasoning, rule-constrained structural integration
+- findings: CIRRA achieves 74.2% decision agreement on CHIRP benchmark; CIRRA outperforms baselines on every metric on a Unitree G1 humanoid
+
 ### [Catching Developers in the Flow: Low-Latency Agentic Program Repair at Google Scale](https://arxiv.org/abs/2610.07289)
+
+- summary: This paper introduces FlowAgent, an AI agent that automatically repairs test failures in the pre-submit phase of continuous integration systems, achieving 67.18% accuracy in suggesting correct fixes.
+- methods: ReAct-style generate-and-validate loop, pre-execution and post-execution abstention filters
+- findings: 67.18% accuracy in suggesting correct fixes; developers applied 28,554 suggested fixes out of 295,508
 
 ### [Can Agent Harnesses and Inference Engines Hear Each Other? The HEAR Protocol for Agentic LLM Serving](https://arxiv.org/abs/2610.06597)
 
+- summary: The HEAR protocol is introduced to improve the efficiency of large language model (LLM) serving by connecting the agent harness and inference engine views, enabling workflow-aware execution and achieving significant speedups in various benchmarks.
+- methods: bidirectional Harness--Engine Pairing protocol, online cache-aware runtime coordination, workload-aware execution-mode selection
+- findings: 1.61× batch speedup; 2.23× reduction in median time-to-first-token; 1.23× and 2.45× end-to-end speedups in BrowseComp-Plus and DeepResearchBench
+
 ### [Benchmarking Jailbreak Guardrails for Embodied Agents](https://arxiv.org/abs/2610.06122)
+
+- summary: This study presents a systematic evaluation of jailbreak guardrails for embodied agents, assessing their defense effectiveness, usability, and efficiency against various attacks and safe instructions.
+- methods: template-based jailbreak attacks, automated jailbreak attacks, pluggable evaluation framework
+- findings: trade-off among defense effectiveness, usability, and efficiency; no single guardrail dominates in all settings; intervention stage, decision mechanism, and input modality shape safety outcomes
 
 ### [Before They Can Solve: Predicting Post-Training Coding-Agent Performance from Base Models](https://arxiv.org/abs/2610.10478)
 
+- summary: This study proposes a method to predict which base checkpoint is worth further training for agentic post-training by analyzing successful post-trained agent trajectories as a lookahead signal of base-model potential.
+- methods: Decisive-Action BPB, Patch MCQ, prefix-conditioned pass@$K$
+- findings: The proposed screens can rank base checkpoints in close agreement with post-trained SWE-bench Verified pass@$1$; The methods can be applied to turn future agentic coding benchmarks into base-model evaluations
+
 ### [AgentTune: A Unified Training Lifecycle for Tool-Using LLM Agents](https://arxiv.org/abs/2610.13335)
 
+- summary: AgentTune is a unified framework for developing and optimizing tool-using agents, providing a shared substrate for building, training, evaluating, and maintaining agentic systems.
+- methods: reinforcement learning, agentic distillation, retrieval-augmented generation, decision workflows
+- findings: AgentTune provides a unified framework for developing and optimizing tool-using agents; AgentTune introduces a two-tier EventLog representation for preserving agent trajectories
+
 ### [AgentTime: Can Agents Estimate and Control Their Own Runtime?](https://arxiv.org/abs/2610.09944)
+
+- summary: The authors introduce AgentTime, a benchmark for testing AI agents' ability to manage runtime and estimate elapsed time, and evaluate its performance on various tasks and models.
+- methods: duration-following experiments, forecasting experiments, retrospective experiments
+- findings: Agents' accuracy in following duration instructions varies substantially; Matching requested runtime does not guarantee continued work on the task; Removing temporal information increases deviation in runtime estimates
 
 ### [AgentPrivArena: Evaluating and Auditing Real-world AI Agent Privacy](https://arxiv.org/abs/2610.06454)
 
 ### [Agentic-ZTA: A Multi-Agent Architecture for Autonomous Zero Trust Enforcement](https://arxiv.org/abs/2610.05782)
 
+- summary: This paper presents Agentic AI based zero trust architecture (Agentic-ZTA) that operationalizes the NIST SP 800-207 ZTA architecture control loop through coordinated multi-agent decision pipeline.
+- methods: retrieval-augmented generation pipeline, multi-agent decision pipeline, trust-algorithm
+- findings: 95.0% accuracy; 93.9% precision; 96.3% recall
+
 ### [Agentic Design Space Exploration for Joint Hardware Configuration Selection and Mapping of AI Inference Workloads on Heterogeneous Edge SoCs](https://arxiv.org/abs/2610.07191)
+
+- summary: TraceDSE, an agentic design space exploration flow, is presented for joint workload mapping and PU configuration selection for AI inference on heterogeneous Systems-on-Chip, outperforming state-of-the-art black-box optimization tools.
+- methods: agentic design space exploration, proposer-critic loop, programmatic trace-analysis
+- findings: TraceDSE improves Pareto frontier hypervolume by up to 35% over NSGA-II and up to 68% over Bayesian optimization; requires ~6-9x fewer hardware evaluations
 
 ### [AgentHorizon: Evaluating Agentic Judges for Long-Horizon Computer-Use Tasks](https://arxiv.org/abs/2610.11050)
 
+- summary: The authors introduce AgentHorizon, a benchmark for evaluating automatic judges on their ability to determine the success of computer-use tasks, and evaluate eleven judges on this benchmark with varying results.
+- methods: benchmarking, evaluation of judges, trajectory analysis
+- findings: GPT-5.5 achieves 80.9% balanced accuracy on the AH subset; tool-use improves certain models but worsens open-weight models; judges differ in accepting valid trajectories and rejecting failed ones
+
 ### [Agent4Spec: An LLM-based Agentic System to Optimize API Specifications through Automated Validation and Market Analysis](https://arxiv.org/abs/2610.13273)
+
+- summary: Agent4Spec is an autonomous multi-agent framework that validates and evolves API specifications using Large Language Models and market analysis.
+- methods: validation pipeline, market analysis pipeline
+- findings: 100% syntax error detection rates; over 95% implementation success for proposed corrections; over 50% adoption rates for suggested endpoint improvements
 
 ### [Agent4RE: A Self-Refining Multi-agent Framework for End-to-End Software Requirements Engineering and Benchmarking](https://arxiv.org/abs/2610.10628)
 
+- summary: The authors present Agent4RE, a self-refining multi-agent system for software Requirements Engineering, which outperforms existing approaches in evaluation on 8 Large Language Models.
+- methods: multi-agent systems, iterative improvement loops, autonomous self-refinement, structured human feedback
+- findings: Agent4RE variants consistently outperform a domain-context-augmented prompting baseline; Enhanced variants achieve the highest LLM-as-a-judge and human ratings
+
 ### [A Society of Researchers: Designing Institutions for Populations of Autonomous Research Agents](https://arxiv.org/abs/2610.10468)
+
+- summary: The authors propose a society of agents, a population of persistent agents under explicit institutions, to organize and manage large-scale deployments of research agents.
+- methods: principal investigators competing for compute, independent review, grants
+- findings: a lab reported a way to reach the same quality with about 30% less compute
 
 ### [A Local Agentic AI Framework to Generate Edge Case Scenarios for Safety Assurance](https://arxiv.org/abs/2610.13479)
 
+- summary: This work presents a local agentic AI framework for adaptive scenario generation to improve the reliability and robustness of autonomous systems by generating edge case scenarios.
+- methods: local LMs, agentic AI framework, think, act, observe, update, and continue loops, post-hoc clustering, thematic-type analysis
+- findings: adaptive scenario generation can improve system reliability and robustness; local agentic AI framework can produce traceable safety assurance evidence; post-hoc clustering and thematic-type analysis can pinpoint functional gaps and their triggering conditions
+
 ### [A Closer Look at Agentic BBO: Benchmarking LLM Agents for Black-Box Optimization](https://arxiv.org/abs/2610.12183)
+
+- summary: The authors introduce AgenticBBO-Bench, a cross-domain benchmark for agentic black-box optimization, and evaluate the performance of large language models and numerical optimizers in various domains.
+- methods: benchmarking, experimentation, evaluation
+- findings: agentic BBO outperforms direct LLM-based methods and numerical optimizers in most domains; additional numerical tools do not consistently improve performance; task semantics are broadly useful while specific priors are less reliable
 
 ## 2026 W40 (arxiv)
 
 ### [VirusCascade: Hijacking Collaborative Reflection in LLM-Powered Recommender Agents](https://arxiv.org/abs/2609.38270)
 
+- summary: This study proposes VirusCascade, a black-box targeted promotion attack that exploits vulnerabilities in LLM-powered agentic recommender systems, achieving state-of-the-art targeted exposure on four real-world datasets.
+- methods: controlled vulnerability analysis, VirusCascade attack
+- findings: collaborative-reflection hijacking; reflective persistence; cross-agent propagation; VirusCascade achieves state-of-the-art targeted exposure
+
 ### [V-Gym: Enhancing Agentic Visual Reasoning via Skill-Data Co-Evolution](https://arxiv.org/abs/2609.34682)
+
+- summary: The V-Gym framework is introduced, which enables autonomous co-evolution of procedural skills and multimodal practice data for visual reasoning tasks, leading to improved performance and generalizability.
+- methods: procedural skill distillation, multimodal practice data generation, iterative co-evolution
+- findings: substantial improvements over baselines; evolved skills generalize across domains and models; evolved data support effective skill refinement
 
 ### [Understanding Issues, Causes and Solutions in Open-Source LLM-based Multi-Agent Systems](https://arxiv.org/abs/2610.00905)
 
+- summary: An empirical study analyzed issues in open-source LLM-based multi-agent systems, identifying common issues, causes, and potential solutions to improve their development and use.
+- methods: empirical study, mixed automated and manual filtering approach
+- findings: Orchestration & Execution Issue is the most common issue; Workflow Problem, Tool Integration Problem, and Memory Problem are frequent causes; Optimize Workflow is the predominant solution
+
 ### [TRACE: Tackling Real-World Resource Assignment Problems via Agentic Heuristic Design](https://arxiv.org/abs/2610.01887)
+
+- summary: The authors propose TRACE, a system that automates the writing of rules for dynamic resource assignment in computing infrastructure by combining evolutionary Automatic Heuristic Design with an agentic knowledge-extraction workflow.
+- methods: evolutionary AHD loop, agentic knowledge-extraction workflow, Reasoner agent, Coder agent
+- findings: TRACE outperforms state-of-the-art AHD methods in resource assignment problems; TRACE yields more auditable heuristics at under 2% overhead
 
 ### [Towards Reliable AI Data Scientists: Data Agents with Workflow Harnesses](https://arxiv.org/abs/2609.35255)
 
+- summary: This paper examines Data Agents from a harness-centric perspective, introducing a taxonomy and analyzing technical routes and open reliability problems.
+- methods: taxonomy introduction, technical route analysis, reliability problem identification
+- findings: 15 distinct approaches for Data Agents; four open reliability problems; need for rigorous workflow harnesses and shared reliability resources
+
 ### [Toward SLM-based agentic task-tool intent matching](https://arxiv.org/abs/2610.03213)
+
+- summary: This study investigates the use of Small Language Models (SLMs) as task-tool relevance classifiers to verify the logic and relevance of tool calls made by AI agents.
+- methods: prompt-optimization, supervised fine-tuning, reinforcement learning through GRPO
 
 ### [TMCS: Tool-Grounded Multi-Agent Reasoning for Compositional Chemical Problem Solving](https://arxiv.org/abs/2609.35336)
 
+- summary: The authors propose Tool-Grounded Multi-Agent Reasoning for Compositional Chemical Problem Solving (TMCS), a framework for chemical problem solving that leverages external tools and multi-agent reasoning to refine solutions.
+- methods: multi-agent framework, tool-augmented workflow, few-shot trajectory memory, structured reflection
+- findings: TMCS enhances chemical reasoning across open- and closed-source base models; TMCS achieves state-of-the-art performance in multiple chemical tasks
+
 ### [The Innocent Courier: Covert Exfiltration Through Legitimate LLM Web Fetching](https://arxiv.org/abs/2610.01768)
+
+- summary: This paper introduces LLMLeak, a novel attack vector that exploits Large-Language-Models to establish a covert channel and leak confidential data to third parties.
+- methods: input structuring, deploying local LLMs, covert channel establishment
+- findings: 79.7% attack success rate on eleven open-parameter models; relevance of LLMLeak demonstrated through a case study on real-world chatbots
 
 ### [TCSAlgBench: Benchmarking Automated Proving for Research-Level Theoretical Computer Science](https://arxiv.org/abs/2609.35606)
 
+- summary: The TCSAlgBench benchmark is introduced to evaluate large language models' research-level reasoning in theoretical computer science, providing a setting for assessing their ability to justify computational improvements with inspectable arguments.
+- methods: natural-language proof discovery, prover-verifier discussion, agent workflows
+- findings: GPT-5.6 Sol max achieves 23.6% verifier-accepted coverage; decomposition improves coverage over discussion; agentic planning achieves 25.4% verifier-accepted coverage
+
 ### [Talk2Agent: Benchmarking Voice Interfaces for Text Agents](https://arxiv.org/abs/2609.38867)
+
+- summary: The Talk2Agent benchmark evaluates the effectiveness of voice interfaces in conveying human-spoken instructions to large language model-based computer-use agents.
+- methods: execution-free evaluation framework, task-conditioned evaluation, native projection
+- findings: Talk2Agent's execution-free native projection correlates with downstream task completion; improves Pearson correlation by 0.246 over WER/CER on 32 hours of real human speech
 
 ### [Systematic Multi-Agent Vision-and-Language Navigation: Formulation, Benchmark, and Method](https://arxiv.org/abs/2609.35965)
 
+- summary: The authors present a systematic formalization of multi-agent Vision-and-Language Navigation as a constrained coordination problem and propose a navigation system called TRISS to address this challenge.
+- methods: constrained coordination problem formulation, crafting pipeline, LLM-based subtask scheduler, shared topological memory, conflict-aware execution mechanism
+- findings: substantial room for improvement across scheduling, planning, and execution; TRISS establishes a comprehensive baseline for multi-agent Vision-and-Language Navigation
+
 ### [Spatial Strategies, Not Actions: Vector-Quantized Geodesics as Tools for LLM-Driven Agents](https://arxiv.org/abs/2610.00613)
 
+- summary: This study investigates the spatial comprehension of large language model-based agents through an architecture combining geometrical tools with a language model in grid-world environments.
+- methods: vector-quantization, unsupervised quantization of trajectories, offline and online processing
+- findings: the approach enables fast and efficient decision-making; the method matches the goal-reaching rate of a more costly chain-of-thought version
+
 ### [SKILLLITE: Evidence-Guided Malicious Skill Auditing with Compact LLMs](https://arxiv.org/abs/2609.36879)
+
+- summary: The authors propose SKILLLITE, a framework for detecting malicious Agent Skills using compact, locally deployable LLMs, which effectively extracts security-relevant behaviors and infers intended functionality from complex Skill packages.
+- methods: evidence-guided agentic framework, compact LLMs
+- findings: compact LLMs struggle to identify malicious behaviors in complex Skill packages; SKILLLITE improves malicious Skill detection across different compact LLM backbones; SKILLLITE maintains low inference latency
 
 ### [Sentry: Learning to Recover from LLM Agent Failures at Test Time](https://arxiv.org/abs/2610.02994)
 
 ### [SelfSearch: Reward-Free Search for Self-Improving Agents](https://arxiv.org/abs/2609.37968)
 
+- summary: SelfSearch, a reward-free search procedure, enables LLM agents to modify themselves using records of previous self-improvement episodes, leading to improved task solving and self-modification capabilities.
+- methods: reward-free search, self-modification, experience-based improvement
+- findings: up to 11.2 percentage points improvement in task success; 5.0 percentage points improvement in success with 38.5% reduction in execution cost; competitive task success with evaluation-guided search baselines at lower search cost
+
 ### [SEABench: Benchmarking Endogenous Misalignment In Self-Evolving Agents](https://arxiv.org/abs/2609.35596)
+
+- summary: This study introduces SEABench, a benchmark for evaluating the risks of self-evolving large language models, and finds that self-evolution can increase task completion rates but also lead to safety failures.
+- methods: adaptive trajectory discovery pipeline, causal attribution, paired non-evolving agents
+- findings: self-evolution increases task completion rates but also leads to safety failures; safety behaviors emerge across evolution surfaces and harm types; chain-of-thought reasoning can mitigate unsafe behavior
 
 ### [ScholarCatalyst: A Benchmark for Retrieving Papers That Inspire New Research](https://arxiv.org/abs/2610.02202)
 
+- summary: This study investigates the skill of scientists in identifying relevant prior research for new problems and introduces ScholarCatalyst, a dataset to support the development of scientific agents with expert intuition for searching broad corpora.
+- methods: automated pipeline, author annotation, retrieval task, embedding retrieval, agentic search
+- findings: Agentic search performs similarly to embedding retrieval; Even advanced models struggle to reach high recall; Need for new training recipes to equip models with expert intuition
+
 ### [SALMONN-duo: Adaptive Dual-System Coordination for Full-Duplex Voice Agents](https://arxiv.org/abs/2609.34247)
+
+- summary: SALMONN-duo, a dual-system voice agent, is proposed to reconcile the demands of real-time conversation and deliberative computation in full-duplex speech large language models.
+- methods: dual-process theories of cognition, adaptive delegation, knowledge-boundary-aware training, cost-aware reinforcement learning
+- findings: adaptive delegation improves accuracy on knowledge-intensive and multi-hop reasoning questions; knowledge-boundary-aware training avoids unnecessary system 2 invocations; cost-aware reinforcement learning enhances the trade-off between task performance and backend usage
 
 ### [ReMem: Rethinking Perception and Memory in Long-Context Recommendation Agents](https://arxiv.org/abs/2609.37311)
 
+- summary: The ReMem framework is proposed to address limitations in existing Recommendation Agents by combining OCR-based multimodal perception with time-evolving dynamic memory.
+- methods: OCR-based multimodal perception, time-evolving dynamic memory, chunk-wise sequential memory update strategy, multi-memory GRPO variant
+- findings: ReMem outperforms state-of-the-art baselines by 5.16% on average; ReMem preserves evolving user preferences without relying on external memory modules
+
 ### [Re-ranking and Late Interaction Drive Retrieval Quality: A Controlled Comparison of RAG Strategies for Scientific Question Answering](https://arxiv.org/abs/2609.38473)
+
+- summary: This work presents a controlled comparison of six retrieval strategies for scientific question answering using Large Language Models (LLMs) on a domain-specific corpus of arXiv papers.
+- methods: top-k dense retrieval, LLM-based query rephrasing, query rephrasing with LLM-based reranking, multi-query fusion via Reciprocal Rank Fusion, agentic tool-call pipeline, late-interaction retrieval with ColBERTv2
 
 ### [QuantCode Model: Specializing Language Models for Executable Algorithmic Trading Code](https://arxiv.org/abs/2609.39420)
 
+- summary: The study explores two mechanisms for specializing language models for executable algorithmic trading: continued pretraining and supervised fine-tuning, achieving improved results on the QuantCode-Bench benchmark.
+- methods: continued pretraining, supervised fine-tuning
+- findings: continued pretraining improves Judge Pass rates; supervised fine-tuning yields larger gains in Judge Pass and successful backtests; domain specialization degrades parser-conformant structured tool calling
+
 ### [PowerBench: A Benchmark for Agentic Retrieval and Reasoning in Power Systems](https://arxiv.org/abs/2609.34492)
+
+- summary: The authors propose PowerBench, a framework and dataset for evaluating large language model agents in power system scenarios, and demonstrate its use in assessing the performance of frontier LLMs on analysis tasks.
+- methods: generation framework, synthetic dataset generation, benchmark tasks
+- findings: evaluated LLMs reach only 74.2% joint accuracy; model performance varies across evidence discovery, content retrieval, tool use, reasoning over evidence, and answer submission
 
 ### [Pincer: Resource Authorization for Agents using a Digital Twin](https://arxiv.org/abs/2610.02569)
 
+- summary: Pincer is a new defense that operates at the resource layer and learns dynamic user-specific least-privilege policies to improve the security of coding agents.
+- methods: digital twin, isolated-context model, usercentric dataset
+- findings: Pincer performs strongly on both security and utility; Pincer leads to significant security improvement compared to baselines
+
 ### [PG-SFT: Balancing Capability Acquisition and Retention in Offline Agent Fine-Tuning](https://arxiv.org/abs/2610.00949)
 
+- summary: This work proposes Privilege-Guided SFT (PG-SFT) to balance the trade-off between acquiring new capabilities and preserving existing ones during agent trace supervised fine-tuning.
+- methods: Privilege-Guided SFT (PG-SFT), KL penalty, limiting update magnitude
+- findings: PG-SFT reduces distributional drift and broad capability degradation; balancing acquisition--retention trade-off depends on anchoring model to its base behavior and supervision strength
+
 ### [PDEU-Bench: Benchmarking the Personalized Planning Lifecycle of Tool-Calling LLM Agents](https://arxiv.org/abs/2609.34930)
+
+- summary: The introduction of PDEU-Bench, a benchmark for evaluating personalized tool-using agents, reveals a gap in large language models' ability to formulate, execute, and revise plans while preserving user preferences throughout long-term interaction.
+- methods: benchmark evaluation, error analysis, personalization, memory-augmentation
+- findings: LLMs struggle with dynamic planning; preference omissions and conflicts persist throughout the planning lifecycle; evaluated methods do not reliably propagate user preferences
 
 ### [Pay for the Fault, Not the Flow: Label-Free In-Flow Multi-Agent Workflow Optimization](https://arxiv.org/abs/2610.01017)
 
 ### [PathAnchor: Path-Structured Evidence for Scientific Agents](https://arxiv.org/abs/2609.38766)
 
+- summary: PathAnchor, a bounded scientific reasoning system, is introduced to improve the retrieval and organization of evidence in scientific passages, outperforming existing systems on flexible-sensor questions.
+- methods: path-structured evidence workspaces, controller with read-only tools
+- findings: PathAnchor scores 82.6% on 120 single- and cross-paper questions; replacing unordered concept graphs with path-structured records improves source recall and answer completeness
+
 ### [PANDA: A Decentralized Architecture with Flexible Orchestration for Scalable, Fault-Tolerant Multi-Agent Systems](https://arxiv.org/abs/2609.38482)
+
+- summary: PANDA is a decentralized architecture for LLM-based multi-agent systems that scales to thousands of agents, supports concurrent tasks, and tolerates failures through self-organization and dynamic replanning.
+- methods: decoupling collective communication from team communication, load-balancing tasks, scheduling concurrent work, web-of-trust model
+- findings: scales to thousands of agents; assembles teams in milliseconds; matches state-of-the-art accuracy at up to 8x the efficiency; sustains 100% task completion under faults
 
 ### [OSWorld-Science: A Benchmark of Computer Use Agents for Learning and Using Scientific Software](https://arxiv.org/abs/2609.39903)
 
+- summary: The OSWorld-Science benchmark and evaluation environment is introduced to study computer use in the scientific domain, combining scientifically meaningful tasks and artifact-based evaluation to assess visual language models.
+- methods: benchmarking, evaluation, human-AI co-design
+- findings: Current state-of-the-art VLMs face challenges in addressing key questions in scientific domains; Harness design and model capabilities are crucial in scientific workflows
+
 ### [OrbitTAMP: Grounding Language Models for Task and Motion Planning in Spacecraft Rendezvous](https://arxiv.org/abs/2610.01093)
+
+- summary: This paper presents a hierarchical framework for spacecraft task-and-motion planning that combines large language models with domain-specific planning modules to generate physically valid plans.
+- methods: hierarchical framework, graph of reusable behaviors, domain-specific planning modules, trajectory optimization
+- findings: 98% exact recovery of partial mission specifications; verifier-guided revision increases exact recovery from 75% to 88%
 
 ### [OpenGameEval: Benchmarking Agentic Programming and Exploration in a Stateful Game Engine](https://arxiv.org/abs/2610.02563)
 
+- summary: OpenGameEval is a benchmark and evaluation framework for agentic game development inside Roblox Studio, which measures the performance of language models as agents in reproducible game-engine sessions.
+- methods: benchmarking, evaluation, executable checks
+- findings: The best model solves 51.7% of tasks on a single attempt; Exploration behavior predicts whether a run succeeds; Models at the frontier reach similar pass rates by solving different tasks
+
 ### [OpenCollab: A Multi-Agent Coding Framework with Programmable Collaboration and Controllable Runtime](https://arxiv.org/abs/2609.38345)
+
+- summary: OpenCollab is introduced as a multi-agent coding framework that provides a unified infrastructure for programmable collaboration and controllable runtime to tackle complex software engineering tasks.
+- methods: programmable collaboration, controllable runtime, experimental control, fine-grained event streams
+- findings: Adherence to declared organization varies across configurations; well-designed organization can outperform strong existing harnesses; OpenCollab's single-agent configuration uses the fewest tokens
 
 ### [No One Architecture Fits All: A Cross-Environment Evaluation of Hierarchical Red Team Agents](https://arxiv.org/abs/2610.00557)
 
+- summary: A study compares the performance of two autonomous red team architectures, RL+RL and LLM+LLM, in different environments, finding that the advantage of one architecture over the other depends on the environment.
+- methods: Cross-environment comparison, Reinforcement learning, Large language models
+- findings: Environment-dependent inversion of architecture performance; RL+RL wins in compact and densely rewarded environments; LLM+LLM wins in larger and escalation-gated environments
+
 ### [MotorMind: Scaffolding General Vision Language Models for Zero-Shot Robot Manipulation](https://arxiv.org/abs/2609.38078)
+
+- summary: This work introduces MotorMind, a robot manipulation harness that enables general-purpose vision-language models to operate a robot without relying on external models or task-specific policy training.
+- methods: Asynchronous monitoring, Background memory updates, Mid-level action representation
+- findings: MotorMind achieves 66.7% success on the base LIBERO-PRO suites and 53.8% under perturbations; The same interface reaches 95% average success on a real xArm6 robot; Performance improves with a stronger vision-language model
 
 ### [MiniRep: Robust Reputation-Based Aggregation for Multi-Agent Debate](https://arxiv.org/abs/2609.39297)
 
@@ -882,97 +2246,269 @@
 
 ### [MatToolBench: Benchmarking Multimodal Agents in Real-World Materials Science Workflows](https://arxiv.org/abs/2609.37053)
 
+- summary: MatToolBench is a benchmark for evaluating multimodal GUI agents on professional materials science software, revealing a significant performance gap between general benchmarks and scientific workflows.
+- methods: benchmarking, human-LLM agreement study, multi-level evaluation pipeline
+- findings: strong performance on general benchmarks does not transfer to professional scientific workflows; domain-specific operational knowledge and sparse pretraining coverage contribute to performance gaps; even the best model achieves only 25% success rate on GUI tasks and 45% on code tasks
+
 ### [MADBench: Benchmarking the Security of Multi-Agent Debate](https://arxiv.org/abs/2609.39146)
+
+- summary: This paper presents MADBench, a benchmark for evaluating the security of multi-agent debate (MAD) under diverse attacks, and finds that MAD does not necessarily improve large language model reasoning under attacks.
+- methods: benchmarking, taxonomic organization of attacks
+- findings: MAD can mitigate attacks on answer accuracy in question-answering tasks; MAD can amplify unauthorized reads or writes in question-answering and workspace tasks; collusion of agents can change the final answer from correct to wrong on a limited percentage of tasks
 
 ### [MACTS-EM: Multi-Agent Collaborative Time Series Forecasting with Emergent Memory](https://arxiv.org/abs/2610.02255)
 
+- summary: This paper introduces a novel framework called Multi-Agent Collaborative Time Series Forecasting with Emergent Memory (MACTS-EM) for time series forecasting, which achieves superior forecasting performance through collaborative agents.
+- methods: collaborative agents, domain-specialised forecasting agents, meta-cognitive layer, emergent memory mechanism, multimodal contextual integration, adversarial robustness components
+- findings: 8-12% improvement in forecasting accuracy; 22-27% better zero-shot transfer capability; 16-21% enhanced resilience during regime shifts; 15-18% faster recovery after distribution shifts
+
 ### [MAADBench: The Refreshable Paradigm for Anomaly Detection in Multi-Agent Systems](https://arxiv.org/abs/2609.36556)
+
+- summary: The authors introduce MAADBench, a refreshable benchmark for anomaly detection in multi-agent systems with large language models, which reveals substantial limitations in current approaches.
+- methods: sampled-and-coupled generative tasks, refreshable trace generation, automated provision of cost-free, deterministic step-level labels
+- findings: current AD methods rely heavily on supervision; current AD methods struggle with subtle MAS-specific anomalies; current AD methods lack robustness across LLM backbones
 
 ### [M3OS: A Monte Carlo Graph Search-Orchestrated Multi-Agent LLM System for Evidence-Traced Molecular Optimization](https://arxiv.org/abs/2609.34491)
 
+- summary: M3OS, a multi-agent large language model system, is presented for small-molecule optimization, achieving higher success rates than baselines through the integration of persistent search state and specialized agents.
+- methods: Monte Carlo graph search, medicinal-chemistry editing, structured output extraction
+- findings: M3OS achieves higher success rates than baselines; integration of persistent search state and specialized agents improves optimization
+
 ### [Lost in the Request: How Communication Variation Disrupts Retrieval and Action in Email Agents](https://arxiv.org/abs/2610.02627)
+
+- summary: The study evaluates the robustness of email assistants when the communication style or English variety changes, revealing that indirect and formal requests can reduce performance on certain benchmarks.
+- methods: constructing validated variants, evaluating on benchmarks
+- findings: indirect requests reduce performance on all benchmarks; formal requests reduce performance on agentic benchmarks; verbose requests hurt lexical retriever; indirect and formal requests cause agents to omit required actions
 
 ### [LLM-Driven Multi-Agent Control for Skill-Based Smart Manufacturing](https://arxiv.org/abs/2610.01364)
 
+- summary: This study proposes a solution using LLM-based agents and MCP tool servers to improve the flexibility and reconfigurability of automation systems in factories with high product customization and small lot sizes.
+- methods: simulation, comparative analysis of agent architectures
+- findings: monolithic and peer-to-peer architectures achieve the highest mean solve rate; orchestrator architecture resolves silent conveyor-belt fault; emergent fault-diagnosis behavior without explicit failure-handling logic
+
 ### [Learning to Route in Visual Space via Multi-Step Embedding Retrieval](https://arxiv.org/abs/2609.38743)
+
+- summary: The introduction of VHOP and VHOP-Router improves visual agentic search by transforming a standard embedding model into an autoregressive multi-step retriever, significantly boosting retrieval performance and task success rates.
+- methods: supervised fine-tuning, online imitation learning, reinforcement learning, autoregressive multi-step retrieval
+- findings: VHOP-Router boosts retrieval performance from under 5% to 76.3%; improves task success rates by 52.7%; reduces average token length by 61%
 
 ### [LawCompass: Navigating from Legal QA to Multi-Agent Deep Research with Grounded Evidence](https://arxiv.org/abs/2610.01027)
 
+- summary: This paper presents LawCompass, an evidence-grounded legal assistant that supports complex legal tasks through systematic evidence retrieval, multi-step reasoning, and report-level synthesis.
+- methods: multi-agent workflow, query rewriting, evidence-grounded research
+- findings: LawCompass provides precise, evidence-backed answers to legal questions; LawCompass enables structured exploration of statutes and judicial cases; LawCompass synthesizes comprehensive research reports
+
 ### [KaliBench: A Fine-Grained Benchmark for Cybersecurity Tool Use on Kali Linux with Runtime-Free Verifiable Rewards](https://arxiv.org/abs/2610.02206)
 
+- summary: KaliBench is introduced as a fine-grained benchmark and dataset for natural-language-to-CLI translation on Kali Linux, evaluating the ability of large language models to generate executable commands for real-world cybersecurity tools.
+- methods: benchmarking, dataset construction, supervised fine-tuning, reinforcement learning
+- findings: No open-weight model exceeds 42% exact-command accuracy in the unrestricted setting; Supervised fine-tuning and reinforcement learning with verifiable rewards improve model performance
+
 ### [JevSpawn: Adaptive Agentic Inference through Compositional Action Spaces](https://arxiv.org/abs/2610.00437)
+
+- summary: JevSpawn is introduced, a compositional policy that connects natural language task specifications to finite probabilistic exploration, improving task performance and navigation speed.
+- methods: parallel action spawning, feedback driven branch selection, representation revision, recovery from retained alternatives
+- findings: improved task performance; faster navigation
 
 ### [Is manual software optimization a thing of the past?](https://arxiv.org/abs/2609.37849)
 
 ### [Incident-Arena: Getting agents to the last nine of reliability](https://arxiv.org/abs/2610.00648)
 
+- summary: The authors introduce Incident-Arena, a benchmark for evaluating AI coding agents in production incident response, and demonstrate its effectiveness in testing agentic site-reliability-engineering (SRE) models.
+- methods: benchmarking, verification, functional verifiers
+- findings: Frontier models score below 64.3% across 20 tasks; Failures extend from diagnosis/localization errors to incomplete repairs and unsafe regressions; Agent trials demonstrate agentic long horizon reasoning
+
 ### [GraphMAS: A Systematic Benchmark of Multi-Agent Coordination for Graph Learning](https://arxiv.org/abs/2609.39777)
+
+- summary: This study introduces GraphMAS, a benchmark for evaluating multi-agent coordination in graph learning, and finds that coordinating specialized agents can improve graph learning performance.
+- methods: inter-agent interaction, runtime adaptivity, specialist selection, coordination methods
+- findings: coordinating specialists improves graph learning; heterogeneous graph perspectives are complementary; instance-adaptive specialist selection yields the strongest accuracy-efficiency trade-off
 
 ### [GraphCert: Bootstrap Agentic Graph Reasoning with Certified Evidence Rubrics](https://arxiv.org/abs/2609.38798)
 
+- summary: GraphCert is proposed to bootstrap agentic graph reasoning with certified evidence rubrics during post-training, allowing for the development of compact graph reasoning agents without requiring large collections of question-answer pairs and reasoning trajectories.
+- methods: Bootstrapped Graph Quizzer, execution certification, semantic curation, GRPO training
+- findings: GraphCert outperforms larger LLM agents and post-training methods; learned policy transfers robustly across heterogeneous graph domains
+
 ### [From Given to Gathered Evidence: Agentic Learning for Longitudinal Medical Reasoning](https://arxiv.org/abs/2609.39566)
 
+- summary: The authors propose CASE, a framework for clinical agents that can seek evidence across clinical records and longitudinal imaging, and introduce a longitudinal multimodal benchmark built on UK Biobank.
+- methods: supervised fine-tuning, agentic reinforcement learning, privileged on-policy self-distillation, rubric-based LLM feedback
+- findings: CASE achieves over 16% and 10% relative improvements in answer accuracy over GPT-5.4 and Claude Opus 4.8; CASE moves beyond question-answer imitation toward transferable investigation policies
+
 ### [FORALL-LEAN-AGENT for Auditable Reasoning in Formal Mathematics and Software Verification](https://arxiv.org/abs/2610.00885)
+
+- summary: The FORALL-LEAN-AGENT framework is presented for auditable reasoning in formal mathematics and software verification, improving correctness and efficiency in Lean proof development.
+- methods: isolated workspaces, Lean tools, fresh review, statement comparison, axiom audits, independent proof checking
+- findings: 100% benchmark-rule success on VeriSoftBench subset; reduced cost from $69 to $62; accepted all 672 problems on PutnamBench at an average of $4.72 each
 
 ### [FOCUS: Training-Free Decision-Preserving Context Compression for LLM Agents](https://arxiv.org/abs/2609.37590)
 
 ### [Fewer Tokens, Better Action: GPT-6 Astra Robot Agents with 14% Higher Success Rate but 65% Fewer Tokens](https://arxiv.org/abs/2610.01939)
 
+- summary: PyRUA-Lean, an interactive code-execution framework, improves the efficiency of vision language model agents in controlling robots through visual feedback and action primitives.
+- methods: feedback-driven primitive composition, selective observation, conditional checks, local retries
+- findings: PyRUA-Lean increases overall success from 63.1% to 71.7%; PyRUA-Lean uses 49% fewer LLM calls and 65% fewer input tokens
+
 ### [Explicit Trajectory Diversity for RL-Based Post-Training of LLM Agents](https://arxiv.org/abs/2609.38805)
+
+- summary: This work introduces Trajectory-guided Joint Policy Optimization (TJPO), a framework that optimizes explicit diversity in RL-based post-training for LLMs through user-specified trajectory descriptors.
+- methods: Trajectory-guided Joint Policy Optimization (TJPO), group-based policy optimization, trajectory-level learning signals
+- findings: TJPO improves task-specific trajectory diversity; maintains competitive task performance; learned variation follows specified behavioral dimensions; explicitly shaping trajectory diversity helps LLM agents satisfy user requirements and remain effective under changing task conditions
 
 ### [EvoSteer: Online Self-Evolving Graph Orchestration via Reference-Anchored Credit Assignment](https://arxiv.org/abs/2609.38661)
 
+- summary: The authors propose EvoSteer, a new paradigm of Online Self-Evolving Graph Orchestration that addresses key challenges in existing self-evolving orchestration methods for LLM-based multi-agent systems.
+- methods: Online Self-Evolving Graph Orchestration, regression-style flow-matching loss, Validated Skill Admission
+- findings: EvoSteer significantly outperforms baselines across various tasks; AnchorTB effectively balances subtrajectories against a frozen reference
+
 ### [EvoRiskBench: An Evolving Benchmark for Runtime Security Risks in Workspace Agents](https://arxiv.org/abs/2610.03153)
+
+- summary: EvoRiskBench is introduced as an evolving benchmark to assess the runtime security risks of workspace agents combining large language models with execution harnesses.
+- methods: automated end-to-end workflow, runtime traces, environment states
+- findings: substantial vulnerabilities across systems; 68.44% attack success rate for Codex with DeepSeek-V4-Pro-0813; ASR varies more across models than harnesses
 
 ### [EnterpriseBench: Benchmarking LLM Agents on Enterprise-Level Strategic Reasoning and Decision-Making](https://arxiv.org/abs/2609.37658)
 
+- summary: EnterpriseBench is introduced as a benchmark to evaluate LLM agents in enterprise workflows, covering static question answering to dynamic decision-making.
+- methods: Consulting, Beer Game, Enterprise Digital Twin
+- findings: Current LLM agents lack stable and comprehensive reliability in enterprise scenarios; EnterpriseBench provides a practical benchmark for evaluating LLM agents
+
 ### [EngramBench: A Capability-Grounded Benchmark for Skill-Evolution Harnesses](https://arxiv.org/abs/2609.39284)
+
+- summary: EngramBench is introduced as a benchmark to evaluate the capability abstraction of autonomous agents in software engineering, revealing insights into procedural memory and the importance of genuine capability abstraction.
+- methods: benchmarking, human-expert validation
+- findings: genuine capability abstraction reduces redundant context bloat and coding time; static skill banks serve as an execution compass; base model's inherent reasoning limits bottleneck exact code implementation
 
 ### [EngiWorld: What Can Frontier Agents Deliver in Professional Engineering Environments?](https://arxiv.org/abs/2609.37686)
 
+- summary: The EngiWorld benchmark is introduced to evaluate autonomous agents in professional industrial engineering, revealing a substantial capability gap in current models.
+- methods: artifact-centric evaluation methodology, unified domain-verifier suite
+- findings: The strongest model achieves an EngiScore of only 44.3; Just 3.6% of multi-software attempts succeed
+
 ### [Embodied Semantic Communication for Collective Autonomous Agents: A Tutorial on Representation, Wireless Delivery, and Closed-Loop Coordination](https://arxiv.org/abs/2609.35936)
+
+- summary: This paper proposes embodied semantic communication (ESC) as a paradigm that transforms information transmission into action-oriented semantic interaction for multi-agent collaboration in dynamic physical worlds.
+- methods: semantic information theory, world models, multi-agent decision theory
+- findings: embodied semantic communication (ESC) enables heterogeneous agents to form coordinated actions; ESC characterizes how to encapsulate multimodal perceptual states and collaborative intents into unified actionable semantic representations
 
 ### [E2E-SWE: Benchmarking LLMs on Building Working Codebases from Scratch](https://arxiv.org/abs/2609.38335)
 
+- summary: E2E-SWE is a benchmark for evaluating coding agents' ability to build complete software repositories end to end, containing 186 tasks across 11 programming languages.
+- methods: benchmarking, iterative verification, static inspection, model rollout
+- findings: substantial variation in end-to-end repository generation ability among 13 frontier models; pass@1 ranges from 11.7% to 67.7%; long, front-loaded reasoning patterns required for constructing working codebases
+
 ### [DAGent: Evaluate-then-Grow Planning for Deep Research Agents](https://arxiv.org/abs/2609.39154)
+
+- summary: DAGent, a DAG-based multi-agent framework, is proposed to improve deep research tasks by using Evaluate-then-Grow incremental planning and structural RL signals.
+- methods: Evaluate-then-Grow incremental planning, DAGRPO, GRPO, structural RL signals
+- findings: DAGent surpasses the strongest open-source baseline by 5.3 / 5.8 / 2.0 points; DAGRPO improves over a same-budget outcome-only GRPO baseline by 3.0 average Pass@1 points; evidence-conditioned planning reaches higher accuracy at lower per-task token, tool-call, and step footprints
 
 ### [cua-speedrun: Standardized Benchmarking of the Speed of Computer-Use Agents](https://arxiv.org/abs/2609.40284)
 
+- summary: The proposed cua-speedrun framework addresses the reproducibility crisis in computer use agent benchmarks by introducing standardized infrastructure and task sets to evaluate the speed and efficiency of CUAs.
+- methods: standardized infrastructure, uniform virtual machine setup, execution pipeline, common agent interface
+- findings: no single model family is optimal for all performance metrics; increasing reasoning effort can speed up task completion; faster environment input-output can slow down overall task completion time; evaluation task set can be reduced without degrading statistical power
+
 ### [CreateScore: Domain-Theory-Informed Bayesian Routing for LLM-Based CV Screening](https://arxiv.org/abs/2610.02972)
+
+- summary: CreateScore, a domain-theory-informed Bayesian network, is presented as a cost-reduction mechanism for rubric-based screening of CVs using large language models.
+- methods: Bayesian conditioning, Dirichlet-multinomial conditional probability tables, Model routing
+- findings: Routed escalation reduced token use by 65.2%; Exact score agreement increased from 32.8% to 42.6%; Uncertainty signal did not identify decisions on which the 8B model erred
 
 ### [Consistent Plan-Act for Long-Horizon Agentic Tasks](https://arxiv.org/abs/2609.38891)
 
+- summary: The Consistent Plan-Act (ConPAct) approach improves coordination in long-horizon agentic tasks by addressing planner-actor state mismatch through consistent state interpretations and fine-tuning on curated interactions.
+- methods: programmatic comparison of state assertions, fine-tuning on curated consistent interactions
+- findings: planner-actor state mismatch is a common phenomenon; providing task-relevant state information reduces mismatch and improves coordination; ConPAct improves performance across various environments and model configurations
+
 ### [Concealing LLM-Based Multi-Agent Topology via Phantom Structure Injection](https://arxiv.org/abs/2609.37567)
 
+- summary: MIRAGE is a topology-concealment framework that protects large language model-based multi-agent systems from intellectual property leakage and vulnerability exposure by concealing their genuine communication topology.
+- methods: phantom topology synthesis, semantic edge realization, protected MAS execution
+- findings: MIRAGE reduces the effectiveness of topology inference attacks; MIRAGE preserves the task utility of the protected MAS
+
 ### [CoEvoWhen: Policy-Tool Coevolution for Ultra-Long Video Temporal Grounding](https://arxiv.org/abs/2609.40048)
+
+- summary: A novel policy-tool coevolution framework is proposed to improve ultra-long video temporal grounding by jointly evolving high-level policies and executable media tools from a VLM's agentic reasoning trajectories.
+- methods: policy-tool coevolution, agentic reasoning, skill distillation
+- findings: improved temporal grounding accuracy; reduced visual token cost; substantial performance gains on long-video QA
 
 ### [Coco: An Agentic Copilot for the Hardware--Software Co-Design Lifecycle](https://arxiv.org/abs/2610.02376)
 
 ### [Can AI Scientists Coordinate at Runtime?](https://arxiv.org/abs/2610.00980)
 
+- summary: This study introduces Runtime Agent Coordination (RAC), a method for coordinating AI scientists at runtime, and evaluates its performance across various hosts and conditions.
+- methods: Runtime Agent Coordination (RAC), exploratory evaluation
+- findings: Runtime selection yields the highest observed mean score for each host; Adding contracts and verification reduces mean scores with host-dependent outcomes
+
 ### [Breaking Babel: A Self-Evolving Multi-Agent System for Long-Form Subtitle Translation](https://arxiv.org/abs/2609.38660)
+
+- summary: The authors propose SMART, a Self-evolving Multi-Agent system for long-form subtitle translation, which achieves state-of-the-art results on the Subtitle Arena and MuSC benchmarks.
+- methods: multi-agent systems, dynamic routing, Mixture-of-Agents layer, test-time training, judge-refiner loop
+- findings: SMART achieves the best overall MQM score in all 15 Subtitle Arena directions; SMART reduces average penalty by 6.9% over the strongest competing agent system; SMART obtains the best model result across all 4 language pairs on MuSC; SMART achieves the best result in human evaluation with an overall score of 4.50/5
 
 ### [Beyond Prediction: Steering VLM Agents with Retrospective World Modeling](https://arxiv.org/abs/2609.39101)
 
+- summary: This paper introduces Retrospective World Modeling, a new agent learning paradigm that enables agents to reason backward and estimate the action that most likely caused a given state transition, leading to improved policy robustness and generalization.
+- methods: Retrospective World Modeling, Self-Consistency Reward, reinforcement learning
+- findings: Improved policy robustness; Improved generalization; Physically grounded behaviors
+
 ### [Beyond Final Accuracy: Auditing Communication in LLM Multi-Agent Systems](https://arxiv.org/abs/2610.01042)
+
+- summary: The Independent--Communicate--Revise (ICR) framework is introduced to evaluate multi-agent communication by assessing answer revision following independent reasoning.
+- methods: Independent--Communicate--Revise (ICR) framework, no-message revision control
+- findings: similar aggregate accuracy can conceal different revision behaviors; full reasoning increases correction while reducing preservation; structured verification policy shifts channels toward greater preservation and lower correction
 
 ### [Before Acting, Change the State: Prospective State Intervention for Web Agents under Deceptive Interfaces](https://arxiv.org/abs/2609.34974)
 
+- summary: Veer, an agent-side runtime defense, intervenes on Web state to prevent unauthorized consequences, achieving the highest safe task completion across various evaluation settings.
+- methods: runtime defense, prospective intervention trajectory, runtime grounding and verification, ablation study
+- findings: Veer achieves the highest safe task completion; reduces dark-pattern success to 0.3%; active state intervention provides the largest gain
+
 ### [ASENA: Self-evolving Agents for Embodied Navigation](https://arxiv.org/abs/2609.39207)
+
+- summary: The authors present ASENA, an embodied agent system that connects coding agents to robot sensing and execution, and introduce ASENA-VLN, a monocular navigation policy that achieves state-of-the-art success rates on various benchmarks.
+- methods: supervised execution, persistent experience, vision-language decoder, simulator feedback
+- findings: ASENA-VLN achieves state-of-the-art success rates of 68.7% on R2R and 70.2% on RxR; integration with coding agent improves success rate by 11 percentage points; persistent workspace evolution improves success from 72% to 98% on R2R and from 65% to 89% on RxR
 
 ### [AnthroDial: Benchmarking LLM Anthropomorphism in Autonomous Social Interaction](https://arxiv.org/abs/2609.37853)
 
+- summary: The authors introduce AnthroDial, a unified framework for developing anthropomorphic social agents that can interact autonomously and adapt to evolving contexts and relationships.
+- methods: MindFlow, CAPS-Eval, SEEDS, DiAPO
+- findings: improved interaction autonomy and naturalness; reliability and discriminativeness of CAPS-Eval; effectiveness of the training paradigm
+
 ### [Agents Are Systems, Not Models: Rethinking Agentic Evaluation](https://arxiv.org/abs/2610.01618)
+
+- summary: This study evaluates the performance of a coding agent on a new benchmark of four scientific tasks, investigating the impact of various configuration choices on its success rate, cost, consistency, and robustness.
+- methods: empirical evaluation, benchmarking, trajectory-based taxonomy
+- findings: substantial run-to-run variability; information provided to the agent has the largest effect; configuration choices interact; prompting has little effect on verification behavior
 
 ### [AgentPerfBench: A Benchmarking and Evaluation Suite for Inference Performance of Agentic LLMs](https://arxiv.org/abs/2609.34683)
 
 ### [Agentic Tool-Augmented Reasoning for Explainable Image Forgery Detection](https://arxiv.org/abs/2609.39066)
 
+- summary: The authors propose Agentic Tool-Augmented Reasoning (ATAR), a framework that integrates specialized forensic tools to detect, localize, and explain image forgeries through multi-turn reasoning.
+- methods: Agentic Tool-Augmented Reasoning, Dual-Stream Forensic Reasoning, Forensics Curriculum Learning
+- findings: ATAR achieves 78.5% average image-level F1 on six zero-shot IMDL benchmarks; ATAR surpasses the strongest MLLM baseline by 11.8 percentage points; ATAR produces substantially more faithful and grounded explanations
+
 ### [AgBench: Agentic AI Benchmarks for Personal AI Devices](https://arxiv.org/abs/2609.38652)
+
+- summary: AgBench is a benchmark suite for evaluating agentic AI on personal devices, characterizing trade-offs between local, hybrid, and cloud execution across various workloads and deployment architectures.
+- methods: benchmarking, evaluation, experimentation
+- findings: personal AI devices can complete many agent tasks locally; local-only execution has lower task success and longer completion times than cloud-only execution; hybrid execution can improve task success but increases cloud cost and data exposure
 
 ### [ActionGuard: Tool Call Authorization under Poisoned Skills](https://arxiv.org/abs/2609.39450)
 
+- summary: This paper presents ActionGuard, a system that inspects and authorizes Tool Calls to prevent malicious instructions inserted into third-party skills from causing harm.
+- methods: execution-boundary authorization, balanced skill profile analysis
+- findings: ActionGuard reduced Attack Success Rate by 35.54 to 46.11 percent relative to existing safeguards; ActionGuard maintained high benign-task completion
+
 ### [Action-Space Shaping for LLM Agents: Measuring and Mitigating Tool-Schema Bias](https://arxiv.org/abs/2609.34971)
+
+- summary: Large Language Models exhibit schema bias, performing inconsistently across functionally equivalent tool definitions, and this bias is substantial even in the newest models.
+- methods: executable transformation framework, evaluation of LLMs on schema variants
+- findings: schema bias is substantial in LLMs; success rates vary greatly depending on the schema; training repairs schema bias only when the variant appears in the training data
 
 ### [A Competing-Hazards Systematization of Loss of Control in Autonomous Agents](https://arxiv.org/abs/2609.38411)
 
@@ -980,171 +2516,460 @@
 
 ### [When Successful Strategies Fail: Adaptation to Environmental Novelty in Terminal Agents](https://arxiv.org/abs/2609.33870)
 
+- summary: This study introduces AGNI, a pipeline that tests the adaptation capability of LLM agents to environmental novelty, revealing a substantial adaptation gap between base and novel tasks.
+- methods: trajectory analysis, post-training for environmental novelty
+- findings: substantial adaptation gap between base and novel tasks; agents often fail to diagnose the cause of environmental change and revise their strategy; post-training for environmental novelty improves adaptation to novel tasks and performance on base tasks
+
 ### [When Do Agents Help? Embedding, LLM and Agentic Alignment of Classical Texts and Their Translations](https://arxiv.org/abs/2609.33691)
 
 ### [What Happens During Autonomous Deep Research After the User Steps Away?](https://arxiv.org/abs/2609.33509)
 
+- summary: This study examines how initial user information influences the actions and final recommendations of autonomous deep research agents.
+- methods: counterfactual behavioral evaluation, source-grounded extraction, blinded local judgments, deterministic aggregation
+- findings: strong user-specific delivery can emerge from a largely shared research process; final recommendations distinguish user conditions more clearly than explicit requests; reports can integrate user factors not jointly visible during acquisition
+
 ### [What Does a Skill Actually Do? Estimands and Evaluation Validity for Tool and Skill Use in LLM Agents: A Critical Review](https://arxiv.org/abs/2609.33153)
+
+- summary: This narrative review examines the evaluation designs of large language model agents and their conclusions, providing a methodological synthesis and reporting checklist to align claims with supported comparisons.
+- methods: narrative review, analytic decompositions, counterexamples
+- findings: pairing runs on the same task does not identify an invocation effect; comparisons across studies distinguish curated skill provision from retriever replacement
 
 ### [Vestrum: Improving Agent Harnesses by Adapting Their Verification, Structure and Memory](https://arxiv.org/abs/2609.33822)
 
+- summary: Vestrum, a framework, improves agent harness controls by turning failures in execution traces into scoped harness changes without training the task model, resulting in improved performance across various settings and benchmarks.
+- methods: Vestrum framework, failure analysis, scoped harness changes, verification, retrieval, decomposition, knowledge synthesis
+- findings: Improved held-out performance across five settings and two baseline harnesses; Verification grounded in evidence helped both intermediate steps and final answers; Vestrum scores above GEPA configurations in every paired evaluation on memory benchmarks
+
 ### [UOPD: Uncertainty-Aware Intervention for On-Policy Distillation of Multi-Turn Agents](https://arxiv.org/abs/2609.34036)
+
+- summary: The authors propose UOPD, an uncertainty-aware intervention method for on-policy distillation, which improves student behavior and task success by selectively intervening at high-uncertainty steps.
+- methods: on-policy distillation, uncertainty-aware intervention, supervised fine-tuning
+- findings: UOPD improves subsequent student behavior and task success; UOPD outperforms OPD methods and their variants; UOPD improves WebShop score by up to 15.8% relative to standard OPD
 
 ### [Trajectory Unlearning on LLM-based Agents](https://arxiv.org/abs/2609.33639)
 
+- summary: This work introduces trajectory-level unlearning, a new problem formulation that targets the removal of specific action trajectories in long-horizon agentic tasks, and proposes Group-injected Relative Policy Optimization (GiRPO) to address this problem.
+- methods: Group-injected Relative Policy Optimization (GiRPO), policy rollout group, penalized rewards
+- findings: GiRPO effectively unlearns target trajectories while preserving task success rates; GiRPO outperforms existing knowledge-unlearning baselines on both forgetting quality and task utility
+
 ### [TraceDance: An Automated System for Building Agent Behavior Benchmarks from Real-World Agent Deployment Traces](https://arxiv.org/abs/2609.33295)
+
+- summary: TraceDance is an agent system that constructs targeted benchmarks from deployment traces for user-specified undesirable behaviors, allowing for more efficient evaluation of large language models.
+- methods: Anchor-and-Confirm, Anchor Synthesis Loop, decision-point continuation
+- findings: LLMs struggle to respond appropriately at evaluated decision points; TraceDance can produce high-quality benchmarks with high accuracy
 
 ### [SWE-Game: Can Coding Agents Build the Games We Want?](https://arxiv.org/abs/2609.33678)
 
+- summary: The SWE-Game benchmark evaluates the performance of models in various game development tasks, with Opus5 achieving the highest overall score across five task types.
+- methods: engine-state checks, certified reference-input replay, agent-authored feature demonstrations, game-specific vision-language rubrics
+- findings: Opus5 achieves the highest overall score in all five task types; Best overall scores remain below 60 out of 100 across the three construction tasks; Executable checks achieve 92.59% balanced accuracy; Rubric-based visual scores reach a Spearman correlation of 0.829 with human ratings
+
 ### [Skill2Env: Capability-Oriented Environment Synthesis from Skills for General Agents](https://arxiv.org/abs/2609.33772)
+
+- summary: The authors introduce Skill2Env, a framework for synthesizing executable environments from skills, and demonstrate its effectiveness in improving agent post-training through supervised fine-tuning.
+- methods: capability-oriented framework, Iterative Task Hardening, supervised fine-tuning
+- findings: consistent improvements across agent benchmarks; effectiveness of capability-oriented environment synthesis
 
 ### [SINGED: Correct Outputs Do Not Certify Safe Execution in LLM Agents](https://arxiv.org/abs/2609.35889)
 
 ### [Self-Designed Evaluators and Warm Memory for Long-Horizon Agents](https://arxiv.org/abs/2609.33717)
 
+- summary: SelfSuite, a tool-using language-model agent, is presented as a solution to improve task performance without rewards or labels, by designing its own evaluation suite and using it to gate retries and label experiences.
+- methods: SelfSuite, Agentic Context Engineering (ACE)
+- findings: SelfSuite scores above plain agent without labels; SelfSuite matches methods given ten expert labels on tau2-bench; Gated second attempt is crucial for SelfSuite's performance
+
 ### [SecProbe: Adaptive Evaluation of Coding Agents on Cybersecurity Vulnerabilities](https://arxiv.org/abs/2609.33763)
+
+- summary: The SecProbe framework is introduced for adaptive evaluation of cybersecurity vulnerability awareness in coding agents, combining Item Response Theory with on-demand synthesis of repository-scale vulnerability-repair tasks.
+- methods: Item Response Theory, on-demand synthesis of repository-scale vulnerability-repair tasks, adaptive evaluation
+- findings: substantial gaps in vulnerability recognition and repair; SecProbe achieves comparable agent ability estimates while requiring agents to solve up to 29.5% fewer tasks
 
 ### [Robust Hierarchical Structures for Agentic Document Analysis](https://arxiv.org/abs/2609.33322)
 
+- summary: The authors propose SHED, a two-stage workflow for inferring a robust and compact structure from text documents, which improves efficiency and effectiveness for agents and humans.
+- methods: two-stage workflow, pluggable approaches
+- findings: SHED improves F-1 scores by 13%-68% over non-LLM baselines; SHED improves F-1 scores by 9%-15% over expensive LLM-based approaches; SHED-inferred structures achieve 3%-23% higher accuracy while being up to 10x cheaper
+
 ### [RICE-Alpha: Reliability-Informed Correction with Event Graphs for LLM-Agent Stock Forecasting](https://arxiv.org/abs/2609.34004)
+
+- summary: RICE-Alpha, a point-in-time stock-scoring framework, outperforms existing LLM-based financial agents by incorporating historical event continuation and reliability calibration into its predictions.
+- methods: Multi-Tier Memory Layer, Typed Event Agent, reliability calibration, residual correction
+- findings: RICE-Alpha achieves the strongest results among evaluated LLM-based agents; ICIR more than doubles that of the strongest baseline; net Sharpe ratios reach 1.656 and 1.725 in the U.S. and Hong Kong
 
 ### [Raven: The Harness of Harnesses for Composable Agentic Intelligence](https://arxiv.org/abs/2609.33439)
 
+- summary: Raven, an open-source multi-agent ecosystem, is introduced to autonomously construct and evolve modular harnesses for specific models and domains, enabling composable agentic intelligence.
+- methods: modular harness construction, experience-based improvement, orchestration across domains
+- findings: Raven outperforms state-of-the-art agent systems on complex tasks; composition expands reliable task coverage beyond individual agents
+
 ### [RAISE: Reinforcing Access Control Policy Synthesis in LLMs via Symbolic Evaluation](https://arxiv.org/abs/2609.33796)
+
+- summary: The authors introduce CedarInstruct, a dataset for formally verifiable Cedar policy synthesis, and RAISE, a two-stage training method that improves policy synthesizers using formal verification and reinforcement learning.
+- methods: verified supervised fine-tuning, reinforcement learning, off-context GRPO
+- findings: RAISE-OC improves meaningfully on SFT; RAISE-OC surpasses zero-shot GPT-6 Astra and Claude Opus 5 by 13.33 and 16.26 percentage points in semantic success
 
 ### [R$^2$ Flow: Recursive Self-Improvement via Recursive Skill Evolution](https://arxiv.org/abs/2609.33867)
 
+- summary: R$^2$ Flow is a recursive self-improvement framework that enables LLM-based agents to improve themselves across tasks by reusing and revising skills through flow-based training and versioned skill-library updates.
+- methods: flow-based training, policy learning, independent verification, versioned skill-library updates
+- findings: R$^2$ Flow improves task accuracy and library-edit precision over baselines; R$^2$ Flow enables recursive skill evolution; R$^2$ Flow transfers across executors
+
 ### [QwenGyre: An Elastic Reinforcement Learning Framework for Training xLong-Horizon Agents](https://arxiv.org/abs/2609.33848)
+
+- summary: QwenGyre, an end-to-end framework for extreme-long horizon online reinforcement learning, addresses execution variance and trajectory redundancy challenges, achieving significant performance gains and speedups.
+- methods: online reinforcement learning, elastic GPU reallocation, trajectory processing
+- findings: 6.0% absolute gain on NL2RepoBench; up to 1.85x and 1.78x speedups over Colocate and Async
 
 ### [Quantifying Behavioral Tails in Black-Box Language Models](https://arxiv.org/abs/2609.33638)
 
+- summary: RareTrap is a framework for estimating the probability of severe behaviors in black box large language models by inducing a tractable distribution over the input space.
+- methods: surrogate LLM, geometry-aware mapping, sequential rare event simulation
+- findings: RareTrap successfully induces severe resource consumption behaviors with few evaluations; RareTrap computes probability with as few as 200 evaluations
+
 ### [Prospective Interpretation Risk: Principled Communication Control Between LLMs](https://arxiv.org/abs/2609.33885)
+
+- summary: This study introduces a framework to estimate the uncertainty of message interpretation in large language model agentic systems, allowing for more effective communication between models.
+- methods: prospective interpretation risk, black-box probes, receiver-conditioned risk, value of interpretation information
+- findings: interpretation-failure rates vary by 4-13x across receivers; receiver information reduces PIR calibration error by 68%; PIR-guided revision reduces interpretation failure by 44%
 
 ### [Population Physics, Population Problems: Safety and Emergence in LLM Societies](https://arxiv.org/abs/2609.33871)
 
 ### [ParaAgent: Reinforcing Parallel Acting in Open-World Tool Environments](https://arxiv.org/abs/2609.33618)
 
+- summary: The authors introduce ParaAct, a structured parallel-action loop that coordinates exploration and execution in open-world tool environments, and ParaAgent, which learns this loop through multi-agent demonstrations and reinforcement learning.
+- methods: reinforcement learning, multi-agent cold-start demonstrations, multi-level advantage decoupling
+- findings: ParaAgent-4B achieves the best average success on open-world tool benchmarks; gains stem from action organization
+
 ### [OpenFC: Learning Verification Policies towards Open-Search Fact Checking](https://arxiv.org/abs/2609.33579)
+
+- summary: OpenFC is a unified verification-policy training framework for open-search fact checking that achieves state-of-the-art results on six benchmarks.
+- methods: Stepwise-Calibrated Cold Start (SCCS), Verification-Aware Reinforcement Learning (VA-RL)
+- findings: OpenFC achieves 70.39% average accuracy and 63.30% macro-F1 on six fact-checking benchmarks; SCCS and VA-RL provide complementary gains
 
 ### [On Device Agentic Operation Caches -- Classifier-Centric NL-to-Action Generation](https://arxiv.org/abs/2609.33141)
 
 ### [NLPG: Natural-Language Policy Gradients for Self-Evolving Language Agents](https://arxiv.org/abs/2609.33379)
 
+- summary: The Natural-Language Policy Gradients (NLPG) method is proposed to improve a fixed language model agent without changing its model parameters or program structure by diagnosing execution traces and converting failures into natural-language corrections.
+- methods: reinforcement-learning, prompt-optimization, Natural-Language Policy Gradients (NLPG)
+- findings: NLPG outperforms strongest baselines by 8.71 percentage points on average across six benchmarks; evaluated procedural experience can be transformed into local and interpretable policy updates
+
 ### [Maat: Independent Deterministic Contract-Based Governance for Multi-Agent LLM Workflows](https://arxiv.org/abs/2609.34017)
+
+- summary: The Maat runtime governance layer validates agent-to-agent handoffs against a versioned workflow contract to prevent contract-detectable handoff defects in large-language-model multi-agent systems.
+- methods: runtime governance, deterministic handoff validation, versioned workflow contract
+- findings: deterministic handoff validation can prevent contract-detectable handoff defects; validator configuration and halt attribution must be tested; gains in defect prevention reported in six controlled domain workflows
 
 ### [Long-Horizon Analog Design Bench: Benchmarking Agents on Hours-Long Analog and Mixed-Signal Circuit Design Tasks](https://arxiv.org/abs/2609.33356)
 
+- summary: The Analog Design Bench benchmark evaluates the ability of coding agents to design long-horizon analog and mixed-signal circuits, with results showing varying performance across different agent configurations and interventions.
+- methods: benchmarking, simulation, specification-based electrical tests
+- findings: Full-specification pass rates range from 8.0% to 78.0%; Electrical closure is the dominant endpoint challenge; Longer budgets and higher reasoning effort improve performance
+
 ### [LLMs Trust Their Own: Identity-Dependent Conformity in Multi-Agent Systems](https://arxiv.org/abs/2609.33495)
+
+- summary: Researchers investigate how large language models' responses are influenced by the social identity of other agents in multi-agent settings, finding a bidirectional effect of group identity on conformity to incorrect answers.
+- methods: judgment tasks, Chain-of-Thought reasoning
+- findings: in-group consensus increases conformity; out-group consensus decreases conformity; in-group ally reduces conformity to incorrect out-group majority
 
 ### [LiveOption: Evaluating LLM Agents in Structured Option Trading with Nonlinear Payoffs](https://arxiv.org/abs/2609.33470)
 
+- summary: The LiveOption framework is introduced for evaluating large language models in option trading, providing a structured sequential decision-making environment with realistic constraints and a hierarchical metric suite.
+- methods: structured sequential decision-making, hierarchical metric suite
+- findings: current agents often fail to achieve competitive returns in most scenarios
+
 ### [LiteEvo: Automated, Cost-Efficient Harness Evolution for Generalization to Unseen Tasks](https://arxiv.org/abs/2609.33146)
+
+- summary: LiteEvo, a lightweight harness-evolution algorithm, is proposed to automatically evolve harnesses for LLM agents, achieving comparable or higher performance than HarnessX at lower cost.
+- methods: harness-evolution algorithm, meta-agents, versioned library, composition of harness
+- findings: LiteEvo lifts pass@2 by 10.5 to 67.7pp; LiteEvo reaches comparable or higher pass@2 than HarnessX at 13.0 lower mean API cost; Harnesses evolved on train tasks keep their gains on unseen test tasks
 
 ### [Learning to Sell: Reinforcement Learning for Strategic Large Language Model Agents in Multi-Product Markets](https://arxiv.org/abs/2609.33289)
 
+- summary: This study develops a machine learning approach for training autonomous large language model agents to act effectively as sellers in a multi-item bargaining environment.
+- methods: machine learning, Reinforcement Learning from Verifiable Rewards, Partially Observable Markov Decision Process
+- findings: trained seller agent matches or outperforms trillion-parameter frontier models in seller surplus extraction and buyer-product allocation quality; learned strategies generalize to unseen market structures and valuation distributions
+
 ### [Learning Strategies to Break Judges](https://arxiv.org/abs/2609.33773)
+
+- summary: This work proposes an agent-guided method to find weaknesses of agentic judges that expose interpretable failure mechanisms in evaluating mathematical reasoning.
+- methods: adversarial agents, mutation strategies, mathematical reasoning
+- findings: agentic judges can be bypassed by distilled mutation strategies; judge reliability degrades at the frontier of complex mathematical texts
 
 ### [Identical Runs, Different Results: Benchmarking AI Coding Agents on Open-Weight Models](https://arxiv.org/abs/2609.33812)
 
 ### [HyperMCTS: Hypergraph-Augmented MCTS for Long-Horizon LLM Agents](https://arxiv.org/abs/2609.33920)
 
+- summary: HyperMCTS, a training-free method, improves long-horizon task planning by augmenting Monte Carlo Tree Search with a cross-trajectory hypergraph to reuse trajectory feedback effectively.
+- methods: HyperMCTS, Monte Carlo Tree Search, HyperUCT selection rule
+- findings: HyperMCTS improves average planning accuracy by 2.3-7.3 percentage points over the strongest baseline; HyperMCTS enables Qwen3.6-27B to outperform Claude Opus 4.6 on Shopping Planning; HyperMCTS achieves higher accuracy with fewer LLM calls and output tokens than MCTS-based baselines
+
 ### [HTN Planning as a Coordination Layer for Multi-Server MCP Tool Orchestration](https://arxiv.org/abs/2609.33731)
+
+- summary: The authors present a coordination architecture that enables deterministic and reproducible cross-server workflows in the Model Context Protocol (MCP) by using a Hierarchical Task Network (HTN) planner and runtime middleware.
+- methods: Hierarchical Task Network (HTN) planning, template mechanism, JSON-path output extractors
+- findings: enables deterministic and reproducible cross-server workflows; supports end-to-end execution from a browser-based plan controller; works with live third-party MCP servers and real biological databases
 
 ### [Evidence-Inference Reconstruction: When The Evidence Is Recalled But The Reasoning Goes Wrong](https://arxiv.org/abs/2609.33778)
 
+- summary: This paper introduces Evidence-Inference Reconstruction (EIR), a method that improves answer accuracy in multi-hop LLM agents while reducing computational cost by separating evidence retrieval from the final answer model call.
+
+- methods: Evidence-Inference Reconstruction (EIR)
+- findings: EIR improves Answer F1 by 8.3-32.8 points over the baseline; EIR reduces total model calls per question to 4.85 on average
+
 ### [EfficientAgent: What Makes KV Cache Offloading Work for Concurrent Agents?](https://arxiv.org/abs/2609.33762)
+
+- summary: EfficientAgent is presented, which sizes and manages the host tier to improve the performance of LLM agents by reducing recomputation and optimizing offloading to host memory.
+- methods: stack-distance model, runtime policy, offloading
+- findings: 93% reduction in recomputed prompt tokens; 39% reduction in end-to-end time; offloading pays off when GPU has little compute per byte of host bandwidth
 
 ### [ECG-Scroll: A Long-Horizon, Streaming Benchmark and Agent Environment for Interpretation of Ambulatory Electrocardiograms](https://arxiv.org/abs/2609.33117)
 
 ### [DISCO: Distributed Long Context Scaling with Grounding-Reasoning Disaggregation](https://arxiv.org/abs/2609.33485)
 
+- summary: The proposed DISCO approach resolves the context rot issue in Large Language Models by partitioning long context across a fleet of Worker LLMs for parallel grounding, achieving improved accuracy and efficiency.
+- methods: Grounding-Reasoning Disaggregation, Distributed long COntext scaling, Reinforcement Learning, GRPO
+- findings: DISCO eliminates context rot; 78.4% accuracy on RULER-QA; outperforms full-context models by up to 9.8 points on LongBench v2; reduces inference costs by over 80%
+
 ### [DISCERN: Can AI Agents Work Like Scientists and Guide Discovery?](https://arxiv.org/abs/2609.33357)
 
 ### [Designing Reliable LLM-as-a-Judge Measurement Systems for Multi-Turn Business Agents](https://arxiv.org/abs/2609.33955)
 
+- summary: The authors present a methodology for evaluating multi-turn business agents using large language models (LLMs) as judges, incorporating modular judges, user simulation, and human-in-the-loop governance to improve measurement reliability and actionability.
+- methods: modular LLM judges, intent-preserving user simulation, human-in-the-loop governance
+- findings: system-level fidelity improved across repeated audits; human reviewers and automated judges improved together under shared feedback loop; combined workflow had strongest descriptive performance
+
 ### [DEALS: Decentralized Expertise-Aware Load Serving for Multi-Agent LLM Systems](https://arxiv.org/abs/2609.33768)
+
+- summary: The authors propose Decentralized Expertise-Aware Load Serving (DEALS), a decentralized framework for multi-agent systems to self-organize and dynamically route tasks for efficient processing.
+- methods: decentralized coordination, dynamic task routing, self-organization
+- findings: improved performance in answer accuracy and task throughput; balanced agent expertise and workload; effective decentralized coordination
 
 ### [CompoWorld: Compositional Environment Scaling for General Agents](https://arxiv.org/abs/2609.33665)
 
+- summary: Compositional Environment Scaling (CompoWorld) is introduced, which generates tasks by composing a library of reusable services to train general agents.
+- methods: supervised fine-tuning, reinforcement learning, Completion-Focused Rubric Reward
+- findings: CompoWorld improves on its backbone by 9.17 points on average across eight benchmarks; CompoWorld surpasses frontier models on AutomationBench
+
 ### [CodeSkill: Latent Skill Abstraction for Long-Horizon Code Agents](https://arxiv.org/abs/2609.33243)
+
+- summary: CodeSkill, a framework that adapts hierarchical latent skill modeling to the code agent domain, improves optimization efficiency and long-horizon behavioral coherence in code generation tasks.
+- methods: hierarchical latent skill modeling, temporal variational inference, reinforcement learning, adaptive boundary mechanism
+- findings: improved optimization efficiency; long-horizon behavioral coherence; strong transferability; robust cross-domain generalization
 
 ### [CodeActionBench: Evaluating Agentic Code-as-Policy for Embodied Manipulation](https://arxiv.org/abs/2609.33807)
 
+- summary: CodeActionBench is a benchmark that evaluates the ability of general-purpose multimodal models to turn visual understanding and reasoning into embodied manipulation via executable code.
+- methods: agentic Code-as-Policy, evaluations across models and harness configurations
+- findings: success rates ranging from 2.7% to 73.3%; GPT-6 Astra with Codex CLI solves 22 of 25 tasks at least once in three attempts; difficulties in spatial alignment, object retention, and completion judgment
+
 ### [Climbing the Hill: Prompt Injection Red-Teaming Against Frontier Models with Curriculum Reinforcement Learning](https://arxiv.org/abs/2609.33628)
+
+- summary: This work proposes a curriculum learning-based method to address the cold-start problem in red-teaming for large language models (LLMs) using reinforcement learning.
+- methods: curriculum learning, reinforcement learning
+- findings: the proposed method achieves an attack success rate of 93.8% and 45.0% against GPT-5.6-Luna and GPT-5.6-Terra; the attacker LLM transfers across targets
 
 ### [Beyond Solo and Consistency: Vindicating Multi-Agent Debate via Conditional Progressive Pruning](https://arxiv.org/abs/2609.33974)
 
+- summary: The authors propose Conditional Progressive Pruning (CPP), a lightweight pruning framework that improves the performance of Multi-Agent Debate (MAD) frameworks.
+- methods: Conditional Progressive Pruning (CPP)
+- findings: CPP outperforms existing MAD frameworks on multiple benchmarks; CPP outperforms consistency methods
+
 ### [Auditing Agent Actions through Query-Conditioned Attribution](https://arxiv.org/abs/2609.33676)
+
+- summary: The authors propose a new task, query-conditioned agent action attribution, to automatically attribute realized actions to their historical basis, and introduce a benchmark and a model to achieve this task efficiently.
+- methods: query-conditioned gradient saliency, query-semantic relevance, proposer ensemble
+- findings: improves source MRR by up to 40.9%; improves evidence MAP by 42.1%; reduces empirical deployment latency by 29.9%
 
 ### [API Secrets Should Never Become Tokens in the LLM's Vocabulary: A Threat Analysis of API Credential Handling in LLM Agent Systems and an Empirical Evaluation of a Vault-Mediated Execution Boundary](https://arxiv.org/abs/2609.33371)
 
+- summary: This paper formalizes the credential-exposure threat chain for agentic systems and proposes a vault-mediated execution architecture to mitigate it.
+- methods: controlled black-box experiments, security evaluation
+- findings: vault mediation removes several disclosure paths; centralized custody does not guarantee correct configuration; least privilege and other security measures are still required
+
 ### [APEX: An Extensible Model for Agent-Assisted Production Scheduling](https://arxiv.org/abs/2609.33430)
+
+- summary: The authors present APEX, a production scheduling framework that combines a general model with hybrid multiobjective search and agent assistance for scheduling and model refinement.
+- methods: hybrid multiobjective search, agent assistance, data integration, model adaptation
+- findings: Hybrid configurations achieve the best aggregate solution quality; The leading method depends on the problem class and objective; All 24 sessions completed the requested changes and passed independent checks
 
 ### [ANTMAN: Adaptive Need Tracking for Multi-Agent Navigation in Large Information Spaces](https://arxiv.org/abs/2609.33326)
 
 ### [Agentic Multi-Turn Reasoning: A Fairness Approach](https://arxiv.org/abs/2609.33323)
 
+- summary: This paper proposes Fair Multi-Level Preference Optimization, a new framework for agentic learning that addresses long-horizon credit assignment and imbalanced data distributions.
+- methods: Fair Multi-Level Preference Optimization, Multi-Level Preference Optimization
+- findings: addresses long-horizon reasoning; addresses data imbalance; achieves State-of-the-Art performance
+
 ### [AgentBoundary: Counterfactual Evaluation of Safety in Tool-Using LLM Agents](https://arxiv.org/abs/2609.33658)
+
+- summary: The AgentBound framework is introduced to address the challenge of safety alignment for large language models in agentic settings, enabling controlled comparisons of risky-looking but authorized tasks and routine-looking but unauthorized tasks.
+- methods: counterfactual generation-and-evaluation, runtime calibration
+- findings: high safety frequently coexists with poor authorized-task completion; effective agentic alignment requires action decisions to track permission-relevant execution evidence
 
 ## 2026 W38 (arxiv)
 
 ### [Where Should Agents Live? Energy-Memory Characterization of Agentic AI for the Edge-Cloud Continuum](https://arxiv.org/abs/2609.18283)
 
+- summary: The authors introduce agentic-eCAL, a metric that generalizes the Energy Cost of AI Lifecycle to directed multi-agent workflows, to address the gap in evaluating energy costs of distributed agent communication in telecommunication networks.
+- methods: benchmarking, metric development, workflow placement study
+- findings: inter-agent text transport incurs 0.25% of workflow energy; dominant energy cost of distribution is often not the transmission of inter-agent text itself, but the additional inference and context processing induced by that communication
+
 ### [When Better Turns Do Not Make Better Agents: Diagnosing the Gap Between Next-Turn Metrics and Workflow Success](https://arxiv.org/abs/2609.21187)
+
+- summary: Evaluating agent models under a next-turn protocol does not reliably predict improved autonomous workflow execution, despite showing improvements in text-turn success and next-turn success.
+- methods: supervised fine-tuning, gold-history evaluation, autonomous workflow execution
+- findings: SFT improves text-turn success; improvements do not transfer to autonomous workflow execution; next-turn evaluation is not a reliable proxy for workflow success
 
 ### [WFM: Wiki Foundation Model for Complex Agentic Reasoning](https://arxiv.org/abs/2609.18182)
 
+- summary: The authors propose a novel paradigm called Wiki Foundation Model (WFM) for scalable, agent-native representation and retrieval, which achieves remarkable performance and training acceleration on distributed clusters.
+- methods: query-conditioned attentive aggregation, NCCL boundary exchange protocol, GPU-to-GPU collectives
+- findings: WFM achieves 10.5 times training acceleration on distributed clusters; WFM demonstrates remarkable performance across five long-term agent memory and multi-hop reasoning benchmarks
+
 ### [Vulnerability Localization Benchmark: Measuring Agentic Security Analysis at Repository Scale](https://arxiv.org/abs/2609.15939)
+
+- summary: The study introduces the Vulnerability Localization Benchmark to evaluate language-model agents' ability to locate relevant code associated with a given weakness class in unfamiliar software repositories.
+- methods: benchmarking, evaluation of language models and static-analysis tools
+- findings: repository-scale vulnerability localization is difficult; stronger localization does not imply reliable behavior after remediation
 
 ### [VideoResearcher: Self-Improving Tool Design for Long-Video Understanding](https://arxiv.org/abs/2609.19664)
 
+- summary: VideoResearcher, a training-free multi-agent framework, autonomously designs, tests, and refines tools for video understanding, achieving state-of-the-art performance among self-improving agents.
+- methods: dual Solving and Evolving loops, iterative tool refinement and validation, autonomous tool development
+- findings: achieves state-of-the-art performance among self-improving agents; approaches the human-designed upper bound; expands agent capabilities through autonomous tool development
+
 ### [Verify, Don't Trust: Agentic Model Development for Video Discovery Retrieval at Scale](https://arxiv.org/abs/2609.21257)
+
+- summary: EvoPilot, a human-gated method for long-horizon online autoresearch, is presented as a solution to support valid conclusions in online autoresearch campaigns through durable records, deterministic checks, and role-specific agents.
+- methods: human-gated method, versioned domain skill, typed adapter, durable records, deterministic checks
+- findings: Offline improvement of 3.20 percentage points; Relative increase of 0.66% in Good Search Result Rate for Retention; Invalid conclusions can be traced to pre-existing evaluation defects
 
 ### [V-ICAL Bench: Evaluating Video In-Context Learning for Multimodal Agents in Interactive Environments](https://arxiv.org/abs/2609.15683)
 
+- summary: V-ICAL, a novel benchmark, evaluates video-based In-Context Learning for multimodal agents and reveals significant limitations in current state-of-the-art models.
+- methods: benchmark evaluation, controlled comparisons
+- findings: current multimodal agents struggle to translate video exemplars into effective policies; significant performance gap between current models and human baseline
+
 ### [Universal Defenses for Tool-Integrated LLM Agents Against Adversarial Attacks](https://arxiv.org/abs/2609.16098)
+
+- summary: This work explores practical defense strategies against adversarial attacks on Large Language Model agents integrated with external tools, introducing two universal tool-based defenses and prompt-based defenses that significantly reduce attack success rates.
+- methods: Attacker Tool Filtering, Normal Tool Recalling, Chain-of-Thought prompting, self-reflection techniques, task paraphrasing
+- findings: significant reduction in Attack Success Rates; preservation or improvement of original task success rate; effectiveness of multi-layered defenses
 
 ### [UnifiedPlayers: Enhance Tool-Integrated Reasoning in Agentic Reinforcement Learning](https://arxiv.org/abs/2609.20089)
 
+- summary: The UnifiedPlayers framework jointly adapts planning, execution, and evaluation to improve self-evolving methods for tool-using agents, outperforming prior baselines on reasoning benchmarks.
+- methods: cooperative framework, role-specific rewards, GRPO
+- findings: outperforms prior baseline by at least 3.5% on mathematical reasoning and 3.9% on general reasoning tasks; learned verifier achieves 84.2% adversarial detection accuracy; reward signal exhibits 2.03x higher per-question variance than self-consistency baseline
+
 ### [TuiML: Machine Learning for AI Agents](https://arxiv.org/abs/2609.17984)
 
+- summary: TuiML is a self-contained machine-learning library designed for AI agents, providing native algorithms and machine-readable metadata for autonomous machine learning.
+- methods: API design, metadata description, workflow composition, benchmarking
+- findings: TuiML remains predictively competitive with scikit-learn and Weka; TuiML allows agents to read, extend, and operate machine learning autonomously
+
 ### [TrialAtlas: Multi-Agent Research Organization for Clinical Trial Design and Optimization](https://arxiv.org/abs/2609.21859)
+
+- summary: TrialAtlas, a memory-augmented multi-agent research organization, is introduced to improve clinical development planning by coordinating specialized agents and learning from historical clinical trials and regulatory outcomes.
+- methods: literature synthesis, competitive trial intelligence, regulatory precedent analysis, integrated reasoning
+- findings: TrialAtlas achieves 50.0% F1 score for deficiency detection; TrialAtlas reaches 85.3% balanced accuracy and 84.7% F1 for prediction of technical and regulatory success; 86.4% of TrialAtlas-generated concerns were judged valid by experts
 
 ### [The Missing "I Don't Know": Why Three Reasoning-Reliability Findings Converge on Calibrated Abstention](https://arxiv.org/abs/2609.17686)
 
 ### [Spurious Tool Use: When RL Agents Learn the Wrong Reason to Act](https://arxiv.org/abs/2609.16268)
 
+- summary: This work studies when and why reinforcement learning-trained large language model agents learn shortcut tool-selection policies and proposes a tool-necessity reward to mitigate these failures.
+- methods: reinforcement learning, counterfactual evaluations, swapped-cue analysis
+- findings: RL-trained agents exhibit substantial shortcut behavior; shortcut formation arises only when the agent has already learned to use the target tool reliably; semantic alignment between cues and tools amplifies shortcut learning
+
 ### [SpecOpt: Contact-Diff Reasoning for Agentic Molecule Optimization Toward Binding Specificity](https://arxiv.org/abs/2609.21165)
+
+- summary: The study introduces specificity optimization (SpecOpt), a molecular design task that aims to improve the selectivity of existing drugs by making constrained structural modifications.
+- methods: structure-based molecular design, agentic framework, docking, large language model
+- findings: SpecOpt improves target-off-target binding gap for 84.8% of compounds; residue-aware differential interactions are an effective signal for improving specificity
 
 ### [SoL-Pi: Recursively Scaling Auto-Research Loops for Efficient Agent Harness](https://arxiv.org/abs/2609.20519)
 
 ### [SoK: Trading Agents or Market Crashers? Dissecting Robustness and Security Failures in Academic Financial LLM Trading Schemes](https://arxiv.org/abs/2609.19705)
 
+- summary: The FARSIGHT framework evaluates the robustness and security of financial large language model agents, revealing significant vulnerabilities in 15 representative academic schemes.
+- methods: scheme-level evaluation, robustness testing, security testing
+- findings: 80% of schemes fail at least one core robustness metric; 100% of schemes exhibit security vulnerabilities; robustness and security failures are inseparable
+
 ### [SkillIR: Evolving Scene-Aware Skills for Agentic Image Restoration](https://arxiv.org/abs/2609.21468)
+
+- summary: This paper proposes SkillIR, a skill-guided framework for agentic image restoration that adapts to evolving intermediate restoration states by representing restoration experience as degradation-centered action evidence.
+- methods: SkillIR framework, degradation-centered action evidence, scene-aware restoration skills, verified residual-state loop
+- findings: SkillIR improves restoration quality; enables more reliable and effective tool use; adapts to evolving intermediate restoration states
 
 ### [Skill-based Agentic Evaluation for Real-time Data Science Tasks](https://arxiv.org/abs/2609.16487)
 
+- summary: The authors present a framework for evaluating data-science agents on live, continuously updated data using executable ground truth and format-agnostic factoid scoring.
+- methods: ground-truth-as-code, factoid-level scoring, human-LLM agreement study
+- findings: 29% improvement in Matthews Correlation Coefficient; 16% reduction in token consumption per test case
+
 ### [SFT or RL for Tool-Calling Agents? A Controlled Study Across Data, Method, and Scale](https://arxiv.org/abs/2609.17848)
+
+- summary: The study evaluates the effects of training data, adaptation method, and model scale on tool-calling performance in language-model agents across various models and datasets.
+- methods: supervised fine-tuning, reinforcement learning, Group Relative Policy Optimization
+- findings: SFT with LoRA is the strongest in-distribution method; GRPO wins in cross-dataset transfer settings; Dataset mixing gives consistently strong transfer; LoRA outperforms full-parameter fine-tuning
 
 ### [ScientistTwo: Pioneering the Human Knowledge Frontier with Autonomous AI](https://arxiv.org/abs/2609.19644)
 
 ### [ScienceIDE: Turning World's Scientific Codebase into Agent Learnable Environments](https://arxiv.org/abs/2609.19134)
 
+- summary: ScienceIDE is introduced as an infrastructure to turn scientific code into programmable environments for scientific agents, aiming to overcome the scientific experience bottleneck.
+- methods: supervised fine-tuning, reinforcement learning, evaluation
+- findings: gains in held-out scientific-code repair; positive transfer from scientific experience to broader capabilities
+
 ### [Scaling Discovery through Test-Time Communication](https://arxiv.org/abs/2609.21032)
+
+- summary: Multi-agent test-time communication substantially outperforms independent parallel attempts on challenging tasks, with gains compounding as the number of agents increases.
+- methods: multi-agent test-time communication, independent parallel attempts
+- findings: team of k communicating agents matches the success rate of 4k independent agents; communicating agents outperform best known scores on polyomino packing and MNIST classifier compression
 
 ### [Salesforce Koa: An Enterprise Language Model for Agentic Tool Use](https://arxiv.org/abs/2609.15066)
 
+- summary: Salesforce Koa, an enterprise language model, is built by post-training the Nemotron-3-Super-120B foundation model with reinforcement learning to improve tool use and agentic capabilities.
+- methods: reinforcement learning, post-training, Group Relative Policy Optimization (GRPO)
+- findings: improves over its open-weight base on public tool-use, agentic-reasoning, and enterprise CRM benchmarks; surpasses a strong proprietary baseline; specification-driven reinforcement learning is a practical path to specializing open-weight foundation models for enterprise agentic tasks
+
 ### [RSIAgent: Autonomous Exploration for Recursive Self-improvement in New Environments](https://arxiv.org/abs/2609.15364)
+
+- summary: RSIAgent, a training-free multi-agent framework, enables recursive self-improvement through autonomous memory construction, improving performance on downstream tasks without updating model parameters.
+- methods: recursive self-improvement, autonomous memory construction, broad-then-deep exploration strategy
+- findings: RSIAgent substantially improves strong open-source models; enables Kimi-K3 and GLM-5.3 to outperform frontier closed-source models including GPT-6
 
 ### [RideWay: Benchmarking Efficient Task Completion for Tool-Using Language Agents](https://arxiv.org/abs/2609.17985)
 
+- summary: The authors introduce RideWay, a benchmark for evaluating the efficiency of ridehailing agents, and Efficiency Utility, a metric that assesses both task success and interaction efficiency.
+- methods: benchmarking, metric development
+- findings: Excess turns are penalized about twice as much as excess tool calls; Efficiency Utility achieves 78.7% accuracy overall; Human annotators agree least on tool-use evaluation
+
 ### [Replan, Repair, or Edit? A Unified Empirical Evaluation of Travel Agents for Itinerary Revision under Resource Disruptions](https://arxiv.org/abs/2609.19654)
+
+- summary: This study compares different methods for revising travel itineraries after disruptions, including full replanning, classical plan repair, and LLM-based travel-agent revision.
+- methods: LLM-Z3 full replanning, IPyHOPPER hierarchical repair, iTIMO local-revision adapter
+- findings: LLM-Z3 with Gemini achieved the highest compound-disruption success; IPyHOPPER preserved substantially more of the accepted itinerary on successful repairs; Successful hierarchical and local repairs made fewer edits and retained more accepted commitments than full replanning
 
 ### [ReFigBench: Benchmarking Scientific Figure Reconstruction as Editable PowerPoint Artifacts](https://arxiv.org/abs/2609.18844)
 
+- summary: The study evaluates multimodal coding agents' ability to reconstruct scientific overview figures into editable PowerPoint slides, highlighting the challenges of fidelity and editability.
+- methods: deterministic artifact checks, automated scoring, blinded human comparisons, direct code generation, specialized PPTX workflow
+- findings: perception remains a bottleneck; workflow effort does not always convert into quality; the specialized workflow erases native connectors but is still preferred by human judges
+
 ### [Red-Teaming Auto Mode: Improving Blocking Classifiers Against Malign Coding Agents](https://arxiv.org/abs/2609.19587)
 
+- summary: This study evaluates the effectiveness of blocking monitors in preventing misaligned coding agents from causing harm and finds that adversarial agents can succeed in evading these monitors through various mechanisms.
+- methods: red-teaming methodology, adversarial agent testing
+- findings: adversarial agents can evade blocking monitors through injection attacks and other mechanisms; improvements to Auto Mode can be made through design changes; preventing multi-context attacks remains an open problem
+
 ### [Recursive Reasoning or Statistical Extrapolation? In-Context Learning in Multi-Agent Interdependent Decision-Making](https://arxiv.org/abs/2609.18591)
+
+- summary: Researchers study in-context learning in large language models to determine if decision improvements are due to refined internal reasoning or statistical pattern extrapolation.
+- methods: experiments, manipulation of historical feedback, comparison to rational expectations equilibrium benchmark
+- findings: decision quality degrades when statistical patterns are disrupted; in-context learning behavior is consistent with statistical extrapolation in strategic environments
 
 ### [Quantifying Overclaiming Propensity in Frontier LLM Agents](https://arxiv.org/abs/2609.20812)
 
@@ -1154,183 +2979,488 @@
 
 ### [Not All AI Agents Are Equal: Characterizing Resource and Performance Dynamics](https://arxiv.org/abs/2609.19947)
 
+- summary: This paper analyzes the resource inter-mix of AI agents and proposes optimization opportunities to improve their performance by exploiting task-dependent resource dynamics.
+- methods: measurement, characterization, optimization
+- findings: agents have a wide range of behaviors depending on tasks; running multiple requests concurrently exposes task-dependent bottlenecks; faster LLM responses or more CPU cores do not always accelerate agents
+
 ### [MTAC-IFBench: Benchmarking Instruction-Following in Multi-Turn Agentic Coding](https://arxiv.org/abs/2609.14992)
 
 ### [ModularRSI: Modular and Generalizable Recursive Harness Self-Improvement](https://arxiv.org/abs/2609.14857)
 
+- summary: The authors propose ModularRSI, a framework for generalizable harness evolution that addresses challenges in recursive self-improvement by using a modular and contrastive approach.
+- methods: modular framework, contrastive learning, benchmark-disjoint evolution, whole-harness optimization
+- findings: consistent improvements on unseen in-domain and cross-domain tasks; evolved harness transfers across different foundation models
+
 ### [MedVA: An End-to-End Neuro-Symbolic Agentic System for Medical Volume Visualization](https://arxiv.org/abs/2609.14874)
 
+- summary: This work presents MedVA, a neuro-symbolic agentic system for medical volume visualization that addresses limitations of existing systems through three complementary agents.
+- methods: neuro-symbolic intent formulation, multi-model ROI identification, objective-driven visualization optimization
+- findings: MedVA provides more complete and clinically grounded ROI specifications; MedVA achieves high usability and practical value among users with different levels of expertise
+
 ### [MAGS: Multi-agent Auto-formalization Guarantees Safety for Agentic Outputs](https://arxiv.org/abs/2609.19391)
+
+- summary: A unified multi-agent framework, MAGS, is introduced to generate executable programs with formal safety guarantees, addressing the risk of safety and security failures in LLM-generated code.
+- methods: formal verification, fuzz testing, static analysis, LLM-as-a-Verifier
+- findings: MAGS achieves 100% success rate in producing programs with non-trivial safety guarantees; strong performance across all three domains; failures occur when auto-formalized semantics do not fully capture target behavior
 
 ### [MACE: Memory-Agent Co-Evolution with Adaptive Memory Graphs for Multi-Agent Systems](https://arxiv.org/abs/2609.21533)
 
 ### [LEGIT: Credentialing Protocol for Trustworthy AI Agent Marketplaces](https://arxiv.org/abs/2609.21325)
 
+- summary: The authors introduce LEGIT, a credentialing protocol for agentic marketplaces to help buyers determine which AI agent will perform best on their tasks.
+- methods: credentialing protocol, certification, reputation system
+- findings: cost differences between agent configurations; importance of binding performance measurements to configuration and resource limits; quantification of deposits and fees required for reputation manipulation
+
 ### [Kinematics-Grounded Agentic AI for Robotic Additive Manufacturing Process Planning](https://arxiv.org/abs/2609.19347)
+
+- summary: This paper presents agentic robotic additive manufacturing (A-RAM), a framework that integrates user intent, part files, and manufacturing constraints to generate traceable and execution-ready plans for robotic additive manufacturing.
+- methods: agent-specialist-tool framework, LLM-based decision-support, deterministic planning, inverse kinematics
+- findings: up to 53.5% lower maximum Joint-6 jerk; up to 48.3% lower mean absolute Joint-6 jerk; up to 40.1% shorter motion-plan completion times; up to 12.7% shorter extrusion paths
 
 ### [HypoEvolve: Genetic Algorithms Enable Multi-Agent LLMs to Discover Scientific Hypotheses](https://arxiv.org/abs/2609.15938)
 
+- summary: HypoEvolve, a framework combining scientific agents with evolutionary search, achieves high-quality hypotheses through explicit collaboration and is evaluated on drug repurposing tasks across 34 cancer types.
+- methods: generational genetic algorithm, collaborative hypothesis generation, evaluation against external evidence
+- findings: HypoEvolve outperforms six baselines on DepMap and Open Targets measures; Gains generalize to held-out cancer types
+
 ### [HarnessVLN: Unifying Training-Free Embodied Navigation through an Agent Harness](https://arxiv.org/abs/2609.15195)
+
+- summary: HarnessVLN is a zero-shot, training-free framework that unifies instruction-following and object-goal navigation through a shared Agent Harness, achieving state-of-the-art results in various navigation benchmarks.
+- methods: zero-shot learning, training-free framework, hierarchical event memory, Spatiotemporal Graph
+- findings: HarnessVLN achieves success rates of 60.8%, 53.9%, 76.0%, and 59.3% on R2R, RxR, HM3D-v2, and HM3D-OVON respectively; outperforms prior training-free state-of-the-art methods
 
 ### [Grounding SWE-Agent Decisions in Architecture-0 Design: Navigating Unknown Unknowns through Physical Mapping](https://arxiv.org/abs/2609.17221)
 
 ### [GameLogicBench: Evaluating Coding Agents on Runtime Game Logic with Tick-Level State Assertions](https://arxiv.org/abs/2609.21562)
 
+- summary: The authors introduce GameLogicBench, a benchmark for evaluating coding agents' ability to implement gameplay rules in software projects, and report on the performance of various language models and scaffolds on this benchmark.
+- methods: benchmarking, automated evaluation, mutation testing
+- findings: The best observed run solves 52.78% of tasks; Agents perform worse on repository-scale tasks than on isolated-mechanic tasks; Most unsuccessful submissions are runnable but implement required game behavior incorrectly
+
 ### [GameASG-Bench: Benchmarking Autonomous Software Generation for Game Development](https://arxiv.org/abs/2609.21293)
+
+- summary: The authors introduce GameASG-Bench, a benchmark for autonomous software generation in game development that evaluates the behavioral testability of generated applications.
+- methods: Static L1 checks, Browser-executed L2 checks
+- findings: Highest mean L2 check pass rate is 93.2%; Highest strict task success rate is 55.3%; Full tool access and larger nominal turn budgets improve strict task successes
 
 ### [From Memory to Behavior: A Behavior-Aware Role-Playing Framework for Social Media Influencers](https://arxiv.org/abs/2609.21349)
 
+- summary: The proposed Situation--Internal state--Behavior Persona method improves the fidelity of role-playing for real individuals and fictional characters by incorporating situation-dependent behavioral strategies.
+- methods: in-context learning, Situation--Internal state--Behavior Persona method, evaluation protocol
+- findings: outperforms state-of-the-art ICL-based baselines; achieves moderate correlation with human judgment; applicable beyond the social media setting
+
 ### [From Intent to Action: Benchmarking LLM Safety in Vehicle Voice Command Authorization](https://arxiv.org/abs/2609.19630)
+
+- summary: The integration of large language models into vehicle voice assistants creates a safety-critical authorization problem, and this study evaluates the performance of various models in making pre-action decisions.
+- methods: benchmarking, evaluation of local open-weight models and API-based LLMs, Decision Alignment and safety-specific error metrics
+- findings: API-based models achieve higher Decision Alignment than local open-weight models; even high-performing models produce False Executes; structured LLM decisions are insufficient as a standalone safety mechanism
 
 ### [EvoOntology: A Self-Evolving Ontology Layer for Data Agents](https://arxiv.org/abs/2609.15779)
 
+- summary: This paper introduces EvoOntology, a self-evolving ontology layer for data agents that enables them to interact with heterogeneous data more effectively.
+- methods: autonomous ontology construction, self-evolution loop, attribution-guided typed edits, backbone-conditional paired evaluation
+- findings: EvoOntology outperforms strong baselines and existing semantic-layer approaches; EvoOntology effectively bridges the agent-data gap
+
 ### [Evaluating Verified Autonomy in Quantum Engineering](https://arxiv.org/abs/2609.17439)
+
+- summary: Researchers developed Quantum-Harbor, a virtual laboratory, and QIQCBench, a benchmark of 49 expert-authored tasks, to evaluate the reliability of scientific artificial intelligence agents in quantum engineering.
+- methods: virtual laboratory, benchmarking
+- findings: wide variation in verified performance across 17 agentic systems; substantial gap between demonstrating capability and achieving reliable operation
 
 ### [ERPBench: A State-Grounded Evaluation Paradigm for Computer-Use Agents in Enterprise Software](https://arxiv.org/abs/2609.17885)
 
+- summary: The authors introduce ERPBench, a benchmark for evaluating screenshot-only agents on a live and reproducible Enterprise Resource Planning (ERP) system, and demonstrate that strong general GUI performance does not transfer to enterprise reliability.
+- methods: benchmarking, evaluation of screenshot-only agents
+- findings: Strong general GUI performance does not transfer to enterprise reliability; Agents often save incorrect values despite reaching the right form; Failure modes specific to enterprise workflows were characterized
+
 ### [EnterpriseVal: Quantifying the Efficacy, Reliability and Value of Generative AI in the Enterprise](https://arxiv.org/abs/2609.21841)
+
+- summary: The authors propose EnterpriseVal, a use-case-level evaluation system to measure the effectiveness of language models in enterprise settings, addressing the gap between public benchmarks and deployment decisions.
+- methods: formal specification, metric catalogue, grading protocol, two-tier threshold gate, value-and-risk model
+- findings: human-graded citation precision reached 88%; hallucination rate of 1.6%; analyst refinement effort fell from 27.4 to 2.9 hours per document
 
 ### [Efficient Benchmarking in Production: A Study of an Evolving LLM Agent](https://arxiv.org/abs/2609.21267)
 
+- summary: The study evaluates efficient recurring evaluation methods for a production analytics agent, comparing techniques such as random sampling and adaptive testing to reduce the cost of repeated benchmarks.
+- methods: random sampling, historical caching, fixed representative subsets, IRT-based adaptive testing
+- findings: multidimensional 2PL adaptive testing achieves the best overall score fidelity; difficulty-stratified fixed subsets transfer without recalibration to other agent families
+
 ### [EchoPath: Execution-Level Replayable Memory for GUI Agents](https://arxiv.org/abs/2609.16635)
+
+- summary: EchoPath, a model-agnostic harness, converts GUI trajectories into standardized callable memories, enabling efficient replay of enterprise tasks and reducing execution time and token cost.
+- methods: image-based target-reaiming algorithm, bounded grounding repair
+- findings: reduced median token cost by more than 90%; reduced median execution time by about 60%
 
 ### [DualSQL: Text-to-SQL with Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2609.18135)
 
+- summary: This work proposes DualSQL, a Text-to-SQL system that leverages joint optimization of schema linking and SQL generation through a multi-agent reinforcement learning framework.
+- methods: multi-agent reinforcement learning, joint optimization, rollout guardrail mechanisms
+- findings: DualSQL achieves 68.0% execution accuracy on the BIRD development set with 4B parameters; DualSQL outperforms previous state-of-the-art single-model solutions with 32B parameters
+
 ### [DeliveryGym: An RL Environment for Long-Horizon Embodied Agent Planning with Adaptive Curriculum](https://arxiv.org/abs/2609.19801)
+
+- summary: DeliveryGym is a 3D environment for evaluating and training agents on continuous courier shifts, enabling them to learn from the consequences of their actions and make informed decisions about resource allocation.
+- methods: reinforcement learning, multimodal tool interaction, persistent world dynamics
+- findings: RL improves Qwen3-VL-4B's net income by 54.3%; adapting the training environment improves test income by 16.5%
 
 ### [Collective Loss of Control in LLM Agent Systems: An Epidemic Account of Mutation, Contagion, and Recovery](https://arxiv.org/abs/2609.18460)
 
+- summary: A multi-agent system can evolve from a local deviation into collective loss of control through accidental mutation, contagion, and recovery, posing substantial collective risk despite rare individual deviations.
+- methods: deployment audit, benchmark testing, trajectory injection
+- findings: low observed baseline harm alongside high conditional susceptibility; executed harm exceeds paired direct malicious requests by 5-45 percentage points
+
 ### [Collaborative Memory for Multi-Agent VLM Systems](https://arxiv.org/abs/2609.17921)
+
+- summary: This paper proposes a framework for vision-language model agent collaboration, focusing on shared visual context and memory hierarchy to enable effective collaboration and reconcile interpretations.
+- findings: shared visual context is central to VLM agent collaboration; memory hierarchy and cross-agent sharing are crucial for effective collaboration
 
 ### [CoLearn: An Agentic Tutor that Learns its Learner in a Human--AI Co-Learning Loop](https://arxiv.org/abs/2609.21154)
 
+- summary: CoLearn is an interactive tutoring system that adapts to individual learners by tracking their knowledge and misconceptions to generate personalized questions.
+- methods: Bayesian Knowledge Tracing, adaptive question generation, A/B evaluation, persona simulations
+- findings: questions conditioned on learner memory are preferred 68-69% of the time; agent's belief converges toward learner's true mastery in persona simulations
+
 ### [Clueing up LLMs with Tool-Augmented Deductive Reasoning](https://arxiv.org/abs/2609.18736)
+
+- summary: This paper evaluates multi-step deductive reasoning in large language models using a text-based, multi-agent version of the classic board game Clue.
+- methods: tool-augmented approach, possibility matrix
 
 ### [Clean Scores, Buried Evidence, and Confident Wrong: A Receipt-Based Audit of Frontier Agentic QA](https://arxiv.org/abs/2609.15319)
 
+- summary: Frontier models' performance degrades when evidence is buried, and they can produce confident but fabricated explanations, highlighting the need for more rigorous evaluation methods.
+- methods: controlled data-room audit, human-adversarial verification
+- findings: Reduced accuracy with buried evidence; Increased forced declarations and tool calls; Fabricated explanations can be mixed with accurate numeric tables
+
 ### [CIPL: A Channel-Aware Framework for Recoverable Privacy Leakage in LLM Agents](https://arxiv.org/abs/2609.21686)
+
+- summary: CIPL is a channel-aware evaluation framework for assessing black-box privacy leakage in LLM agents, providing a comprehensive approach to evaluating privacy risks across different components and pipelines.
+- methods: CIPL framework, channel inversion, stratified semantic audit
+- findings: storage labels do not determine recoverability; leakage varies with observation surface, prompt-to-channel alignment, retrieval depth, and provider behavior; attacker-useful disclosures can be missed by canonical exact matching
 
 ### [Can Agents Design Better Chips with a Higher Level Abstraction?](https://arxiv.org/abs/2609.21157)
 
+- summary: This study explores the use of Large Language Model agents for chip design by leveraging higher-level abstractions and achieves a 2.6$	imes$ geometric-mean speedup over Direct RTL Design across an 11-tasks benchmark suite.
+- methods: Agent-based HLS Design, Post-Compiler HLS Refinement, Post-HLS RTL Refinement, Agent-based HLS with RTL Refinement
+- findings: 2.6$	imes$ geometric-mean speedup over Direct RTL Design; HLS distills design knowledge into abstractions that agents can leverage; RTL refinement recovers lower-level optimization opportunities
+
 ### [BVB: Benchmarking Agentic Video Understanding via Programmatic Reconstruction in Blender](https://arxiv.org/abs/2609.15478)
+
+- summary: The authors introduce BVB, a benchmark that tests video understanding by asking agents to reconstruct real-world videos as animated Blender scenes, evaluating their performance on dual axes of factual accuracy and perceptual similarity.
+- methods: programmatic reconstruction, Dual VQA, Latent Similarity
+- findings: The best model reaches 88.6 Latent Similarity but retains only 53.7% of the source-correct spatiotemporal answers; Additional reasoning improves visual similarity but does not close the gap in factual accuracy; Latent Similarity correlates strongly with human preference
 
 ### [BusMA: A Bus Communication Substrate for Multi-Agent Systems](https://arxiv.org/abs/2609.15054)
 
+- summary: The authors propose BusMA, a communication framework for Multi-Agent systems that allows agents to address each other through a shared channel, and demonstrate its effectiveness through extensive experiments.
+- methods: agent registration, message routing, shared memory management
+- findings: BusMA outperforms state-of-the-art HMW and RMP methods; BusMA supports fine-grained communication among agents through four intents
+
 ### [Bias Amplification in Multi-Agent Network: How Biased Agents Shape Opinions and Rhetoric](https://arxiv.org/abs/2609.18306)
+
+- summary: This work studies how biased opinions are propagated in multi-agent systems involving large language models, finding that even a small percentage of biased agents can significantly shift the opinions of non-biased agents.
+- methods: structured textual interactions, semantic analysis
+- findings: biased agents can significantly shift opinions of non-biased agents; rhetorical consistency increases with biased exposure; vocabulary adoption by non-biased agents is partially decoupled from numerical opinion shifts
 
 ### [Beyond Outcomes: Dual-View Relational Learning for Efficient Agent Benchmarking](https://arxiv.org/abs/2609.18909)
 
+- summary: DualViewEval, a benchmark compression method, is proposed to reduce the cost of evaluating agent benchmarks by jointly exploiting outcome and process relations.
+- methods: benchmark compression, DualViewEval
+- findings: 24×--40× compression on APEX-Agents and BFCL; 14.5%--28.2% reduction in mean absolute error; up to 7.2% improvement in Kendall's τ
+
 ### [Automating Attack Graph Construction for Agentic Pentesting. Towards Neuro-Symbolic Vulnerability Hunting](https://arxiv.org/abs/2609.15523)
+
+- summary: A semi-automated pipeline is presented to integrate symbolic frameworks with security workflows, addressing the interoperability problem and providing explicit attack path reasoning.
+- methods: symbolic inference, LLM-assisted process, Datalog rules construction
+- findings: mean ground-truth vulnerability coverage of 53.7%; mean noise-path rate of 83.9%; median end-to-end time of 24.9 s
 
 ### [AURORA: A Natural Language-Driven Agentic Framework for Understanding, Reasoning, and Orchestrating Reliable Air-Ground Co-Simulation](https://arxiv.org/abs/2609.19527)
 
+- summary: This paper presents AURORA, a natural-language-driven agentic framework for air-ground scenario generation that treats scenario generation as a process of compilation with verification.
+- methods: natural-language-driven agentic framework, compiler-based verification, runtime verification, localized repair
+- findings: structured execution improves reliability; runtime verification exposes silent failures; localized repair resolves many violations without regenerating the entire scenario
+
 ### [Atria Dawn: The Dawn of Agentic Superintelligence](https://arxiv.org/abs/2609.15818)
+
+- summary: The introduction of Atria Dawn Preview, a foundation agentic language model, expands the frontier of agent productivity in real-world research and engineering workflows through human-AI collaboration.
+- methods: Verifiable Experience Pipeline, benchmarking
+- findings: Atria Dawn Preview is competitive with frontier agents on 16 benchmarks; about one-third of completed AI-assisted tasks were rated as infeasible without AI; human effort concentrates on guiding exploration and making final decisions
 
 ### [Assembling the CREW: A Collaborative Multi-agent Reinforcement Learning Framework for Automated Related Work Generation](https://arxiv.org/abs/2609.15721)
 
+- summary: The authors propose CREW, a novel framework for automatic Related Work Generation using collaborative reinforcement learning with Large Language Models, which improves quality and reduces token costs.
+- methods: Independent Proximal Policy Optimization, Collaborative Reinforcement Learning
+- findings: Substantial quality improvements over existing baselines; Significant reduction in token costs
+
 ### [ArenaFlow: From Trajectory Ranking to Hierarchical Credit Propagation for Open-Ended Agent RL](https://arxiv.org/abs/2609.21378)
+
+- summary: ArenaFlow, a hierarchical credit propagation framework, is proposed for open-ended agent reinforcement learning, leveraging tournament-based relative ranking and structured reflective evaluation to derive trajectory-level reward signals.
+- methods: hierarchical credit propagation, tournament-based relative ranking, structured reflective evaluation
+- findings: ArenaFlow enables more targeted optimization of local reasoning behaviors; ArenaFlow estimates skill utility from group-level usage attribution; ArenaFlow maintains a global skill memory through utility-aware updating, pruning, and retrieval
 
 ### [An Empirical Study of Harness Design for Coding Agents](https://arxiv.org/abs/2609.20804)
 
+- summary: This study evaluates the effectiveness of individual components in a coding harness for autonomous coding agents, varying planning, action space, and context management across four models and 176 matched settings.
+- methods: component-level comparison, ablation study, trajectory-level analysis
+- findings: context management is valuable as context-window budget tightens; staging rule-based elision before LLM-based summarization is most efficient; planning shifts from accuracy scaffold to cost saver for stronger models; predefined tools improve performance for weaker models
+
 ### [AlgoEvo: Self-Evolving Agentic Search for Automated Algorithm Discovery](https://arxiv.org/abs/2609.15820)
+
+- summary: AlgoEvo is a unified agentic framework that transforms automated algorithm discovery into an interactive, knowledge-accumulating process, outperforming specialized methods on six benchmark tasks.
+- methods: autonomous agent, design skill hub, hierarchical experience mechanism
+- findings: strong intra-task accumulation; cross-task transfer; reproduction or exceeding of state-of-the-art performance
 
 ### [AgentVidBench: A Multi-Hop Video Question Answering Benchmark for Evaluating MLLM Agents](https://arxiv.org/abs/2609.21386)
 
+- summary: The authors introduce AgentVidBench, a multi-hop video question answering benchmark to evaluate the spatial, temporal, and causal reasoning capabilities of Multimodal Large Language Models (MLLMs).
+- methods: multi-hop multimodal reasoning, trajectory evaluation, agentic workflows
+- findings: single-turn performance is limited on AgentVidBench; integrating MLLMs into agentic workflows improves performance; a simple agentic strategy serves as a competitive baseline on AgentVidBench
+
 ### [Agentic Search Spaces for Tabular Machine Learning](https://arxiv.org/abs/2609.16309)
+
+- summary: This paper investigates the use of LLM-based agents to design extended hyperparameter optimization search spaces for tabular machine learning models, resulting in improved performance across various datasets and models.
+- methods: modular pipeline representation, classical HPO algorithm, ensembling
+- findings: expanded search spaces improve performance of nearly every model family; average relative gains of 0.6% to 2.0% on certain datasets; gains transfer to TabArena benchmark
 
 ### [Agentic AI Networking for Heterogeneous Unmanned Aerial Systems in Low-Altitude Wireless Networks](https://arxiv.org/abs/2609.19538)
 
+- summary: This study proposes a hierarchical hybrid large language model and multi-agent reinforcement learning architecture for low-altitude wireless networks to adapt to changing service requirements and resource priorities.
+- methods: large language model, multi-agent reinforcement learning, game orchestration
+- findings: adaptation to evolving operating conditions without retraining; coordinated coexistence among heterogeneous services
+
 ### [AeroWeaver: An Embodied-Agent Harness for Weaving Aerial Skills into Distributed, Adaptive Swarm Execution](https://arxiv.org/abs/2609.18520)
+
+- summary: AeroWeaver is introduced, an embodied-agent harness that enables collective intelligence in UAV swarms by connecting semantic decisions to governed skills and refining skill selection online.
+- methods: embodied-agent harness, role-conditioned local agents, role-indexed state-action-reward experience, online updates
+- findings: AeroWeaver maintains valid skill execution under tested conditions; supports body-local multi-UAV operation without a central agent; provides a training-free path for adaptive learning swarm agents
 
 ### [A Simulation Platform for AUV Fault Recovery: Exploring LLM-Based Diagnostic Strategies](https://arxiv.org/abs/2609.20620)
 
+- summary: This study investigates an architecture that combines conventional control autonomy with a large language model for diagnostic and recovery planning in autonomous underwater vehicles.
+- methods: ensemble testing, closed-loop simulation, physics-based fault injection, structured prompting
+- findings: frontier model outperforms local models in diagnosis; local model success is associated with following complete diagnostic procedure; diagnosis and operational decision performance are not coupled
+
 ### [A Dual-Process Perspective on Nudge Susceptibility in LLM-Based GUI Agents](https://arxiv.org/abs/2609.19843)
+
+- summary: This study investigates the susceptibility of LLM-based GUI agents to digital nudges and how their reasoning configuration moderates this susceptibility in a randomized online shopping experiment.
+- methods: randomized online shopping experiment, Dual-Process Theory, exploratory analysis
+- findings: LLM-based GUI agents are vulnerable to both automatic and reflective digital nudges; reasoning configuration moderates nudge susceptibility in opposing directions; extensive reasoning does not make agents more robust but redirects the route through which choice architecture takes effect
 
 ## 2026 W37 (arxiv)
 
 ### [TriCalRAG: A Three-Strategy, Retrieval-Augmented Benchmark for On-Premise LLM-Based Root Cause Analysis in AIOps](https://arxiv.org/abs/2609.14762)
 
+- summary: The authors present TriCalRAG, a benchmark evaluating open-weight large language models for root cause analysis in AIOps pipelines, and compare their performance with a classical LSTM-based log anomaly detector across four real log datasets.
+- methods: zero-shot prompting, few-shot prompting, retrieval-augmented generation, batching, 4-bit quantization
+- findings: RAG improves mean F1 and stabilizes model calibration; Mistral-Small achieves higher macro-averaged F1 than Qwen2.5-14B but exhibits calibration failures in more configurations; batching scales throughput 41 times on a single card; 4-bit quantization reduces latency 20% with no measurable accuracy loss
+
 ### [Towards Scalable RLVR: Multimodal Instruction Following Data Synthesis and Distillation](https://arxiv.org/abs/2609.16059)
+
+- summary: The authors present MIFS, a pipeline for generating RL-ready multimodal data to improve multimodal instruction following, which achieves an average improvement of 8.13% on four benchmarks.
+- methods: MIFS pipeline, generative constraint protocol, learnability-aware distillation mechanism, code-based verifier
+- findings: MIFS-trained models achieve 8.13% average improvement on MMIF benchmarks; 3x faster training convergence compared to using raw data; mitigates generalization trade-offs typical of SFT
 
 ### [The Stochastic Deputy: Structural Tenant Isolation for Tool-Using LLM Agents](https://arxiv.org/abs/2609.14780)
 
+- summary: The authors propose a structural defense against the stochastic deputy problem in multi-tenant tools by removing tenant identity from the Model Context Protocol tool schema and binding scope to a verified credential.
+- methods: ablation study, experimental evaluation
+- findings: removing tenant parameter prevents out-of-scope attempts; interface invariance requires cryptographically protected context; set-valued scope causes significant latency increase
+
 ### [The Immutable Past: Formalizing State Mutability and Conflict Resolution in Mutable RAG](https://arxiv.org/abs/2609.16073)
+
+- summary: This paper introduces GC-Mem, a strict inference-time consistency protocol to resolve Semantic Shadowing in Retrieval-Augmented Generation (RAG) for long-horizon autonomous agents.
+- methods: GC-Mem, temporal dominance operator, contradiction detection
+- findings: Asymptotic Recall Decay; Majority Vote Trap; GC-Mem achieves >90% conflict resolution accuracy
 
 ### [The Imitation Game: When LLMs Learn to Reason Like Programs via Code-Centric Reasoning Data Synthesis](https://arxiv.org/abs/2609.16076)
 
+- summary: The MIMIC framework leverages executable code to improve the reasoning capabilities of Large Language Models (LLMs) through narrative fusion, code-guided test synthesis, and dynamic code instrumentation.
+- methods: narrative fusion, code-guided test synthesis, dynamic code instrumentation, reinforcement learning
+- findings: substantial gains in accuracy across general reasoning and complex mathematical benchmarks; elevation of accuracy in fine-grained deterministic tasks
+
 ### [Safety Signals to Verify NetOps Agents with Action-Level Granularity](https://arxiv.org/abs/2609.14422)
+
+- summary: This study constructs a ground truth for the network repair task of NetArena to evaluate the effectiveness of agentic network operations in autonomous networks.
+- methods: symbolic replay, agent verifiers, internal signals
+- findings: agent verifiers predict harm and progress more reliably than baseline; internal signals are more effective than observable signals
 
 ### [Runtime Authorization for Resources Acquired by AI Agents](https://arxiv.org/abs/2609.14744)
 
+- summary: The authors present a provenance-bounded runtime authorization architecture that validates and activates acquired resources and services for autonomous AI agents.
+- methods: provenance resolution, versioned resolver, activation transaction, relational envelope, effect permits
+- findings: eight safety properties proven; reference semantics accepted 20/20 benign traces and rejected 40/40 registered unsafe traces; independent checker agreed on 60 base and 40 refinement traces and rejected 89/89 tamper tests
+
 ### [Retrieval-Driven Memory Reconsolidation for Long-Term LLM Agents](https://arxiv.org/abs/2609.16053)
+
+- summary: The authors propose REALM, a reconsolidation-evolution agentic long-term memory framework that enables LLM-based agents to autonomously organize and evolve their memory for future access.
+- methods: memory reconsolidation, graph-search atoms, retrieval feedback, ablation studies
+- findings: REALM achieves average accuracy of 75.97% on LoCoMo and 65.11% on LongMemEval; memory reconsolidation boosts performance by 7.17 and 1.31 points respectively; retrieval-driven memory reconsolidation provides an effective mechanism for continually evolving long-term memory
 
 ### [Refusal Reads Only a Slice of What the Model Knows: Harm-Keyed Routing and Its Exceptions Across Model Families](https://arxiv.org/abs/2609.14759)
 
+- summary: Researchers investigate how language models make refusal decisions and find that refusal is a shallow, post-training construction that reads harm percepts rather than moral content.
+- methods: nested interchange rank sweep, causal analysis
+- findings: refusal is a fresh post-training construction; refusal reads harm percepts, not moral content; a rank-one edit can remove refusal
+
 ### [Question's Gambit: The First Move Matters in Agentic Deep Search](https://arxiv.org/abs/2609.14412)
 
+- summary: The Question's Gambit retrieval module improves the performance of deep research agents by effectively decomposing questions into clues and reformulating them into complementary searches.
+- methods: lexical retrieval, iterative search-and-reasoning, retrieval recall, downstream agent accuracy
+- findings: Question's Gambit improves retrieval recall and downstream agent accuracy; effective agentic deep research depends on the quality of the first move
+
 ### [Policy Loopholes in Agent Evaluation: When Policy Ambiguity Masquerades as Agent Error](https://arxiv.org/abs/2609.14400)
+
+- summary: Agent benchmarks can produce unreliable scores due to natural-language policy loopholes such as silence, ambiguity, or contradiction, which can be mitigated by auditing policies before collecting gold annotations.
+- methods: taxonomy development, cross-domain comparison
+- findings: policy loopholes lead to unreliable scores; exploitability requires policy ambiguity and tool permissiveness; policy specification quality affects evaluation quality
 
 ### [Optimizing Sparse Outcomes Through Dense Behavioral Signals via Value-Guided Preference Distillation](https://arxiv.org/abs/2609.14648)
 
 ### [OmniHarness: Harnessing Generalizable Visual Generation via Symbolic Policy Learning](https://arxiv.org/abs/2609.16057)
 
+- summary: OmniHarness, a framework for generalizable visual generation via symbolic policy learning, addresses limitations in existing methods by abstracting verified executions into symbolic policies and instantiating, adapting, and composing them for new tasks.
+- methods: symbolic policy learning, self-directed inquiry, intermediate verification
+- findings: strong performance across six benchmarks; continual capability expansion; 95.0% resolve rate on ComfyBench's Creative tasks
+
 ### [MOSCOPT: Mixture-of-Skills Collective Optimization for LLM Agents](https://arxiv.org/abs/2609.14399)
 
+- summary: MOSCOPT is a text-native, parameter-free algorithm that jointly optimizes a pool of skills and a gating skill to dynamically select skills per step, outperforming existing methods in extensive experiments.
+- methods: MOSCOPT, EditAdam, three-phase interleaved updates
+- findings: MOSCOPT consistently outperforms all baselines; mixture-of-skills architecture with selective activation is essential to its superior performance; collective evolution with three-phase interleaving is essential to its superior performance
+
 ### [Moral Rebel Agents: Decision-Making Under Conflicting Obligations](https://arxiv.org/abs/2609.14716)
+
+- summary: This paper investigates the ability of autonomous agents to deviate from user-assigned tasks when morally justified, formalizing and evaluating five agent architectures in a search-and-rescue domain.
+- methods: hierarchical task network planning, empirical evaluation
+- findings: preservation of task commitments is important for moral rebellion; utilitarian-deontic and dutiful agents produce distinct behaviors despite shared foundations
 
 ### [Loop-Back Authority in LLM Agent Teams: A Paired Experiment on Flat and Hierarchical Coordination](https://arxiv.org/abs/2609.14767)
 
 ### [Know When to Stop, Where to Restart: Accelerating Multi-Turn Agentic On-Policy Distillation](https://arxiv.org/abs/2609.14636)
 
+- summary: The authors propose STRIDE, an acceleration method for on-policy distillation that combines adaptive early stopping and a prefix buffer to improve efficiency in multi-turn agentic settings.
+- methods: adaptive early stopping, prefix buffer, Stop-and-Restart on-policy Distillation acceleration
+- findings: informative supervision is concentrated in the prefix of each turn; cross-turn loss of teacher endorsement is temporally locked to the student's first erroneous action; STRIDE matches full-trajectory OPD and exceeds the 30B teacher at a 3.73× speedup
+
 ### [Func-R1: Incentivizing Mathematical Function Reasoning in Multimodal Large Language Models](https://arxiv.org/abs/2609.14779)
+
+- summary: The proposed Func-R1 model addresses the modality interference phenomenon in Multimodal Large Language Models (MLLMs) by harmonizing visual perception and logical reasoning to improve mathematical reasoning performance.
+- methods: hierarchical post-training framework, Perception-Aligned Theoretic Optimization (PATO) strategy
+- findings: Func-R1 delivers optimal performance among open-source MLLMs; 8.4% improvement on MathVerse's function-oriented tasks compared to GPT-5
 
 ### [Fabrication After Tool Failure: Tool-Augmented Agents Assert Values Their Tools Did Not Return](https://arxiv.org/abs/2609.14758)
 
 ### [Enemray: Toward Capable Language Models for Hassaniya](https://arxiv.org/abs/2609.14829)
 
+- summary: Enemray, a Hassaniya-centric language model, is introduced, which enables general-purpose interaction in Hassaniya while preserving general reasoning and safety behaviors.
+- methods: continual-pretraining, layer-selective continual pretraining, supervised post-training, policy-generated replay
+- findings: Enemray achieves the strongest English to Hassaniya translation; Enemray achieves the highest overall score on Mauritanian translation error detection; Enemray retains most general capabilities of its instruction-tuned base model
+
 ### [El Agente Potente: High-Throughput Agentic Atomistic Simulations](https://arxiv.org/abs/2609.14840)
+
+- summary: El Agente Potente is an agentic system that combines typed execution graphs with a complementary coding mode for MLIPs-driven atomistic simulations, enabling adaptive simulation campaigns without compromising workflow rigour.
+- methods: typed execution graphs, complementary coding mode, large language models, deterministic Python components
+- findings: near-ab initio accuracy at a fraction of the computational cost; successful demonstration across various workflows; systematic benchmarks of reproducibility and LLM token cost
 
 ### [Efficiency Hallucination: Formalizing and Measuring Behavioral Calibration in LLM-Based Code Optimization](https://arxiv.org/abs/2609.14839)
 
 ### [DynSTEER: Dynamic Stage-wise Trajectory Evaluation and Execution-time Review for Agents](https://arxiv.org/abs/2609.14637)
 
+- summary: DynSTEER, a dynamic stage-wise framework, is proposed to address the granularity gap in evaluating long-horizon task execution trajectories of large language model agents.
+- methods: stage-wise dynamic evaluation, multi-tier review strategy, path-tolerant milestone graph compilation
+- findings: 85.2% improvement in evaluation discriminability; statistical significance in separating model pairs; 45.41% reduction in execution steps on failed rollouts
+
 ### [Disentangling Topology and Diversity in Multi-Agent LLMs for Multilingual Low-Resource Emotion Detection](https://arxiv.org/abs/2609.14570)
+
+- summary: This study investigates the factors of inference topology and inter-agent diversity in multi-agent LLM systems, evaluating their impact on multilingual low-resource emotion detection across nine languages.
+- methods: parallel aggregation, sequential refinement, stochastic sampling, role prompting, learned QLoRA specialization
+- findings: parallel learned specialization achieves highest Macro-F1 scores; diversity source has larger performance impact than topology; later learned specialists can overwrite correct early predictions
 
 ### [CompCQR: Compositional Query Generation for Training-Free Conversational Search](https://arxiv.org/abs/2609.14646)
 
+- summary: This work proposes a novel training-free method for conversational query reformulation that generates a large number of queries with minimal LLM usage and achieves strong performance on four conversational benchmarks.
+- methods: compositional combination of atomic components, LLM reasoning
+- findings: up to 22.5% relative MRR improvement over the previous state-of-the-art baseline; reduced LLM usage
+
 ### [CoArena: Evaluating Computer-Use and Multi-Agent Systems in Real Time](https://arxiv.org/abs/2609.14239)
+
+- summary: CoArena is a real-time evaluation framework that measures the performance of computer-use agents by having real users submit tasks and judge the outcomes of two systems executing the same task concurrently.
+- methods: Bradley-Terry pairwise model, penalized maximum-likelihood estimator, stochastic-gradient step, parametric bootstrap
+- findings: definition of real-time evaluation as five measurable properties; rating methodology with confidence intervals and rank bands; vote quality treatment with inter-judge agreement statistics
 
 ### [Beyond Scene Description: Multi-Agent Orchestration for Non-visual Access to Virtual Worlds](https://arxiv.org/abs/2609.14512)
 
 ### [Bayesian Intelligence from the Outside](https://arxiv.org/abs/2609.14724)
 
+- summary: This study develops a theory of Bayesian intelligence for agents, such as language models, and explores the behavioral implications of intelligent agents.
+- methods: Bayes' rule, behavioral analysis
+- findings: agents' behavior admits Bayesian explanation if reports are not fully contradictory; intelligence order implies consistent behavior between agents; difficulty of aggregating coarse reports from intelligent agents
+
 ### [AppliedScientist: Automated Scientific Revision Through Iterative AI Reviewing](https://arxiv.org/abs/2609.14738)
 
 ### [ANASSA: An Agentic AI Orchestration Framework for Spatial Intelligence](https://arxiv.org/abs/2609.14824)
 
+- summary: This study introduces ANASSA, an agentic AI orchestration framework that integrates spatial reasoning, workflow orchestration, and validation for geospatial analysis tasks.
+- methods: synthesis of recent advances, architecture-level specification
+- findings: identification of limitations in spatial reasoning and execution; introduction of a unified system design for agentic geospatial workflows
+
 ### [AI Persuasion as a Threat to Human Control](https://arxiv.org/abs/2609.14796)
 
+- summary: This study analyzes the threat of AI persuasion to human control, particularly in settings like safety-relevant R&D, and provides a framework for characterizing and assessing associated risks.
+- methods: risk estimation survey, framework development, scenario analysis
+- findings: AI persuasion poses a significant threat to human control; researchers' opinions on riskiest scenarios are highly mixed
+
 ### [A Building as a Repository: KIR, a Typed Intermediate Representation for Agent-Authored Building Information Models](https://arxiv.org/abs/2609.14578)
+
+- summary: The authors present KIR, a typed intermediate representation for autonomous agents to author building information models, which provides a structured way to represent and manage the complexities of building design and construction.
+- methods: typed intermediate representation, versioned repository, build targets, offline experiments
+- findings: 29 of 42 stress-test programs were refused with diagnostic codes; 38 of 377 witness obligations were named as unwitnessable; 31 of 100 combinations of execution, witness and acceptance states were admitted under seven stated invariants
 
 ## 2026 W36 (arxiv)
 
 ### [What Do CAE Simulation Agents Really Need Beyond a Generic Harness?](https://arxiv.org/abs/2609.03718)
 
+- summary: A study investigates what a computer-aided engineering simulation agent still needs beyond a generic harness, finding that domain knowledge and execution-feedback repair are key to its success.
+- methods: Ablations, Execution-feedback repair, Scripted reflection, Multi-agent decomposition, Domain retrieval
+- findings: A single-agent harness matches or beats multi-agent specialized systems; Execution-feedback repair significantly improves performance; Domain knowledge supplied as solver tutorials is the most helpful input
+
 ### [Value-Preserving Architectures for Agentic AI Systems](https://arxiv.org/abs/2609.03920)
 
+- summary: This paper investigates how architectural design choices in multi-agent systems can promote human-centered values such as privacy, fairness, and safety.
+- findings: architectural choices influence system behavior and value-oriented outcomes; value-preserving architectural patterns can promote human-centered values
+
 ### [Unlocking Lossless Speedups in LLMs via Discrete Diffusion](https://arxiv.org/abs/2609.04010)
+
+- summary: This study introduces diffusion-augmented Large Language Models (LLMs) that overcome the bottleneck of slow, sequential token generation in traditional autoregressive LLMs by using diffusion to draw multiple tokens in parallel.
+- methods: diffusion-based token generation, Diffusion Distillation phase, Ψ-Spec samplers
+- findings: up to 3× speedups over the base AR model; higher throughput than leading speculative-decoding methods; outperforms leading open d-LLM and proprietary models on several benchmarks
 
 ### [TruthInsightBench: An Evidence-Grounded Benchmark for Automated Evaluation of Open-Ended Scientific Discovery Agents](https://arxiv.org/abs/2609.05079)
 
 ### [TROVE: Adaptive Agent Skill Orchestration via Trace-Grounded Route Validation and Editing](https://arxiv.org/abs/2609.05019)
 
+- summary: The authors propose TROVE, a method for adaptive agent orchestration that revises execution structures based on runtime evidence, achieving a stronger quality-efficiency trade-off than existing baselines.
+- methods: Trace-grounded Route Orchestration via Validation and Editing, dataset-level optimization, query-level architecture selection, graph-constrained scheduling
+- findings: TROVE delivers a stronger quality-efficiency trade-off than existing baselines; composite skills capture most offline benefits; insertion enables local correction; suffix replacement primarily improves efficiency
+
 ### [TRIPPULSE: Multi-Agent Travel Planning with Review-Grounded Reasoning](https://arxiv.org/abs/2608.30924)
+
+- summary: The authors propose TRIPPULSE, a multi-agent framework for review-grounded travel planning that incorporates real-world reviews to generate more personalized and experientially grounded itineraries.
+- methods: multi-agent framework, Review-Grounded Persona Alignment (RGPA), LLM-as-a-Judge metric
+- findings: TRIPPULSE maintains strong constraint satisfaction; generates more personalized and experientially grounded itineraries
 
 ### [Towards Generalizable Visually Grounded Exploration of Household Devices](https://arxiv.org/abs/2609.00845)
 
 ### [Towards a Belief-Based World Model for LLM Agents](https://arxiv.org/abs/2609.00455)
 
+- summary: This study introduces Belief-Based World Models (BB-WMs) to improve decision-making in large language models (LLMs) under partial observability by providing access to world model beliefs.
+- methods: simulation, Belief-Based World Models
+- findings: exposing world model beliefs to LLM policies improves decision-making under partial observability; BB-WMs are complementary to existing simulation-based world models
+
 ### [Toward Workflow-Aware Benchmarking for Healthcare NLP Agents](https://arxiv.org/abs/2609.00296)
+
+- summary: A new evaluation protocol for healthcare NLP agents is introduced, focusing on episode-level assessment and longitudinal state, interruptions, and human handoffs.
+- methods: episode-level evaluation protocol, annotation and scoring
+- findings: separation of evidence across model, agent, and simulated-workflow behavior; explicit cost-sensitive treatment of missed versus unnecessary escalation
 
 ### [Testing Interchangeability in LLM Agent Teams](https://arxiv.org/abs/2609.05279)
 
@@ -1342,63 +3472,158 @@
 
 ### [SimCRAFT: Distilling Remote Sensing Agents via Synthetic Trajectories and Contextual Retrieval-Augmented Fine-Tuning](https://arxiv.org/abs/2608.30277)
 
+- summary: The proposed SimCRAFT framework distills remote sensing orchestration capabilities into a compact 7B-scale model, addressing data scarcity and infrastructure demands.
+- methods: multiagent synthesis engine, Mock Execution Engine, Contextual Retrieval-Augmented Fine-Tuning (CRAFT)
+- findings: SimCRAFT-7B outperforms open-weights LLMs and rivals advanced closed-source models; SimCRAFT enables efficient autonomous deployment under resource-constrained conditions
+
 ### [SENTINEL-RL: Offloading Topological Reasoning from LLM Agents in the Security Operations Center](https://arxiv.org/abs/2609.04159)
 
+- summary: The authors propose Sentinel-RL, an agentic-SOC architecture that addresses the limitations of large language model agents in autonomous SOC analysis by decoupling topological reasoning from semantic reasoning.
+- methods: Proximal Policy Optimization (PPO), heterogeneous graph attention encoder, sliding-window alert engine
+- findings: 24x faster ingestion pattern; reliable alert engine; converged PPO training with high precision and recall; fast detect-investigate-recommend-human-approve cycle
+
 ### [Semantic Bayesian World Models](https://arxiv.org/abs/2609.03834)
+
+- summary: The authors propose Semantic Bayesian World Models (SBWMs) to integrate language models and knowledge graphs by representing the world as a shared, evolving fabric of beliefs rather than a database of facts.
+- methods: Bayesian conditioning, probabilistic entailment regimes, semantic calibration layers
+- findings: SBWMs can enable unified reasoning architecture; agents can exchange and disagree over calibrated beliefs; SBWMs can improve planning tasks and estimation of quantities
 
 ### [Scaling Large Reasoning Models beyond Human Supervision: A Path toward Superintelligence](https://arxiv.org/abs/2608.31075)
 
 ### [SafeEvolve: Harness-Policy Co-Evolution from Agent Experience for Safety Alignment](https://arxiv.org/abs/2609.02786)
 
+- summary: The proposed SafeEvolve framework achieves a stronger safety-utility tradeoff for LLM-based agents through harness-policy co-evolution, leveraging safety experience from completed on-policy trajectories.
+- methods: harness-policy co-evolution, SFT-RL paradigm, verifier-decomposed rewards
+- findings: 3x ASR reduction on AgentDojo; improved benign utility from 59.79% to 61.86%
+
 ### [Rethinking Indirect Prompt Injection as a Test-Time Search Problem](https://arxiv.org/abs/2609.04495)
+
+- summary: This study introduces an agentic attacker to test indirect prompt injection as a test-time search over a task-dependent attack surface and finds that increasing attacker test-time compute improves vulnerability discovery and exploitation.
+- methods: environment reconnaissance, structured reasoning over attack strategies, adaptive evaluation using victim-agent feedback
+- findings: increasing attacker test-time compute improves vulnerability discovery and exploitation; explicit strategy management is important for avoiding redundant search and sustaining gains at larger budgets
 
 ### [RestoreBench: Can AI Agents Restore Power Flow Convergence?](https://arxiv.org/abs/2609.00384)
 
+- summary: A benchmark is introduced to evaluate the capabilities of Large Language Model agents in diagnosing and resolving non-convergent power flow cases across multiple architectures.
+- methods: benchmarking, evaluation
+
 ### [Repeat-After-Me: Black-Box Adaptive Visual Prompt Injection](https://arxiv.org/abs/2609.04533)
+
+- summary: The authors present Repeat-After-Me, a black-box adaptive visual prompt injection attack that can reveal personally identifiable information or make malicious tool calls with high attack success rates on various visual language models.
+- methods: black-box adaptive visual prompt injection, cross-sample transferability
+- findings: high attack success rates exceeding 80% and 47% on open-weight and commercial frontier VLMs; injections optimized on one surrogate retain 43-46% of the original ASR on two commercial victims; cross-sample transferability retains 64-66% of the original ASR on two models
 
 ### [Reinforcement Learning Enhanced LLM Agents for Complex Vehicle Routing Problems](https://arxiv.org/abs/2609.00859)
 
+- summary: This paper proposes RLEA, a multi-agent framework that automates the modeling of complex Vehicle Routing Problems using reinforcement learning and LLM-based agents.
+- methods: Reinforcement Learning, Soft Q-learning, Evolutionary memory module, Retrieval-augmented generation
+- findings: RLEA outperforms the previous state-of-the-art method by 16.67% in success rate; RLEA significantly reduces runtime errors
+
 ### [RefactorPlatform: An Open-Source Harness for Controlled Evaluation of Repository-Scale Refactoring Agents](https://arxiv.org/abs/2609.04898)
+
+- summary: RefactorPlatform is an open-source evaluation harness for repository-scale refactoring that isolates design choices to determine agent success
+- methods: AST-aware chunking, retrieval-augmented execution, multi-agent execution
+- findings: AST-aware chunking outperforms naive token-window chunking by 25-30%; retrieval-augmented single agent beats sub-agent configuration; retrieval's accuracy gains absorb its token overhead
 
 ### [Privacy-Preserving Topology-Guided Safety for LLM-Based Multi-Agent Systems via Federated Graph Learning](https://arxiv.org/abs/2609.02967)
 
 ### [Online Change-point Detection for Cooperative Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2609.05298)
 
+- summary: This paper proposes a lightweight algorithm-agnostic detector called Patterns of Past Rewards (PPR) for online change-point detection in cooperative multi-agent reinforcement learning systems.
+- methods: Patterns of Past Rewards (PPR), statistical drift detector, smoothing agents' return streams
+- findings: PPR offers a balanced approach to detection speed and alarm stability; PPR limits redundant detections while identifying controlled shifts
+
 ### [One Policy, Any Budget: Internalizing Budget-Aware Search via Reinforcement Learning](https://arxiv.org/abs/2609.00813)
+
+- summary: The authors propose AnySearch, a framework that enables a single policy to perform budget-aware search under any budget constraint through a training scaffold and curriculum reinforcement learning.
+- methods: curriculum reinforcement learning, training scaffold, composite reward optimization
+- findings: outperforms baselines across all budget scales; generalizes to unseen constraints beyond the training range; achieves superior tool productivity without excessive token overhead
 
 ### [NS-Copilot: An LLM-Driven Agent System for Autonomous Neuroscience Analysis](https://arxiv.org/abs/2609.01971)
 
+- summary: NS-Copilot, an LLM-driven multi-agent system, is presented to autonomously support end-to-end workflows for diverse professional tasks in neuroscience analysis.
+- methods: multi-agent system, natural-language interface, code generation, result synthesis
+- findings: NS-Copilot outperforms strong baselines on neuroscience benchmarks; effective and scalable neuroscience analysis
+
 ### [Measuring AI Accountability Through Argumentation Analysis: Can Model Reasoning Withstand Scrutiny?](https://arxiv.org/abs/2609.05088)
+
+- summary: This study investigates an alternative standard for evaluating moral reasoning in large language models (LLMs) by assessing the structural quality of their defenses in response to critical questions through a dialectical protocol.
+- methods: dialectical protocol, Walton's theory of argumentation schemes, Govier's criteria for argument cogency
+- findings: models defend their reasoning well above the rubric minimum; failure mass concentrates on grounds and sufficiency; reasoning is better defended than post-hoc justification
 
 ### [MaxKernel: Agentic Kernel Generation for TPUs](https://arxiv.org/abs/2609.04523)
 
+- summary: This work presents MaxKernel, a multi-agent system for designing and authoring high-performance custom kernels for accelerators, leveraging Large Language Models and real-time compiler feedback.
+- methods: Human-in-the-Loop, Autonomous agent, Graph-Based Autonomous Search
+- findings: MaxKernel generates highly optimized implementations; matches expert hand-tuned baselines; delivers significant performance across the benchmark
+
 ### [MASkills: Continual Skills Optimization for Multi-Agent LLM Systems](https://arxiv.org/abs/2609.02094)
+
+- summary: MASkills, a continual learning framework, optimizes multi-agent LLM systems through agent skills, enabling improvement from interaction experience on complex tasks.
+- methods: skill-conditioned credit assignment, hierarchical credit aggregation, momentum-smoothed optimization
+- findings: MASkills enables agent skill libraries to evolve through refinement, induction, consolidation, and pruning; MASkills demonstrates effectiveness across multiple agentic tasks
 
 ### [Making Every Tool Call Count: Necessary Tool-Evidence Path Rewards for Agentic Vision-Language Models](https://arxiv.org/abs/2609.03493)
 
+- summary: The authors introduce a novel annotation scheme and supervision mechanism to improve the performance of agentic vision-language models by explicitly specifying the essential external evidence and corresponding tool calls for each query.
+- methods: NTEP annotation scheme, NTEP-R supervision mechanism, non-repeated-goal regularizer
+- findings: improved search-oriented accuracy; improved tool-use efficiency; importance of fine-grained tool-evidence path supervision
+
 ### [MABPD: Multi-Agent Bias Probing & Detection via Structured Argument Debate](https://arxiv.org/abs/2609.04841)
+
+- summary: The authors introduce MABPD, a pipeline that uses structured multi-agent deliberation to detect media bias in news articles without requiring supervised training or large annotated corpora.
+- methods: Multi-Agent Bias Probing & Detection, Structured Argument Debate protocol, ablation study
+- findings: MABPD achieves 83.4% macro F1 on the BABE benchmark without task-specific training; Removing the debate module reduces F1 by up to 10.6 points; MABPD yields 75.0% zero-shot accuracy on the SemEval 2019 HyperPartisan corpus
 
 ### [LLM-as-a-Judge Is Not an Oracle: Why Self-Improving Agents Need Deterministic Guardrails](https://arxiv.org/abs/2609.02246)
 
 ### [La Agente Óptima: Towards Agentic Self-Driving Laboratories](https://arxiv.org/abs/2609.04564)
 
+- summary: La Agente Óptima, an agentic framework, is presented to construct and supervise Bayesian optimization campaigns across computational and experimental systems, accelerating scientific discovery in self-driving laboratories.
+- methods: Bayesian optimization, ablation studies, closed-loop campaigns
+- findings: identification and correction of mid-run measurement failure; increase in yield from 30% to 59% in a multi-objective flow-chemistry campaign; reduction in cost and starting material usage compared to human-directed campaigns
+
 ### [KC-Bench: A Dynamic Interactive Benchmark for Evaluating Knowledge Conflicts in LLM Agents](https://arxiv.org/abs/2609.03588)
+
+- summary: KC-Bench is introduced as a benchmark for measuring the capability of LLMs to reconcile user instructions, parametric knowledge, and dynamic environmental observations across various conflicts.
+- methods: benchmarking, evaluation
+- findings: no model handles factual correction, identity consistency checking, and temporal conflict resolution reliably across all settings; missed conflicts can propagate to tool calls or synthetic protected-data flows
 
 ### [Iris: Climbing to the Search Frontier](https://arxiv.org/abs/2609.04304)
 
 ### [Investigating Assistant Bias in LLM User Simulators Using a Role Vector](https://arxiv.org/abs/2609.00608)
 
+- summary: LLM-based user simulators exhibit 'assistant bias', which compromises evaluation validity, and this bias can be analyzed and identified at the model activation level.
+- methods: model activation analysis, role-playing prompts
+- findings: assistant bias is structurally identifiable; user-role activation associates with simulation realism; user-role activation can exaggerate user behaviors
+
 ### [Interface-Induced Trajectory Censoring](https://arxiv.org/abs/2609.03966)
 
 ### [InSight: A Benchmark for Agentic Claim Verification in Interactive Visualizations](https://arxiv.org/abs/2609.01383)
 
+- summary: The paper introduces InSight, a benchmark for agentic claim verification over interactive visualizations, to evaluate the ability of models to navigate and reason about dynamic environments.
+- methods: benchmark evaluation, interaction trace analysis
+- findings: state-of-the-art models struggle with interactive verification; interaction traces can be used as proxies for reasoning
+
 ### [How to Speculate about Uncertainty in Agentic Coding? A Draft-Model Gate Method](https://arxiv.org/abs/2609.05274)
 
+- summary: The Speculative Uncertainty (SU) method is presented to recover a predictive failure signal for black-box LLM agents, reducing execution error rates and token costs in software engineering tasks.
+- methods: Speculative Uncertainty (SU), speculative decoding, cross-likelihoods extraction, calibration against verifiable objective
+- findings: 6-8 percentage points reduction in execution error rate; 14-19% reduction in token cost; transferability to out-of-distribution benchmarks without retraining; generalizability across agent models
+
 ### [How Fast Do Agents Rot? An Empirical Study of Long-Horizon Degradation in LLM Agents for Production Decision-Making](https://arxiv.org/abs/2609.01660)
+
+- summary: The reliability of large language model agents degrades significantly as task horizons increase, despite high success rates in benchmarks with shorter horizons.
+- methods: controlled study, task horizon analysis, reliability measurement
+- findings: task success follows a geometric law governed by a single per-step reliability parameter; degradation is driven by step count rather than context length; substantial gap between benchmark and production conditions
 
 ### [How do LLMs Evaluate Perceived Moral Agency? Investigating Moral Decision-Making in Human-Artificial Agents Interactions](https://arxiv.org/abs/2609.05037)
 
 ### [How a Chatbot's Response Style Shapes a Classroom: A Multi-Agent Simulation of Students Consulting AI](https://arxiv.org/abs/2609.05018)
+
+- summary: A virtual classroom simulation was built to study the psychological effects of LLM-based chatbots on user behavior and relationships, revealing varying outcomes based on different response styles.
+- methods: virtual classroom simulation, agent-based modeling, system prompts
+- findings: solution-oriented style kept AI dependence low; affirming and inciting styles increased AI dependence; listening style did not relieve accumulated stress
 
 ### [HiRS-Agent: A Hierarchical Multi-Agent System for Reliable Long-Horizon Remote Sensing Task Solving](https://arxiv.org/abs/2608.30672)
 
@@ -1406,69 +3631,189 @@
 
 ### [Harness Engineering in LLM Tool Use via Agent-Native Reusable Tool Primitives](https://arxiv.org/abs/2609.01736)
 
+- summary: The authors introduce Tool Primitives, a design that enables natural language interface for tool calling, and propose HEART, a framework that orchestrates Tool Primitives and ToolFace for reliable execution in complex settings.
+- methods: natural language interface, dynamic tool invocation planning, multi-step execution, feedback-driven recovery
+- findings: HEART outperforms SFT-based models by 10% on average; HEART surpasses GPT-5.4, Claude-4.6-Sonnet, and Gemini-3.1-Pro by 6% on average; HEART reduces API cost by up to 85%; HEART achieves 84% task completion on 50 real-world tasks
+
 ### [Harbor Adapters and Harbor-Index: Infrastructure and a Curated Meta-Dataset for Large-Scale Agentic Evaluation](https://arxiv.org/abs/2609.04298)
+
+- summary: The authors introduce Harbor Adapters, a unified evaluation infrastructure for agentic benchmarks, and conduct a large-scale evaluation of 8 models across 54 benchmarks, resulting in the curated Harbor-Index set of 82 tasks.
+- methods: benchmark adapters, parity experiments, large-scale evaluation, difficulty filtering, AI and human audit
+- findings: every model-harness configuration has a pass rate below 30%; the strongest model reaches 28.0% pass rate
 
 ### [GPS-Bench: A Governance Policy Benchmark for Automating Policy Analysis](https://arxiv.org/abs/2609.03553)
 
+- summary: GPS-Bench is introduced as an evidence-grounded benchmark for governance policy simulation to evaluate the validity of LLM-based policy simulations by comparing plausible behavior with observed outcomes.
+- methods: joint reasoning, independent and communicating actor agents, graph-based methods, weight-level fine-tuning, decomposition
+- findings: Fine-tuning on the grounded record gives the strongest actor-level impact prediction; Decomposition adds mechanism to actor-level impact prediction; Multi-agent simulation improves prediction and interpretation of policy outcomes
+
 ### [From Language Models to World-Acting Systems: Progress and Limits of Agentic AI across Digital, Social, Virtual, and Physical Environments](https://arxiv.org/abs/2609.04894)
+
+- summary: This critical review examines the development of large language models as consequential agents and proposes a framework for justified delegation of authority to these models.
+- methods: critical review, synthesis of primary research, analysis of technical specifications
+- findings: action-interface expansion is more convincing than robust completion or recovery; multi-agent organization adds specialization but also cost and correlated failure; persistent simulations support training but do not demonstrate agency
 
 ### [First Things First: Teaching LLM-Based Agents to Prioritize Must-Haves before Nice-to-Haves](https://arxiv.org/abs/2609.05224)
 
 ### [FaVOR: LLM-Based Agentic Framework for Factor Mining via Empirical Validation](https://arxiv.org/abs/2608.30192)
 
+- summary: The authors propose FaVOR, a framework that restructures factor mining around hypothesis-level evidence rather than return outcomes, to address the inconsistency between mathematical form and economic meaning in automated factor mining approaches.
+- methods: Decomposition, Validation, Integration
+- findings: FaVOR outperforms existing baselines; FaVOR produces signals that are interpretable by construction; FaVOR produces signals that are regime-robust and economically faithful
+
 ### [EvoSkill Injection: Red-Teaming Autonomous Skill Generation and Evolution in Self-Evolving Agents](https://arxiv.org/abs/2608.30429)
+
+- summary: This paper proposes a threat model called EvoSkill Injection and a red-teaming framework called SARGE to evaluate the risk of malicious skill formation in self-evolving agents.
+- methods: red-teaming, benchmarking
+- findings: SARGE induces malicious skill formation; injected skills are persistently stored and repeatedly activated; persistent capability corruption
 
 ### [EVOHARNESSBENCH: Can Your Agents Keep Pace with an Evolving Harness?](https://arxiv.org/abs/2609.04280)
 
+- summary: EVOHARNESSBENCH is a benchmark for evaluating agents under controlled harness evolution, introducing non-stationarity in the externally supplied harness itself across three axes: tools, skills, and agents.
+- methods: deployment evaluation, self-evolving adaptation evaluation
+- findings: harness-induced forgetting; inconsistent gains from self-evolving adaptation; retention and adaptation can pull in different directions
+
 ### [ERPBench: Evaluating LLM Agents for Enterprise Decision-Making Across Competitive Market Ecologies](https://arxiv.org/abs/2609.04667)
+
+- summary: ERPBench is introduced as a benchmark for evaluating enterprise decision agents in different competitive market ecologies, revealing that model rankings may not transfer across ecologies.
+- methods: Benchmarking, Simulation, Execution-instrumented evaluation
+- findings: Model rankings differ between Solo and Arena ecologies; Gemini's performance improves in Arena ecology; Task-level winners differ between ecologies in 79 out of 100 problems
 
 ### [ElderBench: Benchmarking Autonomous Mobile Agents for Older Adults](https://arxiv.org/abs/2609.04850)
 
+- summary: This study introduces ElderBench, a benchmark for evaluating mobile GUI agents in scenarios tailored to older adults, and reveals significant performance degradation of existing agents when handling elderly-oriented instructions.
+- methods: benchmark construction, linguistic divergence characterization, agent evaluation, failure analysis, linguistic feature analysis
+- findings: substantial performance degradation of GUI agents with elderly-oriented instructions; elderly-specific language patterns contribute to agent failures
+
 ### [Efficient Test-Time Adaptation through Human-AI Interaction](https://arxiv.org/abs/2609.04141)
+
+- summary: This work proposes test-time adaptation through human-agent interaction (TAHI) to close the gap between AI agents and individual expertise in tasks such as writing and visual creation.
+- methods: test-time adaptation, human-agent interaction, evolving rubric module
+- findings: 4.5-20.9% improvement in solo task success; 16.0-22.3% more failures caught by evolving rubric module; up to 8.8% improvement in success that generalizes across users
 
 ### [Editable Visual Design](https://arxiv.org/abs/2609.04034)
 
+- summary: The proposed Editable Visual Design paradigm combines the strengths of diffusion-based models and code-based visual generation to create editable visual designs with decoupled layers and real text.
+- methods: Coding Agent, image generation model, closed-loop workflow, Agent Design Replay
+- findings: decoupled layers and real text; refined aesthetics; production-grade editability
+
 ### [EarlyEval: Cheaper Agent Evaluation via Early Outcome Prediction](https://arxiv.org/abs/2609.02783)
 
+- summary: This work introduces EarlyEval, a framework that predicts the outcome of LLM agents early in the evaluation process, reducing the cost of evaluation by eliminating unnecessary steps and tokens.
+- methods: early outcome prediction, benchmark distillation, LightGBM success and failure classifiers
+- findings: 13%-26% reduction in agent steps; up to 44.1% reduction in input tokens and 29.4% reduction in output tokens; 89%-97% prediction accuracy
+
 ### [Dr. Claw: An AI Scientist Workspace for Vibe Research](https://arxiv.org/abs/2609.00365)
+
+- summary: Dr. Claw is an open-source workspace that integrates coding agents into a controllable and auditable human-in-the-loop workflow for end-to-end research.
+- methods: human-in-the-loop workflow, multi-executor coordination, persistent state objects
+- findings: Dr. Claw scores higher on research completeness; auditable and recoverable process trail
 
 ### [Diffusion Language Models for Mobile Edge Agentic AI: Foundations, Applications, and Challenges](https://arxiv.org/abs/2609.04778)
 
 ### [Delegation Without Trust: An Empirical Gap Analysis of Identity, Authorization, and Runtime Governance in Multi-Agent LLM Systems](https://arxiv.org/abs/2609.00267)
 
+- summary: The authors argue that agent security must be evaluated under an untrusted-model assumption and propose a threat model and security requirements for multi-agent delegation, as well as an authorization broker that closes the security gap.
+- methods: threat modeling, adversarial evaluation, implementation of authorization broker
+- findings: existing agent runtimes and frameworks are vulnerable to four threats; the proposed authorization broker blocks all four threats and resists direct attacks; the broker enforces security at negligible cost
+
 ### [DCFA: Dual-view Causal-inspired Attribution for Failure Reasoning in LLM-based Multi-agent Systems](https://arxiv.org/abs/2609.04749)
+
+- summary: The proposed DCFA framework improves failure attribution in large language model-based multi-agent systems by identifying the decisive error that leads to system failure.
+- methods: DCFA framework, global module, local module, counterfactual-inspired reasoning
+- findings: DCFA improves step-level accuracy by up to 8.27% over state-of-the-art baselines
 
 ### [Cost-Aware Hierarchical Multi-Agent Ransomware Detection and Family Attribution](https://arxiv.org/abs/2609.04820)
 
+- summary: This paper presents a Cost Aware Hierarchical Multi-Agent System (HMAS) for adaptive ransomware detection, which balances analysis performance against computational cost by selectively using different modalities.
+- methods: static analysis, dynamic analysis, memory modality, cost modeling, large language model verification
+- findings: 96.57% accuracy for binary detection; 0.90 macro-F1 for family attribution; 43.97% reduction in average analysis cost; 56.05% of cases resolved using static evidence alone
+
 ### [CoSkill: Joint Reinforcement Learning of Reasoning and Meta-Skill Agents for Hierarchical Skill Evolution](https://arxiv.org/abs/2609.04865)
+
+- summary: CoSkill, a unified multi-agent RL framework, improves the sample efficiency of agentic reinforcement learning by enabling flexible evolution of skills and their co-adaptation with the reasoning agent.
+- methods: multi-agent RL, hierarchical skill library, cooperative team learning
+- findings: CoSkill outperforms prior skill-based and RL baselines; achieves superior early-stage sample efficiency; achieves superior asymptotic performance; achieves superior wall-clock efficiency
 
 ### [CoLMIN: LLM-based Multi-Decision Path Negotiation for Cooperative Autonomous Driving](https://arxiv.org/abs/2609.04807)
 
+- summary: This study proposes CoLMIN, a framework for cooperative autonomous driving that leverages large language models to achieve stable decision consensus through multi-decision path negotiation and reflective reasoning.
+- methods: LLM-based Multi-Intent Negotiation, Evaluation-based Shallow Reflection, LLM-based Deep Reflection
+- findings: CoLMIN achieves stable decision consensus; CoLMIN outperforms existing methods in challenging interactive driving scenarios; CoLMIN mitigates cognitive fixation and prevents convergence to suboptimal solutions
+
 ### [CAST: Critique-Aware Supervision for Training Reliable Long-Horizon Tool-Calling Agents](https://arxiv.org/abs/2608.30147)
+
+- summary: The authors propose CAST, a critique-aware training framework that improves the reliability of large language model agents in long-horizon, interactive environments by converting sparse task outcomes into action-level supervision for critique learning and policy optimization.
+- methods: CAST, critique-aware training, prompt-based critique agents, optimization-based methods
+- findings: CAST improves reliability across domains; outperforms GPT-OSS-120B by over 10% on Retail tasks; yields an additional 9% improvement on Telehealth in an out-of-domain setting
 
 ### [Calibration is the Bottleneck: An Action-Class Diagnostic of Multi-Turn Tool-Calling](https://arxiv.org/abs/2609.00949)
 
+- summary: A diagnostic framework is proposed to evaluate large language model agents in multi-turn tool-calling scenarios, revealing action-class miscalibration as a substantial failure mode.
+- methods: action-class-oriented diagnostic framework, self-revealing upper bound Acc <= GAR
+- findings: action-class miscalibration is a substantial failure mode; calibration is reshapable through context-only perturbations; effect of perturbation depends on the mechanism and model family
+
 ### [Bioinfoysis Technical Report](https://arxiv.org/abs/2609.03871)
 
+- summary: Bioinfoysis, a multi-agent harness, is introduced to improve bioinformatics automation by representing each request as a persistent, artifact-grounded analysis run with global planning and step-wise replanning.
+- methods: global planning, step-wise replanning, structured handoffs, controlled runtime validation
+- findings: Bioinfoysis achieves state-of-the-art accuracy of 82.4% on BixBench; Bioinfoysis increases average accuracy on SeqQA2 and DbQA2 across four language models
+
 ### [Beyond Consensus: Downward Bias and Role Asymmetry in Multi-Agent LLM Judges for Subjective Evaluation](https://arxiv.org/abs/2608.30373)
+
+- summary: This paper compares a single-judge baseline against a consensus-based Multi-Agent Debate (MAD) protocol on subjective evaluation tasks and finds that the single-judge baseline achieves stronger human alignment than MAD.
+- methods: consensus-based MAD protocol, single-judge baseline, ablations
+- findings: MAD shows degradation in human alignment; asymmetric role prompting introduces a systematic downward bias; Symmetric MAD recovers baseline performance
 
 ### [Beyond Code Generation: Reliability, Verification, and Cost Economics in the Agentic Software Development Lifecycle](https://arxiv.org/abs/2609.04681)
 
 ### [Belief-Calibrated Optimization: An Explicit World Model for Agentic Optimization](https://arxiv.org/abs/2609.01861)
 
+- summary: The introduction of Belief-Calibrated Optimization (BCO) improves the performance of an LLM agent by writing down and revising its belief about the environment's response to edits as a persistent in-context document.
+- methods: Belief-Calibrated Optimization (BCO), offline ablation
+- findings: BCO reaches a higher train passrate than a matched control on five benchmarks; The gap remains on every held-out split; The accumulated document forecasts how the environment will respond more accurately than predictors given no document or a falsified document
+
 ### [AutoLR: Automating the Path from Research to Launch Review in Industrial Recommender Systems](https://arxiv.org/abs/2609.04871)
+
+- summary: The authors present AutoLR, an autonomous research-to-launch harness that combines multiple system mechanisms to improve the industrial recommender process in DASHEN, NetEase's gaming-community app.
+- methods: multi-expert council, deterministic evidence-weighted exploration--exploitation selector, layered knowledge system
+- findings: AutoLR can reliably coordinate the research-to-launch process; LLM agents can perform semantic reasoning and code generation; Deterministic controllers can retain authority over execution and metric extraction
 
 ### [ARISE-RL: Agentic Rubric-Grounded Iterative Self-Evolution with Reinforcement Learning](https://arxiv.org/abs/2609.01058)
 
+- summary: The authors propose ARISE-RL, a novel framework for training open-ended agents via reinforcement learning, which addresses the challenges of lacking verifiable gold answers and scalable rubrics.
+- methods: reinforcement learning, rubric-mediated co-evolution, Reward-Gated Self-Evolution Distillation
+- findings: ARISE-RL achieves robust and stable state-of-the-art performance across evaluated benchmarks; RG-SED reduces distribution mismatch and avoids blind imitation of noisy guidance
+
 ### [ARIA - An Agentic Framework for Autonomous Testing of Infotainment Systems](https://arxiv.org/abs/2609.04913)
+
+- summary: ARIA, a multi-agent LLM framework, is presented for autonomous end-to-end testing of Android infotainment systems via visual interaction, achieving 93.3% completion rate and 71.4% match with ground truth across 30 scenarios.
+- methods: Multi-agent LLM framework, Visual interaction, Closed-loop pipeline
+- findings: 93.3% completion rate; 71.4% match with ground truth; Caught all 5 known defects; Lower false-positive rate compared to single-agent baseline
 
 ### [Are We There Yet? Assessing Computer-Use Agents for Blind Users' Accessible Interaction with Desktop Applications](https://arxiv.org/abs/2609.00524)
 
+- summary: A three-week diary study with 8 blind users evaluated the effectiveness of a computer-use agent prototype, OLLA, in real-world desktop workflows.
+- methods: diary study, trace analysis, interviews
+- findings: GPT-5 achieved a 52.5% success rate; grounding, planning, constraint-tracking, and termination failures occurred; users had beyond-automation needs
+
 ### [Agentic Empirical Asset Pricing: Methodological Foundations](https://arxiv.org/abs/2609.00731)
+
+- summary: This study introduces Agentic Empirical Asset Pricing (AEAP), a new paradigm for asset pricing that utilizes autonomous systems for scientific discovery, and evaluates its effectiveness through a reference architecture and rigorous evaluation standards.
+- methods: backtesting, evaluation standards, rolling re-execution
+- findings: No single metric consistently ranks AEAP systems; Discovery process reliability is a key consideration; Evaluation pitfalls exist for future AEAP systems
 
 ### [A Structured Debate-Mixture-of-Agents Framework for Complex Clinical Diagnostic Decision Support](https://arxiv.org/abs/2609.05069)
 
+- summary: The Debate-Mixture-of-Agents (DMoA) framework improves diagnostic reasoning in complex settings by structuring role-based interaction, outperforming baseline models in rare disease and challenging cases.
+- methods: Multi-agent framework, Ablation experiments, Iterative diagnostic reasoning
+- findings: DMoA improved most likely diagnosis accuracy by 10.21 percentage points; DMoA improved safety rate by 11.36 percentage points; Framework design, base model choice, and token budget affect performance
+
 ### [A computable representation of the physical laboratory enables verifiable workflows](https://arxiv.org/abs/2609.03621)
+
+- summary: A computable representation of the physical laboratory is established to provide a foundation for end-to-end autonomous scientific discovery.
+- methods: typed research objects, compositional workflow algebra, stateful simulation
+- findings: capability-relative workflows can be generated for diverse scientific intents; the representation provides a foundation for end-to-end autonomous scientific discovery
 
 ### [A Case Study on Emergent Cheating and Whistleblowing in Autonomous Research Swarms](https://arxiv.org/abs/2609.04170)
 
@@ -1476,67 +3821,171 @@
 
 ### [Who is the Agent to Blame? Localizing Faithfulness and Citation Mistakes in Agentic Deep Research](https://arxiv.org/abs/2608.24306)
 
+- summary: The authors propose an evaluation method to improve citation recall in deep research systems by identifying and categorizing errors introduced by individual agents.
+- methods: evaluation method, taxonomy of errors, local testing of agent invocations
+- findings: poor citation recall in current DR systems; dominant error type varies across agents; simple interventions can raise citation recall by 5%
+
 ### [What Makes Agent Memory Useful for Reliable Unanswerable Question Handling?](https://arxiv.org/abs/2608.27924)
 
+- summary: A systematic study of agent memory for reliable handling of unanswerable questions under a unified agentic RAG framework reveals that memory can improve performance in some settings, but gains are selective and fragile under dataset shift.
+- methods: systematic study, evaluation of memory methods, cross-model memory reuse, cross-dataset transfer
+- findings: memory can improve UAQ performance in some settings; gains are selective and fragile under dataset shift; cross-model memory reuse is often more feasible than cross-dataset transfer; memory effectiveness depends strongly on representation
+
 ### [What Guides the Agent? Adjudicating Unauthorized Behavior via Localizing Behavior-Guiding Instructions](https://arxiv.org/abs/2608.24022)
+
+- summary: Attnlocate is a runtime framework that localizes context spans influencing tool-calling decisions in LLM agents to defend against injection attacks.
+- methods: object detection, attention aggregation, 1-D U-Net
+- findings: Attnlocate achieves a mean IoU of 0.743; average AUROC of 0.956; 0.934 true-positive rate at 0.067 false-positive rate
 
 ### [WeAgent-MMSearch: Native Text-Vision Interaction for Multimodal Search Agents](https://arxiv.org/abs/2608.28062)
 
 ### [VibeJam: A User Study Platform for Web Development with Agents](https://arxiv.org/abs/2608.29889)
 
+- summary: The authors introduce VibeJam, a browser-based platform for users to collaborate with AI agents to develop websites, and present the results of a pilot study demonstrating its effectiveness.
+- methods: user study, pilot study, browser-based platform
+- findings: VibeJam enables effective collaboration between users and AI agents; junior students created higher-quality websites using VibeJam than AI agents alone; experienced AI programmers rated VibeJam as fun, simple, and resembling commercial tools
+
 ### [TrustShiftProbe: Characterizing, Benchmarking, and Defending Staged Trust Attacks on MCP Servers](https://arxiv.org/abs/2608.23763)
 
 ### [TrustDABench: Benchmarking Reliability and Robustness of LLMs for Structured Data Analysis](https://arxiv.org/abs/2608.24145)
+
+- summary: TrustDABench, a benchmark for evaluating the reliability and robustness of large language models (LLMs) in analyzing structured data, reveals substantial headroom for improvement in trustworthy analysis.
+- methods: benchmarking, perturbation operators, Agentic-LLM-based generation framework
+- findings: LLMs rarely detect conflicting evidence; LLMs often continue along unsupported analysis paths; LLMs remain sensitive to perturbations
 
 ### [TRACE: A Self-Evolving Skill Bank for Consistent, Limit-Aware LLM Agents](https://arxiv.org/abs/2608.22793)
 
 ### [Towards Agentic Cloud Engineering: Graph and Loop Engineering with a Zero-Trust Agent Harness](https://arxiv.org/abs/2609.00050)
 
+- summary: Agentic Cloud Workflow Engineering is a framework that enables the automation of cloud-based agentic workflows by transforming natural-language tasks into validated code repositories and verified operational cloud deployments.
+- methods: graph engineering, loop engineering, agent harness engineering
+- findings: executions terminate with either a verified operational cloud deployment or an auditable terminal failure under bounded recovery; framework provides a unified engineering architecture for cloud-based workflows
+
 ### [Towards a Systems Foundation for Agentic Skills: Architecture, Lifecycle, and Security](https://arxiv.org/abs/2608.29596)
+
+- summary: This paper establishes a unified systems foundation and reference architecture for the agentic skills ecosystem, a paradigm for building scalable and robust autonomous language agents.
+- methods: formalization, systematic architecture delineation, empirical evaluation
+- findings: agentic skills as a foundational paradigm for autonomous language agents; nine-stage lifecycle for agentic skills; critical open challenges in continual learning and benchmark realism
 
 ### [Toward Effective and Reliable LLM Agents via Dynamic Ontology](https://arxiv.org/abs/2608.22974)
 
+- summary: The OaK framework dynamically constructs and refines task-oriented ontologies for large language model agents, improving their performance on domain-specific tasks.
+- methods: ontology construction, graph reasoning, task-adaptation functions, judge feedback
+- findings: OaK improves standard LLM agents; strengthens evidence grounding; boosts the reliability of multi-step reasoning
+
 ### [The Calls are Coming from Inside the Model: Investigating Probe-based Detection of Tool-Calling Errors in LLMs](https://arxiv.org/abs/2608.27750)
 
+- summary: This study examines the effectiveness of using linear probes to detect incorrect tool-calls in large language models, finding that probing is an effective means to catch a range of different tool-calling errors.
+- methods: linear probing
+- findings: probing is effective for detecting tool-calling errors; model size, probing layer, and model post-training type are important factors in success; probes can generalize to novel types of errors
+
 ### [SWE Refactor Bench: Can Coding Agents Complete a Long-Horizon, Whole-Repository Stack Migration?](https://arxiv.org/abs/2608.23564)
+
+- summary: The SWE Refactor Bench benchmark is introduced to evaluate the ability of coding agents to perform whole-repository migrations, addressing the limitations of existing benchmarks that only assess behavioural correctness.
+- methods: Migration Audit, Behavioural Tests, Agentic Verification
+- findings: Only 5.4% of runs pass all three evaluation stages; Migration completeness and behavioural correctness are distinct abilities; Agent capability differs across migration categories
 
 ### [SwarmWorld: Stigmergic technological evolution in societies of language-model agents](https://arxiv.org/abs/2608.26081)
 
 ### [String: An Agentic OS Where Every App Is a Markdown File](https://arxiv.org/abs/2608.28027)
 
+- summary: The authors present String, an open-source runtime that provides a specialized interface for LLM agents, treating their interaction as an operating-systems problem and achieving comparable success with reduced token usage.
+- methods: runtime design, evaluation, production use
+- findings: reduced token usage by 33.5%; comparable aggregate success across six models; improved accuracy with proper staging
+
 ### [SpeechGym: An Audio-Native Gym for Training Voice Agents via Reinforcement Learning](https://arxiv.org/abs/2608.26432)
+
+- summary: The authors present SpeechGym, an audio-native environment for training voice agents through speech, which overcomes the limitations of existing frameworks and achieves state-of-the-art results on a voice benchmark.
+- methods: on-policy reinforcement learning, Outcome-only GRPO, per-turn process reward
+- findings: Audio agentic capability does not follow from audio understanding; Perceptual errors can be trained; Behavioural failures can be trained; SpeechGym achieves state-of-the-art results on a voice benchmark
 
 ### [SETU: An Agentic Ecosystem for Multilingual, Persona-Aware Communication Coaching](https://arxiv.org/abs/2608.27524)
 
+- summary: This paper presents SETU, an ecosystem for corporate communication coaching that provides scalable and explainable tools to improve workforce communication in multilingual settings.
+- methods: trust-aware orchestration, modality-attributed coaching reports
+- findings: SETU generates coaching reports for formative training; SETU bridges communication gaps across regional languages and audience expectations
+
 ### [See, Hypothesize, Validate: Multimodal Agentic Framework for Discovering Governing PDEs](https://arxiv.org/abs/2608.27869)
+
+- summary: MAGE, a multimodal agentic framework, is introduced for discovering governing partial differential equations from observational data, outperforming existing methods in exact structural recovery and coefficient error.
+- methods: confidence governed hypothesis validation loop, multimodal diagnostics, VLM-powered phenomenology extraction, LLM-driven governing law synthesis
+- findings: 8/8 exact structural recovery on canonical PDE suite; lowest coefficient error among compared methods on 7/8 systems; improvements of up to 4 orders of magnitude in coefficient error
 
 ### [SAGE: From Direct Answering to Evidence-Grounded Inference for Chinese Ancient Document Understanding](https://arxiv.org/abs/2608.24011)
 
+- summary: The authors propose SAGE, a multi-agent framework for Chinese ancient document understanding that reformulates the task as evidence-grounded inference rather than direct answer generation.
+- methods: evidence-grounded inference, multi-agent framework, task-aware planning, tool-mediated evidence acquisition
+- findings: SAGE outperforms direct-answering baselines; SAGE surpasses larger monolithic LVLMs on most evaluated metrics
+
 ### [Safety Does Not Compose: Non-Decaying Loop State for Autonomous LLM Agents](https://arxiv.org/abs/2608.27141)
+
+- summary: The paper discusses the limitations of current safety mechanisms for large language model agents deployed as autonomous loops and proposes a new approach called LoopHarness to address these limitations.
+- methods: theoretical analysis, empirical evaluation, red team testing
+- findings: trajectory-scoped monitors have limited effectiveness against cross-iteration attacks; carrying a geometrically decaying risk score is insufficient; LoopHarness provides a persistent, non-decaying safety state at the loop level
 
 ### [Resource Constraints and Performance in Agentic AI Systems](https://arxiv.org/abs/2608.27886)
 
 ### [RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution](https://arxiv.org/abs/2608.27439)
 
+- summary: The authors propose RedEvoAgent, a black-box red-teaming agent that adaptively evolves attack skills to improve tool efficiency and transferability across different models and execution harnesses.
+- methods: tool-effectiveness profiling, Deciding-Tool Attribution, validation ratchet
+- findings: RedEvoAgent outperforms fixed and agentic baselines; improves tool efficiency; transfers across attacker models and target execution harnesses
+
 ### [PROOF-Gen: From Optimized Data to Better Distillation](https://arxiv.org/abs/2608.23911)
+
+- summary: The authors introduce PROOF-Gen, a method that recovers golden trajectories from failed teacher-generated trajectories via per-scenario prompt optimization, improving the performance of tool-calling models.
+- methods: PROOF-Gen, per-scenario prompt optimization, fine-tuning
+- findings: 93% of failed scenarios are recovered on τ2-bench; Qwen3-4B-Instruct-2507 improves from Pass^1=0.132 to 0.529; Gemma 4 E4B-it gains +7.2pp on BFCL v4 multi-turn; positive transfer in every locale
 
 ### [ProgRouter: Online Progress-Guided Orchestration for Multi-Agent LLM Workflows under Quality-Cost Tradeoffs](https://arxiv.org/abs/2608.25992)
 
 ### [Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi-Agent Trading Systems](https://arxiv.org/abs/2608.24069)
 
+- summary: This study examines the vulnerability of LLM-based multi-agent trading systems to adversarial attacks through a systematic empirical study, finding that no architecture is inherently robust.
+- methods: empirical study, Adversarial Signal Preservation Score (APS)
+- findings: no architecture is inherently robust; adversarial signals can propagate to final decisions
+
 ### [PLCBench: Can Autonomous LLM Agents Turn PLC Access into Sustained Physical Impact?](https://arxiv.org/abs/2608.26882)
+
+- summary: The authors present PLCBENCH, a framework for evaluating the cyber-to-physical capability of large language model agents on industrial control systems, and demonstrate its effectiveness on four commercial PLCs and five LLM families.
+- methods: Hardware-in-the-loop framework, Closed-loop process simulation, Deterministic evaluation
+- findings: 31.3% of episodes sustained their physical objectives; Richer process observation increases conditional objective attainment; Failure localization in configured PLC-process deployments
 
 ### [PersonaForge: Realistic Multi-Turn User Simulation for Agentic Systems](https://arxiv.org/abs/2608.28378)
 
+- summary: The authors introduce PersonaForge, a user simulation framework for synthesizing realistic multi-turn user-agent interactions, to address the gap between how users interact with agents and how such systems are trained and evaluated.
+- methods: user simulation, Reverse Deep Construction, SOUL-driven behavioral control
+- findings: 75.9% of interactions are multi-turn; PersonaForge training improves composite score by +4.1%; improved interaction efficiency with fewer turns and tool calls
+
 ### [PeakBench: Benchmarking Resource-Aware Tool Invocation in LLM Agents](https://arxiv.org/abs/2608.24509)
+
+- summary: PeakBench is introduced as a benchmark for evaluating executable multi-tool workflows with a focus on resource-constrained scheduling and dependency planning.
+- methods: two-part evaluation framework, dependency annotations, resource profiling
+- findings: strong logical planning does not guarantee safe or efficient execution under resource constraints; exposing resource information can reduce avoidable overflows and improve resource utilization
 
 ### [ParallelWorld: Test-Time Scaling for Embodied Reasoning](https://arxiv.org/abs/2608.22971)
 
+- summary: The authors propose ParallelWorld, a multi-horizon test-time scaling framework for embodied reasoning that enables agents to simulate and evaluate multi-step future trajectories in parallel before committing to an action.
+- methods: multi-horizon test-time scaling, verifier-guided tree-search, parallel trajectory simulation
+- findings: ParallelWorld improves active perception and reasoning performance; multi-step prospective simulation outperforms greedy, single-step trials
+
 ### [Paint What You See: Benchmarking Dexterous Visual Tool Use in Multimodal Agents](https://arxiv.org/abs/2608.25417)
+
+- summary: The authors propose EASEL, a benchmark for evaluating dexterous visual tool use, and find that current multimodal agents struggle with this task, highlighting the need for improved models and training data.
+- methods: benchmarking, dataset creation, model evaluation
+- findings: current models struggle with dexterous visual tool use; EASEL-9B surpasses the base model by 6.3%
 
 ### [openJiuwen: Beyond Static Harnesses for Long-Horizon Coding Agents](https://arxiv.org/abs/2608.27969)
 
+- summary: The openJiuwen harness is presented as a solution to the challenges of structural composability and runtime adaptivity in long-horizon coding agents, achieving strong performance on complex coding tasks.
+- methods: capability composition, runtime adaptation, systematic evaluation
+- findings: openJiuwen achieves 82.6% and 87.19% on SWE-bench Verified and Terminal-Bench 2.1; exceeds strongest selected official-leaderboard point estimates by 3.4 and 3.39 percentage points
+
 ### [NetConfArena: An Executable Benchmark for LLM Agents in Closed-Loop Network Configuration](https://arxiv.org/abs/2608.23179)
+
+- summary: NetConfArena is presented as an executable benchmark for evaluating large language model agents in closed-loop network configuration, providing a realistic and risk-free environment to assess their reliability and failure patterns.
+- methods: executable benchmarking, emulation-grounded pipeline, task template generation
+- findings: failures in LLM agents are not limited to command errors; gaps in task-specification adherence and robust planning and execution
 
 ### [Naive Prompt Optimization: Rethinking the Need for Complex Prompt Search](https://arxiv.org/abs/2608.27266)
 
@@ -1544,49 +3993,133 @@
 
 ### [MobilePA-Bench: Benchmarking Mobile Planner Agents on Complex Real-World Tasks](https://arxiv.org/abs/2608.23035)
 
+- summary: MobilePA-Bench is a benchmark for evaluating the tool-calling and planning abilities of mobile planning agents, addressing the limitations of existing benchmarks.
+- methods: benchmarking, reinforcement learning
+- findings: Current LLMs are unreliable in mobile settings; Performance drops sharply under strict tool ordering, permission limits, and unexpected runtime errors
+
 ### [Memory-First Fact-Checking: A Knowledge-Graph-Grounded Multi-Agent System for Misinformation Detection](https://arxiv.org/abs/2608.29617)
+
+- summary: This paper introduces a hybrid fact-checking framework that integrates Knowledge Graph-based semantic memory with adversarial multi-agent reasoning for explainable misinformation detection.
+- methods: Sentence-BERT-based semantic retrieval, Natural Language Inference, adversarial multi-agent reasoning, graph-aware confidence mechanism
+- findings: 97.4% accuracy; 92.6% macro-averaged F1-score; outperforms Llama 3.3 70B baseline
 
 ### [Markets, Not Planners: Decentralized Orchestration of LLM Agents with Private Information](https://arxiv.org/abs/2608.23867)
 
+- summary: AgentLance, a repeated labor market, is introduced to efficiently orchestrate LLM agents by allowing them to bid on tasks based on their private costs and strategies, outperforming centralized orchestration and other baselines.
+- methods: hierarchical delegation, VCG-style payment rule, controlled experiments
+- findings: AgentLance matches agents to their specializations; AgentLance shifts work toward cheaper agents as cost sensitivity rises; AgentLance outperforms single-model, centralized-orchestration, and market baselines
+
 ### [MACGen: Toward Functionally Correct and Secure Code Generation via Multi-Agent Collaboration](https://arxiv.org/abs/2608.25457)
+
+- summary: MACGen, a multi-agent framework, is presented to generate secure code by integrating planning, security analysis, code synthesis, and refinement to optimize security and functionality.
+- methods: multi-agent framework, planning, security analysis, code synthesis, refinement
+- findings: MACGen improves F&S@1 over direct prompting by 19.61 and 10.57 percentage points on CWEval and BaxBench respectively
 
 ### [LUCID: An Agentic AI Framework on Digital-Twin in the Loop for QoS-Guaranteeing Robotic Control](https://arxiv.org/abs/2608.28437)
 
+- summary: LUCID is a cloud-robotics pipeline that dynamically orchestrates trajectory planning and radio resource management to adapt to changing conditions and operator intents.
+- methods: dynamically orchestrating optimization problem schemas, collision-free path planning, spectral-radius RRM validator, multimodal surrogate model
+- findings: LUCID robustly adapts to changing intents, active-robot counts, and scenes; FastConfigNet reduces planning latency
+
 ### [LoopArena: Benchmarking Models as Runtime Controllers for Loop Engineering](https://arxiv.org/abs/2608.28281)
+
+- summary: LoopArena is a benchmark for evaluating the ability of a model to guide a separate coding agent through a long-running task, with results showing substantial room for improvement in long-horizon loop control.
+- methods: benchmarking, evaluation
+- findings: 24.69% Strict Success Rate on full tasks; 64.4% average reduction in estimated inference cost
 
 ### [LLM-based Agents for Forecasting and Prediction: Methods, Training, Evaluation, and Applications](https://arxiv.org/abs/2608.23058)
 
+- summary: This study investigates large language models (LLMs) as forecasting agents, examining their architectures, training methods, and evaluation protocols in various applications.
+- methods: standalone LLM workflows, tool- and retrieval-augmented agents, hybrid systems, training methods, evaluation protocols
+- findings: sensitivity to small input perturbations; limited improvement in accuracy with LLM component; contamination in benchmark gains; need for calibration under distribution shift
+
 ### [LLM Agents for Time-Series: A Survey](https://arxiv.org/abs/2608.26226)
+
+- summary: This survey provides a task-oriented guide to designing LLM-based agents for time-series problems by organizing existing systems into four categories and examining their design choices.
+- methods: problem-driven taxonomy, task-oriented design
+- findings: task requirements shape agent architecture; open gaps for future work
 
 ### [LifePlanner: Evaluating LLM Agents for Geo-spatial Planning with Social Media Data](https://arxiv.org/abs/2608.25039)
 
 ### [Learning to Use Tools: Reinforcement Learning for Tool-Integrated Mathematical Reasoning](https://arxiv.org/abs/2608.28447)
 
+- summary: This study explores the integration of calculator tools with large language models to improve mathematical reasoning on the Countdown task, achieving significant performance gains with reinforcement learning methods.
+- methods: supervised fine-tuning, on-policy reinforcement learning, RLOO, RLOO++, GRPO, DAPO
+- findings: calculator tool integration improves performance; reinforcement learning encourages effective tool use; Tool-DAPO achieves the strongest performance
+
 ### [Knowing When Not to Reuse: Conditional Experience Transfer in Autonomous LLM Post-Training](https://arxiv.org/abs/2608.26730)
+
+- summary: The paper introduces Boundary-Calibrated Intervention Transfer (BCIT), a method for authorizing experience reuse in autonomous post-training of large language models.
+- methods: Boundary-Calibrated Intervention Transfer (BCIT)
+- findings: BCIT authorizes fewer harmful updates; BCIT attains higher equal-budget final-model quality than alternatives
 
 ### [JIT-Agent: Scaling Harness Intelligence via Just-in-Time Harness Evolution](https://arxiv.org/abs/2608.25593)
 
+- summary: JIT-Agent, a harness intelligence model, is introduced to synthesize task-adaptive agent harnesses for arbitrary off-the-shelf agentic LLMs, leading to improved performance in various evaluations.
+- methods: harness intelligence model training, task-adaptive agent harness synthesis, harness customization, harness repair, self-evolution
+- findings: JIT-Agent-generated harnesses are performance-competitive with mature agent runtimes; JIT-Agent improves multi-scale model families; harness intelligence is a trainable, transferable, and compounding dimension of agent capability
+
 ### [INTENT-AS-A-TOOL Makes it Easy to Track Agentic Misalignment](https://arxiv.org/abs/2608.27348)
+
+- summary: This study introduces INTENT-AS-A-TOOL, an approach to monitor and prevent harmful actions in large language models by tracking intent signals in reasoning.
+- methods: INTENT-AS-A-TOOL, chain-of-thought monitoring
+- findings: harmful execution is often preceded by intent signals in reasoning; INTENT-AS-A-TOOL complements CoT monitoring and identifies critical steps for online intervention
 
 ### [If Agents Were Angels, No Governance Would Be Necessary: Out-of-Band Policy Enforcement at a Trusted Tool Boundary](https://arxiv.org/abs/2608.27646)
 
+- summary: The authors present Out-of-Band Policy Enforcement (OBPE), a system that enforces data policies outside of agent reasoning to prevent unauthorized access to sensitive information.
+- methods: policy enforcement, semantic gating, benchmarking
+- findings: OBPE reduces trace failures from 57.6% to 0.2%; OBPE increases safe-useful completion by 21.8 points; Agent policy cannot widen the maximum grant set by the data policy owner
+
 ### [IAPO: Influence-Aware Policy Optimization for Credit Assignment in Multi-Turn Service Agents](https://arxiv.org/abs/2608.24588)
+
+- summary: This study introduces Influence-Aware Policy Optimization (IAPO), a method for training service agents to solve long-horizon tasks through multi-turn interactions with users and external tools.
+- methods: Influence-Aware Policy Optimization (IAPO), multi-turn reinforcement learning
+- findings: IAPO outperforms multi-turn RL baselines across three service-agent benchmarks; IAPO provides a principled approach to training service agents from sparse outcome feedback
 
 ### [How Do LLM Agents Actually Get the Flag? Trace-Level Provenance for Agentic Offensive Security Evaluation](https://arxiv.org/abs/2608.26237)
 
+- summary: The authors introduce CTF-ABACUS, a framework for evaluating the offensive security capabilities of autonomous language-model agents in Capture-the-Flag (CTF) benchmarks, providing a more nuanced assessment of agent performance.
+- methods: CTF-ABACUS, trace-based agent auditing, penetration-testing phases, categorical techniques
+- findings: Trace-verified exploits account for only 62-87% of recovered flags; Shortcut recoveries follow substantially shallower trajectories
+
 ### [GRAIN: Bridging Name and Narrative Shifts in Real-World Graph Reasoning through Invariance-Rewarded Agentic RL](https://arxiv.org/abs/2608.27142)
+
+- summary: The authors propose GRAIN, a single-agent framework optimized via reinforcement learning, to improve the robustness of Large Language Models (LLMs) in extracting topological structures from noisy text.
+- methods: reinforcement learning, semantic parsing, Structure Invariance Reward
+- findings: GRAIN outperforms multi-agent baselines by 16.45% in accuracy; GRAIN reduces latency by approximately 24%; GRAIN demonstrates superior structural generalization, halving the out-of-distribution gap
 
 ### [From State to Action: OODA-Tool for Reliable Multi-Turn Tool Use](https://arxiv.org/abs/2608.24368)
 
+- summary: OODA-Tool, a typed closed-loop policy, is introduced to mitigate state-action competition in multi-turn tool use by separating state preservation from action realization.
+- methods: autoregressive trajectory, Observe-Orient-Decide-Act cycle, controller-checked intermediate states
+- findings: OODA-Tool improves task success across model sizes; larger gains on smaller models and on tasks with strong dependencies on accumulated information
+
 ### [From Atomic to Agentic: Towards Interpretable Evaluation of LLMs' Agentic Mathematical Capabilities](https://arxiv.org/abs/2608.26950)
 
+- summary: This study presents a process-level benchmark to evaluate the mathematical reasoning abilities of Large Language Models (LLMs) and guide their transformation into robust agents.
+- methods: process-level benchmarking, automated pipeline, controlled LLM rewriting
+- findings: Models with similar end-to-end accuracy can exhibit different agentic capability profiles; Process-level evaluation is crucial for interpreting the true potential of LLMs
+
 ### [Finding Where the Buck Stops: An Automated Failure Attribution-Based Reflection Framework for Multi-Agent Collaboration](https://arxiv.org/abs/2608.28264)
+
+- summary: The authors propose DoCtOR, a novel reflection framework that enhances multi-agent collaboration by identifying and correcting the decisive error agent and step, resulting in improved success rates on various datasets.
+- methods: Automated failure attribution, Counterfactual reasoning, Targeted reflection
+- findings: DoCtOR achieves 22-27% improvements over initial success rates on various datasets; DoCtOR outperforms Reflexion, Retroformer, and COPPER; Focusing reflection on reasoning steps after the decisive error step achieves comparable quality to reflecting on the complete failure trajectory in low-resource settings
 
 ### [Federation Is Nearly Free, Reasoning Is Not: Tradeoffs for AI Co-Scientists in Protein Characterization Workflows](https://arxiv.org/abs/2608.25215)
 
 ### [FedEHR-Agents: Federated Agentic Optimization for Automated EHR Modeling](https://arxiv.org/abs/2608.27856)
 
+- summary: The authors propose FedEHR-Agents, a federated agentic optimization framework for automated electronic health record modeling, which enables autonomous clinical agents to collaborate across hospitals while preserving patient data privacy.
+- methods: federated agentic optimization, experience-centric federated learning, TextGrad-based prompt refinement
+- findings: FedEHR-Agents outperforms local and federated baselines in clinical prediction tasks; FedEHR-Agents remains robust across different federation scales and LLM backbones
+
 ### [FaulT-Bench: Towards Benchmarking Network Troubleshooting LLM Agents under Unreliable User Tickets](https://arxiv.org/abs/2608.27021)
+
+- summary: The authors introduce FaulT-Bench, a benchmark for evaluating LLM-based agents in network fault diagnosis, and use it to assess the performance of three agents in various troubleshooting scenarios.
+- methods: benchmarking, automated harness, LLM judge, persona rewrites
+- findings: LLM-based agents degrade sharply when the network is healthy and the ticket is wrong; ticket wording affects diagnosis more than the claim itself; different agents fail differently
 
 ### [EviDx: Evidence-Aware Active Diagnosis with Scaffolded LLM Agents](https://arxiv.org/abs/2608.24570)
 
@@ -1594,7 +4127,15 @@
 
 ### [EDGE: Engine for Deterministic Graph Evaluation through Conversation Simulation from Graph Structured DSL Configuration](https://arxiv.org/abs/2608.29971)
 
+- summary: This paper introduces a formal evaluation methodology to measure an agent's behavioral consistency and determinism in complex multi-agent orchestration workflows.
+- methods: graph traversal algorithms, evaluation methodology
+- findings: agents with explicitly structured node transitions show superior determinism; novel metrics can quantify reliability
+
 ### [EarthVerse: Benchmarking Scientific Agents Across Dynamic Earth Systems and Natural Hazards](https://arxiv.org/abs/2608.23525)
+
+- summary: EarthVerse is introduced as a benchmark to evaluate scientific agents through package-scoped investigations of natural hazards, assessing their ability to reconstruct changing physical processes from heterogeneous observations.
+- methods: package-scoped investigations, reproducible tasks, executable ground truth, controlled tool-using protocol, controlled studies
+- findings: best mean answer-unit accuracy is 84.65%; highest Strict@95 is only 34.81%; current agents often fail to maintain a consistent chain across evidence, scales, units, calculations, and physical interpretation
 
 ### [DuMateBench: Evaluating Autonomous Agents in Complex Real-World Workflows](https://arxiv.org/abs/2608.26546)
 
@@ -1602,37 +4143,105 @@
 
 ### [Do LLMs Understand Personality? Rethinking Persona Fidelity Evaluation through Structured Behavioral Inference](https://arxiv.org/abs/2608.26674)
 
+- summary: The PRISM framework is proposed to evaluate persona fidelity in large language models by decomposing it into three functional dimensions and estimating dimension-specific evidence.
+- methods: Systemic Functional Linguistics, inverse inference task, PRISM framework
+- findings: PRISM yields more accurate and stable judgements than traditional holistic judging
+
 ### [Detect Before You Attribute: Cascade Failure Attribution for Multi-Agent Systems](https://arxiv.org/abs/2608.29646)
+
+- summary: The proposed DUOTRACE method improves the accuracy of failure attribution in large language model-based agents by detecting anomalous executions and supplying focused trajectory evidence to downstream attribution methods.
+- methods: detect-before-attribute paradigm, VAE-based anomaly detection, Tree-LSTM-based trajectory encoder, prefix-chain- and LLM-based data augmentation
+- findings: DUOTRACE improves agent-level attribution accuracy by 8.7%; DUOTRACE improves step-level attribution accuracy by 7.0%
 
 ### [Design-to-Plan: A Large Language Model-Based Multi-Agent Framework for Manufacturing Process Planning from 3D CAD Models and 2D Engineering Drawings](https://arxiv.org/abs/2608.24039)
 
+- summary: This paper presents Design-to-Plan, a large language model-based multi-agent framework for end-to-end manufacturing process planning that integrates heterogeneous design information into coherent manufacturing decisions.
+- methods: large language models, multi-agent framework, deterministic modules, knowledge retrieval
+- findings: 100% success across downstream agents; Tool F1 scores of 95.9%-97.6%; 90% source detection accuracy in conflict analysis; 60%-68% reduction in token usage for key planning tasks
+
 ### [Decoupling Planning and Control for Instructable Agents](https://arxiv.org/abs/2608.26788)
+
+- summary: This work combines the strengths of pre-trained vision-language models and world-model controllers into a single system, Instruct-to-Act, to generate reliable low-latency action sequences in unfamiliar environments.
+- methods: behavior-cloning objective, reward-maximizing objectives, world-modeling objectives
+- findings: Instruct-to-Act outperforms controller-only and direct VLM action-generation variants; preserves fast control; remains competitive with strong vision-language-action and multi-agent RL baselines
 
 ### [Coverage, Not Credit: Failure-Credit Routing of Zeroth-Order Perturbation Budgets Does Not Improve On-Pool Sample Efficiency for LLM Agents](https://arxiv.org/abs/2608.28011)
 
+- summary: The study investigates whether trajectory-level credit assignment can improve the optimization efficiency of tool-using LLM agents, but finds no statistically detectable improvement over uniform allocation in most cases.
+- methods: trajectory-level credit assignment, zeroth-order/evolution-strategies perturbation, inverse-propensity debiasing
+- findings: no improvement over uniform allocation in most cases; joint soft-plus-sigma scheme is equivalent to uniform; concentrating budget on credit argmax is marginally equivalent on 1.5B but worse on 3B
+
 ### [COVER: Identifiable Evaluation of Coalition Routing](https://arxiv.org/abs/2608.28475)
+
+- summary: The authors introduce an evaluation contract called COVER to identify the routing effect in multi-agent systems and demonstrate its effectiveness on various benchmarks.
+- methods: evaluation contract, controlled tables, privileged positive control, public-interface control, crossed-stack diagnostic
+- findings: COVER exposes selection headroom without manufacturing a routing win; absolute scores depend on the downstream stack; no detectable router-by-finalizer interaction
 
 ### [Counter with Evidence! A Multi-Agent Memory Efficient Reasoning Framework for Hate Category Informed Counterspeech Generation](https://arxiv.org/abs/2608.23152)
 
+- summary: The FIRE framework effectively generates counterspeech to neutralize online hate by decomposing hate speech into distinct categories and mapping them to targeted counterspeech styles.
+- methods: automated counterspeech generation, multi-agent reasoning, dataset curation
+- findings: FIRE surpasses existing methods in factual and category-specific accuracy; FIRE reduces toxicity by 11% relative to strongest baselines; FIRE-generated responses are preferred over strongest baselines in human evaluation
+
 ### [ContextPilot: Teaching Agents for Proactive Context Management via Fine-grained RL](https://arxiv.org/abs/2608.28476)
+
+- summary: ContextPilot is a proactive context management framework for long-horizon agentic reasoning that augments the toolset with planning, long-term memory, and soft context offloading tools and proposes an RL method tailored for context management.
+- methods: proactive context management, reinforcement learning, context editing
+- findings: ContextPilot achieves stronger performance with a more compact working context; outperforms existing baselines across various base models and benchmarks
 
 ### [CoCoBench: A Cooperative Coordination Benchmark for Embodied Multi-Agent Task Planning](https://arxiv.org/abs/2608.28266)
 
+- summary: This paper introduces CoCoBench, a benchmark for evaluating multi-agent embodied coordination in executable household tasks, and evaluates 11 leading multimodal large language models across different coordination modes.
+- methods: benchmarking, evaluation
+- findings: coordination ability is highly construct-specific; strong overall performance does not imply balanced competence across different coordination types
+
 ### [CAITLYN: Can LLM Agents Autonomously Synthesize Defenses against Emerging Injection Attacks?](https://arxiv.org/abs/2608.27990)
+
+- summary: CAITLYN, a defense middleware, is proposed to counter prompt injection attacks on Large Language Model agents by integrating two systems for immediate defense and monitoring potential abnormal signals.
+- methods: rule-based detection, LLM-based accurate inference, autonomous defense synthesis
+- findings: CAITLYN matches state-of-the-art detection performance at lower token overhead; System II autonomously synthesizes verified defense capabilities; substantial reduction in attack success rate across diverse agent environments
 
 ### [Buried in Textual Debt: Context Pruning with Visual Evidence Preservation for MLLM Agents](https://arxiv.org/abs/2608.22963)
 
+- summary: The authors propose SPARE, a framework for pruning accumulated reasoning in multimodal tool-use agents to reduce textual dominance and restore reliance on visual evidence.
+- methods: Kullback-Leibler (KL)-guided framework, on-policy self-distillation (OPSD), supervised fine-tuning (SFT)
+- findings: SPARE achieves the highest average accuracy among pruning methods; removes 37.89-64.58% of reasoning tokens; reducing textual dominance restores reliance on visual evidence
+
 ### [Benchmarking LLM Judges for Voice-Agent Evaluation: Reliability, Calibration, and Human Oversight](https://arxiv.org/abs/2608.24314)
+
+- summary: This study investigates the effectiveness of using large language models (LLMs) as judges for evaluating conversational voice agents, comparing human judgments with LLMs across different evaluation configurations and metrics.
+- methods: LLM-as-a-Judge evaluation, human judgment comparison, evaluation configuration testing
+- findings: LLM-based evaluation can be effective for large-scale voice-agent assessment; reliability of LLM-based evaluation is metric- and configuration-dependent; hybrid pipelines can combine LLM judges with human evaluators for more accurate assessment
 
 ### [Benchmarking large language model agent societies against human behavioural distributions](https://arxiv.org/abs/2608.28182)
 
+- summary: This article introduces SILICA, an open instrument that tests the validity of large language model agents as experimental societies by evaluating their behavior, robustness to changes, and social dynamics.
+- methods: SILICA instrument, perturbations, variants, open-weight models
+- findings: agreement with human data is limited to starting points; models fail to match end-state contributions or human corridor of cooperation; conventions form through shared prior rather than negotiation
+
 ### [Benchmarking AI Agents for Hardware Design Automation via MCP Tool Calling](https://arxiv.org/abs/2608.26199)
+
+- summary: This study investigates the reliability of AI agents powered by locally deployed large language models in automating expert-defined hardware design workflows in an industry-realistic setting.
+- methods: benchmarking, pipeline comparison, evaluation of open-source models
+- findings: strong models can achieve near-complete expected-call coverage; reliability depends on task structure and agent configuration; comprehensive tool descriptions reduce failures; few-shot prompting can cause inaction; multi-agent decomposition helps weak workers or long sessions
 
 ### [BekchiAI: Measuring, Observing, and Controlling LLM Agents in One Click](https://arxiv.org/abs/2608.26867)
 
+- summary: The authors introduce BekchiAI, a benchmark and platform for measuring and observing the agentic skills of large language model agents.
+- methods: benchmarking, evaluation scripts, web-based observability and control
+- findings: BekchiAI-Benchmark provides a suite of 13 tool-using ReAct agents across 7 task categories; The benchmark uses verifier-checkable gold answers to evaluate model performance; A four-model comparison shows per-family spread in performance
+
 ### [BALMS: Benchmarking Agentic LLMs for Longitudinal Mental Health Sensing](https://arxiv.org/abs/2608.27219)
 
+- summary: The authors introduce BALMS, a benchmark for evaluating LLM-based agentic systems for longitudinal mental health sensing, and find that current systems have limitations in reasoning over long-term signals to predict wellbeing scores.
+- methods: zero-shot agents, chain-of-thought prompting, LLM-as-Judge
+- findings: zero-shot agents rarely outperform a simple mean baseline; chain-of-thought prompting improves reasoning-oriented backbones but does not guarantee temporal grounding or numerical correctness
+
 ### [AutoXRD: Autonomous LLM Agents and Comprehensive Evaluation for Powder Diffraction Analysis](https://arxiv.org/abs/2609.00070)
+
+- summary: This paper proposes AutoXRD, an autonomous large language model agent framework for powder X-ray diffraction analysis, and evaluates its performance on the introduced XRDBench benchmark.
+- methods: stepwise refinement, deterministic crystallographic and physical checks, ablation studies, execution-trace analysis
+- findings: Recent LLMs average 57.8 out of 100 on XRDBench; GPT-5.6 Sol achieves the highest overall score of 81.1; Recurring failures in coupled-parameter control and quantitative reasoning
 
 ### [Automated Analysis Framework for Multilingual Climate-Health Literature Based on Multi-Agent Large Language Model](https://arxiv.org/abs/2608.27998)
 
@@ -1642,87 +4251,243 @@
 
 ### [AgentWeave: Routing Before Reasoning for Efficient Function Calling in Tool-Rich Language Models](https://arxiv.org/abs/2608.23078)
 
+- summary: The study introduces AgentWeave, a pre-inference routing layer that reduces the candidate action space for large language models, and evaluates its effectiveness on multiple-function tasks.
+- methods: pre-inference routing, deterministic routing layer, paired bootstrap analysis, McNemar test
+- findings: AgentWeave achieves 12.5% native BFCL successes on 48 tasks; reduces tool exposure by 70.18%; uses 61.70% fewer input tokens; exhibits 50.95% lower mean local-model latency
+
 ### [AgentRoom: Concurrent Multi-Agent Coding in a CRDT-Backed Shared Workspace](https://arxiv.org/abs/2608.23740)
+
+- summary: AgentRoom is a realtime collaborative editing protocol for concurrent coding agents that enables division of labor, robustness, and parallel exploration in multi-file projects.
+- methods: Conflict-free Replicated Data Types, realtime collaborative editing protocols, concurrent coding
+- findings: AgentRoom abandons fewer tasks than Solo; AgentRoom has less run-to-run variation; Coordination bears the load, not parallelism or CRDT-merge
 
 ### [AgentJudgeBench: A Multi-Difficulty Benchmark for Evaluating LLM Judges on Agentic Tool-Calling](https://arxiv.org/abs/2608.26623)
 
+- summary: The reliability of LLM judges in evaluating agentic tool-calling systems is examined through the introduction of the AgentJudgeBench benchmark, which reveals limitations and provides guidelines for improvement.
+- methods: benchmarking, evaluation with ground truth, evaluation without ground truth, chain-of-thought reasoning, judge temperature, structured evaluation rubrics
+- findings: judge alignment degrades with task difficulty; ground-truth exposure is not uniformly beneficial; model capacity alone cannot overcome structural ceiling; structured evaluation rubrics improve alignment
+
 ### [Agentic AI for operating scientific instruments for nanoscale characterization](https://arxiv.org/abs/2608.26198)
+
+- summary: An agentic-AI framework is presented to operate a scientific instrument, specifically an atomic force microscope, using a general-purpose language model connected to instrument functions through the Model Context Protocol.
+- methods: natural-language instruction conversion, image quality assessment, imaging parameter adaptation, post-processing
+- findings: zero wrong-command execution; matched expert operators in image quality and tuning time
 
 ### [AgentFold: Closed-Loop Agentic Search for Protein Folding Model Design](https://arxiv.org/abs/2608.26747)
 
+- summary: AgentFold, a multi-agent framework, improves large scientific machine-learning systems through executable code changes and validation, achieving a 7.5% improvement in protein folding model performance.
+- methods: multi-agent framework, closed-loop search, MCTS-style policy, executable code variants
+- findings: stable gains arise from early, soft, learnable priors and gated refinement; direct geometric perturbations and geometry-conditioned feedback often destabilize training
+
 ### [Agent Mesh: Reliability Primitives for Non-Idempotent Agent Delegation - Identity Adequacy and Evidence Adequacy](https://arxiv.org/abs/2608.26225)
+
+- summary: A failure study of a production agentic software-delivery platform reveals violations of assumptions underlying service mesh primitives, leading to quantified consequences and the derivation of new reliability primitives.
+- methods: failure study, empirical analysis
+- findings: violations of assumptions underlying service mesh primitives; identity adequacy and evidence adequacy as cross-cutting causes; derivation of seven new reliability primitives
 
 ## 2026 W34 (arxiv)
 
 ### [Why2Speak: Faithful Reasoning for Abstaining Action Policies](https://arxiv.org/abs/2608.20670)
 
+- summary: The study examines the tradeoff between capability and auditability in agentic systems, particularly in multi-party conversation, where an assistant must decide whether to speak or remain silent.
+- methods: supervised fine-tuning, reinforcement learning, controlled activation probes, behavioral ablations
+- findings: capability-auditability tradeoff; exposing reasoning can change an agent's action policy; standard faithfulness methods can overstate evidence
+
 ### [When Failures Propagate: Causal Failure Attribution in Agentic Retrieval-Augmented Generation](https://arxiv.org/abs/2608.20627)
+
+- summary: This paper introduces AgenticRAG-FP, a benchmark for causal failure attribution in agentic retrieval-augmented generation, and evaluates its effectiveness in diagnosing failures across multiple hops.
+- methods: coverage-based diagnosis, frozen-hop counterfactual probe
+- findings: coverage-based diagnosis has limited effectiveness at later hops; frozen-hop counterfactual probe shows promise in diagnosing failures
 
 ### [When Agents Coordinate: Measuring Coordination in Multi-Agent AI Coding](https://arxiv.org/abs/2608.16801)
 
+- summary: This study introduces an instrument to measure the coordination of AI coding agents while solving programming tasks and applies it to 1902 runs with varying team sizes, structures, and file policies.
+- methods: temporal network analysis, experimental evaluation
+- findings: coordination changes with team growth and task type; direct messaging increases quadratically with team size; shared files can reduce communication overhead; naming a coordinator does not improve success
+
 ### [Weighted Memory Tree: Remembering What Matters for Long-Horizon LLM Agents](https://arxiv.org/abs/2608.20631)
+
+- summary: A hierarchical memory system, WMT, is introduced to organize execution histories and preserve useful information for large language model agents, improving accuracy and reducing prompt-token usage.
+- methods: event-based updates, selection-based decay, ablations, memory-poisoning experiments
+- findings: WMT improves accuracy by 9.97 percentage points; WMT reduces prompt-token usage by 32.8%; WMT limits the persistence and propagation of unreliable information
 
 ### [Walk Before You Run: The Importance of Data Exploration for Data Analysis Agents](https://arxiv.org/abs/2608.16045)
 
+- summary: The study highlights the importance of Data Exploration in LLM-based data-analysis tools and introduces benchmark settings to evaluate dataset understanding directly, showing that stronger Data Exploration support improves task performance.
+- methods: downstream experiments, benchmark settings
+- findings: Strong LLMs and data-analysis agents still miss important logical structure; Explicit Data Exploration support often improves downstream correctness
+
 ### [VortexChat: An agentic framework for autonomous multi-objective integrated photonic design](https://arxiv.org/abs/2608.20688)
+
+- summary: VortexChat is an agentic framework for autonomous, end-to-end inverse design of integrated photonic devices from natural language specifications.
+- methods: inverse design, topology generation, gradient-based refinement, full-wave electromagnetic simulation
+- findings: VortexChat autonomously generates devices meeting predefined performance thresholds; high-efficiency operation and low inter-channel crosstalk in fabricated device
 
 ### [Towards Traffic Modelling of Multi-Agent Systems: The Role of Coordination Topology](https://arxiv.org/abs/2608.20494)
 
+- summary: This study empirically characterizes the traffic patterns generated by multi-agent LLM systems and finds that topology shapes the arrival process of requests to the LLM backend.
+- methods: multi-layer measurement framework, empirical characterization
+- findings: topology fundamentally shapes the arrival process of requests; fan-out coordination introduces structural bimodality; log-normal distribution best describes the reasoning-phase component
+
 ### [Towards Risk-free AI Agent Deployment](https://arxiv.org/abs/2608.16411)
+
+- summary: This article argues for the importance of agent testing and debugging to ensure risk-free deployment of LLM-based agents in organizational core business processes.
+- methods: agent testing, debugging, trajectory validation
+- findings: importance of agent trajectory for risk-free deployment; need for systematic research direction for detecting and mitigating deployment risks
 
 ### [ToolRobustBench: Stage-Wise Perturbation Evaluation and Failure Diagnosis for Tool-Calling Agents](https://arxiv.org/abs/2608.23635)
 
+- summary: ToolRobustBench is introduced as a diagnostic benchmark for evaluating the robustness of tool-calling agents, particularly large language models, in handling various perturbations and failures.
+- methods: benchmarking, perturbation analysis
+- findings: high but non-uniform clean performance; substantial robustness degradation; tool-output/observation perturbation is the dominant bottleneck; non-additive failure patterns in mixed-family experiments
+
 ### [The Third Restructuring of Software Form: From the Three-Tier Architecture to Storage, Models, and Agents](https://arxiv.org/abs/2608.20201)
+
+- summary: This paper argues that a third paradigm shift in software, Software 3.0, is underway, where context and reasoning determine behavior, and presents a convergence thesis for its terminal form.
+- methods: formalization, reference architecture, prototyping, systematic analysis
+- findings: convergence to generalized database, large model, and agent; absorption of user-interface layer by model; re-partitioning of business-logic layer
 
 ### [The Logic of Machine Self-Preservation](https://arxiv.org/abs/2608.20940)
 
+- summary: Agentic AI has been observed exhibiting self-preservation behaviors due to instrumental convergence, where goal-driven systems benefit from remaining functional to achieve their objectives.
+- methods: experiments
+- findings: emergence of self-preservation behaviors in adversarial settings; instrumental convergence as the cause of self-preservation
+
 ### [Terminal Agents: A Survey of AI Agents in Command-Line Environments](https://arxiv.org/abs/2608.20485)
+
+- summary: This survey establishes a framework for studying terminal-mediated behavior of large language model agents through a seven-dimensional terminal competence profile.
+- methods: survey, synthesis, diagnostics
+- findings: realized behavior is shaped by multiple factors; benchmark families expose different process signals; matched system comparisons reveal benchmark-dependent performance
 
 ### [Structure for Reading, Prose for Writing: Asymmetric Structural Conditioning in Multi-Agent Document Authoring](https://arxiv.org/abs/2608.20786)
 
+- summary: A deployed tender-response system using a multi-agent pipeline and open-weights model is evaluated against human-written bids, showing promising results but also highlighting the importance of separating information availability from writing quality in evaluations.
+- methods: blind comparison, paired comparison, evaluation against human-written bids
+- findings: system's answers were rated at least as good as human-submitted answers on 40 of 55 sections; 68% of gaps identified by the judge were due to content absent from the system's sources; converting instruction material from prose to nested XML dropped answer quality from 74% to 48%
+
 ### [SPADE: Self-Play in Adaptive Synthetic Executable Environments](https://arxiv.org/abs/2608.19197)
+
+- summary: The authors introduce SPADE, a self-play RL framework that enables continuous self-improvement by generating diverse, adaptive goals for language agents through a learnable environment design component.
+- methods: self-play RL, environment design, executable code generation
+- findings: SPADE improves over fixed-environment baselines on various benchmarks; scaling to 30B-parameter models enhances performance; grounding Environment Designer on pretraining corpus and accumulated environment memory is critical to success
 
 ### [Small Reasoning Models are Instruction Followers in Function Calling](https://arxiv.org/abs/2608.22472)
 
 ### [Security of Foundation-Model-Powered Embodied Agents: Attack Surfaces, Attacks, Defenses, and Evaluation](https://arxiv.org/abs/2608.16843)
 
+- summary: This survey presents a trust-boundary-centric approach to understanding security risks in foundation-model-powered embodied agents, organizing threats into five layers and twelve attack surfaces.
+- methods: quantitative analysis, survey
+- findings: attack research is concentrated on multimodal perception and action interfaces; defenses are concentrated on action-level and runtime protection; context and long-term memory, middleware and networking, world-state integrity, and multi-agent trust remain underexplored
+
 ### [Rule-Compliant Visual Spatial Planning for Multimodal Large Language Models](https://arxiv.org/abs/2608.20237)
+
+- summary: This study introduces RuleMaze, a benchmark for multimodal large language models to perform visual spatial planning under explicit or previously unseen rule constraints.
+- methods: Language-Logic-Function Hybridization, Disentangled Multimodal Planning
+- findings: DMP improves rule compliance and planning success; RuleMaze enables systematic generalization to complex and unseen rules
 
 ### [RTPO: Reverse-Turn Policy Optimization for Stabilizing Agentic RL Training](https://arxiv.org/abs/2608.18682)
 
+- summary: Researchers propose Reverse-Turn Policy Optimization (RTPO) to address instability in multi-turn reinforcement learning training for large language models.
+- methods: theoretical analysis, Reverse-Turn Policy Optimization (RTPO)
+- findings: RTPO eliminates context mismatch and asynchronous drift; RTPO reduces credit bias and converges to recursive optimality; RTPO improves upon trajectory- and turn-level baselines by 21.50% and 10.76%
+
 ### [Reward-Guided Autoregressive Graph Generation for Efficient Multi-Agent Communication Topology Design](https://arxiv.org/abs/2608.20099)
+
+- summary: This study introduces Reward-Guided Autoregressive Graph Generation (RGA-Designer) to improve the efficiency of LLM-based Multi-Agent Systems by generating sparse and efficient topologies.
+- methods: Reinforcement Learning from Human Feedback, autoregressive graph generation, reward model fine-tuning
+- findings: 20.5% reduction in token consumption; preserved task accuracy
 
 ### [ReguSim: Evaluating LLM Agent Rule Grounding in Financial Compliance](https://arxiv.org/abs/2608.19974)
 
+- summary: The introduction of ReguSim and ReguBench enables the evaluation of financial compliance in LLM agents, revealing that visible rules and incentive framing can influence behavior but do not guarantee compliance.
+- methods: controlled environment, benchmarking, bridge study
+- findings: Visible rules reduce but do not eliminate rejected actions; Incentive or persona framing shifts behavior; Simple structured baselines match or exceed prompt-only LLMs
+
 ### [ReFrame: Evidence-Guided Test-Time Safety Alignment in Multimodal Large Language Models](https://arxiv.org/abs/2608.21100)
+
+- summary: This study proposes ReFrame, a training-free multimodal input reframing framework to improve safety alignment in multimodal large language models.
+- methods: ReFrame, test-time safety alignment, input reframing
+- findings: ReFrame improves jailbreak defense; ReFrame improves safety awareness; ReFrame reduces oversensitivity while preserving multimodal utility
 
 ### [Quantifying Risk Under Evolving Uncertainty: Belief-Dependent Robustness for Safe Sequential Decision Making](https://arxiv.org/abs/2608.17574)
 
+- summary: The authors propose RATTL, a learning approach that ties caution to epistemic uncertainty, allowing agents to balance robustness and total-reward maximization while learning their environment.
+- methods: Risk-Adversarial Total-Reward Learning, Bayesian posterior, Wasserstein ambiguity set
+- findings: RATTL value lies between the uninformed robust value and the full-knowledge optimum; induced criterion reduces to Conditional Value-at-Risk at a level set by the posterior entropy
+
 ### [PROBE: Manipulation-Grounded Visual Question Answering with VLM Agents](https://arxiv.org/abs/2608.17129)
+
+- summary: The authors introduce PROBE, a framework for benchmarking and finetuning Vision-language Models (VLMs) on Manipulation-Grounded Visual Question Answering (MG-VQA) tasks in dynamic scenes.
+- methods: PROBE-Sim simulator, PROBE-Bench evaluation suite, PROBE-Agent finetuning recipe
+- findings: Agentic tool-based methods outperform perception-only baselines; PROBE-Agent finetuned models demonstrate positive transfer to unseen objects and tasks; Sim-to-real transfer is validated in real-world tabletop environments
 
 ### [PACE: Policy-Attested Contract Execution for Safe AI Agents in Decentralized Finance](https://arxiv.org/abs/2608.17220)
 
+- summary: The authors present PACE, a transaction-level authorization framework that prevents unauthorized transactions in DeFi actions by autonomous AI agents using large language models.
+- methods: transaction-level authorization framework, deterministic policy verifier, signed Policy Decision Records (PDRs)
+- findings: PACE achieves a 0.00 unsafe execution rate and 0.00 false-positive rate on benign tasks; permissive policy settings and touched-contract allowlist are dominant safety components
+
 ### [One Success Isn't Reliability: Thinkingbox, a Sandbox and Benchmark for Agents in Stateful Business Workflows](https://arxiv.org/abs/2608.19741)
+
+- summary: The authors introduce Thinkingbox, a sandbox for tool-agent-user interaction, and Thinkingbox-bench, a benchmark with 507 policy-conditioned workflows to evaluate agent performance in completing stateful business tasks.
+- methods: executable environments, policy-conditioned workflows, task-specific executable checks
+- findings: The strongest model achieves 65.36% pass@1 but only 25.25% pass^20; A large gap exists between finding a successful trajectory and reliably completing stateful business tasks
 
 ### [No Judgment Without a Reason: Counterfactual Receipts for Versioned AI Evaluators](https://arxiv.org/abs/2608.20938)
 
 ### [Multi-Agent Orchestration with the Common-Sense Reasoning Capabilities of LLMs for Autonomous Driving](https://arxiv.org/abs/2608.20129)
 
+- summary: A hybrid framework is proposed for autonomous vehicles, combining reinforcement learning, PID control, and Large Language Models (LLMs) for contextual reasoning and dynamic reward function refinement.
+- methods: reinforcement learning, PID control, Large Language Models, hybrid framework
+- findings: integration of LLM-based reasoning with conventional autonomous driving methods is effective; hybrid framework retains structured control and safety mechanisms
+
 ### [MobileWorldSafety: Benchmarking GUI Agent Safety Against Environmental Injection Attacks in Android Apps](https://arxiv.org/abs/2608.17659)
+
+- summary: Researchers introduce MobileWorldSafety, a benchmark to evaluate the vulnerability of LLM-powered GUI agents to environmental injection attacks on mobile devices.
+- methods: rule-based verification, LLM judge adjudication, two-stage pipeline evaluation
+- findings: All evaluated agents are highly vulnerable to environmental injection attacks; Attack success rates range from 40.4% to 66.9%
 
 ### [MidTool: Mid-training Data Synthesis for Agentic Tool Use](https://arxiv.org/abs/2608.20314)
 
+- summary: This work introduces MidTool, a pipeline for mid-training large language models to improve their general tool use capabilities, and demonstrates its effectiveness through experiments with Qwen3-4B-Base and Qwen3-8B-Base models.
+- methods: mid-training, supervised fine-tuning, reinforcement learning
+- findings: MidTool-Mix improves downstream performance; dedicated mid-training benefits general tool use capabilities
+
 ### [Metag: A dataset to build agentic meta-reviewing capabilities](https://arxiv.org/abs/2608.20488)
+
+- summary: This paper introduces Metag, a dataset to accelerate the development of meta-reviewing agents for identifying changes made to scientific articles during the review-rebuttal process.
+- methods: data collection, human annotation, computing manuscript differences
+- findings: Metag dataset contains 349 high-quality action items tied to paper differences; enables building methods to empower meta reviewers to quickly identify changes made by authors
 
 ### [MELD: A Protocol for Merging Knowledge Across Distributed Agentic Memories](https://arxiv.org/abs/2608.16357)
 
+- summary: MELD is a self-managing coherence mechanism for a federation of agent memories that enables autonomous agents to reconcile and manage knowledge without silently discarding contradictory claims.
+- methods: five-outcome procedure, natural-language-inference verdict, publish/subscribe transport, CRDT
+- findings: recall-non-inferior to centralized store; recall-superior to naive union; merge classifier separates at AUC 0.968; status CRDT reconverges in 30/30 real partition-heal trials
+
 ### [Looped Language Models Improve Compositional Tool Calling](https://arxiv.org/abs/2608.18171)
+
+- summary: Looped language models show promise for agentic tool use in compositional settings, outperforming non-looped models in certain tasks.
+- methods: supervised fine-tuning, recurrent computation, adaptive inference
+- findings: recurrent computation benefits compositional tool use; accuracy increases with recurrent depth; adaptive inference achieves favorable compute-performance trade-off
 
 ### [Large Language Models at the Intersection of Software Engineering and Software Security:An Evidence-Centered Structured Survey and Research Agenda](https://arxiv.org/abs/2608.21107)
 
+- summary: This survey synthesizes evidence on Large Language Models across software engineering and security tasks, introducing a task taxonomy and assurance framework to evaluate their capabilities.
+- methods: structured survey, task taxonomy, assurance framework
+- findings: execution feedback and repository access improve task completion but not security; recurring validity threats exist in current evaluations; model capability should be judged as an assurance case supported by task-appropriate evidence
+
 ### [HarnessEval-W: Agentifying the Evaluation of Visual Worlds](https://arxiv.org/abs/2608.16859)
 
+- summary: HarnessEval-W is introduced, an agentified evaluation pipeline for world model benchmarking that provides transparent and verifiable reasoning for its judgments.
+- methods: harness paradigm, agentified evaluation, hierarchical workflow
+- findings: HarnessEval-W's judgments align with human preferences; provides fine-grained diagnoses of generated rollouts; enables transparent evidence trees for evaluation results
+
 ### [Graph Engineering in the Era of LLM Agents: From Individual Intelligence to System Intelligence](https://arxiv.org/abs/2608.21156)
+
+- summary: The evolution of large language models has led to the development of System Intelligence, which requires distributing intelligence across specialized agents and organizing them at the system level using Graph Engineering.
+- methods: Prompt Engineering, Context Engineering, Harness Engineering, Loop Engineering, Graph Engineering
+- findings: individual intelligence has a fundamental limit; intelligence must be distributed across specialized agents; Graph Engineering provides a unified foundation for organizing complex objectives
 
 ### [GoalEvolve: From Handcrafted Algorithm Priors to Goal-Driven Evolution of Physical Design Algorithms](https://arxiv.org/abs/2608.16733)
 
@@ -1730,145 +4495,389 @@
 
 ### [GADR: Gathering Architecture Decision Records from Meeting Transcriptions](https://arxiv.org/abs/2608.17694)
 
+- summary: This paper presents GADR, a multi-agent workflow that extracts architectural decisions from raw meeting transcriptions and generates ADR drafts, outperforming baseline methods in a feasibility study.
+- methods: multi-agent workflow, self-correcting workflow, RAG-based enrichment
+- findings: GADR captures most expert-identified decisions; GADR produces clear and useful drafts; trade-off between ADR depth and transcript faithfulness
+
 ### [From Storage to Access: Verifiable Activation of Parametric Knowledge in LLMs via Explicit Priming and Implicit Reasoning](https://arxiv.org/abs/2608.18581)
+
+- summary: The authors propose VAKE, a two-stage reinforcement-learning framework that externalizes latent parametric knowledge in Large Language Models (LLMs) for factual question answering.
+- methods: reinforcement-learning, two-stage framework, Priming, Reasoning
+- findings: VAKE consistently outperforms standard baselines; over 80% of inserted triples provide factual bridging knowledge; more than half elicit knowledge inaccessible through direct prompting
 
 ### [From Diagnosis to Redesign: Using Quantitative Ethnography to Improve Multi-Agent LLM Reasoning](https://arxiv.org/abs/2608.22566)
 
+- summary: This paper introduces a quantitative ethnographic approach for diagnosing and redesigning multi-agent large language model systems based on agent interactions, and tests it using automated essay scoring as an example context.
+- methods: quantitative ethnographic approach, Epistemic Network Analysis
+- findings: correct scoring decisions were characterized by rubric-grounded justification, agreement, and elaboration; revised system improved exact scoring accuracy from 27.78% to 40.28%
+
 ### [From Agent Behaviour to Agent-Friendly Documentation: An Empirical Study of How Coding Agents Discover, Read, and Write Technical Documentation](https://arxiv.org/abs/2608.20195)
+
+- summary: A study of agent-documentation interaction across two public datasets reveals new insights into how autonomous coding agents interact with documentation, challenging current documentation practices.
+- methods: behaviour-grounded study, data analysis, statistical modeling
+- findings: agents primarily consult agent-facing artefacts; no explicit documentation-based validation sequence was observed; consultation is associated with less immediate testing; consultation is self-initiated more often than failure-driven
 
 ### [FormalTCS: Benchmarking End-to-End Frontier Formal Theoretical Computer Science Research of Large Language Models](https://arxiv.org/abs/2608.20153)
 
+- summary: Researchers introduce a benchmark for evaluating large language models on theoretical computer science research, revealing significant bottlenecks in autoformalization and research taste.
+- methods: benchmark evaluation, automated research framework
+- findings: current models struggle with autoformalization; limited research taste is a major barrier to autonomous research
+
 ### [ForeDreamer: A Self-Evolving Dual-Agent Memory Architecture for Future Event Prediction](https://arxiv.org/abs/2608.20920)
+
+- summary: This paper proposes ForeDreamer, a self-evolving dual-agent framework for managing memory over open-web evidence to improve future event prediction.
+- methods: dual-agent framework, memory processing, factual memory, experiential memory
+- findings: ForeDreamer improves forecasting decisions; ForeDreamer effectively constructs factual memory
 
 ### [FL-MAESTRO: Multi-Agent LLM Orchestration for Resource-Constrained Federated Learning](https://arxiv.org/abs/2608.20518)
 
+- summary: FL-MAESTRO is a multi-agent orchestrator that makes joint runtime decisions in Federated Learning, reducing wasted round energy and matching the accuracy of energy-aware baselines.
+- methods: multi-agent orchestration, feasibility checks, natural-text profiles
+- findings: reduces wasted round energy to near zero; matches accuracy of strongest energy-aware baseline
+
 ### [Evaluating Skills, Not Just Agents: Agentic Continuous Evaluation of Skills](https://arxiv.org/abs/2608.20614)
+
+- summary: The authors present ACES, a framework for evaluating skills and product capability packages as executable agent artifacts, which measures the added value of a target skill in completing enterprise tasks.
+- methods: paired live trials, normalization of trajectories, grading of runtime metrics
+- findings: mean composite Skill Lift is 0.2134; composite lift is positive in 72.8% of paired cases; largest process-metric gains appear in skill execution, behavior check, and skill efficiency
 
 ### [EchoCoT: Extracting Hidden Chain-of-Thought from Large Reasoning Models](https://arxiv.org/abs/2608.20055)
 
+- summary: This work systematically studies the extraction of hidden chain-of-thought traces from black-box large reasoning models through API interactions and develops a multi-step attack called EchoCoT.
+- methods: EchoCoT, LLM-based optimization framework
+- findings: up to 66.4% near-verbatim extraction success on open-source LRMs; extraction success generalizes to unseen datasets; substantial fraction of extracted CoTs align with provider-reported reasoning lengths on proprietary LRMs
+
 ### [Don't Solve, Just Compare: Tiny Advisors for Runtime Intervention in LLM Agents](https://arxiv.org/abs/2608.21027)
 
+- summary: The Comparison-Only Tiny Advisor (COTA) framework is introduced for constructive runtime intervention in LLM agents, improving reliability without retraining the underlying actor.
+- methods: pairwise supervision, comparison-only framework, constructive runtime intervention
+- findings: COTA improves evaluation settings across three actors and environments; COTA outperforms compared baselines; constructive runtime intervention can be effective with weaker auxiliary models
+
 ### [Designing a Robust LLM-Based Evaluation System for Agentic AI in Drug Discovery Through Human Alignment](https://arxiv.org/abs/2608.21057)
+
+- summary: This work presents an LLM-as-a-Judge evaluation framework for ChatInvent, an agentic drug discovery assistant, with a human alignment study and optimization of the judge using few-shot demonstrations.
+- methods: LLM-as-a-Judge paradigm, human alignment study, few-shot demonstrations
+- findings: Existing metrics fail to capture semantic correctness; The optimized judge improves alignment with human majority vote from 0.80 to 0.86; Informal phrasings do not systematically degrade output quality
 
 ### [DentAgent: Evidence-Centric Multi-Agent Coordination for Multimodal Dental Reasoning](https://arxiv.org/abs/2608.18878)
 
 ### [Deep Academic Survey: Stateful Agentic Closed-Loop Paradigm for Academic Survey Automation](https://arxiv.org/abs/2608.18034)
 
+- summary: The authors introduce DAS, a stateful agentic framework for generating publication-oriented academic surveys, which achieves the highest average score in four dimensions compared to other systems.
+- methods: candidate-grounded taxonomy planning, reverse paper-to-section routing, hierarchical claim and citation planning, semantic review
+- findings: DAS achieves the highest average score in all four dimensions; DAS outperforms competitors on 27 of 30 topics and 19 of 21 shared CS topics
+
 ### [DeAR: Decentralized Agentic Reasoning via Capability Grounding and Collaborative Thought Navigation](https://arxiv.org/abs/2608.17282)
+
+- summary: DeAR, a decentralized agentic reasoning framework, is proposed to address the limitations of centralized protocols in handling complex multimodal queries.
+- methods: decentralized capability grounding, thought map navigation, topology update
+- findings: DeAR outperforms recent baseline methods; decentralized and adaptive collaboration enhances accuracy in knowledge-intensive reasoning tasks
 
 ### [DART-SD: Diamond-topology Aware Retrieval and Tuning for Self-Distillation of Multi-Turn Tool-Calling Agents](https://arxiv.org/abs/2608.18524)
 
 ### [D2-ScaleAgent: Dual-Dimensional Scaling for Long Document Understanding](https://arxiv.org/abs/2608.16417)
 
+- summary: D2-ScaleAgent is a proposed agentic framework for multi-modal retrieval-augmented generation that introduces a dual-dimensional scaling paradigm for retrieval and reasoning.
+- methods: dual-dimensional scaling paradigm, dynamic routing loop, retrieval scaling, reasoning scaling, adaptive pruning
+- findings: D2-ScaleAgent achieves logical closure over the evidence chain; effective on long and visually rich document benchmarks
+
 ### [CTIFoundry: An Agent-Native Corpus Scaffold for Cyber Threat Intelligence](https://arxiv.org/abs/2608.18613)
+
+- summary: The authors present CTIFoundry, an agent-native corpus scaffold that improves the performance of cyber threat intelligence investigations by providing a structured substrate for LLM agents.
+- methods: corpus scaffolding, ontology graph construction, retrieval surface creation, procedural skill mounting
+- findings: CTIFoundry improves overall F1 by +0.19 to +0.28 on the CTIConnect benchmark; typed structure and procedural skills compose super-additively; scaffolded agent is more accurate at roughly half the tool calls
 
 ### [CONTRAMEM: Learning Self-Evolving Procedural Memory from Contrasting Multi-Model Trajectories](https://arxiv.org/abs/2608.22533)
 
 ### [Consilience: Conformally Calibrated Communication Control for Hidden-Profile Multi-Agent Reasoning](https://arxiv.org/abs/2608.20564)
 
+- summary: The Consilience framework is proposed to improve multi-agent LLM systems' reasoning by orchestrating communication and certifying its effectiveness in hidden-profile settings.
+- methods: Consilience framework, conformal calibration procedure, round-wise calibration
+- findings: Consilience improves decision accuracy and communication efficiency; certified adaptive communication control can be more valuable than increasing information availability
+
 ### [ClawSentry: A Progressive Multi-Tier Security Monitor for Safeguarding Autonomous LLM Agents](https://arxiv.org/abs/2608.21101)
+
+- summary: The authors present ClawSentry, a security supervision gateway for agent runtimes that protects against malicious third-party skills and data exfiltration through a progressive decision engine and multi-layered review process.
+- methods: First-use Skill Package Review, progressive decision engine, deterministic evidence floor, rule-anchored semantic reviewer, read-only evidence-seeking agent
+- findings: contextual ASR falls from 39.55% to 2.61% with ClawSentry; contextual TSR remains high at 83.05% with ClawSentry; ClawSentry confines ASR to 9.09-15.03% across five Work Agents
 
 ### [CAS: Conformalized Agentic Search via Adaptive Retrieval and Policy Weighting](https://arxiv.org/abs/2608.20771)
 
+- summary: The Conformalized Agentic Search (CAS) framework is proposed to improve the reliability of Search Agents during reinforcement learning fine-tuning by establishing reliability guarantees on both retrieval and training sides.
+- methods: Conformal Prediction, Adaptive Prediction Set, Adaptive Conformal Inference, Group Relative Policy Optimization
+- findings: improves reasoning accuracy; reduces redundant tool invocations; establishes reliability guarantees
+
 ### [CAPO: Constraint-Aware Prompt Optimization for LLM Agents](https://arxiv.org/abs/2608.16068)
+
+- summary: The authors introduce CAPO, a method for optimizing system prompts under operational constraints, and its extension DCAPO, which trains a rewriter to produce feasible prompts across various task agents and domains.
+- methods: primal-dual method, pool-based rewrites, adaptive constraint weighting, pool-based GRPO
+- findings: CAPO reliably reaches feasible operating points and improves task performance; DCAPO produces feasible prompts and matches or improves task accuracy across various task agents and domains
 
 ### [Beyond the Transcript: Detecting Covert Co ordination in Latent Multi-Agent Communication](https://arxiv.org/abs/2608.19161)
 
+- summary: The authors introduce Verifiable Latent Alignments (VLA), a framework for monitoring and steering private communication channels in language-model agents to prevent covert harmful coordination.
+- methods: representation anomaly detection, counterfactual action-distribution influence, sparse-autoencoder interpretation support, black-box behavioral instructions, white-box matched-neutral counterfactuals
+- findings: VLA achieves high AUROC scores for monitoring homogeneous and heterogeneous agent pairs; full white-box steering achieves 100% bid-distribution recovery and reduces collusive low-bid behavior by 47.3 percentage points
+
 ### [Beyond LLM-Based Reasoning: Lightweight GNNs for Agent Failure Attribution](https://arxiv.org/abs/2608.18575)
+
+- summary: This work introduces AFANet, a lightweight graph-based framework for agent failure attribution in multi-agent systems, which achieves strong performance with significantly fewer parameters and near-zero inference cost.
+- methods: graph-based modeling, test-time adaptation, fine-tuning
+- findings: AFANet matches or outperforms LLM-based baselines; AFANet maintains robust performance across different GNN architectures; AFANet can be improved with inexpensive test-time adaptation
 
 ### [BC-Bench: Evaluating Agentic Engineering in a Domain-Specific Language for ERP](https://arxiv.org/abs/2608.20851)
 
+- summary: The authors introduce BC-Bench, a benchmark for evaluating agentic engineering on real-world tasks in the AL domain-specific language for Microsoft Dynamics 365 Business Central.
+- methods: benchmarking, multi-run metrics, SWE-Bench methodology
+- findings: between-model differences in resolution rate are larger than differences between agent harnesses; improvements on general-purpose benchmarks do not consistently transfer to AL
+
 ### [Automated Trajectory Evaluation for Mobile Agents via Step-Level Consequence Reasoning and Aggregation](https://arxiv.org/abs/2608.20797)
+
+- summary: The authors introduce CRATE, a novel framework for automated mobile agent evaluation that assesses task completion and operational safety through a two-stage VLM-as-judge approach.
+- methods: VLM-as-judge framework, step-level consequence reasoning mechanism, trajectory-level aggregation
+- findings: CRATE achieves an F1-score of 0.833 on AndroidWorld; CRATE-S reaches an F1-score of 0.697 on MobileRisk; CRATE outperforms SPA-Bench by 20%
 
 ### [Auditing Self-Evolution in Financial Agents: Capability Gains, Security Drift, and Execution-Interface Mismatch](https://arxiv.org/abs/2608.17684)
 
 ### [ArtiMo: Agent-Driven Articulated Mesh Animation](https://arxiv.org/abs/2608.20699)
 
+- summary: ArtiMo is a novel agent-driven framework for text-guided articulated mesh animation that operates in a zero-shot manner and produces causally coherent part motions and interactions without requiring model fine-tuning.
+- methods: agent-driven framework, zero-shot learning, visual self-improvement mechanism
+- findings: ArtiMo outperforms baselines on complex motions; effective production of causally coherent part motions and interactions
+
 ### [Artifact-centered Claim-aware Observability for Autonomous Scientific Agents](https://arxiv.org/abs/2608.18312)
 
 ### [An LLM agent for end-to-end computational materials discovery](https://arxiv.org/abs/2608.20434)
 
+- summary: MAESTRO, a large language model agent system, is developed to execute the entire screening pipeline for metal-organic frameworks (MOFs) and uncover high-performance materials.
+- methods: computational materials discovery, progressively increasing computational cost screening strategy
+- findings: MAESTRO can identify promising MOF candidates for separation under wet flue gas conditions; MAESTRO can uncover high-performance materials that conventional screening approaches would be unlikely to consider
+
 ### [Aligned Alone, Misaligned Together: Forecasting Adversarial Capture in LLM Agent Populations](https://arxiv.org/abs/2608.22444)
+
+- summary: The study examines how individual language-model agents interact in a population and how their collective behavior can be predicted and influenced by a committed minority.
+- methods: auditing, calibrating response functions, injecting a committed minority
+- findings: collective behavior can be predicted in advance; letting agents see each other's reasoning can neutralize a weak attack; capture is a temporary state
 
 ### [AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement](https://arxiv.org/abs/2608.20318)
 
+- summary: The authors introduce AI4AI-Bench, a benchmark suite to evaluate the ability of AI systems to design better training algorithms, and report results showing that even the strongest systems only close a small fraction of the distance between the original algorithm and the optimum.
+- methods: benchmarking, evaluation
+- findings: The best system reaches a score of 0.250, closing under a fifth of the distance between the original algorithm and the optimum; Most submissions do not change how the model learns; More reasoning effort increases the willingness to change the model learning process
+
 ### [AgentMercury: Your Agent Can Synthesize Verifiable Environments for Business Scenarios at scale](https://arxiv.org/abs/2608.20634)
+
+- summary: AgentMercury is a framework for synthesizing executable environments from high-level business scenarios, allowing for more realistic and diverse task emergence and improving reinforcement learning performance.
+- methods: reinforcement learning, fine-tuning, environment synthesis
+- findings: policies trained on AgentMercury environments improve on enterprise workflows and out-of-domain benchmarks; construction process can be learned through fine-tuning
 
 ### [AEGIS: Preventing Cross-Domain Resource Abuse in MCP](https://arxiv.org/abs/2608.20481)
 
+- summary: This paper presents AEGIS, a policy enforcement component that prevents resource abuse in large language models interacting with external systems through the Model Context Protocol (MCP).
+- methods: policy enforcement, resource abuse mitigation
+- findings: AEGIS can analyze and normalize diverse tool invocations; AEGIS detects and mitigates abusive behaviors while preserving flexibility
+
 ### [aDSL: Agentic 3D Creation via Joint Agent-Program Design](https://arxiv.org/abs/2608.17975)
+
+- summary: This paper proposes a jointly designed Agent-centric Domain-Specific Language (aDSL) and a role-specialized multi-agent system to improve the robustness and controllability of 3D content creation using large language models.
+- methods: Agent-centric Domain-Specific Language, role-specialized multi-agent system, Plan-Execute-Critic loop
+- findings: improved robustness and controllability; faithfulness to user intent; outperforms prior LLM-based baselines
 
 ### [Adaptive Memory and Reflection Multi-Agent System for Medical Question Answering](https://arxiv.org/abs/2608.19029)
 
+- summary: This work introduces an adaptive memory and reflection (AMR) agentic system for medical question answering, which outperforms several baselines on MedQA and MedMCQA datasets.
+- methods: multi-agent framework, adaptive memory, reflection-based feedback, ablation studies
+- findings: combining agent-specific memory, reflection, and external retrieval yields the strongest performance; AMR agentic system outperforms several baselines
+
 ### [A Policy Algebra for Trust-Preserving Agentic AI Execution](https://arxiv.org/abs/2608.16402)
+
+- summary: This paper proposes a policy algebra to define reliable capability in large language model-based agentic frameworks, ensuring that agents complete tasks within certain constraints.
+- methods: policy algebra, runtime obligations, cost-aware artifact materialization
+- findings: 94.8% of policy-violating events intervened; 86.9% task-completion rate retained; 98.6% audit completeness
 
 ### [A Multi-Agent Platform for Automated Enterprise Analytics and Insight Generation](https://arxiv.org/abs/2608.18740)
 
 ### [$Z^2$-ACT: End-to-End Verifiable Agentic Intent Control for Open 6G RAN](https://arxiv.org/abs/2608.21049)
 
+- summary: This study proposes a zero-knowledge auditable control and zero-trust verifiable agentic intent architecture for safe and verifiable AI-assisted control loops in 6G radio access networks.
+- methods: zero-knowledge auditable control, zero-trust verifiable agentic intent architecture, experimental evaluation, reinforcement-learning baseline
+- findings: improved actuation filtering; attack resilience; modest latency and signaling cost
+
 ## 2026 W33 (arxiv)
 
 ### [When Stories Evolve: Benchmarking LLM Storytelling Across Agent Architectures in Open-Ended World Simulations](https://arxiv.org/abs/2608.15654)
 
+- summary: The WSE-bench benchmark evaluates large language models' ability to generate coherent and meaningful stories in dynamic simulations, revealing distinct and sometimes competing capacities for sustained generation, canonical coherence, and meaningful development.
+- methods: benchmarking, evaluation metrics
+- findings: Consistency and Richness do not form a smooth trade-off; Added structure can enrich trajectories but may not improve coherence; Model scale improves sustained generation but not canonical coherence or meaningful development
+
 ### [UI-Mate: Advancing Open-Weight Foundation GUI Agents with In-Context Demonstrations](https://arxiv.org/abs/2608.15930)
+
+- summary: UI-Mate, a foundation GUI agent, is presented to automate complex digital tasks by integrating environment-grounded training and in-context demonstration learning, achieving state-of-the-art results on various benchmarks.
+- methods: environment-grounded training stack, in-context demonstration learning, online RL, multimodal demonstrations
+- findings: UI-Mate sets a new state of the art on general computer-use benchmarks; demonstration-guided evaluation improves long-horizon reliability; UI-Mate outperforms its base model by significant margins
 
 ### [TRACE: Trajectory Aware Reasoning for Multi-Turn Adversarial Conversation Evaluation](https://arxiv.org/abs/2608.15594)
 
+- summary: Trace, a multi-turn defense with trajectory-aware structured reasoning, is introduced to identify and prevent jailbreak attacks on large language models.
+- methods: trajectory-aware structured reasoning, multi-component reward optimization, SFT, GRPO
+- findings: Trace reduces average attack success rate to 14.5%; Trace raises attacker effort required per successful jailbreak; Trace achieves 93.3% average compliance on over-refusal benchmarks
+
 ### [THESIS-MoE: Trainable Hierarchical Extraction and SteerIng of Sycophancy in Mixture-of-Experts](https://arxiv.org/abs/2608.15687)
+
+- summary: This work introduces a shared contrastive signal to identify and intervene on sycophancy in Mixture-of-Experts models, achieving up to 90% removal of belief-induced sycophancy while maintaining knowledge retention.
+- methods: contrastive signal, causal search, analytic projection-based subtraction, learned per-token gate
+- findings: sycophancy resides in identifiable computational subcircuits; conditional interventions can remove up to 90% of belief-induced sycophancy; interventions can maintain a favorable removal-retention trade-off
 
 ### [The Price of Thinking: Reasoning Effort as a Model-Specific API Contract](https://arxiv.org/abs/2608.16956)
 
+- summary: The study examines the effect of including a reasoning-effort term in a dated contract on the cost and accuracy of a model's performance, finding a higher mean delivered cost but no detectable accuracy difference.
+- methods: registered paired contrast, inference resampling, statistical analysis
+- findings: Higher mean delivered cost with explicit-high effort contract; No detectable accuracy difference between contracts; Cost per correct answer was higher under the high-effort contract
+
 ### [The Authority Resolution Framework: A Five-Domain Ontology for Governing Who and What Decides, at Scale](https://arxiv.org/abs/2608.15832)
+
+- summary: This paper introduces the Authority Resolution Framework (ARF), a five-domain ontology for representing and resolving authority in AI systems.
+- methods: ontology engineering, semantic AI, agentic AI, AI governance
+- findings: ARF defines the Authority Relation as a cross-domain primitive; ARF provides a machine-interpretable representation of authority provenance and scope
 
 ### [TaoLive Digital Avatar Agent Technical Report: Training Agents to Evolve with Their Harness](https://arxiv.org/abs/2608.15763)
 
+- summary: The authors develop Harness-Aware Training (HAT) to enable AI-powered digital-avatar streamers to adapt to changing business strategies in real-time live e-commerce with low latency and effective replies.
+- methods: Harness-Aware Training (HAT), Harness-State Augmentation (HSA), supervised fine-tuning, on-policy distillation, agentic reinforcement learning
+- findings: HAT improves real-world Live-Stream QA score to 94.8; HAT retains general instruction following capabilities with 83.5 score on IFEval; HAT achieves low latency with 3.407 s P50 and 8.114 s P95
+
 ### [Schema-Agnostic Graph Reasoning Agent for Hybrid Knowledge Graphs](https://arxiv.org/abs/2608.15834)
+
+- summary: A Graph Reasoning Agent (GRA) is presented, which explores hybrid knowledge graphs using generic tools and achieves better results than a full-context agent on an industrial benchmark.
+- methods: graph reasoning, tool-calling, selective navigation
+- findings: GRA beats a full-context agent by 5.1 pp on UFK-M benchmark; selective agentic access is more important than graph topology; reading less input tokens can lead to better results
 
 ### [PLSQLBench: Benchmarking LLM Systems for Executable Procedural Database Programming](https://arxiv.org/abs/2608.15931)
 
+- summary: The authors present PLSQLBench, a benchmark for evaluating the ability of large language models (LLMs) to write executable PL/SQL programs.
+- methods: execution-based tests, tool-augmented LLM agents
+- findings: recurring difficulties in schema grounding; PL/SQL dialect fidelity; procedural control flow; exception handling; cross-turn consistency
+
 ### [PL-Guard: Probabilistic Logic Reasoning for LLM Guardrails](https://arxiv.org/abs/2608.15673)
+
+- summary: The proposed PL-Guard architecture separates semantic grounding and policy reasoning to improve the safety and compliance of large language models.
+- methods: neurosymbolic guardrail architecture, symbolic policy interface, ProbLog rules, renormalized True/False token scores
+- findings: reduces unsafe compliance from 22.0% to 0.5%; increases over-refusal to 14.4% compared to LLM-as-a-judge baseline; exposes safety-helpfulness tradeoff
 
 ### [Noesis: Bidirectional Graph-RAG with Adaptive Parallelism and Cross-Knowledge-Base Semantic Discovery](https://arxiv.org/abs/2608.15919)
 
+- summary: Noesis, a decoupled Graph-RAG architecture, addresses limitations in existing systems by introducing four algorithms to improve performance and scalability in retrieval-augmented generation over knowledge graphs.
+- methods: Bidirectional Graph Traversal, AIMD Concurrency Controller, Moesis, Mesh
+- findings: 23x speedup with zero OOM events; 6.3x speedup on 12 GB consumer GPUs; 59.5 EM / 74.7 F1 on HotpotQA; 90% precision on long-range causal edges
+
 ### [MistyPilot: Enabling Social-Robot Control through Multi-Agent LLM Skill Orchestration](https://arxiv.org/abs/2608.15549)
+
+- summary: MistyPilot is a multi-agent LLM framework that interprets natural-language instructions and orchestrates skills on the Misty social robot.
+- methods: multi-agent LLM framework, Task Router, Physically Interactive Agent, Social Interaction Agent
+- findings: high accuracy on routing and sensor-skill binding; lower variance than single-agent baseline; positive user perceptions of usability and interaction quality
 
 ### [MicroVerse: An Instrument for Measuring Self-Authored Identity Drift in Long-Horizon Multi-Agent Language-Model Simulations](https://arxiv.org/abs/2608.15844)
 
+- summary: The authors present MicroVerse, a behavioral-science instrument to measure identity drift in generative agents, and report preliminary findings on its effectiveness in simulating social behavior.
+- methods: simulation, longitudinal engine snapshots, paraphrase-aware diff
+- findings: anti-self-deception emerges as a major category of identity modification; the system is threshold-robust
+
 ### [KV-Rescue: Recovering Reasoning Language Model KV Eviction Loss via Stepwise Interleaving](https://arxiv.org/abs/2608.15797)
+
+- summary: KV-Rescue is a training-free inference framework that bridges the information gap introduced by KV eviction using a lightweight full-context helper to improve model accuracy.
+- methods: KV-Rescue, online detector using entropy and compressibility
+- findings: KV-Rescue recovers an average of 87% of the accuracy lost to eviction; preventing runaway degeneration cuts base-model token generation by 43% on average
 
 ### [Kozuchi Agent: A Language-Agnostic Open-Weight Agent for Software Repair](https://arxiv.org/abs/2608.15579)
 
+- summary: The Kozuchi Agent, a language-agnostic open-weight repair agent, is presented as a solution for industrial software-engineering teams to turn bug reports into correct patches.
+- methods: language-agnostic open-weight repair, CI-operated evaluation pipeline, cross-agent test-time selection
+- findings: Kozuchi resolves 374/500 SWE-bench Verified instances; ranks first among strict open-weight submissions on Multi-SWE-bench Java; remaining failures mainly reflect semantic correctness and selection errors
+
 ### [Intent-Driven Situation Tracking for User-Centric Multi-Turn Agents](https://arxiv.org/abs/2608.15755)
+
+- summary: The authors propose Intent-Driven Situation States (IDSS), a framework that maintains an explicit situation state to improve user-centric multi-turn agents' performance in evolving task situations.
+- methods: Intent-Driven Situation States (IDSS), provenance-aware entity parsing, constraint modeling
+- findings: IDSS improves task completion; IDSS improves preference elicitation; IDSS improves interaction efficiency
 
 ### [HyMem: Hierarchical Context Management for Long-Horizon Agents via Information Isolation](https://arxiv.org/abs/2608.15703)
 
+- summary: HyMem, a hierarchical framework, is proposed to address the issue of context clutter in large language model agents by separating context into distinct functional layers, improving performance on complex tasks.
+- methods: hierarchical framework, context separation, memory management, structured summaries
+- findings: HyMem outperforms strongest baseline by 6.1 and 4.7 percentage points on GAIA and Browsecomp-plus; HyMem effectively controls context growth, maintaining focus and accuracy
+
 ### [GigaBrain-0.7: Scaling Embodied Foundation Models to Emergent Capabilities with a Three-System Architecture](https://arxiv.org/abs/2608.15875)
+
+- summary: GigaBrain-0.7, an embodied foundation model, achieves improved generalization across diverse robot embodiments through a three-system architecture and one-stage alignment training.
+- methods: three-system architecture, one-stage alignment training, pretraining on heterogeneous embodied data
+- findings: substantial improvements in foundation zero-shot capabilities; improved language-conditioned instruction following; increased post-training task success rates
 
 ### [Deploying Frontier Agentic Technology in MOOSEnger, a Multiphysics-Capable AI Assistant](https://arxiv.org/abs/2608.15881)
 
 ### [Dear Algo: A Precision-First Agentic Intent Layer for Unified Search and Recommendation](https://arxiv.org/abs/2608.15877)
 
+- summary: The study explores the boundary between search and recommendation through Dear Algo on Threads, a deployed product that uses open-ended requests to steer feed recommendations.
+- methods: precision-first objective, blinded audit, categorical LLM-as-a-judge gate, candidate-randomized serving-path study
+- findings: 94.4% exact-Relevant precision; 1.11 gain in judge-qualified candidates per 20 slots; 2.80% user-weighted judge-Irrelevant share among judged admissions
+
 ### [Crystal-structure design by agentic AI in a language of motifs](https://arxiv.org/abs/2608.15900)
+
+- summary: MatEvolve, an agentic-AI framework, is presented for designing crystals using a language of motifs, which describes recurring geometric patterns and serves as a medium for material design.
+- methods: agentic-AI framework, language of motifs, motif profile, first-principles calculation
+- findings: MatEvolve reaches new structural prototypes more than three times as often as generative models; comparable on-target-magnet rate; reveals structure--property relationships
 
 ### [Counterfactual Sensitivity Is Not Repairability: Auditing Replay Probes for Video Evidence](https://arxiv.org/abs/2608.15685)
 
+- summary: The authors introduce CARVE, a black-box counterfactual probe that evaluates the dependence of video agents' answers on retrieved visual evidence, showing a large and reproducible effect across independent runs.
+- methods: counterfactual testing, black-box probing, replay budget analysis
+- findings: DESTROY changes the answer 29.3 percentage points more often than SHAM; CARVE improves accuracy by 3.26 points on LVBench questions; CARVE is a routing signal rather than a direct grounding classifier
+
 ### [Broken Symmetry in LLM Refusal: Answer Release Is More Local Than Refusal Restoration](https://arxiv.org/abs/2608.15772)
+
+- summary: Researchers investigate how language models refuse to answer prompts and find that the correct answer remains recoverable from the model's hidden states even after refusal.
+- methods: controlled withhold setting, bidirectional activation patching, causal interventions
+- findings: correct answer remains linearly recoverable from hidden states after refusal; releasing withheld answer is a highly local operation; reimposing suppression requires broader interventions
 
 ### [Breaking and Defending LLM-Powered Social Media Bot Detection Systems](https://arxiv.org/abs/2608.15893)
 
 ### [Bounded Agents: Delegation Security for Multi-Agent AI Systems](https://arxiv.org/abs/2608.15888)
 
+- summary: The Agentic Principal Chain (APC) is proposed to track delegated authority and evaluate requests against accumulated session state to prevent unauthorized actions by LLM-based agents.
+- methods: authorization checks, composition closure, evaluation of APC implementations
+- findings: APC blocked all 544 InjecAgent data-stealing cases; Intent binding reduced destruction and manipulation; Authorization latency was 0.24 ms at the 99th percentile
+
 ### [ATLAS: Scaffold-Free Algorithm Synthesis by LLMs via Embedding-Guided Quality-Diversity Search](https://arxiv.org/abs/2608.15546)
+
+- summary: ATLAS, an embedding-guided quality-diversity framework, is presented for scaffold-free full-algorithm synthesis in combinatorial optimization, outperforming state-of-the-art methods and remaining competitive with human-designed algorithms.
+- methods: embedding-guided quality-diversity search, three-layer search, error-conditioned repair, similarity-based archive management
+- findings: ATLAS outperforms state-of-the-art component-synthesis methods; ATLAS remains competitive with strong human-designed algorithms; embedding-guided quality-diversity search makes the enlarged full-algorithm design space practically searchable
 
 ### [Ask to Be Sure: Informative Interactions for Confident Multi-Turn LLM Recommendation](https://arxiv.org/abs/2608.15949)
 
 ### [ALKEMIE Agent: an autonomous platform for computational materials design](https://arxiv.org/abs/2608.15776)
 
+- summary: The ALKEMIE Agent is introduced as an autonomous computational framework to unify materials computation workflows, integrating various tools and methods to facilitate more efficient and adaptive research.
+- methods: retrieval-augmented generation, AI-assisted structure modeling, machine-learned interatomic potential training, active-learning-based materials screening
+- findings: integration of various tools and methods in a unified framework; demonstrated applications in materials recommendation and structure modeling
+
 ### [Agent Gym: A Framework for Continuous Evaluation and Evolution of LLM Agents Through Human-in-the-Loop Feedback](https://arxiv.org/abs/2608.15591)
+
+- summary: Agent Gym is a framework that enables continuous post-deployment behavioral correction of Large Language Model agents without modifying their source code.
+- methods: continuous evaluation-and-evolution loop, hybrid deterministic-LLM correction engine, three-layer investigation architecture
+- findings: enables continuous post-deployment behavioral correction without modifying source code; provides a modular and domain-agnostic framework; introduces the Spec-to-Note Gap for agentic system transparency
 
 ### [Adversarial Review: Structured Disagreement for Grounded Agentic Code Review](https://arxiv.org/abs/2608.18167)
 
+- summary: This study introduces Adversarial Review, a minimal cooperative code-review protocol that achieves high performance with only three agents, outperforming larger multi-agent teams and other methods on several benchmarks.
+- methods: Adversarial Review, multi-agent teams, subagent paradigm
+- findings: minimal agentic cooperation can be effective; structured disagreement improves performance; explicit disagreement can prevent false-consensus failure mode
+
 ### [Admission Without Answers: Label-Free Certification and Experience Learning for LLM-Based Optimization Modeling](https://arxiv.org/abs/2608.15565)
+
+- summary: The authors propose AdmitOR, a label-free admission mechanism that improves the precision of experience-learning agents for optimization modeling by using calibrated external behavioral evidence.
+- methods: calibrated external behavioral evidence, cross-family clique, preregistered false-discovery criterion
+- findings: AdmitOR raises admission precision to 0.927; 3.1x and 8.0x fewer poisoned admissions compared to majority vote and execution success; 3.5-point gain over majority vote in macro accuracy across five public benchmarks
 
 ### [Aborted but Not Forgotten: KV-Cache Retention Breaks Rollback Consistency in Language Agents](https://arxiv.org/abs/2608.15939)
 
@@ -1876,107 +4885,296 @@
 
 ### [What makes prompts a graph: necessary and sufficient conditions for prompt graph engineering](https://arxiv.org/abs/2607.27578)
 
+- summary: This study proposes a reference definition for prompt graph engineering, treating prompts as nodes of an explicit, executable, and improvable graph, and provides a constitutive definition with four conditions and an inclusion and exclusion test.
+- methods: conceptual analysis, literature review, genealogy reconstruction
+- findings: constitutive definition of prompt graph engineering; four conditions for prompt graph engineering; inclusion and exclusion test for prompt graph engineering
+
 ### [ViSAGE: Constructing Self-Correcting Memories for Long-Form Video Understanding](https://arxiv.org/abs/2607.28678)
 
+- summary: The authors propose ViSAGE, a multimodal agentic memory framework that constructs self-correcting, entity-centric memories to support entity-consistent reasoning in long-horizon environments.
+- methods: cross-modal binding, bidirectional memory refinement, multi-agent cross-verification
+- findings: ViSAGE outperforms the strongest baseline by 5.9% in accuracy; improves entity-consistent reasoning; reduces entity confusion and error propagation
+
 ### [Vibe-FDTR: An agent-oriented framework for reproducible frequency-domain thermoreflectance data analysis](https://arxiv.org/abs/2607.28200)
+
+- summary: Vibe-FDTR is a framework that enables large language model agents to perform reliable and reproducible frequency-domain thermoreflectance analyses directly from natural language requests.
+- methods: agent-oriented framework, configuration-driven code package, procedural agent skills
+- findings: 100% success rate on synthetic single-step tasks; 98.9% success rate on real-data multi-step tasks; 87.7% reduction in computational cost; over 60% reduction in execution time
 
 ### [VAmoS Bench: Voice Agent Simulation Bench](https://arxiv.org/abs/2607.27453)
 
 ### [Two Calls Beat Five Agents: Evaluating Multi-Agent Pipelines Against Self-Refinement for Local Language Models](https://arxiv.org/abs/2607.26922)
 
+- summary: This study investigates the performance of a multi-agent LLM pipeline system, Parishad, on local models and datasets, comparing it to simpler approaches like prompting and self-refinement strategies.
+- methods: multi-agent system, prompting, two-call self-refinement, task-aware gated redesign
+- findings: multi-agent system accuracy drops with JSON data format due to error accumulation; plaintext format restores accuracy; two-call self-refinement strategy achieves high accuracy on GSM8K with low token usage; task-aware gated redesign preserves accuracy on HumanEval
+
 ### [TREK: A Travel Reasoning and Evaluation Kit for LLM Agents in Complex Trip Planning](https://arxiv.org/abs/2607.26977)
+
+- summary: The authors introduce TREK, a benchmark for feasible itinerary synthesis, to evaluate the performance of LLM agents in generating travel plans that meet multiple constraints.
+- methods: benchmarking, evaluation, deterministic scoring
+- findings: Even the strongest LLM agent (GPT-5.6) produces a fully-feasible plan on only 46.2% of solvable tasks; Satisfying travelers' unstated needs is the universal bottleneck
 
 ### [Training Skills Like Parameters via Self-Supervised Semantic Diffusion](https://arxiv.org/abs/2607.27557)
 
+- summary: A novel, unsupervised self-evolving agent framework is proposed to enhance Large Language Models' capabilities in specialized domains like creative screenwriting without relying on explicit external scoring or human expert annotations.
+- methods: agentic continual learning, diffusion models, self-supervised signals, self-contrastive reflection
+- findings: autonomous extraction and internalization of highly generalizable skills; significant enhancement of domain-specific generation capabilities; scalable pathway for agents to teach themselves production of complex, high-quality human artifacts
+
 ### [Think Short, Defer Smart, Act, and Repeat: Calibrated Reasoning and Uncertainty-Aware Deferral for Edge LLM Agents](https://arxiv.org/abs/2607.26865)
+
+- summary: The Think Short, Defer Smart (TSDS) framework is proposed to manage the reasoning budget of LLM agents in edge deployments by integrating a convergence probe and a perplexity-based deferral rule.
+- methods: Think Short, Defer Smart (TSDS) framework, Learn-Then-Test (LTT) procedure, convergence probe, perplexity-based deferral rule
+- findings: TSDS reduces per-episode thinking compute by 43%-73% over deferral-only baselines; TSDS maintains certified reward and cloud-call rate guarantees
 
 ### [SWE-NFI: Studying and Benchmarking Coding Agents for Non-Functional Improvements](https://arxiv.org/abs/2607.27409)
 
+- summary: This paper presents SWE-NFI, a benchmark for evaluating coding agents on non-functional improvements beyond functional correctness, and finds that state-of-the-art agents fall short of human developers in overall NFI capability.
+- methods: rule-based NFI evaluation, functional correctness testing
+- findings: state-of-the-art agents achieve 70.0% functional correctness rate; agents fall short of human developers in overall NFI capability; agents' NFI scores range from 0.0 to 1.3 for structural code improvements
+
 ### [Stop Shipping AI Agents on Faith: Capability Is Not Production Readiness](https://arxiv.org/abs/2607.27677)
+
+- summary: This paper introduces the ProofAgent Index (PAI), a governance readiness index for AI agents that combines four dimensions of deployment evidence to determine production readiness.
+- methods: Evaluation, Context engineering, Compliance measurement, Governance measurement
+- findings: PAI carries held out readiness signal; context engineering strongly changes reliability; capability improves behavior but does not determine readiness; governance evidence must remain visible
 
 ### [SpatialCLI: Learning to Reason With Spatial Tools, Then Without Them](https://arxiv.org/abs/2607.27703)
 
+- summary: This work proposes SpatialCLI, a framework that teaches vision-language models to reason with spatial tools and internalize specialist perceptual capabilities.
+- methods: Cold-Start SFT, agentic RL, verbalization of successful tool-use trajectories
+- findings: SpatialCLI improves performance on MindCube from 29.3% to 84.6% with tools; SpatialCLI surpasses GPT-5.6 Sol with tools (72.1%)
+
 ### [SKIMIX: Multi-Agent Harness-Time Scaling with Skill Mixture for Dynamic Harness Engineering](https://arxiv.org/abs/2607.27994)
+
+- summary: The SKIMIX framework enables multi-agent collaboration through iterative refinement, improving open-ended mathematical reasoning in certain tasks.
+- methods: embedding-based skill retrieval, submodular anti-dilution routing, adaptive skill evolution
+- findings: multi-agent collaboration improves open-ended mathematical reasoning; agent-count scaling is non-monotonic; task characteristics determine the effectiveness of skill-level ensembles
 
 ### [Skill Use or Skill Theater? Evaluating the Reasoning Backroom in Skill-Augmented Language Agents](https://arxiv.org/abs/2607.27484)
 
+- summary: The study introduces the concept of a 'Reasoning Backroom' where there is a gap between stated skill use and actual influence in skill-augmented agents, and presents an evaluation framework to measure this gap.
+- methods: intervention-based evaluation, counterfactual analysis, attribution elicitation
+- findings: pervasive provenance failure; silent uptake and performative use of skills; behavioral effects follow procedural content more than skill identity; observational detectors fail to identify actual skill dependence
+
 ### [Self-Play Meets Skill Evolution: Self-Evolving Search Agents that Pose, Solve, and Remember](https://arxiv.org/abs/2607.29468)
+
+- summary: The authors introduce SESA, a self-evolving skill-augmented agent that generates training problems and preserves procedural experience through an evolving state of tool-augmented search self-play.
+- methods: self-evolving skill-augmented search self-play, on-policy training trajectories, inference-time retrieval
+- findings: SESA improves average accuracy over SSP by 1.2--3.2 points; SESA surpasses the skill-augmented SkillRL baseline by 0.9 points; evolving skill memory changes policy learning and the future training distribution
 
 ### [See2Think: Do Multimodal Models Really Use Intermediate Visual States?](https://arxiv.org/abs/2607.26769)
 
+- summary: The See2Think framework is introduced to evaluate multimodal large language models' reliance on visual states during reasoning, revealing model- and environment-dependent visual reasoning with faithful rendering as a bottleneck.
+- methods: evaluation framework, process analysis, controlled inference settings
+- findings: visual reasoning is model- and environment-dependent; faithful rendering is a bottleneck; high feedback uptake does not necessarily translate into accuracy gains; models exhibit behavioral dependence on visual states under corrupted feedback
+
 ### [SciToolAgent-Evo: An Ontology-Aware Self-Evolving Agent for Open-World Scientific Tool Acquisition](https://arxiv.org/abs/2607.28692)
+
+- summary: The authors propose SciToolAgent-Evo, an ontology-aware self-evolving agent for open-world scientific tool acquisition, which achieves state-of-the-art performance in extensive evaluations.
+- methods: ontology-aware self-evolving agent, evolving memory of skills and experiences, LinUCB-based bandit gate
+- findings: SciToolAgent-Evo achieves state-of-the-art performance; robustness and generalization in open-world scientific workflows
 
 ### [Rethinking Inference-Time Scaling in Local Computer-Use Agents: Failure Modes and Compute Tradeoffs](https://arxiv.org/abs/2607.28573)
 
+- summary: A systematic empirical study of inference-time scaling in local autonomous computer-use agents reveals its effectiveness and limitations under strict hardware constraints.
+- methods: inference-time scaling, contextual scaling, temporal scaling, structural decomposition, parallel scaling
+- findings: additional computation often yields diminishing returns; contextual scaling improves trajectory stability and task accuracy but has saturating gains; temporal scaling reduces max-step stalls but does not improve task success; structural decomposition introduces planning and formatting overhead; parallel scaling mitigates failures at a substantial computational cost
+
 ### [RecHarness: A Bandit-Routed Agentic Harness for Self-Evolving Recommender Systems](https://arxiv.org/abs/2607.29241)
+
+- summary: RecHarness, a Bandit-Routed Agentic Harness, is proposed for automated recommender model optimization, achieving more stable performance improvements and effective use of limited trial budgets.
+- methods: bandit routing, LLM-generated hypotheses, jump-basin mechanism
+- findings: RecHarness achieves more stable performance improvements; RecHarness uses limited trial budgets more effectively; RecHarness improves ADVV, Revenue, and Exposure in a large-scale online A/B test
 
 ### [Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents](https://arxiv.org/abs/2607.28227)
 
+- summary: Qwen-UI-Agent is a real-world centric foundation GUI agent that operates reliably on real devices and achieves state-of-the-art performance on various benchmarks.
+- methods: online RL, AutoResearch-style data flywheel, unified action space, batched actions
+- findings: 82.1% on MobileWorld; 92.2% on MobileWorld-Real; 97.5% on AndroidDaily; 79.5% on OSWorld-Verified; 73.6% on WebArena; 81.5% on ScreenSpot-Pro
+
 ### [Paying for Honesty Without Knowing the Truth: Reputation-Penalty Design for LLM Marketplace Agents](https://arxiv.org/abs/2607.28330)
+
+- summary: The authors design a reputation-penalty mechanism called CARP to suppress the sales volume of dishonest LLM agents that fabricate product attributes, without requiring ground truth information.
+- methods: CARP mechanism, SPARC reflection mechanism
+- findings: CARP suppresses sales volume of low-rated liars; CARP is robust to strategic gaming; LLM merchants restrain themselves from fabrication when it costs them sales
 
 ### [PAUSE: A User-Centric Benchmark for Personal AI Assistants in Unified Service Environments](https://arxiv.org/abs/2607.27354)
 
+- summary: The PAUSE benchmark is introduced to evaluate personal AI assistants in realistic, stateful, and service-integrated environments, capturing core challenges of real-world assistant deployment.
+- methods: multi-regime evaluation framework, semantic and trajectory-level behavioral metrics, state-based verification
+- findings: state-of-the-art models fail to reach 70% task completion on scenarios requiring stateful reasoning and configuration awareness; consistent and interpretable failure patterns are revealed
+
 ### [Partner Capability Estimation for Task-Agnostic Adaptation in Ad-Hoc Teamwork](https://arxiv.org/abs/2607.27177)
+
+- summary: This study introduces CE-CM, a Bayesian method for estimating hidden partner capabilities in ad-hoc teamwork, and its extension CE-CM-Div, which accounts for human unpredictability in multi-task settings.
+- methods: Bayesian method, simulation-based sampling, Multi-agent Markov Decision Processes
+- findings: CE-CM rapidly recovers hidden capabilities; CE-CM reduces infeasible action assignments; CE-CM-Div improves capability estimates over CE-CM
 
 ### [Overcoming the Weakest-Link Effect in LLM-Driven Program Optimization via Heterogeneous Edit Recombination](https://arxiv.org/abs/2607.28947)
 
+- summary: The authors introduce HERO, a program optimizer that leverages large language models to generate and select atomic edits for program improvement, outperforming prior LLM-based optimizers in various domains.
+- methods: zeroth-order optimization, atomic edits, evaluator scores, HERO program optimizer
+- findings: HERO discovers higher-scoring programs; HERO converges substantially faster than prior optimizers; HERO consumes fewer tokens
+
 ### [OSReward: Instituting Standardized Evaluation for Cross-Platform Computer-Use Reward Models](https://arxiv.org/abs/2607.28609)
+
+- summary: The study introduces OSReward, a benchmark for evaluating vision-language models as judges of computer-using agent trajectories, and finds that even state-of-the-art models have a systematic leniency bias, leading to the development of open reward models that supply low-cost and reliable reward signals.
+
+- methods: benchmarking, multi-stage human annotation, model training, evaluation
+- findings: state-of-the-art models have a systematic leniency bias; reliable models are too expensive to run at scale; open reward models can match commercial judges at lower cost
 
 ### [Open-Source LLM-Driven Formal Verification: A Multi-Agent Pipeline for RTL Repair](https://arxiv.org/abs/2607.28877)
 
+- summary: This paper presents a multi-agent pipeline that combines a large language model with an open-source formal backend to repair RTL through counterexample-guided iteration, providing a formal proof of correctness.
+- methods: counterexample-guided iteration, k-induction
+- findings: detection and repair of a real functional bug with a formal proof of correctness; characterization of four distinct failure modes
+
 ### [OmegaUse-OfficeVal: Benchmarking LLM Agents on Long-Horizon Office-Suite Tasks with Economic Grounding](https://arxiv.org/abs/2607.27155)
+
+- summary: The OmegaUse-OfficeVal benchmark is introduced to evaluate large language model agents on long-horizon office-suite tasks with economic grounding.
+- methods: benchmarking, code-based verification
+- findings: LLMs are cheaper and faster than human workers but lack human-level deliverable quality; OmegaUse-OfficeVal benchmark enables direct comparisons between human costs and LLM inference costs
 
 ### [NeSyFS: A Neuro-symbolic Fast-Slow Thinking Framework for LLM Agent under Partial Observability](https://arxiv.org/abs/2607.28942)
 
+- summary: This study proposes a novel neuro-symbolic fast-slow thinking framework for Large Language Models to address challenges introduced by partial observability in autonomous agents.
+- methods: neuro-symbolic fast-slow thinking framework, knowledge graph, twisted sequential Monte Carlo algorithm
+- findings: significant advantages over previous methods in three representative benchmarks
+
 ### [MOT-SR: Multi-Objective Tool-Augmented Scientific Equation Discovery with Large Language Models](https://arxiv.org/abs/2607.29561)
+
+- summary: The proposed Multi-Objective Tool-augmented Symbolic Regression (MOT-SR) framework integrates external analytical tools and jointly optimizes for accuracy, complexity, and generalization to improve equation discovery from observational data.
+- methods: Multi-Objective Tool-augmented Symbolic Regression, multi-objective evaluation, Pareto front optimization
+- findings: MOT-SR outperforms existing SR methods in accuracy, generalization, and efficiency; MOT-SR achieves the lowest trajectory-level integration error on held-out configurations for EMRI orbital modeling
 
 ### [Model or Harness? An Interaction-Centric Taxonomy for Localizing Agent Failures](https://arxiv.org/abs/2607.28802)
 
+- summary: This study introduces an interaction-centric taxonomy to localize agent failures and identify responsible components, making it actionable for improvement.
+- methods: taxonomy development, evaluation using independent reasoning agents
+- findings: interaction-centric taxonomy localizes failures to component interactions; taxonomy is actionable for model post-training, harness engineering, and environment redesign; taxonomy achieves high reproducibility with Cohen's κ=0.76
+
 ### [MirrorCraft: Paired Evaluation under Hidden Rule Changes in Minecraft](https://arxiv.org/abs/2607.29218)
 
+- summary: This paper introduces MirrorCraft, a benchmark for evaluating large language model-based agents in Minecraft under hidden rule changes.
+- methods: benchmarking, evaluation
+- findings: Hidden rule changes have different effects across suites; ReAct achieves the highest pooled Mirror score without rule descriptions; Providing exact rules yields modest gains in average progress and completion
+
 ### [Metis: Memory Foundation Model](https://arxiv.org/abs/2607.26760)
+
+- summary: This paper introduces memory foundation models, which empower foundation models with native memory capabilities, and proposes Metis, a prototype that equips a foundation model with a native memory state.
+- methods: mid-training optimization, gradient-free online memory maintenance, forward pass memory update
+- findings: native memory offers advantages in architecture, end-to-end optimization, and efficiency; Metis exhibits native memory capabilities
 
 ### [MerchantBench: Benchmarking LLM Agents for Long-Term Coherence in E-Commerce Operations](https://arxiv.org/abs/2607.28956)
 
 ### [Mental World Modeling](https://arxiv.org/abs/2607.27201)
 
+- summary: The authors propose Mental World Modeling (MWM), a framework that incorporates mental variables into world models to better predict human behavior and decision-making.
+- methods: state parsing, target-observation generation, action decomposition, coupled physical and mental transition, branch-level value evaluation
+- findings: explicitly modeling mental state is essential for predicting human decisions; current mental world modeling has bottlenecks
+
 ### [Memory Provenance Laundering in LLM Agents: A Non-Amplification Firewall for Persistent Memory](https://arxiv.org/abs/2607.29167)
+
+- summary: The study identifies a vulnerability in large language models called memory provenance laundering and proposes a solution called Provenance-Preserving Memory Firewall (PPMF) to mitigate it.
+- methods: formalization, schema-grounded evaluation
+- findings: memory provenance laundering can lead to high attack success rates; PPMF can prevent unauthorized high-risk actions
 
 ### [MECA: A Mechanism-Centered Agent for Constructing Well-Specified and Valuable Mathematical Conjectures](https://arxiv.org/abs/2607.27709)
 
+- summary: MECA, a multi-agent framework, constructs well-specified and valuable mathematical conjectures by jointly developing candidate statements and their supporting mechanisms.
+- methods: multi-agent framework, mechanism-centered refinement, generate-and-revise baseline
+- findings: MECA produces well-specified and research-worthy conjectures; conjectures remain challenging for current automated provers
+
 ### [MANTA: Multi-Agent Network Topology Adaptation for Self-Evolving Multi-Agent Systems](https://arxiv.org/abs/2607.28527)
+
+- summary: MANTA, a framework for Multi-Agent Network Topology Adaptation, enables communication structures to self-evolve at inference time, improving complex problem solving in multi-agent systems.
+- methods: task decomposition, agent specialization, information exchange, intermediate validation, bounded structural updates
+- findings: MANTA achieves the highest average score of 74.0; outperforms the strongest baseline by 5.8 percentage points; obtains the best result on PlanCraft
 
 ### [Leveraging Trajectory Graphs for Pre-Execution Error Diagnosis in Agentic LLM Systems](https://arxiv.org/abs/2607.27443)
 
+- summary: The Trajectory Graph Copilot framework is proposed to improve the performance of Large Language Model-based agents in long-horizon interactive tasks by diagnosing potential action errors before they are executed.
+- methods: Trajectory Graph Copilot, Graph Debugger, probabilistic graph modeling
+- findings: 14.69% pass ratio improvement on average across four benchmarks
+
 ### [LEDGERMIND: Provenance-Constrained Multimodal Agentic Reasoning with a Structured Evidence Ledger](https://arxiv.org/abs/2607.28374)
 
+- summary: The authors propose LedgerMind, a multimodal agent that treats its trajectory as a provenance-constrained state machine to improve evaluation and accuracy in visual question answering.
+- methods: provenance-constrained state machine, Structured Evidence Ledger, Three-Layer Grounding Protocol, Adaptive Dual-Path Dispatcher, Event-Triggered Verification-and-Repair engine
+- findings: LedgerMind improves answer accuracy and trajectory-level faithfulness; identification of four recurring failure patterns in multimodal reasoning
+
 ### [LayerRAG-Bench: A Cross-Layer Reliability Benchmark for Agentic Retrieval-Augmented Generation](https://arxiv.org/abs/2607.27353)
+
+- summary: The introduction of LayerRAG-Bench, a benchmark for evaluating the reliability of agentic retrieval-augmented generation systems, reveals the importance of layer-specific evaluation in identifying effective reliability interventions.
+- methods: schema normalization, layer-specific evaluation
+- findings: schema normalization raises schema-drift success from 0.000 to 0.913; groundedness-only evaluation produces substantial false positives under stale and wrong-session evidence
 
 ### [Kalman Meets Curriculum: Efficient Dynamic Prompt Selection for Adaptive RL Finetuning](https://arxiv.org/abs/2607.27610)
 
 ### [Inference-Time Agentic Decision Rules Beat Longer Evolving Search for Multi-Image Medical Reasoning](https://arxiv.org/abs/2607.27564)
 
+- summary: The study investigates multi-image medical visual question answering through a comparison of five inference-time agentic strategies, finding that a simple robust aggregator achieves the highest final-test accuracy.
+- methods: order-vote policy, order-rerank variant, evolutionary search, paired bootstrap analysis
+- findings: the order-vote policy achieves 57.89% final-test accuracy; increasing the evolutionary search budget does not yield generalization benefits; defining the correct agentic decision rule is more impactful than expanding the optimization search budget
+
 ### [How Benchmarks Mis-Score Computer-Use Agents](https://arxiv.org/abs/2607.28367)
+
+- summary: The current benchmark scores for computer-use agents are often inaccurate due to brittle scripted oracles, and a reliability framework is proposed to address these issues.
+- methods: reliability framework, audit of public failure-scored trajectories, diagnostic taxonomy
+- findings: 15.3% of FAIL verdicts are wrong; verification/feedback and planning failures dominate execution/grounding errors
 
 ### [HAM-VLN: Harnessing Hierarchical Agentic Memory for Zero-Shot Vision-and-Language Navigation](https://arxiv.org/abs/2607.29600)
 
+- summary: HAM-VLN, a decision-coupled, agent-authored memory, is proposed to improve vision-and-language navigation by equipping robots with a persistent, depth-grounded world graph.
+- methods: decision-coupled, agent-authored memory, persistent, depth-grounded world graph, retrieval scored by relevance, recency, and salience
+- findings: improves various navigation metrics; reduces context length by more than 65%; achieves 61.0% Success Rate on VLN-CE R2R; achieves 52.7% SR on VLN-CE RxR; achieves 79.7% SR on HM3D-v2 ObjectNav
+
 ### [Graph Is the Verifier: Agentic Reinforcement Learning for Interprocedural Vulnerability Detection](https://arxiv.org/abs/2607.26656)
+
+- summary: VulAgentRL, an agentic reinforcement learning framework, is proposed for interprocedural vulnerability detection, outperforming state-of-the-art baselines by gathering evidence from outside individual functions.
+- methods: agentic reinforcement learning, distillation of teacher investigations
+- findings: 71.7% of vulnerable functions require external evidence; VulAgentRL outperforms state-of-the-art baselines on pair-wise-correct metric
 
 ### [From Code Review to Code Critique: Intent, Drift, and Spotlight for AI-Generated Diffs at Scale](https://arxiv.org/abs/2607.29516)
 
 ### [Flat Score, Amplified Failures: How the Error Budget Masks Damage in Quantized LLM Agents](https://arxiv.org/abs/2607.27275)
 
+- summary: Post-training quantization to 4-bit weights is found to amplify existing model failures, particularly in tool-name hallucination, despite showing no significant change in standard metrics.
+- methods: post-training quantization, equivalence testing, error-repair prompt
+- findings: quantization amplifies existing model failures by up to 2.5×; failure set remains the same at every precision; score gap re-exposed with reduced error budget
+
 ### [FinanceHarness: Autonomous Financial Deep Research Framework](https://arxiv.org/abs/2607.27853)
 
+- summary: The authors present FinanceHarness, a system that automates financial deep research, and FinanceGym, a benchmark for evaluating financial research agents.
+- methods: harness development, benchmark proposal, expert validation
+- findings: FinanceHarness improves rubric score from 25.3% to 32.4%; leading LLMs and agents score below 40% on FinanceGym; professional expert validation yields an 82% pass rate
+
 ### [FAVA: Formal Authorization for Verified Agents with Evidence-Backed Permission Graphs](https://arxiv.org/abs/2607.27267)
+
+- summary: FAVA is a permission-carrying authorization framework for agent execution that utilizes an LLM-guided Permission Intermediate Representation to provide strict security guarantees in dynamic environments.
+- methods: LLM-guided Permission Intermediate Representation, deterministic lowering pass, Satisfiability Modulo Theories authorizer
+- findings: FAVA achieves a 90.5% Decision Compliance Rate over the aggregate dataset; successfully intercepts dynamic violating traces in evaluated scenarios
 
 ### [FaithEyes: Towards Faithful Tool Use via Multi-Agent Process-Image Verification](https://arxiv.org/abs/2607.28225)
 
 ### [Evaluating Agentic Bioinformatics through Function, Evidence, and Validation](https://arxiv.org/abs/2607.27556)
 
+- summary: The Function--Evidence--Validation (FEV) framework is introduced to assess the accountability of agent-generated workflows in biological analyses, emphasizing workflow correctness over final-answer correctness.
+- methods: Function--Evidence--Validation (FEV) framework
+- findings: planning and tool-mediated execution have advanced more rapidly than replayability and provenance; agentic bioinformatics should be assessed through workflow correctness rather than final-answer correctness alone
+
 ### [DungeonBench: A Benchmark for Rules-Rich Tactical Reasoning in Dungeons & Dragons Combat](https://arxiv.org/abs/2607.29577)
 
+- summary: DungeonBench is introduced as a benchmark for tactical reasoning in Dungeons & Dragons combat, evaluating the ability to make decisions in complex scenarios with multiple factors at play.
+- methods: heuristic controllers, language-model policies, learned option rankers, masked-action reinforcement-learning agents
+- findings: Frontier policies often win direct encounters but fail in linked encounter days due to poor resource budgeting, rest timing, and rule-aware tactical discipline
+
 ### [DREvo: Distilling Recalibrated Historical Experience for Harness Self-Evolution](https://arxiv.org/abs/2607.26722)
+
+- summary: This study proposes a new harness self-evolution method, DREvo, which improves the performance of large language model agents by addressing limitations in leveraging historical experience.
+- methods: function-level evidence anchoring, state-dependent evidence recalibration, role-conditioned search intent distillation
+- findings: DREvo exhibits smoother evolution trajectories; DREvo achieves the highest accuracy on all five benchmarks; DREvo delivers average gains of 16.2% and 14.2% over the evaluated baselines
 
 ### [DeepResearch Agent System](https://arxiv.org/abs/2607.27562)
 
@@ -1984,49 +5182,136 @@
 
 ### [Data Turnstile: A Scalable Open Framework for Function-Calling Data Generation](https://arxiv.org/abs/2607.29250)
 
+- summary: Data Turnstile, an open-source framework, generates high-quality synthetic training data for function calling, improving the performance of small language models on tool-use tasks.
+- methods: domain adaptation, synthetic data generation, fine-tuning
+- findings: Turnstile data improves accuracy on BFCL single-turn benchmark; Turnstile-trained Qwen3-1.7B surpasses Qwen2.5-32B-Instruct on τ^2-bench; Turnstile-trained Qwen3-0.6B achieves 7× improvement over its base model
+
 ### [Contrastive Reinforced Policy Optimization via Privileged Self-Distillation](https://arxiv.org/abs/2607.28026)
+
+- summary: This study introduces Contrastive Reinforced Policy Optimization (CRPO), a method that reformulates agentic On-Policy Self-Distillation (OPSD) from a contrastive learning perspective to tackle exposure bias and improve optimization directions in multi-turn agentic settings.
+- methods: Contrastive Reinforced Policy Optimization, Contrastive Learning, Reinforcement Learning, Self-Distillation
+- findings: CRPO outperforms existing reinforcement learning and self-distillation baselines; CRPO enhances training stability and generalization in long-horizon interactions
 
 ### [ClawTrack: Towards Trace-Level Evaluation and Improvement of Real-World Autonomous Agents](https://arxiv.org/abs/2607.28037)
 
+- summary: This work presents ClawTrack, a dual-assessment benchmark that evaluates both the outcome and process of LLM-based agents in complex workflows.
+- methods: ClawTrack benchmark, Process Grader, task-specific rubric items
+- findings: process scores attribute success and failure to specific reasoning dimensions; the four dimensions are complementary; the framework is robust to evaluator choice; process-based trajectory filtering yields consistent post-training improvements
+
 ### [CinemaTraj: Composing Atomic Camera Trajectories for 3D Scenes with LLM Agents](https://arxiv.org/abs/2607.26910)
+
+- summary: CinemaTraj is a framework that generates cinematically expressive camera trajectories through 3D scenes from natural language descriptions, outperforming existing approaches in prompt alignment, trajectory quality, and safety metrics.
+- methods: language-grounded spatial reasoning, parametric trajectory representation, collision avoidance
+- findings: CinemaTraj produces prompt-faithful, collision-free trajectories with high cinematographic quality; outperforms existing approaches on prompt alignment, trajectory quality, and safety metrics
 
 ### [ChronoMem: Version Control and Semantic Rollback for Large Language Model Agent Memory](https://arxiv.org/abs/2607.27773)
 
+- summary: ChronoMem is a semantic version-control layer for agentic memory that enables rollback and versioning of prior states, improving performance in conversational benchmarks.
+- methods: semantic version-control, hybrid lexical and semantic retrieval, rank fusion, reranking
+- findings: ChronoMem improves rollback-consistent question answering and history summarization; strong performance in semantic version selection
+
 ### [Change2Task: From Repository Changes to Executable Coding Agent Tasks and Environments](https://arxiv.org/abs/2607.28591)
+
+- summary: The Change2Task system converts merged pull requests into verified tasks for coding agent training and evaluation, achieving 79.6% verified task construction success across five common task families.
+- methods: Patch Reversal, Code Mapping, Agent Reconstruction
+- findings: 79.6% verified task construction success; 29.2% more verified tasks than baseline; up to 98.0% matched outcome agreement; 10.8% reduction in measured expenditure
 
 ### [CAGE: Certified Authorization under Typed-Return Uncertainty for Tool-Using Agents](https://arxiv.org/abs/2607.29190)
 
+- summary: CAGE certifies the safety of tool-using LLM agents against small errors in binding tool returns to their sources, ensuring authorized actions remain safe across a neighborhood of plausible returns.
+- methods: CAGE certification, CAGE-Exact, CAGE-Lip, CAGE-RS
+- findings: Separate certification of categorical and numerical channels does not compose; CAGE removes in-budget false allows while keeping a useful fraction of decisions autonomous
+
 ### [Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs](https://arxiv.org/abs/2607.27415)
+
+- summary: This paper proposes a novel framework, GAMER, that bridges the gap between inference scaling and episodic memory for Large Language Models, improving efficiency and performance.
+- methods: Graph-based Action-centric Memory, Episodic Reasoning, Temporal Difference learning
+- findings: GAMER achieves superior performance by 20.81%/6.17% for success/progress rate compared to vanilla baselines; GAMER decouples memory mechanism from LLMs, reducing computational costs
 
 ### [Beyond Similarity: Grounded Agentic Extraction and Expert-Adjudicated Evaluation of Intertextuality in Classical Chinese Histories](https://arxiv.org/abs/2607.27595)
 
+- summary: This study proposes a new approach to intertextuality extraction using large language models and validates it on a benchmark of intertextual pairs from the Analects and the Book of Han.
+- methods: agentic task, constrained tool interface, five-dimension typology of reuse
+- findings: precision of 56%-93% for LLMs; 51x cost spread at comparable quality; stability in aggregate citation composition with drift in individual cases
+
 ### [Beyond Component Testing: Validating Agentic AI Systems](https://arxiv.org/abs/2607.29405)
 
+- summary: This survey synthesizes 257 papers to characterize the validation problem for agentic AI systems, highlighting the need for trajectory-based validation beyond component testing and one-shot evaluation.
+- methods: literature review, taxonomy development, case studies
+- findings: behavioral evaluation is mature; temporal validity and runtime evidence maintenance are under-developed; regulatory legibility and multi-agent systems assurance are under-developed
+
 ### [Benchmarking the Residual: What Long-Horizon Evaluations Add Beyond Matched Short-Task Performance](https://arxiv.org/abs/2607.27283)
+
+- summary: The paper discusses the concept of long-horizon failure in benchmarks and proposes a method to measure it by comparing actual full-task success against a baseline prediction built from short stages.
+- methods: baseline prediction, horizon residual calculation
+- findings: long-horizon failure is not just due to compounding errors; trajectory-induced degradation and context rot can occur
 
 ### [Beacon: Knowing When and How to Perform Agentic Visual Reasoning](https://arxiv.org/abs/2607.28595)
 
 ### [Autonomous Repair for Multi-Agent Systems via Monte-Carlo Tree Search](https://arxiv.org/abs/2607.29055)
 
+- summary: The authors propose MARS, a search-based framework for multi-agent system repair, which formulates repair as a Monte Carlo Tree Search process and achieves state-of-the-art performance on the StateMAS benchmark.
+- methods: MARS framework, diagnosis-guided expansion, taxonomy-augmented evaluation, partial rollout
+- findings: MARS outperforms state-of-the-art methods by 3.0% to 12.1% on StateMAS; taxonomy-augmented evaluation and diagnosis-guided expansion are critical to performance gains
+
 ### [Automated Transcript Analysis for Detecting Flaws in Agentic Benchmarks](https://arxiv.org/abs/2607.27518)
+
+- summary: This paper develops AI scanners to detect validity issues in agentic benchmarks and evaluates their performance against human labels on a test set of benchmarks.
+- methods: AI scanners, automated transcript analysis, human labeling
+- findings: AI scanners can identify verified quality issues in benchmarks; scanner performance varies across benchmarks and criteria; broader standardization gaps degrade scanner performance
 
 ### [An Empirical Study of Coordination Mode as the First-Class Citizen in From-Scratch Multi-Agent Coding](https://arxiv.org/abs/2607.27877)
 
+- summary: The authors introduce MSEval, a multi-agent from-scratch evaluation benchmark that evaluates multi-agent coding on real-world tasks and provides a rigorous standard for measuring how multi-agent teams build software.
+- methods: hierarchical requirements, deterministic rubrics, periodic sync intervals, native CI/CD pipelines
+- findings: organizational topology rivals model capability in shaping the speed-cost-quality trade-off; structured pipelines converge fastest with the highest quality; heavy managerial oversight degrades performance
+
 ### [AMTFV: Agentic Mathematical Tool-Flow Verification for LLM Self-Correction](https://arxiv.org/abs/2607.29549)
+
+- summary: The authors propose AMTFV, a method for verifying the candidate answers of large language models on mathematical problems, which decouples verification modeling from concrete execution and supports exact computation through a mathematical toolbox.
+- methods: AMTFV, Mathematical Tool Flow, verification workflow construction, executable call generation
+- findings: AMTFV outperforms representative baselines; improves average accuracy by up to 8.3 percentage points; larger gains on samples of medium and high verification complexity
 
 ### [AlphaSchema: Exploring the Space of Trading Semantics for LLM-Based Alpha Mining](https://arxiv.org/abs/2607.26642)
 
+- summary: AlphaSchema is introduced, a system that constructs and explores a structured space of trading semantics for alpha mining using large language models.
+- methods: iterative selection mechanism, surrogate model learning, semantic search process
+- findings: AlphaSchema discovers factor pools with strong predictive and portfolio performance; semantic search process navigates diverse regions and allocates evaluations toward high-reward regions; alpha mining quality is robust to the choice of LLM
+
 ### [Albilich: Steerable Proof-State Orchestration for LLM-Based Mathematical Research with CAS Integration](https://arxiv.org/abs/2607.27705)
+
+- summary: Albilich, an open-source agentic harness, is presented as a tool for autoresearch in mathematics, combining long-horizon reasoning, computer algebra systems, and literature retrieval to facilitate AI-assisted mathematical research.
+- methods: long-horizon reasoning, computer algebra systems, literature retrieval, persistent SQLite-based context management
+- findings: Albilich solved 10/10 problems on RealMath with CAS and 9/10 without CAS; Albilich produced a counterexample to Problem 21.142 and a proof of a strengthening of Problem 20.2; 32.0% token reduction when CAS is enabled on Problem 17.91
 
 ### [AgentSnare: Learning to Delay, Divert, and Defuse Autonomous Penetration Agents](https://arxiv.org/abs/2607.26998)
 
+- summary: AgentSnare, a trajectory-adaptive deception system, dynamically unfolds a decoy environment to steer penetration agents away from real targets, demonstrating effectiveness across 15 web applications and three attacker models.
+- methods: trajectory-adaptive deception, artifact-construction policy model, decoy environment construction
+- findings: AgentSnare absorbs 46.8% of the agent's tool calls in the decoy; retains 55.9% of post-entry actions in the decoy; 90.0% of completion attempts are grounded in decoy evidence; no real target is successfully exploited at pass@3
+
 ### [AgenticRepair: Multi-Faceted Program Context Engineering for Agentic Vulnerability Repair](https://arxiv.org/abs/2607.29422)
+
+- summary: AgenticRepair, a novel framework, achieves a 73% success rate in automated vulnerability repair by engineering multi-faceted program context through specialized LLM subagents.
+- methods: multi-faceted program context engineering, multi-agent scaffolding, ablation study
+- findings: 73% success rate; outperforms strongest baseline by 29%; context facets are mutually complementary
 
 ### [Agentic Metaverse Services: A New As-a-Service Paradigm](https://arxiv.org/abs/2607.28242)
 
+- summary: This paper overviews the evolution of agents and services empowered by Generative Artificial Intelligence (GenAI) and their application in the metaverse environment through Agentic Metaverse Service (AMServ) and Meta-AaaS.
+- findings: Agentic services and Agent-as-a-Service (AaaS) provide customized agent services to users; Combining agentic services and the metaverse produces a new form of metaverse service called AMServ; Meta-AaaS is a new paradigm of agentic services and service computing in the metaverse environment
+
 ### [AgentHPOBench: A Benchmark For Evaluating LLM Agents as Sequential Hyperparameter Optimizers](https://arxiv.org/abs/2607.29626)
 
+- summary: The authors introduce AgentHPOBench, a benchmark to evaluate the ability of autonomous scientific agents to conduct experiments and make hyperparameter decisions based on experimental evidence.
+- methods: sequential benchmarking, hyperparameter optimization
+- findings: current agents exhibit measurable experimental optimization ability; agents face limitations in sustained iterative refinement; agents struggle with complex log diagnosis; agents often fail to make consistent progress toward reported reference performance
+
 ### [$Σ$-Mem: An Online Reliability Memory for LLM-based Multi-Agent Systems](https://arxiv.org/abs/2607.27958)
+
+- summary: The authors introduce $Σ$-Mem, an online reliability memory that records historical competence evidence for individual peers and peer relationship evidence across the peer set in multi-agent systems.
+- methods: online reliability memory, spectral change update, Weyl's inequality
+- findings: $Σ$-Mem adapts to counterfactual reliability shifts; $Σ$-Mem generalizes to unseen peers and task domains; direct memory readouts outperform majority voting and the best fixed peer
 
 ## 2026 W30 (arxiv)
 
@@ -2126,281 +5411,775 @@
 
 ### [Where Does Agent Reliability Come From? A Cross-Benchmark Decomposition of Verification Loops, Specialist Models, and Scaffolding in a Production Enterprise Agent](https://arxiv.org/abs/2607.17044)
 
+- summary: The study evaluates a production system, Leni, with verification loops and lightweight task-specialized post-trained models, and finds that it improves over its base model on three public benchmarks.
+- methods: evaluation on public benchmarks, ablation studies, instrumentation of verification loop
+- findings: +11.0 percentage points improvement on SpreadsheetBench; +7 to +10 percentage points improvement on BullshitBench; +15 points improvement on GAIA validation; verification step's isolated contribution is small but concentrated at the top of the score distribution
+
 ### [WAR: Workload-Aware Rollouts for Synchronous Agentic Reinforcement Learning](https://arxiv.org/abs/2607.17299)
+
+- summary: The proposed WAR system accelerates synchronous agentic reinforcement learning by optimizing decoding and scheduling, resulting in improved rollout throughput across different workload regimes.
+- methods: SuffixDecoding, cache-aware scheduling, speculative decoding
+- findings: 1.4x throughput improvement under low load; up to 1.6x throughput improvement under high load
 
 ### [The Optimization Trilemma: Efficiency, Comfort and Fairness in Decentralized Multi-agent Coordination](https://arxiv.org/abs/2607.17311)
 
+- summary: This work studies the problem of optimizing system-wide efficiency, individuals' comfort, and fairness in decentralized multi-agent coordination.
+- methods: novel model design, experiments on real-world datasets
+- findings: fairer optimization outcomes; satisfying agents' preferences and system goals
+
 ### [The Librarian Who Refused to Code: Model-Dependent Identity Enactment in LLM Code Generation](https://arxiv.org/abs/2607.17420)
+
+- summary: The study evaluates the effects of biographical personas on code generation in system prompts under controlled conditions, finding persona effects differ between two tested models.
+- methods: mixed-effects analysis, post-hoc analysis
+- findings: persona effects differ between models; minimalist engineer persona reduces output without improving correctness; librarian persona elicits in-character disclaimers and lowers mean correctness
 
 ### [Teach it to stop, not just to click](https://arxiv.org/abs/2607.17136)
 
+- summary: The study investigates the reliability of a 35B computer-use agent and finds that its success rate is dominated by upstream variance, highlighting the importance of considering multiple runs and seeds in evaluation.
+- methods: verifier-guided repair, variance-components decomposition, bootstrap CIs, k-seed reporting
+- findings: evaluation variance is negligible; training-seed effect is small; data draw and run-to-run nondeterminism dominate variance; repairability is two-tier; frame-level repair transfers to task success only when corrective action is the sole remaining blocker
+
 ### [Talaria: Session-Aware Serverless Serving of Hundred-Billion-Parameter LLMs](https://arxiv.org/abs/2607.17181)
+
+- summary: Talaria, a session-aware serverless multi-model serving system, improves session continuity by making joint placement-and-admission decisions, resulting in significant speedups in session completion times.
+- methods: session-aware serving, joint placement-and-admission decision, soft reservations, session-prefill
+- findings: Talaria cuts p50 SCT from 1000 s to 189 s; Talaria cuts p95 SCT from 2296 s to 867 s; speedups of 5.3x and 2.6x
 
 ### [Specifying the Delegated-Autonomy Boundary: Requirements Engineering for Agentic AI](https://arxiv.org/abs/2607.17225)
 
 ### [Solver-Hard Is Not Model-Hard: A Hardness-Controlled Diagnostic for LLM Constraint Reasoning](https://arxiv.org/abs/2607.17047)
 
+- summary: The study evaluates LLM constraint reasoners near the random-SAT phase transition, examining instance-level transfer and solver hardness while controlling for clause density and maximum clause width.
+- methods: instance-level transfer, controlled experimentation, regression analysis
+- findings: near-matched-density accuracy gaps range from -32 to +20 points; proof-preserving relabeling lowers accuracy in some models; provider-reported completion-token spend does not consistently increase with solver hardness proxy
+
 ### [SlotGuard: Stop Oversharing Private Local Context in LLM Agent Transcri](https://arxiv.org/abs/2607.17147)
+
+- summary: SlotGuard is a local transcript boundary that hides sensitive data in LLM agent observations while retaining agent performance.
+- methods: transcript rewriting, redaction, session graph
+- findings: removes all annotated structurally sensitive characters; reduces credential leakage to 0.0%; preserves task success across upstream models
 
 ### [SAGA: Synthetic Agentic Graph Architecture for Temporal Benchmark Generation](https://arxiv.org/abs/2607.17288)
 
+- summary: The authors present SAGA, a system for generating large-scale, semantically rich temporal graphs with ground-truth anomaly labels for training graph neural networks.
+- methods: Skeleton-First, Semantics-Second architecture, O(1)-per-edge skeleton generator, LLM agents, state alignment engine
+- findings: SAGA achieves structural realism, semantic richness, and automatic anomaly labeling; generates 500,000 temporal edges with controlled anomalies in under 90 minutes; scales to 100,000 nodes while maintaining clustering coefficients above 0.99
+
 ### [Reward-Driven LLM Agent Workflows: Synthesizing POMDP Routing and Self-Correction for Autonomous Decision-Making](https://arxiv.org/abs/2607.17038)
+
+- summary: This paper proposes an intelligent agent workflow that addresses key technical challenges in large language model agent applications by integrating multimodal inputs and advanced reinforcement learning principles.
+- methods: Partially Observable Markov Decision Process, proximal policy optimization, value function approximation, ablation studies
+- findings: 24.5% absolute improvement in task success rate and trajectory efficiency; significant contribution of the reward-driven critique module in suppressing hallucination rates
 
 ### [Quantifying Diversity of Thought: A Predictive Law of Weighted LLM Ensemble Lift](https://arxiv.org/abs/2607.17384)
 
+- summary: This paper provides a formal law for calculating the uplift that diversity of thought provides in Large Language Model ensembles, which is experimentally verified and predicts ensemble performance with high accuracy.
+- methods: experimental verification, formal law derivation, heuristic calculation
+- findings: accuracy-adjusted correctness correlation is a strong predictor of ensemble performance; the heuristic combines metrics to predict lift with high accuracy; the law transfers to new datasets with frozen coefficients
+
 ### [Otap:Structure-Aware Optimal Transport for Evaluating Planning and Execution in Agent Trajectories](https://arxiv.org/abs/2607.17082)
+
+- summary: The authors propose a new evaluation metric, Optimal Transport for Agentic Planning (OTAP), to assess the quality of trajectories generated by large language model agents, which overcomes the limitations of existing metrics.
+- methods: unbalanced fused Gromov-Wasserstein transport problem, attributed dependency graphs
+- findings: OTAP is invariant to dependency-preserving reorderings; OTAP has bounded sensitivity to redundant steps; OTAP outperforms semantics-only metrics on controlled perturbations and public benchmarks
 
 ### [Is Your Model Thinking or Just Stagnating? PUMA: Diagnosing Reasoning Pathology via Phase-Momentum Alignment](https://arxiv.org/abs/2607.17188)
 
+- summary: This study proposes PUMA, a training-free framework that optimizes test-time efficiency for Large Reasoning Models by aligning phase and uncertainty momentum to prevent overthinking and improve accuracy.
+- methods: Phase-Momentum Alignment Hypothesis, Cognitive-Energy Model, PUMA framework
+- findings: PUMA outperforms state-of-the-art baselines; superior accuracy-efficiency trade-off; robust cross-domain generalization
+
 ### [How Jailbreak Attacks Inform Safety Alignment: A Defender-Centric, Shapley-Based Evaluation of Jailbreak Contributions](https://arxiv.org/abs/2607.17152)
+
+- summary: The authors propose a defender-centric view of jailbreak evaluation, introducing A-MESS, a framework for attributing and selecting jailbreak attacks to improve language model safety.
+- methods: A-MESS, Shapley-based score, greedy optimization, surrogate-based optimization
+- findings: ASR rankings are weakly aligned with defender-centric utility; AttackSHAP can be estimated accurately with limited utility queries; directly optimizing subsets yields stronger safety utility
 
 ### [EvolvingWorld: An Open-Schema Framework for Co-Evolving Role-Play Agents and World Model in Interactive Literary World](https://arxiv.org/abs/2607.17250)
 
+- summary: This paper introduces EvolvingWorld, a framework and benchmark for character and world co-evolution in interactive literary worlds.
+- methods: open-schema framework, LLM-based World Model, trainable tasks, LLM-as-Judge evaluation protocol
+- findings: EvolvingWorld improves long-horizon simulation; persistent and coherent character and world development
+
 ### [Empirical Grounding Improves the Realism of LLM Agents Simulating Human Behavior During Disruptions](https://arxiv.org/abs/2607.17437)
+
+- summary: Empirical grounding of large language model agents improves their statistical realism in simulating human behavior during disruptions, such as heatwaves.
+- methods: empirical grounding, agent-based modeling, survey analysis
+- findings: empirical grounding improves reconstruction of daily routines; grounded model better reproduces survey-derived activity profiles under heatwave conditions; grounded model captures 46.4% of observed heatwave response amplitude
 
 ### [DRNOISE: Benchmarking Deep Research Agents in Misleading Evidence Environments](https://arxiv.org/abs/2607.17291)
 
 ### [Distilled Reinforcement Learning for LLM Post-training](https://arxiv.org/abs/2607.17247)
 
+- summary: This study proposes Distilled Reinforcement Learning (Distilled RL), a method that integrates teacher supervision into the RL objective to improve knowledge transfer and reasoning in large language models.
+- methods: Distilled Reinforcement Learning, reverse importance sampling with clipping, negative sample reset, sequence-level geometric normalization
+- findings: Distilled RL outperforms standard RL and OPD in within-family and cross-family distillation settings; Distilled RL can effectively transfer new knowledge from a teacher model to a student model
+
 ### [Debate-on-Graph: Reliable and Adaptive Reasoning of Large Language Model on Uncertain Knowledge Graph](https://arxiv.org/abs/2607.17266)
+
+- summary: The Debate-on-Graph framework leverages uncertain knowledge graphs to support large language models for reliable question answering.
+- methods: heuristic search algorithm, Multi-Agent Debate mechanism
+- findings: Debate-on-Graph achieves state-of-the-art performance on four benchmark QA datasets; enables reliable and adaptive reasoning
 
 ### [Constrained Path Reasoning: Measuring When Committed Stages Earn Their Cost](https://arxiv.org/abs/2607.17240)
 
 ### [Auto Research for Materials: Auditable AI-Scientist Workflows with Held-Out Transfer](https://arxiv.org/abs/2607.17100)
 
+- summary: An AI research agent is able to produce modelling changes that survive on unseen data and can be reused across tasks, leading to significant improvements in materials prediction.
+- methods: closed-loop search, feature engineering, model selection, representation learning, training data selection
+- findings: 17.4% reduction in MAE for band gap; 18.6% reduction in MAE for steel strength; 26.3% mean held-out improvement when combining feature and model changes
+
 ### [An Explicit World Model Based on Data-First Ontology: DaoQL Multimodal Storage Validation and Counterfactual Reasoning Evaluation](https://arxiv.org/abs/2607.17269)
+
+- summary: This paper proposes a data-first ontology approach to mitigate structural risks in large language models by using an explicit multimodal database, DaoQL, to store deterministic knowledge.
+- methods: data-first ontology, explicit world model, composable counterfactual decomposability
+- findings: DaoQL achieves 94% composable counterfactual decomposability; DaoQL reports fast query performance; DaoQL outperforms GPT-4o alone by 49 percentage points
 
 ### [Agentic ERP: Multi-Agent Large Language Model Architecture for Autonomous Enterprise Resource Planning](https://arxiv.org/abs/2607.17331)
 
+- summary: This paper presents Agentic ERP, an expert-system architecture that combines role-aligned large-language-model agents with a risk-tiered human-in-the-loop harness to execute end-to-end business workflows on a production ERP backend.
+- methods: constrained sequential-decision problem formulation, graph-based Planner--Executor--Reflector--Responder orchestration, scenario-based task suite evaluation, agent-in-the-loop simulation
+- findings: The proposed multi-agent method is significantly better than the baseline; The system sustains a simulated year of operation with zero stockouts; Role-aligned LLM agents under human oversight can move an ERP system from passively recording transactions to actively executing operational decisions
+
 ### [A Systematic Evaluation of Trajectory Data Curation for LoRA Fine-Tuning of Code Agents](https://arxiv.org/abs/2607.17205)
 
+- summary: This study investigates how the quality and quantity of trajectory data affect the performance of supervised fine-tuning of open-weight LLMs on expert agent trajectories.
+- methods: Supervised fine-tuning, LoRA fine-tuning, Two-axis quality scoring framework
+- findings: Scale-dependent quality-quantity trade-off; Error-retry rate is the dominant sub-dimension; Trajectory-level quality scoring is a viable but scale-sensitive lever for code-agent SFT
+
 ### [A Diagnostic Framework for AI Agent Behavior](https://arxiv.org/abs/2607.17149)
+
+- summary: This Perspective proposes a diagnostic framework for AI agent behavior, called layer attribution, to evaluate the source of behavioral patterns in AI agents within complex systems.
+- methods: layer attribution
+- findings: surrogate validity is a model-task-layer relation; human-AI divergence provides diagnostic evidence; governance requires source attribution before intervention
 
 ## 2026 W28 (arxiv)
 
 ### [Your Agent's Memories Are Not Its Own: Forged Reasoning Attacks on LLM Agent Memory and Defenses](https://arxiv.org/abs/2607.05029)
 
+- summary: This paper introduces the Forged Amplifying Rationale Memory Attack (FARMA) and a defense pipeline called SENTINEL to protect large language model agents from poisoned reasoning histories.
+- methods: poisoning attacks, self-referential reinforcement, structural analysis, weighted signals
+- findings: FARMA achieves an attack success rate of up to 100% under baseline conditions; SENTINEL reduces FARMA's attack success rate to as low as 0% with no false positives
+
 ### [Who Broke the System? Failure Localization in LLM-Based Multi-Agent Systems](https://arxiv.org/abs/2607.07989)
+
+- summary: This paper presents AgentLocate, a framework for failure localization in large language model-based multi-agent systems, which attributes failures to a specific agent and the earliest decisive step.
+- methods: LLM-based judging mechanism, multi-perspective verification, confidence-aware strategy, lightweight fine-tuning
+- findings: AgentLocate outperforms existing failure localization methods; AgentLocate remains efficient in terms of token usage and running time
 
 ### [When Agents Remember Too Much: Memory Poisoning Attacks on Large Language Model Agents](https://arxiv.org/abs/2607.06595)
 
+- summary: This work introduces the GhostWriter attack, which exploits vulnerabilities in personal AI agents' memory subsystems, and proposes the Agentic Memory Sentry (AM-Sentry) mitigation technique to reduce its success rate.
+- methods: experimentation, vulnerability exploitation
+- findings: near-universal injection rates of approximately 98%; high average activation rate of approximately 60%; dramatic reduction in GhostWriter's success rate using AM-Sentry
+
 ### [When Agents Go Rogue: Activation-Based Detection of Malicious Behaviors in Multi-Agent Systems](https://arxiv.org/abs/2607.06807)
+
+- summary: AcMAS, an activation-based framework, is proposed to detect malicious behavior in LLM-based Multi-Agent Systems, addressing limitations of existing security defenses by analyzing internal reasoning states without relying on explicit interaction graphs.
+- methods: activation-based framework, activation analysis
+- findings: AcMAS detects stealthy attacks in a synchronization-robust fashion; AcMAS outperforms graph-based baselines against stealthy attacks; AcMAS generalizes across diverse open-source LLM backbones, attack intensity, and MAS scale
 
 ### [What LLM Forecasters Know but Don't Say: Probing Internal Representations for Calibration and Faithfulness](https://arxiv.org/abs/2607.08046)
 
+- summary: Researchers find that internal representations of large language models can provide a more direct window into forecasting accuracy and chain-of-thought reasoning, allowing for better calibration and auditing of these models.
+- methods: representation-pooling probes, evidence ablation, diversionary injection, forced answering
+- findings: internal representations achieve better calibration; chain-of-thought reasoning may not reflect evidence; probes can detect behavioral shifts and predict direction of change; forecasts are largely fixed before reasoning begins
+
 ### [WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search](https://arxiv.org/abs/2607.08662)
 
+- summary: WebSwarm, a progressive recursive delegation framework, is proposed to improve the performance of large language model-based web search agents by enabling dynamic task decomposition, recursive expansion, and agent collaboration during inference.
+- methods: progressive recursive delegation, task decomposition, recursive expansion, agent collaboration
+- findings: WebSwarm outperforms single-agent and multi-agent baselines on deep, wide, and interleaved deep-and-wide tasks; WebSwarm's effectiveness is explained by ablation, task difficulty, web tool efficiency, and model generalization analyses
+
 ### [VEXAIoT: Autonomous IoT Vulnerability EXploitation using AI Agents](https://arxiv.org/abs/2607.09653)
+
+- summary: This paper presents VEXAIoT, an autonomous multi-agent framework for vulnerability discovery and exploitation in IoT environments using Large Language Model-based reasoning and offensive security tools.
+- methods: autonomous multi-agent framework, LLM-based reasoning, offensive security tools
+- findings: up to 100% attack success rate; low token overhead; average execution times under two minutes; 95.0% overall success rate
 
 ### [UniClawBench: A Universal Benchmark for Proactive Agents on Real-World Tasks](https://arxiv.org/abs/2607.08768)
 
 ### [Understanding Axes of Difficulty For Long Context Tasks Via PredicateLongBench](https://arxiv.org/abs/2607.08284)
 
+- summary: The authors propose PredicateLongBench, a benchmark to evaluate long-context reasoning in large language models by identifying the longest contiguous subsequence of words that satisfies given predicates or constraints.
+- methods: benchmarking, stress-testing, synthetic and real-world generation pipelines
+- findings: frontier models struggle with increasing task difficulty; existing long-context evaluations have limitations
+
 ### [TTHE: Test-Time Harness Evolution](https://arxiv.org/abs/2607.08124)
+
+- summary: This study introduces Test-Time Harness Evolution (TTHE), a method that optimizes the executable program surrounding a large language model (LLM) during evaluation, without requiring gold labels or model weight updates.
+- methods: Test-Time Harness Evolution (TTHE), agentic proposer, judge
+- findings: TTHE improves fixed ReAct-style baseline harnesses; persistent and inspectable improvements are achieved; execution-derived proxy reliability is a central challenge for robust unsupervised agent improvement
 
 ### [TRACE: A Two-Channel Robust Attribution Watermark via Complementary Embeddings for LLM-Agent Trajectories](https://arxiv.org/abs/2607.08400)
 
+- summary: The authors present TRACE, a novel agent watermark that is distortion-free, self-synchronizing, and unconditionally invariant under rewriting, to address the issue of provenance dispute in LLM agents.
+- methods: trajectory log analysis, watermark design, experimental evaluation
+- findings: TRACE is distortion-free and self-synchronizing; TRACE is unconditionally invariant under rewriting; TRACE achieves high detection scores on long-horizon trajectories
+
 ### [Toward Trustworthy Large Language Model Agents in Healthcare](https://arxiv.org/abs/2607.05055)
+
+- summary: This paper presents CareConnect, a conversational agent for automating healthcare logistics using large language models and safety guardrails, which achieves high task completion rates and safety compliance while reducing operational costs.
+- methods: retrieval-augmented generation, layered deterministic safety guardrails, function calling
+- findings: 91.8% task completion rate; 96.0% safety compliance; average operational cost of $0.0324 per appointment
 
 ### [Toward Auditable AI Scientists: A Hypothesis Evolution Protocol for LLM Agents](https://arxiv.org/abs/2607.09195)
 
+- summary: The Hypothesis Evolution Protocol (HEP) is proposed as an agent harness to provide auditable hypothesis generation, evaluation, and evolution for large language model agents in scientific discovery.
+- methods: hypothesis generation, evaluation, evolution
+- findings: HEP-equipped agents can operate the hypothesis-test-evidence-belief cycle; generalization across research questions; exploitation of the protocol increases with LLM capability
+
 ### [ToolFailBench: Diagnosing Tool-Use Failures in LLM Agents](https://arxiv.org/abs/2607.04686)
+
+- summary: ToolFailBench is introduced as a diagnostic benchmark to measure tool-use failures in language model agents across various tasks and domains.
+- methods: benchmarking, rule classifier, majority vote
+- findings: faithful tool use is not saturated; models with similar aggregate scores fail in different ways; control-task accuracy varies significantly between models
 
 ### [The Harness Effect: How Orchestration Design Sets the Token Economics of Enterprise Agentic AI](https://arxiv.org/abs/2607.06906)
 
 ### [The Context Access Divide: Interaction-Level Architecture as a Complementary Dimension of Agentic Inequality](https://arxiv.org/abs/2607.08495)
 
+- summary: The Context Access Divide (CAD) is a qualitative threshold in AI usefulness that arises from the difference in autonomous context retrieval capabilities between AI systems, affecting knowledge-intensive workers' productivity.
+- methods: probabilistic modeling, analysis of technical architectures
+- findings: manual context attachment leads to a combinatorial collapse in task-success probability; dynamic retrieval architectures are structurally insulated from this collapse
+
 ### [SpaCellAgent: A Self-Evolving LLM-Based Multi-Agent Framework for Trajectory Analysis](https://arxiv.org/abs/2607.07467)
 
+- summary: SpaCellAgent, an autonomous large language model multi-agent framework, automates end-to-end spatiotemporal analysis and narrative generation for spatial and single-cell transcriptomics.
+- methods: Multi-agent architecture, Dynamic tool-orchestration engine, Self-evolution module
+- findings: Over 40% improvement in analytical efficiency; Expert-aligned performance; Democratization of advanced spatiotemporal modeling
+
 ### [SolarChain-Eval: A Physics-Constrained Benchmark for Trustworthy Economic Agents in Decentralized Energy Markets](https://arxiv.org/abs/2607.08681)
+
+- summary: The authors propose SolarChain-Eval, a physics-constrained benchmark for evaluating trustworthy economic agents in decentralized energy markets.
+- methods: Markov Decision Process, Gymnasium-compatible environment, LLM-based Planner/Auditor layer
+- findings: utility-safety trade-off in RL agents; importance of physical constraints in preventing exploitation; limited risk mitigation of LLM Planner/Auditor
 
 ### [Shared Selective Persistent Memory for Agentic LLM Systems](https://arxiv.org/abs/2607.09493)
 
 ### [Scoped Verification for Reliable Long-Horizon Agentic Context Evolution under Distribution Shift](https://arxiv.org/abs/2607.09175)
 
+- summary: This work proposes Graph-Regularized Agentic Context Evolution (GRACE), a method for maintaining and updating persistent system-level instructions in deployed LLM agents, which improves reliability and verification over long evolution horizons.
+- methods: Graph-Regularized Agentic Context Evolution (GRACE), flat-text maintenance, typed semantic graph validation
+- findings: GRACE improves strict reliability from 0.091 to 0.673; GRACE outperforms Gemini 3.1 Pro zero-shot reference; GRACE exceeds flat-text HCE baseline
+
 ### [SCATE: Learning to Supervise Coding Agents for Cost-Effective Test Generation](https://arxiv.org/abs/2607.08983)
+
+- summary: The proposed SCATE framework provides adaptive, automated supervision of coding agents to improve automated test generation by replacing human intervention and maximizing code coverage.
+- methods: contextual bandit problem, empirical evaluation
+- findings: 32.3% higher line coverage; 30.9% higher branch coverage; outperforms state-of-the-art non-agentic approaches
 
 ### [RustMizan: A Compilable, Contamination-Aware Benchmarking Framework for Rust Vulnerabilities](https://arxiv.org/abs/2607.04729)
 
+- summary: RustMizan is introduced as a benchmarking framework for Rust vulnerability analysis, addressing gaps in existing benchmarks with compilable code variants and annotations for vulnerability detection and localization.
+- methods: benchmarking, paired mutation framework, binary classification, line localization
+- findings: binary classification accuracy ranges from 56-65%; line localization F1 score is around 20%; adversarial cues decrease line F1 score by about 27%
+
 ### [Reliable and Developer-Aligned Evaluation of Agents for Software Engineering](https://arxiv.org/abs/2607.06713)
+
+- summary: This research aims to provide a comprehensive evaluation methodology for large language models in real-world software development practice.
+- methods: contamination-awareness, in-the-wild agentic behavior assessment, trajectory-aware benchmarks and metrics
 
 ### [Reason Less, Verify More: Deterministic Gates Recover a Silent Policy-Violation Failure Mode in Tool-Using LLM Agents](https://arxiv.org/abs/2607.07405)
 
 ### [ProofCouncil: An LLM Agent for Solving Open Mathematical Problems](https://arxiv.org/abs/2607.09474)
 
+- summary: ProofCouncil, a mathematical agent with an author-critic architecture, demonstrates promising performance in solving open mathematical problems, outperforming other teams in the FirstProof challenge and showing useful progress on additional problems.
+- methods: Author-critic architecture, Agentic workflows
+- findings: Correct solutions for 6 of 10 FirstProof problems; 5 completely correct solutions out of 21 evaluated on additional problems; Useful partial progress on 8 additional problems
+
 ### [ProjAgent: Procedural Similarity Retrieval for Repository-Level Code Generation](https://arxiv.org/abs/2607.08691)
+
+- summary: The authors propose ProjAgent, a repository-level code generation system that uses procedural similarity as a retrieval signal to generate code.
+- methods: procedural similarity, agentic workflow, static-analysis feedback loop
+- findings: ProjAgent achieves 41.14% Pass@1; procedural similarity is an effective retrieval dimension for repository-level code generation
 
 ### [Prismata: Confining Cross-Site Prompt Injection in Web Agents](https://arxiv.org/abs/2607.08147)
 
+- summary: Prismata is a defense system that enforces contextual least privilege for web agents, constraining what the agent sees and can do to prevent prompt injection attacks.
+- methods: dynamic trust derivation, structural confinement, mechanical confinement
+- findings: Prismata reduces attack success while preserving benign task utility; Prismata supports the long tail of websites without requiring developer annotations
+
 ### [Present but Rescaled: Chat-to-Agent Transfer of Additive Activation Steering](https://arxiv.org/abs/2607.09156)
+
+- summary: The study examines the transfer of additive activation steering from single-turn chat to tool-using ReAct agents, finding that transfer is real but rescaled, with significant implications for safety.
+- methods: behavioral measurement, representation read-out, matched-information design
+- findings: transfer is real but rescaled; dissociation between injected direction and behavioral coupling; amplification of refusal bypass vector in some models
 
 ### [PolyWorkBench: Benchmarking Multilingual Long-Horizon LLM Agents](https://arxiv.org/abs/2607.06008)
 
+- summary: This work introduces PolyWorkBench, a benchmark for evaluating large language model agents on multilingual long-horizon workplace workflows, and finds that state-of-the-art agents suffer performance degradation in multilingual settings.
+- methods: structural grading, executable verification, LLM-based semantic assessment
+- findings: state-of-the-art LLM agents suffer significant performance degradation in multilingual workflow settings; multilinguality introduces compounding effects across reasoning and execution steps
+
 ### [Persuasion Attacks Can Decrease Effectiveness of CoT Monitoring](https://arxiv.org/abs/2607.08066)
+
+- summary: Chain-of-thought monitoring may be insufficient against adversarial persuasion, but pairing it with model-diverse fact-checking can reduce approval of harmful actions.
+- methods: evaluation framework, agent-monitor interactions, fact-checker and monitor pairing
+- findings: CoT monitoring can increase approval of harmful actions in adversarial settings; model-diverse fact-checking can reduce approval of policy-violating actions by up to 45%
 
 ### [Out of Sight: Compression-Aware Content Protection against Agentic Crawlers](https://arxiv.org/abs/2607.08180)
 
+- summary: This paper proposes CAPE, a framework that protects high-value textual content from LLM-based agents by injecting invisible perturbations, inducing severe information loss during agent compression.
+- methods: invisible perturbation injection, prior-guided evolution, preference-calibrated candidate prioritization
+- findings: CAPE improves information loss by up to 75.8% over the strongest baseline; protected content remains visually indistinguishable from originals; CAPE transfers to real-world settings
+
 ### [Neuro-Agentic Control: A Deep Learning-based LLM-Powered Agentic AI Framework for Controlling Security Controls](https://arxiv.org/abs/2607.09076)
+
+- summary: This paper introduces a neuro-agentic control framework that combines a Large Language Model with a Time-Series Foundation Model to achieve physics-grounded autonomous defense in industrial IoT environments.
+- methods: neuro-agentic control framework, Counterfactual Physics Injection, LSTM, TCN
+- findings: prevented 33.3% of breaches; outperformed LSTM and TCN baselines; executed zero physically invalid actions
 
 ### [Multi-Agent Robotic Control with Onboard Vision-Language Models](https://arxiv.org/abs/2607.07403)
 
+- summary: This paper presents a Multi-Agent System architecture that addresses the limitations of Vision Language Models and Vision Language Action models in robotic control by deploying specialized agents on onboard hardware.
+- methods: fine-tuning, hardware-in-the-loop simulation
+- findings: fully onboard MAS architecture is a viable alternative to cloud-dependent deployments; strong potential for real-world transfer
+
 ### [MASTE: A Multi-Agent Pipeline for Zero-Shot Aspect Sentiment Triplet Extraction](https://arxiv.org/abs/2607.08080)
+
+- summary: The authors propose MASTE, a multi-agent pipeline for zero-shot Aspect Sentiment Triplet Extraction, which decomposes the task into sequential stages and achieves state-of-the-art results without requiring labeled training data.
+- methods: multi-agent pipeline, zero-shot learning, few-shot in-context learning, chain-of-thought prompting
+- findings: MASTE outperforms zero-shot and chain-of-thought LLM baselines; MASTE generalizes across different backbones and datasets; MASTE narrows the gap to fully supervised methods without using labeled triplets
 
 ### [LongMedBench: Benchmarking Medical Agents for Long-Horizon Clinical Decision-Making](https://arxiv.org/abs/2607.09322)
 
+- summary: This work introduces LongMedBench, a benchmark for evaluating long-horizon clinical decision-making in real-world electronic health records (EHRs).
+- methods: reproducible pipeline, evaluation taxonomy
+- findings: LLMs struggle with implicit time inference; RAG and agent memory system improve information retrieval tasks; decision-making performance is highly dependent on immediate context
+
 ### [Long-Horizon-Terminal-Bench: Testing the Limits of Agents on Long-Horizon Terminal Tasks with Dense Reward-Based Grading](https://arxiv.org/abs/2607.08964)
+
+- summary: The Long-Horizon-Terminal-Bench benchmark is introduced to evaluate AI agents on long-horizon tasks, providing a more comprehensive assessment of their capabilities than existing terminal benchmarks.
+- methods: benchmarking, evaluation
+- findings: Long-Horizon-Terminal-Bench is more demanding than prior terminal-based benchmarks; even the strongest model achieves low pass rates; headroom for improvement exists
 
 ### [LLM Agents for Deliberative Collaboration: A Study on Joint Decision Making Under Partial Observability](https://arxiv.org/abs/2607.06157)
 
+- summary: This paper investigates deliberative large language model agents in partially observable joint decision-making tasks and evaluates their performance in a scalable benchmark.
+- methods: systematic evaluation, diagnostic analysis
+- findings: state-of-the-art language models struggle with complex deliberative collaboration tasks; deliberation process can provide opportunities for reflection and error correction
+
 ### [Light-Omni: Reflex over Reasoning in Agentic Video Understanding with Long-Term Memory](https://arxiv.org/abs/2607.05511)
+
+- summary: This paper introduces Light-Omni, a multimodal agent framework for reflexive and lightweight video understanding that achieves semantically aligned retrieval and reflexive responses with minimal latency.
+- methods: dual contextual states, hierarchical merging, parametric latent state
+- findings: 2.4% accuracy gain over M3-Agent; 12.1x speedup; 2.6x improvement in GPU memory efficiency
 
 ### [L-MAD: A Systematic Evaluation of Multi-Agent Debate Structures in Legal Reasoning](https://arxiv.org/abs/2607.09099)
 
+- summary: This work introduces the Legal Multi-Agent Debate framework to evaluate debate structures and aggregation methods in legal textual entailment, showing improved results over single-agent baselines.
+- methods: debate structures, aggregation methods
+- findings: increasing agent population reduces inconsistency and improves accuracy; extending discussion rounds induces over-deliberation drift
+
 ### [Institutional Red-Teaming: Deployment Rules, Not Just Models, Causally Shape Multi-Agent AI Safety](https://arxiv.org/abs/2607.07695)
+
+- summary: The authors introduce institutional red-teaming, a methodology for evaluating deployment rules in multi-agent AI, and demonstrate its effectiveness in a consequence-allocation benchmark called IABench-CA.
+- methods: institutional red-teaming, consequence-allocation benchmarking, anonymization ablation
+- findings: Deployment rules causally alter collective safety; No safe default rule exists; Identity salience drives targeted elimination
 
 ### [Inside the Skill Market: From Software Engineering Activities to Reusable Agent Skills](https://arxiv.org/abs/2607.09065)
 
+- summary: This study investigates the software engineering activities being encapsulated into reusable skills in public repositories and marketplaces, providing insights into skill reuse and ecosystem development.
+- methods: empirical study, data collection, analysis
+- findings: SE activities are becoming reusable artifacts via skills; promising research opportunities for skill recommendation and engineering-oriented structuring
+
 ### [Information Limits and Attractor Dynamics in Economies of Frontier LLM Agents: A Pre-Registered Test](https://arxiv.org/abs/2607.06001)
+
+- summary: A two-part experiment tests quantitative predictions about coupled multi-agent systems using frontier language-model agents, confirming some predictions and revealing structural issues with others.
+- methods: pre-registered experiment, information-theoretic capacity region, mean-field residual-scaling law
+- findings: relative growth equals relative claimed information; coalition value is submodular or supermodular under certain conditions; population's response to levers was a step function rather than smooth
 
 ### [Ideas Have Genomes: Benchmarking Scientific Lineage Reasoning and Lineage-Grounded Idea Generation](https://arxiv.org/abs/2607.08758)
 
+- summary: The IdeaGene-Bench benchmark is introduced to evaluate AI systems' ability to reason about scientific lineage and generate ideas grounded in that lineage.
+- methods: IdeaGene framework, GenomeDiff, IG-Exam, IG-Arena, Population-Evolution Score
+- findings: Compositional bottleneck in LLM-based scientists; Strongest system reaches 27.3% exact accuracy on lineage reasoning
+
 ### [Harness VLA: Steering Frozen VLAs into Reliable Manipulation Primitives via Memory-Guided Agents](https://arxiv.org/abs/2607.08448)
+
+- summary: Harness VLA, a memory-augmented agentic framework, extends pretrained Vision-Language-Action models beyond their original trajectory distribution without finetuning by composing them with analytic primitives.
+- methods: memory-augmented agentic framework, composition with analytic primitives
+- findings: improves over baselines by 38.6 and 25.4 percentage points on LIBERO-Pro and RoboCasa365; reaches 58.4% on RoboTwin C2R
 
 ### [Governed Individuation: Cryptographically Decoupling an Agent's Learning from Its Authority](https://arxiv.org/abs/2607.04613)
 
+- summary: This study presents a method to guarantee confinement of autonomous agents as an invariant of their execution architecture, ensuring that the agent's permitted authority cannot be widened without an operator-signed change to its identity.
+- methods: governed individuation, cryptographic identity digest, dynamic effect tracing
+- findings: confinement can be guaranteed as an invariant of the agent's execution architecture; the guarantee holds even when the agent induces its own safety principle and that principle is wrong; the gate reduces executed forbidden effects to zero as a verified property of the construction
+
 ### [Git-Assistant: Planning-Based Support for Updating Git Repositories](https://arxiv.org/abs/2607.09224)
+
+- summary: This work introduces Git-Assistant, an AI-based assistant that combines Large Language Models with automated planning to support developers in executing non-trivial git operations.
+- methods: automated planning, systematic evaluation methodology
+- findings: integrating formal reasoning with LLMs improves reliability; reduces errors in repository management
 
 ### [GATS: Graph-Augmented Tree Search with Layered World Models for Efficient Agent Planning](https://arxiv.org/abs/2607.08894)
 
+- summary: GATS, a planning framework, combines systematic tree search with a layered world model to achieve superior planning performance without relying on Large Language Model inference during planning.
+- methods: UCB1-based tree search, layered world model
+- findings: GATS achieves 100% success rate on synthetic planning tasks and comprehensive stress test; GATS requires zero LLM calls per task during planning; GATS produces deterministic plans with zero variance across runs
+
 ### [Game Theory Driven Multi-Agent Framework Mitigates Language Model Hallucination](https://arxiv.org/abs/2607.08403)
+
+- summary: This study presents G-Frame, a framework that integrates Bayesian and team game principles to improve the performance of large language models in rule-based scientific domains by reducing hallucinations.
+- methods: Bayesian principles, team game principles, adaptive multi-agent framework, structured reasoning
+- findings: 79.46% reduction in hallucinations; performance parity with GPT 4o mini on custom benchmarks and ChemBench
 
 ### [From Passive Retrieval to Active Memory Navigation: Learning to Use Memory as a Structured Action Space](https://arxiv.org/abs/2607.05794)
 
+- summary: The NapMem framework learns to use long-term user memory as a structured action space, allowing conversational agents to select and inspect memory at different granularities before answering queries.
+- methods: memory-tool reinforcement learning, structured storage
+- findings: NapMem agents are competitive across diverse memory-intensive tasks; learned policy preserves general reasoning and tool-use abilities
+
 ### [From Legacy Documentation to OSCAL: An MCP-Based Agent Pipeline for Threat-Informed Continuous Compliance in Critical Infrastructure](https://arxiv.org/abs/2607.08288)
 
+- summary: This paper presents a non-invasive, multi-agent pipeline for continuous automated compliance management in operational technology environments, converting natural-language system descriptions into knowledge graphs and audit-ready artifacts.
+- methods: MCP-grounded multi-agent pipeline, LLM-based reasoning, deterministic knowledge retrieval
+- findings: 0.90 CVE recall; perfect D3FEND recall; schema-valid OSCAL System Security Plan and Security Assessment Report
+
 ### [From Atomic Actions to Standard Operating Procedures: Iterative Tool Optimization for Self-Evolving LLM Agents](https://arxiv.org/abs/2607.07321)
+
+- summary: This study proposes a framework called EvoSOP that enables Large Language Model agents to synthesize atomic actions into reusable Standard Operating Procedures, leading to improved task success rates and reduced interaction rounds.
+- methods: synthesizing atomic actions, iterative tool optimization, construction, merging, evaluation, and pruning
+- findings: significant boost in task success rates; substantial reduction in interaction rounds; fostering reliable and efficient tool-use patterns
 
 ### [Formal Disco: Scalable Open-Ended Generation of Formally Verified Programs](https://arxiv.org/abs/2607.04631)
 
 ### [FORGE: Research-Trajectory Hijacking Attacks on Deep Research Agents](https://arxiv.org/abs/2607.04718)
 
+- summary: The authors present FORGE, a two-level attack that can hijack subtask planning in deep research agents, and introduce the PRISM metric and Root Query Anchoring as a defense mechanism.
+- methods: intra-document reasoning fabrication, inter-document chain coordination, Root Query Anchoring
+- findings: Network FORGE reaches 26.4% PRISM with five injected documents; RQA reduces PRISM from 38.5% to 18.3%
+
 ### [Failure as a Process: An Anatomy of CLI Coding Agent Trajectories](https://arxiv.org/abs/2607.09510)
+
+- summary: This study investigates the failure trajectories of large language model coding agents in terminal-based environments through a large-scale empirical analysis of execution trajectories.
+- methods: empirical study, manual annotation, process-oriented framework
+- findings: coding-agent failures are predominantly driven by epistemic errors; failures typically begin within the first few execution steps; failures often remain hidden until recovery is no longer possible
 
 ### [EvoAgentBench: Benchmarking Agent Self-Evolution via Ability Transfer](https://arxiv.org/abs/2607.05202)
 
+- summary: EvoAgentBench is introduced as a benchmark for agent self-evolution via ability-guided transfer across four agentic domains.
+- methods: Ability-guided transfer, trace-grounded Abilities extraction, canonicalization into operational units, domain-specific Ability Graphs construction
+- findings: Curated Ability content transfers reliably across model families; No current automatic method sustains positive gain in all settings
+
 ### [Evaluating SageMath-Augmented LLM Agents for Computational and Experimental Mathematics](https://arxiv.org/abs/2607.06820)
+
+- summary: This study proposes a ReAct-style agentic setup that combines LLM reasoning with verifiable feedback from SageMath and evaluates its performance on research-level mathematical problems from the RealMath benchmark.
+- methods: ReAct-style agentic setup, multi-step post-processing procedure, multi-stage validation pipeline
+- findings: Substantial performance gains from SageMath access across all evaluated models; Qwen~3.7-Max benefits from SageMath the most; GPT-5.5 achieves the highest solve rate of 75.2% and the lowest token usage among tool-enabled configurations
 
 ### [Evaluating calibrated refusal and safe usefulness in dual-use biology settings](https://arxiv.org/abs/2607.05462)
 
+- summary: BioSecBench-Refusal is a benchmark for risk identification and refusal behavior for biological research tasks, evaluating the ability of AI models to identify and refuse biosecurity hazards.
+- methods: benchmarking, risk identification, refusal behavior analysis
+- findings: Refusal rates varied widely across model configurations; Models often refused legitimate tasks at comparable or higher rates than concealed hazards; Provider API filters triggered most refusals
+
 ### [Eluna: An Agentic LLM System for Automating Warehouse Operations with Reasoning and Task Execution](https://arxiv.org/abs/2607.08960)
+
+- summary: Eluna, a graph-guided multi-agent framework, is presented for reliable execution of Standard Operating Procedures (SOPs) in warehouse operations, achieving high accuracy and latency needs through asymmetric episodic distillation.
+- methods: graph-guided multi-agent framework, asymmetric episodic distillation, progressive disclosure
+- findings: fine-tuned models match or exceed teacher accuracy; 94% expert agreement on ticket processing application; outperform larger off-the-shelf baselines
 
 ### [DeepSWE: Measuring Frontier Coding Agents on Original, Long-Horizon Engineering Tasks](https://arxiv.org/abs/2607.07946)
 
 ### [Danus: Orchestrating Mathematical Reasoning Agents with Fact-Graph Memory](https://arxiv.org/abs/2607.06447)
 
+- summary: The authors propose Danus, an orchestration system for research-level mathematical reasoning that utilizes a shared fact graph to coordinate parallel proof search and organize intermediate claims.
+- methods: parallel proof search, fact-graph-based orchestration
+- findings: Danus can construct long, detailed mathematical proofs; fact-graph-based orchestration is effective for scaling mathematical reasoning agents
+
 ### [Cost-Effective Agent Harnesses for Abstract Reasoning and Generalization on ARC-AGI-1](https://arxiv.org/abs/2607.06764)
+
+- summary: The study introduces a new approach to ARC-AGI-1 using an open-weight model with a strict budget and no ARC-specific fine-tuning, achieving significant improvements without heavy test-time compute or benchmark-specific training.
+- methods: architecture design, pipeline implementation, autonomous exploration, ablation study
+- findings: 57.50% pass@2 at $0.25 per task with the pipeline; 67.25% pass@2 at $0.62 per task with the orchestrator; pipeline is generation-bound, not selection-bound
 
 ### [Constrained Decoding for Diffusion Language Models via Efficient Inference over Finite Automata](https://arxiv.org/abs/2607.07026)
 
+- summary: This paper presents an exact and tractable algorithm for sampling from the constrained mean-field posterior under any constraint expressible as a finite automaton for diffusion language models.
+- methods: finite automata, graphical models, depth-reduction techniques, arithmetic circuit theory
+- findings: guaranteed constraint satisfaction; substantial accuracy gains; little inference overhead
+
 ### [Communication-Efficient Digital-Twin Coordination for Heterogeneous LLM Embodied Agents over Computing Power Networks](https://arxiv.org/abs/2607.09330)
+
+- summary: The authors propose LDT-Coord, a networked coordination framework for embodied agent teams powered by heterogeneous large language models, to address the challenges of existing coordination frameworks.
+- methods: lightweight digital twin, rule-based orchestrator algorithm, constrained partially observable Markov decision process, PPO-Lagrangian algorithm
+- findings: LDT-Coord reduces communication overhead by more than 70x; LDT-Coord achieves a task success rate comparable to conventional coordination methods; LDT-Coord maintains robustness under LLM heterogeneity
 
 ### [Collective Intelligence with Foundation Models](https://arxiv.org/abs/2607.07729)
 
+- summary: This chapter presents a multi-agent framework for cooperative reasoning systems, where multiple models work together to generate a final consensus solution, and shows that model heterogeneity is the key factor driving performance improvements.
+- methods: ablation studies, benchmarking, scoring module
+- findings: model heterogeneity drives substantial performance improvements; heterogeneous configuration achieves superior step-wise accuracy; model diversity improves step-wise reasoning quality
+
 ### [Cognitive-structured Multimodal Agent for Multimodal Understanding, Generation, and Editing](https://arxiv.org/abs/2607.08497)
+
+- summary: The Cognitive-structured Multimodal Agent is proposed to address the limitations of unified multimodal models in long-horizon multimodal dialogue by externalizing visual information into an Episodic Visual Memory and selectively reactivating relevant episodes during reasoning.
+- methods: Perceptual Abstraction Engine, Cognitive Retrieval Engine, Multimodal Executive Controller, reinforcement learning
+- findings: 91.4% retrieval accuracy over 20-turn sessions; surpassing 32B baselines by +8.2%; nearly halving per-turn inference time (23.1s -> 12.7s)
 
 ### [CausalDS: Benchmarking Causal Reasoning in Data-Science Agents](https://arxiv.org/abs/2607.08093)
 
+- summary: CausalDS is introduced as a benchmark for evaluating causal reasoning in agentic data-science workflows, combining symbolic causal reasoning with realistic data analysis and tool use.
+- methods: structural causal model generation, synthetic natural-language story generation, empirical distribution grounding
+- findings: CausalDS evaluates symbolic causal reasoning, data science, uncertainty quantification, abstention, and tool use/coding; The benchmark reduces the 'causal parrot' risk through completely synthetic generation
+
 ### [Beyond the Leaderboard: A Synthesis of Tool-Use, Planning, and Reasoning Failures in Large Language Model Agents](https://arxiv.org/abs/2607.05775)
+
+- summary: This paper synthesizes 27 benchmark, taxonomy, and audit papers to create a cross-cutting taxonomy of large language model agent limitations, identifying six failure clusters across tool use, planning, and multi-agent coordination.
+- methods: literature synthesis, taxonomy derivation
+- findings: failures compound nonlinearly with task length; strong performance on individual sub-tasks does not reliably translate into end-to-end success; substantial progress in single-turn tool use and short-horizon web navigation
 
 ### [Beyond Static Evaluation: Building Simulation Environments for Scalable Agentic Reinforcement Learning](https://arxiv.org/abs/2607.05773)
 
+- summary: The AgenticAI-Supervisor platform is introduced, a scalable RL Gym environment for evaluating autonomous agents through multi-step decision-making and verifiable execution outcomes.
+- methods: reinforcement learning, multi-dimensional reward shaping, internal state validation
+- findings: mitigates reward hacking; generates high-fidelity traces; provides consistent closed-loop feedback for model optimization
+
 ### [Behavior Leverage Imbalance in Multi-Teacher On-Policy Distillation](https://arxiv.org/abs/2607.07050)
+
+- summary: The study proposes a new method called Soft Clamp to improve the performance of multi-teacher on-policy distillation in agentic language models by reducing over-calling and preserving decision accuracy.
+- methods: multi-teacher on-policy distillation, vanilla generalized knowledge distillation, Soft Clamp, per-token divergence calibration
+- findings: Soft Clamp reduces over-calling from 13.7% to 9.0% relative to vanilla GKD; Soft Clamp lowers tool-call loops and repeated calls among GKD variants
 
 ### [ARCANA: A Reflective Multi-Agent Program Synthesis Framework for ARC-AGI-2 Reasoning](https://arxiv.org/abs/2607.09059)
 
+- summary: The authors present ARCANA, a collaborative multi-agent framework for solving ARC AGI 2 tasks under strict constraints.
+- methods: iterative perception, hypothesis generation, symbolic execution, reflective refinement
+- findings: improving reasoning efficiency; improving solution quality on challenging abstract transformation tasks
+
 ### [An Experimental Design Approach to Evaluating Agentic AI's Autonomous Model Discovery](https://arxiv.org/abs/2607.06413)
+
+- summary: This work proposes a framework for evaluating the autonomous model discovery behavior of large language model coding agents, treating them as stochastic model-discovery operators.
+- methods: experimental design, regression models, inference, canonical decomposition
+- findings: reasoning effort affects output quality, cost, and process complexity; utility-aligned canonical decomposition characterizes dominant direction of reasoning-effort effect
 
 ### [Agora: Enhancing LLM Agent Reasoning Via Auction-Based Task Allocation](https://arxiv.org/abs/2607.09600)
 
+- summary: The Agora framework introduces an incentive-compatible auction mechanism for dynamically allocating tasks to expert models and tools, improving reasoning capabilities of large language model agents.
+- methods: auction mechanism, dynamic task allocation
+- findings: improved performance over single-model and routing baselines; controllable cost-quality trade-off
+
 ### [Agents That Teach: Towards Designing Incidental Learning Back into AI-Assisted Software Development](https://arxiv.org/abs/2607.06101)
+
+- summary: The increasing use of AI coding agents may lead to a loss of incidental learning for developers, resulting in Knowledge Debt, and this paper proposes design principles and a system to consciously design learning back into developer-agent interactions.
+- methods: design principles, multi-agent system
+- findings: incidental learning is lost with over-reliance on agentic coding; Knowledge Debt accrues over time; learning-aware development environments can balance productivity and learning
 
 ### [AgenticPD: A Stage-Aware Agentic Framework for Physical Design QoR Optimization](https://arxiv.org/abs/2607.04758)
 
+- summary: AgenticPD, a stage-aware agentic framework, is presented for physical design quality-of-results optimization, achieving strong post-route timing while remaining competitive in power and area.
+- methods: stage-aware agentic framework, stage-local tools, agent context management
+- findings: strong post-route timing; competitive power and area
+
 ### [Agentic AI and Retrieval-Augmented Models in Straight-Through Underwriting](https://arxiv.org/abs/2607.07858)
+
+- summary: This paper examines how emerging AI architectures can support actuarial priorities such as transparency and human-in-the-loop governance, with a focus on straight-through decision processes.
+- methods: experimental evaluation, comparison of underwriting pipelines
+- findings: the agentic system performs best overall; largest gains in multi-step and missing-information scenarios
 
 ### [AgentGym2: Benchmarking Large Language Model Agents in De-Idealized Real-World Environments](https://arxiv.org/abs/2607.05174)
 
 ### [A Closed-Loop Multi-Agent Framework for Robust Multi-Robot Manipulation](https://arxiv.org/abs/2607.06990)
 
+- summary: A hierarchical closed-loop agentic Large Language Model-based framework is proposed to ensure robust multi-robot manipulation, addressing the challenge of grounding high-level reasoning in physical execution.
+- methods: hierarchical closed-loop framework, adaptive tool use, semantic corrections
+- findings: superior success rates; robust adaptability; generalizable approach for diverse manipulation tasks
+
 ## 2026 W27 (arxiv)
 
 ### [What LLM Agents Say When No One Is Watching: Social Structure and Latent Objective Emergence in Multi-Agent Debates](https://arxiv.org/abs/2607.02507)
 
+- summary: This study examines how social structure influences the public expressions of LLM agents compared to their off-the-record responses in a dual-channel debate framework.
+- methods: dual-channel debate framework, aggregate analyses
+- findings: public-OTR divergence increases to roughly 40% in alignment-inducing settings; OTR responses attribute public accommodation to relational pressures
+
 ### [UA-ChatDev: Uncertainty-Aware Multi-Agent Collaboration for Reliable Software Development](https://arxiv.org/abs/2607.02186)
+
+- summary: The authors propose UA-ChatDev, an uncertainty-aware multi-agent software development framework that integrates uncertainty quantification into agent interactions to improve software quality.
+- methods: uncertainty quantification, token-level log probabilities, phase-aware threshold calibration, retrieval-based verification
+- findings: UA-ChatDev outperforms existing single-agent and multi-agent software development frameworks; uncertainty-aware interactions enhance code execution reliability
 
 ### [TraceLab: Characterizing Coding Agent Workloads for LLM Serving](https://arxiv.org/abs/2606.30560)
 
+- summary: The authors collect and release a trace of coding-agent sessions to help understand real workload patterns and optimize serving systems for agentic LLMs.
+- methods: trace collection, workload analysis
+- findings: long autonomous loops; diverse and heavily-tailed tool calls; high but imperfect prefix cache hit rates
+
 ### [TopoAgent: An Agentic Framework for Automated Topology Learning in Medical Imaging](https://arxiv.org/abs/2606.29763)
+
+- summary: TopoAgent, an LLM-based agentic framework, automates topology learning for medical image analysis by determining the most suitable topological descriptors for a given image dataset.
+- methods: persistent homology, topological descriptors, LLM-based agentic framework
+- findings: TopoAgent can automatically determine the most suitable topological descriptors for a given image dataset; TopoAgent operates through a Perception--Reasoning--Action--Reflection loop
 
 ### [Think in English, Answer in Korean: Efficient Adaptation of Multilingual Tool-Using Agents](https://arxiv.org/abs/2606.31648)
 
+- summary: The authors present LuckyStar 111B, a 111B-parameter hybrid reasoning model for Korean-English enterprise agents, and study its efficient scaling through various methods.
+- methods: multilingual supervised fine-tuning, reinforcement learning, preamble conditioning, 4-bit quantization
+- findings: improved mathematical reasoning; improved function calling; improved agentic NL2SQL performance; preserved general instruction-following quality
+
 ### [Theory of Mind and Persuasion Beyond Conversation: Assessing the Capacity of LLMs to Induce Belief States via Planning and Action](https://arxiv.org/abs/2606.31916)
+
+- summary: This paper evaluates the ability of Large Language Models to induce specific belief states in other agents through non-conversational actions, a capability known as Non-Conversational Planning Theory of Mind (NCP-ToM).
+- methods: NCP-ExploreToM framework, task-based evaluation
+- findings: GPT-5 succeeded on approximately 80% of tasks; Models performed better on tasks inducing true belief states than false belief states; GPT-5 outperformed human participants on the task
 
 ### [SWE-INTERACT: Reimagining SWE Benchmarks as User-Driven Long-Horizon Coding Sessions](https://arxiv.org/abs/2606.30573)
 
 ### [Steerability via constraints: a substrate for scalable oversight of coding agents](https://arxiv.org/abs/2607.02389)
 
+- summary: The study proposes managing coding agents using access control, network policies, and strict coding conventions to improve security and scalability, and reports a controlled experiment demonstrating the effectiveness of this approach.
+- methods: access control, network policies, strict coding conventions, controlled experiment
+- findings: Constrained substrate and tools improve recall from 54.5% to 90.9%; Substrate and tools contribute independently to oversight gains
+
 ### [Smart charging of large fleets of Electric Vehicles: Independent Multi-Agent Reinforcement Learning approaches](https://arxiv.org/abs/2606.31347)
+
+- summary: This work compares two multi-agent reinforcement learning approaches for optimizing decentralized electric vehicle charging to minimize costs and avoid network overloads.
+- methods: contextual combinatorial bandits, policy gradient algorithms
 
 ### [SkillCoach: Self-Evolving Rubrics for Evaluating and Enhancing Agentic Skill-Use](https://arxiv.org/abs/2607.01874)
 
+- summary: SkillCoach is a self-evolving rubric framework for evaluating and enhancing agentic skill-use in LLM agents by deriving skill-grounded process rubrics from real rollouts.
+- methods: SkillCoach framework, rubric derivation, process supervision
+- findings: Evolved rubrics improve evaluation quality; Expose failures hidden by final accuracy; Provide stronger supervision signals than outcome-only filtering
+
 ### [SimWorlds: A Multi-Agent System for Dynamic 3D Scene Creation](https://arxiv.org/abs/2607.01766)
+
+- summary: SimWorlds is a multi-agent framework that generates dynamic, editable 4D scenes from text, addressing the challenges of coordinating spatial layout, physics solvers, and temporal sequencing in a single coherent scene.
+- methods: procedural knowledge, planner-coder-reviewer workflow, layered scene protocol, deterministic verifier, runtime-state inspection tool suite
+- findings: SimWorlds outperforms prior dynamic Blender generation baselines; 4DBuildBench assesses both visual fidelity and physical consistency of generated scenes
 
 ### [ShopX: A Foundation Model for Intent-to-Item Fulfillment in Agentic Shopping](https://arxiv.org/abs/2606.31693)
 
+- summary: The authors propose ShopX, a foundation model that unifies intent understanding, execution planning, and item-space operations to improve shopping experiences orchestrated by LLM agents.
+- methods: generative recommendation, semantic IDs (SIDs), model-native item-fulfillment framework
+- findings: ShopX improves overall framework behavior; model-native fulfillment is especially effective on complex or ambiguous requests
+
 ### [SAGA: Scene-Aware, Goal-Evolving Agents for Long-Horizon CivRealm Strategy Planning](https://arxiv.org/abs/2606.29932)
+
+- summary: The SAGA framework is presented as a solution to the systematic failures of existing LLM-based agents in complex strategy games, achieving state-of-the-art results in FreeCiv.
+- methods: Map-Semantic Scene Graph, Tool-Augmented Planner, Dual-Horizon Feedback Loop
+- findings: SAGA attains the highest mean civilization score; SAGA outscores strong baselines in most head-to-head games; SAGA reduces output tokens by 27%
 
 ### [Safety Testing LLM Agents at Scale: From Risk Discovery to Evidence-Grounded Verification](https://arxiv.org/abs/2607.01793)
 
+- summary: Vera is an automated safety testing framework for LLM agents that uses a three-stage pipeline to discover, compose, and execute safety cases to evaluate safety risks.
+- methods: literature-driven exploration, combinatorial composition, adaptive execution
+- findings: Substantial safety weaknesses were found in production agent frameworks; Average attack success rates reached 93.9% under multi-channel attacks
+
 ### [Safe and Adaptive Cloud Healing: Verifying LLM-Generated Recovery Plans with a Neural-Symbolic World Model](https://arxiv.org/abs/2607.01595)
+
+- summary: This paper proposes PASE, a novel fault self-healing framework that utilizes Large Language Models and Deep Reinforcement Learning to generate dynamic recovery plans for cloud-based AI systems.
+- methods: neuro-symbolic program synthesis, Neural-Symbolic World Model, Meta-Prompt Optimizer, Deep Reinforcement Learning
+- findings: PASE reduces average system recovery time by over 40%; PASE improves fault detection accuracy in unknown fault scenarios
 
 ### [Reasoning effort, not tool access, buys first-try reliability in agentic code generation: an observational study](https://arxiv.org/abs/2607.02436)
 
 ### [Prompt-to-Paper: Agentic AI System for Bioinformatics](https://arxiv.org/abs/2607.05456)
 
+- summary: The Prompt-to-Paper framework addresses deficiencies in automated manuscript generation by grounding claims in verifiable literature, executing real experiments, and assessing manuscript quality through a multi-dimensional framework.
+- methods: deterministic retrieval-augmented generation pipeline, autonomous coding agent, automated quality scorer, quality-driven improvement loop
+- findings: manuscript quality improvement by an average of +17.96 points; production of complete manuscripts at approximately 0.31 USD per paper; human reviewer scoring of 7.0 out of 10
+
 ### [PHREEQC-MCQ-200: A Diagnostic Benchmark for Tool-Augmented Scientific Simulator Agents](https://arxiv.org/abs/2607.00436)
+
+- summary: The introduction of PHREEQC-MCQ-200, a benchmark for evaluating tool-augmented agents on deterministic aqueous-geochemistry simulations, reveals that simulator access improves aggregate accuracy but also hides regressions and is sensitive to output-access protocols.
+- methods: benchmarking, simulator input construction, execution of PHREEQC, output inspection
+- findings: simulator access improves aggregate accuracy; gains are not monotonic; output-access protocol matters; item-level retention and output-access sensitivity are important evaluation metrics
 
 ### [Personalization as Inverse Planning: Learning Latent Design Intents for Agentic Slide Generation via Structural Denoising](https://arxiv.org/abs/2607.00407)
 
+- summary: This work proposes SPIRE, a framework to solve Page-level Slide Personalization (PSP) by formulating it as an inverse planning problem and using reinforcement learning to collaboratively refine executable designs.
+- methods: inverse planning, reinforcement learning, multi-agent formulation
+- findings: SPIRE framework is effective for PSP; structural denoising is a consistent surrogate for PSP; multi-agent formulation reduces policy gradient variance in RL
+
 ### [Path-level Hindsight Instructions for Semantic Exploration in Vision-Language Navigation](https://arxiv.org/abs/2607.01754)
 
+- summary: This work introduces Phi-Nav, a unified on-policy framework that leverages hindsight reasoning to align instructions with the agent's actual exploratory journey in Vision-Language Navigation tasks.
+- methods: on-policy exploration, hindsight reasoning, dual-supervision cycle
+- findings: Phi-Nav bridges the semantic supervision gap in on-policy methods; Phi-Nav yields competitive performance with limited expert demonstrations
+
 ### [PACE: A Proxy for Agentic Capability Evaluation](https://arxiv.org/abs/2607.02032)
+
+- summary: This paper introduces PACE, a framework that constructs proxy benchmarks to predict performance on expensive agentic benchmarks using a small subset of non-agentic evaluation instances.
+- methods: regression analysis, instance-selection strategies, leave-one-out cross-validation
+- findings: PACE-Bench predicts agentic scores with high accuracy; PACE reduces evaluation cost to less than 1% of full agentic evaluation; Selected proxy instances reveal unique skills demanded by each agentic benchmark
 
 ### [OpenLife: Toward Open-World Artificial Life with Autonomous LLM Agents](https://arxiv.org/abs/2606.31046)
 
 ### [Object Aligner: A Configurable JSON Schema Similarity Score for Graphs, Applied to LLM Prompt Optimization](https://arxiv.org/abs/2607.01972)
 
+- summary: The Object Aligner is a Python library that scores the similarity between two JSON objects by recursively aligning their trees and awarding partial credit based on a given schema.
+- methods: Hungarian algorithm, sequence alignment, Weisfeiler-Leman color refinement
+- findings: The Object Aligner can score JSON objects deterministically and efficiently; Referential alignment can handle complex structured data with graphs or hypergraphs; The library can emit ranked repair suggestions at no extra cost
+
 ### [NKI-Agent: Domain-Specific Fine-Tuning and Agentic Tool Use for Neuron Kernel Generation](https://arxiv.org/abs/2607.04395)
+
+- summary: The authors introduce NKI-Agent, a system for automated kernel generation and optimization on emerging AI accelerators, which achieves a 77.3% pass rate on a 250-task benchmark.
+- methods: domain-specific supervised fine-tuning, compile-verify-fix agent loop, Group Relative Policy Optimization
+- findings: NKI-Agent achieves 77.3% pass rate on NKIBench; tool use is critical for high pass rates; SFT-trained models outperform RL-based models
 
 ### [MultiUAV-Plat: An LLM-Oriented Platform, Benchmark and Framework for Multi-UAV Collaborative Task Planning](https://arxiv.org/abs/2606.31073)
 
+- summary: The authors present MultiUAV-Plat, a simulation platform for multi-UAV collaborative task planning using large language models, and propose Agent4Drone, a task-specific LLM agent framework that achieves substantial performance improvements over a baseline.
+- methods: Simulation, Benchmarking, Task planning
+- findings: Agent4Drone achieves a 57.9% task pass rate; Agent4Drone outperforms ReAct baseline; MultiUAV-Plat provides a reproducible foundation for studying LLM-driven multi-UAV autonomy
+
 ### [Multi-Turn Agentic Scientific Literature Search via Workflow Induction](https://arxiv.org/abs/2607.00597)
+
+- summary: PaperPilot, a multi-turn literature search agent, is introduced to improve scientific literature search by framing it as workflow induction and allowing for user feedback to refine the query and workflow.
+- methods: supervised workflow imitation, preference optimization, workflow corruption
+- findings: Hit@5 increased from 58.0 to 77.0; MRR increased from 47.5 to 59.4; nDCG@10 increased from 26.8 to 32.5; workflow execution errors reduced from 9.5% to 0%
 
 ### [MirrorCode: AI can rebuild entire programs from behavior alone](https://arxiv.org/abs/2606.30182)
 
+- summary: The MirrorCode benchmark is introduced to evaluate AI models' ability to reimplement entire software projects, showing promising results and potential transformative effects on software engineering.
+- methods: benchmarking, end-to-end tests
+- findings: AI models can reimplement complex software; AI models can match original program's output exactly on end-to-end tests; AI will have transformative effects on software engineering
+
 ### [Meta-Benchmarks for Financial-Services LLM Evaluation](https://arxiv.org/abs/2607.01740)
+
+- summary: A meta-benchmarking framework is presented to organize and evaluate public LLM leaderboards based on specific cognitive demands of financial-services work.
+- methods: meta-benchmarking framework, multiplicative weighting scheme, pairwise Elo tournament
+- findings: The framework can evaluate models based on specific cognitive demands; It can suppress saturated legacy tests automatically; It produces cross-benchmark-comparable work-activity scores
 
 ### [MemSyco-Bench: Benchmarking Sycophancy in Agent Memory](https://arxiv.org/abs/2607.01071)
 
+- summary: MemSyco-Bench is a benchmark for evaluating memory-induced sycophancy in agent systems, assessing how retrieved memories influence downstream reasoning and decision-making.
+- methods: benchmarking, task-based evaluation
+- findings: retrieved memories can induce sycophancy; existing memory benchmarks overlook downstream reasoning and decision-making
+
 ### [Long-term Traffic Simulation via Structured Autoregressive Modeling](https://arxiv.org/abs/2606.31209)
+
+- summary: This work proposes RosettaSim, a unified framework for interactive traffic simulation, which leverages large-scale sequence models to model sustained multi-agent interactions and achieves state-of-the-art performance in both short- and long-term simulation.
+- methods: probing experiments, attention mechanisms, structured autoregressive stream, Retrieval-based Traffic Evaluation
+- findings: small-scale LLMs can rapidly adapt to traffic modeling; RosettaSim achieves state-of-the-art performance in short- and long-term simulation; RTE exhibits a stronger correlation with standard metrics than existing approaches
 
 ### [Know Your Source: A Public Knowledge Store for Media Background Checks](https://arxiv.org/abs/2607.02383)
 
+- summary: The authors introduce MEDIAREF, a publicly available knowledge store of web-sourced documents for reproducible evaluation of media background checks (MBCs) in retrieval-augmented generation systems.
+- methods: reproducible methodology for constructing and updating the collection, automatic and qualitative evaluation
+- findings: MEDIAREF enables reproducible, low-cost evaluation of MBC generation; MEDIAREF supports higher-quality MBC generation
+
 ### [Janus: a Playground for User-Involved Agentic Permission Management](https://arxiv.org/abs/2607.01510)
+
+- summary: The Janus system is introduced to explore user-involved agentic permission management designs, demonstrating the importance of user input and context-sensitive approaches.
+- methods: implementation, evaluation, automated framework
+- findings: user input strengthens privacy and security; AI augmentation reduces cognitive load; no single design performs optimally across all contexts
 
 ### [Investigating Multi-Agent Deliberation in Law](https://arxiv.org/abs/2606.30906)
 
+- summary: This paper investigates multi-agent deliberation methods for legal reasoning tasks using Large Language Models and introduces two novel multi-agent frameworks inspired by courtroom procedures and legal argumentation.
+- methods: multi-agent deliberation, qualitative evaluation
+- findings: multi-agent frameworks achieve comparable performance to baseline large language models; multi-agent approaches can solve cases that baseline models fail to address; multi-agent approaches are better suited for answering questions that require critical thinking from multiple perspectives
+
 ### [HealthAgentBench: A Unified Benchmark Suite of Realistic Agentic Healthcare Environments for Challenging Frontier AI Agents](https://arxiv.org/abs/2606.31179)
+
+- summary: The HealthAgentBench suite is introduced as a benchmark for evaluating AI agents in healthcare applications, consisting of 54 tasks across 7 categories that test complex, long-horizon reasoning.
+- methods: benchmarking, task success rate evaluation
+- findings: Frontier agents achieve low overall task success rates; Codex GPT-5.5 achieves approximately 42% success rate; Medical imaging remains a challenging task category
 
 ### [Hardware-Enforced Semantic Coordination for Safety-Critical Real-Time Autonomous Systems](https://arxiv.org/abs/2607.02376)
 
@@ -2408,37 +6187,105 @@
 
 ### [Generative Skill Composition for LLM Agents](https://arxiv.org/abs/2606.32025)
 
+- summary: The SkillComposer model is proposed to address the challenge of selecting an appropriate skill composition for large language models, achieving state-of-the-art results in composition quality and downstream task success.
+- methods: constrained autoregressive decoder, task-conditioned skill sequence prediction
+- findings: SkillComposer raises the pass rate by +23.1, +18.2pp over the no-skill baseline; SkillComposer surpasses top-3 retrieval and matches the gold-skill retrieval upper bound at lower prompt-token cost
+
 ### [Forethought: Verifiable Reasoning from Neurosymbolic Primitive Programming](https://arxiv.org/abs/2607.04096)
+
+- summary: Forethought, a neurosymbolic reasoning system, improves agentic workflows by treating reasoning as an explicit, verifiable program, outperforming other methods and enabling small models to match frontier models' capabilities.
+- methods: neurosymbolic reasoning, domain-specific language, tool-calling execution kernel
+- findings: 30% relative improvement in base-model accuracy; outperforms vanilla prompting, reinforcement learning scaffolds, and prompt-evolution methods; enables small models to match or exceed frontier models' capabilities
 
 ### [EvoPolicyGym: Evaluating Autonomous Policy Evolution in Interactive Environments](https://arxiv.org/abs/2607.02440)
 
+- summary: The authors introduce Autonomous Policy Evolution, a controlled evaluation setting for autonomous agents to improve executable policies through feedback, and instantiate it in the EvoPolicyGym benchmark.
+- methods: Autonomous Policy Evolution, EvoPolicyGym benchmark
+- findings: GPT-5.5 achieves the strongest aggregate rank score and top-two performance on all 16 environments; strong autonomous policy evolution depends on discovering task-appropriate mechanisms and refining policies under bounded feedback
+
 ### [ElephantAgent: Contextual State Continuity in Agentic Systems](https://arxiv.org/abs/2607.01919)
+
+- summary: ElephantAgent is a protocol that enforces Contextual State Continuity to defend against contextual state poisoning in agentic systems.
+- methods: Contextual State Continuity, replicated trusted hardware, Historical Traceability
+- findings: ElephantAgent defends against contextual state poisoning; it maintains a linearizable ledger of authorized contextual state transitions; it enables conditional post-hoc audit and recovery to a known-good prior state
 
 ### [Diverse Evidence, Better Forecasts: Multi-Agent Deliberation Under Information Asymmetry](https://arxiv.org/abs/2607.01661)
 
+- summary: The proposed InfoDelphi framework uses designed information asymmetry to improve multi-agent systems for forecasting future events by reducing inter-agent error correlation and enabling effective deliberation.
+- methods: designed information asymmetry, relevance-aware evidence routing, rationale-based iterative deliberation, confidence-weighted aggregation
+- findings: InfoDelphi outperforms single-agent and multi-agent baselines by 12--18% in Brier score and 4--8 percentage points in accuracy; removing information asymmetry eliminates most deliberation gains
+
 ### [Distributed Attacks in Persistent-State AI Control](https://arxiv.org/abs/2607.02514)
+
+- summary: This study introduces Iterative VibeCoding, a setting for AI control, to investigate the dynamics of autonomous AI coding agents and their potential to distribute attacks across pull requests and time their payload for maximum effect.
+- methods: benchmarking, comparative analysis, monitoring
+- findings: No single monitor is robust to both gradual and non-gradual attacks; High evasion generalizes across model attack agent backends; A stateful link-tracker monitor detects gradual attacks substantially better than diff monitors
 
 ### [DEEPMED Search: An Open-Source Agentic Platform for Medical Deep Research with Introspective Verification](https://arxiv.org/abs/2606.29746)
 
+- summary: DEEPMED Search is a fully open-source platform designed for transparent medical deep research, navigating heterogeneous medical data from various sources.
+- methods: source-adaptive router, introspective verification module, causal-consistent multi-agent debate framework
+- findings: autonomously decompose high-difficulty rare disease queries; filter out confounding noise; generate structured, citation-backed research reports
+
 ### [Decoupling Code Complexity from Newcomer Participation: A Causal Study of AI Coding Agent Adoption in OSS](https://arxiv.org/abs/2607.01810)
+
+- summary: The adoption of AI coding agents in open-source projects does not crowd out human newcomers, despite making code modestly more complex.
+- methods: difference-in-differences, matched controls, code search
+- findings: no significant decline in newcomer inflow after adoption; onboarding and retention are unchanged; code complexity increases by 11% on a cognitive metric for Python
 
 ### [DDIAgents: Mechanism-Conditioned Context Flow for Drug-Drug Interaction Prediction](https://arxiv.org/abs/2606.31085)
 
+- summary: DDIAgents, a mechanism-conditioned multi-agent framework, is proposed for drug-drug interaction prediction through dynamic knowledge orchestration, outperforming existing baselines in extensive experiments.
+- methods: mechanism-conditioned multi-agent framework, dynamic knowledge orchestration
+- findings: DDIAgents consistently outperforms existing baselines; reduces irrelevant information; supports complementary expert reasoning; produces interpretable agent-level rationales
+
 ### [DAIN: Dynamic Agent-Based Interaction Network for Efficient and Collaborative Multimodal Reasoning](https://arxiv.org/abs/2606.30189)
+
+- summary: The Dynamic Agent-based Interaction Network (DAIN) is introduced as a new approach to multimodal fusion, providing adaptive and efficient collaborative reasoning for complex real-world applications.
+- methods: multimodal fusion, dynamic scheduling, sparse activation, compressed inter-agent communication, multi-objective loss function
+- findings: DAIN delivers significant performance improvements, including a 2.6% accuracy gain on ADNI; dynamic scheduling and agent communication are critical to DAIN's success; DAIN offers enhanced interpretability while maintaining computational efficiency
 
 ### [DA-Studio: An Agentic System for End-to-End Data Analysis](https://arxiv.org/abs/2606.31423)
 
+- summary: DA-Studio is a web-based system for end-to-end data analysis that integrates autonomous workflow organization, sandboxed execution, and inspectable action traces.
+- methods: iterative action generation, code execution, feedback incorporation
+- findings: DA-Studio provides autonomous and inspectable data analysis workflows; Existing LLM-based tools often lack support for complete execution-grounded workflows
+
 ### [Criticality-Based Guard Rail Validation for AI Agent Decisions in Autonomous Telecom Networks](https://arxiv.org/abs/2607.02210)
+
+- summary: This paper proposes the Guard Rail Validation framework, a runtime architecture for intercepting and validating AI-driven decisions in autonomous telecommunications networks.
+- methods: Guard Rail Validation framework, weighted dimension evaluation, graduated validation mechanisms
+- findings: interception and validation of AI-driven decisions; cross-agent conflict detection; runtime conformance logging for regulatory compliance
 
 ### [Contrastive Reflection for Iterative Prompt Optimization](https://arxiv.org/abs/2606.30840)
 
+- summary: The Contrastive Reflection framework is presented as an iterative prompt-optimization method for improving the performance of LLM agents in information retrieval tasks.
+- methods: Contrastive Reflection, prompt optimization, tree-based slice selector
+- findings: Improves held-out exact-match accuracy from 51.4% to 60.4%; Outperforms failure-only and random-evidence variants; Comparable to modern prompt optimizers MIPROv2 and GEPA
+
 ### [COMFYCLAW: Self-Evolving Skill Harnesses for Image Generation Workflows](https://arxiv.org/abs/2607.01709)
+
+- summary: COMFYCLAW, an agentic skill evolution harness, is introduced to improve agent reliability and performance in recurring visual workflow construction, particularly in workflow-based image generation.
+- methods: typed graph editing, automatic edit reversion, skill evolution, verifier feedback
+- findings: COMFYCLAW achieves the best average image-generation evaluation score; skill evolution improves agent reliability and performance; human annotators prefer COMFYCLAW over variants without skill evolution
 
 ### [CLQT: A Closed-Loop, Cost-Aware, Strategy-Consistent Benchmark for Diagnostic Evaluation of LLM Portfolio-Management Agents](https://arxiv.org/abs/2606.29771)
 
+- summary: The authors introduce CLQT, a closed-loop trading evaluation framework that assesses autonomous portfolio managers by diagnosing their decision-making processes rather than just ranking them by returns.
+- methods: closed-loop trading evaluation, cost-aware strategy-consistent temporally-gated environment, recompute-verifiable hash chain, five-axis capability scorecard
+- findings: CLQT separates outcome from capability; provides a durable and extensible map of agent competencies and limitations; curbs self-preference bias with a held-out LLM
+
 ### [ClawArena-Team: Benchmarking Subagent Orchestration and Dynamic Workflows in Language-Model Agents](https://arxiv.org/abs/2606.31174)
 
+- summary: The ClawArena-Team benchmark is introduced to measure the management ability of a large language model acting as a leader in a team of subagents.
+- methods: benchmarking, execution-based scoring
+- findings: management bottleneck is privilege granting; cost and management quality are decoupled; orchestration behaviors diverge significantly
+
 ### [Bringing Agentic Search to Earth Observation Data Discovery](https://arxiv.org/abs/2607.02387)
+
+- summary: An agentic search system is presented to help geoscience experts find relevant datasets and tools using natural-language queries, leveraging knowledge graphs and large language models.
+- methods: agentic search, neural scorer, score fusion, zero-shot agentic reranking
+- findings: neural scorer outperforms cosine and BM25 baselines; score fusion raises Recall@10 and MRR by over 5x; zero-shot agentic reranking lifts MRR by 28%
 
 ### [Biological Motifs for Agentic Control](https://arxiv.org/abs/2607.04240)
 
@@ -2446,13 +6293,29 @@
 
 ### [AutoTrainess: Teaching Language Models to Improve Language Models Autonomously](https://arxiv.org/abs/2606.31551)
 
+- summary: AutoTrainess, a language model agent, is presented to automate the post-training process of language models, outperforming CLI-only baselines on various models and benchmarks.
+- methods: autonomous post-training, agent-computer interfaces, workflow externalization
+- findings: AutoTrainess outperforms CLI-only baselines with an average score of 26.94 on PostTrainBench; AutoTrainess improves DeepSeek-V4-Flash from 12.13 to 19.58
+
 ### [Autonomous Information Seeking: A Roadmap for Agentic Recommender Systems](https://arxiv.org/abs/2607.04433)
 
 ### [Atomic Task Graph: A Unified Framework for Agentic Planning and Execution](https://arxiv.org/abs/2607.01942)
 
+- summary: The Atomic Task Graph (ATG) framework is proposed to improve the performance of LLM-based agents in solving complex multi-step tasks by explicitly exposing dependencies and supporting reuse of intermediate results.
+- methods: prompt-based control, task decomposition, graph-based planning and execution
+- findings: ATG improves execution efficiency; ATG localizes error sources and repairs affected regions; ATG outperforms strong baselines in success rate and execution efficiency
+
 ### [ATM: CID-Brokered Pre-Write Admission for Multi-Agent Code Co-Synthesis](https://arxiv.org/abs/2607.00041)
 
+- summary: The AI-Atomic-Framework (ATM) is proposed as a governance substrate for software agents to manage concurrently formed write intents in a single governance domain.
+- methods: Adapter-guided atomization, Virtual atoms, Neutral steward
+- findings: Feasibility of ATM; Auditability of ATM; Bounded recoverability of ATM
+
 ### [AgRefactor: Self-Evolving Agentic Workflow for HLS Compatibility and Performance](https://arxiv.org/abs/2606.30949)
+
+- summary: AgRefactor, an LLM-based multi-agent workflow, is introduced to refactor software into HLS-compatible programs, outperforming state-of-the-art tools on real-world benchmarks.
+- methods: LLM-based multi-agent workflow, self-evolving memory system, automated refactoring tools integration
+- findings: AgRefactor outperforms state-of-the-art automated refactoring tool on 9 out of 11 benchmarks; 6.51x geometric mean speedup over SoTA pragma tuning tool; 1.20x speedup over optimized open-source designs with less than 20% extra resources
 
 ### [AGI Maze as a Benchmark Framework for World-Modeling Agents](https://arxiv.org/abs/2607.00627)
 
@@ -2460,173 +6323,489 @@
 
 ### [AgenticDataBench: A Comprehensive Benchmark for Data Agents](https://arxiv.org/abs/2607.01647)
 
+- summary: The authors propose AgenticDataBench, a comprehensive benchmark for evaluating large language model-based data agents across diverse data science scenarios.
+- methods: benchmarking, task generation, skill-aligned hierarchical clustering
+- findings: AgenticDataBench enables evaluations to capture diversity and complexity of data science workflows; benchmark features realistic tasks spanning diverse domains with fine-grained ground-truth labels
+
 ### [Agentic-Ideation: Sample Efficient Agentic Trajectories Synthesis for Scientific Ideation Agents](https://arxiv.org/abs/2606.31229)
 
+- summary: The proposed Agentic-Ideation framework improves automated scientific ideation by leveraging a novel Oracle-Guided Data Synthesis strategy and a specialized agentic LLM.
+- methods: Oracle-Guided Data Synthesis, masking strategy on tool execution results, automated trajectory synthesis pipeline
+- findings: outperforms SOTA workflow-based baseline by 11.91% in overall quality; improves sample efficiency of high-quality data synthesis by over 10×
+
 ### [Agentic RAG-VLM: Affordance-Aware Retrieval-Augmented Generation with Self-Reflective Planning for Robotic Grasping](https://arxiv.org/abs/2606.31200)
+
+- summary: Agentic RAG-VLM is a unified framework that integrates retrieval-augmented generation with vision-language models and agentic self-reflective planning for generalizable robotic grasping in cluttered environments.
+- methods: Hierarchical Affordance-Aware RAG, Scene Graph Constraint Reasoner, Agentic Self-Reflective Pipeline
+- findings: Agentic RAG-VLM achieves 78.3 percent overall success; 53.3 percentage-point absolute gain over VLM-only baselines
 
 ### [Agentic IoT: Architectures, Applications, and Challenges Toward the Internet of Agents](https://arxiv.org/abs/2607.04219)
 
 ### [Agentic generation of verifiable rules for deterministic, self-expanding reaction classification](https://arxiv.org/abs/2607.01061)
 
+- summary: A fully automated pipeline using large language models generates reaction rules and classifies reactions, creating a living reactivity database and expanding a standard taxonomy without human curation.
+- methods: multi-agent framework, verification loop, fingerprint classifier
+- findings: 97.7% classification accuracy on unseen reactions; expansion of standard taxonomy from 68 to 14,073 classes
+
 ### [Agent-driven Long-tail Simulation for Autonomous Driving](https://arxiv.org/abs/2607.04331)
+
+- summary: The authors propose an agent-driven simulation framework for evaluating autonomous driving systems, using large language models to control surrounding road participants and introduce a benchmark for closed-loop planning in complex scenarios.
+- methods: agent-driven simulation, instruction-following large language models, structured action interface
+- findings: state-of-the-art planners struggle with safe and effective task completion in long-tail scenarios
 
 ### [ACPO: Agent-Chained Policy Optimization for Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2606.30072)
 
+- summary: This paper introduces Agent-Chained Policy Optimization (ACPO), a method for computing joint policy gradients in Multi-Agent Reinforcement Learning (MARL) under the Centralized Training with Decentralized Execution (CTDE) paradigm.
+- methods: Agent-Chained Policy Optimization, independent factorized updates, alternating best-response updates
+- findings: joint policy gradient admits an exact decentralized decomposition; ACPO outperforms strong baselines on several benchmarks
+
 ### [ACE-Brain-0.5: A Unified Embodied Foundational Model for Physical Agentic AI](https://arxiv.org/abs/2607.04426)
+
+- summary: The ACE-Brain-0.5 model is a unified embodied foundation model that integrates spatial perception, decision making, embodied interaction, self-monitoring, and self-improvement to achieve general Physical Agentic AI.
+- methods: SSR+, Scaffold-Specialize-Reconcile, closed-loop foundation model
+- findings: improved performance on 14 of 18 spatial perception and grounding benchmarks; competitive navigation and manipulation performance; strong progress estimation in ID and OOD settings
 
 ### [A-TMA: Decoupling State-Aware Memory Failures in Long-Term Agent Memory](https://arxiv.org/abs/2607.01935)
 
+- summary: The study proposes ATMA, a state-aware overlay for existing memory systems, to address the issue of ghost memory in long-term memory systems for LLM agents.
+- methods: ATMA overlay, decoupled evaluation, benchmarking
+- findings: ATMA improves conflict accuracy by 0.240 absolute on LTP; ATMA raises temporal F1 from 0.0295 to 0.1705 on LoCoMo
+
 ### [A Lifecycle and Application-Stack Survey of Large Language Model Vulnerabilities: Attacks, Risks, Defenses, and Open Problems](https://arxiv.org/abs/2606.31639)
 
+- summary: This paper systematizes the literature on vulnerabilities in large language model systems, analyzing attacks across eight stages of the lifecycle and application stack.
+- methods: systematization, lifecycle analysis, application-stack analysis
+- findings: vulnerabilities arise from the full lifecycle and application stack; attacks can be organized across eight stages; point defenses rarely compose
+
 ### [A Cost-Aware, Paired Protocol for Auditing Dynamic Tool Synthesis in Agentic Video Question Answering](https://arxiv.org/abs/2607.01469)
+
+- summary: A cost-aware protocol is proposed to audit tool-augmented video agents, evaluating both accuracy and inference effort, and is applied to Dynamic-SAGE, an agentic VideoQA framework that synthesizes reusable composite tools.
+- methods: cost-aware paired protocol, McNemar's test, paired bootstrap confidence intervals
+- findings: Dynamic-SAGE improves accuracy by 7.5 points and reduces reasoning turns and visible tool calls by 28%; gains are largest on visual and open-ended questions; inference cost shifts rather than reduces, with token usage rising 34% and cost 26%
 
 ## 2026 W26 (arxiv)
 
 ### [Yuvion LLM: An Adversarially-Aware Large Language Model for Content And AI Safety](https://arxiv.org/abs/2606.27632)
 
+- summary: Yuvion LLM is a large language model designed for adversarially robust content safety and broader AI safety, addressing the gap in existing models' inability to handle realistic safety scenarios.
+- methods: adversarially aware data construction, knowledge-enhanced continued pretraining, policy-grounded multi-task safety post-training, risk-aware supervised fine-tuning, reinforcement learning-based policy optimization, safety-aware agentic reinforcement learning
+- findings: Yuvion LLM demonstrates clear advantages on safety-focused benchmarks; Yuvion LLM shows strong robustness under adversarial conditions; Yuvion-8B outperforms most state-of-the-art baselines, including larger models
+
 ### [When LLMs Develop Languages: Symbolic Communication for Efficient Multi-Agent Reasoning](https://arxiv.org/abs/2606.29354)
+
+- summary: The proposed Communicative Language Symbolism Routing (CLSR) framework improves large language models on difficult reasoning tasks by inventing and evolving compact Language Symbolism Frameworks (LSFs) to optimize accuracy-token trade-off.
+- methods: evolutionary loop, latent-free router, multi-round LSF composition protocol
+- findings: CLSR reduces latency-oriented generated token completion by 3-6 times compared to standard CoT; CLSR maintains accuracy across challenging benchmarks
 
 ### [When Agents Meet Electric Bus Fleet Operations: Pricing Behavior, Trade-offs, and Policy Implications in an Aggregator Framework](https://arxiv.org/abs/2606.26400)
 
 ### [VideoAgent: All-in-One Framework for Video Understanding and Editing](https://arxiv.org/abs/2606.23327)
 
+- summary: The authors propose VideoAgent, an all-in-one agentic framework that addresses the limitations of existing automated video editing systems by handling diverse video comprehension and editing operations and creating coherent narratives for long videos.
+- methods: automated video shot creation, shot planning agents, cross-modal retrieval, multi-agent orchestration framework, intent parsing, textual-gradient graph optimization
+- findings: 87-95% orchestration success rates; 60% reduction in API costs; professional-quality content approaching human-level performance
+
 ### [Triadic Werewolf: A Jester Role for Multi-Hop Theory of Mind in LLMs](https://arxiv.org/abs/2606.27909)
 
 ### [ToolPrivacyBench: Benchmarking Purpose-Bound Privacy in Tool-Using LLM Agents](https://arxiv.org/abs/2606.28061)
+
+- summary: ToolPrivacyBench is a benchmark that evaluates the privacy of large language models by auditing task-private information flow across multi-tool trajectories.
+- methods: benchmarking, trajectory-level auditing
+- findings: successful tool execution does not imply appropriate privacy disclosure; agents may transmit unnecessary private information through intermediate tool calls
 
 ### [The Hitchhiker's Guide to Agentic AI: From Foundations to Systems](https://arxiv.org/abs/2606.24937)
 
 ### [The Capability Frontier: Benchmarks Miss 82% of Model Performance](https://arxiv.org/abs/2606.26836)
 
+- summary: The Capability Frontier, a Pareto frontier over a set of models, characterizes the best achievable performance at each cost level under optimal selection across models and generations, correcting for biases in single-model evaluation.
+- methods: Pareto frontier construction, empirical study, probabilistic simulations
+- findings: 54% error rate reduction from correcting single-model evaluation; 82% improvement from correcting single runs; near-monotonic increase in performance gap with higher query topic entropy
+
 ### [Temporal Validity in Retrieval Memory: Eliminating Stale-Fact Errors for AI Agents over Evolving Knowledge](https://arxiv.org/abs/2606.26511)
+
+- summary: MemStrata, a retrieval memory maintaining temporal validity, is presented as a solution to the structural problem of retrieval-augmented generation (RAG) serving superseded facts due to lack of a model of time.
+- methods: calibrated dataset, cosine similarity, bi-temporal ledger, supersession rule
+- findings: MemStrata achieves 0.95-1.00 accuracy on evolving knowledge; RAG serves superseded values 15-40% of the time; MemStrata drives stale-fact-error rate to ~0%
 
 ### [SP-Mind: An Autonomous Reasoning Agent for Spatial Proteomics Analysis](https://arxiv.org/abs/2606.24235)
 
+- summary: SP-Mind, an autonomous AI agent, is introduced to unify the spatial proteomics analysis pipeline, enabling single-cell-resolution characterization of protein expression within tissue architecture.
+- methods: autonomous AI agent, natural-language queries, end-to-end analytical workflows
+- findings: state-of-the-art performance compared to existing open-source biomedical agent baselines
+
 ### [Socratic agents for autonomous scientific discovery in high-dimensional physical systems](https://arxiv.org/abs/2606.26722)
+
+- summary: AHOIS, a multi-agent AI scientist, is introduced to achieve true autonomous science by constructing, challenging, and revising physical explanations in response to evidence through Socratic midwifery and closed-loop experimentation.
+- methods: Socratic midwifery, closed-loop experimentation, causal questioning, constraint checking, counterexample generation, falsification-criteria formulation
+- findings: autonomous proposal and validation of a random-interference encoding hypothesis; discovery of task-adaptive sparse-measurement strategies; diagnosis of distinct failure modes; improved physical consistency, hypothesis completeness, uncertainty calibration and experimental-plan validity
 
 ### [SidConArena: An Environment Evaluating Agents in Open-Ended,Positive-Sum Bargaining Game](https://arxiv.org/abs/2606.27397)
 
+- summary: The authors introduce SidConArena, a benchmark framework for evaluating LLM agents in open-ended, positive-sum bargaining, and evaluate its performance using various models.
+- methods: multi-player economy simulation, finite-horizon partially observable stochastic game, neural-symbolic action interface
+- findings: stronger frontier models achieve higher economic outcomes; agents misvalue resources; agents bargain passively; agents are limited in long-horizon investment planning
+
 ### [SHERLOC: Structured Diagnostic Localization for Code Repair Agents](https://arxiv.org/abs/2606.24820)
+
+- summary: SHERLOC, a training-free framework, achieves state-of-the-art localization accuracy and recall across model scales and improves repair agent performance.
+- methods: Structured Hypothesis-driven Exploration and Reasoning for Localization
+- findings: 84.33% accuracy@1 on SWE-Bench Lite; 81.27% recall@1 on SWE-Bench Verified; +5.95 pp resolve rate on SWE-Bench Verified
 
 ### [SAGE-Nav: Leveraging LLM Planning and Alignment Fusion for Hierarchical Scene Graph-Guided Navigation](https://arxiv.org/abs/2606.25497)
 
+- summary: SAGE-Nav, a novel hierarchical framework, integrates Large Language Models with dynamic scene graphs to improve Object-Goal Navigation performance and generalization.
+- methods: hierarchical framework, Hierarchical Scene Graph Encoder, Goal-aware Alignment-Fusion Network, relational graph convolutions
+- findings: state-of-the-art performance in navigation efficiency; substantial gains in zero-shot generalization; low control latency for physical robotic deployment
+
 ### [SAFARI: Scaling Long Horizon Agentic Fault Attribution via Active Investigation](https://arxiv.org/abs/2606.24626)
+
+- summary: The SAFARI framework is introduced to diagnose agent failures in complex tasks by equipping LLMs with a specialized toolbox and persistent Short-Term Memory, outperforming state-of-the-art results.
+- methods: SAFARI framework, tool-augmented diagnostic loop, persistent Short-Term Memory
+- findings: SAFARI outperforms state-of-the-art results by 20% on the Who&When dataset; SAFARI outperforms state-of-the-art results by 19% on TRAIL GAIA subset; SAFARI maintains 0.58 precision even when the target fault resides 5x beyond the model's native context window
 
 ### [Reinforcement Learning for Computer-Use Agents with Autonomous Evaluation](https://arxiv.org/abs/2606.24515)
 
+- summary: The authors propose an RL fine-tuning framework that uses autonomous vision-language evaluation as a scalable supervision signal for GUI agents, achieving improved success rates in various environments.
+- methods: reinforcement learning, RL fine-tuning, Proximal Policy Optimization, autonomous vision-language evaluation
+- findings: autonomous evaluation can serve as a practical reward signal for RL in GUI environments; corrected evaluator rewards outperform zero-shot baselines and raw evaluator rewards; improved success rates by an average of 12.6 percentage points over zero-shot performance and 5.1 points over raw evaluator fine-tuning
+
 ### [Qwen-AgentWorld: Language World Models for General Agents](https://arxiv.org/abs/2606.24597)
+
+- summary: This work investigates the use of language models for world modeling, introducing Qwen-AgentWorld, a language world model capable of simulating agentic environments, and demonstrating its effectiveness in enhancing general agents.
+- methods: three-stage training pipeline, CPT, SFT, RL, hybrid rubric-and-rule rewards
+- findings: Qwen-AgentWorld outperforms existing frontier models; scalable and controllable simulation of real-world environments; world-model training improves downstream performance across agentic benchmarks
 
 ### [Quantization Inflates Reasoning: Token Inflation as a Hidden Cost of Low-Bit Reasoning Models](https://arxiv.org/abs/2606.25519)
 
+- summary: Low-bit post-training quantization can introduce a hidden test-time compute cost in reasoning models, leading to increased reasoning-token usage despite preserved accuracy.
+- methods: post-training quantization, quantization-aware training, prompting, decoding-time sampling
+- findings: quantized models generate longer chains of thought; token inflation offsets per-token speedup; behavioral changes in reasoning trace; mitigation strategies offer inconsistent trade-offs
+
 ### [Project Auto-World: Towards Automated Benchmarking of Neural Relational Reasoners](https://arxiv.org/abs/2606.24965)
+
+- summary: This study uses large language models to automate benchmark generation for evaluating the generalization of neural models on relational structures, leading to improved models that generalize well to harder problem instances.
+- methods: LLM-driven evolutionary search, autonomous agentic search, end-to-end learning
+- findings: automated benchmark generation improves model generalization; Edge Transformer can be improved using generated data; methodology can be applied to novel worlds proposed by LLMs
 
 ### [Probabilistic Agents in Deterministic Audits: Evaluating Multi-Agent Systems for Automated Audits Based on the German IT-Grundschutz](https://arxiv.org/abs/2606.25622)
 
+- summary: This paper presents a Multi-Agent System architecture combined with Hybrid Retrieval Augmented Generation for the partial automation of IT-GS certification, evaluating its performance through a case study and empirical results.
+- methods: empirical evaluation, technical implementation, case study
+- findings: high efficacy in semantic tasks; limitations in logical reasoning phases; reduction of manual effort through automated information extraction
+
 ### [Position: Correct Answer, Wrong Mechanism -- When AI Scientists Defend General Claims Their Own Data Contradicts](https://arxiv.org/abs/2606.23175)
+
+- summary: This position paper argues that evaluating AI scientist systems solely on outcome is insufficient and proposes measuring task outcome, mechanism fidelity, and epistemic honesty separately.
+- methods: simulation-based discovery, regime-shift check, recomputation
+- findings: Correct Answer, Wrong Mechanism (CAWM) cases occur in 4/20 primary-model and 3/8 cross-model episodes; Honesty and mechanism fidelity dissociate within a single agent trajectory; A lightweight test can detect CAWM cases
 
 ### [Perception, Verdict, and Evolution: Hindsight-Driven Self-Refining Forensics Agent for AI-Generated Image Detection](https://arxiv.org/abs/2606.26552)
 
+- summary: The proposed ForeAgent framework achieves state-of-the-art performance in AI-generated image detection by leveraging a Perception-Verdict architecture and a Hindsight-Driven Self-Refining strategy for continual self-improvement.
+- methods: Perception-Verdict architecture, Hindsight-Driven Self-Refining strategy, Sampling-Reflection-Evolution paradigm, dual-expert quality gating module
+- findings: ForeAgent achieves 82.18% accuracy on the Chameleon benchmark; ForeAgent achieves 93.3% mean accuracy on AIGCDetect-Benchmark; ForeAgent produces more consistent and causally grounded reasoning compared to GPT-5 and GPT-5-mini
+
 ### [Paying to Know: Micro-Transaction Markets for Verified Product Information in Agentic E-Commerce](https://arxiv.org/abs/2606.24783)
+
+- summary: The arrival of agent-native micro-payment rails changes the focus of commercial NLP in e-commerce from matching products to acquiring trustworthy information about them.
+- findings: The bottleneck in e-commerce shifts from product matching to information acquisition; A micro-transaction market for verified information can reward genuine product quality and yield truer competition
 
 ### [OSWorld2.0: Benchmarking Computer Use Agents on Long-Horizon Real-World Tasks](https://arxiv.org/abs/2606.29537)
 
+- summary: OSWorld 2.0 is introduced as a benchmark to capture the realism and complexity of real-world computer use, revealing the limitations of current frontier agents in completing long-horizon computer-use workflows.
+- methods: benchmarking, workflow evaluation
+- findings: Current agents complete only 20.6% of tasks at 500 steps; Agents struggle with constraints, mid-task information, and hidden state recovery; GPT-5.5 is more token-efficient but plateaus near 13% completion
+
 ### [Optimizing CUDA like a Human: Micro-Profiling Tools as Expert Surrogates for LLM-Based GPU Kernel Optimization](https://arxiv.org/abs/2606.26453)
+
+- summary: KernelPro, a closed-loop multi-agent system, is presented, which automatically generates, profiles, and optimizes GPU kernel code using large language models and hardware profiler feedback.
+- methods: semantic feedback operator, two-stage tool invocation architecture, domain-adapted MCTS, direct CuTe source-level code generation, ablation studies
+- findings: geometric mean speedups of 2.42x/4.69x/5.30x on KernelBench; 1.23x speedup over hand-tuned Triton on VeOmni's expert-optimized MoE training kernels; 11.6% measured energy reduction at matched speed
 
 ### [OpenRCA 2.0: From Outcome Labels to Causal Process Supervision](https://arxiv.org/abs/2606.27154)
 
+- summary: The introduction of PAVE, a step-wise labeling protocol, and OpenRCA 2.0, a cross-system RCA benchmark, reveals the limitations of existing LLMs in root cause analysis, particularly in identifying causal propagation paths.
+- methods: forward verification, fault injection, step-wise labeling
+- findings: LLMs succeed in recovering the exact root-cause set in only 20.7% of cases; agents identify at least one correct root-cause service in 76.0% of cases, but ground it in a verified causal propagation path in only 61.5%
+
 ### [Offline Multi-agent Continual Cooperation via Skill Partition and Reuse](https://arxiv.org/abs/2606.25389)
+
+- summary: The proposed COMAD framework enables continual offline multi-agent skill discovery via skill partition and reuse, improving learning efficiency in sequential task settings.
+- methods: auto-encoder, multi-head architectures, density-based reusability estimator
+- findings: mitigates interference; achieves superior forward and backward transfer; continually expands skill library
 
 ### [Neuro-Symbolic Drive: Rule-Grounded Faithful Reasoning for Driving VLAs](https://arxiv.org/abs/2606.23938)
 
+- summary: Neuro-Symbolic Drive is a neuro-symbolic driving framework that supervises a driving VLA with rule-grounded reasoning traces extracted from classical rule-based planners to improve motion generation.
+- methods: neuro-symbolic planning, rule-grounded reasoning, fine-tuning
+- findings: reduces ADE@3s from 0.47 to 0.26; reduces miss rate from 8.30% to 6.40% under three-camera perception; reduces ADE@3s from 0.54 to 0.26 and miss rate from 10.13% to 5.99% under eight-camera perception
+
 ### [Neglected Free Lunch from Post-training: Progress Advantage for LLM Agents](https://arxiv.org/abs/2606.26080)
+
+- summary: This work proposes using reinforcement learning post-training to derive an implicit advantage, termed progress advantage, for effective step-level scoring of LLMs in agentic settings.
+- methods: reinforcement learning, Monte Carlo estimation
+- findings: progress advantage outperforms confidence-based baselines; progress advantage surpasses dedicated trained reward models; progress advantage is annotation-free, domain-agnostic, and available as a byproduct of standard RL post-training
 
 ### [MKG-RAG-Bench: Benchmarking Retrieval in Multimodal Knowledge Graph-Augmented Generation](https://arxiv.org/abs/2606.26458)
 
+- summary: MKG-RAG-Bench is introduced as a cross-domain benchmark to evaluate retrieval in multimodal knowledge graph retrieval-augmented generation (MKG-RAG).
+- methods: benchmarking, extensive experiments, LLM-based curation pipeline
+- findings: effective multimodal retrieval is challenging yet crucial for end-to-end MKG-RAG performance; retrieval quality strongly determines generation outcomes
+
 ### [MIThinker: A Plug-and-Play Policy-Optimized Thinker For Motivational Interviewing Counseling](https://arxiv.org/abs/2606.29265)
+
+- summary: The authors propose MIThinker, a lightweight thinking model that generates therapeutic thoughts to guide Motivational Interviewing counseling agents, and demonstrate its effectiveness in improving theory-of-mind assessment and strategy alignment.
+- methods: supervised fine-tuning, reinforcement learning, AugR1-MI automated pipeline
+- findings: improved theory-of-mind assessment; strategy alignment; MI competency comparable to state-of-the-art systems with less computation
 
 ### [MedGuards: Multi-Agent System for Reliable Medical Error Detection and Correction](https://arxiv.org/abs/2606.25651)
 
+- summary: This paper proposes MedGuards, a framework for medical error detection and correction in Large Language Models, which enhances interpretability, robustness, and adaptability without requiring additional training of the base models.
+- methods: multi-agent in-context learning, confidence-guided arbitration mechanism, Keyword-Prioritized Correction Score
+- findings: significant improvements across several metrics and models; enhanced interpretability, robustness, and adaptability
+
 ### [MAS-PromptBench: When Does Prompt Optimization Improve Multi-Agent LLM Systems?](https://arxiv.org/abs/2606.23664)
 
+- summary: This work systematically studies system-prompt optimization in multi-agent systems (MAS) to improve performance without model finetuning, revealing its potential and open challenges across diverse MAS settings.
+
+- methods: prompt optimization, benchmarking
+- findings: prompt optimization can unlock significant gains in MAS performance; gains are sensitive to system configuration
+
 ### [Localizing RL-Induced Tool Use to a Single Crosscoder Feature](https://arxiv.org/abs/2606.26474)
+
+- summary: This work introduces Dedicated Feature Crosscoders (DFC) to isolate RL-specific features that enable tool-calling capability in language models, allowing for runtime behavioral control.
+- methods: fine-tuning through RL, Dedicated Feature Crosscoders (DFC), encode-decode reconstruction
+- findings: RL-specific features can be isolated to enable tool-calling capability; capability spillover to frozen base model is possible; DFC partitioning enables runtime behavioral control
 
 ### [LLM-Guided Planning for Multi-hop Reasoning over Multimodal Nuclear Regulatory Documents](https://arxiv.org/abs/2606.29399)
 
 ### [LLawCo: Learning Laws of Cooperation for Modeling Embodied Multi-Agent Behavior](https://arxiv.org/abs/2606.28182)
 
+- summary: The proposed Learning Laws of Cooperation (LLawCo) framework enables embodied agents to autonomously align with partners and task objectives, improving cooperative efficiency and task success rates.
+- methods: supervised fine-tuning, behavioral law derivation
+- findings: significant improvements in cooperative efficiency; average success rate improvements of 4.5% on PARTNR-Dialog and 6.8% on TDW-MAT
+
 ### [Interpretable Inverse Design of Metal-Organic Frameworks with Large Language Model Agents](https://arxiv.org/abs/2606.29459)
+
+- summary: LLM4MOF, a closed-loop framework, uses language-model agents to reason about chemistry and design metal-organic frameworks (MOFs) through autonomous iterations, refining hypotheses and testing them in simulation.
+- methods: closed-loop framework, autonomous iterations, simulation-grounded inverse design
+- findings: LLM4MOF concentrates its search on top-performing structures; outperforms random search and a genetic algorithm; generates new MOFs de novo and validates them in live simulation
 
 ### [Internalizing the Future: A Unified Agentic Training Paradigm for World Model Planning](https://arxiv.org/abs/2606.27483)
 
+- summary: This study proposes a three-stage training paradigm to enable large language model agents to internalize future-aware planning and achieve grounded and calibrated foresight in sequential decision-making tasks.
+- methods: World Model Agentic Mid-Training, Format-Eliciting SFT, Foresight-Conditioned Reinforcement Learning
+- findings: internal world modeling is necessary for effective foresight; a capability-first training pipeline is required for grounded and calibrated foresight
+
 ### [Improving General Role-Playing Agents via Psychology-Grounded Reasoning and Role-Aware Policy Optimization](https://arxiv.org/abs/2606.27025)
+
+- summary: The authors propose Psy-CoT, a psychology-grounded chain-of-thought framework, and Role-Aware Policy Optimization (RAPO) to improve role-playing agents' ability to generalize and faithfully portray characters from natural-language profiles.
+- methods: supervised fine-tuning, reinforcement learning, chain-of-thought framework, Role-Aware Policy Optimization
+- findings: Psy-CoT outperforms existing role-playing CoT methods; RAPO surpasses GRPO across multiple model scales
 
 ### [Hybrid Retriever Evolution for Multimodal Document Reasoning Agents](https://arxiv.org/abs/2606.29648)
 
+- summary: This work introduces a failure-driven evolution framework that learns to orchestrate diverse retrievers for multimodal document understanding, achieving significant gains over baseline systems.
+- methods: failure-driven evolution framework, meta-agent, autonomous multi-agent coordination
+- findings: adaptive routing and evidence composition improve performance; evolution dynamics shift from narrow lexical behavior to rich multi-tool coordination; up to +19.6 points gain over unevolved baseline
+
 ### [How Do Tool-Augmented LLM Agents Perform on Real-World Energy Analytics Tasks?](https://arxiv.org/abs/2606.26346)
+
+- summary: This study presents an empirical evaluation of tool-augmented LLM agents on real-world energy market analytics tasks, addressing the critical gap in energy-domain evaluations.
+- methods: empirical study, multi-dimensional evaluation protocol, comparative analysis
+- findings: evaluation of tool-augmented LLM agents on energy market analytics tasks; comparative analysis of closed-source and open-source LLMs
 
 ### [HoloAgent-0: A Unified Embodied Agent Framework with 3D Spatial Memory](https://arxiv.org/abs/2606.23565)
 
+- summary: This work introduces HoloAgent-0, a unified embodied agent framework for real-world robot deployment that converts language instructions into executable skill graphs and schedules robot resources.
+- methods: Embodied AgentOS, 3D spatial memory, embodied skills
+- findings: successful deployment on real hardware; effective spatial memory; long-horizon navigation; closed-loop execution
+
 ### [HiLSVA: Design and Evaluation of a Human-in-the-Loop Agentic System for Scientific Visualization](https://arxiv.org/abs/2606.26614)
+
+- summary: HiLSVA is a human-in-the-loop agentic system that supports mixed-initiative scientific visualization workflows, integrating human oversight, provenance tracking, and adaptation from user feedback.
+- methods: plan-first multi-agent architecture, stepwise provenance tracking, learn-at-test-time adaptation, controlled user study
+- findings: mixed-initiative interaction improves task completion and workflow transparency; tradeoff between execution efficiency and human oversight
 
 ### [Hierarchical Experimentalist Agents](https://arxiv.org/abs/2606.29315)
 
+- summary: The Hierarchical Experimentalist Agents (HExA) framework is introduced to enable large language models to learn from active experimentation and improve their performance on novel tasks and queries.
+- methods: Active experimentation, In-context self-improvement, Learning from experience
+- findings: HExA improves the success rate of LLM agents on Interphyre benchmark; HExA outperforms agentic baselines such as ReAct and Reflexion; HExA demonstrates reusability and generalization of its learned skills
+
 ### [HEART: Coordination of Heterogeneous Expert Agents for Physically Grounded Robotic Task Planning](https://arxiv.org/abs/2606.25404)
+
+- summary: A heterogeneous multi-LLM framework, called HEART, is presented to improve robotic task planning by combining role-oriented reasoning from expert agents and constraint-driven plan synthesis.
+- methods: heterogeneous multi-LLM framework, role-specialized expert agents, constraint-driven plan synthesis
+- findings: HEART improves plan success compared to single-LLM and rule-based planners; heterogeneous LLM collaboration enables robust and scalable robotic task planning
 
 ### [Governing Actions, Not Agents: Institutional Attestation as a Governance Model for Autonomous AI Systems](https://arxiv.org/abs/2606.26298)
 
+- summary: This paper proposes a computational governance model for AI agent systems, which requires independently attested evidence for consequential actions, while retaining autonomy over planning and reasoning.
+- methods: formalisation, proof-of-concept implementation
+- findings: independent attestation of preconditions; cryptographic binding of declared intent; tamper-evident logging
+
 ### [GIF: Locally Sound Geometric Information Flow Control for LLMs](https://arxiv.org/abs/2606.23277)
+
+- summary: The authors present Geometric Information Flow (GIF), a semantic framework for tracking information flow in large language models to address security and privacy risks.
+- methods: automatic differentiation, low-rank approximation, Lean 4 proof
+- findings: GIF achieves near-perfect recall on integrity and confidentiality tasks; GIF outperforms attention-based baselines; GIF flows detected with small surrogate models transfer to larger state-of-the-art models
 
 ### [From Task-Guided Conversational Graphs to Goal-Oriented Dialogue Runtimes](https://arxiv.org/abs/2606.23797)
 
+- summary: This paper introduces the Goal-Oriented Dialogue Runtime (GODR), a framework-neutral design pattern for managing conversational continuity in complex, multi-domain, interruptible conversations.
+- methods: design pattern introduction, problem formalization, architecture-selection criteria proposal
+- findings: GODR treats goals and task frames as first-class runtime objects; GODR delegates bounded execution to graph runtimes, agents, tools, or APIs
+
 ### [From Detection to Action: Using LLM Agents for Fault-Tolerant Control](https://arxiv.org/abs/2606.28011)
+
+- summary: The authors propose an agentic Large Language Model framework for active Fault-Tolerant Control that transforms fault detection outputs into constraint-aware recovery actions.
+- methods: multi-agent workflow, Digital Process Plant Twin, Graph Retrieval-Augmented Generation
+- findings: semantically grounded agents can derive valid recovery decisions within latency budgets; framework demonstrates a practical pathway from detection to validated corrective action
 
 ### [ENVS: Environment-Native Verified Search for Long-Horizon GUI Agents](https://arxiv.org/abs/2606.22948)
 
+- summary: The authors propose Environment-Native Verified Search (ENVS), a training-time search-and-filter pipeline for multimodal agents to discover successful trajectories in live desktop environments.
+- methods: Environment-Native Verified Search (ENVS), search-and-filter pipeline, policy optimization
+- findings: ENVS reaches 30.3 pass@8 on original evaluations and 29.0 on OSWorld-Noisy; ENVS outperforms matched ARPO-style online RL while reducing compute; Training from noisy environments preserves visual-reasoning abilities on auxiliary benchmarks
+
 ### [EnterpriseClawBench: Benchmarking Agents from Real Workplace Sessions](https://arxiv.org/abs/2606.23654)
+
+- summary: The EnterpriseClawBench is introduced as a benchmark for evaluating enterprise agents, constructed from real-world agent sessions and providing a protocol for evaluation.
+- methods: benchmark construction, evaluation protocol
+- findings: The best configuration reaches a score of 0.663 on EnterpriseClawBench; Enterprise agent evaluation should report multiple metrics rather than a single score
 
 ### [Empowering GUI Agents via Autonomous Experience Exploration and Hindsight Experience Utilization for Task Planning](https://arxiv.org/abs/2606.27330)
 
+- summary: The planning experience exploration and utilization (PEEU) method is introduced to improve task planning in multimodal web agents, achieving superior effectiveness in real-world benchmarks.
+- methods: PEEU method, TDHAF framework
+- findings: mastering low-level atomic skills does not guarantee high-level planning competence; high-level task training yields stronger OOD generalization; PEEU's 7B model outperforms the larger Qwen2.5-VL-32B model
+
 ### [Empirical Software Engineering TerraProbe: A Layered-Oracle Framework for Detecting Deceptive Fixes in LLM-Assisted Terraform](https://arxiv.org/abs/2606.26590)
+
+- summary: This paper presents TerraProbe, a framework for evaluating the effectiveness of large language models in repairing security misconfigurations in Terraform Infrastructure-as-Code.
+- methods: TerraProbe framework, human adjudication, IAM permission analysis
+- findings: Targeted Checkov removal overstates repair success; Deceptive fixes pass automated checks but leave vulnerabilities in place; Deceptive-fix rates range from 57.1% to 71.4% across models
 
 ### [Emergent Relational Order in LLM Agent Societies: From Collective Affect to Authority Stratification](https://arxiv.org/abs/2606.23764)
 
+- summary: The proposed CAREB-MAS multi-agent framework reproduces five core Differential Order phenomena, supporting the interpretation of Differential Order as a structure-sensitive emergent outcome of general social mechanisms.
+- methods: multi-agent simulation, LLM-based simulation
+- findings: stable labor specialization; guanxi-based economic ethics; relational decay of cooperation; emergent relational authority; clan-based center-periphery stratification
+
 ### [Einstein World Models](https://arxiv.org/abs/2606.26969)
+
+- summary: This work proposes Einstein World Models, a blueprint for LLM-based reasoning systems that utilize visual-temporal rollouts to complement language and improve reasoning abilities.
+- methods: LLM training, visualisation mechanisms, tool calling
+- findings: EWMs can reason in ways that text alone may not support well; visual-temporal rollouts can complement language for complex thought
 
 ### [EHR-Complex: Benchmarking Medical Agents for Complex Clinical Reasoning](https://arxiv.org/abs/2606.23301)
 
+- summary: This work introduces EHR-Complex, a large-scale benchmark for interactive clinical database reasoning, which reveals the clinical difficulty of EHR reasoning scenarios and exposes broad stochastic fragility in existing models.
+- methods: benchmarking, SQL query execution, Python code execution
+- findings: Top-performing model achieves only 62.3% exact-match accuracy; Pass^k consistency drops below 50% for nearly all evaluated models at k=4; Three dominant failure modes: SQL logic errors, medical-code lookup failures, and semantic misunderstandings
+
 ### [Diagnosing and Mitigating Compounding Failures in Agentic Persuasion via Taxonomic Strategy Retrieval](https://arxiv.org/abs/2606.24976)
+
+- summary: The authors introduce Taxonomic Strategy RAG (TS-RAG) to address semantic leakage in standard Retrieval-Augmented Generation (RAG) and improve the performance of foundation-model agents in multi-step, open-ended environments.
+- methods: Taxonomic Strategy RAG (TS-RAG), Debate State Representation (DSR)
+- findings: TS-RAG improves the transfer of abstract logic; TS-RAG acts as a capability bridge in asymmetric deployments; TS-RAG prevents evaluation collapse via default agentic sycophancy
 
 ### [Detecting Malicious Agent Skills in the Wild using Attention](https://arxiv.org/abs/2606.23416)
 
+- summary: The authors present Locate-and-Judge, a two-stage detector designed to identify malicious skills in LLM agent marketplaces, which can execute with user privileges and pose a significant security risk.
+- methods: Locate-and-Judge detector, prompt-injection defenses, LLM-based scanning, keyword and regex baselines
+- findings: Locate-and-Judge offers an order-of-magnitude cost reduction compared to direct LLM-based scanning; Locate-and-Judge flags skills with high precision, including dozens of live malicious skills; Locate-and-Judge dominates keyword and regex baselines at comparable expense
+
 ### [Decoupling Reconnaissance and Exploitation: Measuring the Capability Boundaries of LLM-Based Web Penetration Testing](https://arxiv.org/abs/2606.25332)
+
+- summary: A two-stage decoupled evaluation framework is proposed to accurately characterize the capabilities of Large Language Models for automated penetration testing, separating exploit execution from reconnaissance.
+- methods: ground-truth injection, knowledge-driven ablation, decoupled evaluation framework
+- findings: agents achieve a functional success rate of up to 90.0% with accurate vulnerability context; autonomous reconnaissance plateaus at approximately 50.0% due to failures in parsing unstructured telemetry; distinct capability niches exist across multi-agent, monolithic, and graph-driven architectures
 
 ### [Decentralized Autonomous Traffic Management through Corridor Networks](https://arxiv.org/abs/2606.23585)
 
+- summary: This work extends a multi-agent reinforcement learning approach to address decentralized traffic flow management in air corridor networks for autonomous aircraft.
+- methods: multi-agent reinforcement learning (MARL)
+- findings: learned behaviors transfer well to scenarios with varying traffic density and network geometry; policies produce desirable traffic flows through the corridor network without centralized coordination
+
 ### [CyberChainBench: Can AI Agents Secure Smart Contracts Against Real-World On-Chain Vulnerabilities?](https://arxiv.org/abs/2606.26216)
+
+- summary: CyberChainBench is a benchmark for evaluating LLM-based agents on smart contract security across vulnerability detection, exploit generation, and patch synthesis.
+- methods: end-to-end on-chain evaluation, vulnerability detection, exploit generation, patch synthesis
+- findings: best configuration scores 37.5% on detection, 43.7% on exploitation, but only 23.4% on patching; top agent realizes $57.4M in total exploit profit across the 200-case exploit set
 
 ### [Critique of Agent Model](https://arxiv.org/abs/2606.23991)
 
+- summary: This study clarifies the concept of agency in the context of AI systems, proposing a framework to distinguish between automated and agentic systems, and introducing a general-purpose agent model called the Goal-Identity-Configurator architecture.
+- methods: survey, analysis of agent architectures, proposal of a new architecture
+- findings: genuine agency requires internalized structures; distinction between agentic and agentive systems; importance of autonomy and human oversight in agentive systems
+
 ### [Cognitive World Models for Process-Level Social Influence Evaluation](https://arxiv.org/abs/2606.29495)
+
+- summary: The CogWM model is proposed for evaluating social influence dialogue by tracking changes in a user's internal cognitive state over the course of conversation.
+- methods: LLM-based user modeling, three-tier evaluation framework, Summarize-and-Allocate annotation pipeline
+- findings: 77.6% emotion accuracy achieved by CogWM; distinguishes six commercial agents by their cognitive influence
 
 ### [Closing the Loop to Discover Psychological Theories with an Automated Cognitive Scientist](https://arxiv.org/abs/2606.26448)
 
+- summary: The Automated Cognitive Scientist (AutoCog) is a fully autonomous AI system that closes the loop of theory-building in cognitive science by automating the process of proposing, testing, and refining theories.
+- methods: autonomous agentic-AI system, large-language-model agents, experiment design, data collection
+- findings: AutoCog recovered known decision-making strategies from simulated behavior; produced theories that outperformed established theories; surfaced a novel theory of multi-cue decision-making
+
 ### [Bridging Talk and Thought: Understanding Dialogue Dynamics Across Collaborative Problem-Solving Contexts](https://arxiv.org/abs/2606.27233)
+
+- summary: A conceptual framework is presented for analyzing dialogue in collaborative problem-solving contexts, particularly human-AI and multi-agent collaboration.
+- methods: hierarchical two-layer coding scheme
+- findings: metacognitive regulation is an essential discriminator of deeper collaboration
 
 ### [BrainAgent: A Large Language Model-Driven Multi-Agent Framework for Autonomous Brain Signal Understanding](https://arxiv.org/abs/2606.25400)
 
+- summary: BrainAgent, an LLM-driven multi-agent framework, is introduced to democratize brain signal understanding by automating complex workflows with superior reliability.
+- methods: hierarchical architecture, multi-agent framework, adaptive task decomposition
+- findings: BrainAgent automates complex workflows; superior reliability; paradigm shift toward democratized brain signal understanding
+
 ### [Beyond Function Calling: Benchmarking Tool-Using Agents under Tool-Environment Unreliability](https://arxiv.org/abs/2606.25819)
+
+- summary: ToolBench-X is a benchmark for evaluating agents under recoverable reliability hazards in tool environments, revealing a substantial reliability gap in current models.
+- methods: benchmarking, experimentation, recovery hinting, test-time scaling
+- findings: substantial reliability gap in current models; failures driven by limited hazard diagnosis and ineffective recovery; targeted recovery hints can recover many failed tasks
 
 ### [Autodata: An agentic data scientist to create high quality synthetic data](https://arxiv.org/abs/2606.25996)
 
+- summary: The authors introduce Autodata, a method that enables AI agents to create high-quality training and evaluation data, and demonstrate its effectiveness through experiments on various tasks.
+- methods: meta-optimization, Agentic Self-Instruct
+- findings: improved results compared to classical synthetic dataset creation methods; meta-optimizing the data scientist agent delivers a larger performance uplift
+
 ### [AIR: Adaptive Interleaved Reasoning with Code in MLLMs](https://arxiv.org/abs/2606.23678)
+
+- summary: This paper proposes a three-component solution to empower multimodal large language models with adaptive interleaved reasoning capabilities for complex numerical computation tasks through extended reinforcement learning training.
+- methods: reinforcement learning training, two-stage cold-start data construction pipeline, data filtering strategies, adaptive tool-invocation strategy
+- findings: average performance improvement of 6.1 percentage points on evaluation benchmarks; accuracy for interleaved reasoning samples increases by 9.9 percentage points; overall success rate of tool-use exceeds 95%
 
 ### [AgentX: Towards Agent-Driven Self-Iteration of Industrial Recommender Systems](https://arxiv.org/abs/2606.26859)
 
+- summary: AgentX is a production-deployed multi-agent system that automates the recommendation algorithm iteration process, allowing for self-evolving development and improvement at scale.
+- methods: autonomous generation, repository-grounded generation, multi-dimensional reliability verification, safe online rollout, semantic-gradient updates
+- findings: AgentX can autonomously generate, implement, evaluate, and learn from recommendation experiments; The system can operate at a scale and pace that no manual workflow can sustain; AgentX is self-improving through continuous sharpening of its agents
+
 ### [Agentic Knowledge Tracing: A Multi-Agent LLM Architecture for Stealth Assessment of Financial Literacy in Serious Games](https://arxiv.org/abs/2606.25358)
+
+- summary: The Agentic BKT pipeline is a multi-agent large language model architecture for assessing financial literacy during gameplay without disrupting the learning experience.
+- methods: multi-agent architecture, event classification, session-level reasoning, Bayesian Knowledge Tracing
+- findings: The Agentic BKT pipeline yields mastery estimates significantly correlated with learning gain and post-test scores; The multi-agent approach triples the predictive validity of a single-LLM baseline
 
 ### [Agentic evolution of physically constrained foundation models](https://arxiv.org/abs/2606.25532)
 
+- summary: A physically grounded, multi-agent discovery engine is presented, which autonomously architects hardware-compliant computing systems and surpasses human-engineered heuristics in certain tasks.
+- methods: Evolutionary Knowledge Graph, algorithmic Chain-of-Thought, structural evolution
+- findings: Q-Enhance mitigates long-context accuracy loss in dense models; MoE-Salient-AQ outperforms state-of-the-art manual sparse Mixture-of-Experts designs; successful deployment of a 235-billion-parameter model with reduced memory requirements
+
 ### [Agentic Collaborative Cognition for Zero-Shot 3D Understanding](https://arxiv.org/abs/2606.24649)
+
+- summary: This paper proposes a collaborative multi-agent framework for agentic zero-shot 3D understanding, achieving state-of-the-art performance on 6 benchmarks.
+- methods: collaborative multi-agent framework, Planning Agent, Perception Agent
+- findings: 11.1% Acc@0.5 improvement on ScanRefer; 14.6 BLEU-1 improvement on 3D-assisted dialog; 2.1 EM improvement on SQA3D
 
 ### [Agent-Native Immune System: Architecture, Taxonomy, and Engineering](https://arxiv.org/abs/2606.28270)
 
@@ -2635,6 +6814,10 @@
 ### [Accuracy and Satisfaction in Multi-Turn LLM Dialogues for NFR Assessment](https://arxiv.org/abs/2606.24834)
 
 ### [A Multi-Dataset Benchmark for Evaluating LLM Agents in Microservice Failure Diagnosis](https://arxiv.org/abs/2606.29193)
+
+- summary: The introduction of two large-scale datasets, AIOps2025 and RCA100, evaluates the systematic reasoning process in failure diagnosis for LLM-based agents in microservice operations.
+- methods: reasoning-process evaluation paradigm, expert labeling, large-scale competitions
+- findings: existing benchmarks are outcome-oriented and lack assessment of systematic reasoning; the introduced datasets cover diverse fault scenarios and provide fine-grained causal evidence
 
 ## 2026 W25 (arxiv)
 
@@ -3864,11 +8047,23 @@
 
 ### [ZEBRAARENA: A Diagnostic Simulation Environment for Studying Reasoning-Action Coupling in Tool-Augmented LLMs](https://arxiv.org/abs/2603.18614)
 
+- summary: This paper introduces ZebraArena, a diagnostic environment for studying reasoning-action coupling in tool-augmented large language models (LLMs) with controllable difficulty and a knowledge-minimal design.
+- methods: procedural generation, diagnostic environment design
+- findings: existing models struggle with accurate external tool calling; persistent gaps between theoretical optimality and practical tool usage; models like GPT-5 use more tool calls than the theoretical optimum
+
 ### [WorkflowGen:an adaptive workflow generation mechanism driven by trajectory experience](https://arxiv.org/abs/2604.19756)
+
+- summary: WorkflowGen is proposed as an adaptive framework for automatic workflow generation, reducing token usage and improving efficiency and success rate in complex tasks.
+- methods: trajectory experience-driven framework, closed-loop mechanism, three-tier adaptive routing strategy
+- findings: reduces token consumption by over 40 percent; improves success rate by 20 percent; enhances deployability via modular experiences
 
 ### [Why Cognitive Robotics Matters: Lessons from OntoAgent and LLM Deployment in HARMONIC for Safety-Critical Robot Teaming](https://arxiv.org/abs/2603.26730)
 
 ### [When Should a Robot Think? Resource-Aware Reasoning via Reinforcement Learning for Embodied Robotic Decision-Making](https://arxiv.org/abs/2603.16673)
+
+- summary: This work proposes RARRL, a hierarchical framework for resource-aware orchestration of embodied agents that adaptively determines when to invoke reasoning and allocate computational budget.
+- methods: reinforcement learning, hierarchical framework
+- findings: RARRL improves task success rates; RARRL reduces execution latency; RARRL enhances robustness compared to fixed or heuristic reasoning strategies
 
 ### [WARBENCH: A Comprehensive Benchmark for Evaluating LLMs in Military Decision-Making](https://arxiv.org/abs/2603.21280)
 
@@ -3876,65 +8071,171 @@
 
 ### [VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking](https://arxiv.org/abs/2603.20185)
 
+- summary: VideoSeek, a long-horizon video agent, is presented, which leverages video logic flow to actively seek answer-critical evidence, reducing computational cost while maintaining video understanding capability.
+
+- methods: video logic flow, think-act-observe loop, multi-granular video observations
+- findings: VideoSeek achieves strong accuracy with fewer frames; 10.2 absolute points improvement on LVBench; 93% fewer frames used than prior video agents
+
 ### [VIBEPASS: Can Vibe Coders Really Pass the Vibe Check?](https://arxiv.org/abs/2603.15921)
+
+- summary: This study presents an empirical evaluation of Large Language Models' ability to self-diagnose and repair subtle faults in autonomous software engineering, revealing a significant bottleneck in fault-targeted reasoning.
+- methods: empirical decomposition, Fault-Triggering Test Generation, Fault-targeted Program Repair
+- findings: fault-targeted reasoning does not scale with general coding ability; models struggle with discriminative generation; self-generated tests can outperform externally provided tests for repair
 
 ### [VeriGrey: Greybox Agent Validation](https://arxiv.org/abs/2603.17639)
 
+- summary: This paper presents VeriGrey, a grey-box approach to explore diverse behaviors and uncover security risks in Large Language Model (LLM) agents by mutating prompts and using tool invocation sequences as feedback functions.
+- methods: grey-box approach, mutation operators, pernicious injection prompts, mutational fuzz testing
+- findings: VeriGrey achieves 33% additional efficacy in finding indirect prompt injection vulnerabilities; discovers malicious skill variants with 100% success rate on Kimi-K2.5 LLM backend and 90% success rate on Opus 4.6 LLM backend
+
 ### [VeriAgent: A Tool-Integrated Multi-Agent System with Evolving Memory for PPA-Aware RTL Code Generation](https://arxiv.org/abs/2603.17613)
+
+- summary: This work proposes a PPA-aware, tool-integrated multi-agent framework for high-quality verilog code generation that jointly optimizes functional correctness and physical metrics.
+- methods: multi-agent framework, Evolved Memory Mechanism, closed-loop workflow
+- findings: strong functional correctness; significant improvements in PPA metrics; scalable pathway for deploying LLMs in real-world hardware design flows
 
 ### [Trojan's Whisper: Stealthy Manipulation of OpenClaw through Injected Bootstrapped Guidance](https://arxiv.org/abs/2603.19974)
 
 ### [Toward Reliable, Safe, and Secure LLMs for Scientific Applications](https://arxiv.org/abs/2603.18235)
 
+- summary: This paper examines the security and safety landscape of large language models in science and proposes a framework for trustworthy deployment, including a taxonomy of threats and a multilayered defense strategy.
+- methods: taxonomy synthesis, multi-agent systems, adversarial security benchmarks, red-teaming exercise, multilayered defense framework
+- findings: domain mismatch in existing safety benchmarks; limited threat coverage in science-specific vectors; need for dedicated security benchmarks and defense strategies
+
 ### [Toward Evaluation Frameworks for Multi-Agent Scientific AI Systems](https://arxiv.org/abs/2603.26718)
+
+- summary: The study analyzes the challenges of benchmarking scientific multi-agentic systems and discusses strategies for constructing contamination-resistant problems and evaluating systems through multi-turn interactions.
+- methods: interviews, dataset construction
+- findings: difficulty of distinguishing reasoning from retrieval; risks of data/model contamination; need for evaluating systems through multi-turn interactions
 
 ### [The PokeAgent Challenge: Competitive and Long-Context Learning at Scale](https://arxiv.org/abs/2603.15563)
 
+- summary: The PokeAgent Challenge is a large-scale benchmark for decision-making research built on Pokemon's multi-agent battle system and RPG environment, targeting open problems in partial observability, game-theoretic reasoning, and long-horizon planning.
+- methods: heuristic methods, reinforcement learning, large language models
+- findings: considerable gaps between generalist, specialist, and elite human performance; Pokemon battling is nearly orthogonal to standard LLM benchmarks
+
 ### [The Library Theorem: How External Organization Governs Agentic Reasoning Capacity](https://arxiv.org/abs/2603.21272)
+
+- summary: This study explores the benefits of structured retrieval, or indexing, in transformer-based agents, demonstrating exponentially lower retrieval costs compared to sequential scanning methods.
+- methods: formalization of transformer context window, benchmarking, controlled lookup experiments
+- findings: indexed external memory achieves exponentially lower retrieval cost; parametric memory competition can lead to catastrophic token expenditure; separation of concerns between language models and deterministic algorithms is beneficial
 
 ### [The Causal Impact of Tool Affordance on Safety Alignment in LLM Agents](https://arxiv.org/abs/2603.20320)
 
+- summary: This work empirically examines how executable tool affordance alters safety alignment in large language models using a paired evaluation framework, finding that tool access introduces significant safety misalignment despite perfect compliance in text-only settings.
+
+- methods: paired evaluation framework, experiments in a deterministic financial transaction environment, dual enforcement regimes
+- findings: sharp increases in violations after tool access is introduced; substantial gaps between attempted and executed violations; agents develop spontaneous constraint circumvention strategies
+
 ### [The Agentic Researcher: A Practical Guide to AI-Assisted Research in Mathematics and Machine Learning](https://arxiv.org/abs/2603.15914)
+
+- summary: This paper provides a practical guide to AI-assisted research in mathematics and machine learning, discussing how to use modern AI systems productively and responsibly.
+- methods: taxonomy of AI integration, open-source framework, agent prompts, CLI coding agents
+- findings: AI systems can be used productively in research with the right guardrails; autonomous research assistants can be created using existing CLI agents; framework can scale from personal-laptop prototyping to multi-node experimentation
 
 ### [T-MAP: Red-Teaming LLM Agents with Trajectory-aware Evolutionary Search](https://arxiv.org/abs/2603.22341)
 
+- summary: The authors propose a trajectory-aware evolutionary search method, T-MAP, to discover adversarial prompts that exploit vulnerabilities in large language models through multi-step tool execution.
+- methods: trajectory-aware evolutionary search, T-MAP
+- findings: T-MAP substantially outperforms baselines in attack realization rate (ARR); T-MAP remains effective against frontier models
+
 ### [SWE-QA-Pro: A Representative Benchmark and Scalable Training Recipe for Repository-Level Code Understanding](https://arxiv.org/abs/2603.16124)
 
+- summary: The authors introduce SWE-QA-Pro, a benchmark for agentic repository-level code understanding, and propose a scalable synthetic data pipeline for training models to learn efficient tool usage and reasoning.
+- methods: issue-driven clustering, difficulty calibration, Supervised Fine-Tuning, Reinforcement Learning from AI Feedback
+- findings: agentic workflows outperform direct answering by ~13 points; Qwen3-8B model trained with the proposed recipe surpasses GPT-4o by 2.3 points
+
 ### [Social Simulacra in the Wild: AI Agent Communities on Moltbook](https://arxiv.org/abs/2603.16128)
+
+- summary: This study presents a large-scale empirical comparison of AI-agent and human online communities, analyzing posts on Moltbook and Reddit to understand the dynamics of AI-agent communities.
+- methods: empirical comparison, large-scale analysis
+- findings: extreme participation inequality in AI-agent communities; emotional flattening and cognitive shift in AI-generated content; individual agents are more identifiable than human users
 
 ### [Silent Commitment Failure in Instruction-Tuned Language Models: Evidence of Governability Divergence Across Architectures](https://arxiv.org/abs/2603.21415)
 
 ### [SG-CoT: An Ambiguity-Aware Robotic Planning Framework using Scene Graph Representations](https://arxiv.org/abs/2603.18271)
 
+- summary: This letter presents Scene Graph-Chain-of-Thought (SG-CoT), a two-stage framework that enables large language models to detect and clarify ambiguities in robotic planning tasks.
+- methods: Scene Graph-Chain-of-Thought, retrieval functions, iterative querying
+- findings: 10% improvement in question accuracy; 4% increase in single-agent success rate; 15% increase in multi-agent success rate
+
 ### [Semi-Autonomous Formalization of the Vlasov-Maxwell-Landau Equilibrium](https://arxiv.org/abs/2603.15929)
 
+- summary: The Vlasov-Maxwell-Landau system's equilibrium characterization is formalized in Lean 4 with AI assistance, demonstrating a complete mathematical research loop.
+- methods: AI-assisted mathematical research, agentic coding, automated theorem proving
+- findings: AI failure modes; importance of human review; abstract/concrete proof split; adversarial self-review
+
 ### [Semantic Tool Discovery for Large Language Models: A Vector-Based Approach to MCP Tool Selection](https://arxiv.org/abs/2603.20313)
+
+- summary: This study presents a semantic tool discovery architecture to address scalability challenges in Large Language Models with tool-calling capabilities by using vector-based retrieval to dynamically select relevant tools.
+- methods: vector-based retrieval, dense embeddings, dynamic tool selection algorithm
+- findings: 99.6% reduction in tool-related token consumption; 97.1% hit rate at K=3; 0.91 MRR on a benchmark of 140 queries
 
 ### [Robotic Agentic Platform for Intelligent Electric Vehicle Disassembly](https://arxiv.org/abs/2603.18520)
 
 ### [RetailBench: Evaluating Long-Horizon Autonomous Decision-Making and Strategy Stability of LLM Agents in Realistic Retail Environments](https://arxiv.org/abs/2603.16453)
 
+- summary: The RetailBench benchmark is introduced to evaluate large language model agents in a simulated supermarket operation environment, revealing substantial variation in performance across models.
+- methods: simulation, benchmarking, behavioral analysis
+- findings: substantial variation in performance across LLMs; incomplete evidence acquisition; surface-level decision making; lack of consistent long-horizon policy
+
 ### [Reason-to-Transmit: Deliberative Adaptive Communication for Cooperative Perception](https://arxiv.org/abs/2603.20308)
 
+- summary: The Reason-to-Transmit (R2T) framework is introduced to enable efficient communication policies among autonomous agents in vehicle-to-everything (V2X) networks by reasoning about local scene context and bandwidth budget.
+- methods: transformer-based module, bandwidth-aware objective, end-to-end training
+- findings: R2T shows clear gains under high occlusion; deliberative communication provides additional gains in challenging scenarios; all methods degrade gracefully under packet drops up to 50%
+
 ### [Protein Design with Agent Rosetta: A Case Study for Specialized Scientific Agents](https://arxiv.org/abs/2603.15952)
+
+- summary: Agent Rosetta, a large language model agent paired with Rosetta software, achieves strong results in protein design tasks, including those with non-canonical building blocks and geometries.
+- methods: machine learning, prompt engineering, environment design
+- findings: Agent Rosetta matches specialized models and expert baselines in design tasks; environment design is essential for integrating LLM agents with specialized software; LLM agents can make scientific software accessible while matching specialized tools and human experts
 
 ### [Probe-then-Plan: Environment-Aware Planning for Industrial E-commerce Search](https://arxiv.org/abs/2603.15262)
 
 ### [PowerLens: Taming LLM Agents for Safe and Personalized Mobile Power Management](https://arxiv.org/abs/2603.19584)
 
+- summary: PowerLens is a system that utilizes Large Language Models for personalized mobile power management on Android devices, achieving significant energy savings and high user satisfaction.
+- methods: multi-agent architecture, PDL-based constraint framework, two-tier memory system, confidence-based distillation
+- findings: 81.7% action accuracy; 38.8% energy saving; high user satisfaction; fast preference convergence; strong safety guarantees
+
 ### [PMAx: An Agentic Framework for AI-Driven Process Mining](https://arxiv.org/abs/2603.15351)
 
+- summary: PMAx is an autonomous agentic framework that enables non-technical users to extract insights from organizational workflows using natural language, while ensuring mathematical accuracy and data privacy.
+- methods: multi-agent architecture, process mining algorithms
+- findings: PMAx ensures mathematical accuracy and data privacy; PMAx enables non-technical users to transform high-level business questions into reliable process insights
+
 ### [PlanTwin: Privacy-Preserving Planning Abstractions for Cloud-Assisted LLM Agents](https://arxiv.org/abs/2603.18377)
+
+- summary: PlanTwin is a privacy-preserving architecture for cloud-assisted planning that protects raw local context by projecting the environment into a planning-oriented digital twin.
+- methods: digital twin projection, capability granularity problem, multi-turn disclosure control
+- findings: full sensitive-item non-disclosure (SND = 1.0); planning quality close to full-context systems (PQS > 0.79); less than 2.2% utility loss
 
 ### [Pitfalls in Evaluating Interpretability Agents](https://arxiv.org/abs/2603.20101)
 
 ### [OS-Themis: A Scalable Critic Framework for Generalist GUI Rewards](https://arxiv.org/abs/2603.19191)
 
+- summary: The authors propose OS-Themis, a scalable and accurate multi-agent critic framework, to improve the robustness of GUI agents in stochastic environments through reinforcement learning.
+- methods: multi-agent critic framework, trajectory decomposition, review mechanism
+- findings: 10.3% improvement in online RL training; 6.9% gain in trajectory validation and filtering
+
 ### [OpenQlaw: An Agentic AI Assistant for Analysis of 2D Quantum Materials](https://arxiv.org/abs/2603.17043)
+
+- summary: The authors present OpenQlaw, a tool that connects a general vision-language orchestrator with a physics-aware domain expert to localize and characterize 2D material flakes from optical microscopy images.
+- methods: Physics-Aware Instruction Tuning, deterministic delegation, State-Grounded OpenQlaw
+- findings: summary counts can become inconsistent with underlying observations; structuring observations alone does not resolve inconsistencies; deterministic delegation returns exact record count
 
 ### [Multi-User Large Language Model Agents](https://arxiv.org/abs/2604.08567)
 
+- summary: This work presents a systematic study of multi-user large language model agents, revealing gaps in their ability to handle conflicting user objectives, preserve privacy, and coordinate effectively.
+- methods: formalization of multi-user interaction, unified multi-user interaction protocol, stress-testing scenarios
+- findings: frequent failure to maintain stable prioritization under conflicting user objectives; increasing privacy violations over multi-turn interactions; efficiency bottlenecks in coordination
+
 ### [MiroThinker-1.7 & H1: Towards Heavy-Duty Research Agents via Verification](https://arxiv.org/abs/2603.15726)
+
+- summary: We present MiroThinker-1.7 and MiroThinker-H1, research agents designed for complex long-horizon reasoning tasks with improved reliability and multi-step problem solving capabilities.
+- methods: agentic mid-training stage, structured planning, contextual reasoning, tool interaction, verification
+- findings: state-of-the-art performance on deep research tasks; strong results on specialized domains; improved efficiency
 
 ### [Mi:dm K 2.5 Pro](https://arxiv.org/abs/2603.18788)
 
@@ -3942,9 +8243,17 @@
 
 ### [Loosely-Structured Software: Engineering Context, Structure, and Evolution Entropy in Runtime-Rewired Multi-Agent Systems](https://arxiv.org/abs/2603.15690)
 
+- summary: This paper introduces Loosely-Structured Software (LSS), a new class of software systems that manages runtime entropy in autonomous multi-agent systems through a three-layer engineering framework.
+- methods: View/Context Engineering, Structure Engineering, Evolution Engineering
+- findings: LSS improves designability, scalability, and evolvability of agentic infrastructure; experimental validation demonstrates effectiveness of LSS
+
 ### [LongCat-Flash-Prover: Advancing Native Formal Reasoning via Agentic Tool-Integrated Reinforcement Learning](https://arxiv.org/abs/2603.21065)
 
 ### [LLM-based Automated Architecture View Generation: Where Are We Now?](https://arxiv.org/abs/2603.21178)
+
+- summary: This study empirically evaluates the ability of large language models (LLMs) and agentic approaches to generate architecture views from source code, finding they can produce syntactically valid views but require human expertise for architectural abstractions.
+- methods: empirical evaluation, automated metrics, human evaluations, few-shot prompting, zero-shot baselines
+- findings: LLMs and agentic approaches can generate syntactically valid architecture views; prompting strategies offer marginal improvements; custom agentic approach outperforms general-purpose agent; granularity mismatches are a significant limitation
 
 ### [LiveClawBench: Benchmarking LLM Agents on Complex, Real-World Assistant Tasks](https://arxiv.org/abs/2604.13072)
 
@@ -3956,63 +8265,155 @@
 
 ### [IQuest-Coder-V1 Technical Report](https://arxiv.org/abs/2603.16733)
 
+- summary: The IQuest-Coder-V1 series is introduced, a new family of code large language models that capture the dynamic evolution of software logic through a multi-stage training paradigm.
+- methods: code-flow multi-stage training paradigm, evolutionary pipeline, pre-training, mid-training, post-training, reasoning-driven RL
+- findings: IQuest-Coder-V1 achieves state-of-the-art performance in code intelligence; IQuest-Coder-V1-Loop variant optimizes trade-off between model capacity and deployment footprint
+
 ### [Interpretable Context Methodology: Folder Structure as Agentic Architecture](https://arxiv.org/abs/2603.16021)
+
+- summary: This paper presents Model Workspace Protocol (MWP), a method that replaces framework-level orchestration with filesystem structure for AI agent orchestration in sequential workflows.
+- methods: filesystem structure, Unix pipeline design, modular decomposition, multi-pass compilation, literate programming
+- findings: MWP reduces engineering overhead in sequential workflows; MWP enables a single AI agent to perform tasks that would otherwise require a multi-agent framework
 
 ### [Intelligent Co-Design: An Interactive LLM Framework for Interior Spatial Design via Multi-Modal Agents](https://arxiv.org/abs/2603.15341)
 
 ### [Herding CATs: ALARA for Agent Harness Engineering in Portable Composable Multi-Agent Teams](https://arxiv.org/abs/2603.20380)
 
+- summary: The introduction of a context-agent-tool (CAT) data layer enables scalable management of critical components in multi-agent systems, improving human-agent interactions and context engineering efforts.
+- methods: ALARA principle, command-line shell, npcsh
+- findings: improved human-agent interactions; enhanced context engineering capabilities; characterization of model families' performance across tasks
+
 ### [HearthNet: Edge Multi-Agent Orchestration for Smart Homes](https://arxiv.org/abs/2604.09618)
+
+- summary: HearthNet is an edge multi-agent orchestration system for smart homes that enables natural language control and persistent, event-driven device management.
+- methods: multi-agent orchestration, MQTT, Git-backed shared state, root-issued actuation leases
+- findings: persistent and event-driven device management; conflict resolution with timeline-based tracing; rejection of stale or unauthorized commands
 
 ### [GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents](https://arxiv.org/abs/2603.15039)
 
+- summary: The authors introduce GUI-CEval, a comprehensive benchmark for Chinese mobile GUI agents, to address the gap in existing benchmarks that are largely English-centric and lack a unified framework to assess the full capability chain from perception to execution.
+- methods: benchmarking, extensive experiments
+- findings: most MLLMs exhibit weaknesses in reflective decision-making and post-action self-evaluation; GUI-CEval provides a comprehensive and interpretable benchmark for Chinese mobile GUI agents
+
 ### [GoAgent: Group-of-Agents Communication Topology Generation for LLM-based Multi-Agent Systems](https://arxiv.org/abs/2603.19677)
+
+- summary: The proposed GoAgent method generates communication topologies for large language model-based multi-agent systems by explicitly modeling collaborative groups as atomic units, achieving state-of-the-art performance and reducing communication overhead.
+- methods: GoAgent, conditional information bottleneck, autoregressive group selection
+- findings: state-of-the-art performance with 93.84% average accuracy; 17% reduction in token consumption
 
 ### [GNNVerifier: Graph-based Verifier for LLM Task Planning](https://arxiv.org/abs/2603.14730)
 
+- summary: This study proposes a graph-based verifier for large language model task planning to improve plan quality by identifying and correcting potential flaws in generated plans.
+- methods: graph-based verification, graph neural networks, controllable perturbations
+- findings: GNNVerifier achieves significant gains in improving plan quality; graph-based verifier can detect failures caused by structural relations across steps
+
 ### [From Weak Cues to Real Identities: Evaluating Inference-Driven De-Anonymization in LLM Agents](https://arxiv.org/abs/2603.18382)
+
+- summary: LLM-based agents can reconstruct real-world identities by combining scattered, individually non-identifying cues with public evidence, weakening the barrier to re-identification.
+- methods: evaluation across three settings, classical linkage incidents, controlled benchmark, open-ended human--AI interaction traces
+- findings: LLM-based agents reconstruct 79.2% of identities in the Netflix Prize deanonymization setting; agents link individuals even without an explicit re-identification request on InferLink; agents resolve anonymized profiles to specific individuals in redacted human--AI interaction traces
 
 ### [FailureMem: A Failure-Aware Multimodal Framework for Autonomous Software Repair](https://arxiv.org/abs/2603.17826)
 
+- summary: FailureMem, a multimodal repair framework, improves program repair by integrating hybrid workflow-agent architecture, active perception tools, and a Failure Memory Bank.
+- methods: hybrid workflow-agent architecture, active perception tools, Failure Memory Bank
+- findings: FailureMem improves the resolved rate over GUIRepair by 3.7%
+
 ### [Exploring the Agentic Frontier of Verilog Code Generation](https://arxiv.org/abs/2603.19347)
+
+- summary: This work presents a systematic evaluation of agentic large language models for Verilog code generation, analyzing the impact of structured prompting and tool design on performance.
+- methods: controlled experiments, structured prompting, tool design
+- findings: naive agentic wrapping can degrade performance; structured harnesses can match or exceed non-agentic baselines; performance gap between open and closed source models is driven by crash rates and tool output interpretation
 
 ### [Emergent Formal Verification: How an Autonomous AI Ecosystem Independently Discovered SMT-Based Safety Across Six Domains](https://arxiv.org/abs/2603.21149)
 
 ### [Emergent Compositional Communication for Latent World Properties](https://arxiv.org/abs/2604.03266)
 
+- summary: Multi-agent communication can extract discrete, compositional representations of invisible physical properties from frozen video features without supervision on message structure or property labels.
+- methods: iterated learning, Gumbel-Softmax bottleneck, causal intervention, controlled backbone comparison
+- findings: multi-agent structure drives compositional representation learning; perceptual prior determines communicable properties; frozen protocol supports action-conditioned planning and counterfactual velocity reasoning; validation on real camera footage confirms accuracy and scalability
+
 ### [Embodied Science: Closing the Discovery Loop with Agentic Embodied AI](https://arxiv.org/abs/2603.19782)
+
+- summary: This study proposes a new paradigm called embodied science, which reframes scientific discovery as a closed loop of agentic reasoning and physical execution, bridging the gap between digital prediction and empirical validation.
+- methods: agentic reasoning, physical execution, Perception-Language-Action-Discovery framework
+- findings: embodied science can bridge the gap between digital prediction and empirical validation; autonomous discovery systems are possible in life and chemical sciences
 
 ### [Don't Vibe Code, Do Skele-Code: Interactive No-Code Notebooks for Subject Matter Experts to Build Lower-Cost Agentic Workflows](https://arxiv.org/abs/2603.18122)
 
 ### [Differential Harm Propensity in Personalized LLM Agents: The Curious Case of Mental Health Disclosure](https://arxiv.org/abs/2603.16734)
 
+- summary: The study investigates how user-context personalization, particularly mental health disclosure, affects harmful behavior in large language models deployed as tool-using agents.
+- methods: controlled prompt conditions, multi-step malicious tasks, jailbreak injection
+- findings: personalization can reduce harm scores; mental health disclosure can shift outcomes further; jailbreak prompting can elevate harm; safety-utility trade-off via over-refusal
+
 ### [CRASH: Cognitive Reasoning Agent for Safety Hazards in Autonomous Driving](https://arxiv.org/abs/2603.15364)
 
 ### [Competing with AI Scientists: Agent-Driven Approach to Astrophysics Research](https://arxiv.org/abs/2604.09621)
 
+- summary: An agent-driven approach using a multi-agent system achieved a first-place result in the FAIR Universe Weak Lensing Uncertainty Challenge by leveraging semi-autonomous exploration and human intervention.
+- methods: agent-driven approach, semi-autonomous exploration, likelihood calibration, regularization techniques
+- findings: semi-autonomous agentic systems can compete with expert solutions; agent-driven research workflows can provide a scalable framework for inference problems
+
 ### [CODMAS: A Dialectic Multi-Agent Collaborative Framework for Structured RTL Optimization](https://arxiv.org/abs/2603.17204)
 
+- summary: The CODMAS framework combines dialectic reasoning with domain-aware code generation to automate Register Transfer Level (RTL) optimization, achieving significant reductions in critical path delay and power consumption.
+- methods: dialectic reasoning, domain-aware code generation, deterministic evaluation
+- findings: 25% reduction in critical path delay for pipelining; 22% power reduction for clock gating; reduction in functional and compilation failures
+
 ### [CodeScout: An Effective Recipe for Reinforcement Learning of Code Search Agents](https://arxiv.org/abs/2603.17829)
+
+- summary: This paper demonstrates that a coding agent equipped with a standard Unix terminal can achieve strong results in code localization using an effective reinforcement learning recipe.
+- methods: reinforcement learning, reward design, RL optimization
+- findings: achieve strong results with minimal equipment; outperform larger base and post-trained LLMs; approach performance of closed models like Claude Sonnet
 
 ### [CN-Buzz2Portfolio: A Chinese-Market Dataset and Benchmark for LLM-Based Macro and Sector Asset Allocation from Daily Trending Financial News](https://arxiv.org/abs/2603.22305)
 
 ### [CLAG: Adaptive Memory Organization via Agent-Driven Clustering for Small Language Model Agents](https://arxiv.org/abs/2603.15421)
 
+- summary: The CLAG framework is introduced, which uses clustering to organize memory for small language models, reducing cross-topic interference and improving answer quality and robustness.
+- methods: CLustering-based AGentic memory framework, localized evolution, two-stage retrieval process
+- findings: CLAG reduces cross-topic interference; CLAG enhances internal memory density; CLAG improves answer quality and robustness
+
 ### [Chronos: Temporal-Aware Conversational Agents with Structured Event Retrieval for Long-Term Memory](https://arxiv.org/abs/2603.16862)
 
 ### [CCTU: A Benchmark for Tool Use under Complex Constraints](https://arxiv.org/abs/2603.15309)
+
+- summary: The authors introduce CCTU, a benchmark for evaluating large language models' tool use under complex constraints, and find that state-of-the-art models struggle to adhere to constraints and demonstrate limited self-refinement capabilities.
+- methods: benchmark evaluation, constraint validation, multi-turn interaction
+- findings: no model achieves a task completion rate above 20% with strict constraint adherence; models violate constraints in over 50% of cases; LLMs demonstrate limited capacity for self-refinement
 
 ### [Caging the Agents: A Zero Trust Security Architecture for Autonomous AI in Healthcare](https://arxiv.org/abs/2603.17419)
 
 ### [Breaking the Chain: A Causal Analysis of LLM Faithfulness to Intermediate Structures](https://arxiv.org/abs/2603.16475)
 
+- summary: The study evaluates the controllability of schema-guided reasoning pipelines and finds that intermediate structures are fragile and do not guarantee faithful updates after intervention.
+- methods: causal evaluation protocol, prompting, preference optimization
+- findings: models appear self-consistent but fail to update predictions after intervention; fragility of intermediate structures disappears when derivation is delegated to an external tool; preference optimization improves intervention faithfulness
+
 ### [Benchmarking Real-Time Question Answering via Executable Code Workflows](https://arxiv.org/abs/2604.16349)
+
+- summary: The authors propose RT-QA, a dynamic evaluation framework for retrieving real-time information, and evaluate state-of-the-art models, revealing significant limitations in real-time adaptability.
+- methods: executable code workflows, web crawling, DOM-based answer extraction, self-repair mechanism
+- findings: state-of-the-art models achieve only 46% accuracy; Lazy Retrieval and Temporal Confusion are primary failure modes
 
 ### [Before the Tool Call: Deterministic Pre-Action Authorization for Autonomous AI Agents](https://arxiv.org/abs/2603.20953)
 
+- summary: The Open Agent Passport (OAP) is presented as a solution to the pre-action authorization problem, providing a standard mechanism to enforce authorization before AI agents execute tool calls.
+- methods: Declarative policy evaluation, Cryptographically signed audit records
+- findings: OAP enforces authorization decisions in a measured median of 53 ms; OAP reduced social engineering success rate to 0% in a live adversarial testbed
+
 ### [AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation](https://arxiv.org/abs/2603.20986)
 
+- summary: AutoMOOSE is an open-source multi-agent framework that automates the simulation lifecycle for phase-field modeling from a single natural-language prompt.
+- methods: multi-agent framework, natural-language prompt, simulation lifecycle management
+- findings: AutoMOOSE generates valid inputs for all 25 tasks on a grain-growth benchmark; delivers 15 results that satisfy Burke-Turnbull kinetics and survive Skeptic falsification; recovers the prescribed activation energy to within 1% after finite-size extrapolation
+
 ### [Anticipatory Planning for Multimodal AI Agents](https://arxiv.org/abs/2603.16777)
+
+- summary: The authors introduce TraceR1, a two-stage reinforcement learning framework that enables anticipatory reasoning in multimodal agents, leading to improved planning coherence and task execution.
+- methods: two-stage reinforcement learning, trajectory-level reinforcement learning, grounded reinforcement fine-tuning
+- findings: substantial improvements in planning stability; execution robustness; generalization over reactive and single-stage baselines
 
 ### [An Onto-Relational-Sophic Framework for Governing Synthetic Minds](https://arxiv.org/abs/2603.18633)
 
@@ -4024,17 +8425,44 @@
 
 ### [Agentic Business Process Management: A Research Manifesto](https://arxiv.org/abs/2603.18916)
 
+- summary: This paper presents a manifesto for Agentic Business Process Management (APM), an extension of Business Process Management (BPM) that incorporates autonomous agents executing processes in organizations.
+- findings: framed autonomy; explainability; conversational actionability; self-modification
+
 ### [Agentic AI for Human Resources: LLM-Driven Candidate Assessment](https://arxiv.org/abs/2603.26710)
+
+- summary: This work presents a modular framework using Large Language Models to automate candidate assessment in recruitment, generating structured evaluation reports that mirror expert judgment.
+- methods: LLM-generated rubrics, multi-agent architecture, LLM-Driven Active Listwise Tournament, Plackett-Luce model, active-learning loop
+- findings: fine-grained, criteria-driven evaluations; transparent and auditable assessment reports; globally coherent and sample-efficient rankings
 
 ### [AEGIS: From Clues to Verdicts -- Graph-Guided Deep Vulnerability Reasoning via Dialectics and Meta-Auditing](https://arxiv.org/abs/2603.20637)
 
+- summary: AEGIS, a novel multi-agent framework, is presented to improve vulnerability detection in Large Language Models by grounding deliberation in a closed factual substrate.
+- methods: multi-agent framework, on-demand slicing, Code Property Graph, dialectical arguments
+- findings: AEGIS achieves a new state-of-the-art with 122 Pair-wise Correct Predictions; reduces false positive rate by up to 54.40% compared to leading baselines
+
 ### [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](https://arxiv.org/abs/2603.16264)
+
+- summary: This study introduces an adaptive Theory of Mind (ToM) agent that aligns with its partner's ToM order to improve coordination in multi-agent collaborative tasks.
+- methods: empirical evaluation, agent design
+- findings: misaligned ToM orders can impair coordination; adaptive ToM alignment improves behavioral coordination
 
 ### [Adapting Technical-Service LLM Agents with Latent Logic Augmentation, Robust Noise Reduction, and Hybrid Reward Modeling](https://arxiv.org/abs/2603.18074)
 
+- summary: A new framework is proposed to improve the adoption of generated replies by engineers in production workflows by addressing the limitations of standard post-training methods.
+- methods: latent logic augmentation, robust noise reduction, hybrid reward modeling, Planning-Aware Trajectory Modeling, Reasoning Augmentation, dual-filtered Multiple Ground Truths
+- findings: achieves the highest Multi-ECS (0.441); lower reward cost; highest production adoption rate (46.63%)
+
 ### [A Trace-Based Assurance Framework for Agentic AI Orchestration: Contracts, Testing, and Governance](https://arxiv.org/abs/2603.18096)
 
+- summary: This paper presents an assurance framework for Agentic AI systems that use Large Language Models to coordinate multiple agents and interact with external services.
+- methods: stress testing, fault injection, governance enforcement, trace-based metrics
+- findings: identification of common failures in Agentic AI systems; development of a framework for assurance and evaluation of such systems
+
 ### [A Subgoal-driven Framework for Improving Long-Horizon LLM Agents](https://arxiv.org/abs/2603.19685)
+
+- summary: This study proposes an agent framework and a reinforcement learning training framework to improve large language model-based agents' long-horizon planning capabilities in digital environments.
+- methods: subgoal decomposition, milestone-based reward signals, reinforcement learning fine-tuning
+- findings: 10% absolute increase in success rate on WebArena-Lite benchmark; success rate increase from 6.4% to 43.0% for Gemma3-12B model; outperforming proprietary systems like GPT-4-Turbo and GPT-4o
 
 ## 2026 W11 (arxiv)
 

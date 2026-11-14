@@ -44,5 +44,33 @@ class RenderBlankLineTests(unittest.TestCase):
         self.assertIn("### [Some Paper](https://arxiv.org/abs/2601.00001)", out)
 
 
+class RecoverFencedExtractTests(unittest.TestCase):
+    """Since W26 the extraction model wraps its JSON in ```json fences; the action's
+    parser then stores the reply under `_raw` with empty fields. The index recovers it."""
+
+    def test_recovers_fields_from_fenced_raw(self):
+        raw = '```json\n{"summary": "S", "methods": ["m1"], "key_findings": ["f1"]}\n```'
+        ex = build_rxiv_index.recover_extracted({"summary": "", "methods": [], "_raw": raw})
+        self.assertEqual(ex["summary"], "S")
+        self.assertEqual(ex["methods"], ["m1"])
+        self.assertEqual(ex["key_findings"], ["f1"])
+
+    def test_keeps_parsed_fields_untouched(self):
+        ex = {"summary": "already", "_raw": '```json\n{"summary": "other"}\n```'}
+        self.assertEqual(build_rxiv_index.recover_extracted(ex)["summary"], "already")
+
+    def test_truncated_raw_stays_empty(self):
+        ex = {"summary": "", "_raw": '```json\n{"summary": "cut off'}
+        self.assertEqual(build_rxiv_index.recover_extracted(ex)["summary"], "")
+
+    def test_raw_newline_inside_string_tolerated(self):
+        ex = {"summary": "", "_raw": '```json\n{"summary": "line one\nline two"}\n```'}
+        self.assertEqual(build_rxiv_index.recover_extracted(ex)["summary"], "line one\nline two")
+
+    def test_non_dict_json_ignored(self):
+        ex = {"summary": "", "_raw": "```json\n[1, 2]\n```"}
+        self.assertEqual(build_rxiv_index.recover_extracted(ex)["summary"], "")
+
+
 if __name__ == "__main__":
     unittest.main()
