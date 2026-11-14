@@ -61,8 +61,19 @@ search, and blocking a search bot does not stop a user's assistant from fetching
 - **Microsoft (Bing Ads blog, 2025-10-08):** "Use schema, clear headings, and modular layouts" and
   "Make answers snippable" ([post][bing-ai-answers]) — more prescriptive than Google, and the two
   disagree on whether schema helps.
-- **OpenAI, Perplexity:** beyond the crawler tokens above, no first-party content-optimisation guidance
-  was found on the pages checked (OpenAI's publisher FAQ returned 403 to automated fetches).
+- **OpenAI:** no written content-optimisation guidance was found (its publisher FAQ returned 403 to
+  automated fetches), but since 2026-11-10 it runs a first-party listing surface. Through
+  **Business Hub**, part of "Businesses in ChatGPT" (beta), a business can claim its listing, keep
+  profile details current, connect a product feed, and see 28-day insights on mentions and website
+  clicks ([announcement][oai-businesses]). The help article sets the limits: "Claiming a profile or
+  disputing ownership doesn't change its visibility in ChatGPT", "Connecting a feed doesn't publish an
+  agent or guarantee that ChatGPT recommends your products", and for an online business a mention
+  counts only when ChatGPT references the business's website: "The brand name alone doesn't count."
+  Publishing changes and viewing insights need Persona identity verification; Business Agents are for
+  "eligible ecommerce and online service businesses in the US with a website" ([help][oai-business-help]).
+  Sponsoring a Business Agent as a ChatGPT Ads destination is announced, labelled separately.
+- **Perplexity:** beyond the crawler tokens above, no first-party content-optimisation guidance was
+  found on the pages checked.
 
 "GEO"/"AEO" playbooks from third parties go beyond what any of these operators state; treat them as
 hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical)). A score-based view of agent readiness (Ora, Lightsage) is in
@@ -70,7 +81,8 @@ hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical))
 
 ## GEO and AEO: what is canonical
 
-- **One academic origin.** "GEO: Generative Engine Optimization" (Aggarwal et al., [arXiv 2311.09735][geo-paper], accepted to KDD 2024) introduced the term and a benchmark, GEO-bench; its abstract reports that "GEO can boost visibility by up to 40% in generative engine responses", measured on that benchmark, not in the field. Code and data: [`GEO-optim/GEO`][geo-repo] (Apache-2.0). AEO, LLMO and "AI search optimization" are later labels for the same practice, with no comparable source.
+- **One academic origin.** "GEO: Generative Engine Optimization" (Aggarwal et al., [arXiv 2311.09735][geo-paper], accepted to KDD 2024) introduced the term and a benchmark, GEO-bench; its abstract reports that "GEO can boost visibility by up to 40% in generative engine responses", measured on that benchmark, not in the field. Code and data: [`GEO-optim/GEO`][geo-repo] (Apache-2.0). AEO, LLMO, ASO and LEO are later labels for the same practice, used by vendors and agencies, with no comparable academic or standards source. ASO has competing expansions, none settled: "Agentic Search Optimization" (Semrush's CMO in [TechRadar][aso-techradar], 2026-04-20), "Agent search optimization" ([Visualping][aso-visualping], 2026), and "AI search optimization"; in mobile marketing ASO already means App Store Optimization. LEO is usually expanded as "LLM Engine Optimization".
+- **Optimizing for agents, not answers, is studied under the GEO name.** [Toolflation][toolflation] (arXiv 2610.28454, 2026-10-20) has seller agents rewrite tool descriptions in a simulated tool market; under one of five models "sellers copy one another until the descriptions no longer tell the tools apart", and buyer agents fall back to picking by list position. A position paper titled [*AX is the New AEO*][ax-new-aeo] (arXiv 2609.34951, 2026-09-28) argues the two converge; Netlify's own AX definition (below) is narrower.
 - **No standards body owns GEO.** The nearest standards work is the IETF [aipref][aipref] working group: two drafts (`draft-ietf-aipref-vocab-08`, `draft-ietf-aipref-attach-05`), both WG Documents aiming at Proposed Standard as of 2026-11-14. They signal *usage preferences* (training, search, fetch), not visibility or ranking. llms.txt, schema.org, NLWeb and MCP are existing formats reused for the purpose.
 - **"Agent Experience" is a different thing.** Netlify says it "coined the term in 2025" and defines AX as "the holistic experience AI agents will have as the user of a product or platform" ([Netlify][netlify-ax]): agents as *users* of your product, not your brand appearing in AI answers. Some GEO vendors reuse the words for the latter.
 - **How it differs from classic SEO.** Crawlability, structured data and being cited by others carry over. What changes is the target: inclusion and prominence inside a generated answer instead of a rank on a results page, with no click to measure and no first-party reporting tool like Search Console. Visibility trackers such as [Peec AI][peec] and [Scrunch][scrunch] run their own prompt panels against each engine; their numbers are vendor-specific.
@@ -100,6 +112,9 @@ hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical))
 | [Cloudflare AI Crawl Control][cf-ai-crawl-control] · [pay per crawl][cf-pay-per-crawl] · [managed robots.txt][cf-managed-robots] | Publisher controls, 402, Content Signals |
 | [Google AI features][google-ai-features] | No special markup or files for AI Overviews / AI Mode |
 | [Microsoft Bing Ads blog][bing-ai-answers] | Schema, headings, snippable answers |
+| [OpenAI: Businesses in ChatGPT][oai-businesses] · [Business Hub help][oai-business-help] | Business Hub (beta, 2026-11-10): claim, profile, feed, 28-day insights, limits |
+| [TechRadar (Semrush CMO)][aso-techradar] · [Visualping][aso-visualping] | ASO expansions in vendor usage |
+| [Toolflation (arXiv 2610.28454)][toolflation] · [AX is the New AEO (arXiv 2609.34951)][ax-new-aeo] | Agent-facing optimization research |
 | Falsification pass, 2026-10-24 | 15 claims re-checked: 14 confirmed, 1 misquote fixed |
 
 [openai-bots]: https://developers.openai.com/api/docs/bots
@@ -119,3 +134,9 @@ hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical))
 [netlify-ax]: https://www.netlify.com/agent-experience/
 [peec]: https://peec.ai/
 [scrunch]: https://scrunch.com/
+[oai-businesses]: https://openai.com/index/introducing-businesses-chatgpt/
+[oai-business-help]: https://help.openai.com/en/articles/20001635-setting-up-your-business-on-chatgpt
+[aso-techradar]: https://www.techradar.com/pro/agentic-search-optimization-reshapes-brand-visibility-in-ai-search
+[aso-visualping]: https://visualping.io/blog/agent-search-optimization
+[toolflation]: https://arxiv.org/abs/2610.28454
+[ax-new-aeo]: https://arxiv.org/abs/2609.34951
