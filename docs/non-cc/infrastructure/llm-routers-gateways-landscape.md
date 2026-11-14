@@ -3,7 +3,7 @@ title: LLM Routers & Gateways Landscape
 source: https://openrouter.ai/
 purpose: Provider-agnostic model routers, hosted aggregators, self-hostable gateways, and model-fusion/ensemble routing tools — a reference catalog verified 2026-06-16.
 created: 2026-06-16
-updated: 2026-09-24
+updated: 2026-11-14
 validated_links: 2026-09-24
 status: reference
 ---
@@ -20,7 +20,7 @@ A survey of provider-agnostic LLM routers, API gateways, and model aggregators �
 
 | Tool | License | Pricing | Models / Providers | Differentiator |
 |---|---|---|---|---|
-| [LiteLLM](https://github.com/BerriAI/litellm) | MIT (enterprise dir: separate) | Free self-hosted; enterprise custom | 100+ providers incl. OpenAI, Anthropic, Gemini, Azure, Bedrock, Vertex, Cohere, vLLM, HuggingFace | Python SDK + proxy server; 50.5 k stars; v1.89.0 (2026-06-14); cost tracking, load balancing, guardrails, MCP gateway support; also appears in CC-routing doc |
+| [LiteLLM](https://github.com/BerriAI/litellm) | MIT (enterprise dir: separate) | Free self-hosted; enterprise custom | 100+ providers incl. OpenAI, Anthropic, Gemini, Azure, Bedrock, Vertex, Cohere, vLLM, HuggingFace | Python SDK + proxy server; 63.3 k stars; v1.109.1 (2026-11-12); cost tracking, load balancing, guardrails, MCP gateway support; [Customer Portal][litellm-portal] (announced 2026-11-13, not yet confirmed in a release): spend tracking and budgets per customer org, team and member, a budget webhook, usage APIs to show costs in your own product; OSS caps each level at 5, per-model key budgets need Enterprise; also appears in CC-routing doc |
 | [Portkey](https://portkey.ai/) | MIT (OSS gateway); managed: proprietary | Free self-hosted / managed from $49/month | 1,600+ LLMs across 200+ providers | TypeScript gateway (12.1 k stars); dedicated Claude Code Gateway product page; Anthropic/Bedrock/Vertex backends; RBAC, guardrails, semantic caching |
 | [Bifrost](https://www.getmaxim.ai/bifrost/) | Apache 2.0 | Free self-hosted; enterprise hosted (no public price) | 23+ providers, 1,000+ models (OpenAI, Anthropic, Bedrock, Vertex, Azure, Cerebras, Mistral, Groq, Ollama) | Go implementation; claims 50× lower P99 latency vs LiteLLM; 5.8 k stars; v1.4.9 (2026-06-15); adaptive load balancer, provider fallback, semantic caching, MCP gateway |
 | [Helicone AI Gateway](https://www.helicone.ai/) | Apache-2.0 | Hobby free (10 k req/month); Pro $79/month; Team $799/month; Enterprise on-prem | 100+ models incl. OpenAI, Anthropic, Azure, Gemini, DeepSeek, Groq, OpenRouter | TypeScript (91.2%); 5.8 k stars; v2025.08.21-1; observability-first — request logging, cost tracking, agent tracing, prompt management; SOC-2/HIPAA on Team+ |
@@ -84,6 +84,7 @@ Facts compiled from each tool's first-party page (1p-verified 2026-06-16). No th
 | [openrouter.ai/blog/announcements/fusion-beats-frontier/](https://openrouter.ai/blog/announcements/fusion-beats-frontier/) | OpenRouter Fusion benchmark and billing model |
 | [arxiv.org/abs/2608.20316](https://arxiv.org/abs/2608.20316) | Pandora's AI Model Routing Box — Google DeepMind cost/accuracy routing paper; author affiliations verified via arXiv HTML, no code repo found (accessed 2026-09-24) |
 | [github.com/BerriAI/litellm](https://github.com/BerriAI/litellm) | LiteLLM release, license, star count |
+| [LiteLLM Customer Portal blog][litellm-portal] | Customer Portal announcement (2026-11-13), OSS vs Enterprise limits |
 | [portkey.ai/for/claude-code](https://portkey.ai/for/claude-code) | Portkey Claude Code Gateway product |
 | [docs.requesty.ai/integrations/claude-code](https://docs.requesty.ai/integrations/claude-code) | Requesty CC integration |
 | [docs.withmartian.com/integrations/claude-code](https://docs.withmartian.com/integrations/claude-code) | Martian CC integration, pricing |
@@ -112,3 +113,5 @@ Facts compiled from each tool's first-party page (1p-verified 2026-06-16). No th
 | [github.com/lm-sys/RouteLLM](https://github.com/lm-sys/RouteLLM) | RouteLLM paper/OSS router |
 
 Cross-ref: [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md) — OpenRouter and LiteLLM appear there as Claude Code integration targets, and the five hosted CC-integrated gateways here (Portkey, Martian, Vercel AI Gateway, Zuplo, RelayPlane) are back-ported there with their Claude Code `ANTHROPIC_BASE_URL` config. This landscape stays the authoritative catalog (license/pricing/breadth); the CC doc holds only the CC-specific setup.
+
+[litellm-portal]: https://docs.litellm.ai/blog/customer-portal
