@@ -58,9 +58,26 @@ search, and blocking a search bot does not stop a user's assistant from fetching
   special optimizations necessary", and "You don't need to create new machine readable files, AI
   text files, or markup to appear in these features" ([AI features][google-ai-features]). The controls
   are the ordinary snippet and indexing ones (`nosnippet`, `max-snippet`, `noindex`).
+  Google's [AI optimization guide][google-ai-guide] (announced May 2026, last updated 2026-07-10) goes
+  further and lists what to ignore: llms.txt and similar files "will neither harm nor help your site's
+  visibility or rankings in Google Search, as Google Search ignores them"; "Structured data isn't
+  required for generative AI search, and there's no special schema.org markup you need to add" (though
+  it advises keeping it for SEO); "There's no requirement to break your content into tiny pieces"; and
+  "No third-party tool has access to our internal ranking or AI systems."
+  Since 2026-08-31 every site can opt out of AI Overviews and AI Mode in Search Console: "Sites that opt
+  out will not receive traffic or impressions from our generative AI features", and the control "will
+  not be used as a ranking signal" for ordinary results ([Google][google-ai-optout]). Search Console
+  also reports impressions in those features ([2026-06-03][google-ai-reports]).
 - **Microsoft (Bing Ads blog, 2025-10-08):** "Use schema, clear headings, and modular layouts" and
   "Make answers snippable" ([post][bing-ai-answers]) — more prescriptive than Google, and the two
-  disagree on whether schema helps.
+  disagree on whether schema helps. Microsoft Advertising's [*A Guide to GEO*][ms-geo-guide]
+  (2026-01-06, written for retailers) keeps that line: "Deploy Product, Offer, AggregateRating,
+  Review, Brand, ItemList, and FAQ schema types", "Provide Q&A blocks AI can reason over and cite", and
+  "never serve different HTML to bots". The guide uses "GEO" throughout and never "AEO"; the
+  "Answer/Agentic Engine Optimization" gloss seen in trade press is not Microsoft's. Bing Webmaster
+  Tools' AI Performance report (public preview, [2026-02-10][bing-ai-performance]) shows how often a
+  site is cited across "Microsoft Copilot, AI-generated summaries in Bing, and select partner
+  integrations".
 - **OpenAI:** no written content-optimisation guidance was found (its publisher FAQ returned 403 to
   automated fetches), but since 2026-11-10 it runs a first-party listing surface. Through
   **Business Hub**, part of "Businesses in ChatGPT" (beta), a business can claim its listing, keep
@@ -75,6 +92,10 @@ search, and blocking a search bot does not stop a user's assistant from fetching
 - **Perplexity:** beyond the crawler tokens above, no first-party content-optimisation guidance was
   found on the pages checked.
 
+Google and Microsoft disagree on two points: schema (optional for Google, recommended by Microsoft)
+and splitting content into Q&A or FAQ blocks (unneeded for Google, recommended by Microsoft and Bing).
+They agree on crawlable, indexable pages, no cloaking, and original content.
+
 "GEO"/"AEO" playbooks from third parties go beyond what any of these operators state; treat them as
 hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical)). A score-based view of agent readiness (Ora, Lightsage) is in
 [evaluation-data-resources-landscape.md § Agent-readiness scoring](../../sdlc-lcm/evaluation-data-resources-landscape.md).
@@ -85,7 +106,58 @@ hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical))
 - **Optimizing for agents, not answers, is studied under the GEO name.** [Toolflation][toolflation] (arXiv 2610.28454, 2026-10-20) has seller agents rewrite tool descriptions in a simulated tool market; under one of five models "sellers copy one another until the descriptions no longer tell the tools apart", and buyer agents fall back to picking by list position. A position paper titled [*AX is the New AEO*][ax-new-aeo] (arXiv 2609.34951, 2026-09-28) argues the two converge; Netlify's own AX definition (below) is narrower.
 - **No standards body owns GEO.** The nearest standards work is the IETF [aipref][aipref] working group: two drafts (`draft-ietf-aipref-vocab-08`, `draft-ietf-aipref-attach-05`), both WG Documents aiming at Proposed Standard as of 2026-11-14. They signal *usage preferences* (training, search, fetch), not visibility or ranking. llms.txt, schema.org, NLWeb and MCP are existing formats reused for the purpose.
 - **"Agent Experience" is a different thing.** Netlify says it "coined the term in 2025" and defines AX as "the holistic experience AI agents will have as the user of a product or platform" ([Netlify][netlify-ax]): agents as *users* of your product, not your brand appearing in AI answers. Some GEO vendors reuse the words for the latter.
-- **How it differs from classic SEO.** Crawlability, structured data and being cited by others carry over. What changes is the target: inclusion and prominence inside a generated answer instead of a rank on a results page, with no click to measure and no first-party reporting tool like Search Console. Visibility trackers such as [Peec AI][peec] and [Scrunch][scrunch] run their own prompt panels against each engine; their numbers are vendor-specific.
+- **How it differs from classic SEO.** Crawlability, structured data and being cited by others carry over. What changes is the target: inclusion and prominence inside a generated answer instead of a rank on a results page, often with no click to measure. First-party reporting arrived in 2026: Bing's AI Performance report (February), Search Console's generative-AI reports (June) and ChatGPT Business Hub insights (November), each covering only its own engine. Visibility trackers such as [Peec AI][peec] and [Scrunch][scrunch] run their own prompt panels against each engine; their numbers are vendor-specific.
+
+## What the research shows
+
+Peer-reviewed or workshop work since the GEO paper, each checked against its arXiv record on
+2026-11-14. Venues are given only where the arXiv record states them.
+
+| Paper | Finding |
+|---|---|
+| [C-SEO Bench][c-seo-bench] (Puerto et al., NeurIPS Datasets & Benchmarks 2025) | "most current C-SEO methods are not only largely ineffective but also frequently have a negative impact on document ranking"; effects shrink as more actors adopt them (a zero-sum game) |
+| [AutoGEO][autogeo] (Wu et al., CMU, 2025) | learned rewriting rules give "an average improvement of 35.99% in GEO metrics while maintaining utility" on its benchmarks |
+| [E-GEO][e-geo] (Bagga et al., MIT; NeurIPS 2026 E&D) | 13,746 product queries; "under a simple in-prompt defense in our setting, gains from GEO reflect genuine content improvement" |
+| [Characterizing Web Search in the Age of Generative AI][kirsten-aio] (Kirsten et al., 2025) | a large share of the domains AI Overviews consult are not in the top-10, or even top-100, organic results |
+| [Navigating the Shift][chen-shift] (Chen et al., Toronto; EDBT/ICDT 2026 Workshops) | domain overlap with Google's top 10 is low; "GPT-4o shows the lowest mean overlap at 4.0%" |
+| [Adversarial SEO for LLMs][nestaas-aseo] (Nestaas et al., ETH Zürich, 2024) | injected page content makes an adversarial plugin "up to 7.2× more likely to be selected"; when everyone attacks, all lose (a prisoner's dilemma) |
+| [Ranking Manipulation for Conversational Search Engines][pfrommer-rank] (Pfrommer et al., Berkeley; EMNLP 2024) | adversarial text in product pages reorders LLM product rankings, with a demonstration on perplexity.ai |
+| [What Is Your AI Agent Buying?][aces] (Allouah et al., 2025) | in a simulated shop, "a single iteration produced a statistically significant increase in market share for the focal product in 33% of our experiments"; agents show strong position biases |
+| [Tool Preferences in Agentic LLMs are Unreliable][faghih-tools] (Faghih et al., EMNLP 2025) | edited tool descriptions shift agents' tool choice sharply |
+| [Advertising to Agents][adv-agents] (Wang, MIT; NeurIPS 2026 workshop) | stacked praise in a tool description "raised a tool's pick rate by about 43 percentage points"; single author, and the abstract says results are "provisional" and "cover two small models" |
+
+Read together: rewriting content for AI answers sometimes helps and sometimes hurts (AutoGEO vs
+C-SEO Bench), gains erode as more sites optimize, AI answers draw on sources outside the classic top
+results, and both product and tool descriptions can be gamed, which is why Toolflation (above) finds
+descriptions converging. No academic study of AI-search referral traffic was found; the figures in
+circulation come from analytics vendors.
+
+## Tools: trackers, MCP servers and open-source projects
+
+Commercial visibility trackers ([Peec AI][peec], [Scrunch][scrunch], Profound, Otterly.AI, AthenaHQ,
+Semrush AI Toolkit, Ahrefs Brand Radar, Evertune, Goodie and others) all run their own prompt panels
+against several engines; their metrics are vendor-defined and not comparable across tools. Several now
+expose MCP servers, so an agent can query visibility data directly: Peec's MCP docs list "Claude
+(Desktop, Web, Code)" ([docs][peec-mcp]); Profound's hosted MCP is "Available on: the Enterprise plan"
+([docs][profound-mcp]).
+
+Open-source projects, checked on GitHub 2026-11-14 (stars at that date). GitLab had nothing
+substantive; Codeberg could not be searched (rate-limited).
+
+| Repo | License | What it is |
+|---|---|---|
+| [`cxcscmu/AutoGEO`][autogeo-repo] | MIT | Research code for AutoGEO (above) |
+| [`elmohq/elmo`][elmo] | MIT | Self-hosted AEO/GEO tracker with an MCP server |
+| [`limelit-co/open`][limelit-open] | Apache-2.0 | Self-hosted visibility tracking, single binary, MCP server |
+| [`danishashko/geo-aeo-tracker`][geo-aeo-tracker] | MIT | Visibility tracker and AEO checker |
+| [`yaojingang/GEOInflow`][geoinflow] | MIT | Self-hosted analytics for AI crawlers and AI referrals (created 2026-10-26) |
+| [`dodopayments/dualmark`][dualmark] | Apache-2.0 | Markdown copies of pages for agents via content negotiation |
+| [`Auriti-Labs/geo-optimizer-skill`][geo-optimizer] | MIT | Citation-audit engine behind GeoReady; CLI, Python, MCP |
+| [`zubair-trabzada/geo-seo-claude`][geo-seo-claude], [`onvoyage-ai/gtm-engineer-skills`][gtm-skills] | MIT | Claude Code skills for GEO/AEO audits (checklists, not measurement) |
+
+The broader SEO skill set `AgriciDaniel/claude-seo` is profiled in [CC-community-plugins-landscape.md](../../cc-community/CC-community-plugins-landscape.md). The two most-starred Claude Code GEO skill repos grew to 10k+ stars within months of creation; treat
+star counts in this niche as weak signal. The open-source trackers mostly mirror the commercial ones:
+prompt panels across engines, run with your own API keys.
 
 ## Practical checklist (our synthesis)
 
@@ -93,7 +165,13 @@ hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical))
 2. Write robots.txt per token from the table, not one rule for "AI bots".
 3. Don't rely on robots.txt for user-triggered fetchers that say they may ignore it; use server-side
    controls (Cloudflare policies, signed-agent verification) if it matters.
-4. For visibility, follow ordinary search guidance; Google says no special files or markup are needed.
+4. For visibility, follow ordinary search guidance: indexable pages, original content, no cloaking.
+   Google says no special files, markup or chunking are needed; Microsoft recommends schema and Q&A
+   blocks. Do both only where they also help human readers.
+5. Measure in the engines' own reports (Search Console, Bing AI Performance, ChatGPT Business Hub)
+   before buying a third-party tracker; each covers one engine, and no tracker sees ranking internals.
+6. To keep normal Google results but leave AI Overviews and AI Mode, use the Search Console opt-out
+   rather than `nosnippet`.
 
 ## Sources
 
@@ -112,6 +190,11 @@ hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical))
 | [Cloudflare AI Crawl Control][cf-ai-crawl-control] · [pay per crawl][cf-pay-per-crawl] · [managed robots.txt][cf-managed-robots] | Publisher controls, 402, Content Signals |
 | [Google AI features][google-ai-features] | No special markup or files for AI Overviews / AI Mode |
 | [Microsoft Bing Ads blog][bing-ai-answers] | Schema, headings, snippable answers |
+| [Google AI optimization guide][google-ai-guide] · [AI features opt-out][google-ai-optout] · [gen-AI reports][google-ai-reports] | What to ignore; Search Console opt-out and reporting |
+| [Microsoft Advertising: A Guide to GEO][ms-geo-guide] · [Bing AI Performance][bing-ai-performance] | Retail GEO guide; Bing citation reporting |
+| [Peec AI MCP][peec-mcp] · [Profound MCP][profound-mcp] | Vendor MCP access to visibility data |
+| GitHub repos listed in § Tools | Licenses, stars, dates via the GitHub API, 2026-11-14 |
+| arXiv records: [C-SEO Bench][c-seo-bench], [AutoGEO][autogeo], [E-GEO][e-geo], [Kirsten et al.][kirsten-aio], [Chen et al.][chen-shift], [Nestaas et al.][nestaas-aseo], [Pfrommer et al.][pfrommer-rank], [ACES][aces], [Faghih et al.][faghih-tools], [Advertising to Agents][adv-agents] | GEO research findings |
 | [OpenAI: Businesses in ChatGPT][oai-businesses] · [Business Hub help][oai-business-help] | Business Hub (beta, 2026-11-10): claim, profile, feed, 28-day insights, limits |
 | [TechRadar (Semrush CMO)][aso-techradar] · [Visualping][aso-visualping] | ASO expansions in vendor usage |
 | [Toolflation (arXiv 2610.28454)][toolflation] · [AX is the New AEO (arXiv 2609.34951)][ax-new-aeo] | Agent-facing optimization research |
@@ -140,3 +223,29 @@ hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical))
 [aso-visualping]: https://visualping.io/blog/agent-search-optimization
 [toolflation]: https://arxiv.org/abs/2610.28454
 [ax-new-aeo]: https://arxiv.org/abs/2609.34951
+[google-ai-guide]: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+[google-ai-optout]: https://blog.google/products-and-platforms/products/search/new-controls-website-owners/
+[google-ai-reports]: https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports
+[ms-geo-guide]: https://about.ads.microsoft.com/en/blog/post/january-2026/from-discovery-to-influence-a-guide-to-geo
+[bing-ai-performance]: https://blogs.bing.com/webmaster/February-2026/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview
+[c-seo-bench]: https://arxiv.org/abs/2506.11097
+[autogeo]: https://arxiv.org/abs/2510.11438
+[e-geo]: https://arxiv.org/abs/2511.20867
+[kirsten-aio]: https://arxiv.org/abs/2510.11560
+[chen-shift]: https://arxiv.org/abs/2601.16858
+[nestaas-aseo]: https://arxiv.org/abs/2406.18382
+[pfrommer-rank]: https://arxiv.org/abs/2406.03589
+[aces]: https://arxiv.org/abs/2508.02630
+[faghih-tools]: https://arxiv.org/abs/2505.18135
+[adv-agents]: https://arxiv.org/abs/2605.23916
+[peec-mcp]: https://docs.peec.ai/mcp/introduction
+[profound-mcp]: https://docs.tryprofound.com/mcp/overview
+[autogeo-repo]: https://github.com/cxcscmu/AutoGEO
+[elmo]: https://github.com/elmohq/elmo
+[limelit-open]: https://github.com/limelit-co/open
+[geo-aeo-tracker]: https://github.com/danishashko/geo-aeo-tracker
+[geoinflow]: https://github.com/yaojingang/GEOInflow
+[dualmark]: https://github.com/dodopayments/dualmark
+[geo-optimizer]: https://github.com/Auriti-Labs/geo-optimizer-skill
+[geo-seo-claude]: https://github.com/zubair-trabzada/geo-seo-claude
+[gtm-skills]: https://github.com/onvoyage-ai/gtm-engineer-skills
