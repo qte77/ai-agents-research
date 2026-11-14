@@ -4,7 +4,7 @@ purpose: Static (SCA) and dynamic (DCA) code-analysis for AI coding agents — b
 category: landscape
 status: assess
 created: 2026-07-23
-updated: 2026-11-12
+updated: 2026-11-14
 validated_links: 2026-11-12
 ---
 
@@ -60,6 +60,18 @@ MCP) across 71 vulnerability patterns. First-party-verified (repo and `LICENSE` 
 19,514★ as of `gh api`, 2026-10-06) — the full write-up, with its research-basis figures and
 Verified Skills pipeline role, is at
 [agentic-ai-vulnerability-landscape.md § NVIDIA SkillSpector][skillspector-vuln].
+
+**Research: repository context and the security of generated code.** [A.S.E 2.0][ase2] (Yu et al., NTU,
+Tencent and others, arXiv 2611.06294) builds CASE-Bench from 145 tasks on real CVEs, each with
+functional tests and a working exploit; the model "is never told that the task is security-relevant".
+Context aimed at functionality raised working code by up to 8.2 points but secure code by at most 3.7; a
+generic "security reminder" added 1.3. One insecure example placed in the context raised
+correct-but-exploitable code by 6.3 points even with the safeguard present. Coding agents, including
+Claude Code on Sonnet 4.5, observed the relevant safeguard in only 27–36% of runs. The paper also finds
+that static checkers "miss 17%" of vulnerable versions, a reason to pair rules like those above with
+exploit-based tests. _Our reading:_ name the project's authorization checks and validators in CLAUDE.md
+or rules files, and fix or flag vulnerable sibling code the agent may copy. Predecessor: A.S.E 1.0
+(`Tencent/AICGSecEval`).
 
 ## 2. Dynamic Analysis (DCA) — observing agent behavior at runtime
 
@@ -224,6 +236,7 @@ synthesis opportunity, not an existing CC feature.
 
 | Source | Content |
 |---|---|
+| [A.S.E 2.0 (arXiv 2611.06294)][ase2] | Repository context vs secure code; CASE-Bench |
 | [garak][garak] · [NVIDIA/garak README][garak-gh] | LLM red-team probe/detector scanner; probe families, CLI, Apache-2.0 (first-party) |
 | [Semgrep Guardian docs][guardian] · [announcement blog][guardian-blog] | Agent-generated-code scanner; launch 2026-06-23 (first-party; rule counts unconfirmable, omitted) |
 | [CodeQL][codeql] · [Semgrep][semgrep] · [Bandit][bandit] · [Trivy][trivy] | SCA engines |
@@ -258,3 +271,4 @@ synthesis opportunity, not an existing CC feature.
 [specula]: https://github.com/specula-org/Specula
 [skillspector]: https://github.com/NVIDIA/SkillSpector
 [skillspector-vuln]: agentic-ai-vulnerability-landscape.md#nvidia-skillspector--agent-skill-security-scanner
+[ase2]: https://arxiv.org/abs/2611.06294
