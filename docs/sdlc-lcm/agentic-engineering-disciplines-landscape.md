@@ -3,7 +3,7 @@ title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 category: landscape
 created: 2026-06-23
-updated: 2026-09-30
+updated: 2026-11-14
 validated_links: 2026-09-30
 status: assess
 ---
@@ -53,6 +53,14 @@ NEW vs current repo coverage: the Anthropic context-engineering and OpenAI harne
 **Quantified evidence for the thesis:** [The Harness Effect][harness-effect] (Sayed Ali et al., 32 authors, Jul 2026) shows the orchestration layer — not model choice — dominates agentic cost/quality: holding six foundation models constant (Claude Sonnet 4.6, Gemini 3.1, Gemini Flash 3.5, Qwen 3.6, GLM 5.1, Palmyra X6), a purpose-built "Writer Agent Harness" cut blended cost per task 41% ($0.21→$0.12), with the efficiency gain model-invariant (every model 33–61% cheaper) while quality gains correlated almost perfectly with each model's baseline strength (r=0.99) — direct quantitative support for *Agent = Model + Harness*.
 
 **2026 harness-evolution research cluster:** three Aug–Sep 2026 arXiv papers extend the harness-as-evolvable-artifact line from [HarnessX][harnessx] (composable scaffolding evolved from execution traces) into concrete benchmarking and optimization. **HarnessDev** ([arXiv:2609.01437][harnessdev], Wu et al., Sep 2026) benchmarks whether LLMs can build and iteratively evolve their own execution harness (2,207 instances, 6 LLMs, 4 domains) — generated harnesses beat human-engineered references for writing and ML-experimentation tasks but lag for coding/research, and evolution gains transfer poorly across models. **AutoDesign** ([arXiv:2608.13560][autodesign-paper], [repo][autodesign-repo], Luo et al., Aug 2026, 227★, MIT + third-party-notices addendum) frames design as a long-horizon agentic process and runs "Meta-Harness Optimization" — a meta-harness optimizer that recursively improves a task-specific *DesignHarness* from failure feedback — for +12.4% on academic paper-to-poster generation (78.32 on PosterBench). **RobustSGPO** ([arXiv:2609.09646][robustsgpo], Zhao et al., Sep 2026) controls the search space of semantic-gradient prompt optimization for harness evolution, lifting an AgentX brainstorming workflow's completion rate 60%→80% across 120 tasks. Full harness-as-primitive analysis: [harnessx-analysis.md][harnessx].
+
+**Harness search, November 2026:** [HarnessFlow][harnessflow] (Hong et al., SCUT, Fudan, MSRA and
+others, arXiv 2611.06254) treats a whole executable harness as the unit of search: a tree of candidate
+harnesses, each refined by a coding agent from scores and traces. With GPT-5.4-mini as the executor it
+averages 69.48 across six benchmarks, against 61.71 for Claude Code 2.1.272 run on the same non-Claude
+model and a lower score for [Meta-Harness][meta-harness] (Stanford IRIS Lab; MIT), the outer-loop
+harness search it builds on (Table 1). Code is announced ("will be released"), not out. The results say
+nothing about Claude Code on Claude models.
 
 **Design lens — graph engineering names the wiring, not new model behavior:** André Lindenberg's *From Loops to Graphs* (LinkedIn, 2026-07-25; `linkedin.com/pulse/from-loops-graphs-andré-lindenberg-m8jae`) reads the term above against the software factories already shipping — StrongDM, OpenAI's Symphony, Stripe's Minions, Ramp's Inspect, WorkOS's Project Horizon — as graphs that were "always there": intake, builder, review, test and incident-feedback nodes wired by edges, each edge only as trustworthy as the gate sitting on it. "A graph's throughput is set by its narrowest verified edge, not by its widest generating node." Deeper coverage of the same human-gate convergence (spec and merge as the two gates that hold, Dex Horthy's `wsff.md` dissent on why lights-off factories degrade) already lives in [software-factory-landscape.md §(c)][software-factory] — this entry is the ladder-rung framing, not a restatement.
 
@@ -118,6 +126,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 
 | Source | Content |
 |---|---|
+| [HarnessFlow (arXiv 2611.06254)][harnessflow] · [Meta-Harness repo][meta-harness] | Tree search over whole agent harnesses; its baseline |
 | [Anthropic — Effective Context Engineering][anthropic-ce] | Canonical 4-component context-engineering framework |
 | [Anthropic — Building Effective Agents][anthropic-bea] | Workflows-vs-agents; 5 patterns |
 | [OpenAI — Harness Engineering][openai-harness] | Convergent harness definition; Codex throughput evidence |
@@ -212,3 +221,5 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [kleppmann-sel4]: https://martin.kleppmann.com/2025/12/08/ai-formal-verification.html
 [acal]: agent-code-analysis-landscape.md
 [software-factory]: software-factory-landscape.md
+[harnessflow]: https://arxiv.org/abs/2611.06254
+[meta-harness]: https://github.com/stanford-iris-lab/meta-harness

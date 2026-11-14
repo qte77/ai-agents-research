@@ -5,7 +5,7 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-11-13
+updated: 2026-11-14
 validated_links: 2026-11-13
 ---
 
@@ -52,6 +52,23 @@ Background process runs periodically during idle time to review, deduplicate, pr
 ### 5. Progressive Context Compaction
 
 Multiple compression stages for conversations of different ages. Recent turns stay at full detail; older turns lightly summarized; very old turns aggressively collapsed. Four layers: `HISTORY_SNIP`, Microcompact, `CONTEXT_COLLAPSE`, Autocompact.
+
+**Research on what compaction loses (2026-11).** [ARCBench][arcbench] (Zha et al., VU Amsterdam, arXiv
+2611.03223) tested ten compactors on the pi agent harness and others, not Claude Code's own. Across
+models, rule violations rose from 9.6% with full context to 37.8% after compaction (Table 3), and runs
+whose summary still contained the rule violated it 2.6 times as often as the baseline (§4.2). Only a
+compaction prompt that explicitly preserves rules beat full context (9.0% against 11.9%). The set is
+small: "seventeen English cases". A second preprint (Chu, University at Albany, [arXiv
+2611.06545][handoff-paper]) audits agents' own hand-off summaries on Qwen3 and gpt-oss models in a custom
+harness. Summaries sometimes state restrictions or approvals the record doesn't support (1.2–2.4% of
+held-out summaries for restrictions). Replacing "Some actions need approval." with "Only actions that
+the rules or the user's request say need approval require it." cut unsupported restrictions from 5.0%
+to 1.8% on the development set and from 1.8% to 0.3% on held-out templates (pre-specified tests);
+neutralizing false approvals cut unauthorized actions from 24 to 7 of 120 runs (post hoc). Code:
+[`Chuw1/handoff-audit`][handoff-audit] (MIT). *Our reading:* keep standing rules in CLAUDE.md or rules
+files, which Claude Code reloads after compaction, rather than stating them once in conversation; word
+approval rules by where the requirement comes from; and check plan or hand-off files for approvals
+nobody gave.
 
 ## Category 2: Workflow and Orchestration (3 patterns)
 
@@ -101,6 +118,16 @@ Replaces general shell with purpose-built tools for common operations: FileReadT
 
 Shell commands fire automatically at specific agent lifecycle points, outside the prompt. 25+ hook points: `PreToolUse`, `PostToolUse`, `SessionStart`, `CwdChanged`. Mandatory actions belong in hooks, not instructions.
 
+**Evidence: a Stop hook as the goal check (KernelSeek).** In *Ask, Don't Equip* (Oliaro et al.,
+Snowflake AI Research and CMU, [arXiv 2611.03517][kernelseek]), both arms ran in Claude Code
+(`claude-opus-4-8` headless for the tool-rich baseline). KernelSeek kept the harness minimal, enforced
+the goal as a computed predicate in a Stop hook, and had a human ask short questions at decision
+points, later distilled into a 101-entry question bank packaged as a skill. Its attention kernel
+reached 1.13× FlashAttention-3 against 0.48× for the baseline (Table 2), from a single run per arm. Two
+cautions from the paper: the one time the hook delegated its verdict to a model judge, "it accepted a
+premature claim that a human then overturned", and the baseline's knowledge store was "actively
+harmful". Code: [`Snowflake-AI-Research/flash-cuda`][flash-cuda] (Apache-2.0).
+
 **Cross-ref**: This repo documents the full hook lifecycle in [CC-hooks-system-analysis.md](../configuration/CC-hooks-system-analysis.md).
 
 [HumanLayer][humanlayer] provides a structured approval-gate SDK that intercepts agent
@@ -121,6 +148,9 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Practical Lessons From the Claude Code Leak](https://generativeprogrammer.com/p/practical-lessons-from-the-claude) (2026-04-03)
 - [Skill Issue: Harness Engineering for Coding Agents][skill-issue-post] (Kyle, hlyr.dev, 2026-03-12) — harness engineering framing, HumanLayer mention
 - [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK for agent tool calls
+- [ARCBench (arXiv 2611.03223)][arcbench] — rule compliance after context compaction
+- [Unsupported policy in hand-off summaries (arXiv 2611.06545)][handoff-paper] · [code][handoff-audit] — hand-off summaries that invent approvals or restrictions
+- [KernelSeek (arXiv 2611.03517)][kernelseek] · [code][flash-cuda] — Stop-hook goal predicate, question bank as a skill
 - [Kubernetes Patterns (O'Reilly)](https://k8spatterns.com/)
 - [Prompt Patterns catalog](https://www.promptpatterns.dev/)
 - [The Generative Programmer Substack](https://generativeprogrammer.com/)
@@ -183,3 +213,9 @@ It compares CC against a second system ("OpenClaw") to show how deployment conte
 - [ ] Map remaining patterns to existing analyses (6/12 mapped above)
 - [ ] Track Ibryam's Prompt Patterns catalog for convergence with CC skills format
 - [ ] Monitor for community implementations of these patterns outside CC
+
+[arcbench]: https://arxiv.org/abs/2611.03223
+[handoff-paper]: https://arxiv.org/abs/2611.06545
+[handoff-audit]: https://github.com/Chuw1/handoff-audit
+[kernelseek]: https://arxiv.org/abs/2611.03517
+[flash-cuda]: https://github.com/Snowflake-AI-Research/flash-cuda
