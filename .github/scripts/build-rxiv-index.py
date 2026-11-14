@@ -33,6 +33,36 @@ def _fatal(message: str) -> None:
     sys.exit(2)
 
 
+FENCE_RE = re.compile(r"^\s*```[a-zA-Z]*\s*\n?(?P<body>.*?)\n?\s*```\s*$", re.DOTALL)
+RECOVERED_FIELDS = ("summary", "subjects", "methods", "key_findings", "study_type")
+
+
+def recover_extracted(ex: dict) -> dict:
+    """Recover fields the upstream parser dropped into ``_raw``.
+
+    Reason: since 2026 W26 the extraction model wraps its JSON reply in a
+    ```json fence, so the action's strict parser fails and stores the reply
+    under ``_raw`` with empty fields. Strip the fence and parse; a reply cut off
+    at the token limit, or invalid JSON such as an unquoted string, is left as
+    it was; raw newlines inside strings are tolerated (``strict=False``).
+    """
+    raw = ex.get("_raw")
+    if ex.get("summary") or not isinstance(raw, str):
+        return ex
+    m = FENCE_RE.match(raw)
+    try:
+        parsed = json.loads(m.group("body") if m else raw, strict=False)
+    except json.JSONDecodeError:
+        return ex
+    if not isinstance(parsed, dict):
+        return ex
+    out = dict(ex)
+    for key in RECOVERED_FIELDS:
+        if parsed.get(key):
+            out[key] = parsed[key]
+    return out
+
+
 def parse_key(filename: str) -> tuple[str, int, int] | None:
     """Parse ``<server>-<year>-W<week>.jsonl`` into (server, year, week)."""
     m = KEY_RE.match(filename)
@@ -62,7 +92,7 @@ def collect(data_dir: Path) -> tuple[list[dict], int]:
             rec = {
                 "title": title,
                 "doi": doi,
-                "extracted": d.get("extracted") or {},
+                "extracted": recover_extracted(d.get("extracted") or {}),
                 "server": server,
                 "year": year,
                 "week": week,
