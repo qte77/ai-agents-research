@@ -4,7 +4,7 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-12
+updated: 2026-11-14
 validated_links: 2026-11-12
 ---
 
@@ -109,7 +109,7 @@ differences do not establish statistical significance." Checked 2026-10-22.
 
 **Leaderboards**: SciArena, Berkeley Function-Calling, Chatbot Arena, GAIA, [WebDev Arena][webdev-arena] (hosted on Arena.ai, "formerly LMArena" per Arena.ai's own about page; rows are mostly model-named, with some tagging a harness, e.g. "GPT-5.6 Sol (xHigh, Codex Harness)"), MiniWoB++.
 
-**Agent-readiness scoring (websites/APIs)**: a new, two-vendor category — `git grep` for `ora.ai`,
+**Agent-readiness scoring (websites/APIs)**: a new category (two vendors when first added; a third below) — `git grep` for `ora.ai`,
 `lightsage`, and "agent readiness"/"agent experience arena" across `docs/` returns zero hits before
 this entry. [Ora][ora] (by era labs) scores how a website or MCP-server endpoint works for AI agents,
 pairing a numeric score with a letter grade on its leaderboard (e.g. "96A+", "91A", "77B" — A+/A/B
@@ -133,6 +133,8 @@ discovery or usability scores, nor a founder, team, or funding for either vendor
 operator is named below) — these are a first,
 not-yet-independently-audited example of the category; revisit as a standalone landscape if a third
 vendor appears.
+
+*Third vendor: Cloudflare (added 2026-11-14).* [isitagentready.com][cf-agent-ready], announced 2026-04-17, scores a site on "four dimensions": Discoverability (robots.txt, sitemap, Link headers), Content (Markdown for Agents), Bot Access Control (Content Signals, AI bot rules, Web Bot Auth) and Capabilities (Agent Skills, API Catalog, OAuth discovery, MCP Server Card, WebMCP). It also checks x402, UCP and ACP, "but these do not currently count towards the score", and exposes the scan as an MCP `scan_site` tool. The owner's own [agent-readiness-kit][ark] calls both Ora and isitagentready.com as scan sources, so it aggregates this category rather than adding an independent fourth score. A neighbouring but different category measures what AI answer engines *say* about a brand rather than whether a site is agent-callable; see [ai-crawlers-discoverability-landscape.md § GEO and AEO](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md#geo-and-aeo-what-is-canonical).
 
 *DevTool Arena (re-checked 2026-10-22).* It now lives at devtoolarena.com, and Lightsage's
 [terms][lightsage-terms] name the operator: "API-Rex, Inc., doing business as Lightsage" (last updated
@@ -210,12 +212,14 @@ ask for is short:
 
 ## Sources
 
-Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. Agent-readiness-scoring sources (checked 2026-10-15; DevTool Arena and Lightsage re-checked 2026-10-22):
+Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. Agent-readiness-scoring sources (checked 2026-10-15; DevTool Arena and Lightsage re-checked 2026-10-22; Cloudflare checked 2026-11-14):
 
 [omi-bench]: https://omi.health/benchmark
 [omi-home]: https://omi.health/
 [omi-repo]: https://github.com/Omi-Health/medical-STT-eval
 [ora]: https://ora.ai
+[cf-agent-ready]: https://blog.cloudflare.com/agent-readiness/
+[ark]: https://github.com/qte77/agent-readiness-kit
 [google-ai-features]: https://developers.google.com/search/docs/appearance/ai-features
 [schemaorg-4786]: https://github.com/schemaorg/schemaorg/issues/4786
 [nlweb]: https://github.com/nlweb-ai/NLWeb

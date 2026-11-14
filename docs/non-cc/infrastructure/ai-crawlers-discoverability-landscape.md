@@ -2,8 +2,8 @@
 title: AI Crawlers and Discoverability Landscape
 purpose: Which AI crawlers and fetchers exist, what each robots.txt token controls (training, search, user-triggered fetch), the publisher-side controls (Cloudflare AI Crawl Control, pay per crawl, Content Signals), and what answer-engine operators actually say about appearing in AI answers.
 created: 2026-10-24
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-14
+validated_links: 2026-11-14
 status: research
 ---
 
@@ -65,8 +65,15 @@ search, and blocking a search bot does not stop a user's assistant from fetching
   was found on the pages checked (OpenAI's publisher FAQ returned 403 to automated fetches).
 
 "GEO"/"AEO" playbooks from third parties go beyond what any of these operators state; treat them as
-hypotheses. A score-based view of agent readiness (Ora, Lightsage) is in
+hypotheses (what is canonical: [§ GEO and AEO](#geo-and-aeo-what-is-canonical)). A score-based view of agent readiness (Ora, Lightsage) is in
 [evaluation-data-resources-landscape.md § Agent-readiness scoring](../../sdlc-lcm/evaluation-data-resources-landscape.md).
+
+## GEO and AEO: what is canonical
+
+- **One academic origin.** "GEO: Generative Engine Optimization" (Aggarwal et al., [arXiv 2311.09735][geo-paper], accepted to KDD 2024) introduced the term and a benchmark, GEO-bench; its abstract reports that "GEO can boost visibility by up to 40% in generative engine responses", measured on that benchmark, not in the field. Code and data: [`GEO-optim/GEO`][geo-repo] (Apache-2.0). AEO, LLMO and "AI search optimization" are later labels for the same practice, with no comparable source.
+- **No standards body owns GEO.** The nearest standards work is the IETF [aipref][aipref] working group: two drafts (`draft-ietf-aipref-vocab-08`, `draft-ietf-aipref-attach-05`), both WG Documents aiming at Proposed Standard as of 2026-11-14. They signal *usage preferences* (training, search, fetch), not visibility or ranking. llms.txt, schema.org, NLWeb and MCP are existing formats reused for the purpose.
+- **"Agent Experience" is a different thing.** Netlify says it "coined the term in 2025" and defines AX as "the holistic experience AI agents will have as the user of a product or platform" ([Netlify][netlify-ax]): agents as *users* of your product, not your brand appearing in AI answers. Some GEO vendors reuse the words for the latter.
+- **How it differs from classic SEO.** Crawlability, structured data and being cited by others carry over. What changes is the target: inclusion and prominence inside a generated answer instead of a rank on a results page, with no click to measure and no first-party reporting tool like Search Console. Visibility trackers such as [Peec AI][peec] and [Scrunch][scrunch] run their own prompt panels against each engine; their numbers are vendor-specific.
 
 ## Practical checklist (our synthesis)
 
@@ -80,6 +87,10 @@ hypotheses. A score-based view of agent readiness (Ora, Lightsage) is in
 
 | Source | Content |
 |---|---|
+| [GEO paper (arXiv 2311.09735)][geo-paper] · [`GEO-optim/GEO`][geo-repo] | The term's academic origin, KDD 2024; benchmark code |
+| [IETF aipref WG][aipref] | Usage-preference vocabulary and attachment drafts (WG Documents, 2026-11-14) |
+| [Netlify: Agent Experience][netlify-ax] | AX definition; agents as users of a product |
+| [Peec AI][peec] · [Scrunch][scrunch] | AI-search visibility tracking vendors (self-described) |
 | [OpenAI bots][openai-bots] | GPTBot, OAI-SearchBot, ChatGPT-User |
 | [Anthropic crawler article][anthropic-bots] | ClaudeBot, Claude-SearchBot, Claude-User; Crawl-delay |
 | [Google common crawlers][google-crawlers] | Google-Extended scope and non-impact on Search |
@@ -102,3 +113,9 @@ hypotheses. A score-based view of agent readiness (Ora, Lightsage) is in
 [cf-managed-robots]: https://developers.cloudflare.com/bots/additional-configurations/managed-robots-txt/
 [google-ai-features]: https://developers.google.com/search/docs/appearance/ai-features
 [bing-ai-answers]: https://about.ads.microsoft.com/en/blog/post/october-2025/optimizing-your-content-for-inclusion-in-ai-search-answers
+[geo-paper]: https://arxiv.org/abs/2311.09735
+[geo-repo]: https://github.com/GEO-optim/GEO
+[aipref]: https://datatracker.ietf.org/wg/aipref/documents/
+[netlify-ax]: https://www.netlify.com/agent-experience/
+[peec]: https://peec.ai/
+[scrunch]: https://scrunch.com/
