@@ -4,7 +4,7 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-12
+updated: 2026-11-14
 validated_links: 2026-11-12
 ---
 
@@ -426,6 +426,18 @@ A different category from the graph/LSP/search/packer tools above: Floorplan ask
 
 The project's own README distinguishes itself from two similar tools it names directly: [Archify][archify] (any of 10 diagram types, including non-code processes, for Claude Code/Codex/Cursor/OpenCode) and [Understand Anything][understand-anything] (a full code knowledge graph down to functions, for Claude Code/Codex/Cursor/Copilot/Gemini CLI) — Floorplan's own framing is "understand and check an app you own" versus "draw a diagram" (Archify) or "study a large codebase function by function" (Understand Anything); it positions itself as complementary to both rather than a replacement. **Caveat**: at two weeks old (created 2026-10-27) this is an early-stage project with no independent review found.
 
+## Research: do code maps help coding agents?
+
+Sepidband et al. (York University, [arXiv 2611.07286][code-maps]) attached five code-map MCP servers of
+their own (AST, call graph, dependencies, docs, and a hybrid; built on tree-sitter, jedi and SQLite
+full-text search) to Claude Code via `--mcp-config`, with `claude-haiku-4-5` at low effort. Maps helped
+*finding* code: the hybrid map raised fault-localization recall@10 on LinuxFLBench from 0.717 to 0.829
+with fewer tokens. They did not reliably help *fixing* it: SWE-bench Pro resolution was 49.0% without a
+map and 44.3–50.6% with one, though tokens fell. Each task ran once, on one model, and the treatment
+bundles the map with a map-first workflow (including "a pre-tool-use hook that forces one map query
+before native reads"). Aider's repo map and LSP tools were not tested. Code:
+[`MelikaSepidband/How-Should-Agents-See-Code`][code-maps-repo] (no LICENSE file).
+
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
@@ -462,3 +474,6 @@ The project's own README distinguishes itself from two similar tools it names di
 ## Sources
 
 Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt, Floorplan).
+
+[code-maps]: https://arxiv.org/abs/2611.07286
+[code-maps-repo]: https://github.com/MelikaSepidband/How-Should-Agents-See-Code
