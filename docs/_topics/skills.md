@@ -21,5 +21,6 @@ corpus. Pointers only; see [the hub index](README.md).
 | [microsoft-365-copilot-analysis.md § Microsoft Copilot Cowork](../non-cc/agents/microsoft-365-copilot-analysis.md#microsoft-copilot-cowork-ga-june-2026) | Copilot Cowork's own `SKILL.md`-based custom skills (up to 50, `Documents/Cowork/skills/{name}/SKILL.md`) — a third, unrelated Microsoft "skill" mechanism | non-cc |
 | [skill-recorder-analysis.md](../non-cc/agents/skill-recorder-analysis.md) | Microsoft Skill Recorder: records or imports a screen session and reconstructs it via the GitHub Copilot CLI into a reusable `SKILL.md`-style Skill or scheduled Automation | non-cc |
 | [agent-evaluation-metrics-landscape.md § Evaluation Platform Integration](../sdlc-lcm/agent-evaluation-metrics-landscape.md#evaluation-platform-integration) | Waza (Microsoft): Go CLI authoring and grading eval scenarios for agent skills and custom agents | sdlc-lcm |
+| [agentic-ai-vulnerability-landscape.md § LatentTriad](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#latenttriad--malicious-skill-detection-from-hidden-states) | Malicious-skill detection from hidden states; white-box only (arXiv 2611.05088) | sdlc-lcm |
 
 Related hubs: [plugins.md](plugins.md), [harness.md](harness.md).

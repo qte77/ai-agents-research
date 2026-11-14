@@ -15,5 +15,6 @@ only; see [the hub index](README.md).
 | [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) | Standalone AI PR-review products; open-code-review (hybrid deterministic + LLM, rubric-scored) | non-cc |
 | [jev-analysis.md](../non-cc/infrastructure/jev-analysis.md) | Jev (TypeSafe) system-one classifier as a pre-CI code-review gate, rubric-scored; measured qte77/feelings pilot | non-cc |
 | [agent-code-analysis-landscape.md](../sdlc-lcm/agent-code-analysis-landscape.md) | Static and dynamic code analysis for and by coding agents | sdlc-lcm |
+| [CC-code-tooling-landscape.md § Research: do code maps help coding agents?](../cc-community/CC-code-tooling-landscape.md#research-do-code-maps-help-coding-agents) | Code-map MCP servers with Claude Code: better localization, not better fixes (arXiv 2611.07286) | cc-community |
 
 Related hubs: [rag.md](rag.md), [knowledge-graphs.md](knowledge-graphs.md).
