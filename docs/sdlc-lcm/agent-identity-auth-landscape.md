@@ -3,7 +3,7 @@ title: Agent Identity, Authentication & Personhood Landscape
 purpose: Survey of how agents get identity and authorization, and how human-vs-agent is proven — the "who may act, and how is it proven" layer, distinct from CC-local runtime permissions.
 category: landscape
 created: 2026-07-08
-updated: 2026-10-24
+updated: 2026-11-14
 validated_links: 2026-10-24
 status: assess
 ---
@@ -75,6 +75,8 @@ The agent has its own identity, independent of any human.
   human-authorized. A trust/authorization layer feeding [agentic payments](../non-cc/protocols/agentic-payments-landscape.md).
   [AP2 repo][ap2].
 
+**Design lens: authorization when agents fan out.** A practitioner post by Johnny Watson (LinkedIn, 2026-11-10; opinion, no product named) argues that gateway-style governance (policy proxies, MCP gateways) assumes linear chains. Once a step fans out into parallel branches that act (update records, send messages, move money), every branch waits on one central service. The post names four costs: shared fate when that service slows or fails, bursts that size it for everyone's peak, tail latency at the join, and organisation or cloud boundaries with no shared gateway. Its example: if 1 in 100 governed calls times out, a run with 100 of them hits at least one 63% of the time (1 − 0.99¹⁰⁰ ≈ 0.63, which checks out). The proposed inversion: define policy centrally, let bounded authority travel with each branch and be verified locally at the consequential boundary, send evidence back off the critical path, and keep a central stop. It also names the costs this incurs: revocation within a bounded window, global limits such as a spend cap split across branches, and staged policy rollouts ([post][watson-fanout]). This is an argument, not a measured result; it fits the token-binding direction of the specs above (MCP's per-server tokens, Okta XAA's revocable delegation, AP2's signed mandates), which make authority portable and checkable at the edge.
+
 ## 3. Personhood & the bot-vs-authorized-agent distinction
 
 As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics.
@@ -129,6 +131,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 
 | Source | Content |
 |---|---|
+| [Johnny Watson, "Your agents can fan out. Can their authority?" (LinkedIn, 2026-11-10)][watson-fanout] | Opinion: governance for parallel agent branches; costs of central gateways |
 | [SPIFFE/SPIRE][spiffe] | Workload identity (SVIDs) |
 | [Microsoft Entra Agent ID][entra] | Agent service-principal identity (GA 2026-04) |
 | [ERC-8004][erc8004] | On-chain trustless-agent identity/reputation (Draft) |
@@ -161,3 +164,4 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 [paypercrawl]: https://blog.cloudflare.com/introducing-pay-per-crawl/
 [jit]: https://www.beyondtrust.com/resources/glossary/just-in-time-access
 [cc-perms]: https://code.claude.com/docs/en/permissions
+[watson-fanout]: https://www.linkedin.com/posts/johnny-watson-39890a8_your-agents-can-fan-out-can-their-authority-share-7525809949105459200-nHK8/
