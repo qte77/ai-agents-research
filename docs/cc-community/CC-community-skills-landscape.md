@@ -1,16 +1,16 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI).
+description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI), modern-web-guidance (browser-vendor web-platform skill).
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-11-12
+updated: 2026-11-14
 validated_links: 2026-10-11
 ---
 
 ## Summary
 
-Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/MCP/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell. A fifth addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi). A sixth addition (2026-10-11, also not rubric-scored — a new diagram/illustration row does not move a filled skills census cell): wheresryan22/anatomy, a Claude Code Agent Skill that turns a technical idea into an audited, interactive isometric SVG/WebGL/3D figure of a real machine.
+Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/MCP/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell. A fifth addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi). A sixth addition (2026-10-11, also not rubric-scored — a new diagram/illustration row does not move a filled skills census cell): wheresryan22/anatomy, a Claude Code Agent Skill that turns a technical idea into an audited, interactive isometric SVG/WebGL/3D figure of a real machine. A seventh (2026-11-14, not rubric-scored): GoogleChrome/modern-web-guidance, a browser-vendor skill that retrieves current web-platform guides on demand through a bundled CLI, packaged as plugins for Claude Code and other hosts.
 
 ## gstack (Garry Tan)
 
@@ -665,6 +665,46 @@ cross-machine sync — it is a single-operator local CLI reading a static shippe
 `scored 2026-10-02`. **This does not fill skills·Shared or skills·Distributed** — both stay at the scores
 above, consistent with every other row in this doc's census.
 
+## GoogleChrome/modern-web-guidance
+
+**Repo**: [GoogleChrome/modern-web-guidance][mwg-repo] | **Stars**: 14,896 | **License**: Apache-2.0 |
+created 2026-03-23, pushed 2026-11-10 (`gh api`, 2026-11-14) | **Docs**: [developer.chrome.com][mwg-docs]
+
+A vendor-maintained skill, unlike the community libraries above: the README says it is "Stewarded by the
+Google Chrome, Microsoft Edge, Mozilla Firefox, and MDN teams". It targets one failure: coding agents
+"often default to older patterns because LLM training data contains vast amounts of legacy code".
+
+**Skill, tool or package? All three, in layers.**
+
+- **Skill (the core).** Two Agent Skills under `skills/`: `modern-web-guidance` and `chrome-extensions`
+  (Manifest V3). The main `SKILL.md` describes itself as a "Search tool for modern web development best
+  practices" and tells the agent to run it first for HTML/CSS and client-side JS work, and not for
+  backend, infra or tooling tasks.
+- **CLI tool inside the skill.** The skill doesn't inline its guides; it has the agent run
+  `npx -y modern-web-guidance@latest search "<query>"` (then `retrieve <id>`), so only the matching guide
+  enters the context. A third command, `legacy-scan`, scans a codebase for legacy patterns. Guides cover
+  250 web features and 203 use cases (README counts), including WebMCP guides for exposing page
+  functions as agent tools.
+- **npm package.** `modern-web-guidance` on npm (v1.0.0, 121 published versions since 2026-04-30,
+  Apache-2.0; the package's `bin` is the skill's own `modern-web.mjs`).
+- **Plugin packaging for many hosts.** The same repo ships a Claude Code plugin and marketplace
+  (`.claude-plugin/marketplace.json`, marketplace `googlechrome`: `/plugin marketplace add
+  GoogleChrome/modern-web-guidance`, then `/plugin install modern-web-guidance@googlechrome`), a GitHub
+  Copilot plugin, a Gemini CLI extension, a VS Code `chatSkills` contribution, and documented installs for
+  Codex, Antigravity, Grok Build, Kimi Code, `npx skills` and `gh skill`.
+
+**Eval loop.** The README describes how guides are kept: expert-written guides, tasks on real web apps
+with Playwright graders, graders calibrated to pass 100% of golden solutions and fail 100% of the
+unmodified app, then coding agents run with and without the skill. Guides that agents no longer need are
+pruned ("uplift" = guided minus unguided pass rate). The README's latest snapshot (vendor-run, 2026-11-08)
+reports Claude Code (Opus 5.5) at 57% → 88% on 215 tasks, with Codex CLI and Antigravity in the same
+range; the [eval dashboard][mwg-evals] has per-guide breakdowns.
+
+**Why it matters here.** It is the clearest example so far of a browser vendor shipping guidance *to
+agents* as a skill with retrieval on demand rather than a long prompt, and of a skill maintained by
+measured uplift. Cross-ref: the WebMCP and agent-readiness material in
+[ai-crawlers-discoverability-landscape.md](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md).
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -686,6 +726,7 @@ above, consistent with every other row in this doc's census.
 | [dispatch][dispatch] | Context window multiplication via background workers |
 | [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
 | [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
+| [modern-web-guidance][mwg-repo] · [docs][mwg-docs] · [eval dashboard][mwg-evals] | Browser-vendor web-platform skill, CLI, plugin manifests, eval loop |
 | [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
 | [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
 | [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
@@ -721,3 +762,6 @@ above, consistent with every other row in this doc's census.
 [skills-sh-xref]: https://skills.sh/
 [cc-skills-adoption]: ../cc-native/agents-skills/CC-skills-adoption-analysis.md#ecosystem-context
 [rubric]: ../sdlc-lcm/agent-substrate-rubric.md
+[mwg-repo]: https://github.com/GoogleChrome/modern-web-guidance
+[mwg-docs]: https://developer.chrome.com/docs/modern-web-guidance
+[mwg-evals]: https://googlechrome.github.io/modern-web-guidance-src/
