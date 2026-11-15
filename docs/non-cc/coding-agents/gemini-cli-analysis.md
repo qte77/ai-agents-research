@@ -4,7 +4,7 @@ source: https://github.com/google-gemini/gemini-cli
 purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now deprecated for non-enterprise users.
 platform_scope: [cli]
 created: 2026-06-16
-updated: 2026-06-28
+updated: 2026-11-15
 validated_links: 2026-06-28
 status: hold
 ---
@@ -40,10 +40,10 @@ authentication pathways:
 | Auth method | User tier | Free quota |
 |---|---|---|
 | Google OAuth (personal account) | Free / Pro / Ultra | 60 req/min, 1,000 req/day |
-| Gemini API key (Google AI Studio) | Free / paid | 1,000 req/day (free tier) |
+| Gemini API key (Google AI Studio) | Free / paid | 1,000 req/day (free tier) at launch; 250 req/day, Flash only, per the [quota page][gemini-quota] checked 2026-11-15 |
 | Vertex AI credentials | Enterprise | Usage-based billing |
 
-All three pathways accessed Gemini 2.5 Pro with a 1M token context window.
+All three pathways accessed Gemini 2.5 Pro with a 1M token context window. Headless sign-in, billing and the terms on third-party access, as of 2026-11-15: [CC-web-auth-setup-analysis.md § Other Coding CLIs](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing).
 [Pricing and quota data from Google's official blog post, accessed 2026-06-16.][blog]
 
 ### Built-in tools
@@ -140,5 +140,6 @@ guarantees for paying users.
 [blog]: https://blog.google/technology/developers/introducing-gemini-cli-open-source-ai-agent/
 [gcfa-faqs]: https://developers.google.com/gemini-code-assist/resources/faqs
 [antigravity-discussion]: https://github.com/google-gemini/gemini-cli/discussions/27274
+[gemini-quota]: https://github.com/google-gemini/gemini-cli/blob/main/docs/resources/quota-and-pricing.md
 [techtimes]: https://www.techtimes.com/articles/317056/20260523/google-accepted-6000-gemini-cli-contributions-then-closed-tool-enterprise-only.htm
 [copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md

@@ -1,10 +1,10 @@
 ---
 title: CC Web Setup, Authentication & API Key Usage
-source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup, https://code.claude.com/docs/en/web-quickstart, https://platform.claude.com/docs/en/manage-claude/authentication, https://platform.claude.com/docs/en/manage-claude/workspaces, https://platform.claude.com/docs/en/api/rate-limits, https://platform.claude.com/docs/en/manage-claude/usage-cost-api, https://platform.claude.com/docs/en/manage-claude/api-and-data-retention, https://platform.claude.com/docs/en/api/overview, https://code.claude.com/docs/en/settings
+source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup, https://code.claude.com/docs/en/web-quickstart, https://platform.claude.com/docs/en/manage-claude/authentication, https://platform.claude.com/docs/en/manage-claude/workspaces, https://platform.claude.com/docs/en/api/rate-limits, https://platform.claude.com/docs/en/manage-claude/usage-cost-api, https://platform.claude.com/docs/en/manage-claude/api-and-data-retention, https://platform.claude.com/docs/en/api/overview, https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/legal-and-compliance, https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive usage, connect remote sessions, and the Claude Console platform-admin surface (workspaces, rate limits, cost reporting, data retention) a headless org API key touches.
 created: 2026-03-24
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-15
+validated_links: 2026-11-15
 status: research-preview
 ---
 
@@ -270,6 +270,94 @@ Zero data retention (ZDR) for "Claude Code with API keys" applies when the organ
 
 Agentic use is explicitly in scope of Anthropic's Usage Policy, not a gap it leaves unaddressed. Under "Additional Use Case Guidelines," the policy states, verbatim: "Agentic use cases must comply with the Usage Policy." ([source][aup]) This document does not interpret what that requires for any specific automation — read the policy itself.
 
+### Terms That Apply to Scripted Runs
+
+Quoted from the vendor pages, accessed 2026-11-15. This section reports what the pages say; it does not
+decide whether a given automation is allowed. For that, the [legal page][cc-legal] points to Anthropic
+sales.
+
+- **Which terms.** Claude Code use is subject to the "Commercial Terms of Service - for Team, Enterprise,
+  and Claude API users" and the "Consumer Terms of Service - for Free, Pro, Max, and Ultra users"
+  ([legal and compliance][cc-legal]). The Agent SDK is governed by the Commercial Terms, "including when
+  you use it to power products and services that you make available to your own customers and end
+  users," except components under a different license ([Agent SDK overview][cc-sdk]).
+- **Plan limits assume individual use.** "Advertised usage limits for Pro, Max, and Ultra plans assume
+  ordinary, individual usage of Claude Code and the Agent SDK" ([legal][cc-legal]).
+- **Sign-in rules.** "OAuth authentication is intended exclusively for purchasers of Claude Free, Pro,
+  Max, Ultra, Team, and Enterprise subscription plans and is designed to support ordinary use of Claude
+  Code and other native Anthropic applications." Developers building products, "including those using
+  the Agent SDK, should use API key authentication." Anthropic "does not permit third-party developers to
+  offer Claude.ai login into their own applications, or to route requests through Free, Pro, Max, or
+  Ultra plan credentials on behalf of their users," and developers "may not collect, store, or
+  intermediate Claude.ai credentials or session tokens." The same page says this does not prevent "an
+  end user from signing in to the unmodified Claude Code binary with their own Claude subscription"
+  ([legal][cc-legal]).
+- **Consumer Terms on automated access.** The version of the [Consumer Terms][consumer-terms] served to
+  us (effective 2025-10-08) applies to consumers "resident in the European Economic Area or Switzerland";
+  we did not see the version served elsewhere. It lists as prohibited: "Except when you are accessing our
+  Services via an Anthropic API Key or where we otherwise explicitly permit it, to access the Services
+  through automated or non-human means, whether through a bot, script, or otherwise."
+- **What the pages leave open.** The [authentication docs][cc-auth] offer `claude setup-token` for "CI
+  pipelines, scripts, or other environments where interactive browser login isn't available," and the
+  [API-credits article][api-credits] says `claude -p` and the Agent SDK on a plan login "still draw from
+  your plan's usage limits." No page we read says whether such a run counts as the "explicitly permit"
+  exception or as "ordinary, individual usage." Read the pages yourself before relying on either.
+
+### What a Scripted Run Bills
+
+Checked 2026-11-15 against the linked pages.
+
+| Run | Draws on | Source |
+|---|---|---|
+| `claude -p` or the Agent SDK, signed in with a plan | The plan's usage limits | [api-credits] |
+| The same with a `setup-token` token | The plan: the token "authenticates with your Claude subscription" | [cc-auth] |
+| `claude -p` or the Agent SDK with an API key from the Console org linked to a plan | That org's monthly API credits, then its purchased credits (sales-invoiced orgs are "billed as usual") | [api-credits] |
+| `claude -p` or the Agent SDK with any other Console key | Per-token billing to that Console account (the page says this of API keys generally; it doesn't name `-p` or the SDK) | [cc-usage-metering] |
+| The Claude Code GitHub Action, an IDE extension, the desktop app | Claude Code usage; "API credits don't cover them, even with `-p`" | [api-credits] |
+| A cloud session | "your plan's usage limits ... there's no separate charge for the cloud VM" | [cc-web] |
+| A scheduled task (formerly a routine) | Subscription usage, then metered overage if usage credits are on, plus hourly run caps; see [CC-web-scheduled-tasks-analysis.md § Usage Limits](CC-web-scheduled-tasks-analysis.md#usage-limits) | [cc-routines] |
+| Claude Managed Agents | Tokens plus a session-runtime fee; see [CC-session-cost-analysis.md](../sessions/CC-session-cost-analysis.md#price-modifiers-exposed-by-the-usage-object) | [platform-pricing] |
+
+**`setup-token`.** It generates "a one-year OAuth token." It "authenticates with your Claude subscription
+and requires a Pro, Max, Ultra, Team, or Enterprise plan. It can only make model requests, so it can't
+establish Remote Control sessions or fetch claude.ai connectors" ([authentication][cc-auth]).
+
+**API credits for subscribers.** Per [the help article][api-credits] (last updated 2026-10-30): Max
+($100/month), Ultra ($200), and Team ($20 per Standard seat, $100 per Premium seat, pooled and capped at
+$500) include monthly credits for the Claude Platform; "Free, Pro, and Enterprise plans aren't eligible."
+
+- **Setup:** you link one Console organization, which receives the credits.
+- **What they pay for:** the Claude API, the Console Playground, Managed Agents, and the Agent SDK.
+- **What they don't:** "Interactive Claude Code in the terminal, IDE, desktop, or web," extra usage, or
+  Claude on Bedrock, Vertex AI or Foundry.
+- **Expiry:** they expire at the end of each billing cycle ("Doesn't roll over").
+- **Plan limits:** they are "Separate from your plan limits."
+- **When they run out:** with no other credits, "API requests stop until your next monthly credits
+  arrive. Usage is never charged to your Claude plan."
+
+**`--bare` and plan logins.** "In bare mode, Claude Code never reads OAuth credentials or the system
+keychain," so it needs `ANTHROPIC_API_KEY` or an `apiKeyHelper` ([headless docs][cc-headless]; pitfalls
+in [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md)). The same page says `--bare` "will
+become the default for `-p` in a future release," with no date. Our inference: once that ships, a `-p`
+script that relies on a plan login will need an explicit opt-out or a key.
+
+### Other Coding CLIs: Headless Sign-In and Billing
+
+Checked 2026-11-15 against each vendor's docs; per-tool detail lives in the linked analysis docs. "No rule
+in the docs read" means those pages are silent, not that no rule exists elsewhere.
+
+| CLI | Headless run | Sign-in for scripts | What a scripted run bills | Vendor text on automated or third-party use |
+|---|---|---|---|---|
+| [Codex CLI](../../non-cc/coding-agents/codex-cli-analysis.md) | `codex exec` | "API keys are still the recommended default for automation"; ChatGPT login in CI is an advanced path; Enterprise access tokens are "intended for trusted scripts, schedulers, and private CI runners" ([auth][codex-auth]) | API key: "standard API pricing instead of included ChatGPT plan credits" ([auth][codex-auth]) | No rule in the Codex docs read; OpenAI's general terms not checked |
+| [Gemini CLI](../../non-cc/coding-agents/gemini-cli-analysis.md) | `-p` or a non-TTY run ([headless][gemini-headless]) | Cached login, `GEMINI_API_KEY`, or Vertex AI ([auth][gemini-auth]) | Gemini Code Assist (individual) login: 1,000 requests/day; Google AI Pro 1,500; AI Ultra 2,000; unpaid API key: 250/day, Flash only ([quotas][gemini-quota]) | "Directly accessing the services powering Gemini CLI (for example, the Gemini Code Assist service) using third-party software, tools, or services (for example, using OpenClaw with Gemini CLI OAuth) is a violation of applicable terms and policies" ([terms][gemini-tos]); scripted use of the CLI itself not stated |
+| [Copilot CLI](../../non-cc/agents/github-copilot-cli-analysis.md) | `copilot -p` | `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN`; classic `ghp_` PATs "Not supported by Copilot CLI" ([auth][copilot-auth]); in Actions, a PAT "if you want usage billed to a specific user's Copilot seat" ([Actions][copilot-actions]) | GitHub AI Credits, "1 AI credit = $0.01 USD" ([billing][copilot-billing]) | No rule in the Copilot CLI docs read |
+| [Cursor CLI](../../non-cc/coding-agents/cursor-analysis.md) | `agent -p` (`--force` to skip approvals) | `CURSOR_API_KEY` ([auth][cursor-auth]); team admins can turn on "Disable CLI headless mode" ([headless][cursor-headless]) | Paid plans have "a weekly pool of usage for Cursor models"; third-party models at "API list price, from prepaid credit" on Premium and above ([pricing][cursor-pricing]); the page doesn't name the CLI | No rule in the CLI docs read; Cursor's general terms not checked |
+| [opencode](../../non-cc/coding-agents/opencode-analysis.md) Go plan | `opencode run`, "designed for scripts, CI jobs, and other workflows" ([CLI][opencode-cli]) | Provider keys or logins ([providers][opencode-providers]) | Go $10/month, Go Plus $40, Go Teams $20/member; "Service accounts are not covered by Go Teams" ([Go][opencode-go]) | "Go and Go Plus are for workspaces with a single member"; "Traffic is monitored for abuse" ([Go][opencode-go]) |
+| Z.ai GLM Coding Plan | Through a supported tool | Plan API key | Plan quota | "may only be used within officially supported tools and products"; "Accounts with more than three violations may be banned" ([usage policy][zai-policy]) |
+| MiniMax M Plan | Through a compatible tool | Plan API key | Plan quota | "designed for individual, interactive developer use ... Pay-as-you-go is recommended for production use" ([FAQ][minimax-faq]) |
+
+Not checked, so left out: OpenAI's and Cursor's general terms of use, and the Kimi Code membership rules.
+
 ### Adjacent Platform Building Blocks for Agents
 
 One line each, where they bear on running agents against a Console key:
@@ -303,6 +391,7 @@ One line each, where they bear on running agents against a Console key:
 | Remote Control (mobile monitoring) | OAuth subscription | `claude remote-control` (must be logged in) |
 | Headless hit the claude.ai weekly limit | Personal/service-account key, scoped to one workspace | `platform.claude.com/settings/keys` → Create key → set Linked account + Workspace |
 | Multi-workspace Console key in headless CC | Same key + a workspace-id header | `ANTHROPIC_CUSTOM_HEADERS="anthropic-workspace-id: wrkspc_..."` (CC v2.1.227+) |
+| Scripted runs paid from a Max/Ultra/Team plan's monthly API credits | Console key from the org linked to the plan | claude.ai Settings > Billing → API credits → Link organization; see [§ What a Scripted Run Bills](#what-a-scripted-run-bills) |
 
 ## See Also
 
@@ -337,6 +426,8 @@ One line each, where they bear on running agents against a Console key:
 - [Claude Help Center — Playground article][support-playground]
 - [Claude Marketplace — Connectors and plugins][marketplace-connectors]
 - [Anthropic Usage Policy][aup]
+- [CC Legal and compliance][cc-legal], [Consumer Terms][consumer-terms], [Agent SDK overview][cc-sdk], [CC headless docs][cc-headless], [CC scheduled tasks docs][cc-routines], [Monthly API credits article][api-credits], [Models, usage, and limits in Claude Code][cc-usage-metering], [Claude Platform pricing][platform-pricing] (all accessed 2026-11-15)
+- Other CLIs (accessed 2026-11-15): [Codex auth][codex-auth]; Gemini CLI [auth][gemini-auth], [headless][gemini-headless], [quotas][gemini-quota], [terms][gemini-tos]; Copilot CLI [auth][copilot-auth], [Actions][copilot-actions], [billing][copilot-billing]; Cursor [headless][cursor-headless], [auth][cursor-auth], [pricing][cursor-pricing]; opencode [CLI][opencode-cli], [providers][opencode-providers], [Go][opencode-go]; [Z.ai usage policy][zai-policy]; [MiniMax M Plan FAQ][minimax-faq]
 
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-auth]: https://code.claude.com/docs/en/authentication
@@ -361,3 +452,27 @@ One line each, where they bear on running agents against a Console key:
 [marketplace-connectors]: https://claude.com/marketplace/connectors-plugins
 [aup]: https://www.anthropic.com/legal/aup
 [session-cost]: ../sessions/CC-session-cost-analysis.md#shared-plan-usage-across-claude-products
+[cc-legal]: https://code.claude.com/docs/en/legal-and-compliance
+[consumer-terms]: https://www.anthropic.com/legal/consumer-terms
+[cc-sdk]: https://code.claude.com/docs/en/agent-sdk/overview
+[cc-headless]: https://code.claude.com/docs/en/headless
+[cc-routines]: https://code.claude.com/docs/en/routines
+[api-credits]: https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans
+[cc-usage-metering]: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
+[platform-pricing]: https://platform.claude.com/docs/en/about-claude/pricing
+[codex-auth]: https://learn.chatgpt.com/docs/auth
+[gemini-auth]: https://geminicli.com/docs/get-started/authentication/
+[gemini-quota]: https://github.com/google-gemini/gemini-cli/blob/main/docs/resources/quota-and-pricing.md
+[gemini-tos]: https://github.com/google-gemini/gemini-cli/blob/main/docs/resources/tos-privacy.md
+[copilot-auth]: https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/authenticate-copilot-cli
+[copilot-actions]: https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/automate-with-actions
+[copilot-billing]: https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing
+[cursor-headless]: https://cursor.com/docs/cli/headless
+[cursor-auth]: https://cursor.com/docs/cli/reference/authentication
+[cursor-pricing]: https://cursor.com/docs/models-and-pricing
+[opencode-providers]: https://opencode.ai/docs/providers/
+[opencode-cli]: https://opencode.ai/docs/cli/
+[gemini-headless]: https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/headless.md
+[opencode-go]: https://opencode.ai/docs/console/go/
+[zai-policy]: https://docs.z.ai/devpack/usage-policy
+[minimax-faq]: https://platform.minimax.io/docs/m-plan/faq

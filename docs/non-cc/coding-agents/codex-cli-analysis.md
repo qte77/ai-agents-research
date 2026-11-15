@@ -3,7 +3,7 @@ title: OpenAI Codex CLI (Terminal Agent)
 source: https://github.com/openai/codex
 purpose: Evaluate Codex CLI as an interactive and headless terminal coding agent, distinct from the cloud Codex environment.
 created: 2026-06-16
-updated: 2026-10-24
+updated: 2026-11-15
 validated_links: 2026-06-28
 status: trial
 platform_scope: [openai, cli, vscode, cursor, windsurf]
@@ -63,7 +63,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 
 - **Image input**: attach screenshots or design specs via `-i`/`--image` flag or paste in composer (PNG, JPEG)
 - **Web search**: built-in, uses OpenAI cached index by default; `--search` switches to live results
-- **Model selection**: `gpt-5.5` recommended for complex tasks; switch mid-session with `/model`
+- **Model selection**: `gpt-5.5` recommended for complex tasks; switch mid-session with `/model`. GPT-5.5 retired from Codex with ChatGPT sign-in on 2026-10-14; API-key sessions are not affected ([Codex pricing][codex-pricing], checked 2026-11-15)
 - **Subagent parallelisation**: explicit fan-out for parallel subtasks (extra token cost)
 - **MCP support**: connect STDIO or streaming-HTTP MCP servers via `config.toml`; launched automatically
 - **Session resume**: `codex resume` restores prior conversation and repository state
@@ -78,7 +78,7 @@ Codex CLI authenticates via ChatGPT account sign-in (Plus, Pro, Business, Edu, E
 
 Codex CLI is **Trial**. The two-layer sandbox + approval model, headless `codex exec` path, and MCP integration make it production-credible for local and CI use. The 91 k-star repo and 842+ releases signal strong community traction and rapid iteration. However, it is not yet Adopt because:
 
-1. **ChatGPT plan dependency**: access requires a paid ChatGPT subscription or API key; no free tier for the recommended `gpt-5.5` model.
+1. **ChatGPT plan dependency**: access requires a paid ChatGPT subscription or API key; no free tier for the recommended `gpt-5.5` model. For CI, OpenAI recommends an API key, billed at API rates rather than plan credits; see [CC-web-auth-setup-analysis.md § Other Coding CLIs](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing).
 2. **Rapid version churn**: 842 releases in roughly one year; APIs and config schema change frequently.
 3. **No Claude Code parity**: lacks CC's CLAUDE.md hook system, project-skill architecture, and operator permission model — relevant when evaluating as a CC alternative.
 
@@ -125,3 +125,4 @@ A `Stop` hook can return `"decision": "block"` to force another turn ([hooks][go
 [goal-codex-follow]: https://learn.chatgpt.com/use-cases/follow-goals
 [goal-codex-cmds]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
 [goal-codex-hooks]: https://learn.chatgpt.com/docs/hooks
+[codex-pricing]: https://learn.chatgpt.com/docs/pricing
