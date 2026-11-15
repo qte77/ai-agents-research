@@ -3,7 +3,7 @@ title: "Multi-Agent Systems & Benchmarking Best Practices"
 purpose: Production best practices for multi-agent system development and benchmarking, covering infrastructure, training, and evaluation.
 created: 2026-01-13
 updated: 2026-11-15
-validated_links: 2026-09-24
+validated_links: 2026-11-15
 status: assess
 ---
 
@@ -144,6 +144,8 @@ How to build, validate, release and maintain a benchmark against these criteria:
 - Decentralized Partially Observable Markov Decision Process (Dec-POMDP) framework tests agent-user coordination
 - Performance drops significantly when users modify environment
 - Fine-grained ablations separate reasoning from communication errors
+
+For error bars, pass@k vs pass^k estimators and judge calibration, see [Judge Calibration, Trace Evals and Eval Statistics](agent-evaluation-metrics-landscape.md#judge-calibration-trace-evals-and-eval-statistics).
 
 ### 3.4 Ecosystem Gaps
 

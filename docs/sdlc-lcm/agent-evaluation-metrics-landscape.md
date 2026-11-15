@@ -3,7 +3,7 @@ title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
 updated: 2026-11-15
-validated_links: 2026-11-12
+validated_links: 2026-11-15
 status: assess
 ---
 
@@ -98,6 +98,36 @@ definitions, use cases, and primary research references for each metric.
 - **Limitations**: Requires clear context-query relationships
 - **Reference**: [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
 - **Landscape Reference**: [RAG evaluation tools (RAGAs, TruLens)](evaluation-data-resources-landscape.md)
+
+### Judge Calibration, Trace Evals and Eval Statistics
+
+Methods for trusting a score, as opposed to the metric definitions above. Pairs with the benchmark-side
+[lifecycle in mas-benchmarking-best-practices.md § 3.5](mas-benchmarking-best-practices.md#35-creating-and-maintaining-a-benchmark),
+which this section does not repeat.
+
+#### Judge calibration
+
+- **Agreement with humans**: [Zheng et al. (MT-Bench)][mtbench] report that strong LLM judges such as GPT-4 reach over 80% agreement with human preferences, "the same level of agreement between humans" (paper result, 2023-era judges). The body reports 85% GPT-4-to-human against 81% human-to-human in the no-tie setup. Re-measure on your own task: agreement on chat preferences says little about grading agent outputs.
+- **Known biases**: the same paper names position bias (favouring an answer slot), verbosity bias (favouring longer answers) and self-enhancement bias, plus limited reasoning when the judge grades maths or logic. Its verbosity test, a "repetitive list" attack, is failed by all judges tried, GPT-4 least. Its mitigations: call the judge twice with the answer order swapped and count a win only if it holds in both orders (position bias), and give a chain-of-thought or reference answer for maths (failure 14/20 default, 6/20 with CoT, 3/20 with a reference on its 10-question test). Each is a check to run on your judge, not a property to assume.
+- **Pairwise vs pointwise**: the paper treats both. Pairwise comparison discriminates subtle differences but the number of pairs grows quadratically; single-answer (pointwise) grading avoids that but, in the paper's words, scores "are likely to fluctuate more than relative pairwise results if the judge model changes". Our reading (inference, not a paper result): pointwise for tracking one system over time with a pinned judge, pairwise for ranking a few candidates.
+- **Drift**: [Chen, Zaharia and Zou][llmdrift] show that the "same" hosted model can change behaviour within months (GPT-4 prime-number accuracy 84% in March 2023, 51% in June; paper result). A judge behind a hosted alias drifts the same way, so pin the judge version where the API allows it, keep a frozen human-labelled sample, and re-score it whenever the judge changes. Judge-side manipulation is covered under [LLM Evaluator Vulnerability](#llm-evaluator-vulnerability); judge-agreement scoring under [Evaluator Alignment](#evaluator-alignment).
+
+#### Trajectory, trace and outcome-vs-process grading
+
+- **Outcome grading** checks the end state (a test passes, a database matches a goal state, as in [τ-bench][taubench]); it is hard to game by prose but blind to how the agent got there. **Process grading** scores intermediate steps; for training reward models, [Lightman et al.][prm] found process supervision beat outcome supervision on MATH (paper result, maths reasoning, not agent traces).
+- **Trace evals**: [TRAIL][trail] provides 148 human-annotated agent traces with a taxonomy of error types; the best long-context model it tried (Gemini 2.5 Pro) scored 11% (paper result, mid-2025 models). Judging a long trace is a hard task in its own right, so treat trace judges as needing the same calibration as any other.
+- **Agent-as-a-Judge**: [Zhuge et al.][agentjudge] use an agentic system to grade agentic systems with intermediate feedback, on DevAI (55 tasks, 365 hierarchical requirements). They report it far outperforming plain LLM-as-a-Judge and being as reliable as their human baseline (paper result, one benchmark, authors' own).
+- Vendor trace judges (TruLens Agent GPA, Arize Phoenix, LangChain AgentEvals) are listed under [Observability Tool Integration](#observability-tool-integration) and in the [frameworks table](evaluation-data-resources-landscape.md).
+
+#### Eval statistics
+
+- **Error bars**: [Miller][errorbars] treats an eval as an experiment on questions drawn from a super-population: standard errors of the mean, clustered standard errors when questions come in related groups, resampling answers to cut variance, paired differences (not two unpaired summaries) when comparing models, and power analysis before running. Report an interval with every headline score, and an interval on the paired difference when claiming one system beats another.
+- **pass@k vs pass^k**: with n trials per task and c successes, the [τ-bench paper][taubench] defines pass^k as the chance that all k i.i.d. trials succeed, averaged over tasks, and pass@k (from [Codex][codex], at least one of k succeeds) as its optimistic counterpart; both have unbiased estimators from n and c. Use pass@k when one good attempt is enough (a human picks the best), pass^k when every run must work (unattended agents). τ-bench's own result: GPT-4o below 50% task success and pass^8 below 25% in retail (paper result, 2024 model).
+- **Run-to-run variance**: report the number of runs and the spread, not one run. Resampling within a task is one of Miller's variance-reduction levers.
+
+#### Harness: Inspect AI
+
+[Inspect AI][inspect] is the UK AI Security Institute and Meridian Labs framework; its docs describe composable datasets, agents, tools and scorers, 200-plus pre-built evals, a web log viewer and sandboxed execution (Docker, Kubernetes and others), including running external agents such as Claude Code. Statistics-relevant features per its [options reference][inspect-opts]: `--epochs` repeats each sample, and built-in epoch reducers include `mean`, `median`, `mode`, `max`, `at_least_{n}`, `pass_at_{k}` and `pass_k_{k}`; built-in scorers such as `exact()` report mean and stderr, and `model_graded_qa()` is its LLM-judge scorer (calibrate it as above). MIT licence; v0.3.290 released 2026-11-14, about 3.3k GitHub stars (checked 2026-11-15). Peers in the [frameworks table](evaluation-data-resources-landscape.md): HELM and the lm-evaluation-harness (via Every Eval Ever).
 
 ### Agent Performance Metrics
 
@@ -498,6 +528,25 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 
 Metric definitions are sourced from the research papers and tool docs cited inline throughout; the implementing frameworks, benchmarks, and datasets are catalogued in [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md).
 
+| Source | Content |
+|---|---|
+| [MT-Bench][mtbench] | LLM-judge agreement with humans; position, verbosity and self-enhancement bias; pairwise vs single-answer grading |
+| [LLM drift][llmdrift] | Behaviour change of hosted models over months |
+| [TRAIL][trail] / [Agent-as-a-Judge][agentjudge] | Trace-level error taxonomy and agentic judges |
+| [Adding Error Bars][errorbars] | Statistics for eval reporting |
+| [τ-bench][taubench] / [Codex][codex] | pass^k and pass@k |
+| [Inspect AI][inspect] | Harness docs and repo |
+
 [trulens]: https://github.com/truera/trulens
 [trulens-org]: https://www.trulens.org/
 [agent-gpa]: https://arxiv.org/abs/2510.08847
+[mtbench]: https://arxiv.org/abs/2306.05685
+[llmdrift]: https://arxiv.org/abs/2307.09009
+[taubench]: https://arxiv.org/abs/2406.12045
+[codex]: https://arxiv.org/abs/2107.03374
+[prm]: https://arxiv.org/abs/2305.20050
+[trail]: https://arxiv.org/abs/2505.08638
+[agentjudge]: https://arxiv.org/abs/2410.10934
+[errorbars]: https://arxiv.org/abs/2411.00640
+[inspect]: https://inspect.aisi.org.uk/
+[inspect-opts]: https://inspect.aisi.org.uk/options.html
