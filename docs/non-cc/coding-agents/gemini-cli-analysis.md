@@ -125,8 +125,8 @@ guarantees for paying users.
 - Evaluate Antigravity CLI when first-party documentation matures; note it is
   currently closed-source
 - For Google-ecosystem organizations with Gemini Code Assist Enterprise licenses,
-  Gemini CLI v0.46.0 remains the current stable version through the enterprise
-  support window
+  Gemini CLI remains supported through the enterprise support window (v0.46.0 was
+  the stable version when this was written; v0.68.0 is the latest release as of 2026-11-15)
 
 ## Sources
 

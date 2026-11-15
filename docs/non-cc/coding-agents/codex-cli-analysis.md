@@ -44,7 +44,7 @@ Protected paths (`.git`, `.agents`, `.codex`) are read-only even in `workspace-w
 | `auto_review` | Routes eligible approvals through an automatic reviewer agent |
 | `never` | Disables prompts entirely; for hardened environments |
 
-**Correction 2026-11-15:** the vendor's [approvals page][approvals] now lists `untrusted` as a retired policy (the setting can stop the client starting), and `auto_review` is a separate `approvals_reviewer` setting, not an approval policy; `granular` is a newer policy. The table above reflects the 2026-06 page.
+**Correction 2026-11-15:** the vendor's [approvals page][approvals] now lists `untrusted` as a retired policy (the setting can stop the client starting), and `auto_review` is a separate `approvals_reviewer` setting, not an approval policy; `granular` is a documented policy that the 2026-06 table omitted. The table above reflects the 2026-06 page.
 
 Codex detects the folder context automatically: version-controlled projects get `workspace-write + on-request`; non-VCS folders default to read-only.
 
@@ -82,7 +82,7 @@ Codex CLI is **Trial**. The two-layer sandbox + approval model, headless `codex 
 
 1. **ChatGPT plan dependency**: access requires a paid ChatGPT subscription or API key; no free tier for the recommended `gpt-5.5` model. For CI, OpenAI recommends an API key, billed at API rates rather than plan credits; see [CC-web-auth-setup-analysis.md § Other Coding CLIs](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing).
 2. **Rapid version churn**: 842 releases in roughly one year; APIs and config schema change frequently.
-3. **No Claude Code parity**: lacks CC's CLAUDE.md hook system, project-skill architecture, and operator permission model — relevant when evaluating as a CC alternative.
+3. **No Claude Code parity**: lacks CC's CLAUDE.md conventions, has fewer documented hook events (14 vs 33 as of 2026-11-15; see the [cross-harness matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15)), and lacks CC's project-skill architecture, and operator permission model — relevant when evaluating as a CC alternative.
 
 For teams already on OpenAI/ChatGPT Enterprise, this is an immediately viable terminal agent. For CC-native workflows, the primary value is as a reference model for headless sandboxing and approval-policy design.
 
