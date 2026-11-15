@@ -3,8 +3,8 @@ title: CC Extended Context Window (1M) Analysis
 source: https://code.claude.com/docs/en/model-config#extended-context
 purpose: Analysis of 1M token extended context window for cost planning and headless CC workflow usage.
 created: 2026-03-07
-updated: 2026-11-09
-validated_links: 2026-11-09
+updated: 2026-11-15
+validated_links: 2026-11-15
 status: beta
 ---
 
@@ -12,35 +12,57 @@ status: beta
 
 ## What It Is
 
-Opus 4.6 and Sonnet 4.6 support a 1 million token context window, up from
-the standard 200K. This enables long sessions with large codebases without
-hitting context limits or triggering auto-compaction.
+A 1 million token context window, up from the standard 200K, for long sessions
+with large codebases. Per the [model configuration docs][cc-model-config]
+(checked 2026-11-15), Fable models, Sonnet 5 and later, Haiku 5.5, Opus 4.6 and
+later, and Sonnet 4.6 support it. Fable models, Sonnet 5 and later, Haiku 5.5
+and Opus 4.7 and later run with the 1M window **by default**; Opus 4.6 and
+Sonnet 4.6 reach it only through the `[1m]` suffix.
+
+**Corrected 2026-11-15:** earlier versions of this doc described a
+long-context premium above 200K tokens and a 200K billing boundary. That no
+longer matches the pricing page; see [Pricing Model](#pricing-model).
 
 ## Availability
 
-| Account Type | 1M Access | Billing |
-| ------------ | --------- | ------- |
-| API / pay-as-you-go | Full access | Long-context pricing above 200K |
-| Pro, Max, Teams, Enterprise | Requires [extra usage](https://support.claude.com/en/articles/12429409-manage-extra-usage-for-paid-claude-plans) enabled | Tokens above 200K billed as extra usage |
+| Account type | 1M access and billing (per [model configuration docs][cc-model-config], 2026-11-15) |
+| ------------ | --------- |
+| API / pay-as-you-go | Full access at standard per-token prices (Haiku 5.5: higher prices on prompts over 100K tokens) |
+| Max, Ultra, Team, Enterprise | Opus 4.6 with 1M is included in the subscription; Sonnet 4.6 with 1M needs usage credits on every plan |
+| Pro | Opus 4.6 and Sonnet 4.6 with 1M need usage credits |
+
+Claude Code checks these plan requirements only when it connects to the
+Anthropic API directly: with `ANTHROPIC_BASE_URL` pointing at an LLM gateway
+while a claude.ai login stays the active credential, it doesn't check usage
+credits and the gateway decides. The docs give no per-plan rule for the models
+that run at 1M by default (Fable, Sonnet 5+, Haiku 5.5, Opus 4.7+); separately,
+Fable usage itself can bill to usage credits depending on plan and seat tier.
+Checked 2026-11-15 by two fetches whose text for this section came from a
+summary of the page rather than verbatim — re-check before quoting.
 
 ## Pricing Model
 
-Selecting a 1M model does **not** immediately change billing. The session
-uses standard rates until context exceeds 200K tokens. Beyond 200K:
+There is no long-context premium on current models. The
+[pricing page][pricing-long-context] (checked 2026-11-15): "Claude 4.6 and later
+models (except Claude Haiku 5.5) and Claude Mythos Preview include the full 1M
+token context window at standard pricing. (A 900k-token request is billed at the
+same per-token rate as a 9k-token request.)" Prompt-caching and batch discounts
+apply across the whole window. Haiku 5.5 is the exception: a request whose prompt
+is over 100,000 tokens, cache reads and writes included, pays higher prices.
 
-- Requests charged at
-  [long-context pricing](https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing)
-- Dedicated
-  [rate limits](https://platform.claude.com/docs/en/api/rate-limits#long-context-rate-limits)
-  apply
-- For subscribers, billed as extra usage (not subscription)
+The [rate-limits page](https://platform.claude.com/docs/en/api/rate-limits) no
+longer has a separate long-context rate-limit section (checked 2026-11-15).
+
+What still grows with context is the per-request cost: every request re-sends the
+whole prefix, mostly as cache reads (see
+[CC-prompt-caching-behavior.md](CC-prompt-caching-behavior.md)).
 
 ### Interaction with Fast Mode
 
-Fast mode pricing splits at the same 200K boundary — see pricing table in
-[CC-fast-mode-analysis.md](../configuration/CC-fast-mode-analysis.md#pricing). The 1M window
-extends the upper-tier pricing zone from 200K to 1M tokens. Fast mode is
-compatible with the full 1M context (confirmed v2.1.50).
+Per the [pricing page][pricing-long-context] (checked 2026-11-15): "Fast mode
+pricing applies across the full context window, including requests over 200k
+input tokens." Fast-mode prices per model are in
+[CC-fast-mode-analysis.md](../configuration/CC-fast-mode-analysis.md#pricing).
 
 ## Configuration
 
@@ -65,15 +87,16 @@ The `sonnet[1m]` alias is a top-level model alias in CC.
 CLAUDE_CODE_DISABLE_1M_CONTEXT=1
 ```
 
-Removes 1M model variants from the model picker entirely. Set in
-`settings.json` env section or shell environment.
+Removes the `[1m]` variants from the model picker; models that default to 1M
+are then treated as 200K and compact at that boundary. Set in the
+`settings.json` env section or the shell environment.
 
 ## Relevance by Workflow
 
 | Workflow | Fit | Rationale |
 | -------- | --- | --------- |
 | Interactive development | Strong | Large codebase exploration without compaction; avoids context rot mid-session |
-| Autonomous development loop (`claude -p`) | Weak | Each iteration starts fresh with clean context; rarely approaches 200K. Extra cost unjustified. |
+| Autonomous development loop (`claude -p`) | Weak | Each iteration starts fresh with clean context; rarely approaches 200K. A larger window only lets per-request cost and drift grow. |
 | Headless teams mode | Weak | Each teammate has its own context window; same fresh-start pattern as solo mode |
 | CC baseline collection | Neutral | Longer runs may benefit, but cost scales with context; only if evaluation requires deep multi-file analysis in a single pass |
 | Code review sessions | Medium | Multi-file reviews with large diffs can benefit from sustained context |
@@ -86,10 +109,12 @@ fresh context per iteration is the design pattern.**
 
 ### Cost Awareness
 
-The 200K threshold is the key cost boundary. Monitor context usage via
-`/cost` or the status line (`context_window.used/remaining_percentage`).
-For headless autonomous runs, `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` prevents
-accidental long-context charges.
+There is no 200K price step on current models, so the cost driver is how much
+context each request carries, not which window is selected. Monitor it via
+`/cost` or the status line (`context_window.used/remaining_percentage`). On a
+subscription, Sonnet 4.6 at 1M (and both 4.6 models on Pro) draws on usage
+credits. For headless runs, `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` keeps sessions at
+200K and compacts them there.
 
 Idle sessions: since v2.1.299 Claude Code compacts a 200K+ token conversation left idle for about 54 minutes, before its one-hour prompt cache expires (`idleCompaction`, default on). See [CC-prompt-caching-behavior.md § Idle compaction](CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires).
 
@@ -124,13 +149,15 @@ The primary mitigation is [frequent intentional compaction][cc-mem-ace]: distill
 
 - [CC Model Configuration — Extended context](https://code.claude.com/docs/en/model-config#extended-context)
 - [CC Costs](https://code.claude.com/docs/en/costs)
-- [Long-context pricing](https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing)
-- [Long-context rate limits](https://platform.claude.com/docs/en/api/rate-limits#long-context-rate-limits)
+- [Long-context pricing][pricing-long-context]
+- [Rate limits](https://platform.claude.com/docs/en/api/rate-limits)
 - [CC-fast-mode-analysis.md](../configuration/CC-fast-mode-analysis.md) — fast mode pricing tiers
 - [CC-model-provider-configuration.md](../configuration/CC-model-provider-configuration.md) — model env vars
 - [Long-Context Isn't the Answer][hlyr-long-ctx] — hlyr.dev, Kyle, 2026-03-23
 - [Context-Efficient Backpressure][hlyr-backpressure] — hlyr.dev, Dex, 2025-12-09
 
+[cc-model-config]: https://code.claude.com/docs/en/model-config#extended-context
+[pricing-long-context]: https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing
 [hlyr-long-ctx]: https://www.hlyr.dev/blog/long-context-isnt-the-answer
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [cc-ralph]: ../agents-skills/CC-ralph-enhancement-research.md

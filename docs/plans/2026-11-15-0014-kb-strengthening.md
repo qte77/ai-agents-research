@@ -22,7 +22,7 @@ repo again. The coverage audits behind the rows read headings only, so treat eac
 
 1. `make reconcile`, `git log --oneline -10`, open PRs. 13-A4 runs after Tuesday 2026-11-17 whatever
    else is in flight.
-2. Lead-only rows first: K1 (small fix), then K4; K26–K28 (monitor backlogs found 2026-11-15) between lane merges.
+2. Lead-only rows first: K4 (K1 shipped in #851); K26–K28 (monitor backlogs found 2026-11-15) between lane merges.
 3. Open up to three lanes in parallel (see "Parallel lanes"), starting with L1 (K2), L6 (K3), L2 (K5),
    which already have research in hand. Then continue down each lane's row order.
 4. The owner sitting: G1–G6, then the 13-O rows.
@@ -129,7 +129,7 @@ Audit notes (local only, not in the repo): `/workspaces/temp/ai-agents-research-
 
 | Row | Item | Gate | Done when |
 |---|---|---|---|
-| K1 | Fix 1M-context pricing: the section still describes a long-context premium above 200K tokens; re-check the pricing and CC docs and rewrite (incl. how subscribers are billed for long context) | agent | Section matches the pricing page as fetched; cost hub row still accurate |
+| ~~K1~~ | ~~Fix 1M-context pricing~~ | agent | Shipped 2026-11-15 (#851): standard pricing across the 1M window on 4.6+ (Haiku 5.5's over-100K tier), plan gating per model-config, defaults per model, fast-mode note, dead rate-limit link removed; checked against the pricing, rate-limits and model-config pages |
 | K2 | Benchmarks — how to create and maintain one: a lifecycle section (design → validate → release → maintain → retire) covering construct / task / outcome validity, null and known-good controls, recomputable reference answers, rubric and labelling protocol, provenance recorded before runs, held-out sets, versioning and errata, retiring saturated items, noise and minimum task counts; agentic-cax-gauge as the worked example | agent | Per the loop |
 | K3 | Scraping — polyfetch's current state: a catalog subsection on the rendered-session scripting substrate (tiers, `render_session`, capture, HAR and auth sessions, emulation, `discover`, error schema), the Patchright console limitation as a catalog fact, the headed-plus-xvfb finding in Anti-Bot, and a corrected migration note | agent | Per the loop; every polyfetch claim cites its own docs at v0.11.0 |
 | K4 | Long-running / headless — authentication, billing and terms: plan login vs API key for `claude -p` and the Agent SDK, `--bare`, `setup-token`, API credits for subscribers, consumer vs commercial terms on scripted use, cloud sessions and routines billing, Managed Agents; the same questions for Codex, Gemini CLI, Copilot CLI, Cursor CLI, opencode and flat coding plans | agent | Per the loop; every terms claim quotes the vendor page with its access date |
