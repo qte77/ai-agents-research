@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-11-09
+updated: 2026-11-15
 validated_links: 2026-11-09
 status: reference
 ---
@@ -19,8 +19,10 @@ bypass. Focused on what's actively maintained and relevant as of 2025–2026.
 > **Single source of truth.** This catalog is the authoritative home for
 > scraping / crawling / extraction tooling across the qte77 ecosystem. It was
 > migrated here from `polyfetch-scrape` on 2026-06-16; that repo now
-> [points here][polyfetch] and retains only its own implementation-specific
-> probe findings. Tool facts below reflect the 2026-04 snapshot unless
+> [points here][polyfetch] for the landscape and keeps its own
+> implementation docs (usage contract, scripting cookbook, API reference,
+> architecture, probe findings). This catalog stays the source of truth for the
+> landscape; polyfetch facts below are sourced to that repo. Tool facts below reflect the 2026-04 snapshot unless
 > re-validated — verify before relying.
 
 ## Claude Code Built-in Web Tools
@@ -80,7 +82,23 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 - **Fidelity is the vendor's own number:** 81.9% vs Chrome's 99.8% on Lexmount's Lexbench-Headless-Browser, not independently reproduced.
 - **Moving fast:** 20,397★ and `v1.1.19` (2026-10-21) as of this check, so expect API churn.
 
-At most an optional, experimental CDP backend for low-fidelity, structure-first crawling, and only after a spike shows that console and network events, full-page screenshots and typed input work over `connect_over_cdp()`.
+At most an optional, experimental CDP backend for low-fidelity, structure-first crawling, and only after a spike shows that console and network events, full-page screenshots and typed input work over `connect_over_cdp()`. The verdict is unchanged; note that "console events" is a criterion Patchright itself fails for page-script output (see the polyfetch subsection below), so the spike should compare against that baseline, not against full Playwright behaviour.
+
+### Rendered-session scripting: polyfetch-scrape
+
+Placed under Browser Automation, not Anti-Bot Bypass: the differentiator is a scriptable, instrumented browser session on top of a fetch chain, not a bypass technique. [polyfetch-scrape][polyfetch-repo] (owner's repo; v0.11.0, 2026-11-12, verified from `pyproject.toml` and the [changelog][polyfetch-changelog]) is a typed fetch engine plus a scripting substrate. Evidence level: first-party docs of the tool's own maintainer; behaviour claims are the maintainer's, not independently re-run here. Detail: [USING.md][polyfetch-using], [scripting cookbook][polyfetch-scripting], [API reference][polyfetch-api].
+
+- **Tier chain.** httpx, then curl_cffi (browser TLS/JA3), then Patchright (Chromium; third tier since 0.3.0). `--tier` pins one backend; `--min-tier`/`--max-tier` bound the range (0.6.0), so `--max-tier curl_cffi` never launches a browser. The browser tier was renamed from `playwright` to `patchright` in 0.7.0.
+- **Retry and escalation.** Retries cover `429` and `500`/`502`/`503`/`504` and honour `Retry-After`; `403` escalates to the next tier. A GET returning 2xx (not `204`) with an empty HTML-or-untyped body is treated as a suspected soft block (some anti-bot layers answer with an empty 200) and escalates like a `403` (0.9.0).
+- **Typed errors.** Terminal statuses raise `AuthRequired` (401/407), `GoneError` (404/410), `LegalBlock` (451), without retry; since 0.10.0 any other non-2xx/3xx final status raises a plain `FetchError` (breaking change). Errors carry `headers` (`Set-Cookie` redacted) and a `body_excerpt` truncated to 2 KB (0.9.0), so a fingerprint block can be told from a session block; `--json` emits the same schema.
+- **Rendered session.** `render_session(url)` (0.6.0) yields the live Patchright `Page` as `.page`. Console errors and failed/`>=400` requests are collected for the whole session by default; `RenderOptions(capture_console=..., capture_network_failures=...)` is the opt-in form on one-shot `fetch()` (0.6.0). `capture_network` (opt-in, 0.11.0) adds a per-request log including SSE (`EventSource`) message frames, one entry per redirect hop, capped at 1000 entries and 1000 SSE messages per session, over a separate CDP session that sends only `Network.enable`.
+- **Recording and emulation.** HAR 1.2 recording (0.9.0; the file contains every header including cookies, so treat it as a secret); device presets, viewport, locale, colour scheme, user agent and VP8 `.webm` video (0.7.0); custom device bundle and `polyfetch devices` (0.8.0); screenshots (viewport, full page, CSS target).
+- **Authenticated sessions (0.11.0).** `storage_state`, `cookies` and `extra_http_headers` resume a session; `RenderSession.save_storage_state(path)` persists cookies and localStorage. Storage-state files hold live credentials.
+- **Discovery.** `discover(url)` (0.7.0) returns sitemaps, feeds, `llms.txt` and JSON-LD `@type` values, URLs/types only, no extraction. `utils.robots.is_allowed()` (0.10.0) is an opt-in robots.txt helper that `fetch()` and `discover()` never call.
+- **SSRF guard scope.** Escalation-only and only on discovery paths (`discover`, sitemap fetching, the robots helper): the seed URL is never blocked, including `localhost`; URLs derived from an external seed are checked. Plain `fetch()` is not guarded.
+- **Headed launch (0.10.0).** `--headed` / `headless=False`; on display-less hosts run under `xvfb-run -a`.
+
+**Patchright console limits (catalog-level fact).** Patchright's README states it disables the Console API to avoid a detection leak: "console functionality will not work in Patchright" (read in the installed 1.64.4 package metadata, 2026-11-15). Consequence: page-script `console.*` output never reaches `page.on("console")`. That uncaught page exceptions are lost too is an **inference** (the README does not say so): Patchright avoids `Runtime.enable`, and `Runtime.exceptionThrown` needs it. polyfetch's four-page repro (sync throw, module throw, unhandled rejection, bare `console.error()`) saw none of them via `console_errors` or `pageerror`, while a real CORS failure did (**observed by polyfetch, one environment**). Treat Patchright console/pageerror events as a browser/network signal, not a page-script one; read page state structurally (DOM) and by screenshot. A related caveat: `page.evaluate` runs in an isolated world there, so page-defined globals read back `undefined`.
 
 ### Accessibility-tree page representation
 
@@ -216,6 +234,8 @@ Most tools listed above offer both proper REST/SDK APIs and MCP servers. For pro
 | [Botasaurus](https://github.com/omkarcloud/botasaurus) | OSS (MIT) | Cloudflare, DataDome |
 | [ScrapFly](https://scrapfly.io/) | SaaS | Cloudflare, DataDome, Akamai; from $30/mo |
 
+**Headed launch (observed by polyfetch).** Launching Chromium headed instead of headless clears some anti-bot challenges that a headless launch never does ([polyfetch#190][polyfetch-190], as recorded in its [changelog][polyfetch-changelog] and [USING.md][polyfetch-using]; maintainer's observation, no per-site data given there). On a display-less host (CI) a virtual display such as `xvfb-run -a` keeps it unattended. Counterpoint from the same repo: Patchright's own README requires `launch_persistent_context(channel="chrome", headless=False)` for hardened Cloudflare targets, which headless CI cannot provide.
+
 **Reality check**: open-source anti-bot bypasses have a shelf life of months before detection vendors patch them. Commercial APIs invest continuously but cost $1K-5K/mo at scale.
 
 > **Implementation probes.** Point-in-time empirical results of a concrete fallback chain (plain `httpx` → `curl_cffi` → Patchright) are maintained in the consumer repo, [polyfetch-scrape][polyfetch], because they are specific to that codebase rather than to the catalog.
@@ -245,5 +265,18 @@ Need LLM-ready output?
 
 Each tool links to its first-party page inline in the tables above. This catalog was migrated from [polyfetch-scrape's `scraping-landscape.md`][polyfetch] (origin 2026-04-23, content snapshot 2026-04-26); see that repo for empirical probe results specific to its fallback chain.
 
+| Source | Content |
+|---|---|
+| [polyfetch-scrape USING.md][polyfetch-using] | Usage contract: tiers, error schema, soft block, session scripting, headed launch, SSRF scope, Patchright console caveat |
+| [polyfetch-scrape CHANGELOG.md][polyfetch-changelog] | Version in which each polyfetch feature shipped (0.3.0 to 0.11.0) |
+| [polyfetch-scrape scripting cookbook][polyfetch-scripting] and [API reference][polyfetch-api] | Recipes and exact signatures |
+| Patchright README (installed 1.64.4 package metadata, 2026-11-15) | Console API disabled; `Runtime.enable` avoided |
+
 [polyfetch]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
+[polyfetch-repo]: https://github.com/qte77/polyfetch-scrape
+[polyfetch-using]: https://github.com/qte77/polyfetch-scrape/blob/main/USING.md
+[polyfetch-changelog]: https://github.com/qte77/polyfetch-scrape/blob/main/CHANGELOG.md
+[polyfetch-scripting]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scripting.md
+[polyfetch-api]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/api-reference.md
+[polyfetch-190]: https://github.com/qte77/polyfetch-scrape/issues/190
 [agent-desktop]: https://github.com/vercel-labs/agent-desktop
