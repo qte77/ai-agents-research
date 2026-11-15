@@ -387,7 +387,7 @@ Anthropic's own self-hosted gateway runs Claude Code through Amazon Bedrock, Cla
 
 - **Pooled budgets.** For a developer in several groups with pooled budgets, "each request counts against the first budget whose spend is below its limit, and is refused when every budget is used up."
 - **Order.** `admin.pooled_conflict_rule` is `default_order` (the default) or `priority_list`; with `priority_list`, `admin.pooled_priority_order` names up to 50 groups whose budgets are tried first. Both need v2.1.319 or later.
-- **Spend in `/usage`.** Since 2.1.319, developers behind the gateway who have no spend limit see their spend for today, this week and this month in `/usage` ([changelog][cc-changelog]).
+- **Spend in `/usage`.** Once the gateway runs 2.1.319 or later, developers behind it who have no spend limit see their spend for today, this week and this month in `/usage` ([changelog][cc-changelog]).
 
 Auto mode behind a gateway depends on `CLAUDE_CODE_AUTO_MODE_SERVER`; see [CC-env-vars-reference.md § Session Guards & Runtime](CC-env-vars-reference.md#session-guards--runtime).
 

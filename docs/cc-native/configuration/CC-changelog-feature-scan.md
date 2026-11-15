@@ -14,8 +14,8 @@ status: research
 > changelog monitor's cutoff. Each monitor run moves its end to the newest release it compared, so it
 > runs ahead of the entries below, which stop at v2.1.71 and the 2026-04-06 list. Features since then
 > are folded into the topic docs (for example [CC-env-vars-reference.md](CC-env-vars-reference.md)); the
-> monitor's report counts a feature as covered when every backticked setting or variable it names
-> appears in one doc.
+> monitor's report counts a feature as covered when every specific backticked setting or variable it
+> names (one found in at most three docs) appears in one doc; lines naming none fall back to keyword overlap.
 
 ## [2026-03-07]
 

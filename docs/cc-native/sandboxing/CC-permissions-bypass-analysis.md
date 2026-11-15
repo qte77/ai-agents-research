@@ -39,13 +39,16 @@ Lead (--dangerously-skip-permissions)
 See [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md)
 for team architecture details.
 
-## The 5 Permission Modes
+## The Six Permission Modes
+
+Six modes per the [permission-modes docs][cc-modes] (checked 2026-11-15); this table had five before `auto` was added.
 
 | Mode | Behavior | Risk |
 |---|---|---|
 | **Default** | Asks for everything | Lowest -- blocks on every action |
 | **`acceptEdits`** | Auto-approves file edits, asks for bash/network | Low |
 | **`plan`** | Requires plan approval before implementation | Low |
+| **`auto`** | Runs everything, with background safety checks by a classifier | Medium -- see [the auto-mode error rates](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md) |
 | **`dontAsk`** | Auto-approves everything matching `settings.json` allowlist | Medium -- granular control |
 | **`bypassPermissions`** | Auto-approves ALL actions | Highest -- no guardrails |
 
@@ -156,3 +159,4 @@ Bypassing permissions does not bypass the sandbox.
 
 [cc-permissions]: https://code.claude.com/docs/en/permissions
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[cc-modes]: https://code.claude.com/docs/en/permission-modes
