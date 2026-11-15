@@ -5,6 +5,7 @@ Pointers only; see [the hub index](README.md).
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
+| [agentic-ai-vulnerability-landscape.md § Guardrail layers: a comparison](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#guardrail-layers-a-comparison) | Filters, classifiers, rails, policy engines, approvals, sandboxes and monitors set against Claude Code's hooks, permissions, sandbox and auto-mode classifier; error rates and approval fatigue | sdlc-lcm |
 | [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md) | 12-pattern taxonomy extracted from the CC source leak | cc-native |
 | [CC-dynamic-workflows-analysis.md](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md) | Dynamic workflow orchestration tool, ultracode effort setting | cc-native |
 | [CC-ralph-enhancement-research.md](../cc-native/agents-skills/CC-ralph-enhancement-research.md) | Autonomous headless CC development loop (Ralph pattern) | cc-native |
