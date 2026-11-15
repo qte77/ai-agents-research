@@ -185,6 +185,15 @@ class SelectNewVersionsTests(unittest.TestCase):
         self.assertEqual([v for v, _ in result], ["2.1.282", "2.1.281"])
 
 
+class ScanDocHeaderTests(unittest.TestCase):
+    def test_real_scan_doc_still_yields_a_cutoff(self):
+        # Reason: the monitor reads its cutoff from this doc's purpose line; a
+        # wording edit that drops the vX.Y.Z-A.B.C range would silently make
+        # every run treat all history as new.
+        doc = Path(__file__).resolve().parents[1] / "docs/cc-native/configuration/CC-changelog-feature-scan.md"
+        self.assertRegex(cl.extract_scanned_version(doc.read_text(encoding="utf-8")) or "", r"^\d+\.\d+\.\d+$")
+
+
 class FindCoveringDocsTests(unittest.TestCase):
     def test_covered_uncovered_and_noise(self):
         self.assertEqual(
@@ -193,6 +202,56 @@ class FindCoveringDocsTests(unittest.TestCase):
         )
         self.assertEqual(cl.find_covering_docs("Totally unrelated xyzzy widget", IDX), [])
         self.assertEqual(cl.find_covering_docs("- Bug fixes and reliability improvements", IDX), [])
+
+    def test_backticked_token_in_doc_body_counts_as_covered(self):
+        # Reason: plan 0014 K26 -- the index held only filenames and H2/H3
+        # headings, so a setting or env var documented in a table row read as
+        # UNCOVERED forever. A feature line whose backticked tokens all appear
+        # backticked in one doc's body is covered by that doc.
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "docs"
+            (root / "cfg").mkdir(parents=True)
+            (root / "cfg" / "env.md").write_text(
+                "# Env\n\n| `CLAUDE_CODE_AUTO_MODE_SERVER` | server |\n", encoding="utf-8"
+            )
+            (root / "cfg" / "perm.md").write_text(
+                "# Perms\n\nSee `permissions.denyInsteadOfPrompting`.\n", encoding="utf-8"
+            )
+            idx = cl.collect_doc_keyword_index(root)
+            self.assertEqual(
+                cl.find_covering_docs(
+                    "- Added `CLAUDE_CODE_AUTO_MODE_SERVER` to pick the classifier endpoint", idx
+                ),
+                ["docs/cfg/env.md"],
+            )
+            # All of a line's backticked tokens must be in the same doc.
+            self.assertEqual(
+                cl.find_covering_docs(
+                    "- Added `CLAUDE_CODE_AUTO_MODE_SERVER` and `permissions.denyInsteadOfPrompting`",
+                    idx,
+                ),
+                [],
+            )
+            # An assignment like `VAR=1` matches the documented name `VAR`.
+            self.assertEqual(
+                cl.find_covering_docs("- Set `CLAUDE_CODE_AUTO_MODE_SERVER=0` to keep it", idx),
+                ["docs/cfg/env.md"],
+            )
+            # A generic token (a command many docs mention) proves nothing about
+            # a specific change: a line naming only that token is not covered by it.
+            for i in range(4):
+                (root / "cfg" / f"misc{i}.md").write_text(
+                    "# Misc\n\nRun `/usage` to see limits.\n", encoding="utf-8"
+                )
+            idx = cl.collect_doc_keyword_index(root)
+            self.assertEqual(
+                cl.find_covering_docs("- Fixed `/usage` showing a whole-session percentage", idx), []
+            )
+            # A token that no doc mentions stays uncovered.
+            self.assertEqual(
+                cl.find_covering_docs("- Added `CLAUDE_CODE_DISABLE_FEATURE_FLAGS`", idx), []
+            )
 
 
 class ReportTests(unittest.TestCase):

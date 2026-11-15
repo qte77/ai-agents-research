@@ -3,7 +3,7 @@ title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
 updated: 2026-11-15
-validated_links: 2026-11-09
+validated_links: 2026-11-15
 status: adopt
 ---
 
@@ -82,6 +82,7 @@ Cross-ref: [CC-prompt-caching-behavior.md][cc-caching-behavior]
 | `CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL` | (unset) | Re-enable the session quality survey for enterprises capturing responses through OpenTelemetry (disabled by default when OTel is active). Set to `1` to opt in. (v2.1.136) | CHANGELOG v2.1.136 |
 | `CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS` | `1740000` (29 min) | Refresh interval for dynamic OTLP headers | [monitoring][monitoring] |
 | `DISABLE_AUTOUPDATER` | `0` | Prevent automatic CC updates | [env-vars][env-vars] |
+| `CLAUDE_CODE_DISABLE_FEATURE_FLAGS` | (unset) | `1` turns off feature-flag fetching; [Remote Control][remote-control] and the other features that need flags become unavailable, every flag uses its built-in default, and telemetry stays on unless `DISABLE_TELEMETRY` is also set. v2.1.319+; the older name `DISABLE_GROWTHBOOK` still works and is the only one v2.1.124–v2.1.318 read | [env-vars][env-vars], [changelog][changelog] (2.1.319) |
 | `DISABLE_COST_WARNINGS` | `0` | Suppress cost warning messages | [env-vars][env-vars] |
 
 Cross-ref: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [monitoring docs][monitoring], [CC-monitoring-telemetry-analysis.md](CC-monitoring-telemetry-analysis.md)
@@ -145,6 +146,10 @@ Toggle metric attributes to trade granularity for storage cost. Source: [monitor
 | `CLAUDECODE` | Set by CC | Session guard — set to `1` in shells CC spawns. Clear to enable recursive spawning | [env-vars][env-vars] |
 | `CLAUDE_CONFIG_DIR` | `~/.claude` | Override the configuration directory (settings, hooks, plugins, memory; on Linux/Windows also credentials → per-dir login = one account per dir, enabling concurrent multi-account sessions; macOS credentials stay in Keychain and carry over). **Documented only in the [debug-config guide][debug-config]** — absent from the official env vars list as of 2026-07-23 | [debug-config][debug-config] |
 | `CLAUDE_CODE_TMPDIR` | `/tmp` (Unix) | Override temp directory. CC appends `/claude/` | [env-vars][env-vars] |
+| `CLAUDE_CODE_AUTO_MODE_SERVER` | (depends on session) | Whether CC asks the server to review auto-mode actions; `0` = CC's own classifier requests. v2.1.271+ (direct API connection: v2.1.281+). Since v2.1.319, with telemetry or feature flags off (including behind LLM gateways), calls the server can't check are asked about or denied with no fallback to the built-in classifier unless this is `0` (Bedrock, Vertex and Foundry are unchanged); behind a gateway, `1` turns the server check on even with `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` set | [env-vars][env-vars], [changelog][changelog] (2.1.319) |
+| `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` | `120000` | Milliseconds before a still-running MCP tool call moves to a background task; `0` turns automatic backgrounding off and, interactively, makes Claude wait for MCP tasks. v2.1.212+ | [env-vars][env-vars] |
+| `CLAUDE_CODE_DISABLE_MCP_TASK_BACKGROUND` | (unset) | `1` = in an interactive session Claude waits for an MCP task's result (a call still moves to the background after the auto-background threshold). The docs say v2.1.304+; the changelog lists it under 2.1.319, when MCP tasks started running in the background in the terminal | [env-vars][env-vars], [changelog][changelog] (2.1.319) |
+| `CLAUDE_CODE_DISABLE_MCP_TASKS` | (unset) | `1` turns MCP tasks off. Changelog only (2.1.319); not in the env-vars page on 2026-11-15 | [changelog][changelog] (2.1.319) |
 | `CLAUDE_CODE_SIMPLE` | `0` | Minimal mode (set by `--bare` flag). Disables hooks, plugins, MCP, auto memory, CLAUDE.md | [env-vars][env-vars] |
 | `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | (unset) | Return to the original working directory after each Bash command. `1` = reset cwd to project root after each command; unset = cwd persists across Bash calls. **Note**: `=0` behavior is undocumented — only `1` is confirmed. See [tools-reference § Bash tool behavior][tools-ref], [#9359][gh-9359], [#11067][gh-11067] | [env-vars][env-vars], [tools-ref][tools-ref] |
 
@@ -362,6 +367,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | [CC settings reference][settings] | `settings.json` keys and `env` block |
 | [CC prompt-caching docs][cc-caching] | TTL-selection variables, precedence order, disable variables (accessed 2026-10-15) |
 | [CC settings reference][settings-ref] | `promptCacheTtl` / `subagentPromptCacheTtl` setting keys (accessed 2026-10-15) |
+| [CC CHANGELOG][changelog] | 2.1.319 entries for the auto-mode, feature-flag and MCP-task variables (accessed 2026-11-15) |
 | [CC debug-your-config guide][debug-config] | `CLAUDE_CONFIG_DIR` behavior + per-platform credential storage |
 | [CC monitoring docs][monitoring] | OTel configuration and metrics |
 | [CC statusline docs][statusline] | Statusline JSON schema and examples |
@@ -378,6 +384,8 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 [env-vars-precedence]: https://code.claude.com/docs/en/env-vars#precedence
 [settings-ref-env]: https://code.claude.com/docs/en/settings-reference#env
 [settings-ref]: https://code.claude.com/docs/en/settings-reference
+[changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[remote-control]: https://code.claude.com/docs/en/remote-control
 [cc-caching]: https://code.claude.com/docs/en/prompt-caching
 [cc-caching-behavior]: ../context-memory/CC-prompt-caching-behavior.md
 [debug-config]: https://code.claude.com/docs/en/debug-your-config

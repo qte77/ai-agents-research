@@ -3,7 +3,7 @@ title: CC Permissions Bypass Analysis
 source: https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/security
 purpose: Analysis of --dangerously-skip-permissions flag, permission modes, team inheritance, and safer alternatives for headless/CI execution.
 created: 2026-03-17
-updated: 2026-11-09
+updated: 2026-11-15
 status: research
 ---
 
@@ -39,15 +39,22 @@ Lead (--dangerously-skip-permissions)
 See [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md)
 for team architecture details.
 
-## The 5 Permission Modes
+## The Six Permission Modes
+
+Six modes per the [permission-modes docs][cc-modes] (checked 2026-11-15); this table had five before `auto` was added.
 
 | Mode | Behavior | Risk |
 |---|---|---|
 | **Default** | Asks for everything | Lowest -- blocks on every action |
 | **`acceptEdits`** | Auto-approves file edits, asks for bash/network | Low |
 | **`plan`** | Requires plan approval before implementation | Low |
+| **`auto`** | Runs everything, with background safety checks by a classifier | Medium -- see [the auto-mode error rates](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md#guardrail-layers-a-comparison) |
 | **`dontAsk`** | Auto-approves everything matching `settings.json` allowlist | Medium -- granular control |
 | **`bypassPermissions`** | Auto-approves ALL actions | Highest -- no guardrails |
+
+### Deny instead of prompting (v2.1.319)
+
+For unattended runs, the [permissions docs][cc-permissions] add a settings key: "To deny calls that would wait on a permission prompt, so an unattended session keeps working, set `permissions.denyInsteadOfPrompting` to `true` in your user or managed settings. `dontAsk` is a permission mode of its own, while this key works with the permission mode you're in." Per the [changelog][cc-changelog] (2.1.319), it applies "in terminal sessions, subagents and teammates." (Checked 2026-11-15.)
 
 ## Safer Alternative: `settings.json` Allowlists
 
@@ -149,3 +156,7 @@ Bypassing permissions does not bypass the sandbox.
 - [CC-cli-reference.md](../configuration/CC-cli-reference.md) — canonical flag definitions (`--dangerously-skip-permissions`, `--permission-mode`, `--allowedTools`)
 - [CC-web-auth-setup-analysis.md](../ci-remote/CC-web-auth-setup-analysis.md) — authentication methods and API key setup for headless/CI
 - [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md) — `--bare` auth breakage, stream-json pitfalls
+
+[cc-permissions]: https://code.claude.com/docs/en/permissions
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[cc-modes]: https://code.claude.com/docs/en/permission-modes
