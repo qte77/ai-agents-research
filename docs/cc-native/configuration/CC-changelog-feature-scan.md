@@ -1,14 +1,21 @@
 ---
 title: CC Changelog Feature Scan
 source: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md, https://claudelog.com/claude-code-changelog/
-purpose: Identify actionable CC features from recent releases (v2.1.0–2.1.319) not yet covered by existing analysis docs. Applicable to any project using Claude Code.
+purpose: Comparison cutoff for the weekly changelog monitor (CHANGELOG.md checked v2.1.0–2.1.319; the monitor bumps this range, it does not mean the features are documented). The hand-written scan below covers v2.1.0–v2.1.71 and the 2026-04-06 power-features list; later features are documented in the topic docs.
 created: 2026-03-07
-updated: 2026-04-06
+updated: 2026-11-15
 validated_links: 2026-04-06
 status: research
 ---
 
 **Details:** informational — feeds into adoption plan
+
+> **What the version range means (2026-11-15):** the range in this doc's frontmatter is the weekly
+> changelog monitor's cutoff. Each monitor run moves its end to the newest release it compared, so it
+> runs ahead of the entries below, which stop at v2.1.71 and the 2026-04-06 list. Features since then
+> are folded into the topic docs (for example [CC-env-vars-reference.md](CC-env-vars-reference.md)); the
+> monitor's report counts a feature as covered when every backticked setting or variable it names
+> appears in one doc.
 
 ## [2026-03-07]
 

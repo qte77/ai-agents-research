@@ -21,6 +21,19 @@ _NOISE_ONLY = re.compile(
     r"^[-\s]*bug fixes and reliability improvements\.?\s*$", re.IGNORECASE
 )
 _COVERAGE_THRESHOLD = 0.4
+# Backticked identifiers (settings, env vars, flags, commands) of at least 4 chars.
+_BACKTICK_TOKEN = re.compile(r"`([^`\s]{4,})`")
+
+
+def _backtick_marks(text: str) -> set[str]:
+    """Backticked tokens in ``text``, lowercased and wrapped in backticks.
+
+    The wrapping keeps them apart from the plain keywords in the same set.
+    """
+    # An assignment such as `VAR=1` is matched by the variable's name.
+    return {f"`{t.split('=', 1)[0].lower()}`" for t in _BACKTICK_TOKEN.findall(text)}
+
+
 _VERSION_SECTION = re.compile(r"^##\s+\[?(\d+\.\d+\.\d+)\]?", re.MULTILINE)
 _ATOM_NS = {"atom": "http://www.w3.org/2005/Atom"}
 _RELEASE_ID_VERSION = re.compile(r"/v(\d+\.\d+\.\d+)$")
@@ -184,7 +197,8 @@ def select_new_versions(
 
 
 def collect_doc_keyword_index(docs_dir: Path) -> dict[str, frozenset[str]]:
-    """Map each ``*.md`` doc's relative path to its keyword set (filename + H2/H3).
+    """Map each ``*.md`` doc's relative path to its keyword set (filename + H2/H3)
+    plus marks for every backticked token anywhere in its body (see find_covering_docs).
 
     Pre-computing keywords once here avoids rebuilding them per feature line in
     find_covering_docs.
@@ -194,7 +208,9 @@ def collect_doc_keyword_index(docs_dir: Path) -> dict[str, frozenset[str]]:
     for md in sorted(docs_dir.rglob("*.md")):
         rel = str(md.relative_to(docs_dir.parent))
         kw = set(extract_keywords(md.name))
-        for line in md.read_text(encoding="utf-8", errors="replace").splitlines():
+        text = md.read_text(encoding="utf-8", errors="replace")
+        kw.update(_backtick_marks(text))
+        for line in text.splitlines():
             m = heading_re.match(line)
             if m:
                 kw.update(extract_keywords(m.group(1).strip()))
@@ -212,6 +228,12 @@ def find_covering_docs(
     """
     if _NOISE_ONLY.match(feature_line.strip("- ")):
         return []
+    # Reason: a feature naming a setting, env var or flag is covered by the doc
+    # that documents that exact token, wherever in the body it sits (plan 0014
+    # K26: heading-only matching left documented settings tagged UNCOVERED).
+    marks = _backtick_marks(feature_line)
+    if marks:
+        return [path for path, doc_kw in keyword_index.items() if marks <= doc_kw]
     feature_kw = extract_keywords(feature_line) - DEFAULT_NOISE
     if not feature_kw:
         return []

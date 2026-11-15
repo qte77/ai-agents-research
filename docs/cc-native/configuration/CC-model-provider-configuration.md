@@ -3,7 +3,7 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/env-vars, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-11-09
+updated: 2026-11-15
 validated_links: 2026-11-09
 status: reference
 ---
@@ -381,6 +381,16 @@ When routing through gateways, additionally set ([source][cc-settings]):
 - `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` — disable Anthropic-specific `anthropic-beta` headers
 - `CLAUDE_CODE_SKIP_*_AUTH=true` — skip native provider auth (Bedrock/Vertex/Foundry)
 
+#### Claude apps gateway
+
+Anthropic's own self-hosted gateway runs Claude Code through Amazon Bedrock, Claude Platform on AWS, Google Cloud or Microsoft Foundry "with SSO sign-in, per-group model access, and OTLP telemetry" ([overview][cc-apps-gateway]). Budget rules in its `gateway.yaml` ([configuration reference][cc-apps-gateway-config], checked 2026-11-15):
+
+- **Pooled budgets.** For a developer in several groups with pooled budgets, "each request counts against the first budget whose spend is below its limit, and is refused when every budget is used up."
+- **Order.** `admin.pooled_conflict_rule` is `default_order` (the default) or `priority_list`; with `priority_list`, `admin.pooled_priority_order` names up to 50 groups whose budgets are tried first. Both need v2.1.319 or later.
+- **Spend in `/usage`.** Since 2.1.319, developers behind the gateway who have no spend limit see their spend for today, this week and this month in `/usage` ([changelog][cc-changelog]).
+
+Auto mode behind a gateway depends on `CLAUDE_CODE_AUTO_MODE_SERVER`; see [CC-env-vars-reference.md § Session Guards & Runtime](CC-env-vars-reference.md#session-guards--runtime).
+
 ## Output & Context Tuning
 
 | Variable | Purpose | Default |
@@ -492,3 +502,6 @@ When routing through gateways, additionally set ([source][cc-settings]):
 [vercel-gw]: https://vercel.com/docs/ai-gateway
 [zuplo-cc]: https://zuplo.com/docs/ai-gateway/integrations/claude-code
 [relayplane]: https://relayplane.com/
+[cc-apps-gateway]: https://code.claude.com/docs/en/claude-apps-gateway
+[cc-apps-gateway-config]: https://code.claude.com/docs/en/claude-apps-gateway-config
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
