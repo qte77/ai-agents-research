@@ -42,4 +42,5 @@ status: reference
 | [2026-10-01-0010-open-substrate-cells.md](2026-10-01-0010-open-substrate-cells.md) | done | #576 |
 | [2026-10-06-0011-owner-leads-and-followups.md](2026-10-06-0011-owner-leads-and-followups.md) | done | #600 |
 | [2026-10-10-0012-decision-models-estate.md](2026-10-10-0012-decision-models-estate.md) | done | #652 |
-| [2026-11-12-0013-followups-after-0012.md](2026-11-12-0013-followups-after-0012.md) | approved | #800 |
+| [2026-11-12-0013-followups-after-0012.md](2026-11-12-0013-followups-after-0012.md) | superseded | #800 |
+| [2026-11-15-0014-kb-strengthening.md](2026-11-15-0014-kb-strengthening.md) | approved | #848 |
