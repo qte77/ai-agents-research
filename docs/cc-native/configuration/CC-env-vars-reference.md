@@ -2,7 +2,7 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-11-09
+updated: 2026-11-15
 validated_links: 2026-11-09
 status: adopt
 ---
@@ -43,7 +43,14 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | `0` | Remove built-in git workflow instructions from context | [env-vars][env-vars] |
 | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | (built-in default) | Percentage (1-100) of the auto-compact window at which compaction triggers. It can only lower the threshold: "values above the default percentage are ignored". The docs give no default number (checked 2026-11-09); observed triggers at ~78-85% ([#18264][gh-18264], [#18241][gh-18241]) | [env-vars][env-vars] |
 | `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` | 200000 | Minimum conversation size for idle compaction (compacting a session left idle for about 54 minutes, before its one-hour prompt cache expires); turn the feature off with `"idleCompaction": false` in settings. v2.1.299+ ([changelog][gh-changelog-cc]); see [CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires) | [env-vars][env-vars] |
-| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | (model context size) | Override context capacity in tokens for compaction calculations | [env-vars][env-vars] |
+| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | (model context size) | Override context capacity in tokens for compaction calculations; accepts `100000` to `1000000` (checked 2026-11-15) | [env-vars][env-vars] |
+| `DISABLE_AUTO_COMPACT` | (unset) | `1` turns off automatic compaction near the context limit and idle compaction; overrides the `autoCompactEnabled` setting. Manual `/compact` still works | [env-vars][env-vars] |
+| `DISABLE_COMPACT` | (unset) | `1` turns off all compaction, automatic and the manual `/compact` command | [env-vars][env-vars] |
+| `BASH_MAX_OUTPUT_LENGTH` | 30000 | Characters of Bash output read back into the tool result (maximum 150000). Lowering it trims what long command output adds to context | [env-vars][env-vars] |
+| `MAX_MCP_OUTPUT_TOKENS` | 25000 | Token cap on an MCP tool response; CC warns above 10,000 tokens | [env-vars][env-vars] |
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | (per model; 32000 for an unrecognized model ID, cap 128000) | Maximum output tokens for most requests | [env-vars][env-vars] |
+| `MAX_THINKING_TOKENS` | (unset: adaptive models choose their own depth) | Fixed extended-thinking budget, capped one token below the request's max output tokens and never below 1,024 | [env-vars][env-vars] |
+| `ENABLE_TOOL_SEARCH` | (unset = `true`) | Defers MCP tool definitions so they load on demand instead of all entering context up front, except where tool search stays off | [env-vars][env-vars] |
 
 Cross-ref: [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md), [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md)
 
@@ -295,7 +302,6 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 
 | Variable | Inferred Purpose | Notes |
 |---|---|---|
-| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | Response token limit | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_MAX_RETRIES` | Max API retries | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY` | Parallel tool limit | String extraction, CC 2.1.87 |
 | `CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS` | Read tool token cap | String extraction, CC 2.1.87 |

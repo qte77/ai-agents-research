@@ -2,7 +2,7 @@
 title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economics
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
-updated: 2026-11-09
+updated: 2026-11-15
 validated_links: 2026-11-09
 status: adopt
 ---
@@ -163,6 +163,40 @@ The other side of the TTL: a session you step away from loses its cache, and the
 - **Threshold:** `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` changes the 200K-token minimum (changelog, 2.1.299).
 - **Where it runs:** terminal from 2.1.299; `/config` gained an "Idle compaction" toggle in 2.1.302; 2.1.314 added it to VS Code and Claude Desktop's Code tab (there, "the summary is used on your next message if the prompt cache has expired") and extended it to "subscribers with telemetry turned off, and on Bedrock, Vertex, Foundry and LLM gateways once the one-hour prompt cache is on"; 2.1.318 "Fixed idle compaction replacing a conversation with a reply that was not a summary."
 - **Trade-off:** the next turn is cheaper (a summary instead of a full cache rebuild of 200K+ tokens), but it continues from a summary, so detail from the conversation can be lost exactly as with `/compact`. Turn it off for sessions where you need the full transcript after a break, and see [CC-extended-context-analysis.md](CC-extended-context-analysis.md) for compaction in general.
+
+### One week of sessions on one machine (2026-11-07 to 2026-11-14)
+
+A measurement of the owner's own transcripts, to size what idle gaps cost in practice. Scope: every
+transcript under `~/.claude/projects/` on one Codespace, CC 2.1.319 to 2.1.325, Claude subscription.
+Method: one row per API request (deduplicated on message ID and request ID), reading the `usage`
+fields described in [CC-session-cost-analysis.md](../sessions/CC-session-cost-analysis.md). An
+"idle rewrite" is a request that follows a gap of more than one hour in the same transcript and
+writes more than 20,000 tokens to the cache.
+
+| Metric | Main conversations (51 transcripts) | Including subagent transcripts (453) |
+|---|---|---|
+| Requests | 14,026 | 25,059 |
+| Cache reads | 4,718M tokens (98.6% of input tokens) | 6,289M tokens |
+| Cache writes | 65.4M tokens, all at the one-hour TTL | 114.0M tokens |
+| Mean cache read per request | 336k tokens | 251k tokens |
+| Idle rewrites | 109, totalling 34.1M tokens (52% of cache writes) | 113, totalling 34.5M tokens (30%) |
+| Size of an idle rewrite | median 237k, largest 920k tokens; 87 of 109 were 100k tokens or more | — |
+
+Read it as one user's working pattern, not a benchmark:
+
+- Uncached input was negligible (about 0.03M tokens). Nearly every input token was a cache read or a
+  cache write, so cost tracks the size of the context carried on each request.
+- A cache write is billed at a higher multiple of base input than a cache read ([pricing docs][pricing]),
+  so idle rewrites weigh more in cost than their token share suggests.
+- Most idle rewrites were full-context rebuilds (100k tokens or more), not just the base context. Idle
+  compaction above did not prevent them; this measurement does not show why (a conversation under its
+  200K-token minimum, a resumed session, or another cause).
+- Levers, from this doc and [CC-extended-context-analysis.md](CC-extended-context-analysis.md): `/clear`
+  or `/compact` before stepping away from a long session, start a new session after a long break rather
+  than resuming a large one, and run fewer long-lived sessions in parallel.
+
+The method above is enough to reproduce the table on your own transcripts with a short script; do that
+before relying on these shares.
 
 ### Cache warmup curve
 
