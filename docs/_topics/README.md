@@ -17,6 +17,7 @@ lives in the linked docs.
 | [plugins.md](plugins.md) | Extension packaging: plugins, MCP servers, marketplaces |
 | [harness.md](harness.md) | The loop around the model: orchestration, tools, sandboxes, self-improving harnesses |
 | [long-running.md](long-running.md) | Hands-off, offloaded, multi-hour or scheduled agent work: durability, resume, remote execution |
+| [cost.md](cost.md) | Token usage and spend: cost drivers, levers that lower them, measurement tools |
 
 To score the tools behind these hubs, use the [agent substrate rubric](../sdlc-lcm/agent-substrate-rubric.md) (shared, distributed, reproducible, adaptable, versionable, traceable).
 The scored rows are read together in the [agent substrate reference architecture](../sdlc-lcm/agent-substrate-reference-architecture.md) (evidence matrix per subject and property, layers, open cells).

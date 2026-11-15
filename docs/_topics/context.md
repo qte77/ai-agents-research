@@ -20,4 +20,4 @@ patterns across the corpus. Pointers only; see [the hub index](README.md).
 | [redis-iris-analysis.md § Context Retriever](../non-cc/context-memory/redis-iris-analysis.md#context-retriever) | Auto-generated MCP tools over business data, shared read access across agents; first row to score `partial` on context·Shared and context·Distributed (plan 0010) | non-cc |
 | [CC-agentic-harness-patterns-analysis.md § 5. Progressive Context Compaction](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#5-progressive-context-compaction) | ARCBench (rules after compaction) and unsupported policy in hand-off summaries (arXiv 2611.03223, 2611.06545) | cc-native |
 
-Related hubs: [memory.md](memory.md), [code-tooling.md](code-tooling.md), [rag.md](rag.md).
+Related hubs: [memory.md](memory.md), [code-tooling.md](code-tooling.md), [rag.md](rag.md), [cost.md](cost.md).
