@@ -7,9 +7,12 @@ agents.** For technical workflows and coding standards, see
 
 **External References:**
 
-- @CONTRIBUTING.md - Command reference, testing guidelines, code style patterns
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Command reference, testing guidelines, code style patterns (read before a task)
 - @AGENT_REQUESTS.md - Escalation and human collaboration
-- @AGENT_LEARNINGS.md - Pattern discovery and knowledge sharing
+- [AGENT_LEARNINGS.md](AGENT_LEARNINGS.md) - Pattern discovery and knowledge sharing (read before solving a problem)
+
+CONTRIBUTING.md and AGENT_LEARNINGS.md are linked, not `@`-imported: an import loads the whole file
+into every request (about 7.4k tokens for these two). Read them when a task needs them.
 
 ## Claude Code Infrastructure
 
