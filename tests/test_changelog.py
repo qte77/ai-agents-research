@@ -238,6 +238,16 @@ class FindCoveringDocsTests(unittest.TestCase):
                 cl.find_covering_docs("- Set `CLAUDE_CODE_AUTO_MODE_SERVER=0` to keep it", idx),
                 ["docs/cfg/env.md"],
             )
+            # A generic token (a command many docs mention) proves nothing about
+            # a specific change: a line naming only that token is not covered by it.
+            for i in range(4):
+                (root / "cfg" / f"misc{i}.md").write_text(
+                    "# Misc\n\nRun `/usage` to see limits.\n", encoding="utf-8"
+                )
+            idx = cl.collect_doc_keyword_index(root)
+            self.assertEqual(
+                cl.find_covering_docs("- Fixed `/usage` showing a whole-session percentage", idx), []
+            )
             # A token that no doc mentions stays uncovered.
             self.assertEqual(
                 cl.find_covering_docs("- Added `CLAUDE_CODE_DISABLE_FEATURE_FLAGS`", idx), []

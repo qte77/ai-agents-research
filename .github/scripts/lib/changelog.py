@@ -21,6 +21,9 @@ _NOISE_ONLY = re.compile(
     r"^[-\s]*bug fixes and reliability improvements\.?\s*$", re.IGNORECASE
 )
 _COVERAGE_THRESHOLD = 0.4
+# A backticked token found in more docs than this is generic (a common command
+# or flag); naming it says nothing about whether one specific change is covered.
+_SPECIFIC_TOKEN_MAX_DOCS = 3
 # Backticked identifiers (settings, env vars, flags, commands) of at least 4 chars.
 _BACKTICK_TOKEN = re.compile(r"`([^`\s]{4,})`")
 
@@ -228,10 +231,15 @@ def find_covering_docs(
     """
     if _NOISE_ONLY.match(feature_line.strip("- ")):
         return []
-    # Reason: a feature naming a setting, env var or flag is covered by the doc
-    # that documents that exact token, wherever in the body it sits (plan 0014
-    # K26: heading-only matching left documented settings tagged UNCOVERED).
-    marks = _backtick_marks(feature_line)
+    # Reason: a feature naming a specific setting, env var or flag is covered by
+    # the doc that documents that exact token, wherever in the body it sits (plan
+    # 0014 K26: heading-only matching left documented settings tagged UNCOVERED).
+    # Generic tokens are dropped first; a line with none left falls back to the
+    # keyword-overlap rule below.
+    marks = {
+        m for m in _backtick_marks(feature_line)
+        if sum(m in doc_kw for doc_kw in keyword_index.values()) <= _SPECIFIC_TOKEN_MAX_DOCS
+    }
     if marks:
         return [path for path, doc_kw in keyword_index.items() if marks <= doc_kw]
     feature_kw = extract_keywords(feature_line) - DEFAULT_NOISE

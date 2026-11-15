@@ -1,6 +1,6 @@
 ### Fixed
 
-- Changelog monitor coverage tagging (plan 0014 K26): a feature line now counts as covered when every backticked setting, variable or flag it names (an assignment like `VAR=1` matches `VAR`) appears backticked in one doc's body. Before, only filenames and H2/H3 headings were indexed, so documented settings stayed UNCOVERED. Since v2.1.71 this moves 93 → 1,448 of 7,940 changelog lines to covered. Tests pin the rule and guard that the scan doc still yields a cutoff.
+- Changelog monitor coverage tagging (plan 0014 K26): a feature line now counts as covered when every backticked setting, variable or flag it names (an assignment like `VAR=1` matches `VAR`) appears backticked in one doc's body. Tokens backticked in more than three docs (common commands and flags such as `/usage`) are treated as generic and ignored, so they can't mark an unrelated fix as covered. Before, only filenames and H2/H3 headings were indexed, so documented settings stayed UNCOVERED. Since v2.1.71 this moves 93 → 1,077 of 7,940 changelog lines to covered; "covered" means the setting or command is documented somewhere, not that every fix to it is. Tests pin the rule and guard that the scan doc still yields a cutoff.
 - `CC-changelog-feature-scan.md`: the frontmatter range is now labelled as the monitor's comparison cutoff, not documentation coverage.
 
 ### Added
