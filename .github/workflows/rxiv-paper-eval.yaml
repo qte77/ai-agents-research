@@ -100,7 +100,7 @@ jobs:
   eval:
     needs: resolve
     if: ${{ github.actor != 'dependabot[bot]' }}
-    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@59b27ed5fe615f5d148fb891e9dc3a829ec3959b  # v0.6.0
+    uses: qte77/gha-rxiv-paper-eval/.github/workflows/eval-papers.yaml@f9105ff97f0f42eb2d927ebe2bc7e1d11ca744e7  # v0.6.1
     with:
       server: ${{ inputs.server || vars.RXIV_SERVER || 'arxiv' }}
       topic: ${{ vars.RXIV_TOPIC || 'LLM-based autonomous agents, tool use and function calling, multi-agent coordination, agentic evaluation and benchmarking, and LLM reasoning and planning' }}
@@ -130,7 +130,7 @@ jobs:
       decide_hi: "0.75"
       decide_instructions: "Answer YES only if the paper's main contribution is about: {topic}. That means it builds, trains, evaluates or analyses agents or reasoning systems driven by large language models (tool use, function calling, multi-agent coordination, planning, agent benchmarks or agent safety). Answer NO for general machine-learning methods (optimizers, architectures, sampling, clustering, vision or speech models) without an LLM-agent focus, for robotics or control work without an LLM agent, and for applications of machine learning in other fields. When unsure, answer NO."
       eval_repo: qte77/gha-rxiv-paper-eval
-      eval_ref: 59b27ed5fe615f5d148fb891e9dc3a829ec3959b  # v0.6.0 — keep in lockstep with the workflow pin above (qte77/gha-rxiv-paper-eval#80)
+      eval_ref: f9105ff97f0f42eb2d927ebe2bc7e1d11ca744e7  # v0.6.1 — keep in lockstep with the workflow pin above (qte77/gha-rxiv-paper-eval#80)
     secrets:
       llm-api-key: ${{ secrets.CF_WORKERS_AI_TOKEN }}
       llm-api-base: ${{ secrets.LLM_BASE_URL }}
