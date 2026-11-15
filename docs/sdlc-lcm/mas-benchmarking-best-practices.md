@@ -251,6 +251,55 @@ task validity, held-out briefs, a second rater, uncertainty and a datasheet as s
 while controls, bands, rubric and provenance are built. No first-party worked example of
 retiring saturated items was read for this section.
 
+#### Second worked example: Text2WetLab (observed)
+
+[Text2WetLab][t2w] is a third-party benchmark, which the corpus owner contributes to, in which agents write
+Opentrons OT-2 Python protocols that are run in the Opentrons simulator and graded by a layered verifier. The
+points below were read from its files at commit [`a50139a`][t2w]. They add to the steps above.
+
+- Attack the grader, not only controls: README [§ 3.4][t2w-grader] reports the reference solution scoring 1 in
+  all 27 controls, and 151 attacks on 9 tasks (broken or cheating protocols) all scoring below 1. The
+  best-scoring attack reaches 0.47 (deterministic reward, judge off; [`results/adversarial.json`][t2w-adv]).
+  Nine reward-hacking traps set the score to 0 when tripped. Controls show the floor; attacks show how high a
+  deliberately wrong artifact can climb.
+- A judge model bounded by the hard checks: the judge scores the rubric, voting 3 times per protocol with
+  each item taking the majority ([`judge_layer.py`][t2w-judge]). A failed critical check caps the reward at 0.3
+  whatever the judge says, and when the judge call fails the deterministic score stands and `judge_error = 1`
+  is recorded ([`grade.py`][t2w-grade]).
+- Replay saved outputs whenever the grader changes (our suggestion; done once here): for a change to the
+  shared spec checker in an open pull request (tip state tracked per instrument), the committed trials were
+  replayed on `main` and on the PR head. The 49 trials on IR-based tasks gave identical verdicts check by check,
+  and `main` reproduced every committed deterministic pass or fail ([comment on the PR][t2w-replay]).
+- Source and licence for each task, before the tasks are published: its [risk register][t2w-risks] records a
+  task credited to a source that does not contain it (P1) and reference code copied from repositories with no
+  licence that is still published (on the Hugging Face dataset, L1; in the public GitHub repo, L4). We suggest
+  a test that the cited source contains the task, and a licence check on whatever is published.
+- Decide the held-out set before release (our inference): the same register notes that one task's hidden
+  grader and reference solution are in the public repo (H8), and a publication is hard to withdraw. LAB-Bench
+  (below) keeps a private 20%.
+
+#### Wet-lab protocol references
+
+No canonical benchmark for wet-lab protocols was found; the search was not exhaustive. Sources read on
+2026-11-15:
+
+- [LAB-Bench][lab-bench] (paper): over 2,400 multiple-choice questions on biology research, one category of
+  which is protocol troubleshooting (ProtocolQA). Its [repo][lab-bench-repo] publishes about 80% of the
+  questions and keeps a 20% private test subset to monitor training contamination.
+- [BioPlanner][bioplanner] (paper, EMNLP 2023): introduces BioProt, biology protocols paired with pseudocode.
+  A model has to rebuild the pseudocode from a high-level description and a list of allowed functions, and one
+  generated protocol was run successfully in the authors' lab.
+- Systems that generate robot code, and checkers such as AEGIS: Text2WetLab's README [Table F1][t2w-f1] compares
+  18 related works. That table is its authors' description of them; the works were not read at source here.
+- Standards, not benchmarks (project pages): [SiLA 2][sila] is an interface standard for lab instruments and
+  systems that runs over HTTP/2 with the gRPC wire format. [Autoprotocol][autoprotocol] calls itself "the
+  standard way to express experiments in life science" (JSON; BSD-licensed Python library).
+  [LabOP][labop] is a representation for exchanging protocols between labs, with a converter to
+  human-readable Markdown and an Autoprotocol integration. [PyLabRobot][pylabrobot] is a hardware-agnostic Python library for
+  liquid-handling robots and accessories (Wierenga et al., *Device*, 2023).
+
+For CAD benchmarks, see § 2 of the agentic-cax-gauge [reference][gauge-ref].
+
 ## 4. Multi-Agent Systems
 
 **Coordination Patterns:**
@@ -309,6 +358,10 @@ retiring saturated items was read for this section.
 | [1803.09010] Datasheets for Datasets | Documentation standard: motivation, composition, collection, recommended uses |
 | AgentBeats tutorial / AgentX competition page | Berkeley RDI run-hygiene guidance; held-out task testing |
 | agentic-cax-gauge benchmark files | Owner's repo; first-party for its own controls, bands, rubric and provenance |
+| Text2WetLab files at `a50139a` | Third-party benchmark; first-party only for its own grader, attacks, judge cap and risk register |
+| [2407.10362] LAB-Bench | Over 2,400 biology-research questions incl. protocol troubleshooting; 20% private test subset |
+| [2310.10632] BioPlanner | BioProt protocols with pseudocode; pseudocode reconstruction; one generated protocol run in the lab |
+| SiLA 2, Autoprotocol, LabOP, PyLabRobot project pages | Lab-automation standards and libraries, not benchmarks |
 | [2606.20493] Contagion Networks | Evaluator preference/bias propagation across multi-agent LLM systems; evaluator-committee-size and communication-topology mitigations |
 | [2606.20517] Multi-LCB | Extends LiveCodeBench to 12 programming languages; exposes Python-favoring bias and cross-language ranking instability across 24 LLMs |
 | [2609.17496] FUSE | Verifiable multi-agent simulation framework for user-mediated social reasoning eval; 21k-example dataset, 12 LLMs evaluated |
@@ -334,3 +387,20 @@ retiring saturated items was read for this section.
 [gauge-ref]: https://github.com/qte77/agentic-cax-gauge/blob/main/docs/reference/benchmarking.md
 [eval-upkeep]: evaluation-data-resources-landscape.md
 [tb-sw]: https://arxiv.org/abs/2611.08417
+[2407.10362]: https://arxiv.org/abs/2407.10362
+[2310.10632]: https://arxiv.org/abs/2310.10632
+[lab-bench]: https://arxiv.org/abs/2407.10362
+[lab-bench-repo]: https://github.com/Future-House/LAB-Bench
+[bioplanner]: https://aclanthology.org/2023.emnlp-main.162
+[sila]: https://sila-standard.com/standards/
+[autoprotocol]: https://github.com/autoprotocol/autoprotocol-python
+[labop]: https://github.com/Bioprotocols/labop
+[pylabrobot]: https://github.com/PyLabRobot/pylabrobot
+[t2w]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/tree/a50139a9917a69d78eda350f14d375ec9437bd8f
+[t2w-grader]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/blob/a50139a9917a69d78eda350f14d375ec9437bd8f/README.md#34-does-the-verifier-grade-correctly
+[t2w-f1]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/blob/a50139a9917a69d78eda350f14d375ec9437bd8f/README.md#f-related-work-coverage
+[t2w-adv]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/blob/a50139a9917a69d78eda350f14d375ec9437bd8f/results/adversarial.json
+[t2w-judge]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/blob/a50139a9917a69d78eda350f14d375ec9437bd8f/tasks/golden-gate-assembly/tests/judge_layer.py
+[t2w-grade]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/blob/a50139a9917a69d78eda350f14d375ec9437bd8f/tasks/golden-gate-assembly/tests/grade.py#L80-L88
+[t2w-risks]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/blob/a50139a9917a69d78eda350f14d375ec9437bd8f/docs/risks.md
+[t2w-replay]: https://github.com/PhysicalAIBenchmarks/Text2WetLab/pull/69#issuecomment-6883733437
