@@ -280,7 +280,7 @@ sales.
   and Claude API users" and the "Consumer Terms of Service - for Free, Pro, Max, and Ultra users"
   ([legal and compliance][cc-legal]). The Agent SDK is governed by the Commercial Terms, "including when
   you use it to power products and services that you make available to your own customers and end
-  users" ([Agent SDK overview][cc-sdk]).
+  users," except components under a different license ([Agent SDK overview][cc-sdk]).
 - **Plan limits assume individual use.** "Advertised usage limits for Pro, Max, and Ultra plans assume
   ordinary, individual usage of Claude Code and the Agent SDK" ([legal][cc-legal]).
 - **Sign-in rules.** "OAuth authentication is intended exclusively for purchasers of Claude Free, Pro,
@@ -309,12 +309,13 @@ Checked 2026-11-15 against the linked pages.
 
 | Run | Draws on | Source |
 |---|---|---|
-| `claude -p` or the Agent SDK, signed in with a plan (incl. a `setup-token` token) | The plan's usage limits | [api-credits] |
-| `claude -p` or the Agent SDK with an API key from the Console org linked to a plan | That org's monthly API credits, then its other credits | [api-credits] |
-| `claude -p` or the Agent SDK with any other Console key | Pay-as-you-go on that Console org | [cc-usage-metering] |
+| `claude -p` or the Agent SDK, signed in with a plan | The plan's usage limits | [api-credits] |
+| The same with a `setup-token` token | The plan: the token "authenticates with your Claude subscription" | [cc-auth] |
+| `claude -p` or the Agent SDK with an API key from the Console org linked to a plan | That org's monthly API credits, then its purchased credits (sales-invoiced orgs are "billed as usual") | [api-credits] |
+| `claude -p` or the Agent SDK with any other Console key | Per-token billing to that Console account (the page says this of API keys generally; it doesn't name `-p` or the SDK) | [cc-usage-metering] |
 | The Claude Code GitHub Action, an IDE extension, the desktop app | Claude Code usage; "API credits don't cover them, even with `-p`" | [api-credits] |
 | A cloud session | "your plan's usage limits ... there's no separate charge for the cloud VM" | [cc-web] |
-| A scheduled task (formerly a routine) | Subscription usage, plus hourly run caps; see [CC-web-scheduled-tasks-analysis.md § Usage Limits](CC-web-scheduled-tasks-analysis.md#usage-limits) | [cc-routines] |
+| A scheduled task (formerly a routine) | Subscription usage, then metered overage if usage credits are on, plus hourly run caps; see [CC-web-scheduled-tasks-analysis.md § Usage Limits](CC-web-scheduled-tasks-analysis.md#usage-limits) | [cc-routines] |
 | Claude Managed Agents | Tokens plus a session-runtime fee; see [CC-session-cost-analysis.md](../sessions/CC-session-cost-analysis.md#price-modifiers-exposed-by-the-usage-object) | [platform-pricing] |
 
 **`setup-token`.** It generates "a one-year OAuth token." It "authenticates with your Claude subscription
