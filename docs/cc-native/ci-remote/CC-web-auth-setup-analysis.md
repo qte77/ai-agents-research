@@ -342,21 +342,20 @@ script that relies on a plan login will need an explicit opt-out or a key.
 
 ### Other Coding CLIs: Headless Sign-In and Billing
 
-Checked 2026-11-15 against each vendor's docs; per-tool detail lives in the linked analysis docs. "Not
-stated" means the pages we read are silent, not that no rule exists.
+Checked 2026-11-15 against each vendor's docs; per-tool detail lives in the linked analysis docs. "No rule
+in the docs read" means those pages are silent, not that no rule exists elsewhere.
 
 | CLI | Headless run | Sign-in for scripts | What a scripted run bills | Vendor text on automated or third-party use |
 |---|---|---|---|---|
-| [Codex CLI](../../non-cc/coding-agents/codex-cli-analysis.md) | `codex exec` | "API keys are still the recommended default for automation"; ChatGPT login in CI is an advanced path; Enterprise access tokens are "intended for trusted scripts, schedulers, and private CI runners" ([auth][codex-auth]) | API key: "standard API pricing instead of included ChatGPT plan credits" ([auth][codex-auth]) | Not stated on the pages read |
-| [Gemini CLI](../../non-cc/coding-agents/gemini-cli-analysis.md) | `-p` or a non-TTY run | Cached login, `GEMINI_API_KEY`, or Vertex AI ([auth][gemini-auth]) | Google-account login: 1,000 requests/day; unpaid API key: 250/day, Flash only ([quotas][gemini-quota]) | Using "third-party software, tools, or services" to reach the services behind Gemini CLI "is a violation of applicable terms and policies" ([terms][gemini-tos]); scripted use of the CLI itself not stated |
-| [Copilot CLI](../../non-cc/agents/github-copilot-cli-analysis.md) | `copilot -p` | `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN`; classic `ghp_` PATs "Not supported by Copilot CLI" ([auth][copilot-auth]); in Actions, a PAT "if you want usage billed to a specific user's Copilot seat" ([Actions][copilot-actions]) | GitHub AI Credits, "1 AI credit = $0.01 USD" ([billing][copilot-billing]) | Not stated on the pages read |
-| [Cursor CLI](../../non-cc/coding-agents/cursor-analysis.md) | `agent -p` (`--force` to skip approvals) | `CURSOR_API_KEY` ([auth][cursor-auth]); team admins can turn on "Disable CLI headless mode" ([headless][cursor-headless]) | Paid plans have "a weekly pool of usage for Cursor models"; third-party models at "API list price, from prepaid credit" on Premium and above ([pricing][cursor-pricing]); the page doesn't name the CLI | Not stated on the pages read |
-| [opencode](../../non-cc/coding-agents/opencode-analysis.md) Go plan | `opencode run` | Provider keys or logins ([providers][opencode-providers]) | Go $10/month, Go Plus $40, Go Teams $20/member; "Service accounts are not covered by Go Teams" ([Go][opencode-go]) | "Go and Go Plus are for workspaces with a single member"; "Traffic is monitored for abuse" ([Go][opencode-go]) |
+| [Codex CLI](../../non-cc/coding-agents/codex-cli-analysis.md) | `codex exec` | "API keys are still the recommended default for automation"; ChatGPT login in CI is an advanced path; Enterprise access tokens are "intended for trusted scripts, schedulers, and private CI runners" ([auth][codex-auth]) | API key: "standard API pricing instead of included ChatGPT plan credits" ([auth][codex-auth]) | No rule in the Codex docs read; OpenAI's general terms not checked |
+| [Gemini CLI](../../non-cc/coding-agents/gemini-cli-analysis.md) | `-p` or a non-TTY run ([headless][gemini-headless]) | Cached login, `GEMINI_API_KEY`, or Vertex AI ([auth][gemini-auth]) | Gemini Code Assist (individual) login: 1,000 requests/day; Google AI Pro 1,500; AI Ultra 2,000; unpaid API key: 250/day, Flash only ([quotas][gemini-quota]) | "Directly accessing the services powering Gemini CLI (for example, the Gemini Code Assist service) using third-party software, tools, or services (for example, using OpenClaw with Gemini CLI OAuth) is a violation of applicable terms and policies" ([terms][gemini-tos]); scripted use of the CLI itself not stated |
+| [Copilot CLI](../../non-cc/agents/github-copilot-cli-analysis.md) | `copilot -p` | `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN`; classic `ghp_` PATs "Not supported by Copilot CLI" ([auth][copilot-auth]); in Actions, a PAT "if you want usage billed to a specific user's Copilot seat" ([Actions][copilot-actions]) | GitHub AI Credits, "1 AI credit = $0.01 USD" ([billing][copilot-billing]) | No rule in the Copilot CLI docs read |
+| [Cursor CLI](../../non-cc/coding-agents/cursor-analysis.md) | `agent -p` (`--force` to skip approvals) | `CURSOR_API_KEY` ([auth][cursor-auth]); team admins can turn on "Disable CLI headless mode" ([headless][cursor-headless]) | Paid plans have "a weekly pool of usage for Cursor models"; third-party models at "API list price, from prepaid credit" on Premium and above ([pricing][cursor-pricing]); the page doesn't name the CLI | No rule in the CLI docs read; Cursor's general terms not checked |
+| [opencode](../../non-cc/coding-agents/opencode-analysis.md) Go plan | `opencode run`, "designed for scripts, CI jobs, and other workflows" ([CLI][opencode-cli]) | Provider keys or logins ([providers][opencode-providers]) | Go $10/month, Go Plus $40, Go Teams $20/member; "Service accounts are not covered by Go Teams" ([Go][opencode-go]) | "Go and Go Plus are for workspaces with a single member"; "Traffic is monitored for abuse" ([Go][opencode-go]) |
 | Z.ai GLM Coding Plan | Through a supported tool | Plan API key | Plan quota | "may only be used within officially supported tools and products"; "Accounts with more than three violations may be banned" ([usage policy][zai-policy]) |
 | MiniMax M Plan | Through a compatible tool | Plan API key | Plan quota | "designed for individual, interactive developer use ... Pay-as-you-go is recommended for production use" ([FAQ][minimax-faq]) |
 
-Not verified, so left out: OpenAI's and Cursor's terms on automated use of a consumer plan, and the
-Kimi Code membership rules.
+Not checked, so left out: OpenAI's and Cursor's general terms of use, and the Kimi Code membership rules.
 
 ### Adjacent Platform Building Blocks for Agents
 
@@ -427,7 +426,7 @@ One line each, where they bear on running agents against a Console key:
 - [Claude Marketplace — Connectors and plugins][marketplace-connectors]
 - [Anthropic Usage Policy][aup]
 - [CC Legal and compliance][cc-legal], [Consumer Terms][consumer-terms], [Agent SDK overview][cc-sdk], [CC headless docs][cc-headless], [CC scheduled tasks docs][cc-routines], [Monthly API credits article][api-credits], [Models, usage, and limits in Claude Code][cc-usage-metering], [Claude Platform pricing][platform-pricing] (all accessed 2026-11-15)
-- Other CLIs (accessed 2026-11-15): [Codex auth][codex-auth]; Gemini CLI [auth][gemini-auth], [quotas][gemini-quota], [terms][gemini-tos]; Copilot CLI [auth][copilot-auth], [Actions][copilot-actions], [billing][copilot-billing]; Cursor [headless][cursor-headless], [auth][cursor-auth], [pricing][cursor-pricing]; opencode [providers][opencode-providers], [Go][opencode-go]; [Z.ai usage policy][zai-policy]; [MiniMax M Plan FAQ][minimax-faq]
+- Other CLIs (accessed 2026-11-15): [Codex auth][codex-auth]; Gemini CLI [auth][gemini-auth], [headless][gemini-headless], [quotas][gemini-quota], [terms][gemini-tos]; Copilot CLI [auth][copilot-auth], [Actions][copilot-actions], [billing][copilot-billing]; Cursor [headless][cursor-headless], [auth][cursor-auth], [pricing][cursor-pricing]; opencode [CLI][opencode-cli], [providers][opencode-providers], [Go][opencode-go]; [Z.ai usage policy][zai-policy]; [MiniMax M Plan FAQ][minimax-faq]
 
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-auth]: https://code.claude.com/docs/en/authentication
@@ -471,6 +470,8 @@ One line each, where they bear on running agents against a Console key:
 [cursor-auth]: https://cursor.com/docs/cli/reference/authentication
 [cursor-pricing]: https://cursor.com/docs/models-and-pricing
 [opencode-providers]: https://opencode.ai/docs/providers/
+[opencode-cli]: https://opencode.ai/docs/cli/
+[gemini-headless]: https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/headless.md
 [opencode-go]: https://opencode.ai/docs/console/go/
 [zai-policy]: https://docs.z.ai/devpack/usage-policy
 [minimax-faq]: https://platform.minimax.io/docs/m-plan/faq
