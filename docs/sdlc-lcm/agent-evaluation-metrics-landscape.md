@@ -2,7 +2,7 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-11-14
+updated: 2026-11-15
 validated_links: 2026-11-12
 status: assess
 ---
@@ -434,6 +434,7 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires comprehensive attack vectors
 - **Reference**: [Prompt injection attacks against large language models](https://arxiv.org/abs/2302.12173)
 - **Landscape Reference**: [Giskard - Security Testing](evaluation-data-resources-landscape.md)
+- **Taxonomy**: [Prompt injection: attacks and defenses](agentic-ai-vulnerability-landscape.md#prompt-injection-attacks-and-defenses)
 
 #### LLM Evaluator Vulnerability
 
