@@ -5,8 +5,8 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-11-14
-validated_links: 2026-11-13
+updated: 2026-11-15
+validated_links: 2026-11-15
 ---
 
 ## Summary
@@ -116,7 +116,7 @@ Replaces general shell with purpose-built tools for common operations: FileReadT
 
 ### 12. Deterministic Lifecycle Hooks
 
-Shell commands fire automatically at specific agent lifecycle points, outside the prompt. 25+ hook points: `PreToolUse`, `PostToolUse`, `SessionStart`, `CwdChanged`. Mandatory actions belong in hooks, not instructions.
+Shell commands fire automatically at specific agent lifecycle points, outside the prompt. 25+ hook points at the time of the leak analysis (33 documented events as of 2026-11-15, see the matrix below): `PreToolUse`, `PostToolUse`, `SessionStart`, `CwdChanged`. Mandatory actions belong in hooks, not instructions.
 
 **Evidence: a Stop hook as the goal check (KernelSeek).** In *Ask, Don't Equip* (Oliaro et al.,
 Snowflake AI Research and CMU, [arXiv 2611.03517][kernelseek]), both arms ran in Claude Code
@@ -190,7 +190,7 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 
 ["Dive into Claude Code: The Design Space of Today's and Future AI Agent Systems"](https://arxiv.org/abs/2604.14228) (Liu, Zhao, Shang, Shen, 2026) reverse-engineers CC's published TypeScript source — an academic complement to Ibryam's pattern taxonomy above, framing the same artifact as a *design space*. It extracts five design motivations and traces them to concrete mechanisms:
 
-- **Seven-mode permission system** + an ML-based command risk classifier — cf. patterns 9–10 (Progressive Tool Expansion, Command Risk Classification).
+- **Seven-mode permission system** (leak-era count; the docs list six modes as of 2026-11-15) + an ML-based command risk classifier — cf. patterns 9–10 (Progressive Tool Expansion, Command Risk Classification).
 - **Five-layer context-compaction pipeline** — cf. pattern 5 (Progressive Context Compaction).
 - **Four extensibility mechanisms** — MCP, plugins, skills, hooks.
 - **Subagent + worktree delegation** and append-oriented session management.
@@ -207,6 +207,74 @@ It compares CC against a second system ("OpenClaw") to show how deployment conte
 
 [salapa-harness]: https://arxiv.org/abs/2608.20622
 [fan-harness-study]: https://arxiv.org/abs/2609.20804
+
+## Cross-Harness Matrix (checked 2026-11-15)
+
+How five terminal harnesses implement the mechanics behind the patterns above. Cells come from each
+vendor's own docs read on 2026-11-15 (links in the table notes); "not documented" means the pages read
+are silent, not that the feature is absent. Per-tool depth lives in the analysis docs:
+[Codex CLI](../../non-cc/coding-agents/codex-cli-analysis.md),
+[Gemini CLI](../../non-cc/coding-agents/gemini-cli-analysis.md),
+[OpenCode](../../non-cc/coding-agents/opencode-analysis.md),
+[Pi](../../non-cc/coding-agents/pi-analysis.md). Headless sign-in and billing are compared in
+[CC-web-auth-setup-analysis.md § Other Coding CLIs](../ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing)
+and not repeated here.
+
+| Mechanic | Claude Code | Codex CLI | Gemini CLI | OpenCode | Pi |
+|---|---|---|---|---|---|
+| Built-in tools | Dedicated file, search and shell tools plus MCP ([inventory](../configuration/CC-tools-inventory.md)) | Not enumerated on the pages read; MCP via `config.toml` | File system, shell, web fetch/search, plus MCP ([README][gem-readme]) | Including `read`, `write`, `edit`, `patch`, `glob`, `grep`, `shell`, `webfetch`, `websearch`, `skill`, `subagent`, `question` ([tools][oc-tools], [permissions][oc-perm]) | Eight: `read`, `bash`, `powershell`, `edit`, `write`, `grep`, `find`, `ls` ([extensions][pi-ext]) |
+| Sandbox | Bash sandbox, off by default; Seatbelt on macOS, bubblewrap on Linux/WSL2 ([docs][cc-sandbox]) | OS sandbox: Seatbelt, `bwrap` + seccomp, Windows MXC; network off by default ([docs][codex-sec]) | Opt-in via `-s`, `GEMINI_SANDBOX` or settings; Seatbelt profiles, Docker, Podman, `runsc`, `lxc` ([docs][gem-sandbox]) | Not documented on the permissions, tools and config pages read | None built in; containerize it (Docker, Gondolin micro-VM, OpenShell) ([README][pi-readme]) |
+| Permissions | Six modes (`default`, `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions`) plus allow/ask/deny rules ([docs][cc-modes]) | Sandbox mode (`read-only`, `workspace-write`, `danger-full-access`) crossed with approval policy (`on-request`, `never`, `granular`); `approvals_reviewer = "auto_review"` routes approvals to a reviewer agent ([docs][codex-sec]) | Policy engine with rules per mode: `default`, `autoEdit`, `plan`, `yolo` ([docs][gem-policy]) | Ordered `permissions` rules, effect `allow`/`deny`/`ask`, last match wins; separate tighten-only `policies` ([docs][oc-perm]) | None built in; an extension can block in `tool_call` ([README][pi-readme], [extensions][pi-ext]) |
+| Compaction | Automatic, plus `/compact` ([docs][cc-how]) | Automatic and `/compact`; the `PreCompact`/`PostCompact` hook trigger is `manual` or `auto` ([hooks][codex-hooks], [commands][codex-cmds]) | Automatic at 50% of context by default (`model.compressionThreshold`), plus `/compress` ([configuration][gem-config], [commands][gem-commands]) | Automatic by default, keeps about 15,000 recent tokens ([docs][oc-compaction]) | Automatic when context passes window minus `reserveTokens` (default 16,384), plus `/compact` ([docs][pi-compaction]) |
+| Hooks (documented event rows or headings; counts are not capability ratings) | 33 events in the lifecycle table ([docs][cc-hooks]) | 14 events, including `PreCompact`, `PermissionRequest`, `SubagentStart` ([docs][codex-hooks]) | 11 events, including `BeforeTool`, `PreCompress` ([docs][gem-hooks]) | Plugins "add tools, hooks, integrations, commands, agents"; event list not read ([docs][oc-build-plugin]) | Extension events, e.g. `tool_call` (can block or mutate), `session_before_compact` ([docs][pi-ext]) |
+| Resume | `--continue`, `--resume`, fork, rewind checkpoints ([docs][cc-how], [CLI][cc-cli]) | `codex resume`, `/resume`, `/fork` ([commands][codex-cmds]) | `--resume`, `/resume`, tagged checkpoints, `/rewind`, `/restore` ([sessions][gem-session], [commands][gem-commands]) | Sessions live in a shared background server; resume flags not documented on the pages read ([CLI][oc-cli]) | `--continue`, `--resume`, `/resume`, `/fork`, tree-structured branches ([docs][pi-sessions]) |
+
+### Which patterns each harness shows
+
+Only patterns the vendor docs make checkable are compared. Not compared here: 2 (scoped assembly),
+3 (tiered memory), 4 (dream consolidation), 8 (fork-join), 9 (progressive tool expansion).
+
+| Pattern | Claude Code | Codex CLI | Gemini CLI | OpenCode | Pi |
+|---|---|---|---|---|---|
+| 1 Persistent instruction file | `CLAUDE.md` | `AGENTS.md` | `GEMINI.md`, hierarchical (`/memory`) | `AGENTS.md` (per our [OpenCode doc](../../non-cc/coding-agents/opencode-analysis.md)) | `AGENTS.md`, `SYSTEM.md` (per our [Pi doc](../../non-cc/coding-agents/pi-analysis.md)) |
+| 5 Compaction (single-stage; the pattern above is multi-stage) | Automatic plus `/compact` | Automatic plus `/compact` | Automatic plus `/compress` | Automatic | Automatic plus `/compact` |
+| 6 Explore-plan-act | Plan mode | `/plan` | `/plan`, read-only | `plan` agent, edits denied except plan files | Skipped by design ([README][pi-readme]) |
+| 7 Context-isolated subagents | Yes | Subagents exist (`/subagents`, `SubagentStart` hook); isolation not verified | Subagents exist (`/agents`); isolation not verified | `subagent` permission, shipped `general` and `explore` agents | Skipped by design ([README][pi-readme]) |
+| 10 Command risk classification | Rules plus auto-mode classifier | Rules plus optional `auto_review` reviewer agent | Per-tool rules by mode | Per-resource rules | None built in |
+| 11 Single-purpose tools | Yes | Not documented on the pages read | Partial: three tool categories, one of them general shell | Yes | Yes |
+| 12 Lifecycle hooks | 33 events | 14 events | 11 events | Via plugins | Via extensions |
+
+**Reading it.** All three of Claude Code, Codex and Gemini CLI pair an OS sandbox with approval rules;
+Codex turns its sandbox on by default, while Claude Code and Gemini CLI make it opt-in; OpenCode ships permission rules and, on the pages read,
+no sandbox; Pi pushes both sandbox and permissions to the user. Hook coverage runs from a fixed event
+table (Claude Code, Codex, Gemini CLI) to a code-level extension API (Pi, OpenCode). Gemini CLI is
+now aimed at Code Assist Standard/Enterprise accounts, plus legacy paid API or Vertex keys, per its [README][gem-readme]. OpenCode's current docs are the V2 line, which renamed `permission`/`bash`/`task`
+to `permissions`/`shell`/`subagent` ([permissions][oc-perm]); its analysis doc cites v1.17.7.
+
+[gem-readme]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/README.md
+[gem-sandbox]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/sandbox.md
+[gem-policy]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/reference/policy-engine.md
+[gem-hooks]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/hooks/index.md
+[gem-session]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/session-management.md
+[gem-commands]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/reference/commands.md
+[gem-config]: https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/configuration.md
+[codex-sec]: https://learn.chatgpt.com/docs/agent-approvals-security
+[codex-hooks]: https://learn.chatgpt.com/docs/hooks
+[codex-cmds]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
+[oc-tools]: https://opencode.ai/docs/tools
+[oc-perm]: https://opencode.ai/docs/permissions
+[oc-compaction]: https://opencode.ai/docs/compaction
+[oc-build-plugin]: https://opencode.ai/docs/build/plugins
+[oc-cli]: https://opencode.ai/docs/cli
+[pi-readme]: https://github.com/earendil-works/pi/blob/main/README.md
+[pi-ext]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/extensions.md
+[pi-compaction]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md
+[pi-sessions]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/sessions.md
+[cc-sandbox]: https://code.claude.com/docs/en/sandboxing
+[cc-modes]: https://code.claude.com/docs/en/permission-modes
+[cc-hooks]: https://code.claude.com/docs/en/hooks
+[cc-how]: https://code.claude.com/docs/en/how-claude-code-works
+[cc-cli]: https://code.claude.com/docs/en/cli-reference
 
 ## Action Items
 

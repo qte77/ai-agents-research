@@ -5,7 +5,7 @@ purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now d
 platform_scope: [cli]
 created: 2026-06-16
 updated: 2026-11-15
-validated_links: 2026-06-28
+validated_links: 2026-11-15
 status: hold
 ---
 
@@ -89,6 +89,8 @@ page, accessed 2026-06-16):
 
 Latest stable at time of writing: **v0.46.0** (2026-06-10).
 
+**Correction 2026-11-15:** the [latest GitHub release][gemini-latest] is v0.68.0 (2026-11-10); v0.46.0 is no longer current.
+
 ## Adoption Decision
 
 **Hold** — the free-tier and prosumer access model that made Gemini CLI
@@ -123,8 +125,8 @@ guarantees for paying users.
 - Evaluate Antigravity CLI when first-party documentation matures; note it is
   currently closed-source
 - For Google-ecosystem organizations with Gemini Code Assist Enterprise licenses,
-  Gemini CLI v0.46.0 remains the current stable version through the enterprise
-  support window
+  Gemini CLI remains supported through the enterprise support window (v0.46.0 was
+  the stable version when this was written; v0.68.0 is the latest release as of 2026-11-15)
 
 ## Sources
 
@@ -137,6 +139,7 @@ guarantees for paying users.
 | [TechTimes: Google Accepted 6,000 Gemini CLI Contributions][techtimes] | Third-party reporting on access restriction announcement (2026-05-23) |
 
 [gemini-cli-repo]: https://github.com/google-gemini/gemini-cli
+[gemini-latest]: https://github.com/google-gemini/gemini-cli/releases/latest
 [blog]: https://blog.google/technology/developers/introducing-gemini-cli-open-source-ai-agent/
 [gcfa-faqs]: https://developers.google.com/gemini-code-assist/resources/faqs
 [antigravity-discussion]: https://github.com/google-gemini/gemini-cli/discussions/27274
