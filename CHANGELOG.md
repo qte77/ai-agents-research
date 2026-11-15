@@ -11,6 +11,558 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.20.0] - 2026-11-15
+
+### Added
+
+- `.github/workflows/decision-model-eval.yaml` + `.github/scripts/eval-decision-models.py` (manual):
+  runs decision models (default Cloudflare `clef-flash` and `clef`, through `decide()` from
+  qte77/.github pinned to 43ad121) over the G1 gold sets and writes `records.jsonl` + `summary.md`:
+  ROC-AUC with a seeded bootstrap interval (papers only), Brier, accuracy, and a `hi` sweep with a
+  rule fixed before the run (smallest `hi` whose acted decisions are wrong at most 5% of the time).
+  Transient errors are retried; escalated items are counted and left out. Fails when a model answers
+  nothing. Scoring in `lib/decision_eval.py`, 17 tests. Plan 0012 row H1.
+
+- `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md` § Agent-native ontology
+  tools: Auto Ontology MCP (gogoymh), a third-party standalone port of NVIDIA Auto Ontology.
+  It runs on local SQLite, uses the MCP client's own model and adds a knowledge store that
+  exports to Obsidian. The entry notes that it shares its package name with NVIDIA's own MCP
+  client, and that its README warns datasource passwords are stored in plain text. Hub row in
+  `docs/_topics/knowledge-graphs.md`.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: seven owner-screenshot leads
+  verified at first-party sources. Kept five — § Strands Decider (AWS / Strands Labs, a LoRA
+  pointer head on Qwen3.5-2B), § Vega (Nandakishor M's follow-on to Laya, an energy-landscape
+  readout engine), § Drex (Nace.AI, a 8B–35B family under a custom RAIL-M license), § Serving
+  without training (Hugging Face `transformers serve`'s unreleased `/v1/systemone` endpoint and
+  Ollama 0.35's native support), and two new entries in § Tools built on Jev (OntoSmith,
+  edgextract) — plus a JevEval bullet in § Use cases → 5. Dropped one unverifiable sub-claim
+  (Vega's benchmark wins over "hosted Jev 1.13.0"). The Strands Decider entry now cites
+  Strands' own 2026-11-09 post on replacing Claude Sonnet 4.6 for Amazon ticket labelling; it
+  was first dropped as unsourced after only the launch blog and README were checked.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md` § Cloudflare Clef: results of the
+  first decision-model run on this repo's gold sets (2026-11-10). Clef reached ROC-AUC 0.970 on
+  the 100 papers, with a recommended `hi` of 0.75 at 90% coverage; Clef-flash reached 0.958.
+  The section notes the limits: in-sample threshold, agent labels, and an issue set whose 3
+  negatives are planted fixtures.
+
+- `docs/cc-community/CC-community-tooling-landscape.md`: Plannotator (MIT or Apache-2.0), a local
+  browser review surface for agent plans, diffs and documents. In Claude Code it hooks
+  `PermissionRequest` on `ExitPlanMode`, adds a hooks module for non-blocking review, and
+  supports nine other harnesses. The entry covers its privacy and sharing model, and it gets a
+  Comparison row and a cross-reference from `CC-hooks-system-analysis.md`.
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §1: Strands Agents
+  (AWS), an Apache-2.0 Python/TypeScript agent SDK. The entry covers its `harness-sdk` monorepo
+  (renamed from `sdk-python`), the Strands harness (with its self-reported cost comparisons
+  against Claude Code), Strands Evals, the AgentCore deployment target and the Claude Code plugin.
+
+- `docs/non-cc/agents/salesforce-agentforce-analysis.md` (plan 0013 A10): first-party fact-check of
+  Salesforce Agentforce 360 — the platform and its component products, Claude via Amazon Bedrock
+  inside the Salesforce trust boundary (Claudeforce), the Agentforce Registry and the separately
+  branded MuleSoft Agent Fabric, Agent Script / Agentforce DX, the 2026-08-18 Flex Credits rate
+  card, the Hyperforce EU Operating Zone, and an "announced vs. shipped" table. Resolves the
+  "masking disabled for agents" question against Salesforce's own help article and a corroborating
+  blog post (it is a documented agent-action-vs-direct-template scope split, not a conflict), and
+  corrects a prior research note's A2A claim against Salesforce's own architecture recipe page.
+  Cross-linked from `agentic-enterprise-os-landscape.md`, `ag-ui-protocol-landscape.md`,
+  `CC-business-api-integrations.md`, and `microsoft-365-copilot-analysis.md`.
+
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md` § Training and certification: a
+  Learn-sourced table of agent-relevant Microsoft credentials (AB-900, AB-620, AB-100, AB-730,
+  AB-731, AI-103, AI-500, SC-500), plus the Learn-confirmed retirement dates for AI-102, PL-200,
+  and AZ-500 — with a note that the commonly cited AI-102→AI-103 / PL-200→AB-410 / AZ-500→SC-500
+  replacements trace to Microsoft Partner Center, not to any Learn page.
+- `docs/non-cc/agents/github-copilot-cloud-agent-analysis.md` § GitHub certifications: GH-300
+  (GitHub Copilot) and GH-600 (GitHub Certified: Agentic AI Developer), the latter confirmed to
+  exist via Microsoft Learn's certification catalog API rather than taken from the certification
+  poster alone. Plan 0013 row A9.
+
+- `.github/workflows/decision-model-eval.yaml`, `.github/scripts/eval-decision-models.py`, `.github/scripts/lib/decision_eval.py`: monthly drift check for the decision models. The gold-set eval runs on the 1st of each month with Clef, Clef-flash and Jev 1.13.0, writes `metrics.json`, compares with the committed `.github/scripts/data/gold/baseline.json` (ROC-AUC drop above 0.03, recommended `hi` moving by 0.05 or more) and opens, updates or closes one `decision-drift` issue (plan 0013 row A7, part 1).
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §4: WikiTrace
+  (arXiv:2611.14320, Lee/Choi/Baek/Hwang, KAIST AI · DeepAuto.ai) — an evidence-linked memory
+  that links each lesson to a compilation and the raw trajectory it came from, so an agent can
+  check an underspecified, conflicting, or failure-sourced lesson before acting instead of
+  trusting it outright. Self-reports the best average score against four prior memory methods,
+  an insights-only ablation and no memory across eight evaluation suites, cutting the regression
+  rate on tasks solvable without memory
+  from 6.5% to 4.5% (paper claims; methodology not independently verified). Code released
+  (Apache-2.0, 10★).
+- `docs/_topics/memory.md`: hub row for the WikiTrace addition.
+
+- `docs/cc-community/CC-community-plugins-landscape.md` § Community Mod Catalogs: Notable Plugin
+  Profile for lot-map (MIT; 407★/45 forks, `gh api` 2026-11-12) — a Claude Code mod that draws a
+  live node-map pane of tool calls, hooks, subagents and skills as they happen, built on the
+  native Mods mechanism rather than an external hook server. Includes a source read of
+  `hooks/register.tsx`/`hooks/map.ts` cross-checking its self-reported no-network/no-fs/no-process
+  privacy claim.
+- `docs/_topics/visualization.md`: hub row for the lot-map addition.
+
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md`: a second first-party pass (2026-11-12)
+  covering Microsoft products the corpus lacked — Microsoft Copilot Cowork (GA June 2026,
+  disambiguated from Anthropic's Claude Cowork), the 2026-09-25 "new Copilot" (Home, Copilot Code,
+  Autopilot — confirmed "previously called Scout"), Microsoft Copilot Managed Runtime (preview,
+  hosts line-of-business apps, not agents), declarative agent manifest 1.9's `agent_skills`
+  property and Fabric capability, Researcher/Analyst, and the Microsoft 365/Agent 365 SDKs and
+  Agent Store. Updates the Scope/Details/Timeline/Pricing sections and the "Two things called
+  skill" item on custom skills in declarative agents (mechanism now vendor-documented; GA-by-date
+  claim still unconfirmed).
+- `docs/non-cc/frameworks/agentic-enterprise-os-landscape.md`: extends the Microsoft Copilot Studio
+  row with the Microsoft Foundry "managed runtime" caveat — the Foundry Copilot harness (preview)
+  and Foundry hosted agents (containerized; "managed runtime" is marketing-page wording only, GA
+  unverified), disambiguated from Copilot Studio's own (renamed) harness.
+- `docs/cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md`: disambiguation note
+  pointing to Microsoft Copilot Cowork, a different, Microsoft-branded product.
+
+- `docs/sdlc-lcm/software-factory-landscape.md` §(c): Anthropic's own 2026-10-13 engineering post on
+  migrating its monorepo off git to an in-house system (Scion) as daily merges rose from ~2,500 to
+  30,000+ per day — a vendor-reported internal case alongside the existing Cloudflare Astro case.
+- `docs/cc-native/configuration/CC-models-reference.md`: Claude Fable 5.2 / Mythos 5.2 (CC v2.1.321+),
+  pricing table rows, and the headline benchmark figures stated directly in Anthropic's 2026-11-09
+  announcement.
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md`: the `claude-api` skill's `build-eval` and
+  `hillclimb` commands (claude.dev, Lance Martin, 2026-09-28), which operationalize the EDD loop
+  already documented there, plus the self-reported 66.1%→87.9% result on Anthropic's own skill.
+- `docs/cc-native/configuration/CC-tools-inventory.md`: the account-email-in-outbound-request guardrail
+  (CC v2.1.317/v2.1.321 CHANGELOG entries, verbatim) alongside the still-open `claude-code#107757`
+  privacy issue it is adjacent to.
+- `docs/cc-native/context-memory/CC-memory-system-analysis.md`: the `v2.1.277` CHANGELOG line, quoted
+  verbatim, confirming the already-documented AGENTS.md-fallback behavior and its `/config` toggle.
+- `docs/cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md`: the Claude for Financial
+  Advisors Cowork plugin (2026-09-14, updated 2026-10-27) and the Claude for Nonprofits plugin
+  (2026-10-26), distinct from the existing financial-services and Cowork-templates coverage.
+
+- `docs/sdlc-lcm/ai-security-governance-analysis.md` § Defensive Tooling: Stroq (local
+  tool-call-gating + secret-leak tracing for coding-agent sessions), Tracekit (tamper-evident
+  signed audit log for tool calls, mapped to EU AI Act / ISO 42001 / NIST AI RMF / OWASP), and
+  devvm (per-project Lima VM sandbox for coding-agent hooks and local MCP servers).
+- `docs/sdlc-lcm/agent-code-analysis-landscape.md` §3: Grim Prompter (agent-driven,
+  file-and-line-cited threat modeling) and OpenQodex (scanner-then-agent-review pre-push
+  pipeline).
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md` § Evaluation Platform Integration: Waza
+  (Microsoft's Go CLI for authoring and grading agent-skill eval scenarios).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §1/§3: ToolCallJudge
+  (Pydantic AI Harness's tool-call-approval gate), Harness² (Google Research's recursive
+  harness-optimization loop) and OpenHuman (a Rust agent harness self-benchmarked against
+  Hermes).
+- `docs/cc-community/CC-code-tooling-landscape.md`: Floorplan, a Claude Code/Codex plugin that
+  draws an interactive map of a codebase, with a Health check and a Recent-work view.
+- `docs/cc-community/CC-community-plugins-landscape.md`: new Notable Plugin Profiles for
+  Impeccable (cross-agent design-vocabulary/slop-detector plugin) and Elephant-Goldfish Model
+  (Google's drafter/fresh-context-reviewer spec-review plugin).
+- `docs/cc-community/CC-community-tooling-landscape.md`: cogit, a Claude Code plugin that
+  records the intent behind agent-written code as git-linked "thought commits."
+- `docs/non-cc/agents/skill-recorder-analysis.md` (new doc): Microsoft Skill Recorder, which
+  turns a recorded or imported screen session into a reusable Skill or Automation via the
+  GitHub Copilot CLI, for Scout/Copilot Cowork/Copilot Studio.
+- `docs/_topics/harness.md` and `docs/_topics/skills.md`: hub rows for the Harness²/OpenHuman/
+  ToolCallJudge and Skill-Recorder/Waza additions above.
+
+- `docs/cc-community/CC-memory-tooling-landscape.md`: CortexDB (liliang-cn) — Go agent memory +
+  RDF knowledge graph in one SQLite file, with a Claude Code plugin and early-access mod — and
+  Leviathan (elstongun) — a Rust full-text/memory index for agents over large datasets, with a
+  self-reported 245x token reduction vs. grep.
+- `docs/cc-community/CC-code-tooling-landscape.md`: AxiomCode Graph (compiler-accurate,
+  type-resolved code knowledge graph; FSL-1.1-Apache-2.0), Graphicle (a Rust port of Graphify's
+  code graph plus an agent-memory layer, benchmarked against Graphify and against seven memory
+  systems), and XERJ (an Elasticsearch-compatible local search engine/MCP server with a
+  first-party Claude Code/Cursor installer and a reference-coding token-savings case study).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §4: Kortix CompanyOS
+  (shared company memory in a multiplayer cloud-agent harness; Elastic License 2.0, not the
+  README's "Open Source" framing), MemoProAgent/MemoProBench (arXiv:2610.22671 — the paper found
+  at this ID does not match the names "ProPerAgent"/"ProPerMem" or the "Meta" attribution the
+  source post used), and ReHarness (arXiv:2610.12668, backward-revised harness state for agentic
+  continual learning). §7 Agent-native graph & hybrid RAG platforms: Carrel (self-hosted
+  ontology-augmented knowledge base, MIT) and RAGFlow (agent-native RAG database, 94k★,
+  Apache-2.0).
+- `docs/non-cc/knowledge-management/research-agents-landscape.md` §1: Épi (arXiv:2610.24944),
+  a persistent, self-improving research agent with hierarchical memory.
+- `docs/_topics/memory.md`, `knowledge-graphs.md`, `rag.md`, `code-tooling.md`: hub rows for the
+  above.
+
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md` § Evaluator Alignment / § Tool Call Accuracy:
+  DUET (co-evolving solver/grader agents, arXiv:2610.04087) and MCP-Injector (MCP tool-call fault
+  injection, arXiv:2610.32555, NeurIPS 2026).
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md` § Benchmarks: LifeVal (arXiv:2611.06687) and
+  MiniCorp (arXiv:2610.05912) added to the general/real-world-agent benchmark row.
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`: four more
+  self-improving-harness papers — Harness² (arXiv:2610.14224), RSI-Dojo (arXiv:2611.03698), InfraRSI
+  (arXiv:2611.11558), and Self-HPO (arXiv:2610.22791).
+- `docs/non-cc/frameworks/agent-skill-evolution-research-landscape.md`: Adaptive Skill Granularity
+  (arXiv:2610.31461) and Skill++ (arXiv:2611.00544), batch-triage additions (not rubric-scored).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` § Memento: notes the later
+  Memento 3 paper (arXiv:2610.11794) as a distinct method from a mostly different author list sharing
+  one author with the original Memento paper.
+- `docs/_topics/harness.md`, `docs/_topics/skills.md`: hub rows updated for the above.
+
+- `docs/cc-native/configuration/CC-tools-inventory.md`: `/powerup` (interactive feature lessons, CC v2.1.90) in the documented slash-command table (plan 0013 row A11).
+
+- `docs/_topics/cost.md`: topic hub for token usage and spend (cost drivers, levers, measurement tools), pointers only; registered in the hub index and CONTRIBUTING.
+- `CC-prompt-caching-behavior.md`: one week of sessions on one machine (2026-11-07 to 2026-11-14) — 98.6% of input tokens were cache reads; cache rewrites after idle gaps of over an hour were 52% of cache writes in main conversations.
+- `CC-env-vars-reference.md`: documented rows for `DISABLE_AUTO_COMPACT`, `DISABLE_COMPACT`, `BASH_MAX_OUTPUT_LENGTH`, `MAX_MCP_OUTPUT_TOKENS`, `CLAUDE_CODE_MAX_OUTPUT_TOKENS`, `MAX_THINKING_TOKENS` and `ENABLE_TOOL_SEARCH`, checked against the env-vars page on 2026-11-15; `CLAUDE_CODE_MAX_OUTPUT_TOKENS` moved out of the undocumented list.
+
+### Changed
+
+- `make reconcile` also lists open plan rows that cite no checkable PR/issue ("verify by hand";
+  informational, exit code unchanged). `lib/plan_reconcile.py` `unchecked_open_rows()`, 2 tests.
+- Plan 0012: D2 struck (qte77/.github#47 merged 2026-10-26, found stale on 2026-11-10); its live
+  call moved into H1's done-when. `AGENT_LEARNINGS.md` records the blind spot.
+
+- Plan 0012: H1's Clef part is shipped (Jev waits on K0). C1 is shipped: live triage checks
+  passed in five consumer repos. P1 is shadow-only first, and P2's done-when compares against the
+  Llama-70B baseline on the gold set.
+- `.github/scripts/eval-decision-models.py`: the summary prints the real negative count, not a
+  hardcoded 3.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md` § Cloudflare Clef: the gold-set
+  results now include Jev 1.13.0 (2026-11-11). On papers Jev scored ROC-AUC 0.968 with a
+  recommended `hi` of 0.70 at 91% coverage, overlapping Clef within the bootstrap intervals; on
+  issues it scored 62/62. Median call time from a runner was 0.14–0.15 s.
+- Plan 0012: H1 and P2 struck. Papers use Clef at `hi` 0.75; issue triage uses Clef in shadow mode.
+
+- `.github/workflows/issue-triage.yaml`: pinned gha-issue-triage v0.6.0 and turned on
+  `decide-shadow`. Triage comments here now carry a fixed-format decision-model section
+  (value, probability and band from Clef). Labels still come only from the existing triage.
+- Plan 0012: P1 struck (v0.6.0 released, six consumer repos bumped); labels from the decision
+  model are deferred until the shadow mode has data from real issues.
+
+- Plan 0012: P2's code merged in gha-rxiv-paper-eval (release and opt-in pending); P1's PR open in
+  shadow mode; Q1 shipped; `TYPESAFE_API_KEY` set here; new row N13 for the 2026-11-11 owner
+  screenshot batch (417 tiered, 186 useful leads, routed to this repo and three siblings).
+
+- `.github/workflows/rxiv-paper-eval.yaml`: pinned gha-rxiv-paper-eval v0.6.0 and turned on its
+  decision-model path. Relevance asks Clef 27B first, with `hi` 0.75 from the H1 gold-set run.
+  Uncertain papers and escalations fall back to the agent-strict chat call. The decision path
+  gets the same agent-strict criterion, minus the chat reply-format sentence; a unit test keeps
+  the two in sync. The base URL is now passed as the `LLM_BASE_URL` secret, so the
+  `LLM_BASE_URL` repo variable is no longer read. A feed week with 0 rows now fails the eval.
+
+- `docs/architecture.md`, `docs/UserStory.md`: the monthly `decision-model-eval` drift check (baseline file, `decision-drift` issue, manual runs summary-only) and the skipped-source reporting in the content monitors are documented, with a user story for each.
+
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` §1 Archon: refreshed to v0.14.0 (2026-11-07). Archon runs Claude Code, Codex and Pi as separately installed providers (since v0.12.0; the 2026-09-30 entry wrongly called it Claude-Code-run), Slack moved to a plugin (v0.13.0), the SDLC pack reaches GitHub only through the `forge-github` plugin and `archon metrics` was added (v0.14.0); telemetry on by default; README quotes that no longer appear were replaced.
+- `docs/cc-community/CC-community-skills-landscape.md` § coleam00: star counts and skill count refreshed (2026-11-12); pointer to Archon and the author's YouTube channel.
+
+- `CLAUDE.md` is now a one-line file importing `@AGENTS.md` instead of a symlink to it. Plan 0013
+  row A2 notes that gha-issue-triage must follow that import, because its repo-context loader
+  reads `CLAUDE.md`.
+
+- Plans: plan 0012 (decision models) and plan 0001 (user-level rules) are closed. Owner rows
+  were closed with their defaults (R8, R13, plan 0001 row 7), K0 was closed as done, and the
+  remainder moved to the new plan 0013 (#800): sibling Dependabot PRs, the `AGENTS.md`
+  fallback in gha-issue-triage, the community monitor's skip report, the first scheduled Clef
+  paper run, and owner items.
+
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md` § Cost-Performance Efficiency (Pareto):
+  updated the Artificial Analysis Coding Agent Index entry from v1.5 to v2.0 (FrontierCode v1.1
+  replaced DeepSWE v1.1; SWE-Atlas-QnA renamed SWE-Atlas-QnA-AA; equal-weight composite; "each
+  public row is an agent variant, not a model"), and added the data-API scope note ("no longer
+  publishes a Coding Index or an Agentic Index") and a Terms-of-Use note (personal/non-commercial
+  use, no reproduction, no automated scraping) — this corpus does not copy its scores, costs, or
+  rankings.
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md` § 2. Benchmarks: enriched the Code / SWE
+  bullet with a harness-level-vs-model-level breakdown of SWE-bench / SWE-bench Verified,
+  Terminal-Bench, and Scale SWE-bench Pro, plus a corrected Epoch AI note (it runs its own
+  scaffold plus named third-party scaffolds on SWE-bench Verified, not zero-shot as first
+  assumed); linked WebDev Arena in the Leaderboards bullet to Arena.ai ("formerly LMArena").
+- `docs/_topics/harness.md`: added a pointer row to the new benchmarks breakdown and a one-line
+  addition to the existing Pareto-section row noting the Coding Agent Index v2.0 update.
+
+- `.github/workflows/issue-triage.yaml`: gha-issue-triage v0.6.0 → v0.7.0. Triage now reads `AGENTS.md` through this repo's `@AGENTS.md` import in `CLAUDE.md` (qte77/gha-issue-triage#132), and the shadow section shows `relevance_score` as a 1–10 level instead of `-` (qte77/gha-issue-triage#133).
+
+- `.github/workflows/issue-triage.yaml`: gha-issue-triage v0.7.0 → v0.7.1, which prints each shadow `relevance_score` answer's raw number to the job log, to confirm its zero-based reading (qte77/gha-issue-triage#136; plan 0013 row A6).
+
+- Microsoft 365 Copilot ecosystem analysis: re-checked ~47 load-bearing claims against current
+  first-party pages (`microsoft-365-copilot-analysis.md`). Added a previously-unreported,
+  not-yet-shipped Microsoft Copilot blog announcement (2026-11-05) that Claude processing is
+  planned to move into the EU Data Boundary for EU/EFTA tenants by end of 2026, without changing
+  the doc's current-state claim that Claude remains excluded today; softened the Copilot Studio
+  GPT-5.5/GPT-4.1/GPT-5 retirement rows from "retired"/"reached" to "scheduled, completion
+  unconfirmed on the page" (the Learn page's own content metadata is unchanged since before those
+  dates); refreshed several re-checked dates from 2026-11-09 to 2026-11-12; updated two citation
+  URLs to their current canonical Learn paths (`connect-to-ai-subprocessor`,
+  `manage-byo-mcp-server`, both still resolving via redirect from the prior URL).
+- Microsoft MXC analysis: refreshed star count (3,116 → 3,132) and re-confirmed the "Claude Code
+  support is announcement-only" absence claim against the full text of Claude Code's own
+  sandboxing docs (`microsoft-mxc-analysis.md`).
+- Microsoft Skill Recorder analysis: corrected a misattribution — the "Scout/Cowork/Copilot Studio"
+  consumer-surface claim is sourced to the repo's GitHub description field, not its README body,
+  which never names those surfaces; added the Ubuntu/Linux install path the README's own
+  instructions point to but the doc had omitted; refreshed star count (5,760 → 5,762)
+  (`skill-recorder-analysis.md`).
+
+- `docs/cc-community/CC-community-plugins-landscape.md` § claude-seo: refreshed the stale
+  2026-04-15 snapshot (23 skills/17 subagents/3 extensions, 2026-04-23 counts) to the repo's
+  current README and `gh api` figures (26 skills/19 subagents/9 extensions, 28,262★).
+
+- Plan 0012: E1 struck. The estate decision-model conventions are now in
+  `qte77/.github` `actions/decide/CONVENTIONS.md`, linked from the decide README and both ported
+  actions. New struck row N14 records the 2026-11-11 owner leads: Strands Agents,
+  Auto Ontology MCP and Plannotator.
+
+- Plan 0012: N13 struck. The 2026-11-11 owner screenshot leads have been verified and folded
+  into the corpus (#790–#793) and into agentic-cax-gauge. All agent rows are closed; what's
+  left is optional or rests with the owner.
+
+- Plan 0013: O3 is struck. The gha-issue-triage lint failure came from an old pin of the shared
+  workflow (fixed in qte77/gha-issue-triage#131), not from the Actions setting. Five new agent
+  rows: drift checks for the decision models (A7), out-of-sample gold sets (A8), AI
+  certification paths (A9), a Salesforce Agentforce 360 analysis (A10), and `/powerup` in the
+  tools inventory (A11).
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: opening status brought up to date (A1, A3, A9–A11 and A7 part 1 shipped; A2/A6 code in gha-issue-triage v0.7.0/v0.7.1 and pinned in all consumers), A2 and A7 rows record what is left, and four owner rows added with defaults: link-check excludes for three bot-blocked links (O6), the Mythos-on-AMD note (O7), the SoTA Letters leads kept here (O8), re-cloning coding-harness-eval (O9).
+
+- `.claude/settings.json`: allow the read-only `make check_status`, `make check_actions`, `make help`, `make census` and `shellcheck *`, alongside the existing exact make-target rules, so sessions without a local settings file (cloud, CI, other machines) don't prompt for them.
+
+- `lychee.toml`: exclude `developer.salesforce.com` and `architect.salesforce.com` (host-level, replacing the single developer.salesforce.com blog URL) and the one path `arena.ai/leaderboard/webdev`. Every URL on them returns 403 to lychee both locally and in CI (a persistent bot-block, unlike runner-IP 403s that pass on a local recheck); one page per host was checked live on 2026-11-13. The Salesforce and harness-comparison docs added on 2026-11-12 had turned the link check red on every run, including `main`.
+
+- `docs/cc-native/configuration/CC-models-reference.md`: dated note on the hardware Claude runs on, cited to Anthropic's S-1/A (filed 2026-11-10: four chip families, one fungible compute pool, Claude used to bring up new chip platforms) and AMD's 2026-07-22 release (up to 2 GW of MI450 Series GPUs, builds on existing MI355X use). A time figure for Mythos on AMD hardware, shared on X, is left out: the filing's text gives only the old "many months" baseline, and its source wasn't traced (plan 0013 O7).
+- `lychee.toml`: exclude Anthropic PBC's SEC EDGAR filings path (`sec.gov/Archives/edgar/data/2130357/`). SEC returns 403 to clients without a contact user agent; owner-approved.
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: row O1 done (owner set the Workers AI token in gha-rxiv-paper-eval; a manual self-test run returned real Workers AI verdicts), with a correction: the self-test already used Workers AI on `main`.
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: owner row O10 records the Cloudflare account-details audit: what shipped (`qte77/ldnmxx-hack#373`, `qte77/qte77.github.io#62`) and the open owner decisions.
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: row O10 trimmed to what shipped; the open Cloudflare decisions and removal steps moved to the owner's private notes.
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: rows O4 (operator commands: first tranche shipped in six repos, remaining hits counted) and O5 (stale token variables traced and removed where the container allows) updated.
+
+- `tag-release.yaml` and `publish-release.yaml` re-pinned from `qte77/.github@613b950` to `qte77/.github@a32769a` (main, 2026-11-12, qte77/.github#64). Inputs/outputs used by this repo are unchanged at the new pin.
+
+- `.claude/settings.json`: allow more read-only calls seen often in recent sessions: `~/.local/bin/lychee *` (the user-local install path, which `lychee *` doesn't match), `gh run watch *`, `gh secret list *` (names only, never values), `gh search prs *`, `gh label list *`, and the Cloudflare docs search MCP tool.
+
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: correct the Glasswing mention. Project Glasswing is Anthropic's 2026-04-07 initiative with launch partners to secure critical software using the gated Claude Mythos Preview, not a "security team collaboration program". Since the expanded Cyber Verification Program launched (2026-10-06), its members "will transition" to that program's Specialized Access tier. The mention is now linked.
+- `docs/sdlc-lcm/agentic-ai-vulnerability-landscape.md`: size ATLAS's "Poison Training Data" with Souly et al. (arXiv 2510.07192): 250 poisoned documents backdoored 600M–13B models regardless of size. The backdoor tested is narrow, and the paper is a preprint (plan 0013 O8).
+
+- `.claude/settings.json`: set `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` to 60, so long research and PR/CI sessions compact earlier with room left for reasoning and recovery.
+
+- `docs/sdlc-lcm/agent-identity-auth-landscape.md`: design lens on authorization when agents fan out into parallel acting branches. It adds the costs of central gateways and the "authority travels with the branch" alternative, cited to a practitioner post (opinion) and tied to the token-binding specs already in the doc.
+
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`, `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`: TruLens now lists its seven agent evaluators, Agent GPA result, MCP span type, v2.16.0, and Snowflake stewardship.
+- `docs/non-cc/infrastructure/llm-routers-gateways-landscape.md`: LiteLLM row refreshed (v1.109.1, stars) and the announced Customer Portal (per-customer budgets, OSS vs Enterprise limits).
+- `docs/non-cc/frameworks/agentic-enterprise-os-landscape.md`: add Lyzr Agent Studio to the enterprise vendor tier, with a caveat on deployment modes and vendor claims.
+
+- `docs/non-cc/infrastructure/ai-crawlers-discoverability-landscape.md`: new section "GEO and AEO: what is canonical". It covers the KDD 2024 paper and its repo, the IETF aipref drafts and their actual scope, Netlify's "Agent Experience" as a separate idea, and how GEO differs from classic SEO.
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md`: Cloudflare's isitagentready.com added as a third agent-readiness scorer, with a note that agent-readiness-kit aggregates Ora and Cloudflare rather than adding a fourth score.
+
+- `docs/non-cc/infrastructure/ai-crawlers-discoverability-landscape.md`: OpenAI's Business Hub (Businesses in ChatGPT, beta, 2026-11-10) and its stated limits; ASO and LEO added to the GEO label list with their competing expansions; agent-facing optimization research (Toolflation, "AX is the New AEO").
+- `docs/non-cc/knowledge-management/research-agents-landscape.md`: field evidence on agent search sessions from arXiv 2601.17617 (SIGIR 2026) under the `/deep-research` mapping.
+
+- `docs/non-cc/infrastructure/ai-crawlers-discoverability-landscape.md`: GEO field refresh. Google's AI optimization guide (what to ignore), the Search Console AI-features opt-out and generative-AI reports, Microsoft Advertising's *A Guide to GEO* and Bing's AI Performance report, where Google and Microsoft disagree; a research table of ten GEO papers (C-SEO Bench, AutoGEO, E-GEO, ranking-manipulation and tool-selection studies); trackers with MCP access and open-source GEO projects; checklist extended. Corrects the claim that no first-party AI-visibility reporting exists.
+
+- `docs/cc-community/CC-community-skills-landscape.md`: add GoogleChrome/modern-web-guidance, a browser-vendor Agent Skill with a bundled retrieval CLI, an npm package and plugin packaging for Claude Code and other hosts, plus its uplift-based eval loop.
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: row O2 (marketplace SEO/ASO) dropped by the owner; a research pass on marketing for agents replaces it.
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: row O4 done: older plans across six public repos cleaned (live plans reworded, closed plans marked as records).
+
+- `docs/plans/2026-11-12-0013-followups-after-0012.md`: status as of 2026-11-14 (research fold-ins, auto-compact, status-monitor fix); new owner rows O11 (`#726`) and O12 (shared-rule promotion); `#588` listed under Deferred.
+
+- `docs/sdlc-lcm/software-factory-landscape.md`: add the 2026 wave of company pipelines, each from its own source: Stripe Minions, Ramp Inspect, WorkOS Horizon, OpenAI Symphony, Delinea (StrongDM) Software Factory with its `attractor` spec, and the Vercel factory template. Also notes the `open-inspect` repo against the ai-that-works ep. #73 entry.
+
+- Ten papers from the W45 arXiv triage folded into existing docs, each checked against the full paper: ARCBench and hand-off-summary policy (`CC-agentic-harness-patterns-analysis.md` § 5), KernelSeek (§ 12), HarnessFlow and Meta-Harness (`agentic-engineering-disciplines-landscape.md`), task-tampering injection and LatentTriad (`agentic-ai-vulnerability-landscape.md` § 6), A.S.E 2.0 (`agent-code-analysis-landscape.md`), code maps with Claude Code (`CC-code-tooling-landscape.md`), Terminal-Bench 2.1 and MCPHallu (`evaluation-data-resources-landscape.md`); topic hubs updated.
+
+- `.claude/settings.json`: drop the project-level `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` (60). Project settings override user settings, so it was overriding the owner's user-scope value (50).
+- `AGENTS.md`: link `CONTRIBUTING.md` and `AGENT_LEARNINGS.md` instead of `@`-importing them; the imports loaded about 7.4k tokens into every request in this repo.
+
+- `rxiv-paper-eval.yaml`: pin `qte77/gha-rxiv-paper-eval` to v0.6.1 (workflow `uses:` and `eval_ref`, in lockstep). v0.6.1 parses extraction replies that the model wraps in a ```json fence; since W26 these were stored as `_raw` while the log reported "extract OK" (qte77/gha-rxiv-paper-eval#109).
+
+### Fixed
+
+- `.github/workflows/rxiv-paper-eval.yaml`: the week resolver skips feed CSVs under 1 KB. The feed
+  now seeds a header-only file for the new ISO week each Monday; on 2026-11-10 the resolver picked
+  that stub (W46), loaded 0 papers and finished green, so W45 was never evaluated.
+- `docs/cc-native/plugins-ecosystem/CC-plugin-packaging-research.md`: the Plugin Structure skill
+  link pointed at a claude-plugins.dev mirror that now returns 402; it points at the skill in
+  Anthropic's official plugin marketplace repo.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md` § Strands Decider: Strands' own
+  2026-11-09 post documents replacing Claude Sonnet 4.6 for Amazon ticket labelling; the entry
+  had wrongly dropped that claim as unsourced.
+- `docs/non-cc/protocols/ag-ui-protocol-landscape.md`: the Strands/AgentCore row now notes that
+  Strands' own docs list AG-UI only as a community-tier, Python-only page.
+
+- `docs/non-cc/agents/salesforce-agentforce-analysis.md` (plan 0013 A10): applied an independent
+  falsification pass. The A2A section now presents a genuine, unresolved contradiction inside
+  Salesforce's own documentation (an architecture recipe and MuleSoft's own A2A-bridge guide say
+  Agentforce Agents have no direct A2A support; Salesforce's own Agentforce interoperability guide
+  says the opposite) instead of treating one side as settled. Switched the primary Flex Credits rate
+  card citation to the 2026-11-03 version (new IT/HR Employee Agent Resolutions, Sales, and Slack
+  Workspace rows; corrected the Data 360 usage-type count from ten to eleven) and restored the
+  verified "Flex Credits and Conversations will not be supported in the same org" FAQ claim. Fixed a
+  "Work Summaries" → "Field Summaries" typo, replaced a mischaracterized "two regional copies
+  disagreeing" claim with the actual one-page, two-sub-scope wording, added Anthropic's own
+  confirmation that "Salesforce in Claude" shipped in beta on schedule, and updated the Hyperforce
+  Operating Zone URL after its redirect. Reworded the `CC-business-api-integrations.md` cross-link to
+  stop conflating the Agentforce Registry's per-tool risk assessment with Security Center's separate
+  tenant-wide MCP Risk Score, and carried the A2A-contradiction framing into
+  `agentic-enterprise-os-landscape.md` and `ag-ui-protocol-landscape.md`.
+
+- `.github/scripts/community-monitor.py`, `.github/scripts/lib/monitor_utils.py`: a source whose
+  credentials are unset (Reddit, X) is now listed as skipped, with the missing variables, in the
+  report and the triage PR, instead of showing as a source that returned nothing. The workflow
+  writes the report to the run summary and adds a warning annotation per skipped source (#726).
+  A source whose fetch fails is listed the same way (`fetch failed (<exception type>)`) in every
+  monitor that uses `run_monitor`.
+
+- `docs/non-cc/reference/system-1-decision-models-landscape.md`: edgextract's library default
+  decision model is `nimble` (Bespoke Labs), not `tev1` — the entry had the quickstart's explicit
+  `--model tev1` and the README's actual stated default backwards. The JevEval (DeepEval) quote
+  is corrected to the source's own wording and capitalization ("You define the logic, Jev makes
+  the decisions, and DeepEval calculates the score," not "does the calculation"). The gold-set
+  pricing comparison ("about 6× Jev's") is corrected to match the doc's own earlier pricing
+  paragraph ("roughly 5.7×" — Clef is 5.7× Jev's rate, not 6×; 6× was only true of Clef-flash).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`: the Strands Agents entry
+  quoted AWS's AgentCore page as saying agents are "built on any framework" — that exact phrase
+  appears nowhere on AgentCore's marketing or FAQ pages. Replaced with the page's actual hero-text
+  quote, "Build with any framework, any model."
+- `docs/non-cc/protocols/ag-ui-protocol-landscape.md`: the AWS Strands Agents / Bedrock AgentCore
+  row said the TypeScript AG-UI integration "is still an open PR" — `ag-ui-protocol/ag-ui#1681`
+  merged on 2026-05-26, six months before this row's own "checked 2026-11-11" stamp, and ships as
+  the `@ag-ui/aws-strands` npm package. Strands' own docs page still says "This feature is only
+  supported in Python," which the row now cites directly instead of the stale PR-status claim.
+- `docs/cc-community/CC-community-plugins-landscape.md`: the lot-map entry said the Hooks-station
+  row removed in 0.4.0 was "restored in 0.5.1" — the repo's own CHANGELOG shows it was restored in
+  0.5.0 (0.5.1 only restored a demo video file). Also softened the privacy-claim attribution: the
+  verbatim "makes no network requests..." sentence is the README's wording; `PRIVACY.md` states
+  the same substance across separate bullets in different wording, not verbatim.
+
+All other checked claims across #782, #786, #787, #788, #795, #797, #779 and #784 (licenses,
+star/fork counts, benchmark numbers against the `decision-model-eval.yaml` run artifacts, and
+every other quoted sentence) were confirmed against first-party sources and left unchanged.
+
+- `docs/cc-community/CC-code-tooling-landscape.md` (AxiomCode Graph): removed an unsupported claim
+  that the repo's topic list carries "open-source"-adjacent framing (no such topic exists);
+  corrected the TypeScript call-linking "next-best tool" figure (Code-Review-Graph at 71.6%, not
+  GitNexus's 65.1%, which is the next-best for Java only); scoped the "only tool in this doc"
+  claim to precomputed-graph tools (Serena, in the same doc, also resolves calls without syntax
+  matching, via a live LSP server).
+- `docs/cc-community/CC-memory-tooling-landscape.md` (Leviathan): corrected the benchmark citation
+  — the memory-benchmark table is sourced from `docs/MEMORY.md`, not solely `docs/BENCHMARKS.md`;
+  replaced an imprecise "and 20 more" agent count with the README's own total (24 agents).
+- `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md`: corrected a misattributed
+  quote on Carrel (the "status rules" / "current and historical views" text is `docs/architecture.md`'s
+  framing, not the top-level README's); corrected a wrong absence claim on Kortix CompanyOS — its
+  own linked docs (`kortix.com/docs/guide`) name a dedicated Claude Code integration ("Each turn
+  runs through Claude Code, Anthropic's own program, on the session's computer"), not merely a
+  generic MCP connector; softened RAGFlow's "four thinking-effort tiers" claim with a note that the
+  v1.0.0 release notes describe this as replaced by an "Agentic Chat" mode, even though the live
+  README's Key Features section still listed the four tiers as of 2026-11-12.
+- `docs/non-cc/knowledge-management/research-agents-landscape.md` (Épi): corrected "5.4 points
+  higher than Codex" to the paper's own wording, "a 5.4% higher total benchmark score than Codex."
+- `docs/sdlc-lcm/software-factory-landscape.md` (Anthropic/Scion): replaced a fabricated quote —
+  "the limit moved from writing code to the surrounding systems" does not appear in Anthropic's
+  source-control post — with its actual verbatim sentence ("The bottleneck, now, is all of the
+  developer infrastructure built for human scale: source control, builds, and CI").
+- `docs/cc-native/configuration/CC-models-reference.md` (Fable/Mythos 5.2): restored "Claude" in
+  the quoted CVE-rediscovery sentence ("10.2% more vulnerabilities than Claude Opus 5.5 and 14.4%
+  more than Claude Mythos 5.1"), which the merged PR had silently dropped from a quoted string.
+
+Adversarial falsification pass on the 2026-11-12 PRs #790 and #791 (research-subagent content,
+spot-checked only at merge time): 8 repos (metadata, LICENSE, README and cited docs files), 3 arXiv
+abstracts, 3 CC CHANGELOG entries, GitHub issue #107757, and 7 Anthropic/claude.dev/Kortix web pages.
+Every other claim checked in this pass was confirmed; not independently re-checked: MemoProAgent's
+granular benchmark figures beyond its headline numbers, the three arXiv "no code repository found"
+claims (checked only on the abstract page, not site-wide), one secondary detail on the Nonprofits
+Design Partner Circle, the hillclimb revert-logic paraphrase, and one CortexDB live-view detail
+(`serve_graph_3d`).
+
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md` § InfraRSI: the
+  "two-level self-improvement loop" line was a paraphrase dressed as a direct quote; replaced with
+  the abstract's actual wording ("a two-level Recursive Self-Improvement loop" / "revising priors
+  online within runs and distilling experience across clusters").
+- `docs/cc-community/CC-code-tooling-landscape.md` § Floorplan: `Version: 0.7.3` was already one
+  release behind at check time — the project's own `plugin.json`/`CHANGELOG.md` show `0.8.0`,
+  published the same day (2026-11-12).
+- `docs/cc-community/CC-community-tooling-landscape.md` § cogit: corrected a wrong "single-agent,
+  works with Claude Code today, no other harness documented" claim and its unsourced quote — the
+  README documents Claude Code *and* Codex CLI as supported harnesses, each with its own install
+  path, plus a Node 22.13+ requirement the entry omitted.
+- `docs/cc-community/CC-community-plugins-landscape.md` § Impeccable: the Claude Code install step
+  cited a `/plugin install impeccable@pbakaus-impeccable` command that doesn't appear in the
+  README (which instead says to open `/plugin` and install Impeccable); and the live-mode caveat
+  misattributed the README's "review it before using live mode in an unfamiliar repo" warning —
+  that sentence is about the separate `impeccable:manual-edit-validate` script, not the
+  bypass-approvals-and-sandbox fallback it was attached to.
+- `docs/sdlc-lcm/agent-code-analysis-landscape.md` § OpenQodex: fixed a non-verbatim quote
+  ("who calls this function" → the README's actual "who calls a function").
+- `docs/sdlc-lcm/ai-security-governance-analysis.md` § Tracekit: corrected a mischaracterized demo
+  description — the README's tamper demo rewrites a logged "deny" decision to "allow" in a copy of
+  a verified run, not "an agent editing its own log... to hide a deletion."
+
+All other claims added by #792 and #793 (paper facts, author lists, star/fork/license figures,
+README quotes and numeric self-reports across DUET, MCP-Injector, LifeVal, MiniCorp, Harness²,
+RSI-Dojo, InfraRSI, Self-HPO, Adaptive Skill Granularity, Skill++, Memento 3, Sharpening Tax,
+OpenHuman, Elephant-Goldfish Model, Stroq, Tracekit's own metrics, devvm, Grim Prompter, OpenQodex's
+other claims, Waza, ToolCallJudge and claude-seo's refreshed counts) were checked against the
+arXiv abstract pages, `gh api`, and project READMEs and are confirmed as written.
+
+- `docs/cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md`: second, independent
+  adversarial re-check of the Microsoft new-products content (#799) and its first falsification
+  pass (#803). Fixes a verbatim-quote mismatch in the Cowork disambiguation note — Microsoft's
+  announcement blog says it "integrated the technology behind Claude Cowork into Microsoft 365
+  Copilot" (confirmed against the blog), not "built 'integrat[ing] the technology...' into"; the
+  stray "built" and the wrong `[ing]` bracket are removed and the quote now matches the sibling doc
+  (`microsoft-365-copilot-analysis.md`), which already had it right.
+- `docs/non-cc/frameworks/agentic-enterprise-os-landscape.md`: fixes a misattributed citation — the
+  Copilot Studio row cited its own `what's new` page for the GitHub→Microsoft Copilot harness
+  rename, but that page (fetched fresh, content-dated 2026-11-04) still calls it the "GitHub
+  Copilot harness" throughout and never states a rename. The rename is documented on Microsoft's
+  billing/licensing FAQ page ("Apps are built with the Microsoft Copilot harness (formerly the
+  GitHub Copilot harness)"), which is now cited instead, with a note that the what's-new page
+  hasn't caught up.
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md`: two minor quote-fidelity fixes applying
+  the bracket convention #803 itself established for a quoted fragment's capitalization — two
+  quotes ("a list of objects…", "a plugin can include…") silently lowercase a source sentence's
+  capital first letter without the bracket the doc uses everywhere else for this ("[A]n optional…",
+  "[c]an be created…"); both now read "[a] list…" / "[a] plugin…" for consistency. Also softens an
+  evidence-level overstatement: "Home and Code began rolling out to Frontier" and "Autopilot
+  expanded to private preview" stated as completed fact, sourced only to the 2026-09-25 blog post
+  that *announces* both for "the coming weeks" / "the end of the month" — now "were slated to"
+  with a note that the cited post announces rather than confirms shipping.
+
+All other #803 fixes and a broad sample of #799's "confirmed" claims (Cowork/Code/Managed
+Runtime/Researcher/Analyst/Agent 365 SDK model names, dates, caps, and quotes) were re-verified
+against freshly fetched first-party Microsoft pages and held up.
+
+- `microsoft-365-copilot-analysis.md`: two stray "93-claim" references corrected to "85-claim" to
+  match the Results table (no other page in the corpus corroborates a 93-claim combined total).
+
+- `docs/non-cc/agents/microsoft-365-copilot-analysis.md`: adversarial re-check of the 2026-11-12
+  Microsoft new-products pass (#799) against every cited first-party page. Corrects two
+  misattributed citations (the declarative-agent build-tooling claim cited `da-overview` instead
+  of `da-agents-overview`, in both the prose and the Build paths table), an overstated "public
+  preview" claim for Microsoft Copilot Managed Runtime that no cited page actually uses (the
+  09-25 blog and the overview page both say only "preview"), a wrong structural claim about where
+  the manifest's Worker agent object sits relative to `agent_skills` (earlier on the page, not
+  "two sections later"), and three small verbatim-quote mismatches (a silently dropped "(Model
+  Context Protocol)" expansion, a capitalization change inside a Foundry harness quote, and a
+  "This is a preview feature" claim applied to a page that actually reads "This feature is in
+  preview"). Also softens an unsupported "FAQ pages" reference for Foundry hosted agents to the
+  one Learn page actually fetched.
+- `docs/non-cc/frameworks/agentic-enterprise-os-landscape.md`: same "FAQ pages" softening for the
+  Foundry hosted-agents caveat.
+
+- `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md` § Sharpening Tax: the
+  2026-10-06 "no code repository" note was stale — `changdaeoh/sharpening-tax` now exists
+  (CC BY-NC 4.0).
+
+- `docs/cc-native/examples/statusline.sh`: check that `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is numeric and pass it to awk with `-v`, instead of interpolating the env var into the awk program.
+
+- `.github/scripts/build-rxiv-index.py`: recover paper summaries, methods and findings that the triage action dropped into `_raw` since 2026 W26 (the extraction model wraps its JSON in a ```json fence, which the action's strict parser rejects). The cumulative index now shows summaries for 1,162 of 1,919 papers (was 53). Replies cut off at the token limit or with invalid JSON stay empty.
+
+- `.github/scripts/lib/status_incidents.py`, `.github/workflows/cc-status-monitor.yaml`: the status monitor read `status.anthropic.com`, which has answered the weekly run with HTTP 403 since 2026-08-24, and the step swallowed the error, so 12 runs went green without collecting anything. It now reads `status.claude.com` (same Statuspage API) and fails the run on any collector error.
+
+### Dropped (researched, not added)
+
+- RoboArchitect (arXiv:2610.42141) and JIT-Agent (arXiv:2608.25593): both are agent-harness
+  design/evolution papers in which persistent memory is a secondary feature, not the core
+  contribution — out of this corpus's memory/KG/code-graph/search/RAG scope.
+- Memento: already covered in `agent-frameworks-infrastructure-landscape.md` §4.
+- Two owner-screenshot infographics (token-cost optimization; six AI-harness terms): no URL to
+  verify at first-party.
+
 ## [0.19.0] - 2026-11-09
 
 ### Added
