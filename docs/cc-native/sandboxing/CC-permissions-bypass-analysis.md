@@ -48,7 +48,7 @@ Six modes per the [permission-modes docs][cc-modes] (checked 2026-11-15); this t
 | **Default** | Asks for everything | Lowest -- blocks on every action |
 | **`acceptEdits`** | Auto-approves file edits, asks for bash/network | Low |
 | **`plan`** | Requires plan approval before implementation | Low |
-| **`auto`** | Runs everything, with background safety checks by a classifier | Medium -- see [the auto-mode error rates](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md) |
+| **`auto`** | Runs everything, with background safety checks by a classifier | Medium -- see [the auto-mode error rates](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md#guardrail-layers-a-comparison) |
 | **`dontAsk`** | Auto-approves everything matching `settings.json` allowlist | Medium -- granular control |
 | **`bypassPermissions`** | Auto-approves ALL actions | Highest -- no guardrails |
 
