@@ -2,7 +2,7 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-10-26
+updated: 2026-11-15
 validated_links: 2026-10-26
 status: adopt
 ---
@@ -217,6 +217,8 @@ The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin o
 **Reset and display.** "Your plan's included usage limit will reset every five hours once you reach it." Usage is tracked via "Usage dashboard: View real-time consumption in Settings > Usage." For paid plans (Pro, Max 5x, Max 20x) with usage credits enabled, "Usage credits apply to both Claude conversations and Claude Code terminal usage. Your combined usage across both interfaces counts toward your limits." ([usage-credits][usage-credits])
 
 **Metering by sign-in method.** ["Models, usage, and limits in Claude Code"][cc-usage-metering] states "How you signed in determines how usage is metered" — but its table names only two flows, not a general subscription-vs-Enterprise split: "Claude Enterprise seat (via `/login`)" gets "A pool of usage included in your organization's plan, reset on a rolling window," while "API key (Console, Bedrock, Vertex, or Microsoft Foundry)" gets "Pay-as-you-go, billed per token to that cloud or Console account. No hard stop; the account is charged for what it uses." The article does not describe a separate row for a personal Pro/Max/Team subscriber signed in via `/login` — that case falls under the shared five-hour plan limit described above ([usage-limits][usage-limits], [usage-credits][usage-credits]) instead of either of this table's two rows.
+
+**API credits and scripted runs.** Max, Ultra and Team plans also include monthly Claude Platform API credits, which are separate from these plan limits and don't cover interactive Claude Code. Which pool a `claude -p`, Agent SDK, cloud-session or scheduled-task run draws on, and what the terms say about scripted use, is in [CC-web-auth-setup-analysis.md § What a Scripted Run Bills](../ci-remote/CC-web-auth-setup-analysis.md#what-a-scripted-run-bills) (checked 2026-11-15).
 
 **Owner observation** (claude.ai Settings > Usage, observed 2026-09-23): the usage page splits usage per product — Claude Code / Chats / Cowork / Other. None of the three help-center articles cited above documents this per-product split; [usage-limits][usage-limits] states only that the three surfaces share one limit, not how the dashboard breaks it out.
 

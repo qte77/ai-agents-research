@@ -3,7 +3,7 @@ title: Cursor AI Code Editor Analysis
 source: https://cursor.com/
 purpose: Analysis of Cursor as a GUI-first AI code editor with agentic composer and a secondary headless CLI.
 created: 2026-06-16
-updated: 2026-10-24
+updated: 2026-11-15
 validated_links: 2026-06-16
 status: trial
 ---
@@ -66,6 +66,8 @@ A secondary terminal surface installable via:
 
 - **macOS/Linux/WSL**: `curl https://cursor.com/install -fsS | bash`
 - **Windows PowerShell**: `irm 'https://cursor.com/install?win32=true' | iex`
+
+Current docs (checked 2026-11-15) invoke the CLI as `agent` (headless: `agent -p`, with `CURSOR_API_KEY`); team admins can turn headless mode off. Billing and sign-in: [CC-web-auth-setup-analysis.md § Other Coding CLIs](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing).
 
 Key CLI commands (sourced from [cursor.com/docs/cli][cursor-cli-docs], accessed
 2026-06-16):

@@ -4,7 +4,7 @@ source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface.
 platform_scope: [cli, cloud]
 created: 2026-06-11
-updated: 2026-10-24
+updated: 2026-11-15
 validated_links: 2026-10-24
 status: proprietary
 ---
@@ -75,7 +75,7 @@ compression and **cross-session repository memory**; `/usage`, `/context`,
 **Copilot Requests** permission set through `GH_TOKEN` / `GITHUB_TOKEN`. Usage is
 billed in GitHub AI Credits — `/usage` shows "The amount of GitHub AI Credits used in the current
 session" ([using the CLI][copilot-cli-use]); "premium requests" no longer appear on the CLI or
-billing pages checked 2026-10-24.
+billing pages checked 2026-10-24; a [legacy request-based billing page][copilot-legacy-requests] still lists one premium request per CLI prompt (checked 2026-11-15).
 
 ### Install and invoke
 
@@ -155,3 +155,4 @@ the hook and ends the turn anyway" ([hooks][goal-copilot-hooks]).
 [copilot-cli-use]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
 [goal-copilot-cmds]: https://docs.github.com/en/copilot/reference/cli-command-reference
 [goal-copilot-hooks]: https://docs.github.com/en/copilot/reference/hooks-configuration
+[copilot-legacy-requests]: https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/copilot-requests
