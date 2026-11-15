@@ -2,7 +2,7 @@
 title: "Multi-Agent Systems & Benchmarking Best Practices"
 purpose: Production best practices for multi-agent system development and benchmarking, covering infrastructure, training, and evaluation.
 created: 2026-01-13
-updated: 2026-09-24
+updated: 2026-11-15
 validated_links: 2026-09-24
 status: assess
 ---
@@ -70,6 +70,8 @@ status: assess
 4. **Appropriate difficulty**: Stratified levels to differentiate capabilities
 5. **Baseline provision**: Clear reference points for comparison
 6. **Reproducibility**: Systematic measurement with ground truth and rigorous rubrics
+
+How to build, validate, release and maintain a benchmark against these criteria: [§ 3.5](#35-creating-and-maintaining-a-benchmark).
 
 **Validation Methods:**
 
@@ -152,6 +154,100 @@ status: assess
 - Fragmented landscape with discovery challenges
 - LLM-centric evaluations, fixed harnesses, high overhead
 
+### 3.5 Creating and maintaining a benchmark
+
+The [§ 3.1 checklist](#31-design-checklist) says what a good benchmark looks like. This section
+orders the work over its life: design, validate, release, maintain, retire. Each step is
+labelled by its evidence: *paper* (published, read at source), *RDI* (Berkeley RDI's AgentBeats
+material) or *observed* (one repo's own files, tests and commits, which support only that
+repo's own findings).
+
+#### Design: say what the score is evidence for
+
+- *Construct validity* (paper): the score has to be evidence for the claim made from it.
+  [Measuring what Matters][construct-validity] reviewed 445 LLM benchmarks with 29 expert
+  reviewers; 21.7% leave the measured phenomenon undefined, and 16.0% report uncertainty
+  estimates or statistical tests. Define the phenomenon before building the tasks.
+- *Task validity* and *outcome validity* ([ABC][abc]): a task should be solvable if and only if
+  the agent has the target capability, and the check's verdict should truly indicate success.
+  § 3.1 cites the second; the first needs its own review of every task.
+
+#### Validate: controls before any ranking
+
+Run the scorer on artifacts that no contestant made, and assert the outcome in code:
+
+- a null artifact (empty, do-nothing) that must fail;
+- a trivial or oversized artifact (e.g. a part filling the whole envelope) that must fail;
+- known-good references, made independently, that must pass;
+- blind spots the check cannot see, written down and asserted, so "green" is not read as
+  "correct".
+
+Why: ABC found that in τ-bench an agent returning empty responses passes the intentionally
+impossible tasks and reaches a 38% success rate, above a GPT-4o-based agent (paper). A
+measured floor tells you what a score means.
+
+*Observed* in [agentic-cax-gauge][gauge], a CAD benchmark by the corpus owner: the controls in
+[`tests/test_bench_controls.py`][gauge-controls] use `trimesh` primitives and a committed
+fixture rather than any contestant tool, cover all 18 bounded briefs, and include a test that a
+plain slab with the right volume passes preflight, naming the render and the human as the
+cover for shape. Known-good parts exist for 3 of the 18 briefs.
+
+#### Validate: reference answers that can be recomputed
+
+Keep the exact answer as an expression hidden from the agent, and derive the accepted band from
+a stated tolerance, never from a contestant's output. *Observed*: each brief in
+agentic-cax-gauge declares its volume as arithmetic in hidden front matter;
+[`tests/test_bench_bands.py`][gauge-bands] evaluates it with an arithmetic-only parser
+(a test rejects anything else), checks that the prose and the formula agree, and that the band
+edges follow from the tolerance the brief states, where it states one exactly.
+
+#### Validate: a review rubric fixed before labelling
+
+Fix the verdict values and reason codes before the first label, and change them only between
+rounds, so labels and any agreement statistic stay comparable. Record how each defect was
+found, so the review can falsify the design. *Observed*: the repo's
+[`bench/rubric.md`][gauge-rubric] uses `yes` / `no` / `unsure` plus reason codes, a
+`found_by` field (`preflight`, `render` or `source`) and a decision rule set before the
+review sitting. Its text records that three of the four defects the owner found in one part
+were visible only by reading the design source beside the views, which the blind sheet hides;
+that is why `unsure` exists. One part is one data point.
+
+#### Release: record provenance before each run, and document the benchmark
+
+- Provenance cannot be backfilled: record the harness commit and a dirty flag, a hash of the
+  exact task brief, tool versions (for build123d, its OCCT binding), and the agent CLI version and model before the
+  run. *Observed*: [`bench/provenance.py`][gauge-prov] does this per run, and its comments
+  note two traps: `uv` reports installs on stderr, and OpenSCAD prints its version on stderr.
+  The Python tool versions come from the same unpinned `uv run --with` resolution as the run,
+  taken seconds before it, not from inside the run. The 30 pilot runs predate it and have none.
+- Run hygiene (RDI): the [AgentBeats tutorial][agentbeats] says each assessment starts from a
+  fresh, clean state; the assessment request carries one `config`; the benchmark ("green")
+  agent is a lightweight verifier that checks the participant's result itself; baseline
+  participants are built alongside it. The [competition page][rdi-agentx] says submissions
+  "may be tested on held-out tasks".
+- Documentation (paper): a [datasheet][datasheets] states the dataset's motivation,
+  composition, collection process and recommended uses. That paper is about datasets, so
+  applying it to a task suite is an adaptation.
+
+#### Maintain and scale: last, once the instrument itself is sound
+
+- A second rater with an agreement statistic (kappa is our suggestion; the rubric only names the need), uncertainty on every primary score,
+  and a held-out task set cover what a single rater and a fixed public set cannot.
+  *Observed*: the repo lists a second rater, held-out briefs and uncertainty as open, and its
+  pilot labelling sheet (`bench/labels.csv`) has 30 rows with no accept value filled at the
+  time of reading, so human labelling, not tooling, was the bottleneck there.
+- Contamination: score items the model cannot have trained on, e.g. items released after its
+  training cutoff (LiveCodeBench, see § 3.1).
+- Upkeep, versioning, errata and retiring items: a benchmark is software. The Terminal-Bench
+  audit, repairs and 2.1 release are summarised under "Benchmark upkeep" in the
+  [evaluation data landscape][eval-upkeep]; not repeated here. Our reading, not a source's
+  rule: publish repairs and item removals under a new version number with a changelog.
+
+Status of the worked example (observed): its own [reference][gauge-ref] lists construct and
+task validity, held-out briefs, a second rater, uncertainty and a datasheet as still open,
+while controls, bands, rubric and provenance are built. No first-party worked example of
+retiring saturated items was read for this section.
+
 ## 4. Multi-Agent Systems
 
 **Coordination Patterns:**
@@ -205,6 +301,11 @@ status: assess
 
 | Source | Content |
 |---|---|
+| [2507.02825] ABC | Agentic Benchmark Checklist; task and outcome validity; τ-bench empty-response agent at 38%; ten benchmarks assessed |
+| [2511.04703] Measuring what Matters | Construct-validity review of 445 LLM benchmarks; 21.7% leave the phenomenon undefined, 16.0% use statistical tests |
+| [1803.09010] Datasheets for Datasets | Documentation standard: motivation, composition, collection, recommended uses |
+| AgentBeats tutorial / AgentX competition page | Berkeley RDI run-hygiene guidance; held-out task testing |
+| agentic-cax-gauge benchmark files | Owner's repo; first-party for its own controls, bands, rubric and provenance |
 | [2606.20493] Contagion Networks | Evaluator preference/bias propagation across multi-agent LLM systems; evaluator-committee-size and communication-topology mitigations |
 | [2606.20517] Multi-LCB | Extends LiveCodeBench to 12 programming languages; exposes Python-favoring bias and cross-language ranking instability across 24 LLMs |
 | [2609.17496] FUSE | Verifiable multi-agent simulation framework for user-mediated social reasoning eval; 21k-example dataset, 12 LLMs evaluated |
@@ -214,3 +315,18 @@ status: assess
 [2606.20517]: https://arxiv.org/abs/2606.20517
 [2609.17496]: https://arxiv.org/abs/2609.17496
 [2608.16578]: https://arxiv.org/abs/2608.16578
+[2507.02825]: https://arxiv.org/abs/2507.02825
+[2511.04703]: https://arxiv.org/abs/2511.04703
+[1803.09010]: https://arxiv.org/abs/1803.09010
+[abc]: https://arxiv.org/abs/2507.02825
+[construct-validity]: https://arxiv.org/abs/2511.04703
+[datasheets]: https://arxiv.org/abs/1803.09010
+[agentbeats]: https://github.com/RDI-Foundation/agentbeats-tutorial/tree/v1
+[rdi-agentx]: https://rdi.berkeley.edu/agentx-agentbeats.html
+[gauge]: https://github.com/qte77/agentic-cax-gauge
+[gauge-controls]: https://github.com/qte77/agentic-cax-gauge/blob/main/tests/test_bench_controls.py
+[gauge-bands]: https://github.com/qte77/agentic-cax-gauge/blob/main/tests/test_bench_bands.py
+[gauge-rubric]: https://github.com/qte77/agentic-cax-gauge/blob/main/bench/rubric.md
+[gauge-prov]: https://github.com/qte77/agentic-cax-gauge/blob/main/bench/provenance.py
+[gauge-ref]: https://github.com/qte77/agentic-cax-gauge/blob/main/docs/reference/benchmarking.md
+[eval-upkeep]: evaluation-data-resources-landscape.md
