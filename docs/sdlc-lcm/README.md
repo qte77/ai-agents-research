@@ -36,7 +36,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [ai-security-governance-analysis.md](ai-security-governance-analysis.md) | NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001 frameworks |
 | [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) | Operational vuln layer: AIVSS scoring, MITRE ATLAS + AI Incident Sharing, vendor discovery (MDASH/Vuln.AI), Berkeley tracker |
 | [agent-identity-auth-landscape.md](agent-identity-auth-landscape.md) | Agent identity/auth/personhood: SPIFFE, Entra Agent ID, MCP-OAuth, Okta XAA, AP2 Mandates, World ID, Cloudflare Web Bot Auth |
-| [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) | Agent evaluation metrics survey (task completion, reasoning, safety) |
+| [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) | Agent evaluation metrics survey (task completion, reasoning, safety; judge calibration, trace evals, eval statistics) |
 | [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md) | Eval frameworks, agentic benchmarks, datasets (companion to the metrics survey) |
 | [agent-silent-failure-taxonomy-analysis.md](agent-silent-failure-taxonomy-analysis.md) | Longitudinal taxonomy of silent failures in a production LLM agent runtime (arXiv:2606.14589) |
 | [sovereign-execution-brokers-analysis.md](sovereign-execution-brokers-analysis.md) | Sovereign Execution Brokers: brokered/controlled agent execution (arXiv:2606.20520) |
