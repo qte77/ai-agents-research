@@ -2,7 +2,7 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-11-12
+updated: 2026-11-15
 validated_links: 2026-11-12
 status: assess
 ---
@@ -82,7 +82,7 @@ Escalation, and Agentic Behaviors (2024-2025 addition).
 
 | Technique | Name | MAS Relevance |
 | --- | --- | --- |
-| AML.T0051 | LLM Prompt Injection | One agent's output becomes another's prompt — injection propagates across the agent graph |
+| AML.T0051 | LLM Prompt Injection | One agent's output becomes another's prompt — injection propagates across the agent graph; attack/defense taxonomy: [vulnerability landscape](agentic-ai-vulnerability-landscape.md#prompt-injection-attacks-and-defenses) |
 | AML.T0054 | LLM Jailbreak | Bypassing safety guardrails on individual agents corrupts downstream reasoning |
 | AML.T0056 | Meta-Prompt Extraction | Recovering agent system prompts reveals orchestration logic and trust assumptions |
 | AML.T0040 | ML Supply Chain Compromise | Compromising agent frameworks (PydanticAI), tool registries (MCP), or model weights |

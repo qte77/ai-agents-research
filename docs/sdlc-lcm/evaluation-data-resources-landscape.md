@@ -4,7 +4,7 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-14
+updated: 2026-11-15
 validated_links: 2026-11-12
 ---
 
@@ -92,7 +92,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Multi-agent**: [MultiAgentBench](https://arxiv.org/abs/2503.01935).
 
-**Safety & security**: [SALAD-Bench](https://arxiv.org/abs/2402.05044), [Agent-SafetyBench](https://arxiv.org/abs/2412.14470), [AgentHarm](https://arxiv.org/abs/2410.09024), [WASP](https://arxiv.org/abs/2504.18575) (prompt-injection resilience).
+**Safety & security**: [SALAD-Bench](https://arxiv.org/abs/2402.05044), [Agent-SafetyBench](https://arxiv.org/abs/2412.14470), [AgentHarm](https://arxiv.org/abs/2410.09024), [WASP](https://arxiv.org/abs/2504.18575) (prompt-injection resilience; see the [prompt-injection taxonomy](agentic-ai-vulnerability-landscape.md#prompt-injection-attacks-and-defenses)).
 
 **Multimodal/general**: [GAIA2](https://openreview.net/forum?id=9gw03JpKK4) (async environments, ~42% best pass@1).
 
