@@ -12,7 +12,9 @@ there is one live plan and `make reconcile` checks all of it.
 
 ## Current status
 
-**Read this first (2026-11-15, plan opened, no K row started).** You are the lead session for this
+**Read this first (status at end of 2026-11-15 session).** Shipped: K1 #851, K5 #852, K2 #853, K3 #854,
+K4 #856, K6 #857, K8 #858, K9 #859, K26 #860 (9 of 38 rows), plus the owner-reviewed Text2WetLab
+example in § 3.5 (#855). No branch, worktree or PR is open. You are the lead session for this
 plan. The work: strengthen the corpus on the owner's 2026-11-15 topic list (rows K1–K25), plus plan
 0013's open rows (`13-` prefix). Owner gates G1–G6 each carry a default; apply the default and move on.
 Everything a row needs to start is in its source-map entry below, so you shouldn't need to map the
@@ -22,9 +24,12 @@ repo again. The coverage audits behind the rows read headings only, so treat eac
 
 1. `make reconcile`, `git log --oneline -10`, open PRs. 13-A4 runs after Tuesday 2026-11-17 whatever
    else is in flight.
-2. Lead-only rows first: K4 (K1 shipped in #851); K26–K28 (monitor backlogs found 2026-11-15) between lane merges.
-3. Open up to three lanes in parallel (see "Parallel lanes"), starting with L1 (K2), L6 (K3), L2 (K5),
-   which already have research in hand. Then continue down each lane's row order.
+2. Open up to three lanes in parallel (see "Parallel lanes"): next are L1 K7, L3 K10, L4 K11, then
+   L5 K16 and L6 K22. Run two falsification passes per row: pass A checks quotes and numbers
+   verbatim against raw pages; pass B checks attribution, staleness, duplication and consistency
+   with the rest of the corpus.
+3. Lead-only rows between lane merges: K15, K23, K24 (its long-running hub fix already shipped in
+   #856), K27 after K22, K28.
 4. The owner sitting: G1–G6, then the 13-O rows.
 
 Shipped the same day before this plan: `#844` (context-load trim), `#845` (gha-rxiv-paper-eval v0.6.1
