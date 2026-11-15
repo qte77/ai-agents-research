@@ -4,7 +4,7 @@ source: https://github.com/openai/codex
 purpose: Evaluate Codex CLI as an interactive and headless terminal coding agent, distinct from the cloud Codex environment.
 created: 2026-06-16
 updated: 2026-11-15
-validated_links: 2026-06-28
+validated_links: 2026-11-15
 status: trial
 platform_scope: [openai, cli, vscode, cursor, windsurf]
 ---
@@ -44,6 +44,8 @@ Protected paths (`.git`, `.agents`, `.codex`) are read-only even in `workspace-w
 | `auto_review` | Routes eligible approvals through an automatic reviewer agent |
 | `never` | Disables prompts entirely; for hardened environments |
 
+**Correction 2026-11-15:** the vendor's [approvals page][approvals] now lists `untrusted` as a retired policy (the setting can stop the client starting), and `auto_review` is a separate `approvals_reviewer` setting, not an approval policy; `granular` is a newer policy. The table above reflects the 2026-06 page.
+
 Codex detects the folder context automatically: version-controlled projects get `workspace-write + on-request`; non-VCS folders default to read-only.
 
 ### Interactive vs headless
@@ -55,7 +57,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 - `--json` — newline-delimited JSON event stream
 - `--output-last-message, -o` — write assistant's final message to a file
 - `--sandbox <mode>` — set sandbox at invocation time
-- `--ask-for-approval, -a` — set approval policy (`untrusted | on-request | never`)
+- `--ask-for-approval, -a` — set approval policy (`on-request | never`; `untrusted` retired, see correction above)
 - `--dangerously-bypass-approvals-and-sandbox` (`--yolo`) — bypass everything; only inside externally hardened VMs
 - `--ephemeral` — no session files persisted to disk
 
