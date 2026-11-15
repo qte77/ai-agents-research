@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-11-09
+updated: 2026-11-15
 validated_links: 2026-11-09
 status: reference
 ---
@@ -19,9 +19,12 @@ bypass. Focused on what's actively maintained and relevant as of 2025–2026.
 > **Single source of truth.** This catalog is the authoritative home for
 > scraping / crawling / extraction tooling across the qte77 ecosystem. It was
 > migrated here from `polyfetch-scrape` on 2026-06-16; that repo now
-> [points here][polyfetch] and retains only its own implementation-specific
-> probe findings. Tool facts below reflect the 2026-04 snapshot unless
-> re-validated — verify before relying.
+> [points here][polyfetch] for the landscape and keeps its own
+> implementation docs (usage contract, scripting cookbook, API reference,
+> architecture, probe findings). This catalog stays the source of truth for the
+> landscape. Tool facts below reflect the 2026-04 snapshot unless re-validated,
+> except where an entry gives its own date (e.g. polyfetch, v0.11.0, 2026-11-12)
+> — verify before relying.
 
 ## Claude Code Built-in Web Tools
 
@@ -62,6 +65,7 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 | [Puppeteer](https://pptr.dev/) | Apache-2.0 | None built-in | Google's Chrome/Firefox DevTools control (Node) |
 | [Magnitude](https://magnitude.run) | Apache-2.0 | n/a (AI test/automation) | Vision-first: LLM drives the browser via screenshots + pixel coordinates (no selectors); `act()` / `extract()` (Zod schemas); dedicated test runner; Playwright as low-level escape hatch |
 | [Lightpanda](https://lightpanda.io) | AGPL-3.0 | None built-in | Built from scratch in Zig — not a Chromium/WebKit fork; CDP-compatible drop-in for Puppeteer/Playwright |
+| [polyfetch-scrape][polyfetch-repo] | Apache-2.0 | Via Patchright tier (headed option) | Tiered httpx / curl_cffi / Patchright fetch plus `render_session` scripting API; see subsection below |
 | [moli](https://github.com/lexmount/moli) | MIT/Apache-2.0 (dual) | None built-in | Built from scratch in Rust — not a Chromium fork; CLI/CDP/WebDriver Classic/BiDi from one binary; ships agent "skills" (`moli-webfetch`, `moli-websearch`) |
 
 **When to use what**: Playwright for JS rendering without anti-bot. Patchright or Nodriver when detection is an issue. Botasaurus for the hardest targets. Magnitude when selector maintenance (dynamic UIs, canvas, drag-and-drop) is the pain point and you can afford per-step vision-model cost.
@@ -80,7 +84,7 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 - **Fidelity is the vendor's own number:** 81.9% vs Chrome's 99.8% on Lexmount's Lexbench-Headless-Browser, not independently reproduced.
 - **Moving fast:** 20,397★ and `v1.1.19` (2026-10-21) as of this check, so expect API churn.
 
-At most an optional, experimental CDP backend for low-fidelity, structure-first crawling, and only after a spike shows that console and network events, full-page screenshots and typed input work over `connect_over_cdp()`.
+At most an optional, experimental CDP backend for low-fidelity, structure-first crawling, and only after a spike shows that console and network events, full-page screenshots and typed input work over `connect_over_cdp()`. The verdict is unchanged; note that "console events" is a criterion Patchright itself fails for page-script output (see the polyfetch subsection below), so the spike should compare against that baseline, not against full Playwright behaviour.
 
 ### Accessibility-tree page representation
 
@@ -89,6 +93,18 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 **Desktop counterpart: agent-desktop.** The same accessibility-tree approach now covers native desktop apps. [vercel-labs/agent-desktop][agent-desktop] (Apache-2.0, v1.2.0 released 2026-11-05) is a Rust CLI and C library that "gives an AI agent computer use without screenshots or pixel matching": it reads a desktop app's accessibility tree through the OS API (AX API on macOS 13+, UI Automation on Windows 10 1809+, AT-SPI on Ubuntu 24.04+) and returns JSON with a ref per element, which the agent then clicks or types on. "The loop lives in your agent; agent-desktop has no model inside." Ref actions are headless by default (no pointer movement or focus change; `--headed` allows physical input), and refs are bound to the snapshot they came from, so a changed UI returns an error instead of a wrong click. Agents use it as a CLI, as a skill (`npx skills add https://github.com/vercel-labs/agent-desktop --skill agent-desktop`), or since v1.2.0 through `agent-desktop mcp`. Its own AGENTS.md draws the line with the browser tool: "It does not automate web pages (use agent-browser)." The README warns that snapshots, clipboard reads and screenshots can contain private desktop content. Screenshot-based computer use (Anthropic's computer-use tool) is the contrasting approach; see the [CC web-scraping plugins analysis](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md). A decision-model variant, the repo's `jev-desktop` skill, is listed under [system-1-decision-models-landscape.md § Tools built on Jev](../reference/system-1-decision-models-landscape.md#tools-built-on-jev).
 
 **Version-gate before relying on the API — it moved recently.** Playwright removed `page.accessibility.snapshot()` in [1.57](https://playwright.dev/docs/release-notes) (it now points to Axe for a11y *testing*); the LLM-facing replacement is `aria_snapshot` (role/name YAML). The [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) 1.58.2 pin exposes only `page.locator("body").aria_snapshot()` (signature `aria_snapshot(*, timeout) -> str`) — no `Page.aria_snapshot` shortcut and no `mode="ai"` option (the AI-optimised snapshot with `[ref=e2]` element refs is a newer upstream Playwright feature, absent from this pin). Re-check against the pinned version before use.
+
+### Rendered-session scripting: polyfetch-scrape
+
+[polyfetch-scrape][polyfetch-repo] (Apache-2.0 per its `LICENSE`; v0.11.0, 2026-11-12, per `pyproject.toml` and the [changelog][polyfetch-changelog]; owner's repo) is a Python tiered fetch engine with a rendered-session scripting API. **Fit:** agent fetch jobs that need an escalating httpx / curl_cffi / Patchright chain, or a scriptable instrumented Patchright page. Everything below is documented by polyfetch itself (maintainer's docs, not re-run here); the feature list and versions are in [USING.md][polyfetch-using], recipes in the [scripting cookbook][polyfetch-scripting], signatures in the [API reference][polyfetch-api].
+
+- **Fetch chain.** httpx, then curl_cffi, then Patchright (third tier since 0.3.0), pinnable or bounded by `--tier` / `--min-tier` / `--max-tier` (0.6.0). Retries cover `429` and `500`/`502`/`503`/`504`; `403` and, since 0.9.0, an empty-body HTML 2xx ("soft block") escalate.
+- **Errors.** Typed terminal errors (`AuthRequired`, `GoneError`, `LegalBlock`); other non-2xx/3xx statuses raise `FetchError` (0.10.0, breaking). Errors carry redacted `headers` and a 2 KB `body_excerpt` (0.9.0).
+- **Rendered session.** `render_session(url)` (0.6.0) exposes the live Patchright `Page`; console errors and failed requests are captured by default, opt-in `capture_network` adds a capped request log with SSE frames (0.11.0); HAR recording (0.9.0), device/viewport/locale/video emulation (0.7.0), headed launch (0.10.0).
+- **Authenticated sessions (0.11.0).** `storage_state`, `cookies`, `extra_http_headers`, and `save_storage_state()`; HAR and storage-state files contain credentials.
+- **Discovery.** `discover()` (0.7.0) lists sitemaps, feeds, `llms.txt` and JSON-LD types; an opt-in robots helper (0.10.0). Its SSRF guard covers only the discovery paths (`discover`, sitemap fetching, the robots helper, the `easter-hunt` contrib), never the seed URL or plain `fetch()`.
+
+**Patchright console limits (catalog-level fact).** Patchright's README states it disables the Console API to avoid a detection leak: "console functionality will not work in Patchright" (read in the installed 1.64.4 package metadata, 2026-11-15). Consequence: page-script `console.*` output never reaches `page.on("console")`. That uncaught page exceptions are lost too is an **inference** (the README does not say so): Patchright avoids `Runtime.enable`, and `Runtime.exceptionThrown` needs it. polyfetch's repro (four pages of script errors) saw none of them reach `console_errors` or `pageerror`, while a real CORS failure did (**observed by polyfetch, one environment**). Treat Patchright console/pageerror events as a browser/network signal, not a page-script one; read page state structurally (DOM) and by screenshot. A related caveat: `page.evaluate` runs in an isolated world there, so page-defined globals read back `undefined`.
 
 ## Scraping Frameworks
 
@@ -212,13 +228,15 @@ Most tools listed above offer both proper REST/SDK APIs and MCP servers. For pro
 | [curl_cffi](https://github.com/lexiforest/curl_cffi) | OSS (MIT) | TLS/JA3 fingerprinting |
 | [Nodriver](https://github.com/ultrafunkamsterdam/nodriver) | OSS (MIT) | Cloudflare, general anti-bot |
 | [SeleniumBase UC Mode](https://seleniumbase.io/help_docs/uc_mode/) | OSS (MIT) | Cloudflare, CAPTCHAs |
-| [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) | OSS (Apache-2.0) | CDP detection, Cloudflare |
+| [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) | OSS (Apache-2.0) | CDP detection, Cloudflare (per its README, with headed real Chrome; page console API disabled) |
 | [Botasaurus](https://github.com/omkarcloud/botasaurus) | OSS (MIT) | Cloudflare, DataDome |
 | [ScrapFly](https://scrapfly.io/) | SaaS | Cloudflare, DataDome, Akamai; from $30/mo |
 
+**Headed launch (observed by polyfetch).** Launching Chromium headed instead of headless clears some anti-bot challenges that a headless launch never does ([polyfetch#190][polyfetch-190], as recorded in its [changelog][polyfetch-changelog] and [USING.md][polyfetch-using]; maintainer's observation, no per-site data given there). On a display-less host (CI) a virtual display such as `xvfb-run -a` keeps it unattended. Patchright's own README recommends `launch_persistent_context(channel="chrome", headless=False, no_viewport=True)` with real Chrome as its best practice for staying undetected. polyfetch's probe reads Patchright's Cloudflare claim as holding only with that setup ([`docs/scraping-landscape.md`][polyfetch]). Headless CI cannot provide it.
+
 **Reality check**: open-source anti-bot bypasses have a shelf life of months before detection vendors patch them. Commercial APIs invest continuously but cost $1K-5K/mo at scale.
 
-> **Implementation probes.** Point-in-time empirical results of a concrete fallback chain (plain `httpx` → `curl_cffi` → Patchright) are maintained in the consumer repo, [polyfetch-scrape][polyfetch], because they are specific to that codebase rather than to the catalog.
+> **Implementation probes.** Catalog-level findings from polyfetch's probes (the Patchright console limitation and the headed-launch observation) are summarised in this catalog; the detailed point-in-time results of the concrete fallback chain (plain `httpx` → `curl_cffi` → Patchright) stay in the consumer repo, [polyfetch-scrape][polyfetch], because they are specific to that codebase.
 
 ## Decision Flowchart
 
@@ -226,7 +244,7 @@ Most tools listed above offer both proper REST/SDK APIs and MCP servers. For pro
 Need to download a known URL?
   ├─ No anti-bot? → httpx
   ├─ TLS fingerprinting? → curl_cffi
-  ├─ Needs JavaScript? → Playwright (or Patchright if detected)
+  ├─ Needs JavaScript? → Playwright (or Patchright if detected; console API disabled, headed real Chrome for hardened targets)
   ├─ Government legislation? → Use the official API
   └─ All else fails? → Managed platform (Bright Data, ScrapFly)
 
@@ -245,5 +263,18 @@ Need LLM-ready output?
 
 Each tool links to its first-party page inline in the tables above. This catalog was migrated from [polyfetch-scrape's `scraping-landscape.md`][polyfetch] (origin 2026-04-23, content snapshot 2026-04-26); see that repo for empirical probe results specific to its fallback chain.
 
+| Source | Content |
+|---|---|
+| [polyfetch-scrape USING.md][polyfetch-using] | Usage contract: tiers, error schema, soft block, session scripting, headed launch, SSRF scope, Patchright console caveat |
+| [polyfetch-scrape CHANGELOG.md][polyfetch-changelog] | Version in which each polyfetch feature shipped (0.3.0 to 0.11.0) |
+| [polyfetch-scrape scripting cookbook][polyfetch-scripting] and [API reference][polyfetch-api] | Recipes and exact signatures |
+| Patchright README (installed 1.64.4 package metadata, 2026-11-15) | Console API disabled; `Runtime.enable` avoided |
+
 [polyfetch]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
+[polyfetch-repo]: https://github.com/qte77/polyfetch-scrape
+[polyfetch-using]: https://github.com/qte77/polyfetch-scrape/blob/main/USING.md
+[polyfetch-changelog]: https://github.com/qte77/polyfetch-scrape/blob/main/CHANGELOG.md
+[polyfetch-scripting]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scripting.md
+[polyfetch-api]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/api-reference.md
+[polyfetch-190]: https://github.com/qte77/polyfetch-scrape/issues/190
 [agent-desktop]: https://github.com/vercel-labs/agent-desktop
