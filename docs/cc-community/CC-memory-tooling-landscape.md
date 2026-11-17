@@ -313,7 +313,7 @@ Local-first SQLite episodic-memory store aimed at the "200,000-token context win
 
 **Strengths**: Only tool in this doc with a Google Antigravity adapter (alongside Claude Code, Cursor, Codex CLI, Copilot CLI, OpenCode, and Windsurf — seven environments total); per-entry `origin_agent` provenance lets a team see which agent contributed a given decision; tiny on-disk footprint (single SQLite file); MIT, with an optional commercial variant for teams rather than a required upsell.
 
-**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K at the time and deja-vu's 935). No third-party or public benchmark number, unlike ByteRover/MemPalace/deja-vu.
+**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K at review time, 16,057 on 2026-11-17 and deja-vu's 935). No third-party or public benchmark number, unlike ByteRover/MemPalace/deja-vu.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -483,7 +483,7 @@ maintenance; the private/shared/personal tiers map onto a team's actual read/wri
 extra config.
 
 **Risks**: small community relative to peers in this doc (359 stars vs. deja-vu's 935 or ai-memory's
-8.2K at the time); only 5 of 7 listed harnesses are "Fully Supported" — OpenCode V1 and Kiro carry a lower support
+8.2K at review time, 16,057 on 2026-11-17); only 5 of 7 listed harnesses are "Fully Supported" — OpenCode V1 and Kiro carry a lower support
 tier per the README's own table; no pinned-model or deterministic-rebuild claim is documented for the
 Update step itself — only the retrieval/orientation path is stated to be deterministic, not the Brain's
 content generation (the agent authoring the Markdown each session is whichever model the harness is
@@ -536,7 +536,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## Second-brain vaults (LLM-maintained markdown)
 
-A second family of tools treats memory as a personal or team *knowledge base* the agent writes and curates, not a session log: pages live as markdown, usually in an Obsidian-style vault, and the agent reads them back at the start of a task. This is the implementation side of the pattern analysed in [karpathy-llm-kb-analysis.md](../non-cc/knowledge-management/karpathy-llm-kb-analysis.md) (raw sources, an LLM-owned wiki, a schema file), which is not re-explained here. The five below differ mainly in who writes pages and what indexes them.
+A second family of tools treats memory as a personal or team *knowledge base* the agent writes and curates, not a session log: pages live as markdown, usually in an Obsidian-style vault, and the agent reads them back at the start of a task. These are variants of the pattern analysed in [karpathy-llm-kb-analysis.md](../non-cc/knowledge-management/karpathy-llm-kb-analysis.md) (raw sources, an LLM-owned wiki, a schema file), which is not re-explained here; three of them (gbrain, open-second-brain, claude-second-brain) add vector or semantic retrieval, which the original pattern set out to replace. The five below differ mainly in who writes pages and what indexes them. Three of the five run on many harnesses besides Claude Code; they sit here, next to ai-memory and deja-vu, because this doc is the corpus home for cross-agent memory tools.
 
 Metadata as of 2026-11-17 (`gh api`, READMEs read the same day). All five are MIT-licensed.
 
@@ -550,7 +550,7 @@ Metadata as of 2026-11-17 (`gh api`, READMEs read the same day). All five are MI
 
 Evidence levels: **documented** = stated in the project's README or docs; **shipped in code** = checked against repo contents; **vendor claim** = the author's own assertion, not independently reproduced.
 
-**gbrain** ([garrytan/gbrain][gbrain], latest release v0.60.734.0, 2026-11-17; the README says releases ship several times a day and a slower `stable` channel is the default install)
+**gbrain** ([garrytan/gbrain][gbrain], latest release v0.60.734.0, 2026-11-17; the README says new releases come out many times a day and a slower `stable` channel is the default install)
 
 - Repo created 2026-04-05; README presents it as a "brain" read by every connected agent, with `gbrain setup claude-code` registering MCP, hooks and a brain-first block in the agent's instruction file (documented).
 - Self-hostable and keyless to start; hosted gbrain.io is an optional paid service (documented).
@@ -566,21 +566,21 @@ Evidence levels: **documented** = stated in the project's README or docs; **ship
 
 **open-second-brain** ([itechmeat/open-second-brain][osb], v1.98.0, 2026-11-03)
 
-- Broadest harness list of the five, with per-client install guides and `o2b install --check` / `o2b doctor` verification (documented).
-- Learning loop: agent feedback becomes inbox signals, the dream pass renders rules into `Brain/active.md`, read at next session start; the README states no model runs inside the dream algorithm (documented).
-- Safety features documented as opt-in: snapshots with rollback, hash-chained write log, staged review for agent writes, a permissions file (documented; defaults off per README).
+- One of the two broadest harness lists here (about 14 clients, comparable to gbrain's), with per-client install guides and `o2b install --check` / `o2b doctor` verification (documented).
+- Learning loop: agent feedback becomes inbox signals, the dream pass renders rules into `Brain/active.md`, read at next session start; the README says "no model runs inside that algorithm", while its how-it-works doc names one model-delegated rollup step (documented).
+- Safety features: a snapshot before every brain mutation with `o2b brain rollback`, and a hash-chained write log (documented, not described as opt-in); staged review of agent writes and a permissions file (documented as off or absent by default).
 
 **agent-second-brain** ([smixs/agent-second-brain][asb], v3.0.3, 2026-06-20)
 
 - Voice-first: Deepgram transcribes audio; text goes to Claude; the vault stays on the server (documented).
 - Memory model borrows forgetting-curve decay across five tiers via the separate `autograph` project (documented; not evaluated here).
-- The README states that headless `claude -p` runs bill separately from the subscription since 2026-06-15, and that this design avoids that by driving an interactive session. We did not verify that claim and do not rely on it; for what scripted runs bill per Anthropic's own pages, see [CC-web-auth-setup-analysis.md § What a Scripted Run Bills](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#what-a-scripted-run-bills).
+- The README's rationale for driving one interactive session is its claim that headless `claude -p` runs bill separately from the subscription since 2026-06-15. Anthropic's [API-credits article][api-credits-max] (undated page, read 2026-11-17) conflicts with that for plan logins: `claude -p` and Agent SDK usage signed in with a plan "still draw from your plan's usage limits", and the Agent SDK credit announced in June "isn't available". For what scripted runs bill, see [CC-web-auth-setup-analysis.md § What a Scripted Run Bills](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#what-a-scripted-run-bills).
 - The README's quick start pipes a remote `bootstrap.sh` into bash; it was not run here.
 
 **claude-second-brain** ([jessepinkman9900/claude-second-brain][csb], v1.1.0, 2026-04-20)
 
 - Closest to the Karpathy pattern: raw sources, an LLM-owned `wiki/` with five page types, and `CLAUDE.md` as the schema file the README calls the "idea file" (documented).
-- Scaffolds with `npx claude-second-brain`; qmd needs a one-time download of roughly 2 GB of models (documented).
+- Scaffolds with an `npx` command per the README; qmd needs a one-time download of roughly 2 GB of models (documented).
 - Roadmap items (scheduled refresh, auto-ingest on push) are unchecked, so not shipped per the README.
 
 Adoption note: page quality depends on the agent following the schema or skills, and none of the five READMEs read cites an independent third-party benchmark; the scale and accuracy numbers above are the authors' own.
@@ -624,6 +624,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 | [agent-memory][agent-memory] | Long-term memory runtime for Claude Code/Codex/Hermes (README, `gh api`, 2026-09-30) |
 | [ai-memory][ai-memory] | Cross-agent long-term memory (Rust) |
 | [gbrain][gbrain] · [COG-second-brain][cog] · [open-second-brain][osb] · [agent-second-brain][asb] · [claude-second-brain][csb] | Second-brain vault tools (READMEs, `gh api`, 2026-11-17) |
+| [Anthropic: monthly API credits][api-credits-max] | What `claude -p` and Agent SDK runs bill on a plan login (support article, undated page, read 2026-11-17) |
 | [Byterover][byterover] · [paper][byterover-paper] | Agent memory layer (CLI) |
 | [claude-mem][claude-mem] · [docs][claude-mem-docs] · [configuration][claude-mem-config] | Cross-agent memory plugin (README, releases, `gh api`, 2026-11-09) |
 | [claude-reflect][claude-reflect] | Correction/preference memory plugin for Claude Code |
@@ -657,6 +658,7 @@ Caveat: LOCOMO's authors (Meta) did not evaluate these frameworks; cite as "X-re
 [claude-mem-docs]: https://docs.claude-mem.ai/introduction
 [claude-reflect]: https://github.com/BayramAnnakov/claude-reflect
 [gbrain]: https://github.com/garrytan/gbrain
+[api-credits-max]: https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-users
 [cog]: https://github.com/huytieu/COG-second-brain
 [osb]: https://github.com/itechmeat/open-second-brain
 [asb]: https://github.com/smixs/agent-second-brain
