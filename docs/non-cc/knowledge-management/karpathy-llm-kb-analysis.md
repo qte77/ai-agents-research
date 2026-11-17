@@ -2,14 +2,14 @@
 title: "Karpathy LLM Knowledge Base: Markdown-First Alternative to RAG"
 purpose: Analyse Karpathy's LLM wiki pattern and gap-compare against ai-agents-research
 created: 2026-04-06
-updated: 2026-10-06
+updated: 2026-11-17
 validated_links: 2026-10-06
 status: assess
 ---
 
 ## What It Is
 
-A markdown-first knowledge management pattern where the LLM acts as author, editor, and librarian of a persistent wiki — replacing vector-DB RAG with explicit structure, summaries, and backlinks. Published by Andrej Karpathy in April 2026 as an [idea gist][gist] with no dedicated repository.
+A markdown-first knowledge management pattern where the LLM acts as author, editor, and librarian of a persistent wiki — replacing vector-DB RAG with explicit structure, summaries, and backlinks. Published by Andrej Karpathy in April 2026 as an [idea gist][gist] with no dedicated repository. Open-source implementations of the pattern have since appeared (vault-based agent memory with ingest skills and nightly maintenance passes); five are compared in [CC-memory-tooling-landscape.md § Second-brain vaults](../../cc-community/CC-memory-tooling-landscape.md#second-brain-vaults-llm-maintained-markdown).
 
 ## Architecture
 
