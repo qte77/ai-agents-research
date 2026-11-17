@@ -313,7 +313,7 @@ Local-first SQLite episodic-memory store aimed at the "200,000-token context win
 
 **Strengths**: Only tool in this doc with a Google Antigravity adapter (alongside Claude Code, Cursor, Codex CLI, Copilot CLI, OpenCode, and Windsurf — seven environments total); per-entry `origin_agent` provenance lets a team see which agent contributed a given decision; tiny on-disk footprint (single SQLite file); MIT, with an optional commercial variant for teams rather than a required upsell.
 
-**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K at review time, 16,057 on 2026-11-17 and deja-vu's 935). No third-party or public benchmark number, unlike ByteRover/MemPalace/deja-vu.
+**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K (16,057 on 2026-11-17) and deja-vu's 935). No third-party or public benchmark number, unlike ByteRover/MemPalace/deja-vu.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -483,7 +483,7 @@ maintenance; the private/shared/personal tiers map onto a team's actual read/wri
 extra config.
 
 **Risks**: small community relative to peers in this doc (359 stars vs. deja-vu's 935 or ai-memory's
-8.2K at review time, 16,057 on 2026-11-17); only 5 of 7 listed harnesses are "Fully Supported" — OpenCode V1 and Kiro carry a lower support
+8.2K, 16,057 on 2026-11-17); only 5 of 7 listed harnesses are "Fully Supported" — OpenCode V1 and Kiro carry a lower support
 tier per the README's own table; no pinned-model or deterministic-rebuild claim is documented for the
 Update step itself — only the retrieval/orientation path is stated to be deterministic, not the Brain's
 content generation (the agent authoring the Markdown each session is whichever model the harness is
