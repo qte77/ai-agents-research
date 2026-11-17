@@ -76,6 +76,14 @@ jobs:
             --out decision-eval-output \
             --baseline .github/scripts/data/gold/baseline.json
 
+      - name: Add weekly paper-run decide() counts
+        # Plan 0014 row 13-A7 (2): the committed triage reports carry each run's
+        # "Decided via decide()" line; a fall over three runs joins drift.md.
+        run: |
+          python3 .github/scripts/rxiv-decide-counts.py \
+            --summary decision-eval-output/summary.md \
+            --drift decision-eval-output/drift.md
+
       - name: Append summary to step summary
         if: always()
         run: |
