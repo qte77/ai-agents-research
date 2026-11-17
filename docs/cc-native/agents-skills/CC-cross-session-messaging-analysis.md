@@ -3,7 +3,7 @@ title: CC Cross-Session Messaging
 source: https://code.claude.com/docs/en/cross-session-messaging
 purpose: Analysis of Claude Code's first-party cross-session messaging — independent sessions you start and steer yourself message each other, distinct from agent-team/subagent mailboxes.
 created: 2026-09-23
-updated: 2026-10-24
+updated: 2026-11-17
 validated_links: 2026-10-24
 status: adopt
 ---
@@ -149,6 +149,7 @@ Per the docs, these are properties of the channel itself, not platform gaps:
 - **Plain text only** — structured agent-team protocol messages stay within a team; this channel never carries them.
 - **Same-machine message size cap** — refused at the sender once the serialized message passes about a million characters; nothing reaches the receiving session.
 - **Burst throttling at the sender** — once a rapid burst to one session exceeds what that session's inbox accepts, further sends are refused in the sending session (Claude is told to batch or wait). Before v2.1.236, such sends were reported as sent while silently dropped on the receiving side.
+- **Messages without a prompt from you (v2.1.321–323, CHANGELOG).** How many messages each of your sessions on one machine can send the others before a prompt from you is needed moved from about 20 to 100,000 (v2.1.323). For a Claude Desktop Code tab session the cap before it waits for you to type again moved from 10 to 20 (v2.1.321), then from 20 to 100,000 (v2.1.323).
 - **Loop throttling at the receiver** — the receiving session rate-limits repeated messages per sender, drops identical repeats within a short window, and queues at most 50 accepted messages for Claude to read, so a message loop between two sessions stops on its own ([cross-session-messaging][cc-xsm]).
 
 This design-choice framing is worth noting against [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md)'s limitation #12 ("structured messages cannot be broadcast"): that limitation describes the Agent-Teams protocol-message channel specifically and doesn't extend to this plain-text channel, which was never meant to carry structured broadcasts.

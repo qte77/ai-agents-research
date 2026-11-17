@@ -13,8 +13,9 @@ status: research
 
 Claude Code sandboxing uses OS-level primitives to enforce filesystem and network
 isolation on bash commands ([source][cc-sandboxing]). This replaces approval
-fatigue with automated enforcement — commands that stay within sandbox boundaries
-run without prompts.
+fatigue with automated enforcement — in auto-allow mode, commands that stay within
+sandbox boundaries run without prompts (auto-allow needs
+`sandbox.autoAllowBashIfSandboxed: true`; see "Changes in v2.1.321–325").
 
 **Both layers required**: Without network isolation, a compromised agent could
 exfiltrate files (e.g., SSH keys). Without filesystem isolation, it could
@@ -53,7 +54,7 @@ From `.claude/settings.json` ([source][cc-sandbox-settings]):
 
 **Key choices:**
 
-- [x] Sandbox enabled with auto-allow
+- [x] Sandbox enabled with auto-allow (`sandbox.autoAllowBashIfSandboxed: true`, no longer the default)
 - [x] Unsandboxed escape hatch disabled (`allowUnsandboxedCommands: false`)
 - [x] Weaker nested sandbox disabled
 - [x] Network restricted to `api.github.com` only
@@ -88,7 +89,7 @@ the default dev setup — must be run separately.
 | Key | Description | Default |
 | --- | ----------- | ------- |
 | `sandbox.enabled` | Enable bash sandboxing | `false` |
-| `sandbox.autoAllowBashIfSandboxed` | Auto-approve sandboxed bash commands | `false` since v2.1.325 (was `true`; see below) |
+| `sandbox.autoAllowBashIfSandboxed` | Auto-approve sandboxed bash commands | `false` (CHANGELOG files the change under v2.1.325; the settings reference says "Before v2.1.324, the default was `true`") |
 | `sandbox.excludedCommands` | Commands that bypass sandbox entirely | — |
 | `sandbox.allowUnsandboxedCommands` | Allow `dangerouslyDisableSandbox` escape hatch | `true` |
 
@@ -172,7 +173,8 @@ with `allowUnsandboxedCommands: false` ([source][cc-sandboxing]).
 
 ### Two Sandbox Modes
 
-**Auto-allow** (`/sandbox`): Sandboxed bash commands run without prompts.
+**Auto-allow** (`/sandbox`): Sandboxed bash commands run without prompts. Requires
+`sandbox.autoAllowBashIfSandboxed: true`; the default is now `false`.
 Unsandboxable commands fall back to regular permission flow
 ([source][cc-sandboxing]).
 
@@ -279,18 +281,11 @@ Bash sandbox entirely. Only Bash tool commands are subject to
 **Security note**: Adding broad paths like `/workspaces/` to `allowWrite`
 expands the blast radius. Prefer specific repo paths over parent directories.
 
-## See Also
-
-For external sandbox platforms (OpenSandbox, E2B, Sprites.dev) that provide cloud
-execution and stronger isolation (gVisor, Firecracker microVMs) beyond CC's local
-bubblewrap/Seatbelt enforcement, see
-[CC-sandbox-platforms-landscape.md](CC-sandbox-platforms-landscape.md).
-
 ## Changes in v2.1.321–325
 
 Changelog entries (CHANGELOG sections 2.1.321 to 2.1.325) unless marked "documented".
 
-- **Auto-allow is no longer the default (v2.1.325).** Sandboxed Bash commands follow the normal permission flow unless `sandbox.autoAllowBashIfSandboxed: true` is set. Managed settings that turn the sandbox on need the key in the highest-ranking managed source to keep commands prompt-free. Documented: the [settings reference](https://code.claude.com/docs/en/settings-reference) gives `false`, "Before v2.1.324, the default was `true`" (the changelog files the change under 2.1.325; the version boundary is unreconciled). The core-settings table above is corrected accordingly.
+- **Auto-allow is no longer the default (v2.1.325).** Sandboxed Bash commands follow the normal permission flow unless `sandbox.autoAllowBashIfSandboxed: true` is set. Managed settings that turn the sandbox on need the key in the highest-ranking managed source to keep commands prompt-free. Documented: the [settings reference](https://code.claude.com/docs/en/settings-reference) gives `false`, "Before v2.1.324, the default was `true`" (the CHANGELOG files the change under 2.1.325 and has no 2.1.324 section; the boundary is unreconciled). The core-settings table above is corrected accordingly.
 - **Worktrees (v2.1.323, v2.1.325).** On macOS and Linux `git worktree add|move|remove` fail read-only in the sandbox, as do commits in a worktree the session was not started in or given. An isolated worktree session or agent is refused `git bisect run`, `git maintenance register|start` and `scalar` set-up commands (v2.1.325).
 - **Symlinked write grants ignored (v2.1.323).** Write access granted through a symlink in a writable folder that leads elsewhere, or to a missing path, is ignored on macOS, Linux and WSL; grant the real path.
 - **Invalid `--settings` stops start-up (v2.1.323).** A `--settings` file that is not valid JSON and has a `sandbox` key stops start-up, even if the key turns the sandbox off.
@@ -298,6 +293,13 @@ Changelog entries (CHANGELOG sections 2.1.321 to 2.1.325) unless marked "documen
 - **Hosted sessions (v2.1.325).** Claude Code on the web, cloud scheduled tasks and Cowork cloud sessions start despite `sandbox.failIfUnavailable`, because the hosted container has no command sandbox (the settings reference lists the key as "except in an Anthropic-hosted environment").
 - **Credential hygiene (v2.1.323, v2.1.325).** Claude Code's own ripgrep and most internal git commands run without most sign-in tokens and API keys in their environment (v2.1.323), as do the sandbox's own helper programs such as its network bridge (v2.1.325); ripgrep, local git and the sandbox runtime helpers also run without the mTLS client key's passphrase (v2.1.325).
 - **Untrusted folders (v2.1.325).** `-p` and SDK runs in a worktree or submodule mounted into a container apply `.claude/settings.local.json` allow rules only once the folder is trusted.
+
+## See Also
+
+For external sandbox platforms (OpenSandbox, E2B, Sprites.dev) that provide cloud
+execution and stronger isolation (gVisor, Firecracker microVMs) beyond CC's local
+bubblewrap/Seatbelt enforcement, see
+[CC-sandbox-platforms-landscape.md](CC-sandbox-platforms-landscape.md).
 
 ## References
 

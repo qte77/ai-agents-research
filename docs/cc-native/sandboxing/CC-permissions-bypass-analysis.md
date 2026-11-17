@@ -87,6 +87,7 @@ startup about allow rules with a `*` before the subcommand
 
 Changelog entries unless marked.
 
+- **Sandbox auto-allow off by default (v2.1.325 per CHANGELOG).** Sandboxed Bash commands follow the normal permission flow unless `sandbox.autoAllowBashIfSandboxed: true`; see [CC-sandboxing-analysis](CC-sandboxing-analysis.md).
 - **`PreToolUse` allow, then a failing permission check (v2.1.323).** If a tool's permission check errors after a `PreToolUse` hook returned "allow", the call is decided as if no hook had answered.
 - **Bash checks (v2.1.321, v2.1.323).** `cp` and `mv` spelled by a path such as `/bin/cp` get the same path checks as bare `cp`/`mv` (v2.1.321). Some commands that could run differently from how they were checked now ask (v2.1.323). A start-up warning flags Bash allow rules with a `*` in a variable's value, such as `Bash(PORT=* npm run dev)` (v2.1.323).
 - **Scheduled skills (v2.1.325).** Scheduled tasks and `/loop` ask before running a skill that declares `allowed-tools` or hooks; `Skill(name)` in `permissions.allow` runs it unattended. "Always allow" in Desktop, IDE and SDK hosts offers a rule alone only when saving it would allow that command again, so a scheduled task that relied on one can now wait for you.
@@ -94,6 +95,17 @@ Changelog entries unless marked.
 - **Mod tool calls (v2.1.321).** A mod's own `$.tool.call` and `$.mcp.call` raise no prompt, even under `ask` rules or in `dontAsk` and `-p` runs; deny rules and organization policy still apply.
 - **Managed `policyHelper` (v2.1.323).** No longer takes environment variables from user or `--settings` files; set them in managed `env` or the launching shell.
 - **Untrusted workspaces (v2.1.323).** Under `--trust-workspace false` on self-hosted runners and in VS Code untrusted folders, repository settings can no longer disable your hooks or turn plugins on or off.
+
+### Security-relevant fixes in v2.1.321–325
+
+CHANGELOG entries, stated as fixed bugs (the behaviour before the listed version was the bug):
+
+- Bash deny and ask rules missed some commands run through `sudo`, `env` and similar wrappers; Bash allow rules written with combined `sudo` flags could skip the prompt (fixed v2.1.323).
+- `--permission-mode auto` or a settings `defaultMode: auto` started in a mode that could allow more when auto mode was unavailable; it now starts in Manual, which asks first (v2.1.323).
+- `claude -p` and the Agent SDK ran Bash unsandboxed when `--settings` or SDK settings that turn the sandbox on failed validation; they now stop at start-up and name the invalid setting (v2.1.323).
+- Project settings were sometimes read through a symbolic link that led to a different folder than the one Claude Code checked (v2.1.323).
+- WebFetch did not recheck organization policy and `CLAUDE_CODE_DISABLE_WEB_FETCH` at each call (v2.1.323).
+- Token counting on Amazon Bedrock sent the conversation to Bedrock even when the `allowedProviders` managed setting did not allow it (v2.1.325).
 
 ## Auto Mode Hard-Deny Rules (v2.1.136)
 

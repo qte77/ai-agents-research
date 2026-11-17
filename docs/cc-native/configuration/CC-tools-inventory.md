@@ -106,7 +106,7 @@ Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 
 ### Code Mode (v2.1.323)
 
-Documented at the [Code Mode page][code-mode-page] (read 2026-11-17): an experimental, off-by-default mode in which Claude writes JavaScript that makes several tool calls in one step, run in the session by a `REPL` tool. Opt in with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1` (shell or user settings; ignored in project settings; `0` in managed settings blocks it for an organization). Requirements per the page: v2.1.323 or later (v2.1.326 for agent teams), native build, interactive terminal session only (not `-p`, SDK, VS Code, Desktop or cloud), direct Anthropic API access (no gateway or cloud provider), a supported model, and no HIPAA or zero-data-retention organization. Permissions: `deny` and `ask` rules and `PreToolUse` hooks apply per tool call; in auto mode the classifier reviews the code, not each call. A `PreToolUse` hook matching `REPL` can read `tool_input.code`. Code that waits stops after ten minutes; background code can run up to two hours.
+Documented at the [Code Mode page][code-mode-page] (read 2026-11-17): an experimental, off-by-default mode in which Claude writes JavaScript that makes several tool calls in one step, run in the session by a `REPL` tool. Opt in with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1` (shell or user settings; ignored in project settings; `0` in managed settings blocks it for an organization). Requirements per the page: v2.1.323 or later (v2.1.326 for agent teams), native build, interactive terminal session only (not `-p`, SDK, VS Code, Desktop or cloud), direct Anthropic API access (no gateway or cloud provider), a supported model, and no HIPAA or zero-data-retention organization. Permissions: `deny` and `ask` rules and `PreToolUse` hooks apply per tool call; in auto mode the classifier reviews the code, not each call. Supported models per the page: Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.2. A Code Mode session resumes only with the variable still set to `1`. Start-up is refused with some settings on, such as an API key helper (`apiKeyHelper`), OpenTelemetry export (`CLAUDE_CODE_ENABLE_TELEMETRY`) or `DISABLE_TELEMETRY`, and with an installed mod that checks tool calls. A `PreToolUse` hook matching `REPL` can read `tool_input.code`. Code that waits stops after ten minutes; background code can run up to two hours.
 
 ## Permission Model
 
@@ -283,7 +283,7 @@ The following tools appear in the `@anthropic-ai/claude-code@2.1.88` npm sourcem
 | `VerifyPlanExecutionTool` | Verify plan execution | `CLAUDE_CODE_VERIFY_PLAN` |
 | `CtxInspectTool` | Context window inspection | `CONTEXT_COLLAPSE` |
 | `TerminalCaptureTool` | Terminal panel capture | `TERMINAL_PANEL` |
-| `REPLTool` | Interactive VM shell | `--bare` mode |
+| `REPLTool` | Interactive VM shell | `--bare` mode (binary-extracted entry; whether it relates to Code Mode's `REPL` tool, see [Code Mode](#code-mode-v21323), no source says) |
 
 ### Kairos-Exclusive Tools (Unreleased)
 
