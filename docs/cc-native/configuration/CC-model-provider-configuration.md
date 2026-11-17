@@ -3,7 +3,7 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/env-vars, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-11-15
+updated: 2026-11-17
 validated_links: 2026-11-09
 status: reference
 ---
@@ -390,6 +390,17 @@ Anthropic's own self-hosted gateway runs Claude Code through Amazon Bedrock, Cla
 - **Spend in `/usage`.** Once the gateway runs 2.1.319 or later, developers behind it who have no spend limit see their spend for today, this week and this month in `/usage` ([changelog][cc-changelog]).
 
 Auto mode behind a gateway depends on `CLAUDE_CODE_AUTO_MODE_SERVER`; see [CC-env-vars-reference.md § Session Guards & Runtime](CC-env-vars-reference.md#session-guards--runtime).
+
+### Changes in v2.1.321–325
+
+Changelog entries unless marked; see [CC-env-vars-reference](CC-env-vars-reference.md#v21321325-additions) for the variables.
+
+- **Unrecognized model IDs assume a 1M window (v2.1.323).** The window assumed for an ID Claude Code does not recognize moved from 200K to 1M; `/autocompact` compacts earlier and `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` keeps 200K. On other vendors' smaller-window models a full session can fail every turn until `/clear`, so set the variable before it fills. From v2.1.325 `CLAUDE_CODE_MAX_CONTEXT_TOKENS` also sets the window for unrecognized IDs starting with `claude-` (a gateway's `claude-sonnet-latest`).
+- **Fable 5.1 picks move to `fable` (v2.1.321).** Saved Fable 5.1 model picks move to the `fable` alias: at once on Pro and Max, on Team and Enterprise once the organization allows it; `/model claude-fable-5-1` switches back.
+- **Fast mode on Vertex (v2.1.322).** See [CC-fast-mode-analysis](CC-fast-mode-analysis.md); documented on the fast-mode page.
+- **Claude apps gateway (v2.1.321).** `policy_mode: layered` now adds managed MCP servers over every matching policy, `match: {}` included, so a gateway already on it serves more after the upgrade; Bedrock, Vertex and Foundry upstreams ignore the gateway environment's `ANTHROPIC_*_BASE_URL` variables, so set `base_url` on the upstream. v2.1.323: `/v1/models` states `max_input_tokens` for models whose window is certain on every upstream.
+- **Proxy handling (v2.1.323, v2.1.325).** Organization settings and policy requests ignore a proxy set only by `ALL_PROXY`; plugin downloads use a CONNECT tunnel when `ALL_PROXY` is the only proxy.
+- **Cost accounting (v2.1.325).** `/cost`, `--max-budget-usd` and the cost and token metrics now count a mod's `$.model.complete` and `$.model.classify` calls.
 
 ## Output & Context Tuning
 

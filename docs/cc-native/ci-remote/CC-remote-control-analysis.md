@@ -3,7 +3,7 @@ title: CC Remote Control Analysis
 source: https://code.claude.com/docs/en/remote-control
 purpose: Analysis of Claude Code Remote Control for mobile monitoring of long-running CC sessions and cross-device session continuity.
 created: 2026-03-07
-updated: 2026-11-09
+updated: 2026-11-17
 validated_links: 2026-11-09
 status: research-preview
 ---
@@ -144,6 +144,10 @@ Source: [CC settings — settings precedence][cc-settings]
 
 Cross-ref: [CC-env-vars-reference.md](../configuration/CC-env-vars-reference.md) for full variable definitions
 
+### Changes in v2.1.321–325
+
+Changelog entries. `claude remote-control` accepts `--settings <file>`, applied to every session it starts; if the file changes, no new session starts until `claude remote-control` is restarted (v2.1.321). It exits with status 4 when it stops by itself (single-session runs still exit 0) and 69 when it cannot register, so a service manager can restart it (v2.1.325). A Remote Control session keeps the folder it was started in; a connected client can no longer move it (v2.1.321).
+
 ### Limitations
 
 1. **One remote session at a time** per CC instance ([source][cc-rc])
@@ -192,6 +196,7 @@ loop_remote:
 - [CC Claude Code on the Web docs][cc-web]
 - [CC CLI Reference][cc-cli]
 - [CC Security][cc-sec]
+- [CC CHANGELOG][cc-changelog] (v2.1.321–325 `claude remote-control` entries, accessed 2026-11-17)
 
 [cc-rc]: https://code.claude.com/docs/en/remote-control
 [cc-rc-req]: https://code.claude.com/docs/en/remote-control#requirements
@@ -205,3 +210,4 @@ loop_remote:
 [cc-cli]: https://code.claude.com/docs/en/cli-reference
 [cc-sec]: https://code.claude.com/docs/en/security
 [cc-settings]: https://code.claude.com/docs/en/settings#settings-precedence
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md

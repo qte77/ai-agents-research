@@ -3,7 +3,7 @@ title: CC Mods (Function Hooks) Analysis
 source: https://code.claude.com/docs/en/plugins/mods/overview, https://code.claude.com/docs/en/plugins/mods/admin, https://code.claude.com/docs/en/plugins/mods/reference, https://code.claude.com/docs/en/plugins/mods/create
 purpose: Analysis of Claude Code mods — in-process JavaScript/TypeScript event handlers, shipped as plugins, that redraw or rewrite how Claude Code behaves — for extensibility, governance, and the agent substrate rubric.
 created: 2026-10-02
-updated: 2026-10-22
+updated: 2026-11-17
 validated_links: 2026-10-22
 status: generally-available
 ---
@@ -62,6 +62,20 @@ Scored 2026-10-02, from [code.claude.com/docs/en/plugins/mods/overview, /admin a
 
 No CONTRIBUTING file, PR template, or README "how to contribute" section was found in `anthropics/claude-code` (mods' home repo) for mods specifically; `claude-plugins-official`'s own README documents a contribution flow only for its `external_plugins/` tier, not for a built-in CC mod. That absence does not change the scores above, which rest on the mods API's own documented runtime behavior (`$.store`'s machine scope), not on rule 6's git-governance framing.
 
+## Changes in v2.1.321–325
+
+Changelog entries unless marked "documented" (the [plugin manifest reference](https://code.claude.com/docs/en/plugins-reference), read 2026-11-17).
+
+- **Version gating (v2.1.323).** `plugin.json` accepts `engines["claude-code"]`; plugins outside the stated Claude Code range are not installed, updated or loaded, and install and update pick the newest version that fits. Documented: a semver range such as `">=2.1.400"`; v2.0.15 to v2.1.75 reject a manifest that has the field with an `Unrecognized key` error, so omit it to stay compatible with them.
+- **`claude plugin validate` (v2.1.323, v2.1.325).** Type-checks a plugin's TypeScript hooks module (each finding a warning; `--strict` fails on it), reports the `$` nouns a mod's `engine.create` hook adds, withholds or replaces, fails a mod whose `engine.create` hook is not in the one accepted form (installed mods keep loading), and reports some unsafe paths and links in a plugin folder, which loading skips (v2.1.325). `claude plugin install --json` gains `unsetOptionCount`, the number of `userConfig` options not yet set (v2.1.323).
+- **Hook semantics (v2.1.323).** A `*`, namespace or negated hook on `engine.create` now only observes; to add or withhold a `$` noun, hook `engine.create` by name. Plugin `tool.list` hooks apply the tools they add or remove to the model and every agent. A mod pane receives `isPromptCovered` (v2.1.323).
+- **Mod reloading (v2.1.321).** Headless sessions reload mods in `.claude/skills` when files change; `CLAUDE_CODE_PLUGIN_DIR_WATCH=0` turns it off.
+- **Managed plugin governance (v2.1.321, v2.1.325).** Managed `extraKnownMarketplaces`: a declared name cannot be added from another source, an entry from elsewhere is hidden, and plugins the declared marketplace lists are reinstalled from it; take-overs set aside saved data for `cleanupPeriodDays` (options and secrets until `claude plugin restore-set-aside`) (v2.1.321). Plugins of a remote marketplace that managed settings declare, enable and list in `prependPlugins` or `appendPlugins` count as the organization's; `pluginDigests` is deprecated and ignored (v2.1.325). Under `--trust-workspace false` or an untrusted VS Code folder, repository settings cannot disable your hooks or toggle plugins (v2.1.323).
+- **Marketplace and bundle handling (v2.1.323, v2.1.325).** Marketplace `ref` accepts the full ID of any commit on a branch or tag; clients before v2.1.325 cannot clone such a pin (v2.1.325). Marketplace and plugin installs fail when a git submodule is not on its recorded commit (v2.1.323). `.mcpb` and `.dxt` MCP bundles unpack under the plugins directory instead of `.mcpb-cache` in the plugin folder (v2.1.325). Project `.mcp.json` server approvals match the server's exact name; an entry in another spelling asks again (v2.1.323).
+- **Nested skill loading (v2.1.321, v2.1.325).** `.claude/skills` folders inside `~/.claude/plugins` no longer load when Claude works on files there (v2.1.321); those in `--plugin-dir` plugins no longer load from a session started above them (v2.1.325).
+- **Removals and deprecations (v2.1.323).** The `subagentStatusLine` setting is removed (rows use the default look; files holding the key still load); a plugin's `agent` setting is deprecated (still applies, warns at start-up, in `claude plugin list` and in `claude plugin validate`).
+- **Code Mode interplay.** Code Mode will not start while a mod that checks tool calls is installed (documented at the [Code Mode page](https://code.claude.com/docs/en/code-mode)); see [CC-tools-inventory](../configuration/CC-tools-inventory.md#code-mode-v21323).
+
 ## Sources
 
 | Source | Content |
@@ -80,6 +94,7 @@ No CONTRIBUTING file, PR template, or README "how to contribute" section was fou
 | [CC-plugin-packaging-research.md §5][packaging-pinning] | Marketplace version-pinning mechanics (`ref`/`sha`/`sha256`), reused for Reproducible above |
 | [anthropics/claude-code `LICENSE.md`][gh-license] | "All rights reserved" — the `mods/` source is published, not open source |
 | [claude.dev mods showcase][claudedev-mods] | Samples, built-ins and the community "Next steps" mod (`next-steps@claude-community`) |
+| [CC CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) / [plugin manifest reference](https://code.claude.com/docs/en/plugins-reference) | v2.1.321–325 plugin and mod entries; `engines` (accessed 2026-11-17) |
 
 [mods-overview]: https://code.claude.com/docs/en/plugins/mods/overview
 [mods-admin]: https://code.claude.com/docs/en/plugins/mods/admin

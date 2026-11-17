@@ -2,7 +2,7 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-11-15
+updated: 2026-11-17
 validated_links: 2026-11-15
 status: adopt
 ---
@@ -175,6 +175,25 @@ These vars are set by CC at runtime and observed via `env` inside a session. The
 | `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD` | `0` | Load CLAUDE.md from `--add-dir` directories | [env-vars][env-vars] |
 
 Cross-ref: [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md)
+
+### v2.1.321–325 Additions
+
+Changelog entries unless marked "documented" (the [env-vars page][env-vars] on 2026-11-17).
+
+| Variable | Default | Purpose | Source |
+|---|---|---|---|
+| `CLAUDE_CODE_MAX_CONTEXT_TOKENS` | (unset) | Overrides the context window Claude Code assumes for the active model (documented). From v2.1.325 it also sets the window for unrecognized model IDs that start with `claude-`, such as a gateway's `claude-sonnet-latest` | [env-vars][env-vars], [changelog][changelog] (2.1.325) |
+| `CLAUDE_CODE_DISABLE_1M_CONTEXT` | `0` | From v2.1.323 the window assumed for a model ID Claude Code does not recognize is 1M instead of 200K; `1` keeps 200K. The changelog warns that other vendors' smaller-window models can then fail every turn until `/clear` once full | [changelog][changelog] (2.1.323) |
+| `CLAUDE_CODE_AUTO_MODE_MODEL` | (unset) | Model for auto-mode classifier requests, full model ID (documented). v2.1.323: also honored in managed settings for Claude Desktop sessions on third-party providers, once Desktop includes that version | [env-vars][env-vars], [changelog][changelog] (2.1.323) |
+| `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE` | (unset) | `1` opts into Code Mode (v2.1.323, experimental; documented at the [Code Mode page][code-mode]). `0` in managed settings blocks it for an organization; ignored in project settings files. See [CC-tools-inventory](CC-tools-inventory.md#code-mode-v21323) | [code-mode][code-mode] |
+| `CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES` | (unset) | `1` turns off subagent progress summaries and the requests that write them (v2.1.323 entry; "available since 2.1.318"). Changelog only: not confirmed on the env-vars page | [changelog][changelog] (2.1.323) |
+| `CLAUDE_CODE_RESUME_HINT_COMMAND` | (unset) | For a wrapper that starts Claude Code: the name the exit hint prints as `<name> --resume <session-id>`; ignored if not matching `^\w[\w-]*$` and ignored in a settings `env` block (documented; v2.1.323+) | [env-vars][env-vars] |
+| `CLAUDE_CODE_PERFORCE_MODE` | (unset) | `1` makes Edit/Write/NotebookEdit fail with a `p4 edit <file>` hint when the target lacks the owner-write bit (documented). v2.1.323 adds a one-time startup notice naming it when Perforce settings are found and the mode is off | [env-vars][env-vars], [changelog][changelog] (2.1.323) |
+| `CLAUDE_CODE_AUTOMOUNT_ROOTS` | (unset) | Automount root folders skipped when Claude Code looks above the working directory for `CLAUDE.md`, skills and `.mcp.json` (documented). v2.1.323: `/home` as an autofs map is handled without it; set this for a map root deeper than one folder below `/` | [env-vars][env-vars], [changelog][changelog] (2.1.323) |
+| `CLAUDE_CODE_OVERLOADED_RETRY_MAX_DELAY_MS` | `32000` | Ceiling on backoff between retries of a `529` overloaded error (documented: whole ms, 32000 to 300000; values above 64000 need v2.1.323+, whose changelog raised the maximum from 64000 to 300000) | [env-vars][env-vars], [changelog][changelog] (2.1.323) |
+| `CLAUDE_CODE_PLUGIN_DIR_WATCH` | (on) | v2.1.321: headless sessions reload mods in `.claude/skills` when files change; `0` turns this off. The env-vars page describes the variable as controlling whether a mod reloads on file changes | [changelog][changelog] (2.1.321), [env-vars][env-vars] |
+| `MCP_SDK_GENERATION` | v2 | Pins the MCP client runtime (`v1` or `v2`; documented). v2.1.323: `v1` now runs the v2 client in a compatibility mode (earlier handshake, relaxed OAuth sign-in checks) because the v1 client is removed | [env-vars][env-vars], [changelog][changelog] (2.1.323) |
+| `ALL_PROXY` | (unset) | v2.1.323: organization settings and policy requests no longer use a proxy set only by `ALL_PROXY` (set `HTTPS_PROXY`). v2.1.325: plugin marketplace and plugin downloads use a CONNECT tunnel when it is the only proxy, so a proxy refusing CONNECT now fails them | [changelog][changelog] (2.1.323, 2.1.325) |
 
 ## Configuration Methods
 
@@ -377,6 +396,8 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | [unkn0wncode env vars gist][unkn0wncode] | Categorized 200+ env vars (v2.1.81) |
 | [CC binary architecture][binary-arch] | Binary analysis methodology |
 | [CC RE landscape][re-landscape] | Community reverse engineering tools and research |
+| [CC CHANGELOG][changelog] | v2.1.321–325 variable additions and changes (accessed 2026-11-17) |
+| [CC Code Mode page][code-mode] | `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE` (accessed 2026-11-17) |
 
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [settings]: https://code.claude.com/docs/en/settings
@@ -385,6 +406,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 [settings-ref-env]: https://code.claude.com/docs/en/settings-reference#env
 [settings-ref]: https://code.claude.com/docs/en/settings-reference
 [changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[code-mode]: https://code.claude.com/docs/en/code-mode
 [remote-control]: https://code.claude.com/docs/en/remote-control
 [cc-caching]: https://code.claude.com/docs/en/prompt-caching
 [cc-caching-behavior]: ../context-memory/CC-prompt-caching-behavior.md

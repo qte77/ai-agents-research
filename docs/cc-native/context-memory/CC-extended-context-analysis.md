@@ -3,7 +3,7 @@ title: CC Extended Context Window (1M) Analysis
 source: https://code.claude.com/docs/en/model-config#extended-context
 purpose: Analysis of 1M token extended context window for cost planning and headless CC workflow usage.
 created: 2026-03-07
-updated: 2026-11-15
+updated: 2026-11-17
 validated_links: 2026-11-15
 status: beta
 ---
@@ -144,6 +144,10 @@ The ~75k smart-zone figure is comparable to this repo's 40–60% utilization tar
 ### Mitigation
 
 The primary mitigation is [frequent intentional compaction][cc-mem-ace]: distilling progress into a structured artifact before the dumb zone is reached, then starting a fresh session from the artifact. This is preferable to relying on a 1M window to avoid compaction altogether. Cross-ref: [fresh-context-per-iteration in CC-ralph-enhancement-research.md][cc-ralph]; [Context Engineering Workflow (ACE-FCA) in CC-memory-system-analysis.md][cc-mem-ace].
+
+## Unrecognized model IDs (v2.1.323, v2.1.325)
+
+Changelog entries: from v2.1.323 the context window assumed for a model ID Claude Code does not recognize is 1M instead of 200K; `/autocompact` compacts earlier and `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` keeps 200K, which matters on other vendors' smaller-window models that can fail every turn once full. From v2.1.325 `CLAUDE_CODE_MAX_CONTEXT_TOKENS` also sets the window for unrecognized IDs starting with `claude-`, such as a gateway's `claude-sonnet-latest` ([CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)).
 
 ## References
 

@@ -3,7 +3,7 @@ title: CC Fast Mode Analysis
 source: https://code.claude.com/docs/en/fast-mode
 purpose: Analysis of Claude Code Fast Mode and the underlying API `speed` parameter for potential adoption within CC-based workflows.
 created: 2026-02-17
-updated: 2026-11-08
+updated: 2026-11-17
 validated_links: 2026-11-08
 status: available
 ---
@@ -81,6 +81,10 @@ After `/usage-credits`, `/fast` remains available.
 - **Claude Code layer** ([CC][cc-fast], [feature availability][cc-features]): Anthropic Console or claude.ai subscription only — "not available on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or Claude Platform on AWS".
 - **Why these don't conflict:** "Google Cloud's Agent Platform" is the Google-managed offering (`CLAUDE_CODE_USE_VERTEX`, `aiplatform.googleapis.com`), a different product from Claude Models on Google Cloud (Anthropic managed) (`claude.googleapis.com`), for which Claude Code documents no integration ([Google Cloud overview][gcp-overview]). Microsoft Foundry is the same product on both pages: the API supports fast mode there for Opus 5.5, but Claude Code's Foundry integration doesn't offer it. A client limitation, not a disagreement about the API.
 
+### Fast mode on Vertex (v2.1.322, supersedes the 2026-11-08 reading above)
+
+The CHANGELOG (2.1.322) says: "Added fast mode on Vertex in the global, us and eu regions, falling back to standard speed if Vertex refuses it". The [fast-mode page](https://code.claude.com/docs/en/fast-mode) (read 2026-11-17) documents it under "Use fast mode on Agent Platform": Fable 5.2 only, Claude Code v2.1.322 or later, the Fable 5.2 region must be `global`, `us` or `eu` (otherwise `/fast` reports `Fast mode needs Vertex region global, us or eu`), and `"fastMode": true` in settings has no effect there. A 403 or 404 from the provider pauses fast mode with a retry message (v2.1.323). The "not available on ... Google Cloud's Agent Platform" quote in the platform list above predates this and no longer holds for Fable 5.2.
+
 ### Fast Mode vs Effort Level
 
 | Setting | Effect |
@@ -133,6 +137,7 @@ autonomous_run:
 | [CC Model Configuration][cc-model] | Effort defaults |
 | [CC Cost Management][cc-costs] | Usage-credit billing context |
 | [CC CLI Reference][cc-cli] | `--settings` flag |
+| [CC CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) / [fast-mode page](https://code.claude.com/docs/en/fast-mode) | Vertex fast mode, v2.1.322–323 (accessed 2026-11-17) |
 
 [cc-fast]: https://code.claude.com/docs/en/fast-mode
 [api-fast]: https://platform.claude.com/docs/en/build-with-claude/fast-mode
