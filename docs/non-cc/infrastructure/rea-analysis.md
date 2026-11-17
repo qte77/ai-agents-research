@@ -86,10 +86,10 @@ single-product pattern in this directory (e.g. [corsair-analysis.md](corsair-ana
 
 **Assess.** REA is MIT-licensed, multi-agent (not CC-exclusive), and ships a genuinely broad analysis
 surface (native binaries via Hopper/Ghidra/IDA, static JS/Electron/.NET with no native engine
-required, Android, firmware, and more) with per-target documentation. The scale of its star count and
-its very recent creation date (2026-04-14) both argue for caution: this review did not independently
+required, Android, firmware, and more) with per-target documentation. The scale of its star count (and its unexplained growth since; see the 2026-11-17 refresh) and
+its recent creation date (2026-04-14) both argue for caution: this review did not independently
 verify any of the showcased case studies (DX-Ball, Notion, TH04) or run REA against a target, and the
-"90,000 GitHub stars" milestone is a platform metric, not an adoption or correctness signal. Revisit
+"90,000 GitHub stars" milestone (README as of 2026-10-11; "400,000" on 2026-11-17) is a platform metric, not an adoption or correctness signal. Revisit
 once independent usage reports or security review of the MCP surface (a tool that drives
 reverse-engineering binaries and can launch native analysis engines) are available.
 
