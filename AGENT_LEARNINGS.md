@@ -19,6 +19,12 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
 - **Problem**: `main` requires CodeFactor on an up-to-date head (`strict_required_status_checks_policy`). After one PR merges the others are behind, and the merge is refused even though CodeFactor was green on the old head. GitHub's `mergeable_state` lags and can still read `clean` or `unknown` right after a merge, so checking it doesn't help.
 - **Solution**: compare the PR head against `main` (`gh api repos/<o>/<r>/compare/main...<head>` → `behind_by`). If it's behind, update the branch, wait for CodeFactor on the new head, then merge. Unsigned bot commits (weekly triage PRs) merge the same way; no owner-signed commit is needed. Recurred on #725, #733, #735, #745, #752–#760.
 
+### CodeFactor stuck "in progress", and bot PRs whose Lint shows `action_required`
+
+- **Context**: merging a series of PRs here, including the weekly bot triage PRs.
+- **Problem**: (1) the CodeFactor check-run sometimes stays `in_progress` for 10+ minutes and never completes, so the strict required check blocks the merge; (2) Lint on PRs opened by the github-actions bot sits at `action_required` and never runs. Note that CodeFactor reports as a check-run, not a commit status, so a script reading `commits/<sha>/status` sees nothing.
+- **Solution**: (1) close and reopen the PR; CodeFactor re-runs and usually passes within a minute. Read it from `commits/<sha>/check-runs`. (2) a maintainer approves the pending workflow runs (Actions tab, or the REST endpoint for approving a workflow run), then waits for the checks. Recurred on #780 (2026-11-11), #863/#869 and #872 (2026-11-17).
+
 ### Rotating github.com 503s in the link check mean lychee is unauthenticated
 
 - **Context**: CI `Link check (lychee)` failing on a *different* github.com URL each run (503 or timeout), on links the PR never touched.
