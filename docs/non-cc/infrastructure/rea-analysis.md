@@ -4,7 +4,7 @@ source: https://github.com/morluto/rea
 purpose: Assess REA, an MCP server and CLI giving coding agents reverse-engineering tools for native binaries, JS/Electron apps, .NET assemblies, and websites.
 platform_scope: [claude-code, codex, cursor, gemini-cli]
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-11-17
 validated_links: 2026-10-11
 status: assess
 ---
@@ -32,7 +32,18 @@ conclusion."
 
 ## License, stars, dates
 
-MIT (confirmed by reading the `LICENSE` file directly: "Copyright (c) 2026 morluto"). 101,489 stars,
+**Refresh, 2026-11-17** (`gh api repos/morluto/rea`): still MIT (`LICENSE` unchanged, "Copyright (c) 2026
+morluto"). 466,058 stars, 114,052 forks, 1,528 open issues and PRs combined, 1,751 subscribers; last push
+2026-11-17; latest release `rea-agents-6.9.0` (2026-11-12, `gh api repos/morluto/rea/releases/latest`). The
+README's star milestone now reads 400,000. The star count rose from 101,489 on 2026-10-11 to about 466,000
+in five weeks. We have no explanation for that jump, and it is an anomaly in a platform metric, not
+evidence of adoption. The 2026-10-11 values below are kept as the dated baseline. For how REA compares with
+other agent tooling in this space, see the offensive-security section of
+[agentic-ai-vulnerability-landscape.md](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md#7-offensive-security-agents-authorized-testing);
+[bethington/ghidra-mcp][ghidra-mcp] (Apache-2.0, 219 MCP tools per its README) is the nearest open
+reverse-engineering MCP server for comparison.
+
+**Baseline, 2026-10-11:** MIT (confirmed by reading the `LICENSE` file directly: "Copyright (c) 2026 morluto"). 101,489 stars,
 22,286 forks, 170 open issues, 314 watchers (all `gh api repos/morluto/rea`, 2026-10-11). Created
 2026-04-14; last pushed 2026-10-11 (same day) — under six months old. The README's own star-history
 section reports crossing 90,000 stars as a milestone, and the repo carries a Trendshift badge. A star
@@ -89,6 +100,9 @@ reverse-engineering binaries and can launch native analysis engines) are availab
 | [morluto/rea][repo] (README) | Product description, target-analysis table, agent support list, FAQ, disclaimer, star-history (accessed 2026-10-11) |
 | [morluto/rea][repo] (repo metadata) | Stars/forks/issues/watchers, license, created/pushed dates (accessed 2026-10-11 via GitHub API) |
 | `LICENSE` file, decoded via GitHub API, 2026-10-11 | MIT license text, copyright "morluto" |
+| [morluto/rea][repo] (repo metadata, latest release) | Refreshed stars/forks/issues, license, push date, `rea-agents-6.9.0` (accessed 2026-11-17 via GitHub API) |
+| [bethington/ghidra-mcp][ghidra-mcp] | Nearest open reverse-engineering MCP server; Apache-2.0, 219 tools per README (accessed 2026-11-17) |
 
 [repo]: https://github.com/morluto/rea
+[ghidra-mcp]: https://github.com/bethington/ghidra-mcp
 [dsh]: ../coding-agents/deepseek-harness-analysis.md

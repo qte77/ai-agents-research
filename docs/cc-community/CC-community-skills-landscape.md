@@ -4,7 +4,7 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-11-14
+updated: 2026-11-17
 validated_links: 2026-10-11
 ---
 
@@ -636,6 +636,8 @@ evidence."
 
 `scored 2026-09-30`
 
+See also the offensive-security skill bundles [Claude-BugHunter][cbh], [pentest-ai-agents][psa] and [communitytools][ct] (authorized testing), compared in [agentic-ai-vulnerability-landscape.md](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#7-offensive-security-agents-authorized-testing).
+
 ## stevesolun/ctx
 
 **Repo**: [stevesolun/ctx][ctx-repo] | **Stars**: 587 | **Forks**: 69 | **License**: MIT | pushed 2026-08-31,
@@ -734,6 +736,7 @@ measured uplift. Cross-ref: the WebMCP and agent-readiness material in
 | [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (5,240 stars, no license file, 2026-11-12) |
 | [Cole Medin on YouTube][cole-youtube] | Author's channel (AI agents and coding assistants); linked for context, not cited for facts |
 | [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (23,302 stars, MIT) |
+| [Claude-BugHunter][cbh] · [pentest-ai-agents][psa] · [communitytools][ct] | Offensive-security skill bundles for authorized testing (stars and details in the linked comparison, 2026-11-17) |
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
 | [stevesolun/ctx][ctx-repo] | Skill/agent/MCP/harness recommender over a bundled graph (587 stars, MIT; `gh api` 2026-10-02) |
 | [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (43,595 stars, MIT; `gh api` 2026-10-06) |
@@ -754,6 +757,9 @@ measured uplift. Cross-ref: the WebMCP and agent-readiness material in
 [excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
 [cole-youtube]: https://www.youtube.com/@ColeMedin
 [cf-sec-audit]: https://github.com/cloudflare/security-audit-skill
+[cbh]: https://github.com/elementalsouls/Claude-BugHunter
+[psa]: https://github.com/0xSteph/pentest-ai-agents
+[ct]: https://github.com/transilienceai/communitytools
 [cf-blog]: https://blog.cloudflare.com/build-your-own-vulnerability-harness
 [ctx-repo]: https://github.com/stevesolun/ctx
 [diagram-design]: https://github.com/cathrynlavery/diagram-design
