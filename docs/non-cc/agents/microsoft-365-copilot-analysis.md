@@ -2,7 +2,7 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365, Cowork, Copilot Code, Managed Runtime, Researcher/Analyst) against first-party documentation; original pass 2026-10-21, extended 2026-11-12.
 created: 2026-10-21
-updated: 2026-11-17
+updated: 2026-11-18
 validated_links: 2026-11-12
 status: assess
 ---
@@ -472,8 +472,13 @@ Anthropic's Claude Cowork** — see the disambiguation above.
   | Application card [cowork-app-card] | 2026-11-04 | "Claude Sonnet 4.6 and Claude Opus 4.7" — "provided to Microsoft as a subprocessor" |
   | GA announcement blog [cowork-ga-blog] | 2026-06-16 | "Opus 4.8 and Sonnet 4.6... In Frontier, customers can use GPT 5.5" |
   | What's-new log (cumulative) [cowork-whats-new] | updated 2026-11-06 | Opus 4.7 (May) → Opus 4.8 + Sonnet 5 replacing Sonnet 4.6 (June GA) → Fable 5 Preview, "requires data retention" (June) → GPT 6 Astra, Fable 5.1 replacing Fable 5 (Sept) → GPT 6.1 Sol replacing GPT 6 Sol, Grok 4.7 "provided by xAI as an independent processor" (Oct) |
+  | What's-new log, re-read 2026-11-18 [cowork-whats-new] | page dated 2026-11-16 | November: "Fable 5.2 is now available in the model selector for select customers, replacing Fable 5.1"; Claude Opus 5.5 with a Fast option; "GPT 5.5 is no longer available in the model selector," replaced by GPT 6.1 Sol hosted in Azure |
+  | Frontier features page [frontier-features] | read 2026-11-18 | still says Cowork "runs on OpenAI GPT-5.5" and still lists Edge browser use as a Frontier item — stale against the what's-new log above, which records both changes |
 
-  Neither page is wrong — each was captured at a different point in a changing model roster.
+  The first three rows are not wrong — each was captured at a different point in a changing
+  model roster; the Frontier features page is the one Microsoft page that lags its own log.
+- **Account types (2026-11-18):** "Cowork for work or school accounts is *generally available*,"
+  while "Cowork for personal accounts is in *preview*" [cowork-overview].
 - **Approvals:** "Before performing sensitive actions (sending, posting, scheduling), Cowork
   presents an approval dialog with a preview of the content" [cowork-app-card]; an approval granted
   via "Don't ask again" is scoped to that one conversation, not persisted [cowork-app-card].
@@ -530,22 +535,32 @@ GPT models specifically, for its own surface.
 
 **Copilot Code** (Frontier preview): "Copilot Code builds working software from your description,"
 "provided under Microsoft Product Terms," requiring the Frontier preview program [code-use]
-(2026-10-01). It runs "on your own device" (local) or "in a secure, isolated environment in the
+(page dated 2026-11-12, re-read 2026-11-18; first read when dated 2026-10-01). It runs "on your own device" (local) or "in a secure, isolated environment in the
 cloud" [code-use]. Its own application card names different models than the Home/Code/Autopilot
 blog above: "You can choose from several models, including Claude Opus and Claude Sonnet variants
 and Claude Haiku from Anthropic... and GPT models hosted and operated by Microsoft... Anthropic
-models are provided to Microsoft as a subprocessor" [code-app-card] (2026-10-01). Usage is "metered
+models are provided to Microsoft as a subprocessor" [code-app-card] (2026-11-12). Usage is "metered
 against your Microsoft Copilot entitlement" [code-app-card]. Code can also "build and publish apps
-to Copilot Managed Runtime" [code-use].
+to Copilot Managed Runtime" [code-use]. **Status (2026-11-18):** Microsoft's Ignite post of
+2026-11-17 says "Code will become generally available in the coming weeks" [ignite-2026-blog] — an
+announcement; Code's own Learn page still carries the preview and Frontier notices [code-use].
 
 ### Microsoft Copilot Managed Runtime (preview)
 
 "Copilot Managed Runtime hosts Microsoft 365 line-of-business **applications** that automatically
 inherit organizational governance, security, and compliance controls from the moment they're
-created" [managed-runtime-overview] (2026-10-05, updated 2026-11-06) — it hosts **apps**, never
-described as an agent runtime on any page checked here. Every page in this cluster carries a
+created" [managed-runtime-overview] (2026-10-05, updated 2026-11-06) — it hosts **apps**. The
+admin overview, re-read 2026-11-18, words this as helping teams "build and run line-of-business
+agentic applications" [managed-runtime-admin]; it is still an app host, not a runtime that runs
+agents for you. Every page in this cluster carries a
 preview notice — "This is a preview feature" on three of them [managed-runtime-overview], worded
 as "This feature is in preview" on the security page [managed-runtime-security].
+**GA announced, not yet documented (2026-11-18):** Microsoft's Ignite post of 2026-11-17 says apps
+are hosted "with the Copilot Managed Runtime, generally available today" [ignite-2026-blog], but the
+licensing FAQ, updated the same day, still says "During preview" [managed-runtime-licensing-faq].
+Treat GA as announced until the Learn pages drop their preview notices. GA of the host does not
+make every build path GA: app creation in Copilot Studio is still "in preview" [studio-overview],
+and Cowork's App skill is still listed as Frontier [cowork-whats-new].
 
 "All four paths produce the same kind of artifact: an app that runs in Copilot Managed Runtime"
 [managed-runtime-overview]:
@@ -554,8 +569,12 @@ as "This feature is in preview" on the security page [managed-runtime-security].
 |---|---|---|
 | Cowork (app builder skill) | Business users describing an app in chat | Requires Frontier; "On by default through Frontier program" once onboarded, otherwise unavailable [managed-runtime-admin] |
 | Microsoft Copilot Studio | Makers wanting more control | On by default [managed-runtime-admin] |
-| Copilot Code | Business users and pro developers | Same Frontier gate as Copilot Code itself [code-use] |
-| SDK/CLI (`@microsoft/managed-apps`, `ms` CLI) | Pro-code developers | Off by default; admin-enabled per environment [managed-runtime-admin] |
+| Copilot Code | Business users and pro developers | Frontier gate of Copilot Code itself [code-use]; the admin page (2026-11-18) adds "Only users included in a spending policy for Copilot Code can build apps" [managed-runtime-admin] |
+| SDK/CLI (`ms` CLI from `@microsoft/cmr-cli`, SDK `@microsoft/cmr-apps`; earlier `@microsoft/managed-apps`) | Pro-code developers | Off by default; admin-enabled per environment [managed-runtime-admin] |
+
+The admin page (2026-11-18) also lists Lovable as a creation path for "Makers who build in Lovable
+and deploy to your tenant," and users open apps at `managedapps.cloud.microsoft`
+[managed-runtime-admin]; the overview page still says four paths [managed-runtime-overview].
 
 - **Sandboxed iframe:** "App code runs inside a sandboxed iframe within the managed host. This
   setup separates the app code from the surrounding host and keeps host-managed authentication
@@ -688,6 +707,119 @@ multi-step questions by acting as a deep research assistant" [faq-researcher] (2
   cost from the Agent Store," which lists agents "built by Microsoft," "built by your
   organization," and those "popular within your organization" [agent-store-admin] (2026-04-07,
   updated 2026-10-31).
+
+### Microsoft agent stack (2026-11-18)
+
+Where Microsoft's agent products sit relative to each other, checked at Microsoft's own pages on
+2026-11-18. Statuses move fast here: the Ignite post of 2026-11-17 announced several GAs that the
+Learn pages did not yet show, so each status below names its page.
+
+#### Computer-using agents
+
+Microsoft ships four ways for an agent to drive a screen, plus Cowork's local Edge browsing
+(above):
+
+| Product | What it drives | Where it runs | Status | Controls |
+|---|---|---|---|---|
+| Copilot Studio computer use [studio-computer-use] | "websites and desktop apps," by selecting buttons and menus and entering text | A Windows machine you set up, or a hosted browser [studio-computer-use-standalone] | Tool documented without a preview notice; the standalone tool is preview and "rolling out across supported regions" [studio-computer-use-standalone] | Allow-list (which "only prevents the model from taking actions" on unlisted sites, it doesn't stop it opening them), enforced HTTPS, human supervision by email, stored credentials [studio-computer-use] |
+| Foundry computer use tool [foundry-computer-use] | "desktop and browser applications," from screenshots | Your own sandbox: the model proposes an action and your code executes it | The `computer-use-preview` model; access needs registration and is granted "based on eligibility criteria" | Pending safety checks need user approval; Microsoft warns of "significant security and privacy risks, including prompt injection attacks" |
+| Project Opal [opal-support] | A browser only: "The agent operates within a Microsoft Edge browser" [opal-admin] | "a secure, Entra-joined, and Intune-enrolled Windows 365 for Agents Cloud PC" [opal-admin] | Frontier: "only available to users in the Frontier early access program with a Microsoft Copilot subscription" [opal-support] | Admin enablement and setup portal; up to three jobs at once; the user can take over the Cloud PC [opal-support] |
+| Researcher's Computer Use | Public, gated and interactive web content through a "virtual computer" | Microsoft-hosted | Admin setting (see [Researcher and Analyst](#researcher-and-analyst)) | User and website scoping [researcher-computer-use] |
+
+- **Copilot Studio models and price:** the model list names OpenAI's Computer-Using Agent, GPT-6
+  Sol and Claude Sonnet 4.5 as GA, with Claude Sonnet 4.6 and Claude Opus 4.6 experimental; "Each
+  step consumes 5 Copilot Credits, or 15 Copilot Credits when using a premium model"
+  [studio-computer-use]. It needs agents with generative orchestration on. A shared agent that uses
+  the maker's credentials lets "anyone using it" act "with the original author's access on the
+  configured machine" [studio-computer-use].
+- **Claude's own computer use on Foundry** is a separate path: Foundry lists Anthropic's
+  client-executed `computer use` tool for Claude models [claude-foundry], next to Foundry's own
+  `computer-use-preview` model.
+- **Opal open questions:** neither Opal page names the model. Microsoft's pages disagree on the
+  default website policy: the admin page says "Opal now allows access to all websites by default"
+  [opal-admin], while the support page describes an admin blocklist [opal-support]. Microsoft's
+  Project Opal is unrelated to Google Labs' Opal mini-app builder.
+
+#### The Frontier program
+
+Frontier is Microsoft's early-access channel for Copilot features still in preview; Microsoft says
+such features can be changed, suspended or ended [frontier-program]. In business tenants an admin
+turns it on in the Microsoft 365 admin center for users with a Microsoft 365 Copilot licence;
+Personal, Family, Pro and Premium subscribers opt in from Copilot settings in the Office web apps
+[frontier-program]. The program page also states that Frontier features don't meet the ISO
+27001/27002/27018 commitments (read in its Dutch-locale copy; not checked further).
+
+Frontier items confirmed on Microsoft's pages on 2026-11-18: Copilot Code [code-use], Cowork's App
+skill [cowork-whats-new], Project Opal [opal-support], and Autopilot, which "is beginning to roll
+out to Frontier customers today" (2026-11-17), plus Workspaces [ignite-2026-blog]. Home moved from
+Frontier to GA per the same post. The program's own features list [frontier-features] is
+incomplete and partly stale (see the Cowork model table above), so treat it as an index, not a
+status source.
+
+#### Agent Builder, Copilot Studio and declarative agents
+
+- **Declarative agents are the artifact.** A declarative agent is defined "by configuration" —
+  identity, knowledge, capabilities, distribution [da-overview]; see
+  [Declarative agents](#declarative-agents).
+- **Agent Builder makes declarative agents:** it "provides an easy way to build declarative agents
+  for Microsoft 365," inside Microsoft 365 Copilot chat and Teams [agent-builder]. It "doesn't
+  support authoring actions that integrate external services," and admins "can't disable agent
+  creation in Agent Builder separately while keeping agents enabled" [agent-builder].
+- **Copilot Studio is the full studio:** "a graphical, low-code studio for building and managing
+  AI-powered agents and workflows" [studio-overview]. Microsoft's guidance: "Use Agent Builder for
+  guided configuration of declarative agents in Microsoft 365 Copilot. Use Copilot Studio when you
+  need its workflow, integration, publishing, or application lifecycle capabilities"; copying an
+  agent from Agent Builder to Copilot Studio "creates a separate snapshot, not a synchronized
+  upgrade" [agent-builder-vs-studio].
+- **Licensing** depends on capabilities, users, channel, billing setup and harness, per Microsoft;
+  no single price is given on these pages (see [Pricing](#pricing)).
+- **Docs moved:** Microsoft's extensibility docs now live under `learn.microsoft.com/en-us/plugins/`;
+  some older `microsoft-365/copilot/extensibility/` links in this doc may redirect.
+
+#### Foundry as an agent platform
+
+Foundry Agent Service is "a managed platform for building, deploying, and scaling AI agents," with
+three agent types — prompt agents, voice-based prompt agents and hosted agents [foundry-agents].
+Workflow agents are not among the listed types (the preview workflow designer is retiring, see
+[foundry-workflow]).
+
+- **Hosted agents** bring their own code: "Agent Framework, LangGraph, the OpenAI Agents SDK, the
+  Anthropic Agent SDK, or your own code," each with its own Entra identity [foundry-agents]; see
+  also [Three things called "harness"](#three-things-called-harness).
+- **Tools:** web search, file search, code interpreter, memory, MCP servers, OpenAPI and functions,
+  with platform tools "like SharePoint, WorkIQ, and Fabric IQ" for hosted agents; publishing goes
+  to Teams, Microsoft Copilot and the Entra Agent Registry [foundry-agents].
+- **Claude on Foundry:** Azure-hosted Claude models are GA; the Fable models run Anthropic-hosted
+  in preview; billing is in Claude Consumption Units through Azure Marketplace [claude-foundry]. For
+  Claude Code against Foundry see
+  [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md#microsoft-azure-foundry).
+- **Price basis:** "There is no additional charge for creating or running Foundry-native agents
+  using prompts and workflows"; "Hosted agents are billed based on the underlying container compute
+  consumed per hour"; model tokens and tools are billed separately [foundry-agent-pricing].
+- **Decision models:** Foundry also hosts Microsoft-Decision-1, covered in
+  [system-1-decision-models-landscape.md](../reference/system-1-decision-models-landscape.md#microsoft-decision-1-microsoft-foundry).
+
+#### Grounding layers
+
+"Microsoft IQ is a unified intelligence layer for enterprise AI" with four parts [microsoft-iq]:
+
+| Layer | Grounds on | Status (2026-11-18) |
+|---|---|---|
+| Work IQ | Microsoft 365 work data plus "business and workflow data from Dynamics 365 and Power Platform"; reached over A2A, a remote MCP server or REST, billed in Copilot Credits [work-iq-overview] | API GA since 2026-06-16 [work-iq-ga] |
+| Fabric IQ | Business entities over OneLake data, through an ontology and Power BI semantic models: "Fabric IQ provides context on business entities and data" [fabric-iq] | Preview ("IQ (preview) workload," "ontology (preview)") |
+| Foundry IQ | Permission-aware knowledge bases over Blob Storage, SharePoint, OneLake and the web; "Azure AI Search is now Foundry IQ" [foundry-iq] | Mixed: "Some Foundry IQ features are now generally available, while others remain in preview" |
+| Web IQ | Web data, per the hub page only [microsoft-iq] | Not checked further |
+
+- **Dataverse** stores "data that's used by business applications," including Dynamics 365's
+  [dataverse-intro]. Its own intro page does not call it a data layer for agents; agents reach it as
+  a declarative-agent capability (see [Declarative agents](#declarative-agents)) and Managed Runtime
+  apps use it as a data source [managed-runtime-licensing-faq].
+- **Microsoft Fabric** is the analytics platform around OneLake, "the centralized, logical data lake
+  for Fabric" [fabric-overview]. Its **data agent** "is a generally available feature" — read-only,
+  up to five data sources, a paid F2-or-higher capacity, answers capped at 25 rows by 25 columns
+  [fabric-data-agent] — though Fabric's overview files it under the preview Fabric IQ workload.
+- **Azure Service Fabric is unrelated:** "a distributed systems platform" for "microservices and
+  containers" [service-fabric], not part of the agent or data stack.
 
 ### Timeline
 
@@ -1088,6 +1220,15 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Power Platform Functional Consultant Associate (retired)][pl-200-cert] | PL-200 retirement date, no successor named |
 | [Azure Security Engineer Associate (retired)][az-500-cert] | AZ-500 retirement date, no successor named |
 | [Certification poster (PDF)][cert-poster-pdf] | Discovery aid only — not cited for any status in the table above; still shows retired codes (PL-200, AZ-500) and labels AI-500 "(Beta)", contradicted by Learn |
+| [Microsoft Copilot blog — Ignite 2026 (2026-11-17)][ignite-2026-blog] | Announced GA of Copilot Managed Runtime and Home, Copilot Code GA "in the coming weeks," Autopilot rolling out to Frontier |
+| [Copilot Studio — Computer use][studio-computer-use], [standalone tool][studio-computer-use-standalone] | Computer-use scope, models, credits per step, controls; standalone tool preview |
+| [Foundry — Computer use tool][foundry-computer-use] | `computer-use-preview`, gated access, client-side execution |
+| [Project Opal — support][opal-support], [admin settings][opal-admin] | Frontier gate, Edge-only Cloud PC agent, default website access |
+| [Frontier program][frontier-program], [Frontier features][frontier-features] | Enrolment paths; partial and stale feature index |
+| [Agent Builder][agent-builder], [Agent Builder vs Copilot Studio][agent-builder-vs-studio], [Copilot Studio overview][studio-overview] | Who builds what; snapshot copy; app creation in preview |
+| [Foundry Agent Service overview][foundry-agents], [pricing][foundry-agent-pricing] | Agent types, tools, publishing; price basis |
+| [Microsoft IQ][microsoft-iq], [Fabric IQ][fabric-iq], [Foundry IQ][foundry-iq] | Grounding layers and their status |
+| [Dataverse][dataverse-intro], [Fabric overview][fabric-overview], [Fabric data agent][fabric-data-agent], [Service Fabric][service-fabric] | Data layer facts; data-agent limits; Service Fabric disambiguation |
 
 [sp-skills]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-skills
 [sp-get-started]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started
@@ -1198,3 +1339,24 @@ re-checked even when Microsoft leaves the page unchanged.
 [pl-200-cert]: https://learn.microsoft.com/en-us/credentials/certifications/power-platform-functional-consultant-associate/
 [az-500-cert]: https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/
 [cert-poster-pdf]: https://arch-center.azureedge.net/Credentials/Certification-Poster_en-us.pdf
+[ignite-2026-blog]: https://www.microsoft.com/en-us/copilot/blog/2026/11/17/copilot-at-microsoft-ignite-expanding-whats-possible-with-intelligence-built-for-work/
+[cowork-overview]: https://learn.microsoft.com/en-us/copilot/cowork/
+[frontier-features]: https://www.microsoft.com/en-us/microsoft-365-copilot/frontier-features
+[frontier-program]: https://www.microsoft.com/microsoft-365-copilot/frontier-program
+[studio-computer-use]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/computer-use
+[studio-computer-use-standalone]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/computer-use-standalone
+[foundry-computer-use]: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/computer-use
+[opal-support]: https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-with-project-opal-frontier
+[opal-admin]: https://learn.microsoft.com/en-us/copilot/manage/opal-settings-manage
+[agent-builder]: https://learn.microsoft.com/en-us/plugins/agent-builder
+[agent-builder-vs-studio]: https://learn.microsoft.com/en-us/plugins/copilot-studio-experience
+[studio-overview]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio
+[foundry-agents]: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+[foundry-agent-pricing]: https://azure.microsoft.com/en-us/pricing/details/foundry-agent-service/
+[microsoft-iq]: https://learn.microsoft.com/en-us/microsoft-iq/
+[fabric-iq]: https://learn.microsoft.com/en-us/fabric/iq/overview
+[foundry-iq]: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-foundry-iq
+[dataverse-intro]: https://learn.microsoft.com/en-us/power-apps/maker/data-platform/data-platform-intro
+[fabric-overview]: https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview
+[fabric-data-agent]: https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent
+[service-fabric]: https://learn.microsoft.com/en-us/azure/service-fabric/service-fabric-overview

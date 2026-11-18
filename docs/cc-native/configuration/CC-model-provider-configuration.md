@@ -3,7 +3,7 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/env-vars, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-11-17
+updated: 2026-11-18
 validated_links: 2026-11-09
 status: reference
 ---
@@ -137,6 +137,8 @@ export ANTHROPIC_FOUNDRY_BASE_URL="https://my-resource.services.ai.azure.com/ant
 ```
 
 ([source][cc-settings])
+
+Foundry as Microsoft's agent platform (agent types, tools, Claude model hosting and billing) is covered in [microsoft-365-copilot-analysis.md § Foundry as an agent platform](../../non-cc/agents/microsoft-365-copilot-analysis.md#foundry-as-an-agent-platform).
 
 ### Infomaniak AI (EU-Sovereign, OpenAI-Compatible)
 
