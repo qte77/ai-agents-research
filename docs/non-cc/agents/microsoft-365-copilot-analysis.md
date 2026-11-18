@@ -75,7 +75,10 @@ recurring operational/automation scenarios assessed against the same vendor docu
 numbers-free pointer to each surface's current pricing page, and — from the 2026-11-12 pass —
 Microsoft Copilot Cowork, the new Copilot (Home/Copilot Code/Autopilot), Copilot Managed Runtime,
 declarative agents' extensibility surface, Researcher and Analyst, and the Microsoft 365/Agent 365
-SDKs and Agent Store.
+SDKs and Agent Store. The 2026-11-18 pass adds the
+[Microsoft agent stack](#microsoft-agent-stack-2026-11-18): computer-using agents (incl. Project
+Opal), the Frontier program, Agent Builder, Foundry Agent Service and the Microsoft IQ grounding
+layers.
 
 **Explicitly out of scope here:** the open Agent Skills specification itself and coding-agent
 comparisons (Claude Code, Codex CLI) — see [CC-skills-adoption-analysis.md][cc-skills-doc].
@@ -475,7 +478,7 @@ Anthropic's Claude Cowork** — see the disambiguation above.
   | What's-new log, re-read 2026-11-18 [cowork-whats-new] | page dated 2026-11-16 | November: "Fable 5.2 is now available in the model selector for select customers, replacing Fable 5.1"; Claude Opus 5.5 with a Fast option; "GPT 5.5 is no longer available in the model selector," replaced by GPT 6.1 Sol hosted in Azure |
   | Frontier features page [frontier-features] | read 2026-11-18 | still says Cowork "runs on OpenAI GPT-5.5" and still lists Edge browser use as a Frontier item — stale against the what's-new log above, which records both changes |
 
-  The first three rows are not wrong — each was captured at a different point in a changing
+  The first four rows are not wrong — each was captured at a different point in a changing
   model roster; the Frontier features page is the one Microsoft page that lags its own log.
 - **Account types (2026-11-18):** "Cowork for work or school accounts is *generally available*,"
   while "Cowork for personal accounts is in *preview*" [cowork-overview].
@@ -520,7 +523,9 @@ blog, not only in secondary coverage: "Autopilot, previously called Scout, is yo
 teammate" [new-copilot-blog]. Home and Code were slated to start rolling out to Frontier "in the
 coming weeks"; Autopilot was slated to expand to private preview "at the end of the month"
 (September 2026) [new-copilot-blog] — the cited post announces both, rather than confirming either
-had shipped.
+had shipped. **Status (2026-11-18):** the Ignite post of 2026-11-17 says Home is GA and Autopilot
+"is beginning to roll out to Frontier customers today" [ignite-2026-blog]; see
+[The Frontier program](#the-frontier-program).
 The same post states Copilot Managed Runtime (below) "is now in preview and will also be accessible
 inside Code" [new-copilot-blog]. The same-day Copilot Studio post calls it "public preview": "Today, we’re introducing Microsoft Copilot Managed Runtime into public preview" [managed-runtime-blog].
 
@@ -737,8 +742,8 @@ Microsoft ships four ways for an agent to drive a screen, plus Cowork's local Ed
   `computer-use-preview` model.
 - **Opal open questions:** neither Opal page names the model. Microsoft's pages disagree on the
   default website policy: the admin page says "Opal now allows access to all websites by default"
-  [opal-admin], while the support page describes an admin blocklist [opal-support]. Microsoft's
-  Project Opal is unrelated to Google Labs' Opal mini-app builder.
+  [opal-admin], while the support page describes an admin blocklist [opal-support]. (Editorial
+  note: Microsoft's Project Opal is unrelated to Google Labs' Opal mini-app builder.)
 
 #### The Frontier program
 
@@ -746,10 +751,9 @@ Frontier is Microsoft's early-access channel for Copilot features still in previ
 such features can be changed, suspended or ended [frontier-program]. In business tenants an admin
 turns it on in the Microsoft 365 admin center for users with a Microsoft 365 Copilot licence;
 Personal, Family, Pro and Premium subscribers opt in from Copilot settings in the Office web apps
-[frontier-program]. The program page also states that Frontier features don't meet the ISO
-27001/27002/27018 commitments (read in its Dutch-locale copy; not checked further).
+[frontier-program].
 
-Frontier items confirmed on Microsoft's pages on 2026-11-18: Copilot Code [code-use], Cowork's App
+Frontier items named on Microsoft's pages and in its Ignite post on 2026-11-18: Copilot Code [code-use], Cowork's App
 skill [cowork-whats-new], Project Opal [opal-support], and Autopilot, which "is beginning to roll
 out to Frontier customers today" (2026-11-17), plus Workspaces [ignite-2026-blog]. Home moved from
 Frontier to GA per the same post. The program's own features list [frontier-features] is
@@ -771,10 +775,9 @@ status source.
   need its workflow, integration, publishing, or application lifecycle capabilities"; copying an
   agent from Agent Builder to Copilot Studio "creates a separate snapshot, not a synchronized
   upgrade" [agent-builder-vs-studio].
-- **Licensing** depends on capabilities, users, channel, billing setup and harness, per Microsoft;
-  no single price is given on these pages (see [Pricing](#pricing)).
-- **Docs moved:** Microsoft's extensibility docs now live under `learn.microsoft.com/en-us/plugins/`;
-  some older `microsoft-365/copilot/extensibility/` links in this doc may redirect.
+- **Docs moved:** Microsoft's extensibility docs now live under `learn.microsoft.com/en-us/plugins/`
+  [agent-builder]; this doc's older `microsoft-365/copilot/extensibility/` links were not re-checked
+  in this pass.
 
 #### Foundry as an agent platform
 
@@ -784,13 +787,15 @@ Workflow agents are not among the listed types (the preview workflow designer is
 [foundry-workflow]).
 
 - **Hosted agents** bring their own code: "Agent Framework, LangGraph, the OpenAI Agents SDK, the
-  Anthropic Agent SDK, or your own code," each with its own Entra identity [foundry-agents]; see
+  Anthropic Agent SDK, or your own code," each with its own Entra identity [foundry-agents] (identity layer:
+  [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md)); see
   also [Three things called "harness"](#three-things-called-harness).
 - **Tools:** web search, file search, code interpreter, memory, MCP servers, OpenAPI and functions,
   with platform tools "like SharePoint, WorkIQ, and Fabric IQ" for hosted agents; publishing goes
   to Teams, Microsoft Copilot and the Entra Agent Registry [foundry-agents].
 - **Claude on Foundry:** Azure-hosted Claude models are GA; the Fable models run Anthropic-hosted
-  in preview; billing is in Claude Consumption Units through Azure Marketplace [claude-foundry]. For
+  in preview; billing is in Claude Consumption Units through Azure Marketplace, per Anthropic's own
+  Foundry page [claude-foundry]. For
   Claude Code against Foundry see
   [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md#microsoft-azure-foundry).
 - **Price basis:** "There is no additional charge for creating or running Foundry-native agents
@@ -859,6 +864,7 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-09-30 (passed) | Declarative agent manifest schema 1.9 adds top-level `agent_skills` (SKILL.md, Agent Skills standard, max 8) and the `Fabric` capability | documented schema addition, no preview marker | [manifest-1-9] |
 | 2026-10-01 (passed) | Copilot Code documented as Frontier preview (page's own `ms.date`, not a stated entry date); application card names Claude Opus/Sonnet/Haiku plus Microsoft-hosted GPT models | Frontier preview | [code-use], [code-app-card] |
 | 2026-10-05 (passed) | Microsoft Copilot Managed Runtime documented in preview (Learn: "This is a preview feature") | preview | [managed-runtime-overview] |
+| 2026-11-17 (passed) | Ignite blog: Copilot Managed Runtime "generally available today," Home GA, Copilot Code GA "in the coming weeks," Autopilot rolling out to Frontier, Workspaces in Frontier; Learn pages still showed preview notices on 2026-11-18 | announcement | [ignite-2026-blog] |
 | — | Copilot Studio's bring-your-own-model feature for prompt-tool nodes explicitly excludes the GPT-5 family and later models | current, no preview label found | [byom-prompts] |
 
 ## Guardrails for SharePoint and Microsoft 365 agent skills
@@ -917,7 +923,10 @@ Runtime credit rates quoted in
 [Microsoft Copilot Cowork](#microsoft-copilot-cowork-ga-june-2026) and
 [Microsoft Copilot Managed Runtime](#microsoft-copilot-managed-runtime-preview) above are each tied
 to one vendor page and one access date (2026-06-16 and 2026-11-10 respectively); re-check those
-pages directly before relying on either figure, exactly as for every other price on this list. As
+pages directly before relying on either figure, exactly as for every other price on this list.
+The [Microsoft agent stack](#microsoft-agent-stack-2026-11-18) section adds two more figures on the
+same terms, both accessed 2026-11-18: Copilot Studio computer use's credits per step and Foundry
+Agent Service's price basis. As
 of **2026-10-21** for the original pass, consult the vendor's own pricing page directly for each
 surface:
 
@@ -1028,6 +1037,11 @@ coverage):
 
 **`not-checked`** (no attempt made, usually low-novelty or in-session-only):
 
+- Microsoft agent stack (2026-11-18): the model behind Project Opal (neither Opal page names one);
+  Opal's default website policy (the admin and support pages disagree); Web IQ beyond its hub
+  entry; the eligibility criteria and regions for Foundry's `computer-use-preview`; the Frontier
+  program page's statement on ISO 27001/27002/27018 (read only in a Dutch-locale copy); and any
+  Dataverse page calling it a data layer for agents (its intro page doesn't).
 - Whether deploying a skill automatically creates an associated automation flow, connector, or
   application (directionally consistent with the confirmed "skills can't connect to external
   systems" boundary above, but not independently targeted against a vendor page).

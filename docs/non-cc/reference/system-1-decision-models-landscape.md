@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-11-12
+updated: 2026-11-18
 validated_links: 2026-11-11
 status: assess
 ---
@@ -475,6 +475,9 @@ here.
 **First-party**: [Microsoft Tech Community launch blog][msft-decision1-blog] · [Microsoft Foundry
 model catalog][msft-decision1-catalog] · [Microsoft Command Line blog][msft-decision1-cmdline] ·
 [Microsoft Learn how-to][msft-decision1-learn]
+
+For Foundry as an agent platform around this model, see
+[microsoft-365-copilot-analysis.md § Foundry as an agent platform](../agents/microsoft-365-copilot-analysis.md#foundry-as-an-agent-platform).
 
 Released 2026-10-09 — one day after Panahi's leaderboard post above, so it is not among the 24
 models that post scored, and gets no leaderboard-placement paragraph here. Per the
