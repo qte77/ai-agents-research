@@ -2,8 +2,8 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-11-17
-validated_links: 2026-11-12
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: adopt
 ---
 
@@ -106,7 +106,9 @@ Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 
 ### Code Mode (v2.1.323)
 
-Documented at the [Code Mode page][code-mode-page] (read 2026-11-17): an experimental, off-by-default mode in which Claude writes JavaScript that makes several tool calls in one step, run in the session by a `REPL` tool. Opt in with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1` (shell or user settings; ignored in project settings; `0` in managed settings blocks it for an organization). Requirements per the page: v2.1.323 or later (v2.1.326 for agent teams), native build, interactive terminal session only (not `-p`, SDK, VS Code, Desktop or cloud), direct Anthropic API access (no gateway or cloud provider), a supported model, and no HIPAA or zero-data-retention organization. Permissions: `deny` and `ask` rules and `PreToolUse` hooks apply per tool call; in auto mode the classifier reviews the code, not each call. Supported models per the page: Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.2. A Code Mode session resumes only with the variable still set to `1`. Start-up is refused with some settings on, such as an API key helper (`apiKeyHelper`), OpenTelemetry export (`CLAUDE_CODE_ENABLE_TELEMETRY`) or `DISABLE_TELEMETRY`, and with an installed mod that checks tool calls. A `PreToolUse` hook matching `REPL` can read `tool_input.code`. Code that waits stops after ten minutes; background code can run up to two hours.
+Documented at the [Code Mode page][code-mode-page] (read 2026-11-17, re-read 2026-11-18): an experimental, off-by-default mode in which Claude writes JavaScript that makes several tool calls in one step, run in the session by a `REPL` tool. Opt in with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1` (shell or user settings; ignored in project settings; `0` in managed settings blocks it for an organization). Requirements per the page: v2.1.323 or later (v2.1.326 for agent teams), native build, interactive terminal session only (not `-p`, SDK, VS Code, Desktop or cloud), direct Anthropic API access (no gateway or cloud provider), a supported model, and no HIPAA or zero-data-retention organization. Permissions: `deny` and `ask` rules and `PreToolUse` hooks apply per tool call; in auto mode the classifier reviews the code, not each call. Supported models per the page: Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.2. A Code Mode session resumes only with the variable still set to `1`. Start-up is refused with some settings on, such as an API key helper (`apiKeyHelper`), OpenTelemetry export (`CLAUDE_CODE_ENABLE_TELEMETRY`) or `DISABLE_TELEMETRY`, and with an installed mod that checks tool calls. A `PreToolUse` hook matching `REPL` can read `tool_input.code`. Code that waits stops after ten minutes; background code can run up to two hours.
+
+Related and not the same thing, despite the shared name: (1) the API's [programmatic tool calling][ptc-pointer] feature, where the model emits code that calls tools server-side (see [programmatic-tool-calling-analysis.md](../../non-cc/protocols/programmatic-tool-calling-analysis.md)); (2) Cloudflare's "Code Mode" ([blog post][cf-code-mode], 2025-09-26), which turns MCP tools into a TypeScript API and runs model-written code in a V8-isolate sandbox that reaches the MCP servers only through bindings; (3) TrueForge's "Code Mode" in [agent-frameworks-infrastructure-landscape.md](../../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md), another vendor's use of the name; (4) the 2026-09-01 "Code Mode for Extensible Software" episode and the general idea of "agents write code against an API", noted in [software-factory-landscape.md](../../sdlc-lcm/software-factory-landscape.md). Claude Code's Code Mode is a Claude Code session mode with a `REPL` tool, gated by the environment variable above. An X post from the ClaudeDevs account about Code Mode could not be read through the fetch tools on 2026-11-18, so nothing here rests on it.
 
 ## Permission Model
 
@@ -342,12 +344,15 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | [CC advisor docs][advisor-cc] | `/advisor` command and `advisorModel` setting (accessed 2026-10-26); see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) |
 | [Claude Code CHANGELOG.md][changelog] | `v2.1.317`/`v2.1.321` account-email-in-outbound-request guardrail, read in full via `gh api repos/anthropics/claude-code/git/blobs/<sha>`, 2026-11-12 (the contents API refuses this file over 1 MB) |
 | `gh api repos/anthropics/claude-code/issues/107757`, 2026-11-12 | Open issue reporting the account email sent in a `User-Agent` header during web searches |
-| [CC Code Mode page](https://code.claude.com/docs/en/code-mode) | Code Mode requirements, enablement, permission checks (accessed 2026-11-17) |
+| [CC Code Mode page](https://code.claude.com/docs/en/code-mode) | Code Mode requirements, enablement, permission checks (accessed 2026-11-17, re-read 2026-11-18) |
+| [Cloudflare Code Mode post][cf-code-mode] | Disambiguation: a different, third-party mechanism (2025-09-26, read 2026-11-18) |
 
 [advisor-cc]: https://code.claude.com/docs/en/advisor
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
 [changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [code-mode-page]: https://code.claude.com/docs/en/code-mode
+[ptc-pointer]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/programmatic-tool-calling
+[cf-code-mode]: https://blog.cloudflare.com/code-mode/
 [issue-107757]: https://github.com/anthropics/claude-code/issues/107757
 [commands]: https://code.claude.com/docs/en/commands
 [cli-ref]: https://code.claude.com/docs/en/cli-reference

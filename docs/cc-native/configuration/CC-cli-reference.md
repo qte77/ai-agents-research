@@ -2,8 +2,8 @@
 title: CC CLI Reference
 purpose: Single canonical reference for all claude CLI flags, subcommands, and constraints. Other docs cross-ref here for flag definitions.
 created: 2026-04-13
-updated: 2026-10-26
-validated_links: 2026-10-26
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: adopt
 ---
 
@@ -113,7 +113,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 | `--permission-mode` | Start in mode: `default`, `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions` | Overrides `defaultMode` from settings | [permission-modes][permission-modes] |
 | `--dangerously-skip-permissions` | Skip all permission prompts (alias for `--permission-mode bypassPermissions`) | — | [permission-modes][permission-modes] |
 | `--allow-dangerously-skip-permissions` | Add `bypassPermissions` to Shift+Tab cycle without starting in it | — | [permission-modes][permission-modes] |
-| `--enable-auto-mode` | Unlock auto mode in Shift+Tab cycle | Team/Enterprise/API plan + Sonnet 4.6 or Opus 4.6 | [auto-mode][auto-mode] |
+| `--enable-auto-mode` | Removed in v2.1.111 (documented in the [CLI reference](https://code.claude.com/docs/en/cli-reference) and the changelog: "Auto mode no longer requires `--enable-auto-mode`"). Auto mode is in the Shift+Tab cycle by default; start in it with `--permission-mode auto`. Availability: [CC-permissions-bypass-analysis.md](../sandboxing/CC-permissions-bypass-analysis.md#auto-mode-availability-classifier-and-defaults-read-2026-11-18) | Removed | [auto-mode][auto-mode] |
 | `--permission-prompt-tool` | MCP tool to handle permission prompts non-interactively | Non-interactive mode | [cli-ref][cli-ref] |
 | `--allowedTools` | Tools that execute without permission prompts | [Permission rule syntax][perm-syntax] | [cli-ref][cli-ref] |
 | `--disallowedTools` | Tools removed from model context entirely | — | [cli-ref][cli-ref] |

@@ -2,8 +2,8 @@
 title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
-updated: 2026-11-14
-validated_links: 2026-11-14
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -95,7 +95,7 @@ Read as design-lens sources, self-reported claims flagged:
   Environment, Harness (Claude Code / Codex / Pi), Orchestration — argued as "composition over
   inheritance" over monolithic vendor stacks; notes that no harness yet standardizes lifecycle hooks
   despite protocols like ACP and AG-UI existing ([ep. #71][aiw-2]).
-- **2026-09-01, "Code Mode for Extensible Software"**: agents write executable code against an API
+- **2026-09-01, "Code Mode for Extensible Software"** (not Claude Code's experimental Code Mode; see [CC-tools-inventory.md](../cc-native/configuration/CC-tools-inventory.md#code-mode-v21323)): agents write executable code against an API
   instead of many discrete tool calls (bash itself is cited as an existing "code mode"); HumanLayer's
   example edits a YJS CRDT via generated JavaScript sandboxed in QuickJS (not Node.js, filesystem/shell
   access denied) ([ep. #72][aiw-3]).

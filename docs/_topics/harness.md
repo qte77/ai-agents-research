@@ -6,6 +6,8 @@ Pointers only; see [the hub index](README.md).
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [agentic-ai-vulnerability-landscape.md § Guardrail layers: a comparison](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#guardrail-layers-a-comparison) | Filters, classifiers, rails, policy engines, approvals, sandboxes and monitors set against Claude Code's hooks, permissions, sandbox and auto-mode classifier; error rates and approval fatigue | sdlc-lcm |
+| [CC-permissions-bypass-analysis.md § Auto Mode: Availability, Classifier and Defaults](../cc-native/sandboxing/CC-permissions-bypass-analysis.md#auto-mode-availability-classifier-and-defaults-read-2026-11-18) | Auto mode by plan, provider and model; the classifier, its fallback thresholds and admin controls | cc-native |
+| [CC-tools-inventory.md § Code Mode (v2.1.323)](../cc-native/configuration/CC-tools-inventory.md#code-mode-v21323) | Claude Code's experimental Code Mode (REPL tool), told apart from API programmatic tool calling and Cloudflare's MCP Code Mode | cc-native |
 | [CC-agentic-harness-patterns-analysis.md § Cross-Harness Matrix](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) | Claude Code, Codex, Gemini CLI, OpenCode and Pi compared on tools, sandbox, permissions, compaction, hooks and resume, and which harness patterns each shows | cc-native |
 | [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md) | 12-pattern taxonomy extracted from the CC source leak | cc-native |
 | [CC-dynamic-workflows-analysis.md](../cc-native/agents-skills/CC-dynamic-workflows-analysis.md) | Dynamic workflow orchestration tool, ultracode effort setting | cc-native |

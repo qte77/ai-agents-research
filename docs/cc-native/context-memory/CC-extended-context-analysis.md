@@ -3,8 +3,8 @@ title: CC Extended Context Window (1M) Analysis
 source: https://code.claude.com/docs/en/model-config#extended-context
 purpose: Analysis of 1M token extended context window for cost planning and headless CC workflow usage.
 created: 2026-03-07
-updated: 2026-11-17
-validated_links: 2026-11-15
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: beta
 ---
 
@@ -149,9 +149,29 @@ The primary mitigation is [frequent intentional compaction][cc-mem-ace]: distill
 
 Changelog entries: from v2.1.323 the context window assumed for a model ID Claude Code does not recognize is 1M instead of 200K; `/autocompact` compacts earlier and `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` keeps 200K, which matters on other vendors' smaller-window models that can fail every turn once full. From v2.1.325 `CLAUDE_CODE_MAX_CONTEXT_TOKENS` also sets the window for unrecognized IDs starting with `claude-`, such as a gateway's `claude-sonnet-latest` ([CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)).
 
+## Setting the auto-compact window (`/autocompact`)
+
+Documented on the [commands page][cc-commands] (`/autocompact`, requires v2.1.221 or later) and in [Model Configuration: auto-compact window][cc-autocompact] (read 2026-11-18). The auto-compact window is how full the context may get before Claude Code compacts; `/compact` is the manual trigger and `/context` shows usage.
+
+| Where | Scope | Notes |
+|---|---|---|
+| `/autocompact [auto\|<tokens>]` | Current model, this and later sessions | Saved under the model in `modelSettings` in user settings (per model since v2.1.288; before that one top-level `autoCompactWindow`). `auto` returns to the window tuned for the model. No argument opens a dialog showing the current window. A higher-priority scope such as managed settings wins for the session; the command says so |
+| `autoCompactWindow` setting | Every model | A per-model value saved by `/autocompact` takes precedence in the same file |
+| `--autocompact <value>` | One launch | Overrides saved settings without changing them; not preempted by managed settings (unlike the command) |
+| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | Scripts, cloud | Wins over the command, flag and setting; `/autocompact` then reports the override without saving. Bare number is tokens; `k`/`M` suffixes need v2.1.304+ |
+| subagent frontmatter `autoCompactWindow` | One subagent | Lowers the window for that subagent, 100K to 1M, v2.1.296+ ([sub-agents page][cc-subagents]); the changelog says it also lowers a window set by the env var and never raises it |
+
+Accepted values for command and flag: 100K to 1M tokens as `200000`, `500k`, `1M`, or a bare 100-1000 meaning thousands (`200` is 200,000; but the env var reads `200` as 200 tokens). The window is capped at the model's context window.
+
+Defaults when unset: models with a native 1M window (Fable, Sonnet 5+, Haiku 5.5, Opus 4.7+) compact at about 967K tokens; Sonnet 4.6 and Opus 4.6 without extended context at 200K; `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` holds native-1M models to 200K (the window setting cannot lift that hold).
+
+How it relates to the other knobs: `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is a percentage of the window and can only lower the trigger; `DISABLE_AUTO_COMPACT=1` (or the `autoCompactEnabled` setting, both on the settings reference) turns automatic compaction off and wins over any window; `idleCompaction` is a separate idle-time trigger. Details in [CC-env-vars-reference.md](../configuration/CC-env-vars-reference.md#context--token-control). Not verified: the changelog entry that first added the command was not located by search; the v2.1.221 floor is the commands page's own statement.
+
 ## References
 
 - [CC Model Configuration — Extended context](https://code.claude.com/docs/en/model-config#extended-context)
+- [CC Commands: `/autocompact`][cc-commands]
+- [CC Model Configuration: auto-compact window][cc-autocompact]
 - [CC Costs](https://code.claude.com/docs/en/costs)
 - [Long-context pricing][pricing-long-context]
 - [Rate limits](https://platform.claude.com/docs/en/api/rate-limits)
@@ -160,6 +180,9 @@ Changelog entries: from v2.1.323 the context window assumed for a model ID Claud
 - [Long-Context Isn't the Answer][hlyr-long-ctx] — hlyr.dev, Kyle, 2026-03-23
 - [Context-Efficient Backpressure][hlyr-backpressure] — hlyr.dev, Dex, 2025-12-09
 
+[cc-commands]: https://code.claude.com/docs/en/commands
+[cc-subagents]: https://code.claude.com/docs/en/sub-agents#subagent-auto-compact-window
+[cc-autocompact]: https://code.claude.com/docs/en/model-config#set-the-auto-compact-window
 [cc-model-config]: https://code.claude.com/docs/en/model-config#extended-context
 [pricing-long-context]: https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing
 [hlyr-long-ctx]: https://www.hlyr.dev/blog/long-context-isnt-the-answer
