@@ -106,7 +106,13 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Saturation-resistant design.** [SqueezeBench][squeeze] (Manrique, Xia, Szeider, 2026-10-09) avoids saturation by scoring bounds on integer functions: a submission must beat a recorded bound and carry a Lean-checked proof, then replaces the record. Ten extremal-combinatorics problems; agents produced 82 accepted record-improving submissions in the baseline round and 60 more with newer models.
 
-**Contamination detection and mitigation.** The corpus holds the principle ([mas-benchmarking-best-practices.md § 3.1](mas-benchmarking-best-practices.md): dynamic benchmarks and a private test subset); this adds sources. [A survey of benchmark data contamination][contam-survey] (Xu et al., 2024-06-06) reviews the problem; its abstract emphasises mitigation and alternative evaluation rather than detection methods, so it is not cited here for any detection technique. The one method this doc can source is time-based: [LiveCodeBench][lcb] (2024) keeps collecting new contest problems and reports contamination findings against dated windows. Treat other detection claims (n-gram overlap, membership inference) as unsourced here.
+**Contamination detection and mitigation.** The corpus holds the principle ([mas-benchmarking-best-practices.md § 3.1](mas-benchmarking-best-practices.md): dynamic benchmarks and a private test subset); this adds sources. [A survey of benchmark data contamination][contam-survey] (Xu et al., 2024-06-06) reviews the problem; its abstract emphasises mitigation and alternative evaluation rather than detection methods, so it is not cited here for any detection technique. Methods below are read at their arXiv abstract pages (2026-11-18); all are paper-reported results, none independently reproduced here, and none of the abstracts states a limit.
+
+- **Time-based avoidance:** [LiveCodeBench][lcb] (2024) keeps collecting new contest problems and reports contamination findings against dated windows. This avoids contamination rather than detecting it.
+- **Membership inference, Min-K% Prob:** [Shi et al.][mink] (2023-10-25) test whether a black-box model saw a given text, using the WIKIMIA benchmark of pre- and post-training data; the method needs no corpus knowledge or reference model and reports a 7.4% gain on WIKIMIA over prior methods.
+- **Guided prompting:** [Golchin and Surdeanu][timetravel] (2023-08-16) prompt the model to complete a partial benchmark instance, then score partitions with ROUGE-L, BLEURT or a GPT-4 classifier; they report 92% to 100% accuracy against human experts on seven datasets and flag GPT-4 as contaminated on AG News, WNLI and XSum.
+- **Performance-based, ConStat:** [Dekoninck et al.][constat] (2024-05-25) define contamination as inflated performance that does not carry over to rephrased, synthetic or related benchmarks, and test it statistically against reference models; the abstract gives no effect sizes or thresholds.
+- **Not covered:** n-gram or substring overlap checks, which several benchmark papers use, were not read at a first-party abstract and are not claimed here.
 
 **Safety and cyber benchmarks.** Safety and prompt-injection benchmarks stay in the **Safety & security** line above. Cyber-capability additions: [Cybench][cybench] (40 professional-level capture-the-flag tasks from 4 competitions, subtask breakdown; submitted 2024-08-15), [CyberGym][cybergym] (1,507 real vulnerabilities in 188 projects; best agents about 20% per the abstract, which also credits it with 34 zero-days and 18 incomplete patches; revised 2026-03-24), and [WMDP][wmdp] (3,668 multiple-choice questions on hazardous knowledge in biosecurity, cybersecurity and chemical security, paired with the RMU unlearning method; 2024-03-05). Vendor-reported scores on these are discussed in [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md).
 
@@ -311,3 +317,6 @@ EDD-methodology sources:
 [cybench]: https://arxiv.org/abs/2408.08926
 [cybergym]: https://arxiv.org/abs/2506.02548
 [wmdp]: https://arxiv.org/abs/2403.03218
+[mink]: https://arxiv.org/abs/2310.16789
+[timetravel]: https://arxiv.org/abs/2308.08493
+[constat]: https://arxiv.org/abs/2405.16281
