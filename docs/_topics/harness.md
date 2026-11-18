@@ -13,6 +13,7 @@ Pointers only; see [the hub index](README.md).
 | [CC-agent-teams-orchestration.md](../cc-native/agents-skills/CC-agent-teams-orchestration.md) | Agent Teams for parallel review, implementation, debugging | cc-native |
 | [CC-recursive-spawning-patterns.md](../cc-native/agents-skills/CC-recursive-spawning-patterns.md) | Recursive `claude -p` invocation and spawning trade-offs | cc-native |
 | [CC-cross-session-messaging-analysis.md](../cc-native/agents-skills/CC-cross-session-messaging-analysis.md) | First-party cross-session messaging between independent sessions | cc-native |
+| [orchestrators-landscape.md](../non-cc/orchestrators/orchestrators-landscape.md) | Multi-agent orchestrators compared (coordination, state hand-off, escalation), Claude Code primitives vs non-CC equivalents, multi-agent failure modes | non-cc |
 | [CC-output-verification-analysis.md](../cc-native/agents-skills/CC-output-verification-analysis.md) | Verifying agentic outputs via hooks, schemas, headless asserts | cc-native |
 | [CC-cli-anything-analysis.md](../cc-native/agents-skills/CC-cli-anything-analysis.md) | Generating agent-native CLIs from existing software | cc-native |
 | [CC-harnessrouter-analysis.md](../cc-community/CC-harnessrouter-analysis.md) | Unified multi-harness API (Codex, Claude Code, Hermes, DSH, Pi) via the Unified Harness Protocol | cc-community |
