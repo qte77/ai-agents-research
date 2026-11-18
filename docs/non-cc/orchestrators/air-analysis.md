@@ -3,7 +3,7 @@ title: JetBrains Air Analysis
 source: https://air.dev, https://blog.jetbrains.com/air/2026/03/air-launches-as-public-preview-a-new-wave-of-dev-tooling-built-on-26-years-of-experience/
 purpose: Analysis of JetBrains Air as an agentic development environment for multi-agent orchestration.
 created: 2026-03-20
-updated: 2026-09-24
+updated: 2026-11-18
 status: public-preview
 ---
 
@@ -15,6 +15,8 @@ JetBrains Air is an **agentic development environment** (not an IDE or coding
 agent itself) that orchestrates multiple coding agents in parallel. Built by
 JetBrains, it wraps existing agents -- Codex, Claude Agent, Gemini CLI, and
 Junie -- into a unified task management interface.
+
+> Status 2026-11-18: Gemini CLI stopped serving free, AI Pro and AI Ultra users on 2026-06-18 ([gemini-cli-analysis.md](../coding-agents/gemini-cli-analysis.md)); the "Supported" cell below is as of this doc's own 2026-09-24 check and was not re-verified.
 
 **Key distinction**: Air is an orchestrator, not an agent. It delegates to
 agents rather than writing code itself.

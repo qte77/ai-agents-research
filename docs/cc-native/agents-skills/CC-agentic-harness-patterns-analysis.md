@@ -222,6 +222,8 @@ are silent, not that the feature is absent. Per-tool depth lives in the analysis
 [CC-web-auth-setup-analysis.md § Other Coding CLIs](../ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing)
 and not repeated here.
 
+Status 2026-11-18: the Gemini CLI column describes the repository as read on 2026-11-15; Google stopped serving free, AI Pro, AI Ultra and Google One users on 2026-06-18 and points them to Antigravity CLI ([tier reconciliation](../../non-cc/coding-agents/gemini-cli-analysis.md)). Antigravity CLI is not a column here; its sandbox, resume and headless docs are in [antigravity-analysis.md](../../non-cc/coding-agents/antigravity-analysis.md#antigravity-cli-agy-first-party-docs-checked-2026-11-18).
+
 What each system saves on resume, and what it does not restore, is in [workflow-frameworks-landscape.md § Checkpoint and resume matrix](../../non-cc/frameworks/workflow-frameworks-landscape.md#checkpoint-and-resume-matrix).
 
 | Mechanic | Claude Code | Codex CLI | Gemini CLI | OpenCode | Pi |

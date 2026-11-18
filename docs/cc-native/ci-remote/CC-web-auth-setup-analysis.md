@@ -3,7 +3,7 @@ title: CC Web Setup, Authentication & API Key Usage
 source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup, https://code.claude.com/docs/en/web-quickstart, https://platform.claude.com/docs/en/manage-claude/authentication, https://platform.claude.com/docs/en/manage-claude/workspaces, https://platform.claude.com/docs/en/api/rate-limits, https://platform.claude.com/docs/en/manage-claude/usage-cost-api, https://platform.claude.com/docs/en/manage-claude/api-and-data-retention, https://platform.claude.com/docs/en/api/overview, https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/legal-and-compliance, https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive usage, connect remote sessions, and the Claude Console platform-admin surface (workspaces, rate limits, cost reporting, data retention) a headless org API key touches.
 created: 2026-03-24
-updated: 2026-11-15
+updated: 2026-11-18
 validated_links: 2026-11-15
 status: research-preview
 ---
@@ -355,6 +355,8 @@ in the docs read" means those pages are silent, not that no rule exists elsewher
 | [opencode](../../non-cc/coding-agents/opencode-analysis.md) Go plan | `opencode run`, "designed for scripts, CI jobs, and other workflows" ([CLI][opencode-cli]) | Provider keys or logins ([providers][opencode-providers]) | Go $10/month, Go Plus $40, Go Teams $20/member; "Service accounts are not covered by Go Teams" ([Go][opencode-go]) | "Go and Go Plus are for workspaces with a single member"; "Traffic is monitored for abuse" ([Go][opencode-go]) |
 | Z.ai GLM Coding Plan | Through a supported tool | Plan API key | Plan quota | "may only be used within officially supported tools and products"; "Accounts with more than three violations may be banned" ([usage policy][zai-policy]) |
 | MiniMax M Plan | Through a compatible tool | Plan API key | Plan quota | "designed for individual, interactive developer use ... Pay-as-you-go is recommended for production use" ([FAQ][minimax-faq]) |
+
+Gemini CLI row, status 2026-11-18: its free, AI Pro and AI Ultra quotas apply to accounts Google stopped serving on 2026-06-18, so read them as the historical quota ([status and tier reconciliation](../../non-cc/coding-agents/gemini-cli-analysis.md)). The Antigravity CLI replacement signs in via browser OAuth, an API key or ADC and has `agy -p` for headless runs ([antigravity-analysis.md](../../non-cc/coding-agents/antigravity-analysis.md#antigravity-cli-agy-first-party-docs-checked-2026-11-18)); its quotas and terms were not compared here.
 
 Not checked, so left out: OpenAI's and Cursor's general terms of use, and the Kimi Code membership rules.
 
