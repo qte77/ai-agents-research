@@ -4,7 +4,7 @@ purpose: Code-understanding tools that integrate with Claude Code — knowledge 
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-14
+updated: 2026-11-18
 validated_links: 2026-11-12
 ---
 
@@ -426,6 +426,62 @@ A different category from the graph/LSP/search/packer tools above: Floorplan ask
 
 The project's own README distinguishes itself from two similar tools it names directly: [Archify][archify] (any of 10 diagram types, including non-code processes, for Claude Code/Codex/Cursor/OpenCode) and [Understand Anything][understand-anything] (a full code knowledge graph down to functions, for Claude Code/Codex/Cursor/Copilot/Gemini CLI) — Floorplan's own framing is "understand and check an app you own" versus "draw a diagram" (Archify) or "study a large codebase function by function" (Understand Anything); it positions itself as complementary to both rather than a replacement. **Caveat**: at two weeks old (created 2026-10-27) this is an early-stage project with no independent review found.
 
+## Grep vs. semantic search for coding agents
+
+Canonical home in this corpus for the question "why do agent harnesses default to grep, and when does it
+fail?" Other docs point here rather than restate it. Evidence level is marked per item; vendor
+statements are vendor claims, not independent measurements.
+
+### What the harnesses say (documented, first-party)
+
+- **Anthropic** (engineering post, 2025-09-29, [effective context engineering][ctx-eng]): describes
+  Claude Code as using "primitives like glob and grep" to navigate its environment, "effectively
+  bypassing the issues of stale indexing and complex syntax trees". The same post concedes "runtime
+  exploration is slower than retrieving pre-computed data" and suggests hybrid designs (some data
+  retrieved up front, further exploration on demand). It gives no accuracy numbers. The Claude Code
+  [how-it-works doc][cc-how] lists regex content search among its built-in tools but states no
+  rationale. Statements attributed to Claude Code's creator on social media about dropping an
+  earlier vector-index design were not verified at a first-party page and are not relied on here.
+- **Cline** (blog, 2025-05-27, [why Cline doesn't index][cline-index]): argues that chunking breaks
+  code logic, indexes go stale, and an embedding store is a second copy of the code to secure. The
+  post contains no benchmark; it is a design argument.
+- **Cursor** (blog, 2026-03-23, [fast regex search][cursor-regex]): says agents still need regular
+  expression search because some queries can only be answered by matching text, and that its harness,
+  like most, uses ripgrep by default. Limit reported: ripgrep scans every file per query, and Cursor
+  says it routinely sees invocations over 15 seconds in large monorepos, so it built a local
+  n-gram index for regex search (the same idea as tgrep above).
+
+### Measured evidence for when grep falls short
+
+| Evidence | Level | Finding (as of 2026-11-18) |
+|---|---|---|
+| Cursor, [Improving agent with semantic search][cursor-sem] (2025-11-06) | vendor claim, own benchmark | On its internal Cursor Context Bench, semantic search plus grep raised answer accuracy by 12.5% on average (range 6.5% to 23.5% by model) versus grep alone; in an online A/B test code retention rose 0.3% overall and 2.6% on codebases of 1,000+ files. The post's conclusion is that the two together do best. The benchmark and per-model numbers are not public. |
+| Bellam, [arXiv 2610.33958][small-agents] (2026-10-25 v1, revised 2026-11-09) | paper, preprint | Nine open-weight models (Qwen3 0.6B to 32B, Gemma 4 E2B to 12B), 500 SWE-bench localization tasks: adding tools to grep raised function-level Acc@10 by +0.06 to +0.10 for models up to 14B (+0.03 at 32B, a near miss after correction); the embedding index, not the code graph, carried most of the gain. Single author, one harness. |
+| Qin and Xie, [Agent Retrieval Bench, arXiv 2607.24882][arb] (2026-07-27) | paper, preprint | 427 file-level samples over 25 repositories: "No single retrieval family dominates"; the paper reports no separate grep score, so it gives no direct grep-vs-embedding number. Logged agent trajectories missed every gold file on 27 to 35 percent of samples. |
+
+### Measured evidence for when grep wins or matches
+
+- Sen et al., [Is Grep All You Need? (arXiv 2605.15184)][grep-all] (2026-05-14): on a 116-question
+  LongMemEval sample (conversation memory, not code), grep "generally yields higher accuracy than
+  vector retrieval", but scores "depend strongly on which harness and tool-calling style is used"
+  (custom harness plus the Claude Code, Codex, and Gemini CLI harnesses). Abstract-level reading;
+  small sample, not peer reviewed.
+- jevgrep and Sepidband et al. above show the other direction of the same trade-off: a relevance
+  model or code map on top of lexical search cut cost or raised localization, with single-run caveats.
+
+**Reading across the evidence.** The two index-favoring results that measure a grep-only baseline
+(Cursor, Bellam) report gains over it; the grep-favoring result is in a non-code domain. None is a
+controlled head-to-head across coding harnesses. Cursor reports larger gains on bigger codebases and
+Bellam on smaller models, which is consistent with, but does not prove, harnesses defaulting to grep
+for strong models on small-to-medium repositories. Treat "grep by default" as a design choice
+(freshness, no index to secure, no setup) rather than a measured win; where it fails is documented
+mainly by vendors with a retrieval product to sell, and independent coding-agent comparisons are
+still thin.
+
+Related: [programmatic-tool-calling-analysis.md § Tool use across model kinds][ptc-kinds] (tool-calling
+benchmarks and tool-set size), [on-device-semantic-search-landscape.md][on-device] (the embedder and
+vector-store layer).
+
 ## Research: do code maps help coding agents?
 
 Sepidband et al. (York University, [arXiv 2611.07286][code-maps]) attached five code-map MCP servers of
@@ -473,7 +529,17 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 
 ## Sources
 
-Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt, Floorplan).
+Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt, Floorplan). The grep-vs-semantic section cites Anthropic, Cline, and Cursor posts and four arXiv papers via the link definitions below.
 
 [code-maps]: https://arxiv.org/abs/2611.07286
+[ctx-eng]: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+[cc-how]: https://code.claude.com/docs/en/how-claude-code-works
+[cline-index]: https://cline.bot/blog/why-cline-doesnt-index-your-codebase-and-why-thats-a-good-thing
+[cursor-regex]: https://cursor.com/blog/fast-regex-search
+[cursor-sem]: https://cursor.com/blog/semsearch
+[small-agents]: https://arxiv.org/abs/2610.33958
+[arb]: https://arxiv.org/abs/2607.24882
+[grep-all]: https://arxiv.org/abs/2605.15184
+[ptc-kinds]: ../non-cc/protocols/programmatic-tool-calling-analysis.md#tool-use-across-model-kinds
+[on-device]: ../non-cc/context-memory/on-device-semantic-search-landscape.md
 [code-maps-repo]: https://github.com/MelikaSepidband/How-Should-Agents-See-Code
