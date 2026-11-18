@@ -16,10 +16,11 @@ its own first-party date and status.
 
 ## TL;DR
 
-- **Einstein to Agentforce has two unreconciled first-party rename dates**: Salesforce's 2024-09-12 launch
-  announcement lists "Agentforce (formerly Einstein Copilot)", while its AI-copilot FAQ says "renamed to
-  Agentforce as of January 2025" [sf-agentforce-launch] [sf-ai-copilot]. See
-  [Naming lineage](#naming-lineage-agentexchange-role-products-and-agent-surfaces).
+- **Salesforce AI naming is dated in one table, and its verdicts changed on 2026-11-18**: the Einstein Copilot to
+  Agentforce rename still has two first-party dates that no fetched page reconciles (2024-09-12 launch vs. "January
+  2025" FAQ); Sales Cloud to Agentforce Sales is internally consistent (October 2025) but the live /sales/ page still
+  says Sales Cloud; Service Cloud to Agentforce Service is stated on Trailhead and contradicted by Salesforce's own
+  Service Cloud pages. See [Naming lineage](#naming-lineage-agentexchange-role-products-and-agent-surfaces).
 - **Copilotforce (2026-11-17) is announcement-only here.** Two launch pages (Salesforce's and Microsoft's) state
   beta/pilot/GA tiers per piece; no Salesforce product documentation for the plugin could be fetched, and pricing is
   not stated. See [Copilotforce](#copilotforce-salesforce-inside-microsoft-copilot-announced-2026-11-17).
@@ -260,30 +261,69 @@ out of the table rather than described from snippets.
 
 ## Naming lineage, AgentExchange, role products and agent surfaces
 
-- **Einstein to Agentforce.** Salesforce's 2024-04-25 release states that "Einstein Copilot Sales actions,
-  Service actions, and Copilot Analytics are generally available today" [sf-ec-ga]. Its 2024-09-12 Agentforce
-  announcement lists "Agentforce (formerly Einstein Copilot)" and says Einstein Copilot "has been upgraded"
-  to an agent [sf-agentforce-launch]. Salesforce's assistant page is titled "Agentforce Assistant (Formerly
-  Einstein Copilot)" with an editor's note that the assistant "has been upgraded to Agentforce"
-  [sf-assistant], while Salesforce's AI-copilot FAQ says the tool was "renamed to Agentforce as of January
-  2025" [sf-ai-copilot]. So two first-party dates exist for the rename (2024-09-12 launch announcement vs.
-  January 2025 FAQ); they are not reconciled on either page. "Einstein" still names the Einstein Trust Layer,
-  Einstein 1 Studio, Einstein 1 Editions and Einstein add-ons [sf-assistant], and "Einstein Requests" in the
-  rate card (see [Pricing](#pricing-flex-credits-rate-card-as-of-2026-11-03)). The Einstein brand's own start
-  date and the Agentforce Assistant rename date were not found on a fetched page.
+**Naming lineage, Salesforce AI and agent brand (first-party pages fetched 2026-11-18).** Evidence levels: *announced*
+(press release, includes pilots), *documented* (product or training page), *stated* (page says it, undated). Wayback
+Machine snapshots could not be fetched from this environment, so no first-appearance dates come from archived pages.
+
+| Old name | New name or state | Date | Source | Evidence |
+|---|---|---|---|---|
+| (none) | "Salesforce Einstein", AI inside the Salesforce Platform | 2016-09-19 | [sf-einstein-2016] | Announced; per-feature pricing "will be announced" |
+| (none) | Einstein GPT, generative AI for CRM, closed pilot | 2023-03-07 | [sf-einstein-gpt] | Announced; a later editor's note says it "has evolved into" Agentforce |
+| (none) | Einstein 1 Platform, Einstein Copilot (pilot), Einstein Copilot Studio (pilot, Fall 2023), Prompt/Model/Skills Builder | 2023-09-12 | [sf-einstein1], [sf-einstein-copilot-pr] | Announced; pilots at the time |
+| Einstein 1 Platform | "Salesforce Platform" | undated editor's note on the 2023-09-12 release | [sf-einstein1] | Stated |
+| Salesforce Platform | Agentforce 360 Platform | 2025-10-13 (release names it); Sales guide FAQ: "now the Agentforce 360 platform" | [sf-360-ga], [sf-sales-guide] | Announced / stated |
+| Einstein Copilot (GA of sales and service actions) | unchanged name | 2024-04-25 | [sf-ec-ga] | Announced as GA |
+| Einstein Copilot | Agentforce ("formerly Einstein Copilot"; "upgraded to an agent") | 2024-09-12 | [sf-agentforce-launch] | Announced |
+| Einstein Copilot | "renamed to Agentforce as of January 2025" | FAQ, undated page | [sf-ai-copilot] | Stated; conflicts with the row above |
+| Agentforce generally available | Agentforce; "Agentforce Service Agent pricing starts at $2 per conversation" | 2024-10-29 | [sf-agentforce-ga] | Announced GA |
+| (none) | Agentforce 2.0 | 2024-12-17 | [sf-agentforce-2] | Announced |
+| (none) | Agentforce 3, Command Center, Agentforce Studio | 2025-06-23 | [sf-agentforce-3] | Announced; Command Center and Studio app "August" |
+| Einstein add-ons, Einstein 1 Editions | Agentforce add-ons, Agentforce 1 Editions ("replace") | 2025-06-17 | [sf-pricing-update] | Announced |
+| (none) | Agentforce 360 (platform, Data 360, Customer 360 apps, Slack) | 2025-10-13 GA | [sf-360-ga] | Announced GA, self-stated |
+| Data Cloud | Data 360 | "As of October 14, 2025" | [trailhead-data360], [sf-data-guide] | Documented (Trailhead gives the date; the guide gives only "formerly Data Cloud") |
+| Sales Cloud | Agentforce Sales | October 2025 | [sf-sales-guide] | Stated (see below) |
+| Service Cloud | Agentforce Service | undated | [trailhead-service] | Stated on Trailhead, contradicted elsewhere (see below) |
+| Marketing Cloud, Commerce Cloud | unchanged on the pages checked | 2026-11-18 | [sf-marketing], [sf-commerce] | Observed absence of a rename |
+| Einstein Requests (billing unit) | Flex Credits for Agentforce 1 Edition and Agentforce for Sales/Service/Industries | rate card 11.2026 | [rate-card] | Documented |
+| Einstein Trust Layer | unchanged name | 2023-09-12 first named; still named 2024-10-29 | [sf-einstein-copilot-pr], [sf-agentforce-ga], [masking-agents] | Announced / documented |
+
+How each contested point reads on 2026-11-18:
+
+- **Einstein Copilot to Agentforce (still open).** The 2024-09-12 release headlines "Agentforce (formerly Einstein
+  Copilot)" and says Einstein Copilot "has been upgraded to an agent"; the assistant page is titled "What Is
+  Agentforce Assistant? (Formerly Einstein Copilot)" (originally published 2024-03-06, updated 2024-05-23) with an editor's
+  note that it "has been upgraded to Agentforce" [sf-assistant]; the FAQ says "renamed to Agentforce as of January 2025"
+  [sf-ai-copilot]. A search result surfaced a Winter '25 release note on help.salesforce.com titled "Einstein Copilot
+  for Salesforce is Now Agentforce" dated January 2025, which would fit an in-product label change, but that page
+  serves a JS shell to WebFetch and to polyfetch's plain tier, so its wording is unread and unused as evidence. The
+  likely reading (announcement 2024-09-12, in-product label January 2025) is a hypothesis, not a finding.
+- **"Einstein" still names live things (confirmed).** The Einstein Trust Layer appears in the 2024-10-29 release and in
+  the agent-masking help article ("In Einstein Trust Layer, ... data masking ... is disabled for agents"
+  [masking-agents], read in an earlier pass; not re-readable this pass because the page is a JS shell). "Einstein
+  Requests" appears in the Flex Credits rate card, which applies Flex Credits to "Agentforce 1 Edition Customers and
+  Agentforce for Sales/Service/Industries Customers and any other Products that no longer use Einstein Requests"
+  [rate-card], so Einstein Requests is retired for those products only, not everywhere.
+- **Sales Cloud to Agentforce Sales (consistent, with a live-page caveat).** The earlier "the guide contradicts
+  itself" reading was wrong. The guide's FAQ says "Yes, in October 2025, Salesforce renamed Sales Cloud to Agentforce
+  Sales"; its history section says Salesforce "renamed Sales Cloud to Agentforce Sales as part of the broader Agentforce
+  360 platform launch" (the launch GA was 2025-10-13); the "2024" sentence there is about agentic AI starting, not a
+  rename [sf-sales-guide]. Yet salesforce.com/sales/ still headlines "Sales Cloud" on 2026-11-18 [sf-sales-page], so
+  the rename is not applied uniformly across salesforce.com.
+- **Service Cloud to Agentforce Service (conflicting).** Trailhead states "Service Cloud is now Agentforce Service" and
+  calls it "the evolution of Service Cloud" [trailhead-service] (page undated, copyright 2026), a framing the
+  earlier "successor" wording never matched exactly and which remains unused here. Salesforce's Service Cloud product
+  page lists "Agentforce for Service" inside a tier [sf-service-cloud]; the Service Cloud guide [sf-service-guide] keeps the
+  Service Cloud name and states no rename; the 2025-10-09 Agentforce IT Service story still says "Service Cloud" [sf-it-service].
+  First-party pages disagree, and none carries a dated rename statement.
+
 - **AgentExchange** is Salesforce's combined marketplace: its Help article (2026-06-17) says it combines
   AppExchange, Slack Marketplace and the Agentforce Ecosystem, with 13,000+ solutions
   [sf-agentexchange]. It began as "the trusted marketplace and community for Agentforce," launched 2025-03-04 with more than 200
   partners [sf-agentexchange-pr]. It is a distribution channel, not a runtime; Copilotforce's plugin is listed there
   [copilotforce-sf]. No GA/beta label applies.
-- **Role products (names as the pages state them).** Salesforce's Sales Cloud guide says "in October 2025,
-  Salesforce renamed Sales Cloud to Agentforce Sales" in its FAQ, while its body text gives 2024; the page
-  contradicts itself, and it describes agents that handle tasks such as prospecting [sf-sales-guide].
-  Agentforce Service: Salesforce's Service Cloud page does not use that name and lists "Agentforce for
-  Service" inside its top pricing tier [sf-service-cloud]; the "successor to Service Cloud" description
-  seen in search was not confirmed on a fetched page and is dropped. Agentforce Contact Center was stated
-  generally available on 2026-03-10 "as an add-on to all Agentforce Service customers in the U.S. and
-  Canada" [sf-contact-center].
+- **Role products.** Rename status for Sales, Service, Marketing and Commerce is in the lineage table above. Agentforce
+  Contact Center was stated generally available on 2026-03-10 "as an add-on to all Agentforce Service customers in
+  the U.S. and Canada" [sf-contact-center].
 - **Surfaces.** Slack and Tableau: Salesforce's Slack AI page (undated; its labels date from late 2025)
   lists Agentforce Tableau in Slack as "Available Today", Agentforce IT and HR Service agents "To Be Released
   Soon" (IT October 2025, HR November 2025) and Slackbot in pilot with general availability planned for
@@ -615,9 +655,9 @@ four as background context, not as verified facts of this analysis.
   pass. Treat the single-model framing as possibly stale, not as confirmed current behavior.
 - **Edition-level included-credit figures** other than Max Edition's 2.75M/org/year [agentforce-pricing]
   — prior notes cite 1M and 2.5M for other editions/regions/years; neither re-verified at source here.
-- **Pre-2025-10 trajectory dates** (Agentforce GA 2024-10-29, Agentforce 2.0 2024-12-17, Flex Credits
-  launch 2025-05-15, Agentforce 3 2025-06-23) — carried from prior secondary research notes only, not
-  independently re-fetched in this pass.
+- **Pre-2025-10 trajectory dates** — Agentforce GA 2024-10-29, Agentforce 2.0 2024-12-17 and Agentforce 3 2025-06-23
+  were re-fetched from Salesforce's own releases on 2026-11-18 (see the lineage table); only Flex Credits launch
+  2025-05-15 remains carried from prior secondary research notes.
 - **"Agents callable as MCP tools" as a Winter '27 feature** — appeared in prior triage notes; not
   found on the Winter '27 platform-release blog fetched in this pass [winter27-blog]. Unconfirmed.
 - **A Gemini model option inside Agentforce's model picker** — appears only in third-party blog
@@ -636,7 +676,12 @@ four as background context, not as verified facts of this analysis.
   way" and describes a native Inbound path too. None of the three pages carries a date or status
   label. Left as an open contradiction, not resolved either way in this pass.
 
-- **Einstein brand start and rename dates** — two first-party rename dates conflict; see
+- **Einstein Copilot to Agentforce rename date** — two fetched first-party dates conflict (2024-09-12, "January
+  2025"); the Winter '25 release note that may settle it was not readable (JS shell). Also not found: the date
+  "Agentforce Assistant" was named (a search snippet says Winter '27 renames it "Agent Optimizer (Beta)"; unread),
+  the 2025-10-24 Einstein Requests to Flex Credits cutover (Einstein Request FAQ help article, unread), the rename
+  dates of Einstein Studio, Prompt Builder and Model Builder, and Einstein Bots. Wayback snapshots of the product pages
+  could not be fetched, so no page-first-appearance dates are given. See
   [Naming lineage](#naming-lineage-agentexchange-role-products-and-agent-surfaces).
 - **Roles, permission sets, permission-set licences and SSO/IdP for agents** — not documented on any page
   we could fetch; see [Licences and roles](#licences-and-roles-for-agentforce-agents).
@@ -679,10 +724,13 @@ four as background context, not as verified facts of this analysis.
 | [Salesforce CRM connector overview (Microsoft Learn)][ms-sf-crm-connector] | Synced connector; objects, permissions, limits |
 | [Salesforce connector, preview (Microsoft Learn)][ms-sf-federated] | Federated connector on Salesforce beta MCP server; jointly maintained; prerequisites; dated 2026-11-16 |
 | [Salesforce connector, Power Platform (Microsoft Learn)][ms-sf-pp] | Premium/Standard class, API-access prerequisite, Entra ID SSO option |
-| [Agentforce Assistant (Formerly Einstein Copilot)][sf-assistant] | Rename note; what "Einstein" still names |
+| [Agentforce Assistant (Formerly Einstein Copilot)][sf-assistant] | Rename note; what "Einstein" still names; originally published 2024-03-06 |
 | [Einstein Copilot GA, 2024-04-25][sf-ec-ga], [Agentforce launch, 2024-09-12][sf-agentforce-launch], [AI copilot FAQ][sf-ai-copilot] | Lineage dates; FAQ says January 2025 |
+| [Einstein 2016][sf-einstein-2016], [Einstein GPT][sf-einstein-gpt], [Einstein 1 Platform][sf-einstein1], [Einstein Copilot and Studio][sf-einstein-copilot-pr] | Pre-Agentforce lineage with editor's notes |
+| [Agentforce GA][sf-agentforce-ga], [Agentforce 2.0][sf-agentforce-2], [Agentforce 3][sf-agentforce-3], [Pricing update][sf-pricing-update] | Version dates; Einstein 1 Editions replaced by Agentforce 1 Editions (2025-06-17) |
+| [Trailhead Data 360 note][trailhead-data360], [Data 360 guide][sf-data-guide], [Trailhead Agentforce Service][trailhead-service], [Sales page][sf-sales-page], [Marketing][sf-marketing], [Commerce][sf-commerce], [IT Service story][sf-it-service] | Cloud and product rename status, 2026-11-18 |
 | [AgentExchange Help article][sf-agentexchange] and [launch press release][sf-agentexchange-pr] | Marketplace scope (2026-06-17); 2025-03-04 launch |
-| [Sales Cloud guide][sf-sales-guide], [Service Cloud page][sf-service-cloud], [Agentforce Contact Center][sf-contact-center] | Role-product naming and status |
+| [Sales Cloud guide][sf-sales-guide], [Service Cloud page][sf-service-cloud], [Service Cloud guide][sf-service-guide], [Agentforce Contact Center][sf-contact-center] | Role-product naming and status |
 | [Slack native AI][sf-slack-ai], [Informatica story][sf-informatica], [Informatica acquisition completed][sf-informatica-close], [Heroku AppLink][heroku-applink] | Agent surfaces |
 | [Copilotforce, Salesforce announcement][copilotforce-sf] | 2026-11-17; availability per piece, AIforce, Teams app, governance statements, no pricing |
 | [Copilotforce, Microsoft announcement][copilotforce-ms] | 2026-11-17; "38+" skills, MCP access statement, Teams open beta "later this year" |
@@ -716,6 +764,21 @@ four as background context, not as verified facts of this analysis.
 [ms-sf-crm-connector]: https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/salesforce-crm-overview
 [ms-sf-federated]: https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/salesforce-admin-published-federated-connector
 [ms-sf-pp]: https://learn.microsoft.com/en-us/connectors/salesforce/
+[sf-einstein-2016]: https://www.salesforce.com/news/press-releases/2016/09/19/salesforce-introduces-salesforce-einstein-artificial-intelligence-for-everyone/
+[sf-einstein-gpt]: https://www.salesforce.com/news/press-releases/2023/03/07/einstein-generative-ai/
+[sf-einstein1]: https://www.salesforce.com/news/press-releases/2023/09/12/salesforce-platform-news-dreamforce/
+[sf-einstein-copilot-pr]: https://www.salesforce.com/news/press-releases/2023/09/12/ai-einstein-news-dreamforce/
+[sf-agentforce-ga]: https://www.salesforce.com/news/press-releases/2024/10/29/agentforce-general-availability-announcement/
+[sf-agentforce-2]: https://www.salesforce.com/news/press-releases/2024/12/17/agentforce-2-0-announcement/
+[sf-agentforce-3]: https://www.salesforce.com/news/press-releases/2025/06/23/agentforce-3-announcement/
+[sf-pricing-update]: https://www.salesforce.com/news/stories/pricing-update-2025/
+[trailhead-data360]: https://trailhead.salesforce.com/content/learn/modules/data-cloud-powered-agentforce/explore-data-cloud-and-agentforce
+[sf-data-guide]: https://www.salesforce.com/data/guide/
+[trailhead-service]: https://trailhead.salesforce.com/content/learn/modules/service-cloud-platform-quick-look/get-to-know-the-service-cloud-platform
+[sf-sales-page]: https://www.salesforce.com/sales/
+[sf-marketing]: https://www.salesforce.com/marketing/
+[sf-commerce]: https://www.salesforce.com/commerce/
+[sf-it-service]: https://www.salesforce.com/news/stories/agentforce-it-service-announcement/
 [sf-assistant]: https://www.salesforce.com/agentforce/einstein-copilot/
 [sf-ec-ga]: https://www.salesforce.com/news/press-releases/2024/04/25/einstein-copilot-general-availability/
 [sf-agentforce-launch]: https://www.salesforce.com/in/news/press-releases/2024/09/12/agentforce-announcement/
@@ -724,6 +787,7 @@ four as background context, not as verified facts of this analysis.
 [sf-sales-guide]: https://www.salesforce.com/ap/sales/cloud/guide/
 [sf-contact-center]: https://www.salesforce.com/news/stories/agentforce-contact-center-announcement/
 [sf-service-cloud]: https://www.salesforce.com/service/cloud/
+[sf-service-guide]: https://www.salesforce.com/service/cloud/guide/
 [sf-ai-copilot]: https://www.salesforce.com/agentforce/ai-copilot/
 [sf-slack-ai]: https://www.salesforce.com/slack/native-ai/
 [sf-informatica-close]: https://www.salesforce.com/news/press-releases/2025/11/18/salesforce-completes-acquisition-of-informatica/
