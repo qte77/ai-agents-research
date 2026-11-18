@@ -44,18 +44,17 @@ search, and blocking a search bot does not stop a user's assistant from fetching
   services are accessing your content", with per-crawler policies; "Available on all plans"
   ([docs][cf-ai-crawl-control]).
 - **Pay per crawl** — crawlers without payment intent get an `HTTP 402 Payment Required` response
-  with pricing; "Pay per crawl is currently in closed beta" ([docs][cf-pay-per-crawl]). The identity
-  side (signed agents via Web Bot Auth) is in
-  [agent-identity-auth-landscape.md § 3](../../sdlc-lcm/agent-identity-auth-landscape.md#3-personhood--the-bot-vs-authorized-agent-distinction).
-- **Pay per crawl, status check (2026-11-18)** — the docs page still says "closed beta"
-  ([docs][cf-pay-per-crawl]); its changelog shows a 2026-06-16 update adding URI-pattern exemptions
-  and dynamic pricing via an origin header or Worker ([changelog][cf-acc-changelog]). TechCrunch
-  reports Cloudflare's 2026-07-01 announcement that pay per crawl is "evolving into" Pay Per Use
-  (publishers paid when content creates value, e.g. in AI search results; partners Ceramic.ai and
-  You.com) and that from 2026-09-15 "mixed-use" crawlers are blocked by default on ad-hosting pages
-  for new customers, new sites and free plans ([TechCrunch][tc-cf-2026-07]). Secondary report; the
-  changelog has no entry for either item, so the detail is unconfirmed at Cloudflare. The crawler-side
-  view (signed agents, vendor table) is in
+  with pricing; the docs page says "Pay per crawl is currently in closed beta" ([docs][cf-pay-per-crawl]),
+  while the changelog headings say "private beta" (read 2026-11-18). The changelog shows a
+  2026-06-16 update adding URI-pattern exemptions and dynamic pricing via an origin header or Worker
+  ([changelog][cf-acc-changelog]). TechCrunch reports Cloudflare's 2026-07-01 announcement that pay
+  per crawl is "evolving into" Pay Per Use (publishers paid when content creates value; partners
+  Ceramic.ai and You.com) and that from 2026-09-15 "mixed-use" crawlers are blocked by default on
+  ad-hosting pages for new customers, new sites and free plans ([TechCrunch][tc-cf-2026-07]). That
+  is a secondary report; the changelog has no entry for either item, so it is unconfirmed at
+  Cloudflare. The identity side (signed agents via Web Bot Auth) is in
+  [agent-identity-auth-landscape.md § 3](../../sdlc-lcm/agent-identity-auth-landscape.md#3-personhood--the-bot-vs-authorized-agent-distinction);
+  the crawler-side view is in
   [web-scraping-extraction-landscape.md § Agent Identity and Vendor Handling](web-scraping-extraction-landscape.md#agent-identity-and-vendor-handling).
 - **Content Signals in managed robots.txt** — three purposes, `search`, `ai-input` and `ai-train`,
   plus an optional `use=` key: `immediate` ("Interact, but store and reuse nothing"), `reference`
