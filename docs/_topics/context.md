@@ -6,6 +6,7 @@ patterns across the corpus. Pointers only; see [the hub index](README.md).
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [CC-extended-context-analysis.md § Context Quality Degradation](../cc-native/context-memory/CC-extended-context-analysis.md#context-quality-degradation) | 1M-token window smart-zone/dumb-zone degradation and mitigation | cc-native |
+| [CC-extended-context-analysis.md § Setting the auto-compact window (`/autocompact`)](../cc-native/context-memory/CC-extended-context-analysis.md#setting-the-auto-compact-window-autocompact) | When auto-compaction fires: the window setting, its precedence and per-model values | cc-native |
 | [CC-memory-system-analysis.md § Context Engineering Workflow (ACE-FCA)](../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca) | Frequent-compaction methodology, context-quality ranking | cc-native |
 | [CC-memory-system-analysis.md § CLAUDE.md Growth and Catastrophic Remembering (arXiv 2608.11095)](../cc-native/context-memory/CC-memory-system-analysis.md#claudemd-growth-and-catastrophic-remembering-arxiv-260811095) | Empirical study of instruction-file bloat; rationale-comment mitigation | cc-native |
 | [CC-memory-system-analysis.md § Practitioner Template: context-engineering-intro](../cc-native/context-memory/CC-memory-system-analysis.md#practitioner-template-context-engineering-intro) | PRP (Product Requirements Prompt) starter template for CLAUDE.md-driven development | cc-native |
