@@ -1,11 +1,11 @@
 ---
 title: CC Code-Analysis Tooling Landscape
-purpose: Code-understanding tools that integrate with Claude Code — knowledge graphs, semantic LSP, structural search, and repository packers.
+purpose: Code-understanding tools that integrate with Claude Code — knowledge graphs, semantic LSP, structural search, and repository packers — plus the cross-harness evidence on grep vs. semantic search for coding agents.
 category: landscape
 status: research
 created: 2026-06-14
 updated: 2026-11-18
-validated_links: 2026-11-12
+validated_links: 2026-11-18
 ---
 
 Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg, XERJ) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
@@ -439,24 +439,24 @@ statements are vendor claims, not independent measurements.
   bypassing the issues of stale indexing and complex syntax trees". The same post concedes "runtime
   exploration is slower than retrieving pre-computed data" and suggests hybrid designs (some data
   retrieved up front, further exploration on demand). It gives no accuracy numbers. The Claude Code
-  [how-it-works doc][cc-how] lists regex content search among its built-in tools but states no
-  rationale. Statements attributed to Claude Code's creator on social media about dropping an
+  [how-it-works doc][cc-how] lists regex content search among its built-in tools; we found no
+  stated rationale on that page (2026-11-18). Statements attributed to Claude Code's creator on social media about dropping an
   earlier vector-index design were not verified at a first-party page and are not relied on here.
-- **Cline** (blog, 2025-05-27, [why Cline doesn't index][cline-index]): argues that chunking breaks
+- **Cline** (vendor position; blog, 2025-05-27, [why Cline doesn't index][cline-index]): argues that chunking breaks
   code logic, indexes go stale, and an embedding store is a second copy of the code to secure. The
   post contains no benchmark; it is a design argument.
 - **Cursor** (blog, 2026-03-23, [fast regex search][cursor-regex]): says agents still need regular
-  expression search because some queries can only be answered by matching text, and that its harness,
-  like most, uses ripgrep by default. Limit reported: ripgrep scans every file per query, and Cursor
-  says it routinely sees invocations over 15 seconds in large monorepos, so it built a local
-  n-gram index for regex search (the same idea as tgrep above).
+  expression search because some queries can only be answered by matching text, and that "Most Agent harnesses,
+  including ours, default to using ripgrep". Limit reported: ripgrep scans every file per query, and Cursor
+  reports (vendor-reported) routinely seeing invocations over 15 seconds in large monorepos, so it built a
+  sparse n-gram index for regex search (the same idea as tgrep above).
 
 ### Measured evidence for when grep falls short
 
 | Evidence | Level | Finding (as of 2026-11-18) |
 |---|---|---|
 | Cursor, [Improving agent with semantic search][cursor-sem] (2025-11-06) | vendor claim, own benchmark | On its internal Cursor Context Bench, semantic search plus grep raised answer accuracy by 12.5% on average (range 6.5% to 23.5% by model) versus grep alone; in an online A/B test code retention rose 0.3% overall and 2.6% on codebases of 1,000+ files. The post's conclusion is that the two together do best. The benchmark and per-model numbers are not public. |
-| Bellam, [arXiv 2610.33958][small-agents] (2026-10-25 v1, revised 2026-11-09) | paper, preprint | Nine open-weight models (Qwen3 0.6B to 32B, Gemma 4 E2B to 12B), 500 SWE-bench localization tasks: adding tools to grep raised function-level Acc@10 by +0.06 to +0.10 for models up to 14B (+0.03 at 32B, a near miss after correction); the embedding index, not the code graph, carried most of the gain. Single author, one harness. |
+| Bellam, [arXiv 2610.33958][small-agents] (2026-10-25 v1, revised 2026-11-09) | paper, preprint | Nine open-weight models (Qwen3 0.6B to 32B, Gemma 4 E2B to 12B), 500 SWE-bench localization tasks: adding tools to grep raised function-level Acc@10 by +0.06 to +0.10 for the Qwen3 models up to 14B and the two small Gemma 4 models, not at all for Gemma 4 12B (which rarely submits), and +0.03 at Qwen3 32B (which the paper calls a near miss); the embedding index, not the code graph, carried most of the gain. Single author, one harness. |
 | Qin and Xie, [Agent Retrieval Bench, arXiv 2607.24882][arb] (2026-07-27) | paper, preprint | 427 file-level samples over 25 repositories: "No single retrieval family dominates"; the paper reports no separate grep score, so it gives no direct grep-vs-embedding number. Logged agent trajectories missed every gold file on 27 to 35 percent of samples. |
 
 ### Measured evidence for when grep wins or matches
@@ -466,10 +466,10 @@ statements are vendor claims, not independent measurements.
   vector retrieval", but scores "depend strongly on which harness and tool-calling style is used"
   (custom harness plus the Claude Code, Codex, and Gemini CLI harnesses). Abstract-level reading;
   small sample, not peer reviewed.
-- jevgrep and Sepidband et al. above show the other direction of the same trade-off: a relevance
+- jevgrep (above) and Sepidband et al. (below) show the other direction of the same trade-off: a relevance
   model or code map on top of lexical search cut cost or raised localization, with single-run caveats.
 
-**Reading across the evidence.** The two index-favoring results that measure a grep-only baseline
+**Reading across the evidence (our inference, not a source's claim).** The two index-favoring results that measure a grep-only baseline
 (Cursor, Bellam) report gains over it; the grep-favoring result is in a non-code domain. None is a
 controlled head-to-head across coding harnesses. Cursor reports larger gains on bigger codebases and
 Bellam on smaller models, which is consistent with, but does not prove, harnesses defaulting to grep

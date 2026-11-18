@@ -6,6 +6,7 @@ only; see [the hub index](README.md).
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [CC-code-tooling-landscape.md](../cc-community/CC-code-tooling-landscape.md) | Code-analysis tools that plug into CC: code graphs (incl. AxiomCode Graph, Graphicle), LSP toolkits, structural search, hybrid search (incl. XERJ), repo packers, question-driven code search (jevgrep) | cc-community |
+| [CC-code-tooling-landscape.md § Grep vs. semantic search](../cc-community/CC-code-tooling-landscape.md#grep-vs-semantic-search-for-coding-agents) | Why harnesses default to grep (vendor statements) and measured evidence on when it falls short; the corpus's one home for this question | cc-community |
 | [fastcontext-analysis.md](../non-cc/context-memory/fastcontext-analysis.md) | Dedicated repo-exploration subagent | non-cc |
 | [ripwire-analysis.md](../non-cc/context-memory/ripwire-analysis.md) | Deterministic repo-context CLI for coding agents | non-cc |
 | [opensrc-analysis.md](../non-cc/context-memory/opensrc-analysis.md) | Fetches dependency source code into agent context | non-cc |
