@@ -4,7 +4,7 @@ purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → sp
 category: landscape
 created: 2026-06-23
 updated: 2026-11-18
-validated_links: 2026-09-30
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -56,7 +56,7 @@ NEW vs current repo coverage: the Anthropic context-engineering and OpenAI harne
 
 **Harness search, November 2026:** [HarnessFlow][harnessflow] and its baseline [Meta-Harness][meta-harness]
 search over whole harnesses; results and caveats live in
-[weco-aide-recursive-self-improvement-analysis.md § Harness search results](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md#harness-search-results-as-of-2026-11-18).
+[weco-aide-recursive-self-improvement-analysis.md § Harness search results](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md#harness-search-results).
 
 **Design lens — graph engineering names the wiring, not new model behavior:** André Lindenberg's *From Loops to Graphs* (LinkedIn, 2026-07-25; `linkedin.com/pulse/from-loops-graphs-andré-lindenberg-m8jae`) reads the term above against the software factories already shipping — StrongDM, OpenAI's Symphony, Stripe's Minions, Ramp's Inspect, WorkOS's Project Horizon — as graphs that were "always there": intake, builder, review, test and incident-feedback nodes wired by edges, each edge only as trustworthy as the gate sitting on it. "A graph's throughput is set by its narrowest verified edge, not by its widest generating node." Deeper coverage of the same human-gate convergence (spec and merge as the two gates that hold, Dex Horthy's `wsff.md` dissent on why lights-off factories degrade) already lives in [software-factory-landscape.md §(c)][software-factory] — this entry is the ladder-rung framing, not a restatement.
 

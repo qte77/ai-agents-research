@@ -147,6 +147,7 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [12 Agentic Harness Patterns from Claude Code](https://generativeprogrammer.com/p/12-agentic-harness-patterns-from) (2026-04-05)
 - [Practical Lessons From the Claude Code Leak](https://generativeprogrammer.com/p/practical-lessons-from-the-claude) (2026-04-03)
 - [Skill Issue: Harness Engineering for Coding Agents][skill-issue-post] (Kyle, hlyr.dev, 2026-03-12) — harness engineering framing, HumanLayer mention
+- Repos and releases (`gh api`, 2026-11-18): [claude-agent-sdk-python][sdk-py] (MIT, v0.2.184), [claude-agent-sdk-typescript][sdk-ts] (Anthropic Commercial Terms per its LICENSE file), [langchain-ai/deepagents][deepagents-gh] (MIT, 0.7.39), [earendil-works/pi][pi-gh] (MIT, v1.5.2; eight built-in tools per its [extensions doc][pi-ext]), [HKUDS/OpenHarness][openharness-gh] (MIT, v0.1.9)
 - [Agent SDK overview][agent-sdk-docs] and [Writing tools for agents][writing-tools] (Anthropic; read 2026-11-18) — build-vs-adopt section; licenses and versions from each repo's LICENSE file and releases via `gh api`, 2026-11-18
 - [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK for agent tool calls
 - [ARCBench (arXiv 2611.03223)][arcbench] — rule compliance after context compaction
@@ -313,6 +314,11 @@ surface. Re-run the same task set on two candidates before committing, holding m
 and budget fixed.
 
 [agent-sdk-docs]: https://code.claude.com/docs/en/agent-sdk/overview
+[sdk-py]: https://github.com/anthropics/claude-agent-sdk-python
+[sdk-ts]: https://github.com/anthropics/claude-agent-sdk-typescript
+[deepagents-gh]: https://github.com/langchain-ai/deepagents
+[pi-gh]: https://github.com/earendil-works/pi
+[openharness-gh]: https://github.com/HKUDS/OpenHarness
 [writing-tools]: https://www.anthropic.com/engineering/writing-tools-for-agents
 
 ## Action Items
