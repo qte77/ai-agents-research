@@ -719,6 +719,23 @@ Where Microsoft's agent products sit relative to each other, checked at Microsof
 2026-11-18. Statuses move fast here: the Ignite post of 2026-11-17 announced several GAs that the
 Learn pages did not yet show, so each status below names its page.
 
+#### What each name is
+
+The names below are often used as if they were one stack. They are different kinds of thing; the
+sections after this table hold the detail.
+
+| Name | What kind of thing | Who uses it | Where it runs / how it is bought | Relation to the others | Source |
+|---|---|---|---|---|---|
+| Frontier | An early-access program for pre-GA features, not a product or platform. It has three separate enrolment paths (see [The Frontier program](#the-frontier-program)) | Admins enrol a tenant; individual subscribers opt in themselves | A switch in the Microsoft 365 admin center or the Office web apps; no price of its own | Other products ship features through it (Cowork, Copilot Code, Agent 365) | [frontier-admin], [frontier-individuals] |
+| Microsoft Foundry (Foundry Agent Service) | An Azure developer platform for models, agents and tools; Agent Service hosts prompt and hosted agents | Developers | An Azure resource, billed by Azure ([price basis](#foundry-as-an-agent-platform)) | Agents can publish into Copilot and Teams; Foundry IQ and Work IQ are tools it can attach | [foundry-overview], [foundry-agents] |
+| Copilot Studio | A low-code studio for building and managing agents and workflows | Makers and business developers | Copilot Credits; runs in Microsoft's cloud | Makes agents that Agent 365 can list; Agent Builder is its lighter sibling ([comparison](#agent-builder-copilot-studio-and-declarative-agents)) | [studio-overview] |
+| Agent 365 | An admin-side registry and governance layer (Microsoft's overview page calls it "the observability platform for AI"), not an agent builder | IT, security and compliance admins | Microsoft 365 admin center; licensed per user, with E5 as the recommended base | Lists agents built in Studio, Foundry, Agent Builder and elsewhere ([Governance](#governance-agent-365-covers-agents-not-sharepoint-skills)) | [agent365-overview] |
+| Work IQ | A grounding layer over Microsoft 365 work data, reached over A2A, MCP or REST | Agent builders (any of the platforms above) | Billed in Copilot Credits | One of the four Microsoft IQ layers | [work-iq-overview], [microsoft-iq] |
+| Fabric IQ / Foundry IQ | Grounding layers: business entities over OneLake data (Fabric IQ, preview); permission-aware knowledge bases (Foundry IQ, mixed GA/preview) | Data teams / agent builders | Inside Fabric and Foundry respectively | Siblings of Work IQ under Microsoft IQ ([table](#grounding-layers)) | [fabric-iq], [foundry-iq] |
+| Dataverse | A data store for business applications (Power Platform and Dynamics 365 data) | App makers | Part of the Power Platform; licensing not checked | Data an agent can be given access to, not an agent layer by its own page | [dataverse-intro] |
+| Microsoft Fabric | An analytics platform around OneLake | Data engineers and analysts | Paid capacity (the data agent needs F2 or higher) | Fabric IQ and the Fabric data agent sit on it | [fabric-overview] |
+| Microsoft Graph | An API: one endpoint, `graph.microsoft.com`, to Microsoft 365 and Entra data | Developers | Called with authorised access; licensing not checked | Not an agent product; the overview page does not say how Work IQ or Agent 365 use it | [graph-overview] |
+
 #### Computer-using agents
 
 Microsoft ships four ways for an agent to drive a screen, plus Cowork's local Edge browsing
@@ -744,18 +761,56 @@ Microsoft ships four ways for an agent to drive a screen, plus Cowork's local Ed
 
 #### The Frontier program
 
-Frontier is Microsoft's early-access channel for Copilot features still in preview; Microsoft says
-such features can be changed, suspended or ended [frontier-program]. In business tenants an admin
-turns it on in the Microsoft 365 admin center for users with a Microsoft 365 Copilot licence;
-Personal, Family, Pro and Premium subscribers opt in from Copilot settings in the Office web apps
-[frontier-program].
+Frontier is a way to get features before general availability, not a product. Microsoft says
+such features are preview, "subject to change", and may be modified, suspended or discontinued
+[frontier-admin]. There are three separate programs with separate gates (as of 2026-11-18):
 
-Frontier items named on Microsoft's pages and in its Ignite post on 2026-11-18: Copilot Code [code-use], Cowork's App
-skill [cowork-whats-new], Project Opal [opal-support], and Autopilot, which "is beginning to roll
-out to Frontier customers today" (2026-11-17), plus Workspaces [ignite-2026-blog]. Home, listed as Frontier in Cowork's October
-what's-new entry [cowork-whats-new], is "now generally available" per the same post. The program's own features list [frontier-features] is
-incomplete and partly stale (see the Cowork model table above), so treat it as an index, not a
-status source.
+| Program | Eligibility | Who switches it on, and where | Licence prerequisite | Source |
+|---|---|---|---|---|
+| Business (Microsoft 365) | A tenant; the admin picks "All users" or "Specific users and groups" | AI Administrator, Security Administrator or Office Apps Administrator: Copilot > Settings > Copilot Frontier, or, rolling out gradually from mid-November 2026, Settings > Org settings > Release preferences > "Turn on Frontier". Tenant-level; features can take about three hours to appear | A Copilot licence is not needed to enrol; it is needed to see Copilot-related Frontier features, and other products need their own (Teams example). Once unified release preferences arrive, opting in no longer needs a Copilot licence | [frontier-admin] |
+| Individuals | Microsoft 365 Personal, Family, Pro or Premium subscribers; no extra fee | The user: Word, Excel or PowerPoint on the web > File > Options > Copilot settings > "Preview Frontier Features", per app. The Microsoft 365 Copilot desktop app needs no opt-in | The subscription | [frontier-individuals] |
+| Agent 365 | A tenant with at least one Microsoft E7 licence that accepts the Agent 365 terms | A global admin only: admin center > Agents > Overview > Try now. Then Billing > Licenses should show 25 "Microsoft 365 Frontier for AI Teammates" licences | E7; licensed per agent instance in Frontier, per user at GA | [frontier-agent365] |
+
+- **Region limits:** the admin, individuals and Agent 365 pages list no supported regions. Three
+  stated limits: the support overview says individual Frontier in Copilot chat is "initially in
+  English for U.S.-based subscribers" [frontier-what-is]; App Builder is English and US only
+  [frontier-app-builder]; EEA customers can get Agent 365 Frontier without Teams licences
+  [frontier-agent365].
+- **Agents and models:** new Frontier agents published since 2026-03-29 reach only enrolled
+  users. They show in the Agent store as "(Frontier)". The admin setting "Allow agents and plugins
+  built by Microsoft" must be on, and an agent an admin turned off stays off regardless of
+  enrolment. Frontier never turns on an AI provider (for example Anthropic) for you
+  [frontier-admin].
+- **Terms:** no HIPAA Business Associate Agreement coverage; the page says Frontier features do not
+  comply with ISO 27001, 27002 or 27018; some features are paid only [frontier-admin]. Agent 365
+  Frontier has no SLA and Microsoft advises trials, not Frontier, for product evaluation
+  [frontier-agent365].
+- **Disagreement:** the Agent 365 FAQ says Frontier is for customers "with a Copilot or E7 license"
+  [frontier-agent365]; the admin page (updated 2026-11-17) says enrolment needs neither
+  [frontier-admin]. Treat the admin page as current.
+- **Related changes:** Targeted release retires in January 2027; users already in Frontier stay
+  enrolled [frontier-admin].
+
+Items the three pages and the program pages name as Frontier:
+
+| Item | Program | Status on the page |
+|---|---|---|
+| Copilot Cowork incl. model choice and Edge browsing | Business | Features page lists both; Edge browsing moved to GA per [cowork-whats-new], so the features page lags |
+| Cowork plugins and mobile (iOS, Android) | Business | Named on [frontier-features]; plugin status not stated |
+| Researcher refresh; new Microsoft 365 Copilot app design | Business | Named on [frontier-program] with no detail |
+| Autopilot | Business | "Rolling out" from 2026-11-17 for Frontier customers with usage-based billing and security controls [frontier-features], [ignite-2026-blog] |
+| Copilot Code; Workspaces; Cowork App skill | Business | Frontier [code-use], [ignite-2026-blog], [cowork-whats-new] |
+| Project Opal | Business, Copilot subscription | Frontier [opal-support] |
+| AI-enabled Cloud PCs | Business | "Frontier Preview"; needs Intune settings [frontier-admin] |
+| Workflows in Microsoft 365 Copilot | Business | Frontier early access [workflows-agent-start] |
+| App Builder (agent that makes lightweight apps; GPT-5 required, no external APIs, code not viewable) | Business, via Agent Store | "Frontier preview"; page dated October 2026 steers app building to Cowork and Copilot Studio; admins manage it in the Microsoft 365 and Power Platform admin centers [frontier-app-builder] |
+| Frontier features in Copilot Chat; Word and Excel on the web | Business and individuals | Support overview: enterprise users need a Copilot licence and admin settings allow it; its eligibility text names Word and Excel while its web-apps text names Word and PowerPoint, and it says capabilities are "coming soon to all apps" [frontier-what-is] |
+| Office Agent (Word and PowerPoint creation, "Powered by Anthropic models") | Individuals | Named on [frontier-individuals]; no other detail |
+| Agents with their own identity; Shadow AI | Agent 365 | Preview via Frontier [frontier-agent365] |
+| Home | Business | Was Frontier; "now generally available" per [ignite-2026-blog] |
+
+No page gives a complete list: the features page's "All Frontier features" section was empty when
+fetched, so treat these tables as an index, not a status source, and check each item's own page.
 
 #### Agent Builder, Copilot Studio and declarative agents
 
@@ -1236,6 +1291,8 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Foundry — Computer use tool][foundry-computer-use] | `computer-use-preview`, gated access, client-side execution |
 | [Project Opal — support][opal-support], [admin settings][opal-admin] | Frontier gate, Edge-only Cloud PC agent, default website access |
 | [Frontier program][frontier-program], [Frontier features][frontier-features] | Enrolment paths; partial and stale feature index |
+| [Frontier admin guide][frontier-admin], [Frontier for individuals][frontier-individuals], [Agent 365 Frontier][frontier-agent365], [What is Frontier][frontier-what-is], [App Builder (Frontier)][frontier-app-builder] | Three programs: roles, toggles, licences, terms, regions, named items (2026-11-18) |
+| [Microsoft Foundry overview][foundry-overview], [Agent 365 overview][agent365-overview], [Microsoft Graph overview][graph-overview] | Kind-of-thing characterisations in the disambiguation table |
 | [Agent Builder][agent-builder], [Agent Builder vs Copilot Studio][agent-builder-vs-studio], [Copilot Studio overview][studio-overview] | Who builds what; snapshot copy; app creation in preview |
 | [Foundry Agent Service overview][foundry-agents], [pricing][foundry-agent-pricing] | Agent types, tools, publishing; price basis |
 | [Microsoft IQ][microsoft-iq], [Fabric IQ][fabric-iq], [Foundry IQ][foundry-iq] | Grounding layers and their status |
@@ -1354,6 +1411,13 @@ re-checked even when Microsoft leaves the page unchanged.
 [cowork-overview]: https://learn.microsoft.com/en-us/copilot/cowork/
 [frontier-features]: https://www.microsoft.com/en-us/microsoft-365-copilot/frontier-features
 [frontier-program]: https://www.microsoft.com/microsoft-365-copilot/frontier-program
+[frontier-admin]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/get-started-frontier?view=o365-worldwide
+[frontier-individuals]: https://www.microsoft.com/en-us/copilot/resources/frontier-individuals
+[frontier-agent365]: https://learn.microsoft.com/en-us/microsoft-agent-365/frontier
+[frontier-what-is]: https://support.microsoft.com/en-us/microsoft-365-copilot/what-is-frontier
+[frontier-app-builder]: https://support.microsoft.com/en-us/microsoft-365-copilot/build-apps-with-microsoft-365-copilot-frontier
+[foundry-overview]: https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry
+[graph-overview]: https://learn.microsoft.com/en-us/graph/overview
 [studio-computer-use]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/computer-use
 [studio-computer-use-standalone]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/computer-use-standalone
 [foundry-computer-use]: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/computer-use
