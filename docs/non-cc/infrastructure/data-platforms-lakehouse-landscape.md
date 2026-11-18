@@ -26,19 +26,19 @@ vendor's docs read on that date and are documented behavior, not tested here.
 | [Apache Iceberg][iceberg] | Apache-2.0 | 1.12.0 (2026-09-30) | Snapshots for time travel; [branches and tags][iceberg-branching] are named references with their own retention policies |
 | [Delta Lake][delta] | Apache-2.0 | v4.4.1 (2026-10-05) | Time travel and `RESTORE`; [shallow clone][delta-clone] copies a table at a version with its own history, referencing source files |
 | [Apache Hudi][hudi] | Apache-2.0 | 1.2.1 (2026-09-24) | Not researched for branching here |
-| [DuckLake][ducklake] | MIT | Site labels 1.1 stable, requires DuckDB 2.0.0 or later (GitHub shows no tagged release) | SQL database as catalog (PostgreSQL, MySQL, SQLite or DuckDB), Parquet data; snapshots and time travel; the page does not mention branching |
+| [DuckLake][ducklake] | MIT | Docs site (`/docs/stable`) labels 1.1 stable, requiring DuckDB 2.0.0 or later; the homepage calls 1.0 production-ready (GitHub shows no tagged release) | SQL database as catalog (PostgreSQL, MySQL, SQLite or DuckDB), Parquet data; snapshots and time travel; the page does not mention branching |
 
 Iceberg's own docs name audit branches and experimental branches "for testing and validating new jobs" as use
 cases ([branching page][iceberg-branching]). Delta's shallow clone is writable without touching the source
 as long as source files are not modified, but a `vacuum` on the source can break clone reads
-([Delta docs][delta-clone]). Both are table-level isolation; neither isolates other tables.
+([Delta docs][delta-clone]). Our reading: both are table-level isolation and neither isolates other tables.
 
 ## Catalog-level and storage-level branching
 
 | Tool | License | Version (2026-11-18) | What it adds |
 |---|---|---|---|
 | [Project Nessie][nessie] | Apache-2.0 | 0.110.0 (2026-11-06) | Version-control-style branches, tags and commits at the catalog, so one commit can span many tables (multi-table transaction); a job writes to a branch and merges when done, per its [guide][nessie-about] |
-| [lakeFS][lakefs] | Business Source License 1.1, converting to Apache-2.0 four years after each version's release (LICENSE file; GitHub shows `NOASSERTION`) | v1.88.0 (2026-10-01) | Data version control over object storage per the repo description. The BSL Additional Use Grant limits production use to the unmodified work: check it before adopting |
+| [lakeFS][lakefs] | Business Source License 1.1, converting to Apache-2.0 four years after each version's release (LICENSE file; GitHub shows `NOASSERTION`) | v1.88.0 (2026-10-01) | Data version control over object storage per the repo description. The BSL Additional Use Grant has two conditions: (a) the work is unmodified and (b) "Internal Use Only", which bars offering or hosting the work or its functionality to third parties; (b) is the material restriction. The LICENSE names lakeFS 1.87.0 while the latest release is 1.88.0 |
 
 Catalog-level branching is the closest lakehouse analogue to the Postgres branching in the database-access
 doc: an agent could write on a branch, a human or check could review, then merge. No source here documents an
@@ -47,8 +47,8 @@ agent-specific workflow; that pattern is an inference from the branch semantics.
 ## Catalogs
 
 [Apache Polaris][polaris] (Apache-2.0, 1.9.0 on 2026-11-14) implements the Iceberg REST catalog API so multiple
-engines can share it. [Unity Catalog OSS][uc-oss] (Apache-2.0, v0.7.0 on 2026-10-13) is the open-source
-sibling of Databricks' governance layer. Both are access-control and discovery points; semantic-layer and
+engines can share it. [Unity Catalog OSS][uc-oss] (Apache-2.0, v0.7.0 on 2026-10-13 per `gh api`; already covered in the
+[catalog landscape](semantic-layers-data-catalog-landscape.md)) is the open-source sibling of Databricks' governance layer. Both are access-control and discovery points; semantic-layer and
 lineage coverage is in the [catalog landscape](semantic-layers-data-catalog-landscape.md). Not researched
 here: AWS Glue, Hive Metastore, or each catalog's RBAC detail.
 
@@ -56,14 +56,14 @@ here: AWS Glue, Hive Metastore, or each catalog's RBAC detail.
 
 | Product | What it is (documented) | Permission model (documented) |
 |---|---|---|
-| [Snowflake Cortex Agents][cortex] | Managed agents that plan, call tools (Cortex Analyst over semantic views, Cortex Search, custom stored-procedure/UDF tools, code execution, web search) and call remote MCP servers | Caller needs the `SNOWFLAKE.CORTEX_USER` or `SNOWFLAKE.CORTEX_AGENT_USER` database role plus privileges on the agent and its tools' objects; a tool the caller's role cannot use is skipped. The page states no GA status |
-| [Databricks Genie][genie-docs] | Genie One (business users), Genie Agents (data-team configuration), Genie Code (developers); answers "governed through Unity Catalog" | Unity Catalog; account admins can manage Genie budgets. Pricing: Genie One/Agents user usage free through 2027-01-31 per the page. Depth in [databricks-genie-analysis.md](../agents/databricks-genie-analysis.md) |
+| [Snowflake Cortex Agents][cortex] | Managed agents that plan, call tools (Cortex Analyst over semantic views, Cortex Search, custom stored-procedure/UDF tools, code execution, web search) and call remote MCP servers | Caller needs the `SNOWFLAKE.CORTEX_USER` or `SNOWFLAKE.CORTEX_AGENT_USER` database role plus privileges on the agent and its tools' objects; if the role cannot use a tool, the run can still continue with the tools it can access. The page states no GA status |
+| [Databricks Genie][genie-docs] | See [databricks-genie-analysis.md](../agents/databricks-genie-analysis.md): Genie One and Agents GA on 2026-06-16, Ontology in Public Preview (per that doc) | Unity Catalog governs answers (Genie docs). Pricing conflict, not resolved: the [Genie page][genie-docs] says user usage of Genie One and Agents is free through 2027-01-31, while the analysis doc records pay-as-you-go from 2026-07-06 with about 150 free DBUs per user per month, sourced from community posts |
 | [BigQuery conversational analytics][bq-ca] | Data agents bundling up to 100 knowledge sources with instructions and verified queries; runs SQL or GQL | Agent reaches only data the user may query; no write or DML operations; the page gives no release status |
-| [Fabric data agent][fabric] | Generally available per Microsoft Learn (page updated 2026-10-21); up to five sources (lakehouse, warehouse, semantic model, KQL, ontology, Graph) | Uses the requesting user's identity; read-only; honors Purview DLP and access policies; answers capped at 25 rows and 25 columns |
+| [Fabric data agent][fabric] | Already analysed in [microsoft-365-copilot-analysis.md](../agents/microsoft-365-copilot-analysis.md) (GA, read-only; that doc notes Fabric's overview files it under the preview Fabric IQ workload). Added here: up to five sources; needs F2 or higher capacity, or Power BI Premium P1 or higher with Fabric enabled | Requesting user's identity; honors Purview DLP and access policies; answers capped at 25 rows and 25 columns |
 
-All four converge on the same design: the agent inherits the caller's permissions and is read-oriented
-(BigQuery and Fabric explicitly bar writes; Snowflake's custom tools can run stored procedures, so write
-exposure there depends on what the tool does). The enterprise positioning is in
+Our reading: three of four document read-only access (BigQuery and Fabric explicitly bar writes) and all
+inherit the caller's permissions; Snowflake Cortex custom tools can run stored procedures, so write exposure
+there depends on the tool. The enterprise positioning is in
 [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md).
 
 ## Local engines as agent scratch space
@@ -73,7 +73,7 @@ queries against the warehouse.
 
 | Engine | License | Latest release (2026-11-18) | Note |
 |---|---|---|---|
-| [DuckDB][duckdb] | MIT | v2.0.0 (2026-10-21) | In-process SQL; DuckLake 1.1 requires it. MotherDuck builds a hosted warehouse on it and, per its docs, gives each user or AI agent isolated compute ([MCP server][motherduck-mcp], covered in the database-access doc) |
+| [DuckDB][duckdb] | MIT | v2.0.0 (2026-10-21) | In-process SQL; DuckLake 1.1 requires it. MotherDuck's MCP server is covered in [agentic-database-access-landscape.md](agentic-database-access-landscape.md) |
 | [chDB][chdb] | Apache-2.0 | v4.5.1 (2026-11-18) | In-process ClickHouse engine |
 | [Polars][polars] | MIT | py-2.1.0 (2026-10-25) | DataFrame library; not SQL-first |
 
@@ -100,7 +100,7 @@ agent. Equivalents for Snowflake, BigQuery and Databricks were not researched fo
 - Hudi branching, Unity Catalog and Polaris RBAC details, Glue; Snowflake budget scope (the fetched page did
   not describe budgets); lakeFS hooks and zero-copy claims (docs page did not load).
 - Any measured benefit of agent-on-a-branch workflows: no source here reports one.
-- Whether the Cortex Agents, BigQuery and Genie features are GA: the cited pages do not say.
+- Whether Cortex Agents and BigQuery conversational analytics are GA: the cited pages do not say.
 
 ## Sources
 
@@ -112,7 +112,7 @@ agent. Equivalents for Snowflake, BigQuery and Databricks were not researched fo
 | [Project Nessie][nessie] · [guide][nessie-about] · [lakeFS][lakefs] | Catalog and storage branching, licenses |
 | [Apache Polaris][polaris] · [Unity Catalog OSS][uc-oss] | Open catalogs |
 | [Cortex Agents][cortex] · [Genie][genie-docs] · [BigQuery conversational analytics][bq-ca] · [Fabric data agent][fabric] | Warehouse-native agents |
-| [DuckDB][duckdb] · [securing DuckDB][duckdb-secure] · [chDB][chdb] · [Polars][polars] · [MotherDuck MCP][motherduck-mcp] | Local engines |
+| [DuckDB][duckdb] · [securing DuckDB][duckdb-secure] · [chDB][chdb] · [Polars][polars] | Local engines |
 | [Snowflake resource monitors][sf-rm] · [BigQuery cost controls][bq-cost] | Cost controls |
 
 [iceberg]: https://github.com/apache/iceberg
@@ -134,6 +134,5 @@ agent. Equivalents for Snowflake, BigQuery and Databricks were not researched fo
 [duckdb-secure]: https://duckdb.org/docs/2.0/operations_manual/securing_duckdb/overview.html
 [chdb]: https://github.com/chdb-io/chdb
 [polars]: https://github.com/pola-rs/polars
-[motherduck-mcp]: https://github.com/motherduckdb/mcp-server-motherduck
 [sf-rm]: https://docs.snowflake.com/en/user-guide/resource-monitors
 [bq-cost]: https://docs.cloud.google.com/bigquery/docs/controlling-costs
