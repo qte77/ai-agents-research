@@ -11,6 +11,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.21.0] - 2026-11-18
+
+### Added
+
+- `docs/sdlc-lcm/mas-benchmarking-best-practices.md` § 3.5: Text2WetLab as a second, third-party worked example (grader attacks, a judge capped by deterministic checks, replay on grader change, source and licence per task, held-out set before release) and wet-lab protocol references (LAB-Bench, BioPlanner, SiLA 2, Autoprotocol, LabOP, PyLabRobot), linking to agentic-cax-gauge for CAD.
+
+- `docs/sdlc-lcm/mas-benchmarking-best-practices.md` § 3.5: benchmark lifecycle (design, validate, release, maintain) covering construct, task and outcome validity, controls before ranking, recomputable reference answers, a fixed review rubric, provenance, run hygiene and documentation, with agentic-cax-gauge as a labelled worked example.
+
+- 2.1.317–2.1.319 features: `CLAUDE_CODE_AUTO_MODE_SERVER`, `CLAUDE_CODE_DISABLE_FEATURE_FLAGS`, `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS`, `CLAUDE_CODE_DISABLE_MCP_TASK_BACKGROUND`, `CLAUDE_CODE_DISABLE_MCP_TASKS` in `CC-env-vars-reference.md`; `permissions.denyInsteadOfPrompting` in `CC-permissions-bypass-analysis.md`; Claude apps gateway pooled-budget rules and `/usage` spend in `CC-model-provider-configuration.md`.
+
+- `docs/cc-native/ci-remote/CC-web-auth-setup-analysis.md` (plan 0014 K4): three subsections on scripted runs. "Terms That Apply to Scripted Runs" quotes the Claude Code legal page, the Agent SDK overview and the Consumer Terms. "What a Scripted Run Bills" covers plan login vs API key, monthly API credits on Max/Ultra/Team, cloud sessions, scheduled tasks, Managed Agents, `setup-token`, and `--bare` becoming the `-p` default. "Other Coding CLIs" compares Codex, Gemini CLI, Copilot CLI, Cursor CLI, opencode Go, Z.ai and MiniMax. Also a decision-matrix row and hub rows in cost.md and long-running.md.
+
+- `docs/sdlc-lcm/agentic-ai-vulnerability-landscape.md`: "Prompt injection: attacks and defenses" section (plan 0014 K5) — attack taxonomy (direct/indirect, tool/MCP, memory, screen, multi-agent), defense table (instruction hierarchy, spotlighting, CaMeL, detectors, sandboxing), benchmarks, Claude Code documented surface; cross-linked from the ATLAS rows, the Prompt Injection Resistance metric and the safety benchmark list.
+
+- `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md` § Judge Calibration, Trace Evals and Eval Statistics: judge agreement and bias checks (position, verbosity, self-enhancement), pairwise vs pointwise, judge drift, outcome vs process and trace grading (TRAIL, Agent-as-a-Judge), eval error bars, pass@k vs pass^k, and the Inspect AI harness (epoch reducers, scorers).
+- `docs/sdlc-lcm/evaluation-data-resources-landscape.md`: Inspect AI row in the frameworks table.
+
+- `docs/sdlc-lcm/agentic-ai-vulnerability-landscape.md`: "Guardrail layers: a comparison" section (plan 0014 K8) — seven-layer table (filters, classifiers, rails, policy engines, approval, sandboxes, monitors) mapped to Claude Code hooks/permissions/sandbox/auto-mode classifier and vendor products, guardrail-evaluation results (auto-mode FPR/FNR, adaptive-attack bypass), approval fatigue.
+
+- `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md`: "Cross-Harness Matrix" section (plan 0014 K9) comparing Claude Code, Codex CLI, Gemini CLI, OpenCode and Pi on tools, sandbox, permissions, compaction, hooks and resume, plus a pattern-coverage table for seven of the 12 patterns; unverified cells marked "not documented".
+
+- `docs/plans/2026-11-15-0014-kb-strengthening.md` (#848): plan for strengthening the corpus across the owner's 2026-11-15 topic list (25 agent rows, 6 owner gates with defaults), based on four same-day coverage audits; carries over plan 0013's open rows with a `13-` prefix. Plan 0013 is marked superseded.
+
+- Monthly decision-model eval now lists each weekly paper run's decide() share (read from the committed `triage/rxiv/` reports) and flags it in the `decision-drift` issue when the share falls more than 0.10 for three runs in a row (plan 0014 13-A7 part 2).
+
+- Claude Code v2.1.321–325 folded into `docs/cc-native/` (plan 0014 K29): 12 env-var rows in `CC-env-vars-reference.md`, Code Mode in `CC-tools-inventory.md`, the sandbox auto-allow default change and worktree/symlink rules in `CC-sandboxing-analysis.md`, permission, Remote Control, fast-mode-on-Vertex, 1M-window and plugin/mod changes in the matching docs.
+
+- `docs/sdlc-lcm/agentic-ai-vulnerability-landscape.md`: new section 7 comparing nine offensive-security and reverse-engineering agent tools (ARTEX, Claude-BugHunter, pentest-ai-agents, communitytools, Decepticon, xalgorix, HexStrike AI, REA, ghidra-mcp) on harness, license, autonomy, scope controls and finding verification; refreshed `rea-analysis.md` (stars, release, ghidra-mcp comparator) and added a pointer in `CC-community-skills-landscape.md`.
+
+- `CC-memory-tooling-landscape.md`: new "Second-brain vaults" section comparing gbrain, COG-second-brain, open-second-brain, agent-second-brain and claude-second-brain (store, harnesses, retrieval, write path, license, stars as of 2026-11-17; COG skill-count inconsistency confirmed); ai-memory stars and version refreshed; pointer added in `karpathy-llm-kb-analysis.md`.
+
+- Harness creation and benchmarking (plan 0014 K10): harness-search results table in `weco-aide-recursive-self-improvement-analysis.md` (HarnessFlow, Harness², Self-HPO, AIDE², RRSI; one canonical home, pointer left in the disciplines landscape), harness-benchmarking method in `agent-evaluation-metrics-landscape.md` § Cost-Performance Efficiency, and a build-vs-adopt section (Agent SDK, deepagents, Pi, OpenHarness) in `CC-agentic-harness-patterns-analysis.md`.
+
+- Orchestrators landscape (six analyses by pattern, Claude Code primitives vs non-CC table, multi-agent failure modes from five papers); agent-teams "Unreleased" sections re-checked and recursive-spawning page updated for nested subagents (plan 0014 K11).
+
+- Checkpoint/resume matrix, watchdog and liveness design and long-run failure evidence in `workflow-frameworks-landscape.md`; API and GitHub triggers and unattended permission posture in `CC-web-scheduled-tasks-analysis.md` (plan 0014 K13).
+
+- Plan-file formats across agents, replanning/drift paper leads and plan-state goal predicates (goal-loops landscape, goal-tracking landscape); corrected Claude Code plan storage (plan 0014 K14)
+
+- New `agentic-database-access-landscape.md` (database MCP servers, text-to-SQL benchmarks, write safety, migrations, lineage) plus a DB-write bullet in the vulnerability landscape (plan 0014 K16).
+
+- New data-platforms and lakehouse landscape: open table formats, branching, catalogs, warehouse-native agents, local scratch engines, cost controls (plan 0014 K17).
+
+- Scraping landscape: agent identity (Web Bot Auth, signed agents), dated vendor anti-bot handling table, dated search API prices, scrape-quality evidence and a short legal note; crawler doc gets a pay-per-crawl status check (plan 0014 K22).
+
+- Tool use across model kinds (function-calling benchmarks, failure modes, action models) in `programmatic-tool-calling-analysis.md`, and a canonical grep-vs-semantic-search evidence section in `CC-code-tooling-landscape.md` (plan 0014 K30).
+
+- `microsoft-365-copilot-analysis.md`: new "Microsoft agent stack" section (computer-using agents incl. Project Opal, the Frontier program, Agent Builder vs Copilot Studio vs declarative agents, Foundry Agent Service, Microsoft IQ grounding layers, Dataverse and Fabric); Cowork, Copilot Code and Managed Runtime re-checked 2026-11-18 (Ignite GA announcements vs Learn preview notices, new SDK/CLI package names); pointer from `CC-model-provider-configuration.md` § Microsoft Azure Foundry.
+
+- Fold 10 preprints (INFUSE, SkillLifeBench, skill scanner, OAP, MAS-Guard, SWE-MISBEHAVIOR, AuthorizationBench, Prompt Lottery, trace-detector audit, cached-trace scoring) into the prompt-injection, guardrail and judge/trace-eval sections (plan 0014 K32).
+
+### Changed
+
+- `docs/non-cc/infrastructure/web-scraping-extraction-landscape.md` (plan 0014 K3): added a "Rendered-session scripting: polyfetch-scrape" subsection (v0.11.0 state, per-feature versions), a catalog-level note on Patchright's console/pageerror limits and its bearing on the moli spike criterion, a headed-launch finding in Anti-Bot Bypass, and corrected the header note (polyfetch keeps its own implementation docs, not only probe findings).
+
+- Dated corrections: the Gemini CLI API-key free tier (now 250 requests/day, Flash only), Codex GPT-5.5 retirement for ChatGPT sign-in, the Cursor CLI's `agent` command name, and Copilot's legacy premium-request page. Moved two `long-running.md` hub rows that sat outside the table.
+
+- `docs/sdlc-lcm/mas-benchmarking-best-practices.md` § 3.3: pointer to the new eval-methods section.
+
+- Plan 0014: rows K26–K28 for the monitor backlogs found on 2026-11-15 (changelog monitor's "scanned through" header overstates coverage; community monitor's uncovered tools and empty reports; 669 of 703 relevant papers never cited in the corpus); K12 points at the company-wave research done the same day.
+
+- Plan 0014: rows 13-A4 (first scheduled Clef paper run checked: 88/100 decided by Clef, 0 failures; 21 of 67 extractions fail to parse) and 13-A6 (shadow `relevance_score` shows a 1–10 label) struck; new row 13-A9 for the extraction-yield fix upstream; 13-A7 gets its first weekly data point.
+
+- `CONTRIBUTING.md` § Auto-generated content: fold-in rule for papers the rxiv run rates relevant (each one cited, routed to an open plan row as a lead, at most four per row, or dropped with a class reason); the triage PR note in `rxiv-paper-eval.yaml` now asks for that before merge. Applied to the October–November reports (645 papers: 14 cited, 52 routed, 579 dropped), with the routed IDs in plan 0014's source map and a new row K32 for papers that fit shipped sections.
+
+- Gemini CLI to Antigravity CLI refresh (plan 0014 K33): reconciled tier wording at Google's own pages, added first-party Antigravity CLI install/auth/resume/sandbox/headless/licence facts, and dated status notes in six docs that compare Gemini CLI.
+
+- Plan 0014: new row K33, refreshing the corpus for Gemini CLI's replacement by Antigravity CLI (owner request).
+
+- Evaluation landscape § 2 Benchmarks: dated or removed undated scores (OSWorld "~5%", SWE-EVO, LoopArena, Exgentic, LiveBench, GAIA2), added a benchmark status table, a validity-audit table, and short contamination and cyber-benchmark sections (plan 0014 K7).
+
+- Plan 0014: session status refreshed for a hand-off. New owner-gated row K34 proposes covering the Azure, Google Cloud and AWS agent stacks (services, roles, identity and IdP, licences).
+
+### Fixed
+
+- `CC-extended-context-analysis.md`: drop the long-context premium above 200K tokens, which no longer exists — current models bill the full 1M window at standard per-token rates (Haiku 5.5 has its own over-100K tier). Adds which models default to 1M, plan gating per the model-config docs (Opus 4.6 at 1M included on Max/Ultra/Team/Enterprise; Sonnet 4.6 at 1M needs usage credits), and removes the dead long-context rate-limit link (plan 0014 K1).
+
+- Changelog monitor coverage tagging (plan 0014 K26): a feature line now counts as covered when every backticked setting, variable or flag it names (an assignment like `VAR=1` matches `VAR`) appears backticked in one doc's body. Tokens backticked in more than three docs (common commands and flags such as `/usage`) are treated as generic and ignored, so they can't mark an unrelated fix as covered. Before, only filenames and H2/H3 headings were indexed, so documented settings stayed UNCOVERED. Since v2.1.71 this moves 93 → 1,077 of 7,940 changelog lines to covered; "covered" means the setting or command is documented somewhere, not that every fix to it is. Tests pin the rule and guard that the scan doc still yields a cutoff.
+- `CC-changelog-feature-scan.md`: the frontmatter range is now labelled as the monitor's comparison cutoff, not documentation coverage.
+
+- `docs/non-cc/coding-agents/codex-cli-analysis.md`: dated correction, the `untrusted` approval policy is retired and `auto_review` is a reviewer setting.
+- `docs/non-cc/coding-agents/gemini-cli-analysis.md`: dated correction, latest release is v0.68.0 (2026-11-10).
+
+- Post-merge falsification of the 2026-11-17 fold-ins: `agentic-ai-vulnerability-landscape.md` § 7 no longer says every listed tool states authorized-use-only (ghidra-mcp doesn't), and separates Decepticon's engagement-level approval from per-call gates; `CC-memory-tooling-landscape.md` scopes open-second-brain's snapshot claim to what its docs say and completes its harness list.
+
+- rxiv paper eval: pass the agent-strict prompt as `relevance_prompt_template`, the input gha-rxiv-paper-eval v0.6.1 reads, instead of the deprecated `relevance_prompt` alias that logged a warning on every run (seen on the 2026-11-17 scheduled run).
+
 ## [0.20.0] - 2026-11-15
 
 ### Added
