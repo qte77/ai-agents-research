@@ -477,7 +477,7 @@ rows are **not comparable with each other**; read each row against its own basel
 | Harness² (repo under the google-research GitHub org, arXiv 2610.14224) | Per-task harness via a verifier-free Propose-Probe-Compose step, plus a cross-task distilled harness | Not stated on the abstract page; our reading: the base model of each run | A single task-level step improves GLM-5 and Gemini 3.5 Flash over their base harnesses, by up to 11.5 (WorkBuddy-Bench), 4.5 (JobBench) and 11.8 points (LAB); the abstract page does not assign figures to models | Apache-2.0 repo |
 | Self-HPO (arXiv 2610.22791) | Alternates harness revision (H-step) and RL on the policy (P-step) | Base policy Qwen3.5-35B-A3B (abstract); a stronger external proposer is a separate variant | Average resolve rate 57.8% to 64.8% over three coding benchmarks | MIT repo |
 | HarnessFlow (arXiv 2611.06254, submitted 2026-11-04) | Whole executable harness; MCTS over a refinement tree, a coding agent proposes each edit | Executor model GPT-5.4-mini at medium reasoning effort (§4.1), 15 refinement attempts per search (§4.1, App. C.4) | Mean over six benchmarks 69.48 vs 65.53 for Meta-Harness, 61.71 for Claude Code 2.1.272 and 58.59 for the initial harness (Table 1) | Announced ("will be released"), not out |
-| Meta-Harness (Stanford IRIS Lab) | Whole harnesses by outer-loop search | n/a | Appears only as HarnessFlow's baseline above; not assessed separately | [Repo][meta-harness] (MIT per the disciplines landscape; not re-checked here) |
+| Meta-Harness (Stanford IRIS Lab) | Whole harnesses by outer-loop search | n/a | Appears only as HarnessFlow's baseline above; not assessed separately | [Repo][meta-harness] (MIT per `gh api`, 2026-11-18) |
 
 **Reading it.**
 
