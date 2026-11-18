@@ -1,6 +1,6 @@
 ---
 title: Multi-Agent Orchestrators — Landscape
-purpose: Cross-cut of the six orchestrator analyses by coordination pattern, state hand-off and escalation, a Claude Code primitives vs non-CC equivalents table, and multi-agent failure modes grounded in papers.
+purpose: Cross-cut of the six orchestrator analyses by coordination pattern, state hand-off and escalation, a short entry on AgentRun (a harness-wrapping platform), a Claude Code primitives vs non-CC equivalents table, and multi-agent failure modes grounded in papers.
 category: landscape
 created: 2026-11-18
 updated: 2026-11-18
@@ -137,6 +137,8 @@ What follows is evidence from papers and the corpus, with each source's own scop
    alpha release.
 4. Delegate planning before implementation when cost matters (one paper, one benchmark), and expect
    delegation to cost more, not less.
+5. Platforms that wrap an existing harness (AgentRun) pitch learned skills and cost savings, but their numbers
+   are vendor self-reports; weigh them as such.
 
 ## Sources
 
