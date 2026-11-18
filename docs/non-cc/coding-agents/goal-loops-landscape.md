@@ -2,7 +2,7 @@
 title: Goal Loops Across Coding Agents
 purpose: Cross-vendor comparison of "keep working until done" features in coding agents — named goal commands, who judges completion, iteration bounds, and Stop-style hooks that can force another turn — with Claude Code's /goal as the reference point.
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-11-18
 validated_links: 2026-10-22
 status: assess
 ---
@@ -77,6 +77,29 @@ docs), Amp and Devin (manual / docs index — both have stop hooks, above), and 
 (what's-new page). These are absences in the pages named, not a site-wide check. Bolt, Lovable and
 Azure AI Foundry were only searched, not read first-party.
 
+## Plan files across agents (re-checked 2026-11-18)
+
+A goal is per conversation; the plan is what survives it. Documented formats, from each vendor's page:
+
+| Agent | Plan artifact | Where it lives | Source |
+|---|---|---|---|
+| Claude Code | Plan mode writes a plan without editing source; approval options on exit; `Ctrl+G` opens it in an editor | `~/.claude/plans/` or the `plansDirectory` setting | [permission modes][cc-plan] |
+| Kiro | `requirements.md`, `design.md`, `tasks.md` per spec (see [kiro-analysis.md](kiro-analysis.md)) | The page does not say | [specs][kiro-specs] |
+| Cursor | Plan Mode builds a plan you edit via chat or markdown files, then build | Home directory by default; "Save to workspace" keeps it in the repo | [planning][cursor-plan] |
+| GitHub Copilot coding agent | The page describes research, plan and implement in the background, with a PR and session logs as outputs; no dedicated plan document or checklist is mentioned | n/a | [about coding agent][copilot-agent] |
+| OpenAI Codex | A `/plan` command is listed; the page read does not describe it | Not verified | [developer commands][codex-cmds] |
+
+Of the formats read, only Kiro documents a fixed multi-file schema; Cursor and Claude Code plans are markdown; Copilot (no plan document described) and Codex (`/plan` listed only) are unverified. GitHub Projects and Codex `/plan` were not read in depth. Repo-native alternatives (`prd.json` stories with status, plan files with a remaining-work table) are in [goal-tracking-attribution-landscape.md](../../sdlc-lcm/goal-tracking-attribution-landscape.md#plan-state-as-the-goal-predicate-2026-11-refresh) and [CC-plans-as-skill-rule-templates.md](../../cc-native/agents-skills/CC-plans-as-skill-rule-templates.md).
+
+### Replanning and drift: paper leads (arXiv abstract pages, read 2026-11-18)
+
+Preprints, abstract-level only; none of the findings are tested on coding agents.
+
+- **Goals that change mid-run.** [DynaRev][dynarev] (web agents, 181 tasks) delivers goal revisions at milestones; across five models agents often completed only part of the requirements, and browser resets hurt while instruction rewriting helped. Our inference: keep the goal in a re-readable file rather than only in turn one.
+- **Planner and actor disagree.** [ConPAct][conpact] reports that a planner and an actor often disagree about task state, and that supplying task-relevant state reduces it. The parallel here is a plan file that goes stale against the repo.
+- **Do agents plan at all?** [Miro-Lopez-Feliu et al.][planclaims] test planning against hidden PDDL models: best setup 78% offline vs 40% online, and unsolvable tasks recognized in under 10% of episodes. Our inference: a judge that only reads the transcript inherits this limit.
+- **Subgoals.** [Wang et al.][subgoal] report that "real-time subgoal planning" with proprietary models such as Gemini raised WebArena-Lite success by roughly 10 percentage points (web tasks only).
+
 ## Practices that hold across vendors
 
 Our synthesis, not any vendor's guidance:
@@ -112,6 +135,14 @@ Our synthesis, not any vendor's guidance:
 | [Cursor hooks][cursor-hooks] | `stop` hook `followup_message`, `loop_limit` |
 | [Devin lifecycle hooks][devin-hooks] | `Stop` hook `"decision": "block"` |
 | [Amp plugin API][amp-plugin] | `agent.end` `continue`, `maxContinuations` |
+| [Claude Code permission modes][cc-plan] | Plan mode, plan storage, approval options |
+| [Kiro specs][kiro-specs] | Spec file formats, task waves |
+| [Cursor planning][cursor-plan] | Plan Mode, save to workspace |
+| [Copilot coding agent][copilot-agent] | Plan-then-implement, PR and logs |
+| [DynaRev, arXiv 2610.40133][dynarev] | Goal revision benchmark |
+| [ConPAct, arXiv 2609.38891][conpact] | Planner-actor state mismatch |
+| [Planning claims, arXiv 2610.22469][planclaims] | Planning vs formal semantics |
+| [Subgoal framework, arXiv 2603.19685][subgoal] | Subgoal decomposition |
 
 [codex-goals]: https://learn.chatgpt.com/use-cases/follow-goals
 [codex-cmds]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
@@ -129,3 +160,11 @@ Our synthesis, not any vendor's guidance:
 [cursor-hooks]: https://cursor.com/docs/agent/hooks
 [devin-hooks]: https://docs.devin.ai/cli/extensibility/hooks/lifecycle-hooks.md
 [amp-plugin]: https://ampcode.com/manual/plugin-api
+[cc-plan]: https://code.claude.com/docs/en/permission-modes
+[kiro-specs]: https://kiro.dev/docs/specs/
+[cursor-plan]: https://cursor.com/docs/agent/planning
+[copilot-agent]: https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent
+[dynarev]: https://arxiv.org/abs/2610.40133
+[conpact]: https://arxiv.org/abs/2609.38891
+[planclaims]: https://arxiv.org/abs/2610.22469
+[subgoal]: https://arxiv.org/abs/2603.19685

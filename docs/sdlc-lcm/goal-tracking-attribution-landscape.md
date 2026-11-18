@@ -3,7 +3,7 @@ title: Goal Tracking & Attribution Landscape
 purpose: How an agentic coding fleet ties work back to stated goals — the top-down goal→spec→build→learning cascade and the bottom-up attribution of every feature, PR, and agent run to the goal that motivated it — with the qte77 estate as the worked reference and the commercial OKR/PM tooling baseline it diverges from.
 category: landscape
 created: 2026-06-28
-updated: 2026-06-28
+updated: 2026-11-18
 validated_links: 2026-06-28
 status: assess
 ---
@@ -70,7 +70,15 @@ The mature commercial tools target this space, but from the human-ceremony side:
 | [Productboard][productboard] | product discovery | customer feedback → prioritized features → roadmap; human insight votes |
 | [LinearB][linearb] | engineering metrics | DORA / cycle-time from Jira + Git; assumes a human author per PR |
 
-**The 2026 wrinkle — and the gap it leaves.** These tools now ship MCP servers (Atlassian's [Rovo MCP Server][atlassian-mcp] is GA; Jira, Productboard, and Linear all expose MCP endpoints), so an agent *can* read and write their work items. But MCP bolts agent **access** onto a human-authored, UI-first goal model — it does not make the goal store machine-native. None expose what the estate pattern needs: a machine-writable goal schema that agents author, a per-run `cost_usd` + `outcome` attribution row, autonomous idle-discovery goal generation, or a spend-based kill switch. As with the [OSS ALM landscape][oss-alm], the verdict is **none fit the agent-native need** — they instrument human goal-setting, not autonomous goal attribution.
+**The 2026 wrinkle — and the gap it leaves.** These tools now ship MCP servers (Atlassian publishes a [Rovo MCP Server][atlassian-mcp], though the pages fetched on 2026-11-18 did not state its release stage, so the earlier "GA" label is dropped; Linear documents a [remote MCP server][linear-mcp] that finds, creates and updates issues, projects and comments, read-write by default; Jira and Productboard endpoints were not re-checked), so an agent *can* read and write their work items. But MCP bolts agent **access** onto a human-authored, UI-first goal model — it does not make the goal store machine-native. None expose what the estate pattern needs: a machine-writable goal schema that agents author, a per-run `cost_usd` + `outcome` attribution row, autonomous idle-discovery goal generation, or a spend-based kill switch. As with the [OSS ALM landscape][oss-alm], the verdict is **none fit the agent-native need** — they instrument human goal-setting, not autonomous goal attribution.
+
+## Plan state as the goal predicate (2026-11 refresh)
+
+A session-level goal needs a predicate that reads plan state, and Claude Code's `/goal` judge sees only the conversation, so the state must be printed there; see [CC-goal-analysis.md](../cc-native/sessions/CC-goal-analysis.md) and the cross-vendor [goal-loops-landscape.md](../non-cc/coding-agents/goal-loops-landscape.md).
+
+Applied to the stores above (our synthesis, not vendor guidance): a predicate such as "every story in `prd.json` has `status` passed, shown by a command whose output is printed" ties the stop condition to the attribution ledger; a plan-row table with a done-when column works the same way. The ledger is the check; the goal only restates it.
+
+**Strategy-level planning (above goals and specs): coverage gap.** A corpus search on 2026-11-18 found strategy only as the human OKR baseline above and the estate's `goals.json`; no doc covers agent-authored strategy or roadmap planning, and vendor docs were not searched for it in this pass. Treat it as unaudited, not as absent.
 
 ## Connections
 
@@ -97,6 +105,7 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 | [Productboard][productboard] | Product discovery: feedback → prioritized features → roadmap |
 | [LinearB][linearb] | Engineering delivery metrics (DORA, cycle time) over Jira + Git |
 | [Atlassian Rovo MCP Server][atlassian-mcp] | First-party evidence of the 2026 MCP-access layer over a human-authored goal model |
+| [Linear MCP docs][linear-mcp] | Remote MCP server for issues, projects, comments; read-write default (checked 2026-11-18) |
 | [Startup CTO Handbook → qte77 mapping][cto-map] | Traditional human-OKR baseline mapped onto `goals.json` |
 
 [qte77]: https://github.com/qte77/qte77
@@ -110,6 +119,7 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 [productboard]: https://www.productboard.com/
 [linearb]: https://linearb.io/
 [atlassian-mcp]: https://www.atlassian.com/platform/remote-mcp-server
+[linear-mcp]: https://linear.app/docs/mcp
 [disciplines]: agentic-engineering-disciplines-landscape.md
 [sdlc-patterns]: agentic-sdlc-patterns.md
 [oss-alm]: oss-alm-landscape.md

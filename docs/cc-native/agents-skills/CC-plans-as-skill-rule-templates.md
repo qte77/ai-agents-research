@@ -4,7 +4,7 @@ description: Analysis of Claude Code plan files — anatomy, plan mode mechanics
 category: analysis
 status: research
 created: 2026-03-13
-updated: 2026-04-05
+updated: 2026-11-18
 validated_links: 2026-04-05
 ---
 
@@ -75,7 +75,7 @@ feat(module): add feature X
 
 1. **EnterPlanMode** — CC switches to read-only exploration (no edits allowed)
 2. **Research phase** — reads files, searches codebase, gathers context
-3. **Plan file written** — structured plan saved (typically to conversation context, sometimes to `.claude/plans/`)
+3. **Plan file written** — plan saved as a file in `~/.claude/plans/` (or the `plansDirectory` setting)
 4. **ExitPlanMode** — returns to normal mode
 5. **User approval** — user reviews plan, approves/rejects/modifies
 6. **Implementation** — CC executes the approved plan
@@ -86,9 +86,10 @@ In agent teams, teammates can produce plans that require approval from the coord
 
 ### Plan Storage
 
-- Plans created via `/plan` or plan mode appear in conversation context
-- Persistent plans can be saved to `.claude/plans/` for cross-session reference
-- Plans are not automatically indexed or discoverable — they require manual organization
+- The [permission-modes docs][cc-pm] (checked 2026-11-18) name the path in their protected-paths section: the session's own plan files in `~/.claude/plans/`, or in the `plansDirectory` you set. The page read does not present it as a documented default location.
+- Enter with `Shift+Tab`, `/plan`, or `--permission-mode plan`; `Ctrl+G` opens the plan in an editor before approval.
+- Our reading, not a documented statement: plans are not automatically indexed or discoverable across projects; keeping them in a repo directory needs the setting or a manual copy.
+- Cross-agent comparison of plan formats: [goal-loops-landscape.md](../../non-cc/coding-agents/goal-loops-landscape.md#plan-files-across-agents-re-checked-2026-11-18).
 
 ## Reuse Patterns
 
@@ -240,3 +241,4 @@ Cross-ref: [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analys
 [ultraplan]: https://code.claude.com/docs/en/ultraplan
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [rc]: https://code.claude.com/docs/en/remote-control
+[cc-pm]: https://code.claude.com/docs/en/permission-modes
