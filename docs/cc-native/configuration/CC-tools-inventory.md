@@ -2,7 +2,7 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-11-12
+updated: 2026-11-17
 validated_links: 2026-11-12
 status: adopt
 ---
@@ -102,7 +102,11 @@ Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 | Tool | Permission | Purpose |
 |---|---|---|
 | `AskUserQuestion` | No | Multiple-choice questions for requirements |
-| `Skill` | Yes | Execute a skill in main conversation |
+| `Skill` | Yes | Execute a skill in main conversation. Since v2.1.325 scheduled tasks and `/loop` ask before running a skill that declares `allowed-tools` or hooks; add `Skill(name)` to `permissions.allow` to run it unattended (changelog) |
+
+### Code Mode (v2.1.323)
+
+Documented at the [Code Mode page][code-mode-page] (read 2026-11-17): an experimental, off-by-default mode in which Claude writes JavaScript that makes several tool calls in one step, run in the session by a `REPL` tool. Opt in with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1` (shell or user settings; ignored in project settings; `0` in managed settings blocks it for an organization). Requirements per the page: v2.1.323 or later (v2.1.326 for agent teams), native build, interactive terminal session only (not `-p`, SDK, VS Code, Desktop or cloud), direct Anthropic API access (no gateway or cloud provider), a supported model, and no HIPAA or zero-data-retention organization. Permissions: `deny` and `ask` rules and `PreToolUse` hooks apply per tool call; in auto mode the classifier reviews the code, not each call. Supported models per the page: Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.2. A Code Mode session resumes only with the variable still set to `1`. Start-up is refused with some settings on, such as an API key helper (`apiKeyHelper`), OpenTelemetry export (`CLAUDE_CODE_ENABLE_TELEMETRY`) or `DISABLE_TELEMETRY`, and with an installed mod that checks tool calls. A `PreToolUse` hook matching `REPL` can read `tool_input.code`. Code that waits stops after ten minutes; background code can run up to two hours.
 
 ## Permission Model
 
@@ -279,7 +283,7 @@ The following tools appear in the `@anthropic-ai/claude-code@2.1.88` npm sourcem
 | `VerifyPlanExecutionTool` | Verify plan execution | `CLAUDE_CODE_VERIFY_PLAN` |
 | `CtxInspectTool` | Context window inspection | `CONTEXT_COLLAPSE` |
 | `TerminalCaptureTool` | Terminal panel capture | `TERMINAL_PANEL` |
-| `REPLTool` | Interactive VM shell | `--bare` mode |
+| `REPLTool` | Interactive VM shell | `--bare` mode (binary-extracted entry; whether it relates to Code Mode's `REPL` tool, see [Code Mode](#code-mode-v21323), no source says) |
 
 ### Kairos-Exclusive Tools (Unreleased)
 
@@ -338,10 +342,12 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | [CC advisor docs][advisor-cc] | `/advisor` command and `advisorModel` setting (accessed 2026-10-26); see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) |
 | [Claude Code CHANGELOG.md][changelog] | `v2.1.317`/`v2.1.321` account-email-in-outbound-request guardrail, read in full via `gh api repos/anthropics/claude-code/git/blobs/<sha>`, 2026-11-12 (the contents API refuses this file over 1 MB) |
 | `gh api repos/anthropics/claude-code/issues/107757`, 2026-11-12 | Open issue reporting the account email sent in a `User-Agent` header during web searches |
+| [CC Code Mode page](https://code.claude.com/docs/en/code-mode) | Code Mode requirements, enablement, permission checks (accessed 2026-11-17) |
 
 [advisor-cc]: https://code.claude.com/docs/en/advisor
 [tools-ref]: https://code.claude.com/docs/en/tools-reference
 [changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[code-mode-page]: https://code.claude.com/docs/en/code-mode
 [issue-107757]: https://github.com/anthropics/claude-code/issues/107757
 [commands]: https://code.claude.com/docs/en/commands
 [cli-ref]: https://code.claude.com/docs/en/cli-reference

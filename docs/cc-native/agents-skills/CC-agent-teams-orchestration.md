@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/agent-teams
 purpose: Analysis of Claude Code Agent Teams for parallel code review, cross-layer implementation, and adversarial debugging.
 test_run: 2026-02-11 (parallel code review with 3 teammates)
 created: 2026-02-08
-updated: 2026-09-23
+updated: 2026-11-17
 validated_links: 2026-09-23
 status: research-preview
 ---
@@ -69,6 +69,10 @@ Restricts lead to coordination-only (spawn, assign, synthesize). Blocks direct i
 | Coordination | Main agent manages all work | Shared task list with self-coordination |
 | Best for | Focused tasks where only the result matters | Complex work requiring discussion and collaboration |
 | Token cost | Lower: results summarized back | Higher: each teammate is a separate instance |
+
+## Changes in v2.1.321–325
+
+CHANGELOG entries ([source](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)): split-pane agent teammates now check that requests come from their team lead, so a teammate that outlives its lead has its asks refused, and plan approvals must be re-sent after `/clear` or `/resume` (v2.1.323). tmux and iTerm2 teammates, and new sessions from the agents view opened with the left arrow, start in the session's folder instead of where the shell last ran `cd` (v2.1.325). An unrecognized `teammateMode` value is now listed as a skipped entry by `claude -p`, the startup warning and `claude doctor`, and is still not applied (v2.1.325).
 
 ## Use Cases
 

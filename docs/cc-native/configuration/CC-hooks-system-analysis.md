@@ -3,7 +3,7 @@ title: CC Hooks System Analysis
 source: https://code.claude.com/docs/en/hooks
 purpose: Analysis of Claude Code hooks system for automation, quality gates, and headless CC workflow integration.
 created: 2026-03-07
-updated: 2026-11-11
+updated: 2026-11-17
 validated_links: 2026-07-23
 status: generally-available
 ---
@@ -94,6 +94,15 @@ webhook-style automation without local scripts.
 
 Agent definitions (`.claude/agents/`) can include hooks in their frontmatter:
 PreToolUse, PostToolUse, Stop. These are scoped to the agent's execution only.
+
+## Changes in v2.1.321–325
+
+CHANGELOG entries ([source](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)):
+
+- `claude -p` and SDK sessions emit a progress heartbeat every 30 seconds while hooks run long, so a host such as Claude Desktop does not end the turn as hung (v2.1.323; takes effect once the host includes that version).
+- `AskUserQuestion` in `claude -p` and SDK sessions denies a host's permission answer that sets the undocumented `afkTimeoutMs` input field (v2.1.321).
+- In Cowork cloud sessions a `PostToolUse` hook can no longer replace the answer to `AskUserQuestion` or the plan in `ExitPlanMode`'s result; Claude reads the originals (v2.1.321).
+- A `PreToolUse` "allow" followed by a failing permission check is decided as if no hook had answered (v2.1.323); see [CC-permissions-bypass-analysis](../sandboxing/CC-permissions-bypass-analysis.md).
 
 ## Applicability
 
