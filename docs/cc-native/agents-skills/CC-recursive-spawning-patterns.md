@@ -1,9 +1,9 @@
 ---
 title: CC Recursive Spawning Patterns
-source: https://code.claude.com/docs/en/sub-agents, https://github.com/anthropics/claude-agent-sdk-python/issues/573, https://dev.to/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma
+source: https://code.claude.com/docs/en/sub-agents, https://code.claude.com/docs/en/env-vars, https://github.com/anthropics/claude-agent-sdk-python/issues/573, https://dev.to/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma
 purpose: Analysis of recursive claude -p invocation patterns, the CLAUDECODE=1 session guard, and spawning method trade-offs for autonomous agent orchestration.
 created: 2026-03-17
-updated: 2026-03-17
+updated: 2026-11-18
 status: research
 ---
 
@@ -91,15 +91,34 @@ any work.
 | `claude -p` (from within CC) | `CLAUDECODE= claude -p` | Yes (unlimited) | **Must clear** | Fresh each call |
 | Agent Teams (in-process) | `TeamCreate` + `Agent` | **No** -- can't spawn sub-teams | Handled internally | Persistent within team |
 | Agent Teams (tmux) | `--teammate-mode tmux` | Teammates get Agent tool | Handled internally | Persistent within team |
-| Subagents (`Agent` tool) | Within single session | 1 level deep | Handled internally | Shared parent session |
+| Subagents (`Agent` tool) | Within single session | Up to 3 layers by default (see update below) | Handled internally | Own context; summary returns to parent |
 | Claude Agent SDK | `subprocess_cli.py` | Yes | **Must filter** `os.environ` | Fresh per call |
+
+## Update 2026-11-18: Nested Subagents Now Documented
+
+The "1 level deep" entry in the table above was true when this page was written. Per the
+[sub-agents docs](https://code.claude.com/docs/en/sub-agents) and the
+[env-vars reference](https://code.claude.com/docs/en/env-vars), subagents can now spawn their own subagents:
+`CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` sets the number of layers below the main conversation, default 3, and `1`
+turns nesting off. The env-vars page dates the variable to v2.1.217 (default 1, so no nesting) and the raised
+default of 3 to v2.1.219, matching the [CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md).
+At the limit the `Agent` tool is withheld from subagents (a fork keeps it, but the call errors). Omitting `Agent`
+from a subagent's `tools` also stops it spawning. This is in-session nesting; the `claude -p` route and the
+`CLAUDECODE=1` guard above are unchanged by it (not re-tested here).
+
+Agent teams still do not nest: the [agent teams docs](https://code.claude.com/docs/en/agent-teams) list "no nested
+teams" and one team per session as current limitations, and an in-process teammate's own subagents run in the
+foreground. Of the issues cited below, [#31977](https://github.com/anthropics/claude-code/issues/31977)
+(teammates lack the `Agent` tool) was closed as not planned on 2026-06-16, and
+[#30008](https://github.com/anthropics/claude-code/issues/30008) (print mode hangs with in-process teammates) was
+closed as completed on 2026-03-05 (issue states checked 2026-11-18; behaviour not re-tested here).
 
 ## Relationship to Agent Teams and Ralph
 
 **Agent Teams** ([CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md))
 spawn teammates as in-process CC instances with shared task lists. Key
 constraint: **no nested teams** -- teammates cannot spawn their own teams.
-Known bugs: teammates lack the Agent tool in `in-process` mode
+Known bugs as of 2026-03 (see the 2026-11-18 update above for issue states): teammates lack the Agent tool in `in-process` mode
 ([#31977](https://github.com/anthropics/claude-code/issues/31977));
 `--print` mode + teams hangs
 ([#30008](https://github.com/anthropics/claude-code/issues/30008), fixed in
@@ -110,7 +129,7 @@ is the battle-tested external harness pattern: a shell script calls `claude -p`
 once per story with fresh context. Filesystem (prd.json, git state) provides
 continuity. Each call is independent -- no session coupling.
 
-**No true "recursive team mode" exists yet.** The closest pattern is a shell
+**No true "recursive team mode" exists** (as of 2026-11-18; agent teams document no nesting). The closest pattern is a shell
 harness (Ralph) calling `claude -p` with
 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` per iteration, but each iteration's
 teams are independent.
@@ -128,5 +147,8 @@ teams are independent.
 | [claude-agent-sdk-python#573](https://github.com/anthropics/claude-agent-sdk-python/issues/573) | `CLAUDECODE=1` guard bug in SDK |
 | [DEV Community](https://dev.to/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma) | 50K token cost per subprocess |
 | [haasonsaas/claude-recursive-spawn](https://github.com/haasonsaas/claude-recursive-spawn) | Bash script with depth control, JSON parsing |
-| [#31977](https://github.com/anthropics/claude-code/issues/31977) | No Agent tool in in-process teammates |
-| [#30008](https://github.com/anthropics/claude-code/issues/30008) | Teams + print mode hang |
+| [#31977](https://github.com/anthropics/claude-code/issues/31977) | No Agent tool in in-process teammates (closed not planned 2026-06-16) |
+| [#30008](https://github.com/anthropics/claude-code/issues/30008) | Teams + print mode hang (closed completed 2026-03-05) |
+| [Environment variables reference](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`, checked 2026-11-18 |
+| [Agent teams docs](https://code.claude.com/docs/en/agent-teams) | No nested teams, checked 2026-11-18 |
+| [Claude Code CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) | v2.1.217 and v2.1.219 spawn-depth entries |
