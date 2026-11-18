@@ -24,7 +24,7 @@ literature says goes wrong.
 
 | Orchestrator | Coordination shape | State hand-off | Escalation |
 |---|---|---|---|
-| [JetBrains Air][air] | Human is the orchestrator: parallel tasks, one agent each (Codex, Claude Agent, Gemini CLI, Junie) | Task = isolated git worktree or Docker container; the diff is the artefact | Human reviews diffs and comments back; interactive plan mode before execution |
+| [JetBrains Air][air] | Human is the orchestrator: parallel tasks, one agent each (Codex, Claude Agent, Gemini CLI, Junie; Gemini CLI status 2026-11-18: [no longer served for free, AI Pro, AI Ultra users](../coding-agents/gemini-cli-analysis.md)) | Task = isolated git worktree or Docker container; the diff is the artefact | Human reviews diffs and comments back; interactive plan mode before execution |
 | [devteam][devteam] | Same shape as Air, as a terminal UI; agents do not talk to each other | One git worktree per agent; PR status and checks surfaced in the TUI | Human review of diffs and PRs |
 | [DeerFlow][deerflow] | Centralised: a primary agent spawns sub-agents dynamically | Persistent memory plus sandboxed execution (local, Docker, Kubernetes); skills as Markdown units | Not described in the analysis |
 | [Omnigent][omnigent] | Meta-harness above agent frameworks (Claude Code, Codex, Pi, custom YAML agents) | Server holds session history and policies; models can be swapped mid-session while history and tool state are preserved | Contextual policies, spend caps and "risk-based escalation" to human review (announced, alpha) |

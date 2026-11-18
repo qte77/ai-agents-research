@@ -5,7 +5,7 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-12
+updated: 2026-11-18
 validated_links: 2026-11-12
 ---
 
@@ -60,7 +60,7 @@ Meta-prompting, context engineering, and spec-driven development system for AI c
 
 - **Stack**: Node.js >= 20, zero production deps, npm package `get-shit-done-cc` ([npm][gsd-npm])
 - **Stars**: 44.5K | **License**: MIT | **Version**: 1.30.0 (2026-03-27)
-- **Runtimes**: Claude Code, OpenCode, Gemini CLI, Codex, Copilot, Cursor, Windsurf, Antigravity
+- **Runtimes** (the project's own list; Gemini CLI [status 2026-11-18](../non-cc/coding-agents/gemini-cli-analysis.md)): Claude Code, OpenCode, Gemini CLI, Codex, Copilot, Cursor, Windsurf, Antigravity
 
 ### Architecture
 
