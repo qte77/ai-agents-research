@@ -12,7 +12,7 @@ there is one live plan and `make reconcile` checks all of it.
 
 ## Current status
 
-**Read this first (status at end of 2026-11-15 session).** Shipped: K1 #851, K5 #852, K2 #853, K3 #854,
+**Read this first.** The newest session paragraph and "Do now" below are current; this paragraph is the 2026-11-15 start. Shipped: K1 #851, K5 #852, K2 #853, K3 #854,
 K4 #856, K6 #857, K8 #858, K9 #859, K26 #860 (9 of 38 rows), plus the owner-reviewed Text2WetLab
 example in § 3.5 (#855). No branch, worktree or PR is open. You are the lead session for this
 plan. The work: strengthen the corpus on the owner's 2026-11-15 topic list (rows K1–K25), plus plan
@@ -22,19 +22,24 @@ repo again. The coverage audits behind the rows read headings only, so treat eac
 
 **2026-11-17 session (13- rows first, at the owner's request):** 13-A4 and 13-A6 done (rows below); #869 fixes the paper run's deprecated `relevance_prompt` input; extraction parse failures filed upstream (13-A9); bot triage PRs #862–#864 and #868 merged. Owner fold-ins, treated as data: #870 (second-brain vaults in the memory-tooling landscape, from seven LinkedIn links) and #871 (offensive-security agents § 7 in the vulnerability landscape, plus a REA refresh), each with two falsification passes. #871 has no hub row until G3 creates a security hub. Later the same day: #873 (post-merge falsification of #870/#871), #874 (M365 drift #866), #875 (13-A7 part 2), #876 (AGENT_LEARNINGS), and K29 (Claude Code v2.1.321–325). #865's two 403 links were not rechecked locally (the auto-mode classifier denied curl and lychee); the `api.github.com` languages citation will 403 on any unauthenticated runner, so citing the repo page is offered to the owner. 13-A2's smoke issue needs the owner's OK.
 
-**2026-11-18 session:** K28 (#880, paper fold-in rule; 645 Oct–Nov papers routed or dropped, new row K32) and K31 (#881, Microsoft agent stack) shipped, then K11 (#882), K30 (#883), K10 (#884), K16 (#885), K7 (#886), K13 (#888), K14 (#889), K32 (#890), K22 (#891), K17 (#892) and K33 from three-lane rounds; K33 added (#887, owner request). Session closed 2026-11-18 at #894; no PR open. **Next session:** `git pull`, `make reconcile`, then (1) K12: research is done but no doc edits have been made yet. Seven papers plus the Uber and Stripe material and the spec-driven framework stats are verified in the local note `k12-findings.md`; SlackBench was dropped. Still to do: write the software-factory section, refresh the spec-driven landscape, re-check Tessl, add the changelog fragment, then run the two falsification passes. (2) Owner answer on the K34 cloud agent stacks proposal. (3) K15, K18 to K21 (K20 before K21), K23, K27. K24 and K25 still wait on G3 and G2. The loop that worked this session: lane in a worktree, two Explore falsifiers in parallel, the fix list sent back to the same lane, then the lead adds hub and index rows, strikes the row and merges. Local session notes (lane brief, per-row findings) are in `/workspaces/temp/ai-agents-research-triage/session-2026-11-18/`. Owner decisions still open: G1–G6, 13-A2's smoke issue, #865, 13-A7 part 3.
+**2026-11-18 session:** K28 (#880, paper fold-in rule; 645 Oct–Nov papers routed or dropped, new row K32) and K31 (#881, Microsoft agent stack) shipped, then K11 (#882), K30 (#883), K10 (#884), K16 (#885), K7 (#886), K13 (#888), K14 (#889), K32 (#890), K22 (#891), K17 (#892) and K33 (#893) from three-lane rounds. Later, at the owner's request: v0.21.0 (#896); K35 Salesforce refresh with Copilotforce (#897); K36 Microsoft Frontier programs, stack table and Microsoft 365 licences (#898); K37 Code Mode, auto mode and `/autocompact` (#899); K38 owner fold-ins (#900); K39 Salesforce naming lineage, which corrected a K35 reading (#901). Session paused 2026-11-18 at #902; no PR, branch or worktree open. Local session notes (lane brief, per-row findings, triage) are in `/workspaces/temp/ai-agents-research-triage/session-2026-11-18/`.
 
 **Do now, in order:**
 
-1. `make reconcile`, `git log --oneline -10`, open PRs. 13-A4 runs after Tuesday 2026-11-17 whatever
-   else is in flight.
-2. Open up to three lanes in parallel (see "Parallel lanes"): next are L1 K7, L4 K13, then
-   L5 K16 and L6 K22. Run two falsification passes per row: pass A checks quotes and numbers
-   verbatim against raw pages; pass B checks attribution, staleness, duplication and consistency
-   with the rest of the corpus.
-3. Lead-only rows between lane merges: K15, K23, K24 (its long-running hub fix already shipped in
-   #856), K27 after K22, K28.
-4. The owner sitting: G1–G6, then the 13-O rows.
+1. `git pull`, `make reconcile`, `git log --oneline -10`, open PRs (merge bot triage PRs first).
+2. K12: research is done but no doc edits have been made yet. Seven papers plus the Uber and Stripe
+   material and the spec-driven framework stats are verified in the local note `k12-findings.md`;
+   SlackBench was dropped. Still to do: write the software-factory section, refresh the spec-driven
+   landscape, re-check Tessl, add the changelog fragment, then run the two falsification passes.
+3. Then K15, K18 to K21 (K20 before K21), K23, K27, up to three lanes in parallel (see "Parallel
+   lanes"). K24 and K25 still wait on G3 and G2.
+4. The loop: lane in a worktree; two Explore falsifiers in parallel (pass A checks quotes and numbers
+   verbatim against raw pages; pass B checks attribution, evidence levels, duplication and consistency
+   with the rest of the corpus); the fix list goes back to the same lane; the lead adds hub, index and
+   plan rows, strikes the row in the same PR and merges.
+5. Owner decisions still open: the K34 cloud agent stacks proposal, G1–G6, 13-A2's smoke issue, #865,
+   13-A7 part 3, the herdr placement, and two paused requests from 2026-11-18 (trim the undated
+   anti-bot tool list in the scraping landscape; local branch and stash cleanup).
 
 Shipped the same day before this plan: `#844` (context-load trim), `#845` (gha-rxiv-paper-eval v0.6.1
 pin), `#846` (cost hub, one-week cache measurement, seven env vars), `#847` (v0.20.0), `#849` (this plan).
