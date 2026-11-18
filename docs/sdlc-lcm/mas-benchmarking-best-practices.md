@@ -105,7 +105,7 @@ How to build, validate, release and maintain a benchmark against these criteria:
 **Real-World Validation** [2506.02548] CyberGym:
 
 - Top agents: ~20% success on real tasks vs inflated benchmark scores
-- Discovered 35 zero-days, 17 incomplete patches in actual CVEs
+- Discovered 34 zero-days, 18 incomplete patches in actual CVEs (current abstract, revised 2026-03-24; earlier versions reported 35 and 17)
 - Proof-of-concept generation validates genuine capability
 
 **Evaluator Bias Propagation** [2606.20493] Contagion Networks:
