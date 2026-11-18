@@ -4,8 +4,8 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-14
-validated_links: 2026-10-11
+updated: 2026-11-18
+validated_links: 2026-11-18
 ---
 
 Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
@@ -41,6 +41,8 @@ Agents that conduct multi-step research and generate research outputs.
 - [dataroom (hanxiao / Jina)][dataroom] — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](../coding-agents/pi-analysis.md)); ~168★, new.
 - [Épi: Towards a Persistent, Self-Improving Agent for Autonomous Research][epi] — Huang, Xu, Luo, Liu, Li, Wang, Song, Ramos, Xie, Isayev, Liang, Dziri, Sun, Gao, Liu, Sra, Zhang, Pentland & Chen (19 authors; arXiv:2610.24944, submitted 2026-10; affiliations not listed on the abstract page). An autonomous research agent that "sustains investigations across model sessions and evolves its methods through accumulated experience," combining **hierarchical memory**, persistent research history, branching, and independent review by a fixed verifier — the abstract gives no structural detail on the memory hierarchy itself. Evaluated on mathematical/research problems (numerical bounds, constructions, a computer-assisted proof) and, via its coding variant Épi-turbo, on FrontierOR operations-research tasks. Self-reported: 120 record-setting results (20 numerical-bound records across 12 families, 100 construction records across 8 families), an n-queens-constant interval ~84× narrower than prior work, a quartic Feigenbaum-attractor-dimension interval >3.6M× narrower, exact dual certificates ruling out a sharp Cohn-Elkies bound in dimensions 10–11, a computer-assisted proof of Tuza's conjecture for a restricted split-graph case, and Épi-turbo achieving "a 5.4% higher total benchmark score than Codex" on 30 FrontierOR tasks at 64% of its model cost (same underlying model/reasoning effort) (paper claims; methodology not independently verified; no code repository found on the abstract page as of 2026-11-12).
 - [Perplexity Computer][perplexity-computer] — Perplexity's general-purpose autonomous agent orchestrator (launched Feb 2026, MCP tool/connector calls; follows 2025's Comet browser agent). HBS+Perplexity production-data study ([paper][perplexity-computer-paper], Feb 27–May 27, 2026; 10,000 matched query pairs drawn from a pool of 100,000 dual-product users, multiple pairs per user permitted) finds 26min of autonomous machine work per session vs. 33s for Search, 55% lower per-query dissatisfaction (1.3% vs. 2.9%), -87%/-94% time/cost vs. Search+human workflows (79–92%/87–96% across 18 occupational domains), and +38% knowledge-domain scope per query (2.40 vs. 1.74 domains).
+
+- [Open Coscientist (Jataware)][open-coscientist] — LangGraph adaptation of [Google's AI co-scientist][google-coscientist] (Google Research blog, 2025-02-19: a multi-agent system on Gemini 2.0 offered through a trusted-tester programme, not a public release); generates, reviews, Elo-ranks and evolves research hypotheses with 8-10 agents, any LiteLLM-supported model. Literature grounding needs a separate MCP server (a reference one ships in the repo). **Source-available, not open source**: the LICENSE is MIT plus the Commons Clause, which withholds the right to sell the software, including hosting or consulting services whose value derives substantially from it. 68 stars, created 2026-01-15, last push 2026-02-25 (stale for about nine months), `gh api` 2026-11-18. An independent community port, not affiliated with Google as far as the README states; no benchmark results were checked.
 
 **Domain-specific science agents**: [Coscientist (CMU, Nature)][coscientist] — GPT-4 chemistry agent driving cloud-lab experiments; [ChemCrow][chemcrow] — GPT-4 + 18 chemistry tools; [BioPlanner][bioplanner] — biology protocol generation (BIOPROT, 9K+ protocols); [BioChatter][biochatter] — privacy-preserving biomedical conversational-AI framework.
 
@@ -123,6 +125,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 | [GPT-Researcher][gpt-researcher] | LangGraph multi-agent deep-research |
 | [STORM / Co-STORM (Stanford)][storm] | Multi-perspective cited-article curation |
 | [Agent Laboratory][agent-laboratory] | Human-in-the-loop research assistant |
+| [Open Coscientist][open-coscientist] · [Google AI co-scientist blog][google-coscientist] | Repo README, LICENSE (MIT + Commons Clause) and `gh api` stats, 2026-11-18; Google's own description of the system it adapts |
 | [MLR-Copilot][mlr-copilot] · [paper][mlr-copilot-paper] | Three-phase ML-research automation |
 | [SciSciGPT][sciscigpt] | "Science of science" agent (capability-maturity model) |
 | [autoresearch (Karpathy)][autoresearch] | Minimalist overnight ML research |
@@ -193,6 +196,8 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 [local-deep-researcher]: https://github.com/langchain-ai/local-deep-researcher
 [dataroom]: https://github.com/hanxiao/dataroom
 [epi]: https://arxiv.org/abs/2610.24944
+[open-coscientist]: https://github.com/jataware/open-coscientist
+[google-coscientist]: https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/
 [ideascientist]: https://arxiv.org/abs/2610.04074
 [rankevolve]: https://arxiv.org/abs/2609.39551
 [hyperresearch]: https://github.com/jordan-gibbs/hyperresearch
