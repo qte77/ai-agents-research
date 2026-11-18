@@ -3,7 +3,7 @@ title: On-Device / Local-First Semantic Search Landscape
 purpose: Survey of the embedder + embedded-vector-store stack for local-first semantic search — ternlight (Hold) as trigger, the Python-native scalable alternatives (Assess), and the decouple-the-layers lesson.
 category: landscape
 created: 2026-07-23
-updated: 2026-09-24
+updated: 2026-11-18
 validated_links: 2026-09-24
 status: assess
 ---
@@ -113,6 +113,9 @@ residency-aware gate `azure-doc-workflows#165` proposes).
   covers the underlying local stack)
 - [agent-frameworks-infrastructure-landscape.md §7](../frameworks/agent-frameworks-infrastructure-landscape.md)
   — RAG & retrieval infrastructure (hosted/managed side)
+
+- [CC-code-tooling-landscape.md § Grep vs. semantic search for coding agents](../../cc-community/CC-code-tooling-landscape.md#grep-vs-semantic-search-for-coding-agents)
+  — evidence on when agent harnesses use grep instead of an embedding index
 
 ## Sources
 
