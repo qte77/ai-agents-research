@@ -3,7 +3,7 @@ title: CC Permissions Bypass Analysis
 source: https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/security
 purpose: Analysis of --dangerously-skip-permissions flag, permission modes, team inheritance, and safer alternatives for headless/CI execution.
 created: 2026-03-17
-updated: 2026-11-17
+updated: 2026-11-18
 status: research
 ---
 
@@ -126,6 +126,41 @@ Use this for absolute red lines (data exfiltration paths, destructive commands) 
 
 Source: CHANGELOG v2.1.136
 
+## Auto Mode: Availability, Classifier and Defaults (read 2026-11-18)
+
+Sources: the [permission-modes page][cc-modes] (the home for current facts) and Anthropic's [auto-mode article][cc-auto-article] (marketing-level summary; it still describes the March 2026 state, see the staleness note below). Engineering-post error rates are in [agentic-ai-vulnerability-landscape.md](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md#guardrail-layers-a-comparison).
+
+**What it is.** A mode where a separate classifier model reviews each action before it runs and blocks what escalates beyond the request, targets unrecognised infrastructure, or looks driven by hostile content Claude read (documented). Explicit `ask` rules still prompt. The page states it reduces prompts but does not guarantee safety.
+
+**Default starting mode (documented, permission-modes page).** From Claude Code v2.1.283 auto mode is the built-in starting mode for interactive terminal and VS Code sessions on every plan and provider; earlier versions did so only on Pro, Max, Ultra and Team. It is not the default for `claude -p` or the Agent SDK (they start in Manual and deny calls that need approval). A `"auto"` `defaultMode` in project settings files has no effect; set it in `~/.claude/settings.json`. HIPAA-configuration orgs: v2.1.326 and later start in auto mode.
+
+**Availability.**
+
+| Provider | Models (per page, 2026-11-18) |
+|---|---|
+| Anthropic API, Claude Platform on AWS, Claude Models on Google Cloud (Anthropic managed) | Opus 4.6+, Sonnet 4.6+, Haiku 5.5 or a Fable model |
+| Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, signed-in Claude apps gateway | Sonnet 5+, Opus 4.7+, Haiku 5.5 (v2.1.293+) or a Fable model |
+
+Sonnet 4.5, Opus 4.5, Haiku 4.5 and Claude 3 models are unsupported. All plans; on Team and Enterprise it is on by default and an admin turns it off with `permissions.disableAutoMode: "disable"` in managed settings (sessions already in auto mode leave it). The Anthropic article adds that the Claude desktop app keeps it off until an admin toggles it in Organization Settings, Claude Code (announced there; not re-checked on a first-party docs page).
+
+**How to enable.** `claude --permission-mode auto`, `permissions.defaultMode: "auto"` (user settings), `Shift+Tab` cycling, the VS Code mode indicator or the Desktop selector; SDK `permissionMode: "auto"`.
+
+**Classifier behaviour (documented).**
+
+- Sees user messages, non-read-only tool calls and CLAUDE.md content; tool results are stripped, so hostile file or web content cannot steer it directly.
+- Defaults to Claude Sonnet 5 with fallbacks; `CLAUDE_CODE_AUTO_MODE_MODEL` overrides it (v2.1.302+). In many sessions the review runs server-side inside the model request; `CLAUDE_CODE_AUTO_MODE_SERVER=0` forces Claude Code's own classifier calls ([env vars](../configuration/CC-env-vars-reference.md)).
+- No verdict (server or gateway) means deny, not run unreviewed.
+- Subagents: checked at start, per action, and on the final report before the parent reads it.
+- Fallback: 3 consecutive or 20 total blocks pause auto mode and resume prompting; approving the prompted action resumes it. The thresholds are not configurable. In `-p` runs without `--permission-prompt-tool`, blocked actions just do not run.
+- On entry, broad allow rules that grant arbitrary code execution (`Bash(*)`, `Bash(python*)`, `Bash(timeout *)`) are dropped and restored on exit; narrow rules such as `Bash(npm test)` stay.
+- Cost: classifier calls count toward token usage on Enterprise, direct API, Bedrock, Google Cloud, Foundry and Claude Platform on AWS accounts, and each check adds a round trip; server-side review avoids the separate calls.
+
+**Defaults (examples, per page).** Blocked: `curl | bash`, sending sensitive data to external endpoints, production deploys and migrations, force push and `git reset --hard`, `terraform destroy`, granting IAM or repo permissions, merging unapproved PRs or disabling CI checks, pushing secrets. Allowed: local file operations in the working directory, installing declared dependencies, read-only HTTP, pushing to a branch of the working repo except deploy-like names (`production`, `gh-pages`). Adjust with `autoMode.environment` and `autoMode.allow`; `claude auto-mode defaults` prints the built-in lists ([CLI reference](../configuration/CC-cli-reference.md)).
+
+**Staleness note.** The Anthropic article (launch 2026-03-24, "generally available" update 2026-07-10) names only Sonnet 4.6 and Opus 4.6 and says Team first, Enterprise and API to follow; the docs page above is newer and broader (see the table). Prefer the docs page. The article's companion "auto-mode-setup" URL returned HTTP 404 on 2026-11-18, so no setup-article claims are made here.
+
+**Code Mode interaction.** In [Code Mode](../configuration/CC-tools-inventory.md#code-mode-v21323) the classifier reviews each piece of code, not each tool call, and cannot see run-time values; background code needs auto or `bypassPermissions` mode.
+
 ## Disabling Organization-Wide
 
 Server-managed settings can force-disable bypass mode:
@@ -174,6 +209,8 @@ Bypassing permissions does not bypass the sandbox.
 | [Official security docs](https://code.claude.com/docs/en/security) | Security model, sandbox separation |
 | [#29110](https://github.com/anthropics/claude-code/issues/29110) | Bypass ineffective on Task tool agents |
 | [#29064](https://github.com/anthropics/claude-code/issues/29064) | Plan mode infinite loop |
+| [CC permission modes][cc-modes] | Auto mode availability, classifier, defaults (read 2026-11-18) |
+| [Auto mode article][cc-auto-article] | Launch and GA dates, desktop admin toggle (read 2026-11-18) |
 | [CC CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) | v2.1.321–325 permission entries (accessed 2026-11-17) |
 
 ## See Also
@@ -185,3 +222,4 @@ Bypassing permissions does not bypass the sandbox.
 [cc-permissions]: https://code.claude.com/docs/en/permissions
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [cc-modes]: https://code.claude.com/docs/en/permission-modes
+[cc-auto-article]: https://claude.com/resources/articles/auto-mode
