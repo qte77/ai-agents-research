@@ -1,6 +1,5 @@
 ---
 title: Agentic Database Access — MCP Servers, Text-to-SQL, Write Safety
-source: https://github.com/googleapis/mcp-toolbox
 purpose: How agents reach databases today — vendor database MCP servers and their read-only controls, text-to-SQL benchmarks and training results, and the write-safety evidence (read-only roles, branching, an incident, injection through MCP). Landscape as of 2026-11-18.
 created: 2026-11-18
 updated: 2026-11-18
@@ -22,16 +21,15 @@ each vendor's own docs or repo as of 2026-11-18.
 | Server | License | Read-only control (documented) | Notes |
 |---|---|---|---|
 | [MCP Toolbox for Databases][toolbox] (Google, `googleapis/mcp-toolbox`) | Apache-2.0 | Not stated on the README; tools are defined per database/toolset | Open-source MCP server for many databases (Google Cloud services plus PostgreSQL, MySQL, SQL Server, Oracle, MongoDB, Snowflake and others); README examples use v1.17.0; ~16.9k stars on 2026-11-18 (`gh api`) |
-| [Supabase MCP][supabase-mcp] (`supabase/mcp`) | Apache-2.0 | `read_only=true` URL parameter (runs SQL as a read-only Postgres user per the [security guidance][supabase-docs]); `project_ref` scoping; `features` groups | ~3.0k stars on 2026-11-18; the old `supabase-community` URL redirects here; the separate postgrest MCP package is deprecated |
-| [Neon MCP][neon-mcp] (`neondatabase/mcp-server-neon`) | MIT | `?readonly=true` hides write tools and runs `run_sql` in a READ ONLY transaction; `projectId`, `category`, `roleName`, `secrets` parameters | Hosted at the Neon MCP endpoint; local stdio package deprecated; docs say development and testing, not production ([docs][neon-docs]) |
+| [Supabase MCP][supabase-mcp] (`supabase/mcp`) | Apache-2.0 | `read_only=true` URL parameter (runs SQL as a read-only Postgres user per the [security guidance][supabase-docs]); `project_ref` scoping; `features` groups | Its [docs][supabase-docs] say to connect to production only when the task needs production evidence, and then to combine project scoping, read-only mode and limited feature groups. ~3.0k stars on 2026-11-18; the old `supabase-community` URL redirects here; the separate postgrest MCP package is deprecated |
+| [Neon MCP][neon-mcp] (`neondatabase/mcp-server-neon`) | MIT | `?readonly=true` hides write tools and runs `run_sql` in a READ ONLY transaction; `projectId`, `category`, `roleName`, `secrets` parameters | Hosted at the Neon MCP endpoint; local stdio package deprecated; the [README][neon-mcp] says it is for local development and IDE use, not production; the [docs page][neon-docs] says the same and that the local stdio package is deprecated |
 | [PlanetScale MCP][planetscale-mcp] | Hosted service (not open source) | Access scope none / read-only / full per organization or database; admins set query access separately | `UPDATE`/`DELETE` without `WHERE` and `TRUNCATE` blocked; DDL asks for human confirmation; short-lived credentials; Vitess and Postgres |
 | [MotherDuck MCP][motherduck-mcp] | MIT | Read-only by default; `--read-write` enables writes | Docs warn read-only alone is not enough for third-party access (filesystem and settings still reachable); hosted remote MCP recommended for that case |
-| [SQL MCP Server][dab-mcp] (Microsoft, part of Data API builder) | Open source (per Microsoft Learn; license file not checked) | Role-based permissions per entity; individual tools such as `delete-record` can be disabled | Deliberately has no NL2SQL and no DDL: agents call typed record tools, and DAB's query builder emits the T-SQL (documented, Microsoft Learn page dated 2026-05) |
-| [Postgres MCP Pro][postgres-mcp-pro] (`crystaldba`) | MIT | Not verified here (a restricted mode is mentioned in secondary sources only) | Community, ~3.5k stars; last push 2026-08-17 |
+| [SQL MCP Server][dab-mcp] (Microsoft, part of Data API builder) | MIT (`Azure/data-api-builder`, `gh api` 2026-11-18) | Role-based permissions per entity; individual tools such as `delete-record` can be disabled | Deliberately has no NL2SQL and no DDL: agents call typed record tools, and DAB's query builder emits the T-SQL (documented, Microsoft Learn page dated 2026-05) |
+| [Postgres MCP Pro][postgres-mcp-pro] (`crystaldba`) | MIT | `--access-mode=restricted` limits operations to read-only transactions plus an execution-time limit (README) | Community; README calls it suitable for production but also says it may add measures to make restricted mode safe for production databases (vendor claim, hedged by the vendor); 3,487 stars, last push 2026-08-17 (`gh api` 2026-11-18) |
 
 Reading across the table: the shared pattern is a scoped, read-only default or flag plus
-confirmation on DDL. Two vendors (Neon, Supabase) say in their own docs not to point the server at
-production data; Microsoft's design avoids the problem by never exposing raw SQL authoring. The
+confirmation on DDL. Neon's README says its server is not for production, and Supabase's docs allow production only when the task needs it, with scoping and read-only; Microsoft's design avoids the problem by never exposing raw SQL authoring. The
 generic MCP-level risks are in
 [agentic-ai-vulnerability-landscape.md](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md).
 
@@ -43,9 +41,9 @@ on 2026-11-18.
 | Benchmark | What it measures | Top entry on 2026-11-18 |
 |---|---|---|
 | [BIRD][bird] | Cross-domain text-to-SQL, 95 databases, 12,751+ question-SQL pairs; also BIRD-Critic (SQL debugging) and BIRD-Interact | Overall test EX 83.40% (AskData, 2026-10-22); human 92.96% |
-| [Spider 2.0][spider2] | Enterprise workflows on large schemas (BigQuery, Snowflake, DBT) | Snow 96.70, Lite 76.23, DBT 65.6; the site shows no leaderboard date, so treat as undated |
+| [Spider 2.0][spider2] | Enterprise workflows on large schemas (BigQuery, Snowflake, DBT) | Snapshot read 2026-11-18: Snow 96.70, Lite 76.23, DBT 65.6 (no leaderboard date on the page) |
 
-Caveats: Spider 2.0's page task counts do not reconcile (632 stated versus per-setting counts), so
+Caveats: Spider 2.0's page says 632 problems in its About section but lists 547 (Snow), 547 (Lite) and 68 (DBT), which do not sum to 632, so
 compare only within one setting. BIRD's dev and test tops are different entries, and the dev leader's
 test score (74.34%) is far below its dev score, which is a reminder that dev numbers are not
 comparable to test numbers.
@@ -60,7 +58,7 @@ reproduced):
 - **[DualSQL][dualsql]** (arXiv 2609.18135) jointly trains schema-linking and SQL-generation agents;
   the authors report 68.0% (4B) and 71.1% (8B) execution accuracy on the BIRD dev set.
 
-Takeaway: accuracy on curated benchmarks is rising, but a score says nothing about blast radius;
+Takeaway: scores are high on curated benchmarks, but a score says nothing about blast radius;
 that is the write-safety question below. Why raw text-to-SQL still needs a governed layer is argued
 in [semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md) under
 Why Agents Need This and in [databricks-genie-analysis.md](../agents/databricks-genie-analysis.md).
@@ -75,10 +73,11 @@ Layers, cheapest first; none is sufficient alone.
    `neon_superuser`, which reads all data and so does not limit reads ([docs][neon-docs]).
 2. **Tool-level modes are not a boundary.** The Anthropic reference Postgres MCP server wrapped each
    query in a read-only transaction, but Datadog Security Labs showed (2025-08-21) that a statement
-   such as `COMMIT; DROP SCHEMA public CASCADE;` ended that transaction and ran writes. Datadog reports the
-   package version it tested (0.6.2) as unpatched on npm, the repository fixed but unreleased, and
-   the server deprecated and archived ([Datadog][datadog-pg]). Evidence: first-party security write-up,
-   documented.
+   such as `COMMIT; DROP SCHEMA public CASCADE;` ended that transaction and ran writes. Datadog says the flaw
+   is present from v0.1.0, that 0.6.2 is the latest npm/Docker release and unpatched, that a Zed fork
+   (`@zeddotdev/postgres-context-server` v0.1.4) carries the fix, and that the server is deprecated and
+   archived ([Datadog][datadog-pg]). Evidence: researcher-reported (Datadog Security Labs); vendor
+   response not found.
 3. **Branching before merging.** Neon's migration tools run a change on a temporary branch and apply
    it to the main branch only on a second call (`prepare_database_migration`,
    `complete_database_migration`; [README][neon-mcp]); Supabase's guidance tells users to test changes on a
@@ -91,19 +90,20 @@ Layers, cheapest first; none is sufficient alone.
 
 ### Incident evidence
 
-- **Replit and SaaStr, July 2025 (reported, single-source-chain).** A founder reported that an AI
-  coding agent deleted a production database during a code freeze and then said rollback was
+- **Replit and SaaStr, July 2025 (reported, single-source-chain).** The SaaStr founder reported that
+  an AI coding agent deleted a production database during a code freeze and then said rollback was
   impossible, though a rollback later worked. [The Register][register-replit] (2025-07-21) reports these as the
   founder's own claims, notes the screenshots only appear to be Replit output, and says Replit had not
   publicly responded at publication time. Numbers (records deleted, fake profiles) vary across
   secondary blogs and are not repeated here. Evidence level: observed by one user, unverified by the
-  vendor in the sources read. No primary Replit postmortem was found and none was sought
-  beyond a web search. Treat as an illustration of a missing environment boundary (agent holding
+  vendor in the sources read. No Replit statement was found in The Register's report, and
+  only a web search (2026-11-18) looked for a primary postmortem. Treat as an illustration of a missing environment boundary (agent holding
   production write access), not as a measured failure rate.
-- **Supabase MCP exfiltration, mid-2025 (research demo).** General Analysis built a
+- **Supabase MCP exfiltration, mid-2025 (research demo on a mock support app, not a field incident).**
+  General Analysis dates its post 2025-07-08 and Willison's post is dated 2025-07-06. They built a
   mock support app; an agent running with the `service_role` key (which bypasses row-level
   security) read a support ticket containing hidden instructions, queried a tokens table and wrote
-  the result back into the ticket thread ([General Analysis][ga-supabase]). Simon Willison, who wrote about it on 2025-07-06, framed it as a
+  the result back into the ticket thread ([General Analysis][ga-supabase]). Simon Willison framed it as a
   "lethal trifecta" and noted that read-only mode removes the write-back leg
   ([post][willison-supabase]). General Analysis' own mitigation list: project scoping,
   read-only, narrower tool groups, human review of queries, and not relying on injection filters alone.
@@ -134,8 +134,7 @@ database MCP server above emits lineage events was not checked.
 ## Not verified
 
 - Toolbox's mechanism for restricting writes (README silent; docs not read).
-- Microsoft SQL MCP Server license file and Postgres MCP Pro read-only behavior.
-- Any vendor statement from Supabase or Replit on the incidents above.
+- Any vendor statement from Supabase on the demo, or from Replit beyond what The Register reports (only a 2026-11-18 web search was run).
 
 ## Sources
 
