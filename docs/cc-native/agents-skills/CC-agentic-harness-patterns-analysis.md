@@ -5,8 +5,8 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 category: analysis
 status: research
 created: 2026-04-06
-updated: 2026-11-15
-validated_links: 2026-11-15
+updated: 2026-11-18
+validated_links: 2026-11-18
 ---
 
 ## Summary
@@ -147,6 +147,7 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [12 Agentic Harness Patterns from Claude Code](https://generativeprogrammer.com/p/12-agentic-harness-patterns-from) (2026-04-05)
 - [Practical Lessons From the Claude Code Leak](https://generativeprogrammer.com/p/practical-lessons-from-the-claude) (2026-04-03)
 - [Skill Issue: Harness Engineering for Coding Agents][skill-issue-post] (Kyle, hlyr.dev, 2026-03-12) — harness engineering framing, HumanLayer mention
+- [Agent SDK overview][agent-sdk-docs] and [Writing tools for agents][writing-tools] (Anthropic; read 2026-11-18) — build-vs-adopt section; licenses and versions from each repo's LICENSE file and releases via `gh api`, 2026-11-18
 - [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK for agent tool calls
 - [ARCBench (arXiv 2611.03223)][arcbench] — rule compliance after context compaction
 - [Unsupported policy in hand-off summaries (arXiv 2611.06545)][handoff-paper] · [code][handoff-audit] — hand-off summaries that invent approvals or restrictions
@@ -275,6 +276,44 @@ to `permissions`/`shell`/`subagent` ([permissions][oc-perm]); its analysis doc c
 [cc-hooks]: https://code.claude.com/docs/en/hooks
 [cc-how]: https://code.claude.com/docs/en/how-claude-code-works
 [cc-cli]: https://code.claude.com/docs/en/cli-reference
+
+## Build vs Adopt a Harness (checked 2026-11-18)
+
+Three levels, from least to most inherited. The choice is about how much of the loop, tool set and
+safety layer you want to own, not about capability: the fixed-model evidence in
+[agent-evaluation-metrics-landscape.md § Cost-Performance Efficiency](../../sdlc-lcm/agent-evaluation-metrics-landscape.md#cost-performance-efficiency-pareto)
+finds harness choice moves cost more than score on coding tasks, so measure before assuming a custom
+loop buys anything.
+
+1. **Minimal loop on a client SDK.** Anthropic's own docs name two options: write the tool loop
+   yourself, or let the client SDK's beta tool runner drive it ([Agent SDK overview][agent-sdk-docs]).
+   You then own permissions, sandboxing, compaction and resume, the mechanics compared in the
+   [Cross-Harness Matrix](#cross-harness-matrix-checked-2026-11-15).
+2. **Tool-set design (applies at every level).** Anthropic's [Writing tools for agents][writing-tools]
+   (2025-09-11) advises a few tools aimed at high-impact workflows rather than wrapping every API
+   endpoint, consolidating multi-step operations, prefixing related tools, returning token-efficient
+   and meaningful output, and iterating against evals with held-out tasks. Pi ships eight built-in
+   tools and leaves sandboxing and permissions to the user (matrix above). The harness-design study
+   above ([2609.20804](#empirical-study-of-harness-design-components-arxiv-260920804)) found a
+   bash-only interface cheaper for bash-capable models on command-line tasks, while weaker models did
+   better with predefined tools.
+3. **Adopt a harness and extend it.**
+
+| Option | What you inherit | License and version (as of 2026-11-18) | Caveat |
+|---|---|---|---|
+| Claude Agent SDK (Python, TypeScript) | Claude Code's built-in tools, hooks, subagents, MCP, permissions, sessions; the SDK runs the Claude Code binary ([docs][agent-sdk-docs]) | Python repo: MIT file, v0.2.184 (2026-11-18). TypeScript repo: LICENSE file points to Anthropic's Commercial Terms; the docs say use is governed by those terms | Third parties may not offer claude.ai login or rate limits for products built on it; use API-key auth (per the docs) |
+| [deepagents](../../non-cc/frameworks/deepagents-analysis.md) | Sub-agents with isolated context, filesystem tools, context offloading, sandboxed shell, memory, skills, MCP, human approval (per its README); built on LangGraph | MIT, deepagents 0.7.39 (2026-11-16) | Model-agnostic Python library; version cadence is fast, pin it |
+| [Pi](../../non-cc/coding-agents/pi-analysis.md) | Eight-tool minimal terminal agent with an extension API | MIT, v1.5.2 (2026-11-10) | No built-in sandbox or permissions (matrix above) |
+| [OpenHarness](../../non-cc/frameworks/openharness-analysis.md) | Python harness infrastructure with tools, skills, memory and multi-agent coordination (README) | MIT, latest GitHub release v0.1.9 (2026-05-07); last push 2026-06-04 | Pre-1.0 and quiet for five months; the README names v0.1.7 (2026-04-18) as latest, so its version note lags the releases page |
+
+**Rule of thumb (our judgment, not a sourced finding).** Start from the minimal loop if the agent has
+a handful of tools and you need full control; adopt the Agent SDK if you want Claude Code's behavior
+inside your own application; adopt deepagents or Pi if you need a non-Claude model or a smaller
+surface. Re-run the same task set on two candidates before committing, holding model, tools, prompts
+and budget fixed.
+
+[agent-sdk-docs]: https://code.claude.com/docs/en/agent-sdk/overview
+[writing-tools]: https://www.anthropic.com/engineering/writing-tools-for-agents
 
 ## Action Items
 
