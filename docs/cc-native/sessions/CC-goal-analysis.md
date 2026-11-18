@@ -144,7 +144,7 @@ The docs page gives its own three-way comparison for approaches that keep a sess
 `/goal` and a Stop hook "both fire after every turn"; `/goal` is session-scoped and
 type-and-go, where a Stop hook lives in settings, applies across sessions, and can run a
 script for deterministic checks instead of a model-evaluated one. Scheduled work (cloud
-routines, desktop scheduled tasks) is explicitly a different axis — it "runs independent of
+routines, now "scheduled tasks", see [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md); desktop scheduled tasks) is explicitly a different axis — it "runs independent of
 any open session," unlike all three session-keepalive approaches above.
 
 `/goal` "works in non-interactive mode, in the desktop app, and through Remote Control."

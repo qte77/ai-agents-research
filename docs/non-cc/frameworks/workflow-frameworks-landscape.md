@@ -3,8 +3,8 @@ title: Agentic Workflow Frameworks — Landscape
 purpose: The workflows-vs-agents distinction (Anthropic's 5 patterns), the agentic-workflow framework landscape, durable-execution engines, and production anti-patterns — beyond Claude Code's own workflow tool.
 category: landscape
 created: 2026-06-27
-updated: 2026-06-27
-validated_links: 2026-06-27
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: research
 ---
 
@@ -51,6 +51,45 @@ When a workflow must survive process crashes, provider timeouts, or human-in-the
 
 The core primitive is idempotency on a stable **`(workflow_id, step_id)`** key — so a replayed step is a no-op, not a duplicated side-effect.
 
+### Checkpoint and resume matrix
+
+Added 2026-11-18, each row from the vendor's docs fetched that day. Resume flags per harness are in [CC-agentic-harness-patterns-analysis.md § Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15); this table adds only what is saved, what bounds it and what is not restored. The two families differ in kind: a harness resumes a **transcript** (the model re-reads history), an engine resumes **code** (steps replay from a journal).
+
+| System | Unit saved | Bound / not restored |
+|---|---|---|
+| Claude Code | Local JSONL transcript per session ([sessions][cc-sessions]); restores history, model, agent, permission mode (terminal), active goal (counters reset), unexpired session-scoped schedules | A tool running when the process died is not rerun. Background Bash and monitors are not restored. MCP, plugin, `--add-dir` and settings flags must be passed again. 30-day default retention. Resuming one session in two terminals makes both write to one transcript, and messages can be missing on a later resume |
+| Codex CLI | Session rollout files; `--ephemeral` skips persisting ([commands][codex-cmds]) | The page read does not state what is restored or where files live (unverified) |
+| Gemini CLI | Conversation, tool inputs and outputs, token usage stats, auto-saved per project under `~/.gemini/tmp/<hash>/chats/` ([sessions][gem-sessions]) | 30-day default cleanup; `maxSessionTurns` default unlimited. The page notes Gemini CLI was replaced by Antigravity CLI for unpaid and Google One users from 2026-06-18 |
+| OpenCode | A local database path is documented (`opencode debug paths db`, `OPENCODE_DB`) ([CLI][oc-cli]) | Resume behaviour unverified: the CLI page documents no resume flags, and the harness matrix records sessions living in a shared background server |
+| Temporal | Event history ([workflow execution][temporal-we]); worker replays it, so workflow code must be deterministic | An activity heartbeat can carry a progress payload that the next attempt reads ([activity failures][temporal-af]) |
+| DBOS | Workflow inputs and step outputs in Postgres, as a library ([architecture][dbos-arch]) | Steps must be idempotent; non-determinism belongs inside steps |
+| Restate | Journal held by a Restate server in front of stateless services ([durable execution][restate-de]) | Idempotency keys dedupe requests; retries use backoff |
+| Inngest | Memoized step results keyed by step ID ([execution][inngest-ex]) | Code outside `step.run()` can run again on replay; a step that had not saved before a crash likely reruns |
+
+Reading it: harness resume gives continuity of **context**, not of **side effects**; an interrupted action is dropped or must be re-asked. Engines give exactly-once-per-step semantics only if steps are idempotent and replayed code is deterministic, which LLM calls are not, so they belong inside recorded steps. Hybrid use (an engine wrapping `claude -p` calls) is an inference from these two properties, not something either vendor documents.
+
+### Watchdog and liveness design
+
+The mechanisms below are each documented; the composition is this corpus's synthesis, not a vendor recipe.
+
+| Failure | Signal that catches it | Documented building block |
+|---|---|---|
+| Hung or crashed worker | No heartbeat within a window | Temporal Heartbeat Timeout fails the attempt and retries per policy ([activity failures][temporal-af]) |
+| Runaway loop or spend | Hard cap | Claude Code `-p` `--max-turns` (no limit by default) and `--max-budget-usd` (client-side estimate; can overshoot, subagent spend counts) ([CLI][cc-cli]); Gemini `maxSessionTurns` |
+| Waiting on a prompt nobody sees | Run state, not exit code | Cloud scheduled-task runs (formerly routines) stop for ask rules and repeated auto-mode blocks ([routines](../../cc-native/ci-remote/CC-web-scheduled-tasks-analysis.md#permission-posture-in-unattended-runs)) |
+| Green but idle or wrong | Output check, not status | The scheduled-tasks docs say a green run status does not mean the task succeeded ([CC-goal-analysis.md](../../cc-native/sessions/CC-goal-analysis.md) quotes it); see also the green-run entries in [AGENT_LEARNINGS.md](../../../AGENT_LEARNINGS.md); the watchdog must be independent of the component it watches ([silent-failure taxonomy](../../sdlc-lcm/agent-silent-failure-taxonomy-analysis.md#the-5-pillar-defense-framework)) |
+
+Design rules that follow: put the liveness check outside the agent process; make the monitor fail on any outcome it did not expect (the corpus's third occurrence of a green no-op); pair every cap with a defined stop state that a person or a resume can pick up. Keep-alive for the host itself is a separate layer: [CC-session-keepalive-analysis.md](../../cc-native/sessions/CC-session-keepalive-analysis.md).
+
+### Long-run failure evidence
+
+Four October 2026 preprints, abstract pages read 2026-11-18; all single-source and unreviewed, so they are leads on mechanism, not settled rates.
+
+- [AgentTime][arx-agenttime]: 222 tasks, duration-following. Reports Fable 5.1 in Claude Code missing requested runtimes by a typical 2.9x against 1.2x for GPT-6 Astra in Codex, and 14 of 158 reviewed Astra runs sleeping after apparently finishing. Matching a duration is not proof of work, which is the green-but-idle case in benchmark form.
+- [Loud Failures, Quiet Failures][arx-quiet]: across 1,920 fault-injected trials, agents flagged a problem in 91.3% of explicit-error cases but 58.8% when a tool returned a plausible wrong value; a "check each result" prompt did not help. Supports detection outside the agent.
+- [Sentry][arx-sentry]: a layer beside the agent that detects failure, retrieves matching lessons from an external playbook and keeps a lesson only after verified recovery; the authors report gains over runtime-intervention baselines (vendor-of-the-paper numbers, not reproduced here).
+- [Transect][arx-transect]: observability tooling for 13-million-token evaluation runs; relevant as a trace-review aid, with no resume or liveness mechanism.
+
 ## Anti-patterns (severity-tiered)
 
 | Tier | Anti-pattern | Why it bites |
@@ -80,6 +119,9 @@ The core primitive is idempotency on a stable **`(workflow_id, step_id)`** key �
 |---|---|
 | [Anthropic — Building Effective Agents][anthropic-bea] | Workflows-vs-agents; the 5 composable patterns |
 | [Temporal][temporal] · [Inngest][inngest] · [Restate][restate] | Durable-execution engines |
+| [Temporal workflow execution][temporal-we] · [activity failures][temporal-af] · [DBOS architecture][dbos-arch] · [Restate durable execution][restate-de] · [Inngest execution][inngest-ex] | Engine recovery and heartbeat semantics (2026-11-18) |
+| [CC sessions][cc-sessions] · [CC CLI][cc-cli] · [Codex commands][codex-cmds] · [Gemini sessions][gem-sessions] · [OpenCode CLI][oc-cli] | Harness resume and caps (2026-11-18) |
+| [AgentTime][arx-agenttime] · [Loud/Quiet Failures][arx-quiet] · [Sentry][arx-sentry] · [Transect][arx-transect] | Long-run failure preprints (abstract pages, 2026-11-18) |
 | [LangGraph][langgraph] · [CrewAI][crewai] · [Langflow][langflow] · [Mastra][mastra] · [Burr][burr] · [Conductor (OSS)][conductor] | Workflow / orchestration frameworks (stars via `gh api`, 2026-06-27) |
 
 [anthropic-bea]: https://www.anthropic.com/research/building-effective-agents
@@ -92,3 +134,17 @@ The core primitive is idempotency on a stable **`(workflow_id, step_id)`** key �
 [mastra]: https://github.com/mastra-ai/mastra
 [burr]: https://github.com/DAGWorks-Inc/burr
 [conductor]: https://github.com/conductor-oss/conductor
+[temporal-we]: https://docs.temporal.io/workflow-execution
+[temporal-af]: https://docs.temporal.io/encyclopedia/detecting-activity-failures
+[dbos-arch]: https://docs.dbos.dev/architecture
+[restate-de]: https://docs.restate.dev/concepts/durable_execution
+[inngest-ex]: https://www.inngest.com/docs/learn/how-functions-are-executed
+[cc-sessions]: https://code.claude.com/docs/en/sessions
+[cc-cli]: https://code.claude.com/docs/en/cli-reference
+[codex-cmds]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
+[gem-sessions]: https://geminicli.com/docs/cli/session-management/
+[oc-cli]: https://opencode.ai/docs/cli/
+[arx-agenttime]: https://arxiv.org/abs/2610.09944
+[arx-quiet]: https://arxiv.org/abs/2610.10062
+[arx-sentry]: https://arxiv.org/abs/2610.02994
+[arx-transect]: https://arxiv.org/abs/2610.08364

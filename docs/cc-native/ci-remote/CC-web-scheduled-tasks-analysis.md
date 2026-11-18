@@ -1,16 +1,18 @@
 ---
 title: CC Web Scheduled Tasks — Cloud Recurring Automation
 source: https://code.claude.com/docs/en/routines
-purpose: Analysis of cloud-native scheduled tasks for recurring autonomous work without local machine dependency.
+purpose: Analysis of cloud-native scheduled tasks (formerly routines) for autonomous work without local machine dependency, covering the Schedule, API and GitHub triggers; the substrate-rubric scores cover the Schedule trigger only.
 created: 2026-03-24
-updated: 2026-10-15
-validated_links: 2026-10-15
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: available
 ---
 
 **Details:** Available (all CC Web users — Pro, Max, Team, Enterprise). Vendor marks the underlying feature as **research preview** — behavior, limits, and API surface may change.
 
-> **Note**: Anthropic renamed this feature to **Routines** (canonical page: [routines][cc-sched], H1 "Automate work with routines"). A routine now supports three trigger types — Schedule, API (HTTP POST to a per-routine `/fire` endpoint), and GitHub event (PR/release webhooks) — not only recurring schedules. This doc covers only the **Schedule-trigger** subset of Routines.
+> **Note**: Anthropic renamed this feature to **Routines** (canonical page: [routines][cc-sched], H1 "Automate work with routines"). A routine now supports three trigger types — Schedule, API (HTTP POST to a per-routine `/fire` endpoint), and GitHub event (PR/release webhooks) — not only recurring schedules. The Schedule trigger is covered first; the API and GitHub triggers and the unattended permission posture are in [API Trigger](#api-trigger), [GitHub Trigger](#github-trigger) and [Permission Posture in Unattended Runs](#permission-posture-in-unattended-runs).
+>
+> **Rename, re-checked 2026-11-18**: the live page at the same URL is now headed "Automate work with scheduled tasks" and says "scheduled tasks, formerly routines". The old name survives in the web address `claude.ai/code/routines`, the `/routines` alias, the `/fire` endpoint path, its beta header and the `<routine-fire-payload>` tag ([cc-sched][cc-sched], section "Where the name routines still appears"). This doc keeps the older name for continuity.
 >
 > **URL-slug trap, found 2026-10-15**: this doc's own title ("CC Web Scheduled Tasks") makes `https://code.claude.com/docs/en/scheduled-tasks` (no `web-` prefix) look like its canonical URL, but it currently is **not** — fetching it directly shows that URL is Anthropic's page for the **session-scoped `/loop` command and its `CronCreate`/`CronList`/`CronDelete` tools**, a different, local feature covered in [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md). (This doc's own `source:` has read `web-scheduled-tasks`, then `routines`, across its history — never bare `scheduled-tasks` — so whether that exact slug ever pointed at the cloud feature is unconfirmed; only its *current* content, re-checked today, is the finding here.) Follow the `routines` URL, not `scheduled-tasks`, for the content below.
 
@@ -81,6 +83,36 @@ Found 2026-10-15, not previously in this doc. Separately from subscription usage
 - **Delete**: removes task; past run sessions remain
 - **CLI**: `/schedule list`, `/schedule update`, `/schedule run`; CC v2.1.227+ also answers natural-language questions about run history, e.g. `/schedule why did my nightly review do nothing this morning?`, by reading a run's log for tool errors, permission denials, and the final result
 
+## API Trigger
+
+Documented 2026-11-18 ([cc-sched][cc-sched]); the feature is a research preview. An API trigger gives a task its own HTTP endpoint. A POST with the task's bearer token starts a new session and returns its URL.
+
+| Aspect | Documented behaviour |
+|---|---|
+| Setup | Web only: you cannot add the trigger or manage its token from the CLI. The page says the trigger "takes effect as soon as you generate the token"; the token is shown once |
+| Auth | One token per task, scoped to that task; `Authorization: Bearer`. Regenerate invalidates the old token; deleting it removes the trigger |
+| Request | POST to the task's `/fire` URL (`https://api.anthropic.com/v1/claude_code/routines/<id>/fire`) with header `anthropic-beta: experimental-cc-routine-2026-04-01` and `anthropic-version: 2023-06-01`; optional JSON body field `text` |
+| `text` handling | Freeform, not parsed (JSON arrives as a literal string). It is wrapped in a `<routine-fire-payload>` block that marks it untrusted data, so the saved prompt must tell Claude to act on it, or it is inert context |
+| Response | JSON with `type: "routine_fire"`, `claude_code_session_id` and `claude_code_session_url` |
+| Stability | Beta header is dated; breaking changes ship under a new header and the two previous versions keep working |
+| Scope | "available to claude.ai users only" and not part of the Claude Platform API surface |
+
+Our reading: the untrusted-data wrapper is the notable design choice for unattended use. The page says a leaked token's fire text arrives labelled as untrusted data rather than as direct instructions. Per-fire caps are in [Usage Limits](#usage-limits). Verified against the doc text only; the endpoint was not called.
+
+## GitHub Trigger
+
+Documented 2026-11-18 ([cc-sched][cc-sched]).
+
+- **Prerequisite** (as documented): the Claude GitHub App must be installed on the repository. `/web-setup` grants clone access only; it does not install the app or enable webhook delivery. From the CLI (v2.1.225+) the app must already be installed, then `/schedule` can attach a trigger to an existing task.
+- **Events**: pull request (opened, closed, assigned, labeled, synchronized and others), release (created, published, edited, deleted), issue (opened, edited, closed, reopened, labeled, assigned and others). A specific action or all actions of a category can be chosen.
+- **Filters (pull requests)**: author, title, body, base branch, head branch, labels, is draft, is merged; operators equals, contains, starts with, is one of, is not one of, matches regex. All conditions must match. Regex tests the whole field, so a substring needs `.*x.*`.
+- **Session model**: each event starts an independent session; sessions are not reused across events. For a PR event on the task's first repository, the clone starts from the PR head commit.
+- **Limits**: webhook events have per-task and per-account hourly caps; events over the cap are dropped until the window resets. Our reading: the page says schedule runs over their cap wait and API-fire actions fail, so GitHub events are the only trigger whose excess is dropped.
+
+## Permission Posture in Unattended Runs
+
+Documented 2026-11-18 ([cc-sched][cc-sched]). A run on Anthropic's cloud starts in auto mode unless auto mode is unavailable (organization setting off, or a model without support). A classifier then allows or blocks actions that would otherwise prompt. A run still stops and waits when an action matches an ask rule, or after repeated blocks reach auto mode's thresholds; the prompt appears in the run's session and waits for a person. If auto mode is unavailable the run keeps the mode it launched in. So "unattended" is not "never blocks": a stuck-on-prompt run looks like a run that went quiet, which is the case the [watchdog design](../../non-cc/frameworks/workflow-frameworks-landscape.md#watchdog-and-liveness-design) has to cover. Branch pushes default to a `claude/` prefix; branch protection is the documented control.
+
 ## Use Cases
 
 | Use Case | Example |
@@ -97,7 +129,7 @@ Found 2026-10-15, not previously in this doc. Separately from subscription usage
 
 ## Scored on the Agent Substrate Rubric
 
-Routines (the Schedule-trigger subset this doc covers), scored 2026-10-02 against the [agent substrate rubric][rubric] from the current [Routines][cc-sched] docs, re-fetched this date. This fills a long-running coverage gap plan 0009 named: no rubric row existed for scheduled tasks. Distributed reuses the evidence already scored for [cloud sessions][cloud-sessions-rubric], since every routine run executes as one.
+Routines (Schedule trigger only; the API and GitHub triggers are not scored), scored 2026-10-02 against the [agent substrate rubric][rubric] from the current [Routines][cc-sched] docs, re-fetched this date. This fills a long-running coverage gap plan 0009 named: no rubric row existed for scheduled tasks. Distributed reuses the evidence already scored for [cloud sessions][cloud-sessions-rubric], since every routine run executes as one.
 
 `subject: long-running`
 
@@ -113,6 +145,7 @@ Re-verified against the live [Routines][cc-sched] page 2026-10-15. Trigger types
 - [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md) — session-scoped `/loop` command
 - [CC-github-actions-analysis.md](CC-github-actions-analysis.md) — GH Actions as alternative scheduling
 - [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md) — authentication for web features
+- [workflow-frameworks-landscape.md](../../non-cc/frameworks/workflow-frameworks-landscape.md#checkpoint-and-resume-matrix) — checkpoint/resume matrix and watchdog design for long unattended runs
 
 ## References
 
