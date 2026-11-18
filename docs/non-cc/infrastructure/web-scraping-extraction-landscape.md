@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-11-15
+updated: 2026-11-18
 validated_links: 2026-11-09
 status: reference
 ---
@@ -140,16 +140,20 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 
 ## Search APIs
 
-| Tool | Free Tier | Pricing | Differentiator |
-|------|-----------|---------|----------------|
-| [Exa](https://exa.ai/) | 2K one-time | ~$5/1K queries | Neural/semantic search; 81% retrieval accuracy |
-| [Tavily](https://tavily.com/) | 1K/mo | Credit-based | 93% SimpleQA accuracy; acquired by Nebius |
-| [Serper](https://serper.dev/) | 2.5K | ~$50/mo | Google SERP proxy with knowledge graphs |
-| [SerpAPI](https://serpapi.com/) | Limited | $10-25/1K | Multi-engine (Google, Bing, Baidu, Yandex) |
-| [Brave Search](https://brave.com/search/api/) | 2K/mo | From $5/mo | Independent index (35B+ pages); privacy-focused |
-| [SearXNG](https://github.com/searxng/searxng) | Self-hosted | Free (AGPL-3.0) | Self-hostable metasearch; ~268 engines, no API keys |
+Prices read from each vendor's pricing page on **2026-11-18**; they change often, so re-check before budgeting.
 
-**When to use what**: Exa for semantic/RAG retrieval. Tavily for factual accuracy. Brave for privacy-conscious search.
+| Tool | Free Tier | Price per 1K queries (from the pricing page) | Differentiator |
+|------|-----------|---------|----------------|
+| [Exa](https://exa.ai/pricing) | $10 credit, resets monthly | $4 (Lite, Instant); $7 (Auto/Fast); $12-15 (Deep); results beyond 10 cost +$1 per 1K | Neural/semantic search; free credit equals about 2.5K Lite searches (our arithmetic: $10 / $4 per 1K) |
+| [Tavily](https://docs.tavily.com/documentation/api-credits) | 1K credits/mo | Basic search = 1 credit, advanced = 2; $8 per 1K credits pay-as-you-go, $5-7.50 on monthly plans | Agentic search API; Nebius announced an agreement to acquire Tavily on 2026-02-10 ([Nebius newsroom][nebius-tavily]; closing not confirmed in what we read) |
+| [Serper](https://serper.dev/) | 2.5K queries, no card | $1.00 (Starter, $50 for 50K) down to $0.30 (Ultimate, $3,750 for 12.5M) | Google SERP proxy with knowledge graphs |
+| [SerpAPI](https://serpapi.com/pricing) | 250 searches/mo | $25 (Starter, $25 for 1K), $7.25 at 100K, about $3.75 (Cloud 1M, $3,750 for 1M) | Multi-engine (Google, Bing, Baidu, Yandex) |
+| [Brave Search](https://brave.com/search/api/) | $5 credit/mo (page headline also says "up to $20") | $5 (Search plan); Answers plan $4 plus token fees | Own search index (page count not stated on the cited page; Brave's own pages give differing figures); privacy-focused |
+| [SearXNG](https://github.com/searxng/searxng) | Self-hosted | Free (AGPL-3.0) | Self-hostable metasearch; docs say "260 search engines of which 81 are enabled by default" ([SearXNG docs](https://docs.searxng.org/user/configured_engines.html), read 2026-11-18); no API keys |
+
+Notes: Serper's table lists credits per plan; we read one credit as one query (the excerpt we read did not say). Per-1K figures for SerpAPI and Serper are our division of plan price by plan quota, not figures the vendors publish.
+
+**When to use what** (a rule of thumb resting on vendor positioning, not on an independent benchmark): Exa for semantic/RAG retrieval, Tavily for agent-oriented search with cited results, Brave for privacy-conscious search. The Decision Flowchart below repeats this.
 
 Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-hosting SearXNG as a keyless search backend for agent and deep-research workflows.
 
@@ -223,6 +227,8 @@ Most tools listed above offer both proper REST/SDK APIs and MCP servers. For pro
 
 ## Anti-Bot Bypass
 
+The tool entries below are undated and were not re-checked on 2026-11-18; vendors change detection frequently. For what defenders document about AI-agent traffic, with dates, see [§ Agent Identity and Vendor Handling](#agent-identity-and-vendor-handling). Prefer identifying yourself honestly to evading detection where a site offers a signed or verified route.
+
 | Tool | Type | Targets |
 |------|------|---------|
 | [curl_cffi](https://github.com/lexiforest/curl_cffi) | OSS (MIT) | TLS/JA3 fingerprinting |
@@ -238,6 +244,52 @@ Most tools listed above offer both proper REST/SDK APIs and MCP servers. For pro
 
 > **Implementation probes.** Catalog-level findings from polyfetch's probes (the Patchright console limitation and the headed-launch observation) are summarised in this catalog; the detailed point-in-time results of the concrete fallback chain (plain `httpx` → `curl_cffi` → Patchright) stay in the consumer repo, [polyfetch-scrape][polyfetch], because they are specific to that codebase.
 
+## Agent Identity and Vendor Handling
+
+This section describes how the defending side treats automated traffic. It is a landscape, not a how-to for defeating any vendor. For the publisher's own controls see [ai-crawlers-discoverability-landscape.md](ai-crawlers-discoverability-landscape.md#publisher-side-controls-cloudflare); for the identity standards in context see [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md).
+
+### Signed requests (Web Bot Auth)
+
+- **Mechanism (documented).** Signature headers follow HTTP Message Signatures, [RFC 9421][rfc9421] (Proposed Standard, February 2024). The operator publishes an Ed25519 public key in a JWKS served at `/.well-known/http-message-signatures-directory`; each request carries `Signature-Input` (with `tag="web-bot-auth"`, `keyid`, `created`, `expires`), `Signature` and `Signature-Agent` ([Cloudflare docs][cf-wba], read 2026-11-18). The key-directory and architecture documents are IETF Internet-Drafts (`draft-meunier-http-message-signatures-directory-03` and `draft-meunier-web-bot-auth-architecture-02` as cited by that page), not RFCs. The page does not state a beta or GA status.
+- **Signed agents (announced 2025-08-28).** Cloudflare introduced "signed agents" as a classification extending its verified-bots program, naming ChatGPT agent, Goose, Browserbase, Anchor Browser and its own Browser Rendering ([blog][cf-signed-blog], Cloudflare's own statements). Its docs now say that since 2026-07-01 signed agents are treated as verified, distinguished by a Direct or Intermediary label in BotBase; requirements are honest self-identification (Web Bot Auth, published IPs with a stable user agent, or reverse DNS) and non-abusive behaviour such as following robots.txt ([docs][cf-signed-docs]).
+- **Pay per crawl** is the publisher-side payment half of the same idea; status and 2026 changes are tracked in [ai-crawlers-discoverability-landscape.md](ai-crawlers-discoverability-landscape.md#publisher-side-controls-cloudflare). At last read (2026-11-18) Cloudflare's docs page says "closed beta" while its changelog headings say "private beta".
+- **Commerce variants.** Visa's Trusted Agent Protocol also uses RFC 9421; see [agentic-payments-landscape.md](../protocols/agentic-payments-landscape.md). Akamai describes Skyfire's Know Your Agent (KYA) as complementary: Web Bot Auth proves where a request comes from, KYA who is behind it ([Akamai blog][akamai-wba]).
+
+### Vendor handling of AI agents (as of 2026-11-18)
+
+Rows are vendor statements, with exceptions marked; none is an independent test of detection quality.
+
+| Vendor | What it documents or announced | Level | Date | Source |
+|---|---|---|---|---|
+| Cloudflare | Verified bots plus signed agents via Web Bot Auth; agent policy requires self-identification and robots.txt compliance; breaches can revoke verified status | Documented | docs read 2026-11-18 | [signed agents docs][cf-signed-docs] |
+| Akamai | Web Bot Auth "already supported" in bot and abuse products; verified requests tagged as validated-bot traffic with customer-chosen action | Announced (live per post) | 2025-11-10 | [Akamai blog][akamai-wba] |
+| Akamai | Agentic security framework in Bot & Agent Control: six components (identity and human attribution, user authentication, adaptive trust analysis, edge enforcement, monetization, visibility); partners include Visa, Skyfire, Experian, TollBit; availability not stated | Announced | 2026-06-15 | [press release][akamai-fw] |
+| DataDome | AI agent identification with strength levels: high (Web Bot Auth, token verification, trusted IP lists, reverse DNS), medium (network attribution, client fingerprinting), low (server fingerprinting); four categories (crawler, assistant, autonomous agent, agentic browser); an AI Agent Trust Score (calculation not described) | Documented | docs read 2026-11-18 | [DataDome docs][datadome-id] |
+| Kasada | "AI Agent Trust": directory of recognised crawlers, assistants and agents, per-agent policy, edge enforcement; designed to support Web Bot Auth; no GA details | Announced | 2026-01-21 | [Kasada release][kasada-ait] |
+| HUMAN | AgenticTrust within HUMAN Sightline; a newsroom release on cryptographic verification of Amazon Bedrock AgentCore browser traffic | Announced; unverified (page returned 403 to our fetch, body not read; launch 2025-07-30 and AgentCore release late 2025 come from search listings) | see Level | [HUMAN newsroom][human-agentcore] |
+
+Reading across the rows (our synthesis): the documented vendors converge on identity first (signatures, IP lists, directories) and policy second (allow, challenge or block per agent). For a scraping agent the practical question shifts from "can it get through" to "does it identify itself and follow the published rules". A signed identity is an input to a vendor decision, not an entitlement: Cloudflare's own docs say verified status can be revoked.
+
+## Scrape-Quality Evidence
+
+Few independent measurements exist; most numbers are vendor-run. Treat each as a point-in-time sample on the tester's chosen targets.
+
+| Evidence | What it measured | Result (as-of) | Caveat |
+|---|---|---|---|
+| [Proxyway Web Scraping API Report 2025][proxyway] | 11 scraping APIs (incl. Firecrawl, Apify, ZenRows, Zyte) against 15 protected sites, mostly e-commerce; about 6,000 URLs per target at 2 and 10 requests/s | Published 2025-12-04, tested mainly October 2025; Zyte led overall, with Decodo, Oxylabs and ScrapingBee next; the report says all four opened targets more than 80% of the time (we did not capture Zyte's own figure); hardest targets averaged 21.88% (Shein), 36.63% (G2), 43.75% (Hyatt) at 2 req/s | Success judged by response code, page size and title, not content correctness; we did not assess the tester's funding or independence |
+| [AICC / MinerU-HTML, arXiv 2511.16397][aicc] | Main-content extraction on MainWebBench, 7,887 annotated pages | 81.8% ROUGE-N F1 vs Trafilatura 63.6% (submitted 2025-11-20) | Authors' own benchmark and model; does not test Firecrawl, Jina or Crawl4AI |
+
+Gap: we found no independent head-to-head HTML-to-Markdown quality benchmark of Firecrawl, Jina Reader and Crawl4AI (one web search, 2026-11-18). Comparisons that surfaced were vendor or competitor blog posts with undisclosed methodology and are not cited. Run your own check on your target URLs.
+
+## Legal and Terms Note
+
+Neutral orientation only, not legal advice; law differs by jurisdiction and facts. Sources are secondary law-firm and press summaries, not the court filings.
+
+- **hiQ v. LinkedIn (US, Ninth Circuit).** In April 2022 the Ninth Circuit again held, after remand in light of *Van Buren*, that scraping publicly accessible pages likely falls outside the CFAA; a November 2022 district-court ruling then found for LinkedIn on breach of contract, and a December 2022 consent judgment (court-approved 2022-12-08 per Proskauer's update) set a $500,000 judgment against hiQ, a permanent injunction and deletion of scraped data, with hiQ accepting liability on trespass to chattels and misappropriation ([filed stipulation][hiq-stip], [Proskauer][proskauer-hiq], [ZwillGen][zwillgen-hiq]); we read these via a search summary, not the full stipulation. The circuit ruling binds only the Ninth Circuit, and other claims such as contract remain open.
+- **Meta v. Bright Data (N.D. Cal., 2024-01-23).** The court read Meta's terms as covering logged-in activity only, so logged-off scraping of public data did not breach them ([Farella Braun summary][fbm-meta]). On 2024-02-26 TechCrunch reported Meta dropped its remaining claim (tortious interference) and gave up its right to appeal ([TechCrunch][tc-meta-bd]); it said Bright Data reported no settlement. We did not read the filing.
+- **Google v. SerpApi (N.D. Cal.).** Filed December 2025 under DMCA section 1201 over circumvention of Google's SearchGuard. Press reports a 2026-07-20 dismissal because section 1201 needs a copyrighted work behind the protection, with 21 days to refile a narrower claim; the report says Google plans to file an amended complaint; later status unconfirmed ([TheNextWeb][tnw-serpapi]). Reports differ on whether any part survived; check the docket.
+- **Site terms and robots.txt.** Contract claims over terms of service can survive where the CFAA does not apply (hiQ's limits); robots.txt is a voluntary convention, as [Cloudflare's managed robots.txt docs](https://developers.cloudflare.com/bots/additional-configurations/managed-robots-txt/) say. Honour both and keep personal-data rules in view.
+
 ## Decision Flowchart
 
 ```text
@@ -249,8 +301,8 @@ Need to download a known URL?
   └─ All else fails? → Managed platform (Bright Data, ScrapFly)
 
 Need to find content?
-  ├─ Semantic/RAG? → Exa
-  ├─ Factual accuracy? → Tavily
+  ├─ Semantic/RAG? → Exa (vendor positioning)
+  ├─ Factual accuracy? → Tavily (vendor positioning)
   └─ Privacy? → Brave Search API
 
 Need LLM-ready output?
@@ -269,6 +321,11 @@ Each tool links to its first-party page inline in the tables above. This catalog
 | [polyfetch-scrape CHANGELOG.md][polyfetch-changelog] | Version in which each polyfetch feature shipped (0.3.0 to 0.11.0) |
 | [polyfetch-scrape scripting cookbook][polyfetch-scripting] and [API reference][polyfetch-api] | Recipes and exact signatures |
 | Patchright README (installed 1.64.4 package metadata, 2026-11-15) | Console API disabled; `Runtime.enable` avoided |
+| [RFC 9421][rfc9421] · [Cloudflare Web Bot Auth][cf-wba] · [signed agents blog][cf-signed-blog] · [signed agents docs][cf-signed-docs] | HTTP Message Signatures; Web Bot Auth mechanism; signed agents (2025-08-28; verified merge 2026-07-01) |
+| [Akamai blog][akamai-wba] · [Akamai framework release][akamai-fw] · [DataDome docs][datadome-id] · [Kasada release][kasada-ait] · [HUMAN newsroom][human-agentcore] | Vendor agent-handling table, 2026-11-18 |
+| Pricing pages: [Exa](https://exa.ai/pricing), [Tavily](https://docs.tavily.com/documentation/api-credits), [Serper](https://serper.dev/), [SerpAPI](https://serpapi.com/pricing), [Brave](https://brave.com/search/api/) | Search API prices, read 2026-11-18 |
+| [Proxyway 2025 report][proxyway] · [AICC arXiv 2511.16397][aicc] | Scrape-quality evidence |
+| [hiQ stipulation][hiq-stip] · [Nebius newsroom][nebius-tavily] · [TechCrunch 2024-02-26][tc-meta-bd] · [Proskauer][proskauer-hiq] · [ZwillGen][zwillgen-hiq] · [Farella Braun][fbm-meta] · [TheNextWeb][tnw-serpapi] | Legal note (secondary summaries) |
 
 [polyfetch]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 [polyfetch-repo]: https://github.com/qte77/polyfetch-scrape
@@ -278,3 +335,21 @@ Each tool links to its first-party page inline in the tables above. This catalog
 [polyfetch-api]: https://github.com/qte77/polyfetch-scrape/blob/main/docs/api-reference.md
 [polyfetch-190]: https://github.com/qte77/polyfetch-scrape/issues/190
 [agent-desktop]: https://github.com/vercel-labs/agent-desktop
+[rfc9421]: https://datatracker.ietf.org/doc/html/rfc9421
+[cf-wba]: https://developers.cloudflare.com/bots/concepts/bot/verified-bots/web-bot-auth/
+[cf-signed-blog]: https://blog.cloudflare.com/signed-agents/
+[cf-signed-docs]: https://developers.cloudflare.com/bots/concepts/bot/signed-agents
+[akamai-wba]: https://www.akamai.com/blog/security/redefine-trust-web-bot-authentication
+[akamai-fw]: https://www.akamai.com/newsroom/press-release/akamai-unveils-agentic-security-framework-to-power-trusted-ai-driven-interactions-and-commerce
+[datadome-id]: https://docs.datadome.co/docs/ai-agent-identification
+[kasada-ait]: https://www.kasada.io/kasada-launches-ai-agent-trust-to-secure-agentic-commerce/
+[human-agentcore]: https://www.humansecurity.com/newsroom/human-delivers-cryptographic-verification-amazon-bedrock-agentcore-browser/
+[proxyway]: https://proxyway.com/research/web-scraping-api-report
+[aicc]: https://arxiv.org/abs/2511.16397
+[proskauer-hiq]: https://newmedialaw.proskauer.com/2022/12/08/hiq-and-linkedin-reach-proposed-settlement-in-landmark-scraping-case/
+[zwillgen-hiq]: https://www.zwillgen.com/?p=18281
+[fbm-meta]: https://www.fbm.com/technology/publications/major-decision-affects-law-of-scraping-and-online-data-collection-meta-platforms-v-bright-data/
+[tnw-serpapi]: https://thenextweb.com/news/google-serpapi-dmca-scraping-lawsuit-dismissed
+[nebius-tavily]: https://nebius.com/newsroom/nebius-announces-agreement-to-acquire-tavily-to-add-agentic-search-to-its-ai-cloud-platform
+[hiq-stip]: https://s3.documentcloud.org/documents/23429042/hiq-stip.pdf
+[tc-meta-bd]: https://techcrunch.com/2024/02/26/meta-drops-lawsuit-against-web-scraping-firm-bright-data-that-sold-millions-of-instagram-records/

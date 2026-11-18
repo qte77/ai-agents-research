@@ -3,7 +3,7 @@ title: Agent Identity, Authentication & Personhood Landscape
 purpose: Survey of how agents get identity and authorization, and how human-vs-agent is proven — the "who may act, and how is it proven" layer, distinct from CC-local runtime permissions.
 category: landscape
 created: 2026-07-08
-updated: 2026-11-14
+updated: 2026-11-18
 validated_links: 2026-10-24
 status: assess
 ---
@@ -88,11 +88,11 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
   central raw-biometric storage; Mastercard partnership. ⚠️ Per Biometric Update (Feb 2026) it has
   pivoted *messaging* away from "proof-of-personhood" while keeping the tech — a moving target.
   [docs.humanity.org][humanity].
-- **Cloudflare Web Bot Auth / signed agents** — an IETF-draft standard on **HTTP Message Signatures**
-  (RFC 9421): an operator publishes a public key at a well-known URL
+- **Cloudflare Web Bot Auth / signed agents** — built on **HTTP Message Signatures** (RFC 9421, a
+  Proposed Standard, Feb 2024); the key-directory and architecture documents are IETF Internet-Drafts: an operator publishes a public key at a well-known URL
   (e.g. `anthropic.com/.well-known/http-message-signatures-directory`); requests are signed per-origin
   and verified server-side — cryptographic proof of *which* bot, replacing spoofable UA/IP. AWS WAF
-  added support Nov 2025; OpenAI signs Operator requests this way. [blog.cloudflare.com][webbotauth].
+  added support Nov 2025; OpenAI signs Operator requests this way. [blog.cloudflare.com][webbotauth]. Crawler-side detail and a dated vendor table: [web-scraping-extraction-landscape.md § Agent Identity and Vendor Handling](../non-cc/infrastructure/web-scraping-extraction-landscape.md#agent-identity-and-vendor-handling); publisher side: [ai-crawlers-discoverability-landscape.md](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md).
 - **Visa Trusted Agent Protocol (TAP)** — Visa's version of the same idea for commerce: introduced
   2025-10-14 and "available today in the Visa Developer Center and GitHub", built on "cryptographic
   standards (RFC9421)" so merchants can tell legitimate agents from bots
