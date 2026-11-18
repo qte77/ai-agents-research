@@ -3,7 +3,7 @@ title: CC CLI Reference
 purpose: Single canonical reference for all claude CLI flags, subcommands, and constraints. Other docs cross-ref here for flag definitions.
 created: 2026-04-13
 updated: 2026-11-18
-validated_links: 2026-10-26
+validated_links: 2026-11-18
 status: adopt
 ---
 

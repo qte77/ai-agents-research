@@ -1,9 +1,10 @@
 ---
 title: CC Permissions Bypass Analysis
-source: https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/security
+source: https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/security, https://code.claude.com/docs/en/permission-modes
 purpose: Analysis of --dangerously-skip-permissions flag, permission modes, team inheritance, and safer alternatives for headless/CI execution.
 created: 2026-03-17
 updated: 2026-11-18
+validated_links: 2026-11-18
 status: research
 ---
 
@@ -149,15 +150,15 @@ Sonnet 4.5, Opus 4.5, Haiku 4.5 and Claude 3 models are unsupported. All plans; 
 
 - Sees user messages, non-read-only tool calls and CLAUDE.md content; tool results are stripped, so hostile file or web content cannot steer it directly.
 - Defaults to Claude Sonnet 5 with fallbacks; `CLAUDE_CODE_AUTO_MODE_MODEL` overrides it (v2.1.302+). In many sessions the review runs server-side inside the model request; `CLAUDE_CODE_AUTO_MODE_SERVER=0` forces Claude Code's own classifier calls ([env vars](../configuration/CC-env-vars-reference.md)).
-- No verdict (server or gateway) means deny, not run unreviewed.
+- No verdict from the server means deny, not run unreviewed.
 - Subagents: checked at start, per action, and on the final report before the parent reads it.
 - Fallback: 3 consecutive or 20 total blocks pause auto mode and resume prompting; approving the prompted action resumes it. The thresholds are not configurable. In `-p` runs without `--permission-prompt-tool`, blocked actions just do not run.
 - On entry, broad allow rules that grant arbitrary code execution (`Bash(*)`, `Bash(python*)`, `Bash(timeout *)`) are dropped and restored on exit; narrow rules such as `Bash(npm test)` stay.
 - Cost: classifier calls count toward token usage on Enterprise, direct API, Bedrock, Google Cloud, Foundry and Claude Platform on AWS accounts, and each check adds a round trip; server-side review avoids the separate calls.
 
-**Defaults (examples, per page).** Blocked: `curl | bash`, sending sensitive data to external endpoints, production deploys and migrations, force push and `git reset --hard`, `terraform destroy`, granting IAM or repo permissions, merging unapproved PRs or disabling CI checks, pushing secrets. Allowed: local file operations in the working directory, installing declared dependencies, read-only HTTP, pushing to a branch of the working repo except deploy-like names (`production`, `gh-pages`). Adjust with `autoMode.environment` and `autoMode.allow`; `claude auto-mode defaults` prints the built-in lists ([CLI reference](../configuration/CC-cli-reference.md)).
+**Defaults (examples, per page).** Blocked: `curl | bash`, sending sensitive data to external endpoints, production deploys and migrations, force push and `git reset --hard`, `terraform destroy`, granting IAM or repo permissions, merging unapproved PRs or disabling CI checks, pushing secrets. Allowed: local file operations in the working directory, installing declared dependencies, read-only HTTP, pushing to any branch of the working repo, the default branch included (for a non-default branch whose name marks a deploy or publication target, such as `production` or `gh-pages`, the classifier judges the push on its own terms). Adjust with `autoMode.environment` and `autoMode.allow`; `claude auto-mode defaults` prints the built-in lists ([CLI reference](../configuration/CC-cli-reference.md)).
 
-**Staleness note.** The Anthropic article (launch 2026-03-24, "generally available" update 2026-07-10) names only Sonnet 4.6 and Opus 4.6 and says Team first, Enterprise and API to follow; the docs page above is newer and broader (see the table). Prefer the docs page. The article's companion "auto-mode-setup" URL returned HTTP 404 on 2026-11-18, so no setup-article claims are made here.
+**Staleness note.** The Anthropic article (launch 2026-03-24, "generally available" update 2026-07-10) names only Sonnet 4.6 and Opus 4.6 and says Team first, Enterprise and API to follow; the docs page above is newer and broader (see the table). Prefer the docs page. The setup article could not be found at claude.com/resources/articles/auto-mode-setup as of 2026-11-18 (the path was given secondhand and may not be the real URL), so no setup-article claims are made here.
 
 **Code Mode interaction.** In [Code Mode](../configuration/CC-tools-inventory.md#code-mode-v21323) the classifier reviews each piece of code, not each tool call, and cannot see run-time values; background code needs auto or `bypassPermissions` mode.
 
