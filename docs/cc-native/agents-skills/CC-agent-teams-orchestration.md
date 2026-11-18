@@ -404,7 +404,7 @@ Community coverage of leaked/hidden features referenced in this section: [Techsy
 
 ## Coordinator Mode — Internal Orchestration (Unreleased)
 
-> **Re-check (2026-11-18)**: still unreleased as far as first-party sources show. The [agent teams docs][cc-teams-doc], the [env-vars reference](https://code.claude.com/docs/en/env-vars) (no `CLAUDE_CODE_COORDINATOR_MODE` entry in the alphabetical table) and the [Claude Code CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) (checked through v2.1.327; the only "coordinator" hit is v2.1.309 moving the `/claude-api` skill's Managed Agents guidance off a `coordinator` setup) show no Coordinator Mode. This is an absence in those sources on this date, not proof the code path is gone. The documented lead-and-teammates design is Agent Teams; for a script-held plan see [CC-dynamic-workflows-analysis.md](CC-dynamic-workflows-analysis.md).
+> **Re-check (2026-11-18)**: still unreleased as far as first-party sources show. The [agent teams docs][cc-teams-docs], the [env-vars reference][cc-env-vars] (no `CLAUDE_CODE_COORDINATOR_MODE` entry in the alphabetical table) and the [Claude Code CHANGELOG][cc-changelog] (checked through v2.1.327; the only "coordinator" hit is v2.1.309 moving the `/claude-api` skill's Managed Agents guidance off a `coordinator` setup) show no Coordinator Mode. This is an absence in those sources on this date, not proof the code path is gone. The documented lead-and-teammates design is Agent Teams; for a script-held plan see [CC-dynamic-workflows-analysis.md](CC-dynamic-workflows-analysis.md).
 
 Multi-agent orchestration mode activated via `CLAUDE_CODE_COORDINATOR_MODE=1`. Transforms CC from a single agent into a coordinator that spawns and manages multiple worker agents in parallel. The coordinator itself has **no filesystem/shell tools** — it is a pure management layer that relies on UDS Inbox for all worker communication.
 
@@ -452,10 +452,14 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 | [Agent Teams Guide][claudefast] | Community | Multi-session orchestration guide |
 | [Porting to OpenCode][dev-opencode] | Uenyioha | Architecture comparison |
 | [C Compiler with 16 Agents][compiler-case] | Anthropic/Register | 2,000 sessions, 100k-line compiler |
+| [Cross-session messaging docs][cc-xsession-doc] | Anthropic | Inbox socket, `ListAgents` / `SendMessage` (re-check 2026-11-18) |
+| [Environment variables reference][cc-env-vars] | Anthropic | No Coordinator Mode variable (re-check 2026-11-18) |
+| [Claude Code CHANGELOG][cc-changelog] | Anthropic | Checked through v2.1.327 (re-check 2026-11-18) |
 
 [cc-teams-docs]: https://code.claude.com/docs/en/agent-teams
-[cc-teams-doc]: https://code.claude.com/docs/en/agent-teams
 [cc-xsession-doc]: https://code.claude.com/docs/en/cross-session-messaging
+[cc-env-vars]: https://code.claude.com/docs/en/env-vars
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [anthropic-teams]: https://www.anthropic.com/engineering/building-c-compiler
 [addy-swarms]: https://addyosmani.com/blog/claude-code-agent-teams/
 [medium-setup]: https://darasoba.medium.com/how-to-set-up-and-use-claude-code-agent-teams-and-actually-get-great-results-9a34f8648f6d

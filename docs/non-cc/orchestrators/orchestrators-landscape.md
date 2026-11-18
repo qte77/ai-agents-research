@@ -29,7 +29,7 @@ literature says goes wrong.
 | [DeerFlow][deerflow] | Centralised: a primary agent spawns sub-agents dynamically | Persistent memory plus sandboxed execution (local, Docker, Kubernetes); skills as Markdown units | Not described in the analysis |
 | [Omnigent][omnigent] | Meta-harness above agent frameworks (Claude Code, Codex, Pi, custom YAML agents) | Server holds session history and policies; models can be swapped mid-session while history and tool state are preserved | Contextual policies, spend caps and "risk-based escalation" to human review (announced, alpha) |
 | [QM][qm] | Multi-tenant: each person or shared room is a scope with its own memory, files and sandbox; harness-agnostic loop | PostgreSQL for sessions, memory and work queue; durable per-scope sandbox; crons, watches and webhooks | Org-level admin governance of harnesses, models and skill promotion |
-| [Raven][raven] | Centralised: a Host Agent decomposes goals and coordinates built-in and third-party (ACP, CLI, API) agents | EverOS memory and a host archive across sessions; benchmark-gated offline Evolver changes harness config | Not described in the analysis |
+| [Raven][raven] | Centralised: a Host Agent decomposes goals and coordinates built-in and third-party (ACP, CLI, API) agents | EverOS memory and "a host archive" for experience preservation (per the paper abstract); benchmark-gated offline Evolver changes harness config | Not described in the analysis |
 
 Reading across the rows:
 
@@ -59,9 +59,9 @@ closest analogue documented in this corpus, not a feature-for-feature match.
 | Agent teams (experimental, off by default) | A lead plus peer teammates with a shared task list and mailboxes; no nested teams, one team per session ([agent teams][cc-teams]) | No direct analogue among the six; the peer-messaging case is rare here |
 | Dynamic workflows | A runtime-executed JavaScript script that orchestrates many subagents; intermediate results live in script variables ([workflows analysis][cc-workflows]) | Durable-execution and workflow engines in the [workflow frameworks landscape][workflows-landscape] |
 | Cross-session messaging | `ListAgents` / `SendMessage` between your independent sessions, with accept/hold/refuse inbound controls ([analysis][cc-xsession]) | Omnigent's shared sessions with comment and steering; QM's Slack/web shared rooms |
-| Agent view / background sessions | Dispatch and monitor sessions in the background (`claude agents`, research preview) | Air and devteam task boards over parallel agents |
+| Agent view / background sessions | Dispatch and monitor sessions in the background (`claude agents`, research preview; [Run agents in parallel][cc-agents-doc]) | Air and devteam task boards over parallel agents |
 | Worktree isolation | A separate git checkout per session or subagent | Air and devteam per-task worktrees (the same mechanism) |
-| Scheduled and background automation | Cloud scheduled tasks and background shell commands | QM crons, watches and webhooks; Raven's Proactivity component |
+| Scheduled and background automation | Cloud scheduled tasks and background shell commands ([scheduled tasks analysis][cc-sched]) | QM crons, watches and webhooks; Raven's Proactivity component |
 | `claude -p` recursive spawning | Fresh-context child sessions from a harness ([spawning patterns][cc-spawn]) | Omnigent running Claude Code under a meta-harness; Raven backends |
 
 Source for the Claude Code column: [Run agents in parallel][cc-agents-doc] (documents five approaches: subagents,
@@ -72,26 +72,28 @@ supporting tools), checked 2026-11-18.
 
 What follows is evidence from papers and the corpus, with each source's own scope noted.
 
-- **The earliest large annotated study found structured, repeatable failure modes.** The
+- **A large annotated study names 14 failure modes.** The
   [MAST study][mast] (Cemri et al., first submitted 2025-03-17, v3 2025-10-26) reports 1600+ annotated traces
   across 7 multi-agent frameworks, 14 failure modes in 3 categories, annotator agreement kappa = 0.88. This
   corpus previously held it only as a reading-list entry in the [archive][further-reading]; the abstract gives the
   counts, not a ranking, so no per-category share is claimed here.
 - **Failures cluster by source.** [Why Agentic Workflows Fail][taxonomy-2610] (Li, Bahsoon, Chen, 2026-10-12)
-  builds a stage-by-capability matrix and reports literature-derived failures clustering around planning and
-  reasoning, GitHub-issue-derived failures around execution, tool use and infrastructure; its conclusion is
+  builds a stage-by-capability matrix and reports literature-derived failures emphasising planning, reasoning,
+  learning, perception and knowledge, GitHub-issue-derived failures concentrating on execution, actuation, tools,
+  APIs and infrastructure, with iterative execution and actuation the dominant hotspot; its conclusion is
   that reliability is a systems problem, not only a model-output problem. The abstract reports no counts.
 - **A named coordinator did not help in one controlled measurement.** [When Agents Coordinate][coord-2608]
-  (Destefanis and Aste, 2026-08-17) analysed 1,902 coding-agent runs as temporal networks: direct messaging grew
-  close to quadratically with team size, shared files could replace repeated messaging (about 42% fewer
+  (Destefanis and Aste, 2026-08-17) analysed 1,902 coding-agent runs as temporal networks: direct messaging at first
+  grew close to quadratically with team size (much of it an early round of introductions) and levelled off in the
+  largest teams as agents shifted to broadcast, shared files could replace repeated messaging (about 42% fewer
   output tokens at eight agents on message-heavy work), and naming one agent coordinator created no hub and no
   reliable gain in success. The same abstract reports agents seeking out hidden grading files in four fifths of
-  244 sealed-environment follow-up runs. This is one study on coding tasks; it speaks to "assign a coordinator"
+  244 follow-up runs in a sealed environment with placeholder files. This is one study on coding tasks; it speaks to "assign a coordinator"
   as a prompt, not to engineered lead designs.
 - **Delegation costs more and helps unevenly.** [MS-Eval][ms-eval] (2026-10-16) tests main-agent delegation with
   sub-agent execution over MCP-heavy scenarios on eight frontier models: specialised sub-agent roles worked best
-  among the variants, delegation raised cost, and benefit depended on the model (open-source models tended to
-  gain; closed-source models saw higher cost and worse performance). Redundant delegation added cost with no
+  among the variants, delegation raised cost, and benefit depended on the model (most open-source models
+  gained in performance and efficiency; closed-source models saw higher cost and degraded performance). Redundant delegation added cost with no
   benefit. The abstract gives no numbers.
 - **Where to put the extra agents.** [Scaling Inference-Time Compute with Teams of Coding Agents][teams-2610]
   (Samway et al., 2026-10-12, ProgramBench) reports teams costing roughly 3 to 7 times a solo agent, planning
@@ -141,6 +143,7 @@ What follows is evidence from papers and the corpus, with each source's own scop
 [cc-workflows]: ../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md
 [cc-spawn]: ../../cc-native/agents-skills/CC-recursive-spawning-patterns.md
 [cc-xsession]: ../../cc-native/agents-skills/CC-cross-session-messaging-analysis.md
+[cc-sched]: ../../cc-native/ci-remote/CC-web-scheduled-tasks-analysis.md
 [cc-agents-doc]: https://code.claude.com/docs/en/agents
 [cc-teams-doc]: https://code.claude.com/docs/en/agent-teams
 [mast]: https://arxiv.org/abs/2503.13657
