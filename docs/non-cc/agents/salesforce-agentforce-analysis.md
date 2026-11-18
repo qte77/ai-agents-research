@@ -1,21 +1,28 @@
 ---
 title: Salesforce Agentforce 360 Analysis — Claude on Bedrock, Agentforce Registry, Agent Script, Pricing
-purpose: First-party fact-check of Salesforce Agentforce 360 (platform scope, Claude via Amazon Bedrock inside the Salesforce trust boundary, Agentforce Registry / MuleSoft Agent Fabric, Agent Script / Agentforce DX, Flex Credits pricing, EU Operating Zone, data-masking behavior for agents) against Salesforce's own documentation, press releases, and rate card.
+purpose: First-party fact-check of Salesforce Agentforce 360 (platform scope, Claude via Amazon Bedrock inside the Salesforce trust boundary, Agentforce Registry / MuleSoft Agent Fabric, Agent Script / Agentforce DX, Flex Credits pricing, EU Operating Zone, data-masking behavior for agents; the 2026-11-17 Copilotforce announcement and how Microsoft's Salesforce connections differ; AgentExchange, Einstein naming lineage, role products, licences and roles) against Salesforce's own documentation, press releases, and rate card.
 created: 2026-11-12
-updated: 2026-11-12
-validated_links: 2026-11-12
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: assess
 ---
 
 **Details:** Salesforce ships Agentforce 360 as a family of separately versioned pieces — the
 Agentforce 360 Platform, the new Agentforce Builder (Canvas/Script views), Agent Script, Data 360,
 Headless 360, the Agentforce Registry, and the MuleSoft-branded Agent Fabric — plus "Claudeforce," a
-2026-08-26 partnership layer that is Anthropic-branded but not a Salesforce product name of its own.
+2026-08-26 partnership layer named on Salesforce's own press release and not a product SKU of its own, and "Copilotforce," the 2026-11-17 Microsoft and Salesforce announcement (announcement-level evidence only).
 No single version string or GA date applies to "Agentforce 360" as a whole; each piece below carries
 its own first-party date and status.
 
 ## TL;DR
 
+- **Einstein to Agentforce has two unreconciled first-party rename dates**: Salesforce's 2024-09-12 launch
+  announcement lists "Agentforce (formerly Einstein Copilot)", while its AI-copilot FAQ says "renamed to
+  Agentforce as of January 2025" [sf-agentforce-launch] [sf-ai-copilot]. See
+  [Naming lineage](#naming-lineage-agentexchange-role-products-and-agent-surfaces).
+- **Copilotforce (2026-11-17) is announcement-only here.** Two launch pages (Salesforce's and Microsoft's) state
+  beta/pilot/GA tiers per piece; no Salesforce product documentation for the plugin could be fetched, and pricing is
+  not stated. See [Copilotforce](#copilotforce-salesforce-inside-microsoft-copilot-announced-2026-11-17).
 - **Agentforce 360 reached general availability 2025-10-13**: "Agentforce 360 is available globally
   today, with continued innovation arriving in pilot and beta over the coming months"
   [sf-360-ga]. Individual components (Agentforce Builder, Agent Script, Agentforce Vibes, Data 360)
@@ -77,8 +84,10 @@ passage. Covers: Agentforce 360 and its component products; Claude's placement i
 trust boundary via Amazon Bedrock and the Claudeforce partnership; the Agentforce Registry (MCP
 server registration, risk scoring) and the separately-branded MuleSoft Agent Fabric; Agent Script and
 Agentforce DX as the pro-code developer surface; the Flex Credits rate card; the Hyperforce EU
-Operating Zone; data-masking behavior for agent actions; and the Agent Development Lifecycle best
-practices.
+Operating Zone; data-masking behavior for agent actions; the Agent Development Lifecycle best
+practices; and, added 2026-11-18, the Copilotforce announcement and a table separating it from
+Microsoft's own Salesforce connections, plus AgentExchange, the Einstein naming lineage, role products and
+licences and roles.
 
 **Explicitly out of scope / not independently re-verified here:** Koa (the CRM reasoning model),
 long-horizon agents/"Hunter", Agent Optimizer, Superagent, AI Skills, third-party orchestration, and
@@ -167,6 +176,122 @@ Agent Script recipe documentation: "The reasoning engine is limited: The Atlas r
 constrained to Salesforce-managed models. However, custom actions using prompt templates, Apex, or
 the Models API can reference" other configured models [atlas-model-config] — bring-your-own-LLM is
 documented as available for custom actions/prompts, not for the reasoning engine itself.
+
+## Copilotforce: Salesforce inside Microsoft Copilot (announced 2026-11-17)
+
+Copilotforce is the Microsoft-side mirror of Claudeforce: a Microsoft and Salesforce partnership
+announced at Microsoft Ignite on 2026-11-17 that brings Salesforce context and actions into Microsoft
+Copilot, Teams and Fabric [copilotforce-sf] [copilotforce-ms]. **Evidence level: announcement only.**
+Both pages are launch press material; the plugin's own Salesforce Help article and the Data 360
+connector guide could not be fetched in this pass (JS shell and HTTP 403), so no behavior below is
+confirmed from product documentation. Availability, as the two pages state it:
+
+| Piece | Stated status (2026-11-17) | Notes |
+|---|---|---|
+| Salesforce in Microsoft Copilot (plugin) | Public preview (beta) [copilotforce-sf] [copilotforce-ms] | Microsoft: starts 2026-11-17, "38+" prebuilt sales skills [copilotforce-ms]; Salesforce lists it via AgentExchange and the Microsoft Copilot plugin directory [copilotforce-sf] |
+| Sales Cloud in Teams | Pilot [copilotforce-sf] [copilotforce-ms] | Microsoft adds an open beta planned "later this year" [copilotforce-ms]; Salesforce's page gives no beta date |
+| Data federation (OneLake into Data 360) | Generally available [copilotforce-sf] [copilotforce-ms] | Fabric data is queried in Data 360 without moving it out of Fabric |
+| Data sharing (Data 360 into OneLake) | Public preview [copilotforce-sf] [copilotforce-ms] | Curated Data 360 context lands in OneLake without duplicate datasets |
+
+- **What it does.** Sellers get prebuilt skills (Salesforce's page names meeting prep, deal-health
+  analysis and pipeline review; Microsoft's lists Pipeline Review, Close Planning, Deal Review,
+  Customer Health, Renewal Radar, Call Follow-Up) in Copilot, combined with Microsoft's Work IQ layer
+  (Teams meetings, Outlook mail, SharePoint/OneDrive documents) [copilotforce-sf] [copilotforce-ms].
+  The Teams app shows pipeline and quota progress and deal notifications, and uses adaptive cards for
+  updating supported opportunity fields [copilotforce-sf]. Salesforce names Agentforce Coworker as the
+  piece that lets sellers act on Teams insights with updates syncing back [copilotforce-sf].
+- **"AIforce" is a Salesforce-only term.** Salesforce's page calls AIforce the interface layer that
+  brings Salesforce capabilities into external AI environments and powers the Copilot plugin
+  [copilotforce-sf]; Microsoft's page does not use the name. What it denotes technically is not
+  defined on either page.
+- **Protocols: the two pages disagree by omission.** Microsoft states that sellers get
+  "authenticated Salesforce MCP access" to retrieve customer information and take supported actions
+  [copilotforce-ms]; Salesforce's page does not mention MCP. Neither mentions A2A. The MCP statement
+  is single-source among the announcements; a separate Microsoft Learn page (next section) documents a
+  preview Salesforce connector on an MCP server it calls "beta" and describes as "part of Salesforce Headless 360"
+  [ms-sf-federated] (see [Headless 360](#products-and-timeline-what-agentforce-360-comprises)); it never
+  mentions Copilotforce, so tying that connector to the Copilotforce plugin is our inference.
+- **Identity and governance (announced).** Both pages: authenticated access under existing Salesforce
+  permissions, explicit user confirmation for CRM writeback that respects existing validation rules, and
+  Microsoft's own compliance controls on communications and documents [copilotforce-sf] [copilotforce-ms].
+  Salesforce's page alone names "sharing rules" and "audit trails" [copilotforce-sf]; Microsoft's says records
+  stay "governed and auditable" without naming either [copilotforce-ms]. Salesforce's page also states the
+  plugin is "Available in our AgentExchange and the Microsoft Copilot plugin directory" [copilotforce-sf].
+  Neither page says whether data masking (see
+  [Data Masking](#data-masking-and-the-einstein-trust-layer-for-agents)) or the Einstein Trust Layer applies
+  to this path, and neither makes a trust-boundary statement like the Bedrock one for Claude (where Salesforce
+  data surfaced in Copilot is processed is unstated).
+- **Pricing and prerequisites: not stated.** Both pages say regional availability and customer access
+  are governed by customer agreements [copilotforce-sf] [copilotforce-ms]; only Salesforce's adds that
+  pricing and packaging are subject to change [copilotforce-sf], and Microsoft's is silent on pricing.
+  No license, edition or credit consumption is given; whether plugin use consumes Flex Credits is unknown.
+- **Customer.** Accenture is design and implementation partner and "customer zero" [copilotforce-sf] [copilotforce-ms];
+  both pages say Accenture scaled Copilot to "more than 740,000" people; Salesforce's says "55,000 active users" and Microsoft's "55,000 users" [copilotforce-sf] [copilotforce-ms]; these are Accenture's own figures.
+
+**Reading across (our reading, not stated by either vendor).** Copilotforce looks like the Microsoft-side
+counterpart of Claudeforce's "Salesforce in Claude" plugin (37 prebuilt skills, pilot at 2026-08-26 and
+beta by 2026-09-15 [claudeforce] [claude-in-claude]): in both, Salesforce skills run inside another
+vendor's assistant. Salesforce stated the same preview/beta tier for both at announcement, but only the
+Claude beta is independently confirmed shipped (by Anthropic's own page); the Copilot plugin's beta rests
+on the two announcement pages alone (the Microsoft Learn connector in the next section is documented, but
+no page ties it to Copilotforce by name).
+
+## Salesforce CRM vs. Copilotforce vs. Microsoft's own Salesforce connections
+
+Several different things get called "Salesforce in Microsoft." As of 2026-11-18, from Microsoft Learn and the
+Copilotforce pages; status is each page's own label, not a verified GA date.
+
+| Item | Built by / runs where | Licence needed (Microsoft side / Salesforce side) | Status as labelled | Source |
+|---|---|---|---|---|
+| Salesforce CRM itself (Sales and Service as system of record; naming in [Role products](#naming-lineage-agentexchange-role-products-and-agent-surfaces)) | Salesforce; Salesforce platform | None / Salesforce edition and user licences | Product, not a connector | [sf-sales-guide] |
+| Sales agent in Microsoft 365 Copilot, Salesforce as CRM | Microsoft; inside Microsoft 365 Copilot; must be connected to a CRM | Microsoft 365 Copilot licence for Graph-grounded data, plus access to Dynamics 365 Sales or Salesforce / Salesforce admins need Modify All Data or Manage Data Integrations on their profile; Sales agent privileges and a security role in the `msdyn_viva` environment | No GA/preview label for the agent; semantic model and business skills marked preview | [ms-sales-agent] [ms-sales-privileges] |
+| Salesforce CRM connector (synced Microsoft 365 Copilot connector) | Microsoft; indexes Salesforce records into Microsoft 365 for Copilot and Search | Overview names no Microsoft licence / System Administrator account with API access and permission to create an OAuth 2.0 external client app; honours record sharing, but not field-level security if that option is enabled | No status label; overview page updated 2026-09-22 | [ms-sf-crm-connector] [ms-sf-crm-admin-setup] |
+| Salesforce connector (federated) | Microsoft and Salesforce "jointly maintain"; live data via an MCP server the Learn page calls beta and "part of Salesforce Headless 360" (relation to the GA Hosted MCP Servers is not stated); Copilot Chat and Copilot Cowork | Microsoft 365 Copilot access / supported Salesforce edition with the MCP server enabled, Salesforce licences, external client app; each user signs in as themselves | Public preview, Salesforce Beta Services Agreement; GA "later" (Learn page dated 2026-11-16) | [ms-sf-federated] |
+| Power Platform Salesforce connector (Copilot Studio, Power Apps, Power Automate, Logic Apps) | Microsoft is publisher; calls Salesforce APIs at runtime | "Premium" class in Copilot Studio, Power Apps, Power Automate; "Standard" in Logic Apps / Salesforce account with API access (no trial orgs); Microsoft Entra ID SSO is one of the sign-in options | No preview label; Learn page updated 2026-09-22 | [ms-sf-pp] |
+| Copilotforce: Salesforce in Microsoft Copilot plugin, Sales Cloud in Teams | Salesforce-built plugin and skills; inside Microsoft Copilot and Teams | Not stated | Announced 2026-11-17: preview / pilot | [copilotforce-sf] [copilotforce-ms] |
+| Dynamics 365 Sales (contrast only) | Microsoft's own CRM; the Sales agent's other supported CRM | Dynamics 365 Sales Enterprise or Premium gives CRM-only Sales agent data without a Copilot licence | n/a | [ms-sales-agent] |
+
+**What this does not settle.** Whether the Copilotforce plugin and the federated connector are the same
+artifact: the Learn page names a jointly maintained connector with Salesforce-built skills, the
+announcement a Salesforce-built plugin with 38+ skills, and neither cites the other. A Copilot Studio
+"Salesforce knowledge source" and Salesforce's older Microsoft integrations (for example a Copilot for Sales
+deployment guide for Salesforce CRM customers) surfaced in search only; they were not fetched and are left
+out of the table rather than described from snippets.
+
+## Naming lineage, AgentExchange, role products and agent surfaces
+
+- **Einstein to Agentforce.** Salesforce's 2024-04-25 release states that "Einstein Copilot Sales actions,
+  Service actions, and Copilot Analytics are generally available today" [sf-ec-ga]. Its 2024-09-12 Agentforce
+  announcement lists "Agentforce (formerly Einstein Copilot)" and says Einstein Copilot "has been upgraded"
+  to an agent [sf-agentforce-launch]. Salesforce's assistant page is titled "Agentforce Assistant (Formerly
+  Einstein Copilot)" with an editor's note that the assistant "has been upgraded to Agentforce"
+  [sf-assistant], while Salesforce's AI-copilot FAQ says the tool was "renamed to Agentforce as of January
+  2025" [sf-ai-copilot]. So two first-party dates exist for the rename (2024-09-12 launch announcement vs.
+  January 2025 FAQ); they are not reconciled on either page. "Einstein" still names the Einstein Trust Layer,
+  Einstein 1 Studio, Einstein 1 Editions and Einstein add-ons [sf-assistant], and "Einstein Requests" in the
+  rate card (see [Pricing](#pricing-flex-credits-rate-card-as-of-2026-11-03)). The Einstein brand's own start
+  date and the Agentforce Assistant rename date were not found on a fetched page.
+- **AgentExchange** is Salesforce's combined marketplace: its Help article (2026-06-17) says it combines
+  AppExchange, Slack Marketplace and the Agentforce Ecosystem, with 13,000+ solutions
+  [sf-agentexchange]. It began as "the trusted marketplace and community for Agentforce," launched 2025-03-04 with more than 200
+  partners [sf-agentexchange-pr]. It is a distribution channel, not a runtime; Copilotforce's plugin is listed there
+  [copilotforce-sf]. No GA/beta label applies.
+- **Role products (names as the pages state them).** Salesforce's Sales Cloud guide says "in October 2025,
+  Salesforce renamed Sales Cloud to Agentforce Sales" in its FAQ, while its body text gives 2024; the page
+  contradicts itself, and it describes agents that handle tasks such as prospecting [sf-sales-guide].
+  Agentforce Service: Salesforce's Service Cloud page does not use that name and lists "Agentforce for
+  Service" inside its top pricing tier [sf-service-cloud]; the "successor to Service Cloud" description
+  seen in search was not confirmed on a fetched page and is dropped. Agentforce Contact Center was stated
+  generally available on 2026-03-10 "as an add-on to all Agentforce Service customers in the U.S. and
+  Canada" [sf-contact-center].
+- **Surfaces.** Slack and Tableau: Salesforce's Slack AI page (undated; its labels date from late 2025)
+  lists Agentforce Tableau in Slack as "Available Today", Agentforce IT and HR Service agents "To Be Released
+  Soon" (IT October 2025, HR November 2025) and Slackbot in pilot with general availability planned for
+  January 2026 [sf-slack-ai]; those labels are stale relative to 2026-11-18, so current status is
+  unconfirmed. Claude's Slackbot role is under Claudeforce above. Informatica: acquisition stated completed on 2025-11-18 [sf-informatica-close]; a 2025-12-09 article says its catalog, MDM and lineage products feed
+  Data 360, "available today" with no GA label [sf-informatica]. Heroku: AppLink exposes Heroku apps as
+  Salesforce API services and generates Agentforce agent actions; the page (updated 2026-06-04) gives no GA
+  status for AppLink [heroku-applink].
 
 ## Agentforce Registry and MuleSoft Agent Fabric
 
@@ -335,6 +460,20 @@ it does not state separate included-credit figures for other editions. Earlier r
 differing historical figures (1M for an "Agentforce 1" edition, 2.5M on a regional page) — **neither
 was independently re-verified at source in this pass**; treat them as unconfirmed.
 
+## Licences and roles for Agentforce agents
+
+The role, permission-set, permission-set-licence and agent-user detail for building, running and governing
+agents lives on `help.salesforce.com` pages that rendered only as a loading shell to both WebFetch and
+polyfetch in this pass, so **none of it is stated here**: search-result summaries are not sources. Not found
+on any fetched page: SSO/IdP federation for agent identity. What is documented: per-user licence list prices
+are under [Current list prices](#pricing-flex-credits-rate-card-as-of-2026-11-03) and agent credits on the
+rate card in the same section (not restated here); MCP server governance is in
+[Agentforce Registry](#agentforce-registry-and-mulesoft-agent-fabric); the Microsoft-side licences and
+prerequisites for Salesforce connections are in the
+[comparison table](#salesforce-crm-vs-copilotforce-vs-microsofts-own-salesforce-connections), including Entra
+ID SSO on the Power Platform connector [ms-sf-pp]. Re-fetch the Setup and Help articles for agent users and
+permission sets in a rendered session before adding detail.
+
 ## EU Operating Zone (Hyperforce)
 
 The Hyperforce EU Operating Zone is a paid, separately licensed add-on, now branded on its own FAQ
@@ -436,11 +575,12 @@ Dated milestones independently fetched and quoted in this pass:
 | 2025-10-14 | Anthropic/Salesforce regulated-industries expansion; "first LLM provider fully integrated within the Salesforce trust boundary" | [sf-anthropic-1014] |
 | 2026-04-15 | Headless 360 announced (60+ MCP tools, 30+ coding skills) | [sf-headless360] |
 | 2026-07-13 (week of) | New agents can only be created in the new Agentforce Builder; legacy agents keep running | [builder-migration] |
-| 2026-08-26 | Claudeforce: Claude as Atlas reasoning model, default for Vibes/Coworker/Slack, via Bedrock inside the trust boundary; "Salesforce in Claude" plugin (37 skills) pilot | [claudeforce] |
 | 2026-08-18 | Flex Credits Rate Card, an earlier version this doc previously cited, "Updated as of August 18, 2026" | [rate-card-aug] |
+| 2026-08-26 | Claudeforce: Claude as Atlas reasoning model, default for Vibes/Coworker/Slack, via Bedrock inside the trust boundary; "Salesforce in Claude" plugin (37 skills) pilot | [claudeforce] |
 | 2026-09-15 | Anthropic's own page confirms "Salesforce in Claude" shipped in beta "on all paid Claude plans" | [claude-in-claude] |
 | 2026-10-13 | Winter '27 (264) release post; MCP Risk Score in Security Center; "all features are GA unless otherwise noted" | [winter27-blog] |
 | 2026-11-03 | Flex Credits Rate Card, the version cited in this doc, "Updated as of November 3, 2026" | [rate-card] |
+| 2026-11-17 | Copilotforce announced (announced tiers: Salesforce in Microsoft Copilot beta, Sales Cloud in Teams pilot, OneLake federation GA) | [copilotforce-sf] [copilotforce-ms] |
 
 **Earlier milestones carried from prior secondary research notes, not independently re-fetched in
 this pass** — presented for orientation only, each unconfirmed at first-party source here: Agentforce
@@ -461,6 +601,7 @@ four as background context, not as verified facts of this analysis.
 | MCP Risk Score (Security Center) | Winter '27 (264) release post, 2026-10-13 [winter27-blog] | Stated GA per the release's blanket "GA unless otherwise noted" policy [winter27-blog]; not individually re-checked for an exception |
 | Claude via Amazon Bedrock inside the Salesforce Trust Boundary | 2025-10-14 [sf-anthropic-1014] | Mixed by sub-scope, on a single page, directly fetched and re-checked: "Agentforce powered by Anthropic is available today for select customers" and "Claude and Slack bi-directional integrations are available today" [sf-anthropic-1014] — but "the new collaboration on regulated industry solutions and the Agentforce 360 integration for Claude are currently under development, with more details on availability to be shared in the coming months" [sf-anthropic-1014]. One announcement, two sub-scopes at different maturity — not two disagreeing copies, as an earlier draft of this doc framed it |
 | Claudeforce / "Salesforce in Claude" (37 prebuilt skills) | 2026-08-26 [claudeforce] | Pilot customers at announcement; "expects to launch in open beta in September 2026" [claudeforce] — confirmed shipped on schedule by Anthropic's own 2026-09-15 page: "Today we are releasing Salesforce in Claude in beta," "available in beta on all paid Claude plans" [claude-in-claude] |
+| Copilotforce (Salesforce in Microsoft Copilot, Sales Cloud in Teams, OneLake federation/sharing) | 2026-11-17 [copilotforce-sf] [copilotforce-ms] | Per both announcements: plugin public preview, Teams pilot (open beta "later this year" per Microsoft only), federation GA, sharing public preview; announcement-level only, no product docs fetched (see [Copilotforce](#copilotforce-salesforce-inside-microsoft-copilot-announced-2026-11-17)) |
 | Data masking disabled for agent actions | Standing documented behavior, traced to "last year" (2024) by a 2025-06-10 post [masking-blog] | Current and documented [masking-agents] [masking-blog] — not a conflict once the agent-action vs. direct-template scope is applied |
 | Direct A2A protocol support on Agentforce Agents | n/a | **Contradicted across Salesforce's own documentation.** The agentic-patterns recipe ("In the absence of direct A2A support on Agentforce Agents" [agentic-patterns]) and MuleSoft's own A2A-bridge doc ("aren't A2A-compliant on their own" [a2a-bridge]) agree there is no native support; Salesforce's own Agentforce interoperability guide calls "Agentforce A2A Outbound... the native way for Agentforce agents to collaborate directly with a third party agent" and describes a native Inbound path too [interop-guide]. None of the three pages carries a date or status label — unresolved, not settled |
 | Flex Credits vs. Conversations combinability | n/a | Settled: "No. Flex Credits and Conversations will not be supported in the same org" [agentforce-pricing] — restored after an earlier draft of this doc dropped it as unverified |
@@ -495,6 +636,15 @@ four as background context, not as verified facts of this analysis.
   way" and describes a native Inbound path too. None of the three pages carries a date or status
   label. Left as an open contradiction, not resolved either way in this pass.
 
+- **Einstein brand start and rename dates** — two first-party rename dates conflict; see
+  [Naming lineage](#naming-lineage-agentexchange-role-products-and-agent-surfaces).
+- **Roles, permission sets, permission-set licences and SSO/IdP for agents** — not documented on any page
+  we could fetch; see [Licences and roles](#licences-and-roles-for-agentforce-agents).
+- **Copilotforce plugin vs. the federated connector** — whether they are the same artifact is not stated;
+  see [the comparison table](#salesforce-crm-vs-copilotforce-vs-microsofts-own-salesforce-connections).
+- **Copilotforce data masking / Trust Layer applicability and where Salesforce data is processed** — neither
+  announcement says; see [Copilotforce](#copilotforce-salesforce-inside-microsoft-copilot-announced-2026-11-17).
+
 ## Cross-References
 
 - [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md) — the
@@ -513,7 +663,9 @@ four as background context, not as verified facts of this analysis.
   vendor-specific contractual postures (Salesforce's single Bedrock-based trust boundary here vs.
   Microsoft's three different subprocessor/Foundry postures there), and both apply the same
   "documented silence is not a stated exclusion" caveat to a residency question (EU Operating Zone
-  here, the EU Data Boundary there).
+  here, the EU Data Boundary there). Copilotforce and Microsoft's own Salesforce connectors are placed in the
+  [Salesforce CRM vs. Copilotforce](#salesforce-crm-vs-copilotforce-vs-microsofts-own-salesforce-connections) table; the Microsoft-side
+  agent stack is in its [Microsoft agent stack](microsoft-365-copilot-analysis.md#microsoft-agent-stack-2026-11-18) section.
 
 ## Sources
 
@@ -522,6 +674,18 @@ four as background context, not as verified facts of this analysis.
 | [Agentforce 360 GA announcement][sf-360-ga] | 2025-10-13 GA statement; Agentforce Builder, Agent Script, Vibes, Data 360 descriptions |
 | [Anthropic/Salesforce regulated-industries announcement][sf-anthropic-1014] | 2025-10-14; "first LLM provider fully integrated within the Salesforce trust boundary" |
 | [Claudeforce announcement][claudeforce] | 2026-08-26; Claude's roles across Atlas, Vibes, Coworker, Agent Builder, Slack; "Salesforce in Claude" plugin |
+| [Sales agent setup (Microsoft Learn)][ms-sales-agent] | Sales agent in Microsoft 365 Copilot; licensing, Salesforce prerequisites, preview features |
+| [Salesforce CRM connector admin setup (Microsoft Learn)][ms-sf-crm-admin-setup], [privileges for Sales agent][ms-sales-privileges] | External client app / OAuth 2.0 prerequisites; Salesforce admin permissions |
+| [Salesforce CRM connector overview (Microsoft Learn)][ms-sf-crm-connector] | Synced connector; objects, permissions, limits |
+| [Salesforce connector, preview (Microsoft Learn)][ms-sf-federated] | Federated connector on Salesforce beta MCP server; jointly maintained; prerequisites; dated 2026-11-16 |
+| [Salesforce connector, Power Platform (Microsoft Learn)][ms-sf-pp] | Premium/Standard class, API-access prerequisite, Entra ID SSO option |
+| [Agentforce Assistant (Formerly Einstein Copilot)][sf-assistant] | Rename note; what "Einstein" still names |
+| [Einstein Copilot GA, 2024-04-25][sf-ec-ga], [Agentforce launch, 2024-09-12][sf-agentforce-launch], [AI copilot FAQ][sf-ai-copilot] | Lineage dates; FAQ says January 2025 |
+| [AgentExchange Help article][sf-agentexchange] and [launch press release][sf-agentexchange-pr] | Marketplace scope (2026-06-17); 2025-03-04 launch |
+| [Sales Cloud guide][sf-sales-guide], [Service Cloud page][sf-service-cloud], [Agentforce Contact Center][sf-contact-center] | Role-product naming and status |
+| [Slack native AI][sf-slack-ai], [Informatica story][sf-informatica], [Informatica acquisition completed][sf-informatica-close], [Heroku AppLink][heroku-applink] | Agent surfaces |
+| [Copilotforce, Salesforce announcement][copilotforce-sf] | 2026-11-17; availability per piece, AIforce, Teams app, governance statements, no pricing |
+| [Copilotforce, Microsoft announcement][copilotforce-ms] | 2026-11-17; "38+" skills, MCP access statement, Teams open beta "later this year" |
 | [Headless 360 announcement][sf-headless360] | 2026-04-15; MCP tools/skills counts, "Available today" |
 | [New Agentforce Builder migration page][builder-migration] | Canvas/Script views; 2026-07-13 mandatory-new-builder cutover; legacy agents keep running |
 | [Supported Models (developer docs)][dev-models] | Salesforce Default vs. AWS-Hosted framing; full Trust-Boundary Claude model table; geo-aware routing providers |
@@ -548,6 +712,27 @@ four as background context, not as verified facts of this analysis.
 [sf-360-ga]: https://www.salesforce.com/news/press-releases/2025/10/13/agentic-enterprise-announcement/
 [sf-anthropic-1014]: https://www.salesforce.com/news/press-releases/2025/10/14/anthropic-regulated-industries-partnership-expansion-announcement/
 [claudeforce]: https://www.salesforce.com/news/press-releases/2026/08/26/salesforce-and-anthropic-announce-claudeforce/
+[ms-sales-agent]: https://learn.microsoft.com/en-us/microsoft-sales-copilot/set-up-sales-chat
+[ms-sf-crm-connector]: https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/salesforce-crm-overview
+[ms-sf-federated]: https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/salesforce-admin-published-federated-connector
+[ms-sf-pp]: https://learn.microsoft.com/en-us/connectors/salesforce/
+[sf-assistant]: https://www.salesforce.com/agentforce/einstein-copilot/
+[sf-ec-ga]: https://www.salesforce.com/news/press-releases/2024/04/25/einstein-copilot-general-availability/
+[sf-agentforce-launch]: https://www.salesforce.com/in/news/press-releases/2024/09/12/agentforce-announcement/
+[sf-agentexchange]: https://help.salesforce.com/s/articleView?id=005387252&language=en_US&type=1
+[sf-agentexchange-pr]: https://www.salesforce.com/news/press-releases/2025/03/04/agentexchange-announcement/
+[sf-sales-guide]: https://www.salesforce.com/ap/sales/cloud/guide/
+[sf-contact-center]: https://www.salesforce.com/news/stories/agentforce-contact-center-announcement/
+[sf-service-cloud]: https://www.salesforce.com/service/cloud/
+[sf-ai-copilot]: https://www.salesforce.com/agentforce/ai-copilot/
+[sf-slack-ai]: https://www.salesforce.com/slack/native-ai/
+[sf-informatica-close]: https://www.salesforce.com/news/press-releases/2025/11/18/salesforce-completes-acquisition-of-informatica/
+[ms-sf-crm-admin-setup]: https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/salesforce-crm-admin-setup
+[ms-sales-privileges]: https://learn.microsoft.com/en-us/microsoft-sales-copilot/privileges
+[sf-informatica]: https://www.salesforce.com/news/stories/informatica-empowers-ai-agent-reasoning/
+[heroku-applink]: https://devcenter.heroku.com/articles/heroku-applink
+[copilotforce-sf]: https://www.salesforce.com/news/stories/copilotforce-announcement/
+[copilotforce-ms]: https://news.microsoft.com/source/2026/11/17/microsoft-and-salesforce-announce-copilotforce-bringing-trusted-customer-context-and-action-into-microsoft-ai-experiences/
 [sf-headless360]: https://www.salesforce.com/news/stories/salesforce-headless-360-announcement/
 [builder-migration]: https://www.salesforce.com/agentforce/agent-builder/migration/
 [dev-models]: https://developer.salesforce.com/docs/ai/agentforce/guide/supported-models.html
