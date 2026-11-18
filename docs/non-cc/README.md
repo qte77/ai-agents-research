@@ -37,14 +37,14 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 
 ## Coding Agents & IDEs
 
-Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned" backlog, now analyzed (access date 2026-06-16).
+Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned" backlog, now analyzed (access date 2026-06-16; Gemini CLI and Antigravity re-checked 2026-11-18).
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
 | [cline-analysis.md](coding-agents/cline-analysis.md) | Cline (autonomous coding agent; VS Code, CLI, SDK) | Yes | Yes (Apache-2.0) |
 | [opencode-analysis.md](coding-agents/opencode-analysis.md) | opencode (terminal agent; TUI + headless CLI, 75+ providers) | Yes | Yes (MIT) |
 | [codebuff-analysis.md](coding-agents/codebuff-analysis.md) | Codebuff (terminal agent; multi-agent orchestration, OpenRouter) | Yes | Yes (Apache-2.0) |
-| [gemini-cli-analysis.md](coding-agents/gemini-cli-analysis.md) | Gemini CLI (Google; free tier ends 2026-06-18 → enterprise-only) — **Hold** | Yes | Yes (Apache-2.0) |
+| [gemini-cli-analysis.md](coding-agents/gemini-cli-analysis.md) | Gemini CLI (Google; no longer served for free, AI Pro, AI Ultra or Google One users since 2026-06-18, replaced by Antigravity CLI; Standard/Enterprise on a separate deprecation schedule per the Code Assist FAQ; re-checked 2026-11-18) — **Hold** | Yes | Yes (Apache-2.0) |
 | [cursor-analysis.md](coding-agents/cursor-analysis.md) | Cursor (GUI AI editor, VS Code fork; Composer agent + CLI) | Partial | No |
 | [antigravity-analysis.md](coding-agents/antigravity-analysis.md) | Google Antigravity (agent-first IDE + CLI; preview) | Partial | No |
 | [kiro-analysis.md](coding-agents/kiro-analysis.md) | Kiro (AWS spec-driven agentic IDE) | Partial | No |

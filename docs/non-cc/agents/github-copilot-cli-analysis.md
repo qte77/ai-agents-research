@@ -4,7 +4,7 @@ source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface.
 platform_scope: [cli, cloud]
 created: 2026-06-11
-updated: 2026-11-15
+updated: 2026-11-18
 validated_links: 2026-10-24
 status: proprietary
 ---
@@ -87,7 +87,7 @@ billing pages checked 2026-10-24; a [legacy request-based billing page][copilot-
 
 | Dimension | Assessment |
 |---|---|
-| **Use case** | Terminal coding agent; peer to Codex CLI / Gemini CLI / Claude Code |
+| **Use case** | Terminal coding agent; peer to Codex CLI / Gemini CLI / Claude Code (Gemini CLI: [status 2026-11-18](../coding-agents/gemini-cli-analysis.md), no longer served for free, AI Pro, AI Ultra users) |
 | **Model flexibility** | Multi-provider via `/model` (default Claude Sonnet 4.5) |
 | **Extensibility** | MCP (GitHub server default), custom agents, plugins, LSP |
 | **Permission model** | Preview-every-action → plan/autopilot → `--yolo`; local/cloud sandbox |

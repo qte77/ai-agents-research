@@ -3,7 +3,7 @@ title: agent-era/devteam Analysis
 source: https://github.com/agent-era/devteam
 purpose: Analysis of devteam as a terminal-based multi-agent orchestration tool for parallel coding agent workflows.
 created: 2026-03-20
-updated: 2026-09-24
+updated: 2026-11-18
 status: active-development
 ---
 
@@ -12,7 +12,7 @@ status: active-development
 ## What It Is
 
 A **terminal UI** for orchestrating multiple AI coding agents (Claude Code,
-Codex, Gemini CLI) working in parallel on development tasks. Users launch
+Codex, Gemini CLI) working in parallel on development tasks. (Status 2026-11-18: Gemini CLI stopped serving free, AI Pro and AI Ultra users on 2026-06-18, see [gemini-cli-analysis.md](../coding-agents/gemini-cli-analysis.md); the agent list reflects this doc's 2026-09-24 check.) Users launch
 agents, switch between them, review changes, and manage pull requests from a
 single interface.
 

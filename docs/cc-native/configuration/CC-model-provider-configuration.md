@@ -289,7 +289,7 @@ export ANTHROPIC_AUTH_TOKEN=<cliproxy-key>
 
 - **Stars / version**: 37.6K stars, v7.2.7 (MIT, Go)
 - **CC story**: wraps `claude` via OAuth account; supports multi-account switching, per-credential circuit breakers, quota management. Note this is *gateway-level* multi-account (quota harvesting for downstream clients) — for running N interactive CC sessions on N subscription accounts, see [CC-multi-account-switching-landscape.md](../../cc-community/CC-multi-account-switching-landscape.md)
-- **Also routes**: Gemini CLI, Codex, Grok Build, Antigravity — plus OpenAI-compatible upstream relay (e.g. OpenRouter)
+- **Also routes**: Gemini CLI (status 2026-11-18: [no longer served for free, AI Pro, AI Ultra users](../../non-cc/coding-agents/gemini-cli-analysis.md), so its free-tier quota harvesting no longer applies to those accounts; routing claims are the project's own), Codex, Grok Build, Antigravity — plus OpenAI-compatible upstream relay (e.g. OpenRouter)
 - **Companion GUI**: [EasyCLI][easycli] (Rust/Tauri desktop app)
 
 #### 9Router

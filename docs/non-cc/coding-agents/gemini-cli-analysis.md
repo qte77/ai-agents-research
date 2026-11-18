@@ -4,8 +4,8 @@ source: https://github.com/google-gemini/gemini-cli
 purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now deprecated for non-enterprise users.
 platform_scope: [cli]
 created: 2026-06-16
-updated: 2026-11-15
-validated_links: 2026-11-15
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: hold
 ---
 
@@ -19,14 +19,28 @@ Gemini CLI was Google's **open-source terminal AI agent**, launched on June 25,
 **Critical status change (as of 2026-06-16):** On May 19, 2026, Google announced
 that Gemini CLI would stop serving requests for free-tier users, Google AI Pro
 subscribers, and Google AI Ultra subscribers on **June 18, 2026** — one day after
-this analysis was written. Only Gemini Code Assist Standard and Enterprise
-subscribers retain access. Non-enterprise users are directed to migrate to
-[Antigravity CLI][antigravity-discussion], Google's closed-source replacement (full analysis: [antigravity-analysis.md](antigravity-analysis.md)).
+this analysis was written. Google documents continued access for Gemini Code
+Assist Standard and Enterprise, on a separate deprecation schedule (see the
+table below). Non-enterprise users are directed to migrate to
+[Antigravity CLI][antigravity-discussion], Google's replacement (no published source or licence, observed 2026-11-18) (full analysis: [antigravity-analysis.md](antigravity-analysis.md)).
 This renders the project effectively an archive for the vast majority of its
 100,000+ GitHub-star community.
 
-The Apache 2.0 repository remains public and maintained for enterprise customers,
-but without Google's backend serving requests, it is not independently operable by
+**Tier wording reconciled at Google's own pages (checked 2026-11-18):**
+
+| Google page | Wording | Reading |
+|---|---|---|
+| [Discussion #27274][antigravity-discussion] (maintainer post, 2026-05-19) | Gemini CLI stops serving requests for Google AI Pro and Ultra "as well as those using it free of charge" on 2026-06-18; "Enterprise access remains unchanged" (Code Assist Standard/Enterprise, Google Cloud, paid API keys) | Names free, AI Pro and AI Ultra; does not mention a separate Standard/Enterprise schedule |
+| [Gemini Code Assist FAQs][gcfa-faqs] | From 2026-06-18 the IDE extensions and Gemini CLI stop serving the individual, AI Pro and AI Ultra tiers; Login with Google no longer works; Standard and Enterprise are "subject to a separate deprecation schedule" | Names individuals, AI Pro and AI Ultra; no end date for Standard/Enterprise in the FAQ excerpt read |
+| [Gemini CLI session-management docs][gemini-session-docs] | Banner for "Unpaid tier and Google One users": Gemini CLI "was replaced by Antigravity CLI on June 18th, 2026" | Only source that names Google One |
+
+Each tier is attributed to the source that names it, as in the table. Status notes in
+other docs use the union of the three lists (free or individual, AI Pro, AI Ultra,
+Google One). All three give 2026-06-18. The FAQ adds a separate deprecation schedule
+for Standard/Enterprise that the maintainer post does not mention.
+
+The Apache 2.0 repository remains public (not archived, latest release v0.68.0 on
+2026-11-10, per the GitHub API on 2026-11-18), but without Google's backend serving requests, it is not independently operable by
 community users.
 
 ## How It Works
@@ -104,8 +118,8 @@ Key factors:
 |---|---|
 | License | Apache 2.0 (open source, but backend-dependent) |
 | Free tier | Ends June 18, 2026 for non-enterprise |
-| Enterprise path | Gemini Code Assist Standard/Enterprise only |
-| Replacement | Antigravity CLI (closed-source, Go) |
+| Enterprise path | Google documents continued access for Standard/Enterprise, on a separate deprecation schedule |
+| Replacement | Antigravity CLI (Go; public repo without source or licence file, 2026-11-18) |
 | Community | 100,000+ stars, 6,000+ merged PRs — now effectively archived |
 | Headless | Yes — `-p`, `--output-format json/stream-json` flags |
 | MCP support | Yes — `~/.gemini/settings.json` |
@@ -122,11 +136,11 @@ guarantees for paying users.
 
 - Track whether the community produces a fork with an alternative backend (e.g.,
   wired to a self-hosted or third-party Gemini-compatible endpoint)
-- Evaluate Antigravity CLI when first-party documentation matures; note it is
-  currently closed-source
-- For Google-ecosystem organizations with Gemini Code Assist Enterprise licenses,
-  Gemini CLI remains supported through the enterprise support window (v0.46.0 was
-  the stable version when this was written; v0.68.0 is the latest release as of 2026-11-15)
+- Evaluate Antigravity CLI (first-party docs now cover install, auth, resume,
+  sandbox and headless use: see [antigravity-analysis.md](antigravity-analysis.md#antigravity-cli-agy-first-party-docs-checked-2026-11-18)); no source or licence file is published in its repo
+- For Google-ecosystem organizations with Gemini Code Assist Standard/Enterprise
+  licenses, Google documents continued access on a separate deprecation schedule
+  ([FAQs][gcfa-faqs]); no end date seen in the excerpt read. Latest release v0.68.0 as of 2026-11-18
 
 ## Sources
 
@@ -134,7 +148,8 @@ guarantees for paying users.
 |---|---|
 | [google-gemini/gemini-cli (GitHub)][gemini-cli-repo] | Repository, README, release history, star/fork counts — accessed 2026-06-16 |
 | [Google blog: Introducing Gemini CLI][blog] | Launch announcement (2025-06-25): license, model, free quota, preview status |
-| [Gemini Code Assist FAQs][gcfa-faqs] | Official June 18, 2026 shutdown announcement; affected tiers; Antigravity migration |
+| [Gemini Code Assist FAQs][gcfa-faqs] | Official June 18, 2026 shutdown announcement; affected tiers; Standard/Enterprise on separate schedule; Antigravity migration (checked 2026-11-18) |
+| [Gemini CLI session-management docs][gemini-session-docs] | Banner: replaced by Antigravity CLI on 2026-06-18 for unpaid tier and Google One users (checked 2026-11-18) |
 | [GitHub Discussion #27274: Transitioning to Antigravity CLI][antigravity-discussion] | Official Google deprecation notice; Antigravity CLI feature summary |
 | [TechTimes: Google Accepted 6,000 Gemini CLI Contributions][techtimes] | Third-party reporting on access restriction announcement (2026-05-23) |
 
@@ -143,6 +158,7 @@ guarantees for paying users.
 [blog]: https://blog.google/technology/developers/introducing-gemini-cli-open-source-ai-agent/
 [gcfa-faqs]: https://developers.google.com/gemini-code-assist/resources/faqs
 [antigravity-discussion]: https://github.com/google-gemini/gemini-cli/discussions/27274
+[gemini-session-docs]: https://geminicli.com/docs/cli/session-management/
 [gemini-quota]: https://github.com/google-gemini/gemini-cli/blob/main/docs/resources/quota-and-pricing.md
 [techtimes]: https://www.techtimes.com/articles/317056/20260523/google-accepted-6000-gemini-cli-contributions-then-closed-tool-enterprise-only.htm
 [copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md

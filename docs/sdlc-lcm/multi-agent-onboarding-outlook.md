@@ -67,7 +67,7 @@ No agent-specific dependency. No Python imports required.
 | **Claude Code** | CC plugin skill reads `[tool.lcm]` + `.lcm/status.json` | `.claude/skills/` |
 | **Kiro** | Steering doc references phase constraints | `.kiro/steering/lifecycle.md` |
 | **Cursor** | Rules file includes phase-aware constraints | `.cursorrules` |
-| **Gemini CLI** | GEMINI.md references phase metadata | `GEMINI.md` |
+| **Gemini CLI** (status 2026-11-18: [replaced by Antigravity CLI](../non-cc/coding-agents/gemini-cli-analysis.md) for non-enterprise users; Antigravity CLI's migration docs say `GEMINI.md` and `AGENTS.md` keep working) | GEMINI.md references phase metadata | `GEMINI.md` |
 | **Codex/AGENTS.md** | AGENTS.md includes phase section | `AGENTS.md` |
 
 Each agent gets the same information via its own config convention. The source

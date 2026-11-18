@@ -3,16 +3,16 @@ title: Google Antigravity Analysis
 source: https://antigravity.google/
 purpose: Analysis of Google Antigravity as an agent-first IDE and agentic development platform announced at Google I/O 2026.
 created: 2026-06-16
-updated: 2026-10-24
-validated_links: 2026-06-16
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: assess
 ---
 
 ## What It Is
 
-Google Antigravity is a proprietary agentic development platform comprising a desktop IDE, CLI (`agy`), and SDK. Announced at [Google I/O 2026][io-2026-blog], it positions itself as an "agent-first" environment built for multi-agent orchestration rather than single-turn AI code completion. Version 1.11.2 launched in public preview on 2025-11-18; version 2.0.1 shipped 2026-05-19 and is the current preview release (access date: 2026-06-16, per [Wikipedia][wiki]).
+Google Antigravity is an agentic development platform comprising a desktop IDE, CLI (`agy`), and SDK, with no published licence for the CLI (observed 2026-11-18). Announced at [Google I/O 2026][io-2026-blog], it positions itself as an "agent-first" environment built for multi-agent orchestration rather than single-turn AI code completion. Version 1.11.2 launched in public preview on 2025-11-18; version 2.0.1 shipped 2026-05-19 and is the current preview release (access date: 2026-06-16, per [Wikipedia][wiki]).
 
-Antigravity is described as a heavily modified fork of Visual Studio Code, though some sources debate whether it derives from Windsurf. It replaces Google's open-source [Gemini CLI][gemini-cli-fossforce], which is being sunset on 2026-06-18.
+Antigravity is described as a heavily modified fork of Visual Studio Code, though some sources debate whether it derives from Windsurf. It replaces Google's open-source [Gemini CLI][gemini-cli-fossforce], which was sunset for non-enterprise users on 2026-06-18.
 
 ## How It Works
 
@@ -34,14 +34,33 @@ The CLI (`agy`) provides a lightweight terminal interface for instant agent crea
 
 Platform support: 64-bit Windows 10+, macOS Monterey 12+, 64-bit Linux with glibc 2.28+.
 
+## Antigravity CLI (`agy`): first-party docs, checked 2026-11-18
+
+Facts below are from Antigravity's own docs unless marked. Gemini CLI's status and tier
+reconciliation: [gemini-cli-analysis.md](gemini-cli-analysis.md).
+
+| Aspect | Documented | Source |
+|---|---|---|
+| Replaces Gemini CLI | Announced 2026-05-19; written in Go; shares architecture with the 2.0 desktop app; keeps skills, hooks, subagents, extensions (now plugins) | [maintainer post][gcli-discussion] |
+| Licence | Not stated in the docs read. The public repo [google-antigravity/antigravity-cli][agy-repo] holds README, CHANGELOG and examples; API reports no licence and no source (2026-11-18). Our inference: treat as proprietary until Google states a licence | [install docs][agy-install] (no licence text on the page), repo |
+| Install | Quickstart: `curl` install script (macOS/Linux) or PowerShell script (Windows); binary `agy`, verify with `agy --version` | [getting started][agy-start] |
+| Auth | Personal Google account via browser OAuth (keyring-cached; paste-code flow over SSH); Gemini API key (needs `"modelProvider": "gemini"` in the CLI `settings.json`; `GEMINI_API_KEY` alone has no effect); Application Default Credentials; Google Cloud project for Enterprise. Workspace accounts are not covered by Antigravity plans | [install docs][agy-install] |
+| Resume | `/resume` picker, `agy -c` (latest conversation in the workspace), `agy --conversation <id>`; per-workspace cache under `~/.gemini/antigravity-cli/` | [resume][agy-resume] |
+| Sandbox | OS-level terminal sandbox (Linux namespaces, macOS Seatbelt, Windows AppContainer); CLI default `enableTerminalSandbox` is off, `--sandbox` or `--mode=auto` turns it on; default permission mode is request-review | [sandbox][agy-sandbox] |
+| Headless | `agy -p`; `--output-format text/json/stream-json`, `--json-schema`, `-c`/`--conversation`; unauthenticated headless runs exit with an error, so sign in once interactively or use an API key | [headless][agy-headless] |
+| Migration | Context files `GEMINI.md`/`AGENTS.md` keep working; workspace skills move to `.agents/skills/`; MCP config moves to `mcp_config.json`; `agy plugin import gemini` converts extensions | [migration][agy-migration] |
+
+Not verified: free-tier quota amounts (the install docs list Free, Pro and Ultra plans without
+numbers) and any end date for Code Assist Standard/Enterprise Gemini CLI access.
+
 ## Adoption Decision
 
 **Assess** — Antigravity is in public preview and pricing is not yet finalised. The multi-agent orchestration, artifact-first workflow, and Browser Subagent are meaningfully differentiated from single-agent IDEs. However, several factors warrant caution:
 
 - **Preview status** — v2.0.1 is labelled preview; paid tiers are not finalised (access date: 2026-06-16)
-- **Proprietary and closed-source** — replaces the open-source Gemini CLI; no community fork or extension path
+- **No published source or licence** (observed 2026-11-18) — replaces the open-source Gemini CLI; extensions continue as plugins (`agy plugin import gemini`)
 - **Vendor lock-in** — deepest value requires Google AI Studio, Firebase, and Gemini ecosystem; cross-provider model support (Claude, GPT-OSS) partially mitigates this
-- **Pricing trajectory** — the bait-and-switch from open-source Gemini CLI to proprietary Antigravity, combined with opaque credit structures, signals pricing risk ([FOSS Force][fossforce])
+- **Pricing trajectory** — what FOSS Force calls a bait-and-switch, from open-source Gemini CLI to proprietary Antigravity, combined with opaque credit structures, signals pricing risk (per [FOSS Force][fossforce])
 
 For teams already invested in the Google Cloud/Firebase stack and comfortable with Gemini models, this warrants hands-on evaluation. For teams prioritising open tooling or multi-cloud neutrality, wait for GA and stable pricing.
 
@@ -72,6 +91,8 @@ execution loop ([hooks][goal-ag-hooks]).
 | [Wikipedia — Google Antigravity][wiki] | Version history, license, platform support, model support |
 | [Stackpick — Antigravity Pricing][stackpick] | Free tier details, parallel agent limits, paid tier ranges |
 | [FOSS Force — Gemini CLI sunset][fossforce] | Open-source context, Gemini CLI deprecation, proprietary concerns |
+| [GitHub Discussion #27274][gcli-discussion] | Maintainer announcement of the Gemini CLI replacement (2026-05-19) |
+| [Antigravity CLI docs][agy-start] | Install, auth, resume, sandbox, headless, migration (2026-11-18) |
 | [antigravity.google][antigravity] | Official product page (minimal content; JavaScript-rendered, 2026-06-16) |
 
 [io-2026-blog]: https://blog.google/innovation-and-ai/technology/developers-tools/google-io-2026-developer-highlights/
@@ -81,5 +102,13 @@ execution loop ([hooks][goal-ag-hooks]).
 [fossforce]: https://fossforce.com/2026/05/gemini-clis-short-life-and-googles-antigravity-bait-and-switch/
 [antigravity]: https://antigravity.google/
 [gemini-cli-fossforce]: https://fossforce.com/2026/05/gemini-clis-short-life-and-googles-antigravity-bait-and-switch/
+[gcli-discussion]: https://github.com/google-gemini/gemini-cli/discussions/27274
+[agy-repo]: https://github.com/google-antigravity/antigravity-cli
+[agy-start]: https://antigravity.google/docs/getting-started
+[agy-install]: https://antigravity.google/docs/install?tab=cli
+[agy-resume]: https://antigravity.google/docs/cli/commands/resume/
+[agy-sandbox]: https://antigravity.google/docs/sandbox/
+[agy-headless]: https://antigravity.google/docs/cli/headless/
+[agy-migration]: https://antigravity.google/docs/cli/gcli-migration/
 [goal-ag-goal]: https://antigravity.google/docs/commands/goal/
 [goal-ag-hooks]: https://antigravity.google/docs/hooks
