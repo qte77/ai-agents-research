@@ -1,7 +1,7 @@
 ---
 title: CC Web Scheduled Tasks — Cloud Recurring Automation
 source: https://code.claude.com/docs/en/routines
-purpose: Analysis of cloud-native scheduled tasks for recurring autonomous work without local machine dependency.
+purpose: Analysis of cloud-native scheduled tasks (formerly routines) for autonomous work without local machine dependency, covering the Schedule, API and GitHub triggers; the substrate-rubric scores cover the Schedule trigger only.
 created: 2026-03-24
 updated: 2026-11-18
 validated_links: 2026-11-18
@@ -89,7 +89,7 @@ Documented 2026-11-18 ([cc-sched][cc-sched]); the feature is a research preview.
 
 | Aspect | Documented behaviour |
 |---|---|
-| Setup | Web only: you cannot add the trigger or manage its token from the CLI. Generating the token activates the trigger at once; the token is shown once |
+| Setup | Web only: you cannot add the trigger or manage its token from the CLI. The page says the trigger "takes effect as soon as you generate the token"; the token is shown once |
 | Auth | One token per task, scoped to that task; `Authorization: Bearer`. Regenerate invalidates the old token; deleting it removes the trigger |
 | Request | POST to the task's `/fire` URL (`https://api.anthropic.com/v1/claude_code/routines/<id>/fire`) with header `anthropic-beta: experimental-cc-routine-2026-04-01` and `anthropic-version: 2023-06-01`; optional JSON body field `text` |
 | `text` handling | Freeform, not parsed (JSON arrives as a literal string). It is wrapped in a `<routine-fire-payload>` block that marks it untrusted data, so the saved prompt must tell Claude to act on it, or it is inert context |
@@ -97,17 +97,17 @@ Documented 2026-11-18 ([cc-sched][cc-sched]); the feature is a research preview.
 | Stability | Beta header is dated; breaking changes ship under a new header and the two previous versions keep working |
 | Scope | "available to claude.ai users only" and not part of the Claude Platform API surface |
 
-The untrusted-data wrapper is the notable design choice for unattended use: a leaked token can inject text, but the text arrives labelled as data rather than as an instruction. Per-fire caps are in [Usage Limits](#usage-limits). Verified against the doc text only; the endpoint was not called.
+Our reading: the untrusted-data wrapper is the notable design choice for unattended use. The page says a leaked token's fire text arrives labelled as untrusted data rather than as direct instructions. Per-fire caps are in [Usage Limits](#usage-limits). Verified against the doc text only; the endpoint was not called.
 
 ## GitHub Trigger
 
 Documented 2026-11-18 ([cc-sched][cc-sched]).
 
-- **Prerequisite**: the Claude GitHub App must be installed on the repository. `/web-setup` grants clone access only; it does not install the app or enable webhook delivery. From the CLI (v2.1.225+) the app must already be installed, then `/schedule` can attach a trigger to an existing task.
+- **Prerequisite** (as documented): the Claude GitHub App must be installed on the repository. `/web-setup` grants clone access only; it does not install the app or enable webhook delivery. From the CLI (v2.1.225+) the app must already be installed, then `/schedule` can attach a trigger to an existing task.
 - **Events**: pull request (opened, closed, assigned, labeled, synchronized and others), release (created, published, edited, deleted), issue (opened, edited, closed, reopened, labeled, assigned and others). A specific action or all actions of a category can be chosen.
 - **Filters (pull requests)**: author, title, body, base branch, head branch, labels, is draft, is merged; operators equals, contains, starts with, is one of, is not one of, matches regex. All conditions must match. Regex tests the whole field, so a substring needs `.*x.*`.
 - **Session model**: each event starts an independent session; sessions are not reused across events. For a PR event on the task's first repository, the clone starts from the PR head commit.
-- **Limits**: webhook events have per-task and per-account hourly caps; events over the cap are dropped until the window resets. Dropped rather than queued is the difference from schedule and API runs, which wait or fail.
+- **Limits**: webhook events have per-task and per-account hourly caps; events over the cap are dropped until the window resets. Our reading: the page says schedule runs over their cap wait and API-fire actions fail, so GitHub events are the only trigger whose excess is dropped.
 
 ## Permission Posture in Unattended Runs
 
@@ -129,7 +129,7 @@ Documented 2026-11-18 ([cc-sched][cc-sched]). A run on Anthropic's cloud starts 
 
 ## Scored on the Agent Substrate Rubric
 
-Routines (the Schedule-trigger subset this doc covers), scored 2026-10-02 against the [agent substrate rubric][rubric] from the current [Routines][cc-sched] docs, re-fetched this date. This fills a long-running coverage gap plan 0009 named: no rubric row existed for scheduled tasks. Distributed reuses the evidence already scored for [cloud sessions][cloud-sessions-rubric], since every routine run executes as one.
+Routines (Schedule trigger only; the API and GitHub triggers are not scored), scored 2026-10-02 against the [agent substrate rubric][rubric] from the current [Routines][cc-sched] docs, re-fetched this date. This fills a long-running coverage gap plan 0009 named: no rubric row existed for scheduled tasks. Distributed reuses the evidence already scored for [cloud sessions][cloud-sessions-rubric], since every routine run executes as one.
 
 `subject: long-running`
 

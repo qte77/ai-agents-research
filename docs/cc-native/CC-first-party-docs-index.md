@@ -35,7 +35,7 @@ validated_links: 2026-10-15
 | Slash commands | <https://code.claude.com/docs/en/slash-commands> |
 | Goal (`/goal`) | <https://code.claude.com/docs/en/goal> |
 | Scheduled tasks (`/loop`, local) | <https://code.claude.com/docs/en/scheduled-tasks> |
-| Routines (cloud scheduling) | <https://code.claude.com/docs/en/routines> |
+| Routines (cloud scheduling; now "scheduled tasks", formerly routines, see [CC-web-scheduled-tasks-analysis.md](ci-remote/CC-web-scheduled-tasks-analysis.md)) | <https://code.claude.com/docs/en/routines> |
 | Desktop scheduled tasks | <https://code.claude.com/docs/en/desktop-scheduled-tasks> |
 | Hooks reference | <https://code.claude.com/docs/en/hooks> |
 | Chrome extension | <https://code.claude.com/docs/en/chrome> |
