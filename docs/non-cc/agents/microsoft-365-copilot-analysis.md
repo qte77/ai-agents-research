@@ -1,9 +1,9 @@
 ---
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
-purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365, Cowork, Copilot Code, Managed Runtime, Researcher/Analyst) against first-party documentation; original pass 2026-10-21, extended 2026-11-12.
+purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365, Cowork, Copilot Code, Managed Runtime, Researcher/Analyst) against first-party documentation; original pass 2026-10-21, extended 2026-11-12 and 2026-11-18 (Frontier programs, a "What each name is" table, Licences).
 created: 2026-10-21
 updated: 2026-11-18
-validated_links: 2026-11-12
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -13,7 +13,9 @@ in SharePoint, Microsoft Copilot Studio, Work IQ, and Microsoft Agent 365 — pl
 Runtime, declarative agents, Researcher/Analyst, and the build-path SDKs — each at its own GA/preview
 stage; no single version string applies to "Microsoft 365 Copilot" as a whole. A separate
 [Training and certification](#training-and-certification) section, added the same day, covers the
-agent-relevant Microsoft credentials. See [Timeline](#timeline) below.
+agent-relevant Microsoft credentials. The 2026-11-18 extension adds the three Frontier programs,
+a "What each name is" disambiguation table, and a Licences subsection (under Pricing). See
+[Timeline](#timeline) below.
 
 > **Disambiguation.** "Microsoft 365 Copilot" (this doc) is a third, unrelated "Copilot" brand —
 > not GitHub Copilot CLI and not the GitHub Copilot coding agent, which are disambiguated from
@@ -727,13 +729,13 @@ sections after this table hold the detail.
 | Name | What kind of thing | Who uses it | Where it runs / how it is bought | Relation to the others | Source |
 |---|---|---|---|---|---|
 | Frontier | An early-access program for pre-GA features, not a product or platform. It has three separate enrolment paths (see [The Frontier program](#the-frontier-program)) | Admins enrol a tenant; individual subscribers opt in themselves | A switch in the Microsoft 365 admin center or the Office web apps; no price of its own | Other products ship features through it (Cowork, Copilot Code, Agent 365) | [frontier-admin], [frontier-individuals] |
-| Microsoft Foundry (Foundry Agent Service) | An Azure developer platform for models, agents and tools; Agent Service hosts prompt and hosted agents | Developers | An Azure resource, billed by Azure ([price basis](#foundry-as-an-agent-platform)) | Agents can publish into Copilot and Teams; Foundry IQ and Work IQ are tools it can attach | [foundry-overview], [foundry-agents] |
-| Copilot Studio | A low-code studio for building and managing agents and workflows | Makers and business developers | Copilot Credits; runs in Microsoft's cloud | Makes agents that Agent 365 can list; Agent Builder is its lighter sibling ([comparison](#agent-builder-copilot-studio-and-declarative-agents)) | [studio-overview] |
+| Microsoft Foundry (Foundry Agent Service) | An Azure developer platform for models, agents and tools; Agent Service hosts prompt and hosted agents | Developers | An Azure resource, billed by Azure ([price basis](#foundry-as-an-agent-platform)) | Agents can publish into Copilot and Teams; Work IQ and Fabric IQ are listed platform tools for hosted agents, and Foundry IQ knowledge bases connect to its agents | [foundry-overview], [foundry-agents] |
+| Copilot Studio | A low-code studio for building and managing agents and workflows | Makers and business developers | A standalone web app; billing depends on the harness you pick (the Microsoft Copilot harness and the standard harness have separate billing pages) | Makes agents that Agent 365 can list; Agent Builder is its lighter sibling ([comparison](#agent-builder-copilot-studio-and-declarative-agents)) | [studio-overview] |
 | Agent 365 | An admin-side registry and governance layer (Microsoft's overview page calls it "the observability platform for AI"), not an agent builder | IT, security and compliance admins | Microsoft 365 admin center; licensed per user, with E5 as the recommended base | Lists agents built in Studio, Foundry, Agent Builder and elsewhere ([Governance](#governance-agent-365-covers-agents-not-sharepoint-skills)) | [agent365-overview] |
 | Work IQ | A grounding layer over Microsoft 365 work data, reached over A2A, MCP or REST | Agent builders (any of the platforms above) | Billed in Copilot Credits | One of the four Microsoft IQ layers | [work-iq-overview], [microsoft-iq] |
 | Fabric IQ / Foundry IQ | Grounding layers: business entities over OneLake data (Fabric IQ, preview); permission-aware knowledge bases (Foundry IQ, mixed GA/preview) | Data teams / agent builders | Inside Fabric and Foundry respectively | Siblings of Work IQ under Microsoft IQ ([table](#grounding-layers)) | [fabric-iq], [foundry-iq] |
 | Dataverse | A data store for business applications (Power Platform and Dynamics 365 data) | App makers | Part of the Power Platform; its own licensing not checked. As agent knowledge it works for Copilot Chat users only with usage-based billing or a Copilot licence ([Licences](#licences-2026-11-18)) | Data an agent can be given access to, not an agent layer by its own page | [dataverse-intro] |
-| Microsoft Fabric | An analytics platform around OneLake | Data engineers and analysts | Paid capacity (the data agent needs F2 or higher) | Fabric IQ and the Fabric data agent sit on it | [fabric-overview] |
+| Microsoft Fabric | An analytics platform around OneLake | Data engineers and analysts | A SaaS platform; the data agent needs a paid F2-or-higher capacity [fabric-data-agent] | Fabric IQ is a workload inside it; the Fabric data agent sits on it | [fabric-overview], [fabric-data-agent] |
 | Microsoft Graph | An API: one endpoint, `graph.microsoft.com`, to Microsoft 365 and Entra data | Developers | Called with authorised access; licensing not checked | Not an agent product; the overview page does not say how Work IQ or Agent 365 use it | [graph-overview] |
 
 Copilotforce (Salesforce's plugin inside Microsoft 365 Copilot and Teams, announced 2026-11-17) is
@@ -770,7 +772,7 @@ such features are preview, "subject to change", and may be modified, suspended o
 
 | Program | Eligibility | Who switches it on, and where | Licence prerequisite | Source |
 |---|---|---|---|---|
-| Business (Microsoft 365) | A tenant; the admin picks "All users" or "Specific users and groups" | AI Administrator, Security Administrator or Office Apps Administrator: Copilot > Settings > Copilot Frontier, or, rolling out gradually from mid-November 2026, Settings > Org settings > Release preferences > "Turn on Frontier". Tenant-level; features can take about three hours to appear | A Copilot licence is not needed to enrol; it is needed to see Copilot-related Frontier features, and other products need their own (Teams example). Once unified release preferences arrive, opting in no longer needs a Copilot licence | [frontier-admin] |
+| Business (Microsoft 365) | A tenant; the admin picks "All users" or "Specific users and groups" | AI Administrator, Security Administrator or Office Apps Administrator: Copilot > Settings > Copilot Frontier, or, rolling out gradually from mid-November 2026, Settings > Org settings > Release preferences > "Turn on Frontier". Tenant-level; features can take about three hours to appear | The prerequisites bullet says a Copilot licence "isn't required to enroll users", though Copilot-related Frontier features need a Copilot licence and other products need their own (Teams example). A Note says that once unified release preferences arrive, admins "will no longer be required" to hold a Copilot-including licence to opt in, which implies they still need one today; the page also says the admin's own account needs a "corresponding license" or some settings may not appear. Ambiguous: confirm in your tenant | [frontier-admin] |
 | Individuals | Microsoft 365 Personal, Family, Pro or Premium subscribers; no extra fee | The user: Word, Excel or PowerPoint on the web > File > Options > Copilot settings > "Preview Frontier Features", per app. The Microsoft 365 Copilot desktop app needs no opt-in | The subscription | [frontier-individuals] |
 | Agent 365 | A tenant with at least one Microsoft E7 licence that accepts the Agent 365 terms | A global admin only: admin center > Agents > Overview > Try now. Then Billing > Licenses should show 25 "Microsoft 365 Frontier for AI Teammates" licences | E7; licensed per agent instance in Frontier, per user at GA | [frontier-agent365] |
 
@@ -790,9 +792,10 @@ such features are preview, "subject to change", and may be modified, suspended o
   [frontier-agent365].
 - **Disagreement:** the Agent 365 FAQ says Frontier is for customers "with a Copilot or E7 license"
   [frontier-agent365] and the support overview says business users with "a Microsoft Copilot
-  license" are eligible [frontier-what-is]; the admin page (updated 2026-11-17) says enrolment needs
-  neither [frontier-admin]. Treat the admin page as current for enrolment, and the licence rule as
-  the gate for seeing Copilot features.
+  license" are eligible [frontier-what-is]; the admin page (updated 2026-11-17) says a Copilot
+  licence "isn't required to enroll users" but is ambiguous about the admin's own licence today
+  (see the table) [frontier-admin]. Treat enrolment rules as unsettled; the licence is the gate for
+  seeing Copilot features.
 - **Related changes:** Targeted release retires in January 2027; users already in Frontier stay
   enrolled [frontier-admin].
 
@@ -803,11 +806,11 @@ Items the three pages and the program pages name as Frontier:
 | Copilot Cowork incl. model choice and Edge browsing | Business | Features page lists both; Edge browsing moved to GA per [cowork-whats-new], so the features page lags |
 | Cowork plugins and mobile (iOS, Android) | Business | Named on [frontier-features]; plugin status not stated |
 | Researcher refresh; new Microsoft 365 Copilot app design | Business | Named on [frontier-program] with no detail |
-| Autopilot | Business | Rolling out progressively from 2026-11-17 to Frontier customers with a Copilot licence, usage-based billing and the required security controls [frontier-features], [ignite-2026-blog] |
+| Autopilot | Business | Announced; no Learn page. Rolling out progressively from 2026-11-17 to Frontier customers with a Copilot licence, usage-based billing and the required security controls, per [frontier-features] (a page that lags elsewhere) and [ignite-2026-blog] |
 | Copilot Code; Workspaces; Cowork App skill | Business | Frontier [code-use], [ignite-2026-blog], [cowork-whats-new] |
 | Project Opal | Business, Copilot subscription | Frontier [opal-support] |
 | AI-enabled Cloud PCs | Business | "Frontier Preview"; needs Intune settings [frontier-admin] |
-| Workflows in Microsoft 365 Copilot | Business | Frontier early access [workflows-agent-start] |
+| Workflows in Microsoft 365 Copilot ("Workflows Agent (Frontier)") | Business and individuals | Rolling out to Frontier early access; individuals in select markets starting with the US in English; Copilot-licensed users add it from the Agent Store [workflows-agent-start] |
 | App Builder (agent that makes lightweight apps; GPT-5 required, no external APIs, code not viewable) | Business, via Agent Store | Requires Frontier program membership; page dated October 2026 steers app building to Cowork and Copilot Studio; admins manage it in the Microsoft 365 and Power Platform admin centers [frontier-app-builder] |
 | Frontier features in Copilot Chat; Word and Excel on the web | Business and individuals | Support overview: enterprise users need a Copilot licence and admin settings allow it; its eligibility text names Word and Excel while its web-apps text names Word and PowerPoint, and it says capabilities are "coming soon to all apps" [frontier-what-is] |
 | Office Agent (Word and PowerPoint creation, "Powered by Anthropic models") | Individuals | Named on [frontier-individuals]; no other detail |
@@ -921,6 +924,10 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-10-01 (passed) | Copilot Code documented as Frontier preview (page's own `ms.date`, not a stated entry date); application card names Claude Opus/Sonnet/Haiku plus Microsoft-hosted GPT models | Frontier preview | [code-use], [code-app-card] |
 | 2026-10-05 (passed) | Microsoft Copilot Managed Runtime documented in preview (Learn: "This is a preview feature") | preview | [managed-runtime-overview] |
 | 2026-11-17 (passed) | Ignite blog: Copilot Managed Runtime "generally available today," Home GA, Copilot Code GA "in the coming weeks," Autopilot rolling out to Frontier, Workspaces in Frontier; Learn pages still showed preview notices on 2026-11-18 | announcement | [ignite-2026-blog] |
+| 2026-03-09 (passed) | Microsoft 365 E7 "Frontier Suite" announced (vendor marketing: partner blog; the Learn comparison page documents what it includes) | announced | [e7-partner-blog], [m365-licence-compare] |
+| 2026-05-01 (passed) | Microsoft 365 E7 general availability, per the partner blog (vendor marketing, not a Learn page; Learn separately documents Agent 365 GA on this date) | GA per vendor blog | [e7-partner-blog], [agent365-overview] |
+| 2026-11-17 (passed) | Business Frontier admin page updated; the unified release preferences experience (Settings > Org settings > Release preferences) rolls out gradually from mid-November 2026 | documented, rolling out | [frontier-admin] |
+| January 2027 (upcoming) | Targeted release retires; users already enrolled in Frontier stay enrolled | scheduled | [frontier-admin] |
 | — | Copilot Studio's bring-your-own-model feature for prompt-tool nodes explicitly excludes the GPT-5 family and later models | current, no preview label found | [byom-prompts] |
 
 ## Guardrails for SharePoint and Microsoft 365 agent skills
@@ -972,7 +979,8 @@ against a specific vendor sentence.
 ## Pricing
 
 This doc deliberately does not quote Microsoft 365 Copilot, Copilot Studio, Microsoft Agent 365,
-Work IQ, Power Automate, Azure OpenAI/Foundry, or Claude list prices. Prices change faster than a
+Work IQ, Power Automate, Azure OpenAI/Foundry, or Claude list prices, with the dated exceptions
+below. See [Licences](#licences-2026-11-18) for what each licence includes. Prices change faster than a
 research doc's own review cycle, and a stale number quoted here would be worse than a pointer to
 the vendor's own current page — with one dated exception: the Copilot Cowork and Copilot Managed
 Runtime credit rates quoted in
@@ -982,8 +990,9 @@ to one vendor page and one access date (2026-06-16 and 2026-11-10 respectively);
 pages directly before relying on either figure, exactly as for every other price on this list.
 The [Microsoft agent stack](#microsoft-agent-stack-2026-11-18) section adds two more figures on the
 same terms, both accessed 2026-11-18: Copilot Studio computer use's credits per step and Foundry
-Agent Service's price basis. As
-of **2026-10-21** for the original pass, consult the vendor's own pricing page directly for each
+Agent Service's price basis. The Licences subsection quotes one more: Microsoft 365 E7 at "$99 per
+user per month", from a partner blog (vendor marketing) with no currency or region stated, so
+treat it as unconfirmed until a Microsoft pricing page shows it. As of **2026-10-21** for the original pass, consult the vendor's own pricing page directly for each
 surface:
 
 - [Microsoft 365 Copilot pricing (Enterprise)][m365-copilot-pricing]
@@ -1006,8 +1015,8 @@ surface:
 - [Use Copilot Code (Frontier)][code-use] — Frontier/Microsoft-Product-Terms preview; no separate
   price page was checked for Copilot Code itself.
 
-Re-check all of the above directly before using any number for a budget or a contract — none of
-them are reproduced here.
+Re-check all of the above directly before using any number for a budget or a contract — apart from
+the dated exceptions named in the preface, none of them are reproduced here.
 
 ### Licences (2026-11-18)
 
@@ -1018,13 +1027,14 @@ licensing availability and terms can change, so confirm in the Product Terms bef
 | Licence | What it gives for agents | Source |
 |---|---|---|
 | Microsoft 365 E3, E5 | The base. Copilot is an add-on for both. Agent 365 is not included in either; Agent 365 works best with E5 as the base, and at least one user needs a qualifying Agent 365 licence | [m365-licence-compare], [agent365-overview] |
-| Microsoft 365 E7 "Frontier Suite" | E5 plus Microsoft Copilot, the Microsoft Entra Suite and Agent 365 in one licence. Announced 2026-03-09; the partner blog gave general availability 2026-05-01 and "$99 per user per month" with no currency or region stated, so confirm the price on a Microsoft pricing page. E7 is also the gate for Agent 365 Frontier ([Frontier table](#the-frontier-program)) | [m365-licence-compare], [e7-partner-blog] |
+| Microsoft 365 E7 "Frontier Suite" | E5 plus Microsoft Copilot, the Microsoft Entra Suite and Agent 365 in one licence. Both dates come from the partner blog (vendor marketing, not Learn): announced 2026-03-09, general availability 2026-05-01. Learn's comparison page documents the contents but gives no dates. The blog also gives "$99 per user per month" with no currency or region stated, so confirm the price on a Microsoft pricing page. E7 is also the gate for Agent 365 Frontier ([Frontier table](#the-frontier-program)) | [m365-licence-compare], [e7-partner-blog] |
 | Business Premium, Standard, Basic, Apps for Business, Teams Essentials | Eligible bases for "Microsoft Copilot Business", an add-on for tenants of up to 300 users, annual commitment. Business Premium is also an eligible base for the Microsoft 365 Copilot add-on | [copilot-licence-options] |
-| Microsoft 365 Copilot add-on | Full Copilot Chat and agent experiences; grounding on SharePoint and Graph data. The same page's licensing table calls the licence required for authoring in Copilot Studio, while its Copilot Studio section says Copilot Studio is available to all Microsoft 365 users, so treat authoring rules as unsettled. Eligible bases include E3, E5, F1, F3 and the Business plans | [copilot-licence-options], [da-prerequisites] |
+| Microsoft 365 Copilot add-on | Full Copilot Chat and agent experiences; grounding on SharePoint and Graph data. The same page's licensing table calls the licence required for authoring in Copilot Studio, while its Copilot Studio section says Copilot Studio is available to all Microsoft 365 users, so treat the authoring rule as unsettled [da-prerequisites]. Eligible bases include E3, E5, F1, F3 and the Business plans | [copilot-licence-options], [da-prerequisites] |
 | Usage-based billing (Copilot Credits) | Agents without a Copilot licence, with limits: SharePoint, Copilot connectors, embedded file and Dataverse knowledge work; email, People and Teams knowledge need the licence. Needs an Azure subscription and a billing policy; not supported in GCC or GCCH | [da-prerequisites] |
 | No Copilot licence, no billing | Copilot Chat is "available to all Microsoft 365 users" with agents grounded on instructions or the web; Copilot Studio is available to all Microsoft 365 users, with grounding on organisational data needing billing or a licence | [da-prerequisites] |
 | Developer tenants | A Microsoft 365 Developer Program instant sandbox (E5, add-ons purchasable); a configurable sandbox cannot buy Copilot, so agents are limited to web grounding | [da-prerequisites] |
 
+- **Work IQ:** the Work IQ API is independent of Microsoft 365 Copilot licensing, billed by usage in Copilot Credits shared with other eligible services [work-iq-overview].
 - **Frontier:** licence rules differ by program; see [The Frontier program](#the-frontier-program)
   rather than a second list here.
 - **Admin roles seen on Microsoft's pages:** AI Administrator, Security Administrator or Office
@@ -1127,9 +1137,13 @@ coverage):
 
 - Microsoft agent stack (2026-11-18): the model behind Project Opal (neither Opal page names one);
   Opal's default website policy (the admin and support pages disagree); Web IQ beyond its hub
-  entry; the eligibility criteria and regions for Foundry's `computer-use-preview`; the Frontier
-  program page's statement on ISO 27001/27002/27018 (read only in a Dutch-locale copy); and any
-  Dataverse page calling it a data layer for agents (its intro page doesn't).
+  entry; the eligibility criteria and regions for Foundry's `computer-use-preview`; and any
+  Dataverse page calling it a data layer for agents (its intro page doesn't). The ISO
+  27001/27002/27018 statement is now read on the en-us admin page [frontier-admin] (earlier only in
+  a Dutch-locale copy of the program page).
+- Licences (2026-11-18): Dataverse and Microsoft Graph licensing; the currency and region of the E7
+  "$99 per user per month" price (partner blog only); and which admin role manages the Agent 365
+  agent settings (the agent-settings page names none).
 - Whether deploying a skill automatically creates an associated automation flow, connector, or
   application (directionally consistent with the confirmed "skills can't connect to external
   systems" boundary above, but not independently targeted against a vendor page).
@@ -1142,7 +1156,7 @@ coverage):
 | Skills extensibility | Copilot-in-SharePoint Skills: GA, but no admin on/off switch and no governance-registry entry; cannot call external systems or run custom code |
 | Agent governance | Agent 365: GA control plane for agents and BYO tool servers; SharePoint Skills are not represented in it at all (documented silence, not a stated exclusion), and the BYO MCP registry explicitly excludes Foundry/declarative-agent tool consumption during preview |
 | Model choice, residency & contract | Copilot Studio supports external models from Anthropic, xAI, and Mistral; Anthropic models are excluded from the EU Data Boundary outright and off by default for in-scope customers; Claude's own Foundry hosting has no EU Data Zone deployment type; Claude's contractual posture differs by path (Foundry vs. standard M365 subprocessor vs. opt-in Data Retention models) |
-| Licensing model | Mixed by design across surfaces — a seat-based Copilot licence, usage-based credits, and a free gated tier each apply to different parts of the family, not one rule; see [Pricing](#pricing) for current numbers (not reproduced here) |
+| Licensing model | Mixed by design across surfaces — a seat-based Copilot licence, usage-based credits, and a free gated tier each apply to different parts of the family, not one rule; see [Licences](#licences-2026-11-18) for E3, E5, the E7 Frontier Suite, Business plans and billing, and [The Frontier program](#the-frontier-program) for the three Frontier gates (admin enrolment, individual opt-in, and Agent 365 Frontier, which needs one E7 licence); current prices are on the vendor pages ([Pricing](#pricing)), with one dated E7 exception |
 | Maturity | Mixed: core Skills, Agent 365, and Work IQ are GA; several adjacent automation hooks (document-generation connectors, Package Management API mutations, the BYO MCP registry) remain preview |
 
 **Strengths:** The core SharePoint Skills and Agent 365 mechanics documented here are confirmed,
@@ -1424,7 +1438,7 @@ re-checked even when Microsoft leaves the page unchanged.
 [da-agents-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agents-overview
 [manifest-1-9]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/declarative-agent-manifest-1.9
 [da-code-interpreter]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/code-interpreter
-[da-prerequisites]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/prerequisites
+[da-prerequisites]: https://learn.microsoft.com/en-us/plugins/prerequisites
 [cea-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview-custom-engine-agent
 [researcher-agent]: https://learn.microsoft.com/en-us/copilot/manage/researcher-agent
 [faq-researcher]: https://learn.microsoft.com/en-us/copilot/manage/faq-researcher
