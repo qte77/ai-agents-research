@@ -4,8 +4,8 @@ purpose: Survey of the "agentic enterprise OS" pattern — the operating-environ
 category: landscape
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, lyzr, self-hosted-oss, claude-code]
 created: 2026-06-28
-updated: 2026-11-14
-validated_links: 2026-11-12
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -27,7 +27,7 @@ All are proprietary SaaS; all govern **human-directed** agents (instructions, to
 | **[SAP Joule Studio 2.0][sap-joule]** | "AI-first development environment" | proprietary; free design-time through 2026 (promotional), production terms TBD | NL goal → PRD + code + tests + multi-agent orchestration *at design time*; part of the SAP Business AI Platform ("the Autonomous Enterprise", Sapphire 2026) |
 | **[Databricks Genie][genie]** | "agentic data coworker" | proprietary managed; OSS lakehouse base (Spark / Delta / Iceberg) | Genie Ontology semantic graph as the persistent context "kernel"; Genie Agents as reusable autonomous workflows |
 | **[Glean Independent Agents][glean]** | "AI coworkers" | not stated in the announcement | Distinct per-agent identity + persistent memory; proactive/event-triggered action (parallel to Copilot Studio's autonomous agents) across Slack/Jira/Teams — still admin-configured, not autonomous goal origination; first instance is the OnCall Assistant (beta) |
-| **[Lyzr Agent Studio][lyzr-docs]** (+ Lyzr ADK, Opencontroller) | enterprise agent builder with a governance control plane | proprietary; deploys as SaaS, on-premise in your VPC, or hybrid; Build tier $0, governance and workflow tiers custom, fixed-scope proof of concept $20,000; "No token billing: you pay your model provider directly" ([pricing][lyzr-pricing]) | no-code studio plus a Python SDK (`pip install lyzr-adk`); model-agnostic, Claude listed in the [ADK model table][lyzr-adk]; MCP client, with only its Cognis memory exposed as an MCP server ([MCP docs][lyzr-mcp]); A2A both ways, calling LangGraph/CrewAI/Semantic Kernel agents as sub-agents ([A2A docs][lyzr-a2a]) |
+| **[Lyzr Agent Studio][lyzr-docs]** (+ Lyzr ADK, [Opencontroller][lyzr-opencontroller] (marketing page, no docs)) | enterprise agent builder with a governance control plane | proprietary; deploys as SaaS, on-premise in your VPC, or hybrid; Build tier $0, governance and workflow tiers custom, fixed-scope proof of concept $20,000; "No token billing: you pay your model provider directly" ([pricing][lyzr-pricing]) | no-code studio plus a Python SDK (`pip install lyzr-adk`); model-agnostic, Claude listed in the [ADK model table][lyzr-adk]; MCP client, with only its Cognis memory exposed as an MCP server ([MCP docs][lyzr-mcp]); A2A both ways, calling LangGraph/CrewAI/Semantic Kernel agents as sub-agents ([A2A docs][lyzr-a2a]) |
 
 **Lyzr caveat** (added 2026-11-14): unlike the rest of the tier it also runs on-premise or hybrid, so "proprietary SaaS" above reads as "proprietary" for Lyzr. Its MCP and A2A support are documented first-party; its AG-UI posture was not checked. Compliance certifications and adoption figures on its site are vendor claims, not verified here. The public `LyzrCore` GitHub repos are small side projects; the most-starred, `lyzr-automata`, has no LICENSE file and is not the platform.
 
@@ -125,6 +125,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 | [Databricks Genie analysis][genie] | Agentic data coworker; Genie Ontology context graph |
 | [Glean — "Introducing independent agents"][glean] | AI coworker agents; independent identity, memory, proactive action |
 | [Lyzr docs][lyzr-docs], [ADK overview][lyzr-adk], [MCP][lyzr-mcp], [A2A][lyzr-a2a], [pricing][lyzr-pricing] | Lyzr deployment modes, SDK and models, MCP/A2A support, tiers |
+| [Lyzr Opencontroller page][lyzr-opencontroller] | Marketing page (checked 2026-11-18): pitches a single control plane over all of an org's agents; no docs or repo link on it, so treat the capability as a vendor claim |
 | Gartner — 2026 Hype Cycle for Agentic AI (gartner.com; bot-blocked, not link-checked) | First-party anchor for the formal category "AI agent development platforms" |
 | [Use the Microsoft Copilot harness with prompt agents][foundry-copilot-harness] | Foundry's own "Copilot harness" — a different thing from Copilot Studio's harness |
 | [Hosted agents in Foundry Agent Service][foundry-hosted-agents] | Foundry hosted agents — containerized, bring-your-own-framework; no stated preview/GA status |
@@ -145,6 +146,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [lyzr-mcp]: https://docs.lyzr.ai/enterprise/agent-studio/tools/MCP
 [lyzr-a2a]: https://docs.lyzr.ai/enterprise/integrations/a2a-protocol
 [lyzr-pricing]: https://www.lyzr.ai/pricing/
+[lyzr-opencontroller]: https://www.lyzr.ai/opencontroller/
 [hugagentos]: https://github.com/ZJU-REAL/HugAgentOS
 [octop]: ../agents/octop-analysis.md
 [polyforge]: https://github.com/qte77/polyforge-orchestrator

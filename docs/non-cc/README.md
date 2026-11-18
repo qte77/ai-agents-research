@@ -6,7 +6,7 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 
 | Document | Type | Headless | Open Source |
 |---|---|---|---|
-| [orchestrators-landscape.md](orchestrators/orchestrators-landscape.md) | Landscape: the six orchestrators by coordination shape, state hand-off and escalation; Claude Code primitives vs non-CC equivalents; multi-agent failure modes (MAST and 2026 papers) | — | — |
+| [orchestrators-landscape.md](orchestrators/orchestrators-landscape.md) | Landscape: the six orchestrators by coordination shape, state hand-off and escalation; Claude Code primitives vs non-CC equivalents; multi-agent failure modes (MAST and 2026 papers); AgentRun beyond the six | — | — |
 | [air-analysis.md](orchestrators/air-analysis.md) | JetBrains Air (GUI) | No | No |
 | [deerflow-analysis.md](orchestrators/deerflow-analysis.md) | ByteDance DeerFlow (LangGraph) | Yes | Yes (MIT) |
 | [devteam-analysis.md](orchestrators/devteam-analysis.md) | agent-era/devteam (TUI) | No | Yes (MIT) |

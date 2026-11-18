@@ -48,7 +48,7 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 | [CC-code-tooling-landscape.md § Research: do code maps help coding agents?](../cc-community/CC-code-tooling-landscape.md#research-do-code-maps-help-coding-agents) | Whether a code map saves exploration tokens | cc-community |
 | [aider-analysis.md § Codebase mapping (repo map)](../non-cc/coding-agents/aider-analysis.md#codebase-mapping-repo-map) | A repo map capped by a token budget | non-cc |
 | [fastcontext-analysis.md § Adoption Decision](../non-cc/context-memory/fastcontext-analysis.md#adoption-decision) | A dedicated, cheaper repo-exploration subagent | non-cc |
-| [llm-routers-gateways-landscape.md § When to Use What](../non-cc/infrastructure/llm-routers-gateways-landscape.md#when-to-use-what) | Routing requests to cheaper models through a gateway | non-cc |
+| [llm-routers-gateways-landscape.md § When to Use What](../non-cc/infrastructure/llm-routers-gateways-landscape.md#when-to-use-what) | Routing requests to cheaper models through a gateway; LiteLLM `agent_eval` (preview) reports pass rate, cost and duration per harness | non-cc |
 | [context-management.md](../cc-native/examples/rules/context-management.md) | Example rule: context-utilization target and compaction triggers | cc-native |
 
 ## Measuring

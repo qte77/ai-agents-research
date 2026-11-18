@@ -3,8 +3,8 @@ title: Shepherd — Programmable Meta-Agents via Reversible Execution Traces
 source: https://arxiv.org/abs/2605.10913
 purpose: Analysis of Shepherd, a research framework that records agent execution as a reversible, Git-like trace so meta-agents can inspect, fork, replay, and revert runs.
 created: 2026-09-24
-updated: 2026-09-24
-validated_links: 2026-09-24
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -76,6 +76,8 @@ latest release `v0.3.1` (published 2026-09-09), most recent push
 2026-09-09 — 2,440 stars, 212 forks, 12 open issues (all via `gh api`,
 accessed 2026-09-24).
 
+**Refresh (2026-11-18):** MIT, confirmed from the repo's LICENSE file (copyright "Shepherd Authors"). 2,646 stars, 229 forks, 13 open issues; latest release still `v0.3.1` (2026-09-09), last push 2026-09-09 (`gh api`). The README badge and notice still say alpha. The README links the paper and points to `shepherd-agents/shepherd-experiments` for the paper's experiment code and a frozen substrate snapshot; the arXiv abstract (v3, 2026-06-24, re-read 2026-11-18) says the authors open-source Shepherd but gives no repository URL, so the repo-to-paper link rests on the README's own claim. This page does not verify that the repo implements all three paper applications; the README documents the runtime, and the experiment code sits in the companion repo.
+
 ## Corpus Relevance
 
 Shepherd's KV-cache-reuse-on-replay claim sits directly against the
@@ -100,7 +102,7 @@ one supported backend, not an exclusive one — hence `non-cc/` placement.
 |---|---|
 | [Shepherd arXiv abstract (2605.10913)][paper] | Title, authors, submission/revision dates, abstract — reported results (28.8%→54.7% pair-coding success; 12.8% Terminal-Bench 2.0 gain over MetaHarness) |
 | [shepherd-agents/shepherd repo][repo] | README — architecture, permission model, install/usage, platform support, copy-on-write/KV-cache-reuse claim, license |
-| GitHub API `repos/shepherd-agents/shepherd`, accessed 2026-09-24 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
+| GitHub API `repos/shepherd-agents/shepherd`, accessed 2026-09-24 and 2026-11-18 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
 
 [paper]: https://arxiv.org/abs/2605.10913
 [repo]: https://github.com/shepherd-agents/shepherd

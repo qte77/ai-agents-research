@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-12
-validated_links: 2026-11-12
+updated: 2026-11-18
+validated_links: 2026-11-18
 ---
 
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
@@ -172,6 +172,7 @@ Design lens — Lindenberg's *Everything Is a Plugin, Proven* reads this decisio
 - [VibeFlow](https://vibeflow.ai) — YC S25 no-code / visual full-stack **app** builder: natural-language → deployable web apps with an **editable, n8n-style visual backend workflow editor** (business logic is inspectable, not a black box), a Convex real-time DB, GitHub deploy + custom domains, "AI Agent Nodes" for in-flow LLM steps, and ~15+ integrations (Stripe/Slack/Notion/…). Web-only, closed SaaS, freemium (paid tiers not surfaced as of 2026-06-20). Name collisions: `pe-menezes/vibeflow` (a CC/Cursor spec-driven tool) and `vibeflowing-inc/vibe_figma` are **not** this product.
 - [Agent Reach](https://github.com/Panniantong/Agent-Reach) — CLI giving coding agents (Claude Code, OpenClaw, Cursor, …) internet access: zero-config web pages/YouTube transcripts/RSS/GitHub, plus login-required platforms (Twitter/X, Reddit, Facebook, Instagram, Xiaohongshu, LinkedIn) — by installing and routing between upstream open-source extractors (yt-dlp, twitter-cli, bili-cli, …) rather than calling paid APIs, hence "zero API fees." Credentials stay local (`~/.agent-reach/config.yaml`, mode 600); the project's own docs warn of account-suspension risk on login-required platforms and recommend throwaway accounts (MIT; 85.2k★, created 2026-02, `gh api` 2026-09-24).
 - [Warp](https://www.warp.dev/) — "agentic development environment" (ADE): a terminal-rooted agent platform spanning inline completions → prompt-driven agentic workflows → system-triggered autonomous agents, plus **Oz**, an orchestration platform for cloud coding agents. Industry framing: [GV — From Terminal to Agent](https://www.gv.com/news/ai-agent-warp) (Zach Lloyd, 2025).
+- [rust-anything (erkamyaman)][rust-anything] — a code-porting/migration tool (not a framework): CLI plus MCP server and skill for agent-assisted porting of an app to Rust piece by piece: it records the original's behaviour on generated and user-supplied inputs, generates a Rust crate and a compatibility wrapper, then replays every recorded case against the port before a unit counts as done (the coding agent or the user writes the Rust). Source languages: Node/TypeScript, Python, C, Go, Ruby and Java, with PHP and C# in preview; `setup` registers it with Claude Code, Codex, Cursor and Gemini CLI, so it is not Claude-Code-specific. MIT (LICENSE file). **Caveats (2026-11-18):** about 3,000 stars within two days of creation (created 2026-11-16; 3,037 stars, 244 forks at `gh api` time) on a new personal repo, a velocity the corpus treats as unexplained, as with Harness² above; the headline figures ("up to 20x faster", 38,251 recorded cases replayed, 0 mismatches) are the author's own benchmarks, not independently reproduced. The README itself says the check only covers what the recording covers, and warns that recording executes the original code, so run it on a copy with no production credentials. Not run here.
 
 ## 4. Agent Memory Infrastructure
 
@@ -547,8 +548,10 @@ WikiTrace addition (§4) — first-party checked 2026-11-12:
 | [arXiv:2611.14320][wikitrace-paper] abstract page | Title, authors, submission date (2026-11-10, v1 only), "Submitted to ACL Rolling Review (October 2026 cycle); under review" Comments field, CC BY 4.0 license badge |
 | [arXiv:2611.14320][wikitrace-paper] HTML full text (`arxiv.org/html/2611.14320`) | Memory-induced-degradation framing, evidence-linked mechanism description, backbone model (`deepseek-v4-flash`), judge models, "all eight suites" / "consults the linked evidence more often on harder tasks" wording, stated limitations |
 | [yukyeongleee/wikitrace][wikitrace-gh] README (`gh api repos/.../contents/README.md`, base64-decoded) | Author roles and "KAIST AI · DeepAuto.ai" byline, verbatim headline sentence ("best method on all eight suites, +8.5 points over the best prior memory method on average, with the lowest Regression (4.5%)"), repo structure (CLI, per-benchmark setup scripts, configs) |
+| [erkamyaman/rust-anything][rust-anything] README, LICENSE and `gh api` metadata | Record/port/diff workflow, supported languages and agents, self-reported benchmarks, recording caveats; MIT; 3,037 stars, created 2026-11-16 (2026-11-18) |
 | [yukyeongleee/wikitrace][wikitrace-gh] LICENSE (`gh api`, base64-decoded) + repo metadata | Apache License, Version 2.0 (read from the LICENSE file itself, not the API's license field alone); public, 10★, created 2026-10-21, pushed 2026-11-11 |
 
+[rust-anything]: https://github.com/erkamyaman/rust-anything
 [wikitrace-paper]: https://arxiv.org/abs/2611.14320
 [wikitrace-gh]: https://github.com/yukyeongleee/wikitrace
 [pydantic-ai-harness-gh]: https://github.com/pydantic/pydantic-ai-harness

@@ -762,7 +762,9 @@ Microsoft ships four ways for an agent to drive a screen, plus Cowork's local Ed
 - **Opal open questions:** neither Opal page names the model. Microsoft's pages disagree on the
   default website policy: the admin page says "Opal now allows access to all websites by default"
   [opal-admin], while the support page describes an admin blocklist [opal-support]. (Editorial
-  note: Microsoft's Project Opal is unrelated to Google Labs' Opal mini-app builder.)
+  note: Microsoft's Project Opal is unrelated to Google Labs' Opal mini-app builder. It is also unrelated to
+  Microsoft Research's [OPAL][msr-opal], a project established in 2016 on a programming language and
+  environment for natural-language intelligent assistants; the two share only the name.)
 
 #### The Frontier program
 
@@ -1342,6 +1344,7 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Copilot Studio — Computer use][studio-computer-use], [standalone tool][studio-computer-use-standalone] | Computer-use scope, models, credits per step, controls; standalone tool preview |
 | [Foundry — Computer use tool][foundry-computer-use] | `computer-use-preview`, gated access, client-side execution |
 | [Project Opal — support][opal-support], [admin settings][opal-admin] | Frontier gate, Edge-only Cloud PC agent, default website access |
+| [Microsoft Research OPAL][msr-opal] | Unrelated 2016 NL-assistant programming project; name collision only (checked 2026-11-18) |
 | [Frontier program][frontier-program], [Frontier features][frontier-features] | Enrolment paths; partial and stale feature index |
 | [Frontier admin guide][frontier-admin], [Frontier for individuals][frontier-individuals], [Agent 365 Frontier][frontier-agent365], [What is Frontier][frontier-what-is], [App Builder (Frontier)][frontier-app-builder] | Three programs: roles, toggles, licences, terms, regions, named items (2026-11-18) |
 | [Compare E3, E5, E7][m365-licence-compare], [Copilot licence options][copilot-licence-options], [E7 partner blog][e7-partner-blog], [Agent 365 agent settings][a365-agent-settings], [M365 Maps][m365maps], [MSPortals.io][msportals] | Licences subsection; the last two are third-party navigation aids |
@@ -1482,6 +1485,7 @@ re-checked even when Microsoft leaves the page unchanged.
 [foundry-computer-use]: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/computer-use
 [opal-support]: https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-with-project-opal-frontier
 [opal-admin]: https://learn.microsoft.com/en-us/copilot/manage/opal-settings-manage
+[msr-opal]: https://www.microsoft.com/en-us/research/project/opal/
 [agent-builder]: https://learn.microsoft.com/en-us/plugins/agent-builder
 [agent-builder-vs-studio]: https://learn.microsoft.com/en-us/plugins/copilot-studio-experience
 [studio-overview]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio
