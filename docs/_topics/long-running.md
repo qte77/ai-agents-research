@@ -6,7 +6,9 @@ the corpus. Pointers only; see [the hub index](README.md).
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [CC-cloud-sessions-analysis.md](../cc-native/ci-remote/CC-cloud-sessions-analysis.md) | Claude Code on the Web: cloud VMs, self-hosted runners, teleport | cc-native |
-| [CC-web-scheduled-tasks-analysis.md](../cc-native/ci-remote/CC-web-scheduled-tasks-analysis.md) | Cloud-native scheduled tasks for recurring autonomous work | cc-native |
+| [CC-web-scheduled-tasks-analysis.md](../cc-native/ci-remote/CC-web-scheduled-tasks-analysis.md) | Cloud scheduled tasks (formerly routines): schedule, API and GitHub triggers; permission posture in unattended runs | cc-native |
+| [workflow-frameworks-landscape.md § Checkpoint and resume matrix](../non-cc/frameworks/workflow-frameworks-landscape.md#checkpoint-and-resume-matrix) | What a resume restores across Claude Code, Codex, Gemini CLI, OpenCode and durable-execution engines (Temporal, DBOS, Restate, Inngest) | non-cc |
+| [workflow-frameworks-landscape.md § Watchdog and liveness design](../non-cc/frameworks/workflow-frameworks-landscape.md#watchdog-and-liveness-design) | Heartbeats, turn and budget caps, stuck-on-prompt runs, green-but-idle detection; long-run failure evidence from 2026 papers | non-cc |
 | [CC-session-keepalive-analysis.md](../cc-native/sessions/CC-session-keepalive-analysis.md) | Keeping CC sessions alive locally, in containers, in Codespaces | cc-native |
 | [CC-goal-analysis.md](../cc-native/sessions/CC-goal-analysis.md) | `/goal`: keep a session working until a completion condition holds; one of three documented keep-running mechanisms with `/loop` and Stop hooks | cc-native |
 | [goal-loops-landscape.md](../non-cc/coding-agents/goal-loops-landscape.md) | Goal loops across coding agents: who judges completion, bounds, and Stop-style hooks in Codex, Antigravity, Kiro, Copilot, Cursor, VS Code, Devin, Amp | non-cc |
