@@ -3,7 +3,7 @@ title: Pi — Minimal Extensible AI Coding Agent CLI
 source: https://pi.dev/
 purpose: Evaluate Pi as an open-source terminal coding agent harness with multi-provider LLM support and extension-first architecture
 created: 2026-06-16
-updated: 2026-09-24
+updated: 2026-11-18
 validated_links: 2026-09-24
 status: trial
 platform_scope: [claude, openai, google, azure, bedrock, groq, mistral, ollama]
@@ -19,7 +19,7 @@ home under [Earendil Inc.][pi-home] in May 2026, with npm packages republished u
 Pi is the third named harness integrated by [Omnigent][omnigent-doc], alongside Claude Code and
 Codex, confirming its standing as a peer-level coding agent in that ecosystem.
 
-The monorepo ships three packages (as of v0.79.4, 2026-06-15, accessed 2026-06-16):
+The monorepo ships three packages (as of v0.79.4, 2026-06-15, accessed 2026-06-16; latest release as of 2026-11-18: v1.5.2, 2026-11-10, via `gh api`):
 
 - **`@earendil-works/pi-coding-agent`** — interactive CLI for coding tasks
 - **`@earendil-works/pi-agent-core`** — runtime handling tool-calling and state management

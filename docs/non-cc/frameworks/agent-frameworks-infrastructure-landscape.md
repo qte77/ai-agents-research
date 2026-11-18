@@ -531,7 +531,7 @@ Harness², OpenHuman and ToolCallJudge additions (§1, §3) — first-party chec
 | Source | Content |
 |---|---|
 | [google-research/harness2][harness2-gh] README | Propose–Probe–Compose and harnessing-level recursion description, scaling-mode flags, benchmark figures, network/sandbox caveat |
-| [google-research/harness2][harness2-gh] `gh api` metadata | Apache-2.0, 23,468★/2,355 forks, created 2026-10-06, pushed 2026-11-02 |
+| [google-research/harness2][harness2-gh] `gh api` metadata | Apache-2.0, 2,355 forks, created 2026-10-06, pushed 2026-11-02 |
 | [tinyhumansai/openhuman][openhuman-gh] README | "Fastest, cheapest, most efficient" framing, cold-start/token/memory benchmark claims, Hermes side-by-side demo |
 | [tinyhumansai/openhuman][openhuman-gh] `gh api` metadata + `/license` | GPL-3.0, 42,654★/4,216 forks, created 2026-02-18, pushed 2026-11-11 |
 | [pydantic/pydantic-ai-harness][pydantic-ai-harness-gh] `gh api` metadata | MIT, 954★/153 forks, created 2026-03-20, pushed 2026-10-02 (refreshes the 595★ snapshot already in this doc) |

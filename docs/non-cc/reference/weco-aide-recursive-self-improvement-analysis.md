@@ -3,8 +3,8 @@ title: AIDE² — Weco AI's Recursive Self-Improvement Experiment
 source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus further harness-subject entries, FineEnvs multi-harness RL training, the agentic meta-reasoning paper, ActiveSaddler's curriculum-driven harness optimization, the Sharpening Tax critique of RL post-training for agentic coverage, MIRA's meta-reasoning architecture for long-horizon research agents, and four more RSI-family papers: Harness² (verifier-free recursive harnessing), RSI-Dojo (agents automating LLM post-training), InfraRSI (RSI for training infrastructure), and Self-HPO (alternating harness/policy optimization).
 created: 2026-09-24
-updated: 2026-11-12
-validated_links: 2026-11-12
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -412,8 +412,8 @@ at design time and no ground-truth verifier exists. It recurses at two levels: t
 refines a single task's harness through a verifier-free "Propose-Probe-Compose" step, and
 harnessing-level recursion distills experience from those edits into a continual-improvement harness for
 future tasks. Across three professional benchmarks (WorkBuddy-Bench, JobBench, LAB) the authors report a
-single task-level step improving GLM-5 and Gemini 3.5 Flash over their base harnesses by up to 11.5, 4.5,
-and 11.8 points respectively, with further gains as the per-task recursion budget grows. Code is released
+single task-level step improving GLM-5 and Gemini 3.5 Flash over their base harnesses by up to 11.5
+(WorkBuddy-Bench), 4.5 (JobBench) and 11.8 points (LAB), with further gains as the per-task recursion budget grows. Code is released
 at [google-research/harness2][harness2-repo] (Apache-2.0 per the repo's own license badge; `gh api` shows
 23,469★/2,355 forks as of 2026-11-12 — a striking count one month after the repo's 2026-10-06 creation,
 flagged here rather than taken at face value; not a fork, and the README matches the paper). Not
@@ -461,6 +461,42 @@ released at [MSR-Orchard/Self-HPO][self-hpo-repo] (confirmed by the repo's own a
 MIT, 65★/4 forks, created 2026-10-10) and [huggingface.co/self-hpo][self-hpo-hf]. Not rubric-scored: a
 second harness-plus-policy co-optimization method alongside AIDE²/RRSI above.
 
+## Harness search results
+
+As of 2026-11-18, one home for the harness-search comparison. The entries in
+[agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md)
+and [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md)
+point here; the per-method sections above (AIDE², RRSI, Self-HPO, Harness²) hold the detail and are not
+repeated in the table. Numbers are each paper's or blog's own, on different benchmarks and models, so the
+rows are **not comparable with each other**; read each row against its own baseline.
+
+| Method | What is searched | Held fixed | Reported result (self-reported) | Code |
+|---|---|---|---|---|
+| AIDE² (Weco, blog 2026-07-14, arXiv 2609.26457) | The research agent's own source, rewritten by an outer agent over 100 iterations | Selection rule: the outer loop keeps a rewrite only if it beats the previous best, on a held-out private score (per the [blog][blog]) | MLE-Bench Lite, paired by task vs AIDE0, mean of 3 seeds: +0.053 (AIDE47), +0.042 (AIDE85) (blog) | None found |
+| RRSI (repo under the google-research GitHub org, arXiv 2609.24972) | Harness around a frozen policy model; candidates in git worktrees | Policy model, per repo config ([`rrsi.json`][rrsi-config]); git-worktree design per the repo README | See [RRSI](#rrsi-regularized-recursive-self-improvement-of-agent-harnesses-added-2026-09-30) | Apache-2.0 repo |
+| Harness² (repo under the google-research GitHub org, arXiv 2610.14224) | Per-task harness via a verifier-free Propose-Probe-Compose step, plus a cross-task distilled harness | Not stated on the abstract page; our reading: the base model of each run | A single task-level step improves GLM-5 and Gemini 3.5 Flash over their base harnesses, by up to 11.5 (WorkBuddy-Bench), 4.5 (JobBench) and 11.8 points (LAB); the abstract page does not assign figures to models | Apache-2.0 repo |
+| Self-HPO (arXiv 2610.22791) | Alternates harness revision (H-step) and RL on the policy (P-step) | Base policy Qwen3.5-35B-A3B (abstract); a stronger external proposer is a separate variant | Average resolve rate 57.8% to 64.8% over three coding benchmarks | MIT repo |
+| HarnessFlow (arXiv 2611.06254, submitted 2026-11-04) | Whole executable harness; MCTS over a refinement tree, a coding agent proposes each edit | Executor model GPT-5.4-mini at medium reasoning effort (§4.1), 15 refinement attempts per search (§4.1, App. C.4) | Mean over six benchmarks 69.48 vs 65.53 for Meta-Harness, 61.71 for Claude Code 2.1.272 and 58.59 for the initial harness (Table 1) | Announced ("will be released"), not out |
+| Meta-Harness (Stanford IRIS Lab) | Whole harnesses by outer-loop search | n/a | Appears only as HarnessFlow's baseline above; not assessed separately | [Repo][meta-harness] (MIT per `gh api`, 2026-11-18) |
+
+**Reading it.**
+
+- **Scope of the HarnessFlow comparison.** Claude Code ran on GPT-5.4-mini there, so the 61.71 says
+  nothing about Claude Code on Claude models. The refiner is a separate agent, Codex CLI 0.154.0 running
+  GPT-5.5 at the highest reasoning effort (App. C.4, "Coding agent"), a stronger model than the executor;
+  the abstract only says "a coding agent".
+- **Protocol and variance (HarnessFlow).** Every method is run five times and Table 1 reports mean ±
+  sample standard deviation (§4.1, Table 1 caption); the data split uses a fixed seed, 4242 (App. C.1);
+  the executor's sampling temperature is the API default (App. C.4, "Models"); model-call seeds, the
+  refiner's temperature and the parent-sampling seeds are not stated. Read the 3.95-point gap to
+  Meta-Harness against the standard deviations in Table 1, which this note does not reproduce. Read
+  2026-11-18 from the paper's HTML version.
+- **Evidence levels.** AIDE², RRSI, Harness², Self-HPO and HarnessFlow results are paper- or
+  blog-reported and were not re-run here. Code: public for RRSI, Harness² and Self-HPO (and the
+  Meta-Harness repo that serves as HarnessFlow's baseline); AIDE² none found; HarnessFlow announced only.
+- **Method for benchmarking harnesses themselves** (what to hold fixed, variance): see
+  [agent-evaluation-metrics-landscape.md § Cost-Performance Efficiency](../../sdlc-lcm/agent-evaluation-metrics-landscape.md#cost-performance-efficiency-pareto).
+
 ## Cross-References
 
 - [harnessx-analysis.md][harnessx] — the same "paper claims ahead of public
@@ -505,6 +541,7 @@ second harness-plus-policy co-optimization method alongside AIDE²/RRSI above.
 | [arXiv 2610.22791 abstract page][self-hpo] | Title, full author list (8), submission date (2026-10-16), full abstract, reported resolve-rate figures — accessed 2026-11-12 |
 | [MSR-Orchard/Self-HPO README][self-hpo-repo] | Confirms the repo via its own arXiv:2610.22791 badge |
 | `gh api repos/MSR-Orchard/Self-HPO`, 2026-11-12 | License (MIT), stars (65), forks (4), created/pushed dates |
+| [arXiv 2611.06254 abstract page and HTML version][harnessflow] | Title, authors, submission date (2026-11-04), abstract figures, Table 1 means, executor and refiner models, five-run protocol, code "will be released" — accessed 2026-11-18 |
 
 [blog]: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 [paper]: https://arxiv.org/abs/2609.26457
@@ -551,3 +588,6 @@ second harness-plus-policy co-optimization method alongside AIDE²/RRSI above.
 [fe-kimik3]: https://arxiv.org/abs/2607.24653
 [fe-qwen]: https://arxiv.org/abs/2603.00729
 [fe-deepseekv32]: https://arxiv.org/abs/2512.02556
+[harnessflow]: https://arxiv.org/abs/2611.06254
+[rrsi-config]: https://github.com/google-research/rrsi/blob/main/domains/coding/rrsi.json
+[meta-harness]: https://github.com/stanford-iris-lab/meta-harness
