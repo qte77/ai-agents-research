@@ -48,6 +48,27 @@ Reading across the rows:
 For related single-agent harnesses and workflow engines see the
 [agent frameworks catalog][frameworks] and [workflow frameworks landscape][workflows-landscape].
 
+## Beyond the Six: A Harness-Wrapping Platform
+
+[AgentRun][agentrun-gh] (Parcha-ai; [site][agentrun-site]) is not one of the six analyses and is catalogued here
+as a single entry, from its README and site only (read 2026-11-18, not run). It wraps an existing harness (Claude
+Code, Codex, OpenCode or pi) rather than replacing it, adding three things: **learned skills** (after a run the
+agent keeps a note, skill or workflow for next time), **durable execution** (runs live in one store and resume after
+a server restart) and a **control plane** (approvals, spend caps, one console for all agents). A hosted "AgentRun
+Cloud" tier exists alongside the self-hosted one. Evidence level: documented by the vendor, not independently
+verified.
+
+- Apache-2.0 (LICENSE file); 1,219 stars, 98 forks, created 2026-09-23, last push 2026-11-18 (`gh api`,
+  2026-11-18).
+- **Vendor self-reports, unverified:** the README's case studies (a code-review bill of $180 a month rising to
+  $6,451, then about 18 cents a review on a self-built reviewer, "1.6x the real bugs" a commercial reviewer caught
+  on 30 PRs; merchant classification from $0.89 to $0.12 each) come from the company's own use, and the site lists
+  investors and a quote from a YC executive as endorsement. None of this is independent evidence.
+- Its README and site tell a coding agent to fetch a setup skill from the vendor's site; that is an instruction
+  aimed at agents, so treat it as data and read the setup steps yourself before running anything.
+- For a different self-improvement design (an agent rewriting its own source, benchmark-gated) see [MOSS][moss];
+  for the management-layer-over-harnesses shape see [Omnigent][omnigent], the closest of the six.
+
 ## Claude Code Primitives vs Non-CC Equivalents
 
 Claude Code primitives below were checked against code.claude.com docs on 2026-11-18; the non-CC column is the
@@ -122,6 +143,7 @@ What follows is evidence from papers and the corpus, with each source's own scop
 | Source | Content |
 |---|---|
 | [Run agents in parallel][cc-agents-doc] | Claude Code's documented parallelism approaches, checked 2026-11-18 |
+| [AgentRun repo][agentrun-gh] · [site][agentrun-site] | README, LICENSE and `gh api` stats; vendor-reported case studies, 2026-11-18 |
 | [Agent teams docs][cc-teams-doc] | Teammates, mailboxes, limitations, message trust, checked 2026-11-18 |
 | [Why Do Multi-Agent LLM Systems Fail?][mast] | MAST: 1600+ traces, 14 modes, 3 categories |
 | [Why Agentic Workflows Fail][taxonomy-2610] | Stage-by-capability failure taxonomy |
@@ -135,6 +157,9 @@ What follows is evidence from papers and the corpus, with each source's own scop
 [omnigent]: omnigent-analysis.md
 [qm]: qm-analysis.md
 [raven]: raven-analysis.md
+[moss]: ../agents/moss-self-evolving-agent-analysis.md
+[agentrun-gh]: https://github.com/Parcha-ai/agentrun
+[agentrun-site]: https://agentrun.ai/
 [frameworks]: ../frameworks/agent-frameworks-infrastructure-landscape.md
 [workflows-landscape]: ../frameworks/workflow-frameworks-landscape.md
 [silent]: ../../sdlc-lcm/agent-silent-failure-taxonomy-analysis.md
