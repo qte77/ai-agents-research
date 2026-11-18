@@ -2,7 +2,7 @@
 title: AI Crawlers and Discoverability Landscape
 purpose: Which AI crawlers and fetchers exist, what each robots.txt token controls (training, search, user-triggered fetch), the publisher-side controls (Cloudflare AI Crawl Control, pay per crawl, Content Signals), and what answer-engine operators actually say about appearing in AI answers.
 created: 2026-10-24
-updated: 2026-11-14
+updated: 2026-11-18
 validated_links: 2026-11-14
 status: research
 ---
@@ -47,6 +47,16 @@ search, and blocking a search bot does not stop a user's assistant from fetching
   with pricing; "Pay per crawl is currently in closed beta" ([docs][cf-pay-per-crawl]). The identity
   side (signed agents via Web Bot Auth) is in
   [agent-identity-auth-landscape.md § 3](../../sdlc-lcm/agent-identity-auth-landscape.md#3-personhood--the-bot-vs-authorized-agent-distinction).
+- **Pay per crawl, status check (2026-11-18)** — the docs page still says "closed beta"
+  ([docs][cf-pay-per-crawl]); its changelog shows a 2026-06-16 update adding URI-pattern exemptions
+  and dynamic pricing via an origin header or Worker ([changelog][cf-acc-changelog]). TechCrunch
+  reports Cloudflare's 2026-07-01 announcement that pay per crawl is "evolving into" Pay Per Use
+  (publishers paid when content creates value, e.g. in AI search results; partners Ceramic.ai and
+  You.com) and that from 2026-09-15 "mixed-use" crawlers are blocked by default on ad-hosting pages
+  for new customers, new sites and free plans ([TechCrunch][tc-cf-2026-07]). Secondary report; the
+  changelog has no entry for either item, so the detail is unconfirmed at Cloudflare. The crawler-side
+  view (signed agents, vendor table) is in
+  [web-scraping-extraction-landscape.md § Agent Identity and Vendor Handling](web-scraping-extraction-landscape.md#agent-identity-and-vendor-handling).
 - **Content Signals in managed robots.txt** — three purposes, `search`, `ai-input` and `ai-train`,
   plus an optional `use=` key: `immediate` ("Interact, but store and reuse nothing"), `reference`
   ("Index, excerpt, and link back") and `full` ("Summarize and reproduce"). Cloudflare is explicit
@@ -188,6 +198,7 @@ prompt panels across engines, run with your own API keys.
 | [Applebot][applebot] | Applebot, Applebot-Extended, Googlebot fallback |
 | [CCBot][ccbot] | Common Crawl user agent |
 | [Cloudflare AI Crawl Control][cf-ai-crawl-control] · [pay per crawl][cf-pay-per-crawl] · [managed robots.txt][cf-managed-robots] | Publisher controls, 402, Content Signals |
+| [Cloudflare AI Crawl Control changelog][cf-acc-changelog] · [TechCrunch 2026-07-01][tc-cf-2026-07] | Pay per crawl 2026-06-16 update; Pay Per Use and mixed-use default block (secondary, 2026-11-18) |
 | [Google AI features][google-ai-features] | No special markup or files for AI Overviews / AI Mode |
 | [Microsoft Bing Ads blog][bing-ai-answers] | Schema, headings, snippable answers |
 | [Google AI optimization guide][google-ai-guide] · [AI features opt-out][google-ai-optout] · [gen-AI reports][google-ai-reports] | What to ignore; Search Console opt-out and reporting |
@@ -208,6 +219,8 @@ prompt panels across engines, run with your own API keys.
 [ccbot]: https://commoncrawl.org/ccbot
 [cf-ai-crawl-control]: https://developers.cloudflare.com/ai-crawl-control/
 [cf-pay-per-crawl]: https://developers.cloudflare.com/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/
+[cf-acc-changelog]: https://developers.cloudflare.com/ai-crawl-control/changelog
+[tc-cf-2026-07]: https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/
 [cf-managed-robots]: https://developers.cloudflare.com/bots/additional-configurations/managed-robots-txt/
 [google-ai-features]: https://developers.google.com/search/docs/appearance/ai-features
 [bing-ai-answers]: https://about.ads.microsoft.com/en/blog/post/october-2025/optimizing-your-content-for-inclusion-in-ai-search-answers
