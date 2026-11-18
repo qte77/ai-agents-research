@@ -5,7 +5,7 @@ category: landscape
 status: research
 created: 2026-06-14
 updated: 2026-11-18
-validated_links: 2026-11-15
+validated_links: 2026-11-18
 ---
 
 Catalog of the **tools, benchmarks, and datasets** for evaluating agents and LLMs — the companion to [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), which defines the *metrics* themselves. Folded in from `docs/archive/landscape-evaluation-data-resources.md` (archived 2026-04-23) and distilled; project-specific boilerplate dropped. Tool/benchmark facts are a **February–March 2026 snapshot** — verify before relying. Web-scraping, browser-automation, and enterprise-infrastructure sections from the source are out of scope here (see [CC-web-scraping-plugins-analysis.md](../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for scraping).
@@ -54,6 +54,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | Patronus AI | [site](https://www.patronus.ai/) | Hallucination detection, custom evaluators | +18% vs OpenAI LLM-judges |
 | Deepchecks | [docs](https://docs.deepchecks.com/) | OSS validation (tabular/NLP/CV) | — |
 | Inspect AI | [repo](https://github.com/UKGovernmentBEIS/inspect_ai) | UK AISI / Meridian Labs eval framework: datasets, agents, scorers, sandboxes; epochs with `pass_at_k` / `pass_k` reducers (see [methods](agent-evaluation-metrics-landscape.md#harness-inspect-ai)) | 200+ pre-built evals (docs); MIT |
+| LiteLLM `agent_eval` | [blog](https://docs.litellm.ai/blog/agent-evaluations) | Compares harness-and-model targets (tool loop, Claude Code, Codex) on your own typed tasks; pass rate, cost, duration. Preview: not in published PyPI releases as of the 2026-11-16 post (see [routers landscape](../non-cc/infrastructure/llm-routers-gateways-landscape.md)) | MIT core (per that landscape) |
 | HELM (Stanford) | [github](https://github.com/stanford-crfm/helm) | Holistic LLM evaluation | 16 scenarios, 7 metrics |
 | MLflow LLM Evaluate | [docs](https://mlflow.org/docs/latest/genai/eval-monitor/index.html) | Eval with experiment tracking | — |
 | AgentBench | [github](https://github.com/THUDM/AgentBench) | LLM-as-Agent across 8 environments | 8 environments |
