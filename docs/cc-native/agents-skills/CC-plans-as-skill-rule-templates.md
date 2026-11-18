@@ -75,7 +75,7 @@ feat(module): add feature X
 
 1. **EnterPlanMode** — CC switches to read-only exploration (no edits allowed)
 2. **Research phase** — reads files, searches codebase, gathers context
-3. **Plan file written** — structured plan saved (typically to conversation context, sometimes to `.claude/plans/`)
+3. **Plan file written** — plan saved as a file in `~/.claude/plans/` (or the `plansDirectory` setting)
 4. **ExitPlanMode** — returns to normal mode
 5. **User approval** — user reviews plan, approves/rejects/modifies
 6. **Implementation** — CC executes the approved plan
@@ -86,9 +86,9 @@ In agent teams, teammates can produce plans that require approval from the coord
 
 ### Plan Storage
 
-- Per the [permission-modes docs][cc-pm] (checked 2026-11-18), the current session's plan files live in `~/.claude/plans/`, or in the directory set by the `plansDirectory` setting.
+- The [permission-modes docs][cc-pm] (checked 2026-11-18) name the path in their protected-paths section: the session's own plan files in `~/.claude/plans/`, or in the `plansDirectory` you set. The page read does not present it as a documented default location.
 - Enter with `Shift+Tab`, `/plan`, or `--permission-mode plan`; `Ctrl+G` opens the plan in an editor before approval.
-- Plans are not automatically indexed or discoverable across projects; keeping them in a repo directory needs the setting or a manual copy.
+- Our reading, not a documented statement: plans are not automatically indexed or discoverable across projects; keeping them in a repo directory needs the setting or a manual copy.
 - Cross-agent comparison of plan formats: [goal-loops-landscape.md](../../non-cc/coding-agents/goal-loops-landscape.md#plan-files-across-agents-re-checked-2026-11-18).
 
 ## Reuse Patterns

@@ -84,21 +84,21 @@ A goal is per conversation; the plan is what survives it. Documented formats, fr
 | Agent | Plan artifact | Where it lives | Source |
 |---|---|---|---|
 | Claude Code | Plan mode writes a plan without editing source; approval options on exit; `Ctrl+G` opens it in an editor | `~/.claude/plans/` or the `plansDirectory` setting | [permission modes][cc-plan] |
-| Kiro | Three files per spec: `requirements.md`, `design.md`, `tasks.md` (`bugfix.md` for bug specs); tasks show in-progress/completed and run in dependency waves | The page does not say | [specs][kiro-specs] |
+| Kiro | `requirements.md`, `design.md`, `tasks.md` per spec (see [kiro-analysis.md](kiro-analysis.md)) | The page does not say | [specs][kiro-specs] |
 | Cursor | Plan Mode builds a plan you edit via chat or markdown files, then build | Home directory by default; "Save to workspace" keeps it in the repo | [planning][cursor-plan] |
 | GitHub Copilot coding agent | The page describes research, plan and implement in the background, with a PR and session logs as outputs; no dedicated plan document or checklist is mentioned | n/a | [about coding agent][copilot-agent] |
 | OpenAI Codex | A `/plan` command is listed; the page read does not describe it | Not verified | [developer commands][codex-cmds] |
 
-Only Kiro's format is a fixed multi-file schema; the others are free-form markdown. GitHub Projects and Codex `/plan` were not read in depth. Repo-native alternatives (`prd.json` stories with status, plan files with a remaining-work table) are in [goal-tracking-attribution-landscape.md](../../sdlc-lcm/goal-tracking-attribution-landscape.md#plan-state-as-the-goal-predicate-2026-11-refresh) and [CC-plans-as-skill-rule-templates.md](../../cc-native/agents-skills/CC-plans-as-skill-rule-templates.md).
+Of the formats read, only Kiro documents a fixed multi-file schema; Cursor and Claude Code plans are markdown; Copilot (no plan document described) and Codex (`/plan` listed only) are unverified. GitHub Projects and Codex `/plan` were not read in depth. Repo-native alternatives (`prd.json` stories with status, plan files with a remaining-work table) are in [goal-tracking-attribution-landscape.md](../../sdlc-lcm/goal-tracking-attribution-landscape.md#plan-state-as-the-goal-predicate-2026-11-refresh) and [CC-plans-as-skill-rule-templates.md](../../cc-native/agents-skills/CC-plans-as-skill-rule-templates.md).
 
 ### Replanning and drift: paper leads (arXiv abstract pages, read 2026-11-18)
 
 Preprints, abstract-level only; none of the findings are tested on coding agents.
 
-- **Goals that change mid-run.** [DynaRev][dynarev] (web agents, 181 tasks) delivers goal revisions at milestones; across five models agents often completed only part of the requirements, and browser resets hurt while instruction rewriting helped. It supports keeping the goal in a re-readable file rather than only in turn one.
+- **Goals that change mid-run.** [DynaRev][dynarev] (web agents, 181 tasks) delivers goal revisions at milestones; across five models agents often completed only part of the requirements, and browser resets hurt while instruction rewriting helped. Our inference: keep the goal in a re-readable file rather than only in turn one.
 - **Planner and actor disagree.** [ConPAct][conpact] reports that a planner and an actor often disagree about task state, and that supplying task-relevant state reduces it. The parallel here is a plan file that goes stale against the repo.
-- **Do agents plan at all?** [Miro-Lopez-Feliu et al.][planclaims] test planning against hidden PDDL models: best setup 78% offline vs 40% online, and unsolvable tasks recognized in under 10% of episodes. A judge that only reads the transcript inherits this limit.
-- **Subgoals.** [Wang et al.][subgoal] report that subgoal decomposition raised Gemini's WebArena-Lite success by roughly 10 points (vendor-lab preprint, web tasks).
+- **Do agents plan at all?** [Miro-Lopez-Feliu et al.][planclaims] test planning against hidden PDDL models: best setup 78% offline vs 40% online, and unsolvable tasks recognized in under 10% of episodes. Our inference: a judge that only reads the transcript inherits this limit.
+- **Subgoals.** [Wang et al.][subgoal] report that "real-time subgoal planning" with proprietary models such as Gemini raised WebArena-Lite success by roughly 10 percentage points (web tasks only).
 
 ## Practices that hold across vendors
 

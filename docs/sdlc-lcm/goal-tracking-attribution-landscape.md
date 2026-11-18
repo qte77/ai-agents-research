@@ -74,7 +74,7 @@ The mature commercial tools target this space, but from the human-ceremony side:
 
 ## Plan state as the goal predicate (2026-11 refresh)
 
-Where the estate stores goals in a file, a session-level goal needs a *predicate* that reads plan state. Claude Code's [`/goal`][cc-goal-doc] is the documented reference: after every turn a small fast model judges the condition against the conversation only, and it "doesn't run commands or read files independently", so the plan state must be surfaced in the transcript for the judge to see it. The docs list "working through a labeled issue backlog until the queue is empty" and "implementing a design doc until all acceptance criteria hold" as intended uses (documented, checked 2026-11-18). Details: [CC-goal-analysis.md](../cc-native/sessions/CC-goal-analysis.md); cross-vendor judges and bounds: [goal-loops-landscape.md](../non-cc/coding-agents/goal-loops-landscape.md).
+A session-level goal needs a predicate that reads plan state, and Claude Code's `/goal` judge sees only the conversation, so the state must be printed there; see [CC-goal-analysis.md](../cc-native/sessions/CC-goal-analysis.md) and the cross-vendor [goal-loops-landscape.md](../non-cc/coding-agents/goal-loops-landscape.md).
 
 Applied to the stores above (our synthesis, not vendor guidance): a predicate such as "every story in `prd.json` has `status` passed, shown by a command whose output is printed" ties the stop condition to the attribution ledger; a plan-row table with a done-when column works the same way. The ledger is the check; the goal only restates it.
 
@@ -105,7 +105,6 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 | [Productboard][productboard] | Product discovery: feedback → prioritized features → roadmap |
 | [LinearB][linearb] | Engineering delivery metrics (DORA, cycle time) over Jira + Git |
 | [Atlassian Rovo MCP Server][atlassian-mcp] | First-party evidence of the 2026 MCP-access layer over a human-authored goal model |
-| [Claude Code `/goal` docs][cc-goal-doc] | Judge sees conversation only; documented backlog and acceptance-criteria uses (checked 2026-11-18) |
 | [Linear MCP docs][linear-mcp] | Remote MCP server for issues, projects, comments; read-write default (checked 2026-11-18) |
 | [Startup CTO Handbook → qte77 mapping][cto-map] | Traditional human-OKR baseline mapped onto `goals.json` |
 
@@ -120,7 +119,6 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 [productboard]: https://www.productboard.com/
 [linearb]: https://linearb.io/
 [atlassian-mcp]: https://www.atlassian.com/platform/remote-mcp-server
-[cc-goal-doc]: https://code.claude.com/docs/en/goal
 [linear-mcp]: https://linear.app/docs/mcp
 [disciplines]: agentic-engineering-disciplines-landscape.md
 [sdlc-patterns]: agentic-sdlc-patterns.md
