@@ -2,8 +2,8 @@
 title: Salesforce Agentforce 360 Analysis — Claude on Bedrock, Agentforce Registry, Agent Script, Pricing
 purpose: First-party fact-check of Salesforce Agentforce 360 (platform scope, Claude via Amazon Bedrock inside the Salesforce trust boundary, Agentforce Registry / MuleSoft Agent Fabric, Agent Script / Agentforce DX, Flex Credits pricing, EU Operating Zone, data-masking behavior for agents) against Salesforce's own documentation, press releases, and rate card.
 created: 2026-11-12
-updated: 2026-11-12
-validated_links: 2026-11-12
+updated: 2026-11-18
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -167,6 +167,57 @@ Agent Script recipe documentation: "The reasoning engine is limited: The Atlas r
 constrained to Salesforce-managed models. However, custom actions using prompt templates, Apex, or
 the Models API can reference" other configured models [atlas-model-config] — bring-your-own-LLM is
 documented as available for custom actions/prompts, not for the reasoning engine itself.
+
+## Copilotforce: Salesforce inside Microsoft Copilot (announced 2026-11-17)
+
+Copilotforce is the Microsoft-side mirror of Claudeforce: a Microsoft and Salesforce partnership
+announced at Microsoft Ignite on 2026-11-17 that brings Salesforce context and actions into Microsoft
+Copilot, Teams and Fabric [copilotforce-sf] [copilotforce-ms]. **Evidence level: announcement only.**
+Both pages are launch press material; the plugin's own Salesforce Help article and the Data 360
+connector guide could not be fetched in this pass (JS shell and HTTP 403), so no behavior below is
+confirmed from product documentation. Availability, as the two pages state it:
+
+| Piece | Stated status (2026-11-17) | Notes |
+|---|---|---|
+| Salesforce in Microsoft Copilot (plugin) | Public preview (beta) [copilotforce-sf] [copilotforce-ms] | Microsoft: starts 2026-11-17, "38+" prebuilt sales skills [copilotforce-ms]; Salesforce lists it via AgentExchange and the Microsoft Copilot plugin directory [copilotforce-sf] |
+| Sales Cloud in Teams | Pilot [copilotforce-sf] [copilotforce-ms] | Microsoft adds an open beta planned "later this year" [copilotforce-ms]; Salesforce's page gives no beta date |
+| Data federation (OneLake into Data 360) | Generally available [copilotforce-sf] [copilotforce-ms] | Fabric data is queried in Data 360 without moving it out of Fabric |
+| Data sharing (Data 360 into OneLake) | Public preview [copilotforce-sf] [copilotforce-ms] | Curated Data 360 context lands in OneLake without duplicate datasets |
+
+- **What it does.** Sellers get prebuilt skills (Salesforce's page names meeting prep, deal-health
+  analysis and pipeline review; Microsoft's lists Pipeline Review, Close Planning, Deal Review,
+  Customer Health, Renewal Radar, Call Follow-Up) in Copilot, combined with Microsoft's Work IQ layer
+  (Teams meetings, Outlook mail, SharePoint/OneDrive documents) [copilotforce-sf] [copilotforce-ms].
+  The Teams app shows pipeline and quota progress and deal notifications, and uses adaptive cards for
+  updating supported opportunity fields [copilotforce-sf]. Salesforce names Agentforce Coworker as the
+  piece that lets sellers act on Teams insights with updates syncing back [copilotforce-sf].
+- **"AIforce" is a Salesforce-only term.** Salesforce's page calls AIforce the interface layer that
+  brings Salesforce capabilities into external AI environments and powers the Copilot plugin
+  [copilotforce-sf]; Microsoft's page does not use the name. What it denotes technically is not
+  defined on either page.
+- **Protocols: the two pages disagree by omission.** Microsoft states that sellers get
+  "authenticated Salesforce MCP access" to retrieve customer information and take supported actions
+  [copilotforce-ms]; Salesforce's page does not mention MCP. Neither mentions A2A. The MCP statement
+  is single-source and unconfirmed against product docs; it fits the Headless 360 MCP tooling covered
+  above but no page ties the two together.
+- **Identity and governance (both pages, announced).** Authenticated user access with existing
+  Salesforce permissions, sharing rules and audit trails; CRM writeback needs explicit user
+  confirmation and follows existing validation rules; Microsoft applies its own compliance controls to
+  communications and documents [copilotforce-sf] [copilotforce-ms]. The page does not say whether
+  data masking (see [Data Masking](#data-masking-and-the-einstein-trust-layer-for-agents)) or the
+  Einstein Trust Layer applies to this path, and it makes no trust-boundary statement like the
+  Bedrock one for Claude (where Salesforce data surfaced in Copilot is processed is unstated).
+- **Pricing and prerequisites: not stated.** Both say pricing, packaging and regional availability
+  follow customer agreements; no license, edition or credit consumption is given
+  [copilotforce-sf] [copilotforce-ms]. Whether plugin use consumes Flex Credits is unknown.
+- **Customer.** Accenture is design and implementation partner and "customer zero" [copilotforce-ms];
+  the roughly 740,000 Copilot users and 55,000 Salesforce users are Accenture's own figures.
+
+**Reading across.** Claudeforce puts Claude inside Salesforce and Salesforce inside Claude;
+Copilotforce is the Salesforce-inside-Microsoft half only, with Salesforce staying the system of
+record. Both reverse-direction plugins launched at the same maturity (beta, one with 37 and one with
+38+ skills). For the Microsoft agent surfaces see the
+[Microsoft 365 Copilot analysis](microsoft-365-copilot-analysis.md).
 
 ## Agentforce Registry and MuleSoft Agent Fabric
 
@@ -441,6 +492,7 @@ Dated milestones independently fetched and quoted in this pass:
 | 2026-09-15 | Anthropic's own page confirms "Salesforce in Claude" shipped in beta "on all paid Claude plans" | [claude-in-claude] |
 | 2026-10-13 | Winter '27 (264) release post; MCP Risk Score in Security Center; "all features are GA unless otherwise noted" | [winter27-blog] |
 | 2026-11-03 | Flex Credits Rate Card, the version cited in this doc, "Updated as of November 3, 2026" | [rate-card] |
+| 2026-11-17 | Copilotforce announced (Salesforce in Microsoft Copilot beta, Sales Cloud in Teams pilot, OneLake federation GA) | [copilotforce-sf] [copilotforce-ms] |
 
 **Earlier milestones carried from prior secondary research notes, not independently re-fetched in
 this pass** — presented for orientation only, each unconfirmed at first-party source here: Agentforce
@@ -461,6 +513,7 @@ four as background context, not as verified facts of this analysis.
 | MCP Risk Score (Security Center) | Winter '27 (264) release post, 2026-10-13 [winter27-blog] | Stated GA per the release's blanket "GA unless otherwise noted" policy [winter27-blog]; not individually re-checked for an exception |
 | Claude via Amazon Bedrock inside the Salesforce Trust Boundary | 2025-10-14 [sf-anthropic-1014] | Mixed by sub-scope, on a single page, directly fetched and re-checked: "Agentforce powered by Anthropic is available today for select customers" and "Claude and Slack bi-directional integrations are available today" [sf-anthropic-1014] — but "the new collaboration on regulated industry solutions and the Agentforce 360 integration for Claude are currently under development, with more details on availability to be shared in the coming months" [sf-anthropic-1014]. One announcement, two sub-scopes at different maturity — not two disagreeing copies, as an earlier draft of this doc framed it |
 | Claudeforce / "Salesforce in Claude" (37 prebuilt skills) | 2026-08-26 [claudeforce] | Pilot customers at announcement; "expects to launch in open beta in September 2026" [claudeforce] — confirmed shipped on schedule by Anthropic's own 2026-09-15 page: "Today we are releasing Salesforce in Claude in beta," "available in beta on all paid Claude plans" [claude-in-claude] |
+| Copilotforce (Salesforce in Microsoft Copilot, Sales Cloud in Teams, OneLake federation/sharing) | 2026-11-17 [copilotforce-sf] [copilotforce-ms] | Plugin public preview, Teams pilot (open beta "later this year" per Microsoft only), federation GA, sharing public preview; announcement-level only, no product docs fetched (see [Copilotforce](#copilotforce-salesforce-inside-microsoft-copilot-announced-2026-11-17)) |
 | Data masking disabled for agent actions | Standing documented behavior, traced to "last year" (2024) by a 2025-06-10 post [masking-blog] | Current and documented [masking-agents] [masking-blog] — not a conflict once the agent-action vs. direct-template scope is applied |
 | Direct A2A protocol support on Agentforce Agents | n/a | **Contradicted across Salesforce's own documentation.** The agentic-patterns recipe ("In the absence of direct A2A support on Agentforce Agents" [agentic-patterns]) and MuleSoft's own A2A-bridge doc ("aren't A2A-compliant on their own" [a2a-bridge]) agree there is no native support; Salesforce's own Agentforce interoperability guide calls "Agentforce A2A Outbound... the native way for Agentforce agents to collaborate directly with a third party agent" and describes a native Inbound path too [interop-guide]. None of the three pages carries a date or status label — unresolved, not settled |
 | Flex Credits vs. Conversations combinability | n/a | Settled: "No. Flex Credits and Conversations will not be supported in the same org" [agentforce-pricing] — restored after an earlier draft of this doc dropped it as unverified |
@@ -522,6 +575,8 @@ four as background context, not as verified facts of this analysis.
 | [Agentforce 360 GA announcement][sf-360-ga] | 2025-10-13 GA statement; Agentforce Builder, Agent Script, Vibes, Data 360 descriptions |
 | [Anthropic/Salesforce regulated-industries announcement][sf-anthropic-1014] | 2025-10-14; "first LLM provider fully integrated within the Salesforce trust boundary" |
 | [Claudeforce announcement][claudeforce] | 2026-08-26; Claude's roles across Atlas, Vibes, Coworker, Agent Builder, Slack; "Salesforce in Claude" plugin |
+| [Copilotforce, Salesforce announcement][copilotforce-sf] | 2026-11-17; availability per piece, AIforce, Teams app, governance statements, no pricing |
+| [Copilotforce, Microsoft announcement][copilotforce-ms] | 2026-11-17; "38+" skills, MCP access statement, Teams open beta "later this year" |
 | [Headless 360 announcement][sf-headless360] | 2026-04-15; MCP tools/skills counts, "Available today" |
 | [New Agentforce Builder migration page][builder-migration] | Canvas/Script views; 2026-07-13 mandatory-new-builder cutover; legacy agents keep running |
 | [Supported Models (developer docs)][dev-models] | Salesforce Default vs. AWS-Hosted framing; full Trust-Boundary Claude model table; geo-aware routing providers |
@@ -548,6 +603,8 @@ four as background context, not as verified facts of this analysis.
 [sf-360-ga]: https://www.salesforce.com/news/press-releases/2025/10/13/agentic-enterprise-announcement/
 [sf-anthropic-1014]: https://www.salesforce.com/news/press-releases/2025/10/14/anthropic-regulated-industries-partnership-expansion-announcement/
 [claudeforce]: https://www.salesforce.com/news/press-releases/2026/08/26/salesforce-and-anthropic-announce-claudeforce/
+[copilotforce-sf]: https://www.salesforce.com/news/stories/copilotforce-announcement/
+[copilotforce-ms]: https://news.microsoft.com/source/2026/11/17/microsoft-and-salesforce-announce-copilotforce-bringing-trusted-customer-context-and-action-into-microsoft-ai-experiences/
 [sf-headless360]: https://www.salesforce.com/news/stories/salesforce-headless-360-announcement/
 [builder-migration]: https://www.salesforce.com/agentforce/agent-builder/migration/
 [dev-models]: https://developer.salesforce.com/docs/ai/agentforce/guide/supported-models.html
