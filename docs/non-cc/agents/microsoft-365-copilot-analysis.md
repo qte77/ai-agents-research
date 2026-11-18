@@ -476,7 +476,7 @@ Anthropic's Claude Cowork** — see the disambiguation above.
   | GA announcement blog [cowork-ga-blog] | 2026-06-16 | "Opus 4.8 and Sonnet 4.6... In Frontier, customers can use GPT 5.5" |
   | What's-new log (cumulative) [cowork-whats-new] | updated 2026-11-06 | Opus 4.7 (May) → Opus 4.8 + Sonnet 5 replacing Sonnet 4.6 (June GA) → Fable 5 Preview, "requires data retention" (June) → GPT 6 Astra, Fable 5.1 replacing Fable 5 (Sept) → GPT 6.1 Sol replacing GPT 6 Sol, Grok 4.7 "provided by xAI as an independent processor" (Oct) |
   | What's-new log, re-read 2026-11-18 [cowork-whats-new] | page dated 2026-11-16 | November: "Fable 5.2 is now available in the model selector for select customers, replacing Fable 5.1"; Claude Opus 5.5 with a Fast option; "GPT 5.5 is no longer available in the model selector," replaced by GPT 6.1 Sol hosted in Azure |
-  | Frontier features page [frontier-features] | read 2026-11-18 | still says Cowork "runs on OpenAI GPT-5.5" and still lists Edge browser use as a Frontier item — stale against the what's-new log above, which records both changes |
+  | Frontier features page [frontier-features] | read 2026-11-18 | still says "Copilot Cowork now runs on both OpenAI GPT-5.5 and Anthropic" and still lists Edge browser use as a Frontier item — stale against the what's-new log above, which records both changes |
 
   The first four rows are not wrong — each was captured at a different point in a changing
   model roster; the Frontier features page is the one Microsoft page that lags its own log.
@@ -575,11 +575,11 @@ and Cowork's App skill is still listed as Frontier [cowork-whats-new].
 | Cowork (app builder skill) | Business users describing an app in chat | Requires Frontier; "On by default through Frontier program" once onboarded, otherwise unavailable [managed-runtime-admin] |
 | Microsoft Copilot Studio | Makers wanting more control | On by default [managed-runtime-admin] |
 | Copilot Code | Business users and pro developers | Frontier gate of Copilot Code itself [code-use]; the admin page (2026-11-18) adds "Only users included in a spending policy for Copilot Code can build apps" [managed-runtime-admin] |
-| SDK/CLI (`ms` CLI from `@microsoft/cmr-cli`, SDK `@microsoft/cmr-apps`; earlier `@microsoft/managed-apps`) | Pro-code developers | Off by default; admin-enabled per environment [managed-runtime-admin] |
+| SDK/CLI (`ms` CLI from `@microsoft/cmr-cli`, SDK `@microsoft/cmr-apps` [managed-runtime-overview]; earlier `@microsoft/managed-apps`) | Pro-code developers | Off by default; admin-enabled per environment [managed-runtime-admin] |
 
 The admin page (2026-11-18) also lists Lovable as a creation path for "Makers who build in Lovable
-and deploy to your tenant," and users open apps at `managedapps.cloud.microsoft`
-[managed-runtime-admin]; the overview page still says four paths [managed-runtime-overview].
+and deploy to your tenant" [managed-runtime-admin]; users open apps at
+`managedapps.cloud.microsoft` [managed-runtime-overview]. The overview page still says four paths [managed-runtime-overview].
 
 - **Sandboxed iframe:** "App code runs inside a sandboxed iframe within the managed host. This
   setup separates the app code from the surrounding host and keeps host-managed authentication
@@ -737,9 +737,6 @@ Microsoft ships four ways for an agent to drive a screen, plus Cowork's local Ed
   [studio-computer-use]. It needs agents with generative orchestration on. A shared agent that uses
   the maker's credentials lets "anyone using it" act "with the original author's access on the
   configured machine" [studio-computer-use].
-- **Claude's own computer use on Foundry** is a separate path: Foundry lists Anthropic's
-  client-executed `computer use` tool for Claude models [claude-foundry], next to Foundry's own
-  `computer-use-preview` model.
 - **Opal open questions:** neither Opal page names the model. Microsoft's pages disagree on the
   default website policy: the admin page says "Opal now allows access to all websites by default"
   [opal-admin], while the support page describes an admin blocklist [opal-support]. (Editorial
@@ -755,8 +752,8 @@ Personal, Family, Pro and Premium subscribers opt in from Copilot settings in th
 
 Frontier items named on Microsoft's pages and in its Ignite post on 2026-11-18: Copilot Code [code-use], Cowork's App
 skill [cowork-whats-new], Project Opal [opal-support], and Autopilot, which "is beginning to roll
-out to Frontier customers today" (2026-11-17), plus Workspaces [ignite-2026-blog]. Home moved from
-Frontier to GA per the same post. The program's own features list [frontier-features] is
+out to Frontier customers today" (2026-11-17), plus Workspaces [ignite-2026-blog]. Home, listed as Frontier in Cowork's October
+what's-new entry [cowork-whats-new], is "now generally available" per the same post. The program's own features list [frontier-features] is
 incomplete and partly stale (see the Cowork model table above), so treat it as an index, not a
 status source.
 
@@ -793,8 +790,8 @@ Workflow agents are not among the listed types (the preview workflow designer is
 - **Tools:** web search, file search, code interpreter, memory, MCP servers, OpenAPI and functions,
   with platform tools "like SharePoint, WorkIQ, and Fabric IQ" for hosted agents; publishing goes
   to Teams, Microsoft Copilot and the Entra Agent Registry [foundry-agents].
-- **Claude on Foundry:** Azure-hosted Claude models are GA; the Fable models run Anthropic-hosted
-  in preview; billing is in Claude Consumption Units through Azure Marketplace, per Anthropic's own
+- **Claude on Foundry:** Claude models are offered hosted on Azure or hosted on Anthropic, and
+  the Fable models are listed as Anthropic-hosted only; billing is in Claude Consumption Units through Azure Marketplace, per Anthropic's own
   Foundry page [claude-foundry]. For
   Claude Code against Foundry see
   [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md#microsoft-azure-foundry).
@@ -1320,7 +1317,7 @@ re-checked even when Microsoft leaves the page unchanged.
 [managed-runtime-blog]: https://www.microsoft.com/en-us/copilot/blog/copilot-studio/build-where-you-want-run-with-confidence-now-microsoft-hosts-and-manages-the-code-created-by-copilot/
 [code-use]: https://learn.microsoft.com/en-us/copilot/code/use-code
 [code-app-card]: https://learn.microsoft.com/en-us/copilot/code/responsible-ai/copilot-code-application-card
-[managed-runtime-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot-managed-runtime/?view=o365-worldwide
+[managed-runtime-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot-managed-runtime/overview?view=o365-worldwide
 [managed-runtime-admin]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/?view=o365-worldwide
 [managed-runtime-security]: https://learn.microsoft.com/en-us/microsoft-365/copilot-managed-runtime/managed-runtime-security-governance?view=o365-worldwide
 [managed-runtime-licensing-faq]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/licensing-faq?view=o365-worldwide
