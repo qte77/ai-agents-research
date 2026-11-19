@@ -274,7 +274,7 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 
 ## Documented cost levers
 
-Anthropic's [Manage costs effectively][cc-costs] page lists the levers Claude Code itself offers for spending fewer tokens (checked 2026-11-19). The ones this corpus does not cover elsewhere, each at the page's own evidence level (documented guidance, not measured savings):
+Anthropic's [Manage costs effectively][cc-costs] page lists the levers Claude Code itself offers for spending fewer tokens (checked 2026-11-19); the output-style row comes from the [output styles][cc-output-styles] page. All are documented guidance, not measured savings; the last column links deeper corpus coverage where it exists:
 
 | Lever | What the docs say | Corpus detail |
 |---|---|---|
@@ -286,7 +286,7 @@ Anthropic's [Manage costs effectively][cc-costs] page lists the levers Claude Co
 | Lower effort or thinking | Thinking tokens bill as output; lower the effort level, or turn thinking off in `/config` on models that allow it (not Opus 5.5, Sonnet 5.5, Haiku 5.5 or the Fable models) | [CC-model-provider-configuration.md § Effort Levels](../configuration/CC-model-provider-configuration.md#effort-levels) |
 | Smaller model for subagents | Subagent requests count against the same usage; set `model: haiku` (or another alias) in a subagent's definition for simple tasks, or force one model on every subagent with `CLAUDE_CODE_SUBAGENT_MODEL` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` (v2.1.257+) | See below |
 
-**Which model a subagent runs on** ([subagents][cc-subagents]): the first that applies of (1) the `model` parameter Claude passes when it spawns the subagent (an alias only), (2) the `model` field in the subagent's definition, including `inherit`, (3) `CLAUDE_CODE_SUBAGENT_MODEL`, (4) the main conversation's model. Before v2.1.251 the environment variable overrode the first two ([env vars][cc-env-vars]). With nothing set, a subagent runs on the parent's model, so a session on an Opus or Fable model spends at that model's rate on every subagent too. A subagent or teammate without its own `effort` runs at the session's effort level only on the parent's model ([model config][cc-effort-subagents]).
+**Which model a subagent runs on** ([subagents][cc-subagents]): the first that applies of (1) the `model` parameter Claude passes when it spawns the subagent (an alias only), (2) the `model` field in the subagent's definition, including `inherit`, (3) `CLAUDE_CODE_SUBAGENT_MODEL`, (4) the main conversation's model. Before v2.1.251 the environment variable overrode the first two ([env vars][cc-env-vars]). With nothing set, a custom subagent runs on the parent's model, so a session on an Opus or Fable model spends at that rate on those subagents too. Built-in Explore is the documented exception for Fable sessions: with a subscription, Console account or gateway it runs on the model the `opus` alias resolves to ([subagents][cc-subagents-builtin]). A subagent or teammate without its own `effort` runs at the session's effort level only on the parent's model ([model config][cc-effort-subagents]).
 
 ## Message Batches API
 
@@ -330,6 +330,7 @@ The Message Batches API runs large request volumes asynchronously. This section 
 | [Manage costs effectively][cc-costs] | Documented cost levers: `/usage`, `/context`, `/clear`, `/compact`, effort, subagent models (accessed 2026-11-19) |
 | [Output styles][cc-output-styles] | Token effect of output styles (accessed 2026-11-19) |
 | [Subagents][cc-subagents] | Subagent model resolution order (accessed 2026-11-19) |
+| [Built-in subagents][cc-subagents-builtin] | Model the built-in Explore subagent runs on (accessed 2026-11-19) |
 | [Environment variables][cc-env-vars] | `CLAUDE_CODE_SUBAGENT_MODEL` precedence change at v2.1.251, `_FORCE` (accessed 2026-11-19) |
 | [Model configuration — effort][cc-effort-subagents] | Effort level of subagents and teammates (accessed 2026-11-19) |
 
@@ -361,3 +362,4 @@ The Message Batches API runs large request volumes asynchronously. This section 
 [cc-subagents]: https://code.claude.com/docs/en/sub-agents#choose-a-model
 [cc-env-vars]: https://code.claude.com/docs/en/env-vars
 [cc-effort-subagents]: https://code.claude.com/docs/en/model-config#effort-level-of-subagents-and-teammates
+[cc-subagents-builtin]: https://code.claude.com/docs/en/sub-agents#built-in-subagents

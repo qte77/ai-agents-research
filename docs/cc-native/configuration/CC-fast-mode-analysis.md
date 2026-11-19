@@ -40,7 +40,7 @@ Fast prices from [the fast-mode page][api-fast] and [CC page][cc-fast]; standard
 
 ### Effort Level Interaction
 
-Default effort is model-specific (`medium` on the newest models, `xhigh` on Opus 4.7, `high` on the rest; no subscriber-plan-specific default). The per-model table lives in [CC-model-provider-configuration.md § Effort Levels](CC-model-provider-configuration.md#effort-levels) ([source][cc-model], checked 2026-11-19). The "ultrathink" keyword still exists — it triggers deeper reasoning for one turn without changing the session effort setting. This interacts with fast mode:
+Default effort is model-specific (`medium` on the newest models, `xhigh` on Opus 4.7, `high` on the rest; an Enterprise organization can set its own default for its organization default model). The per-model table lives in [CC-model-provider-configuration.md § Effort Levels](CC-model-provider-configuration.md#effort-levels) ([source][cc-model], checked 2026-11-19). The "ultrathink" keyword still exists — it triggers deeper reasoning for one turn without changing the session effort setting. This interacts with fast mode:
 
 | Combination | Effect |
 | ----------- | ------ |

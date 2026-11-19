@@ -23,7 +23,7 @@ This doc covers vars observed in agent workflows. For the **complete authoritati
 |---|---|---|---|
 | `ANTHROPIC_MODEL` | `sonnet` | Primary model alias or full ID | [env-vars][env-vars] |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | (inherits primary) | Model for Agent tool subagents and teammates | [env-vars][env-vars] |
-| `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`; outranks every other effort source. `auto` or `unset` sends no effort level, so the API default applies. Support and defaults vary by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | [env-vars][env-vars] |
+| `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`; outranks `--effort`, `/effort` and the effort settings (a `maxEffortLevel` cap still applies). `auto` or `unset` sends no effort level, so the API default applies. Support and defaults vary by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | [env-vars][env-vars] |
 
 Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.md)
 
