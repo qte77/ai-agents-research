@@ -3,8 +3,8 @@ title: "Databricks Genie One: Agentic Data Coworker (Genie Ontology + Genie Agen
 source: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
 purpose: Assess Databricks Genie One and its Genie Ontology semantic layer as an enterprise data-agent platform
 created: 2026-06-20
-updated: 2026-06-20
-validated_links: 2026-06-20
+updated: 2026-11-19
+validated_links: 2026-11-19
 status: trial
 platform_scope: [databricks, slack, microsoft-teams, ios, android, mcp]
 ---
@@ -49,12 +49,51 @@ workplace applications via Lakeflow Connect. Distinguishing properties:
 - **MCP-exposed** — the governed context is served as an MCP server, so external
   agents (Claude, Copilot, custom agents) can consume the same enterprise context.
 
-Hedge unverified figures: a third-party write-up reports "50+ connected sources"
-and "up to 200 knowledge snippets per Genie Space" ([talentbricks][talentbricks],
-third-party — not confirmed in the first-party blog or press release). Databricks'
-"84.5% vs 52.4% first-attempt accuracy" and "2× speed over the strongest
-general-purpose coding agent" are **internal benchmarks with unpublished
-methodology** ([blog][genie-blog]) — treat as vendor claims.
+### Status and changes since launch (checked 2026-11-19)
+
+Per the first-party [Genie Ontology docs page][genie-ont-docs] (shows "Last updated on Nov 16, 2026" under its title) and the
+[AI/BI release notes][genie-rn] (documented):
+
+- **Rollout** (one sequence) — 2026-06-04: first release-notes entry,
+  "Genie Ontology (Public Preview)", describing an automatically built map of
+  the business. 2026-06-15/16: launch announcement (press release; blog dated
+  2026-06-16). 2026-07-02: "ontology snippets" entry, Public Preview, sign-up
+  via the account team. 2026-08-06: ontology "enabled by default" (Public
+  Preview). 2026-08-13: snippets available to all customers without requesting
+  access. 2026-10-22: snippets also extracted from queries that external tools
+  such as dbt run on Databricks. The docs page carries no GA announcement as of
+  this date.
+- **Two knowledge classes** — *modeled knowledge* (metric views, domains,
+  Pages, certification, curated Genie Agents) takes precedence over *learned
+  knowledge* (snippets Genie extracts from dashboards, SQL queries, metric views
+  and Genie Agents). Learned snippets cannot be edited directly: to change what
+  Genie learns, change the source asset or model the concept.
+- **Provenance of machine-written context** — a snippet shows its description,
+  source asset, author, domains and lineage, and responses carry citations
+  (documented). Snippets inherit Unity Catalog permissions, except snippets
+  from external knowledge sources (Beta, e.g. Power BI definitions), which "are
+  available to all users in your account". The page lists one limitation: no
+  customer-managed keys. Whether a reviewable change history of newly learned
+  snippets exists is not stated on the page (unverified).
+- **Pricing** — the docs state that "customers do not incur costs for curating
+  ontology snippets" "at this time" and that Databricks may change this. The
+  [launch blog][genie-blog] says there is no seat-based pricing and "up to $10"
+  of free usage per user per month; the release notes extend free Genie One and
+  Genie Agents usage through 2027-01-31 (previously 2026-07-31). This replaces
+  the earlier community-sourced pricing figures.
+
+Benchmark, restated with its setting: Databricks' internal test used **28**
+enterprise data-analysis questions; Genie got 84.5% right on the first attempt
+vs 52.4% for the strongest and 25% for the weakest general-purpose coding agent
+tested, about 2x faster than the strongest, with competing agents anonymized
+([blog][genie-blog], vendor claim, methodology unpublished). 84.5% and 52.4% of
+28 are not whole numbers of questions, so the figures are probably averaged
+over repeated runs (inference; the blog does not say). If so, one question is
+about 3.6 points per run; treat the gap as indicative only.
+
+Unverified: a third-party write-up reports "50+ connected sources" and "up to
+200 knowledge snippets per Genie Space" ([talentbricks][talentbricks]); neither
+appears in the first-party docs page or blog read on 2026-11-19.
 
 ## Genie Agents
 
@@ -77,10 +116,9 @@ for enterprise data-agent grounding. Trade-offs:
   the context is reusable by non-Databricks agents.
 - **Limits** — proprietary and Databricks/Unity-Catalog-native (no portability
   off the platform); headline accuracy/speed numbers are unaudited internal
-  benchmarks; Genie Ontology is preview-stage. Pricing reportedly moves to
-  pay-as-you-go (consumption, no seat licensing) on 2026-07-06 with ~150 DBUs of
-  free LLM usage per user per month (~$10.50, US East) — sourced from community
-  posts, **not** an official pricing page, so treat as provisional.
+  benchmarks; Genie Ontology is still Public Preview (2026-11-19) and its
+  curation is free only "at this time". Pricing is usage-based, not per seat;
+  see the status section above.
 
 Cross-ref: [omnigent-analysis.md](../orchestrators/omnigent-analysis.md) (Databricks/Neon
 meta-harness), [open-knowledge-format-analysis.md](../knowledge-management/open-knowledge-format-analysis.md)
@@ -94,8 +132,12 @@ the same data-agent-grounding problem), and [rowboat-analysis.md](rowboat-analys
 |---|---|
 | [Genie One introduction blog][genie-blog] | Genie One / Genie Ontology / Genie Agents capabilities, authority-scoring model, internal benchmarks, 2026-06-16 announcement |
 | [Genie One launch press release][genie-press] | GA status, preview tiers, availability surfaces (Slack/Teams/iOS/Android) |
+| [Genie Ontology docs][genie-ont-docs] | Modeled vs learned knowledge, snippet provenance fields, pricing note, limitations (page dated 2026-11-16, read 2026-11-19) |
+| [AI/BI release notes 2026][genie-rn] | Dated ontology rollout entries (07-02, 08-06, 08-13, 10-22), free-usage extension |
 | [talentbricks — Genie Ontology][talentbricks] | Third-party — "50+ sources", "200 snippets/Space" (unconfirmed against first-party) |
 
 [genie-blog]: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
 [genie-press]: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-genie-one-all-new-agentic-coworker-every-team
 [talentbricks]: https://www.talentbricks.ai/en/blog/2026-06-16-genie-ontology-databricks
+[genie-ont-docs]: https://docs.databricks.com/aws/en/genie/genie-ontology
+[genie-rn]: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026

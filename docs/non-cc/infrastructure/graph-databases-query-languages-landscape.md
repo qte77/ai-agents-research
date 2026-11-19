@@ -13,7 +13,9 @@ status: assess
 An agent that reads or writes a graph needs two things: a database it can reach and a query language it
 (or a generator in front of it) can write correctly. This page is the index for both. It is deliberately
 thin: per-tool depth lives in the analyses linked below, and knowledge-graph construction, GraphRAG
-evidence and ontologies are out of scope here. Companion pages: [Agentic Database Access][adb] (the SQL
+evidence and ontologies are out of scope here (see the
+[GraphRAG and KG construction evidence](../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence)
+and [ontology generation](semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction) subsections). Companion pages: [Agentic Database Access][adb] (the SQL
 side: MCP servers, text-to-SQL, write safety) and [Semantic Layers & Data Catalogs][sem] (RDF, OWL and
 SPARQL as a standards stack).
 

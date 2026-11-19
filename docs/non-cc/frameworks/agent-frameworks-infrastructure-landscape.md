@@ -4,8 +4,8 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-18
-validated_links: 2026-11-18
+updated: 2026-11-19
+validated_links: 2026-11-19
 ---
 
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
@@ -180,6 +180,8 @@ Non-CC memory frameworks; for memory tools that integrate *with Claude Code* (Me
 
 The field has reframed memory as **context engineering** — assembling persistent, evolving state across sessions rather than just enlarging the context window.
 
+Evaluation caution (abstract pages only, 2026-11-19; neither is KG-specific): [MemDev-Bench][memdev-paper] finds memory also causes failures on otherwise solvable code tasks, more with unrelated history, and [MemPABench][mempabench-paper] finds current memory "struggles to retrieve interaction preferences and adapt to preference changes".
+
 - [Graphiti (Zep)](https://github.com/getzep/graphiti) — real-time temporal knowledge-graph engine; P95 ~300ms hybrid (vector + BM25 + graph) retrieval, MCP server, Apache-2.0.
 - [Zep](https://github.com/getzep/zep) — memory platform on Graphiti; temporal KG, multi-language SDKs ([paper](https://arxiv.org/abs/2501.13956)).
 - [Mem0](https://github.com/mem0ai/mem0) — universal memory layer; claims +26% vs OpenAI Memory, 90% lower tokens on LOCOMO ([paper](https://arxiv.org/abs/2504.19413)), Apache-2.0.
@@ -224,6 +226,10 @@ Design lens — Lindenberg's *The Graph Doesn't Need RAM Anymore* frames HydraDB
 - [MemoType / TriMEM](https://arxiv.org/abs/2610.11573) — Wen, Xu, Jia, Wang, Zhang, Wang, Li, Zhang, Li, Liu & Zhao (arXiv:2610.11573, 2026-10-08; "NeurIPS 2026 Accept Paper" per the Comments field) argue existing retrieval-based LLM-agent memory methods apply one retrieval strategy to all memories regardless of type, which they show is suboptimal via a theoretical upper bound on single-strategy precision in multi-class corpora. TriMEM is a new multi-class memory dataset with type annotations; MemoType is a framework with a learned router that classifies each memory and query by type and applies a tailored retrieval strategy per type — a typed-routing layer that sits adjacent to WMT's retention-scoring and JITMEM's read-time curation immediately above, in the same memory-curation-strategy cluster (added as a sibling bullet rather than merged into either, since each paper's self-reported numbers need to stay separately attributable). Self-reports consistent gains over existing methods across three datasets, with up to a 16.18% improvement in Recall@1 (paper claims; methodology not independently verified; no code repository found as of 2026-10-11). **Rubric** (subject: memory, scored 2026-10-11): Shared: n/a (single-agent research method, no shared-store claim); Distributed: n/a (no deployment described); Reproducible: no (no code/repo link found); Adaptable: no data; Versionable: no data; Traceable: no data.
 - [lossless-memory (aru-labs)](https://github.com/aru-labs/lossless-memory) — deliberately the opposite design from the summarization/embedding engines above: "never summarize, keep every line, and put a timestamp on everything." Every turn becomes a fixed seven-field record (`ts`/`actor`/`role`/`type`/`text`/`model`/`session`) appended to a per-day JSONL file, which is the sole source of truth; a SQLite FTS5 + `sqlite-vec` index is a derived, fully rebuildable cache. Its "Temporal Backbone" parses time phrases ("yesterday evening," "3 days ago," English and Japanese) into a range *before* ranking, so time-scoped queries return verbatim chronological lines rather than a semantically-similar paraphrase; semantic search is the fallback, not the default. A small "LLL" topic-marker index is injected into context every turn so identity survives compaction. Explicitly single-user, single-machine, no server/cloud, and the README states plainly: "There are no published benchmarks" (MIT; 133★/11 forks, `gh api` 2026-09-30). **Rubric** (subject: memory, scored 2026-09-30, [README](https://github.com/aru-labs/lossless-memory#readme)): Shared: no ("designed for one person and one AI, running on one machine"); Distributed: no (same reason — no server, no cloud); Reproducible: yes ("every index below can be deleted and rebuilt from [the raw logs]. Nothing else is required to survive."); Adaptable: partial (a `config.json` timezone setting is the only documented extension point); Versionable: no data (plain append-only files are git-friendly, but the README documents no git-backed versioning feature); Traceable: yes (every record — utterance, action, document chunk — carries an explicit timestamp and session id).
 - [Sumanth077/Hands-On-AI-Engineering](https://github.com/Sumanth077/Hands-On-AI-Engineering) — a 45-project worked-example collection (3,758★, no LICENSE file — `gh api` 2026-09-30 reports `license: null`, so cite as examples only, not adoptable code). Its `ai_agents/research_assistant_with_memory` folder is a memory-focused example, `ai_agents/agentic_rag_system` is an agentic-RAG example, `ai_agents/self_evolving_code_review_agent` and `ai_agents/multi_agent_coding_assistant` are harness/self-improvement examples (self-evolving review loop; multi-agent coding pipeline), and `ai_agents/grounded_document_agent` pipes LlamaParse's page-aware output (§7) into a local, citation-grounded PDF Q&A agent running on Ollama; no rubric scoring (it's a demo, not a product).
+
+### Temporal knowledge-graph memory: evidence and caveats
+
+Checked 2026-11-19. Graphiti's [README][graphiti-readme] documents the design (documented, not independently tested): each fact carries a validity window and is "invalidated — not deleted" when superseded, every entity and relationship traces to the **episodes** (raw ingested data) that produced it, and ontology can be prescribed (Pydantic types) or learned. Apache-2.0; 32,939 stars (`gh api`, 2026-11-19); latest release v0.31.2 (2026-10-20). The [Zep paper][zep-paper] (abstract page) reports 94.8% vs 93.4% for MemGPT on DMR, and on LongMemEval "accuracy improvements of up to 18.5%" with 90% lower latency than baselines; these are the vendor's own numbers, DMR is the benchmark the MemGPT team chose, and the abstract does not name the baseline for the 18.5%. Update semantics and provenance are the strengths on paper; whether an LLM wrote the *right* edge is not covered by episode lineage, since lineage shows what text produced a fact, not that the extraction was correct (inference). For graph stores and query languages behind these engines see [graph-databases-query-languages-landscape.md](../infrastructure/graph-databases-query-languages-landscape.md).
 
 ## 5. Foundation Models for Agents
 
@@ -279,6 +285,15 @@ citation-grounded PDF Q&A agent running on Ollama.
 - [RAPTOR](https://arxiv.org/abs/2401.18059) — recursive embed→cluster→summarize tree; retrieves across abstraction levels (MIT; ICLR 2024; paper reports +20% absolute on QuALITY with GPT-4).
 - [nano-graphrag](https://github.com/gusye1234/nano-graphrag) — ~1,100-LOC hackable GraphRAG; swappable LLM/embedding/vector backends (Faiss/Neo4j/Ollama), async (MIT, ~3.9k★).
 - [Graft (trailhq)](https://github.com/trailhq/Graft) — codebase context layer for coding agents (Claude Code, Cursor, Codex, Gemini, Copilot): a tree-sitter structural pass (23 languages, no LLM, ~3ms incremental refresh) extracts symbols/calls, then optional LLM enrichment groups them into typed-relationship (`depends_on`/`part_of`/`uses`/`implements`/`produces`) Markdown concept nodes with wikilinks the agent follows like docs; nodes are ranked by **in-degree coupling**, not PageRank. Repo self-reports 46% fewer tool calls, 42% fewer tokens, and +12pp on SWE-bench Verified (66% vs 54%) — not independently verified. Renamed from `NanoNets/Graft` to `trailhq/Graft` (MIT; 9.1k★, `gh api` 2026-09-24).
+
+### GraphRAG vs vector RAG and KG construction evidence
+
+Evidence from arXiv abstract pages read 2026-11-19 (full texts not re-read; the abstracts give no headline numbers, so none are quoted).
+
+- **No blanket winner.** The [GraphRAG-Bench][graphrag-bench] abstract cites "recent studies" reporting that GraphRAG "frequently underperforms vanilla RAG on many real-world tasks" (a claim it attributes to other work, not its own result) and benchmarks fact retrieval, complex reasoning, contextual summarization and creative generation across the whole pipeline (graph construction, retrieval, generation) to find when graphs help. [RAG vs. GraphRAG][rag-vs-graphrag] compares both under one unified protocol on QA and query-based summarization and reports distinct strengths per task, with selection or integration strategies giving "consistent performance improvements" (authors' claim). Practical consequence (inference): evaluate on your own corpus and question mix, and budget for the index build, which the GraphRAG bullets above flag as compute-heavy.
+- **Survey.** [Graph-Mediated LLM Systems in the Agentic Era][graph-survey] offers a role-locus taxonomy and an evaluation framework that separates local metric gains from downstream task performance and keeps reporting conditions; it names memory maintenance as an open challenge. Survey-level, not new measurements.
+- **Construction quality is measurable.** Benchmarks and ontology-grounded pipelines (Text2KGBench, Feng et al.) are summarized in [Ontology generation and ontology-constrained extraction](../infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction).
+- **Update and provenance of LLM-written edges.** Documented mechanisms, not measured quality: Graphiti's validity windows and episode lineage (§4 above); per-concept provenance in the [OKF analysis](../knowledge-management/open-knowledge-format-analysis.md); per-snippet lineage in the [Genie analysis](../agents/databricks-genie-analysis.md). I found no head-to-head study of how often such LLM-written edges are wrong or stale (searched only the sources above, 2026-11-19).
 
 ### Agent-native graph & hybrid RAG platforms
 
@@ -555,3 +570,22 @@ WikiTrace addition (§4) — first-party checked 2026-11-12:
 [wikitrace-paper]: https://arxiv.org/abs/2611.14320
 [wikitrace-gh]: https://github.com/yukyeongleee/wikitrace
 [pydantic-ai-harness-gh]: https://github.com/pydantic/pydantic-ai-harness
+
+KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv abstract pages and README read 2026-11-19:
+
+| Source | Content |
+|---|---|
+| [getzep/graphiti README][graphiti-readme] + `gh api` | Validity windows, episode provenance, prescribed/learned ontology; Apache-2.0, 32,939 stars, v0.31.2 (2026-10-20) |
+| [arXiv:2501.13956][zep-paper] abstract page | Zep/Graphiti DMR and LongMemEval claims (vendor numbers) |
+| [arXiv:2506.05690][graphrag-bench] abstract page | GraphRAG-Bench scope; the "underperforms vanilla RAG" statement attributed to recent studies |
+| [arXiv:2502.11371][rag-vs-graphrag] abstract page | Unified RAG vs GraphRAG protocol; per-task strengths; integration strategies |
+| [arXiv:2611.05953][graph-survey] abstract page | Role-locus taxonomy, evaluation framework, memory-maintenance challenge |
+| [arXiv:2610.27524][memdev-paper] · [arXiv:2610.30485][mempabench-paper] abstract pages | Memory-failure and interaction-preference findings (general memory caution) |
+
+[graphiti-readme]: https://github.com/getzep/graphiti#readme
+[zep-paper]: https://arxiv.org/abs/2501.13956
+[graphrag-bench]: https://arxiv.org/abs/2506.05690
+[rag-vs-graphrag]: https://arxiv.org/abs/2502.11371
+[graph-survey]: https://arxiv.org/abs/2611.05953
+[memdev-paper]: https://arxiv.org/abs/2610.27524
+[mempabench-paper]: https://arxiv.org/abs/2610.30485

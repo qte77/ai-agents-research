@@ -20,5 +20,6 @@ see [the hub index](README.md).
 | [CC-code-tooling-landscape.md § cocoindex-code](../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io) | Embeddings-based semantic code search for CC | cc-community |
 | [CC-code-tooling-landscape.md § XERJ](../cc-community/CC-code-tooling-landscape.md#xerj-xerj-org) | XERJ: Elasticsearch-compatible search engine/MCP server for code, docs and RAG, first-party Claude Code installer | cc-community |
 | [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms) | RAGFlow (agent-native RAG database, Knowledge Compilation) and Carrel (ontology-augmented hybrid retrieval) | non-cc |
+| [agent-frameworks-infrastructure-landscape.md § GraphRAG vs vector RAG and KG construction evidence](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence) | When GraphRAG beats or loses to vector RAG (benchmarks read at abstract level), KG construction quality and provenance of LLM-written edges | non-cc |
 
 Related hubs: [memory.md](memory.md), [knowledge-graphs.md](knowledge-graphs.md), [code-tooling.md](code-tooling.md).
