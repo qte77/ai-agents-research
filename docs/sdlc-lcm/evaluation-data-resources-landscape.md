@@ -4,7 +4,7 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-18
+updated: 2026-11-19
 validated_links: 2026-11-18
 ---
 
@@ -88,7 +88,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 | Benchmark | Reported best score (source) | Contamination | Successor or repair | As-of and source |
 | --- | --- | --- | --- | --- |
-| OSWorld | 12.24% best model vs humans above 72.36% (2024 paper); 79.5% on OSWorld-Verified in the [Qwen-UI-Agent report][qwenui] (vendor-reported, abstract page 2026-11-18, submitted 2026-07-30); 20.6% binary completion on OSWorld 2.0 | Not stated | [OSWorld-Verified][osworld-site] (announced 2025-07-28, fixed examples); [OSWorld 2.0][osworld2] (108 long-horizon workflows; Claude Opus 4.8 at 20.6% binary, 54.8% partial). Our reading: the Verified score and the 2.0 score differ in task design, so they are not one trend | 2024-04-11 paper; OSWorld 2.0 v2 2026-07-13. The Verified leaderboard is client-side rendered and was not read |
+| OSWorld | 12.24% best model vs humans above 72.36% (2024 paper); 79.5% on OSWorld-Verified in the [Qwen-UI-Agent report][qwenui] (vendor-reported, abstract page 2026-11-18, submitted 2026-07-30); 20.6% binary completion on OSWorld 2.0 | Not stated | [OSWorld-Verified][osworld-site] (announced 2025-07-28, fixed examples); [OSWorld 2.0][osworld2] (108 long-horizon workflows; Claude Opus 4.8 at 20.6% binary, 54.8% partial). Our reading: the Verified score and the 2.0 score differ in task design, so they are not one trend. Further dated vendor claims (not reproduced) and the open-model and pixel-versus-accessibility-tree context are in [computer-use-agents-landscape.md](../non-cc/agents/computer-use-agents-landscape.md): 21.3% on OSWorld V2 for Agent S4 with an open model (Agent S README, entry dated 2026-10-20) and 40.0% partial-progress for Qwen-UI-Agent (same abstract page) | 2024-04-11 paper; OSWorld 2.0 v2 2026-07-13; OSWorld site notice pointing to 2.0 dated 2026-06-26. Both leaderboards are client-side rendered and were not read (re-checked 2026-11-19) |
 | SWE-bench Verified | 72.80% for GPT-5.2, quoted in the SWE-EVO abstract (a third-party paper's figure, not the leaderboard) | Not stated in the sources read | Dataset-quality assessor [ExLabel / SWE-TQ][exlabel]; other comparators: SWE-EVO (above), [SWE-bench Pro][scale-swe-pro] | SWE-EVO v6 2026-05-22 |
 | Terminal-Bench | Not stated | Not stated | 2.0 → [2.1][tb21] after an audit found issues in roughly 30% of the benchmark (the 2.1 repo records 26 modified tasks); leaderboard header reads 4.1 | Paper 2026-11-05; leaderboard header read 2026-11-18 |
 | LiveCodeBench | Not stated | Time-windowed problems; see [mas-benchmarking-best-practices.md § 3.1](mas-benchmarking-best-practices.md) | Rolling new problems | arXiv v2 2024-06-06 |

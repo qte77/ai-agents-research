@@ -5,7 +5,7 @@ category: landscape
 status: research
 platform_scope: [claude-code]
 created: 2026-04-11
-updated: 2026-06-26
+updated: 2026-11-19
 validated_links: 2026-06-26
 ---
 
@@ -128,6 +128,10 @@ Three FRs on the `anthropics/claude-code` issue tracker are relevant to visual c
 If a workflow needs to route different tasks (e.g. visual OCR vs. code generation) to different model providers within a single Claude Code session, the current community answer is an external router. [claude-code-router][cc-router] (~34.9K stars, multi-provider) is the most prominent example; it sits in front of Claude Code and routes requests per task to OpenRouter, DeepSeek, Ollama, Gemini, and others. See [CC-model-provider-configuration.md][cc-router-config] for setup and the full routing-scenario list.
 
 Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow could route visual-OCR subagents to local Ollama and reasoning subagents to Anthropic, without waiting for FR #38698.
+
+## Related: Computer-Use Agents
+
+This doc covers feeding screens to a VLM for context, not agents that act on the GUI. For computer-use models, the OSWorld benchmarks and safety guidance see [computer-use-agents-landscape.md](../non-cc/agents/computer-use-agents-landscape.md).
 
 ## Observed Implementations
 
