@@ -1,0 +1,35 @@
+---
+name: bump
+
+# Manually triggered version bump through the reusable qte77/.github
+# bump-version workflow. It bumps current_version in pyproject.toml, collects
+# changelog.d/ fragments into CHANGELOG.md (scriv via uvx, since this repo has
+# no uv project), and opens a bump PR whose commit GitHub signs, so it passes
+# main's signed-commit rule. Merging that PR triggers release.yaml.
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: "Semver part to bump"
+        required: true
+        default: patch
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+permissions:
+  contents: read
+
+jobs:
+  bump:
+    uses: qte77/.github/.github/workflows/bump-version.yml@4613389d22779a8d8ba623a418f7c94415e49da9  # main 2026-11-19 (qte77/.github#72)
+    permissions:
+      contents: write
+      pull-requests: write
+    with:
+      bump_type: ${{ inputs.bump_type }}
+      collect_scriv: true
+      scriv_pin: "1.8.0"
