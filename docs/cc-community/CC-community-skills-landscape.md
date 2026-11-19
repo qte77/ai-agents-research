@@ -4,7 +4,7 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-11-17
+updated: 2026-11-19
 validated_links: 2026-10-11
 ---
 
@@ -109,7 +109,7 @@ All CC features categorized under three primary tags:
 | Concepts Table | 12 | Subagents, Commands, Skills, Workflows, Hooks, MCP Servers, Plugins, Settings, Status Line, Memory, Checkpointing, CLI Startup Flags |
 | Hot Features | 8+ | Power-ups, Ultraplan, CC Web, No Flicker, Computer Use, Auto Mode, Channels, Slack, Code Review, GHA, Chrome Extension, Scheduled Tasks, Voice, Simplify & Batch, Agent Teams, Remote Control, Worktrees, Ralph |
 | Orchestration Workflow | 1 | Visual diagram: Command -> Agent -> Skill architecture |
-| Development Workflows | 9+ | everything-claude-code (137K stars), Superpowers (135K), Spec Kit (85K), gstack, GSD, BMAD-METHOD, OpenSpec, oh-my-claudecode, Compound Engineering, HumanLayer — with uniqueness badges and component breakdowns |
+| Development Workflows | 9+ | everything-claude-code (137K stars), Superpowers (135K), Spec Kit (see [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md)), gstack, GSD, BMAD-METHOD, OpenSpec, oh-my-claudecode, Compound Engineering, HumanLayer — with uniqueness badges and component breakdowns |
 | Tips and Tricks | 38+ | Across 7 categories (prompting, planning, workflows, debugging, utilities, daily) |
 | Startup Comparison | 5 | CC features vs commercial tool equivalents |
 | Open Research Questions | 13 | Across 4 domains |

@@ -3,7 +3,7 @@ title: Kiro Analysis
 source: https://kiro.dev/
 purpose: Analysis of Kiro, AWS's spec-driven agentic IDE, as a coding agent platform distinct from conversational AI coding assistants.
 created: 2026-06-16
-updated: 2026-10-24
+updated: 2026-11-19
 validated_links: 2026-06-16
 status: trial
 ---
@@ -16,7 +16,7 @@ Kiro is an **agentic IDE** from Amazon Web Services, launched in public preview 
 
 The product ships three surfaces — a desktop IDE (Code OSS-based, compatible with VS Code settings and extensions), a CLI (macOS/Linux/Windows), and a browser interface at `app.kiro.dev`. Models default to **Claude Sonnet 4.5**; Pro Max and Power tiers add **Claude Opus 4.8** (1M context window). Copyright is held by ©2026 Amazon.com, Inc. or its affiliates; the software is proprietary (accessed 2026-06-16).
 
-**Key distinction vs peers** (GitHub Copilot CLI, Cursor, Windsurf): Kiro's differentiator is the mandatory spec phase — requirements, design, and tasks are first-class artifacts, not ephemeral chat history. This makes it the closest production IDE analogue to the structured-agent patterns documented in this research repo.
+**Key distinction vs peers** (GitHub Copilot CLI, Cursor, Windsurf): Kiro's differentiator is the first-class spec phase (requirements, design, tasks; Quick Spec skips approval gates) — requirements, design, and tasks are first-class artifacts, not ephemeral chat history. This makes it the closest production IDE analogue to the structured-agent patterns documented in this research repo.
 
 ## How It Works
 
@@ -29,6 +29,8 @@ Specs are the core primitive. Running `/spec` (or selecting "New Spec") triggers
 3. **tasks.md** — discrete, trackable implementation tasks with dependency graph analysis
 
 The agent builds a dependency graph across tasks, groups independent tasks into concurrent execution **waves**, and runs them in parallel while sequencing dependent tasks. Real-time status (in-progress / completed) is visible per task. Specs are also available in the browser for planning before switching to the IDE for code generation (as of 2026-05-28 docs update).
+
+Per [kiro.dev/docs/specs][kiro-specs] (read 2026-11-19, documented): feature specs come as **Requirements-First** or **Design-First**; **Quick Spec** generates all three files in one pass with no approval gates. **Bugfix specs** write `bugfix.md` (current, expected and unchanged behaviour) in place of `requirements.md`. In the IDE each document has a Review button for commenting on passages. Correctness checking via property-based testing is IDE-only.
 
 A separate **"Vibe" mode** (agentic chat without a spec) is available for exploratory work where structure is premature.
 
@@ -92,7 +94,7 @@ Credits reset monthly; unused credits do not roll over. Overage billing is disab
 |---|---|
 | **Use case** | Spec-driven feature development; structured agentic coding in complex codebases |
 | **Model** | Claude Sonnet 4.5 default; Opus 4.8 (1M context) on paid tiers |
-| **Spec workflow** | Mandatory requirements → design → tasks pipeline before code generation |
+| **Spec workflow** | Requirements (or bugfix) → design → tasks pipeline; Quick Spec generates all three without approval gates |
 | **Extensibility** | MCP, steering files, hooks, VS Code plugin compatibility |
 | **Autonomy control** | Per-action approval → autopilot; `/goal` + Queue Steering for mid-turn correction |
 | **Maturity** | Preview 2025-07-14; GA 2025-11-17; CLI v2.7.0 (2026-06-12); active release cadence |
