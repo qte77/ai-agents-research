@@ -5,7 +5,7 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-18
+updated: 2026-11-19
 validated_links: 2026-11-12
 ---
 
@@ -41,7 +41,7 @@ A layered approach to keeping context in Claude's ~75k-token "smart zone" via de
 
 | Layer | Mechanism | Tool / Pattern | Known limitation |
 |---|---|---|---|
-| **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` strips built-in git-workflow tokens from context in headless mode (CC v2.1.69+) | Shell env / `.env` | Headless-only; no effect in interactive sessions |
+| **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` (or `"includeGitInstructions": false` in settings) strips the built-in commit/PR instructions and the git status snapshot from context (CC v2.1.69+) | Shell env / `.env` / settings | The docs state no headless-only scope, so it applies to interactive sessions too (our reading of the [settings reference][cc-settings-ref-git], checked 2026-11-19); cloud sessions never include the snapshot anyway. No source sizes the saving; you lose the built-in git guidance |
 | **2 — Native hook filters (DIY)** | `run_silent()` PostToolUse bash wrapper: captures stdout to a temp file, emits `✓ <desc>` on exit 0, surfaces full output only on non-zero exit; pair with failFast flags (`pytest -x`, `jest --bail`, `go test -failfast`) to halt at first failure | CC PostToolUse hook | Must be written per project; no packaging or reuse mechanism built in |
 | **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); independently verified zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
 | **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity | See [CC-community-skills-landscape.md][skills-landscape] | Output-side only; does not reduce tool or shell output |
@@ -733,3 +733,4 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [llmlingua]: https://github.com/microsoft/LLMLingua
 [selective-context]: https://github.com/liyucheng09/Selective_Context
 [semantic-router]: https://github.com/aurelio-labs/semantic-router
+[cc-settings-ref-git]: https://code.claude.com/docs/en/settings-reference#includegitinstructions
