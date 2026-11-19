@@ -261,7 +261,7 @@ Releases are **operator-driven** and the CHANGELOG is managed with
 [scriv](https://scriv.readthedocs.io/) fragments (the `changelog.d/` workflow
 deferred in #217). Version config lives in `pyproject.toml` — `[tool.bumpversion]`
 holds the version single-source-of-truth, `[tool.scriv]` configures fragments. The
-tooling runs ephemerally via `pipx` (CI) / the Makefile recipes (local); this repo
+tooling runs ephemerally (`pip`/`uvx` in the reusable CI workflow, `pipx` in the Makefile recipes); this repo
 ships no Python package, so there is no venv or lockfile.
 
 ### Per-PR: add a changelog fragment
@@ -278,18 +278,22 @@ existing CHANGELOG entries. `make changelog_preview` shows the assembled result.
 
 ### Cutting a release (maintainer)
 
-1. **Bump** — run the `bump-my-version` workflow (Actions → Run workflow → choose
+1. **Bump** — run the `bump` workflow (Actions → Run workflow → choose
    `major`/`minor`/`patch`). It bumps `current_version`, collects `changelog.d/`
-   fragments into a dated `## [X.Y.Z]` CHANGELOG section, and opens a release PR.
-2. **Merge** — review and squash-merge the release PR to `main`.
-3. **Tag** — `tag-release` fires automatically on the `pyproject.toml` change and
-   pushes the annotated `vX.Y.Z` tag against the merge commit.
-4. **Publish (optional)** — run the `publish-release` workflow to create a GitHub
-   Release with notes extracted from the matching CHANGELOG section.
+   fragments into a dated `## [X.Y.Z]` CHANGELOG section, and opens a release PR
+   whose commit GitHub signs, so it satisfies `main`'s signed-commit rule.
+2. **Merge** — squash-merge the release PR once its checks pass. PRs opened by the
+   Actions token start no workflows on their own, so a maintainer may need to
+   approve the waiting Lint run (and re-run a check that never reports) until the
+   App-token setup in qte77/.github#70 is in place.
+3. **Tag and publish** — `release` fires on the `pyproject.toml` change, pushes the
+   annotated `vX.Y.Z` tag against the merge commit, and publishes the GitHub Release
+   with notes from the matching CHANGELOG section, in the same run.
 
-`tag-release.yaml` and `publish-release.yaml` are thin callers of the estate's reusable
-workflows in `qte77/.github`, pinned to a commit SHA with a date comment. That repo has no
-tags, so Dependabot can't advance the pin: refresh it by hand when the reusable workflows change.
+`publish-release` is a manual fallback that publishes a Release for an existing tag
+that has none. `bump.yaml`, `release.yaml` and `publish-release.yaml` are thin callers
+of the estate's reusable workflows in `qte77/.github`, pinned to a commit SHA with a
+date comment; refresh the pin by hand when the reusable workflows change.
 
 > **Transition note:** `## [Unreleased]` content predating this flow is collected
 > into the first tagged release (`v0.4.0`); from `v0.5.0` onward, use fragments.
