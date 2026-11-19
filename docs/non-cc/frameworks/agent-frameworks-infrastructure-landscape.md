@@ -134,6 +134,47 @@ Design lens — Lindenberg's *Everything Is a Plugin, Proven* reads this decisio
 
   `scored 2026-10-02`
 
+### Agent session runtimes: herdr and Zeron
+
+Two entrants in the same niche — a persistent runtime that keeps coding-agent sessions alive independent of the client connection — with different architectures.
+
+#### herdr (herdrdev)
+
+**Repo**: [herdrdev/herdr][herdr] | **Stars**: 43,400 | **Forks**: 3,422 | **License**: Apache-2.0 |
+**Version**: v0.9.3 (2026-09-29, a hotfix for the same-day v0.9.2 feature release) (`gh api`,
+2026-10-11; stats were 40,485 stars / v0.9.1 as of 2026-09-16)
+
+"the runtime your coding agents live on" — a single-Rust-binary, no-Electron terminal multiplexer and background server built specifically for coding agents.
+
+- **Detach without stopping work**: herdr keeps terminals running in a background server when the client closes or the SSH connection drops; after a server/machine restart it restores the saved layout and can resume supported agent sessions (the original OS processes do not themselves survive the restart)
+- **Self-reported resume** (v0.9.2, 2026-09-29): agents can report their own resume command, so herdr reopens their exact session after a server restart with no built-in per-agent integration needed; self-reported agents clear once their pane is back at an idle shell ([herdr.dev/docs/add-herdr-support][herdr-agent-support])
+- **Multi-machine**: local work and saved SSH machines share one combined agent list with independent reconnects
+- **Status at a glance**: every pane is marked working, blocked, or idle
+- **Agent-native**: agents drive herdr through its own CLI and a socket API — spawning panes, prompting each other, waiting until another agent is genuinely blocked
+- **Runs what you already run**: Claude Code, Codex, Cursor, OpenCode, Grok, and others — "herdr doesn't wrap or replace them; it owns their terminals"
+- Install: `curl -fsSL https://herdr.dev/install.sh | sh`, `brew install herdr`, `mise use -g herdr`, or the Windows PowerShell installer; a plugin marketplace extends panes/workflows
+
+#### Zeron (zeronsh)
+
+**Repo**: [zeronsh/zeron][zeron] | **Stars**: 2,195 | **License**: MIT | **Version**: v0.2.85 (2026-09-24)
+
+Local-first engine plus desktop app that controls Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi, and Antigravity sessions, with optional multi-device sync.
+
+- **Local by default**: every device runs its own engine that stores sessions on that device; a fresh install starts in local-only mode with no account or network connection required
+- **Optional sync**: signing in opens a synced workspace so an agent started on one device can be followed or driven from another (e.g. keep a VPS-hosted agent working after closing a laptop); devices signed into the same account get full read/write access to each other's workspace files (`.git` always excluded; gitignored files such as `.env` are exposed only if "Show ignored files" is enabled) — the README itself flags this as a trust boundary, not just a convenience
+- **Live branch diffs and commit graphs** per workspace
+- Install (Linux): `curl -fsSL https://zeron.sh/install.sh | sh` then `zeron status`; macOS/Windows via a desktop release or source build
+
+#### Adoption considerations
+
+**Strengths**: both are free and open source (Apache-2.0, MIT) and agent-agnostic — neither wraps or replaces the underlying CLI, so existing Claude Code hooks/config keep working unmodified. herdr is the more adopted of the two by star count; Zeron's local-first-with-optional-sync model is the more cautious default for anyone wary of always-on cloud session storage.
+
+**Risks**: herdr's "resume supported agent sessions" after a restart does not resurrect the original OS processes — read its session-state docs before relying on it for long unattended runs. Zeron's cross-device sync grants full workspace read/write to every signed-in device on the account; its own README says to sign in only devices trusted with the workspace's full contents, including secrets.
+
+Cross-ref: [CC-hooks-system-analysis.md](../../cc-native/configuration/CC-hooks-system-analysis.md) — the CC hook surface both tools sit alongside without replacing
+
+Moved here from the cc-community tooling landscape on 2026-11-19 (owner decision); facts as last checked there, not re-verified in the move.
+
 ## 2. LLM Orchestration & Routing
 
 - [LangChain](https://github.com/langchain-ai/langchain) — broad LLM app framework, 100+ integrations (MIT).
@@ -589,3 +630,13 @@ KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv a
 [graph-survey]: https://arxiv.org/abs/2611.05953
 [memdev-paper]: https://arxiv.org/abs/2610.27524
 [mempabench-paper]: https://arxiv.org/abs/2610.30485
+herdr and Zeron (§1), moved from the cc-community tooling landscape 2026-11-19:
+
+| Source | Content |
+|---|---|
+| [herdr][herdr] | Background terminal-multiplexer runtime for coding agents, single Rust binary (43,400 stars, Apache-2.0, v0.9.3; `gh api` 2026-10-11) |
+| [Zeron][zeron] | Local-first coding-agent session engine + desktop control plane, optional multi-device sync (2,195 stars, MIT, v0.2.85) |
+
+[herdr]: https://github.com/herdrdev/herdr
+[herdr-agent-support]: https://herdr.dev/docs/add-herdr-support/
+[zeron]: https://github.com/zeronsh/zeron

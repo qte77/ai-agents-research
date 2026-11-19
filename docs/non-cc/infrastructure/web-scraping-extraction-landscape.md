@@ -227,16 +227,7 @@ Most tools listed above offer both proper REST/SDK APIs and MCP servers. For pro
 
 ## Anti-Bot Bypass
 
-The tool entries below are undated and were not re-checked on 2026-11-18; vendors change detection frequently. For what defenders document about AI-agent traffic, with dates, see [§ Agent Identity and Vendor Handling](#agent-identity-and-vendor-handling). Prefer identifying yourself honestly to evading detection where a site offers a signed or verified route.
-
-| Tool | Type | Targets |
-|------|------|---------|
-| [curl_cffi](https://github.com/lexiforest/curl_cffi) | OSS (MIT) | TLS/JA3 fingerprinting |
-| [Nodriver](https://github.com/ultrafunkamsterdam/nodriver) | OSS (MIT) | Cloudflare, general anti-bot |
-| [SeleniumBase UC Mode](https://seleniumbase.io/help_docs/uc_mode/) | OSS (MIT) | Cloudflare, CAPTCHAs |
-| [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright) | OSS (Apache-2.0) | CDP detection, Cloudflare (per its README, with headed real Chrome; page console API disabled) |
-| [Botasaurus](https://github.com/omkarcloud/botasaurus) | OSS (MIT) | Cloudflare, DataDome |
-| [ScrapFly](https://scrapfly.io/) | SaaS | Cloudflare, DataDome, Akamai; from $30/mo |
+The tools with stealth or bypass features are already catalogued in their own sections: `curl_cffi` (TLS/JA3 fingerprint impersonation) under [§ HTTP Clients](#http-clients); Nodriver, SeleniumBase UC Mode, Patchright and Botasaurus under [§ Browser Automation](#browser-automation); ScrapFly under [§ Scraping Frameworks](#scraping-frameworks). Which protections each one gets past is the project's own undated claim, and detection vendors change frequently, so this section no longer repeats them as a list (trimmed 2026-11-19). For what defenders document about AI-agent traffic, with dates, see [§ Agent Identity and Vendor Handling](#agent-identity-and-vendor-handling). Prefer identifying yourself honestly to evading detection where a site offers a signed or verified route.
 
 **Headed launch (observed by polyfetch).** Launching Chromium headed instead of headless clears some anti-bot challenges that a headless launch never does ([polyfetch#190][polyfetch-190], as recorded in its [changelog][polyfetch-changelog] and [USING.md][polyfetch-using]; maintainer's observation, no per-site data given there). On a display-less host (CI) a virtual display such as `xvfb-run -a` keeps it unattended. Patchright's own README recommends `launch_persistent_context(channel="chrome", headless=False, no_viewport=True)` with real Chrome as its best practice for staying undetected. polyfetch's probe reads Patchright's Cloudflare claim as holding only with that setup ([`docs/scraping-landscape.md`][polyfetch]). Headless CI cannot provide it.
 
