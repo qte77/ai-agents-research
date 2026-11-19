@@ -3,8 +3,8 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-11-11
-validated_links: 2026-11-11
+updated: 2026-11-19
+validated_links: 2026-11-19
 status: assess
 ---
 
@@ -61,6 +61,15 @@ Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized mach
 This is the formal-semantics counterpart to [The Agent-Native Layer](#the-agent-native-layer) below: Genie Ontology and OKF are the *LLM-native* curation of the same verified business meaning that OWL/SKOS encode *formally*.
 
 **A concrete "connect" instance: Vault-LD.** [Vault-LD][vault-ld] (Apache-2.0, 235★ verified 2026-09-24) is a 2026 third-party spec — not a W3C standard — that turns a Markdown note vault into linked data: YAML-LD frontmatter plus a shared `@context` file map note metadata to RDF triples, with reference Python converters (`vault_to_rdf.py` / `rdf_to_vault.py`) giving a lossless roundtrip between Markdown and RDF. It is a file-based, no-database instance of the connect pattern above — an ontology-backed `@context` a human edits as prose and a machine reads as a graph.
+
+### Ontology generation and ontology-constrained extraction
+
+Two separate LLM jobs sit between the formal standards above and the agent-native tools below: *drafting* an ontology, and *extracting* facts that must obey one. Evidence is from arXiv abstract pages read 2026-11-19; I did not re-run any benchmark.
+
+- **Drafting an ontology.** [Lippolis et al.][ontogenia-paper] test whether LLMs can produce OWL ontology drafts from user stories and competency questions (CQs), using two prompting methods they introduce, Memoryless CQbyCQ and Ontogenia, on a benchmark of ten ontologies with 100 CQs and 29 user stories, across three LLMs. Authors' finding: OpenAI o1-preview with Ontogenia produced ontologies "of sufficient quality" for ontology engineers and outperformed novice engineers, while common mistakes and result variability remain, so treat output as a draft for expert review (authors' claim; one model generation, 2025). They also argue for three structural criteria plus expert evaluation rather than one score.
+- **Ontology from competency questions, then extraction under it.** [Feng, Wu & Meng][wikidata-kgc] (KDD 2024 workshop) generate CQs over a knowledge base, extract relations from them, align equivalent relations to Wikidata, then constrain KG generation by that ontology; they report "competitive performance" on benchmark datasets (authors' claim; abstract gives no numbers).
+- **Measuring conformance.** [Text2KGBench][text2kgbench] (ISWC 2023 resources track) gives an ontology plus sentences and scores fact extraction, ontology conformance (concepts, relations, domain/range) and hallucination with seven metrics, over Wikidata-TekGen (10 ontologies, 13,474 sentences) and DBpedia-WebNLG (19 ontologies, 4,860 sentences). Its Vicuna-13B and Alpaca-LoRA-13B baselines are 2023-era models; the abstract only says there is "room for improvement", so it shows how to measure, not where current models stand.
+- **Practical read (inference, not from these papers).** A SHACL or OWL validator (see the standards list above) can check conformance after extraction instead of trusting the prompt. The graph-side counterpart (LLM-written edges, update and provenance) is in [§7 of the frameworks landscape][fw-kg-construction]; graph stores and query languages are in [graph-databases-query-languages-landscape.md](graph-databases-query-languages-landscape.md).
 
 ### Agent-native ontology tools (2026 MCP wave)
 
@@ -205,6 +214,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
 | [RDF][rdf] · [OWL][owl] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
 | [schema.org getting started][schema-org-gs] · [Google structured data intro][google-sd] | schema.org syntaxes (Microdata, RDFa, JSON-LD); Google's JSON-LD recommendation and `<script>` embedding (read 2026-11-09) |
+| [Ontology Generation using LLMs (arXiv:2503.05388)][ontogenia-paper] · [Feng et al. (arXiv:2412.20942)][wikidata-kgc] · [Text2KGBench (arXiv:2308.02357)][text2kgbench] | LLM ontology drafting, ontology-grounded KG construction, ontology-conformance benchmark (abstract pages read 2026-11-19) |
 | [Vault-LD][vault-ld] | Markdown-vault-as-linked-data spec; YAML-LD frontmatter + shared `@context`, roundtrip RDF converters |
 | [Symbolic Separation (arXiv:2609.17107)][symbolic-separation] | Ontology-constrained Virtual Knowledge Graph + deterministic pre-execution validation for deep agents over operational telemetry |
 | [Ontology Atlas README][ontology-atlas] | MCP-native, git-versioned Markdown ontology; MIT license and star count verified 2026-09-30 |
@@ -264,3 +274,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 [scitoolagent-paper]: https://arxiv.org/abs/2607.28692
 [evodkd-paper]: https://arxiv.org/abs/2507.21438
 [scitoolagent-repo]: https://github.com/HICAI-ZJU/SciToolAgent
+[ontogenia-paper]: https://arxiv.org/abs/2503.05388
+[wikidata-kgc]: https://arxiv.org/abs/2412.20942
+[text2kgbench]: https://arxiv.org/abs/2308.02357
+[fw-kg-construction]: ../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence
