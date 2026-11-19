@@ -180,6 +180,8 @@ Non-CC memory frameworks; for memory tools that integrate *with Claude Code* (Me
 
 The field has reframed memory as **context engineering** — assembling persistent, evolving state across sessions rather than just enlarging the context window.
 
+Evaluation caution (abstract pages only, 2026-11-19; neither is KG-specific): [MemDev-Bench][memdev-paper] finds memory also causes failures on otherwise solvable code tasks, more with unrelated history, and [MemPABench][mempabench-paper] finds current memory "struggles to retrieve interaction preferences and adapt to preference changes".
+
 - [Graphiti (Zep)](https://github.com/getzep/graphiti) — real-time temporal knowledge-graph engine; P95 ~300ms hybrid (vector + BM25 + graph) retrieval, MCP server, Apache-2.0.
 - [Zep](https://github.com/getzep/zep) — memory platform on Graphiti; temporal KG, multi-language SDKs ([paper](https://arxiv.org/abs/2501.13956)).
 - [Mem0](https://github.com/mem0ai/mem0) — universal memory layer; claims +26% vs OpenAI Memory, 90% lower tokens on LOCOMO ([paper](https://arxiv.org/abs/2504.19413)), Apache-2.0.
@@ -227,13 +229,7 @@ Design lens — Lindenberg's *The Graph Doesn't Need RAM Anymore* frames HydraDB
 
 ### Temporal knowledge-graph memory: evidence and caveats
 
-Checked 2026-11-19. Graphiti's [README](https://github.com/getzep/graphiti#readme) documents the design (documented, not independently tested): each fact carries a validity window and is "invalidated — not deleted" when superseded, every entity and relationship traces to the **episodes** (raw ingested data) that produced it, and ontology can be prescribed (Pydantic types) or learned. Apache-2.0; 32,939 stars (`gh api`, 2026-11-19); latest release v0.31.2 (2026-10-20). The [Zep paper](https://arxiv.org/abs/2501.13956) (abstract page) reports 94.8% vs 93.4% for MemGPT on DMR, and on LongMemEval "accuracy improvements of up to 18.5%" with 90% lower latency than baselines; these are the vendor's own numbers, DMR is the benchmark the MemGPT team chose, and the abstract does not name the baseline for the 18.5%. Update semantics and provenance are the strengths on paper; whether an LLM wrote the *right* edge is not covered by episode lineage, since lineage shows what text produced a fact, not that the extraction was correct (inference). For graph stores and query languages behind these engines see [graph-databases-query-languages-landscape.md](../infrastructure/graph-databases-query-languages-landscape.md).
-
-Memory benchmarks to read as caution rather than endorsement (abstract pages only; none is a KG-specific study):
-
-- [MemDev-Bench](https://arxiv.org/abs/2610.27524) (4,869 historical tasks, 555 base tasks): memory mainly helps fine-grained localization and editing, but also causes failures on otherwise solvable tasks, more with unrelated history, and raw historical trajectories cut steps more than memory systems did.
-- [Persistent Memory in Multi-Agent LLM Inference](https://arxiv.org/abs/2610.07782) (NeurIPS 2026 workshop poster): in one three-tier architecture the persistent tier produced no detectable accuracy change (+0.015, 95% CI [-0.011, +0.046], n=100 per arm across eight dataset pairs); the authors argue single-question benchmarks give recall nothing to retrieve. Takeaway: a memory ablation needs conditions where stored traces are informative.
-- [MemPABench](https://arxiv.org/abs/2610.30485): on interaction preferences, retrieval-based systems (Mem0, MemOS, simple RAG) did not beat No Memory, while file-based memory improved accuracy but over-applied preferences; all systems struggled to adapt when preferences changed.
+Checked 2026-11-19. Graphiti's [README][graphiti-readme] documents the design (documented, not independently tested): each fact carries a validity window and is "invalidated — not deleted" when superseded, every entity and relationship traces to the **episodes** (raw ingested data) that produced it, and ontology can be prescribed (Pydantic types) or learned. Apache-2.0; 32,939 stars (`gh api`, 2026-11-19); latest release v0.31.2 (2026-10-20). The [Zep paper][zep-paper] (abstract page) reports 94.8% vs 93.4% for MemGPT on DMR, and on LongMemEval "accuracy improvements of up to 18.5%" with 90% lower latency than baselines; these are the vendor's own numbers, DMR is the benchmark the MemGPT team chose, and the abstract does not name the baseline for the 18.5%. Update semantics and provenance are the strengths on paper; whether an LLM wrote the *right* edge is not covered by episode lineage, since lineage shows what text produced a fact, not that the extraction was correct (inference). For graph stores and query languages behind these engines see [graph-databases-query-languages-landscape.md](../infrastructure/graph-databases-query-languages-landscape.md).
 
 ## 5. Foundation Models for Agents
 
@@ -294,10 +290,10 @@ citation-grounded PDF Q&A agent running on Ollama.
 
 Evidence from arXiv abstract pages read 2026-11-19 (full texts not re-read; the abstracts give no headline numbers, so none are quoted).
 
-- **No blanket winner.** [GraphRAG-Bench](https://arxiv.org/abs/2506.05690) starts from the authors' observation that GraphRAG "frequently underperforms vanilla RAG on many real-world tasks" and benchmarks fact retrieval, complex reasoning, contextual summarization and creative generation across the whole pipeline (graph construction, retrieval, generation) to find when graphs help. [RAG vs. GraphRAG](https://arxiv.org/abs/2502.11371) compares both under one unified protocol on QA and query-based summarization and reports distinct strengths per task, with selection or integration strategies giving "consistent performance improvements" (authors' claim). Practical consequence (inference): evaluate on your own corpus and question mix, and budget for the index build, which the GraphRAG bullets above flag as compute-heavy.
-- **Survey.** [Graph-Mediated LLM Systems in the Agentic Era](https://arxiv.org/abs/2611.05953) offers a role-locus taxonomy and an evaluation framework that separates local metric gains from downstream task performance and keeps reporting conditions; it names memory maintenance as an open challenge. Survey-level, not new measurements.
-- **Construction quality is measurable.** [Text2KGBench](https://arxiv.org/abs/2308.02357) scores ontology conformance and hallucination of extracted triples (2023 baselines); [ontology-grounded construction under a Wikidata schema](https://arxiv.org/abs/2412.20942) reports "competitive performance" (no numbers in the abstract). Details in [Ontology generation and ontology-constrained extraction](../infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction).
-- **Update and provenance of LLM-written edges.** Documented mechanisms, not measured quality: Graphiti keeps validity windows and episode lineage (§4 above); OKF v0.2 records `sources`, `generated` and `verified` per concept ([analysis](../knowledge-management/open-knowledge-format-analysis.md)); Genie Ontology shows source asset, author and lineage per learned snippet but does not let you edit it ([analysis](../agents/databricks-genie-analysis.md)). I found no head-to-head study of how often such LLM-written edges are wrong or stale (searched only the sources above, 2026-11-19).
+- **No blanket winner.** The [GraphRAG-Bench][graphrag-bench] abstract cites "recent studies" reporting that GraphRAG "frequently underperforms vanilla RAG on many real-world tasks" (a claim it attributes to other work, not its own result) and benchmarks fact retrieval, complex reasoning, contextual summarization and creative generation across the whole pipeline (graph construction, retrieval, generation) to find when graphs help. [RAG vs. GraphRAG][rag-vs-graphrag] compares both under one unified protocol on QA and query-based summarization and reports distinct strengths per task, with selection or integration strategies giving "consistent performance improvements" (authors' claim). Practical consequence (inference): evaluate on your own corpus and question mix, and budget for the index build, which the GraphRAG bullets above flag as compute-heavy.
+- **Survey.** [Graph-Mediated LLM Systems in the Agentic Era][graph-survey] offers a role-locus taxonomy and an evaluation framework that separates local metric gains from downstream task performance and keeps reporting conditions; it names memory maintenance as an open challenge. Survey-level, not new measurements.
+- **Construction quality is measurable.** Benchmarks and ontology-grounded pipelines (Text2KGBench, Feng et al.) are summarized in [Ontology generation and ontology-constrained extraction](../infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction).
+- **Update and provenance of LLM-written edges.** Documented mechanisms, not measured quality: Graphiti's validity windows and episode lineage (§4 above); per-concept provenance in the [OKF analysis](../knowledge-management/open-knowledge-format-analysis.md); per-snippet lineage in the [Genie analysis](../agents/databricks-genie-analysis.md). I found no head-to-head study of how often such LLM-written edges are wrong or stale (searched only the sources above, 2026-11-19).
 
 ### Agent-native graph & hybrid RAG platforms
 
@@ -574,3 +570,22 @@ WikiTrace addition (§4) — first-party checked 2026-11-12:
 [wikitrace-paper]: https://arxiv.org/abs/2611.14320
 [wikitrace-gh]: https://github.com/yukyeongleee/wikitrace
 [pydantic-ai-harness-gh]: https://github.com/pydantic/pydantic-ai-harness
+
+KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv abstract pages and README read 2026-11-19:
+
+| Source | Content |
+|---|---|
+| [getzep/graphiti README][graphiti-readme] + `gh api` | Validity windows, episode provenance, prescribed/learned ontology; Apache-2.0, 32,939 stars, v0.31.2 (2026-10-20) |
+| [arXiv:2501.13956][zep-paper] abstract page | Zep/Graphiti DMR and LongMemEval claims (vendor numbers) |
+| [arXiv:2506.05690][graphrag-bench] abstract page | GraphRAG-Bench scope; the "underperforms vanilla RAG" statement attributed to recent studies |
+| [arXiv:2502.11371][rag-vs-graphrag] abstract page | Unified RAG vs GraphRAG protocol; per-task strengths; integration strategies |
+| [arXiv:2611.05953][graph-survey] abstract page | Role-locus taxonomy, evaluation framework, memory-maintenance challenge |
+| [arXiv:2610.27524][memdev-paper] · [arXiv:2610.30485][mempabench-paper] abstract pages | Memory-failure and interaction-preference findings (general memory caution) |
+
+[graphiti-readme]: https://github.com/getzep/graphiti#readme
+[zep-paper]: https://arxiv.org/abs/2501.13956
+[graphrag-bench]: https://arxiv.org/abs/2506.05690
+[rag-vs-graphrag]: https://arxiv.org/abs/2502.11371
+[graph-survey]: https://arxiv.org/abs/2611.05953
+[memdev-paper]: https://arxiv.org/abs/2610.27524
+[mempabench-paper]: https://arxiv.org/abs/2610.30485

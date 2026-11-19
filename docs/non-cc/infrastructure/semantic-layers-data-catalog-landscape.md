@@ -187,7 +187,7 @@ Design lens — Lindenberg's *Audit the Auditor* treats a CHANGELOG, not a READM
 The generic layers above solve the *plumbing* — governed APIs an agent can query. But an agent hitting a raw semantic API still re-derives business meaning on every call (and can still get it wrong). Two efforts go further, and are analyzed in depth elsewhere in this repo:
 
 - **[Databricks Genie Ontology](../agents/databricks-genie-analysis.md#genie-ontology)** — a persistent, authority-ranked context graph (metric definitions, joins, synonyms, business logic) built from query history + workplace apps, **MCP-exposed** so external agents consume the same verified context instead of re-deriving it per query.
-- **[Open Knowledge Format](../knowledge-management/open-knowledge-format-analysis.md)** — a vendor-neutral, Apache-2.0 spec (Google Cloud, v0.1) for portable "knowledge bundles" (markdown + YAML) with AI agents as first-class consumers — the platform-independent interchange format for that curated context.
+- **[Open Knowledge Format](../knowledge-management/open-knowledge-format-analysis.md)** — a vendor-neutral, Apache-2.0 spec (Google Cloud, v0.2) for portable "knowledge bundles" (markdown + YAML) with AI agents as first-class consumers — the platform-independent interchange format for that curated context.
 
 Together they mark the shift from "query the catalog at runtime" to "pre-loaded, verified business context the agent can trust." [NVIDIA Auto Ontology](#agent-native-ontology-tools-2026-mcp-wave) is an open-source, self-hosted take on the same idea: an LLM-drafted, human-certified business ontology over relational sources, built partly from query history and exposed over MCP.
 

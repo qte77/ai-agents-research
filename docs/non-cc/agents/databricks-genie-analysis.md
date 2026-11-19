@@ -51,15 +51,18 @@ workplace applications via Lakeflow Connect. Distinguishing properties:
 
 ### Status and changes since launch (checked 2026-11-19)
 
-Per the first-party [Genie Ontology docs page][genie-ont-docs] (page footer "Last updated on Nov 16, 2026") and the
+Per the first-party [Genie Ontology docs page][genie-ont-docs] (shows "Last updated on Nov 16, 2026" under its title) and the
 [AI/BI release notes][genie-rn] (documented):
 
-- **Rollout** — 2026-07-02: ontology snippets announced as Public Preview in
-  Genie One, sign-up via the account team. 2026-08-06: the ontology "is now
-  enabled by default" (Public Preview). 2026-08-13: snippets available to all
-  customers without requesting access. 2026-10-22: snippets are also
-  extracted from queries that external tools such as dbt run on Databricks. The
-  docs page carries no GA announcement as of this date.
+- **Rollout** (one sequence) — 2026-06-04: first release-notes entry,
+  "Genie Ontology (Public Preview)", describing an automatically built map of
+  the business. 2026-06-15/16: launch announcement (press release; blog dated
+  2026-06-16). 2026-07-02: "ontology snippets" entry, Public Preview, sign-up
+  via the account team. 2026-08-06: ontology "enabled by default" (Public
+  Preview). 2026-08-13: snippets available to all customers without requesting
+  access. 2026-10-22: snippets also extracted from queries that external tools
+  such as dbt run on Databricks. The docs page carries no GA announcement as of
+  this date.
 - **Two knowledge classes** — *modeled knowledge* (metric views, domains,
   Pages, certification, curated Genie Agents) takes precedence over *learned
   knowledge* (snippets Genie extracts from dashboards, SQL queries, metric views
@@ -83,8 +86,10 @@ Benchmark, restated with its setting: Databricks' internal test used **28**
 enterprise data-analysis questions; Genie got 84.5% right on the first attempt
 vs 52.4% for the strongest and 25% for the weakest general-purpose coding agent
 tested, about 2x faster than the strongest, with competing agents anonymized
-([blog][genie-blog], vendor claim, methodology unpublished). With n=28 one
-question is about 3.6 points, so treat the gap as indicative only.
+([blog][genie-blog], vendor claim, methodology unpublished). 84.5% and 52.4% of
+28 are not whole numbers of questions, so the figures are probably averaged
+over repeated runs (inference; the blog does not say). If so, one question is
+about 3.6 points per run; treat the gap as indicative only.
 
 Unverified: a third-party write-up reports "50+ connected sources" and "up to
 200 knowledge snippets per Genie Space" ([talentbricks][talentbricks]); neither
