@@ -2,7 +2,7 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-11-18
+updated: 2026-11-19
 validated_links: 2026-11-18
 status: adopt
 ---
@@ -23,7 +23,7 @@ This doc covers vars observed in agent workflows. For the **complete authoritati
 |---|---|---|---|
 | `ANTHROPIC_MODEL` | `sonnet` | Primary model alias or full ID | [env-vars][env-vars] |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | (inherits primary) | Model for Agent tool subagents and teammates | [env-vars][env-vars] |
-| `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`, `auto` — support varies by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | [env-vars][env-vars] |
+| `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`; outranks every other effort source. `auto` or `unset` sends no effort level, so the API default applies. Support and defaults vary by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | [env-vars][env-vars] |
 
 Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.md)
 
@@ -41,7 +41,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 |---|---|---|---|
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | (unset) | `1` turns off 1M-window support: removes `[1m]` model variants from the picker and holds models that run with the 1M window by default to 200K (documented). From v2.1.323 the window assumed for a model ID Claude Code does not recognize is 1M instead of 200K; `1` keeps 200K, and the changelog warns that other vendors' smaller-window models can fail every turn until `/clear` once full | [env-vars][env-vars], [changelog][changelog] (2.1.323) |
 | `CLAUDE_CODE_MAX_CONTEXT_TOKENS` | (unset) | Overrides the context window Claude Code assumes for the active model (documented); since v2.1.193 how it applies depends on how Claude Code resolves the model ID (see the model-config page's "Correct the window for a gateway or custom model ID"). From v2.1.325 it also sets the window for unrecognized IDs starting with `claude-`, such as a gateway's `claude-sonnet-latest` | [env-vars][env-vars], [changelog][changelog] (2.1.325) |
-| `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | `0` | Remove built-in git workflow instructions from context | [env-vars][env-vars] |
+| `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | `0` | `1` removes the built-in commit and PR instructions and the git status snapshot from context, in any session; takes precedence over the `includeGitInstructions` setting | [env-vars][env-vars] |
 | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | (built-in default) | Percentage (1-100) of the auto-compact window at which compaction triggers. It can only lower the threshold: "values above the default percentage are ignored". The docs give no default number (checked 2026-11-09); observed triggers at ~78-85% ([#18264][gh-18264], [#18241][gh-18241]) | [env-vars][env-vars] |
 | `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` | 200000 | Minimum conversation size for idle compaction (compacting a session left idle for about 54 minutes, before its one-hour prompt cache expires); turn the feature off with `"idleCompaction": false` in settings. v2.1.299+ ([changelog][gh-changelog-cc]); see [CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires) | [env-vars][env-vars] |
 | `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | (model context size) | Auto-compact window in tokens (100000 to 1000000); wins over the command, flag and setting; formats and precedence in [CC-extended-context-analysis.md](../context-memory/CC-extended-context-analysis.md#setting-the-auto-compact-window-autocompact) | [env-vars][env-vars] |

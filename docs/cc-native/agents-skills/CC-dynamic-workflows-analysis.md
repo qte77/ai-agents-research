@@ -3,7 +3,7 @@ title: CC Dynamic Workflows, Ultracode & deep-research
 source: https://code.claude.com/docs/en/workflows
 purpose: Document Claude Code's dynamic workflow orchestration tool, the ultracode effort setting, and the bundled /deep-research workflow, with first-party sourcing.
 created: 2026-06-11
-updated: 2026-11-09
+updated: 2026-11-19
 validated_links: 2026-11-09
 status: trial
 ---
@@ -51,9 +51,9 @@ Invoke a saved workflow as `Workflow({ scriptPath, args })`, or have Claude auth
 
 ## Ultracode (effort setting)
 
-`ultracode` is "a Claude Code setting rather than a model effort level: it sends `xhigh` to the model and additionally has Claude orchestrate dynamic workflows for substantive tasks" ([model config — effort][cc-effort]). Set with `/effort ultracode`; **session-only** (resets on a new session — `/effort high` to drop back). With it on, "a single request can turn into several workflows in a row: one to understand the code, one to make the change, and one to verify it" ([workflows][cc-workflows]).
+`ultracode` is a Claude Code setting, not a model effort level: with it on, Claude orchestrates dynamic workflows for substantive tasks at whatever effort level the session runs at ([model config — effort][cc-effort], checked 2026-11-19). From v2.1.284 turning it on or off leaves the effort level unchanged; before that, turning it on set the session to `xhigh` and picking another level turned it off. Set it with `/effort ultracode` (`/effort ultracode off`, or the slider's Ultracode toggle, to drop it) for the session, or persistently with the `ultracode` setting; `--effort ultracode` turns it on *and* sets `xhigh`. With it on, "a single request can turn into several workflows in a row: one to understand the code, one to make the change, and one to verify it" ([workflows][cc-workflows]).
 
-It is **not** part of `effortLevel` in settings.json, the `--effort` flag, or `CLAUDE_CODE_EFFORT_LEVEL`; it can be passed as `"ultracode": true` via `--settings` or an Agent SDK control request ([model config — effort][cc-effort]). Requires a model that supports `xhigh` (Fable 5, Opus 4.8/4.7).
+The `effortLevel` setting and `CLAUDE_CODE_EFFORT_LEVEL` do not accept it; `"ultracode": true` goes in a settings file, `--settings`, or an Agent SDK control request ([model config — effort][cc-effort]). It is unavailable when workflows are turned off or the model does not support `xhigh` (see [Effort Levels](../configuration/CC-model-provider-configuration.md#effort-levels) for which models do).
 
 **Keyword trigger** (single task, without changing session effort): include `ultracode` in a prompt — or just ask "use a workflow". Before v2.1.160 the literal keyword was `workflow`. Disable via *Ultracode keyword trigger* in `/config`. Distinct from `ultrathink` (one-off deeper reasoning — no workflow, no effort change).
 

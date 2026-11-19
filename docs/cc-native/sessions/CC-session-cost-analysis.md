@@ -2,7 +2,7 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-11-15
+updated: 2026-11-19
 validated_links: 2026-10-26
 status: adopt
 ---
@@ -272,6 +272,22 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 
 **Note**: CC now has a "Traces (beta)" feature exporting distributed trace spans (`claude_code.interaction`, `claude_code.llm_request`, `claude_code.tool`, etc.), enabled via `CLAUDE_CODE_ENABLE_TELEMETRY=1` + `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER` (CC v2.1.216+, [monitoring docs][monitoring]). Upstream issues [#9584][gh-9584] and [#2090][gh-2090], which had requested this capability, are now closed. See also [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (OTel section).
 
+## Documented cost levers
+
+Anthropic's [Manage costs effectively][cc-costs] page lists the levers Claude Code itself offers for spending fewer tokens (checked 2026-11-19). The ones this corpus does not cover elsewhere, each at the page's own evidence level (documented guidance, not measured savings):
+
+| Lever | What the docs say | Corpus detail |
+|---|---|---|
+| `/usage` | Shows the session's token usage and, on Pro, Max, Ultra, Team and Enterprise plans, a breakdown that recommends a change for any behavior behind 10% or more of recent usage | [Shared plan usage](#shared-plan-usage-across-claude-products) |
+| `/context` | Shows what is filling the context window; the page cites it next to MCP overhead, since MCP tool definitions are deferred by default and only names and server instructions load up front | [CC-env-vars-reference.md § Context & Token Control](../configuration/CC-env-vars-reference.md#context--token-control) |
+| `/clear` between tasks | Starting fresh when switching to unrelated work stops stale context being re-sent with every message; `/rename` first, `/resume` to return. The page calls `/clear` free, unlike `/compact`, which reads the whole conversation it summarizes | [CC-prompt-caching-behavior.md § Actions That Invalidate vs. Keep the Cache](../context-memory/CC-prompt-caching-behavior.md#actions-that-invalidate-vs-keep-the-cache) |
+| `/compact <focus>` | Focus text, or a "Compact instructions" section in CLAUDE.md, tells the summary what to keep | [CC-extended-context-analysis.md § Mitigation](../context-memory/CC-extended-context-analysis.md#mitigation) |
+| Output style | A style's instructions add input tokens (cached after the first request). Explanatory and Learning produce longer answers than Default, so more output tokens; the built-in Concise style asks for short answers ([output styles][cc-output-styles]) | — |
+| Lower effort or thinking | Thinking tokens bill as output; lower the effort level, or turn thinking off in `/config` on models that allow it (not Opus 5.5, Sonnet 5.5, Haiku 5.5 or the Fable models) | [CC-model-provider-configuration.md § Effort Levels](../configuration/CC-model-provider-configuration.md#effort-levels) |
+| Smaller model for subagents | Subagent requests count against the same usage; set `model: haiku` (or another alias) in a subagent's definition for simple tasks, or force one model on every subagent with `CLAUDE_CODE_SUBAGENT_MODEL` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` (v2.1.257+) | See below |
+
+**Which model a subagent runs on** ([subagents][cc-subagents]): the first that applies of (1) the `model` parameter Claude passes when it spawns the subagent (an alias only), (2) the `model` field in the subagent's definition, including `inherit`, (3) `CLAUDE_CODE_SUBAGENT_MODEL`, (4) the main conversation's model. Before v2.1.251 the environment variable overrode the first two ([env vars][cc-env-vars]). With nothing set, a subagent runs on the parent's model, so a session on an Opus or Fable model spends at that model's rate on every subagent too. A subagent or teammate without its own `effort` runs at the session's effort level only on the parent's model ([model config][cc-effort-subagents]).
+
 ## Message Batches API
 
 The Message Batches API runs large request volumes asynchronously. This section is deliberately bounded to the billing/limits facts that bear on cost accounting; see the [batch processing docs][batch] for the full guide. For ZDR eligibility specifically, Batches is **not** ZDR-eligible per [CC-web-auth-setup-analysis.md § Adjacent Platform Building Blocks for Agents][web-auth-batch] (not edited by this pass; that doc's claim stands as-is).
@@ -311,6 +327,11 @@ The Message Batches API runs large request volumes asynchronously. This section 
 | [TypeScript Agent SDK reference][ts-sdk-ref] | `SDKResultMessage` field names and types (`total_cost_usd`, `usage`, `modelUsage`, `duration_api_ms`, `num_turns`, …) (accessed 2026-10-15) |
 | [Track cost and usage][cost-tracking] | `usage` vs `modelUsage` vs `total_cost_usd` scope, subagent accounting, cross-call accumulation since CC v2.1.277 (accessed 2026-10-15) |
 | [Headless / Agent SDK docs][headless] | `-p --output-format json` usage, `--continue`/`--resume` cost reporting (accessed 2026-10-15) |
+| [Manage costs effectively][cc-costs] | Documented cost levers: `/usage`, `/context`, `/clear`, `/compact`, effort, subagent models (accessed 2026-11-19) |
+| [Output styles][cc-output-styles] | Token effect of output styles (accessed 2026-11-19) |
+| [Subagents][cc-subagents] | Subagent model resolution order (accessed 2026-11-19) |
+| [Environment variables][cc-env-vars] | `CLAUDE_CODE_SUBAGENT_MODEL` precedence change at v2.1.251, `_FORCE` (accessed 2026-11-19) |
+| [Model configuration — effort][cc-effort-subagents] | Effort level of subagents and teammates (accessed 2026-11-19) |
 
 [statusline]: https://code.claude.com/docs/en/statusline
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
@@ -335,3 +356,8 @@ The Message Batches API runs large request volumes asynchronously. This section 
 [fast-mode]: https://platform.claude.com/docs/en/build-with-claude/fast-mode
 [models-reference-pricing]: ../configuration/CC-models-reference.md#model-pricing-current-lineup
 [web-auth-batch]: ../ci-remote/CC-web-auth-setup-analysis.md#adjacent-platform-building-blocks-for-agents
+[cc-costs]: https://code.claude.com/docs/en/costs
+[cc-output-styles]: https://code.claude.com/docs/en/output-styles
+[cc-subagents]: https://code.claude.com/docs/en/sub-agents#choose-a-model
+[cc-env-vars]: https://code.claude.com/docs/en/env-vars
+[cc-effort-subagents]: https://code.claude.com/docs/en/model-config#effort-level-of-subagents-and-teammates
