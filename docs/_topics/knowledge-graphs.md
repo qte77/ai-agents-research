@@ -12,6 +12,7 @@ see [the hub index](README.md).
 | [helixdb-analysis.md](../non-cc/context-memory/helixdb-analysis.md) | Rust graph-vector database | non-cc |
 | [latticedb-analysis.md](../non-cc/context-memory/latticedb-analysis.md) | Embedded graph + vector + full-text database | non-cc |
 | [minigraf-analysis.md](../non-cc/context-memory/minigraf-analysis.md) | Embedded bi-temporal Datalog graph database (Rust/Python/WASM/mobile) | non-cc |
+| [graph-databases-query-languages-landscape.md](../non-cc/infrastructure/graph-databases-query-languages-landscape.md) | Graph query languages, graph databases for agents, text-to-Cypher/SPARQL evidence, graph MCP servers; links the per-tool docs | non-cc |
 | [rowboat-analysis.md](../non-cc/agents/rowboat-analysis.md) | AI coworker that builds knowledge graphs from communications | non-cc |
 | [databricks-genie-analysis.md § Genie Ontology](../non-cc/agents/databricks-genie-analysis.md#genie-ontology) | Enterprise semantic graph behind Genie | non-cc |
 | [open-knowledge-format-analysis.md](../non-cc/knowledge-management/open-knowledge-format-analysis.md) | OKF: agent-readable knowledge-bundle standard | non-cc |
