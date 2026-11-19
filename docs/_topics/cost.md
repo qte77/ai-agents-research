@@ -13,6 +13,7 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 | [CC-models-reference.md § Model Pricing (current lineup)](../cc-native/configuration/CC-models-reference.md#model-pricing-current-lineup) | Per-model input, output and cache prices | cc-native |
 | [CC-extended-context-analysis.md § Pricing Model](../cc-native/context-memory/CC-extended-context-analysis.md#pricing-model) | How the 1M-token window is billed | cc-native |
 | [CC-session-cost-analysis.md § Shared plan usage across Claude products](../cc-native/sessions/CC-session-cost-analysis.md#shared-plan-usage-across-claude-products) | Plan usage limits shared across Claude surfaces | cc-native |
+| [software-factory-landscape.md § Economics, failure and verification evidence](../sdlc-lcm/software-factory-landscape.md#economics-failure-and-verification-evidence) | Factory-scale economics: Uber's cost per session and spend trend (vendor claims) beside the measured cost of agent PRs after merge | sdlc-lcm |
 | [CC-web-auth-setup-analysis.md § What a Scripted Run Bills](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#what-a-scripted-run-bills) | Which pool `claude -p`, the Agent SDK, cloud sessions and scheduled tasks draw on; monthly API credits on Max, Ultra and Team | cc-native |
 
 ## Levers
