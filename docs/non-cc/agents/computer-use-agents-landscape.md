@@ -69,7 +69,7 @@ macOS 14 minimum above, not a conflict). For the Cowork product and enterprise c
 [Cowork enterprise analysis][cowork-ent].
 
 **Pointer only:** Claude in Chrome (browser extension) is a browser agent and is covered under the
-browser-agents topic, not here.
+[browser-agents topic](browser-agents-landscape.md), not here.
 
 ## Other vendors
 

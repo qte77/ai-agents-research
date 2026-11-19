@@ -27,8 +27,9 @@ web pages.
   `CG-DRAFT` in the spec source) with a Chrome 149 origin trial and an Edge 150 origin trial listed
   in its implementation-status file (documented).
 - Browser-agent benchmark scores are not one scale. Online-Mind2Web numbers differ by judge (human,
-  WebJudge, custom agentic judge); the one aggregator we found mixes independent and self-reported
-  rows and is run by a hosted-browser vendor (vendor claim).
+  WebJudge, custom agentic judge); HAL (Princeton) and an aggregator run by Steel list very different
+  ranges; only Steel is a hosted-browser vendor, and its rows mix independent and self-reported
+  results (vendor claim).
 - Every vendor says the same about safety: web content is untrusted, injection is not solved, keep
   sensitive work off agent-driven browsers. Numbers are vendor-internal.
 
@@ -36,17 +37,18 @@ web pages.
 
 | Product | State (read 2026-11-19) | Evidence |
 | ------- | ----------------------- | -------- |
-| [Claude in Chrome][cfc] | Generally available on every paid Claude plan, announced 2026-08-26; also reachable from Claude Code | documented ([GA post][cfc-ga]) |
+| [Claude in Chrome][cfc] | Generally available on every paid Claude plan, announced 2026-08-26; also reachable from Claude Code | documented ([GA post][cfc-ga], [Claude Code docs][cc-chrome]) |
 | ChatGPT Atlas ([launch post][atlas], 2025-10-21) | The page now carries a note that Atlas "has since been deprecated"; no date given. Its help-center pages could not be fetched here (HTTP 403), so replacement and timing are unverified | documented (note), rest unverified |
-| [Gemini in Chrome][gem-chrome] | Assistant in Chrome; agentic "auto browse" described as a preview for Google AI Pro and Ultra subscribers in the US | documented (marketing page, not docs) |
-| [Perplexity Comet][comet] | Launch post dated 2025-07-09 (Max subscribers first); the post is a year old and current availability was not checked | announced, stale |
+| [Gemini in Chrome][gem-chrome] | Assistant in Chrome; agentic "auto browse" described as a preview for Google AI Pro and Ultra subscribers in the US | announced (marketing page, not docs) |
+| [Perplexity Comet][comet] | Launch post dated 2025-07-09 (Max subscribers first); the post is about 16 months old and current availability was not checked | announced, stale |
 
 Our reading: the category is moving fast enough that a product page is a poor long-term anchor
 (Atlas is an example). Other agentic browsers (Opera Neon, Dia, Edge Copilot Mode) were not verified
 at first party in this pass (the Edge page returned 404) and are left out.
 
 Framework side, from repo metadata on 2026-11-19: [browser-use][bu-gh] (MIT, 121,474 stars),
-[Stagehand][stagehand-gh] (MIT, 26,095 stars). Details of both are in the existing
+[Stagehand][stagehand-gh] (MIT, 26,095 stars) and [steel-browser][steel-gh] (Apache-2.0, 7,989
+stars). Details of the first two are in the existing
 [alternatives table](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#alternative-mcp-options-brief);
 the scraping catalog covers [Magnitude, Lightpanda and the accessibility-tree approach][scrape-cat].
 
@@ -57,15 +59,15 @@ both MCP servers); behaviour from each project's own docs.
 
 | Aspect | Claude in Chrome | Chrome DevTools MCP | Playwright MCP |
 | ------ | ---------------- | ------------------- | -------------- |
-| Run by | Anthropic | Chrome DevTools team (`ChromeDevTools` org) | Microsoft (`microsoft` org) |
+| Run by | Anthropic | Chrome DevTools team ([`ChromeDevTools` org][dt-gh]) | Microsoft ([`microsoft` org][pw-gh]) |
 | Form | Chrome extension (side panel; also tools inside Claude Code and Cowork) | MCP server and CLI, npm `chrome-devtools-mcp`, latest release v1.13.0 (2026-11-11) | MCP server, latest release v0.0.86 (2026-11-18); its README also points coding agents to a separate CLI-plus-skills tool |
 | Licence | proprietary extension | Apache-2.0 | Apache-2.0 |
-| How it drives the browser | Extension acts in your Chrome tabs; Claude Code docs say it opens new tabs in a tab group | Puppeteer for automation plus DevTools for traces, network, console | Playwright with structured accessibility snapshots; "No vision models needed" per README |
-| Session and logins | Your real browser, shares your login state; pauses on login pages and CAPTCHAs (Claude Code docs) | Own profile by default (`$HOME/.cache/chrome-devtools-mcp/chrome-profile`); `--autoConnect` attaches to a local Chrome 144+ with remote debugging on | Persistent profile by default; `--isolated` keeps it in memory; `--extension` attaches to a running Chrome or Edge |
+| How it drives the browser | Extension acts in your Chrome tabs; [Claude Code docs][cc-chrome] say it opens new tabs in a tab group | Puppeteer for automation plus DevTools for traces, network, console | Playwright with structured accessibility snapshots; "No vision models needed" per README |
+| Session and logins | Your real browser, shares your login state; pauses on login pages and CAPTCHAs (Claude Code docs) | Own profile by default (`$HOME/.cache/chrome-devtools-mcp/chrome-profile`); `--autoConnect` attaches to a local Chrome 144+ with remote debugging on ([config][dt-cfg]) | README describes a persistent profile under a per-workspace cache path (its option table says a temporary directory when `--user-data-dir` is unset, so the README is not consistent); `--isolated` keeps it in memory; `--extension` attaches to a running Chrome or Edge |
 | Headless | No; actions run in a visible window (Claude Code docs) | `--headless` option | `--headless` option (headed by default) |
-| Browsers | Chrome and Edge; other Chromium browsers detected by Claude Code, but the GA post says the extension "doesn't run on other Chromium browsers" (conflicting docs) | Chrome and Chrome for Testing officially | Chromium, Firefox, WebKit, Edge via `--browser` |
-| Safety controls | Manual, Auto (classifier-checked) and Skip approval modes; site allow and block lists; admin controls; blocked site categories | README disclaimer: exposes browser content to the client; no permission layer described | README says it is "not a security boundary"; origin allow and block flags documented as not security boundaries |
-| Needs | Paid Anthropic plan; with Claude Code a direct plan sign-in (not API key, not Bedrock, Vertex or Foundry); off under ZDR | Chrome | Node, a browser |
+| Browsers | Chrome and Edge; other Chromium browsers are described differently by two Anthropic pages, see the [extension analysis](../../cc-native/plugins-ecosystem/CC-chrome-extension-analysis.md) | Chrome and Chrome for Testing officially | `--browser` values chrome, firefox, webkit, msedge |
+| Safety controls | Approval modes, classifiers, site lists: see the [extension analysis](../../cc-native/plugins-ecosystem/CC-chrome-extension-analysis.md#safety) | README disclaimer: exposes browser content to the client; no permission layer described | README says it is "not a security boundary"; origin allow and block flags documented as not security boundaries |
+| Needs | Paid Anthropic plan; prerequisites and limits in the [extension analysis](../../cc-native/plugins-ecosystem/CC-chrome-extension-analysis.md) | Chrome | Node, a browser |
 | Telemetry | not stated in the docs read | usage statistics on by default, opt out with a flag; CrUX lookups for traces | not checked |
 
 Our reading: pick by the job. Claude in Chrome for work in sessions you are already signed in to;
@@ -90,7 +92,7 @@ proposed Agentic Web Working Group charter (a draft) for broader agent identity 
 A community group draft is not a W3C Recommendation.
 
 **Status (documented, repo file read 2026-11-19).** Per the [implementation-status file][webmcp-status]:
-Chrome origin trial live in Chrome 149 (Chrome's blog post is dated 2026-06-09), Edge origin trial
+Chrome origin trial live in Chrome 149 (Chrome's [origin-trial post][webmcp-ot] is dated 2026-06-09), Edge origin trial
 in Edge 150, a local flag for development, Brave support in its Leo chat expected in a release
 planned for 2027-01-05, ChatGPT Desktop listed as supported, and only standards-position issues for
 Firefox and Safari. Chrome's own docs page was last updated 2026-10-07.
@@ -109,12 +111,10 @@ that means origin-trial pages, so general browser agents still need the pixel or
 Only items checked at first party here; infrastructure already in the [scraping catalog][scrape-cat]
 (Browserbase, Steel, Hyperbrowser, TinyFish pricing and anti-bot detail) is not repeated.
 
-- [Stagehand][stagehand-gh] (Browserbase's open-source SDK): MIT, 26,095 stars, active push on
-  2026-11-19 (GitHub API).
-- [steel-browser][steel-gh] (Steel's open-source browser API): Apache-2.0, 7,989 stars, pushed
-  2026-11-19 (GitHub API).
-- [browser-use][bu-gh]: MIT, 121,474 stars (GitHub API); the benchmark post below is from its hosted
-  product vendor.
+- Open-source cores checked at the GitHub API on 2026-11-19 (licences and stars in the framework
+  paragraph above): [Stagehand][stagehand-gh] (Browserbase's SDK), [steel-browser][steel-gh]
+  (Steel's browser API) and [browser-use][bu-gh] (its hosted vendor authored the self-reported
+  benchmark row below).
 
 Hosted-vendor pricing, concurrency and "anti-detection" claims were not re-verified here; use the
 catalog's dated rows.
@@ -137,9 +137,9 @@ All paper figures are paper-reported (settings in the abstracts, not reproduced 
 - The [HAL leaderboard][hal] (Princeton) lists a top row of SeeAct with GPT-5 Medium at 42.33% and
   notes it has paused adding new models (the page marks its rows as reproduced by the HAL team).
 - A [leaderboard aggregator run by Steel][steel-lb] (a hosted-browser vendor; page last updated
-  2026-10-11) lists rows from 28.0% to 97.0%. Its top row, Browser Use Cloud at 97.0%, is
+  2026-10-11) lists rows from 28.0% to 97.0%. Its top row, Browser Use Cloud at 97.0% (row dated Mar 2026 on the page), is
   self-reported with a custom agentic judge that the page says is not directly comparable to a
-  screenshot-based judge (vendor claim). Another row, ChatGPT Atlas agent mode at 71.0%, is
+  screenshot-based judge (vendor claim). Another row, ChatGPT Atlas agent mode at 71.0% (Mar 2026), is
   OpenAI-reported with no public run data (vendor claim); Atlas is now deprecated per its launch
   page, so the figure is historical.
 - The repo's changelog records a 2026-05-23 move to a v2 submission schema and outsourced human
@@ -150,14 +150,8 @@ a statement about that vendor's judge until run data is public.
 
 ## Safety: prompt injection from web content
 
-- **Claude in Chrome (documented).** Anthropic's [safety help article][cfc-safe] describes a
-  classifier that screens incoming content and another that checks each action, site blocklists,
-  confirmations for sensitive actions, and prohibited actions (for example bypassing CAPTCHAs). It
-  says "the risk is not zero". It cites Anthropic's internal testing: with Claude Opus 4.8 the
-  configuration "reduces attack success rates to less than 0.08%" (vendor claim, internal test). The
-  [GA post][cfc-ga] reports no successful attack against two named models with probes and action
-  classifiers, and 0.3% against a third (vendor claim, internal evaluation). The earlier
-  [2025-11-24 post][pi-post] gave about 1% for its then-current configuration.
+- **Claude in Chrome (documented, vendor-internal numbers).** Layers, approval modes and Anthropic's
+  reported attack-success figures are in the [extension analysis](../../cc-native/plugins-ecosystem/CC-chrome-extension-analysis.md#safety).
 - **ChatGPT Atlas (documented).** OpenAI's [hardening post][atlas-hard] (2025-12-22) describes
   automated red teaming with reinforcement learning and a rapid-response loop, and says
   deterministic guarantees are hard (read via a fallback fetcher; the product is now deprecated).

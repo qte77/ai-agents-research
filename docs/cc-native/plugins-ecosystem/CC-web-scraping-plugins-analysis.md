@@ -192,7 +192,7 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 
 Microsoft's official MCP server that provides full browser automation using Playwright. Interacts with pages through structured accessibility snapshots — no vision model needed. **Runs a local Chromium process** on your machine — no cloud service, no API key, no credit cost. Optional remote mode via `--port` for Docker/server setups, or `--cdp-endpoint` to attach to an existing browser ([source][playwright-mcp-gh]).
 
-**2026-11-19:** Apache-2.0, 39,884★, latest release `v0.0.86` (2026-11-18) (`gh api`; was 38,557★ and `v0.0.83` on 2026-10-24). Its README documents `--isolated`, `--headless`, `--extension` (attach to a running Chrome or Edge) and `--browser` (chrome, firefox, webkit, msedge). Side-by-side with Claude in Chrome and DevTools MCP: [browser-agents-landscape.md](../../non-cc/agents/browser-agents-landscape.md#claude-in-chrome-vs-devtools-mcp-vs-playwright-mcp). It is one of the two MCP servers "enabled by default" for GitHub's Copilot cloud agent ([github-copilot-cloud-agent-analysis.md § MCP servers](../../non-cc/agents/github-copilot-cloud-agent-analysis.md#mcp-servers)). Its README now states "Playwright MCP is not a security boundary" and that "Modern coding agents increasingly favor CLI–based workflows exposed as SKILLs over MCP" ([source][playwright-mcp-gh]).
+**2026-11-19:** Apache-2.0, 39,884★, latest release `v0.0.86` (2026-11-18) (`gh api`; was 38,557★ and `v0.0.83` on 2026-10-24). Flags are in the options table below (it also has `--extension` to attach to a running Chrome or Edge). Side-by-side with Claude in Chrome and DevTools MCP: [browser-agents-landscape.md](../../non-cc/agents/browser-agents-landscape.md#claude-in-chrome-vs-devtools-mcp-vs-playwright-mcp). It is one of the two MCP servers "enabled by default" for GitHub's Copilot cloud agent ([github-copilot-cloud-agent-analysis.md § MCP servers](../../non-cc/agents/github-copilot-cloud-agent-analysis.md#mcp-servers)). Its README now states "Playwright MCP is not a security boundary" and that "Modern coding agents increasingly favor CLI–based workflows exposed as SKILLs over MCP" ([source][playwright-mcp-gh]).
 
 ### Setup
 
@@ -244,7 +244,7 @@ Enable via `--caps=core,vision,pdf` or config file ([source][playwright-mcp-gh])
 - **No vision model needed**: Operates on structured data, not pixels ([source][playwright-mcp-gh])
 - **Deterministic references**: Element references are unique and stable — no coordinate ambiguity ([source][playwright-mcp-gh])
 - **Full browser control**: Navigation, form filling, authentication, file upload/download
-- **Multiple browsers**: Chromium, Firefox, WebKit, Edge ([source][playwright-mcp-gh])
+- **Multiple browsers**: `--browser` takes chrome, firefox, webkit or msedge ([source][playwright-mcp-gh])
 - **Persistent profiles**: Reuse browser profiles with cookies/storage across sessions ([source][playwright-mcp-gh])
 - **Code generation**: Pass `--codegen typescript` to generate Playwright test scripts as Claude navigates ([source][simonwillison-til])
 - **Local execution**: No API key, no cloud dependency, no credit cost
@@ -254,11 +254,11 @@ Enable via `--caps=core,vision,pdf` or config file ([source][playwright-mcp-gh])
 
 | Option | Description | Default |
 |---|---|---|
-| `--browser` | chromium / firefox / webkit / msedge | chromium |
+| `--browser` | chrome / firefox / webkit / msedge | not stated in the README table (2026-11-19) |
 | `--headless` | Run without visible window | false (headed) |
 | `--viewport-size` | Browser dimensions | 1280x720 |
 | `--device` | Emulate device (e.g., "iPhone 15") | — |
-| `--user-data-dir` | Persistent browser profile path | temp dir |
+| `--user-data-dir` | Browser profile path | README option table: temp dir if unset; README prose: persistent per-workspace cache profile (inconsistent) |
 | `--isolated` | Keep profile in memory only | false |
 | `--storage-state` | Load cookies/storage from file | — |
 | `--config` | JSON config file for complex setups | — |

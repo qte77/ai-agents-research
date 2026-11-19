@@ -66,7 +66,7 @@ and `RUNTYPE_OTEL_ENDPOINT` points it at any OTLP/HTTP traces URL. Its README st
 covers one turn, not a whole session; auxiliary model calls and subagent internals are excluded; and on
 Hermes v0.21.4 a terminal provider error can hold a turn's trace until process exit (5-second flush
 budget, leftovers dropped). [`persona`][runtype-persona] (249★, pushed 2026-09-28) is a VanillaJS AI chat
-widget (`@runtypelabs/persona`) with WebMCP page tools, tool-call visualization and approval gates for any
+widget (`@runtypelabs/persona`) with [WebMCP](../agents/browser-agents-landscape.md#webmcp) page tools, tool-call visualization and approval gates for any
 SSE backend. It is a UI layer rather than a harness, so it is not scored.
 
 `subject: harness`

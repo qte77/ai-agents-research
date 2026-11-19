@@ -29,25 +29,30 @@ from the Chrome side panel, from Claude, or from Claude Code ([product page][chr
   (Pro, Max, Ultra, Team or Enterprise), and `/login` sign-in. With an API key or a `setup-token`
   credential Claude Code keeps Chrome off; it is not available through Amazon Bedrock, Google Cloud's agent platform
   or Microsoft Foundry ([Claude Code docs][chrome-cc]).
-- **Availability limits (documented)**: Chrome and Edge are supported; other Chromium browsers are
-  detected by Claude Code, but the GA post says the extension does not run on other Chromium browsers
-  or mobile yet (the two pages disagree). Not supported in WSL. Off under Zero Data Retention in
+- **Availability limits (documented, two pages differ)**: the GA post (2026-08-26) says the extension
+  "doesn't run on other Chromium browsers or on mobile yet", while the Claude Code docs page (read
+  2026-11-19) lists Brave, Arc, Vivaldi and Opera alongside Chrome and Edge and says Claude Code sets
+  up the connection. We do not rule which is current. Not supported in WSL. Off under Zero Data Retention in
   Claude Code; off by default in HIPAA organizations, and outside the BAA ([Claude Code docs][chrome-cc], [safety article][chrome-safe]).
 - **Permission modes (documented)**: Manually approve, Automatically approve (a classifier checks each
-  action; default in the Cowork side panel) and Skip all approvals (no checks). Downloads and
-  entering sensitive data still ask in the first two. Admins on Team and Enterprise set site allow
+  action; default in the Cowork side panel) and Skip all approvals (no checks). Per the permissions guide, entering
+  sensitive data asks "Regardless of your permission mode", Skip included; downloads are documented
+  as asking in Manual and under "Always allow actions on this site". Admins on Team and Enterprise set site allow
   and block lists ([permissions guide][chrome-perm]).
-- **Status wording differs**: the GA post and product page say generally available, while the safety
-  article still says "in beta in the Chrome browser" ([safety article][chrome-safe]). Treat GA as
-  the newer statement and the article as lagging (our reading).
+- **Status wording differs**: the GA post and product page say generally available. The safety
+  article, marked "Updated this week" when read, says it is available in Claude Cowork and Claude
+  Code "and in beta in the Chrome browser", so beta is its current label for the browser surface
+  ([safety article][chrome-safe]); the permissions guide carries no beta label.
 
 ### Safety
 
 Anthropic names prompt injection from page content as the main risk, and the safety article states
 "The risk is not zero" ([safety article][chrome-safe]). Layers listed: training, a content classifier, an action
 classifier, site blocklists, confirmations and red teaming. Reported attack-success numbers are
-vendor-internal (vendor claim): under 0.08% for one configuration in the safety article, and no
-successful attack against two named models with probes plus action classifiers in the GA post.
+vendor-internal (vendor claim): "less than 0.08%" with Claude Opus 4.8 in the safety article; in the
+GA post no attack succeeded against Sonnet 5 or Opus 5 with probes plus action classifiers and 0.3%
+succeeded against Fable 5; the 2025-11-24 [post][chrome-pi] gave about 1% for its then-current
+configuration.
 Comparison with other agent browsers and the injection landscape:
 [browser-agents-landscape.md](../../non-cc/agents/browser-agents-landscape.md#safety-prompt-injection-from-web-content).
 
@@ -57,7 +62,7 @@ Comparison with other agent browsers and the injection landscape:
 | ------ | --- | --------- |
 | Browser automation for API/CLI workflows | None | API/CLI-based pipelines have no browser interaction surface |
 | Testing and debugging a web app you build | Moderate | `claude --chrome` reads console errors and DOM in your own browser; Chrome DevTools MCP and Playwright MCP are the alternatives (see the [comparison](../../non-cc/agents/browser-agents-landscape.md#claude-in-chrome-vs-devtools-mcp-vs-playwright-mcp)) |
-| Cross-platform integration with CC | Weak | Interactive only; headless `claude -p` runs and API-key sessions cannot use it |
+| Cross-platform integration with CC | Weak | Interactive only; API-key sessions are documented as unsupported, and headless `claude -p` use is unlikely to benefit (our reading) |
 | Form filling / web scraping | Conditional | Relevant only where data sits behind your own login; for bulk or unattended extraction see [CC-web-scraping-plugins-analysis.md](CC-web-scraping-plugins-analysis.md) |
 | End-to-end workflows with Cowork | Conditional | Side panel runs as a Cowork session on several plans (see [CC-cowork-plugins-enterprise-analysis.md](CC-cowork-plugins-enterprise-analysis.md)) |
 
@@ -65,16 +70,20 @@ Comparison with other agent browsers and the injection landscape:
 
 **The Chrome extension targets browser work in sessions where you are already signed in (form filling, web navigation, checking a UI you just built). Projects whose CC usage is entirely API/CLI-driven or unattended gain no benefit and need no adoption action; for headless or isolated browser automation use Playwright MCP.**
 
-## References
+## Sources
 
-- [Claude Chrome extension][chrome-product]
-- [Claude in Chrome is generally available][chrome-ga]
-- [Use Claude Code with Chrome][chrome-cc]
-- [Use Claude in Chrome safely][chrome-safe]
-- [Claude in Chrome permissions guide][chrome-perm]
+| Source | Content |
+| ------ | ------- |
+| [Claude Chrome extension][chrome-product] | Product page, availability, safeguards summary |
+| [Claude in Chrome is generally available][chrome-ga] | GA date 2026-08-26, safety evaluation, browser limits |
+| [Use Claude Code with Chrome][chrome-cc] | `--chrome`, `/chrome`, prerequisites, ZDR, HIPAA |
+| [Use Claude in Chrome safely][chrome-safe] | Risks, safeguards, beta wording, 0.08% figure |
+| [Claude in Chrome permissions guide][chrome-perm] | Approval modes, protected actions |
+| [Mitigating prompt injections in browser use][chrome-pi] | 2025-11-24 robustness post |
 
 [chrome-product]: https://claude.com/claude-for-chrome
 [chrome-ga]: https://claude.com/resources/articles/claude-in-chrome-generally-available
 [chrome-cc]: https://code.claude.com/docs/en/chrome
 [chrome-safe]: https://support.claude.com/en/articles/12902428-using-claude-for-chrome-safely
 [chrome-perm]: https://support.claude.com/en/articles/12902446-claude-for-chrome-permissions-guide
+[chrome-pi]: https://www.anthropic.com/research/prompt-injection-defenses
