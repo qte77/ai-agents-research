@@ -22,7 +22,8 @@ This doc covers vars observed in agent workflows. For the **complete authoritati
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `ANTHROPIC_MODEL` | `sonnet` | Primary model alias or full ID | [env-vars][env-vars] |
-| `CLAUDE_CODE_SUBAGENT_MODEL` | (inherits primary) | Model for Agent tool subagents and teammates | [env-vars][env-vars] |
+| `CLAUDE_CODE_SUBAGENT_MODEL` | (inherits primary) | Default model for subagents, agent-team teammates and workflow agents that get no model another way; an alias such as `haiku` or a full model name. Since v2.1.251 a model Claude passes at spawn time and a `model` field in the agent definition (including `inherit`) take precedence over it; before that the variable overrode both. `inherit` is the same as unset. Order: [CC-session-cost-analysis.md § Documented cost levers](../sessions/CC-session-cost-analysis.md#documented-cost-levers) | [env-vars][env-vars] |
+| `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` | (unset) | `1` applies the model set in `CLAUDE_CODE_SUBAGENT_MODEL` to every subagent, teammate and workflow agent: definition `model` fields are ignored and Claude can't pass a model at spawn time. Forks and skills running in a subagent with `model: inherit` still use the parent's model; set alone, subagents use the main conversation's model (built-in Explore keeps its own). Check with `/tasks`. Requires v2.1.257+ ([subagents][subagents-one-model]) | [env-vars][env-vars] |
 | `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`; outranks `--effort`, `/effort` and the effort settings (a `maxEffortLevel` cap still applies). `auto` or `unset` sends no effort level, so the API default applies. Support and defaults vary by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | [env-vars][env-vars] |
 
 Cross-ref: [CC-model-provider-configuration.md](CC-model-provider-configuration.md)
@@ -385,6 +386,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 |---|---|
 | [CC env vars reference][env-vars] | Official complete list (80+ vars) |
 | [CC settings reference][settings] | `settings.json` keys and `env` block |
+| [Subagents — Run every subagent on one model][subagents-one-model] | `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` behaviour and exceptions (accessed 2026-11-19) |
 | [CC prompt-caching docs][cc-caching] | TTL-selection variables, precedence order, disable variables (accessed 2026-10-15) |
 | [CC settings reference][settings-ref] | `promptCacheTtl` / `subagentPromptCacheTtl` setting keys (accessed 2026-10-15) |
 | [CC CHANGELOG][changelog] | 2.1.319 entries for the auto-mode, feature-flag and MCP-task variables (accessed 2026-11-15) |
@@ -427,3 +429,4 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 [frr-build]: https://www.frr.dev/posts/claude-code-native-build-bun/
 [claudecode-nvim]: https://github.com/coder/claudecode.nvim
 [gh-changelog-cc]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[subagents-one-model]: https://code.claude.com/docs/en/sub-agents#run-every-subagent-on-one-model
