@@ -2,7 +2,7 @@
 title: CC CLI Reference
 purpose: Single canonical reference for all claude CLI flags, subcommands, and constraints. Other docs cross-ref here for flag definitions.
 created: 2026-04-13
-updated: 2026-11-18
+updated: 2026-11-19
 validated_links: 2026-11-18
 status: adopt
 ---
@@ -83,7 +83,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 | Flag | Description | Constraints | Source |
 |---|---|---|---|
 | `--model` | Model alias (`sonnet`, `opus`) or full ID | — | [model-config][model-config] |
-| `--effort` | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`, `auto` — support varies by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | Session-scoped, not persisted | [model-config][model-config] |
+| `--effort` | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`, or `ultracode` (turns ultracode on and sets `xhigh`) — support varies by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | Session-scoped, not persisted | [model-config][model-config] |
 | `--fallback-model` | Auto-fallback model when primary is overloaded | `--print` only | [cli-ref][cli-ref] |
 | `--max-turns` | Limit agentic turns; exits with error when reached | `--print` only | [cli-ref][cli-ref] |
 | `--max-budget-usd` | Maximum dollar spend before stopping | `--print` only | [cli-ref][cli-ref] |
