@@ -3,7 +3,7 @@ title: CC Fast Mode Analysis
 source: https://code.claude.com/docs/en/fast-mode
 purpose: Analysis of Claude Code Fast Mode and the underlying API `speed` parameter for potential adoption within CC-based workflows.
 created: 2026-02-17
-updated: 2026-11-17
+updated: 2026-11-19
 validated_links: 2026-11-08
 status: available
 ---
@@ -40,11 +40,11 @@ Fast prices from [the fast-mode page][api-fast] and [CC page][cc-fast]; standard
 
 ### Effort Level Interaction
 
-Default effort is **high** across Opus 4.6, Fable 5, Sonnet 5, Opus 4.8, and Sonnet 4.6, and **xhigh** on Opus 4.7 — no model defaults to medium effort, and there is no Max/Team-subscriber-specific default ([source][cc-model]). The "ultrathink" keyword still exists — it triggers deeper reasoning for one turn without changing the session effort setting. This interacts with fast mode:
+Default effort is model-specific (`medium` on the newest models, `xhigh` on Opus 4.7, `high` on the rest; an Enterprise organization can set its own default for its organization default model). The per-model table lives in [CC-model-provider-configuration.md § Effort Levels](CC-model-provider-configuration.md#effort-levels) ([source][cc-model], checked 2026-11-19). The "ultrathink" keyword still exists — it triggers deeper reasoning for one turn without changing the session effort setting. This interacts with fast mode:
 
 | Combination | Effect |
 | ----------- | ------ |
-| Fast mode + default (high) effort | Balanced speed/quality for the fast-mode model default |
+| Fast mode + the model's default effort | Balanced speed/quality for the fast-mode model default |
 | Fast mode + `ultrathink` | Maximum quality, highest cost and latency |
 | Fast mode + low effort | Maximum speed on simple tasks |
 

@@ -3,7 +3,7 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/env-vars, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-11-18
+updated: 2026-11-19
 validated_links: 2026-11-09
 status: reference
 ---
@@ -19,41 +19,44 @@ status: reference
 | `ANTHROPIC_DEFAULT_SONNET_MODEL` | Override Sonnet-class model | Custom model ID |
 | `ANTHROPIC_DEFAULT_OPUS_MODEL` | Override Opus-class model | Custom model ID |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | Model for subagents/teammates | Custom model ID |
-| `CLAUDE_CODE_EFFORT_LEVEL` | Reasoning effort (Fable 5, Opus 4.8/4.7/4.6, Sonnet 4.6) | `low`, `medium`, `high`, `xhigh`, `max` |
+| `CLAUDE_CODE_EFFORT_LEVEL` | Reasoning effort on effort-capable models (see [Effort Levels](#effort-levels)) | `low`, `medium`, `high`, `xhigh`, `max` |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | Disable adaptive reasoning | `1` |
 
 All variables can also be set in `settings.json` under the `env` key. ([source][cc-settings])
 
 ### Effort Levels
 
-`CLAUDE_CODE_EFFORT_LEVEL` (above), the `/effort` command, the `--effort` flag, and per-skill/subagent `effort` frontmatter all select an **adaptive-reasoning effort level**. The levels available depend on the model ([source][cc-effort]):
+`CLAUDE_CODE_EFFORT_LEVEL` (above), the `/effort` command, the effort slider in `/model`, the `--effort` flag, the `modelSettings` and `effortLevel` settings, and per-skill/subagent `effort` frontmatter all select an **adaptive-reasoning effort level**. Which levels exist, and which one is the default, depend on the model ([source][cc-effort], checked 2026-11-19):
 
-| Level | Models | Notes |
+| Model | Levels | Default |
 |---|---|---|
-| `low` | all effort-capable | Short, scoped, latency-sensitive work |
-| `medium` | all effort-capable | Cost-sensitive work trading some intelligence |
-| `high` | all effort-capable | Balance — **default** on Fable 5, Opus 4.8, Opus 4.6, Sonnet 4.6 |
-| `xhigh` | Fable 5, Opus 4.8, Opus 4.7 | Deeper reasoning, higher spend — **default** on Opus 4.7 |
-| `max` | all effort-capable | Deepest reasoning, no token cap; can overthink |
+| Fable 5.2 | `low`, `medium`, `high`, `xhigh`, `max` | `medium` |
+| Other Fable models (Fable 5, Fable 5.1) | `low`, `medium`, `high`, `xhigh`, `max` | `high` |
+| Opus 5.5, Sonnet 5.5, Haiku 5.5 | `low`, `medium`, `high`, `xhigh`, `max` | `medium` |
+| Opus 5, Sonnet 5, Opus 4.8 | `low`, `medium`, `high`, `xhigh`, `max` | `high` |
+| Opus 4.7 | `low`, `medium`, `high`, `xhigh`, `max` | `xhigh` |
+| Opus 4.6, Sonnet 4.6 | `low`, `medium`, `high`, `max` (no `xhigh`) | `high` |
 
-Opus 4.6 and Sonnet 4.6 support `low`/`medium`/`high`/`max` (no `xhigh`). Setting an unsupported level falls back to the highest the model supports (e.g. `xhigh` runs as `high` on Opus 4.6).
+The page states the defaults as one rule: Fable 5.2, Opus 5.5, Sonnet 5.5 and Haiku 5.5 default to `medium`, Opus 4.7 to `xhigh`, and every other model in its effort table to `high`. Models missing from that table do not support effort. An organization that sets a default effort for its organization default model overrides the model default for that model. Setting an unsupported level falls back to the highest supported level at or below it (e.g. `xhigh` runs as `high` on Opus 4.6). The page names no other plan-specific default. The docs note that Opus 5.5 at `medium` matches or exceeds Opus 5 at `high` on Anthropic's coding and knowledge-work evaluations (vendor claim), and that the scale is calibrated per model, so the same level name is not the same setting across models.
 
 **Precedence & persistence** ([source][cc-effort]):
 
-- Precedence: `CLAUDE_CODE_EFFORT_LEVEL` > configured level (`effortLevel` / `/effort`) > model default. Skill/subagent `effort` frontmatter overrides the session level while active (but not the env var).
-- `low`/`medium`/`high`/`xhigh` **persist** across sessions; `max` is **session-only** (except via `CLAUDE_CODE_EFFORT_LEVEL`). `effortLevel` in `settings.json` accepts only `low`/`medium`/`high`/`xhigh` — `max` and `ultracode` are not accepted there.
-- `/effort auto` (or `CLAUDE_CODE_EFFORT_LEVEL=auto`) resets to the model default.
+- Resolution order, first that applies: `CLAUDE_CODE_EFFORT_LEVEL` > a level picked in the session (`/effort`, the `/model` slider) > `--effort` > settings (`modelSettings` per model, or `effortLevel`) > the model default. Skill and subagent `effort` frontmatter overrides the session level while it runs, unless `CLAUDE_CODE_EFFORT_LEVEL` is set; `maxEffortLevel` and Enterprise per-role effort caps still limit it.
+- `low`/`medium`/`high`/`xhigh` picked interactively are **saved per model** under `modelSettings` (press `s` in the slider to apply to the session only, v2.1.257+); a level set with `/effort` in a `-p` run is session-only. `max` is **session-only** unless set through `CLAUDE_CODE_EFFORT_LEVEL`; neither `max` nor `ultracode` is accepted in `effortLevel` or `modelSettings`.
+- Opus 5.5 and later models ignore a top-level `effortLevel` in the *user* settings file (the older, pre-per-model form) and start at their own default until you pick a level for them; a top-level `effortLevel` in project, local or managed settings still applies to every model.
+- `/effort auto` clears the saved level for the active model. `CLAUDE_CODE_EFFORT_LEVEL=auto` (or `unset`) is different: Claude Code then sends **no** effort level, so the API's own default applies.
+- A subagent or teammate without its own `effort` runs at the session's level only when it is on the main conversation's model; on another model, set `effort` in its definition.
 
 **Related, but not effort levels**:
 
-- **`ultracode`** — a session setting that sends `xhigh` *and* auto-orchestrates dynamic workflows; not part of `effortLevel`/`--effort`/`CLAUDE_CODE_EFFORT_LEVEL`. See [CC-dynamic-workflows-analysis.md](../agents-skills/CC-dynamic-workflows-analysis.md#ultracode-effort-setting).
+- **`ultracode`** — a Claude Code setting, not an effort level: with it on, Claude orchestrates dynamic workflows for substantive tasks at whatever level the session runs at (from v2.1.284; earlier builds forced `xhigh`). `--effort ultracode` turns it on *and* sets `xhigh`; it is not accepted by `effortLevel` or `CLAUDE_CODE_EFFORT_LEVEL`, and it needs a model that supports `xhigh`. See [CC-dynamic-workflows-analysis.md](../agents-skills/CC-dynamic-workflows-analysis.md#ultracode-effort-setting).
 - **`ultrathink`** — include it anywhere in a prompt for one-off deeper reasoning on that turn; Claude Code adds an in-context instruction but the **effort level sent to the API is unchanged**. Phrases like "think", "think hard", and "think more" are *not* recognized keywords ([source][cc-ultrathink]).
 
-**Verified 2026-06-11.** Effort availability and defaults are model-generation-specific and shift over time; `xhigh` is gated on the `xhigh_effort` capability (CC v2.1.111+), and `xhigh`-capable models require recent CC builds (Opus 4.8 → v2.1.154+, Fable 5 → v2.1.170+) ([source][cc-effort]).
+**Verified 2026-11-19** against the model-config page. Effort availability and defaults are model-generation-specific and shift with each model release; for gateway or provider model IDs that Claude Code does not recognize, the `xhigh_effort` and `max_effort` capability values in `ANTHROPIC_DEFAULT_*_MODEL_SUPPORTED_CAPABILITIES` turn those levels on ([source][cc-effort]). Lowering effort is one of the documented cost levers; see [CC-session-cost-analysis.md § Documented cost levers](../sessions/CC-session-cost-analysis.md#documented-cost-levers).
 
-### Newest Model (Fable 5)
+### Fable Models
 
-Claude **Fable 5** (`claude-fable-5`) is the newest model, selectable in CC via `/model` or `ANTHROPIC_MODEL=claude-fable-5`. For its model card (context, pricing, tokenizer/refusal caveats, CC plan access) and a free-tier/OSS provider snapshot, see [CC-models-reference.md](CC-models-reference.md).
+Claude **Fable 5.2** (`claude-fable-5-2`) has superseded **Fable 5** (`claude-fable-5`) as the newest Fable model (see CC-models-reference.md); either is selectable in CC via `/model` or `ANTHROPIC_MODEL`. For its model card (context, pricing, tokenizer/refusal caveats, CC plan access) and a free-tier/OSS provider snapshot, see [CC-models-reference.md](CC-models-reference.md).
 
 ## API Key & Endpoint
 
