@@ -704,7 +704,8 @@ range; the [eval dashboard][mwg-evals] has per-guide breakdowns.
 
 **Why it matters here.** It is the clearest example so far of a browser vendor shipping guidance *to
 agents* as a skill with retrieval on demand rather than a long prompt, and of a skill maintained by
-measured uplift. Cross-ref: the WebMCP and agent-readiness material in
+measured uplift. Cross-ref: WebMCP in
+[browser-agents-landscape.md](../non-cc/agents/browser-agents-landscape.md#webmcp), and the agent-readiness material in
 [ai-crawlers-discoverability-landscape.md](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md).
 
 ## Cross-References
