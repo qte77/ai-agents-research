@@ -27,7 +27,7 @@ Browser agents are a separate topic and are not covered here beyond pointers.
   2026-11-14, lists a best official full-set binary score of 44.33%). Scores from the two are not
   one trend.
 - Screenshot-only versus accessibility-tree input is a real design axis, not a settled one: 2024
-  evidence favoured structured input, current vendor tools are screenshot-first, and a 2026 paper
+  evidence favoured structured input, the vendor computer-use tools documented here take screenshots as their main input (our reading), and a 2026 paper
   uses the accessibility tree for security rather than perception.
 - Every vendor says the same about safety: isolate the environment, treat screen content as
   untrusted, confirm consequential actions.
