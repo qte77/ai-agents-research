@@ -3,8 +3,8 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server, https://github.com/microsoft/playwright-mcp, https://github.com/firecrawl/firecrawl-mcp-server, https://github.com/firecrawl/firecrawl-claude-plugin
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-10-24
-validated_links: 2026-10-24
+updated: 2026-11-19
+validated_links: 2026-11-19
 status: research
 ---
 
@@ -192,7 +192,7 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 
 Microsoft's official MCP server that provides full browser automation using Playwright. Interacts with pages through structured accessibility snapshots — no vision model needed. **Runs a local Chromium process** on your machine — no cloud service, no API key, no credit cost. Optional remote mode via `--port` for Docker/server setups, or `--cdp-endpoint` to attach to an existing browser ([source][playwright-mcp-gh]).
 
-**2026-10-24:** Apache-2.0, 38,557★, latest release `v0.0.83` (2026-09-28) (`gh api`). It is one of the two MCP servers "enabled by default" for GitHub's Copilot cloud agent ([github-copilot-cloud-agent-analysis.md § MCP servers](../../non-cc/agents/github-copilot-cloud-agent-analysis.md#mcp-servers)). Its README now states "Playwright MCP is not a security boundary" and that "Modern coding agents increasingly favor CLI–based workflows exposed as SKILLs over MCP" ([source][playwright-mcp-gh]).
+**2026-11-19:** Apache-2.0, 39,884★, latest release `v0.0.86` (2026-11-18) (`gh api`; was 38,557★ and `v0.0.83` on 2026-10-24). Its README documents `--isolated`, `--headless`, `--extension` (attach to a running Chrome or Edge) and `--browser` (chrome, firefox, webkit, msedge). Side-by-side with Claude in Chrome and DevTools MCP: [browser-agents-landscape.md](../../non-cc/agents/browser-agents-landscape.md#claude-in-chrome-vs-devtools-mcp-vs-playwright-mcp). It is one of the two MCP servers "enabled by default" for GitHub's Copilot cloud agent ([github-copilot-cloud-agent-analysis.md § MCP servers](../../non-cc/agents/github-copilot-cloud-agent-analysis.md#mcp-servers)). Its README now states "Playwright MCP is not a security boundary" and that "Modern coding agents increasingly favor CLI–based workflows exposed as SKILLs over MCP" ([source][playwright-mcp-gh]).
 
 ### Setup
 
@@ -424,7 +424,7 @@ Beyond Firecrawl and Playwright MCP, several agent-browser tools are worth notin
 | Tool | License (lang) | Representation | Token eff. (community) | Best for |
 |---|---|---|---|---|
 | [agent-browser][agent-browser-gh] (Vercel) | Apache-2.0 (Rust CLI + MCP) | Accessibility tree (`@e1` refs) | 3–5K tokens/page | Backup browser automation; standalone CLI |
-| [Chrome DevTools MCP][chrome-devtools-mcp-gh] (Google) | Apache-2.0 (TS) | A11y-tree snapshot over raw CDP | ~10K tokens/page | Raw DevTools access; perf traces |
+| [Chrome DevTools MCP][chrome-devtools-mcp-gh] (Google) | Apache-2.0 (TS) | A11y-tree snapshot over raw CDP | ~10K tokens/page | Raw DevTools access; perf traces; latest release v1.13.0 (2026-11-11), `--autoConnect` to a local Chrome 144+ (README/config, 2026-11-19) |
 | [Stagehand][stagehand-gh] (Browserbase) | MIT (TS + Python) | Accessibility tree + DOM hybrid | n/a | `act()`/`extract()`/`observe()` over a browser |
 | [browser-use][browser-use-gh] | MIT (Python) | Custom numbered-DOM map (**not** the native a11y tree) | ~10K tokens/page | Complex autonomous form-filling |
 | [jev-ultrafast][jev-ultrafast-gh] (browser-use) | MIT (Python) | Indexed element table (operations + targets), no a11y tree | n/a — one [Jev][typesafe-jev-web] decision request per step, not a token-cost model | Fast, cheap DOM-action selection with no per-step LLM reasoning |
