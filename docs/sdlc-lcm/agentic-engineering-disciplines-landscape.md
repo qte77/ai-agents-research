@@ -90,18 +90,7 @@ NEW vs current repo coverage: **BDD, ATDD, EDD-as-methodology, Dave Farley, DDD+
 
 ## §3. Spec-driven frameworks (the 2025–26 inflection)
 
-By 2026 every major coding tool shipped an SDD flavor. Stars verified via `gh api`, 2026-06-23:
-
-| Framework | Stars | License | Workflow / note |
-|---|---|---|---|
-| [github/spec-kit][spec-kit] | 114,808 | MIT | Spec → Plan → Tasks → Implement; 30+ agent integrations, 70+ extensions ("intent is the source of truth") |
-| [Fission-AI/OpenSpec][openspec] | 56,043 | MIT | Proposal → Apply → Archive; no MCP/keys required |
-| [bmadcode/BMAD-METHOD][bmad] | 49,513 | MIT | multi-agent planning (Analyst/PM/Architect) → context-engineered dev |
-| buildermethods/agent-os | 4,936 | MIT | MCP context-injection layer; pairs with any SDD framework |
-| kirodotdev/Kiro | 3,912 | Proprietary | requirements→design→tasks "waves"; full IDE — see [kiro-analysis.md][kiro-doc] |
-| Tessl (tile) | 41 | MIT | "spec-as-source" (spec is the maintained artifact); main framework closed-beta |
-
-The table is the synthesis-level entry as of 2026-06-23; the standalone [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md) carries the refreshed stars, licenses and releases (2026-11-19), including the Tessl and Kiro corrections.
+By 2026 every major coding tool shipped an SDD flavor. The frameworks: [github/spec-kit][spec-kit], [Fission-AI/OpenSpec][openspec], [bmad-code-org/BMAD-METHOD][bmad], buildermethods/agent-os, [Kiro][kiro-doc] and Tessl. Dated stars, licenses, releases and the workflow comparison live in [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md), the single home for those figures.
 
 **Adjacent 2026 developments:** Anthropic's own [The AI-Native SDLC Playbook][anthropic-sdlc] (Aug 2026) operationalizes SDD as a committed artifact chain — "the intent, the spec, the plan, the diff and the review findings are the audit trail" — across six loop stages (Plan/Design/Build/Test/Deploy/Maintain), with a control-band breach in production writing the next `intent.md` to restart the loop. `CLAUDE.md` carries institutional knowledge across sessions; **Skills** encode organizational policy as advisory, reusable constraints; **Hooks** are the deterministic enforcement layer (blocking unsafe edits, gating approvals); **Evals** form the regression suite triggered on config/prompt changes. A human always accepts the spec before build starts, consulting a technical lead for anything the org classes as higher-risk; humans also approve the implementation plan and hold exclusive PR-merge and deploy authorization. In an adjacent domain, [SMART][smart] (Kushnir, Noorbakhsh, Sreedhar et al., Sep 2026) pushes design-docs-as-source past code review into ML systems tooling: an ML performance-modeling repo holds "almost no code," only a DAG of natural-language design docs, and coding sub-agents regenerate the implementation from the docs on each version update — validated against hand-audited reference models including DeepSeek-V3.
 
@@ -185,7 +174,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [loop-eng]: https://github.com/cobusgreyling/loop-engineering
 [spec-kit]: https://github.com/github/spec-kit
 [openspec]: https://github.com/Fission-AI/OpenSpec
-[bmad]: https://github.com/bmadcode/BMAD-METHOD
+[bmad]: https://github.com/bmad-code-org/BMAD-METHOD
 [kiro]: https://kiro.dev/docs/specs/
 [oach]: https://qte77.github.io/open-agentic-coding-harness/
 [workflows]: ../cc-native/agents-skills/CC-dynamic-workflows-analysis.md

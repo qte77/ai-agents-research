@@ -3,7 +3,7 @@ title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
 updated: 2026-11-19
-validated_links: 2026-11-19
+validated_links: 2026-11-18
 status: assess
 ---
 
@@ -149,7 +149,7 @@ Scion is explicitly scoped as a monorepo-specific replacement, not a general git
 rubric row is added here: this is vendor-reported internal tooling with no independently verifiable
 shipped artefact (unlike triagebot-action above) ([Anthropic][anthropic-scion]).
 
-**The 2026 company wave: named in-house or open-sourced pipelines.** Several companies now describe a named agent pipeline for their own code, each first-party (fetched 2026-11-14):
+**The 2026 company wave: named in-house or open-sourced pipelines.** Several companies now describe a named agent pipeline for their own code, each first-party (fetched 2026-11-14; Stripe Part 2 read 2026-11-19):
 
 - **Stripe Minions**: "Stripe’s homegrown coding agents. They’re fully unattended and built to one-shot tasks." Part 1 reported "over a thousand pull requests merged each week" that are "completely minion-produced"; Part 2 (published 2026-02-19) updates this to "Over 1,300 Stripe pull requests (up from 1,000 as of Part 1) merged each week", still human-reviewed with no human-written code. The agent loop runs on a fork of Block’s goose ([Part 1][minions]; [Part 2][minions2]). Vendor claim, self-reported; see the evidence subsection below for the pipeline's CI and review limits.
 - **Ramp Inspect** (2026-10-27): in the past month "99% of our engineering, design, and product teams used Inspect, and Inspect now accounts for 74% of merged PRs" ([Ramp][inspect]). An unaffiliated open-source take, `open-inspect/background-agents` (MIT), describes itself as "inspired by Ramp’s Inspect" ([repo][open-inspect]).
@@ -166,8 +166,8 @@ Two evidence classes, kept apart. **Company claims** are self-reported, unaudite
 
 **Company claims (vendor claim, self-reported).**
 
-- **Throughput.** Stripe: over 1,300 minion-produced PRs merged per week, as of the Part 2 post (2026-02-19; Part 1 said about 1,000). The pipeline allows one iteration against the full CI suite; if failures remain after a second push and CI run, the branch returns to its human operator ([Stripe Part 2][minions2]).
-- **Cost.** Uber (post dated 2026-08-27): "cost per session is down 52% from its June peak", with the model held constant over February to July and cost data starting at end of May; total AI spend "relatively stabilized since April" while weekly active users across agentic offerings grew 7x and weekly agentic requests 9.4x over February to August 2026. More than 70% of PRs are "attributed to local or cloud agents" (attribution method not stated), and uReview "handles AI code review for all pull requests" ([Uber][uber-sf]). Cost per session is not cost per merged PR: neither Uber nor Stripe publishes a throughput-per-dollar figure, so that question is open in this corpus.
+- **Throughput.** Stripe's weekly merged-PR figure is in the Stripe bullet above. Its pipeline allows one iteration against the full CI suite; after a second push and CI run, the branch goes back to its human operator (the post sets no failure condition at that point) ([Stripe Part 2][minions2]).
+- **Cost.** Uber (post dated 2026-08-27): "cost per session is down 52% from its June peak", with the model held constant over February to July and cost data starting at end of May; total AI spend "relatively stabilized since April" while weekly active users across agentic offerings (engineers and non-engineers, deduplicated across tools) grew 7x and weekly agentic requests 9.4x over February to August 2026. More than 70% of PRs are "attributed to local or cloud agents" (attribution method not stated), and uReview "handles AI code review for all pull requests" ([Uber][uber-sf]). Cost per session is not cost per merged PR: neither Uber nor Stripe publishes a throughput-per-dollar figure, so that question is open in this corpus.
 
 **Measured studies.**
 
@@ -175,7 +175,7 @@ Two evidence classes, kept apart. **Company claims** are self-reported, unaudite
 |---|---|---|---|
 | Base data | [AIDev][aidev], 2026-02-09 | 932,791 agent-authored PRs across 116,211 repositories and 72,189 developers (five agents: Codex, Devin, Copilot, Cursor, Claude Code); curated subset of 33,596 PRs in 2,807 repositories with over 100 stars | Public GitHub only; a dataset, not an outcome measure |
 | Throughput at one firm | [Microsoft CLI-agent rollout][ms-cli], 2026-07-01 | Adopters merged "roughly 24% more pull requests", lift persisting over the four-month window | Merged PRs are the authors' own proxy; "tens of thousands of engineers", no exact n in the abstract |
-| Review bottleneck | [Code review agents in PRs][cra-study], 2026-04-03 | In 3,109 AIDev PRs reviewed by review agents, agent-only-reviewed PRs merged at 45.20% vs 68.37% human-only-reviewed (23.17 points lower); 12 of 13 review agents average a signal ratio under 60% | Association, not cause; the signal analysis covers only 98 closed agent-reviewed PRs |
+| Review-agent effectiveness | [Code review agents in PRs][cra-study], 2026-04-03 | Of AIDev's 19,450 PRs, 3,109 are in the commented review state; comparing review by agents only with review by humans only, merge rates are 45.20% vs 68.37% (23.17 points lower); 12 of 13 review agents average a signal ratio under 60% | Association, not cause; measures review-agent effectiveness, not throughput; the signal analysis covers only 98 closed agent-reviewed PRs |
 | Post-merge maintenance | [Post-merge fate][postmerge], 2026-07-10 | Over 182 repositories overall maintenance rates are similar, but agentic code needs significantly more corrective maintenance and adds more security weaknesses and dependency vulnerabilities; each 10-point rise in a project's no-review rate goes with roughly 6% more agentic maintenance burden | Observational; association with the no-review rate is not proof that review prevents the burden |
 | Policy compliance | [SWE-CC][swecc], 2026-10-05 | Across 12 repositories, 823 policies, 500 tasks, four LLMs and two scaffolds, functionally correct patches still violate 43.1% of applicable policies, with nearly half of violations in intermediate execution steps | Benchmark built from SWE-bench Verified tasks, not production traffic |
 | Compounding failure | [FeatureArc][featurearc], 2026-10-27 | Ten agents on 73 tasks: pooled success 62.7% at the first stage but 28.5% when the whole feature is tested on final code; 72.9% of failed later stages involve inherited defects, and agents leave an earlier error unnoticed about 95% of the time | Benchmark with curated tasks; pooled figures hide per-agent spread |
@@ -249,7 +249,7 @@ a verifiable shipped artefact; Flue has one (see above) but has not yet been rub
 | [ai-that-works ep. #73, "Hands-On with Real Builders"][aiw-4] | Practitioner interviews, self-reported metrics |
 | `gh api repos/ai-that-works/ai-that-works`, 2026-09-30 | Confirms `license: null` for the ai-that-works repo |
 | [wsff.md, HumanLayer][wsff] | "Why Software Factories Fail" — dissent on lights-off automation |
-| [Stripe: Minions][minions] · [Part 2][minions2] | Unattended one-shot coding agents; >1,000 merged PRs/week (Part 1), >1,300 (Part 2, 2026-02-19), human-reviewed; vendor claim |
+| [Stripe: Minions][minions] · [Part 2][minions2] | Unattended one-shot coding agents; weekly merged PRs (Part 1 "over a thousand", Part 2 "over 1,300"), human-reviewed; vendor claim |
 | [Uber: efficient software factory][uber-sf] | Vendor claims, 2026-08-27: cost per session -52% from June peak, spend stable since April, uReview on all PRs |
 | [AIDev, arXiv 2602.09185][aidev] · [code review agents, 2604.03196][cra-study] | Agent-PR dataset (932,791 PRs); review-agent merge rates (45.20% vs 68.37%) |
 | [Post-merge fate, 2607.09902][postmerge] · [Microsoft CLI rollout, 2607.01418][ms-cli] | Corrective-maintenance gap; ~24% more merged PRs (proxy) |
