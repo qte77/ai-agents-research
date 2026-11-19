@@ -1,0 +1,35 @@
+---
+name: release
+
+# When a merged bump changes current_version in pyproject.toml, create the
+# annotated v{version} tag and publish the GitHub Release in the same run
+# (notes from the CHANGELOG.md ## [version] block). A tag pushed with
+# GITHUB_TOKEN starts no other workflow, so publishing is chained here.
+# Exits 0 when the version is unchanged; never overwrites a tag or release.
+# publish-release.yaml stays as a manual fallback for an existing tag.
+
+on:
+  push:
+    branches: [main]
+    paths: ['pyproject.toml']
+
+permissions:
+  contents: read
+
+jobs:
+  tag:
+    uses: qte77/.github/.github/workflows/tag-release.yml@4613389d22779a8d8ba623a418f7c94415e49da9  # main 2026-11-19 (qte77/.github#72)
+    permissions:
+      contents: write
+    with:
+      # pyproject.toml uses bump-my-version's current_version key, not the
+      # reusable workflow's default version = "..." pattern.
+      version_regex: '^current_version = "(.*)"'
+  publish:
+    needs: tag
+    if: needs.tag.outputs.tag != ''
+    uses: qte77/.github/.github/workflows/publish-release.yml@4613389d22779a8d8ba623a418f7c94415e49da9  # main 2026-11-19 (qte77/.github#72)
+    permissions:
+      contents: write
+    with:
+      tag: ${{ needs.tag.outputs.tag }}
