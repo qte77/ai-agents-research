@@ -11,6 +11,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.22.0] - 2026-11-19
+
+### Added
+
+- Salesforce Agentforce analysis refresh: Copilotforce section (announcement-level), a table separating Salesforce CRM, Copilotforce and Microsoft's own Salesforce connectors, plus AgentExchange, Einstein naming lineage, role products, agent surfaces, and licences and roles pointers.
+
+- Claude Code Code Mode disambiguation (Cloudflare, API programmatic tool calling), auto mode availability/classifier/defaults section (stale CLI-reference gating corrected), and `/autocompact` window settings with precedence versus `CLAUDE_CODE_AUTO_COMPACT_WINDOW`, `--autocompact` and `DISABLE_AUTO_COMPACT`.
+
+- Owner fold-ins (plan 0014 K38): Opal name-collision note, LiteLLM `agent_eval` (preview), AgentRun, Open Coscientist (source-available), Shepherd repo refresh, Opencontroller source, and a caveated rust-anything entry.
+
+- `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` in the env-vars reference, and the v2.1.251 precedence change for `CLAUDE_CODE_SUBAGENT_MODEL` (post-session docs audit, plan 0014).
+
+- New landscape `docs/non-cc/infrastructure/graph-databases-query-languages-landscape.md`: dated table of graph query languages (Cypher, GQL, SPARQL, Gremlin, Datalog), agent-relevant graph databases with licences and status (Kuzu archived, FalkorDB SSPL, Memgraph BSL), text-to-query evidence, and vendor and vendor-labs graph MCP servers, linking the HelixDB, LatticeDB and Minigraf analyses (plan 0014 K18).
+
+- Knowledge-graph and ontology evidence: GraphRAG-vs-vector-RAG, KG-construction and LLM-edge provenance subsection and a temporal-KG-memory evidence subsection in the frameworks landscape, and an ontology generation and ontology-constrained extraction subsection in the semantic-layers landscape (plan 0014 K19).
+
+- Computer-use agents landscape (new, plan 0014 K20): first-party Claude computer use (tool version, models, Desktop), OpenAI/Google/open-model status, OSWorld family with dated scores, pixel versus accessibility-tree trade-off and safety guidance; OSWorld row in the benchmark status table updated and cross-linked.
+
+- Browser agents landscape (new): Claude in Chrome vs Chrome DevTools MCP vs Playwright MCP comparison, WebMCP status at source, agentic browsers (Atlas now deprecated), Online-Mind2Web and other benchmarks with dated, labelled scores, and prompt-injection safety; Chrome extension analysis refreshed to the GA state and Playwright/DevTools MCP versions updated (plan 0014 K21).
+
+### Changed
+
+- Microsoft 365 Copilot analysis: Frontier section rebuilt from the admin, individuals, support and Agent 365 pages (three programs, gates, licences, named items); new "What each name is" table and a Licences subsection (E3, E5, E7 Frontier Suite, Business plans, Copilot add-ons, usage-based billing, admin roles); Copilotforce pointer.
+
+- Salesforce Agentforce analysis: scattered Einstein/Agentforce naming text replaced by one dated first-party lineage table. Corrected earlier claims: the Sales Cloud guide does not contradict itself (October 2025 in both places), Service Cloud to Agentforce Service is now Trailhead-sourced with conflicting naming noted, and the Einstein Copilot rename dates remain open.
+
+- Owner decisions of 2026-11-19 recorded in plan 0014 (G1–G6 defaults accepted; K34 approved with Oracle, IBM, Alibaba and the Copilot SDK added and no prices); herdr and Zeron moved from the cc-community tooling landscape to the agent-frameworks landscape; the undated anti-bot tool list in the scraping landscape trimmed to pointers; the OpenResearch language citation repointed from the GitHub API to the repo page (#865).
+
+- Software factory landscape: dated evidence subsection separating company claims (Stripe Part 2, Uber) from measured studies (AIDev, review-agent effectiveness, post-merge maintenance, SWE-CC, FeatureArc, FlowAgent); spec-driven landscape refreshed with 2026-11-19 stars and releases, Tessl status corrected (licence stays MIT), Kiro specs workflow moved into kiro-analysis (plan 0014 K12).
+
+- Genie Ontology analysis re-checked against its docs and release notes (one dated rollout sequence, modeled vs learned knowledge, benchmark setting) and the OKF analysis updated for spec v0.2 (provenance, trust and lifecycle fields; two breaking changes) (plan 0014 K19).
+
+- Cost hub follow-ups (plan 0014 K23): one per-model effort table with current defaults (`medium` on Fable 5.2, Opus 5.5, Sonnet 5.5 and Haiku 5.5), resolution order and per-model persistence; the fast-mode doc now points at it; `ultracode` no longer described as forcing `xhigh`; `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` corrected (applies to any session, not headless-only); new "Documented cost levers" section (`/usage`, `/context`, `/clear`, `/compact`, output styles, subagent model order) with a cost-hub row.
+
 ## [0.21.0] - 2026-11-18
 
 ### Added
