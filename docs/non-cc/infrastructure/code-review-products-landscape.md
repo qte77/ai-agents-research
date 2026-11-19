@@ -3,7 +3,7 @@ title: AI PR-Review Products — Tool Landscape
 purpose: Catalog of standalone SaaS PR-review products (multi-platform GitHub/GitLab review bots), distinct from Claude Code-integrated review tooling.
 category: landscape
 created: 2026-06-27
-updated: 2026-10-24
+updated: 2026-11-19
 validated_links: 2026-10-24
 status: research
 ---
@@ -64,6 +64,7 @@ review; a session viewer records and replays past runs. Scored 2026-09-30 agains
 
 - [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md) — CC-integrated code-review tooling: Qodo (`open-aware` MCP + cross-repo review) and Code-Review-Graph (AST blast-radius MCP)
 - [CC-official-plugins-landscape.md](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
+- [software-factory-landscape.md § Economics, failure and verification evidence](../../sdlc-lcm/software-factory-landscape.md#economics-failure-and-verification-evidence) — Uber's uReview (vendor claim) and the empirical review-agent merge-rate study (arXiv 2604.03196)
 - [jev-analysis.md](jev-analysis.md) — a cheap classifier-model gate rather than an LLM-review bot; comparable in that both are automatable pre-merge checks, but Jev answers narrow typed questions instead of writing review comments
 
 ## Sources

@@ -3,35 +3,42 @@ title: Spec-Driven Frameworks — Landscape
 purpose: Comparison of spec-driven development (SDD) frameworks — GitHub Spec-Kit, OpenSpec, BMAD-METHOD, Agent-OS, Kiro, Tessl, AB Method — the standalone deep-dive behind the synthesis entry in the agentic-engineering disciplines landscape.
 category: landscape
 created: 2026-06-27
-updated: 2026-07-23
-validated_links: 2026-07-23
+updated: 2026-11-19
+validated_links: 2026-11-19
 status: research
 ---
 
 ## What It Is
 
-By 2026 every major coding tool shipped a **spec-driven development (SDD)** flavor: a machine-readable spec becomes the agent's source of truth, and human review shifts from reviewing code to reviewing the spec. This is the standalone comparison behind the synthesis-level §3 table in [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md). Stars via `gh api`, 2026-06-27.
+By 2026 every major coding tool shipped a **spec-driven development (SDD)** flavor: a machine-readable spec becomes the agent's source of truth, and human review shifts from reviewing code to reviewing the spec. This is the standalone comparison behind the synthesis-level §3 table in [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md). Stars, licenses and releases via `gh api`, as of 2026-11-19.
 
 ## Frameworks
 
 | Framework | Stars | License | Loop | Distinctive |
 |---|---|---|---|---|
-| [github/spec-kit][spec-kit] | 115.9K | MIT | Spec → Plan → Tasks → Implement | 30+ agent integrations, 70+ extensions; "intent is the source of truth" |
-| [Fission-AI/OpenSpec][openspec] | 57.1K | MIT | Proposal → Apply → Archive | change-proposal centric; no MCP/keys required |
-| [bmadcode/BMAD-METHOD][bmad] | 49.8K | MIT | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec |
-| [buildermethods/agent-os][agent-os] | 5.0K | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
-| [kirodotdev/Kiro][kiro-repo] | 3.9K | proprietary | requirements → design → tasks "waves" | full IDE; spec phase is mandatory — see [kiro-analysis.md](../coding-agents/kiro-analysis.md) |
-| Tessl (`tile`) | ~41 | MIT | "spec-as-source" | the spec, not the code, is the maintained artifact; main framework closed-beta |
-| [ayoubben18/ab-method][ab-method] | 180 | MIT | grill → roadmap → tasks → missions (TDD) | fractal structure; opt-in-silent critic agents bracket implementation; dual-runtime CC + Codex (v3.7.1; stars via `gh api`, 2026-07-23) |
+| [github/spec-kit][spec-kit] | 150.6K (v1.4.2, 2026-11-17) | MIT | Spec → Plan → Tasks → Implement | 30+ agent integrations, 70+ extensions; "intent is the source of truth" (counts as of 2026-06-27, not re-checked) |
+| [Fission-AI/OpenSpec][openspec] | 75.2K (v2.1.0, 2026-11-17) | MIT | Proposal → Apply → Archive | change-proposal centric; no MCP/keys required |
+| [bmad-code-org/BMAD-METHOD][bmad] | 55.5K (v6.12.4, 2026-10-14) | MIT per the LICENSE file (the API reports "NOASSERTION"); the file adds a trademark notice on the BMad names | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec; moved from `bmadcode/` to the `bmad-code-org` org |
+| [buildermethods/agent-os][agent-os] | 5.6K (v3.0.0, 2026-01-20; last push 2026-10-07) | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
+| [kirodotdev/Kiro][kiro-repo] | 4.5K (no releases; last push 2026-11-05) | no license file on the repo | requirements/bugfix → design → tasks "waves" | full IDE; see [Kiro specs workflow](#kiro-specs-workflow) and [kiro-analysis.md](../coding-agents/kiro-analysis.md) |
+| Tessl | [`tesslio/spec-driven-development-tile`][tessl-tile]: 58 | MIT (that repo) | steering tile, "No framework" per its README | see [Tessl status](#tessl-status); the earlier "closed-beta / spec-as-source" description is unverified and withdrawn |
+| [ayoubben18/ab-method][ab-method] | 193 (v5.2.0, 2026-11-13) | MIT | grill → roadmap → tasks → missions (TDD) | fractal structure; opt-in-silent critic agents bracket implementation; dual-runtime CC + Codex (the critic-skill and nesting details below were checked at v3.7.1, 2026-07-23, and not re-verified at v5.2.0) |
 
 ## How they differ
 
 - **Spec-Kit / OpenSpec** are the two large OSS frameworks — Spec-Kit is the broadest (multi-agent, extension ecosystem), OpenSpec is leaner (proposal → apply → archive, no keys).
 - **BMAD** front-loads multi-agent *planning* (role agents draft the spec) before context-engineered execution.
 - **Agent-OS** is a *layer*, not a framework — an MCP context-injection shim that pairs with the others.
-- **Kiro** bakes SDD into a full IDE (the spec phase is mandatory) — covered in depth in its own analysis.
-- **Tessl** pushes "spec-as-source" furthest (the spec is the maintained artifact, code is regenerated), but the main framework is closed-beta.
+- **Kiro** bakes SDD into a full IDE — covered in depth in its own analysis; workflow facts below.
 - **AB Method** is the lightweight dual-runtime sibling: `npx ab-method` installs into `.claude/` (CC slash commands) *and* `.agents/` (Codex `ab-*` skills). No generated spec docs — "the test is the spec"; plans are grounded in `UBIQUITOUS_LANGUAGE.md`/`CONTEXT.md`, missions are one-line tracker entries, and four critic skills (`critique-plan`, `reconcile-roadmap`, `review-implementation` with three parallel critics, `sync-architecture`) gate each layer. Runtime-adaptive: nests subagents on CC (verified two levels), stays flat on Codex (`spawn_agent` can't nest).
+
+## Kiro specs workflow
+
+From [kiro.dev/docs/specs][kiro-specs] (read 2026-11-19, documented): a spec produces `requirements.md` (`bugfix.md` for bug fixes), `design.md` and `tasks.md`. Feature specs come as Requirements-First or Design-First; Quick Spec generates all three in one pass with no approval gates. Bugfix specs record current, expected and unchanged behaviour. Running all tasks builds a dependency graph and runs independent tasks concurrently in "waves" (waves run in sequence). Correctness checking via property-based testing is IDE-only. Earlier text calling the spec phase "mandatory" is superseded: Quick Spec skips the gates.
+
+## Tessl status
+
+Checked 2026-11-19. The `tesslio` GitHub org holds [`spec-driven-development-tile`][tessl-tile] (58 stars, MIT), whose README describes a "steering tile" for writing specs before coding and states "No framework"; an open-source tile, not a closed-beta framework. [tessl.io][tessl] now frames the company around Context, Loops and Factory (footer: Tessl Platform, Tessl Agent, Tessl Registry), with no mention of a spec framework, tiles or beta/GA status. The earlier "~41 stars, closed-beta, spec-as-source" row could not be reproduced and is removed rather than carried forward.
 
 ## Where SDD sits
 
@@ -41,19 +48,25 @@ SDD is the *what* (machine-readable spec → plan → tasks → implement); **ED
 
 - [agentic-engineering-disciplines-landscape.md](../../sdlc-lcm/agentic-engineering-disciplines-landscape.md) — the §3 synthesis entry this doc expands; the full disciplines + methodologies stack
 - [kiro-analysis.md](../coding-agents/kiro-analysis.md) — Kiro's spec-driven IDE in depth
+- [software-factory-landscape.md § Economics, failure and verification evidence](../../sdlc-lcm/software-factory-landscape.md#economics-failure-and-verification-evidence) — measured evidence on what agent-built output costs downstream, which spec gates are meant to reduce
 
 ## Sources
 
 | Source | Content |
 |---|---|
-| [github/spec-kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [agent-os][agent-os] · [Kiro][kiro-repo] | SDD frameworks (stars via `gh api`, 2026-06-27) |
-| [ayoubben18/ab-method][ab-method] | Fractal CC+Codex workflow method, v3.7.1, MIT from LICENSE (stars via `gh api`, 2026-07-23) |
+| [github/spec-kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [agent-os][agent-os] · [Kiro][kiro-repo] | SDD frameworks (stars, licenses, releases via `gh api`, 2026-11-19; BMAD LICENSE file read 2026-11-19) |
+| [ayoubben18/ab-method][ab-method] | Fractal CC+Codex workflow method, MIT, v5.2.0 (`gh api`, 2026-11-19) |
+| [Kiro docs: Specs][kiro-specs] | Spec files, variants, Quick Spec, waves (2026-11-19) |
+| [tesslio/spec-driven-development-tile][tessl-tile] · [tessl.io][tessl] | Tessl repo and site status (2026-11-19) |
 | [Martin Fowler — SDD tools][fowler-sdd] | Spec-driven development survey |
 
 [spec-kit]: https://github.com/github/spec-kit
 [ab-method]: https://github.com/ayoubben18/ab-method
 [openspec]: https://github.com/Fission-AI/OpenSpec
-[bmad]: https://github.com/bmadcode/BMAD-METHOD
+[bmad]: https://github.com/bmad-code-org/BMAD-METHOD
 [agent-os]: https://github.com/buildermethods/agent-os
 [kiro-repo]: https://github.com/kirodotdev/Kiro
 [fowler-sdd]: https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html
+[kiro-specs]: https://kiro.dev/docs/specs/
+[tessl-tile]: https://github.com/tesslio/spec-driven-development-tile
+[tessl]: https://tessl.io/

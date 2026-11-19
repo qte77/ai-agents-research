@@ -3,7 +3,7 @@ title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 category: landscape
 created: 2026-06-23
-updated: 2026-11-18
+updated: 2026-11-19
 validated_links: 2026-11-18
 status: assess
 ---
@@ -101,7 +101,7 @@ By 2026 every major coding tool shipped an SDD flavor. Stars verified via `gh ap
 | kirodotdev/Kiro | 3,912 | Proprietary | requirements→design→tasks "waves"; full IDE — see [kiro-analysis.md][kiro-doc] |
 | Tessl (tile) | 41 | MIT | "spec-as-source" (spec is the maintained artifact); main framework closed-beta |
 
-A full standalone comparison (`spec-driven-frameworks-landscape.md`) is a natural follow-up; this table is the synthesis-level entry.
+The table is the synthesis-level entry as of 2026-06-23; the standalone [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md) carries the refreshed stars, licenses and releases (2026-11-19), including the Tessl and Kiro corrections.
 
 **Adjacent 2026 developments:** Anthropic's own [The AI-Native SDLC Playbook][anthropic-sdlc] (Aug 2026) operationalizes SDD as a committed artifact chain — "the intent, the spec, the plan, the diff and the review findings are the audit trail" — across six loop stages (Plan/Design/Build/Test/Deploy/Maintain), with a control-band breach in production writing the next `intent.md` to restart the loop. `CLAUDE.md` carries institutional knowledge across sessions; **Skills** encode organizational policy as advisory, reusable constraints; **Hooks** are the deterministic enforcement layer (blocking unsafe edits, gating approvals); **Evals** form the regression suite triggered on config/prompt changes. A human always accepts the spec before build starts, consulting a technical lead for anything the org classes as higher-risk; humans also approve the implementation plan and hold exclusive PR-merge and deploy authorization. In an adjacent domain, [SMART][smart] (Kushnir, Noorbakhsh, Sreedhar et al., Sep 2026) pushes design-docs-as-source past code review into ML systems tooling: an ML performance-modeling repo holds "almost no code," only a DAG of natural-language design docs, and coding sub-agents regenerate the implementation from the docs on each version update — validated against hand-audited reference models including DeepSeek-V3.
 
