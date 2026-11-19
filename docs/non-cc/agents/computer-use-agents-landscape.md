@@ -20,10 +20,12 @@ Browser agents are a separate topic and are not covered here beyond pointers.
   scroll), run them in an environment you control, return the next screenshot. Anthropic, OpenAI
   and Google all document this client-executed loop (documented).
 - Claude's computer use is a client-side tool whose current version needs no beta header; earlier
-  versions still need one. Claude Desktop also exposes it to end users (documented, beta).
-- The OSWorld family splits in two: OSWorld-Verified (fixed original tasks, scores near 80% are
-  vendor claims) and OSWorld 2.0 (long-horizon, best published binary score 20.6% in the paper,
-  21.3% in a vendor claim). Scores from the two are not one trend.
+  versions still need one. Claude Desktop also exposes it to end users (documented, research
+  preview).
+- The OSWorld family splits in two: OSWorld-Verified (original tasks, fixed; its published
+  workbook lists rows above 85%) and OSWorld 2.0 (long-horizon; the site's results file, updated
+  2026-11-14, lists a best official full-set binary score of 44.33%). Scores from the two are not
+  one trend.
 - Screenshot-only versus accessibility-tree input is a real design axis, not a settled one: 2024
   evidence favoured structured input, current vendor tools are screenshot-first, and a 2026 paper
   uses the accessibility tree for security rather than perception.
@@ -37,7 +39,7 @@ Browser agents are a separate topic and are not covered here beyond pointers.
 | Item | Documented state |
 | ---- | ---------------- |
 | Current version | `computer_toolset_20260801`; the request "needs no beta header" |
-| Models on the current toolset | Claude Fable 5.2, Mythos 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5 (the page's `supportedModels` list also names earlier 5.x ids) |
+| Models on the current toolset | Claude Fable 5.2, Mythos 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5 are named in the details; the page's `supportedModels` list also names Fable 5.1 and 5, Mythos 5.1, 5 and Preview, Opus 5, Sonnet 5 and Opus 4.8 (several of these are also listed for `computer_20251124`) |
 | Earlier versions | `computer_20251124` (header `computer-use-2025-11-24`) and `computer_20250124` (header `computer-use-2025-01-24`), both beta; the page lists which models take which |
 | Execution | Client side: Claude never connects to your environment; your application runs each action and returns results |
 | Reference implementation | A Docker-based quickstart (virtual display, desktop, Firefox, LibreOffice) |
@@ -53,14 +55,18 @@ latency, coordinate hallucination, weak scrolling, spreadsheet interaction and n
 known limitations, and say not to use it for tasks needing perfect precision without human
 oversight.
 
-**Claude Desktop (documented, beta).** The support article [Let Claude use your computer in
-Cowork][claude-cowork-cu] describes computer use for Pro, Max and Ultra plans on macOS and Windows
-in the Desktop app (Cowork and Claude Code). Claude tries connectors first, then a browser, and
-uses screen control only if neither works; it asks permission per application, blocks some
-categories such as trading and cryptocurrency apps by default, and the article states there is no
-sandbox between Claude and your apps. The article contradicts itself on Team and Enterprise
-availability, and the Claude Code desktop docs give a different macOS minimum than the support
-article for the background-window behaviour, so check both before relying on either.
+**Claude Desktop (documented, research preview).** The [Claude Code desktop docs][claude-desktop]
+call computer use a "research preview" on macOS and Windows for Pro, Max and Ultra plans, not
+available on Team or Enterprise, off by default, with macOS 14 or later plus Accessibility and
+Screen Recording permissions. Access is per app, with fixed control tiers by app category (view
+only for browsers and trading platforms, click only for terminals and IDEs, full control for the
+rest). The docs state that, unlike the sandboxed Bash tool, it runs on your actual desktop. The
+support article [Let Claude use your computer in Cowork][claude-cowork-cu] says Claude tries
+connectors first, then a browser, and uses screen control only if neither works; it also states
+there is no sandbox between Claude and your apps, that Team and Enterprise do not have computer
+use, and that background-window operation needs macOS 15 or later (a separate feature from the
+macOS 14 minimum above, not a conflict). For the Cowork product and enterprise controls see the
+[Cowork enterprise analysis][cowork-ent].
 
 **Pointer only:** Claude in Chrome (browser extension) is a browser agent and is covered under the
 browser-agents topic, not here.
@@ -69,7 +75,7 @@ browser-agents topic, not here.
 
 | Vendor | What the docs say (read 2026-11-19) | Level |
 | ------ | ----------------------------------- | ----- |
-| OpenAI | [Computer use guide][openai-cu]: a `computer` tool in the Responses API; model returns a `computer_call` with an ordered action list, your code executes and returns a screenshot via `computer_call_output`. For the newest model the page recommends code execution and keeps the computer tool "as an alternative". No benchmark numbers on the page | documented |
+| OpenAI | [Computer use guide][openai-cu]: a `computer` tool in the Responses API; model returns a `computer_call` with an ordered action list, your code executes and returns a screenshot via `computer_call_output`. For its newest model the page recommends code execution instead and keeps the computer tool "as an alternative". No benchmark numbers on the page | documented |
 | Google | [Gemini computer use][gemini-cu]: browser, mobile and desktop action sets; coordinates normalised so you do not send display size; each step can carry a `safety_decision` (allowed, require confirmation, blocked); prompt-injection screening is opt-in | documented |
 | Microsoft | Researcher's Computer Use, Copilot Studio computer use and the Foundry computer-use tool are already compared in [Microsoft 365 Copilot analysis, Computer-using agents][ms-cua]; not repeated here | documented (see that doc) |
 | Open models | See next section | mixed |
@@ -82,26 +88,29 @@ status, so this table makes no claim about them.
 
 | Project | State read 2026-11-19 | Level |
 | ------- | --------------------- | ----- |
-| [OpenCUA][opencucode] ([paper][opencua-paper]) | MIT-licensed models (7B, 32B, 72B), the AgentNet dataset and tools; the paper (v1 2025-08-12) reports 45.0% for the 72B model on OSWorld-Verified | paper |
-| [Agent S][agent-s] (Simular) | Apache-2.0 framework; README lists Agent S4 (2026-10-20) and claims 21.3% on OSWorld V2 with an open model, quoting 20.6% for Claude Opus 4.8 and 13.0% for GPT-5.5; the README also claims 72.60% on OSWorld for Agent S3 (2025-12-15) as the first above human performance | vendor claim |
+| [OpenCUA][opencucode] ([paper][opencua-paper]) | MIT-licensed models (7B, 32B, 72B), the AgentNet dataset and tools; the abstract of the current version (v3, 2025-10-04) reports 45.0% for the 72B model on OSWorld-Verified (v1, 2025-08-12, predates the 72B result) | authors' claim |
+| [Agent S][agent-s] (Simular) | Apache-2.0 framework; README lists Agent S4 (2026-10-20) and claims 21.3% on OSWorld V2 with an open model, quoting 20.6% for Claude Opus 4.8 and 13.0% for GPT-5.5; the README also claims 72.60% on OSWorld for Agent S3 (2025-12-15) as the first above human performance, and a 2026-08-28 entry saying Simular's production agent Sai tops OSWorld 2.0 with an unexplained "(73%)". The leaderboard file lists Sai with Opus 5 at 41.67% binary and 79.38% partial (no official flag), so the 73% matches neither; we could not reconcile it | vendor claim |
 | [UI-TARS-desktop][ui-tars] (ByteDance) | Apache-2.0 desktop app on UI-TARS and Seed-1.5-VL models; the repository is archived and read-only per a note dated 2026-11-09, so treat as frozen | documented |
-| [Qwen-UI-Agent report][qwenui] | Abstract reports 79.5% on OSWorld-Verified and 40.0% partial-progress on OSWorld-v2 (submitted 2026-07-30) | vendor claim |
+| [Qwen-UI-Agent report][qwenui] | Abstract reports 79.5% on OSWorld-Verified and 40.0% partial-progress on OSWorld-v2 (submitted 2026-07-30) | authors' claim |
 
 We read none of the weights or code; scores are as reported. "First above human" and "SOTA" are
 the vendors' words and are not independently verified.
 
 ## The OSWorld family
 
-| Benchmark | What it is | Published numbers (as of) | Level |
-| --------- | --------- | ------------------------- | ----- |
-| [OSWorld][osworld-paper] | 369 real-computer tasks; paper v1 2024-04-11 | Humans above 72.36%, best model then 12.24% (2024-04-11) | paper |
-| OSWorld-Verified | The original tasks with community-reported fixes, announced 2025-07-28 on the [OSWorld site][osworld-site] | Leaderboard is client-side rendered and was not readable; reported scores include 45.0% (OpenCUA-72B, paper v3 2025-10-04) and 79.5% (Qwen-UI-Agent, 2026-07-30) | paper / vendor claim |
-| [OSWorld 2.0][osworld2] | 108 long-horizon workflows, humans take a median of about 1.6 hours; the original site notice dated 2026-06-26 points to it as the latest version | Claude Opus 4.8 at 20.6% binary completion and 54.8% partial, GPT-5.5 near 13% (paper v2, 2026-07-13) | paper |
-| [OSWorld 2.0 site][osworld2-site] | Leaderboard table had no readable rows (client-side) | Not read | - |
+This doc is the home for dated OSWorld scores; the benchmark table in [evaluation-data-resources
+§ 2][eval-bench] keeps the description and one top figure and links here.
 
-Our reading: the near-80% Verified claims and the roughly 20% 2.0 figures measure different task
-sets, so they are not a trend line. Related benchmarks from the 2026-09/10 paper wave, all
-single-paper results:
+| Benchmark | What it is | Scores (as of) | Level |
+| --------- | --------- | -------------- | ----- |
+| [OSWorld][osworld-paper] | 369 real-computer tasks; paper v1 2024-04-11 | Humans above 72.36%, best model then 12.24% (2024-04-11) | paper |
+| OSWorld-Verified | The original tasks with community-reported fixes, announced 2025-07-28 on the [OSWorld site][osworld-site]; the site notice dated 2026-06-26 points to 2.0 as the latest version | The site's published [results workbook][osworld-verified-xlsx] (1,076 rows, newest row dated 2026-08-01, read 2026-11-19) lists, by success rate at a 100-step budget: Intelligence-Indeed Agent 90.19% (2026-07-25, uses coding actions), claude-fable-5 85.96% and claude-opus-5 83.39% (both 2026-08-01, no extra coding or a11y tree), Pointer Agent with Opus 4.7 83.64%. The workbook has no official or verified column, so the review status of each row is unknown to us. Earlier claims: OpenCUA-72B 45.0% (authors' claim, 2025-10-04); Qwen-UI-Agent 79.5% (authors' claim, 2026-07-30) | leaderboard file (rows as listed) |
+| [OSWorld 2.0][osworld2] | 108 long-horizon workflows, humans take a median of about 1.6 hours; paper v2 2026-07-13 reports Claude Opus 4.8 at 20.6% binary and 54.8% partial, GPT-5.5 near 13% | The site's [results file][osworld2-json] (reported `updatedAt` 2026-11-14, read 2026-11-19), 500-step default. Official end-to-end rows: Claude Opus 5 at max reasoning 44.33% binary / 77.67% partial on the full set (release v2.1), and 48.65% / 79.2% on the "offline" subset; MuseSpark 1.3 39.25% full. Rows without the official flag: Darwinx with Opus 4.8 44.44% / 75.97% (Salesforce AI Research, paper-linked), Sai with Opus 5 41.67% / 79.38% (Simular). Agent S4's 21.3% claim (README, 2026-10-20) predates these rows | paper; leaderboard file (official flag as given) |
+
+Our reading: the Verified and 2.0 scores measure different task sets and are not one trend. The
+2.0 best moved from about 20% in the paper to above 44% in the file within months, so quote a 2.0
+figure only with its release version, model, reasoning setting and official flag. We did not rerun
+anything. Related benchmarks from the 2026-09/10 paper wave, all single-paper results:
 
 - [OSWorld-Science][osworld-science] (2026-09-30): 146 tasks in scientific software; the authors
   report that strong VLMs with a strong harness still struggle (paper).
@@ -110,9 +119,6 @@ single-paper results:
   reach the frontier (paper).
 - [VeriCUA][vericua] (2026-10-29, marked work in progress): treats task-completion verification as
   agentic exploration; relevant because verifier quality bounds every score above (paper).
-
-The dated benchmark status table lives in [evaluation-data-resources-landscape.md § Benchmark
-status][eval-bench]; update scores there, not here.
 
 ## Pixels versus accessibility tree
 
@@ -124,8 +130,8 @@ status][eval-bench]; update scores there, not here.
 | Set-of-Mark overlays | Numbered boxes ease grounding | Dense OS elements added noise for one model | same |
 
 The 2024 numbers are old models and old data; they show the trade-off shape, not a current
-ranking. Current first-party tools (Claude, OpenAI, Gemini above) are screenshot-first with
-model-predicted coordinates. The counter-design is accessibility-only tooling such as
+ranking. In the docs read here, Claude and Gemini describe screenshot-driven loops with model-predicted
+coordinates, and OpenAI's loop returns screenshots too (our reading: screenshot-centred). The counter-design is accessibility-only tooling such as
 [agent-desktop][agent-desktop], described in the [scraping catalog][scrape-agent-desktop]. A 2026
 paper, [Towards Safe Autonomy for Computer Use][sacua], uses the tree differently: it derives
 deterministic rules from it to separate trusted screen regions from untrusted ones, and reports an
@@ -162,8 +168,9 @@ we found no current head-to-head across vendors.
 
 ## Open items
 
-- OSWorld-Verified and OSWorld 2.0 leaderboards are client-rendered; current top rows were not
-  read. Re-read with a rendered fetch before quoting a leaderboard rank.
+- The OSWorld-Verified workbook has no official or verified column and was read from one
+  download; re-read the live leaderboard before quoting a rank. The Sai "(73%)" README figure is
+  unreconciled.
 - OpenAI Operator/ChatGPT agent status and the Gemini model GA state were not verified.
 
 ## Sources
@@ -171,11 +178,14 @@ we found no current head-to-head across vendors.
 | Source | Content |
 | ------ | ------- |
 | [Claude computer use tool docs][claude-cu] | Versions, models, headers, limits, security (read 2026-11-19) |
+| [Claude Code desktop docs][claude-desktop] | Desktop computer use: research preview, plans, macOS 14, permission tiers, not sandboxed |
+| [agent-desktop][agent-desktop] | Accessibility-tree desktop CLI; latest release v1.3.1 published 2026-11-13 (GitHub API, 2026-11-19) |
+| [Cowork enterprise analysis][cowork-ent] | Existing corpus coverage of Cowork |
 | [Let Claude use your computer in Cowork][claude-cowork-cu] | Desktop computer use, permissions, no-sandbox statement |
 | [OpenAI computer use guide][openai-cu] | Loop, safety guidance |
 | [Gemini computer use][gemini-cu] | Actions, safety decisions |
 | [OSWorld paper][osworld-paper], [HTML][osworld-html] | Original benchmark, observation-type results |
-| [OSWorld site][osworld-site], [OSWorld 2.0][osworld2], [site][osworld2-site] | Verified announcement, 2.0 results |
+| [OSWorld site][osworld-site], [Verified workbook][osworld-verified-xlsx], [OSWorld 2.0][osworld2], [2.0 results file][osworld2-json] | Verified announcement and results, 2.0 results |
 | [OpenCUA][opencucode], [paper][opencua-paper] | Open models, 45.0% claim |
 | [Agent S][agent-s] | README claims, dated |
 | [UI-TARS-desktop][ui-tars] | Archived repo |
@@ -191,7 +201,6 @@ we found no current head-to-head across vendors.
 [osworld-html]: https://arxiv.org/html/2404.07972v2
 [osworld-site]: http://osworld-v1.xlang.ai/
 [osworld2]: https://arxiv.org/abs/2606.29537
-[osworld2-site]: https://osworld-v2.xlang.ai/
 [opencucode]: https://github.com/xlang-ai/OpenCUA
 [opencua-paper]: https://arxiv.org/abs/2508.09123
 [agent-s]: https://github.com/simular-ai/Agent-S
@@ -203,5 +212,9 @@ we found no current head-to-head across vendors.
 [vericua]: https://arxiv.org/abs/2610.40578
 [agent-desktop]: https://github.com/vercel-labs/agent-desktop
 [scrape-agent-desktop]: ../infrastructure/web-scraping-extraction-landscape.md
-[eval-bench]: ../../sdlc-lcm/evaluation-data-resources-landscape.md
+[eval-bench]: ../../sdlc-lcm/evaluation-data-resources-landscape.md#2-benchmarks
+[osworld-verified-xlsx]: https://osworld-v1.xlang.ai/static/data/osworld_verified_results.xlsx
+[osworld2-json]: https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json
+[claude-desktop]: https://code.claude.com/docs/en/desktop.md
+[cowork-ent]: ../../cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md
 [vuln-landscape]: ../../sdlc-lcm/agentic-ai-vulnerability-landscape.md

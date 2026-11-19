@@ -3,7 +3,7 @@ title: Programmatic and Speculative Tool Calling
 source: https://arxiv.org/abs/2608.06370
 purpose: Evaluate the evidence for programmatic tool calling (PTC) over JSON tool calling, and speculative PTC (sPTC) as a technique for overlapping expensive tool/sub-LLM calls with code generation
 created: 2026-09-24
-updated: 2026-11-18
+updated: 2026-11-19
 validated_links: 2026-11-18
 status: assess
 ---
@@ -120,8 +120,9 @@ claims first place on BFCL at that time, a snapshot that has since moved.
 - **Computer-use action spaces** extend tool calling to GUI control, scored on OSWorld
   ([arXiv 2404.07972][osworld], submitted 2024-04-11): 369 tasks, humans above 72.36% against 12.24%
   for the best model at the time, with deficiencies mainly in GUI grounding. That figure is two
-  years old and no longer a state-of-the-art claim. The corpus has no dedicated computer-use
-  landscape yet (plan 0014 row K20); until it exists, see
+  years old and no longer a state-of-the-art claim. For current computer-use tools and
+  scores see [computer-use-agents-landscape.md](../agents/computer-use-agents-landscape.md); for agents
+  that gate steps with decision models see
   [system-1-decision-models-landscape.md § Tools built on Jev][s1-tools] for computer-use agents that
   gate steps with decision models and [microsoft-365-copilot-analysis.md][m365] for a vendor's
   computer-use feature.
