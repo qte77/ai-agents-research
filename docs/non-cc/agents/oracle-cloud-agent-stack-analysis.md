@@ -18,17 +18,18 @@ release notes and press pages read on 2026-11-20; prices are left out on purpose
 
 | Stack | Kind | Built by | Where it runs |
 |---|---|---|---|
-| OCI Generative AI Agents | "Fully managed" service for LLM agents with ready-to-use tools [oci-agents] | Developers and cloud admins | An OCI region ([Regions](#regions)) |
+| OCI Generative AI Agents | "fully managed" service for LLM agents with ready-to-use tools [oci-agents] | Developers and cloud admins | An OCI region ([Regions](#regions)) |
 | OCI Enterprise AI Agents | Newer primitives on OCI Generative AI: an OpenAI-Responses-compatible API, projects, memory, vector stores, hosted applications [oci-enterprise-ai] | Developers | OCI regions, GA 2026-03-31 |
-| AI Agent Studio for Fusion Applications | A design-time environment inside Fusion Applications for creating, configuring and deploying agents and agent teams [aas-key] | Business and Fusion admins; partners | Inside the Fusion tenant |
+| AI Agent Studio for Fusion Applications | A "design-time environment" inside Fusion Applications to "create, configure, validate, and deploy AI agents" [aas-overview]; multi-agent teams per the capability list [aas-key] | Business and Fusion admins; partners | Inside the Fusion tenant |
 
 The OCI Generative AI Agents tools are SQL, RAG, agent-as-tool, custom function calling and custom
 API-endpoint calling, with guardrails (content moderation, prompt-injection and PII handling) and an
 optional human-in-the-loop [oci-agents]. Enterprise AI Agents lists file search, code interpreter,
 function calling and MCP calling of remote MCP servers, plus long- and short-term memory and
-NL2SQL over a customer schema [oci-enterprise-ai]. Data platforms Oracle sells alongside these are
-only linked here:
-[data-platforms-lakehouse-landscape.md](../infrastructure/data-platforms-lakehouse-landscape.md).
+NL2SQL over a customer schema [oci-enterprise-ai]. Data platforms are out of scope here; for
+data platforms in general see
+[data-platforms-lakehouse-landscape.md](../infrastructure/data-platforms-lakehouse-landscape.md)
+(it does not cover Oracle).
 
 ## Roles and identity
 
@@ -44,7 +45,9 @@ OCI authorises with IAM policy statements over resource types, with compartments
   `in tenancy`) is the documented broad grant; the page points to per-resource-type verbs for
   narrower grants.
 - **Invoke only:** the permission for chatting with an agent endpoint, `GENAI_AGENT_ENDPOINT_CHAT`,
-  maps to the `use` verb, so a caller needs `use` on the endpoint rather than `manage`.
+  maps to the `use` verb, so chat itself needs `use` on the endpoint rather than `manage`. Caveat:
+  `CreateSession` and `EndSession` map to the `manage` verb on `genai-agent-session`, so a client that
+  opens and closes its own sessions needs more than endpoint `use` [oci-agents-iam].
 - **Agents as principals:** an agent is itself a resource principal (`resource.type='genaiagent'`),
   and data-ingestion jobs are `genaiagentdataingestionjob`. The page's examples put these in dynamic
   groups and grant them what the agent needs: `use generative-ai-chat` (model calls), `read
@@ -74,9 +77,10 @@ AI Agent Studio uses Fusion Applications' own role model, not OCI IAM [aas-acces
 - **Extra privileges for builders:** an external REST API tool needs a Visual Builder backend
   privilege (`ORA_FND_TRAP_PRIV`); scheduling workflow agent teams needs the Fai Batch Job Manager
   duty; channels and the monitoring tab need their own permission groups [aas-access].
-- **Invoke:** the same page defers end-user access to a separate FAQ, and Oracle's search listing of
-  the 26C guide describes a runtime duty plus an "Access Intelligent Agent Chat" privilege; that
-  detail was seen only in a search snippet, so treat it as unverified until read on the 26C page.
+- **Invoke:** the same page defers end-user access to a separate FAQ ("How can I give users access
+  to AI agents?"), which was not read in this pass. A search listing of the 26C guide mentioned a
+  runtime duty plus an "Access Intelligent Agent Chat" privilege; seen only in a snippet, so
+  unverified.
 - **Caution on the access page:** "Using predefined roles might account for subscription
   consumption irrespective of whether you purchased the cloud service or not" [aas-access] — role
   assignment can therefore have licence effects.
@@ -86,14 +90,14 @@ AI Agent Studio uses Fusion Applications' own role model, not OCI IAM [aas-acces
 
 | Stack | Basis | Source |
 |---|---|---|
-| Fusion embedded AI agents | "Included with a Fusion Applications subscription at no extra cost" (Oracle Fusion executive blog, 2025-04-29; a statement of that date, not re-confirmed in current terms) | [fusion-custom-ai] |
-| Fusion custom AI (new agents, large changes) | Separately priced; the same blog says seat-based and employee-based. Oracle's FAQ title "When do I need a Custom AI Agent Subscription for AI Agent Studio?" exists, but its body did not load in this pass, so the exact trigger is unverified | [fusion-custom-ai], [aas-access] |
+| Fusion embedded AI agents | Oracle states embedded AI "included with a Fusion Applications subscription at no extra cost" (Oracle product page by an Oracle Fusion executive, dated 2025-04-29 on the page but edited later, as it cites an August 2026 Gartner report; confirm in current terms) | [fusion-custom-ai] |
+| Fusion custom AI (fully custom agents) | Planned: the page says custom AI "will be delivered as a separately priced offering" and "will use" seat-based and employee-based pricing (marked "Planned" there). The boundary between embedded and custom use is not documented on pages read in this pass | [fusion-custom-ai] |
 | OCI Generative AI Agents and Enterprise AI Agents | OCI service consumption; the billing basis was not read in this pass (unverified) | n/a |
 
 A community thread asks Oracle to clarify embedded versus custom AI licensing [aas-community]
-(secondary; a question, not an answer). Practical reading: Fusion users of embedded agents need no
-extra licence; teams that build new agents need to confirm the custom-AI entitlement with Oracle
-before role assignment (see the caution above).
+(secondary; a question, not an answer). Practical reading, per Oracle's statements and not independently verified: embedded agents need no
+extra licence; teams that build fully custom agents should confirm the custom-AI entitlement with
+Oracle before assigning roles (see the caution above).
 
 ## Claude, MCP and A2A
 
@@ -134,14 +138,14 @@ before role assignment (see the caution above).
 
 ## At a glance: Oracle
 
-| Facet | OCI Generative AI / Enterprise AI Agents | AI Agent Studio (Fusion) |
+| Dimension | OCI Generative AI / Enterprise AI Agents | AI Agent Studio (Fusion) |
 |---|---|---|
 | Runtime | Managed agents on OCI; hosted applications | Inside Fusion Applications |
 | Claude availability | Not listed on the model pages, 2026-11-20 | Announced as a supported model family (2025-10-15); hosting unstated |
 | MCP / A2A | MCP calling (Enterprise AI Agents); A2A not found | MCP tool; A2A agent cards and registry |
 | Memory | Conversation context; long and short-term memory (Enterprise) | Not checked |
 | Agent identity and IdP | Agent resource principal, dynamic groups; OCI IAM identity domains | Fusion roles and users; SSO not checked |
-| Least-privilege roles | `use` on `genai-agent-endpoint` to invoke; `manage genai-agent-family` to administer | Product duty roles; runtime duty and chat privilege (unverified) |
+| Least-privilege roles | `use` on `genai-agent-endpoint` to chat (session create/end need `manage genai-agent-session`); `manage genai-agent-family` to administer | Product duty roles; runtime duty and chat privilege (unverified) |
 | Licences and who needs one | OCI consumption (basis unverified) | Embedded: with Fusion subscription; custom: separate, seat/employee-based (2025 statement) |
 | Regions | 7 (agents), 9 (enterprise) | Fusion tenant region |
 | Release status | Enterprise GA 2026-03-31 | Expanded 2025-10-15; guide 26D |
@@ -151,7 +155,10 @@ before role assignment (see the caution above).
 - [microsoft-365-copilot-analysis.md](microsoft-365-copilot-analysis.md#roles-identity-and-licences) — the Azure and Entra counterpart
 - [salesforce-agentforce-analysis.md](salesforce-agentforce-analysis.md#licences-and-roles-for-agentforce-agents) — the SaaS-vendor counterpart
 - [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#1-authenticate-the-agent-agent-as-a-first-class-principal) — agent identity across vendors
-- [data-platforms-lakehouse-landscape.md](../infrastructure/data-platforms-lakehouse-landscape.md) — data platforms (linked only)
+- [data-platforms-lakehouse-landscape.md](../infrastructure/data-platforms-lakehouse-landscape.md) — data platforms (general; no Oracle coverage)
+- [ag-ui-protocol-landscape.md](../protocols/ag-ui-protocol-landscape.md) — Oracle Agent Spec and its AG-UI alignment (March 2026)
+- [CC-business-api-integrations.md](../../cc-native/plugins-ecosystem/CC-business-api-integrations.md#oracle-netsuite-official) — Oracle NetSuite's official MCP server for Claude Code
+- [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md) — name clash: ServiceNow Otto also has an "AI Agent Studio"; this doc means Oracle's, for Fusion Applications
 
 ## Sources
 
@@ -164,11 +171,12 @@ before role assignment (see the caution above).
 | [Offered pretrained models][oci-models] | Model families listed, no Anthropic (2026-11-20) |
 | [OCI IAM overview][oci-iam-overview] | Identity domains, federation, SSO |
 | [Access Requirements for AI Agent Studio][aas-access] | Duty roles, privileges, consumption caution (26B page) |
-| [Key Capabilities of AI Agent Studio][aas-key] | Capability list |
+| [Overview of AI Agent Studio (26D)][aas-overview] | Definition of the tool |
+| [Key Capabilities of AI Agent Studio][aas-key] | Capability list, agent teams |
 | [Add MCP Tool (26C)][aas-mcp] | MCP tool fields and transports |
 | [Components in A2A (26B)][aas-a2a] | Agent card and registry |
 | [AI Agent Studio expansion, 2025-10-15][aas-oct25] | LLM families, MCP, A2A cards, credential store |
-| [Fusion custom AI blog, 2025-04-29][fusion-custom-ai] | Embedded versus custom AI licence basis |
+| [Fusion custom AI page][fusion-custom-ai] | Embedded versus custom AI licence basis (page dated 2025-04-29, edited later) |
 | [Community thread on licensing][aas-community] | Secondary: open licensing question |
 
 [oci-agents]: https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/overview.htm
@@ -178,6 +186,7 @@ before role assignment (see the caution above).
 [oci-models]: https://docs.oracle.com/en-us/iaas/Content/generative-ai/pretrained-models.htm
 [oci-iam-overview]: https://docs.oracle.com/en-us/iaas/Content/Identity/getstarted/identity-domains.htm
 [aas-access]: https://docs.oracle.com/en/cloud/saas/fusion-ai/26b/aiaas/access-ai-agent-studio.html
+[aas-overview]: https://docs.oracle.com/en/cloud/saas/fusion-ai/26d/aiaas/overview-of-ai-agent-studio.html
 [aas-key]: https://docs.oracle.com/en/cloud/saas/fusion-ai/26b/aiaas/key-capabilities.html
 [aas-mcp]: https://docs.oracle.com/en/cloud/saas/fusion-ai/26c/aiaas/add-mcp-tool.html
 [aas-a2a]: https://docs.oracle.com/en/cloud/saas/fusion-ai/26b/aiaas/components-in-a2a.html
