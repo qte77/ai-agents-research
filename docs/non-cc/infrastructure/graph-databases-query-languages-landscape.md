@@ -3,7 +3,7 @@ title: Graph Databases & Query Languages — Agent Landscape
 source: https://opencypher.org/
 purpose: A thin, dated table of the graph query languages (Cypher/openCypher, ISO GQL, SPARQL, Gremlin, Datalog), the graph databases most relevant to agents, text-to-query evidence, and vendor and vendor-labs graph MCP servers, linking the per-tool analyses in this corpus. Facts as of 2026-11-19.
 created: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-20
 validated_links: 2026-11-19
 status: assess
 ---
@@ -91,6 +91,7 @@ branch and injection controls see [Write safety][adb-ws] in Agentic Database Acc
 
 ## Not Verified
 
+- Native hyperedge (n-ary relation) support in these graph databases was not checked; the hypergraph-vs-graph retrieval and memory evidence is in the [frameworks doc](../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence).
 - Exact ISO publication day for GQL (iso.org and the ANSI store blocked).
 - NebulaGraph's openCypher compatibility, Neptune's SPARQL support, and TigerGraph (no first-party page read).
 - TEXT2SPARQL organiser result tables (site unreachable); Neo4j Enterprise licence terms.

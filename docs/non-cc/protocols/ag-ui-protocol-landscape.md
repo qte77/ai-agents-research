@@ -160,7 +160,7 @@ Supported clients per the repo: Claude Desktop (stdio), Claude Code / HTTP clien
 
 **Repo**: [CopilotKit/openbot][openbot-repo] | **Site**: [copilotkit.ai/openbot][openbot-site]
 
-A self-hosted, open-source template for a governed "AI coworker" platform — distinct from the OpenGenerativeUI demo above, aimed at production deployment with policy enforcement rather than a UI-pattern showcase:
+A self-hosted template (MIT app; the memory service is separately licensed, below) for a governed "AI coworker" platform — distinct from the OpenGenerativeUI demo above, aimed at production deployment with policy enforcement rather than a UI-pattern showcase:
 
 - **Governance**: every tool call passes through a single gateway enforcing a **CEL** (Common Expression Language) policy with fail-closed defaults — a missing policy denies by default, and a broken rule refuses rather than opens access. All permitted, refused, and failed actions are logged for audit.
 - **Isolation**: each AI coworker runs in its own containerized environment (browser, files, workspace volume); credentials are stored write-only and never returned via API.
@@ -168,7 +168,7 @@ A self-hosted, open-source template for a governed "AI coworker" platform — di
 - **Newer surface (README, 2026-11-20)**: scheduled routines (15-minute minimum interval), Slack and Microsoft Teams channels in the team edition, human take-over of a Bot's browser at a login or 2FA wall, reusable `/` skills, SSO (Google, Microsoft, Okta, SAML/OIDC), and desktop installers for Mac and Windows.
 - **Stack**: React/Vite frontend, Hono API server, PostgreSQL, Docker Compose and Helm charts; tools via MCP and Composio.
 
-**License**: MIT for the app; CopilotKit Intelligence (memory, threads) is **separately licensed** (free local license for personal use, paid for production, per the README). **Stars**: 13,018 (`gh api` 2026-11-20; 5,483 on 2026-09-24). Latest release v1.1.1 (2026-11-19). Ships as a clone-and-customize template, not a managed service. It sits in the same "self-hostable alternative to closed always-on bots" class as the projects in [Hermes: Always-on Teammate Agents](../agents/hermes-agent-analysis.md#always-on-teammate-agents-grok-bot-class).
+**License**: MIT for the app; CopilotKit Intelligence (memory, threads) is **separately licensed** (free local license for personal use, paid for production, per the README). **Stars**: 13,018 (`gh api` 2026-11-20; 5,483 on 2026-09-24). Latest release v1.1.1 (2026-11-19). Self-hosted (clone-and-customize, with Helm charts, a team edition with Slack/Teams and desktop installers per the README); no managed service was found in the README. It sits in the same "self-hostable alternative to closed always-on bots" class as the projects in [Hermes: Always-on Teammate Agents](../agents/hermes-agent-analysis.md#always-on-teammate-agents-grok-bot-class).
 
 ## OpenUI (Thesys — Generative UI Language and Renderers)
 

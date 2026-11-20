@@ -337,7 +337,7 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 
 ## Enterprise Agent Memory Beyond CC
 
-Three first-party references situate CC's memory system against other enterprise agent-memory approaches — useful context, not a like-for-like comparison, since each targets a different product surface.
+Four references situate CC's memory system against other enterprise agent-memory approaches — useful context, not a like-for-like comparison, since each targets a different product surface.
 
 | System | Scope | Curation | Audit trail |
 | --- | --- | --- | --- |
@@ -354,17 +354,17 @@ Three first-party references situate CC's memory system against other enterprise
 
 ### Anthropic's Components of Agent Memory (2026-11-06)
 
-Anthropic's engineering post [The components of agent memory][anthropic-components] (Lance Martin, Engineering, 2026-11-06; read in full 2026-11-20) is the first-party framing for the layers above. It separates four layers bottom to top: **transcripts**, **memory notes**, **memory representations** (for example linked wikis) and **injected context** (loaded every session), with "dreaming" as an offline pass that consolidates and corrects them. It excludes weight changes, in-context learning and compaction from "agent memory". CC's `MEMORY.md` is cited as an example of the small injected layer.
+Anthropic's engineering post [The components of agent memory][anthropic-components] (Lance Martin, Engineering, 2026-11-06; read in full 2026-11-20) is Anthropic's own framing of agent memory layers; its experiments run on Managed Agents, not on CC. It separates four layers bottom to top: **transcripts**, **memory notes**, **memory representations** (for example linked wikis) and **injected context** (loaded every session), with "dreaming" as an offline pass that consolidates and corrects them. It excludes weight changes, in-context learning and compaction from "agent memory". CC's `MEMORY.md` is cited as an example of the small injected layer.
 
 Evidence (the post's own experiments, run on Claude Managed Agents; not independently reproduced, model names as in the post):
 
-- **CL-Bench 1.0 database task**: memory raised mean reward for every model listed, e.g. Opus 5.5 0.655 to 0.838 and Sonnet 4.6 0.330 to 0.364 (to 0.641 with a prompt telling it to read and test memory).
+- **Continual Learning Bench (CL-Bench) 1.0 database task** (the post does not say whether this is the "CLBench" cited for Grounding Agent Memory above): memory raised mean reward for every model listed, e.g. Opus 5.5 0.655 to 0.838 and Sonnet 4.6 0.330 to 0.364 (to 0.641 with a prompt telling it to read and test memory).
 - **Light steering**: a fixed rule such as "record only failures" reduced the memory gain for stronger models; the post recommends saying what memory is for, not how to use it.
 - **Dreaming corrects drift**: in Pokemon Red a wrong note sent Claude off a ledge until a dreaming pass fixed it.
-- **Wikis help multi-document work only**: wiki plus search 61% vs 53% for search alone on a roughly 350,000-file corpus, and 87% vs 73% on Harvey LAB merger questions, with no clear gain on a single-document task and one wiki growing to 1.77x the corpus size.
+- **Wikis help multi-document work only**: wiki plus search 61% vs 53% for search alone on a roughly 350,000-file corpus, and 87% vs 73% on the multi-document, judgment or math items (a subset, "more than half" of the questions) of a 24-question merger test (a separate set from the Stainless corpus), with no clear gain on a single-document task and one wiki growing to 1.77x the corpus size.
 - **Shared tables lose facts**: one shared table retained 41 of 57 contract facts, one page per contract 57 of 57.
 
-Relation to this doc: the post's advice to keep the injected layer small matches the 200-line `MEMORY.md` cap and the CLAUDE.md size guidance above, and its dreaming pass is the documented counterpart of the source-derived [Auto-Dream](#auto-dream--background-memory-consolidation-feature-flagged). For a non-Anthropic design with hard resident-size caps see [Hermes memory](../../non-cc/agents/hermes-agent-analysis.md#memory-design-compared-with-claude-code).
+Relation to this doc: the post's advice to keep the injected layer small matches the 200-line `MEMORY.md` cap and the CLAUDE.md size guidance above, and its dreaming pass is the "dreaming" consolidation row of the [Managed Agents memory table above](#enterprise-agent-memory-beyond-cc); that it resembles the source-derived [Auto-Dream](#auto-dream--background-memory-consolidation-feature-flagged) is my inference. For a non-Anthropic design with hard resident-size caps see [Hermes memory](../../non-cc/agents/hermes-agent-analysis.md#memory-design-compared-with-claude-code).
 
 ## Usage Considerations
 
