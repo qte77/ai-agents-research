@@ -3,7 +3,7 @@ title: CC Hooks System Analysis
 source: https://code.claude.com/docs/en/hooks
 purpose: Analysis of Claude Code hooks system for automation, quality gates, and headless CC workflow integration.
 created: 2026-03-07
-updated: 2026-11-17
+updated: 2026-11-20
 validated_links: 2026-07-23
 status: generally-available
 ---
@@ -84,6 +84,20 @@ Hooks can return JSON to influence CC behavior:
 - **`updatedInput`**: Modify tool input with ask decision (PreToolUse, v2.1.0)
 - **Approval/denial**: PermissionRequest hooks can auto-approve or auto-deny (v2.0.45)
   - Community example: [Plannotator](../../cc-community/CC-community-tooling-landscape.md#plannotator-backnotprop) hooks `PermissionRequest` on `ExitPlanMode` to open the plan for human review in the browser before Claude may leave plan mode
+
+### Stop-hook loop cap
+
+A `Stop` or `SubagentStop` hook that blocks the turn from ending (exit 2 or `"decision": "block"`)
+continues the conversation. Claude Code caps this at **8 consecutive continuations** (the count
+resets whenever Claude calls a tool) and then overrides the next block and ends the turn
+([hooks reference](https://code.claude.com/docs/en/hooks#stop)). Both hooks receive
+`stop_hook_active`, which is `true` while the turn is already continuing because of a stop hook; a
+hook should return success while it's set.
+`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` sets the cap (default 8, `0` disables it;
+[env vars](https://code.claude.com/docs/en/env-vars)). Observed by the owner on 2026-11-20 when the cap
+fired: Claude Code reports "A hook blocked the turn from ending 9 consecutive times—overriding and
+ending turn", that is, the ninth block after eight continuations, and points to `stop_hook_active`
+and the env var. Goal loops built on this: [CC-goal-analysis.md](../sessions/CC-goal-analysis.md).
 
 ### HTTP Hooks (v2.1.63+)
 
