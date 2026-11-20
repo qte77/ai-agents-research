@@ -4,7 +4,7 @@ description: Survey of community plugin catalogs — awesome-claude-code (curate
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-11-12
+updated: 2026-11-20
 validated_links: 2026-11-12
 ---
 
@@ -258,6 +258,8 @@ Impeccable is a "design vocabulary for your coding agent" — 24 slash commands 
 Explicitly cross-agent, not CC-exclusive: works with Claude Code, Cursor, Codex CLI, GitHub Copilot, Devin, Replit Agent, Gemini CLI, Grok Build, OpenCode, Google Antigravity, Kiro, Trae, Rovo Dev, Qoder, Mistral Vibe, Pi, Hermes Agent, DeepSeek Harness and Veto, each with its own skills-folder path documented in the README; a Chrome extension overlays the same findings on any live page. **Claude Code install**: `/plugin marketplace add pbakaus/impeccable`, then open `/plugin` and install Impeccable (or `npx impeccable install`, which detects installed tools and offers the hook).
 
 **Caveat**: "Live mode" apply can fall back to running the `codex` or `claude` CLI with `--dangerously-bypass-approvals-and-sandbox` / `--permission-mode bypassPermissions` and the user's inherited environment when no live session is polling. The README's own caution — "review it before using live mode in an unfamiliar repo" — is stated two sentences earlier, about a separate risk (the optional `impeccable:manual-edit-validate` script that Apply also runs with the user's permissions), not specifically about this bypass-approvals fallback, though the same logic applies to both.
+
+See also the Cursor-hosted cross-harness pack [pstack](CC-community-skills-landscape.md#cursorplugins-pstack-lauren-tan) (playbook-router skill, installable in Claude Code).
 
 ## Notable Plugin Profile: Elephant-Goldfish Model (Google — Design/Spec Review, Cross-Agent)
 

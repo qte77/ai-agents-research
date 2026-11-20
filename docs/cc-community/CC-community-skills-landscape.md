@@ -725,7 +725,7 @@ copies its steps into a todo list and calls the other skills as needed; `skills/
 Defaults route many roles to named frontier models and a three-model review panel; that is configuration
 in the README, not a tested result.
 
-**Why it matters here.** A second vendor-hosted, cross-harness workflow pack on the gstack/Superpowers
+**Why it matters here.** A vendor-hosted, cross-harness workflow pack on the gstack/Superpowers
 model: methodology delivered as a playbook-router skill plus a Claude Code adapter generated from the
 Cursor tree.
 

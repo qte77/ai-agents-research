@@ -3,7 +3,7 @@ title: Cursor AI Code Editor Analysis
 source: https://cursor.com/
 purpose: Analysis of Cursor as a GUI-first AI code editor with agentic composer and a secondary headless CLI.
 created: 2026-06-16
-updated: 2026-11-15
+updated: 2026-11-20
 validated_links: 2026-06-16
 status: trial
 ---
@@ -99,7 +99,7 @@ subject to change.
 
 - **MCP**: Model Context Protocol integration documented
 - **Rules**: Repository-level and user-level instruction files
-- **Skills/plugins**: Marketplace on Teams/Enterprise tier
+- **Skills/plugins**: Marketplace on Teams/Enterprise tier; example cross-harness pack in Cursor's plugin repo: [pstack](../../cc-community/CC-community-skills-landscape.md#cursorplugins-pstack-lauren-tan)
 - **SDK**: Custom tools via `local.customTools`, nested subagents, JSONL and
   custom store options for agent metadata persistence (SDK updates 2026-06-04)
 
