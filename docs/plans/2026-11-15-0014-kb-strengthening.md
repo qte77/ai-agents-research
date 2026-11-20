@@ -3,7 +3,7 @@ title: KB strengthening across the 2026-11-15 topic list, plus the open rows of 
 status: approved
 issue: "#848"
 created: 2026-11-15
-updated: 2026-11-18
+updated: 2026-11-20
 ---
 
 Tracking issue: #848. Successor to [plan 0013](2026-11-12-0013-followups-after-0012.md) (`#800`): its
@@ -24,13 +24,13 @@ repo again. The coverage audits behind the rows read headings only, so treat eac
 
 **2026-11-18 session:** K28, K31, K11, K30, K10, K16, K7, K13, K14, K32, K22, K17, K33 (#880–#893), v0.21.0 (#896), K35–K39 (#897–#901); status in #902. Notes in `/workspaces/temp/ai-agents-research-triage/session-2026-11-18/`.
 
-**2026-11-19 session:** K12 (#903), K23 (#904), K18 (#905), K20 (#906), K19 (#907) and K21 (this PR), each with its falsification passes (two each; K23 one). Session paused by the owner after K21; no lane, PR or worktree open. Local notes in `/workspaces/temp/ai-agents-research-triage/session-2026-11-19/`: `lane-brief-common.md` (dated 2026-11-19), per-row findings, `falsification-log.md`, and `K15-findings.md` (research done for K15, no doc edits).
+**2026-11-19 session:** K12 (#903), K23 (#904), K18 (#905), K20 (#906), K19 (#907) and K21 (#908), each with its falsification passes (two each; K23 one). After K21: owner decisions and housekeeping (#909), the K40 fold-ins row (#910), `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` (#911), v0.22.0 (#913, closing plan 0013 `#800`), and the release flow moved to the org's reusable workflows (#914: `bump.yaml` makes a signed bump PR, `release.yaml` tags and publishes in one run; see CONTRIBUTING "Cutting a release"). The next bump is the first live run of the new flow; until qte77/.github#70 lands, approve the bump PR's waiting Lint run by hand. No lane, PR or worktree open. Local notes in `/workspaces/temp/ai-agents-research-triage/session-2026-11-19/`: `lane-brief-common.md` (dated 2026-11-19), per-row findings, `falsification-log.md`, and `K15-findings.md` (research done for K15, no doc edits).
 
 **Do now, in order:**
 
 1. `git pull`, `make reconcile`, `git log --oneline -10`, open PRs (merge bot triage PRs first; the weekly paper-triage PR is due Tue 2026-11-24).
 2. K15 (lead-only): write it from `K15-findings.md`, re-fetching each claim. Recommended placement in the note: one registries-compared table (A2A card, official MCP Registry in preview, AWS Agent Registry GA 2026-08-31, Google Agent Registry with no GA label found, Agent 365, Agentforce Registry) in `agentic-enterprise-os-landscape.md`, linking the existing Microsoft and Salesforce sections; Claude Code managed settings (four delivery channels, precedence, Enterprise group configs, fail-closed, managed-only keys, verification) in a new cc-native configuration doc, since no existing doc covers it; a cost-attribution section in `CC-monitoring-telemetry-analysis.md`; qualify Tier 1's "none exposes per-run cost attribution" (Agent 365 breaks Copilot Credits down by agent). Then two falsification passes.
-3. K27 (lane L6), K24 (lead: the five new hubs), K25 (lead) and K40 (owner fold-ins, one lane) are unblocked; then K34 (three lanes, two clouds each, plus a lead synthesis).
+3. K27 (lane L6), K24 (lead: the five new hubs), K25 (lead) and K40 (owner fold-ins, one lane) are unblocked; then K34 (three lanes, two clouds each, plus a lead synthesis). Before K34, resolve "Copilot SDK" first-party (GitHub Copilot SDK or a Microsoft Copilot SDK); if both fit, ask the owner once and run the six cloud rows meanwhile.
 4. The loop: lane in a worktree; two Explore falsifiers in parallel (pass A checks quotes and numbers verbatim against raw pages; pass B checks attribution, evidence levels, duplication and consistency with the rest of the corpus); the fix list goes back to the same lane; the lead adds hub, index and plan rows, strikes the row in the same PR and merges. Raw page text: `code.claude.com/docs/en/<page>.md` and other pages via an httpx fetch from the polyfetch-scrape environment (WebFetch returns summaries); OSWorld and some leaderboards load a JSON or xlsx data file that is readable.
 5. Owner decisions taken 2026-11-19: G1–G6 defaults accepted (so K24 adds the five hubs and K25 builds the comparison table); K34 approved with the settings in its row; items 5 and 6 done (anti-bot list trimmed to pointers, two old stashes dropped, stale remote refs pruned); housekeeping done (#865's API link repointed to the repo page, the Mastercard link stays as a bot block; herdr and Zeron moved to `agent-frameworks-infrastructure-landscape.md` § 1; rust-anything kept with its caveat; the auto-mode-setup article stays unclaimed; 13-A7 part 3 deferred until part 2 has six runs; 13-A2's smoke issue opened in CellPlateVision-Prototype). Still open: 13-O5 (codespace rebuild), 13-O10 (private Cloudflare checklist), 13-O12 (promote the monitor exit-code rule).
 
