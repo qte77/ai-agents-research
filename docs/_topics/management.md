@@ -33,6 +33,13 @@ and lifecycle. Pointers only; see [the hub index](README.md).
 | [salesforce-agentforce-analysis.md § Agentforce Registry and MuleSoft Agent Fabric](../non-cc/agents/salesforce-agentforce-analysis.md#agentforce-registry-and-mulesoft-agent-fabric) | Agentforce Registry and MuleSoft Agent Fabric | non-cc |
 | [zed-analysis.md § External agents and the ACP Registry](../non-cc/coding-agents/zed-analysis.md#external-agents-and-the-acp-registry) | Installing external agents from the ACP Registry | non-cc |
 
+## Cloud agent stacks
+
+| Doc / section | What it covers | Bucket |
+|---|---|---|
+| [aws-agent-stack-analysis.md](../non-cc/agents/aws-agent-stack-analysis.md) | AWS: AgentCore, Bedrock Agents, Amazon Quick; IAM roles, identity, licences | non-cc |
+| [google-cloud-agent-stack-analysis.md](../non-cc/agents/google-cloud-agent-stack-analysis.md) | Google Cloud: Agent Platform, ADK, Gemini Enterprise; roles, identity, licences | non-cc |
+
 ## Identity, licences and lifecycle
 
 | Doc / section | What it covers | Bucket |
