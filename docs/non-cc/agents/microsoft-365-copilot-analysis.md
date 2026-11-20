@@ -621,6 +621,8 @@ one) not detailed further here:
 | Microsoft Copilot harness (Foundry) | Microsoft Foundry prompt agents | "[A]n optional managed runtime for prompt agents. Foundry operates the harness and its execution environment" [foundry-copilot-harness] (2026-11-04); five harness tools (file read/write, shell, web, subagents) plus skills "referenced at the top level of the prompt agent definition" [foundry-copilot-harness] | Public preview |
 | Foundry hosted agents (no "harness" name used) | Microsoft Foundry | "Hosted agents are containerized agentic AI applications that run on Agent Service" [foundry-hosted-agents] (2026-11-09); bring your own framework (Agent Framework, LangGraph, Semantic Kernel) | No preview banner or GA statement on the Learn concept page itself; the separate azure.microsoft.com product page calls hosted agents "a managed runtime for running agent code in Azure" and "a session-isolated managed runtime with autoscaling and zero idle cost" [foundry-agent-service-product] — marketing-page wording only, not repeated on the Learn concept page fetched here |
 
+The harness is also exposed to developers as the [Copilot SDK](github-copilot-cli-analysis.md#copilot-sdk-embed-the-clis-agent-engine), which its README calls the programmable interface for the Microsoft Copilot harness.
+
 The Foundry "Copilot harness" and "Copilot Managed Runtime" (above) are also two different things
 that both get called a "managed runtime" by Microsoft on different pages — the Foundry one runs
 *prompt agents*, Managed Runtime hosts *line-of-business apps*. Separately, the 2026-09-25 blog
@@ -884,8 +886,11 @@ see the previous names in some places" and that role IDs and core permissions ar
 | Everything | Foundry Owner | Azure AI Owner | Full management plus build |
 
 - **Deploying Claude** needs a Foundry resource role "such as Foundry User or Cognitive Services
-  User" and an Azure subscription [claude-foundry]; whether the first Azure Marketplace
-  subscription needs a further subscription-level permission is not stated there (unchecked). For
+  User" and an Azure subscription [claude-foundry]. The two first-party pages conflict here: the RBAC
+  page says not to assign built-in roles that start with "Cognitive Services" (Usages Reader
+  excepted) because they are meant for direct AI Services access and do not apply to Foundry
+  scenarios [foundry-rbac]; prefer Foundry User. Whether the first Azure Marketplace
+  subscription needs a further subscription-level permission is not stated (unchecked). For
   setup see [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md#microsoft-azure-foundry).
 - **Quota views** need Cognitive Services Usages Reader at subscription scope [foundry-rbac].
 - **Agent identity.** Foundry provisions a Microsoft Entra agent identity (a specialised identity
@@ -897,26 +902,24 @@ see the previous names in some places" and that role IDs and core permissions ar
   [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#1-authenticate-the-agent-agent-as-a-first-class-principal).
 - **IdP:** Entra ID is the identity provider for all of this; no other IdP is documented on the pages
   read.
-- **Licences, who needs one:** Foundry itself needs no seat; agents and models are Azure consumption
-  ([price basis](#foundry-as-an-agent-platform)) and Claude is billed via Azure Marketplace
-  [claude-foundry]. Copilot Studio, Microsoft 365 Copilot and Agent 365 are licence-gated per the
-  [Licences](#licences-2026-11-18) table: end users need a Copilot licence or usage-based billing for
-  agents grounded on tenant data, admins managing agents need an Agent 365 licence for at least one
-  user, and the Copilot Studio authoring rule is still marked unsettled there.
+- **Licences, who needs one:** Foundry needs no seat (Azure consumption, see the
+  [price basis](#foundry-as-an-agent-platform); Claude is billed via Azure Marketplace
+  [claude-foundry]); for Copilot Studio, Microsoft 365 Copilot and Agent 365 see the
+  [Licences](#licences-2026-11-18) table rather than a second list here.
 
 ##### At a glance: Microsoft
 
-| Facet | Foundry Agent Service | Copilot Studio / Microsoft 365 Copilot |
+| Dimension | Foundry Agent Service | Copilot Studio / Microsoft 365 Copilot |
 |---|---|---|
 | Runtime | Prompt, voice and hosted (container) agents [foundry-agents] | Studio-hosted agents; Managed Runtime for apps ([above](#microsoft-copilot-managed-runtime-preview)) |
-| Claude | Yes, Azure-hosted or Anthropic-hosted; Global Standard and US Data Zone Standard deployments [claude-foundry] | Claude models are offered in Copilot; EU Data Boundary excludes Anthropic ([Residency](#residency-anthropic-excluded-from-the-eu-data-boundary-claude-on-foundry-has-no-eu-data-zone-either)) |
-| MCP / A2A | MCP servers as tools [foundry-agents]; Work IQ reachable over A2A and MCP | Work IQ over A2A, MCP, REST; BYO MCP servers are preview ([byo-mcp]) |
+| Claude availability | Yes, Azure-hosted or Anthropic-hosted; Anthropic-hosted is Global Standard only, and US Data Zone Standard applies only to Azure-hosted [claude-foundry] | Claude models are offered in Copilot; EU Data Boundary excludes Anthropic ([Residency](#residency-anthropic-excluded-from-the-eu-data-boundary-claude-on-foundry-has-no-eu-data-zone-either)) |
+| MCP / A2A | MCP servers as tools; A2A v1.0 generally available, v0.3 in preview [foundry-agents] | Work IQ over A2A, MCP, REST ([work-iq-overview]); BYO MCP servers are preview ([byo-mcp]) |
 | Memory | Memory is a listed Foundry tool [foundry-agents] | Not checked in this pass (see [Three things called "harness"](#three-things-called-harness)) |
-| Agent identity and IdP | Entra agent identity per agent; Entra ID | Entra; Agent 365 registry |
-| Least-privilege roles | Foundry Agent Consumer (invoke), Foundry User (build) | Admin roles per [Licences](#licences-2026-11-18) |
+| Agent identity and IdP | Entra agent identity per agent; Entra ID | Entra; [Agent 365 registry](../frameworks/agentic-enterprise-os-landscape.md#agent-registries-compared) |
+| Least-privilege roles | Foundry Agent Consumer (invoke), Foundry User (build) | Maker and invoke roles not checked; the tenant-admin roles are in [Licences](#licences-2026-11-18) |
 | Licences | Azure consumption; no seat | Per-user Copilot or usage-based billing; Agent 365 per user |
 | Regions | Claude: no EU Data Zone (see Residency) | EU Data Boundary excludes Anthropic |
-| Release status | Foundry Learn pages 2026-11-20; Entra Agent ID GA April 2026 per the identity doc | See [Timeline](#timeline) |
+| Release status | Foundry Learn pages read 2026-11-20 (no status label recorded); Entra agent identity status in [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#1-authenticate-the-agent-agent-as-a-first-class-principal) | See [Timeline](#timeline) |
 
 #### Grounding layers
 
