@@ -3,7 +3,7 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-11-12
+updated: 2026-11-20
 validated_links: 2026-11-12
 status: generally-available
 ---
@@ -337,7 +337,7 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 
 ## Enterprise Agent Memory Beyond CC
 
-Three first-party references situate CC's memory system against other enterprise agent-memory approaches — useful context, not a like-for-like comparison, since each targets a different product surface.
+Four references situate CC's memory system against other enterprise agent-memory approaches — useful context, not a like-for-like comparison, since each targets a different product surface.
 
 | System | Scope | Curation | Audit trail |
 | --- | --- | --- | --- |
@@ -351,6 +351,20 @@ Three first-party references situate CC's memory system against other enterprise
 **Microsoft Copilot Studio "Memory"** (preview, GitHub Copilot harness) captures user preferences and context automatically during conversation into a per-user, Microsoft-managed folder, applies it on later turns, and exposes a self-service portal where a user can view or delete what's remembered; unused memories expire after 28 days idle ([source][ms-copilot-mem]).
 
 **Grounding Agent Memory** ([Suresh, Mak, Bhatnagar, Methani, Gutierrez Munoz — Microsoft Corporation, submitted 2026-09-10][grounding-agent-mem]) proposes environment-probing curation: a curator agent validates and refreshes stored memories using read-only tools against the live environment, requiring no model retraining. On the CLBench database-task benchmark it reports pass rate improving from 39% to 73% and pass-discounted reward from 8.60 to 22.60, average queries per question dropping from 8.8 to 4.7, and per-task agent cost falling from $3.38 to $1.68; on a second benchmark (APEX, management consulting) all 18 memory comparisons showed positive results, with tool calls down 16–75%. Results held across Claude Sonnet 4.6 and Opus 4.7. The core idea — validate a memory against ground truth before trusting it — has no direct analog in CC's memory system today, where both CLAUDE.md and auto memory are trusted without runtime verification.
+
+### Anthropic's Components of Agent Memory (2026-11-06)
+
+Anthropic's engineering post [The components of agent memory][anthropic-components] (Lance Martin, Engineering, 2026-11-06; read in full 2026-11-20) is Anthropic's own framing of agent memory layers; its experiments run on Managed Agents, not on CC. It separates four layers bottom to top: **transcripts**, **memory notes**, **memory representations** (for example linked wikis) and **injected context** (loaded every session), with "dreaming" as an offline pass that consolidates and corrects them. It excludes weight changes, in-context learning and compaction from "agent memory". CC's `MEMORY.md` is cited as an example of the small injected layer.
+
+Evidence (the post's own experiments, run on Claude Managed Agents; not independently reproduced, model names as in the post):
+
+- **Continual Learning Bench (CL-Bench) 1.0 database task** (the post does not say whether this is the "CLBench" cited for Grounding Agent Memory above): memory raised mean reward for every model listed, e.g. Opus 5.5 0.655 to 0.838 and Sonnet 4.6 0.330 to 0.364 (to 0.641 with a prompt telling it to read and test memory).
+- **Light steering**: a fixed rule such as "record only failures" reduced the memory gain for stronger models; the post recommends saying what memory is for, not how to use it.
+- **Dreaming corrects drift**: in Pokemon Red a wrong note sent Claude off a ledge until a dreaming pass fixed it.
+- **Wikis help multi-document work only**: wiki plus search 61% vs 53% for search alone on a roughly 350,000-file corpus, and 87% vs 73% on the multi-document, judgment or math items (a subset, "more than half" of the questions) of a 24-question merger test (a separate set from the Stainless corpus), with no clear gain on a single-document task and one wiki growing to 1.77x the corpus size.
+- **Shared tables lose facts**: one shared table retained 41 of 57 contract facts, one page per contract 57 of 57.
+
+Relation to this doc: the post's advice to keep the injected layer small matches the 200-line `MEMORY.md` cap and the CLAUDE.md size guidance above, and its dreaming pass is the "dreaming" consolidation row of the [Managed Agents memory table above](#enterprise-agent-memory-beyond-cc); that it resembles the source-derived [Auto-Dream](#auto-dream--background-memory-consolidation-feature-flagged) is my inference. For a non-Anthropic design with hard resident-size caps see [Hermes memory](../../non-cc/agents/hermes-agent-analysis.md#memory-design-compared-with-claude-code).
 
 ## Usage Considerations
 
@@ -484,6 +498,7 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 - [Advanced Context Engineering for Coding Agents][hlyr-ace] — hlyr.dev, Dex, 2025-08-29
 - ["Do Context Files Help Coding Agents?" (arXiv 2607.27250)][khatri-context-ablation] — Khatri, 2026-07-28; two-agent ablation study
 - [Claude Managed Agents memory][cc-managed-mem] — memory-store feature docs
+- [The components of agent memory][anthropic-components] — Anthropic Engineering, 2026-11-06
 - [Microsoft Copilot Studio memory overview][ms-copilot-mem]
 - ["Grounding Agent Memory" (arXiv 2609.11060)][grounding-agent-mem] — Suresh et al., Microsoft, 2026-09-10
 - ["Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (arXiv 2608.11095)][claude-md-growth] — Chakrabarti, submitted 2026-08-11
@@ -511,6 +526,7 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 [cc-extended-ctx-degradation]: CC-extended-context-analysis.md#context-quality-degradation
 [khatri-context-ablation]: https://arxiv.org/abs/2607.27250
 [cc-managed-mem]: https://platform.claude.com/docs/en/managed-agents/memory
+[anthropic-components]: https://www.anthropic.com/research/components-of-agent-memory
 [ms-copilot-mem]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/memory-overview
 [grounding-agent-mem]: https://arxiv.org/abs/2609.11060
 [claude-md-growth]: https://arxiv.org/abs/2608.11095

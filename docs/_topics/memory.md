@@ -6,8 +6,10 @@ Agent memory across the corpus. Pointers only; see [the hub index](README.md).
 |---|---|---|
 | [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) | CC's dual memory system: `CLAUDE.md` plus auto memory | cc-native |
 | [CC-agentic-harness-patterns-analysis.md § Memory and Context](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#category-1-memory-and-context-5-patterns) | Harness patterns for memory and context, incl. tiered memory | cc-native |
+| [CC-memory-system-analysis.md § Anthropic's Components of Agent Memory](../cc-native/context-memory/CC-memory-system-analysis.md#anthropics-components-of-agent-memory-2026-11-06) | Anthropic's four-layer memory model and its Managed Agents experiments | cc-native |
 | [CC-memory-tooling-landscape.md](../cc-community/CC-memory-tooling-landscape.md) | Persistent cross-session memory tools that plug into CC | cc-community |
 | [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure) | Agent memory infrastructure catalog | non-cc |
+| [hermes-agent-analysis.md § Memory Design](../non-cc/agents/hermes-agent-analysis.md#memory-design-compared-with-claude-code) | Hermes Agent memory compared with Claude Code and the § 4 systems | non-cc |
 | [openviking-analysis.md](../non-cc/context-memory/openviking-analysis.md) | Filesystem-based context database with memory extraction | non-cc |
 | [mex-analysis.md](../non-cc/context-memory/mex-analysis.md) | Git-shared, human-approved project memory for coding agents | non-cc |
 | [helixdb-analysis.md](../non-cc/context-memory/helixdb-analysis.md) | Graph-vector database positioned for agent memory | non-cc |

@@ -4,7 +4,7 @@ source: https://github.com/nextlevelbuilder/goclaw
 purpose: Analysis of GoClaw as a multi-tenant AI agent platform with 8-stage execution pipeline and multi-channel messaging.
 platform_scope: [telegram, discord, slack, zalo, feishu, whatsapp]
 created: 2026-04-09
-updated: 2026-06-28
+updated: 2026-11-20
 validated_links: 2026-06-28
 status: source-available
 ---
@@ -77,7 +77,7 @@ provides clear execution model. Anthropic prompt caching support.
 
 **Risks**: CC BY-NC 4.0 license prohibits commercial use without separate
 agreement. Successor to OpenClaw — migration path unclear. Smaller community
-than alternatives (2.4K stars vs Hermes 43K).
+than alternatives (2.4K stars vs Hermes 43K, both counts dated; see the [Hermes analysis](../agents/hermes-agent-analysis.md) for 2026-11-20 figures).
 
 ## Cross-References
 

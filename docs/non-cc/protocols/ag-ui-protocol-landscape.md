@@ -2,7 +2,7 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-11-12
+updated: 2026-11-20
 validated_links: 2026-10-24
 status: research
 ---
@@ -160,14 +160,15 @@ Supported clients per the repo: Claude Desktop (stdio), Claude Code / HTTP clien
 
 **Repo**: [CopilotKit/openbot][openbot-repo] | **Site**: [copilotkit.ai/openbot][openbot-site]
 
-A self-hosted, open-source template for a governed "AI coworker" platform — distinct from the OpenGenerativeUI demo above, aimed at production deployment with policy enforcement rather than a UI-pattern showcase:
+A self-hosted template (MIT app; the memory service is separately licensed, below) for a governed "AI coworker" platform — distinct from the OpenGenerativeUI demo above, aimed at production deployment with policy enforcement rather than a UI-pattern showcase:
 
 - **Governance**: every tool call passes through a single gateway enforcing a **CEL** (Common Expression Language) policy with fail-closed defaults — a missing policy denies by default, and a broken rule refuses rather than opens access. All permitted, refused, and failed actions are logged for audit.
 - **Isolation**: each AI coworker runs in its own containerized environment (browser, files, workspace volume); credentials are stored write-only and never returned via API.
-- **Framework-agnostic via AG-UI**: any agent speaking AG-UI — LangGraph, Mastra, CrewAI, Pydantic AI, or a custom endpoint — registers and gets its own channel; CopilotKit Intelligence supplies durable thread management.
-- **Stack**: React/Vite frontend, Hono API server, PostgreSQL + pgvector, Docker Compose for local and production deployment.
+- **Framework-agnostic via AG-UI**: any AG-UI endpoint can be a Bot; the README lists first-class integrations for Claude Agent SDK, Microsoft Agent Framework, Google ADK, AWS Strands, LangChain, Mastra, Pydantic AI, Agno and CrewAI. CopilotKit Intelligence supplies durable threads, memory and "Automatic Learning".
+- **Newer surface (README, 2026-11-20)**: scheduled routines (15-minute minimum interval), Slack and Microsoft Teams channels in the team edition, human take-over of a Bot's browser at a login or 2FA wall, reusable `/` skills, SSO (Google, Microsoft, Okta, SAML/OIDC), and desktop installers for Mac and Windows.
+- **Stack**: React/Vite frontend, Hono API server, PostgreSQL, Docker Compose and Helm charts; tools via MCP and Composio.
 
-**License**: MIT | **Stars**: 5,483 (verified 2026-09-24). Ships as a clone-and-customize template, not a managed service.
+**License**: MIT for the app; CopilotKit Intelligence (memory, threads) is **separately licensed** (free local license for personal use, paid for production, per the README). **Stars**: 13,018 (`gh api` 2026-11-20; 5,483 on 2026-09-24). Latest release v1.1.1 (2026-11-19). Self-hosted (clone-and-customize, with Helm charts, a team edition with Slack/Teams and desktop installers per the README); no managed service was found in the README. It sits in the same "self-hostable alternative to closed always-on bots" class as the projects in [Hermes: Always-on Teammate Agents](../agents/hermes-agent-analysis.md#always-on-teammate-agents-grok-bot-class).
 
 ## OpenUI (Thesys — Generative UI Language and Renderers)
 
