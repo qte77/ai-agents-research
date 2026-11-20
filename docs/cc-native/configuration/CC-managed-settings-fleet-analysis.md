@@ -12,7 +12,7 @@ status: available
 ## What It Is
 
 Claude Code reads policy from a **managed tier** that sits above user, project and local settings
-(precedence in [CC-env-vars-reference.md § Precedence][env-precedence]). This doc covers how that
+(precedence in [CC-env-vars-reference.md § Configuration Methods][env-precedence]). This doc covers how that
 tier reaches a fleet. What each managed key enforces is documented where the key lives: permission
 locks in [CC-permissions-bypass-analysis.md][perm-bypass], managed hooks and the built-in guard in
 [CC-mods-function-hooks-analysis.md][mods], managed CLAUDE.md in
@@ -27,7 +27,7 @@ locks in [CC-permissions-bypass-analysis.md][perm-bypass], managed hooks and the
 | Server-managed | claude.ai admin console, or a self-hosted Claude apps gateway | Fetched at startup, polled hourly |
 | MDM / OS policy | macOS configuration profile (`com.anthropic.claudecode`) or Windows `HKLM\SOFTWARE\Policies\ClaudeCode` | Startup, then checked every 30 minutes |
 | File | `managed-settings.json` plus optional `managed-settings.d/*.json` drop-ins in a system directory (`/etc/claude-code/` on Linux and WSL) | Startup, reloaded when a file changes |
-| HKCU registry (Windows, WSL) | `HKCU\SOFTWARE\Policies\ClaudeCode` | Startup, then every 30 minutes; used only when no admin source above it is present |
+| HKCU registry (Windows, WSL) | `HKCU\SOFTWARE\Policies\ClaudeCode` | Startup, then every 30 minutes; used only when no admin document is present above it and no host-supplied parent settings supply a restrictive key |
 
 Source: [Deploy managed settings][cc-managed]. Anthropic ships starter MDM templates (Jamf, Iru,
 Intune, Group Policy) in the [claude-code examples][cc-mdm-examples].
@@ -35,8 +35,11 @@ Intune, Group Policy) in the [claude-code examples][cc-mdm-examples].
 **Reach.** Terminal, IDE extensions, the desktop Code tab and Agent SDK sessions read every channel;
 SDK sessions load managed settings even when `settingSources` excludes user and project files.
 Sessions in Anthropic-hosted cloud environments can't see a device's MDM profile or file, so their
-policy must come from server-managed settings. Cowork sessions never fetch server-managed settings,
-and Claude Tag sessions don't receive them either ([Where and when a policy applies][cc-managed-where]).
+policy must come from server-managed settings; a self-hosted environment also reads the managed file in
+its runner image. Cowork sessions never fetch server-managed settings: on the user's machine they read
+the device's MDM policy and managed file, while remote Cowork VMs have no device policy. Claude Tag
+sessions don't receive server-managed settings either, but in a self-hosted environment they read the
+runner image's file ([Where and when a policy applies][cc-managed-where]).
 
 ## Ranking and combining
 
@@ -74,8 +77,8 @@ From [Configure server-managed settings][cc-server-managed]:
 
 **Choosing.** Anthropic's own guidance: endpoint-managed settings give stronger guarantees on
 MDM-enrolled devices, because the OS protects the file from the user; server-managed settings suit
-organizations without MDM and are the only channel that reaches cloud sessions. Many fleets will need
-both.
+organizations without MDM and are the only channel that reaches Anthropic-hosted cloud sessions, so
+an MDM fleet whose developers also run cloud sessions configures server-managed settings as well.
 
 ## Managed-only keys and invalid values
 
@@ -100,9 +103,13 @@ that isn't valid JSON stops Claude Code from starting.
 Managed settings distribute **policy**, not an inventory. The pages read for this doc describe no
 org-level registry of the agents or subagents a fleet runs. Organizations see agent activity through
 telemetry instead: `agent_id` on events and the `agent.name` attribution on cost metrics (see
-[CC-monitoring-telemetry-analysis.md § Cost attribution][telemetry-cost]). `claude agents` (agent view,
-research preview) manages background sessions on one machine; admins can turn it off with
-`disableAgentView`. For how Claude Code compares with the enterprise agent registries (AWS, Google,
+[CC-monitoring-telemetry-analysis.md § Cost attribution][telemetry-cost]). `claude agents` opens
+[agent view][cc-agent-view] (research preview), which manages background sessions on one machine;
+admins can turn it off with `disableAgentView`. Agent lifecycle beyond a session lives elsewhere:
+agents deployed through the Claude Managed Agents API (`/v1/agents`,
+[CC-cowork-plugins-enterprise-analysis.md][cowork-enterprise]), subagents shipped and versioned
+inside plugins from managed marketplaces ([CC-mods-function-hooks-analysis.md][mods]), and agent
+identity in [agent-identity-auth-landscape.md][agent-identity]. For how Claude Code compares with the enterprise agent registries (AWS, Google,
 Microsoft, Salesforce, MCP Registry), see
 [agentic-enterprise-os-landscape.md § Agent registries compared][registries].
 
@@ -121,6 +128,7 @@ Microsoft, Salesforce, MCP Registry), see
 | [Deploy managed settings][cc-managed] | Delivery channels, ranking, `managedSourcesBehavior`, drop-ins, `policyHelper`, `/status` and `claude doctor`, fail-closed keys, managed-only keys (read 2026-11-20) |
 | [Configure server-managed settings][cc-server-managed] | Plans and roles, group configurations, fetch and cache behavior, `forceRemoteSettingsRefresh`, limits (read 2026-11-20) |
 | [Set up Claude Code for your organization][cc-admin-setup] | Admin checklist: what to enforce, usage visibility, verification (read 2026-11-20) |
+| [Agent view][cc-agent-view] | `claude agents`, research preview, local background sessions, `disableAgentView` (read 2026-11-20) |
 | [anthropics/claude-code MDM examples][cc-mdm-examples] | Starter templates for Jamf, Iru, Intune and Group Policy |
 
 [cc-managed]: https://code.claude.com/docs/en/managed-settings
@@ -129,8 +137,11 @@ Microsoft, Salesforce, MCP Registry), see
 [cc-managed-only]: https://code.claude.com/docs/en/managed-settings#keys-only-a-managed-source-can-set
 [cc-server-managed]: https://code.claude.com/docs/en/server-managed-settings
 [cc-admin-setup]: https://code.claude.com/docs/en/admin-setup
+[cc-agent-view]: https://code.claude.com/docs/en/agent-view
+[cowork-enterprise]: ../plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md
+[agent-identity]: ../../sdlc-lcm/agent-identity-auth-landscape.md
 [cc-mdm-examples]: https://github.com/anthropics/claude-code/tree/main/examples/mdm
-[env-precedence]: CC-env-vars-reference.md
+[env-precedence]: CC-env-vars-reference.md#configuration-methods
 [perm-bypass]: ../sandboxing/CC-permissions-bypass-analysis.md
 [mods]: ../plugins-ecosystem/CC-mods-function-hooks-analysis.md
 [memory]: ../context-memory/CC-memory-system-analysis.md

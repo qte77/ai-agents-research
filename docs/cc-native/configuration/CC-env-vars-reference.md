@@ -108,7 +108,6 @@ Standard `OTEL_*` variables (per the [OpenTelemetry specification][otel-spec]) t
 | `OTEL_TRACES_EXPORT_INTERVAL` | `5000` ms | Span batch export interval |
 | `OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE` | `delta` | Set to `cumulative` if backend requires it |
 | `OTEL_RESOURCE_ATTRIBUTES` | — | Custom `key=value` attributes (comma-separated, no spaces in values) on every metric and event, e.g. `team.id`, `cost_center`; see [cost attribution][telemetry-cost-attr] |
-| `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES` | `true` | `false` keeps `OTEL_RESOURCE_ATTRIBUTES` keys in the resource block only, off metric labels |
 
 ### OpenTelemetry Privacy Gates
 
@@ -130,6 +129,7 @@ Toggle metric attributes to trade granularity for storage cost. Source: [monitor
 | `OTEL_METRICS_INCLUDE_SESSION_ID` | `true` | Include `session.id` attribute on metrics |
 | `OTEL_METRICS_INCLUDE_VERSION` | `false` | Include `app.version` attribute on metrics |
 | `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` | `true` | Include `user.account_uuid` and `user.account_id` on metrics |
+| `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES` | `true` | `false` keeps `OTEL_RESOURCE_ATTRIBUTES` keys in the resource block only, off metric datapoints and event attributes |
 
 ### Display & Terminal
 

@@ -64,12 +64,12 @@ Documented building blocks for charging Claude Code spend to people, teams and a
   Each key becomes a label on every metric series, so high-cardinality values raise backend storage
   cost; `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES=false` keeps them in the resource block only
   ([monitoring][cc-monitoring-tags]).
-- **Per agent**: events from a subagent or teammate carry `agent_id` (absent on the main session) and,
-  from v2.1.310, `parent_agent_id`. The `claude_code.api_request` event carries `cost_usd`, so summing
+- **Per agent**: from v2.1.310, events from a subagent carry `agent_id` (absent on main-session and
+  in-process teammate events) and `parent_agent_id` (absent when the parent is the main session). The `claude_code.api_request` event carries `cost_usd`, so summing
   it by `agent_id` gives estimated per-subagent spend. That aggregation is ours; the docs list the
   fields, not the recipe. `agent_id` is never attached to metrics (cardinality), so the
   `claude_code.cost.usage` metric attributes cost to an agent only through `agent.name` (see
-  Attribution Chain above).
+  [Attribution Chain](#attribution-chain-skillpluginmcp) above).
 - **Per user, by billing path** ([costs][cc-costs-tools]): Teams and Enterprise get a spend report in
   org analytics and, on Enterprise, the Enterprise Analytics API; Console (API) organizations get the
   Console dashboard and the Claude Code Analytics API; on Bedrock, Google Cloud's Agent Platform and
@@ -105,7 +105,7 @@ Toggle metric attributes to trade granularity for storage cost:
 
 | Source | Content |
 |---|---|
-| [Claude Code — Monitoring usage][cc-monitoring] | First-party OTel: metrics, logs, events, attribution chain, beta distributed traces, privacy gates, cardinality controls (re-fetched 2026-07-23) |
+| [Claude Code — Monitoring usage][cc-monitoring] | First-party OTel: metrics, logs, events, attribution chain, beta distributed traces, privacy gates, cardinality controls (re-fetched 2026-07-23; cost-attribution facts read 2026-11-20) |
 | [Claude Code — Manage costs][cc-costs-tools] | Usage and cost tools per billing path; the three per-user attribution options on cloud providers (read 2026-11-20) |
 | [Claude apps gateway spend limits][cc-gateway-spend] | Per-user spend caps on a self-hosted gateway |
 | [anthropics/claude-code#53954][gh-53954] | Beta-tracing gap in streaming/Agent-SDK mode (live issue) |
