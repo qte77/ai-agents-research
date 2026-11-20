@@ -101,7 +101,7 @@ parallel workstreams in isolated contexts.
 
 ## Always-on Teammate Agents
 
-Hermes shares a category with products that give each agent its own computer, memory and routines and reach it through chat. Rows are identified first-party; all are fast-moving (checked 2026-11-20). Related coworker-style agents elsewhere in the corpus: [Rowboat](rowboat-analysis.md), [Odysseus](odysseus-analysis.md), [Databricks Genie](databricks-genie-analysis.md).
+Hermes shares a category with products that give each agent its own computer and most of: memory, routines and chat access (not every row states all three). Rows are identified first-party; all are fast-moving (checked 2026-11-20). Related coworker-style agents elsewhere in the corpus: [Rowboat](rowboat-analysis.md), [Odysseus](odysseus-analysis.md), [Databricks Genie](databricks-genie-analysis.md).
 
 | Product | Origin | Open? | Memory / notes (evidence) |
 |---|---|---|---|
@@ -111,11 +111,11 @@ Hermes shares a category with products that give each agent its own computer, me
 | [OpenMausBot][openmaus] | milind-soni | Apache-2.0 (`enterprise/` source-available), 26,027 stars | Local-first desktop chat over your `claude`/`codex`/`grok` CLIs; per-bot thread memory; permission broker (README) |
 | [Tucano][tucano] | eduwxyz | Apache-2.0, 439 stars | Desktop team of agents over installed harnesses (incl. Hermes, Claude Code); user-approvable memory, MCP gateway with approvals (README) |
 | [OpenBot][openbot] | CopilotKit | MIT (memory service separately licensed), 13,018 stars | See [AG-UI landscape](../protocols/ag-ui-protocol-landscape.md#openbot-copilotkit-governed-ai-coworker-template) |
-| [Claude Duet][duet] | Anthropic | No; research preview, US waitlist for Pro/Max/Ultra | Own cloud VM with browser; reuses your Claude account memory, skills and connectors; morning brief; approvals before sending or paying (vendor page + [announcement][duet-news], 2026-11-20) |
-| [OpenAI dots][dots] | OpenAI | No; hosted in ChatGPT, first dot included in Pro and Business Premium | Announced 2026-09-29, gradual rollout; own cloud computer and browser; learns preferences over time; reached via ChatGPT apps, Slack, Teams (vendor post) |
-| [Cue][cue] | Manus | Not stated; apps for macOS, mobile, web | Each agent gets its own email, phone number, wallet and computer, plus routines; chat via Apple Messages and WhatsApp; memory and pricing not stated (vendor page) |
+| [Claude Duet][duet] | Anthropic | Hosted; no source release stated; research preview, US waitlist for Pro/Max/Ultra | Own cloud VM with browser; iOS and Android apps and claude.ai; reuses your Claude account memory, skills and connectors; morning brief; approvals before sending or paying (vendor page; [announcement][duet-news], announced 2026-10-21) |
+| [dots][dots] | OpenAI | Hosted in ChatGPT; no source release stated; first dot included in Pro and Business Premium | Announced 2026-09-29, beginning to roll out with more users planned; Enterprise users (including Edu and Healthcare) can try the beta; own cloud computer and browser; learns preferences over time (no routines stated); reached via ChatGPT apps, Slack, Teams (vendor post) |
+| [Cue][cue] | Manus | Not stated; apps for web, macOS, Windows, iOS and Android | Each agent gets its own email, phone number, wallet and computer, plus routines; chat via Apple Messages and WhatsApp; you control which actions need approval (FAQ); memory and pricing not stated (vendor page) |
 
-Hermes differs by being self-improving (skill creation) and by its much larger adoption (264,871 stars, `gh api` 2026-11-20, v0.23.3); the rest compete on governance, approvals and bring-your-own-agent.
+Hermes differs by being self-improving (skill creation) and by larger adoption than the open-source rows (264,871 stars, `gh api` 2026-11-20, v0.23.3); the rest compete on governance, approvals and bring-your-own-agent. Newer in the hosted rows: built-in agent identity (Cue: email, phone, wallet) and reuse of the user's existing account (Duet).
 
 ## Adoption Decision
 
