@@ -147,7 +147,7 @@ export ANTHROPIC_FOUNDRY_BASE_URL="https://my-resource.services.ai.azure.com/ant
 
 ([source][cc-settings])
 
-Foundry as Microsoft's agent platform (agent types, tools, Claude model hosting and billing) is covered in [microsoft-365-copilot-analysis.md § Foundry as an agent platform](../../non-cc/agents/microsoft-365-copilot-analysis.md#foundry-as-an-agent-platform).
+Foundry as Microsoft's agent platform (agent types, tools, Claude model hosting and billing) is covered in [microsoft-365-copilot-analysis.md § Foundry as an agent platform](../../non-cc/agents/microsoft-365-copilot-analysis.md#foundry-as-an-agent-platform); Foundry roles, identity and licences in [§ Roles, identity and licences](../../non-cc/agents/microsoft-365-copilot-analysis.md#roles-identity-and-licences).
 
 ### Infomaniak AI (EU-Sovereign, OpenAI-Compatible)
 

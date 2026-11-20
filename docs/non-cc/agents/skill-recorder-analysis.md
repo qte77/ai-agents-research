@@ -3,7 +3,7 @@ title: Microsoft Skill Recorder Analysis
 source: https://github.com/microsoft/skill-recorder
 purpose: Analysis of Microsoft's Skill Recorder, a desktop app that turns a recorded (or imported) screen-capture session into a reusable agent Skill or scheduled Automation via the GitHub Copilot CLI.
 created: 2026-11-12
-updated: 2026-11-12
+updated: 2026-11-20
 validated_links: 2026-11-12
 status: assess
 ---
@@ -12,7 +12,9 @@ status: assess
 last pushed 2026-11-04 (`gh api`, re-confirmed 2026-11-12 — no new push since). Note: the repo's
 one-line GitHub description says the GitHub **Copilot SDK**; the README's own body text says the
 **Copilot CLI** does the reconstruction, and ships with the app — the README is treated as
-authoritative per this corpus's convention of preferring body text over a short description.
+authoritative per this corpus's convention of preferring body text over a short description. The
+Copilot SDK embeds the same engine as the Copilot CLI, so the two descriptions are compatible
+([github-copilot-cli-analysis.md § Copilot SDK](github-copilot-cli-analysis.md#copilot-sdk-embed-the-clis-agent-engine), 2026-11-20).
 
 ## What It Is
 

@@ -36,6 +36,9 @@ The agent has its own identity, independent of any human.
 - **Microsoft Entra Agent ID** (GA April 2026) — an agent identity is a dedicated **service principal**
   in Entra ID (a genuine non-human identity that may also be "authorized to impersonate" a user);
   agents built in Azure AI Foundry / Copilot Studio auto-register. [learn.microsoft.com][entra].
+  Foundry's current docs describe it as a specialised Entra identity type with a parent
+  "blueprint" per agent; roles and tool authentication are in
+  [microsoft-365-copilot-analysis.md § Roles, identity and licences](../non-cc/agents/microsoft-365-copilot-analysis.md#roles-identity-and-licences) (read 2026-11-20).
 - **ERC-8004 "Trustless Agents"** (Draft EIP) — on-chain Identity / Reputation / Validation registries
   (ERC-721 identity handle → off-chain agent registration JSON) for cross-org agent discovery/trust
   without pre-existing trust. Contracts deployed, EIP still Draft. [eips.ethereum.org][erc8004].

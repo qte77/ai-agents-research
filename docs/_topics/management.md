@@ -39,6 +39,8 @@ and lifecycle. Pointers only; see [the hub index](README.md).
 |---|---|---|
 | [aws-agent-stack-analysis.md](../non-cc/agents/aws-agent-stack-analysis.md) | AWS: AgentCore, Bedrock Agents, Amazon Quick; IAM roles, identity, licences | non-cc |
 | [google-cloud-agent-stack-analysis.md](../non-cc/agents/google-cloud-agent-stack-analysis.md) | Google Cloud: Agent Platform, ADK, Gemini Enterprise; roles, identity, licences | non-cc |
+| [microsoft-365-copilot-analysis.md § Roles, identity and licences](../non-cc/agents/microsoft-365-copilot-analysis.md#roles-identity-and-licences) | Azure/Foundry: RBAC roles, managed identity, Entra agent identity, licences | non-cc |
+| [oracle-cloud-agent-stack-analysis.md](../non-cc/agents/oracle-cloud-agent-stack-analysis.md) | Oracle: OCI Generative AI Agents, Fusion AI Agent Studio; IAM, licences | non-cc |
 
 ## Identity, licences and lifecycle
 
