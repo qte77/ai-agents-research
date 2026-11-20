@@ -4,7 +4,7 @@ source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface.
 platform_scope: [cli, cloud]
 created: 2026-06-11
-updated: 2026-11-18
+updated: 2026-11-20
 validated_links: 2026-10-24
 status: proprietary
 ---
@@ -83,6 +83,35 @@ billing pages checked 2026-10-24; a [legacy request-based billing page][copilot-
 `winget install GitHub.Copilot` · `npm install -g @github/copilot`. Then run
 `copilot` (Linux/macOS/Windows).
 
+## Copilot SDK (embed the CLI's agent engine)
+
+The [Copilot SDK repository][copilot-sdk] (MIT, "Multi-platform SDK for integrating GitHub Copilot
+Agent into apps and services"; created 2026-01-14, formerly under the `github` organisation, now
+`microsoft/copilot-sdk`) exposes "the same engine behind Copilot CLI" as a library, so this doc is
+its home: the SDK is the programmable form of the harness described above, not a separate product
+(re-read 2026-11-20 at the README and `gh api`).
+
+- **Rename in progress.** The README banner says the GitHub Copilot SDK "is becoming Microsoft
+  Copilot SDK", the interface to the Microsoft Copilot harness, with package names that may still
+  say GitHub during the transition; the harness naming is tracked in
+  [microsoft-365-copilot-analysis.md](microsoft-365-copilot-analysis.md#three-things-called-harness).
+- **Languages:** Python, TypeScript, Go, .NET, Java and Rust. The runtime is a native component
+  driven over JSON-RPC, loaded in-process by default, with spawned-process and standalone-server
+  modes for isolation; the README says in-process hosting gives no crash isolation or sandbox.
+- **Auth and licence:** a GitHub Copilot subscription is required, including the free tier, unless
+  you bring your own key (BYOK) from a supported model provider, where no GitHub authentication is
+  needed. BYOK is key-based only; the README says Entra ID, managed identities and third-party
+  identity providers are not supported there. Usage counts against the same allowance as the CLI.
+  Non-BYOK auth paths: a signed-in CLI user, an OAuth GitHub App token, or
+  `COPILOT_GITHUB_TOKEN` / `GH_TOKEN` / `GITHUB_TOKEN`.
+- **Tools by default:** the CLI's first-party tools are exposed, similar to `--allow-all`; the
+  application's permission handler decides each call, so an embedding app owns the approval policy.
+- **Status (2026-11-20):** latest stable release v2.0.1 (2026-11-18); v2.0.2 pre-releases on
+  2026-11-19; repository pushed 2026-11-19. Whether the SDK is "generally available" is not stated
+  on the README.
+- Skill Recorder's GitHub description cites a "Copilot SDK"; see
+  [skill-recorder-analysis.md](skill-recorder-analysis.md).
+
 ## Adoption Decision
 
 | Dimension | Assessment |
@@ -144,8 +173,10 @@ the hook and ends the turn anyway" ([hooks][goal-copilot-hooks]).
 | [GA changelog 2026-02-25][copilot-cli-ga] | GA date, eligible plans, headline features |
 | [Copilot CLI custom instructions][copilot-cli-instructions] | Instruction files incl. AGENTS.md / CLAUDE.md / GEMINI.md (checked 2026-10-24) |
 | [Using Copilot CLI][copilot-cli-use] | AI Credits in `/usage` (checked 2026-10-24) |
+| [microsoft/copilot-sdk][copilot-sdk] | README, MIT licence, languages, auth and BYOK, rename notice, releases (2026-11-20) |
 
 [copilot-cli-repo]: https://github.com/github/copilot-cli
+[copilot-sdk]: https://github.com/microsoft/copilot-sdk
 [copilot-cli-license]: https://github.com/github/copilot-cli/blob/main/LICENSE.md
 [copilot-cli-docs]: https://docs.github.com/en/copilot/how-tos/copilot-cli
 [copilot-cli-overview]: https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview
