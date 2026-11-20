@@ -91,9 +91,8 @@ Sources and what is confirmed:
   [Copilot Studio][m365-pricing-cs]) showed a $30.00 seat and a $200-per-pack, 25,000-credit pack. These were not
   confirmed from raw text on 2026-11-20 (the pages refuse non-browser fetchers), no currency was seen, and they are not
   used in the math below.
-- **Salesforce (WebFetch summary of the [pricing page][agentforce-pricing], 2026-11-20, consistent with the
-  analysis's 2026-11-12 read):** "$500" per 100,000 Flex Credits and a "$5" Agentforce User License that "requires Flex
-  Credits" (metered agent usage for employees). The 20-credit action figure comes from the
+- **Salesforce ([pricing page][agentforce-pricing], raw text read 2026-11-20, consistent with the
+  analysis's 2026-11-12 read):** "$500 per 100k Credits" and a "$5 USD/User/Month (Requires Flex Credits)" Agentforce User License (metered agent usage for employees). The 20-credit action figure comes from the
   [rate card PDF][sf-rate-card] ("Updated as of November 3, 2026": Standard/Custom Action 20, sandbox 16), not from
   the pricing page.
 
@@ -192,7 +191,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 
 | Source | Content |
 |---|---|
-| [M365 Copilot pricing][m365-pricing-ent], [Copilot Studio pricing][m365-pricing-cs], [billing rates][cs-billing-rates], [Agentforce pricing][agentforce-pricing], [Flex Credits rate card][sf-rate-card] | Rates for the worked example; Learn billing rates and the rate card confirmed 2026-11-20, pricing pages via WebFetch summary only |
+| [M365 Copilot pricing][m365-pricing-ent], [Copilot Studio pricing][m365-pricing-cs], [billing rates][cs-billing-rates], [Agentforce pricing][agentforce-pricing], [Flex Credits rate card][sf-rate-card] | Rates for the worked example; Learn billing rates, the rate card and the Salesforce pricing page confirmed from raw text 2026-11-20; Microsoft pricing pages via WebFetch summary only |
 | [Salesforce Agentforce (news)][agentforce] | Agentforce 360 "digital labor" platform; per-action/Flex-Credit billing |
 | [salesforce/einstein-platform][einstein] | LLM Open Connector spec (Apache-2.0) — the OSS-adjacent connector piece |
 | [Microsoft Copilot Studio overview][copilot-studio] | "Platform for building and managing agents"; declarative + autonomous agents |
