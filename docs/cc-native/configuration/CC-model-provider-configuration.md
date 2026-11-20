@@ -3,7 +3,7 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/env-vars, https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration, https://ollama.com/blog/claude, https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models, https://www.infomaniak.com/en/hosting/ai-services/open-source-models
 purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-11-19
+updated: 2026-11-20
 validated_links: 2026-11-09
 status: reference
 ---
@@ -120,6 +120,9 @@ export CLAUDE_CODE_USE_BEDROCK=true
 
 ([source][cc-settings])
 
+AWS's agent stack (AgentCore, Bedrock Agents, Amazon Quick; roles, identity, licences) is covered in
+[aws-agent-stack-analysis.md](../../non-cc/agents/aws-agent-stack-analysis.md).
+
 ### Google Vertex AI
 
 ```bash
@@ -128,6 +131,9 @@ export CLAUDE_CODE_USE_VERTEX=true
 ```
 
 ([source][cc-settings])
+
+Google Cloud's agent stack (Agent Platform, formerly Vertex AI; roles, identity, licences) is covered in
+[google-cloud-agent-stack-analysis.md](../../non-cc/agents/google-cloud-agent-stack-analysis.md).
 
 ### Microsoft Azure Foundry
 

@@ -3,7 +3,7 @@ title: Agent Identity, Authentication & Personhood Landscape
 purpose: Survey of how agents get identity and authorization, and how human-vs-agent is proven — the "who may act, and how is it proven" layer, distinct from CC-local runtime permissions.
 category: landscape
 created: 2026-07-08
-updated: 2026-11-18
+updated: 2026-11-20
 validated_links: 2026-10-24
 status: assess
 ---
@@ -53,6 +53,10 @@ The agent has its own identity, independent of any human.
   `sam-one` bundles all three for single-machine setups. Pre-1.0 per its own README.
   ⚠️ The repo's README and GitHub description do not expand "SAM" — treat "Sovereign
   Agent Mesh" as an unconfirmed gloss, not a first-party name.
+- **Cloud agent identities** — AWS AgentCore Identity (inbound JWT from any OIDC IdP, outbound OAuth
+  credential vault) and Google Cloud's Agent Identity (per-agent principal, GA 2026-04-22) are covered
+  per cloud in [aws-agent-stack-analysis.md § Identity and IdP integration](../non-cc/agents/aws-agent-stack-analysis.md#identity-and-idp-integration)
+  and [google-cloud-agent-stack-analysis.md § Identity and IdP integration](../non-cc/agents/google-cloud-agent-stack-analysis.md#identity-and-idp-integration).
 
 ## 2. Authorize the agent on behalf of a human (delegated, scoped, auditable)
 
