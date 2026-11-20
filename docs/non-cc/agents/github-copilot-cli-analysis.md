@@ -1,7 +1,7 @@
 ---
 title: GitHub Copilot CLI Analysis
 source: https://github.com/github/copilot-cli
-purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface.
+purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface, plus the Copilot SDK that embeds the same engine.
 platform_scope: [cli, cloud]
 created: 2026-06-11
 updated: 2026-11-20
@@ -87,9 +87,9 @@ billing pages checked 2026-10-24; a [legacy request-based billing page][copilot-
 
 The [Copilot SDK repository][copilot-sdk] (MIT, "Multi-platform SDK for integrating GitHub Copilot
 Agent into apps and services"; created 2026-01-14, formerly under the `github` organisation, now
-`microsoft/copilot-sdk`) exposes "the same engine behind Copilot CLI" as a library, so this doc is
-its home: the SDK is the programmable form of the harness described above, not a separate product
-(re-read 2026-11-20 at the README and `gh api`).
+`microsoft/copilot-sdk`) exposes "the same engine behind Copilot CLI" as a library. It sits in this
+doc because it is the programmable form of the harness described above (re-read 2026-11-20 at the
+README and `gh api`).
 
 - **Rename in progress.** The README banner says the GitHub Copilot SDK "is becoming Microsoft
   Copilot SDK", the interface to the Microsoft Copilot harness, with package names that may still
@@ -107,8 +107,12 @@ its home: the SDK is the programmable form of the harness described above, not a
 - **Tools by default:** the CLI's first-party tools are exposed, similar to `--allow-all`; the
   application's permission handler decides each call, so an embedding app owns the approval policy.
 - **Status (2026-11-20):** latest stable release v2.0.1 (2026-11-18); v2.0.2 pre-releases on
-  2026-11-19; repository pushed 2026-11-19. Whether the SDK is "generally available" is not stated
-  on the README.
+  2026-11-19; repository pushed 2026-11-19. The README states "The Microsoft Copilot SDK is
+  generally available and follows semantic versioning" ([README][copilot-sdk]).
+- **Licence scope:** the repository is MIT, but the README does not say whether the MIT licence
+  also covers the native runtime the SDK loads (it describes a separate runtime component), so
+  whether the CLI engine itself is open for reuse is unclear. Check the runtime package's own
+  licence before relying on it.
 - Skill Recorder's GitHub description cites a "Copilot SDK"; see
   [skill-recorder-analysis.md](skill-recorder-analysis.md).
 
@@ -121,16 +125,16 @@ its home: the SDK is the programmable form of the harness described above, not a
 | **Extensibility** | MCP (GitHub server default), custom agents, plugins, LSP |
 | **Permission model** | Preview-every-action → plan/autopilot → `--yolo`; local/cloud sandbox |
 | **Maturity** | GA 2026-02-25, actively released (v1.0.61) |
-| **License** | **Proprietary** — no modification, no standalone redistribution |
-| **Cost** | Copilot Pro / Pro+ / Business / Enterprise; usage billed in GitHub AI Credits |
+| **License** | **Proprietary** (CLI) — no modification, no standalone redistribution; the SDK repository is MIT, runtime licence unclear ([SDK section](#copilot-sdk-embed-the-clis-agent-engine)) |
+| **Cost** | Copilot Pro / Pro+ / Business / Enterprise; usage billed in GitHub AI Credits. The SDK also works on the Copilot free tier (limited usage) per its README, or with your own model key |
 
 **Strengths**: Same agentic harness as the Copilot coding agent — consistent
 behavior across CLI and cloud. Reuses existing GitHub auth, billing, and MCP
 server (lowest onboarding friction for orgs already on Copilot). Strong
 permission/sandbox model. Multi-provider model choice.
 
-**Risks**: **Proprietary license** — cannot fork, embed, or self-host (unlike
-Aider/Kilo/OpenCode). Subscription + AI-credit allowance.
+**Risks**: **Proprietary CLI license** — cannot fork or self-host the CLI (unlike
+Aider/Kilo/OpenCode); embedding goes through the MIT-licensed SDK, whose runtime licence is unclear. Subscription + AI-credit allowance.
 Business/Enterprise use requires admin enablement. PAT auth keys
 off `GH_TOKEN`/`GITHUB_TOKEN` — watch for env-var shadowing in CI.
 
