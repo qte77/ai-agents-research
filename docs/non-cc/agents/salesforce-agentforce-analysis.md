@@ -2,7 +2,7 @@
 title: Salesforce Agentforce 360 Analysis — Claude on Bedrock, Agentforce Registry, Agent Script, Pricing
 purpose: First-party fact-check of Salesforce Agentforce 360 (platform scope, Claude via Amazon Bedrock inside the Salesforce trust boundary, Agentforce Registry / MuleSoft Agent Fabric, Agent Script / Agentforce DX, Flex Credits pricing, EU Operating Zone, data-masking behavior for agents; the 2026-11-17 Copilotforce announcement and how Microsoft's Salesforce connections differ; AgentExchange, Einstein naming lineage, role products, licences and roles) against Salesforce's own documentation, press releases, and rate card.
 created: 2026-11-12
-updated: 2026-11-18
+updated: 2026-11-20
 validated_links: 2026-11-18
 status: assess
 ---
@@ -357,7 +357,7 @@ direct A2A support is not settled across Salesforce's own first-party pages chec
   workaround to expose an agent as an A2A server instead.
 - MuleSoft's own A2A-bridge documentation agrees with that premise: "Salesforce Agentforce agents and
   Microsoft Copilot Studio agents, aren't A2A-compliant on their own" [a2a-bridge]. For Agentforce
-  specifically, "the Bridge translates A2A to the Agentforce Agent API" [a2a-bridge] — and on that
+  specifically, the bridge table row reads "Bridge translates A2A to the Agentforce Agent API" [a2a-bridge] — and on that
   path, "The Agentforce API doesn't support push notifications" [a2a-bridge].
 - Salesforce's own Agentforce interoperability guide contradicts both of the above: "Agentforce A2A
   Outbound is the native way for Agentforce agents to collaborate directly with a third party agent"
@@ -710,7 +710,7 @@ four as background context, not as verified facts of this analysis.
 | [Agentforce DX guide][agent-dx] | CLI/VS Code workflow; agents as metadata; retrieve/deploy/activate/test |
 | [MuleSoft Agent Fabric deep dive][mulesoft-fabric] | Agent Registry/Broker/Governance/Visualizer component descriptions; MCP + A2A |
 | [Agentic patterns recipe][agentic-patterns] | "In the absence of direct A2A support on Agentforce Agents" |
-| [MuleSoft A2A bridge guide][a2a-bridge] | "Salesforce Agentforce agents ... aren't A2A-compliant on their own"; bridge mechanics; no push notifications |
+| [MuleSoft A2A bridge guide][a2a-bridge] | Page moved from `/general/exp-services-create-a2a-bridge` to `/agent-fabric/services-create-a2a-bridge` (old URL redirects; re-read 2026-11-20, quotes unchanged); "Salesforce Agentforce agents ... aren't A2A-compliant on their own"; bridge mechanics; no push notifications |
 | [Agentforce interoperability guide][interop-guide] | "Agentforce A2A Outbound is the native way..."; A2A Inbound description — contradicts the two sources above |
 | [Manage external MCP servers (API Catalog ConnectAPI)][mcp-registry] | Agentforce Registry mechanics; tool-poisoning security warning; allowlist sync states |
 | [Winter '27 platform release post][winter27-blog] | 2026-10-13; MCP Risk Score; "264" release numbering; blanket GA policy |
@@ -773,7 +773,7 @@ four as background context, not as verified facts of this analysis.
 [agent-dx]: https://developer.salesforce.com/docs/ai/agentforce/guide/agent-dx.html
 [mulesoft-fabric]: https://architect.salesforce.com/fundamentals/mulesoft-agent-fabric-deep-dive
 [agentic-patterns]: https://architect.salesforce.com/fundamentals/agentic-patterns
-[a2a-bridge]: https://docs.mulesoft.com/general/exp-services-create-a2a-bridge
+[a2a-bridge]: https://docs.mulesoft.com/agent-fabric/services-create-a2a-bridge
 [interop-guide]: https://www.salesforce.com/agentforce/resources/interoperability-guide/
 [mcp-registry]: https://developer.salesforce.com/docs/platform/api-catalog-connectapi/guide/manage-external-mcp-servers.html
 [winter27-blog]: https://www.salesforce.com/blog/platform-winter-27-release/
