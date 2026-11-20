@@ -18,6 +18,11 @@ lives in the linked docs.
 | [harness.md](harness.md) | The loop around the model: orchestration, tools, sandboxes, self-improving harnesses |
 | [long-running.md](long-running.md) | Hands-off, offloaded, multi-hour or scheduled agent work: durability, resume, remote execution |
 | [cost.md](cost.md) | Token usage and spend: cost drivers, levers that lower them, measurement tools |
+| [evals-benchmarks.md](evals-benchmarks.md) | Eval methods and judges, benchmark catalogues and validity, building a benchmark, domain benchmarks |
+| [security.md](security.md) | Threat models, prompt injection, guardrails and permissions, sandboxes, offensive-security agents |
+| [data.md](data.md) | Database access and text-to-SQL, lakehouses, semantic layers and catalogs, graph and vector stores |
+| [agentic-web.md](agentic-web.md) | Browser and computer-use agents, fetching and scraping, agent identity, access and payments |
+| [management.md](management.md) | Agent management: fleet policy, registries, cost attribution, identity, licences, lifecycle |
 
 To score the tools behind these hubs, use the [agent substrate rubric](../sdlc-lcm/agent-substrate-rubric.md) (shared, distributed, reproducible, adaptable, versionable, traceable).
 The scored rows are read together in the [agent substrate reference architecture](../sdlc-lcm/agent-substrate-reference-architecture.md) (evidence matrix per subject and property, layers, open cells).

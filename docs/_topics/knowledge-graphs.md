@@ -24,4 +24,4 @@ see [the hub index](README.md).
 | [agent-frameworks-infrastructure-landscape.md § GraphRAG vs vector RAG and KG construction evidence](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence) | GraphRAG vs vector RAG evidence, KG construction quality, provenance of LLM-written edges; hypergraph vs graph evidence (authors' claims) | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Ontology generation and ontology-constrained extraction](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction) | LLM-generated ontologies and extraction constrained by an ontology (Text2KGBench and others) | non-cc |
 
-Related hubs: [memory.md](memory.md), [rag.md](rag.md), [visualization.md](visualization.md).
+Related hubs: [memory.md](memory.md), [rag.md](rag.md), [visualization.md](visualization.md), [data.md](data.md).

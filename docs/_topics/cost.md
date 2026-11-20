@@ -67,4 +67,4 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 | [CC-usage-tooling-landscape.md § Optimization Rules](../cc-community/CC-usage-tooling-landscape.md#optimization-rules) | CodeBurn's waste-detection rules | cc-community |
 | [CC-usage-tooling-landscape.md](../cc-community/CC-usage-tooling-landscape.md) | ccusage, Claude-Code-Usage-Monitor, cc-costline | cc-community |
 
-Related hubs: [context.md](context.md), [harness.md](harness.md), [long-running.md](long-running.md).
+Related hubs: [context.md](context.md), [harness.md](harness.md), [long-running.md](long-running.md), [management.md](management.md).
