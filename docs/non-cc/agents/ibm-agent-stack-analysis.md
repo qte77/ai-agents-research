@@ -68,7 +68,7 @@ ADK docs site and the pricing page were readable.
 - **A2A server role:** the ADK API reference for the "supported A2A protocol versions" call ([page][adk-a2av],
   read 2026-11-20) says the client role is implemented and the server role is "not yet implemented"
   (the call returns HTTP 501 for `role=server`). That is documented, but it is an API-reference
-  description of the server API with no stated ADK or product version, so it may lag the product; treat
+  description of the server API with no stated ADK or product version (its OpenAPI block shows `version: 0.1.0`), so it may lag the product; treat
   "no Orchestrate-agent A2A endpoint" as the documented position, not a re-tested one.
 
 ## Identity, IdP and least privilege
@@ -114,7 +114,7 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
 |---|---|
 | Runtime | SaaS on AWS and IBM Cloud, AWS GovCloud (US), on-premises; local Developer Edition (needs a licence) |
 | Claude availability | claude-sonnet-4-6 via AWS Bedrock, public preview, SaaS tenants only (not EU, HIPAA, GovCloud, Developer Edition); BYO Anthropic key possible (documented) |
-| MCP / A2A | MCP toolkits (index entry only); A2A external-agent client, 1.0.0 provider in ADK 2.20.0 (documented); A2A server role documented as not yet implemented (API reference, undated) |
+| MCP / A2A | MCP toolkits (index entry only); A2A external-agent client (1.0.0 provider type in ADK 2.20.0, documented); A2A server role documented as not yet implemented (API reference, undated) |
 | Memory | Agentic SDK `/memories` APIs for custom agents (documented); native-agent memory unverified |
 | Agent identity and IdP | `ibm_iam`/`mcsp`/`cpd` auth; per-tool connections (OAuth, OBO SSO); no distinct agent-identity object found; workforce SSO/IdP unverified |
 | Least-privilege roles | Not confirmed: IBM Cloud IAM role pages (ibm.com/docs, cloud.ibm.com/docs) are JS-rendered and were not read, 2026-11-20 |
