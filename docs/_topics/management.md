@@ -37,10 +37,13 @@ and lifecycle. Pointers only; see [the hub index](README.md).
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
+| [cloud-agent-platforms-landscape.md](../non-cc/infrastructure/cloud-agent-platforms-landscape.md) | Six cloud agent stacks compared in one dated table (no prices) | non-cc |
 | [aws-agent-stack-analysis.md](../non-cc/agents/aws-agent-stack-analysis.md) | AWS: AgentCore, Bedrock Agents, Amazon Quick; IAM roles, identity, licences | non-cc |
 | [google-cloud-agent-stack-analysis.md](../non-cc/agents/google-cloud-agent-stack-analysis.md) | Google Cloud: Agent Platform, ADK, Gemini Enterprise; roles, identity, licences | non-cc |
 | [microsoft-365-copilot-analysis.md § Roles, identity and licences](../non-cc/agents/microsoft-365-copilot-analysis.md#roles-identity-and-licences) | Azure/Foundry: RBAC roles, managed identity, Entra agent identity, licences | non-cc |
 | [oracle-cloud-agent-stack-analysis.md](../non-cc/agents/oracle-cloud-agent-stack-analysis.md) | Oracle: OCI Generative AI Agents, Fusion AI Agent Studio; IAM, licences | non-cc |
+| [ibm-agent-stack-analysis.md](../non-cc/agents/ibm-agent-stack-analysis.md) | IBM: watsonx Orchestrate and ADK; connections, MAU plans | non-cc |
+| [alibaba-cloud-agent-stack-analysis.md](../non-cc/agents/alibaba-cloud-agent-stack-analysis.md) | Alibaba Cloud: Model Studio, AgentRun, Agent Identity; RAM policies, licences | non-cc |
 
 ## Identity, licences and lifecycle
 
