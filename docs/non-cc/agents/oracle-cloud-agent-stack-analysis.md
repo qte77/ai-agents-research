@@ -94,8 +94,7 @@ AI Agent Studio uses Fusion Applications' own role model, not OCI IAM [aas-acces
 | Fusion custom AI (fully custom agents) | Planned: the page says custom AI "will be delivered as a separately priced offering" and "will use" seat-based and employee-based pricing (marked "Planned" there). The boundary between embedded and custom use is not documented on pages read in this pass | [fusion-custom-ai] |
 | OCI Generative AI Agents and Enterprise AI Agents | OCI service consumption; the billing basis was not read in this pass (unverified) | n/a |
 
-A community thread asks Oracle to clarify embedded versus custom AI licensing [aas-community]
-(secondary; a question, not an answer). Practical reading, per Oracle's statements and not independently verified: embedded agents need no
+Practical reading, per Oracle's statements and not independently verified: embedded agents need no
 extra licence; teams that build fully custom agents should confirm the custom-AI entitlement with
 Oracle before assigning roles (see the caution above).
 
@@ -177,7 +176,6 @@ Oracle before assigning roles (see the caution above).
 | [Components in A2A (26B)][aas-a2a] | Agent card and registry |
 | [AI Agent Studio expansion, 2025-10-15][aas-oct25] | LLM families, MCP, A2A cards, credential store |
 | [Fusion custom AI page][fusion-custom-ai] | Embedded versus custom AI licence basis (page dated 2025-04-29, edited later) |
-| [Community thread on licensing][aas-community] | Secondary: open licensing question |
 
 [oci-agents]: https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/overview.htm
 [oci-agents-iam]: https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/iam-policies.htm
@@ -192,4 +190,3 @@ Oracle before assigning roles (see the caution above).
 [aas-a2a]: https://docs.oracle.com/en/cloud/saas/fusion-ai/26b/aiaas/components-in-a2a.html
 [aas-oct25]: https://www.oracle.com/news/announcement/ai-world-oracle-expands-ai-agent-studio-for-fusion-applications-with-new-marketplace-llms-and-vast-partner-network-2025-10-15/
 [fusion-custom-ai]: https://www.oracle.com/applications/fusion-ai/custom-ai/
-[aas-community]: https://community.oracle.com/customerconnect/discussion/928484/ai-agent-studio-clarification-needed-on-licensing-for-ai-agent-studio-embedded-vs-custom-ai
