@@ -4,7 +4,7 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-19
+updated: 2026-11-20
 validated_links: 2026-11-19
 ---
 
@@ -64,7 +64,7 @@ and the gateway. It is a read-only mirror of `packages/hermes-adapter` in Runtyp
 2026-09-28). Content capture is off by default (IDs, model names, token usage, timings and status only),
 and `RUNTYPE_OTEL_ENDPOINT` points it at any OTLP/HTTP traces URL. Its README states the limits: a trace
 covers one turn, not a whole session; auxiliary model calls and subagent internals are excluded; and on
-Hermes v0.21.4 a terminal provider error can hold a turn's trace until process exit (5-second flush
+Hermes v0.21.4 (as observed at the time; latest is v0.23.3, 2026-11-20) a terminal provider error can hold a turn's trace until process exit (5-second flush
 budget, leftovers dropped). [`persona`][runtype-persona] (249★, pushed 2026-09-28) is a VanillaJS AI chat
 widget (`@runtypelabs/persona`) with [WebMCP](../agents/browser-agents-landscape.md#webmcp) page tools, tool-call visualization and approval gates for any
 SSE backend. It is a UI layer rather than a harness, so it is not scored.
@@ -332,6 +332,7 @@ citation-grounded PDF Q&A agent running on Ollama.
 Evidence from arXiv abstract pages read 2026-11-19 (full texts not re-read; the abstracts give no headline numbers, so none are quoted).
 
 - **No blanket winner.** The [GraphRAG-Bench][graphrag-bench] abstract cites "recent studies" reporting that GraphRAG "frequently underperforms vanilla RAG on many real-world tasks" (a claim it attributes to other work, not its own result) and benchmarks fact retrieval, complex reasoning, contextual summarization and creative generation across the whole pipeline (graph construction, retrieval, generation) to find when graphs help. [RAG vs. GraphRAG][rag-vs-graphrag] compares both under one unified protocol on QA and query-based summarization and reports distinct strengths per task, with selection or integration strategies giving "consistent performance improvements" (authors' claim). Practical consequence (inference): evaluate on your own corpus and question mix, and budget for the index build, which the GraphRAG bullets above flag as compute-heavy.
+- **Hypergraph vs graph (authors' claims only).** A knowledge graph edge joins two nodes; a hyperedge joins any number, so one n-ary fact or one episode stays a single unit instead of being split into pairwise triples. Four 2025-26 papers (abstract pages read 2026-11-20) apply this to LLM retrieval and memory: [HyperRAG][hyperrag] (WWW '26) retrieves over n-ary facts and reports average gains of 2.95% MRR and 1.23% Hits@10 over the strongest baseline on WikiTopics, HotpotQA, MuSiQue and 2WikiMultiHopQA; [HGMem][hgmem] (ICML 2026) makes each working-memory unit a hyperedge for multi-step RAG (abstract states no numbers); [HyperMem][hypermem] (ACL 2026 Main) builds a topic, episode and fact hypergraph for conversation memory and reports 92.73% LLM-judge accuracy on LoCoMo; [HyperSkill][hyperskill] (arXiv only, no venue listed) links the subtasks and skills of one trajectory per hyperedge and reports gains of up to +11.51 on GAIA and +11.18 on WebWalkerQA (the abstract gives no unit) against ten memory baselines. **Evidence level: peer-reviewed or preprint results from the method authors, each against its own chosen baselines; the abstracts name no independent reproduction and no head-to-head between hypergraph and graph memory on one benchmark.** Where it plausibly helps: relations that are intrinsically n-ary (an episode with several participants, a trajectory of steps and skills). Where it is unproven: single-hop lookups, and cost against the construction and storage overhead (not reported in the abstracts). Native hyperedge support in graph databases was not checked first-party in this pass; see the [graph database landscape](../infrastructure/graph-databases-query-languages-landscape.md). Related corpus mentions: [Rippletide](#3-lightweight--specialized-frameworks) (a vendor-described "hypergraph decision engine"), [graphify's hyperedges](../../cc-community/CC-code-tooling-landscape.md) for n-way code relationships, and a [GraphRAG hypergraph note](../infrastructure/semantic-layers-data-catalog-landscape.md).
 - **Survey.** [Graph-Mediated LLM Systems in the Agentic Era][graph-survey] offers a role-locus taxonomy and an evaluation framework that separates local metric gains from downstream task performance and keeps reporting conditions; it names memory maintenance as an open challenge. Survey-level, not new measurements.
 - **Construction quality is measurable.** Benchmarks and ontology-grounded pipelines (Text2KGBench, Feng et al.) are summarized in [Ontology generation and ontology-constrained extraction](../infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction).
 - **Update and provenance of LLM-written edges.** Documented mechanisms, not measured quality: Graphiti's validity windows and episode lineage (§4 above); per-concept provenance in the [OKF analysis](../knowledge-management/open-knowledge-format-analysis.md); per-snippet lineage in the [Genie analysis](../agents/databricks-genie-analysis.md). I found no head-to-head study of how often such LLM-written edges are wrong or stale (searched only the sources above, 2026-11-19).
@@ -619,6 +620,7 @@ KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv a
 | [getzep/graphiti README][graphiti-readme] + `gh api` | Validity windows, episode provenance, prescribed/learned ontology; Apache-2.0, 32,939 stars, v0.31.2 (2026-10-20) |
 | [arXiv:2501.13956][zep-paper] abstract page | Zep/Graphiti DMR and LongMemEval claims (vendor numbers) |
 | [arXiv:2506.05690][graphrag-bench] abstract page | GraphRAG-Bench scope; the "underperforms vanilla RAG" statement attributed to recent studies |
+| [arXiv:2602.14470][hyperrag] · [2512.23959][hgmem] · [2604.08256][hypermem] · [2608.16114][hyperskill] abstract pages | Hypergraph RAG and memory: venues, numbers and baselines as the authors state them (2026-11-20) |
 | [arXiv:2502.11371][rag-vs-graphrag] abstract page | Unified RAG vs GraphRAG protocol; per-task strengths; integration strategies |
 | [arXiv:2611.05953][graph-survey] abstract page | Role-locus taxonomy, evaluation framework, memory-maintenance challenge |
 | [arXiv:2610.27524][memdev-paper] · [arXiv:2610.30485][mempabench-paper] abstract pages | Memory-failure and interaction-preference findings (general memory caution) |
@@ -626,6 +628,10 @@ KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv a
 [graphiti-readme]: https://github.com/getzep/graphiti#readme
 [zep-paper]: https://arxiv.org/abs/2501.13956
 [graphrag-bench]: https://arxiv.org/abs/2506.05690
+[hyperrag]: https://arxiv.org/abs/2602.14470
+[hgmem]: https://arxiv.org/abs/2512.23959
+[hypermem]: https://arxiv.org/abs/2604.08256
+[hyperskill]: https://arxiv.org/abs/2608.16114
 [rag-vs-graphrag]: https://arxiv.org/abs/2502.11371
 [graph-survey]: https://arxiv.org/abs/2611.05953
 [memdev-paper]: https://arxiv.org/abs/2610.27524
