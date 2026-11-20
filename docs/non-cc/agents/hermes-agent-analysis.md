@@ -4,7 +4,7 @@ source: https://github.com/nousresearch/hermes-agent
 purpose: Analysis of Hermes as a self-improving autonomous agent by Nous Research with multi-platform presence and skill creation.
 platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email, simplex]
 created: 2026-04-09
-updated: 2026-06-28
+updated: 2026-11-20
 validated_links: 2026-06-28
 status: open-source
 ---
@@ -32,6 +32,27 @@ execution.
 3. Skill refined during subsequent use
 4. Agent-curated memory with periodic reinforcement nudges
 5. FTS5 full-text search across past conversations
+
+### Memory Design (Compared with Claude Code)
+
+Documented in the [Hermes memory docs][hermes-mem] (read 2026-11-20; documented behaviour, not tested here).
+
+- **Two small curated files**: `MEMORY.md` (agent notes, 2,200 characters) and `USER.md` (user profile, 1,375 characters) in `~/.hermes/memories/`, entries separated by `§`. A write over the limit errors and the agent must consolidate first; nothing auto-compacts.
+- **Frozen snapshot**: loaded into the system prompt at session start (keeps the prompt cache valid); mid-session writes reach disk at once but show in the prompt only next session.
+- **Recall by search, not by index**: all sessions go to a local SQLite store with FTS5; `session_search` returns stored messages without LLM summarisation.
+- **Background review**: after a turn an agent pass may save memory or create skills, paced by `memory.nudge_interval` / `skills.creation_nudge_interval`. `write_approval` (default off) stages writes for `/memory approve`.
+- **External providers run alongside**: RetainDB and ByteRover ship as plugins; Honcho, Hindsight, Mem0 and Supermemory are installable.
+
+| Aspect | Hermes | Claude Code ([CC memory][cc-mem-doc]) | [§ 4 engines][fw-mem] (Mem0, Graphiti, Zep, ...) |
+|---|---|---|---|
+| Always-loaded budget | ~2.2k + ~1.4k characters, hard error when full | First 200 lines or 25 KB of `MEMORY.md` index, rest silently not loaded | Retrieved per query, no fixed resident set |
+| Topic detail | None; use session search | Topic files read on demand | Vector / graph / temporal store |
+| Past-conversation recall | FTS5 over raw messages | Transcripts exist, searched by consolidation, not a built-in recall tool | Per-engine extraction and retrieval |
+| Consolidation | Agent edits within the size cap; background review nudges | Auto-Dream between sessions (feature-flagged, source-derived) | Engine-side (invalidation, merging) |
+| Write gate | Optional approval (`write_approval`) | Plain markdown, human-editable | Varies |
+| Extension | Pluggable provider alongside built-in | None built in | These are the providers |
+
+Reading: Hermes and Claude Code share the "small always-loaded notes plus on-demand recall" shape; Hermes bounds the resident set by hard character caps and recalls by full-text search, Claude Code by an index with topic files. Anthropic's layered framing is summarised in [CC memory](../../cc-native/context-memory/CC-memory-system-analysis.md#anthropics-components-of-agent-memory-2026-11-06).
 
 ### Multi-Platform Presence (7 channels)
 
@@ -78,6 +99,22 @@ OpenAI, custom endpoints. Model switching via `hermes model` command.
 Built-in cron scheduler with delivery to any platform. Subagent spawning for
 parallel workstreams in isolated contexts.
 
+## Always-on Teammate Agents (Grok Bot Class)
+
+Hermes shares a category with products that give each agent its own computer, memory and routines and reach it through chat. Rows are identified first-party; all are fast-moving (checked 2026-11-20).
+
+| Product | Origin | Open? | Memory / notes (evidence) |
+|---|---|---|---|
+| [Grok Bot][grokbot] | xAI ("SpaceX Super Intelligence" per its launch post) | No; bundled in paid plans | Out of beta; own cloud computer, routines, Slack/Teams; memory "learns how your team works" (vendor page) |
+| [Muse][muse] | Meta | No; free tier, paid plans | Announced 2026-09-08; Secure VM with a separate approving "Sentinel" agent; user-editable memory incl. "forget" (vendor post) |
+| dots | OpenAI | Not verified | Announced 2026-09-29 per [OpenAI][dots] and press; the OpenAI page returned HTTP 403 to fetch, so details are **unverified** and omitted |
+| [Rakazo][rakazo] | elie222 | Apache-2.0, 9,280 stars | Self-hosted "alternative to Grok Bot"; memory, routines, sandboxes (Docker/E2B/Daytona) (README, `gh api` 2026-11-20) |
+| [OpenMausBot][openmaus] | milind-soni | Apache-2.0 (`enterprise/` source-available), 26,027 stars | Local-first desktop chat over your `claude`/`codex`/`grok` CLIs; per-bot thread memory; permission broker (README) |
+| [Tucano][tucano] | eduwxyz | Apache-2.0, 439 stars | Desktop team of agents over installed harnesses (incl. Hermes, Claude Code); user-approvable memory, MCP gateway with approvals (README) |
+| [OpenBot][openbot] | CopilotKit | MIT (memory service separately licensed), 13,018 stars | See [AG-UI landscape](../protocols/ag-ui-protocol-landscape.md#openbot-copilotkit-governed-ai-coworker-template) |
+
+Hermes differs by being self-improving (skill creation) and by its much larger adoption (264,871 stars, `gh api` 2026-11-20, v0.23.3); the rest compete on governance, approvals and bring-your-own-agent.
+
 ## Adoption Decision
 
 | Dimension | Assessment |
@@ -110,6 +147,9 @@ on multi-channel deployment but different architecture.
 |---|---|
 | [Hermes Agent repo][hermes] | Self-improving autonomous agent (43.2K stars) |
 | [Hermes docs][hermes-docs] | CLI, config, messaging, security, tools, skills, memory |
+| [Hermes memory docs][hermes-mem] | File sizes, snapshot injection, FTS5 session search, providers, review nudges |
+| [Grok Bot][grokbot] · [Meta Muse][muse] · [OpenAI dots][dots] | Closed always-on agent products (vendor pages) |
+| [Rakazo][rakazo] · [OpenMausBot][openmaus] · [Tucano][tucano] · [OpenBot][openbot] | Open-source teammate-agent projects (READMEs, `gh api` 2026-11-20) |
 | [Hermes integrations index][hermes-int] | Full channel roster (27+ platforms incl. SimpleX) |
 | [SimpleX Chat repo][simplex] | Privacy-preserving messaging transport (no user identifiers; AGPLv3) — a Hermes channel |
 
@@ -119,3 +159,13 @@ on multi-channel deployment but different architecture.
 [simplex]: https://github.com/simplex-chat/simplex-chat
 [nous]: https://nousresearch.com
 [skills-hub]: https://agentskills.io/home
+[hermes-mem]: https://hermes-agent.nousresearch.com/docs/user-guide/features/memory
+[cc-mem-doc]: ../../cc-native/context-memory/CC-memory-system-analysis.md#auto-memory-architecture
+[fw-mem]: ../frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure
+[grokbot]: https://x.ai/bot
+[muse]: https://about.fb.com/news/2026/09/introducing-muse
+[dots]: https://openai.com/index/introducing-dots/
+[rakazo]: https://github.com/elie222/rakazo
+[openmaus]: https://github.com/milind-soni/OpenMausBot
+[tucano]: https://github.com/eduwxyz/tucano
+[openbot]: https://github.com/CopilotKit/openbot
