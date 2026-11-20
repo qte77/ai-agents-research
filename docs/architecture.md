@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-11-09
+updated: 2026-11-20
 ---
 
 ## Architecture: ai-agents-research
@@ -31,7 +31,7 @@ ai-agents-research/
 │   ├── non-cc/                # Non-CC coding agents (JetBrains Air, DeerFlow, Goose, ...)
 │   │   └── <section>/         # 9 subdirs mirroring non-cc/README.md sections (orchestrators, agents, coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols)
 │   ├── sdlc-lcm/              # SDLC + product lifecycle management specs
-│   ├── _topics/               # Cross-subject hub indexes (memory, knowledge-graphs, rag, code-tooling, visualization, context, skills, plugins, harness, long-running); pointers only
+│   ├── _topics/               # Cross-subject hub indexes (memory, knowledge-graphs, rag, code-tooling, visualization, context, skills, plugins, harness, long-running, cost, evals-benchmarks, security, data, agentic-web, management); pointers only
 │   ├── learnings/             # Cross-repo compound learnings hub (CRLA write-back target)
 │   │   └── per-repo/          # Per-repo pattern distillations
 │   ├── research/              # Auto-generated cumulative agentic-AI paper index (rxiv eval)
@@ -86,7 +86,7 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 | Community monitor | Community forums, GitHub | `triage/community/` | Monday 10:00 UTC |
 | ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → decision-model relevance gate (Clef via `decide()`), chat-LLM fallback for uncertain papers | `triage/rxiv/` | Tuesday 09:00 UTC |
 
-A content source whose credentials are unset (the community monitor's Reddit and X sources) or whose fetch fails is listed as skipped, with the reason, in the report, the triage PR and the run summary (#811).
+A content source whose credentials are unset (the community monitor's Reddit and X sources) or whose fetch fails is listed as skipped, with the reason, in the report, the triage PR and the run summary (#811). A run in which no source returns any entries exits 2 and fails the job instead of opening an empty triage PR (#916).
 
 Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key. The CC changelog monitor's trigger uses `releases.atom` entry ids as its dedup ledger for feed-covered versions, falling back to the scan-doc version cutoff for any version the feed doesn't cover (a gap, or the feed being unavailable entirely) — `CHANGELOG.md` stays the sole content source either way (#410).
 
