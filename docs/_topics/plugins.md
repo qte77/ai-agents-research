@@ -18,5 +18,6 @@ Extension packaging: plugins, MCP servers, marketplaces across the corpus. Point
 | [openai-apps-plugins-analysis.md](../non-cc/protocols/openai-apps-plugins-analysis.md) | OpenAI's unified ChatGPT + Codex plugin system vs. CC packaging and the Agent Plugins standard; manifest, marketplace, pinning, review; rubric-scored | non-cc |
 | [goose-analysis.md § AAIF](../non-cc/agents/goose-analysis.md#agentic-ai-foundation-aaif-governance-and-hosted-projects) | Agentic AI Foundation governance/hosted-projects; relevance to plugin/MCP standards is indirect (no dedicated AAIF plugin spec) | non-cc |
 | [agent-skill-evolution-research-landscape.md § AutoTailor](../non-cc/frameworks/agent-skill-evolution-research-landscape.md) | AutoTailor — auto-constructed, pruned MCP tool sets | non-cc |
+| [CC-community-skills-landscape.md § cursor/plugins pstack (Lauren Tan)](../cc-community/CC-community-skills-landscape.md#cursorplugins-pstack-lauren-tan) | Cursor's pstack plugin: playbooks installable in Claude Code via a marketplace | cc-community |
 
 Related hubs: [skills.md](skills.md), [harness.md](harness.md).
