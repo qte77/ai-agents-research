@@ -2,8 +2,8 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365, Cowork, Copilot Code, Managed Runtime, Researcher/Analyst) against first-party documentation; original pass 2026-10-21, extended 2026-11-12 and 2026-11-18 (Frontier programs, a "What each name is" table, Licences).
 created: 2026-10-21
-updated: 2026-11-18
-validated_links: 2026-11-18
+updated: 2026-11-20
+validated_links: 2026-11-20
 status: assess
 ---
 
@@ -621,6 +621,8 @@ one) not detailed further here:
 | Microsoft Copilot harness (Foundry) | Microsoft Foundry prompt agents | "[A]n optional managed runtime for prompt agents. Foundry operates the harness and its execution environment" [foundry-copilot-harness] (2026-11-04); five harness tools (file read/write, shell, web, subagents) plus skills "referenced at the top level of the prompt agent definition" [foundry-copilot-harness] | Public preview |
 | Foundry hosted agents (no "harness" name used) | Microsoft Foundry | "Hosted agents are containerized agentic AI applications that run on Agent Service" [foundry-hosted-agents] (2026-11-09); bring your own framework (Agent Framework, LangGraph, Semantic Kernel) | No preview banner or GA statement on the Learn concept page itself; the separate azure.microsoft.com product page calls hosted agents "a managed runtime for running agent code in Azure" and "a session-isolated managed runtime with autoscaling and zero idle cost" [foundry-agent-service-product] — marketing-page wording only, not repeated on the Learn concept page fetched here |
 
+The harness is also exposed to developers as the [Copilot SDK](github-copilot-cli-analysis.md#copilot-sdk-embed-the-clis-agent-engine), which its README calls the programmable interface for the Microsoft Copilot harness.
+
 The Foundry "Copilot harness" and "Copilot Managed Runtime" (above) are also two different things
 that both get called a "managed runtime" by Microsoft on different pages — the Foundry one runs
 *prompt agents*, Managed Runtime hosts *line-of-business apps*. Separately, the 2026-09-25 blog
@@ -864,6 +866,60 @@ Workflow agents are not among the listed types (the preview workflow designer is
   consumed per hour"; model tokens and tools are billed separately [foundry-agent-pricing].
 - **Decision models:** Foundry also hosts Microsoft-Decision-1, covered in
   [system-1-decision-models-landscape.md](../reference/system-1-decision-models-landscape.md#microsoft-decision-1-microsoft-foundry).
+
+#### Roles, identity and licences
+
+What it takes to build, deploy and invoke an agent with least privilege, from Microsoft's RBAC and
+agent-identity pages read on 2026-11-20 [foundry-rbac], [foundry-agent-identity]. Prices are
+deliberately left out.
+
+**Foundry roles.** Microsoft renamed the Foundry built-in roles; its RBAC page says "You might still
+see the previous names in some places" and that role IDs and core permissions are unchanged
+[foundry-rbac]. Both names, so a portal or older doc still matches:
+
+| Job | Current role | Previous name | What the page says it grants |
+|---|---|---|---|
+| Invoke agents only | Foundry Agent Consumer | (none listed) | Interact with agent endpoints in a project; "least-privilege" for principals that only call agents (for example through the Responses API) |
+| Build and test agents | Foundry User | Azure AI User | Reader access plus project data actions; the least-privilege developer role. Also the role to give a project's managed identity |
+| Run a project; hand out access | Foundry Project Manager | Azure AI Project Manager | Project management and build; may assign only the Foundry User role |
+| Create accounts and projects | Foundry Account Owner | Azure AI Account Owner | Manage projects and resources; may assign Foundry User, ACR and monitoring roles; no build data actions |
+| Everything | Foundry Owner | Azure AI Owner | Full management plus build |
+
+- **Deploying Claude** needs a Foundry resource role "such as Foundry User or Cognitive Services
+  User" and an Azure subscription [claude-foundry]. The two first-party pages conflict here: the RBAC
+  page says not to assign built-in roles that start with "Cognitive Services" (Usages Reader
+  excepted) because they are meant for direct AI Services access and do not apply to Foundry
+  scenarios [foundry-rbac]; prefer Foundry User. Whether the first Azure Marketplace
+  subscription needs a further subscription-level permission is not stated (unchecked). For
+  setup see [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md#microsoft-azure-foundry).
+- **Quota views** need Cognitive Services Usages Reader at subscription scope [foundry-rbac].
+- **Agent identity.** Foundry provisions a Microsoft Entra agent identity (a specialised identity
+  type with a parent "blueprint") per agent, so tool calls authenticate without secrets in prompts or
+  code; some tool connections use the project managed identity instead, and the page's advice is to
+  grant each downstream resource a narrow role at resource or resource-group scope rather than
+  subscription-wide [foundry-agent-identity]. Incoming access to the blueprint endpoint is a
+  separate, preview scheme. Identity concepts across vendors:
+  [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#1-authenticate-the-agent-agent-as-a-first-class-principal).
+- **IdP:** Entra ID is the identity provider for all of this; no other IdP is documented on the pages
+  read.
+- **Licences, who needs one:** Foundry needs no seat (Azure consumption, see the
+  [price basis](#foundry-as-an-agent-platform); Claude is billed via Azure Marketplace
+  [claude-foundry]); for Copilot Studio, Microsoft 365 Copilot and Agent 365 see the
+  [Licences](#licences-2026-11-18) table rather than a second list here.
+
+##### At a glance: Microsoft
+
+| Dimension | Foundry Agent Service | Copilot Studio / Microsoft 365 Copilot |
+|---|---|---|
+| Runtime | Prompt, voice and hosted (container) agents [foundry-agents] | Studio-hosted agents; Managed Runtime for apps ([above](#microsoft-copilot-managed-runtime-preview)) |
+| Claude availability | Yes, Azure-hosted or Anthropic-hosted; Anthropic-hosted is Global Standard only, and US Data Zone Standard applies only to Azure-hosted [claude-foundry] | Claude models are offered in Copilot; EU Data Boundary excludes Anthropic ([Residency](#residency-anthropic-excluded-from-the-eu-data-boundary-claude-on-foundry-has-no-eu-data-zone-either)) |
+| MCP / A2A | MCP servers as tools; A2A v1.0 generally available, v0.3 in preview [foundry-agents] | Work IQ over A2A, MCP, REST ([work-iq-overview]); BYO MCP servers are preview ([byo-mcp]) |
+| Memory | Memory is a listed Foundry tool [foundry-agents] | Not checked in this pass (see [Three things called "harness"](#three-things-called-harness)) |
+| Agent identity and IdP | Entra agent identity per agent; Entra ID | Entra; [Agent 365 registry](../frameworks/agentic-enterprise-os-landscape.md#agent-registries-compared) |
+| Least-privilege roles | Foundry Agent Consumer (invoke), Foundry User (build) | Maker and invoke roles not checked; the tenant-admin roles are in [Licences](#licences-2026-11-18) |
+| Licences | Azure consumption; no seat | Per-user Copilot or usage-based billing; Agent 365 per user |
+| Regions | Claude: no EU Data Zone (see Residency) | EU Data Boundary excludes Anthropic |
+| Release status | Foundry Learn pages read 2026-11-20 (no status label recorded); Entra agent identity status in [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#1-authenticate-the-agent-agent-as-a-first-class-principal) | See [Timeline](#timeline) |
 
 #### Grounding layers
 
@@ -1353,6 +1409,8 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Foundry Agent Service overview][foundry-agents], [pricing][foundry-agent-pricing] | Agent types, tools, publishing; price basis |
 | [Microsoft IQ][microsoft-iq], [Fabric IQ][fabric-iq], [Foundry IQ][foundry-iq] | Grounding layers and their status |
 | [Dataverse][dataverse-intro], [Fabric overview][fabric-overview], [Fabric data agent][fabric-data-agent], [Service Fabric][service-fabric] | Data layer facts; data-agent limits; Service Fabric disambiguation |
+| [Foundry RBAC][foundry-rbac] | Role names (current and previous), build/invoke/admin split, quota role (2026-11-20) |
+| [Foundry agent identity][foundry-agent-identity] | Entra agent identity, blueprint, tool-call authentication, least-privilege guidance (2026-11-20) |
 
 [sp-skills]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-skills
 [sp-get-started]: https://learn.microsoft.com/en-us/sharepoint/copilot-in-sharepoint-get-started
@@ -1491,6 +1549,8 @@ re-checked even when Microsoft leaves the page unchanged.
 [studio-overview]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio
 [foundry-agents]: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
 [foundry-agent-pricing]: https://azure.microsoft.com/en-us/pricing/details/foundry-agent-service/
+[foundry-rbac]: https://learn.microsoft.com/en-us/azure/foundry/concepts/rbac-foundry
+[foundry-agent-identity]: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity
 [microsoft-iq]: https://learn.microsoft.com/en-us/microsoft-iq/
 [fabric-iq]: https://learn.microsoft.com/en-us/fabric/iq/overview
 [foundry-iq]: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-foundry-iq
