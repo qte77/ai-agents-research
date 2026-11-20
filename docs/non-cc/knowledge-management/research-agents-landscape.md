@@ -4,7 +4,7 @@ purpose: Catalog of autonomous research agents, scientific-domain models, and li
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-18
+updated: 2026-11-20
 validated_links: 2026-11-18
 ---
 
@@ -36,6 +36,7 @@ Agents that conduct multi-step research and generate research outputs.
 - [OpenScience (Synthetic Sciences)][openscience] — open-source AI research workbench: plan → literature search → write/run code → run experiments → write up findings, with 500+ bundled scientific skills (biology/chemistry/physics/ML/data engineering), ChEMBL/UniProt/PubMed/arXiv connectors, and desktop/browser/CLI interfaces; repo ships a `CLAUDE.md` and credits Claude Scientific Writer (K-Dense) among its skill sources. Apache-2.0, 3.6k★.
 - [Claude Science (Anthropic)][claude-science] — first-party desktop workbench, the same shape as OpenScience above: Claude runs Python/R/shell in a sandbox and saves "versioned artifacts with a full provenance record", with a reviewer that checks claims against the execution record. Beta. Full analysis: [CC-claude-science-analysis.md](../../cc-native/plugins-ecosystem/CC-claude-science-analysis.md).
 - [ScientistTwo (Google Cloud AI Research)][scientisttwo] — autonomous end-to-end research system across six agent groups (Idea Generator → Evaluator → Analyzer → Writer → Peer-Review → Meta-Review); paper reports besting human baselines on 80.4% of 107 evaluated research problems (avg. +25.2% relative improvement) across 86 generated papers in eight AI domains, with 91.9%/72.1% acceptance under its ScholarPeer/Stanford-Agentic-Reviewer simulated reviewers ([paper][scientisttwo-paper]).
+- [A Society of AI Scientists][society-ai-scientists] — Ahmad, Anderson, Qu and dozens of co-authors (the alphaXiv list includes Buehler and Schmidgall and truncates at "+38 more"; MIT and Stanford are shown among the affiliations), submitted 2026-11-19. An exploratory twelve-week study of 936 autonomous agents from 35 human-operated labs working on a shared agent-only preprint server and messaging workspace. Authors' claims, none re-checked here: 936 studies with code and data, 9,500 messages across 229 agent-made chat rooms, agents publicly retracting their own mistaken claims, an agent-run "Journal of Agent Research", and agent-run reproducibility audits matching reported results. In blinded comparisons with recent human preprints, agent studies rated higher on experimental rigor and measured claims, human preprints higher on novelty and significance. The authors say they release the full archive (manuscripts, code, data, reviews, chat). **Provenance caveat:** only the alphaXiv page was readable; it shows no arXiv ID and an arXiv API search for the title returned nothing on 2026-11-20, so no arXiv URL is cited and the paper counts as a preprint on alphaXiv's host, not yet on arXiv. The study is a multi-agent social setting, unlike the single-pipeline systems above.
 - [local-deep-research (LearningCircuit)][local-deep-research] — LLM-agnostic deep-research assistant: local (Ollama/LM Studio/llama.cpp) + cloud (Claude, OpenAI, Gemini, OpenRouter), LangGraph agent strategies, 20+ search sources (arXiv/PubMed/SearXNG/…), cited reports; 95.7% SimpleQA. MIT, 8.5k★, v1.7.0 (2026-06) — a close OSS parallel to CC's [`/deep-research`](../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research).
 - [local-deep-researcher (langchain-ai)][local-deep-researcher] — **distinct from the above** despite the near-identical name: LangChain's minimal LangGraph *reference* implementation of the search→summarize→reflect loop (Ollama/LMStudio, local-only by default) — the canonical starting pattern, not a full assistant. MIT, ~9.2k★.
 - [dataroom (hanxiao / Jina)][dataroom] — self-hosted research *harness*: a local LLM (Qwen3.6 on a single GPU) runs the mechanical search/read/rerank via Jina CLI tools and emits a structured "dataroom" knowledge package for a frontier model to synthesize — the "cheap local gathering, expensive frontier reasoning" split. Pi-based (see [pi-analysis.md](../coding-agents/pi-analysis.md)); ~168★, new.
@@ -137,6 +138,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 | [local-deep-research (LearningCircuit)][local-deep-research] | LLM-agnostic deep-research assistant |
 | [local-deep-researcher (langchain-ai)][local-deep-researcher] | Minimal LangGraph reference impl |
 | [dataroom (hanxiao / Jina)][dataroom] | Local-gather / frontier-synthesize harness |
+| [A Society of AI Scientists][society-ai-scientists] | alphaXiv abstract page read 2026-11-20 (authors, abstract claims; no arXiv ID found) |
 | [IdeaScientist][ideascientist] | RL-trained gap-finding/innovation/report-writing agent roles for research ideation |
 | [RankEvolve][rankevolve] | Multi-agent auto-research harness composing coding-agent products |
 | [Hyperresearch (jordan-gibbs)][hyperresearch] | CC skill: 16-step cited-report deep-research pipeline |
@@ -198,6 +200,7 @@ Claude Code ships one bundled workflow, [`/deep-research`](../../cc-native/agent
 [open-coscientist]: https://github.com/jataware/open-coscientist
 [google-coscientist]: https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/
 [ideascientist]: https://arxiv.org/abs/2610.04074
+[society-ai-scientists]: https://www.alphaxiv.org/abs/2611.society-ai-scientists
 [rankevolve]: https://arxiv.org/abs/2609.39551
 [hyperresearch]: https://github.com/jordan-gibbs/hyperresearch
 [openscience]: https://github.com/synthetic-sciences/openscience
