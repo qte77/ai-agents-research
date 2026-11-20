@@ -60,6 +60,7 @@ The agent has its own identity, independent of any human.
   credential vault) and Google Cloud's Agent Identity (per-agent principal, GA 2026-04-22) are covered
   per cloud in [aws-agent-stack-analysis.md § Identity and IdP integration](../non-cc/agents/aws-agent-stack-analysis.md#identity-and-idp-integration)
   and [google-cloud-agent-stack-analysis.md § Identity and IdP integration](../non-cc/agents/google-cloud-agent-stack-analysis.md#identity-and-idp-integration).
+  All six clouds side by side: [cloud-agent-platforms-landscape.md](../non-cc/infrastructure/cloud-agent-platforms-landscape.md).
 
 ## 2. Authorize the agent on behalf of a human (delegated, scoped, auditable)
 

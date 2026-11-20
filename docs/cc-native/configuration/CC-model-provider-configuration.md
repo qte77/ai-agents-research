@@ -121,7 +121,8 @@ export CLAUDE_CODE_USE_BEDROCK=true
 ([source][cc-settings])
 
 AWS's agent stack (AgentCore, Bedrock Agents, Amazon Quick; roles, identity, licences) is covered in
-[aws-agent-stack-analysis.md](../../non-cc/agents/aws-agent-stack-analysis.md).
+[aws-agent-stack-analysis.md](../../non-cc/agents/aws-agent-stack-analysis.md). Six cloud agent stacks are compared in
+[cloud-agent-platforms-landscape.md](../../non-cc/infrastructure/cloud-agent-platforms-landscape.md).
 
 ### Google Vertex AI
 

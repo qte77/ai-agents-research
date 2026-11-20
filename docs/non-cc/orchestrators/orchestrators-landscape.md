@@ -3,7 +3,7 @@ title: Multi-Agent Orchestrators — Landscape
 purpose: Cross-cut of the six orchestrator analyses by coordination pattern, state hand-off and escalation, a short entry on AgentRun (a harness-wrapping platform), a Claude Code primitives vs non-CC equivalents table, and multi-agent failure modes grounded in papers.
 category: landscape
 created: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-20
 validated_links: 2026-11-18
 status: assess
 ---
@@ -50,7 +50,7 @@ For related single-agent harnesses and workflow engines see the
 
 ## Beyond the Six: A Harness-Wrapping Platform
 
-[AgentRun][agentrun-gh] (Parcha-ai; [site][agentrun-site]) is not one of the six analyses and is catalogued here
+[AgentRun][agentrun-gh] (Parcha-ai; [site][agentrun-site]; not Alibaba Cloud's AgentRun, which is in [alibaba-cloud-agent-stack-analysis.md](../agents/alibaba-cloud-agent-stack-analysis.md)) is not one of the six analyses and is catalogued here
 as a single entry, from its README and site only (read 2026-11-18, not run). It wraps an existing harness (Claude
 Code, Codex, OpenCode or pi) rather than replacing it, adding three things: **learned skills** (after a run the
 agent keeps a note, skill or workflow for next time), **durable execution** (runs live in one store and resume after
