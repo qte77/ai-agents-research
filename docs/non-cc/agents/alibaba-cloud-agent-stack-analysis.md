@@ -69,8 +69,14 @@ updated Aug-Nov 2026), so re-read before relying on a detail.
 - **MCP:** agent and workflow applications use official or custom MCP services; AgentRun converts
   agents, sandboxes and API tools into MCP and can bundle them behind an MCP gateway
   ([AgentRun][agentrun]); AgentBay offers an MCP integration ([overview][agentbay]).
-- **A2A:** an AgentRun case-study page titled as an A2A multi-agent example appeared in search; support
-  level and spec version were **not read** (unverified).
+- **A2A (consumer side, documented):** Model Studio's third-party agent integration page ([page][ms-a2a],
+  updated 2026-10-10, read 2026-11-20) requires integrated agents to follow the Google A2A protocol
+  (it points to the A2A 0.2.5 specification) and lists AgentCard fields, with an `apiKey` security option.
+- **A2A (AgentRun, tutorial only):** the "Xixi Coffee Shop" best-practice page ([page][ms-a2acase],
+  updated 2026-08-24, read 2026-11-20) deploys a template whose "order" and "delivery" agents appear as
+  "A2A services" in its web UI. It is a worked example; the AgentRun data-structure page read
+  ([ProtocolConfiguration][ar-proto], updated 2026-09-18) lists only the type `HTTP` and no A2A setting,
+  so a native AgentRun A2A endpoint and its spec version are **not stated** on the pages read.
 
 ## Identity, IdP and least privilege
 
@@ -100,7 +106,10 @@ updated Aug-Nov 2026), so re-read before relying on a detail.
   ([tutorial][agentid]). Activating Model Studio on a primary account grants it
   `AliyunBailianFullAccess` by default ([RAM permissions][ms-ram]).
 - **Workforce SSO:** RAM supports SAML 2.0 and OIDC role-based SSO and user SSO; Entra ID and Okta are
-  named examples, IDaaS as a bridge ([SSO overview][ram-sso]); **unverified (search snippet)**.
+  named examples, IDaaS as a bridge ([SSO overview][ram-sso]; documented, English page updated 2026-05-27,
+  read 2026-11-20). Detail: user-based SSO is SAML only; role-based SSO uses SAML 2.0 for console login
+  and OIDC for API access (an application exchanges an OIDC token for STS tokens, `AssumeRoleWithOIDC`).
+  Named IdPs: AD FS, Entra ID, Okta, Google Workspace, Alibaba Cloud IDaaS.
 
 ## Licences and consumption — who needs one
 
@@ -130,9 +139,9 @@ read were English; **mainland-only features were not mapped**, and "AI guardrail
 |---|---|
 | Runtime | Model Studio managed apps; AgentRun serverless (Function Compute); AgentBay and Agent Sandbox for tool environments |
 | Claude availability | Not found on any page read; Anthropic-compatible API serves Qwen; Claude Code listed as a client tool |
-| MCP / A2A | MCP: documented in apps, AgentRun, AgentBay; A2A: unverified (search snippet, case-study page title only) |
+| MCP / A2A | MCP: documented in apps, AgentRun, AgentBay; A2A: documented on the Model Studio consumer side (A2A 0.2.5) and in an AgentRun tutorial; native AgentRun A2A endpoint not stated |
 | Memory | Agent 2.0 short-term 0-30 turns, long-term planned; AgentRun with Mem0/RAGFlow |
-| Agent identity and IdP | Agent Identity (OIDC inbound incl. Okta/Entra, STS/OAuth outbound); RAM SAML/OIDC SSO (unverified, search snippet) |
+| Agent identity and IdP | Agent Identity (OIDC inbound incl. Okta/Entra, STS/OAuth outbound); RAM SAML 2.0 / OIDC SSO (documented) |
 | Least-privilege roles | Six `AliyunBailian*` policies + workspace roles; AgentRun action-level RAM (no system policy names found) |
 | Licences and who needs one | Mostly pay-as-you-go (AgentRun billing unverified, search snippet); seat-based Token Plan (Team) for interactive coding tools; no prices here |
 | Regions | Six Model Studio regions; Token Plan Team Singapore only |
@@ -161,7 +170,10 @@ read were English; **mainland-only features were not mapped**, and "AI guardrail
 | [AgentRun RAM authorization][agentrun-ram] | action list |
 | [Agent Identity in AgentRun][agentid] | inbound/outbound identity, IdPs |
 | [AgentBay][agentbay] / [Agent Sandbox][sandbox] | execution environments |
-| [RAM SSO overview][ram-sso] | SAML/OIDC SSO (secondary read) |
+| [RAM SSO overview][ram-sso] | SAML 2.0 / OIDC SSO, IdPs, user- vs role-based |
+| [Third-party agent integration][ms-a2a] | A2A 0.2.5 consumer side, AgentCard |
+| [Xixi Coffee Shop tutorial][ms-a2acase] | AgentRun A2A multi-agent example |
+| [ProtocolConfiguration][ar-proto] | AgentRun protocol type (`HTTP` only) |
 | [Qwen-Agent][qa-repo] / [README][qa-readme] | Apache-2.0, release v0.0.26 |
 
 [data-platforms]: ../infrastructure/data-platforms-lakehouse-landscape.md
@@ -178,6 +190,9 @@ read were English; **mainland-only features were not mapped**, and "AI guardrail
 [agentid]: https://help.aliyun.com/en/agentidentity/using-agent-identity-in-agenrun
 [agentbay]: https://www.alibabacloud.com/help/en/agentbay/product-overview/what-is-eds-agentbay
 [sandbox]: https://www.alibabacloud.com/help/en/agent-sandbox/agent-sandbox-overview
-[ram-sso]: https://help.aliyun.com/en/ram/sso-overview
+[ram-sso]: https://www.alibabacloud.com/help/en/ram/user-guide/sso-overview
+[ms-a2a]: https://www.alibabacloud.com/help/en/model-studio/multimodal-integration-a2a
+[ms-a2acase]: https://www.alibabacloud.com/help/en/agentrun/cech-coffee-shop-agenrun-a2a-protocol-multi-agent-case
+[ar-proto]: https://www.alibabacloud.com/help/en/agentrun/api-agentrun-2025-09-10-struct-protocolconfiguration
 [qa-repo]: https://github.com/QwenLM/Qwen-Agent
 [qa-readme]: https://github.com/QwenLM/Qwen-Agent/blob/main/README.md
