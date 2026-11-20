@@ -191,9 +191,19 @@ class RunMonitorSkipTests(unittest.TestCase):
                 with self.assertRaises(SystemExit) as cm:
                     mu.run_monitor([{"name": "down", "description": "d"}], fetch, docs,
                                    Path(tmp) / "state.json", "R", "x.py")
-            self.assertEqual(cm.exception.code, 0)
+            self.assertEqual(cm.exception.code, 2)  # nothing fetched: fail, don't pass as clean
             self.assertIn("- Skipped: fetch failed (OSError)", out.getvalue())
             self.assertNotIn("secret-ish", out.getvalue())
+
+    def test_run_with_no_entries_fetched_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            docs = Path(tmp) / "docs"
+            docs.mkdir()
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as cm:
+                    mu.run_monitor([{"name": "empty", "description": "d"}], lambda _s: [], docs,
+                                   Path(tmp) / "state.json", "R", "x.py")
+            self.assertEqual(cm.exception.code, 2)
 
 
 if __name__ == "__main__":

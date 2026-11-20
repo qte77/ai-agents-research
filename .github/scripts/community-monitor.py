@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Monitor community sources for Claude Code features, tips, and tricks.
 
-Fetches content from community sources (claudelog.com, awesome-claude-code,
+Fetches content from community sources (awesome-claude-code,
 awesome-claude-code-plugins, Reddit, X) and identifies entries not yet covered
-by existing community docs. Pure parsing lives in lib/community_sources.py.
+by existing community docs. claudelog.com is not polled: its changelog text
+duplicates cc-changelog-monitor and its truncated lines made noisy reports.
+Pure parsing lives in lib/community_sources.py.
 
 Usage:
     python community-monitor.py --community-docs-dir PATH [--state-file PATH]
@@ -11,7 +13,7 @@ Usage:
 Exit codes:
     0 = no new uncovered content
     1 = new content found (workflow should open a PR)
-    2 = fatal error (bad input) — distinct from 1 so the workflow fails loudly
+    2 = fatal error (bad input, or no source returned any entries) — distinct from 1 so the workflow fails loudly
         instead of treating an error as "new content"
 """
 
@@ -29,12 +31,6 @@ from lib.community_sources import extract_html_entries, extract_markdown_entries
 from lib.monitor_utils import SourceSkipped, fatal, fetch_text, run_monitor
 
 SOURCES: list[dict[str, str]] = [
-    {
-        "name": "claudelog",
-        "url": "https://claudelog.com/claude-code-changelog/",
-        "type": "html",
-        "description": "Third-party CC changelog aggregator with community annotations",
-    },
     {
         "name": "awesome-claude-code",
         "url": "https://raw.githubusercontent.com/hesreallyhim/awesome-claude-code/main/README.md",
