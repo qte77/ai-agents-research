@@ -21,5 +21,6 @@ the corpus. Pointers only; see [the hub index](README.md).
 | [CC-claude-science-analysis.md](../cc-native/plugins-ecosystem/CC-claude-science-analysis.md) | Claude Science: remote jobs on SSH/Slurm hosts or Modal GPUs; sessions pause and resume at usage limits | cc-native |
 | [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) | Monitoring and steering long-running CC sessions from phone or web (Remote Control, Happy Coder, Omnara, CloudCLI, Emdash, DIY tmux + Tailscale incl. Tailnet Preview) | cc-native |
 | [CC-web-auth-setup-analysis.md § Terms That Apply to Scripted Runs](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#terms-that-apply-to-scripted-runs) | Sign-in, billing and terms for unattended `claude -p`, Agent SDK and scheduled runs, with Codex, Gemini CLI, Copilot CLI, Cursor CLI and opencode compared | cc-native |
+| [hermes-agent-analysis.md § Always-on Teammate Agents](../non-cc/agents/hermes-agent-analysis.md#always-on-teammate-agents) | Always-on agents with their own computer, reached through chat: Hermes, Claude Duet, OpenAI dots, Cue, Grok Bot, Muse and open-source peers | non-cc |
 
 Related hubs: [harness.md](harness.md).
