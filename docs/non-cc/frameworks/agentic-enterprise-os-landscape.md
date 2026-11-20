@@ -1,10 +1,10 @@
 ---
 title: Agentic Enterprise OS Landscape
-purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves.
+purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves; includes a comparison of agent registries (A2A, MCP Registry, AWS, Google, Agent 365, Agentforce).
 category: landscape
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, lyzr, self-hosted-oss, claude-code]
 created: 2026-06-28
-updated: 2026-11-18
+updated: 2026-11-20
 validated_links: 2026-11-18
 status: assess
 ---
@@ -17,7 +17,7 @@ This doc maps the pattern across three tiers and contrasts the human-governed en
 
 ## Tier 1 — Enterprise vendor platforms
 
-All are proprietary SaaS; all govern **human-directed** agents (instructions, topics, guardrails); all interoperate via **MCP + A2A** and **none has adopted AG-UI** (see [ag-ui-protocol-landscape][ag-ui]); and — the load-bearing gap — **none exposes a machine-writable goal schema, autonomous goal generation, or per-run cost+outcome attribution**. Cost is billed per action or per consumption, not attributed to a goal.
+All are proprietary SaaS; all govern **human-directed** agents (instructions, topics, guardrails); all interoperate via **MCP + A2A** and **none has adopted AG-UI** (see [ag-ui-protocol-landscape][ag-ui]); and — the load-bearing gap — **none exposes a machine-writable goal schema, autonomous goal generation, or per-run cost+outcome attribution**. Cost is billed per action or per consumption, not attributed to a goal. A per-*agent* cost view does exist: Agent 365 breaks Copilot Credits down by user, group, agent and service ([overview][agent365-overview]), but not by run or outcome. Registries are compared in [Agent registries compared](#agent-registries-compared).
 
 | Platform | Vendor framing | Commercial model | Notable |
 |---|---|---|---|
@@ -96,6 +96,26 @@ Postgres+pgvector with an MCP server, ~alpha) and a concept note in
 **adjacent framing** of the same goal-attribution gap the enterprise platforms leave — not a separate
 category. A standalone doc is deferred until the term accrues non-vendor traction.
 
+## Agent registries compared
+
+A registry answers "which agents and tools exist, who owns them, which version is live, and how is one
+retired". Read 2026-11-20 at each source; Microsoft and Salesforce detail stays in their analyses.
+
+| Registry | What it registers | Version and ownership | Retirement | Status (as read) |
+|---|---|---|---|---|
+| **[A2A Agent Card][a2a-spec]** | One agent, self-described at `/.well-known/agent-card.json`; the spec lists curated registries as one discovery route but defines no registry API; an AI Catalog at `/.well-known/ai-catalog.json` is merged to `dev-1.1`, unreleased ([ag-ui § A2A][ag-ui-a2a]) | Card has a free-form `version`; optional `provider`; cards may be JWS-signed | None for agents; the spec's deprecation rules cover protocol names only | Spec site 1.0.0; GitHub release v1.0.1 ([ag-ui § A2A][ag-ui-a2a]) |
+| **[Official MCP Registry][mcp-registry]** | Metadata (`server.json`) for publicly reachable MCP servers; namespace proven by a GitHub, DNS or HTTP challenge; no private servers | Version string unique per publication and immutable; ranges rejected ([versioning][mcp-registry-versioning]) | `mcp-publisher status --status deleted` hides a server; it can be restored, never permanently removed ([FAQ][mcp-registry-faq]) | Preview: "Breaking changes or data resets may occur before general availability" |
+| **[AWS Agent Registry][aws-agent-registry-ga]** (AgentCore) | Agents (A2A cards), MCP servers, skills and custom records; auto-detects agents on AgentCore runtime and gateways | Record `name` + `recordVersion` unique; publisher, curator and admin roles; tags for cost allocation and access control ([concepts][aws-registry-concepts]) | Curators approve or reject records and deprecate them to remove them from discovery ([curating][aws-registry-curating]) | GA, posted 2026-08-31, five regions |
+| **[Google Cloud Agent Registry][gcp-agent-registry]** | Agents, MCP servers and tools, endpoints and skills in a governance project, optionally across a folder or organization; automatic registration from supported runtimes or manual; Agent Gateway checks it before routing | Not compared here | Not stated on the two pages read | No product-level GA or preview label on the [overview][gcp-agent-registry] (updated 2026-11-10) or the [Agent Platform page][gcp-agent-registry-govern] (updated 2026-11-20); standalone skills are marked Preview and cross-cloud registration Limited Preview. Not read as GA |
+| **Microsoft Agent 365** | Agents built across Microsoft's tools plus synced third-party agents | Registry shows owner, usage and risk per agent; ownerless agents can be reassigned ([overview][agent365-overview]) | Approve, block, delete ([M365 analysis][m365-agent365]) | GA, commercial segment, per user |
+| **Salesforce Agentforce Registry / MuleSoft Agent Fabric** | MCP servers (allowlist with sync states) and agents | Not stated in the analysis | Not stated in the analysis | No GA label on the first-party pages ([Agentforce analysis][sf-agentforce-registry]) |
+
+**Reading the table.** Of the rows read, only AWS and Microsoft document ownership, approval and
+retirement together (Google and Salesforce state less on the pages read); the two open formats stop at self-description (A2A) or public metadata
+(MCP Registry). Claude Code has no org-level agent registry: fleets get policy through managed settings
+and see agents only through telemetry ([CC-managed-settings-fleet-analysis.md][cc-fleet]). Per-cloud
+depth (AWS, Google and others) is plan row K34's.
+
 ## Synthesis
 
 Three tiers, one axis — **who sets and owns the goals**:
@@ -127,6 +147,11 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 | [Lyzr docs][lyzr-docs], [ADK overview][lyzr-adk], [MCP][lyzr-mcp], [A2A][lyzr-a2a], [pricing][lyzr-pricing] | Lyzr deployment modes, SDK and models, MCP/A2A support, tiers |
 | [Lyzr Opencontroller page][lyzr-opencontroller] | Marketing page (checked 2026-11-18): pitches a single control plane over all of an org's agents; no docs or repo link on it, so treat the capability as a vendor claim |
 | Gartner — 2026 Hype Cycle for Agentic AI (gartner.com; bot-blocked, not link-checked) | First-party anchor for the formal category "AI agent development platforms" |
+| [A2A specification][a2a-spec] | Agent Card, discovery (§ 8.2), signing (§ 8.4); latest released version 1.0.0 (read 2026-11-20) |
+| [MCP Registry: about][mcp-registry], [versioning][mcp-registry-versioning], [FAQ][mcp-registry-faq] | Preview status, public-only metadata, immutable versions, `deleted` status (read 2026-11-20) |
+| [AWS Agent Registry GA][aws-agent-registry-ga], [concepts][aws-registry-concepts], [curating][aws-registry-curating] | GA 2026-08-31, record types and versions, roles, deprecation (read 2026-11-20) |
+| [Google Cloud Agent Registry overview][gcp-agent-registry], [Agent Platform page][gcp-agent-registry-govern] | Governance project, management boundary, automatic vs manual registration, Agent Gateway (read 2026-11-20) |
+| [Microsoft Agent 365 overview][agent365-overview] | Registry per-agent owner, usage and risk; Copilot Credits by user, group, agent and service (read 2026-11-20) |
 | [Use the Microsoft Copilot harness with prompt agents][foundry-copilot-harness] | Foundry's own "Copilot harness" — a different thing from Copilot Studio's harness |
 | [Hosted agents in Foundry Agent Service][foundry-hosted-agents] | Foundry hosted agents — containerized, bring-your-own-framework; no stated preview/GA status |
 | [Microsoft Foundry Agent Service (product page)][foundry-agent-service] | Marketing-page-only "managed runtime" wording for hosted agents |
@@ -164,3 +189,17 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [foundry-hosted-agents]: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents
 [foundry-agent-service]: https://azure.microsoft.com/en-us/products/ai-foundry/agent-service
 [m365-copilot-harness]: ../agents/microsoft-365-copilot-analysis.md#three-things-called-harness
+[a2a-spec]: https://a2a-protocol.org/latest/specification/
+[mcp-registry]: https://modelcontextprotocol.io/registry/about
+[mcp-registry-versioning]: https://modelcontextprotocol.io/registry/versioning
+[mcp-registry-faq]: https://modelcontextprotocol.io/registry/faq
+[aws-agent-registry-ga]: https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-generally-available
+[aws-registry-concepts]: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-concepts.html
+[aws-registry-curating]: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-curating.html
+[gcp-agent-registry]: https://docs.cloud.google.com/agent-registry/overview
+[gcp-agent-registry-govern]: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/agent-registry
+[agent365-overview]: https://learn.microsoft.com/en-us/microsoft-agent-365/overview
+[m365-agent365]: ../agents/microsoft-365-copilot-analysis.md#governance-agent-365-covers-agents-not-sharepoint-skills
+[sf-agentforce-registry]: ../agents/salesforce-agentforce-analysis.md#agentforce-registry-and-mulesoft-agent-fabric
+[ag-ui-a2a]: ../protocols/ag-ui-protocol-landscape.md#a2a-agent-to-agent-protocol
+[cc-fleet]: ../../cc-native/configuration/CC-managed-settings-fleet-analysis.md

@@ -2,7 +2,7 @@
 title: CC CLI Reference
 purpose: Single canonical reference for all claude CLI flags, subcommands, and constraints. Other docs cross-ref here for flag definitions.
 created: 2026-04-13
-updated: 2026-11-19
+updated: 2026-11-20
 validated_links: 2026-11-18
 status: adopt
 ---
@@ -24,7 +24,7 @@ For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools
 | `claude auth login` | Sign in. Accepts `--email`, `--sso`, `--console` | [auth][auth] |
 | `claude auth logout` | Sign out | [cli-ref][cli-ref] |
 | `claude auth status` | Auth status as JSON. `--text` for human-readable | [cli-ref][cli-ref] |
-| `claude agents` | List configured subagents by source | [cli-ref][cli-ref] |
+| `claude agents` | Open agent view (research preview) to monitor and dispatch background sessions; `--cwd <path>` filters by directory, `--json` prints active sessions | [cli-ref][cli-ref] |
 | `claude auto-mode defaults` | Print built-in auto-mode classifier rules as JSON | [auto-mode][auto-mode] |
 | `claude auto-mode config` | Show effective auto-mode config with settings applied | [auto-mode][auto-mode] |
 | `claude mcp` | Configure MCP servers | [mcp][mcp] |

@@ -11,7 +11,8 @@ CC configuration features: hooks, model routing, execution modes.
 | [CC-bash-mode-analysis.md](CC-bash-mode-analysis.md) | Bash mode capabilities and sandbox interaction |
 | [CC-loop-cron-analysis.md](CC-loop-cron-analysis.md) | Loop and cron scheduling patterns |
 | [CC-env-vars-reference.md](CC-env-vars-reference.md) | Consolidated CLAUDE_CODE_* env vars reference |
-| [CC-monitoring-telemetry-analysis.md](CC-monitoring-telemetry-analysis.md) | First-party OTel telemetry: span hierarchy, trace propagation, privacy gates, cardinality controls |
+| [CC-monitoring-telemetry-analysis.md](CC-monitoring-telemetry-analysis.md) | First-party OTel telemetry: span hierarchy, trace propagation, privacy gates, cardinality controls, cost attribution |
+| [CC-managed-settings-fleet-analysis.md](CC-managed-settings-fleet-analysis.md) | Fleet policy: managed-settings delivery channels, ranking, Enterprise group configs, fail-closed startup, managed-only keys, verification |
 | [CC-tools-inventory.md](CC-tools-inventory.md) | 28 public tools (CC 2.1.83) + internal/gated tools appendix, feature flags |
 | [CC-models-reference.md](CC-models-reference.md) | Newest Claude model (Fable 5.2) + free-tier/OSS provider snapshot behind the provider-configuration doc |
 | [CC-binary-architecture.md](CC-binary-architecture.md) | CLI binary + VS Code extension internals: build system, shared codebase, internal API endpoints, model IDs |
