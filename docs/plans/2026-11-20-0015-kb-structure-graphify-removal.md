@@ -1,0 +1,103 @@
+---
+title: Remove graphify; strengthen topic hubs, frontmatter, indices and cross-references
+status: approved
+issue: "#935"
+created: 2026-11-20
+updated: 2026-11-20
+---
+
+Tracking issue: #935. Successor to [plan 0014](2026-11-15-0014-kb-strengthening.md) (`#848`): its
+open rows moved here unchanged (they keep their `13-` IDs), so there is one live plan and
+`make reconcile`, which reads only the newest plan, checks all of it.
+
+## Current status
+
+**Read this first.** Plan opened 2026-11-20 from the owner's request: "remove graphify and all
+remnants", and "strengthen the topics, frontmatter and indices and cross-refs instead". Earlier the
+same day the owner approved a simpler doc graph (docs only, one edge per linked pair) that redeploys
+after every merge, and asked to keep live search and topic checkboxes. Nothing in this plan has
+shipped yet. The approach below follows an advisory review (Fable, read-only) whose line references
+the lead re-checked at source.
+
+**Do now, in order:**
+
+1. `git pull`, `make reconcile`, open PRs (merge the weekly paper-triage bot PR first if one is open).
+2. Owner decisions D1–D6 below: each has a default; work proceeds on the default unless the owner
+   overrides it on the plan PR or in conversation.
+3. G1 (removal), then G2 (simple doc graph), then F1 to F3 (frontmatter), then X1 to X3 (coverage
+   checks), each its own branch and PR, striking its row in the same PR.
+4. Module changes follow strict TDD (failing test first): G2, F2, X1, X2, X3. G1 removes code and its
+   tests together, so the test count drops below 247; that is expected.
+
+**The loop** (same as plan 0014): one branch per row; doc-heavy rows (F3, X2 backfill) run as worktree
+lanes, at most three at once, per bucket so they don't share files; two falsification passes for any
+row that adds or changes factual claims; `make check_docs`, `make test`, `make reconcile` before
+pushing; squash-merge once CI is green (lychee failures on known bot-blocked links are not grounds to
+add excludes); delete the branch and worktree.
+
+**Watch-outs:**
+
+- Metadata-only edits (frontmatter keys, hub rows) don't bump a doc's `updated:` date.
+- New checks start lenient and turn strict once the backfill is done (the `doc_status.py` precedent);
+  a strict check on day one fails CI.
+- X3 will surface existing broken section anchors (lychee does not check fragments here); budget
+  for the fixes.
+- Don't edit `CHANGELOG.md` by hand; each PR adds a `changelog.d/` fragment.
+
+## Owner decisions (defaults apply until overridden)
+
+| ID | Question | Default |
+|---|---|---|
+| D1 | Research docs that analyse graphify as a third-party tool (`CC-code-tooling-landscape.md`, `CC-community-tooling-landscape.md`, `repo-to-docs-tools-landscape.md`, `agent-frameworks-infrastructure-landscape.md`, `cc-community/README.md`) | Keep them as research on a third-party tool, like any other catalog entry; remove only the sentences saying this repo uses graphify |
+| D2 | History: `CHANGELOG.md`, closed plans 0003, 0005 to 0009, the gold eval data `.github/scripts/data/gold/issues.items.jsonl` | Keep unchanged; only re-point plan 0006's link to the renamed architecture anchor |
+| D3 | Show docs inside the site with a markdown renderer | No for now: a node click opens the doc on GitHub in a new tab (GitHub already renders frontmatter, tables, relative links and anchors); kept as row V1 |
+| D4 | Share paperverse's engine (Vite, TypeScript, Three.js point cloud, sql.js search) | No, either way: different data (a link graph vs an embedding cloud) and this repo has no Node build; share only the EyeRest brand tokens, as now |
+| D5 | `status` vocabulary | Lifecycle only (`adopt`, `trial`, `assess`, `hold`, `research`, `reference`, `archived`, plus the plan tokens); product release words move to a new optional `release:` key; licence words leave frontmatter (the doc body states the licence) |
+| D6 | Hub coverage target | Every content doc in at least one topic hub, or on an owner-approved exempt list |
+
+## Source map
+
+| Row | Where |
+|---|---|
+| G1 | Local, untracked (remove first, before `.gitignore` changes, so a commit-all can't pick them up): `graphify-out/` (3.4 MB), `.claude/skills/graphify/`, the local graphify install, the memory note on the graphify rebuild. Tracked: `ui/graph.html` (662 KB); `scripts/render-graph-page.py`; `scripts/pages_build.py` `restyle_graph`, `filter_graph_data` and their test classes in `tests/test_pages_build.py`; `scripts/build-site-info.py` `--graph` and the graph commit in `site_info()` (plus its tests); `ui/build-info.js` `data-artifact="graph"` branch; `.github/workflows/gh-pages.yaml` comments and `--graph` argument; `Makefile` `GRAPHIFY*` variables and `graph-build`, `graph-html`, `graph-query`, `graph-explain`, `graph-path`, `graph-page` targets and the `preview` text; `ui/index.html` lines 46 and 84 (button, footer); `.gitignore` graphify block; `CONTRIBUTING.md` lines 143, 235, 244; `docs/architecture.md` § Knowledge Graph (graphify) (line 120 on; rename it, and re-point its three inbound anchors: `_topics/knowledge-graphs.md:8`, `_topics/visualization.md:12`, `sdlc-lcm/agent-substrate-reference-architecture.md:273`, plus plan 0006 line 60); `README.md` line 10 ("Live" links); `AGENT_LEARNINGS.md` § "graphify: never partial-update a uniformly-built graph" (keep the generic reconcile learning above it); "this repo uses graphify" sentences at `repo-to-docs-tools-landscape.md:81` and `agent-frameworks-infrastructure-landscape.md:402`. Keep `ui/vendor/vis-network.min.js` (the doc graph uses it) and fix its "graphify's renderer" description |
+| G2 | `.github/scripts/lib/doc_graph.py` (drop domain nodes and `cites` edges; keep `lines`/`fragments` in `build_graph` for the X-checks; add a tested slim projection for the site: docs with title, bucket and hubs, one edge per doc pair); `.github/scripts/build-doc-graph.py`; `ui/doc-graph.html` (search on the `input` event, dim non-matches, Enter zooms to the top hit; one checkbox per `docs/_topics/` hub plus "Unfiled" and "select all", hub membership from the hub rows; colour by folder; drop the domains toggle; click opens the doc on GitHub in a new tab); `.github/workflows/gh-pages.yaml` (remove the `paths:` filter so every merge to main redeploys); remove the dead badge fallback in `doc_graph`'s status lookup. A test build on 2026-11-20 gave 307 doc nodes and 1,452 doc pairs, about 190 KB of JSON instead of about 790 KB |
+| F1 | `CONTRIBUTING.md` frontmatter section. Required keys: `title`, `purpose`, `created`, `updated`, `validated_links`, `status`; optional: `source`, `category`, `platform_scope`, `test_run`, `release`. Fold `description` into `purpose`; drop `sources`, `version`, `authority`. Counts on 2026-11-20 over 261 content docs: `category` 51, `purpose` 232, `status` missing on 25 |
+| F2 | New `.github/scripts/lib/doc_frontmatter.py` (regex parsing, no YAML dependency, like `doc_status.py`): required keys, ISO dates, unknown keys, `status` and `release` vocabularies; `make check_frontmatter`, lenient mode first, wired into `make lint` and CI |
+| F3 | Migration over the content docs: about 33 release or licence words out of `status`, the 25 missing `status`, stray keys; shrink `VOCAB` in `doc_status.py`; switch F2 to strict |
+| X1 | New `.github/scripts/lib/doc_coverage.py` on top of `doc_graph.build_graph`: each content doc listed in its folder's README index and linked from at least one other doc (5 and 2 docs fail on 2026-11-20); strict |
+| X2 | Hub coverage in `doc_coverage.py`: a ratchet (`--max-unhubbed`, starting at 123) that may only go down; backfill hub rows per bucket; new hubs or exemptions need the owner |
+| X3 | Anchor check in `doc_coverage.py`: every `#fragment` in a doc-to-doc link exists as a heading slug in its target |
+| V1 | In-site doc view (vendored markdown renderer, docs copied into the Pages artifact, sanitised output) |
+| H1 | `.gitignore` gets `.claude/worktrees/` (a lane worktree was swept into a commit by `git add -A` on 2026-11-20); `docs/sdlc-lcm/evaluation-data-resources-landscape.md:126` links a jenova.ai page that returns 410 Gone: replace from a first-party source or remove the claim |
+
+## Remaining work
+
+| Row | Item | Gate | Done when |
+|---|---|---|---|
+| G1 | Remove graphify and every repo dependency on it (D1, D2 defaults) | agent | `git grep -i graphify` hits only `CHANGELOG.md`, closed plans, the gold data and the D1 research docs; `make test` and the Pages deploy pass; `graph.html` no longer published |
+| G2 | Simple doc graph: docs only, live search, topic-hub checkboxes, redeploy on every merge | agent | Site JSON holds only doc nodes; search filters as you type; hub checkboxes and "Unfiled" filter the graph; a merge that touches no docs still deploys |
+| F1 | Frontmatter schema and `status` vocabulary written into `CONTRIBUTING.md` (D5) | owner | Owner approves the schema on its PR |
+| F2 | `doc_frontmatter.py` check, lenient, in `make lint` and CI | agent | Tests written first and passing; the check runs in CI and reports without failing |
+| F3 | Migrate frontmatter to the schema; check goes strict | agent + owner spot-check | Strict check passes on all content docs |
+| X1 | README-index and inbound-link coverage check, strict | agent | Check in CI; the 5 unindexed and 2 unlinked docs fixed |
+| X2 | Topic-hub coverage ratchet and backfill (D6) | agent; owner for new hubs or exemptions | Unhubbed count at 0, or an owner-approved exempt list |
+| X3 | Section-anchor check for doc-to-doc links | agent | Strict check in CI; existing broken anchors fixed |
+| V1 | In-site doc view (D3) | owner | Owner decides yes or no |
+| H1 | Repo hygiene: ignore `.claude/worktrees/`; fix or drop the jenova.ai 410 link | agent | Both merged |
+| 13-A2 | gha-issue-triage: `_load_repo_context()` falls back to `AGENTS.md` when `CLAUDE.md` is absent, and follows a `CLAUDE.md` that only imports it (`@AGENTS.md`, this repo's form since 2026-11-12 — until then triage here sees just that one line) (TDD), release, bump consumers; then plan 0001's local cleanup (see source map). **Code shipped 2026-11-12:** `qte77/gha-issue-triage#132`, released as v0.7.0; this repo and gha-issue-triage's self-triage (`qte77/gha-issue-triage#135`) pin v0.7.0; all six active consumers now pin v0.7.1 (`qte77/agentic-job-offer-to-application-kit#494`, `qte77/cc-senses-plugin#158`, `qte77/claude-code-plugins#283`, `qte77/vlm-toolkit#34`, `qte77/analyze-stock-kpi#540`, `qte77/CellPlateVision-Prototype#12`; i3mega-pipettebot is archived). **Test-repo check passed 2026-11-20** (`qte77/CellPlateVision-Prototype#13`, closed with the evidence: its triage run used v0.7.1, and replaying `_load_repo_context()` at that commit on the repo loads `README.md` and `AGENTS.md`; the run log doesn't print the files read). Left: the local cleanup, in a fresh session | agent (sibling) | Release tag; a test repo with only `AGENTS.md` gets repo context in triage; the two parent `AGENTS.md` files and the symlink removed after a fresh session confirms rules still load |
+| 13-A5 | Labels from `decide()` in issue triage at a measured threshold (moved from plan 0012's Deferred list) | data | About 50 issues across the shadowed repos carry the shadow section; then sweep `hi` against the labels the existing triage set and decide |
+| 13-A7 | Drift checks for the decision models: (1) a monthly scheduled run of `decision-model-eval.yaml` on the gold sets, flagged against the 2026-11-10/11 baseline (AUC drop above about 0.03, Brier rise, recommended `hi` moving by 0.05 or more); (2) store each weekly paper run's decided / fallback / escalated counts (the artifact summary already prints "Decided via decide()") and flag a sustained fall in the decided share or a rise in escalations; (3) on about 10% of papers also run the chat call and track the disagreement rate. Pin model versions (`jev-1.13.0`, `clef`) and re-run the gold sets before any bump; set thresholds on one half of a gold set and report on the other. **Part (1) shipped 2026-11-12** (`#813`: `decision-model-eval.yaml` monthly on the 1st, `data/gold/baseline.json`, `decision-drift` issue; Brier shown, not flagged). A manual run the same day reproduced the Clef and Clef-flash baseline exactly, so run-to-run noise for Clef is nil on this evidence (Jev not re-run). **Part (2) shipped 2026-11-17** (`#875`): the committed triage reports already store each run's "Decided via decide()" line, so `lib/decide_counts.py` reads them and the monthly `decision-model-eval.yaml` run appends a per-run table to its summary and a note to `drift.md` (the `decision-drift` issue) when each of the last 3 runs' decided share is more than 0.10 below the earlier mean; it needs 6 runs before it can flag. First data point: W45, 88 of 100 decided. Escalations are not printed separately in the summary, so they are counted as fallbacks. Left: (3) the chat-call disagreement sample — ask the owner whether it earns its cost; the split-half thresholds belong to A8 | agent | Monthly workflow live with a baseline file; counts stored per run; disagreement sample in the summary |
+| 13-A8 | Gold-set refresh against the in-sample caveat: add a second paper week as a held-out set, a human spot-check of about 20 items, and real (not planted) off-topic issues | agent + owner spot-check | Second paper set and an issue set with real negatives in `.github/scripts/data/gold/`; H1 numbers re-reported out of sample |
+| 13-A9 | Paper extraction yield: 21 of 67 replies failed to parse on the W45 run (13-A4). Upstream issue qte77/gha-rxiv-paper-eval#111 proposes, undecided: JSON mode via `response_format` (Cloudflare lists the model as supported but doesn't document it on the OpenAI-compatible endpoint, so test first), one retry on a parse failure, and the failure count in `summary.md` | agent (sibling) | Fix released and pinned here; next weekly run's PARSE-FAILED share recorded in this row |
+| 13-O5 | Stale token variables. **Done 2026-11-13 as far as the container allows:** `GH_TOKEN` comes from this codespace's devcontainer mapping of an expired PAT secret; the mapping was already dropped upstream on 2026-07-22, but the codespace was never rebuilt. It is now removed from the machine's environment file and unset for new shells. Running processes keep it until a container rebuild, which is the full fix. `GITHUB_TOKEN` is the Codespaces-issued token and the commit signer uses it, so it stays; network calls to other repos keep needing the per-session workaround | owner | Codespace rebuilt (owner) |
+| 13-O10 | Cloudflare account details in public repos (owner audit 2026-11-13, checked at source). Shipped: `qte77/ldnmxx-hack#373` and `#374` (the account id is no longer pinned in the repo; `.env.example` carries a placeholder), `qte77/qte77.github.io#62` (a draft link removed). The open decisions (git history, the live Worker hostname, CI secrets) and the step-by-step removal guide sit in the owner's private notes, not in this public plan, so it doesn't point at where the old values still are. An account id itself can't be changed; a new one means a new account | owner | Owner closes the private checklist |
+| 13-O11 | Community monitor's Reddit and X sources never run because their secrets are unset (#726; A3 made the skip visible) | owner | Owner decides: set the secrets with ToU-safe storage, or remove the two sources; #726 closed either way |
+| 13-O12 | Promote "a monitor step must fail on any exit code it doesn't expect" to the shared rules: third green-but-did-nothing occurrence (AGENT_LEARNINGS, `#837`) | owner | Owner decides; if yes, a PR to claude-code-plugins in the owner's words, `make sync`, version bump |
+
+**Deferred** (moved from plan 0012; gate: owner):
+
+- gha-ai-changelog and gha-repo-index decision-model ports: no consumer / AI off by default.
+- OpenAI Decisions and Perplexity adapters for `decide()`: beta APIs, no key.
+- Laya self-hosting: no use case yet.
+- Held research leads Originator, Serova, C3 (`#588`): waiting for first-party evidence.
+- The 143 "maybe" screenshot leads from batch 4 and the market-research / signal-to-concept leads: not pursued (low first-party substance).
