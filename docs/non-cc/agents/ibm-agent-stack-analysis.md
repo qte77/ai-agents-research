@@ -1,7 +1,7 @@
 ---
 title: IBM Agent Stack Analysis — watsonx Orchestrate and its Agent Development Kit
 purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate agent builder, ADK, external-agent and MCP/A2A support, model choice incl. Claude, identity, licence metrics, regions) for the cloud-agent-stacks synthesis (plan 0014 K34); no prices.
-category: non-cc/agents
+category: analysis
 created: 2026-11-20
 updated: 2026-11-20
 validated_links: 2026-11-20
@@ -12,19 +12,19 @@ status: assess
 runtime, catalog) and its open-source **Agent Development Kit (ADK)**. ML training is out of scope; data
 platforms are only linked ([data-platforms-lakehouse-landscape.md][data-platforms]). No prices are
 given; licence metrics are named only. Evidence is as of 2026-11-20 and labelled *documented* (vendor
-docs read now), *vendor claim*, or **unverified** (could not be read first-party). The IBM product docs
-site (`ibm.com/docs`) and `cloud.ibm.com/docs` are JavaScript or access-blocked for our fetchers, so
-everything on IAM role names is explicitly unverified; the ADK docs site and the pricing page were
-readable.
+docs read now), *index entry only* (listed in the ADK docs index, page not read) or **unverified**
+(could not be read first-party). The IBM product docs site (`ibm.com/docs`) and
+`cloud.ibm.com/docs` are JavaScript-rendered and were not read, so IAM role names are unverified; the
+ADK docs site and the pricing page were readable.
 
 ## What each name is
 
 | Name | What it is | Evidence |
 |---|---|---|
 | watsonx Orchestrate | IBM's SaaS agent platform: build native agents, import external ones, tools/catalog, control plane, chat channels | documented ([ADK docs][adk-agents], [pricing page][wxo-pricing]) |
-| Agent Development Kit (ADK) | Python library + `orchestrate` CLI to author, import and deploy agents/tools; MIT licence | documented ([repo][adk-repo], LICENSE read via GitHub API) |
-| Developer Edition | local, self-contained copy of Orchestrate run via a docker engine for iteration before connecting to a remote instance | documented ([ADK README][adk-readme]) |
-| watsonx.ai agents / Agent Lab | IBM's model-platform side; Orchestrate can register watsonx.ai agents as *external* agents | partly documented ([agents overview][adk-agents]); Agent Lab itself **unverified** |
+| Agent Development Kit (ADK) | Python library + `orchestrate` CLI to author, import and deploy agents/tools; the ADK repo is MIT-licensed | documented ([repo][adk-repo], licence field via GitHub API) |
+| Developer Edition | local, self-contained copy of Orchestrate run via a docker engine for iteration before connecting to a remote instance; needs a valid Developer Edition licence | documented ([ADK README][adk-readme], [setup][adk-setup]) |
+| watsonx.ai agents / Agent Lab | IBM's model-platform side; Orchestrate can register watsonx.ai agents as *external* agents | documented for external-agent registration ([agents overview][adk-agents]); Agent Lab itself **unverified** |
 | watsonx.governance | agent inventory/lifecycle monitoring | **unverified** first-party here; the ADK docs expose a "governance-monitoring" API (agent monitoring setup), see [Governance hooks](#governance-hooks) |
 
 ## Build and runtime
@@ -38,7 +38,7 @@ readable.
   an `external_chat/A2A/1.0.0` provider. GitHub's latest *release* object is 2.19.1 (2026-10-22, as of
   2026-11-20; MIT), so the docs run ahead of GitHub releases — treat the docs date as the newer signal.
 - Agents are versioned and released per **environment** (draft/live) through ADK commands and an
-  agent-releases API (documented in the [docs index][adk-index]).
+  agent-releases API (index entry only, [docs index][adk-index]).
 - Memory: an Agentic SDK exposes `/memories` and `/memories/search` APIs for "runs-on" custom agents
   ([memory page][adk-memory]); runtime memory for native agents beyond that was not read.
 
@@ -47,9 +47,10 @@ readable.
 - Built-in models listed in the [LLM docs][adk-llm]: gpt-oss-120b (Groq or AWS Bedrock; watsonx.ai on
   AWS GovCloud), Gemma 4 31B via Bedrock (public preview), GPT-5.4 via Azure OpenAI, and
   **claude-sonnet-4-6 via AWS Bedrock (public preview)**.
-- Claude availability is narrow: "selected regions only", not EU regions, not HIPAA tenants; the docs
-  list AWS us-east-1, ap-southeast-1, ap-south-1 and IBM Cloud Dallas, Toronto, Sydney, Tokyo, Sao
-  Paulo ([model availability][adk-llmstart], as of 2026-11-20).
+- Claude is "available only on SaaS tenants (not available in EU regions, HIPAA, AWS GovCloud
+  environments, or Developer Edition)" ([LLM docs][adk-llm], [availability][adk-llmstart], as of
+  2026-11-20). Regions: AWS us-east-1, ap-southeast-1, ap-south-1; IBM Cloud Dallas, Toronto, Sydney,
+  Tokyo, São Paulo. The availability table also shows no on-premises support.
 - Bring-your-own: virtual models can be registered for providers including `anthropic` (API key via a
   connection) and Bedrock-hosted Claude ([managing models][adk-llm]); model policies (public preview)
   add load-balance/fallback across virtual models ([policies][adk-policies]). Premier models such as
@@ -58,12 +59,15 @@ readable.
 
 ## MCP and A2A
 
-- **MCP:** local and remote MCP toolkits can be imported as tools, and the ADK docs include MCP-based
-  workflow publishing in public preview (index entries in [docs index][adk-index]).
+- **MCP:** local and remote MCP toolkits can be imported as tools, and a page titled "Running
+  agentic workflows with MCP (Public Preview)" exists (both **index entry only**, [docs
+  index][adk-index]); the ADK agent-design docs list "MCP tools & integration considerations" (also
+  index entry only).
 - **A2A:** external agents can be discovered from an A2A agent card; A2A 1.0.0 provider added in ADK
   2.20.0; LangGraph agents can be A2A-enabled ([connect to external agents][adk-connect]).
-- How Orchestrate itself is exposed as an A2A *server* was not verified; an A2A protocol-version API
-  exists in the API index.
+- The A2A API index lists a "supported A2A protocol versions" call and the docs mention an A2A role
+  (client or server); that hints at a server role but does not prove Orchestrate agents are callable
+  over A2A, so it is **unverified**.
 
 ## Identity, IdP and least privilege
 
@@ -75,10 +79,8 @@ readable.
   agent-to-system identity; **no separate "agent identity" object** was found.
 - **IdP (workforce SSO into Orchestrate):** **unverified.** The only first-party SSO material read is
   the Entra-to-Workday outbound tutorial above; IBM IAM federation/App ID options were not confirmed.
-- **Roles for build/deploy/invoke:** **unverified.** IBM Cloud IAM role names and the action-to-role
-  mapping for Orchestrate could not be read (docs pages are script-rendered). Do not cite role names
-  from this note. Ask the lead to re-check via a browser session on `ibm.com/docs` (Orchestrate
-  "Managing users and roles").
+- **Roles for build/deploy/invoke:** **not confirmed.** IBM Cloud IAM role pages (`ibm.com/docs`,
+  `cloud.ibm.com/docs`) are JS-rendered and were not read, 2026-11-20. No role names are given here.
 
 ## Governance hooks
 
@@ -98,21 +100,24 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
   use per user. This is a consumption/capacity model keyed to *active users*, not a named per-seat
   licence (reading of the table; vendor documents, not a contract).
 - Premier LLMs and some add-on agents are separately metered (MAU-based or API-call allowances).
-- The Developer Edition and ADK are free to install (MIT); a remote instance needs an Orchestrate
-  plan.
+- The ADK repo is MIT-licensed, but the [Developer Edition setup page][adk-setup] states you need a
+  valid Developer Edition licence, obtained by purchasing a SaaS or on-premises licence or via IBM
+  Sales; sign-in is by watsonx Orchestrate account (including a 30-day trial), myIBM entitlement key
+  or a custom image registry. So the ADK is open source; running the Developer Edition is not free
+  of an Orchestrate entitlement.
 
 ## At a glance
 
-| Item | IBM watsonx Orchestrate (+ ADK) |
+| Dimension | IBM watsonx Orchestrate (+ ADK) |
 |---|---|
-| Runtime | SaaS multi-tenant on AWS and IBM Cloud, AWS GovCloud (US), on-prem/air-gapped options; local Developer Edition |
-| Claude availability | claude-sonnet-4-6 via AWS Bedrock, public preview, selected regions, not EU/HIPAA; BYO Anthropic API key possible (documented) |
-| MCP / A2A | MCP toolkits local+remote (documented); A2A client for external agents, 1.0.0 provider in ADK 2.20.0 (documented) |
+| Runtime | SaaS on AWS and IBM Cloud, AWS GovCloud (US), on-premises; local Developer Edition (needs a licence) |
+| Claude availability | claude-sonnet-4-6 via AWS Bedrock, public preview, SaaS tenants only (not EU, HIPAA, GovCloud, Developer Edition); BYO Anthropic key possible (documented) |
+| MCP / A2A | MCP toolkits (index entry only); A2A external-agent client, 1.0.0 provider in ADK 2.20.0 (documented); A2A server role unverified |
 | Memory | Agentic SDK `/memories` APIs for custom agents (documented); native-agent memory unverified |
 | Agent identity and IdP | `ibm_iam`/`mcsp`/`cpd` auth; per-tool connections (OAuth, OBO SSO); no distinct agent-identity object found; workforce SSO/IdP unverified |
-| Least-privilege roles | **Unverified** (IBM docs not readable) |
-| Licences and who needs one | Plan tiers by MAU, messages, doc volume; premier models metered extra; no per-seat licence found; no prices here |
-| Regions | AWS and IBM Cloud regions, GovCloud (US), on-prem; Claude only in 3 AWS + 5 IBM Cloud regions |
+| Least-privilege roles | Not confirmed: IBM Cloud IAM role pages (ibm.com/docs, cloud.ibm.com/docs) are JS-rendered and were not read, 2026-11-20 |
+| Licences and who needs one | Plan tiers by MAU, messages, doc volume; premier models metered extra; no per-seat licence found; Developer Edition needs a licence; no prices here |
+| Regions | AWS and IBM Cloud regions, GovCloud (US), on-prem; Claude in 3 AWS + 5 IBM Cloud regions |
 | Release status | ADK 2.20.0 docs 2026-11-11 (GitHub latest release 2.19.1, 2026-10-22); Claude preview; model policies preview |
 
 ## Cross-References
@@ -136,6 +141,7 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
 | [Model policies][adk-policies] | fallback/load-balance, public preview |
 | [Enabling premier models][adk-premier] | premier models off by default, MAU cost note |
 | [Environments][adk-env] | `ibm_iam` / `mcsp` / `cpd` environment types |
+| [Developer Edition setup][adk-setup] | licence requirement, sign-in methods |
 | [SDK memory][adk-memory] | memory APIs for custom agents |
 | [ADK release notes][adk-release] | 2.20.0 (2026-11-11) |
 | [ADK repo][adk-repo] / [README][adk-readme] | MIT licence, Developer Edition, latest GitHub release 2.19.1 |
@@ -151,6 +157,7 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
 [adk-policies]: https://developer.watson-orchestrate.ibm.com/llm/model_policies.md
 [adk-premier]: https://developer.watson-orchestrate.ibm.com/llm/enable_premier_models.md
 [adk-env]: https://developer.watson-orchestrate.ibm.com/environment/initiate_environment.md
+[adk-setup]: https://developer.watson-orchestrate.ibm.com/developer_edition/wxOde_setup.md
 [adk-memory]: https://developer.watson-orchestrate.ibm.com/sdk/memory.md
 [adk-release]: https://developer.watson-orchestrate.ibm.com/release/release.md
 [adk-repo]: https://github.com/IBM/ibm-watsonx-orchestrate-adk
