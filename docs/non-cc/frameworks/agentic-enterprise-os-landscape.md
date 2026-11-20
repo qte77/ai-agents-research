@@ -22,7 +22,7 @@ All are proprietary SaaS; all govern **human-directed** agents (instructions, to
 | Platform | Vendor framing | Commercial model | Notable |
 |---|---|---|---|
 | **[Salesforce Agentforce 360][agentforce]** | "digital labor" platform | proprietary; Flex Credits (20 credits/standard action × $500/100k credits ≈ $0.10/action, multiplier unchanged between the 2026-08-18 and 2026-11-03 rate cards) + per-conversation (not combinable with Flex Credits in the same org) + per-user editions | Agentforce Builder (Canvas/Script views) / Agent Script (Apache-2.0 authoring toolchain, runtime excluded) / Voice on the Einstein/Atlas engine; the [LLM Open Connector spec][einstein] (Apache-2.0) is the only other OSS-adjacent piece; whether Agentforce Agents have *direct* A2A support is unsettled across Salesforce's own documentation (an architecture recipe and MuleSoft's own A2A-bridge guide say no, Salesforce's own interoperability guide says yes) — MuleSoft Agent Fabric's Agent Governance layer is at least the documented MCP+A2A path either way, no AG-UI; see [salesforce-agentforce-analysis.md][sf-agentforce-analysis] for the full first-party fact-check (pricing, Claude-on-Bedrock trust boundary, EU Operating Zone, data-masking scope, the A2A contradiction) |
-| **[Microsoft Copilot Studio][copilot-studio]** (+ Agent 365) | "platform for building and managing agents" | proprietary; in M365 Copilot ($30/user/mo) or Azure pay-as-you-go credits | declarative + autonomous (event-triggered) agents; Agent 365 is the governance control plane; A2A GA for the standard harness (April 2026), preview for the GitHub Copilot harness, now itself being renamed the Microsoft Copilot harness per Microsoft's own billing documentation ([licensing FAQ][managed-runtime-licensing-faq]) — Copilot Studio's own [what's new][copilot-studio-whats-new] page still calls it the GitHub Copilot harness throughout, as of its 2026-11-04 content date — a same-named "Copilot harness", documented separately from Microsoft Foundry's own "Copilot harness" and "managed runtime" (whether they share an implementation is not stated on either page) — see the caveat below; legacy Bot Framework (MIT) being archived |
+| **[Microsoft Copilot Studio][copilot-studio]** (+ Agent 365) | "platform for building and managing agents" | proprietary; in M365 Copilot (add-on, $30.00/user/month paid yearly on the US list page, 2026-11-20) or Azure pay-as-you-go credits | declarative + autonomous (event-triggered) agents; Agent 365 is the governance control plane; A2A GA for the standard harness (April 2026), preview for the GitHub Copilot harness, now itself being renamed the Microsoft Copilot harness per Microsoft's own billing documentation ([licensing FAQ][managed-runtime-licensing-faq]) — Copilot Studio's own [what's new][copilot-studio-whats-new] page still calls it the GitHub Copilot harness throughout, as of its 2026-11-04 content date — a same-named "Copilot harness", documented separately from Microsoft Foundry's own "Copilot harness" and "managed runtime" (whether they share an implementation is not stated on either page) — see the caveat below; legacy Bot Framework (MIT) being archived |
 | **[ServiceNow Otto][servicenow]** | "the AI control tower" | proprietary, cloud-only; bundled into Foundation/Advanced/Prime tiers (Apr 2026) | AI Agent Studio / Orchestrator / Control Tower + Action Fabric (MCP); vendor-neutral ("open to Claude, Copilot, or homegrown agents") |
 | **[SAP Joule Studio 2.0][sap-joule]** | "AI-first development environment" | proprietary; free design-time through 2026 (promotional), production terms TBD | NL goal → PRD + code + tests + multi-agent orchestration *at design time*; part of the SAP Business AI Platform ("the Autonomous Enterprise", Sapphire 2026) |
 | **[Databricks Genie][genie]** | "agentic data coworker" | proprietary managed; OSS lakehouse base (Spark / Delta / Iceberg) | Genie Ontology semantic graph as the persistent context "kernel"; Genie Agents as reusable autonomous workflows |
@@ -87,10 +87,14 @@ Sources and what is confirmed:
 - **Microsoft credit price:** "PayGo is priced at $0.01 per Copilot Credit", quoted in the analysis's
   [Cowork section][ms-cowork] from Microsoft's GA blog (2026-06-16); the Managed Runtime FAQ gives the same
   rate ([MS Managed Runtime][ms-managed-runtime], accessed 2026-11-10). Applying it to Copilot Studio is an assumption.
-- **Not confirmed:** a WebFetch summary of Microsoft's pricing pages ([enterprise][m365-pricing-ent],
-  [Copilot Studio][m365-pricing-cs]) showed a $30.00 seat and a $200-per-pack, 25,000-credit pack. These were not
-  confirmed from raw text on 2026-11-20 (the pages refuse non-browser fetchers), no currency was seen, and they are not
-  used in the math below.
+- **Microsoft list prices (confirmed from the rendered en-us pages, 2026-11-20):** the
+  [enterprise page][m365-pricing-ent] lists Microsoft 365 Copilot as an add-on at "$30.00 user/month, paid yearly",
+  needing a qualifying Microsoft 365 plan, and notes that "Prices shown are for marketing purposes only and may not
+  reflect the actual list price due to currency, country, and regional variant factors". The
+  [Copilot Studio page][m365-pricing-cs] lists "capacity packs of 25,000 Copilot Credits each, priced at $200.00
+  /pack/month" (that disclaimer was read on the enterprise page only). Both pages show "$" with no currency code and,
+  from the fetching machine, "This product is not available in your market". The pack price is not used in the math
+  below, which uses the PayGo rate.
 - **Salesforce ([pricing page][agentforce-pricing], raw text read 2026-11-20, consistent with the
   analysis's 2026-11-12 read):** "$500 per 100k Credits" and a "$5 USD/User/Month (Requires Flex Credits)" Agentforce User License (metered agent usage for employees). The 20-credit action figure comes from the
   [rate card PDF][sf-rate-card] ("Updated as of November 3, 2026": Standard/Custom Action 20, sandbox 16), not from
@@ -103,7 +107,7 @@ Flex "standard action" treated as comparable (they are not defined identically).
 |---|---|---|
 | Credits for 100,000 actions | 100,000 x 5 = 500,000 | 100,000 x 20 = 2,000,000 |
 | Monthly credit cost | 500,000 x $0.01 = $5,000 | 2,000,000 / 100,000 x $500 = $10,000 |
-| Employee user licence | Scenario 1, users not Copilot-licensed or agent autonomous: credits as above. Scenario 2, licensed users under their own identity: no credits; seat price unconfirmed | 500 x $5 = $2,500 on top, as the licence requires Flex Credits (both "$", currency not stated on the fetched summary) |
+| Employee user licence | Scenario 1, users not Copilot-licensed or agent autonomous: credits as above. Scenario 2, licensed users under their own identity: no credits; the seat is $30.00/user/month, paid yearly (list price, see above) | 500 x $5 = $2,500 on top, as the licence requires Flex Credits (both "$", currency not stated on the fetched summary) |
 
 Not captured: base suites and seats, Agent 365, Max Edition and add-ons, overage and enforcement rules, reasoning-token
 charges, prompt/LLM rows and Data 360 on the rate card, discounts, commitments, other currencies, and the fair-use
@@ -191,7 +195,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 
 | Source | Content |
 |---|---|
-| [M365 Copilot pricing][m365-pricing-ent], [Copilot Studio pricing][m365-pricing-cs], [billing rates][cs-billing-rates], [Agentforce pricing][agentforce-pricing], [Flex Credits rate card][sf-rate-card] | Rates for the worked example; Learn billing rates, the rate card and the Salesforce pricing page confirmed from raw text 2026-11-20; Microsoft pricing pages via WebFetch summary only |
+| [M365 Copilot pricing][m365-pricing-ent], [Copilot Studio pricing][m365-pricing-cs], [billing rates][cs-billing-rates], [Agentforce pricing][agentforce-pricing], [Flex Credits rate card][sf-rate-card] | Rates for the worked example; Learn billing rates, the rate card and the Salesforce pricing page confirmed from raw text 2026-11-20; Microsoft pricing pages from the rendered en-us pages (headless browser) 2026-11-20 |
 | [Salesforce Agentforce (news)][agentforce] | Agentforce 360 "digital labor" platform; per-action/Flex-Credit billing |
 | [salesforce/einstein-platform][einstein] | LLM Open Connector spec (Apache-2.0) — the OSS-adjacent connector piece |
 | [Microsoft Copilot Studio overview][copilot-studio] | "Platform for building and managing agents"; declarative + autonomous agents |
