@@ -29,7 +29,7 @@ or the repo, read as data only.
 | Web Assets Generator Skill | <https://github.com/alonw0/web-asset-generator> | dropped | single-purpose skill, last push 2026-01-28 |
 | Claude Mountaineering Skills | <https://github.com/dreamiurg/claude-mountaineering-skills> | dropped | domain-specific (mountain route research) |
 | Laravel TALL Stack AI Development Starter Kit | <https://github.com/tott/laravel-tall-claude-ai-configs> | dropped | stack-specific config, last push 2025-08-08 |
-| read-only-postgres | <https://github.com/jawwadfirdousi/agent-skills> | dropped | tiny skill; repo link guessed from the report author, not confirmed |
+| read-only-postgres | — | dropped | no longer listed in either awesome list; repo not resolved |
 | cclogviewer | <https://github.com/Brads3290/cclogviewer> | dropped | 86 stars, last push 2025-08-08 |
 | AI Agent, AI Spy |  | dropped | not a tool (no longer in the awesome list README), no repo |
 | MyVibe | <https://www.myvibe.so> | dropped | hosted publish service, no repo |
