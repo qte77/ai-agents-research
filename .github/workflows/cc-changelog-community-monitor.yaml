@@ -48,13 +48,14 @@ jobs:
           sed -n 's/^WARNING: Skipping \(.*\)$/::warning::Skipped source: \1/p' /tmp/monitor-stderr.txt
           cat /tmp/report.md >> "$GITHUB_STEP_SUMMARY"
 
-          # An uncaught crash also exits 1; a real "new content" run always prints a report
-          if [ ! -s /tmp/report.md ]; then
-            echo "::error::community-monitor.py produced an empty report (exit $EXIT_CODE)"
-            exit 1
-          fi
-
           if [ $EXIT_CODE -eq 1 ]; then
+            # Defense in depth: a bad-input exit once read as "new content" and merged
+            # 0-byte reports (wrong --community-docs-dir, fixed 2026-06-07); a real
+            # "new content" run always prints a report.
+            if [ ! -s /tmp/report.md ]; then
+              echo "::error::community-monitor.py exited 1 with an empty report"
+              exit 1
+            fi
             echo "new_content=true" >> "$GITHUB_OUTPUT"
           elif [ $EXIT_CODE -eq 0 ]; then
             echo "new_content=false" >> "$GITHUB_OUTPUT"

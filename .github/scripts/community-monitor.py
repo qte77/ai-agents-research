@@ -27,7 +27,7 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.community_sources import extract_html_entries, extract_markdown_entries
+from lib.community_sources import extract_markdown_entries
 from lib.monitor_utils import SourceSkipped, fatal, fetch_text, run_monitor
 
 SOURCES: list[dict[str, str]] = [
@@ -137,9 +137,7 @@ def fetch_and_extract_source(source: dict[str, str]) -> list[dict[str, str]]:
         return fetch_x_tweets(source["url"], _require_env("X_BEARER_TOKEN")[0])
 
     content = fetch_text(source["url"])
-    if source["type"] == "markdown":
-        return extract_markdown_entries(content)
-    return extract_html_entries(content)
+    return extract_markdown_entries(content)
 
 
 def main() -> None:
