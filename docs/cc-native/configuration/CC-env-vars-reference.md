@@ -2,7 +2,7 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-11-19
+updated: 2026-11-20
 validated_links: 2026-11-18
 status: adopt
 ---
@@ -107,6 +107,8 @@ Standard `OTEL_*` variables (per the [OpenTelemetry specification][otel-spec]) t
 | `OTEL_LOGS_EXPORT_INTERVAL` | `5000` ms | Logs export interval |
 | `OTEL_TRACES_EXPORT_INTERVAL` | `5000` ms | Span batch export interval |
 | `OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE` | `delta` | Set to `cumulative` if backend requires it |
+| `OTEL_RESOURCE_ATTRIBUTES` | — | Custom `key=value` attributes (comma-separated, no spaces in values) on every metric and event, e.g. `team.id`, `cost_center`; see [cost attribution][telemetry-cost-attr] |
+| `OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES` | `true` | `false` keeps `OTEL_RESOURCE_ATTRIBUTES` keys in the resource block only, off metric labels |
 
 ### OpenTelemetry Privacy Gates
 
@@ -416,6 +418,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 [debug-config]: https://code.claude.com/docs/en/debug-your-config
 [tools-ref]: https://code.claude.com/docs/en/tools-reference#bash-tool-behavior
 [monitoring]: https://code.claude.com/docs/en/monitoring-usage
+[telemetry-cost-attr]: CC-monitoring-telemetry-analysis.md#cost-attribution
 [otel-spec]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options
 [statusline]: https://code.claude.com/docs/en/statusline
 [gh-9359]: https://github.com/anthropics/claude-code/issues/9359

@@ -63,6 +63,7 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 | [CC-web-auth-setup-analysis.md § Org-Level Rate Limits and Spend Caps](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#org-level-rate-limits-and-spend-caps) | Spend caps and workspace limits for API keys | cc-native |
 | [CC-web-auth-setup-analysis.md § Monitoring Org Spend — Usage and Cost Admin API](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#monitoring-org-spend--usage-and-cost-admin-api) | Org spend reports per key, workspace and model | cc-native |
 | [CC-session-cost-analysis.md § Relationship to Statusline](../cc-native/sessions/CC-session-cost-analysis.md#relationship-to-statusline) | Live cost and context in the status line; see the [statusline.sh](../cc-native/examples/statusline.sh) example | cc-native |
+| [CC-monitoring-telemetry-analysis.md § Cost attribution](../cc-native/configuration/CC-monitoring-telemetry-analysis.md#cost-attribution) | Team and cost-centre tags, per-subagent spend from `agent_id`, per-user options by billing path | cc-native |
 | [CC-usage-tooling-landscape.md § Optimization Rules](../cc-community/CC-usage-tooling-landscape.md#optimization-rules) | CodeBurn's waste-detection rules | cc-community |
 | [CC-usage-tooling-landscape.md](../cc-community/CC-usage-tooling-landscape.md) | ccusage, Claude-Code-Usage-Monitor, cc-costline | cc-community |
 
