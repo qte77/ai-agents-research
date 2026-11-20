@@ -11,6 +11,7 @@ Usage:
 Exit codes:
     0 = no new uncovered content
     1 = new content found (workflow should open a PR)
+    2 = fatal error (bad input, or no source returned any entries)
 """
 
 import argparse

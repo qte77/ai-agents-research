@@ -315,6 +315,11 @@ def run_monitor(
     report, has_new = build_report(source_results, report_title, script_name)
     print(report)
 
+    # Reason: a run that fetched nothing (every source skipped, failed or empty) is an
+    # outage, not "no new content"; exit 2 fails the job instead of merging an empty report.
+    if sum(r["total"] for r in source_results) == 0:
+        fatal("ERROR: no entries fetched from any source")
+
     sys.exit(1 if has_new else 0)
 
 

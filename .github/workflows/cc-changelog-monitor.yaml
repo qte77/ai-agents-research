@@ -86,8 +86,11 @@ jobs:
 
           if [ $NATIVE_EXIT -eq 1 ]; then
             echo "new_native=true" >> "$GITHUB_OUTPUT"
-          else
+          elif [ $NATIVE_EXIT -eq 0 ]; then
             echo "new_native=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::native-sources-monitor.py failed (exit $NATIVE_EXIT)"
+            exit "$NATIVE_EXIT"
           fi
 
       - name: Create triage PR

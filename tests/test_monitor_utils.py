@@ -191,9 +191,42 @@ class RunMonitorSkipTests(unittest.TestCase):
                 with self.assertRaises(SystemExit) as cm:
                     mu.run_monitor([{"name": "down", "description": "d"}], fetch, docs,
                                    Path(tmp) / "state.json", "R", "x.py")
-            self.assertEqual(cm.exception.code, 0)
+            self.assertEqual(cm.exception.code, 2)  # nothing fetched: fail, don't pass as clean
             self.assertIn("- Skipped: fetch failed (OSError)", out.getvalue())
             self.assertNotIn("secret-ish", out.getvalue())
+
+    def _run(self, fetch, state=None):
+        with tempfile.TemporaryDirectory() as tmp:
+            docs = Path(tmp) / "docs"
+            docs.mkdir()
+            state_file = Path(tmp) / "state.json"
+            if state:
+                mu.save_state(state_file, state)
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as cm:
+                    mu.run_monitor([{"name": "s", "description": "d"}], fetch, docs, state_file, "R", "x.py")
+            return cm.exception.code
+
+    def test_healthy_run_with_all_entries_already_seen_exits_zero(self):
+        entry = {"name": "Fresh subagent topic", "url": "u1", "description": ""}
+        seen = {"s": [mu.entry_fingerprint(entry)]}
+        self.assertEqual(self._run(lambda _s: [entry], seen), 0)
+
+    def test_all_sources_skipped_fails(self):
+        def fetch(_source):
+            raise mu.SourceSkipped("TOKEN not set")
+
+        self.assertEqual(self._run(fetch), 2)
+
+    def test_run_with_no_entries_fetched_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            docs = Path(tmp) / "docs"
+            docs.mkdir()
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as cm:
+                    mu.run_monitor([{"name": "empty", "description": "d"}], lambda _s: [], docs,
+                                   Path(tmp) / "state.json", "R", "x.py")
+            self.assertEqual(cm.exception.code, 2)
 
 
 if __name__ == "__main__":

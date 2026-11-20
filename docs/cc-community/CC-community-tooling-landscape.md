@@ -5,7 +5,7 @@ category: landscape
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-19
+updated: 2026-11-20
 validated_links: 2026-11-12
 ---
 
@@ -554,6 +554,25 @@ Not rubric-scored yet.
 
 ---
 
+## Registry catch-up: awesome-list entries (2026-11-20)
+
+Seven entries that the community monitor flagged from the two awesome lists and that this corpus
+did not yet cover. Star counts, licences and descriptions come from each repo's `gh api` record and
+`LICENSE` file on 2026-11-20; what each tool does is the repo's own description, not tested here.
+Not scored. Each flagged name's outcome (folded, covered or dropped, with a reason) is in [the K27 name-outcomes record](../../triage/community/2026-11-20-k27-name-outcomes.md).
+
+| Tool | Stars | Licence | What the repo describes |
+|---|---|---|---|
+| [claude-code-infrastructure-showcase][infra-showcase] | 10,058 | MIT | Reference library, not an app: auto-activating skills via hooks, modular skills, agents, a dev-docs system that survives context resets |
+| [QualityLayer (formerly Claude CodePro)][codepro] | 2,152 | Source-available commercial ("QualityLayer"), not OSI | Plan, implement and verify workflow across coding agents |
+| [skill-codex][skill-codex] | 1,479 | MIT | Claude Code skill that delegates prompts to Codex |
+| [claude-codex-settings][codex-settings] | 1,214 | Apache-2.0 | Shared Claude Code, Codex and Cursor configs, plugins and hooks |
+| [claude-code-docs (ericbuess)][docs-mirror] | 1,005 | MIT (per `LICENSE`) | Local mirror of the official Claude Code docs |
+| [ultraship][ultraship] | 124 | MIT | Plugin bundle for building and shipping production software (README: 43 skills, 37 audit tools; counts drift) |
+| [fable-baton][fable-baton] | 30 | MIT | Plugin that makes a top-tier model the orchestrator and tiered cheaper agents do the labour (a Fable-5-as-orchestrator design) |
+
+---
+
 ## Detailed Tool Landscapes
 
 Per-tool entries for three categories have moved to focused topic docs; the cross-tool comparison below still covers all of them:
@@ -643,6 +662,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Context-Efficient Backpressure for Coding Agents][hlyr-backpressure] | 4-layer token-waste reduction ladder: env vars, hook filters, wrapper scripts, output-style skills (hlyr.dev, 2025-12-09) |
 | [LLMLingua][llmlingua] | Microsoft prompt-compression library (LLMLingua / LongLLMLingua / LLMLingua-2); README compression claims (6.3K stars, MIT) |
 | [Selective Context][selective-context] | Self-information prompt pruning; arXiv:2310.06201 (423 stars, MIT; unmaintained since 2024) |
+| Registry catch-up repos: [infrastructure showcase][infra-showcase] · [QualityLayer][codepro] · [skill-codex][skill-codex] · [claude-codex-settings][codex-settings] · [claude-code-docs][docs-mirror] · [ultraship][ultraship] · [fable-baton][fable-baton] | Stars, licences and descriptions from each repo's `gh api` record and `LICENSE`/README, 2026-11-20 |
 | [semantic-router][semantic-router] | Aurelio Labs semantic routing/decision layer — skips LLM calls for recognized intents (3.6K stars, MIT) |
 
 [graphify]: https://github.com/safishamsi/graphify
@@ -692,3 +712,10 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [selective-context]: https://github.com/liyucheng09/Selective_Context
 [semantic-router]: https://github.com/aurelio-labs/semantic-router
 [cc-settings-ref-git]: https://code.claude.com/docs/en/settings-reference#includegitinstructions
+[infra-showcase]: https://github.com/diet103/claude-code-infrastructure-showcase
+[codepro]: https://github.com/maxritter/qualitylayer
+[skill-codex]: https://github.com/skills-directory/skill-codex
+[codex-settings]: https://github.com/fcakyon/claude-codex-settings
+[docs-mirror]: https://github.com/ericbuess/claude-code-docs
+[ultraship]: https://github.com/Houseofmvps/ultraship
+[fable-baton]: https://github.com/realgarit/fable-baton

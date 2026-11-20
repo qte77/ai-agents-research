@@ -1,4 +1,4 @@
-# Polls community sources (claudelog.com, awesome-claude-code, Reddit, X) for
+# Polls community sources (awesome-claude-code, awesome-claude-code-plugins, Reddit, X) for
 # Claude Code tips and features not yet covered by community docs.
 # Opens a triage PR when new uncovered content is found.
 name: Community Monitor
@@ -49,6 +49,13 @@ jobs:
           cat /tmp/report.md >> "$GITHUB_STEP_SUMMARY"
 
           if [ $EXIT_CODE -eq 1 ]; then
+            # Defense in depth: a bad-input exit once read as "new content" and merged
+            # 0-byte reports (wrong --community-docs-dir, fixed 2026-06-07); a real
+            # "new content" run always prints a report.
+            if [ ! -s /tmp/report.md ]; then
+              echo "::error::community-monitor.py exited 1 with an empty report"
+              exit 1
+            fi
             echo "new_content=true" >> "$GITHUB_OUTPUT"
           elif [ $EXIT_CODE -eq 0 ]; then
             echo "new_content=false" >> "$GITHUB_OUTPUT"
