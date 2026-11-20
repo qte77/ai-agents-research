@@ -1,6 +1,6 @@
 ---
 title: Agentic Enterprise OS Landscape
-purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves; includes a comparison of agent registries (A2A, MCP Registry, AWS, Google, Agent 365, Agentforce).
+purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves; includes a comparison of agent registries (A2A, MCP Registry, AWS, Google, Agent 365, Agentforce) and a Microsoft 365 Copilot vs Agentforce 360 comparison with an illustrative pricing example.
 category: landscape
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, lyzr, self-hosted-oss, claude-code]
 created: 2026-06-28
@@ -17,7 +17,7 @@ This doc maps the pattern across three tiers and contrasts the human-governed en
 
 ## Tier 1 — Enterprise vendor platforms
 
-All are proprietary SaaS; all govern **human-directed** agents (instructions, topics, guardrails); all interoperate via **MCP + A2A** and **none has adopted AG-UI** (see [ag-ui-protocol-landscape][ag-ui]); and — the load-bearing gap — **none exposes a machine-writable goal schema, autonomous goal generation, or per-run cost+outcome attribution**. Cost is billed per action or per consumption, not attributed to a goal. A per-*agent* cost view does exist: Agent 365 breaks Copilot Credits down by user, group, agent and service ([overview][agent365-overview]), but not by run or outcome. Registries are compared in [Agent registries compared](#agent-registries-compared).
+All are proprietary SaaS; all govern **human-directed** agents (instructions, topics, guardrails); all interoperate via **MCP + A2A** and **none has adopted AG-UI** (see [ag-ui-protocol-landscape][ag-ui]); and — the load-bearing gap — **none exposes a machine-writable goal schema, autonomous goal generation, or per-run cost+outcome attribution**. Cost is billed per action or per consumption, not attributed to a goal. A per-*agent* cost view does exist: Agent 365 breaks Copilot Credits down by user, group, agent and service ([overview][agent365-overview]), but not by run or outcome. Registries are compared in [Agent registries compared](#agent-registries-compared); Microsoft 365 Copilot and Agentforce 360 are compared side by side in [Microsoft 365 Copilot vs Salesforce Agentforce 360](#microsoft-365-copilot-vs-salesforce-agentforce-360).
 
 | Platform | Vendor framing | Commercial model | Notable |
 |---|---|---|---|
@@ -58,51 +58,58 @@ and Foundry hosted agents) is in
 
 ## Microsoft 365 Copilot vs Salesforce Agentforce 360
 
-A side-by-side of the two Tier 1 platforms with the deepest first-party analyses. Each cell
-is a pointer into [the Microsoft analysis][ms-analysis] ("MS") or [the Salesforce analysis][sf-agentforce-analysis]
-("SF"), which carry the evidence levels; this table does not restate them. Registries and
-governance are in [Agent registries compared](#agent-registries-compared).
+Tier 1 has a Copilot Studio row and an Agentforce row; this section widens the Microsoft side to Microsoft 365
+Copilot and sets it against Agentforce 360. Each cell points into [the Microsoft analysis][ms-analysis] ("MS") or
+[the Salesforce analysis][sf-agentforce-analysis] ("SF"), which carry the evidence levels; this table does not
+restate them.
 
 | Dimension | Microsoft 365 Copilot | Salesforce Agentforce 360 |
 |---|---|---|
-| Target user and surfaces | Employees inside Microsoft 365 apps, Copilot Chat, Cowork; customer-facing agents via Copilot Studio ([MS stack][ms-stack], [Cowork][ms-cowork]) | CRM-centred: service, sales, Slack, Voice, plus employee agents ([SF products][sf-products]) |
-| Agent builders | Agent Builder (low-code), Agents Toolkit (pro-code), Copilot Studio, Foundry ([MS declarative][ms-da], [MS stack][ms-stack]) | Agentforce Builder (Canvas/Script), Agent Script authoring toolchain Apache-2.0 with runtime excluded ([SF products][sf-products], [SF Agent Script][sf-script]) |
-| Runtime / harness | Several "harnesses" with different billing; Managed Runtime is preview ([MS harness][ms-harness]) | Salesforce-hosted reasoning engine; Headless 360 exposes capabilities as API, MCP or CLI ([SF products][sf-products]) |
+| Target user and surfaces | Employees in Microsoft 365 apps, Copilot Chat and Cowork ([MS stack][ms-stack], [Cowork][ms-cowork]); customer-facing use is not compared here | Service, sales, Slack, Voice and role products ([SF surfaces][sf-surfaces]) |
+| Agent builders | Agent Builder (low-code), Agents Toolkit (pro-code), Copilot Studio, Foundry ([MS declarative][ms-da], [MS stack][ms-stack]) | Agentforce Builder (Canvas/Script); Agent Script toolchain is Apache-2.0, runtime excluded ([SF products][sf-products], [SF Agent Script][sf-script]) |
+| Runtime / harness | Three things called "harness" ([MS harness][m365-copilot-harness]); Managed Runtime is preview on Learn, while the Ignite post of 2026-11-17 announced GA ([MS Managed Runtime][ms-managed-runtime]); billing differs by harness ([MS stack][ms-stack]) | Atlas-based reasoning in Salesforce's trust boundary ([SF Claude][sf-claude]); Headless 360 exposes capabilities as API, MCP or CLI ([SF products][sf-products]) |
 | Models incl. Claude | Anthropic models selectable, but excluded from the EU Data Boundary ([MS residency][ms-residency]) | Claude via Amazon Bedrock inside the Salesforce trust boundary ([SF Claude][sf-claude]) |
-| MCP / A2A | MCP in Copilot Studio; Work IQ over A2A, MCP or REST ([MS grounding][ms-grounding]) | MCP via the registry and MuleSoft Agent Fabric; direct A2A on agents is contradicted across Salesforce's own docs ([SF registry][sf-registry], [SF status][sf-status]) |
-| Data grounding | Microsoft Graph, SharePoint, connectors, Work IQ ([MS grounding][ms-grounding]) | Salesforce data and Data 360; licensed credits metered per usage type ([SF pricing][sf-pricing]) |
-| Governance and registry | Agent 365 covers agents, not SharePoint skills ([MS governance][ms-governance]) | Agentforce Registry and MuleSoft Agent Fabric ([SF registry][sf-registry]) |
-| Identity | Entra-based; see the governance section ([MS governance][ms-governance]) | Agent-user and permission-set detail not read in the analysis; SSO/IdP federation for agent identity not found ([SF licences][sf-licences]) |
+| MCP / A2A | A bring-your-own MCP registry is preview and needs the Agent 365 licence ([MS governance][m365-agent365]); Copilot Studio A2A status is in the Tier 1 row; Work IQ is reached over A2A, MCP or REST ([MS grounding][ms-grounding]) | MCP via the registry and MuleSoft Agent Fabric; direct A2A on agents is contradicted in Salesforce's own docs ([SF registry][sf-agentforce-registry], [SF status][sf-status]) |
+| Data grounding | Microsoft Graph, SharePoint, connectors, Work IQ ([MS grounding][ms-grounding]) | Salesforce data and Data 360, metered per usage type ([SF pricing][sf-pricing]) |
+| Governance and registry | See [Agent registries compared](#agent-registries-compared) | See [Agent registries compared](#agent-registries-compared) |
+| Identity | Not compared in the analysis as a whole; Foundry hosted agents each get their own Entra identity ([MS Foundry][ms-stack]), Managed Runtime uses Entra ID ([MS Managed Runtime][ms-managed-runtime]) | Agent-user and permission-set detail not read; SSO/IdP federation for agent identity not found ([SF licences][sf-licences]) |
 | Licence model | Per-user add-on, plus Copilot Credits for unlicensed or autonomous use ([MS licences][ms-licences]) | Flex Credits, per-conversation (not combinable in one org), per-user editions ([SF pricing][sf-pricing]) |
 | Release status | Mixed GA and preview ([MS timeline][ms-timeline]) | Platform GA; many components pilot or beta ([SF status][sf-status]) |
 
-### Worked pricing example (list prices, USD, as of 2026-11-20)
+### Worked pricing example (illustrative; re-check before budgeting)
 
-Rates re-checked today on first-party pages: [Microsoft 365 Copilot pricing][m365-pricing-ent] ("$30.00" per user per
-month, paid yearly), [Copilot Studio pricing][m365-pricing-cs] (capacity pack "$200.00/pack/month", 25,000 credits),
-[Copilot Studio billing rates][cs-billing-rates] (agent action = 5 credits; no charge when a Microsoft 365
-Copilot-licensed user uses an employee-facing agent under their own identity, within fair use), the
-[Salesforce pricing page][agentforce-pricing] ("$500" per 100,000 Flex Credits, "$5" Agentforce User License) and the
-[Flex Credits rate card][sf-rate-card] ("Updated as of November 3, 2026"; standard or custom action = 20 credits).
+Sources and what is confirmed:
 
-Assumptions (invented, not a benchmark): 500 employees, 100,000 agent actions per month in total, treating one
-Copilot Studio "agent action" and one Flex "standard action" as comparable units (they are not defined identically).
+- **Microsoft credit rate (confirmed from Learn raw text, 2026-11-20):** an agent action is 5 Copilot Credits, premium
+  reasoning-model tokens 10 credits per 1,000 tokens ([billing rates][cs-billing-rates], ms.date 2026-10-30).
+  Employee-facing use by a Microsoft 365 Copilot-licensed user costs no credits only if the agent runs under that
+  user's own identity (footnote 1), and computer-using agents are not included (footnote 4).
+- **Microsoft credit price:** "PayGo is priced at $0.01 per Copilot Credit", quoted in the analysis's
+  [Cowork section][ms-cowork] from Microsoft's GA blog (2026-06-16); the Managed Runtime FAQ gives the same
+  rate ([MS Managed Runtime][ms-managed-runtime], accessed 2026-11-10). Applying it to Copilot Studio is an assumption.
+- **Not confirmed:** a WebFetch summary of Microsoft's pricing pages ([enterprise][m365-pricing-ent],
+  [Copilot Studio][m365-pricing-cs]) showed a $30.00 seat and a $200-per-pack, 25,000-credit pack. These were not
+  confirmed from raw text on 2026-11-20 (the pages refuse non-browser fetchers), no currency was seen, and they are not
+  used in the math below.
+- **Salesforce (WebFetch summary of the [pricing page][agentforce-pricing], 2026-11-20, consistent with the
+  analysis's 2026-11-12 read):** "$500" per 100,000 Flex Credits and a "$5" Agentforce User License that "requires Flex
+  Credits" (metered agent usage for employees). The 20-credit action figure comes from the
+  [rate card PDF][sf-rate-card] ("Updated as of November 3, 2026": Standard/Custom Action 20, sandbox 16), not from
+  the pricing page.
 
-| Line | Microsoft | Salesforce |
+Assumptions (invented): 100,000 agent actions per month, 500 employees, one Copilot Studio "agent action" and one
+Flex "standard action" treated as comparable (they are not defined identically).
+
+| Line | Microsoft (credits at $0.01) | Salesforce (Flex at $500 per 100,000) |
 |---|---|---|
 | Credits for 100,000 actions | 100,000 x 5 = 500,000 | 100,000 x 20 = 2,000,000 |
-| Credit cost per month | 500,000 / 25,000 = 20 packs x $200 = $4,000 | 2,000,000 / 100,000 = 20 x $500 = $10,000 |
-| Per-user licences | Scenario A: 500 x $30 = $15,000, actions then no charge | Optional 500 x $5 = $2,500 (Agentforce User License, needs Flex Credits) |
+| Monthly credit cost | 500,000 x $0.01 = $5,000 | 2,000,000 / 100,000 x $500 = $10,000 |
+| Employee user licence | Scenario 1, users not Copilot-licensed or agent autonomous: credits as above. Scenario 2, licensed users under their own identity: no credits; seat price unconfirmed | 500 x $5 = $2,500 on top, as the licence requires Flex Credits (both "$", currency not stated on the fetched summary) |
 
-Reading it: Microsoft can be $4,000 per month (credit packs, if the users are not Copilot-licensed or the agent runs
-autonomously) or $15,000 per month (licences, actions free within fair use); Salesforce is about $10,000 per month in
-credits, or $12,500 with the user licence. The scenarios differ by who is licensed, so the table shows no single winner.
-
-Not captured: base suites (Microsoft 365 E3/E5; Salesforce clouds and seats), Agent 365, Max Edition or add-on
-editions, Copilot Studio and Salesforce overage rules, reasoning-model token charges (10 credits per 1,000 tokens on
-the Microsoft side), prompt and LLM rows on the rate card, Data 360 consumption, discounts, annual commitments,
-non-USD pricing, and the Microsoft "marketing purposes only" price disclaimer. Salesforce's pricing page also says to
-contact sales for detailed pricing.
+Not captured: base suites and seats, Agent 365, Max Edition and add-ons, overage and enforcement rules, reasoning-token
+charges, prompt/LLM rows and Data 360 on the rate card, discounts, commitments, other currencies, and the fair-use
+limits. Salesforce's page says to contact sales for detailed pricing. Treat every figure as a snapshot, as both
+analyses' Pricing sections ask.
 
 ## Tier 2 — Open-source self-operating workspaces & runtimes
 
@@ -185,7 +192,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 
 | Source | Content |
 |---|---|
-| [M365 Copilot pricing][m365-pricing-ent], [Copilot Studio pricing][m365-pricing-cs], [billing rates][cs-billing-rates], [Agentforce pricing][agentforce-pricing], [Flex Credits rate card][sf-rate-card] | List prices and credit rates for the worked example, re-checked 2026-11-20 |
+| [M365 Copilot pricing][m365-pricing-ent], [Copilot Studio pricing][m365-pricing-cs], [billing rates][cs-billing-rates], [Agentforce pricing][agentforce-pricing], [Flex Credits rate card][sf-rate-card] | Rates for the worked example; Learn billing rates and the rate card confirmed 2026-11-20, pricing pages via WebFetch summary only |
 | [Salesforce Agentforce (news)][agentforce] | Agentforce 360 "digital labor" platform; per-action/Flex-Credit billing |
 | [salesforce/einstein-platform][einstein] | LLM Open Connector spec (Apache-2.0) — the OSS-adjacent connector piece |
 | [Microsoft Copilot Studio overview][copilot-studio] | "Platform for building and managing agents"; declarative + autonomous agents |
@@ -211,16 +218,15 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [ms-stack]: ../agents/microsoft-365-copilot-analysis.md#microsoft-agent-stack-2026-11-18
 [ms-cowork]: ../agents/microsoft-365-copilot-analysis.md#microsoft-copilot-cowork-ga-june-2026
 [ms-da]: ../agents/microsoft-365-copilot-analysis.md#declarative-agents
-[ms-harness]: ../agents/microsoft-365-copilot-analysis.md#three-things-called-harness
 [ms-residency]: ../agents/microsoft-365-copilot-analysis.md#residency-anthropic-excluded-from-the-eu-data-boundary-claude-on-foundry-has-no-eu-data-zone-either
 [ms-grounding]: ../agents/microsoft-365-copilot-analysis.md#grounding-layers
-[ms-governance]: ../agents/microsoft-365-copilot-analysis.md#governance-agent-365-covers-agents-not-sharepoint-skills
 [ms-licences]: ../agents/microsoft-365-copilot-analysis.md#licences-2026-11-18
 [ms-timeline]: ../agents/microsoft-365-copilot-analysis.md#timeline
+[ms-managed-runtime]: ../agents/microsoft-365-copilot-analysis.md#microsoft-copilot-managed-runtime-preview
+[sf-surfaces]: ../agents/salesforce-agentforce-analysis.md#naming-lineage-agentexchange-role-products-and-agent-surfaces
 [sf-products]: ../agents/salesforce-agentforce-analysis.md#products-and-timeline-what-agentforce-360-comprises
 [sf-script]: ../agents/salesforce-agentforce-analysis.md#agent-script-and-agentforce-dx
 [sf-claude]: ../agents/salesforce-agentforce-analysis.md#claude-inside-salesforces-trust-boundary-via-amazon-bedrock
-[sf-registry]: ../agents/salesforce-agentforce-analysis.md#agentforce-registry-and-mulesoft-agent-fabric
 [sf-status]: ../agents/salesforce-agentforce-analysis.md#announced-vs-shipped
 [sf-pricing]: ../agents/salesforce-agentforce-analysis.md#pricing-flex-credits-rate-card-as-of-2026-11-03
 [sf-licences]: ../agents/salesforce-agentforce-analysis.md#licences-and-roles-for-agentforce-agents
