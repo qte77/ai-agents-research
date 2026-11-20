@@ -1,4 +1,4 @@
-"""Unit tests for lib/community_sources.py (pure markdown + HTML extractors)."""
+"""Unit tests for lib/community_sources.py (pure markdown extractor)."""
 import sys
 import unittest
 from pathlib import Path
@@ -21,22 +21,6 @@ class MarkdownTests(unittest.TestCase):
             {"heading": "Tools", "name": "Ruff", "url": "https://ruff.rs", "description": "fast linter"},
             {"heading": "Tools", "name": "Black", "url": "", "description": "formatter"},
         ])
-
-
-class HtmlTests(unittest.TestCase):
-    def test_strips_script_tracks_version_heading_and_matches_features(self):
-        html = (
-            "<script>junk</script>"
-            "<p>v2.1.80 release notes</p>"
-            "<p>Added new plugin support for hooks and skills</p>"
-            "<p>tiny</p>"
-            "<p>just prose without any matching terms at all here</p>"
-        )
-        entries = cs.extract_html_entries(html)
-        self.assertEqual(len(entries), 1)
-        self.assertEqual(entries[0]["heading"], "v2.1.80 release notes")
-        self.assertEqual(entries[0]["description"], "Added new plugin support for hooks and skills")
-        self.assertNotIn("junk", entries[0]["description"])
 
 
 if __name__ == "__main__":
