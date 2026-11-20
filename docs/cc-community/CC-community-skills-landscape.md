@@ -4,7 +4,7 @@ description: Survey of community-built Claude Code skill libraries — gstack (f
 category: landscape
 status: research
 created: 2026-03-13
-updated: 2026-11-19
+updated: 2026-11-20
 validated_links: 2026-10-11
 ---
 
@@ -708,6 +708,27 @@ measured uplift. Cross-ref: WebMCP in
 [browser-agents-landscape.md](../non-cc/agents/browser-agents-landscape.md#webmcp), and the agent-readiness material in
 [ai-crawlers-discoverability-landscape.md](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md).
 
+## cursor/plugins pstack (Lauren Tan)
+
+**Repo**: [cursor/plugins `pstack/`][pstack-repo] | **License**: MIT (`pstack/LICENSE`, plugin.json 0.15.46) |
+repo 17,719 stars, `pstack/` last touched 2026-11-19 (`gh api`, 2026-11-20)
+
+A skill pack published in Cursor's own plugin repository (described as "Cursor plugin specification and
+official plugins") but also installable in Claude Code (`/plugin marketplace add cursor/plugins`, then
+`/plugin install pstack@cursor-plugins`). The author's stated aim (README, a claim not a measurement) is
+less but higher-quality code so that several agents can run in parallel with trust. The entry point is
+`/poteto-mode`, which per the README picks one of 22 playbooks (bug fix, perf, hillclimb, refactoring,
+babysit a PR, shipping, autonomous run, session pickup, worktree cleanup, opening a PR, and others),
+copies its steps into a todo list and calls the other skills as needed; `skills/` holds 58 entries
+(directory count, 2026-11-20). `/setup-pstack` writes model choices; in Claude Code it saves them to
+`~/.claude/rules/pstack-models.md`, and Cursor-only steps (Bugbot, automations) are skipped with a note.
+Defaults route many roles to named frontier models and a three-model review panel; that is configuration
+in the README, not a tested result.
+
+**Why it matters here.** A second vendor-hosted, cross-harness workflow pack on the gstack/Superpowers
+model: methodology delivered as a playbook-router skill plus a Claude Code adapter generated from the
+Cursor tree.
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -741,6 +762,7 @@ measured uplift. Cross-ref: WebMCP in
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
 | [stevesolun/ctx][ctx-repo] | Skill/agent/MCP/harness recommender over a bundled graph (587 stars, MIT; `gh api` 2026-10-02) |
 | [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (43,595 stars, MIT; `gh api` 2026-10-06) |
+| [cursor/plugins pstack][pstack-repo] | Playbook-router skill pack (22 playbooks) for Cursor, installable in Claude Code (MIT; `gh api` 2026-11-20) |
 | [wheresryan22/anatomy][anatomy] | Isometric interactive figure-generation Agent Skill, audited geometry + screenshot verification loop (3,109 stars, MIT; `gh api` 2026-10-11) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
@@ -770,5 +792,6 @@ measured uplift. Cross-ref: WebMCP in
 [cc-skills-adoption]: ../cc-native/agents-skills/CC-skills-adoption-analysis.md#ecosystem-context
 [rubric]: ../sdlc-lcm/agent-substrate-rubric.md
 [mwg-repo]: https://github.com/GoogleChrome/modern-web-guidance
+[pstack-repo]: https://github.com/cursor/plugins/tree/main/pstack
 [mwg-docs]: https://developer.chrome.com/docs/modern-web-guidance
 [mwg-evals]: https://googlechrome.github.io/modern-web-guidance-src/
