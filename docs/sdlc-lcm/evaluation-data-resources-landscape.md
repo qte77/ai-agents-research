@@ -46,7 +46,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 | Tool | Link | Focus | Notable |
 |---|---|---|---|
-| RAGAs | [github](https://github.com/explodinggradients/ragas) | RAG eval: context precision/recall, faithfulness | — |
+| RAGAs | [github](https://github.com/vibrantlabsai/ragas) | RAG eval: context precision/recall, faithfulness | — |
 | TruLens | [github](https://github.com/truera/trulens) | RAG Triad + agent feedback functions | — |
 | DeepEval | [github](https://github.com/confident-ai/deepeval) | Pytest-like LLM testing, 30+ metrics | 30+ research-backed metrics |
 | Confident AI | [site](https://www.confident-ai.com/) | Enterprise eval platform (DeepEval cloud) | 30+ judge metrics, HIPAA/SOC2 |
