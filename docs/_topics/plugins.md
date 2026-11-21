@@ -19,5 +19,13 @@ Extension packaging: plugins, MCP servers, marketplaces across the corpus. Point
 | [goose-analysis.md § AAIF](../non-cc/agents/goose-analysis.md#agentic-ai-foundation-aaif-governance-and-hosted-projects) | Agentic AI Foundation governance/hosted-projects; relevance to plugin/MCP standards is indirect (no dedicated AAIF plugin spec) | non-cc |
 | [agent-skill-evolution-research-landscape.md § AutoTailor](../non-cc/frameworks/agent-skill-evolution-research-landscape.md) | AutoTailor — auto-constructed, pruned MCP tool sets | non-cc |
 | [CC-community-skills-landscape.md § cursor/plugins pstack (Lauren Tan)](../cc-community/CC-community-skills-landscape.md#cursorplugins-pstack-lauren-tan) | Cursor's pstack plugin: playbooks installable in Claude Code via a marketplace | cc-community |
+| [CC-codex-plugin-cc-analysis.md](../cc-community/CC-codex-plugin-cc-analysis.md) | OpenAI's official Claude Code plugin that delegates work to Codex | cc-community |
+| [CC-compass-mcp-analysis.md](../cc-community/CC-compass-mcp-analysis.md) | compass-mcp MCP server: architecture and Claude Code integration | cc-community |
+| [CC-netdata-mcp-analysis.md](../cc-community/CC-netdata-mcp-analysis.md) | Netdata's built-in MCP server for incident-time infrastructure queries | cc-community |
+| [CC-business-api-integrations.md](../cc-native/plugins-ecosystem/CC-business-api-integrations.md) | Business MCP servers: payments, accounting, CRM, ERP, legal | cc-native |
+| [CC-channels-analysis.md](../cc-native/plugins-ecosystem/CC-channels-analysis.md) | Channels: MCP server plugins that push external events into running sessions | cc-native |
+| [CC-ide-integration-protocol.md](../cc-native/configuration/CC-ide-integration-protocol.md) | The WebSocket MCP protocol between the CLI and IDE extensions | cc-native |
+| [ag-ui-protocol-landscape.md](../non-cc/protocols/ag-ui-protocol-landscape.md) | Protocol triangle: AG-UI and A2UI (frontend), A2A (agent to agent), MCP (model to tools) | non-cc |
+| [rea-analysis.md](../non-cc/infrastructure/rea-analysis.md) | REA: MCP server and CLI giving coding agents reverse-engineering tools | non-cc |
 
 Related hubs: [skills.md](skills.md), [harness.md](harness.md).

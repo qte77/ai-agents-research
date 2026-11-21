@@ -43,5 +43,14 @@ Pointers only; see [the hub index](README.md).
 | [weco-aide-recursive-self-improvement-analysis.md § Harness search results](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md#harness-search-results) | The one home for harness search: AIDE², RRSI, Harness², Self-HPO, HarnessFlow and Meta-Harness compared on what is searched, what is held fixed, reported result and code | non-cc |
 | [CC-agentic-harness-patterns-analysis.md § Build vs Adopt a Harness](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#build-vs-adopt-a-harness-checked-2026-11-18) | Minimal loop, tool-set design, and Agent SDK / deepagents / Pi / OpenHarness compared (licence, latest release) | cc-native |
 | [software-factory-landscape.md § Economics, failure and verification evidence](../sdlc-lcm/software-factory-landscape.md#economics-failure-and-verification-evidence) | Agentic software factories measured: company claims (Stripe, Uber) kept apart from studies on review agents, post-merge maintenance, policy compliance, compounding failure and abstaining verification gates | sdlc-lcm |
+| [CC-community-reimplementations-landscape.md](../cc-community/CC-community-reimplementations-landscape.md) | Community rebuilds, ports and deconstructions of Claude Code | cc-community |
+| [CC-domain-claudemd-showcase.md](../cc-community/CC-domain-claudemd-showcase.md) | CLAUDE.md as a domain pipeline controller (genome-analysis case study) | cc-community |
+| [CC-openmontage-analysis.md](../cc-community/CC-openmontage-analysis.md) | OpenMontage's CLAUDE.md-as-domain-controller architecture | cc-community |
+| [CC-office-worker-workflows.md](../cc-community/CC-office-worker-workflows.md) | Office workflow patterns and parallel-task orchestrators (Vibe Kanban, Conductor, tmux tools) | cc-community |
+| [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) | Hooks for automation, quality gates and headless workflows | cc-native |
+| [CC-bash-mode-analysis.md](../cc-native/configuration/CC-bash-mode-analysis.md) | Bash mode and dynamic shell execution in skills and rules | cc-native |
+| [CC-stream-json-protocol.md](../cc-native/configuration/CC-stream-json-protocol.md) | The NDJSON event format of `--output-format stream-json` and stream chaining | cc-native |
+| [mas-design-principles.md](../sdlc-lcm/mas-design-principles.md) | Multi-agent design principles from 12-Factor Agents, Anthropic's harness guidance and PydanticAI | sdlc-lcm |
+| [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md) | Spec-driven development frameworks compared (Spec-Kit, OpenSpec, BMAD-METHOD, Kiro, Tessl and others) | non-cc |
 
 Related hubs: [skills.md](skills.md), [plugins.md](plugins.md), [long-running.md](long-running.md).

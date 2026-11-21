@@ -12,5 +12,6 @@ Visual output, agent-run visualizers and graph rendering across the corpus. Poin
 | [architecture.md § Doc Graph and Site](../architecture.md#doc-graph-and-site) | How this repo renders its doc graph page | repo |
 | [CC-community-skills-landscape.md § cathrynlavery/diagram-design](../cc-community/CC-community-skills-landscape.md#cathrynlaverydiagram-design) | diagram-design: editorial HTML+SVG diagram skill for Claude Code, Codex, Copilot, Droid and Pi (44 type references; its tagline says 42) | cc-community |
 | [CC-community-plugins-landscape.md § Notable Plugin Profile: lot-map](../cc-community/CC-community-plugins-landscape.md#notable-plugin-profile-lot-map-live-session-map-mod) | lot-map: a Claude Code mod drawing a live node-map pane of tool calls, hooks, subagents and skills as they happen | cc-community |
+| [agent-observability-methods-analysis.md](../non-cc/protocols/agent-observability-methods-analysis.md) | 18 observability platforms and five tracing patterns for agent behaviour | non-cc |
 
 Related hubs: [knowledge-graphs.md](knowledge-graphs.md).

@@ -12,6 +12,9 @@ and maintaining a benchmark, and domain benchmarks. Pointers only; see [the hub 
 | [evaluation-data-resources-landscape.md § Why This Catalog Exists: EDD as Methodology](../sdlc-lcm/evaluation-data-resources-landscape.md#why-this-catalog-exists-edd-as-methodology) | Eval-driven development; `/claude-api build-eval` and `/claude-api hillclimb` | sdlc-lcm |
 | [evaluation-data-resources-landscape.md § 1. Evaluation & Testing Frameworks](../sdlc-lcm/evaluation-data-resources-landscape.md#1-evaluation--testing-frameworks) | Eval and testing frameworks, LiteLLM `agent_eval` (preview) among them | sdlc-lcm |
 | [CC-output-verification-analysis.md § No first-party eval runner → DIY](../cc-native/agents-skills/CC-output-verification-analysis.md#no-first-party-eval-runner--diy) | Claude Code ships no eval runner; what to build instead | cc-native |
+| [agentic-legacy-migration-validation-analysis.md](../sdlc-lcm/agentic-legacy-migration-validation-analysis.md) | American Express's agentic test synthesis for validating COBOL-to-Java migrations | sdlc-lcm |
+| [agent-silent-failure-taxonomy-analysis.md](../sdlc-lcm/agent-silent-failure-taxonomy-analysis.md) | A five-class taxonomy of silent failures from an 8-week production case study | sdlc-lcm |
+| [automata-agent-traces-analysis.md](../sdlc-lcm/automata-agent-traces-analysis.md) | Finite-state machines rebuilt from agent traces to predict failures and audit behaviour | sdlc-lcm |
 
 ## Benchmark catalogue and validity
 

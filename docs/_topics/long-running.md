@@ -22,5 +22,13 @@ the corpus. Pointers only; see [the hub index](README.md).
 | [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) | Monitoring and steering long-running CC sessions from phone or web (Remote Control, Happy Coder, Omnara, CloudCLI, Emdash, DIY tmux + Tailscale incl. Tailnet Preview) | cc-native |
 | [CC-web-auth-setup-analysis.md § Terms That Apply to Scripted Runs](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#terms-that-apply-to-scripted-runs) | Sign-in, billing and terms for unattended `claude -p`, Agent SDK and scheduled runs, with Codex, Gemini CLI, Copilot CLI, Cursor CLI and opencode compared | cc-native |
 | [hermes-agent-analysis.md § Always-on Teammate Agents](../non-cc/agents/hermes-agent-analysis.md#always-on-teammate-agents) | Always-on agents with their own computer, reached through chat: Hermes, Claude Duet, OpenAI dots, Cue, Grok Bot, Muse and open-source peers | non-cc |
+| [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md) | Claude Code GitHub Actions: PR automation, review, issue triage, scheduled workflows | cc-native |
+| [CC-remote-control-analysis.md](../cc-native/ci-remote/CC-remote-control-analysis.md) | Remote Control: watch long sessions from mobile and continue across devices | cc-native |
+| [CC-version-pinning-resilience.md](../cc-native/ci-remote/CC-version-pinning-resilience.md) | Version pinning for reproducible CI and containers; resilience to API outages | cc-native |
+| [CC-status-monitoring-analysis.md](../cc-native/ci-remote/CC-status-monitoring-analysis.md) | Claude platform incident monitoring via the Statuspage API and webhooks | cc-native |
+| [CC-loop-cron-analysis.md](../cc-native/configuration/CC-loop-cron-analysis.md) | `/loop` and the cron tools for recurring tasks | cc-native |
+| [CC-print-mode-gotchas.md](../cc-native/sessions/CC-print-mode-gotchas.md) | Pitfalls of `claude -p` in headless and CI runs | cc-native |
+| [CC-session-lifecycle-analysis.md](../cc-native/sessions/CC-session-lifecycle-analysis.md) | Session creation, naming, persistence and `/resume` | cc-native |
+| [CC-subagent-session-artifacts.md](../cc-native/sessions/CC-subagent-session-artifacts.md) | Subagent worktrees, transcripts, tombstones and cleanup | cc-native |
 
 Related hubs: [harness.md](harness.md).
