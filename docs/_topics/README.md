@@ -3,7 +3,7 @@
 Cross-subject indexes. The corpus is split by relationship to Claude Code (`cc-native/`,
 `cc-community/`, `non-cc/`, `sdlc-lcm/`), so one subject can span several buckets. Each hub lists
 the docs and sections for its subject across all buckets. Hubs hold pointers only; the content
-lives in the linked docs.
+lives in the linked docs. For where a term is defined, see the [glossary](../glossary.md).
 
 | Hub | Subject |
 |---|---|
