@@ -111,7 +111,7 @@ What follows is evidence from papers and the corpus, with each source's own scop
   244 follow-up runs in a sealed environment with placeholder files. This is one study on coding tasks; it speaks to "assign a coordinator"
   as a prompt, not to engineered lead designs.
 - **Delegation costs more and helps unevenly.** [MS-Eval][ms-eval] (2026-10-16) tests main-agent delegation with
-  sub-agent execution over MCP-heavy scenarios on eight frontier models: specialised sub-agent roles worked best
+  sub-agent execution over Model Context Protocol (MCP)-heavy scenarios on eight frontier models: specialised sub-agent roles worked best
   among the variants, delegation raised cost, and benefit depended on the model (most open-source models
   gained in performance and efficiency; closed-source models saw higher cost and degraded performance). Redundant delegation added cost with no
   benefit. The abstract gives no numbers.

@@ -179,6 +179,11 @@ _MIRRORS = ("docs/learnings/per-repo/",)
 _ABBR = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$")
 _INLINE_CODE = re.compile(r"`[^`\n]*`")
 _REF_DEF = re.compile(r"^\s*\[[^\]]+\]:\s")
+_FRONTMATTER = re.compile(r"\A---[ \t]*\n.*?\n---[ \t]*\n", re.DOTALL)
+_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+_LINK_TARGET = re.compile(r"\]\([^)]*\)")
+_URL = re.compile(r"<?https?://[^\s>)]+>?")
+_GLOSSARY_LINK = re.compile(r"\]\([^)\s]*glossary\.md")
 
 
 def parse_glossary(text: str) -> dict[str, str]:
@@ -205,24 +210,27 @@ def parse_glossary(text: str) -> dict[str, str]:
 
 
 def _prose(text: str) -> str:
-    """Text outside fenced code blocks, inline code spans and reference-link definitions."""
-    kept, fenced = [], False
-    for line in text.splitlines():
-        if _FENCE.match(line):
-            fenced = not fenced
-        elif not fenced and not _REF_DEF.match(line):
+    """Body text outside frontmatter, fenced code, inline code, HTML comments and reference-link definitions."""
+    kept, fence = [], None
+    for line in _COMMENT.sub("", _FRONTMATTER.sub("", text, count=1)).splitlines():
+        m = _FENCE.match(line)
+        if m and fence in (None, m.group(1)):
+            # Reason: only the marker that opened a block closes it (``` vs ~~~).
+            fence = None if fence else m.group(1)
+        elif fence is None and not _REF_DEF.match(line):
             kept.append(_INLINE_CODE.sub("", line))
     return "\n".join(kept)
 
 
 def check_abbreviations(docs: dict, glossary: dict[str, str]) -> list[str]:
-    """Content docs that use a glossary abbreviation without expanding it (report-only, C2).
+    """Content docs that use a glossary abbreviation without expanding it (C2; fails check_coverage).
 
     Scope is the frontmatter schema's (no READMEs, hubs, plans, examples, archive or
     ``docs/research/``) minus the per-repo learnings mirrors.
 
-    A doc passes if the expansion appears anywhere in it (any case; a hyphen and a space
-    count as the same) or it links the glossary.
+    A doc passes if the expansion appears anywhere in its body text (any case; a hyphen and a
+    space count as the same; URLs and link targets don't count) or it links the glossary.
+    Plurals and hyphen compounds ("MCPs", "MCP-based") count as uses.
     """
     def norm(s: str) -> str:
         return s.lower().replace("-", " ")
@@ -232,11 +240,12 @@ def check_abbreviations(docs: dict, glossary: dict[str, str]) -> list[str]:
         if path == GLOSSARY or not in_scope(path) or path.startswith(_MIRRORS):
             continue
         prose = _prose(docs[path])
-        if "glossary.md" in prose:
+        if _GLOSSARY_LINK.search(prose):
             continue
+        prose = _URL.sub("", _LINK_TARGET.sub("]", prose))
         lower = norm(prose)
         missing = [a for a in sorted(glossary)
-                   if re.search(rf"(?<![\w-]){re.escape(a)}(?![\w-])", prose) and norm(glossary[a]) not in lower]
+                   if re.search(rf"(?<![\w-]){re.escape(a)}(?=s?\b)", prose) and norm(glossary[a]) not in lower]
         if missing:
             out.append(f"{path}: {', '.join(missing)} not expanded")
     return out

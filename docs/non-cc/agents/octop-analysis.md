@@ -60,7 +60,7 @@ Client Protocol (ACP)** in both directions: inbound (`octop acp`) lets external 
 agent; outbound, Octop delegates coding tasks to external coding-agent CLIs — **including Claude
 Code** — alongside OpenCode, CodeBuddy, and Codex, gated by permission checks. Additional surfaces:
 headless-Chromium browser automation (Octop Browser, via CDP), an in-browser AI-assisted terminal,
-live remote-desktop screen/input from the dashboard, a plugin system, and a RAG-backed knowledge base
+live remote-desktop screen/input from the dashboard, a plugin system, and a knowledge base backed by Retrieval-Augmented Generation (RAG)
 over user documents. Stated safety controls: tool-approval gates, user-editable shell-command
 guardrails, and PII redaction.
 

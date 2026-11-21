@@ -12,7 +12,7 @@ allowed-tools: Agent Bash Read Grep Glob Write Edit WebFetch
 
 Two modes: **add a source** (below) and **[enrich a topic](#mode-enrich-a-topic)** (a hub or area
 that needs depth, a pruning sweep, or several related gaps). To re-verify facts already in the corpus,
-use the `refresh-docs` skill instead.
+use the `refresh-docs` workflow (`.claude/workflows/refresh-docs.js`) instead.
 
 ## Mode: add a source
 
@@ -53,7 +53,8 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
    you added that fails: recheck it locally and replace a dead one with its current canonical URL.
    Don't add `lychee.toml` excludes yourself; ask the owner.
 6. **Ship:** branch `<type>/<slug>`; **commit by topic** (doc, then index/meta); PR; merge once CI is
-   green, where a lychee failure is acceptable only if `main` already has it → prune the branch.
+   green. Owner rule for the link check: a failure counts as green only if `main` already has it or
+   it passes when rechecked locally, and that check happens before the merge → prune the branch.
 
 ### Research-subagent brief (dispatch verbatim; one per source or tight cluster)
 

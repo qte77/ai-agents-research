@@ -187,8 +187,27 @@ class AbbreviationTests(unittest.TestCase):
         text = '# A\n\nSee [c].\n\n[c]: https://example.com/x "Connectors and MCP Apps"\n'
         self.assertEqual(self.check(text), [])
 
+    def test_ignores_urls_link_targets_comments_and_frontmatter(self):
+        text = ("---\ntitle: MCP notes\n---\n\n# A\n\nSee [spec](https://x/MCP/y) and https://h/RRF/z.\n"
+                "<!-- MCP draft -->\n")
+        self.assertEqual(self.check(text), [])
+
+    def test_expansion_in_frontmatter_or_url_does_not_count(self):
+        text = "---\npurpose: Model Context Protocol notes\n---\n\nUses MCP, see https://x/model-context-protocol.\n"
+        self.assertEqual(self.check(text), ["docs/non-cc/x/a.md: MCP not expanded"])
+
+    def test_plurals_and_hyphen_compounds_count_as_uses(self):
+        self.assertEqual(self.check("# A\n\nTwo MCPs and an MCP-based tool.\n"), ["docs/non-cc/x/a.md: MCP not expanded"])
+
+    def test_glossary_must_be_a_link(self):
+        self.assertEqual(self.check("# A\n\nUses MCP; see glossary.md.\n"), ["docs/non-cc/x/a.md: MCP not expanded"])
+
+    def test_tilde_line_inside_backtick_fence_stays_fenced(self):
+        text = "# A\n\n```\n~~~\nMCP\n```\n\nplain\n"
+        self.assertEqual(self.check(text), [])
+
     def test_ignores_code_and_partial_words(self):
-        self.assertEqual(self.check("# A\n\n`MCP` and MCPs and mcp\n\n```\nMCP\n```\n"), [])
+        self.assertEqual(self.check("# A\n\n`MCP` and MCPServer and Google-MCP and mcp\n\n```\nMCP\n```\n"), [])
 
     def test_skips_glossary_and_non_content(self):
         for path in ("docs/glossary.md", "docs/non-cc/README.md", "docs/plans/2026-01-01-0001-x.md",
