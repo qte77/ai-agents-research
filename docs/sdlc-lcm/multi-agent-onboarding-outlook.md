@@ -2,10 +2,9 @@
 title: Multi-Agent Onboarding Outlook
 purpose: How multiple coding agents (CC, Kiro, Antigravity, Cursor, etc.) integrate with SDLC/LCM lifecycle management.
 created: 2026-03-24
-sources:
-  - https://ai.google.dev/gemini-api/docs/coding-agents
-  - https://dev.to/madeburo/ai-context-management-across-claude-cursor-kiro-gemini-and-custom-agents-2n1f
-  - https://particula.tech/blog/agents-md-ai-coding-agent-configuration
+updated: 2026-11-18
+validated_links: 2026-11-21
+status: assess
 ---
 
 ## Multi-Agent Onboarding Outlook
@@ -107,3 +106,9 @@ as the interface. Multi-agent onboarding requires:
 1. **Per-agent config stubs** — one-time setup of phase constraints in each agent's config format
 2. **Shared artifact contracts** — `[tool.lcm]` in pyproject.toml, `.lcm/status.json`
 3. **No code coupling** — agents read files, don't import libraries
+
+## Sources
+
+- [Gemini API: coding agents](https://ai.google.dev/gemini-api/docs/coding-agents)
+- [AI context management across Claude, Cursor, Kiro, Gemini and custom agents (dev.to)](https://dev.to/madeburo/ai-context-management-across-claude-cursor-kiro-gemini-and-custom-agents-2n1f)
+- [AGENTS.md: AI coding agent configuration (Particula)](https://particula.tech/blog/agents-md-ai-coding-agent-configuration)

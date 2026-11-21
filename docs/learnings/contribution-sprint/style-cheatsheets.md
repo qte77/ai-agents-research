@@ -3,6 +3,8 @@ title: Contribution Style Cheatsheets
 purpose: Quick-reference coding style and PR conventions for compass-mcp, SimpleAgents, and opencode
 created: 2026-03-30
 updated: 2026-03-30
+validated_links: 2026-11-21
+status: reference
 ---
 
 ## Contribution Style Cheatsheets

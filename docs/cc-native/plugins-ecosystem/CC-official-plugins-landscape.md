@@ -1,6 +1,6 @@
 ---
 title: CC Official Plugins Landscape
-source: https://www.firecrawl.dev/blog/best-claude-code-plugins, https://code.claude.com/docs/en/plugins
+source: https://www.firecrawl.dev/blog/best-claude-code-plugins
 purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this research repo, and provide adoption guidance per plugin.
 created: 2026-03-12
 updated: 2026-10-18

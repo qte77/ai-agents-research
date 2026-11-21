@@ -1,6 +1,6 @@
 ---
 title: CC Models & Free-Tier Provider Reference
-source: https://platform.claude.com/docs/en/about-claude/models/overview, https://platform.claude.com/docs/en/about-claude/pricing
+source: https://platform.claude.com/docs/en/about-claude/models/overview
 purpose: Descriptive reference for CC's primary agentic model (Claude Fable 5, superseded by Claude Fable 5.2), the current per-model pricing table, and a snapshot of free-tier / OSS inference providers — the model/provider facts behind CC-model-provider-configuration.md.
 created: 2026-06-14
 updated: 2026-11-13

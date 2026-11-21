@@ -1,7 +1,6 @@
 ---
 title: Evaluation & Data Resources Landscape
 purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and evaluation datasets — the tools, benchmarks, and data behind the metrics defined in the evaluation-metrics landscape.
-category: landscape
 status: research
 created: 2026-06-14
 updated: 2026-11-21

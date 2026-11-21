@@ -1,13 +1,14 @@
 ---
 title: JetBrains Air Analysis
-source: https://air.dev, https://blog.jetbrains.com/air/2026/03/air-launches-as-public-preview-a-new-wave-of-dev-tooling-built-on-26-years-of-experience/
+source: https://air.dev
 purpose: Analysis of JetBrains Air as an agentic development environment for multi-agent orchestration.
 created: 2026-03-20
 updated: 2026-11-18
-status: public-preview
+validated_links: 2026-11-21
+status: assess
 ---
 
-**Details:** macOS only, Windows/Linux planned 2026
+**Details:** Public preview; macOS only, Windows/Linux planned 2026
 
 ## What It Is
 

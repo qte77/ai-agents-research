@@ -1,9 +1,10 @@
 ---
 title: CC Recursive Spawning Patterns
-source: https://code.claude.com/docs/en/sub-agents, https://code.claude.com/docs/en/env-vars, https://github.com/anthropics/claude-agent-sdk-python/issues/573, https://dev.to/jungjaehoon/why-claude-code-subagents-waste-50k-tokens-per-turn-and-how-to-fix-it-41ma
+source: https://code.claude.com/docs/en/sub-agents
 purpose: Analysis of recursive claude -p invocation patterns, the CLAUDECODE=1 session guard, and spawning method trade-offs for autonomous agent orchestration.
 created: 2026-03-17
 updated: 2026-11-18
+validated_links: 2026-11-21
 status: research
 ---
 

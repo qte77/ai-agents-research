@@ -4,10 +4,11 @@ source: https://github.com/agent-era/devteam
 purpose: Analysis of devteam as a terminal-based multi-agent orchestration tool for parallel coding agent workflows.
 created: 2026-03-20
 updated: 2026-11-18
-status: active-development
+validated_links: 2026-11-21
+status: assess
 ---
 
-**Details:** MIT licensed, open source
+**Details:** Active development. MIT licensed, open source
 
 ## What It Is
 

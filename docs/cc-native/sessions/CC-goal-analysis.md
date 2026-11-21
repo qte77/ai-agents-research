@@ -5,10 +5,10 @@ purpose: Analysis of the /goal command, the session-scoped completion-condition 
 created: 2026-10-15
 updated: 2026-10-22
 validated_links: 2026-10-22
-status: generally-available
+status: assess
 ---
 
-**Details:** `/goal` introduced v2.1.139 ([CHANGELOG][changelog-raw]); not labeled beta or
+**Details:** Generally available; `/goal` introduced v2.1.139 ([CHANGELOG][changelog-raw]); not labeled beta or
 Research Preview on its docs page or in the introducing changelog entry (contrast the
 Research-Preview-labeled agent view added the same release). All claims below are
 **documented** — read from [code.claude.com/docs/en/goal][goal-docs] and the CC CHANGELOG as

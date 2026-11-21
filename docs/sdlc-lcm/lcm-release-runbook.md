@@ -2,6 +2,9 @@
 title: Release Management Runbook
 purpose: Checklist bridging SDLC release phase to LCM phase transitions.
 created: 2026-03-24
+updated: 2026-04-12
+validated_links: 2026-11-21
+status: reference
 ---
 
 ## Release Management Runbook

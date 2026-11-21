@@ -1,14 +1,14 @@
 ---
 title: CC /loop Command and Cron System Analysis
-source: https://code.claude.com/docs/en/scheduled-tasks, gist by @sorrycc (v2.1.71 cli.js decompilation), empirical testing (cc-recursive-team-mode, 2026-03-23)
+source: https://code.claude.com/docs/en/scheduled-tasks
 purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and comparison with external scheduling approaches. Includes empirical finding that /loop accepts syntax in -p mode but exits after first iteration.
 created: 2026-03-17
 updated: 2026-10-18
 validated_links: 2026-10-18
-status: generally-available
+status: assess
 ---
 
-**Details:** v2.1.71+, feature gate `tengu_kairos_cron` (polled every 5 min) — original gist-sourced finding, unconfirmed against first-party docs, which don't document internal feature gates. The feature now has an official first-party page, [Run prompts on a schedule][cc-sched-loop] ("`/loop` and the cron scheduling tools"), re-checked 2026-10-15; most of this doc's original gist/cli.js-decompilation and empirical findings are superseded or substantially extended below. The URL slug `scheduled-tasks` is this feature's own page — it is **not** the cloud Routines feature documented in [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md), which lives at the different URL `/docs/en/routines`.
+**Details:** Generally available; v2.1.71+, feature gate `tengu_kairos_cron` (polled every 5 min) — original gist-sourced finding, unconfirmed against first-party docs, which don't document internal feature gates. The feature now has an official first-party page, [Run prompts on a schedule][cc-sched-loop] ("`/loop` and the cron scheduling tools"), re-checked 2026-10-15; most of this doc's original gist/cli.js-decompilation and empirical findings are superseded or substantially extended below. The URL slug `scheduled-tasks` is this feature's own page — it is **not** the cloud Routines feature documented in [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md), which lives at the different URL `/docs/en/routines`. The `-p` mode finding comes from empirical testing (cc-recursive-team-mode, 2026-03-23).
 
 ## What `/loop` Is
 

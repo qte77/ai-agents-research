@@ -2,8 +2,8 @@
 """Check content-doc frontmatter against the CONTRIBUTING §1–§2 schema (plan 0015 F2).
 
 Pure logic lives in ``lib/doc_frontmatter.py``. Lenient by default: violations are
-printed and the exit code is 0, so CI reports without failing until the F3
-migration is done; ``--strict`` exits 1 on any violation.
+printed and the exit code is 0. ``--strict`` exits 1 on any violation; ``make
+check_frontmatter`` (and CI) runs strict since the plan 0015 F3 migration.
 
 Usage:
     python check-doc-frontmatter.py [--root .] [--strict]

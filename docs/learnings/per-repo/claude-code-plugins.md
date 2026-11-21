@@ -1,8 +1,11 @@
 ---
 title: "claude-code-plugins AGENT_LEARNINGS"
-description: Mirror of AGENT_LEARNINGS.md from qte77/claude-code-plugins.
+purpose: Mirror of AGENT_LEARNINGS.md from qte77/claude-code-plugins.
 updated: 2026-11-02
 source: https://github.com/qte77/claude-code-plugins/blob/main/AGENT_LEARNINGS.md
+created: 2026-05-17
+validated_links: 2026-11-21
+status: reference
 ---
 
 > Auto-aggregated by `.github/scripts/learnings-aggregator.py`.

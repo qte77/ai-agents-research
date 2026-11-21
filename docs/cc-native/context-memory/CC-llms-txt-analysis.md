@@ -1,15 +1,14 @@
 ---
 title: llms.txt Specification, Anthropic Documentation Index, and Project Implementation
-description: Analysis of the llms.txt standard, Anthropic's documentation surface area, and a project's template and workflows.
-source: https://llmstxt.org/, https://platform.claude.com/llms.txt, https://code.claude.com/docs/llms.txt
-category: analysis
+purpose: Analysis of the llms.txt standard, Anthropic's documentation surface area, and a project's template and workflows.
+source: https://llmstxt.org/
 created: 2026-03-07
 updated: 2026-10-24
 validated_links: 2026-10-24
-status: stable
+status: assess
 ---
 
-**Details:** spec analysis + 651-page Anthropic index + example project implementation
+**Details:** Stable; spec analysis + 651-page Anthropic index + example project implementation
 
 ## Summary
 

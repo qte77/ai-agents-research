@@ -1,6 +1,6 @@
 ---
 title: CC GitHub Actions — claude-code-action & Claude GitHub App
-source: https://code.claude.com/docs/en/github-actions, https://github.com/apps/claude, https://github.com/anthropics/claude-code-action/blob/main/action.yml, https://github.com/anthropics/claude-code-action/discussions/578, https://code.claude.com/docs/en/amazon-bedrock, https://code.claude.com/docs/en/google-vertex-ai, https://code.claude.com/docs/en/microsoft-foundry, https://dev.to/myougatheaxo/automate-your-entire-pr-workflow-with-claude-code-description-review-tests-1i41
+source: https://code.claude.com/docs/en/github-actions
 purpose: Evaluate Claude Code GitHub Actions for PR automation, code review, issue triage, and scheduled workflows — setup, capabilities, limitations, and cost.
 created: 2026-03-12
 updated: 2026-06-22
@@ -365,6 +365,8 @@ A Python composite GHA addressing all four gaps is planned at [qte77/gha-issue-t
 - Authentication and API key setup — [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md)
 
 ## References
+
+- [claude-code-action `action.yml`](https://github.com/anthropics/claude-code-action/blob/main/action.yml)
 
 [cc-gha-docs]: https://code.claude.com/docs/en/github-actions
 [claude-app]: https://github.com/apps/claude

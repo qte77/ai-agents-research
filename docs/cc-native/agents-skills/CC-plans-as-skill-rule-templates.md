@@ -1,7 +1,6 @@
 ---
 title: CC Plans as Skill and Rule Templates
-description: Analysis of Claude Code plan files — anatomy, plan mode mechanics, and patterns for extracting reusable skills and rules from recurring plans.
-category: analysis
+purpose: Analysis of Claude Code plan files — anatomy, plan mode mechanics, and patterns for extracting reusable skills and rules from recurring plans.
 status: research
 created: 2026-03-13
 updated: 2026-11-18

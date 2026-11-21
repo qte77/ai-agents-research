@@ -62,15 +62,26 @@ def normalize_upstream(content: str) -> str:
     return content.rstrip("\n") + "\n"
 
 
-def render_file(owner: str, repo: str, content: str) -> str:
-    """Wrap upstream content with frontmatter + source attribution."""
+def render_file(owner: str, repo: str, content: str, existing: str = "") -> str:
+    """Wrap upstream content with schema-valid frontmatter + source attribution.
+
+    Frontmatter follows CONTRIBUTING §1–§2 (``make check_frontmatter`` is strict).
+    ``created`` is kept from the existing mirror. Reason: ``validated_links`` is the
+    run date because the aggregator lands through a PR whose lychee job checks the links.
+    """
     today = date.today().isoformat()
+    head = re.match(r"\A---\n(.*?)\n---", existing, flags=re.DOTALL)
+    kept = head and re.search(r"^created:\s*(\d{4}-\d{2}-\d{2})\s*$", head.group(1), flags=re.MULTILINE)
+    created = kept.group(1) if kept else today
     source_url = f"https://github.com/{owner}/{repo}/blob/main/AGENT_LEARNINGS.md"
     frontmatter = (
         "---\n"
         f'title: "{repo} AGENT_LEARNINGS"\n'
-        f"description: Mirror of AGENT_LEARNINGS.md from {owner}/{repo}.\n"
+        f"purpose: Mirror of AGENT_LEARNINGS.md from {owner}/{repo}.\n"
+        f"created: {created}\n"
         f"updated: {today}\n"
+        f"validated_links: {today}\n"
+        "status: reference\n"
         f"source: {source_url}\n"
         "---\n\n"
         "> Auto-aggregated by `.github/scripts/learnings-aggregator.py`.\n"
@@ -116,7 +127,8 @@ def main() -> int:
             continue
 
         target = target_dir / f"{stem}.md"
-        target.write_text(render_file(args.owner, repo, content), encoding="utf-8")
+        existing = target.read_text(encoding="utf-8") if target.exists() else ""
+        target.write_text(render_file(args.owner, repo, content, existing), encoding="utf-8")
         state[repo] = fingerprint
         updated.append(f"{repo} -> {target}")
         print(f"  UPDATED: {target}", file=sys.stderr)

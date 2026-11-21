@@ -274,8 +274,8 @@ check_status: ## Validate doc frontmatter status: tokens; no body badges (strict
 check_coverage: ## README index, inbound link, real section anchors, no duplicate hub rows, unhubbed docs ≤ MAX_UNHUBBED (strict; plan 0015 X1–X3)
 	$(PYTHON) .github/scripts/check-doc-coverage.py --max-unhubbed $(MAX_UNHUBBED)
 
-check_frontmatter: ## Content-doc frontmatter vs the CONTRIBUTING §1–§2 schema (lenient: reports, exit 0, until the F3 migration; plan 0015 F2)
-	$(PYTHON) .github/scripts/check-doc-frontmatter.py
+check_frontmatter: ## Content-doc frontmatter vs the CONTRIBUTING §1–§2 schema (strict; plan 0015 F2–F3)
+	$(PYTHON) .github/scripts/check-doc-frontmatter.py --strict
 
 lint: check_docs check_status check_coverage check_frontmatter check_actions check_links ## Run all linters (markdown + status + coverage + frontmatter + actions first; flaky link check last so it can't mask them)
 

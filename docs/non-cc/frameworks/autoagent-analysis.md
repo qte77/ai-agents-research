@@ -2,7 +2,6 @@
 title: AutoAgent Analysis (HKUDS)
 source: https://github.com/HKUDS/AutoAgent
 purpose: Analysis of AutoAgent as a zero-code LLM agent framework with self-developing capabilities.
-category: analysis
 status: research
 created: 2026-04-06
 updated: 2026-04-06

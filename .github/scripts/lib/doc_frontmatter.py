@@ -7,13 +7,13 @@ from __future__ import annotations
 
 import re
 
-from .doc_status import extract_frontmatter
+from .doc_status import DOC_STATUS_VOCAB, extract_frontmatter
 
 REQUIRED = ("title", "purpose", "created", "updated", "validated_links", "status")
 OPTIONAL = frozenset({"source", "platform_scope", "test_run"})
 REMOVED = frozenset({"sources", "description", "release", "version", "license", "authority", "category"})
 DATE_KEYS = ("created", "updated", "validated_links")
-LIFECYCLE = frozenset({"adopt", "trial", "assess", "hold", "research", "reference", "archived"})
+LIFECYCLE = DOC_STATUS_VOCAB
 
 # Not content docs: indexes, hubs, plans (own schema), example files, the archive, generated output.
 _OUT_OF_SCOPE = ("docs/_topics/", "docs/plans/", "docs/cc-native/examples/", "docs/archive/", "docs/research/")

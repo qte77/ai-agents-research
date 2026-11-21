@@ -1,7 +1,6 @@
 ---
 title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
-category: landscape
 created: 2026-06-23
 updated: 2026-11-19
 validated_links: 2026-11-18

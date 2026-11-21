@@ -1,7 +1,6 @@
 ---
 title: Knowledge Organisation Methods for a Markdown KB
 purpose: Short, practical survey of the widely used methods for organising a plain-markdown knowledge base (hub pages, backlinks, Zettelkasten, PARA, Diátaxis, Obsidian, llms.txt, frontmatter) and what each means when humans and agents maintain it.
-category: landscape
 status: research
 created: 2026-11-21
 updated: 2026-11-21

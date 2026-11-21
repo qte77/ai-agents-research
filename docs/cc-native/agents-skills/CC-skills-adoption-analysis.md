@@ -1,13 +1,13 @@
 ---
 title: Claude Code Skills Adoption - Implementation Summary
-description: Implementation summary of adopting Claude Code Skills for modular agent capabilities, including format analysis and ecosystem context.
-category: analysis
-version: 2.0.0
-status: completed
+purpose: Implementation summary of adopting Claude Code Skills for modular agent capabilities, including format analysis and ecosystem context.
+status: adopt
 created: 2026-01-11
 updated: 2026-11-09
 validated_links: 2026-10-23
 ---
+
+**Version:** 2.0.0
 
 **Date**: 2026-01-11
 

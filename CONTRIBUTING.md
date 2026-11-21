@@ -56,7 +56,7 @@ Plans (`docs/plans/`) use `draft`, `approved`, `done` or `superseded`, and only 
 
 Release status, licence and version go on a `**Details:**` line right after the frontmatter, per surface where they differ (for example "preview on the web, GA in the CLI", which one token can't hold).
 
-The older release and licence tokens (`generally-available`, `beta`, `open-source`, …) are still accepted by `make check_status` until the plan 0015 F3 migration maps them to the values above; `VOCAB` in [`.github/scripts/lib/doc_status.py`](.github/scripts/lib/doc_status.py) shrinks to this table in that same change.
+`make check_status` and `make check_frontmatter` reject any other token, including the older release and licence tokens (`generally-available`, `beta`, `open-source`, …).
 
 ### 3. Body
 

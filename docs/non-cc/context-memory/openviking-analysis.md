@@ -2,7 +2,6 @@
 title: OpenViking Analysis (ByteDance/Volcengine)
 source: https://github.com/volcengine/OpenViking
 purpose: Analysis of OpenViking as a filesystem-based context database for AI agents.
-category: analysis
 status: research
 created: 2026-04-06
 updated: 2026-04-06

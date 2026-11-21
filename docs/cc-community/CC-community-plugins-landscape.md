@@ -1,7 +1,6 @@
 ---
 title: CC Community Plugins Landscape
-description: Survey of community plugin catalogs — awesome-claude-code (curated resource list) and awesome-claude-code-plugins (installable plugin registry with marketplace format).
-category: landscape
+purpose: Survey of community plugin catalogs — awesome-claude-code (curated resource list) and awesome-claude-code-plugins (installable plugin registry with marketplace format).
 status: research
 created: 2026-03-13
 updated: 2026-11-20
