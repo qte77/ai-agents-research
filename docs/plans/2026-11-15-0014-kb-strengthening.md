@@ -1,10 +1,12 @@
 ---
 title: KB strengthening across the 2026-11-15 topic list, plus the open rows of plan 0013
-status: approved
+status: superseded
 issue: "#848"
 created: 2026-11-15
 updated: 2026-11-20
 ---
+
+**Superseded 2026-11-20 by [plan 0015](2026-11-20-0015-kb-structure-graphify-removal.md) (`#935`): every open row below moved there unchanged; edit them there, not here.**
 
 Tracking issue: #848. Successor to [plan 0013](2026-11-12-0013-followups-after-0012.md) (`#800`): its
 open rows moved here unchanged except for a `13-` prefix on their IDs (`13-A4` is plan 0013's A4), so
