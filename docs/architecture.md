@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 description: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 category: technical
 created: 2026-03-22
-updated: 2026-11-20
+updated: 2026-11-21
 ---
 
 ## Architecture: ai-agents-research
@@ -42,9 +42,9 @@ ai-agents-research/
 │   ├── community/             # Community-sources triage
 │   ├── status-monitor/        # CC status page incident archive + stats
 │   └── rxiv/                  # ArXiv paper eval triage (filtered by RXIV_TOPIC)
-├── scripts/                   # Graph-page render + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles)
+├── scripts/                   # Site-info + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles)
 ├── tests/                     # Unit tests for scripts/ + .github/scripts/lib modules
-├── ui/                        # Branded gh-pages site (index.html, graph.html, assets)
+├── ui/                        # Branded gh-pages site (index.html, doc-graph.html, assets)
 ├── changelog.d/               # scriv changelog fragments (collected on release)
 └── .github/
     ├── workflows/             # content-monitor crons, link-rot, m365-drift + plan-reconcile health monitors, manual model evals, lint, release, Pages
@@ -117,15 +117,13 @@ Three lint jobs run on every PR touching docs, workflows, or actions:
 
 The rxiv triage job additionally runs `markdownlint-cli2` against the assembled would-be PR content (with the action's H1 prepend simulated) and fails the job before opening a triage PR if the output is md-dirty.
 
-## Knowledge Graph (graphify)
+## Doc Graph and Site
 
-An optional graphify knowledge graph maps the corpus — concepts, cross-document references, and community structure — for navigation and gap-finding. It is **on-demand only**: no hooks or `CLAUDE.md` mandates run it automatically (that per-tool-call overhead was deliberately removed), so it adds no cost to normal sessions. Build output (`graphify-out/`) is gitignored; the EyeRest-restyled copy is committed to `ui/graph.html` and published to GitHub Pages by the deploy workflow.
+**Doc graph (plan 0009 row G, option C):** `make graph-data` runs `.github/scripts/build-doc-graph.py`, a stdlib-only builder backed by the unit-tested `lib/doc_graph.py`. It writes `ui/doc-graph.json` with doc nodes (bucket, status, title), external-domain nodes, and `link` / `hub` / `cites` edges, each carrying the line numbers it occurs on. The same corpus always gives byte-identical JSON, with no LLM involved. Link validity stays with lychee. The Pages deploy regenerates the JSON from `docs/` on every push that touches docs, the builder or the workflow, and the file is never committed, so it cannot drift. It is rendered at `/doc-graph.html` (`ui/doc-graph.html`, using the vendored vis-network): docs as dots, topic hubs as diamonds, cited domains as squares (hidden by default), with search and a details panel.
 
-**Deterministic base graph (plan 0009 row G, option C):** `make graph-data` runs `.github/scripts/build-doc-graph.py`, a stdlib-only builder backed by the unit-tested `lib/doc_graph.py`. It writes `ui/doc-graph.json` with doc nodes (bucket, status, title), external-domain nodes, and `link` / `hub` / `cites` edges, each carrying the line numbers it occurs on. The same corpus always gives byte-identical JSON, with no LLM involved. Link validity stays with lychee. The Pages deploy regenerates the JSON from `docs/` on every push that touches docs, the builder or the workflow, and the file is never committed, so it cannot drift. It is rendered at `/doc-graph.html` (`ui/doc-graph.html`, using the vendored vis-network): docs as dots, topic hubs as diamonds, cited domains as squares (hidden by default), with search and a details panel. graphify stays an optional concept overlay at `/graph.html`.
+**Build metadata:** every page shows the release version (`pyproject.toml`), last-modified date and commit link. The deploy writes `build.json` with `scripts/build-site-info.py` (pure logic in `pages_build.site_info`), and `ui/build-info.js` renders it.
 
-**Build metadata:** every page shows the release version (`pyproject.toml`), last-modified date and commit link. The deploy writes `build.json` with `scripts/build-site-info.py` (pure logic in `pages_build.site_info`), and `ui/build-info.js` renders it. The graphify page reports the commit that last changed `ui/graph.html`, which is its real rebuild date. The deploy injects that page's tag into the published copy only, so that history stays accurate.
-
-**Live site:** <https://qte77.github.io/ai-agents-research/> — a branded EyeRest landing page (`index.html`) linking to the knowledge graph at `/graph.html`. After a rebuild, run `make graph-page`, then commit & push — the gh-pages workflow deploys.
+**Live site:** <https://qte77.github.io/ai-agents-research/> — a branded EyeRest landing page (`index.html`) linking to the doc graph at `/doc-graph.html`.
 
 ### Published site (gh-pages)
 
@@ -134,34 +132,16 @@ The site applies the qte77 EyeRest brand (`qte77/qte77/brand/DESIGN.md`: zero-bl
 | Path | Role |
 |---|---|
 | `ui/index.html` | Branded landing page (site root) |
-| `ui/graph.html` | EyeRest-restyled knowledge graph — committed; produced locally by `make graph-page` |
-| `ui/vendor/vis-network.min.js` | Self-hosted vis-network (graphify's renderer) — committed so the graph renders offline / without a CDN round-trip |
+| `ui/doc-graph.html` | Doc graph page; its JSON is built by the deploy |
+| `ui/vendor/vis-network.min.js` | Self-hosted vis-network (the doc graph's renderer) — committed so the graph renders offline / without a CDN round-trip |
 | `ui/style.css` | EyeRest design tokens + `@font-face` + layout |
 | `ui/favicon.svg` | Adapted qte77 logo-mark |
 | `ui/assets/fonts/*.woff2` | Self-hosted Inter + JetBrains Mono — committed (refresh with `make graph-fonts`); `@font-face` falls back to system-ui if absent |
-| `scripts/pages_build.py` | Pure, unit-tested helpers — `filter_graph_data()` prunes tooling/code nodes; `restyle_graph()` recolors the export to EyeRest, injects fonts/favicon/title, and repoints vis-network from unpkg to the vendored copy (both run by `make graph-page`); font helpers feed the fetch script |
+| `scripts/pages_build.py` | Pure, unit-tested helpers — `site_info()` and `read_version()` for `build.json`; font helpers feed the fetch script |
 
-**Deploy** is a GitHub Actions workflow (`.github/workflows/gh-pages.yaml`) using the Pages API — like the sibling repos `analyze-stock-kpi` and `paperverse` (no `gh-pages` branch). On push to `main` (paths under `ui/`), CI assembles `ui/` (with the committed fonts and vendored vis-network) into the Pages artifact and deploys. The repo's **Settings → Pages → Source** must be set to "GitHub Actions".
+**Deploy** is a GitHub Actions workflow (`.github/workflows/gh-pages.yaml`) using the Pages API — like the sibling repos `analyze-stock-kpi` and `paperverse` (no `gh-pages` branch). On a push to `main` that touches `ui/`, `docs/`, the doc-graph builder, the site helpers or the workflow, CI assembles `ui/` (with the committed fonts and vendored vis-network), builds the doc-graph JSON and `build.json`, and deploys. The repo's **Settings → Pages → Source** must be set to "GitHub Actions".
 
-The knowledge graph stays **local and interactive** (key-free, via the `/graphify` skill — no LLM in CI): rebuild the graph, run `make graph-page` to render + EyeRest-restyle it into the committed `ui/graph.html`, then commit & push to trigger a deploy. `make graph-page` also **prunes build/tooling nodes** (`scripts/`, `tests/`, `ui/`, `src/`, `.github/scripts/`) so the published graph maps the research corpus, not the machinery — workflows and actions are kept.
-
-The landing page carries a **System / Light / Dark theme picker** (persisted to `localStorage`, no-flash, OS-following by default); the graph page stays dark.
-
-**Build** (semantic extraction needs an LLM):
-
-- Interactive, key-free — the `/graphify` Claude Code skill (uses the session as the extraction model).
-- Headless, for CI/scripts — `graphify extract . --backend gemini` (or `claude`, `openai`, …) with the matching API key, then `graphify label .` to name communities. Also exposed as `make graph-build`.
-
-**Navigate** (free, no LLM — operate on `graphify-out/graph.json`):
-
-| Action | Command |
-|---|---|
-| Query | `make graph-query Q="<question>"` |
-| Explain a node | `make graph-explain N="<node>"` |
-| Shortest path | `make graph-path A="<node>" B="<node>"` |
-| Re-render viz | `make graph-html` |
-
-Install `graphify` with `uv tool install graphifyy` — this puts the `graphify` CLI on `PATH` (interpreter under `~/.local/share/uv/tools/graphifyy/`) and is the key-free path used for a local `/graphify` rebuild. Alternatively it is side-loaded (not on `PATH`); set `GRAPHIFY=/path/to/graphify` to point the recipes at a specific build.
+The landing page carries a **System / Light / Dark theme picker** (persisted to `localStorage`, no-flash, OS-following by default).
 
 ## Downstream Consumers
 

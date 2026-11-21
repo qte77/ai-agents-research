@@ -4,7 +4,8 @@
     "pr": "Generated with Claude <noreply@anthropic.com>"
   },
   "env": {
-    "BASH_MAX_OUTPUT_LENGTH": "15000"
+    "BASH_MAX_OUTPUT_LENGTH": "15000",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "50"
   },
   "permissions": {
     "allow": [
@@ -29,7 +30,6 @@
       "Bash(gh secret list *)",
       "Bash(gh search prs *)",
       "Bash(gh label list *)",
-      "mcp__plugin_cloudflare_cloudflare-docs__search_cloudflare_documentation",
       "Bash(make -s check_docs)",
       "Bash(make -s reconcile)",
       "Bash(make -s check_status)",

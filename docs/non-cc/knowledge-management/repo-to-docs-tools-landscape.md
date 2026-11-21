@@ -15,7 +15,7 @@ Three tools represent an emerging category of **AI-powered repo-to-documentation
 
 **Relevance to agent workflows**: These tools can serve as context sources for coding agents -- pre-generated documentation reduces the need for expensive runtime codebase analysis. The repo-to-docs pattern also overlaps with the `llms.txt` standard and context engineering approaches documented in this repository.
 
-A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose -- the external analogue to this repo's own [graphify integration](../../architecture.md#knowledge-graph-graphify).
+A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose.
 
 A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes docs **for coding agents**, appending pointers into `AGENTS.md`/`CLAUDE.md`, rather than human-browsable wikis.
 
@@ -68,7 +68,7 @@ Published examples: [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-C
 
 **URL**: [github.com/egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything) | **Stars**: 57.4k | **License**: MIT | **Stack**: TypeScript (originally by Lum1104)
 
-Unlike the doc-*generators* in this landscape, Understand Anything emits an **interactive knowledge graph** -- files, functions, classes, and dependencies as color-coded, navigable nodes -- the external analogue to this repo's own [graphify integration](../../architecture.md#knowledge-graph-graphify).
+Unlike the doc-*generators* in this landscape, Understand Anything emits an **interactive knowledge graph** -- files, functions, classes, and dependencies as color-coded, navigable nodes.
 
 Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, call graphs) plus LLMs for semantic summaries and architecture classification, run through a **5-agent pipeline** (scanner -> analyzer -> architecture-mapper -> tour-builder -> reviewer) in parallel, with incremental updates.
 
@@ -78,7 +78,7 @@ Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, 
 - **Karpathy-pattern LLM-wiki support** -- entity extraction + relationship discovery over markdown KBs, directly overlapping this repo's three-layer architecture
 - **Version-controllable output** -- the graph is JSON; multi-platform (Claude Code, Cursor, VS Code Copilot, Codex, Gemini CLI)
 
-**Relevance**: it produces the same primitive graphify gives this repo (a queryable code/doc graph), but as an external multi-agent tool -- a useful benchmark for the graphify approach and its Karpathy-KB handling.
+**Relevance**: it produces a queryable code and doc graph as an external multi-agent tool; compare the CC-integrated graph builders in [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md).
 
 ## GitSummarize
 
@@ -205,5 +205,4 @@ Differentiation happens at the output stage:
 - [ ] Evaluate DeepWiki output as pre-generated context for CC analysis workflows
 - [ ] Test Code2Tutorial on this repository for documentation generation
 - [ ] Monitor GitSummarize API for programmatic integration potential
-- [ ] Benchmark Understand Anything against the graphify integration (graph quality, Karpathy-KB handling, incremental updates)
 - [ ] Evaluate OpenKB's Claude Code skill-distillation output against this repo's own doc corpus as an agent-context source
