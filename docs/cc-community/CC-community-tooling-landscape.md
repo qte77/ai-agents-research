@@ -593,7 +593,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
 | **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
 | **TokenEconomizer** | Cross-session cost control | Plugin hooks (6 events) + `settings.local.json` | Micro-skills, tool pruning, loop guard learned per repository | Early (v0.1.0, Apache-2.0) |
-| **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Active (4.1K stars, 48 releases) |
+| **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Archived (4,943 stars, `gh api` 2026-11-21) |
 | **Claude-Mem** | Persistent memory + compression (cross-agent) | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (115.2K stars, v15.13.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
 | **Parry Guard** | Injection/secrets/exfil scanning | Hooks (PreToolUse + PostToolUse + UserPromptSubmit) | Local ML (DeBERTa v3) + AST/regex layers, fail-closed | Early (44 stars, v0.1.5) |
