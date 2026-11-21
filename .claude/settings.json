@@ -34,7 +34,12 @@
       "Bash(make -s reconcile)",
       "Bash(make -s check_status)",
       "Bash(make -s check_actions)",
-      "Bash(make -s test)"
+      "Bash(make -s test)",
+      "Bash(gh repo list *)",
+      "Bash(gh search issues *)",
+      "Bash(uv tool list)",
+      "Bash(rtk gain)",
+      "Bash(rtk gain *)"
     ]
   },
   "enabledPlugins": {
