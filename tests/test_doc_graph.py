@@ -22,14 +22,13 @@ class BucketTests(unittest.TestCase):
 
 
 class DocStatusTests(unittest.TestCase):
-    def test_frontmatter_wins_over_badge(self):
+    def test_frontmatter_status(self):
         text = "---\nstatus: trial\n---\n\n**Status**: Assess\n\n## Body\n"
         self.assertEqual(dg.doc_status(text), "trial")
 
-    def test_badge_is_normalized_to_its_leading_token(self):
-        self.assertEqual(dg.doc_status("---\nt: x\n---\n\n**Status**: Research (informational)\n"), "research")
-        self.assertEqual(dg.doc_status("**Status**: Reference (plan)\n\n## H\n"), "reference")
-        self.assertEqual(dg.doc_status("**Status**: Research Preview — beta\n"), "research-preview")
+    def test_body_badge_is_ignored(self):
+        # check_status forbids body badges (#348), so frontmatter is the only source (plan 0015 G2).
+        self.assertIsNone(dg.doc_status("**Status**: Reference (plan)\n\n## H\n"))
 
     def test_none_when_no_status(self):
         self.assertIsNone(dg.doc_status("# Title\n\nbody\n"))
@@ -63,11 +62,11 @@ class ResolveTests(unittest.TestCase):
     def test_relative_doc_link_resolves_with_fragment(self):
         self.assertEqual(
             dg.resolve("docs/non-cc/a/x.md", "../b/y.md#part"),
-            ("doc", "docs/non-cc/b/y.md", "part"),
+            ("docs/non-cc/b/y.md", "part"),
         )
 
-    def test_external_link_becomes_domain(self):
-        self.assertEqual(dg.resolve("docs/x.md", "https://www.GitHub.com/o/r"), ("domain", "github.com", None))
+    def test_external_link_is_skipped(self):
+        self.assertIsNone(dg.resolve("docs/x.md", "https://www.GitHub.com/o/r"))
 
     def test_non_markdown_and_mailto_are_skipped(self):
         self.assertIsNone(dg.resolve("docs/x.md", "img/pic.svg"))
@@ -82,8 +81,13 @@ CORPUS = {
         "[outside](../../../CONTRIBUTING.md)\n"
     ),
     # Real docs put the badge in the preamble, before the first heading (doc_status semantics).
-    "docs/non-cc/b/y.md": "**Status**: Assess\n\n# Y\n\nback to [x](../a/x.md)\n",
-    "docs/_topics/memory.md": "# Topic Hub: Memory\n\n| [x](../non-cc/a/x.md) | row |\n",
+    "docs/non-cc/b/y.md": "---\nstatus: assess\n---\n\n# Y\n\nback to [x](../a/x.md)\n",
+    "docs/_topics/memory.md": (
+        "# Topic Hub: Memory\n\n| [x](../non-cc/a/x.md) | row |\n"
+        "| [x § part](../non-cc/a/x.md#part) | second row, same doc |\n"
+    ),
+    "docs/_topics/README.md": "# Hubs\n\n[memory](memory.md)\n",
+    "docs/z.md": "# Z\n\nno links\n",
 }
 
 
@@ -106,9 +110,9 @@ class BuildGraphTests(unittest.TestCase):
     def test_hub_docs_emit_hub_edges(self):
         self.assertIn(("docs/_topics/memory.md", "docs/non-cc/a/x.md", "hub"), self.edges)
 
-    def test_external_links_create_domain_nodes_and_cites_edges(self):
-        self.assertEqual(self.nodes["domain:github.com"]["type"], "domain")
-        self.assertIn(("docs/non-cc/a/x.md", "domain:github.com", "cites"), self.edges)
+    def test_external_links_create_no_nodes_or_edges(self):
+        self.assertFalse(any(n["type"] != "doc" for n in self.g["nodes"]))
+        self.assertTrue(all(t in CORPUS for (_, t, _) in self.edges))
 
     def test_links_leaving_the_corpus_create_no_edge(self):
         self.assertFalse(any(t.endswith("CONTRIBUTING.md") for (_, t, _) in self.edges))
@@ -122,6 +126,40 @@ class BuildGraphTests(unittest.TestCase):
         self.assertEqual(set(data), {"nodes", "edges"})
         self.assertEqual([n["id"] for n in data["nodes"]], sorted(n["id"] for n in data["nodes"]))
         self.assertTrue(dg.to_json(self.g).endswith("\n"))
+
+
+class SiteGraphTests(unittest.TestCase):
+    """The slim projection the Pages site loads (plan 0015 G2)."""
+
+    def setUp(self):
+        self.site = dg.site_graph(dg.build_graph(CORPUS))
+        self.nodes = {n["id"]: n for n in self.site["nodes"]}
+
+    def test_nodes_carry_only_title_bucket_and_hubs(self):
+        self.assertEqual(self.nodes["docs/non-cc/a/x.md"],
+                         {"id": "docs/non-cc/a/x.md", "title": "X", "bucket": "non-cc/a",
+                          "hubs": ["docs/_topics/memory.md"]})
+
+    def test_hub_rows_pointing_at_a_section_count_once(self):
+        self.assertEqual(self.nodes["docs/non-cc/a/x.md"]["hubs"], ["docs/_topics/memory.md"])
+
+    def test_hub_index_is_not_a_hub(self):
+        self.assertEqual(self.nodes["docs/_topics/memory.md"]["hubs"], [])
+
+    def test_unfiled_doc_has_no_hubs(self):
+        self.assertEqual(self.nodes["docs/z.md"]["hubs"], [])
+        self.assertEqual(self.nodes["docs/non-cc/b/y.md"]["hubs"], [])
+
+    def test_one_edge_per_linked_pair_regardless_of_direction(self):
+        self.assertEqual(self.site["edges"], [
+            ["docs/_topics/README.md", "docs/_topics/memory.md"],
+            ["docs/_topics/memory.md", "docs/non-cc/a/x.md"],
+            ["docs/non-cc/a/x.md", "docs/non-cc/b/y.md"],
+        ])
+
+    def test_deterministic(self):
+        again = dg.site_graph(dg.build_graph(dict(reversed(list(CORPUS.items())))))
+        self.assertEqual(dg.to_json(again), dg.to_json(self.site))
 
 
 class LoadCorpusTests(unittest.TestCase):
