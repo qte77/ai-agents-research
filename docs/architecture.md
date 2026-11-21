@@ -66,7 +66,7 @@ Every research document follows this four-section structure:
 
 1. **What it is** — Brief description of the feature or agent
 2. **How it works** — Mechanism, internals, observed behavior
-3. **Adoption decision** — Adopt / Defer / Skip with rationale
+3. **Adoption decision** — the doc's `status` ([CONTRIBUTING.md §2](../CONTRIBUTING.md#2-frontmatter-status): `adopt`, `trial`, `assess` or `hold`) with rationale
 4. **Action items** — Concrete next steps for downstream repos
 
 This format ensures each doc is directly actionable, not just descriptive.

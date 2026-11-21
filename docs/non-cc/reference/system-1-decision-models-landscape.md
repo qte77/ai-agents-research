@@ -195,7 +195,7 @@ Adrian documents).
 **Decision shape**: sort candidates by a returned score or probability.
 
 - Dedicated cross-encoder rerankers (shipped) — Cohere Rerank, bge-reranker-v2-m3, Qwen3-Reranker,
-  mxbai-rerank, FlashRank, rerankers, Voyage/ZeroEntropy/Contextual/Jina; see
+  FlashRank, rerankers, Voyage/ZeroEntropy/Contextual/Jina; see
   [agent-frameworks-infrastructure-landscape.md § Rerankers][rerankers]. None use the typed
   `noul`/`choice`/`score` interface this page tracks.
 - [jevgrep][jevgrep-home] (shipped) — the closest system-1-family match: its README states it
