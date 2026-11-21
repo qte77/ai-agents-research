@@ -16,6 +16,7 @@ layers, catalogs and ontologies, graph and vector stores. Pointers only; see [th
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
+| [data-platforms-lakehouse-landscape.md § Data lake vs lakehouse vs data warehouse](../non-cc/infrastructure/data-platforms-lakehouse-landscape.md#data-lake-vs-lakehouse-vs-data-warehouse) | The three architectures compared (Databricks' view plus Delta and Hudi self-descriptions; our rows labelled) | non-cc |
 | [data-platforms-lakehouse-landscape.md § Open table formats](../non-cc/infrastructure/data-platforms-lakehouse-landscape.md#open-table-formats) | Iceberg, Delta, Hudi, DuckLake with versions and licences | non-cc |
 | [data-platforms-lakehouse-landscape.md § Catalog-level and storage-level branching](../non-cc/infrastructure/data-platforms-lakehouse-landscape.md#catalog-level-and-storage-level-branching) | Nessie and lakeFS branching (lakeFS under BSL 1.1) | non-cc |
 | [data-platforms-lakehouse-landscape.md § Warehouse-native agents](../non-cc/infrastructure/data-platforms-lakehouse-landscape.md#warehouse-native-agents) | Snowflake Cortex Agents, BigQuery conversational analytics, Genie, Fabric data agent | non-cc |
