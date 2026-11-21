@@ -1,14 +1,14 @@
 ---
 title: CC Cowork, Plugins & Enterprise Analysis
-source: https://claude.com/blog/cowork-plugins-across-enterprise, https://claude.com/product/cowork
+source: https://claude.com/blog/cowork-plugins-across-enterprise
 purpose: Analysis of Claude's Cowork enterprise platform, plugin architecture, and connector ecosystem for potential relevance to projects using Claude Code.
 created: 2026-03-07
 updated: 2026-11-12
 validated_links: 2026-11-12
-status: generally-available
+status: assess
 ---
 
-**Details:** Standard feature across paid plans (Cowork); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout
+**Details:** Generally available. Standard feature across paid plans (Cowork); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout
 
 > **Disambiguation.** This doc covers Anthropic's own **Cowork**. **Microsoft Copilot Cowork** is a
 > different, Microsoft-branded product that Microsoft says it "integrated the technology behind

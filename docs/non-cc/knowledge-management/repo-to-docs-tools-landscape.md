@@ -1,8 +1,7 @@
 ---
 title: Repo-to-Docs AI Tools Landscape
-source: https://deepwiki.com, https://code2tutorial.com, https://gitsummarize.com, https://github.com/egonex-ai/understand-anything
+source: https://deepwiki.com
 purpose: Survey of AI-powered tools that generate documentation from GitHub repositories.
-category: landscape
 status: research
 created: 2026-04-06
 updated: 2026-11-21

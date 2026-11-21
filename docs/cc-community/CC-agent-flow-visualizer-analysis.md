@@ -2,7 +2,6 @@
 title: "Agent Flow: Real-Time Claude Code / Codex Run Visualizer"
 source: https://github.com/patoles/agent-flow
 purpose: Analysis of Agent Flow — a VS Code extension and standalone web app that replays a Claude Code or Codex agent session as an interactive node graph, for debugging and understanding agent behavior.
-category: analysis
 platform_scope: [claude-code, codex]
 created: 2026-09-24
 updated: 2026-09-24

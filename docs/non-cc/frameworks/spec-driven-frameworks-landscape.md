@@ -1,7 +1,6 @@
 ---
 title: Spec-Driven Frameworks — Landscape
 purpose: Comparison of spec-driven development (SDD) frameworks — GitHub Spec-Kit, OpenSpec, BMAD-METHOD, Agent-OS, Kiro, Tessl, AB Method — the standalone deep-dive behind the synthesis entry in the agentic-engineering disciplines landscape.
-category: landscape
 created: 2026-06-27
 updated: 2026-11-19
 validated_links: 2026-07-23

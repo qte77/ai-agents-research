@@ -1,7 +1,6 @@
 ---
 title: CC Community Reimplementations Landscape
-description: Survey of community reimplementations and educational deconstructions of Claude Code — cleanroom rebuilds, spec-derived ports, educational courses, and leak-derived alternatives.
-category: landscape
+purpose: Survey of community reimplementations and educational deconstructions of Claude Code — cleanroom rebuilds, spec-derived ports, educational courses, and leak-derived alternatives.
 status: research
 created: 2026-04-04
 updated: 2026-10-26

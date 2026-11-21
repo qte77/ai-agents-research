@@ -5,7 +5,7 @@ purpose: Analysis of cloud-native scheduled tasks (formerly routines) for autono
 created: 2026-03-24
 updated: 2026-11-18
 validated_links: 2026-11-18
-status: available
+status: assess
 ---
 
 **Details:** Available (all CC Web users — Pro, Max, Team, Enterprise). Vendor marks the underlying feature as **research preview** — behavior, limits, and API surface may change.

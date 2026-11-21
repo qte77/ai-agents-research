@@ -1,11 +1,13 @@
 ---
 title: User Story - ai-agents-research
-description: User stories for systematic coding agent research, comparison, and feature triage
-category: requirements
+purpose: User stories for systematic coding agent research, comparison, and feature triage
 created: 2026-03-22
 updated: 2026-11-09
-version: 1.0.0
+validated_links: 2026-11-21
+status: reference
 ---
+
+**Version:** 1.0.0
 
 ## User Story: ai-agents-research
 

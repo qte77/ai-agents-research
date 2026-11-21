@@ -1,9 +1,10 @@
 ---
 title: Cowork, Skills API & CC Web Programmatic Workflows
-source: https://platform.claude.com/docs/en/build-with-claude/skills-guide, https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview, https://platform.claude.com/docs/en/build-with-claude/workspaces, https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/github-actions
+source: https://platform.claude.com/docs/en/build-with-claude/skills-guide
 purpose: API-level analysis of Cowork, Skills API, Chrome extension, and CC Web for programmatic workflow creation, GitHub integration, and multi-repo orchestration.
 created: 2026-03-18
 updated: 2026-03-18
+validated_links: 2026-11-21
 status: research
 ---
 

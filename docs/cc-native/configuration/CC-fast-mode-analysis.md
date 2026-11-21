@@ -5,7 +5,7 @@ purpose: Analysis of Claude Code Fast Mode and the underlying API `speed` parame
 created: 2026-02-17
 updated: 2026-11-19
 validated_links: 2026-11-08
-status: available
+status: assess
 ---
 
 **Details:** (2026-11-17 update: the [CC page][cc-fast] now also lists Fable 5.2, from v2.1.321.) Available on Opus 5.5, research preview on Opus 5 and Opus 4.8 — the API and Claude Code pages now both state this per model; Opus 4.8 fast mode is deprecated (2026-10-30) and will be removed 2026-11-30 (both pages read 2026-11-08)

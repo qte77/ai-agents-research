@@ -1,7 +1,6 @@
 ---
 title: VLM Screen-Sharing Landscape for Claude Code
 purpose: Survey of Vision Language Models, local runtimes, image token math, and architecture patterns for integrating screen-sharing / visual-context workflows with Claude Code.
-category: landscape
 status: research
 platform_scope: [claude-code]
 created: 2026-04-11

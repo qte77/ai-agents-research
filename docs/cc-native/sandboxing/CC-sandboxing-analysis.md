@@ -1,8 +1,7 @@
 ---
 title: Claude Code Sandboxing and Security Analysis
-description: Analysis of CC sandboxing mechanics, configuration options, security model, and sandbox configuration options.
-source: https://code.claude.com/docs/en/sandboxing, https://code.claude.com/docs/en/settings#sandbox-settings, https://code.claude.com/docs/en/security
-category: analysis
+purpose: Analysis of CC sandboxing mechanics, configuration options, security model, and sandbox configuration options.
+source: https://code.claude.com/docs/en/sandboxing
 created: 2026-03-07
 updated: 2026-11-17
 validated_links: 2026-09-23

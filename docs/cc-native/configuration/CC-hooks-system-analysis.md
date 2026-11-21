@@ -5,10 +5,10 @@ purpose: Analysis of Claude Code hooks system for automation, quality gates, and
 created: 2026-03-07
 updated: 2026-11-20
 validated_links: 2026-07-23
-status: generally-available
+status: adopt
 ---
 
-**Details:** v1.0.38+, extensively evolved through v2.1.218
+**Details:** Generally available; v1.0.38+, extensively evolved through v2.1.218
 
 ## What Hooks Are
 

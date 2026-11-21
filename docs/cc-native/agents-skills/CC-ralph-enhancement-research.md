@@ -1,6 +1,5 @@
 ---
 title: Ralph Loop Enhancement Research
-source: ralph/scripts/ralph.sh, ralph/README.md, external Ralph pattern research (ralph/README.md is project-specific; see external references below for the general pattern)
 purpose: Identify actionable enhancements to autonomous headless CC development loops (Ralph pattern) based on gap analysis and external pattern research.
 created: 2026-03-07
 updated: 2026-09-24
@@ -8,7 +7,7 @@ validated_links: 2026-09-24
 status: research
 ---
 
-**Details:** informational — feeds into iteration planning
+**Details:** informational — feeds into iteration planning. Based on `ralph/scripts/ralph.sh`, `ralph/README.md` and external Ralph pattern research (see the external references below).
 
 ## Current Architecture Summary
 

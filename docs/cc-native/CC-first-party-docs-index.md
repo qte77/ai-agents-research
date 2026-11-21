@@ -4,6 +4,7 @@ purpose: Canonical Anthropic URLs for CC, Agent SDK, Anthropic SDK, API, and bes
 created: 2026-03-28
 updated: 2026-10-15
 validated_links: 2026-10-15
+status: reference
 ---
 
 ## CC First-Party Documentation Index

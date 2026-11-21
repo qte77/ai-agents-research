@@ -5,6 +5,7 @@ purpose: Analysis of Anthropic's emotion-concept interpretability research and i
 created: 2026-04-04
 validated_links: 2026-04-04
 status: research
+updated: 2026-09-30
 ---
 
 **Details:** interpretability with CC-operational relevance

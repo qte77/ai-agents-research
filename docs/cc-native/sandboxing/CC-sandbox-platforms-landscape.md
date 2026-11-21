@@ -1,8 +1,7 @@
 ---
 title: CC Sandbox Platforms Landscape
-source: https://github.com/alibaba/OpenSandbox, https://e2b.dev, https://fly.io/sprites, https://code.claude.com/docs/en/sandboxing
+source: https://github.com/alibaba/OpenSandbox
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
-category: landscape
 created: 2026-03-08
 updated: 2026-11-09
 validated_links: 2026-11-09

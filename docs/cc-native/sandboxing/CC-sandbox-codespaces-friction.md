@@ -1,8 +1,7 @@
 ---
 title: CC Sandbox Friction in Codespaces — Research Summary
-description: Analysis of sandbox friction points in Codespace/devcontainer environments and mitigation strategies.
-source: https://code.claude.com/docs/en/sandboxing, https://code.claude.com/docs/en/settings#sandbox-settings, https://code.claude.com/docs/en/security
-category: analysis
+purpose: Analysis of sandbox friction points in Codespace/devcontainer environments and mitigation strategies.
+source: https://code.claude.com/docs/en/sandboxing
 created: 2026-03-17
 updated: 2026-07-23
 validated_links: 2026-07-23

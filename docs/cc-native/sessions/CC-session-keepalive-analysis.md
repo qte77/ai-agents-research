@@ -1,6 +1,6 @@
 ---
 title: CC Session Keepalive Across Environments
-source: https://code.claude.com/docs/en/remote-control, https://code.claude.com/docs/en/claude-code-on-the-web, https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces
+source: https://code.claude.com/docs/en/remote-control
 purpose: Actionable techniques to keep CC sessions alive on local machines, in containers, and in GitHub Codespaces.
 created: 2026-03-25
 updated: 2026-07-23
@@ -141,6 +141,8 @@ gh codespace create --idle-timeout 240m
 - [CC-sandbox-codespaces-friction.md](../sandboxing/CC-sandbox-codespaces-friction.md)
 
 ## References
+
+- [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web)
 
 [gh-idle-timeout]: https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces
 [gh-codespace-secrets]: https://docs.github.com/en/codespaces/managing-your-codespaces/managing-your-account-specific-secrets-for-github-codespaces

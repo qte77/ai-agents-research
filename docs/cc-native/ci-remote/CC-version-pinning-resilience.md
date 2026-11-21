@@ -1,6 +1,6 @@
 ---
 title: CC Version Pinning & Provider Resilience
-source: https://code.claude.com/docs/en/setup, https://www.npmjs.com/package/@anthropic-ai/claude-code, https://docs.github.com/en/actions/concepts/runners/self-hosted-runners, https://www.vcluster.com/blog/comparing-coder-vs-codespaces-vs-gitpod-vs-devpod
+source: https://code.claude.com/docs/en/setup
 purpose: Document how to pin Claude Code versions for reproducible CI/CD and container environments, self-hosted runners, cloud dev environments, and resilience against Anthropic API outages or discontinuation.
 created: 2026-03-12
 updated: 2026-07-23
@@ -387,6 +387,7 @@ For scenarios where Anthropic may be entirely unavailable (business discontinuat
 - [CC Model & Provider Configuration](../configuration/CC-model-provider-configuration.md)
 - [Local setup guide][local-setup]
 - [GitHub Self-Hosted Runners][gh-runners]
+- [Comparing Coder vs Codespaces vs Gitpod vs DevPod (vCluster)](https://www.vcluster.com/blog/comparing-coder-vs-codespaces-vs-gitpod-vs-devpod)
 
 [cc-setup]: https://code.claude.com/docs/en/setup
 [cc-action]: https://github.com/anthropics/claude-code-action

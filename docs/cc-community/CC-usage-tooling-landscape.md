@@ -1,7 +1,6 @@
 ---
 title: CC Usage-Observability Tooling Landscape
 purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor, cc-costline, agentacct.
-category: landscape
 status: research
 created: 2026-06-14
 updated: 2026-09-24

@@ -1,6 +1,6 @@
 ---
 title: CC Remote Access Landscape
-source: https://www.omnara.com, https://cloudcli.ai, https://happy.engineering, https://code.claude.com/docs/en/remote-control, https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
+source: https://www.omnara.com
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
 updated: 2026-10-23

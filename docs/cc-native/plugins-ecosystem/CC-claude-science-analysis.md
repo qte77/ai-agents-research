@@ -5,7 +5,7 @@ purpose: Record what Anthropic's Claude Science desktop workbench is, how it run
 created: 2026-10-03
 updated: 2026-10-06
 validated_links: 2026-10-06
-status: beta
+status: assess
 ---
 
 **Details:** beta; Pro, Max, Team and Enterprise plans; separate desktop app (docs, fetched 2026-10-03)

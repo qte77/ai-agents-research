@@ -1,7 +1,6 @@
 ---
 title: CC Community Skills Landscape
-description: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI), modern-web-guidance (browser-vendor web-platform skill).
-category: landscape
+purpose: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI), modern-web-guidance (browser-vendor web-platform skill).
 status: research
 created: 2026-03-13
 updated: 2026-11-20
