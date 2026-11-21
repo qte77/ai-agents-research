@@ -17,7 +17,7 @@ Four layers of document handling are available for Claude workflows: Anthropic's
 
 **Source**: [anthropics/skills](https://github.com/anthropics/skills). The four skills were source-available under a proprietary license until 2026-11-06, when Anthropic moved them to Apache 2.0 ([commit 2c5958e](https://github.com/anthropics/skills/commit/2c5958e)). Install in Claude Code with `/plugin marketplace add anthropics/skills`, then `/plugin install document-skills@anthropic-agent-skills`.
 
-These are the production skills powering Claude.ai, Cowork, and the Skills API. Documented in detail in [CC-cowork-skills-api-workflows.md](CC-cowork-skills-api-workflows.md#anthropic-document-skill-capabilities-2026-03-26).
+These are the production skills powering Claude.ai, Cowork, and the Skills API. Their skill type and IDs are in [CC-cowork-skills-api-workflows.md § Skill Types](CC-cowork-skills-api-workflows.md#skill-types).
 
 | Skill | Create | Edit | Read | Key Capabilities |
 |-------|--------|------|------|-----------------|
@@ -117,7 +117,7 @@ Standalone MCP servers enabling Claude Code (or any MCP client) to manipulate do
 ## Cross-References
 
 - [CC-cowork-skills-api-workflows.md](CC-cowork-skills-api-workflows.md) — Skills API endpoints, skill type details, capability table
-- [CC-connectors-overview.md](CC-connectors-overview.md) — Claude for Excel/PowerPoint add-ins, M365 connector
+- [CC-connectors-overview.md](CC-connectors-overview.md) — Built-in connectors, including Microsoft 365
 - [CC-business-api-integrations.md](CC-business-api-integrations.md) — Business APIs (accounting, CRM, payments) that feed into document workflows
 - [CC-office-worker-workflows.md](../../cc-community/CC-office-worker-workflows.md) — End-to-end workflow patterns combining these capabilities
 

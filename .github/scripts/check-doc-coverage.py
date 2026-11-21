@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check that every content doc is in its folder's README index and has an inbound link (plan 0015 X1).
+"""Check doc coverage: README index, inbound links (plan 0015 X1) and section anchors (X3).
 
 Pure logic lives in ``lib/doc_coverage.py``; this entry point reads ``docs/`` (minus
 the archive) and the repo-root markdown files, prints each violation and sets the
@@ -19,13 +19,13 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.doc_coverage import check_coverage  # noqa: E402
+from lib.doc_coverage import check_anchors, check_coverage  # noqa: E402
 from lib.doc_graph import load_corpus  # noqa: E402
 
 
 def main() -> None:
     """Entry point: run the coverage checks and exit accordingly."""
-    parser = argparse.ArgumentParser(description="Check README-index and inbound-link coverage of docs/.")
+    parser = argparse.ArgumentParser(description="Check README-index, inbound-link and anchor coverage of docs/.")
     parser.add_argument("--root", type=Path, default=Path("."), help="Repo root containing docs/ (default: .)")
     args = parser.parse_args()
 
@@ -34,7 +34,8 @@ def main() -> None:
         sys.exit(2)
 
     root_files = {p.name: p.read_text(encoding="utf-8") for p in sorted(args.root.glob("*.md"))}
-    problems = check_coverage(load_corpus(args.root), root_files)
+    docs = load_corpus(args.root)
+    problems = check_coverage(docs, root_files) + check_anchors(docs)
     for line in problems:
         print(line)
     if problems:

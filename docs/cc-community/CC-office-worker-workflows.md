@@ -58,7 +58,7 @@ QuickBooks/Xero MCP → P&L + Balance Sheet → Excel modeling → PowerPoint de
 - **Data pull**: Accounting MCP server retrieves financial data
 - **Analysis**: Claude for Excel performs variance analysis, reconciliation
 - **Presentation**: Claude for PowerPoint generates brand-consistent deck with shared Excel context (Mar 2026+)
-- **Tools**: [Business API integrations](../cc-native/plugins-ecosystem/CC-business-api-integrations.md) + [Excel/PowerPoint add-ins](../cc-native/plugins-ecosystem/CC-connectors-overview.md#claude-for-excel-add-in)
+- **Tools**: [Business API integrations](../cc-native/plugins-ecosystem/CC-business-api-integrations.md) + Claude for Excel and PowerPoint add-ins
 
 ### Offer & Contract Generation
 
@@ -136,7 +136,7 @@ CC-first for high ROI MVP, but these extend the pattern:
 
 - [CC-office-document-skills.md](../cc-native/plugins-ecosystem/CC-office-document-skills.md) — Document skills ecosystem (4 layers)
 - [CC-business-api-integrations.md](../cc-native/plugins-ecosystem/CC-business-api-integrations.md) — Business MCP servers (payments, accounting, CRM, ERP)
-- [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) — Built-in connectors and Office add-ins
+- [CC-connectors-overview.md](../cc-native/plugins-ecosystem/CC-connectors-overview.md) — Built-in connectors, including Microsoft 365
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — RTK, Pilot Shell, ruflo
 - [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — Skill libraries and organizational frameworks
 

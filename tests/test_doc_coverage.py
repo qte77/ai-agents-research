@@ -68,5 +68,36 @@ class CheckCoverageTests(unittest.TestCase):
         self.assertEqual(self.problems, sorted(self.problems))
 
 
+class HeadingSlugTests(unittest.TestCase):
+    def test_github_slug_rules(self):
+        text = (
+            "# Title\n"
+            "## Coding Agents & IDEs\n"
+            "## 3. Agents _Performing_ SCA/DCA (agent-as-scanner)\n"
+            "## Skills API (`/v1/skills`)\n"
+            "## [Linked](https://x.y) heading\n"
+            "### my_var **bold**\n"
+            "## Notes\n"
+            "## Notes\n"
+            "```\n## not a heading\n```\n"
+            '<a id="custom-anchor"></a>\n'
+        )
+        self.assertEqual(dc.heading_slugs(text), {
+            "title", "coding-agents--ides", "3-agents-performing-scadca-agent-as-scanner",
+            "skills-api-v1skills", "linked-heading", "my_var-bold", "notes", "notes-1",
+            "custom-anchor",
+        })
+
+
+class CheckAnchorsTests(unittest.TestCase):
+    DOCS = {
+        "docs/a.md": "# A\n\n[ok](b.md#section-one) [bad](b.md#gone)\n[case](b.md#Section-One)\n",
+        "docs/b.md": "# B\n\n## Section One\n",
+    }
+
+    def test_missing_fragment_is_reported_with_its_lines(self):
+        self.assertEqual(dc.check_anchors(self.DOCS), ["docs/a.md:3: #gone not found in docs/b.md"])
+
+
 if __name__ == "__main__":
     unittest.main()
