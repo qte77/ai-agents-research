@@ -132,7 +132,7 @@ Valuable as a **community health indicator** and discovery entry point. The open
 
 **Repo**: [luongnv89/claude-howto][claude-howto] | **Stars**: 18.9K | **License**: MIT
 
-Example-driven learning guide for Claude Code — 10 sequential modules covering slash commands, memory, skills, subagents, MCP, hooks, plugins, checkpoints, advanced features, and CLI. Bridges the gap between official reference docs and production-ready implementation.
+Example-driven learning guide for Claude Code — 10 sequential modules covering slash commands, memory, skills, subagents, Model Context Protocol (MCP), hooks, plugins, checkpoints, advanced features, and CLI. Bridges the gap between official reference docs and production-ready implementation.
 
 ### Key Templates
 
