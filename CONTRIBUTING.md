@@ -19,12 +19,20 @@ status: assess
 ---
 ```
 
-- `status` — the doc's maturity token (see §2); the single source of status, read by `make check_status` and the doc graph
-- `validated_links` — date when URLs in the doc were last checked
-- `updated` — date of last content edit
-- **No `sources:` key in frontmatter** — sources belong in the Sources section at the end
+Required keys:
 
-Optional fields: `source` (primary URL the doc is based on), `category`, `test_run`.
+- `title`, `purpose` (one line; there is no separate `description:`)
+- `created`, `updated` (date of last content edit), `validated_links` (date the URLs were last checked), all ISO `YYYY-MM-DD`
+- `status` — the doc's lifecycle token (see §2); the single source of status, read by `make check_status` and the doc graph
+
+Optional keys: `source` (primary URL the doc is based on), `platform_scope` (see [platform_scope frontmatter](#platform_scope-frontmatter)), `test_run`.
+
+Not in frontmatter (owner decision D5, plan 0015, 2026-11-21):
+
+- `sources:` — sources belong in the Sources section at the end
+- `description:` — use `purpose:`
+- `release:`, `version:`, `license:`, `authority:` — release status, version and licence go on the `**Details:**` line (§2)
+- `category:` — the filename suffix (`-landscape`, `-analysis`, `-reference`, …) already says it
 
 **Frontmatter must be on line 1.** No HTML comments (`<!-- -->`) before the opening `---` — this breaks markdownlint's frontmatter parser and causes false MD041/MD003 errors.
 
@@ -32,7 +40,7 @@ Optional fields: `source` (primary URL the doc is based on), `category`, `test_r
 
 Status lives only in the frontmatter `status:` field (#348). There is no body `**Status**:` badge; `make check_status` runs in strict mode and fails on one.
 
-Values (Technology Radar convention):
+`status` says where the doc's subject stands for us, not what the vendor calls its release. Values (Technology Radar convention, plus three for docs that recommend nothing):
 
 | Status | Meaning |
 |---|---|
@@ -40,8 +48,15 @@ Values (Technology Radar convention):
 | `trial` | Worth pursuing, needs more validation |
 | `assess` | Worth exploring, not yet validated |
 | `hold` | Not recommended or deprecated |
+| `research` | A paper or method; nothing to adopt |
+| `reference` | Descriptive: a spec, index, runbook or requirements doc |
+| `archived` | Retired; see [Archiving legacy content](#archiving-legacy-content) |
 
-Other tokens in use (`research`, `reference`, `generally-available`, `beta`, …; plans: `draft`/`approved`/`done`/`superseded`) are listed in `VOCAB` in [`.github/scripts/lib/doc_status.py`](.github/scripts/lib/doc_status.py), the one authoritative list. Extra maturity detail (license, version, availability) goes on a `**Details:**` line right after the frontmatter.
+Plans (`docs/plans/`) use `draft`, `approved`, `done` or `superseded`, and only plans use them.
+
+Release status, licence and version go on a `**Details:**` line right after the frontmatter, per surface where they differ (for example "preview on the web, GA in the CLI", which one token can't hold).
+
+The older release and licence tokens (`generally-available`, `beta`, `open-source`, …) are still accepted by `make check_status` until the plan 0015 F3 migration maps them to the values above; `VOCAB` in [`.github/scripts/lib/doc_status.py`](.github/scripts/lib/doc_status.py) shrinks to this table in that same change.
 
 ### 3. Body
 
