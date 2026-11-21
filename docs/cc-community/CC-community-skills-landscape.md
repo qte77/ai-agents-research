@@ -593,10 +593,10 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| BHIL AI-First Development Toolkit | 134 stars; no measured benefit or named independent users found in its README, docs or tree (it ships eval and ADR templates only); last push 2026-03-28 (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/camalus/BHIL-AI-First-Development-Toolkit> |
+| BHIL AI-First Development Toolkit | 134 stars; no measured benefit or named independent users found in its README, docs or tree (it ships eval and ADR templates only); last push 2026-03-28 (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/PolymathWizard/BHIL-AI-First-Development-Toolkit> |
 | dispatch | 411 stars; no measured benefit or named independent users in its README or tree; no releases; last push 2026-04-06 (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/bassimeledath/dispatch> |
 | claude-howto fork (Master Claude Code in a Weekend) | 11 stars; a repackaged copy of luongnv89/claude-howto with no original content; last push 2026-03-27 (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/akolaarthurali/claude-howto-Master-Claude-Code-in-a-Weekend> |
-| coleam00/skills | 777 stars; its README states no measured benefit (only a ~4,400-token always-on cost) and names no independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/coleam00/skills> |
+| coleam00/skills | 777 stars; its README states no measured benefit and names no independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/coleam00/skills> |
 | stevesolun/ctx | 593 stars; its benchmark folder documents a protocol, not a published result, and says controlled fixtures do not measure recommendation relevance; no named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/stevesolun/ctx> |
 
 ## Sources
