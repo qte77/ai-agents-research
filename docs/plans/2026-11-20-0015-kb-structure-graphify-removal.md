@@ -15,16 +15,16 @@ open rows moved here unchanged (they keep their `13-` IDs), so there is one live
 **Read this first.** Plan opened 2026-11-20 from the owner's request: "remove graphify and all
 remnants", and "strengthen the topics, frontmatter and indices and cross-refs instead". Earlier the
 same day the owner approved a simpler doc graph (docs only, one edge per linked pair) that redeploys
-after every merge, and asked to keep live search and topic checkboxes. Nothing in this plan has
-shipped yet. The approach below follows an advisory review (Fable, read-only) whose line references
+after every merge, and asked to keep live search and topic checkboxes. Shipped so far: T1 to T4,
+H1 (#946) and G1 (#947). The approach below follows an advisory review (Fable, read-only) whose line references
 the lead re-checked at source.
 
 **Do now, in order:**
 
 1. `git pull`, `make reconcile`, open PRs (merge the weekly paper-triage bot PR first if one is open).
-2. Owner decisions D1–D6 below: each has a default; work proceeds on the default unless the owner
-   overrides it on the plan PR or in conversation.
-3. T1 to T4 shipped 2026-11-21 (#937, #939, #938, #941). Order from here (advisory review, Fable, 2026-11-21; lead-verified): G1 (agent-only, any time); P1; F1; C1; G2; F2 and F3; X1; X3; X2; C2; W1.
+2. Owner decisions D1–D8 below: the owner approved all eight defaults on 2026-11-21 (in
+   conversation, on this plan's PR #942).
+3. T1 to T4 shipped 2026-11-21 (#937, #939, #938, #941). Order from here (advisory review, Fable, 2026-11-21; lead-verified): P1; F1; C1; G2; F2 and F3; X1; X3; X2; C2; W1. The owner approved running the agent-only rows G2, X1 and X3 first (2026-11-21), so they don't wait on the owner-gated P1 and F1.
 4. Module changes follow strict TDD (failing test first): G2, F2, X1, X2, X3. G1 removes code and its
    tests together, so the test count drops below 247; that is expected.
 
@@ -44,7 +44,7 @@ add excludes); delete the branch and worktree.
   for the fixes.
 - Don't edit `CHANGELOG.md` by hand; each PR adds a `changelog.d/` fragment.
 
-## Owner decisions (defaults apply until overridden)
+## Owner decisions (all approved 2026-11-21)
 
 | ID | Question | Default |
 |---|---|---|
