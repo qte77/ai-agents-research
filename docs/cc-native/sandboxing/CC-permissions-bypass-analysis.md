@@ -11,7 +11,7 @@ status: research
 ## What `--dangerously-skip-permissions` Does
 
 Bypasses **all** permission checks -- file edits, bash commands, network
-requests, MCP tools, subagent spawning. Every action auto-approves without
+requests, Model Context Protocol (MCP) tools, subagent spawning. Every action auto-approves without
 confirmation.
 
 ```bash

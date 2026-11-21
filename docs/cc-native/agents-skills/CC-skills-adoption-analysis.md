@@ -200,7 +200,7 @@ Source: [Context Forking to Save Time, Tokens and Trouble][context-forking-post]
 - **Skills in `--add-dir` auto-load** (v2.1.32)
 - **Duplicate skill detection** via filesystem inode checks (v2.1.3)
 - **Skill `allowed-tools` application fixes** (v2.0.76)
-- **`auto:N` MCP tool search threshold** via context % (v2.1.13)
+- **`auto:N` Model Context Protocol (MCP) tool search threshold** via context % (v2.1.13)
 
 ## Skills Auto-Discovery
 

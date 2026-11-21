@@ -111,7 +111,7 @@ names no specific projects): six in total, including Goose; the other five —
 - **Model Context Protocol (MCP)** — "a protocol for seamless integration between LLM applications and external data sources"
 - **AGENTS.md** — "a simple, open format for guiding coding agents"
 - **agentgateway** — "secure, scalable connections between AI agents, models, tools, and APIs across ecosystems"
-- **Agent2Agent (A2A)** — agent-to-agent communication and task exchange across platforms
+- **Agent2Agent (A2A)** — Agent-to-Agent Protocol for communication and task exchange across platforms
 - **Agent Router** — "an open source AI gateway built on Envoy that connects applications to models and MCP tools"
 
 **Relevance to skills/plugins standards**: indirect, not direct. AAIF hosts no dedicated Agent-Skills

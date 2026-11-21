@@ -12,7 +12,7 @@ status: assess
 
 ## What It Is
 
-MCP server bridging Claude Chat, Cowork, and Code via shared operational state.
+Model Context Protocol (MCP) server bridging Claude Chat, Cowork, and Code via shared operational state.
 Provides task management and project context persistence in plain markdown files.
 
 - **Stack**: TypeScript, Node.js 20+, `@modelcontextprotocol/sdk` 1.25.2, Zod 4

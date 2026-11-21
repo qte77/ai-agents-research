@@ -36,7 +36,7 @@ They go out of sync when one is updated and the rest forgotten.
 
 **AGENTS.md** (originated by OpenAI, Aug 2025) is becoming the universal standard:
 
-- Adopted by Linux Foundation's **Agentic AI Foundation** (AAIF) alongside MCP and Goose (MCP co-creator — see [goose-analysis](../non-cc/agents/goose-analysis.md))
+- Adopted by Linux Foundation's **Agentic AI Foundation** (AAIF) alongside Model Context Protocol (MCP) and Goose (MCP co-creator — see [goose-analysis](../non-cc/agents/goose-analysis.md))
 - 60,000+ repos, supported by Codex, Cursor, Windsurf, Zed, Jules, Gemini CLI
 - **Exception**: Claude Code uses CLAUDE.md (open issue with 3,000+ upvotes)
 - MCP Dev Summit (April 2026, NYC) may bring further governance updates
@@ -92,9 +92,9 @@ agents. No architectural changes needed to support Kiro-like workflows.
 | Protocol | Owner | Purpose | Relevance |
 |----------|-------|---------|-----------|
 | **MCP** | Anthropic / AAIF | Tool access standardization | CC plugins, Gemini CLI tools |
-| **A2A** | Google | Agent-to-agent collaboration | Multi-agent orchestration (future) |
+| **Agent-to-Agent Protocol (A2A)** | Google | Agent-to-agent collaboration | Multi-agent orchestration (future) |
 | **ACP** | IBM | Enterprise governance | Compliance/audit (Phase 3) |
-| **AG-UI** | Community | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
+| **Agent-User Interaction Protocol (AG-UI)** | Community | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
 
 The frontend / agent / tool **protocol triangle** (AG-UI · A2A · MCP) is mapped in detail in [ag-ui-protocol-landscape.md](../non-cc/protocols/ag-ui-protocol-landscape.md).
 

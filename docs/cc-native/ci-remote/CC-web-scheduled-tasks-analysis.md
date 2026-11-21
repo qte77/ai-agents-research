@@ -29,7 +29,7 @@ Recurring prompts that run on Anthropic cloud infrastructure on a schedule. Task
 | Requires open session | No | No | Yes |
 | Persistent across restarts | Yes | Yes | Restored on `--resume` if unexpired |
 | Access to local files | No (fresh clone) | Yes | Yes |
-| MCP servers | Connectors per task | Config files + connectors | Inherits from session |
+| Model Context Protocol (MCP) servers | Connectors per task | Config files + connectors | Inherits from session |
 | Permission prompts | No (runs autonomously) | Configurable per task | Inherits from session |
 | Customizable schedule | Via `/schedule update` in the CLI | Yes | Yes |
 | Minimum interval | 1 hour | 1 minute | 1 minute |

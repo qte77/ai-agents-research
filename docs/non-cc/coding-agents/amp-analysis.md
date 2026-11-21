@@ -66,7 +66,7 @@ Docker container or anywhere with a terminal" (ampcode.com/manual, accessed
 - **AGENTS.md** guidance files for codebase-specific instructions (same
   convention as Claude Code)
 - **Plugins** via TypeScript SDK for extending tool definitions
-- **MCP servers** for external integrations
+- **Model Context Protocol (MCP) servers** for external integrations
 - **Subagent spawning** for parallel work
 - **Python and TypeScript SDKs** for embedding Amp capabilities
 

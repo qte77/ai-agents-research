@@ -61,7 +61,7 @@ Best score per subject and property, one exemplar row each, derived from the cen
 |---|---|---|---|---|---|---|
 | Memory | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] |
 | Ontology | yes — [AWS context-ontology-accelerator][ont] | yes — [AWS context-ontology-accelerator][ont] | yes — [open-ontologies][ont] | yes — [AWS context-ontology-accelerator][ont] | yes — [open-ontologies][ont] | yes — [AWS context-ontology-accelerator][ont] |
-| Graphs/RAG/hybrid | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | partial — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] |
+| Graphs/Retrieval-Augmented Generation (RAG)/hybrid | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | partial — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] |
 | Context | partial — [Redis Iris Context Retriever][redis-ctx]; [CLAUDE.md][ccmem] under rule 6 | partial — [Redis Iris Context Retriever][redis-ctx]; [CLAUDE.md][ccmem] under rule 6 | open (best: no data) | yes — [CLAUDE.md][ccmem] | yes — [context-engineering-intro][cei] | partial — [CLAUDE.md][ccmem] |
 | Skills | yes — [org skill provisioning][orgskills] | yes — [org skill provisioning][orgskills] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] |
 | Plugins | yes — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | yes — [Code Modernization][codemod] |

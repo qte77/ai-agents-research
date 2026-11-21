@@ -19,7 +19,7 @@ The CC plugin ecosystem has grown to 9,000+ plugins across the marketplace, Clau
 | # | Plugin | Installs | This Repo Coverage | Action |
 |---|---|---|---|---|
 | 1 | [Frontend Design](#frontend-design) | 96.4k | None | Brief section (UI-focused, skip unless frontend) |
-| 2 | [Context7](#context7) | 71.8k | None | Full section (actively used via MCP) |
+| 2 | [Context7](#context7) | 71.8k | None | Full section (actively used via Model Context Protocol (MCP)) |
 | 3 | [Code Review](#code-review) | 50k | Name-only mention | Moderate section (multi-agent scoring) |
 | 4 | Firecrawl | — | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
 | 5 | Playwright | 28.1k | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |

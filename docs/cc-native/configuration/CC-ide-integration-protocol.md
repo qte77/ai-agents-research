@@ -9,7 +9,7 @@ status: research
 
 ## What It Is
 
-Claude Code communicates with IDE extensions (VS Code, JetBrains) via a **WebSocket JSON-RPC 2.0 (MCP) server** — not SSE despite the `CLAUDE_CODE_SSE_PORT` variable name. The protocol enables IDE features: diff viewing, selection context, diagnostics sharing, Jupyter cell execution.
+Claude Code communicates with IDE extensions (VS Code, JetBrains) via a **WebSocket JSON-RPC 2.0 (Model Context Protocol, MCP) server** — not SSE despite the `CLAUDE_CODE_SSE_PORT` variable name. The protocol enables IDE features: diff viewing, selection context, diagnostics sharing, Jupyter cell execution.
 
 ## Discovery & Auth
 

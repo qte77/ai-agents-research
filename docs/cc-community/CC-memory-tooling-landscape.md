@@ -42,7 +42,7 @@ Long-term memory runtime pitched as "the two lines" of prior memory architecture
 
 ### Architecture
 
-- **Three read tracks**: deterministic `MEMORY.md` injection at session start; BM25 recall over FTS5 (optional vector plugin fused by RRF); the plain directory tree as a last resort
+- **Three read tracks**: deterministic `MEMORY.md` injection at session start; BM25 recall over FTS5 (optional vector plugin fused by Reciprocal Rank Fusion (RRF)); the plain directory tree as a last resort
 - **Path-then-level retrieval**: `mem recall` returns an L0 index (abstract, path, anchor, score); the agent opens a hit at `outline`, `abstract`, or `full` depth, or `mem trace <name>` for the cited raw messages
 - **Validity-interval versioning**: each memory carries `valid_from`/optional `invalid_at`; `mem correct`, `mem supersede`, and `mem merge` don't destroy history — replaced/deleted files stay in the store for `recall --as-of <date>` and `trace`
 - **Schema-driven types**: one schema file per memory type under `schemas/`; `config.toml` holds every tunable and refuses an unknown knob at load
@@ -95,7 +95,7 @@ Rust-based cross-agent long-term memory: "Quit Claude Code mid-task, start OpenA
 
 ### CC Integration
 
-Registers via MCP. Claude Code is one of "twenty-plus harnesses" sharing the store — Codex, Cursor, Gemini CLI, OpenCode, Grok, Devin, Kimi, Kiro, and more, per the README.
+Registers via Model Context Protocol (MCP). Claude Code is one of "twenty-plus harnesses" sharing the store — Codex, Cursor, Gemini CLI, OpenCode, Grok, Devin, Kimi, Kiro, and more, per the README.
 
 ### Adoption Considerations
 
@@ -185,7 +185,7 @@ A dedicated observer AI watches each session in real-time, generating searchable
 
 ### RAD Protocol (announced earlier, not in the current README)
 
-**Real-Time Agent Data** — an open protocol for how AI agents capture and retrieve working memory, announced as a counterpart to RAG. The README no longer mentions it (checked 2026-11-09); whether it was dropped or moved is unverified.
+**Real-Time Agent Data** — an open protocol for how AI agents capture and retrieve working memory, announced as a counterpart to Retrieval-Augmented Generation (RAG). The README no longer mentions it (checked 2026-11-09); whether it was dropped or moved is unverified.
 
 ### Adoption Considerations
 
@@ -228,7 +228,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 **Repo**: [liliang-cn/cortexdb][cortexdb] | **Stars**: 479 | **License**: MIT | **Version**: Go module v2, `gh api` 2026-11-12
 
-Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run, works without an embedding model" ([README][cortexdb]). Combines vector search (HNSW/IVF/flat/binary), FTS5 full-text, RAG knowledge, scoped agent memory, and an RDF 1.2 knowledge graph (SPARQL 1.1/1.2, OWL 2 RL inference, SHACL validation, read-only Cypher) plus a Palantir-style governed-action ontology, behind 100+ tools exposed in-process or over MCP.
+Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run, works without an embedding model" ([README][cortexdb]). Combines vector search (HNSW/IVF/flat/binary), FTS5 full-text, RAG knowledge, scoped agent memory, and a Resource Description Framework (RDF) 1.2 knowledge graph ([SPARQL](../glossary.md#knowledge-structures) 1.1/1.2, Web Ontology Language (OWL) 2 RL inference, Shapes Constraint Language (SHACL) validation, read-only Cypher) plus a Palantir-style governed-action ontology, behind 100+ tools exposed in-process or over MCP.
 
 ### Architecture
 

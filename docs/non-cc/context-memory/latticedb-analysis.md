@@ -10,7 +10,7 @@ status: assess
 
 ## What It Is
 
-[LatticeDB][repo] is an embedded, single-file property-graph database combining graph traversal, HNSW vector search, and BM25 full-text search behind one Cypher-like query language (`MATCH`/`WHERE`/`RETURN`, a vector-distance operator `<=>`, a text-match operator `@@`). It is written in Zig with no external dependencies, uses a single-writer embedded model (one owning process, WAL-backed durability), and targets local, relationship-heavy workloads such as Graph RAG and agent memory — its own README frames these as example workloads built on the graph/vector/text substrate, not the definition of the engine.
+[LatticeDB][repo] is an embedded, single-file property-graph database combining graph traversal, HNSW vector search, and BM25 full-text search behind one Cypher-like query language (`MATCH`/`WHERE`/`RETURN`, a vector-distance operator `<=>`, a text-match operator `@@`). It is written in Zig with no external dependencies, uses a single-writer embedded model (one owning process, WAL-backed durability), and targets local, relationship-heavy workloads such as Graph Retrieval-Augmented Generation (RAG) and agent memory — its own README frames these as example workloads built on the graph/vector/text substrate, not the definition of the engine.
 
 Stars: 685 · License: MIT · Language: Zig · Latest release: **v0.15.0** (2026-08-29, via GitHub Releases) · 4 contributors · homepage [latticedb.org][site] (all accessed 2026-09-24). Bindings: CLI, Python (`pip install latticedb`), TypeScript/Node (`npm install @hajewski/latticedb`), Go (cgo), Java (JDK 21+, JNI). Note: the in-repo release-notes index still lists 0.11.1 as its newest entry as of 2026-09-24 — docs lag the tagged releases by several versions.
 

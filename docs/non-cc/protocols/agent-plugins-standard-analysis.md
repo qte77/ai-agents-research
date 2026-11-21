@@ -11,7 +11,7 @@ status: assess
 ## What It Is
 
 [Agent Plugins][site] is an open standard (v1.0.0) for packaging reusable AI
-agent components — Agent Skills and MCP servers — into one directory format
+agent components — Agent Skills and Model Context Protocol (MCP) servers — into one directory format
 that any compatible client can discover and load the same way. A plugin is a
 directory containing a `plugin.json` manifest, optional `skills/` and
 `mcp.json` files, and extensible client-specific namespaces for anything a

@@ -24,7 +24,7 @@ them today; AWS renames often.
 | Name | What it is (per its own docs) | Status as read |
 |---|---|---|
 | **Amazon Bedrock AgentCore** | Modular agent platform: Harness, Runtime, Memory, Gateway, Identity, Code Interpreter, Browser, Observability, Payments, Evaluations, Optimization, Policy, Registry; each usable alone, framework- and model-agnostic ([overview][ac-overview]) | GA announced 2025-10-13 ([announcement][ac-ga]); individual later services (Payments, Optimization, Policy) carry no per-service stage on the overview page |
-| **AWS Agent Registry** (AgentCore Registry) | Catalog for agents, MCP servers, skills and custom records across clouds; comparison with other registries in [Agent registries compared][registries] — not repeated here | GA, posted 2026-08-31 ([GA post][registry-ga]) |
+| **AWS Agent Registry** (AgentCore Registry) | Catalog for agents, Model Context Protocol (MCP) servers, skills and custom records across clouds; comparison with other registries in [Agent registries compared][registries] — not repeated here | GA, posted 2026-08-31 ([GA post][registry-ga]) |
 | **Amazon Bedrock Agents Classic** | The older configure-an-agent service (action groups, knowledge bases) | New sign-ups closed; existing users continue; docs point to AgentCore and the Strands Agents SDK ([Bedrock user guide][agents-classic]) |
 | **AWS Quick** | Workspace product for chat, research, flows, automation, apps and BI; "evolved from Amazon QuickSight", which continues as Quick Sight ([what is Quick][quick-what]) | Current product; no GA date read |
 | **Amazon Q Business** | Earlier enterprise assistant | "No longer open to new customers"; docs point to Quick ([Q Business][qbiz]) |
@@ -32,7 +32,7 @@ them today; AWS renames often.
 
 ## Build and deploy: AgentCore services
 
-- **Runtime** hosts agents and tools serverless with per-session isolation and supports MCP and A2A (A2A
+- **Runtime** hosts agents and tools serverless with per-session isolation and supports MCP and A2A, the Agent-to-Agent Protocol (A2A
   governance and version caveats, including that AgentCore's sample pins an older `a2a-sdk` line:
   [ag-ui-protocol-landscape.md § A2A][a2a]); it names
   CrewAI, LangGraph, LlamaIndex, Google ADK, OpenAI Agents SDK and Strands Agents, and models including

@@ -38,7 +38,7 @@ This analysis examines the specific technical mechanisms used by 18 observabilit
 
 ## Claude Code (First-Party OTel Integration)
 
-Claude Code's own first-party OTel telemetry — span hierarchy, distributed-trace propagation, privacy-default gates, and metric cardinality controls — now lives in [CC-monitoring-telemetry-analysis.md](../../cc-native/configuration/CC-monitoring-telemetry-analysis.md). The OTel-native backends catalogued below can ingest CC's OTLP output directly (Logfire advertises a "zero-config" Claude Code path via its MCP server).
+Claude Code's own first-party OTel telemetry — span hierarchy, distributed-trace propagation, privacy-default gates, and metric cardinality controls — now lives in [CC-monitoring-telemetry-analysis.md](../../cc-native/configuration/CC-monitoring-telemetry-analysis.md). The OTel-native backends catalogued below can ingest CC's OTLP output directly (Logfire advertises a "zero-config" Claude Code path via its Model Context Protocol (MCP) server).
 
 ## OpenTelemetry GenAI Semantic Conventions (2025-2026)
 

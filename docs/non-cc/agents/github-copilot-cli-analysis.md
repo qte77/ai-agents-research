@@ -25,7 +25,7 @@ that opens PRs from assigned issues (covered in
 
 **Key distinction vs OSS peers** (Aider, Kilo Code, OpenCode): Copilot CLI is
 **proprietary** and gated on a Copilot subscription, but reuses an org's existing
-GitHub identity, billing, and the GitHub MCP server out of the box — the adoption
+GitHub identity, billing, and the GitHub Model Context Protocol (MCP) server out of the box — the adoption
 cost is access control, not a new vendor.
 
 ## How It Works

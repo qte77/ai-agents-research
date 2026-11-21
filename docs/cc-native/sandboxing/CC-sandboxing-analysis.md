@@ -244,7 +244,7 @@ The sandbox runtime is available as a standalone npm package
 npx @anthropic-ai/sandbox-runtime <command-to-sandbox>
 ```
 
-Enables sandboxing outside Claude Code, including MCP servers.
+Enables sandboxing outside Claude Code, including Model Context Protocol (MCP) servers.
 
 ## Cross-Repo Write Access Pattern
 

@@ -62,7 +62,7 @@ production software through repeatable, increasingly automated workflows," and a
 bottleneck from writing code to validating it. Concrete practices: inner/outer-loop validation (fast
 targeted checks, then full independent verification before merge), test intelligence (selective,
 change-scoped testing), short-lived OIDC auth and least-privilege secrets, and CI feedback agents can
-read directly through an API (a CircleCI MCP server and CLI) ([CircleCI][circleci]).
+read directly through an API (a CircleCI Model Context Protocol (MCP) server and CLI) ([CircleCI][circleci]).
 
 **Augment Code**'s guide defines an agentic software factory as "an agentic software-delivery operating
 model in which AI agents write, test, and ship code inside a pipeline whose specifications and merge
@@ -94,7 +94,7 @@ Read as design-lens sources, self-reported claims flagged:
 - **2026-08-25, "Software Factory Design Patterns"**: a four-layer architecture — Compute, Dev
   Environment, Harness (Claude Code / Codex / Pi), Orchestration — argued as "composition over
   inheritance" over monolithic vendor stacks; notes that no harness yet standardizes lifecycle hooks
-  despite protocols like ACP and AG-UI existing ([ep. #71][aiw-2]).
+  despite protocols like ACP and Agent-User Interaction Protocol (AG-UI) existing ([ep. #71][aiw-2]).
 - **2026-09-01, "Code Mode for Extensible Software"** (not Claude Code's experimental Code Mode; see [CC-tools-inventory.md](../cc-native/configuration/CC-tools-inventory.md#code-mode-v21323)): agents write executable code against an API
   instead of many discrete tool calls (bash itself is cited as an existing "code mode"); HumanLayer's
   example edits a YJS CRDT via generated JavaScript sandboxed in QuickJS (not Node.js, filesystem/shell

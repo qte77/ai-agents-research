@@ -17,7 +17,7 @@ status: reference
 | Commits | lowercase verb-noun | conventional `feat(mod):` | conventional (PR titles) |
 | Default branch | `main` | `main` | **`dev`** |
 | CI | none | bindings-ci, docs-quality, benches | test.yml (unit + e2e) |
-| Tests | none (MCP Inspector) | `make test-*` per language | `bun turbo test` per-pkg |
+| Tests | none (Model Context Protocol (MCP) Inspector) | `make test-*` per language | `bun turbo test` per-pkg |
 | Governance | none | CONTRIBUTING.md + AGENTS.md | CONTRIBUTING.md + AGENTS.md + vouch |
 | PR rules | informal | TODO.md update required | issue-first, no AI walls of text |
 | License | MIT | Apache-2.0 (dual MIT OR Apache-2.0) | MIT |

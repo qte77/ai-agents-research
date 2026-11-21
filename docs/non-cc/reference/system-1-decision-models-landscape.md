@@ -1433,7 +1433,7 @@ jev-browser, OntoSmith, and edgextract have none yet, so their full entries live
   [CC-community-tooling-landscape.md § abide][abide-home].
 - **jev-ultrafast** (browser-use) — a browser agent whose action-selection loop is a Jev decision
   per step instead of an LLM generating an action. See
-  [CC-web-scraping-plugins-analysis.md § Alternative MCP Options][jevultrafast-home].
+  [CC-web-scraping-plugins-analysis.md § Alternative Model Context Protocol (MCP) Options][jevultrafast-home].
 - **jevgrep** (dzhng) — a code-search CLI that uses Jev to judge file/declaration relevance to a
   natural-language question. See [CC-code-tooling-landscape.md § jevgrep][jevgrep-home].
 - **typesafe-computer-use** (awlevin) — a macOS computer-use agent whose per-step

@@ -22,10 +22,10 @@ release notes and press pages read on 2026-11-20; prices are left out on purpose
 | OCI Enterprise AI Agents | Newer primitives on OCI Generative AI: an OpenAI-Responses-compatible API, projects, memory, vector stores, hosted applications [oci-enterprise-ai] | Developers | OCI regions, GA 2026-03-31 |
 | AI Agent Studio for Fusion Applications | A "design-time environment" inside Fusion Applications to "create, configure, validate, and deploy AI agents" [aas-overview]; multi-agent teams per the capability list [aas-key] | Business and Fusion admins; partners | Inside the Fusion tenant |
 
-The OCI Generative AI Agents tools are SQL, RAG, agent-as-tool, custom function calling and custom
+The OCI Generative AI Agents tools are SQL, Retrieval-Augmented Generation (RAG), agent-as-tool, custom function calling and custom
 API-endpoint calling, with guardrails (content moderation, prompt-injection and PII handling) and an
 optional human-in-the-loop [oci-agents]. Enterprise AI Agents lists file search, code interpreter,
-function calling and MCP calling of remote MCP servers, plus long- and short-term memory and
+function calling and Model Context Protocol (MCP) calling of remote MCP servers, plus long- and short-term memory and
 NL2SQL over a customer schema [oci-enterprise-ai]. Data platforms are out of scope here; for
 data platforms in general see
 [data-platforms-lakehouse-landscape.md](../infrastructure/data-platforms-lakehouse-landscape.md)
@@ -114,7 +114,7 @@ Oracle before assigning roles (see the caution above).
   listing says 26D shows only StreamableHTTP [aas-mcp]. Oracle's Oct 2025 release announced MCP
   support and a credential store [aas-oct25]. OCI Enterprise AI Agents supports "MCP Calling" of
   remote MCP servers and can host agent applications built on MCP servers [oci-enterprise-ai].
-- **A2A:** AI Agent Studio documents agent cards and an agent registry (A2A "components" page, 26B),
+- **Agent-to-Agent Protocol (A2A):** AI Agent Studio documents agent cards and an agent registry (A2A "components" page, 26B),
   announced in the same Oct 2025 release [aas-a2a], [aas-oct25]. Whether OCI Generative AI Agents
   speaks A2A was not found.
 
@@ -155,7 +155,7 @@ Oracle before assigning roles (see the caution above).
 - [salesforce-agentforce-analysis.md](salesforce-agentforce-analysis.md#licences-and-roles-for-agentforce-agents) — the SaaS-vendor counterpart
 - [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#1-authenticate-the-agent-agent-as-a-first-class-principal) — agent identity across vendors
 - [data-platforms-lakehouse-landscape.md](../infrastructure/data-platforms-lakehouse-landscape.md) — data platforms (general; no Oracle coverage)
-- [ag-ui-protocol-landscape.md](../protocols/ag-ui-protocol-landscape.md) — Oracle Agent Spec and its AG-UI alignment (March 2026)
+- [ag-ui-protocol-landscape.md](../protocols/ag-ui-protocol-landscape.md) — Oracle Agent Spec and its Agent-User Interaction Protocol (AG-UI) alignment (March 2026)
 - [CC-business-api-integrations.md](../../cc-native/plugins-ecosystem/CC-business-api-integrations.md#oracle-netsuite-official) — Oracle NetSuite's official MCP server for Claude Code
 - [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md) — name clash: ServiceNow Otto also has an "AI Agent Studio"; this doc means Oracle's, for Fusion Applications
 

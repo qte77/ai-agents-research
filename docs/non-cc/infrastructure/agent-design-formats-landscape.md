@@ -19,7 +19,7 @@ a **format spec + CLI** (Google Labs `design.md`) â€” plus the upstream Figma â†
 token chain that feeds them.
 
 For Claude Code's own design surface, see the first-party
-[Figma MCP plugin](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md#figma-mcp).
+[Figma Model Context Protocol (MCP) plugin](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md#figma-mcp).
 
 ## awesome-design-md (VoltAgent)
 

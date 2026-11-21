@@ -16,7 +16,7 @@ A feature that connects `claude.ai/code` or the Claude mobile app (iOS/Android) 
 
 ### Key Mechanics
 
-- **Local execution**: Filesystem, MCP servers, tools, and project configuration stay on your machine ([source][cc-rc])
+- **Local execution**: Filesystem, Model Context Protocol (MCP) servers, tools, and project configuration stay on your machine ([source][cc-rc])
 - **Multi-surface sync**: Conversation stays in sync across terminal, browser, and phone — messages can be sent from any surface interchangeably ([source][cc-rc])
 - **Auto-reconnect**: If laptop sleeps or network drops, session reconnects automatically when machine comes back online ([source][cc-rc])
 - **Outbound-only**: No inbound ports opened; local session polls Anthropic API over HTTPS. All traffic over TLS ([source][cc-sec])

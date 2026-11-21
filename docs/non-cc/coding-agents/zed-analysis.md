@@ -39,7 +39,7 @@ ACP draws a configuration boundary. Per the [external-agents page][zed-external]
 |---|---|
 | Zed Agent profiles | "Do not apply unless the integration says otherwise" |
 | Zed Skills | "Do not apply as Zed Skills" |
-| Zed MCP servers | "May be forwarded over ACP" |
+| Zed Model Context Protocol (MCP) servers | "May be forwarded over ACP" |
 | Tool permissions | "Zed ACP/tool forwarding permissions may apply; native tool permissions depend on the agent" |
 
 ### Claude Code in Zed

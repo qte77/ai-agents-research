@@ -36,7 +36,7 @@ This supersedes this doc's earlier claim of a flat **"default interval: 10 minut
 - **Max**: 50 scheduled jobs per session (unchanged, re-confirmed 2026-10-15)
 - **Feature gate**: `tengu_kairos_cron` — see the Details line above
 - **Self-paced loops appear in the task list** like any fixed-interval one, so `CronList`/cancellation work the same way; they're also subject to the 7-day expiry below
-- **`/loop 20m /code-review 1234`-style skill re-runs** only execute skills Claude is [allowed to invoke on its own][skill-invocation]; built-in commands (`/permissions`, `/model`, `/clear`), `disable-model-invocation: true` skills, skills withheld by a `skillOverrides` setting or a `Skill` deny rule, and MCP prompts (`/mcp__server__name`) instead reach Claude as plain text on a scheduled fire
+- **`/loop 20m /code-review 1234`-style skill re-runs** only execute skills Claude is [allowed to invoke on its own][skill-invocation]; built-in commands (`/permissions`, `/model`, `/clear`), `disable-model-invocation: true` skills, skills withheld by a `skillOverrides` setting or a `Skill` deny rule, and Model Context Protocol (MCP) prompts (`/mcp__server__name`) instead reach Claude as plain text on a scheduled fire
 - A session with the [Monitor tool available][monitor-tool] may use it directly for a dynamic `/loop` request instead of polling — streaming a background script's output back is often more token-efficient and responsive than re-running a prompt on an interval
 
 ### Customize the default prompt with `loop.md`

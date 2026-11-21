@@ -86,7 +86,7 @@ WASM/mobile) embedded graph database with a real test suite and an active releas
 Datalog-plus-bi-temporal model is a genuinely distinctive combination (its own comparison table shows
 no competitor — XTDB, Cozo, Neo4j, SQLite — matching single-file + bi-temporal + embedded + graph-
 native + Rust together). Its positioning as agent memory is vendor-documented, not independently
-demonstrated: there is no MCP server or memory-specific API beyond the general Datalog interface, and
+demonstrated: there is no Model Context Protocol (MCP) server or memory-specific API beyond the general Datalog interface, and
 the one example cited for the agent-memory use case is the maintainer's own project (see above), not
 a third-party adopter. Worth evaluating as a general embedded graph/temporal store; treat the
 "for AI agents" framing as a positioning claim pending an independent adopter.

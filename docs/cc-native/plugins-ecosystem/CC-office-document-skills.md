@@ -11,7 +11,7 @@ status: research
 
 ## Summary
 
-Four layers of document handling are available for Claude workflows: Anthropic's built-in document skills (docx/xlsx/pptx/pdf), Anthropic's knowledge-work plugins (18 business domain plugins), community CC skills (OOXML editing, batch processing), and standalone MCP servers for direct file manipulation. Together they cover the full office document lifecycle.
+Four layers of document handling are available for Claude workflows: Anthropic's built-in document skills (docx/xlsx/pptx/pdf), Anthropic's knowledge-work plugins (18 business domain plugins), community CC skills (OOXML editing, batch processing), and standalone Model Context Protocol (MCP) servers for direct file manipulation. Together they cover the full office document lifecycle.
 
 ## Layer 1: Anthropic Built-in Document Skills
 
@@ -80,7 +80,7 @@ CC-native SKILL.md files for office document workflows. Mirrors the Anthropic sk
 
 **Repo**: [landing-ai/ade-document-processing-skills][ade-skills] (68 stars, MIT license, verified 2026-09-24)
 
-Vendor-published agent skills teaching coding assistants to call LandingAI's own Agentic Document Extraction (ADE) API — a hosted document-AI service that parses complex real-world documents into structured Markdown/JSON without templates or ML training. The skills follow the Agent Skills convention (`SKILL.md` files) and cover parsing to Markdown, JSON-schema field extraction, page classification, and multi-document batch splitting, plus patterns for batch processing, RAG preparation, and table stitching.
+Vendor-published agent skills teaching coding assistants to call LandingAI's own Agentic Document Extraction (ADE) API — a hosted document-AI service that parses complex real-world documents into structured Markdown/JSON without templates or ML training. The skills follow the Agent Skills convention (`SKILL.md` files) and cover parsing to Markdown, JSON-schema field extraction, page classification, and multi-document batch splitting, plus patterns for batch processing, Retrieval-Augmented Generation (RAG) preparation, and table stitching.
 
 **Supported platforms** (per the repo): Claude Code, Cursor, Roo Code, and any agent following the Agent Skills convention.
 

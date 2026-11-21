@@ -26,7 +26,7 @@ Key capabilities (sourced from [Google Codelabs][codelabs-getting-started] and [
 - **Multi-agent orchestration** — dynamic subagents for parallelised workflows, scheduled background tasks
 - **Artifact system** — agents emit verifiable deliverables (implementation plans, task lists, browser recordings) before executing; human review gate before action
 - **Browser Subagent** — spins up a real Chrome instance, clicks UI elements, takes screenshots, and self-debugs visual failures
-- **MCP integration** — local and remote MCP servers ground agents in external data systems
+- **Model Context Protocol (MCP) integration** — local and remote MCP servers ground agents in external data systems
 - **Skills system** — contextual knowledge packages loaded on demand via markdown + optional Python/Bash scripts
 - **Model support** — primarily Gemini 3.1 Pro and Gemini 3.5 Flash; also supports Claude Sonnet 4.6, Claude Opus 4.6, and GPT-OSS-120B (per [Wikipedia][wiki], 2026-06-16)
 

@@ -33,7 +33,7 @@ Coordinates multiple independent CC sessions with:
 
 - Lead spawns teammates, coordinates work; each teammate is a full CC instance
 - Shared task list (pending/in-progress/completed) with dependency tracking
-- Teammates load project context (project instructions, MCP servers, skills) automatically
+- Teammates load project context (project instructions, Model Context Protocol (MCP) servers, skills) automatically
 - Lead's conversation history does NOT carry over to teammates
 - Display modes: in-process (single terminal, Shift+Down to cycle teammates) or split panes (tmux/iTerm2, click into pane)
 - `--teammate-mode` CLI flag: `in-process`, `tmux`, or `auto` (default). `auto` uses split panes if already inside tmux, in-process otherwise

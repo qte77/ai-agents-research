@@ -220,7 +220,7 @@ claude
 ```
 
 - Also exposes an OpenAI-compatible endpoint at `/v1` for non-Anthropic clients, and `/v1/responses` for Codex CLI and other OpenAI Responses API clients.
-- Ships a separate MCP server (`tools/strata_mcp.py`, stdlib-only Python) that lets an agent **manage** Strata itself — install, start, stop, check VRAM/logs, recommend a model size for the host's hardware — via `claude mcp add strata -- python3 /path/to/Strata/tools/strata_mcp.py`. This is setup/ops tooling, not an inference-serving MCP tool; the Anthropic-compatible HTTP endpoint above is what Claude Code actually talks to for inference.
+- Ships a separate Model Context Protocol (MCP) server (`tools/strata_mcp.py`, stdlib-only Python) that lets an agent **manage** Strata itself — install, start, stop, check VRAM/logs, recommend a model size for the host's hardware — via `claude mcp add strata -- python3 /path/to/Strata/tools/strata_mcp.py`. This is setup/ops tooling, not an inference-serving MCP tool; the Anthropic-compatible HTTP endpoint above is what Claude Code actually talks to for inference.
 - MIT, 21,540 stars, 2,037 forks (`gh api`, 2026-10-11); created 2026-09-24 — 17 days old at time of writing, so no independent track record yet.
 
 #### LM Studio & Other OpenAI-Compatible Servers

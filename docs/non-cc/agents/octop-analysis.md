@@ -54,7 +54,7 @@ preserve "history IDs, metadata, parent, writes and business memories" while com
 describes how hierarchical recall ranks or selects memories at query time — that part of the claim
 rests on README prose, not an inspected mechanism.
 
-**Tools, MCP, and agent-to-agent delegation.** Connectors cover OAuth apps and MCP gateways,
+**Tools, Model Context Protocol (MCP), and agent-to-agent delegation.** Connectors cover OAuth apps and MCP gateways,
 including a bundled Tencent suite (Docs, Meeting, News, and others). Octop implements the **Agent
 Client Protocol (ACP)** in both directions: inbound (`octop acp`) lets external IDEs drive an Octop
 agent; outbound, Octop delegates coding tasks to external coding-agent CLIs — **including Claude

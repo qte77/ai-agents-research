@@ -11,7 +11,7 @@ status: research
 
 ## Summary
 
-Claude can handle typical office workflows — invoice processing, document generation, email triage, financial reporting — through a combination of document skills, business MCP servers, and multi-agent orchestration. This doc maps the end-to-end patterns and the orchestration tools that enable parallel execution across business functions.
+Claude can handle typical office workflows — invoice processing, document generation, email triage, financial reporting — through a combination of document skills, business Model Context Protocol (MCP) servers, and multi-agent orchestration. This doc maps the end-to-end patterns and the orchestration tools that enable parallel execution across business functions.
 
 ## Office Workflow Patterns
 

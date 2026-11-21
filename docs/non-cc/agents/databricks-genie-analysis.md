@@ -25,7 +25,7 @@ Genie One ships as **three layers**: the **Genie One** coworker, the **Genie
 Ontology** semantic-context graph that grounds it, and **Genie Agents** —
 reusable, shareable autonomous workflows. The suite is a **proprietary, managed
 Databricks platform feature**; only the lakehouse foundations it sits on (Apache
-Spark, Delta Lake, Apache Iceberg) are open source, and MCP is an open-protocol
+Spark, Delta Lake, Apache Iceberg) are open source, and Model Context Protocol (MCP) is an open-protocol
 integration point rather than an open-source release.
 
 Disambiguation: the community project `databrickslabs/ontobricks` (an
@@ -44,7 +44,7 @@ workplace applications via Lakeflow Connect. Distinguishing properties:
   authority, usage frequency, certification status, and freshness; Unity Catalog
   Semantics definitions carry the highest weight.
 - **Persistent, not per-query** — it maintains a cumulative, authority-ranked
-  knowledge store, replacing the per-query RAG re-derivation that ad-hoc
+  knowledge store, replacing the per-query Retrieval-Augmented Generation (RAG) re-derivation that ad-hoc
   text-to-SQL agents repeat on every request.
 - **MCP-exposed** — the governed context is served as an MCP server, so external
   agents (Claude, Copilot, custom agents) can consume the same enterprise context.

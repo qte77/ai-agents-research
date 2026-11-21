@@ -178,6 +178,7 @@ GLOSSARY = "docs/glossary.md"
 _MIRRORS = ("docs/learnings/per-repo/",)
 _ABBR = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$")
 _INLINE_CODE = re.compile(r"`[^`\n]*`")
+_REF_DEF = re.compile(r"^\s*\[[^\]]+\]:\s")
 
 
 def parse_glossary(text: str) -> dict[str, str]:
@@ -204,12 +205,12 @@ def parse_glossary(text: str) -> dict[str, str]:
 
 
 def _prose(text: str) -> str:
-    """Text outside fenced code blocks and inline code spans."""
+    """Text outside fenced code blocks, inline code spans and reference-link definitions."""
     kept, fenced = [], False
     for line in text.splitlines():
         if _FENCE.match(line):
             fenced = not fenced
-        elif not fenced:
+        elif not fenced and not _REF_DEF.match(line):
             kept.append(_INLINE_CODE.sub("", line))
     return "\n".join(kept)
 

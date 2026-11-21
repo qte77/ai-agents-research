@@ -60,7 +60,7 @@ gateway subscription.
 
 ### MCP Integration
 
-The platform ships an MCP Server Marketplace for extending agent capabilities.
+The platform ships a Model Context Protocol (MCP) Server Marketplace for extending agent capabilities.
 MCP servers are configurable via the Automation section of the docs.
 
 ### CLI / Headless Mode

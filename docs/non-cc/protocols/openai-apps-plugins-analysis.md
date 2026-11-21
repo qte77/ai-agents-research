@@ -15,7 +15,7 @@ people discover, install, share, and publish in ChatGPT and Codex... ChatGPT and
 universal plugin directory. When you publish a public plugin, people can discover the same listing
 from supported surfaces in either product" ([Plugin architecture][concepts-plugins]). A plugin
 bundles **skills** (Markdown workflow instructions, same `SKILL.md` shape as Claude Code and the
-Agent Plugins standard), an optional **MCP server** (called an "App" in the end-user-facing docs —
+Agent Plugins standard), an optional **Model Context Protocol (MCP) server** (called an "App" in the end-user-facing docs —
 see [Moving your custom GPT workflows to plugins][migrate-gpts]: "**Apps** connect ChatGPT to other
 services for information or supported actions"), and optional lifecycle hooks.
 

@@ -34,7 +34,7 @@ User → Primary Agent → Sub-agents (spawned dynamically)
 
 - **Skills**: Markdown-defined capability units (research, report generation,
   slide creation). Custom skills follow same format.
-- **Tools**: Web search, file operations, bash execution, MCP server integration
+- **Tools**: Web search, file operations, bash execution, Model Context Protocol (MCP) server integration
   for custom tools.
 - **Sandboxing**: Local, Docker, or Kubernetes-provisioned execution isolation.
 - **Memory**: Persistent context engineering across conversations.

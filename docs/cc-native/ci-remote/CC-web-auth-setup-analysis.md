@@ -412,7 +412,7 @@ One line each, where they bear on running agents against a Console key:
 - [CC Setup docs][cc-setup]
 - [CC Security docs][cc-sec]
 - [CC Web Quickstart docs][cc-web-quickstart]
-- [CC MCP docs][cc-mcp]
+- [CC Model Context Protocol (MCP) docs][cc-mcp]
 - [CC env vars reference][cc-env-vars]
 - [Claude Console][console]
 - [Console Authentication docs][console-auth]

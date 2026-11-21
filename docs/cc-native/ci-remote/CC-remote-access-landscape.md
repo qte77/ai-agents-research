@@ -165,7 +165,7 @@ sleeps mid-session.**
 | Happy Coder | Relay server dependency (encrypted, but still a hop) | Self-host relay if concerned; code is MIT-licensed |
 | Omnara | Startup risk (3-person team, pivoted once); no E2E encryption | Don't send sensitive code; evaluate stability before adopting |
 | Emdash | Orchestration complexity; community-maintained | Evaluate only when parallel agent runs are a real need |
-| CloudCLI | Cloud-first doesn't fit local MCP/state workflows | Only for tasks that don't need local config |
+| CloudCLI | Cloud-first doesn't fit local Model Context Protocol (MCP)/state workflows | Only for tasks that don't need local config |
 | DIY | Setup overhead, raw terminal UX on mobile | One-time setup; acceptable for power users |
 
 ### Actionable Next Steps

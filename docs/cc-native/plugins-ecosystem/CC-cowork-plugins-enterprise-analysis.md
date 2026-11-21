@@ -107,7 +107,7 @@ If the framework or tooling becomes a team-wide tool:
 
 **Source**: [anthropics/financial-services][fin-svc]
 
-Anthropic's reference collection of production-ready financial services agents and plugins. Distinct from the generic pre-built templates in the Cowork plugin templates above — this is a standalone repo with agent cookbooks, vertical plugins, and MCP data connectors.
+Anthropic's reference collection of production-ready financial services agents and plugins. Distinct from the generic pre-built templates in the Cowork plugin templates above — this is a standalone repo with agent cookbooks, vertical plugins, and Model Context Protocol (MCP) data connectors.
 
 **10 named agents** (in `managed-agent-cookbooks/`):
 

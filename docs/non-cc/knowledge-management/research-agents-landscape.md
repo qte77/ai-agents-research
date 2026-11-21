@@ -26,7 +26,7 @@ Agents that conduct multi-step research and generate research outputs.
 - [Kosmos (Edison Scientific)][kosmos] — autonomous scientist using structured world models; claims ~6 months of PhD-equivalent work per run (proprietary).
 - [Denario (AstroPilot-AI)][denario] — AG2 + LangGraph multi-agent pipeline producing publication-ready LaTeX; uses CMBAgent as backend.
 - [CMBAgent][cmbagent] — AG2-based autonomous "Planning & Control" multi-agent system; 1st place, NeurIPS 2025 Fair Universe Competition.
-- [OpenAI Deep Research][openai-deep-research] — agentic ChatGPT capability; API as `o3-deep-research` ($10/$40 per MTok, 200K ctx, MCP connectors), led HLE at launch.
+- [OpenAI Deep Research][openai-deep-research] — agentic ChatGPT capability; API as `o3-deep-research` ($10/$40 per MTok, 200K ctx, Model Context Protocol (MCP) connectors), led HLE at launch.
 - [Gemini Deep Research][gemini-deep-research] — Gemini 3 Pro long-horizon agent via the Interactions API (`deep-research-pro-preview-12-2025`); 46.4% HLE, 66.1% DeepSearchQA, background execution + remote MCP.
 - [AutoScientists (mims-harvard)][autoscientists] — decentralized team of AI agents for long-running computational-science experiments, self-organizing around promising hypotheses; **packaged as Claude Code subagents** coordinating via a local ClawInstitute server (no central planner). BioML-Bench 74.4% mean leaderboard percentile (629★, Python) — the most direct CC-harness tie-in here.
 - [IdeaScientist][ideascientist] — treats research ideation itself as an agentic task, split across three RL-trained roles (gap-finding, innovation, report-writing) that find limitations in related work, borrow solution ideas from analogous problems in other fields, and turn them into full research proposals; built on the **Svalbard Idea Vault**, a 2.77M-item corpus of decomposed research ideas used for retrieval/training/eval against a literature-cutoff date. On a Qwen3.6-27B backbone, the authors report besting the strongest open-source autoresearch baseline by 14.0% (mainly novelty) and outperforming "Claude Code SDK with Claude-4.8-Opus and Codex SDK with GPT-5.4" by up to 5.9% — both self-reported. Paper only (arXiv:2610.04074, submitted 2026-10-02); no code, benchmark, or Idea Vault release stated on the abstract page.
@@ -76,7 +76,7 @@ Literature search, paper analysis, and discovery (assistive, not autonomous cond
 ## 4. Research Support Frameworks
 
 - [Paper2Agent][paper2agent] — converts a paper + codebase into an interactive **MCP-server agent** (auto-generated, test-refined); integrates with Claude Code. Cross-ref: [ai-security-governance-analysis.md § MCP Ecosystem Security](../../sdlc-lcm/ai-security-governance-analysis.md#mcp-ecosystem-security) for MCP-server hardening.
-- [PaperQA2][paperqa2] — superhuman scientific-literature RAG (beats PhD/postdoc on LitQA2); powers WikiCrow and ContraCrow ([paper][paperqa2-paper]).
+- [PaperQA2][paperqa2] — superhuman scientific-literature Retrieval-Augmented Generation (RAG) (beats PhD/postdoc on LitQA2); powers WikiCrow and ContraCrow ([paper][paperqa2-paper]).
 
 ## 5. Research Communities
 

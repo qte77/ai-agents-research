@@ -33,7 +33,7 @@ A Wiki claim can be "grounded" to a specific Code Graph node (stored as a node I
 
 ## What It Explicitly Is Not
 
-Per the README's own "What MEX is not" section: no cloud-hosted Hub or sync, no live notifications/presence/chat, no Git staging or pushes/pulls without explicit review, no authentication/RBAC, no Jira-style task management, no semantic/vector search (Wiki search is full-text; Graph retrieval is lexical/structural), and no published MCP server in the 0.8 line (an MCP workspace exists in-repo but is source-only).
+Per the README's own "What MEX is not" section: no cloud-hosted Hub or sync, no live notifications/presence/chat, no Git staging or pushes/pulls without explicit review, no authentication/RBAC, no Jira-style task management, no semantic/vector search (Wiki search is full-text; Graph retrieval is lexical/structural), and no published Model Context Protocol (MCP) server in the 0.8 line (an MCP workspace exists in-repo but is source-only).
 
 ## Privacy
 

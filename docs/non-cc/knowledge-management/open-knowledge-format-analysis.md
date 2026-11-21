@@ -147,9 +147,9 @@ in trustworthy business/data context — from opposite philosophies:
 | State | Static artifacts (git repos, tarballs) — no runtime | Live, continuously-updated graph with authority scoring |
 | Portability | Vendor-neutral, filesystem-native | Databricks / Unity Catalog-native |
 
-Both replace per-query RAG re-derivation with persistent knowledge — OKF via
+Both replace per-query Retrieval-Augmented Generation (RAG) re-derivation with persistent knowledge — OKF via
 portable bundles, Genie Ontology via a live graph. They are not strictly
-competitors: Genie Ontology exposes its context as an MCP server, so an OKF
+competitors: Genie Ontology exposes its context as a Model Context Protocol (MCP) server, so an OKF
 bundle could serve as a portable export/interchange format for a
 Genie-Ontology-grounded workspace. Full analysis:
 [databricks-genie-analysis.md](../agents/databricks-genie-analysis.md).

@@ -47,7 +47,7 @@ with no API keys, and a 7-dimension provider-scoring step ranks tools before sel
 video editor) is out of scope here, but two of its **concepts** transfer directly to the agent-integration
 patterns this corpus tracks:
 
-- **Timeline-as-MCP-workspace** — Palmier embeds a local MCP server (`127.0.0.1:19789/mcp`) that exposes
+- **Timeline-as-MCP-workspace** — Palmier embeds a local Model Context Protocol (MCP) server (`127.0.0.1:19789/mcp`) that exposes
   its project state to any MCP client (Claude Desktop, Cursor, Codex), which can then read and mutate the
   timeline. Generalizes to: *expose your app's domain state as a local MCP server so any agent can drive it.*
 - **Control-plane-open / generation-plane-monetized** — the editor, MCP server, and in-app agent chat are

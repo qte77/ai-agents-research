@@ -41,10 +41,10 @@ The eight subjects of the arc. The `_topics` hubs index existing coverage for ea
 |---|---|---|
 | Memory | Persistent agent memory: stores, extraction, consolidation, recall | [memory.md](../_topics/memory.md) |
 | Ontology | Schemas, semantic layers, formal ontologies, knowledge formats | [knowledge-graphs.md](../_topics/knowledge-graphs.md) |
-| Graphs/RAG/hybrid | Knowledge graphs, vector/full-text/graph retrieval, indexing pipelines | [knowledge-graphs.md](../_topics/knowledge-graphs.md), [rag.md](../_topics/rag.md) |
+| Graphs/Retrieval-Augmented Generation (RAG)/hybrid | Knowledge graphs, vector/full-text/graph retrieval, indexing pipelines | [knowledge-graphs.md](../_topics/knowledge-graphs.md), [rag.md](../_topics/rag.md) |
 | Context | What enters the context window: repo context, compression, retrieval-for-context | [context.md](../_topics/context.md), [code-tooling.md](../_topics/code-tooling.md) |
 | Skills | Packaged agent capabilities (SKILL.md and equivalents), their distribution and optimization | [skills.md](../_topics/skills.md) |
-| Plugins | Extension packaging: plugins, MCP servers, marketplaces | [plugins.md](../_topics/plugins.md) |
+| Plugins | Extension packaging: plugins, Model Context Protocol (MCP) servers, marketplaces | [plugins.md](../_topics/plugins.md) |
 | Harness | The loop around the model: orchestration, tools, sandboxes, self-improving harnesses | [harness.md](../_topics/harness.md) |
 | Long-running | Hands-off, offloaded, multi-hour or scheduled agent work: durability, resume, remote execution | [long-running.md](../_topics/long-running.md) |
 

@@ -41,7 +41,7 @@ Cleanroom reimplementation of an AI agent harness in Rust and Python. Described 
 
 **Architecture**: Rust workspace with modular crates (API client, runtime, tools, commands, plugins, CLI, LSP). Python workspace for porting infrastructure and parity auditing.
 
-**Key features**: Interactive REPL, OAuth and multi-provider API abstraction, plugin system with hook pipelines, session state compaction, MCP orchestration.
+**Key features**: Interactive REPL, OAuth and multi-provider API abstraction, plugin system with hook pipelines, session state compaction, Model Context Protocol (MCP) orchestration.
 
 **Note**: Repository describes itself as studying a different AI agent harness system, not explicitly Claude Code. Temporary ownership transfer noted with maintenance continuing at a parity repo.
 

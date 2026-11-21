@@ -32,7 +32,7 @@ those cells.
   via a universal API/SDK ([hyperspell.com][hyperspell-home]).
 - Client libraries are published under the `hyperspell` GitHub org: [`node-sdk`][node-sdk] (MIT, 4★/1 fork,
   pushed 2026-09-27, `gh api` 2026-10-02), a Python SDK (MIT, 3★/0 forks per repo listing, `gh api`
-  2026-10-02), and a Go SDK, plus an `hyperspell-mcp` MCP server, an `hyperspell-openclaw` plugin, and an
+  2026-10-02), and a Go SDK, plus an `hyperspell-mcp` Model Context Protocol (MCP) server, an `hyperspell-openclaw` plugin, and an
   `hyperspell-n8n-node` community node.
 - **No LICENSE file for the core platform**: the hosted service itself is closed, with no self-hosting path
   documented. Only the thin client SDKs (REST wrappers) are open-source (MIT) — the same pattern this

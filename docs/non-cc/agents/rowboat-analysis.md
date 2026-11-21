@@ -46,7 +46,7 @@ Communication Sources (Gmail, Calendar, Meetings)
 | **Meeting notes** | Fireflies |
 | **Web search** | Exa |
 | **Tools library** | Composio |
-| **MCP servers** | Twitter/X, Slack, Linear, GitHub, ElevenLabs |
+| **Model Context Protocol (MCP) servers** | Twitter/X, Slack, Linear, GitHub, ElevenLabs |
 | **Voice input** | Deepgram API |
 | **Voice output** | ElevenLabs API |
 

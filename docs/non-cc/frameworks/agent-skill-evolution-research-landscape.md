@@ -48,7 +48,7 @@ found.
 and Adaptation for Web Agents" (Cao, Szekeres, Faisal; affiliation not stated on the abstract page — not
 confirmed as Microsoft Research despite the plan's lead description). No public code repository linked.
 
-A meta-agentic framework that constructs and maintains a compact set of trajectory-derived MCP APIs in
+A meta-agentic framework that constructs and maintains a compact set of trajectory-derived Model Context Protocol (MCP) APIs in
 two phases: **offline**, converting web trajectories into parameterized automation programs, quality-
 filtering them, and keeping only broadly useful ones via a "Usage Likelihood Filter"; **online**,
 "Dynamic Reselection monitors task outcomes and API usage, identifies recurring coverage gaps, adds

@@ -30,7 +30,7 @@ ADK docs site and the pricing page were readable.
 
 - **Native agents** combine an LLM, instructions, tools, collaborator agents, optional knowledge and
   optional scheduling; **external agents** are integrated from other platforms (watsonx.ai,
-  Salesforce Agentforce, third-party frameworks) through protocols such as `external_chat` or A2A
+  Salesforce Agentforce, third-party frameworks) through protocols such as `external_chat` or Agent-to-Agent Protocol (A2A)
   (documented, [agents overview][adk-agents]).
 - ADK 2.20.0 (2026-11-11 per the [release notes][adk-release]) adds live-agent escalation, registering
   external agents for the **control plane only**, PKCE for OAuth 2.0 authorization-code connections and
@@ -58,7 +58,7 @@ ADK docs site and the pricing page were readable.
 
 ## MCP and A2A
 
-- **MCP:** local and remote MCP toolkits can be imported as tools, and a page titled "Running
+- **Model Context Protocol (MCP):** local and remote MCP toolkits can be imported as tools, and a page titled "Running
   agentic workflows with MCP (Public Preview)" exists (both **index entry only**, [docs
   index][adk-index]); the ADK agent-design docs list "MCP tools & integration considerations" (also
   index entry only).

@@ -23,7 +23,7 @@ platform_scope: [vscode, jetbrains, cursor, windsurf, cli, sdk]
 
 **Model providers.** Cline is provider-agnostic with BYOK (bring your own key): Anthropic (Claude Opus/Sonnet/Haiku), OpenAI, Google Gemini, AWS Bedrock, Azure, GCP Vertex, OpenRouter (200+ models), Groq, Cerebras, Vercel AI Gateway, DeepSeek, Ollama, LM Studio, and any OpenAI-compatible endpoint (github.com/cline/cline, 2026-06-16).
 
-**MCP extensibility.** Cline connects to MCP servers to query databases, call external APIs, and manage cloud infrastructure. Custom tools are registerable via the SDK.
+**Model Context Protocol (MCP) extensibility.** Cline connects to MCP servers to query databases, call external APIs, and manage cloud infrastructure. Custom tools are registerable via the SDK.
 
 **Project rules.** `.clinerules` files encode coding standards and architecture guidance, scoped per project, giving teams a lightweight way to enforce conventions without baking them into prompts.
 

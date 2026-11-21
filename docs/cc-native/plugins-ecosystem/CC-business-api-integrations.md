@@ -11,7 +11,7 @@ status: research
 
 ## Summary
 
-20+ business MCP servers are available for Claude Code, covering payments, accounting, CRM, ERP, productivity, and legal/IP domains. Three are official first-party servers (Stripe, HubSpot, Oracle NetSuite); one is from the vendor's official GitHub org (Xero). Composio provides a universal hub covering 1,000+ apps.
+20+ business Model Context Protocol (MCP) servers are available for Claude Code, covering payments, accounting, CRM, ERP, productivity, and legal/IP domains. Three are official first-party servers (Stripe, HubSpot, Oracle NetSuite); one is from the vendor's official GitHub org (Xero). Composio provides a universal hub covering 1,000+ apps.
 
 ## Payments
 

@@ -72,7 +72,7 @@ recomputes them on demand via "graph-based selective recomputation with high-deg
 pruning" — its own README's headline claim (accessed 2026-09-24) is indexing 60 million text
 chunks in 6GB instead of 201GB (a ~97% storage reduction) at comparable accuracy, choosing between
 an HNSW backend (maximum storage savings) or a DiskANN backend (faster search via PQ-based
-traversal). It ships a native MCP server (`leann_mcp`) that plugs into **Claude Code** as a
+traversal). It ships a native Model Context Protocol (MCP) server (`leann_mcp`) that plugs into **Claude Code** as a
 semantic-search tool with AST-aware chunking for Python, Java, C#, and TypeScript; on a 30-task
 SWE-Bench Pro sample from ContextBench, LEANN's own README reports the agent reaching 2.1× the
 initial relevant-code recall versus BM25 (24.2% vs. 11.4%) — a first-party, vendor-run benchmark,
@@ -111,7 +111,7 @@ residency-aware gate `azure-doc-workflows#165` proposes).
   CC-side persistent-memory tools (several embed + retrieve internally; this doc
   covers the underlying local stack)
 - [agent-frameworks-infrastructure-landscape.md §7](../frameworks/agent-frameworks-infrastructure-landscape.md)
-  — RAG & retrieval infrastructure (hosted/managed side)
+  — Retrieval-Augmented Generation (RAG) & retrieval infrastructure (hosted/managed side)
 
 - [CC-code-tooling-landscape.md § Grep vs. semantic search for coding agents](../../cc-community/CC-code-tooling-landscape.md#grep-vs-semantic-search-for-coding-agents)
   — evidence on when agent harnesses use grep instead of an embedding index

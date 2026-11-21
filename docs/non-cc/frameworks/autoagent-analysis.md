@@ -73,7 +73,7 @@ Uses [LiteLLM](https://github.com/BerriAI/litellm) abstraction layer (100+ model
 | Benchmark | Result |
 |-----------|--------|
 | [GAIA](https://gaia-benchmark-leaderboard.hf.space/) | Surpasses existing SOTA on generalist multi-agent tasks |
-| MultiHopRAG | Superior performance vs alternative LLM-based RAG solutions |
+| MultiHopRAG | Superior performance vs alternative LLM-based Retrieval-Augmented Generation (RAG) solutions |
 | SWE-bench | Planned |
 | WebArena | Planned |
 
@@ -84,7 +84,7 @@ Uses [LiteLLM](https://github.com/BerriAI/litellm) abstraction layer (100+ model
 | Target user | Non-programmers | Developers (CLI) | Developers (CLI) |
 | Agent creation | Natural language | CLAUDE.md + skills | Config + CLI |
 | Self-modification | Yes (Docker sandbox) | No | No |
-| Tool creation | Runtime code generation | MCP servers | 43+ built-in tools |
+| Tool creation | Runtime code generation | Model Context Protocol (MCP) servers | 43+ built-in tools |
 | Multi-agent | Workflow Editor mode | Agent teams | Coordinator subsystem |
 | MCP support | No (own tool system) | Yes | Yes |
 | Model default | Claude 3.5 Sonnet | Claude (native) | Configurable |

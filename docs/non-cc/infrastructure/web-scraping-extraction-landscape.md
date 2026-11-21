@@ -38,7 +38,7 @@ Claude Code provides two built-in tools for web access — no setup required.
 
 **Key gaps**: no JS rendering, no browser state/auth, no batch ops, no anti-bot bypass, PDF fetching broken in CC wrapper (works in API). For anything beyond simple URL fetching, use an external tool below.
 
-See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for detailed comparison of CC built-in vs Firecrawl MCP vs Playwright MCP.
+See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) for detailed comparison of CC built-in vs Firecrawl Model Context Protocol (MCP) vs Playwright MCP.
 
 ## HTTP Clients
 
@@ -102,7 +102,7 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 - **Errors.** Typed terminal errors (`AuthRequired`, `GoneError`, `LegalBlock`); other non-2xx/3xx statuses raise `FetchError` (0.10.0, breaking). Errors carry redacted `headers` and a 2 KB `body_excerpt` (0.9.0).
 - **Rendered session.** `render_session(url)` (0.6.0) exposes the live Patchright `Page`; console errors and failed requests are captured by default, opt-in `capture_network` adds a capped request log with SSE frames (0.11.0); HAR recording (0.9.0), device/viewport/locale/video emulation (0.7.0), headed launch (0.10.0).
 - **Authenticated sessions (0.11.0).** `storage_state`, `cookies`, `extra_http_headers`, and `save_storage_state()`; HAR and storage-state files contain credentials.
-- **Discovery.** `discover()` (0.7.0) lists sitemaps, feeds, `llms.txt` and JSON-LD types; an opt-in robots helper (0.10.0). Its SSRF guard covers only the discovery paths (`discover`, sitemap fetching, the robots helper, the `easter-hunt` contrib), never the seed URL or plain `fetch()`.
+- **Discovery.** `discover()` (0.7.0) lists sitemaps, feeds, `llms.txt` and [JSON-LD](../../glossary.md#knowledge-structures) types; an opt-in robots helper (0.10.0). Its SSRF guard covers only the discovery paths (`discover`, sitemap fetching, the robots helper, the `easter-hunt` contrib), never the seed URL or plain `fetch()`.
 
 **Patchright console limits (catalog-level fact).** Patchright's README states it disables the Console API to avoid a detection leak: "console functionality will not work in Patchright" (read in the installed 1.64.4 package metadata, 2026-11-15). Consequence: page-script `console.*` output never reaches `page.on("console")`. That uncaught page exceptions are lost too is an **inference** (the README does not say so): Patchright avoids `Runtime.enable`, and `Runtime.exceptionThrown` needs it. polyfetch's repro (four pages of script errors) saw none of them reach `console_errors` or `pageerror`, while a real CORS failure did (**observed by polyfetch, one environment**). Treat Patchright console/pageerror events as a browser/network signal, not a page-script one; read page state structurally (DOM) and by screenshot. A related caveat: `page.evaluate` runs in an isolated world there, so page-defined globals read back `undefined`.
 
@@ -153,7 +153,7 @@ Prices read from each vendor's pricing page on **2026-11-18**; they change often
 
 Notes: Serper's table lists credits per plan; we read one credit as one query (the excerpt we read did not say). Per-1K figures for SerpAPI and Serper are our division of plan price by plan quota, not figures the vendors publish.
 
-**When to use what** (a rule of thumb resting on vendor positioning, not on an independent benchmark): Exa for semantic/RAG retrieval, Tavily for agent-oriented search with cited results, Brave for privacy-conscious search. The Decision Flowchart below repeats this.
+**When to use what** (a rule of thumb resting on vendor positioning, not on an independent benchmark): Exa for semantic/Retrieval-Augmented Generation (RAG) retrieval, Tavily for agent-oriented search with cited results, Brave for privacy-conscious search. The Decision Flowchart below repeats this.
 
 Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-hosting SearXNG as a keyless search backend for agent and deep-research workflows.
 
@@ -195,7 +195,7 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 Distinct from the source-specific APIs above: general-purpose OCR/VLM tools that turn arbitrary PDFs and images into LLM-ready text — a document-ingestion front-end for RAG and knowledge bases.
 
 - [olmOCR (AllenAI)](https://github.com/allenai/olmocr) — GPU OCR pipeline converting PDF/PNG/JPEG → Markdown or Dolma JSON via a fine-tuned Qwen2.5-VL 7B model; handles equations, tables, handwriting, multi-column layout and reading-order recovery (<$200 / 1M pages, Apache-2.0). Install `pip install olmocr` (remote inference) or `pip install olmocr[gpu] --extra-index-url https://download.pytorch.org/whl/cu128` for local vLLM (Docker image `alleninstituteforai/olmocr:latest-with-model`). Run `olmocr <workspace> --pdfs … --markdown` — default model `allenai/olmOCR-2-7B-1025-FP8`; point at a remote endpoint with `--server`/`--api_key`, or read/write S3 via `--workspace_profile`/`--pdf_profile` (no env vars; the full ~25-flag reference is in the [repo README](https://github.com/allenai/olmocr)).
-- [Docling Graph (docling-project, IBM-sponsored)](https://github.com/docling-project/docling-graph) — extends [Docling](https://github.com/docling-project/docling) with a knowledge-graph layer: converts PDFs, images and Office files into typed Pydantic objects, then a directed graph (NetworkX, stable node IDs) exportable to CSV or Cypher for a graph database. Extraction schemas are Pydantic models that double as graph structure — auto-generated from example documents (`docling-graph template from-docs`: an LLM proposes classes/relationships, a deterministic renderer writes the code) or compiled directly from an existing OWL/RDFS/SKOS ontology with no LLM involved (`docling-graph template from-ontology`). MIT license, 901★ (verified 2026-09-24), part of the LF AI & Data ecosystem.
+- [Docling Graph (docling-project, IBM-sponsored)](https://github.com/docling-project/docling-graph) — extends [Docling](https://github.com/docling-project/docling) with a knowledge-graph layer: converts PDFs, images and Office files into typed Pydantic objects, then a directed graph (NetworkX, stable node IDs) exportable to CSV or Cypher for a graph database. Extraction schemas are Pydantic models that double as graph structure — auto-generated from example documents (`docling-graph template from-docs`: an LLM proposes classes/relationships, a deterministic renderer writes the code) or compiled directly from an existing Web Ontology Language (OWL)/RDFS/Simple Knowledge Organization System (SKOS) ontology with no LLM involved (`docling-graph template from-ontology`). MIT license, 901★ (verified 2026-09-24), part of the LF AI & Data ecosystem.
 
 | Platform | License/Pricing | Differentiator |
 |----------|----------------|----------------|

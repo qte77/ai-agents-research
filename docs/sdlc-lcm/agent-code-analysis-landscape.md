@@ -13,7 +13,7 @@ Two analysis modes bound a non-deterministic coding agent: **static code analysi
 — inspecting source/config without running it — and **dynamic code analysis (DCA)** —
 observing behavior at runtime. Both apply in **two directions**:
 
-1. **Analysis _of_ agents** — scanning agent-generated code, skills, and MCP tool
+1. **Analysis _of_ agents** — scanning agent-generated code, skills, and Model Context Protocol (MCP) tool
    surfaces for vulnerabilities before they reach the host or the repo.
 2. **Agents _performing_ analysis** — LLM agents used as the vulnerability-discovery
    engine (agent-as-scanner).

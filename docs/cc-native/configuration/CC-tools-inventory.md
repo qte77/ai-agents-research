@@ -68,7 +68,7 @@ CC 2.1.83 ships 28 built-in tools. This is a categorized snapshot linking to the
 |---|---|---|
 | `WebFetch` | Yes | Fetch URL content |
 | `WebSearch` | Yes | Web search |
-| `ListMcpResourcesTool` | No | List MCP server resources |
+| `ListMcpResourcesTool` | No | List Model Context Protocol (MCP) server resources |
 | `ReadMcpResourceTool` | No | Read MCP resource by URI |
 | `ToolSearch` | No | Search/load deferred tools (MCP tool search) |
 

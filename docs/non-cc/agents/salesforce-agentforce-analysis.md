@@ -51,7 +51,7 @@ its own first-party date and status.
   single-model framing as probably stale, not as the current admin-UI truth. Not resolved further in
   this pass — see [Unverified](#what-this-pass-did-not-settle).
 - **Salesforce's own documentation disagrees with itself on whether Agentforce agents have direct
-  A2A support.** An architect.salesforce.com recipe states, as its premise, "In the absence of
+  Agent-to-Agent Protocol (A2A) support.** An architect.salesforce.com recipe states, as its premise, "In the absence of
   direct A2A support on Agentforce Agents" [agentic-patterns], and MuleSoft's own A2A-bridge
   documentation agrees: "Salesforce Agentforce agents and Microsoft Copilot Studio agents, aren't
   A2A-compliant on their own" [a2a-bridge]. But Salesforce's own Agentforce interoperability guide
@@ -665,7 +665,7 @@ four as background context, not as verified facts of this analysis.
   Agentforce Registry/MuleSoft Agent Fabric governance detail, and the Claude/Bedrock posture; its own
   Salesforce row should cite the dated rate card here rather than restate a snapshot figure on its own.
 - [ag-ui-protocol-landscape.md](../protocols/ag-ui-protocol-landscape.md) — covers Salesforce's
-  non-adoption of AG-UI in favor of an MCP/MuleSoft-centered strategy; this doc adds the MuleSoft
+  non-adoption of Agent-User Interaction Protocol (AG-UI) in favor of an MCP/MuleSoft-centered strategy; this doc adds the MuleSoft
   Agent Fabric component breakdown and the A2A contradiction inside Salesforce's own documentation
   behind that strategy.
 - [CC-business-api-integrations.md § Salesforce](../../cc-native/plugins-ecosystem/CC-business-api-integrations.md)

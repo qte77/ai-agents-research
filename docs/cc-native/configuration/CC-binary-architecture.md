@@ -117,7 +117,7 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 | `/api/oauth/claude_cli/create_api_key` | OAuth key creation | No |
 | `/api/oauth/claude_cli/roles` | OAuth role check | No |
 | `/api/web/domain_info` | Domain info lookup | No |
-| `/mcp-registry/v0/servers` | MCP server registry | No |
+| `/mcp-registry/v0/servers` | Model Context Protocol (MCP) server registry | No |
 
 ### Other Services
 

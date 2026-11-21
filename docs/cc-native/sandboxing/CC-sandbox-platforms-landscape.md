@@ -44,7 +44,7 @@ on macOS; requires `apt install bubblewrap socat` on Linux. Sufficient for
 local-first workflows.
 
 The standalone `@anthropic-ai/sandbox-runtime` npm package extends this
-outside CC (e.g., for MCP servers). Same isolation primitives, different
+outside CC (e.g., for Model Context Protocol (MCP) servers). Same isolation primitives, different
 entry point.
 
 ### OpenSandbox (Alibaba)

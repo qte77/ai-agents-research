@@ -69,7 +69,7 @@ Install: `pip install spec-ptc`.
 
 Naming note: Claude Code's experimental **Code Mode** (v2.1.323, a session mode where Claude writes
 JavaScript that makes several tool calls via a `REPL` tool) is a CLI feature, distinct from the API's
-programmatic tool calling and from Cloudflare's MCP "Code Mode"; see
+programmatic tool calling and from Cloudflare's Model Context Protocol (MCP) "Code Mode"; see
 [CC-tools-inventory.md § Code Mode](../../cc-native/configuration/CC-tools-inventory.md#code-mode-v21323).
 
 ## Tool use across model kinds

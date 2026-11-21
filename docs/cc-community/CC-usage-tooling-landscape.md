@@ -60,7 +60,7 @@ npx codeburn
 
 | # | Detector | Flags | Fix |
 |---|----------|-------|-----|
-| 1 | `detectCacheBloat` | Cache-creation tokens above the p25 baseline +40% (bloated MCP/skill warm-up) | Trim per-session loaded context |
+| 1 | `detectCacheBloat` | Cache-creation tokens above the p25 baseline +40% (bloated Model Context Protocol (MCP)/skill warm-up) | Trim per-session loaded context |
 | 2 | `detectLowReadEditRatio` | Read:edit ratio under 4:1 (high severity <2:1) → retries | "Read before edit; grep callers first" |
 | 3 | `detectJunkReads` | Reads into generated/dependency dirs (`node_modules`, `.git`, `dist`, `.venv`…), ~600 tokens each | Exclude paths |
 | 4 | `detectDuplicateReads` | Same file re-read within a session (high severity >30) | Cite `file:lines`, hold context |
