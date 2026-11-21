@@ -33,7 +33,7 @@ Coordinates multiple independent CC sessions with:
 
 - Lead spawns teammates, coordinates work; each teammate is a full CC instance
 - Shared task list (pending/in-progress/completed) with dependency tracking
-- Teammates load project context (project instructions, Model Context Protocol (MCP) servers, skills) automatically
+- Teammates load project context (project instructions, MCP servers, skills) automatically
 - Lead's conversation history does NOT carry over to teammates
 - Display modes: in-process (single terminal, Shift+Down to cycle teammates) or split panes (tmux/iTerm2, click into pane)
 - `--teammate-mode` CLI flag: `in-process`, `tmux`, or `auto` (default). `auto` uses split panes if already inside tmux, in-process otherwise
@@ -395,7 +395,7 @@ Workers respond via XML-based `<task-notification>` protocol with fields for sta
 | Transport | Direction | Purpose | Protocol |
 |-----------|-----------|---------|----------|
 | IDE WebSocket | IDE ↔ Claude | Editor integration (selection, diff, file context) | WebSocket JSON-RPC 2.0 (MCP) |
-| Channels | External → Claude | Push events from Telegram, Discord, iMessage | MCP over channel adapters |
+| Channels | External → Claude | Push events from Telegram, Discord, iMessage | Model Context Protocol (MCP) over channel adapters |
 | **UDS Inbox** | Claude ↔ Claude | Inter-session IPC on same machine | Unix Domain Sockets |
 
 Cross-ref: [CC-ide-integration-protocol.md](../configuration/CC-ide-integration-protocol.md) — WebSocket IDE protocol; [CC-channels-analysis.md](../plugins-ecosystem/CC-channels-analysis.md) — external push channels

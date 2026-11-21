@@ -20,7 +20,7 @@ web pages.
 ## TL;DR
 
 - Three ways to give a coding agent a browser, all documented: Anthropic's Claude in Chrome (your own
-  signed-in Chrome, via an extension), Google's Chrome DevTools Model Context Protocol (MCP) (a Chrome the server launches or
+  signed-in Chrome, via an extension), Google's Chrome DevTools MCP (a Chrome the server launches or
   attaches to, aimed at debugging and performance), and Microsoft's Playwright MCP (a Playwright
   browser, optionally attached to your own via an extension). See [the comparison](#claude-in-chrome-vs-devtools-mcp-vs-playwright-mcp).
 - WebMCP is a proposal, not a standard: a W3C Web Machine Learning Community Group draft (status
@@ -55,7 +55,7 @@ the scraping catalog covers [Magnitude, Lightpanda and the accessibility-tree ap
 ## Claude in Chrome vs DevTools MCP vs Playwright MCP
 
 As of 2026-11-19. Versions and licences from the GitHub API (licence file detected as Apache-2.0 for
-both MCP servers); behaviour from each project's own docs.
+both Model Context Protocol (MCP) servers); behaviour from each project's own docs.
 
 | Aspect | Claude in Chrome | Chrome DevTools MCP | Playwright MCP |
 | ------ | ---------------- | ------------------- | -------------- |

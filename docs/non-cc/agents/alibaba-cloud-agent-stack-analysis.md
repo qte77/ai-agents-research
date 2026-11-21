@@ -68,9 +68,9 @@ updated Aug-Nov 2026), so re-read before relying on a detail.
 - **MCP:** agent and workflow applications use official or custom MCP services; AgentRun converts
   agents, sandboxes and API tools into MCP and can bundle them behind an MCP gateway
   ([AgentRun][agentrun]); AgentBay offers an MCP integration ([overview][agentbay]).
-- **Agent-to-Agent Protocol (A2A) (consumer side, documented):** Model Studio's third-party agent integration page ([page][ms-a2a], read
+- **A2A (consumer side, documented):** Model Studio's third-party agent integration page ([page][ms-a2a], read
   2026-11-20; it sits under the Multimodal Interaction Developer Suite, so scope is that suite, not all of Model Studio) says integrations
-  "must be based on the Google A2A protocol" and links the A2A 0.2.5 specification; it lists AgentCard fields, with an `apiKey` security option.
+  "must be based on the Google A2A protocol" and links the Agent-to-Agent Protocol (A2A) 0.2.5 specification; it lists AgentCard fields, with an `apiKey` security option.
 - **A2A (AgentRun, tutorial only):** the "Xixi Coffee Shop" best-practice page ([page][ms-a2acase],
   updated 2026-08-24, read 2026-11-20) deploys a template whose "order" and "delivery" agents appear as
   "A2A services" in its web UI. It is a worked example; the AgentRun data-structure page read

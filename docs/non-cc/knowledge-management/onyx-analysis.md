@@ -24,10 +24,10 @@ through several surfaces.
 
 ## Features (per the README)
 
-- **Agentic Retrieval-Augmented Generation (RAG)** on a hybrid (vector + keyword) index, **Deep Research** reports, and **Custom
+- **Agentic RAG** (Retrieval-Augmented Generation) on a hybrid (vector + keyword) index, **Deep Research** reports, and **Custom
   Agents** with their own knowledge subsets, instructions and actions.
 - **Web search** (Serper, Google PSE, Brave, SearXNG and others; its own crawler plus Firecrawl/Exa),
-  **External Actions & Model Context Protocol (MCP)**, a **Secure Sandbox** for code, **Artifacts** and **Voice Mode**.
+  **External Actions & MCP** (Model Context Protocol), a **Secure Sandbox** for code, **Artifacts** and **Voice Mode**.
 - **LLM providers**: "all major LLM providers, both self-hosted (like Ollama, LiteLLM, vLLM, etc.) and
   proprietary (like Anthropic, OpenAI, Gemini, etc.)".
 - **Access surfaces**: web and desktop app, Slack and Discord bots, a Chrome extension, an embeddable

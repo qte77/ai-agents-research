@@ -73,7 +73,7 @@ Uses [LiteLLM](https://github.com/BerriAI/litellm) abstraction layer (100+ model
 | Benchmark | Result |
 |-----------|--------|
 | [GAIA](https://gaia-benchmark-leaderboard.hf.space/) | Surpasses existing SOTA on generalist multi-agent tasks |
-| MultiHopRAG | Superior performance vs alternative LLM-based Retrieval-Augmented Generation (RAG) solutions |
+| MultiHopRAG | Superior performance vs alternative LLM-based RAG (Retrieval-Augmented Generation) solutions |
 | SWE-bench | Planned |
 | WebArena | Planned |
 

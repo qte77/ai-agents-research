@@ -61,7 +61,7 @@ Comparison with other agent browsers and the injection landscape:
 | Aspect | Fit | Rationale |
 | ------ | --- | --------- |
 | Browser automation for API/CLI workflows | None | API/CLI-based pipelines have no browser interaction surface |
-| Testing and debugging a web app you build | Moderate | `claude --chrome` reads console errors and DOM in your own browser; Chrome DevTools Model Context Protocol (MCP) and Playwright MCP are the alternatives (see the [comparison](../../non-cc/agents/browser-agents-landscape.md#claude-in-chrome-vs-devtools-mcp-vs-playwright-mcp)) |
+| Testing and debugging a web app you build | Moderate | `claude --chrome` reads console errors and DOM in your own browser; Chrome DevTools MCP and Playwright MCP (Model Context Protocol servers) are the alternatives (see the [comparison](../../non-cc/agents/browser-agents-landscape.md#claude-in-chrome-vs-devtools-mcp-vs-playwright-mcp)) |
 | Cross-platform integration with CC | Weak | Interactive only; API-key sessions are documented as unsupported, and headless `claude -p` use is unlikely to benefit (our reading) |
 | Form filling / web scraping | Conditional | Relevant only where data sits behind your own login; for bulk or unattended extraction see [CC-web-scraping-plugins-analysis.md](CC-web-scraping-plugins-analysis.md) |
 | End-to-end workflows with Cowork | Conditional | Side panel runs as a Cowork session on several plans (see [CC-cowork-plugins-enterprise-analysis.md](CC-cowork-plugins-enterprise-analysis.md)) |

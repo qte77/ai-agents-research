@@ -17,7 +17,7 @@ status: reference
 | Commits | lowercase verb-noun | conventional `feat(mod):` | conventional (PR titles) |
 | Default branch | `main` | `main` | **`dev`** |
 | CI | none | bindings-ci, docs-quality, benches | test.yml (unit + e2e) |
-| Tests | none (Model Context Protocol (MCP) Inspector) | `make test-*` per language | `bun turbo test` per-pkg |
+| Tests | none (MCP Inspector) | `make test-*` per language | `bun turbo test` per-pkg |
 | Governance | none | CONTRIBUTING.md + AGENTS.md | CONTRIBUTING.md + AGENTS.md + vouch |
 | PR rules | informal | TODO.md update required | issue-first, no AI walls of text |
 | License | MIT | Apache-2.0 (dual MIT OR Apache-2.0) | MIT |
@@ -32,7 +32,7 @@ status: reference
 - `node:` prefix for Node.js builtins (`import fs from 'node:fs/promises'`)
 - **camelCase** functions/vars, **PascalCase** interfaces, **SCREAMING_SNAKE** constants
 - Zod `.describe()` for parameter docs — no JSDoc
-- MCP tools via `server.tool(name, description, zodSchema, asyncHandler)`
+- Model Context Protocol (MCP) tools via `server.tool(name, description, zodSchema, asyncHandler)`
 - Consistent return: `{ content: [{ type: 'text', text: ... }] }`
 - Async/await everywhere; silent-fail error handling (`catch { return '' }`)
 

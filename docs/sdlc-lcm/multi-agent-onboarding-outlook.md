@@ -92,9 +92,9 @@ agents. No architectural changes needed to support Kiro-like workflows.
 | Protocol | Owner | Purpose | Relevance |
 |----------|-------|---------|-----------|
 | **MCP** | Anthropic / AAIF | Tool access standardization | CC plugins, Gemini CLI tools |
-| **Agent-to-Agent Protocol (A2A)** | Google | Agent-to-agent collaboration | Multi-agent orchestration (future) |
+| **A2A** (Agent-to-Agent Protocol) | Google | Agent-to-agent collaboration | Multi-agent orchestration (future) |
 | **ACP** | IBM | Enterprise governance | Compliance/audit (Phase 3) |
-| **Agent-User Interaction Protocol (AG-UI)** | Community | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
+| **AG-UI** (Agent-User Interaction Protocol) | Community | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
 
 The frontend / agent / tool **protocol triangle** (AG-UI · A2A · MCP) is mapped in detail in [ag-ui-protocol-landscape.md](../non-cc/protocols/ag-ui-protocol-landscape.md).
 

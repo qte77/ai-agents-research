@@ -37,7 +37,7 @@ CodeBuddy surfaces four autonomous tiers:
 
 ### Extensibility
 
-- **Model Context Protocol (MCP)**: ACP protocol support added in v2.0 (early 2026); [plugin marketplace][codebuddy-plugins] distributes extensions via JSON manifests from local paths, GitHub repos, GitLab, or HTTP URLs — analogous to Claude Code's MCP server model.
+- **MCP protocol**: ACP protocol support added in v2.0 (early 2026); [plugin marketplace][codebuddy-plugins] distributes extensions via JSON manifests from local paths, GitHub repos, GitLab, or HTTP URLs — analogous to Claude Code's Model Context Protocol (MCP) server model.
 - **Skills**: A configurable skills system (added v2.0) lets teams define reusable agent capabilities.
 - **Rules / Hooks / Commands**: Plugin marketplace manifest supports Rules, MCP, Skills, Commands, and Hooks — a surface overlap with Claude Code's `AGENTS.md` / `.claude/` conventions.
 - **SDK**: Opened for external integration in v2.0.

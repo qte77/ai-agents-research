@@ -58,7 +58,7 @@ ADK docs site and the pricing page were readable.
 
 ## MCP and A2A
 
-- **Model Context Protocol (MCP):** local and remote MCP toolkits can be imported as tools, and a page titled "Running
+- **MCP:** local and remote Model Context Protocol (MCP) toolkits can be imported as tools, and a page titled "Running
   agentic workflows with MCP (Public Preview)" exists (both **index entry only**, [docs
   index][adk-index]); the ADK agent-design docs list "MCP tools & integration considerations" (also
   index entry only).

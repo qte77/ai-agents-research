@@ -48,7 +48,7 @@ found.
 and Adaptation for Web Agents" (Cao, Szekeres, Faisal; affiliation not stated on the abstract page — not
 confirmed as Microsoft Research despite the plan's lead description). No public code repository linked.
 
-A meta-agentic framework that constructs and maintains a compact set of trajectory-derived Model Context Protocol (MCP) APIs in
+A meta-agentic framework that constructs and maintains a compact set of trajectory-derived MCP APIs in
 two phases: **offline**, converting web trajectories into parameterized automation programs, quality-
 filtering them, and keeping only broadly useful ones via a "Usage Likelihood Filter"; **online**,
 "Dynamic Reselection monitors task outcomes and API usage, identifies recurring coverage gaps, adds
@@ -167,7 +167,7 @@ to a dedicated analysis.
 ## Cross-References
 
 - [docs/_topics/skills.md](../../_topics/skills.md) — topic hub pointer
-- [docs/_topics/plugins.md](../../_topics/plugins.md) — AutoTailor's MCP tool-set angle
+- [docs/_topics/plugins.md](../../_topics/plugins.md) — AutoTailor's Model Context Protocol (MCP) tool-set angle
 - [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — distribution-side skill libraries (coleam00, cloudflare, superpowers, …)
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — `runtypelabs/skills`, the adjacent distribution-side entry for this research batch; also ACM (§1), a general agentic-configuration-governance paper that names "skills" as one of several configuration-item types it covers but gives it no distinct treatment (checked and found not to fill the skills·Shared/Distributed open cells, plan 0010 row L3)
 

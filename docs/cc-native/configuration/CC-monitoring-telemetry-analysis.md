@@ -25,7 +25,7 @@ claude_code.interaction                        # root span: one per user prompt
 
 - Task-spawned subagents nest their own `llm_request` and `tool` spans under the parent's `claude_code.tool` span
 - Retries on `claude_code.llm_request` are recorded as `gen_ai.request.attempt` span events with `attempt` and `client_request_id` attributes
-- Tool span attributes include `file_path` (Read/Edit/Write), `full_command` (Bash), `skill_name` (Skill tool), `mcp_server_name`/`mcp_tool_name` (Model Context Protocol (MCP) tools), `subagent_type` (Task tool) — all gated behind `OTEL_LOG_TOOL_DETAILS`. Note this plain tool-span namespace is distinct from the redacted `attribution` namespace on metrics/events (see [Attribution Chain](#attribution-chain-skillpluginmcp))
+- Tool span attributes include `file_path` (Read/Edit/Write), `full_command` (Bash), `skill_name` (Skill tool), `mcp_server_name`/`mcp_tool_name` (MCP tools), `subagent_type` (Task tool) — all gated behind `OTEL_LOG_TOOL_DETAILS`. Note this plain tool-span namespace is distinct from the redacted `attribution` namespace on metrics/events (see [Attribution Chain](#attribution-chain-skillpluginmcp))
 - The `claude_code.hook` span (fields: `hook_event`, `hook_name`, `num_hooks`, gated `hook_definitions`, `duration_ms`, success/blocking/non-blocking-error/cancelled counts) sits behind a **second beta tier**: beyond `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1`, detailed tracing requires `ENABLE_BETA_TRACING_DETAILED=1` + `BETA_TRACING_ENDPOINT`, and in **interactive CLI sessions additionally org-level allowlisting** (Agent SDK / `claude -p` sessions are not org-gated). Content-bearing attrs (`new_context`, `system_prompt_preview`, `tool_input`, `response.model_output`; `user_system_prompt` also needs `OTEL_LOG_USER_PROMPTS`) live in this tier. The beta is imperfect in streaming/Agent-SDK mode ([#53954][gh-53954]: missing interaction/tool spans). Verified against live docs 2026-07-23; introduction versions not pinned in the public changelog — no version gate asserted
 
 ## Privacy-First Defaults
@@ -35,7 +35,7 @@ All sensitive attributes are **redacted unless explicitly unlocked**:
 | Gate | What it reveals |
 |---|---|
 | `OTEL_LOG_USER_PROMPTS` | Prompt text on `user_prompt` events / interaction span |
-| `OTEL_LOG_TOOL_DETAILS` | Bash command, MCP tool name, Skill name, file path, subagent type |
+| `OTEL_LOG_TOOL_DETAILS` | Bash command, Model Context Protocol (MCP) tool name, Skill name, file path, subagent type |
 | `OTEL_LOG_TOOL_CONTENT` | Tool input/output content in span events (60 KB truncation) |
 | `OTEL_LOG_RAW_API_BODIES` | Full Anthropic API request/response JSON (`1` inline / `file:<dir>` to disk with `body_ref`) |
 

@@ -1433,7 +1433,7 @@ jev-browser, OntoSmith, and edgextract have none yet, so their full entries live
   [CC-community-tooling-landscape.md § abide][abide-home].
 - **jev-ultrafast** (browser-use) — a browser agent whose action-selection loop is a Jev decision
   per step instead of an LLM generating an action. See
-  [CC-web-scraping-plugins-analysis.md § Alternative Model Context Protocol (MCP) Options][jevultrafast-home].
+  [CC-web-scraping-plugins-analysis.md § Alternative MCP Options][jevultrafast-home].
 - **jevgrep** (dzhng) — a code-search CLI that uses Jev to judge file/declaration relevance to a
   natural-language question. See [CC-code-tooling-landscape.md § jevgrep][jevgrep-home].
 - **typesafe-computer-use** (awlevin) — a macOS computer-use agent whose per-step
@@ -1488,7 +1488,7 @@ jev-browser, OntoSmith, and edgextract have none yet, so their full entries live
   clickable, typeable, and selectable elements, and scores how likely it is that the goal is met or
   the run is stuck." Per its README, "Code owns the loop: budgets, recovery, stop gates" — the same
   pick-next-action shape as jev-ultrafast, with Jev's goal-met probability doubling as the stop
-  condition. Runs as an MCP server, a CLI or a library; the README gives MCP setup for Claude
+  condition. Runs as a Model Context Protocol (MCP) server, a CLI or a library; the README gives MCP setup for Claude
   Code, Codex, OpenCode and Amp. Needs Node.js 22+; TypeSafe direct is the default Jev transport.
   Its README's examples are self-reported (e.g. Wikipedia Coffee → Espresso "in about 4 seconds,
   for $0.0016"), and two sources disagree on form filling: the README lists "Filled a contact

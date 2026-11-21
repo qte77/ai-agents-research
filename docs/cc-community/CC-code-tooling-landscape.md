@@ -7,7 +7,7 @@ updated: 2026-11-18
 validated_links: 2026-11-18
 ---
 
-Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep Model Context Protocol (MCP)) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg, XERJ) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
+Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg, XERJ) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
 
 ## Graphify (safishamsi)
 
@@ -64,7 +64,7 @@ On 748 held-out Defects4J bugs, the tests AxiomCode selects from source include 
 
 ### CC Integration
 
-Repo topics list `claude-code`, `codex`, `cursor`, `antigravity`, `gemini`, `mcp` — an installable CLI/MCP server exposing the graph for impact/blast-radius queries, call paths and cross-file coverage.
+Repo topics list `claude-code`, `codex`, `cursor`, `antigravity`, `gemini`, `mcp` — an installable CLI/Model Context Protocol (MCP) server exposing the graph for impact/blast-radius queries, call paths and cross-file coverage.
 
 ### Adoption Considerations
 

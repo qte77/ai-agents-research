@@ -10,7 +10,7 @@ status: assess
 ## Why This Doc
 
 Agent work on analytical data differs from agent work on an application database
-([agentic-database-access-landscape.md](agentic-database-access-landscape.md) covers database Model Context Protocol (MCP) servers,
+([agentic-database-access-landscape.md](agentic-database-access-landscape.md) covers database MCP servers,
 text-to-SQL and write safety). Analytical stores are large, scan-priced and shared, so the questions are:
 which storage layer gives an agent cheap isolation (snapshots, branches, clones), which vendors ship an agent
 inside the warehouse, where an agent can compute without touching shared state, and which documented controls

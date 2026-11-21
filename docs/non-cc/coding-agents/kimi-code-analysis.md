@@ -36,7 +36,7 @@ curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
 
 **IDE and editor integration** — Agent Client Protocol (ACP) enables plug-in from VS Code (official extension), JetBrains, Zed, and any editor implementing ACP. Third-party integration is documented for Claude Code, Roo Code, and OpenCode via OpenAI-compatible or Anthropic-compatible endpoints.
 
-**Model Context Protocol (MCP) support** — `/mcp-config` command for AI-native MCP server management; standard MCP tool-call protocol.
+**MCP support** — `/mcp-config` command for AI-native MCP server management; standard Model Context Protocol (MCP) tool-call protocol.
 
 **Lifecycle hooks** — local command execution hooks for pre/post-tool-call automation (analogous to CC hooks).
 

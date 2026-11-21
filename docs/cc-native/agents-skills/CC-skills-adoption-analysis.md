@@ -200,7 +200,7 @@ Source: [Context Forking to Save Time, Tokens and Trouble][context-forking-post]
 - **Skills in `--add-dir` auto-load** (v2.1.32)
 - **Duplicate skill detection** via filesystem inode checks (v2.1.3)
 - **Skill `allowed-tools` application fixes** (v2.0.76)
-- **`auto:N` Model Context Protocol (MCP) tool search threshold** via context % (v2.1.13)
+- **`auto:N` MCP tool search threshold** via context % (v2.1.13)
 
 ## Skills Auto-Discovery
 
@@ -313,7 +313,7 @@ The Agent Skills standard has achieved broad cross-industry adoption:
 | [HashiCorp Agent Skills][hashi-skills] | Domain skill library | Terraform/Packer skills in SKILL.md format |
 | [anthropics/skills][gh-skills] | Reference skills | Official Anthropic skills: 19 skill folders, also a Claude Code plugin marketplace (190.3k★/22.4k forks, 2026-11-09) |
 | [SylphAI-Inc/atskills][atskills] (`@skills`) | Alternative protocol | Path-based, no-install skill addressing; paired with the [atskills.one][atskills-hub] hub |
-| [HKUDS/OpenSpace][openspace] | Skill management layer | Evaluates skill quality from task outcomes; MCP/CLI/Python/dashboard access |
+| [HKUDS/OpenSpace][openspace] | Skill management layer | Evaluates skill quality from task outcomes; Model Context Protocol (MCP)/CLI/Python/dashboard access |
 | [GitSkills dataset][gitskills-paper] | Research dataset | 3,797,117 SKILL.md files across 282,200 GitHub repos (July 2026 snapshot) |
 | [AREX-Skill Library][repo-to-skill-repo] ([paper][repo-to-skill-paper]) | Research system + dataset | DisCo distills 5,000+ verified skills from 1,000 widely-used ML repos |
 

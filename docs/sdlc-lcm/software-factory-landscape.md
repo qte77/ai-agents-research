@@ -62,7 +62,7 @@ production software through repeatable, increasingly automated workflows," and a
 bottleneck from writing code to validating it. Concrete practices: inner/outer-loop validation (fast
 targeted checks, then full independent verification before merge), test intelligence (selective,
 change-scoped testing), short-lived OIDC auth and least-privilege secrets, and CI feedback agents can
-read directly through an API (a CircleCI Model Context Protocol (MCP) server and CLI) ([CircleCI][circleci]).
+read directly through an API (a CircleCI MCP server and CLI) ([CircleCI][circleci]; MCP = Model Context Protocol).
 
 **Augment Code**'s guide defines an agentic software factory as "an agentic software-delivery operating
 model in which AI agents write, test, and ship code inside a pipeline whose specifications and merge

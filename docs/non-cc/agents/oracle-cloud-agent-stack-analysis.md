@@ -114,9 +114,9 @@ Oracle before assigning roles (see the caution above).
   listing says 26D shows only StreamableHTTP [aas-mcp]. Oracle's Oct 2025 release announced MCP
   support and a credential store [aas-oct25]. OCI Enterprise AI Agents supports "MCP Calling" of
   remote MCP servers and can host agent applications built on MCP servers [oci-enterprise-ai].
-- **Agent-to-Agent Protocol (A2A):** AI Agent Studio documents agent cards and an agent registry (A2A "components" page, 26B),
+- **A2A:** AI Agent Studio documents agent cards and an agent registry (A2A "components" page, 26B),
   announced in the same Oct 2025 release [aas-a2a], [aas-oct25]. Whether OCI Generative AI Agents
-  speaks A2A was not found.
+  speaks Agent-to-Agent Protocol (A2A) was not found.
 
 ## Regions
 

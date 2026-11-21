@@ -15,7 +15,7 @@ people discover, install, share, and publish in ChatGPT and Codex... ChatGPT and
 universal plugin directory. When you publish a public plugin, people can discover the same listing
 from supported surfaces in either product" ([Plugin architecture][concepts-plugins]). A plugin
 bundles **skills** (Markdown workflow instructions, same `SKILL.md` shape as Claude Code and the
-Agent Plugins standard), an optional **Model Context Protocol (MCP) server** (called an "App" in the end-user-facing docs —
+Agent Plugins standard), an optional **MCP server** (called an "App" in the end-user-facing docs —
 see [Moving your custom GPT workflows to plugins][migrate-gpts]: "**Apps** connect ChatGPT to other
 services for information or supported actions"), and optional lifecycle hooks.
 
@@ -48,7 +48,7 @@ A portable manifest declares the Agent Plugins schema directly:
 
 "For a portable Agent Plugins package, add `plugin.json` at the plugin root and declare the Agent
 Plugins schema... OpenAI also accepts legacy and Claude-compatible manifests, but new packages
-should use this format" ([Package your plugin][build-plugins]). OpenAI-specific presentation, MCP
+should use this format" ([Package your plugin][build-plugins]). OpenAI-specific presentation, Model Context Protocol (MCP)
 registration and hooks go under an `extensions.com.openai` object in that same root manifest; a
 separate `.codex-plugin/plugin.json` "is optional and serves as a compatibility fallback when that
 object is absent." `mcp.json` likewise declares the Agent Plugins MCP schema
