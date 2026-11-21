@@ -1,8 +1,8 @@
 ---
 title: Data Platforms and Lakehouses for Agents — Table Formats, Branching, Warehouse-Native Agents, Scratch Engines, Cost Controls
-purpose: What the data-lake and lakehouse layer offers an agent — open table formats and their snapshot/branch features, catalogs, warehouse-native agents from four vendors, local analytical engines as scratch space, and the documented cost and permission controls. Landscape as of 2026-11-18.
+purpose: What the data-lake and lakehouse layer offers an agent — open table formats and their snapshot/branch features, catalogs, warehouse-native agents from four vendors, local analytical engines as scratch space, and the documented cost and permission controls. Landscape as of 2026-11-21.
 created: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-21
 validated_links: 2026-11-18
 status: assess
 ---
@@ -16,12 +16,34 @@ which storage layer gives an agent cheap isolation (snapshots, branches, clones)
 inside the warehouse, where an agent can compute without touching shared state, and which documented controls
 cap spend and access. Catalogs, metrics and lineage are in
 [semantic-layers-data-catalog-landscape.md](semantic-layers-data-catalog-landscape.md). Versions, licenses and
-star counts are from each project's repo (`gh api`) on 2026-11-18; vendor feature statements are from the
-vendor's docs read on that date and are documented behavior, not tested here.
+star counts are from each project's repo (`gh api`) on 2026-11-21; vendor feature statements are from the
+vendor's docs read on 2026-11-18 (the definitions below on 2026-11-21) and are documented behavior, not tested
+here.
+
+## Data lake vs lakehouse vs data warehouse
+
+Databricks' [glossary page][dbx-lakehouse] (a vendor that sells the lakehouse, so the framing is its own)
+describes the three as follows (documented, read 2026-11-21).
+
+| | Data warehouse | Data lake | Lakehouse |
+|---|---|---|---|
+| What it is | Structured, SQL-optimised system for business intelligence | Low-cost storage for raw data in any format | Open architecture adding warehouse-style management to lake storage |
+| Data and schema | Structured data; closed or proprietary formats; ETL from raw storage | Any format; no schema or quality enforcement | Cloud object storage, many data types, schema enforcement and evolution |
+| Transactions | Yes | None per the vendor (mixing appends, reads and batch or streaming jobs is hard) | ACID, time travel, governance, streaming I/O via a metadata layer |
+| Open table format | No | Not applicable (raw files) | [Iceberg][iceberg], [Delta Lake][delta], [Hudi][hudi] below |
+| Where an agent queries it | Warehouse-native agents (below) or database MCP servers ([database-access doc](agentic-database-access-landscape.md)) | Through an engine that reads the files; no transactional guarantees on its own | Any engine that speaks the table format, through a catalog (below) |
+
+The "no open format" and "transactions" cells for the warehouse are the vendor's characterisation, not a
+neutral one. The three open table formats each state the lakehouse role themselves: Delta describes a
+lakehouse layer over existing data lakes with ACID transactions at serializable isolation and time travel
+([Delta docs][delta-docs], read 2026-11-21); Hudi calls itself an open lakehouse platform with row-level
+upserts and deletes, incremental processing, a transaction timeline and copy-on-write or merge-on-read tables
+([Hudi overview][hudi-docs], 2026-11-21); Iceberg is documented below. No performance comparison between the
+formats is made here, and none is cited: no first-party source read for this doc states one.
 
 ## Open table formats
 
-| Format | License | Latest release (2026-11-18) | Snapshot / branch feature (documented) |
+| Format | License | Latest release (2026-11-21) | Snapshot / branch feature (documented) |
 |---|---|---|---|
 | [Apache Iceberg][iceberg] | Apache-2.0 | 1.12.0 (2026-09-30) | Snapshots for time travel; [branches and tags][iceberg-branching] are named references with their own retention policies |
 | [Delta Lake][delta] | Apache-2.0 | v4.4.1 (2026-10-05) | Time travel and `RESTORE`; [shallow clone][delta-clone] copies a table at a version with its own history, referencing source files |
@@ -35,9 +57,9 @@ as long as source files are not modified, but a `vacuum` on the source can break
 
 ## Catalog-level and storage-level branching
 
-| Tool | License | Version (2026-11-18) | What it adds |
+| Tool | License | Version (2026-11-21) | What it adds |
 |---|---|---|---|
-| [Project Nessie][nessie] | Apache-2.0 | 0.110.0 (2026-11-06) | Version-control-style branches, tags and commits at the catalog, so one commit can span many tables (multi-table transaction); a job writes to a branch and merges when done, per its [guide][nessie-about] |
+| [Project Nessie][nessie] | Apache-2.0 | 0.110.1 (2026-11-21) | Version-control-style branches, tags and commits at the catalog, so one commit can span many tables (multi-table transaction); a job writes to a branch and merges when done, per its [guide][nessie-about] |
 | [lakeFS][lakefs] | Business Source License 1.1, converting to Apache-2.0 four years after each version's release (LICENSE file; GitHub shows `NOASSERTION`) | v1.88.0 (2026-10-01) | Data version control over object storage per the repo description. The BSL Additional Use Grant has two conditions: (a) the work is unmodified and (b) "Internal Use Only", which bars offering or hosting the work or its functionality to third parties; (b) is the material restriction. The LICENSE names lakeFS 1.87.0 while the latest release is 1.88.0 |
 
 Catalog-level branching is the closest lakehouse analogue to the Postgres branching in the database-access
@@ -71,9 +93,9 @@ there depends on the tool. The enterprise positioning is in
 An agent can pull a bounded extract into an in-process engine and compute there instead of running exploratory
 queries against the warehouse.
 
-| Engine | License | Latest release (2026-11-18) | Note |
+| Engine | License | Latest release (2026-11-21) | Note |
 |---|---|---|---|
-| [DuckDB][duckdb] | MIT | v2.0.0 (2026-10-21) | In-process SQL; DuckLake 1.1 requires it. MotherDuck's MCP server is covered in [agentic-database-access-landscape.md](agentic-database-access-landscape.md) |
+| [DuckDB][duckdb] | MIT | v2.0.1 (2026-11-20) | In-process SQL; DuckLake 1.1 requires 2.0.0 or later. MotherDuck's MCP server is covered in [agentic-database-access-landscape.md](agentic-database-access-landscape.md) |
 | [chDB][chdb] | Apache-2.0 | v4.5.1 (2026-11-18) | In-process ClickHouse engine |
 | [Polars][polars] | MIT | py-2.1.0 (2026-10-25) | DataFrame library; not SQL-first |
 
@@ -109,12 +131,16 @@ agent. Equivalents for Snowflake, BigQuery and Databricks were not researched fo
 | [Apache Iceberg][iceberg] · [branching page][iceberg-branching] | Version, license, branches and tags |
 | [Delta Lake][delta] · [shallow clone docs][delta-clone] | Version, license, clone semantics |
 | [Apache Hudi][hudi] · [DuckLake][ducklake] | Versions, licenses, catalog design |
+| [Databricks lakehouse glossary][dbx-lakehouse] · [Delta docs][delta-docs] · [Hudi overview][hudi-docs] | Lake, lakehouse and warehouse definitions |
 | [Project Nessie][nessie] · [guide][nessie-about] · [lakeFS][lakefs] | Catalog and storage branching, licenses |
 | [Apache Polaris][polaris] · [Unity Catalog OSS][uc-oss] | Open catalogs |
 | [Cortex Agents][cortex] · [Genie][genie-docs] · [BigQuery conversational analytics][bq-ca] · [Fabric data agent][fabric] | Warehouse-native agents |
 | [DuckDB][duckdb] · [securing DuckDB][duckdb-secure] · [chDB][chdb] · [Polars][polars] | Local engines |
 | [Snowflake resource monitors][sf-rm] · [BigQuery cost controls][bq-cost] | Cost controls |
 
+[dbx-lakehouse]: https://www.databricks.com/glossary/data-lakehouse
+[delta-docs]: https://docs.delta.io/latest/index.html
+[hudi-docs]: https://hudi.apache.org/docs/overview
 [iceberg]: https://github.com/apache/iceberg
 [iceberg-branching]: https://iceberg.apache.org/docs/latest/branching/
 [delta]: https://github.com/delta-io/delta

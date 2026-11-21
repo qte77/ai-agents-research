@@ -4,7 +4,7 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/rout
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-20
+updated: 2026-11-21
 validated_links: 2026-11-19
 ---
 
@@ -221,16 +221,27 @@ Non-CC memory frameworks; for memory tools that integrate *with Claude Code* (Me
 
 The field has reframed memory as **context engineering** — assembling persistent, evolving state across sessions rather than just enlarging the context window.
 
+**Memory types.** [CoALA][coala-paper] (abstract page, read 2026-11-21) frames a language agent as having "modular memory components"; the abstract does not name the types. The split used in this section follows LangMem's [conceptual guide][langmem-concepts] (2026-11-21): *semantic* memory holds facts and user details, *episodic* memory holds past interactions kept as examples, *procedural* memory shapes how the agent behaves (starting from system instructions, refined by feedback); *working* memory is the immediate context, as [MemMachine][memmachine-repo] labels it. Entries below, by what their own descriptions say they store (mapping is ours, from the entry text, not a vendor taxonomy):
+
+| Memory type | Entries that store it |
+|---|---|
+| Working / short-term | MemMachine (working layer), MemoryOS (short-term tier), Neo4j Agent Memory (session messages) |
+| Episodic | MemMachine (episodic layer, Neo4j), Graphiti and Zep (episodes behind each fact), Agent Zero Memory (event timeline), lossless-memory (verbatim log) |
+| Semantic | Graphiti, Zep, Cognee (knowledge graphs), Mem0, MemMachine (profile memory), EverOS (Markdown files) |
+| Procedural | LangMem, ACE (Skillbook), Memorable (procedure graph), Memento (case bank of past trajectories) |
+
+For how Claude Code itself layers instruction files and auto memory, see [CC-memory-system-analysis.md](../../cc-native/context-memory/CC-memory-system-analysis.md) rather than the entries below. Stars and versions in this section are as of the date on each entry; refreshed 2026-11-21 for Graphiti, Cognee and EverOS only.
+
 Evaluation caution (abstract pages only, 2026-11-19; neither is KG-specific): [MemDev-Bench][memdev-paper] finds memory also causes failures on otherwise solvable code tasks, more with unrelated history, and [MemPABench][mempabench-paper] finds current memory "struggles to retrieve interaction preferences and adapt to preference changes".
 
 - [Graphiti (Zep)](https://github.com/getzep/graphiti) — real-time temporal knowledge-graph engine; P95 ~300ms hybrid (vector + BM25 + graph) retrieval, MCP server, Apache-2.0.
 - [Zep](https://github.com/getzep/zep) — memory platform on Graphiti; temporal KG, multi-language SDKs ([paper](https://arxiv.org/abs/2501.13956)).
 - [Mem0](https://github.com/mem0ai/mem0) — universal memory layer; claims +26% vs OpenAI Memory, 90% lower tokens on LOCOMO ([paper](https://arxiv.org/abs/2504.19413)), Apache-2.0.
-- [Cognee](https://github.com/topoteretes/cognee) — Apache-2.0 KG memory engine, 30+ data types, MCP server; raised $7.5M seed (Feb 2026); 31.2k★, `gh api` 2026-09-30. Using Postgres as a graph store is documented as "currently released as a demo feature," with "the production-ready version" only "available as a licensed product" ([README](https://github.com/topoteretes/cognee#readme)) — a paywalled-tier caveat in the same vein as BrainAPI's BSL license below. **Rubric** (subject: graphs-rag, scored 2026-09-30, row G evaluation, [README](https://github.com/topoteretes/cognee#readme)): Shared: partial ("Build a Company Brain" pitches one shared memory across documentation, conversations, tickets and agent work, but the README documents no concurrent multi-writer or locking semantics); Distributed: partial (a `distributed/deploy/` directory ships Docker Compose and deployment templates beyond the local demo, but the README does not describe a cluster/sync protocol for the graph store itself); Reproducible: partial (a local-only quickstart runs on a bundled small model, GLiNER, with no cloud LLM call, but the README itself flags that extractor as "a demo of Cognee's small-model pipeline," with a production-ready version available on request rather than shipped); Adaptable: partial (custom data models and ontologies are a documented use case, but the README documents Postgres-as-graph-store only as a demo feature, with production behind a licensed product); Versionable: no data (no snapshot/diff/rollback of graph state documented in the README); Traceable: no data (the paper behind Cognee targets KG-grounded reasoning, but the README itself documents no citation or audit-trail feature).
+- [Cognee](https://github.com/topoteretes/cognee) — Apache-2.0 KG memory engine, 30+ data types, MCP server; raised $7.5M seed (Feb 2026); 33.4k★, `gh api` 2026-11-21 (31.2k on 2026-09-30). Using Postgres as a graph store is documented as "currently released as a demo feature," with "the production-ready version" only "available as a licensed product" ([README](https://github.com/topoteretes/cognee#readme)) — a paywalled-tier caveat in the same vein as BrainAPI's BSL license below. **Rubric** (subject: graphs-rag, scored 2026-09-30, row G evaluation, [README](https://github.com/topoteretes/cognee#readme)): Shared: partial ("Build a Company Brain" pitches one shared memory across documentation, conversations, tickets and agent work, but the README documents no concurrent multi-writer or locking semantics); Distributed: partial (a `distributed/deploy/` directory ships Docker Compose and deployment templates beyond the local demo, but the README does not describe a cluster/sync protocol for the graph store itself); Reproducible: partial (a local-only quickstart runs on a bundled small model, GLiNER, with no cloud LLM call, but the README itself flags that extractor as "a demo of Cognee's small-model pipeline," with a production-ready version available on request rather than shipped); Adaptable: partial (custom data models and ontologies are a documented use case, but the README documents Postgres-as-graph-store only as a demo feature, with production behind a licensed product); Versionable: no data (no snapshot/diff/rollback of graph state documented in the README); Traceable: no data (the paper behind Cognee targets KG-grounded reasoning, but the README itself documents no citation or audit-trail feature).
 - [A-MEM](https://github.com/agiresearch/A-mem) — Zettelkasten-style agentic memory with dynamic linking ([paper](https://arxiv.org/abs/2502.12110)).
 - [LangMem](https://github.com/langchain-ai/langmem) — LangGraph-native semantic/episodic/procedural memory (MIT).
 - [MemoryOS](https://github.com/BAI-LAB/MemoryOS) — hierarchical short/mid/long-term memory OS for personalized agents; +49.11% F1 over baselines on LoCoMo (self-reported), EMNLP 2025 Oral (Apache-2.0).
-- [EverOS (EverMind-AI)](https://github.com/EverMind-AI/EverOS) — **Markdown-native, local-first** portable memory layer (9.4K★, Apache-2.0): plain Markdown files as source of truth over a SQLite + LanceDB hybrid index, file-watch cascade sync, multimodal ingest (text/image/PDF/audio/office), LLM-driven extraction/ranking, and an OpenAI-compatible endpoint; user-owned and self-evolving across apps — a files-first contrast to Mem0's graph-first and MemoryOS's hierarchical designs.
+- [EverOS (EverMind-AI)](https://github.com/EverMind-AI/EverOS) — **Markdown-native, local-first** portable memory layer (14.0k★, `gh api` 2026-11-21; 9.4K earlier; Apache-2.0): plain Markdown files as source of truth over a SQLite + LanceDB hybrid index, file-watch cascade sync, multimodal ingest (text/image/PDF/audio/office), LLM-driven extraction/ranking, and an OpenAI-compatible endpoint; user-owned and self-evolving across apps — a files-first contrast to Mem0's graph-first and MemoryOS's hierarchical designs.
 - [Gulp.ai (Osmosis)](https://docs.gulp.ai/introduction) — agent-improvement API enriching prompts with past-interaction knowledge.
 - [ACE — Agentic Context Engine (Kayba)](https://github.com/kayba-ai/agentic-context-engine) — self-improving context layer: a three-role loop (Agent / Reflector / SkillManager) curates a persistent "Skillbook" of strategies that evolves with every task, so agents stop repeating mistakes without fine-tuning or a vector DB (Apache-2.0, [paper](https://arxiv.org/abs/2510.04618)). PydanticAI-based; ships an MCP server (`ace-mcp`) and a Claude Code runner. Offline benchmark-driven counterpart: autoharness (§3).
 - [learnings-ralphy (qte77 estate)](https://github.com/qte77/learnings-ralphy) — **file-based compound-learning memory**, the filesystem-as-memory complement to the graph/vector engines above: plain-Markdown `CLAUDE.md` + `AGENT_LEARNINGS.md` / `LEARNINGS.md` as durable, git-versioned agent memory with an explicit promotion path (inline fix → `AGENT_LEARNINGS.md` → always-loaded `.claude/rules/` → skills). `learnings-ralphy` distills these **across the whole repo estate** on a weekly loop (synthesize → PRD → TDD → write-back PR). EverOS (above) is the productized markdown-native analog; the trade-off vs the graph engines is recall (grep/LLM over files) for zero infra and full git auditability.
@@ -272,7 +283,7 @@ Companion SDK from the same organisation (added 2026-11-20, not scored): [selfgr
 
 ### Temporal knowledge-graph memory: evidence and caveats
 
-Checked 2026-11-19. Graphiti's [README][graphiti-readme] documents the design (documented, not independently tested): each fact carries a validity window and is "invalidated — not deleted" when superseded, every entity and relationship traces to the **episodes** (raw ingested data) that produced it, and ontology can be prescribed (Pydantic types) or learned. Apache-2.0; 32,939 stars (`gh api`, 2026-11-19); latest release v0.31.2 (2026-10-20). The [Zep paper][zep-paper] (abstract page) reports 94.8% vs 93.4% for MemGPT on DMR, and on LongMemEval "accuracy improvements of up to 18.5%" with 90% lower latency than baselines; these are the vendor's own numbers, DMR is the benchmark the MemGPT team chose, and the abstract does not name the baseline for the 18.5%. Update semantics and provenance are the strengths on paper; whether an LLM wrote the *right* edge is not covered by episode lineage, since lineage shows what text produced a fact, not that the extraction was correct (inference). For graph stores and query languages behind these engines see [graph-databases-query-languages-landscape.md](../infrastructure/graph-databases-query-languages-landscape.md).
+Checked 2026-11-19. Graphiti's [README][graphiti-readme] documents the design (documented, not independently tested): each fact carries a validity window and is "invalidated — not deleted" when superseded, every entity and relationship traces to the **episodes** (raw ingested data) that produced it, and ontology can be prescribed (Pydantic types) or learned. Apache-2.0; 32,976 stars (`gh api`, 2026-11-21); latest release v0.31.2 (2026-10-20). The [Zep paper][zep-paper] (abstract page) reports 94.8% vs 93.4% for MemGPT on DMR, and on LongMemEval "accuracy improvements of up to 18.5%" with 90% lower latency than baselines; these are the vendor's own numbers, DMR is the benchmark the MemGPT team chose, and the abstract does not name the baseline for the 18.5%. Update semantics and provenance are the strengths on paper; whether an LLM wrote the *right* edge is not covered by episode lineage, since lineage shows what text produced a fact, not that the extraction was correct (inference). For graph stores and query languages behind these engines see [graph-databases-query-languages-landscape.md](../infrastructure/graph-databases-query-languages-landscape.md).
 
 ## 5. Foundation Models for Agents
 
@@ -397,15 +408,19 @@ Graph-centric infrastructure built around agent access patterns (MCP, multi-agen
 
 ### Graph visualization
 
-The post-retrieval / analysis layer: once a GraphRAG pipeline or knowledge graph (the GraphRAG family above) is built, these render it for inspection. JS browser libraries dominate for embeddable / static-site graphs; desktop and GPU tools handle large-scale exploration. Licenses verified first-party 2026-06-28.
+The post-retrieval / analysis layer: once a GraphRAG pipeline or knowledge graph (the GraphRAG family above) is built, these render it for inspection. Table limited to widely used renderers; licenses from each repo's license metadata and releases from `gh api`, both 2026-11-21. None of these projects' repos was read for a stated node or edge scale limit, so none is given here; benchmark on your own graph. Hub: [visualization topic](../../_topics/visualization.md).
 
-- [vis-network](https://github.com/visjs/vis-network) — force-directed interactive renderer with physics layout out of the box (dual **Apache-2.0 OR MIT**); this repo's own knowledge graph ships as a static `ui/graph.html` rendered by vis-network (graphify output).
-- [D3.js](https://github.com/d3/d3) — low-level SVG/Canvas toolkit (**ISC**, formerly BSD); maximal control, but you author the force-simulation and layout yourself — not a drop-in graph renderer.
-- [Cytoscape.js](https://github.com/cytoscape/cytoscape.js) — graph-theory library with built-in layouts for browser + Node (**MIT**); strong for biological / network analysis.
-- [Sigma.js](https://github.com/jacomyal/sigma.js) — WebGL-accelerated renderer for large graphs in the browser (**MIT**).
-- [Gephi](https://github.com/gephi/gephi) — open-source desktop graph-analysis app (**GPL-3.0**; some NetBeans modules CDDL); ForceAtlas2 layout + interactive exploration for big static graphs.
-- [PyGraphistry](https://github.com/graphistry/pygraphistry) — **BSD-3-Clause** Python client that pushes data to a **Graphistry** GPU server whose rendering engine is **commercial / closed** (open-core: the client alone is just data-shaping).
-- [Neo4j Bloom](https://neo4j.com/product/bloom/) — codeless graph-exploration UI bundled with Neo4j; **freemium** (local DB only — remote/sharing/perspectives require paid Neo4j Enterprise). OSS alternative: [Neo4j Browser](https://github.com/neo4j/neo4j-browser) (**GPL-3.0** Cypher IDE).
+| Tool | Renderer | License | Latest release (2026-11-21) | Fit |
+|---|---|---|---|---|
+| [vis-network](https://github.com/visjs/vis-network) | Canvas, physics force layout | Apache-2.0 (dual with MIT) | v10.1.5 (2026-11-08) | Embeddable interactive graphs, static sites |
+| [D3.js](https://github.com/d3/d3) | SVG / Canvas toolkit | ISC | v7.9.2 (2026-11-03) | Maximal control; you write the layout, not a drop-in graph renderer |
+| [Cytoscape.js](https://github.com/cytoscape/cytoscape.js) | Browser + Node, built-in layouts | MIT | v3.35.0 (2026-11-10) | Graph-theory analysis, network biology |
+| [Sigma.js](https://github.com/jacomyal/sigma.js) | WebGL | MIT | sigma@4.0.6 (2026-11-10) | Larger graphs in the browser (WebGL is the project's approach; no figure checked) |
+| [Gephi](https://github.com/gephi/gephi) | Desktop app, ForceAtlas2 | GPL-3.0 (some modules CDDL, 2026-06-28 reading) | v0.11.4 (2026-11-01) | Exploring big static graphs offline |
+| [PyGraphistry](https://github.com/graphistry/pygraphistry) | Client for the Graphistry GPU server | BSD-3-Clause client; rendering server commercial / closed | 0.62.1 (2026-11-12) | Open-core: the client alone only shapes data |
+| [Neo4j Bloom](https://neo4j.com/product/bloom/) | Codeless exploration UI bundled with Neo4j | Freemium (local DB only; sharing and perspectives need paid Enterprise, 2026-06-28 reading) | not checked | Cypher-free exploration. OSS alternative: [Neo4j Browser](https://github.com/neo4j/neo4j-browser) (GPL-3.0, last release 2025.8.0 on 2025-08-07), a Cypher IDE |
+
+The `gh api` license field matched the 2026-06-28 first-party reading for every row it covers. Choose by where the graph lives: embedded in a page (vis-network, Cytoscape.js, Sigma.js), custom (D3), or analysed on a desktop (Gephi).
 
 ## 8. Output Validation, Guardrails & Verification
 
@@ -628,8 +643,9 @@ KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv a
 
 | Source | Content |
 |---|---|
-| [getzep/graphiti README][graphiti-readme] + `gh api` | Validity windows, episode provenance, prescribed/learned ontology; Apache-2.0, 32,939 stars, v0.31.2 (2026-10-20) |
+| [getzep/graphiti README][graphiti-readme] + `gh api` | Validity windows, episode provenance, prescribed/learned ontology; Apache-2.0, 32,976 stars, v0.31.2 (2026-10-20) |
 | [arXiv:2501.13956][zep-paper] abstract page | Zep/Graphiti DMR and LongMemEval claims (vendor numbers) |
+| [CoALA][coala-paper] · [LangMem concepts][langmem-concepts] · [MemMachine][memmachine-repo] | Memory-type taxonomy used in §4 (abstract page and docs read 2026-11-21) |
 | [arXiv:2506.05690][graphrag-bench] abstract page | GraphRAG-Bench scope; the "underperforms vanilla RAG" statement attributed to recent studies |
 | [arXiv:2602.14470][hyperrag] · [2512.23959][hgmem] · [2604.08256][hypermem] · [2608.16114][hyperskill] abstract pages | Hypergraph RAG and memory: venues, numbers and baselines as the authors state them (2026-11-20) |
 | [arXiv:2502.11371][rag-vs-graphrag] abstract page | Unified RAG vs GraphRAG protocol; per-task strengths; integration strategies |
@@ -638,6 +654,9 @@ KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv a
 
 [graphiti-readme]: https://github.com/getzep/graphiti#readme
 [zep-paper]: https://arxiv.org/abs/2501.13956
+[coala-paper]: https://arxiv.org/abs/2309.02427
+[langmem-concepts]: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/
+[memmachine-repo]: https://github.com/MemMachine/MemMachine
 [graphrag-bench]: https://arxiv.org/abs/2506.05690
 [hyperrag]: https://arxiv.org/abs/2602.14470
 [hgmem]: https://arxiv.org/abs/2512.23959
