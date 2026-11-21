@@ -98,20 +98,13 @@ A structured plugin registry organized around Claude Code's installable plugin f
 
 ## TTS / Voice Output Plugins (Emerging Category)
 
-8+ community projects add text-to-speech output to Claude Code. All converge on the same pattern: Stop hook → sentence chunking → TTS → non-blocking playback. CC has native `/voice` for STT input but **no native TTS output**.
+Community projects add text-to-speech output to Claude Code; the ones that pass the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) are listed below, and the rest are under [Not included](#not-included). They converge on the same pattern: Stop hook → sentence chunking → TTS → non-blocking playback. CC has native `/voice` for STT input but **no native TTS output**.
 
 | Project | Engine | Key Feature | Local/OSS |
 |---------|--------|-------------|-----------|
-| [ybouhjira/claude-code-tts][tts-ybou] | OpenAI API | Worker pool, cross-platform, `speak-text` CLI | No |
-| [~cg/claude-code-tts][tts-cg] | Kokoro | Smart interruption, markdown stripping | Yes |
-| [ktaletsk/claude-code-tts][tts-ktal] | Kokoro | Audio ducking | Yes |
-| [LAURA-agent/Claude-to-Speech][tts-laura] | ElevenLabs | Invisible markers, smart defaults (silent for code) | No |
 | [mbailey/voicemode][tts-voice] | Kokoro/cloud | Full 2-way voice (Whisper STT + TTS), MCP server | Yes |
-| [johnmatthewtennant/mcp-voice-hooks][tts-mcp] | Various | MCP server for voice I/O | Depends |
-| [husniadil/cc-hooks][tts-hooks] | Multi-provider | Sound effects, TTS announcements | Depends |
-| [shanraisshan/claude-code-hooks][tts-shanr] | Various | Voice via hooks (Stop, PreToolUse, PostToolUse) | Depends |
 
-**Common pattern**: All use the Stop hook (fires after full response). No project has achieved true mid-generation streaming — CC exposes no streaming hook in interactive mode. `--output-format stream-json` enables token-level streaming but only in headless mode (`claude -p`).
+**Common pattern**: The pruned projects all used the Stop hook (fires after full response). None achieved true mid-generation streaming — CC exposes no streaming hook in interactive mode. `--output-format stream-json` enables token-level streaming but only in headless mode (`claude -p`).
 
 **TTS engines used**: Kokoro (most popular local), OpenAI TTS API (most polished cloud), ElevenLabs (highest quality cloud), espeak-ng (fallback). [RealtimeTTS][realtimetts] library provides sentence-boundary detection with 12+ engine backends.
 
@@ -127,17 +120,7 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 | [whisper.cpp][whispercpp] | 39M (tiny) – 1.5B (large) | ~200-500ms (medium, CPU) | Desktop/server | C++ port of OpenAI Whisper; GPU acceleration; 99 languages |
 | [Vosk][vosk] | 50MB (small model) | Real-time streaming | Lightweight/embedded | Continuous listening built-in; offline; 20+ languages |
 
-### Community Voice Input Projects
-
-| Project | Engine | Integration | Status |
-|---------|--------|-------------|--------|
-| [jarrodwatts/claude-stt][claude-stt] | Moonshine ONNX | Plugin: hotkey → local STT → keyboard injection (xdotool/accessibility API) | **Archived** — superseded by native `/voice` |
-| [Traves-Theberge/Wake-Word][wake-word] | Picovoice Porcupine | Electron app: "Hey Claude" wake-word → launch Claude CLI | Active |
-| [mbailey/voicemode][tts-voice] | Whisper (local) | MCP server: 2-way voice (STT + Kokoro TTS), webrtcvad silence detection | Active |
-| [SergeyKirk/hey-claude][hey-claude] | Picovoice Porcupine | macOS: always-on "Hey Claude" → execute via Claude Code | Active |
-| bacharyehya/talk-to-claude (`github.com/bacharyehya/talk-to-claude`, 404 as of 2026-11-02 — repo removed; retained for provenance) | Various | MCP: wake-word activated voice conversations | Removed |
-
-**Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. Community projects fill these gaps but require separate installation.
+**Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. The one community project that clears the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter), [mbailey/voicemode][tts-voice] (local Whisper STT + Kokoro TTS over MCP, see the table above), fills part of these gaps but requires separate installation.
 
 ## Notable Plugin Profile: claude-seo (Marketing Growth)
 
@@ -221,33 +204,6 @@ The repo ships Node.js lifecycle hooks (`hooks/`), platform-specific markdown ru
 
 **Notable pattern**: Unusually high star count (~16.6k) for a code-quality plugin reflects broad cross-ecosystem appeal — the minimalism philosophy is platform-agnostic and the multi-platform distribution lowers the barrier for polyglot teams.
 
-## Notable Plugin Profile: squid (Agentic Engineering Pipeline)
-
-**Repo**: [iusztinpaul/squid][squid] | **Writeup**: [decodingai][squid-writeup] | **License**: Apache-2.0 | **Stars**: ~114 | **Category**: Workflow Orchestration
-
-An opinionated full-lifecycle engineering pipeline that mirrors a real team across five role subagents — `product-architect` → `software-engineer` → `tester` → `pr-reviewer` → `oncall-engineer` — plus an optional self-improve meta-agent. Core principle: *no agent both writes code and decides if it's correct*. Human gates sit at plan approval and final merge. Architectural memory is externalised to ADR files (`docs/adr/<NNNN_title>.md`) and a DDD `docs/glossary.md`; `/scaffold` generates `AGENTS.md` + folder skeletons for Python/TypeScript/Go.
-
-| Command | Purpose |
-|---------|---------|
-| `/scaffold` | Bootstrap stack + `AGENTS.md` + folder skeleton |
-| `/plan <spec>` | Groom a spec into a Tasks Plan; create branch + worktree |
-| `/implement-night <plan>` | Full 5-agent pipeline (async, ≤5 retry loops, 2 human gates) |
-| `/implement-task` | Single task — SWE ↔ Tester loop only |
-| `/review`, `/review-ci` | Acceptance/diff review + On-Call CI validation |
-
-**Install** (Claude Code plugin):
-
-```bash
-/plugin marketplace add iusztinpaul/squid
-/plugin install squid@iusztinpaul
-# or via the skills runner:
-npx skills add iusztinpaul/squid
-```
-
-**Env vars**: none documented — configuration is per-project via `AGENTS.md` + `.claude/settings.json`.
-
-**Notable pattern**: the ADR layer (architectural memory) and the Tasks Plan (feature → task decomposition) make squid a worked example of memory + goal-tracking *inside* a CC pipeline — threads picked up in the deferred agentic-memory / goal-attribution research. Relevant to [CC-agent-teams-orchestration](../cc-native/agents-skills/CC-agent-teams-orchestration.md).
-
 ## Notable Plugin Profile: Impeccable (pbakaus — Design, Cross-Agent)
 
 **Repo**: [pbakaus/impeccable][impeccable] | **License**: Apache-2.0 | **Stars**: 108,300★/6,438 forks (`gh api`, 2026-11-12) | **Category**: Design review
@@ -282,11 +238,9 @@ these is Anthropic's.
 | Catalog | What it is | Licence / size | Notes |
 |---|---|---|---|
 | [claude-mods.com][mods-dir] | Mod directory; labels itself "Unofficial directory" | No licence stated; "278 mods listed" | Operator not named on the page |
-| [OneWave-AI/claude-code-mods][onewave] | 11 mods (README: "Eleven mods"; repo description says ten): burn-meter, launch-codes, session-wrapped, boss-fight, code-pet, inner-monologue, sportscaster, agent-narrator, swarm, agent-race, inbox-alerts | MIT; 23★, created 2026-10-02 | Self-described "Anthropic Partner Network firm" (unverified). `inbox-alerts` "Polls Gmail, Slack, and Google Calendar every two minutes through the claude.ai connectors" |
-| [whyashthakker/awesome-claude-code-mods][awesome-mods] | 50-mod collection, introduced by its author's [explainx.ai post][explainx-mods] (Yash Thakker, 2026-10-03) | MIT; 88★, created 2026-10-03 | Claims "50 of 50 pass strict validation" (unverified) |
 | [ruvnet field guide (gist)][ruvnet-mods] | "Claude Code Mods: a field guide" — how-to, no mod code | No licence stated | Partly outdated: tells readers to `export CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1`, which "Claude Code v2.1.287 and later ignores" per the [first-party docs][mods-overview-cc]. Its own advice: "Grep them before you trust any guide, this one included." |
 
-**Install-path caution.** OneWave, the explainx post and the ruvnet gist all suggest adding
+**Install-path caution.** The pruned OneWave catalog, the [explainx post][explainx-mods] and the ruvnet gist all suggest adding
 `CLAUDE_CODE_PLUGIN_DIRS` to the `env` block of `~/.claude/settings.json`, which loads those mod
 directories into *every* session (the explainx post itself says it "could not verify end to end in the
 app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our advice is to prefer the per-session
@@ -365,29 +319,44 @@ an update brings whatever is there: read the diff before updating if that matter
 - [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — skill libraries (gstack, pm-skills)
 - [CC-cowork-plugins-enterprise-analysis.md](../cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md) — Cowork/enterprise plugin distribution
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| ybouhjira/claude-code-tts | 21 stars; last push 2026-01-25; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/ybouhjira/claude-code-tts> |
+| ~cg/claude-code-tts | Hosted on sr.ht, not GitHub: no star, activity or independent-user evidence found; fails the adoption criterion | 2026-11-21 | <https://git.sr.ht/~cg/claude-code-tts> |
+| ktaletsk/claude-code-tts | 20 stars; last push 2026-02-02; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/ktaletsk/claude-code-tts> |
+| LAURA-agent/Claude-to-Speech | 20 stars (repo now at TwinPeaksTownie/Claude-to-Speech); last push 2026-03-31; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/TwinPeaksTownie/Claude-to-Speech> |
+| johnmatthewtennant/mcp-voice-hooks | 130 stars; no licence; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/johnmatthewtennant/mcp-voice-hooks> |
+| husniadil/cc-hooks | 19 stars; no measured benefit or named independent users in its README (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/husniadil/cc-hooks> |
+| shanraisshan/claude-code-hooks | 572 stars; last push 2026-06-04; no measured benefit or named independent users in its README (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/shanraisshan/claude-code-hooks> |
+| jarrodwatts/claude-stt | Archived (last push 2026-03-13), 364 stars, below the one-dated-line adoption bar; superseded by native `/voice` (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/jarrodwatts/claude-stt> |
+| Traves-Theberge/Wake-Word | 7 stars; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/Traves-Theberge/Wake-Word> |
+| SergeyKirk/hey-claude | 1 star; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/SergeyKirk/hey-claude> |
+| bacharyehya/talk-to-claude | No usable artifact: repo returned 404 as of 2026-11-02 (removed) | 2026-11-21 | <https://github.com/bacharyehya/talk-to-claude> |
+| iusztinpaul/squid | 218 stars; no measured benefit or named independent users in its README (`gh api` 2026-11-21); the only adoption evidence was the author's own writeup | 2026-11-21 | <https://github.com/iusztinpaul/squid> |
+| OneWave-AI/claude-code-mods | 32 stars; no measured benefit or named independent users; self-described partner status unverified (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/OneWave-AI/claude-code-mods> |
+| whyashthakker/awesome-claude-code-mods | 124 stars; created 2026-10-03; "50 of 50 pass strict validation" is an unverified self-claim, no named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/whyashthakker/awesome-claude-code-mods> |
+
 ## Sources
 
 | Source | Content |
 |---|---|
 | [awesome-claude-code][acc] | Curated resource list |
 | [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
-| [squid][squid] | Agentic engineering pipeline plugin (5-agent; ADR memory + Tasks Plan task decomposition) |
-| [squid writeup][squid-writeup] | Author's setup rationale (decodingai) |
 | [pbakaus/impeccable][impeccable] (README + `gh api`, 2026-11-12) | Design-vocabulary plugin: commands, 62-rule detector, cross-agent install table |
 | [google/elephant-goldfish-model][egm] (README + `gh api`, 2026-11-12) | Elephant/Goldfish drafter-reviewer spec-review plugin |
-| [claude-mods.com][mods-dir] · [OneWave-AI/claude-code-mods][onewave] · [awesome-claude-code-mods][awesome-mods] · [explainx.ai post][explainx-mods] · [ruvnet gist][ruvnet-mods] | Community mod catalogs and guides (checked 2026-10-22) |
+| [claude-mods.com][mods-dir] · [explainx.ai post][explainx-mods] · [ruvnet gist][ruvnet-mods] | Community mod catalogs and guides (checked 2026-10-22) |
 | [Mods overview][mods-overview-cc] | First-party: "Mods aren't sandboxed"; `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` ignored from v2.1.287 |
 | [alexeyw/lot-map][lot-map] (README, LICENSE, PRIVACY.md, CHANGELOG.md, `plugin.json`, `hooks/register.tsx`, `hooks/map.ts` + `gh api`, 2026-11-12) | Live session-map mod: repo stats, license, install, hooked events, privacy claims, source read for network/fs/process calls |
 
 [ponytail]: https://github.com/DietrichGebert/ponytail
 [mods-dir]: https://claude-mods.com/
-[onewave]: https://github.com/OneWave-AI/claude-code-mods
-[awesome-mods]: https://github.com/whyashthakker/awesome-claude-code-mods
 [explainx-mods]: https://www.explainx.ai/blog/awesome-claude-code-mods-50-open-source-mods-install-guide-2026
 [ruvnet-mods]: https://gist.github.com/ruvnet/a485e930b148185197fc53fd38b429ea
 [mods-overview-cc]: https://code.claude.com/docs/en/plugins/mods/overview
-[squid]: https://github.com/iusztinpaul/squid
-[squid-writeup]: https://www.decodingai.com/p/squid-my-agentic-coding-setup-may-2026
 [impeccable]: https://github.com/pbakaus/impeccable
 [egm]: https://github.com/google/elephant-goldfish-model
 [acc]: https://github.com/hesreallyhim/awesome-claude-code
@@ -396,20 +365,10 @@ an update brings whatever is there: read the diff before updating if that matter
 [claude-seo-site]: https://claude-seo.md
 [claude-seo-readme]: https://github.com/AgriciDaniel/claude-seo/blob/main/README.md
 [seo-audit-skill]: https://github.com/AgriciDaniel/claude-seo/blob/main/skills/seo-audit/SKILL.md
-[tts-ybou]: https://github.com/ybouhjira/claude-code-tts
-[tts-cg]: https://git.sr.ht/~cg/claude-code-tts
-[tts-ktal]: https://github.com/ktaletsk/claude-code-tts
-[tts-laura]: https://github.com/TwinPeaksTownie/Claude-to-Speech
 [tts-voice]: https://github.com/mbailey/voicemode
-[tts-mcp]: https://github.com/johnmatthewtennant/mcp-voice-hooks
-[tts-hooks]: https://github.com/husniadil/cc-hooks
-[tts-shanr]: https://github.com/shanraisshan/claude-code-hooks
 [realtimetts]: https://github.com/KoljaB/RealtimeTTS
 [voice-docs]: https://code.claude.com/docs/en/voice-dictation
 [moonshine]: https://github.com/moonshine-ai/moonshine
 [whispercpp]: https://github.com/ggml-org/whisper.cpp
 [vosk]: https://alphacephei.com/vosk/
 [lot-map]: https://github.com/alexeyw/lot-map
-[claude-stt]: https://github.com/jarrodwatts/claude-stt
-[wake-word]: https://github.com/Traves-Theberge/Wake-Word
-[hey-claude]: https://github.com/SergeyKirk/hey-claude
