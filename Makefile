@@ -269,7 +269,7 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 check_status: ## Validate doc frontmatter status: tokens; no body badges (strict; #348)
 	$(PYTHON) .github/scripts/check-doc-status.py --strict
 
-check_coverage: ## Every content doc is in its folder's README index and has an inbound link (strict; plan 0015 X1)
+check_coverage: ## Docs are in their README index, have an inbound link, and link only to real section anchors (strict; plan 0015 X1, X3)
 	$(PYTHON) .github/scripts/check-doc-coverage.py
 
 lint: check_docs check_status check_coverage check_actions check_links ## Run all linters (markdown + status + coverage + actions first; flaky link check last so it can't mask them)

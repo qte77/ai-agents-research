@@ -338,7 +338,7 @@ The CC GHA interactive mode supports `@claude` in issue comments, but the broade
 | [Devin][devin] | Yes (full autonomous) | No | Basic | Full agent | No | $20/mo + ACUs |
 | [AI Issue Resolver][axiotree] | Yes (label-triggered) | No | Label-triggered | Generates PRs | MIT | Free (BYOK) |
 
-**CLI vs cloud-agent surfaces.** The *GitHub Copilot Coding Agent* and *Devin* rows above are the autonomous **cloud** products (assign work, it opens a PR). They are distinct from the same brands' interactive **terminal/IDE** agents — [GitHub Copilot CLI][copilot-cli] (same agentic harness, run locally), VS Code Copilot Chat, and Devin CLI — which are tracked in the [non-CC coding-agent landscape](../../non-cc/README.md#planned), not as CI-native issue→PR automations.
+**CLI vs cloud-agent surfaces.** The *GitHub Copilot Coding Agent* and *Devin* rows above are the autonomous **cloud** products (assign work, it opens a PR). They are distinct from the same brands' interactive **terminal/IDE** agents — [GitHub Copilot CLI][copilot-cli] (same agentic harness, run locally), VS Code Copilot Chat, and Devin CLI — which are tracked in the [non-CC coding-agent landscape](../../non-cc/README.md#coding-agents--ides), not as CI-native issue→PR automations.
 
 ### Gap Analysis
 
