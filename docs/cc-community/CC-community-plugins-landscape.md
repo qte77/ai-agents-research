@@ -98,7 +98,7 @@ A structured plugin registry organized around Claude Code's installable plugin f
 
 ## TTS / Voice Output Plugins (Emerging Category)
 
-Community projects add text-to-speech output to Claude Code; the ones that pass the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) are listed below, and the rest are under [Not included](#not-included). They converge on the same pattern: Stop hook → sentence chunking → TTS → non-blocking playback. CC has native `/voice` for STT input but **no native TTS output**.
+Community projects add text-to-speech output to Claude Code; the ones that pass the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) are listed below, and the rest are under [Not included](#not-included). They converge on the same pattern: Stop hook → sentence chunking → TTS → non-blocking playback. CC has native `/voice` for STT input but **no native TTS output**.
 
 | Project | Engine | Key Feature | Local/OSS |
 |---------|--------|-------------|-----------|
@@ -106,7 +106,7 @@ Community projects add text-to-speech output to Claude Code; the ones that pass 
 
 **Common pattern**: The pruned projects all used the Stop hook (fires after full response). None achieved true mid-generation streaming — CC exposes no streaming hook in interactive mode. `--output-format stream-json` enables token-level streaming but only in headless mode (`claude -p`).
 
-**TTS engines used**: Kokoro (most popular local), OpenAI TTS API (most polished cloud), ElevenLabs (highest quality cloud), espeak-ng (fallback). [RealtimeTTS][realtimetts] library provides sentence-boundary detection with 12+ engine backends.
+The [RealtimeTTS][realtimetts] library provides sentence-boundary detection with 12+ engine backends.
 
 ## STT / Voice Input (Community Alternatives)
 
@@ -120,7 +120,7 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 | [whisper.cpp][whispercpp] | 39M (tiny) – 1.5B (large) | ~200-500ms (medium, CPU) | Desktop/server | C++ port of OpenAI Whisper; GPU acceleration; 99 languages |
 | [Vosk][vosk] | 50MB (small model) | Real-time streaming | Lightweight/embedded | Continuous listening built-in; offline; 20+ languages |
 
-**Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. The one community project that clears the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter), [mbailey/voicemode][tts-voice] (local Whisper STT + Kokoro TTS over MCP, see the table above), fills part of these gaps but requires separate installation.
+**Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. The one community project that clears the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter), [mbailey/voicemode][tts-voice] (local Whisper STT + Kokoro TTS over MCP, see the table above), fills part of these gaps but requires separate installation.
 
 ## Notable Plugin Profile: claude-seo (Marketing Growth)
 
@@ -232,14 +232,14 @@ Not CC-exclusive — Claude Code is one of four installable surfaces: `claude pl
 
 Mods — plugins whose JavaScript/TypeScript handlers run inside Claude Code and can draw UI (first-party
 coverage: [CC-mods-function-hooks-analysis.md](../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md))
-— gained community catalogs within weeks of becoming default-on in v2.1.287. Checked 2026-10-22; none of
-these is Anthropic's.
+— drew community catalogs and guides within weeks of becoming default-on in v2.1.287 (checked 2026-10-22;
+none is Anthropic's). The catalogs failed the pruning rule and are under [Not included](#not-included).
 
 | Catalog | What it is | Licence / size | Notes |
 |---|---|---|---|
 | [ruvnet field guide (gist)][ruvnet-mods] | "Claude Code Mods: a field guide" — how-to, no mod code | No licence stated | Partly outdated: tells readers to `export CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1`, which "Claude Code v2.1.287 and later ignores" per the [first-party docs][mods-overview-cc]. Its own advice: "Grep them before you trust any guide, this one included." |
 
-**Install-path caution.** The pruned OneWave catalog, the [explainx post][explainx-mods] and the ruvnet gist all suggest adding
+**Install-path caution.** The [explainx post][explainx-mods] and the ruvnet gist both suggest adding
 `CLAUDE_CODE_PLUGIN_DIRS` to the `env` block of `~/.claude/settings.json`, which loads those mod
 directories into *every* session (the explainx post itself says it "could not verify end to end in the
 app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our advice is to prefer the per-session
@@ -320,7 +320,7 @@ an update brings whatever is there: read the diff before updating if that matter
 
 ## Not included
 
-Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
