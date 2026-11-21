@@ -172,11 +172,10 @@ This prevents misreading a `cc-community` placement as "CC-exclusive."
 
 ### Index maintenance
 
-- Each `cc-native/` subdirectory has a `README.md` index with a doc table
-- When adding a doc, update **both** the subdirectory README and `cc-native/README.md` (doc count)
-- `cc-community/` follows the same standard as `cc-native/`
+- Every content doc is linked from its folder's README index: the nearest `README.md` above it inside `docs/` (a `non-cc/<section>/` doc is indexed by `non-cc/README.md`), and from at least one other doc or repo-root file. `make check_coverage` enforces both in CI
+- Not covered: the README indexes themselves, `docs/` root files (no folder index; still need an inbound link), `cc-native/examples/` (example files) and `docs/archive/`
+- When adding a `cc-native/` doc, update **both** the subdirectory README and `cc-native/README.md` (doc count); `cc-community/` follows the same standard
 - `docs/archive/` holds retired/superseded docs — excluded from link-checking, not content candidates
-- Other directories (`sdlc-lcm/`, `non-cc/`) follow their own conventions
 
 ## Naming Convention
 

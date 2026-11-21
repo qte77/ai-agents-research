@@ -92,6 +92,15 @@ jobs:
       - name: Validate doc frontmatter status tokens
         run: make check_status
 
+  coverage:
+    name: Doc coverage (check_coverage)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Check README-index and inbound-link coverage
+        run: make check_coverage
+
   tests:
     name: Unit tests (unittest)
     runs-on: ubuntu-latest
