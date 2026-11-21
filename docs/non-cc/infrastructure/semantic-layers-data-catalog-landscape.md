@@ -3,7 +3,7 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-11-20
+updated: 2026-11-21
 validated_links: 2026-11-19
 status: assess
 ---
@@ -16,6 +16,24 @@ When an agent answers a data question ("Q2 revenue by region?"), free-form text-
 - **Data catalogs** provide discovery, lineage, ownership, and permissions, so the agent knows *what exists* and *what it may touch*.
 
 The agent-relevant question for each tool is: **what does it expose to an agent** — a Model Context Protocol (MCP) server, an SDK tool layer, or natural-language query? The agent-native evolution of this substrate is covered under [The Agent-Native Layer](#the-agent-native-layer) below.
+
+## Choosing a structure
+
+"Add structure to the knowledge base" can mean seven different things, at very different upkeep cost. Pick the cheapest rung that answers the questions an agent actually asks. Definitions of RDF, SKOS and OWL are W3C wording (documented, read 2026-11-21); the cost and "when" columns are this corpus's own judgement (inference, not measured).
+
+| Structure | What it is | Upkeep cost (inference) | An agent-facing KB needs it when |
+|---|---|---|---|
+| Tag list | Free labels on items; no defined meaning, no relations | Near zero, drifts (synonyms, typos) | Filtering and grouping are enough |
+| Controlled vocabulary | A fixed list of allowed terms, one spelling each | Low; someone owns the list | Agents must write and match the same labels |
+| Taxonomy | Terms in a broader/narrower hierarchy | Medium; the tree needs review as the domain moves | "Everything under X" queries, navigation, scoped retrieval |
+| Thesaurus ([SKOS][skos]) | Taxonomy plus synonyms and associative "related" links; SKOS is "a common data model for sharing and linking knowledge organization systems via the Web" (W3C Recommendation, 2009-08-18) | Medium | Query expansion over synonyms; publishing a vocabulary others can link to |
+| Ontology ([OWL 2][owl]) | Classes, properties and individuals with "formally defined meaning" (Recommendation, second edition, 2012-12-11), so a reasoner can infer facts | High; needs a modeller and review | Correctness must be provable or inferred (compliance, finance, clinical) |
+| Semantic layer | Metrics, dimensions and joins defined once over structured data, queried by name instead of raw SQL (see [Semantic / Metrics Layers](#semantic--metrics-layers)) | Medium; owned like code | Agents answer numeric questions over tables |
+| Knowledge graph | Entities as nodes and typed relations as edges; in RDF, a graph is "a set of RDF triples" ([RDF 1.1 Concepts][rdf], Recommendation, 2014-02-25) | Medium to high; the cost is keeping facts current and sourced | Answers need multi-hop relations across documents or systems |
+
+The rungs stack: a thesaurus is a taxonomy plus synonyms, an ontology adds logic on top, and a knowledge graph can be built from any of them (storage and query models: [Property Graph vs RDF](graph-databases-query-languages-landscape.md#property-graph-vs-rdf)). Skipping rungs is the usual failure: an OWL ontology over terms that are not yet consistent has nothing to stand on. For most agent-facing Markdown corpora the sensible stopping point is a controlled vocabulary or a SKOS-style hierarchy plus typed links (inference; see "Exclude" under [Formal Ontologies & Semantic Web](#formal-ontologies--semantic-web)).
+
+**Typed links vs plain hyperlinks.** A plain hyperlink says only "these two pages are connected." A typed link also says how. HTML already has this: the `rel` attribute carries "link types" describing the kind of relationship, for example `author`, `license` or `canonical` ([WHATWG HTML, link types][html-rel], read 2026-11-21). In a graph the same idea is the edge label: an RDF predicate is an IRI denoting a binary relation ([RDF 1.1 Concepts][rdf]) and a property-graph relationship has exactly one type such as `ACTED_IN` ([Neo4j concepts][neo4j-pg]). SKOS `broader`, `narrower` and `related` are a minimal typed-link set. For a Markdown KB the consequence (inference): a link that carries a type (a frontmatter field or a prefix such as "supersedes:") lets an agent follow only the relations it needs instead of every outbound link.
 
 ## Semantic / Metrics Layers
 
@@ -44,13 +62,11 @@ Discovery, lineage, ownership, and permissions across the data estate.
 
 Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized machine-readable meaning. These standards predate agents but increasingly **connect to, are excluded by, or enhance** the LLM-native layers below:
 
-- **[RDF][rdf]** — subject–predicate–object triples; the base data model for graph-structured facts.
-- **[OWL][owl]** — Web Ontology Language: classes, properties, and logical constraints enabling automated inference (open-world assumption — unstated ≠ false).
-- **[SKOS][skos]** — lightweight taxonomy/thesaurus vocabulary (broader/narrower/related) for concept schemes; the pragmatic middle between flat tags and a full OWL ontology.
-- **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above.
+- **[RDF][rdf]**, **[OWL][owl]**, **[SKOS][skos]**: the triple data model, the ontology language and the thesaurus vocabulary, defined once in [Choosing a structure](#choosing-a-structure). RDF 1.2 Concepts is a W3C Candidate Recommendation Draft dated 2026-11-16 (adds triple terms: a triple usable as the object of another); RDF 1.1 remains the current Recommendation (read 2026-11-21).
+- **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above. Comparison with Cypher, GQL and Gremlin: [graph-databases doc](graph-databases-query-languages-landscape.md#query-languages).
 - **[JSON-LD][json-ld]** — "a JSON-based format to serialize Linked Data" (JSON-LD 1.1, W3C Recommendation 2020-07-16). It is "designed to be usable directly as JSON, with no knowledge of RDF", and also "usable as RDF" with tools like SPARQL. For agents it is the form they meet most: [schema.org][schema-org-gs] markup can be written in Microdata, RDFa or JSON-LD, and Google Search recommends JSON-LD "in most cases", embedded in a `<script>` tag of the page ([Google structured data][google-sd]). Whether such markup helps AI answers is disputed; see [ai-crawlers-discoverability-landscape.md](ai-crawlers-discoverability-landscape.md). [YAML-LD][yaml-ld] (a W3C Working Draft, 2026-10-24) "applies JSON-LD's data model and processing model to YAML"; Vault-LD below uses it in note frontmatter.
 
-**Open- vs closed-world.** OWL/RDF assume an *open world* (absent ≠ false), which fits the web's incompleteness but makes hard validation awkward; [SHACL][shacl] adds closed-world *shape* constraints for validation. SQL catalogs and most semantic layers above are closed-world — an agent reasoning across both must know which regime applies.
+**Open- vs closed-world.** OWL assumes an *open world*: the OWL 2 Primer says a fact missing from an OWL document "may simply be missing (but possibly true)", unlike a database where absence usually means false ([OWL 2 Primer][owl-primer], read 2026-11-21). That fits the web's incompleteness but makes hard validation awkward; [SHACL][shacl] (W3C Recommendation, 2017-07-20) is "a language for validating RDF graphs against a set of conditions". SQL catalogs and most semantic layers above are closed-world — an agent reasoning across both must know which regime applies.
 
 **connect / exclude / enhance** — how formal ontologies relate to the LLM-embedded KGs (Genie Ontology, GraphRAG) and the catalog/semantic layers above:
 
@@ -214,7 +230,7 @@ A complementary research direction formalizes *why* this grounding improves reli
 | [Unity Catalog OSS][unity-catalog] | LF open catalog + `unitycatalog-ai` SDK |
 | [Apache Atlas][atlas] | Hadoop-era governance framework |
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
-| [RDF][rdf] · [OWL][owl] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
+| [RDF][rdf] · [OWL][owl] · [OWL 2 Primer][owl-primer] · [SKOS][skos] · [WHATWG HTML link types][html-rel] · [Neo4j graph concepts][neo4j-pg] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
 | [schema.org getting started][schema-org-gs] · [Google structured data intro][google-sd] | schema.org syntaxes (Microdata, RDFa, JSON-LD); Google's JSON-LD recommendation and `<script>` embedding (read 2026-11-09) |
 | [Ontology Generation using LLMs (arXiv:2503.05388)][ontogenia-paper] · [Feng et al. (arXiv:2412.20942)][wikidata-kgc] · [Text2KGBench (arXiv:2308.02357)][text2kgbench] | LLM ontology drafting, ontology-grounded KG construction, ontology-conformance benchmark (abstract pages read 2026-11-19) |
 | [Vault-LD][vault-ld] | Markdown-vault-as-linked-data spec; YAML-LD frontmatter + shared `@context`, roundtrip RDF converters |
@@ -246,9 +262,12 @@ A complementary research direction formalizes *why* this grounding improves reli
 [unity-catalog]: https://github.com/unitycatalog/unitycatalog
 [atlas]: https://github.com/apache/atlas
 [dataplex]: https://cloud.google.com/dataplex
-[rdf]: https://www.w3.org/RDF/
-[owl]: https://www.w3.org/OWL/
-[skos]: https://www.w3.org/2004/02/skos/
+[rdf]: https://www.w3.org/TR/rdf11-concepts/
+[owl]: https://www.w3.org/TR/owl2-overview/
+[owl-primer]: https://www.w3.org/TR/owl2-primer/
+[skos]: https://www.w3.org/TR/skos-reference/
+[html-rel]: https://html.spec.whatwg.org/multipage/links.html#linkTypes
+[neo4j-pg]: https://neo4j.com/docs/getting-started/appendix/graphdb-concepts/
 [sparql]: https://www.w3.org/TR/sparql11-overview/
 [shacl]: https://www.w3.org/TR/shacl/
 [json-ld]: https://www.w3.org/TR/json-ld11/

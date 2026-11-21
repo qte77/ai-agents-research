@@ -3,7 +3,7 @@ title: Graph Databases & Query Languages — Agent Landscape
 source: https://opencypher.org/
 purpose: A thin, dated table of the graph query languages (Cypher/openCypher, ISO GQL, SPARQL, Gremlin, Datalog), the graph databases most relevant to agents, text-to-query evidence, and vendor and vendor-labs graph MCP servers, linking the per-tool analyses in this corpus. Facts as of 2026-11-19.
 created: 2026-11-19
-updated: 2026-11-20
+updated: 2026-11-21
 validated_links: 2026-11-19
 status: assess
 ---
@@ -17,20 +17,34 @@ evidence and ontologies are out of scope here (see the
 [GraphRAG and KG construction evidence](../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence)
 and [ontology generation](semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction) subsections). Companion pages: [Agentic Database Access][adb] (the SQL
 side: MCP servers, text-to-SQL, write safety) and [Semantic Layers & Data Catalogs][sem] (RDF, OWL and
-SPARQL as a standards stack).
+SPARQL as a standards stack; [Choosing a structure][sem-choose] says when a KB needs a taxonomy, ontology or graph at all).
 
 Evidence labels: **documented** (first-party docs or README), **shipped** (a release or repo state
 observed), **vendor claim** / **authors' claim** (a number from the project's own abstract or README,
 not independently reproduced).
 
+## Property Graph vs RDF
+
+Two data models sit under the query languages below; the choice decides which language and tooling apply.
+
+| | Property graph | RDF graph |
+|---|---|---|
+| Unit | Nodes and directed relationships; each relationship has one type; nodes and relationships carry key-value properties; nodes carry zero to many labels ([Neo4j concepts][neo4j-pg], read 2026-11-21) | Triples of subject, predicate and object; the predicate is an IRI; "an RDF graph is a set of RDF triples" ([RDF 1.1 Concepts][rdf11], Recommendation, 2014-02-25) |
+| Data on an edge | Native properties | Not in RDF 1.1; RDF 1.2 ([Candidate Recommendation Draft, 2026-11-16][rdf12]) adds triple terms, a triple usable as the object of another |
+| Identity of terms | Local names and labels | Global IRIs, so vocabularies (SKOS, OWL, schema.org) are shareable across datasets |
+| Query languages | Cypher/openCypher, GQL, Gremlin | SPARQL |
+| Governance | GQL: ISO/IEC; Gremlin: Apache TinkerPop (a project, not a standard) | W3C Recommendations |
+
+Evidence level: documented, from the linked sources. Which model fits an agent KB is a judgement (inference): RDF when shared vocabularies, SHACL validation or OWL inference matter; property graph when the job is application data and traversal. What SKOS, OWL and knowledge graphs are, and when a corpus needs them, is defined once in [Choosing a structure][sem-choose]; typed edges are the common idea in both models.
+
 ## Query Languages
 
 | Language | Owner / standard | Status on 2026-11-19 | Evidence |
 |---|---|---|---|
-| Cypher / [openCypher][opencypher] | Cypher was developed by Neo4j, which holds the trademarks; openCypher is the open specification effort | The openCypher site says the language is evolving toward ISO GQL and adds GQL features incrementally, aiming at conformance over time | documented |
-| [GQL][gqlsite] (ISO/IEC 39075) | ISO/IEC JTC 1 SC 32 WG 3 | Published in April 2024. A news entry dated 2024-04-17 on the GQL standards site announces it as officially published and sold through the ISO web store; the openCypher site gives 2024-04-11. BigQuery's data agents can run GQL (see [Data Platforms][dp]). The exact day and any later corrigendum are **unverified** (iso.org returned HTTP 403) | documented (published); day unverified |
-| [SPARQL][sparql11] | W3C | SPARQL 1.1 Query is a W3C Recommendation dated 2013-03-21. A [SPARQL 1.2 Query][sparql12] document is a W3C Working Draft dated 2026-11-16 on the Recommendation track | documented |
-| Gremlin ([Apache TinkerPop][tinkerpop]) | Apache Software Foundation | The project site shows TinkerPop 3.8.2, released 2026-09-01; the repo's tag list also shows core tags `4.0.0-beta.1` to `4.0.0-beta.3` (and Go-driver `gremlin-go/v4.0.0-beta.*` tags), so 4.0 is in beta | documented (site); shipped (tags) |
+| Cypher / [openCypher][opencypher] | Cypher was developed by Neo4j, which holds the trademarks; openCypher is the open specification effort | Re-read 2026-11-21, unchanged: the openCypher site says the language is evolving toward ISO GQL and adds GQL features incrementally, aiming at conformance over time | documented |
+| [GQL][gqlsite] (ISO/IEC 39075) | ISO/IEC JTC 1 SC 32 WG 3 | Published in April 2024 as ISO/IEC 39075:2024; the standards site (re-read 2026-11-21) lists no later edition or amendment, its newest entry being the April 2024 publication. A news entry dated 2024-04-17 on the GQL standards site announces it as officially published and sold through the ISO web store; the openCypher site gives 2024-04-11. BigQuery's data agents can run GQL (see [Data Platforms][dp]). The exact day and any later corrigendum are **unverified** (iso.org returned HTTP 403) | documented (published); day unverified |
+| [SPARQL][sparql11] | W3C | SPARQL 1.1 Query is a W3C Recommendation dated 2013-03-21. A [SPARQL 1.2 Query][sparql12] document is a W3C Working Draft dated 2026-11-19 (re-read 2026-11-21) on the Recommendation track | documented |
+| Gremlin ([Apache TinkerPop][tinkerpop]) | Apache Software Foundation | The project site (re-read 2026-11-21) shows TinkerPop 3.8.2, released 2026-09-01 and does not mention 4.0; the repo's tag list also shows core tags `4.0.0-beta.1` to `4.0.0-beta.3` (and Go-driver `gremlin-go/v4.0.0-beta.*` tags), so 4.0 is in beta | documented (site); shipped (tags) |
 | Datalog | A family of recursive logic query languages, not one standard (no governing body checked here) | Used by embedded stores such as Minigraf; see [Minigraf][minigraf] | documented (per that analysis) |
 
 What this means for agents: Cypher/openCypher is supported by most databases listed below (Neo4j,
@@ -101,7 +115,8 @@ branch and injection controls see [Write safety][adb-ws] in Agentic Database Acc
 | Source | Content |
 |---|---|
 | [openCypher][opencypher] · [GQL standards site][gqlsite] | Cypher/GQL relationship, GQL publication status |
-| [SPARQL 1.1 Query][sparql11] · [SPARQL 1.2 Query][sparql12] | W3C status and dates |
+| [SPARQL 1.1 Query][sparql11] · [SPARQL 1.2 Query][sparql12] · [RDF 1.1][rdf11] · [RDF 1.2][rdf12] Concepts | W3C status and dates |
+| [Neo4j graph concepts][neo4j-pg] | Property-graph model definition |
 | [Apache TinkerPop][tinkerpop] | Gremlin, 3.8.2 release date |
 | SPDX [BUSL-1.1][spdx-busl] · [SSPL-1.0][spdx-sspl] | OSI-approval flag (license-list-data JSON, `isOsiApproved`) |
 | [neo4j][neo4j] · [memgraph][memgraph] · [FalkorDB][falkordb] · [kuzu][kuzu] · [age][age] · [nebula][nebula] · [helix-db][helixdb] | Repo metadata, LICENSE files, releases via `gh api`, 2026-11-19 |
@@ -115,6 +130,10 @@ branch and injection controls see [Write safety][adb-ws] in Agentic Database Acc
 [spdx-busl]: https://spdx.org/licenses/BUSL-1.1.html
 [spdx-sspl]: https://spdx.org/licenses/SSPL-1.0.html
 [sem]: semantic-layers-data-catalog-landscape.md#formal-ontologies--semantic-web
+[sem-choose]: semantic-layers-data-catalog-landscape.md#choosing-a-structure
+[rdf11]: https://www.w3.org/TR/rdf11-concepts/
+[rdf12]: https://www.w3.org/TR/rdf12-concepts/
+[neo4j-pg]: https://neo4j.com/docs/getting-started/appendix/graphdb-concepts/
 [fw]: ../frameworks/agent-frameworks-infrastructure-landscape.md
 [helixdb-doc]: ../context-memory/helixdb-analysis.md
 [latticedb]: ../context-memory/latticedb-analysis.md
