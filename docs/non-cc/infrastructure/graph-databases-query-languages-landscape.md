@@ -1,7 +1,7 @@
 ---
 title: Graph Databases & Query Languages — Agent Landscape
 source: https://opencypher.org/
-purpose: A thin, dated table of the graph query languages (Cypher/openCypher, ISO GQL, SPARQL, Gremlin, Datalog), the graph databases most relevant to agents, text-to-query evidence, and vendor and vendor-labs graph MCP servers, linking the per-tool analyses in this corpus. Facts as of 2026-11-19.
+purpose: A thin, dated table of the graph query languages (Cypher/openCypher, ISO GQL, SPARQL, Gremlin, Datalog), the graph databases most relevant to agents, text-to-query evidence, and vendor and vendor-labs graph MCP servers, linking the per-tool analyses in this corpus. Facts as of 2026-11-19 (query-language and W3C status re-read 2026-11-21).
 created: 2026-11-19
 updated: 2026-11-21
 validated_links: 2026-11-19
@@ -17,7 +17,7 @@ evidence and ontologies are out of scope here (see the
 [GraphRAG and KG construction evidence](../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence)
 and [ontology generation](semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction) subsections). Companion pages: [Agentic Database Access][adb] (the SQL
 side: MCP servers, text-to-SQL, write safety) and [Semantic Layers & Data Catalogs][sem] (RDF, OWL and
-SPARQL as a standards stack; [Choosing a structure][sem-choose] says when a KB needs a taxonomy, ontology or graph at all).
+SPARQL as a standards stack; [Choosing a Structure][sem-choose] says when a KB needs a taxonomy, ontology or graph at all).
 
 Evidence labels: **documented** (first-party docs or README), **shipped** (a release or repo state
 observed), **vendor claim** / **authors' claim** (a number from the project's own abstract or README,
@@ -29,17 +29,17 @@ Two data models sit under the query languages below; the choice decides which la
 
 | | Property graph | RDF graph |
 |---|---|---|
-| Unit | Nodes and directed relationships; each relationship has one type; nodes and relationships carry key-value properties; nodes carry zero to many labels ([Neo4j concepts][neo4j-pg], read 2026-11-21) | Triples of subject, predicate and object; the predicate is an IRI; "an RDF graph is a set of RDF triples" ([RDF 1.1 Concepts][rdf11], Recommendation, 2014-02-25) |
-| Data on an edge | Native properties | Not in RDF 1.1; RDF 1.2 ([Candidate Recommendation Draft, 2026-11-16][rdf12]) adds triple terms, a triple usable as the object of another |
-| Identity of terms | Local names and labels | Global IRIs, so vocabularies (SKOS, OWL, schema.org) are shareable across datasets |
+| Unit | Nodes and directed relationships; each relationship has one type; nodes and relationships carry key-value properties; nodes carry zero to many labels ([Neo4j concepts][neo4j-pg], read 2026-11-21) | Triples of subject, predicate and object; the predicate is an IRI (a global web identifier, like a URL; the predicate "denotes a property", a binary relation); "an RDF graph is a set of RDF triples" ([RDF 1.1 Concepts][rdf11], Recommendation, 2014-02-25) |
+| Data on an edge | Native properties | Only indirectly in RDF 1.1 (reification or named graphs; inference); RDF 1.2 ([Candidate Recommendation Draft, 2026-11-16][rdf12]) adds triple terms, a triple usable as the object of another |
+| Identity of terms (inference) | Local names and labels | Global IRIs, so vocabularies (SKOS, OWL, schema.org) are shareable across datasets |
 | Query languages | Cypher/openCypher, GQL, Gremlin | SPARQL |
-| Governance | GQL: ISO/IEC; Gremlin: Apache TinkerPop (a project, not a standard) | W3C Recommendations |
+| Governance (inference) | GQL: ISO/IEC; Gremlin: Apache TinkerPop (a project, not a standard) | W3C (1.1 Recommendations; 1.2 drafts) |
 
-Evidence level: documented, from the linked sources. Which model fits an agent KB is a judgement (inference): RDF when shared vocabularies, SHACL validation or OWL inference matter; property graph when the job is application data and traversal. What SKOS, OWL and knowledge graphs are, and when a corpus needs them, is defined once in [Choosing a structure][sem-choose]; typed edges are the common idea in both models.
+Evidence level: the Unit and Data-on-an-edge rows are documented in the linked sources (the RDF 1.1 workaround is inference); Identity, Query languages and Governance rows are inference or restate the Query Languages table. Which model fits an agent KB is a judgement (inference): RDF when shared vocabularies, SHACL validation or OWL inference matter; property graph when the job is application data and traversal. What SKOS, OWL and knowledge graphs are, and when a corpus needs them, is defined once in [Choosing a Structure][sem-choose]; typed edges are the common idea in both models.
 
 ## Query Languages
 
-| Language | Owner / standard | Status on 2026-11-19 | Evidence |
+| Language | Owner / standard | Status on 2026-11-21 | Evidence |
 |---|---|---|---|
 | Cypher / [openCypher][opencypher] | Cypher was developed by Neo4j, which holds the trademarks; openCypher is the open specification effort | Re-read 2026-11-21, unchanged: the openCypher site says the language is evolving toward ISO GQL and adds GQL features incrementally, aiming at conformance over time | documented |
 | [GQL][gqlsite] (ISO/IEC 39075) | ISO/IEC JTC 1 SC 32 WG 3 | Published in April 2024 as ISO/IEC 39075:2024; the standards site (re-read 2026-11-21) lists no later edition or amendment, its newest entry being the April 2024 publication. A news entry dated 2024-04-17 on the GQL standards site announces it as officially published and sold through the ISO web store; the openCypher site gives 2024-04-11. BigQuery's data agents can run GQL (see [Data Platforms][dp]). The exact day and any later corrigendum are **unverified** (iso.org returned HTTP 403) | documented (published); day unverified |
