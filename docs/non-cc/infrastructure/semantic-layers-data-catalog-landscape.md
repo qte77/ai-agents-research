@@ -221,7 +221,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | Name | Reason | Date | Link |
 |---|---|---|---|
 | Vault-LD | Markdown-vault-as-linked-data spec; 254 stars, below the adoption bar | 2026-11-21 | [repo][vault-ld] |
-| Auto Ontology MCP (gogoymh) | Third-party port of NVIDIA Auto Ontology (kept above); 518 stars, below the adoption bar | 2026-11-21 | [repo][auto-ontology-mcp] |
+| Auto Ontology MCP (gogoymh) | Third-party port of NVIDIA Auto Ontology (the NVIDIA original stays above); 518 stars, below the adoption bar | 2026-11-21 | [repo][auto-ontology-mcp] |
 
 ## Sources
 
