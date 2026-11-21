@@ -284,7 +284,7 @@ reconcile: ## Check the newest plan's remaining-work rows against live PR/issue 
 # Deterministic doc graph and site helpers (stdlib only, no LLM). The Pages
 # deploy rebuilds the doc graph itself; these targets are for local previews.
 
-graph-data: ## Build the deterministic structural doc graph into ui/doc-graph.json (no LLM, stdlib)
+graph-data: ## Build the site doc graph (docs, hubs, linked pairs) into ui/doc-graph.json (no LLM, stdlib)
 	$(PYTHON) .github/scripts/build-doc-graph.py
 
 census: ## Print the rubric evidence matrix from every scored row in docs/ (needs subject: tags; stdlib)

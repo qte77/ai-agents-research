@@ -36,6 +36,10 @@
   --text-muted: #686040;
   --primary: #7a6010;
   --primary-on: #ece8d8;
+  /* Folder colours for the doc graph: warm hues only (EyeRest is zero-blue). */
+  --cat-rust: #9a4a28;
+  --cat-olive: #5a6a1a;
+  --cat-clay: #8a6a4a;
   color-scheme: light;
 
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -60,6 +64,9 @@
   --text-muted: #a89878;
   --primary: #c8a858;
   --primary-on: #1c1a14;
+  --cat-rust: #d08860;
+  --cat-olive: #a8b868;
+  --cat-clay: #c8a888;
   color-scheme: dark;
 }
 
@@ -72,6 +79,9 @@
     --text-muted: #a89878;
     --primary: #c8a858;
     --primary-on: #1c1a14;
+    --cat-rust: #d08860;
+    --cat-olive: #a8b868;
+    --cat-clay: #c8a888;
     color-scheme: dark;
   }
 }

@@ -2,7 +2,7 @@
 title: Agent Substrate Reference Architecture — a Shared, Versioned, Traceable Memory and Context Layer
 purpose: Synthesis of the plan 0009 rubric rows into one store-first reference architecture for shared, versioned, traceable agent memory and context, with each cell linked to its scored row and the layers mapped to qte77 estate repos.
 created: 2026-09-30
-updated: 2026-10-02
+updated: 2026-11-21
 validated_links: 2026-09-30
 status: reference
 ---
@@ -165,7 +165,7 @@ described from source.
 
 | Layer | Estate repo | What it supplies | Corpus doc |
 |---|---|---|---|
-| Store | `ai-agents-research` (this repo) | `docs/` as the canonical store, `docs/plans/` as durable plan state, `changelog.d/` fragments as the change record — all in git; `.github/scripts/lib/doc_graph.py` builds the structural doc graph with no LLM (docs, hubs, cited domains; edges carry line numbers), the deterministic base of plan row G | [architecture.md][arch-kg], [plan][plan-g] |
+| Store | `ai-agents-research` (this repo) | `docs/` as the canonical store, `docs/plans/` as durable plan state, `changelog.d/` fragments as the change record — all in git; `.github/scripts/lib/doc_graph.py` builds the structural doc graph with no LLM (docs and topic hubs; edges carry line numbers and section fragments), the deterministic base of plan row G | [architecture.md][arch-kg], [plan][plan-g] |
 | Store | `qte77` | `goals.json`, a machine-writable goal schema humans set and orchestrators read | [goal-tracking][goal-estate] |
 | Store | `ralph-loop-cc-tdd-wt-vibe-kanban-template` | `prd.json` + `progress.txt` + `LEARNINGS.md` + commits — "the repo *is* the attribution ledger" | [goal-tracking][goal-estate] |
 | Store | `learnings-ralphy` | Markdown learnings as git-versioned memory with a promotion path (inline → `AGENT_LEARNINGS.md` → rules → skills) | [frameworks §4][fw4] |

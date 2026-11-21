@@ -11,19 +11,11 @@ name: Deploy GitHub Pages
 #
 # Requires repo Settings -> Pages -> Source = "GitHub Actions".
 
+# Every push to main redeploys (no paths filter), so the version, date and commit
+# shown on the site always match main (plan 0015 G2).
 on:
   push:
     branches: [main]
-    paths:
-      - "ui/**"
-      - "docs/**"
-      - ".github/scripts/build-doc-graph.py"
-      - ".github/scripts/lib/doc_graph.py"
-      - ".github/scripts/lib/doc_status.py"
-      - "scripts/pages_build.py"
-      - "scripts/build-site-info.py"
-      - "pyproject.toml"
-      - ".github/workflows/gh-pages.yaml"
   workflow_dispatch:
 
 permissions:

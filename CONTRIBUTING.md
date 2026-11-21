@@ -232,7 +232,7 @@ make setup_all   # install lychee, Node.js (user-local), markdownlint-cli2
 make lint        # run lychee + markdownlint-cli2 over the full repo
 make autofix     # mechanical markdownlint --fix pass
 make test        # unit tests for src/ + .github/scripts/lib/ modules (stdlib unittest)
-make graph-data  # deterministic structural doc graph (docs, domains, link/hub/cites edges) into ui/doc-graph.json — no LLM
+make graph-data  # doc graph for the site (docs with their topic hubs, one edge per linked pair) into ui/doc-graph.json — no LLM
 make census      # rubric evidence matrix from every scored row's subject: tag (8 subjects × 6 properties) — no LLM
 make reconcile   # newest plan's remaining-work rows vs live PR/issue state (needs an authenticated gh)
 make help        # list all recipes grouped by section
@@ -240,7 +240,7 @@ make help        # list all recipes grouped by section
 
 Run `make lint` against any PR that touches docs before requesting review. `lychee` reads `lychee.toml`; `markdownlint-cli2` reads `.markdownlint.json`.
 
-**Doc graph:** the Pages deploy rebuilds the doc graph from `docs/` on each qualifying push to `main`; `make graph-data` builds the same JSON locally. Details: [architecture.md § Doc Graph and Site](docs/architecture.md#doc-graph-and-site).
+**Doc graph:** the Pages deploy rebuilds the doc graph from `docs/` on every push to `main`; `make graph-data` builds the same JSON locally. Details: [architecture.md § Doc Graph and Site](docs/architecture.md#doc-graph-and-site).
 
 ## Commit & PR
 
