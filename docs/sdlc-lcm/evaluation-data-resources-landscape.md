@@ -4,7 +4,7 @@ purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and eva
 category: landscape
 status: research
 created: 2026-06-14
-updated: 2026-11-19
+updated: 2026-11-21
 validated_links: 2026-11-18
 ---
 
@@ -123,7 +123,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Scientific**: [CORE-Bench](https://arxiv.org/abs/2409.11363) (reproducibility), [BadScientist](https://openreview.net/forum?id=7MPstNz66e) (LLM-reviewer manipulation; 67–82% acceptance via 5 strategies; paper-reported, undated here).
 
-**Memory**: [LongMemEval](https://github.com/xiaowu0162/LongMemEval) (long-history temporal reasoning), [Jenova long-context orchestration](https://www.jenova.ai/en/resources/jenova-ai-long-context-agentic-orchestration-benchmark-february-2026).
+**Memory**: [LongMemEval](https://github.com/xiaowu0162/LongMemEval) (long-history temporal reasoning).
 
 **Multi-agent**: [MultiAgentBench](https://arxiv.org/abs/2503.01935).
 
