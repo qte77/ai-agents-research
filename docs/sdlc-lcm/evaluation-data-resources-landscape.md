@@ -45,7 +45,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 | Tool | Link | Focus | Notable |
 |---|---|---|---|
-| RAGAs | [github](https://github.com/vibrantlabsai/ragas) | RAG eval: context precision/recall, faithfulness | — |
+| RAGAs | [github](https://github.com/vibrantlabsai/ragas) | Retrieval-Augmented Generation (RAG) eval: context precision/recall, faithfulness | — |
 | TruLens | [github](https://github.com/truera/trulens) | RAG Triad + agent feedback functions | — |
 | DeepEval | [github](https://github.com/confident-ai/deepeval) | Pytest-like LLM testing, 30+ metrics | 30+ research-backed metrics |
 | Confident AI | [site](https://www.confident-ai.com/) | Enterprise eval platform (DeepEval cloud) | 30+ judge metrics, HIPAA/SOC2 |
@@ -60,7 +60,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | AutoGenBench | [github](https://github.com/microsoft/autogen/blob/0.2/samples/tools/autogenbench) | AutoGen agent eval, Docker isolation | — |
 | LangChain AgentEvals | [github](https://github.com/langchain-ai/agentevals) | Trajectory / decision-sequence eval (LLM judge) | — |
 | LangChain OpenEvals | [github](https://github.com/langchain-ai/openevals) | Prebuilt LLM-judge evaluators | — |
-| Google ADK Evaluation | [docs](https://google.github.io/adk-docs/evaluate) | Tool-trajectory + ROUGE response scoring | — |
+| Google ADK Evaluation | [docs](https://google.github.io/adk-docs/evaluate) | Tool-trajectory + Recall-Oriented Understudy for Gisting Evaluation (ROUGE) response scoring | — |
 | Azure AI Evaluation SDK | [docs](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/agent-evaluate-sdk) | Programmatic Azure Foundry agent eval | Likert 1–5 |
 | Strands Agents Evaluation | [docs](https://strandsagents.com/docs/user-guide/evals-sdk/quickstart/) | Multi-dimensional agent eval | — |
 | Maxim AI | [site](https://www.getmaxim.ai/) | Simulation + eval + observability | — |
@@ -116,7 +116,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Safety and cyber benchmarks.** Safety and prompt-injection benchmarks stay in the **Safety & security** line above. Cyber-capability additions: [Cybench][cybench] (40 professional-level capture-the-flag tasks from 4 competitions, subtask breakdown; submitted 2024-08-15), [CyberGym][cybergym] (1,507 real vulnerabilities in 188 projects; abstract revised 2026-03-24; headline results are in [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md)), and [WMDP][wmdp] (3,668 multiple-choice questions on hazardous knowledge in biosecurity, cybersecurity and chemical security, paired with the RMU unlearning method; 2024-03-05). Vendor-reported scores: [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) covers only CyberGym (MDASH); [ai-security-governance-analysis.md](ai-security-governance-analysis.md) uses Cybench as an evaluation task. WMDP has no vendor-score coverage in the corpus.
 
-**MCP agents**: [MCPHallu][mcphallu] (PKU and others, arXiv 2611.07689; [code][mcphallu-code], Apache-2.0) — 358 tasks on 36 real MCP servers testing reasoning, execution and memory hallucinations; "Unreachable Goal is the hardest subtype for 12 of the 14 models". Claude Opus 4.6 scored highest (0.728; paper-reported, not in the abstract (average 0.642 across 14 models), unverified here; paper 2026-11-05), but the tasks were generated with Claude Sonnet 4.6.
+**MCP agents**: [MCPHallu][mcphallu] (PKU and others, arXiv 2611.07689; [code][mcphallu-code], Apache-2.0) — 358 tasks on 36 real Model Context Protocol (MCP) servers testing reasoning, execution and memory hallucinations; "Unreachable Goal is the hardest subtype for 12 of the 14 models". Claude Opus 4.6 scored highest (0.728; paper-reported, not in the abstract (average 0.642 across 14 models), unverified here; paper 2026-11-05), but the tasks were generated with Claude Sonnet 4.6.
 
 **Tool use & info-seeking**: [ToolLLM](https://arxiv.org/abs/2307.16789), [StableToolBench](https://github.com/THUNLP-MT/StableToolBench), [InfoDeepSeek](https://arxiv.org/abs/2505.15872).
 
@@ -209,7 +209,7 @@ ask for is short:
 - **Natural-language endpoints over existing data.** [NLWeb][nlweb] (MIT; moved from `microsoft/NLWeb`
   to `nlweb-ai/NLWeb`; 6,259★; no releases or tags; last push 2026-08-11) turns a site's
   schema.org/RSS data into an `ask` endpoint: "It returns responses in JSON using Schema.org", and
-  "Every NLWeb instance also acts as an MCP server (and soon A2A)". Microsoft announced it on
+  "Every NLWeb instance also acts as an MCP server (and soon A2A)" (A2A = Agent-to-Agent Protocol). Microsoft announced it on
   2025-05-19, crediting R.V. Guha ([announcement][nlweb-announce]).
 - **A connector agents can call.** Consumer marketplaces now ship MCP connectors: Checkatrade's
   Claude connector — "Find trusted local tradespeople and book fixed-price jobs — without leaving

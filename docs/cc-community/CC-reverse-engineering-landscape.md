@@ -137,7 +137,7 @@ URL: [turboai][turboai]
 
 ### unkn0wncode — Environment Variables Gist
 
-Comprehensive categorized list of ~200+ env vars (v2.1.81) including model selection, feature flags, OAuth, MCP, remote/collab, and advanced internals.
+Comprehensive categorized list of ~200+ env vars (v2.1.81) including model selection, feature flags, OAuth, Model Context Protocol (MCP), remote/collab, and advanced internals.
 
 URL: [unkn0wncode][unkn0wncode]
 

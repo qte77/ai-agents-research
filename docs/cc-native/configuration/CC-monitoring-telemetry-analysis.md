@@ -35,7 +35,7 @@ All sensitive attributes are **redacted unless explicitly unlocked**:
 | Gate | What it reveals |
 |---|---|
 | `OTEL_LOG_USER_PROMPTS` | Prompt text on `user_prompt` events / interaction span |
-| `OTEL_LOG_TOOL_DETAILS` | Bash command, MCP tool name, Skill name, file path, subagent type |
+| `OTEL_LOG_TOOL_DETAILS` | Bash command, Model Context Protocol (MCP) tool name, Skill name, file path, subagent type |
 | `OTEL_LOG_TOOL_CONTENT` | Tool input/output content in span events (60 KB truncation) |
 | `OTEL_LOG_RAW_API_BODIES` | Full Anthropic API request/response JSON (`1` inline / `file:<dir>` to disk with `body_ref`) |
 

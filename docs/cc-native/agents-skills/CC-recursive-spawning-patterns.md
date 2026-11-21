@@ -60,7 +60,7 @@ breaking hooks/plugins that spawn child CC instances.
 ## Token Cost Warning
 
 Each `claude -p` subprocess re-ingests the full system prompt:
-`~/.claude/settings.json`, all MCP tool descriptions, plugins, skills,
+`~/.claude/settings.json`, all Model Context Protocol (MCP) tool descriptions, plugins, skills,
 `CLAUDE.md`. A single subprocess turn can consume **~50K tokens** before doing
 any work.
 

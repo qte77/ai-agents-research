@@ -83,7 +83,7 @@ review shifts from code to specs" idea made concrete: the builder agent cannot j
 its own code, so seven independent validator subagents (code review, security, browser
 QA, design, alignment, load testing) run in parallel with typed verdicts before a
 milestone is accepted, on top of failing-tests-first TDD. Installed via a single
-`./install.sh` that auto-detects dependencies (superpowers, gstack, Playwright MCP) and
+`./install.sh` that auto-detects dependencies (superpowers, gstack, Playwright MCP — a Model Context Protocol server) and
 copies steering files to `~/.kiro/steering/`; runs guided (pauses for plan approval) or
 autonomous (end-to-end).
 

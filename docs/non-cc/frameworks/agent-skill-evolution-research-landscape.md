@@ -167,7 +167,7 @@ to a dedicated analysis.
 ## Cross-References
 
 - [docs/_topics/skills.md](../../_topics/skills.md) — topic hub pointer
-- [docs/_topics/plugins.md](../../_topics/plugins.md) — AutoTailor's MCP tool-set angle
+- [docs/_topics/plugins.md](../../_topics/plugins.md) — AutoTailor's Model Context Protocol (MCP) tool-set angle
 - [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — distribution-side skill libraries (coleam00, cloudflare, superpowers, …)
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — `runtypelabs/skills`, the adjacent distribution-side entry for this research batch; also ACM (§1), a general agentic-configuration-governance paper that names "skills" as one of several configuration-item types it covers but gives it no distinct treatment (checked and found not to fill the skills·Shared/Distributed open cells, plan 0010 row L3)
 

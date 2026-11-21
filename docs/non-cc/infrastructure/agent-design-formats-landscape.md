@@ -70,7 +70,7 @@ awesome-design-md is a *corpus* of 58 hand-authored DESIGN.md files; Google Labs
 
 ### Related: design source + token standard
 
-DESIGN.md sits downstream of two adjacent pieces. **Source of truth:** the [Figma Dev Mode MCP server][figma-mcp] (beta) feeds AI coding agents structured design context — components, variables, layout — straight from Figma files (and can write frames/variables back to the canvas), supported in Claude Code, Copilot/VS Code, Cursor, and Windsurf. **Token format:** the [W3C Design Tokens (DTCG) format][dtcg] (`$value`/`$type`; first stable spec Oct 2025) is the interchange standard that Amazon's [Style Dictionary][style-dictionary] (v4+) emits — the same token shape DESIGN.md's CLI exports. The chain: Figma MCP supplies live design context to the agent → DTCG/Style Dictionary standardizes the tokens → DESIGN.md packages them as agent-readable Markdown.
+DESIGN.md sits downstream of two adjacent pieces. **Source of truth:** the [Figma Dev Mode MCP server][figma-mcp] (beta; MCP = Model Context Protocol) feeds AI coding agents structured design context — components, variables, layout — straight from Figma files (and can write frames/variables back to the canvas), supported in Claude Code, Copilot/VS Code, Cursor, and Windsurf. **Token format:** the [W3C Design Tokens (DTCG) format][dtcg] (`$value`/`$type`; first stable spec Oct 2025) is the interchange standard that Amazon's [Style Dictionary][style-dictionary] (v4+) emits — the same token shape DESIGN.md's CLI exports. The chain: Figma MCP supplies live design context to the agent → DTCG/Style Dictionary standardizes the tokens → DESIGN.md packages them as agent-readable Markdown.
 
 ## Cross-References
 

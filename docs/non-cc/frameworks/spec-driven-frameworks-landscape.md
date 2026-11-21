@@ -16,7 +16,7 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 | Framework | Stars | License | Loop | Distinctive |
 |---|---|---|---|---|
 | [github/spec-kit][spec-kit] | 150.6K (v1.4.2, 2026-11-17) | MIT | Spec → Plan → Tasks → Implement | 30+ agent integrations, 70+ extensions; "intent is the source of truth" (counts as of 2026-06-27, not re-checked) |
-| [Fission-AI/OpenSpec][openspec] | 75.2K (v2.1.0, 2026-11-17) | MIT | Proposal → Apply → Archive | change-proposal centric; no MCP/keys required |
+| [Fission-AI/OpenSpec][openspec] | 75.2K (v2.1.0, 2026-11-17) | MIT | Proposal → Apply → Archive | change-proposal centric; no Model Context Protocol (MCP)/keys required |
 | [bmad-code-org/BMAD-METHOD][bmad] | 55.5K (v6.12.4, 2026-10-14) | MIT per the LICENSE file (the API reports "NOASSERTION"); the file adds a trademark notice on the BMad names | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec; moved from `bmadcode/` to the `bmad-code-org` org |
 | [buildermethods/agent-os][agent-os] | 5.6K (v3.0.0, 2026-01-20; last push 2026-10-07) | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
 | [kirodotdev/Kiro][kiro-repo] | 4.5K (no releases; last push 2026-11-05) | Proprietary (AWS Customer Agreement); the GitHub repo has no LICENSE file | requirements/bugfix → design → tasks "waves" | full IDE; specs workflow (variants, Quick Spec, bugfix specs) in [kiro-analysis.md § Spec-Driven Workflow](../coding-agents/kiro-analysis.md) |

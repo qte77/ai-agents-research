@@ -62,7 +62,7 @@ stateless loop** design is a useful reference for minimal harness construction,
 but the implementation itself should not be used.
 
 For OpenAI-ecosystem multi-agent work, use the OpenAI Agents SDK directly:
-it preserves the handoffs model, adds guardrails, tracing, sessions, MCP
+it preserves the handoffs model, adds guardrails, tracing, sessions, Model Context Protocol (MCP)
 server integration, and realtime voice support (`pip install openai-agents`).
 
 ## Action Items

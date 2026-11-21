@@ -10,7 +10,7 @@ status: research
 
 ## Context
 
-Claude Code provides built-in web tools (WebSearch, WebFetch) for basic web access. Two prominent MCP plugins — **Firecrawl** and **Playwright** — extend these capabilities significantly. This analysis evaluates when each option is the right tool and whether the plugins justify their setup cost over the built-in tools.
+Claude Code provides built-in web tools (WebSearch, WebFetch) for basic web access. Two prominent Model Context Protocol (MCP) plugins — **Firecrawl** and **Playwright** — extend these capabilities significantly. This analysis evaluates when each option is the right tool and whether the plugins justify their setup cost over the built-in tools.
 
 ## CC Plugin vs Raw MCP Server
 

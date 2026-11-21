@@ -55,7 +55,7 @@ the scraping catalog covers [Magnitude, Lightpanda and the accessibility-tree ap
 ## Claude in Chrome vs DevTools MCP vs Playwright MCP
 
 As of 2026-11-19. Versions and licences from the GitHub API (licence file detected as Apache-2.0 for
-both MCP servers); behaviour from each project's own docs.
+both Model Context Protocol (MCP) servers); behaviour from each project's own docs.
 
 | Aspect | Claude in Chrome | Chrome DevTools MCP | Playwright MCP |
 | ------ | ---------------- | ------------------- | -------------- |

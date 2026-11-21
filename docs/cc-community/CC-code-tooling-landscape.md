@@ -64,7 +64,7 @@ On 748 held-out Defects4J bugs, the tests AxiomCode selects from source include 
 
 ### CC Integration
 
-Repo topics list `claude-code`, `codex`, `cursor`, `antigravity`, `gemini`, `mcp` — an installable CLI/MCP server exposing the graph for impact/blast-radius queries, call paths and cross-file coverage.
+Repo topics list `claude-code`, `codex`, `cursor`, `antigravity`, `gemini`, `mcp` — an installable CLI/Model Context Protocol (MCP) server exposing the graph for impact/blast-radius queries, call paths and cross-file coverage.
 
 ### Adoption Considerations
 
@@ -346,7 +346,7 @@ Local-first, Elasticsearch-API-compatible search engine and MCP server: one Rust
 
 ### Benchmarks
 
-The README's own "controlled study" reports a 2.7× cut in a coding agent's output tokens on a reference-coding task at the same 16/16 solve rate, plus "roughly 5x in everyday work" from field reports. The README does not state, and this doc did not independently verify, the more specific claim (from the social post that queued this entry) that the gain holds only on libraries the agent hasn't seen before and disappears on popular/well-known code. A separate, optional small model, **XERJ Query-1** (off by default), answers questions by running a short program over facts the user wrote into the store rather than retrieving-then-generating; on the project's own 160-question test it reports 1 wrong answer (124 right, 35 declined) vs. 9–15 for "RAG with Opus 5.5," at a self-reported $42 vs. $13,400–$694,000 per million questions. Query-1's training/eval data are not public, so this number can't be independently replicated.
+The README's own "controlled study" reports a 2.7× cut in a coding agent's output tokens on a reference-coding task at the same 16/16 solve rate, plus "roughly 5x in everyday work" from field reports. The README does not state, and this doc did not independently verify, the more specific claim (from the social post that queued this entry) that the gain holds only on libraries the agent hasn't seen before and disappears on popular/well-known code. A separate, optional small model, **XERJ Query-1** (off by default), answers questions by running a short program over facts the user wrote into the store rather than retrieving-then-generating; on the project's own 160-question test it reports 1 wrong answer (124 right, 35 declined) vs. 9–15 for "RAG with Opus 5.5," (RAG = Retrieval-Augmented Generation) at a self-reported $42 vs. $13,400–$694,000 per million questions. Query-1's training/eval data are not public, so this number can't be independently replicated.
 
 ### Adoption Considerations
 

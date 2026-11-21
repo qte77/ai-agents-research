@@ -13,7 +13,7 @@ status: assess
 Cortex is a hosted memory product from **Mitosis Labs** (GitHub org [`OperatingSystem-1`][org], self-described as
 "Autonomous AI agents that persist, reproduce, and evolve" — org profile, 2026-09-30). Per its own developer docs,
 Cortex builds "one graph per team, built once at ingest" from connected sources — Google Workspace, WhatsApp,
-GitHub, Notion, Obsidian — and exposes it through four surfaces: an MCP server, a REST API, a TypeScript SDK, and a
+GitHub, Notion, Obsidian — and exposes it through four surfaces: a Model Context Protocol (MCP) server, a REST API, a TypeScript SDK, and a
 CLI ([Mitosis developer docs][mitosis-docs], fetched 2026-09-30). Cortex itself is a **closed, hosted service**: the
 docs give no license, no self-hosting path, and no public source repository for the memory engine. The
 `OperatingSystem-1` org does publish MIT-licensed **client-side** integrations that connect an agent to a user's

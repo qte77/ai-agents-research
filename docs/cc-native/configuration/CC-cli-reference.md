@@ -27,7 +27,7 @@ For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools
 | `claude agents` | Open agent view (research preview) to monitor and dispatch background sessions; `--cwd <path>` filters by directory, `--json` prints active sessions | [cli-ref][cli-ref] |
 | `claude auto-mode defaults` | Print built-in auto-mode classifier rules as JSON | [auto-mode][auto-mode] |
 | `claude auto-mode config` | Show effective auto-mode config with settings applied | [auto-mode][auto-mode] |
-| `claude mcp` | Configure MCP servers | [mcp][mcp] |
+| `claude mcp` | Configure Model Context Protocol (MCP) servers | [mcp][mcp] |
 | `claude plugin` | Manage plugins. Alias: `claude plugins` | [plugins-ref][plugins-ref] |
 | `claude remote-control` | Start Remote Control server (no local session) | [remote-control][remote-control] |
 | `claude setup-token` | Generate long-lived OAuth token for CI/scripts | [auth][auth] |

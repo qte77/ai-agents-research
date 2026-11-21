@@ -15,7 +15,7 @@ comment on PRs directly; most also expose IDE or agent hooks. They are
 multi-platform, **not** Claude Code-specific — any CC integration is incidental,
 which is why they live here rather than in the cc-community tooling docs.
 
-For CC-*integrated* code-review tooling — Qodo's `open-aware` MCP server +
+For CC-*integrated* code-review tooling — Qodo's `open-aware` Model Context Protocol (MCP) server +
 cross-repo review, and the Code-Review-Graph AST/blast-radius MCP tool — see
 [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md).
 

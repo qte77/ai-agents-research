@@ -12,7 +12,7 @@ status: assess
 ## What It Is
 
 Ripwire ([redhat-et/ripwire][repo]) is a zero-dependency C++23 CLI — with an
-optional MCP server — described in the repo as "the ripgrep of AI context."
+optional Model Context Protocol (MCP) server — described in the repo as "the ripgrep of AI context."
 The CLI is the primary interface; MCP is opt-in for agents that prefer a
 tool-call surface over shelling out. It targets a specific inefficiency in
 agent-based coding: every cold context orientation otherwise means

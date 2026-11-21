@@ -34,7 +34,7 @@ Cross-vendor comparisons in the README (vs. Neo4j, Kuzu, FAISS, Weaviate, Qdrant
 
 ## Adoption Decision
 
-**Assess.** MIT-licensed, ~9 months old (created 2025-12), with credible self-reported latency numbers for the embedded-single-writer niche it targets — comparable in spirit to Kuzu, which LatticeDB's own README notes was archived in October 2025. Worth a pilot for local-first agent-memory or RAG use cases where a single embedded process is acceptable; the low bus factor (4 contributors) and young ecosystem are the main risks to track before depending on it in production.
+**Assess.** MIT-licensed, ~9 months old (created 2025-12), with credible self-reported latency numbers for the embedded-single-writer niche it targets — comparable in spirit to Kuzu, which LatticeDB's own README notes was archived in October 2025. Worth a pilot for local-first agent-memory or Retrieval-Augmented Generation (RAG) use cases where a single embedded process is acceptable; the low bus factor (4 contributors) and young ecosystem are the main risks to track before depending on it in production.
 
 ## Sources
 

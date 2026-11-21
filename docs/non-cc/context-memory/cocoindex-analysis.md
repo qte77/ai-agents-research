@@ -19,7 +19,7 @@ than reindexing everything on every run. The project self-describes as targeting
 A companion project, [cocoindex-code][cocoindex-code-gh], is a lightweight, embedded
 AST-based semantic code-search CLI built on the same engine. It targets the code-search
 use case specifically, integrating with coding agents (Claude Code, Codex, Cursor) via
-MCP servers or Skills. Its stats, features and CC integration are cataloged in
+Model Context Protocol (MCP) servers or Skills. Its stats, features and CC integration are cataloged in
 [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io)
 (the canonical entry for cocoindex-code); this analysis covers the core engine.
 
@@ -71,7 +71,7 @@ file tools. At v1.0.10, the core is past early prototyping, but the 1.x release 
 
 The primary risk is API stability: taking a dependency on a library at v1.0.x while
 the release pace is high means migration cost. A time-boxed trial (2–4 weeks) against
-one existing RAG use case is the appropriate next step before broader adoption.
+one existing Retrieval-Augmented Generation (RAG) use case is the appropriate next step before broader adoption.
 
 Compare with [OpenViking][openviking] which frames the context problem as a virtual
 filesystem rather than an ETL pipeline — the two approaches are complementary rather

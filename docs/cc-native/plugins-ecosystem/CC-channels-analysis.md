@@ -12,7 +12,7 @@ status: assess
 
 ## What Channels Are
 
-An MCP server that **pushes** events into a running CC session — Claude reacts while you're away from the terminal. Two-way: Claude reads the event and replies back through the same channel (e.g., Telegram message in, reply back in Telegram). Events only arrive while the session is open.
+A Model Context Protocol (MCP) server that **pushes** events into a running CC session — Claude reacts while you're away from the terminal. Two-way: Claude reads the event and replies back through the same channel (e.g., Telegram message in, reply back in Telegram). Events only arrive while the session is open.
 
 Unlike web sessions (fresh cloud sandbox) or Remote Control (you drive), channels let **external systems push into your existing local session**.
 

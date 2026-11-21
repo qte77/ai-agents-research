@@ -188,7 +188,7 @@ published ([source][maritime-terms]).
   API, and ready-made templates (openclaw, hermes, zeroclaw, claude_code, codex, dsh) or any Docker
   container ([source][maritime]).
 - Paid plans add optional headful Linux desktops per machine, viewable over VNC and controllable via
-  MCP or REST ([source][maritime]).
+  Model Context Protocol (MCP) or REST ([source][maritime]).
 
 **Pricing** (flat monthly; sleeping machines are free and don't count toward the awake limit):
 Free $0 (3 machines/1 awake), Starter $20/mo (20/5), Growth $100/mo (100/25), Scale $500/mo

@@ -67,7 +67,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 - **Web search**: built-in, uses OpenAI cached index by default; `--search` switches to live results
 - **Model selection**: `gpt-5.5` recommended for complex tasks; switch mid-session with `/model`. GPT-5.5 retired from Codex with ChatGPT sign-in on 2026-10-14; API-key sessions are not affected ([Codex pricing][codex-pricing], checked 2026-11-15)
 - **Subagent parallelisation**: explicit fan-out for parallel subtasks (extra token cost)
-- **MCP support**: connect STDIO or streaming-HTTP MCP servers via `config.toml`; launched automatically
+- **MCP support**: connect STDIO or streaming-HTTP Model Context Protocol (MCP) servers via `config.toml`; launched automatically
 - **Session resume**: `codex resume` restores prior conversation and repository state
 - **AGENTS.md**: honours `AGENTS.md` files for custom per-project instructions ([agents-md][agents-md]); cross-agent convergence of this convention is tracked in [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md)
 - **Shell completions**: bash, zsh, fish

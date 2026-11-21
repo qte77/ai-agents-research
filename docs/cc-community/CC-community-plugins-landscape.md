@@ -73,7 +73,7 @@ A structured plugin registry organized around Claude Code's installable plugin f
 
 - **Install**: `claude plugin install [plugin-name]` or `/plugin marketplace add user-or-org/repo-name`
 - **Package format**: `.claude-plugin/marketplace.json` in a Git repo
-- **Composability**: each plugin bundles slash commands + subagents + MCP servers + hooks as a single unit
+- **Composability**: each plugin bundles slash commands + subagents + Model Context Protocol (MCP) servers + hooks as a single unit
 - **Role-specific subagents**: plugins target named roles (data-scientist, frontend-developer, legal-advisor)
 - **100% Python** implementation
 

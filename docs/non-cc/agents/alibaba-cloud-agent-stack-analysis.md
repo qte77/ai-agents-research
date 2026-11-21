@@ -19,7 +19,7 @@ updated Aug-Nov 2026), so re-read before relying on a detail.
 
 | Name | What it is | Evidence |
 |---|---|---|
-| Model Studio (Bailian) | model service plus agent/workflow application builder, knowledge bases, MCP, API keys, workspaces | documented ([overview][ms-overview], [agent 2.0][ms-agent2]) |
+| Model Studio (Bailian) | model service plus agent/workflow application builder, knowledge bases, Model Context Protocol (MCP), API keys, workspaces | documented ([overview][ms-overview], [agent 2.0][ms-agent2]) |
 | Agent application (Agent 2.0) | agent that plans over tools (MCP, knowledge base, skills); Agent 1.0 is legacy and cannot be upgraded | documented ([page][ms-agent2]); GA vs preview not stated on the page |
 | AgentRun (Alibaba Cloud) | serverless agent runtime on Function Compute, with sandbox, model proxy, tool hub, observability; not the Parcha-ai AgentRun catalogued in [orchestrators-landscape.md](../orchestrators/orchestrators-landscape.md) | documented ([page][agentrun]); last updated 2026-08-22 |
 | Agent Identity | workload identity, credential and user-pool service for agents | documented ([AgentRun tutorial][agentid]) |
@@ -38,7 +38,7 @@ updated Aug-Nov 2026), so re-read before relying on a detail.
   session affinity and scale to zero (Python, Node.js, Java), a model proxy (fallback, load balancing,
   token-rate limiting), sandboxes (code interpreter, browser; "Computer/Mobile Use (Planned)"), and OpenTelemetry
   tracing with token-level cost attribution. It integrates LangChain, AgentScope, CrewAI and Google
-  ADK, and can plug in Mem0 and RAGFlow for memory/RAG ([AgentRun][agentrun]).
+  ADK, and can plug in Mem0 and RAGFlow for memory/Retrieval-Augmented Generation (RAG) ([AgentRun][agentrun]).
 - **AgentBay** provides four environments (browser, code space, cloud computer, mobile) through SDK and
   MCP ([overview][agentbay]).
 - **OpenSandbox:** Alibaba's open-source sandbox is covered in
@@ -70,7 +70,7 @@ updated Aug-Nov 2026), so re-read before relying on a detail.
   ([AgentRun][agentrun]); AgentBay offers an MCP integration ([overview][agentbay]).
 - **A2A (consumer side, documented):** Model Studio's third-party agent integration page ([page][ms-a2a], read
   2026-11-20; it sits under the Multimodal Interaction Developer Suite, so scope is that suite, not all of Model Studio) says integrations
-  "must be based on the Google A2A protocol" and links the A2A 0.2.5 specification; it lists AgentCard fields, with an `apiKey` security option.
+  "must be based on the Google A2A protocol" and links the Agent-to-Agent Protocol (A2A) 0.2.5 specification; it lists AgentCard fields, with an `apiKey` security option.
 - **A2A (AgentRun, tutorial only):** the "Xixi Coffee Shop" best-practice page ([page][ms-a2acase],
   updated 2026-08-24, read 2026-11-20) deploys a template whose "order" and "delivery" agents appear as
   "A2A services" in its web UI. It is a worked example; the AgentRun data-structure page read

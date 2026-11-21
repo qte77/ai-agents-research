@@ -101,7 +101,7 @@ pass@5 19%→44%) and OpenAI's Feb 2026 "Harness Engineering" post — is tracke
 
 ### 9. Progressive Tool Expansion
 
-Starts with fewer than 20 default tools (Read, Edit, Write, Bash, Grep, Glob). MCP tools, remote tools, and custom skills activate on demand.
+Starts with fewer than 20 default tools (Read, Edit, Write, Bash, Grep, Glob). Model Context Protocol (MCP) tools, remote tools, and custom skills activate on demand.
 
 ### 10. Command Risk Classification
 

@@ -95,7 +95,7 @@ Rust-based cross-agent long-term memory: "Quit Claude Code mid-task, start OpenA
 
 ### CC Integration
 
-Registers via MCP. Claude Code is one of "twenty-plus harnesses" sharing the store — Codex, Cursor, Gemini CLI, OpenCode, Grok, Devin, Kimi, Kiro, and more, per the README.
+Registers via Model Context Protocol (MCP). Claude Code is one of "twenty-plus harnesses" sharing the store — Codex, Cursor, Gemini CLI, OpenCode, Grok, Devin, Kimi, Kiro, and more, per the README.
 
 ### Adoption Considerations
 
@@ -185,7 +185,7 @@ A dedicated observer AI watches each session in real-time, generating searchable
 
 ### RAD Protocol (announced earlier, not in the current README)
 
-**Real-Time Agent Data** — an open protocol for how AI agents capture and retrieve working memory, announced as a counterpart to RAG. The README no longer mentions it (checked 2026-11-09); whether it was dropped or moved is unverified.
+**Real-Time Agent Data** — an open protocol for how AI agents capture and retrieve working memory, announced as a counterpart to Retrieval-Augmented Generation (RAG). The README no longer mentions it (checked 2026-11-09); whether it was dropped or moved is unverified.
 
 ### Adoption Considerations
 
@@ -228,12 +228,12 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 **Repo**: [liliang-cn/cortexdb][cortexdb] | **Stars**: 479 | **License**: MIT | **Version**: Go module v2, `gh api` 2026-11-12
 
-Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run, works without an embedding model" ([README][cortexdb]). Combines vector search (HNSW/IVF/flat/binary), FTS5 full-text, RAG knowledge, scoped agent memory, and an RDF 1.2 knowledge graph (SPARQL 1.1/1.2, OWL 2 RL inference, SHACL validation, read-only Cypher) plus a Palantir-style governed-action ontology, behind 100+ tools exposed in-process or over MCP.
+Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run, works without an embedding model" ([README][cortexdb]). Combines vector search (HNSW/IVF/flat/binary), FTS5 full-text, RAG knowledge, scoped agent memory, and a Resource Description Framework (RDF) 1.2 knowledge graph ([SPARQL](../glossary.md#knowledge-structures) 1.1/1.2, OWL 2 RL inference, SHACL validation, read-only Cypher) plus a Palantir-style governed-action ontology, behind 100+ tools exposed in-process or over MCP.
 
 ### Architecture
 
 - **Vectors + graph + FTS in one file**: HNSW/IVF/flat/binary vector indexes, FTS5 full-text, hybrid and graph retrieval; an `EmbeddedConfig` mode opens 100k 768-d vectors in 0.28s with a 193MB heap for small devices
-- **RDF knowledge graph**: SPARQL 1.1/1.2, RDFS + OWL 2 RL inference, SHACL Core + SHACL-SPARQL — the README states it passes the W3C SPARQL, RDF 1.2 and SHACL test suites (RDFS/OWL 2 RL covered by the repo's own tests)
+- **RDF knowledge graph**: SPARQL 1.1/1.2, RDFS + OWL 2 RL inference (OWL = Web Ontology Language), SHACL Core + SHACL-SPARQL — the README states it passes the W3C SPARQL, RDF 1.2 and Shapes Constraint Language (SHACL) test suites (RDFS/OWL 2 RL covered by the repo's own tests)
 - **Versioned history**: every entity/relation/triple/schema change is kept with `as_of` queries on SPARQL, find, expand and Cypher, plus a live 3D graph viewer (`serve_graph_3d`) with an Entity page showing why a value is in effect and what it replaced
 - **`import_agent_memory`**: pulls in what Claude Code, Codex and DeepSeek Harness already remember — memory notes, `CLAUDE.md`/`AGENTS.md`, Codex memories, optionally past sessions distilled into memories
 
@@ -409,7 +409,7 @@ Persistent, cross-session semantic memory for AI coding agents from the Milvus/Z
 
 - **Markdown is the source of truth** (`.memsearch/memory/*.md`); the Milvus index is a derived "shadow" cache, rebuildable at any time
 - **3-layer progressive retrieval**: search → expand → transcript
-- **Hybrid search**: dense vector embeddings + BM25 sparse + RRF reranking
+- **Hybrid search**: dense vector embeddings + BM25 sparse + Reciprocal Rank Fusion (RRF) reranking
 - **Local-first embeddings**: ONNX bge-m3 int8 by default (CPU, no API key); pluggable to OpenAI, Google, Voyage, Ollama
 - **SHA-256 dedup** avoids re-indexing unchanged content; a live file watcher auto-indexes edits
 - **Backend options**: Milvus Lite (embedded default), self-hosted Milvus, or Zilliz Cloud (free tier)

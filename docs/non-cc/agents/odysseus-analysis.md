@@ -39,7 +39,7 @@ Development is split across two branches: `dev` (default, active work) and
 
 | Module | Description |
 |---|---|
-| **Chat / Agents** | Local and API models, MCP server integration, tool use, file handling |
+| **Chat / Agents** | Local and API models, Model Context Protocol (MCP) server integration, tool use, file handling |
 | **Deep Research** | Multi-step web investigation and automated report generation |
 | **Model Comparison** | Blind side-by-side evaluation of multiple models |
 | **Document Editor** | AI-assisted editing with Markdown and syntax highlighting |

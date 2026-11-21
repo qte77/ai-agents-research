@@ -14,7 +14,7 @@ This research evaluates whether a project's CC configuration — skills, agents,
 
 ## What CC Plugins Are
 
-Plugins are portable directory bundles that extend Claude Code with commands, agents, skills, hooks, and MCP servers ([source][sdk-plugins]). They work across Cowork and the Claude Agent SDK.
+Plugins are portable directory bundles that extend Claude Code with commands, agents, skills, hooks, and Model Context Protocol (MCP) servers ([source][sdk-plugins]). They work across Cowork and the Claude Agent SDK.
 
 ### Plugin Structure
 

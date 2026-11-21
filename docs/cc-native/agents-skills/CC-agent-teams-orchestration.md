@@ -395,7 +395,7 @@ Workers respond via XML-based `<task-notification>` protocol with fields for sta
 | Transport | Direction | Purpose | Protocol |
 |-----------|-----------|---------|----------|
 | IDE WebSocket | IDE ↔ Claude | Editor integration (selection, diff, file context) | WebSocket JSON-RPC 2.0 (MCP) |
-| Channels | External → Claude | Push events from Telegram, Discord, iMessage | MCP over channel adapters |
+| Channels | External → Claude | Push events from Telegram, Discord, iMessage | Model Context Protocol (MCP) over channel adapters |
 | **UDS Inbox** | Claude ↔ Claude | Inter-session IPC on same machine | Unix Domain Sockets |
 
 Cross-ref: [CC-ide-integration-protocol.md](../configuration/CC-ide-integration-protocol.md) — WebSocket IDE protocol; [CC-channels-analysis.md](../plugins-ecosystem/CC-channels-analysis.md) — external push channels

@@ -22,7 +22,7 @@ It is included here as an **AI-native application** rather than a coding agent.
 The corpus-relevant hook is its open surface: the closed-core SaaS is paired with
 an open-source GitHub org ([opennote-dev][gh-org]) publishing **MIT-licensed**
 Python and TypeScript API SDKs plus document utilities (`speedyf`) — i.e. it
-exposes an agent/RAG integration surface, not just an end-user app.
+exposes an agent/Retrieval-Augmented Generation (RAG) integration surface, not just an end-user app.
 
 ## Capabilities
 

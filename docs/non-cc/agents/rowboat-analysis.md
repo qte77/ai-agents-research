@@ -56,7 +56,7 @@ Works with local models (Ollama, LM Studio) or hosted APIs. Model-swappable
 without data migration — knowledge graph is model-independent Markdown.
 
 Despite the GitHub topic tags `claude-code` and `claude-cowork`, there is no
-Claude-specific integration surface — model access is via MCP and bring-your-own
+Claude-specific integration surface — model access is via Model Context Protocol (MCP) and bring-your-own
 API key, fully model-agnostic. The tags are discovery/categorization only.
 
 ## Adoption Decision

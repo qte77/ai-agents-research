@@ -9,7 +9,7 @@ status: assess
 
 ## What It Is
 
-A markdown-first knowledge management pattern where the LLM acts as author, editor, and librarian of a persistent wiki — replacing vector-DB RAG with explicit structure, summaries, and backlinks. Published by Andrej Karpathy as an [idea gist][gist] (dated 2026-04-04 on the gist page, re-read 2026-11-21) with no dedicated repository. Open-source implementations of the pattern have since appeared (vault-based agent memory with ingest skills and nightly maintenance passes); five are compared in [CC-memory-tooling-landscape.md § Second-brain vaults](../../cc-community/CC-memory-tooling-landscape.md#second-brain-vaults-llm-maintained-markdown).
+A markdown-first knowledge management pattern where the LLM acts as author, editor, and librarian of a persistent wiki — replacing vector-DB Retrieval-Augmented Generation (RAG) with explicit structure, summaries, and backlinks. Published by Andrej Karpathy as an [idea gist][gist] (dated 2026-04-04 on the gist page, re-read 2026-11-21) with no dedicated repository. Open-source implementations of the pattern have since appeared (vault-based agent memory with ingest skills and nightly maintenance passes); five are compared in [CC-memory-tooling-landscape.md § Second-brain vaults](../../cc-community/CC-memory-tooling-landscape.md#second-brain-vaults-llm-maintained-markdown).
 
 ## Architecture
 

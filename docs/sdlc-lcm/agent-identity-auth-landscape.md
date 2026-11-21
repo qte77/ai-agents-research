@@ -63,7 +63,7 @@ The agent has its own identity, independent of any human.
 
 ## 2. Authorize the agent on behalf of a human (delegated, scoped, auditable)
 
-- **MCP Authorization (OAuth 2.1)** — MCP servers act as OAuth 2.1 **resource servers** validating
+- **MCP Authorization (OAuth 2.1)** — Model Context Protocol (MCP) servers act as OAuth 2.1 **resource servers** validating
   tokens from an external authorization server; MUST implement RFC 9728 (Protected Resource Metadata),
   PKCE mandatory. Delegated human authority, not a durable agent identity. [modelcontextprotocol.io][mcp-authz].
   Current revision (2026-07-28, re-checked 2026-10-24): "Authorization is **OPTIONAL** for MCP

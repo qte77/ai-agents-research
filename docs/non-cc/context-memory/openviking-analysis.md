@@ -106,6 +106,8 @@ Priority-queue-based recursive traversal. Vector search first identifies the bes
 
 ## Comparison with Traditional Vector DB / RAG
 
+Compared with Retrieval-Augmented Generation (RAG) over a vector database:
+
 | Dimension | Traditional Vector DB | OpenViking |
 |-----------|----------------------|------------|
 | Organization | Flat chunks in vector space | Hierarchical directories with URI paths |

@@ -92,7 +92,7 @@ public launch.
 |---|---|
 | **Use case** | Terminal agent + CI/CD headless mode; peer to Claude Code, Copilot CLI, Codex CLI |
 | **Model flexibility** | Multi-provider (Anthropic + OpenAI); mode-based auto-selection |
-| **Extensibility** | MCP, TypeScript plugins, AGENTS.md, Python/TypeScript SDKs |
+| **Extensibility** | Model Context Protocol (MCP), TypeScript plugins, AGENTS.md, Python/TypeScript SDKs |
 | **Headless** | Yes — `amp -x` + `--stream-json` for scripted/CI use |
 | **Maturity** | Public GA May 7, 2026; active weekly releases |
 | **License** | **Proprietary** — no source, no self-hosting |

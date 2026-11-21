@@ -44,7 +44,7 @@ primitives, and inspecting state through structured schemas.
 |-----------|------|---------|
 | **InsForge** | [InsForge/InsForge][insforge] (7.3K stars) | Core platform |
 | **insforge-skills** | [InsForge/insforge-skills][insforge-skills] | Skill modules |
-| **insforge-mcp** | [InsForge/insforge-mcp][insforge-mcp] | MCP integration |
+| **insforge-mcp** | [InsForge/insforge-mcp][insforge-mcp] | Model Context Protocol (MCP) integration |
 | **CLI** | [InsForge/CLI][insforge-cli] | Command-line interface |
 | **JS SDK** | [InsForge/InsForge-sdk-js][insforge-js] | JavaScript SDK |
 | **Python SDK** | [InsForge/insforge-python][insforge-py] | Python SDK |

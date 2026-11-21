@@ -18,7 +18,7 @@ thin: per-tool depth lives in the analyses linked below, and knowledge-graph con
 evidence and ontologies are out of scope here (see the
 [GraphRAG and KG construction evidence](../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence)
 and [ontology generation](semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction) subsections). Companion pages: [Agentic Database Access][adb] (the SQL
-side: MCP servers, text-to-SQL, write safety) and [Semantic Layers & Data Catalogs][sem] (RDF, OWL and
+side: Model Context Protocol (MCP) servers, text-to-SQL, write safety) and [Semantic Layers & Data Catalogs][sem] (RDF, OWL and
 SPARQL as a standards stack; [Choosing a Structure][sem-choose] says when a KB needs a taxonomy, ontology or graph at all).
 
 Evidence labels: **documented** (first-party docs or README), **shipped** (a release or repo state

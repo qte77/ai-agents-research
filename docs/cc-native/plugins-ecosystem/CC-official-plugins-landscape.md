@@ -36,7 +36,7 @@ The CC plugin ecosystem has grown to 9,000+ plugins across the marketplace, Clau
 
 ### Context7
 
-**What it does**: Injects real, up-to-date library documentation into Claude's context via MCP, reducing hallucinations from stale training data ([source][firecrawl-blog]).
+**What it does**: Injects real, up-to-date library documentation into Claude's context via Model Context Protocol (MCP), reducing hallucinations from stale training data ([source][firecrawl-blog]).
 
 **Installation**: `/plugin install context7@claude-plugins-official`
 

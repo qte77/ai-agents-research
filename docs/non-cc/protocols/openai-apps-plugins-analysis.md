@@ -48,7 +48,7 @@ A portable manifest declares the Agent Plugins schema directly:
 
 "For a portable Agent Plugins package, add `plugin.json` at the plugin root and declare the Agent
 Plugins schema... OpenAI also accepts legacy and Claude-compatible manifests, but new packages
-should use this format" ([Package your plugin][build-plugins]). OpenAI-specific presentation, MCP
+should use this format" ([Package your plugin][build-plugins]). OpenAI-specific presentation, Model Context Protocol (MCP)
 registration and hooks go under an `extensions.com.openai` object in that same root manifest; a
 separate `.codex-plugin/plugin.json` "is optional and serves as a compatibility fallback when that
 object is absent." `mcp.json` likewise declares the Agent Plugins MCP schema

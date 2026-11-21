@@ -111,7 +111,7 @@ agents deployed through the Claude Managed Agents API (`/v1/agents`,
 [CC-cowork-plugins-enterprise-analysis.md][cowork-enterprise]), subagents shipped and versioned
 inside plugins from managed marketplaces ([CC-mods-function-hooks-analysis.md][mods]), and agent
 identity in [agent-identity-auth-landscape.md][agent-identity]. For how Claude Code compares with the enterprise agent registries (AWS, Google,
-Microsoft, Salesforce, MCP Registry), see
+Microsoft, Salesforce, MCP Registry; MCP = Model Context Protocol), see
 [agentic-enterprise-os-landscape.md § Agent registries compared][registries].
 
 ## Cross-References

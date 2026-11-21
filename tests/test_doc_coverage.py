@@ -183,6 +183,10 @@ class AbbreviationTests(unittest.TestCase):
     def test_link_to_glossary_counts(self):
         self.assertEqual(self.check("# A\n\nUses MCP, see [glossary](../../glossary.md) for RRF.\n"), [])
 
+    def test_ignores_reference_link_definitions(self):
+        text = '# A\n\nSee [c].\n\n[c]: https://example.com/x "Connectors and MCP Apps"\n'
+        self.assertEqual(self.check(text), [])
+
     def test_ignores_code_and_partial_words(self):
         self.assertEqual(self.check("# A\n\n`MCP` and MCPs and mcp\n\n```\nMCP\n```\n"), [])
 

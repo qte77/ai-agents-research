@@ -101,7 +101,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 
 - [CC-dynamic-workflows-analysis.md][workflows] — execution + observability + verify surfaces (Layers 3–4)
 - [CC-agentic-harness-patterns-analysis.md][harness-patterns] — the 12 harness patterns (Layer 1/3)
-- [agent-frameworks-infrastructure-landscape.md][frameworks] — orchestration frameworks, RAG, §8 output validation
+- [agent-frameworks-infrastructure-landscape.md][frameworks] — orchestration frameworks, Retrieval-Augmented Generation (RAG), §8 output validation
 - [agentic-sdlc-patterns.md][sdlc-patterns] — the ADLC this stack instantiates
 - [CC-ralph-enhancement-research.md][ralph] — the Ralph loop in this repo's tooling
 - [Startup CTO Handbook → qte77 mapping][cto-map] — the traditional human-team engineering-leadership baseline these agentic disciplines diverge from

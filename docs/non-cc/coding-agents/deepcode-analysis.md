@@ -23,7 +23,7 @@ directly inside a repository — editing files, running commands, running
 tests — through "Loop Engineering": multi-turn, goal-directed loops with
 durable sessions that survive restarts and LLM-provider switches (OpenAI,
 Anthropic, DeepSeek, and others). It also supports reusable Skills and
-Automations, explicit permission controls and sandboxing, MCP server
+Automations, explicit permission controls and sandboxing, Model Context Protocol (MCP) server
 integration, and CLI, Desktop, Web, and TUI clients sharing one local
 service.
 

@@ -21,7 +21,7 @@ GitHub's docs list four Copilot surfaces on github.com — "Chat", "Agentic expe
 review" and "Automations" ([Copilot on GitHub][surfaces]). This doc covers the agentic ones: the
 **cloud agent**, which works in a GitHub-hosted environment and opens pull requests; **automations**,
 which start the cloud agent without a person; and **code review**, which shares the cloud agent's
-MCP configuration.
+Model Context Protocol (MCP) configuration.
 
 ## Automations
 

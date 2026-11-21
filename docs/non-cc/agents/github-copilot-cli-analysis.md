@@ -48,7 +48,7 @@ Select via `/agent` or `--agent=<name>`.
 
 | Surface | Location |
 |---|---|
-| MCP servers | GitHub MCP server preconfigured; add via `/mcp add` → `mcp-config.json` |
+| Model Context Protocol (MCP) servers | GitHub MCP server preconfigured; add via `/mcp add` → `mcp-config.json` |
 | Custom agents | Markdown profiles at `~/.copilot/agents`, `.github/agents`, `.github-private/agents` |
 | Instructions | `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md`, `AGENTS.md`, `CLAUDE.md` (also `.claude/CLAUDE.md`), `GEMINI.md`, plus `$HOME/.copilot/` and `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` ([custom instructions][copilot-cli-instructions]) |
 | Settings | `settings.json` in `~/.copilot` (override path via `COPILOT_HOME`) |

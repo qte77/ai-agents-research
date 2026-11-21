@@ -17,7 +17,7 @@ production agentic AI consultancy. It is MIT-licensed and published on PyPI as
 `agentcanvas` (latest release: 0.1.1, June 12, 2026, accessed 2026-06-16).
 
 The project sits in the **observability/debugging** category rather than in the
-agent UI or generative-UI protocol space. It is not an implementation of AG-UI
+agent UI or generative-UI protocol space. It is not an implementation of Agent-User Interaction Protocol (AG-UI)
 or A2UI. Its closest neighbors are trace-inspection tools; the [AG-UI protocol
 landscape][ag-ui-landscape] notes that Pydantic AI has adopted AG-UI as a
 framework integration, but AgentCanvas itself is a separate, standalone

@@ -93,7 +93,7 @@ Shares rate limits with all Claude/Claude Code usage. Parallel tasks consume pro
 | Workflow | Fit | Rationale |
 | -------- | --- | --------- |
 | Parallel CC baseline collection | Strong | `claude --cloud` can run N tasks simultaneously on cloud VMs; no local resource contention |
-| Autonomous development loop execution | Moderate | Could run `claude --cloud "Execute next iteration"` but loses local state files and user-local MCP servers |
+| Autonomous development loop execution | Moderate | Could run `claude --cloud "Execute next iteration"` but loses local state files and user-local Model Context Protocol (MCP) servers |
 | CI/CD integration (PR review) | Strong | Kick off cloud session for automated review; results appear as PR |
 | Interactive development | Weak | Latency to clone + setup; better to use local CC or Remote Control |
 | Workflows requiring local toolchains | Weak | Custom toolchains (LaTeX, pandoc, etc.) need complex setup scripts to replicate in cloud |

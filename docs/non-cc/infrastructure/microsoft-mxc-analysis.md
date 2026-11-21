@@ -14,7 +14,7 @@ status: assess
 
 ## What It Is
 
-MXC is Microsoft's containment layer for AI agents. Its README calls it the "Microsoft eXecution Container (MXC)", "a **sandboxed code execution system** for running untrusted code (model output, plugins, and tools) on Windows, Linux, and macOS". The [Windows Developer blog post][blog] of 2026-10-07 names it "Microsoft Execution Containers (MXC), now generally available". It ships as SDKs (Rust `mxc-sdk`, .NET `Microsoft.Mxc.Sdk`, Node `@microsoft/mxc-sdk`) and an executor, `wxc-exec.exe`, that an agent host embeds; it is not an agent and has no MCP server.
+MXC is Microsoft's containment layer for AI agents. Its README calls it the "Microsoft eXecution Container (MXC)", "a **sandboxed code execution system** for running untrusted code (model output, plugins, and tools) on Windows, Linux, and macOS". The [Windows Developer blog post][blog] of 2026-10-07 names it "Microsoft Execution Containers (MXC), now generally available". It ships as SDKs (Rust `mxc-sdk`, .NET `Microsoft.Mxc.Sdk`, Node `@microsoft/mxc-sdk`) and an executor, `wxc-exec.exe`, that an agent host embeds; it is not an agent and has no Model Context Protocol (MCP) server.
 
 For this corpus its main interest is Windows: Claude Code's own sandbox has no native Windows support (see [CC-sandboxing-analysis.md](../../cc-native/sandboxing/CC-sandboxing-analysis.md)), and MXC is a first-party Windows process sandbox aimed at agents.
 

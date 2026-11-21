@@ -32,7 +32,7 @@ status: reference
 - `node:` prefix for Node.js builtins (`import fs from 'node:fs/promises'`)
 - **camelCase** functions/vars, **PascalCase** interfaces, **SCREAMING_SNAKE** constants
 - Zod `.describe()` for parameter docs — no JSDoc
-- MCP tools via `server.tool(name, description, zodSchema, asyncHandler)`
+- Model Context Protocol (MCP) tools via `server.tool(name, description, zodSchema, asyncHandler)`
 - Consistent return: `{ content: [{ type: 'text', text: ... }] }`
 - Async/await everywhere; silent-fail error handling (`catch { return '' }`)
 

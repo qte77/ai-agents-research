@@ -49,7 +49,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 | `DISABLE_AUTO_COMPACT` | (unset) | `1` turns off automatic compaction near the context limit and idle compaction; overrides the `autoCompactEnabled` setting. Manual `/compact` still works | [env-vars][env-vars] |
 | `DISABLE_COMPACT` | (unset) | `1` turns off all compaction, automatic and the manual `/compact` command | [env-vars][env-vars] |
 | `BASH_MAX_OUTPUT_LENGTH` | 30000 | Characters of Bash output read back into the tool result (maximum 150000). Lowering it trims what long command output adds to context | [env-vars][env-vars] |
-| `MAX_MCP_OUTPUT_TOKENS` | 25000 | Token cap on an MCP tool response; CC warns above 10,000 tokens | [env-vars][env-vars] |
+| `MAX_MCP_OUTPUT_TOKENS` | 25000 | Token cap on a Model Context Protocol (MCP) tool response; CC warns above 10,000 tokens | [env-vars][env-vars] |
 | `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | (per model; 32000 for an unrecognized model ID, cap 128000) | Maximum output tokens for most requests | [env-vars][env-vars] |
 | `MAX_THINKING_TOKENS` | (unset: adaptive models choose their own depth) | Fixed extended-thinking budget, capped one token below the request's max output tokens and never below 1,024 | [env-vars][env-vars] |
 | `ENABLE_TOOL_SEARCH` | (unset = `true`) | Defers MCP tool definitions so they load on demand instead of all entering context up front, except where tool search stays off | [env-vars][env-vars] |

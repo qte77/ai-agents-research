@@ -212,7 +212,7 @@ Per the CC docs' "Use MCP servers from claude.ai" section: "Connectors from clau
 - `ANTHROPIC_PROFILE`, a federation variable, or an active Anthropic profile
 - `CLAUDE_CODE_OAUTH_TOKEN` (a `claude setup-token` token, which can only make model requests)
 
-Fix: run `/status` to see which authentication method is active, unset the variable (or remove the `apiKeyHelper` setting / switch off the profile), then `/login` to pick the claude.ai account again. Two settings turn connectors off regardless of auth method: `disableClaudeAiConnectors: true` or `ENABLE_CLAUDEAI_MCP_SERVERS=false` ([source][cc-mcp]). This gating is specific to claude.ai-added connectors (the catalog at the [connectors and plugins marketplace][marketplace-connectors]); it has no bearing on project- or user-configured MCP servers.
+Fix: run `/status` to see which authentication method is active, unset the variable (or remove the `apiKeyHelper` setting / switch off the profile), then `/login` to pick the claude.ai account again. Two settings turn connectors off regardless of auth method: `disableClaudeAiConnectors: true` or `ENABLE_CLAUDEAI_MCP_SERVERS=false` ([source][cc-mcp]). This gating is specific to claude.ai-added connectors (the catalog at the [connectors and plugins marketplace][marketplace-connectors]); it has no bearing on project- or user-configured Model Context Protocol (MCP) servers.
 
 ### Console-Based Team Setup (API Billing)
 

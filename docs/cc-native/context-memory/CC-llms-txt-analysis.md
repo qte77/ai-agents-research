@@ -98,7 +98,7 @@ Optional body content (no headings)
 | Output & Structured Data | 2 | Structured outputs, citations |
 | Performance & Cost | 5 | Batch processing, prompt caching, compaction, fast mode, latency |
 | Tool Use | 10 | Overview, implementation, bash, code execution, computer use, memory, text editor, search |
-| Agent SDK | 20+ | Overview, Python/TypeScript SDKs, custom tools, MCP, plugins, skills, hooks, sessions |
+| Agent SDK | 20+ | Overview, Python/TypeScript SDKs, custom tools, Model Context Protocol (MCP), plugins, skills, hooks, sessions |
 | Agent Skills | 4 | Overview, quickstart, best practices, enterprise |
 | MCP | 2 | MCP connector, remote MCP servers |
 | Quality & Safety | 7 | Evals, hallucinations, consistency, jailbreaks, prompt leak, refusals |

@@ -12,7 +12,7 @@ status: assess
 ## What It Is
 
 [REA][repo] ("Reverse Engineer Anything") connects a coding agent to reverse-engineering tooling
-through one MCP server, distributed as the npm package `rea-agents`. The README's own framing:
+through one Model Context Protocol (MCP) server, distributed as the npm package `rea-agents`. The README's own framing:
 "See a feature you like. Understand how it works, down to the binary level." An agent (or a human
 from the terminal, via the same tool surface) can inspect a target without its source — a native
 binary, a JavaScript/Electron app, a .NET assembly, a website, an Android APK, firmware, and more —

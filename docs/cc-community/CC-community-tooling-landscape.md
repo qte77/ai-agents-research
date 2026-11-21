@@ -176,7 +176,7 @@ A hook plugin from UC Berkeley, Microsoft Research and Microsoft Security that l
 | **Loop guard** | When a turn keeps hitting the same failures, a judge model at confidence ≥ 0.7 adds at most one redirect note; the README says "it never stops a turn itself" | On |
 
 - **Claude Code integration**: plugin hooks for SessionStart, UserPromptSubmit, PostToolUse, PostToolUseFailure, Stop and SessionEnd (`plugin/hooks/hooks.json`). Installed from a local clone with `claude plugin marketplace add "$PWD/TokenEconomizer"`, then `claude plugin install tokeneconomizer@tokeneconomizer`. Supported Claude Code versions are 2.1.300 to 2.1.310; older ones are "not supported".
-- **Other agents**: Codex, GitHub Copilot CLI and Pi are supported; opencode, Cursor Agent, Grok Build, Hermes Agent and Antigravity CLI are experimental. Tool pruning writes to each agent's own settings, so it removes single tools on Claude Code but whole MCP servers on Copilot CLI.
+- **Other agents**: Codex, GitHub Copilot CLI and Pi are supported; opencode, Cursor Agent, Grok Build, Hermes Agent and Antigravity CLI are experimental. Tool pruning writes to each agent's own settings, so it removes single tools on Claude Code but whole Model Context Protocol (MCP) servers on Copilot CLI.
 - **Costs and data**: its own model calls (proposer, judge, redirect) run through the user's agent on the same plan, need no separate API key, and are counted in its reports. What it learns stays in `~/.tokeneconomizer`.
 - **Reported results** (by the authors, not independently replicated): on SWE-Bench tasks, "18.4–30.9% lower mean cost" across five agent–model combinations, cheaper in all 30 repository × combination cells, and Pass@1 up in 4 of 5.
 
