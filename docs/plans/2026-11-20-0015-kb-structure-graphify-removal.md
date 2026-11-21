@@ -37,6 +37,7 @@ add excludes); delete the branch and worktree.
 
 **Watch-outs:**
 
+- **Owner priority (2026-11-21): well-known, performance-optimised solutions, not bells and whistles.** Topic rows (T1 to T3) favour widely adopted standards and tools and tighten existing text over adding entries; a niche or new product needs adoption or a first-party measured benefit to earn a line. G2 stays a plain, fast graph page: no extra features beyond live search and the hub checkboxes.
 - Metadata-only edits (frontmatter keys, hub rows) don't bump a doc's `updated:` date.
 - New checks start lenient and turn strict once the backfill is done (the `doc_status.py` precedent);
   a strict check on day one fails CI.
