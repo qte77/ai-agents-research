@@ -112,7 +112,7 @@ class BuildGraphTests(unittest.TestCase):
 
     def test_external_links_create_no_nodes_or_edges(self):
         self.assertFalse(any(n["type"] != "doc" for n in self.g["nodes"]))
-        self.assertFalse(any("github.com" in t for (_, t, _) in self.edges))
+        self.assertTrue(all(t in CORPUS for (_, t, _) in self.edges))
 
     def test_links_leaving_the_corpus_create_no_edge(self):
         self.assertFalse(any(t.endswith("CONTRIBUTING.md") for (_, t, _) in self.edges))
