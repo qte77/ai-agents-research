@@ -512,7 +512,7 @@ code branches on directly, backed by a probability rather than free text.
 
 ## Not included
 
-Entries dropped under the pruning rule of plan 0015 (usable artifact; not archived and released or committed on or after 2025-11-21; adoption or first-party measured benefit).
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
