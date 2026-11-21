@@ -10,7 +10,7 @@ endif
 .ONESHELL:
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
-	check_links check_links_report check_docs check_status check_actions autofix lint test \
+	check_links check_links_report check_docs check_status check_coverage check_actions autofix lint test \
 	graph-data census graph-fonts preview \
 	changelog_new changelog_preview changelog_release \
 	help
@@ -269,7 +269,10 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 check_status: ## Validate doc frontmatter status: tokens; no body badges (strict; #348)
 	$(PYTHON) .github/scripts/check-doc-status.py --strict
 
-lint: check_docs check_status check_actions check_links ## Run all linters (markdown + status + actions first; flaky link check last so it can't mask them)
+check_coverage: ## Every content doc is in its folder's README index and has an inbound link (strict; plan 0015 X1)
+	$(PYTHON) .github/scripts/check-doc-coverage.py
+
+lint: check_docs check_status check_coverage check_actions check_links ## Run all linters (markdown + status + coverage + actions first; flaky link check last so it can't mask them)
 
 test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/pages_build modules)
 	$(PYTHON) -m unittest discover -s tests -v

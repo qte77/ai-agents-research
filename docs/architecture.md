@@ -107,13 +107,14 @@ An eighth — `decision-model-eval` (1st of each month, 15:00 UTC; also manual) 
 
 ## Lint Gate
 
-Three lint jobs run on every PR touching docs, workflows, or actions:
+These lint jobs run on every PR touching docs, workflows, or actions:
 
 | Job | Tool | Scope |
 |---|---|---|
 | Markdown lint | `markdownlint-cli2` | root governance docs (`README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CLAUDE.md`, `AGENTS.md`, `AGENT_LEARNINGS.md`, `AGENT_REQUESTS.md`) + `docs/**/*.md` |
 | Link check | `lychee` | repo-wide (configured via `lychee.toml`); github.com requests authenticated with the workflow `GITHUB_TOKEN` (#721) |
 | Action lint | `actionlint` (+ `shellcheck` on the runner) | `.github/workflows/**`, `.github/actions/**` |
+| Doc coverage | `make check_coverage` (`lib/doc_coverage.py`, stdlib) | every content doc under `docs/` is linked from its folder's README index and from at least one other doc or root file |
 
 The rxiv triage job additionally runs `markdownlint-cli2` against the assembled would-be PR content (with the action's H1 prepend simulated) and fails the job before opening a triage PR if the output is md-dirty.
 
