@@ -79,7 +79,7 @@ add excludes); delete the branch and worktree.
 
 | Row | Item | Gate | Done when |
 |---|---|---|---|
-| G1 | Remove graphify and every repo dependency on it (D1, D2 defaults) | agent | `git grep -i graphify` hits only `CHANGELOG.md`, closed plans, the gold data and the D1 research docs; `make test` and the Pages deploy pass; `graph.html` no longer published |
+| ~~G1~~ | ~~Remove graphify and every repo dependency on it (D1, D2 defaults)~~ | agent | Shipped 2026-11-21 (this PR): local leftovers removed first (`graphify-out/`, a `docs/graphify-out/` cache, the skill folder, the dangling CLI links, two memory notes); `ui/graph.html`, `render-graph-page.py`, `restyle_graph`, `filter_graph_data`, the graph commit in `build.json`, the `--graph` deploy step, the `GRAPHIFY*` Makefile variables and six targets removed; `architecture.md` § Knowledge Graph (graphify) became § Doc Graph and Site with its inbound links re-pointed. `git grep -i graphify` now also hits this plan, plan 0014, `docs/plans/README.md` (plan filenames) and the `knowledge-graphs.md` hub rows for the third-party research, all kept on purpose. Tests 247 → 232 |
 | G2 | Simple doc graph: docs only, live search, topic-hub checkboxes, redeploy on every merge | agent | Site JSON holds only doc nodes; search filters as you type; hub checkboxes and "Unfiled" filter the graph; a merge that touches no docs still deploys |
 | F1 | Frontmatter schema and `status` vocabulary written into `CONTRIBUTING.md` (D5) | owner | Owner approves the schema on its PR |
 | F2 | `doc_frontmatter.py` check, lenient, in `make lint` and CI | agent | Tests written first and passing; the check runs in CI and reports without failing |

@@ -1,4 +1,4 @@
-"""Unit tests for the pure site-build module (src/pages_build.py).
+"""Unit tests for the pure site-build module (scripts/pages_build.py).
 
 Only the module is tested — the scripts/*.py entry points are thin IO wrappers
 around these functions and are not unit-tested. Stdlib `unittest`, no deps.
@@ -12,120 +12,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import pages_build  # noqa: E402
-
-# A minimal stand-in for the graphify-generated graph.html head, carrying every
-# hardcoded color the restyle must neutralize (dark bg, navy sidebar, borders,
-# the steel-blue accent / blue node category, and the body text gray).
-SAMPLE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>graphify - graphify-out/graph.html</title>
-<script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"
-        integrity="sha384-deadbeef"
-        crossorigin="anonymous"></script>
-<style>
-  body { background: #0f0f1a; color: #e0e0e0; }
-  #sidebar { background: #1a1a2e; border-left: 1px solid #2a2a4e; }
-  #search { border: 1px solid #3a3a5e; }
-  #search:focus { border-color: #4E79A7; }
-  .legend-cb:checked { background: #4e79a7; border-color: #4E79A7; }
-</style>
-</head>
-<body><div id="sidebar"></div></body>
-</html>
-"""
-
-
-class RestyleGraphTests(unittest.TestCase):
-    def setUp(self):
-        self.out = pages_build.restyle_graph(SAMPLE)
-
-    def test_blue_accent_removed(self):
-        # Zero-blue is the brand's defining constraint — no steel blue survives,
-        # in either letter case.
-        self.assertNotIn("#4E79A7", self.out)
-        self.assertNotIn("#4e79a7", self.out)
-
-    def test_graphify_default_dark_bg_replaced_with_eyerest(self):
-        self.assertNotIn("#0f0f1a", self.out)
-        self.assertIn("#1c1a14", self.out)  # EyeRest dark-bg
-
-    def test_amber_primary_present(self):
-        self.assertIn("#c8a858", self.out)  # EyeRest dark-primary
-
-    def test_favicon_injected(self):
-        self.assertIn('rel="icon"', self.out)
-        self.assertIn("favicon.svg", self.out)
-
-    def test_brand_fonts_injected(self):
-        self.assertIn("@font-face", self.out)
-        self.assertIn("Inter", self.out)
-        self.assertIn("font-family", self.out)
-
-    def test_title_replaced(self):
-        self.assertIn(
-            "<title>ai-agents-research — knowledge graph</title>", self.out
-        )
-        self.assertNotIn("graphify - graphify-out", self.out)
-
-    def test_vis_network_vendored(self):
-        # The graph must render offline / without the unpkg CDN.
-        self.assertNotIn("unpkg.com", self.out)
-        self.assertIn('src="vendor/vis-network.min.js"', self.out)
-
-    def test_idempotent(self):
-        # Republishing a refreshed graph must not double-inject head content.
-        self.assertEqual(pages_build.restyle_graph(self.out), self.out)
-
-    def test_build_info_script_injected_once_as_graph_artifact(self):
-        # The graph page shows its own last-rebuilt commit/date, not the deploy's.
-        tag = '<script src="build-info.js" data-artifact="graph" defer></script>'
-        self.assertEqual(self.out.count(tag), 1)
-        self.assertLess(self.out.index(tag), self.out.index("</body>"))
-
-
-SAMPLE_GRAPH = """<html><body>
-<script>
-const RAW_NODES = [{"id":"a","source_file":"docs/x.md"},{"id":"b","source_file":"scripts/y.py"},{"id":"c","source_file":".github/scripts/z.py"},{"id":"d","source_file":"docs/w.md"}];
-const RAW_EDGES = [{"from":"a","to":"d"},{"from":"a","to":"b"},{"from":"b","to":"c"}];
-const hyperedges = [{"id":"h1","nodes":["a","d","b"],"source_file":"docs/x.md"},{"id":"h2","nodes":["b","c"],"source_file":"scripts/y.py"},{"id":"h3","nodes":["a","b"],"source_file":"docs/x.md"}];
-</script></body></html>"""
-
-
-def _array(html, var):
-    import json
-    import re
-    return json.loads(re.search(var + r" = (\[.*?\]);", html, re.DOTALL).group(1))
-
-
-class FilterGraphDataTests(unittest.TestCase):
-    def setUp(self):
-        self.out = pages_build.filter_graph_data(SAMPLE_GRAPH)
-
-    def test_excluded_dir_nodes_dropped(self):
-        ids = {n["id"] for n in _array(self.out, "RAW_NODES")}
-        self.assertEqual(ids, {"a", "d"})  # scripts/ and .github/scripts/ gone
-        self.assertNotIn("scripts/y.py", self.out)
-        self.assertNotIn(".github/scripts/z.py", self.out)
-
-    def test_dangling_edges_pruned(self):
-        edges = _array(self.out, "RAW_EDGES")
-        self.assertEqual(edges, [{"from": "a", "to": "d"}])
-
-    def test_hyperedges_pruned_and_trimmed(self):
-        hy = _array(self.out, "hyperedges")
-        # h2 excluded by source_file; h3 drops to <2 members; h1 keeps a,d only.
-        self.assertEqual([h["id"] for h in hy], ["h1"])
-        self.assertEqual(hy[0]["nodes"], ["a", "d"])
-
-    def test_unparseable_returns_unchanged(self):
-        broken = "<html>no graph arrays here</html>"
-        self.assertEqual(pages_build.filter_graph_data(broken), broken)
-
-    def test_idempotent(self):
-        self.assertEqual(pages_build.filter_graph_data(self.out), self.out)
-
 
 PYPROJECT = """[project]
 name = "x"
@@ -149,7 +35,6 @@ class SiteInfoTests(unittest.TestCase):
         self.info = pages_build.site_info(
             version="0.12.0",
             commit="a" * 40, commit_date="2026-09-30T14:18:14+00:00",
-            graph_commit="b" * 40, graph_date="2026-09-25T20:06:30+02:00",
             repo_url="https://github.com/qte77/ai-agents-research",
         )
 
@@ -160,14 +45,9 @@ class SiteInfoTests(unittest.TestCase):
             "url": "https://github.com/qte77/ai-agents-research/commit/" + "a" * 40,
         })
 
-    def test_graph_carries_its_own_last_rebuild_commit(self):
-        self.assertEqual(self.info["graph"]["short"], "bbbbbbb")
-        self.assertEqual(self.info["graph"]["date"], "2026-09-25")
-
-    def test_graph_is_none_when_never_committed(self):
-        info = pages_build.site_info("0.12.0", "a" * 40, "2026-09-30T00:00:00Z", None, None,
-                                     "https://github.com/o/r")
-        self.assertIsNone(info["graph"])
+    def test_no_graph_artifact_key(self):
+        # The separate concept-graph page is gone (plan 0015 G1); build.json describes the deploy only.
+        self.assertEqual(set(self.info), {"version", "site"})
 
 
 class IsWoff2Tests(unittest.TestCase):

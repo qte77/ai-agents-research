@@ -11,7 +11,7 @@ endif
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
 	check_links check_links_report check_docs check_status check_actions autofix lint test \
-	graph-data census graph-build graph-html graph-query graph-explain graph-path graph-fonts graph-page preview \
+	graph-data census graph-fonts preview \
 	changelog_new changelog_preview changelog_release \
 	help
 .DEFAULT_GOAL := help
@@ -24,13 +24,7 @@ NODE_DIR           := $(HOME)/.local/share/node
 NODE_BIN           := $(NODE_DIR)/bin
 LOCAL_BIN          := $(HOME)/.local/bin
 
-# graphify knowledge graph — https://qte77.github.io/ai-agents-research/
-# GRAPHIFY: binary (override for a side-loaded build, e.g.
-#   GRAPHIFY=/workspaces/external/graphify/.venv/bin/graphify)
-# GRAPHIFY_BACKEND: LLM backend for headless `make graph-build` (needs its API key)
-# PYTHON: interpreter for the stdlib-only publish helper (no deps, so no uv needed)
-GRAPHIFY           ?= graphify
-GRAPHIFY_BACKEND   ?= gemini
+# PYTHON: interpreter for the stdlib-only site and doc-graph helpers (no deps, so no uv needed)
 PYTHON             ?= python3
 
 # Markdown lint scope — root governance docs + all docs/ (single source for check_docs + autofix)
@@ -287,9 +281,8 @@ reconcile: ## Check the newest plan's remaining-work rows against live PR/issue 
 # MARK: GRAPH
 
 
-# Query/navigate ops are free (no LLM). Building needs an extraction model: the
-# /graphify skill (key-free, uses the Claude Code session) or `graphify extract`
-# with an API key. Config (GRAPHIFY / GRAPHIFY_BACKEND / PYTHON) is at the top.
+# Deterministic doc graph and site helpers (stdlib only, no LLM). The Pages
+# deploy rebuilds the doc graph itself; these targets are for local previews.
 
 graph-data: ## Build the deterministic structural doc graph into ui/doc-graph.json (no LLM, stdlib)
 	$(PYTHON) .github/scripts/build-doc-graph.py
@@ -297,34 +290,11 @@ graph-data: ## Build the deterministic structural doc graph into ui/doc-graph.js
 census: ## Print the rubric evidence matrix from every scored row in docs/ (needs subject: tags; stdlib)
 	$(PYTHON) .github/scripts/build-doc-census.py
 
-graph-build: ## Headless full rebuild (AST + semantic) — needs an LLM backend API key
-	$(GRAPHIFY) extract . --backend $(GRAPHIFY_BACKEND)
-	$(GRAPHIFY) label . --backend $(GRAPHIFY_BACKEND)
-
-graph-html: ## Re-render graphify-out/graph.html from graph.json (no LLM)
-	if [ ! -f graphify-out/graph.json ]; then echo "no graph.json — build first (/graphify skill or make graph-build)"; exit 1; fi
-	$(GRAPHIFY) export html
-
-graph-query: ## Query the graph: make graph-query Q="how does X work?"
-	if [ -z "$(Q)" ]; then echo 'Usage: make graph-query Q="<question>"'; exit 2; fi
-	$(GRAPHIFY) query "$(Q)"
-
-graph-explain: ## Explain a node + neighbors: make graph-explain N="Node Label"
-	if [ -z "$(N)" ]; then echo 'Usage: make graph-explain N="<node>"'; exit 2; fi
-	$(GRAPHIFY) explain "$(N)"
-
-graph-path: ## Shortest path between nodes: make graph-path A="Node A" B="Node B"
-	if [ -z "$(A)" ] || [ -z "$(B)" ]; then echo 'Usage: make graph-path A="<node>" B="<node>"'; exit 2; fi
-	$(GRAPHIFY) path "$(A)" "$(B)"
-
 graph-fonts: ## Fetch self-hosted brand fonts (Inter + JetBrains Mono woff2) into ui/assets/fonts/
 	$(PYTHON) scripts/fetch-web-fonts.py
 
-graph-page: graph-html ## Render + EyeRest-restyle the graph into committed ui/graph.html (commit + push; the gh-pages workflow deploys)
-	$(PYTHON) scripts/render-graph-page.py
-
 preview: ## Serve the branded site (ui/) locally at http://localhost:$$PORT (default 8000)
-	echo "Serving ui/ at http://localhost:$${PORT:-8000}/  ->  / (landing), /graph.html  (Ctrl-C to stop)"
+	echo "Serving ui/ at http://localhost:$${PORT:-8000}/  ->  / (landing), /doc-graph.html  (Ctrl-C to stop)"
 	echo "Tip: run 'make graph-fonts' first to preview the real brand fonts (else system-ui fallback)."
 	$(PYTHON) -m http.server $${PORT:-8000} --directory ui
 
