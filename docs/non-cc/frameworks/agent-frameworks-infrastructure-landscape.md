@@ -294,7 +294,23 @@ Non-LLM foundation models an agent invokes as a *tool* for one narrow capability
 
 ## 7. RAG & Retrieval Infrastructure
 
-Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; this section is how agents *retrieve* over corpora. Tool facts verified first-party 2026-06-20; star counts are GitHub-rendered (approximate). For incremental code/RAG ETL see [cocoindex-analysis.md](../context-memory/cocoindex-analysis.md); for a filesystem-first retrieval contrast see [openviking-analysis.md](../context-memory/openviking-analysis.md). For local, LLM-free document parsing that feeds RAG ingestion, see [LiteParse (run-llama)](https://github.com/run-llama/liteparse) — a Rust-core PDF/DOCX/XLSX/PPTX parser with bounding-box text extraction and Markdown output, no cloud dependency (contrasted by its own README with the vendor's cloud LlamaParse for complex documents); Apache-2.0, 12.7k★, `gh api` 2026-09-30.
+Retrieval is the sibling of memory (§4): §4 persists evolving agent *state*; this section is how agents *retrieve* over corpora, known as retrieval-augmented generation (RAG). Tool facts verified first-party 2026-11-21 unless dated otherwise; star counts are `gh api` values (approximate). For incremental code/RAG extract-transform-load (ETL) see [cocoindex-analysis.md](../context-memory/cocoindex-analysis.md); for a filesystem-first retrieval contrast see [openviking-analysis.md](../context-memory/openviking-analysis.md). Memory types live in the [memory taxonomy](../../cc-community/CC-memory-tooling-landscape.md); knowledge-graph terms live in the [graph database landscape](../infrastructure/graph-databases-query-languages-landscape.md).
+
+### RAG patterns at a glance
+
+Five patterns, roughly cheapest to costliest. They stack: a common production shape is hybrid search plus a reranker, with GraphRAG or agentic retrieval added only for question types that need them (inference, not a measured result). Sources are first-party papers and vendor docs, read 2026-11-21. The [Singh et al. 2025][agentic-rag-survey] survey (§ 2.3) stages the field as Naïve RAG, Advanced RAG, Modular RAG, Graph RAG and Agentic RAG.
+
+| Pattern | What it is | Pays off when | Cost | Source |
+|---|---|---|---|---|
+| Plain (vector) RAG | A retriever queries a searchable index and the generator conditions on the hits; the original paper pairs a sequence-to-sequence model with a Wikipedia index and a neural retriever. Today's "vector RAG" embeds the query and returns the nearest chunks. | Knowledge-intensive questions over a private or changing corpus | One embedding lookup plus one large language model (LLM) call per question; a one-off index build | [Lewis et al. 2020][rag-paper] |
+| Hybrid search | Run a lexical Best Matching 25 (BM25) query and a vector query, then fuse the lists. Reciprocal rank fusion (RRF) adds `1/(k+rank)` per document across lists, so raw scores need no normalizing. | Queries that mix exact terms (names, IDs, error codes) with paraphrase (inference) | Two query paths; fusion weights are worth tuning on an evaluation set (Qdrant docs advise this) | [Cormack et al. 2009][rrf-paper]; [Elasticsearch][es-rrf], [OpenSearch][os-hybrid], [Qdrant][qdrant-hybrid], [Weaviate][weaviate-hybrid], [pgvector][pgvector-readme] docs |
+| Reranking | A second-stage model re-scores the top retrieved candidates jointly with the query and reorders them before generation. | The answer is in the candidate set but not at the top (inference) | One model pass per candidate, so latency grows with the candidate count | [Nogueira and Cho 2019][bert-rerank] |
+| GraphRAG | An LLM derives an entity knowledge graph (KG) from the documents and pregenerates summaries of closely related entity groups ("communities"); at query time each summary yields a partial answer and the partials are merged. | Corpus-wide "global" questions; the authors report gains in answer comprehensiveness and diversity over a conventional RAG baseline on datasets around 1M tokens (authors' claim) | LLM-driven index build (compute-heavy); evidence against vector RAG is mixed, see [GraphRAG vs vector RAG](#graphrag-vs-vector-rag-and-kg-construction-evidence) | [Edge et al. 2024][graphrag-paper] |
+| Agentic / iterative retrieval | An agent decides when and what to retrieve, reflects on the hits and retries. Self-RAG, for one, trains a model to decide when to retrieve and to critique passages with reflection tokens. | Multi-hop or ambiguous questions where one retrieval round fails (inference) | Several LLM calls and more latency per question; harder to evaluate (inference) | [Singh et al. 2025][agentic-rag-survey]; [Self-RAG][self-rag] |
+
+### Document parsing for ingestion
+
+For local, LLM-free document parsing that feeds RAG ingestion, see [LiteParse (run-llama)](https://github.com/run-llama/liteparse) — a Rust-core PDF/DOCX/XLSX/PPTX parser with bounding-box text extraction and Markdown output, no cloud dependency (contrasted by its own README with the vendor's cloud LlamaParse for complex documents); Apache-2.0, 13.1k★, `gh api` 2026-11-21.
 
 [LlamaParse (LlamaIndex)](https://www.llamaindex.ai/llamaparse) is the cloud counterpart LiteParse's
 README contrasts itself with: a hosted, layout-aware document-parsing API across 90+ file formats,
@@ -320,15 +336,13 @@ citation-grounded PDF Q&A agent running on Ollama.
 
 `scored 2026-09-30`
 
-**Pipeline taxonomy**: Naive RAG (index→retrieve→read, single-hop) → Advanced RAG (pre/post-retrieval transforms) → Modular RAG (interoperable, multi-hop) → **Agentic RAG** (the agent plans retrieval, reflects, and calls tools). Survey: [Singh et al. 2025, arXiv:2501.09136](https://arxiv.org/abs/2501.09136).
-
 ### GraphRAG family
 
-- [Microsoft GraphRAG](https://github.com/microsoft/graphrag) — entity/relationship extraction → Leiden community detection → Global / Local / DRIFT search over community summaries (MIT, v3.2.0, ~36k★, `gh api` 2026-09-30). Indexing is compute-heavy; built for reasoning over large private corpora. Paper: [Edge et al. 2024, arXiv:2404.16130](https://arxiv.org/abs/2404.16130). The repo's own banner now states it is "largely in maintenance mode" and won't accept new features, only bug/CVE fixes ([README](https://github.com/microsoft/graphrag#readme)). **Rubric** (subject: graphs-rag, scored 2026-09-30, row G evaluation, [README](https://github.com/microsoft/graphrag#readme)): Shared: no data (a local indexing pipeline + query CLI; no multi-agent/multi-user access pattern documented); Distributed: no data (single-machine indexing pipeline; no cluster/sync docs found); Reproducible: no (entity/relationship extraction is LLM-driven with no pinned model or seed documented in the README — a fresh index over the same corpus is not guaranteed to match a prior one); Adaptable: partial (prompt tuning and a documented config-migration path between versions, but the extraction schema itself is fixed); Versionable: no (the README's "Versioning" section covers config-schema compatibility across GraphRAG releases via `breaking-changes.md`, not snapshot/diff/rollback of the indexed graph data itself); Traceable: no data (neither the README nor the docs site's [Local Search](https://microsoft.github.io/graphrag/query/local_search/) / [query overview](https://microsoft.github.io/graphrag/query/overview/) pages document a citation, data-reference or audit-log feature for query answers).
-- [LightRAG (HKUDS)](https://github.com/HKUDS/LightRAG) — dual-layer KG + vector with five query modes (local/global/hybrid/naive/mix); positioned as an efficient GraphRAG alternative (MIT, v1.5.7, ~40k★, `gh api` 2026-09-30). **Rubric** (subject: graphs-rag, scored 2026-09-30, row G evaluation, [README](https://github.com/HKUDS/LightRAG#readme)): Shared: no data (a library/server for one deployment; no multi-agent concurrent-write semantics documented); Distributed: no data (Docker images and an API server are documented, but no clustering/sync protocol); Reproducible: partial (`ENABLE_LLM_CACHE` makes identical queries — same query, mode and model parameters — return identical cached results, and a documented `Reproduce.md` walks through reproducing the paper's evaluation numbers, but entity/relation extraction itself is LLM-driven with no default pinned model, so a from-scratch rebuild is not guaranteed deterministic); Adaptable: yes (pluggable KV/vector/graph storage backends, plus incremental updates and selective deletion without a full rebuild); Versionable: no (incremental updates change the KG in place; no snapshot, diff or rollback of graph state is documented — only Docker image tags for the software itself); Traceable: no data (README documents caches and reproduction steps but no citation/audit-trail feature for query answers).
+- [Microsoft GraphRAG](https://github.com/microsoft/graphrag) — entity/relationship extraction → Leiden community detection → Global / Local / DRIFT search over community summaries (MIT, v3.3.0 of 2026-10-08, ~36.7k★, `gh api` 2026-11-21). Indexing is compute-heavy; built for reasoning over large private corpora. Paper: [Edge et al. 2024][graphrag-paper]. The repo's own banner now states it is "largely in maintenance mode" and won't accept new features, only bug/CVE fixes ([README](https://github.com/microsoft/graphrag#readme)). **Rubric** (subject: graphs-rag, scored 2026-09-30, row G evaluation, [README](https://github.com/microsoft/graphrag#readme)): Shared: no data (a local indexing pipeline + query CLI; no multi-agent/multi-user access pattern documented); Distributed: no data (single-machine indexing pipeline; no cluster/sync docs found); Reproducible: no (entity/relationship extraction is LLM-driven with no pinned model or seed documented in the README — a fresh index over the same corpus is not guaranteed to match a prior one); Adaptable: partial (prompt tuning and a documented config-migration path between versions, but the extraction schema itself is fixed); Versionable: no (the README's "Versioning" section covers config-schema compatibility across GraphRAG releases via `breaking-changes.md`, not snapshot/diff/rollback of the indexed graph data itself); Traceable: no data (neither the README nor the docs site's [Local Search](https://microsoft.github.io/graphrag/query/local_search/) / [query overview](https://microsoft.github.io/graphrag/query/overview/) pages document a citation, data-reference or audit-log feature for query answers).
+- [LightRAG (HKUDS)](https://github.com/HKUDS/LightRAG) — dual-layer KG + vector with five query modes (local/global/hybrid/naive/mix); positioned as an efficient GraphRAG alternative (MIT, v1.5.8rc1 (a release candidate) of 2026-11-15, ~40.8k★, `gh api` 2026-11-21). **Rubric** (subject: graphs-rag, scored 2026-09-30, row G evaluation, [README](https://github.com/HKUDS/LightRAG#readme)): Shared: no data (a library/server for one deployment; no multi-agent concurrent-write semantics documented); Distributed: no data (Docker images and an API server are documented, but no clustering/sync protocol); Reproducible: partial (`ENABLE_LLM_CACHE` makes identical queries — same query, mode and model parameters — return identical cached results, and a documented `Reproduce.md` walks through reproducing the paper's evaluation numbers, but entity/relation extraction itself is LLM-driven with no default pinned model, so a from-scratch rebuild is not guaranteed deterministic); Adaptable: yes (pluggable KV/vector/graph storage backends, plus incremental updates and selective deletion without a full rebuild); Versionable: no (incremental updates change the KG in place; no snapshot, diff or rollback of graph state is documented — only Docker image tags for the software itself); Traceable: no data (README documents caches and reproduction steps but no citation/audit-trail feature for query answers).
 
 - [RAPTOR](https://arxiv.org/abs/2401.18059) — recursive embed→cluster→summarize tree; retrieves across abstraction levels (MIT; ICLR 2024; paper reports +20% absolute on QuALITY with GPT-4).
-- [nano-graphrag](https://github.com/gusye1234/nano-graphrag) — ~1,100-LOC hackable GraphRAG; swappable LLM/embedding/vector backends (Faiss/Neo4j/Ollama), async (MIT, ~3.9k★).
+- [nano-graphrag](https://github.com/gusye1234/nano-graphrag) — ~1,100-LOC hackable GraphRAG; swappable LLM/embedding/vector backends (Faiss/Neo4j/Ollama), async (MIT, ~4.0k★, last push 2026-01-27, `gh api` 2026-11-21).
 - [Graft (trailhq)](https://github.com/trailhq/Graft) — codebase context layer for coding agents (Claude Code, Cursor, Codex, Gemini, Copilot): a tree-sitter structural pass (23 languages, no LLM, ~3ms incremental refresh) extracts symbols/calls, then optional LLM enrichment groups them into typed-relationship (`depends_on`/`part_of`/`uses`/`implements`/`produces`) Markdown concept nodes with wikilinks the agent follows like docs; nodes are ranked by **in-degree coupling**, not PageRank. Repo self-reports 46% fewer tool calls, 42% fewer tokens, and +12pp on SWE-bench Verified (66% vs 54%) — not independently verified. Renamed from `NanoNets/Graft` to `trailhq/Graft` (MIT; 9.1k★, `gh api` 2026-09-24).
 
 ### GraphRAG vs vector RAG and KG construction evidence
@@ -359,43 +373,46 @@ Graph-centric infrastructure built around agent access patterns (MCP, multi-agen
 
 ### Hybrid search & query transforms
 
-- **BM25 + dense** — sparse keyword precision + dense semantic recall, fused via Reciprocal Rank Fusion or weighted combination.
-- **Reciprocal Rank Fusion (RRF)** — rank-position-only fusion, default k=60 (Cormack et al., SIGIR 2009).
-- [ColBERT (Stanford)](https://github.com/stanford-futuredata/ColBERT) — token-level late interaction (MaxSim); v2 adds residual compression; usable as retriever or reranker (MIT; [arXiv:2112.01488](https://arxiv.org/abs/2112.01488)).
-- **HyDE** — the LLM drafts a hypothetical answer whose embedding retrieves real docs, bridging the query↔document vocabulary gap ([Gao et al. 2022, arXiv:2212.10496](https://arxiv.org/abs/2212.10496)); plus multi-query expansion and step-back prompting.
+- **BM25 + dense** — keyword (BM25) precision plus dense-embedding recall, fused by rank ([RRF](#rag-patterns-at-a-glance); [Cormack et al. 2009][rrf-paper]) or by normalized scores. The paper fixed k = 60 in a pilot and reports it near-optimal in its own table; Elasticsearch's documented default `rank_constant` is also 60, while Qdrant's docs state a default k of 2, so check the engine's default before comparing runs. Documented platform support (docs read 2026-11-21): the [Elasticsearch RRF retriever][es-rrf] (BM25 with a sparse or KNN retriever); the [OpenSearch hybrid query][os-hybrid] (`min_max`, `l2` or `z_score` normalization, or RRF); [Qdrant][qdrant-hybrid] `rrf` and distribution-based score fusion (DBSF) over `prefetch` sub-queries; [Weaviate][weaviate-hybrid] relative-score fusion (default since v1.24) or ranked fusion, balanced by `alpha`; and [pgvector][pgvector-readme], which pairs with Postgres full-text search and points to RRF or cross-encoder examples.
+- [ColBERT (Stanford)](https://github.com/stanford-futuredata/ColBERT) — token-level late interaction (MaxSim); v2 adds residual compression; usable as retriever or reranker (MIT; [arXiv:2112.01488](https://arxiv.org/abs/2112.01488); 4.0k★, last push 2025-10-14, `gh api` 2026-11-21).
+- **Hypothetical Document Embeddings (HyDE)** — the LLM drafts a hypothetical answer whose embedding retrieves real docs, bridging the query-document vocabulary gap ([Gao et al. 2022, arXiv:2212.10496](https://arxiv.org/abs/2212.10496)); plus multi-query expansion and step-back prompting.
 
 ### Rerankers
 
 - [Cohere Rerank](https://cohere.com/rerank) — cross-encoder rerank API (rerank-v4.0 pro/fast, 100+ languages); commercial.
-- **Cross-encoders** — joint query+document forward pass (via sentence-transformers); higher accuracy than bi-encoders at O(n) per-candidate cost; run as a second stage after ANN retrieval. ColBERT (above) is the late-interaction middle ground.
-- [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) — multilingual cross-encoder (BAAI, Apache-2.0); pairs with bge-m3 dense embeddings and is a strong default second stage after BM25+dense fusion.
+- **Cross-encoders** — joint query+document forward pass (via sentence-transformers; the BERT re-ranking recipe is [Nogueira and Cho 2019][bert-rerank]); typically more accurate than bi-encoders at a per-candidate cost (inference); run as a second stage after approximate nearest neighbor (ANN) retrieval. ColBERT (above) is the late-interaction middle ground.
+- [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) — multilingual cross-encoder (BAAI, Apache-2.0); pairs with bge-m3 dense embeddings and is a plausible second stage after BM25+dense fusion (inference).
 - [Qwen3-Reranker](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B) — instruction-aware cross-encoder family (Alibaba, Apache-2.0; 0.6B/4B/8B, long context); the 0.6B is CPU-viable, larger sizes trade latency for quality.
-- [mxbai-rerank](https://github.com/mixedbread-ai/mxbai-rerank) — DeBERTa-based cross-encoders in three sizes (mixedbread, Apache-2.0); a permissive-license alternative to bge-reranker.
-- [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) — lightweight CPU reranker (Apache-2.0); bundles tiny cross-encoders (optional GGUF listwise) with no PyTorch dependency — for latency-sensitive post-retrieval.
+- [mxbai-rerank](https://github.com/mixedbread-ai/mxbai-rerank) — DeBERTa-based cross-encoders in three sizes (mixedbread, Apache-2.0); a permissive-license alternative to bge-reranker (55★, last push 2025-09-17, `gh api` 2026-11-21).
+- [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) — lightweight CPU reranker (Apache-2.0; ~1.0k★); bundles tiny cross-encoders (optional GGUF listwise) with no PyTorch dependency — for latency-sensitive post-retrieval.
 - [rerankers](https://github.com/AnswerDotAI/rerankers) — unified Python API over cross-encoders, ColBERT, MonoT5, RankGPT, FlashRank and hosted APIs (answerdotai, Apache-2.0); swap backends without code changes, handy for A/B eval. [RAGatouille](https://github.com/AnswerDotAI/RAGatouille) makes ColBERT indexing + reranking practical in a few lines.
 - **Hosted alternatives** (managed comparison points for local-first stacks): Voyage `rerank-2.5`, ZeroEntropy `zerank-2`, and Contextual AI `ctxl-rerank-v2` add instruction-following without fine-tuning (Contextual also ships open weights); Jina `reranker-m0` is multimodal (CC BY-NC). Per-search (Cohere) vs per-token (Voyage/ZeroEntropy) billing makes headline cost comparison non-trivial.
 
 ### Embedding models
 
 - [SPECTER2](https://huggingface.co/allenai/specter2) — scientific-document embeddings (AllenAI; citation-proximity-trained, task-adaptive adapters), a strong default for scholarly-paper similarity where general-purpose embeddings underperform (Apache-2.0). SciNCL is a citation-neighbour-sampled alternative.
-- General-purpose text embeddings (sentence-transformers bi-encoders, BAAI **bge**, **nomic-embed**) cover cross-domain corpora; prefer a domain-tuned model when the corpus is narrow (e.g. SPECTER2 for papers).
+- General-purpose text embeddings (sentence-transformers bi-encoders, BAAI [bge](https://github.com/FlagOpen/FlagEmbedding) (MIT, 12.3k★, `gh api` 2026-11-21), **nomic-embed**) cover cross-domain corpora; prefer a domain-tuned model when the corpus is narrow (e.g. SPECTER2 for papers). Model choice should be settled on your own corpus with the evaluation tools below; no leaderboard rank is quoted here.
 
 ### Vector databases
 
-- [Qdrant](https://github.com/qdrant/qdrant) — dense + sparse + multi-vector (ColBERT), built-in RRF/DBSF hybrid fusion, quantization (Apache-2.0, Rust).
-- [Milvus](https://github.com/milvus-io/milvus) — cloud-native distributed; HNSW/IVF/DiskANN; billion-vector scale (Apache-2.0).
-- [Weaviate](https://github.com/weaviate/weaviate) — vector + keyword + RAG in a single query; integrated auto-vectorization (BSD-3-Clause).
-- [Chroma](https://github.com/chroma-core/chroma) — minimal API, in-memory → production (Apache-2.0).
-- [pgvector](https://github.com/pgvector/pgvector) — vectors inside Postgres: ACID, JOINs, no separate system (PostgreSQL License).
+ANN indexes trade a little recall for speed; Hierarchical Navigable Small World (HNSW) graphs and inverted-file (IVF) indexes are the common types. Counts and licenses are `gh api` / LICENSE-file reads of 2026-11-21.
+
+- [FAISS (Meta)](https://github.com/facebookresearch/faiss) — a library, not a database: dense-vector similarity search and clustering, with optional GPU support per its README (MIT, v1.16.0 of 2026-11-10, 41.8k★). Embedded-store comparison: [on-device semantic search](../context-memory/on-device-semantic-search-landscape.md).
+- [pgvector](https://github.com/pgvector/pgvector) — vectors inside Postgres: ACID (atomicity, consistency, isolation, durability), JOINs, no separate system; exact search by default, optional HNSW or IVFFlat indexes; hybrid search via Postgres full-text search (PostgreSQL-style license text in the LICENSE file; GitHub reports NOASSERTION; 23.8k★, tag v0.8.7).
+- [Elasticsearch](https://github.com/elastic/elasticsearch) and [OpenSearch](https://github.com/opensearch-project/OpenSearch) — search engines that already run BM25 and now offer vector search and the hybrid fusion above (Elasticsearch: default triple AGPL-3.0 / SSPL / Elastic License 2.0 per its LICENSE.txt, 78.7k★, v9.5.6 of 2026-11-02; OpenSearch: Apache-2.0, 14.0k★, 3.10.0 of 2026-11-18).
+- [Qdrant](https://github.com/qdrant/qdrant) — dense + sparse + multi-vector (ColBERT), built-in RRF/DBSF hybrid fusion, quantization (Apache-2.0, Rust; 35.7k★, v1.20.2 of 2026-11-16).
+- [Milvus](https://github.com/milvus-io/milvus) — cloud-native distributed; HNSW/IVF/DiskANN; "billion-vector scale" is the vendor's own positioning (Apache-2.0; 46.7k★, v3.0.6 of 2026-11-11).
+- [Weaviate](https://github.com/weaviate/weaviate) — vector + keyword (BM25F) + RAG in a single query; integrated auto-vectorization (LICENSE file: BSD-3-Clause, or the Weaviate License for some code; 17.0k★).
+- [Chroma](https://github.com/chroma-core/chroma) — minimal API, in-memory → production (Apache-2.0; 29.7k★).
 - [Pinecone](https://www.pinecone.io/) — fully managed serverless ANN; no self-hosted option (proprietary).
-- [LanceDB](https://github.com/lancedb/lancedb) — embedded, multimodal, Lance columnar format, zero-copy + versioning (Apache-2.0).
-- [sqlite-vec](https://github.com/asg017/sqlite-vec) — vector search as a single-file **SQLite extension**; runs in-process and compiles to **WASM** for in-browser KNN, so precomputed embeddings can ship inside a static site with no server (Apache-2.0). Brute-force (no ANN index yet, pre-1.0) — fine at small/medium corpus sizes.
+- [LanceDB](https://github.com/lancedb/lancedb) — embedded, on the Lance columnar format (Apache-2.0; 12.0k★); see the on-device comparison above.
+- [sqlite-vec](https://github.com/asg017/sqlite-vec) — vector search as a SQLite extension that also compiles to WebAssembly; brute-force only, pre-1.0 (Apache-2.0/MIT; 8.3k★, last push 2026-05-18); see the on-device comparison above.
 
 ### RAG evaluation
 
-- [RAGAs](https://github.com/explodinggradients/ragas) — reference-free metrics (faithfulness, answer relevancy, context precision/recall) via LLM-as-judge (Apache-2.0; [arXiv:2309.15217](https://arxiv.org/abs/2309.15217)).
+- [RAGAs](https://github.com/vibrantlabsai/ragas) — reference-free metrics (faithfulness, answer relevancy, context precision/recall) via LLM-as-judge (Apache-2.0, v0.4.4 of 2026-11-14, 16.4k★, `gh api` 2026-11-21 — the repo now lives under the `vibrantlabsai` org; [arXiv:2309.15217](https://arxiv.org/abs/2309.15217)).
 - [TruLens](https://github.com/truera/trulens) — OTel tracing + LLM-as-judge feedback with seven agentic evaluators and an MCP span type; maintained by Snowflake since its TruEra acquisition (MIT). Detail: [agent-evaluation-metrics-landscape.md](../../sdlc-lcm/agent-evaluation-metrics-landscape.md).
-- [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0). Eval cross-ref: [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
+- [DeepEval](https://github.com/confident-ai/deepeval) — pytest-style LLM-output tests: RAG metrics + G-Eval + hallucination detection (Apache-2.0; 19.6k★). Eval cross-ref: [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
 
 ### Graph visualization
 
@@ -663,3 +680,26 @@ herdr and Zeron (§1), moved from the cc-community tooling landscape 2026-11-19:
 [herdr]: https://github.com/herdrdev/herdr
 [herdr-agent-support]: https://herdr.dev/docs/add-herdr-support/
 [zeron]: https://github.com/zeronsh/zeron
+
+RAG and retrieval refresh (§7) — first-party pages read 2026-11-21:
+
+| Source | Content |
+|---|---|
+| [arXiv:2005.11401][rag-paper] abstract page | Original RAG definition: sequence-to-sequence model plus Wikipedia index and neural retriever |
+| [Cormack et al. 2009][rrf-paper] PDF (read via `pdftotext`) | RRF definition, k = 60 fixed in a pilot, near-optimal in its table |
+| [arXiv:2404.16130][graphrag-paper] abstract page | Graph index, community summaries, claimed comprehensiveness/diversity gains |
+| [arXiv:1901.04085][bert-rerank] · [arXiv:2310.11511][self-rag] · [arXiv:2501.09136][agentic-rag-survey] abstract pages | BERT passage re-ranking; Self-RAG reflection tokens; agentic RAG survey |
+| [Elasticsearch RRF][es-rrf] · [OpenSearch hybrid search][os-hybrid] · [Qdrant hybrid queries][qdrant-hybrid] · [Weaviate hybrid search][weaviate-hybrid] · [pgvector README][pgvector-readme] | Documented hybrid fusion modes and defaults |
+| `gh api` repo, release and LICENSE reads, 2026-11-21 | Stars, versions and licenses for the §7 entries touched |
+
+[rag-paper]: https://arxiv.org/abs/2005.11401
+[rrf-paper]: http://cormack.uwaterloo.ca/cormacksigir09-rrf.pdf
+[graphrag-paper]: https://arxiv.org/abs/2404.16130
+[bert-rerank]: https://arxiv.org/abs/1901.04085
+[self-rag]: https://arxiv.org/abs/2310.11511
+[agentic-rag-survey]: https://arxiv.org/abs/2501.09136
+[es-rrf]: https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion
+[os-hybrid]: https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/index/
+[qdrant-hybrid]: https://qdrant.tech/documentation/concepts/hybrid-queries/
+[weaviate-hybrid]: https://docs.weaviate.io/weaviate/search/hybrid
+[pgvector-readme]: https://github.com/pgvector/pgvector#hybrid-search
