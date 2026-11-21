@@ -99,5 +99,48 @@ class CheckAnchorsTests(unittest.TestCase):
         self.assertEqual(dc.check_anchors(self.DOCS), ["docs/a.md:3: #gone not found in docs/b.md"])
 
 
+class HubCoverageTests(unittest.TestCase):
+    DOCS = {
+        "docs/_topics/README.md": "# Hubs\n\n| [m](memory.md) | x |\n",
+        "docs/_topics/memory.md": (
+            "# Memory\n\n| Doc | Note |\n|---|---|\n"
+            "| [L § 4](../non-cc/frameworks/l-landscape.md#4-memory) | catalog |\n"
+            "| [L § 4](../non-cc/frameworks/l-landscape.md#4-memory) | product B, see also [z](../sdlc-lcm/z-analysis.md) |\n"
+            "| [L § 7](../non-cc/frameworks/l-landscape.md#7-rag) | other section |\n"
+            "\nSee [L](../non-cc/frameworks/l-landscape.md) and, again, [L](../non-cc/frameworks/l-landscape.md).\n"
+            "Graph rows live in [L](../non-cc/frameworks/l-landscape.md).\n"
+        ),
+        "docs/non-cc/frameworks/l-landscape.md": "# L\n## 4. Memory\n## 7. RAG\n",
+        "docs/non-cc/frameworks/x-analysis.md": "# X\n",
+        "docs/non-cc/agents/p-analysis.md": "# P\n",
+        "docs/non-cc/agents/q-landscape.md": "# Q\n",
+        "docs/sdlc-lcm/z-analysis.md": "# Z\n",
+        "docs/sdlc-lcm/lcm-spec.md": "# Spec\n",
+        "docs/sdlc-lcm/release-runbook.md": "# Runbook\n",
+        "docs/sdlc-lcm/orphan-analysis.md": "# O\n",
+        "docs/architecture.md": "# A\n",
+    }
+
+    def test_exemptions_follow_d6(self):
+        for path in ("docs/architecture.md", "docs/non-cc/agents/p-analysis.md",
+                     "docs/non-cc/frameworks/x-analysis.md", "docs/sdlc-lcm/lcm-spec.md",
+                     "docs/sdlc-lcm/release-runbook.md"):
+            self.assertTrue(dc.hub_exempt(path), path)
+        for path in ("docs/non-cc/agents/q-landscape.md", "docs/non-cc/frameworks/l-landscape.md",
+                     "docs/sdlc-lcm/orphan-analysis.md"):
+            self.assertFalse(dc.hub_exempt(path), path)
+
+    def test_unhubbed_lists_non_exempt_content_docs_no_hub_links(self):
+        # z is hubbed through a link inside a row's description; the hub index is not a hub.
+        self.assertEqual(dc.unhubbed(self.DOCS), ["docs/non-cc/agents/q-landscape.md",
+                                                  "docs/sdlc-lcm/orphan-analysis.md"])
+
+    def test_duplicate_rows_are_same_hub_doc_and_section(self):
+        self.assertEqual(dc.check_hub_duplicates(self.DOCS), [
+            "docs/_topics/memory.md:6: duplicate row for docs/non-cc/frameworks/l-landscape.md#4-memory "
+            "(first at line 5); merge them",
+        ])
+
+
 if __name__ == "__main__":
     unittest.main()

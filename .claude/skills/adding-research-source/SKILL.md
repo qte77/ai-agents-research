@@ -28,8 +28,9 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
      coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols);
      add the index row under that section
    - Security / governance / identity / lifecycle → `docs/sdlc-lcm/<topic>-landscape.md`
-   - Whatever the bucket: if the doc is about memory, knowledge graphs, RAG, code tooling or
-     visualization, add a row to the matching `docs/_topics/<hub>.md` (pointer + one line, no content)
+   - Whatever the bucket: add a row to every matching hub listed in `docs/_topics/README.md`
+     (pointer + one line, no content; one row per doc and section). Only CONTRIBUTING's hub
+     exemptions may skip this, and `make check_coverage` holds the unhubbed count to its ratchet
    - **Extend, don't create** when a landscape already covers the area (dup-check with `git grep`);
      synthesis labels (e.g. "company brain") → extend, never standalone. Spans both dirs → deeper
      analysis in one, cross-ref from the other.
