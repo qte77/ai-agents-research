@@ -23,6 +23,7 @@ lives in the linked docs.
 | [data.md](data.md) | Database access and text-to-SQL, lakehouses, semantic layers and catalogs, graph and vector stores |
 | [agentic-web.md](agentic-web.md) | Browser and computer-use agents, fetching and scraping, agent identity, access and payments |
 | [management.md](management.md) | Agent management: fleet policy, registries, cost attribution, identity, licences, lifecycle |
+| [knowledge-management.md](knowledge-management.md) | Wikis, LLM-maintained knowledge bases, knowledge-organisation methods, frontmatter schemas, enterprise knowledge layers |
 
 To score the tools behind these hubs, use the [agent substrate rubric](../sdlc-lcm/agent-substrate-rubric.md) (shared, distributed, reproducible, adaptable, versionable, traceable).
 The scored rows are read together in the [agent substrate reference architecture](../sdlc-lcm/agent-substrate-reference-architecture.md) (evidence matrix per subject and property, layers, open cells).

@@ -84,6 +84,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [research-agents-landscape.md](knowledge-management/research-agents-landscape.md) | Research/discovery agents catalog (STORM, GPT-Researcher, Elicit, FutureHouse, OpenScholar, PaperQA2) + mapping to CC's /deep-research harness | — | Mixed |
 | [open-knowledge-format-analysis.md](knowledge-management/open-knowledge-format-analysis.md) | Open Knowledge Format (Google Cloud agent-readable data-catalog spec, v0.2) | — (spec) | Yes (Apache-2.0) |
 | [opennote-analysis.md](knowledge-management/opennote-analysis.md) | Opennote (AI tutor in notes; video lessons; YC S25, Llama-backed) | No (hosted) | Partial (MIT SDKs; closed core) |
+| [knowledge-organisation-methods-landscape.md](knowledge-management/knowledge-organisation-methods-landscape.md) | Knowledge-organisation methods (maps of content, backlinks, Zettelkasten, PARA, Diátaxis, Obsidian, Logseq) and frontmatter schemas compared | n/a | n/a |
 
 ## Reference & Background
 
