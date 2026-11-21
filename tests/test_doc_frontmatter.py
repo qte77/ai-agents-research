@@ -65,6 +65,12 @@ class CheckDocTests(unittest.TestCase):
         self.assertEqual(df.check_doc(GOOD.replace("status: assess", "status: done")),
                          ["status not in the lifecycle vocabulary (CONTRIBUTING §2): done"])
 
+    def test_source_is_one_url(self):
+        self.assertEqual(df.check_doc(GOOD.replace("source: https://x.y", "source: https://a.b, https://c.d")),
+                         ["source must be one URL (others go in the Sources section): https://a.b, https://c.d"])
+        self.assertEqual(df.check_doc(GOOD.replace("source: https://x.y", "source: vendor docs")),
+                         ["source must be one URL (others go in the Sources section): vendor docs"])
+
 
 if __name__ == "__main__":
     unittest.main()
