@@ -1,6 +1,6 @@
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, file-read deduplication, cross-session cost control, source enrichment, provider management, injection scanning, permission auto-approval, session-workflow enforcement. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
+purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, cross-session cost control, source enrichment, provider management, session-workflow enforcement. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
@@ -44,60 +44,18 @@ A layered approach to keeping context in Claude's ~75k-token "smart zone" via de
 | **2 — Native hook filters (DIY)** | `run_silent()` PostToolUse bash wrapper: captures stdout to a temp file, emits `✓ <desc>` on exit 0, surfaces full output only on non-zero exit; pair with failFast flags (`pytest -x`, `jest --bail`, `go test -failfast`) to halt at first failure | CC PostToolUse hook | Must be written per project; no packaging or reuse mechanism built in |
 | **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); independently verified zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
 | **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity | See [CC-community-skills-landscape.md][skills-landscape] | Output-side only; does not reduce tool or shell output |
-| **5 — Context/prompt compression (library)** | Prune low-information tokens from the prompt before the model call — [LLMLingua][llmlingua] (perplexity-based; LLMLingua-2 is task-agnostic and 3–6× faster) and [Selective Context][selective-context] (self-information pruning). *Adjacent mechanism:* [semantic-router][semantic-router] skips the LLM call entirely for recognized intents (routing, not compression) | [LLMLingua][llmlingua] · [Selective Context][selective-context] · [semantic-router][semantic-router] | General-purpose libraries, **not CC-native** — wire in upstream via a model gateway/proxy or PreToolUse hook; Selective Context effectively unmaintained (last release 2024) |
+| **5 — Context/prompt compression (library)** | Prune low-information tokens from the prompt before the model call — [LLMLingua][llmlingua] (perplexity-based; LLMLingua-2 is task-agnostic and 3–6× faster). *Adjacent mechanism:* [semantic-router][semantic-router] skips the LLM call entirely for recognized intents (routing, not compression) | [LLMLingua][llmlingua] · [semantic-router][semantic-router] | General-purpose libraries, **not CC-native** — wire in upstream via a model gateway/proxy or PreToolUse hook |
 | **6 — Cross-session learned control** | Learns per repository which tools go unused, which facts the agent keeps rediscovering and when a turn loops, then prunes tools, injects facts or redirects | [TokenEconomizer](#tokeneconomizer-microsoft) | Early (v0.1.0); savings figures are the authors' own; tool pruning edits `.claude/settings.local.json` |
 
 Layer 1 cross-ref: [CC-changelog-feature-scan.md](../cc-native/configuration/CC-changelog-feature-scan.md) — env var inventory.
 Layer 2 cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — PostToolUse hook mechanism.
-Layer 5 note: compression (LLMLingua, Selective Context) shrinks the prompt *text*; routing (semantic-router) skips the LLM *call* for known intents. Both sit upstream of CC, not as plugins — the headline ratios (LLMLingua "up to 20×", Selective Context "~2× content") are first-party README claims, not measured against a CC workload.
+Layer 5 note: compression (LLMLingua) shrinks the prompt *text*; routing (semantic-router) skips the LLM *call* for known intents. Both sit upstream of CC, not as plugins — the headline ratios (LLMLingua "up to 20×") are first-party README claims, not measured against a CC workload.
 
 ---
 
 ## GSD (Get Shit Done)
 
-Meta-prompting, context engineering, and spec-driven development system for AI coding agents. Sits on top of CC (and 7 other runtimes) to manage context rot and orchestrate subagents ([gsd-repo][gsd-repo]).
-
-- **Stack**: Node.js >= 20, zero production deps, npm package `get-shit-done-cc` ([npm][gsd-npm])
-- **Stars**: 44.5K | **License**: MIT | **Version**: 1.30.0 (2026-03-27)
-- **Runtimes** (the project's own list; Gemini CLI [status 2026-11-18](../non-cc/coding-agents/gemini-cli-analysis.md)): Claude Code, OpenCode, Gemini CLI, Codex, Copilot, Cursor, Windsurf, Antigravity
-
-### Architecture
-
-18 specialized subagent prompts (planner, executor, verifier, debugger, UI auditor, assumptions analyzer, etc.) orchestrated via structured workflows. CC integration via hooks:
-
-| Hook | Purpose |
-|---|---|
-| `gsd-context-monitor.js` | Track context window fill level |
-| `gsd-prompt-guard.js` | Validate prompt quality before execution |
-| `gsd-workflow-guard.js` | Enforce workflow phase transitions |
-| `gsd-statusline.js` | Status display |
-| `gsd-check-update.js` | Version check |
-
-### Key Differentiators
-
-- **Context engineering**: Manages context rot during long sessions — the core problem GSD solves
-- **Spec-driven**: Structured specs → planning → execution → verification loop
-- **Multi-runtime**: Broadest runtime support (8 agents) in the space
-- **Headless SDK**: `gsd-sdk` (v1.30.0) enables autonomous/CI execution
-
-### Known Gaps (77 open issues)
-
-| Issue | Severity |
-|---|---|
-| [#1451][gsd-1451] Worktree merge overwrites earlier worktrees | Bug — data loss |
-| [#1457][gsd-1457] Verifier accepts circular tests and `it.skip` | Verification integrity |
-| [#1459][gsd-1459] Phases marked Complete without real verification | Verification integrity |
-| [#1461][gsd-1461] settings.json overwritten on update | Config preservation |
-| [#1431][gsd-1431] Agents present unvalidated assumptions as decisions | Reliability |
-| [#1466][gsd-1466] Hardcoded `--base main` in ship.md | Portability |
-
-### Adoption Considerations
-
-**Strengths**: Broadest multi-runtime support, active development (5 releases in 10 days), large community (44.5K stars), pragmatic philosophy (anti-enterprise-ceremony).
-
-**Risks**: Verification integrity issues undermine core promise ([#1457][gsd-1457], [#1459][gsd-1459]). Agent hallucination/assumption problem ([#1431][gsd-1431]). SDK is early-stage. Update process erodes user config ([#1461][gsd-1461]).
-
-Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md), [CC-community-skills-landscape.md](CC-community-skills-landscape.md)
+GSD (Get Shit Done, a meta-prompting and spec-driven development system for Claude Code) is archived: its repository ([gsd-repo][gsd-repo], archived, last push 2026-05-31, ~64K stars, `gh api` 2026-11-21) states that development continues as GSD Core in a separate repository ([open-gsd/gsd-core][gsd-core]). The detailed entry (architecture, open-issue review) was shortened in the 2026-11-21 pruning pass; see the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter).
 
 ---
 
@@ -135,31 +93,6 @@ Layered system: skills compose into agents, agents are dispatched by command shi
 - Quality varies across 156 skills — not all independently validated
 
 Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) (§ Superpowers) — the closest peer at equivalent scale (~135K★), methodology-first vs. this collection's framework-first packaging.
-
----
-
-## Boucle Read-Once Framework
-
-**Repo**: [Bande-a-Bonnot/Boucle-framework][boucle] | **License**: MIT
-
-PreToolUse hook that deduplicates file reads within a session. When Claude requests a file already read in the current context, the hook blocks the redundant read and returns a cache notice instead.
-
-### How It Works
-
-1. **PreToolUse hook** intercepts `Read` tool calls
-2. Checks if file path was already read in the current session
-3. If cached: blocks the read, returns "file already in context" (~2K tokens saved per blocked re-read)
-4. **PostCompact integration**: clears the cache after `/compact` (compacted context no longer contains the file contents)
-
-### Token Savings
-
-~40% token reduction on file-read-heavy sessions. Savings depend on how often Claude re-reads files — common in long sessions with context compaction cycles.
-
-### Configuration
-
-Default mode is **warn** (logs but does not block) to avoid conflicts with the Edit tool, which requires a preceding Read. Switch to **block** mode after validating it doesn't break your edit workflow.
-
-Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — PreToolUse hook mechanism Boucle relies on
 
 ---
 
@@ -213,52 +146,6 @@ Available for Windows (MSI/portable), macOS (DMG/Homebrew), and Linux (deb/rpm/A
 Only tool that manages provider configuration **across multiple AI CLIs** from a single GUI. Where RTK optimizes output and GSD orchestrates workflows, CC Switch operates at the **infrastructure layer** — which provider, which model, which API key, across which tools.
 
 Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) — CC's native provider config
-
----
-
-## Parry Guard (vaporif)
-
-**Repo**: [vaporif/parry-guard][parry-guard] | **Stars**: 44 | **License**: MIT (optional Llama Prompt Guard 2 model under a separate Llama Community License) | **Version**: v0.1.5
-
-Rust prompt-injection / secrets / data-exfiltration scanner wired into CC hooks with **local** ML inference plus deterministic checks — no cloud calls at scan time.
-
-### How It Works
-
-1. Six ordered detection layers: Unicode invisible-char/homoglyph/RTL detection → Aho-Corasick known-injection-phrase matching → 40+ secret-pattern regexes → DeBERTa v3 ML classification (256-char chunks, default threshold 0.7) → bash exfiltration detection via tree-sitter AST (network sinks, base64/hex obfuscation, DNS tunneling) → the same source-to-sink analysis across 16 scripting languages
-2. Three hook events: **PreToolUse** (7 ordered checks incl. taint enforcement, CLAUDE.md scanning, exfil/destructive-op/sensitive-path blocking, injection scan of Write/Edit/Bash/MCP input), **PostToolUse** (scans tool *output*, auto-taints the project on hit), **UserPromptSubmit** (audits `.claude/` for dangerous permissions and injected hook scripts)
-3. Fail-closed (undetermined = unsafe); scan cache in `~/.parry-guard/` (~8ms hit vs 70ms+ fresh inference, 30-day TTL)
-
-### Adoption Considerations
-
-- **Claude Code hooks today** — the published v0.1.5 release is Claude-only ("wait for 0.2.0 for Codex support" per its release notes); Codex wiring exists only on unreleased `main`
-- Requires a HuggingFace token: the ProtectAI DeBERTa v3 model is gated (required); Meta's Llama Prompt Guard 2 (`full` mode only) needs separate Meta license approval
-- Latency/speedup numbers are author-self-reported (no independent benchmark); the README itself hedges "early development — bugs and false positives happen"
-- Install: `uvx parry-guard hook`, Nix flake (home-manager module), `cargo install`, or release binaries
-
-Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md) — hook mechanism; [agent-frameworks-infrastructure-landscape.md §8](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md) — LLM Guard, the library-level (app-side) scanner on the same DeBERTa model family
-
----
-
-## Dippy (ldayton)
-
-**Repo**: [ldayton/Dippy][dippy] | **Stars**: 242 | **License**: MIT | **Version**: v0.2.7
-
-PreToolUse hook (matcher `Bash`) that statically analyzes shell commands with a hand-written bash parser and **auto-approves** ones classified safe — attacking permission-prompt fatigue from the approve side where Parry Guard attacks it from the block side.
-
-### How It Works
-
-1. Parses the command with the author's own zero-dependency parser (Parable, vendored by pinned commit + sha256 — a deliberate supply-chain pin)
-2. Auto-approves read-only pipelines, chained reads, safe redirects; blocks subshell injection, hidden mutations, cloud-destructive ops
-3. Two-tier config (`~/.dippy/config` global + `.dippy` project root) with directives like `deny python "Use uv run python, which runs in project environment"` — deny rules carry **custom steering messages** that redirect Claude instead of failing silently
-4. Ships a second entry point, `dippy-statusline`
-
-### Adoption Considerations
-
-- Reduces prompts; it is not a security boundary — no published false-allow/false-block rate, only the README's curated approve/block examples
-- The README's "up to 40% faster development" is an unbenchmarked marketing claim — disregard
-- Install via Homebrew tap (`brew tap ldayton/dippy`) or clone; Python ≥3.8, zero runtime dependencies
-
-Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-system-analysis.md)
 
 ---
 
@@ -504,58 +391,9 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ---
 
-## cogit (erensrtky)
-
-**Repo**: [erensrtky/cogit][cogit] | **Stars**: 122★/13 forks (`gh api`, 2026-11-12) | **License**:
-MIT | Created 2026-10-27 — two weeks old at this check
-
-"Git for the intent behind agent-written code" (README). cogit runs as a plugin in Claude Code or
-Codex CLI, through the host agent's own hooks, recording every message you send the agent as a
-*thought commit*: the question, the outcome, the decisions made and the options rejected, and
-which earlier message it continues. A `Thought:` trailer on each code commit ties it back to that
-record, so `cogit why`, `cogit blame` and `cogit show <sha>` can walk from any line of code back to
-the reason it exists. A background small model writes the record as you work — by default it never
-interrupts the agent — and, on an "Economical" setting, the author's own measurement puts the cost
-"under 2 cents per 20 messages."
-
-### How It Integrates With Claude Code and Codex
-
-- Install: `npm install -g @cogit/cli`, then in Claude Code, `/plugin install cogit --marketplace
-  erensrtky/cogit`.
-- Needs Node 22.13+, a git repository, and Claude Code 2.1.275+ or Codex CLI 0.167+; works through
-  the host agent's own hook system so the record is written live, "not reconstructed from the diff
-  afterwards" (README). The README documents two harnesses today — Claude Code and Codex CLI, each
-  with its own install command below — not Claude Code alone.
-- `cogit open .` renders the recorded sessions as a git-graph-style map (branches, decisions, a
-  "Your turn" inbox); `cogit pr` writes a pull-request description from the recorded decisions and
-  rejected options rather than the raw chat, and `--install-action` adds a GitHub Action that posts
-  it on every PR.
-
-### Scope and Data
-
-The README is explicit about what cogit is not: not agent memory (OpenViking, Mem0 — those help
-the agent recall; cogit helps the human understand), not a token saver, not a code map (that's
-Graphify, cross-ref above), not an orchestrator, and not an AI review bot. It runs locally with no
-server or account; sharing the record with a team is opt-in per `cogit init`, and when enabled it
-pushes to the project's own repository outside normal branches rather than appearing in a pull
-request or `git status`. Key and token patterns in recorded messages are redacted, and `cogit
-prune` deletes old sessions.
-
-### Adoption Considerations
-
-**Strengths**: ties commits to the reasoning behind them without relying on the diff alone;
-cheap-by-design background recording; local-first with explicit, opt-in team sharing.
-
-**Risks**: brand-new (two weeks old), 122 stars, single-maintainer, Claude-Code-only today — no
-independent verification of the recorded-record accuracy was found.
-
-Not rubric-scored yet.
-
----
-
 ## Registry catch-up: awesome-list entries (2026-11-20)
 
-Seven entries that the community monitor flagged from the two awesome lists and that this corpus
+Five entries that the community monitor flagged from the two awesome lists and that this corpus
 did not yet cover. Star counts, licences and descriptions come from each repo's `gh api` record and
 `LICENSE` file on 2026-11-20; what each tool does is the repo's own description, not tested here.
 Not scored. Each flagged name's outcome (folded, covered or dropped, with a reason) is in [the K27 name-outcomes record](../../triage/community/2026-11-20-k27-name-outcomes.md).
@@ -567,8 +405,6 @@ Not scored. Each flagged name's outcome (folded, covered or dropped, with a reas
 | [skill-codex][skill-codex] | 1,479 | MIT | Claude Code skill that delegates prompts to Codex |
 | [claude-codex-settings][codex-settings] | 1,214 | Apache-2.0 | Shared Claude Code, Codex and Cursor configs, plugins and hooks |
 | [claude-code-docs (ericbuess)][docs-mirror] | 1,005 | MIT (per `LICENSE`) | Local mirror of the official Claude Code docs |
-| [ultraship][ultraship] | 124 | MIT | Plugin bundle for building and shipping production software (README: 43 skills, 37 audit tools; counts drift) |
-| [fable-baton][fable-baton] | 30 | MIT | Plugin that makes a top-tier model the orchestrator and tiered cheaper agents do the labour (a Fable-5-as-orchestrator design) |
 
 ---
 
@@ -589,15 +425,12 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | Tool | Layer | CC Integration | Approach | Maturity |
 |---|---|---|---|---|
 | **RTK** | Tool output compression | Hooks (transparent rewrite) | Reduce input noise | Stable (v0.33.1) |
-| **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Active (v1.30.0, rapid iteration) |
+| **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Archived; continues as GSD Core (`gh api` 2026-11-21) |
 | **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
-| **Boucle** | File read deduplication | PreToolUse hook | Prevent redundant reads | Early (MIT) |
 | **TokenEconomizer** | Cross-session cost control | Plugin hooks (6 events) + `settings.local.json` | Micro-skills, tool pruning, loop guard learned per repository | Early (v0.1.0, Apache-2.0) |
 | **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Archived (4,943 stars, `gh api` 2026-11-21) |
 | **Claude-Mem** | Persistent memory + compression (cross-agent) | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (115.2K stars, v15.13.0) |
 | **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
-| **Parry Guard** | Injection/secrets/exfil scanning | Hooks (PreToolUse + PostToolUse + UserPromptSubmit) | Local ML (DeBERTa v3) + AST/regex layers, fail-closed | Early (44 stars, v0.1.5) |
-| **Dippy** | Permission auto-approval | PreToolUse hook (Bash matcher) | Static bash-AST safe/unsafe classification + steerable deny messages | Active (242 stars, v0.2.7) |
 | **abide** | AGENTS.md rule enforcement | Hooks (Claude Code, Codex, OpenCode) | Per-edit/turn Jev decision-model question per rule, agent self-repairs | Early (457 stars, v0.0.4) |
 | **cc-sessions** | Session/workflow enforcement | Hooks + subagents + trigger phrases | DAIC tool-gating, task↔branch binding | Adopted but dormant (1,550 stars, v0.3.6, no commits since 2025-10) |
 | **TeamAI-CLI** | Team-shared AI config | Skill + CLI (git-backed shared repo) | Sync skills/rules/MCP/hooks across 15+ harnesses | Active (4,981 stars, v0.25.0) |
@@ -616,9 +449,23 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **human-review** | Visual review + feedback relay | Skill (any agent with skill support) | Google-Doc-style comments/edits batched to the waiting agent | Active (1,302 stars, v0.8.2) |
 | **Plannotator** | Plan/diff review + feedback relay | Plugin: `PermissionRequest` hook on `ExitPlanMode` + hooks module | Browser annotation, approve/deny with structured feedback; plan diffs between rounds | Active (10,062 stars, v0.28.61) |
 
-All twenty-eight address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
+All twenty-four address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
 Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-extended-context-analysis.md) — CC's built-in context compaction
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Boucle Read-Once Framework | 126 stars (`gh api` 2026-11-21); the README's "40%" appears only in a sample stats printout with no stated method, and it names no independent users | 2026-11-21 | <https://github.com/Bande-a-Bonnot/Boucle-framework> |
+| Parry Guard | 46 stars; no detection benchmark, only author-reported latency, and the README calls it early development; no named independent users | 2026-11-21 | <https://github.com/vaporif/parry-guard> |
+| Dippy | 244 stars; the README's "up to 40% faster" is unbenchmarked and no false-allow rate is published; no named independent users | 2026-11-21 | <https://github.com/ldayton/Dippy> |
+| cogit | 213 stars; repo created 2026-10-27; the README measures only its own recording cost, not a benefit, and names no independent users | 2026-11-21 | <https://github.com/erensrtky/cogit> |
+| ultraship | 124 stars; README reports no measured benefit and no named independent users | 2026-11-21 | <https://github.com/Houseofmvps/ultraship> |
+| fable-baton | 30 stars; its own benchmark (n=2 per cell, one small project) shows total cost about the same, so no measured net benefit | 2026-11-21 | <https://github.com/realgarit/fable-baton> |
+| Selective Context | 426 stars; not alive: last push 2024-02-12, only a release candidate (v0.1.0rc1, 2023-12-26); paper arXiv:2310.06201 | 2026-11-21 | <https://github.com/liyucheng09/Selective_Context> |
 
 ## Sources
 
@@ -626,16 +473,13 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 |---|---|
 | [RTK repository][rtk-repo] | CLI proxy, hook integration, benchmarks |
 | [rtk-ai/rtk#839][rtk-839] | Independent benchmark findings |
-| [GSD repository][gsd-repo] | Meta-prompting + context engineering framework |
+| [GSD repository][gsd-repo] · [GSD Core][gsd-core] | Meta-prompting + context engineering framework; archived, README points to GSD Core (`gh api` 2026-11-21) |
 | [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
-| [Boucle-framework][boucle] | Read-once file deduplication hook |
 | [TokenEconomizer][tokeneconomizer] · [paper][tokeneconomizer-paper] | Cross-session cost control plugin: README, `plugin/hooks/hooks.json`, v0.1.0 release (Apache-2.0; read 2026-11-09) |
 | [ByteRover CLI][byterover] | Portable memory layer for coding agents (MCP, context trees) |
 | [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
 | [Claude-Mem][claude-mem] | Persistent memory compression system, cross-agent (115.2K stars, v15.13.0; `gh api` 2026-11-09) |
 | [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
-| [Parry Guard][parry-guard] | CC-hook injection/secrets/exfil scanner, local DeBERTa + AST layers (44 stars, MIT; optional Llama-licensed model; v0.1.5, PyPI-verified) |
-| [Dippy][dippy] | PreToolUse bash auto-approval hook, zero-dep vendored parser (242 stars, MIT, v0.2.7) |
 | [abide][abide] | AGENTS.md rule enforcement via a Jev decision-model question per rule, per edit/turn, across Claude Code/Codex/OpenCode (457 stars, MIT) |
 | [SWE Refactor Bench (arXiv:2608.23564)][swe-refactor-bench] | 520 agent migrations, 3-stage verification, "Blindness" failure mode (abstract fetched 2026-09-30) |
 | GAO-25-107795 (`gao.gov/products/gao-25-107795`) | Federal legacy-system age (23–60 yrs) and 2019-modernization completion status (fetched 2026-09-30) |
@@ -645,7 +489,6 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (4,981 stars, MIT, v0.25.0) |
 | [human-review][human-review] | Visual HTML/Markdown review — comments and edits batched to the waiting agent (1,302 stars, MIT, v0.8.2) |
 | [Plannotator repository][plannotator] | README (integrations, privacy, sharing), `hooks.json`, `LICENSE-MIT`/`LICENSE-APACHE`, v0.28.61 release; `gh api` 2026-11-11 |
-| [cogit repository][cogit] | README (thought commits, scope, sharing), MIT `LICENSE`; `gh api` 2026-11-12 |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -660,8 +503,7 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 | [Claude-Code-Usage-Monitor][claude-monitor] | Predictive real-time usage monitor with P90-based limits (7.8K stars, MIT) |
 | [Context-Efficient Backpressure for Coding Agents][hlyr-backpressure] | 4-layer token-waste reduction ladder: env vars, hook filters, wrapper scripts, output-style skills (hlyr.dev, 2025-12-09) |
 | [LLMLingua][llmlingua] | Microsoft prompt-compression library (LLMLingua / LongLLMLingua / LLMLingua-2); README compression claims (6.3K stars, MIT) |
-| [Selective Context][selective-context] | Self-information prompt pruning; arXiv:2310.06201 (423 stars, MIT; unmaintained since 2024) |
-| Registry catch-up repos: [infrastructure showcase][infra-showcase] · [QualityLayer][codepro] · [skill-codex][skill-codex] · [claude-codex-settings][codex-settings] · [claude-code-docs][docs-mirror] · [ultraship][ultraship] · [fable-baton][fable-baton] | Stars, licences and descriptions from each repo's `gh api` record and `LICENSE`/README, 2026-11-20 |
+| Registry catch-up repos: [infrastructure showcase][infra-showcase] · [QualityLayer][codepro] · [skill-codex][skill-codex] · [claude-codex-settings][codex-settings] · [claude-code-docs][docs-mirror] | Stars, licences and descriptions from each repo's `gh api` record and `LICENSE`/README, 2026-11-20 |
 | [semantic-router][semantic-router] | Aurelio Labs semantic routing/decision layer — skips LLM calls for recognized intents (3.6K stars, MIT) |
 
 [graphify]: https://github.com/safishamsi/graphify
@@ -676,23 +518,14 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [rtk-repo]: https://github.com/rtk-ai/rtk
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
 [gsd-repo]: https://github.com/gsd-build/get-shit-done
-[gsd-npm]: https://www.npmjs.com/package/get-shit-done-cc
-[gsd-1451]: https://github.com/gsd-build/get-shit-done/issues/1451
-[gsd-1457]: https://github.com/gsd-build/get-shit-done/issues/1457
-[gsd-1459]: https://github.com/gsd-build/get-shit-done/issues/1459
-[gsd-1461]: https://github.com/gsd-build/get-shit-done/issues/1461
-[gsd-1431]: https://github.com/gsd-build/get-shit-done/issues/1431
-[gsd-1466]: https://github.com/gsd-build/get-shit-done/issues/1466
+[gsd-core]: https://github.com/open-gsd/gsd-core
 [ecc]: https://github.com/affaan-m/everything-claude-code
-[boucle]: https://github.com/Bande-a-Bonnot/Boucle-framework
 [tokeneconomizer]: https://github.com/microsoft/TokenEconomizer
 [tokeneconomizer-paper]: https://arxiv.org/abs/2610.22732
 [byterover]: https://github.com/campfirein/byterover-cli
 [byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
 [cc-switch]: https://github.com/farion1231/cc-switch
-[parry-guard]: https://github.com/vaporif/parry-guard
-[dippy]: https://github.com/ldayton/Dippy
 [abide]: https://github.com/coldteadotai/abide
 [typesafe-jev]: https://docs.typesafe.ai/
 [swe-refactor-bench]: https://arxiv.org/abs/2608.23564
@@ -701,14 +534,12 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [teamai-cli]: https://github.com/Tencent/teamai-cli
 [human-review]: https://github.com/petergyang/human-review
 [plannotator]: https://github.com/backnotprop/plannotator
-[cogit]: https://github.com/erensrtky/cogit
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
 [ccusage]: https://github.com/ryoppippi/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
 [llmlingua]: https://github.com/microsoft/LLMLingua
-[selective-context]: https://github.com/liyucheng09/Selective_Context
 [semantic-router]: https://github.com/aurelio-labs/semantic-router
 [cc-settings-ref-git]: https://code.claude.com/docs/en/settings-reference#includegitinstructions
 [infra-showcase]: https://github.com/diet103/claude-code-infrastructure-showcase
@@ -716,5 +547,3 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 [skill-codex]: https://github.com/skills-directory/skill-codex
 [codex-settings]: https://github.com/fcakyon/claude-codex-settings
 [docs-mirror]: https://github.com/ericbuess/claude-code-docs
-[ultraship]: https://github.com/Houseofmvps/ultraship
-[fable-baton]: https://github.com/realgarit/fable-baton
