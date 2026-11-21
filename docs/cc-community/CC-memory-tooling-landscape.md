@@ -233,7 +233,7 @@ Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run,
 ### Architecture
 
 - **Vectors + graph + FTS in one file**: HNSW/IVF/flat/binary vector indexes, FTS5 full-text, hybrid and graph retrieval; an `EmbeddedConfig` mode opens 100k 768-d vectors in 0.28s with a 193MB heap for small devices
-- **RDF knowledge graph**: SPARQL 1.1/1.2, RDFS + Web Ontology Language (OWL) 2 RL inference, SHACL Core + SHACL-SPARQL — the README states it passes the W3C SPARQL, RDF 1.2 and Shapes Constraint Language (SHACL) test suites (RDFS/OWL 2 RL covered by the repo's own tests)
+- **RDF knowledge graph**: SPARQL 1.1/1.2, RDFS + OWL 2 RL inference (OWL = Web Ontology Language), SHACL Core + SHACL-SPARQL — the README states it passes the W3C SPARQL, RDF 1.2 and Shapes Constraint Language (SHACL) test suites (RDFS/OWL 2 RL covered by the repo's own tests)
 - **Versioned history**: every entity/relation/triple/schema change is kept with `as_of` queries on SPARQL, find, expand and Cypher, plus a live 3D graph viewer (`serve_graph_3d`) with an Entity page showing why a value is in effect and what it replaced
 - **`import_agent_memory`**: pulls in what Claude Code, Codex and DeepSeek Harness already remember — memory notes, `CLAUDE.md`/`AGENTS.md`, Codex memories, optionally past sessions distilled into memories
 

@@ -153,7 +153,7 @@ Prices read from each vendor's pricing page on **2026-11-18**; they change often
 
 Notes: Serper's table lists credits per plan; we read one credit as one query (the excerpt we read did not say). Per-1K figures for SerpAPI and Serper are our division of plan price by plan quota, not figures the vendors publish.
 
-**When to use what** (a rule of thumb resting on vendor positioning, not on an independent benchmark): Exa for semantic/Retrieval-Augmented Generation (RAG) retrieval, Tavily for agent-oriented search with cited results, Brave for privacy-conscious search. The Decision Flowchart below repeats this.
+**When to use what** (a rule of thumb resting on vendor positioning, not on an independent benchmark): Exa for semantic/RAG retrieval, Tavily for agent-oriented search with cited results, Brave for privacy-conscious search. The Decision Flowchart below repeats this.
 
 Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-hosting SearXNG as a keyless search backend for agent and deep-research workflows.
 

@@ -32,7 +32,7 @@ them today; AWS renames often.
 
 ## Build and deploy: AgentCore services
 
-- **Runtime** hosts agents and tools serverless with per-session isolation and supports MCP and A2A, the Agent-to-Agent Protocol (A2A
+- **Runtime** hosts agents and tools serverless with per-session isolation and supports MCP and A2A (Agent-to-Agent Protocol; A2A
   governance and version caveats, including that AgentCore's sample pins an older `a2a-sdk` line:
   [ag-ui-protocol-landscape.md § A2A][a2a]); it names
   CrewAI, LangGraph, LlamaIndex, Google ADK, OpenAI Agents SDK and Strands Agents, and models including

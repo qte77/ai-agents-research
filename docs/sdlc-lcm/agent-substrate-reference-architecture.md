@@ -61,7 +61,7 @@ Best score per subject and property, one exemplar row each, derived from the cen
 |---|---|---|---|---|---|---|
 | Memory | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] | yes — [Beads][fw4] |
 | Ontology | yes — [AWS context-ontology-accelerator][ont] | yes — [AWS context-ontology-accelerator][ont] | yes — [open-ontologies][ont] | yes — [AWS context-ontology-accelerator][ont] | yes — [open-ontologies][ont] | yes — [AWS context-ontology-accelerator][ont] |
-| Graphs/Retrieval-Augmented Generation (RAG)/hybrid | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | partial — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] |
+| Graphs/RAG/hybrid | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | partial — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] | yes — [Omnigraph][fw7p] |
 | Context | partial — [Redis Iris Context Retriever][redis-ctx]; [CLAUDE.md][ccmem] under rule 6 | partial — [Redis Iris Context Retriever][redis-ctx]; [CLAUDE.md][ccmem] under rule 6 | open (best: no data) | yes — [CLAUDE.md][ccmem] | yes — [context-engineering-intro][cei] | partial — [CLAUDE.md][ccmem] |
 | Skills | yes — [org skill provisioning][orgskills] | yes — [org skill provisioning][orgskills] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] | yes — [SkillLift][skilllift] |
 | Plugins | yes — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | partial — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | yes — [OpenAI plugins][oaiplug] | yes — [Code Modernization][codemod] |
@@ -199,7 +199,7 @@ corpus's own: shared, distributed context and skills.
 |---|---|
 | [agent-substrate-rubric.md][rubric] | Properties, subjects, scoring rules |
 | [Plan 0009][plan] | Coverage gaps (row C), graph-system decision (row G), row Y done-when |
-| [agent-frameworks-infrastructure-landscape.md][fw1] | 22 rows: harness (§1–2), memory (§4), graphs/RAG (§7) |
+| [agent-frameworks-infrastructure-landscape.md][fw1] | 22 rows: harness (§1–2), memory (§4), graphs/RAG (§7; RAG = Retrieval-Augmented Generation) |
 | [semantic-layers-data-catalog-landscape.md][ont] | 5 ontology rows |
 | [system-1-decision-models-landscape.md][laya] | 7 decision-model rows |
 | [CC-memory-system-analysis.md][ccmem] | 4 context rows; ACE-FCA workflow and review gates |

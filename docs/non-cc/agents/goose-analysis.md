@@ -111,7 +111,7 @@ names no specific projects): six in total, including Goose; the other five —
 - **Model Context Protocol (MCP)** — "a protocol for seamless integration between LLM applications and external data sources"
 - **AGENTS.md** — "a simple, open format for guiding coding agents"
 - **agentgateway** — "secure, scalable connections between AI agents, models, tools, and APIs across ecosystems"
-- **Agent2Agent (A2A)** — agent-to-agent communication and task exchange across platforms
+- **Agent2Agent ([A2A](../../glossary.md#agents-and-protocols))** — agent-to-agent communication and task exchange across platforms
 - **Agent Router** — "an open source AI gateway built on Envoy that connects applications to models and MCP tools"
 
 **Relevance to skills/plugins standards**: indirect, not direct. AAIF hosts no dedicated Agent-Skills
@@ -151,7 +151,7 @@ packaging agent capabilities themselves.
 | [Goose install & CLI docs][install] | Install, CLI commands, provider env vars |
 | [AAIF homepage][aaif-home] | Working groups, foundation framing (fetched 2026-09-30) |
 | [AAIF charter][aaif-charter], [board][aaif-board], [Technical Committee][aaif-tc], [members][aaif-members] | Governance: board, Technical Committee, per-project TSCs, membership tiers (checked 2026-10-01) |
-| [AAIF projects page][aaif-projects] | 6 hosted projects including Goose: MCP, AGENTS.md, agentgateway, Agent-to-Agent Protocol (A2A), Agent Router (fetched 2026-09-30) |
+| [AAIF projects page][aaif-projects] | 6 hosted projects including Goose: MCP, AGENTS.md, agentgateway, A2A, Agent Router (fetched 2026-09-30) |
 | [Agent Plugins standard][agent-plugins] | Cross-ref: the skills/plugin-packaging standard AAIF does *not* host |
 
 [repo]: https://github.com/aaif-goose/goose
