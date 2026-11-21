@@ -1,6 +1,6 @@
 ---
 title: CC Memory Tooling Landscape
-purpose: Persistent cross-session memory tools that integrate with Claude Code — Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, CortexDB, Core, deja-vu, engrim, Leviathan), plus second-brain vault tools (gbrain, COG-second-brain).
+purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover (archived), Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, CortexDB, Core, deja-vu, engrim, Leviathan), plus second-brain vault tools (gbrain, COG-second-brain).
 status: research
 created: 2026-06-14
 updated: 2026-11-21
@@ -277,7 +277,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 **Repo**: [timgordontg/engrim][engrim] | **Stars**: 283 | **License**: MIT | **Version**: 1.4.11
 
-Local-first SQLite episodic-memory store aimed at the "200,000-token context window trap": rather than replaying raw transcripts, it distills project memory into "4,000 characters of high-precision, curated episodic working memory" in a single file (`~/.engrim/memory.db`, WAL mode, restrictive POSIX permissions) ([README][engrim]).
+Local-first SQLite episodic-memory store aimed at the "200,000-token context window trap": rather than replaying raw transcripts, it distills project memory into "4,000 characters of high-precision, curated episodic working memory" in a single file (`~/.engrim/memory.db`, WAL mode, restrictive POSIX permissions) ([README][engrim]). Its README reports a measured result from one project: across 105 sessions on a 50,000-line codebase, context fell from about 153,000 tokens to under 1,000 (self-reported, `gh api` 2026-11-21).
 
 ### Architecture
 
@@ -289,7 +289,7 @@ Local-first SQLite episodic-memory store aimed at the "200,000-token context win
 
 **Strengths**: Only tool in this doc with a Google Antigravity adapter (alongside Claude Code, Cursor, Codex CLI, Copilot CLI, OpenCode, and Windsurf — seven environments total); per-entry `origin_agent` provenance lets a team see which agent contributed a given decision; tiny on-disk footprint (single SQLite file); MIT, with an optional commercial variant for teams rather than a required upsell.
 
-**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K (16,057 on 2026-11-17) and deja-vu's 935). No third-party or public benchmark number, unlike ByteRover/MemPalace/deja-vu.
+**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K (16,057 on 2026-11-17) and deja-vu's 935). No third-party or public benchmark number, unlike MemPalace/deja-vu.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
