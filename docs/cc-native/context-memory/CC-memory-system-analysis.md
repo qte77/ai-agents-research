@@ -5,7 +5,7 @@ purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) 
 created: 2026-03-07
 updated: 2026-11-20
 validated_links: 2026-11-12
-status: generally-available
+status: adopt
 ---
 
 **Details:** Generally available (CLAUDE.md); Auto memory enabled by default

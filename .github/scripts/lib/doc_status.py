@@ -19,18 +19,11 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-# Normalized leading token of the legacy body `**Status**:` badge (kebab-case).
-# Analysis/reference/research docs use the maturity set; plan docs (docs/plans/)
-# add draft|approved|superseded|done. Keep in sync with CONTRIBUTING.md
-# "Frontmatter status" and docs/plans/2026-07-05-0003-status-frontmatter-migration.md.
-DOC_STATUS_VOCAB = frozenset({
-    "adopt", "trial", "assess", "hold",
-    "research", "reference", "research-preview", "beta",
-    "generally-available", "stable", "public-preview", "available",
-    "verified", "proprietary", "source-available", "open-source",
-    "active-development", "completed", "done", "archived",
-})
-PLAN_STATUS_VOCAB = frozenset({"draft", "approved", "superseded"})
+# Lifecycle status for content docs; plan docs (docs/plans/) use their own four.
+# Release, licence and version live on the **Details:** line, not here (plan 0015 F3).
+# Keep in sync with CONTRIBUTING.md §2 "Frontmatter status".
+DOC_STATUS_VOCAB = frozenset({"adopt", "trial", "assess", "hold", "research", "reference", "archived"})
+PLAN_STATUS_VOCAB = frozenset({"draft", "approved", "done", "superseded"})
 VOCAB = DOC_STATUS_VOCAB | PLAN_STATUS_VOCAB
 
 _FRONTMATTER = re.compile(r"^---\s*\n(.*?)\n---", re.DOTALL)

@@ -1,6 +1,6 @@
 ---
 title: Business API & MCP Server Integrations
-description: Landscape of business-oriented MCP servers for Claude Code — payments, accounting, CRM, ERP, legal/IP, and universal hubs. First-party and official sources prioritized.
+purpose: Landscape of business-oriented MCP servers for Claude Code — payments, accounting, CRM, ERP, legal/IP, and universal hubs. First-party and official sources prioritized.
 created: 2026-03-26
 updated: 2026-11-12
 validated_links: 2026-07-23

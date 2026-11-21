@@ -1,6 +1,6 @@
 ---
 title: CC Bash Mode — CLI `!` Prefix and Dynamic Context Injection in Skills/Rules
-source: https://code.claude.com/docs/en/interactive-mode, https://code.claude.com/docs/en/skills
+source: https://code.claude.com/docs/en/interactive-mode
 purpose: Document bash mode usage in CLI interactive sessions and dynamic shell execution within skills and rules files.
 created: 2026-03-12
 updated: 2026-11-09

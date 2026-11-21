@@ -2,7 +2,6 @@
 title: 12 Agentic Harness Patterns (Bilgin Ibryam)
 source: https://generativeprogrammer.com/p/12-agentic-harness-patterns-from
 purpose: Taxonomy of reusable harness-level patterns extracted from the Claude Code source leak.
-category: analysis
 status: research
 created: 2026-04-06
 updated: 2026-11-18

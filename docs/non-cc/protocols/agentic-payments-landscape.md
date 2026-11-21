@@ -1,7 +1,6 @@
 ---
 title: Agentic Payments Landscape — Machine-Native Payment Rails for Agents
 purpose: Survey of emerging agent payment protocols and rails (x402, Google AP2, Stripe MPP, L402, ACP, UCP, Visa and Mastercard agent programmes) that let autonomous agents pay for API/tool access or buy goods without a human in the loop per transaction.
-category: landscape
 created: 2026-07-08
 updated: 2026-11-09
 validated_links: 2026-11-09

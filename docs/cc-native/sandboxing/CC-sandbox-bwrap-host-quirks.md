@@ -1,8 +1,7 @@
 ---
 title: CC Sandbox bwrap Host Quirks — Phantom Files and AppArmor Friction
-description: bwrap-on-Linux friction independent of execution context (local, WSL2, Codespaces) — phantom dotfile leakage and AppArmor user-namespace prerequisites.
-source: https://github.com/anthropics/claude-code/issues/17727, https://github.com/anthropics/claude-code/issues/17087, https://github.com/anthropics/sandbox-runtime/issues/139
-category: analysis
+purpose: bwrap-on-Linux friction independent of execution context (local, WSL2, Codespaces) — phantom dotfile leakage and AppArmor user-namespace prerequisites.
+source: https://github.com/anthropics/claude-code/issues/17727
 created: 2026-05-02
 updated: 2026-09-23
 validated_links: 2026-09-23

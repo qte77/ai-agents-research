@@ -1,11 +1,11 @@
 ---
 title: CC Web Setup, Authentication & API Key Usage
-source: https://code.claude.com/docs/en/claude-code-on-the-web, https://code.claude.com/docs/en/authentication, https://code.claude.com/docs/en/cli-usage, https://code.claude.com/docs/en/setup, https://code.claude.com/docs/en/web-quickstart, https://platform.claude.com/docs/en/manage-claude/authentication, https://platform.claude.com/docs/en/manage-claude/workspaces, https://platform.claude.com/docs/en/api/rate-limits, https://platform.claude.com/docs/en/manage-claude/usage-cost-api, https://platform.claude.com/docs/en/manage-claude/api-and-data-retention, https://platform.claude.com/docs/en/api/overview, https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/legal-and-compliance, https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans
+source: https://code.claude.com/docs/en/claude-code-on-the-web
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive usage, connect remote sessions, and the Claude Console platform-admin surface (workspaces, rate limits, cost reporting, data retention) a headless org API key touches.
 created: 2026-03-24
 updated: 2026-11-18
 validated_links: 2026-11-15
-status: research-preview
+status: assess
 ---
 
 **Details:** Research preview (web), GA (CLI auth, Console API keys, workspaces)

@@ -5,10 +5,10 @@ purpose: Evaluate the Claude Chrome extension (Claude in Chrome) for relevance t
 created: 2026-03-07
 updated: 2026-11-19
 validated_links: 2026-11-19
-status: generally-available
+status: assess
 ---
 
-**Details:** all paid plans; first-party pages read 2026-11-19, no hands-on testing
+**Details:** Generally available; all paid plans; first-party pages read 2026-11-19, no hands-on testing
 
 ## What It Is
 

@@ -1,14 +1,13 @@
 ---
 title: CC Print Mode Gotchas
-source: empirical testing (cc-recursive-team-mode integration tests, 2026-03-23)
 purpose: Document undocumented requirements and pitfalls when using claude -p for headless/CI execution.
 created: 2026-03-23
 updated: 2026-11-09
 validated_links: 2026-11-09
-status: verified
+status: reference
 ---
 
-**Details:** CC v2.1.81
+**Details:** CC v2.1.81. Found by empirical testing (cc-recursive-team-mode integration tests, 2026-03-23).
 
 ## 1. `stream-json` Requires `--verbose` in `-p` Mode
 

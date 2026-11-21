@@ -1,14 +1,14 @@
 ---
 title: CC Channels — Push Events via Telegram, Discord, iMessage
-source: https://code.claude.com/docs/en/channels, https://code.claude.com/docs/en/channels-reference
+source: https://code.claude.com/docs/en/channels
 purpose: Analysis of Claude Code channels for pushing external events into running sessions via MCP server plugins.
 created: 2026-03-24
 updated: 2026-10-15
 validated_links: 2026-10-15
-status: research-preview
+status: assess
 ---
 
-**Details:** v2.1.80+ (earlier research finding — the current channels and channels-reference pages, re-checked 2026-10-15, no longer state a minimum version), allowlisted plugins only. Neither `--channels` nor `--dangerously-load-development-channels` appears in `claude --help` while the feature is in preview, though both flags work.
+**Details:** Research preview; v2.1.80+ (earlier research finding — the current channels and channels-reference pages, re-checked 2026-10-15, no longer state a minimum version), allowlisted plugins only. Neither `--channels` nor `--dangerously-load-development-channels` appears in `claude --help` while the feature is in preview, though both flags work.
 
 ## What Channels Are
 

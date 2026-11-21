@@ -79,10 +79,20 @@ class CheckDocTests(unittest.TestCase):
 
 
 class VocabTests(unittest.TestCase):
-    def test_covers_current_corpus_values(self):
-        # Values present in frontmatter today must validate (PR 0 lenient gate).
-        for token in ("research", "done", "archived", "approved", "completed"):
-            self.assertIn(token, ds.VOCAB)
+    def test_vocab_is_lifecycle_plus_plan_tokens(self):
+        # Plan 0015 F3: status is lifecycle only (CONTRIBUTING §2); plans add their own four.
+        self.assertEqual(ds.VOCAB, ds.DOC_STATUS_VOCAB | ds.PLAN_STATUS_VOCAB)
+        self.assertEqual(
+            ds.DOC_STATUS_VOCAB,
+            {"adopt", "trial", "assess", "hold", "research", "reference", "archived"},
+        )
+        self.assertEqual(ds.PLAN_STATUS_VOCAB, {"draft", "approved", "done", "superseded"})
+
+    def test_release_and_licence_tokens_rejected(self):
+        # These moved to the **Details:** line in F3; a status: carrying one is invalid.
+        for token in ("generally-available", "beta", "open-source", "verified", "completed"):
+            v = ds.check_doc("d.md", f"---\nstatus: {token}\n---\n\n## B\n", strict=False)
+            self.assertEqual([x.kind for x in v], ["invalid-token"], token)
 
 
 class ReportTests(unittest.TestCase):

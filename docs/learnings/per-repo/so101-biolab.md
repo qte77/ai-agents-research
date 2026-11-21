@@ -1,8 +1,11 @@
 ---
 title: "so101-biolab-automation AGENT_LEARNINGS"
-description: Mirror of AGENT_LEARNINGS.md from qte77/so101-biolab-automation.
+purpose: Mirror of AGENT_LEARNINGS.md from qte77/so101-biolab-automation.
 updated: 2026-11-02
 source: https://github.com/qte77/so101-biolab-automation/blob/main/AGENT_LEARNINGS.md
+created: 2026-03-27
+validated_links: 2026-11-21
+status: reference
 ---
 
 > Auto-aggregated by `.github/scripts/learnings-aggregator.py`.

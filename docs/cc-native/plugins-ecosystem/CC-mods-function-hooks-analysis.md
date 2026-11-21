@@ -1,14 +1,14 @@
 ---
 title: CC Mods (Function Hooks) Analysis
-source: https://code.claude.com/docs/en/plugins/mods/overview, https://code.claude.com/docs/en/plugins/mods/admin, https://code.claude.com/docs/en/plugins/mods/reference, https://code.claude.com/docs/en/plugins/mods/create
+source: https://code.claude.com/docs/en/plugins/mods/overview
 purpose: Analysis of Claude Code mods — in-process JavaScript/TypeScript event handlers, shipped as plugins, that redraw or rewrite how Claude Code behaves — for extensibility, governance, and the agent substrate rubric.
 created: 2026-10-02
 updated: 2026-11-17
 validated_links: 2026-10-22
-status: generally-available
+status: assess
 ---
 
-**Details:** Requires Claude Code v2.1.287+ in the terminal (v2.1.286+ in the Desktop app's Code tab; "Yes, with extension version 2.1.299 or later" in VS Code; "A session that doesn't fetch feature flags, such as one on Amazon Bedrock, needs 2.1.304 or later" — [source][mods-overview], 2026-10-22); on by default. Re-verified against [mods-overview][mods-overview], [mods-admin][mods-admin], [mods-reference][mods-reference], and [mods-create][mods-create] 2026-10-15; the mods reference page itself is current "as of v2.1.290."
+**Details:** Generally available. Requires Claude Code v2.1.287+ in the terminal (v2.1.286+ in the Desktop app's Code tab; "Yes, with extension version 2.1.299 or later" in VS Code; "A session that doesn't fetch feature flags, such as one on Amazon Bedrock, needs 2.1.304 or later" — [source][mods-overview], 2026-10-22); on by default. Re-verified against [mods-overview][mods-overview], [mods-admin][mods-admin], [mods-reference][mods-reference], and [mods-create][mods-create] 2026-10-15; the mods reference page itself is current "as of v2.1.290."
 
 ## What a Mod Is
 

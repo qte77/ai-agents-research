@@ -6,7 +6,7 @@ platform_scope: [desktop, ollama, mcp-generic]
 created: 2026-04-09
 updated: 2026-06-22
 validated_links: 2026-06-22
-status: open-source
+status: assess
 ---
 
 **Details:** Open-source (Apache-2.0), active development by [Rowboat Labs][rowboat-site]

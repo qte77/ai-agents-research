@@ -4,7 +4,7 @@ purpose: First-party analysis of Anthropic's advisor tool — a server-executed 
 created: 2026-10-26
 updated: 2026-11-08
 validated_links: 2026-11-08
-status: beta
+status: assess
 ---
 
 **Details:** Anthropic API feature, beta; behavior, pricing, and availability may change.

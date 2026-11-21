@@ -1,6 +1,6 @@
 ---
 title: CC Permissions Bypass Analysis
-source: https://code.claude.com/docs/en/settings, https://code.claude.com/docs/en/security, https://code.claude.com/docs/en/permission-modes
+source: https://code.claude.com/docs/en/settings
 purpose: Analysis of --dangerously-skip-permissions flag, permission modes, team inheritance, and safer alternatives for headless/CI execution.
 created: 2026-03-17
 updated: 2026-11-18

@@ -5,7 +5,7 @@ purpose: Analysis of Claude's custom inline visualization capabilities (charts, 
 created: 2026-03-13
 updated: 2026-09-23
 validated_links: 2026-03-13
-status: beta
+status: assess
 ---
 
 **Details:** Beta (March 12, 2026) — all plans including free tier

@@ -1,6 +1,6 @@
 ---
 title: Office Document Skills & MCP Servers
-description: Ecosystem analysis of document generation/manipulation capabilities — Anthropic official skills, knowledge-work plugins, community skills, and MCP servers for docx, xlsx, pptx, and pdf.
+purpose: Ecosystem analysis of document generation/manipulation capabilities — Anthropic official skills, knowledge-work plugins, community skills, and MCP servers for docx, xlsx, pptx, and pdf.
 created: 2026-03-26
 updated: 2026-11-09
 validated_links: 2026-09-24

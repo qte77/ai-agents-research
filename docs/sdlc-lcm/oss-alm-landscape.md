@@ -3,12 +3,8 @@ title: OSS ALM Landscape
 purpose: Comparison of open-source Application Lifecycle Management tools for potential Phase 3 adoption.
 created: 2026-03-24
 updated: 2026-06-28
-sources:
-  - https://www.tuleap.com/alm/
-  - https://www.tuleap.com/comparisons/
-  - https://sg1883472.medium.com/top-7-open-source-alm-application-lifecycle-management-tools-bc88e277ffb1
-  - https://www.devopsschool.com/blog/top-10-application-lifecycle-management-alm-tools-in-2025-features-pros-cons-comparison/
-  - https://thectoclub.com/tools/best-alm-software/
+validated_links: 2026-11-21
+status: hold
 ---
 
 ## OSS ALM Landscape
@@ -51,4 +47,9 @@ not agent-driven pipelines where state is inferred from repo artifacts.
 
 ## Sources
 
-The OSS ALM tools compared (Tuleap, OpenProject, Redmine, GitLab) link to their projects inline in the sections above.
+The OSS ALM tools compared (Tuleap, OpenProject, Redmine, GitLab) link to their projects inline in the sections above. Comparison sources:
+
+- [Tuleap ALM](https://www.tuleap.com/alm/) and [Tuleap comparisons](https://www.tuleap.com/comparisons/)
+- [Top 7 open-source ALM tools (Medium)](https://sg1883472.medium.com/top-7-open-source-alm-application-lifecycle-management-tools-bc88e277ffb1)
+- [Top 10 ALM tools in 2025 (DevOpsSchool)](https://www.devopsschool.com/blog/top-10-application-lifecycle-management-alm-tools-in-2025-features-pros-cons-comparison/)
+- [Best ALM software (The CTO Club)](https://thectoclub.com/tools/best-alm-software/)

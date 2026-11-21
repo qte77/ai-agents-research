@@ -4,13 +4,7 @@ purpose: Emerging lifecycle patterns for AI agent-driven development.
 created: 2026-03-24
 updated: 2026-10-22
 validated_links: 2026-09-30
-sources:
-  - https://www.epam.com/insights/ai/blogs/agentic-development-lifecycle-explained
-  - https://techcommunity.microsoft.com/blog/appsonazureblog/an-ai-led-sdlc-building-an-end-to-end-agentic-software-development-lifecycle-wit/4491896
-  - https://www.amplifypartners.com/blog-posts/the-agent-first-developer-toolchain-how-ai-will-radically-transform-the-sdlc
-  - https://www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf
-  - https://about.gitlab.com/blog/agentic-sdlc-gitlab-and-tcs-deliver-intelligent-orchestration-across-the-enterprise/
-  - https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html
+status: assess
 ---
 
 ## Agentic SDLC Patterns
@@ -124,5 +118,11 @@ Traditional SDLC artifacts reimagined as coordination layers for agents.
 | Source | Content |
 |---|---|
 | [SpecShip][specship] (`aws-samples/sample-specship`) | Kiro Power SDD workflow; 252★, MIT, `gh api` 2026-09-24 |
+| [EPAM: agentic development lifecycle explained](https://www.epam.com/insights/ai/blogs/agentic-development-lifecycle-explained) | Background reading |
+| [Microsoft Tech Community: an AI-led SDLC](https://techcommunity.microsoft.com/blog/appsonazureblog/an-ai-led-sdlc-building-an-end-to-end-agentic-software-development-lifecycle-wit/4491896) | Background reading |
+| [Amplify Partners: the agent-first developer toolchain](https://www.amplifypartners.com/blog-posts/the-agent-first-developer-toolchain-how-ai-will-radically-transform-the-sdlc) | § 4 |
+| [PwC: future of solutions development and delivery (PDF)](https://www.pwc.com/m1/en/publications/2026/docs/future-of-solutions-dev-and-delivery-in-the-rise-of-gen-ai.pdf) | Background reading |
+| [GitLab and TCS: agentic SDLC orchestration](https://about.gitlab.com/blog/agentic-sdlc-gitlab-and-tcs-deliver-intelligent-orchestration-across-the-enterprise/) | Background reading |
+| [CIO: how agentic AI will reshape engineering workflows in 2026](https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html) | Background reading |
 
 [specship]: https://github.com/aws-samples/sample-specship

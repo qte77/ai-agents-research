@@ -2,7 +2,6 @@
 title: "Codex Plugin for Claude Code (openai/codex-plugin-cc)"
 source: https://github.com/openai/codex-plugin-cc
 purpose: Analysis of OpenAI's official Claude Code plugin that delegates to Codex — a rival lab building on CC's own hook/slash-command/subagent extension surface.
-category: analysis
 platform_scope: [claude-code, codex]
 created: 2026-07-08
 updated: 2026-09-30

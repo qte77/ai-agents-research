@@ -65,5 +65,27 @@ class ChangeDetectionTests(unittest.TestCase):
             self.assertEqual(len(json.loads((Path(tmp) / "state.json").read_text())), 1)
 
 
+class RenderSchemaTests(unittest.TestCase):
+    """The mirror must pass the content-doc frontmatter schema (plan 0015 F3, strict check)."""
+
+    def setUp(self):
+        sys.path.insert(0, str(_SCRIPT.parent))
+        from lib.doc_frontmatter import check_doc
+        self.check_doc = check_doc
+
+    def test_new_mirror_passes_schema(self):
+        with mock.patch.object(learnings_aggregator, "date", _fixed_date("2026-11-21")):
+            text = learnings_aggregator.render_file("qte77", "some-repo", "# L\n\n- a\n")
+        self.assertEqual(self.check_doc(text), [])
+        self.assertIn("created: 2026-11-21\n", text)
+
+    def test_existing_created_date_is_kept(self):
+        old = "---\ntitle: x\ncreated: 2026-03-27\n---\n\nbody\n"
+        with mock.patch.object(learnings_aggregator, "date", _fixed_date("2026-11-21")):
+            text = learnings_aggregator.render_file("qte77", "some-repo", "# L\n", existing=old)
+        self.assertIn("created: 2026-03-27\n", text)
+        self.assertIn("updated: 2026-11-21\n", text)
+
+
 if __name__ == "__main__":
     unittest.main()
