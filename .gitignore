@@ -6,6 +6,9 @@ Thumbs.db
 .claude/scripts/
 .claude/skills/*
 
+# Claude Code per-user local settings (never tracked)
+.claude/settings.local.json
+
 # Tooling caches (per-session artifacts, never tracked)
 .gh-cache/
 
