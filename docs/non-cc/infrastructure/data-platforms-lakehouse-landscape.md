@@ -1,6 +1,6 @@
 ---
 title: Data Platforms and Lakehouses for Agents — Table Formats, Branching, Warehouse-Native Agents, Scratch Engines, Cost Controls
-purpose: What the data-lake and lakehouse layer offers an agent — open table formats and their snapshot/branch features, catalogs, warehouse-native agents from four vendors, local analytical engines as scratch space, and the documented cost and permission controls. Landscape as of 2026-11-21.
+purpose: What the data-lake and lakehouse layer offers an agent — open table formats and their snapshot/branch features, catalogs, warehouse-native agents from four vendors, local analytical engines as scratch space, and the documented cost and permission controls. Landscape as of 2026-11-18, with rows re-read 2026-11-21 dated.
 created: 2026-11-18
 updated: 2026-11-21
 validated_links: 2026-11-18
@@ -22,24 +22,20 @@ here.
 
 ## Data lake vs lakehouse vs data warehouse
 
-Databricks' [glossary page][dbx-lakehouse] (a vendor that sells the lakehouse, so the framing is its own)
-describes the three as follows (documented, read 2026-11-21).
+Rows 1 to 3 summarize Databricks' [blog post][dbx-lakehouse] (a vendor that sells the lakehouse, so the framing
+is its own; documented, read 2026-11-21). The last two rows are our mapping, not the vendor's.
 
 | | Data warehouse | Data lake | Lakehouse |
 |---|---|---|---|
-| What it is | Structured, SQL-optimised system for business intelligence | Low-cost storage for raw data in any format | Open architecture adding warehouse-style management to lake storage |
-| Data and schema | Structured data; closed or proprietary formats; ETL from raw storage | Any format; no schema or quality enforcement | Cloud object storage, many data types, schema enforcement and evolution |
-| Transactions | Yes | None per the vendor (mixing appends, reads and batch or streaming jobs is hard) | ACID, time travel, governance, streaming I/O via a metadata layer |
-| Open table format | No | Not applicable (raw files) | [Iceberg][iceberg], [Delta Lake][delta], [Hudi][hudi] below |
-| Where an agent queries it | Warehouse-native agents (below) or database MCP servers ([database-access doc](agentic-database-access-landscape.md)) | Through an engine that reads the files; no transactional guarantees on its own | Any engine that speaks the table format, through a catalog (below) |
+| What it is | Long used for decision support and BI; the post says warehouses handled unstructured data poorly or expensively | Low-cost storage for raw data in any format | Warehouse and lake capabilities combined, with ACID transactions, schema enforcement and governance, on cloud object storage |
+| Transactions and quality | Not discussed beyond the point above | Per the post, lakes "do not support transactions" and "do not enforce data quality" | ACID transactions via a metadata layer |
+| Open table format (ours) | Usually closed or vendor-specific | Not applicable (raw files) | [Iceberg][iceberg], [Delta Lake][delta], [Hudi][hudi] below |
+| Where an agent queries it (ours) | Warehouse-native agents (below) or database MCP servers ([database-access doc](agentic-database-access-landscape.md)) | Through an engine that reads the files | Any engine that speaks the table format, through a catalog (below) |
 
-The "no open format" and "transactions" cells for the warehouse are the vendor's characterisation, not a
-neutral one. The three open table formats each state the lakehouse role themselves: Delta describes a
-lakehouse layer over existing data lakes with ACID transactions at serializable isolation and time travel
-([Delta docs][delta-docs], read 2026-11-21); Hudi calls itself an open lakehouse platform with row-level
-upserts and deletes, incremental processing, a transaction timeline and copy-on-write or merge-on-read tables
-([Hudi overview][hudi-docs], 2026-11-21); Iceberg is documented below. No performance comparison between the
-formats is made here, and none is cited: no first-party source read for this doc states one.
+Delta describes a lakehouse layer over existing data lakes with ACID transactions and time travel ([Delta
+docs][delta-docs], read 2026-11-21). Hudi calls itself an open lakehouse platform with efficient upserts and
+deletes, incremental processing, a transaction timeline and copy-on-write or merge-on-read tables ([Hudi
+overview][hudi-docs], 2026-11-21). No performance comparison between the formats is made or cited here.
 
 ## Open table formats
 
@@ -48,7 +44,7 @@ formats is made here, and none is cited: no first-party source read for this doc
 | [Apache Iceberg][iceberg] | Apache-2.0 | 1.12.0 (2026-09-30) | Snapshots for time travel; [branches and tags][iceberg-branching] are named references with their own retention policies |
 | [Delta Lake][delta] | Apache-2.0 | v4.4.1 (2026-10-05) | Time travel and `RESTORE`; [shallow clone][delta-clone] copies a table at a version with its own history, referencing source files |
 | [Apache Hudi][hudi] | Apache-2.0 | 1.2.1 (2026-09-24) | Not researched for branching here |
-| [DuckLake][ducklake] | MIT | Docs site (`/docs/stable`) labels 1.1 stable, requiring DuckDB 2.0.0 or later; the homepage calls 1.0 production-ready (GitHub shows no tagged release) | SQL database as catalog (PostgreSQL, MySQL, SQLite or DuckDB), Parquet data; snapshots and time travel; the page does not mention branching |
+| [DuckLake][ducklake] | MIT | Site read 2026-11-18, not re-read: docs site (`/docs/stable`) labels 1.1 stable, requiring DuckDB 2.0.0 or later; the homepage calls 1.0 production-ready (GitHub shows no tagged release) | SQL database as catalog (PostgreSQL, MySQL, SQLite or DuckDB), Parquet data; snapshots and time travel; the page does not mention branching |
 
 Iceberg's own docs name audit branches and experimental branches "for testing and validating new jobs" as use
 cases ([branching page][iceberg-branching]). Delta's shallow clone is writable without touching the source
@@ -131,15 +127,15 @@ agent. Equivalents for Snowflake, BigQuery and Databricks were not researched fo
 | [Apache Iceberg][iceberg] · [branching page][iceberg-branching] | Version, license, branches and tags |
 | [Delta Lake][delta] · [shallow clone docs][delta-clone] | Version, license, clone semantics |
 | [Apache Hudi][hudi] · [DuckLake][ducklake] | Versions, licenses, catalog design |
-| [Databricks lakehouse glossary][dbx-lakehouse] · [Delta docs][delta-docs] · [Hudi overview][hudi-docs] | Lake, lakehouse and warehouse definitions |
+| [Databricks lakehouse blog post][dbx-lakehouse] · [Delta docs][delta-docs] · [Hudi overview][hudi-docs] | Lake, lakehouse and warehouse definitions |
 | [Project Nessie][nessie] · [guide][nessie-about] · [lakeFS][lakefs] | Catalog and storage branching, licenses |
 | [Apache Polaris][polaris] · [Unity Catalog OSS][uc-oss] | Open catalogs |
 | [Cortex Agents][cortex] · [Genie][genie-docs] · [BigQuery conversational analytics][bq-ca] · [Fabric data agent][fabric] | Warehouse-native agents |
 | [DuckDB][duckdb] · [securing DuckDB][duckdb-secure] · [chDB][chdb] · [Polars][polars] | Local engines |
 | [Snowflake resource monitors][sf-rm] · [BigQuery cost controls][bq-cost] | Cost controls |
 
-[dbx-lakehouse]: https://www.databricks.com/glossary/data-lakehouse
-[delta-docs]: https://docs.delta.io/latest/index.html
+[dbx-lakehouse]: https://www.databricks.com/blog/what-is-data-lakehouse
+[delta-docs]: https://docs.delta.io/
 [hudi-docs]: https://hudi.apache.org/docs/overview
 [iceberg]: https://github.com/apache/iceberg
 [iceberg-branching]: https://iceberg.apache.org/docs/latest/branching/

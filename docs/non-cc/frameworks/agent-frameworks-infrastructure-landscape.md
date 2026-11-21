@@ -221,16 +221,7 @@ Non-CC memory frameworks; for memory tools that integrate *with Claude Code* (Me
 
 The field has reframed memory as **context engineering** — assembling persistent, evolving state across sessions rather than just enlarging the context window.
 
-**Memory types.** [CoALA][coala-paper] (abstract page, read 2026-11-21) frames a language agent as having "modular memory components"; the abstract does not name the types. The split used in this section follows LangMem's [conceptual guide][langmem-concepts] (2026-11-21): *semantic* memory holds facts and user details, *episodic* memory holds past interactions kept as examples, *procedural* memory shapes how the agent behaves (starting from system instructions, refined by feedback); *working* memory is the immediate context, as [MemMachine][memmachine-repo] labels it. Entries below, by what their own descriptions say they store (mapping is ours, from the entry text, not a vendor taxonomy):
-
-| Memory type | Entries that store it |
-|---|---|
-| Working / short-term | MemMachine (working layer), MemoryOS (short-term tier), Neo4j Agent Memory (session messages) |
-| Episodic | MemMachine (episodic layer, Neo4j), Graphiti and Zep (episodes behind each fact), Agent Zero Memory (event timeline), lossless-memory (verbatim log) |
-| Semantic | Graphiti, Zep, Cognee (knowledge graphs), Mem0, MemMachine (profile memory), EverOS (Markdown files) |
-| Procedural | LangMem, ACE (Skillbook), Memorable (procedure graph), Memento (case bank of past trajectories) |
-
-For how Claude Code itself layers instruction files and auto memory, see [CC-memory-system-analysis.md](../../cc-native/context-memory/CC-memory-system-analysis.md) rather than the entries below. Stars and versions in this section are as of the date on each entry; refreshed 2026-11-21 for Graphiti, Cognee and EverOS only.
+Memory taxonomy (working, episodic, semantic, procedural) and which frameworks map to it: [CC-memory-tooling-landscape.md § Memory Taxonomy](../../cc-community/CC-memory-tooling-landscape.md#memory-taxonomy). How Claude Code layers instruction files and auto memory: [CC-memory-system-analysis.md](../../cc-native/context-memory/CC-memory-system-analysis.md). Stars and versions in this section are dated per entry; Graphiti, Cognee and EverOS were refreshed 2026-11-21.
 
 Evaluation caution (abstract pages only, 2026-11-19; neither is KG-specific): [MemDev-Bench][memdev-paper] finds memory also causes failures on otherwise solvable code tasks, more with unrelated history, and [MemPABench][mempabench-paper] finds current memory "struggles to retrieve interaction preferences and adapt to preference changes".
 
@@ -412,15 +403,15 @@ The post-retrieval / analysis layer: once a GraphRAG pipeline or knowledge graph
 
 | Tool | Renderer | License | Latest release (2026-11-21) | Fit |
 |---|---|---|---|---|
-| [vis-network](https://github.com/visjs/vis-network) | Canvas, physics force layout | Apache-2.0 (dual with MIT) | v10.1.5 (2026-11-08) | Embeddable interactive graphs, static sites |
+| [vis-network](https://github.com/visjs/vis-network) | Canvas, force-directed layout | Apache-2.0 (dual with MIT) | v10.1.5 (2026-11-08) | Embeddable interactive graphs, static sites |
 | [D3.js](https://github.com/d3/d3) | SVG / Canvas toolkit | ISC | v7.9.2 (2026-11-03) | Maximal control; you write the layout, not a drop-in graph renderer |
 | [Cytoscape.js](https://github.com/cytoscape/cytoscape.js) | Browser + Node, built-in layouts | MIT | v3.35.0 (2026-11-10) | Graph-theory analysis, network biology |
 | [Sigma.js](https://github.com/jacomyal/sigma.js) | WebGL | MIT | sigma@4.0.6 (2026-11-10) | Larger graphs in the browser (WebGL is the project's approach; no figure checked) |
-| [Gephi](https://github.com/gephi/gephi) | Desktop app, ForceAtlas2 | GPL-3.0 (some modules CDDL, 2026-06-28 reading) | v0.11.4 (2026-11-01) | Exploring big static graphs offline |
+| [Gephi](https://github.com/gephi/gephi) | Desktop app | Dual CDDL 1.0 and GPL-3.0 (README, read 2026-11-21; the `gh api` field reports GPL-3.0 only) | v0.11.4 (2026-11-01) | Exploring big static graphs offline |
 | [PyGraphistry](https://github.com/graphistry/pygraphistry) | Client for the Graphistry GPU server | BSD-3-Clause client; rendering server commercial / closed | 0.62.1 (2026-11-12) | Open-core: the client alone only shapes data |
 | [Neo4j Bloom](https://neo4j.com/product/bloom/) | Codeless exploration UI bundled with Neo4j | Freemium (local DB only; sharing and perspectives need paid Enterprise, 2026-06-28 reading) | not checked | Cypher-free exploration. OSS alternative: [Neo4j Browser](https://github.com/neo4j/neo4j-browser) (GPL-3.0, last release 2025.8.0 on 2025-08-07), a Cypher IDE |
 
-The `gh api` license field matched the 2026-06-28 first-party reading for every row it covers. Choose by where the graph lives: embedded in a page (vis-network, Cytoscape.js, Sigma.js), custom (D3), or analysed on a desktop (Gephi).
+The `gh api` license field agreed with the earlier 2026-06-28 reading for every row except Gephi, whose README states a dual CDDL 1.0 and GPL-3.0 license. Choose by where the graph lives: embedded in a page (vis-network, Cytoscape.js, Sigma.js), custom (D3), or analyzed on a desktop (Gephi).
 
 ## 8. Output Validation, Guardrails & Verification
 
@@ -645,7 +636,6 @@ KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv a
 |---|---|
 | [getzep/graphiti README][graphiti-readme] + `gh api` | Validity windows, episode provenance, prescribed/learned ontology; Apache-2.0, 32,976 stars, v0.31.2 (2026-10-20) |
 | [arXiv:2501.13956][zep-paper] abstract page | Zep/Graphiti DMR and LongMemEval claims (vendor numbers) |
-| [CoALA][coala-paper] · [LangMem concepts][langmem-concepts] · [MemMachine][memmachine-repo] | Memory-type taxonomy used in §4 (abstract page and docs read 2026-11-21) |
 | [arXiv:2506.05690][graphrag-bench] abstract page | GraphRAG-Bench scope; the "underperforms vanilla RAG" statement attributed to recent studies |
 | [arXiv:2602.14470][hyperrag] · [2512.23959][hgmem] · [2604.08256][hypermem] · [2608.16114][hyperskill] abstract pages | Hypergraph RAG and memory: venues, numbers and baselines as the authors state them (2026-11-20) |
 | [arXiv:2502.11371][rag-vs-graphrag] abstract page | Unified RAG vs GraphRAG protocol; per-task strengths; integration strategies |
@@ -654,9 +644,6 @@ KG-memory, GraphRAG evidence and memory-caution additions (§4, §7) — arXiv a
 
 [graphiti-readme]: https://github.com/getzep/graphiti#readme
 [zep-paper]: https://arxiv.org/abs/2501.13956
-[coala-paper]: https://arxiv.org/abs/2309.02427
-[langmem-concepts]: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/
-[memmachine-repo]: https://github.com/MemMachine/MemMachine
 [graphrag-bench]: https://arxiv.org/abs/2506.05690
 [hyperrag]: https://arxiv.org/abs/2602.14470
 [hgmem]: https://arxiv.org/abs/2512.23959
