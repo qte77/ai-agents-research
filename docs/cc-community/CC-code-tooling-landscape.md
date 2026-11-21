@@ -7,7 +7,7 @@ updated: 2026-11-18
 validated_links: 2026-11-18
 ---
 
-Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **on-demand structural search** (ast-grep MCP) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg, XERJ) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
+Code-analysis and code-context tools for Claude Code: knowledge-graph builders, live-LSP semantic toolkits, structural search/rewrite, and one-shot repository packers. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They split along **precompute-a-graph** (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, codebase-memory-mcp) vs. **live-LSP** (Serena) vs. **trigram-indexed text search** (tgrep) vs. **local hybrid lexical+semantic search** (zg, XERJ) vs. **embedded semantic search** (cocoindex-code) vs. **one-shot export** (Repomix, code2prompt).
 
 ## Graphify (safishamsi)
 
@@ -144,25 +144,23 @@ Cross-ref: [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo
 
 ## Qodo (qodo-ai)
 
-**Repos**: [qodo-ai/agents][qodo-agents] · [qodo-ai/open-aware][qodo-aware] | **License**: MIT (both) | **Cross-repo review**: [docs.qodo.ai governance][qodo-crr]
+**Cross-repo review**: [docs.qodo.ai governance][qodo-crr]
 
-A code-review / code-intelligence platform with three surfaces relevant here, all MCP-based — so they plug into Claude Code (and other assistants) directly.
+A code-review platform whose cross-repo review feature is relevant here. Its two open repos (`open-aware`, `agents`) are under [Not included](#not-included).
 
-| Surface | What it is |
+| Feature | What it is |
 |---|---|
-| **open-aware** | Free "deep code research" MCP server — semantic search (`get_context`), architectural Q&A (`deep_research`, `ask`) across **multiple repositories** with daily-updated indexes of popular OSS libraries. Goes beyond keyword search via vector embeddings; private repos need the paid Qodo Aware tier. |
-| **agents** ("Qodo Commands Playbooks") | TOML-defined agent workflows for Qodo Command — code review, test generation, issue handling, docs/changelog, license-compliance, security-scorecard fixes. Each agent declares instructions, tools (MCP servers), arguments, a `plan`/`act` execution strategy, an output schema, and exit expressions. |
 | **cross-repo code review** | Governance feature: traces a PR's impact bidirectionally across *related* repos (Code / Service / Data / Pipeline relationships) to surface breaking changes — a signature change, API-contract shift, or schema evolution — that single-repo review misses. Findings appear inline, tagged "Cross-repo". |
 
 ### Key Differentiator
 
-Code-Review-Graph (above) computes structural blast radius **within one repo**; Qodo's cross-repo review extends impact tracing **across repository boundaries** (shared libraries, API contracts, schemas). open-aware is the semantic-index counterpart (multi-repo embeddings) to the AST-graph tools in this doc, and the `agents` TOML format is an openly reusable playbook pattern.
+Code-Review-Graph (above) computes structural blast radius **within one repo**; Qodo's cross-repo review extends impact tracing **across repository boundaries** (shared libraries, API contracts, schemas).
 
 ### Adoption Considerations
 
-**Strengths**: MCP-native (works with CC out of the box); the agent playbooks are an open (MIT) TOML pattern reusable as a harness reference; cross-repo review fills a gap no AST-blast-radius tool here covers.
+**Strengths**: cross-repo review fills a gap no AST-blast-radius tool here covers.
 
-**Risks**: open-aware's free tier indexes only pre-indexed *public* repos — private-repo coverage and cross-repo review are paid/enterprise. Star/adoption figures not independently verified here.
+**Risks**: cross-repo review is a paid/enterprise feature. Adoption figures not independently verified here.
 
 Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
 
@@ -248,35 +246,6 @@ Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-
 
 ---
 
-## ast-grep MCP (ast-grep)
-
-**Repo**: [ast-grep/ast-grep-mcp][ast-grep-mcp] | **Stars**: 419 | **License**: MIT | **Version**: unreleased (main branch)
-
-Experimental MCP wrapper around the [ast-grep][ast-grep] Rust structural search/rewrite CLI. Exposes tree-sitter AST pattern matching to agents so they search by *syntax structure* (functions, classes, imports, call shapes) instead of text — fewer false positives than Grep, and structure-preserving rewrites.
-
-### CC Integration
-
-| Surface | Mechanism |
-|---------|-----------|
-| **MCP server** | 4 tools — `dump_syntax_tree`, `test_match_code_rule`, `find_code`, `find_code_by_rule` (YAML rules) |
-| **Runtime** | Python + FastMCP; `uvx --from git+https://github.com/ast-grep/ast-grep-mcp`; JSON client config (CC / Cursor / Claude Desktop) |
-
-### Key Features
-
-- Structural patterns across JS/TS, Python, Rust, Go, Java, C/C++, C# and more (custom languages supported)
-- **~75% fewer tokens** with the text output format vs JSON metadata
-- `dump_syntax_tree` lets the agent learn a language's node types before writing a pattern
-
-### Adoption Considerations
-
-**Strengths**: Lightweight and on-demand — no index to build (vs the persistent-graph tools above). Precise structural search/rewrite; pairs well with a graph tool for navigation plus a pattern tool for edits.
-
-**Risks**: Experimental, no tagged releases, low star count (the parent ast-grep CLI is mature; the MCP wrapper is early). Requires writing ast-grep patterns / YAML rules to get full value.
-
-Cross-ref: complements the persistent-graph tools above (search/rewrite vs navigation)
-
----
-
 ## tgrep (microsoft)
 
 **Repo**: [microsoft/tgrep][tgrep] | **Stars**: 3,346 | **License**: MIT | **Version**: v1.0.10 (2026-09-21)
@@ -302,8 +271,6 @@ Per its own `BENCHMARKS.md` (August 24, 2026 sweep): tgrep beat ripgrep in 17 of
 
 **Risks**: the index can lag filesystem changes between refreshes (mitigated by `--no-index` at the cost of speed); the speedup benchmark is self-reported; no CC-native install path.
 
-Cross-ref: ast-grep MCP above — structural AST search vs. tgrep's indexed regex/text search; both are on-demand, with no persistent knowledge graph
-
 ---
 
 ## zg / zvec-grep (zvec-ai)
@@ -326,7 +293,7 @@ Agents are steered to use native grep/rg for exact lookups (a known word, quote,
 
 ### Adoption Considerations
 
-**Strengths**: unlike tgrep above (no CC target at all) and ast-grep MCP (manual JSON client config only), zg ships an explicit, documented `--target claude` installer that writes CC's own config files directly; combines exact, lexical, and semantic retrieval in one local index rather than requiring a separate vector DB; broad multi-agent install coverage (8 named harnesses/IDEs).
+**Strengths**: unlike tgrep above (no CC target at all), zg ships an explicit, documented `--target claude` installer that writes CC's own config files directly; combines exact, lexical, and semantic retrieval in one local index rather than requiring a separate vector DB; broad multi-agent install coverage (8 named harnesses/IDEs).
 
 **Risks**: young (repo created 2026-07-10); the dual TS/Rust implementation is a maintenance surface to watch; no independent benchmark of its own retrieval-quality claims (the repo carries internal `zg-retrieval-metric-review.md` / `zg-retrieval-only-sweqa20-design.md` design docs, not third-party validation).
 
@@ -508,12 +475,8 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 [codebase-memory-mcp-docs]: https://deusdata.github.io/codebase-memory-mcp/
 [cocoindex-code]: https://github.com/cocoindex-io/cocoindex-code
 [serena]: https://github.com/oraios/serena
-[ast-grep-mcp]: https://github.com/ast-grep/ast-grep-mcp
-[ast-grep]: https://github.com/ast-grep/ast-grep
 [repomix]: https://github.com/yamadashy/repomix
 [code2prompt]: https://github.com/mufeedvh/code2prompt
-[qodo-agents]: https://github.com/qodo-ai/agents
-[qodo-aware]: https://github.com/qodo-ai/open-aware
 [qodo-crr]: https://docs.qodo.ai/governance/cross-repo-code-review
 [tgrep]: https://github.com/microsoft/tgrep
 [zvec-grep]: https://github.com/zvec-ai/zvec-grep
@@ -526,9 +489,19 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 [archify]: https://github.com/tt-a1i/archify
 [understand-anything]: https://github.com/Egonex-AI/Understand-Anything
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| ast-grep MCP | 500 stars; experimental, no tagged releases (README, `gh api` 2026-11-21); the "~75% fewer tokens" figure compares its own output formats, not a benefit over other tools; the parent ast-grep CLI (16.7k stars) is a separate project | 2026-11-21 | <https://github.com/ast-grep/ast-grep-mcp> |
+| Qodo open-aware | 503 stars; last push 2025-10-29, outside the 12-month window (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/qodo-ai/open-aware> |
+| Qodo agents (Commands Playbooks) | 122 stars; MIT playbooks for the Qodo Command product only, no independent users found (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/qodo-ai/agents> |
+
 ## Sources
 
-Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, ast-grep MCP, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt, Floorplan). The grep-vs-semantic section cites Anthropic, Cline, and Cursor posts and four arXiv papers via the link definitions below.
+Each tool cites its repository/docs inline via the reference-style link definitions above (Graphify, AxiomCode Graph, Graphicle, Code-Review-Graph, Qodo, codebase-memory-mcp, Serena, tgrep, zg (zvec-grep), XERJ, jevgrep, Repomix, code2prompt, Floorplan). The grep-vs-semantic section cites Anthropic, Cline, and Cursor posts and four arXiv papers via the link definitions below.
 
 [code-maps]: https://arxiv.org/abs/2611.07286
 [ctx-eng]: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
