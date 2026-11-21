@@ -5,7 +5,7 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 category: landscape
 status: research
 created: 2026-04-06
-updated: 2026-09-25
+updated: 2026-11-21
 validated_links: 2026-09-24
 ---
 
@@ -169,25 +169,35 @@ Differentiation happens at the output stage:
 
 | Topic | File |
 |-------|------|
-| Knowledge graphs from code (CC-integrated) | [CC-community-tooling-landscape.md — Graphify](../../cc-community/CC-community-tooling-landscape.md#graphify-safishamsi) |
-| AST-based code analysis (CC-integrated) | [CC-community-tooling-landscape.md — Code-Review-Graph](../../cc-community/CC-community-tooling-landscape.md#code-review-graph-tirth8205) |
+| Knowledge graphs from code (CC-integrated) | [CC-code-tooling-landscape.md — Graphify](../../cc-community/CC-code-tooling-landscape.md#graphify-safishamsi) |
+| AST-based code analysis (CC-integrated) | [CC-code-tooling-landscape.md — Code-Review-Graph](../../cc-community/CC-code-tooling-landscape.md#code-review-graph-tirth8205) |
 | llms.txt documentation standard | [CC-llms-txt-analysis.md](../../cc-native/context-memory/CC-llms-txt-analysis.md) |
 | Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](../../cc-community/CC-community-skills-landscape.md) |
 | OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../context-memory/openviking-analysis.md) |
 
 ## Sources
 
-- [deepwiki.com](https://deepwiki.com)
-- [code2tutorial.com](https://code2tutorial.com)
-- [GitHub: The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge](https://github.com/The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge)
-- [gitsummarize.com](https://gitsummarize.com)
-- [GitHub: antarixxx/gitsummarize](https://github.com/antarixxx/gitsummarize)
-- [GitHub: egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything)
-- [GitHub: langchain-ai/openwiki](https://github.com/langchain-ai/openwiki)
-- [GitHub: VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB)
-- [GitHub: VectifyAI/PageIndex](https://github.com/VectifyAI/PageIndex)
-- GitHub API `repos/VectifyAI/OpenKB` and `repos/VectifyAI/PageIndex`, accessed 2026-09-24 (stars, license, latest release tag)
+| Source | Content |
+|---|---|
+| [deepwiki.com][s-deepwiki] | DeepWiki, reference-style repo docs |
+| [code2tutorial.com][s-c2t] | Code2Tutorial, tutorial-style output |
+| [PocketFlow-Tutorial-Codebase-Knowledge][s-pocketflow] | Open-source generator behind the tutorial style |
+| [gitsummarize.com][s-gitsum] | GitSummarize, summary-style output |
+| [antarixxx/gitsummarize][s-gitsum-gh] | GitSummarize repository |
+| [egonex-ai/understand-anything][s-ua] | Understand Anything repository |
+| [langchain-ai/openwiki][s-openwiki] | OpenWiki repository |
+| [VectifyAI/OpenKB][s-openkb] | OpenKB repository |
+| [VectifyAI/PageIndex][pageindex] | PageIndex repository |
+| `gh api repos/VectifyAI/OpenKB` and `repos/VectifyAI/PageIndex`, 2026-09-24 | Stars, license, latest release tag |
 
+[s-deepwiki]: https://deepwiki.com
+[s-c2t]: https://code2tutorial.com
+[s-pocketflow]: https://github.com/The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge
+[s-gitsum]: https://gitsummarize.com
+[s-gitsum-gh]: https://github.com/antarixxx/gitsummarize
+[s-ua]: https://github.com/egonex-ai/understand-anything
+[s-openwiki]: https://github.com/langchain-ai/openwiki
+[s-openkb]: https://github.com/VectifyAI/OpenKB
 [pageindex]: https://github.com/VectifyAI/PageIndex
 
 ## Action Items
