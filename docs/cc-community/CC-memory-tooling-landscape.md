@@ -1,6 +1,6 @@
 ---
 title: CC Memory Tooling Landscape
-purpose: Persistent cross-session memory tools that integrate with Claude Code — Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, Core, deja-vu, Leviathan), plus second-brain vault tools (gbrain, COG-second-brain).
+purpose: Persistent cross-session memory tools that integrate with Claude Code — Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, CortexDB, Core, deja-vu, engrim, Leviathan), plus second-brain vault tools (gbrain, COG-second-brain).
 status: research
 created: 2026-06-14
 updated: 2026-11-21
@@ -107,6 +107,10 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ---
 
+## ByteRover CLI (campfirein)
+
+[campfirein/byterover-cli][byterover] (Elastic License 2.0; paper [arXiv:2604.01599][byterover-paper]): agent memory layer CLI exposed to Claude Code over MCP. Archived on GitHub (4,943 stars, last push 2026-06-25, last release v3.16.1 on 2026-05-27; `gh api` 2026-11-21).
+
 ## Claude-Mem (thedotmack / Alex Newman)
 
 **Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 115.2K (`gh api`, 2026-11-09) | **License**: Apache-2.0 | **Version**: v15.13.0 (2026-11-09)
@@ -197,6 +201,36 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ---
 
+## CortexDB (liliang-cn)
+
+**Repo**: [liliang-cn/cortexdb][cortexdb] | **Stars**: 479 | **License**: MIT | **Version**: Go module v2, `gh api` 2026-11-12
+
+Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run, works without an embedding model" ([README][cortexdb]). Combines vector search (HNSW/IVF/flat/binary), FTS5 full-text, RAG knowledge, scoped agent memory, and a Resource Description Framework (RDF) 1.2 knowledge graph ([SPARQL](../glossary.md#knowledge-structures) 1.1/1.2, OWL 2 RL inference, SHACL validation, read-only Cypher) plus a Palantir-style governed-action ontology, behind 100+ tools exposed in-process or over MCP.
+
+### Architecture
+
+- **Vectors + graph + FTS in one file**: HNSW/IVF/flat/binary vector indexes, FTS5 full-text, hybrid and graph retrieval; an `EmbeddedConfig` mode opens 100k 768-d vectors in 0.28s with a 193MB heap for small devices
+- **RDF knowledge graph**: SPARQL 1.1/1.2, RDFS + OWL 2 RL inference (OWL = Web Ontology Language), SHACL Core + SHACL-SPARQL — the README states it passes the W3C SPARQL, RDF 1.2 and Shapes Constraint Language (SHACL) test suites (RDFS/OWL 2 RL covered by the repo's own tests)
+- **Versioned history**: every entity/relation/triple/schema change is kept with `as_of` queries on SPARQL, find, expand and Cypher, plus a live 3D graph viewer (`serve_graph_3d`) with an Entity page showing why a value is in effect and what it replaced
+- **`import_agent_memory`**: pulls in what Claude Code, Codex and DeepSeek Harness already remember — memory notes, `CLAUDE.md`/`AGENTS.md`, Codex memories, optionally past sessions distilled into memories
+
+### CC Integration
+
+| Surface | Mechanism |
+|---|---|
+| Plugin | `/plugin marketplace add liliang-cn/cortexdb`, `/plugin install cortexdb@cortexdb` — gives Claude Code one global brain at `~/.cortexdb/cortexdb.db`, `/remember`/`/recall`, and an auto-recall hook |
+| Mod (early access) | `cortexdb-live`: Haiku plans each recall before the brain is searched (so a bare "ok" searches nothing), a status line names the active brain/node-count/recall latency, and 90 seconds of session idle triggers Haiku to distil new durable memories — run on Claude Code's own model access, no separate API key |
+
+### Adoption Considerations
+
+**Strengths**: single-file, zero-dependency Go binary (no vector DB or server required, unless sharing one brain over the optional `cortexdb-grpc`); the RDF/SPARQL/SHACL layer is a standards-conformant knowledge graph rather than a marketing label; distinguishes verified facts from guesses and marks superseded memories rather than deleting them.
+
+**Risks**: young project (created 2025-08-07) relative to its star count; the Claude Code mod is explicitly "early access"; overlaps with CC's built-in memory and every other cross-agent tool in this doc — pick one. The social post that queued this entry cited "80+ MCP tools" — the current README states "100+ tools," so the count has grown since whatever version prompted the post.
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
 ## Core (RedPlanetHQ)
 
 **Repo**: [RedPlanetHQ/core][core] | **Stars**: 2K | **License**: AGPL-3.0 | **Version**: 0.7.20
@@ -234,6 +268,28 @@ Local memory index built from session history already on disk — "one memory sh
 **Strengths**: Retroactive indexing parses each agent's *existing* on-disk session stores directly, so months of pre-install history become searchable immediately — no separate backfill step (claude-reflect above can also recover pre-install learnings, but only by re-scanning sessions through its own capture pipeline); no LLM or embedding dependency for core full-text search; self-reported **88.1% hit@1 on LongMemEval-S** and **70.5% retrieval hit@1 on LoCoMo**, both reproducible in-repo against the public datasets (see [Benchmarks](#benchmarks) below); millisecond lookups.
 
 **Risks**: Overlaps with CC's built-in memory and every other tool in this doc — pick one. Depends on each agent's own on-disk session format; a harness that changes its log layout could break parsing until deja-vu updates. Pre-1.0 (v0.21.1).
+
+Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## engrim (timgordontg)
+
+**Repo**: [timgordontg/engrim][engrim] | **Stars**: 283 | **License**: MIT | **Version**: 1.4.11
+
+Local-first SQLite episodic-memory store aimed at the "200,000-token context window trap": rather than replaying raw transcripts, it distills project memory into "4,000 characters of high-precision, curated episodic working memory" in a single file (`~/.engrim/memory.db`, WAL mode, restrictive POSIX permissions) ([README][engrim]).
+
+### Architecture
+
+- Hybrid retrieval: BM25 full-text search (FTS5) + vector embeddings via `model2vec`
+- Native adapters for seven environments: Claude Code (SessionStart/Stop hooks), Codex CLI (command hooks), Cursor and Windsurf (MCP), GitHub Copilot CLI, OpenCode (plugin + MCP), and Google Antigravity
+- Tracks `origin_agent` provenance per entry, so a team can see which agent/environment contributed a given decision
+
+### Adoption Considerations
+
+**Strengths**: Only tool in this doc with a Google Antigravity adapter (alongside Claude Code, Cursor, Codex CLI, Copilot CLI, OpenCode, and Windsurf — seven environments total); per-entry `origin_agent` provenance lets a team see which agent contributed a given decision; tiny on-disk footprint (single SQLite file); MIT, with an optional commercial variant for teams rather than a required upsell.
+
+**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K (16,057 on 2026-11-17) and deja-vu's 935). No third-party or public benchmark number, unlike ByteRover/MemPalace/deja-vu.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -450,13 +506,10 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| ByteRover CLI | Archived on GitHub (4,943 stars, last push 2026-06-25, `gh api` 2026-11-21); no successor repo found in the `campfirein` org | 2026-11-21 | <https://github.com/campfirein/byterover-cli> |
-| CortexDB | 529 stars; README gives no measured benefit and no named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/liliang-cn/cortexdb> |
-| engrim | 305 stars; only a single-project anecdote as evidence, no method or independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/timgordontg/engrim> |
 | Operator Memory | 523 stars; README gives no benchmark (its "Looking for benchmarks?" link goes to an issue titled "Benchmarks? Evals?") and no named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/aerovato/operator-memory> |
 | open-second-brain | 612 stars; no measured benefit or named independent users in the README (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/itechmeat/open-second-brain> |
 | agent-second-brain | 502 stars; no measured benefit or named independent users in the README (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/smixs/agent-second-brain> |
-| claude-second-brain | 176 stars; last push 2026-04-20; no measured benefit (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/jessepinkman9900/claude-second-brain> |
+| claude-second-brain | 176 stars; no measured benefit or named independent users in the README (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/jessepinkman9900/claude-second-brain> |
 
 ## Sources
 
@@ -464,11 +517,14 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 |---|---|
 | [agent-memory][agent-memory] | Long-term memory runtime for Claude Code/Codex/Hermes (README, `gh api`, 2026-09-30) |
 | [ai-memory][ai-memory] | Cross-agent long-term memory (Rust) |
+| [Byterover][byterover] · [paper][byterover-paper] | Agent memory layer (CLI) |
 | [gbrain][gbrain] · [COG-second-brain][cog] | Second-brain vault tools (READMEs, `gh api`, 2026-11-17) |
 | [claude-mem][claude-mem] · [docs][claude-mem-docs] · [configuration][claude-mem-config] | Cross-agent memory plugin (README, releases, `gh api`, 2026-11-09) |
 | [claude-reflect][claude-reflect] | Correction/preference memory plugin for Claude Code |
 | [Core][core] · [benchmark repo][core-benchmark] | Self-hosted personal AI OS with CC/Codex delegation |
+| [CortexDB][cortexdb] | Go agent memory + RDF knowledge graph in one SQLite file (README, `gh api`, 2026-11-12) |
 | [deja-vu][deja-vu] · [security model][deja-vu-security] | Cross-agent session-history memory index |
+| [engrim][engrim] | Cross-agent episodic memory store (SQLite) |
 | [Leviathan][leviathan] | Deep memory + full-text index for agents over large datasets (README, `gh api`, 2026-11-12) |
 | [MemPalace][mempalace] | Agent memory tool |
 | [memsearch][memsearch] · [CC docs][memsearch-docs] | Zilliz memory search (CC integration) |
@@ -487,6 +543,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 [agent-memory]: https://github.com/tigerless-labs/agent-memory
 [ai-memory]: https://github.com/akitaonrails/ai-memory
+[byterover]: https://github.com/campfirein/byterover-cli
+[byterover-paper]: https://arxiv.org/abs/2604.01599
 [claude-mem]: https://github.com/thedotmack/claude-mem
 [claude-mem-config]: https://github.com/thedotmack/claude-mem/blob/main/docs/public/configuration.mdx
 [claude-mem-docs]: https://docs.claude-mem.ai/introduction
@@ -495,8 +553,10 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [cog]: https://github.com/huytieu/COG-second-brain
 [core]: https://github.com/RedPlanetHQ/core
 [core-benchmark]: https://github.com/RedPlanetHQ/core-benchmark
+[cortexdb]: https://github.com/liliang-cn/cortexdb
 [deja-vu]: https://github.com/vshulcz/deja-vu
 [deja-vu-security]: https://github.com/vshulcz/deja-vu/blob/main/docs/SECURITY-MODEL.md
+[engrim]: https://github.com/timgordontg/engrim
 [leviathan]: https://github.com/elstongun/leviathan
 [mempalace]: https://github.com/MemPalace/mempalace
 [longmemeval]: https://github.com/xiaowu0162/LongMemEval
