@@ -12,6 +12,8 @@ see [the hub index](README.md).
 | [helixdb-analysis.md](../non-cc/context-memory/helixdb-analysis.md) | Rust graph-vector database | non-cc |
 | [latticedb-analysis.md](../non-cc/context-memory/latticedb-analysis.md) | Embedded graph + vector + full-text database | non-cc |
 | [minigraf-analysis.md](../non-cc/context-memory/minigraf-analysis.md) | Embedded bi-temporal Datalog graph database (Rust/Python/WASM/mobile) | non-cc |
+| [semantic-layers-data-catalog-landscape.md § Choosing a Structure](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#choosing-a-structure) | Tag list, controlled vocabulary, taxonomy, SKOS thesaurus, OWL ontology and knowledge graph compared: what each is, upkeep, when a KB needs it | non-cc |
+| [graph-databases-query-languages-landscape.md § Property Graph vs RDF](../non-cc/infrastructure/graph-databases-query-languages-landscape.md#property-graph-vs-rdf) | The two graph data models and their query languages (Cypher/GQL vs SPARQL) | non-cc |
 | [graph-databases-query-languages-landscape.md](../non-cc/infrastructure/graph-databases-query-languages-landscape.md) | Graph query languages, graph databases for agents, text-to-Cypher/SPARQL evidence, graph MCP servers; links the per-tool docs | non-cc |
 | [rowboat-analysis.md](../non-cc/agents/rowboat-analysis.md) | AI coworker that builds knowledge graphs from communications | non-cc |
 | [databricks-genie-analysis.md § Genie Ontology](../non-cc/agents/databricks-genie-analysis.md#genie-ontology) | Enterprise semantic graph behind Genie | non-cc |

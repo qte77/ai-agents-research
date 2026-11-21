@@ -26,6 +26,7 @@ layers, catalogs and ontologies, graph and vector stores. Pointers only; see [th
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
+| [semantic-layers-data-catalog-landscape.md § Choosing a Structure](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#choosing-a-structure) | From tags to taxonomy, SKOS, OWL and knowledge graphs: which structure a KB needs | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Semantic / Metrics Layers](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#semantic--metrics-layers) | Semantic and metrics layers that keep metrics consistent | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Catalogs / Metadata / Governance](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#catalogs--metadata--governance) | Data catalogs, metadata, lineage, governance | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Ontology generation and ontology-constrained extraction](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction) | Generating ontologies and extracting against one | non-cc |
