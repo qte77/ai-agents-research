@@ -4,7 +4,7 @@ purpose: Comparison of open-source Application Lifecycle Management tools for po
 created: 2026-03-24
 updated: 2026-06-28
 validated_links: 2026-11-21
-status: assess
+status: hold
 ---
 
 ## OSS ALM Landscape

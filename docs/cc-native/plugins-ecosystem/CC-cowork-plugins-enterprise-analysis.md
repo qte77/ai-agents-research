@@ -5,7 +5,7 @@ purpose: Analysis of Claude's Cowork enterprise platform, plugin architecture, a
 created: 2026-03-07
 updated: 2026-11-12
 validated_links: 2026-11-12
-status: assess
+status: hold
 ---
 
 **Details:** Generally available. Standard feature across paid plans (Cowork); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout

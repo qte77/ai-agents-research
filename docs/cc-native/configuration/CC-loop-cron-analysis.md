@@ -8,7 +8,7 @@ validated_links: 2026-10-18
 status: assess
 ---
 
-**Details:** Generally available; v2.1.71+, feature gate `tengu_kairos_cron` (polled every 5 min) — original gist-sourced finding, unconfirmed against first-party docs, which don't document internal feature gates. The feature now has an official first-party page, [Run prompts on a schedule][cc-sched-loop] ("`/loop` and the cron scheduling tools"), re-checked 2026-10-15; most of this doc's original gist/cli.js-decompilation and empirical findings are superseded or substantially extended below. The URL slug `scheduled-tasks` is this feature's own page — it is **not** the cloud Routines feature documented in [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md), which lives at the different URL `/docs/en/routines`.
+**Details:** Generally available; v2.1.71+, feature gate `tengu_kairos_cron` (polled every 5 min) — original gist-sourced finding, unconfirmed against first-party docs, which don't document internal feature gates. The feature now has an official first-party page, [Run prompts on a schedule][cc-sched-loop] ("`/loop` and the cron scheduling tools"), re-checked 2026-10-15; most of this doc's original gist/cli.js-decompilation and empirical findings are superseded or substantially extended below. The URL slug `scheduled-tasks` is this feature's own page — it is **not** the cloud Routines feature documented in [CC-web-scheduled-tasks-analysis.md](../ci-remote/CC-web-scheduled-tasks-analysis.md), which lives at the different URL `/docs/en/routines`. The `-p` mode finding comes from empirical testing (cc-recursive-team-mode, 2026-03-23).
 
 ## What `/loop` Is
 

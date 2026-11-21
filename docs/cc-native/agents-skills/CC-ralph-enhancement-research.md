@@ -7,7 +7,7 @@ validated_links: 2026-09-24
 status: research
 ---
 
-**Details:** informational — feeds into iteration planning. Based on `ralph/scripts/ralph.sh`, `ralph/README.md` and external Ralph pattern research (see the external references below).
+**Details:** informational — feeds into iteration planning. Based on `ralph/scripts/ralph.sh`, `ralph/README.md` and external Ralph pattern research (`ralph/README.md` is project-specific; see the external references below for the general pattern).
 
 ## Current Architecture Summary
 

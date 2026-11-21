@@ -8,7 +8,7 @@ validated_links: 2026-10-15
 status: assess
 ---
 
-**Details:** v2.1.80+ (earlier research finding — the current channels and channels-reference pages, re-checked 2026-10-15, no longer state a minimum version), allowlisted plugins only. Neither `--channels` nor `--dangerously-load-development-channels` appears in `claude --help` while the feature is in preview, though both flags work.
+**Details:** Research preview; v2.1.80+ (earlier research finding — the current channels and channels-reference pages, re-checked 2026-10-15, no longer state a minimum version), allowlisted plugins only. Neither `--channels` nor `--dangerously-load-development-channels` appears in `claude --help` while the feature is in preview, though both flags work.
 
 ## What Channels Are
 
