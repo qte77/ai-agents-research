@@ -8,6 +8,8 @@ validated_links: 2026-11-19
 status: assess
 ---
 
+**Abbreviations:** RDF = Resource Description Framework; SKOS = Simple Knowledge Organization System; OWL = Web Ontology Language; SHACL = Shapes Constraint Language (all W3C); JSON-LD = the W3C JSON format for Linked Data; SPARQL = the W3C query language for RDF; GQL = the ISO graph query language (ISO/IEC 39075); IRI = a global web identifier, like a URL.
+
 ## Why Agents Need This
 
 When an agent answers a data question ("Q2 revenue by region?"), free-form text-to-SQL over raw tables is unreliable — it hallucinates joins, misnames columns, and re-invents metric definitions on every call. Two substrate layers harden this:
