@@ -187,8 +187,9 @@ class AbbreviationTests(unittest.TestCase):
         self.assertEqual(self.check("# A\n\n`MCP` and MCPs and mcp\n\n```\nMCP\n```\n"), [])
 
     def test_skips_glossary_and_non_content(self):
-        self.assertEqual(self.check("MCP", path="docs/glossary.md"), [])
-        self.assertEqual(self.check("MCP", path="docs/non-cc/README.md"), [])
+        for path in ("docs/glossary.md", "docs/non-cc/README.md", "docs/plans/2026-01-01-0001-x.md",
+                     "docs/_topics/rag.md", "docs/research/r.md", "docs/learnings/per-repo/some-repo.md"):
+            self.assertEqual(self.check("MCP", path=path), [], path)
 
 
 if __name__ == "__main__":

@@ -16,6 +16,7 @@ from __future__ import annotations
 import posixpath
 import re
 
+from .doc_frontmatter import in_scope
 from .doc_graph import build_graph, extract_links, resolve
 
 _EXEMPT_PREFIXES = ("docs/cc-native/examples/",)
@@ -173,6 +174,8 @@ def check_hub_duplicates(docs: dict) -> list[str]:
 
 
 GLOSSARY = "docs/glossary.md"
+# Reason: per-repo learnings are mirrors overwritten by learnings-aggregator.py; fix upstream, not here.
+_MIRRORS = ("docs/learnings/per-repo/",)
 _ABBR = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$")
 _INLINE_CODE = re.compile(r"`[^`\n]*`")
 
@@ -214,6 +217,9 @@ def _prose(text: str) -> str:
 def check_abbreviations(docs: dict, glossary: dict[str, str]) -> list[str]:
     """Content docs that use a glossary abbreviation without expanding it (report-only, C2).
 
+    Scope is the frontmatter schema's (no READMEs, hubs, plans, examples, archive or
+    ``docs/research/``) minus the per-repo learnings mirrors.
+
     A doc passes if the expansion appears anywhere in it (any case; a hyphen and a space
     count as the same) or it links the glossary.
     """
@@ -222,7 +228,7 @@ def check_abbreviations(docs: dict, glossary: dict[str, str]) -> list[str]:
 
     out = []
     for path in sorted(docs):
-        if path == GLOSSARY or not is_content(path):
+        if path == GLOSSARY or not in_scope(path) or path.startswith(_MIRRORS):
             continue
         prose = _prose(docs[path])
         if "glossary.md" in prose:
