@@ -1,20 +1,26 @@
 ---
 name: adding-research-source
-description: Research a new source (tool / paper / protocol / agent) first-party and add it to the ai-agents-research corpus as an analysis doc — placement, conventions, lint, one-PR-per-topic. Use when the user drops a URL/tool/paper to "add as a source" or asks to extend coverage. For >~4 sources at once, use the batch workflow.
+description: Add or enrich research in the ai-agents-research corpus. Add a source — research a tool / paper / protocol / agent first-party and place it as an analysis doc (placement, conventions, lint, one PR per topic) — when the user drops a URL/tool/paper to "add as a source". Enrich a topic — gap survey, up to three worktree lanes on separate files, two falsification passes, lead adds hub and index rows — when the user asks to deepen, extend or prune coverage of a topic or hub. For >~4 sources at once, use the batch workflow.
 compatibility: ai-agents-research repo; needs make, git, gh, and uv (for polyfetch-scrape / doc-pipeline-engine escalation on dynamic/PDF sources). Designed for Claude Code.
 metadata:
   author: qte77
-  version: "0.1"
+  version: "0.2"
 allowed-tools: Agent Bash Read Grep Glob Write Edit WebFetch
 ---
 
 # adding-research-source
 
+Two modes: **add a source** (below) and **[enrich a topic](#mode-enrich-a-topic)** (a hub or area
+that needs depth, a pruning sweep, or several related gaps). To re-verify facts already in the corpus,
+use the `refresh-docs` skill instead.
+
+## Mode: add a source
+
 Add a source the way it's done consistently here: **research first-party → place correctly → write to
 convention → lint → ship one PR per topic.** Judgment lives in *placement* and *sourcing*; the rest is
 mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't duplicate its rules.
 
-## Procedure (per source)
+### Procedure (per source)
 
 1. **Research first-party.** Dispatch an **Explore subagent** with the brief below (read-only). Never
    trust marketing — verify license/counts/version against the upstream README/LICENSE/releases
@@ -43,13 +49,13 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
    the caveat below it.
 4. **Index + changelog:** add the subdir README row (+ `cc-native/README` count for cc-native docs);
    add a `changelog.d/<ts>_<slug>.md` fragment.
-5. **Lint:** `make check_docs` (run it **directly** — `make lint` aborts at the lychee flake before
-   markdownlint) then `make check_links`. A URL you added that 404s/bot-blocks → *propose* a
-   `lychee.toml` exclude with a note; never admin-merge past a broken link you introduced.
-6. **Ship:** branch `<type>/<slug>`; **commit by topic** (doc, then index/meta); PR; green CI → owner
-   squash-merge past the signed-commit rule, owner-approved (lychee is not required — merge past *pre-existing* rot only) → prune.
+5. **Lint:** `make lint` (markdown, status, coverage, frontmatter, actions, then links last). A URL
+   you added that fails: recheck it locally and replace a dead one with its current canonical URL.
+   Don't add `lychee.toml` excludes yourself; ask the owner.
+6. **Ship:** branch `<type>/<slug>`; **commit by topic** (doc, then index/meta); PR; merge once CI is
+   green, where a lychee failure is acceptable only if `main` already has it → prune the branch.
 
-## Research-subagent brief (dispatch verbatim; one per source or tight cluster)
+### Research-subagent brief (dispatch verbatim; one per source or tight cluster)
 
 > Read-only. Use WebFetch + `git grep`/Read. Do NOT edit files or invoke skills. For `<URL(s)>`:
 > canonical name; what it is (1–2 lines); **license from the LICENSE file, not marketing**;
@@ -60,11 +66,36 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
 > appears verbatim at the source. End with a **strongest claims** list: every superlative, "confirmed",
 > "only" or bolded claim, each with its one piece of evidence. Return prose + compact blocks, no raw dumps.
 
-## Batch mode (>~4 sources at once)
+### Batch mode (>~4 sources at once)
 
 Run the workflow `scripts/batch-sources.workflow.js` (Workflow tool) — parallel first-party research +
 **adversarial verify** across all URLs → structured findings (facts + placement + dup-flags). Then
 write/ship each per steps 3–6. Needs explicit user opt-in (workflows spawn many agents).
+
+## Mode: enrich a topic
+
+For a hub in [`docs/_topics/README.md`](../../../docs/_topics/README.md), an area with several gaps, or
+a pruning sweep under CONTRIBUTING
+[§ Pruning entries](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter).
+The lead (you) plans, verifies and integrates; lanes write.
+
+1. **Gap survey (read-only).** One Explore subagent surveys the hub and the docs it lists: what
+   exists, what's missing, duplicate definitions, stale facts, entries failing the pruning rule. It
+   returns a summary, not file dumps. Re-check every gap and absence claim yourself with `git grep`
+   before acting on it.
+2. **Plan the lanes.** At most three. Each lane owns separate files (no two lanes edit the same file)
+   and gets a task list with a default for every decision. Collect shared evidence (for example
+   `gh api` star counts and push dates) once and hand it to the lanes.
+3. **Run the lanes.** Each lane is a subagent in its own git worktree, outside the main checkout.
+   Brief = [references/lane-brief.md](references/lane-brief.md) with its placeholders filled in, plus
+   the task list. Lanes commit and stop; they never touch hubs, indexes, the glossary or plans.
+4. **Two falsification passes.** Run [references/falsifier-briefs.md](references/falsifier-briefs.md):
+   pass 1 re-checks every claim at source; fix what it finds; then pass 2 checks the diffs for
+   scope creep, lost facts, inconsistent rules, duplicate definitions and orphans. Verify each
+   finding before applying it.
+5. **Integrate.** Add the hub rows, README index rows and glossary rows the lanes proposed, then run
+   `make lint` and `make test`. Ship one PR per lane or topic, with each plan row struck in the PR
+   that ships it.
 
 ## Guardrails (why this exists)
 
