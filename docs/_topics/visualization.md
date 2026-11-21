@@ -9,7 +9,7 @@ Visual output, agent-run visualizers and graph rendering across the corpus. Poin
 | [CC-agent-flow-visualizer-analysis.md](../cc-community/CC-agent-flow-visualizer-analysis.md) | Agent Flow: replays a CC or Codex run as a node graph | cc-community |
 | [agentcanvas-analysis.md](../non-cc/protocols/agentcanvas-analysis.md) | AgentCanvas: Pydantic AI trace visualizer | non-cc |
 | [agent-frameworks-infrastructure-landscape.md § Graph visualization](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graph-visualization) | Graph-rendering libraries | non-cc |
-| [architecture.md § Knowledge Graph](../architecture.md#knowledge-graph-graphify) | How this repo renders its corpus graph page | repo |
+| [architecture.md § Doc Graph and Site](../architecture.md#doc-graph-and-site) | How this repo renders its doc graph page | repo |
 | [CC-community-skills-landscape.md § cathrynlavery/diagram-design](../cc-community/CC-community-skills-landscape.md#cathrynlaverydiagram-design) | diagram-design: editorial HTML+SVG diagram skill for Claude Code, Codex, Copilot, Droid and Pi (44 type references; its tagline says 42) | cc-community |
 | [CC-community-plugins-landscape.md § Notable Plugin Profile: lot-map](../cc-community/CC-community-plugins-landscape.md#notable-plugin-profile-lot-map-live-session-map-mod) | lot-map: a Claude Code mod drawing a live node-map pane of tool calls, hooks, subagents and skills as they happen | cc-community |
 

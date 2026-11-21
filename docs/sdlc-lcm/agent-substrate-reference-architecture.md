@@ -270,6 +270,6 @@ corpus's own: shared, distributed context and skills.
 [goal-thread]: goal-tracking-attribution-landscape.md#the-substrate-thread
 [eos]: ../non-cc/frameworks/agentic-enterprise-os-landscape.md#tier-3--estate-worked-examples-the-self-operating-pattern-built-from-primitives
 [disc-ref]: agentic-engineering-disciplines-landscape.md#reference-implementation-open-agentic-coding-harness
-[arch-kg]: ../architecture.md#knowledge-graph-graphify
+[arch-kg]: ../architecture.md#doc-graph-and-site
 [arch-lint]: ../architecture.md#lint-gate
 [arch-fm]: ../architecture.md#frontmatter-conventions
