@@ -32,6 +32,7 @@ sites identify, admit and charge agents. Pointers only; see [the hub index](READ
 | [web-scraping-extraction-landscape.md § Search APIs](../non-cc/infrastructure/web-scraping-extraction-landscape.md#search-apis) | Search APIs, re-priced 2026-11-18 | non-cc |
 | [web-scraping-extraction-landscape.md § Scrape-Quality Evidence](../non-cc/infrastructure/web-scraping-extraction-landscape.md#scrape-quality-evidence) | Measured scrape quality | non-cc |
 | [web-scraping-extraction-landscape.md § Legal and Terms Note](../non-cc/infrastructure/web-scraping-extraction-landscape.md#legal-and-terms-note) | Case law and terms, neutral note (not legal advice) | non-cc |
+| [searxng-analysis.md](../non-cc/infrastructure/searxng-analysis.md) | SearXNG: self-hosted metasearch as a web-search backend for agents | non-cc |
 
 ## Agent identity, access and payments
 
@@ -42,5 +43,6 @@ sites identify, admit and charge agents. Pointers only; see [the hub index](READ
 | [ai-crawlers-discoverability-landscape.md § Publisher-side controls (Cloudflare)](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md#publisher-side-controls-cloudflare) | Publisher-side crawler controls | non-cc |
 | [agentic-payments-landscape.md § The standards](../non-cc/protocols/agentic-payments-landscape.md#the-standards) | x402, AP2, MPP, L402, UCP, card networks, merchant feeds | non-cc |
 | [CC-llms-txt-analysis.md § Specification (llmstxt.org)](../cc-native/context-memory/CC-llms-txt-analysis.md#specification-llmstxtorg) | The llms.txt spec | cc-native |
+| [corsair-analysis.md](../non-cc/infrastructure/corsair-analysis.md) | Corsair: managed OAuth and a unified API layer for agents | non-cc |
 
 Related hubs: [evals-benchmarks.md](evals-benchmarks.md), [security.md](security.md), [management.md](management.md), [context.md](context.md).

@@ -31,6 +31,9 @@ vulnerability discovery and offensive agents. Pointers only; see [the hub index]
 | [CC-permissions-bypass-analysis.md § Auto Mode: Availability, Classifier and Defaults (read 2026-11-18)](../cc-native/sandboxing/CC-permissions-bypass-analysis.md#auto-mode-availability-classifier-and-defaults-read-2026-11-18) | Auto mode: availability, classifier, fallback thresholds, admin controls | cc-native |
 | [CC-managed-settings-fleet-analysis.md § Managed-only keys and invalid values](../cc-native/configuration/CC-managed-settings-fleet-analysis.md#managed-only-keys-and-invalid-values) | Locks only a managed source can set; restrictive keys that fail closed | cc-native |
 | [agentic-database-access-landscape.md § Write safety](../non-cc/infrastructure/agentic-database-access-landscape.md#write-safety) | Read-only roles, branching, incident evidence for agent database writes | non-cc |
+| [agent-probabilistic-verification-analysis.md](../sdlc-lcm/agent-probabilistic-verification-analysis.md) | Datalog runtime verification with probabilistic bounds on policy violation | sdlc-lcm |
+| [sovereign-execution-brokers-analysis.md](../sdlc-lcm/sovereign-execution-brokers-analysis.md) | Certificate-bound authority before an agent can change production infrastructure | sdlc-lcm |
+| [ledger-state-tool-calling-analysis.md](../sdlc-lcm/ledger-state-tool-calling-analysis.md) | Ledger-state tracking and pre-execution policy gating for tool calls | sdlc-lcm |
 
 ## Sandboxes
 
@@ -40,6 +43,8 @@ vulnerability discovery and offensive agents. Pointers only; see [the hub index]
 | [CC-sandbox-platforms-landscape.md § Platform Comparison](../cc-native/sandboxing/CC-sandbox-platforms-landscape.md#platform-comparison) | Built-in sandbox vs OpenSandbox, E2B, Sprites.dev, Maritime, Daytona | cc-native |
 | [nvidia-openshell-analysis.md](../non-cc/infrastructure/nvidia-openshell-analysis.md) | NVIDIA OpenShell: kernel-enforced policy runtime for agent fleets | non-cc |
 | [microsoft-mxc-analysis.md](../non-cc/infrastructure/microsoft-mxc-analysis.md) | Microsoft MXC: policy-driven sandbox SDK for agent-generated code | non-cc |
+| [CC-sandbox-bwrap-host-quirks.md](../cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md) | bwrap friction on Linux: dotfile leakage, AppArmor user-namespace prerequisites | cc-native |
+| [CC-sandbox-codespaces-friction.md](../cc-native/sandboxing/CC-sandbox-codespaces-friction.md) | Sandbox friction in Codespaces and devcontainers, with mitigations | cc-native |
 
 ## Vulnerability discovery and offensive agents
 
@@ -48,5 +53,6 @@ vulnerability discovery and offensive agents. Pointers only; see [the hub index]
 | [agentic-ai-vulnerability-landscape.md § 2. Vendor discovery & remediation systems](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#2-vendor-discovery--remediation-systems) | MDASH, Vuln.AI, Adrian, Uber ADR, SkillSpector | sdlc-lcm |
 | [agentic-ai-vulnerability-landscape.md § 7. Offensive-security agents (authorized testing)](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#7-offensive-security-agents-authorized-testing) | ARTEX, Claude-BugHunter, cross-tool observations | sdlc-lcm |
 | [CC-community-skills-landscape.md § cloudflare/security-audit-skill](../cc-community/CC-community-skills-landscape.md#cloudflaresecurity-audit-skill) | Community security-audit skill | cc-community |
+| [rea-analysis.md](../non-cc/infrastructure/rea-analysis.md) | REA: reverse-engineering tools for native binaries, JS/Electron apps, .NET assemblies and websites | non-cc |
 
 Related hubs: [harness.md](harness.md), [management.md](management.md), [agentic-web.md](agentic-web.md), [evals-benchmarks.md](evals-benchmarks.md), [plugins.md](plugins.md).

@@ -22,5 +22,7 @@ corpus. Pointers only; see [the hub index](README.md).
 | [skill-recorder-analysis.md](../non-cc/agents/skill-recorder-analysis.md) | Microsoft Skill Recorder: records or imports a screen session and reconstructs it via the GitHub Copilot CLI into a reusable `SKILL.md`-style Skill or scheduled Automation | non-cc |
 | [agent-evaluation-metrics-landscape.md § Evaluation Platform Integration](../sdlc-lcm/agent-evaluation-metrics-landscape.md#evaluation-platform-integration) | Waza (Microsoft): Go CLI authoring and grading eval scenarios for agent skills and custom agents | sdlc-lcm |
 | [agentic-ai-vulnerability-landscape.md § LatentTriad](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#latenttriad--malicious-skill-detection-from-hidden-states) | Malicious-skill detection from hidden states; white-box only (arXiv 2611.05088) | sdlc-lcm |
+| [CC-book-to-skill-analysis.md](../cc-community/CC-book-to-skill-analysis.md) | Converting technical books and documents into on-demand Skills | cc-community |
+| [ai-trader-analysis.md](../non-cc/infrastructure/ai-trader-analysis.md) | ai4trade.ai's SKILL.md onboarding for agents trading on live signals | non-cc |
 
 Related hubs: [plugins.md](plugins.md), [harness.md](harness.md).
