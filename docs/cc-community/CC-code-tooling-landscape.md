@@ -144,25 +144,23 @@ Cross-ref: [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo
 
 ## Qodo (qodo-ai)
 
-**Repos**: [qodo-ai/agents][qodo-agents] · [qodo-ai/open-aware][qodo-aware] | **License**: MIT (both) | **Cross-repo review**: [docs.qodo.ai governance][qodo-crr]
+**Cross-repo review**: [docs.qodo.ai governance][qodo-crr]
 
-A code-review / code-intelligence platform with three surfaces relevant here, all MCP-based — so they plug into Claude Code (and other assistants) directly.
+A code-review platform whose cross-repo review feature is relevant here. Its two open repos (`open-aware`, `agents`) are under [Not included](#not-included).
 
-| Surface | What it is |
+| Feature | What it is |
 |---|---|
-| **open-aware** | Free "deep code research" MCP server — semantic search (`get_context`), architectural Q&A (`deep_research`, `ask`) across **multiple repositories** with daily-updated indexes of popular OSS libraries. Goes beyond keyword search via vector embeddings; private repos need the paid Qodo Aware tier. |
-| **agents** ("Qodo Commands Playbooks") | TOML-defined agent workflows for Qodo Command — code review, test generation, issue handling, docs/changelog, license-compliance, security-scorecard fixes. Each agent declares instructions, tools (MCP servers), arguments, a `plan`/`act` execution strategy, an output schema, and exit expressions. |
 | **cross-repo code review** | Governance feature: traces a PR's impact bidirectionally across *related* repos (Code / Service / Data / Pipeline relationships) to surface breaking changes — a signature change, API-contract shift, or schema evolution — that single-repo review misses. Findings appear inline, tagged "Cross-repo". |
 
 ### Key Differentiator
 
-Code-Review-Graph (above) computes structural blast radius **within one repo**; Qodo's cross-repo review extends impact tracing **across repository boundaries** (shared libraries, API contracts, schemas). open-aware is the semantic-index counterpart (multi-repo embeddings) to the AST-graph tools in this doc, and the `agents` TOML format is an openly reusable playbook pattern.
+Code-Review-Graph (above) computes structural blast radius **within one repo**; Qodo's cross-repo review extends impact tracing **across repository boundaries** (shared libraries, API contracts, schemas).
 
 ### Adoption Considerations
 
-**Strengths**: MCP-native (works with CC out of the box); the agent playbooks are an open (MIT) TOML pattern reusable as a harness reference; cross-repo review fills a gap no AST-blast-radius tool here covers.
+**Strengths**: cross-repo review fills a gap no AST-blast-radius tool here covers.
 
-**Risks**: open-aware's free tier indexes only pre-indexed *public* repos — private-repo coverage and cross-repo review are paid/enterprise. Star/adoption figures not independently verified here.
+**Risks**: cross-repo review is a paid/enterprise feature. Adoption figures not independently verified here.
 
 Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
 
@@ -512,8 +510,6 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 [ast-grep]: https://github.com/ast-grep/ast-grep
 [repomix]: https://github.com/yamadashy/repomix
 [code2prompt]: https://github.com/mufeedvh/code2prompt
-[qodo-agents]: https://github.com/qodo-ai/agents
-[qodo-aware]: https://github.com/qodo-ai/open-aware
 [qodo-crr]: https://docs.qodo.ai/governance/cross-repo-code-review
 [tgrep]: https://github.com/microsoft/tgrep
 [zvec-grep]: https://github.com/zvec-ai/zvec-grep
@@ -525,6 +521,15 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 [floorplan]: https://github.com/haydenschmitty/floorplan
 [archify]: https://github.com/tt-a1i/archify
 [understand-anything]: https://github.com/Egonex-AI/Understand-Anything
+
+## Not included
+
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Qodo open-aware | 503 stars; last push 2025-10-29, outside the 12-month window (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/qodo-ai/open-aware> |
+| Qodo agents (Commands Playbooks) | 122 stars; last commit on `main` 2025-10-06, outside the 12-month window (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/qodo-ai/agents> |
 
 ## Sources
 
