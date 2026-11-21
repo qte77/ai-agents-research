@@ -15,7 +15,7 @@ comment on PRs directly; most also expose IDE or agent hooks. They are
 multi-platform, **not** Claude Code-specific — any CC integration is incidental,
 which is why they live here rather than in the cc-community tooling docs.
 
-For CC-*integrated* code-review tooling — Qodo's cross-repo review, and the Code-Review-Graph AST/blast-radius Model Context Protocol (MCP) tool — see
+For related code-review tooling — Qodo's cross-repo review, and the Code-Review-Graph AST/blast-radius Model Context Protocol (MCP) tool — see
 [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md).
 
 ## Products
@@ -36,7 +36,7 @@ These overlap heavily; the differentiators are codebase-context depth (Greptile'
 index), OSS vs SaaS (open-code-review, below, is Apache-2.0; PR-Agent is MIT-licensed —
 both are open-source options), and agent/MCP reach (Greptile, CodeRabbit, Sourcery). The
 structural/AST counterpart (Code-Review-Graph) and cross-repo review (Qodo) are
-CC-integrated tooling — see Cross-References.
+covered in the Claude Code tooling docs — see Cross-References.
 
 ### Hybrid deterministic + LLM review
 
@@ -60,7 +60,7 @@ review; a session viewer records and replays past runs. Scored 2026-09-30 agains
 
 ## Cross-References
 
-- [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md) — CC-integrated code-review tooling: Qodo (cross-repo review) and Code-Review-Graph (AST blast-radius MCP)
+- [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md) — code-review tooling in the Claude Code docs: Qodo (cross-repo review) and Code-Review-Graph (AST blast-radius MCP)
 - [CC-official-plugins-landscape.md](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
 - [software-factory-landscape.md § Economics, failure and verification evidence](../../sdlc-lcm/software-factory-landscape.md#economics-failure-and-verification-evidence) — Uber's uReview (vendor claim) and the empirical review-agent merge-rate study (arXiv 2604.03196)
 - [jev-analysis.md](jev-analysis.md) — a cheap classifier-model gate rather than an LLM-review bot; comparable in that both are automatable pre-merge checks, but Jev answers narrow typed questions instead of writing review comments
