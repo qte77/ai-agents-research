@@ -3,7 +3,9 @@
 Every content doc must be (1) linked from its folder's README index, the nearest
 ``README.md`` above it inside ``docs/``, and (2) linked from at least one other
 doc or repo-root markdown file. Every ``#fragment`` in a doc-to-doc link must
-match a heading slug (or explicit anchor) in its target (3). Built on ``doc_graph.build_graph``; pure logic, so
+match a heading slug (or explicit anchor) in its target (3). Hub coverage (X2, owner
+decision D6): every content doc outside the D6 exemptions is linked from at least one
+topic hub, and no hub has two rows for the same doc and section. Built on ``doc_graph.build_graph``; pure logic, so
 the entry point (``check-doc-coverage.py``) only reads files and sets the exit code.
 
 Not content docs: README indexes themselves, ``docs/`` root files that have no
@@ -17,6 +19,11 @@ import re
 from .doc_graph import build_graph, extract_links, resolve
 
 _EXEMPT_PREFIXES = ("docs/cc-native/examples/",)
+_HUB_DIR = "docs/_topics/"
+_HUB_INDEX = "docs/_topics/README.md"
+# D6: not expected in a hub (their folder README is the index).
+_PROFILE_DIRS = tuple(f"docs/non-cc/{d}/" for d in ("coding-agents", "agents", "orchestrators", "reference"))
+_NOT_HUB_CONTENT = (_HUB_DIR, "docs/plans/", "docs/archive/", "docs/research/")
 _FENCE = re.compile(r"^\s*(```|~~~)")
 _HEADING = re.compile(r"^#{1,6}\s+(.+?)\s*#*\s*$")
 _HTML_ANCHOR = re.compile(r"<a\s+(?:name|id)=\"([^\"]+)\"")
@@ -113,4 +120,53 @@ def check_anchors(docs: dict) -> list[str]:
                 anchors[target] = {a.lower() for a in heading_slugs(docs[target])}
             if fragment.lower() not in anchors[target]:
                 problems.add(f"{source}:{line}: #{fragment} not found in {target}")
+    return sorted(problems)
+
+
+def hub_exempt(path: str) -> bool:
+    """D6 exemptions: docs/ root files, single-product profiles, framework analyses, specs and runbooks.
+
+    Landscapes are never exempt.
+    """
+    name = posixpath.basename(path)
+    if name.endswith("-landscape.md"):
+        return False
+    if path.count("/") == 1:
+        return True
+    if path.startswith(_PROFILE_DIRS):
+        return True
+    if path.startswith("docs/non-cc/frameworks/") and name.endswith("-analysis.md"):
+        return True
+    return name.endswith(("-spec.md", "-runbook.md"))
+
+
+def unhubbed(docs: dict) -> list[str]:
+    """Content docs outside the D6 exemptions that no topic hub links to, sorted."""
+    hubbed = {e["target"] for e in build_graph(docs)["edges"]
+              if e["kind"] == "hub" and e["source"] != _HUB_INDEX}
+    return sorted(p for p in docs
+                  if is_content(p) and not p.startswith(_NOT_HUB_CONTENT)
+                  and not hub_exempt(p) and p not in hubbed)
+
+
+def check_hub_duplicates(docs: dict) -> list[str]:
+    """Hub table rows (lines starting with ``|``) whose first link repeats an earlier row's doc and section; sorted."""
+    problems = []
+    for hub in sorted(p for p in docs if p.startswith(_HUB_DIR) and p != _HUB_INDEX):
+        first_seen: dict[tuple, int] = {}
+        rows: dict[int, str] = {}
+        lines = docs[hub].splitlines()
+        for link, line in extract_links(docs[hub]):
+            if line in rows or not lines[line - 1].lstrip().startswith("|"):
+                continue  # Reason: a row's first link is its target; later links and prose pointers are asides.
+            rows[line] = link
+            resolved = resolve(hub, link)
+            if not resolved or resolved[0] not in docs:
+                continue
+            key = (resolved[0], resolved[1] or "")
+            if key in first_seen:
+                target = resolved[0] + (f"#{resolved[1]}" if resolved[1] else "")
+                problems.append(f"{hub}:{line}: duplicate row for {target} (first at line {first_seen[key]}); merge them")
+            else:
+                first_seen[key] = line
     return sorted(problems)

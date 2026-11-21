@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check doc coverage: README index, inbound links (plan 0015 X1) and section anchors (X3).
+"""Check doc coverage: README index, inbound links (plan 0015 X1), section anchors (X3) and topic hubs (X2).
 
 Pure logic lives in ``lib/doc_coverage.py``; this entry point reads ``docs/`` (minus
 the archive) and the repo-root markdown files, prints each violation and sets the
@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.doc_coverage import check_anchors, check_coverage  # noqa: E402
+from lib.doc_coverage import check_anchors, check_coverage, check_hub_duplicates, unhubbed  # noqa: E402
 from lib.doc_graph import load_corpus  # noqa: E402
 
 
@@ -27,6 +27,8 @@ def main() -> None:
     """Entry point: run the coverage checks and exit accordingly."""
     parser = argparse.ArgumentParser(description="Check README-index, inbound-link and anchor coverage of docs/.")
     parser.add_argument("--root", type=Path, default=Path("."), help="Repo root containing docs/ (default: .)")
+    parser.add_argument("--max-unhubbed", type=int, default=None,
+                        help="Ratchet: fail if more content docs than this are in no topic hub (plan 0015 X2)")
     args = parser.parse_args()
 
     if not (args.root / "docs").is_dir():
@@ -35,7 +37,13 @@ def main() -> None:
 
     root_files = {p.name: p.read_text(encoding="utf-8") for p in sorted(args.root.glob("*.md"))}
     docs = load_corpus(args.root)
-    problems = check_coverage(docs, root_files) + check_anchors(docs)
+    problems = check_coverage(docs, root_files) + check_anchors(docs) + check_hub_duplicates(docs)
+    missing = unhubbed(docs)
+    if args.max_unhubbed is not None and len(missing) > args.max_unhubbed:
+        problems += [f"{p}: in no topic hub" for p in missing]
+        problems.append(f"{len(missing)} docs in no topic hub, above the ratchet of {args.max_unhubbed}: add hub rows")
+    elif args.max_unhubbed is not None and len(missing) < args.max_unhubbed:
+        print(f"note: {len(missing)} docs in no topic hub; lower MAX_UNHUBBED in the Makefile to {len(missing)}")
     for line in problems:
         print(line)
     if problems:

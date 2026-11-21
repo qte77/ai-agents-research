@@ -148,7 +148,7 @@ ai-agents-research/
       <section>/                       # 9 subdirs mirroring non-cc/README.md sections: orchestrators, agents, coding-agents, knowledge-management, reference, context-memory, infrastructure, frameworks, protocols
     cc-community/                      # Community skills, plugins, tooling, CLAUDE.md patterns
     sdlc-lcm/                          # SDLC/lifecycle management specs
-    _topics/                           # Cross-subject hub indexes (memory, knowledge-graphs, rag, code-tooling, visualization, context, skills, plugins, harness, long-running, cost, evals-benchmarks, security, data, agentic-web, management, knowledge-management); pointers only
+    _topics/                           # Cross-subject hub indexes (list in _topics/README.md); pointers only
     learnings/                         # Cross-repo compound learnings hub (CRLA write-back target)
     research/                          # Auto-generated cumulative rxiv agentic-AI paper index
     plans/                             # Plan/design docs (durable plan-mode output; backlog = GitHub Issues)
@@ -189,6 +189,7 @@ This prevents misreading a `cc-community` placement as "CC-exclusive."
 
 - Every content doc is linked from its folder's README index: the nearest `README.md` above it inside `docs/` (a `non-cc/<section>/` doc is indexed by `non-cc/README.md`), and from at least one other doc or repo-root file. `make check_coverage` enforces both in CI, and also fails on a doc-to-doc link whose `#fragment` matches no heading in the target (rename a heading → fix its inbound anchors)
 - Not covered: the README indexes themselves, `docs/` root files (no folder index; still need an inbound link), `cc-native/examples/` (example files) and `docs/archive/`
+- Every content doc is also in at least one topic hub ([`docs/_topics/README.md`](docs/_topics/README.md) lists them), one row per doc and section. Exempt (owner decision D6): `docs/` root files, single-product profiles in `non-cc/{coding-agents,agents,orchestrators,reference}/`, single-product `non-cc/frameworks/*-analysis.md`, specs (`*-spec.md`) and runbooks (`*-runbook.md`); landscapes never are. `make check_coverage` fails on duplicate hub rows and when more docs than `MAX_UNHUBBED` (a ratchet in the `Makefile` that only goes down) are in no hub
 - When adding a `cc-native/` doc, update **both** the subdirectory README and `cc-native/README.md` (doc count); `cc-community/` follows the same standard
 - `docs/archive/` holds retired/superseded docs — excluded from link-checking, not content candidates
 

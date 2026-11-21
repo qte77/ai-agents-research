@@ -30,20 +30,15 @@ layers, catalogs and ontologies, graph and vector stores. Pointers only; see [th
 | [semantic-layers-data-catalog-landscape.md § Choosing a Structure](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#choosing-a-structure) | From tags to taxonomy, SKOS, OWL and knowledge graphs: which structure a KB needs | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Semantic / Metrics Layers](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#semantic--metrics-layers) | Semantic and metrics layers that keep metrics consistent | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Catalogs / Metadata / Governance](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#catalogs--metadata--governance) | Data catalogs, metadata, lineage, governance | non-cc |
-| [semantic-layers-data-catalog-landscape.md § Ontology generation and ontology-constrained extraction](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction) | Generating ontologies and extracting against one | non-cc |
 | [databricks-genie-analysis.md § Genie Ontology](../non-cc/agents/databricks-genie-analysis.md#genie-ontology) | Genie Ontology (Public Preview), vendor benchmark caveated | non-cc |
 | [open-knowledge-format-analysis.md](../non-cc/knowledge-management/open-knowledge-format-analysis.md) | Open Knowledge Format: agent-readable data-catalog spec (v0.2) | non-cc |
 
+Ontology generation and the agent-native ontology tools are indexed in [knowledge-graphs.md](knowledge-graphs.md).
+
 ## Graphs and vectors
 
-| Doc / section | What it covers | Bucket |
-|---|---|---|
-| [graph-databases-query-languages-landscape.md § Query Languages](../non-cc/infrastructure/graph-databases-query-languages-landscape.md#query-languages) | Graph query languages and their standard status | non-cc |
-| [graph-databases-query-languages-landscape.md § Graph Databases Relevant to Agents](../non-cc/infrastructure/graph-databases-query-languages-landscape.md#graph-databases-relevant-to-agents) | Graph databases with licences and repo state | non-cc |
-| [graph-databases-query-languages-landscape.md § Text-to-Query for Agents](../non-cc/infrastructure/graph-databases-query-languages-landscape.md#text-to-query-for-agents) | Text-to-graph-query evidence (authors' claims) | non-cc |
-| [graph-databases-query-languages-landscape.md § Graph MCP Servers](../non-cc/infrastructure/graph-databases-query-languages-landscape.md#graph-mcp-servers) | Graph MCP servers and their read-only behaviour | non-cc |
-| [agent-frameworks-infrastructure-landscape.md § Temporal knowledge-graph memory: evidence and caveats](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#temporal-knowledge-graph-memory-evidence-and-caveats) | Graphiti/Zep temporal KG memory, vendor and author claims labelled | non-cc |
-| [agent-frameworks-infrastructure-landscape.md § GraphRAG vs vector RAG and KG construction evidence](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence) | GraphRAG vs vector RAG, KG construction and hypergraph evidence | non-cc |
-| [agent-frameworks-infrastructure-landscape.md § Vector databases](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#vector-databases) | Vector databases | non-cc |
+Graph databases, graph query languages, graph MCP servers and ontology tools are indexed in
+[knowledge-graphs.md](knowledge-graphs.md); temporal knowledge-graph memory in [memory.md](memory.md);
+vector databases and GraphRAG-vs-vector evidence in [rag.md](rag.md).
 
 Related hubs: [knowledge-graphs.md](knowledge-graphs.md), [rag.md](rag.md), [memory.md](memory.md), [security.md](security.md), [evals-benchmarks.md](evals-benchmarks.md).
