@@ -18,7 +18,7 @@ multi-agent coordination. Named after the physicist's approach to understanding
 through investigation.
 
 **Key distinction**: Unlike DeerFlow (general-purpose super agent harness) or
-Goose (MCP-native coding agent), Feynman is purpose-built for **scientific
+Goose (a coding agent native to the Model Context Protocol, MCP), Feynman is purpose-built for **scientific
 research workflows** — paper search, peer review simulation, and experiment
 replication on local or cloud GPUs.
 
