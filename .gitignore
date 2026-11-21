@@ -9,6 +9,9 @@ Thumbs.db
 # Claude Code per-user local settings (never tracked)
 .claude/settings.local.json
 
+# Agent worktree lanes (never tracked; a lane was swept into a commit by `git add -A` once)
+.claude/worktrees/
+
 # Tooling caches (per-session artifacts, never tracked)
 .gh-cache/
 
