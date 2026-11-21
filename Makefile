@@ -10,7 +10,7 @@ endif
 .ONESHELL:
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
-	check_links check_links_report check_docs check_status check_coverage check_actions autofix lint test \
+	check_links check_links_report check_docs check_status check_coverage check_frontmatter check_actions autofix lint test \
 	graph-data census graph-fonts preview \
 	changelog_new changelog_preview changelog_release \
 	help
@@ -272,7 +272,10 @@ check_status: ## Validate doc frontmatter status: tokens; no body badges (strict
 check_coverage: ## Docs are in their README index, have an inbound link, and link only to real section anchors (strict; plan 0015 X1, X3)
 	$(PYTHON) .github/scripts/check-doc-coverage.py
 
-lint: check_docs check_status check_coverage check_actions check_links ## Run all linters (markdown + status + coverage + actions first; flaky link check last so it can't mask them)
+check_frontmatter: ## Content-doc frontmatter vs the CONTRIBUTING §1–§2 schema (lenient: reports, exit 0, until the F3 migration; plan 0015 F2)
+	$(PYTHON) .github/scripts/check-doc-frontmatter.py
+
+lint: check_docs check_status check_coverage check_frontmatter check_actions check_links ## Run all linters (markdown + status + coverage + frontmatter + actions first; flaky link check last so it can't mask them)
 
 test: ## Run unit tests (stdlib unittest; covers .github/scripts/lib + scripts/pages_build modules)
 	$(PYTHON) -m unittest discover -s tests -v

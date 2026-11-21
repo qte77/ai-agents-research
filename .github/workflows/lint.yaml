@@ -101,6 +101,16 @@ jobs:
       - name: Check README-index, inbound-link and section-anchor coverage
         run: make check_coverage
 
+  frontmatter:
+    name: Doc frontmatter (check_frontmatter)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      # Lenient until the plan 0015 F3 migration: reports violations, never fails.
+      - name: Check content-doc frontmatter schema
+        run: make check_frontmatter
+
   tests:
     name: Unit tests (unittest)
     runs-on: ubuntu-latest

@@ -114,6 +114,7 @@ These lint jobs run on every PR touching docs, workflows, or actions:
 | Markdown lint | `markdownlint-cli2` | root governance docs (`README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CLAUDE.md`, `AGENTS.md`, `AGENT_LEARNINGS.md`, `AGENT_REQUESTS.md`) + `docs/**/*.md` |
 | Link check | `lychee` | repo-wide (configured via `lychee.toml`); github.com requests authenticated with the workflow `GITHUB_TOKEN` (#721) |
 | Action lint | `actionlint` (+ `shellcheck` on the runner) | `.github/workflows/**`, `.github/actions/**` |
+| Doc frontmatter | `make check_frontmatter` (`lib/doc_frontmatter.py`, stdlib) | content docs against the CONTRIBUTING §1–§2 schema; lenient (reports only) until the F3 migration |
 | Doc coverage | `make check_coverage` (`lib/doc_coverage.py`, stdlib) | every content doc under `docs/` is linked from its folder's README index and from at least one other doc or root file; every `#fragment` in a doc-to-doc link matches a heading (GitHub slug rules) or `<a id>` in its target |
 
 The rxiv triage job additionally runs `markdownlint-cli2` against the assembled would-be PR content (with the action's H1 prepend simulated) and fails the job before opening a triage PR if the output is md-dirty.
