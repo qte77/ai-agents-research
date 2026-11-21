@@ -25,7 +25,7 @@ Required keys:
 - `created`, `updated` (date of last content edit), `validated_links` (date the URLs were last checked), all ISO `YYYY-MM-DD`
 - `status` — the doc's lifecycle token (see §2); the single source of status, read by `make check_status` and the doc graph
 
-Optional keys: `source` (primary URL the doc is based on), `platform_scope` (see [platform_scope frontmatter](#platform_scope-frontmatter)), `test_run`.
+Optional keys: `source` (the one primary URL the doc is based on; other sources go in the Sources section), `platform_scope` (see [platform_scope frontmatter](#platform_scope-frontmatter)), `test_run`.
 
 Not in frontmatter (owner decision D5, plan 0015, 2026-11-21):
 
