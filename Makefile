@@ -26,6 +26,8 @@ LOCAL_BIN          := $(HOME)/.local/bin
 
 # PYTHON: interpreter for the stdlib-only site and doc-graph helpers (no deps, so no uv needed)
 PYTHON             ?= python3
+# Ratchet for docs in no topic hub (plan 0015 X2): only ever lower it, down to 0.
+MAX_UNHUBBED       ?= 71
 
 # Markdown lint scope — root governance docs + all docs/ (single source for check_docs + autofix)
 DOC_LINT_GLOB      := "README.md" "CHANGELOG.md" "CONTRIBUTING.md" "CLAUDE.md" "AGENTS.md" "AGENT_LEARNINGS.md" "AGENT_REQUESTS.md" "docs/**/*.md"
@@ -269,8 +271,8 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 check_status: ## Validate doc frontmatter status: tokens; no body badges (strict; #348)
 	$(PYTHON) .github/scripts/check-doc-status.py --strict
 
-check_coverage: ## Docs are in their README index, have an inbound link, and link only to real section anchors (strict; plan 0015 X1, X3)
-	$(PYTHON) .github/scripts/check-doc-coverage.py
+check_coverage: ## README index, inbound link, real section anchors, no duplicate hub rows, unhubbed docs ≤ MAX_UNHUBBED (strict; plan 0015 X1–X3)
+	$(PYTHON) .github/scripts/check-doc-coverage.py --max-unhubbed $(MAX_UNHUBBED)
 
 check_frontmatter: ## Content-doc frontmatter vs the CONTRIBUTING §1–§2 schema (lenient: reports, exit 0, until the F3 migration; plan 0015 F2)
 	$(PYTHON) .github/scripts/check-doc-frontmatter.py
