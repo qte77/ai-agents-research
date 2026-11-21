@@ -1,6 +1,6 @@
 ---
 title: CC Community Skills Landscape
-purpose: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), BHIL (AI-first development methodology with artifact chains), claude-howto (example-driven learning), dispatch (context window multiplication via background workers), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI), modern-web-guidance (browser-vendor web-platform skill).
+purpose: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), claude-howto (example-driven learning), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI), modern-web-guidance (browser-vendor web-platform skill).
 status: research
 created: 2026-03-13
 updated: 2026-11-20
@@ -9,7 +9,7 @@ validated_links: 2026-10-11
 
 ## Summary
 
-Eleven community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, BHIL provides an AI-first development methodology with traceable artifact chains, claude-howto delivers example-driven learning with production-ready templates, dispatch fans out work to parallel background agents for context window multiplication, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Three later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/skills (a 34-skill PIV loop plus hooks), coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file), and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-02, checked as a skills·Shared/skills·Distributed lead per plan 0010): stevesolun/ctx, a local skill/agent/Model Context Protocol (MCP)/harness recommender over a bundled 79,958-node graph — scored, and found not to fill either open cell. A fifth addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi). A sixth addition (2026-10-11, also not rubric-scored — a new diagram/illustration row does not move a filled skills census cell): wheresryan22/anatomy, a Claude Code Agent Skill that turns a technical idea into an audited, interactive isometric SVG/WebGL/3D figure of a real machine. A seventh (2026-11-14, not rubric-scored): GoogleChrome/modern-web-guidance, a browser-vendor skill that retrieves current web-platform guides on demand through a bundled CLI, packaged as plugins for Claude Code and other hosts.
+Nine community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, claude-howto delivers example-driven learning with production-ready templates, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Two later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file) and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A fourth addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi). A fifth addition (2026-10-11, also not rubric-scored — a new diagram/illustration row does not move a filled skills census cell): wheresryan22/anatomy, a Claude Code Agent Skill that turns a technical idea into an audited, interactive isometric SVG/WebGL/3D figure of a real machine. A sixth (2026-11-14, not rubric-scored): GoogleChrome/modern-web-guidance, a browser-vendor skill that retrieves current web-platform guides on demand through a bundled CLI, packaged as plugins for Claude Code and other hosts.
 
 ## gstack (Garry Tan)
 
@@ -128,44 +128,6 @@ Organized across 4 domains — memory/instructions (4), agents/skills/workflows 
 
 Valuable as a **community health indicator** and discovery entry point. The open research questions surface gaps in CC documentation and community understanding. The workflow pattern catalog (with star counts) tracks ecosystem adoption velocity.
 
-## BHIL AI-First Development Toolkit (camalus)
-
-**Repo**: [camalus/BHIL-AI-First-Development-Toolkit][bhil] | **Stars**: 115 | **License**: MIT
-
-A production-grade methodology for AI-native development using traceable artifact chains. Core thesis: *"The bottleneck in AI-assisted development is not code generation. It is specification quality."*
-
-### Artifact Chain
-
-PRD → SPEC → ADR → TASK → CODE → REVIEW → DEPLOY, with sprint retrospectives feeding back to requirements. Each artifact carries unique IDs enabling machine-actionable traceability.
-
-### CC Integration
-
-| Component | Path | Purpose |
-|-----------|------|---------|
-| CLAUDE.md | root | Project config auto-loaded by CC |
-| Agents | `.claude/agents/` | Custom subagent definitions |
-| Skills | `.claude/skills/` | `new-sprint`, `new-adr`, `validate` workflows |
-| Rules | `.claude/rules/` | Path-scoped coding standards |
-| Settings | `.claude/settings.json` | Model routing, permission hooks |
-
-### AI-Native ADR Extensions
-
-Beyond traditional architecture decisions, three LLM-specific decision types:
-
-- **Model Selection ADRs** — benchmarks, costs, latency tradeoffs
-- **Prompt Strategy ADRs** — approach, versioning, evaluation criteria
-- **Agent Orchestration ADRs** — pattern selection and rationale
-
-### Key Differentiator
-
-Where gstack focuses on cognitive mode-switching and pm-skills on domain framework delivery, BHIL provides **process infrastructure** — the artifact chain that connects sprint planning to deployment with machine-readable traceability. Compatible with CC, RuFlo (Agentics Foundation), and RuVector.
-
-### Adoption Considerations
-
-**Strengths**: Full SDLC coverage, traceable artifact IDs, CC-native configuration (.claude/ directory), methodology-agnostic (works with any sprint framework).
-
-**Risks**: Early stage (3 commits, 115 stars). Heavy methodology — may be more structure than small projects need. No plugin marketplace integration.
-
 ## claude-howto (luongnv89)
 
 **Repo**: [luongnv89/claude-howto][claude-howto] | **Stars**: 18.9K | **License**: MIT
@@ -183,63 +145,6 @@ Example-driven learning guide for Claude Code — 10 sequential modules covering
 ### Relevance
 
 Learning resource with production-ready templates, not a plugin. Where claude-code-best-practice indexes *what exists* and gstack delivers *opinionated workflows*, claude-howto demonstrates *how to combine* CC features into automated pipelines (11–13 hour structured curriculum, beginner → advanced).
-
-**Notable fork**: [akolaarthurali/claude-howto-Master-Claude-Code-in-a-Weekend](https://github.com/akolaarthurali/claude-howto-Master-Claude-Code-in-a-Weekend) (3 stars) — repackaged as a weekend crash course. Same v2.2.0 content; signals demand for condensed onboarding formats but no original content beyond the upstream.
-
-## Dispatch (bassimeledath)
-
-**Repo**: [bassimeledath/dispatch](https://github.com/bassimeledath/dispatch) | **Stars**: 352 | **License**: MIT
-
-A CC skill that **10x's effective context window** by dispatching tasks to background AI workers. The main session becomes a lightweight orchestrator — work fans out to parallel agents, each with their own full context window.
-
-### How It Works
-
-```text
-Without dispatch:                    With dispatch:
-Task 1 → fills context              /dispatch all 5 tasks
-Task 2 → context grows              Workers execute in parallel
-Task 3 → losing track               Main session stays lean
-Task 5 → new session needed          Questions surface when needed
-```
-
-1. User invokes `/dispatch <task>` (optionally specifying model)
-2. Dispatcher generates a checklist (sole main-session artifact)
-3. Background worker executes with full independent context
-4. Worker surfaces questions via IPC — no context restart
-5. Results surface on completion or on-demand status check
-
-### Architecture
-
-| Layer | Role |
-|-------|------|
-| **Host dispatcher** | Runs in main CC session, creates checklists, coordinates |
-| **Background workers** | Claude, Cursor, or Codex CLIs with fresh contexts |
-| **IPC system** | Async question/answer flow preserving worker context continuity |
-
-### Multi-Backend Support
-
-Config at `~/.dispatch/config.yaml` — three sections:
-
-- **Backends**: CLI command definitions (Claude, Cursor, Codex)
-- **Models**: Model names mapped to backend providers
-- **Aliases**: Named shortcuts with optional system prompts
-
-Auto-discovery generates initial config on first run. Last-mentioned model takes precedence.
-
-### Installation
-
-```bash
-npx skills add bassimeledath/dispatch -g      # user-level
-npx skills add bassimeledath/dispatch         # project-level
-```
-
-### Key Differentiator
-
-Inverts traditional context usage: *"the main session becomes a mediator, not the thinker."* Unlike manual `claude --background` or multi-terminal approaches, dispatch automates worker lifecycle, error handling, progress tracking, and worktree isolation. Example: `/dispatch use sonnet to find better design patterns for the auth module`.
-
-### Relevance
-
-Addresses the core context exhaustion problem from a different angle than GSD (meta-prompting), RTK (output compression), or Boucle (read deduplication). Dispatch **multiplies** available context by parallelizing across independent agent processes.
 
 ## Superpowers (obra / Jesse Vincent)
 
@@ -388,7 +293,7 @@ Triggers: `/caveman`, `"talk like caveman"`, `"caveman mode"`, `"less tokens ple
 
 ### Key Differentiator
 
-Where RTK compresses **tool output** going *into* context (see [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md)) and dispatch parallelizes **work** to spare context, caveman compresses the **assistant's own output** — a different layer of the token-reduction stack. Self-reported savings are higher than RTK's independently-benchmarked range, but unverified.
+Where RTK compresses **tool output** going *into* context (see [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md)), caveman compresses the **assistant's own output** — a different layer of the token-reduction stack. Self-reported savings are higher than RTK's independently-benchmarked range, but unverified.
 
 Cross-ref: [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — RTK (output ingestion compression), CodeBurn (token-usage observability)
 
@@ -413,8 +318,6 @@ npx skills add mvanhorn/last30days-skill -g
 ```
 
 **Key differentiator**: Only real-time social-consensus skill in the landscape — ranks by actual engagement rather than SEO/editorial algorithms, includes prediction-market odds alongside discourse, and outputs shareable self-contained HTML briefs. No tracking; research stays local.
-
-**Cross-ref**: Dispatch (above) fans out *work* to parallel agents; last30days fans out *searches* to parallel platforms — different layers of the parallel-fan-out pattern.
 
 ## agent-native skills (Builder.io)
 
@@ -446,25 +349,9 @@ npx @agent-native/skills@latest add --skill quick-recap
 
 Where gstack locks cognitive *modes*, pm-skills delivers domain *frameworks*, superpowers enforces a *TDD methodology*, and agent-skills embeds *Google SDLC culture*, agent-native ships **composable cross-agent meta-skills** adopted individually — orchestration (`/plan-arbiter`, `/efficient-fable`), self-audit (`/agent-watchdog`), and budget/quality guardrails (`/stay-within-limits`, `/read-the-damn-docs`). The Fable-orchestration skills and the usage-budget skill are distinctive in this set.
 
-Cross-ref: Dispatch (above) fans out *work* to background agents; `/agent-watchdog` instead *audits* another agent's work — different layers of the multi-agent pattern. [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format these install into.
+Cross-ref: [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format these install into.
 
 ## coleam00 (Cole Medin): skills and excalidraw-diagram-skill
-
-**Repo**: [coleam00/skills][coleam00-skills] | **Stars**: 736 | **License**: MIT | pushed 2026-11-10 (`gh api`, 2026-11-12)
-
-The author, Cole Medin, also maintains the Archon workflow engine ([agent-frameworks-infrastructure-landscape.md §1](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#1-multi-agent-orchestration-frameworks)) and publishes on AI coding agents on his [YouTube channel][cole-youtube].
-
-34 skills when first reviewed (39 skill folders under `.claude/skills/` on 2026-11-12) — "Straight out of my `.claude/skills/` folder" — built around one loop the author runs on
-nearly every ticket: **prime → plan → implement → validate → review → commit → PR** (the PIV loop),
-plus meta-skills for building more of your own skills (`skills-create`, `rules-create-global`,
-`rules-check-drift`, `ablate-ai-layer` — strips a rule, reruns the same task, diffs the two). Installs
-as a Claude Code plugin (`/plugin marketplace add coleam00/skills`, namespaced `/skills:piv-implement`,
-~4,400 tokens of always-on description text) or as editable files via `npx skills add coleam00/skills`
-(75+ agents). Ships six copy-in **hooks** alongside the skills — block secrets access, refuse `rm -rf`,
-enforce declared file coupling, log every tool call, inject git state at session start, block finishing
-while tests are red — with the explicit framing "a rule *asks* the agent to behave. A hook
-**guarantees** it." The `drive-screen` skill (under "Tools") does real desktop control — focus a
-window, type, paste, click, screenshot — on Windows, macOS, and Linux.
 
 **Repo**: [coleam00/excalidraw-diagram-skill][excalidraw-skill] | **Stars**: 5,240 (2026-11-12) | **License**: none
 found — the repo ships no `LICENSE` file and GitHub's own license detector returns `null`; only
@@ -474,14 +361,6 @@ display" — a depth-assessment step, a research mandate for technical diagrams 
 names before drawing), a visual-pattern library (fan-out, convergence, tree, timeline, assembly line),
 and a mandatory render-view-fix loop (`uv run python render_excalidraw.py`) that reads the rendered PNG
 back before declaring the diagram done.
-
-`subject: skills`
-
-| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
-|---|---|---|---|---|---|
-| no data [README][coleam00-skills] (rule 6: a git-hosted static artifact with no documented contribution flow; full repo tree checked 2026-10-02, no CONTRIBUTING file or PR template) | no data [README][coleam00-skills] (rule 6: a git-hosted static artifact with no documented contribution flow; full repo tree checked 2026-10-02, no CONTRIBUTING file or PR template) | n/a [README][coleam00-skills] (skills are static Markdown procedures, not a generated/extracted artifact — "reproducible rebuild" doesn't apply) | yes [README][coleam00-skills] ("Each skill is a plain markdown file you can read in two minutes, disagree with, and edit") | yes [README][coleam00-skills] (plugin installs are git-versioned via the marketplace repo; `git clone` + copy is a documented install path) | partial [README][coleam00-skills] (`piv-review-pr` posts a severity-ranked review to GitHub; no audit trail for skill *invocations* themselves) |
-
-`scored 2026-09-30`
 
 `subject: skills`
 
@@ -637,35 +516,6 @@ evidence."
 
 See also the offensive-security skill bundles [Claude-BugHunter][cbh], [pentest-ai-agents][psa] and [communitytools][ct] (authorized testing), compared in [agentic-ai-vulnerability-landscape.md](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#7-offensive-security-agents-authorized-testing).
 
-## stevesolun/ctx
-
-**Repo**: [stevesolun/ctx][ctx-repo] | **Stars**: 587 | **Forks**: 69 | **License**: MIT | pushed 2026-08-31,
-created 2026-04-08 (`gh api`, 2026-10-02)
-
-Checked as a lead for skills·Shared/skills·Distributed (plan 0010, row L3). Installs as `pip install
-claude-ctx`; the README's own framing is "Repo-aware recommendations for skills, agents, MCP servers, and
-model harnesses. Use your own inventory or the shipped 79,958-node graph with 68,494 skills, 467 agents,
-10,790 MCPs, and 207 harnesses." `ctx-init --graph` installs that pre-built runtime graph; the recommender
-then watches a repo's stack/workflow signals and proposes a capped bundle of skills/agents/MCP servers to
-load (and unloads ones that stop matching). The same repository also ships **CTX Fit**, a separate
-cost-optimization feature ("finds the cheapest AI coding setup that actually works on your repo" — this is
-the GitHub repo's own short description field, distinct from the recommender README quoted above).
-
-The bundled 79,958-node graph functions as a *consumer-side catalog* of skills/agents/MCPs the tool reads
-from — not a publishing registry agents install from directly (compare [skills.sh][skills-sh-xref], already
-catalogued in [CC-skills-adoption-analysis.md][cc-skills-adoption] as the distribution-layer registry).
-Nothing in the README documents org-level or team provisioning, a shared/central write path, or
-cross-machine sync — it is a single-operator local CLI reading a static shipped or user-supplied graph.
-
-`subject: skills`
-
-| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
-|---|---|---|---|---|---|
-| no data [README][ctx-repo] (a single-operator local recommender; no multi-user or multi-agent shared-store semantics documented) | no [README][ctx-repo] (a local pip-installed CLI reading a pre-built, shipped graph; no sync or remote service documented) | no data [README][ctx-repo] (the shipped graph is a static artifact, but no build/version pinning for how it or its recommendations are generated is documented) | yes [README][ctx-repo] ("Use your own inventory or the shipped... graph" — the data source is swappable without a rewrite) | yes [README][ctx-repo] (MIT, git-hosted, versioned pip package `claude-ctx`) | no data [README][ctx-repo] (no audit log of what was recommended, loaded, or unloaded is documented) |
-
-`scored 2026-10-02`. **This does not fill skills·Shared or skills·Distributed** — both stay at the scores
-above, consistent with every other row in this doc's census.
-
 ## GoogleChrome/modern-web-guidance
 
 **Repo**: [GoogleChrome/modern-web-guidance][mwg-repo] | **Stars**: 14,896 | **License**: Apache-2.0 |
@@ -737,6 +587,18 @@ Cursor tree.
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — claude-mem persistent memory
 - [agents-cli-analysis.md](../non-cc/frameworks/agents-cli-analysis.md) — Google agents-cli installs as a CC skill-pack (`npx skills add`) but is cross-agent; deeper analysis lives in non-cc
 
+## Not included
+
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| BHIL AI-First Development Toolkit | 134 stars; no measured benefit or named independent users found in its README, docs or tree (it ships eval and ADR templates only); last push 2026-03-28 (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/camalus/BHIL-AI-First-Development-Toolkit> |
+| dispatch | 411 stars; no measured benefit or named independent users in its README or tree; no releases; last push 2026-04-06 (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/bassimeledath/dispatch> |
+| claude-howto fork (Master Claude Code in a Weekend) | 11 stars; a repackaged copy of luongnv89/claude-howto with no original content; last push 2026-03-27 (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/akolaarthurali/claude-howto-Master-Claude-Code-in-a-Weekend> |
+| coleam00/skills | 777 stars; its README states no measured benefit (only a ~4,400-token always-on cost) and names no independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/coleam00/skills> |
+| stevesolun/ctx | 593 stars; its benchmark folder documents a protocol, not a published result, and says controlled fixtures do not measure recommendation relevance; no named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/stevesolun/ctx> |
+
 ## Sources
 
 | Source | Content |
@@ -744,22 +606,17 @@ Cursor tree.
 | [gstack][gstack] | Founder/engineering workflow skills |
 | [pm-skills][pm-skills] | Product management skill framework |
 | [claude-code-best-practice][ccbp] | Community knowledge base |
-| [BHIL AI-First Development Toolkit][bhil] | AI-native methodology with artifact chains |
 | [claude-howto][claude-howto] | Example-driven CC learning guide (10 modules, templates) |
-| [dispatch][dispatch] | Context window multiplication via background workers |
 | [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
 | [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
 | [modern-web-guidance][mwg-repo] · [docs][mwg-docs] · [eval dashboard][mwg-evals] | Browser-vendor web-platform skill, CLI, plugin manifests, eval loop |
 | [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
 | [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
 | [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
-| [coleam00/skills][coleam00-skills] | PIV-loop skill set + meta-skills + hooks (736 stars, MIT, 2026-11-12) |
 | [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (5,240 stars, no license file, 2026-11-12) |
-| [Cole Medin on YouTube][cole-youtube] | Author's channel (AI agents and coding assistants); linked for context, not cited for facts |
 | [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (23,302 stars, MIT) |
 | [Claude-BugHunter][cbh] · [pentest-ai-agents][psa] · [communitytools][ct] | Offensive-security skill bundles for authorized testing (stars and details in the linked comparison, 2026-11-17) |
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
-| [stevesolun/ctx][ctx-repo] | Skill/agent/MCP/harness recommender over a bundled graph (587 stars, MIT; `gh api` 2026-10-02) |
 | [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (43,595 stars, MIT; `gh api` 2026-10-06) |
 | [cursor/plugins pstack][pstack-repo] | Playbook-router skill pack (22 playbooks) for Cursor, installable in Claude Code (MIT; `gh api` 2026-11-20) |
 | [wheresryan22/anatomy][anatomy] | Isometric interactive figure-generation Agent Skill, audited geometry + screenshot verification loop (3,109 stars, MIT; `gh api` 2026-10-11) |
@@ -768,27 +625,20 @@ Cursor tree.
 [gstack]: https://github.com/garrytan/gstack
 [pm-skills]: https://github.com/phuryn/pm-skills
 [ccbp]: https://github.com/shanraisshan/claude-code-best-practice
-[bhil]: https://github.com/camalus/BHIL-AI-First-Development-Toolkit
 [claude-howto]: https://github.com/luongnv89/claude-howto
-[dispatch]: https://github.com/bassimeledath/dispatch
 [superpowers]: https://github.com/obra/superpowers
 [caveman]: https://github.com/JuliusBrussee/caveman
 [last30days]: https://github.com/mvanhorn/last30days-skill
 [builderio-skills]: https://github.com/BuilderIO/skills
-[coleam00-skills]: https://github.com/coleam00/skills
 [excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
-[cole-youtube]: https://www.youtube.com/@ColeMedin
 [cf-sec-audit]: https://github.com/cloudflare/security-audit-skill
 [cbh]: https://github.com/elementalsouls/Claude-BugHunter
 [psa]: https://github.com/0xSteph/pentest-ai-agents
 [ct]: https://github.com/transilienceai/communitytools
 [cf-blog]: https://blog.cloudflare.com/build-your-own-vulnerability-harness
-[ctx-repo]: https://github.com/stevesolun/ctx
 [diagram-design]: https://github.com/cathrynlavery/diagram-design
 [anatomy]: https://github.com/wheresryan22/anatomy
 [cc-skills-doc]: https://code.claude.com/docs/en/skills
-[skills-sh-xref]: https://skills.sh/
-[cc-skills-adoption]: ../cc-native/agents-skills/CC-skills-adoption-analysis.md#ecosystem-context
 [rubric]: ../sdlc-lcm/agent-substrate-rubric.md
 [mwg-repo]: https://github.com/GoogleChrome/modern-web-guidance
 [pstack-repo]: https://github.com/cursor/plugins/tree/main/pstack
