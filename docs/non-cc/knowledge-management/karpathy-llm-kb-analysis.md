@@ -2,14 +2,14 @@
 title: "Karpathy LLM Knowledge Base: Markdown-First Alternative to RAG"
 purpose: Analyse Karpathy's LLM wiki pattern and gap-compare against ai-agents-research
 created: 2026-04-06
-updated: 2026-11-17
-validated_links: 2026-10-06
+updated: 2026-11-21
+validated_links: 2026-11-21
 status: assess
 ---
 
 ## What It Is
 
-A markdown-first knowledge management pattern where the LLM acts as author, editor, and librarian of a persistent wiki — replacing vector-DB RAG with explicit structure, summaries, and backlinks. Published by Andrej Karpathy in April 2026 as an [idea gist][gist] with no dedicated repository. Open-source implementations of the pattern have since appeared (vault-based agent memory with ingest skills and nightly maintenance passes); five are compared in [CC-memory-tooling-landscape.md § Second-brain vaults](../../cc-community/CC-memory-tooling-landscape.md#second-brain-vaults-llm-maintained-markdown).
+A markdown-first knowledge management pattern where the LLM acts as author, editor, and librarian of a persistent wiki — replacing vector-DB RAG with explicit structure, summaries, and backlinks. Published by Andrej Karpathy as an [idea gist][gist] (dated 2026-04-04 on the gist page, re-read 2026-11-21) with no dedicated repository. Open-source implementations of the pattern have since appeared (vault-based agent memory with ingest skills and nightly maintenance passes); five are compared in [CC-memory-tooling-landscape.md § Second-brain vaults](../../cc-community/CC-memory-tooling-landscape.md#second-brain-vaults-llm-maintained-markdown).
 
 ## Architecture
 
@@ -43,13 +43,13 @@ Navigation relies on an `index.md` content catalogue and an append-only `log.md`
 - **Sandbox hygiene** — raw sources separated from compiled wiki; controlled promotion
 - **Tooling**: Obsidian (browsing), git (versioning), Web Clipper (capture)
 
-Reported scale: ~100 articles, ~400 K words — sufficient for index-based navigation without RAG.
+Scale: the gist itself says the index approach "works surprisingly well at moderate scale (~100 sources, ~hundreds of pages)" (re-read 2026-11-21). The ~100 articles / ~400 K words figure comes from his X post, which could not be re-fetched on 2026-11-21 (HTTP 402) and stays an earlier-checked, unconfirmed-today figure. Both are the author's own report.
 
 ## Gap Analysis Against ai-agents-research
 
 | Capability | Karpathy pattern | ai-agents-research | Gap? |
 |---|---|---|---|
-| Markdown-first storage | `.md` files, git-versioned | 118 `.md` files, git-versioned | **No gap** |
+| Markdown-first storage | `.md` files, git-versioned | about 310 tracked `.md` files under `docs/` (`git ls-files docs`, 2026-11-21), git-versioned | **No gap** |
 | Raw ingest stage | `raw/` directory, Web Clipper | `triage/` + [3 automated monitors][monitors] | **No gap** — monitors are more systematic |
 | Structured compilation | LLM reads raw, writes wiki pages | Human reviews triage PR, authors analysis doc | **Real** — no LLM compilation step |
 | Schema / conventions | `CLAUDE.md`-style schema file | [CONTRIBUTING.md][contributing] + `.claude/rules/` + `.markdownlint.json` | **No gap** — governance is more detailed |
@@ -60,17 +60,14 @@ Reported scale: ~100 articles, ~400 K words — sufficient for index-based navig
 
 ### Value-Add Opportunities
 
-Two real gaps where adoption would compound existing strengths:
+The table shows two real gaps and one partial one; the rest of the pattern is already covered.
 
-1. **LLM compilation from triage to draft** — Triage monitors already produce structured reports. An LLM step could generate draft analysis docs from triage output, reducing the manual authoring bottleneck. Fits naturally as a skill or CI step between monitor output and PR creation.
-
-2. **Orphan / stale-link detection** — Backlinks exist but are manually maintained. A lightweight script or skill checking for docs with zero inbound links and broken relative paths would close this gap without requiring LLM-driven semantic linting.
+1. **LLM compilation from triage to draft** — monitors already emit structured reports; an LLM step could draft analysis docs from them. Note [CONTRIBUTING.md][contributing] currently requires re-researching from first-party sources rather than promoting triage files, so any such step would produce a lead for a human-reviewed doc, not a doc.
+2. **Orphan and stale-link detection** — a small script checking for docs with no inbound links would close the cross-reference gap without LLM linting. Broken links are already caught by lychee in CI.
 
 ### Relevance to qte77
 
-This repository already implements the Karpathy pattern's core thesis — structured markdown managed by conventions, with automated ingest and human-curated promotion. The pattern validates the existing architecture rather than replacing it. The two value-add opportunities above are incremental enhancements, not architectural shifts.
-
-The gist's abstract, domain-agnostic framing makes it a useful reference for any qte77 repo adopting a knowledge-base pattern (e.g. `coding-harness-eval` documentation, cross-repo learnings).
+The repository already follows the pattern's core thesis: structured markdown governed by conventions, automated ingest, human-curated promotion. The two items above are incremental, not architectural. For the organisation methods the pattern leans on (index pages, backlinks, schemas), see [knowledge-organisation-methods-landscape.md](knowledge-organisation-methods-landscape.md).
 
 ## Related Research: CorpusMap — Entity Pages as a Navigation Layer (added 2026-10-06)
 
@@ -106,10 +103,10 @@ touch the open Context·Reproducible cell in
 
 | Source | Content |
 |---|---|
-| [Karpathy gist — llm-wiki.md][gist] | First-party architecture description (three layers, operations, principles) |
-| [Karpathy X post (original)][x-post] | Original announcement with scale numbers (~100 articles, ~400 K words) |
+| [Karpathy gist — llm-wiki.md][gist] | First-party architecture description (three layers, operations, principles); re-read 2026-11-21 |
+| [Karpathy X post (original)][x-post] | Original announcement with scale numbers (~100 articles, ~400 K words); not re-fetchable 2026-11-21 (HTTP 402) |
 | [Karpathy X post (follow-up)][x-followup] | Follow-up noting viral response, links to gist |
-| [TechBuddies analysis][techbuddies] | Third-party deep-dive with RAG comparison table |
+| [TechBuddies analysis][techbuddies] | Third-party background only, not evidence |
 | [arXiv 2609.37226 abstract page][corpusmap-paper] | Title, authors, submission date (2026-09-29), full abstract verbatim, confirmation of no numeric deltas in the abstract — accessed 2026-10-06 |
 
 [gist]: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f

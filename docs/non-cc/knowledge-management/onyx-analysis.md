@@ -2,15 +2,15 @@
 title: Onyx Analysis
 purpose: Analysis of Onyx (onyx-dot-app), an open-core, self-hostable knowledge/context layer that indexes company apps for chat, agents and MCP clients — and its claim to beat agent-side MCP search on cost and latency.
 created: 2026-10-22
-updated: 2026-10-22
-validated_links: 2026-10-22
+updated: 2026-11-21
+validated_links: 2026-11-21
 status: assess
 ---
 
 **Details:** **Repo**: [onyx-dot-app/onyx][onyx-repo] | **License**: MIT ("MIT Expat") except
 everything under `ee` directories, which is under the Onyx Enterprise License ([LICENSE][onyx-license];
-GitHub's detector reports `NOASSERTION` because of the split) | **Stars**: 32,842, created 2023-04-27 |
-**Latest release**: `v4.9.2`, 2026-10-15 (`gh api`, 2026-10-22). The LICENSE copyright line is
+GitHub's detector reports `NOASSERTION` because of the split) | **Stars**: about 33,500 (2026-11-21; 32,842 on 2026-10-22), created 2023-04-27 |
+**Latest release**: `v5.1.3`, 2026-11-16 (`gh api`, 2026-11-21; was `v4.9.2` on 2026-10-15). README claims and LICENSE split re-read 2026-11-21 and unchanged. The LICENSE copyright line is
 "DanswerAI, Inc.", the company behind the earlier Danswer project; the README itself doesn't mention
 the old name.
 
@@ -66,8 +66,10 @@ replacing the agent.
 
 ## Cross-References
 
-- [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md) — Glean and
-  other enterprise "company brain" platforms; Onyx is the self-hostable, open-core alternative.
+- [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md) — Glean
+  ([Independent Agents row](../frameworks/agentic-enterprise-os-landscape.md#tier-1--enterprise-vendor-platforms)) and the
+  [company-brain label](../frameworks/agentic-enterprise-os-landscape.md#company-brain-adjacent-synthesis-label); Onyx is the self-hostable, open-core alternative, not re-described there.
+- [knowledge-organisation-methods-landscape.md](knowledge-organisation-methods-landscape.md) — how a markdown KB is organised, as opposed to indexed.
 - [rag topic hub](../../_topics/rag.md) — other retrieval and indexing work in the corpus.
 
 ## Sources
@@ -76,9 +78,9 @@ replacing the agent.
 |---|---|
 | [onyx-dot-app/onyx README][onyx-readme] | Positioning, features, access surfaces, deployment modes, editions, MCP claim |
 | [Onyx LICENSE][onyx-license] | MIT outside `ee/`, Onyx Enterprise License inside; DanswerAI, Inc. copyright |
-| [Onyx releases][onyx-releases] | `v4.9.2`, 2026-10-15 |
+| [Onyx releases][onyx-releases] | `v5.1.3`, 2026-11-16 (checked 2026-11-21) |
 | [EnterpriseRAG-Bench][onyx-erb] | The org's RAG benchmark repo (description only) |
-| `gh api repos/onyx-dot-app/onyx`, 2026-10-22 | Stars, creation date, license detection |
+| `gh api repos/onyx-dot-app/onyx`, 2026-11-21 | Stars, creation date, license detection |
 
 [onyx-repo]: https://github.com/onyx-dot-app/onyx
 [onyx-readme]: https://github.com/onyx-dot-app/onyx#readme
