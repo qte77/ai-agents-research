@@ -52,5 +52,6 @@ Pointers only; see [the hub index](README.md).
 | [CC-stream-json-protocol.md](../cc-native/configuration/CC-stream-json-protocol.md) | The NDJSON event format of `--output-format stream-json` and stream chaining | cc-native |
 | [mas-design-principles.md](../sdlc-lcm/mas-design-principles.md) | Multi-agent design principles from 12-Factor Agents, Anthropic's harness guidance and PydanticAI | sdlc-lcm |
 | [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md) | Spec-driven development frameworks compared (Spec-Kit, OpenSpec, BMAD-METHOD, Kiro, Tessl and others) | non-cc |
+| [CC-subagent-session-artifacts.md](../cc-native/sessions/CC-subagent-session-artifacts.md) | Subagent worktrees, transcripts, tombstones and cleanup | cc-native |
 
 Related hubs: [skills.md](skills.md), [plugins.md](plugins.md), [long-running.md](long-running.md).

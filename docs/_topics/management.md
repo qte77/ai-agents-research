@@ -55,7 +55,5 @@ and lifecycle. Pointers only; see [the hub index](README.md).
 | [salesforce-agentforce-analysis.md § Licences and roles for Agentforce agents](../non-cc/agents/salesforce-agentforce-analysis.md#licences-and-roles-for-agentforce-agents) | Licences and roles for Agentforce agents | non-cc |
 | [salesforce-agentforce-analysis.md § Best Practices: Agent Development Lifecycle](../non-cc/agents/salesforce-agentforce-analysis.md#best-practices-agent-development-lifecycle) | Agent development lifecycle practices | non-cc |
 | [agentic-sdlc-patterns.md § 1. ADLC (Agentic Development Lifecycle)](../sdlc-lcm/agentic-sdlc-patterns.md#1-adlc-agentic-development-lifecycle) | ADLC: lifecycle for LLM-centred products | sdlc-lcm |
-| [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) | How several coding agents plug into SDLC/LCM lifecycle management | sdlc-lcm |
-| [oss-alm-landscape.md](../sdlc-lcm/oss-alm-landscape.md) | Open-source ALM tools compared (Tuleap, OpenProject, Redmine, GitLab) | sdlc-lcm |
 
 Related hubs: [cost.md](cost.md), [security.md](security.md), [plugins.md](plugins.md), [long-running.md](long-running.md).

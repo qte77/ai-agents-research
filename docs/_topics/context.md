@@ -22,5 +22,7 @@ patterns across the corpus. Pointers only; see [the hub index](README.md).
 | [CC-agentic-harness-patterns-analysis.md § 5. Progressive Context Compaction](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#5-progressive-context-compaction) | ARCBench (rules after compaction) and unsupported policy in hand-off summaries (arXiv 2611.03223, 2611.06545) | cc-native |
 | [agents-md-cookbook-analysis.md](../non-cc/protocols/agents-md-cookbook-analysis.md) | A tested AGENTS.md template, linter and migrator kit | non-cc |
 | [agent-design-formats-landscape.md](../non-cc/infrastructure/agent-design-formats-landscape.md) | Design-system formats agents consume (DESIGN.md, design-token chain) | non-cc |
+| [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) | Context fragmentation across coding agents and the move to AGENTS.md | sdlc-lcm |
+| [CC-vlm-screen-sharing-landscape.md](../cc-community/CC-vlm-screen-sharing-landscape.md) | Vision language models, image token maths and screen-sharing workflows with Claude Code | cc-community |
 
 Related hubs: [memory.md](memory.md), [code-tooling.md](code-tooling.md), [rag.md](rag.md), [cost.md](cost.md).

@@ -29,6 +29,5 @@ the corpus. Pointers only; see [the hub index](README.md).
 | [CC-loop-cron-analysis.md](../cc-native/configuration/CC-loop-cron-analysis.md) | `/loop` and the cron tools for recurring tasks | cc-native |
 | [CC-print-mode-gotchas.md](../cc-native/sessions/CC-print-mode-gotchas.md) | Pitfalls of `claude -p` in headless and CI runs | cc-native |
 | [CC-session-lifecycle-analysis.md](../cc-native/sessions/CC-session-lifecycle-analysis.md) | Session creation, naming, persistence and `/resume` | cc-native |
-| [CC-subagent-session-artifacts.md](../cc-native/sessions/CC-subagent-session-artifacts.md) | Subagent worktrees, transcripts, tombstones and cleanup | cc-native |
 
 Related hubs: [harness.md](harness.md).

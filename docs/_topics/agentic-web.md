@@ -22,7 +22,6 @@ sites identify, admit and charge agents. Pointers only; see [the hub index](READ
 | [computer-use-agents-landscape.md § Other vendors](../non-cc/agents/computer-use-agents-landscape.md#other-vendors) | OpenAI and Gemini computer-use tools | non-cc |
 | [computer-use-agents-landscape.md § Open models and frameworks](../non-cc/agents/computer-use-agents-landscape.md#open-models-and-frameworks) | Agent S, OpenCUA, UI-TARS (archived) | non-cc |
 | [computer-use-agents-landscape.md § Pixels versus accessibility tree](../non-cc/agents/computer-use-agents-landscape.md#pixels-versus-accessibility-tree) | Screenshot vs accessibility-tree input | non-cc |
-| [CC-vlm-screen-sharing-landscape.md](../cc-community/CC-vlm-screen-sharing-landscape.md) | Vision language models, image token maths and screen-sharing workflows with Claude Code | cc-community |
 
 ## Fetching and scraping
 
