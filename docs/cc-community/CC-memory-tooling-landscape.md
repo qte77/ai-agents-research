@@ -277,7 +277,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 **Repo**: [timgordontg/engrim][engrim] | **Stars**: 283 | **License**: MIT | **Version**: 1.4.11
 
-Local-first SQLite episodic-memory store aimed at the "200,000-token context window trap": rather than replaying raw transcripts, it distills project memory into "4,000 characters of high-precision, curated episodic working memory" in a single file (`~/.engrim/memory.db`, WAL mode, restrictive POSIX permissions) ([README][engrim]). Its README reports a measured result from one project: across 105 sessions on a 50,000-line codebase, context fell from about 153,000 tokens to under 1,000 (self-reported, `gh api` 2026-11-21).
+Local-first SQLite episodic-memory store aimed at the "200,000-token context window trap": rather than replaying raw transcripts, it distills project memory into "4,000 characters of high-precision, curated episodic working memory" in a single file (`~/.engrim/memory.db`, WAL mode, restrictive POSIX permissions) ([README][engrim]). Its README reports a measured result from one project: across 105 sessions on a 50,000-line codebase, context fell from about 153,000 tokens to under 1,000 (self-reported in the README, read 2026-11-21).
 
 ### Architecture
 
