@@ -237,7 +237,6 @@ these is Anthropic's.
 
 | Catalog | What it is | Licence / size | Notes |
 |---|---|---|---|
-| [claude-mods.com][mods-dir] | Mod directory; labels itself "Unofficial directory" | No licence stated; "278 mods listed" | Operator not named on the page |
 | [ruvnet field guide (gist)][ruvnet-mods] | "Claude Code Mods: a field guide" — how-to, no mod code | No licence stated | Partly outdated: tells readers to `export CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1`, which "Claude Code v2.1.287 and later ignores" per the [first-party docs][mods-overview-cc]. Its own advice: "Grep them before you trust any guide, this one included." |
 
 **Install-path caution.** The pruned OneWave catalog, the [explainx post][explainx-mods] and the ruvnet gist all suggest adding
@@ -326,7 +325,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | Name | Reason | Date | Link |
 |---|---|---|---|
 | ybouhjira/claude-code-tts | 21 stars; last push 2026-01-25; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/ybouhjira/claude-code-tts> |
-| ~cg/claude-code-tts | Hosted on sr.ht, not GitHub: no star, activity or independent-user evidence found; fails the adoption criterion | 2026-11-21 | <https://git.sr.ht/~cg/claude-code-tts> |
+| ~cg/claude-code-tts | Hosted on sr.ht, not GitHub; recently active, but no measured benefit or named independent users found (checked 2026-11-21) | 2026-11-21 | <https://git.sr.ht/~cg/claude-code-tts> |
 | ktaletsk/claude-code-tts | 20 stars; last push 2026-02-02; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/ktaletsk/claude-code-tts> |
 | LAURA-agent/Claude-to-Speech | 20 stars (repo now at TwinPeaksTownie/Claude-to-Speech); last push 2026-03-31; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/TwinPeaksTownie/Claude-to-Speech> |
 | johnmatthewtennant/mcp-voice-hooks | 130 stars; no licence; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/johnmatthewtennant/mcp-voice-hooks> |
@@ -338,7 +337,8 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | bacharyehya/talk-to-claude | No usable artifact: repo returned 404 as of 2026-11-02 (removed) | 2026-11-21 | <https://github.com/bacharyehya/talk-to-claude> |
 | iusztinpaul/squid | 218 stars; no measured benefit or named independent users in its README (`gh api` 2026-11-21); the only adoption evidence was the author's own writeup | 2026-11-21 | <https://github.com/iusztinpaul/squid> |
 | OneWave-AI/claude-code-mods | 32 stars; no measured benefit or named independent users; self-described partner status unverified (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/OneWave-AI/claude-code-mods> |
-| whyashthakker/awesome-claude-code-mods | 124 stars; created 2026-10-03; "50 of 50 pass strict validation" is an unverified self-claim, no named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/whyashthakker/awesome-claude-code-mods> |
+| whyashthakker/awesome-claude-code-mods | 124 stars; created 2026-10-03; the README reports test counts ("70 strict plugin validations and 390 native tests"), not a measured benefit, and names no independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/whyashthakker/awesome-claude-code-mods> |
+| claude-mods.com | Unofficial mod directory ("lists 293 mods"); no operator, users or usage numbers named on the site (checked 2026-11-21) | 2026-11-21 | <https://claude-mods.com/> |
 
 ## Sources
 
@@ -348,12 +348,11 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [awesome-claude-code-plugins][accp] | Installable plugin registry with marketplace format |
 | [pbakaus/impeccable][impeccable] (README + `gh api`, 2026-11-12) | Design-vocabulary plugin: commands, 62-rule detector, cross-agent install table |
 | [google/elephant-goldfish-model][egm] (README + `gh api`, 2026-11-12) | Elephant/Goldfish drafter-reviewer spec-review plugin |
-| [claude-mods.com][mods-dir] · [explainx.ai post][explainx-mods] · [ruvnet gist][ruvnet-mods] | Community mod catalogs and guides (checked 2026-10-22) |
+| [explainx.ai post][explainx-mods] · [ruvnet gist][ruvnet-mods] | Community mod catalogs and guides (checked 2026-10-22) |
 | [Mods overview][mods-overview-cc] | First-party: "Mods aren't sandboxed"; `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` ignored from v2.1.287 |
 | [alexeyw/lot-map][lot-map] (README, LICENSE, PRIVACY.md, CHANGELOG.md, `plugin.json`, `hooks/register.tsx`, `hooks/map.ts` + `gh api`, 2026-11-12) | Live session-map mod: repo stats, license, install, hooked events, privacy claims, source read for network/fs/process calls |
 
 [ponytail]: https://github.com/DietrichGebert/ponytail
-[mods-dir]: https://claude-mods.com/
 [explainx-mods]: https://www.explainx.ai/blog/awesome-claude-code-mods-50-open-source-mods-install-guide-2026
 [ruvnet-mods]: https://gist.github.com/ruvnet/a485e930b148185197fc53fd38b429ea
 [mods-overview-cc]: https://code.claude.com/docs/en/plugins/mods/overview
