@@ -55,7 +55,7 @@ Layer 5 note: compression (LLMLingua) shrinks the prompt *text*; routing (semant
 
 ## GSD (Get Shit Done)
 
-GSD (Get Shit Done, a meta-prompting and spec-driven development system for Claude Code) is archived: its repository ([gsd-repo][gsd-repo], archived, last push 2026-05-31, ~64K stars, `gh api` 2026-11-21) states that development continues as GSD Core in a separate repository ([open-gsd/gsd-core][gsd-core]). The detailed entry (architecture, open-issue review) was shortened in the 2026-11-21 pruning pass; see the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter).
+GSD (Get Shit Done, a meta-prompting and spec-driven development system for Claude Code) is archived: its repository ([gsd-repo][gsd-repo], archived, last push 2026-05-31, ~64K stars, `gh api` 2026-11-21) states that development continues as GSD Core in a separate repository ([open-gsd/gsd-core][gsd-core]).
 
 ---
 
@@ -455,16 +455,16 @@ Cross-ref: [CC-extended-context-analysis.md](../cc-native/context-memory/CC-exte
 
 ## Not included
 
-Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-21).
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
 | Boucle Read-Once Framework | 126 stars (`gh api` 2026-11-21); the README's "40%" appears only in a sample stats printout with no stated method, and it names no independent users | 2026-11-21 | <https://github.com/Bande-a-Bonnot/Boucle-framework> |
-| Parry Guard | 46 stars; no detection benchmark, only author-reported latency, and the README calls it early development; no named independent users | 2026-11-21 | <https://github.com/vaporif/parry-guard> |
-| Dippy | 244 stars; the README's "up to 40% faster" is unbenchmarked and no false-allow rate is published; no named independent users | 2026-11-21 | <https://github.com/ldayton/Dippy> |
-| cogit | 213 stars; repo created 2026-10-27; its docs measure the recorder's own cost and accuracy (94% parent match over 109 messages) but say the user-facing benefit is not measured yet; no named independent users | 2026-11-21 | <https://github.com/erensrtky/cogit> |
-| ultraship | 124 stars; README reports no measured benefit and no named independent users | 2026-11-21 | <https://github.com/Houseofmvps/ultraship> |
-| fable-baton | 30 stars; its own benchmark (n=2 per cell, one small project) shows the top model's output tokens falling 38–44% but total cost about the same, so no measured net benefit | 2026-11-21 | <https://github.com/realgarit/fable-baton> |
+| Parry Guard | 46 stars (`gh api` 2026-11-21); no detection benchmark, only author-reported latency, and the README calls it early development; no named independent users | 2026-11-21 | <https://github.com/vaporif/parry-guard> |
+| Dippy | 244 stars (`gh api` 2026-11-21); the README's "up to 40% faster" is unbenchmarked and no false-allow rate is published; no named independent users | 2026-11-21 | <https://github.com/ldayton/Dippy> |
+| cogit | 213 stars, repo created 2026-10-27 (`gh api` 2026-11-21); its 94% figure is the recorder's own accuracy (parent match over 109 messages), not a user-facing benefit, which its docs say is not measured yet; no named independent users | 2026-11-21 | <https://github.com/erensrtky/cogit> |
+| ultraship | 124 stars (`gh api` 2026-11-21); README reports no measured benefit and no named independent users | 2026-11-21 | <https://github.com/Houseofmvps/ultraship> |
+| fable-baton | 30 stars (`gh api` 2026-11-21); its own benchmark (n=2 per cell, one small project) shows the top model's output tokens falling 38–44% but total cost about the same, so no measured net benefit | 2026-11-21 | <https://github.com/realgarit/fable-baton> |
 | Selective Context | Not alive: last push 2024-02-12, last release 0.1.4 on PyPI (2023-10-28); an EMNLP 2023 paper (arXiv:2310.06201), but at 426 stars below the ~1,000 that would keep a dated line | 2026-11-21 | <https://github.com/liyucheng09/Selective_Context> |
 
 ## Sources
