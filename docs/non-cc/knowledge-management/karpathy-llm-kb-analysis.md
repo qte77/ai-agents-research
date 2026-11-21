@@ -49,7 +49,7 @@ Scale: the gist itself says the index approach "works surprisingly well at moder
 
 | Capability | Karpathy pattern | ai-agents-research | Gap? |
 |---|---|---|---|
-| Markdown-first storage | `.md` files, git-versioned | 309 tracked `.md` files under `docs/` (293 excluding READMEs; `git ls-files docs`, 2026-11-21), git-versioned | **No gap** |
+| Markdown-first storage | `.md` files, git-versioned | about 310 tracked `.md` files under `docs/` (`git ls-files docs`, 2026-11-21), git-versioned | **No gap** |
 | Raw ingest stage | `raw/` directory, Web Clipper | `triage/` + [3 automated monitors][monitors] | **No gap** — monitors are more systematic |
 | Structured compilation | LLM reads raw, writes wiki pages | Human reviews triage PR, authors analysis doc | **Real** — no LLM compilation step |
 | Schema / conventions | `CLAUDE.md`-style schema file | [CONTRIBUTING.md][contributing] + `.claude/rules/` + `.markdownlint.json` | **No gap** — governance is more detailed |
@@ -106,7 +106,7 @@ touch the open Context·Reproducible cell in
 | [Karpathy gist — llm-wiki.md][gist] | First-party architecture description (three layers, operations, principles); re-read 2026-11-21 |
 | [Karpathy X post (original)][x-post] | Original announcement with scale numbers (~100 articles, ~400 K words); not re-fetchable 2026-11-21 (HTTP 402) |
 | [Karpathy X post (follow-up)][x-followup] | Follow-up noting viral response, links to gist |
-| [TechBuddies analysis][techbuddies] | Third-party deep-dive with RAG comparison table |
+| [TechBuddies analysis][techbuddies] | Third-party background only, not evidence |
 | [arXiv 2609.37226 abstract page][corpusmap-paper] | Title, authors, submission date (2026-09-29), full abstract verbatim, confirmation of no numeric deltas in the abstract — accessed 2026-10-06 |
 
 [gist]: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f

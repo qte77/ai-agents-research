@@ -9,7 +9,7 @@ status: assess
 
 **Details:** **Repo**: [onyx-dot-app/onyx][onyx-repo] | **License**: MIT ("MIT Expat") except
 everything under `ee` directories, which is under the Onyx Enterprise License ([LICENSE][onyx-license];
-GitHub's detector reports `NOASSERTION` because of the split) | **Stars**: 33,496 (2026-11-21; 32,842 on 2026-10-22), created 2023-04-27 |
+GitHub's detector reports `NOASSERTION` because of the split) | **Stars**: about 33,500 (2026-11-21; 32,842 on 2026-10-22), created 2023-04-27 |
 **Latest release**: `v5.1.3`, 2026-11-16 (`gh api`, 2026-11-21; was `v4.9.2` on 2026-10-15). README claims and LICENSE split re-read 2026-11-21 and unchanged. The LICENSE copyright line is
 "DanswerAI, Inc.", the company behind the earlier Danswer project; the README itself doesn't mention
 the old name.
