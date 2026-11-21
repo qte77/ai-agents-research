@@ -142,5 +142,55 @@ class HubCoverageTests(unittest.TestCase):
         ])
 
 
+GLOSSARY = """# Glossary
+
+| Term | Expansion | Owner |
+|---|---|---|
+| MCP | Model Context Protocol | [x][x] |
+| Hybrid search, RRF | RRF = Reciprocal Rank Fusion | [x][x] |
+| MOC, PARA | MOC = Map of Content; PARA = Projects, Areas, Resources, Archives | [x][x] |
+| Reranker | — | [x][x] |
+| Property graph | — | [x][x] |
+"""
+
+
+class GlossaryTests(unittest.TestCase):
+    def test_parses_abbreviations_and_expansions(self):
+        self.assertEqual(dc.parse_glossary(GLOSSARY), {
+            "MCP": "Model Context Protocol",
+            "RRF": "Reciprocal Rank Fusion",
+            "MOC": "Map of Content",
+            "PARA": "Projects, Areas, Resources, Archives",
+        })
+
+
+class AbbreviationTests(unittest.TestCase):
+    ABBR = {"MCP": "Model Context Protocol", "RRF": "Reciprocal Rank Fusion"}
+
+    def check(self, text, path="docs/non-cc/x/a.md"):
+        return dc.check_abbreviations({path: text}, self.ABBR)
+
+    def test_flags_use_without_expansion(self):
+        self.assertEqual(self.check("# A\n\nUses MCP and RRF.\n"), ["docs/non-cc/x/a.md: MCP, RRF not expanded"])
+
+    def test_expansion_anywhere_counts_case_insensitive(self):
+        self.assertEqual(self.check("# A\n\nThe model context protocol (MCP) and RRF (reciprocal rank fusion).\n"), [])
+
+    def test_hyphens_and_spaces_match_either_way(self):
+        abbr = {"RAG": "Retrieval-Augmented Generation"}
+        self.assertEqual(dc.check_abbreviations({"docs/a/b.md": "RAG (retrieval augmented generation)"}, abbr), [])
+
+    def test_link_to_glossary_counts(self):
+        self.assertEqual(self.check("# A\n\nUses MCP, see [glossary](../../glossary.md) for RRF.\n"), [])
+
+    def test_ignores_code_and_partial_words(self):
+        self.assertEqual(self.check("# A\n\n`MCP` and MCPs and mcp\n\n```\nMCP\n```\n"), [])
+
+    def test_skips_glossary_and_non_content(self):
+        for path in ("docs/glossary.md", "docs/non-cc/README.md", "docs/plans/2026-01-01-0001-x.md",
+                     "docs/_topics/rag.md", "docs/research/r.md", "docs/learnings/per-repo/some-repo.md"):
+            self.assertEqual(self.check("MCP", path=path), [], path)
+
+
 if __name__ == "__main__":
     unittest.main()

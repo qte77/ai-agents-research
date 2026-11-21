@@ -271,7 +271,7 @@ check_actions: ## Lint GitHub Actions workflows + composite actions
 check_status: ## Validate doc frontmatter status: tokens; no body badges (strict; #348)
 	$(PYTHON) .github/scripts/check-doc-status.py --strict
 
-check_coverage: ## README index, inbound link, real section anchors, no duplicate hub rows, unhubbed docs ≤ MAX_UNHUBBED (strict; plan 0015 X1–X3)
+check_coverage: ## README index, inbound link, real section anchors, no duplicate hub rows, unhubbed docs ≤ MAX_UNHUBBED (strict; plan 0015 X1–X3); reports unexpanded glossary abbreviations (C2, no fail)
 	$(PYTHON) .github/scripts/check-doc-coverage.py --max-unhubbed $(MAX_UNHUBBED)
 
 check_frontmatter: ## Content-doc frontmatter vs the CONTRIBUTING §1–§2 schema (strict; plan 0015 F2–F3)

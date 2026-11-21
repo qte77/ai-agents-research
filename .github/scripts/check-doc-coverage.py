@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Check doc coverage: README index, inbound links (plan 0015 X1), section anchors (X3) and topic hubs (X2).
 
+Also reports, without failing, glossary abbreviations a doc uses but never expands (C2).
+
 Pure logic lives in ``lib/doc_coverage.py``; this entry point reads ``docs/`` (minus
 the archive) and the repo-root markdown files, prints each violation and sets the
 exit code.
@@ -19,7 +21,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.doc_coverage import check_anchors, check_coverage, check_hub_duplicates, unhubbed  # noqa: E402
+from lib.doc_coverage import (  # noqa: E402
+    GLOSSARY, check_abbreviations, check_anchors, check_coverage, check_hub_duplicates, parse_glossary, unhubbed,
+)
 from lib.doc_graph import load_corpus  # noqa: E402
 
 
@@ -44,6 +48,12 @@ def main() -> None:
         problems.append(f"{len(missing)} docs in no topic hub, above the ratchet of {args.max_unhubbed}: add hub rows")
     elif args.max_unhubbed is not None and len(missing) < args.max_unhubbed:
         print(f"note: {len(missing)} docs in no topic hub; lower MAX_UNHUBBED in the Makefile to {len(missing)}")
+    # Reason: report-only until the abbreviation backfill (plan 0015 C2); never sets the exit code.
+    unexpanded = check_abbreviations(docs, parse_glossary(docs.get(GLOSSARY, "")))
+    for line in unexpanded:
+        print(f"report: {line}")
+    if unexpanded:
+        print(f"note: {len(unexpanded)} docs use a glossary abbreviation without expanding it (report-only)")
     for line in problems:
         print(line)
     if problems:

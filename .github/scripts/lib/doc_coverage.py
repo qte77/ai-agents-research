@@ -16,6 +16,7 @@ from __future__ import annotations
 import posixpath
 import re
 
+from .doc_frontmatter import in_scope
 from .doc_graph import build_graph, extract_links, resolve
 
 _EXEMPT_PREFIXES = ("docs/cc-native/examples/",)
@@ -170,3 +171,71 @@ def check_hub_duplicates(docs: dict) -> list[str]:
             else:
                 first_seen[key] = line
     return sorted(problems)
+
+
+GLOSSARY = "docs/glossary.md"
+# Reason: per-repo learnings are mirrors overwritten by learnings-aggregator.py; fix upstream, not here.
+_MIRRORS = ("docs/learnings/per-repo/",)
+_ABBR = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$")
+_INLINE_CODE = re.compile(r"`[^`\n]*`")
+
+
+def parse_glossary(text: str) -> dict[str, str]:
+    """Abbreviation → expansion from the glossary tables (plan 0015 C2, owner decision D7).
+
+    A row's Expansion is either the expansion of a one-abbreviation Term, or
+    ``ABBR = expansion`` pairs separated by ``;`` when the Term lists several names.
+    Rows whose Expansion is ``—`` define no abbreviation.
+    """
+    out = {}
+    for line in text.splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 3 or cells[1] in ("", "—", "Expansion") or set(cells[1]) <= set("-"):
+            continue
+        term, expansion = cells[0], cells[1]
+        if "=" in expansion:
+            for pair in expansion.split(";"):
+                abbr, _, full = (s.strip() for s in pair.partition("="))
+                if _ABBR.match(abbr):
+                    out[abbr] = full
+        elif _ABBR.match(term):
+            out[term] = expansion
+    return out
+
+
+def _prose(text: str) -> str:
+    """Text outside fenced code blocks and inline code spans."""
+    kept, fenced = [], False
+    for line in text.splitlines():
+        if _FENCE.match(line):
+            fenced = not fenced
+        elif not fenced:
+            kept.append(_INLINE_CODE.sub("", line))
+    return "\n".join(kept)
+
+
+def check_abbreviations(docs: dict, glossary: dict[str, str]) -> list[str]:
+    """Content docs that use a glossary abbreviation without expanding it (report-only, C2).
+
+    Scope is the frontmatter schema's (no READMEs, hubs, plans, examples, archive or
+    ``docs/research/``) minus the per-repo learnings mirrors.
+
+    A doc passes if the expansion appears anywhere in it (any case; a hyphen and a space
+    count as the same) or it links the glossary.
+    """
+    def norm(s: str) -> str:
+        return s.lower().replace("-", " ")
+
+    out = []
+    for path in sorted(docs):
+        if path == GLOSSARY or not in_scope(path) or path.startswith(_MIRRORS):
+            continue
+        prose = _prose(docs[path])
+        if "glossary.md" in prose:
+            continue
+        lower = norm(prose)
+        missing = [a for a in sorted(glossary)
+                   if re.search(rf"(?<![\w-]){re.escape(a)}(?![\w-])", prose) and norm(glossary[a]) not in lower]
+        if missing:
+            out.append(f"{path}: {', '.join(missing)} not expanded")
+    return out
