@@ -5,7 +5,7 @@ see [the hub index](README.md).
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
-| [architecture.md § Knowledge Graph](../architecture.md#knowledge-graph-graphify) | This repo's own corpus graph (graphify) | repo |
+| [architecture.md § Doc Graph and Site](../architecture.md#doc-graph-and-site) | This repo's own doc graph (links between docs, rebuilt on deploy) | repo |
 | [CC-code-tooling-landscape.md § Graphify](../cc-community/CC-code-tooling-landscape.md#graphify-safishamsi) | Graphify: knowledge-graph builder with CC hook/MCP integration | cc-community |
 | [CC-code-tooling-landscape.md § Code-Review-Graph](../cc-community/CC-code-tooling-landscape.md#code-review-graph-tirth8205) | Code graph for PR review | cc-community |
 | [CC-code-tooling-landscape.md § codebase-memory-mcp](../cc-community/CC-code-tooling-landscape.md#codebase-memory-mcp-deusdata) | Embedded typed code graph over MCP | cc-community |

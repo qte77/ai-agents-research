@@ -139,8 +139,8 @@ ai-agents-research/
     plans/                             # Plan/design docs (durable plan-mode output; backlog = GitHub Issues)
     archive/                           # Retired/superseded docs (excluded from link-checking)
   changelog.d/                         # scriv changelog fragments (collected on release)
-  scripts/                             # Graph-page render + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles)
-  ui/                                  # Branded gh-pages site (index.html, graph.html, assets)
+  scripts/                             # Site-info + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles)
+  ui/                                  # Branded gh-pages site (index.html, doc-graph.html, assets)
   triage/                              # Auto-generated monitor outputs
   .github/                             # CI automation (monitors, scripts, templates)
     state/                             # Per-monitor fingerprint files (committed)
@@ -153,7 +153,7 @@ placement decision is based on **research interest**, not exclusivity:
 
 | Directory | Placement criterion | Example |
 |---|---|---|
-| `cc-community/` | The CC integration surface is the primary research interest — how the tool plugs into CC via hooks, MCP, plugins, slash commands | Graphify (5 platforms, but CC hook/MCP integration is the analysis focus) |
+| `cc-community/` | The CC integration surface is the primary research interest — how the tool plugs into CC via hooks, MCP, plugins, slash commands | Serena (an MCP server any MCP client can use, but its CC integration is the analysis focus) |
 | `non-cc/` | The tool's architecture or capabilities are the primary research subject — CC is incidental or one of many providers | Hermes Agent (supports Claude via API, but self-improving skill loop is the analysis focus) |
 
 When a tool spans both, place it where the **deeper analysis** lives and
@@ -232,7 +232,6 @@ make setup_all   # install lychee, Node.js (user-local), markdownlint-cli2
 make lint        # run lychee + markdownlint-cli2 over the full repo
 make autofix     # mechanical markdownlint --fix pass
 make test        # unit tests for src/ + .github/scripts/lib/ modules (stdlib unittest)
-make graph-page  # rebuild + restyle the knowledge graph into committed ui/graph.html (then commit to publish)
 make graph-data  # deterministic structural doc graph (docs, domains, link/hub/cites edges) into ui/doc-graph.json — no LLM
 make census      # rubric evidence matrix from every scored row's subject: tag (8 subjects × 6 properties) — no LLM
 make reconcile   # newest plan's remaining-work rows vs live PR/issue state (needs an authenticated gh)
@@ -241,7 +240,7 @@ make help        # list all recipes grouped by section
 
 Run `make lint` against any PR that touches docs before requesting review. `lychee` reads `lychee.toml`; `markdownlint-cli2` reads `.markdownlint.json`.
 
-**Knowledge graph:** the corpus knowledge graph is rebuilt on-demand via the `/graphify` skill (uses the session as the extraction model — no LLM key in CI), then `make graph-page` restyles it into the committed `ui/graph.html`; pushing that to `main` redeploys the Pages site. Full flow + rationale: [architecture.md §Knowledge Graph](docs/architecture.md#knowledge-graph-graphify).
+**Doc graph:** the Pages deploy rebuilds the doc graph from `docs/` on each qualifying push to `main`; `make graph-data` builds the same JSON locally. Details: [architecture.md § Doc Graph and Site](docs/architecture.md#doc-graph-and-site).
 
 ## Commit & PR
 
