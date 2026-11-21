@@ -8,7 +8,7 @@ the archive) and the repo-root markdown files, prints each violation and sets th
 exit code.
 
 Usage:
-    python check-doc-coverage.py [--root .]
+    python check-doc-coverage.py [--root .] [--max-unhubbed N]
 
 Exit codes:
     0 = no violations
@@ -29,7 +29,7 @@ from lib.doc_graph import load_corpus  # noqa: E402
 
 def main() -> None:
     """Entry point: run the coverage checks and exit accordingly."""
-    parser = argparse.ArgumentParser(description="Check README-index, inbound-link and anchor coverage of docs/.")
+    parser = argparse.ArgumentParser(description="Check README-index, inbound-link, anchor, topic-hub and glossary-abbreviation coverage of docs/.")
     parser.add_argument("--root", type=Path, default=Path("."), help="Repo root containing docs/ (default: .)")
     parser.add_argument("--max-unhubbed", type=int, default=None,
                         help="Ratchet: fail if more content docs than this are in no topic hub (plan 0015 X2)")

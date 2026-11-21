@@ -57,7 +57,9 @@ full before starting. The lead fills in each `<placeholder>`.
 5. **Paper leads.** Re-read each lead's arXiv abstract page and cite that page, never a triage
    summary. Each lead ends up either cited in the doc or dropped with a one-line reason.
 6. **Lint.** Run `make check_docs check_status check_frontmatter` and fix everything they report.
-   Leave `make check_coverage` to the lead, because hub and index rows are the lead's job. Write
+   Leave `make check_coverage` to the lead, because hub and index rows are the lead's job, but
+   expand every glossary abbreviation you use (or link `docs/glossary.md`), which that check also
+   enforces. Write
    `changelog.d/<YYYYMMDD>_<row>-<slug>.md`: one bullet under `### Added` or `### Changed`.
 
 ## Deliverables

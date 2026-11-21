@@ -183,7 +183,8 @@ _FRONTMATTER = re.compile(r"\A---[ \t]*\n.*?\n---[ \t]*\n", re.DOTALL)
 _COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 _LINK_TARGET = re.compile(r"\]\([^)]*\)")
 _URL = re.compile(r"<?https?://[^\s>)]+>?")
-_GLOSSARY_LINK = re.compile(r"\]\([^)\s]*glossary\.md")
+_GLOSSARY_LINK = re.compile(r"\]\((?!https?:)[^)\s]*glossary\.md|^\s*\[[^\]]+\]:\s*(?!https?:)\S*glossary\.md", re.MULTILINE)
+_FENCE_RUN = re.compile(r"^\s*(`{3,}|~{3,})")
 
 
 def parse_glossary(text: str) -> dict[str, str]:
@@ -209,15 +210,20 @@ def parse_glossary(text: str) -> dict[str, str]:
     return out
 
 
-def _prose(text: str) -> str:
-    """Body text outside frontmatter, fenced code, inline code, HTML comments and reference-link definitions."""
+def _prose(text: str, ref_defs: bool = False) -> str:
+    """Body text outside frontmatter, fenced code, inline code and HTML comments.
+
+    Reference-link definitions are dropped unless ``ref_defs`` is set.
+    """
     kept, fence = [], None
     for line in _COMMENT.sub("", _FRONTMATTER.sub("", text, count=1)).splitlines():
-        m = _FENCE.match(line)
-        if m and fence in (None, m.group(1)):
-            # Reason: only the marker that opened a block closes it (``` vs ~~~).
-            fence = None if fence else m.group(1)
-        elif fence is None and not _REF_DEF.match(line):
+        m = _FENCE_RUN.match(line)
+        if m and fence is None:
+            fence = m.group(1)
+        elif m and m.group(1)[0] == fence[0] and len(m.group(1)) >= len(fence):
+            # Reason: only a run of the opening character, at least as long, closes a block.
+            fence = None
+        elif fence is None and (ref_defs or not _REF_DEF.match(line)):
             kept.append(_INLINE_CODE.sub("", line))
     return "\n".join(kept)
 
@@ -229,19 +235,20 @@ def check_abbreviations(docs: dict, glossary: dict[str, str]) -> list[str]:
     ``docs/research/``) minus the per-repo learnings mirrors.
 
     A doc passes if the expansion appears anywhere in its body text (any case; a hyphen and a
-    space count as the same; URLs and link targets don't count) or it links the glossary.
+    space count as the same, as does a line break; URLs and link targets don't count) or it
+    links the glossary with a relative inline or reference-style link.
     Plurals and hyphen compounds ("MCPs", "MCP-based") count as uses.
     """
     def norm(s: str) -> str:
-        return s.lower().replace("-", " ")
+        return " ".join(s.lower().replace("-", " ").split())
 
     out = []
     for path in sorted(docs):
         if path == GLOSSARY or not in_scope(path) or path.startswith(_MIRRORS):
             continue
-        prose = _prose(docs[path])
-        if _GLOSSARY_LINK.search(prose):
+        if _GLOSSARY_LINK.search(_prose(docs[path], ref_defs=True)):
             continue
+        prose = _prose(docs[path])
         prose = _URL.sub("", _LINK_TARGET.sub("]", prose))
         lower = norm(prose)
         missing = [a for a in sorted(glossary)

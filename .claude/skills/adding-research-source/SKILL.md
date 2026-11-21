@@ -51,10 +51,12 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
    add a `changelog.d/<ts>_<slug>.md` fragment.
 5. **Lint:** `make lint` (markdown, status, coverage, frontmatter, actions, then links last). A URL
    you added that fails: recheck it locally and replace a dead one with its current canonical URL.
-   Don't add `lychee.toml` excludes yourself; ask the owner.
+   An exclude is only for a host that bot-blocks every client (CONTRIBUTING); propose it to the
+   owner rather than adding it yourself.
 6. **Ship:** branch `<type>/<slug>`; **commit by topic** (doc, then index/meta); PR; merge once CI is
    green. Owner rule for the link check: a failure counts as green only if `main` already has it or
-   it passes when rechecked locally, and that check happens before the merge → prune the branch.
+   it passes when rechecked locally, and that check happens before the merge. After merging, prune
+   the branch.
 
 ### Research-subagent brief (dispatch verbatim; one per source or tight cluster)
 

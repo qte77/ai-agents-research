@@ -206,7 +206,7 @@ This prevents misreading a `cc-community` placement as "CC-exclusive."
 - `sources:` in YAML frontmatter — use Sources section instead
 - Bare URLs in prose — use reference-style links
 - Duplicating content across docs — cross-reference the authoritative doc
-- Defining a term another doc already owns — link its owner from [docs/glossary.md](docs/glossary.md); expand an abbreviation on first use or link the glossary (`make check_coverage` fails otherwise)
+- Defining a term another doc already owns — link its owner from [docs/glossary.md](docs/glossary.md); expand an abbreviation on first use or link the glossary (`make check_coverage` fails if a doc never expands it and doesn't link the glossary)
 - Missing Sources section — every doc must cite its sources (a `## Sources` table, or an equivalent `## References` section)
 - Stale `validated_links` dates — re-check URLs when updating findings
 
