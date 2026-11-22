@@ -11,6 +11,188 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.23.0] - 2026-11-22
+
+### Added
+
+- Claude Code stop-hook loop cap: `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` (default 8, `0` disables) and `stop_hook_active` in `CC-hooks-system-analysis.md`, with an env-var row (owner observation 2026-11-20)
+
+- Agent management: new `CC-managed-settings-fleet-analysis.md` (managed-settings delivery channels, ranking, Enterprise group configs, fail-closed startup, managed-only keys, verification), a cost-attribution section in `CC-monitoring-telemetry-analysis.md` with two `OTEL_*` env-var rows, and an agent-registries comparison (A2A Agent Card, MCP Registry, AWS, Google, Agent 365, Agentforce) in `agentic-enterprise-os-landscape.md` (plan 0014 K15)
+
+- Five pointer-only topic hubs: evals and benchmarks, security, data, agentic web, and agent management, registered in the hub index and CONTRIBUTING (plan 0014 K24)
+
+- Microsoft 365 Copilot vs Salesforce Agentforce 360 comparison table and a worked list-price example (re-checked 2026-11-20) in the agentic enterprise OS landscape (plan 0014 K25)
+
+- AWS and Google Cloud agent-stack analyses (AgentCore, Agents Classic, Quick; Gemini Enterprise Agent Platform, Agent Identity, Gemini Enterprise seats): services, least-privilege roles, IdP integration, licences, regions, dated status, no prices (plan 0014 K34)
+
+- Cloud agent stacks: Microsoft Foundry "Roles, identity and licences" with an at-a-glance table, a new Oracle Cloud agent stack analysis (OCI Generative AI Agents, Enterprise AI Agents, AI Agent Studio), and a Copilot SDK section in the Copilot CLI doc (plan 0014 K34)
+
+- Cloud agent stacks: new `ibm-agent-stack-analysis.md` (watsonx Orchestrate and ADK: Claude via Bedrock preview, MCP/A2A, MAU-based plans) and `alibaba-cloud-agent-stack-analysis.md` (Model Studio, AgentRun, AgentBay, Qwen-Agent: RAM policies, Agent Identity, seat-based Token Plan; no Claude found), with IAM role gaps marked unverified (plan 0014 K34)
+
+- `cloud-agent-platforms-landscape.md`: six cloud agent stacks (AWS, Google Cloud, Azure, Oracle, IBM, Alibaba Cloud) compared in one dated table — runtime, Claude availability, MCP/A2A, memory, agent identity, least-privilege roles, licence models, regions, release status; no prices (plan 0014 K34)
+
+- Claude Duet, OpenAI dots and Cue (Manus) rows in the Always-on Teammate Agents table of the Hermes analysis (plan 0014 K40)
+
+- Fold-ins from owner names: Anthropic's components-of-agent-memory post (CC memory doc), hypergraph-vs-graph evidence (frameworks doc), Hermes memory design vs Claude Code and § 4 plus an always-on teammate-agent peer table (Grok Bot, Muse, Rakazo, OpenMausBot, Tucano), an OpenBot refresh, and refreshed Hermes counts (plan 0014 K40)
+
+- Fold-ins from owner names: TrustGraph (ontology-runtime row) and selfgraph (HydraDB companion SDK) in the frameworks landscape, Cursor's pstack plugin in the CC community skills landscape, Qodo's auto-approval and agent-session review in the PR-review landscape, and the "Society of AI Scientists" preprint in the research-agents landscape (alphaXiv only, no arXiv ID found); city2graph dropped as geospatial with no agent angle (plan 0014 K41)
+
+- `docs/glossary.md`: where each recurring term and abbreviation is defined (term, expansion, owner section; no definitions), linked from the topic-hub index and a new CONTRIBUTING anti-pattern; the source-adding skill now checks it before defining a term (plan 0015 C1, owner decision D7)
+
+- `make check_coverage` checks that content docs expand each glossary abbreviation they use, or link `docs/glossary.md` (plan 0015 C2)
+
+- `make check_frontmatter` (new CI job "Doc frontmatter", lenient): checks content docs against the CONTRIBUTING §1–§2 schema (required keys, ISO dates, keys that left frontmatter, unknown keys, lifecycle-only `status`, one URL in `source:`) and reports without failing until the F3 migration (plan 0015 F2)
+
+- Knowledge-management topic hub (`docs/_topics/knowledge-management.md`) linking wikis, LLM-maintained knowledge bases, knowledge-organisation methods and enterprise knowledge layers (plan 0015 T2)
+
+- Knowledge-management: new `knowledge-organisation-methods-landscape.md` (MOC, backlinks, Zettelkasten, PARA, Diátaxis, Obsidian, frontmatter schemas compared), refreshed Karpathy KB counts and gap analysis, fixed broken anchors and Sources table in `repo-to-docs-tools-landscape.md`, Onyx facts re-checked (plan 0015 T2)
+
+- `make check_coverage` (new CI job "Doc coverage"): every content doc must be linked from its folder's README index and from at least one other doc or repo-root file; CONTRIBUTING § Index maintenance now states the rule for all folders (plan 0015 X1)
+
+- `make check_coverage` now also fails on duplicate topic-hub rows (same doc and section) and on more unhubbed docs than the `MAX_UNHUBBED` ratchet (71, only ever lowered); the D6 hub exemptions are in CONTRIBUTING § Index maintenance, duplicate rows in `memory.md`, `harness.md` and `plugins.md` are merged, and `data.md` points to the knowledge-graph, memory and RAG hubs instead of repeating their rows (plan 0015 X2)
+
+- `make check_coverage` also checks section anchors: every `#fragment` in a doc-to-doc link must match a heading (GitHub slug rules) or explicit anchor in its target; four broken anchors fixed (plan 0015 X3)
+
+- Agent-memory landscape § 4: GrepMem (arXiv 2611.25123), lossless index-free memory as grep over an append-only history log (not rubric-scored), with a memory hub mention (owner fold-in)
+
+- Coding-agents comparison: new "Model access and billing" section comparing 15 harnesses on bring-your-own-key, custom base URL or gateway, vendor pricing model and documented cost controls, plus a pointer from the routers and gateways landscape (plan 0015 N1a/N1b)
+
+- Token-Waste Reduction Stack in the CC community tooling landscape gains an Evidence column (who measured each layer's saving, and when) and two layers: the context-mode tool-output sandbox and the Headroom compression proxy, each with author-run figures labelled as such (plan 0015 N1c).
+
+- Coding agents and harnesses comparison (`coding-agents-comparison-landscape.md`), starting with image, PDF, video and voice input across 15 harnesses, each cell sourced to the vendor's own docs and dated (plan 0015 N3).
+
+- LeanRDF (rdf-lean) entry in the semantic-layers landscape § Formal Ontologies & Semantic Web: RDF and RDFS entailment written in Lean 4, an untrusted Elpi search that emits certificates, and a small checker proven sound that accepts or rejects each step. Added on owner request; it meets D8 criterion 3 only through its self-reported W3C test-suite results (47 stars, one author). Cross-referenced from the agent-substrate reference architecture. Glossary rows for RDFS, triple, entailment, Lean and Elpi; the RDF bullet now defines a triple (plan 0015 N6)
+
+- Agent evaluation metrics landscape: "Verifiable rewards (RLVR)" (named in Tulu 3, arXiv 2411.15124; RLVR-World and an RLVR-exploration paper as training work; Modal's open-model list as a vendor source; the eval-side lesson that needs no training) and "Update-regression gate" (Safe Personal RSI, arXiv 2611.23651: adopt a self-edit only if safety does not regress; self-reported results and caveats). Glossary rows for RLVR and RSI (plan 0015 N7)
+
+### Changed
+
+- Release flow moved to the estate's reusable workflows: `bump.yaml` (signed bump commit, scriv collected via uvx) replaces the local `bump-my-version.yaml`, and `release.yaml` tags and publishes the GitHub Release in one run, replacing `tag-release.yaml`; `publish-release.yaml` stays as a manual fallback. CONTRIBUTING's release steps updated.
+
+- Microsoft 365 Copilot and Copilot Studio list prices in the Microsoft vs Salesforce worked example confirmed from the rendered pricing pages (plan 0014 K25)
+
+- Community monitor: drops the claudelog source (its truncated changelog lines duplicate the changelog monitor), and a run that fetches no entries from any source, or leaves an empty report, now fails the job instead of opening an empty triage PR; seven notable uncovered awesome-list tools are folded into the community tooling landscape (plan 0014 K27).
+
+- Re-verified IBM and Alibaba agent-stack claims: IBM A2A server role is documented as not yet implemented, Alibaba A2A (Model Studio consumer side, AgentRun tutorial) and RAM SAML/OIDC SSO are now documented; IBM IAM roles and workforce SSO stay unverified (plan 0014 K34)
+
+- Salesforce Agentforce analysis: re-pointed the MuleSoft A2A bridge source to its new docs path (`/agent-fabric/services-create-a2a-bridge`), re-read all three A2A-contradiction sources on 2026-11-20 (quotes and the "contradicted" finding unchanged), and corrected one partial quote.
+
+- Glossary abbreviations (MCP, RAG, A2A, AG-UI and others) are expanded at first use in 132 docs, and `make check_coverage` now fails on an unexpanded one (plan 0015 C2)
+
+- CONTRIBUTING §1–§2: the frontmatter schema (required and optional keys; `sources`, `description`, `release`, `version`, `license`, `authority` and `category` leave frontmatter) and a lifecycle-only `status` vocabulary (`adopt`, `trial`, `assess`, `hold`, `research`, `reference`, `archived`; plan-only `draft`, `approved`, `done`, `superseded`), with release status, licence and version on the `**Details:**` line (plan 0015 F1, owner decision D5)
+
+- Content-doc frontmatter migrated to the CONTRIBUTING §1–§2 schema: release and licence words moved out of `status:` to the `**Details:**` line, `category`/`description`/`sources`/`version`/`authority` removed from frontmatter (sources moved into each doc's Sources section), missing dates and `validated_links` filled; `status:` accepts lifecycle and plan tokens only, and `make check_frontmatter` is now strict; `learnings-aggregator.py` writes the same schema (plan 0015 F3)
+
+- The doc graph page is simpler and faster: docs only (no cited-domain nodes), live search that dims non-matching docs as you type (Enter zooms to the first match), one checkbox per topic hub plus "Unfiled" and "Select all", colour by top-level folder, and a click opens the doc on GitHub. Its JSON is a slim projection (`site_graph`: title, bucket, hubs, one edge per linked pair), and the Pages site now redeploys on every push to `main` (plan 0015 G2)
+
+- CONTRIBUTING gains the pruning rule (alive, adopted or proven; failures go to a `## Not included` table before Sources). Applied to the flagged entries: Vault-LD, Auto Ontology MCP, Agent Zero Memory, mxbai-rerank and Memorable moved to Not included; Memento cut to one dated line; Graft updated as Trail-code; reranker and LlamaParse pricing facts re-verified at vendor docs (plan 0015 P1)
+
+- `agent-frameworks-infrastructure-landscape.md` § 4: Memento 3 and Neo4j Agent Memory moved to Not included under the pruning rule; MemoProAgent's code link added (plan 0015 P2)
+
+- `CC-memory-tooling-landscape.md`: Operator Memory, open-second-brain, agent-second-brain and claude-second-brain moved to Not included under the pruning rule; ByteRover (archived) reduced to one dated line; Roampal Core's benchmark sentence corrected (plan 0015 P2)
+
+- Prune CC-code-tooling-landscape: move Qodo open-aware and Qodo agents to Not included (D8 pruning rule, plan 0015 p2c)
+
+- CC community tooling landscape: pruned seven entries (Boucle, Parry Guard, Dippy, cogit, ultraship, fable-baton, Selective Context) to a Not included table and shortened the archived GSD entry to one dated line (plan 0015 P2 batch 2)
+
+- Pruned the CC community skills landscape under the D8 rule: BHIL, dispatch, a claude-howto fork, coleam00/skills and stevesolun/ctx moved to a new Not included table (plan 0015 P2)
+
+- CC community plugins landscape: pruned 15 entries (voice/TTS hooks, squid, three mod catalogs) to a Not included table under the D8 rule (plan 0015 P2)
+
+- Semantic-layers doc gains a "Choosing a structure" section (tags to knowledge graph, typed links vs hyperlinks); graph-databases doc gains "Property Graph vs RDF" and refreshed W3C, GQL and TinkerPop status (plan 0015 T1)
+
+- Data platforms landscape gains a data lake vs lakehouse vs warehouse comparison and refreshed versions; agent-frameworks memory section gains a memory-taxonomy pointer with refreshed star counts; graph-visualization list is now a dated comparison table without this repo's own-site claim (plan 0015 T3)
+
+- RAG and retrieval section gains a "RAG patterns at a glance" comparison (plain, hybrid, reranking, GraphRAG, agentic) with first-party sources, documented hybrid-fusion modes per engine, refreshed versions, stars and licenses for GraphRAG, LightRAG, FAISS, pgvector, Elasticsearch, OpenSearch, Qdrant, Milvus, Weaviate and RAGAs, and abbreviations expanded (plan 0015 T4)
+
+- `adding-research-source` skill v0.2: new enrich-a-topic mode (gap survey, up to three worktree lanes on separate files, two falsification passes, lead adds hub and index rows) with reusable lane and falsifier briefs under `references/` (plan 0015 W1)
+
+- Topic hubs: 46 pointer rows added for 45 docs that were in no hub; the unhubbed ratchet drops from 71 to 26 (plan 0015 X2)
+
+- Caveman entry in the community skills landscape now cites the project's own site (caveman.so; getcaveman.dev serves the same page with caveman.so as canonical) and its docs (docs.caveman.so, the repo's homepage field)
+- Caveman entry: new "Caveman Code (the coding-agent app)" subsection: a closed-source macOS and web app that runs Claude, Codex and Cursor plus Caveman's own open-model agent; plans and credit cap; self-reported Terminal-Bench 4 and DeepSWE results against Claude Code and Codex, including the loss the page reports; helper models trim-1, compact-1, router-1
+
+- CC session cost analysis: Documented cost levers re-read against the live costs page (2026-11-22); added reference figures, TPM/RPM table, `modelPricing`, prompt cache line, agent-team and background token use; subagent env-var facts reattributed to the env vars page
+
+- Doc graph page: the hub index (`docs/_topics/README.md`) is drawn as a hollow star so it no longer looks like an ordinary doc; the search box moved to the top of the side panel, and the version line moved into the top bar, right of the theme picker; hovering "Unfiled", "Exempt by rule" or "Not hub content" says which rule puts a doc there (owner request 2026-11-22)
+
+- TrustGraph entry: v3.0.0 exists only as release candidates; latest stable PyPI release is 2.11.7 (checked 2026-11-22)
+
+- Caveman entry in the community skills landscape refreshed to v4.2.0 (Apache-2.0 since 3.0.0, ~122K stars, as of 2026-11-22): now a skill plus local proxy; dropped benchmark figures no longer in the README; remaining numbers dated and marked author-run (plan 0015 N2).
+
+- The doc graph no longer lumps every doc in no topic hub under "Unfiled": it splits them as `make check_coverage` does, into "Unfiled" (the docs the hub ratchet counts), "Exempt by rule" (D6) and "Not hub content" (README indexes, plans, research notes and example files), each with its own checkbox and count. Both read one function, `doc_coverage.hub_filing` (plan 0015 N4)
+
+- Node 24 only: the lint and rxiv-paper-eval workflows set up Node 24 instead of 20, and `make setup_node` installs Node 24.22.3 instead of 22.11.0 (the lint workflow installs markdownlint-cli2 through it)
+
+- `CC-usage-tooling-landscape.md`: pruned cc-costline (28 stars, no licence) and agentacct (early alpha, created 2026-07) to `## Not included` under the D8 rule (plan 0015 P2)
+
+- CC remote-access landscape pruned under the D8 rule: Tailnet Preview, cc-tmux-worktree-orchestration and Typeless moved to Not included; Omnara repo status corrected (not archived) and CloudCLI star count refreshed (plan 0015 P2)
+
+- Orchestrators landscape pruned under the D8 rule: agent-era/devteam (266 stars, no named users) moved to Not included; other entries kept (plan 0015 P2)
+
+- Pruned the LLM routers and gateways landscape against the well-known, performance-optimised filter: Lightport, RelayPlane, ClawRouters, ShareAI and the Pandora routing paper moved to Not included; RouteLLM shortened to one dated line; AISIX and Arch Gateway (now Plano) facts corrected.
+
+- Code-review products landscape: P2 pruning (plan 0015) moves Ellipsis to Not included, and updates the PR-Agent repo link and the Graphite reviewer name.
+
+- CC community reimplementations landscape: pruned under the D8 rule (leaked-claude-code mirror moved to Not included, repo 404); corrected openclaude owner, licence (custom notice, not MIT), stars and version, and the snapshot repo's rename (plan 0015 P2)
+
+- CC multi-account landscape pruned under the D8 rule: claude-code-profiles and claude-multisession moved to Not included (plan 0015 P2)
+
+- CC reverse engineering landscape: D8 pruning pass (plan 0015 P2); no entries moved, `Yuyz0112/claude-code-reverse` shortened to one dated stale-but-adopted line, CL4R1T4S star count corrected.
+
+- Research-agents landscape pruned under the D8 rule: CEDAR, RankEvolve, dataroom, MLR-Copilot and Open Coscientist moved to Not included; AI-Researcher, STORM, Agent Laboratory and OpenScholar cut to one dated line; corrected the IdeaScientist and Épi release facts (plan 0015 P2)
+
+- Web-scraping landscape: pruned per the D8 rule. Moved scrapelex, paperscraper and eurlex (R) to `## Not included`, and marked Requests-HTML as stale but adopted (its "unmaintained since 2019" corrected) (plan 0015 P2).
+
+- On-device semantic search landscape: P2 pruning pass; all entries kept, Voy marked stale with a dated line (plan 0015).
+
+- `system-1-decision-models-landscape.md`: probably, jev-browser and the JEV-as-a-Judge paper moved to Not included under the pruning rule; RouteLLM reduced to one dated stale line; JevK5's JevBench rank corrected (fifth in v1.4.2.2, with Plumb-4B built on it); mentions of the dropped names removed from the non-cc README, the harness hub, jev-analysis and the reference-architecture row count (plan 0015 P2)
+
+- Pruned `docs/sdlc-lcm/evaluation-data-resources-landscape.md` under the D8 rule (plan 0015 P2): moved LoopArena, E-Commerce Bench, MCPHallu, LifeVal, MiniCorp, the Omi medical STT benchmark, awesome-reasoning, SqueezeBench, CLEAR, AgentQuest, Yupp.ai, SWIF2T, SciXGen, StatLLM, MatSci-NLP, Trelis Function Calling, KnowLM-Tool and X-Fact to a new `## Not included` section; marked AutoGenBench archived (its parent repo) and StableToolBench stale.
+
+- Pruned `agentic-ai-vulnerability-landscape.md` (plan 0015 P2, `p2m`): moved Secure Agentics Adrian to Not included (criterion 3)
+- System-1 decision models landscape: dropped the Adrian use-case examples, Sources rows and links that pointed at its removed section (plan 0015 P2)
+
+- Pruning pass on the graph databases and query languages landscape (plan 0015 P2): every entry judged against the pruning rule, none moved; Kuzu row marked stale but adopted
+
+- AI crawlers and discoverability landscape: P2 pruning pass; three open-source generative engine optimisation (GEO) trackers and tools moved to Not included, AutoGEO code folded into its paper row (plan 0015).
+
+- Pruned the spec-driven frameworks landscape: moved AB Method to Not included (no measured benefit or named independent users).
+
+- Pruning pass on the agentic enterprise OS landscape (plan 0015 P2): HugAgentOS moved to Not included (635 stars, no paper, named users or measured benefit)
+- Agentic enterprise OS landscape: AutoAgent marked stale but adopted (last push 2025-10-16); HugAgentOS dropped from the related list in `octop-analysis.md` (plan 0015 P2)
+
+- Pruned the CC sandbox platforms landscape (plan 0015 P2): Maritime and Ephemora Cell moved to Not included; forkd renamed sandstorm (6.1k stars, v0.6.0), OpenSandbox stars refreshed.
+
+- Pruning pass over the browser agents landscape (plan 0015 P2): every entry kept; ChatGPT Atlas stays as one dated line (deprecated, pointing to ChatGPT Work), and Perplexity Comet availability is now sourced to its product page.
+
+- Agentic payments landscape: P2 pruning pass kept every entry; repointed the x402 link to its canonical repo `x402-foundation/x402` (`coinbase/x402` is now a fork).
+
+- AG-UI protocol landscape pruned under the D8 rule: flightdeckhq/flightdeck (31 stars, no named users) moved to Not included; other entries kept (plan 0015 P2)
+
+- Agent identity and auth landscape (plan 0015 P2): Privado ID Know Your Agent moved to Not included (private access only); SAM entry corrected to its renamed repo `google/agentmesh` (1,211 stars)
+
+- Pruned the computer-use agents landscape against the well-known, performance-optimised filter: all four open-model entries kept, and the archived UI-TARS-desktop entry shortened to one dated line.
+
+- Plan 0015 records the owner decisions of 2026-11-22: V1 (in-site doc view) decided no; 13-O5, 13-O10 and 13-O11 deferred; 13-O12 shipped as a shared rule in qte77/claude-code-plugins#303 ("a monitor step fails on any exit code it doesn't expect"), and the `AGENT_LEARNINGS.md` entry now points at it; 13-A2 done after a fresh session confirmed the shared rules still load. The plan's opening status is refreshed for the next session
+
+- Hub coverage (plan 0015 X2): the owner's exemption list is in `doc_coverage.hub_exempt` (learnings notes, Claude Code reference indexes, the agent-substrate pair and two single-case analyses), `oss-alm-landscape` is filed under the management hub, and the `MAX_UNHUBBED` ratchet drops from 26 to 3; the three model-internals docs stay unfiled until their own hub (row X2b, deferred)
+
+### Removed
+
+- The graphify knowledge-graph page (`graph.html`), its render script, restyle and pruning helpers, the `make graph-build`, `graph-html`, `graph-query`, `graph-explain`, `graph-path` and `graph-page` targets, and the graph's own commit in `build.json`; the site now links the doc graph directly, and `architecture.md` § Knowledge Graph (graphify) is now § Doc Graph and Site (plan 0015 G1)
+
+- `non-cc/orchestrators/devteam-analysis.md` archived (owner approval, plan 0015 P2): devteam fails the pruning rule's criterion 3. The doc moved to `docs/archive/non-cc/orchestrators/` with an archive banner, its non-cc README row is gone, and the orchestrators landscape's Not included row links the archived copy
+
+### Fixed
+
+- Abbreviation check: ignores frontmatter, HTML comments, URLs and link targets; counts plurals and hyphen compounds ("MCPs", "MCP-based") as uses; an expansion wrapped across lines counts; only a relative inline or reference-style link to the glossary exempts a doc; fences close only on a matching run, so mixed or nested fences no longer end a block early (plan 0015 C2 fact-check)
+- `adding-research-source` skill: `refresh-docs` is named as a workflow, the link-check merge and exclude rules are aligned with CONTRIBUTING, and lanes are told to expand abbreviations (plan 0015 W1 fact-check)
+
+- `.gitignore` now ignores `.claude/worktrees/`, and the evaluation-data landscape drops a Jenova benchmark link that returns 410 Gone (plan 0015 H1)
+
+- Apache Maka analysis: the `docs/eval/` results folder was removed upstream (link 404); point at the `products/eval/` Harbor runner instead
+
 ## [0.22.0] - 2026-11-19
 
 ### Added
