@@ -2,7 +2,7 @@
 title: Goal Tracking & Attribution Landscape
 purpose: How an agentic coding fleet ties work back to stated goals — the top-down goal→spec→build→learning cascade and the bottom-up attribution of every feature, PR, and agent run to the goal that motivated it — with the qte77 estate as the worked reference and the commercial OKR/PM tooling baseline it diverges from.
 created: 2026-06-28
-updated: 2026-11-18
+updated: 2026-11-22
 validated_links: 2026-06-28
 status: assess
 ---
@@ -59,13 +59,13 @@ The [ralph-loop-cc-tdd-wt-vibe-kanban-template][ralph-loop]'s `ralph/README.md` 
 
 ## Traditional baseline (brief contrast)
 
-The mature commercial tools target this space, but from the human-ceremony side:
+The mature commercial tools target this space, but from the human-ceremony side (Tability has since added agent features, see its row):
 
 | Tool | Layer | Goal model |
 |---|---|---|
 | [Jira Align][jira-align] (Atlassian) | enterprise portfolio | strategic themes / OKRs cascade to stories; SAFe PI-planning ceremonies |
 | [WorkBoard][workboard] (acquired Quantive / ex-Gtmhub, 2025) | strategy execution | OKR cascade + executive business reviews; human check-in cadence |
-| [Tability][tability] (independent) | lightweight OKR | weekly check-in rituals, manual UI |
+| [Tability][tability] (independent) | lightweight OKR | check-in rhythm; on 2026-11-22 also agent check-ins that run on a schedule and an [MCP server][tability-mcp] that reads and updates goals, plans and tasks from Claude or ChatGPT |
 | [Productboard][productboard] | product discovery | customer feedback → prioritized features → roadmap; human insight votes |
 | [LinearB][linearb] | engineering metrics | DORA / cycle-time from Jira + Git; assumes a human author per PR |
 
@@ -101,6 +101,7 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 | [Jira Align][jira-align] | Enterprise portfolio: strategy→execution, OKR hub, SAFe |
 | [WorkBoard][workboard] | Enterprise strategy execution / OKR (absorbed Quantive, ex-Gtmhub, 2025) |
 | [Tability][tability] | Lightweight independent OKR / goal check-ins |
+| [Tability MCP server][tability-mcp] | Vendor page: read and update goals, plans and tasks from an MCP client (checked 2026-11-22) |
 | [Productboard][productboard] | Product discovery: feedback → prioritized features → roadmap |
 | [LinearB][linearb] | Engineering delivery metrics (DORA, cycle time) over Jira + Git |
 | [Atlassian Rovo MCP Server][atlassian-mcp] | First-party evidence of the 2026 MCP-access layer over a human-authored goal model |
@@ -112,9 +113,10 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 [research-ralphy]: https://github.com/qte77/research-ralphy
 [ralph-loop]: https://github.com/qte77/ralph-loop-cc-tdd-wt-vibe-kanban-template
 [cto-map]: https://github.com/qte77/qte77/blob/main/docs/cto-handbook-mapping.md
-[jira-align]: https://www.atlassian.com/software/jira/align
+[jira-align]: https://www.atlassian.com/software/jira-align
 [workboard]: https://www.workboard.com/
 [tability]: https://www.tability.io/
+[tability-mcp]: https://www.tability.io/ai/mcp-server
 [productboard]: https://www.productboard.com/
 [linearb]: https://linearb.io/
 [atlassian-mcp]: https://www.atlassian.com/platform/remote-mcp-server
