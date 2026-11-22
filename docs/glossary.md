@@ -58,6 +58,8 @@ definition first; if one exists, link it, and if not, add the term here with its
 | BLEU | Bilingual Evaluation Understudy | [agent-evaluation-metrics-landscape.md § BLEU][bleu] |
 | ROUGE | Recall-Oriented Understudy for Gisting Evaluation | [agent-evaluation-metrics-landscape.md § ROUGE][rouge] |
 | LLM-as-a-judge | — | [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge] |
+| RLVR | Reinforcement Learning with Verifiable Rewards | [agent-evaluation-metrics-landscape.md § Verifiable rewards (RLVR)][rlvr] |
+| RSI | recursive self-improvement | [agent-evaluation-metrics-landscape.md § Update-regression gate][update-gate] |
 
 ## Sources
 
@@ -82,3 +84,5 @@ This page cites only corpus docs; each owner section carries its own sources.
 [bleu]: sdlc-lcm/agent-evaluation-metrics-landscape.md#bleu-bilingual-evaluation-understudy
 [rouge]: sdlc-lcm/agent-evaluation-metrics-landscape.md#rouge-recall-oriented-understudy-for-gisting-evaluation
 [judge]: sdlc-lcm/agent-evaluation-metrics-landscape.md#llm-as-a-judge-quality-assessment
+[rlvr]: sdlc-lcm/agent-evaluation-metrics-landscape.md#verifiable-rewards-rlvr
+[update-gate]: sdlc-lcm/agent-evaluation-metrics-landscape.md#update-regression-gate
