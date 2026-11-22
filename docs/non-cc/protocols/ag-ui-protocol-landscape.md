@@ -2,7 +2,7 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-11-20
+updated: 2026-11-22
 validated_links: 2026-10-24
 status: research
 ---
@@ -146,7 +146,7 @@ Source: [CopilotKit — Build with Google's new A2UI Spec][a2ui-blog]
 
 ## OpenGenerativeUI (CopilotKit Reference Framework)
 
-**Repo**: [CopilotKit/OpenGenerativeUI][ogui-repo] | **Demo**: [opengenerativeui.copilotkit.ai][ogui-site]
+**Repo**: [CopilotKit/OpenIntelligentUI][ogui-repo] (renamed from OpenGenerativeUI; `gh api` 2026-11-22) | **Demo**: [opengenerativeui.copilotkit.ai][ogui-site]
 
 Not a protocol — an end-to-end reference implementation:
 
@@ -209,11 +209,10 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 |---|---|---|
 | Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](../coding-agents/windsurf-analysis.md#agent-command-center) |
 | [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer — full analysis: [CC-remote-access-landscape.md](../../cc-native/ci-remote/CC-remote-access-landscape.md#omnara) |
-| [flightdeckhq/flightdeck][flightdeck] | "observability and control plane for production and coding agents" | Observability dashboard |
 | [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" | Task-loop TUI — see [CC-ralph-enhancement-research.md](../../cc-native/agents-skills/CC-ralph-enhancement-research.md) |
 | [Vibe Kanban][vibe-kanban] | kanban board (sunsetting) | Orchestrator board — see [CC-office-worker-workflows.md](../../cc-community/CC-office-worker-workflows.md) |
 
-**The positioning gap.** All of the above are **orchestration-board or observability** surfaces. None is a *live generative-UI* surface — one where the agent streams and renders UI components in real time. That capability is precisely what the AG-UI + A2UI + OpenGenerativeUI stack on this page provides, and **not** what the "command center" products do. So the cockpit/HUD naming space is crowding with board/observability tools, while the live-generative-UI cockpit position remains largely unoccupied under those labels.
+**The positioning gap.** All of the above are **orchestration-board or session-sync** surfaces. None is a *live generative-UI* surface — one where the agent streams and renders UI components in real time. That capability is precisely what the AG-UI + A2UI + OpenGenerativeUI stack on this page provides, and **not** what the "command center" products do. So the cockpit/HUD naming space is crowding with board/observability tools, while the live-generative-UI cockpit position remains largely unoccupied under those labels.
 
 **Myth-busting (verified 2026-06-20).** Two widely-repeated "HUD" attributions are **third-party coinages, not first-party framings**: Nous Research's [Hermes][hermes-nous] uses no HUD terminology (it self-describes as a self-improving agent; `hermes-hudui` is an unofficial community monitor), and [Ralph][ralph-tui] self-describes as an "AI Agent Loop Orchestrator" ("heads-up display" appears only as a third-party reviewer's simile).
 
@@ -221,6 +220,14 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 
 - [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) — OTel observability patterns (AG-UI events can be modeled as OTel spans)
 - [CC-connectors-overview.md](../../cc-native/plugins-ecosystem/CC-connectors-overview.md) — MCP connector landscape (the model↔tool leg of the Protocol Triangle)
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| flightdeckhq/flightdeck | Fails criterion 3 (adopted or proven): 31 stars (`gh api` 2026-11-22), though alive (last push 2026-11-19); README names no independent users, standards body or measured result | 2026-11-22 | <https://github.com/flightdeckhq/flightdeck> |
 
 ## Sources
 
@@ -233,13 +240,12 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 | [Google A2UI launch (CopilotKit blog)][a2ui-blog] | A2UI spec origin |
 | [Oracle Agent Spec + AG-UI (Oracle blog)][oracle-agui] | Three-way alignment announcement |
 | [Microsoft Learn — AG-UI Integration][ms-learn-agui] | Microsoft Agent Framework integration |
-| [CopilotKit/OpenGenerativeUI][ogui-repo] | Reference framework |
+| [CopilotKit/OpenIntelligentUI][ogui-repo] (formerly OpenGenerativeUI) | Reference framework |
 | [CopilotKit/openbot][openbot-repo] · [site][openbot-site] | Governed AI-coworker template — CEL policy gateway, container isolation, AG-UI-agnostic |
 | [thesysdev/openui][openui-repo] | OpenUI Lang, renderers, AG-UI and A2UI packages, self-reported token benchmark |
 | [Salesforce Agentforce 360][sf-agentforce] | Salesforce protocol strategy (MCP, not AG-UI) |
 | [Devin Desktop FAQ][devin-faq] | "Agent Command Center" framing (Kanban for local + cloud agents) |
 | [Omnara (YC launch)][omnara] | "command center for AI agents: terminal, web, mobile" |
-| [flightdeckhq/flightdeck][flightdeck] | "observability and control plane" for agents |
 | [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" — no first-party HUD framing |
 | [Nous Research — Hermes Agent][hermes-nous] | Self-improving agent — no HUD / "heads-up display" framing |
 | [A2A protocol][a2a] · [spec][a2a-spec] | Agent-to-agent interop (Google → Linux Foundation), v1.0.1 |
@@ -253,14 +259,13 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [a2ui-blog]: https://www.copilotkit.ai/blog/build-with-googles-new-a2ui-spec-agent-user-interfaces-with-a2ui-ag-ui
 [oracle-agui]: https://blogs.oracle.com/ai-and-datascience/announcing-agent-spec-for-a2ui-copilotkit-ag-ui
 [ms-learn-agui]: https://learn.microsoft.com/en-us/agent-framework/integrations/ag-ui/
-[ogui-repo]: https://github.com/CopilotKit/OpenGenerativeUI
+[ogui-repo]: https://github.com/CopilotKit/OpenIntelligentUI
 [ogui-site]: https://opengenerativeui.copilotkit.ai/
 [sf-agentforce]: https://www.salesforce.com/agentforce/what-is-new/
 [sf-aws]: https://www.salesforce.com/news/stories/agentforce-360-for-aws-announcement/
 [sf-agentforce-analysis]: ../agents/salesforce-agentforce-analysis.md
 [devin-faq]: https://docs.devin.ai/desktop/devin-desktop-faq
 [omnara]: https://www.ycombinator.com/launches/OCT-omnara-the-first-command-center-for-ai-agents-terminal-web-and-mobile
-[flightdeck]: https://github.com/flightdeckhq/flightdeck
 [ralph-tui]: https://ralph-tui.com/
 [hermes-nous]: https://hermes-agent.nousresearch.com/
 [vibe-kanban]: https://www.vibekanban.com/

@@ -40,7 +40,7 @@ vulnerability discovery and offensive agents. Pointers only; see [the hub index]
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [CC-sandboxing-analysis.md § Security Model](../cc-native/sandboxing/CC-sandboxing-analysis.md#security-model) | What Claude Code's sandbox protects against, and its limits | cc-native |
-| [CC-sandbox-platforms-landscape.md § Platform Comparison](../cc-native/sandboxing/CC-sandbox-platforms-landscape.md#platform-comparison) | Built-in sandbox vs OpenSandbox, E2B, Sprites.dev, Maritime, Daytona | cc-native |
+| [CC-sandbox-platforms-landscape.md § Platform Comparison](../cc-native/sandboxing/CC-sandbox-platforms-landscape.md#platform-comparison) | Built-in sandbox vs OpenSandbox, E2B, Sprites.dev, Daytona | cc-native |
 | [nvidia-openshell-analysis.md](../non-cc/infrastructure/nvidia-openshell-analysis.md) | NVIDIA OpenShell: kernel-enforced policy runtime for agent fleets | non-cc |
 | [microsoft-mxc-analysis.md](../non-cc/infrastructure/microsoft-mxc-analysis.md) | Microsoft MXC: policy-driven sandbox SDK for agent-generated code | non-cc |
 | [CC-sandbox-bwrap-host-quirks.md](../cc-native/sandboxing/CC-sandbox-bwrap-host-quirks.md) | bwrap friction on Linux: dotfile leakage, AppArmor user-namespace prerequisites | cc-native |
