@@ -130,6 +130,20 @@ class HubCoverageTests(unittest.TestCase):
                      "docs/sdlc-lcm/orphan-analysis.md"):
             self.assertFalse(dc.hub_exempt(path), path)
 
+    def test_owner_x2_exemptions(self):
+        # Owner decision X2 (2026-11-22): learnings notes, the CC reference indexes (one is a
+        # landscape), the agent-substrate pair and two single-case analyses are exempt.
+        for path in ("docs/learnings/per-repo/any-repo.md", "docs/learnings/cross-repo-digest.md",
+                     "docs/cc-community/CC-reverse-engineering-landscape.md",
+                     "docs/cc-native/configuration/CC-cli-reference.md",
+                     "docs/sdlc-lcm/agent-substrate-rubric.md",
+                     "docs/non-cc/infrastructure/auto-agi-compiler-analysis.md"):
+            self.assertTrue(dc.hub_exempt(path), path)
+        # Deferred, not exempt: model internals wait for their own hub.
+        self.assertFalse(dc.hub_exempt("docs/cc-native/model-internals/CC-emotion-vectors-interpretability.md"))
+        # The owner list does not widen to sibling landscapes.
+        self.assertFalse(dc.hub_exempt("docs/cc-community/CC-community-tooling-landscape.md"))
+
     def test_unhubbed_lists_non_exempt_content_docs_no_hub_links(self):
         # z is hubbed through a link inside a row's description; the hub index is not a hub.
         self.assertEqual(dc.unhubbed(self.DOCS), ["docs/non-cc/agents/q-landscape.md",
