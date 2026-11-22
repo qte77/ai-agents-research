@@ -7,6 +7,7 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
+| [coding-agents-comparison-landscape.md § Model access and billing](../non-cc/coding-agents/coding-agents-comparison-landscape.md#model-access-and-billing) | BYOK, custom base URL, vendor pricing model and documented cost controls across 15 coding agents (vendor docs, 2026-11-22) | non-cc |
 | [CC-prompt-caching-behavior.md § Why Hit Rates Are So High in CC](../cc-native/context-memory/CC-prompt-caching-behavior.md#why-hit-rates-are-so-high-in-cc) | Each request re-sends the whole prefix; cache reads dominate input | cc-native |
 | [CC-prompt-caching-behavior.md § One week of sessions on one machine](../cc-native/context-memory/CC-prompt-caching-behavior.md#one-week-of-sessions-on-one-machine-2026-11-07-to-2026-11-14) | Measured share of cache reads, writes and idle rewrites over seven days | cc-native |
 | [CC-prompt-caching-behavior.md § Actions That Invalidate vs. Keep the Cache](../cc-native/context-memory/CC-prompt-caching-behavior.md#actions-that-invalidate-vs-keep-the-cache) | Mid-session changes that force a full cache rewrite | cc-native |
