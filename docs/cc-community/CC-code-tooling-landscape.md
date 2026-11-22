@@ -3,7 +3,7 @@ title: CC Code-Analysis Tooling Landscape
 purpose: Code-understanding tools that integrate with Claude Code — knowledge graphs, semantic LSP, structural search, and repository packers — plus the cross-harness evidence on grep vs. semantic search for coding agents.
 status: research
 created: 2026-06-14
-updated: 2026-11-22
+updated: 2026-11-18
 validated_links: 2026-11-18
 ---
 
@@ -463,15 +463,11 @@ statements are vendor claims, not independent measurements.
   vector retrieval", but scores "depend strongly on which harness and tool-calling style is used"
   (custom harness plus the Claude Code, Codex, and Gemini CLI harnesses). Abstract-level reading;
   small sample, not peer reviewed.
-- Yang, Shi & Zhao, [GrepMem (arXiv 2611.25123)][grepmem] (2026-11-18): an agent's own history kept as an
-  append-only text log with one regex tool, RL-trained on one model, beats summarization and MemGPT-style memory on
-  average across five long-horizon tasks (agent memory, not code; self-reported; trained checkpoints not yet linked). Entry:
-  [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure).
 - jevgrep (above) and Sepidband et al. (below) show the other direction of the same trade-off: a relevance
   model or code map on top of lexical search cut cost or raised localization, with single-run caveats.
 
 **Reading across the evidence (our inference, not a source's claim).** The two index-favoring results that measure a grep-only baseline
-(Cursor, Bellam) report gains over it; both grep-favoring results (Sen et al., GrepMem) are in non-code domains. None is a
+(Cursor, Bellam) report gains over it; the grep-favoring result is in a non-code domain. None is a
 controlled head-to-head across coding harnesses. Cursor reports larger gains on bigger codebases and
 Bellam on smaller models, which is consistent with, but does not prove, harnesses defaulting to grep
 for strong models on small-to-medium repositories. Treat "grep by default" as a design choice
@@ -548,7 +544,6 @@ Each tool cites its repository/docs inline via the reference-style link definiti
 [small-agents]: https://arxiv.org/abs/2610.33958
 [arb]: https://arxiv.org/abs/2607.24882
 [grep-all]: https://arxiv.org/abs/2605.15184
-[grepmem]: https://arxiv.org/abs/2611.25123
 [ptc-kinds]: ../non-cc/protocols/programmatic-tool-calling-analysis.md#tool-use-across-model-kinds
 [on-device]: ../non-cc/context-memory/on-device-semantic-search-landscape.md
 [code-maps-repo]: https://github.com/MelikaSepidband/How-Should-Agents-See-Code

@@ -1,6 +1,6 @@
 ### Added
 
-- Agent-memory landscape § 4: GrepMem (arXiv 2611.25123), lossless index-free memory as grep over an append-only history log, with a pointer from the code-tooling grep-evidence section and the memory hub row (owner fold-in)
+- Agent-memory landscape § 4: GrepMem (arXiv 2611.25123), lossless index-free memory as grep over an append-only history log (not rubric-scored), with a memory hub mention (owner fold-in)
 
 ### Changed
 
