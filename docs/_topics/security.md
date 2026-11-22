@@ -50,7 +50,7 @@ vulnerability discovery and offensive agents. Pointers only; see [the hub index]
 
 | Doc / section | What it covers | Bucket |
 |---|---|---|
-| [agentic-ai-vulnerability-landscape.md § 2. Vendor discovery & remediation systems](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#2-vendor-discovery--remediation-systems) | MDASH, Vuln.AI, Adrian, Uber ADR, SkillSpector | sdlc-lcm |
+| [agentic-ai-vulnerability-landscape.md § 2. Vendor discovery & remediation systems](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#2-vendor-discovery--remediation-systems) | MDASH, Vuln.AI, Uber ADR, SkillSpector | sdlc-lcm |
 | [agentic-ai-vulnerability-landscape.md § 7. Offensive-security agents (authorized testing)](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#7-offensive-security-agents-authorized-testing) | ARTEX, Claude-BugHunter, cross-tool observations | sdlc-lcm |
 | [CC-community-skills-landscape.md § cloudflare/security-audit-skill](../cc-community/CC-community-skills-landscape.md#cloudflaresecurity-audit-skill) | Community security-audit skill | cc-community |
 | [rea-analysis.md](../non-cc/infrastructure/rea-analysis.md) | REA: reverse-engineering tools for native binaries, JS/Electron apps, .NET assemblies and websites | non-cc |
