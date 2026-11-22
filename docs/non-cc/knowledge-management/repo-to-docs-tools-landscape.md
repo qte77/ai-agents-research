@@ -164,7 +164,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| GitSummarize | Criterion 3: 466 stars (`gh api` 2026-11-22); no standards body or named independent users on its landing page (read via polyfetch); no first-party measured benefit found. Also last push 2025-04-03, no releases (criterion 2 for the repo) | 2026-11-22 | <https://github.com/antarixxx/gitsummarize> |
+| GitSummarize | Criterion 2: the repo's last push was 2025-04-03 and it has no releases (`gh api` 2026-11-22). Criterion 3 also fails: 466 stars, and its landing page (JS-rendered, read via polyfetch) shows no standards body, named independent users or measured benefit | 2026-11-22 | <https://github.com/antarixxx/gitsummarize> |
 
 ## Sources
 
