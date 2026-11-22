@@ -50,6 +50,13 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
   Review a correction like any other claim: check absence site-wide and corpus counts against the full corpus. Fixed in #573; the skill guardrail now says so.
 - **References**: PRs #559, #561, #568, #571–#573.
 
+### Pruning lanes misjudge "no code" and "no adoption" from the wrong page or repo
+
+- **Context**: Plan 0015 P2 pruning sweep (2026-11-21/22), one worktree lane per landscape, two fact-check passes.
+- **Problem**: Fact-check pass 1 reversed lane moves in at least six cases: three because the code was named only in the paper's HTML or appendix, not on the abstract page (Adaptive Skill Granularity, VIPER-MCP's artifact package, UltraQuant's kernel upstreamed into vLLM); one because the lane judged a republished 848-star copy instead of the live 1,122-star original (Tracely); one because a reproducible first-party benchmark was read as "self-run" (agent-audit); one because a reason inferred an unread page's content (Cuttlesoft).
+- **Solution**: The lane and falsifier briefs (`.claude/skills/adding-research-source/references/`) now require searching the HTML or PDF for code, checking every copy of a repo, and stating only what was read. Keep both fact-check passes; the second pass must also cover text the lead adds after pass 1.
+- **References**: plan 0015 row P2 (batches 13–17), #1013, #1016, #1020, #1022.
+
 ### Continued sessions: reconcile git HEAD vs the conversation summary before executing tracked work
 
 - **Context**: A long/continued session whose summary predates recent merges.

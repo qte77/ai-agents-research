@@ -128,7 +128,7 @@ The README names the classes covered as common web vulnerabilities: injection, X
 | `ENABLE_STOP_REVIEW=0` | Stop review only; the README suggests it for multi-agent or shared-worktree setups, where another agent can move `HEAD` between turns |
 | `ENABLE_COMMIT_REVIEW=0` | Commit/push review only |
 
-**Owner observation (2026-11-22, one Codespace, not a benchmark)**: only the pattern warnings worked. The plugin's log reported "no API credentials and no Claude apps gateway sign-in" for the LLM reviews, and the Agent SDK bootstrap had timed out. The `UserPromptSubmit` hook still ran on every prompt: 67 runs on 2026-11-22, median 0.6 s, slowest 7.8 s. Across the session transcripts, 68 runs timed out in all, most of them between 2026-11-11 and 2026-11-15 and 3 since 2026-11-16, so it is not a current hotspot. The snapshot works on a temporary copy of the git index, so lock contention with other sessions is unlikely; the cause of the earlier timeouts is not known.
+**Reported by another session (2026-11-22, one Codespace; not re-checked here)**: only the pattern warnings ran, with the log reporting no credentials for the LLM reviews; the per-prompt hook ran in under a second at the median, and its timeouts clustered on 2026-11-11 to 11-15. A later look at the local debug log (it rotates at 1 MB and then covered only about 15 minutes) showed 35 `UserPromptSubmit` runs taking 0.1 s to 20 s and no credentials line, so these figures are not confirmed. The snapshot works on a temporary copy of the git index, per the hook source.
 
 **Fit assessment**: **Adopt the pattern warnings; turn the LLM reviews on per repo.** Where no credentials reach the plugin, set `ENABLE_CODE_SECURITY_REVIEW=0`: the reviews can't run there, and the switch also drops the per-prompt untracked-file listing (the per-prompt baseline of tracked files still runs). Where several agents share a worktree, the README's switch is `ENABLE_STOP_REVIEW=0`, which keeps the commit and push reviews. Where the reviews do run, they catch multi-file issues that regexes miss, at the cost of a model call when a turn ends and one review per commit or push (Opus by default; set a cheaper model to spend less). It complements, not replaces, tests and SAST (the README's own limitation). The earlier version of this section described a `PreToolUse` hook that blocked edits on 9 patterns with no cost outside edits ([Firecrawl blog][firecrawl-blog]); v2.0.21 does none of these.
 
@@ -299,7 +299,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 - [security-guidance plugin README][sg-readme] — three layers, credentials, switches, privacy, review cost log (v2.0.21, 2026-11-22)
 - [security-guidance hooks.json][sg-hooks] — hook events, matchers and timeouts (v2.0.21, 2026-11-22)
 - [security-guidance hook script][sg-hook-src] — `UserPromptSubmit` baseline and untracked-snapshot gating (v2.0.21, 2026-11-22)
-- Owner observation, 2026-11-22 — the plugin's local debug log and hook timings in one Codespace
+- Another session's report, 2026-11-22 — the plugin's local debug log and hook timings in one Codespace (not re-checked; see the section)
 - CC 2.1.302, this session, 2026-10-18 — observed that the installed `code-review` plugin's skill is listed separately as `code-review:code-review` alongside the bundled `code-review` skill
 
 [firecrawl-blog]: https://www.firecrawl.dev/blog/best-claude-code-plugins
