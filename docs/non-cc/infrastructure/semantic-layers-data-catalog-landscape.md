@@ -45,7 +45,7 @@ Define metrics/dimensions once; query consistently across clients.
 | [Cube][cube] | Apache-2.0 (~20k★) | **MCP server** (hosted, OAuth PKCE) + outbound MCP connectors | Most agent-ready of the group; `claude mcp add` documented |
 | [dbt MetricFlow / Semantic Layer][metricflow] | Apache-2.0 (~1.6k★) | JDBC/GraphQL API; community MCP wrappers only | Engine behind dbt Cloud's Semantic Layer; part of the Open Semantic Interchange effort |
 | [Malloy][malloy] | MIT (Google; ~2.5k★) | None official (one community MCP wrapper) | Semantic *query language* compiling to SQL; VS Code-first |
-| AtScale (`atscale.com`, homepage dead 2026-07-23 — 404) | Proprietary | Partner [MQO-MCP][atscale-mqo] (typed query grammar) | MQO validates every reference against a live catalog snapshot to block hallucinated SQL — notable agent-safety pattern (early/reference impl) |
+| AtScale ([`atscale.com`][atscale]) | Proprietary | None documented here (a third-party typed-query MCP wrapper moved to Not included) | Established semantic-layer vendor; homepage returned 404 on 2026-07-23 but loaded on 2026-11-22 |
 
 ## Catalogs / Metadata / Governance
 
@@ -127,49 +127,6 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 
 `scored 2026-09-30`
 
-**Related self-evolving-ontology research (paper-only, added 2026-10-06).** Three further 2025–2026
-papers propose autonomous/dynamic ontology updating for agents, found via web and arXiv search beyond
-EvoOntology above. None of the three abstract pages links a code repository; a GitHub repo search
-(`gh search repos`, 2026-10-06) for each paper's own name found nothing matching for "Evo-DKD" or
-"ontology-as-a-kernel"/"OaK" (zero results both), and for "SciToolAgent" found only a same-named, non-Evo
-project — [HICAI-ZJU/SciToolAgent][scitoolagent-repo] (428 stars) — whose relationship to the Evo paper
-(same research group? an earlier version?) is not stated on either page, so it is not claimed here as the
-Evo variant's code; no repository confirmed as SciToolAgent-Evo's own was found. None is
-rubric-scored here — the arc's gap-driven policy reserves new scored rows for sources that could move an
-open cell in
-[agent-substrate-reference-architecture.md](../../sdlc-lcm/agent-substrate-reference-architecture.md) (the
-only open cell is Context·Reproducible; these are Ontology-subject and would not move it even if scored),
-and a system with no code cannot be scored on this rubric's evidence terms the way EvoOntology's shipped
-repo can.
-
-- **[OaK][oak-paper]** ("Toward Effective and Reliable LLM Agents via Dynamic Ontology," Zhang, Sun, Yang,
-  Cui, Guo, Hu; arXiv 2608.22974, submitted 2026-08-24) builds a task-oriented ontology and its knowledge
-  graph from task requirements and training data, then iteratively refines both using judge feedback. Per
-  the abstract (verbatim): "an ontology that appears semantically plausible may not contain the relational
-  structures needed for actual decision making... OaK constructs an ontology and its knowledge graph,
-  generates task-adaptation functions for graph reasoning, and uses judge feedback to iteratively refine
-  both." Evaluated on TravelPlanner, CRMArenaPro and ToolQA; self-reported gains only, no independent
-  reproduction found.
-- **[SciToolAgent-Evo][scitoolagent-paper]** ("an ontology-aware self-evolving agent for open-world
-  scientific tool acquisition," Tang, Zhou, Wang, Ding, Zhang, Chen; arXiv 2607.28692, submitted
-  2026-07-30) evolves a *tool-graph* ontology rather than a domain/business ontology: "Once a novel tool is
-  acquired, its scientific ontology is completed online for seamless integration into the known graph"
-  (verbatim). It introduces its own benchmark, OpenSciToolBench ("900 realistic tasks across four
-  difficulty levels"); narrower in scope than EvoOntology (tool metadata, not general domain semantics).
-- **[Evo-DKD][evodkd-paper]** ("Dual-Knowledge Decoding for Autonomous Ontology Evolution in Large Language
-  Models," Raman, Aravindh R, Ragav; arXiv 2507.21438, submitted 2025-07-29) proposes two parallel decoding
-  streams — one proposing ontology edits, one producing natural-language justifications — coordinated by a
-  gating mechanism, in "a closed reasoning loop: proposed ontology edits are validated... and then
-  injected into the knowledge base." **Weaker than the other two on implementation evidence**: the authors
-  state, verbatim, "due to GPU constraints, we simulate the dual-decoder behavior using prompt-based mode
-  control to approximate coordinated decoding in a single-stream mode" — the paper's own headline
-  architecture (dual decoders) was not actually run as described; self-reported results only.
-
-Rejected as out of scope for this section (searched 2026-10-06): EvoGraph-R1 (arXiv:2607.12764) evolves a
-GraphRAG hypergraph, not an ontology schema; "LLM Change Agent" is a human-driven CLI, not autonomous; "Graph
-Engineering in the Era of LLM Agents" (arXiv:2608.21156) is a survey, not a system; `oaklib` (Ontology Access
-Kit) is an unrelated static library that only shares the "OaK" name.
-
 **[AWS context-ontology-accelerator][coa]** (Apache-2.0, 885★, pushed 2026-09-29) is a full semantic-context platform following a **Scan → Model → Serve** pipeline: ingest sources, induce an OWL 2 ontology (Bedrock Claude for concept extraction, Bedrock Cohere Embed v4 for grounding-ontology similarity, HermiT/ELK + OntoQA + OoPS! for three-tier validation), then serve it to agents via a Virtual Knowledge Graph (Ontop) over SPARQL and an MCP server. Access is namespace-isolated with RBAC: per-namespace roles (owner, maintainer, data-steward, data-analyst) plus cross-namespace `platform-admin`/`platform-viewer` roles — the clearest **Shared** evidence in this ontology set. It deploys as AWS CDK-provisioned microservices (control-plane, data-layer, ontology-engine, metric-service, vkg, mcp-server, context-manager), not a single local process. The repo is published as a **read-only mirror**: "We are not accepting pull requests at this time."
 
 `subject: ontology`
@@ -196,7 +153,7 @@ These five give the [agent substrate rubric][rubric] its first ontology-doc evid
 
 **[NVIDIA Auto Ontology][auto-ontology]** (Apache-2.0, 10.8k★ on 2026-11-09 and 11.8k★ on 2026-11-11, `gh api`; version 1.2.0 in `pyproject.toml` and the Helm chart, no GitHub release or PyPI package) is the relational, SQL-only member of this wave. Its README sums it up as three stages: "it generates an ontology, people certify it, and the agent answers questions from it." An ingestion service reads database schemas, profiles columns, extracts business terms table by table, infers joins and bridge tables, and suggests reusable SQL expressions from query history; terms, relationships and SQL attributes are stored "in Postgres, with embeddings in pgvector". People then test, refine and certify that draft. At question time a text-to-SQL agent retrieves certified terms, writes SQL, checks filter values and the query against the database, repairs it when a check fails, and returns the answer with its SQL; when the candidates can't support a query it says the question can't be answered. There is no RDF, OWL or SPARQL layer: the "graph" is the term/relationship graph shown in its UI. Agents reach it through a read-only MCP server, where "every call runs with that user's permissions", plus a CLI and REST API. Inference defaults to NVIDIA NIM, and an optional KumoRFM route for predictive questions uploads the connected tables to that hosted service. Two cautions from the README: the backend trusts a user ID the frontend forwards in a header, and the ingestion endpoints "have no authentication of their own", so only the web app's port should be exposed; and the project "is currently not accepting external contributions."
 
-Not rubric-scored, for the same reason as the paper-only entries above: it is Ontology-subject and could not move the reference architecture's one open cell (Context·Reproducible).
+Not rubric-scored: it is Ontology-subject and could not move the reference architecture's one open cell (Context·Reproducible).
 
 **TrustGraph** (Apache-2.0; RDF/OWL ontology-guided extraction, SHACL per-node query policies, PROV-O lineage, MCP server) is profiled in [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms) as a vendor-described ontology runtime, not restated here.
 
@@ -223,11 +180,15 @@ A complementary research direction formalizes *why* this grounding improves reli
 
 ## Not included
 
-Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked with `gh api` on 2026-11-21).
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked with `gh api` on 2026-11-21 and 2026-11-22).
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
 | Vault-LD | Markdown-vault-as-linked-data spec; 254 stars, below the adoption bar | 2026-11-21 | [repo][vault-ld] |
+| MQO-MCP (AtScale partner; a typed query grammar that checks every reference against a live catalog snapshot) | Criterion 3: 0 stars, no licence file, last push 2026-06-29 (`gh api` 2026-11-22); no standards body, named users or measured result found in the repo metadata | 2026-11-22 | [repo][atscale-mqo] |
+| OaK (arXiv:2608.22974, "Toward Effective and Reliable LLM Agents via Dynamic Ontology") | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link, and a GitHub search on 2026-10-06 found none (oaklib, the Ontology Access Kit, is an unrelated library that shares the name) | 2026-11-22 | [paper][oak-paper] |
+| SciToolAgent-Evo (arXiv:2607.28692) | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link. A same-named repo, HICAI-ZJU/SciToolAgent (434 stars, MIT, last push 2025-08-26), is not stated to be this paper's code | 2026-11-22 | [paper][scitoolagent-paper] |
+| Evo-DKD (arXiv:2507.21438) | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link, and the authors say the dual decoder was only simulated with prompts | 2026-11-22 | [paper][evodkd-paper] |
 | Auto Ontology MCP (gogoymh) | Third-party port of NVIDIA Auto Ontology (the NVIDIA original stays above); 518 stars, below the adoption bar | 2026-11-21 | [repo][auto-ontology-mcp] |
 
 ## Sources
@@ -237,7 +198,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Cube MCP server docs][cube] | Hosted MCP server, OAuth PKCE, connectors |
 | [dbt MetricFlow][metricflow] | Metrics-layer engine; Open Semantic Interchange |
 | [Malloy][malloy] | Semantic query language |
-| AtScale · [MQO-MCP][atscale-mqo] | Proprietary semantic layer; typed-query MCP pattern (AtScale homepage dead 2026-07-23) |
+| [AtScale][atscale] | Proprietary semantic layer (homepage reachable 2026-11-22) |
 | [OpenMetadata][openmetadata] | Catalog with official MCP module |
 | [DataHub][datahub] · [MCP server][datahub-mcp] | Catalog with official MCP server |
 | [Unity Catalog OSS][unity-catalog] | LF open catalog + `unitycatalog-ai` SDK |
@@ -262,20 +223,16 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
 | [NVIDIA Auto Ontology README][auto-ontology] | Generate/certify/answer stages, Postgres + pgvector store, read-only MCP server, NIM default, KumoRFM route, ingestion-auth caution; Apache-2.0 LICENSE, `pyproject.toml` 1.2.0; `gh api` 2026-11-09 |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
-| [OaK abstract page][oak-paper] | Task-oriented ontology-as-a-kernel method, judge-feedback refinement loop, TravelPlanner/CRMArenaPro/ToolQA results, confirmation of no code link — accessed 2026-10-06 |
-| [SciToolAgent-Evo abstract page][scitoolagent-paper] | Self-evolving tool-graph ontology for scientific tool acquisition, OpenSciToolBench benchmark, confirmation of no code link — accessed 2026-10-06 |
-| [Evo-DKD abstract page][evodkd-paper] | Dual-decoder ontology-evolution method and its own "simulated due to GPU constraints" limitation, confirmation of no code link — accessed 2026-10-06 |
-| `gh search repos` for "SciToolAgent", "Evo-DKD", "ontology-as-a-kernel"/"OaK", 2026-10-06 | Confirms no code repo for Evo-DKD or OaK; finds only a same-named, non-Evo SciToolAgent repo (428★, HICAI-ZJU) whose relation to the Evo paper is unstated |
 
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
 [malloy]: https://github.com/malloydata/malloy
-[atscale-mqo]: https://github.com/joeyen-atscale/mqo-mcp
 [openmetadata]: https://github.com/open-metadata/OpenMetadata
 [datahub]: https://github.com/datahub-project/datahub
 [datahub-mcp]: https://github.com/acryldata/mcp-server-datahub
 [unity-catalog]: https://github.com/unitycatalog/unitycatalog
 [atlas]: https://github.com/apache/atlas
+[atscale]: https://www.atscale.com
 [dataplex]: https://cloud.google.com/dataplex
 [rdf]: https://www.w3.org/TR/rdf11-concepts/
 [owl]: https://www.w3.org/TR/owl2-overview/
@@ -290,6 +247,10 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [schema-org-gs]: https://schema.org/docs/gs.html
 [google-sd]: https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
 [vault-ld]: https://github.com/The-Knowledge-Graph-Guys/vault-ld
+[atscale-mqo]: https://github.com/joeyen-atscale/mqo-mcp
+[oak-paper]: https://arxiv.org/abs/2608.22974
+[scitoolagent-paper]: https://arxiv.org/abs/2607.28692
+[evodkd-paper]: https://arxiv.org/abs/2507.21438
 [symbolic-separation]: https://arxiv.org/abs/2609.17107
 [ontology-atlas]: https://github.com/wlsdks/ontology-atlas
 [open-ontologies]: https://github.com/fabio-rovai/open-ontologies
@@ -316,10 +277,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [auto-ontology]: https://github.com/NVIDIA/auto-ontology
 [auto-ontology-mcp]: https://github.com/gogoymh/auto-ontology-mcp
-[oak-paper]: https://arxiv.org/abs/2608.22974
-[scitoolagent-paper]: https://arxiv.org/abs/2607.28692
-[evodkd-paper]: https://arxiv.org/abs/2507.21438
-[scitoolagent-repo]: https://github.com/HICAI-ZJU/SciToolAgent
 [ontogenia-paper]: https://arxiv.org/abs/2503.05388
 [wikidata-kgc]: https://arxiv.org/abs/2412.20942
 [text2kgbench]: https://arxiv.org/abs/2308.02357
