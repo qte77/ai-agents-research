@@ -44,7 +44,7 @@ This landscape cross-references those rather than duplicating them.
 | [Semgrep Guardian][guardian] | Purpose-built for **AI-agent-generated code** | Bundles Semgrep **MCP server + Hooks + Skills** in one install; hooks "fire on every file write, ensuring a scan regardless of what the agent does"; scans via Semgrep Code + Supply Chain + Secrets | Commercial-tiered |
 | [Bandit][bandit] | Python AST security linter | CLI / pre-commit / CI (used in this estate's own CI) | Apache-2.0 |
 | [Trivy][trivy] | All-in-one: deps, containers, IaC, secrets, SBOM | CLI / CI action | Apache-2.0 |
-| [agent-audit][agent-audit] | Static analyzer for **agent frameworks** | 51 rules mapped to OWASP Agentic Top 10; tool-boundary-aware taint (tracks `@tool` params → `eval`/`subprocess`/`cursor.execute`); LangChain/CrewAI/AutoGen | Not verified (repo LICENSE unchecked) |
+| [agent-audit][agent-audit] | Static analyzer for **agent frameworks** | 51 rules mapped to OWASP Agentic Top 10; tool-boundary-aware taint (tracks `@tool` params → `eval`/`subprocess`/`cursor.execute`); LangChain/CrewAI/AutoGen | MIT (`gh api` 2026-11-22) |
 
 **Semgrep Guardian** is the standout for the _analysis-of-agents_ direction: it targets
 Claude Code, Codex, Cursor, GitHub Copilot, Kiro, Devin/Windsurf, and any MCP client,
@@ -111,10 +111,6 @@ or rules files, and fix or flag vulnerable sibling code the agent may copy. Pred
   contexts. Recommends reserving agent audits for high-impact components with a clear binary
   oracle and **requiring a deterministic test harness to prove an exploit before human
   review**. _(Single source; no Big Sleep/Project Zero reference in this post.)_
-- **VulnAgent-R2** (arXiv:[2603.13384][vulnagent]) — evidence-calibrated multi-agent
-  repository-level auditing; hybrid static (graph triage / cross-file dataflow) + dynamic
-  (selective compilation + test execution to validate findings); reports 38.3% token
-  reduction (paper-claimed).
 - **VulnLLM-R** (arXiv:[2512.07533][vulnllm]) — a 7B reasoning-specialized model + agent
   scaffold that reasons about program states; **benchmarks directly against CodeQL (SAST)
   and AFL++ (fuzzing/DAST) and reportedly outperforms both** on real-world projects,
@@ -131,19 +127,6 @@ or rules files, and fix or flag vulnerable sibling code the agent may copy. Pred
   Pi as the underlying coding agent; the project maintains a public case-study archive
   of bugs found in open-source projects — no aggregate precision/recall benchmark was
   found in the README fetch.
-- **[Grim Prompter](https://github.com/jmanico/grim-prompter)** (MIT, 416★/35 forks,
-  created 2026-10-28, `gh api` 2026-11-12, by Manicode Security) — a threat-modeling
-  prompt library for coding agents: point Claude Code, Codex or any agent at a repo
-  with `/threat-model quick api` or `/threat-model deep web` and it produces a
-  threat model tied to that code, backed by 36 architecture workflows and 29
-  method/analysis prompts (STRIDE, LINDDUN, PASTA). Output lands under a new
-  `threat-model/` folder: `SYSTEM_UNDER_REVIEW.md` (scope, evidence, assumptions,
-  inspected and skipped files), `report.md` (findings, mitigations, verification
-  plans), and JSON stage-handoff artifacts; deep runs add a six-stage pipeline and a
-  `DATA_INVENTORY.md` for privacy passes. The runbook requires file-and-line
-  citations for every finding and keeps builds/tests/installs/network access behind
-  explicit authorization. **Caveat**: a brand-new repo (two weeks old at this
-  check) — no independent review of finding quality was found.
 - **[OpenQodex](https://github.com/openqodex/openqodex)** (Apache-2.0, 1,094★/80
   forks, created 2026-10-02, `gh api` 2026-11-12) — a pre-push review pipeline that
   pairs conventional scanners with agent-as-reviewer. A `scan` pass (no model) runs
@@ -225,11 +208,20 @@ synthesis opportunity, not an existing CC feature.
   public repos), AgentSight/VIPER-MCP (research code), Specula (Apache-2.0).
 - **Commercial-tiered**: Semgrep Guardian; GitLab DAST / Dependency-Scanning / Duo auto-fix
   (Ultimate); GitHub Advanced Security (private repos); ARMO/Metoro.
-- **Research, not shipped products**: VIPER-MCP, AgentSight, VulnAgent-R2, VulnLLM-R,
+- **Research, not shipped products**: VIPER-MCP, AgentSight, VulnLLM-R,
   CodeMender (not public at time of Google's post).
-- **Unverified**: agent-audit license; Forgejo-Actions portability of GitHub-marketplace
+- **Unverified**: Forgejo-Actions portability of GitHub-marketplace
   security actions. SkillSpector is now first-party-verified (Apache-2.0, 19,514★, `gh api`
   2026-10-06) — see [agentic-ai-vulnerability-landscape.md § NVIDIA SkillSpector][skillspector-vuln].
+
+## Not included
+
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Grim Prompter (threat-modeling prompt library, Manicode Security) | Criterion 3: 658 stars, last push 2026-11-08 (`gh api` 2026-11-22); its README names no independent users, standards-body adoption or measured benefit, and no independent review of finding quality was found | 2026-11-22 | <https://github.com/jmanico/grim-prompter> |
+| VulnAgent-R2 (arXiv:2603.13384, multi-agent repository-level auditing) | Criterion 1: the paper's HTML says prompts, agent schemas, predictions and plotting code are released "in the artifact package" but gives no link, and `gh search repos` found none (2026-11-22); its 38.3% token reduction is paper-reported | 2026-11-22 | <https://arxiv.org/abs/2603.13384> |
 
 ## Sources
 
@@ -239,11 +231,11 @@ synthesis opportunity, not an existing CC feature.
 | [garak][garak] · [NVIDIA/garak README][garak-gh] | LLM red-team probe/detector scanner; probe families, CLI, Apache-2.0 (first-party) |
 | [Semgrep Guardian docs][guardian] · [announcement blog][guardian-blog] | Agent-generated-code scanner; launch 2026-06-23 (first-party; rule counts unconfirmable, omitted) |
 | [CodeQL][codeql] · [Semgrep][semgrep] · [Bandit][bandit] · [Trivy][trivy] | SCA engines |
-| [agent-audit][agent-audit] | Agent-framework static taint analyzer (repo; license unverified) |
+| [agent-audit][agent-audit] | Agent-framework static taint analyzer (repo, MIT) |
 | [AgentSight][agentsight] (arXiv:2508.02736) · [VIPER-MCP][viper] (arXiv:2605.21392) | eBPF boundary tracing; hybrid MCP taint+PoC (106 zero-days/67 CVEs, paper-reported) |
 | [Google Cloud — AI-Assisted Vulnerability Management][gcloud-blueprint] | Agents-as-scanner blueprint, 2026-07-16, −7-day TTE, binary-oracle finding (first-party, single source) |
 | [Specula][specula] (`specula-org/Specula`) | Agentic TLA+ formal-verification bug finder; 486★, Apache-2.0, `gh api` 2026-09-24 |
-| [VulnAgent-R2][vulnagent] (2603.13384) · [VulnLLM-R][vulnllm] (2512.07533) · [ICLR formalization][iclr-formalize] (#10016279) | Agent-based detection papers (arXiv/ICLR-first-party; results paper-claimed) |
+| [VulnLLM-R][vulnllm] (2512.07533) · [ICLR formalization][iclr-formalize] (#10016279) | Agent-based detection papers (arXiv/ICLR-first-party; results paper-claimed) |
 | [OWASP Top 10 for Agentic Applications 2026][owasp-agentic-top10] | Ranked agentic-risk list, 2025-12-09 (distinct from MAESTRO / LLM Top 10; categories not enumerated here) |
 | [GitLab application security][gitlab-appsec] · [GitHub code scanning][gh-codescan] · [Forgejo Actions][forgejo-actions] | CI-forge SCA/DCA capability, verified per forge |
 | [NVIDIA/SkillSpector][skillspector] | Repo, LICENSE (Apache-2.0), star count (`gh api`, 2026-10-06) — moved from "unverified secondary source" to first-party |
@@ -261,7 +253,6 @@ synthesis opportunity, not an existing CC feature.
 [agentsight]: https://github.com/eunomia-bpf/agentsight
 [viper]: https://arxiv.org/abs/2605.21392
 [gcloud-blueprint]: https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/
-[vulnagent]: https://arxiv.org/abs/2603.13384
 [vulnllm]: https://arxiv.org/abs/2512.07533
 [owasp-agentic-top10]: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
 [gitlab-appsec]: https://docs.gitlab.com/user/application_security/
