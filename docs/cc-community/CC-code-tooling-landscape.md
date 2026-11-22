@@ -465,7 +465,7 @@ statements are vendor claims, not independent measurements.
   small sample, not peer reviewed.
 - Yang, Shi & Zhao, [GrepMem (arXiv 2611.25123)][grepmem] (2026-11-18): an agent's own history kept as an
   append-only text log with one regex tool, RL-trained on one model, beats summarization and MemGPT-style memory on
-  average across five long-horizon tasks (agent memory, not code; self-reported, checkpoints not yet public). Entry:
+  average across five long-horizon tasks (agent memory, not code; self-reported; trained checkpoints not yet linked). Entry:
   [agent-frameworks-infrastructure-landscape.md § 4](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure).
 - jevgrep (above) and Sepidband et al. (below) show the other direction of the same trade-off: a relevance
   model or code map on top of lexical search cut cost or raised localization, with single-run caveats.
