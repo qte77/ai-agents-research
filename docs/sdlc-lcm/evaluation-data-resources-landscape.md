@@ -3,7 +3,7 @@ title: Evaluation & Data Resources Landscape
 purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and evaluation datasets — the tools, benchmarks, and data behind the metrics defined in the evaluation-metrics landscape.
 status: research
 created: 2026-06-14
-updated: 2026-11-21
+updated: 2026-11-22
 validated_links: 2026-11-18
 ---
 
@@ -57,19 +57,18 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | HELM (Stanford) | [github](https://github.com/stanford-crfm/helm) | Holistic LLM evaluation | 16 scenarios, 7 metrics |
 | MLflow LLM Evaluate | [docs](https://mlflow.org/docs/latest/genai/eval-monitor/index.html) | Eval with experiment tracking | — |
 | AgentBench | [github](https://github.com/THUDM/AgentBench) | LLM-as-Agent across 8 environments | 8 environments |
-| AutoGenBench | [github](https://github.com/microsoft/autogen/blob/0.2/samples/tools/autogenbench) | AutoGen agent eval, Docker isolation | — |
+| AutoGenBench | [github](https://github.com/microsoft/autogen/blob/0.2/samples/tools/autogenbench) | AutoGen agent eval, Docker isolation | Archived: its parent repo `microsoft/autogen` (61,956 stars) is archived (`gh api` 2026-11-22) |
 | LangChain AgentEvals | [github](https://github.com/langchain-ai/agentevals) | Trajectory / decision-sequence eval (LLM judge) | — |
 | LangChain OpenEvals | [github](https://github.com/langchain-ai/openevals) | Prebuilt LLM-judge evaluators | — |
 | Google ADK Evaluation | [docs](https://google.github.io/adk-docs/evaluate) | Tool-trajectory + Recall-Oriented Understudy for Gisting Evaluation (ROUGE) response scoring | — |
 | Azure AI Evaluation SDK | [docs](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/agent-evaluate-sdk) | Programmatic Azure Foundry agent eval | Likert 1–5 |
 | Strands Agents Evaluation | [docs](https://strandsagents.com/docs/user-guide/evals-sdk/quickstart/) | Multi-dimensional agent eval | — |
 | Maxim AI | [site](https://www.getmaxim.ai/) | Simulation + eval + observability | — |
-| Yupp.ai | [site](https://yupp.ai/) | Crowd-sourced model comparison | Bradley-Terry/VIBE, 500+ models |
 | Every Eval Ever | [github](https://github.com/evaleval/every_eval_ever) | Community schema unifying Inspect AI/HELM/lm-evaluation-harness eval outputs into one JSON format | arXiv:2606.14516; backed by Hugging Face, U. Edinburgh, EleutherAI; MIT (code/dataset), paper CC BY 4.0 |
 
 ## 2. Benchmarks
 
-**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [CLEAR](https://arxiv.org/abs/2511.14136) (Cost/Latency/Efficacy/Assurance/Reliability, ρ=0.83 production correlation vs 0.41 for accuracy-only, expert study N=15; abstract, v1 2025-11-18), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentQuest](https://arxiv.org/abs/2404.06411), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; open general-agent leaderboard; [General Agent Evaluation](https://arxiv.org/abs/2602.22953), 2026-02-26, v2 2026-05-11, is the paper behind it; its abstract does not state the "top 0.73 success @ $8.54/task" figure quoted in [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), so treat that figure as paper-body-reported and unverified here — the site's `results.csv` lists per-benchmark scores with no date column, e.g. 0.88 on TauBench-Telecom for Smolagent + gemini-3-pro), [E-Commerce Bench](https://github.com/QwenLM/E-CommerceBench) (Qwen; 18 LLM agents each run up to four simulated online stores for 365 days on real market data — negotiation, pricing, inventory, fraud detection; 6,886 products/576 suppliers; Apache-2.0; [arXiv:2608.30730](https://arxiv.org/abs/2608.30730)), [LifeVal](https://arxiv.org/abs/2611.06687) (Yang, Proehl, Bharadwaj, Fan, Cole, Kim, Brown, Thacker, Glaese, Patwardhan; Nov 2026 — 148 personalized agentic consumer-task categories, derived from a >3,800-respondent willingness-to-pay survey cross-checked against two national time-use studies; each task is written from real conversation histories/reference files by an expertise-gated creator and passed through 3+ rounds of human QC; no code link on the abstract page), [MiniCorp](https://arxiv.org/abs/2610.05912) (Zeng, Dai, Li, Shin, Zhang, Lu, He, Wang, Chang; Oct 2026 — an office simulator where agents collectively run an e-commerce company: external market mechanics plus an internal world where agent decisions feed back into market outcomes, with checkpointing for replay under counterfactual decisions; no code link on the abstract page).
+**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; open general-agent leaderboard; [General Agent Evaluation](https://arxiv.org/abs/2602.22953), 2026-02-26, v2 2026-05-11, is the paper behind it; its abstract does not state the "top 0.73 success @ $8.54/task" figure quoted in [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), so treat that figure as paper-body-reported and unverified here — the site's `results.csv` lists per-benchmark scores with no date column, e.g. 0.88 on TauBench-Telecom for Smolagent + gemini-3-pro).
 
 **Reward hacking (coding agents)**: [EvilGenie](https://arxiv.org/abs/2511.21654) (LiveCodeBench tasks where agents can hardcode tests or edit test files; detection via held-out tests, LLM judges and test-file edits; covers Claude Code, Codex, Gemini CLI). Context: [ai-security-governance-analysis.md § Reward Hacking](ai-security-governance-analysis.md#reward-hacking-and-evaluation-awareness-research).
 
@@ -77,7 +76,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Web agent** (dated browser benchmarks: [browser-agents-landscape.md](../non-cc/agents/browser-agents-landscape.md#browser-benchmarks-with-dates)): [WebArena](https://arxiv.org/abs/2307.13854), [BrowseComp](https://www.evidentlyai.com/blog/ai-agent-benchmarks) (1,266 multi-hop questions), [BrowserGym](https://arxiv.org/abs/2412.05467), [OSWorld][osworld-paper] (desktop; the 2024 paper reports humans above 72.36% against 12.24% for the best model then, as of 2024-04-11; OSWorld 2.0 reports 20.6% best binary completion in the paper, as of v2 2026-07-13, and a higher site-file figure — see Benchmark status and validity below), [AppWorld](https://www.evidentlyai.com/blog/ai-agent-benchmarks).
 
-**Code / SWE**: [SWE-EVO](https://arxiv.org/abs/2512.18470) (long-horizon multi-file evolution: 48 tasks from seven Python projects; its abstract (v6, 2026-05-22) reports GPT-5.4 + OpenHands at "only 25%" against 72.80% for GPT-5.2 on SWE-bench Verified; the earlier "21% vs 65%" pair is not in that abstract), [SciCode](https://arxiv.org/abs/2407.13168), [LoopArena](https://github.com/AMAP-ML/LoopArena) (models as runtime *Controllers* directing a fixed coding-agent *Worker* through long-running loops, vs. end-to-end outcome-only scoring; best observed Strict Success Rate 36.25% on full tasks per the abstract (v2, 2026-10-13), Apache-2.0; [arXiv:2608.28281](https://arxiv.org/abs/2608.28281)).
+**Code / SWE**: [SWE-EVO](https://arxiv.org/abs/2512.18470) (long-horizon multi-file evolution: 48 tasks from seven Python projects; its abstract (v6, 2026-05-22) reports GPT-5.4 + OpenHands at "only 25%" against 72.80% for GPT-5.2 on SWE-bench Verified; the earlier "21% vs 65%" pair is not in that abstract), [SciCode](https://arxiv.org/abs/2407.13168).
 
 **Harness-level vs model-level coding-agent comparators** (checked 2026-11-12): [SWE-bench / SWE-bench Verified][swe-bench] is harness-level — leaderboard entries are submitted per agent run; the official [SWE-bench/experiments][swe-bench-experiments] record names each submission folder `<date>_<model>`; its own examples (e.g. `20240402_sweagent_gpt4`) fold a scaffold label into that token, which is this entry's evidence for calling the comparator harness-level (the site itself does not state an "agent+model" field structure). Maintained by the SWE-bench project (its README lists contacts with Princeton and Stanford email domains), MIT licence (`SWE-bench/SWE-bench`, confirmed via `gh api`). The original SWE-bench draws "2,294 task instances" from Pull Requests and Issues across 12 Python repos; **SWE-bench Verified** is "a human-validated subset of 500 SWE-bench instances," created "in collaboration with OpenAI." Submissions go through [sb-cli][sb-cli], "a command-line tool for interacting with the SWE-bench API." [Terminal-Bench][terminal-bench] is harness-level — its leaderboard lists Rank/Model/**Agent**/Resolution Rate/Cost/Tokens per row; Apache-2.0 code at [harbor-framework/terminal-bench][tbench-repo] (confirmed via `gh api`). Its README calls it "a continuous benchmark" with "tagged releases" published "on the Harbor Hub," and says it "is hosted by Harbor and Laude Institute" — the live leaderboard page's own footer additionally credits Stanford ("Hosted by Stanford / Harbor / Laude Institute"), a discrepancy between the two first-party sources, stated here as each source states it. The live board is now on Terminal-Bench 4.1 (checked 2026-11-12), one minor version ahead of the Terminal-Bench 4.0 edition (re-read 2026-11-18: header still 4.1) [Artificial Analysis's Coding Agent Index](agent-evaluation-metrics-landscape.md#cost-performance-efficiency-pareto) scores against. [Scale SWE-bench Pro][scale-swe-pro] leans model-level: Scale AI's [paper][scale-swe-pro-paper] frames the evaluation as running "under a unified scaffold," but the public leaderboard's own legend tags only asterisked rows "Run with mini-swe-agent harness," while its narrative separately says frontier models ran under "the SWE-Agent scaffold" — not one disclosed harness across every row. The board separates results run with "a capped cost limit and turn limit of 50" (now linked off to a page named `..._deprecated`) from current results run with "an uncapped cost and ... a turn limit of 250," without stating the two groups are directly comparable — that comparability caveat does not appear on either page checked. The code repo, [scaleapi/SWE-bench_Pro-os][scale-swe-pro-repo], is MIT (confirmed via `gh api`); the paired Hugging Face dataset's licence is not stated on the paper page and was not separately checked. By contrast, [Epoch AI's SWE-bench Verified page][epoch-swebv] is not scaffold-free (correcting an initial assumption that it was): it runs its own default tool-calling scaffold — "a simple loop where models can take an individual action (e.g. reasoning and tool call)" — plus named third-party scaffolds including Claude Code and Codex, over "484 samples that are validated on [Epoch's] infrastructure" out of the 500-instance Verified set, and Epoch states site-wide that its data is under CC BY 4.0 ("All data is freely available under CC BY 4.0", [epoch.ai/llms.txt][epoch-llms]; benchmark questions and answers stay "the property of their respective creators", [data hub][epoch-data]).
 
@@ -104,8 +103,6 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | [TRACE][trace] (Gaonkar) | Verifier brittleness | Renaming tools or reformatting output mostly left rewards near unchanged; misleading tool names lowered them; identical reruns flipped 15-36% of outcomes | 2026-10-08 |
 | [Agents Are Systems][agent-systems] (Wiedmann et al.) | Configuration effects on four scientific tasks | About 54% of outcome variance came from repeating the same configuration; task information had the largest effect | 2026-10-01 |
 
-**Saturation-resistant design.** [SqueezeBench][squeeze] (Manrique, Xia, Szeider, 2026-10-09) avoids saturation by scoring bounds on integer functions: a submission must beat a recorded bound and carry a Lean-checked proof, then replaces the record. Ten extremal-combinatorics problems; agents produced 82 accepted record-improving submissions in the baseline round and 60 more with newer models.
-
 **Contamination detection and mitigation.** The corpus holds the principle ([mas-benchmarking-best-practices.md § 3.1](mas-benchmarking-best-practices.md): dynamic benchmarks and a private test subset); this adds sources. [A survey of benchmark data contamination][contam-survey] (Xu et al., 2024-06-06) reviews the problem; its abstract emphasises mitigation and alternative evaluation rather than detection methods, so it is not cited here for any detection technique. Methods below are read at their arXiv abstract pages (2026-11-18); all are paper-reported results, none independently reproduced here, and none of the abstracts states a limit.
 
 - **Time-based avoidance:** [LiveCodeBench][lcb] (2024) avoids rather than detects contamination; see [mas-benchmarking-best-practices.md § 3.1](mas-benchmarking-best-practices.md).
@@ -116,9 +113,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Safety and cyber benchmarks.** Safety and prompt-injection benchmarks stay in the **Safety & security** line above. Cyber-capability additions: [Cybench][cybench] (40 professional-level capture-the-flag tasks from 4 competitions, subtask breakdown; submitted 2024-08-15), [CyberGym][cybergym] (1,507 real vulnerabilities in 188 projects; abstract revised 2026-03-24; headline results are in [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md)), and [WMDP][wmdp] (3,668 multiple-choice questions on hazardous knowledge in biosecurity, cybersecurity and chemical security, paired with the RMU unlearning method; 2024-03-05). Vendor-reported scores: [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) covers only CyberGym (MDASH); [ai-security-governance-analysis.md](ai-security-governance-analysis.md) uses Cybench as an evaluation task. WMDP has no vendor-score coverage in the corpus.
 
-**MCP agents**: [MCPHallu][mcphallu] (PKU and others, arXiv 2611.07689; [code][mcphallu-code], Apache-2.0) — 358 tasks on 36 real Model Context Protocol (MCP) servers testing reasoning, execution and memory hallucinations; "Unreachable Goal is the hardest subtype for 12 of the 14 models". Claude Opus 4.6 scored highest (0.728; paper-reported, not in the abstract (average 0.642 across 14 models), unverified here; paper 2026-11-05), but the tasks were generated with Claude Sonnet 4.6.
-
-**Tool use & info-seeking**: [ToolLLM](https://arxiv.org/abs/2307.16789), [StableToolBench](https://github.com/THUNLP-MT/StableToolBench), [InfoDeepSeek](https://arxiv.org/abs/2505.15872).
+**Tool use & info-seeking**: [ToolLLM](https://arxiv.org/abs/2307.16789), [StableToolBench](https://github.com/THUNLP-MT/StableToolBench) (stale: 243 stars, last push 2025-04-15 (`gh api` 2026-11-22); still reused as a test bed by independent work, e.g. [MAFBench](https://arxiv.org/abs/2602.03128), 2026-02), [InfoDeepSeek](https://arxiv.org/abs/2505.15872).
 
 **Scientific**: [CORE-Bench](https://arxiv.org/abs/2409.11363) (reproducibility), [BadScientist](https://openreview.net/forum?id=7MPstNz66e) (LLM-reviewer manipulation; 67–82% acceptance via 5 strategies; paper-reported, undated here).
 
@@ -130,26 +125,11 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Multimodal/general**: [GAIA2](https://openreview.net/forum?id=9gw03JpKK4) (async environments; the earlier "~42% best pass@1" is undated and was not re-sourced).
 
-**Domain: clinical speech-to-text (vendor-run)**: [Omi Health's medical STT benchmark][omi-bench]
-scores speech-to-text accuracy and latency on medical speech, batch and realtime. It is not an agent
-or clinical-reasoning benchmark, but it is the input layer for voice-driven clinical agents and
-scribes. The page states "Omi-run evaluation. Same recordings and scorer for every model" on "1,513
-English recordings, 7.2 hours" (edition "2026-10-18.1 (extends 2026-09-26.1)"), with metrics for
-medical word error, drug-name errors and dose/unit matches. Omi's own model tops its own tables —
-batch medical WER 0.87%, "Lowest among 19 tested APIs", and 1 drug-term error in 442, ahead of Voxtral
-Small Transcribe 3 at 1.04% — and Omi sells that model as a hosted API ([home][omi-home]: "Start with 25
-free hours"), so this is a vendor scoring itself. The page doesn't say where the 1,513 recordings come
-from or whether they are released. The open scorer repo, [Omi-Health/medical-STT-eval][omi-repo] (MIT),
-uses a different, public set — 57 PriMock57 consultations, "Reference transcripts derived from PriMock57
-under CC BY 4.0" — and its own 42-model leaderboard (updated 2026-04-29) doesn't include Omi's model.
-The page's own caveat: "Scores describe the tested configurations, not clinical safety; small
-differences do not establish statistical significance." Checked 2026-10-22.
-
 **Leaderboards**: SciArena, Berkeley Function-Calling, Chatbot Arena, GAIA, [WebDev Arena][webdev-arena] (hosted on Arena.ai, "formerly LMArena" per Arena.ai's own about page; rows are mostly model-named, with some tagging a harness, e.g. "GPT-5.6 Sol (xHigh, Codex Harness)"), MiniWoB++.
 
 **Agent-readiness scoring (websites/APIs)**: a new category (two vendors when first added; a third below) — `git grep` for `ora.ai`,
 `lightsage`, and "agent readiness"/"agent experience arena" across `docs/` returns zero hits before
-this entry. [Ora][ora] (by era labs) scores how a website or MCP-server endpoint works for AI agents,
+this entry. [Ora][ora] (by era labs) scores how a website or Model Context Protocol (MCP) server endpoint works for AI agents,
 pairing a numeric score with a letter grade on its leaderboard (e.g. "96A+", "91A", "77B" — A+/A/B
 observed, no C example seen); it self-styles "The standard for agent experience" and ships a CLI
 (`npx ax audit <domain>`). Self-reported on its own [research page][ora-research], which runs off a
@@ -224,22 +204,14 @@ ask for is short:
 | Dataset | Link | Content | Size |
 |---|---|---|---|
 | PeerRead | [github](https://github.com/allenai/PeerRead) | Paper drafts + expert peer reviews + decisions (JSONL) | 14K drafts, 10K+ reviews |
-| SWIF2T | [arxiv](https://arxiv.org/abs/2405.20477) | Peer reviews citing scientific-paper weaknesses | 300 reviews |
 | BigSurvey | [pdf](https://www.ijcai.org/proceedings/2022/0591.pdf) | Survey papers + referenced abstracts | 7K surveys, 430K abstracts |
-| SciXGen | [arxiv](https://arxiv.org/abs/2110.10774) | Context-aware scientific text generation | 205K papers |
 | scientific_papers | [hf](https://huggingface.co/datasets/armanc/scientific_papers) | Long structured arXiv/PubMed papers | 300K+ |
 | FEVER | [site](https://fever.ai/dataset/fever.html) | Fact extraction & verification | 185.4K |
 | LIAR | [zip](https://www.cs.ucsb.edu/~william/data/liar_dataset.zip) | Fake-news detection | 12.8K |
-| X-Fact | [github](https://github.com/utahnlp/x-fact/) | Multilingual fact-checking | 31.1K |
 | MultiFC | [site](https://www.copenlu.com/publication/2019_emnlp_augenstein/) | Multi-domain evidence-based fact checking | 34.9K |
 | Plancraft | [arxiv](https://arxiv.org/abs/2412.21033) | Agent planning (text + multimodal) | — |
 | IDAT | [arxiv](https://arxiv.org/abs/2407.08898) | Interactive task-solving agent eval | — |
 | PDEBench | [github](https://github.com/pdebench/PDEBench) | SciML on partial differential equations | — |
-| MatSci-NLP | [arxiv](https://arxiv.org/abs/2305.08264) | Materials-science NLP eval | — |
-| StatLLM | [arxiv](https://arxiv.org/abs/2502.17657) | Statistical analysis + LLM SAS code, human scores | — |
-| Trelis Function Calling | [hf](https://huggingface.co/datasets/Trelis/function_calling_v3) | Tool-use / function-invocation | — |
-| KnowLM-Tool | [hf](https://huggingface.co/datasets/zjunlp/KnowLM-Tool) | Knowledge-grounded function invocation | — |
-| awesome-reasoning | [github](https://github.com/neurallambda/awesome-reasoning) | Curated reasoning-dataset collection | — |
 
 ## Cross-References
 
@@ -248,13 +220,35 @@ ask for is short:
 - [research-agents-landscape.md](../non-cc/knowledge-management/research-agents-landscape.md) — research/discovery agents
 - [agent-frameworks-infrastructure-landscape.md](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md) — agent frameworks & memory infrastructure
 
+## Not included
+
+Entries below fail the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (criteria: 1 usable artifact exists, 2 alive within 12 months, 3 adopted or proven). Star counts are `gh api` 2026-11-22.
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| LoopArena | Criterion 3: 156 stars (`gh api` 2026-11-22); paper from 2026-08-28; no independent users or standards body found beyond paper-summary aggregators; results are the authors' own | 2026-11-22 | [github](https://github.com/AMAP-ML/LoopArena) |
+| E-Commerce Bench | Criterion 3: 131 stars (`gh api` 2026-11-22); results, including the post-publication model rows, are run by the authors; no independent users found | 2026-11-22 | [github](https://github.com/QwenLM/E-CommerceBench) |
+| MCPHallu | Criterion 3: 5 stars (`gh api` 2026-11-22); repo README labels itself a double-blind NeurIPS 2026 submission; no independent users found | 2026-11-22 | [github](https://github.com/J1zz/mcp_hallu) |
+| LifeVal | Criterion 1: the arXiv HTML version (checked 2026-11-22) links no code or data and states no release; GitHub search by title found no repo | 2026-11-22 | [arXiv:2611.06687](https://arxiv.org/abs/2611.06687) |
+| MiniCorp | Criterion 1: the project site's GitHub link (`github.com/agents-minicorp/minicorp`) returned 404 on 2026-11-22 and the site says the demo is "coming soon"; no downloadable artifact | 2026-11-22 | [arXiv:2610.05912](https://arxiv.org/abs/2610.05912) |
+| Omi medical STT benchmark | Criterion 3: vendor-run, the vendor's own model tops its own tables (the measured result is a self-score); scorer repo 54 stars (`gh api` 2026-11-22); no independent users found | 2026-11-22 | [site](https://omi.health/benchmark) |
+| awesome-reasoning | Criteria 2 and 3: last push 2024-08-04, 143 stars (`gh api` 2026-11-22); a link list, not a dataset | 2026-11-22 | [github](https://github.com/neurallambda/awesome-reasoning) |
+| SqueezeBench | Criterion 3: 10 stars (`gh api` 2026-11-22), 6 weeks after the 2026-10-09 paper; the records are mostly the authors' own baseline runs and the paper says the runs "were not a controlled comparison"; no independent users found | 2026-11-22 | [arXiv:2610.13461](https://arxiv.org/abs/2610.13461) |
+| CLEAR | Criterion 1: the arXiv HTML version (checked 2026-11-22) links no code or data and says only that the author "aim[s] to release" the task suite and evaluation code; GitHub search found no repo; the expert study (N=15) is the author's own | 2026-11-22 | [arXiv:2511.14136](https://arxiv.org/abs/2511.14136) |
+| AgentQuest | Criteria 2 and 3: 31 stars, last push 2025-04-03 (`gh api` 2026-11-22); NAACL 2024 demo paper; no independent paper reporting results on it found | 2026-11-22 | [github](https://github.com/nec-research/agentquest) |
+| X-Fact | Criteria 2 and 3: 31 stars, last push 2024-10-04 (`gh api` 2026-11-22); ACL 2021 dataset, no independent paper reporting results on it found | 2026-11-22 | [github](https://github.com/utahnlp/x-fact/) |
+| Yupp.ai | Criterion 2: the service shut down on 2026-03-31 ([TechCrunch](https://techcrunch.com/2026/03/31/yupp-ai-shuts-down-raising-33m-from-a16z-cryptos-chris-dixon/)) | 2026-11-22 | [site](https://yupp.ai/) |
+| SWIF2T | Criterion 3: Findings of ACL 2024; authors' repo 9 stars, last push 2024-07-16 (`gh api` 2026-11-22); no independent users found; the paper links no test-set release | 2026-11-22 | [arXiv:2405.20477](https://arxiv.org/abs/2405.20477) |
+| SciXGen | Criteria 2 and 3: EMNLP 2021 Findings; repo 13 stars, last push 2022-02-14 (`gh api` 2026-11-22); no follow-up work using it found | 2026-11-22 | [arXiv:2110.10774](https://arxiv.org/abs/2110.10774) |
+| StatLLM | Criterion 3: arXiv preprint only, repo 7 stars (`gh api` 2026-11-22); no independent users found | 2026-11-22 | [arXiv:2502.17657](https://arxiv.org/abs/2502.17657) |
+| MatSci-NLP | Criterion 3: ACL 2023; repo `BangLab-UdeM-Mila/NLP4MatSci-ACL23` 19 stars, last push 2023-11-21 (`gh api` 2026-11-22); no independent results on it found | 2026-11-22 | [arXiv:2305.08264](https://arxiv.org/abs/2305.08264) |
+| Trelis Function Calling | Criterion 3: the vendor's own dataset behind its own fine-tuned models; full v3 is gated and sold; 232 downloads, last modified 2024-03-06 (Hugging Face API, 2026-11-22); no independent use found | 2026-11-22 | [hf](https://huggingface.co/datasets/Trelis/function_calling_v3) |
+| KnowLM-Tool | Criterion 3: 18 downloads, last modified 2023-07-29 (Hugging Face API, 2026-11-22); no independent use found | 2026-11-22 | [hf](https://huggingface.co/datasets/zjunlp/KnowLM-Tool) |
+
 ## Sources
 
 Each framework, benchmark, and dataset links to its first-party page (repo / Hugging Face / arXiv) inline in the tables above. Agent-readiness-scoring sources (checked 2026-10-15; DevTool Arena and Lightsage re-checked 2026-10-22; Cloudflare checked 2026-11-14):
 
-[omi-bench]: https://omi.health/benchmark
-[omi-home]: https://omi.health/
-[omi-repo]: https://github.com/Omi-Health/medical-STT-eval
 [ora]: https://ora.ai
 [cf-agent-ready]: https://blog.cloudflare.com/agent-readiness/
 [ark]: https://github.com/qte77/agent-readiness-kit
@@ -302,15 +296,12 @@ EDD-methodology sources:
 [mods-claudedev]: ../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md#the-other-built-in-mods-and-a-sample-set
 [tb-maintenance]: https://arxiv.org/abs/2611.08417
 [tb21]: https://github.com/harbor-framework/terminal-bench-2-1
-[mcphallu]: https://arxiv.org/abs/2611.07689
-[mcphallu-code]: https://github.com/J1zz/mcp_hallu
 [osworld-paper]: https://arxiv.org/abs/2404.07972
 [osworld-site]: http://osworld-v1.xlang.ai/
 [osworld2]: https://arxiv.org/abs/2606.29537
 [exlabel]: https://arxiv.org/abs/2610.39417
 [trace]: https://arxiv.org/abs/2610.11678
 [agent-systems]: https://arxiv.org/abs/2610.01618
-[squeeze]: https://arxiv.org/abs/2610.13461
 [abc]: https://arxiv.org/abs/2507.02825
 [contam-survey]: https://arxiv.org/abs/2406.04244
 [lcb]: https://arxiv.org/abs/2403.07974
