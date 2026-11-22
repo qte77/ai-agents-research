@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-11-19
+updated: 2026-11-22
 validated_links: 2026-11-09
 status: reference
 ---
@@ -122,7 +122,7 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 |------|---------|-------------|----------------|
 | [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) | MIT | No | Pythonic HTML/XML parse-tree navigation over lxml/html5lib |
 | [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup) | MIT | No | Requests + BeautifulSoup with auto cookie/form handling |
-| [Requests-HTML](https://github.com/psf/requests-html) | MIT | Yes (pyppeteer) | HTML parsing + JS rendering; unmaintained since 2019 |
+| [Requests-HTML](https://github.com/psf/requests-html) | MIT | Yes (pyppeteer) | HTML parsing + JS rendering; stale but widely adopted: last release v0.10.0 2019-02-18, last push 2024-04-16 (`gh api` 2026-11-22) |
 
 ## AI/LLM-Native Scrapers
 
@@ -179,8 +179,6 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 | [legislation.gov.uk API](https://www.legislation.gov.uk/developer) | UK legislation | Free | Official REST API; XML/HTML; bypasses PDF download issues |
 | [Lex API](https://lex.lab.i.ai.gov.uk/) | UK legislation | Free | AI-oriented API with semantic search + MCP server |
 | [eurlex (R)](https://michalovadek.github.io/eurlex/) | EUR-Lex | MIT | SPARQL + REST wrapper; bulk download all EU languages |
-| [scrapelex (Python)](https://github.com/bocchilorenzo/scrapelex) | EUR-Lex | OSS | BeautifulSoup-based bulk downloader |
-| [paperscraper](https://github.com/jannisborn/paperscraper) | arXiv, PubMed | Apache-2.0 | Full-text download via DOI |
 | [arXiv Bulk Access](https://info.arxiv.org/help/bulk_data.html) | arXiv | Free | Official S3/GCS bulk access to source + metadata |
 | [USPTO Open Data](https://developer.uspto.gov/) | US patents | Free | Bulk data, PatentsView API, full-text search |
 | [EPO Open Patent Services](https://www.epo.org/en/searching-for-patents/data/web-services/ops) | EU patents | Free (fair use) | REST API; bibliographic, legal, full-text data |
@@ -195,7 +193,6 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 Distinct from the source-specific APIs above: general-purpose OCR/VLM tools that turn arbitrary PDFs and images into LLM-ready text — a document-ingestion front-end for RAG and knowledge bases.
 
 - [olmOCR (AllenAI)](https://github.com/allenai/olmocr) — GPU OCR pipeline converting PDF/PNG/JPEG → Markdown or Dolma JSON via a fine-tuned Qwen2.5-VL 7B model; handles equations, tables, handwriting, multi-column layout and reading-order recovery (<$200 / 1M pages, Apache-2.0). Install `pip install olmocr` (remote inference) or `pip install olmocr[gpu] --extra-index-url https://download.pytorch.org/whl/cu128` for local vLLM (Docker image `alleninstituteforai/olmocr:latest-with-model`). Run `olmocr <workspace> --pdfs … --markdown` — default model `allenai/olmOCR-2-7B-1025-FP8`; point at a remote endpoint with `--server`/`--api_key`, or read/write S3 via `--workspace_profile`/`--pdf_profile` (no env vars; the full ~25-flag reference is in the [repo README](https://github.com/allenai/olmocr)).
-- [Docling Graph (docling-project, IBM-sponsored)](https://github.com/docling-project/docling-graph) — extends [Docling](https://github.com/docling-project/docling) with a knowledge-graph layer: converts PDFs, images and Office files into typed Pydantic objects, then a directed graph (NetworkX, stable node IDs) exportable to CSV or Cypher for a graph database. Extraction schemas are Pydantic models that double as graph structure — auto-generated from example documents (`docling-graph template from-docs`: an LLM proposes classes/relationships, a deterministic renderer writes the code) or compiled directly from an existing Web Ontology Language (OWL)/RDFS/Simple Knowledge Organization System (SKOS) ontology with no LLM involved (`docling-graph template from-ontology`). MIT license, 901★ (verified 2026-09-24), part of the LF AI & Data ecosystem.
 
 | Platform | License/Pricing | Differentiator |
 |----------|----------------|----------------|
@@ -301,6 +298,16 @@ Need LLM-ready output?
   ├─ Managed? → Firecrawl
   └─ Lightweight? → Jina Reader
 ```
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| scrapelex (Python) | 2 stars; last push 2024-03-08; no releases (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/bocchilorenzo/scrapelex> |
+| paperscraper | 547 stars (`gh api` 2026-11-22), about 2,300 PyPI downloads in the last month (pypistats 2026-11-22); no named independent users or measured benefit in its README | 2026-11-22 | <https://github.com/jannisborn/paperscraper> |
+| Docling Graph | 949 stars (`gh api` 2026-11-22); the Docling docs site does not present it (checked 2026-11-22), so it does not inherit Docling's adoption; no named independent users or measured benefit | 2026-11-22 | <https://github.com/docling-project/docling-graph> |
 
 ## Sources
 
