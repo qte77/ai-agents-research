@@ -115,7 +115,7 @@ Facts compiled from each tool's first-party page (1p-verified 2026-06-16). No th
 | [zuplo.com/ai-gateway](https://zuplo.com/ai-gateway) | Zuplo pricing, CC integration docs |
 | [github.com/lm-sys/RouteLLM](https://github.com/lm-sys/RouteLLM) | RouteLLM paper/OSS router |
 
-Cross-ref: [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md) — OpenRouter and LiteLLM appear there as Claude Code integration targets, and the hosted CC-integrated gateways here (Portkey, Martian, Vercel AI Gateway, Zuplo) are back-ported there, alongside RelayPlane (no longer catalogued here, see Not included) with their Claude Code `ANTHROPIC_BASE_URL` config. This landscape stays the authoritative catalog (license/pricing/breadth); the CC doc holds only the CC-specific setup.
+Cross-ref: [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md) — OpenRouter and LiteLLM appear there as Claude Code integration targets, and the hosted CC-integrated gateways here (Portkey, Martian, Vercel AI Gateway, Zuplo) are back-ported there with their Claude Code `ANTHROPIC_BASE_URL` config. This landscape stays the authoritative catalog (license/pricing/breadth); the CC doc holds only the CC-specific setup.
 
 [litellm-portal]: https://docs.litellm.ai/blog/customer-portal
 [litellm-agent-eval]: https://docs.litellm.ai/blog/agent-evaluations

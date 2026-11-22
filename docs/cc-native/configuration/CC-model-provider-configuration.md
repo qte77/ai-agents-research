@@ -358,7 +358,7 @@ export ANTHROPIC_AUTH_TOKEN=<requesty-api-key>
 
 #### Hosted CC-Integrated Gateways (Portkey · Martian · Vercel · Zuplo)
 
-Five more hosted gateways document explicit Claude Code support — set `ANTHROPIC_BASE_URL` (plus the gateway's auth token) and CC routes through them. To avoid duplicating the catalog, provider breadth, licensing, and pricing for these (and ~30 more routers/gateways) live in [llm-routers-gateways-landscape.md](../../non-cc/infrastructure/llm-routers-gateways-landscape.md); the **CC-specific config** is below (each verified against the gateway's own CC docs, 2026-06-22):
+Four more hosted gateways document explicit Claude Code support — set `ANTHROPIC_BASE_URL` (plus the gateway's auth token) and CC routes through them. To avoid duplicating the catalog, provider breadth, licensing, and pricing for these (and ~30 more routers/gateways) live in [llm-routers-gateways-landscape.md](../../non-cc/infrastructure/llm-routers-gateways-landscape.md); the **CC-specific config** is below (each verified against the gateway's own CC docs, 2026-06-22):
 
 | Gateway | CC config | First-party CC doc |
 |---|---|---|
@@ -367,7 +367,7 @@ Five more hosted gateways document explicit Claude Code support — set `ANTHROP
 | **Vercel AI Gateway** | `ANTHROPIC_BASE_URL=https://ai-gateway.vercel.sh` — Anthropic Messages API, zero token markup, BYOK option | [vercel.com/docs][vercel-gw] |
 | **Zuplo AI Gateway** | `ANTHROPIC_BASE_URL=<your-app-gateway-url>` + `ANTHROPIC_AUTH_TOKEN=<app-key>` — per-app URL after provider/team/app setup; serves Anthropic `/v1/messages` | [zuplo.com/docs][zuplo-cc] |
 
-All five satisfy the [Gateway Requirements](#gateway-requirements) below (Anthropic `/v1/messages` + forwarded `anthropic-beta` / `anthropic-version` headers).
+All four satisfy the [Gateway Requirements](#gateway-requirements) below (Anthropic `/v1/messages` + forwarded `anthropic-beta` / `anthropic-version` headers).
 
 #### Direct CC-Compatible Endpoints
 
