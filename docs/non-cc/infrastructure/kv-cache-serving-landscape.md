@@ -67,7 +67,9 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
 - **FP8 KV cache** ([vLLM][vllm-fp8] · [TensorRT-LLM][trtllm-quant]) — 8-bit K/V, hardware-native on
   Hopper/Ada+. **Shipped** production knob. NVFP4 KV emerging on Blackwell.
 - **KIVI** ([arXiv 2402.02750][kivi]), **KVQuant** ([arXiv 2401.18079][kvquant]) — tuning-free 2-bit /
-  outlier-aware low-bit for long context. **Research** (not mainline defaults).
+  outlier-aware low-bit for long context. **Research** (not mainline defaults). KVQuant is cited as a
+  research concept, not an option to deploy: its [reference repo][kvquant-repo] was last pushed 2024-08-13
+  (`gh api`, 2026-11-22).
 - **UltraQuant / Ultra-TurboQuant** ([arXiv 2606.20474][ultraquant], AMD) — 4-bit K/V for context-heavy
   agentic serving; Ultra-TQ = optimized rotation+codebook (TurboQuant-derived), UltraQuant = hardware-
   native FP4 via AMD CDNA4 scaled-MFMA. Vs. vLLM's FP8 KV baseline on AMD MI355X: P50 TTFT 3.47x faster
@@ -81,7 +83,9 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
 - **H2O** ([2306.14048][h2o]) heavy-hitter eviction · **StreamingLLM / attention sinks**
   ([2309.17453][streamingllm]) — the sinks idea influenced production sliding-window configs ·
   **SnapKV** ([2404.14469][snapkv]) prompt-side compression · **Scissorhands** ([2305.17118][scissorhands]).
-  No major stack ships eviction-based compression as a default path as of mid-2026.
+  No major stack ships eviction-based compression as a default path as of mid-2026. H2O is cited as
+  a research concept, not an option to deploy: its [reference repo][h2o-repo] was last pushed
+  2024-08-01 (`gh api`, 2026-11-22).
 
 ### Architectural (small-by-construction)
 
@@ -133,8 +137,8 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
 | [PagedAttention][paged] · [vLLM APC][vllm-apc] | Paged memory + prefix caching |
 | [kvcached][kvcached-repo] · [site][kvcached-site] | OS-style virtual-memory KV manager for elastic multi-LLM GPU sharing |
 | [SGLang / RadixAttention][sglang] · [docs][radix] | Radix-tree prefix reuse + HiCache |
-| [FP8 KV (vLLM)][vllm-fp8] · [TensorRT-LLM][trtllm-quant] · [KIVI][kivi] · [KVQuant][kvquant] · [UltraQuant][ultraquant] | Quantization |
-| [H2O][h2o] · [StreamingLLM][streamingllm] · [SnapKV][snapkv] · [Scissorhands][scissorhands] | Eviction/sparsity |
+| [FP8 KV (vLLM)][vllm-fp8] · [TensorRT-LLM][trtllm-quant] · [KIVI][kivi] · [KVQuant][kvquant] ([repo][kvquant-repo], last push 2024-08) · [UltraQuant][ultraquant] | Quantization |
+| [H2O][h2o] ([repo][h2o-repo], last push 2024-08) · [StreamingLLM][streamingllm] · [SnapKV][snapkv] · [Scissorhands][scissorhands] | Eviction/sparsity |
 | [MQA][mqa] · [GQA][gqa] · [MLA][mla] · [CLA][cla] | Architectural KV reduction |
 | [DistServe][distserve] · [Mooncake][mooncake] · [LMCache][lmcache] | Offload / disaggregation |
 | [Execution-State Capsules][capsules] · [FlashRT][flashrt] | Checkpoint/restore, physical-AI/robotics serving |
@@ -154,7 +158,9 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
 [trtllm-quant]: https://nvidia.github.io/TensorRT-LLM/
 [kivi]: https://arxiv.org/abs/2402.02750
 [kvquant]: https://arxiv.org/abs/2401.18079
+[kvquant-repo]: https://github.com/SqueezeAILab/KVQuant
 [h2o]: https://arxiv.org/abs/2306.14048
+[h2o-repo]: https://github.com/FMInference/H2O
 [streamingllm]: https://arxiv.org/abs/2309.17453
 [snapkv]: https://arxiv.org/abs/2404.14469
 [scissorhands]: https://arxiv.org/abs/2305.17118

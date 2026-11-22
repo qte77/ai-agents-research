@@ -2,7 +2,7 @@
 title: "Multi-Agent System Design Principles"
 purpose: Core design principles for multi-agent systems synthesized from 12-Factor Agents, Anthropic Effective Harnesses, and PydanticAI.
 created: 2026-02-09
-updated: 2026-06-27
+updated: 2026-11-22
 validated_links: 2026-06-27
 status: adopt
 ---
@@ -11,8 +11,8 @@ Synthesized from
 [12-Factor Agents][12fa-blog] (Dex Horthy / [HumanLayer][humanlayer], 2025-04-03; accessed 2026-06-19),
 [Anthropic Effective Harnesses][ant-harness],
 and [PydanticAI][pydantic-ai].
-HumanLayer is the org behind the spec and ships a human-in-the-loop approval-gate SDK
-that implements factor #7 directly. Factor numbering follows the canonical post — they
+HumanLayer is the org behind the spec and shipped a human-in-the-loop approval-gate SDK
+that implements factor #7 directly (no PyPI release since 2025-06; see [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md)). Factor numbering follows the canonical post — they
 have been renumbered across releases, so the access date matters.
 GitHub mirror: [github.com/humanlayer/12-factor-agents][12fa-gh].
 
@@ -66,7 +66,7 @@ mode + cloud sessions provide the launch/pause/resume surface.
 Request human input and approval via structured tool definitions, not special
 tokens or out-of-band syntax. Human contact is just another tool call with a
 well-typed schema. CC: permission prompts expose this pattern natively;
-HumanLayer's approval-gate SDK implements it as a first-class service.
+HumanLayer's approval-gate SDK implemented it as a first-class service (no PyPI release since 2025-06).
 
 ### #8: Own Your Control Flow
 
@@ -159,7 +159,7 @@ For security-specific checks, see the
 
 - [12-Factor Agents — canonical post][12fa-blog] (Dex Horthy / HumanLayer, 2025-04-03; accessed 2026-06-19)
 - [12-Factor Agents — GitHub mirror][12fa-gh]
-- [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK (implements factor #7)
+- [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK (implements factor #7; no PyPI release since 2025-06)
 - [Anthropic: Effective Harnesses][ant-harness]
 - [PydanticAI][pydantic-ai]
 - [12-Factor App][12fa-app] (Heroku, 2011) — original methodology
