@@ -3,7 +3,7 @@ title: Apache Maka (Incubating) — Local-First Agent Workspace
 purpose: Assess Apache Maka's event-sourced, local-first agent runtime and its Apache Incubator status
 source: https://github.com/apache/maka
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-22
 validated_links: 2026-09-24
 status: trial
 ---
@@ -22,10 +22,10 @@ without ever leaving the log. Session data, settings, and run records stay on
 the user's machine by default; the user supplies their own model (a cloud
 API, a local model, or a compatible gateway).
 
-The project also ships a benchmarking mode: Maka is evaluated against other
-agent harnesses on the same model with an official verifier, and per-task
-results ship in [`docs/eval/`][eval] with every report — "measured, not
-claimed" is the project's own framing.
+The project also ships an evaluation runner: [`products/eval/`][eval] is a containerized
+Harbor evaluation runner against the native host (README, checked 2026-11-22). Our
+2026-09-24 reading recorded per-task results against other agent harnesses under
+`docs/eval/`; that folder is no longer in the repository (checked 2026-11-22).
 
 ## Incubation Status
 
@@ -59,4 +59,4 @@ agents — rather than a local execution log that *is* the runtime record.
 | GitHub API repo metadata, 2026-09-24 | Stars(5,645)/forks(529)/open issues(504), license, dates |
 
 [repo]: https://github.com/apache/maka
-[eval]: https://github.com/apache/maka/tree/main/docs/eval
+[eval]: https://github.com/apache/maka/tree/main/products/eval
