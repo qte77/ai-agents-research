@@ -18,7 +18,7 @@ Multiple community projects have reimplemented or deconstructed Claude Code's ar
 | [ultraworkers/claw-code][claw] | Rust 93% / Python 7% | Cleanroom | 194K | MIT | LOW |
 | [Kuberwastaken/claude-code][claurst] (CLAURST) | Rust | Spec-derived | 9.8K | GPL-3.0 | MEDIUM |
 | [shareAI-lab/learn-claude-code][learn] | Python / TypeScript | Educational | 66.7K | MIT | LOW |
-| [Twigpine/openclaude][openclaude] (formerly Gitlawb) | TypeScript 99.7% | Leak-derived | 34K | Custom notice (not MIT) | MEDIUM |
+| [Twigpine/openclaude][openclaude] (formerly Gitlawb) | TypeScript 99.7% | Leak-derived | 34K | NOTICE: Anthropic-proprietary derived code; contributors' changes MIT where permissible | MEDIUM |
 | [coder/claudecode.nvim][nvim] | Lua | Cleanroom | 2.8K | MIT | LOW |
 | [agentforce314/clawcodex][clawcodex] | Python 100% | Cleanroom | 609 | MIT | LOW |
 | [razakiau/claude-code][zack] (formerly zackautocracy) | TypeScript | Leak-derived (snapshot) | 1.0K | — | **HIGH** |
@@ -92,7 +92,7 @@ Comprehensive educational project teaching "harness engineering" — building in
 
 ## Twigpine/openclaude
 
-**Repo**: [Twigpine/openclaude][openclaude] (formerly `Gitlawb/openclaude`; old URL redirects) | **Stars**: 34K | **License**: custom NOTICE, not MIT (GitHub reports no SPDX match) | **Version**: v0.37.0 (2026-11-17) | **Approach**: Leak-derived
+**Repo**: [Twigpine/openclaude][openclaude] (formerly `Gitlawb/openclaude`; old URL redirects) | **Stars**: 34K | **License**: not plain MIT: its LICENSE file is a NOTICE saying the code is derived from Anthropic's proprietary Claude Code and that contributors' changes are MIT "where legally permissible" (GitHub reports no SPDX match; read 2026-11-22) | **Version**: v0.37.0 (2026-11-17) | **Approach**: Leak-derived
 
 Open-source multi-provider CLI derived from the March 2026 Claude Code source exposure. Strips telemetry and adds provider-agnostic functionality.
 

@@ -529,7 +529,7 @@ For the Python-library landscape behind web crawling and source connectors (poly
 [cc-common-workflows]: https://code.claude.com/docs/en/common-workflows#work-with-images
 [cc-system-prompts]: https://github.com/Piebald-AI/claude-code-system-prompts
 [webfetch-pdf-issue]: https://github.com/anthropics/claude-code/issues/23694
-[openclaude-gh]: https://github.com/Gitlawb/openclaude
+[openclaude-gh]: https://github.com/Twigpine/openclaude
 [cc-tools-reference]: https://code.claude.com/docs/en/tools-reference
 [websearch-api-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool
 [cc-tools-inventory]: ../configuration/CC-tools-inventory.md
