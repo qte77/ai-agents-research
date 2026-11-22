@@ -1,6 +1,6 @@
 ---
 title: Multi-Agent Orchestrators — Landscape
-purpose: Cross-cut of the six orchestrator analyses by coordination pattern, state hand-off and escalation, a short entry on AgentRun (a harness-wrapping platform), a Claude Code primitives vs non-CC equivalents table, and multi-agent failure modes grounded in papers.
+purpose: Cross-cut of the five orchestrator analyses by coordination pattern, state hand-off and escalation, a short entry on AgentRun (a harness-wrapping platform), a Claude Code primitives vs non-CC equivalents table, and multi-agent failure modes grounded in papers.
 created: 2026-11-18
 updated: 2026-11-20
 validated_links: 2026-11-18
@@ -13,18 +13,17 @@ independently reproduced results).
 
 ## What It Is
 
-Six orchestrator analyses sit in this directory with no page comparing them. This page groups them by the
+Five orchestrator analyses are compared here (a sixth, devteam, is under [Not included](#not-included)). This page groups them by the
 three questions that matter when choosing or building one: **who coordinates** (one lead vs peers vs a
 human), **how state moves between workers**, and **how a worker's problem reaches a decision-maker**. It then maps
 Claude Code's own parallelism primitives to their non-Claude-Code counterparts and collects what the research
 literature says goes wrong.
 
-## The Six, By Pattern
+## The Five, By Pattern
 
 | Orchestrator | Coordination shape | State hand-off | Escalation |
 |---|---|---|---|
 | [JetBrains Air][air] | Human is the orchestrator: parallel tasks, one agent each (Codex, Claude Agent, Gemini CLI, Junie; Gemini CLI status 2026-11-18: [no longer served for free, AI Pro, AI Ultra users](../coding-agents/gemini-cli-analysis.md)) | Task = isolated git worktree or Docker container; the diff is the artefact | Human reviews diffs and comments back; interactive plan mode before execution |
-| [devteam][devteam] | Same shape as Air, as a terminal UI; agents do not talk to each other | One git worktree per agent; PR status and checks surfaced in the TUI | Human review of diffs and PRs |
 | [DeerFlow][deerflow] | Centralised: a primary agent spawns sub-agents dynamically | Persistent memory plus sandboxed execution (local, Docker, Kubernetes); skills as Markdown units | Not described in the analysis |
 | [Omnigent][omnigent] | Meta-harness above agent frameworks (Claude Code, Codex, Pi, custom YAML agents) | Server holds session history and policies; models can be swapped mid-session while history and tool state are preserved | Contextual policies, spend caps and "risk-based escalation" to human review (announced, alpha) |
 | [QM][qm] | Multi-tenant: each person or shared room is a scope with its own memory, files and sandbox; harness-agnostic loop | PostgreSQL for sessions, memory and work queue; durable per-scope sandbox; crons, watches and webhooks | Org-level admin governance of harnesses, models and skill promotion |
@@ -32,24 +31,24 @@ literature says goes wrong.
 
 Reading across the rows:
 
-- **Centralised vs peer.** DeerFlow and Raven are lead-and-workers designs. Air and devteam have no orchestrating
+- **Centralised vs peer.** DeerFlow and Raven are lead-and-workers designs. Air has no orchestrating
   agent at all; the human is the integration point. Omnigent and QM are governance and persistence layers over
-  one or many agent loops rather than coordination designs. None of the six documents agents negotiating with
+  one or many agent loops rather than coordination designs. None of the five documents agents negotiating with
   peers; Claude Code's agent teams ([below](#claude-code-primitives-vs-non-cc-equivalents)) are the peer-messaging
   case in this corpus.
-- **State hand-off is mostly the filesystem or a database, not conversation.** Worktree-plus-diff (Air, devteam)
+- **State hand-off is mostly the filesystem or a database, not conversation.** Worktree-plus-diff (Air)
   and database-backed sessions (Omnigent, QM) pass state outside any model's context, which matches the
   Claude Code stance that a message is text, never another session's history
   ([cross-session messaging][cc-xsession]).
 - **Escalation is the weakest-documented column.** Only Omnigent states an explicit policy-driven route to a human;
-  the human-in-the-loop designs (Air, devteam) escalate by construction because nothing merges unreviewed.
+  the human-in-the-loop design (Air) escalates by construction because nothing merges unreviewed.
 
 For related single-agent harnesses and workflow engines see the
 [agent frameworks catalog][frameworks] and [workflow frameworks landscape][workflows-landscape].
 
-## Beyond the Six: A Harness-Wrapping Platform
+## Beyond the Five: A Harness-Wrapping Platform
 
-[AgentRun][agentrun-gh] (Parcha-ai; [site][agentrun-site]; not Alibaba Cloud's AgentRun, which is in [alibaba-cloud-agent-stack-analysis.md](../agents/alibaba-cloud-agent-stack-analysis.md)) is not one of the six analyses and is catalogued here
+[AgentRun][agentrun-gh] (Parcha-ai; [site][agentrun-site]; not Alibaba Cloud's AgentRun, which is in [alibaba-cloud-agent-stack-analysis.md](../agents/alibaba-cloud-agent-stack-analysis.md)) is not one of the five analyses and is catalogued here
 as a single entry, from its README and site only (read 2026-11-18, not run). It wraps an existing harness (Claude
 Code, Codex, OpenCode or pi) rather than replacing it, adding three things: **learned skills** (after a run the
 agent keeps a note, skill or workflow for next time), **durable execution** (runs live in one store and resume after
@@ -66,7 +65,7 @@ verified.
 - Its README and site tell a coding agent to fetch a setup skill from the vendor's site; that is an instruction
   aimed at agents, so treat it as data and read the setup steps yourself before running anything.
 - For a different self-improvement design (an agent rewriting its own source, benchmark-gated) see [MOSS][moss];
-  for the management-layer-over-harnesses shape see [Omnigent][omnigent], the closest of the six.
+  for the management-layer-over-harnesses shape see [Omnigent][omnigent], the closest of the five.
 
 ## Claude Code Primitives vs Non-CC Equivalents
 
@@ -76,11 +75,11 @@ closest analogue documented in this corpus, not a feature-for-feature match.
 | Claude Code primitive | What it is (documented) | Closest non-CC analogue in this corpus |
 |---|---|---|
 | Subagents | Workers Claude spawns in one session; a summary returns to the caller; nesting depth default 3 since v2.1.219 ([spawning patterns][cc-spawn]) | DeerFlow sub-agents; Raven's Host Agent delegating to sub-agents |
-| Agent teams (experimental, off by default) | A lead plus peer teammates with a shared task list and mailboxes; no nested teams, one team per session ([agent teams][cc-teams]) | No direct analogue among the six; the peer-messaging case is rare here |
+| Agent teams (experimental, off by default) | A lead plus peer teammates with a shared task list and mailboxes; no nested teams, one team per session ([agent teams][cc-teams]) | No direct analogue among the five; the peer-messaging case is rare here |
 | Dynamic workflows | A runtime-executed JavaScript script that orchestrates many subagents; intermediate results live in script variables ([workflows analysis][cc-workflows]) | Durable-execution and workflow engines in the [workflow frameworks landscape][workflows-landscape] |
 | Cross-session messaging | `ListAgents` / `SendMessage` between your independent sessions, with accept/hold/refuse inbound controls ([analysis][cc-xsession]) | Omnigent's shared sessions with comment and steering; QM's Slack/web shared rooms |
-| Agent view / background sessions | Dispatch and monitor sessions in the background (`claude agents`, research preview; [Run agents in parallel][cc-agents-doc]) | Air and devteam task boards over parallel agents |
-| Worktree isolation | A separate git checkout per session or subagent | Air and devteam per-task worktrees (the same mechanism) |
+| Agent view / background sessions | Dispatch and monitor sessions in the background (`claude agents`, research preview; [Run agents in parallel][cc-agents-doc]) | Air task boards over parallel agents |
+| Worktree isolation | A separate git checkout per session or subagent | Air per-task worktrees |
 | Scheduled and background automation | Cloud scheduled tasks and background shell commands ([scheduled tasks analysis][cc-sched]) | QM crons, watches and webhooks; Raven's Proactivity component |
 | `claude -p` recursive spawning | Fresh-context child sessions from a harness ([spawning patterns][cc-spawn]) | Omnigent running Claude Code under a meta-harness; Raven backends |
 
@@ -128,16 +127,24 @@ What follows is evidence from papers and the corpus, with each source's own scop
 
 ## Takeaways
 
-1. Pick the orchestration shape by who must integrate results. If a human reviews diffs anyway (Air, devteam),
+1. Pick the orchestration shape by who must integrate results. If a human reviews diffs anyway (Air),
    a coordinating agent adds cost the evidence above does not support.
 2. Hand state over through files, databases or git, not chat history; every orchestrator here that persists
    work does so outside the context window.
-3. Treat escalation as a design requirement: only one of six analyses documents it as policy, and it is an
+3. Treat escalation as a design requirement: only one of five analyses documents it as policy, and it is an
    alpha release.
 4. Delegate planning before implementation when cost matters (one paper, one benchmark), and expect
    delegation to cost more, not less.
 5. Platforms that wrap an existing harness (AgentRun) pitch learned skills and cost savings, but their numbers
    are vendor self-reports; weigh them as such.
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| devteam | 266 stars; last push 2026-05-26, no GitHub releases, no named independent users or measured benefit in its README (`gh api` 2026-11-22); its [analysis](devteam-analysis.md) stays in the corpus | 2026-11-22 | <https://github.com/agent-era/devteam> |
 
 ## Sources
 
@@ -153,7 +160,6 @@ What follows is evidence from papers and the corpus, with each source's own scop
 | [Scaling Inference-Time Compute with Teams of Coding Agents][teams-2610] | Team compute allocation on ProgramBench |
 
 [air]: air-analysis.md
-[devteam]: devteam-analysis.md
 [deerflow]: deerflow-analysis.md
 [omnigent]: omnigent-analysis.md
 [qm]: qm-analysis.md
