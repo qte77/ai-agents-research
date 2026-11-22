@@ -51,7 +51,7 @@ winning "all six model × benchmark combinations," +8.8–24.2pp over the one-sh
 ## NVlabs Skill2Env
 
 **Repo**: [NVlabs/Skill2Env][skill2env] — Apache-2.0 (project-owned source; third-party material in
-`SkillHub/` keeps its own upstream licenses), pushed 2026-09-21. Tagline: "Democratizing Collective
+`SkillHub/` keeps its own upstream licenses), last push 2026-11-14 (checked 2026-11-22). Tagline: "Democratizing Collective
 Intelligence." Turns any [Agent Skill][agentskills-org] into RL-ready terminal tasks in the
 [Harbor][harbor] framework: a planner/creator pipeline (Codex agents in Docker containers) generates
 task instructions, a containerized environment, deterministic tests (`test.sh` + a grading `rubric.md`),
@@ -103,9 +103,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| WikiSkill | Criterion 1: paper only, no code link on the abstract page (arXiv:2608.27454); results self-reported | 2026-11-22 | <https://arxiv.org/abs/2608.27454> |
-| AutoTailor | Criterion 1: paper only, no code link on the abstract page (arXiv:2609.13548); single-benchmark self-reported results | 2026-11-22 | <https://arxiv.org/abs/2609.13548> |
-| Skill++ | Criterion 1: paper only, no code link on the abstract page (arXiv:2611.00544); self-reported results | 2026-11-22 | <https://arxiv.org/abs/2611.00544> |
+| WikiSkill ("Compiling Agent Experience into Persistent Knowledge for Skill Evolution") | Criterion 1: paper only, no code link on the abstract page (arXiv:2608.27454); results self-reported | 2026-11-22 | <https://arxiv.org/abs/2608.27454> |
+| AutoTailor ("Automatic, User-Aligned Capability Selection and Adaptation for Web Agents") | Criterion 1: paper only, no code link on the abstract page (arXiv:2609.13548); single-benchmark self-reported results | 2026-11-22 | <https://arxiv.org/abs/2609.13548> |
+| Skill++ ("Towards Lifelong Agents via Routing-Aware Skill Refinement") | Criterion 1: paper only, no code link on the abstract page (arXiv:2611.00544); self-reported results | 2026-11-22 | <https://arxiv.org/abs/2611.00544> |
 
 ## Sources
 
