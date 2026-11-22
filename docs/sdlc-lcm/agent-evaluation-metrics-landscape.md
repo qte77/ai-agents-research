@@ -233,6 +233,17 @@ which this section does not repeat.
   **API scope** (checked 2026-11-12): the [data API docs](https://artificialanalysis.ai/data-api/docs) document model-level endpoints and none for agents, so the Coding Agent Index above is available on the website only. Separately, the docs mark the model-level `artificial_analysis_coding_index` and `artificial_analysis_agentic_index` fields as always null — "Artificial Analysis no longer publishes a Coding Index or an Agentic Index" — those are older model-level sub-indexes, not the agent-level Coding Agent Index.
   **Terms-of-use note**: Artificial Analysis's [Terms of Use](https://artificialanalysis.ai/terms-of-use) limit the site to "personal, noncommercial use" (§2.1), bar copying/reproducing/republishing site content (§2.2(d): "no part of the Site may be copied, reproduced, distributed, republished, downloaded") and bar automated scraping or data mining (§3.3(b), the second item labelled (vi): "to generate automated searches, requests, or queries to (or to strip, scrape, or mine data from) the Site"). This corpus accordingly describes the index's methodology narratively, by link, and does not scrape, reproduce, or cite its scores, costs, or rankings.
 
+#### Code Erosion and Verbosity (SlopCodeBench)
+
+- **Definition**: Quality metrics for code an agent keeps extending across successive spec changes, reported next to correctness. A **checkpoint** is one stage of a problem: the agent gets that stage's spec and its own earlier workspace, and the test suite stays hidden. *Strict* pass means every test passes, regression tests from earlier checkpoints included; *isolated* pass counts only that checkpoint's non-regression tests
+- **Use Case**: Catch agents that pass checkpoints while the code degrades turn by turn, which single-shot benchmarks do not show
+- **Calculation**: *Erosion* weights each function by cyclomatic complexity times the square root of its source lines of code (SLOC), then takes the share of that weight held by functions with cyclomatic complexity above 10. *Verbosity* is the share of lines flagged by 137 AST-grep rules or by clone detection (AST = abstract syntax tree)
+- **Strengths**: Measures degradation over a trajectory, not a single snapshot; compares agent code against human-written repositories
+- **Limitations**: Python track only; CC and clone detection are proxies for maintainability; the paper's authors call the repo an open evaluation primitive, not a finalized benchmark
+- **Reference**: [SlopCodeBench][slopcodebench] (Orlanski et al., arXiv 2603.24755, v1 2026-03-25, v2 2026-05-07; code: [SprocketLab/slop-code-bench][slopcodebench-repo], MIT, 324 stars, last push 2026-11-19, latest release v0.3 2026-04-21, all checked 2026-11-22; problems also published as a Harbor dataset per the repo README)
+- **Headline results** (paper v2, self-reported, not re-run here): 36 problems, 196 checkpoints, 15 agents. No agent solves a whole problem end-to-end, and the best strict pass rate is 14.8% of checkpoints. Erosion rises in 77% of trajectories and verbosity in 75.5%. Against 473 open-source Python repositories, agent code scores about 2.3x higher on verbosity (0.44 vs 0.19) and 2.0x on erosion (0.68 vs 0.34). Anti-slop prompting lowers initial erosion and verbosity but not the rate of degradation, and raises cost per checkpoint by about 12%
+- **Application**: Add erosion and verbosity next to pass rate when evaluating coding agents on multi-turn or evolving-spec work
+
 ### Multi-Agent Coordination Metrics
 
 *See also: [Graph Analysis & Network Tools](evaluation-data-resources-landscape.md) and [Agent Frameworks](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md)*
@@ -565,6 +576,7 @@ Metric definitions are sourced from the research papers and tool docs cited inli
 | [Trial by Trace][tracetrial] / [Doc2Harness][doc2harness] / [Strong Harness][legal-xml] | Harness-reliability benchmark, harness-building benchmark, single-domain controlled ablation (abstract pages, read 2026-11-18) |
 | [Infrastructure noise][infra-noise] / [HAL][hal] | Container-resource effect on agentic coding scores; standardized evaluation harness and log review (read 2026-11-18) |
 | [Tulu 3][tulu3] / [RLVR-World][rlvr-world] / [RLVR exploration][rlvr-explore] / [Modal (vendor)][modal-rlvr] | RLVR named and defined; two training papers that apply it; a vendor's list of open models for code-execution rewards |
+| [SlopCodeBench][slopcodebench] / [repo][slopcodebench-repo] | Checkpoint-based benchmark of code erosion and verbosity under iterative spec changes; paper v2 and repo metadata read 2026-11-22 |
 | [Safe Personal RSI][safe-rsi] | Update-regression gate for a self-editing personal agent; self-reported rejection and repair results |
 
 [trulens]: https://github.com/truera/trulens
@@ -596,3 +608,5 @@ Metric definitions are sourced from the research papers and tool docs cited inli
 [promptlottery]: https://arxiv.org/abs/2610.38076
 [tracedetect]: https://arxiv.org/abs/2610.30491
 [cachedtraces]: https://arxiv.org/abs/2611.06803
+[slopcodebench]: https://arxiv.org/abs/2603.24755
+[slopcodebench-repo]: https://github.com/SprocketLab/slop-code-bench

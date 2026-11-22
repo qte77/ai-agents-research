@@ -187,6 +187,7 @@ Moved here from the cc-community tooling landscape on 2026-11-19 (owner decision
   description, not a verified architecture change — no release-notes diff was done to confirm
   what, if anything, changed under that label.
 - [DSPy (Stanford)](https://github.com/stanfordnlp/dspy) — "programming, not prompting": modules + optimizers auto-tune prompts/weights; v3.1 (Jan 2026), Agenspy adds MCP/A2A.
+- [GEPA (gepa-ai)][gepa-repo] — reflective, Pareto-based optimizer for text parameters (prompts, code, configs) of an LLM system against a metric. An LLM reads full execution traces and feedback text to diagnose failures and propose edits; candidates that win on at least one validation instance form a Pareto frontier from which the next one is mutated. Paper: [arXiv:2507.19457][gepa-paper] (ICLR 2026 Oral per its arXiv page), which reports, on six tasks, +6% on average (up to +20%) over GRPO with up to 35x fewer rollouts and >10% over MIPROv2 (+12% on AIME-2025) — authors' own results (vendor claim, arXiv v2 page read 2026-11-22, not independently reproduced here). Relation to DSPy: [`dspy.GEPA`][gepa-dspy] is a DSPy optimizer that depends on the separate `gepa` package (installed by default on Python below 3.15, per dspy.ai); the paper lists Omar Khattab among its authors (DSPy affiliation not checked here). MIT (LICENSE file); 7,534★, latest release `v0.1.4` (2026-07-15), last push 2026-11-21 (`gh api` 2026-11-22). Passes the pruning filter (artifact, alive, adopted). The README lists 50+ production uses and a 90x-cheaper Databricks case; both are the repo's own claims, not checked at the linked posts.
 - [Restack](https://github.com/restackio) — event-driven, durable agent backend with task queues (Apache-2.0).
 - **Routers, gateways & aggregators** now live in a dedicated catalog → [llm-routers-gateways-landscape.md](../infrastructure/llm-routers-gateways-landscape.md) (provider-agnostic tools such as OpenRouter, Withmartian/Martian, LiteLLM, Portkey, Mammouth, Requesty, Helicone, Vercel/Cloudflare AI Gateway, OpenRouter Fusion, …). CC-side routing config: [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md).
 - [Intent-Router (angel291592)](https://github.com/angel291592/Intent-Router) — an **intent compiler**, not a router itself: a Claude Code/Codex/OpenCode/Cursor skill (`npx skills add angel291592/Intent-Router`; no install, API key, or dependency) that converges a vague request into a typed `IntentSpec` — probing what the repo, ticket system, or docs already answer, asking only the one question no file can resolve, and halting on a contradiction, a dual reading, or an unproven premise — before handing off to "your planner / agent / workflow / human." Its own framing: [Jev](../infrastructure/jev-analysis.md) and Laya (System-1 decision models — see [system-1-decision-models-landscape.md](../reference/system-1-decision-models-landscape.md)) "turn an *already-clear* input into a typed, calibrated decision"; Intent-Router is the **upstream layer** that produces that clear input to begin with. Every run writes a cross-session artifact, `.intent/<intent>.intent.yaml`, carrying evidence pointers per resolved field and its own state (waiting on a question / settled / already checked); a later session reads that file before probing anything, and the check of delivered work against the spec is written back into the same file. Self-reported evals (same-author replay, not independently verified): an N=5-bare vs. N=3-with-skill delivery comparison (2026-09-24) where every skill-assisted run asked exactly the one question that mattered and all 3 stated a failure policy, vs. none of the 5 bare runs; a separate 10-case suite held 8/10 with "0 hallucinated evidence" the day before (2026-09-23). MIT (LICENSE-confirmed, `gh api` 2026-09-30); 411★/47 forks, v1.2.0 (2026-09-27).
@@ -598,6 +599,14 @@ ACM entry (§1) — checked 2026-10-02 (plan 0010, row L3):
 | [arXiv:2608.11166][acm-paper] | Abstract, design principles, scope limits (distributed deployment delegated to frameworks, skills given no distinct treatment) |
 | [`audreyqvial/ACM`][acm-repo] | LICENSE file content (read directly), repo metadata (`gh api`, 2026-10-02) |
 
+GEPA entry (§2) — first-party checked 2026-11-22 (plan 0015, row N9):
+
+| Source | Content |
+|---|---|
+| [gepa-ai/gepa][gepa-repo] | README (method, install, key-results claims), LICENSE file (MIT), stars, release, last push (`gh api` 2026-11-22) |
+| [arXiv:2507.19457][gepa-paper] | Abstract page: title, authors, ICLR 2026 Oral note, method summary, headline numbers vs GRPO and MIPROv2 |
+| [DSPy GEPA docs][gepa-dspy] | Optimizer description, Pareto-frontier selection, dependency on the `gepa` package |
+
 Haystack refresh (§2) — first-party checked 2026-10-06 (plan 0011, row E1):
 
 | Source | Content |
@@ -723,3 +732,6 @@ RAG and retrieval refresh (§7) — first-party pages read 2026-11-21:
 [pgvector-readme]: https://github.com/pgvector/pgvector#hybrid-search
 [grepmem-paper]: https://arxiv.org/abs/2611.25123
 [grepmem-repo]: https://github.com/limenlp/GrepMem
+[gepa-repo]: https://github.com/gepa-ai/gepa
+[gepa-paper]: https://arxiv.org/abs/2507.19457
+[gepa-dspy]: https://dspy.ai/current/api/optimizers/GEPA/overview/
