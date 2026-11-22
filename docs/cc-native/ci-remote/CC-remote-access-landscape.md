@@ -3,7 +3,7 @@ title: CC Remote Access Landscape
 source: https://www.omnara.com
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
-updated: 2026-10-23
+updated: 2026-11-22
 validated_links: 2026-10-06
 status: research
 ---
@@ -19,7 +19,7 @@ monitoring and steering from phone/web without being desk-bound.
 
 | Aspect | CC Remote Control | Happy Coder | Omnara | CloudCLI | Emdash | DIY (tmux + Tailscale) |
 | ------ | ----------------- | ----------- | ------ | -------- | ------ | ---------------------- |
-| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (~12.4k–12.8k stars) | Multi-agent orchestrator | Self-hosted infrastructure |
+| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (~14.7k stars) | Multi-agent orchestrator | Self-hosted infrastructure |
 | **Execution** | Local machine | Local machine | Local + cloud failover | Cloud VMs | Local (git worktrees) | Local machine |
 | **Mobile app** | Claude iOS/Android | iOS, Android, Web | Dedicated iOS app | Browser-based | Web dashboard | Terminal app (Termius, Blink) |
 | **Voice input** | No | Yes | Yes (two-way) | No | No | No |
@@ -30,7 +30,7 @@ monitoring and steering from phone/web without being desk-bound.
 | **Pricing** | Free (with CC sub) | Free | Free tier + $9/mo Pro (unlimited) | Free (infra costs) | Free (open source) | Free (infra costs) |
 | **Setup** | `claude remote-control` | `npm i -g happy-coder` | `curl install + omnara` | Docker/cloud setup | npm install | tmux + Tailscale/WireGuard |
 | **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | 25+ agents (provider-agnostic) | Any terminal tool |
-| **Open source** | No (native) | Yes (MIT) | No (archived OSS) | Yes | Yes | N/A |
+| **Open source** | No (native) | Yes (MIT) | Yes (Apache-2.0; repo now the managed-agent platform) | Yes | Yes | N/A |
 | **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Zero external dependency |
 
 ## Detailed Notes
@@ -50,9 +50,9 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 *Markets itself as a "command center for AI agents" — see the [agent control-surface naming landscape](../../non-cc/protocols/ag-ui-protocol-landscape.md#agent-control-surface-naming-2026) for how that framing compares across the category.*
 
 - **YC S25 startup** (San Francisco, 3-person team) ([source][omnara-yc])
-- **Pivoted**: Original open-source CLI wrapper (`omnara-ai/omnara`,
-  Apache-2.0) is **archived and unmaintained** as of late 2025. New
-  version built on Claude Agent SDK as a standalone platform
+- **Pivoted**: the `omnara-ai/omnara` repo (Apache-2.0, not archived,
+  last push 2026-11-21 per `gh api`) now describes itself as an open-source,
+  self-hostable managed agent platform rather than the original CLI wrapper
   ([source][omnara-gh])
 - **Key differentiator**: Cloud sandbox failover — if laptop goes
   offline, session continues in hosted sandbox. Code state preserved
@@ -75,7 +75,7 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 
 ### CloudCLI
 
-- **Open source** (~12.4k–12.8k GitHub stars for the underlying
+- **Open source** (~14.7k GitHub stars as of 2026-11-22 for the underlying
   siteboon/claudecodeui repo), cloud or self-hosted dev environments
   ([source][cloudcli-gh])
 - **Multi-tool**: Works with five coding agents — Claude Code, Cursor CLI,
@@ -126,16 +126,6 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
   mobile ("terminal on a phone screen is nobody's idea of a good time"
   ([source][zilliz]))
 - **Already possible**: No new tooling needed if tmux is available
-- **Productized packaging — Tailnet Preview**: [elsheppo/tailnet-preview][tailnet-preview] (MIT,
-  confirmed against `LICENSE`; 1★, created and pushed 2026-09-23, no tagged release; `gh api`,
-  2026-10-06) packages this Tailscale pattern for *web preview* rather than terminal access: it
-  gives a local dev server (bound to `127.0.0.1`) a stable link over Tailscale Serve — not
-  Funnel — viewable from another device the tailnet already trusts, with saved routes and
-  viewport sizes, similar in spirit to Omnara's "Localhost previews" above but self-hosted. It
-  ships as an agent skill: its README states "the default installer location makes the included
-  agent skill available to Codex" (installing to `$CODEX_HOME/skills/tailnet-preview`); Claude
-  Code is never named in the README. Narrower than, and not a replacement for, the DIY row above —
-  a packaged complement for the web-preview use case, tied to Codex specifically
 
 ## Workflow Fit by Use Case
 
@@ -186,13 +176,21 @@ Tools that complement any remote access method ([source][zilliz]):
 
 | Tool | Purpose | Setup | Notes |
 | ---- | ------- | ----- | ----- |
-| **Typeless** | Voice-to-text for prompts | Mobile app | ~4x faster than phone typing; replaces keyboard for prompt input |
 | **memsearch** | Persistent searchable recall across sessions/devices | CC plugin (hooks + skill, no MCP) | Markdown store + Milvus hybrid vector+BM25 search; full entry in [CC-memory-tooling-landscape.md](../../cc-community/CC-memory-tooling-landscape.md#memsearch-zilliztech) |
-| **cc-tmux-worktree-orchestration** | Parallel CC instances via git worktrees | CC plugin | `/tmux-worktree-split login signup dashboard` runs 3 agents simultaneously |
 
 ## See Also
 
 - [CC-web-auth-setup-analysis.md](CC-web-auth-setup-analysis.md) — authentication methods for web, terminal, and headless modes
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Tailnet Preview | 1 star; last push 2026-09-23; no named independent users or standards body (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/elsheppo/tailnet-preview> |
+| cc-tmux-worktree-orchestration | 2 stars; last push 2026-01-29; no other adoption evidence (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/zc277584121/cc-tmux-worktree-orchestration> |
+| Typeless | Voice-dictation app; adoption evidence is vendor-published testimonials only (typeless.com, fetched 2026-11-22); "~4x faster" is an uncited blog claim | 2026-11-22 | <https://www.typeless.com> |
 
 ## References
 
@@ -201,14 +199,13 @@ Tools that complement any remote access method ([source][zilliz]):
 - [Happy Coder GitHub][happy-gh] — MIT-licensed source
 - [Happy Coder (HN launch)][happy-hn] — community discussion
 - [Omnara][omnara] — YC S25, cloud sandbox failover
-- [Omnara GitHub (archived)][omnara-gh] — original open-source version
+- [Omnara GitHub][omnara-gh] — open-source repo (Apache-2.0)
 - [Emdash][emdash] — multi-agent parallel orchestration
 - [CloudCLI][cloudcli] — open-source cloud dev environments
 - [CloudCLI GitHub (siteboon/claudecodeui)][cloudcli-gh] — underlying open-source repo
 - [Omnara pricing][omnara-pricing] — current pricing tiers
 - [CC Cloud Sessions docs][cc-cloud] — Anthropic cloud execution
 - [Zilliz mobile CC guide][zilliz] — comparison + supporting tools
-- [Tailnet Preview][tailnet-preview] — MIT, README/LICENSE read 2026-10-06; Codex agent-skill tie-in
 
 [cc-rc]: https://code.claude.com/docs/en/remote-control
 [happy]: https://happy.engineering
@@ -224,6 +221,5 @@ Tools that complement any remote access method ([source][zilliz]):
 [cloudcli]: https://cloudcli.ai
 [cloudcli-gh]: https://github.com/siteboon/claudecodeui
 [omnara-pricing]: https://www.omnara.com/pricing
-[tailnet-preview]: https://github.com/elsheppo/tailnet-preview
 [cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web
 [zilliz]: https://zilliz.com/blog/3-easiest-ways-to-use-claude-code-on-your-mobile-phone
