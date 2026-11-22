@@ -135,17 +135,17 @@ permission prompts and `PermissionRequest` hooks: CC's hooks handle automated al
 logic, while an approval gate adds a structured human-in-the-loop layer for cases where
 automated approval rules are insufficient.
 
-**Status as of 2026-11-22 (shipped, first-party)**: the approval-gate SDK is dormant. The PyPI package
+**Status as of 2026-11-22 (first-party sources)**: the approval-gate SDK has had no release since 2025-06. The PyPI package
 `humanlayer` was last uploaded 2025-06-03 (0.7.9), and the current [repo][humanlayer-gh] no longer
 holds an SDK: its README describes a product that runs coding agents (Claude Code, Codex, OpenCode, Pi)
 on your machines and lets a team steer them from a desktop app, a web app and a per-host daemon
-(Apache-2.0 per the LICENSE file; 12.9k stars; last push 2026-11-16; download via the
+(Apache-2.0 per the LICENSE file; 12.9k stars; last push 2026-11-22; download via the
 [site][humanlayer] and release notes, 0.202.0 dated 2026-11-14, rather than GitHub releases, which hold
-only nightly pre-releases). The podcast-era name "CodeLayer" is not used on the current README or site;
+only nightly pre-releases). The earlier name "CodeLayer" (used in 2025 [ai-that-works](https://github.com/ai-that-works/ai-that-works) episodes) is not used on the current README or site;
 `codelayer` survives as an internal agent module in the daemon source. The tool passes the
 [pruning filter](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter)
-(usable artifact, alive, about 1,000+ stars), so it is a valid option for team-level orchestration of
-coding agents, not an approval-gate library. Practitioner context: [Ralph enhancement research](CC-ralph-enhancement-research.md),
+(usable artifact, alive, 12.9k stars). Treat it as a candidate for team-level orchestration of
+coding agents, not as an approval-gate library. Practitioner context: [Ralph enhancement research](CC-ralph-enhancement-research.md),
 [extended context analysis](../context-memory/CC-extended-context-analysis.md).
 
 ## Author
