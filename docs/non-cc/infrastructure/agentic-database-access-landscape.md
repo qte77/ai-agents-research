@@ -48,15 +48,13 @@ compare only within one setting. BIRD's dev and test tops are different entries,
 test score (74.34%) is far below its dev score, which is a reminder that dev numbers are not
 comparable to test numbers.
 
-Recent training work, both arXiv abstracts read 2026-11-18 (paper claims, not independently
+Recent training work, arXiv abstract read 2026-11-18 (paper claims, not independently
 reproduced):
 
 - **[BIRD-RL][bird-rl]** (arXiv 2610.29426, NeurIPS 2026 main track per the page) trains agents on
   stateful database tasks such as SQL debugging, using database replicas with per-trajectory
   isolation. Its 7B and 14B models reach 44.40% and 48.00% on BIRD-CRITIC-SQLite versus 48.20% the
   authors report for a Claude-Opus-4.6 agent.
-- **[DualSQL][dualsql]** (arXiv 2609.18135) jointly trains schema-linking and SQL-generation agents;
-  the authors report 68.0% (4B) and 71.1% (8B) execution accuracy on the BIRD dev set.
 
 Takeaway: scores are high on curated benchmarks, but a score says nothing about blast radius;
 that is the write-safety question below. Why raw text-to-SQL still needs a governed layer is argued
@@ -136,6 +134,14 @@ database MCP server above emits lineage events was not checked.
 - Toolbox's mechanism for restricting writes (README silent; docs not read).
 - Any vendor statement from Supabase on the demo, or from Replit beyond what The Register reports (only a 2026-11-18 web search was run).
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| DualSQL | Criterion 1: no code, weights or repo link on the arXiv abstract or HTML pages, and a GitHub repository search for the name returned nothing (2026-11-22); self-reported 68.0% (4B) / 71.1% (8B) BIRD dev execution accuracy | 2026-11-22 | <https://arxiv.org/abs/2609.18135> |
+
 ## Sources
 
 | Source | Content |
@@ -148,7 +154,7 @@ database MCP server above emits lineage events was not checked.
 | [SQL MCP Server (Microsoft Learn)][dab-mcp] | Entity/RBAC tool surface, no NL2SQL, no DDL |
 | [Postgres MCP Pro][postgres-mcp-pro] | Community Postgres server |
 | [BIRD][bird] · [Spider 2.0][spider2] | Text-to-SQL leaderboards |
-| [BIRD-RL (arXiv 2610.29426)][bird-rl] · [DualSQL (arXiv 2609.18135)][dualsql] | Training results for SQL agents |
+| [BIRD-RL (arXiv 2610.29426)][bird-rl] | Training results for SQL agents |
 | [Datadog Security Labs][datadog-pg] | Read-only bypass in the reference Postgres MCP server |
 | [General Analysis][ga-supabase] · [Willison][willison-supabase] | Supabase MCP injection demo and framing |
 | [The Register][register-replit] | Replit production database incident reporting |
@@ -166,7 +172,6 @@ database MCP server above emits lineage events was not checked.
 [bird]: https://bird-bench.github.io/
 [spider2]: https://spider2-sql.github.io/
 [bird-rl]: https://arxiv.org/abs/2610.29426
-[dualsql]: https://arxiv.org/abs/2609.18135
 [datadog-pg]: https://securitylabs.datadoghq.com/articles/mcp-vulnerability-case-study-SQL-injection-in-the-postgresql-mcp-server/
 [ga-supabase]: https://generalanalysis.com/blog/supabase-mcp-blog
 [willison-supabase]: https://simonwillison.net/2025/Jul/6/supabase-mcp-lethal-trifecta/
