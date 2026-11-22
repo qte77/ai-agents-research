@@ -2,7 +2,7 @@
 title: KV-Cache Serving Landscape — Vendor Prompt Caching & Inference Internals
 purpose: Survey of KV (key-value) cache mechanisms in LLM serving — vendor prompt-caching APIs (Anthropic/OpenAI/Gemini) and open serving-stack internals (paging, prefix reuse, quantization, eviction, architectural sharing, offload/disaggregation).
 created: 2026-07-08
-updated: 2026-09-24
+updated: 2026-11-22
 validated_links: 2026-09-24
 status: reference
 ---
@@ -49,7 +49,7 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
   virtual-memory idea one level up from PagedAttention: decouples GPU *virtual* addressing from
   *physical* KV allocation so vLLM (≥v0.8.4) and SGLang (≥v0.4.9) can elastically share one GPU across
   multiple LLM instances with no engine-code changes, plus a frontend router and per-model sleep mode.
-  **Shipped** — v0.1.5 (2026-04-07), 1,484 stars, and listed under the README's own "Trusted and
+  **Shipped** — v0.1.5 (2026-04-07), 2,054 stars (`gh api` 2026-11-22), and listed under the README's own "Trusted and
   deployed by" logos (Google, LinkedIn, Intel, AMD, Red Hat, and others; accessed 2026-09-24). Vendor-
   reported benchmark: **2–28x TTFT reduction** serving three Llama-3.1-8B instances on one A100-80G
   under intermittent-peak load, vs. static per-model memory reservation.
@@ -73,7 +73,8 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
   native FP4 via AMD CDNA4 scaled-MFMA. Vs. vLLM's FP8 KV baseline on AMD MI355X: P50 TTFT 3.47x faster
   in cache-pressured late rounds (2.3x averaged), 1.63x output throughput — though FP8 stays ahead
   (0.86x) in early "warm" rounds, so the gain is concentrated in the long-context/high-concurrency
-  regime. **Research** prototype; no public code repo found as of 2026-07-23.
+  regime. **Research**; the paper (HTML version, appendix A.2, read 2026-11-22) says the Ultra-TQ decode
+  kernel was upstreamed into vLLM mainline and the UltraQuant FP4 kernel is planned as a follow-up release.
 
 ### Eviction / sparsity (mostly research)
 
@@ -109,7 +110,7 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
   N1.6-N1.7/Pi0-FAST) plus LLM serving (Qwen3.6-27B). TTFT speedup over cold prefill scales 3.9x (2k
   tokens) to 27x (16k tokens); sub-millisecond GPU-resident snapshot/restore. Positioned as
   complementary to, not competing with, mainstream high-throughput KV-cache serving. **Research/early**
-  — repo ~3 months old, 448 stars.
+  — repo ~3 months old, 821 stars (`gh api` 2026-11-22).
 
 ## Current state of the art (2026)
 
