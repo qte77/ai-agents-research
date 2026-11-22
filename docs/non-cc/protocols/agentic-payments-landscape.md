@@ -114,7 +114,8 @@ feature is live). The page doesn't mention ACP.
 - **Visa Trusted Agent Protocol (TAP)**, [introduced 2025-10-14][visa-tap] and "available today in the
   Visa Developer Center and GitHub", is identity rather than payment: it uses "cryptographic standards
   (RFC9421)" ([overview][visa-tap-dev]) so merchants can tell legitimate agents from bots, with a sample
-  implementation at [visa/trusted-agent-protocol][visa-tap-repo]. It belongs next to Web Bot Auth in
+  implementation at [visa/trusted-agent-protocol][visa-tap-repo] (last commit 2025-10-28, `gh api` 2026-11-22;
+  the protocol itself is kept on Visa's live developer docs). It belongs next to Web Bot Auth in
   [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md).
 - **Mastercard Agent Pay**: Mastercard's [merchant developer guide][mc-guide] says "Card issuers cannot
   identify the transaction as agentic without an Agentic Token" and "For Mastercard Agent Pay
