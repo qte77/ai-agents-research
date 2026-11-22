@@ -413,7 +413,6 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Limitations**: Requires trace path definition
 - **Reference**: [OpenTelemetry Specification](https://opentelemetry.io/docs/specs/)
 - **Landscape Reference**: [AgentNeo - Observability Platform](../non-cc/protocols/agent-observability-methods-analysis.md)
-- **Landscape Reference**: [Tracely](https://github.com/jwuthri-cloud/Tracely-ai) (MIT, 1,156★ on 2026-10-23; republished under `jwuthri-cloud` on 2026-10-11 — the original `Jwuthri/Tracely-ai` returns 404) — trace-native CI/CD for agents: production traces are auto-clustered into failures, frozen into hermetic regression cases with recorded fixtures, and replayed in CI at $0 to block the PR, without hand-authored eval datasets
 
 #### Error Recovery Rate
 
@@ -547,6 +546,14 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 ## Additional Resources
 
 [Framework implementations and practical guidance on using these metrics](evaluation-data-resources-landscape.md)
+
+## Not included
+
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Tracely | Criterion 3: 848 stars (`gh api` 2026-11-22), repo created 2026-10-11, no GitHub releases; README names no independent users and gives no measured benefit | 2026-11-22 | <https://github.com/jwuthri-cloud/Tracely-ai> |
 
 ## Sources
 
