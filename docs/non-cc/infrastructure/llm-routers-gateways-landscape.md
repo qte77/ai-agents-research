@@ -3,7 +3,7 @@ title: LLM Routers & Gateways Landscape
 source: https://openrouter.ai/
 purpose: Provider-agnostic model routers, hosted aggregators, self-hostable gateways, and model-fusion/ensemble routing tools — a reference catalog verified 2026-06-16.
 created: 2026-06-16
-updated: 2026-11-18
+updated: 2026-11-22
 validated_links: 2026-11-18
 status: reference
 ---
@@ -70,7 +70,7 @@ A survey of provider-agnostic LLM routers, API gateways, and model aggregators �
 
 ## When to Use What
 
-**Need maximum model breadth with a single API key?** OpenRouter (400+ models, CC-native via `ANTHROPIC_BASE_URL`) or LiteLLM (100+ providers, self-hosted, MIT). **Need Claude Code integration out of the box?** Requesty, Martian, Portkey, Vercel AI Gateway, Zuplo, and RelayPlane all document explicit CC `ANTHROPIC_BASE_URL` patterns. **Prioritizing performance and low overhead?** Bifrost (Go, Apache 2.0, claims 50× faster P99 than LiteLLM), AISIX (Rust, sub-ms overhead), or Arch Gateway (Rust/Envoy, intent-based routing). **Need observability and cost attribution?** Helicone (Apache 2.0, OSS, strong tracing), Kong AI Gateway (43.6 k stars, MCP + A2A governance), or ClawRouters / Requesty for per-developer spend dashboards. **Running fully local / air-gapped?** LiteLLM, Apache APISIX, RouteLLM, Lightport, or RelayPlane (no Docker required). **Want ensemble/fusion quality beyond any single model?** OpenRouter Fusion dispatches to a judge-synthesized panel at the cost of all constituent completions.
+**Need maximum model breadth with a single API key?** OpenRouter (400+ models, CC-native via `ANTHROPIC_BASE_URL`) or LiteLLM (100+ providers, self-hosted, MIT). **Need Claude Code integration out of the box?** Requesty, Martian, Portkey, Vercel AI Gateway, Zuplo, and RelayPlane all document explicit CC `ANTHROPIC_BASE_URL` patterns. **Prioritizing performance and low overhead?** Bifrost (Go, Apache 2.0, claims 50× faster P99 than LiteLLM), AISIX (Rust, sub-ms overhead), or Arch Gateway (Rust/Envoy, intent-based routing). **Need observability and cost attribution?** Helicone (Apache 2.0, OSS, strong tracing), Kong AI Gateway (43.6 k stars, MCP + A2A governance), or ClawRouters / Requesty for per-developer spend dashboards. **Running fully local / air-gapped?** LiteLLM, Apache APISIX, RouteLLM, Lightport, or RelayPlane (no Docker required). **Want ensemble/fusion quality beyond any single model?** OpenRouter Fusion dispatches to a judge-synthesized panel at the cost of all constituent completions. **Which coding harness accepts a custom base URL?** See [Model access and billing](../coding-agents/coding-agents-comparison-landscape.md#model-access-and-billing), which compares 15 harnesses from their own docs.
 
 ---
 
