@@ -3,7 +3,7 @@ title: CC Community Reimplementations Landscape
 purpose: Survey of community reimplementations and educational deconstructions of Claude Code — cleanroom rebuilds, spec-derived ports, educational courses, and leak-derived alternatives.
 status: research
 created: 2026-04-04
-updated: 2026-10-26
+updated: 2026-11-22
 validated_links: 2026-10-26
 ---
 
@@ -18,11 +18,10 @@ Multiple community projects have reimplemented or deconstructed Claude Code's ar
 | [ultraworkers/claw-code][claw] | Rust 93% / Python 7% | Cleanroom | 194K | MIT | LOW |
 | [Kuberwastaken/claude-code][claurst] (CLAURST) | Rust | Spec-derived | 9.8K | GPL-3.0 | MEDIUM |
 | [shareAI-lab/learn-claude-code][learn] | Python / TypeScript | Educational | 66.7K | MIT | LOW |
-| [Gitlawb/openclaude][openclaude] | TypeScript 99.7% | Leak-derived | 29K | MIT | MEDIUM |
+| [Twigpine/openclaude][openclaude] (formerly Gitlawb) | TypeScript 99.7% | Leak-derived | 34K | NOTICE: Anthropic-proprietary derived code; contributors' changes MIT where permissible | MEDIUM |
 | [coder/claudecode.nvim][nvim] | Lua | Cleanroom | 2.8K | MIT | LOW |
-| [agentforce314/clawcodex][clawcodex] | Python 100% | Cleanroom | 609 | MIT | LOW |
-| zackautocracy/claude-code *(account removed/404)* | TypeScript | Leak-derived (snapshot) | 696 | — | **HIGH** |
-| leaked-claude-code/leaked-claude-code *(archived — repo deleted/DMCA'd)* | TypeScript | Leaked source | — | — | **HIGH** |
+| [agentforce314/clawcodex][clawcodex] | Python 100% | Cleanroom | 928 | MIT | LOW |
+| [razakiau/claude-code][zack] (formerly zackautocracy) | TypeScript | Leak-derived (snapshot) | 1.0K | — | **HIGH** |
 
 ## Provenance & Risk Classification
 
@@ -91,9 +90,9 @@ Comprehensive educational project teaching "harness engineering" — building in
 
 **Companion projects**: Kode-cli (open-source agent CLI), Kode-agent-sdk (embeddable agent library), claw0 (always-on assistant patterns).
 
-## Gitlawb/openclaude
+## Twigpine/openclaude
 
-**Repo**: [Gitlawb/openclaude][openclaude] | **Stars**: 29K | **License**: MIT | **Version**: v0.18.0 (2026-06-10) | **Approach**: Leak-derived
+**Repo**: [Twigpine/openclaude][openclaude] (formerly `Gitlawb/openclaude`; old URL redirects) | **Stars**: 34K | **License**: not plain MIT: its LICENSE file is a NOTICE saying the code is derived from Anthropic's proprietary Claude Code and that contributors' changes are MIT "where legally permissible" (GitHub reports no SPDX match; read 2026-11-22) | **Version**: v0.37.0 (2026-11-17) | **Approach**: Leak-derived
 
 Open-source multi-provider CLI derived from the March 2026 Claude Code source exposure. Strips telemetry and adds provider-agnostic functionality.
 
@@ -117,7 +116,7 @@ Cross-ref: [CC-ide-integration-protocol.md](../cc-native/configuration/CC-ide-in
 
 ## agentforce314/clawcodex (ClawCodex)
 
-**Repo**: [agentforce314/clawcodex][clawcodex] | **Stars**: 609 | **License**: MIT | **Approach**: Cleanroom
+**Repo**: [agentforce314/clawcodex][clawcodex] | **Stars**: 928 (`gh api` 2026-11-22) | **License**: MIT | **Approach**: Cleanroom
 
 Production-oriented Python rebuild of a Claude Code-style agent harness, described as "real architecture, reliable CLI agent" with new features released weekly. ~233,520 lines across 1,093 Python files (Python 3.10+), accessed 2026-06-16.
 
@@ -127,15 +126,15 @@ Production-oriented Python rebuild of a Claude Code-style agent harness, describ
 
 **Multi-LLM support**: Anthropic, OpenAI, Zhipu GLM, Minimax, OpenRouter, DeepSeek — a significant departure from the original's Claude-only model support.
 
-**SWE-bench Verified**: 58.2% resolution rate (291/499 instances using Gemini 2.5 Pro), outperforming [openclaude][openclaude] (53.0% / 265 instances) by 50 exclusive solves, as reported in the repository README (accessed 2026-06-16).
+**Benchmarks (self-reported)**: the repository README now reports Terminal-Bench 2.1 at 80.9% (72 of 89 tasks, pass@1) on Claude Opus 5, and an `/eco` mode that cut Bash-output tokens by 80% (92,989 → 17,767 across 27 replayed command outputs) (README, read 2026-11-22). The SWE-bench Verified figure the June README gave is no longer stated there.
 
 **Provenance note**: Self-described cleanroom rebuild with no stated derivation from leaked source. LOW risk for citation.
 
-**Adoption**: **Assess** — Benchmark numbers are credible and independently stated, but 609 stars and no external validation of the SWE-bench methodology warrant monitoring before deeper integration. The multi-LLM angle distinguishes it from other reimplementations in this landscape.
+**Adoption**: **Assess** — Benchmark numbers are self-reported, and 928 stars and no external validation of its benchmark methodology warrant monitoring before deeper integration. The multi-LLM angle distinguishes it from other reimplementations in this landscape.
 
 ## zackautocracy/claude-code
 
-**Repo**: zackautocracy/claude-code *(account removed/404)* | **Stars**: 696 | **Approach**: Leak-derived (snapshot)
+**Repo**: [razakiau/claude-code][zack] (formerly `zackautocracy/claude-code`; old URL redirects) | **Stars**: 1.0K | **Approach**: Leak-derived (snapshot)
 
 Read-only source snapshot from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]). Not a reimplementation — a navigable archive maintained for *"educational, defensive security research, and software supply-chain analysis"* by a university student (autocracy101).
 
@@ -144,10 +143,6 @@ Powers [ccunpacked.dev][ccunpacked] — a visual architecture explorer with inte
 **Provenance note**: Contains alleged proprietary source (~512K LOC TypeScript, ~1,906 files). Reference existence and architectural observations only; do not cite code.
 
 Cross-ref: [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscape.md) — ccunpacked.dev visual guide entry
-
-## leaked-claude-code/leaked-claude-code
-
-**Excluded from analysis** — claims to contain full proprietary TypeScript source code (~512K lines) from the March 2026 npm sourcemap exposure. Includes alleged security bypass techniques. Included in landscape table for completeness only. Do not use as a source for factual claims elsewhere in this repository.
 
 ## Cross-References
 
@@ -160,6 +155,14 @@ Cross-ref: [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscap
 - [CC-agent-teams-orchestration.md](../cc-native/agents-skills/CC-agent-teams-orchestration.md) — UDS Inbox and Coordinator Mode
 - [CC-plans-as-skill-rule-templates.md](../cc-native/agents-skills/CC-plans-as-skill-rule-templates.md) — UltraPlan section
 
+## Not included
+
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| leaked-claude-code/leaked-claude-code | Criterion 1: no usable artifact; the repo returns 404 (`gh api` 2026-11-22). Its only role here was an excluded alleged-source mirror | 2026-11-22 | — (the repo returns 404; its former URL was `github.com/leaked-claude-code/leaked-claude-code`) |
+
 ## Sources
 
 | Source | Content |
@@ -167,18 +170,18 @@ Cross-ref: [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscap
 | [instructkr/claw-code][claw] | Cleanroom Rust/Python reimplementation |
 | [Kuberwastaken/claude-code][claurst] | Spec-derived Rust reimplementation (CLAURST) |
 | [shareAI-lab/learn-claude-code][learn] | Educational harness engineering course |
-| [Gitlawb/openclaude][openclaude] | Multi-provider CLI (leak-derived) |
+| [Twigpine/openclaude][openclaude] | Multi-provider CLI (leak-derived) |
 | [coder/claudecode.nvim][nvim] | Cleanroom Neovim IDE integration (Lua, MIT) |
-| [agentforce314/clawcodex][clawcodex] | Cleanroom Python reimplementation; SWE-bench results, tool inventory, multi-LLM support |
-| leaked-claude-code/leaked-claude-code *(archived — repo deleted/DMCA'd)* | Alleged proprietary source (excluded from analysis) |
-| zackautocracy/claude-code *(account removed/404)* | Source snapshot powering ccunpacked.dev (leak-derived) |
+| [agentforce314/clawcodex][clawcodex] | Cleanroom Python reimplementation; Terminal-Bench and token-compression results, tool inventory, multi-LLM support |
+| [razakiau/claude-code][zack] | Source snapshot powering ccunpacked.dev (leak-derived) |
 
 [claw]: https://github.com/ultraworkers/claw-code
 [claurst]: https://github.com/Kuberwastaken/claurst
 [learn]: https://github.com/shareAI-lab/learn-claude-code
-[openclaude]: https://github.com/Gitlawb/openclaude
+[openclaude]: https://github.com/Twigpine/openclaude
 [nvim]: https://github.com/coder/claudecode.nvim
 [clawcodex]: https://github.com/agentforce314/clawcodex
+[zack]: https://github.com/razakiau/claude-code
 [ccunpacked]: https://ccunpacked.dev/
 [ultraplan]: https://code.claude.com/docs/en/ultraplan
 [register-leak]: https://www.theregister.com/2026/03/31/anthropic_claude_code_source_code/

@@ -12,7 +12,7 @@ Community-built skills, plugins, tooling, workflows, and patterns for Claude Cod
 | [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) | Persistent memory: ByteRover, Claude-Mem, MemPalace, MemSearch, roampal-core |
 | [CC-code-tooling-landscape.md](CC-code-tooling-landscape.md) | Code analysis: Graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP, Repomix, code2prompt |
 | [CC-usage-tooling-landscape.md](CC-usage-tooling-landscape.md) | Usage observability: CodeBurn, ccusage, Claude-Code-Usage-Monitor |
-| [CC-community-reimplementations-landscape.md](CC-community-reimplementations-landscape.md) | Reimplementations: claw-code, CLAURST (expanded), learn-claude-code, openclaude, zackautocracy/claude-code (with provenance classification) |
+| [CC-community-reimplementations-landscape.md](CC-community-reimplementations-landscape.md) | Reimplementations: claw-code, CLAURST (expanded), learn-claude-code, openclaude, the razakiau/claude-code snapshot (formerly zackautocracy; with provenance classification) |
 | [CC-reverse-engineering-landscape.md](CC-reverse-engineering-landscape.md) | RE tools: system prompts, binary analysis, env vars, API interception, ccunpacked.dev |
 | [CC-office-worker-workflows.md](CC-office-worker-workflows.md) | Office workflows: invoices, documents, email, financial reporting + multi-agent orchestrators (Vibe Kanban, Conductor, tmux tools) |
 | [CC-domain-claudemd-showcase.md](CC-domain-claudemd-showcase.md) | CLAUDE.md as domain pipeline controller (genome analysis case study) |
