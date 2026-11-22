@@ -19,11 +19,13 @@
     }
     .bar h1 { font-size: 1rem; margin-right: auto; }
     input { accent-color: var(--primary); } /* brand: no browser-default blue controls */
-    .bar input[type="search"] {
+    .bar #build-info { color: var(--text-muted); font-size: 0.75rem; }
+    #search {
+      display: block; width: 100%; box-sizing: border-box; margin-bottom: var(--unit);
       background: var(--bg); color: var(--text); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 4px 8px; font: inherit; min-width: 12rem;
+      border-radius: var(--radius-sm); padding: 4px 8px; font: inherit;
     }
-    .bar input[type="search"]::-webkit-search-cancel-button { filter: grayscale(1); } /* no blue */
+    #search::-webkit-search-cancel-button { filter: grayscale(1); } /* no blue */
     .stage { flex: 1; display: flex; min-height: 0; }
     /* min-height: 0 lets the canvas shrink with its flex parent; without it the stacked
        phone layout feeds a ResizeObserver loop (vis canvas grows its own container). */
@@ -47,17 +49,18 @@
 <body>
   <div class="bar">
     <h1><a href="index.html">ai-agents-research</a> · doc graph</h1>
-    <input id="search" type="search" placeholder="Find a doc… (Enter zooms)" aria-label="Find a doc" />
     <select id="theme" aria-label="Color theme">
       <option value="system">System</option>
       <option value="light">Light</option>
       <option value="dark">Dark</option>
     </select>
+    <span id="build-info"></span>
   </div>
   <div class="stage">
     <div id="graph" role="img" aria-label="Doc graph"></div>
     <aside id="info">
-      <p>Dots are docs, diamonds are topic hubs, lines are links between them. Click a doc to open it
+      <input id="search" type="search" placeholder="Find a doc… (Enter zooms)" aria-label="Find a doc" />
+      <p>Dots are docs, diamonds are topic hubs, the star is the hub index, lines are links between them. Click a doc to open it
         on GitHub. Built from the docs on every deploy, without an LLM.</p>
       <p class="legend" id="legend"></p>
       <p id="stats"></p>
@@ -114,6 +117,14 @@
         var base = {};
         var nodes = new vis.DataSet(data.nodes.map(function (n) {
           var hub = isHub(n);
+          if (n.id === HUB_INDEX) {
+            // The hub index lists the hubs; a hollow star keeps it apart from hubs and docs.
+            var star = { background: token("--surface"), border: token("--primary") };
+            // Reason: an object colour without highlight/hover falls back to vis-network's blue.
+            base[n.id] = { background: star.background, border: star.border, highlight: star, hover: star };
+            return { id: n.id, title: n.title + "\n" + n.id, color: base[n.id], shape: "star",
+                     size: 18, borderWidth: 3, label: "Hub index" };
+          }
           base[n.id] = hub ? token("--text") : colour[folder(n)];
           return { id: n.id, title: n.title + "\n" + n.id, color: base[n.id],
                    shape: hub ? "diamond" : "dot", size: hub ? 14 : 8,
