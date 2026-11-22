@@ -2,7 +2,7 @@
 title: Agent Substrate Reference Architecture — a Shared, Versioned, Traceable Memory and Context Layer
 purpose: Synthesis of the plan 0009 rubric rows into one store-first reference architecture for shared, versioned, traceable agent memory and context, with each cell linked to its scored row and the layers mapped to qte77 estate repos.
 created: 2026-09-30
-updated: 2026-11-21
+updated: 2026-11-22
 validated_links: 2026-09-30
 status: reference
 ---
@@ -29,7 +29,8 @@ shows the best score found and one row at that score. The linked section lists t
 1. **No LLM in the write path.** [agent-memory][memtool] ("files are the truth; every index is a
    rebuildable cache"), [AgentiCow][fw4] (copy-on-write reads), [Beads][fw4] (Dolt is commit-addressed),
    [lossless-memory][fw4] (indexes rebuild from raw logs) and [open-ontologies][ont] (Lean-checked
-   certificates, pinned Oxigraph).
+   certificates, pinned Oxigraph); [LeanRDF][leanrdf-x] has the same shape for RDF (Resource Description Framework) and RDFS (RDF Schema) entailment
+   (an untrusted Elpi search, a small checker proven sound in Lean).
 2. **LLM output recorded, then replayed.** [OrcaReplay][orca] ("Reproduce the run byte-for-byte with no
    model called").
 3. **Model pinned by checksum or ID.** [Laya][laya] (checkpoints pinnable by revision and SHA-256, though
@@ -237,6 +238,7 @@ corpus's own: shared, distributed context and skills.
 [fw7g]: ../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-family
 [fw7p]: ../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms
 [ont]: ../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#agent-native-ontology-tools-2026-mcp-wave
+[leanrdf-x]: ../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#formal-ontologies--semantic-web
 [laya]: ../non-cc/reference/system-1-decision-models-landscape.md#laya-nandhakishorm
 [kev]: ../non-cc/reference/system-1-decision-models-landscape.md#kev-jaredpalmer
 [ccmem]: ../cc-native/context-memory/CC-memory-system-analysis.md#scored-on-the-agent-substrate-rubric

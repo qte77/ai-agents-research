@@ -2,7 +2,7 @@
 title: Glossary and concept owners
 purpose: Where each recurring term and abbreviation is defined in this corpus, so a doc links its owner instead of defining it again.
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 validated_links: 2026-11-21
 status: reference
 ---
@@ -40,6 +40,9 @@ definition first; if one exists, link it, and if not, add the term here with its
 | RDF | Resource Description Framework | [semantic-layers-data-catalog-landscape.md § Formal Ontologies & Semantic Web][formal] |
 | OWL | Web Ontology Language | [same section][formal] |
 | SKOS | Simple Knowledge Organization System | [same section][formal] |
+| RDFS | RDF Schema | [same section][formal] |
+| Triple, entailment | — | [same section][formal] (triple: the RDF bullet; entailment: the LeanRDF entry) |
+| Lean, Elpi | — | [same section][formal] (the LeanRDF entry) |
 | SHACL | Shapes Constraint Language | [same section][formal] |
 | SPARQL | The W3C query language for RDF | [same section][formal] |
 | JSON-LD | The W3C JSON format for Linked Data | [same section][formal] |
