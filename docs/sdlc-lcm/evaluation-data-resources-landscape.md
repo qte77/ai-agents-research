@@ -223,7 +223,7 @@ ask for is short:
 
 ## Not included
 
-Entries below fail the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (criteria: 1 usable artifact exists, 2 alive within 12 months, 3 adopted or proven). Star counts are `gh api` 2026-11-22.
+Entries below fail the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (criteria: 1 usable artifact exists, 2 alive within 12 months, 3 adopted or proven). Star counts are `gh api` 2026-11-22.
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
