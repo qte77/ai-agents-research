@@ -3,7 +3,7 @@ title: CC Official Plugins Landscape
 source: https://www.firecrawl.dev/blog/best-claude-code-plugins
 purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this research repo, and provide adoption guidance per plugin.
 created: 2026-03-12
-updated: 2026-10-18
+updated: 2026-11-22
 validated_links: 2026-10-18
 status: reference
 ---
@@ -264,7 +264,7 @@ These plugins have full analysis elsewhere in this repo:
 - [CC Ultimate Guide][cc-ultimate] — beginner to power user guide with templates and quizzes
 - [45 CC Tips (ykdojo)][cc-tips] — custom statusline, system prompt reduction, dx plugin
 - [CC Best Practice][cc-best-practice-gh] — curated best practices collection
-- [Everything Claude Code (Context7)][everything-cc] — battle-tested configs and patterns
+- [Everything Claude Code][everything-cc] — battle-tested configs and patterns
 
 ## Not included
 
@@ -272,7 +272,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| Cuttlesoft Advanced Tips | Criterion 1 and 3: a single consultancy blog post, no code, package or product, and no standards-body, named-user or measured-benefit evidence; page returned 403 to automated fetch 2026-11-22, so liveness unconfirmed | 2026-11-22 | [Cuttlesoft blog post](https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/) |
+| Cuttlesoft Advanced Tips | Criterion 3: a single vendor blog post (per its URL and this list's own description), with no standards-body, named-user or measured-benefit evidence found; its content was not read, since the page returned 403 to automated fetches on 2026-11-22 | 2026-11-22 | [Cuttlesoft blog post](https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/) |
 
 ## References
 
