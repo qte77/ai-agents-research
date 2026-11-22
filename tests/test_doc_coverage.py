@@ -135,6 +135,19 @@ class HubCoverageTests(unittest.TestCase):
         self.assertEqual(dc.unhubbed(self.DOCS), ["docs/non-cc/agents/q-landscape.md",
                                                   "docs/sdlc-lcm/orphan-analysis.md"])
 
+    def test_hub_filing_splits_docs_without_a_hub_the_way_check_coverage_does(self):
+        # Plan 0015 N4: the doc graph's "Unfiled" must mean what check_coverage means.
+        docs = {**self.DOCS, "docs/sdlc-lcm/README.md": "# Index\n", "docs/plans/p.md": "# Plan\n"}
+        filing = dc.hub_filing(docs)
+        self.assertEqual(filing["docs/non-cc/frameworks/l-landscape.md"], "hubbed")
+        self.assertEqual(filing["docs/sdlc-lcm/z-analysis.md"], "hubbed")
+        for path in ("docs/architecture.md", "docs/non-cc/agents/p-analysis.md", "docs/sdlc-lcm/lcm-spec.md"):
+            self.assertEqual(filing[path], "exempt", path)
+        for path in ("docs/sdlc-lcm/README.md", "docs/plans/p.md", "docs/_topics/memory.md"):
+            self.assertEqual(filing[path], "not-hub-content", path)
+        self.assertEqual(sorted(p for p, f in filing.items() if f == "unfiled"), dc.unhubbed(docs))
+        self.assertEqual(set(filing), set(docs))
+
     def test_duplicate_rows_are_same_hub_doc_and_section(self):
         self.assertEqual(dc.check_hub_duplicates(self.DOCS), [
             "docs/_topics/memory.md:6: duplicate row for docs/non-cc/frameworks/l-landscape.md#4-memory "
