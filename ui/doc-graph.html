@@ -75,8 +75,15 @@
       var REPO = "https://github.com/qte77/ai-agents-research/blob/main/";
       var HUB_INDEX = "docs/_topics/README.md";
       // A doc in no hub is split the way check_coverage splits it (plan 0015 N4).
-      var FILING = [["unfiled", "Unfiled"], ["exempt", "Exempt by rule"],
-                    ["not-hub-content", "Not hub content"]];
+      // Third field: the hover text saying why a doc lands there (lib/doc_coverage.py rules).
+      var FILING = [
+        ["unfiled", "Unfiled", "Content docs in no topic hub and not exempt. make check_coverage " +
+          "counts these against its ratchet; a hub row or an owner-approved exemption removes one."],
+        ["exempt", "Exempt by rule", "In no hub by design (D6): files at the docs/ root, single-product " +
+          "profiles (non-cc coding-agents, agents, orchestrators, reference), framework analyses, " +
+          "specs and runbooks. Landscapes are never exempt."],
+        ["not-hub-content", "Not hub content", "Never expected in a hub: folder README indexes " +
+          "(including the hub index), example files, plans and research notes."]];
       // Top-level folder -> colour token; anything else (root files, plans, learnings) is muted.
       var FOLDERS = [["cc-native", "--primary"], ["non-cc", "--cat-rust"],
                      ["cc-community", "--cat-olive"], ["sdlc-lcm", "--cat-clay"],
@@ -155,8 +162,9 @@
         var checked = {};
         var boxes = [];
         var panel = document.getElementById("hubs");
-        function box(key, text, cls) {
+        function box(key, text, cls, why) {
           var label = el("label"), input = el("input");
+          if (why) { label.title = why; }
           input.type = "checkbox";
           input.checked = true;
           input.dataset.key = key;
@@ -170,7 +178,7 @@
         hubs.forEach(function (h) { checked[h.id] = true; boxes.push(box(h.id, hubLabel(h))); });
         FILING.forEach(function (f) {
           checked[f[0]] = true;
-          boxes.push(box(f[0], f[1] + " (" + (count[f[0]] || 0) + ")"));
+          boxes.push(box(f[0], f[1] + " (" + (count[f[0]] || 0) + ")", "", f[2]));
         });
 
         function visible(n) {
