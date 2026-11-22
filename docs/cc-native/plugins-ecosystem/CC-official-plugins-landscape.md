@@ -23,7 +23,7 @@ The CC plugin ecosystem has grown to 9,000+ plugins across the marketplace, Clau
 | 3 | [Code Review](#code-review) | 50k | Name-only mention | Moderate section (multi-agent scoring) |
 | 4 | Firecrawl | — | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
 | 5 | Playwright | 28.1k | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
-| 6 | [Security Guidance](#security-guidance) | 25.5k | Name-only mention | Moderate section (9 security patterns) |
+| 6 | [Security Guidance](#security-guidance) | 25.5k | Name-only mention | Full section (three review layers, hooks, switches; v2.0.21) |
 | 7 | Chrome DevTools MCP | 20k | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
 | 8 | [Figma MCP](#figma-mcp) | 18.1k | None | Brief section (design-focused, skip unless UI) |
 | 9 | [Linear](#linear) | 9.5k | None | Brief section (adopt if using Linear PM) |
@@ -104,29 +104,35 @@ mcp__context7__get-library-docs \
 
 ### Security Guidance
 
-**What it does**: Scans Claude Code's file edits for security vulnerabilities and blocks risky changes before they happen ([source][firecrawl-blog]).
+**What it does** (v2.0.21, checked at source 2026-11-22; Apache-2.0; author David Dworken, Anthropic): three review layers for code Claude writes ([README][sg-readme], [hooks.json][sg-hooks]):
 
-**Installation**: `/plugin install security-guidance@claude-plugins-official`
+1. **Pattern warnings**: regex reminders on about 25 known-dangerous patterns (for example `yaml.load`, `pickle.load` on untrusted data, raw `innerHTML`, hardcoded secrets). They run as a `PostToolUse` hook on `Edit`, `Write`, `MultiEdit` and `NotebookEdit`, so they warn after the edit lands; they don't block it. Each pattern warns once per file per session. No credentials needed.
+2. **LLM diff review on Stop**: when a turn ends, the diff since the prompt goes to a model (the newest Opus by default) and high-severity findings come back to Claude as a background (`asyncRewake`) message.
+3. **Agentic commit and push review**: after `git commit`, `git push` or Graphite's `gt create` / `gt modify`, an Agent SDK reviewer reads related files (`Read`/`Grep`/`Glob`) to trace data flow across files (IDOR, auth bypass, cross-file SSRF). Capped at 20 commit and 20 push reviews per session per rolling hour by default (`MAX_COMMIT_REVIEWS_PER_HOUR`).
 
-**How it works**:
+The README names the classes covered as common web vulnerabilities: injection, XSS, SSRF, hardcoded secrets, IDOR, auth bypass, unsafe deserialization and path traversal, among others.
 
-- Uses `PreToolUse` hook to scan edits before they're applied
-- Monitors 9 security patterns:
-  1. Command injection
-  2. XSS (cross-site scripting)
-  3. SQL injection
-  4. Unsafe input handling
-  5. Dangerous HTML generation
-  6. Hardcoded secrets
-  7. Path traversal
-  8. Insecure deserialization
-  9. SSRF (server-side request forgery)
-- Provides warnings with fix suggestions
-- Non-repetitive: warns once per pattern per session
+**Installation**: `/plugin install security-guidance@claude-plugins-official`. Needs Claude Code 2.1.144 or later and Python 3.8+ on `PATH`.
 
-**Fit assessment**: **Moderate adopt.** Relevant to all projects. Complements existing security tests (`tests/security/`) by catching issues at edit time rather than test time. The `PreToolUse` hook pattern is lightweight — no performance impact on non-edit operations.
+**Hooks on every session, not only on edits** ([hooks.json][sg-hooks], [hook source][sg-hook-src]): `SessionStart` bootstraps the Agent SDK (180 s timeout); `UserPromptSubmit` runs on every prompt and records a git baseline commit, plus a snapshot of untracked files that only the Stop review reads; `PostToolUse` matches edits and `git` commands; `Stop` starts the diff review. The baseline is taken even with the reviews off, because the `Write` pattern filter reads it; `ENABLE_STOP_REVIEW=0` or `ENABLE_CODE_SECURITY_REVIEW=0` skips the untracked snapshot.
 
-**Interaction with CC's bash layer**: Security Guidance hooks into the edit pipeline, not the bash layer. It intercepts `Write` and `Edit` tool calls, not `Bash` tool calls. For bash-level security (blocking dangerous commands), use CC's built-in permission model (`Bash(pattern:*)` syntax, see [CC-bash-mode-analysis.md](../configuration/CC-bash-mode-analysis.md)).
+**Credentials and cost**: the two LLM layers use the first credential that reaches the plugin: a cloud provider config (Bedrock, Vertex, Foundry), `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN`, the Claude Code sign-in, or a Claude apps gateway sign-in. Claude Code passes no sign-in to plugins in a session started with `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`, `DISABLE_TELEMETRY` or `DO_NOT_TRACK`; with no credentials the LLM reviews are skipped and only the pattern warnings run. Reviews cost tokens or subscription usage on top of the session; on the Anthropic API path the Stop review calls the API directly, so it doesn't show in Claude Code's own cost figures. Each review writes a `Review usage:` line with an estimated cost to `~/.claude/security/log.txt`. Cheaper models: `SECURITY_REVIEW_MODEL` (diff review) and `SG_AGENTIC_MODEL` (commit review). Diffs, related file contents and `claude-security-guidance.md` policy files go to the configured model endpoint.
+
+**Switches** (environment variables, [README][sg-readme]):
+
+| Variable | Effect |
+|---|---|
+| `SECURITY_GUIDANCE_DISABLE=1` | Turns the whole plugin off |
+| `ENABLE_PATTERN_RULES=0` | Turns off the pattern warnings |
+| `ENABLE_CODE_SECURITY_REVIEW=0` | Turns off both LLM reviews (Stop and commit/push) and the no-credentials notice |
+| `ENABLE_STOP_REVIEW=0` | Stop review only; the README suggests it for multi-agent or shared-worktree setups, where another agent can move `HEAD` between turns |
+| `ENABLE_COMMIT_REVIEW=0` | Commit/push review only |
+
+**Owner observation (2026-11-22, one Codespace, not a benchmark)**: only the pattern warnings worked. The plugin's log reported "no API credentials and no Claude apps gateway sign-in" for the LLM reviews, and the Agent SDK bootstrap had timed out. The `UserPromptSubmit` hook still ran on every prompt: 67 runs on 2026-11-22, median 0.6 s, slowest 7.8 s. Across the session transcripts, 68 runs timed out in all, most of them between 2026-11-11 and 2026-11-15 and 3 since 2026-11-16, so it is not a current hotspot. The snapshot works on a temporary copy of the git index, so lock contention with other sessions is unlikely; the cause of the earlier timeouts is not known.
+
+**Fit assessment**: **Adopt the pattern warnings; turn the LLM reviews on per repo.** Where no credentials reach the plugin, set `ENABLE_CODE_SECURITY_REVIEW=0`: the reviews can't run there, and the switch also drops the per-prompt untracked-file listing (the per-prompt baseline of tracked files still runs). Where several agents share a worktree, the README's switch is `ENABLE_STOP_REVIEW=0`, which keeps the commit and push reviews. Where the reviews do run, they catch multi-file issues that regexes miss, at the cost of a model call when a turn ends and one review per commit or push (Opus by default; set a cheaper model to spend less). It complements, not replaces, tests and SAST (the README's own limitation). The earlier version of this section described a `PreToolUse` hook that blocked edits on 9 patterns with no cost outside edits ([Firecrawl blog][firecrawl-blog]); v2.0.21 does none of these.
+
+**Interaction with CC's bash layer**: the pattern layer covers edit tools only, not `Bash`; the `Bash` hooks start commit and push reviews and don't block commands. For blocking dangerous commands, use CC's permission model (`Bash(pattern:*)` syntax, see [CC-bash-mode-analysis.md](../configuration/CC-bash-mode-analysis.md)).
 
 ### Figma MCP
 
@@ -203,7 +209,7 @@ mcp__context7__get-library-docs \
 
 ### Decision Rule
 
-**Install Context7 and Code Review for all projects. Add Security Guidance for projects with security-sensitive code. Everything else is conditional on project type and tooling choices.**
+**Install Context7 and Code Review for all projects. Add Security Guidance for projects with security-sensitive code (its LLM reviews need credentials that reach the plugin; see [§ Security Guidance](#security-guidance)). Everything else is conditional on project type and tooling choices.**
 
 ## Full Ecosystem Inventory
 
@@ -290,6 +296,10 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 - [CC code-review (managed) docs][code-review-managed] — the separate GitHub-App PR-review service (Team/Enterprise)
 - [code-review plugin README][cr-plugin-readme] — 4-agent / confidence-scoring architecture, author, version
 - [code-review plugin.json][cr-plugin-json] — plugin manifest (name, description, author)
+- [security-guidance plugin README][sg-readme] — three layers, credentials, switches, privacy, review cost log (v2.0.21, 2026-11-22)
+- [security-guidance hooks.json][sg-hooks] — hook events, matchers and timeouts (v2.0.21, 2026-11-22)
+- [security-guidance hook script][sg-hook-src] — `UserPromptSubmit` baseline and untracked-snapshot gating (v2.0.21, 2026-11-22)
+- Owner observation, 2026-11-22 — the plugin's local debug log and hook timings in one Codespace
 - CC 2.1.302, this session, 2026-10-18 — observed that the installed `code-review` plugin's skill is listed separately as `code-review:code-review` alongside the bundled `code-review` skill
 
 [firecrawl-blog]: https://www.firecrawl.dev/blog/best-claude-code-plugins
@@ -304,6 +314,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [cc-best-practice-gh]: https://github.com/shanraisshan/claude-code-best-practice
 [everything-cc]: https://github.com/affaan-m/everything-claude-code
 [design-cowork]: https://claude.com/plugins/design
+[sg-readme]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/security-guidance/README.md
+[sg-hooks]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/security-guidance/hooks/hooks.json
+[sg-hook-src]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/security-guidance/hooks/security_reminder_hook.py
 [labs-design]: https://www.anthropic.com/news/claude-design-anthropic-labs
 [cm-readme]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/README.md
 [cm-plugin-json]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/.claude-plugin/plugin.json
