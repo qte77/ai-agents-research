@@ -112,9 +112,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| CEDAR (Sakana AI) | Paper only: no code or project link in the arXiv HTML version (read 2026-11-22), so no usable artifact (criterion 1). | 2026-11-22 | <https://arxiv.org/abs/2608.06871> |
+| CEDAR (Sakana AI) | Paper only: no code or project link in the arXiv HTML or PDF (read 2026-11-22), and no CEDAR repo in Sakana AI's GitHub org; code appears only as appendix listings, so no released artifact (criterion 1). | 2026-11-22 | <https://arxiv.org/abs/2608.06871> |
 | RankEvolve | Paper only: the HTML version says components "will be released" with a codebase but links none (read 2026-11-22), so no usable artifact (criterion 1). Its reported 45.8% to 62.5% accuracy is a first-party result, not an artifact. | 2026-11-22 | <https://arxiv.org/abs/2609.39551> |
-| dataroom (hanxiao / Jina) | 194 stars (`gh api` 2026-11-22); no measured benefit or named independent users found in the README (criterion 3). | 2026-11-22 | <https://github.com/hanxiao/dataroom> |
+| dataroom (hanxiao / Jina) | 194 stars (`gh api` 2026-11-22); its README's numbers measure the local model's inference tuning (draft acceptance, memory use), not a research benefit, and it names no independent users (criterion 3). | 2026-11-22 | <https://github.com/hanxiao/dataroom> |
 | MLR-Copilot | 72 stars; last push 2025-03-30, outside 12 months (`gh api` 2026-11-22); no named independent users (criteria 2, 3). | 2026-11-22 | <https://github.com/du-nlp-lab/MLR-Copilot> |
 | Open Coscientist (Jataware) | 70 stars; last push 2026-02-25; source-available (MIT + Commons Clause), community port of Google's AI co-scientist with no benchmark or named independent users (`gh api` 2026-11-22; criterion 3). Google's own description: <https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/>. | 2026-11-22 | <https://github.com/jataware/open-coscientist> |
 
