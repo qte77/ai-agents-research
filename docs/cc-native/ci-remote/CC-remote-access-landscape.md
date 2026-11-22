@@ -190,7 +190,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 |---|---|---|---|
 | Tailnet Preview | 1 star; last push 2026-09-23; no named independent users or standards body (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/elsheppo/tailnet-preview> |
 | cc-tmux-worktree-orchestration | 2 stars; last push 2026-01-29; no other adoption evidence (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/zc277584121/cc-tmux-worktree-orchestration> |
-| Typeless | Voice-dictation app; adoption evidence is vendor-published testimonials only (typeless.com, fetched 2026-11-22); "~4x faster" is an uncited blog claim | 2026-11-22 | <https://www.typeless.com> |
+| Typeless | Criterion 3: voice-dictation app from an undisclosed company; its only adoption evidence is named testimonials the vendor publishes itself, and "4x faster than typing" is the vendor's own claim with no measurement behind it (typeless.com, fetched 2026-11-22) | 2026-11-22 | <https://www.typeless.com> |
 
 ## References
 
