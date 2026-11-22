@@ -10,7 +10,7 @@ validated_links: 2026-09-24
 
 ## Summary
 
-Three tools represent an emerging category of **AI-powered repo-to-documentation generators**: DeepWiki (by Cognition/Devin) produces wiki-style reference docs with architecture diagrams, Code2Tutorial (by The-Pocket/PocketFlow) generates chapter-based educational tutorials, and GitSummarize (indie open-source) produces multi-level summaries via URL rewrite. All take a GitHub URL as input and produce structured natural-language documentation.
+Two tools represent an emerging category of **AI-powered repo-to-documentation generators**: DeepWiki (by Cognition/Devin) produces wiki-style reference docs with architecture diagrams, and Code2Tutorial (by The-Pocket/PocketFlow) generates chapter-based educational tutorials. Both take a GitHub URL as input and produce structured natural-language documentation.
 
 **Relevance to agent workflows**: These tools can serve as context sources for coding agents -- pre-generated documentation reduces the need for expensive runtime codebase analysis. The repo-to-docs pattern also overlaps with the `llms.txt` standard and context engineering approaches documented in this repository.
 
@@ -22,17 +22,17 @@ A sixth entrant, **OpenKB** (VectifyAI), flips the *input*: rather than a GitHub
 
 ## Comparison
 
-| Dimension | DeepWiki | Code2Tutorial | GitSummarize |
-|-----------|----------|---------------|--------------|
-| **Output type** | Wiki-style reference docs | Chapter-based tutorials | Multi-level summaries |
-| **Target audience** | Developers navigating large codebases | Beginners learning a codebase | Developers evaluating/onboarding |
-| **Maker** | Cognition Labs (Devin) | The-Pocket (PocketFlow) | Indie (@schrodinger, @antarixx) |
-| **Open source** | No (proprietary) | Yes (MIT) | Yes (Apache-2.0) |
-| **Self-hostable** | No | Yes (Python + API key) | Yes (Next.js + FastAPI) |
-| **AI model** | Proprietary (Devin) | Gemini Pro 2.5 (configurable) | Gemini 2.5 Pro |
-| **Unique feature** | Conversational docs + Mermaid diagrams | Multi-language tutorials, abstraction control | URL rewrite (`github.com` -> `gitsummarize.com`) |
-| **Pricing** | Free (public repos) | Free (self-hosted) | Free (hosted, rate-limited) |
-| **Maturity** | 100+ pre-indexed repos | Growing, published examples | Early stage (444 stars) |
+| Dimension | DeepWiki | Code2Tutorial |
+|-----------|----------|---------------|
+| **Output type** | Wiki-style reference docs | Chapter-based tutorials |
+| **Target audience** | Developers navigating large codebases | Beginners learning a codebase |
+| **Maker** | Cognition Labs (Devin) | The-Pocket (PocketFlow) |
+| **Open source** | No (proprietary) | Yes (MIT) |
+| **Self-hostable** | No | Yes (Python + API key) |
+| **AI model** | Proprietary (Devin) | Gemini Pro 2.5 (configurable) |
+| **Unique feature** | Conversational docs + Mermaid diagrams | Multi-language tutorials, abstraction control |
+| **Pricing** | Free (public repos) | Free (self-hosted) |
+| **Maturity** | 100+ pre-indexed repos | Growing, published examples |
 
 ## DeepWiki (Cognition Labs)
 
@@ -78,21 +78,6 @@ Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, 
 - **Version-controllable output** -- the graph is JSON; multi-platform (Claude Code, Cursor, VS Code Copilot, Codex, Gemini CLI)
 
 **Relevance**: it produces a queryable code and doc graph as an external multi-agent tool; compare the CC-integrated graph builders in [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md).
-
-## GitSummarize
-
-**URL**: [gitsummarize.com](https://gitsummarize.com)
-**GitHub**: [antarixxx/gitsummarize](https://github.com/antarixxx/gitsummarize) | **Stars**: 444 | **License**: Apache-2.0
-
-One-click AI documentation generator. URL rewrite workflow:
-
-```text
-github.com/user/repo  -->  gitsummarize.com/user/repo
-```
-
-Three output levels: system architecture, directory-level summaries, file-level descriptions. Business logic extraction and architecture diagrams.
-
-**Tech stack**: Next.js + Tailwind (Vercel), FastAPI (Render), PostgreSQL (Supabase), Gemini 2.5 Pro, PostHog analytics.
 
 ## OpenWiki (LangChain)
 
@@ -146,7 +131,7 @@ alongside human browsing.
 
 ## Pattern Analysis
 
-All three doc-generators share a common pipeline:
+Both doc-generators share a common pipeline:
 
 ```text
 GitHub URL --> Clone/Fetch --> AI Analysis --> Structured Output
@@ -156,7 +141,6 @@ Differentiation happens at the output stage:
 
 - **Reference** (DeepWiki): architecture-level, developer-to-developer
 - **Educational** (Code2Tutorial): abstraction-level, teacher-to-student
-- **Summary** (GitSummarize): evaluation-level, quick scan
 
 **Agent integration opportunity**: Generated documentation could be:
 
@@ -174,6 +158,14 @@ Differentiation happens at the output stage:
 | Context engineering for agents | [CC-community-skills-landscape.md — agent-skills](../../cc-community/CC-community-skills-landscape.md) |
 | OpenViking L0/L1/L2 tiering | [openviking-analysis.md](../context-memory/openviking-analysis.md) |
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| GitSummarize | Criterion 3: 466 stars (`gh api` 2026-11-22); no standards body or named independent users on its landing page (read via polyfetch); no first-party measured benefit found. Also last push 2025-04-03, no releases (criterion 2 for the repo) | 2026-11-22 | <https://github.com/antarixxx/gitsummarize> |
+
 ## Sources
 
 | Source | Content |
@@ -181,8 +173,6 @@ Differentiation happens at the output stage:
 | [deepwiki.com][s-deepwiki] | DeepWiki, reference-style repo docs |
 | [code2tutorial.com][s-c2t] | Code2Tutorial, tutorial-style output |
 | [PocketFlow-Tutorial-Codebase-Knowledge][s-pocketflow] | Open-source generator behind the tutorial style |
-| [gitsummarize.com][s-gitsum] | GitSummarize, summary-style output |
-| [antarixxx/gitsummarize][s-gitsum-gh] | GitSummarize repository |
 | [egonex-ai/understand-anything][s-ua] | Understand Anything repository |
 | [langchain-ai/openwiki][s-openwiki] | OpenWiki repository |
 | [VectifyAI/OpenKB][s-openkb] | OpenKB repository |
@@ -192,8 +182,6 @@ Differentiation happens at the output stage:
 [s-deepwiki]: https://deepwiki.com
 [s-c2t]: https://code2tutorial.com
 [s-pocketflow]: https://github.com/The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge
-[s-gitsum]: https://gitsummarize.com
-[s-gitsum-gh]: https://github.com/antarixxx/gitsummarize
 [s-ua]: https://github.com/egonex-ai/understand-anything
 [s-openwiki]: https://github.com/langchain-ai/openwiki
 [s-openkb]: https://github.com/VectifyAI/OpenKB
@@ -203,5 +191,4 @@ Differentiation happens at the output stage:
 
 - [ ] Evaluate DeepWiki output as pre-generated context for CC analysis workflows
 - [ ] Test Code2Tutorial on this repository for documentation generation
-- [ ] Monitor GitSummarize API for programmatic integration potential
 - [ ] Evaluate OpenKB's Claude Code skill-distillation output against this repo's own doc corpus as an agent-context source
