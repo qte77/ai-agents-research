@@ -121,7 +121,7 @@ confidence per choice.
 
 **Decision shape**: a `choice` among a fixed action/tool vocabulary (what GLiNER2.5-Decide and
 jev-ultrafast document), distinct from an allow/deny verdict on an already-formed call (what
-Adrian documents).
+Perplexity's action-gate cookbook below documents).
 
 - [jev-ultrafast][jevultrafast-home] (shipped) — each step asks Jev to pick an operation
   (`CLICK`, `TYPE_TEXT`, `SELECT`, `SCROLL_UP`, `SCROLL_DOWN`, `WAIT`, `DONE`, `BLOCKED`) and a
@@ -146,10 +146,6 @@ Adrian documents).
   use" bullets: "Select from a permitted set of tools and capture arguments from the request as
   structured records" and "Evaluate the current state to select the next action. Represent the
   action, target, and parameters as a structured record."
-- [Secure Agentics Adrian][adrian-home] (shipped, not Jev-family — a bundled local Gemma
-  classifier, not a `noul`/`choice`/`score` API) — the clearest first-party match for gating a
-  *proposed* call rather than picking one: per its README, "every tool call is classified in real
-  time, with risky actions blocked or held for your approval."
 - [Perplexity Decisions API][pplx-action-gate] (documented) — Perplexity, not a Jev-family clone,
   is the first entry in this corpus to document this gap's exact pattern for *any* Jev-style
   (`noul`/`choice`/`score`) model: an agent proposes a function call (its example is
@@ -184,7 +180,7 @@ Adrian documents).
   action to take rather than gating one already formed (jev-ultrafast, typesafe-computer-use,
   GLiNER2.5-Decide, Perplexity's own browser-agent cookbook, OpenAI's announced-only "next
   action") — a related but
-  distinct decision shape from Adrian's and Perplexity's action-gate pattern. Microsoft's catalog
+  distinct decision shape from Perplexity's action-gate pattern. Microsoft's catalog
   page for Decision-1 (below) names the approve/deny pattern too — "Agent guardrails: Evaluate
   proposed agent actions or tool calls before an integrating application permits execution" — but,
   like OpenAI's announced-only mention, ships no worked example to match Perplexity's cookbook; the
@@ -268,9 +264,6 @@ escalate-to-human.
   [agent-evaluation-metrics-landscape.md § Verbalized Confidence Calibration (Brier)][brier] for
   what the score means and why it can diverge from the act/abstain decision itself ("Calibrated
   Enough to Know, Not Calibrated to Act" — Aggarwal, arXiv:2608.27167).
-- [Secure Agentics Adrian][adrian-home] (shipped) — classifies every tool call and, per
-  [agentic-ai-vulnerability-landscape.md § Secure Agentics Adrian][adrian-home], can intervene
-  in-flight (alert, hold for human review, or block) — a three-way act/confirm/escalate gate.
 - **Failure mode**: treat an uncertain or blocked signal as its own outcome, never as a verdict —
   see [jev-analysis.md § Build for When It's Wrong][jev-wrong].
 
@@ -1726,8 +1719,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [GLiNER2.5-Decide announcement][gliner-blog] | Use-case bullets ("Model routing," "Tool calling," "Browser and computer use," "Guardrails," "LLM-as-a-judge") re-fetched verbatim, 2026-10-09 |
 | [docs.typesafe.ai][typesafe] (home, `/api`, `/models`) | Re-checked 2026-10-09 for a model-selection routing claim; none found |
 | [docs.typesafe.ai/confidence][typesafe-confidence] | Re-fetched verbatim 2026-10-09: the "Three paths for using confidence in your code" act/confirm/escalate pattern |
-| [Secure Agentics Adrian README][adrian-gh] | Tool-call classification and block/hold-for-approval behavior, re-fetched verbatim via `gh api`, 2026-10-09 |
-| [agentic-ai-vulnerability-landscape.md § Secure Agentics Adrian][adrian-home] | Existing corpus analysis of Adrian's act/confirm/escalate intervention modes, cross-referenced not repeated |
 | [typesafe-computer-use][tcu-home] | README, LICENSE (fetched via GitHub contents API, 2026-10-11); `gh api` repo metadata (stars/forks/dates); architecture description and cost/latency table |
 | [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics] | Free-text judge metrics, cross-referenced not repeated |
 | [agent-frameworks-infrastructure-landscape.md § Guardrails / policy][guardrails-policy] | Safety-classifier/guardrail tools, cross-referenced not repeated |
@@ -1813,7 +1804,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [notdiamond-home]: https://www.notdiamond.ai/
 [judge-metrics]: ../../sdlc-lcm/agent-evaluation-metrics-landscape.md#llm-as-a-judge-quality-assessment
 [brier]: ../../sdlc-lcm/agent-evaluation-metrics-landscape.md#verbalized-confidence-calibration-brier
-[adrian-home]: ../../sdlc-lcm/agentic-ai-vulnerability-landscape.md#secure-agentics-adrian--open-source-runtime-agent-monitor
 [openai-decisions-guide]: https://developers.openai.com/api/docs/guides/decisions
 [openai-decisions-ref]: https://developers.openai.com/api/reference/resources/decisions/methods/create
 [openai-devday]: https://openai.com/index/devday-2026-recap/
@@ -1832,7 +1822,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [pplx-action-gate]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-action-gate/README
 [pplx-browser-agent]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-browser-agent/README
 [pplx-answer-gate]: https://docs.perplexity.ai/docs/cookbook/examples/decisions-api-answer-gate/README
-[adrian-gh]: https://github.com/secureagentics/Adrian
 [msft-decision1-blog]: https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-microsoft-decision-1-in-microsoft-foundry-for-decision-and-classific/4562742
 [msft-decision1-catalog]: https://ai.azure.com/catalog/models/Microsoft-Decision-1
 [msft-decision1-cmdline]: https://commandline.microsoft.com/microsoft-decision-1-model-foundry/
