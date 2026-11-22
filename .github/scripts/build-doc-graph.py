@@ -15,9 +15,11 @@ Exit codes:
 
 import argparse
 import sys
+from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.doc_coverage import hub_filing  # noqa: E402
 from lib.doc_graph import build_graph, load_corpus, site_graph, to_json  # noqa: E402
 
 
@@ -34,11 +36,16 @@ def main() -> None:
         print(f"ERROR: no docs/ under {args.root}", file=sys.stderr)
         sys.exit(2)
 
-    graph = site_graph(build_graph(load_corpus(args.root)))
+    docs = load_corpus(args.root)
+    graph = site_graph(build_graph(docs), hub_filing(docs))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(to_json(graph), encoding="utf-8")
-    unfiled = sum(1 for n in graph["nodes"] if not n["hubs"] and n["bucket"] != "_topics")
-    print(f"Wrote {args.out}: {len(graph['nodes'])} docs ({unfiled} in no hub), {len(graph['edges'])} linked pairs")
+    # Reason: same count as the page's checkboxes, which leave the hubs themselves to their own boxes.
+    counts = Counter(n["filing"] for n in graph["nodes"]
+                     if not n["hubs"] and (n["bucket"] != "_topics" or n["id"] == "docs/_topics/README.md"))
+    print(f"Wrote {args.out}: {len(graph['nodes'])} docs ({counts['unfiled']} unfiled, "
+          f"{counts['exempt']} exempt, {counts['not-hub-content']} not hub content), "
+          f"{len(graph['edges'])} linked pairs")
 
 
 if __name__ == "__main__":

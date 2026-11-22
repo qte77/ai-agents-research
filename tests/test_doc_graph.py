@@ -157,6 +157,14 @@ class SiteGraphTests(unittest.TestCase):
             ["docs/non-cc/a/x.md", "docs/non-cc/b/y.md"],
         ])
 
+    def test_filing_is_copied_onto_nodes_when_given(self):
+        # Plan 0015 N4: build-doc-graph passes doc_coverage.hub_filing so the site splits "no hub".
+        filing = {path: "unfiled" for path in CORPUS}
+        filing["docs/non-cc/a/x.md"] = "hubbed"
+        nodes = {n["id"]: n for n in dg.site_graph(dg.build_graph(CORPUS), filing)["nodes"]}
+        self.assertEqual(nodes["docs/z.md"]["filing"], "unfiled")
+        self.assertEqual(nodes["docs/non-cc/a/x.md"]["filing"], "hubbed")
+
     def test_deterministic(self):
         again = dg.site_graph(dg.build_graph(dict(reversed(list(CORPUS.items())))))
         self.assertEqual(dg.to_json(again), dg.to_json(self.site))
