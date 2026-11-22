@@ -2,7 +2,7 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
 created: 2026-04-24
-updated: 2026-11-20
+updated: 2026-11-22
 validated_links: 2026-10-24
 status: research
 ---
@@ -146,7 +146,7 @@ Source: [CopilotKit — Build with Google's new A2UI Spec][a2ui-blog]
 
 ## OpenGenerativeUI (CopilotKit Reference Framework)
 
-**Repo**: [CopilotKit/OpenGenerativeUI][ogui-repo] | **Demo**: [opengenerativeui.copilotkit.ai][ogui-site]
+**Repo**: [CopilotKit/OpenIntelligentUI][ogui-repo] (renamed from OpenGenerativeUI; `gh api` 2026-11-22) | **Demo**: [opengenerativeui.copilotkit.ai][ogui-site]
 
 Not a protocol — an end-to-end reference implementation:
 
@@ -227,7 +227,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| flightdeckhq/flightdeck | Fails criterion 3 (adopted or proven): 31 stars (`gh api` 2026-11-22); repo created 2026-04-07; README names no independent users, standards body or measured result | 2026-11-22 | <https://github.com/flightdeckhq/flightdeck> |
+| flightdeckhq/flightdeck | Fails criterion 3 (adopted or proven): 31 stars (`gh api` 2026-11-22), though alive (last push 2026-11-19); README names no independent users, standards body or measured result | 2026-11-22 | <https://github.com/flightdeckhq/flightdeck> |
 
 ## Sources
 
@@ -240,7 +240,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Google A2UI launch (CopilotKit blog)][a2ui-blog] | A2UI spec origin |
 | [Oracle Agent Spec + AG-UI (Oracle blog)][oracle-agui] | Three-way alignment announcement |
 | [Microsoft Learn — AG-UI Integration][ms-learn-agui] | Microsoft Agent Framework integration |
-| [CopilotKit/OpenGenerativeUI][ogui-repo] | Reference framework |
+| [CopilotKit/OpenIntelligentUI][ogui-repo] (formerly OpenGenerativeUI) | Reference framework |
 | [CopilotKit/openbot][openbot-repo] · [site][openbot-site] | Governed AI-coworker template — CEL policy gateway, container isolation, AG-UI-agnostic |
 | [thesysdev/openui][openui-repo] | OpenUI Lang, renderers, AG-UI and A2UI packages, self-reported token benchmark |
 | [Salesforce Agentforce 360][sf-agentforce] | Salesforce protocol strategy (MCP, not AG-UI) |
@@ -259,7 +259,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [a2ui-blog]: https://www.copilotkit.ai/blog/build-with-googles-new-a2ui-spec-agent-user-interfaces-with-a2ui-ag-ui
 [oracle-agui]: https://blogs.oracle.com/ai-and-datascience/announcing-agent-spec-for-a2ui-copilotkit-ag-ui
 [ms-learn-agui]: https://learn.microsoft.com/en-us/agent-framework/integrations/ag-ui/
-[ogui-repo]: https://github.com/CopilotKit/OpenGenerativeUI
+[ogui-repo]: https://github.com/CopilotKit/OpenIntelligentUI
 [ogui-site]: https://opengenerativeui.copilotkit.ai/
 [sf-agentforce]: https://www.salesforce.com/agentforce/what-is-new/
 [sf-aws]: https://www.salesforce.com/news/stories/agentforce-360-for-aws-announcement/
