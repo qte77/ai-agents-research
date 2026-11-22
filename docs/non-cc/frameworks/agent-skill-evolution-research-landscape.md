@@ -2,28 +2,29 @@
 title: Agent Skill Evolution Research Landscape
 purpose: Survey research (papers and reference repos) on constructing, evolving, and transferring agent skills and tool sets — as distinct from the packaging/distribution landscapes in cc-community and cc-native.
 created: 2026-09-30
-updated: 2026-11-12
+updated: 2026-11-22
 validated_links: 2026-11-12
 status: assess
 ---
 
 ## What It Is
 
-Two 2026 research efforts on the *mechanics* of agent skills — how a skill is authored, tested,
+Three 2026 research efforts on the *mechanics* of agent skills — how a skill is authored, tested,
 evolved, or compiled — rather than how it is packaged or distributed (see
 [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) and
 [CC-skills-adoption-analysis.md](../../cc-native/agents-skills/CC-skills-adoption-analysis.md) for the
-distribution side). Both were scored 2026-09-30 against the [agent substrate rubric][rubric]. Neither
-ships a Claude Code integration; they are general agent-harness research (SkillLift's benchmarks,
-WildClawBench and SkillsBench, run on OpenClaw and OpenHands harnesses, not CC). Four paper-only
-entries were removed 2026-11-22 (see Not included).
+distribution side). SkillLift and Skill2Env were scored 2026-09-30 against the [agent substrate
+rubric][rubric]; Adaptive Skill Granularity (added 2026-11-12) is a batch-triage addition, not
+rubric-scored. None ships a Claude Code integration; they are general agent-harness research
+(SkillLift's benchmarks, WildClawBench and SkillsBench, run on OpenClaw and OpenHands harnesses, not
+CC). Three paper-only entries were removed 2026-11-22 (see Not included).
 
 ## SkillLift
 
 **Paper**: [arXiv:2609.15396][skilllift-paper] — "SkillLift: Learning Dense Rubrics from Sparse Oracles
 for Efficient Skill Evolution" (Kang, Wen; affiliation not stated on the abstract page — not confirmed
 as Fudan University despite the plan's lead description). **Repo**: [WalteR-MittY-pro/SkillLift][skilllift]
-— MIT, 4★, pushed 2026-09-08. The paper states "Codes are available at" the repo, confirming the
+— MIT, 5★, last push 2026-10-28 (checked 2026-11-22). The paper states "Codes are available at" the repo, confirming the
 pairing.
 
 Rubric-guided self-evolution: rather than spending a full agent rollout (an "oracle call") to judge
@@ -68,6 +69,28 @@ task performance. Requires a Codex CLI login and Docker; `--resume` makes batch 
 
 `scored 2026-09-30`
 
+## Adaptive Skill Granularity (added 2026-11-12)
+
+**Paper**: [arXiv:2610.31461][adaptive-skill] — "Adaptive Skill Granularity for Coding Agents: Runtime
+Routing and Macro-to-Micro Recovery" (Zhang, Jiang, Wang, Zhou; submitted 2026-10-22). **Repo**:
+[Jayceon-3/Adaptive-Skill-Agent][adaptive-skill-repo], which the paper's HTML version names as its code
+(2 stars, last push 2026-06-28, no licence file; checked 2026-11-22). An earlier version of this entry
+(2026-11-12) left the repo uncited because the abstract page doesn't name it.
+
+Argues that prior skill-evolution work studies skills *before*
+execution — retrieval, composition, synthesis — and that for coding agents the *runtime* choice matters
+just as much: a task can be solved with primitive tool calls, a macro skill, or a hybrid that falls back
+from macro to primitives on mismatch. The authors frame granularity as an action-abstraction policy
+driven by task structure, execution state, and macro-skill failures, pairing a feature-based granularity
+controller with a finite-state recovery executor. In a deterministic coding-agent evaluation using
+verifier-defined success/cost/process metrics, fixed macro execution was efficient when it applied but
+brittle on mismatch, while runtime routing plus explicit macro-to-micro recovery improved robustness —
+self-reported, no independent replication found.
+
+`subject: skills`
+
+Not rubric-scored: a batch-triage addition; score if promoted to a dedicated analysis.
+
 ## Cross-References
 
 - [docs/_topics/skills.md](../../_topics/skills.md) — topic hub pointer
@@ -82,7 +105,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 |---|---|---|---|
 | WikiSkill | Criterion 1: paper only, no code link on the abstract page (arXiv:2608.27454); results self-reported | 2026-11-22 | <https://arxiv.org/abs/2608.27454> |
 | AutoTailor | Criterion 1: paper only, no code link on the abstract page (arXiv:2609.13548); single-benchmark self-reported results | 2026-11-22 | <https://arxiv.org/abs/2609.13548> |
-| Adaptive Skill Granularity | Criterion 1: paper only, no code link on the abstract page (arXiv:2610.31461); self-reported results | 2026-11-22 | <https://arxiv.org/abs/2610.31461> |
 | Skill++ | Criterion 1: paper only, no code link on the abstract page (arXiv:2611.00544); self-reported results | 2026-11-22 | <https://arxiv.org/abs/2611.00544> |
 
 ## Sources
@@ -92,6 +114,8 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [SkillLift (arXiv:2609.15396)][skilllift-paper] | Abstract, method summary; confirms the GitHub pairing |
 | [WalteR-MittY-pro/SkillLift][skilllift] | README (fetched via GitHub contents API, 2026-09-30), MIT license, repo metadata |
 | [NVlabs/Skill2Env][skill2env] | README (fetched via GitHub contents API, 2026-09-30), Apache-2.0 license, repo metadata |
+| [Adaptive Skill Granularity (arXiv:2610.31461)][adaptive-skill] | Abstract and method summary (2026-11-12); the HTML version names the code repo (checked 2026-11-22) |
+| [Jayceon-3/Adaptive-Skill-Agent][adaptive-skill-repo] | Repo metadata (2026-11-22) |
 | [Plan 0009][plan] | Lead list and rubric scope for this batch |
 
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
@@ -101,3 +125,5 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [skill2env]: https://github.com/NVlabs/Skill2Env
 [agentskills-org]: https://agentskills.io
 [harbor]: https://harborframework.com
+[adaptive-skill]: https://arxiv.org/abs/2610.31461
+[adaptive-skill-repo]: https://github.com/Jayceon-3/Adaptive-Skill-Agent
