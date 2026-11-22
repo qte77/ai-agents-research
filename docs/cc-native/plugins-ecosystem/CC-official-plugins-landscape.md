@@ -3,7 +3,7 @@ title: CC Official Plugins Landscape
 source: https://www.firecrawl.dev/blog/best-claude-code-plugins
 purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this research repo, and provide adoption guidance per plugin.
 created: 2026-03-12
-updated: 2026-10-18
+updated: 2026-11-22
 validated_links: 2026-10-18
 status: reference
 ---
@@ -264,8 +264,15 @@ These plugins have full analysis elsewhere in this repo:
 - [CC Ultimate Guide][cc-ultimate] — beginner to power user guide with templates and quizzes
 - [45 CC Tips (ykdojo)][cc-tips] — custom statusline, system prompt reduction, dx plugin
 - [CC Best Practice][cc-best-practice-gh] — curated best practices collection
-- [Everything Claude Code (Context7)][everything-cc] — battle-tested configs and patterns
-- [Cuttlesoft Advanced Tips][cuttlesoft] — expert workflows for advanced users
+- [Everything Claude Code][everything-cc] — battle-tested configs and patterns
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Cuttlesoft Advanced Tips | Criterion 3: a single vendor blog post (per its URL and this list's own description), with no standards-body, named-user or measured-benefit evidence found; its content was not read, since the page returned 403 to automated fetches on 2026-11-22 | 2026-11-22 | [Cuttlesoft blog post](https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/) |
 
 ## References
 
@@ -296,7 +303,6 @@ These plugins have full analysis elsewhere in this repo:
 [cc-tips]: https://github.com/ykdojo/claude-code-tips
 [cc-best-practice-gh]: https://github.com/shanraisshan/claude-code-best-practice
 [everything-cc]: https://github.com/affaan-m/everything-claude-code
-[cuttlesoft]: https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/
 [design-cowork]: https://claude.com/plugins/design
 [labs-design]: https://www.anthropic.com/news/claude-design-anthropic-labs
 [cm-readme]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/README.md
