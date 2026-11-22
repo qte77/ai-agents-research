@@ -170,7 +170,8 @@ standby cost — between E2B's ephemeral model and Sprites' always-warm persiste
 ### forkd (now sandstorm)
 
 Renamed to `deeplethe/sandstorm` (checked 2026-11-22); its current README documents both gVisor and
-Firecracker backends. The details below were verified on 2026-09-24, before the rename.
+Firecracker backends. The details below were verified on 2026-09-24, before the rename, and the source
+link points at the v0.5.3 tag they match.
 
 Firecracker microVM sandbox runtime built for AI agent fan-out: spawning many
 isolated children from one warmed parent snapshot via copy-on-write memory sharing
@@ -252,7 +253,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | Name | Reason | Date | Link |
 | ---- | ------ | ---- | ---- |
 | Maritime | Criterion 3: no named independent users, funding or independent measurement at the vendor's own pages; timings are self-reported (checked 2026-11-22) | 2026-11-22 | <https://maritime.sh> |
-| Ephemora Cell | Criteria 2 and 3: source repository returns 404 (`gh api` 2026-11-22); single PyPI maintainer, no stated users | 2026-11-22 | <https://pypi.org/project/ephemora-cell/> |
+| Ephemora Cell | Criterion 3: no stated users, stars or measured result; one PyPI maintainer (latest release 1.1.0, 2026-10-05) and the cited source repository returns 404 (`gh api` 2026-11-22) | 2026-11-22 | <https://pypi.org/project/ephemora-cell/> |
 
 ## References
 
@@ -277,7 +278,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [blaxel]: https://blaxel.ai
 [blaxel-pricing]: https://blaxel.ai/pricing
 [blaxel-docs]: https://docs.blaxel.ai/Overview
-[forkd]: https://github.com/deeplethe/sandstorm
+[forkd]: https://github.com/deeplethe/sandstorm/tree/v0.5.3
 [opensandbox-gh]: https://github.com/alibaba/OpenSandbox
 [opensandbox-marktechpost]: https://www.marktechpost.com/2026/03/03/alibaba-releases-opensandbox-to-provide-software-developers-with-a-unified-secure-and-scalable-api-for-autonomous-ai-agent-execution/
 [e2b]: https://e2b.dev
