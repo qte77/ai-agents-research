@@ -18,7 +18,7 @@ endif
 
 
 # -- config --
-NODE_VERSION       ?= 22.11.0
+NODE_VERSION       ?= 24.22.3
 ACTIONLINT_VERSION ?= 1.7.12
 NODE_DIR           := $(HOME)/.local/share/node
 NODE_BIN           := $(NODE_DIR)/bin
