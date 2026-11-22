@@ -265,7 +265,14 @@ These plugins have full analysis elsewhere in this repo:
 - [45 CC Tips (ykdojo)][cc-tips] — custom statusline, system prompt reduction, dx plugin
 - [CC Best Practice][cc-best-practice-gh] — curated best practices collection
 - [Everything Claude Code (Context7)][everything-cc] — battle-tested configs and patterns
-- [Cuttlesoft Advanced Tips][cuttlesoft] — expert workflows for advanced users
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Cuttlesoft Advanced Tips | Criterion 1 and 3: a single consultancy blog post, no code, package or product, and no standards-body, named-user or measured-benefit evidence; page returned 403 to automated fetch 2026-11-22, so liveness unconfirmed | 2026-11-22 | [Cuttlesoft blog post](https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/) |
 
 ## References
 
@@ -296,7 +303,6 @@ These plugins have full analysis elsewhere in this repo:
 [cc-tips]: https://github.com/ykdojo/claude-code-tips
 [cc-best-practice-gh]: https://github.com/shanraisshan/claude-code-best-practice
 [everything-cc]: https://github.com/affaan-m/everything-claude-code
-[cuttlesoft]: https://cuttlesoft.com/blog/2026/02/03/claude-code-for-advanced-users/
 [design-cowork]: https://claude.com/plugins/design
 [labs-design]: https://www.anthropic.com/news/claude-design-anthropic-labs
 [cm-readme]: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-modernization/README.md
