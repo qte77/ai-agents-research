@@ -1,6 +1,6 @@
 ---
 title: Agentic Enterprise OS Landscape
-purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, HugAgentOS, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves; includes a comparison of agent registries (A2A, MCP Registry, AWS, Google, Agent 365, Agentforce) and a Microsoft 365 Copilot vs Agentforce 360 comparison with an illustrative pricing example.
+purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves; includes a comparison of agent registries (A2A, MCP Registry, AWS, Google, Agent 365, Agentforce) and a Microsoft 365 Copilot vs Agentforce 360 comparison with an illustrative pricing example.
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, lyzr, self-hosted-oss, claude-code]
 created: 2026-06-28
 updated: 2026-11-20
@@ -115,13 +115,12 @@ analyses' Pricing sections ask.
 
 ## Tier 2 — Open-source self-operating workspaces & runtimes
 
-The OSS layer gives you the runtime instead of a managed platform. Most already have a dedicated analysis (HugAgentOS does not yet); they are gathered here for the pattern:
+The OSS layer gives you the runtime instead of a managed platform. Each has a dedicated analysis or is covered in the frameworks landscape; they are gathered here for the pattern:
 
-- **[AutoAgent][autoagent]** (HKUDS, MIT) — explicitly an "autonomous Agent Operating System": a self-managing file system, an LLM-powered actionable engine, and self-play customization that generates its own tools and agents at runtime inside a Docker sandbox. The closest literal "agent OS" in this corpus.
+- **[AutoAgent][autoagent]** (HKUDS, MIT; stale: 9.8k stars, last push 2025-10-16, `gh api` 2026-11-22) — explicitly an "autonomous Agent Operating System": a self-managing file system, an LLM-powered actionable engine, and self-play customization that generates its own tools and agents at runtime inside a Docker sandbox. The closest literal "agent OS" in this corpus.
 - **[Odysseus][odysseus]** (AGPL-3.0) — self-hosted all-in-one AI workspace (chat, agents, deep research, email, calendar, notes) in one Docker Compose deploy with MCP integration — the breadth-over-depth "operating environment" model.
 - **[Goose][goose]** (AAIF / Linux Foundation, Apache-2.0) — MCP co-creator and reference implementation; extensions *are* MCP servers and ACP handles agent-to-agent/IDE messaging — the protocol-native runtime an agent OS is built on.
 - **multica** (in [agent-frameworks-infrastructure-landscape §1][frameworks]; source-available, modified Apache-2.0 — not OSI) — turns coding-agent CLIs into managed teammates: issues route to an agent or squad, a local daemon executes with autopilot (cron/webhook) scheduling.
-- **[HugAgentOS][hugagentos]** (ZJU-REAL; source-available: Apache-2.0 + Additional Terms — no competing multi-tenant SaaS offering, "Powered by" UI attribution required without a commercial white-label license; not OSI) — self-hosted "AgentOS" combining agentic chat, private Retrieval-Augmented Generation (RAG) knowledge bases, sub-agents, sandboxed code execution, long-term memory, and automation; treats **domain ontology as a control plane** for agent reasoning, decisions, and tool execution — governed concepts/relations/rules/action-contracts, with versioned ontology proposals and audit logs for traceable evolution.
 - **[Octop][octop]** (TencentCloud, MIT) — self-hosted multi-user, multi-agent assistant: one admin account serves a household or small team, each user's "experts" (agents) isolated per database row inside a single Python process (no queue, no separate worker); an **AgentTeams (Beta)** coordinator schedules multiple experts on multi-step work, and outbound ACP delegates coding tasks to Claude Code, OpenCode, CodeBuddy, and Codex.
 
 ## Tier 3 — Estate worked examples (the self-operating pattern, built from primitives)
@@ -190,6 +189,14 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 - [agent-frameworks-infrastructure-landscape.md][frameworks] — multica + the broader orchestration catalog
 - [ag-ui-protocol-landscape.md][ag-ui] — the AG-UI protocol none of these enterprise platforms adopt
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| HugAgentOS (ZJU-REAL) | (criterion 3) 635 stars, last push 2026-11-20 (`gh api` 2026-11-22); no paper (arXiv search for the name returns nothing), no named independent users and no measured benefit in the README | 2026-11-22 | [ZJU-REAL/HugAgentOS](https://github.com/ZJU-REAL/HugAgentOS) |
+
 ## Sources
 
 | Source | Content |
@@ -213,7 +220,7 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 | [Use the Microsoft Copilot harness with prompt agents][foundry-copilot-harness] | Foundry's own "Copilot harness" — a different thing from Copilot Studio's harness |
 | [Hosted agents in Foundry Agent Service][foundry-hosted-agents] | Foundry hosted agents — containerized, bring-your-own-framework; no stated preview/GA status |
 | [Microsoft Foundry Agent Service (product page)][foundry-agent-service] | Marketing-page-only "managed runtime" wording for hosted agents |
-| [AutoAgent][autoagent] · [Odysseus][odysseus] · [Goose][goose] · [multica][frameworks] · [HugAgentOS][hugagentos] · [Octop][octop] | OSS self-operating workspaces / runtimes (in-corpus analyses + HugAgentOS repo) |
+| [AutoAgent][autoagent] · [Odysseus][odysseus] · [Goose][goose] · [multica][frameworks] · [Octop][octop] | OSS self-operating workspaces / runtimes (in-corpus analyses) |
 | [polyforge-orchestrator][polyforge] · [office-forge-orchestrator][office-forge] · [liminal-flux-gh-acc][liminal] | qte77 estate self-operating orchestrators (public repos) |
 
 [ms-analysis]: ../agents/microsoft-365-copilot-analysis.md
@@ -251,7 +258,6 @@ The enterprise "agent OS" is real as a **governance-and-authoring layer**; it is
 [lyzr-a2a]: https://docs.lyzr.ai/enterprise/integrations/a2a-protocol
 [lyzr-pricing]: https://www.lyzr.ai/pricing/
 [lyzr-opencontroller]: https://www.lyzr.ai/opencontroller/
-[hugagentos]: https://github.com/ZJU-REAL/HugAgentOS
 [octop]: ../agents/octop-analysis.md
 [polyforge]: https://github.com/qte77/polyforge-orchestrator
 [office-forge]: https://github.com/qte77/office-forge-orchestrator
