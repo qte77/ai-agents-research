@@ -2,79 +2,29 @@
 title: Agent Skill Evolution Research Landscape
 purpose: Survey research (papers and reference repos) on constructing, evolving, and transferring agent skills and tool sets — as distinct from the packaging/distribution landscapes in cc-community and cc-native.
 created: 2026-09-30
-updated: 2026-11-12
+updated: 2026-11-22
 validated_links: 2026-11-12
 status: assess
 ---
 
 ## What It Is
 
-Six 2026 research efforts on the *mechanics* of agent skills — how a skill is authored, tested,
+Three 2026 research efforts on the *mechanics* of agent skills — how a skill is authored, tested,
 evolved, or compiled — rather than how it is packaged or distributed (see
 [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) and
 [CC-skills-adoption-analysis.md](../../cc-native/agents-skills/CC-skills-adoption-analysis.md) for the
-distribution side). The first four were scored 2026-09-30 against the [agent substrate rubric][rubric];
-Adaptive Skill Granularity and Skill++ (added 2026-11-12) are batch-triage additions, not rubric-scored.
-None of the six ships a Claude Code integration — Skill++'s routing gains do carry over to the Codex CLI
-agent harness, but that is not CC — and they are general agent-harness research (WildClawBench/SkillsBench
-run on OpenClaw and OpenHands harnesses, not CC).
-
-## WikiSkill
-
-**Paper**: [arXiv:2608.27454][wikiskill] — "WikiSkill: Compiling Agent Experience into Persistent
-Knowledge for Skill Evolution" (Tang, Rashtchian, Ferng, Tomkins, Juan, Vu; submitted 2026-08-27). No
-public code repository is linked from the abstract page.
-
-A framework that "co-evolves agent skills with a persistent knowledge base (wiki)," distinguishing raw
-execution experience, accumulated knowledge, and executable skills — where prior skill-evolution methods
-leave "insights that guide skill development... scattered across optimization histories," WikiSkill
-consolidates them into a wiki that "subsequent skill updates can build on." The authors report it
-"consistently outperforms state-of-the-art skill-evolution methods," that evolved skills "transfer
-effectively across models and model families," and that smaller models with evolved skills can
-"outperform substantially larger models without them" — all self-reported, no independent replication
-found.
-
-`subject: skills`
-
-| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
-|---|---|---|---|---|---|
-| n/a [paper][wikiskill] (research method, not a shipped multi-user system) | n/a [paper][wikiskill] (no deployment artifact to run across machines) | no data [paper][wikiskill] (no code repository linked from the abstract page, so rebuildability can't be checked either way) | yes [paper][wikiskill] (the wiki is explicitly designed to accumulate and be built on by later skill updates) | no data [paper][wikiskill] (no stated mechanism for snapshotting or rolling back the wiki's state) | partial [paper][wikiskill] (the wiki records *why* a skill changed — provenance for the update, not a citation trail for a given output) |
-
-`scored 2026-09-30`
-
-## AutoTailor
-
-**Paper**: [arXiv:2609.13548][autotailor] — "AutoTailor: Automatic, User-Aligned Capability Selection
-and Adaptation for Web Agents" (Cao, Szekeres, Faisal; affiliation not stated on the abstract page — not
-confirmed as Microsoft Research despite the plan's lead description). No public code repository linked.
-
-A meta-agentic framework that constructs and maintains a compact set of trajectory-derived MCP APIs in
-two phases: **offline**, converting web trajectories into parameterized automation programs, quality-
-filtering them, and keeping only broadly useful ones via a "Usage Likelihood Filter"; **online**,
-"Dynamic Reselection monitors task outcomes and API usage, identifies recurring coverage gaps, adds
-relevant candidates, and prunes persistently unused capabilities." On 106 WebArena Postmill tasks, the
-authors report reducing 1,283 unrefined APIs to 87 (offline) then 33 (online), reaching "90.6%
-correctness, compared with 87.5% for ReAct alone," with 57.8% lower token cost and 29.4% lower latency —
-self-reported, single-benchmark.
-
-This is a **tool-set curation** method — it produces MCP APIs, not `SKILL.md` procedures — so it is as
-relevant to the Plugins subject as to Skills; see
-[docs/_topics/plugins.md](../../_topics/plugins.md).
-
-`subject: skills`
-
-| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
-|---|---|---|---|---|---|
-| n/a [paper][autotailor] (research method, not a shipped multi-user system) | n/a [paper][autotailor] (single-agent evaluation harness, no deployment claim) | no [paper][autotailor] (no code repository linked; the offline/online pipeline depends on an unpinned LLM for trajectory-to-API conversion) | yes [paper][autotailor] (Dynamic Reselection adds/prunes APIs at runtime without a rewrite of the agent) | no data [paper][autotailor] (no stated versioning of the evolving 1,283→87→33 API set) | no data [paper][autotailor] (no audit trail linking a kept/pruned API back to the trajectories that justified it) |
-
-`scored 2026-09-30`
+distribution side). SkillLift and Skill2Env were scored 2026-09-30 against the [agent substrate
+rubric][rubric]; Adaptive Skill Granularity (added 2026-11-12) is a batch-triage addition, not
+rubric-scored. None ships a Claude Code integration; they are general agent-harness research
+(SkillLift's benchmarks, WildClawBench and SkillsBench, run on OpenClaw and OpenHands harnesses, not
+CC). Three paper-only entries were removed 2026-11-22 (see Not included).
 
 ## SkillLift
 
 **Paper**: [arXiv:2609.15396][skilllift-paper] — "SkillLift: Learning Dense Rubrics from Sparse Oracles
 for Efficient Skill Evolution" (Kang, Wen; affiliation not stated on the abstract page — not confirmed
 as Fudan University despite the plan's lead description). **Repo**: [WalteR-MittY-pro/SkillLift][skilllift]
-— MIT, 4★, pushed 2026-09-08. The paper states "Codes are available at" the repo, confirming the
+— MIT, 5★, last push 2026-10-28 (checked 2026-11-22). The paper states "Codes are available at" the repo, confirming the
 pairing.
 
 Rubric-guided self-evolution: rather than spending a full agent rollout (an "oracle call") to judge
@@ -101,13 +51,13 @@ winning "all six model × benchmark combinations," +8.8–24.2pp over the one-sh
 ## NVlabs Skill2Env
 
 **Repo**: [NVlabs/Skill2Env][skill2env] — Apache-2.0 (project-owned source; third-party material in
-`SkillHub/` keeps its own upstream licenses), pushed 2026-09-21. Tagline: "Democratizing Collective
+`SkillHub/` keeps its own upstream licenses), last push 2026-11-14 (checked 2026-11-22). Tagline: "Democratizing Collective
 Intelligence." Turns any [Agent Skill][agentskills-org] into RL-ready terminal tasks in the
 [Harbor][harbor] framework: a planner/creator pipeline (Codex agents in Docker containers) generates
 task instructions, a containerized environment, deterministic tests (`test.sh` + a grading `rubric.md`),
 and a reference solution per skill, retaining only tasks with `retained_tasks >= 1`. This converts a
 *procedural* skill (a `SKILL.md` an agent follows) into a *benchmark task* (an environment an agent is
-scored against) — the inverse direction from SkillLift/WikiSkill/AutoTailor, which evolve skills from
+scored against) — the inverse direction from SkillLift, which evolves skills from
 task performance. Requires a Codex CLI login and Docker; `--resume` makes batch generation over
 `SkillHub/skills/` restartable.
 
@@ -122,13 +72,12 @@ task performance. Requires a Codex CLI login and Docker; `--resume` makes batch 
 ## Adaptive Skill Granularity (added 2026-11-12)
 
 **Paper**: [arXiv:2610.31461][adaptive-skill] — "Adaptive Skill Granularity for Coding Agents: Runtime
-Routing and Macro-to-Micro Recovery" (Zhang, Jiang, Wang, Zhou; submitted 2026-10-22). No code
-repository or project page was found on the abstract page. A repo named in the lead that surfaced this
-paper (`Jayceon-3/Adaptive-Skill-Agent`) contains Chinese-language design notes outlining a similar
-granularity-routing method, but names neither this paper nor its arXiv ID and isn't confirmed as the
-authors' own, so it is not cited here.
+Routing and Macro-to-Micro Recovery" (Zhang, Jiang, Wang, Zhou; submitted 2026-10-22). **Repo**:
+[Jayceon-3/Adaptive-Skill-Agent][adaptive-skill-repo], which the paper's HTML version names as its code
+(2 stars, last push 2026-06-28, no licence file; checked 2026-11-22). An earlier version of this entry
+(2026-11-12) left the repo uncited because the abstract page doesn't name it.
 
-Argues that prior skill-evolution work (including the four entries above) studies skills *before*
+Argues that prior skill-evolution work studies skills *before*
 execution — retrieval, composition, synthesis — and that for coding agents the *runtime* choice matters
 just as much: a task can be solved with primitive tool calls, a macro skill, or a hybrid that falls back
 from macro to primitives on mismatch. The authors frame granularity as an action-abstraction policy
@@ -140,58 +89,41 @@ self-reported, no independent replication found.
 
 `subject: skills`
 
-Not rubric-scored: a batch-triage addition (paper only, no confirmed code artifact); score if promoted
-to a dedicated analysis.
-
-## Skill++ (added 2026-11-12)
-
-**Paper**: [arXiv:2611.00544][skillpp] — "Skill++: Towards Lifelong Agents via Routing-Aware Skill
-Refinement" (Zhang, Liang, Wu, Chen, Fan, Liu, Ma, Yuan, Wang, Min, Zheng, Liu, Yu; submitted
-2026-10-31). No code repository or project page was found on the abstract page.
-
-Frames a growing skill library as a lifelong, class-incremental routing problem: a router selects
-skills from name-plus-description alone, so a new skill similar to an older one can silently displace
-it at routing time even though the older skill's body never changed. Skill++ rewrites only the
-incoming skill's name and description — no router training, no labeled data — so the rewritten text
-states what the skill supports, how it differs from its closest predecessor, and what related work it
-excludes. On a library grown to 731 skills over ten sessions, the authors report selecting all required
-skills for 76.3% of queries versus 36.4% with the original metadata, across three benchmarks and five
-LLM routers, with gains carrying over to the Codex CLI agent harness — self-reported, no independent
-replication found.
-
-`subject: skills`
-
-Not rubric-scored: a batch-triage addition (paper only, no confirmed code artifact); score if promoted
-to a dedicated analysis.
+Not rubric-scored: a batch-triage addition; score if promoted to a dedicated analysis.
 
 ## Cross-References
 
 - [docs/_topics/skills.md](../../_topics/skills.md) — topic hub pointer
-- [docs/_topics/plugins.md](../../_topics/plugins.md) — AutoTailor's Model Context Protocol (MCP) tool-set angle
 - [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — distribution-side skill libraries (coleam00, cloudflare, superpowers, …)
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — `runtypelabs/skills`, the adjacent distribution-side entry for this research batch; also ACM (§1), a general agentic-configuration-governance paper that names "skills" as one of several configuration-item types it covers but gives it no distinct treatment (checked and found not to fill the skills·Shared/Distributed open cells, plan 0010 row L3)
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| WikiSkill ("Compiling Agent Experience into Persistent Knowledge for Skill Evolution") | Criterion 1: paper only, no code link on the abstract page (arXiv:2608.27454); results self-reported | 2026-11-22 | <https://arxiv.org/abs/2608.27454> |
+| AutoTailor ("Automatic, User-Aligned Capability Selection and Adaptation for Web Agents") | Criterion 1: paper only, no code link on the abstract page (arXiv:2609.13548); single-benchmark self-reported results | 2026-11-22 | <https://arxiv.org/abs/2609.13548> |
+| Skill++ ("Towards Lifelong Agents via Routing-Aware Skill Refinement") | Criterion 1: paper only, no code link on the abstract page (arXiv:2611.00544); self-reported results | 2026-11-22 | <https://arxiv.org/abs/2611.00544> |
 
 ## Sources
 
 | Source | Content |
 |---|---|
-| [WikiSkill (arXiv:2608.27454)][wikiskill] | Abstract, method summary, self-reported results |
-| [AutoTailor (arXiv:2609.13548)][autotailor] | Abstract, WebArena Postmill results |
 | [SkillLift (arXiv:2609.15396)][skilllift-paper] | Abstract, method summary; confirms the GitHub pairing |
 | [WalteR-MittY-pro/SkillLift][skilllift] | README (fetched via GitHub contents API, 2026-09-30), MIT license, repo metadata |
 | [NVlabs/Skill2Env][skill2env] | README (fetched via GitHub contents API, 2026-09-30), Apache-2.0 license, repo metadata |
+| [Adaptive Skill Granularity (arXiv:2610.31461)][adaptive-skill] | Abstract and method summary (2026-11-12); the HTML version names the code repo (checked 2026-11-22) |
+| [Jayceon-3/Adaptive-Skill-Agent][adaptive-skill-repo] | Repo metadata (2026-11-22) |
 | [Plan 0009][plan] | Lead list and rubric scope for this batch |
-| [Adaptive Skill Granularity (arXiv:2610.31461)][adaptive-skill] | Abstract, method summary; confirms no Comments/code field on the page — accessed 2026-11-12 |
-| [Skill++ (arXiv:2611.00544)][skillpp] | Abstract, method summary, 731-skill/10-session routing figures — accessed 2026-11-12 |
 
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [plan]: ../../plans/2026-09-27-0009-focus-shared-memory-context.md
-[wikiskill]: https://arxiv.org/abs/2608.27454
-[autotailor]: https://arxiv.org/abs/2609.13548
 [skilllift-paper]: https://arxiv.org/abs/2609.15396
 [skilllift]: https://github.com/WalteR-MittY-pro/SkillLift
 [skill2env]: https://github.com/NVlabs/Skill2Env
 [agentskills-org]: https://agentskills.io
 [harbor]: https://harborframework.com
 [adaptive-skill]: https://arxiv.org/abs/2610.31461
-[skillpp]: https://arxiv.org/abs/2611.00544
+[adaptive-skill-repo]: https://github.com/Jayceon-3/Adaptive-Skill-Agent
