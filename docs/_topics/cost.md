@@ -66,6 +66,6 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 | [CC-session-cost-analysis.md § Relationship to Statusline](../cc-native/sessions/CC-session-cost-analysis.md#relationship-to-statusline) | Live cost and context in the status line; see the [statusline.sh](../cc-native/examples/statusline.sh) example | cc-native |
 | [CC-monitoring-telemetry-analysis.md § Cost attribution](../cc-native/configuration/CC-monitoring-telemetry-analysis.md#cost-attribution) | Team and cost-centre tags, per-subagent spend from `agent_id`, per-user options by billing path | cc-native |
 | [CC-usage-tooling-landscape.md § Optimization Rules](../cc-community/CC-usage-tooling-landscape.md#optimization-rules) | CodeBurn's waste-detection rules | cc-community |
-| [CC-usage-tooling-landscape.md](../cc-community/CC-usage-tooling-landscape.md) | ccusage, Claude-Code-Usage-Monitor, cc-costline | cc-community |
+| [CC-usage-tooling-landscape.md](../cc-community/CC-usage-tooling-landscape.md) | ccusage, Claude-Code-Usage-Monitor | cc-community |
 
 Related hubs: [context.md](context.md), [harness.md](harness.md), [long-running.md](long-running.md), [management.md](management.md).
