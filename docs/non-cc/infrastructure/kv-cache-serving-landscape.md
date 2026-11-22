@@ -68,6 +68,13 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
   Hopper/Ada+. **Shipped** production knob. NVFP4 KV emerging on Blackwell.
 - **KIVI** ([arXiv 2402.02750][kivi]), **KVQuant** ([arXiv 2401.18079][kvquant]) — tuning-free 2-bit /
   outlier-aware low-bit for long context. **Research** (not mainline defaults).
+- **UltraQuant / Ultra-TurboQuant** ([arXiv 2606.20474][ultraquant], AMD) — 4-bit K/V for context-heavy
+  agentic serving; Ultra-TQ = optimized rotation+codebook (TurboQuant-derived), UltraQuant = hardware-
+  native FP4 via AMD CDNA4 scaled-MFMA. Vs. vLLM's FP8 KV baseline on AMD MI355X: P50 TTFT 3.47x faster
+  in cache-pressured late rounds (2.3x averaged), 1.63x output throughput — though FP8 stays ahead
+  (0.86x) in early "warm" rounds, so the gain is concentrated in the long-context/high-concurrency
+  regime. **Research**; the paper (HTML version, appendix A.2, read 2026-11-22) says the Ultra-TQ decode
+  kernel was upstreamed into vLLM mainline and the UltraQuant FP4 kernel is planned as a follow-up release.
 
 ### Eviction / sparsity (mostly research)
 
@@ -117,14 +124,6 @@ exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memo
   is small by construction (MLA/GQA/CLA)" + "treat the KV cache as a first-class distributed/tiered
   storage system (Mooncake/LMCache/disaggregation)."
 
-## Not included
-
-Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
-
-| Name | Reason | Date | Link |
-|---|---|---|---|
-| UltraQuant / Ultra-TurboQuant | Criterion 1: no usable artifact; the arXiv abstract page (read 2026-11-22) links no code and no public repo was found; the AMD MI355X speedups are paper-reported only | 2026-11-22 | <https://arxiv.org/abs/2606.20474> |
-
 ## Sources
 
 | Source | Content |
@@ -134,7 +133,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [PagedAttention][paged] · [vLLM APC][vllm-apc] | Paged memory + prefix caching |
 | [kvcached][kvcached-repo] · [site][kvcached-site] | OS-style virtual-memory KV manager for elastic multi-LLM GPU sharing |
 | [SGLang / RadixAttention][sglang] · [docs][radix] | Radix-tree prefix reuse + HiCache |
-| [FP8 KV (vLLM)][vllm-fp8] · [TensorRT-LLM][trtllm-quant] · [KIVI][kivi] · [KVQuant][kvquant] | Quantization |
+| [FP8 KV (vLLM)][vllm-fp8] · [TensorRT-LLM][trtllm-quant] · [KIVI][kivi] · [KVQuant][kvquant] · [UltraQuant][ultraquant] | Quantization |
 | [H2O][h2o] · [StreamingLLM][streamingllm] · [SnapKV][snapkv] · [Scissorhands][scissorhands] | Eviction/sparsity |
 | [MQA][mqa] · [GQA][gqa] · [MLA][mla] · [CLA][cla] | Architectural KV reduction |
 | [DistServe][distserve] · [Mooncake][mooncake] · [LMCache][lmcache] | Offload / disaggregation |
@@ -167,5 +166,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [mooncake]: https://arxiv.org/abs/2407.00079
 [lmcache]: https://github.com/LMCache/LMCache
 [lmcache-paper]: https://arxiv.org/abs/2510.09665
+[ultraquant]: https://arxiv.org/abs/2606.20474
 [capsules]: https://arxiv.org/abs/2606.20537
 [flashrt]: https://github.com/flashrt-project/FlashRT
