@@ -204,7 +204,7 @@ corpus's own: shared, distributed context and skills.
 | [system-1-decision-models-landscape.md][laya] | 7 decision-model rows |
 | [CC-memory-system-analysis.md][ccmem] | 4 context rows; ACE-FCA workflow and review gates |
 | [agent-skill-evolution-research-landscape.md][skilllift] | 4 skills rows |
-| [CC-community-skills-landscape.md][skl-cole] | 3 skills rows |
+| [CC-community-skills-landscape.md][skl-cole] | 2 skills rows |
 | [CC-community-tooling-landscape.md][hr] | human-review row |
 | [CC-memory-tooling-landscape.md][memtool] | agent-memory row |
 | [CC-plugin-packaging-research.md][ccplug] | CC plugin packaging row |
@@ -247,7 +247,7 @@ corpus's own: shared, distributed context and skills.
 [cei]: ../cc-native/context-memory/CC-memory-system-analysis.md#practitioner-template-context-engineering-intro
 [acefca]: ../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
 [skilllift]: ../non-cc/frameworks/agent-skill-evolution-research-landscape.md#skilllift
-[skl-cole]: ../cc-community/CC-community-skills-landscape.md#coleam00-cole-medin-skills-and-excalidraw-diagram-skill
+[skl-cole]: ../cc-community/CC-community-skills-landscape.md#coleam00-cole-medin-excalidraw-diagram-skill
 [hr]: ../cc-community/CC-community-tooling-landscape.md#human-review-petergyang
 [memtool]: ../cc-community/CC-memory-tooling-landscape.md#agent-memory-tigerless-labs
 [ccplug]: ../cc-native/plugins-ecosystem/CC-plugin-packaging-research.md#5-version-pinning-for-reproducible-installs
