@@ -28,7 +28,7 @@ and image token cost in
 
 | Harness | Image | PDF | Video | Voice |
 |---|---|---|---|---|
-| Claude Code ([CLI reference](../../cc-native/configuration/CC-cli-reference.md)) | Drag and drop, `Ctrl+V` paste (`Alt+V` on Windows and WSL), or a path in the prompt ([workflows][cc-workflows]); the Read tool returns PNG, JPEG, GIF, WebP as visual content ([tools][cc-tools]) | Read tool reads short PDFs whole; over 10 pages, a `pages` range of up to 20 pages, rendered with poppler's `pdftoppm` ([tools][cc-tools]) | not documented (checked 2026-11-22) | `/voice` dictation into the prompt; needs a claude.ai sign-in, not API-key or cloud-provider auth ([voice][cc-voice]) |
+| Claude Code ([CLI reference](../../cc-native/configuration/CC-cli-reference.md)) | Drag and drop, `Ctrl+V` paste (`Alt+V` on Windows and WSL), or a path in the prompt ([workflows][cc-workflows]); the Read tool returns PNG, JPEG, GIF, WebP as visual content ([tools][cc-tools]) | Read tool reads PDFs, with page ranges for long ones ([tools][cc-tools]; detail in [Read Tool: PDF & Image Parsing](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#read-tool-pdf--image-parsing)) | not documented (checked 2026-11-22) | `/voice` dictation into the prompt; needs a claude.ai sign-in, not API-key or cloud-provider auth ([voice][cc-voice]) |
 | [Codex CLI](codex-cli-analysis.md) | Paste into the composer, or `--image`/`-i` with comma-separated or repeated paths ([image inputs][codex-img], [commands][codex-cmds]) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) | `/voice` or F8 starts a voice conversation, in a terminal build that supports voice ([commands][codex-cmds]) |
 | [Gemini CLI](gemini-cli-analysis.md) | `read_file` "Supports text, images, audio, and PDF"; clipboard image paste not documented (checked 2026-11-22) ([file tools][gemini-fs], [shortcuts][gemini-keys]) | Same `read_file` line ([file tools][gemini-fs]) | not documented (checked 2026-11-22); the same line lists audio, not video | Hold `Space` to speak in Voice Mode ([shortcuts][gemini-keys]) |
 | [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md) | JPEG, PNG, GIF, WebP, HEIC and HEIF by `@path`, drag-and-drop or clipboard paste (`Alt+V`), with a model that supports image input ([using Copilot CLI][copilot-cli-use]); `--attachment PATH` in the [CLI reference][copilot-cli] | PDF attachments the same ways ([using Copilot CLI][copilot-cli-use]) | not documented (checked 2026-11-22) | `/voice` toggles voice mode and picks the microphone; `Ctrl+Space` toggles dictation ([CLI reference][copilot-cli]) |
@@ -49,18 +49,19 @@ and image token cost in
 - **Three styles of image input.** Claude Code, Codex CLI, Aider, Copilot CLI, Kiro CLI and Antigravity
   CLI give terminal users an explicit path (clipboard shortcut, flag or command). Gemini CLI and
   OpenCode document image handling only at the file-read tool, so an image reaches the model when the
-  agent reads a path. Editor-based tools (Cursor, Zed, VS Code, Cline) use drag-and-drop or attach.
+  agent reads a path. Editor-based tools (Cursor, Zed, VS Code, Cline) use drag-and-drop, paste or an
+  attach control; see each row for which. A file-read tool counts as documented only for the file types
+  its own page names, which is why Cursor's PDF cell stays undocumented.
 - **PDF is the thinnest column.** Only Claude Code, Copilot CLI, Gemini CLI, Cline, OpenCode and Amp document it,
-  and mostly as a file-read behaviour; Claude Code is the one that documents page ranges and a
-  rendering dependency.
+  and mostly as a file-read behaviour; Claude Code is the one that documents page ranges.
 - **Video is documented by three harnesses.** Amp (audio and video inspected directly), Kimi Code
   (pasted video, gated by `video_in`) and Antigravity CLI (four container formats). Gemini CLI lists
   audio but not video in its file tools.
 - **Voice is input to the prompt, not media.** Most rows document dictation or a voice mode; Claude
-  Code's needs a claude.ai sign-in, Kiro's is stated to transcribe on the user's machine, and
+  Code's needs a claude.ai sign-in, Kiro's is stated to run on the user's machine by default, and
   Antigravity's and Codex's are conversational.
-- **Gating by model and policy.** Copilot CLI, Kimi Code and Cline each say image or video use needs
-  a capable model. Copilot CLI's two pages differ on policy: the CLI reference says `--attachment` needs
+- **Gating by model and policy.** Copilot CLI, Kimi Code, Cline and Zed each say image or video use
+  needs a capable model. Copilot CLI's two pages differ on policy: the CLI reference says `--attachment` needs
   the model "and organization policy to allow vision input", while the usage page says attachments
   are "enabled by default, with no policy required". A documented harness path does not mean the
   selected model will accept the input.
