@@ -167,7 +167,7 @@ Entries that fail the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-we
 
 | Name | Reason | Date | Link |
 | ---- | ------ | ---- | ---- |
-| ChatGPT Atlas | Fails criterion 1 (no usable artifact): its launch post carries the note that Atlas "has since been deprecated" (no date given; read 2026-11-22) | 2026-11-22 | <https://openai.com/index/introducing-chatgpt-atlas/> |
+| ChatGPT Atlas | Fails criterion 1 (no usable artifact): its launch post carries the note that Atlas "has since been deprecated" (no date given; read 2026-11-22) and points readers to ChatGPT Work instead, so it is not a stale-but-usable entry | 2026-11-22 | <https://openai.com/index/introducing-chatgpt-atlas/> |
 
 ## Sources
 
