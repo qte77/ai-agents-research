@@ -193,6 +193,7 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 Distinct from the source-specific APIs above: general-purpose OCR/VLM tools that turn arbitrary PDFs and images into LLM-ready text — a document-ingestion front-end for RAG and knowledge bases.
 
 - [olmOCR (AllenAI)](https://github.com/allenai/olmocr) — GPU OCR pipeline converting PDF/PNG/JPEG → Markdown or Dolma JSON via a fine-tuned Qwen2.5-VL 7B model; handles equations, tables, handwriting, multi-column layout and reading-order recovery (<$200 / 1M pages, Apache-2.0). Install `pip install olmocr` (remote inference) or `pip install olmocr[gpu] --extra-index-url https://download.pytorch.org/whl/cu128` for local vLLM (Docker image `alleninstituteforai/olmocr:latest-with-model`). Run `olmocr <workspace> --pdfs … --markdown` — default model `allenai/olmOCR-2-7B-1025-FP8`; point at a remote endpoint with `--server`/`--api_key`, or read/write S3 via `--workspace_profile`/`--pdf_profile` (no env vars; the full ~25-flag reference is in the [repo README](https://github.com/allenai/olmocr)).
+- [Docling Graph (docling-project, IBM-sponsored)](https://github.com/docling-project/docling-graph) — extends [Docling](https://github.com/docling-project/docling) with a knowledge-graph layer: converts PDFs, images and Office files into typed Pydantic objects, then a directed graph (NetworkX, stable node IDs) exportable to CSV or Cypher for a graph database. Extraction schemas are Pydantic models that double as graph structure — auto-generated from example documents (`docling-graph template from-docs`: an LLM proposes classes/relationships, a deterministic renderer writes the code) or compiled directly from an existing Web Ontology Language (OWL)/RDFS/Simple Knowledge Organization System (SKOS) ontology with no LLM involved (`docling-graph template from-ontology`). MIT license, 901★ (verified 2026-09-24), part of the LF AI & Data ecosystem.
 
 | Platform | License/Pricing | Differentiator |
 |----------|----------------|----------------|
@@ -307,7 +308,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 |---|---|---|---|
 | scrapelex (Python) | 2 stars; last push 2024-03-08; no releases (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/bocchilorenzo/scrapelex> |
 | paperscraper | 547 stars (`gh api` 2026-11-22), about 2,300 PyPI downloads in the last month (pypistats 2026-11-22); no named independent users or measured benefit in its README | 2026-11-22 | <https://github.com/jannisborn/paperscraper> |
-| Docling Graph | 949 stars (`gh api` 2026-11-22); the Docling docs site does not present it (checked 2026-11-22), so it does not inherit Docling's adoption; no named independent users or measured benefit | 2026-11-22 | <https://github.com/docling-project/docling-graph> |
 
 ## Sources
 
