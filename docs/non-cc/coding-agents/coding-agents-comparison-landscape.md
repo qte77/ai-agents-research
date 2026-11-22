@@ -85,16 +85,16 @@ Prices and allowances are vendor claims as read on 2026-11-22 and change; "not d
 | Harness | Bring your own key (BYOK) / direct API | Custom base URL or gateway | Vendor pricing model | Cost controls documented |
 |---|---|---|---|---|
 | Claude Code | `ANTHROPIC_API_KEY` for "direct Anthropic API access" with a Console key; also Amazon Bedrock, Google Cloud's Agent Platform and Microsoft Foundry ([auth][cc-auth]) | `ANTHROPIC_BASE_URL`; "Any gateway that exposes a" supported API format works, but Anthropic "doesn't support routing Claude Code to non-Claude models through any gateway" ([gateway][cc-gw]) | "Claude Code charges by API token consumption"; subscription plans are priced separately ([costs][cc-costs]) | `/usage` shows session tokens and a cost computed locally at list price, plus a prompt-cache line; `/model`, `/effort`; Console workspace spend limits ([costs][cc-costs]) |
-| [Codex CLI](codex-cli-analysis.md) | Sign in with an API key for "usage-based access" ([auth][codex-auth]) | A model provider is "base URL, wire API, authentication, and optional HTTP headers"; the built-in provider can point at a proxy or router; `--oss` runs Ollama or LM Studio ([advanced config][codex-cfg]); OpenAI models via Amazon Bedrock ([Bedrock][codex-bedrock]) | Plan allowance plus credits; "API-key sessions use separate API pricing, not your ChatGPT allowance" ([pricing][codex-pricing]) | `/status` in a session and a usage dashboard; no spend-limit setting on the pricing page ([pricing][codex-pricing]) |
+| [Codex CLI](codex-cli-analysis.md) | Sign in with an API key for "usage-based access" ([auth][codex-auth]) | A model provider is "base URL, wire API, authentication, and optional HTTP headers"; the built-in provider can point at a proxy or router; `--oss` runs Ollama or LM Studio ([advanced config][codex-cfg]); OpenAI models via Amazon Bedrock ([Bedrock][codex-bedrock]) | Plan allowance plus credits; "API-key sessions use separate API pricing, not your ChatGPT allowance" ([pricing][codex-pricing]) | `/status` in a session and a usage dashboard ([pricing][codex-pricing]); API-key usage bills the OpenAI Platform account ([auth][codex-auth]), whose spend-limits guide documents organization and project hard limits but does not mention Codex ([spend limits][oai-spend]) |
 | [Gemini CLI](gemini-cli-analysis.md) | `GEMINI_API_KEY` from Google AI Studio, or Vertex AI by ADC, service-account key or Cloud API key ([auth][gemini-auth]) | `GOOGLE_GEMINI_BASE_URL` and `GOOGLE_VERTEX_BASE_URL` override the endpoints; HTTPS unless localhost ([configuration][gemini-cfg]) | "Your authentication method affects your quotas, pricing" ([auth][gemini-auth]); the page also says Antigravity CLI replaced Gemini CLI on 2026-06-18 | Token caching with an API key or Vertex, not with OAuth; `/stats` shows usage and cached-token savings ([token caching][gemini-cache]) |
 | [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md) | `providers.json` entries of type `openai`, `azure` or `anthropic`; local Ollama models are found automatically ([BYOK][copilot-byok]) | `baseUrl` per provider; the OpenAI type covers "Ollama, vLLM, and Foundry Local"; `COPILOT_PROVIDERS_CONFIG` moves the file ([BYOK][copilot-byok]) | AI credits, "1 AI credit = $0.01 USD"; billing of BYOK models not documented (checked 2026-11-22) ([billing][copilot-billing]) | Budget for usage beyond included credits "set in US dollars"; usage dashboard ([billing][copilot-billing]) |
 | [VS Code Copilot Chat](vscode-copilot-chat-analysis.md) | Built-in providers include "Azure, Anthropic, Gemini, OpenAI, and others"; BYOK models "work without signing into a GitHub account and without a Copilot plan", chat only ([language models][vscode-lm]) | Custom Endpoint provider for Chat Completions, Responses or Messages APIs ([language models][vscode-lm]) | AI credits ([Copilot billing][copilot-billing]) | "Higher thinking effort produces more thinking tokens, which increases AI credit consumption"; budget as in the Copilot CLI row ([language models][vscode-lm], [billing][copilot-billing]) |
-| [Cursor](cursor-analysis.md) | OpenAI, Anthropic, Google, Azure and AWS Bedrock keys in Settings, Models; "Custom API keys only work with chat models", Tab keeps Cursor's models ([API keys][cursor-keys]) | base URL override not documented (checked 2026-11-22) | Weekly pool for Cursor models; third-party models "at API list price, paid from prepaid credit" on Premium and above; Teams and Enterprise add a rate "on top of model API pricing" for BYOK usage ([pricing][cursor-pricing]) | "Your remaining usage and next reset date are shown in your editor settings" ([pricing][cursor-pricing]) |
-| [Cline](cline-analysis.md) | "Bring Your Own Key" with cloud providers or local runtimes ([overview][cline-start]) | OpenAI Compatible provider takes a Base URL, key and model ID; OpenRouter listed ([OpenAI compatible][cline-oai], [OpenRouter][cline-or]) | Cline account with built-in billing; ClinePass "Flat $9.99/month subscription" ([overview][cline-start]); "OpenRouter charges based on the underlying model's pricing" ([OpenRouter][cline-or]) | not documented (checked 2026-11-22) |
-| [Aider](aider-analysis.md) | Connects to "most LLMs": OpenAI, Anthropic, Gemini, Azure, Bedrock, Vertex AI, OpenRouter, Ollama and others ([LLMs][aider-llms]) | `OPENAI_API_BASE` plus an `openai/` model prefix for OpenAI-compatible endpoints ([OpenAI compatible][aider-oai]) | not documented (checked 2026-11-22) | `--cache-prompts` for Anthropic Sonnet and Haiku and DeepSeek Chat; "caching statistics and costs are not available when streaming responses", use `--no-stream` ([caching][aider-cache]) |
+| [Cursor](cursor-analysis.md) | OpenAI, Anthropic, Google, Azure and AWS Bedrock keys in Settings, Models; "Custom API keys only work with chat models", Tab keeps Cursor's models ([API keys][cursor-keys]) | base URL override not documented (checked 2026-11-22) | Weekly pool for Cursor models; third-party models "at API list price, paid from prepaid credit" on Premium and above; Teams and Enterprise add a rate "on top of model API pricing" for BYOK usage ([pricing][cursor-pricing]) | "A monthly additional usage limit caps how much paid additional usage you can consume each month"; on Teams "one cap for the whole team"; "Your remaining usage and next reset date are shown in your editor settings" ([pricing][cursor-pricing]) |
+| [Cline](cline-analysis.md) | "Bring Your Own Key" with cloud providers or local runtimes ([overview][cline-start]) | OpenAI Compatible provider takes a Base URL, key and model ID; OpenRouter listed ([OpenAI compatible][cline-oai], [OpenRouter][cline-or]) | Cline account: credits "used on a pay-as-you-go basis" for paid models ([Cline provider][cline-prov]); ClinePass "Flat $9.99/month subscription" that "offers 2-5x the usage on popular open coding models compared to standard API rate" (vendor claim) ([overview][cline-start]); "OpenRouter charges based on the underlying model's pricing" ([OpenRouter][cline-or]) | "View usage in Cline Settings" ([Cline provider][cline-prov]); no spend cap on the pages read (checked 2026-11-22) |
+| [Aider](aider-analysis.md) | Connects to "most LLMs": OpenAI, Anthropic, Gemini, Azure, Bedrock, Vertex AI, OpenRouter, Ollama and others ([LLMs][aider-llms]) | `OPENAI_API_BASE` plus an `openai/` model prefix for OpenAI-compatible endpoints ([OpenAI compatible][aider-oai]) | No vendor pricing: Apache-2.0 repository ([repo][aider-repo]), you bring the provider's key | `--cache-prompts` for Anthropic Sonnet and Haiku and DeepSeek Chat; "caching statistics and costs are not available when streaming responses", use `--no-stream` ([caching][aider-cache]) |
 | [OpenCode](opencode-analysis.md) | `/connect` adds credentials for catalog providers; Bedrock uses the AWS credential chain, Vertex uses ADC, Azure uses deployments ([providers][oc-providers]) | Add a custom provider or override `baseURL` for a catalog provider; LM Studio and vLLM have built-in local discovery ([providers][oc-providers]) | Console "uses pay-as-you-go pricing", sold "at cost, with markup only to cover processing fees": 4.6% + $0.31 per credit purchase (vendor claim); Go is a subscription, see the [headless billing table](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing) ([Console][oc-zen]) | not documented (checked 2026-11-22) |
-| [Amp](amp-analysis.md) | Hobby tier lists "bring-your-own-key (BYOK) support" ([pricing][amp-pricing]) | not documented (checked 2026-11-22) | "pay for what you use at standard rates" or monthly tiers; "Amp does not add a markup to providers' API prices" for individuals and non-enterprise workspaces; purchased credits expire after twelve months ([pricing][amp-pricing]) | Balance in settings or `amp usage`; per-thread cost on the thread's price label ([pricing][amp-pricing]) |
-| [Windsurf](windsurf-analysis.md) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) |
+| [Amp](amp-analysis.md) | BYOK on Hobby and Individual; Teams add "Shared BYOK & model routing"; Enterprise lists regional endpoints for BYOK providers ([pricing][amp-pricing]) | Custom URL connection to "any OpenAI- or Anthropic-compatible endpoint": "Enter the base URL, and Amp appends the API path"; routers such as OpenRouter, Vercel AI Gateway and Cloudflare AI Gateway listed, "available to all users on every tier" ([model routing][amp-routing]) | "pay for what you use at standard rates" or monthly tiers; "Amp does not add a markup to providers' API prices" for individuals and non-enterprise workspaces; purchased credits expire after twelve months ([pricing][amp-pricing]) | Balance in settings or `amp usage`; per-thread cost on the thread's price label ([pricing][amp-pricing]) |
+| [Windsurf](windsurf-analysis.md) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) | Docs now say Devin Desktop: since March 2026 a quota with daily and weekly allowances; extra usage "billed at API list prices for the model you're using" ([quota][ws-quota]); per-token prices per model, e.g. SWE-2 free for self-serve plans through November 30, 2026, then $3.00/1M input and $15.00/1M output ([models][ws-models]); legacy credit plans: "$120 for 1000 pooled credits" ([usage][ws-usage]) (vendor claims) | Remaining quota in the usage meter or plan page; docs suggest the lower-cost SWE models for routine tasks ([quota][ws-quota]); legacy credit auto-refill "subject to maximum monthly budget caps ($160 by default)" ([usage][ws-usage]); a cap on self-serve extra usage not documented (checked 2026-11-22) |
 | [Kiro](kiro-analysis.md) | not documented (checked 2026-11-22); `KIRO_API_KEY` is a Kiro key for paid tiers, not a provider key ([headless][kiro-headless]) | not documented (checked 2026-11-22) | Credits: Pro $20/user/month for 1,000 credits, add-on credits $0.04 each (vendor prices) ([pricing][kiro-pricing]) | Credits used and remaining in the subscription dashboard, "updated at least every 5 minutes" ([pricing][kiro-pricing]) |
 | [Zed](zed-analysis.md) | Keys go to the system keychain; Anthropic, OpenAI, Google AI, Mistral, DeepSeek, xAI; own keys on every plan including Free ([API access][zed-api], [plans][zed-plans]) | `api_url` under `language_models.openai_compatible` for an OpenAI-compatible endpoint ([API access][zed-api]) | Hosted models at provider list price "+10%", Pro includes $5 monthly token credit; own-key use "even when you pay the provider directly" is API access ([plans][zed-plans], [API access][zed-api]) | Billing page for usage; Pro default incremental limit $10, adjustable down to $0; org-wide limit on Business ([plans][zed-plans]) |
 | [Kimi Code](kimi-code-analysis.md) | Provider types `kimi`, `anthropic`, `openai`, `openai_responses`, `bedrock`, `google-genai`, `vertexai`; `/login` also takes a Kimi Platform API key ([providers][kimi-prov], [getting started][kimi-start]) | `base_url` per provider; the `openai` type works with "any third-party service compatible with that protocol" ([providers][kimi-prov]) | Kimi Code is a membership subscription "with rate limiting"; the Kimi Platform is "Pay-as-you-go, top up and use" ([Kimi Code docs][kimi-docs]) | not documented (checked 2026-11-22) |
@@ -102,22 +102,26 @@ Prices and allowances are vendor claims as read on 2026-11-22 and change; "not d
 
 ### Model access notes
 
-- **Custom endpoints split three ways.** Documented base-URL or gateway paths: Claude Code,
-  Codex CLI, Gemini CLI, Copilot CLI, VS Code, Cline, Aider, OpenCode, Zed and Kimi Code. Cursor,
-  Amp, Windsurf, Kiro and Antigravity do not document one on the pages read. A documented
-  endpoint says the harness will send requests there, not that every gateway forwards the
-  harness's features; Claude Code's page says so for its own case.
-- **Claude Code's gateway page limits models.** It says Anthropic "doesn't support routing Claude Code to non-Claude models through any gateway";
-  Aider, OpenCode, Cline, Zed and Kimi Code document multi-provider setups.
+- **Custom endpoints are documented by 11 of 15.** Claude Code, Codex CLI, Gemini CLI, Copilot
+  CLI, VS Code, Cline, Aider, OpenCode, Amp, Zed and Kimi Code document a base-URL or gateway path.
+  Cursor, Windsurf, Kiro and Antigravity do not on the pages read. A documented endpoint says the
+  harness will send requests there, not that every gateway forwards the harness's features; Claude
+  Code's page says so for its own case.
+- **Claude Code's gateway page limits models.** It says Anthropic "doesn't support routing Claude
+  Code to non-Claude models through any gateway"; Aider, OpenCode, Cline, Zed, Amp and Kimi Code
+  document multi-provider setups.
 - **Pass-through pricing is stated by few.** Amp ("does not add a markup", non-enterprise) and
   OpenCode Console ("at cost", plus a purchase fee) say so; Zed states +10% on hosted models;
-  Cursor states list price from prepaid credit. All are vendor claims.
+  Cursor and Windsurf (Devin Desktop) state API list price for usage beyond their allowance. All
+  are vendor claims.
 - **Cost controls are mostly usage displays.** Spend caps are documented by Claude Code (Console
-  workspaces), Copilot (a budget in dollars) and Zed (monthly limit); Codex's pricing page names
-  none. Caching controls appear for Aider (`--cache-prompts`), Gemini CLI (token caching) and
-  Claude Code (prompt cache statistics).
-- **Windsurf docs moved.** Its docs now live under Devin's; the pages read did not cover
-  Windsurf's models or pricing, so every cell stays undocumented rather than inferred.
+  workspaces), Copilot (a budget in dollars), Cursor (a monthly additional-usage limit), Zed (a
+  monthly limit) and, for legacy credit plans, Windsurf (a monthly budget cap). Codex's pricing page
+  names none; its API-key route falls under OpenAI's general API spend limits. Caching controls
+  appear for Aider (`--cache-prompts`), Gemini CLI (token caching) and Claude Code (prompt cache
+  statistics).
+- **Windsurf docs moved and the product was renamed.** They now live under Devin's as Devin
+  Desktop; BYOK and endpoint overrides were not found there, so those cells stay undocumented.
 - **Antigravity cells rest on one page.** The getting-started CLI tab lists sign-in modes and
   `/usage` but no endpoint override or prices; the auth names it uses mirror Gemini CLI's.
 
@@ -184,6 +188,13 @@ Prices and allowances are vendor claims as read on 2026-11-22 and change; "not d
 | [Kimi Code: providers][kimi-prov] | Provider types, `base_url` |
 | [Kimi Code docs][kimi-docs] | Membership vs platform billing |
 | [Kimi Code: getting started][kimi-start] | `/login` Platform API key |
+| [OpenAI: spend limits][oai-spend] | Organization and project hard limits for the API |
+| [Cline: Cline provider][cline-prov] | Pay-as-you-go credits, View Usage |
+| [Aider: repository][aider-repo] | Apache-2.0 licence |
+| [Amp: model routing][amp-routing] | Custom URL connection, routers |
+| [Devin Desktop: quota-based usage][ws-quota] | Extra usage at API list prices, usage meter |
+| [Devin Desktop: models][ws-models] | Per-token prices, SWE-2 promotion |
+| [Devin Desktop: usage (legacy credits)][ws-usage] | $120 per 1000 pooled credits, budget caps |
 | [Antigravity: getting started (CLI tab)][ag-start] | Sign-in modes, `/usage`, plan names |
 
 [cc-workflows]: https://code.claude.com/docs/en/common-workflows
@@ -246,3 +257,10 @@ Prices and allowances are vendor claims as read on 2026-11-22 and change; "not d
 [kimi-docs]: https://www.kimi.com/code/docs/en/
 [ag-start]: https://antigravity.google/docs/getting-started?tab=cli
 [kimi-start]: https://moonshotai.github.io/kimi-code/en/guides/getting-started.html
+[oai-spend]: https://developers.openai.com/api/docs/guides/spend-limits
+[cline-prov]: https://docs.cline.bot/getting-started/cline-provider
+[aider-repo]: https://github.com/Aider-AI/aider
+[amp-routing]: https://ampcode.com/docs/customize/model-routing
+[ws-quota]: https://docs.devin.ai/desktop/accounts/quota
+[ws-models]: https://docs.devin.ai/desktop/models
+[ws-usage]: https://docs.devin.ai/desktop/accounts/usage
