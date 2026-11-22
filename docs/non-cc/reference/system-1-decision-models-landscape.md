@@ -250,9 +250,6 @@ another model's output.
 - Free-text LLM-as-a-judge metrics (documented) — G-Eval, TRUE, and others; see
   [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics].
   These score generated prose, not a typed decision.
-- **Failure mode**: per the paper's own abstract (re-checked 2026-10-09), the approach "falls
-  behind where the verdict must be derived, as in math, code, and logic," and "Confidence routing
-  weakens on style-adversarial pairs and reference-free prose."
 
 ### 6. Confidence gate (act / confirm / human-in-the-loop escalation)
 
