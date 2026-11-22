@@ -194,8 +194,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| cc-costline | 28 stars; no LICENSE file (GitHub `license` null), so not a usable grant; no measured benefit or named independent users (`gh api` 2026-11-22). Its optional ccclub integration (38 stars) goes with it | 2026-11-22 | <https://github.com/Ventuss-OvO/cc-costline> |
-| agentacct | 758 stars, repo created 2026-07-24; the README calls it early alpha; no measured benefit or named independent users (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/mikehasa/agentacct> |
+| cc-costline | Criterion 3: 28 stars, no measured benefit or named independent users; also no LICENSE file (`gh api` 2026-11-22). Its optional ccclub integration (38 stars) goes with it | 2026-11-22 | <https://github.com/Ventuss-OvO/cc-costline> |
+| agentacct | Criterion 3: 758 stars, repo created 2026-07-24; the README calls it early alpha; no measured benefit or named independent users (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/mikehasa/agentacct> |
 
 ## Sources
 
