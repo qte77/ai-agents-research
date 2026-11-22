@@ -334,7 +334,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | jarrodwatts/claude-stt | Archived (last push 2026-03-13), 364 stars, below the one-dated-line adoption bar; superseded by native `/voice` (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/jarrodwatts/claude-stt> |
 | Traves-Theberge/Wake-Word | 7 stars; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/Traves-Theberge/Wake-Word> |
 | SergeyKirk/hey-claude | 1 star; no measured benefit or named independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/SergeyKirk/hey-claude> |
-| bacharyehya/talk-to-claude | No usable artifact: repo returned 404 as of 2026-11-02 (removed) | 2026-11-21 | <https://github.com/bacharyehya/talk-to-claude> |
+| bacharyehya/talk-to-claude | No usable artifact: repo removed (404 on 2026-11-02 and on 2026-11-22, `gh api`) | 2026-11-21 | `github.com/bacharyehya/talk-to-claude` (removed) |
 | iusztinpaul/squid | 218 stars; no measured benefit or named independent users in its README (`gh api` 2026-11-21); the only adoption evidence was the author's own writeup | 2026-11-21 | <https://github.com/iusztinpaul/squid> |
 | OneWave-AI/claude-code-mods | 32 stars; no measured benefit or named independent users; self-described partner status unverified (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/OneWave-AI/claude-code-mods> |
 | whyashthakker/awesome-claude-code-mods | 124 stars; created 2026-10-03; the README reports test counts ("70 strict plugin validations and 390 native tests"), not a measured benefit, and names no independent users (`gh api` 2026-11-21) | 2026-11-21 | <https://github.com/whyashthakker/awesome-claude-code-mods> |
