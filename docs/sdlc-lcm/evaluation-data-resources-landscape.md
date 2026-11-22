@@ -64,12 +64,11 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | Azure AI Evaluation SDK | [docs](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/agent-evaluate-sdk) | Programmatic Azure Foundry agent eval | Likert 1–5 |
 | Strands Agents Evaluation | [docs](https://strandsagents.com/docs/user-guide/evals-sdk/quickstart/) | Multi-dimensional agent eval | — |
 | Maxim AI | [site](https://www.getmaxim.ai/) | Simulation + eval + observability | — |
-| Yupp.ai | [site](https://yupp.ai/) | Crowd-sourced model comparison | Bradley-Terry/VIBE, 500+ models |
 | Every Eval Ever | [github](https://github.com/evaleval/every_eval_ever) | Community schema unifying Inspect AI/HELM/lm-evaluation-harness eval outputs into one JSON format | arXiv:2606.14516; backed by Hugging Face, U. Edinburgh, EleutherAI; MIT (code/dataset), paper CC BY 4.0 |
 
 ## 2. Benchmarks
 
-**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [CLEAR](https://arxiv.org/abs/2511.14136) (Cost/Latency/Efficacy/Assurance/Reliability, ρ=0.83 production correlation vs 0.41 for accuracy-only, expert study N=15; abstract, v1 2025-11-18), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentQuest](https://arxiv.org/abs/2404.06411), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; open general-agent leaderboard; [General Agent Evaluation](https://arxiv.org/abs/2602.22953), 2026-02-26, v2 2026-05-11, is the paper behind it; its abstract does not state the "top 0.73 success @ $8.54/task" figure quoted in [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), so treat that figure as paper-body-reported and unverified here — the site's `results.csv` lists per-benchmark scores with no date column, e.g. 0.88 on TauBench-Telecom for Smolagent + gemini-3-pro).
+**General & real-world agent**: [METR HCAST](https://evaluations.metr.org/) (pre-release autonomy; time-horizon, reward-hacking rate), [τ-bench](https://sierra.ai/blog/benchmarking-ai-agents) & [τ²-bench](https://arxiv.org/abs/2506.07982) (simulated-user tool use), [AgentBoard](https://arxiv.org/abs/2401.13178), [TheAgentCompany](https://arxiv.org/abs/2412.14161), [Exgentic](https://www.exgentic.ai/) (IBM unified protocol; open general-agent leaderboard; [General Agent Evaluation](https://arxiv.org/abs/2602.22953), 2026-02-26, v2 2026-05-11, is the paper behind it; its abstract does not state the "top 0.73 success @ $8.54/task" figure quoted in [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md), so treat that figure as paper-body-reported and unverified here — the site's `results.csv` lists per-benchmark scores with no date column, e.g. 0.88 on TauBench-Telecom for Smolagent + gemini-3-pro).
 
 **Reward hacking (coding agents)**: [EvilGenie](https://arxiv.org/abs/2511.21654) (LiveCodeBench tasks where agents can hardcode tests or edit test files; detection via held-out tests, LLM judges and test-file edits; covers Claude Code, Codex, Gemini CLI). Context: [ai-security-governance-analysis.md § Reward Hacking](ai-security-governance-analysis.md#reward-hacking-and-evaluation-awareness-research).
 
@@ -103,8 +102,6 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | [ExLabel][exlabel] (Jiang et al.) | Task clarity and test coverage in SWE-bench-style datasets | An LLM assistant with an evolving experience bank reports the best F1 across all settings on its eight-language SWE-TQ benchmark, against the best baseline; a model trained on filtered data resolves 66.2% of SWE-bench Verified | 2026-10-29 |
 | [TRACE][trace] (Gaonkar) | Verifier brittleness | Renaming tools or reformatting output mostly left rewards near unchanged; misleading tool names lowered them; identical reruns flipped 15-36% of outcomes | 2026-10-08 |
 | [Agents Are Systems][agent-systems] (Wiedmann et al.) | Configuration effects on four scientific tasks | About 54% of outcome variance came from repeating the same configuration; task information had the largest effect | 2026-10-01 |
-
-**Saturation-resistant design.** [SqueezeBench][squeeze] (Manrique, Xia, Szeider, 2026-10-09) avoids saturation by scoring bounds on integer functions: a submission must beat a recorded bound and carry a Lean-checked proof, then replaces the record. Ten extremal-combinatorics problems; agents produced 82 accepted record-improving submissions in the baseline round and 60 more with newer models.
 
 **Contamination detection and mitigation.** The corpus holds the principle ([mas-benchmarking-best-practices.md § 3.1](mas-benchmarking-best-practices.md): dynamic benchmarks and a private test subset); this adds sources. [A survey of benchmark data contamination][contam-survey] (Xu et al., 2024-06-06) reviews the problem; its abstract emphasises mitigation and alternative evaluation rather than detection methods, so it is not cited here for any detection technique. Methods below are read at their arXiv abstract pages (2026-11-18); all are paper-reported results, none independently reproduced here, and none of the abstracts states a limit.
 
@@ -207,9 +204,7 @@ ask for is short:
 | Dataset | Link | Content | Size |
 |---|---|---|---|
 | PeerRead | [github](https://github.com/allenai/PeerRead) | Paper drafts + expert peer reviews + decisions (JSONL) | 14K drafts, 10K+ reviews |
-| SWIF2T | [arxiv](https://arxiv.org/abs/2405.20477) | Peer reviews citing scientific-paper weaknesses | 300 reviews |
 | BigSurvey | [pdf](https://www.ijcai.org/proceedings/2022/0591.pdf) | Survey papers + referenced abstracts | 7K surveys, 430K abstracts |
-| SciXGen | [arxiv](https://arxiv.org/abs/2110.10774) | Context-aware scientific text generation | 205K papers |
 | scientific_papers | [hf](https://huggingface.co/datasets/armanc/scientific_papers) | Long structured arXiv/PubMed papers | 300K+ |
 | FEVER | [site](https://fever.ai/dataset/fever.html) | Fact extraction & verification | 185.4K |
 | LIAR | [zip](https://www.cs.ucsb.edu/~william/data/liar_dataset.zip) | Fake-news detection | 12.8K |
@@ -218,10 +213,6 @@ ask for is short:
 | Plancraft | [arxiv](https://arxiv.org/abs/2412.21033) | Agent planning (text + multimodal) | — |
 | IDAT | [arxiv](https://arxiv.org/abs/2407.08898) | Interactive task-solving agent eval | — |
 | PDEBench | [github](https://github.com/pdebench/PDEBench) | SciML on partial differential equations | — |
-| MatSci-NLP | [arxiv](https://arxiv.org/abs/2305.08264) | Materials-science NLP eval | — |
-| StatLLM | [arxiv](https://arxiv.org/abs/2502.17657) | Statistical analysis + LLM SAS code, human scores | — |
-| Trelis Function Calling | [hf](https://huggingface.co/datasets/Trelis/function_calling_v3) | Tool-use / function-invocation | — |
-| KnowLM-Tool | [hf](https://huggingface.co/datasets/zjunlp/KnowLM-Tool) | Knowledge-grounded function invocation | — |
 
 ## Cross-References
 
@@ -243,6 +234,16 @@ Entries below fail the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-w
 | MiniCorp | Criterion 1: the project site's GitHub link (`github.com/agents-minicorp/minicorp`) returned 404 on 2026-11-22 and the site says the demo is "coming soon"; no downloadable artifact | 2026-11-22 | [arXiv:2610.05912](https://arxiv.org/abs/2610.05912) |
 | Omi medical STT benchmark | Criterion 3: vendor-run, the vendor's own model tops its own tables (the measured result is a self-score); scorer repo 54 stars (`gh api` 2026-11-22); no independent users found | 2026-11-22 | [site](https://omi.health/benchmark) |
 | awesome-reasoning | Criteria 2 and 3: last push 2024-08-04, 143 stars (`gh api` 2026-11-22); a link list, not a dataset | 2026-11-22 | [github](https://github.com/neurallambda/awesome-reasoning) |
+| SqueezeBench | Criterion 3: 10 stars (`gh api` 2026-11-22), 6 weeks after the 2026-10-09 paper; the records are mostly the authors' own baseline runs and the paper says the runs "were not a controlled comparison"; no independent users found | 2026-11-22 | [arXiv:2610.13461](https://arxiv.org/abs/2610.13461) |
+| CLEAR | Criterion 1: the arXiv HTML version (checked 2026-11-22) links no code or data and says only that the author "aim[s] to release" the task suite and evaluation code; GitHub search found no repo; the expert study (N=15) is the author's own | 2026-11-22 | [arXiv:2511.14136](https://arxiv.org/abs/2511.14136) |
+| AgentQuest | Criteria 2 and 3: 31 stars, last push 2025-04-03 (`gh api` 2026-11-22); NAACL 2024 demo paper; no independent paper reporting results on it found | 2026-11-22 | [github](https://github.com/nec-research/agentquest) |
+| Yupp.ai | Criterion 2: the service shut down on 2026-03-31 ([TechCrunch](https://techcrunch.com/2026/03/31/yupp-ai-shuts-down-raising-33m-from-a16z-cryptos-chris-dixon/)) | 2026-11-22 | [site](https://yupp.ai/) |
+| SWIF2T | Criterion 3: Findings of ACL 2024; authors' repo 9 stars, last push 2024-07-16 (`gh api` 2026-11-22); no independent users found; the paper links no test-set release | 2026-11-22 | [arXiv:2405.20477](https://arxiv.org/abs/2405.20477) |
+| SciXGen | Criteria 2 and 3: EMNLP 2021 Findings; repo 13 stars, last push 2022-02-14 (`gh api` 2026-11-22); no follow-up work using it found | 2026-11-22 | [arXiv:2110.10774](https://arxiv.org/abs/2110.10774) |
+| StatLLM | Criterion 3: arXiv preprint only, repo 7 stars (`gh api` 2026-11-22); no independent users found | 2026-11-22 | [arXiv:2502.17657](https://arxiv.org/abs/2502.17657) |
+| MatSci-NLP | Criterion 3: ACL 2023; repo `BangLab-UdeM-Mila/NLP4MatSci-ACL23` 19 stars, last push 2023-11-21 (`gh api` 2026-11-22); no independent results on it found | 2026-11-22 | [arXiv:2305.08264](https://arxiv.org/abs/2305.08264) |
+| Trelis Function Calling | Criterion 3: the vendor's own dataset behind its own fine-tuned models; full v3 is gated and sold; 232 downloads, last modified 2024-03-06 (Hugging Face API, 2026-11-22); no independent use found | 2026-11-22 | [hf](https://huggingface.co/datasets/Trelis/function_calling_v3) |
+| KnowLM-Tool | Criterion 3: 18 downloads, last modified 2023-07-29 (Hugging Face API, 2026-11-22); no independent use found | 2026-11-22 | [hf](https://huggingface.co/datasets/zjunlp/KnowLM-Tool) |
 
 ## Sources
 
@@ -301,7 +302,6 @@ EDD-methodology sources:
 [exlabel]: https://arxiv.org/abs/2610.39417
 [trace]: https://arxiv.org/abs/2610.11678
 [agent-systems]: https://arxiv.org/abs/2610.01618
-[squeeze]: https://arxiv.org/abs/2610.13461
 [abc]: https://arxiv.org/abs/2507.02825
 [contam-survey]: https://arxiv.org/abs/2406.04244
 [lcb]: https://arxiv.org/abs/2403.07974
