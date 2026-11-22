@@ -219,7 +219,8 @@ are silent, not that the feature is absent. Per-tool depth lives in the analysis
 [OpenCode](../../non-cc/coding-agents/opencode-analysis.md),
 [Pi](../../non-cc/coding-agents/pi-analysis.md). Headless sign-in and billing are compared in
 [CC-web-auth-setup-analysis.md § Other Coding CLIs](../ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing)
-and not repeated here.
+and not repeated here. Image, PDF, video and voice input across 15 harnesses are compared in
+[coding-agents-comparison-landscape.md](../../non-cc/coding-agents/coding-agents-comparison-landscape.md).
 
 Status 2026-11-18: the Gemini CLI column describes the repository as read on 2026-11-15; Google stopped serving free, AI Pro, AI Ultra and Google One users on 2026-06-18 and points them to Antigravity CLI ([tier reconciliation](../../non-cc/coding-agents/gemini-cli-analysis.md)). Antigravity CLI is not a column here; its sandbox, resume and headless docs are in [antigravity-analysis.md](../../non-cc/coding-agents/antigravity-analysis.md#antigravity-cli-agy-first-party-docs-checked-2026-11-18).
 
