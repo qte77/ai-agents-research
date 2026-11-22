@@ -3,7 +3,7 @@ title: CC Usage-Observability Tooling Landscape
 purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor, cc-costline, agentacct.
 status: research
 created: 2026-06-14
-updated: 2026-09-24
+updated: 2026-11-22
 validated_links: 2026-09-24
 ---
 
@@ -81,11 +81,11 @@ Each finding ships estimated token/dollar savings plus copy-paste remediation (`
 
 ### Key Differentiator
 
-Where RTK reduces tokens *entering* context and caveman compresses tokens *leaving* the assistant, **CodeBurn observes** what was actually spent — across agents, models, and projects. Complementary to both: optimization needs measurement. Local-first (no API keys, no telemetry) makes it usable in air-gapped or compliance-sensitive environments.
+Where RTK reduces tokens *entering* context and caveman (output voice, plus input shrinking in its 4.x CLI) trims the assistant's own replies, **CodeBurn observes** what was actually spent — across agents, models, and projects. Complementary to both: optimization needs measurement. Local-first (no API keys, no telemetry) makes it usable in air-gapped or compliance-sensitive environments.
 
 **Blind spot**: CodeBurn's dashboard, `optimize`, and `export` read only local transcripts (`~/.claude/projects/` for Claude), so Chats and Cowork usage are invisible to them and total plan usage is undercounted; its separate `codeburn quota` subcommand queries the provider's live account limit instead and is not subject to this gap. See [CC-session-cost-analysis.md § Shared plan usage across Claude products][cc-session-cost-usage].
 
-Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — caveman (output compression skill); [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's native session-cost extraction via JSONL/jq
+Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — caveman (output-voice skill and local token-saving proxy); [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — CC's native session-cost extraction via JSONL/jq
 
 ---
 

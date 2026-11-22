@@ -2,7 +2,7 @@
 title: Agentic Payments Landscape — Machine-Native Payment Rails for Agents
 purpose: Survey of emerging agent payment protocols and rails (x402, Google AP2, Stripe MPP, L402, ACP, UCP, Visa and Mastercard agent programmes) that let autonomous agents pay for API/tool access or buy goods without a human in the loop per transaction.
 created: 2026-07-08
-updated: 2026-11-09
+updated: 2026-11-22
 validated_links: 2026-11-09
 status: research
 ---
@@ -114,7 +114,7 @@ feature is live). The page doesn't mention ACP.
 - **Visa Trusted Agent Protocol (TAP)**, [introduced 2025-10-14][visa-tap] and "available today in the
   Visa Developer Center and GitHub", is identity rather than payment: it uses "cryptographic standards
   (RFC9421)" ([overview][visa-tap-dev]) so merchants can tell legitimate agents from bots, with a sample
-  implementation at [visa/trusted-agent-protocol][visa-tap-repo]. It belongs next to Web Bot Auth in
+  implementation at [visa/trusted-agent-protocol][visa-tap-repo] (last commit 2025-10-28, `gh api` 2026-11-22). It belongs next to Web Bot Auth in
   [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md).
 - **Mastercard Agent Pay**: Mastercard's [merchant developer guide][mc-guide] says "Card issuers cannot
   identify the transaction as agentic without an Agentic Token" and "For Mastercard Agent Pay
@@ -226,7 +226,7 @@ above.
 
 | Source | Content |
 |---|---|
-| [x402 (Coinbase/LF)][x402-repo] | x402 protocol home |
+| [x402 (x402 Foundation, Linux Foundation)][x402-repo] | x402 protocol home; canonical repo moved from coinbase/x402 (now a fork) to x402-foundation/x402 |
 | [Apify: introducing x402][x402-apify-blog] · [Apify x402 docs][x402-apify-docs] | Live x402 integration + case study |
 | [apify-mcp-server#626][x402-mcp-issue] | Closed RFC: MCP-level payment gating (x402 + Stripe MPP) |
 | [google-agentic-commerce/AP2][ap2] | Google Agent Payments Protocol (v0.2.0) |
@@ -242,7 +242,7 @@ above.
 | [Mastercard agentic commerce guide][mc-guide] · [Agent Pay for Machines release][mc-ap4m] | Agentic Tokens, Payment Data object, "introduced in 2025" |
 | Falsification pass, 2026-10-22 | 33 claims re-checked against these sources by an independent agent: 32 confirmed, 1 overstated (Universal Cart, corrected above) |
 
-[x402-repo]: https://github.com/coinbase/x402
+[x402-repo]: https://github.com/x402-foundation/x402
 [x402-apify-blog]: https://blog.apify.com/introducing-x402-agentic-payments/
 [x402-apify-docs]: https://docs.apify.com/platform/integrations/x402
 [x402-mcp-issue]: https://github.com/apify/apify-mcp-server/issues/626

@@ -141,13 +141,28 @@ def hub_exempt(path: str) -> bool:
     return name.endswith(("-spec.md", "-runbook.md"))
 
 
-def unhubbed(docs: dict) -> list[str]:
-    """Content docs outside the D6 exemptions that no topic hub links to, sorted."""
+def hub_filing(docs: dict) -> dict[str, str]:
+    """Each doc's hub state: ``hubbed``, ``not-hub-content``, ``exempt`` (D6) or ``unfiled``.
+
+    ``unfiled`` is what the hub ratchet counts; the doc graph shows the same split (plan 0015 N4).
+    """
     hubbed = {e["target"] for e in build_graph(docs)["edges"]
               if e["kind"] == "hub" and e["source"] != _HUB_INDEX}
-    return sorted(p for p in docs
-                  if is_content(p) and not p.startswith(_NOT_HUB_CONTENT)
-                  and not hub_exempt(p) and p not in hubbed)
+
+    def state(p: str) -> str:
+        # Reason: hubs link each other; a hub is never filed under another hub.
+        if not is_content(p) or p.startswith(_NOT_HUB_CONTENT):
+            return "not-hub-content"
+        if p in hubbed:
+            return "hubbed"
+        return "exempt" if hub_exempt(p) else "unfiled"
+
+    return {p: state(p) for p in docs}
+
+
+def unhubbed(docs: dict) -> list[str]:
+    """Content docs outside the D6 exemptions that no topic hub links to, sorted."""
+    return sorted(p for p, state in hub_filing(docs).items() if state == "unfiled")
 
 
 def check_hub_duplicates(docs: dict) -> list[str]:

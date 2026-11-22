@@ -4,7 +4,7 @@ purpose: Survey of community developer tools that integrate with or enhance Clau
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-20
+updated: 2026-11-22
 validated_links: 2026-11-12
 ---
 
@@ -43,7 +43,7 @@ A layered approach to keeping context in Claude's ~75k-token "smart zone" via de
 | **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` (or `"includeGitInstructions": false` in settings) strips the built-in commit/PR instructions and the git status snapshot from context (CC v2.1.69+) | Shell env / `.env` / settings | The docs state no headless-only scope, so it applies to interactive sessions too (our reading of the [settings reference][cc-settings-ref-git], checked 2026-11-19); cloud sessions never include the snapshot anyway. No source sizes the saving; you lose the built-in git guidance |
 | **2 — Native hook filters (DIY)** | `run_silent()` PostToolUse bash wrapper: captures stdout to a temp file, emits `✓ <desc>` on exit 0, surfaces full output only on non-zero exit; pair with failFast flags (`pytest -x`, `jest --bail`, `go test -failfast`) to halt at first failure | CC PostToolUse hook | Must be written per project; no packaging or reuse mechanism built in |
 | **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); independently verified zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
-| **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity | See [CC-community-skills-landscape.md][skills-landscape] | Output-side only; does not reduce tool or shell output |
+| **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity (caveman 4.x also ships a separate input-shrinking proxy, see its entry) | See [CC-community-skills-landscape.md][skills-landscape] | Output-side only; does not reduce tool or shell output |
 | **5 — Context/prompt compression (library)** | Prune low-information tokens from the prompt before the model call — [LLMLingua][llmlingua] (perplexity-based; LLMLingua-2 is task-agnostic and 3–6× faster). *Adjacent mechanism:* [semantic-router][semantic-router] skips the LLM call entirely for recognized intents (routing, not compression) | [LLMLingua][llmlingua] · [semantic-router][semantic-router] | General-purpose libraries, **not CC-native** — wire in upstream via a model gateway/proxy or PreToolUse hook |
 | **6 — Cross-session learned control** | Learns per repository which tools go unused, which facts the agent keeps rediscovering and when a turn loops, then prunes tools, injects facts or redirects | [TokenEconomizer](#tokeneconomizer-microsoft) | Early (v0.1.0); savings figures are the authors' own; tool pruning edits `.claude/settings.local.json` |
 

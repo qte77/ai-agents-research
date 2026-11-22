@@ -120,11 +120,14 @@ def build_graph(docs: dict[str, str]) -> dict:
     }
 
 
-def site_graph(graph: dict) -> dict:
+def site_graph(graph: dict, filing: dict[str, str] | None = None) -> dict:
     """Slim projection for the Pages site: each doc's title, bucket and hubs, one edge per linked pair.
 
     A doc's hubs are the topic hubs (``_topics/*`` except the hub index) with a row
     linking to it, counted once even when several rows point at its sections.
+    ``filing`` (``doc_coverage.hub_filing``, passed in to keep this module free of the
+    coverage rules) adds each doc's hub state so the site splits "no hub" the way
+    ``check_coverage`` does.
     """
     hubs: dict[str, set] = {}
     pairs = set()
@@ -134,11 +137,11 @@ def site_graph(graph: dict) -> dict:
         if e["kind"] == "hub" and e["source"] != _HUB_INDEX:
             hubs.setdefault(e["target"], set()).add(e["source"])
         pairs.add(tuple(sorted((e["source"], e["target"]))))
-    return {
-        "nodes": [{"id": n["id"], "title": n["title"], "bucket": n["bucket"],
-                   "hubs": sorted(hubs.get(n["id"], ()))} for n in graph["nodes"]],
-        "edges": [list(p) for p in sorted(pairs)],
-    }
+    nodes = [{"id": n["id"], "title": n["title"], "bucket": n["bucket"],
+              "hubs": sorted(hubs.get(n["id"], ()))} for n in graph["nodes"]]
+    for n in nodes if filing else ():
+        n["filing"] = filing[n["id"]]
+    return {"nodes": nodes, "edges": [list(p) for p in sorted(pairs)]}
 
 
 def to_json(graph: dict) -> str:
