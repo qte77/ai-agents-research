@@ -111,7 +111,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 - **Zero Standing Privileges / JIT access** — no standing privileged credentials; access (and, for
   agents, sometimes the identity itself) is provisioned at task start, scoped, and auto-revoked at
   completion. [beyondtrust.com][jit].
-- **Human-in-the-loop approval gates** — HumanLayer's approval-gate SDK (12-Factor Agents "Factor 7")
+- **Human-in-the-loop approval gates** — HumanLayer's approval-gate SDK (12-Factor Agents "Factor 7"; no PyPI release since 2025-06)
   is already cited in [mas-design-principles.md](mas-design-principles.md).
 - **Claude Code's permission model** (local reference anchor, *not* an instance of the above) —
   per-tool-call allow / ask / deny, evaluated deny → ask → allow, managed via `/permissions` and

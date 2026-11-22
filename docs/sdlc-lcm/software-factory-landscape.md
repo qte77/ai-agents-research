@@ -2,7 +2,7 @@
 title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
-updated: 2026-11-19
+updated: 2026-11-22
 validated_links: 2026-11-18
 status: assess
 ---
@@ -273,7 +273,7 @@ HumanLayer's separate approval-gate SDK),
 [CC-memory-system-analysis.md § Context Engineering Workflow (ACE-FCA)](../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca)
 (HumanLayer/Dex's other, unrelated ACE-FCA post),
 [CC-agentic-harness-patterns-analysis.md](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md)
-(HumanLayer's approval-gate SDK in harness terms),
+(HumanLayer's earlier approval-gate SDK and its current coding-agent workspace),
 [CC-community-tooling-landscape.md § human-review](../cc-community/CC-community-tooling-landscape.md#human-review-petergyang)
 (a concrete tool for the spec-review gate: comments on the artifact go straight back to the agent).
 
