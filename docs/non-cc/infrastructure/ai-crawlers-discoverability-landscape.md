@@ -156,6 +156,7 @@ substantive; Codeberg could not be searched (rate-limited).
 | Repo | License | What it is |
 |---|---|---|
 | [`elmohq/elmo`][elmo] | MIT | Self-hosted AEO/GEO tracker with an MCP server |
+| [`limelit-co/open`][limelit-open] | Apache-2.0 | Self-hosted visibility tracking, single binary, MCP server |
 | [`Auriti-Labs/geo-optimizer-skill`][geo-optimizer] | MIT | Citation-audit engine behind GeoReady; CLI, Python, MCP |
 | [`zubair-trabzada/geo-seo-claude`][geo-seo-claude], [`onvoyage-ai/gtm-engineer-skills`][gtm-skills] | MIT | Claude Code skills for GEO/AEO audits (checklists, not measurement) |
 
@@ -183,7 +184,6 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| limelit-co/open | 454 stars (`gh api` 2026-11-22); no named independent users or measured benefit found in its README or on limelit.co (criterion 3) | 2026-11-22 | <https://github.com/limelit-co/open> |
 | danishashko/geo-aeo-tracker | 334 stars (`gh api` 2026-11-22); no named independent users or measured benefit in its README (criterion 3) | 2026-11-22 | <https://github.com/danishashko/geo-aeo-tracker> |
 | yaojingang/GEOInflow | 865 stars (`gh api` 2026-11-22), repo created 2026-10-26; no named independent users or measured benefit in its README (criterion 3) | 2026-11-22 | <https://github.com/yaojingang/GEOInflow> |
 | dodopayments/dualmark | 125 stars (`gh api` 2026-11-22); its README names only its maker's own site as a user, pre-1.0 (criterion 3) | 2026-11-22 | <https://github.com/dodopayments/dualmark> |
@@ -260,6 +260,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [profound-mcp]: https://docs.tryprofound.com/mcp/overview
 [autogeo-repo]: https://github.com/cxcscmu/AutoGEO
 [elmo]: https://github.com/elmohq/elmo
+[limelit-open]: https://github.com/limelit-co/open
 [geo-optimizer]: https://github.com/Auriti-Labs/geo-optimizer-skill
 [geo-seo-claude]: https://github.com/zubair-trabzada/geo-seo-claude
 [gtm-skills]: https://github.com/onvoyage-ai/gtm-engineer-skills
