@@ -2,7 +2,7 @@
 title: AI PR-Review Products — Tool Landscape
 purpose: Catalog of standalone SaaS PR-review products (multi-platform GitHub/GitLab review bots), distinct from Claude Code-integrated review tooling.
 created: 2026-06-27
-updated: 2026-11-20
+updated: 2026-11-22
 validated_links: 2026-10-24
 status: research
 ---
@@ -22,10 +22,9 @@ For related code-review tooling — Qodo's cross-repo review, and the Code-Revie
 
 - [CodeRabbit](https://www.coderabbit.ai/) — GitHub/GitLab/Azure/Bitbucket app + IDE (VS Code/Cursor/Windsurf) + CLI; bills itself "the most installed AI app on GitHub" (SaaS).
 - [Greptile](https://www.greptile.com/) — a swarm of agents builds a codebase graph index, then reviews PRs in parallel; GitHub/GitLab, API, **MCP**, and a Claude Code plugin; SaaS or self-hosted in AWS.
-- [Ellipsis](https://www.ellipsis.dev/) — GitHub-app code review plus automated bug fixes, Q&A, and changelogs (SaaS; free for public repos).
 - [Sourcery](https://sourcery.ai/) — review focused on security and AI-generated-code defects; GitHub/GitLab, VS Code/JetBrains, fixes via coding agents (SaaS).
-- [Qodo Merge / PR-Agent](https://github.com/qodo-ai/pr-agent) — the original open-source PR reviewer (MIT) behind Qodo; `/review` `/improve` `/describe` `/ask` via CLI, GitHub Action, Docker, or webhooks; GitHub/GitLab/Bitbucket/Azure/Gitea. Qodo's platform adds **Auto Approval Workflows** (Beta) and **Agent Session Review** (Research Preview), announced 2026-11-18 ([blog][qodo-auto-approval], vendor announcement, not tested here): after a review finishes, a workflow can approve the PR as `qodo-bot` or add a "Qodo approved" label based on criteria such as a severity threshold, blast radius and team rules (the blog lists these as available criteria, not all required); "guards" (repos, paths such as `auth/**`, authors incl. coding-agent logins) are never auto-approved, and approval is re-checked and withdrawn on each new commit. The bot approval counts as one approval, with required reviewers and code owners still applying. Agent Session Review is a `/qodo-agent-session-review` skill in Qodo's Agentic Toolbox that bundles every PR an agent opened in a session, with plan deviations and a reading plan, into one work package. Qodo's CC-integrated pieces: [CC-code-tooling-landscape.md § Qodo](../../cc-community/CC-code-tooling-landscape.md#qodo-qodo-ai).
-- [Graphite Diamond](https://graphite.com/) — AI reviewer bundled with Graphite's PR-stacking workflow; GitHub app, tuned for low false positives (SaaS).
+- [Qodo Merge / PR-Agent](https://github.com/The-PR-Agent/pr-agent) — the original open-source PR reviewer (MIT); the repo now lives in the separate `The-PR-Agent` GitHub org and its description says it is not the Qodo free tier (`gh api` 2026-11-22); `/review` `/improve` `/describe` `/ask` via CLI, GitHub Action, Docker, or webhooks; GitHub/GitLab/Bitbucket/Azure/Gitea. Qodo's platform adds **Auto Approval Workflows** (Beta) and **Agent Session Review** (Research Preview), announced 2026-11-18 ([blog][qodo-auto-approval], vendor announcement, not tested here): after a review finishes, a workflow can approve the PR as `qodo-bot` or add a "Qodo approved" label based on criteria such as a severity threshold, blast radius and team rules (the blog lists these as available criteria, not all required); "guards" (repos, paths such as `auth/**`, authors incl. coding-agent logins) are never auto-approved, and approval is re-checked and withdrawn on each new commit. The bot approval counts as one approval, with required reviewers and code owners still applying. Agent Session Review is a `/qodo-agent-session-review` skill in Qodo's Agentic Toolbox that bundles every PR an agent opened in a session, with plan deviations and a reading plan, into one work package. Qodo's CC-integrated pieces: [CC-code-tooling-landscape.md § Qodo](../../cc-community/CC-code-tooling-landscape.md#qodo-qodo-ai).
+- [Graphite](https://graphite.com/) — AI reviewer bundled with Graphite's PR-stacking workflow, now called "Graphite Agent" ([AI reviews docs](https://graphite.com/docs/ai-reviews), read 2026-11-22); GitHub app (SaaS).
 - [Cursor Bugbot](https://cursor.com/bugbot) — Cursor's PR-review agent; comments on GitHub PRs and pushes fixes into the Cursor editor or a Background Agent; usage-based billing (SaaS).
 - [Cubic](https://www.cubic.dev/) — YC-backed AI review plus whole-codebase bug scanning; GitHub app + IDE, one-click fixes, custom rules (SaaS).
 - [Bito](https://bito.ai/) — codebase-aware AI Code Review Agent for GitHub/GitLab/Bitbucket (SaaS).
@@ -64,6 +63,14 @@ review; a session viewer records and replays past runs. Scored 2026-09-30 agains
 - [CC-official-plugins-landscape.md](../../cc-native/plugins-ecosystem/CC-official-plugins-landscape.md) — the first-party `/code-review` plugin
 - [software-factory-landscape.md § Economics, failure and verification evidence](../../sdlc-lcm/software-factory-landscape.md#economics-failure-and-verification-evidence) — Uber's uReview (vendor claim) and the empirical review-agent merge-rate study (arXiv 2604.03196)
 - [jev-analysis.md](jev-analysis.md) — a cheap classifier-model gate rather than an LLM-review bot; comparable in that both are automatable pre-merge checks, but Jev answers narrow typed questions instead of writing review comments
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Ellipsis | Criterion 3: its site names no customers and gives no measured result for review, and its home page now leads with hosted coding agents (read 2026-11-22); no first-party page found for the "free for public repos" claim | 2026-11-22 | <https://www.ellipsis.dev/> |
 
 ## Sources
 
