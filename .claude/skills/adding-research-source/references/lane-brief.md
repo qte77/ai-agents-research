@@ -56,6 +56,13 @@ full before starting. The lead fills in each `<placeholder>`.
    with the same reason format on every row.
 5. **Paper leads.** Re-read each lead's arXiv abstract page and cite that page, never a triage
    summary. Each lead ends up either cited in the doc or dropped with a one-line reason.
+   - Before calling a paper "paper only", search its HTML version (`arxiv.org/html/<id>`) or PDF
+     for "github", "code", "release", "artifact" and "upstream": the abstract page often omits the
+     code link, and code can be upstreamed into another project.
+   - Before judging a repo's adoption, check for moved or republished copies (the owner's other
+     repos, a renamed org); judge the original and say which repo you checked.
+   - A pruning reason states only what you read. If a page couldn't be read, say so instead of
+     inferring its content.
 6. **Lint.** Run `make check_docs check_status check_frontmatter` and fix everything they report.
    Leave `make check_coverage` to the lead, because hub and index rows are the lead's job, but
    expand every glossary abbreviation you use (or link `docs/glossary.md`), which that check also

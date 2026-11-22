@@ -21,6 +21,8 @@ send the pass brief with the lane's worktree path, branch and findings-note path
 > repo via `gh api`, the vendor page, the arXiv abstract page). Return a table:
 > `| Claim | File:line | CONFIRMED / WRONG / UNVERIFIABLE | Evidence (URL + quote) |`.
 > Check absence claims site-wide (navigation, GitHub org, linked repos) before you confirm them.
+> For a "no code" or "no adoption" reason, read the paper's HTML or PDF (not only the abstract
+> page) and look for other copies of the repo; a kept-entry check covers the same ground.
 
 ## Pass 2: diff discipline
 
