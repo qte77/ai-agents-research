@@ -117,7 +117,7 @@ self-evolution roadmap items ship.
 ## Cross-References
 
 - [agentic-enterprise-os-landscape.md § Tier 2][eos-tier2] — Octop as an open-source
-  self-operating workspace, alongside AutoAgent, Odysseus, Goose, multica, and HugAgentOS
+  self-operating workspace, alongside AutoAgent, Odysseus, Goose and multica
 - [odysseus-analysis.md][odysseus] — a single-user self-hosted all-in-one AI workspace, contrasted
   with Octop's multi-user row-isolation model
 - [qwenpaw-analysis.md][qwenpaw] — a channel-breadth-focused self-hosted personal assistant,
