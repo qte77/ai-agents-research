@@ -82,9 +82,7 @@ Two behaviours matter:
 | Tool | Mechanism | Concurrent? | Signals (2026-07-23) | License |
 |---|---|---|---|---|
 | [claude-swap][claude-swap] | Backs up/rotates OAuth credentials per account (Keychain/file); scopes a terminal to one account; **auto-rotation on rate-limit** + usage TUI | **Yes** — explicit design goal | 1,276★, pushed 2026-07-23 | MIT |
-| [claude-code-profiles][cc-profiles] | Shell wrapper setting `CLAUDE_CONFIG_DIR` per named profile; one active profile per shell | Sequential switching by design (separate shells parallelize incidentally) | 56★, v1.1.0 2026-07-06 | MIT |
 | [claude-multiprofile][multiprofile] | Native `CLAUDE_CONFIG_DIR` + per-profile macOS Keychain handling; also isolates Claude **Desktop** via `open -n` + `--user-data-dir` | **Yes** — incl. Desktop instances | 42★, v0.1.4 ~2026-05 | MIT |
-| [claude-multisession][multisession] | Per-session dirs under `~/.claude-sessions/` (own creds/history/memory); settings shareable via symlink | **Yes** | 1★, single push 2026-02 — stale | MIT |
 
 **Recommendation shape**: Linux/Windows + no tool trust required → the alias pattern.
 Concurrency with rotation/observability → claude-swap. Claude Desktop profiles too →
@@ -100,6 +98,15 @@ Adjacent categories that look similar but solve different problems:
 | Gateway-level **quota harvesting** | CLIProxyAPI — see [CC-model-provider-configuration.md](../cc-native/configuration/CC-model-provider-configuration.md) | Wraps CC accounts into an API endpoint for downstream clients — not N interactive CC sessions |
 | Usage/cost **observability** | [CC-usage-tooling-landscape.md](CC-usage-tooling-landscape.md) | Watches spend; claude-swap's usage TUI overlaps here but its core is account rotation |
 
+## Not included
+
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| claude-code-profiles | Criterion 3: 109 stars; last push 2026-09-18 (`gh api` 2026-11-22); no named independent users or measured benefit in its README | 2026-11-22 | <https://github.com/quinnjr/claude-code-profiles> |
+| claude-multisession | Criterion 3: 1 star; last push 2026-02-28 (`gh api` 2026-11-22); no named users | 2026-11-22 | <https://github.com/israads/claude-multisession> |
+
 ## Sources
 
 | Source | Content |
@@ -108,18 +115,14 @@ Adjacent categories that look similar but solve different problems:
 | [CC env vars reference][env-vars] | Confirmed gap: variable not listed (checked 2026-07-23) |
 | [`scripts/cc-multi-account.sh`](../../scripts/cc-multi-account.sh) | Repo helper: commands, env vars, `ccsync` and permission behaviour (source read 2026-09-23) |
 | [claude-swap][claude-swap] | Concurrent multi-account rotation; repo metadata via GitHub API, 2026-07-23 |
-| [claude-code-profiles][cc-profiles] | Profile-switching wrapper; repo metadata via GitHub API, 2026-07-23 |
 | [claude-multiprofile][multiprofile] | CLI + Desktop profile isolation; repo metadata via GitHub API, 2026-07-23 |
-| [claude-multisession][multisession] | Per-session config dirs; repo metadata via GitHub API, 2026-07-23 |
 | [anthropics/claude-code#44687][gh-44687] | Upstream FR: multi-account support (closed as duplicate) |
 | [anthropics/claude-code#35856][gh-35856], [#64376][gh-64376], [#37554][gh-37554] | Further upstream FRs, all closed unimplemented |
 
 [debug-config]: https://code.claude.com/docs/en/debug-your-config
 [env-vars]: https://code.claude.com/docs/en/env-vars
 [claude-swap]: https://github.com/realiti4/claude-swap
-[cc-profiles]: https://github.com/quinnjr/claude-code-profiles
 [multiprofile]: https://github.com/jmdarre-v/claude-multiprofile
-[multisession]: https://github.com/israads/claude-multisession
 [gh-44687]: https://github.com/anthropics/claude-code/issues/44687
 [gh-35856]: https://github.com/anthropics/claude-code/issues/35856
 [gh-64376]: https://github.com/anthropics/claude-code/issues/64376
