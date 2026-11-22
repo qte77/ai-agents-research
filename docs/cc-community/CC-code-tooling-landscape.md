@@ -413,7 +413,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 
 ### Adoption Considerations
 
-**Use when**: you want a deterministic, whole-repo snapshot for a one-off question, an agent's first turn, or a non-CC LLM — no server to run. **Prefer the graph/LSP tools above** (codebase-memory-mcp, graphify, Serena) for repeated, large-codebase work, where re-sending a packed corpus every turn would blow the context budget. Repomix's `--compress` and these packers are complementary to RTK (output-side) and Boucle (read dedup), both in the [main tooling landscape](CC-community-tooling-landscape.md).
+**Use when**: you want a deterministic, whole-repo snapshot for a one-off question, an agent's first turn, or a non-CC LLM — no server to run. **Prefer the graph/LSP tools above** (codebase-memory-mcp, graphify, Serena) for repeated, large-codebase work, where re-sending a packed corpus every turn would blow the context budget. Repomix's `--compress` and these packers are complementary to RTK (output-side), in the [main tooling landscape](CC-community-tooling-landscape.md).
 
 ## Floorplan (haydenschmitty)
 
