@@ -117,7 +117,7 @@ analyses' Pricing sections ask.
 
 The OSS layer gives you the runtime instead of a managed platform. Each has a dedicated analysis or is covered in the frameworks landscape; they are gathered here for the pattern:
 
-- **[AutoAgent][autoagent]** (HKUDS, MIT) — explicitly an "autonomous Agent Operating System": a self-managing file system, an LLM-powered actionable engine, and self-play customization that generates its own tools and agents at runtime inside a Docker sandbox. The closest literal "agent OS" in this corpus.
+- **[AutoAgent][autoagent]** (HKUDS, MIT; stale: 9.8k stars, last push 2025-10-16, `gh api` 2026-11-22) — explicitly an "autonomous Agent Operating System": a self-managing file system, an LLM-powered actionable engine, and self-play customization that generates its own tools and agents at runtime inside a Docker sandbox. The closest literal "agent OS" in this corpus.
 - **[Odysseus][odysseus]** (AGPL-3.0) — self-hosted all-in-one AI workspace (chat, agents, deep research, email, calendar, notes) in one Docker Compose deploy with MCP integration — the breadth-over-depth "operating environment" model.
 - **[Goose][goose]** (AAIF / Linux Foundation, Apache-2.0) — MCP co-creator and reference implementation; extensions *are* MCP servers and ACP handles agent-to-agent/IDE messaging — the protocol-native runtime an agent OS is built on.
 - **multica** (in [agent-frameworks-infrastructure-landscape §1][frameworks]; source-available, modified Apache-2.0 — not OSI) — turns coding-agent CLIs into managed teammates: issues route to an agent or squad, a local daemon executes with autopilot (cron/webhook) scheduling.
