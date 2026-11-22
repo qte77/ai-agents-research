@@ -3,7 +3,7 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-11-21
+updated: 2026-11-22
 validated_links: 2026-11-19
 status: assess
 ---
@@ -63,7 +63,7 @@ Discovery, lineage, ownership, and permissions across the data estate.
 
 Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized machine-readable meaning. These standards predate agents but increasingly **connect to, are excluded by, or enhance** the LLM-native layers below:
 
-- **[RDF][rdf]**, **[OWL][owl]**, **[SKOS][skos]**: the triple data model, the ontology language and the thesaurus vocabulary; see [Choosing a Structure](#choosing-a-structure) and, for RDF 1.1 vs 1.2 status, [Property Graph vs RDF](graph-databases-query-languages-landscape.md#property-graph-vs-rdf).
+- **[RDF][rdf]**, **[OWL][owl]**, **[SKOS][skos]**: the triple data model (each statement is a subject, a predicate and an object: [RDF 1.1 Concepts § Triples][rdf-triples]), the ontology language and the thesaurus vocabulary; see [Choosing a Structure](#choosing-a-structure) and, for RDF 1.1 vs 1.2 status, [Property Graph vs RDF](graph-databases-query-languages-landscape.md#property-graph-vs-rdf).
 - **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above. Comparison with Cypher, GQL and Gremlin: [graph-databases doc](graph-databases-query-languages-landscape.md#query-languages).
 - **[JSON-LD][json-ld]** — "a JSON-based format to serialize Linked Data" (JSON-LD 1.1, W3C Recommendation 2020-07-16). It is "designed to be usable directly as JSON, with no knowledge of RDF", and also "usable as RDF" with tools like SPARQL. For agents it is the form they meet most: [schema.org][schema-org-gs] markup can be written in Microdata, RDFa or JSON-LD, and Google Search recommends JSON-LD "in most cases", embedded in a `<script>` tag of the page ([Google structured data][google-sd]). Whether such markup helps AI answers is disputed; see [ai-crawlers-discoverability-landscape.md](ai-crawlers-discoverability-landscape.md). [YAML-LD][yaml-ld] (a W3C Working Draft, 2026-10-24) "applies JSON-LD's data model and processing model to YAML".
 
@@ -109,6 +109,13 @@ Five 2026 tools expose an ontology as an MCP surface for coding agents — the s
 | partial [README][open-ontologies] (HTTP-transport MCP server can serve multiple clients, but the README states the OSS engine has no shared evidence store — that's the paid "for teams" tier) | partial [README][open-ontologies] ("`rmcp` for MCP over streamable HTTP" — a remote-reachable single node, not a documented multi-node deployment) | yes [README][open-ontologies] (Lean 4 v4.33.1 proof checker, pinned Oxigraph 0.5/Rust 1.85+, a `docs/determinism.md` page, "lost zero conclusions out of 2,583 differences") | yes [README][open-ontologies] (plugin marketplace; `--features embeddings,plugins,sql` build flags; alignment/crosswalk module) | yes [README][open-ontologies] (explicit plan/apply/drift/rollback loop over the ontology's own state) | yes [README][open-ontologies] (proof certificates re-checkable "months later… on the archived files," needing "the two files and a Lean build"; SQLite lineage store) |
 
 `scored 2026-09-30`
+
+**[LeanRDF (rdf-lean)][leanrdf]** (MIT or Apache-2.0, 47★, created 2026-10-29, pushed 2026-11-21; read 2026-11-22) writes the W3C semantics of RDF and RDFS (RDF Schema), plus OWL 2 RL/EL, SPARQL 1.1 and SHACL Core, as definitions in [Lean 4][lean4], a programming language and theorem prover ([README][leanrdf]; [project site and book][leanrdf-site]). It splits the work into an untrusted search and a small trusted checker:
+
+- **Untrusted search.** [Elpi][elpi], an embeddable λProlog interpreter (run here through the author's own `lean-elpi`), forward-chains over the graph and emits a certificate: a list of steps, each a conclusion, the rule used and the earlier steps it rests on ([book: Elpi][leanrdf-elpi]).
+- **Trusted checker.** `LeanRDF/Cert/Check.lean` accepts a step only if it is a fact of the graph or an instance of the named rule over earlier steps; its soundness theorem `checkQuery_sound` turns an accepted certificate into the Lean statement that the graph RDFS-entails the query ([Check.lean][leanrdf-check]). Entailment is the W3C notion: a graph entails another when every interpretation that satisfies the first also satisfies the second ([RDF 1.1 Semantics][rdf-semantics]). A search bug therefore yields a rejected certificate, never a wrong "entailed".
+- **What is trusted.** The Lean kernel, the author's transcriptions of the W3C texts (RDF 1.1 Semantics, and likewise the OWL 2, SPARQL 1.1 and SHACL Core ones) and the rule statements, plus the Lean compiler and runtime for the command-line tools and `native_decide`; the search, the certificate generator and JSON parsing are not ([book: trust][leanrdf-trust]). No size in lines is stated.
+- **Limits.** "Not derived" is not a claim of non-entailment, because the rules are proven sound but not complete ([book: trust][leanrdf-trust]); v0.5.0 adds checked countermodels (REFUTED) and clash certificates (INCONSISTENT) ([v0.5.0 release][leanrdf-rel]). One author, six releases in 22 days (v0.1.0 on 2026-10-30 to v0.5.0 on 2026-11-21), and no adoption yet (47 stars, no named users). It meets D8 criterion 3 only through a first-party measured result: the README reports W3C test-suite results such as SHACL Core 98/98, SPARQL 1.1 Query 257 evaluation tests passing and RDF 1.2 Semantics 16 of 20 run tests certified ([README][leanrdf]); these are the author's figures, not reproduced here. Added on owner request (2026-11-22), next to open-ontologies above, which also certifies derivations with Lean.
 
 **[EvoOntology][evoontology]** (ruc-datalab; MIT, 539★, pushed 2026-09-29; [arXiv:2609.15779][evoontology-paper]) is a self-evolving Ontology Layer for data agents, installed as a Claude Code or Codex plugin. A builder constructs a typed semantic graph (Terms/Mappings/Constraints/**Evidence** node families) grounded against the workload; an evolution agent proposes bounded updates and will "publish a Candidate only when paired evaluation shows a reproducible improvement over its Parent," else retains the Parent — a named `ontology_v0` → `ontology_vN+1` lifecycle. The repo layout labels its own store "Deterministic core." Reported gains (BIRD, DDR-Bench, InsightBench, four-backbone subset) are the authors' own benchmark, so treat as self-reported pending independent replication.
 
@@ -244,6 +251,8 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Symbolic Separation (arXiv:2609.17107)][symbolic-separation] | Ontology-constrained Virtual Knowledge Graph + deterministic pre-execution validation for deep agents over operational telemetry |
 | [Ontology Atlas README][ontology-atlas] | MCP-native, git-versioned Markdown ontology; MIT license and star count verified 2026-09-30 |
 | [open-ontologies README][open-ontologies] | Rust MCP server, Lean-4-certified ontology plan/apply/rollback; MIT license and star count verified 2026-09-30 |
+| [LeanRDF README][leanrdf] · [Check.lean][leanrdf-check] · [book: trust][leanrdf-trust] · [book: Elpi][leanrdf-elpi] · [v0.5.0 release][leanrdf-rel] | Lean 4 RDF/RDFS semantics, certificate checker and its soundness theorems, trusted base, "not derived" caveat, REFUTED/INCONSISTENT verdicts; licence files, stars and dates via the GitHub API, 2026-11-22 |
+| [RDF 1.1 Semantics][rdf-semantics] · [RDF 1.1 Concepts § Triples][rdf-triples] · [Lean 4][lean4] · [Elpi][elpi] | Definitions of entailment and triple; what Lean 4 and Elpi are |
 | [EvoOntology README][evoontology] · [arXiv:2609.15779][evoontology-paper] | Self-evolving ontology layer for data agents; MIT license and star count verified 2026-09-30 |
 | [AWS context-ontology-accelerator README][coa] · [ontology-engine README][coa-engine] | Namespace-RBAC, AWS CDK-deployed semantic context platform; Apache-2.0 license and star count verified 2026-09-30 |
 | [Utopia README][utopia] · [decisions/README.md][utopia-decisions] · [decision 0012][utopia-0012] | Bottom-up bitemporal ontology platform; Apache-2.0 license and star count verified 2026-09-30 (`gh api`) |
@@ -284,6 +293,16 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [symbolic-separation]: https://arxiv.org/abs/2609.17107
 [ontology-atlas]: https://github.com/wlsdks/ontology-atlas
 [open-ontologies]: https://github.com/fabio-rovai/open-ontologies
+[leanrdf]: https://github.com/Volland/rdf-lean
+[leanrdf-site]: https://volland.github.io/rdf-lean/
+[leanrdf-check]: https://github.com/Volland/rdf-lean/blob/main/LeanRDF/Cert/Check.lean
+[leanrdf-trust]: https://github.com/Volland/rdf-lean/blob/main/site/content/book/trust.md
+[leanrdf-elpi]: https://github.com/Volland/rdf-lean/blob/main/site/content/book/elpi.md
+[leanrdf-rel]: https://github.com/Volland/rdf-lean/releases/tag/v0.5.0
+[rdf-semantics]: https://www.w3.org/TR/rdf11-semantics/
+[rdf-triples]: https://www.w3.org/TR/rdf11-concepts/#section-triples
+[lean4]: https://github.com/leanprover/lean4
+[elpi]: https://github.com/LPCIC/elpi
 [evoontology]: https://github.com/ruc-datalab/EvoOntology
 [evoontology-paper]: https://arxiv.org/abs/2609.15779
 [coa]: https://github.com/aws/context-ontology-accelerator
