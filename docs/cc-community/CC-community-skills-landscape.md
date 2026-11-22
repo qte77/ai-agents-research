@@ -3,7 +3,7 @@ title: CC Community Skills Landscape
 purpose: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), claude-howto (example-driven learning), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI), modern-web-guidance (browser-vendor web-platform skill).
 status: research
 created: 2026-03-13
-updated: 2026-11-20
+updated: 2026-11-22
 validated_links: 2026-10-11
 ---
 
@@ -247,53 +247,64 @@ Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/cl
 
 ## Caveman (JuliusBrussee)
 
-**Repo**: [JuliusBrussee/caveman][caveman] | **Stars**: 46.9K | **License**: MIT | **Version**: v1.6.0 (2026-04-15)
+**Repo**: [JuliusBrussee/caveman][caveman] | **Stars**: ~122K | **License**: Apache-2.0 | **Version**: v4.2.0 (2026-11-22) | all as of 2026-11-22 ([GitHub API][caveman-api], [LICENSE][caveman-license], [releases][caveman-releases])
 
-Skill pack and cross-agent plugin that compresses agent **output** by switching the assistant into telegraphic-speech registers. Tagline: *"why use many token when few do trick"* ([README][caveman]).
+Started in April 2026 as a skill pack that compresses agent **output** by switching the assistant into telegraphic-speech registers; tagline *"why use many token when few do trick"*. Since 4.0 it is a skill plus a local proxy and CLI for coding agents: the README lists 30+ supported agents, and describes the shorter-answers skill as one of six parts, each with its own on/off switch ([README][caveman]). Passes the pruning rule in [CONTRIBUTING § Pruning entries](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter): usable artifact, not archived, last push 2026-11-22, well above 1,000 stars.
+
+**Licence history** ([LICENSING.md][caveman-licensing]): releases before 3.0.0 kept the terms they shipped with (MIT for the skill and adoption surfaces, a source-available Business Source License for the runtime); from 3.0.0 the whole repository is Apache-2.0. The earlier "MIT" entry in this doc was correct for v1.6.0. The hosted Caveman Cloud service is separate commercial software outside the repository licence.
+
+### The six parts (v4.2.0 README, 2026-11-22)
+
+| Part | What it does | Evidence level |
+|------|--------------|----------------|
+| Say less | The skill: terse output, code and error text untouched; modes `/caveman`, `/ultracave`, `/megacave` | Author-run, 10 questions on one model: 4,119 vs 4,334 output tokens for the plain instruction "Answer concisely." (about 3% less); `/ultracave` 2,693 (about 35% less). The README says it measured the 3.1.0 rules and has not re-run |
+| Read less | Shrinks logs, JSON, CSV and test output before the model reads them; originals kept on disk | Author-run: 33.2% fewer input tokens over six synthetic large-output tasks (Aug 2026 engine); HTML not compressed yet |
+| Auto | Routes each request to a model and effort level; needs a free account | Author-run interim: 0.46x the cost of Opus 5.5 at xhigh on 85 tasks; the README states the score gap is unresolved |
+| Blocks | Code mode: reusable scripts kept in the repo | Pre-release (v0.1.0-rc.5), own repo [caveman-ai/blocks](https://github.com/caveman-ai/blocks) |
+| Waste fixes | `caveman learn` ranks where tokens go; keeps the prompt cache warm while you pause | "Not measured yet" per the README |
+| Browse | Compressed web pages for the agent | Author-run, one 200-row table |
+
+All numbers above are self-reported by the author. The README also cites a third-party paper (Adobe Research, arXiv 2606.24083) and a JetBrains A/B (86 tasks, no measurable quality loss, 8.5% fewer output tokens); we did not re-read either source (unverified here). The earlier figures in this entry (about 75% headline, 65% average over 10 tasks with a 22-87% range) no longer appear in the README, so they are dropped.
 
 ### Skills
 
 | Skill | Purpose |
 |-------|---------|
-| `caveman-commit` | Terse conventional commits (≤50-char subject) |
-| `caveman-review` | One-line PR comments |
-| `caveman-help` | Quick-reference card |
-| `caveman-compress` | Compresses memory/input files (~46% token reduction, [README][caveman]) |
-
-### Intensity Levels
-
-- **Lite** — drop filler, keep grammar
-- **Full** — drop articles, fragments allowed (default)
-- **Ultra** — telegraphic, maximum compression
-- **Wenyan** (Lite/Full/Ultra) — Classical Chinese variants
-
-### Token Savings Claims
-
-Per the [README][caveman]: "cutting ~75% of output tokens" headline; benchmark across 10 real API tasks averages **65%** with a 22–87% range. **caveman-compress** reports an average **46%** reduction on memory files. Claims are self-reported; no independent benchmark.
+| `/caveman` · `/ultracave` · `/megacave` | The output voice at three compression levels (`megacave` uses Classical Chinese; formerly the Wenyan variants) |
+| `caveman-commit` | One-line conventional commit |
+| `caveman-review` | One finding per line |
+| `caveman-compress` | Shrinks memory files such as `CLAUDE.md`, keeps a backup; README bench on five files: 4,138 vs 6,198 tokens (22.8-49.1% each, author-run; replaces the earlier "~46% average") |
+| `caveman-stats` · `caveman-help` | Token usage for the session; quick reference |
+| `cavecrew` | Subagents that report back tersely |
+| `investigate-first`, `lean-build`, `surgical-patch`, `safe-refactor`, `migration`, `verify-and-stop` | Work-pattern skills that aim to write less code |
 
 ### Installation
 
 ```bash
-# Claude Code
+# Everything (skill + CLI/proxy); needs Node.js 22.13+
+npx @caveman-ai/cli@latest
+
+# Skill only
+npx skills add JuliusBrussee/caveman -g
+
+# Claude Code plugin
 claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman
 
 # Gemini CLI
 gemini extensions install https://github.com/JuliusBrussee/caveman
-
-# Cursor / Windsurf / Cline / Copilot / others
-npx skills add JuliusBrussee/caveman -a [agent-name]
-
-# Standalone hook (macOS/Linux/WSL)
-bash <(curl -s https://raw.githubusercontent.com/JuliusBrussee/caveman/main/hooks/install.sh)
 ```
 
 ### Activation
 
-Triggers: `/caveman`, `"talk like caveman"`, `"caveman mode"`, `"less tokens please"`. Deactivation: `"stop caveman"` or `"normal mode"` ([README][caveman]).
+Type `/caveman` (`$caveman` in Codex) if it does not start on its own; `stop caveman` returns to normal ([README][caveman]). The old trigger phrases listed here before are not in the current README.
+
+### Privacy and cost caveats
+
+Per the README: the skill sends nothing, except `/caveman-compress`, which sends the file to your model provider. The CLI sends usage statistics by default (opt out with `caveman telemetry off` or `DO_NOT_TRACK=1`). Auto sends request content to Caveman Cloud once you sign in. The skill rules cost about 1,160 input tokens, and the README notes shorter answers save nothing where billing is per request (GitHub Copilot). The README header also promotes a separate desktop coding app, Caveman Code, with its own vendor benchmark; not assessed here.
 
 ### Key Differentiator
 
-Where RTK compresses **tool output** going *into* context (see [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md)), caveman compresses the **assistant's own output** — a different layer of the token-reduction stack. Self-reported savings are higher than RTK's independently-benchmarked range, but unverified.
+Where RTK compresses **tool output** going *into* context (see [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md)), caveman began as compression of the **assistant's own output** and now also covers the input side (Read less) and routing. Its largest published claim is on input and routing, not voice: the output-voice gain over a plain "be concise" instruction is small by the author's own numbers. All figures are author-run; the only outside evidence is cited by the README and unchecked here.
 
 Cross-ref: [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — RTK (output ingestion compression), CodeBurn (token-usage observability)
 
@@ -610,7 +621,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
 | [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
 | [modern-web-guidance][mwg-repo] · [docs][mwg-docs] · [eval dashboard][mwg-evals] | Browser-vendor web-platform skill, CLI, plugin manifests, eval loop |
-| [caveman][caveman] | Telegraphic-speech output compression skill pack (46.9K stars) |
+| [caveman][caveman] | Output-voice skill plus local token-saving proxy and CLI (~122K stars, Apache-2.0, v4.2.0, 2026-11-22) |
 | [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
 | [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
 | [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (5,240 stars, no license file, 2026-11-12) |
@@ -628,6 +639,10 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [claude-howto]: https://github.com/luongnv89/claude-howto
 [superpowers]: https://github.com/obra/superpowers
 [caveman]: https://github.com/JuliusBrussee/caveman
+[caveman-api]: https://api.github.com/repos/JuliusBrussee/caveman
+[caveman-license]: https://github.com/JuliusBrussee/caveman/blob/main/LICENSE
+[caveman-licensing]: https://github.com/JuliusBrussee/caveman/blob/main/LICENSING.md
+[caveman-releases]: https://github.com/JuliusBrussee/caveman/releases
 [last30days]: https://github.com/mvanhorn/last30days-skill
 [builderio-skills]: https://github.com/BuilderIO/skills
 [excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
