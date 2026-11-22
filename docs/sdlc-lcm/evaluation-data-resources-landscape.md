@@ -3,7 +3,7 @@ title: Evaluation & Data Resources Landscape
 purpose: Catalog of agent/LLM evaluation frameworks, agentic benchmarks, and evaluation datasets — the tools, benchmarks, and data behind the metrics defined in the evaluation-metrics landscape.
 status: research
 created: 2026-06-14
-updated: 2026-11-21
+updated: 2026-11-22
 validated_links: 2026-11-18
 ---
 
@@ -57,7 +57,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 | HELM (Stanford) | [github](https://github.com/stanford-crfm/helm) | Holistic LLM evaluation | 16 scenarios, 7 metrics |
 | MLflow LLM Evaluate | [docs](https://mlflow.org/docs/latest/genai/eval-monitor/index.html) | Eval with experiment tracking | — |
 | AgentBench | [github](https://github.com/THUDM/AgentBench) | LLM-as-Agent across 8 environments | 8 environments |
-| AutoGenBench | [github](https://github.com/microsoft/autogen/blob/0.2/samples/tools/autogenbench) | AutoGen agent eval, Docker isolation | Stale: parent `microsoft/autogen` archived, 61,956 stars, last push 2026-11-12 (`gh api` 2026-11-22) |
+| AutoGenBench | [github](https://github.com/microsoft/autogen/blob/0.2/samples/tools/autogenbench) | AutoGen agent eval, Docker isolation | Archived: its parent repo `microsoft/autogen` (61,956 stars) is archived (`gh api` 2026-11-22) |
 | LangChain AgentEvals | [github](https://github.com/langchain-ai/agentevals) | Trajectory / decision-sequence eval (LLM judge) | — |
 | LangChain OpenEvals | [github](https://github.com/langchain-ai/openevals) | Prebuilt LLM-judge evaluators | — |
 | Google ADK Evaluation | [docs](https://google.github.io/adk-docs/evaluate) | Tool-trajectory + Recall-Oriented Understudy for Gisting Evaluation (ROUGE) response scoring | — |
@@ -129,7 +129,7 @@ Observability-first platforms with strong eval features — **LangWatch, Evident
 
 **Agent-readiness scoring (websites/APIs)**: a new category (two vendors when first added; a third below) — `git grep` for `ora.ai`,
 `lightsage`, and "agent readiness"/"agent experience arena" across `docs/` returns zero hits before
-this entry. [Ora][ora] (by era labs) scores how a website or MCP-server endpoint works for AI agents,
+this entry. [Ora][ora] (by era labs) scores how a website or Model Context Protocol (MCP) server endpoint works for AI agents,
 pairing a numeric score with a letter grade on its leaderboard (e.g. "96A+", "91A", "77B" — A+/A/B
 observed, no C example seen); it self-styles "The standard for agent experience" and ships a CLI
 (`npx ax audit <domain>`). Self-reported on its own [research page][ora-research], which runs off a
@@ -208,7 +208,6 @@ ask for is short:
 | scientific_papers | [hf](https://huggingface.co/datasets/armanc/scientific_papers) | Long structured arXiv/PubMed papers | 300K+ |
 | FEVER | [site](https://fever.ai/dataset/fever.html) | Fact extraction & verification | 185.4K |
 | LIAR | [zip](https://www.cs.ucsb.edu/~william/data/liar_dataset.zip) | Fake-news detection | 12.8K |
-| X-Fact | [github](https://github.com/utahnlp/x-fact/) | Multilingual fact-checking (ACL 2021; stale: 31 stars, last push 2024-10-04 (`gh api` 2026-11-22)) | 31.1K |
 | MultiFC | [site](https://www.copenlu.com/publication/2019_emnlp_augenstein/) | Multi-domain evidence-based fact checking | 34.9K |
 | Plancraft | [arxiv](https://arxiv.org/abs/2412.21033) | Agent planning (text + multimodal) | — |
 | IDAT | [arxiv](https://arxiv.org/abs/2407.08898) | Interactive task-solving agent eval | — |
@@ -237,6 +236,7 @@ Entries below fail the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well
 | SqueezeBench | Criterion 3: 10 stars (`gh api` 2026-11-22), 6 weeks after the 2026-10-09 paper; the records are mostly the authors' own baseline runs and the paper says the runs "were not a controlled comparison"; no independent users found | 2026-11-22 | [arXiv:2610.13461](https://arxiv.org/abs/2610.13461) |
 | CLEAR | Criterion 1: the arXiv HTML version (checked 2026-11-22) links no code or data and says only that the author "aim[s] to release" the task suite and evaluation code; GitHub search found no repo; the expert study (N=15) is the author's own | 2026-11-22 | [arXiv:2511.14136](https://arxiv.org/abs/2511.14136) |
 | AgentQuest | Criteria 2 and 3: 31 stars, last push 2025-04-03 (`gh api` 2026-11-22); NAACL 2024 demo paper; no independent paper reporting results on it found | 2026-11-22 | [github](https://github.com/nec-research/agentquest) |
+| X-Fact | Criteria 2 and 3: 31 stars, last push 2024-10-04 (`gh api` 2026-11-22); ACL 2021 dataset, no independent paper reporting results on it found | 2026-11-22 | [github](https://github.com/utahnlp/x-fact/) |
 | Yupp.ai | Criterion 2: the service shut down on 2026-03-31 ([TechCrunch](https://techcrunch.com/2026/03/31/yupp-ai-shuts-down-raising-33m-from-a16z-cryptos-chris-dixon/)) | 2026-11-22 | [site](https://yupp.ai/) |
 | SWIF2T | Criterion 3: Findings of ACL 2024; authors' repo 9 stars, last push 2024-07-16 (`gh api` 2026-11-22); no independent users found; the paper links no test-set release | 2026-11-22 | [arXiv:2405.20477](https://arxiv.org/abs/2405.20477) |
 | SciXGen | Criteria 2 and 3: EMNLP 2021 Findings; repo 13 stars, last push 2022-02-14 (`gh api` 2026-11-22); no follow-up work using it found | 2026-11-22 | [arXiv:2110.10774](https://arxiv.org/abs/2110.10774) |
