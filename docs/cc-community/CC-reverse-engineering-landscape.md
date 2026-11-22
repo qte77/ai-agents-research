@@ -2,7 +2,7 @@
 title: CC Reverse Engineering Landscape
 purpose: Survey of community tools, blogs, and trackers that reverse engineer Claude Code internals — system prompts, binary analysis, env vars, API interception.
 created: 2026-03-29
-updated: 2026-06-16
+updated: 2026-11-22
 validated_links: 2026-04-05
 status: research
 ---
@@ -57,7 +57,7 @@ URL: [sabrina][sabrina]
 
 Cross-vendor corpus of **extracted system prompts and guidelines** from major AI models and services. Directories cover OpenAI, Google, Anthropic, xAI, Perplexity, Cursor, Windsurf, Devin, Manus, Replit, and more. Purpose: transparency into the hidden prompt scaffolds that shape model behavior — personas, refusal patterns, and embedded frameworks.
 
-- ~39.8k stars; ~189 commits; AGPL-3.0
+- ~53.7k stars (`gh api` 2026-11-22); AGPL-3.0
 - **Includes Anthropic/Claude entries**, making it relevant alongside the CC-specific prompt extraction work above
 - Method: prompt extraction (observed/elicited at inference time), not binary decompilation or sourcemap exposure
 
@@ -75,9 +75,7 @@ URL: [frr-build][frr-build]
 
 ### Yuyz0112/claude-code-reverse
 
-Tool that monkey-patches `cli.js` to intercept `beta.messages.create` calls. Provides `parser.js` and `visualize.html` for log analysis.
-
-Discovered: quota verification via Haiku 3.5, topic detection prompts, context compression, IDE integration reading open file paths, todo-based memory in `~/.claude/todos/`, sub-agent architecture.
+Stale but adopted (~2.5k stars; last push 2025-08-26, `gh api` 2026-11-22): monkey-patches `cli.js` to intercept `beta.messages.create` calls, with log parser and visualiser; findings cover quota checks, topic detection, context compression and sub-agents.
 
 URL: [yuyz-repo][yuyz-repo] | Docs: [yuyz-docs][yuyz-docs]
 
@@ -103,11 +101,11 @@ URL: [ghuntley][ghuntley]
 
 ### ccunpacked.dev — Visual Architecture Guide
 
-Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31). Created by autocracy101 (`github.com/zackautocracy` — account removed/404) within hours of the leak using AI-assisted development.
+Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31). Created by autocracy101 (`github.com/zackautocracy`) within hours of the leak using AI-assisted development.
 
 **Sections**: Architecture Explorer (color-coded codebase tiles linking to source files), Agent Loop (message processing from `TextInput.tsx` through response), Tool Systems (40+ tools categorized by function), Command Catalog (50+ slash commands), Hidden Features (Buddy, Kairos, UltraPlan, Coordinator Mode, Bridge, Daemon Mode, UDS Inbox, Auto-Dream).
 
-**Companion repo**: zackautocracy/claude-code *(account removed/404)* (696 stars) — read-only source snapshot the site navigates. No license. Described as maintained for *"educational, defensive security research, and software supply-chain analysis."*
+**Companion repo**: zackautocracy/claude-code *(now redirects to razakiau/claude-code; 1,047 stars, last push 2026-03-31, `gh api` 2026-11-22)* — read-only source snapshot the site navigates. No license. Described as maintained for *"educational, defensive security research, and software supply-chain analysis."*
 
 **Community reception**: Featured on [Hacker News][hn-ccunpacked], [GIGAZINE][gigazine-ccunpacked], [daily.dev][dailydev-ccunpacked]. Praised for design quality and navigability of a 512K-LOC codebase.
 
