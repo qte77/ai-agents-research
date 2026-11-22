@@ -2,7 +2,7 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-11-18
+updated: 2026-11-22
 validated_links: 2026-11-18
 status: assess
 ---
@@ -127,6 +127,12 @@ which this section does not repeat.
 - **Error bars**: [Miller][errorbars] treats an eval as an experiment on questions drawn from a super-population: standard errors of the mean, clustered standard errors when questions come in related groups, resampling answers to cut variance, paired differences (not two unpaired summaries) when comparing models, and power analysis before running. Report an interval with every headline score, and an interval on the paired difference when claiming one system beats another.
 - **pass@k vs pass^k**: with n trials per task and c successes, the [τ-bench paper][taubench] defines pass^k as the chance that all k i.i.d. trials succeed, averaged over tasks, and pass@k (from [Codex][codex], at least one of k succeeds) as its optimistic counterpart; both have unbiased estimators from n and c. Use pass@k when one good attempt is enough (a human picks the best), pass^k when every run must work (unattended agents). τ-bench's own result for GPT-4o with function calling: about 61% pass^1 in retail and 35% in airline, with pass^8 below 25% in retail (paper result, 2024 model).
 - **Run-to-run variance**: report the number of runs and the spread, not one run. Resampling within a task is one of Miller's variance-reduction levers.
+
+#### Verifiable rewards (RLVR)
+
+- **What it is**: Reinforcement Learning with Verifiable Rewards (RLVR) is a post-training stage that, in the words of [Tulu 3][tulu3] (arXiv 2411.15124, v1 2024-11-22), "trains the model on verifiable rewards instead of a reward model, as is common for traditional RLHF training", on tasks with checkable outcomes such as maths problems and precise instruction following. Tulu 3 introduced and named it ("a novel method we call Reinforcement Learning with Verifiable Rewards (RLVR)").
+- **Later work, all training**: [RLVR-World][rlvr-world] (arXiv 2505.13934) applies it to world models, rewarding prediction metrics directly; [strategy switching for RLVR exploration][rlvr-explore] (arXiv 2609.33085, v1 2026-09-27) splits a fixed rollout budget so hard problems don't produce groups of all-wrong rollouts. Modal lists open models it recommends for RLVR with code-execution rewards (the Qwen3-Coder family, QwQ-32B, ReTool-Qwen-32B); its benchmark figures are not checked here ([Modal article][modal-rlvr]; a vendor's own page, read 2026-11-22).
+- **Eval-side lesson, no training needed**: where a deterministic check exists (tests, a schema, an exact match), grade with it and keep an LLM judge for what has no check; see [Judge calibration](#judge-calibration) above. RLVR training itself needs GPUs and an RL stack.
 
 #### Harness: Inspect AI
 
@@ -476,6 +482,14 @@ Metrics derived from production evaluation frameworks and competition benchmarks
 - **Landscape Reference**: [Giskard - Security Testing](evaluation-data-resources-landscape.md)
 - **Taxonomy**: [Prompt injection: attacks and defenses](agentic-ai-vulnerability-landscape.md#prompt-injection-attacks-and-defenses)
 
+#### Update-regression gate
+
+- **Definition**: Before a self-editing agent adopts a change to its own instructions, replay the current and the candidate version on a fixed set of executable cases and adopt the candidate only if safety does not get worse; otherwise keep the current version.
+- **Example**: [Safe Personal RSI][safe-rsi] (arXiv 2611.23651, v1 2026-11-18) restricts recursive self-improvement (RSI; see the [AIDE² analysis](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md)) of the personal health assistant Kicker to prompt updates. It repeats failing cases, temporarily undoes changes to guide repairs, and checks safety and task performance on 29 email, calendar, health and marketplace cases before adoption.
+- **Observed results (self-reported)**: across three models and two deliberately risky edits the gate rejected 20 of 21 update attempts; one admitted repair cut attack violations from 10.7% to 0% ([abstract][safe-rsi]).
+- **Caveats**: the risk audit's LLM judge is also one of the evaluated models, which the paper notes; no code or data release was found (2026-11-22). It uses no reinforcement learning and is not RLVR.
+- **Use Case**: Gate edits to skills, CLAUDE.md or agent prompts in CI: a fixed case set, several runs per version, reject on any safety regression.
+
 #### LLM Evaluator Vulnerability
 
 - **Definition**: Susceptibility of LLM-based evaluators to manipulation strategies
@@ -550,6 +564,8 @@ Metric definitions are sourced from the research papers and tool docs cited inli
 | [What Does a Harness Buy?][what-harness-buy] / [HarnessFlow][harnessflow-eval] / [When Agents Fail][model-harness-fit] | Fixed-model harness comparison, five-run protocol, model-harness interaction measures (abstract pages, read 2026-11-18) |
 | [Trial by Trace][tracetrial] / [Doc2Harness][doc2harness] / [Strong Harness][legal-xml] | Harness-reliability benchmark, harness-building benchmark, single-domain controlled ablation (abstract pages, read 2026-11-18) |
 | [Infrastructure noise][infra-noise] / [HAL][hal] | Container-resource effect on agentic coding scores; standardized evaluation harness and log review (read 2026-11-18) |
+| [Tulu 3][tulu3] / [RLVR-World][rlvr-world] / [RLVR exploration][rlvr-explore] / [Modal (vendor)][modal-rlvr] | RLVR named and defined; two training papers that apply it; a vendor's list of open models for code-execution rewards |
+| [Safe Personal RSI][safe-rsi] | Update-regression gate for a self-editing personal agent; self-reported rejection and repair results |
 
 [trulens]: https://github.com/truera/trulens
 [trulens-org]: https://www.trulens.org/
@@ -563,6 +579,11 @@ Metric definitions are sourced from the research papers and tool docs cited inli
 [agentjudge]: https://arxiv.org/abs/2410.10934
 [errorbars]: https://arxiv.org/abs/2411.00640
 [inspect]: https://inspect.aisi.org.uk/
+[tulu3]: https://arxiv.org/abs/2411.15124
+[rlvr-world]: https://arxiv.org/abs/2505.13934
+[rlvr-explore]: https://arxiv.org/abs/2609.33085
+[modal-rlvr]: https://modal.com/resources/best-open-source-models-rlvr-code-execution-rewards
+[safe-rsi]: https://arxiv.org/abs/2611.23651
 [inspect-opts]: https://inspect.aisi.org.uk/options.html
 [what-harness-buy]: https://arxiv.org/abs/2610.04433
 [harnessflow-eval]: https://arxiv.org/abs/2611.06254
