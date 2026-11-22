@@ -3,7 +3,7 @@ title: CC Sandbox Platforms Landscape
 source: https://github.com/alibaba/OpenSandbox
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 created: 2026-03-08
-updated: 2026-11-09
+updated: 2026-11-22
 validated_links: 2026-11-09
 status: research
 ---
@@ -21,18 +21,18 @@ environments — from self-hosted open-source to managed cloud services.
 
 ## Platform Comparison
 
-| Aspect | CC Built-in | `sandbox-runtime` | OpenSandbox (Alibaba) | E2B | Sprites.dev (fly.io) | Maritime | Daytona |
-| ------ | ----------- | ------------------ | --------------------- | --- | -------------------- | -------- | ------- |
-| **Type** | Local (OS-level) | Local (npm package) | Self-hosted (Docker/K8s) | Cloud SaaS | Cloud SaaS | Cloud SaaS | Cloud / self-hosted |
-| **Isolation** | bubblewrap (Linux), Seatbelt (macOS) | Same as CC built-in | gVisor, Kata, Firecracker | Firecracker microVM | Firecracker microVM | Firecracker microVM (dedicated per agent) | Container (optional enhanced) |
-| **Cold start** | N/A (local process) | N/A | <800ms | ~150ms | 1-2s (cold), <1s (warm) | ~0.5s new machine; ~0.6s sleep-wake (self-reported) | Fast (container) |
-| **State** | N/A | N/A | Ephemeral | Ephemeral (24h max) | Persistent + checkpoint/restore (~300ms) | Persistent (`/data` only); idle sleeps free | Stateful |
-| **Storage** | Local filesystem | Local filesystem | Container volumes | Ephemeral per session | 100GB persistent NVMe | `/data` directory (size not stated) | Persistent |
-| **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go | Python, JS/TS | REST API | TypeScript, Python, CLI (`maritime-cli`), REST | Python, JS/TS |
-| **CC integration** | Native | npm package | Documented | Via SDK | Via API | `claude_code` template or custom Docker image | Via SDK |
-| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Not stated; ToS retains all rights, no licence published | Closed source (legacy OSS repo frozen) |
-| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Free (3/1) – $500/mo Scale (500/60); Enterprise custom | Usage-based |
-| **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Not stated | Yes |
+| Aspect | CC Built-in | `sandbox-runtime` | OpenSandbox (Alibaba) | E2B | Sprites.dev (fly.io) | Daytona |
+| ------ | ----------- | ------------------ | --------------------- | --- | -------------------- | ------- |
+| **Type** | Local (OS-level) | Local (npm package) | Self-hosted (Docker/K8s) | Cloud SaaS | Cloud SaaS | Cloud / self-hosted |
+| **Isolation** | bubblewrap (Linux), Seatbelt (macOS) | Same as CC built-in | gVisor, Kata, Firecracker | Firecracker microVM | Firecracker microVM | Container (optional enhanced) |
+| **Cold start** | N/A (local process) | N/A | <800ms | ~150ms | 1-2s (cold), <1s (warm) | Fast (container) |
+| **State** | N/A | N/A | Ephemeral | Ephemeral (24h max) | Persistent + checkpoint/restore (~300ms) | Stateful |
+| **Storage** | Local filesystem | Local filesystem | Container volumes | Ephemeral per session | 100GB persistent NVMe | Persistent |
+| **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go | Python, JS/TS | REST API | Python, JS/TS |
+| **CC integration** | Native | npm package | Documented | Via SDK | Via API | Via SDK |
+| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Closed source (legacy OSS repo frozen) |
+| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Usage-based |
+| **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Yes |
 
 ## Platform Details
 
@@ -44,12 +44,12 @@ on macOS; requires `apt install bubblewrap socat` on Linux. Sufficient for
 local-first workflows.
 
 The standalone `@anthropic-ai/sandbox-runtime` npm package extends this
-outside CC (e.g., for MCP servers). Same isolation primitives, different
+outside CC (e.g., for Model Context Protocol (MCP) servers). Same isolation primitives, different
 entry point.
 
 ### OpenSandbox (Alibaba)
 
-Open-sourced March 2026 under Apache 2.0. ~12.1k GitHub stars (as of 2026-07-23)
+Open-sourced March 2026 under Apache 2.0. ~17.8k GitHub stars (as of 2026-11-22)
 ([source][opensandbox-gh]).
 
 **Architecture** — four-layer modular stack ([source][opensandbox-gh]):
@@ -167,65 +167,11 @@ public site.
 **When to use**: Bursty or long-idle agent workloads that need fast resume without
 standby cost — between E2B's ephemeral model and Sprites' always-warm persistence.
 
-### Maritime
+### forkd (now sandstorm)
 
-Cloud hosting for persistent AI agents, each running in its own Firecracker microVM with its own
-kernel. Operated by **Maritime AI, Inc.** (Delaware governing law), per its
-[terms of service][maritime-terms] — the name also appears in the copyright footers of the
-[pricing][maritime-pricing] and [startups][maritime-startups] pages ("© 2026 Maritime AI, Inc. All
-rights reserved"), though not on the homepage ([source][maritime]). Section 8 of the terms states
-"Maritime retains all rights, title, and interest in and to the Service... including all software,
-infrastructure, documentation, trademarks, and other intellectual property" — no licence is
-published ([source][maritime-terms]).
-
-**Key characteristics**:
-
-- Only the `/data` directory is persistent — it survives sleep, restart, and redeploy; the rest of
-  the filesystem is disposable. New machines report booting in ~0.5s, and sleeping (idle) agents
-  wake in ~0.6s on a message, webhook, or cron trigger — both self-reported, not independently timed
-  ([source][maritime]).
-- CLI (`maritime-cli`, Node ≥20.12), TypeScript (`maritime-sdk`) and Python (`maritime`) SDKs, a REST
-  API, and ready-made templates (openclaw, hermes, zeroclaw, claude_code, codex, dsh) or any Docker
-  container ([source][maritime]).
-- Paid plans add optional headful Linux desktops per machine, viewable over VNC and controllable via
-  Model Context Protocol (MCP) or REST ([source][maritime]).
-
-**Pricing** (flat monthly; sleeping machines are free and don't count toward the awake limit):
-Free $0 (3 machines/1 awake), Starter $20/mo (20/5), Growth $100/mo (100/25), Scale $500/mo
-(500/60), Dedicated $5,000/mo (5,000/500), Enterprise custom ([source][maritime-pricing]). A
-"Maritime for Startups" program matches spend up to $5,000 (or $10,000 via a partner
-accelerator/fund); grants are stated as discretionary, with credits carrying no cash value
-([source][maritime-startups]).
-
-**When to use**: Same product category as Sprites.dev and Blaxel above — per-agent Firecracker
-microVMs with auto-sleep/wake and a persistent disk — but aimed at long-running conversational
-agents triggered by messages/webhooks/cron, rather than at code-execution sandboxes.
-
-### Ephemora Cell
-
-A different layer than the platforms above: a capability-based WebAssembly sandbox
-for executing individual untrusted calls (AI-generated code, MCP tool invocations)
-inside an existing process, not a full VM/container agent environment
-([source][ephemora]).
-
-**Key characteristics** (per the README of the PyPI release v1.0.4.2, re-checked 2026-11-09; the
-GitHub repository the doc first cited returns 404 since at least 2026-11-09):
-
-- wasmtime-based, WASI-isolated execution with enforced fuel (CPU), memory, time,
-  and I/O budgets ([source][ephemora])
-- README reports ~0.5ms warm execution, ~3M executions/hour per core, and all 8
-  tested attack vectors blocked (filesystem escape, fork, sockets, threading, etc.)
-  — self-reported, not third-party audited ([source][ephemora])
-- Generates tamper-evident, RFC 8785-canonicalized execution records; listed in the
-  MCP Registry; the README advertises a GitHub Action for gating untrusted PR code, but that
-  Action lived in the now-missing GitHub repository ([source][ephemora])
-- README badges report 440 passing tests and 86% coverage; Apache-2.0 (PyPI classifier), Python
-  ([source][ephemora])
-
-**When to use**: Sandboxing individual AI-generated function calls or MCP tool
-invocations — complements rather than replaces the VM-level platforms above.
-
-### forkd
+Renamed to `deeplethe/sandstorm` (checked 2026-11-22); its current README documents both gVisor and
+Firecracker backends. The details below were verified on 2026-09-24, before the rename, and the source
+link points at the v0.5.3 tag they match.
 
 Firecracker microVM sandbox runtime built for AI agent fan-out: spawning many
 isolated children from one warmed parent snapshot via copy-on-write memory sharing
@@ -242,7 +188,7 @@ isolated children from one warmed parent snapshot via copy-on-write memory shari
   without duplicating base images ([source][forkd])
 - Per-child KVM isolation, network namespaces, cgroup memory limits; REST API plus
   Python/TypeScript SDKs ([source][forkd])
-- Apache-2.0, Rust, 2.9k stars ([source][forkd])
+- Apache-2.0, Rust, 6.1k stars (as of 2026-11-22) ([source][forkd])
 
 **Maturity**: Alpha. README states core functionality is "in place and exercised by
 25 unit + integration tests" but on-disk formats and API shapes may change before
@@ -300,16 +246,20 @@ inside an OpenSandbox/E2B/Sprites environment that provides its own
 isolation. The external
 platform's isolation is additive — it doesn't replace CC's permission model.
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter).
+
+| Name | Reason | Date | Link |
+| ---- | ------ | ---- | ---- |
+| Maritime | Criterion 3: no named independent users, funding or independent measurement at the vendor's own pages; timings are self-reported (checked 2026-11-22) | 2026-11-22 | <https://maritime.sh> |
+| Ephemora Cell | Criterion 3: no stated users, stars or measured result; one PyPI maintainer (latest release 1.1.0, 2026-10-05) and the cited source repository returns 404 (`gh api` 2026-11-22) | 2026-11-22 | <https://pypi.org/project/ephemora-cell/> |
+
 ## References
 
 - [Blaxel][blaxel]
 - [Blaxel pricing][blaxel-pricing]
-- [Maritime][maritime]
-- [Maritime pricing][maritime-pricing]
-- [Maritime terms of service][maritime-terms]
-- [Maritime for Startups][maritime-startups]
-- [Ephemora Cell (PyPI v1.0.4.2)][ephemora]
-- [forkd (GitHub)][forkd]
+- [sandstorm, formerly forkd (GitHub)][forkd]
 - [OpenSandbox GitHub][opensandbox-gh]
 - [OpenSandbox announcement (MarkTechPost)][opensandbox-marktechpost]
 - [E2B][e2b]
@@ -328,12 +278,7 @@ platform's isolation is additive — it doesn't replace CC's permission model.
 [blaxel]: https://blaxel.ai
 [blaxel-pricing]: https://blaxel.ai/pricing
 [blaxel-docs]: https://docs.blaxel.ai/Overview
-[maritime]: https://maritime.sh
-[maritime-pricing]: https://maritime.sh/pricing
-[maritime-terms]: https://maritime.sh/terms
-[maritime-startups]: https://maritime.sh/startups
-[ephemora]: https://pypi.org/project/ephemora-cell/1.0.4.2/
-[forkd]: https://github.com/deeplethe/forkd
+[forkd]: https://github.com/deeplethe/sandstorm/tree/v0.5.3
 [opensandbox-gh]: https://github.com/alibaba/OpenSandbox
 [opensandbox-marktechpost]: https://www.marktechpost.com/2026/03/03/alibaba-releases-opensandbox-to-provide-software-developers-with-a-unified-secure-and-scalable-api-for-autonomous-ai-agent-execution/
 [e2b]: https://e2b.dev
