@@ -4,7 +4,7 @@ source: https://generativeprogrammer.com/p/12-agentic-harness-patterns-from
 purpose: Taxonomy of reusable harness-level patterns extracted from the Claude Code source leak.
 status: research
 created: 2026-04-06
-updated: 2026-11-18
+updated: 2026-11-22
 validated_links: 2026-11-18
 ---
 
@@ -129,11 +129,24 @@ harmful". Code: [`Snowflake-AI-Research/flash-cuda`][flash-cuda] (Apache-2.0).
 
 **Cross-ref**: This repo documents the full hook lifecycle in [CC-hooks-system-analysis.md](../configuration/CC-hooks-system-analysis.md).
 
-[HumanLayer][humanlayer] provides a structured approval-gate SDK that intercepts agent
+[HumanLayer][humanlayer] began as a structured approval-gate SDK that intercepts agent
 tool calls for human review before execution. This is complementary to CC's built-in
 permission prompts and `PermissionRequest` hooks: CC's hooks handle automated allow/deny
-logic, while HumanLayer adds a structured human-in-the-loop layer for cases where
+logic, while an approval gate adds a structured human-in-the-loop layer for cases where
 automated approval rules are insufficient.
+
+**Status as of 2026-11-22 (shipped, first-party)**: the approval-gate SDK is dormant. The PyPI package
+`humanlayer` was last uploaded 2025-06-03 (0.7.9), and the current [repo][humanlayer-gh] no longer
+holds an SDK: its README describes a product that runs coding agents (Claude Code, Codex, OpenCode, Pi)
+on your machines and lets a team steer them from a desktop app, a web app and a per-host daemon
+(Apache-2.0 per the LICENSE file; 12.9k stars; last push 2026-11-16; download via the
+[site][humanlayer] and release notes, 0.202.0 dated 2026-11-14, rather than GitHub releases, which hold
+only nightly pre-releases). The podcast-era name "CodeLayer" is not used on the current README or site;
+`codelayer` survives as an internal agent module in the daemon source. The tool passes the
+[pruning filter](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter)
+(usable artifact, alive, about 1,000+ stars), so it is a valid option for team-level orchestration of
+coding agents, not an approval-gate library. Practitioner context: [Ralph enhancement research](CC-ralph-enhancement-research.md),
+[extended context analysis](../context-memory/CC-extended-context-analysis.md).
 
 ## Author
 
@@ -148,7 +161,7 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Skill Issue: Harness Engineering for Coding Agents][skill-issue-post] (Kyle, hlyr.dev, 2026-03-12) — harness engineering framing, HumanLayer mention
 - Repos and releases (`gh api`, 2026-11-18): [claude-agent-sdk-python][sdk-py] (MIT, v0.2.184), [claude-agent-sdk-typescript][sdk-ts] (Anthropic Commercial Terms per its LICENSE file), [langchain-ai/deepagents][deepagents-gh] (MIT, 0.7.39), [earendil-works/pi][pi-gh] (MIT, v1.5.2; eight built-in tools per its [extensions doc][pi-ext]), [HKUDS/OpenHarness][openharness-gh] (MIT, v0.1.9)
 - [Agent SDK overview][agent-sdk-docs] and [Writing tools for agents][writing-tools] (Anthropic; read 2026-11-18) — build-vs-adopt section; licenses and versions from each repo's LICENSE file and releases via `gh api`, 2026-11-18
-- [HumanLayer][humanlayer] — human-in-the-loop approval-gate SDK for agent tool calls
+- [HumanLayer][humanlayer] · [repo][humanlayer-gh] (`gh api` and README, PyPI JSON, release notes; read 2026-11-22) — original approval-gate SDK (dormant, last PyPI upload 2025-06-03) and current multiplayer coding-agent workspace
 - [ARCBench (arXiv 2611.03223)][arcbench] — rule compliance after context compaction
 - [Unsupported policy in hand-off summaries (arXiv 2611.06545)][handoff-paper] · [code][handoff-audit] — hand-off summaries that invent approvals or restrictions
 - [KernelSeek (arXiv 2611.03517)][kernelseek] · [code][flash-cuda] — Stop-hook goal predicate, question bank as a skill
@@ -186,6 +199,7 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 [claude-security]: https://claude.com/product/claude-security
 [skill-issue-post]: https://www.hlyr.dev/blog/skill-issue-harness-engineering-for-coding-agents
 [humanlayer]: https://www.humanlayer.dev/
+[humanlayer-gh]: https://github.com/humanlayer/humanlayer
 
 ## Academic Design-Space Analysis (arXiv 2604.14228)
 
