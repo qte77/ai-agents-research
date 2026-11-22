@@ -8,7 +8,7 @@ layers, catalogs and ontologies, graph and vector stores. Pointers only; see [th
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [agentic-database-access-landscape.md § Database MCP servers](../non-cc/infrastructure/agentic-database-access-landscape.md#database-mcp-servers) | Database MCP servers with licences and read-only modes | non-cc |
-| [agentic-database-access-landscape.md § Text-to-SQL benchmarks](../non-cc/infrastructure/agentic-database-access-landscape.md#text-to-sql-benchmarks) | BIRD and Spider 2.0 with dates, BIRD-RL, DualSQL | non-cc |
+| [agentic-database-access-landscape.md § Text-to-SQL benchmarks](../non-cc/infrastructure/agentic-database-access-landscape.md#text-to-sql-benchmarks) | BIRD and Spider 2.0 with dates, BIRD-RL | non-cc |
 | [agentic-database-access-landscape.md § Write safety](../non-cc/infrastructure/agentic-database-access-landscape.md#write-safety) | Read-only roles, branching, incident evidence | non-cc |
 | [agentic-database-access-landscape.md § Data quality and lineage](../non-cc/infrastructure/agentic-database-access-landscape.md#data-quality-and-lineage) | Data quality and lineage, pointing at the semantic-layers landscape | non-cc |
 | [insforge-analysis.md](../non-cc/infrastructure/insforge-analysis.md) | InsForge: backend platform with semantic infrastructure for coding agents | non-cc |

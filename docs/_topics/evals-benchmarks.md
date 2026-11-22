@@ -38,7 +38,7 @@ and maintaining a benchmark, and domain benchmarks. Pointers only; see [the hub 
 |---|---|---|
 | [computer-use-agents-landscape.md § The OSWorld family](../non-cc/agents/computer-use-agents-landscape.md#the-osworld-family) | OSWorld-Verified and OSWorld 2.0 results, vendor scores labelled | non-cc |
 | [browser-agents-landscape.md § Browser benchmarks with dates](../non-cc/agents/browser-agents-landscape.md#browser-benchmarks-with-dates) | Web-agent benchmarks with dates; HAL vs a vendor-run aggregator | non-cc |
-| [agentic-database-access-landscape.md § Text-to-SQL benchmarks](../non-cc/infrastructure/agentic-database-access-landscape.md#text-to-sql-benchmarks) | BIRD and Spider 2.0 with dates, BIRD-RL, DualSQL | non-cc |
+| [agentic-database-access-landscape.md § Text-to-SQL benchmarks](../non-cc/infrastructure/agentic-database-access-landscape.md#text-to-sql-benchmarks) | BIRD and Spider 2.0 with dates, BIRD-RL | non-cc |
 | [programmatic-tool-calling-analysis.md § LLM function-calling benchmarks](../non-cc/protocols/programmatic-tool-calling-analysis.md#llm-function-calling-benchmarks) | Function-calling benchmarks | non-cc |
 | [agentic-ai-vulnerability-landscape.md § Benchmarks](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#benchmarks) | Prompt-injection benchmarks | sdlc-lcm |
 | [CC-memory-tooling-landscape.md § Benchmarks](../cc-community/CC-memory-tooling-landscape.md#benchmarks) | Memory benchmarks (LongMemEval) | cc-community |
