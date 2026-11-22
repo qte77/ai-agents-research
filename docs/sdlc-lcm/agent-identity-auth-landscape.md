@@ -2,7 +2,7 @@
 title: Agent Identity, Authentication & Personhood Landscape
 purpose: Survey of how agents get identity and authorization, and how human-vs-agent is proven — the "who may act, and how is it proven" layer, distinct from CC-local runtime permissions.
 created: 2026-07-08
-updated: 2026-11-20
+updated: 2026-11-22
 validated_links: 2026-10-24
 status: assess
 ---
@@ -41,20 +41,16 @@ The agent has its own identity, independent of any human.
 - **ERC-8004 "Trustless Agents"** (Draft EIP) — on-chain Identity / Reputation / Validation registries
   (ERC-721 identity handle → off-chain agent registration JSON) for cross-org agent discovery/trust
   without pre-existing trust. Contracts deployed, EIP still Draft. [eips.ethereum.org][erc8004].
-- **Privado ID "Know Your Agent" (KYA)** — gives agents a verifiable identity tied to a creator, with
-  public reputation (W3C DIDs + ZK verifiable credentials); a SingularityNET trust registry. Bridges
-  "is this a human" and "is this agent accountable." [privado.id][privado].
-- **SAM** (`google/sam`, Apache-2.0, 934★, created 2026-04-21, `gh api` 2026-09-24) — a
-  private P2P network giving each agent-adjacent node a verifiable identity, built on two
-  stated principles: "nothing is reachable by default" (a node exposes no services until
+- **Agent Mesh** (`google/agentmesh`, formerly `google/sam`; Apache-2.0, 1,211★, created 2026-04-21,
+  `gh api` 2026-11-22) — a private network for agents giving each node a verifiable identity, built on
+  two stated principles: "Nothing is reachable by default" (a node exposes no services until
   configured, and policy grants are by service name rather than network address) and
-  "identity comes from your identity provider" (a node enrolls via an OIDC or bootstrap
-  token; `sam-control-plane` turns that into a short-lived, offline-verifiable credential
-  bound to the node's key). `sam-node` runs beside the agent for enrollment + local
-  exposure, `sam-router` relays nodes that cannot connect directly (NAT traversal), and
-  `sam-one` bundles all three for single-machine setups. Pre-1.0 per its own README.
-  ⚠️ The repo's README and GitHub description do not expand "SAM" — treat "Sovereign
-  Agent Mesh" as an unconfirmed gloss, not a first-party name.
+  "Identity comes from your identity provider" (a node enrolls via an OIDC or bootstrap
+  token; `agentmesh-control-plane` turns that into a short-lived, offline-verifiable credential
+  bound to the node's key). `agentmesh-node` runs beside the agent for enrollment + local
+  exposure, `agentmesh-router` relays nodes that cannot connect directly (NAT traversal), and
+  `agentmesh-one` bundles control plane, router and web console for single-machine setups.
+  Pre-1.0 per its own README, which also says it is not an officially supported Google product.
 - **Cloud agent identities** — AWS AgentCore Identity (inbound JWT from any OIDC IdP, outbound OAuth
   credential vault) and Google Cloud's Agent Identity (per-agent principal, GA 2026-04-22) are covered
   per cloud in [aws-agent-stack-analysis.md § Identity and IdP integration](../non-cc/agents/aws-agent-stack-analysis.md#identity-and-idp-integration)
@@ -134,6 +130,14 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 - **Assess:** standards are early and fragmented (OAuth-vs-workload-identity-vs-onchain), several EIPs
   Draft, one vendor already rebranding. Track MCP-OAuth, Entra Agent ID, and Web Bot Auth adoption.
 
+## Not included
+
+Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| Privado ID "Know Your Agent" | Fails criterion 1 (not publicly available): the vendor's own post (2026-01-21) says KYA is "currently available under private access" to selected customers and partners, with its SDK by request; one named adopter (Billions), vendor-stated | 2026-11-22 | <https://www.privado.id/blog/privado-know-your-agent> |
+
 ## Sources
 
 | Source | Content |
@@ -142,8 +146,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 | [SPIFFE/SPIRE][spiffe] | Workload identity (SVIDs) |
 | [Microsoft Entra Agent ID][entra] | Agent service-principal identity (GA 2026-04) |
 | [ERC-8004][erc8004] | On-chain trustless-agent identity/reputation (Draft) |
-| [Privado ID — Know Your Agent][privado] | DID + ZK-VC agent identity/reputation |
-| [SAM][sam] (`google/sam`) | P2P agent-network identity/discovery; 934★, Apache-2.0, `gh api` 2026-09-24; acronym unexpanded in repo |
+| [Agent Mesh][sam] (`google/agentmesh`) | P2P agent-network identity/discovery; 1,211★, Apache-2.0, `gh api` 2026-11-22 |
 | [MCP Authorization][mcp-authz] | OAuth 2.1 resource-server model |
 | [Okta Cross-App Access][xaa] | ID-JAG delegated agent authorization |
 | [Google AP2 spec][ap2] | Mandate (W3C VC) authorization chain |
@@ -156,8 +159,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 [spiffe]: https://spiffe.io/docs/latest/spire-about/spire-concepts/
 [entra]: https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id
 [erc8004]: https://eips.ethereum.org/EIPS/eip-8004
-[privado]: https://www.privado.id/blog/privado-know-your-agent
-[sam]: https://github.com/google/sam
+[sam]: https://github.com/google/agentmesh
 [mcp-authz]: https://modelcontextprotocol.io/specification/latest/basic/authorization
 [visa-tap-release]: https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.21716.html
 [visa-tap-overview]: https://developer.visa.com/capabilities/trusted-agent-protocol/overview
