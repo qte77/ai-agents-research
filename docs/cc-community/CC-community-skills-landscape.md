@@ -267,7 +267,7 @@ Started in April 2026 as a skill pack that compresses agent **output** by switch
 All numbers above are self-reported by the author, as is the README's Terminal-Bench comparison. Two outside sources, checked 2026-11-22:
 
 - **JetBrains A/B** ([JetBrains AI blog, July 2026][caveman-jetbrains]): a paired A/B on Claude Code over 86 of the 87 SkillsBench tasks, with the skill forced on. Measured output-token saving was 8.5% against the advertised 65%, which the post calls "the ceiling, not the usual-case result"; average task score was 0.326 without the skill and 0.311 with it, a difference that a sign test puts at p = 0.82 (not significant).
-- **CAVEWOMAN paper** ([arXiv 2606.24083][caveman-cavewoman], submitted 2026-06-23; the README attributes it to Adobe Research, the abstract page lists no affiliation): caveman-style output compression cut realised cost on most API models by 1.4-2.4x per model across eight models and five datasets, while compressing the user's prompt raised net cost (about 1.15x on the five-benchmark mean) as accuracy fell. It studies the style, not this repository's code.
+- **CAVEWOMAN paper** ([arXiv 2606.24083][caveman-cavewoman], submitted 2026-06-23; the README attributes it to Adobe Research, the abstract page lists no affiliation): in a study of eight models on five datasets, caveman-style output compression cut realised cost by 1.4-2.4x per model on most API models, while compressing the user's prompt raised net cost (about 1.15x on the five-benchmark mean) as accuracy fell. It studies the style, not this repository's code.
 
 The earlier figures in this entry (about 75% headline, 65% average over 10 tasks with a 22-87% range) no longer appear in the README, so they are dropped.
 
