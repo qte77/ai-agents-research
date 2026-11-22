@@ -42,7 +42,7 @@ def main() -> None:
     args.out.write_text(to_json(graph), encoding="utf-8")
     # Reason: same count as the page's checkboxes, which leave the hubs themselves to their own boxes.
     counts = Counter(n["filing"] for n in graph["nodes"]
-                     if n["bucket"] != "_topics" or n["id"] == "docs/_topics/README.md")
+                     if not n["hubs"] and (n["bucket"] != "_topics" or n["id"] == "docs/_topics/README.md"))
     print(f"Wrote {args.out}: {len(graph['nodes'])} docs ({counts['unfiled']} unfiled, "
           f"{counts['exempt']} exempt, {counts['not-hub-content']} not hub content), "
           f"{len(graph['edges'])} linked pairs")

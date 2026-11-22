@@ -137,12 +137,14 @@ class HubCoverageTests(unittest.TestCase):
 
     def test_hub_filing_splits_docs_without_a_hub_the_way_check_coverage_does(self):
         # Plan 0015 N4: the doc graph's "Unfiled" must mean what check_coverage means.
-        docs = {**self.DOCS, "docs/sdlc-lcm/README.md": "# Index\n", "docs/plans/p.md": "# Plan\n"}
+        docs = {**self.DOCS, "docs/sdlc-lcm/README.md": "# Index\n", "docs/plans/p.md": "# Plan\n",
+                "docs/_topics/data.md": "# Data\n\n| [m](memory.md) | hub to hub |\n"}
         filing = dc.hub_filing(docs)
         self.assertEqual(filing["docs/non-cc/frameworks/l-landscape.md"], "hubbed")
         self.assertEqual(filing["docs/sdlc-lcm/z-analysis.md"], "hubbed")
         for path in ("docs/architecture.md", "docs/non-cc/agents/p-analysis.md", "docs/sdlc-lcm/lcm-spec.md"):
             self.assertEqual(filing[path], "exempt", path)
+        # memory.md is linked from another hub's row, yet a hub is never "hubbed".
         for path in ("docs/sdlc-lcm/README.md", "docs/plans/p.md", "docs/_topics/memory.md"):
             self.assertEqual(filing[path], "not-hub-content", path)
         self.assertEqual(sorted(p for p, f in filing.items() if f == "unfiled"), dc.unhubbed(docs))

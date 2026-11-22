@@ -150,10 +150,11 @@ def hub_filing(docs: dict) -> dict[str, str]:
               if e["kind"] == "hub" and e["source"] != _HUB_INDEX}
 
     def state(p: str) -> str:
-        if p in hubbed:
-            return "hubbed"
+        # Reason: hubs link each other; a hub is never filed under another hub.
         if not is_content(p) or p.startswith(_NOT_HUB_CONTENT):
             return "not-hub-content"
+        if p in hubbed:
+            return "hubbed"
         return "exempt" if hub_exempt(p) else "unfiled"
 
     return {p: state(p) for p in docs}
