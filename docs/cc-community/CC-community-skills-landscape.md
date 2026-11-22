@@ -249,6 +249,8 @@ Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/cl
 
 **Repo**: [JuliusBrussee/caveman][caveman] | **Stars**: ~122K | **License**: Apache-2.0 | **Version**: v4.2.0 (2026-11-22) | all as of 2026-11-22 ([GitHub API][caveman-api], [LICENSE][caveman-license], [releases][caveman-releases])
 
+**Site**: [caveman.so][caveman-site], the project's own site (it links the repo; `getcaveman.dev` serves the same page and declares `caveman.so` canonical) · **Docs**: [docs.caveman.so][caveman-docs] (the repo's homepage field) · read 2026-11-22
+
 Started in April 2026 as a skill pack that compresses agent **output** by switching the assistant into telegraphic-speech registers; tagline *"why use many token when few do trick"*. Since 4.0 it is a skill plus a local proxy and CLI for coding agents: the README lists 30+ supported agents, and describes the shorter-answers skill as one of six parts, each with its own on/off switch ([README][caveman]). Passes the pruning rule in [CONTRIBUTING § Pruning entries](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter): usable artifact, not archived, last push 2026-11-22, well above 1,000 stars.
 
 **Licence history** ([LICENSING.md][caveman-licensing]): releases before 3.0.0 kept the terms they shipped with (MIT for the skill and adoption surfaces, a source-available Business Source License for the runtime); from 3.0.0 the whole repository is Apache-2.0. The earlier "MIT" entry in this doc was correct for v1.6.0, whose LICENSE file is MIT ([v1.6.0 LICENSE][caveman-v160-license]). The hosted Caveman Cloud service is separate commercial software outside the repository licence.
@@ -654,6 +656,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [caveman-jetbrains]: https://blog.jetbrains.com/ai/2026/07/speak-to-ai-agents-like-cavemen-tosave-tokens/
 [caveman-cavewoman]: https://arxiv.org/abs/2606.24083
 [caveman-releases]: https://github.com/JuliusBrussee/caveman/releases
+[caveman-site]: https://caveman.so/
+[caveman-docs]: https://docs.caveman.so/caveman
 [last30days]: https://github.com/mvanhorn/last30days-skill
 [builderio-skills]: https://github.com/BuilderIO/skills
 [excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
