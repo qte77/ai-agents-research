@@ -144,7 +144,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| devteam | 266 stars; last push 2026-05-26, no GitHub releases, no named independent users or measured benefit in its README (`gh api` 2026-11-22); its [analysis](devteam-analysis.md) stays in the corpus | 2026-11-22 | <https://github.com/agent-era/devteam> |
+| devteam | Criterion 3: 266 stars; last push 2026-05-26, no GitHub releases, no named independent users or measured benefit in its README (`gh api` 2026-11-22); its [analysis](devteam-analysis.md) stays in the corpus | 2026-11-22 | <https://github.com/agent-era/devteam> |
 
 ## Sources
 
