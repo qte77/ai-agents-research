@@ -161,7 +161,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| leaked-claude-code/leaked-claude-code | Criterion 1: no usable artifact; the repo returns 404 (`gh api` 2026-11-22). Its only role here was an excluded alleged-source mirror | 2026-11-22 | <https://github.com/leaked-claude-code/leaked-claude-code> |
+| leaked-claude-code/leaked-claude-code | Criterion 1: no usable artifact; the repo returns 404 (`gh api` 2026-11-22). Its only role here was an excluded alleged-source mirror | 2026-11-22 | — (the repo returns 404; its former URL was `github.com/leaked-claude-code/leaked-claude-code`) |
 
 ## Sources
 
