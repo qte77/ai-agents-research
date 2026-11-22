@@ -2,7 +2,7 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-11-19
+updated: 2026-11-22
 validated_links: 2026-10-26
 status: adopt
 ---
@@ -274,17 +274,39 @@ The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metr
 
 ## Documented cost levers
 
-Anthropic's [Manage costs effectively][cc-costs] page lists the levers Claude Code itself offers for spending fewer tokens (checked 2026-11-19); the output-style row comes from the [output styles][cc-output-styles] page. All are documented guidance, not measured savings; the last column links deeper corpus coverage where it exists:
+Anthropic's [Manage costs effectively][cc-costs] page covers tracking spend, organization controls and the levers Claude Code itself offers for spending fewer tokens (read 2026-11-22); the output-style row comes from the [output styles][cc-output-styles] page. All are documented guidance, not measured savings, and the page gives no method for its figures. Pricing per model is in [CC-models-reference.md § Model Pricing](../configuration/CC-models-reference.md#model-pricing-current-lineup); per-billing-path reporting (Teams, Console, cloud providers) is in [CC-monitoring-telemetry-analysis.md](../configuration/CC-monitoring-telemetry-analysis.md).
+
+**Reference figures** (costs page, read 2026-11-22): across enterprise deployments the average is around $13 per developer per active day and $150-250 per developer per month, with costs below $30 per active day for 90% of users. The page advises a small pilot to set a baseline. Its Console rate-limit recommendations are per-user Token Per Minute (TPM) / Request Per Minute (RPM) values that fall as team size grows (costs page, read 2026-11-22):
+
+| Team size | TPM per user | RPM per user |
+|---|---|---|
+| 1-5 | 200k-300k | 5-7 |
+| 5-20 | 100k-150k | 2.5-3.5 |
+| 20-50 | 50k-75k | 1.25-1.75 |
+| 50-100 | 25k-35k | 0.62-0.87 |
+| 100-500 | 15k-20k | 0.37-0.47 |
+| 500+ | 10k-15k | 0.25-0.35 |
+
+The limits apply at organization level, so one user can temporarily exceed their share. The page also notes that Claude Code gets its own "Claude Code" workspace in the Console, whose rate limit can be capped separately.
 
 | Lever | What the docs say | Corpus detail |
 |---|---|---|
-| `/usage` | Shows the session's token usage and, on Pro, Max, Ultra, Team and Enterprise plans, a breakdown that recommends a change for any behavior behind 10% or more of recent usage | [Shared plan usage](#shared-plan-usage-across-claude-products) |
-| `/context` | Shows what is filling the context window; the page cites it next to Model Context Protocol (MCP) overhead, since MCP tool definitions are deferred by default and only names and server instructions load up front | [CC-env-vars-reference.md § Context & Token Control](../configuration/CC-env-vars-reference.md#context--token-control) |
-| `/clear` between tasks | Starting fresh when switching to unrelated work stops stale context being re-sent with every message; `/rename` first, `/resume` to return. The page calls `/clear` free, unlike `/compact`, which reads the whole conversation it summarizes | [CC-prompt-caching-behavior.md § Actions That Invalidate vs. Keep the Cache](../context-memory/CC-prompt-caching-behavior.md#actions-that-invalidate-vs-keep-the-cache) |
+| `/usage` | The Session block shows the session's token usage and a dollar estimate computed locally at list price (API users; subscribers' usage is included in the plan). On Pro, Max, Ultra, Team and Enterprise, a breakdown attributes recent usage to skills, subagents, plugins and MCP servers and recommends a change for any behavior behind 10% or more of recent usage; the shares can sum above 100%. Loops rows list the heaviest scheduled tasks (v2.1.242+); pressing `f` applies the recommendations Claude Code can (v2.1.305+) | [Shared plan usage](#shared-plan-usage-across-claude-products) |
+| Prompt cache line | After the first response, the Session block adds a "Prompt cache (main)" line: request count, share of input tokens from cache, misses, expected rebuilds after compaction or tool-result clearing, and warm or cold state (v2.1.251+; likely-cause text v2.1.260+). Main conversation only, not subagents | [CC-prompt-caching-behavior.md § Actions That Invalidate vs. Keep the Cache](../context-memory/CC-prompt-caching-behavior.md#actions-that-invalidate-vs-keep-the-cache) |
+| `modelPricing` | A managed-settings key that makes `/usage`, the status line and OpenTelemetry (OTel) figures use contracted rates: a `multiplier` and/or per-model `overrides` (v2.1.242+; markup above 1 needs v2.1.271+). It changes what Claude Code reports, not what Anthropic charges; ignored in user, project and local settings | - |
+| `/context` | Shows what is filling the context window; the page cites it next to Model Context Protocol (MCP) overhead, since MCP tool definitions are deferred by default and only names and server instructions load up front. It also recommends CLI tools such as `gh` or `aws` over MCP servers (no per-tool listing) and disabling unused servers via `/mcp` | [CC-env-vars-reference.md § Context & Token Control](../configuration/CC-env-vars-reference.md#context--token-control) |
+| `/clear` between tasks | Starting fresh when switching to unrelated work stops stale context being re-sent with every message; `/rename` first, `/resume` to return. The page calls `/clear` free, unlike `/compact`, which reads the whole conversation it summarizes. Session totals reset on `/clear` (since v2.1.211) | [CC-prompt-caching-behavior.md § Actions That Invalidate vs. Keep the Cache](../context-memory/CC-prompt-caching-behavior.md#actions-that-invalidate-vs-keep-the-cache) |
 | `/compact <focus>` | Focus text, or a "Compact instructions" section in CLAUDE.md, tells the summary what to keep | [CC-extended-context-analysis.md § Mitigation](../context-memory/CC-extended-context-analysis.md#mitigation) |
-| Output style | A style's instructions add input tokens (cached after the first request). Explanatory and Learning produce longer answers than Default, so more output tokens; the built-in Concise style asks for short answers ([output styles][cc-output-styles]) | — |
-| Lower effort or thinking | Thinking tokens bill as output; lower the effort level, or turn thinking off in `/config` on models that allow it (not Opus 5.5, Sonnet 5.5, Haiku 5.5 or the Fable models) | [CC-model-provider-configuration.md § Effort Levels](../configuration/CC-model-provider-configuration.md#effort-levels) |
-| Smaller model for subagents | Subagent requests count against the same usage; set `model: haiku` (or another alias) in a subagent's definition for simple tasks, or force one model on every subagent with `CLAUDE_CODE_SUBAGENT_MODEL` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` (v2.1.257+) | See below |
+| Smaller CLAUDE.md, hooks, skills | CLAUDE.md loads every session, so workflow-specific instructions belong in on-demand skills; the page suggests under 200 lines. A `PreToolUse` hook can filter output before Claude sees it (its example trims test output to the last 100 lines); a skill can hand Claude a codebase overview instead of file exploration. Code intelligence plugins replace grep-and-read with symbol navigation | [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md) |
+| Output style | A style's instructions add input tokens (cached after the first request). Explanatory and Learning produce longer answers than Default, so more output tokens; the built-in Concise style asks for short answers ([output styles][cc-output-styles]) | - |
+| Lower effort or thinking | Thinking tokens bill as output; lower the effort level, or turn thinking off in `/config` on models that allow it (not Opus 5.5, Sonnet 5.5, Haiku 5.5 or the Fable models). On fixed-budget models `MAX_THINKING_TOKENS` (page example: 8000) caps it; adaptive models ignore nonzero budgets | [CC-model-provider-configuration.md § Effort Levels](../configuration/CC-model-provider-configuration.md#effort-levels) |
+| Smaller model for subagents | Subagent requests count against the same usage; set `model: haiku` for simple tasks, and delegate verbose work (tests, docs, logs) so only a summary returns to the main context. The page's Sonnet-over-Opus advice also applies to subagents that inherit the session model. Forcing one model on every subagent is `CLAUDE_CODE_SUBAGENT_MODEL` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` (v2.1.257+), documented on the [env vars][cc-env-vars] page rather than the costs page | See below |
+| Prompting habits | Specific prompts avoid broad scanning; plan mode, early Escape, `/rewind` and verification targets avoid re-work; test incrementally | - |
+| `/insights` | Writes an HTML report on how you work (friction, suggestions) from up to 200 unseen recent sessions on this machine; its own tokens count against plan or API usage | - |
+
+**Agent teams** (costs page, read 2026-11-22): each teammate has its own context window, so tokens scale with active teammates and runtime. The page puts teams at "approximately 7x more tokens than standard sessions" when teammates run in plan mode, and advises Sonnet for teammates, small teams, focused spawn prompts and shutting teammates down when done. See [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md).
+
+**Background and idle token use** (costs page, read 2026-11-22): the page lists these causes of usage that climbs in a long session: the full conversation re-sent on every request (at the cached rate), the first message after a break longer than the cache lifetime missing the cache, session-scoped scheduled tasks firing while idle, cross-session messages delivered to an idle session (`crossSessionInbound` set to `hold` holds them; see [CC-cross-session-messaging-analysis.md](../agents-skills/CC-cross-session-messaging-analysis.md)), goal check-ins (at most three per goal between prompts since v2.1.246; `CLAUDE_CODE_GOAL_CHECKIN_MINUTES=0` turns them off, see [CC-goal-analysis.md](CC-goal-analysis.md)), subagent and workflow requests, active teammates, and compaction itself. Session recap and idle compaction (see [CC-prompt-caching-behavior.md § Idle compaction](../context-memory/CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires)) and prompt suggestions (mostly cache reads) also use tokens while idle.
 
 **Which model a subagent runs on** ([subagents][cc-subagents]): the first that applies of (1) the `model` parameter Claude passes when it spawns the subagent (an alias only), (2) the `model` field in the subagent's definition, including `inherit`, (3) `CLAUDE_CODE_SUBAGENT_MODEL`, (4) the main conversation's model. Before v2.1.251 the environment variable overrode the first two ([env vars][cc-env-vars]). With nothing set, a custom subagent runs on the parent's model, so a session on an Opus or Fable model spends at that rate on those subagents too. Built-in Explore is the documented exception for Fable sessions: with a subscription, Console account or gateway it runs on the model the `opus` alias resolves to ([subagents][cc-subagents-builtin]). A subagent or teammate without its own `effort` runs at the session's effort level only on the parent's model ([model config][cc-effort-subagents]).
 
@@ -327,7 +349,7 @@ The Message Batches API runs large request volumes asynchronously. This section 
 | [TypeScript Agent SDK reference][ts-sdk-ref] | `SDKResultMessage` field names and types (`total_cost_usd`, `usage`, `modelUsage`, `duration_api_ms`, `num_turns`, …) (accessed 2026-10-15) |
 | [Track cost and usage][cost-tracking] | `usage` vs `modelUsage` vs `total_cost_usd` scope, subagent accounting, cross-call accumulation since CC v2.1.277 (accessed 2026-10-15) |
 | [Headless / Agent SDK docs][headless] | `-p --output-format json` usage, `--continue`/`--resume` cost reporting (accessed 2026-10-15) |
-| [Manage costs effectively][cc-costs] | Documented cost levers: `/usage`, `/context`, `/clear`, `/compact`, effort, subagent models (accessed 2026-11-19) |
+| [Manage costs effectively][cc-costs] | Documented cost levers, reference figures, TPM/RPM table, agent-team and background token use, `modelPricing` (read 2026-11-22) |
 | [Output styles][cc-output-styles] | Token effect of output styles (accessed 2026-11-19) |
 | [Subagents][cc-subagents] | Subagent model resolution order (accessed 2026-11-19) |
 | [Built-in subagents][cc-subagents-builtin] | Model the built-in Explore subagent runs on (accessed 2026-11-19) |
