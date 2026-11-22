@@ -3,7 +3,7 @@ title: Browser Agents Landscape
 source: https://code.claude.com/docs/en/chrome
 purpose: Landscape of agents that use websites - agentic browsers, Claude in Chrome versus Chrome DevTools MCP versus Playwright MCP, the WebMCP proposal, hosted agent browsers, browser benchmarks with dates, and prompt-injection safety.
 created: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-22
 validated_links: 2026-11-19
 status: reference
 ---
@@ -38,9 +38,9 @@ web pages.
 | Product | State (read 2026-11-19) | Evidence |
 | ------- | ----------------------- | -------- |
 | [Claude in Chrome][cfc] | Generally available on every paid Claude plan, announced 2026-08-26; also reachable from Claude Code | documented ([GA post][cfc-ga], [Claude Code docs][cc-chrome]) |
-| ChatGPT Atlas ([launch post][atlas], 2025-10-21) | The page now carries a note that Atlas "has since been deprecated"; no date given. Its help-center pages could not be fetched here (HTTP 403), so replacement and timing are unverified | documented (note), rest unverified |
+| ChatGPT Atlas ([launch post][atlas], 2025-10-21) | Stale, kept as one dated line: the page now says Atlas "has since been deprecated" (no date given) and points readers to ChatGPT Work, read 2026-11-22 | documented (note) |
 | [Gemini in Chrome][gem-chrome] | Assistant in Chrome; agentic "auto browse" described as a preview for Google AI Pro and Ultra subscribers in the US | announced (marketing page, not docs) |
-| [Perplexity Comet][comet] | Launch post dated 2025-07-09 (Max subscribers first); the post is about 16 months old and current availability was not checked | announced, stale |
+| [Perplexity Comet][comet] | Launch post dated 2025-07-09 (Max subscribers first); the [product page][comet-page] (dated 2026-03-11) lists downloads for Mac, Windows, iOS and Android, read 2026-11-22; pricing not confirmed | announced (launch post), documented (download page) |
 
 Our reading: the category is moving fast enough that a product page is a poor long-term anchor
 (Atlas is an example). Other agentic browsers (Opera Neon, Dia, Edge Copilot Mode) were not verified
@@ -177,7 +177,7 @@ and credential flows away from any agent-driven browser. Cross-reference:
 | [Chrome DevTools MCP][dt-gh], [config doc][dt-cfg] | Features, flags, licence, release |
 | [Playwright MCP][pw-gh] | Features, flags, licence, release |
 | [WebMCP repo][webmcp-gh], [spec source][webmcp-bs], [status][webmcp-status], [security][webmcp-sec], [Chrome docs][webmcp-chrome], [origin trial post][webmcp-ot] | WebMCP proposal and status |
-| [Atlas launch][atlas], [Atlas hardening][atlas-hard], [Gemini in Chrome][gem-chrome], [Comet launch][comet] | Agentic browser state |
+| [Atlas launch][atlas], [Atlas hardening][atlas-hard], [Gemini in Chrome][gem-chrome], [Comet launch][comet], [Comet page][comet-page] | Agentic browser state |
 | [browser-use][bu-gh], [Stagehand][stagehand-gh], [steel-browser][steel-gh] | Licence, stars, activity |
 | [WebArena][webarena], [WebVoyager][webvoyager], [Online-Mind2Web][om-paper], [repo][om-gh], [BrowseComp][browsecomp] | Benchmarks |
 | [HAL][hal], [Steel aggregator][steel-lb] | Online-Mind2Web leaderboards |
@@ -203,6 +203,7 @@ and credential flows away from any agent-driven browser. Cross-reference:
 [atlas-hard]: https://openai.com/index/hardening-atlas-against-prompt-injection/
 [gem-chrome]: https://gemini.google/overview/gemini-in-chrome/
 [comet]: https://www.perplexity.ai/hub/blog/introducing-comet
+[comet-page]: https://www.perplexity.ai/comet
 [bu-gh]: https://github.com/browser-use/browser-use
 [stagehand-gh]: https://github.com/browserbase/stagehand
 [steel-gh]: https://github.com/steel-dev/steel-browser

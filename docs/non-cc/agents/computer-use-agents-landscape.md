@@ -90,7 +90,7 @@ status, so this table makes no claim about them.
 | ------- | --------------------- | ----- |
 | [OpenCUA][opencucode] ([paper][opencua-paper]) | MIT-licensed models (7B, 32B, 72B), the AgentNet dataset and tools; the abstract of the current version (v3, 2025-10-04) reports 45.0% for the 72B model on OSWorld-Verified (v1, 2025-08-12, predates the 72B result) | authors' claim |
 | [Agent S][agent-s] (Simular) | Apache-2.0 framework; README lists Agent S4 (2026-10-20) and claims 21.3% on OSWorld V2 with an open model, quoting 20.6% for Claude Opus 4.8 and 13.0% for GPT-5.5; the README also claims 72.60% on OSWorld for Agent S3 (2025-12-15) as the first above human performance, and a 2026-08-28 entry saying Simular's production agent Sai tops OSWorld 2.0 with an unexplained "(73%)". The leaderboard file lists Sai with Opus 5 at 41.67% binary and 79.38% partial (no official flag), so the 73% matches neither; we could not reconcile it | vendor claim |
-| [UI-TARS-desktop][ui-tars] (ByteDance) | Apache-2.0 desktop app on UI-TARS and Seed-1.5-VL models; the repository is archived and read-only per a note dated 2026-11-09, so treat as frozen | documented |
+| [UI-TARS-desktop][ui-tars] (ByteDance) | Apache-2.0 desktop app on UI-TARS models; archived (read-only), about 39,600 stars, last push 2026-10-09 (GitHub API, 2026-11-22), so treat as frozen | documented |
 | [Qwen-UI-Agent report][qwenui] | Abstract reports 79.5% on OSWorld-Verified and 40.0% partial-progress on OSWorld-v2 (submitted 2026-07-30) | authors' claim |
 
 We read none of the weights or code; scores are as reported. "First above human" and "SOTA" are
