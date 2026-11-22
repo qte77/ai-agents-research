@@ -209,7 +209,6 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 |---|---|---|
 | Devin Desktop (Cognition) | "Agent Command Center" | Kanban board for local + cloud agents — see [windsurf-analysis.md](../coding-agents/windsurf-analysis.md#agent-command-center) |
 | [Omnara][omnara] | "the command center for your coding agents… terminal, web, mobile" | Session-sync / notification layer — full analysis: [CC-remote-access-landscape.md](../../cc-native/ci-remote/CC-remote-access-landscape.md#omnara) |
-| [flightdeckhq/flightdeck][flightdeck] | "observability and control plane for production and coding agents" | Observability dashboard |
 | [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" | Task-loop TUI — see [CC-ralph-enhancement-research.md](../../cc-native/agents-skills/CC-ralph-enhancement-research.md) |
 | [Vibe Kanban][vibe-kanban] | kanban board (sunsetting) | Orchestrator board — see [CC-office-worker-workflows.md](../../cc-community/CC-office-worker-workflows.md) |
 
@@ -221,6 +220,14 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 
 - [agent-observability-methods-analysis.md](agent-observability-methods-analysis.md) — OTel observability patterns (AG-UI events can be modeled as OTel spans)
 - [CC-connectors-overview.md](../../cc-native/plugins-ecosystem/CC-connectors-overview.md) — MCP connector landscape (the model↔tool leg of the Protocol Triangle)
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| flightdeckhq/flightdeck | Fails criterion 3 (adopted or proven): 31 stars (`gh api` 2026-11-22); repo created 2026-04-07; README names no independent users, standards body or measured result | 2026-11-22 | <https://github.com/flightdeckhq/flightdeck> |
 
 ## Sources
 
@@ -239,7 +246,6 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 | [Salesforce Agentforce 360][sf-agentforce] | Salesforce protocol strategy (MCP, not AG-UI) |
 | [Devin Desktop FAQ][devin-faq] | "Agent Command Center" framing (Kanban for local + cloud agents) |
 | [Omnara (YC launch)][omnara] | "command center for AI agents: terminal, web, mobile" |
-| [flightdeckhq/flightdeck][flightdeck] | "observability and control plane" for agents |
 | [Ralph TUI][ralph-tui] | "AI Agent Loop Orchestrator" — no first-party HUD framing |
 | [Nous Research — Hermes Agent][hermes-nous] | Self-improving agent — no HUD / "heads-up display" framing |
 | [A2A protocol][a2a] · [spec][a2a-spec] | Agent-to-agent interop (Google → Linux Foundation), v1.0.1 |
@@ -260,7 +266,6 @@ A wave of agent-management products has adopted **cockpit / "command center" / "
 [sf-agentforce-analysis]: ../agents/salesforce-agentforce-analysis.md
 [devin-faq]: https://docs.devin.ai/desktop/devin-desktop-faq
 [omnara]: https://www.ycombinator.com/launches/OCT-omnara-the-first-command-center-for-ai-agents-terminal-web-and-mobile
-[flightdeck]: https://github.com/flightdeckhq/flightdeck
 [ralph-tui]: https://ralph-tui.com/
 [hermes-nous]: https://hermes-agent.nousresearch.com/
 [vibe-kanban]: https://www.vibekanban.com/
