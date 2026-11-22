@@ -2,8 +2,8 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365, Cowork, Copilot Code, Managed Runtime, Researcher/Analyst) against first-party documentation; original pass 2026-10-21, extended 2026-11-12 and 2026-11-18 (Frontier programs, a "What each name is" table, Licences).
 created: 2026-10-21
-updated: 2026-11-20
-validated_links: 2026-11-20
+updated: 2026-11-22
+validated_links: 2026-11-22
 status: assess
 ---
 
@@ -528,6 +528,28 @@ coming weeks"; Autopilot was slated to expand to private preview "at the end of 
 had shipped. **Status (2026-11-18):** the Ignite post of 2026-11-17 says Home is GA and Autopilot
 "is beginning to roll out to Frontier customers today" [ignite-2026-blog]; see
 [The Frontier program](#the-frontier-program).
+**Autopilot has a Learn page (read 2026-11-22):** the short link aka.ms/autopilot-documentation
+redirects to [autopilot-docs], titled "Autopilot (Frontier) overview" (ms.date 2026-11-10), which
+carries a prerelease banner and says "This feature is in preview" (preview). Per that page:
+
+- **Identity and scope:** each person can have one Autopilot, with its own workplace identity,
+  memory, cloud computer, mailbox and calendar; it appears on the Home tab and in a private
+  one-on-one Teams chat, and "doesn't expand the data you can access". It cannot reach local
+  folders or apps.
+- **Oversight:** before it sends, shares, deletes or changes something, an automated review compares
+  the action with the request; matches run, others wait for approval. Only the user's own requests
+  authorise actions, not instructions found in email, files or web pages. The page adds that
+  activity "isn't a guarantee of a complete administrative audit record" and that
+  sensitivity-label recognition does not prove every operation is covered by data loss prevention.
+- **Extension:** skills (task instructions) and plugins (connect services, can include skills);
+  "Neither grants access to data by itself". Users can create or upload their own skills and invoke
+  them with `/`.
+- **Versus siblings:** Cowork handles delegated tasks, Code focuses on building, and Autopilot
+  provides "persistent follow-through"; the Teams **@Copilot** capability is distinct from it.
+- **Licence:** the Learn page names only Frontier enrolment and preview assignment. The Copilot
+  licence, usage-based billing and security-control conditions come from [frontier-features], not
+  from this page.
+
 The same post states Copilot Managed Runtime (below) "is now in preview and will also be accessible
 inside Code" [new-copilot-blog]. The same-day Copilot Studio post calls it "public preview": "Today, we’re introducing Microsoft Copilot Managed Runtime into public preview" [managed-runtime-blog].
 
@@ -717,6 +739,53 @@ multi-step questions by acting as a deep research assistant" [faq-researcher] (2
   organization," and those "popular within your organization" [agent-store-admin] (2026-04-07,
   updated 2026-10-31).
 
+#### Extensibility framing (Learn, read 2026-11-22)
+
+Microsoft's "Ways to extend Microsoft 365 Copilot" page (ms.date 2026-11-16) now frames the choice as
+two paths [ext-overview]; the page states no GA or preview level (status not stated):
+
+- **Build a plugin:** package skills, tools (MCP servers, connectors) and agents, and publish
+  through the plugin registry for your organisation, or submit through Partner Center for public
+  distribution via Microsoft Marketplace. It points to the Copilot Plugin Catalog to check for an
+  existing plugin first.
+- **Build Copilot into your own app:** APIs, SDKs, Microsoft Graph and Work IQ guidance, where you
+  own the runtime and hosting.
+- **Connector kinds:** Copilot connectors come in a synced form (content ingested into Microsoft
+  Graph) and a federated form (content retrieved in real time through the Model Context Protocol,
+  MCP). A plugin connector references a remote MCP server from an app manifest. Power Platform
+  connectors used in Copilot Studio are "a different integration model".
+- **Tooling:** start with Work IQ Dev Tools and add Agents Toolkit or an SDK only when needed.
+
+#### Copilot UX components (SPFx)
+
+Copilot UX components are client-side UI components built with the SharePoint Framework (SPFx) that
+render inside Microsoft 365 Copilot, packaged with a declarative agent that makes them callable
+[spfx-copilot-overview]. **Generally available** with SPFx 1.24, released 2026-10-28
+[spfx-1-24-release] (read 2026-11-22); introduced in July as a public preview under the name
+"SharePoint Copilot Apps".
+
+- **Packaging:** the same toolchain as web parts, shipped as a SharePoint solution package
+  (`.sppkg`) that carries the agent definition and components; one `.sppkg` can also hold web parts
+  and extensions. The component implements the MCP Apps model and is hosted from the tenant's App
+  Catalog, so no separate host is needed [spfx-copilot-overview].
+- **Deploy:** an admin uploads and enables the `.sppkg` in the SharePoint App Catalog, then selects
+  "Add to Teams", which runs Sync to Teams and deploys the baseline declarative agent. Later
+  component and tool changes are picked up through dynamic tool discovery (cached for a few
+  minutes); changes to agent instructions, knowledge or starters need another sync
+  [spfx-copilot-deploy].
+- **Local testing:** Copilot Workbench; it does not validate intent matching, tool discovery or
+  tenant permissions, so test those with a deployed agent in a development tenant
+  [spfx-copilot-deploy].
+- **Licence:** each user needs the Microsoft 365 Copilot add-on on top of E3, E5 or E7, including for
+  development and testing; no consumption-based charges for the capability itself
+  [spfx-1-24-release].
+- **Limits at GA:** Copilot and Teams browser and desktop clients only (no iOS or Android); a
+  solution combining Copilot UX components with SPFx Teams functionality needs a manually created
+  Teams package; standard-chat plug-in packaging and Cowork are not GA surfaces; fixes are "fast
+  follows" with no committed dates [spfx-1-24-release], [spfx-copilot-deploy]. The same `.sppkg` can
+  be deployed to another tenant but grants no access to its data and copies no consent or policy
+  [spfx-copilot-deploy].
+
 ### Microsoft agent stack (2026-11-18)
 
 Where Microsoft's agent products sit relative to each other, checked at Microsoft's own pages on
@@ -810,7 +879,8 @@ Items the three pages and the program pages name as Frontier:
 | Copilot Cowork incl. model choice and Edge browsing | Business | Features page lists both; Edge browsing moved to GA per [cowork-whats-new], so the features page lags |
 | Cowork plugins and mobile (iOS, Android) | Business | Named on [frontier-features]; plugin status not stated |
 | Researcher refresh; new Microsoft 365 Copilot app design | Business | Named on [frontier-program] with no detail |
-| Autopilot | Business | Announced; no Learn page. Rolling out progressively from 2026-11-17 to Frontier customers with a Copilot licence, usage-based billing and the required security controls, per [frontier-features] (a page that lags elsewhere) and [ignite-2026-blog] |
+| Autopilot | Business | Preview, with a Learn page ([autopilot-docs], read 2026-11-22; see [The new Copilot](#the-new-copilot-2026-09-25-home-copilot-code-autopilot)). Rolling out progressively from 2026-11-17 to Frontier customers with a Copilot licence, usage-based billing and the required security controls, per [frontier-features] (a page that lags elsewhere) and [ignite-2026-blog] |
+| Sharing a link to an agent | Business | Named on [frontier-features] (read 2026-11-22) as a way to help someone find a specific agent; no status or detail beyond that |
 | Copilot Code; Workspaces; Cowork App skill | Business | Frontier [code-use], [ignite-2026-blog], [cowork-whats-new] |
 | Project Opal | Business, Copilot subscription | Frontier [opal-support] |
 | AI-enabled Cloud PCs | Business | "Frontier Preview"; needs Intune settings [frontier-admin] |
@@ -1092,6 +1162,7 @@ licensing availability and terms can change, so confirm in the Product Terms bef
 | No Copilot licence, no billing | Copilot Chat is "available to all Microsoft 365 users" with agents grounded on instructions or the web; Copilot Studio is available to all Microsoft 365 users, with grounding on organisational data needing billing or a licence | [da-prerequisites] |
 | Developer tenants | A Microsoft 365 Developer Program instant sandbox (E5, add-ons purchasable); a configurable sandbox cannot buy Copilot, so agents are limited to web grounding | [da-prerequisites] |
 
+- **Copilot UX components (SPFx):** need the Copilot add-on on top of E3, E5 or E7, also for development and testing; see [Copilot UX components](#copilot-ux-components-spfx).
 - **Work IQ:** the Work IQ API is independent of Microsoft 365 Copilot licensing, billed by usage in Copilot Credits shared with other eligible services [work-iq-overview].
 - **Frontier:** licence rules differ by program; see [The Frontier program](#the-frontier-program)
   rather than a second list here.
@@ -1402,6 +1473,9 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Project Opal — support][opal-support], [admin settings][opal-admin] | Frontier gate, Edge-only Cloud PC agent, default website access |
 | [Microsoft Research OPAL][msr-opal] | Unrelated 2016 NL-assistant programming project; name collision only (checked 2026-11-18) |
 | [Frontier program][frontier-program], [Frontier features][frontier-features] | Enrolment paths; partial and stale feature index |
+| [Autopilot (Frontier) overview][autopilot-docs] (short link aka.ms/autopilot-documentation) | Preview status, identity, oversight, skills and plugins, difference from Cowork and Code |
+| [Ways to extend Microsoft 365 Copilot][ext-overview] | Plugin versus build-into-your-app paths, connector kinds, plugin catalog |
+| [Copilot UX components overview][spfx-copilot-overview], [develop and deploy][spfx-copilot-deploy], [SPFx 1.24.0 release notes][spfx-1-24-release] | GA date, `.sppkg` packaging, App Catalog deployment, licence, GA limits |
 | [Frontier admin guide][frontier-admin], [Frontier for individuals][frontier-individuals], [Agent 365 Frontier][frontier-agent365], [What is Frontier][frontier-what-is], [App Builder (Frontier)][frontier-app-builder] | Three programs: roles, toggles, licences, terms, regions, named items (2026-11-18) |
 | [Compare E3, E5, E7][m365-licence-compare], [Copilot licence options][copilot-licence-options], [E7 partner blog][e7-partner-blog], [Agent 365 agent settings][a365-agent-settings], [M365 Maps][m365maps], [MSPortals.io][msportals] | Licences subsection; the last two are third-party navigation aids |
 | [Microsoft Foundry overview][foundry-overview], [Agent 365 overview][agent365-overview], [Microsoft Graph overview][graph-overview] | Kind-of-thing characterisations in the disambiguation table |
@@ -1523,8 +1597,13 @@ re-checked even when Microsoft leaves the page unchanged.
 [cert-poster-pdf]: https://arch-center.azureedge.net/Credentials/Certification-Poster_en-us.pdf
 [ignite-2026-blog]: https://www.microsoft.com/en-us/copilot/blog/2026/11/17/copilot-at-microsoft-ignite-expanding-whats-possible-with-intelligence-built-for-work/
 [cowork-overview]: https://learn.microsoft.com/en-us/copilot/cowork/
-[frontier-features]: https://www.microsoft.com/en-us/microsoft-365-copilot/frontier-features
-[frontier-program]: https://www.microsoft.com/microsoft-365-copilot/frontier-program
+[frontier-features]: https://www.microsoft.com/en-us/copilot/resources/frontier-features
+[frontier-program]: https://www.microsoft.com/en-us/copilot/resources/frontier-program
+[autopilot-docs]: https://learn.microsoft.com/en-us/copilot/autopilot/overview
+[ext-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview
+[spfx-copilot-overview]: https://learn.microsoft.com/en-us/sharepoint/dev/spfx/copilot/overview-copilot-apps
+[spfx-copilot-deploy]: https://learn.microsoft.com/en-us/sharepoint/dev/spfx/copilot/development-and-deployment
+[spfx-1-24-release]: https://learn.microsoft.com/en-us/sharepoint/dev/spfx/release-1.24.0
 [frontier-admin]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/get-started-frontier?view=o365-worldwide
 [frontier-individuals]: https://www.microsoft.com/en-us/copilot/resources/frontier-individuals
 [frontier-agent365]: https://learn.microsoft.com/en-us/microsoft-agent-365/frontier
