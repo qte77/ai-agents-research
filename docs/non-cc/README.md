@@ -9,7 +9,6 @@ Standalone analyses of coding agents and orchestration tools beyond Claude Code.
 | [orchestrators-landscape.md](orchestrators/orchestrators-landscape.md) | Landscape: the five orchestrators by coordination shape, state hand-off and escalation; Claude Code primitives vs non-CC equivalents; multi-agent failure modes (MAST and 2026 papers); AgentRun beyond the five | — | — |
 | [air-analysis.md](orchestrators/air-analysis.md) | JetBrains Air (GUI) | No | No |
 | [deerflow-analysis.md](orchestrators/deerflow-analysis.md) | ByteDance DeerFlow (LangGraph) | Yes | Yes (MIT) |
-| [devteam-analysis.md](orchestrators/devteam-analysis.md) | agent-era/devteam (TUI) | No | Yes (MIT) |
 | [omnigent-analysis.md](orchestrators/omnigent-analysis.md) | Omnigent (Databricks/Neon meta-harness; unifies Claude Code, Codex, Pi, custom agents) | Yes | Yes (Apache-2.0) |
 | [qm-analysis.md](orchestrators/qm-analysis.md) | QM (Y Combinator; multiplayer, multi-scope agent harness for Slack + web; harness-agnostic across Pi/OpenCode/Codex/Claude Code) | No | Yes (MIT) |
 | [raven-analysis.md](orchestrators/raven-analysis.md) | Raven (EverMind-AI "harness of harnesses"; multi-agent orchestrator with benchmark-gated self-evolution loop, EverOS memory, SkillForge) | Yes | Yes (Apache-2.0) |
