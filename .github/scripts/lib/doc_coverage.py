@@ -124,11 +124,32 @@ def check_anchors(docs: dict) -> list[str]:
     return sorted(problems)
 
 
+# Owner decision X2 (plan 0015, 2026-11-22): docs no topic hub fits. The learnings notes are
+# mirrors and digests; the CC reference docs are indexes `cc-native/README.md` already lists;
+# the hub index links the agent-substrate pair. Model internals are deferred, not exempt.
+_OWNER_EXEMPT_PREFIXES = ("docs/learnings/",)
+_OWNER_EXEMPT = frozenset({
+    "docs/cc-community/CC-reverse-engineering-landscape.md",
+    "docs/cc-native/CC-first-party-docs-index.md",
+    "docs/cc-native/configuration/CC-binary-architecture.md",
+    "docs/cc-native/configuration/CC-changelog-feature-scan.md",
+    "docs/cc-native/configuration/CC-cli-reference.md",
+    "docs/cc-native/sessions/CC-1x-session-schema.md",
+    "docs/cc-native/sessions/CC-error-messages-reference.md",
+    "docs/sdlc-lcm/agent-substrate-reference-architecture.md",
+    "docs/sdlc-lcm/agent-substrate-rubric.md",
+    "docs/non-cc/infrastructure/auto-agi-compiler-analysis.md",
+    "docs/sdlc-lcm/german-wiki-incident-analysis.md",
+})
+
+
 def hub_exempt(path: str) -> bool:
     """D6 exemptions: docs/ root files, single-product profiles, framework analyses, specs and runbooks.
 
-    Landscapes are never exempt.
+    Landscapes are never exempt by rule; the owner's X2 list can name one explicitly.
     """
+    if path in _OWNER_EXEMPT or path.startswith(_OWNER_EXEMPT_PREFIXES):
+        return True
     name = posixpath.basename(path)
     if name.endswith("-landscape.md"):
         return False
