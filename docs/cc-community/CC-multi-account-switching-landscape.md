@@ -2,7 +2,7 @@
 title: CC Multi-Account & Profile Switching Landscape
 purpose: How to run multiple Claude Code subscription accounts — concurrently or switched — in one OS environment, via the native CLAUDE_CONFIG_DIR mechanism and community tools built on it.
 created: 2026-07-23
-updated: 2026-09-23
+updated: 2026-11-22
 validated_links: 2026-07-23
 status: assess
 ---
@@ -82,7 +82,7 @@ Two behaviours matter:
 | Tool | Mechanism | Concurrent? | Signals (2026-07-23) | License |
 |---|---|---|---|---|
 | [claude-swap][claude-swap] | Backs up/rotates OAuth credentials per account (Keychain/file); scopes a terminal to one account; **auto-rotation on rate-limit** + usage TUI | **Yes** — explicit design goal | 1,276★, pushed 2026-07-23 | MIT |
-| [claude-multiprofile][multiprofile] | Native `CLAUDE_CONFIG_DIR` + per-profile macOS Keychain handling; also isolates Claude **Desktop** via `open -n` + `--user-data-dir` | **Yes** — incl. Desktop instances | 42★, v0.1.4 ~2026-05 | MIT |
+| [claude-multiprofile][multiprofile] | Native `CLAUDE_CONFIG_DIR` + per-profile macOS Keychain handling; also isolates Claude **Desktop** via `open -n` + `--user-data-dir` | **Yes** — incl. Desktop instances | 221★, v0.1.40 2026-11-21 (`gh api` 2026-11-22) | MIT |
 
 **Recommendation shape**: Linux/Windows + no tool trust required → the alias pattern.
 Concurrency with rotation/observability → claude-swap. Claude Desktop profiles too →
