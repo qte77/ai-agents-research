@@ -60,7 +60,7 @@ WASM), no API/GPU. `embed()` → 384-dim (base) / 256-dim (mini); `similar(query
 | [Qdrant local mode][qdrant-client] | yes (`:memory:`/path) | yes | HNSW | Apache-2.0 |
 | [DuckDB `vss`][duckdb-vss] | yes | yes | HNSW (uses usearch) | MIT |
 | [sqlite-vec][sqlite-vec] | yes | yes | ⚠️ **brute-force only today** | Apache-2.0/MIT |
-| [Voy][voy] | yes (WASM) | no (JS) | k-d tree | MIT/Apache-2.0 |
+| [Voy][voy] (stale: last push 2023-09-20, `gh api` 2026-11-22) | yes (WASM) | no (JS) | k-d tree | MIT/Apache-2.0 |
 | [LEANN][leann] | yes (recompute, not store) | yes | HNSW or DiskANN backend | MIT |
 
 **Key gotcha:** `sqlite-vec` is **brute-force only** today — ANN is roadmap, not
