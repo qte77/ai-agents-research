@@ -4,7 +4,7 @@ source: https://deepwiki.com
 purpose: Survey of AI-powered tools that generate documentation from GitHub repositories.
 status: research
 created: 2026-04-06
-updated: 2026-11-21
+updated: 2026-11-22
 validated_links: 2026-09-24
 ---
 
@@ -14,7 +14,7 @@ Two tools represent an emerging category of **AI-powered repo-to-documentation g
 
 **Relevance to agent workflows**: These tools can serve as context sources for coding agents -- pre-generated documentation reduces the need for expensive runtime codebase analysis. The repo-to-docs pattern also overlaps with the `llms.txt` standard and context engineering approaches documented in this repository.
 
-A fourth tool, **Understand Anything** (Egonex-AI, 57.4k stars), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose.
+A fourth tool, **Understand Anything** (Egonex-AI, 93.7k stars on 2026-11-22), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose.
 
 A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes docs **for coding agents**, appending pointers into `AGENTS.md`/`CLAUDE.md`, rather than human-browsable wikis.
 
@@ -65,7 +65,7 @@ Published examples: [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-C
 
 ## Understand Anything (Egonex-AI)
 
-**URL**: [github.com/egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything) | **Stars**: 57.4k | **License**: MIT | **Stack**: TypeScript (originally by Lum1104)
+**URL**: [github.com/egonex-ai/understand-anything](https://github.com/egonex-ai/understand-anything) | **Stars**: 93.7k (2026-11-22) | **License**: MIT | **Stack**: TypeScript (originally by Lum1104)
 
 Unlike the doc-*generators* in this landscape, Understand Anything emits an **interactive knowledge graph** -- files, functions, classes, and dependencies as color-coded, navigable nodes.
 
@@ -81,20 +81,20 @@ Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, 
 
 ## OpenWiki (LangChain)
 
-**URL**: [github.com/langchain-ai/openwiki](https://github.com/langchain-ai/openwiki) | **Stars**: 9.7k | **License**: MIT | **Version**: v0.0.3 (2026-07-08, pre-1.0)
+**URL**: [github.com/langchain-ai/openwiki](https://github.com/langchain-ai/openwiki) | **Stars**: 18.1k (2026-11-22) | **License**: MIT | **Version**: v0.9.0 (2026-11-05, pre-1.0)
 
 A CLI that "writes and maintains documentation for your codebase, **built specifically for agents**." Unlike the human-facing generators above, its output is *agent context*, not a browsable wiki:
 
 - `npm install -g openwiki`; bootstrap with `openwiki --init`, refresh on change.
 - Writes generated docs into an `openwiki/` directory, and **auto-appends pointers into `AGENTS.md` and `CLAUDE.md`** so coding agents find the context.
 - CI/CD integration opens PRs with documentation refreshes as the repo changes.
-- TypeScript-heavy; very early (v0.0.3).
+- TypeScript-heavy; pre-1.0 (v0.0.3 when first reviewed; v0.9.0 on 2026-11-22).
 
 **Relevance**: the "repo → machine-readable agent context" corner of this space — directly adjacent to CC's own `CLAUDE.md`/`AGENTS.md` conventions, and the agent-oriented contrast to human-facing DeepWiki-style tools.
 
 ## OpenKB (VectifyAI)
 
-**URL**: [github.com/VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB) | **Stars**: 4,556 | **License**: Apache-2.0 | **Version**: v0.4.5 (released 2026-07-20)
+**URL**: [github.com/VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB) | **Stars**: 5,022 (2026-11-22) | **License**: Apache-2.0 | **Version**: v0.4.5 (released 2026-07-20; still the latest on 2026-11-22)
 
 An open-source CLI that compiles raw **documents** — not code — into a
 structured, interlinked wiki-style knowledge base powered by LLMs, building
@@ -178,6 +178,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [VectifyAI/OpenKB][s-openkb] | OpenKB repository |
 | [VectifyAI/PageIndex][pageindex] | PageIndex repository |
 | `gh api repos/VectifyAI/OpenKB` and `repos/VectifyAI/PageIndex`, 2026-09-24 | Stars, license, latest release tag |
+| `gh api repos/egonex-ai/understand-anything`, `repos/langchain-ai/openwiki` and `repos/VectifyAI/OpenKB`, 2026-11-22 | Refreshed stars and latest release tags |
 
 [s-deepwiki]: https://deepwiki.com
 [s-c2t]: https://code2tutorial.com

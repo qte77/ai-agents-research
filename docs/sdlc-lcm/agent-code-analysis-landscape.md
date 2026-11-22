@@ -3,7 +3,7 @@ title: Agent Code Analysis Landscape — SCA & DCA for AI Coding Agents
 purpose: Static (SCA) and dynamic (DCA) code-analysis for AI coding agents — both directions (analysis OF agent-produced code, and agents PERFORMING analysis), the tooling, the GitHub/GitLab/Codeberg CI matrix, and sandboxing as an analysis boundary.
 status: assess
 created: 2026-07-23
-updated: 2026-11-14
+updated: 2026-11-22
 validated_links: 2026-11-12
 ---
 
@@ -116,8 +116,9 @@ or rules files, and fix or flag vulnerable sibling code the agent may copy. Pred
   and AFL++ (fuzzing/DAST) and reportedly outperforms both** on real-world projects,
   discovering zero-days (paper-claimed — a signal that agent detection is now measured
   head-to-head against incumbent SCA/DCA tools, not just used alongside them).
-- **[Specula][specula]** (`specula-org/Specula`, Apache-2.0, 486★, created 2025-06-15,
-  `gh api` 2026-09-24) — an agentic tool that has coding agents write and check **TLA+
+- **[Specular][specula]** (formerly Specula, renamed by 2026-11-22; `specular-org/Specular`,
+  Apache-2.0, 699★, created 2025-06-15, `gh api` 2026-11-22; paper
+  [arXiv:2607.25333][specular-arxiv]) — an agentic tool that has coding agents write and check **TLA+
   formal specifications** to find deep bugs in concurrent/distributed system code, a
   different verification mode from the fuzzing/dataflow tools above. A five-skill
   pipeline (code analysis → spec generation → harness generation → validation → bug
@@ -125,8 +126,9 @@ or rules files, and fix or flag vulnerable sibling code the agent may copy. Pred
   a TLA+ model checker, and trace any violation back to the source line. Supports
   Claude Code (Opus 4.8 or Fable), Codex (GPT-5.5/5.6-Sol), Copilot CLI, OpenCode, and
   Pi as the underlying coding agent; the project maintains a public case-study archive
-  of bugs found in open-source projects — no aggregate precision/recall benchmark was
-  found in the README fetch.
+  of bugs found in open-source projects. No aggregate precision/recall benchmark was found in
+  the README fetch (2026-09-24); the paper's results are summarised in
+  [agentic-engineering-disciplines-landscape.md](agentic-engineering-disciplines-landscape.md).
 - **[OpenQodex](https://github.com/openqodex/openqodex)** (Apache-2.0, 1,094★/80
   forks, created 2026-10-02, `gh api` 2026-11-12) — a pre-push review pipeline that
   pairs conventional scanners with agent-as-reviewer. A `scan` pass (no model) runs
@@ -205,7 +207,7 @@ synthesis opportunity, not an existing CC feature.
 ## Adoption & Licensing Notes
 
 - **OSS / free**: garak (Apache-2.0), Semgrep OSS engine, Bandit, Trivy, CodeQL (free on
-  public repos), AgentSight/VIPER-MCP (research code), Specula (Apache-2.0).
+  public repos), AgentSight/VIPER-MCP (research code), Specular, formerly Specula (Apache-2.0).
 - **Commercial-tiered**: Semgrep Guardian; GitLab DAST / Dependency-Scanning / Duo auto-fix
   (Ultimate); GitHub Advanced Security (private repos); ARMO/Metoro.
 - **Research, not shipped products**: VIPER-MCP, AgentSight, VulnLLM-R,
@@ -234,7 +236,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [agent-audit][agent-audit] | Agent-framework static taint analyzer (repo, MIT) |
 | [AgentSight][agentsight] (arXiv:2508.02736) · [VIPER-MCP][viper] (arXiv:2605.21392) | eBPF boundary tracing; hybrid MCP taint+PoC (106 zero-days/67 CVEs, paper-reported) |
 | [Google Cloud — AI-Assisted Vulnerability Management][gcloud-blueprint] | Agents-as-scanner blueprint, 2026-07-16, −7-day TTE, binary-oracle finding (first-party, single source) |
-| [Specula][specula] (`specula-org/Specula`) | Agentic TLA+ formal-verification bug finder; 486★, Apache-2.0, `gh api` 2026-09-24 |
+| [Specular][specula] (`specular-org/Specular`, formerly Specula) | Agentic TLA+ formal-verification bug finder; 699★, Apache-2.0, `gh api` 2026-11-22 |
+| [Specula paper (arXiv:2607.25333)][specular-arxiv] (the tool is now Specular) | Method and results of the TLA+ trace and invariant checker |
 | [VulnLLM-R][vulnllm] (2512.07533) · [ICLR formalization][iclr-formalize] (#10016279) | Agent-based detection papers (arXiv/ICLR-first-party; results paper-claimed) |
 | [OWASP Top 10 for Agentic Applications 2026][owasp-agentic-top10] | Ranked agentic-risk list, 2025-12-09 (distinct from MAESTRO / LLM Top 10; categories not enumerated here) |
 | [GitLab application security][gitlab-appsec] · [GitHub code scanning][gh-codescan] · [Forgejo Actions][forgejo-actions] | CI-forge SCA/DCA capability, verified per forge |
@@ -258,7 +261,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [gitlab-appsec]: https://docs.gitlab.com/user/application_security/
 [gh-codescan]: https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning
 [forgejo-actions]: https://forgejo.org/docs/latest/user/actions/
-[specula]: https://github.com/specula-org/Specula
+[specula]: https://github.com/specular-org/Specular
+[specular-arxiv]: https://arxiv.org/abs/2607.25333
 [skillspector]: https://github.com/NVIDIA/SkillSpector
 [skillspector-vuln]: agentic-ai-vulnerability-landscape.md#nvidia-skillspector--agent-skill-security-scanner
 [ase2]: https://arxiv.org/abs/2611.06294
