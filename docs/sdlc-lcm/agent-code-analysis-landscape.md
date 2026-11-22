@@ -44,6 +44,7 @@ This landscape cross-references those rather than duplicating them.
 | [Semgrep Guardian][guardian] | Purpose-built for **AI-agent-generated code** | Bundles Semgrep **MCP server + Hooks + Skills** in one install; hooks "fire on every file write, ensuring a scan regardless of what the agent does"; scans via Semgrep Code + Supply Chain + Secrets | Commercial-tiered |
 | [Bandit][bandit] | Python AST security linter | CLI / pre-commit / CI (used in this estate's own CI) | Apache-2.0 |
 | [Trivy][trivy] | All-in-one: deps, containers, IaC, secrets, SBOM | CLI / CI action | Apache-2.0 |
+| [agent-audit][agent-audit] | Static analyzer for **agent frameworks** | 51 rules mapped to OWASP Agentic Top 10; tool-boundary-aware taint (tracks `@tool` params → `eval`/`subprocess`/`cursor.execute`); LangChain/CrewAI/AutoGen | MIT (`gh api` 2026-11-22) |
 
 **Semgrep Guardian** is the standout for the _analysis-of-agents_ direction: it targets
 Claude Code, Codex, Cursor, GitHub Copilot, Kiro, Devin/Windsurf, and any MCP client,
@@ -88,6 +89,11 @@ or rules files, and fix or flag vulnerable sibling code the agent may copy. Pred
   and causally correlates agent _intent_ to system _action_ across process boundaries,
   <3% overhead, zero-instrumentation, framework-agnostic. Detects prompt injection,
   resource-wasting reasoning loops, and multi-agent bottlenecks.
+- **[VIPER-MCP][viper]** (arXiv:2605.21392) — hybrid **static + dynamic**: anchor-query
+  taint analysis on MCP server tool handlers, plus dynamic validation via feedback-driven
+  prompt evolution that generates concrete PoC exploits. Scanned 39,884 open-source MCP
+  repos → **106 zero-days, 67 CVEs** assigned (paper-reported), responsibly disclosed —
+  the strongest single result tying static+dynamic analysis to agent tool-call surfaces.
 - **GitLab Libbehave** — experimental analyzer in GitLab Dependency Scanning that examines
   dependency **runtime behavior** for suspicious activity (Ultimate tier).
 - **ARMO / Metoro** — commercial eBPF-based agent runtime monitoring/enforcement,
@@ -167,8 +173,9 @@ what agent-run code can _reach_, but its own docs state **"no traffic inspection
 domains can carry any payload"**: it doesn't inspect _what_ the generated code does inside
 the boundary. The field's answer to that gap:
 
-- **eBPF boundary tracing** (AgentSight) runs _around_ the execution boundary to
-  supply the behavioral visibility the sandbox lacks.
+- **eBPF boundary tracing** (AgentSight) and **hybrid taint+PoC validation** (VIPER-MCP)
+  run _around_ the execution boundary to supply the behavioral visibility the sandbox
+  lacks.
 - **Ephemeral CI runners** (GitHub-hosted Actions runners, self-hosted Forgejo runners)
   play the same "isolate untrusted agent output before it touches the host/upstream repo"
   role at the CI layer — same security principle, different layer.
@@ -198,10 +205,10 @@ synthesis opportunity, not an existing CC feature.
 ## Adoption & Licensing Notes
 
 - **OSS / free**: garak (Apache-2.0), Semgrep OSS engine, Bandit, Trivy, CodeQL (free on
-  public repos), AgentSight (research code), Specula (Apache-2.0).
+  public repos), AgentSight/VIPER-MCP (research code), Specula (Apache-2.0).
 - **Commercial-tiered**: Semgrep Guardian; GitLab DAST / Dependency-Scanning / Duo auto-fix
   (Ultimate); GitHub Advanced Security (private repos); ARMO/Metoro.
-- **Research, not shipped products**: AgentSight, VulnLLM-R,
+- **Research, not shipped products**: VIPER-MCP, AgentSight, VulnLLM-R,
   CodeMender (not public at time of Google's post).
 - **Unverified**: Forgejo-Actions portability of GitHub-marketplace
   security actions. SkillSpector is now first-party-verified (Apache-2.0, 19,514★, `gh api`
@@ -213,10 +220,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| agent-audit | Criterion 3: 249 stars, 30 forks; last push 2026-09-13 (`gh api` 2026-11-22); no standards-body adoption or named independent users found in its README; its only measured benefit is a self-run benchmark whose headline metrics the repo itself revised | 2026-11-22 | <https://github.com/HeadyZhang/agent-audit> |
-| Grim Prompter | Criterion 3: 658 stars; last push 2026-11-08 (`gh api` 2026-11-22); README shows no named independent users, standards-body adoption or measured benefit (the prior doc text already noted no independent review of finding quality) | 2026-11-22 | <https://github.com/jmanico/grim-prompter> |
-| VIPER-MCP | Criterion 1: paper only; no link to released code found in the arXiv HTML or on the abs page, and a `gh search repos` for the name found no repo by the authors (2026-11-22). Self-reported 106 zero-days / 67 CVEs, unverified | 2026-11-22 | <https://arxiv.org/abs/2605.21392> |
-| VulnAgent-R2 | Criterion 1: paper only; no link to released code found in the arXiv HTML, and `gh search repos` found no repo (2026-11-22). Self-reported 38.3% token reduction, unverified | 2026-11-22 | <https://arxiv.org/abs/2603.13384> |
+| Grim Prompter (threat-modeling prompt library, Manicode Security) | Criterion 3: 658 stars, last push 2026-11-08 (`gh api` 2026-11-22); its README names no independent users, standards-body adoption or measured benefit, and no independent review of finding quality was found | 2026-11-22 | <https://github.com/jmanico/grim-prompter> |
+| VulnAgent-R2 (arXiv:2603.13384, multi-agent repository-level auditing) | Criterion 1: the paper's HTML says prompts, agent schemas, predictions and plotting code are released "in the artifact package" but gives no link, and `gh search repos` found none (2026-11-22); its 38.3% token reduction is paper-reported | 2026-11-22 | <https://arxiv.org/abs/2603.13384> |
 
 ## Sources
 
@@ -226,7 +231,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [garak][garak] · [NVIDIA/garak README][garak-gh] | LLM red-team probe/detector scanner; probe families, CLI, Apache-2.0 (first-party) |
 | [Semgrep Guardian docs][guardian] · [announcement blog][guardian-blog] | Agent-generated-code scanner; launch 2026-06-23 (first-party; rule counts unconfirmable, omitted) |
 | [CodeQL][codeql] · [Semgrep][semgrep] · [Bandit][bandit] · [Trivy][trivy] | SCA engines |
-| [AgentSight][agentsight] (arXiv:2508.02736) | eBPF boundary tracing |
+| [agent-audit][agent-audit] | Agent-framework static taint analyzer (repo, MIT) |
+| [AgentSight][agentsight] (arXiv:2508.02736) · [VIPER-MCP][viper] (arXiv:2605.21392) | eBPF boundary tracing; hybrid MCP taint+PoC (106 zero-days/67 CVEs, paper-reported) |
 | [Google Cloud — AI-Assisted Vulnerability Management][gcloud-blueprint] | Agents-as-scanner blueprint, 2026-07-16, −7-day TTE, binary-oracle finding (first-party, single source) |
 | [Specula][specula] (`specula-org/Specula`) | Agentic TLA+ formal-verification bug finder; 486★, Apache-2.0, `gh api` 2026-09-24 |
 | [VulnLLM-R][vulnllm] (2512.07533) · [ICLR formalization][iclr-formalize] (#10016279) | Agent-based detection papers (arXiv/ICLR-first-party; results paper-claimed) |
@@ -241,9 +247,11 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [guardian-blog]: https://semgrep.dev/blog/2026/introducing-semgrep-guardian-real-time-security-for-ai-written-code/
 [bandit]: https://bandit.readthedocs.io/
 [trivy]: https://trivy.dev/
+[agent-audit]: https://github.com/HeadyZhang/agent-audit
 [garak]: https://garak.ai/
 [garak-gh]: https://github.com/NVIDIA/garak
 [agentsight]: https://github.com/eunomia-bpf/agentsight
+[viper]: https://arxiv.org/abs/2605.21392
 [gcloud-blueprint]: https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/
 [vulnllm]: https://arxiv.org/abs/2512.07533
 [owasp-agentic-top10]: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
