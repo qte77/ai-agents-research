@@ -249,6 +249,8 @@ Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/cl
 
 **Repo**: [JuliusBrussee/caveman][caveman] | **Stars**: ~122K | **License**: Apache-2.0 | **Version**: v4.2.0 (2026-11-22) | all as of 2026-11-22 ([GitHub API][caveman-api], [LICENSE][caveman-license], [releases][caveman-releases])
 
+**Site**: [caveman.so][caveman-site], the project's own site (it links the repo; `getcaveman.dev` serves the same page and declares `caveman.so` canonical) · **Docs**: [docs.caveman.so][caveman-docs] (the repo's homepage field) · read 2026-11-22
+
 Started in April 2026 as a skill pack that compresses agent **output** by switching the assistant into telegraphic-speech registers; tagline *"why use many token when few do trick"*. Since 4.0 it is a skill plus a local proxy and CLI for coding agents: the README lists 30+ supported agents, and describes the shorter-answers skill as one of six parts, each with its own on/off switch ([README][caveman]). Passes the pruning rule in [CONTRIBUTING § Pruning entries](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter): usable artifact, not archived, last push 2026-11-22, well above 1,000 stars.
 
 **Licence history** ([LICENSING.md][caveman-licensing]): releases before 3.0.0 kept the terms they shipped with (MIT for the skill and adoption surfaces, a source-available Business Source License for the runtime); from 3.0.0 the whole repository is Apache-2.0. The earlier "MIT" entry in this doc was correct for v1.6.0, whose LICENSE file is MIT ([v1.6.0 LICENSE][caveman-v160-license]). The hosted Caveman Cloud service is separate commercial software outside the repository licence.
@@ -270,6 +272,18 @@ All numbers above are self-reported by the author, as is the README's Terminal-B
 - **CAVEWOMAN paper** ([arXiv 2606.24083][caveman-cavewoman], submitted 2026-06-23; the README attributes it to Adobe Research, the abstract page lists no affiliation): in a study of eight models on five datasets, caveman-style output compression cut realised cost by 1.4-2.4x per model on most API models, while compressing the user's prompt raised net cost (about 1.15x on the five-benchmark mean) as accuracy fell. It studies the style, not this repository's code.
 
 The earlier figures in this entry (about 75% headline, 65% average over 10 tasks with a 22-87% range) no longer appear in the README, so they are dropped.
+
+### Caveman Code (the coding-agent app)
+
+The same team also sells **Caveman Code**, a coding-agent app for macOS 13.5+ (Apple silicon and Intel) and the browser; Windows is "coming soon" ([download page][caveman-dl]). It is a separate product from the skill above, all read 2026-11-22 on the [Caveman Code page][caveman-code]:
+
+- **What it is:** one app that runs Claude, Codex and Cursor in tabs and splits on the subscriptions you already pay for, plus Caveman's own agent, which "runs on open models" (the models are not named). It needs a Caveman account and "is not open source"; the skill, CLI and SDKs stay free and open source.
+- **How it saves tokens (stated, not documented in detail):** "a small first request, results from other apps kept out of the chat, and the prompt cache kept warm, while the model's reasoning is never trimmed". Tool set, sandbox and permission model, and memory are not described on the pages read.
+- **Pricing:** free on your own subscriptions and keys; Pro at $20 or $60 a month and Max at $100 or $200 (the higher tier of each carries 3× or 2× the credits), with credits at the model's list price; one week, or any 5 hours, can spend at most 35% of a month's credits.
+- **Benchmarks (self-reported, Caveman's own runs in November 2026 "on the harness's benchmark build, not necessarily the shipped app"; the app ships the same harness with three benchmark-only settings turned off, and only Caveman's own agent runs on it, while a Claude plan "runs as Claude Agent, on Anthropic's harness", so the figures cover only the Caveman agent):** on Terminal-Bench 4 with the same model on both sides, $5.19 per solved task against Claude Code's $6.04 with 22% fewer tokens, "level within noise" (97 of 180 runs solved against 83 of 177); against Codex, $1.21 against $1.52 per solved task (90 of 192 runs solved each), but 10% more per session on a three-session working-days task, which the page itself calls "A loss"; on DeepSWE's 53 held-out tasks Codex solved 33 to Caveman's 30, inside the run's 90% interval. No independent evaluation of the app was found.
+- **Helper models** ([models page][caveman-models]): `trim-1` keeps only the lines an agent's question needs ("88.9% fewer tokens on long documents, 8k to 32k tokens (n=90)", self-reported; open source, [caveman-ai/trim-1][caveman-trim1], Apache-2.0), plus `compact-1` and `router-1`.
+
+D8: a usable, current product; its adoption evidence is the skill's, and the app's own evidence is only first-party benchmarks, so it is listed here, inside the skill's entry, rather than as a standalone coding-agent profile.
 
 ### Skills
 
@@ -630,6 +644,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [caveman LICENSE][caveman-license] · [LICENSING.md][caveman-licensing] · [v1.6.0 LICENSE][caveman-v160-license] · [releases][caveman-releases] · [repo API][caveman-api] | Caveman licence history, latest version and repo stats, checked 2026-11-22 |
 | [JetBrains A/B][caveman-jetbrains] | Independent paired A/B of caveman on SkillsBench: 8.5% output-token saving, no significant score difference (p = 0.82), checked 2026-11-22 |
 | [CAVEWOMAN, arXiv 2606.24083][caveman-cavewoman] | Study of caveman-style output and input compression across eight models, checked 2026-11-22 |
+| [caveman.so][caveman-site] · [docs][caveman-docs] · [Caveman Code][caveman-code] · [download][caveman-dl] · [models][caveman-models] · [trim-1][caveman-trim1] | Project site and docs; Caveman Code app: platforms, not open source, plans and credit cap, stated token strategy, self-reported Terminal-Bench 4 and DeepSWE results; helper models, read 2026-11-22 |
 | [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
 | [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
 | [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (5,240 stars, no license file, 2026-11-12) |
@@ -654,6 +669,12 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [caveman-jetbrains]: https://blog.jetbrains.com/ai/2026/07/speak-to-ai-agents-like-cavemen-tosave-tokens/
 [caveman-cavewoman]: https://arxiv.org/abs/2606.24083
 [caveman-releases]: https://github.com/JuliusBrussee/caveman/releases
+[caveman-site]: https://caveman.so/
+[caveman-docs]: https://docs.caveman.so/caveman
+[caveman-code]: https://caveman.so/code
+[caveman-dl]: https://caveman.so/download
+[caveman-models]: https://caveman.so/models
+[caveman-trim1]: https://github.com/caveman-ai/trim-1
 [last30days]: https://github.com/mvanhorn/last30days-skill
 [builderio-skills]: https://github.com/BuilderIO/skills
 [excalidraw-skill]: https://github.com/coleam00/excalidraw-diagram-skill
