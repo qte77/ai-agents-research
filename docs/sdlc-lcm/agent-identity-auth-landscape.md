@@ -136,7 +136,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| Privado ID "Know Your Agent" | No usable artifact: the vendor's own post (2026-01-21) says KYA is "currently available under private access" to selected customers and partners; one named adopter (Billions), vendor-stated | 2026-11-22 | <https://www.privado.id/blog/privado-know-your-agent> |
+| Privado ID "Know Your Agent" | Fails criterion 1 (not publicly available): the vendor's own post (2026-01-21) says KYA is "currently available under private access" to selected customers and partners, with its SDK by request; one named adopter (Billions), vendor-stated | 2026-11-22 | <https://www.privado.id/blog/privado-know-your-agent> |
 
 ## Sources
 
