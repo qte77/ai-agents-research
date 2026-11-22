@@ -38,10 +38,12 @@ web pages.
 | Product | State (read 2026-11-19) | Evidence |
 | ------- | ----------------------- | -------- |
 | [Claude in Chrome][cfc] | Generally available on every paid Claude plan, announced 2026-08-26; also reachable from Claude Code | documented ([GA post][cfc-ga], [Claude Code docs][cc-chrome]) |
+| ChatGPT Atlas ([launch post][atlas], 2025-10-21) | Stale, kept as one dated line: the page now says Atlas "has since been deprecated" (no date given) and points readers to ChatGPT Work, read 2026-11-22 | documented (note) |
 | [Gemini in Chrome][gem-chrome] | Assistant in Chrome; agentic "auto browse" described as a preview for Google AI Pro and Ultra subscribers in the US | announced (marketing page, not docs) |
-| [Perplexity Comet][comet] | Launch post dated 2025-07-09 (Max subscribers first); the product page (dated 2026-03-11) lists downloads for Mac, Windows, iOS and Android, read 2026-11-22; pricing not confirmed | announced (launch post), documented (download page) |
+| [Perplexity Comet][comet] | Launch post dated 2025-07-09 (Max subscribers first); the [product page][comet-page] (dated 2026-03-11) lists downloads for Mac, Windows, iOS and Android, read 2026-11-22; pricing not confirmed | announced (launch post), documented (download page) |
 
-Our reading: the category is moving fast enough that a product page is a poor long-term anchor. Other agentic browsers (Opera Neon, Dia, Edge Copilot Mode) were not verified
+Our reading: the category is moving fast enough that a product page is a poor long-term anchor
+(Atlas is an example). Other agentic browsers (Opera Neon, Dia, Edge Copilot Mode) were not verified
 at first party in this pass (the Edge page returned 404) and are left out.
 
 Framework side, from repo metadata on 2026-11-19: [browser-use][bu-gh] (MIT, 121,474 stars),
@@ -137,8 +139,9 @@ All paper figures are paper-reported (settings in the abstracts, not reproduced 
 - A [leaderboard aggregator run by Steel][steel-lb] (a hosted-browser vendor; page last updated
   2026-10-11) lists rows from 28.0% to 97.0%. Its top row, Browser Use Cloud at 97.0% (row dated Mar 2026 on the page), is
   self-reported with a custom agentic judge that the page says is not directly comparable to a
-  screenshot-based judge (vendor claim). Another row, an OpenAI agent-mode entry at 71.0% (Mar 2026), is
-  reported without public run data (vendor claim), and that product is no longer offered.
+  screenshot-based judge (vendor claim). Another row, ChatGPT Atlas agent mode at 71.0% (Mar 2026), is
+  OpenAI-reported with no public run data (vendor claim); Atlas is now deprecated per its launch
+  page, so the figure is historical.
 - The repo's changelog records a 2026-05-23 move to a v2 submission schema and outsourced human
   evaluation, so older leaderboard rows and new ones may not share a protocol.
 
@@ -149,6 +152,9 @@ a statement about that vendor's judge until run data is public.
 
 - **Claude in Chrome (documented, vendor-internal numbers).** Layers, approval modes and Anthropic's
   reported attack-success figures are in the [extension analysis](../../cc-native/plugins-ecosystem/CC-chrome-extension-analysis.md#safety).
+- **ChatGPT Atlas (documented).** OpenAI's [hardening post][atlas-hard] (2025-12-22) describes
+  automated red teaming with reinforcement learning and a rapid-response loop, and says
+  deterministic guarantees are hard (read via a fallback fetcher; the product is now deprecated).
 - **Playwright MCP and DevTools MCP (documented).** Both READMEs disclaim security boundaries:
   origin filters are not boundaries and browser content is exposed to the client.
 - **Research (paper).** [Veer][veer] (2026-09-28) targets deceptive interfaces: it changes the page
@@ -161,14 +167,6 @@ Operating rule (our reading): use an isolated profile, allow-list sites, and kee
 and credential flows away from any agent-driven browser. Cross-reference:
 [vulnerability landscape](../../sdlc-lcm/agentic-ai-vulnerability-landscape.md).
 
-## Not included
-
-Entries that fail the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter).
-
-| Name | Reason | Date | Link |
-| ---- | ------ | ---- | ---- |
-| ChatGPT Atlas | Fails criterion 1 (no usable artifact): its launch post carries the note that Atlas "has since been deprecated" (no date given; read 2026-11-22) and points readers to ChatGPT Work instead, so it is not a stale-but-usable entry | 2026-11-22 | <https://openai.com/index/introducing-chatgpt-atlas/> |
-
 ## Sources
 
 | Source | Content |
@@ -179,7 +177,7 @@ Entries that fail the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-we
 | [Chrome DevTools MCP][dt-gh], [config doc][dt-cfg] | Features, flags, licence, release |
 | [Playwright MCP][pw-gh] | Features, flags, licence, release |
 | [WebMCP repo][webmcp-gh], [spec source][webmcp-bs], [status][webmcp-status], [security][webmcp-sec], [Chrome docs][webmcp-chrome], [origin trial post][webmcp-ot] | WebMCP proposal and status |
-| [Gemini in Chrome][gem-chrome], [Comet launch][comet] | Agentic browser state |
+| [Atlas launch][atlas], [Atlas hardening][atlas-hard], [Gemini in Chrome][gem-chrome], [Comet launch][comet], [Comet page][comet-page] | Agentic browser state |
 | [browser-use][bu-gh], [Stagehand][stagehand-gh], [steel-browser][steel-gh] | Licence, stars, activity |
 | [WebArena][webarena], [WebVoyager][webvoyager], [Online-Mind2Web][om-paper], [repo][om-gh], [BrowseComp][browsecomp] | Benchmarks |
 | [HAL][hal], [Steel aggregator][steel-lb] | Online-Mind2Web leaderboards |
@@ -201,8 +199,11 @@ Entries that fail the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-we
 [webmcp-sec]: https://github.com/webmachinelearning/webmcp/blob/main/security-privacy-questionnaire.md
 [webmcp-chrome]: https://developer.chrome.com/docs/ai/webmcp
 [webmcp-ot]: https://developer.chrome.com/blog/ai-webmcp-origin-trial
+[atlas]: https://openai.com/index/introducing-chatgpt-atlas/
+[atlas-hard]: https://openai.com/index/hardening-atlas-against-prompt-injection/
 [gem-chrome]: https://gemini.google/overview/gemini-in-chrome/
 [comet]: https://www.perplexity.ai/hub/blog/introducing-comet
+[comet-page]: https://www.perplexity.ai/comet
 [bu-gh]: https://github.com/browser-use/browser-use
 [stagehand-gh]: https://github.com/browserbase/stagehand
 [steel-gh]: https://github.com/steel-dev/steel-browser
