@@ -762,7 +762,8 @@ Copilot UX components are client-side UI components built with the SharePoint Fr
 render inside Microsoft 365 Copilot, packaged with a declarative agent that makes them callable
 [spfx-copilot-overview]. **Generally available** with SPFx 1.24, released 2026-10-28
 [spfx-1-24-release] (read 2026-11-22); introduced in July as a public preview under the name
-"SharePoint Copilot Apps".
+"SharePoint Copilot Apps". The release page names SPFx 1.24.1 (2026-11-02) as the current maintenance release
+for new projects [spfx-1-24-release].
 
 - **Packaging:** the same toolchain as web parts, shipped as a SharePoint solution package
   (`.sppkg`) that carries the agent definition and components; one `.sppkg` can also hold web parts
