@@ -185,9 +185,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | Name | Reason | Date | Link |
 |---|---|---|---|
 | Vault-LD | Markdown-vault-as-linked-data spec; 254 stars, below the adoption bar | 2026-11-21 | [repo][vault-ld] |
-| MQO-MCP (AtScale partner) | Criterion 3: 0 stars, no licence file, last push 2026-06-29 (`gh api` 2026-11-22); no standards body, named users or measured result found in the repo metadata | 2026-11-22 | [repo][atscale-mqo] |
-| OaK (arXiv:2608.22974) | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link | 2026-11-22 | [paper][oak-paper] |
-| SciToolAgent-Evo (arXiv:2607.28692) | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link | 2026-11-22 | [paper][scitoolagent-paper] |
+| MQO-MCP (AtScale partner; a typed query grammar that checks every reference against a live catalog snapshot) | Criterion 3: 0 stars, no licence file, last push 2026-06-29 (`gh api` 2026-11-22); no standards body, named users or measured result found in the repo metadata | 2026-11-22 | [repo][atscale-mqo] |
+| OaK (arXiv:2608.22974, "Toward Effective and Reliable LLM Agents via Dynamic Ontology") | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link, and a GitHub search on 2026-10-06 found none (oaklib, the Ontology Access Kit, is an unrelated library that shares the name) | 2026-11-22 | [paper][oak-paper] |
+| SciToolAgent-Evo (arXiv:2607.28692) | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link. A same-named repo, HICAI-ZJU/SciToolAgent (434 stars, MIT, last push 2025-08-26), is not stated to be this paper's code | 2026-11-22 | [paper][scitoolagent-paper] |
 | Evo-DKD (arXiv:2507.21438) | Criterion 1: no usable artifact; arXiv HTML read 2026-11-22 shows no code link, and the authors say the dual decoder was only simulated with prompts | 2026-11-22 | [paper][evodkd-paper] |
 | Auto Ontology MCP (gogoymh) | Third-party port of NVIDIA Auto Ontology (the NVIDIA original stays above); 518 stars, below the adoption bar | 2026-11-21 | [repo][auto-ontology-mcp] |
 
