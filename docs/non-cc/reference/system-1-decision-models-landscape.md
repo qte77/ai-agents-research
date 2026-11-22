@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-11-18
+updated: 2026-11-22
 validated_links: 2026-11-11
 status: assess
 ---
@@ -1513,7 +1513,8 @@ batch (neither was in the original lead list); light treatment only, per this ba
   `LICENSE`; weights and code) | **Stars**: 126, pushed 2026-09-28 (`gh api`, 2026-09-30). An
   independent open-weight alternative (Qwen3.5-4B/9B plus a distilled LoRA, merged), explicitly
   "not affiliated with TypeSafe AI." On the third-party [JevBench v1.4][jevbench] leaderboard it
-  ranks second of 76 systems and first among open entrants (62.04 vs. Jev 1.13.0's 63.29).
+  ranked second of 76 systems in v1.4; in v1.4.2.2 (95 systems) it ranks fifth (62.04 vs. Jev 1.13.0's 63.29), and the
+  second-ranked Plumb-4B (crh225) is built on JevK5 v0.2 plus a LoRA (README checked 2026-11-22).
   (`ngrok-adhoc/jevk5` is a same-day fork of this repo, not a second independent project.)
 - **SemIf** (formerly OpenJev) — **Repo**: [TheoLeeCJ/SemIf-OpenJev][semif] | **License**: MIT
   (confirmed against `LICENSE`) | **Stars**: 4,602, pushed 2026-09-23 (`gh api`, 2026-09-30). An
@@ -1655,7 +1656,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | Name | Reason | Date | Link |
 |---|---|---|---|
 | probably | (criterion 3) 12 stars, no releases, last push 2026-09-19 (`gh api` 2026-11-22); the README calls it "an experimental toy language"; no measured benefit or named independent users | 2026-11-22 | <https://github.com/southpolesteve/probably> |
-| jev-browser | (criterion 3) 375 stars (`gh api` 2026-11-22); the README calls it "early software", its only result is one anecdotal run (about 4 s, $0.0016) with no method or task set, and no benchmark folder or named independent users found | 2026-11-22 | <https://github.com/jkudish/jev-browser> |
+| jev-browser | (criterion 3) 375 stars (`gh api` 2026-11-22); the README calls it "early software" and lists five runs on real sites, only one with numbers (about 4 s, $0.0016), with no method or task set, and no benchmark folder or named independent users found | 2026-11-22 | <https://github.com/jkudish/jev-browser> |
 | JEV-as-a-Judge (CMU paper) | (criterion 1) no code, package or weights from the authors: the authors' repository `yubol-bobo/jev-as-a-judge` is a project website only, and the paper's "supplementary reproducibility package" has no link (arXiv HTML and project page, 2026-11-22) | 2026-11-22 | <https://arxiv.org/abs/2609.26550> |
 
 ## Sources
