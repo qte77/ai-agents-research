@@ -11,7 +11,7 @@ Tools that measure token usage and cost across coding-agent sessions. Split out 
 
 ## CodeBurn (AgentSeal)
 
-**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 4K | **License**: MIT | **Latest**: v0.9.25 / Menubar v0.9.25 (2026-09-21, [GitHub Releases][codeburn-releases]; npm registry confirms `codeburn@0.9.25`, corrects the prior "Menubar v0.9.0 (2026-04-25)" note) | **Stack**: TypeScript, Node.js >=22.13.0 (per `package.json` `engines`, corrects the prior "Node.js 20+" note)
+**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 11.9K (`gh api` 2026-11-22) | **License**: MIT | **Latest**: v0.9.25 / Menubar v0.9.25 (2026-09-21, [GitHub Releases][codeburn-releases]; npm registry confirms `codeburn@0.9.25`, corrects the prior "Menubar v0.9.0 (2026-04-25)" note) | **Stack**: TypeScript, Node.js >=22.13.0 (per `package.json` `engines`, corrects the prior "Node.js 20+" note)
 
 Local-first TUI dashboard that tracks AI coding token usage and cost across multiple coding agents. Reads session data directly from disk — no API keys, no proxy ([README][codeburn]).
 
@@ -91,7 +91,7 @@ Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) 
 
 ## ccusage (ryoppippi)
 
-**Repo**: [ryoppippi/ccusage][ccusage] | **Stars**: 13.4K | **License**: MIT | **Version**: v18.0.11 (2026-04-19) | **Stack**: TypeScript
+**Repo**: [ryoppippi/ccusage][ccusage] | **Stars**: 19.5K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v18.0.11 (2026-04-19) | **Stack**: TypeScript
 
 CLI tool that analyzes Claude Code / Codex CLI usage from local JSONL files. Established reference tool in the CC usage-tracking space — predates and is broader-adopted than CodeBurn ([README][ccusage]).
 
@@ -136,7 +136,7 @@ Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-a
 
 ## Claude-Code-Usage-Monitor (Maciek-roboblog)
 
-**Repo**: [Maciek-roboblog/Claude-Code-Usage-Monitor][claude-monitor] | **Stars**: 7.8K | **License**: MIT | **Version**: v3.1.0 | **Stack**: Python 3.9+
+**Repo**: [Maciek-roboblog/Claude-Code-Usage-Monitor][claude-monitor] | **Stars**: 8.8K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v3.1.0 | **Stack**: Python 3.9+
 
 Real-time terminal monitor for Claude Code with **predictions and warnings**, distinguishing it from after-the-fact analyzers like ccusage / CodeBurn ([README][claude-monitor]).
 
