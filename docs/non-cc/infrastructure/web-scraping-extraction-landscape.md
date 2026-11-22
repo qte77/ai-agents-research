@@ -122,7 +122,7 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 |------|---------|-------------|----------------|
 | [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) | MIT | No | Pythonic HTML/XML parse-tree navigation over lxml/html5lib |
 | [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup) | MIT | No | Requests + BeautifulSoup with auto cookie/form handling |
-| [Requests-HTML](https://github.com/psf/requests-html) | MIT | Yes (pyppeteer) | HTML parsing + JS rendering; stale but widely adopted: last release v0.10.0 2019-02-18, last push 2024-04-16 (`gh api` 2026-11-22) |
+| [Requests-HTML](https://github.com/psf/requests-html) | MIT | Yes (pyppeteer) | HTML parsing + JS rendering; stale but widely adopted (13,798 stars): last release v0.10.0 2019-02-18, last push 2024-04-16 (`gh api` 2026-11-22) |
 
 ## AI/LLM-Native Scrapers
 
@@ -178,7 +178,6 @@ Cross-ref: [searxng-analysis.md](searxng-analysis.md) — deep-dive on self-host
 |------|--------|---------|-------|
 | [legislation.gov.uk API](https://www.legislation.gov.uk/developer) | UK legislation | Free | Official REST API; XML/HTML; bypasses PDF download issues |
 | [Lex API](https://lex.lab.i.ai.gov.uk/) | UK legislation | Free | AI-oriented API with semantic search + MCP server |
-| [eurlex (R)](https://michalovadek.github.io/eurlex/) | EUR-Lex | MIT | SPARQL + REST wrapper; bulk download all EU languages |
 | [arXiv Bulk Access](https://info.arxiv.org/help/bulk_data.html) | arXiv | Free | Official S3/GCS bulk access to source + metadata |
 | [USPTO Open Data](https://developer.uspto.gov/) | US patents | Free | Bulk data, PatentsView API, full-text search |
 | [EPO Open Patent Services](https://www.epo.org/en/searching-for-patents/data/web-services/ops) | EU patents | Free (fair use) | REST API; bibliographic, legal, full-text data |
@@ -306,8 +305,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| scrapelex (Python) | 2 stars; last push 2024-03-08; no releases (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/bocchilorenzo/scrapelex> |
-| paperscraper | 547 stars (`gh api` 2026-11-22), about 2,300 PyPI downloads in the last month (pypistats 2026-11-22); no named independent users or measured benefit in its README | 2026-11-22 | <https://github.com/jannisborn/paperscraper> |
+| scrapelex (Python) | Not alive within 12 months and not adopted (criteria 2 and 3): 2 stars, last push 2024-03-08, no releases (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/bocchilorenzo/scrapelex> |
+| paperscraper | 547 stars (`gh api` 2026-11-22), about 2,300 PyPI downloads in the last month (pypistats 2026-11-22); no named independent users or measured benefit in its README (criterion 3) | 2026-11-22 | <https://github.com/jannisborn/paperscraper> |
+| eurlex (R) | Alive (CRAN 0.5.1, 2026-10-22) but not adopted (criterion 3): 61 stars (`gh api` 2026-11-22); the only use its README and CRAN page cite is the author's own paper; no measured benefit | 2026-11-22 | <https://github.com/michalovadek/eurlex> |
 
 ## Sources
 
