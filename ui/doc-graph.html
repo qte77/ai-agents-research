@@ -71,7 +71,9 @@
     (function () {
       var REPO = "https://github.com/qte77/ai-agents-research/blob/main/";
       var HUB_INDEX = "docs/_topics/README.md";
-      var UNFILED = "unfiled";
+      // A doc in no hub is split the way check_coverage splits it (plan 0015 N4).
+      var FILING = [["unfiled", "Unfiled"], ["exempt", "Exempt by rule"],
+                    ["not-hub-content", "Not hub content"]];
       // Top-level folder -> colour token; anything else (root files, plans, learnings) is muted.
       var FOLDERS = [["cc-native", "--primary"], ["non-cc", "--cat-rust"],
                      ["cc-community", "--cat-olive"], ["sdlc-lcm", "--cat-clay"],
@@ -129,11 +131,15 @@
           s.appendChild(document.createTextNode(f[0]));
           legend.appendChild(s);
         });
-        var unfiledCount = data.nodes.filter(function (n) { return !n.hubs.length && n.bucket !== "_topics"; }).length;
+        var count = {};
+        data.nodes.forEach(function (n) {
+          if (!isHub(n) && !n.hubs.length) { count[n.filing] = (count[n.filing] || 0) + 1; }
+        });
         document.getElementById("stats").textContent = data.nodes.length + " docs (" +
-          unfiledCount + " in no hub), " + data.edges.length + " linked pairs.";
+          FILING.map(function (f) { return (count[f[0]] || 0) + " " + f[1].toLowerCase(); }).join(", ") +
+          "), " + data.edges.length + " linked pairs.";
 
-        // Hub filter: one checkbox per hub, plus "Unfiled" and "Select all".
+        // Hub filter: one checkbox per hub, one per kind of doc in no hub, and "Select all".
         var hubs = data.nodes.filter(isHub);
         var checked = {};
         var boxes = [];
@@ -151,12 +157,14 @@
         }
         var all = box("", "Select all", "all");
         hubs.forEach(function (h) { checked[h.id] = true; boxes.push(box(h.id, hubLabel(h))); });
-        checked[UNFILED] = true;
-        boxes.push(box(UNFILED, "Unfiled (" + unfiledCount + ")"));
+        FILING.forEach(function (f) {
+          checked[f[0]] = true;
+          boxes.push(box(f[0], f[1] + " (" + (count[f[0]] || 0) + ")"));
+        });
 
         function visible(n) {
           if (isHub(n)) { return checked[n.id]; }
-          if (!n.hubs.length) { return checked[UNFILED]; }
+          if (!n.hubs.length) { return checked[n.filing]; }
           return n.hubs.some(function (h) { return checked[h]; });
         }
         function applyFilter() {
