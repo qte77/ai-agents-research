@@ -1,6 +1,6 @@
 ---
 title: Spec-Driven Frameworks — Landscape
-purpose: Comparison of spec-driven development (SDD) frameworks — GitHub Spec-Kit, OpenSpec, BMAD-METHOD, Agent-OS, Kiro, Tessl, AB Method — the standalone deep-dive behind the synthesis entry in the agentic-engineering disciplines landscape.
+purpose: Comparison of spec-driven development (SDD) frameworks — GitHub Spec-Kit, OpenSpec, BMAD-METHOD, Agent-OS, Kiro, Tessl — the standalone deep-dive behind the synthesis entry in the agentic-engineering disciplines landscape.
 created: 2026-06-27
 updated: 2026-11-19
 validated_links: 2026-07-23
@@ -21,7 +21,6 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 | [buildermethods/agent-os][agent-os] | 5.6K (v3.0.0, 2026-01-20; last push 2026-10-07) | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
 | [kirodotdev/Kiro][kiro-repo] | 4.5K (no releases; last push 2026-11-05) | Proprietary (AWS Customer Agreement); the GitHub repo has no LICENSE file | requirements/bugfix → design → tasks "waves" | full IDE; specs workflow (variants, Quick Spec, bugfix specs) in [kiro-analysis.md § Spec-Driven Workflow](../coding-agents/kiro-analysis.md) |
 | Tessl | [`tesslio/spec-driven-development-tile`][tessl-tile]: 58 | MIT (that repo) | steering tile, "No framework" per its README | see [Tessl status](#tessl-status); the earlier "closed-beta / spec-as-source" description is unverified and withdrawn |
-| [ayoubben18/ab-method][ab-method] | 193 (v5.2.0, 2026-11-13) | MIT | grill → roadmap → tasks → missions (TDD) | fractal structure; opt-in-silent critic agents bracket implementation; dual-runtime CC + Codex (the critic-skill and nesting details below were checked at v3.7.1, 2026-07-23, and not re-verified at v5.2.0) |
 
 ## How they differ
 
@@ -29,7 +28,6 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 - **BMAD** front-loads multi-agent *planning* (role agents draft the spec) before context-engineered execution.
 - **Agent-OS** is a *layer*, not a framework — an MCP context-injection shim that pairs with the others.
 - **Kiro** bakes SDD into a full IDE — covered in depth, including its specs workflow, in its own analysis.
-- **AB Method** is the lightweight dual-runtime sibling: `npx ab-method` installs into `.claude/` (CC slash commands) *and* `.agents/` (Codex `ab-*` skills). No generated spec docs — "the test is the spec"; plans are grounded in `UBIQUITOUS_LANGUAGE.md`/`CONTEXT.md`, missions are one-line tracker entries, and four critic skills (`critique-plan`, `reconcile-roadmap`, `review-implementation` with three parallel critics, `sync-architecture`) gate each layer. Runtime-adaptive: nests subagents on CC (verified two levels), stays flat on Codex (`spawn_agent` can't nest).
 
 ## Tessl status
 
@@ -45,17 +43,23 @@ SDD is the *what* (machine-readable spec → plan → tasks → implement); **ED
 - [kiro-analysis.md](../coding-agents/kiro-analysis.md) — Kiro's spec-driven IDE in depth
 - [software-factory-landscape.md § Economics, failure and verification evidence](../../sdlc-lcm/software-factory-landscape.md#economics-failure-and-verification-evidence) — measured evidence on what agent-built output costs downstream, which spec gates are meant to reduce
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| AB Method | (criterion 3) adopted or proven: 192 stars (`gh api` 2026-11-22), alive (last push 2026-11-13), but the README states no measured benefit, names no independent users and cites no standards body (checked 2026-11-22) | 2026-11-22 | <https://github.com/ayoubben18/ab-method> |
+
 ## Sources
 
 | Source | Content |
 |---|---|
 | [github/spec-kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [agent-os][agent-os] · [Kiro][kiro-repo] | SDD frameworks (stars, licenses, releases via `gh api`, 2026-11-19; BMAD LICENSE file read 2026-11-19) |
-| [ayoubben18/ab-method][ab-method] | Fractal CC+Codex workflow method, MIT, v5.2.0 (`gh api`, 2026-11-19) |
 | [tesslio/spec-driven-development-tile][tessl-tile] · [tessl.io][tessl] | Tessl repo and site status (2026-11-19) |
 | [Martin Fowler — SDD tools][fowler-sdd] | Spec-driven development survey |
 
 [spec-kit]: https://github.com/github/spec-kit
-[ab-method]: https://github.com/ayoubben18/ab-method
 [openspec]: https://github.com/Fission-AI/OpenSpec
 [bmad]: https://github.com/bmad-code-org/BMAD-METHOD
 [agent-os]: https://github.com/buildermethods/agent-os
