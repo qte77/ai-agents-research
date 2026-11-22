@@ -495,7 +495,7 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
 - [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo-to-docs-tools-landscape.md) — repo-to-docs generators
-- [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) — standalone SaaS PR-review products (CodeRabbit, Greptile, Ellipsis, …) moved out of this doc per #326
+- [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) — standalone SaaS PR-review products (CodeRabbit, Greptile, Sourcery, …) moved out of this doc per #326
 
 [graphify]: https://github.com/safishamsi/graphify
 [axiomcode]: https://github.com/AxiomCodeAI/axiomcodegraph
