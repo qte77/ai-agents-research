@@ -125,7 +125,7 @@ Peer-reviewed or workshop work since the GEO paper, each checked against its arX
 | Paper | Finding |
 |---|---|
 | [C-SEO Bench][c-seo-bench] (Puerto et al., NeurIPS Datasets & Benchmarks 2025) | "most current C-SEO methods are not only largely ineffective but also frequently have a negative impact on document ranking"; effects shrink as more actors adopt them (a zero-sum game) |
-| [AutoGEO][autogeo] (Wu et al., CMU, 2025) | learned rewriting rules give "an average improvement of 35.99% in GEO metrics while maintaining utility" on its benchmarks |
+| [AutoGEO][autogeo] (Wu et al., CMU, 2025; code: [`cxcscmu/AutoGEO`][autogeo-repo]) | learned rewriting rules give "an average improvement of 35.99% in GEO metrics while maintaining utility" on its benchmarks |
 | [E-GEO][e-geo] (Bagga et al., MIT; NeurIPS 2026 E&D) | 13,746 product queries; "under a simple in-prompt defense in our setting, gains from GEO reflect genuine content improvement" |
 | [Characterizing Web Search in the Age of Generative AI][kirsten-aio] (Kirsten et al., 2025) | a large share of the domains AI Overviews consult are not in the top-10, or even top-100, organic results |
 | [Navigating the Shift][chen-shift] (Chen et al., Toronto; EDBT/ICDT 2026 Workshops) | domain overlap with Google's top 10 is low; "GPT-4o shows the lowest mean overlap at 4.0%" |
@@ -155,12 +155,7 @@ substantive; Codeberg could not be searched (rate-limited).
 
 | Repo | License | What it is |
 |---|---|---|
-| [`cxcscmu/AutoGEO`][autogeo-repo] | MIT | Research code for AutoGEO (above) |
 | [`elmohq/elmo`][elmo] | MIT | Self-hosted AEO/GEO tracker with an MCP server |
-| [`limelit-co/open`][limelit-open] | Apache-2.0 | Self-hosted visibility tracking, single binary, MCP server |
-| [`danishashko/geo-aeo-tracker`][geo-aeo-tracker] | MIT | Visibility tracker and AEO checker |
-| [`yaojingang/GEOInflow`][geoinflow] | MIT | Self-hosted analytics for AI crawlers and AI referrals (created 2026-10-26) |
-| [`dodopayments/dualmark`][dualmark] | Apache-2.0 | Markdown copies of pages for agents via content negotiation |
 | [`Auriti-Labs/geo-optimizer-skill`][geo-optimizer] | MIT | Citation-audit engine behind GeoReady; CLI, Python, MCP |
 | [`zubair-trabzada/geo-seo-claude`][geo-seo-claude], [`onvoyage-ai/gtm-engineer-skills`][gtm-skills] | MIT | Claude Code skills for GEO/AEO audits (checklists, not measurement) |
 
@@ -181,6 +176,17 @@ prompt panels across engines, run with your own API keys.
    before buying a third-party tracker; each covers one engine, and no tracker sees ranking internals.
 6. To keep normal Google results but leave AI Overviews and AI Mode, use the Search Console opt-out
    rather than `nosnippet`.
+
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| limelit-co/open | 454 stars (`gh api` 2026-11-22); no named independent users or measured benefit found in its README or on limelit.co (criterion 3) | 2026-11-22 | <https://github.com/limelit-co/open> |
+| danishashko/geo-aeo-tracker | 334 stars (`gh api` 2026-11-22); no named independent users or measured benefit in its README (criterion 3) | 2026-11-22 | <https://github.com/danishashko/geo-aeo-tracker> |
+| yaojingang/GEOInflow | 865 stars (`gh api` 2026-11-22), repo created 2026-10-26; no named independent users or measured benefit in its README (criterion 3) | 2026-11-22 | <https://github.com/yaojingang/GEOInflow> |
+| dodopayments/dualmark | 125 stars (`gh api` 2026-11-22); its README names only its maker's own site as a user, pre-1.0 (criterion 3) | 2026-11-22 | <https://github.com/dodopayments/dualmark> |
 
 ## Sources
 
@@ -254,10 +260,6 @@ prompt panels across engines, run with your own API keys.
 [profound-mcp]: https://docs.tryprofound.com/mcp/overview
 [autogeo-repo]: https://github.com/cxcscmu/AutoGEO
 [elmo]: https://github.com/elmohq/elmo
-[limelit-open]: https://github.com/limelit-co/open
-[geo-aeo-tracker]: https://github.com/danishashko/geo-aeo-tracker
-[geoinflow]: https://github.com/yaojingang/GEOInflow
-[dualmark]: https://github.com/dodopayments/dualmark
 [geo-optimizer]: https://github.com/Auriti-Labs/geo-optimizer-skill
 [geo-seo-claude]: https://github.com/zubair-trabzada/geo-seo-claude
 [gtm-skills]: https://github.com/onvoyage-ai/gtm-engineer-skills
