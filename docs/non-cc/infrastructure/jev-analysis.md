@@ -131,7 +131,7 @@ leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark
   (`.fill<T>()`) integration with Jev, and Laya as the open-weight alternative
 - [system-1-decision-models-landscape.md](../reference/system-1-decision-models-landscape.md) —
   open-weight and research alternatives (Laya, kev, CLM, GLiNER2.5-Decide, RuVector) and tools built on
-  Jev (probably, abide, jev-ultrafast, jevgrep, pg-jev, jev-browser), organized by use case (routing,
+  Jev (abide, jev-ultrafast, jevgrep, pg-jev), organized by use case (routing,
   guardrails, tool-call gating, reranking, judge/eval, confidence gate) in its § Use cases; its
   § Tools built on Jev also lists the two community awesome-jev catalogs (cobanov, MrJev) as
   discovery sources

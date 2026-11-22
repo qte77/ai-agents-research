@@ -201,7 +201,7 @@ corpus's own: shared, distributed context and skills.
 | [Plan 0009][plan] | Coverage gaps (row C), graph-system decision (row G), row Y done-when |
 | [agent-frameworks-infrastructure-landscape.md][fw1] | 22 rows: harness (§1–2), memory (§4), graphs/RAG (§7; RAG = Retrieval-Augmented Generation) |
 | [semantic-layers-data-catalog-landscape.md][ont] | 5 ontology rows |
-| [system-1-decision-models-landscape.md][laya] | 7 decision-model rows |
+| [system-1-decision-models-landscape.md][laya] | 5 decision-model rows |
 | [CC-memory-system-analysis.md][ccmem] | 4 context rows; ACE-FCA workflow and review gates |
 | [agent-skill-evolution-research-landscape.md][skilllift] | 4 skills rows |
 | [CC-community-skills-landscape.md][skl-cole] | 2 skills rows |

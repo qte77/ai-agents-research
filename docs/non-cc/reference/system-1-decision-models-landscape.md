@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
 created: 2026-09-30
-updated: 2026-11-18
+updated: 2026-11-22
 validated_links: 2026-11-11
 status: assess
 ---
@@ -59,8 +59,8 @@ confidence per choice.
   `escalate` tickets are then handed to a *second*, more capable system (the Agent API) for an
   investigation plan — escalation-based routing to one fixed downstream system, the same pattern
   already described above for the Panhwar cascade, not a choice among several candidate models.
-- [RouteLLM][routellm-home] and [Not Diamond][notdiamond-home] (shipped) — classifier-trained
-  per-query routers, already cataloged in
+- [RouteLLM][routellm-home] (stale: 5,723 stars; last push 2024-08-10 (`gh api` 2026-11-22), widely
+  adopted) and [Not Diamond][notdiamond-home] (shipped) — classifier-trained per-query routers, already cataloged in
   [llm-routers-gateways-landscape.md § Open / Self-Hostable Gateways][llm-routers-open] and
   [§ Hosted Aggregators][llm-routers-hosted]; cross-referenced here, not duplicated. Neither uses
   a `noul`/`choice`/`score` API.
@@ -230,9 +230,6 @@ another model's output.
 - [GLiNER2.5-Decide][gliner-blog] (documented) — its own "LLM-as-a-judge" bullet: "Express rubric
   criteria as categorical or ordinal questions and return selected values with probability
   distributions and confidence scores."
-- [JEV-as-a-Judge (arXiv:2609.26550)][jaaj] (documented — a research paper, no released code or
-  dataset) — a decision-only judge that "comes within three points of GPT-6 wherever a verdict
-  can be read off the text, at 0.36% of its fee."
 - [Perplexity Decisions API][pplx-answer-gate] (documented, hedged by the source itself) — its own
   citation-accuracy cookbook scores whether cited passages support each sentence of another
   model's generated answer, using one `checkable` `noul` question plus a `supports_N`/
@@ -253,9 +250,6 @@ another model's output.
 - Free-text LLM-as-a-judge metrics (documented) — G-Eval, TRUE, and others; see
   [agent-evaluation-metrics-landscape.md § LLM-as-a-Judge Quality Assessment][judge-metrics].
   These score generated prose, not a typed decision.
-- **Failure mode**: per the paper's own abstract (re-checked 2026-10-09), the approach "falls
-  behind where the verdict must be derived, as in math, code, and logic," and "Confidence routing
-  weakens on style-adversarial pairs and reference-free prose."
 
 ### 6. Confidence gate (act / confirm / human-in-the-loop escalation)
 
@@ -277,8 +271,6 @@ escalate-to-human.
 - [Secure Agentics Adrian][adrian-home] (shipped) — classifies every tool call and, per
   [agentic-ai-vulnerability-landscape.md § Secure Agentics Adrian][adrian-home], can intervene
   in-flight (alert, hold for human review, or block) — a three-way act/confirm/escalate gate.
-- [JEV-as-a-Judge][jaaj] (documented) — accepts when confident, escalates to a reasoning judge
-  when unsure: "0.9 points more accurate than GPT-6 on 1,610 held-out pairs at 41% of its fee."
 - **Failure mode**: treat an uncertain or blocked signal as its own outcome, never as a verdict —
   see [jev-analysis.md § Build for When It's Wrong][jev-wrong].
 
@@ -765,8 +757,7 @@ second publish or edit date). Billed as "the first thinking decision model," GLi
 Lightweight Decision Engine," per the blog's own expansion) is adaptive rather than single-pass:
 per the post, it "first produces a fast probability distribution, then allocates additional
 reasoning when the leading result is uncertain" — reasoning that happens *inside* GLiDE's own call
-("thinking tokens count against the same window"), unlike AnyJev's `Tacit` with `adaptive=True` or
-JEV-as-a-Judge below, both of which escalate to a *separate* model or judge from outside rather than
+("thinking tokens count against the same window"), unlike AnyJev's `Tacit` with `adaptive=True`, which escalates to a *separate* model from outside rather than
 reasoning within the decision call itself. Fastino's own 2026-10-14 roundup, "Decision Models
 Explained," lists GLiNER2.5-Decide and GLiDE as two separate rows in its own "Top decision models in
 2026" table — GLiNER2.5-Decide: "Compact English classifier for supplied labels, routing, tagging,
@@ -1062,7 +1053,7 @@ article's own charts have been refreshed to match the live leaderboard.
 independent/open-weight projects covered earlier in this doc, none appear on the Artificial
 Analysis Decision Index — Laya, kev, CLM, RuVector, GLiNER2.5-Decide, JevK5, SemIf, and AnyJev are
 all absent, alongside BioDecision-4B and the Jev-family tooling (abide, jev-ultrafast, jevgrep,
-typesafe-computer-use, pg-jev, probably). The 13 currently scored are exactly: TypeSafe's two Jev
+typesafe-computer-use, pg-jev). The 13 currently scored are exactly: TypeSafe's two Jev
 versions, Liquid AI's two (d1 and d1-ultra), three major-vendor Jev-style APIs already in this doc
 (OpenAI's GPT-6 Luna Decisions, Microsoft-Decision-1, and Perplexity's pplx-decider, branded here
 "Decider v1.1 27B"), Cloudflare's three Clef variants, and GLiDE/Celeris-1 Decision/Mercury Decide
@@ -1250,7 +1241,7 @@ license: its own first markdown cell states "This notebook is licensed [LGPL-3.0
 
 No rubric row: this is a training path layered on an existing serving app (Laya's own server,
 scored above) and existing base models, not a new decision-model architecture of its own — the
-same reasoning this doc already applies to pg-jev and probably.
+same reasoning this doc already applies to pg-jev.
 
 ## Serving without training: Hugging Face `transformers serve` and Ollama
 
@@ -1280,7 +1271,7 @@ Foundry's hosted one, the sglang PR serving Cloudflare's Clef, and Unsloth's loc
 
 No rubric row for either: both are serving paths over existing models (one training-free, one
 Ollama's own packaging), not new decision-model architectures — the same reasoning this doc
-already applies to pg-jev and probably.
+already applies to pg-jev.
 
 ## CLM / CLM-8B (Contrastive-LM)
 
@@ -1424,16 +1415,16 @@ change an open cell in the rubric's evidence census; this entry doesn't, so none
 
 ## Tools built on Jev
 
-Ten projects call Jev (or an alternative decision model) as one step in a larger tool. Five have
-their own home elsewhere in this corpus and this section only points to them; probably, pg-jev,
-jev-browser, OntoSmith, and edgextract have none yet, so their full entries live here.
+Eight projects call Jev (or an alternative decision model) as one step in a larger tool. Five have
+their own home elsewhere in this corpus and this section only points to them; pg-jev, OntoSmith,
+and edgextract have none yet, so their full entries live here.
 
 - **abide** (coldteadotai) — asks Jev one question per AGENTS.md rule on every coding-agent edit or
   turn and has the agent repair a break. See
   [CC-community-tooling-landscape.md § abide][abide-home].
 - **jev-ultrafast** (browser-use) — a browser agent whose action-selection loop is a Jev decision
   per step instead of an LLM generating an action. See
-  [CC-web-scraping-plugins-analysis.md § Alternative MCP Options][jevultrafast-home].
+  [CC-web-scraping-plugins-analysis.md § Alternative MCP Options][jevultrafast-home] (MCP = Model Context Protocol).
 - **jevgrep** (dzhng) — a code-search CLI that uses Jev to judge file/declaration relevance to a
   natural-language question. See [CC-code-tooling-landscape.md § jevgrep][jevgrep-home].
 - **typesafe-computer-use** (awlevin) — a macOS computer-use agent whose per-step
@@ -1461,42 +1452,6 @@ jev-browser, OntoSmith, and edgextract have none yet, so their full entries live
   a placeholder. No rubric row: it is a SQL wrapper around Jev's existing decision-model API, not a
   new decision-model architecture, so it cannot bear on any open rubric cell (gap-driven scoring,
   plan 0011 row O1).
-
-- **probably** (southpolesteve) — **Repo**: [southpolesteve/probably][probably] | **License**: MIT
-  (confirmed against `LICENSE`) | **Stars**: 12, pushed 2026-09-19 (`gh api`, 2026-09-30). An
-  experimental toy programming language whose `if value feels "description"` branches ask Jev
-  directly for a yes/no judgment, with a `match` construct for 2–8 semantic labels and a `chaos`
-  block that samples judgment probabilities. The interpreter is real (it executes the program;
-  it does not ask an LLM to interpret it), and runs (`--save`/`--replay`) record the input and
-  every model output so a run replays offline, with no model call and no credentials, rejecting
-  any mismatched or incomplete recording. [jev-analysis.md](../infrastructure/jev-analysis.md)
-  already cross-references this page for probably (see its Cross-References section) — this page
-  is probably's home in the corpus, not a placeholder.
-
-  `subject: harness`
-
-  | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
-  |---|---|---|---|---|---|
-  | n/a [README][probably] (a single-user CLI/language, not a multi-agent store) | n/a [README][probably] (a local interpreter; no deployment target) | partial [README][probably] (`--replay` deterministically reproduces a prior run from its saved effect tape, but a live run's model outputs are not themselves pinned/reproducible) | no data [README][probably] (no plugin/backend extension point beyond the two built-in provider adapters) | no [README][probably] (recordings are individual JSON files, not a versioned store) | yes [README][probably] (a saved run's every judgment, generated text, and random draw is inspectable in its recording) |
-
-  `scored 2026-09-30`
-
-- **jev-browser** (jkudish) — **Repo**: [jkudish/jev-browser][jev-browser] | **License**: MIT
-  (confirmed against `LICENSE`) | **Stars**: 341, created 2026-09-17, pushed 2026-10-21, latest
-  release `v0.8.9` (2026-10-21) (`gh api`, 2026-10-22). A browser-use tool: given a task and a URL,
-  it drives a headless Chromium (Playwright) while Jev "picks one action per step from the page's
-  clickable, typeable, and selectable elements, and scores how likely it is that the goal is met or
-  the run is stuck." Per its README, "Code owns the loop: budgets, recovery, stop gates" — the same
-  pick-next-action shape as jev-ultrafast, with Jev's goal-met probability doubling as the stop
-  condition. Runs as a Model Context Protocol (MCP) server, a CLI or a library; the README gives MCP setup for Claude
-  Code, Codex, OpenCode and Amp. Needs Node.js 22+; TypeSafe direct is the default Jev transport.
-  Its README's examples are self-reported (e.g. Wikipedia Coffee → Espresso "in about 4 seconds,
-  for $0.0016"), and two sources disagree on form filling: the README lists "Filled a contact
-  form and stopped without submitting it", while the community list awesome-jev (below) reports
-  from its own container run that "Every typing step presses Enter, so filling a contact form
-  submits it" (neither states the version tested). A fork exists at MrJev/jev-browser (stale since
-  2026-09-19); cite upstream. No rubric row: an application of Jev's existing API, not a new
-  decision-model architecture (gap-driven scoring, plan 0011 row O1).
 
 - **OntoSmith** (Dongbumlee) — **Repo**: [Dongbumlee/ontosmith][ontosmith] | **License**: MIT
   (confirmed against `LICENSE`) | **Stars**: 270 / 27 forks, created 2026-10-22, pushed
@@ -1542,8 +1497,7 @@ treat them as leads to verify, not evidence:
 - [MrJev/awesome-jev][awesome-jev-mrjev] — 17 stars; its README states "597 entries · every one
   checked to actually call Jev", sets a written bar (Jev central, 10+ stars, it runs) and says it
   "is not affiliated with or endorsed by TypeSafe AI." Adds two tables found nowhere else: "What
-  We Found Running These" (issues its maintainers report from running tools in containers — e.g.
-  the jev-browser form-submit finding above) and "Running Without Jev" (which tools accept a
+  We Found Running These" (issues its maintainers report from running tools in containers) and "Running Without Jev" (which tools accept a
   non-Jev endpoint, checked by the maintainers). The account behind it (MrJev, created
   2026-09-18) does not say who runs it; 17 of its 18 public repos are forks.
 
@@ -1556,7 +1510,8 @@ batch (neither was in the original lead list); light treatment only, per this ba
   `LICENSE`; weights and code) | **Stars**: 126, pushed 2026-09-28 (`gh api`, 2026-09-30). An
   independent open-weight alternative (Qwen3.5-4B/9B plus a distilled LoRA, merged), explicitly
   "not affiliated with TypeSafe AI." On the third-party [JevBench v1.4][jevbench] leaderboard it
-  ranks second of 76 systems and first among open entrants (62.04 vs. Jev 1.13.0's 63.29).
+  ranked second of 76 systems in v1.4; in v1.4.2.2 (95 systems) it ranks fifth (62.04 vs. Jev 1.13.0's 63.29), and the
+  second-ranked Plumb-4B (crh225) is built on JevK5 v0.2 plus a LoRA (README checked 2026-11-22).
   (`ngrok-adhoc/jevk5` is a same-day fork of this repo, not a second independent project.)
 - **SemIf** (formerly OpenJev) — **Repo**: [TheoLeeCJ/SemIf-OpenJev][semif] | **License**: MIT
   (confirmed against `LICENSE`) | **Stars**: 4,602, pushed 2026-09-23 (`gh api`, 2026-09-30). An
@@ -1622,31 +1577,6 @@ results for Tacit-8B/2B/1.7B "come next."
 
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
 change an open cell in the rubric's evidence census. This entry doesn't, so none is added here.
-
-## Paper: JEV-as-a-Judge (CMU)
-
-**Paper**: [arXiv:2609.26550][jaaj] — "JEV-as-a-Judge: Accept When Confident, Escalate When
-Unsure" (Yubo Li, Yidi Miao, Ramayya Krishnan, Rema Padman; Carnegie Mellon University, per the
-paper's own affiliation block and `@andrew.cmu.edu` author emails). Submitted 22 Sep 2026 (v1),
-current version v3, 29 Sep 2026.
-
-Per the abstract (quoted): a decision-only judge (JEV) "returns label probabilities instead of
-text," and its confidence decides whether to accept its verdict or escalate to a reasoning judge.
-Against sixteen generative and reward-model judges, with blinded human adjudication, it "comes
-within three points of GPT-6 wherever a verdict can be read off the text, at 0.36% of its fee and
-a 0.15-second median latency, and falls behind where the verdict must be derived, as in math,
-code, and logic." With a threshold frozen in advance, the accept/escalate cascade is "0.9 points
-more accurate than GPT-6 on 1,610 held-out pairs at 41% of its fee," and in a pre-specified live
-test on two new workloads "matches GPT-6's accuracy exactly." Confidence-based routing weakens on
-style-adversarial pairs and reference-free prose.
-
-`subject: harness`
-
-| Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
-|---|---|---|---|---|---|
-| n/a [abs][jaaj] (a research method, not shipped multi-user software) | n/a [abs][jaaj] (no deployment artifact to run across machines) | no data [abs][jaaj] (no code or dataset release is linked from the abstract page) | n/a [abs][jaaj] (a method description, not an extensible system) | yes [abs][jaaj] (arXiv revisions v1 → v3, 22–29 Sep 2026) | partial [abs][jaaj] (the confidence-gated escalation is itself a routing rationale for every verdict, but no persistent audit log or citation mechanism is described) |
-
-`scored 2026-09-30`
 
 ## Paper: JevSpawn (Fudan, SJTU, Shanghai Innovation Institute)
 
@@ -1716,6 +1646,16 @@ No rubric row: under this corpus's gap-driven scoring policy, a new row is added
 could change an open cell in the rubric's evidence census. This entry doesn't, so none is added
 here.
 
+## Not included
+
+Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) (alive, adopted or proven; checked 2026-11-22).
+
+| Name | Reason | Date | Link |
+|---|---|---|---|
+| probably | (criterion 3) 12 stars, no releases, last push 2026-09-19 (`gh api` 2026-11-22); the README calls it "an experimental toy language"; no measured benefit or named independent users | 2026-11-22 | <https://github.com/southpolesteve/probably> |
+| jev-browser | (criterion 3) 375 stars (`gh api` 2026-11-22); the README calls it "early software" and lists five runs on real sites, only one with numbers (about 4 s, $0.0016), with no method or task set, and no benchmark folder or named independent users found | 2026-11-22 | <https://github.com/jkudish/jev-browser> |
+| JEV-as-a-Judge (CMU paper) | (criterion 1) no code, package or weights from the authors: the authors' repository `yubol-bobo/jev-as-a-judge` is a project website only, and the paper's "supplementary reproducibility package" has no link (arXiv HTML and project page, 2026-11-22) | 2026-11-22 | <https://arxiv.org/abs/2609.26550> |
+
 ## Sources
 
 | Source | Content |
@@ -1770,7 +1710,6 @@ here.
 | [GLiNER2.5-Decide (Hugging Face)][gliner-hf] | Model card |
 | [RuVector][ruvector] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [BioDecision-4B][biodecision] | Hugging Face model card |
-| [probably][probably] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [pg-jev][pg-jev] | README, LICENSE, releases (fetched via GitHub contents/API, 2026-10-06) |
 | [OSI PostgreSQL License template][osi-pgl] | Compared verbatim against pg-jev's `LICENSE` file, 2026-10-06 |
 | [JevK5][jevk5] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
@@ -1778,7 +1717,6 @@ here.
 | [SemIf-OpenJev][semif] | README, LICENSE (fetched via GitHub contents API, 2026-09-30) |
 | [AnyJev][anyjev] | README, LICENSE (fetched via GitHub contents API, 2026-10-11); `gh api` repo metadata (stars/forks/dates); Hugging Face API check on `morriszjm/Tacit-9B` (public, ungated, Apache-2.0), 2026-10-11 |
 | [AnyJev Technical Report (arXiv:2610.00831)][anyjev-paper] | Abstract page: title, authors, submission date (30 Sep 2026, v1) verified; abstract text not reproducible verbatim from this fetch, so not quoted or cited for figures; fetched 2026-10-11 |
-| [JEV-as-a-Judge (arXiv:2609.26550)][jaaj] | Abstract page (verbatim, fetched 2026-09-30) |
 | [JevSpawn (arXiv:2610.00437)][jevspawn-paper] | Abstract (arXiv Atom API, verbatim) and HTML full text (jev-1.13.0/Qwen3.8-27B setup, Table 1/2 figures, code-availability sentence); fetched 2026-10-10 |
 | [JevSpawn (GitHub)][jevspawn-repo] | README (same Table 1/2, "TypeSafe Jev — API-based finite scoring" wording, entry point `src/jev_spawn/api.py`), root contents (no `LICENSE`); fetched via `gh api`, 2026-10-10 |
 | GitHub code search, `q=JevSpawn` | Absence-of-collision check: 2 results, both Hoyant-Su's own repos; checked 2026-10-10 |
@@ -1853,9 +1791,7 @@ here.
 [jevultrafast-home]: ../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#alternative-mcp-options-brief
 [jevgrep-home]: ../../cc-community/CC-code-tooling-landscape.md#jevgrep-dzhng
 [tcu-home]: https://github.com/awlevin/typesafe-computer-use
-[probably]: https://github.com/southpolesteve/probably
 [pg-jev]: https://github.com/realZachi/pg-jev
-[jev-browser]: https://github.com/jkudish/jev-browser
 [awesome-jev-cobanov]: https://github.com/cobanov/awesome-jev
 [awesome-jev-mrjev]: https://github.com/MrJev/awesome-jev
 [osi-pgl]: https://opensource.org/license/postgresql
@@ -1864,7 +1800,6 @@ here.
 [semif]: https://github.com/TheoLeeCJ/SemIf-OpenJev
 [anyjev]: https://github.com/nokia-applied-research/AnyJev
 [anyjev-paper]: https://arxiv.org/abs/2610.00831
-[jaaj]: https://arxiv.org/abs/2609.26550
 [jevspawn-paper]: https://arxiv.org/abs/2610.00437
 [jevspawn-repo]: https://github.com/Hoyant-Su/JevSpawn
 [typesafe-confidence]: https://docs.typesafe.ai/confidence
