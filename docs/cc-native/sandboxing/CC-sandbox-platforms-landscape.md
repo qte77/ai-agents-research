@@ -44,7 +44,7 @@ on macOS; requires `apt install bubblewrap socat` on Linux. Sufficient for
 local-first workflows.
 
 The standalone `@anthropic-ai/sandbox-runtime` npm package extends this
-outside CC (e.g., for MCP servers). Same isolation primitives, different
+outside CC (e.g., for Model Context Protocol (MCP) servers). Same isolation primitives, different
 entry point.
 
 ### OpenSandbox (Alibaba)
@@ -169,8 +169,8 @@ standby cost — between E2B's ephemeral model and Sprites' always-warm persiste
 
 ### forkd (now sandstorm)
 
-Renamed to `deeplethe/sandstorm`; v0.6.0 (2026-11-01) makes gVisor the default backend, and the README
-now documents the Firecracker fork runtime only at tag v0.5.3. The details below describe that v0.5.3 runtime.
+Renamed to `deeplethe/sandstorm` (checked 2026-11-22); its current README documents both gVisor and
+Firecracker backends. The details below were verified on 2026-09-24, before the rename.
 
 Firecracker microVM sandbox runtime built for AI agent fan-out: spawning many
 isolated children from one warmed parent snapshot via copy-on-write memory sharing
@@ -252,7 +252,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | Name | Reason | Date | Link |
 | ---- | ------ | ---- | ---- |
 | Maritime | Criterion 3: no named independent users, funding or independent measurement at the vendor's own pages; timings are self-reported (checked 2026-11-22) | 2026-11-22 | <https://maritime.sh> |
-| Ephemora Cell | Criteria 2 and 3: source repository returns 404 (`gh api` 2026-11-22); single PyPI maintainer, no stated users | 2026-11-22 | <https://pypi.org/project/ephemora-cell/1.0.4.2/> |
+| Ephemora Cell | Criteria 2 and 3: source repository returns 404 (`gh api` 2026-11-22); single PyPI maintainer, no stated users | 2026-11-22 | <https://pypi.org/project/ephemora-cell/> |
 
 ## References
 
