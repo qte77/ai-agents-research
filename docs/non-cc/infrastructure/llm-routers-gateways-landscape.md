@@ -78,7 +78,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | Lightport | Criterion 3: 25 stars, no GitHub releases; the only named user is its own maker Glama (README) (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/glama-ai/lightport> |
 | RelayPlane | Criterion 3: 211 stars (`RelayPlane/proxy`); names no customers; its savings figures are notional list-price examples, not measured results (product page, 2026-11-22) | 2026-11-22 | <https://relayplane.com/> |
 | ClawRouters | Criterion 3: no repo, no named customers; "5,000+ integrations", 70-90% savings and SOC 2 claims are unsourced on its own page (2026-11-22) | 2026-11-22 | <https://www.clawrouters.com/> |
-| ShareAI | Criterion 3: no repo; only an unexplained logo strip, no usage figures or measured benefit (product page, 2026-11-22) | 2026-11-22 | <https://shareai.now/> |
+| ShareAI | Criterion 3: no repo; its only adoption evidence is an unattributed "Companies using ShareAI" logo list of small startups, with no case studies, usage figures or measured benefit (product page, 2026-11-22) | 2026-11-22 | <https://shareai.now/> |
 | Pandora's AI Model Routing Box | Criterion 1: paper only, no code link on the arXiv abstract page (v2, 2026-08-21) | 2026-11-22 | <https://arxiv.org/abs/2608.20316> |
 
 ## Sources
