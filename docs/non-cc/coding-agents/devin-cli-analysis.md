@@ -4,7 +4,7 @@ source: https://devin.ai/cli
 purpose: Evaluate Devin CLI as an interactive terminal coding agent, distinct from autonomous cloud Devin.
 platform_scope: [cli, cloud]
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-23
 validated_links: 2026-06-16
 status: trial
 ---
@@ -91,6 +91,10 @@ Devin CLI does **not yet** support Knowledge, Playbooks, or Secrets — these
 are cloud-only features. Complex, long-running tasks should be handed off via
 `/handoff`.
 
+### Open-source alternative to cloud Devin: OpenComputer
+
+[diggerhq/opencomputer][opencomputer] describes itself as "an open-source, faster Devin alternative" (the vendor's own tagline, not an independent comparison). Per its README, you mention `@Computer` in a Slack thread, a gateway starts a Claude Code, Codex or OpenCode session per thread in rootless Podman, and the result lands as a pull request; the stack is self-hostable (a VM plus Cloudflare Workers and Durable Objects) or runs on the vendor's cloud. Apache-2.0 per the `LICENSE` file; created 2025-12-09, 1,658 stars, latest release v0.6.0.50 (2026-11-09) (`gh api` 2026-11-23). Its headline "3.3x faster than Devin" (56s vs 185s to open four PRs) is the vendor's own benchmark on its own blog, not independently verified. Adoption not yet shown: no named independent users were found in the README. Nothing was installed or run.
+
 ## Adoption Decision
 
 | Dimension | Assessment |
@@ -150,6 +154,7 @@ evaluate against your existing subscriptions before adding a new vendor.
 | [Devin CLI commands reference][devin-cli-cmds] | Full command list, permission modes, slash commands, headless `-p` flag |
 | [Devin billing self-serve][devin-billing] | Plan tiers (Free/$20/$200), shared quota across CLI+Desktop+Cloud, ACU to credit mapping |
 | [Windsurf → Devin Desktop blog][devin-desktop-blog] | Rust rewrite (Devin Local), Cascade sunset July 2026, Desktop vs CLI distinction |
+| [OpenComputer repository][opencomputer] | Open-source Devin-style Slack agent: README, Apache-2.0 `LICENSE`, `gh api` record and release (read 2026-11-23); vendor claims |
 | [TerminalTrove / web search][search-result] | ~April 9 2026 CLI launch date, ACU cost estimate ($2.25/ACU, 15 min ≈ 1 ACU); third-party — treat as approximate |
 
 [devin-cli-page]: https://devin.ai/cli
@@ -159,3 +164,4 @@ evaluate against your existing subscriptions before adding a new vendor.
 [devin-desktop-blog]: https://devin.ai/blog/windsurf-is-now-devin-desktop/
 [copilot-cli-doc]: ../agents/github-copilot-cli-analysis.md
 [search-result]: https://terminaltrove.com/ai-coding-agents/devin-for-terminal/
+[opencomputer]: https://github.com/diggerhq/opencomputer
