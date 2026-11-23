@@ -1,8 +1,8 @@
 ---
 title: Coding Agents and Harnesses Compared
-purpose: Cross-vendor comparison of coding agents and harnesses from their own docs; sections cover input modalities (images, PDF, video and voice) and model access and billing (own key, custom endpoint, pricing, cost controls), each cell sourced and dated.
+purpose: Cross-vendor comparison of coding agents and harnesses from their own docs; sections cover input modalities (images, PDF, video and voice) and model access and billing (own key, custom endpoint, pricing, cost controls, subscription sign-in), and context compaction (auto trigger, manual command, setting names), each cell sourced and dated.
 created: 2026-11-22
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-22
 status: assess
 ---
@@ -125,6 +125,92 @@ Prices and allowances are vendor claims as read on 2026-11-22 and change; "not d
 - **Antigravity cells rest on one page.** The getting-started CLI tab lists sign-in modes and
   `/usage` but no endpoint override or prices; the auth names it uses mirror Gemini CLI's.
 
+### Using subscriptions in other harnesses
+
+Question: can a consumer subscription (instead of an API key) power a harness, and what do the vendors'
+own pages say about it? Read 2026-11-23 from vendor pages only; evidence level per cell: **documented**
+(vendor page states it) or **not addressed** (the named page is silent, which is not permission). Nothing
+was run. This is not legal advice; the terms pages are the authority.
+
+| Harness | Subscription sign-in documented | Terms wording on the vendor's own pages | Stated limits and pitfalls |
+|---|---|---|---|
+| Claude Code | Pro, Max, Ultra via claude.ai login; Team and Enterprise too ([auth][cc-auth]). `claude setup-token` makes a one-year token for CI that "requires a Pro, Max, Ultra, Team, or Enterprise plan" and cannot do Remote Control or claude.ai connectors ([auth][cc-auth]) | OAuth "is intended exclusively for purchasers" of the subscription plans, for "ordinary use of Claude Code and other native Anthropic applications"; developers building products "should use API key authentication"; Anthropic "does not permit third-party developers" to "route requests through Free, Pro, Max, or Ultra plan credentials on behalf of their users"; an end user may sign in to "the unmodified Claude Code binary" with their own subscription ([legal][cc-legal]) | Plan limits "assume ordinary, individual usage of Claude Code and the Agent SDK" ([legal][cc-legal]); five-hour and weekly limits "shared across Claude and Claude Code" ([plan article][cc-plan]); a set `ANTHROPIC_API_KEY` wins over the subscription and bills API rates ([auth][cc-auth], [plan article][cc-plan]); `--bare` does not read `CLAUDE_CODE_OAUTH_TOKEN` ([auth][cc-auth]) |
+| [Codex CLI](codex-cli-analysis.md) | "Sign in with ChatGPT for subscription access" in the app, CLI and IDE extension; Codex cloud needs ChatGPT sign-in ([auth][codex-auth]); Codex is in Free, Go, Plus, Pro, Business, Edu and Enterprise plans ([pricing][codex-pricing]) | Third-party or automated use of the ChatGPT sign-in: not addressed on [auth][codex-auth] or [pricing][codex-pricing]; the auth page advises "API keys are still the recommended default for automation" and "Use API key authentication for programmatic Codex CLI workflows, such as CI/CD jobs" | Plus has a "five-hour period" limit and weekly limits may apply; local and cloud use share one allowance ([pricing][codex-pricing]); API-key sign-in limits or drops features that rely on ChatGPT workspace access, and bills "standard API pricing" ([auth][codex-auth]); treat `~/.codex/auth.json` "like a password" ([auth][codex-auth]) |
+| [Gemini CLI](gemini-cli-analysis.md) | Google account sign-in for AI Pro or Ultra, and Code Assist ([auth][gemini-auth]); the page banner says unpaid-tier and Google One users moved to Antigravity CLI on 2026-06-18 | Directly accessing the services behind Gemini CLI "using third-party software, tools, or services (for example, using OpenClaw with Gemini CLI OAuth) is a violation of applicable terms and policies", with possible "suspension or termination" ([terms][gemini-tos]) | Per-user daily request caps by sign-in method, e.g. AI Pro 1,500 and AI Ultra 2,000 (page dated 2026-06-18) ([quota][gemini-quota]); headless runs reuse a cached credential, else need an API key or Vertex AI, with service-account keys suggested for CI ([auth][gemini-auth]); for API-key use the page says terms may differ between unpaid and paid service ([terms][gemini-tos]) |
+| [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md) | Needs "An active GitHub Copilot subscription"; `/login` or a fine-grained token with the Copilot Requests permission in `COPILOT_GITHUB_TOKEN`, `GH_TOKEN` or `GITHUB_TOKEN` ([install][copilot-install]) | Not addressed on [install][copilot-install] | CI use not covered on that page; an organization or enterprise owner can disable the CLI ([install][copilot-install]) |
+| [OpenCode](opencode-analysis.md) | "Sign in with ChatGPT" for OpenAI (Plus or Pro; usage counts against the plan); GitHub Copilot by device OAuth; Claude Pro/Max and Gemini subscription sign-in not covered on the page ([providers][oc-providers]) | Not addressed on [providers][oc-providers] | OpenCode caps context limits for ChatGPT sign-ins by default ([providers][oc-providers]) |
+| [Cline](cline-analysis.md) | "Claude Code (Subscription)" provider that drives the user's own installed `claude` CLI ([Cline docs][cline-cc]) | Not addressed on [Cline docs][cline-cc]; the Claude Code terms above apply to the CLI itself | Responses may not stream token by token; image uploads and prompt caching limited ([Cline docs][cline-cc]) |
+| [Antigravity](antigravity-analysis.md) | Plans on personal Google accounts; AI Pro and Ultra get larger quotas ([plans][ag-plans]); sign-in steps not on that page | Third-party or automated use: not addressed on [plans][ag-plans]; BYOK and bring-your-own-endpoint "currently" unsupported | AI Pro and Ultra quota refreshes every five hours until a weekly limit; Workspace plans "don't include" Antigravity plans ([plans][ag-plans]) |
+
+Rows not listed (Cursor, Aider, Amp, Windsurf, Kiro, Zed, Kimi Code, VS Code Copilot Chat) either sell their
+own plan or use provider keys; their pages read for this doc do not describe signing in with another
+vendor's consumer subscription (checked 2026-11-23, not exhaustive).
+
+**Data handling differs by plan.** Anthropic: consumer plans may be used for training when the setting is on,
+with 5-year retention if allowed and 30 days if not; commercial plans and the API keep 30 days and are not
+trained on under commercial terms ([data usage][cc-data]). OpenAI: ChatGPT sign-in follows workspace
+permissions and retention, API keys follow the API organization's settings ([auth][codex-auth]). Google:
+the terms page points to the privacy policy and notices and does not state a training rule
+([terms][gemini-tos]).
+
+**Patterns** (documented basis in brackets; the combination is this corpus's reading, not a vendor
+recommendation):
+
+| Pattern | Basis |
+|---|---|
+| Subscription for interactive work on the machine you sit at; API key or cloud-provider credential for CI and shared automation | Codex auth page recommends API keys for CI; Claude Code legal page points developers and products to API keys ([auth][codex-auth], [legal][cc-legal]) |
+| Use each vendor's own, unmodified harness with its own plan; do not embed another party's subscription token in a tool you operate for others | Claude Code legal page and Gemini terms page above |
+| Check which credential is active before a long run (an inherited API key silently moves billing off the plan) | Claude Code `/status` and precedence rules ([auth][cc-auth]) |
+| Route API-key traffic through a gateway for logging, budgets or provider switching; subscription sign-ins use the vendor's own endpoint | [gateway docs](../infrastructure/llm-routers-gateways-landscape.md); Claude Code's gateway page ([gateway][cc-gw]) |
+| Keep a token file (`auth.json`, `CLAUDE_CODE_OAUTH_TOKEN`) out of repos, images and shared runners | Codex auth page; Claude Code auth page |
+
+Scripted-run terms for Claude Code are in
+[Terms That Apply to Scripted Runs](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#terms-that-apply-to-scripted-runs).
+
+## Context compaction by harness
+
+Question (owner, 2026-11-23): do other harnesses offer what Claude Code's `/autocompact` window plus
+percentage trigger offers? Read from vendor docs on 2026-11-23; "not documented" names the pages looked at,
+and means those pages were silent. Claude Code's own settings are owned by
+[Setting the auto-compact window](../../cc-native/context-memory/CC-extended-context-analysis.md#setting-the-auto-compact-window-autocompact)
+and the [env vars reference](../../cc-native/configuration/CC-env-vars-reference.md), not restated here.
+Defaults are vendor-documented values, not observed behaviour.
+
+| Harness | Auto compaction | Manual command | Trigger setting (name, unit) | Scope / notes | Source |
+|---|---|---|---|---|---|
+| Claude Code | yes | yes | window in tokens and percent of window | see the two owner sections above | [CC-extended-context-analysis](../../cc-native/context-memory/CC-extended-context-analysis.md#setting-the-auto-compact-window-autocompact), [CC-env-vars-reference](../../cc-native/configuration/CC-env-vars-reference.md) |
+| [Codex CLI](codex-cli-analysis.md) | yes ("automatic history compaction") | `/compact` | `model_auto_compact_token_limit` (tokens, unset uses model defaults); `model_post_turn_compact_threshold_percent` (0-100, percent of usable window, unset or `0` disables); `model_auto_compact_token_limit_scope` (`total` default, or `body_after_prefix`) | `compact_prompt` overrides the summary prompt; per-model settings not documented on the part read (about 100k of 166k characters of the config reference) | [config ref][codex-cfgref], [commands][codex-cmds] |
+| [Gemini CLI](gemini-cli-analysis.md) | yes | `/compress` ("Replace the entire chat context with a summary") | `model.compressionThreshold` (fraction of context, default `0.5`); experimental `contextManagement.historyWindow.maxTokens` (tokens, default `150000`) and `retainedTokens` (default `40000`), behind `experimental.contextManagement` (default `false`) | disable switch not found; `hooks.PreCompress` runs before compression; last 16k characters of the configuration page not read | [configuration][gemini-cfg], [commands][gemini-cmds] |
+| [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md) | yes: background compaction at "approximately 80%", pauses if context reaches about 95% first | `/compact [FOCUS-INSTRUCTIONS]` | not documented: the context article names no setting, and the first 200k characters of the command reference name none | disabling not documented; `/context` shows token usage | [context][copilot-ctx], [CLI reference][copilot-cli] |
+| [VS Code Copilot Chat](vscode-copilot-chat-analysis.md) | yes, "as the conversation nears the context window limit" | `/compact` | not documented ("Setting names: none" on the page) | threshold not stated | [context][vscode-ctx] |
+| [Cursor](cursor-analysis.md) | not documented (agent overview, CLI slash commands) | `/summarize`, alias `/compress` (CLI) | not documented | the CLI command is the only compaction control found | [slash commands][cursor-slash], [overview][cursor-overview] |
+| [Cline](cline-analysis.md) | yes ("Auto Compact"), when a conversation nears the context limit | `/smol`; `/compact` is an alias | not documented: no percentage or token count on the page; apparently a toggle | with other models Cline falls back to rule-based truncation | [auto compact][cline-auto], [slash commands][cline-slash] |
+| [Aider](aider-analysis.md) | yes, summarization of older chat history | no summarise command found; `/clear` and `/reset` drop history | `--max-chat-history-tokens` (tokens, "Soft limit ... after which summarization begins"; env `AIDER_MAX_CHAT_HISTORY_TOKENS`) | summaries by `--weak-model`; falls back to the model's own value when unset | [options][aider-opts], [commands][aider-cmds] |
+| [OpenCode](opencode-analysis.md) | yes (`compaction.auto`; `false` "disables new automatic compaction") | command `session.compact`, default keybind `<leader>c`; a `/compact` entry not found on the TUI page | `compaction.buffer` (share of window kept free, example `"15%"`); `compaction.keep.tokens` (tokens of recent context kept) | compaction type `native` or `summary` per provider or model under `settings.compaction`; per-agent compaction not documented | [config][oc-config], [keybinds][oc-keybinds] |
+| [Amp](amp-analysis.md) | not documented (manual, threads page, CLI settings page) | not documented | not documented | the threads page instead advises asking the agent to "Handoff and ..." for a fresh thread | [threads][amp-threads], [CLI settings][amp-cli-settings] |
+| [Windsurf](windsurf-analysis.md) | not documented (Cascade page) | not documented | not documented | the page says Cascade retrieves "conversation summaries and checkpoints" when mentioning past chats | [Cascade][windsurf-cascade] |
+| [Kiro](kiro-analysis.md) | yes | `/compact`, CLI only | `compaction.autoCompactionThreshold` (percent 0-100, default `80`, CLI 3.3.0 or later); `compaction.excludeMessages` (default `2`); `compaction.excludeContextWindowPercent` (default `2`) | workspace `.kiro/settings/cli.json` overrides the global default; `PreCompact` hook can refuse; off via `/settings`, no key named | [compaction][kiro-compaction] |
+| [Zed](zed-analysis.md) | yes, default on | `/compact` | `agent.auto_compact.threshold` (default `"90%"`; a positive integer means tokens used, a negative integer means tokens remaining) and `enabled` | no auto compaction for models with a window under 80,000 tokens | [agent panel][zed-panel], [agent settings][zed-agent-settings] |
+| [Kimi Code](kimi-code-analysis.md) | yes | `/compact` (optional hint) | `reserved_context_size` under `[loop_control]` (tokens reserved for model output; the sessions page says history is compressed automatically "when the context approaches the window limit"); `compaction_max_attempts` (default `5`) | `max_input_size` on a model entry is preferred for the window; disable switch not found | [sessions][kimi-sessions], [config files][kimi-config], [interaction][kimi-int] |
+| [Antigravity](antigravity-analysis.md) | yes ("automatically compacts older turns") | `/compact`, or `/compact <message>` | not documented | `disableSlashCommands` in `settings.json` turns off slash commands in headless mode | [`/compact`][ag-compact] |
+
+### Compaction notes
+
+- **A percentage or fraction trigger is documented by five of the 14 other harnesses.** Gemini CLI
+  (`model.compressionThreshold`), Codex CLI (`model_post_turn_compact_threshold_percent`), OpenCode
+  (`compaction.buffer`), Kiro (`compaction.autoCompactionThreshold`) and Zed (`agent.auto_compact.threshold`).
+  Codex, Aider, Zed and Gemini CLI's experimental key also take token counts; Kimi Code's trigger is a reserved
+  token margin, not a percent.
+- **Manual commands are near-universal, names differ:** `/compact` (Codex, Copilot, VS Code, Kiro, Zed, Kimi,
+  Antigravity, Cline alias), `/compress` (Gemini CLI; Cursor alias), `/summarize` (Cursor), `/smol` (Cline).
+  Amp, Windsurf and Aider document none.
+- **Disable switches are documented by three:** Codex (`0` on the percent key), OpenCode (`compaction.auto`)
+  and Zed (`enabled`). Kiro says to use `/settings`. Goose, not in this doc's harness set, is the clearest
+  example of both a percent and a token cap with `0.0` to disable
+  ([Goose docs][goose-ctx], read 2026-11-23).
+- **No per-agent compaction setting was found** on the pages read; OpenCode documents per-provider or
+  per-model type only.
+
 ## Sources
 
 | Source | Established |
@@ -197,6 +283,33 @@ Prices and allowances are vendor claims as read on 2026-11-22 and change; "not d
 | [Devin Desktop: models][ws-models] | Per-token prices, SWE-2 promotion |
 | [Devin Desktop: usage (legacy credits)][ws-usage] | $120 per 1000 pooled credits, budget caps |
 | [Antigravity: getting started (CLI tab)][ag-start] | Sign-in modes, `/usage`, plan names |
+| [Claude Code: legal and compliance][cc-legal] | Consumer terms, OAuth intended use, products and third parties |
+| [Claude: Claude Code with Pro or Max][cc-plan] | Limit windows, shared limits, API key precedence |
+| [Claude Code: data usage][cc-data] | Training and retention by plan |
+| [Gemini CLI: terms and privacy][gemini-tos] | Terms by sign-in method, third-party OAuth wording |
+| [Gemini CLI: quota and pricing][gemini-quota] | Daily request caps by sign-in |
+| [Copilot CLI: install][copilot-install] | Subscription need, tokens |
+| [Cline: Claude Code provider][cline-cc] | Subscription route via the CLI |
+| [Antigravity: plans][ag-plans] | Quota windows, BYOK unsupported |
+| [Codex: configuration reference][codex-cfgref] | Auto-compact settings |
+| [Gemini CLI: commands][gemini-cmds] | `/compress` |
+| [Copilot CLI: context management][copilot-ctx] | Auto-compact at about 80% |
+| [VS Code: context][vscode-ctx] | Automatic and `/compact` |
+| [Cursor: CLI slash commands][cursor-slash] | `/summarize`, `/compress` |
+| [Cline: Auto Compact][cline-auto] | Auto-compact behaviour |
+| [Cline: slash commands][cline-slash] | `/smol`, `/compact` |
+| [Aider: options][aider-opts] | `--max-chat-history-tokens` |
+| [Aider: in-chat commands][aider-cmds] | `/clear`, `/reset` |
+| [OpenCode: config][oc-config] | `compaction.*` |
+| [OpenCode: keybinds][oc-keybinds] | `session.compact` |
+| [Amp: threads][amp-threads] | Handoff, no compaction page |
+| [Amp: CLI settings][amp-cli-settings] | No compaction settings |
+| [Kiro: compaction][kiro-compaction] | Thresholds, `/compact` |
+| [Zed: agent settings][zed-agent-settings] | `agent.auto_compact` |
+| [Kimi Code: sessions][kimi-sessions] | Auto and `/compact` |
+| [Kimi Code: config files][kimi-config] | `reserved_context_size` |
+| [Antigravity: `/compact`][ag-compact] | Command and auto behaviour |
+| [Goose: smart context management][goose-ctx] | Percent and token compaction settings, `0.0` disables |
 
 [cc-workflows]: https://code.claude.com/docs/en/common-workflows
 [cc-tools]: https://code.claude.com/docs/en/tools-reference
@@ -266,3 +379,30 @@ Prices and allowances are vendor claims as read on 2026-11-22 and change; "not d
 [ws-quota]: https://docs.devin.ai/desktop/accounts/quota
 [ws-models]: https://docs.devin.ai/desktop/models
 [ws-usage]: https://docs.devin.ai/desktop/accounts/usage
+[cc-legal]: https://code.claude.com/docs/en/legal-and-compliance
+[cc-plan]: https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan
+[cc-data]: https://code.claude.com/docs/en/data-usage
+[gemini-tos]: https://geminicli.com/docs/resources/tos-privacy/
+[gemini-quota]: https://geminicli.com/docs/resources/quota-and-pricing/
+[copilot-install]: https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli
+[cline-cc]: https://docs.cline.bot/provider-config/claude-code
+[ag-plans]: https://antigravity.google/docs/plans
+[codex-cfgref]: https://learn.chatgpt.com/docs/config-file/config-reference
+[gemini-cmds]: https://geminicli.com/docs/reference/commands/
+[copilot-ctx]: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/context-management
+[vscode-ctx]: https://code.visualstudio.com/docs/copilot/concepts/context
+[cursor-slash]: https://cursor.com/docs/cli/reference/slash-commands
+[cline-auto]: https://docs.cline.bot/features/auto-compact
+[cline-slash]: https://docs.cline.bot/features/slash-commands/new-task
+[aider-opts]: https://aider.chat/docs/config/options.html
+[aider-cmds]: https://aider.chat/docs/usage/commands.html
+[oc-config]: https://opencode.ai/docs/config/
+[oc-keybinds]: https://opencode.ai/docs/keybinds/
+[amp-threads]: https://ampcode.com/docs/threads
+[amp-cli-settings]: https://ampcode.com/docs/cli/settings
+[kiro-compaction]: https://kiro.dev/docs/compaction/
+[zed-agent-settings]: https://zed.dev/docs/ai/agent-settings
+[kimi-sessions]: https://moonshotai.github.io/kimi-code/en/guides/sessions.html
+[kimi-config]: https://moonshotai.github.io/kimi-code/en/configuration/config-files.html
+[ag-compact]: https://antigravity.google/docs/commands/compact/
+[goose-ctx]: https://goose-docs.ai/docs/guides/sessions/smart-context-management
