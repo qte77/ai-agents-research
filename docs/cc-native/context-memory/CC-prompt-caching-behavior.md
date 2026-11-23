@@ -2,7 +2,7 @@
 title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economics
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
-updated: 2026-11-15
+updated: 2026-11-23
 validated_links: 2026-11-09
 status: adopt
 ---
@@ -48,7 +48,7 @@ From the [caching docs][caching]:
 
 1. CC places `cache_control: {"type": "ephemeral"}` on the request
 2. The server hashes the prefix up to the breakpoint
-3. If a matching hash exists from a prior request within the TTL → **cache hit** — 0.025x input price on Claude Fable 5.1/Mythos 5.1, 0.05x on Claude Opus 5.5/Sonnet 5.5, and the standard 0.1x on every other model ([pricing docs][pricing], accessed 2026-10-26)
+3. If a matching hash exists from a prior request within the TTL → **cache hit** — 0.025x input price on Claude Fable 5.2/Mythos 5.2 and Fable 5.1/Mythos 5.1, 0.05x on Claude Opus 5.5/Sonnet 5.5, and the standard 0.1x on every other model ([pricing docs][pricing], accessed 2026-10-26)
 4. If no match → **cache miss** → full processing + cache write (1.25x input price for 5m)
 
 ### 20-block lookback window
@@ -59,11 +59,11 @@ Source: [prompt caching docs][caching], "How automatic prefix checking works" se
 
 ### Minimum cacheable prefix
 
-The cacheable prefix is model-dependent (re-verified against the [caching docs][caching], 2026-10-15). On the Claude API, Claude Platform on AWS, Google Cloud, and Microsoft Foundry:
+The cacheable prefix is model-dependent (re-verified against the [caching docs][caching], 2026-10-15; Fable 5.2 and Mythos 5.2 added to the 512-token row after re-reading the page on 2026-11-23). On the Claude API, Claude Platform on AWS, Google Cloud, and Microsoft Foundry:
 
 | Minimum tokens | Models |
 |---|---|
-| 512 | Fable 5.1, Mythos 5.1, Fable 5, Mythos 5, Opus 5.5, Opus 5, Sonnet 5.5, Haiku 5.5 |
+| 512 | Fable 5.2, Mythos 5.2, Fable 5.1, Mythos 5.1, Fable 5, Mythos 5, Opus 5.5, Opus 5, Sonnet 5.5, Haiku 5.5 |
 | 1,024 | Opus 4.8, Sonnet 5, Sonnet 4.6, Sonnet 4.5 (deprecated) |
 | 2,048 | Opus 4.7, Mythos Preview |
 | 4,096 | Opus 4.6, Opus 4.5, Haiku 4.5 |
@@ -264,9 +264,9 @@ The list above is CC's own framing. The [prompt caching docs][caching] document 
 | Thinking parameters (mode, `budget_tokens` in extended mode) | model-specific | model-specific | ✘ |
 | Effort setting (`output_config.effort`) | model-specific | model-specific | ✘ |
 | Non-tool results passed to requests with thinking | ✓ | ✓ | ✓ on Opus 4.5+, Sonnet 4.6+, Haiku 5.5 (thinking blocks preserved); ✘ on earlier Opus/Sonnet and Haiku through 4.5 |
-| Dropped thinking blocks (Fable 5.1, Mythos 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5) | ✓ | ✓ | ✘ from the dropped block onward |
+| Dropped thinking blocks (blocks the receiving model cannot read; readable blocks passed back unchanged keep the cache; Fable 5.2 binding rules in [CC-models-reference.md](../configuration/CC-models-reference.md#claude-5x-lifecycle-defaults-and-fable-52-breaking-changes)) | ✓ | ✓ | ✘ from the dropped block onward |
 
-Two exceptions in the table's own text bear on CC: "Setting effort explicitly to the model's default is equivalent to omitting it and does not invalidate," and "On models that support per-message effort, an effort change carried in a `role: "system"` message inside `messages` leaves the cached prefix intact." Likewise, on Fable 5.1, Mythos 5.1, Fable 5, Mythos 5, Opus 5.5, Opus 4.8, Opus 5, Sonnet 5.5 and Haiku 5.5 a new system instruction can be appended as a `{"role": "system"}` message without invalidating the system or message caches (not on Sonnet 5), and the `inline-tools-2026-09-15` beta lets a tool be added mid-conversation without editing `tools`.
+Two exceptions in the table's own text bear on CC: "Setting effort explicitly to the model's default is equivalent to omitting it and does not invalidate," and "On models that support per-message effort, an effort change carried in a `role: "system"` message inside `messages` leaves the cached prefix intact." Likewise, on Fable 5.2, Mythos 5.2, Fable 5.1, Mythos 5.1, Fable 5, Mythos 5, Opus 5.5, Opus 4.8, Opus 5, Sonnet 5.5 and Haiku 5.5 a new system instruction can be appended as a `{"role": "system"}` message without invalidating the system or message caches (not on Sonnet 5), and the `inline-tools-2026-09-15` beta lets a tool be added mid-conversation without editing `tools`.
 
 **Effort: the two statements reconcile.** The API table says a top-level `output_config.effort` change "always invalidates message blocks", with the per-message exception above. The CC list says CC's mid-session effort changes keep the cache on Opus 5.5/Sonnet 5.5/Haiku 5.5/Fable 5.1 with an API key or Claude subscription ([CC prompt-caching docs][cc-caching]). CC uses exactly that exception: "On Opus 5.5, Sonnet 5.5, Haiku 5.5, and Fable 5.1, a beta header pairs with `output_config.effort` on `role: "system"` entries, either a system message or an entry with empty content" ([CC gateway guide][cc-gateway], "Beta header and body field pairs", accessed 2026-11-08). The [effort docs][effort] name that beta `mid-conversation-output-config-2026-07-01` and list per-message effort on Fable 5.1, Mythos 5.1, Opus 5.5, Opus 5, Sonnet 5.5 and Haiku 5.5 on the Claude API (fewer models on other platforms), so CC's list is a subset. Where CC doesn't send the per-message field — Bedrock, Google Cloud's Agent Platform, a Claude apps gateway, `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`, or a HIPAA configuration — an effort change invalidates as on other models ([CC prompt-caching docs][cc-caching], [CC gateway guide][cc-gateway]).
 
@@ -301,10 +301,13 @@ internals (PagedAttention, RadixAttention, quantization, offload/disaggregation)
 invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`), see
 [CC-model-provider-configuration.md](../configuration/CC-model-provider-configuration.md).
 
+**Fable 5.2 prefix check (documented, 2026-11-23).** On Fable 5.2 and Mythos 5.2 the API also runs a [prefix check](../configuration/CC-models-reference.md#claude-5x-lifecycle-defaults-and-fable-52-breaking-changes): changing `system`, `tools` or earlier messages and then sending thinking blocks back returns a 400 rather than a silent cache miss. The [migration guide][fable52-migration] says an append-only history, which this section's invalidation rules already favor, also keeps the prompt cache warm. The guide points to compaction on demand (beta) and mid-conversation tool and system changes as ways to keep history append-only. Claude Code manages history itself, so this affects only code that builds its own `messages` array.
+
 ## Sources
 
 | Source | Content |
 |---|---|
+| [Fable 5.2 migration guide][fable52-migration] | Prefix check, append-only history and cache note (read 2026-11-23) |
 | [Prompt caching docs][caching] | What's cached, prefix matching, breakpoints, TTL, minimum cacheable prefix per model, cache isolation, lifetime start, manual clear, ZDR, Batches interaction, API-level invalidation table — raw page text, re-verified 2026-10-26 |
 | [CC LLM gateway guide][cc-gateway] | Per-turn effort via `output_config.effort` on `role: "system"` entries (accessed 2026-11-08) |
 | [Effort docs][effort] | Per-message effort beta, header, supported models (accessed 2026-11-08) |
@@ -318,6 +321,7 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | [AWS Bedrock prompt-caching docs][bedrock-caching] | Per-model minimum cacheable prefix on Bedrock specifically (Fable/Mythos 5.x = 512 tokens, same as other platforms) (accessed 2026-10-15) |
 
 [caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+[fable52-migration]: https://platform.claude.com/docs/en/models/fable-5-2/migration-guide
 [pricing]: https://platform.claude.com/docs/en/about-claude/pricing
 [api]: https://platform.claude.com/docs/en/api/messages
 [cc-caching]: https://code.claude.com/docs/en/prompt-caching
