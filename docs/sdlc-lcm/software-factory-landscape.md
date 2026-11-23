@@ -2,7 +2,7 @@
 title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-18
 status: assess
 ---
@@ -149,6 +149,23 @@ Scion is explicitly scoped as a monorepo-specific replacement, not a general git
 rubric row is added here: this is vendor-reported internal tooling with no independently verifiable
 shipped artefact (unlike triagebot-action above) ([Anthropic][anthropic-scion]).
 
+Design lens — Lindenberg's *What Agents Can't Promise* reads one sentence of that post as the open
+question for any team running parallel agents. Anthropic says it could not replicate the usual global
+lock on a merge queue at this volume, so it invested in post-merge and pre-deploy testing and in
+automated bisect-and-revert pipelines (documented in the post; the post does not describe how they
+work or what triggers a revert). Lindenberg's point, a practitioner claim: a clean merge and a green
+main are separate checks, because two correct changes can combine into a failing build, so a green
+main becomes a state to restore rather than a guarantee. His suggested minimum, which is his own
+advice and not Anthropic's: CI moves a "last green" ref only after the combined tests pass, new agent
+work starts from that ref instead of the branch tip, reverts are automatic, capped and gated by a
+credential the agents do not hold. As one open-source illustration he cites the `git-ai` server and
+its `graft-verify` verifier ([README and VERIFY.md][git-ai], read 2026-11-23): the verifier tests the
+new tip and, on a pass, moves a green ref by compare-and-swap; on a failure it reruns once, then
+bisects, and reverts only if the operator enabled it. The repo has 1,005 stars, pushed 2026-11-22, and
+`gh api` reports its licence as unasserted (no licence identified), so treat it as an example of the
+pattern, not a recommendation (`gh api`, 2026-11-23). Source: LinkedIn, 2026-10-25, single source for the
+framing.
+
 **The 2026 company wave: named in-house or open-sourced pipelines.** Several companies now describe a named agent pipeline for their own code, each first-party (fetched 2026-11-14; Stripe Part 2 read 2026-11-19):
 
 - **Stripe Minions**: "Stripe’s homegrown coding agents. They’re fully unattended and built to one-shot tasks." Part 1 reported "over a thousand pull requests merged each week" that are "completely minion-produced"; Part 2 (published 2026-02-19) updates this to "Over 1,300 Stripe pull requests (up from 1,000 as of Part 1) merged each week", still human-reviewed with no human-written code. The agent loop runs on a fork of Block’s goose ([Part 1][minions]; [Part 2][minions2]). Vendor claim, self-reported; see the evidence subsection below for the pipeline's CI and review limits.
@@ -262,6 +279,8 @@ a verifiable shipped artefact; Flue has one (see above) but has not yet been rub
 | `gh api repos/humanlayer/advanced-context-engineering-for-coding-agents/commits?path=wsff.md`, 2026-09-30 | First commit 2026-07-22 (publish date); `contents/LICENSE` 404 (no license) |
 | [Cloudflare: Astro issue triage][cf-astro] | Concrete production case; Flue and triagebot-action, published 2026-08-04 |
 | [Anthropic: Redesigning source control][anthropic-scion] | Vendor-reported internal case: Scion/Antique, 2,500→30,000 merges/day, published 2026-10-13 |
+| [git-ai repo][git-ai] (`gh api`, 2026-11-23) | Green-ref / graft-verify contract; 1,005 stars, licence not asserted, pushed 2026-11-22 |
+| André Lindenberg — *What Agents Can't Promise* (LinkedIn, 2026-10-25; `linkedin.com/pulse/what-agents-cant-promise-green-main-honest-log-kept-andré-lindenberg-wxeef`) | Design lens: green main vs clean merge; last-green ref advice is practitioner framing (LinkedIn — not link-checked) |
 | `gh api repos/withastro/triagebot-action`, 2026-09-30 | `license: null`, 220 stars, pushed 2026-08-28 |
 | [flueframework.com][flue] | Vendor claim; site links a public GitHub repo |
 | [github.com/withastro/flue][flue-repo] | Apache-2.0, ~8,400 stars (`gh api`, 2026-09-30); not yet rubric-scored here |
@@ -293,6 +312,7 @@ HumanLayer's separate approval-gate SDK),
 [flue]: https://flueframework.com/
 [flue-repo]: https://github.com/withastro/flue
 [anthropic-scion]: https://www.anthropic.com/engineering/redesigning-source-control
+[git-ai]: https://github.com/feder-cr/git-ai/blob/main/doc/graft/VERIFY.md
 [hlyr-ace-xref]: ../cc-native/context-memory/CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
 [disciplines-graph]: agentic-engineering-disciplines-landscape.md
 [minions]: https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents

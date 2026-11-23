@@ -2,7 +2,7 @@
 title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 created: 2026-06-23
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-18
 status: assess
 ---
@@ -38,7 +38,7 @@ Each rung scaffolds the next; together they describe the environment built *arou
 | **Prompt engineering** | crafting the literal input text | GPT-3 era (Brown et al. 2020); Learn Prompting (Schulhoff) | Established, now "table stakes" |
 | **Context engineering** | filling the context window with the right tokens each step | **Tobi Lütke** (X, Jun 2025), amplified by Karpathy; **Anthropic** canonical 4-component framework ([Effective Context Engineering][anthropic-ce], Sep 2025); LangChain *write/select/compress/isolate* | Emerging→established |
 | **Harness engineering** | the full runtime environment (Instructions/State/Verification/Scope/Session-Lifecycle) | WalkingLabs ([learn-harness-engineering][walkinglabs], MIT); **OpenAI** independently ([Harness Engineering][openai-harness], Feb 2026, from the Codex effort); **Pydantic** ([The Harness Thesis][pydantic-thesis] + [What Makes a Good Harness][pydantic-good-harness], Jun 2026 — axioms: *disclosure* = just-in-time context/tools, *steering* = catch agent drift early) | Established in practice |
-| **Loop engineering** | the outer autonomous cycle (schedule/spawn/persist across many ticks) | no single coiner; [ReAct][react] = inner loop; Ralph loop (Geoffrey Huntley, 2025) and [loop-engineering][loop-eng] (Cobus Greyling, 2026 — 7 production patterns, `loop-audit`/`loop-init`/`loop-cost` CLIs, Claude Code/Grok/Codex starter kits) = concrete outer-loop references | Emerging / buzzword |
+| **Loop engineering** | the outer autonomous cycle (schedule/spawn/persist across many ticks) | term popularised in June 2026: earliest dated use found is [Addy Osmani's post][osmani-loop] (2026-06-07), which credits the framing to Peter Steinberger and Boris Cherny (Anthropic) rather than claiming the term — see [§ Loop engineering in practice](#loop-engineering-in-practice); [ReAct][react] = inner loop; Ralph loop (Geoffrey Huntley, 2025) and [loop-engineering][loop-eng] (Cobus Greyling, 2026 — 7 production patterns, `loop-audit`/`loop-init`/`loop-cost` CLIs, Claude Code/Grok/Codex starter kits) = concrete outer-loop references | Emerging / buzzword |
 | **Graph engineering** | wiring already-loop-shaped specialized agents (planner/implementer/reviewer/tester) into a topology — each node is still a loop; edges carry state, routing, and the gate the handoff must pass | **Hamel Husain** (X, `x.com/HamelHusain/status/2078346425621237935` — not fetchable, HTTP 402; verified via [Turing Post][turingpost-graph], "Loop Engineering Is Dead. Enter Graph Engineering.", published within hours of Peter Steinberger's question on 2026-07-18, `x.com/steipete/status/2078277297791189132`) | Emerging / contested naming — [Turing Post][turingpost-graph] found no confirmed Microsoft/Stanford/Anthropic adoption of a "graph engineering" discipline |
 | **Flow engineering** | a structured multi-stage pipeline (reflect → generate → test → fix → validate) | **Itamar Friedman** / CodiumAI, [AlphaCodium][alphacodium] (arXiv 2401.08500, Jan 2024; +2.3× pass@5) | Established in code-gen |
 | **Spec engineering / SDD** | machine-readable specs as the agent's source of truth | GitHub Spec-Kit (Sep 2025), Kiro (2025); [Fowler on SDD tools][fowler-sdd] | Emerging→mainstream |
@@ -57,6 +57,30 @@ NEW vs current repo coverage: the Anthropic context-engineering and OpenAI harne
 search over whole harnesses; results and caveats live in
 [weco-aide-recursive-self-improvement-analysis.md § Harness search results](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md#harness-search-results).
 
+### Loop engineering in practice
+
+One cluster, not seven corroborations: the sources below date from 2026-06-07 to 2026-07-22, restate Osmani's post or each other, and most sell something (noted per source). Only the Claude Code article documents shipped features; the rest are vendor guidance or practitioner claims.
+
+**Provenance.** [Osmani][osmani-loop] (2026-06-07, practitioner) defines a loop as a recursive goal and the job as designing the system that prompts the agent; he credits Peter Steinberger and Cherny for the framing and does not name a coiner. One secondary source has him posting the day after a Steinberger statement; an earlier, undated Steinberger statement is reported secondhand and was not reached. swyx's "Loopcraft: the art of stacking loops" (Latent Space, 2026-06-12; search snippet only, no working URL, original not read) is a parallel framing: stack loops. [LangChain][lc-loop] (2026-06-16), [Kilo][kilo-loop] (2026-06-10), [Data Science Dojo][dsd-loop] (2026-06-24), [codecentric][cc-loop] (2026-07-05, which names Osmani as coiner), [IBM][ibm-loop] (2026-07-17) and [Augment][augment-loop] (2026-07-22) restate it; IBM and Data Science Dojo name no coiner. Huntley's Ralph loop (2025) predates all of these; Greyling's repo (created 2026-06-09, after Osmani's post) is a later concrete reference (row above).
+
+**Anatomy.** Vendor-guidance consensus: trigger, execution, verification, outcome, improvement ([Augment][augment-loop]); goal, action, observation, adjustment ([IBM][ibm-loop]). [LangChain][lc-loop] names four stacked loops: agent, verification (grader sends failures back), event-driven (schedule/webhook), hill-climbing (trace analysis updates prompts, tools and graders). [Osmani][osmani-loop] lists automations, worktrees, skills, connectors, sub-agents and persistent state (a markdown file or board). The author's own canvas ([Lindenberg's loop-engineering-canvas][lindenberg-canvas], 36 stars as of 2026-11-23, NOASSERTION licence, one-author template, not adoption-backed) adds explicit Limits (budget, max iterations, no-progress detection) and Observability fields; use as a checklist, not a standard.
+
+**Loop vs harness vs context.** [codecentric][cc-loop] (practitioner/consultancy claim): context supplies the right tokens, the harness adds guardrails (feedforward guides, feedback sensors), the loop automates repetition on top; each layer inherits the weaknesses below it, so fix context, then harness, then loop. Definitions stay in the table above; this is a sequencing heuristic, consistent with the nesting line below it.
+
+**What Anthropic documents (first-party).** [Getting started with loops][claude-loops] (Delba de Oliveira and Michael Segner, 2026-06-30) names four loop types: "Turn-based", "Goal-based (/goal)", "Time-based (/loop and /schedule)" and "Proactive loops" (event or schedule, no real-time human). For `/goal` an evaluator model checks the stop condition, with a maximum turn count; deterministic criteria work best. Feature detail lives in [CC-goal-analysis.md][cc-goal], [CC-loop-cron-analysis.md][cc-loop-cron] and [CC-web-scheduled-tasks-analysis.md][cc-sched]; not restated here.
+
+**Best practices (vendor guidance unless noted).**
+
+- **Separate maker and checker:** a second agent with fresh context reviews ("Loops that write code need loops that check it", Anthropic); Osmani and IBM say the same. Treat "done" as a claim to verify.
+- **Stop conditions and budgets:** write a goal checkable by a machine, with a turn or iteration cap; Anthropic adds scripts for deterministic steps, match the primitive and model to the task, pilot before large fan-out, and set schedule intervals to how often the watched data changes. [Data Science Dojo][dsd-loop] lists circuit breaker, heartbeat and bounded execution among ten patterns (vendor listing).
+- **State outside the loop:** progress in a file or task board so each run starts informed ([Osmani][osmani-loop], [IBM][ibm-loop], [codecentric][cc-loop]).
+- **Human checkpoints by risk, not as a fallback;** approval for sensitive actions, and human review of harness changes ([Augment][augment-loop], [LangChain][lc-loop]).
+- **Feed traces back:** improve prompts, tests and graders from run traces ([LangChain][lc-loop], [Augment][augment-loop]); Anthropic: encode each missed standard into the system.
+- **Start narrow:** pick one task where you are the bottleneck, run it, watch where it stalls ([Anthropic][claude-loops], [Kilo][kilo-loop]).
+- **Risks:** thrashing, overfitting to tests, context drift ([Kilo][kilo-loop]); comprehension debt and uncritical acceptance of output ([Osmani][osmani-loop]); a critic notes a loop around an LLM call is "just a while loop" ([Augment][augment-loop], reporting it). Augment's cost claim for its own review loop is a vendor claim, unmeasured here.
+
+**Vendor stakes:** IBM (Bob is named among the agents), LangChain (LangSmith), Augment (Cosmos), Kilo (Kilo Code), codecentric (consulting) and Data Science Dojo (bootcamps) each promote a product; Anthropic's article describes its own product. No Linear-specific loop material was found in these sources beyond Osmani's passing mention of a Linear board as persistent state, so none is added.
+
 **Design lens — graph engineering names the wiring, not new model behavior:** André Lindenberg's *From Loops to Graphs* (LinkedIn, 2026-07-25; `linkedin.com/pulse/from-loops-graphs-andré-lindenberg-m8jae`) reads the term above against the software factories already shipping — StrongDM, OpenAI's Symphony, Stripe's Minions, Ramp's Inspect, WorkOS's Project Horizon — as graphs that were "always there": intake, builder, review, test and incident-feedback nodes wired by edges, each edge only as trustworthy as the gate sitting on it. "A graph's throughput is set by its narrowest verified edge, not by its widest generating node." Deeper coverage of the same human-gate convergence (spec and merge as the two gates that hold, Dex Horthy's `wsff.md` dissent on why lights-off factories degrade) already lives in [software-factory-landscape.md §(c)][software-factory] — this entry is the ladder-rung framing, not a restatement.
 
 **Harness engineering's Verification axiom — three 2026 data points on its cost (design lens, Lindenberg's *Artificial Engineering*):** Dan Shapiro's zero-indexed six-level framework ([*The Five Levels*][shapiro-five-levels], 2026-01-23) names Level 3 as the rung most teams get stuck on — "Your life is diffs," his own words for the agent generating while a human reviews every line — and Level 4 ("Then you leave for 12 hours, and check to see if the tests pass") as the one the Verification axiom actually describes — machine verification standing in for unread diffs. The jump is not free: METR's randomized controlled trial (16 experienced open-source developers, 246 real tasks, [metr.org][metr-rct], 2025-07-10) found developers *estimated* AI had made them 20% faster after the fact, while the clock measured them 19% *slower*. [Faros AI][faros-whiplash]'s own published telemetry (22,000 developers, two years, 4,000 teams — fetched 2026-09-30) independently shows the same shape at the fleet level: +242.7% incidents per PR and +54% bugs per developer accompany high AI adoption (Faros measures adoption intensity, not Shapiro's levels directly). Lindenberg reads that fleet-level telemetry as the shadow of teams staying parked on Level-3 review load instead of building a Level-4 verifier (Lindenberg, *The Most Expensive Rung on the Ladder*, LinkedIn, 2026-08-08, `linkedin.com/pulse/most-expensive-rung-ladder-andré-lindenberg-l2oqe`; *The Half We Don't Budget For*, LinkedIn, 2026-08-01, `linkedin.com/pulse/half-we-dont-budget-andré-lindenberg-pinxe`).
@@ -64,6 +88,10 @@ search over whole harnesses; results and caveats live in
   **Specula** (renamed Specular, repo `specular-org/Specular`, checked 2026-11-22; [arXiv:2607.25333][specula-arxiv], Cheng et al., 9 authors, Jul–Aug 2026 v2 — already cited for its security-bug-finding angle in [agent-code-analysis-landscape.md][acal], not restated here) is a concrete Level-4 verifier for concurrent/distributed system code: coding agents write TLA+ specs, instrument the real code to collect execution traces, and pair trace-conformance checking with invariant checking so neither an overfit model nor an under-specified one passes alone. Verified directly from the paper: 48 OSS projects (36 distributed, 12 concurrent; 7 languages; 2K–95K LoC), 249 bugs found (207 new, 42 previously known), 89 reported to maintainers of which 68 are confirmed and 24 fixed; cost per system check $19–$168 (median $57; 1.43–9.86 hours); on a five-system subset (Autobahn, CometBFT, libspdm, MongoDB, sofa-jraft) scored against its own SysMoBench-derived quality metric, specification quality holds at 93% overall with Claude Sonnet-4.6 but falls to 47% with Haiku-4.5 — the verifier's own reliability is model-dependent. The companion benchmark [SysMoBench][sysmobench-arxiv] (Cheng et al., arXiv:2509.23130, Sep 2025 – Jan 2026 v3) independently scores AI-generated TLA+ models against syntax/runtime/conformance/invariant metrics across eleven real system artifacts; its own write-up ([SIGOPS blog][sysmobench-writeup], fetched 2026-09-30) confirms the newsletter's aggregate — "even the latest leading LLMs average around 46% on conformance and 41% on invariant" — with three named failure modes: a ZooKeeper vote-storage model that unions old and new votes where the real system's map overwrites the previous one, a ZooKeeper leader-election model that fuses two sequential steps into one guarded atomic action, and a model that reproduces the Raft paper's own appendix rather than Etcd's actual implementation.
 
   **Bend 2** ([bendlang/bend][bend-repo], Apache-2.0, 23,165★/713 forks — `gh api`, 2026-09-30) is a harder Level-4 bet: its own README poses "how can you trust AI code, without reading it?" and answers that its compiler "guarantees" a declared `LAWS.bend` rule always holds "by demanding mathematical proof whenever your code is edited" (README fetched via `gh api repos/bendlang/bend/readme`, 2026-09-30) — Lindenberg's framing reads that as rejecting sampling-based verification (tests, review) in favor of a categorical gate. Its Hacker News launch thread ([item 49746163][bend-hn], 616 points/327 comments as re-verified 2026-09-30) carries the sharpest objection in public — "the issue is I'll have to vibecode all the laws and the laws could be wrong" (user garrisonj) — because the laws are still written by someone, so Bend hardens what was specified without closing the completeness gap. Martin Kleppmann's cost anchor for this style of verification ([kleppmann.com][kleppmann-sel4], 2025-12-08) is the seL4 microkernel: as of 2009, 8,700 lines of C required 20 person-years and 200,000 lines of Isabelle proof — 23 lines of proof for every line of implementation (Lindenberg, *Laws Instead of Diffs*, LinkedIn, 2026-09-19, `linkedin.com/pulse/laws-instead-diffs-andré-lindenberg-wxlmf`).
+
+**Design lens — "pointable" work (single-source, practitioner claim; Lindenberg, *Point It at Something*, LinkedIn, 2026-11-21, `linkedin.com/pulse/point-something-which-work-agent-can-finish-alone-andré-lindenberg-sfm6e`):** a job is safe to leave an agent on alone when an original it cannot edit judges the result; checks are ranked by who could have fooled them (agent-written tests weakest, an uneditable original strongest). The one measured example is [rust-anything][rust-anything], whose README (MIT, created 2026-11-16, 8,615★ in about a week via `gh api`, 2026-11-23; adoption beyond stars not shown) reports 15,861 of 17,224 recorded Prettier runs fully in Rust, all 17,224 matching, 7.9% handed back to Prettier. Those are the project's own figures; the ladder framing itself is not independently corroborated. The article was not re-fetched in this pass (LinkedIn); its content rests on the triage read of 2026-11-23.
+
+**Design lens — three kinds of debt (Lindenberg, *Comprehension Debt: What a Codebase Map Can Pay Back*, LinkedIn, 2026-11-07, `linkedin.com/pulse/comprehension-debt-what-codebase-map-can-pay-back-andré-lindenberg-x10rf`):** split the debt into code (technical), people's shared understanding (cognitive) and unwritten goals (intent), and buy a different fix for each. The split is corroborated outside the newsletter: [Storey, arXiv:2603.22106][storey-debt] (2026-03, v4 2026-04) proposes a "Triple Debt Model" of technical, cognitive and intent debt; the Thoughtworks Radar lists [Codebase cognitive debt][tw-cognitive] (Vol. 35, 15 April 2026, ring Caution; no longer on the current edition); [Osmani's Comprehension Debt essay][osmani-comp] (2026-03) is the practitioner origin of the term as cited here, though one source credits another coiner (unresolved). It connects to the loop risk above: unattended loops grow comprehension debt.
 
 ## §2. The "-driven development" ladder
 
@@ -96,6 +124,17 @@ By 2026 every major coding tool shipped an SDD flavor. The frameworks: [github/s
 ## Reference implementation: open-agentic-coding-harness
 
 qte77's sibling project [open-agentic-coding-harness][oach] implements the whole stack — `ralph-loop` (Layers 2–3: TDD + loop), `claude-code-plugins` (Layer 1: harness), `cc-recursive-team-mode` (Layer 3: teams), `coding-harness-eval` (Layer 4: deterministic EDD), and `LEARNINGS.md` refeeding (Layer 5: compound) — under "faithful adoption + measurability" ("you can't trust a harness you can't measure"). Per cross-repo routing, deep product analysis stays in that repo; here it is cited as the reference implementation of the disciplines above.
+
+## Rollout and governance (vendor guidance)
+
+The ladders above cover how to build; one vendor guide adds how to hand an agent real autonomy. [Databricks' "Guide to Agentic Systems and AI Agents"][databricks-guide] (undated page, © 2026; it promotes the vendor's own agent product, so read as vendor guidance, not measured evidence) recommends, in its own words paraphrased:
+
+- **Shadow before autonomy** — a human watches the agent's decisions for roughly the first several hundred workflow runs before it acts alone.
+- **Test before scaling** — test first, because a pilot at 100 runs a day may meet new failure modes at 10,000. The page says to test before scaling; it does not prescribe a re-test at every step.
+- **Regression-test before a model swap** — replay a representative sample of historical tasks before promoting a new model to production.
+- **A named human owner per workflow** — one person accountable for outcomes.
+
+These map onto the Layer 4 evals (regression suite) and the human-approval gates above; the shadow period and the named owner are the parts this landscape did not state. The guide also quotes an analyst forecast about future autonomous decisions, which is omitted here as unnamed and unverified.
 
 ## Cross-References
 
@@ -137,6 +176,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | André Lindenberg — *Laws Instead of Diffs* (LinkedIn, 2026-09-19; `linkedin.com/pulse/laws-instead-diffs-andré-lindenberg-wxlmf`) | Design lens: proof-gated compiler as a harder Level-4 bet (LinkedIn — not link-checked) |
 | [bendlang/bend][bend-repo] | Apache-2.0, 23,165★ (`gh api`, 2026-09-30); proof-gated language, HN launch |
 | [Bend Hacker News thread][bend-hn] | 616 points/327 comments (2026-09-30); "vibecode all the laws" skepticism quoted |
+| [Databricks — Guide to Agentic Systems and AI Agents][databricks-guide] | Vendor guidance: shadow period, test before scaling, regression tests before a model swap, named owner per workflow (read 2026-11-23) |
 | [Martin Kleppmann — AI and formal verification][kleppmann-sel4] | seL4: 8,700 LOC / 20 person-years / 200,000 Isabelle lines (2025-12-08) |
 | [AlphaCodium (arXiv 2401.08500)][alphacodium] | Flow engineering; Itamar Friedman / CodiumAI |
 | [ReAct (arXiv 2210.11610)][react] | Inner-loop foundation |
@@ -145,6 +185,20 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | [Hamel Husain — Your AI Product Needs Evals][husain-evals] | EDD primary practitioner reference |
 | [Martin Fowler — SDD tools][fowler-sdd] | Spec-driven development survey |
 | [Kaggle/Google — The New SDLC With Vibe Coding][kaggle-sdlc] | Vibe-coding→agentic-engineering synthesis; *Agent = Model + Harness* (Osmani, Saboo, Kartakis) |
+| [Addy Osmani — Loop Engineering][osmani-loop] | Practitioner post (2026-06-07): loop as recursive goal; blocks; maker/checker split; comprehension-debt warning; earliest dated use found |
+| [Anthropic — Getting started with loops][claude-loops] | First-party (2026-06-30): four loop types by hand-off, `/goal`, `/loop`, `/schedule`, token-budget guidance |
+| [LangChain — The Art of Loop Engineering][lc-loop] | Vendor (2026-06-16): four stacked loops; sells LangSmith |
+| [IBM Think — Loop engineering][ibm-loop] | Vendor (2026-07-17): goal/action/observation/adjustment; names IBM Bob among the agents |
+| [codecentric — Loop, harness, context engineering][cc-loop] | Consultancy (2026-07-05): layer ordering; names Osmani as coiner |
+| [Data Science Dojo — Loop engineering design patterns][dsd-loop] | Vendor (2026-06-24): ten patterns incl. circuit breaker, heartbeat; sells bootcamps |
+| [Augment — What is loop engineering][augment-loop] | Vendor (2026-07-22, updated 2026-09-05): five stages, risk-based checkpoints; sells Cosmos |
+| [Kilo — What is loop engineering][kilo-loop] | Vendor (2026-06-10): core loop, failure modes; sells Kilo Code |
+| [alindnbrg/loop-engineering-canvas][lindenberg-canvas] | Author's one-page template; 36 stars, NOASSERTION (`gh api`, 2026-11-23) |
+| André Lindenberg — *Point It at Something* (LinkedIn, 2026-11-21; slug in the design-lens paragraph) | Design lens: pointable-work trust ladder; single-source (LinkedIn, not link-checked) |
+| André Lindenberg — *Comprehension Debt* (LinkedIn, 2026-11-07; slug in the design-lens paragraph) | Design lens: code/cognitive/intent debt split |
+| [Storey — Technical to Cognitive and Intent Debt (arXiv:2603.22106)][storey-debt] | Triple Debt Model; abstract page read 2026-11-23 |
+| [Thoughtworks Radar — Codebase cognitive debt][tw-cognitive] | Radar Vol. 35 technique entry, 15 April 2026, Caution |
+| [Osmani — Comprehension Debt (Medium)][osmani-comp] | Practitioner essay, March 2026; read via search result only |
 | [cobusgreyling/loop-engineering][loop-eng] | Concrete loop-engineering reference — production patterns, readiness/scaffold/cost CLIs, CC/Grok/Codex starter kits |
 | [GitHub Spec-Kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [Kiro specs][kiro] | SDD frameworks |
 | [qte77/open-agentic-coding-harness][oach] | Reference implementation (sibling repo) |
@@ -207,3 +261,20 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [software-factory]: software-factory-landscape.md
 [harnessflow]: https://arxiv.org/abs/2611.06254
 [meta-harness]: https://github.com/stanford-iris-lab/meta-harness
+[databricks-guide]: https://www.databricks.com/blog/agentic-systems-guide
+[osmani-loop]: https://addyosmani.com/blog/loop-engineering/
+[claude-loops]: https://claude.com/resources/articles/getting-started-with-loops
+[lc-loop]: https://www.langchain.com/blog/the-art-of-loop-engineering
+[ibm-loop]: https://www.ibm.com/think/topics/loop-engineering
+[cc-loop]: https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained
+[dsd-loop]: https://datasciencedojo.com/blog/loop-engineering-design-patterns/
+[augment-loop]: https://www.augmentcode.com/blog/what-is-loop-engineering-and-how-are-leading-software-engineering-teams-using-it
+[kilo-loop]: https://kilo.ai/articles/what-is-loop-engineering
+[lindenberg-canvas]: https://github.com/alindnbrg/loop-engineering-canvas
+[storey-debt]: https://arxiv.org/abs/2603.22106
+[tw-cognitive]: https://www.thoughtworks.com/en-us/radar/techniques/codebase-cognitive-debt
+[osmani-comp]: https://medium.com/@addyosmani/comprehension-debt-the-hidden-cost-of-ai-generated-code-285a25dac57e
+[cc-goal]: ../cc-native/sessions/CC-goal-analysis.md
+[cc-loop-cron]: ../cc-native/configuration/CC-loop-cron-analysis.md
+[cc-sched]: ../cc-native/ci-remote/CC-web-scheduled-tasks-analysis.md
+[rust-anything]: https://github.com/erkamyaman/rust-anything

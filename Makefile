@@ -27,7 +27,7 @@ LOCAL_BIN          := $(HOME)/.local/bin
 # PYTHON: interpreter for the stdlib-only site and doc-graph helpers (no deps, so no uv needed)
 PYTHON             ?= python3
 # Ratchet for docs in no topic hub (plan 0015 X2): only ever lower it, down to 0.
-MAX_UNHUBBED       ?= 3
+MAX_UNHUBBED       ?= 0
 
 # Markdown lint scope — root governance docs + all docs/ (single source for check_docs + autofix)
 DOC_LINT_GLOB      := "README.md" "CHANGELOG.md" "CONTRIBUTING.md" "CLAUDE.md" "AGENTS.md" "AGENT_LEARNINGS.md" "AGENT_REQUESTS.md" "docs/**/*.md"
