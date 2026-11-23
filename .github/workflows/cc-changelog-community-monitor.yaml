@@ -39,9 +39,10 @@ jobs:
 
           cat /tmp/monitor-stderr.txt >&2
 
-          # Show the report (incl. sources skipped for unset credentials) in the
-          # run summary, and each skip as an annotation, so green doesn't hide them (#726)
-          sed -n 's/^WARNING: Skipping \(.*\)$/::warning::Skipped source: \1/p' /tmp/monitor-stderr.txt
+          # Show the report (incl. skipped or failed sources) in the run summary, and
+          # each skip or failed fetch as an annotation, so green doesn't hide them (#726)
+          sed -n -e 's/^WARNING: Skipping \(.*\)$/::warning::Skipped source: \1/p' \
+            -e 's/^WARNING: Failed to fetch \(.*\)$/::warning::Failed source: \1/p' /tmp/monitor-stderr.txt
           cat /tmp/report.md >> "$GITHUB_STEP_SUMMARY"
 
           if [ $EXIT_CODE -eq 1 ]; then

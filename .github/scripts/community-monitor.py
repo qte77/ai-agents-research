@@ -40,6 +40,7 @@ SOURCES: list[dict[str, str]] = [
     },
 ]
 
+
 def fetch_and_extract_source(source: dict[str, str]) -> list[dict[str, str]]:
     """Fetch a markdown source and extract its entries."""
     content = fetch_text(source["url"])
