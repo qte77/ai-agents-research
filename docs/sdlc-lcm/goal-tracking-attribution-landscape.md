@@ -108,7 +108,7 @@ The classification is a judgment call per team; two reviewers can disagree, so r
 
 **Adjacent and orthogonal concepts** (all well known; each differs from core/context as noted):
 
-- *Zone to Win* (Moore, 2015, [author page][moore-ztw]): adjacent, from the same author. Four zones (Performance, Productivity, Incubation, Transformation), each with its own operating model and metrics; it organizes by operating mode where core/context classifies by differentiation.
+- *Zone to Win* (Moore, [author page][moore-ztw]): adjacent, from the same author. Four zones (Performance, Productivity, Incubation, Transformation), each with its own operating model and metrics; it organizes by operating mode where core/context classifies by differentiation.
 - *Wardley mapping* ([Learn Wardley Mapping][wardley]): adjacent. Places capabilities on an evolution axis (Genesis, Custom, Product, Commodity), which models the "core becomes context as it commoditizes" movement explicitly rather than as a single slide.
 - *Jobs to be done* ([HBR, Christensen et al., 2016][jtbd]): orthogonal. Classifies work by the customer need it serves, not by whether it differentiates; useful to decide what is core, not a substitute for the classification.
 - *Build vs buy / outsourcing*: the action layer of the context quadrants (Moore's own "outsource" lever is one instance); it is a decision, not a classification, so no separate source is cited.
