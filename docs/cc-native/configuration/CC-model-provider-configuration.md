@@ -156,7 +156,7 @@ Infomaniak (Swiss host) runs an **OpenAI-compatible** inference API serving open
 
 ```bash
 # product_id is per-organization: GET https://api.infomaniak.com/1/ai (Authorization: Bearer $API_TOKEN)
-# v2 (current) OpenAI-compatible base URL:
+# v2 (current) OpenAI-compatible base URL (per models.dev and a third-party blog; not checked in Infomaniak's developer docs):
 https://api.infomaniak.com/2/ai/${PRODUCT_ID}/openai/v1
 ```
 
@@ -176,7 +176,7 @@ The v2 base URL form is also listed by the third-party catalog [models.dev][info
 
 The page also lists re-rankers (`BAAI/bge-reranker-v2-m3`, `Qwen/Qwen3-Reranker-0.6B`), embeddings (`Qwen/Qwen3-Embedding-8B`, Bge Multilingual Gemma2, All MiniLM L12 v2), Whisper V3 transcription and image generation. The catalog moves: the older `qwen3` / `llama3` / `mistral3` / `gemma3n` ids in this doc's earlier recipe no longer match this list, and models.dev (10 models at the same read) lacked Qwen3.8-27B, so check the vendor page before pinning an id.
 
-**Pricing (vendor prices page, 2026-11-23, CHF per 1M tokens, excluding VAT, input / output).** Gemma 4 31B 0.20 / 0.40; Ministral 3 14B 0.30 / 0.40; Kimi K2.6 0.60 / 3.00; Mistral Small 4 0.20 / 0.75; Qwen3.5 397B 0.80 / 3.60; Apertus 70B 0.70 / 2.50; Qwen3.8 27B 0.40 / 3.00. Billing is per token, invoiced monthly; Whisper V3 is CHF 0.006 per minute. The vendor offers 1M free credits; the page does not state an expiry, and a valid payment card is required to open the account. models.dev (third party) lists different USD prices for some of the same models, so treat vendor CHF prices as the reference.
+**Pricing (vendor prices page, 2026-11-23, CHF per 1M tokens, excluding VAT, input / output).** Gemma 4 31B 0.20 / 0.40; Ministral 3 14B 0.30 / 0.40; Kimi K2.6 0.60 / 3.00; Mistral Small 4 0.20 / 0.75; Qwen3.5 397B 0.80 / 3.60; Apertus 70B 0.70 / 2.50; Qwen3.8 27B 0.40 / 3.00. Billing is per token, invoiced monthly; Whisper V3 is CHF 0.006 per minute. The vendor offers 1M free credits; the page does not state an expiry, and the prices page says a valid payment card is required. Earlier versions of this doc listed Llama-family models and an Infomaniak build of TranslateGemma-27B; the 2026-11-23 models page lists neither. models.dev (third party) lists different USD prices for some of the same models, so treat vendor CHF prices as the reference.
 
 **Data location (vendor claims).** The page says infrastructure is in Switzerland, that queries are not stored or used for training, and that the service complies with the Swiss FADP and GDPR (Federal Act on Data Protection; General Data Protection Regulation).
 
@@ -189,10 +189,10 @@ Snapshot of providers with free or trial tiers, for routing CC (via proxy) or si
 
 | Provider | Free Tier | Example Model (API ID) | Context | Output | Tools | Notes / Limit |
 | --- | --- | --- | --- | --- | --- | --- |
-| **gemini** | Truly free | `gemini-2.0-flash` | 1M | 8K | Yes | 15 RPM, ~1.5K RPD. **Re-check 2026-11-23:** the [rate-limits page][rl-gemini] gives no free-tier numbers for this model; read current limits in AI Studio |
+| **gemini** | Free tier (Feb 2026 snapshot; unconfirmed 2026-11-23) | `gemini-2.0-flash` | 1M | 8K | Yes | 15 RPM, ~1.5K RPD (Feb 2026). **Re-check 2026-11-23:** the [rate-limits page][rl-gemini] gives no free-tier numbers for this model; read current limits in AI Studio |
 | **github** | Truly free | `gpt-4.1-mini` | 1M | 32K | Yes | 15 RPM, ~150 RPD |
-| **cerebras** | Truly free | `gpt-oss-120b` | 128K | 8K | Yes | 30 RPM, 1M TPD. **Re-check 2026-11-23:** the [rate-limits page][rl-cerebras] now shows a Free Trial of 5 RPM and 1M tokens/day for `gpt-oss-120b`, with $5 credits expiring 30 days after grant |
-| **groq** | Truly free | `llama-3.3-70b-versatile` | 131K | 32K | Yes | 30 RPM, 1K RPD. **Re-check 2026-11-23:** the [limits page][rl-groq] showed no free-plan table; not confirmed |
+| **cerebras** | Free trial (2026-11-23) | `gpt-oss-120b` | 128K | 8K | Yes | 5 RPM, 1M TPD on the free trial ([rate-limits page][rl-cerebras], 2026-11-23; was 30 RPM in Feb 2026); $5 credits after adding a verified payment method, expiring 30 days after grant |
+| **groq** | Free plan (Feb 2026 snapshot; unconfirmed 2026-11-23) | `llama-3.3-70b-versatile` | 131K | 32K | Yes | 30 RPM, 1K RPD (Feb 2026). **Re-check 2026-11-23:** the [limits page][rl-groq] showed no free-plan table; not confirmed |
 | **mistral** | Truly free | `open-mistral-nemo` | 128K | 4K | Yes | 1 RPS, 1B tokens/mo |
 | **openrouter** | Truly free | `qwen/qwen3-next-80b-a3b-instruct:free` | 262K | 8K | Yes | 20 RPM, 50 RPD. **Re-check 2026-11-23:** [limits page][rl-openrouter] confirms 20 RPM / 50 RPD under 10 purchased credits, 1000 RPD from 10 credits |
 | **cohere** | Truly free | `command-a-03-2025` | 256K | 8K | Yes | 20 RPM, 1K calls/mo |
@@ -499,7 +499,7 @@ Changelog entries unless marked; see [CC-env-vars-reference](CC-env-vars-referen
 | **Enterprise cloud** | Bedrock / Vertex / Foundry | High (cloud config) |
 | **Non-Anthropic models in CC** | LiteLLM or claude-code-proxy | Medium (proxy) |
 | **Per-task local routing / cost control** | Claude Code Router (CCR) | Medium (npm + `ccr start`) |
-| **EU / Swiss data sovereignty, OSS models** | Infomaniak AI (+ proxy for CC; native in OpenCode) | Medium (OpenAI→Anthropic proxy) |
+| **Swiss-hosted data (vendor claim), OSS models** | Infomaniak AI (+ proxy for CC; native in OpenCode) | Medium (OpenAI→Anthropic proxy) |
 | **Free or trial inference tiers** | [Free-tier provider table](#free-tier-and-oss-inference-providers) (+ proxy for CC) | Medium (OpenAI→Anthropic proxy) |
 | **Free-tier quota harvesting (no API key)** | CLIProxyAPI | Medium (OAuth setup + local server) |
 | **Multi-tool gateway + token compression** | 9Router | Medium (local server + config) |

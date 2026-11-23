@@ -112,7 +112,7 @@ Checked 2026-11-23 against the repo's [authentication guide][gemini-auth] and [c
 - **Google Cloud.** Vertex AI is a documented auth method with three credential options: Application Default Credentials via `gcloud`, a service-account JSON key (`GOOGLE_APPLICATION_CREDENTIALS`) and a Google Cloud API key (`GOOGLE_API_KEY`). All need `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`; set any Gemini or Google API key variables aside first, as the guide says.
 - **Google AI Studio.** The other direct route is a Gemini API key in `GEMINI_API_KEY`.
 - **Gateway or proxy.** `GOOGLE_GEMINI_BASE_URL` (Gemini API key auth) and `GOOGLE_VERTEX_BASE_URL` (Vertex auth) override the endpoint; the value must be HTTPS unless it points at localhost. These redirect to a proxy that speaks the Gemini or Vertex API, not an OpenAI-compatible one.
-- **Azure, AWS Bedrock, OpenRouter, Infomaniak.** No documented route. The authentication guide (read in full for method headings and env vars) and a search of the configuration reference for `BASE_URL` found none; this is absence in those two pages only, not in the whole docs tree. Reaching these backends would need a third-party translation layer, which is outside the vendor docs.
+- **Azure, AWS Bedrock, OpenRouter, Infomaniak.** No route found in the two pages read. The authentication guide (read in full for method headings and env vars) and a search of the configuration reference for `BASE_URL` found none; this is absence in those two pages only, not in the whole docs tree. If no route exists, reaching these backends would take a third-party translation layer outside the vendor docs.
 
 ## Adoption Decision
 
