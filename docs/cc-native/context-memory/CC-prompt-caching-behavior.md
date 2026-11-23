@@ -264,7 +264,7 @@ The list above is CC's own framing. The [prompt caching docs][caching] document 
 | Thinking parameters (mode, `budget_tokens` in extended mode) | model-specific | model-specific | ✘ |
 | Effort setting (`output_config.effort`) | model-specific | model-specific | ✘ |
 | Non-tool results passed to requests with thinking | ✓ | ✓ | ✓ on Opus 4.5+, Sonnet 4.6+, Haiku 5.5 (thinking blocks preserved); ✘ on earlier Opus/Sonnet and Haiku through 4.5 |
-| Dropped thinking blocks (Fable 5.1, Mythos 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5) | ✓ | ✓ | ✘ from the dropped block onward |
+| Dropped thinking blocks (blocks the receiving model cannot read; readable blocks passed back unchanged keep the cache; Fable 5.2 binding rules in [CC-models-reference.md](../configuration/CC-models-reference.md#claude-5x-lifecycle-defaults-and-fable-52-breaking-changes)) | ✓ | ✓ | ✘ from the dropped block onward |
 
 Two exceptions in the table's own text bear on CC: "Setting effort explicitly to the model's default is equivalent to omitting it and does not invalidate," and "On models that support per-message effort, an effort change carried in a `role: "system"` message inside `messages` leaves the cached prefix intact." Likewise, on Fable 5.2, Mythos 5.2, Fable 5.1, Mythos 5.1, Fable 5, Mythos 5, Opus 5.5, Opus 4.8, Opus 5, Sonnet 5.5 and Haiku 5.5 a new system instruction can be appended as a `{"role": "system"}` message without invalidating the system or message caches (not on Sonnet 5), and the `inline-tools-2026-09-15` beta lets a tool be added mid-conversation without editing `tools`.
 
