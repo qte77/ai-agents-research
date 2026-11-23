@@ -364,12 +364,14 @@ but serves the same posts through its board RSS feed.
 - Separately, Microsoft introduced a Microsoft 365 admin center setting on 2026-04-03 letting
   EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft
   365 apps — an opt-in setting, off by default, with no preview label on the page documenting it
-  [eudb-subprocessor].
+  [eudb-subprocessor]. The setting's own page qualifies that: it "is enabled by default for tenants
+  in the EU, EFTA, and UK that were created after March 25, 2026"; older tenants are asked to check
+  theirs [eudb-apps-setting].
 - **That default changes on 2026-12-09** (Microsoft Learn, page dated 2026-11-20, read 2026-11-23)
   [eudb-apps-setting]. The "All users for Microsoft 365 apps only" option goes away, and the
   remaining options become "All users", "No users" and "Specific users and groups". Tenants that
   chose the removed option, **or made no selection**, move to "All users", so Claude models
-  become enabled for them; "No users" and the other choices stay as they are. Microsoft says the
+  become enabled for them; "No users" and the other selections are kept, under the shorter names. Microsoft says the
   change simplifies the controls "as part of Claude models from Anthropic coming into the EU Data
   Boundary starting in December 2026", and recommends that admins check the Anthropic subprocessor
   setting before that date. Until then, Claude processing in Excel, PowerPoint and Word "occurs
@@ -1043,7 +1045,7 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-10-01 (passed) | Product blog: quick access to skills; example of "a custom skill that defines company-specific terms such as 'PII.'" | blog announcement | [sp-whats-new-2026-10] |
 | March → April CY2026 (passed, per roadmap feed) | Package Management API preview → GA | mixed — list/get read GA-shaped, 4 mutation operations (update/block/unblock/reassign) still preview | [RM502875][rm-package-api] |
 | April → May CY2026 (per roadmap feed) | Roadmap feed for Copilot in SharePoint's custom-skills capability — the same Skills mechanism as the 2026-09-30 GA row above — states preview beginning April CY2026 and GA May CY2026, tagged "Launched"/"General Availability"; the same feed entry still also carries a "Preview" category tag. This is the feed's own tracked milestone for the Skills capability specifically — a separate data point from the product-wide 2026-09-30 rollout above, sourced from a different page; neither date supersedes the other here | GA per roadmap feed (feed also tags Preview) | [RM559800][rm-sp-custom-skills] |
-| 2026-04-03 (passed) | Microsoft 365 admin center setting introduced, letting EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft 365 apps | GA setting (opt-in, off by default, no preview label) | [eudb-subprocessor] |
+| 2026-04-03 (passed) | Microsoft 365 admin center setting introduced, letting EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft 365 apps | GA setting (opt-in, off by default, no preview label; on by default for tenants created after 2026-03-25 per [eudb-apps-setting]) | [eudb-subprocessor] |
 | May CY2026 (passed) | Legacy Graph beta agent-registry API begins being replaced by the Agent 365-branded registry API | superseded | [agent-registry-beta] |
 | October CY2026, per roadmap feed (month passed; re-checked 2026-11-12, the feed still reads "GA date: October CY2026" and still carries both the "General Availability" and "Preview" tags, unchanged since 2026-11-09, so GA is not confirmed) | Structured document generation reaches GA | roadmap-stated GA; 3 automation-connector actions still preview | [RM545896][rm-docgen] |
 | 2026-07-22 (passed) | Microsoft 365 admin center setting lets non-federal GCC customers use Anthropic models (not GCC federal, GCC High or DoD) | GA setting | [eudb-subprocessor] |
