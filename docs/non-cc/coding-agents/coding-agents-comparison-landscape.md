@@ -1,6 +1,6 @@
 ---
 title: Coding Agents and Harnesses Compared
-purpose: Cross-vendor comparison of coding agents and harnesses from their own docs; sections cover input modalities (images, PDF, video and voice) and model access and billing (own key, custom endpoint, pricing, cost controls, subscription sign-in), and context compaction (auto trigger, manual command, setting names), each cell sourced and dated.
+purpose: "Cross-vendor comparison of coding agents and harnesses from their own docs: input modalities, model access and billing, and context compaction, each cell sourced and dated."
 created: 2026-11-22
 updated: 2026-11-23
 validated_links: 2026-11-22

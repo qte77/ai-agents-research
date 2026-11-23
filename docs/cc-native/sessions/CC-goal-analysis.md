@@ -1,7 +1,7 @@
 ---
 title: CC /goal Command Analysis
 source: https://code.claude.com/docs/en/goal
-purpose: Analysis of the /goal command, the session-scoped completion-condition loop that keeps Claude working across turns until a model-evaluated condition is met — its evaluation mechanism, lifecycle, version gates, and relation to other long-running-session approaches in this corpus.
+purpose: "Analysis of the /goal command, a session-scoped completion-condition loop: its evaluation mechanism, lifecycle, version gates, and relation to other long-running-session approaches here."
 created: 2026-10-15
 updated: 2026-10-22
 validated_links: 2026-10-22

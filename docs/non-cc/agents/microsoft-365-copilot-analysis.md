@@ -1,6 +1,6 @@
 ---
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
-purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365, Cowork, Copilot Code, Managed Runtime, Researcher/Analyst) against first-party documentation; original pass 2026-10-21, extended 2026-11-12 and 2026-11-18 (Frontier programs, a "What each name is" table, Licences).
+purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem, from SharePoint Skills and Copilot Studio to Agent 365, Cowork and Researcher.
 created: 2026-10-21
 updated: 2026-11-23
 validated_links: 2026-11-22

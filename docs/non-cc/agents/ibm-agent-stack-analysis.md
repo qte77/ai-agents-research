@@ -1,13 +1,13 @@
 ---
 title: IBM Agent Stack Analysis — watsonx Orchestrate and its Agent Development Kit
-purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate agent builder, ADK, external-agent and MCP/A2A support, model choice incl. Claude, identity, licence metrics, regions) for the cloud-agent-stacks synthesis (plan 0014 K34); no prices.
+purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate, ADK, MCP/A2A support, model choice incl. Claude, identity, licence metrics, regions); no prices.
 created: 2026-11-20
 updated: 2026-11-20
 validated_links: 2026-11-20
 status: assess
 ---
 
-**Details:** Scope is the business-and-dev agent path on IBM: **watsonx Orchestrate** (agent builder,
+**Details:** Feeds the cloud-agent-stacks synthesis (plan 0014 K34). Scope is the business-and-dev agent path on IBM: **watsonx Orchestrate** (agent builder,
 runtime, catalog) and its open-source **Agent Development Kit (ADK)**. ML training is out of scope; data
 platforms are only linked ([data-platforms-lakehouse-landscape.md][data-platforms]). No prices are
 given; licence metrics are named only. Evidence is as of 2026-11-20 and labelled *documented* (vendor

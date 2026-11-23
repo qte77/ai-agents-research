@@ -1,6 +1,6 @@
 ---
 title: OpenAI Apps, Plugins and the GPT Store — Manifest, Marketplace and Review Compared
-purpose: Compare OpenAI's current unified ChatGPT + Codex plugin system against CC plugin packaging and the Agent Plugins standard, and answer the plugins-topic Reproducible question for a second first-party vendor
+purpose: Compares OpenAI's unified ChatGPT + Codex plugin system with Claude Code plugin packaging and the Agent Plugins standard; answers the plugins-topic Reproducible question for a second vendor.
 source: https://developers.openai.com/plugins
 created: 2026-09-30
 updated: 2026-10-02

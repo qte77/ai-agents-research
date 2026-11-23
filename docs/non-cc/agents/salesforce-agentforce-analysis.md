@@ -1,6 +1,6 @@
 ---
 title: Salesforce Agentforce 360 Analysis — Claude on Bedrock, Agentforce Registry, Agent Script, Pricing
-purpose: First-party fact-check of Salesforce Agentforce 360 (platform scope, Claude via Amazon Bedrock inside the Salesforce trust boundary, Agentforce Registry / MuleSoft Agent Fabric, Agent Script / Agentforce DX, Flex Credits pricing, EU Operating Zone, data-masking behavior for agents; the 2026-11-17 Copilotforce announcement and how Microsoft's Salesforce connections differ; AgentExchange, Einstein naming lineage, role products, licences and roles) against Salesforce's own documentation, press releases, and rate card.
+purpose: "First-party fact-check of Salesforce Agentforce 360 against Salesforce's own docs, press releases and rate card: platform scope, Claude via Bedrock, registry, pricing, data masking, licences, roles."
 created: 2026-11-12
 updated: 2026-11-20
 validated_links: 2026-11-18

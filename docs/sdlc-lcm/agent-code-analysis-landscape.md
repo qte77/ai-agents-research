@@ -1,6 +1,6 @@
 ---
 title: Agent Code Analysis Landscape — SCA & DCA for AI Coding Agents
-purpose: Static (SCA) and dynamic (DCA) code-analysis for AI coding agents — both directions (analysis OF agent-produced code, and agents PERFORMING analysis), the tooling, the GitHub/GitLab/Codeberg CI matrix, and sandboxing as an analysis boundary.
+purpose: Static (SCA) and dynamic (DCA) code analysis for AI coding agents, in both directions (of agent code, and by agents), the tooling, the CI matrix and sandboxing as an analysis boundary.
 status: assess
 created: 2026-07-23
 updated: 2026-11-22

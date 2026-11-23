@@ -1,7 +1,7 @@
 ---
 title: Computer-Use Agents Landscape
 source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
-purpose: Landscape of agents that operate a GUI from screen observations - first-party Claude computer use, other vendors' tools, open models, the OSWorld benchmark family, the pixel versus accessibility-tree trade-off, and safety guidance.
+purpose: "Landscape of agents that operate a GUI from screen observations: Claude computer use, other vendors' tools, open models, the OSWorld benchmark family, pixel vs accessibility-tree, and safety."
 created: 2026-11-19
 updated: 2026-11-19
 validated_links: 2026-11-19

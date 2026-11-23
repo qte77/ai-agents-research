@@ -1,13 +1,13 @@
 ---
 title: Alibaba Cloud Agent Stack Analysis — Model Studio, AgentRun, AgentBay, Qwen-Agent
-purpose: First-party fact-check of Alibaba Cloud's agent stack (Model Studio agent applications, AgentRun runtime, AgentBay/Agent Sandbox, open-source Qwen-Agent), its RAM permissions, identity, licence/consumption model, MCP/A2A and Claude availability, for the cloud-agent-stacks synthesis (plan 0014 K34); no prices.
+purpose: "First-party fact-check of Alibaba Cloud's agent stack (Model Studio, AgentRun, AgentBay, Qwen-Agent): permissions, identity, licensing, MCP/A2A and Claude availability; no prices."
 created: 2026-11-20
 updated: 2026-11-20
 validated_links: 2026-11-20
 status: assess
 ---
 
-**Details:** Scope is business-and-dev agents on Alibaba Cloud. ML training is out of scope; data
+**Details:** Feeds the cloud-agent-stacks synthesis (plan 0014 K34). Scope is business-and-dev agents on Alibaba Cloud. ML training is out of scope; data
 platforms are only linked ([data-platforms-lakehouse-landscape.md][data-platforms]). No prices are
 given; billing metrics are named only. Evidence is as of 2026-11-20: *documented* (Alibaba help pages
 read now, English, mostly `alibabacloud.com/help/en`; a few pages only resolved on the English

@@ -21,7 +21,7 @@ status: assess
 
 Required keys:
 
-- `title`, `purpose` (one line; there is no separate `description:`)
+- `title`, `purpose` (one sentence on one line, at most 200 characters, saying what the doc covers; detail goes in the body or on the `**Details:**` line; there is no separate `description:`)
 - `created`, `updated` (date of last content edit), `validated_links` (date the URLs were last checked), all ISO `YYYY-MM-DD`
 - `status` — the doc's lifecycle token (see §2); the single source of status, read by `make check_status` and the doc graph
 

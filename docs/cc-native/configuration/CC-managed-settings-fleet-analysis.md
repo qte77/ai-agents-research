@@ -1,7 +1,7 @@
 ---
 title: CC Managed Settings and Fleet Policy
 source: https://code.claude.com/docs/en/managed-settings
-purpose: How an organization distributes Claude Code policy to a fleet of developer machines and cloud sessions — the four delivery channels, how they rank and combine, Enterprise group configurations, fail-closed startup, managed-only keys, and how to check that a policy is in force.
+purpose: "How an organization distributes Claude Code policy to a fleet of machines and cloud sessions: delivery channels, precedence, fail-closed startup, managed-only keys, and checking a policy is in force."
 created: 2026-11-20
 updated: 2026-11-20
 validated_links: 2026-11-20

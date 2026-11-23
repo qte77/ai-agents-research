@@ -1,7 +1,7 @@
 ---
 title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
-purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
+purpose: "The semantic-layer and data-catalog substrate that grounds agentic data access: what each tool exposes to an agent and how it relates to agent-native context layers. Verified 2026-06-22."
 created: 2026-06-22
 updated: 2026-11-23
 validated_links: 2026-11-19

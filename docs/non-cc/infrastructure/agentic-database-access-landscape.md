@@ -1,6 +1,6 @@
 ---
 title: Agentic Database Access — MCP Servers, Text-to-SQL, Write Safety
-purpose: How agents reach databases today — vendor database MCP servers and their read-only controls, text-to-SQL benchmarks and training results, and the write-safety evidence (read-only roles, branching, an incident, injection through MCP). Landscape as of 2026-11-18.
+purpose: "How agents reach databases: vendor database MCP servers and read-only controls, text-to-SQL benchmarks, and write-safety evidence (read-only roles, branching, incidents). As of 2026-11-18."
 created: 2026-11-18
 updated: 2026-11-18
 validated_links: 2026-11-18
