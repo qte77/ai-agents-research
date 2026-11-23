@@ -71,6 +71,17 @@ class CheckDocTests(unittest.TestCase):
         self.assertEqual(df.check_doc(GOOD.replace("source: https://x.y", "source: vendor docs")),
                          ["source must be one URL (others go in the Sources section): vendor docs"])
 
+    def test_purpose_is_one_short_line(self):
+        long = "x" * (df.PURPOSE_MAX + 1)
+        self.assertEqual(df.check_doc(GOOD.replace("purpose: P", f"purpose: {long}")),
+                         [f"purpose over {df.PURPOSE_MAX} characters; keep it to one line (detail goes in the body)"])
+        self.assertEqual(df.check_doc(GOOD.replace("purpose: P", "purpose: " + "x" * df.PURPOSE_MAX)), [])
+
+    def test_folded_or_empty_purpose_is_flagged(self):
+        for value in (">\n  folded text", "|\n  block", ""):
+            self.assertEqual(df.check_doc(GOOD.replace("purpose: P", f"purpose: {value}")),
+                             ["purpose must be one non-empty line"], value)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,6 +14,7 @@ OPTIONAL = frozenset({"source", "platform_scope", "test_run"})
 REMOVED = frozenset({"sources", "description", "release", "version", "license", "authority", "category"})
 DATE_KEYS = ("created", "updated", "validated_links")
 LIFECYCLE = DOC_STATUS_VOCAB
+PURPOSE_MAX = 200  # one line (CONTRIBUTING §1); detail belongs in the body
 
 # Not content docs: indexes, hubs, plans (own schema), example files, the archive, generated output.
 _OUT_OF_SCOPE = ("docs/_topics/", "docs/plans/", "docs/cc-native/examples/", "docs/archive/", "docs/research/")
@@ -51,6 +52,12 @@ def check_doc(text: str) -> list[str]:
         problems.append(f"key not allowed (see CONTRIBUTING §1): {k}" if k in REMOVED else f"unknown key: {k}")
     if "source" in keys and not _ONE_URL.match(keys["source"]):
         problems.append(f"source must be one URL (others go in the Sources section): {keys['source']}")
+    purpose = keys.get("purpose")
+    if purpose is not None:
+        if purpose in ("", ">", "|", ">-", "|-"):
+            problems.append("purpose must be one non-empty line")
+        elif len(purpose) > PURPOSE_MAX:
+            problems.append(f"purpose over {PURPOSE_MAX} characters; keep it to one line (detail goes in the body)")
     status = keys.get("status")
     if status is not None and status not in LIFECYCLE:
         problems.append(f"status not in the lifecycle vocabulary (CONTRIBUTING §2): {status}")
