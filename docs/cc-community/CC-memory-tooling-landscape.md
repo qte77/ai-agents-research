@@ -3,7 +3,7 @@ title: CC Memory Tooling Landscape
 purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover (archived), Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, CortexDB, Core, deja-vu, engrim, Leviathan), plus second-brain vault tools (gbrain, COG-second-brain).
 status: research
 created: 2026-06-14
-updated: 2026-11-21
+updated: 2026-11-23
 validated_links: 2026-10-06
 ---
 
@@ -203,7 +203,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## CortexDB (liliang-cn)
 
-**Repo**: [liliang-cn/cortexdb][cortexdb] | **Stars**: 479 | **License**: MIT | **Version**: Go module v2, `gh api` 2026-11-12
+**Repo**: [liliang-cn/cortexdb][cortexdb] | **Stars**: 531 | **License**: MIT | **Version**: Go module v2, `gh api` 2026-11-23 (479 on 2026-11-12)
 
 Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run, works without an embedding model" ([README][cortexdb]). Combines vector search (HNSW/IVF/flat/binary), FTS5 full-text, RAG knowledge, scoped agent memory, and a Resource Description Framework (RDF) 1.2 knowledge graph ([SPARQL](../glossary.md#knowledge-structures) 1.1/1.2, OWL 2 RL inference, SHACL validation, read-only Cypher) plus a Palantir-style governed-action ontology, behind 100+ tools exposed in-process or over MCP.
 
@@ -225,9 +225,21 @@ Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run,
 
 **Strengths**: single-file, zero-dependency Go binary (no vector DB or server required, unless sharing one brain over the optional `cortexdb-grpc`); the RDF/SPARQL/SHACL layer is a standards-conformant knowledge graph rather than a marketing label; distinguishes verified facts from guesses and marks superseded memories rather than deleting them.
 
+**Supersession rule (documented in the CHANGELOG, read 2026-11-23)**: a newer memory that contradicts an older one marks the older one superseded: kept and exported, no longer recalled as current, with `superseded_by` and `superseded_at` recorded so a mistaken pass can be found and undone. In the live-capture step a model decides which existing memories a new fact contradicts; the CHANGELOG caps this at five retirements per pass, and the later date wins, so an old session cannot retire a newer memory. Graph rows archived on a replace or delete record a reason and stay readable through `as_of` queries. Not verified here: a `retracted_at` column and a 0.85–1.0 age tie-break band that the newsletter below attributes to the project (neither found in the CHANGELOG).
+
+**Design lens — Lindenberg's *Forgetting Is a Write* judges any memory tool by four questions**: what rule retires a fact (a newer fact, a code change, a date, or nothing), who applies it and how often per pass, whether a wrong retirement can be found and undone, and which single operation deletes for good. The four-question list and his advice to put retirements in front of a person on a shared brain are his own practitioner framing (single source; the CortexDB facts above were checked against the CHANGELOG, not the article) (Lindenberg, *Forgetting Is a Write*, LinkedIn, 2026-10-18).
+
 **Risks**: young project (created 2025-08-07) relative to its star count; the Claude Code mod is explicitly "early access"; overlaps with CC's built-in memory and every other cross-agent tool in this doc — pick one. The social post that queued this entry cited "80+ MCP tools" — the current README states "100+ tools," so the count has grown since whatever version prompted the post.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
+
+---
+
+## Atuin Agent Threads (atuinsh)
+
+**Repo**: [atuinsh/atuin][atuin] | **Stars**: 32,577 | **License**: MIT | pushed 2026-11-23 (`gh api`, 2026-11-23)
+
+Atuin is a shell-history tool whose README now also describes **Agent Threads** (documented, README read 2026-11-23): it captures Claude Code, Codex, OpenCode and other agent sessions; a thread started on one machine can be picked up with `atuin resume` on another machine and in a different harness. Agents can optionally search the history through a built-in MCP server, and history plus threads can sync end-to-end encrypted or stay offline. This is session-continuity across machines and harnesses rather than a distilled memory store, so it complements the tools above instead of replacing them. Not verified here: how complete a resumed thread is across harnesses, and the newsletter's claims that capture is opt-in and that the sync server can be self-hosted (Lindenberg, *Point It at Something*, LinkedIn, 2026-11-21, single source for those two details).
 
 ---
 
@@ -537,6 +549,10 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [A-MEM][a-mem] | Agentic memory system |
 | [MemoryOS][memoryos] | Hierarchical memory OS |
 | [CoALA][coala] | Cognitive-architectures framework (paper) |
+| [Atuin README][atuin] | Agent Threads feature description, MIT licence, star count and push date (`gh api`, 2026-11-23) |
+| [CortexDB CHANGELOG][cortexdb-changelog] | Supersession rule, `superseded_by`/`superseded_at`, five-per-pass cap, `as_of` reads (read 2026-11-23) |
+| André Lindenberg — *Forgetting Is a Write* (LinkedIn, 2026-10-18; `linkedin.com/pulse/forgetting-write-agent-memory-knows-what-stopped-being-lindenberg-5nezf`) | Design lens: four questions for judging a memory tool's retirement rule (practitioner framing; LinkedIn — not link-checked) |
+| André Lindenberg — *Point It at Something* (LinkedIn, 2026-11-21; `linkedin.com/pulse/point-something-which-work-agent-can-finish-alone-andré-lindenberg-sfm6e`) | Pointer to Atuin Agent Threads; two details single-source (LinkedIn — not link-checked) |
 | André Lindenberg — *Memory should change future behavior* (LinkedIn, 2026) | Design principle: memory judged by behavior change, not storage (LinkedIn — not link-checked) |
 | [LongMemEval][longmemeval] | Long-term-memory benchmark |
 | [LOCOMO][locomo] | Long-conversation memory benchmark |
@@ -554,6 +570,8 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [core]: https://github.com/RedPlanetHQ/core
 [core-benchmark]: https://github.com/RedPlanetHQ/core-benchmark
 [cortexdb]: https://github.com/liliang-cn/cortexdb
+[cortexdb-changelog]: https://github.com/liliang-cn/cortexdb/blob/main/CHANGELOG.md
+[atuin]: https://github.com/atuinsh/atuin
 [deja-vu]: https://github.com/vshulcz/deja-vu
 [deja-vu-security]: https://github.com/vshulcz/deja-vu/blob/main/docs/SECURITY-MODEL.md
 [engrim]: https://github.com/timgordontg/engrim
