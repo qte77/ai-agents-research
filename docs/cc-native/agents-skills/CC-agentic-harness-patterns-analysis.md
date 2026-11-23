@@ -127,8 +127,8 @@ Starts with fewer than 20 default tools (Read, Edit, Write, Bash, Grep, Glob). M
 **Decision rule and measurement (single-source, [ai-that-works][aiw-talks] practitioner talks).** In the
 2026-03-24 episode the hosts argue: if you control the integration, call the SDK or first-party API; use
 MCP for tools your users bring themselves; promote a popular MCP to a first-class integration. Stated
-reason: every tool definition costs context on every call. The hosts disagreed on how much MCP itself
-hurts, and the token figures they quoted differ between the README and the transcript, so none are
+reason: every tool definition costs context on every call. The token figures
+quoted for popular MCP servers differ between the episode README and the transcript, so none are
 repeated here. Anthropic's [Writing tools for agents][writing-tools] corroborates the direction
 ("more tools don't always lead to better outcomes"). To measure a definition's cost yourself, run the
 same one-line prompt headless with and without the server and compare the cache-creation fields of the
@@ -208,7 +208,14 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Skill Issue: Harness Engineering for Coding Agents][skill-issue-post] (Kyle, hlyr.dev, 2026-03-12) — harness engineering framing, HumanLayer mention
 - Repos and releases (`gh api`, 2026-11-18): [claude-agent-sdk-python][sdk-py] (MIT, v0.2.184), [claude-agent-sdk-typescript][sdk-ts] (Anthropic Commercial Terms per its LICENSE file), [langchain-ai/deepagents][deepagents-gh] (MIT, 0.7.39), [earendil-works/pi][pi-gh] (MIT, v1.5.2; eight built-in tools per its [extensions doc][pi-ext]), [HKUDS/OpenHarness][openharness-gh] (MIT, v0.1.9)
 - [Agent SDK overview][agent-sdk-docs] and [Writing tools for agents][writing-tools] (Anthropic; read 2026-11-18) — build-vs-adopt section; licenses and versions from each repo's LICENSE file and releases via `gh api`, 2026-11-18
-- [ai-that-works practitioner talks][aiw-talks] (BoundaryML and HumanLayer hosts, read 2026-11-22; practitioner-talk evidence, conversations not shipped code; hosts discuss their own products) — episodes 2025-09-16, 2025-10-21, 2025-10-28, 2026-01-06, 2026-01-27, 2026-02-10, 2026-02-24, 2026-03-24
+- [ai-that-works 2025-09-16, "Bash vs. MCP"][aiw-2025-09-16] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: measuring tool-definition token cost from `stream-json` usage
+- [ai-that-works 2025-10-21, "Agentic RAG + Context Engineering"][aiw-2025-10-21] (RAG: retrieval-augmented generation) — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: tool-result shape
+- [ai-that-works 2025-10-28, "Ralph Wiggum under the hood"][aiw-2025-10-28] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: back pressure, one step per loop
+- [ai-that-works 2026-01-06, "Understanding Latency in AI Applications"][aiw-2026-01-06] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: speculative reads (design sketch)
+- [ai-that-works 2026-01-27, "No Vibes Allowed"][aiw-2026-01-27] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: questions, then blind research
+- [ai-that-works 2026-02-10, "Agentic Backpressure Deep Dive"][aiw-2026-02-10] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: proof before research
+- [ai-that-works 2026-02-24, "No Vibes Allowed February"][aiw-2026-02-24] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: learning tests in a live session
+- [ai-that-works 2026-03-24, "MCP is Dead?"][aiw-2026-03-24] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: MCP vs first-party decision rule
 - [HumanLayer][humanlayer] · [repo][humanlayer-gh] (`gh api` and README, PyPI JSON, release notes; read 2026-11-22) — original approval-gate SDK (dormant, last PyPI upload 2025-06-03) and current multiplayer coding-agent workspace
 - [ARCBench (arXiv 2611.03223)][arcbench] — rule compliance after context compaction
 - [Unsupported policy in hand-off summaries (arXiv 2611.06545)][handoff-paper] · [code][handoff-audit] — hand-off summaries that invent approvals or restrictions
@@ -248,6 +255,14 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 [skill-issue-post]: https://www.hlyr.dev/blog/skill-issue-harness-engineering-for-coding-agents
 [humanlayer]: https://www.humanlayer.dev/
 [aiw-talks]: https://github.com/ai-that-works/ai-that-works/tree/main
+[aiw-2025-09-16]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-09-16-coding-agent-tools-bash-vs-mcp
+[aiw-2025-10-21]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-10-21-agentic-rag-context-engineering
+[aiw-2025-10-28]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-10-28-ralph-wiggum-coding-agent-power-tools
+[aiw-2026-01-06]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-06-latency
+[aiw-2026-01-27]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-27-no-vibes-allowed
+[aiw-2026-02-10]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-10-agentic-backpressure-deep-dive
+[aiw-2026-02-24]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-24-no-vibes-february
+[aiw-2026-03-24]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-24-mcp-is-dead
 [humanlayer-gh]: https://github.com/humanlayer/humanlayer
 
 ## Academic Design-Space Analysis (arXiv 2604.14228)
