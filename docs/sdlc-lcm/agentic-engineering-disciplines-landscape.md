@@ -2,7 +2,7 @@
 title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines (prompt → spec) and "-driven development" methodologies (TDD → EDD → SDD) that make an agentic coding fleet compound instead of drift — with first-party coiners, a five-layer stack, and qte77's open-agentic-coding-harness as the reference implementation.
 created: 2026-06-23
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-18
 status: assess
 ---
@@ -97,6 +97,17 @@ By 2026 every major coding tool shipped an SDD flavor. The frameworks: [github/s
 
 qte77's sibling project [open-agentic-coding-harness][oach] implements the whole stack — `ralph-loop` (Layers 2–3: TDD + loop), `claude-code-plugins` (Layer 1: harness), `cc-recursive-team-mode` (Layer 3: teams), `coding-harness-eval` (Layer 4: deterministic EDD), and `LEARNINGS.md` refeeding (Layer 5: compound) — under "faithful adoption + measurability" ("you can't trust a harness you can't measure"). Per cross-repo routing, deep product analysis stays in that repo; here it is cited as the reference implementation of the disciplines above.
 
+## Rollout and governance (vendor guidance)
+
+The ladders above cover how to build; one vendor guide adds how to hand an agent real autonomy. [Databricks' "Guide to Agentic Systems and AI Agents"][databricks-guide] (undated page, © 2026; it promotes the vendor's own agent product, so read as vendor guidance, not measured evidence) recommends, in its own words paraphrased:
+
+- **Shadow before autonomy** — a human watches the agent's decisions for roughly the first several hundred workflow runs before it acts alone.
+- **Test before scaling** — test first, because a pilot at 100 runs a day may meet new failure modes at 10,000. The page says to test before scaling; it does not prescribe a re-test at every step.
+- **Regression-test before a model swap** — replay a representative sample of historical tasks before promoting a new model to production.
+- **A named human owner per workflow** — one person accountable for outcomes.
+
+These map onto the Layer 4 evals (regression suite) and the human-approval gates above; the shadow period and the named owner are the parts this landscape did not state. The guide also quotes an analyst forecast about future autonomous decisions, which is omitted here as unnamed and unverified.
+
 ## Cross-References
 
 - [CC-dynamic-workflows-analysis.md][workflows] — execution + observability + verify surfaces (Layers 3–4)
@@ -137,6 +148,7 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 | André Lindenberg — *Laws Instead of Diffs* (LinkedIn, 2026-09-19; `linkedin.com/pulse/laws-instead-diffs-andré-lindenberg-wxlmf`) | Design lens: proof-gated compiler as a harder Level-4 bet (LinkedIn — not link-checked) |
 | [bendlang/bend][bend-repo] | Apache-2.0, 23,165★ (`gh api`, 2026-09-30); proof-gated language, HN launch |
 | [Bend Hacker News thread][bend-hn] | 616 points/327 comments (2026-09-30); "vibecode all the laws" skepticism quoted |
+| [Databricks — Guide to Agentic Systems and AI Agents][databricks-guide] | Vendor guidance: shadow period, test before scaling, regression tests before a model swap, named owner per workflow (read 2026-11-23) |
 | [Martin Kleppmann — AI and formal verification][kleppmann-sel4] | seL4: 8,700 LOC / 20 person-years / 200,000 Isabelle lines (2025-12-08) |
 | [AlphaCodium (arXiv 2401.08500)][alphacodium] | Flow engineering; Itamar Friedman / CodiumAI |
 | [ReAct (arXiv 2210.11610)][react] | Inner-loop foundation |
@@ -207,3 +219,4 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 [software-factory]: software-factory-landscape.md
 [harnessflow]: https://arxiv.org/abs/2611.06254
 [meta-harness]: https://github.com/stanford-iris-lab/meta-harness
+[databricks-guide]: https://www.databricks.com/blog/agentic-systems-guide
