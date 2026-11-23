@@ -26,7 +26,7 @@ This analysis examines the specific technical mechanisms used by 18 observabilit
 5. **2026 Updates**: Recent feature releases, performance benchmarks, and industry adoption metrics
 6. **Research Methodology**: Transparent verification process and source validation
 
-## Design Stance: Instrument Before the Bug
+## Design Stance (Practitioner Talk): Instrument Before the Bug
 
 The platform sections below catalogue tools; a practitioner talk ([ai-that-works ep. #64, 2026-07-07][aiw-obs]; practitioner talk, single-source, hosts build BAML and HumanLayer, so product-adjacent) argues for a stance on how to use them. Three points change what a team would do, each labelled by evidence:
 
