@@ -148,16 +148,16 @@ The ~75k smart-zone figure is comparable to this repo's 40–60% utilization tar
 | Failure mode | What happens |
 |---|---|
 | Poisoning | An early error or hallucination enters the context and keeps being referenced |
-| Distraction | A very long history pulls the model toward repeating it instead of reasoning fresh |
+| Distraction | The context grows so long that the model over-focuses on it and neglects what it learned in training |
 | Confusion | Irrelevant content, such as unused tool definitions, degrades the answer |
 | Clash | New information contradicts what is already in context |
 
 Two of the primary papers behind it (abstract pages read 2026-11-23):
 
-- **Tool count** — [Less is More (arXiv 2411.15399)][arxiv-less-is-more] (Paramanayakam et al., submitted 2024-11-23, accepted at DATE 2025) proposes selecting a subset of tools per query rather than passing all of them. In its worked example (read in the HTML version, not the abstract), a 4-bit quantized Llama 3.1 8B on an edge board picked the wrong tool when given 46 tools at a 16K context, though the window could hold them, and succeeded with 19. This is one model and one query on a benchmark's tool set: an illustration that tool-list size alone can break selection, not a general threshold. The abstract's headline numbers are different (execution time down by up to 70%, power by up to 40%).
-- **Multi-turn drift** — [LLMs Get Lost In Multi-Turn Conversation (arXiv 2505.06120)][arxiv-lost-multiturn] (Laban et al., submitted 2025-05-09) reports that every top open- and closed-weight model tested did worse when a task was spread across turns than when given in one prompt, an average drop of 39% across six generation tasks. The authors split it into a small loss of aptitude and a larger rise in unreliability: models commit to early assumptions and do not recover from a wrong turn.
+- **Tool count** — [Less is More (arXiv 2411.15399)][arxiv-less-is-more] (Paramanayakam et al., submitted 2024-11-23, accepted at DATE 2025) proposes selecting a subset of tools per query rather than passing all of them. In its worked example (read in the HTML version, not the abstract), a 4-bit quantized Llama 3.1 8B on an edge board picked the wrong tool when given 46 tools at a 16K context, and succeeded with 19. This is one model and one query on a benchmark's tool set: an illustration that tool-list size alone can break selection, not a general threshold. The abstract's headline numbers are different (execution time down by up to 70%, power by up to 40%).
+- **Multi-turn drift** — [LLMs Get Lost In Multi-Turn Conversation (arXiv 2505.06120)][arxiv-lost-multiturn] (Laban et al., submitted 2025-05-09) reports that every top open- and closed-weight model tested did worse when a task was spread across turns than when given in one prompt, an average drop of 39% across six generation tasks. The authors split it into a small loss of aptitude and a larger rise in unreliability: once a model takes a wrong turn, it gets lost and does not recover.
 
-Read with care: both papers are not Claude Code studies. They are background for, not proof of, trimming unused tool sets and starting a fresh session after a wrong turn (see Mitigation below). A [Splunk blog][splunk-ctx] (Pratik Bhavsar, 2026-08-11; vendor post promoting its agent-observability product) (search snippet and page title read 2026-11-23; not fetched in full) relies on the same material and adds a context-size-tier strategy table and token thresholds; those are vendor guidance, not adopted here.
+Read with care: both papers are not Claude Code studies. They are background for, not proof of, trimming unused tool sets and starting a fresh session after a wrong turn (see Mitigation below). A [Splunk blog][splunk-ctx] (Pratik Bhavsar, 2026-08-11; vendor post promoting its agent-observability product) (read 2026-11-23) relies on the same material and adds a context-size-tier strategy table and token thresholds; those are vendor guidance, not adopted here.
 
 ### Mitigation
 

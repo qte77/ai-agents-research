@@ -101,9 +101,9 @@ qte77's sibling project [open-agentic-coding-harness][oach] implements the whole
 
 The ladders above cover how to build; one vendor guide adds how to hand an agent real autonomy. [Databricks' "Guide to Agentic Systems and AI Agents"][databricks-guide] (undated page, © 2026; it promotes the vendor's own agent product, so read as vendor guidance, not measured evidence) recommends, in its own words paraphrased:
 
-- **Shadow before autonomy** — a human watches the agent's decisions for roughly the first several hundred workflow runs before it acts alone, to surface edge cases and tighten tool permissions.
-- **Test before scaling** — run performance and permission-boundary reviews first, because a pilot at 100 runs a day may meet new failure modes at 10,000. The page says to test before scaling; it does not prescribe a re-test at every step.
-- **Regression-test before a model swap** — replay a representative sample of historical tasks before promoting a new model, since a model update can shift behavior that aggregate metrics hide.
+- **Shadow before autonomy** — a human watches the agent's decisions for roughly the first several hundred workflow runs before it acts alone.
+- **Test before scaling** — test first, because a pilot at 100 runs a day may meet new failure modes at 10,000. The page says to test before scaling; it does not prescribe a re-test at every step.
+- **Regression-test before a model swap** — replay a representative sample of historical tasks before promoting a new model to production.
 - **A named human owner per workflow** — one person accountable for outcomes.
 
 These map onto the Layer 4 evals (regression suite) and the human-approval gates above; the shadow period and the named owner are the parts this landscape did not state. The guide also quotes an analyst forecast about future autonomous decisions, which is omitted here as unnamed and unverified.
