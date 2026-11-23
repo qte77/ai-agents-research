@@ -8,7 +8,7 @@ updated: 2026-11-23
 validated_links: 2026-11-12
 ---
 
-**Details:** Also covers source-enrichment and session-workflow-enforcement tools.
+**Details:** Also covers session-workflow enforcement (cc-sessions).
 
 ## RTK (Rust Token Killer)
 

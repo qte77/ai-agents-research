@@ -1,6 +1,6 @@
 ---
 title: CC Community Skills Landscape
-purpose: Survey of community-built Claude Code skill libraries, such as gstack, pm-skills, agent-skills, caveman and last30days, compared by purpose and design.
+purpose: Survey of community-built Claude Code skill libraries, such as gstack, pm-skills, agent-skills, caveman and last30days, with what each one is for.
 status: research
 created: 2026-03-13
 updated: 2026-11-22
