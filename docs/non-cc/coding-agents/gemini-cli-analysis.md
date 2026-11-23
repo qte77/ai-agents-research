@@ -4,7 +4,7 @@ source: https://github.com/google-gemini/gemini-cli
 purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now deprecated for non-enterprise users.
 platform_scope: [cli]
 created: 2026-06-16
-updated: 2026-11-18
+updated: 2026-11-23
 validated_links: 2026-11-18
 status: hold
 ---
@@ -105,6 +105,15 @@ Latest stable at time of writing: **v0.46.0** (2026-06-10).
 
 **Correction 2026-11-15:** the [latest GitHub release][gemini-latest] is v0.68.0 (2026-11-10); v0.46.0 is no longer current.
 
+## Providers
+
+Checked 2026-11-23 against the repo's [authentication guide][gemini-auth] and [configuration reference][gemini-config] (repo docs at v0.70.0, released 2026-11-19; status stays Hold, see below).
+
+- **Google Cloud.** Vertex AI is a documented auth method with three credential options: Application Default Credentials via `gcloud`, a service-account JSON key (`GOOGLE_APPLICATION_CREDENTIALS`) and a Google Cloud API key (`GOOGLE_API_KEY`). All need `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`; set any Gemini or Google API key variables aside first, as the guide says.
+- **Google AI Studio.** The other direct route is a Gemini API key in `GEMINI_API_KEY`.
+- **Gateway or proxy.** `GOOGLE_GEMINI_BASE_URL` (Gemini API key auth) and `GOOGLE_VERTEX_BASE_URL` (Vertex auth) override the endpoint; the value must be HTTPS unless it points at localhost. These redirect to a proxy that speaks the Gemini or Vertex API, not an OpenAI-compatible one.
+- **Azure, AWS Bedrock, OpenRouter, Infomaniak.** No route found in the two pages read. The authentication guide (read in full for method headings and env vars) and a search of the configuration reference for `BASE_URL` found none; this is absence in those two pages only, not in the whole docs tree. If no route exists, reaching these backends would take a third-party translation layer outside the vendor docs.
+
 ## Adoption Decision
 
 **Hold** — the free-tier and prosumer access model that made Gemini CLI
@@ -150,6 +159,8 @@ guarantees for paying users.
 | [Google blog: Introducing Gemini CLI][blog] | Launch announcement (2025-06-25): license, model, free quota, preview status |
 | [Gemini Code Assist FAQs][gcfa-faqs] | Official June 18, 2026 shutdown announcement; affected tiers; Standard/Enterprise on separate schedule; Antigravity migration (checked 2026-11-18) |
 | [Gemini CLI session-management docs][gemini-session-docs] | Banner: replaced by Antigravity CLI on 2026-06-18 for unpaid tier and Google One users (checked 2026-11-18) |
+| [Gemini CLI authentication guide][gemini-auth] | Google login, API key, Vertex AI methods and env vars (checked 2026-11-23) |
+| [Gemini CLI configuration reference][gemini-config] | `GOOGLE_GEMINI_BASE_URL` / `GOOGLE_VERTEX_BASE_URL` overrides (checked 2026-11-23) |
 | [GitHub Discussion #27274: Transitioning to Antigravity CLI][antigravity-discussion] | Official Google deprecation notice; Antigravity CLI feature summary |
 | [TechTimes: Google Accepted 6,000 Gemini CLI Contributions][techtimes] | Third-party reporting on access restriction announcement (2026-05-23) |
 
@@ -160,5 +171,7 @@ guarantees for paying users.
 [antigravity-discussion]: https://github.com/google-gemini/gemini-cli/discussions/27274
 [gemini-session-docs]: https://geminicli.com/docs/cli/session-management/
 [gemini-quota]: https://github.com/google-gemini/gemini-cli/blob/main/docs/resources/quota-and-pricing.md
+[gemini-auth]: https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/authentication.mdx
+[gemini-config]: https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/configuration.md
 [techtimes]: https://www.techtimes.com/articles/317056/20260523/google-accepted-6000-gemini-cli-contributions-then-closed-tool-enterprise-only.htm
 [copilot-cli-analysis]: ../agents/github-copilot-cli-analysis.md
