@@ -75,6 +75,27 @@ nobody gave.
 
 Three phases with increasing write permissions: Explore (read-only) -> Plan (discussion with user) -> Act (full tool access). Ensures understanding before editing.
 
+**Practitioner additions (single-source, [ai-that-works][aiw-talks] practitioner talks; hosts discuss their own workflow, so these are
+claims, not shipped code).**
+
+- *Proof before research.* The 2026-02-10 episode and the 2026-02-24 live session add a step before
+  research: have the agent write and run a small program against the real SDK or API ("learning tests")
+  and carry the findings into later phases. Stated reason: docs and model memory can describe behavior
+  the runtime does not show. The host also called these a contract to re-run on upgrades, and "proof" a
+  third research type next to code and web research. Not independently corroborated; the episode credits
+  Michael Feathers' legacy-code book for the term, which we did not check.
+- *Questions, then blind research.* In the 2026-01-27 session the ticket is first turned into a list of
+  objective questions about the code; a fresh context answers them without being told what is being
+  built. Stated reason: a model that knows the goal bakes implementation choices into the research.
+  Compare the research-plan-implement gates in
+  [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md).
+- *Back pressure and one step per loop.* In the 2025-10-28 Ralph episode the hosts describe tests,
+  types and builds as the governor of an unattended loop, and bound each run to one meaningful step,
+  then check, commit, exit and rerun, instead of asking the model to keep working. HumanLayer authors
+  also wrote the post the corpus already cites for back pressure
+  ([CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md)), so this is
+  not a second source. Loop mechanics: [CC-ralph-enhancement-research.md](CC-ralph-enhancement-research.md).
+
 ### 7. Context-Isolated Subagents
 
 Separate agents with distinct context windows, system prompts, and restricted tool access. Research agents cannot edit code; planning agents cannot execute commands. Each sees only task-relevant information.
@@ -103,13 +124,39 @@ pass@5 19%→44%) and OpenAI's Feb 2026 "Harness Engineering" post — is tracke
 
 Starts with fewer than 20 default tools (Read, Edit, Write, Bash, Grep, Glob). Model Context Protocol (MCP) tools, remote tools, and custom skills activate on demand.
 
+**Decision rule and measurement (single-source, [ai-that-works][aiw-talks] practitioner talks).** In the
+2026-03-24 episode the hosts argue: if you control the integration, call the SDK or first-party API; use
+MCP for tools your users bring themselves; promote a popular MCP to a first-class integration. Stated
+reason: every tool definition costs context on every call. The token figures
+quoted for popular MCP servers differ between the episode README and the transcript, so none are
+repeated here. Anthropic's [Writing tools for agents][writing-tools] corroborates the direction
+("more tools don't always lead to better outcomes"). To measure a definition's cost yourself, run the
+same one-line prompt headless with and without the server and compare the cache-creation fields of the
+`stream-json` usage output (the 2025-09-16 episode demonstrates this; field meanings in
+[CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md)).
+
 ### 10. Command Risk Classification
 
 Deterministic pre-parsing and per-tool permission gating. Each tool has individual allow, ask, and deny rules with pattern matching. Auto-mode classifier auto-approves low-risk actions; safety classifier handles dangerous commands.
 
+*Speculative reads (single-source, hypothetical).* In the 2026-01-06 latency episode a host sketched
+pre-running read-only tool calls while the user is still typing, with every write tool blocked, to hide
+latency at the cost of extra spend. It was a design sketch, not a shipped feature. Different mechanism
+from speculation during code generation in
+[programmatic-tool-calling-analysis.md](../../non-cc/protocols/programmatic-tool-calling-analysis.md).
+
 ### 11. Single-Purpose Tool Design
 
 Replaces general shell with purpose-built tools for common operations: FileReadTool, FileEditTool, GrepTool, GlobTool. Typed inputs, constrained scope, dedicated permission rules.
+
+**Result shape (single-source, [ai-that-works][aiw-talks] 2025-10-21).** A host who built a small agentic
+retrieval agent live reported that the details that mattered were in tool results, not tool prompts:
+paths printed relative to an injected working directory, an explicit truncation notice that says what was
+cut and how to continue, timeouts on every subprocess call, and a parse-error nudge shown to the model
+once and then dropped from history. Anthropic's [Writing tools for agents][writing-tools] supports the
+truncation and error points (steer the agent with instructions when truncating; actionable errors over
+opaque codes) and states that Claude Code caps tool responses at 25,000 tokens by default (read
+2026-11-22). The relative-path and timeout points rest on the talk alone.
 
 ## Category 4: Automation (1 pattern)
 
@@ -161,6 +208,14 @@ Pattern taxonomist by trade: Kubernetes patterns -> Camel patterns -> Prompt pat
 - [Skill Issue: Harness Engineering for Coding Agents][skill-issue-post] (Kyle, hlyr.dev, 2026-03-12) — harness engineering framing, HumanLayer mention
 - Repos and releases (`gh api`, 2026-11-18): [claude-agent-sdk-python][sdk-py] (MIT, v0.2.184), [claude-agent-sdk-typescript][sdk-ts] (Anthropic Commercial Terms per its LICENSE file), [langchain-ai/deepagents][deepagents-gh] (MIT, 0.7.39), [earendil-works/pi][pi-gh] (MIT, v1.5.2; eight built-in tools per its [extensions doc][pi-ext]), [HKUDS/OpenHarness][openharness-gh] (MIT, v0.1.9)
 - [Agent SDK overview][agent-sdk-docs] and [Writing tools for agents][writing-tools] (Anthropic; read 2026-11-18) — build-vs-adopt section; licenses and versions from each repo's LICENSE file and releases via `gh api`, 2026-11-18
+- [ai-that-works 2025-09-16, "Bash vs. MCP"][aiw-2025-09-16] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: measuring tool-definition token cost from `stream-json` usage
+- [ai-that-works 2025-10-21, "Agentic RAG + Context Engineering"][aiw-2025-10-21] (RAG: retrieval-augmented generation) — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: tool-result shape
+- [ai-that-works 2025-10-28, "Ralph Wiggum under the hood"][aiw-2025-10-28] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: back pressure, one step per loop
+- [ai-that-works 2026-01-06, "Understanding Latency in AI Applications"][aiw-2026-01-06] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: speculative reads (design sketch)
+- [ai-that-works 2026-01-27, "No Vibes Allowed"][aiw-2026-01-27] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: questions, then blind research
+- [ai-that-works 2026-02-10, "Agentic Backpressure Deep Dive"][aiw-2026-02-10] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: proof before research
+- [ai-that-works 2026-02-24, "No Vibes Allowed February"][aiw-2026-02-24] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: learning tests in a live session
+- [ai-that-works 2026-03-24, "MCP is Dead?"][aiw-2026-03-24] — practitioner talk (BoundaryML and HumanLayer hosts; a conversation, not shipped code), read 2026-11-22: MCP vs first-party decision rule
 - [HumanLayer][humanlayer] · [repo][humanlayer-gh] (`gh api` and README, PyPI JSON, release notes; read 2026-11-22) — original approval-gate SDK (dormant, last PyPI upload 2025-06-03) and current multiplayer coding-agent workspace
 - [ARCBench (arXiv 2611.03223)][arcbench] — rule compliance after context compaction
 - [Unsupported policy in hand-off summaries (arXiv 2611.06545)][handoff-paper] · [code][handoff-audit] — hand-off summaries that invent approvals or restrictions
@@ -199,6 +254,15 @@ A concrete application of Context-Isolated Subagents + Fork-Join Parallelism to 
 [claude-security]: https://claude.com/product/claude-security
 [skill-issue-post]: https://www.hlyr.dev/blog/skill-issue-harness-engineering-for-coding-agents
 [humanlayer]: https://www.humanlayer.dev/
+[aiw-talks]: https://github.com/ai-that-works/ai-that-works/tree/main
+[aiw-2025-09-16]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-09-16-coding-agent-tools-bash-vs-mcp
+[aiw-2025-10-21]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-10-21-agentic-rag-context-engineering
+[aiw-2025-10-28]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-10-28-ralph-wiggum-coding-agent-power-tools
+[aiw-2026-01-06]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-06-latency
+[aiw-2026-01-27]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-27-no-vibes-allowed
+[aiw-2026-02-10]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-10-agentic-backpressure-deep-dive
+[aiw-2026-02-24]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-24-no-vibes-february
+[aiw-2026-03-24]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-24-mcp-is-dead
 [humanlayer-gh]: https://github.com/humanlayer/humanlayer
 
 ## Academic Design-Space Analysis (arXiv 2604.14228)
