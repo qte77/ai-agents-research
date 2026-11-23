@@ -2,7 +2,7 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem (Copilot in SharePoint, Copilot Studio, Work IQ, Agent 365, Cowork, Copilot Code, Managed Runtime, Researcher/Analyst) against first-party documentation; original pass 2026-10-21, extended 2026-11-12 and 2026-11-18 (Frontier programs, a "What each name is" table, Licences).
 created: 2026-10-21
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-22
 status: assess
 ---
@@ -49,7 +49,8 @@ a "What each name is" disambiguation table, and a Licences subsection (under Pri
   has no EU-region deployment type either — a gap on both sides of this integration, stated here
   without favoring either vendor. A 2026-11-05 Microsoft blog post announces an end-of-2026 change
   that would move Claude processing into the Boundary for EU/EFTA tenants, but it has not shipped
-  as of this update. See
+  as of this update. On 2026-12-09 the EU/EFTA/UK setting changes: tenants that never chose an
+  option get Claude enabled for all users. See
   [Residency](#residency-anthropic-excluded-from-the-eu-data-boundary-claude-on-foundry-has-no-eu-data-zone-either).
 - Claude's contractual relationship to this family is not one thing: three different postures
   apply depending on path (Microsoft Foundry, standard Microsoft 365 Copilot subprocessor models,
@@ -364,6 +365,15 @@ but serves the same posts through its board RSS feed.
   EU/EFTA/UK tenant administrators enable Anthropic as the default model for Copilot in Microsoft
   365 apps — an opt-in setting, off by default, with no preview label on the page documenting it
   [eudb-subprocessor].
+- **That default changes on 2026-12-09** (Microsoft Learn, page dated 2026-11-20, read 2026-11-23)
+  [eudb-apps-setting]. The "All users for Microsoft 365 apps only" option goes away, and the
+  remaining options become "All users", "No users" and "Specific users and groups". Tenants that
+  chose the removed option, **or made no selection**, move to "All users", so Claude models
+  become enabled for them; "No users" and the other choices stay as they are. Microsoft says the
+  change simplifies the controls "as part of Claude models from Anthropic coming into the EU Data
+  Boundary starting in December 2026", and recommends that admins check the Anthropic subprocessor
+  setting before that date. Until then, Claude processing in Excel, PowerPoint and Word "occurs
+  outside of the EU Data Boundary".
 - Outside those regions the default is the opposite: "Microsoft enables Claude models on by default
   for most customers in commercial cloud (excluding EU/EFTA and UK)." EU, EFTA and UK
   organizations that "previously opted in to use Claude models under Anthropic's separate
@@ -1042,7 +1052,8 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-11-12 (passed; re-read 2026-11-17 — the page is still the 2026-10-23 snapshot, its availability table still lists GPT-4.1, GPT-5 Chat, GPT-5 Auto and GPT-5 Reasoning, and it has no past-tense retirement statement) | Copilot Studio retires GPT-4.1, GPT-4.1 Mini, GPT-5 Chat, GPT-5 Auto and GPT-5 Reasoning (extension available); FedRAMP tenants and regions where cross-geo movement is restricted keep GPT-4.1 and GPT-5 | scheduled, completion unconfirmed on the page | [copilot-model-select] |
 | 2026-11-01 (passed; re-read 2026-11-12 — 11 days after the stated date — and the Learn page still says existing settings "continue to be honored until November 1, 2026" in future tense, so the retirement remains unconfirmed there) | Preview-era PowerShell opt-in parameters for Copilot in SharePoint stop being honored | retiring | [sp-get-started] |
 | 2026-12-01 (upcoming) | Microsoft Foundry's visual workflow designer and in-portal execution retire; YAML-defined workflows keep running as hosted agents under Microsoft Agent Framework | preview feature, partial retirement | [foundry-workflow] |
-| end of 2026 (announced 2026-11-05; upcoming, no shipped date) | EU/EFTA tenants gain a (default-off) setting to move Claude processing into the EU Data Boundary automatically; existing opted-in users need take no further action | announced, not shipped | [eudb-euboundary-blog] |
+| 2026-12-09 (upcoming; page dated 2026-11-20) | EU/EFTA/UK Anthropic subprocessor setting simplified: the "Microsoft 365 apps only" option is removed, and tenants on it or with no selection move to "All users" (Claude enabled); "No users" is unchanged | announced setting change, admin check recommended | [eudb-apps-setting] |
+| end of 2026 (announced 2026-11-05; Learn now says "starting in December 2026") | EU/EFTA tenants gain a (default-off) setting to move Claude processing into the EU Data Boundary automatically; existing opted-in users need take no further action | announced, not shipped | [eudb-euboundary-blog] |
 | ongoing, per roadmap feed | A unified "Workflows" app for Teams + SharePoint automation menus | GA per roadmap feed | [RM491632][rm-workflows-app] |
 | 2026-03-09 (passed) | Copilot Cowork Research Preview announced; "integrated the technology behind Claude Cowork into Microsoft 365 Copilot" | Research Preview | [cowork-announce-blog] |
 | 2026-03-30 (passed) | Copilot Cowork "available via the Frontier program" | Frontier | [cowork-frontier-blog] |
@@ -1369,7 +1380,8 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Microsoft 365 Copilot — Package Management API overview][package-api] | GA-shaped reads vs. preview writes, licence requirement |
 | [Microsoft Graph — agentRegistry (beta) resource][agent-registry-beta] | Legacy API replacement notice |
 | [Microsoft Graph — UTCM/TCM authentication setup][utcm-setup] | Public preview, service-principal (app-only) authentication |
-| [Claude models from Anthropic in Microsoft Online Services][eudb-subprocessor] (page revised 2026-11-04, re-read 2026-11-12) | Anthropic EU Data Boundary exclusion, subprocessor/Data-Retention postures, EU/EFTA/UK admin setting and re-opt-in, commercial-cloud default on, retention periods |
+| [Claude models from Anthropic in Microsoft Online Services][eudb-subprocessor] (page revised 2026-11-04, re-read 2026-11-12; dated 2026-11-20 on 2026-11-23, adds a pointer to the 2026-12-09 change) | Anthropic EU Data Boundary exclusion, subprocessor/Data-Retention postures, EU/EFTA/UK admin setting and re-opt-in, commercial-cloud default on, retention periods |
+| [Enable Claude models only for Copilot experiences in Microsoft 365 apps][eudb-apps-setting] (page dated 2026-11-20, read 2026-11-23) | The 2026-12-09 setting change for EU/EFTA/UK tenants (options, what no selection becomes) and "coming into the EU Data Boundary starting in December 2026" |
 | [Microsoft Copilot blog — Bringing Claude models in Microsoft Copilot into the EU Data Boundary (2026-11-05)][eudb-euboundary-blog] | Announced, not-yet-shipped end-of-2026 change moving Claude processing into the EU Data Boundary for EU/EFTA tenants |
 | [Microsoft 365 Copilot — Flex routing][flex-routing] | Default-on cutover date, older-tenant guidance, Multi-Geo scope |
 | [Claude in Microsoft Foundry][claude-foundry] | Deployment types, absence of an EU-region type |
@@ -1496,6 +1508,7 @@ re-checked even when Microsoft leaves the page unchanged.
 [agent-registry-beta]: https://learn.microsoft.com/en-us/graph/api/resources/agentregistry
 [utcm-setup]: https://learn.microsoft.com/en-us/graph/utcm-authentication-setup
 [eudb-subprocessor]: https://learn.microsoft.com/en-us/copilot/implement/connect-to-ai-subprocessor
+[eudb-apps-setting]: https://learn.microsoft.com/en-us/copilot/implement/copilot-anthropic-apps
 [eudb-euboundary-blog]: https://www.microsoft.com/en-us/copilot/blog/2026/11/05/bringing-claude-models-in-microsoft-copilot-into-the-eu-data-boundary/
 [flex-routing]: https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-flex-routing
 [claude-foundry]: https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry
