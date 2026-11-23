@@ -3,7 +3,7 @@ title: Claude Code Skills Adoption - Implementation Summary
 purpose: Implementation summary of adopting Claude Code Skills for modular agent capabilities, including format analysis and ecosystem context.
 status: adopt
 created: 2026-01-11
-updated: 2026-11-09
+updated: 2026-11-22
 validated_links: 2026-10-23
 ---
 
@@ -300,6 +300,12 @@ rankings transfer weakly across models. Their conclusion: treat a skill as
 hypothesis-specific to one model/project pairing, not as a universally reusable
 asset, and audit per deployment.
 
+### What Belongs in a Skill: Information, Not Instructions
+
+A practitioner rule of thumb ([ai-that-works ep. #68, 2026-08-04][aiw-skills]; practitioner talk, single-source, hosts build BAML and HumanLayer): a skill earns its place by carrying **information the model cannot know** (a repo's type-system quirks, which monorepo folder matters, that the main branch is named something unusual), not **instructions for things it already does** (run the tests, use the GitHub CLI). The stated reason is that instructional skills rot as models improve and can pull a capable model away from its good defaults. The hosts' corollary: when a new model ships, delete skills and agent-instruction files by default and make the team justify each keeper. A follow-up episode ([ep. #77, 2026-10-06][aiw-memory-skills]) added that content already in the weights is not worth a skill, and that the best fix for agents missing repo context can be one pointer line in the root file.
+
+This is the same filter Anthropic's own [skill authoring guide][skills-best-practices] applies ("only add context Claude doesn't already have"), and it fits the measured downsides of skill injection above ([WebDev-Skills-Bench][webdev-skills-bench-paper]). Two papers covered in [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md#claudemd-growth-and-catastrophic-remembering-arxiv-260811095) point the same way without measuring this rule: [arXiv 2608.11095][claude-md-growth] traces unbounded instruction-file growth to imperfect recall, and [arXiv 2607.27250][khatri-context-ablation] found that context files did not measurably change task correctness. What the talk adds is the test to apply: for each line, ask whether the model could not know it, or only needs to be told. The "delete on every model release" cadence is the hosts' opinion, not a measured result.
+
 ## Ecosystem Context
 
 The Agent Skills standard has achieved broad cross-industry adoption:
@@ -435,3 +441,7 @@ Update `.claude/settings.json` to adopt Skills:
 [webdev-skills-bench-paper]: https://arxiv.org/abs/2608.23067
 [repo-to-skill-paper]: https://arxiv.org/abs/2609.02749
 [repo-to-skill-repo]: https://github.com/VectorSpaceLab/AREX-Skill
+[aiw-skills]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-04-slop-code-bench
+[aiw-memory-skills]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-10-06-building-a-memory-pipeline
+[claude-md-growth]: https://arxiv.org/abs/2608.11095
+[khatri-context-ablation]: https://arxiv.org/abs/2607.27250

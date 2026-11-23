@@ -101,6 +101,10 @@ Implement agents as functional transformations of state: `(state, event) ->
 (state, actions)`. Structured logging with JSON output; traces capture agent
 event streams; queryable audit trails for debugging and compliance.
 
+#### Separate projections of one event log
+
+A practitioner talk ([ai-that-works ep. #30, 2025-11-05][aiw-events]; practitioner talk, single-source; the guest describes his own product, SageKit) extends the reducer idea: log every user input, tool result and model chunk as an append-only event, then derive independent projections for each consumer rather than one shared mutable conversation. The UI projection shows pending approvals and queued messages, the prompt projection hides queued user messages until they become active, and the persistence projection stores the log. Because state is derived, a test can replay a recorded event log and assert the result without a UI or a model, which makes the loop deterministic to test. The underlying technique is established ([Fowler on event sourcing][fowler-es]: rebuild state by re-running the log, and replay real events into a test system); what the talk adds is applying it to agent loops with distinct UI, prompt and storage views. Whether it pays off beyond interrupts, approvals and queued inputs is not shown by the talk.
+
 ## 12-Factor App Alignment
 
 The factors above blend 12-Factor Agents (Horthy/HumanLayer, 2025) with
@@ -164,6 +168,8 @@ For security-specific checks, see the
 - [PydanticAI][pydantic-ai]
 - [12-Factor App][12fa-app] (Heroku, 2011) — original methodology
 - [OWASP MAESTRO][owasp-maestro]
+- [ai-that-works ep. #30, "Event-driven agentic loops"][aiw-events] — practitioner talk, 2025-11-05; a conversation with a demo, not shipped code
+- [Martin Fowler: Event Sourcing][fowler-es] — replay and rebuild from an event log
 
 [12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
 [12fa-gh]: https://github.com/humanlayer/12-factor-agents
@@ -172,3 +178,5 @@ For security-specific checks, see the
 [ant-harness]: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
 [pydantic-ai]: https://ai.pydantic.dev/
 [owasp-maestro]: https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/
+[aiw-events]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-11-05-event-driven-agents
+[fowler-es]: https://martinfowler.com/eaaDev/EventSourcing.html
