@@ -3,7 +3,7 @@ title: CC Code-Analysis Tooling Landscape
 purpose: Code-understanding tools that integrate with Claude Code — knowledge graphs, semantic LSP, structural search, and repository packers — plus the cross-harness evidence on grep vs. semantic search for coding agents.
 status: research
 created: 2026-06-14
-updated: 2026-11-18
+updated: 2026-11-23
 validated_links: 2026-11-18
 ---
 
@@ -358,7 +358,7 @@ Cross-ref: [zg / zvec-grep](#zg--zvec-grep-zvec-ai) above — the other hybrid l
 
 ## jevgrep (dzhng)
 
-**Repo**: [dzhng/jevgrep][jevgrep] | **Stars**: 1,848 | **License**: MIT (confirmed against
+**Repo**: [dzhng/jevgrep][jevgrep] | **Stars**: 3,262 (1,848 on 2026-09-30; `gh api`, 2026-11-23) | **License**: MIT (confirmed against
 `LICENSE`) | **Version**: latest tag v0.7.0, latest GitHub Release v0.6.0 (provider selection requires 0.3.0+), pushed 2026-09-29
 (`gh api`, 2026-09-30)
 
@@ -380,6 +380,10 @@ reduction (rounded to "~30%" in its README banner), excluding Jev's own cost. A 
 *includes* Jev's cost reports 25.8% lower total cost at the same 8/10 solve rate. These are the
 project's own single-run measurements, not an independent replication, and the README says so:
 "single-run observations do not establish statistical equivalence or a speed improvement."
+
+### Scoring a searcher on your own history
+
+Design lens — Lindenberg's *The Searcher and the Writer* (LinkedIn, 2026-10-03; `linkedin.com/pulse/searcher-writer-andré-lindenberg-ibbzc`; LinkedIn — not link-checked) argues that splitting search from writing lets you tell "search returned the wrong files" from "the writer misread the right ones". His test for any searcher, jevgrep or a Haiku subagent: take about twenty recent fixes, write the question each one answered from its ticket rather than its diff, run it against the commit before the fix, and score two things, whether the files the fix touched came back and how much else came with them. A searcher that builds no index can query an old commit as easily as today's. The 20-fix protocol is his own practitioner method (single source), not jevgrep's. His motivation is Cognition's own observation that its agents often spent more than 60% of a first turn retrieving context, and that it tuned its search model for precision because noise in the main agent's context hurt more than a missed file ([Cognition: SWE-grep][swe-grep], 2025-10-16, read 2026-11-23). His other jevgrep claims (a 2,761-file repository taking about a minute per query; a skill that went uncalled in one issue) were not checked against the repo's issues here and are omitted.
 
 ### Adoption Considerations
 
@@ -515,6 +519,7 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 [zvec-grep]: https://github.com/zvec-ai/zvec-grep
 [zvec]: https://github.com/alibaba/zvec
 [jevgrep]: https://github.com/dzhng/jevgrep
+[swe-grep]: https://cognition.com/blog/swe-grep
 [typesafe-jev-code]: https://docs.typesafe.ai/
 [skills-cli]: https://github.com/vercel-labs/skills
 [decision-models-landscape-code]: ../non-cc/reference/system-1-decision-models-landscape.md#tools-built-on-jev
