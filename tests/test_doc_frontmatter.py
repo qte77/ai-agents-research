@@ -78,7 +78,7 @@ class CheckDocTests(unittest.TestCase):
         self.assertEqual(df.check_doc(GOOD.replace("purpose: P", "purpose: " + "x" * df.PURPOSE_MAX)), [])
 
     def test_folded_or_empty_purpose_is_flagged(self):
-        for value in (">\n  folded text", "|\n  block", ""):
+        for value in (">\n  folded text", "|\n  block", "", ">+\n  x", "|2\n  x", "plain start\n  continued"):
             self.assertEqual(df.check_doc(GOOD.replace("purpose: P", f"purpose: {value}")),
                              ["purpose must be one non-empty line"], value)
 

@@ -21,6 +21,8 @@ _OUT_OF_SCOPE = ("docs/_topics/", "docs/plans/", "docs/cc-native/examples/", "do
 _TOP_KEY = re.compile(r"^([A-Za-z_][\w-]*):\s*(.*?)\s*$")
 _ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 _ONE_URL = re.compile(r"^https?://\S+$")
+_BLOCK_SCALAR = re.compile(r"^[>|][+-]?\d?[+-]?$")  # YAML folded/literal markers: >, |-, >+, |2 ...
+_CONTINUED = re.compile(r"^purpose:.*\n[ \t]+\S", re.M)  # an indented line right after purpose:
 
 
 def in_scope(path: str) -> bool:
@@ -54,7 +56,7 @@ def check_doc(text: str) -> list[str]:
         problems.append(f"source must be one URL (others go in the Sources section): {keys['source']}")
     purpose = keys.get("purpose")
     if purpose is not None:
-        if purpose in ("", ">", "|", ">-", "|-"):
+        if not purpose or _BLOCK_SCALAR.match(purpose) or _CONTINUED.search(fm):
             problems.append("purpose must be one non-empty line")
         elif len(purpose) > PURPOSE_MAX:
             problems.append(f"purpose over {PURPOSE_MAX} characters; keep it to one line (detail goes in the body)")
