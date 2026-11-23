@@ -3,7 +3,7 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
 purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
 created: 2026-06-22
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-19
 status: assess
 ---
@@ -159,6 +159,8 @@ Not rubric-scored: it is Ontology-subject and could not move the reference archi
 
 **Semantica's decision-graph audit trail** is a candidate for this same "ontology as MCP surface" pattern; its full profile (decision-as-graph-node, PROV-O lineage, bi-temporal facts, point-in-time snapshots) lives elsewhere in this corpus and is not restated here: [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms][semantica-frameworks] (RAG = Retrieval-Augmented Generation). Two facts add to that profile. Timing matters here: [EU AI Act Article 12][ai-act-12] requires high-risk systems to "technically allow for the automatic recording of events (logs) over the lifetime of the system," and the currently amended Act sets that deadline at 2027-12-02 for Annex III systems (2028-08-02 for Annex I) — later than the original date Lindenberg's issue cites, which this entry could not independently re-verify against a primary pre-amendment source. Semantica's own [CHANGELOG][semantica-changelog] is harder evidence than the audit-trail pitch itself: v0.6.7 (2026-08-28) fixed `get_causal_chain()` silently returning an empty chain whenever a causal edge used the analyzer's present-tense vocabulary (`causes`/`influences`/`precedes`) rather than the canonical uppercase form — "silent, and in the dangerous direction for a compliance trace," in the project's own words — fixed a `SHACLGenerator` that produced shapes matching no data so `pySHACL` reported `conforms: True` on plainly violating input, and fixed every RDF export path except JSON-LD silently dropping an entity's source document, page, extractor and reviewer.
 
+Design lens — Lindenberg's *The Join Nobody Approved* argues that a wrong join is valid SQL that runs and returns believable numbers, so a join check is only as good as the keys behind it (LinkedIn, 2026-11-01; practitioner framing, single source). His proposed order is measure, declare, then gate: for each inferred or drafted link, count how many child rows find a parent (a left join with `count(*)` against `count()` of the parent id) and confirm the parent key is unique (`count(*) = count(DISTINCT id)`), because a low match rate means the link is wrong and a non-unique parent makes sums inflate; where a key holds, declare it in PostgreSQL as a foreign key added `NOT VALID` and then validated, so the database proves it once. The `NOT VALID` / `VALIDATE CONSTRAINT` mechanism is documented in the [PostgreSQL `ALTER TABLE` reference][pg-altertable] (read 2026-11-23); the two queries are plain SQL, and the match-rate and uniqueness framing is his. He ties this to [NVIDIA Auto Ontology](#agent-native-ontology-tools-2026-mcp-wave), which takes a declared foreign key directly and otherwise infers edges; his claims about its join-path check being off by default were not verified against the repo here and are omitted.
+
 Design lens — Lindenberg's *Audit the Auditor* treats a CHANGELOG, not a README pitch, as the real evidence a decision-audit-trail tool is used in earnest: "an audit trail does not fail by crashing; it fails by giving a reassuring answer" (Lindenberg, *Audit the Auditor*, LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`).
 
 ## The Agent-Native Layer
@@ -220,10 +222,13 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Semantica CHANGELOG][semantica-changelog] | v0.6.7 (2026-08-28) fixes verified against the changelog text: empty causal chain, SHACL false-conforms, dropped RDF provenance metadata |
 | [EU AI Act Article 12 explainer][ai-act-12] | Record-keeping requirement text and the amended Annex III deadline (2027-12-02) |
 | André Lindenberg — *The Change of Mind Is Information* (LinkedIn, 2026-09-05; `linkedin.com/pulse/change-mind-information-andré-lindenberg-uvcue`) | Design lens: bitemporal correction as the cheap starting point for an agent-facing ontology (LinkedIn — not link-checked) |
+| [PostgreSQL ALTER TABLE][pg-altertable] | `ADD table_constraint [ NOT VALID ]` and `VALIDATE CONSTRAINT` syntax (read 2026-11-23) |
+| André Lindenberg — *The Join Nobody Approved* (LinkedIn, 2026-11-01; `linkedin.com/pulse/join-nobody-approved-andré-lindenberg-9mylf`) | Design lens: measure join keys, declare, then gate; framing practitioner single-source (LinkedIn — not link-checked) |
 | André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
 | [NVIDIA Auto Ontology README][auto-ontology] | Generate/certify/answer stages, Postgres + pgvector store, read-only MCP server, NIM default, KumoRFM route, ingestion-auth caution; Apache-2.0 LICENSE, `pyproject.toml` 1.2.0; `gh api` 2026-11-09 |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
 
+[pg-altertable]: https://www.postgresql.org/docs/current/sql-altertable.html
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
 [malloy]: https://github.com/malloydata/malloy
