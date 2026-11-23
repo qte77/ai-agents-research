@@ -53,5 +53,6 @@ and maintaining a benchmark, and domain benchmarks. Pointers only; see [the hub 
 | [weco-aide-recursive-self-improvement-analysis.md § Harness search results](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md#harness-search-results) | Harness-search methods (HarnessFlow, Harness², AIDE², RRSI, Self-HPO, Meta-Harness): what is searched, reported result | non-cc |
 | [CC-agent-teams-orchestration.md § Benchmarking a MAS vs CC-Style Baselines](../cc-native/agents-skills/CC-agent-teams-orchestration.md#benchmarking-a-mas-vs-cc-style-baselines) | Comparing a multi-agent system against Claude Code-style baselines | cc-native |
 | [llm-routers-gateways-landscape.md § When to Use What](../non-cc/infrastructure/llm-routers-gateways-landscape.md#when-to-use-what) | LiteLLM `agent_eval` (preview): pass rate, cost and duration per harness | non-cc |
+| [llm-routers-gateways-landscape.md § Open / Self-Hostable Gateways](../non-cc/infrastructure/llm-routers-gateways-landscape.md#open--self-hostable-gateways) | LiteLLM Lens (early access): trace service plus a private-preview CLI comparing pass rate and cost across harness × model pairs | non-cc |
 
 Related hubs: [security.md](security.md), [harness.md](harness.md), [agentic-web.md](agentic-web.md), [data.md](data.md), [cost.md](cost.md).
