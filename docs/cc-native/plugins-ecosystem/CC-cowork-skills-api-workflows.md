@@ -3,7 +3,7 @@ title: Cowork, Skills API & CC Web Programmatic Workflows
 source: https://platform.claude.com/docs/en/build-with-claude/skills-guide
 purpose: API-level analysis of Cowork, Skills API, Chrome extension, and CC Web for programmatic workflow creation, GitHub integration, and multi-repo orchestration.
 created: 2026-03-18
-updated: 2026-03-18
+updated: 2026-11-23
 validated_links: 2026-11-21
 status: research
 ---
@@ -75,6 +75,17 @@ Skills **do not sync across surfaces**:
 | Claude.ai | Settings > Features upload | Individual user only |
 | Claude Code | `.claude/skills/` filesystem | Project or personal |
 | Cowork | Settings upload | Individual user only |
+
+### File creation in claude.ai (support article, read 2026-11-23)
+
+Separate from the API's `pptx`/`xlsx`/`docx`/`pdf` skills above, Anthropic's [support article on creating and editing files][file-creation] documents the claude.ai-side feature: Claude runs code in a sandboxed container and produces `.xlsx`, `.pptx`, `.docx` and PDF files (plus Python scripts and PNG charts) for download or saving to Google Drive. Documented defaults by plan:
+
+- **Free, Pro, Max, Ultra**: on by default, with network access allowed for package installs. Users toggle it under Settings > Capabilities ("Code execution and file creation", relabeled "Create and edit files" in the updated settings layout).
+- **Team and Enterprise**: on by default for new organizations; owners can disable it in organization settings, and network egress is configured there. The article's text is inconsistent on Team (one passage says network access is off by default, another says package managers only); check the live page before relying on either.
+- **Network egress options**: off, package managers only, package managers plus allowlisted domains, or all domains (the article calls this the riskiest). MCP integrations can still reach the network regardless of the egress setting.
+- **Limit**: 30MB per file for uploads and downloads.
+
+The Settings > Capabilities toggle is an authenticated claude.ai page and was not opened for this note; it is described here only as the article describes it.
 
 ## Workspaces (Admin API)
 
@@ -237,6 +248,7 @@ jobs:
 
 ## References
 
+- [Create and edit files with Claude (support article)][file-creation]
 - [Skills API Guide](https://platform.claude.com/docs/en/build-with-claude/skills-guide)
 - [Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - [Workspaces](https://platform.claude.com/docs/en/build-with-claude/workspaces)
@@ -246,3 +258,5 @@ jobs:
 - [Cowork Plugins](https://claude.com/blog/cowork-plugins)
 - [Knowledge Work Plugins](https://github.com/anthropics/knowledge-work-plugins)
 - [Agent Skills Open Standard](https://agentskills.io/home)
+
+[file-creation]: https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude
