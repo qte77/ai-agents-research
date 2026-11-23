@@ -1,14 +1,14 @@
 ---
 title: CC Models & Free-Tier Provider Reference
 source: https://platform.claude.com/docs/en/about-claude/models/overview
-purpose: Descriptive reference for CC's primary agentic model (Claude Fable 5, superseded by Claude Fable 5.2), the current per-model pricing table, and a snapshot of free-tier / OSS inference providers — the model/provider facts behind CC-model-provider-configuration.md.
+purpose: Descriptive reference for CC's primary agentic model (Claude Fable 5, superseded by Claude Fable 5.2), the 5.x lifecycle and the current per-model pricing table — the model facts behind CC-model-provider-configuration.md, which owns provider facts.
 created: 2026-06-14
 updated: 2026-11-23
 validated_links: 2026-11-12
 status: reference
 ---
 
-**Details:** Reference (descriptive). For *how to configure* CC against these models/providers (env vars, endpoints, gateways), see [CC-model-provider-configuration.md](CC-model-provider-configuration.md).
+**Details:** Reference (descriptive). For *how to configure* CC against these models/providers (env vars, endpoints, gateways), see [CC-model-provider-configuration.md](CC-model-provider-configuration.md), which also owns the free-tier and OSS provider facts.
 
 ## Claude Fable 5 (CC's primary agentic model)
 
@@ -93,35 +93,11 @@ Cache-hit multiplier is 0.025x base input on Fable 5.2/Mythos 5.2/Fable 5.1/Myth
 
 ## Free-Tier & OSS Provider Reference
 
-Snapshot of inference providers with free or trial tiers — useful when routing CC (via proxy) or sibling agents (OpenCode, n8n, PydanticAI) to non-Anthropic models. Free-tier terms and model ids change frequently: **the rows below are a February 2026 snapshot** (except Infomaniak, verified June 2026); confirm current offerings on each provider's site before relying on them.
-
-| Provider | Free Tier | Example Model (API ID) | Context | Output | Tools | Notes / Limit |
-| --- | --- | --- | --- | --- | --- | --- |
-| **infomaniak** | 1M credits, 1-mo trial | OSS via OpenAI API: `qwen3`, `mistral3`, `gemma3`, `llama3` | model-dependent | — | Yes | EU/Swiss-hosted; OpenAI-compatible (proxy for CC) |
-| **gemini** | Truly free | `gemini-2.0-flash` | 1M | 8K | Yes | 15 RPM, ~1.5K RPD |
-| **github** | Truly free | `gpt-4.1-mini` | 1M | 32K | Yes | 15 RPM, ~150 RPD |
-| **cerebras** | Truly free | `gpt-oss-120b` | 128K | 8K | Yes | 30 RPM, 1M TPD |
-| **groq** | Truly free | `llama-3.3-70b-versatile` | 131K | 32K | Yes | 30 RPM, 1K RPD |
-| **mistral** | Truly free | `open-mistral-nemo` | 128K | 4K | Yes | 1 RPS, 1B tokens/mo |
-| **openrouter** | Truly free | `qwen/qwen3-next-80b-a3b-instruct:free` | 262K | 8K | Yes | 20 RPM, 50 RPD |
-| **cohere** | Truly free | `command-a-03-2025` | 256K | 8K | Yes | 20 RPM, 1K calls/mo |
-| **deepseek** | 5M free tokens | `deepseek-chat` | 128K | 8K | Yes | Spend-limited |
-| **grok** | $25 trial credit | `grok-3-mini` | 131K | 32K | Yes | Spend-limited |
-| **sambanova** | $5 trial + limited free | `Meta-Llama-3.3-70B-Instruct` | 128K | 8K | Yes | Free: 40 RPD |
-| **nebius** | $1 trial credit | `meta-llama/Meta-Llama-3.1-70B-Instruct` | 128K | 8K | Yes | $1 credit |
-| **fireworks** | $1 trial credit | `accounts/fireworks/models/llama-v3p3-70b-instruct` | 131K | 8K | Yes | $1 credit |
-| **together** | No free tier | `meta-llama/Llama-3.3-70B-Instruct-Turbo` | 128K | 8K | Yes | $5 min purchase |
-| **perplexity** | No free API tier | `sonar` | 127K | 4K | Limited | Credits required |
-| **huggingface** | ~$0.10/mo | `meta-llama/Meta-Llama-3.3-70B-Instruct` | 128K | 8K | Yes | ~10 calls on free |
-| **ollama** | Always free (local) | `llama3.3:70b` | 128K | 8K | Yes | Hardware-bound (local) |
-
-> **OpenAI-compatible tool calling**: some providers reject strict tool-definition schemas — `groq`, `cerebras`, `fireworks`, `together`, `sambanova`. With PydanticAI, set `OpenAIModelProfile(openai_supports_strict_tool_definition=False)` for these.
-
-(`restack`, which appears on some provider lists, is a workflow-orchestration platform — not an inference provider; it proxies to others.)
+Moved 2026-11-23: provider facts (endpoints, auth, free tiers, which models each provider serves) now live in one place, [CC-model-provider-configuration.md § Free-tier and OSS inference providers](CC-model-provider-configuration.md#free-tier-and-oss-inference-providers) and the provider sections around it. This doc keeps model facts only: IDs, pricing, lifecycle.
 
 ## Cross-References
 
-- [CC-model-provider-configuration.md](CC-model-provider-configuration.md) — how to point CC at these models/providers (env vars, endpoints, gateways, decision matrix)
+- [CC-model-provider-configuration.md](CC-model-provider-configuration.md) — how to point CC at these models and at other providers (env vars, endpoints, free tiers, gateways, decision matrix)
 
 ## References
 
