@@ -46,6 +46,12 @@ and lifecycle. Pointers only; see [the hub index](README.md).
 | [ibm-agent-stack-analysis.md](../non-cc/agents/ibm-agent-stack-analysis.md) | IBM: watsonx Orchestrate and ADK; connections, MAU plans | non-cc |
 | [alibaba-cloud-agent-stack-analysis.md](../non-cc/agents/alibaba-cloud-agent-stack-analysis.md) | Alibaba Cloud: Model Studio, AgentRun, Agent Identity; RAM policies, licences | non-cc |
 
+## Work classification
+
+| Doc / section | What it covers | Bucket |
+|---|---|---|
+| [goal-tracking-attribution-landscape.md § Core vs context](../sdlc-lcm/goal-tracking-attribution-landscape.md#core-vs-context-classifying-work-moore) | Moore's core/context × mission-critical grid applied to issues, PRs, milestones, agent runs and time spent; related models | sdlc-lcm |
+
 ## Identity, licences and lifecycle
 
 | Doc / section | What it covers | Bucket |

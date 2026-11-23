@@ -3,7 +3,7 @@ title: CC CLI-Anything Analysis
 source: https://github.com/HKUDS/CLI-Anything
 purpose: Evaluate CLI-Anything as a framework for generating agent-native CLIs from existing software, and its fit relative to .gitmodules, bun scripts, and Makefile recipes.
 created: 2026-03-12
-updated: 2026-07-23
+updated: 2026-11-23
 validated_links: 2026-07-23
 status: research
 ---
@@ -14,7 +14,9 @@ status: research
 
 CLI-Anything is a framework that transforms any software into an agent-native CLI through automated code analysis and generation ([source][cli-anything]). It bridges the gap between AI agents and professional software that lacks agent-friendly interfaces.
 
-Facts below reflect HKUDS/CLI-Anything, README as of 2026-07-09 (last repo push) — a fast-moving community project without versioned releases.
+Facts below reflect HKUDS/CLI-Anything, README as of 2026-07-09, plus a `gh api` refresh on 2026-11-23: 63,380 stars and 5,758 forks, Apache-2.0 (`LICENSE`), created 2026-03-08, latest release v0.4.0 (2026-06-25; earlier v0.3.0 2026-04-24 and v0.2.0 2026-03-30). The last commit on `main` is 2026-09-22 (a README edit), and the README's newest News entry is dated 2026-05-30, so the pace since summer is slower than the spring burst; the README's test badge still reads 2,461 passing, the figure used below. The 2026-07-23 text said "no versioned releases"; that no longer holds.
+
+**CLI-Hub** (the README's package manager and registry; `pip install cli-anything-hub`, then `cli-hub install <name>`) is live: on 2026-11-23 the repo's `registry.json` lists 79 CLIs and `public_registry.json` (third-party CLIs installed via pip, npm, brew or system tools) lists 24. These are counts of registry entries read from the files, not install or usage numbers.
 
 Available as a CC plugin: `/plugin install cli-anything` ([source][cli-anything]).
 

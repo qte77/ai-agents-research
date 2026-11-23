@@ -3,7 +3,7 @@ title: HarnessRouter Analysis
 source: https://github.com/HarnessRouter/harnessrouter
 purpose: Unified multi-harness API for AI coding-agent backends (Codex, Claude Code, Hermes, DeepSeek Harness, Pi) — architecture, protocol, and fit with this corpus's agent-integration research.
 created: 2026-09-24
-updated: 2026-09-30
+updated: 2026-11-23
 validated_links: 2026-09-30
 status: assess
 platform_scope: [claude-code, codex, hermes, deepseek-harness, pi]
@@ -61,6 +61,10 @@ Scored 2026-09-30 against the [agent-substrate-rubric.md](../sdlc-lcm/agent-subs
 |---|---|---|---|---|---|
 | no data (single-user Docker deployment documented; no multi-user session-sharing semantics found) | partial (the gateway/runner/ui split and per-task session workspaces support one self-hosted node; no multi-node clustering documented) | no data (harness versions are pinned by the underlying CLI installs, but no lockfile or deterministic-rebuild path is documented for HarnessRouter itself) | yes (UHP is an explicit abstraction layer — new harnesses plug in behind the same protocol, the same "one contract, many backends" idea this doc uses above to compare UHP with CC's model-gateway layer) | partial (tagged releases exist for the router itself, but per-session/per-task state versioning is not documented) | partial (UHP's "structured error handling with execution traces" gives per-task traces, but no cross-session audit log is documented) |
 
+## Related: NVIDIA NeMo Switchyard (model-level routing for Claude Code)
+
+[NVIDIA-NeMo/Switchyard][switchyard] sits one layer below HarnessRouter: it routes LLM traffic across models and providers while keeping OpenAI- and Anthropic-compatible APIs (Apache-2.0, 3,671 stars, latest release v0.3.0, pushed 2026-11-23; `gh api`, 2026-11-23). Its README lists several routing strategies, among them an **escalation router** that starts a conversation on a cheaper model and uses an LLM judge to latch the session onto a stronger one after sustained trouble (repeated errors, loops, drift), judging how the run is going rather than predicting difficulty from the request (documented, [escalation doc][switchyard-escalation], read 2026-11-23). A Claude Code example plugin routes between Sonnet and Opus using the user's Claude login and shows the chosen model in the status line; it needs Linux x86_64, Claude Code CLI 2.1.301 or newer with mods enabled, and is built from source ([example README][switchyard-claude]). Manual model selection pauses routing and subagents keep Claude's own model choice. Not verified here: which routing algorithm the Claude Code plugin uses by default, and the newsletter's detail that a repeated failure sends the next three requests to the stronger model so the prompt cache stays warm (Lindenberg, *Point It at Something*, LinkedIn, 2026-11-21; single source, routing docs for the plugin not read). Pointer only: no rubric row is added.
+
 ## Adoption Decision
 
 **Assess.** The Apache-2.0 self-hosted core, real Docker image, tagged releases (`v0.23.11`,
@@ -80,8 +84,13 @@ one layer down, at the model-provider/gateway level rather than the harness/CLI 
 |---|---|
 | [HarnessRouter/harnessrouter][repo] (GitHub API) | License (Apache-2.0), stars, latest release, creation/push dates, top-level directory listing (`gateway/`, `runner/`, `ui/`, `protocol/`) — `gh api repos/HarnessRouter/harnessrouter`, `.../releases/latest`, `.../contents`, 2026-09-24 |
 | [README][repo] | UHP feature list, Docker install command |
+| [NeMo Switchyard repo][switchyard] · [escalation doc][switchyard-escalation] · [Claude Code example][switchyard-claude] | Licence, stars, release (`gh api`, 2026-11-23); escalation-router behaviour; plugin requirements |
+| André Lindenberg — *Point It at Something* (LinkedIn, 2026-11-21; `linkedin.com/pulse/point-something-which-work-agent-can-finish-alone-andré-lindenberg-sfm6e`) | Pointer to Switchyard; the cache-warm detail is single-source and unverified (LinkedIn — not link-checked) |
 | [harnessrouter.ai][site] | Marketing site — harness list corroborated by the README; Cloud-tier specifics and backing/funding claims are site-only and unverified, omitted from the Adoption Decision |
 
 [repo]: https://github.com/HarnessRouter/harnessrouter
 [site]: https://harnessrouter.ai
 [gateway-doc]: ../cc-native/configuration/CC-model-provider-configuration.md
+[switchyard]: https://github.com/NVIDIA-NeMo/Switchyard
+[switchyard-escalation]: https://github.com/NVIDIA-NeMo/Switchyard/blob/main/docs/routing_algorithms/escalation_router_routing.md
+[switchyard-claude]: https://github.com/NVIDIA-NeMo/Switchyard/blob/main/examples/claude/README.md
