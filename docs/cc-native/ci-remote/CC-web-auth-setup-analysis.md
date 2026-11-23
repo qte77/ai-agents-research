@@ -1,7 +1,7 @@
 ---
 title: CC Web Setup, Authentication & API Key Usage
 source: https://code.claude.com/docs/en/claude-code-on-the-web
-purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive usage, connect remote sessions, and the Claude Console platform-admin surface (workspaces, rate limits, cost reporting, data retention) a headless org API key touches.
+purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive use, connect remote sessions, and the Claude Console admin surface an org API key touches.
 created: 2026-03-24
 updated: 2026-11-18
 validated_links: 2026-11-15

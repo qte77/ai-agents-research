@@ -1,6 +1,6 @@
 ---
 title: Research Agents & Discovery Platforms Landscape
-purpose: Catalog of autonomous research agents, scientific-domain models, and literature discovery/analysis platforms for research automation, with a mapping of deep-research agents to Claude Code's bundled /deep-research harness.
+purpose: Catalog of autonomous research agents, scientific-domain models and literature platforms for research automation, mapped to Claude Code's bundled /deep-research harness.
 status: research
 created: 2026-06-14
 updated: 2026-11-22

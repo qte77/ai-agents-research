@@ -1,6 +1,6 @@
 ---
 title: GitHub Copilot Cloud Agent Analysis
-purpose: Analysis of Copilot on github.com — the cloud agent, its automations, MCP server configuration, repository custom instructions, automatic code review and the responsible-use mitigations — as the cloud counterpart to the Copilot CLI.
+purpose: Analysis of Copilot on github.com (cloud agent, automations, MCP configuration, custom instructions, automatic code review, responsible-use mitigations) as the cloud counterpart to the Copilot CLI.
 created: 2026-10-24
 updated: 2026-11-12
 validated_links: 2026-11-12

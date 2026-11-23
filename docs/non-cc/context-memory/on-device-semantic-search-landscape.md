@@ -1,6 +1,6 @@
 ---
 title: On-Device / Local-First Semantic Search Landscape
-purpose: Survey of the embedder + embedded-vector-store stack for local-first semantic search — ternlight (Hold) as trigger, the Python-native scalable alternatives (Assess), and the decouple-the-layers lesson.
+purpose: "Survey of the embedder plus embedded-vector-store stack for local-first semantic search: ternlight (Hold), Python-native scalable alternatives (Assess), and the decouple-the-layers lesson."
 created: 2026-07-23
 updated: 2026-11-18
 validated_links: 2026-09-24

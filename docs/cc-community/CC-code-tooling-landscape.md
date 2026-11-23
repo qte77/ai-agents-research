@@ -1,6 +1,6 @@
 ---
 title: CC Code-Analysis Tooling Landscape
-purpose: Code-understanding tools that integrate with Claude Code — knowledge graphs, semantic LSP, structural search, and repository packers — plus the cross-harness evidence on grep vs. semantic search for coding agents.
+purpose: Code-understanding tools that integrate with Claude Code (knowledge graphs, semantic LSP, structural search, repo packers) and cross-harness evidence on grep vs. semantic search.
 status: research
 created: 2026-06-14
 updated: 2026-11-23

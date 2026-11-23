@@ -1,6 +1,6 @@
 ---
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
-purpose: Disambiguates the agent-interoperability "Protocol Triangle" — frontend (AG-UI / A2UI / OpenGenerativeUI), agent↔agent (A2A), model↔tools (MCP) — plus the AGNTCY infrastructure stack. Tracks 2026 ecosystem adoption and clarifies which vendors have and have not joined.
+purpose: Disambiguates the agent-interoperability Protocol Triangle (AG-UI/A2UI frontend, A2A agent-to-agent, MCP model-to-tools) plus the AGNTCY stack, and tracks 2026 ecosystem adoption.
 created: 2026-04-24
 updated: 2026-11-22
 validated_links: 2026-10-24

@@ -1,7 +1,7 @@
 ---
 title: CC Changelog Feature Scan
 source: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
-purpose: Comparison cutoff for the weekly changelog monitor (CHANGELOG.md checked v2.1.0–2.1.325; the monitor bumps this range, it does not mean the features are documented). The hand-written scan below covers v2.1.0–v2.1.71 and the 2026-04-06 power-features list; later features are documented in the topic docs.
+purpose: Comparison cutoff for the weekly changelog monitor, plus a hand-written scan of Claude Code features v2.1.0-v2.1.71 and the 2026-04-06 power-features list.
 created: 2026-03-07
 updated: 2026-11-15
 validated_links: 2026-04-06

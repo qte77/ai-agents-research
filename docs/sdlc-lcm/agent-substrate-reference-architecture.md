@@ -1,6 +1,6 @@
 ---
 title: Agent Substrate Reference Architecture — a Shared, Versioned, Traceable Memory and Context Layer
-purpose: Synthesis of the plan 0009 rubric rows into one store-first reference architecture for shared, versioned, traceable agent memory and context, with each cell linked to its scored row and the layers mapped to qte77 estate repos.
+purpose: Synthesis of the plan 0009 rubric rows into one store-first reference architecture for shared, versioned, traceable agent memory and context, mapped to qte77 estate repos.
 created: 2026-09-30
 updated: 2026-11-22
 validated_links: 2026-09-30
