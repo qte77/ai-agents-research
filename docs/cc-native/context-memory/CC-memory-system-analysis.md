@@ -3,7 +3,7 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-11-20
+updated: 2026-11-22
 validated_links: 2026-11-12
 status: adopt
 ---
@@ -335,6 +335,15 @@ All gates must pass before a dream runs:
 
 Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) — CLAURST documents Auto-Dream's three-gate trigger and four-phase architecture
 
+### Practitioner Variant: A Memory Pipeline Split by Learning Source
+
+Auto-Dream's Gather Signal phase treats session transcripts as one pool. A practitioner talk on building a memory pipeline over coding-agent sessions ([ai-that-works ep. #77, 2026-10-06][aiw-memory]; practitioner talk, single-source) describes three refinements. The hosts, who build BAML and HumanLayer, also use their own small decision model (Jev) in the pipeline, so cost and quality figures are self-reported.
+
+- **Split by where the learning comes from.** One track extracts facts the agent discovered, a second catches humans correcting the agent, and a third maps which files subagents read and which docs answered their question. Facts that recur across sessions are grouped before they are admitted as memory, so a single-session fluke does not become a rule.
+- **Filter cheaply before the large model.** A small classifier scores each message (discovery, correction, or neither) and only survivors reach the large grouping and judging model. The hosts reported that the filter kept about 60% of the text but all of their golden-set messages, at about two cents per session. This is the general LLM cascade idea, which [FrugalGPT][frugalgpt] describes as a cost-reduction strategy (learning which model combinations to use per query); the 60% / 100% / two-cent figures are the hosts' own and not independently verified.
+- **Keep the expensive first version as the golden dataset.** The first run, pointing a coding agent at raw session data, cost far more than the final pipeline (reported about $100 against about 50 cents); its output became the reference every later prompt change was compared against. Caching each model call by a hash of its inputs lets one step be re-run without paying for earlier ones.
+- **The fix is sometimes a pointer, not a new memory.** With repository access, the pipeline found agents repeatedly asking about layout because nothing told them to read an existing architecture file; the fix reported was one line in the root instruction file rather than many one-fact skills. This matches the rot findings above ([arXiv 2608.11095][claude-md-growth], [arXiv 2607.27250][khatri-context-ablation]) and the rule in [CC-skills-adoption-analysis.md](../agents-skills/CC-skills-adoption-analysis.md#what-belongs-in-a-skill-information-not-instructions).
+
 ## Enterprise Agent Memory Beyond CC
 
 Four references situate CC's memory system against other enterprise agent-memory approaches — useful context, not a like-for-like comparison, since each targets a different product surface.
@@ -504,6 +513,8 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 - ["Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (arXiv 2608.11095)][claude-md-growth] — Chakrabarti, submitted 2026-08-11
 - [coleam00/context-engineering-intro][cei] — MIT-licensed CLAUDE.md/PRP starter template, 13.9k★ (verified 2026-09-30)
 - [TrackPoint "Semantic Reasoning"][trackpoint-sr] — Jay Shah, updated 2026-09-29; vendor blog on topic-label context gating
+- [ai-that-works ep. #77, "Building a Memory Pipeline"][aiw-memory] — practitioner talk, 2026-10-06; a conversation with a demo, not shipped code; hosts are the makers of BAML and HumanLayer
+- ["FrugalGPT" (arXiv 2305.05176)][frugalgpt] — Chen, Zaharia, Zou, submitted 2023-05-09; LLM cascade as a cost-reduction strategy
 - [Agent substrate rubric][rubric] — six-property scoring rubric applied to CC's memory system above
 - [Claude Code CHANGELOG.md][changelog] — `v2.1.277`'s own AGENTS.md-fallback bullet, read in full via `gh api repos/anthropics/claude-code/git/blobs/<sha>`, 2026-11-12 (contents API refuses this file over 1 MB)
 
@@ -534,3 +545,5 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 [trackpoint-sr]: https://www.trackpoint.ai/blogs/semantic-reasoning
 [trackpoint-demo]: https://www.trackpoint.ai/demo
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
+[aiw-memory]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-10-06-building-a-memory-pipeline
+[frugalgpt]: https://arxiv.org/abs/2305.05176
