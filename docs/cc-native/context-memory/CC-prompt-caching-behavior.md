@@ -272,6 +272,24 @@ Two exceptions in the table's own text bear on CC: "Setting effort explicitly to
 
 Source: [prompt caching docs][caching], "What invalidates the cache" section and the notes after it (raw page text, accessed 2026-10-26); [CC gateway guide][cc-gateway] and [effort docs][effort] (accessed 2026-11-08)
 
+### Preserved thinking (documented, 2026-11-23)
+
+[Preserved thinking][pthink] covers which earlier-turn thinking blocks Claude can still use when a request sends them back. Documented scope: Fable 5.2, Mythos 5.2, Fable 5.1, Mythos 5.1, Opus 5.5, Sonnet 5.5 and Haiku 5.5 (Messages API, Managed Agents). On these models, usable blocks stay in context and are billed as input.
+
+| Binding | Rule (documented) |
+|---|---|
+| Prior content | A block is tied to `system`, `tools` and every earlier message; a change fails the prefix check and the request can get a 400 (rules: [CC-models-reference.md](../configuration/CC-models-reference.md#claude-5x-lifecycle-defaults-and-fable-52-breaking-changes)) |
+| Model | A model reads only some other models' blocks; the page has a switch matrix (for example Fable 5.2 blocks are read only by Fable 5.2 and Mythos 5.2) |
+| Account | Fable 5.2, Mythos 5.2, Sonnet 5.5 and Haiku 5.5 blocks work only in the producing account or a linked one. "Account" means the organization on the Claude API, Platform on AWS, Google Cloud (Anthropic managed) and Foundry; the AWS account on Bedrock; the project on Google Cloud (Google managed) |
+
+**Unusable block.** A block the new model or account cannot read never causes an error: the API drops it for that request, does not bill it, and Claude answers without that reasoning. The dropped entry is listed in `input_transformations` (reasons `model_binding_mismatch`, `organization_binding_mismatch`) when the `anthropic-beta: thinking-binding-controls-2026-08-01` header is sent. The history is not changed, so the block is readable again on the original model or account. A prefix-check failure is separate: `prefix_mismatch_behavior` chooses between a 400 and dropping the failing blocks (`"drop_block"`, which needs that beta header and adaptive thinking); with the setting unset, behaviour varies by model (some let the blocks through), and Message Batches items never get the 400.
+
+**Cost of dropping.** The docs say Claude can spend more output tokens re-deriving reasoning it cannot read, and that dropping invalidates the prompt cache from the first dropped block onward. This is the "Dropped thinking blocks" row in the [invalidation table](#api-level-invalidation-platform-docs) above.
+
+**In Claude Code (owner observation, CC v2.1.330).** After signing in to a different organization, CC showed a notice that Claude cannot use thinking from another organization. The text said the earlier thinking was written under the other org and is not deleted, that resuming signed in to that org makes it usable again, and that the next responses may be slower and use more tokens because Claude rereads the session and writes new thinking. It linked the preserved-thinking page. This is a single observation, not in the CC changelog through 2.1.330; it matches the documented account-bound drop, and the cost it names matches the cache effect above. Whether it applies to every affected model or sign-in path is unverified.
+
+Source: [Preserved thinking][pthink] and [Fix a thinking block bound to a different conversation][pthink-fix] (read 2026-11-23)
+
 ## Cache Scope
 
 In CC, the cache is effectively scoped to one machine and directory — the system prompt embeds auto-memory paths, and the conversation opens with an announcement of the working directory, platform, shell, and OS version. Two sessions in different directories therefore build different prefixes and miss each other's cache. Sessions run in **parallel** in the *same* directory build matching prefixes and read each other's cache; **sequential** sessions in the same directory share the prefix only when the git status snapshot taken at startup matches, since each conversation also carries the branch and recent commits from that snapshot.
@@ -308,6 +326,7 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | Source | Content |
 |---|---|
 | [Fable 5.2 migration guide][fable52-migration] | Prefix check, append-only history and cache note (read 2026-11-23) |
+| [Preserved thinking][pthink], [fix-bound page][pthink-fix] | Supported models, model/account binding, unusable-block drop, cost of dropping, `input_transformations` (read 2026-11-23) |
 | [Prompt caching docs][caching] | What's cached, prefix matching, breakpoints, TTL, minimum cacheable prefix per model, cache isolation, lifetime start, manual clear, ZDR, Batches interaction, API-level invalidation table — raw page text, re-verified 2026-10-26 |
 | [CC LLM gateway guide][cc-gateway] | Per-turn effort via `output_config.effort` on `role: "system"` entries (accessed 2026-11-08) |
 | [Effort docs][effort] | Per-message effort beta, header, supported models (accessed 2026-11-08) |
@@ -322,6 +341,8 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 
 [caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 [fable52-migration]: https://platform.claude.com/docs/en/models/fable-5-2/migration-guide
+[pthink]: https://platform.claude.com/docs/en/build-with-claude/preserved-thinking
+[pthink-fix]: https://platform.claude.com/docs/en/build-with-claude/preserved-thinking/fix-bound-to-a-different-conversation
 [pricing]: https://platform.claude.com/docs/en/about-claude/pricing
 [api]: https://platform.claude.com/docs/en/api/messages
 [cc-caching]: https://code.claude.com/docs/en/prompt-caching
