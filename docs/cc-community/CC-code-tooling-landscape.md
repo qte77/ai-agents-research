@@ -359,8 +359,8 @@ Cross-ref: [zg / zvec-grep](#zg--zvec-grep-zvec-ai) above — the other hybrid l
 ## jevgrep (dzhng)
 
 **Repo**: [dzhng/jevgrep][jevgrep] | **Stars**: 3,262 (1,848 on 2026-09-30; `gh api`, 2026-11-23) | **License**: MIT (confirmed against
-`LICENSE`) | **Version**: latest tag v0.7.0, latest GitHub Release v0.6.0 (provider selection requires 0.3.0+), pushed 2026-09-29
-(`gh api`, 2026-09-30)
+`LICENSE`) | **Version**: latest tag v0.7.0, latest GitHub Release v0.6.0 (provider selection requires 0.3.0+), pushed 2026-11-12
+(`gh api`, 2026-11-23; 2026-09-29 at the 2026-09-30 read)
 
 A CLI (`jg`) that answers a natural-language question about a repository ("Where is
 authentication checked before a request reaches a handler?") with a compact file list, selected
