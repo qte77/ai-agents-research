@@ -1,4 +1,4 @@
-# Polls community sources (awesome-claude-code, awesome-claude-code-plugins, Reddit, X) for
+# Polls community sources (awesome-claude-code, awesome-claude-code-plugins) for
 # Claude Code tips and features not yet covered by community docs.
 # Opens a triage PR when new uncovered content is found.
 name: Community Monitor
@@ -28,10 +28,6 @@ jobs:
 
       - name: Run community monitor
         id: monitor
-        env:
-          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
-          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
-          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
         run: |
           set +e
           python .github/scripts/community-monitor.py \

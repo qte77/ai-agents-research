@@ -87,7 +87,7 @@ Four GitHub Actions cron workflows maintain currency by polling external sources
 | Community monitor | Community forums, GitHub | `triage/community/` | Monday 10:00 UTC |
 | ArXiv paper eval | `qte77/gha-rxiv-feed-action` CSVs → decision-model relevance gate (Clef via `decide()`), chat-LLM fallback for uncertain papers | `triage/rxiv/` | Tuesday 09:00 UTC |
 
-A content source whose credentials are unset (the community monitor's Reddit and X sources) or whose fetch fails is listed as skipped, with the reason, in the report, the triage PR and the run summary (#811). A run in which no source returns any entries exits 2 and fails the job instead of opening an empty triage PR (#916).
+A content source whose fetch fails is listed as skipped, with the reason, in the report, the triage PR and the run summary (#811). A run in which no source returns any entries exits 2 and fails the job instead of opening an empty triage PR (#916).
 
 Each monitor commits its state-fingerprint file in `.github/state/` alongside the triage PR for content-stable dedup across runs. The rxiv eval skips PR creation when the assembled report fingerprint matches the prior emission for the same `(server, year, week)` key. The CC changelog monitor's trigger uses `releases.atom` entry ids as its dedup ledger for feed-covered versions, falling back to the scan-doc version cutoff for any version the feed doesn't cover (a gap, or the feed being unavailable entirely) — `CHANGELOG.md` stays the sole content source either way (#410).
 
