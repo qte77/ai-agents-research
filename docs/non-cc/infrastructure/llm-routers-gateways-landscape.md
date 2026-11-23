@@ -3,7 +3,7 @@ title: LLM Routers & Gateways Landscape
 source: https://openrouter.ai/
 purpose: Provider-agnostic model routers, hosted aggregators, self-hostable gateways, and model-fusion/ensemble routing tools — a reference catalog verified 2026-06-16.
 created: 2026-06-16
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-18
 status: reference
 ---
@@ -20,7 +20,7 @@ A survey of provider-agnostic LLM routers, API gateways, and model aggregators �
 
 | Tool | License | Pricing | Models / Providers | Differentiator |
 |---|---|---|---|---|
-| [LiteLLM](https://github.com/BerriAI/litellm) | MIT (enterprise dir: separate) | Free self-hosted; enterprise custom | 100+ providers incl. OpenAI, Anthropic, Gemini, Azure, Bedrock, Vertex, Cohere, vLLM, HuggingFace | Python SDK + proxy server; 63.5 k stars; v1.110.0 (2026-11-18); cost tracking, load balancing, guardrails, Model Context Protocol (MCP) gateway support; [Customer Portal][litellm-portal] (announced 2026-11-13, not yet confirmed in a release): spend tracking and budgets per customer org, team and member, a budget webhook, usage APIs to show costs in your own product; OSS caps each level at 5, per-model key budgets need Enterprise; [agent evaluations][litellm-agent-eval] (blog 2026-11-16, preview): `litellm.agent_eval()` runs your own typed tasks against harness-and-model targets (tool loop, Claude Code, Codex) in fresh workspaces and reports pass rate, cost and duration; the page says published PyPI releases do not include it yet (on `main`, release version not stated), so it is not shipped as of 2026-11-18; also appears in CC-routing doc |
+| [LiteLLM](https://github.com/BerriAI/litellm) | MIT (enterprise dir: separate) | Free self-hosted; enterprise custom | 100+ providers incl. OpenAI, Anthropic, Gemini, Azure, Bedrock, Vertex, Cohere, vLLM, HuggingFace | Python SDK + proxy server; 63.5 k stars; v1.110.0 (2026-11-18); cost tracking, load balancing, guardrails, Model Context Protocol (MCP) gateway support; [Customer Portal][litellm-portal] (announced 2026-11-13, not yet confirmed in a release): spend tracking and budgets per customer org, team and member, a budget webhook, usage APIs to show costs in your own product; OSS caps each level at 5, per-model key budgets need Enterprise; [agent evaluations][litellm-agent-eval] (blog 2026-11-16, preview): `litellm.agent_eval()` runs your own typed tasks against harness-and-model targets (tool loop, Claude Code, Codex) in fresh workspaces and reports pass rate, cost and duration; the page says published PyPI releases do not include it yet (on `main`, release version not stated), so it is not shipped as of 2026-11-18; also appears in CC-routing doc; [Lens][litellm-lens] (early access; repo [BerriAI/lens][lens-repo], MIT outside an `enterprise/` directory the repo doesn't have, 63 stars, v0.4.0 on 2026-11-23): a self-hosted trace and investigation service (one container plus ClickHouse) that Claude Code and Codex plugins can send session traces to, and a [Lens CLI][litellm-lens-cli] in private preview (no public install yet) whose `lens run` runs one task set across harness × model configurations (Claude Code, Codex, OpenCode, Pi, Deep Agents and others) and reports pass rate, estimated cost, cost per pass and P50 latency. The launch post's 24-task legal-QA run is a vendor demo, not a benchmark |
 | [Portkey](https://portkey.ai/) | MIT (OSS gateway); managed: proprietary | Free self-hosted / managed from $49/month | 1,600+ LLMs across 200+ providers | TypeScript gateway (12.1 k stars); dedicated Claude Code Gateway product page; Anthropic/Bedrock/Vertex backends; RBAC, guardrails, semantic caching |
 | [Bifrost](https://www.getmaxim.ai/bifrost/) | Apache 2.0 | Free self-hosted; enterprise hosted (no public price) | 23+ providers, 1,000+ models (OpenAI, Anthropic, Bedrock, Vertex, Azure, Cerebras, Mistral, Groq, Ollama) | Go implementation; claims 50× lower P99 latency vs LiteLLM; 5.8 k stars; v1.4.9 (2026-06-15); adaptive load balancer, provider fallback, semantic caching, MCP gateway |
 | [Helicone AI Gateway](https://www.helicone.ai/) | Apache-2.0 | Hobby free (10 k req/month); Pro $79/month; Team $799/month; Enterprise on-prem | 100+ models incl. OpenAI, Anthropic, Azure, Gemini, DeepSeek, Groq, OpenRouter | TypeScript (91.2%); 5.8 k stars; v2025.08.21-1; observability-first — request logging, cost tracking, agent tracing, prompt management; SOC-2/HIPAA on Team+ |
@@ -91,6 +91,7 @@ Facts compiled from each tool's first-party page (1p-verified 2026-06-16). No th
 | [openrouter.ai/blog/announcements/fusion-beats-frontier/](https://openrouter.ai/blog/announcements/fusion-beats-frontier/) | OpenRouter Fusion benchmark and billing model |
 | [github.com/BerriAI/litellm](https://github.com/BerriAI/litellm) | LiteLLM release, license, star count |
 | [LiteLLM Agent evaluations blog][litellm-agent-eval] | `litellm.agent_eval` API shape and its preview status (2026-11-16) |
+| [LiteLLM Lens docs][litellm-lens] · [Lens CLI docs][litellm-lens-cli] · [Lens CLI blog][litellm-lens-blog] · [BerriAI/lens][lens-repo] | Lens status (early access), data paths, CLI scope (private preview) and metrics; repo licence and release from `gh api` (2026-11-23) |
 | [LiteLLM Customer Portal blog][litellm-portal] | Customer Portal announcement (2026-11-13), OSS vs Enterprise limits |
 | [portkey.ai/for/claude-code](https://portkey.ai/for/claude-code) | Portkey Claude Code Gateway product |
 | [docs.requesty.ai/integrations/claude-code](https://docs.requesty.ai/integrations/claude-code) | Requesty CC integration |
@@ -119,3 +120,7 @@ Cross-ref: [CC-model-provider-configuration.md](../../cc-native/configuration/CC
 
 [litellm-portal]: https://docs.litellm.ai/blog/customer-portal
 [litellm-agent-eval]: https://docs.litellm.ai/blog/agent-evaluations
+[litellm-lens]: https://docs.litellm.ai/docs/proxy/lens
+[litellm-lens-cli]: https://docs.litellm.ai/docs/proxy/lens/cli
+[litellm-lens-blog]: https://docs.litellm.ai/blog/lens-cli
+[lens-repo]: https://github.com/BerriAI/lens
