@@ -3,7 +3,7 @@ title: CC Extended Context Window (1M) Analysis
 source: https://code.claude.com/docs/en/model-config#extended-context
 purpose: Analysis of 1M token extended context window for cost planning and headless CC workflow usage.
 created: 2026-03-07
-updated: 2026-11-18
+updated: 2026-11-23
 validated_links: 2026-11-18
 status: assess
 ---
@@ -141,6 +141,24 @@ The ~75k smart-zone figure is comparable to this repo's 40–60% utilization tar
 - Coherence drops between consecutive turns
 - Repetition of already-completed steps increases
 
+### Context failure modes
+
+[Drew Breunig's "How Contexts Fail"][breunig-ctx] (2025-06-22, practitioner blog) names four ways a large context goes wrong. The labels are his; the evidence behind each is a mix of papers and benchmarks he cites, so treat the taxonomy as a vocabulary, not a measurement.
+
+| Failure mode | What happens |
+|---|---|
+| Poisoning | An early error or hallucination enters the context and keeps being referenced |
+| Distraction | A very long history pulls the model toward repeating it instead of reasoning fresh |
+| Confusion | Irrelevant content, such as unused tool definitions, degrades the answer |
+| Clash | New information contradicts what is already in context |
+
+Two of the primary papers behind it (abstract pages read 2026-11-23):
+
+- **Tool count** — [Less is More (arXiv 2411.15399)][arxiv-less-is-more] (Paramanayakam et al., submitted 2024-11-23, accepted at DATE 2025) proposes selecting a subset of tools per query rather than passing all of them. In its worked example (read in the HTML version, not the abstract), a 4-bit quantized Llama 3.1 8B on an edge board picked the wrong tool when given 46 tools at a 16K context, though the window could hold them, and succeeded with 19. This is one model and one query on a benchmark's tool set: an illustration that tool-list size alone can break selection, not a general threshold. The abstract's headline numbers are different (execution time down by up to 70%, power by up to 40%).
+- **Multi-turn drift** — [LLMs Get Lost In Multi-Turn Conversation (arXiv 2505.06120)][arxiv-lost-multiturn] (Laban et al., submitted 2025-05-09) reports that every top open- and closed-weight model tested did worse when a task was spread across turns than when given in one prompt, an average drop of 39% across six generation tasks. The authors split it into a small loss of aptitude and a larger rise in unreliability: models commit to early assumptions and do not recover from a wrong turn.
+
+Read with care: both papers are not Claude Code studies. They are background for, not proof of, trimming unused tool sets and starting a fresh session after a wrong turn (see Mitigation below). A [Splunk blog][splunk-ctx] (Pratik Bhavsar, 2026-08-11; vendor post promoting its agent-observability product) (search snippet and page title read 2026-11-23; not fetched in full) relies on the same material and adds a context-size-tier strategy table and token thresholds; those are vendor guidance, not adopted here.
+
 ### Mitigation
 
 The primary mitigation is [frequent intentional compaction][cc-mem-ace]: distilling progress into a structured artifact before the dumb zone is reached, then starting a fresh session from the artifact. This is preferable to relying on a 1M window to avoid compaction altogether. Cross-ref: [fresh-context-per-iteration in CC-ralph-enhancement-research.md][cc-ralph]; [Context Engineering Workflow (ACE-FCA) in CC-memory-system-analysis.md][cc-mem-ace].
@@ -179,6 +197,10 @@ How it relates to the other knobs: `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is a percen
 - [CC-model-provider-configuration.md](../configuration/CC-model-provider-configuration.md) — model env vars
 - [Long-Context Isn't the Answer][hlyr-long-ctx] — hlyr.dev, Kyle, 2026-03-23
 - [Context-Efficient Backpressure][hlyr-backpressure] — hlyr.dev, Dex, 2025-12-09
+- [How Contexts Fail][breunig-ctx] — dbreunig.com, Drew Breunig, 2025-06-22 (practitioner taxonomy)
+- [Less is More (arXiv 2411.15399)][arxiv-less-is-more] — tool-count example, paper
+- [LLMs Get Lost In Multi-Turn Conversation (arXiv 2505.06120)][arxiv-lost-multiturn] — multi-turn degradation, paper
+- [Context Engineering for AI Agents in Production][splunk-ctx] — Splunk, 2026-08-11, vendor blog (pointer only)
 
 [cc-commands]: https://code.claude.com/docs/en/commands
 [cc-subagents]: https://code.claude.com/docs/en/sub-agents#subagent-auto-compact-window
@@ -189,3 +211,7 @@ How it relates to the other knobs: `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is a percen
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [cc-ralph]: ../agents-skills/CC-ralph-enhancement-research.md
 [cc-mem-ace]: CC-memory-system-analysis.md#context-engineering-workflow-ace-fca
+[breunig-ctx]: https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html
+[arxiv-less-is-more]: https://arxiv.org/abs/2411.15399
+[arxiv-lost-multiturn]: https://arxiv.org/abs/2505.06120
+[splunk-ctx]: https://www.splunk.com/en_us/blog/artificial-intelligence/context-engineering-production-agents.html

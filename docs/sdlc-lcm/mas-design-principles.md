@@ -2,7 +2,7 @@
 title: "Multi-Agent System Design Principles"
 purpose: Core design principles for multi-agent systems synthesized from 12-Factor Agents, Anthropic Effective Harnesses, and PydanticAI.
 created: 2026-02-09
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-06-27
 status: adopt
 ---
@@ -143,6 +143,10 @@ Same agent code works across providers (OpenAI,
 Anthropic, Gemini, local). Configurable via environment
 variables.
 
+### Supervisor with a guided waterfall
+
+A hybrid of supervisor and sequential topologies, from an [AWS HPC blog with Synera][aws-synera] (Bydlon et al., 2025-05-06; vendor case study of a prototype, orchestrated with LangGraph). Each specialist agent either passes to the next agent in a predetermined order or returns to the supervisor for redirection, so routine requests follow a fixed path and unusual ones get re-routed. The agents call existing engineering workflows exposed as tools, so established analysis pipelines are wrapped rather than rewritten. The post says an RFQ response (request for quote) that takes 2-3 weeks and six engineers could be simulated in minutes once built; that is the vendors' unmeasured demo claim, not a benchmark.
+
 ## Agent/Plugin Design Checklist
 
 For security-specific checks, see the
@@ -170,6 +174,7 @@ For security-specific checks, see the
 - [OWASP MAESTRO][owasp-maestro]
 - [ai-that-works ep. #30, "Event-driven agentic loops"][aiw-events] — practitioner talk, 2025-11-05; a conversation with a demo, not shipped code
 - [Martin Fowler: Event Sourcing][fowler-es] — replay and rebuild from an event log
+- [AWS HPC blog: multi-agent AI and Synera][aws-synera] — vendor case study, 2025-05-06 (guided waterfall)
 
 [12fa-blog]: https://www.hlyr.dev/blog/12-factor-agents
 [12fa-gh]: https://github.com/humanlayer/12-factor-agents
@@ -180,3 +185,4 @@ For security-specific checks, see the
 [owasp-maestro]: https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/
 [aiw-events]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-11-05-event-driven-agents
 [fowler-es]: https://martinfowler.com/eaaDev/EventSourcing.html
+[aws-synera]: https://aws.amazon.com/blogs/hpc/engineering-at-the-speed-of-thought-accelerating-complex-processes-with-multi-agent-ai-and-synera/
