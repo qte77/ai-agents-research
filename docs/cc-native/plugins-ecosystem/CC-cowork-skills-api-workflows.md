@@ -82,7 +82,7 @@ Separate from the API's `pptx`/`xlsx`/`docx`/`pdf` skills above, Anthropic's [su
 
 - **Free, Pro, Max, Ultra**: on by default, with network access allowed for package installs. Users toggle it under Settings > Capabilities ("Code execution and file creation", relabeled "Create and edit files" in the updated settings layout).
 - **Team and Enterprise**: on by default for new organizations; owners can disable it in organization settings, and network egress is configured there. The article's text is inconsistent on Team (one passage says network access is off by default, another says package managers only); check the live page before relying on either.
-- **Network egress options**: off, package managers only, package managers plus allowlisted domains, or all domains (the article calls this the riskiest). MCP integrations can still reach the network regardless of the egress setting.
+- **Network egress options**: off, package managers only, package managers plus allowlisted domains, or all domains (the article calls this the riskiest). Model Context Protocol (MCP) integrations can still reach the network regardless of the egress setting.
 - **Limit**: 30MB per file for uploads and downloads.
 
 The Settings > Capabilities toggle is an authenticated claude.ai page and was not opened for this note; it is described here only as the article describes it.
