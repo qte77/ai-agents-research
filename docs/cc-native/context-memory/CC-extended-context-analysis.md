@@ -183,13 +183,26 @@ Accepted values for command and flag: 100K to 1M tokens as `200000`, `500k`, `1M
 
 Defaults when unset: models with a native 1M window (Fable, Sonnet 5+, Haiku 5.5, Opus 4.7+) compact at about 967K tokens; Sonnet 4.6 and Opus 4.6 without extended context at 200K; `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` holds native-1M models to 200K (the window setting cannot lift that hold).
 
-How it relates to the other knobs: `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is a percentage of the window and can only lower the trigger; `DISABLE_AUTO_COMPACT=1` (or the `autoCompactEnabled` setting, both on the settings reference) turns automatic compaction off and wins over any window; `idleCompaction` is a separate idle-time trigger. Details in [CC-env-vars-reference.md](../configuration/CC-env-vars-reference.md#context--token-control). Not verified: the changelog entry that first added the command was not located by search; the v2.1.221 floor is the commands page's own statement.
+How it relates to the other knobs: `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is a percentage of the window and can only lower the trigger; `DISABLE_AUTO_COMPACT=1` (or the `autoCompactEnabled` setting, both on the settings reference) turns automatic compaction off and wins over any window; `idleCompaction` is a separate idle-time trigger. Details in [CC-env-vars-reference.md](../configuration/CC-env-vars-reference.md#context--token-control).
+
+### How the window and the percentage combine
+
+They are two settings, and they stack rather than override each other. The window (set by `/autocompact`, `--autocompact`, `autoCompactWindow` or `CLAUDE_CODE_AUTO_COMPACT_WINDOW`, in tokens) is how full the context may get; the [env-vars page][cc-env-vars] defines `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` as "the percentage (1-100) of the auto-compact window at which auto-compaction triggers", which "can't raise the threshold" (read 2026-11-23). So the trigger is roughly window × percentage: with `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=50`, a 400K window compacts near 200K and a 1M window near 500K. The model-config page adds that the status line's `used_percentage` is measured against the full context window, so while a window is set it does not show when compaction will run. Owner observation (2026-11-23, CC v2.1.330, one sample): with the percentage at 50, the "compact earlier" prompt said a 400K window would summarize a 205K conversation on the next message, which fits the stacked reading; the prompt itself shows the window, not the effective trigger.
+
+### When `/autocompact` first appeared
+
+The [commands page][cc-commands] gives v2.1.221 as the minimum version. The CC CHANGELOG (read 2026-11-23, through v2.1.330) has no "added `/autocompact`" entry; its oldest mention is v2.1.234 (dialogs that open mid-turn), so the command shipped between v2.1.221 and v2.1.234 (inferred, not stated). Later entries: v2.1.280 footer hint, v2.1.285 `/autocompact 200k` advice for gateways that stop at 200K, v2.1.288 per-model saving, v2.1.296 subagent `autoCompactWindow`, v2.1.304 `k`/`M` suffixes on the env var, v2.1.323 unknown model IDs assumed 1M, v2.1.326 slider, v2.1.329 a fix for the percentage variable staying in effect after removal from settings. The usage prompt that suggests compacting earlier (offering, for example, a 400K window) is not in the changelog through v2.1.330 (owner observation, 2026-11-23).
+
+**Related guidance.** Anthropic's [session-management article][cc-session-mgmt] (Thariq Shihipar, 2026-04-15) does not cover the window settings; it advises a new session per task, rewinding instead of correcting after a failed attempt, compacting proactively with a note on what comes next rather than letting auto-compaction fire mid-task, and subagents for steps with large intermediate output. A community guide ([bogdanmatasaru/claude-code-guide][community-autocompact], not affiliated with Anthropic, last verified against CC v2.1.226 on 2026-08-10) describes the same settings; the first-party pages above are the authority.
 
 ## References
 
 - [CC Model Configuration — Extended context](https://code.claude.com/docs/en/model-config#extended-context)
 - [CC Commands: `/autocompact`][cc-commands]
 - [CC Model Configuration: auto-compact window][cc-autocompact]
+- [CC Environment variables][cc-env-vars] — `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` definition (read 2026-11-23)
+- [Using Claude Code: session management and 1M context][cc-session-mgmt] — Anthropic article, 2026-04-15
+- [Auto-compact guide][community-autocompact] — community guide, not affiliated with Anthropic (verified against v2.1.226)
 - [CC Costs](https://code.claude.com/docs/en/costs)
 - [Long-context pricing][pricing-long-context]
 - [Rate limits](https://platform.claude.com/docs/en/api/rate-limits)
@@ -215,3 +228,6 @@ How it relates to the other knobs: `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is a percen
 [arxiv-less-is-more]: https://arxiv.org/abs/2411.15399
 [arxiv-lost-multiturn]: https://arxiv.org/abs/2505.06120
 [splunk-ctx]: https://www.splunk.com/en_us/blog/artificial-intelligence/context-engineering-production-agents.html
+[cc-env-vars]: https://code.claude.com/docs/en/env-vars
+[cc-session-mgmt]: https://claude.com/resources/articles/using-claude-code-session-management-and-1m-context
+[community-autocompact]: https://bogdanmatasaru.github.io/claude-code-guide/guides/auto-compact
