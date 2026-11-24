@@ -6,8 +6,10 @@ created: 2026-09-24
 updated: 2026-09-24
 validated_links_on: 2026-09-24
 status: assess
-platform_scope: [claude-code, claude-desktop, cursor, vs-code, jetbrains, gemini-cli, codex-cli, crush, opencode]
+platform_scope: [claude-code, claude-desktop, cursor, gemini-cli, codex, crush, opencode]
 ---
+
+**Details:**. Also runs on or integrates with: `vs-code`, `jetbrains`.
 
 ## What It Is
 

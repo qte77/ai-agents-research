@@ -2,14 +2,13 @@
 title: GoClaw Multi-Tenant Agent Gateway Analysis
 source: https://github.com/nextlevelbuilder/goclaw
 purpose: Analysis of GoClaw as a multi-tenant AI agent platform with 8-stage execution pipeline and multi-channel messaging.
-platform_scope: [telegram, discord, slack, zalo, feishu, whatsapp]
 created: 2026-04-09
 updated: 2026-11-20
 validated_links_on: 2026-06-28
 status: assess
 ---
 
-**Details:** Source-available (CC BY-NC 4.0 — non-commercial), active development
+**Details:** Source-available (CC BY-NC 4.0 — non-commercial), active development. Also runs on or integrates with: `telegram`, `discord`, `slack`, `zalo`, `feishu`, `whatsapp`.
 
 ## What It Is
 

@@ -60,9 +60,16 @@ class CheckDocTests(unittest.TestCase):
             "key not allowed (see docs/schema/frontmatter.schema.json): validated_links",
         ])
 
-    def test_nested_yaml_lines_are_not_keys(self):
+    def test_platform_scope_must_be_an_inline_list(self):
         text = GOOD.replace("platform_scope: [claude-code, cursor]\n", "platform_scope:\n  - claude-code\n  - cursor\n")
-        self.assertEqual(df.check_doc(text), [])
+        self.assertEqual(df.check_doc(text), ["platform_scope must be an inline list, e.g. [claude-code, codex]"])
+
+    def test_platform_scope_slugs_come_from_the_schema(self):
+        text = GOOD.replace("[claude-code, cursor]", "[claude-code, vscode, slack]")
+        self.assertEqual(df.check_doc(text), [
+            "platform_scope value not in the harness list (docs/schema/frontmatter.schema.json): slack",
+            "platform_scope value not in the harness list (docs/schema/frontmatter.schema.json): vscode",
+        ])
 
     def test_status_must_be_lifecycle(self):
         self.assertEqual(df.check_doc(GOOD.replace("status: assess", "status: generally-available")),

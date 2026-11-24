@@ -2,14 +2,14 @@
 title: InsForge Agent Backend Analysis
 source: https://github.com/InsForge/InsForge
 purpose: Analysis of InsForge as a backend platform providing semantic infrastructure for AI coding agents.
-platform_scope: [claude-code, cursor, mcp-generic]
+platform_scope: [claude-code, cursor]
 created: 2026-04-09
 updated: 2026-04-09
 validated_links_on: 2026-04-09
 status: assess
 ---
 
-**Details:** Open-source (Apache-2.0), active development
+**Details:** Open-source (Apache-2.0), active development. Also runs on or integrates with: `mcp-generic`.
 
 ## What It Is
 

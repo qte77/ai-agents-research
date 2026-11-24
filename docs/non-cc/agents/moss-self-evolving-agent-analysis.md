@@ -2,7 +2,7 @@
 title: MOSS — Self-Evolution through Source-Level Rewriting Analysis
 source: https://arxiv.org/abs/2605.22794
 purpose: Analysis of MOSS, a self-evolving AI assistant that autonomously rewrites its own source code to fix underperforming behavior surfaced from production sessions.
-platform_scope: [claude-code, openai-codex, deepseek-tui, opencode]
+platform_scope: [claude-code, codex, deepseek-tui, opencode]
 created: 2026-07-23
 updated: 2026-07-23
 validated_links_on: 2026-07-23

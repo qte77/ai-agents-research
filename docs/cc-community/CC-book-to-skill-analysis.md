@@ -2,7 +2,7 @@
 title: "book-to-skill: Books and Documents as Agent Skills"
 source: https://github.com/virgiliojr94/book-to-skill
 purpose: Analysis of book-to-skill — converts technical books and documents into on-demand Claude Code (and other-harness) Skills, avoiding both PDF search and full-context dumping.
-platform_scope: [claude-code, github-copilot-cli]
+platform_scope: [claude-code, github-copilot]
 created: 2026-09-24
 updated: 2026-09-24
 validated_links_on: 2026-09-24

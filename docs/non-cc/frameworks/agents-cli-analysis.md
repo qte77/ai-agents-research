@@ -2,12 +2,14 @@
 title: "Google agents-cli — Skill Layer for Building ADK Agents"
 source: https://github.com/google/agents-cli
 purpose: Analysis of Google's agents-cli, a CLI plus skill pack that turns a coding agent (Claude Code, Antigravity, Codex) into an expert at scaffolding, evaluating and deploying ADK agents.
-platform_scope: [claude-code, antigravity, codex, google-adk]
+platform_scope: [claude-code, antigravity, codex]
 created: 2026-07-08
 updated: 2026-07-08
 validated_links_on: 2026-07-08
 status: assess
 ---
+
+**Details:**. Also runs on or integrates with: `google-adk`.
 
 ## What It Is
 

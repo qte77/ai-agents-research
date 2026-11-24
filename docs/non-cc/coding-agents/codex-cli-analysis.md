@@ -6,8 +6,10 @@ created: 2026-06-16
 updated: 2026-11-23
 validated_links_on: 2026-11-15
 status: trial
-platform_scope: [openai, cli, vscode, cursor, windsurf]
+platform_scope: [cursor, windsurf]
 ---
+
+**Details:**. Also runs on or integrates with: `openai`, `cli`, `vscode`.
 
 ## What It Is
 

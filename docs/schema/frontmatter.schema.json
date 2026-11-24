@@ -63,7 +63,39 @@
       "x-rdf": "dcterms:source"
     },
     "platform_scope": {
-      "description": "Optional. Agent harnesses the doc's subject works with, written as an inline list (not yet checked: a fixed list of slugs is planned). Maps only approximately to dcterms:subject: it describes the subject tool's reach, not the doc's topic.",
+      "type": "array",
+      "items": {
+        "enum": [
+          "amp",
+          "antigravity",
+          "claude-code",
+          "claude-desktop",
+          "cline",
+          "codex",
+          "crush",
+          "cursor",
+          "databricks-genie",
+          "deepseek-harness",
+          "deepseek-tui",
+          "gemini-cli",
+          "github-copilot",
+          "glean",
+          "google-jules",
+          "hermes",
+          "lyzr",
+          "microsoft-copilot-studio",
+          "opencode",
+          "pi",
+          "qwen-code",
+          "roocode",
+          "salesforce-agentforce",
+          "sap-joule",
+          "servicenow",
+          "windsurf",
+          "zed"
+        ]
+      },
+      "description": "Optional. Agent harnesses and hosts the doc's subject works with or runs on, as an inline list of slugs from this enum (synonyms merged: codex covers Codex CLI; github-copilot covers Copilot CLI). Editors, surfaces, operating systems, chat channels, clouds, model providers and protocols go on the **Details:** line instead. Not used for cc-native docs (the folder already says claude-code). Maps only approximately to dcterms:subject: it describes the subject tool's reach, not the doc's topic.",
       "x-rdf": "dcterms:subject"
     },
     "test_run": {

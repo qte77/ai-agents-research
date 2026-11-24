@@ -1,12 +1,14 @@
 ---
 title: Agentic Enterprise OS Landscape
 purpose: Survey of the "agentic enterprise OS" pattern (the operating-environment layer for AI agents) across enterprise platforms, open-source workspaces and the qte77 estate, with registry and pricing views.
-platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, lyzr, self-hosted-oss, claude-code]
+platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, lyzr, claude-code]
 created: 2026-06-28
 updated: 2026-11-20
 validated_links_on: 2026-11-18
 status: assess
 ---
+
+**Details:**. Also runs on or integrates with: `self-hosted-oss`.
 
 ## What It Is
 

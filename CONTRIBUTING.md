@@ -163,14 +163,18 @@ cross-reference from the other directory.
 
 #### platform_scope frontmatter
 
-For tools that support multiple platforms, add a `platform_scope` field to
-frontmatter to make cross-platform reach explicit:
+For tools that work with several agent harnesses, add a `platform_scope` field to
+frontmatter to make cross-harness reach explicit:
 
 ```yaml
 platform_scope: [claude-code, cursor, windsurf, zed, opencode, antigravity]
 ```
 
-This prevents misreading a `cc-community` placement as "CC-exclusive."
+Values are slugs from the harness list in
+[`docs/schema/frontmatter.schema.json`](docs/schema/frontmatter.schema.json); add a slug there
+when a new harness appears. Editors, surfaces, operating systems, chat channels, clouds and model
+providers go on the `**Details:**` line instead. Leave it out of `cc-native/` docs: the folder
+already says Claude Code. This prevents misreading a `cc-community` placement as "CC-exclusive."
 
 ### Index maintenance
 

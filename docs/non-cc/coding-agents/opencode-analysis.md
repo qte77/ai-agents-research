@@ -2,14 +2,13 @@
 title: opencode Analysis
 source: https://github.com/sst/opencode
 purpose: Analysis of opencode as a provider-agnostic, open-source terminal coding agent with TUI, desktop, and headless modes.
-platform_scope: [terminal, desktop, ide, web, headless]
 created: 2026-06-16
 updated: 2026-11-09
 validated_links_on: 2026-11-09
 status: trial
 ---
 
-**Details:** **License**: MIT | **Latest release**: v1.17.7 (2026-06-14) | **Stars**: ~175 k (anomalyco/opencode, 2026-06-16)
+**Details:** **License**: MIT | **Latest release**: v1.17.7 (2026-06-14) | **Stars**: ~175 k (anomalyco/opencode, 2026-06-16). Also runs on or integrates with: `terminal`, `desktop`, `ide`, `web`, `headless`.
 
 ## What It Is
 

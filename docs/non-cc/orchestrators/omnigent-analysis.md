@@ -6,8 +6,10 @@ created: 2026-06-16
 updated: 2026-06-16
 validated_links_on: 2026-06-16
 status: assess
-platform_scope: [claude-code, codex, pi, custom-agents, openai-agents]
+platform_scope: [claude-code, codex, pi]
 ---
+
+**Details:**. Also runs on or integrates with: `custom-agents`, `openai-agents`.
 
 ## What It Is
 
