@@ -44,4 +44,5 @@ status: reference
 | [2026-10-10-0012-decision-models-estate.md](2026-10-10-0012-decision-models-estate.md) | done | #652 |
 | [2026-11-12-0013-followups-after-0012.md](2026-11-12-0013-followups-after-0012.md) | superseded | #800 |
 | [2026-11-15-0014-kb-strengthening.md](2026-11-15-0014-kb-strengthening.md) | superseded | #848 |
-| [2026-11-20-0015-kb-structure-graphify-removal.md](2026-11-20-0015-kb-structure-graphify-removal.md) | approved | #935 |
+| [2026-11-20-0015-kb-structure-graphify-removal.md](2026-11-20-0015-kb-structure-graphify-removal.md) | superseded | #935 |
+| [2026-11-24-0016-graph-ui-sources-paperverse-feed.md](2026-11-24-0016-graph-ui-sources-paperverse-feed.md) | approved | #1071 |

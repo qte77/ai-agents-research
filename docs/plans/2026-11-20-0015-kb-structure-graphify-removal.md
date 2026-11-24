@@ -1,6 +1,6 @@
 ---
 title: Remove graphify; strengthen topic hubs, frontmatter, indices and cross-references
-status: approved
+status: superseded
 issue: "#935"
 created: 2026-11-20
 updated: 2026-11-24
@@ -11,6 +11,8 @@ open rows moved here unchanged (they keep their `13-` IDs), so there is one live
 `make reconcile`, which reads only the newest plan, checks all of it.
 
 ## Current status
+
+**Superseded 2026-11-24 by [plan 0016](2026-11-24-0016-graph-ui-sources-paperverse-feed.md) (#1071).** Its open rows (13-A5, 13-A7, 13-A8, 13-O5, 13-O10, N9) and the deferred list moved there unchanged; the status below is the record at hand-over.
 
 **Read this first.** Plan opened 2026-11-20 from the owner's request: "remove graphify and all
 remnants", and "strengthen the topics, frontmatter and indices and cross-refs instead". Status
