@@ -2,14 +2,13 @@
 title: Kilo Code Analysis
 source: https://github.com/Kilo-Org/kilocode
 purpose: Analysis of Kilo Code as an open-source agentic coding platform covering VS Code, JetBrains, CLI, and Cloud surfaces.
-platform_scope: [vscode, jetbrains, cli, cloud, slack]
 created: 2026-06-16
 updated: 2026-06-16
 validated_links_on: 2026-06-16
 status: trial
 ---
 
-**Details:** **License**: MIT (repo-confirmed; kilo.ai website states Apache-2.0 — MIT is authoritative per `LICENSE` and `package.json` as of 2026-06-16) | **Version**: v7.3.46 (2026-06-15) | **Stars**: 20.1k (2026-06-16)
+**Details:** **License**: MIT (repo-confirmed; kilo.ai website states Apache-2.0 — MIT is authoritative per `LICENSE` and `package.json` as of 2026-06-16) | **Version**: v7.3.46 (2026-06-15) | **Stars**: 20.1k (2026-06-16). Also runs on or integrates with: `vscode`, `jetbrains`, `cli`, `cloud`, `slack`.
 
 ## What It Is
 

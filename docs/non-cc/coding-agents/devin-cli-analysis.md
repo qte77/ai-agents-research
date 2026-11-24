@@ -2,14 +2,13 @@
 title: Devin CLI (Cognition) Analysis
 source: https://devin.ai/cli
 purpose: Evaluate Devin CLI as an interactive terminal coding agent, distinct from autonomous cloud Devin.
-platform_scope: [cli, cloud]
 created: 2026-06-16
 updated: 2026-11-23
 validated_links_on: 2026-06-16
 status: trial
 ---
 
-**Details:** **GA**: ~April 2026 | **Vendor**: Cognition AI | **License**: Proprietary | requires Devin account (free tier available)
+**Details:** **GA**: ~April 2026 | **Vendor**: Cognition AI | **License**: Proprietary | requires Devin account (free tier available). Also runs on or integrates with: `cli`, `cloud`.
 
 ## What It Is
 

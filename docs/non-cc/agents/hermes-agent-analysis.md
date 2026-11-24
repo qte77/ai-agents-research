@@ -2,14 +2,13 @@
 title: Hermes Agent Analysis
 source: https://github.com/nousresearch/hermes-agent
 purpose: Analysis of Hermes as a self-improving autonomous agent by Nous Research with multi-platform presence and skill creation.
-platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email, simplex]
 created: 2026-04-09
 updated: 2026-11-20
 validated_links_on: 2026-06-28
 status: assess
 ---
 
-**Details:** Open-source (MIT), active development by [Nous Research][nous] | **Version**: v0.23.3 (2026-11-20)
+**Details:** Open-source (MIT), active development by [Nous Research][nous] | **Version**: v0.23.3 (2026-11-20). Also runs on or integrates with: `cli`, `telegram`, `discord`, `slack`, `whatsapp`, `signal`, `email`, `simplex`.
 
 ## What It Is
 

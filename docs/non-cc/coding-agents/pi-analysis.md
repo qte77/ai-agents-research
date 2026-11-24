@@ -6,8 +6,9 @@ created: 2026-06-16
 updated: 2026-11-18
 validated_links_on: 2026-09-24
 status: trial
-platform_scope: [claude, openai, google, azure, bedrock, groq, mistral, ollama]
 ---
+
+**Details:**. Also runs on or integrates with: `claude`, `openai`, `google`, `azure`, `bedrock`, `groq`, `mistral`, `ollama`.
 
 ## What It Is
 

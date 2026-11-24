@@ -16,6 +16,7 @@ OPTIONAL = frozenset(PROPERTIES) - frozenset(REQUIRED)
 REMOVED = frozenset(SCHEMA["x-removed"])
 DATE_KEYS = tuple(k for k, v in PROPERTIES.items() if v.get("format") == "date")
 LIFECYCLE = DOC_STATUS_VOCAB
+PLATFORMS = frozenset(PROPERTIES["platform_scope"]["items"]["enum"])
 PURPOSE_MAX = PROPERTIES["purpose"]["maxLength"]  # one line; detail belongs in the body
 
 # Not content docs: indexes, hubs, plans (own schema), example files, the archive, generated output.
@@ -23,6 +24,7 @@ _OUT_OF_SCOPE = ("docs/_topics/", "docs/plans/", "docs/cc-native/examples/", "do
 _TOP_KEY = re.compile(r"^([A-Za-z_][\w-]*):\s*(.*?)\s*$")
 _ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 _ONE_URL = re.compile(PROPERTIES["source"]["pattern"])
+_INLINE_LIST = re.compile(r"^\[(.*)\]$")
 _BLOCK_SCALAR = re.compile(r"^[>|][+-]?\d?[+-]?$")  # YAML folded/literal markers: >, |-, >+, |2 ...
 _CONTINUED = re.compile(r"^purpose:.*\n[ \t]+\S", re.M)  # an indented line right after purpose:
 
@@ -64,6 +66,13 @@ def check_doc(text: str) -> list[str]:
             problems.append("purpose must be one non-empty line")
         elif len(purpose) > PURPOSE_MAX:
             problems.append(f"purpose over {PURPOSE_MAX} characters; keep it to one line (detail goes in the body)")
+    if "platform_scope" in keys:
+        m = _INLINE_LIST.match(keys["platform_scope"])
+        if not m:
+            problems.append("platform_scope must be an inline list, e.g. [claude-code, codex]")
+        else:
+            for slug in sorted({v.strip() for v in m.group(1).split(",") if v.strip()} - PLATFORMS):
+                problems.append(f"platform_scope value not in the harness list (docs/schema/frontmatter.schema.json): {slug}")
     status = keys.get("status")
     if status is not None and status not in LIFECYCLE:
         problems.append(f"status not in the lifecycle vocabulary (CONTRIBUTING §2): {status}")

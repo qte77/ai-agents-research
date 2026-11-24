@@ -2,12 +2,13 @@
 title: Gemini CLI Analysis
 source: https://github.com/google-gemini/gemini-cli
 purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now deprecated for non-enterprise users.
-platform_scope: [cli]
 created: 2026-06-16
 updated: 2026-11-23
 validated_links_on: 2026-11-18
 status: hold
 ---
+
+**Details:**. Also runs on or integrates with: `cli`.
 
 ## What It Is
 

@@ -2,14 +2,13 @@
 title: GitHub Copilot CLI Analysis
 source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface, plus the Copilot SDK that embeds the same engine.
-platform_scope: [cli, cloud]
 created: 2026-06-11
 updated: 2026-11-20
 validated_links_on: 2026-10-24
 status: assess
 ---
 
-**Details:** Proprietary ([custom license][copilot-cli-license], no derivatives) | **GA**: 2026-02-25 | **Version**: v1.0.61 (2026-06-09) | requires active Copilot subscription
+**Details:** Proprietary ([custom license][copilot-cli-license], no derivatives) | **GA**: 2026-02-25 | **Version**: v1.0.61 (2026-06-09) | requires active Copilot subscription. Also runs on or integrates with: `cli`, `cloud`.
 
 ## What It Is
 

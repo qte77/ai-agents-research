@@ -42,7 +42,7 @@ ENFORCED = {
     "validated_links_on": {"type", "format"},
     "status": {"enum"},
     "source": {"type", "format", "pattern"},
-    "platform_scope": set(),
+    "platform_scope": {"type", "items"},
     "test_run": set(),
 }
 ANNOTATIONS = {"description", "x-rdf"}
@@ -76,6 +76,7 @@ class CheckerReadsSchemaTests(unittest.TestCase):
         self.assertEqual(set(df.DATE_KEYS), {k for k, v in props.items() if v.get("format") == "date"})
         self.assertEqual(df.PURPOSE_MAX, props["purpose"]["maxLength"])
         self.assertEqual(df._ONE_URL.pattern, props["source"]["pattern"])
+        self.assertEqual(df.PLATFORMS, frozenset(props["platform_scope"]["items"]["enum"]))
         self.assertEqual(ds.DOC_STATUS_VOCAB, frozenset(props["status"]["enum"]))
         self.assertEqual(ds.PLAN_STATUS_VOCAB, frozenset(SCHEMA["$defs"]["plan"]["properties"]["status"]["enum"]))
 

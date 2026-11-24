@@ -6,8 +6,9 @@ created: 2026-06-20
 updated: 2026-11-19
 validated_links_on: 2026-11-19
 status: trial
-platform_scope: [databricks, slack, microsoft-teams, ios, android, mcp]
 ---
+
+**Details:**. Also runs on or integrates with: `databricks`, `slack`, `microsoft-teams`, `ios`, `android`, `mcp`.
 
 ## What It Is
 

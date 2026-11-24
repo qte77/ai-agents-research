@@ -6,8 +6,9 @@ created: 2026-06-20
 updated: 2026-06-20
 validated_links_on: 2026-06-20
 status: assess
-platform_scope: [web, google-drive, notion, api-sdk]
 ---
+
+**Details:**. Also runs on or integrates with: `web`, `google-drive`, `notion`, `api-sdk`.
 
 ## What It Is
 

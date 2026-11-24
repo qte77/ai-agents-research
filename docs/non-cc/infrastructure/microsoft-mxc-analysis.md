@@ -2,7 +2,6 @@
 title: Microsoft MXC (Execution Containers) Analysis
 source: https://github.com/microsoft/mxc
 purpose: Analysis of Microsoft's MXC, a cross-platform, policy-driven sandbox SDK for running agent-generated code and tools, with a Windows-native process container.
-platform_scope: [windows, linux, macos]
 created: 2026-11-09
 updated: 2026-11-12
 validated_links_on: 2026-11-12
@@ -10,7 +9,7 @@ status: assess
 ---
 
 **Details:** MIT; v1.0.0 GA 2026-10-07, latest v1.0.1 (2026-10-17, unchanged); 3,132★ (re-checked
-2026-11-12, up from 3,116★).
+2026-11-12, up from 3,116★). Also runs on or integrates with: `windows`, `linux`, `macos`.
 
 ## What It Is
 

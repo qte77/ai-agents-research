@@ -6,7 +6,7 @@ created: 2026-06-22
 updated: 2026-06-22
 validated_links_on: 2026-06-22
 status: trial
-platform_scope: [claude-code, cursor, copilot, windsurf, codex]
+platform_scope: [claude-code, cursor, github-copilot, windsurf, codex]
 ---
 
 ## What It Is

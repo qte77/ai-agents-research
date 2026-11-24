@@ -2,7 +2,7 @@
 title: Zed Editor (Agent Panel, ACP host) Analysis
 source: https://github.com/zed-industries/zed
 purpose: Analysis of the Zed editor as an agent host — its own Zed Agent, external agents such as Claude Agent over the Agent Client Protocol (ACP), and agent CLIs in terminal threads.
-platform_scope: [zed, claude-code, codex, opencode, copilot, cursor, pi, gemini-cli]
+platform_scope: [zed, claude-code, codex, opencode, github-copilot, cursor, pi, gemini-cli]
 created: 2026-11-09
 updated: 2026-11-09
 validated_links_on: 2026-11-09

@@ -2,7 +2,7 @@
 title: agents-md-cookbook — Tool-Agnostic AGENTS.md Template Kit
 purpose: Assess a tested AGENTS.md template/linter/migrator kit and its claim of cross-tool AGENTS.md support
 source: https://github.com/Taiizor/agents-md-cookbook
-platform_scope: [cursor, openai-codex, github-copilot, windsurf, cline, zed, amp, google-jules, opencode, roocode, claude-code]
+platform_scope: [cursor, codex, github-copilot, windsurf, cline, zed, amp, google-jules, opencode, roocode, claude-code]
 created: 2026-07-23
 updated: 2026-09-30
 validated_links_on: 2026-09-30
