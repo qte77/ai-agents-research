@@ -58,7 +58,7 @@ class ExtractIdsTests(unittest.TestCase):
 
     def test_four_or_five_digit_serials(self):
         self.assertEqual(
-            kb.extract_ids("arxiv.org/abs/2301.1234 arxiv.org/abs/2301.12345"),
+            kb.extract_ids("arxiv.org/abs/1301.1234 arxiv.org/abs/2301.12345"),
             {"1301.1234", "2301.12345"},
         )
 
