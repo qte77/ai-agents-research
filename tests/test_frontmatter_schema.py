@@ -22,6 +22,14 @@ class SchemaFileTests(unittest.TestCase):
     def test_required_keys_are_properties(self):
         self.assertTrue(set(SCHEMA["required"]) <= set(SCHEMA["properties"]))
 
+    def test_every_status_value_has_its_own_rdf_mapping(self):
+        status = SCHEMA["properties"]["status"]
+        self.assertEqual(set(status["x-rdf-values"]), set(status["enum"]))
+        rings = {v: m for v, m in status["x-rdf-values"].items() if m["property"] == "schema:reviewRating"}
+        self.assertEqual(sorted(rings, key=lambda v: -rings[v]["ratingValue"]), ["adopt", "trial", "assess", "hold"])
+        for m in status["x-rdf-values"].values():
+            self.assertIn(m["property"].split(":")[0], SCHEMA["x-rdf-prefixes"])
+
     def test_every_key_names_its_rdf_term_or_null(self):
         prefixes = SCHEMA["x-rdf-prefixes"]
         for key, spec in SCHEMA["properties"].items():
@@ -45,7 +53,7 @@ ENFORCED = {
     "platform_scope": {"type", "items"},
     "test_run": set(),
 }
-ANNOTATIONS = {"description", "x-rdf"}
+ANNOTATIONS = {"description", "x-rdf", "x-rdf-values"}
 
 
 class EnforcedKeywordsTests(unittest.TestCase):
