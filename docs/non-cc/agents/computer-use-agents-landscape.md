@@ -29,6 +29,9 @@ Browser agents are a separate topic and are not covered here beyond pointers.
 - Screenshot-only versus accessibility-tree input is a real design axis, not a settled one: 2024
   evidence favoured structured input, the vendor computer-use tools documented here take screenshots as their main input (our reading), and a 2026 paper
   uses the accessibility tree for security rather than perception.
+- A third route skips the screen: an MCP server drives the app through its scripting API, as MCP for
+  Blender does and community bridges do for Bonsai (IFC/BIM); exact control, but the main tool runs
+  code in the live session (see [App bridges](#app-bridges-instead-of-screens-blender-and-bonsai-checked-2026-11-24)).
 - Every vendor says the same about safety: isolate the environment, treat screen content as
   untrusted, confirm consequential actions.
 
@@ -152,8 +155,8 @@ a minimal anonymous usage event by default; content collection is opt-in (README
 
 [Bonsai][bonsai-docs] is the add-on for IFC (Industry Foundation Classes, the open building information modelling, or BIM, exchange standard) in Blender, part of
 [IfcOpenShell][ifcopenshell] (repo 2,988 stars; Bonsai's folder is GPL-3.0, the libraries LGPL-3.0;
-latest stable release `bonsai-0.9.0`, 2026-09-29). It documents no AI or MCP feature itself (docs
-landing page, read 2026-11-24). Two small community MCP bridges add IFC tools on top of the Blender
+latest stable release `bonsai-0.9.0`, 2026-09-29). Its docs landing page mentions no AI or MCP feature (read
+2026-11-24). Two small community MCP bridges add IFC tools on top of the Blender
 pattern; both are early, with about 70 stars each:
 
 - [Bonsai_mcp][bonsai-mcp] (MIT, last push 2026-09-06): a fork of the Blender MCP server that keeps
