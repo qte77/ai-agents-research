@@ -3,7 +3,7 @@ title: CC Remote Access Landscape
 source: https://www.omnara.com
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
-updated: 2026-11-22
+updated: 2026-11-24
 validated_links_on: 2026-10-06
 status: research
 ---
@@ -17,21 +17,21 @@ monitoring and steering from phone/web without being desk-bound.
 
 ## Options Compared
 
-| Aspect | CC Remote Control | Happy Coder | Omnara | CloudCLI | Emdash | DIY (tmux + Tailscale) |
-| ------ | ----------------- | ----------- | ------ | -------- | ------ | ---------------------- |
-| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (~14.7k stars) | Multi-agent orchestrator | Self-hosted infrastructure |
-| **Execution** | Local machine | Local machine | Local + cloud failover | Cloud VMs | Local (git worktrees) | Local machine |
-| **Mobile app** | Claude iOS/Android | iOS, Android, Web | Dedicated iOS app | Browser-based | Web dashboard | Terminal app (Termius, Blink) |
-| **Voice input** | No | Yes | Yes (two-way) | No | No | No |
-| **Offline continuation** | No — auto-reconnects on wake | No — pauses | Yes — cloud sandbox | Yes — cloud-native | No — pauses | No — pauses |
-| **Push notifications** | Yes | Yes | Yes | No | No | No |
-| **E2E encryption** | TLS (Anthropic) | Yes (TweetNaCl) | No | SSH | N/A | VPN-encrypted |
-| **Multi-agent** | One per instance | Multi-session parallel | Orchestration dashboard | Persistent sessions | Parallel worktrees | Multiple tmux panes |
-| **Pricing** | Free (with CC sub) | Free | Free tier + $9/mo Pro (unlimited) | Free (infra costs) | Free (open source) | Free (infra costs) |
-| **Setup** | `claude remote-control` | `npm i -g happy-coder` | `curl install + omnara` | Docker/cloud setup | npm install | tmux + Tailscale/WireGuard |
-| **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | 25+ agents (provider-agnostic) | Any terminal tool |
-| **Open source** | No (native) | Yes (MIT) | Yes (Apache-2.0; repo now the managed-agent platform) | Yes | Yes | N/A |
-| **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Zero external dependency |
+| Aspect | CC Remote Control | Happy Coder | Omnara | CloudCLI | Emdash | T3 Code | DIY (tmux + Tailscale) |
+| ------ | ----------------- | ----------- | ------ | -------- | ------ | ------ | ---------------------- |
+| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (~14.7k stars) | Multi-agent orchestrator | Open source (MIT) control plane for coding agents (~77.1k stars, read 2026-11-24) | Self-hosted infrastructure |
+| **Execution** | Local machine | Local machine | Local + cloud failover | Cloud VMs | Local (git worktrees) | Local machine, or any host you run it on | Local machine |
+| **Mobile app** | Claude iOS/Android | iOS, Android, Web | Dedicated iOS app | Browser-based | Web dashboard | iOS, Android, web | Terminal app (Termius, Blink) |
+| **Voice input** | No | Yes | Yes (two-way) | No | No | Not verified | No |
+| **Offline continuation** | No — auto-reconnects on wake | No — pauses | Yes — cloud sandbox | Yes — cloud-native | No — pauses | No — host must stay running and reachable | No — pauses |
+| **Push notifications** | Yes | Yes | Yes | No | No | Not verified | No |
+| **E2E encryption** | TLS (Anthropic) | Yes (TweetNaCl) | No | SSH | N/A | Not verified | VPN-encrypted |
+| **Multi-agent** | One per instance | Multi-session parallel | Orchestration dashboard | Persistent sessions | Parallel worktrees | Threads, each can use its own git worktree | Multiple tmux panes |
+| **Pricing** | Free (with CC sub) | Free | Free tier + $9/mo Pro (unlimited) | Free (infra costs) | Free (open source) | Free app; no token resale. T3 Connect machine cap is raised by a paid T3 Chat plan | Free (infra costs) |
+| **Setup** | `claude remote-control` | `npm i -g happy-coder` | `curl install + omnara` | Docker/cloud setup | npm install | `curl -fsSL https://t3.codes/install.sh \| sh`, `npx t3@latest`, desktop app or package manager | tmux + Tailscale/WireGuard |
+| **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | 25+ agents (provider-agnostic) | Claude Code, Codex, Cursor, OpenCode + any Agent Client Protocol (ACP) agent | Any terminal tool |
+| **Open source** | No (native) | Yes (MIT) | Yes (Apache-2.0; repo now the managed-agent platform) | Yes | Yes | Yes (MIT; name and logos trademarked) | N/A |
+| **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Young (repo created 2026-02-08), pre-1.0 (v0.1.11) | Zero external dependency |
 
 ## Detailed Notes
 
@@ -115,6 +115,31 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
   ([source][emdash])
 - **Not a remote access tool per se** — more an orchestration layer that
   complements remote access
+
+### T3 Code
+
+- **Open-source control plane for coding agents** from T3 Tools, Inc.
+  (`pingdotgg/t3code`): desktop, web and phone clients over one server.
+  Source is MIT per the repo's `LICENSE` file, but the name, logos and
+  branding are trademarked, so forks must rebrand ([source][t3code-gh])
+- **Agents**: README lists Claude Code, Codex, Cursor, OpenCode, Grok Build,
+  Antigravity, Kiro, Pi, Muse Code, fx and any Agent Client Protocol (ACP)
+  agent; it drives agents already signed in on the host and does not resell
+  tokens ([source][t3code-gh])
+- **Remote access**: the agents run on the host machine; clients connect over
+  LAN, Tailscale or "T3 Connect" (account sign-in, no router forwarding; set up with
+  `t3 up`, optional per-device approval). The host must stay running
+  ([source][t3code-remote]). No offline continuation, so it sits with the
+  local-execution options above
+- **Install**: desktop app, Homebrew cask, winget/scoop, `curl` script
+  (`t3`), or `npx t3@latest`; iOS and Android apps in the stores
+  ([source][t3code-gh])
+- **Adoption and maturity**: 77,113 stars, latest release v0.1.11
+  (2026-11-20), repo created 2026-02-08 (`gh api`, read 2026-11-24).
+  README describes it as "Fast" — vendor marketing, not measured here
+- **Not verified**: voice input, push notifications and end-to-end
+  encryption are not stated in the README or the remote-access page
+  (read 2026-11-24)
 
 ### DIY (tmux + Tailscale/SSH)
 
@@ -201,6 +226,8 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 - [Omnara][omnara] — YC S25, cloud sandbox failover
 - [Omnara GitHub][omnara-gh] — open-source repo (Apache-2.0)
 - [Emdash][emdash] — multi-agent parallel orchestration
+- [T3 Code GitHub][t3code-gh] — open-source multi-agent control plane (MIT), README read 2026-11-24
+- [T3 Code remote-access doc][t3code-remote] — T3 Connect, LAN and Tailscale routes
 - [CloudCLI][cloudcli] — open-source cloud dev environments
 - [CloudCLI GitHub (siteboon/claudecodeui)][cloudcli-gh] — underlying open-source repo
 - [Omnara pricing][omnara-pricing] — current pricing tiers
@@ -218,6 +245,8 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [omnara-techmonk]: https://techmonk.economictimes.indiatimes.com/news/ai/omnara-wants-to-put-your-coding-agent-on-your-phone/128286862
 [omnara-hiretop]: https://hiretop.com/blog5/omnara-mobile-voice-interface-for-claude-code/
 [emdash]: https://emdash.ai/
+[t3code-gh]: https://github.com/pingdotgg/t3code
+[t3code-remote]: https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md
 [cloudcli]: https://cloudcli.ai
 [cloudcli-gh]: https://github.com/siteboon/claudecodeui
 [omnara-pricing]: https://www.omnara.com/pricing
