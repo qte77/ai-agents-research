@@ -1,20 +1,22 @@
-"""Frontmatter schema check for content docs (CONTRIBUTING §1–§2; plan 0015 F2, owner decision D5).
+"""Frontmatter schema check for content docs (plan 0015 F2, owner decision D5).
 
-Regex parsing only (no YAML dependency), like ``doc_status.py``; no file IO here, so
-the entry point ``check-doc-frontmatter.py`` owns reading files and exit codes.
+The rules come from ``docs/schema/frontmatter.schema.json`` (via ``frontmatter_schema``).
+Regex parsing only (no YAML dependency), like ``doc_status.py``; the entry point
+``check-doc-frontmatter.py`` owns reading docs and exit codes.
 """
 from __future__ import annotations
 
 import re
 
 from .doc_status import DOC_STATUS_VOCAB, extract_frontmatter
+from .frontmatter_schema import PROPERTIES, SCHEMA, SCHEMA_PATH  # noqa: F401  (SCHEMA_PATH re-exported)
 
-REQUIRED = ("title", "purpose", "created", "updated", "validated_links", "status")
-OPTIONAL = frozenset({"source", "platform_scope", "test_run"})
-REMOVED = frozenset({"sources", "description", "release", "version", "license", "authority", "category"})
-DATE_KEYS = ("created", "updated", "validated_links")
+REQUIRED = tuple(SCHEMA["required"])
+OPTIONAL = frozenset(PROPERTIES) - frozenset(REQUIRED)
+REMOVED = frozenset(SCHEMA["x-removed"])
+DATE_KEYS = tuple(k for k, v in PROPERTIES.items() if v.get("format") == "date")
 LIFECYCLE = DOC_STATUS_VOCAB
-PURPOSE_MAX = 200  # one line (CONTRIBUTING §1); detail belongs in the body
+PURPOSE_MAX = PROPERTIES["purpose"]["maxLength"]  # one line; detail belongs in the body
 
 # Not content docs: indexes, hubs, plans (own schema), example files, the archive, generated output.
 _OUT_OF_SCOPE = ("docs/_topics/", "docs/plans/", "docs/cc-native/examples/", "docs/archive/", "docs/research/")
@@ -47,6 +49,8 @@ def check_doc(text: str) -> list[str]:
         return ["no frontmatter"]
     keys = _keys(fm)
     problems = [f"missing required key: {k}" for k in REQUIRED if k not in keys]
+    if keys.get("title") == "":
+        problems.append("title must not be empty")
     for k in DATE_KEYS:
         if k in keys and not _ISO_DATE.match(keys[k]):
             problems.append(f"{k} is not an ISO date (YYYY-MM-DD): {keys[k]}")

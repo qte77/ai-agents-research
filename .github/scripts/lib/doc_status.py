@@ -19,11 +19,13 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-# Lifecycle status for content docs; plan docs (docs/plans/) use their own four.
-# Release, licence and version live on the **Details:** line, not here (plan 0015 F3).
-# Keep in sync with CONTRIBUTING.md §2 "Frontmatter status".
-DOC_STATUS_VOCAB = frozenset({"adopt", "trial", "assess", "hold", "research", "reference", "archived"})
-PLAN_STATUS_VOCAB = frozenset({"draft", "approved", "done", "superseded"})
+from .frontmatter_schema import PROPERTIES, SCHEMA, SCHEMA_PATH  # noqa: F401  (SCHEMA_PATH re-exported)
+
+# Lifecycle status for content docs; plan docs (docs/plans/) use their own four. Both lists
+# live in docs/schema/frontmatter.schema.json. Release, licence and version go on the
+# **Details:** line, not here (plan 0015 F3).
+DOC_STATUS_VOCAB = frozenset(PROPERTIES["status"]["enum"])
+PLAN_STATUS_VOCAB = frozenset(SCHEMA["$defs"]["plan"]["properties"]["status"]["enum"])
 VOCAB = DOC_STATUS_VOCAB | PLAN_STATUS_VOCAB
 
 _FRONTMATTER = re.compile(r"^---\s*\n(.*?)\n---", re.DOTALL)
