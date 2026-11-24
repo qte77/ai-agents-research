@@ -158,6 +158,66 @@ class FacetTests(unittest.TestCase):
         self.assertIsNone(self.nodes["docs/sdlc-lcm/ops-runbook.md"]["status"])
 
 
+class DatesAndPurposeTests(unittest.TestCase):
+    """created, updated and purpose reach the site graph for the details panel and timeline (plan 0016 N34)."""
+
+    CORPUS = {
+        "docs/a-analysis.md": '---\ntitle: A\npurpose: "Why A: matters."\ncreated: 2026-06-14\nupdated: 2026-11-23\n---\n',
+        "docs/b-analysis.md": "---\ntitle: B\ncreated: not-a-date\n---\n",
+        "docs/c.md": "# C\n\ncreated: 2026-01-01\n",
+    }
+
+    def setUp(self):
+        self.nodes = {n["id"]: n for n in dg.site_graph(dg.build_graph(self.CORPUS))["nodes"]}
+
+    def test_dates_and_purpose_are_read_from_frontmatter(self):
+        a = self.nodes["docs/a-analysis.md"]
+        self.assertEqual((a["created"], a["updated"]), ("2026-06-14", "2026-11-23"))
+        self.assertEqual(a["purpose"], "Why A: matters.")
+
+    def test_missing_or_malformed_values_are_none(self):
+        b = self.nodes["docs/b-analysis.md"]
+        self.assertEqual((b["created"], b["updated"], b["purpose"]), (None, None, None))
+
+    def test_body_text_is_not_frontmatter(self):
+        c = self.nodes["docs/c.md"]
+        self.assertEqual((c["created"], c["updated"], c["purpose"]), (None, None, None))
+
+    def test_build_graph_nodes_carry_them_too(self):
+        node = dg.build_graph(self.CORPUS)["nodes"][0]
+        self.assertEqual(node["updated"], "2026-11-23")
+
+
+class FrontmatterEdgeCaseTests(unittest.TestCase):
+    """Empty values, block scalars and quotes must not leak into purpose or dates (review fixes)."""
+
+    @staticmethod
+    def node(fm):
+        corpus = {"docs/a-analysis.md": f"---\ntitle: A\n{fm}\n---\n"}
+        return dg.build_graph(corpus)["nodes"][0]
+
+    def test_empty_purpose_does_not_capture_the_next_line(self):
+        self.assertIsNone(self.node("purpose:\nstatus: trial")["purpose"])
+
+    def test_block_scalar_markers_are_none(self):
+        for marker in (">", "|", ">-", "|-", ">+", "|2"):
+            self.assertIsNone(self.node(f"purpose: {marker}\n  text")["purpose"], marker)
+
+    def test_quotes_are_stripped_only_when_they_match(self):
+        self.assertEqual(self.node("purpose: 'It works'")["purpose"], "It works")
+        self.assertEqual(self.node("purpose: \"It's fine\"")["purpose"], "It's fine")
+        self.assertEqual(self.node("purpose: It's \"fine\"")["purpose"], "It's \"fine\"")
+        self.assertEqual(self.node("purpose: \"half")["purpose"], "\"half")
+
+    def test_empty_date_does_not_capture_the_next_line(self):
+        n = self.node("created:\nupdated: 2026-11-23")
+        self.assertEqual((n["created"], n["updated"]), (None, "2026-11-23"))
+
+    def test_dates_may_be_quoted(self):
+        n = self.node("created: '2026-01-02'\nupdated: \"2026-03-04\"")
+        self.assertEqual((n["created"], n["updated"]), ("2026-01-02", "2026-03-04"))
+
+
 class SiteGraphTests(unittest.TestCase):
     """The slim projection the Pages site loads (plan 0015 G2)."""
 
@@ -169,7 +229,7 @@ class SiteGraphTests(unittest.TestCase):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"],
                          {"id": "docs/non-cc/a/x.md", "title": "X", "bucket": "non-cc/a",
                           "hubs": ["docs/_topics/memory.md"], "status": "trial",
-                          "doc_type": "other", "platforms": []})
+                          "doc_type": "other", "platforms": [], "purpose": None, "created": None, "updated": None})
 
     def test_hub_rows_pointing_at_a_section_count_once(self):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"]["hubs"], ["docs/_topics/memory.md"])

@@ -40,9 +40,30 @@
     #hubs .all { font-weight: 600; color: var(--text); }
     .legend span { display: inline-flex; align-items: center; gap: 4px; margin-right: var(--unit); }
     .legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+    .facet { margin: 0 0 var(--unit); }
+    .facet h3 { font-size: 0.75rem; margin: 0 0 4px; color: var(--text); font-weight: 600; }
+    .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+    .chip {
+      font: inherit; font-size: 0.75rem; padding: 2px 8px; cursor: pointer; color: var(--text);
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    }
+    .chip[aria-pressed="true"] { background: var(--primary); color: var(--primary-on); border-color: var(--primary); }
+    .facet summary { cursor: pointer; font-size: 0.75rem; margin: 4px 0; }
+    #timeline { display: flex; align-items: flex-end; gap: 1px; height: 44px; border-bottom: 1px solid var(--border); }
+    #timeline > * { flex: 1; min-width: 0; padding: 0; border: 0; background: var(--border); }
+    #timeline button { background: var(--text-muted); cursor: pointer; }
+    #timeline button:disabled { background: var(--border); cursor: default; }
+    #timeline button[aria-pressed="true"] { background: var(--primary); }
+    #tl-readout { display: flex; justify-content: space-between; align-items: center; margin: 4px 0 0; font-size: 0.75rem; }
+    #detail { margin-bottom: calc(var(--unit) * 2); padding-bottom: var(--unit); border-bottom: 1px solid var(--border); }
+    #detail dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; }
+    #detail dt { color: var(--text-muted); }
+    #detail dd { margin: 0; color: var(--text); overflow-wrap: anywhere; }
+    #detail a { color: var(--primary); }
     @media (max-width: 720px) {
       .stage { flex-direction: column; }
-      #info { width: auto; max-height: 35vh; border-left: 0; border-top: 1px solid var(--border); }
+      #info { width: auto; max-height: 45vh; border-left: 0; border-top: 1px solid var(--border); }
     }
   </style>
 </head>
@@ -59,11 +80,23 @@
   <div class="stage">
     <div id="graph" role="img" aria-label="Doc graph"></div>
     <aside id="info">
+      <section id="detail" aria-live="polite" hidden></section>
       <input id="search" type="search" placeholder="Find a doc… (Enter zooms)" aria-label="Find a doc" />
-      <p>Dots are docs, diamonds are topic hubs, the star is the hub index, lines are links between them. Click a doc to open it
-        on GitHub. Built from the docs on every deploy, without an LLM.</p>
+      <p>Dots are docs, diamonds are topic hubs, the star is the hub index, lines are links between them. Click a node for its details
+        and a link to GitHub. Built from the docs on every deploy, without an LLM.</p>
+      <label for="colour-by">Colour by
+        <select id="colour-by"><option value="topic">topic hub</option><option value="folder">folder</option></select>
+      </label>
       <p class="legend" id="legend"></p>
       <p id="stats"></p>
+      <h2>Filters</h2>
+      <div id="facets"></div>
+      <div class="facet">
+        <h3 id="tl-title">Recently updated (last 90 days)</h3>
+        <div id="timeline" role="group" aria-labelledby="tl-title"></div>
+        <p id="tl-readout"><span id="tl-text">Click a day, then another day for a range.</span>
+          <button type="button" class="chip" id="tl-clear" hidden>Clear</button></p>
+      </div>
       <h2>Topic hubs</h2>
       <div id="hubs"></div>
     </aside>
@@ -121,6 +154,24 @@
       function render(data) {
         var colour = {};
         FOLDERS.forEach(function (f) { colour[f[0]] = token(f[1]); });
+        // Topic colours: one warm hue per hub (no blue, as the brand), stepped by the golden angle.
+        var dark = document.documentElement.dataset.theme === "dark" || (document.documentElement.dataset.theme !== "light" &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches);
+        var hubIds = data.nodes.filter(isHub).map(function (h) { return h.id; });
+        var topicColour = {};
+        hubIds.forEach(function (id, i) {
+          var h = (i * 137.5) % 360;
+          if (h > 170 && h < 270) { h += 100; } // skip cyan to blue-violet
+          topicColour[id] = "hsl(" + Math.round(h % 360) + ", 55%, " + (dark ? 62 : 42) + "%)";
+        });
+        var mode = "folder"; // switched to "topic" once the filters exist (end of render)
+        function docColour(n) {
+          if (mode === "topic") {
+            var first = n.hubs.filter(function (h) { return checked[h]; })[0]; // first CHECKED hub
+            return first ? topicColour[first] : token("--text-muted");
+          }
+          return colour[folder(n)];
+        }
         var dim = token("--border");
         var base = {};
         var nodes = new vis.DataSet(data.nodes.map(function (n) {
@@ -133,23 +184,46 @@
             return { id: n.id, title: n.title + "\n" + n.id, color: base[n.id], shape: "star",
                      size: 18, borderWidth: 3, label: "Hub index" };
           }
-          base[n.id] = hub ? token("--text") : colour[folder(n)];
+          base[n.id] = hub ? (mode === "topic" ? topicColour[n.id] : token("--text")) : docColour(n);
           return { id: n.id, title: n.title + "\n" + n.id, color: base[n.id],
                    shape: hub ? "diamond" : "dot", size: hub ? 14 : 8,
                    label: hub ? hubLabel(n) : "" };
         }));
+        // Layout springs run only from a doc to its primary hub (its first checked hub, as in the colour
+        // mode); every other link, including the hub index's, is drawn but exerts no force, so each hub
+        // gathers its own docs and the hubs push apart. See syncSprings.
+        var byNode = {};
+        data.nodes.forEach(function (n) { byNode[n.id] = n; });
+        var springEdge = {}; // edge id -> {hub, doc} for hub-to-doc links
         var edges = new vis.DataSet(data.edges.map(function (e, i) {
-          return { id: i, from: e[0], to: e[1] };
+          var a = byNode[e[0]], b = byNode[e[1]];
+          if (isHub(a) && !isHub(b) && b.bucket !== "_topics") { springEdge[i] = { hub: a.id, doc: b }; }
+          if (isHub(b) && !isHub(a) && a.bucket !== "_topics") { springEdge[i] = { hub: b.id, doc: a }; }
+          return { id: i, from: e[0], to: e[1], length: 40, physics: false };
         }));
+        function primaryHub(n) { return n.hubs.filter(function (h) { return checked[h]; })[0]; }
+        function syncSprings() {
+          edges.update(Object.keys(springEdge).map(function (i) {
+            return { id: Number(i), physics: primaryHub(springEdge[i].doc) === springEdge[i].hub };
+          }));
+        }
 
         var legend = document.getElementById("legend");
-        FOLDERS.forEach(function (f) {
-          var s = el("span"), dot = el("i");
-          dot.style.background = colour[f[0]];
-          s.appendChild(dot);
-          s.appendChild(document.createTextNode(f[0]));
-          legend.appendChild(s);
-        });
+        function buildLegend() {
+          legend.textContent = "";
+          var items = mode === "topic"
+            ? hubIds.filter(function (id) { return checked[id]; }).map(function (id) { return [hubLabel(data.nodes.filter(function (n) { return n.id === id; })[0]), topicColour[id]]; })
+              .concat([["no hub", token("--text-muted")]])
+            : FOLDERS.map(function (f) { return [f[0], colour[f[0]]]; });
+          items.forEach(function (it) {
+            var s = el("span"), dot = el("i");
+            dot.style.background = it[1];
+            s.appendChild(dot);
+            s.appendChild(document.createTextNode(it[0]));
+            legend.appendChild(s);
+          });
+        }
+        buildLegend();
         var count = {};
         data.nodes.forEach(function (n) {
           if (!isHub(n) && !n.hubs.length) { count[n.filing] = (count[n.filing] || 0) + 1; }
@@ -163,11 +237,11 @@
         var checked = {};
         var boxes = [];
         var panel = document.getElementById("hubs");
-        function box(key, text, cls, why) {
+        function box(key, text, cls, why, on) {
           var label = el("label"), input = el("input");
           if (why) { label.title = why; }
           input.type = "checkbox";
-          input.checked = true;
+          input.checked = on !== false;
           input.dataset.key = key;
           if (cls) { label.className = cls; }
           label.appendChild(input);
@@ -178,19 +252,163 @@
         var all = box("", "Select all", "all");
         hubs.forEach(function (h) { checked[h.id] = true; boxes.push(box(h.id, hubLabel(h))); });
         FILING.forEach(function (f) {
-          checked[f[0]] = true;
-          boxes.push(box(f[0], f[1] + " (" + (count[f[0]] || 0) + ")", "", f[2]));
+          checked[f[0]] = false; // docs in no hub start hidden; tick to show them
+          boxes.push(box(f[0], f[1] + " (" + (count[f[0]] || 0) + ")", "", f[2], false));
         });
 
+        // Facet chips (status, doc type, platform): OR within a group, AND across groups and with
+        // the hub boxes and the timeline range. Hubs and the hub index ignore chips and range.
+        var FACETS = [["status", "Status", function (n) { return [n.status || "none"]; }],
+                      ["doc_type", "Doc type", function (n) { return [n.doc_type]; }],
+                      ["platform", "Platform", function (n) { return n.platforms.length ? n.platforms : ["none"]; }]];
+        var PLATFORM_TOP = 6;
+        var picked = { status: {}, doc_type: {}, platform: {} };
+        var range = null; // {from, to} ISO dates, inclusive
+        var docs = data.nodes.filter(function (n) { return n.bucket !== "_topics"; });
+        function hubOk(n) { return n.hubs.length ? n.hubs.some(function (h) { return checked[h]; }) : checked[n.filing]; }
+        function chipOk(n, skip) {
+          return FACETS.every(function (f) {
+            if (f[0] === skip) { return true; }
+            var on = Object.keys(picked[f[0]]);
+            return !on.length || f[2](n).some(function (v) { return picked[f[0]][v]; });
+          });
+        }
+        function rangeOk(n) { return !range || (!!n.updated && n.updated >= range.from && n.updated <= range.to); }
         function visible(n) {
           if (isHub(n)) { return checked[n.id]; }
-          if (!n.hubs.length) { return checked[n.filing]; }
-          return n.hubs.some(function (h) { return checked[h]; });
+          if (n.bucket === "_topics") { return true; }
+          return hubOk(n) && chipOk(n) && rangeOk(n);
+        }
+        var shown = el("span");
+        var network = null, recolour = null;
+        // Physics runs only while the layout settles; a filter change re-settles briefly, then stops.
+        function restabilise() {
+          if (!network) { return; }
+          network.setOptions({ physics: { enabled: true } });
+          network.stabilize(150);
         }
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
+          syncSprings();
+          restabilise();
+          if (recolour && mode === "topic") { recolour(); } // multi-hub docs follow their first checked hub
+          refreshCounts();
+          refreshTimeline();
           all.checked = boxes.every(function (b) { return b.checked; });
+          var k = docs.filter(visible).length;
+          shown.textContent = " Showing " + k + " of " + docs.length + " docs.";
         }
+        document.getElementById("stats").appendChild(shown);
+
+        // Chip counts: docs that pass the hub boxes, the timeline range and the OTHER chip groups.
+        var chipRefs = [];
+        function refreshCounts() {
+          var per = {};
+          FACETS.forEach(function (f) {
+            var c = {};
+            docs.forEach(function (n) {
+              if (hubOk(n) && rangeOk(n) && chipOk(n, f[0])) { f[2](n).forEach(function (v) { c[v] = (c[v] || 0) + 1; }); }
+            });
+            per[f[0]] = c;
+          });
+          chipRefs.forEach(function (r) { r.b.textContent = r.v + " " + (per[r.group][r.v] || 0); });
+        }
+        function tally(f) {
+          var c = {};
+          docs.forEach(function (n) { f[2](n).forEach(function (v) { c[v] = (c[v] || 0) + 1; }); });
+          return Object.keys(c).sort(function (a, b) { return c[b] - c[a] || (a < b ? -1 : 1); })
+            .map(function (v) { return [v, c[v]]; });
+        }
+        function chip(group, v, count, into) {
+          var b = el("button", v + " " + count);
+          b.type = "button";
+          b.className = "chip";
+          b.setAttribute("aria-pressed", "false");
+          b.addEventListener("click", function () {
+            var on = b.getAttribute("aria-pressed") !== "true";
+            b.setAttribute("aria-pressed", String(on));
+            if (on) { picked[group][v] = true; } else { delete picked[group][v]; }
+            applyFilter();
+          });
+          into.appendChild(b);
+          chipRefs.push({ group: group, v: v, b: b });
+        }
+        FACETS.forEach(function (f) {
+          var wrap = el("div"), head = el("h3", f[1]), row = el("div"), rows = tally(f);
+          wrap.className = "facet";
+          row.className = "chips";
+          row.setAttribute("role", "group");
+          row.setAttribute("aria-label", f[1]);
+          wrap.appendChild(head);
+          wrap.appendChild(row);
+          var top = f[0] === "platform" ? rows.slice(0, PLATFORM_TOP) : rows;
+          top.forEach(function (r) { chip(f[0], r[0], r[1], row); });
+          if (rows.length > top.length) {
+            var more = el("details"), sum = el("summary", "More platforms (" + (rows.length - top.length) + ")");
+            var rest = el("div");
+            rest.className = "chips";
+            more.appendChild(sum);
+            more.appendChild(rest);
+            rows.slice(top.length).forEach(function (r) { chip(f[0], r[0], r[1], rest); });
+            wrap.appendChild(more);
+          }
+          document.getElementById("facets").appendChild(wrap);
+        });
+
+        // Timeline: docs per `updated` day over the 90 days ending at the newest `updated` date
+        // in the data (a fixed window would go empty on a stale deploy).
+        var DAY = 86400000, WINDOW = 90;
+        var newest = docs.reduce(function (m, n) { return n.updated && n.updated > m ? n.updated : m; }, "");
+        var tl = document.getElementById("timeline");
+        var readout = document.getElementById("tl-text");
+        var clear = document.getElementById("tl-clear");
+        var dayBtns = [];
+        function iso(ms) { return new Date(ms).toISOString().slice(0, 10); }
+        function paintRange() {
+          dayBtns.forEach(function (d) {
+            d.b.setAttribute("aria-pressed", String(!!range && d.day >= range.from && d.day <= range.to));
+          });
+          clear.hidden = !range;
+          readout.textContent = !range ? "Click a day, then another day for a range."
+            : (range.from === range.to ? range.from : range.from + " to " + range.to) + " (" +
+              docs.filter(function (n) { return hubOk(n) && chipOk(n) && rangeOk(n); }).length + " docs)";
+          applyFilter();
+        }
+        // Day bars count docs passing the hub boxes and chips (not the range, so a range can be widened).
+        function refreshTimeline() {
+          var counts = {}, peak = 1;
+          docs.forEach(function (n) {
+            if (n.updated && hubOk(n) && chipOk(n)) { counts[n.updated] = (counts[n.updated] || 0) + 1; }
+          });
+          dayBtns.forEach(function (d) { peak = Math.max(peak, counts[d.day] || 0); });
+          dayBtns.forEach(function (d) {
+            var c = counts[d.day] || 0;
+            d.b.disabled = !c;
+            d.b.style.height = Math.max(c / peak * 100, 4) + "%";
+            d.b.title = d.day + ": " + c;
+            d.b.setAttribute("aria-label", d.day + ": " + c + " docs updated");
+          });
+        }
+        if (newest) {
+          var end = Date.parse(newest);
+          for (var i = WINDOW - 1; i >= 0; i--) {
+            (function (day) {
+              var node = el("button");
+              node.type = "button";
+              node.setAttribute("aria-pressed", "false");
+              node.addEventListener("click", function () {
+                if (!range || range.from !== range.to) { range = { from: day, to: day }; }
+                else if (day === range.from) { range = null; }
+                else { range = { from: day < range.from ? day : range.from, to: day < range.from ? range.from : day }; }
+                paintRange();
+              });
+              dayBtns.push({ day: day, b: node });
+              tl.appendChild(node);
+            })(iso(end - i * DAY));
+          }
+        } else { document.getElementById("tl-title").textContent = "Recently updated (no dates in data)"; }
+        clear.addEventListener("click", function () { range = null; paintRange(); });
+        paintRange();
         panel.addEventListener("change", function (ev) {
           var t = ev.target;
           if (t === all) {
@@ -201,17 +419,63 @@
           applyFilter();
         });
 
-        var network = new vis.Network(document.getElementById("graph"), { nodes: nodes, edges: edges }, {
-          physics: { solver: "forceAtlas2Based", stabilization: { iterations: 200 } },
+        network = new vis.Network(document.getElementById("graph"), { nodes: nodes, edges: edges }, {
+          physics: { solver: "forceAtlas2Based", stabilization: { iterations: 200 },
+                     forceAtlas2Based: { gravitationalConstant: -100, centralGravity: 0.012, springLength: 40,
+                                         springConstant: 0.2, damping: 0.6, avoidOverlap: 0.2 } },
           edges: { color: { color: token("--border"), highlight: token("--primary") }, width: 1, smooth: false },
           nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
           interaction: { hover: true, tooltipDelay: 120 }
         });
 
+        network.on("stabilized", function () { network.setOptions({ physics: { enabled: false } }); });
+        network.on("stabilizationIterationsDone", function () { network.setOptions({ physics: { enabled: false } }); });
+
+        // Colour mode: recolour nodes and legend; hub-edge springs are set per edge above.
+        recolour = function () {
+          data.nodes.forEach(function (n) {
+            if (n.id === HUB_INDEX) { return; }
+            base[n.id] = isHub(n) ? (mode === "topic" ? topicColour[n.id] : token("--text")) : docColour(n);
+          });
+          search.dispatchEvent(new Event("input"));
+          buildLegend();
+        };
+        document.getElementById("colour-by").addEventListener("change", function (ev) {
+          mode = ev.target.value;
+          recolour();
+        });
+
+        // Click opens the details panel (title, purpose, facets, hubs, dates, GitHub link).
+        var byId = {};
+        data.nodes.forEach(function (n) { byId[n.id] = n; });
+        var detail = document.getElementById("detail");
+        function row(dl, k, v) {
+          dl.appendChild(el("dt", k));
+          dl.appendChild(el("dd", v));
+        }
+        function openDetail(n) {
+          detail.textContent = "";
+          detail.hidden = false;
+          detail.appendChild(el("h2", n.title));
+          if (n.purpose) { detail.appendChild(el("p", n.purpose)); }
+          var dl = el("dl");
+          row(dl, "Status", n.status || "none");
+          row(dl, "Doc type", n.doc_type);
+          row(dl, "Platforms", n.platforms.join(", ") || "none");
+          row(dl, "Hubs", (n.hubs || []).map(function (h) { return byId[h] ? hubLabel(byId[h]) : h; }).join(", ") || "none");
+          row(dl, "Created", n.created || "unknown");
+          row(dl, "Updated", n.updated || "unknown");
+          detail.appendChild(dl);
+          var p = el("p"), a = el("a", "Open on GitHub");
+          a.href = REPO + n.id.split("/").map(encodeURIComponent).join("/");
+          a.target = "_blank";
+          a.rel = "noopener";
+          p.appendChild(a);
+          detail.appendChild(p);
+          document.getElementById("info").scrollTop = 0;
+        }
         network.on("click", function (params) {
-          if (params.nodes.length) {
-            window.open(REPO + params.nodes[0], "_blank", "noopener");
-          }
+          if (params.nodes.length) { openDetail(byId[params.nodes[0]]); }
         });
 
         // Live search: dim every doc that doesn't match; Enter zooms to the first visible match.
@@ -239,6 +503,9 @@
             network.focus(top.id, { scale: 1.2, animation: true });
           }
         });
+
+        mode = "topic"; // colour and layout both follow a doc's primary hub by default
+        recolour();
       }
 
       sel.addEventListener("change", function () {
