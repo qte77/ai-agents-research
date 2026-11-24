@@ -44,35 +44,51 @@ def _keys(frontmatter: str) -> dict[str, str]:
     return out
 
 
+def _key_problems(keys: dict[str, str]) -> list[str]:
+    """Missing, empty, removed and unknown keys."""
+    problems = [f"missing required key: {k}" for k in REQUIRED if k not in keys]
+    if keys.get("title") == "":
+        problems.append("title must not be empty")
+    for k in sorted(set(keys) - set(REQUIRED) - OPTIONAL):
+        problems.append(f"key not allowed (see docs/schema/frontmatter.schema.json): {k}" if k in REMOVED else f"unknown key: {k}")
+    return problems
+
+
+def _purpose_problems(purpose: str | None, fm: str) -> list[str]:
+    """One non-empty line of at most PURPOSE_MAX characters."""
+    if purpose is None:
+        return []
+    if not purpose or _BLOCK_SCALAR.match(purpose) or _CONTINUED.search(fm):
+        return ["purpose must be one non-empty line"]
+    if len(purpose) > PURPOSE_MAX:
+        return [f"purpose over {PURPOSE_MAX} characters; keep it to one line (detail goes in the body)"]
+    return []
+
+
+def _platform_problems(value: str | None) -> list[str]:
+    """An inline list of slugs from the schema's harness list."""
+    if value is None:
+        return []
+    m = _INLINE_LIST.match(value)
+    if not m:
+        return ["platform_scope must be an inline list, e.g. [claude-code, codex]"]
+    unknown = {v.strip() for v in m.group(1).split(",") if v.strip()} - PLATFORMS
+    return [f"platform_scope value not in the harness list (docs/schema/frontmatter.schema.json): {s}" for s in sorted(unknown)]
+
+
 def check_doc(text: str) -> list[str]:
     """Schema violations for one doc, in a stable order."""
     fm = extract_frontmatter(text)
     if fm is None:
         return ["no frontmatter"]
     keys = _keys(fm)
-    problems = [f"missing required key: {k}" for k in REQUIRED if k not in keys]
-    if keys.get("title") == "":
-        problems.append("title must not be empty")
-    for k in DATE_KEYS:
-        if k in keys and not _ISO_DATE.match(keys[k]):
-            problems.append(f"{k} is not an ISO date (YYYY-MM-DD): {keys[k]}")
-    for k in sorted(set(keys) - set(REQUIRED) - OPTIONAL):
-        problems.append(f"key not allowed (see docs/schema/frontmatter.schema.json): {k}" if k in REMOVED else f"unknown key: {k}")
+    problems = _key_problems(keys)
+    problems += [f"{k} is not an ISO date (YYYY-MM-DD): {keys[k]}" for k in DATE_KEYS
+                 if k in keys and not _ISO_DATE.match(keys[k])]
     if "source" in keys and not _ONE_URL.match(keys["source"]):
         problems.append(f"source must be one URL (others go in the Sources section): {keys['source']}")
-    purpose = keys.get("purpose")
-    if purpose is not None:
-        if not purpose or _BLOCK_SCALAR.match(purpose) or _CONTINUED.search(fm):
-            problems.append("purpose must be one non-empty line")
-        elif len(purpose) > PURPOSE_MAX:
-            problems.append(f"purpose over {PURPOSE_MAX} characters; keep it to one line (detail goes in the body)")
-    if "platform_scope" in keys:
-        m = _INLINE_LIST.match(keys["platform_scope"])
-        if not m:
-            problems.append("platform_scope must be an inline list, e.g. [claude-code, codex]")
-        else:
-            for slug in sorted({v.strip() for v in m.group(1).split(",") if v.strip()} - PLATFORMS):
-                problems.append(f"platform_scope value not in the harness list (docs/schema/frontmatter.schema.json): {slug}")
+    problems += _purpose_problems(keys.get("purpose"), fm)
+    problems += _platform_problems(keys.get("platform_scope"))
     status = keys.get("status")
     if status is not None and status not in LIFECYCLE:
         problems.append(f"status not in the lifecycle vocabulary (CONTRIBUTING §2): {status}")
