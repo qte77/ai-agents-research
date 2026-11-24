@@ -69,7 +69,7 @@
 </head>
 <body>
   <div class="bar">
-    <h1><a href="index.html">ai-agents-research</a> · doc graph</h1>
+    <h1><a href="https://github.com/qte77/ai-agents-research">ai-agents-research</a> · doc graph</h1>
     <select id="theme" aria-label="Color theme">
       <option value="system">System</option>
       <option value="light">Light</option>
@@ -182,7 +182,7 @@
             // Reason: an object colour without highlight/hover falls back to vis-network's blue.
             base[n.id] = { background: star.background, border: star.border, highlight: star, hover: star };
             return { id: n.id, title: n.title + "\n" + n.id, color: base[n.id], shape: "star",
-                     size: 18, borderWidth: 3, label: "Hub index" };
+                     size: 18, borderWidth: 3, label: "Hub index", x: 0, y: 0, fixed: true };
           }
           base[n.id] = hub ? (mode === "topic" ? topicColour[n.id] : token("--text")) : docColour(n);
           return { id: n.id, title: n.title + "\n" + n.id, color: base[n.id],
@@ -281,11 +281,14 @@
         }
         var shown = el("span");
         var network = null, recolour = null;
-        // Physics runs only while the layout settles; a filter change re-settles briefly, then stops.
+        // Physics: a slight live relaxation that stops GENTLE_MS after the layout settles and after each
+        // filter change (a new run cancels the pending stop). No perpetual motion.
+        var GENTLE_MS = 2000, stopTimer = null;
         function restabilise() {
           if (!network) { return; }
+          clearTimeout(stopTimer);
           network.setOptions({ physics: { enabled: true } });
-          network.stabilize(150);
+          stopTimer = setTimeout(function () { network.setOptions({ physics: { enabled: false } }); }, GENTLE_MS);
         }
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
@@ -420,16 +423,25 @@
         });
 
         network = new vis.Network(document.getElementById("graph"), { nodes: nodes, edges: edges }, {
-          physics: { solver: "forceAtlas2Based", stabilization: { iterations: 200 },
+          physics: { solver: "forceAtlas2Based", stabilization: { iterations: 60 }, maxVelocity: 8,
                      forceAtlas2Based: { gravitationalConstant: -100, centralGravity: 0.012, springLength: 40,
-                                         springConstant: 0.2, damping: 0.6, avoidOverlap: 0.2 } },
+                                         springConstant: 0.2, damping: 0.8, avoidOverlap: 0.2 } },
           edges: { color: { color: token("--border"), highlight: token("--primary") }, width: 1, smooth: false },
           nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
           interaction: { hover: true, tooltipDelay: 120 }
         });
 
-        network.on("stabilized", function () { network.setOptions({ physics: { enabled: false } }); });
-        network.on("stabilizationIterationsDone", function () { network.setOptions({ physics: { enabled: false } }); });
+        // After the short pre-layout: centre the view on the fixed hub index, zoom so every node fits
+        // around it, then let physics run gently for GENTLE_MS.
+        network.once("stabilizationIterationsDone", function () {
+          var box = document.getElementById("graph"), far = 1;
+          var pos = network.getPositions();
+          Object.keys(pos).forEach(function (id) {
+            far = Math.max(far, Math.abs(pos[id].x) / (box.clientWidth / 2), Math.abs(pos[id].y) / (box.clientHeight / 2));
+          });
+          network.moveTo({ position: { x: 0, y: 0 }, scale: Math.min(1, 0.9 / far), animation: false });
+          restabilise();
+        });
 
         // Colour mode: recolour nodes and legend; hub-edge springs are set per edge above.
         recolour = function () {
@@ -453,19 +465,32 @@
           dl.appendChild(el("dt", k));
           dl.appendChild(el("dd", v));
         }
+        function kindOf(n) {
+          if (n.id === HUB_INDEX) { return "Hub index"; }
+          if (isHub(n)) { return "Topic hub"; }
+          return n.id.split("/").pop() === "README.md" ? "Folder index" : "";
+        }
         function openDetail(n) {
           detail.textContent = "";
           detail.hidden = false;
           detail.appendChild(el("h2", n.title));
-          if (n.purpose) { detail.appendChild(el("p", n.purpose)); }
+          var kind = kindOf(n), plain = !kind;
+          if (kind) { detail.appendChild(el("p", kind)); }
+          var blurb = isHub(n) || n.id === HUB_INDEX ? n.intro || n.purpose : n.purpose;
+          if (blurb) { detail.appendChild(el("p", blurb)); }
           var dl = el("dl");
-          row(dl, "Status", n.status || "none");
-          row(dl, "Doc type", n.doc_type);
-          row(dl, "Platforms", n.platforms.join(", ") || "none");
-          row(dl, "Hubs", (n.hubs || []).map(function (h) { return byId[h] ? hubLabel(byId[h]) : h; }).join(", ") || "none");
-          row(dl, "Created", n.created || "unknown");
-          row(dl, "Updated", n.updated || "unknown");
-          detail.appendChild(dl);
+          function when(key) {
+            var v = n[key];
+            return v ? v + (n.dates_from && n.dates_from.indexOf(key) >= 0 ? " (from git history)" : "") : "";
+          }
+          var rows = [["Docs listed", isHub(n) ? String(n.doc_count || 0) : ""],
+                      ["Status", plain ? n.status || "" : ""],
+                      ["Doc type", plain ? n.doc_type : ""],
+                      ["Platforms", plain ? n.platforms.join(", ") : ""],
+                      ["Hubs", plain ? (n.hubs || []).map(function (h) { return byId[h] ? hubLabel(byId[h]) : h; }).join(", ") : ""],
+                      ["Created", when("created")], ["Updated", when("updated")]];
+          rows.forEach(function (r) { if (r[1]) { row(dl, r[0], r[1]); } });
+          if (dl.children.length) { detail.appendChild(dl); }
           var p = el("p"), a = el("a", "Open on GitHub");
           a.href = REPO + n.id.split("/").map(encodeURIComponent).join("/");
           a.target = "_blank";

@@ -229,7 +229,8 @@ class SiteGraphTests(unittest.TestCase):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"],
                          {"id": "docs/non-cc/a/x.md", "title": "X", "bucket": "non-cc/a",
                           "hubs": ["docs/_topics/memory.md"], "status": "trial",
-                          "doc_type": "other", "platforms": [], "purpose": None, "created": None, "updated": None})
+                          "doc_type": "other", "platforms": [], "purpose": None, "created": None, "updated": None,
+                          "dates_from": [], "intro": None, "doc_count": None})
 
     def test_hub_rows_pointing_at_a_section_count_once(self):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"]["hubs"], ["docs/_topics/memory.md"])
@@ -259,6 +260,79 @@ class SiteGraphTests(unittest.TestCase):
     def test_deterministic(self):
         again = dg.site_graph(dg.build_graph(dict(reversed(list(CORPUS.items())))))
         self.assertEqual(dg.to_json(again), dg.to_json(self.site))
+
+
+class IntroTests(unittest.TestCase):
+    """First prose paragraph after the H1: the purpose line of hubs and indexes (plan 0016 N44)."""
+
+    def test_first_paragraph_after_h1_joined_and_links_flattened(self):
+        text = "# Topic Hub: X\n\nAgent memory across\nthe corpus; see [the index](README.md).\n\nSecond.\n"
+        self.assertEqual(dg.doc_intro(text), "Agent memory across the corpus; see the index.")
+
+    def test_frontmatter_is_skipped(self):
+        self.assertEqual(dg.doc_intro("---\ntitle: T\n---\n\n# T\n\nIntro.\n"), "Intro.")
+
+    def test_none_when_a_table_list_or_heading_follows(self):
+        self.assertIsNone(dg.doc_intro("# T\n\n| a | b |\n|---|---|\n"))
+        self.assertIsNone(dg.doc_intro("# T\n\n- item\n"))
+        self.assertIsNone(dg.doc_intro("# T\n\n## Sub\n\nText.\n"))
+        self.assertIsNone(dg.doc_intro("no heading\n"))
+
+
+class GitDatesTests(unittest.TestCase):
+    """Dates from git history fill what frontmatter lacks (plan 0016 N44)."""
+
+    LOG = "2026-11-20\n\ndocs/a.md\ndocs/b.md\n\n2026-10-01\n\ndocs/a.md\n\n2026-09-05\n\ndocs/a.md\n"
+
+    def test_parse_git_log_first_and_last_commit_dates(self):
+        self.assertEqual(dg.parse_git_log(self.LOG), {
+            "docs/a.md": ("2026-09-05", "2026-11-20"), "docs/b.md": ("2026-11-20", "2026-11-20")})
+
+    def test_parse_empty_log(self):
+        self.assertEqual(dg.parse_git_log(""), {})
+
+    def test_frontmatter_wins_git_fills_gaps_missing_stays_none(self):
+        corpus = {"docs/a.md": "---\ncreated: 2026-01-01\n---\n# A\n", "docs/b.md": "# B\n",
+                  "docs/c.md": "# C\n"}
+        git = {"docs/a.md": ("2026-09-05", "2026-11-20"), "docs/b.md": ("2026-11-20", "2026-11-21")}
+        nodes = {n["id"]: n for n in dg.site_graph(dg.build_graph(corpus), git_dates=git)["nodes"]}
+        self.assertEqual((nodes["docs/a.md"]["created"], nodes["docs/a.md"]["updated"]),
+                         ("2026-01-01", "2026-11-20"))
+        self.assertEqual(nodes["docs/a.md"]["dates_from"], ["updated"])
+        self.assertEqual((nodes["docs/b.md"]["created"], nodes["docs/b.md"]["updated"]),
+                         ("2026-11-20", "2026-11-21"))
+        self.assertEqual(nodes["docs/b.md"]["dates_from"], ["created", "updated"])
+        self.assertEqual((nodes["docs/c.md"]["created"], nodes["docs/c.md"]["updated"]), (None, None))
+        self.assertEqual(nodes["docs/c.md"]["dates_from"], [])
+
+    def test_no_git_dates_leaves_nodes_unchanged(self):
+        nodes = dg.site_graph(dg.build_graph({"docs/c.md": "# C\n"}))["nodes"]
+        self.assertEqual(nodes[0]["dates_from"], [])
+
+
+class HubNodeTests(unittest.TestCase):
+    """Hubs carry their intro and the number of docs they list (plan 0016 N44)."""
+
+    CORPUS = {
+        "docs/_topics/README.md": "# Hubs\n\nIndex intro.\n\n[m](memory.md)\n",
+        "docs/_topics/memory.md": "# Topic Hub: Memory\n\nAll about memory.\n\n"
+                                  "[x](../a/x.md) [x2](../a/x.md#s) [y](../a/y.md) [i](README.md)\n",
+        "docs/a/x.md": "# X\n", "docs/a/y.md": "# Y\n",
+    }
+
+    def setUp(self):
+        self.nodes = {n["id"]: n for n in dg.site_graph(dg.build_graph(self.CORPUS))["nodes"]}
+
+    def test_hub_has_intro_and_doc_count_of_distinct_docs(self):
+        hub = self.nodes["docs/_topics/memory.md"]
+        self.assertEqual(hub["intro"], "All about memory.")
+        self.assertEqual(hub["doc_count"], 2)
+
+    def test_hub_index_has_intro_but_no_count_and_plain_docs_neither(self):
+        self.assertEqual(self.nodes["docs/_topics/README.md"]["intro"], "Index intro.")
+        self.assertIsNone(self.nodes["docs/_topics/README.md"]["doc_count"])
+        self.assertIsNone(self.nodes["docs/a/x.md"]["intro"])
+        self.assertIsNone(self.nodes["docs/a/x.md"]["doc_count"])
 
 
 class LoadCorpusTests(unittest.TestCase):

@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ai-agents-research</title>
-  <meta name="description" content="Field research and feature analysis for AI coding agents — sandboxing, orchestration, plugins, community tooling, SDLC patterns." />
+  <meta name="description" content="Field research and feature analysis for AI coding agents. The doc graph is the site." />
+  <meta http-equiv="refresh" content="0; url=doc-graph.html" />
+  <link rel="canonical" href="https://qte77.github.io/ai-agents-research/doc-graph.html" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
   <script>
-    // Apply the saved theme before first paint to avoid a flash of the wrong palette.
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "system";
   </script>
 </head>
@@ -17,97 +18,11 @@
     <header class="masthead">
       <img src="favicon.svg" alt="qte77 mark" width="56" height="56" />
       <h1>ai-agents-research</h1>
-      <select id="theme" aria-label="Color theme">
-        <option value="system">System</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select>
     </header>
-    <p class="tagline">
-      Field research and feature analysis for AI coding agents — sandboxing,
-      orchestration, plugins, community tooling, SDLC patterns.
-    </p>
-
-    <p>
-      A continuously-updated research catalog: make informed
-      <strong>adopt / trial / assess / hold</strong> decisions about coding agents and
-      their ecosystems before building production systems on them. Tracks Claude
-      Code, JetBrains Air, DeerFlow, Goose, Codex, Devin and others — plus the
-      surrounding plugins, observability, SDLC patterns, and cross-repo learnings.
-    </p>
-    <p>
-      Each doc opens with frontmatter (a <code>status</code> ring, dates, a
-      one-line purpose; see the
-      <a href="https://github.com/qte77/ai-agents-research/blob/main/docs/schema/frontmatter.schema.json">schema</a>),
-      a <code>What It Is</code> section, and ends with a Sources table. Docs are
-      grouped by folder and by topic hub. Scheduled workflows keep it current: Claude
-      Code changelog, status and community monitors, a link-rot check, an M365 drift
-      check, a plan reconcile and a weekly paper triage.
-    </p>
-
-    <div class="actions">
-      <a class="btn btn-primary" href="doc-graph.html">View doc graph →</a>
-      <a class="btn btn-secondary" href="https://github.com/qte77/ai-agents-research">GitHub repository</a>
-    </div>
-
-    <h2>Contents</h2>
-    <div class="grid">
-      <a class="card" href="https://github.com/qte77/ai-agents-research/blob/main/docs/_topics/README.md">
-        <div class="name">topic hubs</div>
-        <div class="desc">Start here: one page per topic (harness, memory, context, skills, security, evals, RAG …) listing the docs that cover it.</div>
-      </a>
-      <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/cc-native">
-        <div class="name">cc-native</div>
-        <div class="desc">Anthropic-native features: agents/skills, CI/sandboxing, context/memory, configuration, plugins, model-internals, MCP.</div>
-      </a>
-      <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/non-cc">
-        <div class="name">non-cc</div>
-        <div class="desc">Other harnesses and the stack around them: agents, coding agents, orchestrators, frameworks, protocols, context and memory, infrastructure, knowledge management.</div>
-      </a>
-      <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/cc-community">
-        <div class="name">cc-community</div>
-        <div class="desc">Community skills, plugins, tooling, and domain-specific CLAUDE.md patterns.</div>
-      </a>
-      <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/sdlc-lcm">
-        <div class="name">sdlc-lcm</div>
-        <div class="desc">SDLC / lifecycle-management specs, agentic SDLC patterns, OSS ALM landscape.</div>
-      </a>
-      <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/learnings">
-        <div class="name">learnings</div>
-        <div class="desc">Cross-repo compound learnings — recurring patterns from live development across the qte77 ecosystem.</div>
-      </a>
-      <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/research">
-        <div class="name">research</div>
-        <div class="desc">Auto-generated cumulative index of agentic-AI papers from the rxiv eval pipeline.</div>
-      </a>
-      <a class="card" href="https://github.com/qte77/ai-agents-research/blob/main/docs/glossary.md">
-        <div class="name">glossary</div>
-        <div class="desc">Abbreviations and which doc owns each term.</div>
-      </a>
-    </div>
-
-    <hr class="divider" />
-    <footer>
-      <p>
-        <a href="https://github.com/qte77/ai-agents-research/blob/main/LICENSE">Apache-2.0</a>
-        · Brand: EyeRest (<a href="https://github.com/qte77">qte77</a>).
-      </p>
-      <p id="build-info"></p>
-    </footer>
+    <p>Opening the <a href="doc-graph.html">doc graph</a>. The graph is the site; the
+      <a href="https://github.com/qte77/ai-agents-research">README</a> is the overview.</p>
+    <p id="build-info"></p>
   </main>
   <script src="build-info.js" defer></script>
-  <script>
-    // Theme picker: reflect the saved choice and persist changes. Default = follow the OS.
-    (function () {
-      var sel = document.getElementById("theme");
-      var mode = localStorage.getItem("theme") || "system";
-      document.documentElement.dataset.theme = mode;
-      sel.value = mode;
-      sel.addEventListener("change", function () {
-        localStorage.setItem("theme", sel.value);
-        document.documentElement.dataset.theme = sel.value;
-      });
-    })();
-  </script>
 </body>
 </html>
