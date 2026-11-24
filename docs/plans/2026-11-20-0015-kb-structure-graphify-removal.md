@@ -3,7 +3,7 @@ title: Remove graphify; strengthen topic hubs, frontmatter, indices and cross-re
 status: approved
 issue: "#935"
 created: 2026-11-20
-updated: 2026-11-22
+updated: 2026-11-24
 ---
 
 Tracking issue: #935. Successor to [plan 0014](2026-11-15-0014-kb-strengthening.md) (`#848`): its
@@ -16,13 +16,18 @@ open rows moved here unchanged (they keep their `13-` IDs), so there is one live
 remnants", and "strengthen the topics, frontmatter and indices and cross-refs instead". Status
 2026-11-22: P2 is done (all 49 landscapes checked) and every other agent row has shipped except
 13-A9 (waiting on the next weekly run's data); each row below names its PR. v0.23.0 released 2026-11-22.
+Status 2026-11-24: the owner's 2026-11-23 fold-in batches shipped as N14–N26 (#1045–#1058, N26 in the PR that adds it), including
+the one-line `purpose` limit (N24) and the RDFS and frontmatter wrap-up (N25). Bot PRs whose commits are
+unsigned (weekly changelog triage, outage archive, M365 drift state) stay blocked by the signed-commit
+rule even with green checks: the owner merges them.
 
 **Do now, in order:**
 
 1. `git pull`, `make reconcile`, open PRs (merge the weekly paper-triage bot PR first if one is open).
 2. 13-A9: after the next scheduled weekly paper run on gha-rxiv-paper-eval v0.7.1 (owner: wait for it, don't dispatch), record its
    "Extraction parse failures" line in the row and strike it (W45 baseline: 21 of 67).
-3. Release after a batch of merges: dispatch the bump workflow (minor), merge its PR once CI is
+3. Bot PRs: bring each up to date with `main` and check it, then hand it to the owner to merge (unsigned bot commits).
+4. Release after a batch of merges: dispatch the bump workflow (minor), merge its PR once CI is
    green, check the tag and the GitHub Release.
 
 **Owner-gated, don't start:** 13-A7 part (3) (deferred by the owner 2026-11-22), N9 Cole Medin (#1009: the owner picks a transcript route; the ai-that-works part is done),
