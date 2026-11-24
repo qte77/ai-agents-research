@@ -75,6 +75,7 @@ class CheckerReadsSchemaTests(unittest.TestCase):
         props = SCHEMA["properties"]
         self.assertEqual(set(df.DATE_KEYS), {k for k, v in props.items() if v.get("format") == "date"})
         self.assertEqual(df.PURPOSE_MAX, props["purpose"]["maxLength"])
+        self.assertEqual(df._ONE_URL.pattern, props["source"]["pattern"])
         self.assertEqual(ds.DOC_STATUS_VOCAB, frozenset(props["status"]["enum"]))
         self.assertEqual(ds.PLAN_STATUS_VOCAB, frozenset(SCHEMA["$defs"]["plan"]["properties"]["status"]["enum"]))
 

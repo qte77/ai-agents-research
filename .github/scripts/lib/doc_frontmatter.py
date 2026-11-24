@@ -22,7 +22,7 @@ PURPOSE_MAX = PROPERTIES["purpose"]["maxLength"]  # one line; detail belongs in 
 _OUT_OF_SCOPE = ("docs/_topics/", "docs/plans/", "docs/cc-native/examples/", "docs/archive/", "docs/research/")
 _TOP_KEY = re.compile(r"^([A-Za-z_][\w-]*):\s*(.*?)\s*$")
 _ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-_ONE_URL = re.compile(r"^https?://\S+$")
+_ONE_URL = re.compile(PROPERTIES["source"]["pattern"])
 _BLOCK_SCALAR = re.compile(r"^[>|][+-]?\d?[+-]?$")  # YAML folded/literal markers: >, |-, >+, |2 ...
 _CONTINUED = re.compile(r"^purpose:.*\n[ \t]+\S", re.M)  # an indented line right after purpose:
 
@@ -55,7 +55,7 @@ def check_doc(text: str) -> list[str]:
         if k in keys and not _ISO_DATE.match(keys[k]):
             problems.append(f"{k} is not an ISO date (YYYY-MM-DD): {keys[k]}")
     for k in sorted(set(keys) - set(REQUIRED) - OPTIONAL):
-        problems.append(f"key not allowed (see CONTRIBUTING §1): {k}" if k in REMOVED else f"unknown key: {k}")
+        problems.append(f"key not allowed (see docs/schema/frontmatter.schema.json): {k}" if k in REMOVED else f"unknown key: {k}")
     if "source" in keys and not _ONE_URL.match(keys["source"]):
         problems.append(f"source must be one URL (others go in the Sources section): {keys['source']}")
     purpose = keys.get("purpose")

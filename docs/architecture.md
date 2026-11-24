@@ -74,7 +74,7 @@ This format ensures each doc is directly actionable, not just descriptive.
 
 ## Frontmatter Conventions
 
-All documents carry YAML frontmatter, including the doc's `status:` (there is no body status badge). The spec lives in [CONTRIBUTING.md §1–§2](../CONTRIBUTING.md#1-frontmatter); `make check_status` enforces the status part.
+All documents carry YAML frontmatter, including the doc's `status:` (there is no body status badge). The rules live in [`schema/frontmatter.schema.json`](schema/frontmatter.schema.json) (JSON Schema, with each key's RDF (Resource Description Framework) term), explained in [CONTRIBUTING.md §1–§2](../CONTRIBUTING.md#1-frontmatter); `make check_frontmatter` and `make check_status` read it.
 
 ## Automated Monitors
 
@@ -115,7 +115,7 @@ These lint jobs run on every PR touching docs, workflows, or actions:
 | Markdown lint | `markdownlint-cli2` | root governance docs (`README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CLAUDE.md`, `AGENTS.md`, `AGENT_LEARNINGS.md`, `AGENT_REQUESTS.md`) + `docs/**/*.md` |
 | Link check | `lychee` | repo-wide (configured via `lychee.toml`); github.com requests authenticated with the workflow `GITHUB_TOKEN` (#721) |
 | Action lint | `actionlint` (+ `shellcheck` on the runner) | `.github/workflows/**`, `.github/actions/**` |
-| Doc frontmatter | `make check_frontmatter` (`lib/doc_frontmatter.py`, stdlib) | content docs against the CONTRIBUTING §1–§2 schema; strict |
+| Doc frontmatter | `make check_frontmatter` (`lib/doc_frontmatter.py`, stdlib) | content docs against `docs/schema/frontmatter.schema.json`; strict |
 | Doc coverage | `make check_coverage` (`lib/doc_coverage.py`, stdlib) | every content doc under `docs/` is linked from its folder's README index and from at least one other doc or root file; every `#fragment` in a doc-to-doc link matches a heading (GitHub slug rules) or `<a id>` in its target |
 
 The rxiv triage job additionally runs `markdownlint-cli2` against the assembled would-be PR content (with the action's H1 prepend simulated) and fails the job before opening a triage PR if the output is md-dirty.
