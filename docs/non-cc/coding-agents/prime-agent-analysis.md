@@ -43,10 +43,10 @@ Per the paper ([arXiv:2608.23552][paper], authors Seth Karten, Alex L. Zhang, Ke
 
 ## Training the Model for an RLM Harness
 
-A separate paper trains the model to fit an RLM-style harness rather than building the harness ([arXiv:2611.28298][rlm-cg], Zhang, Chakraborty and Khattab, v1 2026-11-20; authors' own results, not independently reproduced). Its **surrogate harness training** builds easier synthetic environments that reproduce what one model call would see inside the harness on the real task, with fake tools or sub-calls and the same solution strategy but not the real task's content, then trains on them with reinforcement learning (RL). The trained model is called RLM-27B and starts from Qwen3.8-27B.
+A separate paper trains the model to fit an RLM-style harness rather than building the harness ([arXiv:2611.28298][rlm-cg], Zhang, Chakraborty and Khattab, v1 2026-11-20; authors' own results, not independently reproduced). Its **surrogate harness training** builds easier synthetic environments that reproduce what one model call would see inside the harness on the real task, with fake tools or sub-calls, and trains the model on rollouts from them. The released model, RLM-27B, is Qwen3.8-27B after full-parameter supervised fine-tuning (SFT) on those synthetic rollouts, not reinforcement learning (RL); the paper also reports RL on the synthetic tasks as a comparison.
 
-- **Average score over eight long-context benchmarks (Table 4, [HTML][rlm-cg-html], read 2026-11-24):** RLM-27B 58.5 vs 46.1 for the untrained RLM harness on the same base model (+12.4 points, about +27% relative). For comparison, the table's RL on the synthetic tasks within the same harness scores 52.9 and RL on short tasks 48.5.
-- **Chained tasks (Table 6):** full-chain solve rate 55.2% for RLM-27B vs 19.3% for Qwen3.8-27B in the same harness; 77.5% with the table's supervised fine-tuning (SFT) variant.
+- **Average score over eight long-context benchmarks (Table 4, [HTML][rlm-cg-html], read 2026-11-24):** RLM-27B 58.5 vs 46.1 for the untrained RLM harness on the same base model (+12.4 points, about +27% relative). The comparison rows with RL instead of SFT score 52.9 (RL on the synthetic tasks) and 48.5 (RL on short tasks).
+- **Chained tasks (Table 6):** full-chain solve rate 55.2% for RLM-27B vs 19.3% for Qwen3.8-27B in the same harness; 77.5% for RLM-27B with additional recursion SFT data (depth 3).
 - **Cost:** the paper states about 2x fewer inference tokens in the abstract and, for root trajectories in section 4.2, 3x fewer turns and 6x fewer input tokens.
 - **Artifacts:** code [`alexzhang13/harness-cg`][rlm-cg-repo] (MIT per its LICENSE file; 17 stars, `gh api` 2026-11-24) and a synthetic SFT [dataset][rlm-cg-data].
 
