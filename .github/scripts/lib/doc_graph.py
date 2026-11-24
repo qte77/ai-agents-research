@@ -33,9 +33,10 @@ _HUB_INDEX = "docs/_topics/README.md"
 _ARCHIVE = "docs/archive/"
 _DOC_TYPES = ("analysis", "landscape", "reference", "spec", "runbook")
 _PLATFORMS = re.compile(r"^platform_scope:\s*\[(.*)\]\s*$", re.MULTILINE)
-_DATE_KEYS = {k: re.compile(rf"^{k}:\s*(\d{{4}}-\d{{2}}-\d{{2}})\s*$", re.MULTILINE)
+_DATE_KEYS = {k: re.compile(rf"^{k}:[ \t]*([\"']?)(\d{{4}}-\d{{2}}-\d{{2}})\1[ \t]*$", re.MULTILINE)
               for k in ("created", "updated")}
-_PURPOSE = re.compile(r"^purpose:\s*(.+?)\s*$", re.MULTILINE)
+_PURPOSE = re.compile(r"^purpose:[ \t]*(\S.*?)[ \t]*$", re.MULTILINE)
+_BLOCK_MARKER = re.compile(r"^[>|][+-]?\d?[+-]?$")  # YAML folded/literal scalar indicators
 _CC_BUCKETS = ("cc-native", "cc-community")
 
 
@@ -83,14 +84,17 @@ def doc_platforms(text: str, path: str) -> list[str]:
 def doc_dates(text: str) -> dict[str, str | None]:
     """Frontmatter ``created`` and ``updated`` as ISO date strings, ``None`` when absent or malformed."""
     fm = extract_frontmatter(text) or ""
-    return {k: (m.group(1) if (m := rx.search(fm)) else None) for k, rx in _DATE_KEYS.items()}
+    return {k: (m.group(2) if (m := rx.search(fm)) else None) for k, rx in _DATE_KEYS.items()}
 
 
 def doc_purpose(text: str) -> str | None:
     """Frontmatter ``purpose:`` one-liner (surrounding quotes dropped), else ``None``."""
     fm = extract_frontmatter(text)
     m = _PURPOSE.search(fm) if fm else None
-    return m.group(1).strip("\"'") if m else None
+    if not m or _BLOCK_MARKER.match(m.group(1)):
+        return None
+    value = m.group(1)
+    return value[1:-1] if len(value) > 1 and value[0] == value[-1] and value[0] in "\"'" else value
 
 
 def extract_links(text: str) -> list[tuple[str, int]]:
