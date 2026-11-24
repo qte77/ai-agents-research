@@ -291,7 +291,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [auto-ontology]: https://github.com/NVIDIA/auto-ontology
 [kumo-engine]: https://github.com/NVIDIA/kumo-engine
 [ontobricks]: https://github.com/databrickslabs/ontobricks
-[ontobricks-license]: https://github.com/databrickslabs/ontobricks/blob/main/LICENSE.txt
+[ontobricks-license]: https://github.com/databrickslabs/ontobricks/blob/master/LICENSE.txt
 [auto-ontology-mcp]: https://github.com/gogoymh/auto-ontology-mcp
 [ontogenia-paper]: https://arxiv.org/abs/2503.05388
 [wikidata-kgc]: https://arxiv.org/abs/2412.20942
