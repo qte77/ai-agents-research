@@ -11,6 +11,118 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.24.0] - 2026-11-24
+
+### Added
+
+- `microsoft-365-copilot-analysis.md`: Autopilot Learn page (preview), Copilot UX components with SharePoint Framework `.sppkg` packaging (GA 2026-10-28), the plugin-versus-app extensibility framing, one Frontier item, and refreshed Frontier links (plan 0015 N8)
+
+- GEPA (reflective, Pareto-based prompt and text optimizer, paper arXiv:2507.19457) entry next to DSPy in the agent-frameworks landscape, with its DSPy relationship and dated first-party figures
+
+- SlopCodeBench erosion and verbosity metrics (checkpoint-based code-degradation benchmark) in the agent evaluation metrics landscape
+
+- `agentic-ai-vulnerability-landscape.md`: the lethal trifecta (Simon Willison, 2025-06-16) as a defense row, linked to the Supabase MCP case; lead from the ai-that-works triage (plan 0015 N9)
+
+- Harness patterns: practitioner-talk additions (proof before research, questions-then-blind research, back pressure per loop, MCP vs first-party rule and token-cost measurement, tool-result shape, speculative reads), labelled single-source (plan 0015 N9)
+
+- `agent-evaluation-metrics-landscape.md`: practitioner eval practices from ai-that-works episodes, all labelled single-source (model-swap relative gate with repeats and no default price, runtime invariant checks, scenario tests with soft metrics, SlopCodeBench-author slop patterns) (plan 0015 N9)
+
+- Concepts from the ai-that-works show, labelled as single-source practitioner claims: memory pipeline split by learning source (`CC-memory-system-analysis.md`), information-not-instructions rule for skills (`CC-skills-adoption-analysis.md`), instrument-before-the-bug observability stance with an OpenTelemetry attribute-type caveat (`agent-observability-methods-analysis.md`), separate projections of an event log (`mas-design-principles.md`) (plan 0015 N9)
+
+- Agentic-systems guides folded in: context failure modes with two primary papers (`CC-extended-context-analysis.md`), a rollout-and-governance section from a Databricks guide (`agentic-engineering-disciplines-landscape.md`) and the guided-waterfall supervisor pattern (`mas-design-principles.md`), each labelled by evidence level
+
+- `CC-extended-context-analysis.md`: how the auto-compact window and `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` combine (they stack: trigger ≈ window × percentage), when `/autocompact` first appeared (v2.1.221 floor; first changelog mention v2.1.234), Anthropic's session-management article and a community guide as related reading
+
+- `goal-tracking-attribution-landscape.md`: "Core vs context: classifying work (Moore)" section (quadrants and actions per a slide-deck summary of *Dealing with Darwin*, single-source AI-angle essay, work-item classification how-to as corpus synthesis, adjacent concepts) (read 2026-11-23)
+
+- Lindenberg newsletter lenses (labelled practitioner, single-source) with first-party checks: Atuin Agent Threads and CortexDB supersession in `CC-memory-tooling-landscape.md`, NVIDIA NeMo Switchyard in `CC-harnessrouter-analysis.md`, last-green-ref pattern after Scion in `software-factory-landscape.md`, dual-run rollout in `system-1-decision-models-landscape.md`, join-key checks in `semantic-layers-data-catalog-landscape.md`, and the own-history searcher test in `CC-code-tooling-landscape.md`
+
+- LiteLLM Lens (early access): trace service and a private-preview CLI that compares harness × model configurations, in `llm-routers-gateways-landscape.md`, with a pointer from the harness-benchmarking method in `agent-evaluation-metrics-landscape.md`
+
+- `agentic-engineering-disciplines-landscape.md`: "Loop engineering in practice" subsection (Anthropic first-party loop types, anatomy, stop conditions, maker/checker, budgets, vendor-cluster provenance with per-source stakes); loop-engineering row corrected (earliest dated use: Osmani 2026-06-07); Lindenberg design lenses for pointable work and the code/cognitive/intent debt split (Storey, Thoughtworks Radar, Osmani)
+
+- Topic hub `docs/_topics/model-internals.md` (interpretability and hidden-state docs); every content doc now sits in a hub, so the unhubbed ratchet `MAX_UNHUBBED` drops from 3 to 0 (plan 0015 X2b)
+
+- `CC-prompt-caching-behavior.md`: preserved-thinking subsection (supported models, model/account binding, drop behaviour and cache cost, owner observation of the cross-organization notice in CC v2.1.330) (read 2026-11-23)
+
+- Dated, hedged entries for mobile-agent-testers and fast-anything (new Claude Code plugins) in `CC-community-tooling-landscape.md`, and OpenComputer (open-source Devin alternative) in `devin-cli-analysis.md`
+
+- `computer-use-agents-landscape.md`: app bridges instead of screens: MCP for Blender, Bonsai (IFC/BIM add-on for Blender) and two community Bonsai MCP bridges, plus the IFC-MCQ benchmark; hub row in `agentic-web.md`.
+
+- `/tui` row in `CC-tools-inventory.md` (fullscreen vs classic renderer, `/tui classic` since v2.1.327, the failed-start fallback since v2.1.236) and a `CLAUDE_CODE_NO_FLICKER` row in `CC-env-vars-reference.md`.
+
+- Doc graph (`ui/doc-graph.json`): each doc now carries clustering facets: `status`, `doc_type` (from the filename suffix) and `platforms` (from `platform_scope`, or `claude-code` for `cc-native/` and `cc-community/` docs without one); tests first. The page does not filter on them yet.
+
+- `docs/schema/frontmatter.schema.json` (JSON Schema 2020-12): the single source of the content-doc frontmatter rules, with each key's RDF term (`x-rdf`, e.g. `updated` → `dcterms:modified`); `doc_frontmatter.py` and `doc_status.py` read it via `lib/frontmatter_schema.py` (tests first, including one that every rule in the schema is enforced); CONTRIBUTING §1 links to it instead of restating it. An empty `title` is now flagged.
+
+### Changed
+
+- Paper triage pins `qte77/gha-rxiv-paper-eval` v0.7.0: an unparseable extraction reply gets one retry, and the run summary reports the extraction parse-failure count (plan 0015 13-A9)
+
+- Paper triage pins `qte77/gha-rxiv-paper-eval` v0.7.1: a paper whose extraction retry call fails still counts in the parse-failure line (plan 0015 13-A9)
+
+- `CC-official-plugins-landscape.md` § Security Guidance rewritten for plugin v2.0.21 from its own README, `hooks.json` and hook script: post-edit pattern warnings (not a blocking `PreToolUse` hook), an LLM diff review on Stop, an agentic commit and push review, the per-prompt `UserPromptSubmit` git baseline, credentials, cost log and environment switches; fit is now pattern warnings on, LLM reviews per repo (plan 0015 N10)
+
+- `CC-agentic-harness-patterns-analysis.md`: HumanLayer's current status, dated 2026-11-22 (the approval-gate SDK has had no PyPI release since 2025-06; the product now runs coding agents for teams), with a Sources row; the SDK mentions in `mas-design-principles.md`, `agent-identity-auth-landscape.md` and `software-factory-landscape.md` now say so (plan 0015 N9)
+
+- `CC-official-plugins-landscape.md`: pruned one community-guide entry (Cuttlesoft blog post) to a Not included table under the well-known, performance-optimised rule (plan 0015 P2)
+
+- Pruned the agent skill evolution landscape under the pruning rule: moved three paper-only entries (WikiSkill, AutoTailor, Skill++) to Not included; kept SkillLift, NVlabs/Skill2Env and Adaptive Skill Granularity, whose paper names its code repo (fact check 2026-11-22); SkillLift's star count and last push refreshed
+
+- Agentic database access landscape: pruned under the D8 rule (DualSQL moved to Not included, no code or weights released; all database MCP servers, benchmarks, BIRD-RL and OpenLineage kept) (plan 0015 P2)
+
+- KV-cache serving landscape checked under the pruning rule: nothing moved; FlashRT and kvcached star counts refreshed, and UltraQuant's code status corrected (its paper says the Ultra-TQ kernel is upstreamed in vLLM; the FP4 kernel release is planned)
+
+- `semantic-layers-data-catalog-landscape.md`: moved MQO-MCP and the three paper-only self-evolving-ontology entries (OaK, SciToolAgent-Evo, Evo-DKD) to Not included under the well-known, performance-optimised rule; corrected the AtScale homepage status (plan 0015 P2)
+
+- Pruned the repo-to-docs tools landscape under the pruning rule: moved GitSummarize to Not included (466 stars, last push 2025-04-03); kept DeepWiki, Code2Tutorial, Understand Anything, OpenWiki and OpenKB
+
+- `agent-code-analysis-landscape.md`: Grim Prompter and VulnAgent-R2 moved to Not included under the pruning rule; agent-audit (reproducible first-party benchmark) and VIPER-MCP (artifact package released with the paper) kept after fact-check; agent-audit licence recorded as MIT (plan 0015 P2)
+
+- Agent evaluation metrics landscape checked under the pruning rule: nothing moved; Tracely's link and facts corrected (its original repo is live again with 1,122 stars; a separate copy has 848)
+
+- Review fixes after plan 0015's P2 sweep: the security-guidance section's local timing figures are relabelled as another session's unconfirmed report; the lane and falsifier briefs require searching a paper's HTML or PDF for code, checking every copy of a repo and stating only what was read (with an `AGENT_LEARNINGS.md` entry); plan rows 13-A7 and 13-A9 show their owner and data gates
+
+- `agent-design-formats-landscape.md`: star counts, DESIGN.md file count, Figma MCP server name and beta scope, DTCG 2025.10 date and Style Dictionary v5.8.0 re-checked at source on 2026-11-22 (plan 0015 R1)
+
+- `goal-tracking-attribution-landscape.md`: Jira Align link moved to its current URL; Tability's agent check-ins and MCP server added from its own pages, checked 2026-11-22 (plan 0015 R1)
+
+- `kv-cache-serving-landscape.md`: H2O and KVQuant marked as dated research concepts, with their reference repos and last-push dates (`gh api`, 2026-11-22) (plan 0015 R1)
+
+- `repo-to-docs-tools-landscape.md`: Understand Anything, OpenWiki and OpenKB star counts and OpenWiki v0.9.0 re-checked with `gh api` on 2026-11-22 (plan 0015 R1)
+
+- `agent-code-analysis-landscape.md`: Specula is now Specular (`specular-org/Specular`); repo link, star count and its arXiv:2607.25333 paper added; rename noted in `agentic-engineering-disciplines-landscape.md` (plan 0015 R1)
+
+- `CC-mods-function-hooks-analysis.md`: built-in mods list updated with `cc-plugin-easel` (documented) and `cc-plugin-privacy` (observed, source README read), new `mods/` directory contents incl. `hipaa-default`; `CC-skills-adoption-analysis.md`: new subsection on skills and plugins synced from claude.ai (opt-out settings, cadence, `CLAUDE_CODE_SYNC_SKILLS`, namespace reservation and its revert, per-skill list display), read 2026-11-23
+
+- Coding-agents comparison: context compaction by harness (auto trigger, manual command, setting names) and a subscription sign-in subsection (vendor terms wording, limits, data handling) under model access and billing
+
+- `make check_frontmatter` now requires `purpose` to be one non-empty line of at most 200 characters (tests first); 59 docs' purposes shortened, with any fact not already in the body moved to the `**Details:**` line; CONTRIBUTING §1 states the limit.
+
+- `microsoft-365-copilot-analysis.md`: the 2026-12-09 change to the EU/EFTA/UK Anthropic subprocessor setting (tenants with no selection move to "All users"), from the Microsoft Learn page dated 2026-11-20; follows the M365 drift report (#1037).
+
+- `CC-models-reference.md`, `CC-advisor-tool-analysis.md`, `CC-prompt-caching-behavior.md`, `CC-cowork-skills-api-workflows.md`: Fable 5.2 / Opus 5.5 / Sonnet 5.5 release and retirement dates, default effort, Fable 5.2 breaking changes (prefix check, thinking-block binding, `computer_20251124`, advisor pairing), Fable/Mythos verification programs and Opus 4.8 / Opus 5 fallback routing, deprecations, the 0.025x cache-read multiplier and 512-token minimum for Fable 5.2 / Mythos 5.2, the announcement's canonical URL; claude.ai file-creation settings (read 2026-11-23)
+- `kv-cache-serving-landscape.md`: Anthropic 512-token minimum list brought up to date; stale Bedrock 1,024 note and "5-min tier only" claim replaced with pointers to the corrected caching doc
+
+- `CC-model-provider-configuration.md`, `CC-models-reference.md`: provider facts consolidated into the provider-configuration doc (free-tier table moved with four rows re-checked at source, 2026-11-23; the models doc keeps a pointer under the same heading); Infomaniak section refreshed from the vendor's models and prices pages (current model ids, CHF prices, vendor-claim labels, third-party catalog noted)
+- `codex-cli-analysis.md`, `gemini-cli-analysis.md`: new Providers sections from each vendor's docs (Codex `model_providers`, Azure, built-in Bedrock and Google Cloud providers, Responses-API requirement; Gemini CLI Vertex AI, API key and base-URL overrides, no documented OpenAI-compatible, Azure or Bedrock route)
+
+- Refreshed CLI-Anything (stars, v0.4.0 release, CLI-Hub registry counts) and Trail-code (stars, README claims, version) facts
+
+- `semantic-layers-data-catalog-landscape.md` § Formal Ontologies & Semantic Web now covers RDFS (RDF Schema 1.1), which the glossary row already pointed to; `docs/learnings/README.md` uses `purpose:` instead of `description:`.
+
+- `lychee.toml`: exclude `pdma.org`, which returns 403 to lychee in CI and locally while the page is live (owner OK, 2026-11-24).
+
+- `platform_scope` now takes only harness and agent-host slugs from the list in `docs/schema/frontmatter.schema.json`, as an inline list (tests first); synonyms merged (`codex-cli`/`openai-codex` → `codex`, `copilot`/`github-copilot-cli` → `github-copilot`); in 34 docs, editors, surfaces, operating systems, channels, clouds and providers moved to the `**Details:**` line, and 12 docs with no harness left dropped the key.
+
+- `docs/schema/frontmatter.schema.json`: each `status` value now has its own RDF mapping (`x-rdf-values`): the rings adopt/trial/assess/hold as a `schema:reviewRating` of 4 to 1, `research` and `reference` as `dcterms:type`, `archived` as `schema:creativeWorkStatus`; `validated_links_on` maps approximately to `schema:lastReviewed` (tests first).
+
+- Frontmatter key `validated_links` renamed to `validated_links_on` (owner 2026-11-24) in the schema file, 264 docs, the learnings aggregator, CONTRIBUTING and the add-source skill; the old key now fails the check with a pointer to the schema.
+
+### Removed
+
+- Community monitor: the Reddit and X sources, their fetchers and the three secret mappings in the workflow; they never ran because the secrets were unset (owner decision 2026-11-23, plan row 13-O11, #726)
+
 ## [0.23.0] - 2026-11-22
 
 ### Added
