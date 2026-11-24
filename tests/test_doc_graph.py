@@ -188,6 +188,36 @@ class DatesAndPurposeTests(unittest.TestCase):
         self.assertEqual(node["updated"], "2026-11-23")
 
 
+class FrontmatterEdgeCaseTests(unittest.TestCase):
+    """Empty values, block scalars and quotes must not leak into purpose or dates (review fixes)."""
+
+    @staticmethod
+    def node(fm):
+        corpus = {"docs/a-analysis.md": f"---\ntitle: A\n{fm}\n---\n"}
+        return dg.build_graph(corpus)["nodes"][0]
+
+    def test_empty_purpose_does_not_capture_the_next_line(self):
+        self.assertIsNone(self.node("purpose:\nstatus: trial")["purpose"])
+
+    def test_block_scalar_markers_are_none(self):
+        for marker in (">", "|", ">-", "|-", ">+", "|2"):
+            self.assertIsNone(self.node(f"purpose: {marker}\n  text")["purpose"], marker)
+
+    def test_quotes_are_stripped_only_when_they_match(self):
+        self.assertEqual(self.node("purpose: 'It works'")["purpose"], "It works")
+        self.assertEqual(self.node("purpose: \"It's fine\"")["purpose"], "It's fine")
+        self.assertEqual(self.node("purpose: It's \"fine\"")["purpose"], "It's \"fine\"")
+        self.assertEqual(self.node("purpose: \"half")["purpose"], "\"half")
+
+    def test_empty_date_does_not_capture_the_next_line(self):
+        n = self.node("created:\nupdated: 2026-11-23")
+        self.assertEqual((n["created"], n["updated"]), (None, "2026-11-23"))
+
+    def test_dates_may_be_quoted(self):
+        n = self.node("created: '2026-01-02'\nupdated: \"2026-03-04\"")
+        self.assertEqual((n["created"], n["updated"]), ("2026-01-02", "2026-03-04"))
+
+
 class SiteGraphTests(unittest.TestCase):
     """The slim projection the Pages site loads (plan 0015 G2)."""
 
