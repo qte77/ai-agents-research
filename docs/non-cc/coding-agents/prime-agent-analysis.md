@@ -3,7 +3,7 @@ title: Prime Agent Analysis
 source: https://github.com/PrimeIntellect-ai/prime-agent
 purpose: Analysis of Prime Agent, Prime Intellect's open-source self-improving coding harness built on the Recursive Language Model (RLM) abstraction, for long-horizon coding and autonomous-task workflows.
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-24
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -41,12 +41,30 @@ Per the paper ([arXiv:2608.23552][paper], authors Seth Karten, Alex L. Zhang, Ke
 - Strong results reported on long-context coding and GPU-kernel-generation tasks.
 - On Factorio specifically: "refinement allows for continuous technology progression and dedicated subagents enable parallelized work."
 
+## Training the Model for an RLM Harness
+
+A separate paper trains the model to fit an RLM-style harness rather than building the harness ([arXiv:2611.28298][rlm-cg], Zhang, Chakraborty and Khattab, v1 2026-11-20; authors' own results, not independently reproduced). Its **surrogate harness training** builds easier synthetic environments that reproduce what one model call would see inside the harness on the real task, with fake tools or sub-calls and the same solution strategy but not the real task's content, then trains on them with reinforcement learning (RL). The trained model is called RLM-27B and starts from Qwen3.8-27B.
+
+- **Average score over eight long-context benchmarks (Table 4, [HTML][rlm-cg-html], read 2026-11-24):** RLM-27B 58.5 vs 46.1 for the untrained RLM harness on the same base model (+12.4 points, about +27% relative). For comparison, the table's RL on the synthetic tasks within the same harness scores 52.9 and RL on short tasks 48.5.
+- **Chained tasks (Table 6):** full-chain solve rate 55.2% for RLM-27B vs 19.3% for Qwen3.8-27B in the same harness; 77.5% with the table's supervised fine-tuning (SFT) variant.
+- **Cost:** the paper states about 2x fewer inference tokens in the abstract and, for root trajectories in section 4.2, 3x fewer turns and 6x fewer input tokens.
+- **Artifacts:** code [`alexzhang13/harness-cg`][rlm-cg-repo] (MIT per its LICENSE file; 17 stars, `gh api` 2026-11-24) and a synthetic SFT [dataset][rlm-cg-data].
+
+For the RLM and CodeAct framing of sub-LLM calls, see [programmatic-tool-calling-analysis.md](../protocols/programmatic-tool-calling-analysis.md#speculative-programmatic-tool-calling-spec-ptc).
+
 ## Sources
 
 | Source | Content |
 |---|---|
 | [PrimeIntellect-ai/prime-agent][repo] | Repo README — architecture, features, license, star count |
 | [arXiv:2608.23552][paper] | Paper "Prime Agent: A Self-Improving RLM Harness" — authors, benchmark results |
+| [arXiv:2611.28298][rlm-cg] ([HTML][rlm-cg-html]) | Surrogate harness training paper — method, Tables 4 and 6, token and turn savings |
+| [alexzhang13/harness-cg][rlm-cg-repo] | LICENSE file (MIT), stars (`gh api` 2026-11-24) |
+| [synthetic-rlm-sft-data][rlm-cg-data] | Dataset link as given in the paper (listing not opened) |
 
 [repo]: https://github.com/PrimeIntellect-ai/prime-agent
 [paper]: https://arxiv.org/abs/2608.23552
+[rlm-cg]: https://arxiv.org/abs/2611.28298
+[rlm-cg-html]: https://arxiv.org/html/2611.28298
+[rlm-cg-repo]: https://github.com/alexzhang13/harness-cg
+[rlm-cg-data]: https://huggingface.co/datasets/a1zhang/synthetic-rlm-sft-data

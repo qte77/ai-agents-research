@@ -3,7 +3,7 @@ title: Agent Frameworks & Infrastructure Landscape
 purpose: Catalog of multi-agent orchestration frameworks, LLM routing tools, agent memory infrastructure, agent-oriented foundation models and specialist models agents call as tools, beyond Claude Code.
 status: research
 created: 2026-06-14
-updated: 2026-11-23
+updated: 2026-11-24
 validated_links_on: 2026-11-19
 ---
 
@@ -205,6 +205,7 @@ Moved here from the cc-community tooling landscape on 2026-11-19 (owner decision
 - [Atomic Agents](https://github.com/BrainBlend-AI/atomic-agents) — modular Pydantic/Instructor pipelines with strict I/O schemas.
 - [smolAgents (HuggingFace)](https://github.com/huggingface/smolagents) — minimalist code-first agents with HF model access.
 - [Youtu-Agent (Tencent)](https://github.com/Tencent/Youtu-agent) — async, YAML-configured agents; 71.47% WebWalkerQA, OSS-model friendly.
+- [chat-data.com][chatdata] — closed SaaS builder for customer-support chatbots trained on your own content; no open-source repo checked. Pricing page, read 2026-11-24: free tier with 100 message credits a month, paid tiers priced by message credits (the entry tier lists $15.83 a month billed annually for 1,500 credits). Its SOC 2, HIPAA and MCP-app-count claims are vendor claims, not checked here.
 - [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), [BabyAGI](https://github.com/yoheinakajima/babyagi), [SuperAGI](https://github.com/TransformerOptimus/SuperAGI) — the original autonomous-task-loop projects (recursive planning; AutoGPT/BabyAGI/SuperAGI respectively minimal→GUI).
 - [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
 - [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
@@ -482,6 +483,7 @@ code branches on directly, backed by a probability rather than free text.
 - [Hands-On Modern RL (WalkingLabs)](https://github.com/walkinglabs/hands-on-modern-rl) — practice-first RL curriculum from classic control to LLM post-training (RLHF, DPO, GRPO, RLVR, DeepSeek-R1) and agentic RL (multi-turn credit assignment, tool-use trajectories, Deep Research); Python/PyTorch (CC BY-NC-SA 4.0, non-commercial).
 - [Compiling Agentic Workflows into LLM Weights](https://arxiv.org/abs/2605.22502) — Dennis et al. (2026-05-21) argue for *compiling* an agent's orchestration procedure into the weights of a small fine-tuned model instead of an external framework, reporting near-frontier quality at ~2 orders-of-magnitude lower cost — with no context-window or orchestration overhead — across travel-booking, support, and insurance-claims workflows (14–55 nodes). A weight-level counterpoint to the graph/framework orchestration in §1 (paper claims; methodology not independently verified).
 - [Beyond Global Replanning: Hierarchical Recovery for Cross-Device Agent Systems](https://arxiv.org/abs/2606.20487) — Yao et al. (Shanghai Jiao Tong University et al., arXiv:2606.20487, 2026-06-18) propose **H-RePlan**, splitting multi-device agent failure recovery into device-local strategy recovery vs. orchestrator-level global replanning via a compact cross-layer failure abstraction, plus **HeraBench** (23 seed tasks → 174 fault-injected variants across a 4-device Linux+Android testbed) to evaluate the distinction. Reported vs. a UFO3-GUI baseline: 75.84% vs 46.86% completion, 36.78% vs 13.79% perfect-pass rate, and ~5.44× lower token cost per perfect pass (paper claims; methodology not independently verified; no code/benchmark repo published as of 2026-07-23).
+- [EGGROLL (ESHyperscale)][eggroll-paper] — Sarkar et al., "Evolution Strategies at the Hyperscale" (arXiv 2511.16652, v2 2026-02-16): evolution strategies with low-rank perturbations, which the [project page][eggroll-site] says gives a hundredfold training speed-up over naive ES (authors' claim; read 2026-11-24); training method, not an agent framework. Code: [HyperscaleES][eggroll-repo] (JAX, 390★) and [nano-egg][eggroll-nano] (192★), both GPL-3.0 per their LICENSE files (`gh api` 2026-11-24).
 - [TradingAgents (Tauric Research)](https://github.com/TauricResearch/TradingAgents) — open-source multi-agent framework modeling a trading firm on **LangGraph**: an analyst team (fundamentals / sentiment / news / technical), bull/bear researchers who debate, a trader agent, and a risk-management/portfolio-manager layer that approves or rejects trades; SEC EDGAR + Yahoo Finance data, backtesting, checkpoint resume. Multi-provider (OpenAI, Anthropic, Google, xAI, DeepSeek, Qwen, …); explicitly framed as **research-only, not financial advice** ([paper](https://arxiv.org/abs/2412.20138)) (Apache-2.0; 108k★, `gh api` 2026-09-24).
 
 ## Cross-References
@@ -603,6 +605,8 @@ GEPA entry (§2) — first-party checked 2026-11-22 (plan 0015, row N9):
 
 | Source | Content |
 |---|---|
+| [arXiv:2511.16652][eggroll-paper], [project page][eggroll-site], [HyperscaleES][eggroll-repo], [nano-egg][eggroll-nano] | Method, speed-up claim, LICENSE files (GPL-3.0 both), stars (`gh api` 2026-11-24) |
+| [chat-data.com pricing][chatdata] | Plans and message credits (as of 2026-11-24); marketing page, claims unchecked |
 | [gepa-ai/gepa][gepa-repo] | README (method, install, key-results claims), LICENSE file (MIT), stars, release, last push (`gh api` 2026-11-22) |
 | [arXiv:2507.19457][gepa-paper] | Abstract page: title, authors, ICLR 2026 Oral note, method summary, headline numbers vs GRPO and MIPROv2 |
 | [DSPy GEPA docs][gepa-dspy] | Optimizer description, Pareto-frontier selection, dependency on the `gepa` package |
@@ -735,3 +739,8 @@ RAG and retrieval refresh (§7) — first-party pages read 2026-11-21:
 [gepa-repo]: https://github.com/gepa-ai/gepa
 [gepa-paper]: https://arxiv.org/abs/2507.19457
 [gepa-dspy]: https://dspy.ai/current/api/optimizers/GEPA/overview/
+[chatdata]: https://www.chat-data.com/pricing
+[eggroll-paper]: https://arxiv.org/abs/2511.16652
+[eggroll-site]: https://eshyperscale.github.io/
+[eggroll-repo]: https://github.com/ESHyperscale/HyperscaleES
+[eggroll-nano]: https://github.com/ESHyperscale/nano-egg

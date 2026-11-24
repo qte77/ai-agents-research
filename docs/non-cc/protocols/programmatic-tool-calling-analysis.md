@@ -3,7 +3,7 @@ title: Programmatic and Speculative Tool Calling
 source: https://arxiv.org/abs/2608.06370
 purpose: Evaluate the evidence for programmatic tool calling (PTC) over JSON tool calling, and speculative PTC (sPTC) as a technique for overlapping expensive tool/sub-LLM calls with code generation
 created: 2026-09-24
-updated: 2026-11-19
+updated: 2026-11-24
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -45,7 +45,7 @@ speculating tool and sub-LLM calls that will happen as the root LLM is generatin
 allowing the [caller] to batch and asynchronously compute these expensive calls while the full
 codeblock is still being generated" (accessed 2026-09-24). It positions itself against harness
 designs like **Recursive Language Models (RLMs)** and **CodeAct**, where sub-LLM calls embedded in
-generated code are often the dominant share of runtime.
+generated code are often the dominant share of runtime. For training a model to fit an RLM harness, see [Prime Agent § Training the Model for an RLM Harness](../coding-agents/prime-agent-analysis.md#training-the-model-for-an-rlm-harness).
 
 **Repository facts** (`gh api repos/alexzhang13/spec-ptc`, accessed 2026-09-24): 214 stars, 17
 forks, **MIT** license, created 2026-08-21, latest tagged release `v0.1.1` (published 2026-08-24).
