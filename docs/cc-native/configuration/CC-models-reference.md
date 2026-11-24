@@ -1,7 +1,7 @@
 ---
 title: CC Models Reference
 source: https://platform.claude.com/docs/en/about-claude/models/overview
-purpose: Descriptive reference for CC's primary agentic model (Claude Fable 5, superseded by Claude Fable 5.2), the 5.x lifecycle and the current per-model pricing table — the model facts behind CC-model-provider-configuration.md, which owns provider facts.
+purpose: Descriptive reference for Claude Code's primary agentic model, the 5.x lifecycle and the per-model pricing table; the model facts behind CC-model-provider-configuration.md, which owns provider facts.
 created: 2026-06-14
 updated: 2026-11-23
 validated_links: 2026-11-12

@@ -1,6 +1,6 @@
 ---
 title: Agentic Enterprise OS Landscape
-purpose: Survey of the "agentic enterprise OS" pattern — the operating-environment layer for AI agents — across enterprise vendor platforms (Agentforce 360, Microsoft Copilot Studio, ServiceNow Otto, SAP Joule, Databricks Genie, Glean Independent Agents), open-source self-operating workspaces (AutoAgent, Odysseus, Goose, multica, Octop), and the qte77 estate's self-operating orchestrators; framed honestly against Gartner's "AI agent development platforms" category and the agent-native goal-attribution gap each enterprise platform leaves; includes a comparison of agent registries (A2A, MCP Registry, AWS, Google, Agent 365, Agentforce) and a Microsoft 365 Copilot vs Agentforce 360 comparison with an illustrative pricing example.
+purpose: Survey of the "agentic enterprise OS" pattern (the operating-environment layer for AI agents) across enterprise platforms, open-source workspaces and the qte77 estate, with registry and pricing views.
 platform_scope: [salesforce-agentforce, microsoft-copilot-studio, servicenow, sap-joule, databricks-genie, glean, lyzr, self-hosted-oss, claude-code]
 created: 2026-06-28
 updated: 2026-11-20

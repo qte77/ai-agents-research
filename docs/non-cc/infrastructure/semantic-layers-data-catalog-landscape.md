@@ -1,9 +1,9 @@
 ---
 title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
-purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
+purpose: "The semantic-layer and data-catalog substrate that grounds agentic data access: what each tool exposes to an agent and how it relates to agent-native context layers. Verified 2026-06-22."
 created: 2026-06-22
-updated: 2026-11-23
+updated: 2026-11-24
 validated_links: 2026-11-19
 status: assess
 ---
@@ -64,6 +64,7 @@ Discovery, lineage, ownership, and permissions across the data estate.
 Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized machine-readable meaning. These standards predate agents but increasingly **connect to, are excluded by, or enhance** the LLM-native layers below:
 
 - **[RDF][rdf]**, **[OWL][owl]**, **[SKOS][skos]**: the triple data model (each statement is a subject, a predicate and an object: [RDF 1.1 Concepts § Triples][rdf-triples]), the ontology language and the thesaurus vocabulary; see [Choosing a Structure](#choosing-a-structure) and, for RDF 1.1 vs 1.2 status, [Property Graph vs RDF](graph-databases-query-languages-landscape.md#property-graph-vs-rdf).
+- **[RDFS][rdfs]** (RDF Schema 1.1, W3C Recommendation, 2014-02-25): "a data-modelling vocabulary for RDF data" that extends the basic RDF vocabulary. It declares classes and their hierarchy (`rdfs:Class`, `rdfs:subClassOf`) and which classes a property links (`rdfs:domain`, `rdfs:range`); the spec leaves richer modelling to "ontology" languages such as OWL.
 - **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above. Comparison with Cypher, GQL and Gremlin: [graph-databases doc](graph-databases-query-languages-landscape.md#query-languages).
 - **[JSON-LD][json-ld]** — "a JSON-based format to serialize Linked Data" (JSON-LD 1.1, W3C Recommendation 2020-07-16). It is "designed to be usable directly as JSON, with no knowledge of RDF", and also "usable as RDF" with tools like SPARQL. For agents it is the form they meet most: [schema.org][schema-org-gs] markup can be written in Microdata, RDFa or JSON-LD, and Google Search recommends JSON-LD "in most cases", embedded in a `<script>` tag of the page ([Google structured data][google-sd]). Whether such markup helps AI answers is disputed; see [ai-crawlers-discoverability-landscape.md](ai-crawlers-discoverability-landscape.md). [YAML-LD][yaml-ld] (a W3C Working Draft, 2026-10-24) "applies JSON-LD's data model and processing model to YAML".
 
@@ -206,7 +207,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Unity Catalog OSS][unity-catalog] | LF open catalog + `unitycatalog-ai` SDK |
 | [Apache Atlas][atlas] | Hadoop-era governance framework |
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
-| [RDF][rdf] · [OWL][owl] · [OWL 2 Primer][owl-primer] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
+| [RDF][rdf] · [RDFS][rdfs] · [OWL][owl] · [OWL 2 Primer][owl-primer] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
 | [WHATWG HTML link types][html-rel] | `rel` link types (typed hyperlinks), read 2026-11-21 |
 | [Neo4j graph concepts][neo4j-pg] | Property-graph model (vendor docs), read 2026-11-21 |
 | [schema.org getting started][schema-org-gs] · [Google structured data intro][google-sd] | schema.org syntaxes (Microdata, RDFa, JSON-LD); Google's JSON-LD recommendation and `<script>` embedding (read 2026-11-09) |
@@ -240,6 +241,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [atscale]: https://www.atscale.com
 [dataplex]: https://cloud.google.com/dataplex
 [rdf]: https://www.w3.org/TR/rdf11-concepts/
+[rdfs]: https://www.w3.org/TR/rdf-schema/
 [owl]: https://www.w3.org/TR/owl2-overview/
 [owl-primer]: https://www.w3.org/TR/owl2-primer/
 [skos]: https://www.w3.org/TR/skos-reference/

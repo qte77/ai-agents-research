@@ -1,6 +1,6 @@
 ---
 title: CC Community Skills Landscape
-purpose: Survey of community-built Claude Code skill libraries — gstack (founder/engineering workflows), pm-skills (product management framework), claude-code-best-practice (knowledge base), claude-howto (example-driven learning), agent-skills (Google SDLC engineering), caveman (terse-output token compression), last30days (real-time social research across 14+ platforms), agent-native (composable cross-agent meta-skills via @agent-native/skills CLI), modern-web-guidance (browser-vendor web-platform skill).
+purpose: Survey of community-built Claude Code skill libraries, such as gstack, pm-skills, agent-skills, caveman and last30days, with what each one is for.
 status: research
 created: 2026-03-13
 updated: 2026-11-22

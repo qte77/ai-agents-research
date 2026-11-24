@@ -1,12 +1,14 @@
 ---
 title: CC Community Tooling Landscape
-purpose: Survey of community developer tools that integrate with or enhance Claude Code — context compression, meta-prompting, spec-driven development, agent frameworks, cross-session cost control, source enrichment, provider management, session-workflow enforcement. Memory, code-analysis, and usage-observability tools live in linked topic docs; this doc keeps the cross-tool comparison.
+purpose: Survey of community developer tools that integrate with Claude Code (context compression, spec-driven development, cost control, provider management); links topic docs for memory and code analysis.
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
 updated: 2026-11-23
 validated_links: 2026-11-12
 ---
+
+**Details:** Also covers session-workflow enforcement (cc-sessions).
 
 ## RTK (Rust Token Killer)
 
