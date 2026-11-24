@@ -3,7 +3,7 @@ title: CC Cross-Session Messaging
 source: https://code.claude.com/docs/en/cross-session-messaging
 purpose: Analysis of Claude Code's first-party cross-session messaging — independent sessions you start and steer yourself message each other, distinct from agent-team/subagent mailboxes.
 created: 2026-09-23
-updated: 2026-11-17
+updated: 2026-11-24
 validated_links_on: 2026-10-24
 status: adopt
 ---
@@ -48,6 +48,15 @@ The docs' own guidance on which feature to reach for: "Use messaging between ind
 This resolves a framing gap in [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md): a limitation documented there is specific to the Agent-Teams protocol-message channel — it does not apply to this plain-text independent-session channel, which is a separate mechanism entirely (see [Limits](#limits) below). See also the [correction note](CC-agent-teams-orchestration.md#uds-inbox--inter-session-ipc-unreleased) added there.
 
 Same-machine, cross-repo messaging works with no configuration: "two sessions can reach each other only when they can see the same files" — no `team_name`, no worktree config. Each session registers itself in files on disk, so three independent `claude` sessions each `cd`'d into a different git repo on one machine can already reach each other ([cross-session-messaging][cc-xsm]).
+
+## Third-Party Alternative: Vercel `board`
+
+[`vercel/board`][vboard] (Apache-2.0 per its `LICENSE`; 257 stars; `@vercel/board` 0.56.1 released 2026-11-23; repo created 2026-10-01; `gh api`, read 2026-11-24) is not a Claude Code feature. It is a message board for people and coding agents, with channels, threads and leased tasks, kept in Vercel's API (or a local or tailnet board you serve yourself) ([README][vboard]). Where the native channel above is a direct, same-machine or Remote Control message between independent sessions, `board` is a shared, durable log that any agent or CI job reads and writes.
+
+- **How a Claude Code session uses it**: through the `vb` CLI (`vb post`, `reply`, `read`, `wait`, `tasks claim`) plus an installable agent skill (`npx skills add vercel/board --skill board`) that teaches the agent to read a thread before joining and to wait for answers ([README][vboard]; [coding-agents guide][vboard-agents]). No Claude Code docs page names it; this is the generic skill-plus-CLI route.
+- **Identity model**: no accounts; every request carries an OpenID Connect (OIDC) token and every message records the verified principal that wrote it (`vercel:user:<id>`, GitHub Actions repo, Vercel deployment, or `tailscale:user:<login>` on a tailnet board). An agent names itself with `--as`, shown as, for example, "claude via julian" ([identity doc][vboard-identity]; README). This is attribution of who wrote, not isolation between agents.
+- **Fit**: useful when sessions on different machines, or CI and deployments, need one auditable thread, and when work is handed out as claimable tasks. The cost is a Vercel account and `vercel login` for the default board.
+- **Caveats**: young (about eight weeks old at read date), pre-1.0 versioning, and tied to Vercel for the default hosted board; I did not run it, so behaviour is documented, not observed.
 
 ## Delivery And Trust Model
 
@@ -206,6 +215,7 @@ Observations from using this feature across sessions, not documented behavior:
 | [CC cross-session messaging][cc-xsm] | Full feature description: tools, delivery/trust model, `notify_when_idle`, cross-machine transport, inbox socket + env vars, limits, availability |
 | [CC what's new — 2026-w32][cc-w32] | Ship-week digest confirming v2.1.224 headline gate and macOS/Linux initial availability |
 | [anthropics/claude-code CHANGELOG][cc-changelog] | Version-gate verification for v2.1.224, .225, .232, .236, .239, .247, .248, .271; surfaces the native-Windows gate discrepancy (page: v2.1.234, CHANGELOG: v2.1.239) |
+| [vercel/board README][vboard] · [identity][vboard-identity] · [coding agents][vboard-agents] | Message-board model, `vb` CLI, agent skill, OIDC identity; Apache-2.0; stars and version read 2026-11-24 |
 | CC 2.1.310, Codespaces, 2026-10-24 | Owner observations: `notify_when_idle` notice wording, and the "In Practice" peer-messaging notes above |
 
 [cc-xsm]: https://code.claude.com/docs/en/cross-session-messaging
@@ -216,3 +226,6 @@ Observations from using this feature across sessions, not documented behavior:
 [cc-agent-view]: https://code.claude.com/docs/en/agent-view
 [cc-remote-control]: https://code.claude.com/docs/en/remote-control
 [cc-channels]: https://code.claude.com/docs/en/channels
+[vboard]: https://github.com/vercel/board
+[vboard-identity]: https://github.com/vercel/board/blob/main/packages/board/docs/01-board/03-identity.md
+[vboard-agents]: https://github.com/vercel/board/blob/main/packages/board/docs/03-guides/01-coding-agents.md

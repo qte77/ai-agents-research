@@ -3,7 +3,7 @@ title: "Databricks Genie One: Agentic Data Coworker (Genie Ontology + Genie Agen
 source: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
 purpose: Assess Databricks Genie One and its Genie Ontology semantic layer as an enterprise data-agent platform
 created: 2026-06-20
-updated: 2026-11-19
+updated: 2026-11-24
 validated_links_on: 2026-11-19
 status: trial
 ---
@@ -29,9 +29,10 @@ Databricks platform feature**; only the lakehouse foundations it sits on (Apache
 Spark, Delta Lake, Apache Iceberg) are open source, and Model Context Protocol (MCP) is an open-protocol
 integration point rather than an open-source release.
 
-Disambiguation: the community project `databrickslabs/ontobricks` (an
-R2RML/GraphQL knowledge-graph layer over Databricks tables) is unrelated to
-Genie Ontology.
+Disambiguation: the Databricks Labs project `databrickslabs/ontobricks` (an
+ontology and knowledge-graph layer over Unity Catalog tables, published to
+agents over MCP) is a separate project from Genie Ontology: its README does not mention Genie (our reading, no Databricks statement either way); see its
+[entry in the semantic-layers landscape](../infrastructure/semantic-layers-data-catalog-landscape.md#agent-native-ontology-tools-2026-mcp-wave).
 
 ## Genie Ontology
 
