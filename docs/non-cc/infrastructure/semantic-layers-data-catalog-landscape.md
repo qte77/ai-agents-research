@@ -156,6 +156,10 @@ These five give the [agent substrate rubric][rubric] its first ontology-doc evid
 
 Not rubric-scored: it is Ontology-subject and could not move the reference architecture's one open cell (Context·Reproducible).
 
+Pointer, not a tool profile: for the KumoRFM route above, [NVIDIA Kumo Engine][kumo-engine] (Apache-2.0, 197★, `kumo-engine-v1.0.1` 2026-11-05; `gh api`, read 2026-11-24) is a separate open-source library, part of the NVIDIA Kumo family per its README, that trains predictive models on relational tables. It is not an agent tool or ontology layer: its README only adds an optional agent skill to help a coding agent write the workflow.
+
+**[OntoBricks][ontobricks]** (`databrickslabs/ontobricks`; 505★, `v0.9.3` 2026-11-21, repo created 2026-04-07, `gh api`, read 2026-11-24) turns Unity Catalog tables into a knowledge graph through ontology design, mapping and SPARQL, executed as Spark SQL; each domain is published to agents over MCP, with the domain choosing which tools and datasets it exposes ([README][ontobricks]). Three constraints decide fit: it runs only as a Databricks App (reusing Unity Catalog, a SQL Warehouse and Lakebase, with Neo4j as an optional graph backend); its `LICENSE.txt` is the "Databricks License", which limits use to connection with Databricks Services, so it is source-available, not OSI-open, despite the Labs repo being public (GitHub reports NOASSERTION); and the README says Databricks Labs projects are exploration-only, AS-IS and without SLAs. Domain versions go through a draft, review and published lifecycle. Not rubric-scored, and unrelated to Genie Ontology (see [Databricks Genie analysis](../agents/databricks-genie-analysis.md)).
+
 **TrustGraph** (Apache-2.0; RDF/OWL ontology-guided extraction, SHACL per-node query policies, PROV-O lineage, MCP server) is profiled in [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms) as a vendor-described ontology runtime, not restated here.
 
 **Semantica's decision-graph audit trail** is a candidate for this same "ontology as MCP surface" pattern; its full profile (decision-as-graph-node, PROV-O lineage, bi-temporal facts, point-in-time snapshots) lives elsewhere in this corpus and is not restated here: [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms][semantica-frameworks] (RAG = Retrieval-Augmented Generation). Two facts add to that profile. Timing matters here: [EU AI Act Article 12][ai-act-12] requires high-risk systems to "technically allow for the automatic recording of events (logs) over the lifetime of the system," and the currently amended Act sets that deadline at 2027-12-02 for Annex III systems (2028-08-02 for Annex I) — later than the original date Lindenberg's issue cites, which this entry could not independently re-verify against a primary pre-amendment source. Semantica's own [CHANGELOG][semantica-changelog] is harder evidence than the audit-trail pitch itself: v0.6.7 (2026-08-28) fixed `get_causal_chain()` silently returning an empty chain whenever a causal edge used the analyzer's present-tense vocabulary (`causes`/`influences`/`precedes`) rather than the canonical uppercase form — "silent, and in the dangerous direction for a compliance trace," in the project's own words — fixed a `SHACLGenerator` that produced shapes matching no data so `pySHACL` reported `conforms: True` on plainly violating input, and fixed every RDF export path except JSON-LD silently dropping an entity's source document, page, extractor and reviewer.
@@ -227,6 +231,8 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | André Lindenberg — *The Join Nobody Approved* (LinkedIn, 2026-11-01; `linkedin.com/pulse/join-nobody-approved-andré-lindenberg-9mylf`) | Design lens: measure join keys, declare, then gate; framing practitioner single-source (LinkedIn — not link-checked) |
 | André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
 | [NVIDIA Auto Ontology README][auto-ontology] | Generate/certify/answer stages, Postgres + pgvector store, read-only MCP server, NIM default, KumoRFM route, ingestion-auth caution; Apache-2.0 LICENSE, `pyproject.toml` 1.2.0; `gh api` 2026-11-09 |
+| [NVIDIA Kumo Engine README][kumo-engine] | Predictive-model library over relational tables, optional agent skill; Apache-2.0 LICENSE, stars and release read 2026-11-24 |
+| [OntoBricks README][ontobricks] · [LICENSE.txt][ontobricks-license] | UC tables to knowledge graph, per-domain MCP publishing, Databricks App only; "Databricks License" read 2026-11-24 |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
 
 [pg-altertable]: https://www.postgresql.org/docs/current/sql-altertable.html
@@ -283,6 +289,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [ai-act-12]: https://artificialintelligenceact.eu/article/12/
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [auto-ontology]: https://github.com/NVIDIA/auto-ontology
+[kumo-engine]: https://github.com/NVIDIA/kumo-engine
+[ontobricks]: https://github.com/databrickslabs/ontobricks
+[ontobricks-license]: https://github.com/databrickslabs/ontobricks/blob/main/LICENSE.txt
 [auto-ontology-mcp]: https://github.com/gogoymh/auto-ontology-mcp
 [ontogenia-paper]: https://arxiv.org/abs/2503.05388
 [wikidata-kgc]: https://arxiv.org/abs/2412.20942
