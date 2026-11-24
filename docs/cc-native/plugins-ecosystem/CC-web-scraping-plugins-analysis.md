@@ -3,7 +3,7 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-11-19
+updated: 2026-11-24
 validated_links_on: 2026-11-19
 status: research
 ---
@@ -156,6 +156,16 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 - **Rate limits (free)**: 10 scrapes/min, 10 maps/min, 5 searches/min, 1 crawl/min ([source][firecrawl-ai-mcps])
 - **Paid tiers**: Scale with credit packs; see [firecrawl.dev/pricing](https://www.firecrawl.dev/pricing)
 - **Self-hosted**: No credit cost; requires Docker Compose (5 containers: API, Redis, RabbitMQ, PostgreSQL, Playwright-service) ([source][firecrawl-self-host])
+
+### Hosted Connector Route (ChatGPT and Claude)
+
+Besides the local `firecrawl-mcp` server and the plugin, Firecrawl ships hosted connectors that sign in with a Firecrawl account instead of an API key (evidence: documented and shipped per Firecrawl's own pages, read 2026-11-24; Firecrawl's claims, not independently tested):
+
+- **Claude**: a connector in Claude's directory (listed as Firecrawl-made with Anthropic's "verified" label, added July 2026, per the [Claude connector listing][firecrawl-claude-connector]). Connect, sign in in the browser, pick a team, approve; no API key ([Claude integration page][firecrawl-claude-integration]). The listing shows 13 tools while the integration page says eight (search, scrape, Alexandria discovery, Developer Index search, four paper-research tools), so treat the count as unstable. Alexandria in Claude was announced 2026-09-24 ([changelog][firecrawl-alexandria-claude]).
+- **ChatGPT**: a Firecrawl plugin, announced 2026-08-05 ([blog][firecrawl-chatgpt-plugin]; tools: search, scrape, crawl, interact, monitor, Alexandria), with Alexandria added 2026-09-29 ([blog][firecrawl-alexandria-chatgpt]). The blog says to install it from the ChatGPT directory; we could not load OpenAI's directory page to confirm the listing.
+- **Other harnesses (MCP)**: the hosted server takes either OAuth sign-in or an API key as bearer token; both reach the full tool set on the team's plan ([MCP docs][firecrawl-mcp-docs], [Alexandria page][firecrawl-alexandria-site]). Endpoints are on the vendor's pages.
+- **Billing**: credits, as with the API (about 1 credit per scraped page, +4 for JSON format, per the Claude integration page). Alexandria needs an authenticated account (no keyless access); discovering tools is free and each call is charged at the tool's listed credit price; some providers need an org admin to accept their terms first.
+- **Provider count**: Firecrawl's own figures differ by page and date; see [Universal Scrape in the landscape](../../non-cc/infrastructure/web-scraping-extraction-landscape.md#aillm-native-scrapers).
 
 ### Cloud vs Self-Hosted vs firecrawl-simple
 
@@ -474,6 +484,8 @@ For the Python-library landscape behind web crawling and source connectors (poly
 - [Firecrawl Pricing][firecrawl-pricing]
 - [Firecrawl Use Cases — AI MCPs][firecrawl-ai-mcps]
 - [Firecrawl Prometheus][firecrawl-prometheus]
+- [Firecrawl Claude connector listing][firecrawl-claude-connector] · [Claude integration page][firecrawl-claude-integration] · [Alexandria in Claude (changelog, 2026-09-24)][firecrawl-alexandria-claude]
+- [Firecrawl ChatGPT plugin (blog, 2026-08-05)][firecrawl-chatgpt-plugin] · [Alexandria in ChatGPT and Codex (blog, 2026-09-29)][firecrawl-alexandria-chatgpt] · [Alexandria catalog][firecrawl-alexandria-site]
 - [Playwright MCP (GitHub)][playwright-mcp-gh]
 - [Playwright Claude Plugin (Marketplace)][playwright-plugin]
 - [agent-browser (GitHub)][agent-browser-gh]
@@ -533,3 +545,9 @@ For the Python-library landscape behind web crawling and source connectors (poly
 [cc-tools-reference]: https://code.claude.com/docs/en/tools-reference
 [websearch-api-docs]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool
 [cc-tools-inventory]: ../configuration/CC-tools-inventory.md
+[firecrawl-claude-connector]: https://claude.com/connectors/firecrawl
+[firecrawl-claude-integration]: https://www.firecrawl.dev/integrations/claude
+[firecrawl-alexandria-claude]: https://www.firecrawl.dev/changelog/alexandria-claude
+[firecrawl-chatgpt-plugin]: https://firecrawl.dev/blog/firecrawl-official-chatgpt-plugin
+[firecrawl-alexandria-chatgpt]: https://firecrawl.dev/blog/alexandria-chatgpt-codex
+[firecrawl-alexandria-site]: https://alexandria.firecrawl.dev/
