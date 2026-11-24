@@ -158,6 +158,36 @@ class FacetTests(unittest.TestCase):
         self.assertIsNone(self.nodes["docs/sdlc-lcm/ops-runbook.md"]["status"])
 
 
+class DatesAndPurposeTests(unittest.TestCase):
+    """created, updated and purpose reach the site graph for the details panel and timeline (plan 0016 N34)."""
+
+    CORPUS = {
+        "docs/a-analysis.md": '---\ntitle: A\npurpose: "Why A: matters."\ncreated: 2026-06-14\nupdated: 2026-11-23\n---\n',
+        "docs/b-analysis.md": "---\ntitle: B\ncreated: not-a-date\n---\n",
+        "docs/c.md": "# C\n\ncreated: 2026-01-01\n",
+    }
+
+    def setUp(self):
+        self.nodes = {n["id"]: n for n in dg.site_graph(dg.build_graph(self.CORPUS))["nodes"]}
+
+    def test_dates_and_purpose_are_read_from_frontmatter(self):
+        a = self.nodes["docs/a-analysis.md"]
+        self.assertEqual((a["created"], a["updated"]), ("2026-06-14", "2026-11-23"))
+        self.assertEqual(a["purpose"], "Why A: matters.")
+
+    def test_missing_or_malformed_values_are_none(self):
+        b = self.nodes["docs/b-analysis.md"]
+        self.assertEqual((b["created"], b["updated"], b["purpose"]), (None, None, None))
+
+    def test_body_text_is_not_frontmatter(self):
+        c = self.nodes["docs/c.md"]
+        self.assertEqual((c["created"], c["updated"], c["purpose"]), (None, None, None))
+
+    def test_build_graph_nodes_carry_them_too(self):
+        node = dg.build_graph(self.CORPUS)["nodes"][0]
+        self.assertEqual(node["updated"], "2026-11-23")
+
+
 class SiteGraphTests(unittest.TestCase):
     """The slim projection the Pages site loads (plan 0015 G2)."""
 
