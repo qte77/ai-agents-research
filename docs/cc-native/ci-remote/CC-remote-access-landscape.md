@@ -22,16 +22,16 @@ monitoring and steering from phone/web without being desk-bound.
 | **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (~14.7k stars) | Multi-agent orchestrator | Open source (MIT) control plane for coding agents (~77.1k stars, read 2026-11-24) | Self-hosted infrastructure |
 | **Execution** | Local machine | Local machine | Local + cloud failover | Cloud VMs | Local (git worktrees) | Local machine, or any host you run it on | Local machine |
 | **Mobile app** | Claude iOS/Android | iOS, Android, Web | Dedicated iOS app | Browser-based | Web dashboard | iOS, Android, web | Terminal app (Termius, Blink) |
-| **Voice input** | No | Yes | Yes (two-way) | No | No | Not documented | No |
+| **Voice input** | No | Yes | Yes (two-way) | No | No | Not verified | No |
 | **Offline continuation** | No — auto-reconnects on wake | No — pauses | Yes — cloud sandbox | Yes — cloud-native | No — pauses | No — host must stay running and reachable | No — pauses |
 | **Push notifications** | Yes | Yes | Yes | No | No | Not verified | No |
 | **E2E encryption** | TLS (Anthropic) | Yes (TweetNaCl) | No | SSH | N/A | Not verified | VPN-encrypted |
 | **Multi-agent** | One per instance | Multi-session parallel | Orchestration dashboard | Persistent sessions | Parallel worktrees | Threads, each can use its own git worktree | Multiple tmux panes |
 | **Pricing** | Free (with CC sub) | Free | Free tier + $9/mo Pro (unlimited) | Free (infra costs) | Free (open source) | Free app; no token resale. T3 Connect machine cap is raised by a paid T3 Chat plan | Free (infra costs) |
 | **Setup** | `claude remote-control` | `npm i -g happy-coder` | `curl install + omnara` | Docker/cloud setup | npm install | `curl -fsSL https://t3.codes/install.sh \| sh`, `npx t3@latest`, desktop app or package manager | tmux + Tailscale/WireGuard |
-| **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | 25+ agents (provider-agnostic) | Claude Code, Codex, Cursor, OpenCode + any ACP agent | Any terminal tool |
+| **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | 25+ agents (provider-agnostic) | Claude Code, Codex, Cursor, OpenCode + any Agent Client Protocol (ACP) agent | Any terminal tool |
 | **Open source** | No (native) | Yes (MIT) | Yes (Apache-2.0; repo now the managed-agent platform) | Yes | Yes | Yes (MIT; name and logos trademarked) | N/A |
-| **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Young (repo created 2026-02-08), pre-1.0 (v0.1.11), limited review capacity | Zero external dependency |
+| **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Young (repo created 2026-02-08), pre-1.0 (v0.1.11) | Zero external dependency |
 
 ## Detailed Notes
 

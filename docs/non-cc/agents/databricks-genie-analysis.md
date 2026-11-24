@@ -32,7 +32,7 @@ integration point rather than an open-source release.
 Disambiguation: the Databricks Labs project `databrickslabs/ontobricks` (an
 ontology and knowledge-graph layer over Unity Catalog tables, published to
 agents over MCP) is a separate project from Genie Ontology: its README does not mention Genie (our reading, no Databricks statement either way); see its
-[row in the semantic-layers landscape](../infrastructure/semantic-layers-data-catalog-landscape.md#agent-native-ontology-tools-2026-mcp-wave).
+[entry in the semantic-layers landscape](../infrastructure/semantic-layers-data-catalog-landscape.md#agent-native-ontology-tools-2026-mcp-wave).
 
 ## Genie Ontology
 
