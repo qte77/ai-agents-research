@@ -19,20 +19,7 @@ status: assess
 ---
 ```
 
-Required keys:
-
-- `title`, `purpose` (one sentence on one line, at most 200 characters, saying what the doc covers; detail goes in the body or on the `**Details:**` line; there is no separate `description:`)
-- `created`, `updated` (date of last content edit), `validated_links` (date the URLs were last checked), all ISO `YYYY-MM-DD`
-- `status` — the doc's lifecycle token (see §2); the single source of status, read by `make check_status` and the doc graph
-
-Optional keys: `source` (the one primary URL the doc is based on; other sources go in the Sources section), `platform_scope` (see [platform_scope frontmatter](#platform_scope-frontmatter)), `test_run`.
-
-Not in frontmatter (owner decision D5, plan 0015, 2026-11-21):
-
-- `sources:` — sources belong in the Sources section at the end
-- `description:` — use `purpose:`
-- `release:`, `version:`, `license:`, `authority:` — release status, version and licence go on the `**Details:**` line (§2)
-- `category:` — the filename suffix (`-landscape`, `-analysis`, `-reference`, …) already says it
+The rules live in one file, [`docs/schema/frontmatter.schema.json`](docs/schema/frontmatter.schema.json) (JSON Schema 2020-12), which `make check_frontmatter` reads. It lists the required and optional keys, their formats, the `purpose` limit (one sentence on one line, at most 200 characters), the `status` values (§2), the keys that left frontmatter with the reason for each (owner decision D5, plan 0015), and for each key the standard RDF term it means (`x-rdf`, e.g. `updated` → `dcterms:modified`). Change a rule there, not here.
 
 **Frontmatter must be on line 1.** No HTML comments (`<!-- -->`) before the opening `---` — this breaks markdownlint's frontmatter parser and causes false MD041/MD003 errors.
 

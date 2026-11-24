@@ -48,8 +48,8 @@ class CheckDocTests(unittest.TestCase):
     def test_keys_that_left_frontmatter_and_unknown_keys(self):
         text = GOOD.replace("status: assess\n", "status: assess\ncategory: landscape\ndescription: d\nfoo: 1\n")
         self.assertEqual(df.check_doc(text), [
-            "key not allowed (see CONTRIBUTING §1): category",
-            "key not allowed (see CONTRIBUTING §1): description",
+            "key not allowed (see docs/schema/frontmatter.schema.json): category",
+            "key not allowed (see docs/schema/frontmatter.schema.json): description",
             "unknown key: foo",
         ])
 

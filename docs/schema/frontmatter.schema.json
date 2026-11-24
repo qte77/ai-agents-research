@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Content-doc frontmatter",
+  "description": "Single source of the frontmatter rules for content docs (plan 0015). Read by .github/scripts/lib/doc_frontmatter.py and doc_status.py; CONTRIBUTING §1 links here. Each key's x-rdf names the RDF term it means, or null where no standard term fits.",
+  "type": "object",
+  "required": [
+    "title",
+    "purpose",
+    "created",
+    "updated",
+    "validated_links",
+    "status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "x-rdf": "dcterms:title"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "One sentence on one line saying what the doc covers; detail goes in the body or on the **Details:** line.",
+      "x-rdf": "dcterms:description"
+    },
+    "created": {
+      "type": "string",
+      "format": "date",
+      "x-rdf": "dcterms:created"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the last content edit; metadata-only edits don't change it.",
+      "x-rdf": "dcterms:modified"
+    },
+    "validated_links": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the doc's URLs were last checked.",
+      "x-rdf": null
+    },
+    "status": {
+      "enum": [
+        "adopt",
+        "trial",
+        "assess",
+        "hold",
+        "research",
+        "reference",
+        "archived"
+      ],
+      "description": "Where the doc's subject stands for us: Technology Radar rings (adopt, trial, assess, hold) plus research, reference and archived; see CONTRIBUTING §2. The mapping to schema:creativeWorkStatus is approximate: the rings assess the subject, not the doc's own lifecycle.",
+      "x-rdf": "schema:creativeWorkStatus"
+    },
+    "source": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://\\S+$",
+      "description": "The one primary URL; other sources go in the Sources section.",
+      "x-rdf": "dcterms:source"
+    },
+    "platform_scope": {
+      "description": "Optional. Agent harnesses the doc's subject works with, written as an inline list (not yet checked: a fixed list of slugs is planned). Maps only approximately to dcterms:subject: it describes the subject tool's reach, not the doc's topic.",
+      "x-rdf": "dcterms:subject"
+    },
+    "test_run": {
+      "x-rdf": null
+    }
+  },
+  "x-removed": {
+    "sources": "sources belong in the Sources section at the end",
+    "description": "use purpose",
+    "release": "release status goes on the **Details:** line (CONTRIBUTING §2)",
+    "version": "the version goes on the **Details:** line",
+    "license": "the licence goes on the **Details:** line",
+    "authority": "goes in the body",
+    "category": "the filename suffix (-landscape, -analysis, -reference, …) already says it"
+  },
+  "x-rdf-prefixes": {
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/"
+  },
+  "$defs": {
+    "plan": {
+      "description": "Frontmatter of docs/plans/ files (not checked by check_frontmatter).",
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "draft",
+            "approved",
+            "done",
+            "superseded"
+          ],
+          "x-rdf": "schema:creativeWorkStatus"
+        }
+      }
+    }
+  }
+}
