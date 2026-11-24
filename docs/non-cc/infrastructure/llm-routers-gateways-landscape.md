@@ -4,7 +4,7 @@ source: https://openrouter.ai/
 purpose: Provider-agnostic model routers, hosted aggregators, self-hostable gateways, and model-fusion/ensemble routing tools — a reference catalog verified 2026-06-16.
 created: 2026-06-16
 updated: 2026-11-23
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: reference
 ---
 

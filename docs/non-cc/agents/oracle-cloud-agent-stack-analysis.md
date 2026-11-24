@@ -4,7 +4,7 @@ source: https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/overview
 purpose: "First-party fact-check of Oracle's two agent stacks (OCI Generative AI Agents; AI Agent Studio in Fusion Applications): roles, identity, licensing, Claude availability, MCP/A2A, regions; no prices."
 created: 2026-11-20
 updated: 2026-11-20
-validated_links: 2026-11-20
+validated_links_on: 2026-11-20
 status: assess
 ---
 

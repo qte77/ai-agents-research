@@ -4,7 +4,7 @@ source: https://arxiv.org/abs/2606.14249
 purpose: Paper analysis of HarnessX, a harness-as-primitive framework that evolves agent scaffolding from execution traces.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 ---
 

@@ -4,7 +4,7 @@ source: https://github.com/microsoft/skill-recorder
 purpose: Analysis of Microsoft's Skill Recorder, a desktop app that turns a recorded (or imported) screen-capture session into a reusable agent Skill or scheduled Automation via the GitHub Copilot CLI.
 created: 2026-11-12
 updated: 2026-11-20
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 status: assess
 ---
 

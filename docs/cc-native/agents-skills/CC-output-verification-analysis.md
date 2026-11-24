@@ -3,7 +3,7 @@ title: CC Output Verification Methods
 purpose: How to verify/validate Claude Code's own agentic outputs — across dynamic workflows, agent teams, subagents, plan mode, and memory — using hooks, structured-output schemas, and headless asserts.
 created: 2026-06-27
 updated: 2026-06-27
-validated_links: 2026-06-27
+validated_links_on: 2026-06-27
 status: adopt
 ---
 

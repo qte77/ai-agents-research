@@ -3,7 +3,7 @@ title: Data Platforms and Lakehouses for Agents — Table Formats, Branching, Wa
 purpose: "What the data-lake and lakehouse layer offers an agent: open table formats, catalogs, warehouse-native agents, local analytical engines, and cost and permission controls. As of 2026-11-18."
 created: 2026-11-18
 updated: 2026-11-21
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

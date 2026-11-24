@@ -4,7 +4,7 @@ purpose: Static (SCA) and dynamic (DCA) code analysis for AI coding agents, in b
 status: assess
 created: 2026-07-23
 updated: 2026-11-22
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 ---
 
 ## What It Is

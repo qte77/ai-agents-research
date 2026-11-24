@@ -4,7 +4,7 @@ purpose: Implementation summary of adopting Claude Code Skills for modular agent
 status: adopt
 created: 2026-01-11
 updated: 2026-11-23
-validated_links: 2026-10-23
+validated_links_on: 2026-10-23
 ---
 
 **Version:** 2.0.0

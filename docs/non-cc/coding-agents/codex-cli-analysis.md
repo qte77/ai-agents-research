@@ -4,7 +4,7 @@ source: https://github.com/openai/codex
 purpose: Evaluate Codex CLI as an interactive and headless terminal coding agent, distinct from the cloud Codex environment.
 created: 2026-06-16
 updated: 2026-11-23
-validated_links: 2026-11-15
+validated_links_on: 2026-11-15
 status: trial
 platform_scope: [openai, cli, vscode, cursor, windsurf]
 ---

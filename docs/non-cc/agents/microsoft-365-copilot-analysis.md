@@ -3,7 +3,7 @@ title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Wor
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem, from SharePoint Skills and Copilot Studio to Agent 365, Cowork and Researcher.
 created: 2026-10-21
 updated: 2026-11-23
-validated_links: 2026-11-22
+validated_links_on: 2026-11-22
 status: assess
 ---
 

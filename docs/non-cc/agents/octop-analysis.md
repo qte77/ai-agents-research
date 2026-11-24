@@ -4,7 +4,7 @@ source: https://github.com/TencentCloud/Octop
 purpose: Evaluate Octop's single-process, multi-user agent-orchestration architecture, its memory/context layer, and its outbound ACP delegation to coding agents including Claude Code.
 created: 2026-10-09
 updated: 2026-10-09
-validated_links: 2026-10-09
+validated_links_on: 2026-10-09
 status: assess
 ---
 

@@ -4,7 +4,7 @@ purpose: Survey of community-built Claude Code skill libraries, such as gstack, 
 status: research
 created: 2026-03-13
 updated: 2026-11-22
-validated_links: 2026-10-11
+validated_links_on: 2026-10-11
 ---
 
 ## Summary

@@ -3,7 +3,7 @@ title: CC Reverse Engineering Landscape
 purpose: Survey of community tools, blogs, and trackers that reverse engineer Claude Code internals — system prompts, binary analysis, env vars, API interception.
 created: 2026-03-29
 updated: 2026-11-22
-validated_links: 2026-04-05
+validated_links_on: 2026-04-05
 status: research
 ---
 

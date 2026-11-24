@@ -3,7 +3,7 @@ title: "Introduction to Autonomous Robots (Open Textbook)"
 purpose: Background reading on embodied autonomous agents — mechanics, sensing, planning, and coordination
 created: 2026-06-13
 updated: 2026-06-13
-validated_links: 2026-06-13
+validated_links_on: 2026-06-13
 status: assess
 ---
 

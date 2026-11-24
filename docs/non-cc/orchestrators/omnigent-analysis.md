@@ -4,7 +4,7 @@ source: https://omnigent.ai/
 purpose: Evaluate Omnigent as a meta-harness layer for unifying Claude Code, Codex, Pi, and custom agents with policy governance and OS-level sandboxing
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 platform_scope: [claude-code, codex, pi, custom-agents, openai-agents]
 ---

@@ -5,7 +5,7 @@ purpose: Taxonomy of reusable harness-level patterns extracted from the Claude C
 status: research
 created: 2026-04-06
 updated: 2026-11-22
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 ---
 
 ## Summary

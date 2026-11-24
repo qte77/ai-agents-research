@@ -4,7 +4,7 @@ source: https://openai.github.io/openai-agents-python/
 purpose: Production-ready Python framework for building multi-agent workflows with handoffs, guardrails, sessions, and tracing — the successor to Swarm.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: trial
 ---
 

@@ -4,7 +4,7 @@ source: https://github.com/NVIDIA/OpenShell
 purpose: Analysis of OpenShell, NVIDIA's kernel-enforced, formally-verified policy runtime for fleets of autonomous AI agents.
 created: 2026-09-30
 updated: 2026-11-09
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: assess
 ---
 

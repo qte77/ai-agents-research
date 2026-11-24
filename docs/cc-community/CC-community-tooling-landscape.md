@@ -5,7 +5,7 @@ status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
 updated: 2026-11-23
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 ---
 
 **Details:** Also covers session-workflow enforcement (cc-sessions).

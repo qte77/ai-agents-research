@@ -4,7 +4,7 @@ purpose: An externally reconstructed case study of autonomous LLM agents uninten
 source: https://arxiv.org/abs/2609.12748
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

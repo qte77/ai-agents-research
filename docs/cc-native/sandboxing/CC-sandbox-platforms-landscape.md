@@ -4,7 +4,7 @@ source: https://github.com/alibaba/OpenSandbox
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 created: 2026-03-08
 updated: 2026-11-22
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: research
 ---
 

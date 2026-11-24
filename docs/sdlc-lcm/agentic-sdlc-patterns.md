@@ -3,7 +3,7 @@ title: Agentic SDLC Patterns
 purpose: Emerging lifecycle patterns for AI agent-driven development.
 created: 2026-03-24
 updated: 2026-10-22
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: assess
 ---
 

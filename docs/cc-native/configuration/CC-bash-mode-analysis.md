@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/interactive-mode
 purpose: Document bash mode usage in CLI interactive sessions and dynamic shell execution within skills and rules files.
 created: 2026-03-12
 updated: 2026-11-09
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: adopt
 ---
 

@@ -5,7 +5,7 @@ purpose: Analysis of book-to-skill — converts technical books and documents in
 platform_scope: [claude-code, github-copilot-cli]
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: trial
 ---
 

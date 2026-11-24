@@ -4,7 +4,7 @@ source: https://github.com/getcompanion-ai/feynman
 purpose: Analysis of Feynman as an open-source terminal-based AI research agent with multi-agent investigation workflows.
 created: 2026-04-09
 updated: 2026-09-30
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: assess
 ---
 

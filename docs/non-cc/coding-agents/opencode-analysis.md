@@ -5,7 +5,7 @@ purpose: Analysis of opencode as a provider-agnostic, open-source terminal codin
 platform_scope: [terminal, desktop, ide, web, headless]
 created: 2026-06-16
 updated: 2026-11-09
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: trial
 ---
 

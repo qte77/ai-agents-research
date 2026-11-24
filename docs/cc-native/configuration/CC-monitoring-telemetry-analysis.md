@@ -3,7 +3,7 @@ title: CC Monitoring & Telemetry (First-Party OTel)
 purpose: Claude Code's first-party OpenTelemetry integration — span hierarchy, distributed-trace propagation, privacy-default gates, and metric cardinality controls for monitoring CC agent behavior.
 created: 2026-06-27
 updated: 2026-11-20
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

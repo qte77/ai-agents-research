@@ -4,7 +4,7 @@ source: https://karpathy.bearblog.dev/
 purpose: Primary-source map of Andrej Karpathy's agentic-coding arc (2023 LLM OS → 2025 Software 3.0 / vibe coding → 2026 agentic engineering) and its relevance to agentic-SDLC and harness design.
 created: 2026-07-08
 updated: 2026-07-08
-validated_links: 2026-07-08
+validated_links_on: 2026-07-08
 status: research
 ---
 

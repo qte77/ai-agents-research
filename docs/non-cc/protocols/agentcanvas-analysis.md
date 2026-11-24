@@ -4,7 +4,7 @@ source: https://github.com/vstorm-co/agentcanvas
 purpose: Evaluate AgentCanvas as an observability/debugging tool for Pydantic AI agents via Logfire traces.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 ---
 

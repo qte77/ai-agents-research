@@ -4,7 +4,7 @@ source: https://www.omnara.com
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
 updated: 2026-11-22
-validated_links: 2026-10-06
+validated_links_on: 2026-10-06
 status: research
 ---
 

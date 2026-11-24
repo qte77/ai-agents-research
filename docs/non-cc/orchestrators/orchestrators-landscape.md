@@ -3,7 +3,7 @@ title: Multi-Agent Orchestrators — Landscape
 purpose: Cross-cut of the five orchestrator analyses by coordination pattern, state hand-off and escalation, with a Claude Code primitives table and multi-agent failure modes grounded in papers.
 created: 2026-11-18
 updated: 2026-11-20
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

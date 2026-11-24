@@ -5,7 +5,7 @@ purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the a
 platform_scope: [cli, cloud]
 created: 2026-06-11
 updated: 2026-11-20
-validated_links: 2026-10-24
+validated_links_on: 2026-10-24
 status: assess
 ---
 

@@ -4,7 +4,7 @@ source: https://poolside.ai/blog/introducing-laguna-s-2-1
 purpose: Evaluate Poolside's Laguna S 2.1 as a frontier agentic-coding model for long-horizon autonomous coding tasks
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

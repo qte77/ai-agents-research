@@ -4,7 +4,7 @@ source: https://github.com/yc-software/qm
 purpose: Evaluate QM's multi-scope (personal + shared) agent harness for team/startup use, and its multi-harness (Pi/OpenCode/Codex/Claude Code) design
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

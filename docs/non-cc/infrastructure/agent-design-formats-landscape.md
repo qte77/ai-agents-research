@@ -3,7 +3,7 @@ title: Agent-Consumable Design Formats — Tool Landscape
 purpose: Catalog of agent-consumable design-system formats and tooling (the DESIGN.md corpus + Google Labs format spec/CLI; the upstream Figma/W3C token chain) — multi-agent, not Claude Code-specific.
 created: 2026-06-27
 updated: 2026-11-22
-validated_links: 2026-06-27
+validated_links_on: 2026-06-27
 status: research
 ---
 

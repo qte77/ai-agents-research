@@ -8,7 +8,7 @@
     "purpose",
     "created",
     "updated",
-    "validated_links",
+    "validated_links_on",
     "status"
   ],
   "additionalProperties": false,
@@ -36,7 +36,7 @@
       "description": "Date of the last content edit; metadata-only edits don't change it.",
       "x-rdf": "dcterms:modified"
     },
-    "validated_links": {
+    "validated_links_on": {
       "type": "string",
       "format": "date",
       "description": "Date the doc's URLs were last checked.",
@@ -77,7 +77,8 @@
     "version": "the version goes on the **Details:** line",
     "license": "the licence goes on the **Details:** line",
     "authority": "goes in the body",
-    "category": "the filename suffix (-landscape, -analysis, -reference, …) already says it"
+    "category": "the filename suffix (-landscape, -analysis, -reference, …) already says it",
+    "validated_links": "renamed to validated_links_on (owner 2026-11-24)"
   },
   "x-rdf-prefixes": {
     "dcterms": "http://purl.org/dc/terms/",

@@ -4,7 +4,7 @@ purpose: Catalog of Claude error messages with triggers, resolutions, and commun
 source: https://support.claude.com/en/articles/12466728-troubleshoot-claude-error-messages
 created: 2026-04-04
 updated: 2026-04-04
-validated_links: 2026-04-04
+validated_links_on: 2026-04-04
 status: assess
 ---
 

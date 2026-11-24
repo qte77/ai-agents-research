@@ -4,7 +4,7 @@ purpose: Analysis of Claude Code plan files — anatomy, plan mode mechanics, an
 status: research
 created: 2026-03-13
 updated: 2026-11-18
-validated_links: 2026-04-05
+validated_links_on: 2026-04-05
 ---
 
 ## Summary

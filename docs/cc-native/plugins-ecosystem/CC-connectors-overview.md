@@ -3,7 +3,7 @@ title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/env-vars
 purpose: Reference for configuring Claude Code with alternative models, endpoints, API keys, third-party providers, local models and LLM gateway proxies.
 created: 2026-03-07
 updated: 2026-11-23
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: reference
 ---
 

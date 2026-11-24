@@ -4,7 +4,7 @@ purpose: Analysis of a tuning procedure that iteratively rewrites a repo's AGENT
 source: https://arxiv.org/abs/2606.20512
 created: 2026-07-23
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

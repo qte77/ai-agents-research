@@ -3,7 +3,7 @@ title: CC Print Mode Gotchas
 purpose: Document undocumented requirements and pitfalls when using claude -p for headless/CI execution.
 created: 2026-03-23
 updated: 2026-11-09
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: reference
 ---
 

@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/settings
 purpose: Analysis of --dangerously-skip-permissions flag, permission modes, team inheritance, and safer alternatives for headless/CI execution.
 created: 2026-03-17
 updated: 2026-11-18
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: research
 ---
 

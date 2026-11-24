@@ -4,7 +4,7 @@ purpose: A CPU cache-timing side channel that reconstructs text from a locally h
 source: https://arxiv.org/abs/2609.06674
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

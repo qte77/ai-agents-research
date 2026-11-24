@@ -4,7 +4,7 @@ purpose: Assess DeepCode's multi-agent coding harness, including its Paper2Code 
 source: https://github.com/HKUDS/DeepCode
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: trial
 ---
 

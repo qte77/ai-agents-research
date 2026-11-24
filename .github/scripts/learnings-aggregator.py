@@ -66,7 +66,7 @@ def render_file(owner: str, repo: str, content: str, existing: str = "") -> str:
     """Wrap upstream content with schema-valid frontmatter + source attribution.
 
     Frontmatter follows CONTRIBUTING §1–§2 (``make check_frontmatter`` is strict).
-    ``created`` is kept from the existing mirror. Reason: ``validated_links`` is the
+    ``created`` is kept from the existing mirror. Reason: ``validated_links_on`` is the
     run date because the aggregator lands through a PR whose lychee job checks the links.
     """
     today = date.today().isoformat()
@@ -80,7 +80,7 @@ def render_file(owner: str, repo: str, content: str, existing: str = "") -> str:
         f"purpose: Mirror of AGENT_LEARNINGS.md from {owner}/{repo}.\n"
         f"created: {created}\n"
         f"updated: {today}\n"
-        f"validated_links: {today}\n"
+        f"validated_links_on: {today}\n"
         "status: reference\n"
         f"source: {source_url}\n"
         "---\n\n"

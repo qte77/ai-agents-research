@@ -5,7 +5,7 @@ source: https://github.com/Taiizor/agents-md-cookbook
 platform_scope: [cursor, openai-codex, github-copilot, windsurf, cline, zed, amp, google-jules, opencode, roocode, claude-code]
 created: 2026-07-23
 updated: 2026-09-30
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: assess
 ---
 

@@ -3,7 +3,7 @@ title: CC Advisor Tool Analysis
 purpose: First-party analysis of Anthropic's advisor tool — a server-executed API beta that lets an executor model consult a stronger advisor model mid-request — and its Claude Code /advisor surface.
 created: 2026-10-26
 updated: 2026-11-23
-validated_links: 2026-11-08
+validated_links_on: 2026-11-08
 status: assess
 ---
 

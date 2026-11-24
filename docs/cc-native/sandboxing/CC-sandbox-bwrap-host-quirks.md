@@ -4,7 +4,7 @@ purpose: bwrap-on-Linux friction independent of execution context (local, WSL2, 
 source: https://github.com/anthropics/claude-code/issues/17727
 created: 2026-05-02
 updated: 2026-09-23
-validated_links: 2026-09-23
+validated_links_on: 2026-09-23
 status: reference
 ---
 

@@ -4,7 +4,7 @@ source: https://hyperspell.com
 purpose: Analysis of Hyperspell, a hosted company-data memory/context platform for AI agents, scored against the agent-substrate rubric as a lead for the context Shared and Distributed cells.
 created: 2026-10-02
 updated: 2026-10-02
-validated_links: 2026-10-02
+validated_links_on: 2026-10-02
 status: assess
 ---
 

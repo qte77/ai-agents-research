@@ -4,7 +4,7 @@ source: https://status.claude.com
 purpose: Real-time and archival monitoring of Claude platform incidents via Statuspage API, webhook integration, and statistical analysis.
 created: 2026-03-17
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: adopt
 ---
 

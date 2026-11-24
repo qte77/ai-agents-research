@@ -4,7 +4,7 @@ source: https://github.com/alphaXiv/OpenResearch
 purpose: Evaluate OpenResearch as a local-first, git-native workspace that turns coding agents into autonomous research/experiment agents.
 created: 2026-09-30
 updated: 2026-11-19
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: assess
 ---
 

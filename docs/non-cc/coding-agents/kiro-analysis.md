@@ -4,7 +4,7 @@ source: https://kiro.dev/
 purpose: Analysis of Kiro, AWS's spec-driven agentic IDE, as a coding agent platform distinct from conversational AI coding assistants.
 created: 2026-06-16
 updated: 2026-11-19
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: trial
 ---
 

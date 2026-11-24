@@ -4,7 +4,7 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM routing tools, age
 status: research
 created: 2026-06-14
 updated: 2026-11-23
-validated_links: 2026-11-19
+validated_links_on: 2026-11-19
 ---
 
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.

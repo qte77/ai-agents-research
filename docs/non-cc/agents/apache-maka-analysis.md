@@ -4,7 +4,7 @@ purpose: Assess Apache Maka's event-sourced, local-first agent runtime and its A
 source: https://github.com/apache/maka
 created: 2026-09-24
 updated: 2026-11-22
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: trial
 ---
 

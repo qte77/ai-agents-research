@@ -4,7 +4,7 @@ source: https://ampcode.com/
 purpose: Analysis of Amp (Sourcegraph spinoff) as a terminal-first agentic coding tool with pay-as-you-go model pricing.
 created: 2026-06-16
 updated: 2026-07-10
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: trial
 ---
 

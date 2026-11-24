@@ -5,7 +5,7 @@ purpose: Analysis of MOSS, a self-evolving AI assistant that autonomously rewrit
 platform_scope: [claude-code, openai-codex, deepseek-tui, opencode]
 created: 2026-07-23
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

@@ -3,7 +3,7 @@ title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
 updated: 2026-11-15
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 status: assess
 ---
 

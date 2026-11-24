@@ -5,7 +5,7 @@ purpose: Analysis of mex, a Git-shared, human-approval-gated project memory and 
 platform_scope: [claude-code, codex, cursor, windsurf, github-copilot, opencode]
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

@@ -4,7 +4,7 @@ source: https://arxiv.org/abs/2605.10913
 purpose: Analysis of Shepherd, a research framework that records agent execution as a reversible, Git-like trace so meta-agents can inspect, fork, replay, and revert runs.
 created: 2026-09-24
 updated: 2026-11-18
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

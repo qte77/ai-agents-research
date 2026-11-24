@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/sub-agents
 purpose: Analysis of recursive claude -p invocation patterns, the CLAUDECODE=1 session guard, and spawning method trade-offs for autonomous agent orchestration.
 created: 2026-03-17
 updated: 2026-11-18
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: research
 ---
 

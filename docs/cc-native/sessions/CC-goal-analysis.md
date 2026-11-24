@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/goal
 purpose: "Analysis of the /goal command, a session-scoped completion-condition loop: its evaluation mechanism, lifecycle, version gates, and relation to other long-running-session approaches here."
 created: 2026-10-15
 updated: 2026-10-22
-validated_links: 2026-10-22
+validated_links_on: 2026-10-22
 status: assess
 ---
 

@@ -3,7 +3,7 @@ title: "Agent Observability Methods Analysis"
 purpose: Technical analysis of 18 observability platforms and five primary tracing patterns for AI agent behavior.
 created: 2025-08-24
 updated: 2026-11-22
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

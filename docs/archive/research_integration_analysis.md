@@ -22,7 +22,7 @@ related_documents:
 created: 2025-09-02
 updated: 2026-03-01
 version: 3.2.0
-validated_links: 2026-03-12
+validated_links_on: 2026-03-12
 ---
 
 > **Status: archived** on 2026-04-23. This document is preserved for historical context. See [docs/cc-community/](../../cc-community/) for current analyses.

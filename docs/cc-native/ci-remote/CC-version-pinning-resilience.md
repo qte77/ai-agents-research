@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/setup
 purpose: How to pin Claude Code versions for reproducible CI/CD, containers, self-hosted runners and cloud dev environments, and stay resilient to Anthropic API outages or discontinuation.
 created: 2026-03-12
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: reference
 ---
 

@@ -3,7 +3,7 @@ title: CC Session Lifecycle — Naming, Persistence, and /rename Bugs
 purpose: Analysis of session creation, naming, persistence, /resume discovery, and known /rename bugs with reproduction evidence.
 created: 2026-03-27
 updated: 2026-04-13
-validated_links: 2026-04-13
+validated_links_on: 2026-04-13
 status: research
 ---
 

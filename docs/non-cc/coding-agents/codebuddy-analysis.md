@@ -4,7 +4,7 @@ source: https://www.codebuddy.ai/
 purpose: Analysis of CodeBuddy as a Tencent Cloud AI coding agent spanning IDE plugin, standalone IDE, and CLI surfaces.
 created: 2026-06-16
 updated: 2026-11-09
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: assess
 ---
 

@@ -4,7 +4,7 @@ purpose: Persistent cross-session memory tools for Claude Code (ByteRover, Claud
 status: research
 created: 2026-06-14
 updated: 2026-11-23
-validated_links: 2026-10-06
+validated_links_on: 2026-10-06
 ---
 
 Persistent-memory tools for Claude Code. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). For non-CC memory *infrastructure* (Mem0, Zep/Graphiti, Cognee, LangMem, A-MEM), see [agent-frameworks-infrastructure-landscape.md § Agent Memory Infrastructure](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#4-agent-memory-infrastructure). CC's native memory: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md).

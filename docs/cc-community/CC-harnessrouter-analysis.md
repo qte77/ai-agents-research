@@ -4,7 +4,7 @@ source: https://github.com/HarnessRouter/harnessrouter
 purpose: Unified multi-harness API for AI coding-agent backends (Codex, Claude Code, Hermes, DeepSeek Harness, Pi) — architecture, protocol, and fit with this corpus's agent-integration research.
 created: 2026-09-24
 updated: 2026-11-23
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: assess
 platform_scope: [claude-code, codex, hermes, deepseek-harness, pi]
 ---

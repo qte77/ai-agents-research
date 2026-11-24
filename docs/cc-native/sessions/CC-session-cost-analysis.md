@@ -3,7 +3,7 @@ title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
 updated: 2026-11-22
-validated_links: 2026-10-26
+validated_links_on: 2026-10-26
 status: adopt
 ---
 

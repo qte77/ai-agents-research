@@ -5,7 +5,7 @@ purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now d
 platform_scope: [cli]
 created: 2026-06-16
 updated: 2026-11-23
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: hold
 ---
 

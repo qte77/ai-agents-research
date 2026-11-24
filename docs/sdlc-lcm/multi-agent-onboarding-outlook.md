@@ -3,7 +3,7 @@ title: Multi-Agent Onboarding Outlook
 purpose: How multiple coding agents (CC, Kiro, Antigravity, Cursor, etc.) integrate with SDLC/LCM lifecycle management.
 created: 2026-03-24
 updated: 2026-11-18
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: assess
 ---
 

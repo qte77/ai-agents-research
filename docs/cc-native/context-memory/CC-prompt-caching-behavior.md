@@ -3,7 +3,7 @@ title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economic
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
 updated: 2026-11-23
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: adopt
 ---
 

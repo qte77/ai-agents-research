@@ -4,7 +4,7 @@ source: https://github.com/NVIDIA-NeMo/labs-OO-Agents
 purpose: Evaluate NOOA's object-oriented Python paradigm for agent development against the workflow/graph frameworks already covered in this corpus
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

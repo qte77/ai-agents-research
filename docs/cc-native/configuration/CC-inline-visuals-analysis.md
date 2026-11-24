@@ -4,7 +4,7 @@ source: https://claude.com/blog/claude-builds-visuals
 purpose: Analysis of Claude's custom inline visualization capabilities (charts, diagrams, interactive visuals in conversation).
 created: 2026-03-13
 updated: 2026-09-23
-validated_links: 2026-03-13
+validated_links_on: 2026-03-13
 status: assess
 ---
 

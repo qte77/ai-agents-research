@@ -4,7 +4,7 @@ source: https://github.com/calesthio/OpenMontage
 purpose: Analyze OpenMontage's CLAUDE.md-as-domain-controller architecture (and the parallel Palmier pivot signal) for the agent-workspace patterns this corpus tracks
 created: 2026-06-22
 updated: 2026-06-22
-validated_links: 2026-06-22
+validated_links_on: 2026-06-22
 status: trial
 platform_scope: [claude-code, cursor, copilot, windsurf, codex]
 ---

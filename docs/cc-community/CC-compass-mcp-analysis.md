@@ -4,7 +4,7 @@ source: https://github.com/richlira/compass-mcp
 purpose: Architecture analysis, contribution gaps, and CC-native integration potential for compass-mcp.
 created: 2026-03-28
 updated: 2026-03-29
-validated_links: 2026-03-29
+validated_links_on: 2026-03-29
 status: assess
 ---
 

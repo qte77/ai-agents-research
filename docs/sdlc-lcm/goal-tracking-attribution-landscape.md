@@ -3,7 +3,7 @@ title: Goal Tracking & Attribution Landscape
 purpose: How an agentic coding fleet ties work to stated goals (top-down cascade, bottom-up attribution), with the qte77 estate as worked reference and the commercial OKR/PM tooling baseline it diverges from.
 created: 2026-06-28
 updated: 2026-11-23
-validated_links: 2026-06-28
+validated_links_on: 2026-06-28
 status: assess
 ---
 

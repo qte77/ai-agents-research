@@ -3,7 +3,7 @@ title: IBM Agent Stack Analysis — watsonx Orchestrate and its Agent Developmen
 purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate, ADK, MCP/A2A support, model choice incl. Claude, identity, licence metrics, regions); no prices.
 created: 2026-11-20
 updated: 2026-11-20
-validated_links: 2026-11-20
+validated_links_on: 2026-11-20
 status: assess
 ---
 

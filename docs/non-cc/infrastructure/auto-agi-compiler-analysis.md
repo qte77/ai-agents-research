@@ -4,7 +4,7 @@ purpose: Assess RightNow AI's AUTO compiler and its self-published "Auto — The
 source: https://github.com/RightNow-AI/auto
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

@@ -4,7 +4,7 @@ source: https://github.com/cline/cline
 purpose: Evaluate Cline as an open-source autonomous coding agent for IDE, CLI, and CI/CD use cases.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: adopt
 platform_scope: [vscode, jetbrains, cursor, windsurf, cli, sdk]
 ---

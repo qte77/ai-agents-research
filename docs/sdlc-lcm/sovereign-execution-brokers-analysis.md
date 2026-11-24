@@ -4,7 +4,7 @@ purpose: Runtime enforcement boundary requiring certificate-bound authority — 
 source: https://arxiv.org/abs/2606.20520
 created: 2026-07-23
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

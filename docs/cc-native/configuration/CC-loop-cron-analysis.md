@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/scheduled-tasks
 purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and external scheduling alternatives; notes /loop exits after one iteration in -p mode.
 created: 2026-03-17
 updated: 2026-10-18
-validated_links: 2026-10-18
+validated_links_on: 2026-10-18
 status: assess
 ---
 

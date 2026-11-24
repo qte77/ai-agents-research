@@ -4,7 +4,7 @@ source: https://arxiv.org/abs/2608.06370
 purpose: Evaluate the evidence for programmatic tool calling (PTC) over JSON tool calling, and speculative PTC (sPTC) as a technique for overlapping expensive tool/sub-LLM calls with code generation
 created: 2026-09-24
 updated: 2026-11-19
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

@@ -3,7 +3,7 @@ title: "Multi-Agent System Design Principles"
 purpose: Core design principles for multi-agent systems synthesized from 12-Factor Agents, Anthropic Effective Harnesses, and PydanticAI.
 created: 2026-02-09
 updated: 2026-11-23
-validated_links: 2026-06-27
+validated_links_on: 2026-06-27
 status: adopt
 ---
 

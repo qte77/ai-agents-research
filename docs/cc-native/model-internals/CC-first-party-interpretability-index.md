@@ -3,7 +3,7 @@ title: First-Party Anthropic Interpretability & Safety Research Index
 purpose: Curated index of Anthropic's first-party research publications relevant to model internals, interpretability, safety classifiers, sycophancy, reasoning faithfulness, and alignment steering.
 created: 2026-04-05
 updated: 2026-10-06
-validated_links: 2026-10-06
+validated_links_on: 2026-10-06
 status: reference
 source: https://www.anthropic.com/research
 ---

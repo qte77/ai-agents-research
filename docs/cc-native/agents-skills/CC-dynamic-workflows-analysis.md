@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/workflows
 purpose: Document Claude Code's dynamic workflow orchestration tool, the ultracode effort setting, and the bundled /deep-research workflow, with first-party sourcing.
 created: 2026-06-11
 updated: 2026-11-19
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: trial
 ---
 

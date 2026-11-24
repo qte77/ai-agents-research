@@ -4,7 +4,7 @@ source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 purpose: Analysis of Weco AI's AIDE2 experiment, where an outer-loop agent rewrote the inner AIDE research agent's code over 100 iterations, with related recursive self-improvement papers as comparison points.
 created: 2026-09-24
 updated: 2026-11-18
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

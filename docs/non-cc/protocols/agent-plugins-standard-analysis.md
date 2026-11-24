@@ -4,7 +4,7 @@ purpose: Assess the Agent Plugins open standard for packaging Agent Skills and M
 source: https://agent-plugins.org
 created: 2026-09-24
 updated: 2026-10-02
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: assess
 ---
 

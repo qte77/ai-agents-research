@@ -3,7 +3,7 @@ title: Software Factory Landscape
 purpose: Disambiguates three unrelated meanings of "software factory" — historical, DevSecOps-vendor, and agentic-AI — and rubric-scores the agentic implementations with concrete artefacts.
 created: 2026-09-30
 updated: 2026-11-23
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

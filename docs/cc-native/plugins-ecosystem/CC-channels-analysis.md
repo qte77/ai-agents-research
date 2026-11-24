@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/channels
 purpose: Analysis of Claude Code channels for pushing external events into running sessions via MCP server plugins.
 created: 2026-03-24
 updated: 2026-10-15
-validated_links: 2026-10-15
+validated_links_on: 2026-10-15
 status: assess
 ---
 

@@ -4,7 +4,7 @@ purpose: Third-party interpretability study on pre-generation code-correctness p
 source: https://arxiv.org/abs/2606.14530
 created: 2026-07-23
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

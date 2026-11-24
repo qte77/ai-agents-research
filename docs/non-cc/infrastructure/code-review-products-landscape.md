@@ -3,7 +3,7 @@ title: AI PR-Review Products — Tool Landscape
 purpose: Catalog of standalone SaaS PR-review products (multi-platform GitHub/GitLab review bots), distinct from Claude Code-integrated review tooling.
 created: 2026-06-27
 updated: 2026-11-22
-validated_links: 2026-10-24
+validated_links_on: 2026-10-24
 status: research
 ---
 

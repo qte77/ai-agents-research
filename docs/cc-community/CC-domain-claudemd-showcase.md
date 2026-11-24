@@ -4,7 +4,7 @@ purpose: "Case study of CLAUDE.md as a domain-specific pipeline controller: a ge
 status: research
 created: 2026-03-13
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 ---
 
 ## Summary

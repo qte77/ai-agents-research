@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/cross-session-messaging
 purpose: Analysis of Claude Code's first-party cross-session messaging — independent sessions you start and steer yourself message each other, distinct from agent-team/subagent mailboxes.
 created: 2026-09-23
 updated: 2026-11-17
-validated_links: 2026-10-24
+validated_links_on: 2026-10-24
 status: adopt
 ---
 

@@ -5,7 +5,7 @@ purpose: Analysis of devteam as a terminal-based multi-agent orchestration tool 
 created: 2026-03-20
 updated: 2026-11-22
 archived: 2026-11-22
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: archived
 ---
 

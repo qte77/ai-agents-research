@@ -3,7 +3,7 @@ title: Model Hardware Standard (MHS) Analysis
 purpose: Analysis of Anthropic's Model Hardware Standard research preview — a shared specification for AI agents to operate physical lab/manufacturing hardware, and its relationship to MCP.
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

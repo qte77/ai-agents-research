@@ -3,7 +3,7 @@ title: DeepVariant Learnings
 purpose: Patterns from deepvariant work — ARM64/ML toolchain, containerized genomics pipelines.
 created: 2026-03-27
 updated: 2026-03-27
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: reference
 ---
 

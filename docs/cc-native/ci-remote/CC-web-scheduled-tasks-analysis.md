@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/routines
 purpose: "Analysis of cloud-native scheduled tasks (formerly routines) for autonomous work without a local machine: the Schedule, API and GitHub triggers; rubric scores cover the Schedule trigger only."
 created: 2026-03-24
 updated: 2026-11-18
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

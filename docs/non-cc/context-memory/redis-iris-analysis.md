@@ -4,7 +4,7 @@ source: https://redis.io/docs/latest/develop/ai/context-engine/
 purpose: Analysis of Redis Iris, Redis's AI context-engine suite (Agent Memory and Context Retriever services), scored against the agent-substrate rubric as a lead for the Shared and Distributed cells.
 created: 2026-10-02
 updated: 2026-10-02
-validated_links: 2026-10-02
+validated_links_on: 2026-10-02
 status: assess
 ---
 

@@ -4,7 +4,7 @@ purpose: A football-club-management benchmark that tests LLM agents on long-hori
 source: https://arxiv.org/abs/2608.18423
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

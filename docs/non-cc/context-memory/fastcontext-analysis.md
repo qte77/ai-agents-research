@@ -4,7 +4,7 @@ source: https://arxiv.org/abs/2606.14066
 purpose: Evaluate FastContext as a token-saving repo-exploration subagent for coding agents
 created: 2026-06-16
 updated: 2026-07-05
-validated_links: 2026-07-05
+validated_links_on: 2026-07-05
 status: assess
 ---
 

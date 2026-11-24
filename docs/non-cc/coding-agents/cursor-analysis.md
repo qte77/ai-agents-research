@@ -4,7 +4,7 @@ source: https://cursor.com/
 purpose: Analysis of Cursor as a GUI-first AI code editor with agentic composer and a secondary headless CLI.
 created: 2026-06-16
 updated: 2026-11-20
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: trial
 ---
 

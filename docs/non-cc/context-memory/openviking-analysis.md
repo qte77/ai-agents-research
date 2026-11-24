@@ -5,7 +5,7 @@ purpose: Analysis of OpenViking as a filesystem-based context database for AI ag
 status: research
 created: 2026-04-06
 updated: 2026-04-06
-validated_links: 2026-04-06
+validated_links_on: 2026-04-06
 ---
 
 **Details:** Open-source (AGPL-3.0), active development by ByteDance/Volcengine

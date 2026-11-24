@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/managed-settings
 purpose: "How an organization distributes Claude Code policy to a fleet of machines and cloud sessions: delivery channels, precedence, fail-closed startup, managed-only keys, and checking a policy is in force."
 created: 2026-11-20
 updated: 2026-11-20
-validated_links: 2026-11-20
+validated_links_on: 2026-11-20
 status: assess
 ---
 

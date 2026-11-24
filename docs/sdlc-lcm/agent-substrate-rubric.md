@@ -3,7 +3,7 @@ title: Agent Substrate Rubric — Shared, Versionable, Traceable Memory, Context
 purpose: One scoring rubric (6 properties × 8 subjects) for judging agent memory, ontology, graphs/RAG, context, skills, plugins, harness and long-running offloaded tasks.
 created: 2026-09-29
 updated: 2026-10-02
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: reference
 ---
 

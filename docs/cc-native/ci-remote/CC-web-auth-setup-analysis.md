@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/claude-code-on-the-web
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive use, connect remote sessions, and the Claude Console admin surface an org API key touches.
 created: 2026-03-24
 updated: 2026-11-18
-validated_links: 2026-11-15
+validated_links_on: 2026-11-15
 status: assess
 ---
 

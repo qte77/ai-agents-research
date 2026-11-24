@@ -3,7 +3,7 @@ title: User Story - ai-agents-research
 purpose: User stories for systematic coding agent research, comparison, and feature triage
 created: 2026-03-22
 updated: 2026-11-09
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: reference
 ---
 

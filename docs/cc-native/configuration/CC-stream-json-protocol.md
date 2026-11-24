@@ -3,7 +3,7 @@ title: CC stream-json Protocol Reference
 purpose: Undocumented NDJSON event format for --output-format stream-json, including event types, stream chaining, and community parsers.
 created: 2026-04-04
 updated: 2026-04-04
-validated_links: 2026-04-04
+validated_links_on: 2026-04-04
 status: research
 ---
 

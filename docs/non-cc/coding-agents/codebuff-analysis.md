@@ -4,7 +4,7 @@ source: https://github.com/CodebuffAI/codebuff
 purpose: Evaluate Codebuff as an open-source, terminal-based multi-agent coding assistant for potential adoption alongside or instead of Claude Code.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 ---
 
