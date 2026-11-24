@@ -33,6 +33,9 @@ _HUB_INDEX = "docs/_topics/README.md"
 _ARCHIVE = "docs/archive/"
 _DOC_TYPES = ("analysis", "landscape", "reference", "spec", "runbook")
 _PLATFORMS = re.compile(r"^platform_scope:\s*\[(.*)\]\s*$", re.MULTILINE)
+_DATE_KEYS = {k: re.compile(rf"^{k}:\s*(\d{{4}}-\d{{2}}-\d{{2}})\s*$", re.MULTILINE)
+              for k in ("created", "updated")}
+_PURPOSE = re.compile(r"^purpose:\s*(.+?)\s*$", re.MULTILINE)
 _CC_BUCKETS = ("cc-native", "cc-community")
 
 
@@ -77,6 +80,19 @@ def doc_platforms(text: str, path: str) -> list[str]:
     return ["claude-code"] if bucket_of(path).split("/")[0] in _CC_BUCKETS else []
 
 
+def doc_dates(text: str) -> dict[str, str | None]:
+    """Frontmatter ``created`` and ``updated`` as ISO date strings, ``None`` when absent or malformed."""
+    fm = extract_frontmatter(text) or ""
+    return {k: (m.group(1) if (m := rx.search(fm)) else None) for k, rx in _DATE_KEYS.items()}
+
+
+def doc_purpose(text: str) -> str | None:
+    """Frontmatter ``purpose:`` one-liner (surrounding quotes dropped), else ``None``."""
+    fm = extract_frontmatter(text)
+    m = _PURPOSE.search(fm) if fm else None
+    return m.group(1).strip("\"'") if m else None
+
+
 def extract_links(text: str) -> list[tuple[str, int]]:
     """``(target, line)`` for every inline and reference-style link outside code fences."""
     links: list[tuple[str, int]] = []
@@ -107,7 +123,7 @@ def resolve(source: str, target: str) -> tuple[str, str | None] | None:
 def _doc_node(path: str, text: str) -> dict:
     return {"id": path, "type": "doc", "bucket": bucket_of(path), "status": doc_status(text),
             "title": doc_title(text, path), "doc_type": doc_type(path),
-            "platforms": doc_platforms(text, path)}
+            "platforms": doc_platforms(text, path), "purpose": doc_purpose(text), **doc_dates(text)}
 
 
 def _add_link(edges: dict, docs: dict, source: str, target: str, line: int) -> None:
@@ -142,7 +158,7 @@ def build_graph(docs: dict[str, str]) -> dict:
 
 def site_graph(graph: dict, filing: dict[str, str] | None = None) -> dict:
     """Slim projection for the Pages site: each doc's title, bucket, hubs and facets (status,
-    doc type, platforms), one edge per linked pair.
+    doc type, platforms, purpose, created, updated), one edge per linked pair.
 
     A doc's hubs are the topic hubs (``_topics/*`` except the hub index) with a row
     linking to it, counted once even when several rows point at its sections.
@@ -160,7 +176,8 @@ def site_graph(graph: dict, filing: dict[str, str] | None = None) -> dict:
         pairs.add(tuple(sorted((e["source"], e["target"]))))
     nodes = [{"id": n["id"], "title": n["title"], "bucket": n["bucket"],
               "hubs": sorted(hubs.get(n["id"], ())), "status": n["status"],
-              "doc_type": n["doc_type"], "platforms": n["platforms"]} for n in graph["nodes"]]
+              "doc_type": n["doc_type"], "platforms": n["platforms"], "purpose": n["purpose"],
+              "created": n["created"], "updated": n["updated"]} for n in graph["nodes"]]
     for n in nodes if filing else ():
         n["filing"] = filing[n["id"]]
     return {"nodes": nodes, "edges": [list(p) for p in sorted(pairs)]}
