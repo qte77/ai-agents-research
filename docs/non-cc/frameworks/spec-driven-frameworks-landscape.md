@@ -3,7 +3,7 @@ title: Spec-Driven Frameworks — Landscape
 purpose: Comparison of spec-driven development frameworks (Spec-Kit, OpenSpec, BMAD-METHOD, Agent-OS, Kiro, Tessl), the deep-dive behind the synthesis entry in the agentic-engineering disciplines landscape.
 created: 2026-06-27
 updated: 2026-11-19
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: research
 ---
 

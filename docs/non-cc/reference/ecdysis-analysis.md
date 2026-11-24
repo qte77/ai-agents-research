@@ -4,7 +4,7 @@ source: https://github.com/cuiyu-ai/Ecdysis
 purpose: Analysis of Ecdysis, a failure-aggregation method for training self-evolving LLM agent runtime harnesses.
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

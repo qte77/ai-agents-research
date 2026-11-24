@@ -4,7 +4,7 @@ source: https://github.com/vercel-labs/opensrc
 purpose: Analysis of vercel-labs/opensrc — a CLI that fetches npm package source code (not just types) to deepen AI coding-agent context.
 created: 2026-06-27
 updated: 2026-06-27
-validated_links: 2026-06-27
+validated_links_on: 2026-06-27
 status: assess
 ---
 

@@ -4,7 +4,7 @@ source: https://github.com/project-minigraf/minigraf
 purpose: Analysis of Minigraf, an embedded bi-temporal Datalog graph database pitched as agent memory.
 created: 2026-10-11
 updated: 2026-10-11
-validated_links: 2026-10-11
+validated_links_on: 2026-10-11
 status: assess
 ---
 

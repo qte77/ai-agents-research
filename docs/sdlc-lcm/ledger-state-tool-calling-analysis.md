@@ -4,7 +4,7 @@ purpose: Ledger-state tracking and pre-execution policy gating for tool-calling 
 source: https://arxiv.org/abs/2606.20529
 created: 2026-07-23
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

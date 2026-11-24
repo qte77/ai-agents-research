@@ -5,7 +5,7 @@ purpose: Analysis of Ripwire, a Red Hat Emerging Technologies CLI (with optional
 platform_scope: [claude-code, cursor, windsurf, gemini-cli]
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

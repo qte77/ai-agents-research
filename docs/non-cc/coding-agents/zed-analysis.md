@@ -5,7 +5,7 @@ purpose: Analysis of the Zed editor as an agent host — its own Zed Agent, exte
 platform_scope: [zed, claude-code, codex, opencode, copilot, cursor, pi, gemini-cli]
 created: 2026-11-09
 updated: 2026-11-09
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: assess
 ---
 

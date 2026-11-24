@@ -4,7 +4,7 @@ source: https://claude.com/blog/cowork-plugins-across-enterprise
 purpose: Analysis of Claude's Cowork enterprise platform, plugin architecture, and connector ecosystem for potential relevance to projects using Claude Code.
 created: 2026-03-07
 updated: 2026-11-12
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 status: hold
 ---
 

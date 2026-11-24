@@ -4,7 +4,7 @@ purpose: Analysis of a Datalog-based, distributionally-robust runtime-verificati
 source: https://arxiv.org/abs/2606.20510
 created: 2026-07-23
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

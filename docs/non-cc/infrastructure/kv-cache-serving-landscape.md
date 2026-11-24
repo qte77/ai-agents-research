@@ -3,7 +3,7 @@ title: KV-Cache Serving Landscape — Vendor Prompt Caching & Inference Internal
 purpose: "Survey of KV (key-value) cache mechanisms in LLM serving: vendor prompt-caching APIs (Anthropic, OpenAI, Gemini) and open serving-stack internals such as paging, prefix reuse and offload."
 created: 2026-07-08
 updated: 2026-11-23
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: reference
 ---
 

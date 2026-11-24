@@ -4,7 +4,7 @@ source: https://github.com/jeffhajewski/latticedb
 purpose: Analysis of LatticeDB, an embedded single-file graph, vector, and full-text database written in Zig.
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

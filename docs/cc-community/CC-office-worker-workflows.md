@@ -3,7 +3,7 @@ title: Office Worker Workflows & Multi-Agent Orchestration
 purpose: End-to-end office workflow patterns (invoices, documents, email, financial reporting) and multi-agent orchestrators (Vibe Kanban, Conductor, tmux tools) for parallel business task execution.
 created: 2026-03-26
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: research
 ---
 

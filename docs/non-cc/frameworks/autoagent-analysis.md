@@ -5,7 +5,7 @@ purpose: Analysis of AutoAgent as a zero-code LLM agent framework with self-deve
 status: research
 created: 2026-04-06
 updated: 2026-04-06
-validated_links: 2026-04-06
+validated_links_on: 2026-04-06
 ---
 
 **Details:** Open-source (MIT), active development by HKU Data Science Lab

@@ -3,7 +3,7 @@ title: CC First-Party Documentation Index
 purpose: Canonical Anthropic URLs for CC, Agent SDK, Anthropic SDK, API, and best practices.
 created: 2026-03-28
 updated: 2026-10-15
-validated_links: 2026-10-15
+validated_links_on: 2026-10-15
 status: reference
 ---
 

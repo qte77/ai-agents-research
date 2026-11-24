@@ -3,7 +3,7 @@ title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
 updated: 2026-11-24
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: adopt
 ---
 

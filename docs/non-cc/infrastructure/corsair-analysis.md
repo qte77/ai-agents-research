@@ -4,7 +4,7 @@ purpose: Assess Corsair's managed-OAuth, unified-API integration layer for agent
 source: https://github.com/corsairdev/corsair
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: trial
 ---
 

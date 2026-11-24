@@ -4,7 +4,7 @@ purpose: Short survey of widely used methods for organising a plain-markdown kno
 status: research
 created: 2026-11-21
 updated: 2026-11-21
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 ---
 
 Scope: well-known methods only, each read at its originator's own site on 2026-11-21 (documented).

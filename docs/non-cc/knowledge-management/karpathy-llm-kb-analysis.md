@@ -3,7 +3,7 @@ title: "Karpathy LLM Knowledge Base: Markdown-First Alternative to RAG"
 purpose: Analyse Karpathy's LLM wiki pattern and gap-compare against ai-agents-research
 created: 2026-04-06
 updated: 2026-11-21
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: assess
 ---
 
@@ -55,7 +55,7 @@ Scale: the gist itself says the index approach "works surprisingly well at moder
 | Schema / conventions | `CLAUDE.md`-style schema file | [CONTRIBUTING.md][contributing] + `.claude/rules/` + `.markdownlint.json` | **No gap** — governance is more detailed |
 | Index pages | Single `index.md` catalogue | Subdirectory READMEs with doc tables + [architecture.md][arch] | **No gap** — multi-level indexing is richer |
 | Cross-references | LLM-maintained backlinks | Manual reference-style links + "See Also" sections | **Partial** — links exist but no orphan detection |
-| Lint / health checks | LLM-driven semantic lint | [markdownlint][mlint] (structural) + `validated_links` dates | **Partial** — structural lint exists, semantic lint does not |
+| Lint / health checks | LLM-driven semantic lint | [markdownlint][mlint] (structural) + `validated_links_on` dates | **Partial** — structural lint exists, semantic lint does not |
 | Activity log | `log.md` with parseable prefixes | [CHANGELOG.md][changelog] (Keep a Changelog) + git history | **No gap** |
 
 ### Value-Add Opportunities

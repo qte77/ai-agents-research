@@ -3,7 +3,7 @@ title: CC IDE Integration Protocol
 purpose: WebSocket-based MCP protocol between Claude Code CLI and IDE extensions — discovery, auth, transport, and community reimplementations.
 created: 2026-04-04
 updated: 2026-04-04
-validated_links: 2026-04-04
+validated_links_on: 2026-04-04
 status: research
 ---
 

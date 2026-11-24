@@ -9,7 +9,7 @@ from lib import doc_frontmatter as df  # noqa: E402
 
 GOOD = (
     "---\ntitle: T\npurpose: P\ncreated: 2026-01-02\nupdated: 2026-11-21\n"
-    "validated_links: 2026-11-21\nstatus: assess\nsource: https://x.y\n"
+    "validated_links_on: 2026-11-21\nstatus: assess\nsource: https://x.y\n"
     "platform_scope: [claude-code, cursor]\n---\n\n# T\n"
 )
 
@@ -37,7 +37,7 @@ class CheckDocTests(unittest.TestCase):
         text = "---\ntitle: T\nstatus: assess\n---\n"
         self.assertEqual(df.check_doc(text), [
             "missing required key: purpose", "missing required key: created",
-            "missing required key: updated", "missing required key: validated_links",
+            "missing required key: updated", "missing required key: validated_links_on",
         ])
 
     def test_dates_must_be_iso(self):
@@ -51,6 +51,13 @@ class CheckDocTests(unittest.TestCase):
             "key not allowed (see docs/schema/frontmatter.schema.json): category",
             "key not allowed (see docs/schema/frontmatter.schema.json): description",
             "unknown key: foo",
+        ])
+
+    def test_old_validated_links_key_is_rejected_with_a_pointer(self):
+        text = GOOD.replace("validated_links_on: 2026-11-21", "validated_links: 2026-11-21")
+        self.assertEqual(df.check_doc(text), [
+            "missing required key: validated_links_on",
+            "key not allowed (see docs/schema/frontmatter.schema.json): validated_links",
         ])
 
     def test_nested_yaml_lines_are_not_keys(self):

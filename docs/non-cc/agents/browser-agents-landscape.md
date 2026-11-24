@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/chrome
 purpose: "Landscape of agents that use websites: agentic browsers, Claude in Chrome vs Chrome DevTools MCP vs Playwright MCP, WebMCP, hosted agent browsers, dated benchmarks, and prompt-injection safety."
 created: 2026-11-19
 updated: 2026-11-22
-validated_links: 2026-11-19
+validated_links_on: 2026-11-19
 status: reference
 ---
 

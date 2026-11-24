@@ -3,7 +3,7 @@ title: Agentic Workflow Frameworks — Landscape
 purpose: The workflows-vs-agents distinction (Anthropic's 5 patterns), agentic-workflow frameworks, durable-execution engines and production anti-patterns, beyond Claude Code's own workflow tool.
 created: 2026-06-27
 updated: 2026-11-18
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: research
 ---
 

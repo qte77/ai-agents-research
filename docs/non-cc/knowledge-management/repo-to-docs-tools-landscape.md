@@ -5,7 +5,7 @@ purpose: Survey of AI-powered tools that generate documentation from GitHub repo
 status: research
 created: 2026-04-06
 updated: 2026-11-22
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 ---
 
 ## Summary

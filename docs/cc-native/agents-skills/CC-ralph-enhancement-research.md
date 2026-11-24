@@ -3,7 +3,7 @@ title: Ralph Loop Enhancement Research
 purpose: Identify actionable enhancements to autonomous headless CC development loops (Ralph pattern) based on gap analysis and external pattern research.
 created: 2026-03-07
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: research
 ---
 

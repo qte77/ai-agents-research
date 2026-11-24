@@ -3,7 +3,7 @@ title: Alibaba Cloud Agent Stack Analysis — Model Studio, AgentRun, AgentBay, 
 purpose: "First-party fact-check of Alibaba Cloud's agent stack (Model Studio, AgentRun, AgentBay, Qwen-Agent): permissions, identity, licensing, MCP/A2A and Claude availability; no prices."
 created: 2026-11-20
 updated: 2026-11-20
-validated_links: 2026-11-20
+validated_links_on: 2026-11-20
 status: assess
 ---
 

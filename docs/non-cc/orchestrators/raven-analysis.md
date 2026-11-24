@@ -5,7 +5,7 @@ purpose: Analysis of Raven, EverMind's "harness of harnesses" — a multi-agent 
 platform_scope: [claude-code, github-copilot, qwen-code]
 created: 2026-09-24
 updated: 2026-10-06
-validated_links: 2026-10-06
+validated_links_on: 2026-10-06
 status: assess
 ---
 

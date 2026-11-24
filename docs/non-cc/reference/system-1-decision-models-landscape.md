@@ -3,7 +3,7 @@ title: System-1 Decision Models Landscape
 purpose: "Survey of alternatives to TypeSafe's Jev: fast, typed-output classifiers (one forward pass, no free text) for agent routing, guardrails and verification, scored against the agent substrate rubric."
 created: 2026-09-30
 updated: 2026-11-23
-validated_links: 2026-11-11
+validated_links_on: 2026-11-11
 status: assess
 ---
 

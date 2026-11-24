@@ -5,7 +5,7 @@ purpose: Assess REA, an MCP server and CLI giving coding agents reverse-engineer
 platform_scope: [claude-code, codex, cursor, gemini-cli]
 created: 2026-10-11
 updated: 2026-11-17
-validated_links: 2026-10-11
+validated_links_on: 2026-10-11
 status: assess
 ---
 

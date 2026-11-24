@@ -3,7 +3,7 @@ title: AI Crawlers and Discoverability Landscape
 purpose: Which AI crawlers and fetchers exist, what each robots.txt token controls, publisher-side controls (Cloudflare AI Crawl Control, Content Signals), and what answer engines say on appearing in answers.
 created: 2026-10-24
 updated: 2026-11-18
-validated_links: 2026-11-14
+validated_links_on: 2026-11-14
 status: research
 ---
 

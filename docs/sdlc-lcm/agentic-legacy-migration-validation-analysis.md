@@ -4,7 +4,7 @@ purpose: American Express's agentic test-synthesis method for validating COBOL-t
 source: https://arxiv.org/abs/2607.28271
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

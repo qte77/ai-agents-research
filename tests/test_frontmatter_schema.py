@@ -39,7 +39,7 @@ ENFORCED = {
     "purpose": {"type", "minLength", "maxLength"},
     "created": {"type", "format"},
     "updated": {"type", "format"},
-    "validated_links": {"type", "format"},
+    "validated_links_on": {"type", "format"},
     "status": {"enum"},
     "source": {"type", "format", "pattern"},
     "platform_scope": set(),
@@ -56,7 +56,7 @@ class EnforcedKeywordsTests(unittest.TestCase):
 
     def test_empty_title_is_flagged(self):
         good = ("---\ntitle: T\npurpose: P\ncreated: 2026-01-02\nupdated: 2026-11-21\n"
-                "validated_links: 2026-11-21\nstatus: assess\n---\n")
+                "validated_links_on: 2026-11-21\nstatus: assess\n---\n")
         self.assertEqual(df.check_doc(good.replace("title: T", "title:")), ["title must not be empty"])
 
 

@@ -4,7 +4,7 @@ purpose: Analysis of arXiv:2606.14589, an 8-week case study deriving a 5-class t
 source: https://arxiv.org/abs/2606.14589
 created: 2026-07-23
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

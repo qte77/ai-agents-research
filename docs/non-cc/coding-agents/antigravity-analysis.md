@@ -4,7 +4,7 @@ source: https://antigravity.google/
 purpose: Analysis of Google Antigravity as an agent-first IDE and agentic development platform announced at Google I/O 2026.
 created: 2026-06-16
 updated: 2026-11-18
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

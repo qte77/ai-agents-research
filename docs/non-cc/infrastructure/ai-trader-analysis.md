@@ -4,7 +4,7 @@ purpose: Assess ai4trade.ai's SKILL.md onboarding surface for Claude Code/Codex/
 source: https://ai4trade.ai/SKILL.md
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

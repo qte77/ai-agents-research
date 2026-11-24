@@ -4,7 +4,7 @@ source: https://aider.chat/
 purpose: OSS terminal coding agent with git-native workflow and multi-LLM support
 created: 2026-06-16
 updated: 2026-06-22
-validated_links: 2026-06-22
+validated_links_on: 2026-06-22
 status: adopt
 ---
 

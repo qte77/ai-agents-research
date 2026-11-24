@@ -4,7 +4,7 @@ source: https://www.ycombinator.com/launches/Nwd-opennote-interactive-learning-f
 purpose: Track Opennote as an AI-native edtech product with open agent SDKs and a Llama-backed tutoring pipeline
 created: 2026-06-20
 updated: 2026-06-20
-validated_links: 2026-06-20
+validated_links_on: 2026-06-20
 status: assess
 platform_scope: [web, google-drive, notion, api-sdk]
 ---

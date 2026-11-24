@@ -4,7 +4,7 @@ purpose: Catalog of autonomous research agents, scientific-domain models and lit
 status: research
 created: 2026-06-14
 updated: 2026-11-22
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 ---
 
 Survey of agents and platforms for autonomous scientific discovery, literature search, and paper analysis. Restored from `docs/archive/landscape-research-agents.md` (archived 2026-04-23) and trimmed to the durable catalog; project-specific integration notes were dropped. For agent *frameworks* and infrastructure see [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md); for evaluation tooling see [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).

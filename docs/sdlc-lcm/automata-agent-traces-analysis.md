@@ -4,7 +4,7 @@ purpose: Reconstructing a compact finite-state machine from LLM-agent trace corp
 source: https://arxiv.org/abs/2608.23670
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

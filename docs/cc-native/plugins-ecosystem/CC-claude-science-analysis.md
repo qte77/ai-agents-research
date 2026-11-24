@@ -4,7 +4,7 @@ source: https://claude.com/docs/claude-science/overview
 purpose: Record what Anthropic's Claude Science desktop workbench is, how it runs analyses, and how its provenance and reviewer features relate to Claude Code and Cowork.
 created: 2026-10-03
 updated: 2026-10-06
-validated_links: 2026-10-06
+validated_links_on: 2026-10-06
 status: assess
 ---
 

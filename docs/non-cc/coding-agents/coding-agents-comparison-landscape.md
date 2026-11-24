@@ -3,7 +3,7 @@ title: Coding Agents and Harnesses Compared
 purpose: "Cross-vendor comparison of coding agents and harnesses from their own docs: input modalities, model access and billing, and context compaction, each cell sourced and dated."
 created: 2026-11-22
 updated: 2026-11-23
-validated_links: 2026-11-22
+validated_links_on: 2026-11-22
 status: assess
 ---
 

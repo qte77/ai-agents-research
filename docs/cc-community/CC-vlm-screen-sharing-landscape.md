@@ -5,7 +5,7 @@ status: research
 platform_scope: [claude-code]
 created: 2026-04-11
 updated: 2026-11-19
-validated_links: 2026-06-26
+validated_links_on: 2026-06-26
 ---
 
 ## What It Is

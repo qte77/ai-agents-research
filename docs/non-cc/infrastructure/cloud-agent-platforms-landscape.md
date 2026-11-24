@@ -3,7 +3,7 @@ title: Cloud Agent Platforms Compared — AWS, Google Cloud, Azure, Oracle, IBM,
 purpose: One dated comparison of six cloud agent stacks (runtime, Claude availability, MCP/A2A, memory, identity, roles, licences, regions, release status), built from the per-cloud analyses; no prices.
 created: 2026-11-20
 updated: 2026-11-20
-validated_links: 2026-11-20
+validated_links_on: 2026-11-20
 status: assess
 ---
 

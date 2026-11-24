@@ -3,7 +3,7 @@ title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines and "-driven development" methodologies that keep an agentic coding fleet compounding, with a five-layer stack and a reference implementation.
 created: 2026-06-23
 updated: 2026-11-23
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

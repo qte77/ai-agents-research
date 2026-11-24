@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
 updated: 2026-11-22
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 status: adopt
 ---
 

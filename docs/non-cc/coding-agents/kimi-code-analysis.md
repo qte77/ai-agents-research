@@ -4,7 +4,7 @@ source: https://github.com/MoonshotAI/kimi-code
 purpose: Analysis of Kimi Code CLI as a terminal-first AI coding agent from Moonshot AI, successor to the earlier kimi-cli Python tool.
 created: 2026-06-16
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

@@ -3,7 +3,7 @@ title: Goal Loops Across Coding Agents
 purpose: Cross-vendor comparison of "keep working until done" features in coding agents (goal commands, who judges completion, iteration bounds, Stop-style hooks), with Claude Code's /goal as reference.
 created: 2026-10-22
 updated: 2026-11-18
-validated_links: 2026-10-22
+validated_links_on: 2026-10-22
 status: assess
 ---
 

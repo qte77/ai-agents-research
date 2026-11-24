@@ -4,7 +4,7 @@ source: https://github.com/microsoft/vscode-copilot-chat
 purpose: Analysis of VS Code Copilot Chat extension with focus on agent mode for autonomous multi-file coding tasks.
 created: 2026-06-16
 updated: 2026-10-24
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: adopt
 ---
 

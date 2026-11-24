@@ -3,7 +3,7 @@ title: Salesforce Agentforce 360 Analysis — Claude on Bedrock, Agentforce Regi
 purpose: "First-party fact-check of Salesforce Agentforce 360 against Salesforce's own docs, press releases and rate card: platform scope, Claude via Bedrock, registry, pricing, data masking, licences, roles."
 created: 2026-11-12
 updated: 2026-11-20
-validated_links: 2026-11-18
+validated_links_on: 2026-11-18
 status: assess
 ---
 

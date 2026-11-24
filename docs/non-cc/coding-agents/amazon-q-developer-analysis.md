@@ -4,7 +4,7 @@ source: https://aws.amazon.com/q/developer/
 purpose: Assess Amazon Q Developer as a CLI and IDE coding agent, including its deprecation timeline and transition to Kiro.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: hold
 ---
 

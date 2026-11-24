@@ -4,7 +4,7 @@ source: https://github.com/cocoindex-io/cocoindex
 purpose: Evaluate CocoIndex as an incremental ETL/indexing layer for AI agent context ingestion and RAG pipelines.
 created: 2026-06-16
 updated: 2026-09-25
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 ---
 

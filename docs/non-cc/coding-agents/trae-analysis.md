@@ -4,7 +4,7 @@ source: https://www.trae.ai/
 purpose: Evaluate Trae, ByteDance's VS Code-based agentic IDE, for adoption as a coding agent alternative to Cursor or GitHub Copilot.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 ---
 

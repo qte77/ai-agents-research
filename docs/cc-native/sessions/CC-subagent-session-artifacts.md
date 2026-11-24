@@ -3,7 +3,7 @@ title: CC Subagent Session Artifacts
 purpose: Reference for subagent session artifacts — worktree lifecycle, meta.json tombstones, transcript storage, and cleanup behavior.
 created: 2026-04-13
 updated: 2026-04-13
-validated_links: 2026-04-13
+validated_links_on: 2026-04-13
 status: research
 ---
 

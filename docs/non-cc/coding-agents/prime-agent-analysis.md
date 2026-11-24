@@ -4,7 +4,7 @@ source: https://github.com/PrimeIntellect-ai/prime-agent
 purpose: Analysis of Prime Agent, Prime Intellect's open-source self-improving coding harness built on the Recursive Language Model (RLM) abstraction, for long-horizon coding and autonomous-task workflows.
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

@@ -4,7 +4,7 @@ purpose: Analysis of the llms.txt standard, Anthropic's documentation surface ar
 source: https://llmstxt.org/
 created: 2026-03-07
 updated: 2026-10-24
-validated_links: 2026-10-24
+validated_links_on: 2026-10-24
 status: assess
 ---
 

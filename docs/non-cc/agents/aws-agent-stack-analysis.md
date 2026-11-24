@@ -3,7 +3,7 @@ title: AWS Agent Stack Analysis — Bedrock AgentCore, Agents Classic, Quick
 purpose: First-party read of what AWS ships for business and developer agents (services, least-privilege IAM, identity, licences, regions, release status), with Claude availability; no prices.
 created: 2026-11-20
 updated: 2026-11-20
-validated_links: 2026-11-20
+validated_links_on: 2026-11-20
 status: assess
 ---
 

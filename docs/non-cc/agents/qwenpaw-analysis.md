@@ -4,7 +4,7 @@ source: https://github.com/agentscope-ai/QwenPaw
 purpose: Evaluate QwenPaw's self-hosted, multi-channel personal-assistant architecture and its three-tier memory design
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

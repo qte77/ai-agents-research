@@ -5,7 +5,7 @@ purpose: Analysis of Agent Flow — a VS Code extension and standalone web app t
 platform_scope: [claude-code, codex]
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: trial
 ---
 

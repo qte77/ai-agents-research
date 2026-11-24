@@ -3,7 +3,7 @@ title: Architecture - ai-agents-research
 purpose: Document hierarchy, conventions, and downstream consumer relationships for the ai-agents-research repository
 created: 2026-03-22
 updated: 2026-11-21
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: reference
 ---
 

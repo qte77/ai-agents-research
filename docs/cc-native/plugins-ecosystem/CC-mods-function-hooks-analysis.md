@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/plugins/mods/overview
 purpose: Analysis of Claude Code mods, in-process JavaScript/TypeScript event handlers shipped as plugins, for extensibility, governance and the agent substrate rubric.
 created: 2026-10-02
 updated: 2026-11-23
-validated_links: 2026-10-22
+validated_links_on: 2026-10-22
 status: assess
 ---
 

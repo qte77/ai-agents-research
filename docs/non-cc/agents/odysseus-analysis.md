@@ -4,7 +4,7 @@ source: https://github.com/pewdiepie-archdaemon/odysseus
 purpose: Evaluate Odysseus as a self-hosted all-in-one AI workspace and agent platform for the qte77 research context.
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 ---
 

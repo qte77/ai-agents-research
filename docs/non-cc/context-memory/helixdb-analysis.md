@@ -5,7 +5,7 @@ purpose: Analysis of HelixDB, a Rust graph-vector database positioned for knowle
 platform_scope: [claude-code, codex, opencode, cursor]
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

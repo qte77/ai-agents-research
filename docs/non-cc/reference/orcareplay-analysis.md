@@ -4,7 +4,7 @@ source: https://github.com/Continuum-AI-Corp/OrcaReplay
 purpose: Analysis of OrcaReplay, a record/replay/fork debugger for coding-agent runs, as first-party evidence for reproducible and traceable long-running agent work.
 created: 2026-09-30
 updated: 2026-09-30
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: assess
 ---
 

@@ -5,7 +5,7 @@ purpose: Analysis of InsForge as a backend platform providing semantic infrastru
 platform_scope: [claude-code, cursor, mcp-generic]
 created: 2026-04-09
 updated: 2026-04-09
-validated_links: 2026-04-09
+validated_links_on: 2026-04-09
 status: assess
 ---
 

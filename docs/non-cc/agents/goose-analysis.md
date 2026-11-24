@@ -4,7 +4,7 @@ source: https://github.com/aaif-goose/goose
 purpose: Analysis of Goose as MCP co-creator, reference implementation, and AAIF founding project — architectural comparison with CC's MCP integration.
 created: 2026-04-05
 updated: 2026-10-02
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: assess
 ---
 

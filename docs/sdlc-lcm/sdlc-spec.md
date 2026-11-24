@@ -3,7 +3,7 @@ title: SDLC Phase Specification
 purpose: Standardized dev process phases for all repos in the qte77 ecosystem, mapped to governance frameworks.
 created: 2026-03-24
 updated: 2026-06-21
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: reference
 ---
 

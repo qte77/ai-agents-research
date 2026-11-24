@@ -4,7 +4,7 @@ purpose: Survey of community plugin catalogs — awesome-claude-code (curated re
 status: research
 created: 2026-03-13
 updated: 2026-11-20
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 ---
 
 ## Summary

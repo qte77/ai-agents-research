@@ -3,7 +3,7 @@ title: Onyx Analysis
 purpose: Analysis of Onyx (onyx-dot-app), an open-core, self-hostable knowledge layer that indexes company apps for chat, agents and MCP clients, and its claim to beat agent-side MCP search.
 created: 2026-10-22
 updated: 2026-11-21
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: assess
 ---
 

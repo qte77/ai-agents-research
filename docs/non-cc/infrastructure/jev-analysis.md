@@ -3,7 +3,7 @@ title: Jev (TypeSafe AI) — System-One Decision Model
 purpose: What Jev is (question types, pricing, limits) and the qte77/feelings measured pilot using it as a pre-CI code-review gate.
 created: 2026-09-30
 updated: 2026-10-24
-validated_links: 2026-10-24
+validated_links_on: 2026-10-24
 status: trial
 ---
 

@@ -4,7 +4,7 @@ source: https://github.com/HKUDS/OpenHarness
 purpose: Analysis of HKUDS OpenHarness — an open-source Python agent harness framework (10 subsystems) compatible with Claude Code conventions but provider-agnostic.
 created: 2026-06-27
 updated: 2026-11-18
-validated_links: 2026-06-27
+validated_links_on: 2026-06-27
 status: assess
 ---
 

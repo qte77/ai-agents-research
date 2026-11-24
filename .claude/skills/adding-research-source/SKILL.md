@@ -42,7 +42,7 @@ mechanical. Reference [CONTRIBUTING.md](../../../CONTRIBUTING.md) — don't dupl
      analysis in one, cross-ref from the other.
    - **Define nothing twice**: before defining a term, check [`docs/glossary.md`](../../../docs/glossary.md)
      and `git grep` for an existing definition; link the owner section instead of restating it.
-3. **Write** per CONTRIBUTING: frontmatter (`title/purpose/created/updated/validated_links/status`; no
+3. **Write** per CONTRIBUTING: frontmatter (`title/purpose/created/updated/validated_links_on/status`; no
    body status badge), body sections, a **Sources table with reference-style links**, cross-refs. Hedge unverified
    claims; flag weak/secondary sources explicitly. State each claim at the level its evidence shows,
    *documented* / *announced* / *shipped* / *observed*, and never let a headline sentence claim more than

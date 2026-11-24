@@ -4,7 +4,7 @@ purpose: Analysis of sandbox friction points in Codespace/devcontainer environme
 source: https://code.claude.com/docs/en/sandboxing
 created: 2026-03-17
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: research
 ---
 

@@ -4,7 +4,7 @@ source: https://github.com/netdata/netdata
 purpose: Netdata's built-in MCP server for incident-time infrastructure queries from Claude Code, Claude Desktop, Cursor, and other MCP clients — what it exposes, transports, and auth.
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 platform_scope: [claude-code, claude-desktop, cursor, vs-code, jetbrains, gemini-cli, codex-cli, crush, opencode]
 ---

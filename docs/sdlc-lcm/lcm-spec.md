@@ -3,7 +3,7 @@ title: Product Lifecycle Management (LCM) Specification
 purpose: Product/project lifecycle phases for RAPID-managed products in the qte77 ecosystem.
 created: 2026-03-24
 updated: 2026-06-21
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: reference
 ---
 

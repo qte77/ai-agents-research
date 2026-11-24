@@ -3,7 +3,7 @@ title: CC 1.x Session Artifact Schema
 purpose: Reference for the CC 1.x session JSONL wire format -- directory layout, event type catalog, and field reference -- for downstream consumers such as polyforge learnings-sync.sh and cc-meta bigpicture.
 created: 2026-04-23
 updated: 2026-04-23
-validated_links: 2026-04-23
+validated_links_on: 2026-04-23
 status: research
 ---
 

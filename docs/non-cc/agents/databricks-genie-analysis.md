@@ -4,7 +4,7 @@ source: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and
 purpose: Assess Databricks Genie One and its Genie Ontology semantic layer as an enterprise data-agent platform
 created: 2026-06-20
 updated: 2026-11-19
-validated_links: 2026-11-19
+validated_links_on: 2026-11-19
 status: trial
 platform_scope: [databricks, slack, microsoft-teams, ios, android, mcp]
 ---

@@ -5,7 +5,7 @@ purpose: Analysis of Rowboat as a local-first AI coworker building long-lived kn
 platform_scope: [desktop, ollama, mcp-generic]
 created: 2026-04-09
 updated: 2026-06-22
-validated_links: 2026-06-22
+validated_links_on: 2026-06-22
 status: assess
 ---
 

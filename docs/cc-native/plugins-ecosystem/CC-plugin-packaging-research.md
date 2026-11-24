@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/agent-sdk/plugins
 purpose: Evaluate packaging project skills, agents, and rules as a CC Plugin — including migration from repo-local configuration to a plugin-based integration.
 created: 2026-03-07
 updated: 2026-11-11
-validated_links: 2026-11-11
+validated_links_on: 2026-11-11
 status: research
 ---
 

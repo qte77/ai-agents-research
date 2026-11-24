@@ -3,7 +3,7 @@ title: OSS ALM Landscape
 purpose: Comparison of open-source Application Lifecycle Management tools for potential Phase 3 adoption.
 created: 2026-03-24
 updated: 2026-06-28
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: hold
 ---
 

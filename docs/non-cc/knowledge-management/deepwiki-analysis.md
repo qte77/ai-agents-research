@@ -4,7 +4,7 @@ source: https://deepwiki.com/
 purpose: Evaluate DeepWiki (Cognition / Devin) as a repo-to-docs tool for the ai-agents-research context
 created: 2026-06-16
 updated: 2026-09-25
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: assess
 ---
 

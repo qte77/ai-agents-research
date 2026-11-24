@@ -4,7 +4,7 @@ source: https://github.com/bytedance/deer-flow
 purpose: Analysis of DeerFlow as an open-source super agent harness for research, coding, and content creation.
 created: 2026-03-25
 updated: 2026-06-28
-validated_links: 2026-06-28
+validated_links_on: 2026-06-28
 status: hold
 ---
 

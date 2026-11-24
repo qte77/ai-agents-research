@@ -3,7 +3,7 @@ title: Cross-Repo Pattern Digest
 purpose: Recurring operational patterns identified across multiple qte77 repos — GitHub API, CC sandbox, CI tooling, release management.
 created: 2026-03-27
 updated: 2026-03-27
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: reference
 ---
 

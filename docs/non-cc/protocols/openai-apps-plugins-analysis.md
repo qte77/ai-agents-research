@@ -4,7 +4,7 @@ purpose: Compares OpenAI's unified ChatGPT + Codex plugin system with Claude Cod
 source: https://developers.openai.com/plugins
 created: 2026-09-30
 updated: 2026-10-02
-validated_links: 2026-09-30
+validated_links_on: 2026-09-30
 status: assess
 ---
 

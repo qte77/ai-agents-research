@@ -5,7 +5,7 @@ purpose: Analysis of GoClaw as a multi-tenant AI agent platform with 8-stage exe
 platform_scope: [telegram, discord, slack, zalo, feishu, whatsapp]
 created: 2026-04-09
 updated: 2026-11-20
-validated_links: 2026-06-28
+validated_links_on: 2026-06-28
 status: assess
 ---
 

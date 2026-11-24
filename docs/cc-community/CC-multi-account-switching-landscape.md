@@ -3,7 +3,7 @@ title: CC Multi-Account & Profile Switching Landscape
 purpose: How to run multiple Claude Code subscription accounts — concurrently or switched — in one OS environment, via the native CLAUDE_CONFIG_DIR mechanism and community tools built on it.
 created: 2026-07-23
 updated: 2026-11-22
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

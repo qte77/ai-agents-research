@@ -4,7 +4,7 @@ purpose: Assess DeepSeek AI's open-source, Cordis-based "everything-is-a-plugin"
 source: https://github.com/deepseek-ai/deepseek-harness
 created: 2026-09-24
 updated: 2026-11-09
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: assess
 ---
 

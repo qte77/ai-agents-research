@@ -5,7 +5,7 @@ purpose: Analysis of Hermes as a self-improving autonomous agent by Nous Researc
 platform_scope: [cli, telegram, discord, slack, whatsapp, signal, email, simplex]
 created: 2026-04-09
 updated: 2026-11-20
-validated_links: 2026-06-28
+validated_links_on: 2026-06-28
 status: assess
 ---
 

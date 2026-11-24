@@ -4,7 +4,7 @@ source: https://docs.firecrawl.dev/mcp-server
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
 updated: 2026-11-19
-validated_links: 2026-11-19
+validated_links_on: 2026-11-19
 status: research
 ---
 

@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/fast-mode
 purpose: Analysis of Claude Code Fast Mode and the underlying API `speed` parameter for potential adoption within CC-based workflows.
 created: 2026-02-17
 updated: 2026-11-19
-validated_links: 2026-11-08
+validated_links_on: 2026-11-08
 status: hold
 ---
 

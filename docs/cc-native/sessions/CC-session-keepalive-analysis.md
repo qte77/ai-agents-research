@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/remote-control
 purpose: Actionable techniques to keep CC sessions alive on local machines, in containers, and in GitHub Codespaces.
 created: 2026-03-25
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: research
 ---
 

@@ -3,7 +3,7 @@ title: "Multi-Agent Systems & Benchmarking Best Practices"
 purpose: Production best practices for multi-agent system development and benchmarking, covering infrastructure, training, and evaluation.
 created: 2026-01-13
 updated: 2026-11-15
-validated_links: 2026-11-15
+validated_links_on: 2026-11-15
 status: assess
 ---
 

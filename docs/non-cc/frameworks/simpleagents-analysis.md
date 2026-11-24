@@ -4,7 +4,7 @@ source: https://github.com/CraftsMan-Labs/SimpleAgents
 purpose: Architecture analysis of SimpleAgents — Rust-first LLM agent framework with polyglot bindings and YAML workflow orchestration.
 created: 2026-03-29
 updated: 2026-07-23
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: assess
 ---
 

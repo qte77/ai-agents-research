@@ -4,7 +4,7 @@ source: https://github.com/langchain-ai/deepagents
 purpose: Architecture analysis of deepagents — LangChain's batteries-included harness for long-horizon agents with planning, sub-agent delegation, and a virtual filesystem, built on LangGraph.
 created: 2026-06-13
 updated: 2026-11-18
-validated_links: 2026-06-13
+validated_links_on: 2026-06-13
 status: assess
 ---
 

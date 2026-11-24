@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/hooks
 purpose: Analysis of Claude Code hooks system for automation, quality gates, and headless CC workflow integration.
 created: 2026-03-07
 updated: 2026-11-20
-validated_links: 2026-07-23
+validated_links_on: 2026-07-23
 status: adopt
 ---
 

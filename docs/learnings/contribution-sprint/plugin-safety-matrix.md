@@ -3,7 +3,7 @@ title: Plugin Safety Matrix and Pre-PR Checklist
 purpose: Which cc-plugins-utils plugins are safe per upstream repo, and universal checks to avoid .claude/ leakage
 created: 2026-03-30
 updated: 2026-03-30
-validated_links: 2026-11-21
+validated_links_on: 2026-11-21
 status: reference
 ---
 

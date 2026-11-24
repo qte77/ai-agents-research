@@ -4,7 +4,7 @@ source: https://arxiv.org/abs/2609.07925
 purpose: Analysis of FrogNano, a 4B coding agent trained exclusively via reinforcement learning on synthetically-generated software-engineering tasks.
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

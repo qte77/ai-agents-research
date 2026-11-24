@@ -5,7 +5,7 @@ purpose: Analysis of Microsoft's MXC, a cross-platform, policy-driven sandbox SD
 platform_scope: [windows, linux, macos]
 created: 2026-11-09
 updated: 2026-11-12
-validated_links: 2026-11-12
+validated_links_on: 2026-11-12
 status: assess
 ---
 

@@ -5,7 +5,7 @@ purpose: Analysis of Kilo Code as an open-source agentic coding platform coverin
 platform_scope: [vscode, jetbrains, cli, cloud, slack]
 created: 2026-06-16
 updated: 2026-06-16
-validated_links: 2026-06-16
+validated_links_on: 2026-06-16
 status: trial
 ---
 

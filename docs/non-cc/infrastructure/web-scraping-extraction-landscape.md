@@ -4,7 +4,7 @@ source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landsc
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
 updated: 2026-11-22
-validated_links: 2026-11-09
+validated_links_on: 2026-11-09
 status: reference
 ---
 

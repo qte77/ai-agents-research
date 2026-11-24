@@ -4,7 +4,7 @@ source: https://cloud.google.com/blog/products/data-analytics/how-the-open-knowl
 purpose: Assess OKF as an interchange format for agent knowledge bundles in the ai-agents-research context
 created: 2026-06-16
 updated: 2026-11-19
-validated_links: 2026-11-19
+validated_links_on: 2026-11-19
 status: assess
 ---
 

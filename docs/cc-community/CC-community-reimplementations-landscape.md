@@ -4,7 +4,7 @@ purpose: Survey of community reimplementations and educational deconstructions o
 status: research
 created: 2026-04-04
 updated: 2026-11-22
-validated_links: 2026-10-26
+validated_links_on: 2026-10-26
 ---
 
 ## Summary

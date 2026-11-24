@@ -4,7 +4,7 @@ source: https://github.com/Rath-Team/OpenRath
 purpose: Evaluate OpenRath's Session-centered runtime abstraction for multi-agent, multi-session Python workflows and its v2.0.0 durable-execution layer
 created: 2026-09-24
 updated: 2026-09-24
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 status: assess
 ---
 

@@ -4,7 +4,7 @@ purpose: Token-usage and cost observability tools for Claude Code (and sibling a
 status: research
 created: 2026-06-14
 updated: 2026-11-22
-validated_links: 2026-09-24
+validated_links_on: 2026-09-24
 ---
 
 Tools that measure token usage and cost across coding-agent sessions. Split out of [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) (which keeps the cross-tool comparison table). They divide into **retrospective** measurement (CodeBurn cross-agent; ccusage CC/Codex-deep) and **predictive** monitoring (Claude-Code-Usage-Monitor). Where RTK reduces tokens *entering* context, these observe what was actually spent — optimization needs measurement.

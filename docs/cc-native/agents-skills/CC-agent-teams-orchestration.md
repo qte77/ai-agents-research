@@ -5,7 +5,7 @@ purpose: Analysis of Claude Code Agent Teams for parallel code review, cross-lay
 test_run: 2026-02-11 (parallel code review with 3 teammates)
 created: 2026-02-08
 updated: 2026-11-18
-validated_links: 2026-09-23
+validated_links_on: 2026-09-23
 status: trial
 ---
 
