@@ -11,7 +11,7 @@ endif
 .PHONY: \
 	setup_node setup_lychee setup_mdlint setup_actionlint setup_shellcheck setup_skills setup_all \
 	check_links check_links_report check_docs check_status check_coverage check_frontmatter check_actions autofix lint test \
-	graph-data census graph-fonts preview \
+	graph-data census graph-fonts preview kb-papers \
 	changelog_new changelog_preview changelog_release \
 	help
 .DEFAULT_GOAL := help
@@ -305,6 +305,9 @@ preview: ## Serve the branded site (ui/) locally at http://localhost:$$PORT (def
 	echo "Serving ui/ at http://localhost:$${PORT:-8000}/  ->  / (landing), /doc-graph.html  (Ctrl-C to stop)"
 	echo "Tip: run 'make graph-fonts' first to preview the real brand fonts (else system-ui fallback)."
 	$(PYTHON) -m http.server $${PORT:-8000} --directory ui
+
+kb-papers: ## Export arXiv papers cited in docs/ but not in the rxiv feed to triage/kb-papers/arxiv-kb.jsonl (arXiv API, 3 s between requests, stdlib)
+	$(PYTHON) .github/scripts/build-kb-papers-feed.py
 
 
 # MARK: RELEASE
