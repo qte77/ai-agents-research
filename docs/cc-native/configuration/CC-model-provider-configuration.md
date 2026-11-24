@@ -1,9 +1,9 @@
 ---
 title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/env-vars
-purpose: Reference for configuring CC with alternative models, endpoints, API keys, third-party providers (OpenRouter, Bedrock, Vertex, Foundry, Infomaniak), local models (Ollama, llama.cpp, LM Studio, Strata), and LLM gateway proxies.
+purpose: Reference for configuring Claude Code with alternative models, endpoints, API keys, third-party providers, local models and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-11-20
+updated: 2026-11-23
 validated_links: 2026-11-09
 status: reference
 ---
@@ -56,7 +56,7 @@ The page states the defaults as one rule: Fable 5.2, Opus 5.5, Sonnet 5.5 and Ha
 
 ### Fable Models
 
-Claude **Fable 5.2** (`claude-fable-5-2`) has superseded **Fable 5** (`claude-fable-5`) as the newest Fable model (see CC-models-reference.md); either is selectable in CC via `/model` or `ANTHROPIC_MODEL`. For its model card (context, pricing, tokenizer/refusal caveats, CC plan access) and a free-tier/OSS provider snapshot, see [CC-models-reference.md](CC-models-reference.md).
+Claude **Fable 5.2** (`claude-fable-5-2`) has superseded **Fable 5** (`claude-fable-5`) as the newest Fable model (see CC-models-reference.md); either is selectable in CC via `/model` or `ANTHROPIC_MODEL`. For its model card (context, pricing, tokenizer/refusal caveats, CC plan access) see [CC-models-reference.md](CC-models-reference.md); free-tier and OSS provider facts are in [Free-tier and OSS inference providers](#free-tier-and-oss-inference-providers) below.
 
 ## API Key & Endpoint
 
@@ -150,18 +150,67 @@ export ANTHROPIC_FOUNDRY_BASE_URL="https://my-resource.services.ai.azure.com/ant
 
 Foundry as Microsoft's agent platform (agent types, tools, Claude model hosting and billing) is covered in [microsoft-365-copilot-analysis.md § Foundry as an agent platform](../../non-cc/agents/microsoft-365-copilot-analysis.md#foundry-as-an-agent-platform); Foundry roles, identity and licences in [§ Roles, identity and licences](../../non-cc/agents/microsoft-365-copilot-analysis.md#roles-identity-and-licences).
 
-### Infomaniak AI (EU-Sovereign, OpenAI-Compatible)
+### Infomaniak AI (Swiss-hosted, OpenAI-Compatible)
 
-Infomaniak (Swiss host) runs an **OpenAI-compatible** inference API serving open-source models — Llama, Mistral, Qwen, Gemma, plus Infomaniak's own vLLM build of Google's [TranslateGemma-27B][infomaniak-translategemma] — with end-to-end processing in Switzerland and 1M free credits for a one-month trial ([source][infomaniak-ai]). Because it speaks OpenAI Chat Completions rather than the Anthropic Messages API, **using it from CC needs a translation proxy** (LiteLLM or claude-code-proxy — see the LLM Gateway / Proxy section below); OpenAI-native agents such as OpenCode and n8n point at it directly.
+Infomaniak (Swiss host) runs an **OpenAI-compatible** inference API serving open-source models. Read 2026-11-23 from the vendor's [models page][infomaniak-models], [prices page][infomaniak-prices] and [AI Services page][infomaniak-ai]; data-location and privacy statements below are **vendor claims**, not independently verified. Because it speaks OpenAI Chat Completions rather than the Anthropic Messages API, **using it from CC needs a translation proxy** (LiteLLM or claude-code-proxy; see the LLM Gateway / Proxy section below); OpenAI-native agents such as OpenCode and n8n point at it directly. The same generic route for Codex CLI is limited by the Responses-API requirement noted in [codex-cli-analysis.md § Providers](../../non-cc/coding-agents/codex-cli-analysis.md#providers).
 
 ```bash
 # product_id is per-organization: GET https://api.infomaniak.com/1/ai (Authorization: Bearer $API_TOKEN)
-# v2 (current) OpenAI-compatible base URL:
+# v2 (current) OpenAI-compatible base URL (per models.dev and a third-party blog; not checked in Infomaniak's developer docs):
 https://api.infomaniak.com/2/ai/${PRODUCT_ID}/openai/v1
 ```
 
-- **OpenCode** ([source][infomaniak-opencode]): register a provider in `~/.config/opencode/opencode.json` using the `@ai-sdk/openai-compatible` package with `baseURL` set to the v2 endpoint and model ids `qwen3` / `llama3` / `mistral3` / `gemma3n` (e.g. default `infomaniak/qwen3`). The recipe wires `API_TOKEN` (created with the `ai-tools` scope at manager.infomaniak.com) and `PRODUCT_ID` as environment variables.
-- **n8n** ([source][infomaniak-n8n]): no native node — use the built-in OpenAI node with a custom base URL (`.../1/ai/{product_id}/openai`) and the API token as the key. The credential test fails but inference works; early threads predated function-calling support.
+The v2 base URL form is also listed by the third-party catalog [models.dev][infomaniak-modelsdev] (read 2026-11-23, via the `@ai-sdk/openai-compatible` package).
+
+**Models (vendor models page, 2026-11-23).** All chat models list function calling. Max input tokens as the page states them:
+
+| Model id | Max input | Notes (vendor wording, condensed) |
+| --- | --- | --- |
+| `moonshotai/Kimi-K2.6` | 256K | Beta; image-text input; pitched for coding and agent workflows |
+| `Qwen/Qwen3.5-397B-A17B-FP8` | 200K | Beta; image-text input; the page's "most powerful" |
+| `Qwen/Qwen3.8-27B-FP8` | 100K | Beta; image-text input; thinking mode on by default |
+| `mistralai/Mistral-Small-4-119B-2603` | 256K | Image-text input |
+| `swiss-ai/Apertus-v1.5-70B` | 100K | Beta; image-audio-text input; vendor stresses open weights and training-data transparency |
+| `google/gemma-4-31B-it` | 100K | Text input |
+| `mistralai/Ministral-3-14B-Instruct-2512` | 100K | Image-text input; small and cheap |
+
+The page also lists re-rankers (`BAAI/bge-reranker-v2-m3`, `Qwen/Qwen3-Reranker-0.6B`), embeddings (`Qwen/Qwen3-Embedding-8B`, Bge Multilingual Gemma2, All MiniLM L12 v2), Whisper V3 transcription and image generation. The catalog moves: the older `qwen3` / `llama3` / `mistral3` / `gemma3n` ids in this doc's earlier recipe no longer match this list, and models.dev (10 models at the same read) lacked Qwen3.8-27B, so check the vendor page before pinning an id.
+
+**Pricing (vendor prices page, 2026-11-23, CHF per 1M tokens, excluding VAT, input / output).** Gemma 4 31B 0.20 / 0.40; Ministral 3 14B 0.30 / 0.40; Kimi K2.6 0.60 / 3.00; Mistral Small 4 0.20 / 0.75; Qwen3.5 397B 0.80 / 3.60; Apertus 70B 0.70 / 2.50; Qwen3.8 27B 0.40 / 3.00. Billing is per token, invoiced monthly; Whisper V3 is CHF 0.006 per minute. The vendor offers 1M free credits; the page does not state an expiry, and the prices page says a valid payment card is required. Earlier versions of this doc listed Llama-family models and an Infomaniak build of TranslateGemma-27B; the 2026-11-23 models page lists neither. models.dev (third party) lists different USD prices for some of the same models, so treat vendor CHF prices as the reference.
+
+**Data location (vendor claims).** The page says infrastructure is in Switzerland, that queries are not stored or used for training, and that the service complies with the Swiss FADP and GDPR (Federal Act on Data Protection; General Data Protection Regulation).
+
+- **OpenCode** ([source][infomaniak-opencode], blog dated 2026-04-01): register a provider in `~/.config/opencode/opencode.json` using the `@ai-sdk/openai-compatible` package with `baseURL` set to the v2 endpoint; the recipe's model ids predate the current list. It wires `API_TOKEN` (created with the `ai-tools` scope at manager.infomaniak.com) and `PRODUCT_ID` as environment variables.
+- **n8n** ([source][infomaniak-n8n]): no native node; use the built-in OpenAI node with a custom base URL (`.../1/ai/{product_id}/openai`) and the API token as the key. The credential test fails but inference works; early threads predated function-calling support.
+
+### Free-tier and OSS inference providers
+
+Snapshot of providers with free or trial tiers, for routing CC (via proxy) or sibling agents (OpenCode, n8n, PydanticAI) to non-Anthropic models. Moved here from `CC-models-reference.md` on 2026-11-23 (Infomaniak is in its own section above). The columns are the **February 2026 snapshot**; four rows were re-checked at source on 2026-11-23 and are marked. Free-tier terms and model ids change often, so confirm on each provider's site before relying on a row.
+
+| Provider | Free Tier | Example Model (API ID) | Context | Output | Tools | Notes / Limit |
+| --- | --- | --- | --- | --- | --- | --- |
+| **gemini** | Free tier (Feb 2026 snapshot; unconfirmed 2026-11-23) | `gemini-2.0-flash` | 1M | 8K | Yes | 15 RPM, ~1.5K RPD (Feb 2026). **Re-check 2026-11-23:** the [rate-limits page][rl-gemini] gives no free-tier numbers for this model; read current limits in AI Studio |
+| **github** | Truly free | `gpt-4.1-mini` | 1M | 32K | Yes | 15 RPM, ~150 RPD |
+| **cerebras** | Free trial (2026-11-23) | `gpt-oss-120b` | 128K | 8K | Yes | 5 RPM, 1M TPD on the free trial ([rate-limits page][rl-cerebras], 2026-11-23; was 30 RPM in Feb 2026); $5 credits after adding a verified payment method, expiring 30 days after grant |
+| **groq** | Free plan (Feb 2026 snapshot; unconfirmed 2026-11-23) | `llama-3.3-70b-versatile` | 131K | 32K | Yes | 30 RPM, 1K RPD (Feb 2026). **Re-check 2026-11-23:** the [limits page][rl-groq] showed no free-plan table; not confirmed |
+| **mistral** | Truly free | `open-mistral-nemo` | 128K | 4K | Yes | 1 RPS, 1B tokens/mo |
+| **openrouter** | Truly free | `qwen/qwen3-next-80b-a3b-instruct:free` | 262K | 8K | Yes | 20 RPM, 50 RPD. **Re-check 2026-11-23:** [limits page][rl-openrouter] confirms 20 RPM / 50 RPD under 10 purchased credits, 1000 RPD from 10 credits |
+| **cohere** | Truly free | `command-a-03-2025` | 256K | 8K | Yes | 20 RPM, 1K calls/mo |
+| **deepseek** | 5M free tokens | `deepseek-chat` | 128K | 8K | Yes | Spend-limited |
+| **grok** | $25 trial credit | `grok-3-mini` | 131K | 32K | Yes | Spend-limited |
+| **sambanova** | $5 trial + limited free | `Meta-Llama-3.3-70B-Instruct` | 128K | 8K | Yes | Free: 40 RPD |
+| **nebius** | $1 trial credit | `meta-llama/Meta-Llama-3.1-70B-Instruct` | 128K | 8K | Yes | $1 credit |
+| **fireworks** | $1 trial credit | `accounts/fireworks/models/llama-v3p3-70b-instruct` | 131K | 8K | Yes | $1 credit |
+| **together** | No free tier | `meta-llama/Llama-3.3-70B-Instruct-Turbo` | 128K | 8K | Yes | $5 min purchase |
+| **perplexity** | No free API tier | `sonar` | 127K | 4K | Limited | Credits required |
+| **huggingface** | ~$0.10/mo | `meta-llama/Meta-Llama-3.3-70B-Instruct` | 128K | 8K | Yes | ~10 calls on free |
+| **ollama** | Always free (local) | `llama3.3:70b` | 128K | 8K | Yes | Hardware-bound (local) |
+
+Rows without a re-check note were not re-verified on 2026-11-23 and are carried over as the February 2026 snapshot (unverified since).
+
+> **OpenAI-compatible tool calling**: some providers reject strict tool-definition schemas: `groq`, `cerebras`, `fireworks`, `together`, `sambanova`. With PydanticAI, set `OpenAIModelProfile(openai_supports_strict_tool_definition=False)` for these.
+
+(`restack`, which appears on some provider lists, is a workflow-orchestration platform, not an inference provider; it proxies to others.)
 
 ### Local Models
 
@@ -450,7 +499,8 @@ Changelog entries unless marked; see [CC-env-vars-reference](CC-env-vars-referen
 | **Enterprise cloud** | Bedrock / Vertex / Foundry | High (cloud config) |
 | **Non-Anthropic models in CC** | LiteLLM or claude-code-proxy | Medium (proxy) |
 | **Per-task local routing / cost control** | Claude Code Router (CCR) | Medium (npm + `ccr start`) |
-| **EU / Swiss data sovereignty, OSS models** | Infomaniak AI (+ proxy for CC; native in OpenCode) | Medium (OpenAI→Anthropic proxy) |
+| **Swiss-hosted data (vendor claim), OSS models** | Infomaniak AI (+ proxy for CC; native in OpenCode) | Medium (OpenAI→Anthropic proxy) |
+| **Free or trial inference tiers** | [Free-tier provider table](#free-tier-and-oss-inference-providers) (+ proxy for CC) | Medium (OpenAI→Anthropic proxy) |
 | **Free-tier quota harvesting (no API key)** | CLIProxyAPI | Medium (OAuth setup + local server) |
 | **Multi-tool gateway + token compression** | 9Router | Medium (local server + config) |
 | **Hot-swap multiple local models** | llama-swap | Medium (config + backends) |
@@ -459,7 +509,7 @@ Changelog entries unless marked; see [CC-env-vars-reference](CC-env-vars-referen
 
 ## Cross-References
 
-- [CC-models-reference.md](CC-models-reference.md) — Fable 5 model card + free-tier/OSS provider reference table
+- [CC-models-reference.md](CC-models-reference.md) — model card, 5.x lifecycle and pricing (model facts; this doc owns provider facts)
 - [CC-cli-reference.md](CC-cli-reference.md) — canonical flag definitions (`--model`, `--effort`, `--fallback-model`, `--betas`)
 - [CC-env-vars-reference.md](CC-env-vars-reference.md) — env var reference for `ANTHROPIC_MODEL`, `CLAUDE_CODE_EFFORT_LEVEL`, etc.
 - [llm-routers-gateways-landscape.md](../../non-cc/infrastructure/llm-routers-gateways-landscape.md) — authoritative provider-agnostic router/gateway catalog (license, pricing, model breadth) for the gateways above and ~30 more; this doc holds only their CC-specific config
@@ -489,8 +539,9 @@ Changelog entries unless marked; see [CC-env-vars-reference](CC-env-vars-referen
 - [Vercel AI Gateway docs][vercel-gw]
 - [Zuplo AI Gateway — Claude Code integration][zuplo-cc]
 - [Local setup guide][local-setup]
-- [Infomaniak — Open-Source AI Models][infomaniak-ai]
-- [Infomaniak — vLLM TranslateGemma-27B (Hugging Face)][infomaniak-translategemma]
+- [Infomaniak — AI Services][infomaniak-ai], [Open-Source AI Models][infomaniak-models] and [Prices][infomaniak-prices] (read 2026-11-23)
+- [models.dev — Infomaniak provider][infomaniak-modelsdev] (third-party catalog)
+- Rate-limit pages re-checked 2026-11-23: [Gemini API][rl-gemini], [Cerebras][rl-cerebras], [Groq][rl-groq], [OpenRouter][rl-openrouter]
 - [OpenCode + Infomaniak AI Tools setup (janikvonrotz)][infomaniak-opencode]
 - [n8n community — add Infomaniak AI language model][infomaniak-n8n]
 
@@ -514,8 +565,14 @@ Changelog entries unless marked; see [CC-env-vars-reference](CC-env-vars-referen
 [requesty]: https://docs.requesty.ai/integrations/claude-code
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
 [models-pricing]: https://platform.claude.com/docs/en/about-claude/pricing
-[infomaniak-ai]: https://www.infomaniak.com/en/hosting/ai-services/open-source-models
-[infomaniak-translategemma]: https://huggingface.co/Infomaniak-AI/vllm-translategemma-27b-it
+[infomaniak-ai]: https://www.infomaniak.com/en/hosting/ai-services
+[infomaniak-models]: https://www.infomaniak.com/en/hosting/ai-services/open-source-models
+[infomaniak-prices]: https://www.infomaniak.com/en/hosting/ai-services/prices
+[infomaniak-modelsdev]: https://models.dev/providers/infomaniak/
+[rl-gemini]: https://aistudio.google.com/docs/rate-limits
+[rl-cerebras]: https://inference-docs.cerebras.ai/support/rate-limits
+[rl-groq]: https://console.groq.com/docs/rate-limits
+[rl-openrouter]: https://openrouter.ai/docs/api-reference/limits
 [infomaniak-opencode]: https://janikvonrotz.ch/2026/04/01/setup-opencode-with-infomaniak-ai-tools/
 [infomaniak-n8n]: https://community.n8n.io/t/add-new-language-model-informaniak-ai/73182
 [portkey-cc]: https://portkey.ai/docs/integrations/libraries/claude-code

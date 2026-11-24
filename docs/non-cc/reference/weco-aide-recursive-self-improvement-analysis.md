@@ -1,7 +1,7 @@
 ---
 title: AIDE² — Weco AI's Recursive Self-Improvement Experiment
 source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
-purpose: Analysis of Weco AI's AIDE² experiment and its arXiv technical report, where an outer-loop agent rewrote the inner-loop AIDE research-agent's code across 100 iterations. Also covers RRSI and ROFT as comparison points in the self-improving-harness family, plus further harness-subject entries, FineEnvs multi-harness RL training, the agentic meta-reasoning paper, ActiveSaddler's curriculum-driven harness optimization, the Sharpening Tax critique of RL post-training for agentic coverage, MIRA's meta-reasoning architecture for long-horizon research agents, and four more RSI-family papers: Harness² (verifier-free recursive harnessing), RSI-Dojo (agents automating LLM post-training), InfraRSI (RSI for training infrastructure), and Self-HPO (alternating harness/policy optimization).
+purpose: Analysis of Weco AI's AIDE2 experiment, where an outer-loop agent rewrote the inner AIDE research agent's code over 100 iterations, with related recursive self-improvement papers as comparison points.
 created: 2026-09-24
 updated: 2026-11-18
 validated_links: 2026-11-18

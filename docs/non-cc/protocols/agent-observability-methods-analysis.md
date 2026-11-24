@@ -2,7 +2,7 @@
 title: "Agent Observability Methods Analysis"
 purpose: Technical analysis of 18 observability platforms and five primary tracing patterns for AI agent behavior.
 created: 2025-08-24
-updated: 2026-09-24
+updated: 2026-11-22
 validated_links: 2026-09-24
 status: assess
 ---
@@ -25,6 +25,16 @@ This analysis examines the specific technical mechanisms used by 18 observabilit
 4. **OpenTelemetry Standards**: Coverage of GenAI semantic conventions for agent applications and frameworks
 5. **2026 Updates**: Recent feature releases, performance benchmarks, and industry adoption metrics
 6. **Research Methodology**: Transparent verification process and source validation
+
+## Design Stance (Practitioner Talk): Instrument Before the Bug
+
+The platform sections below catalogue tools; a practitioner talk ([ai-that-works ep. #64, 2026-07-07][aiw-obs]; practitioner talk, single-source, hosts build BAML and HumanLayer, so product-adjacent) argues for a stance on how to use them. Three points change what a team would do, each labelled by evidence:
+
+- **Instrument before the bug exists.** Tracing helps in hindsight, after a user reports a failure you could not predict, so its usefulness is bounded by how much was tagged when the code shipped. When agents write most of the code, the hosts argue, instrumentation has to be automatic (every outbound call and every model input and output captured by default) because an agent will not reliably remember to add it. A rising error count may also reflect rising user expectations rather than a worse system (the hosts' interpretation, not measured).
+- **Automatic redaction, not per-call judgment.** Redact headers, environment variables and keys in the pipeline so logging is not a choice made function by function. [OpenTelemetry's guidance on sensitive data][otel-sensitive] agrees on the direction: do not collect what might be sensitive, review what instrumentation libraries emit, and filter or redact in Collector processors (`attribute`, `filter`, `redaction`, `transform`); it also warns that hashing small, predictable values such as numeric IDs may not anonymize them.
+- **Wide, typed events over flattened strings.** The talk claims OpenTelemetry forces complex values into JSON strings, which loses queryability and inflates payloads (the host's example was 100 bytes growing to about 800; unverified). Check this against the current specification before adopting the premise: the [OpenTelemetry common specification][otel-common] (read 2026-11-22) lists maps and arrays of `AnyValue` as allowed attribute values, with a default nesting depth limit of 64 and a documented performance-overhead caveat, so the constraint depends on the SDK, exporter and backend in use rather than on the standard alone. The durable point is the one the talk builds on it: typed traces let an agent write its own queries against production behavior, such as filtering by argument size and latency.
+
+A further pattern from the talk, single-source: trace design, code and execution, then feed the execution trace back to the model and ask what the design missed.
 
 ## Technical Insights Documented
 
@@ -629,3 +639,9 @@ The observability landscape continues rapid evolution toward standardization (Op
 ## Sources
 
 Each of the 18 platforms cites its official docs/repo inline across the five tracing-pattern sections above. Claude Code's own first-party OTel telemetry is documented separately in [CC-monitoring-telemetry-analysis.md](../../cc-native/configuration/CC-monitoring-telemetry-analysis.md).
+
+Design-stance sources: [ai-that-works ep. #64, "agent observability" (2026-07-07)][aiw-obs] (practitioner talk, a conversation rather than shipped code); [OpenTelemetry: handling sensitive data][otel-sensitive]; [OpenTelemetry common specification (attributes)][otel-common].
+
+[aiw-obs]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-07-agent-observability
+[otel-sensitive]: https://opentelemetry.io/docs/security/handling-sensitive-data/
+[otel-common]: https://opentelemetry.io/docs/specs/otel/common/

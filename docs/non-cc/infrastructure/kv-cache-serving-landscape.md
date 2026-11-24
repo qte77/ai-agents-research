@@ -1,8 +1,8 @@
 ---
 title: KV-Cache Serving Landscape — Vendor Prompt Caching & Inference Internals
-purpose: Survey of KV (key-value) cache mechanisms in LLM serving — vendor prompt-caching APIs (Anthropic/OpenAI/Gemini) and open serving-stack internals (paging, prefix reuse, quantization, eviction, architectural sharing, offload/disaggregation).
+purpose: "Survey of KV (key-value) cache mechanisms in LLM serving: vendor prompt-caching APIs (Anthropic, OpenAI, Gemini) and open serving-stack internals such as paging, prefix reuse and offload."
 created: 2026-07-08
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-09-24
 status: reference
 ---
@@ -28,13 +28,13 @@ prefix match only — no semantic/fuzzy matching. Cache **read** is ~90% cheaper
 
 | Vendor | Mechanism | Min prefix | TTL | Read / write pricing |
 |---|---|---|---|---|
-| **Anthropic** | Explicit `cache_control` breakpoints (auto or ≤4 manual); cumulative-hash prefix | 1,024 (Opus 4.8, Sonnet 5/4.6/4.5); 4,096 (Opus 4.6/4.5, Haiku 4.5); 2,048 (Opus 4.7); 512 (Fable 5/Mythos 5) | 5-min default (free refresh) / 1-hour opt-in | read 0.1×; write 1.25× (5m) / 2× (1h) |
+| **Anthropic** | Explicit `cache_control` breakpoints (auto or ≤4 manual); cumulative-hash prefix | 1,024 (Opus 4.8, Sonnet 5/4.6/4.5); 4,096 (Opus 4.6/4.5, Haiku 4.5); 2,048 (Opus 4.7); 512 (Fable 5.x/Mythos 5.x, Opus 5/5.5, Sonnet 5.5, Haiku 5.5) | 5-min default (free refresh) / 1-hour opt-in | read 0.1×; write 1.25× (5m) / 2× (1h) |
 | **OpenAI** | Automatic prefix caching (no flag); hash of ~first 256 tokens; optional `prompt_cache_key` for routing affinity | 1,024 (then 128-tok increments) | 5–60 min inactivity, up to 1 h; extended tier to 24 h | read 0.1× (90% off) |
 | **Google Gemini** | Implicit (on by default, 2.5+) + explicit `CachedContent` resource (generateContent API) | 2,048 (2.5 Flash/Pro); 4,096 (3.x preview) | implicit auto; explicit default 1 h, configurable | cached-token rate (~0.1×) **plus** a per-hour storage rate |
 
 Anthropic's per-model minimums verified against the [prompt-caching docs][anthropic-caching]
-(2026-07-08); Bedrock differs (Fable 5 / Mythos 5 = 1,024 there). CC itself uses the 5-min tier
-exclusively — see [CC-prompt-caching-behavior.md](../../cc-native/context-memory/CC-prompt-caching-behavior.md).
+(2026-07-08; 512-token list re-read 2026-11-23). An earlier note here said Bedrock uses 1,024 for Fable 5 / Mythos 5; that was corrected on 2026-10-15 (see [CC-prompt-caching-behavior.md](../../cc-native/context-memory/CC-prompt-caching-behavior.md#minimum-cacheable-prefix)). CC picks the TTL tier per request (it is not limited to the 5-min tier); see
+[CC-prompt-caching-behavior.md](../../cc-native/context-memory/CC-prompt-caching-behavior.md).
 
 ## 2. Serving-engine internals
 

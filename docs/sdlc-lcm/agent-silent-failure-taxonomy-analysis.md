@@ -1,6 +1,6 @@
 ---
 title: Silent Failures in a Production LLM Agent Runtime — Taxonomy Analysis
-purpose: Analysis of arXiv:2606.14589's 8-week longitudinal case study deriving a 5-class taxonomy of "silent failures" (errors that never reach a human in usable form) in a production LLM agent runtime, plus its 5-pillar defense framework.
+purpose: Analysis of arXiv:2606.14589, an 8-week case study deriving a 5-class taxonomy of silent failures in a production LLM agent runtime, plus its 5-pillar defense framework.
 source: https://arxiv.org/abs/2606.14589
 created: 2026-07-23
 updated: 2026-07-23

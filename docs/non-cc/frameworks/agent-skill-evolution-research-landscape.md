@@ -1,6 +1,6 @@
 ---
 title: Agent Skill Evolution Research Landscape
-purpose: Survey research (papers and reference repos) on constructing, evolving, and transferring agent skills and tool sets — as distinct from the packaging/distribution landscapes in cc-community and cc-native.
+purpose: Survey of research (papers and reference repos) on constructing, evolving and transferring agent skills and tool sets, distinct from the packaging landscapes in cc-community and cc-native.
 created: 2026-09-30
 updated: 2026-11-22
 validated_links: 2026-11-12

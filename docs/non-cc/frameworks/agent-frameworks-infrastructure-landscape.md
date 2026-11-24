@@ -1,9 +1,9 @@
 ---
 title: Agent Frameworks & Infrastructure Landscape
-purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/routing tools, agent memory infrastructure, agent-oriented foundation models, and specialist models agents call as tools beyond Claude Code — restored and refreshed from the archived frameworks-infrastructure landscape.
+purpose: Catalog of multi-agent orchestration frameworks, LLM routing tools, agent memory infrastructure, agent-oriented foundation models and specialist models agents call as tools, beyond Claude Code.
 status: research
 created: 2026-06-14
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-19
 ---
 
@@ -276,7 +276,7 @@ Checked 2026-11-19. Graphiti's [README][graphiti-readme] documents the design (d
 
 ## 5. Foundation Models for Agents
 
-Frontier model facts and pricing change fast and live in [CC-models-reference.md](../../cc-native/configuration/CC-models-reference.md) (Fable 5 card + free-tier/OSS provider table) and [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md) (how to route CC to them). Notable agent-oriented / OSS entries:
+Frontier model facts and pricing change fast and live in [CC-models-reference.md](../../cc-native/configuration/CC-models-reference.md) (Fable 5 card, lifecycle and pricing; the free-tier/OSS provider table is in CC-model-provider-configuration.md) and [CC-model-provider-configuration.md](../../cc-native/configuration/CC-model-provider-configuration.md) (how to route CC to them). Notable agent-oriented / OSS entries:
 
 - [DeepSeek V3.2 / V3.2-Speciale / R1](https://api-docs.deepseek.com/news/news251201) — reasoning-first, agent-trained models (V3.2-Speciale synthesized 1,800+ environments, 85K+ instructions; integrates thinking into tool use). Cost-efficient OSS.
 - [Devstral (Mistral)](https://mistral.ai/news/devstral) — Apache-2.0 agentic-coding model family (All Hands AI / OpenHands lineage). Devstral Small 2 (24B) hits 68.0% SWE-Bench Verified (123B: 72.2%) — the top open-source agentic-coding scores; runs on a single RTX 4090 / 32GB Mac, ~30–50× cheaper than Sonnet, and is a listed [Claude Code model backend](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512) via OpenAI-compatible routing. Capabilities are folding into the unified Mistral Small 4 line.
@@ -343,7 +343,7 @@ citation-grounded PDF Q&A agent running on Ollama.
 
 - [RAPTOR](https://arxiv.org/abs/2401.18059) — recursive embed→cluster→summarize tree; retrieves across abstraction levels (MIT; ICLR 2024; paper reports +20% absolute on QuALITY with GPT-4).
 - [nano-graphrag](https://github.com/gusye1234/nano-graphrag) — ~1,100-LOC hackable GraphRAG; swappable LLM/embedding/vector backends (Faiss/Neo4j/Ollama), async (MIT, ~4.0k★, last push 2026-01-27, `gh api` 2026-11-21).
-- [Trail-code (trailhq, formerly Graft)](https://github.com/trailhq/Trail-Code) — context layer for coding agents (Claude Code, Cursor, Codex and others); the repo URL `trailhq/Graft` redirects here, and the README says Graft is now Trail-code, with the "graft map" kept as one half. The graft map is a tree-sitter parse (no LLM, no network) of symbols and call edges, ranked by in-degree; the newer half, "learnings", records what the team and agents have learned from conversations; optional `trail build --deep` adds LLM summaries. Repo self-reports 46% fewer tool calls and 42% fewer uncached input tokens over 162 runs, and 33 vs 27 of 50 SWE-bench Verified issues solved (66% vs 54%) — vendor claims, not independently verified. MIT; 11.4k★, last push 2026-11-21 (`gh api` 2026-11-21); npm `@trailhq/trail-code`.
+- [Trail-code (trailhq, formerly Graft)](https://github.com/trailhq/Trail-Code) — context layer for coding agents (Claude Code, Cursor, Codex and others); the repo URL `trailhq/Graft` redirects here, and the README says Graft is now Trail-code, with the "graft map" kept as one half. The graft map is a tree-sitter parse (no LLM, no network) of symbols and call edges, ranked by in-degree; the newer half, "learnings", records what the team and agents have learned from conversations; optional `trail build --deep` adds LLM summaries. README headlines 46% fewer tool calls and 60% less time over 162 runs, and its prose adds 32% lower cost and 42% fewer uncached input tokens, and 33 vs 27 of 50 SWE-bench Verified issues solved (66% vs 54%, one model, n=50) — vendor claims, not independently verified. MIT; 11,458★, last push 2026-11-23 (`gh api` 2026-11-23); npm `@trailhq/trail-code`; the CHANGELOG's newest entry is 0.30.5, while GitHub shows no releases and tags stop at v0.21.1.
 
 ### GraphRAG vs vector RAG and KG construction evidence
 

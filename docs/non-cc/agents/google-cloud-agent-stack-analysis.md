@@ -1,6 +1,6 @@
 ---
 title: Google Cloud Agent Stack Analysis — Gemini Enterprise Agent Platform, ADK, Gemini Enterprise
-purpose: First-party read of what Google Cloud ships for business and developer agents (renamed platform, runtime, identity, gateway, registry, IAM roles, seats and editions, regions, release status), with Claude availability; no prices.
+purpose: First-party read of what Google Cloud ships for business and developer agents (platform, runtime, identity, gateway, registry, IAM roles, editions, regions), with Claude availability; no prices.
 created: 2026-11-20
 updated: 2026-11-20
 validated_links: 2026-11-20

@@ -1,8 +1,8 @@
 ---
 title: Goal Tracking & Attribution Landscape
-purpose: How an agentic coding fleet ties work back to stated goals — the top-down goal→spec→build→learning cascade and the bottom-up attribution of every feature, PR, and agent run to the goal that motivated it — with the qte77 estate as the worked reference and the commercial OKR/PM tooling baseline it diverges from.
+purpose: How an agentic coding fleet ties work to stated goals (top-down cascade, bottom-up attribution), with the qte77 estate as worked reference and the commercial OKR/PM tooling baseline it diverges from.
 created: 2026-06-28
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-06-28
 status: assess
 ---
@@ -79,6 +79,40 @@ Applied to the stores above (our synthesis, not vendor guidance): a predicate su
 
 **Strategy-level planning (above goals and specs): coverage gap.** A corpus search on 2026-11-18 found strategy only as the human OKR baseline above and the estate's `goals.json`; no doc covers agent-authored strategy or roadmap planning, and vendor docs were not searched for it in this pass. Treat it as unaudited, not as absent.
 
+## Core vs context: classifying work (Moore)
+
+Geoffrey Moore's core/context analysis (book *Dealing with Darwin*; Moore's Stanford talk is dated 2005-04-06) is a way to decide where scarce attention goes, and it can double as a classifier for the work this doc attributes to goals. Evidence level: Moore's framing is documented (his [Stanford talk page][moore-talk], which states the framework is used "to discuss how to overcome inertia in strategy and structure", and [Zone to Win page][moore-ztw]); the quadrant layout is confirmed by Moore's own 2×2 in his 2021-08-06 LinkedIn post (`linkedin.com/pulse/core-context-future-work-geoffrey-moore`; not a live link) and a [PDMA review][moore-pdma] of the book. The action labels (Deploy, Invent, Manage, Offload) come from an uploader's [slide deck][moore-slides], read as slide text only (the SlideShare copy was bot-blocked); Moore's own prose uses "extract resources" and "outsource" instead.
+
+**The model (per the slide deck).** *Core* is the work that creates differentiation that wins customers; *context* is all other work. A second axis separates *mission-critical* work (a shortfall creates serious and immediate risk) from non-mission-critical. Crossing the two gives four quadrants, each paired with one action:
+
+| | Mission-critical | Not mission-critical |
+|---|---|---|
+| **Core** | **Deploy** differentiation at scale | **Invent** the next differentiated offering (Moore calls this quadrant "enabling core") |
+| **Context** | **Manage** at scale, and extract resources to repurpose for core (five levers: centralize, standardize, modularize, optimize, outsource) | **Offload** it, to fund the next innovation |
+
+The deck also makes two dynamic points: core becomes context over time as it commoditizes, and resources get stuck "clinging to context", where mission-critical context work absorbs the people and money that core invention needs. That is the inertia point of the Stanford talk. (We could not watch the talk; only its one-line description was read.)
+
+**The AI angle (one practitioner's claim).** A single-author [Medium essay][moore-ai] (2025-05-22, opinion, not research) argues the model needs an agent layer: its "Context Offloading (with Human-in-the-Loop)" has people supervise and validate agent output, while core stays human-led and agent-augmented, and the boundary stays fluid. Its sharpest point for us is that context work is where agents plausibly absorb effort, which maps onto the deck's Offload action and Moore's "extract resources"; whether that happens at a given team is an open empirical question, not something these sources show.
+
+**How-to: classifying work items (this corpus's synthesis, not Moore's).** Keep two fields per item, `class: core|context` and `critical: yes|no`, set when the item is created or triaged, and reviewed when the goal set changes (the [attribution loop](#the-agentic-attribution-loop) already ties each item to a goal, so the goal is the natural place to decide core vs context once).
+
+| Item | Where the label lives | Tally and review |
+|---|---|---|
+| Goal / milestone | On the goal record (e.g. an OKR entry in the [goal store](#qte77qte77--the-goal-store-and-okr-home)); children inherit it | Review quarterly: is this still core, or did it commoditize? |
+| Issue / task / feature | Label pair or project field; default to the parent goal's class | Count open items per quadrant; a large Manage share is the "clinging to context" signal |
+| Pull request | Inherit from the linked issue; no separate label | Merged PRs per quadrant per period |
+| Agent run | Inherit from the attributed goal in the run log | Cost and run counts per quadrant; Offload/Manage items are the first candidates for full agent execution |
+| Time spent | Sum item time (or run cost) by quadrant | Compare share spent on Invent/Deploy vs Manage/Offload against intent |
+
+The classification is a judgment call per team; two reviewers can disagree, so record who set the label and when.
+
+**Adjacent and orthogonal concepts** (all well known; each differs from core/context as noted):
+
+- *Zone to Win* (Moore, [author page][moore-ztw]): adjacent, from the same author. Four zones (Performance, Productivity, Incubation, Transformation), each with its own operating model and metrics; it organizes by operating mode where core/context classifies by differentiation.
+- *Wardley mapping* ([Learn Wardley Mapping][wardley]): adjacent. Places capabilities on an evolution axis (Genesis, Custom, Product, Commodity), which models the movement of core toward context as it commoditizes (our reading) more explicitly than a single slide does.
+- *Jobs to be done* ([HBR, Christensen et al., 2016][jtbd]): orthogonal. Classifies work by the customer need it serves, not by whether it differentiates; useful to decide what is core (our reading), not a substitute for the classification.
+- *Build vs buy / outsourcing*: the action layer of the context quadrants (Moore's own "outsource" lever is one instance); it is a decision, not a classification, so no separate source is cited.
+
 ## Connections
 
 - [agentic-engineering-disciplines-landscape.md][disciplines] — this doc is the **goals** anchor of the credo's compound loop (its Layer 5, *Compound*).
@@ -107,6 +141,14 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 | [Atlassian Rovo MCP Server][atlassian-mcp] | First-party evidence of the 2026 MCP-access layer over a human-authored goal model |
 | [Linear MCP docs][linear-mcp] | Remote MCP server for issues, projects, comments; read-write default (checked 2026-11-18) |
 | [Startup CTO Handbook → qte77 mapping][cto-map] | Traditional human-OKR baseline mapped onto `goals.json` |
+| [Moore, Core and Context (Stanford)][moore-talk] | Talk page (dated 2005-04-06): one-line description of the core/context framework applied to inertia (video not watched; checked 2026-11-23) |
+| `linkedin.com/pulse/core-context-future-work-geoffrey-moore` | Moore, "Core, Context and the Future of Work" (2021-08-06): his own core/context 2×2 incl. "enabling core" (not link-checked) |
+| [PDMA review of Dealing with Darwin][moore-pdma] | Book review: outsourcing as an exhaust vent after centralize/standardize/modularize/optimize |
+| [Moore, Dealing with Darwin slides][moore-slides] | Uploader's slide deck (secondary, slide text only): core/context quadrants, five levers (checked 2026-11-23) |
+| [Moore, Zone to Win][moore-ztw] | Author's book page: four zones of enterprise work (checked 2026-11-23) |
+| [Traveso, core vs context in the age of AI][moore-ai] | Single-author Medium essay (2025-05-22): agent layer on Moore's model; opinion |
+| [Learn Wardley Mapping][wardley] | Wardley map components and the four evolution stages |
+| [HBR, Know Your Customers' "Jobs to Be Done"][jtbd] | Christensen et al., 2016: jobs-to-be-done framing |
 
 [qte77]: https://github.com/qte77/qte77
 [liminal]: https://github.com/qte77/liminal-flux-gh-acc
@@ -127,3 +169,10 @@ Goal attribution is the top of a substrate stack this corpus tracks end-to-end: 
 [enterprise-os]: ../non-cc/frameworks/agentic-enterprise-os-landscape.md
 [frameworks]: ../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md
 [semantic]: ../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md
+[moore-talk]: https://stvp.stanford.edu/av/core-and-context
+[moore-slides]: https://www.slideserve.com/ellema/dealing-with-darwin-by-geoffrey-moore
+[moore-ztw]: https://geoffreyamoore.com/book/zone-to-win/
+[moore-ai]: https://medium.com/@ivantraveso/redrawing-the-business-core-vs-context-line-in-the-age-of-ai-an-updated-model-d56ed3f165b8
+[wardley]: https://learnwardleymapping.com/introduction/
+[jtbd]: https://hbr.org/2016/09/know-your-customers-jobs-to-be-done
+[moore-pdma]: https://pdma.org/page/review_dealing_w_dar

@@ -3,7 +3,7 @@ title: Claude Code Skills Adoption - Implementation Summary
 purpose: Implementation summary of adopting Claude Code Skills for modular agent capabilities, including format analysis and ecosystem context.
 status: adopt
 created: 2026-01-11
-updated: 2026-11-09
+updated: 2026-11-23
 validated_links: 2026-10-23
 ---
 
@@ -300,6 +300,12 @@ rankings transfer weakly across models. Their conclusion: treat a skill as
 hypothesis-specific to one model/project pairing, not as a universally reusable
 asset, and audit per deployment.
 
+### What Belongs in a Skill: Information, Not Instructions
+
+A practitioner rule of thumb ([ai-that-works ep. #68, 2026-08-04][aiw-skills]; practitioner talk, single-source, hosts build BAML and HumanLayer): a skill earns its place by carrying **information the model cannot know** (a repo's type-system quirks, which monorepo folder matters, that the main branch is named something unusual), not **instructions for things it already does** (run the tests, use the GitHub CLI). The stated reason is that instructional skills rot as models improve and can pull a capable model away from its good defaults. The hosts' corollary: when a new model ships, delete skills and agent-instruction files by default and make the team justify each keeper. A follow-up episode ([ep. #77, 2026-10-06][aiw-memory-skills]) added that content already in the weights is not worth a skill, and that the best fix for agents missing repo context can be one pointer line in the root file.
+
+This is the same filter Anthropic's own [skill authoring guide][skills-best-practices] applies ("only add context Claude doesn't already have"), and it fits the measured downsides of skill injection above ([WebDev-Skills-Bench][webdev-skills-bench-paper]). Two papers covered in [CC-memory-system-analysis.md](../context-memory/CC-memory-system-analysis.md#claudemd-growth-and-catastrophic-remembering-arxiv-260811095) point the same way without measuring this rule: [arXiv 2608.11095][claude-md-growth] traces unbounded instruction-file growth to imperfect recall, and [arXiv 2607.27250][khatri-context-ablation] found that context files did not measurably change task correctness. What the talk adds is the test to apply: for each line, ask whether the model could not know it, or only needs to be told. The "delete on every model release" cadence is the hosts' opinion, not a measured result.
+
 ## Ecosystem Context
 
 The Agent Skills standard has achieved broad cross-industry adoption:
@@ -402,6 +408,17 @@ Scored 2026-10-02 (plan 0010, R1) on the [agent substrate rubric](../../sdlc-lcm
 
 This is the first scored row in the corpus to reach `yes` on skills·Shared and skills·Distributed, and it is first-party evidence, not a rule-6 calibration.
 
+### Skills and Plugins Synced from claude.ai in Claude Code
+
+Checked 2026-11-23 against the [skills page][cc-skills] (synced-skills section), the [settings page][cc-settings] and the [Claude Code changelog][cc-changelog]. This extends the provisioning flow above, which covers only the organization side; sync itself is not limited to Team and Enterprise.
+
+- **Sync (changelog v2.1.275).** Terminal sessions signed in with a claude.ai account download the skills and plugins enabled on that account. Opt out with `syncClaudeAiSkills: false` and `syncClaudeAiPlugins: false`. The settings page honours a `false` from managed, `--settings`, user or local settings even where a managed source says `true`; a `false` in the shared project file is ignored. The skills page documents that sync does not run with API-key or token auth, on Amazon Bedrock, in bare mode or with `--safe-mode`.
+- **One-way, and where files go.** The skills page documents that Claude Code only downloads: edits to a synced skill are not saved to the account and can be overwritten; turn a skill off on claude.ai to disable it. Setting `syncClaudeAiSkills` to `false` moves already-synced skills to a `.trash/` folder at the next start.
+- **Cadence.** The skills page documents background downloads at session start that never delay startup, a check about every 10 minutes while a session is in use and about every 40 minutes while idle. The idle interval is changelog v2.1.293 (previously 10 minutes). Changes made on claude.ai apply to a running session without a restart. The page cites v2.1.273 for terminal sessions; the changelog lists the sync feature under v2.1.275, so the version is not settled between the two sources.
+- **Non-interactive runs.** `CLAUDE_CODE_SYNC_SKILLS=1` makes a non-interactive run download the list and wait for it before answering (skills page). Changelog v2.1.311: with that variable set and feature-flag fetching off, a session reuses a skills list up to 10 minutes old that another session on the machine fetched.
+- **Namespaces.** Synced skills carry the name `anthropic-skills:<name>`, and the short name works when nothing else uses it (changelog v2.1.281 shows the short name in the `/` menu, `/skills`, `/context` and the `/plugin` Installed list). The skills page documents `anthropic-skills` as reserved: a local skill or command with a name in it does not load (changelog v2.1.282 adds workflow commands). Changelog v2.1.282 reserved both `anthropic-skills` and `claude-ai`; v2.1.283 **reverted the `claude-ai` reservation**, so only `anthropic-skills` stays reserved as of the changelog copy read 2026-11-23 (CLI v2.1.330).
+- **What the list shows per skill.** The skills page documents a **claude.ai sync** group in `/skills`, and `/skill-doctor` for what each skill costs in context and how often it is used (changelog: added to show unused skills and their context cost). Changelog v2.1.280 added each skill's source, token estimate and on/off state to the VS Code slash-commands dialog. Owner observation, CLI v2.1.330, one screen, possibly partial: the terminal list showed a source tag (for example `claude.ai`, `claude.ai sync`), an on/off marker, an approximate token cost and a usage line. Examples only: `google-workspace` as claude.ai sync, about 247 tokens, never used; `pdf` about 115 tokens, used once 33 days ago; `docx`, `computer-use` and `chrome-browser` shown as off. The skills page does not document these columns, so treat the exact layout as observed, not specified.
+
 ## Settings Configuration
 
 Update `.claude/settings.json` to adopt Skills:
@@ -413,6 +430,8 @@ Update `.claude/settings.json` to adopt Skills:
 
 [agentskills-spec]: https://agentskills.io/specification
 [cc-skills]: https://code.claude.com/docs/en/skills
+[cc-settings]: https://code.claude.com/docs/en/settings
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [agents-md-cookbook]: ../../non-cc/protocols/agents-md-cookbook-analysis.md
 [skills-overview]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
 [skills-best-practices]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
@@ -435,3 +454,7 @@ Update `.claude/settings.json` to adopt Skills:
 [webdev-skills-bench-paper]: https://arxiv.org/abs/2608.23067
 [repo-to-skill-paper]: https://arxiv.org/abs/2609.02749
 [repo-to-skill-repo]: https://github.com/VectorSpaceLab/AREX-Skill
+[aiw-skills]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-04-slop-code-bench
+[aiw-memory-skills]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-10-06-building-a-memory-pipeline
+[claude-md-growth]: https://arxiv.org/abs/2608.11095
+[khatri-context-ablation]: https://arxiv.org/abs/2607.27250

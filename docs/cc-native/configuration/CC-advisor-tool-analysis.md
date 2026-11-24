@@ -2,7 +2,7 @@
 title: CC Advisor Tool Analysis
 purpose: First-party analysis of Anthropic's advisor tool — a server-executed API beta that lets an executor model consult a stronger advisor model mid-request — and its Claude Code /advisor surface.
 created: 2026-10-26
-updated: 2026-11-08
+updated: 2026-11-23
 validated_links: 2026-11-08
 status: assess
 ---
@@ -40,7 +40,9 @@ There is no conversation-level cap built into the tool: "the advisor tool has no
 
 ### Pairing summary
 
-"The advisor must be Claude Sonnet 4.6 or a more capable model, and it must be at least as capable as the executor" — models of equal capability (e.g. Opus 4.7 and Opus 4.8) can advise each other. An invalid pair returns `400 invalid_request_error` naming the unsupported combination ([advisor-tool-api]). The published compatibility table has 12 executor entries covering 14 models (Fable 5.1/Mythos 5.1 and Fable 5/Mythos 5 share entries). The floor is capability, not model family: Claude Haiku 5.5 is an accepted advisor for Haiku 5.5, Sonnet 5, Opus 4.6, Sonnet 4.6 and Haiku 4.5 executors, while Claude Haiku 4.5 appears only as an executor (table read 2026-11-08). Seven newer executors (Sonnet 5.5, Fable 5.1, Mythos 5.1, Opus 5.5, Opus 5, Fable 5, Mythos 5) "pair only with advisors that return the encrypted form, so on those executors the advice text isn't readable in the response" — their accepted advisors return `advisor_redacted_result` (`encrypted_content`) rather than the plaintext `advisor_result` (`text`) that e.g. `claude-opus-4-8` returns. Eight advisors (those seven plus Haiku 5.5) return the encrypted form; every other advisor model returns plaintext.
+"The advisor must be Claude Sonnet 4.6 or a more capable model, and it must be at least as capable as the executor" — models of equal capability (e.g. Opus 4.7 and Opus 4.8) can advise each other. An invalid pair returns `400 invalid_request_error` naming the unsupported combination ([advisor-tool-api]). The published compatibility table has 12 executor entries covering 14 models (Fable 5.1/Mythos 5.1 and Fable 5/Mythos 5 share entries). The floor is capability, not model family: Claude Haiku 5.5 is an accepted advisor for Haiku 5.5, Sonnet 5, Opus 4.6, Sonnet 4.6 and Haiku 4.5 executors, while Claude Haiku 4.5 appears only as an executor (table read 2026-11-08). Seven newer executors as of the 2026-11-08 read (Sonnet 5.5, Fable 5.1, Mythos 5.1, Opus 5.5, Opus 5, Fable 5, Mythos 5) "pair only with advisors that return the encrypted form, so on those executors the advice text isn't readable in the response" — their accepted advisors return `advisor_redacted_result` (`encrypted_content`) rather than the plaintext `advisor_result` (`text`) that e.g. `claude-opus-4-8` returns. Eight advisors (those seven plus Haiku 5.5) returned the encrypted form then; by 2026-11-23 the page lists ten, adding Fable 5.2 and Mythos 5.2, and Fable 5.2 and Mythos 5.2 executors are added to the encrypted-only group. Every other advisor model returns plaintext.
+
+**Fable 5.2 / Mythos 5.2 executors (re-read 2026-11-23).** The [Fable 5.2 migration guide][fable52-migration] and the current compatibility table add a stricter rule: a Fable 5.2 or Mythos 5.2 executor accepts only Fable 5.2 or Mythos 5.2 as its advisor, and any other advisor, Fable 5.1 and Mythos 5.1 included, returns `400 invalid_request_error`. Moving an executor to Fable 5.2 therefore means changing the model in the advisor tool definition in the same change. That is an edit to `tools`, so make it in new conversations: a request that sends earlier thinking blocks back after the change fails the [prefix check](CC-models-reference.md#claude-5x-lifecycle-defaults-and-fable-52-breaking-changes) unless `prefix_mismatch_behavior` is `"drop_block"`. In the other direction, Fable 5.2 is an accepted advisor for every executor entry in the table, so keeping the executor and upgrading only the advisor to `claude-fable-5-2` is the low-friction path. A Fable 5.2 advisor returns its advice encrypted. Managed Agents advisors follow the same pairing rule. As of the 2026-11-23 read, the compatibility table has 13 executor entries (a Fable 5.2 and Mythos 5.2 entry was added), covering 16 models. The announcement also describes Fable 5.2 as able to act as Advisor or Orchestrator ([announcement][fable52-intro]).
 
 ### Errors
 
@@ -99,6 +101,7 @@ These don't conflict. Claude Platform on AWS supports the tool at the API level,
 | Source | Content |
 |---|---|
 | [Advisor tool — Claude API docs][advisor-tool-api] | Tool schema, pairing table, billing/usage accounting, streaming, caching, platform availability (accessed 2026-10-26) |
+| [Fable 5.2 migration guide][fable52-migration] and [announcement][fable52-intro] | Fable 5.2 / Mythos 5.2 executor-advisor pairing rule, encrypted advice, Advisor/Orchestrator role (read 2026-11-23); the advisor page's compatibility table and result-variants section re-read the same day |
 | [Claude Code on Claude Platform on AWS][cc-cpoaws] | Advisor unavailable in Claude Code on that provider; feature-flag features off by default (accessed 2026-11-08) |
 | [Escalate hard decisions with the advisor tool — Claude Code docs][advisor-cc] | `/advisor` command, `advisorModel` setting, `--advisor` flag, version gates, disable env var, cache interaction (accessed 2026-10-26) |
 
@@ -106,4 +109,6 @@ Cross-ref: [CC-tools-inventory.md](CC-tools-inventory.md), [CC-cli-reference.md]
 
 [advisor-tool-api]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool
 [advisor-cc]: https://code.claude.com/docs/en/advisor
+[fable52-migration]: https://platform.claude.com/docs/en/models/fable-5-2/migration-guide
+[fable52-intro]: https://www.anthropic.com/claude-fable-and-mythos-5-2
 [cc-cpoaws]: https://code.claude.com/docs/en/claude-platform-on-aws

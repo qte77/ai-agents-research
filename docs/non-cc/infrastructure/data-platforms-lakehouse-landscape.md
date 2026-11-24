@@ -1,6 +1,6 @@
 ---
 title: Data Platforms and Lakehouses for Agents — Table Formats, Branching, Warehouse-Native Agents, Scratch Engines, Cost Controls
-purpose: What the data-lake and lakehouse layer offers an agent — open table formats and their snapshot/branch features, catalogs, warehouse-native agents from four vendors, local analytical engines as scratch space, and the documented cost and permission controls. Landscape as of 2026-11-18, with rows re-read 2026-11-21 dated.
+purpose: "What the data-lake and lakehouse layer offers an agent: open table formats, catalogs, warehouse-native agents, local analytical engines, and cost and permission controls. As of 2026-11-18."
 created: 2026-11-18
 updated: 2026-11-21
 validated_links: 2026-11-18

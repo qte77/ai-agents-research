@@ -1,8 +1,8 @@
 ---
 title: System-1 Decision Models Landscape
-purpose: Survey open-weight, research, independent, and major-vendor alternatives to TypeSafe's Jev — fast, typed-output classifiers (choice/score/noul answers, calibrated probabilities, one forward pass, no free text) used for agent routing, guardrails, and verification — scored against the agent substrate rubric where the model's deployment path makes that possible.
+purpose: "Survey of alternatives to TypeSafe's Jev: fast, typed-output classifiers (one forward pass, no free text) for agent routing, guardrails and verification, scored against the agent substrate rubric."
 created: 2026-09-30
-updated: 2026-11-22
+updated: 2026-11-23
 validated_links: 2026-11-11
 status: assess
 ---
@@ -929,6 +929,18 @@ served it on SageMaker. These figures are the vendor's own and were not reproduc
 (Correction 2026-11-11: an earlier version of this entry called the Sonnet claim unsourced after
 checking only the launch blog and README; the source is this later post.)
 
+**Rollout pattern (documented in the same post, re-read 2026-11-23)**: the labelling function reads a
+three-way setting from AWS AppConfig on every message. In one mode the large model labels every ticket
+and the decision model is not called; in a second ("DUAL") both run in parallel, the large model's
+answer is applied to the ticket and compared with the decision model's; in the third the decision
+model labels everything and the large model is not called. The post reports its measured per-ticket
+figures from that setup (about 6,724 vs 2,010 total tokens, about 4,215 vs 897 ms, and about $22,200
+vs about $500 per million tickets at on-demand prices), all self-reported. Design lens — Lindenberg's
+*Amazon's 44x Saving, Taken Apart* reads this as a transferable how-to: run the decision model
+beside the LLM behind a config switch, review the disagreements for a period, then set the confidence
+threshold, rather than flipping over blind (LinkedIn, 2026-11-14; practitioner reading of the post, single
+source for the framing; the newsletter's rollback timing is not in the post as read and is omitted).
+
 No rubric row: under this corpus's gap-driven scoring policy, a new row is added only when it could
 change an open cell in the rubric's evidence census; this entry doesn't, so none is added here.
 
@@ -1741,6 +1753,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Artificial Analysis — Decision Index methodology][aa-decision-index-methodology] | Eval weights and dataset filtering detail, non-hallucination-rate formula, versioning ("Version 1.0... October 2026 to current"); fetched via WebFetch 2026-10-15 |
 | [Artificial Analysis — Decision Index live leaderboard][aa-decision-index-leaderboard] | Full per-model scores, cost-per-task, latency, extracted directly from the page's own embedded JSON (`contestants` array and `defaultSlugs` field — the latter is this corpus's source for which 11 of the 13 decision models AA treats as its own "default" view); fetched via polyfetch **twice** 2026-10-15 (morning: 11 decision models; afternoon, after an external fact-check: 13 — Jev 1.14 and Liquid AI's new d1-ultra had been added live, and Mercury Decide's own measured cost had changed, in between) |
 | [Strands Decider launch blog][strands-decider-blog] | Launch date (2026-10-01), 2B/Qwen3.5-2B-Base/LoRA architecture, Strands Labs framing, no Claude/Sonnet mention; fetched via WebFetch 2026-11-11 |
+| André Lindenberg — *Amazon's 44x Saving, Taken Apart* (LinkedIn, 2026-11-14; `linkedin.com/pulse/amazons-44x-saving-taken-apart-andré-lindenberg-yy9mf`) | Design lens: dual-run rollout reading of the Strands blog; framing is practitioner single-source (LinkedIn — not link-checked) |
 | [Strands blog — replacing Sonnet 4.6 with Strands Decider][strands-decider-sonnet-blog] | 2026-11-09 Amazon ticket-labelling case: Sonnet 4.6 replaced, "98% less cost", Gemma 4 E4B build, threshold tuning, SageMaker serving (self-reported); read from the post's source in `strands-agents/harness-sdk` 2026-11-11 |
 | [strands-labs/strands-decider][strands-decider-gh] | README (CLI, `/v1/systemone` server, vision), `LICENSE` (Apache-2.0), `evaluation/results.md` (JevBench 180/231, Brier/ECE, soup methodology); fetched via `gh api`, 2026-11-11 |
 | [Hugging Face API — strands-decider-2B-qwen3.5-v1-2610][strands-decider-hf] | `license: apache-2.0`, `peft`/`lora` tags, `base_model:adapter:Qwen/Qwen3.5-2B-Base`, storage size (~234 MB); fetched via WebFetch 2026-11-11 |

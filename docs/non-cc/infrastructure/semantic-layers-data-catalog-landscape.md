@@ -1,9 +1,9 @@
 ---
 title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://cube.dev/docs/product/apis-integrations/mcp-server
-purpose: The semantic-layer (consistent metrics) and data-catalog (discovery, lineage, governance) substrate that grounds agentic data access — what each tool exposes to an agent (MCP / SDK / NL query), and how it relates to the agent-native context layers (Databricks Genie Ontology, Open Knowledge Format). Reference catalog verified 2026-06-22.
+purpose: "The semantic-layer and data-catalog substrate that grounds agentic data access: what each tool exposes to an agent and how it relates to agent-native context layers. Verified 2026-06-22."
 created: 2026-06-22
-updated: 2026-11-22
+updated: 2026-11-24
 validated_links: 2026-11-19
 status: assess
 ---
@@ -64,6 +64,7 @@ Discovery, lineage, ownership, and permissions across the data estate.
 Before LLM-embedded knowledge graphs, the W3C Semantic Web stack formalized machine-readable meaning. These standards predate agents but increasingly **connect to, are excluded by, or enhance** the LLM-native layers below:
 
 - **[RDF][rdf]**, **[OWL][owl]**, **[SKOS][skos]**: the triple data model (each statement is a subject, a predicate and an object: [RDF 1.1 Concepts § Triples][rdf-triples]), the ontology language and the thesaurus vocabulary; see [Choosing a Structure](#choosing-a-structure) and, for RDF 1.1 vs 1.2 status, [Property Graph vs RDF](graph-databases-query-languages-landscape.md#property-graph-vs-rdf).
+- **[RDFS][rdfs]** (RDF Schema 1.1, W3C Recommendation, 2014-02-25): "a data-modelling vocabulary for RDF data" that extends the basic RDF vocabulary. It declares classes and their hierarchy (`rdfs:Class`, `rdfs:subClassOf`) and which classes a property links (`rdfs:domain`, `rdfs:range`); the spec leaves richer modelling to "ontology" languages such as OWL.
 - **[SPARQL][sparql]** — the query language for RDF graphs (the "SQL of the Semantic Web"); an MCP-wrappable agent surface alongside the catalogs above. Comparison with Cypher, GQL and Gremlin: [graph-databases doc](graph-databases-query-languages-landscape.md#query-languages).
 - **[JSON-LD][json-ld]** — "a JSON-based format to serialize Linked Data" (JSON-LD 1.1, W3C Recommendation 2020-07-16). It is "designed to be usable directly as JSON, with no knowledge of RDF", and also "usable as RDF" with tools like SPARQL. For agents it is the form they meet most: [schema.org][schema-org-gs] markup can be written in Microdata, RDFa or JSON-LD, and Google Search recommends JSON-LD "in most cases", embedded in a `<script>` tag of the page ([Google structured data][google-sd]). Whether such markup helps AI answers is disputed; see [ai-crawlers-discoverability-landscape.md](ai-crawlers-discoverability-landscape.md). [YAML-LD][yaml-ld] (a W3C Working Draft, 2026-10-24) "applies JSON-LD's data model and processing model to YAML".
 
@@ -159,6 +160,8 @@ Not rubric-scored: it is Ontology-subject and could not move the reference archi
 
 **Semantica's decision-graph audit trail** is a candidate for this same "ontology as MCP surface" pattern; its full profile (decision-as-graph-node, PROV-O lineage, bi-temporal facts, point-in-time snapshots) lives elsewhere in this corpus and is not restated here: [agent-frameworks-infrastructure-landscape.md § Agent-native graph & hybrid RAG platforms][semantica-frameworks] (RAG = Retrieval-Augmented Generation). Two facts add to that profile. Timing matters here: [EU AI Act Article 12][ai-act-12] requires high-risk systems to "technically allow for the automatic recording of events (logs) over the lifetime of the system," and the currently amended Act sets that deadline at 2027-12-02 for Annex III systems (2028-08-02 for Annex I) — later than the original date Lindenberg's issue cites, which this entry could not independently re-verify against a primary pre-amendment source. Semantica's own [CHANGELOG][semantica-changelog] is harder evidence than the audit-trail pitch itself: v0.6.7 (2026-08-28) fixed `get_causal_chain()` silently returning an empty chain whenever a causal edge used the analyzer's present-tense vocabulary (`causes`/`influences`/`precedes`) rather than the canonical uppercase form — "silent, and in the dangerous direction for a compliance trace," in the project's own words — fixed a `SHACLGenerator` that produced shapes matching no data so `pySHACL` reported `conforms: True` on plainly violating input, and fixed every RDF export path except JSON-LD silently dropping an entity's source document, page, extractor and reviewer.
 
+Design lens — Lindenberg's *The Join Nobody Approved* argues that a wrong join is valid SQL that runs and returns believable numbers, so a join check is only as good as the keys behind it (LinkedIn, 2026-11-01; practitioner framing, single source). His proposed order is measure, declare, then gate: for each inferred or drafted link, count how many child rows find a parent (a left join with `count(*)` against `count()` of the parent id) and confirm the parent key is unique (`count(*) = count(DISTINCT id)`), because a low match rate means the link is wrong and a non-unique parent makes sums inflate; where a key holds, declare it in PostgreSQL as a foreign key added `NOT VALID` and then validated, so the database proves it once. The `NOT VALID` / `VALIDATE CONSTRAINT` mechanism is documented in the [PostgreSQL `ALTER TABLE` reference][pg-altertable] (read 2026-11-23); the two queries are plain SQL, and the match-rate and uniqueness framing is his. He ties this to [NVIDIA Auto Ontology](#agent-native-ontology-tools-2026-mcp-wave), which takes a declared foreign key directly and otherwise infers edges; his claims about its join-path check being off by default were not verified against the repo here and are omitted.
+
 Design lens — Lindenberg's *Audit the Auditor* treats a CHANGELOG, not a README pitch, as the real evidence a decision-audit-trail tool is used in earnest: "an audit trail does not fail by crashing; it fails by giving a reassuring answer" (Lindenberg, *Audit the Auditor*, LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`).
 
 ## The Agent-Native Layer
@@ -204,7 +207,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Unity Catalog OSS][unity-catalog] | LF open catalog + `unitycatalog-ai` SDK |
 | [Apache Atlas][atlas] | Hadoop-era governance framework |
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
-| [RDF][rdf] · [OWL][owl] · [OWL 2 Primer][owl-primer] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
+| [RDF][rdf] · [RDFS][rdfs] · [OWL][owl] · [OWL 2 Primer][owl-primer] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
 | [WHATWG HTML link types][html-rel] | `rel` link types (typed hyperlinks), read 2026-11-21 |
 | [Neo4j graph concepts][neo4j-pg] | Property-graph model (vendor docs), read 2026-11-21 |
 | [schema.org getting started][schema-org-gs] · [Google structured data intro][google-sd] | schema.org syntaxes (Microdata, RDFa, JSON-LD); Google's JSON-LD recommendation and `<script>` embedding (read 2026-11-09) |
@@ -220,10 +223,13 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Semantica CHANGELOG][semantica-changelog] | v0.6.7 (2026-08-28) fixes verified against the changelog text: empty causal chain, SHACL false-conforms, dropped RDF provenance metadata |
 | [EU AI Act Article 12 explainer][ai-act-12] | Record-keeping requirement text and the amended Annex III deadline (2027-12-02) |
 | André Lindenberg — *The Change of Mind Is Information* (LinkedIn, 2026-09-05; `linkedin.com/pulse/change-mind-information-andré-lindenberg-uvcue`) | Design lens: bitemporal correction as the cheap starting point for an agent-facing ontology (LinkedIn — not link-checked) |
+| [PostgreSQL ALTER TABLE][pg-altertable] | `ADD table_constraint [ NOT VALID ]` and `VALIDATE CONSTRAINT` syntax (read 2026-11-23) |
+| André Lindenberg — *The Join Nobody Approved* (LinkedIn, 2026-11-01; `linkedin.com/pulse/join-nobody-approved-andré-lindenberg-9mylf`) | Design lens: measure join keys, declare, then gate; framing practitioner single-source (LinkedIn — not link-checked) |
 | André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
 | [NVIDIA Auto Ontology README][auto-ontology] | Generate/certify/answer stages, Postgres + pgvector store, read-only MCP server, NIM default, KumoRFM route, ingestion-auth caution; Apache-2.0 LICENSE, `pyproject.toml` 1.2.0; `gh api` 2026-11-09 |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
 
+[pg-altertable]: https://www.postgresql.org/docs/current/sql-altertable.html
 [cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
 [malloy]: https://github.com/malloydata/malloy
@@ -235,6 +241,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [atscale]: https://www.atscale.com
 [dataplex]: https://cloud.google.com/dataplex
 [rdf]: https://www.w3.org/TR/rdf11-concepts/
+[rdfs]: https://www.w3.org/TR/rdf-schema/
 [owl]: https://www.w3.org/TR/owl2-overview/
 [owl-primer]: https://www.w3.org/TR/owl2-primer/
 [skos]: https://www.w3.org/TR/skos-reference/

@@ -1,6 +1,6 @@
 ---
 title: Learnings Hub
-description: Cross-repo pattern aggregation and per-repo knowledge distillations from live development across the qte77 ecosystem.
+purpose: Cross-repo pattern aggregation and per-repo knowledge distillations from live development across the qte77 ecosystem.
 created: 2026-03-27
 updated: 2026-03-27
 ---
