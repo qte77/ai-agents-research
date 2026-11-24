@@ -33,8 +33,7 @@ belongs to `qte77/coding-harness-eval#74` (owner 2026-11-22), not this plan.
 
 **Rules of thumb kept from earlier sessions:** topic lanes and pruning sweeps run from the
 `adding-research-source` skill's enrich-a-topic mode (W1) and its `references/` briefs; module
-changes follow strict TDD (failing test first). Not pursued: passing `status` into `site_graph` (no
-status filter on the page; add a row if one is requested).
+changes follow strict TDD (failing test first). `site_graph` carries status, doc type and platforms since N32 (2026-11-24); the page has no filter for them yet.
 
 **The loop** (same as plan 0014): one branch per row; doc-heavy rows (F3, X2 backfill) run as worktree
 lanes, at most three at once, per bucket so they don't share files; two falsification passes for any

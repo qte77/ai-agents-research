@@ -31,6 +31,9 @@ _SUBDIR_SECTIONS = ("cc-native", "non-cc")
 _HUB_BUCKET = "_topics"
 _HUB_INDEX = "docs/_topics/README.md"
 _ARCHIVE = "docs/archive/"
+_DOC_TYPES = ("analysis", "landscape", "reference", "spec", "runbook")
+_PLATFORMS = re.compile(r"^platform_scope:\s*\[(.*)\]\s*$", re.MULTILINE)
+_CC_BUCKETS = ("cc-native", "cc-community")
 
 
 def bucket_of(path: str) -> str:
@@ -56,6 +59,22 @@ def doc_title(text: str, path: str) -> str:
         return m.group(1).strip().strip("\"'")
     m = _H1.search(text)
     return m.group(1) if m else posixpath.splitext(posixpath.basename(path))[0]
+
+
+def doc_type(path: str) -> str:
+    """Doc type from the filename suffix (``-analysis``, ``-landscape``, ...), else ``other``."""
+    stem = posixpath.splitext(posixpath.basename(path))[0]
+    suffix = stem.rsplit("-", 1)[-1] if "-" in stem else ""
+    return suffix if suffix in _DOC_TYPES else "other"
+
+
+def doc_platforms(text: str, path: str) -> list[str]:
+    """``platform_scope`` slugs; Claude Code docs without one get ``claude-code`` from their folder."""
+    fm = extract_frontmatter(text)
+    m = _PLATFORMS.search(fm) if fm else None
+    if m:
+        return [v.strip() for v in m.group(1).split(",") if v.strip()]
+    return ["claude-code"] if bucket_of(path).split("/")[0] in _CC_BUCKETS else []
 
 
 def extract_links(text: str) -> list[tuple[str, int]]:
@@ -86,8 +105,9 @@ def resolve(source: str, target: str) -> tuple[str, str | None] | None:
 
 
 def _doc_node(path: str, text: str) -> dict:
-    return {"id": path, "type": "doc", "bucket": bucket_of(path),
-            "status": doc_status(text), "title": doc_title(text, path)}
+    return {"id": path, "type": "doc", "bucket": bucket_of(path), "status": doc_status(text),
+            "title": doc_title(text, path), "doc_type": doc_type(path),
+            "platforms": doc_platforms(text, path)}
 
 
 def _add_link(edges: dict, docs: dict, source: str, target: str, line: int) -> None:
@@ -121,7 +141,8 @@ def build_graph(docs: dict[str, str]) -> dict:
 
 
 def site_graph(graph: dict, filing: dict[str, str] | None = None) -> dict:
-    """Slim projection for the Pages site: each doc's title, bucket and hubs, one edge per linked pair.
+    """Slim projection for the Pages site: each doc's title, bucket, hubs and facets (status,
+    doc type, platforms), one edge per linked pair.
 
     A doc's hubs are the topic hubs (``_topics/*`` except the hub index) with a row
     linking to it, counted once even when several rows point at its sections.
@@ -138,7 +159,8 @@ def site_graph(graph: dict, filing: dict[str, str] | None = None) -> dict:
             hubs.setdefault(e["target"], set()).add(e["source"])
         pairs.add(tuple(sorted((e["source"], e["target"]))))
     nodes = [{"id": n["id"], "title": n["title"], "bucket": n["bucket"],
-              "hubs": sorted(hubs.get(n["id"], ()))} for n in graph["nodes"]]
+              "hubs": sorted(hubs.get(n["id"], ())), "status": n["status"],
+              "doc_type": n["doc_type"], "platforms": n["platforms"]} for n in graph["nodes"]]
     for n in nodes if filing else ():
         n["filing"] = filing[n["id"]]
     return {"nodes": nodes, "edges": [list(p) for p in sorted(pairs)]}
