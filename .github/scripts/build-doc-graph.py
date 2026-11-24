@@ -26,9 +26,15 @@ from lib.doc_graph import build_graph, load_corpus, parse_git_log, site_graph, t
 
 def git_dates(root: Path) -> dict[str, tuple[str, str]]:
     """First and last commit date per doc from one ``git log`` pass; empty when git or history is missing."""
-    cmd = ["git", "-C", str(root), "-c", "core.quotepath=off", "log", "--format=%cs", "--name-only",
-           "--", "docs"]
+    # Reason: --relative keeps paths relative to --root, which is how node ids are written.
+    cmd = ["git", "-C", str(root), "-c", "core.quotepath=off", "log", "--relative", "--format=%cs",
+           "--name-only", "--", "docs"]
+    shallow = ["git", "-C", str(root), "rev-parse", "--is-shallow-repository"]
     try:
+        # Reason: a shallow clone reports the tip commit's date for every file, which would be wrong.
+        if subprocess.run(shallow, capture_output=True, text=True, check=True).stdout.strip() == "true":  # noqa: S603
+            print("WARNING: shallow clone; docs without frontmatter dates stay undated", file=sys.stderr)
+            return {}
         done = subprocess.run(cmd, capture_output=True, text=True, check=True)  # noqa: S603
     except (OSError, subprocess.CalledProcessError) as err:
         print(f"WARNING: no git dates ({err}); docs without frontmatter dates stay undated",
