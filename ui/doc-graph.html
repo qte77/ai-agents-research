@@ -85,7 +85,7 @@
       <p>Dots are docs, diamonds are topic hubs, the star is the hub index, lines are links between them. Click a node for its details
         and a link to GitHub. Built from the docs on every deploy, without an LLM.</p>
       <label for="colour-by">Colour by
-        <select id="colour-by"><option value="folder">folder</option><option value="topic">topic hub</option></select>
+        <select id="colour-by"><option value="topic">topic hub</option><option value="folder">folder</option></select>
       </label>
       <p class="legend" id="legend"></p>
       <p id="stats"></p>
@@ -164,7 +164,7 @@
           if (h > 170 && h < 270) { h += 100; } // skip cyan to blue-violet
           topicColour[id] = "hsl(" + Math.round(h % 360) + ", 55%, " + (dark ? 62 : 42) + "%)";
         });
-        var mode = "folder";
+        var mode = "folder"; // switched to "topic" once the filters exist (end of render)
         function docColour(n) {
           if (mode === "topic") {
             var first = n.hubs.filter(function (h) { return checked[h]; })[0]; // first CHECKED hub
@@ -189,14 +189,24 @@
                    shape: hub ? "diamond" : "dot", size: hub ? 14 : 8,
                    label: hub ? hubLabel(n) : "" };
         }));
-        // Only hub edges (a hub or the hub index at one end) pull on the layout, with a short spring, so
-        // docs gather around their hubs; doc-to-doc links are drawn but exert no spring force.
-        var hubSet = {};
-        data.nodes.forEach(function (n) { if (isHub(n) || n.id === HUB_INDEX) { hubSet[n.id] = true; } });
+        // Layout springs run only from a doc to its primary hub (its first checked hub, as in the colour
+        // mode); every other link, including the hub index's, is drawn but exerts no force, so each hub
+        // gathers its own docs and the hubs push apart. See syncSprings.
+        var byNode = {};
+        data.nodes.forEach(function (n) { byNode[n.id] = n; });
+        var springEdge = {}; // edge id -> {hub, doc} for hub-to-doc links
         var edges = new vis.DataSet(data.edges.map(function (e, i) {
-          var hubEdge = hubSet[e[0]] || hubSet[e[1]];
-          return { id: i, from: e[0], to: e[1], length: hubEdge ? 40 : undefined, physics: !!hubEdge };
+          var a = byNode[e[0]], b = byNode[e[1]];
+          if (isHub(a) && !isHub(b) && b.bucket !== "_topics") { springEdge[i] = { hub: a.id, doc: b }; }
+          if (isHub(b) && !isHub(a) && a.bucket !== "_topics") { springEdge[i] = { hub: b.id, doc: a }; }
+          return { id: i, from: e[0], to: e[1], length: 40, physics: false };
         }));
+        function primaryHub(n) { return n.hubs.filter(function (h) { return checked[h]; })[0]; }
+        function syncSprings() {
+          edges.update(Object.keys(springEdge).map(function (i) {
+            return { id: Number(i), physics: primaryHub(springEdge[i].doc) === springEdge[i].hub };
+          }));
+        }
 
         var legend = document.getElementById("legend");
         function buildLegend() {
@@ -279,6 +289,7 @@
         }
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
+          syncSprings();
           restabilise();
           if (recolour && mode === "topic") { recolour(); } // multi-hub docs follow their first checked hub
           refreshCounts();
@@ -409,7 +420,9 @@
         });
 
         network = new vis.Network(document.getElementById("graph"), { nodes: nodes, edges: edges }, {
-          physics: { solver: "forceAtlas2Based", stabilization: { iterations: 200 } },
+          physics: { solver: "forceAtlas2Based", stabilization: { iterations: 200 },
+                     forceAtlas2Based: { gravitationalConstant: -100, centralGravity: 0.012, springLength: 40,
+                                         springConstant: 0.2, damping: 0.6, avoidOverlap: 0.2 } },
           edges: { color: { color: token("--border"), highlight: token("--primary") }, width: 1, smooth: false },
           nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
           interaction: { hover: true, tooltipDelay: 120 }
@@ -490,6 +503,9 @@
             network.focus(top.id, { scale: 1.2, animation: true });
           }
         });
+
+        mode = "topic"; // colour and layout both follow a doc's primary hub by default
+        recolour();
       }
 
       sel.addEventListener("change", function () {
