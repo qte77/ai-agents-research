@@ -3,7 +3,7 @@ title: Computer-Use Agents Landscape
 source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
 purpose: "Landscape of agents that operate a GUI from screen observations: Claude computer use, other vendors' tools, open models, the OSWorld benchmark family, pixel vs accessibility-tree, and safety."
 created: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-24
 validated_links: 2026-11-19
 status: reference
 ---
@@ -139,6 +139,37 @@ attack success rate of zero on its own evaluation (paper abstract, not reproduce
 pixels buy generality, trees buy precision and a trust signal; hybrid is the likely direction but
 we found no current head-to-head across vendors.
 
+### App bridges instead of screens: Blender and Bonsai (checked 2026-11-24)
+
+A third option skips the screen and the tree: an MCP (Model Context Protocol) server talks to the application's own
+scripting API. [MCP for Blender][blender-mcp] (`ahujasid/mcp-for-blender`, formerly
+`blender-mcp`; MIT, 35,524 stars, last push 2026-11-18, GitHub API 2026-11-24) is the widely used
+example. A Blender add-on opens a local socket and the MCP server sends commands to it; the README
+lists nine tools, led by `execute_blender_code` ("Run Python in your live Blender"), plus scene
+inspection, viewport images and asset import. Its own warnings: the tool runs arbitrary Python, and
+the socket "has no authentication or encryption", so it should stay on `localhost`. It also records
+a minimal anonymous usage event by default; content collection is opt-in (README).
+
+[Bonsai][bonsai-docs] is the add-on for IFC (Industry Foundation Classes, the open building information modelling, or BIM, exchange standard) in Blender, part of
+[IfcOpenShell][ifcopenshell] (repo 2,988 stars; Bonsai's folder is GPL-3.0, the libraries LGPL-3.0;
+latest stable release `bonsai-0.9.0`, 2026-09-29). It documents no AI or MCP feature itself (docs
+landing page, read 2026-11-24). Two small community MCP bridges add IFC tools on top of the Blender
+pattern; both are early, with about 70 stars each:
+
+- [Bonsai_mcp][bonsai-mcp] (MIT, last push 2026-09-06): a fork of the Blender MCP server that keeps
+  its code-execution tool and adds IFC inspection tools (project info, entities, properties, spatial
+  structure, relationships, quantities).
+- [ifc-bonsai-mcp][ifc-bonsai-mcp] (MIT, last push 2026-07-10): claims over 50 tools for IFC
+  analysis and parametric creation, and a local RAG (retrieval-augmented generation) index over the IFC and IfcOpenShell docs
+  (vendor claim, not tested here).
+
+The same app-API route appears in [CLI-Anything][cli-anything] (a generated CLI per app, Blender via
+`bpy`). For evaluation, [IFC-MCQ][ifc-mcq] (arXiv, submitted 2026-10-21) generates multiple-choice
+benchmarks from IFC files and tests two agent set-ups using tool- and code-based retrieval. Our
+reading: an app bridge gives exact, scriptable control without coordinate errors, but its main tool is
+code execution in the user's live session, so the [Safety](#safety) guidance applies at least as
+strongly as for screen agents.
+
 ## Safety
 
 - **Anthropic (documented):** use a dedicated VM or container with minimal privileges, keep
@@ -182,6 +213,10 @@ we found no current head-to-head across vendors.
 | [agent-desktop][agent-desktop] | Accessibility-tree desktop CLI; latest release v1.3.1 published 2026-11-13 (GitHub API, 2026-11-19) |
 | [Cowork enterprise analysis][cowork-ent] | Existing corpus coverage of Cowork |
 | [Let Claude use your computer in Cowork][claude-cowork-cu] | Desktop computer use, permissions, no-sandbox statement |
+| [MCP for Blender][blender-mcp] | Socket add-on, nine tools, code-execution and socket warnings, telemetry defaults (README; GitHub API 2026-11-24) |
+| [Bonsai docs][bonsai-docs] · [IfcOpenShell][ifcopenshell] | Bonsai Studio as the IFC authoring add-on; licences from the `COPYING` files; release `bonsai-0.9.0` (GitHub API 2026-11-24) |
+| [Bonsai_mcp][bonsai-mcp] · [ifc-bonsai-mcp][ifc-bonsai-mcp] | Community IFC MCP bridges (READMEs; GitHub API 2026-11-24) |
+| [IFC-MCQ][ifc-mcq] | Multiple-choice benchmarks generated from IFC files for LLM agents (abstract, read 2026-11-24) |
 | [OpenAI computer use guide][openai-cu] | Loop, safety guidance |
 | [Gemini computer use][gemini-cu] | Actions, safety decisions |
 | [OSWorld paper][osworld-paper], [HTML][osworld-html] | Original benchmark, observation-type results |
@@ -218,3 +253,10 @@ we found no current head-to-head across vendors.
 [claude-desktop]: https://code.claude.com/docs/en/desktop.md
 [cowork-ent]: ../../cc-native/plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md
 [vuln-landscape]: ../../sdlc-lcm/agentic-ai-vulnerability-landscape.md
+[blender-mcp]: https://github.com/ahujasid/mcp-for-blender
+[bonsai-docs]: https://docs.bonsaibim.org/
+[ifcopenshell]: https://github.com/IfcOpenShell/IfcOpenShell
+[bonsai-mcp]: https://github.com/JotaDeRodriguez/Bonsai_mcp
+[ifc-bonsai-mcp]: https://github.com/Show2Instruct/ifc-bonsai-mcp
+[ifc-mcq]: https://arxiv.org/abs/2610.30533
+[cli-anything]: ../../cc-native/agents-skills/CC-cli-anything-analysis.md
