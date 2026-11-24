@@ -2,7 +2,7 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-11-18
+updated: 2026-11-24
 validated_links: 2026-11-18
 status: adopt
 ---
@@ -146,6 +146,7 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/schedule` | Manage scheduled remote agents | [remote-control][remote-control] |
 | `/simplify` | Reviews changed code for reuse/simplification/efficiency/abstraction-level cleanup via 4 parallel agents and applies the fixes; does not look for correctness bugs (use `/code-review` for that). Former name of `/code-review` before v2.1.147 | [commands][commands] |
 | `/status` | Show session status | [cli-ref][cli-ref] |
+| `/tui` | Switch renderer: `/tui fullscreen` (research preview, flicker-free; saves the `tui` setting and relaunches) or `/tui default`, which v2.1.327 also names `/tui classic`; `/tui` alone shows the current renderer and why. After a fullscreen session crashes before it has started, the next launch uses the classic renderer and says so ("didn't finish starting last time"); after two failed starts it stays classic until you update or run `/tui fullscreen`. Since v2.1.236 ([fullscreen][fullscreen-docs], read 2026-11-24) | [fullscreen][fullscreen-docs] |
 | `/ultrareview` | Alias of `/code-review ultra`, once ultrareview is available to the account — a deep, multi-agent review in a cloud sandbox. Research preview. See [details below](#code-review-review-simplify-and-ultrareview) | [commands][commands], [ultrareview][ultrareview] |
 
 #### `/code-review`, `/review`, `/simplify`, and ultrareview
@@ -356,6 +357,7 @@ Cross-ref: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orc
 [issue-107757]: https://github.com/anthropics/claude-code/issues/107757
 [commands]: https://code.claude.com/docs/en/commands
 [cli-ref]: https://code.claude.com/docs/en/cli-reference
+[fullscreen-docs]: https://code.claude.com/docs/en/fullscreen
 [code-review-local]: https://code.claude.com/docs/en/code-review-local
 [ultrareview]: https://code.claude.com/docs/en/ultrareview
 [plugins-code-review]: ../plugins-ecosystem/CC-official-plugins-landscape.md#code-review-command-and-ultrareview
