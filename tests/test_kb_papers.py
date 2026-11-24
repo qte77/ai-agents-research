@@ -59,7 +59,7 @@ class ExtractIdsTests(unittest.TestCase):
     def test_four_or_five_digit_serials(self):
         self.assertEqual(
             kb.extract_ids("arxiv.org/abs/2301.1234 arxiv.org/abs/2301.12345"),
-            {"2301.1234", "2301.12345"},
+            {"1301.1234", "2301.12345"},
         )
 
 
@@ -106,7 +106,7 @@ class MainTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual([r["doi"] for r in kb.read_jsonl(out)], ["2603.13594"])
 
-    def test_all_found_exits_0(self):
+    def test_unreturned_id_exits_1(self):
         code, _ = self._run(lambda ids: ATOM)
         self.assertEqual(code, 1)  # 2603.99999 is not in ATOM
 

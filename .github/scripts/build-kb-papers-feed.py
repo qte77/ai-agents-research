@@ -11,8 +11,9 @@ Usage:
         [--out triage/kb-papers/arxiv-kb.jsonl] [--batch-size 100]
 
 Exit codes:
-    0 = output written (IDs the API did not return are listed on stderr)
-    2 = fatal error (network or bad response)
+    0 = output written
+    1 = output written, but the API did not return some requested IDs (listed on stderr)
+    2 = fetch failure (rows fetched so far are still written)
 """
 
 import argparse
@@ -37,13 +38,13 @@ def fetch(ids: list[str]) -> str:
         return resp.read().decode("utf-8")
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--docs", type=Path, default=Path("docs"))
     ap.add_argument("--feed", type=Path, default=Path("triage/rxiv/data"))
     ap.add_argument("--out", type=Path, default=Path("triage/kb-papers/arxiv-kb.jsonl"))
     ap.add_argument("--batch-size", type=int, default=100)
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
     existing = kb.read_jsonl(args.out)
     cited = kb.collect_cited_ids(args.docs)
@@ -51,20 +52,26 @@ def main() -> int:
     print(f"cited={len(cited)} to_fetch={len(todo)} already_in_output={len(existing)}")
 
     new: list[dict] = []
+    failed = False
     for i, batch in enumerate(kb.batches(todo, args.batch_size)):
         if i:
             time.sleep(DELAY_S)
         try:
             new += kb.parse_atom(fetch(batch))
-        except Exception as exc:  # noqa: BLE001 (any failure aborts; nothing is written)
+        except Exception as exc:  # noqa: BLE001 (any failure stops fetching; partial rows are kept)
             print(f"fatal: batch {i} failed: {exc}", file=sys.stderr)
-            return 2
+            failed = True
+            break
 
+    if new or existing:
+        kb.write_jsonl(args.out, kb.merge_records(existing, new))
+    print(f"fetched={len(new)} total={len(kb.merge_records(existing, new))} -> {args.out}")
+    if failed:
+        return 2
     missing = sorted(set(todo) - {r["doi"] for r in new})
     if missing:
         print(f"not returned by the API ({len(missing)}): {' '.join(missing)}", file=sys.stderr)
-    kb.write_jsonl(args.out, kb.merge_records(existing, new))
-    print(f"fetched={len(new)} total={len(existing) + len(new)} -> {args.out}")
+        return 1
     return 0
 
 

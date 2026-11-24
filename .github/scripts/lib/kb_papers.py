@@ -6,12 +6,13 @@ live in ``build-kb-papers-feed.py``; everything here is deterministic and stdlib
 """
 import datetime
 import json
+import os
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 # Reason: the version suffix (v2) and .pdf extension sit after the ID and must not join it.
-ID_RE = re.compile(r"arxiv\.org/(?:abs|html|pdf)/(\d{4}\.\d{4,5})")
+ID_RE = re.compile(r"arxiv\.org/(?:abs|html|pdf)/(\d{4})\.(\d{4,5})(?!\d)", re.IGNORECASE)
 # Excluded: the generated rxiv index (its IDs are the feed) and archived docs.
 EXCLUDED = ("research/rxiv-agentic-papers.md", "archive")
 
@@ -23,7 +24,13 @@ FIELDS = ("date", "iso_week", "doi", "version", "category", "title", "authors", 
 
 def extract_ids(text: str) -> set[str]:
     """Return the bare arXiv IDs cited as abs/html/pdf URLs in ``text``."""
-    return set(ID_RE.findall(text))
+    ids = set()
+    for yymm, num in ID_RE.findall(text):
+        # Reason: 4-digit serials for 0704-1412, 5-digit from 1501; other shapes would
+        # make the API answer a whole batch with one error entry.
+        if (704 <= int(yymm) <= 1412 and len(num) == 4) or (int(yymm) >= 1501 and len(num) == 5):
+            ids.add(f"{yymm}.{num}")
+    return ids
 
 
 def collect_cited_ids(docs_dir: Path) -> set[str]:
@@ -108,4 +115,6 @@ def merge_records(existing: list[dict], new: list[dict]) -> list[dict]:
 
 def write_jsonl(path: Path, records: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in records), encoding="utf-8")
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in records), encoding="utf-8")
+    os.replace(tmp, path)  # Reason: atomic, so an interrupted run never leaves a truncated file
