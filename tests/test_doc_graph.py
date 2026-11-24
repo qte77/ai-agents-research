@@ -229,7 +229,8 @@ class SiteGraphTests(unittest.TestCase):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"],
                          {"id": "docs/non-cc/a/x.md", "title": "X", "bucket": "non-cc/a",
                           "hubs": ["docs/_topics/memory.md"], "status": "trial",
-                          "doc_type": "other", "platforms": [], "purpose": None, "created": None, "updated": None})
+                          "doc_type": "other", "platforms": [], "purpose": None, "created": None, "updated": None,
+                          "dates_from": [], "intro": None, "doc_count": None})
 
     def test_hub_rows_pointing_at_a_section_count_once(self):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"]["hubs"], ["docs/_topics/memory.md"])

@@ -37,6 +37,9 @@ _DATE_KEYS = {k: re.compile(rf"^{k}:[ \t]*([\"']?)(\d{{4}}-\d{{2}}-\d{{2}})\1[ \
               for k in ("created", "updated")}
 _PURPOSE = re.compile(r"^purpose:[ \t]*(\S.*?)[ \t]*$", re.MULTILINE)
 _BLOCK_MARKER = re.compile(r"^[>|][+-]?\d?[+-]?$")  # YAML folded/literal scalar indicators
+_MD_LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+_ISO_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+_INTRO_MAX = 400
 _CC_BUCKETS = ("cc-native", "cc-community")
 
 
@@ -97,6 +100,48 @@ def doc_purpose(text: str) -> str | None:
     return value[1:-1] if len(value) > 1 and value[0] == value[-1] and value[0] in "\"'" else value
 
 
+def doc_intro(text: str) -> str | None:
+    """First prose paragraph after the H1 (links flattened to their text), else ``None``.
+
+    ``None`` when a heading, table, list, quote or fence comes first: hubs and indexes open with a
+    plain paragraph saying what they are for, and that is all this reads.
+    """
+    fm = extract_frontmatter(text)
+    body = text.split("---", 2)[2] if fm is not None and text.lstrip().startswith("---") else text
+    m = _H1.search(body)
+    if not m:
+        return None
+    para: list[str] = []
+    for line in body[m.end():].splitlines():
+        if not line.strip():
+            if para:
+                break
+            continue
+        if not para and re.match(r"\s*(#|\||[-*+>]\s|\d+\.\s|```|~~~|<)", line):
+            return None
+        para.append(line.strip())
+    flat = _MD_LINK.sub(r"\1", " ".join(para))
+    return flat[:_INTRO_MAX] or None
+
+
+def parse_git_log(output: str) -> dict[str, tuple[str, str]]:
+    """``{path: (created, updated)}`` from ``git log --format=%cs --name-only`` output (newest first).
+
+    The first date a path appears under is its last commit, the last is its first commit.
+    """
+    dates: dict[str, tuple[str, str]] = {}
+    day = None
+    for line in output.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        if _ISO_DAY.match(line):
+            day = line
+        elif day:
+            dates[line] = (day, dates[line][1] if line in dates else day)
+    return dates
+
+
 def extract_links(text: str) -> list[tuple[str, int]]:
     """``(target, line)`` for every inline and reference-style link outside code fences."""
     links: list[tuple[str, int]] = []
@@ -127,7 +172,8 @@ def resolve(source: str, target: str) -> tuple[str, str | None] | None:
 def _doc_node(path: str, text: str) -> dict:
     return {"id": path, "type": "doc", "bucket": bucket_of(path), "status": doc_status(text),
             "title": doc_title(text, path), "doc_type": doc_type(path),
-            "platforms": doc_platforms(text, path), "purpose": doc_purpose(text), **doc_dates(text)}
+            "platforms": doc_platforms(text, path), "purpose": doc_purpose(text), **doc_dates(text),
+            "intro": doc_intro(text) if bucket_of(path) == _HUB_BUCKET else None}
 
 
 def _add_link(edges: dict, docs: dict, source: str, target: str, line: int) -> None:
@@ -160,7 +206,8 @@ def build_graph(docs: dict[str, str]) -> dict:
     }
 
 
-def site_graph(graph: dict, filing: dict[str, str] | None = None) -> dict:
+def site_graph(graph: dict, filing: dict[str, str] | None = None,
+               git_dates: dict[str, tuple[str, str]] | None = None) -> dict:
     """Slim projection for the Pages site: each doc's title, bucket, hubs and facets (status,
     doc type, platforms, purpose, created, updated), one edge per linked pair.
 
@@ -168,20 +215,33 @@ def site_graph(graph: dict, filing: dict[str, str] | None = None) -> dict:
     linking to it, counted once even when several rows point at its sections.
     ``filing`` (``doc_coverage.hub_filing``, passed in to keep this module free of the
     coverage rules) adds each doc's hub state so the site splits "no hub" the way
-    ``check_coverage`` does.
+    ``check_coverage`` does. ``git_dates`` (``{path: (created, updated)}`` from the commit
+    history, built by the entry point to keep this module free of git) fills a missing
+    ``created``/``updated``; frontmatter wins, and ``dates_from`` lists the fields git filled.
+    Hubs also carry their ``intro`` and ``doc_count`` (distinct docs they list).
     """
     hubs: dict[str, set] = {}
+    listed: dict[str, set] = {}
     pairs = set()
     for e in graph["edges"]:
         if e["source"] == e["target"]:
             continue
         if e["kind"] == "hub" and e["source"] != _HUB_INDEX:
             hubs.setdefault(e["target"], set()).add(e["source"])
+        if e["kind"] == "hub" and e["source"] != _HUB_INDEX and not e["target"].startswith("docs/_topics/"):
+            listed.setdefault(e["source"], set()).add(e["target"])
         pairs.add(tuple(sorted((e["source"], e["target"]))))
-    nodes = [{"id": n["id"], "title": n["title"], "bucket": n["bucket"],
-              "hubs": sorted(hubs.get(n["id"], ())), "status": n["status"],
-              "doc_type": n["doc_type"], "platforms": n["platforms"], "purpose": n["purpose"],
-              "created": n["created"], "updated": n["updated"]} for n in graph["nodes"]]
+    nodes = []
+    for n in graph["nodes"]:
+        fill = git_dates.get(n["id"]) if git_dates else None
+        got = {k: n[k] or (fill[i] if fill else None) for i, k in enumerate(("created", "updated"))}
+        is_hub = n["bucket"] == _HUB_BUCKET and n["id"] != _HUB_INDEX
+        nodes.append({"id": n["id"], "title": n["title"], "bucket": n["bucket"],
+                      "hubs": sorted(hubs.get(n["id"], ())), "status": n["status"],
+                      "doc_type": n["doc_type"], "platforms": n["platforms"], "purpose": n["purpose"],
+                      **got, "dates_from": [k for k in got if got[k] and not n[k]],
+                      "intro": n["intro"],
+                      "doc_count": len(listed.get(n["id"], ())) if is_hub else None})
     for n in nodes if filing else ():
         n["filing"] = filing[n["id"]]
     return {"nodes": nodes, "edges": [list(p) for p in sorted(pairs)]}

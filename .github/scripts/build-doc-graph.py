@@ -14,13 +14,27 @@ Exit codes:
 """
 
 import argparse
+import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.doc_coverage import hub_filing  # noqa: E402
-from lib.doc_graph import build_graph, load_corpus, site_graph, to_json  # noqa: E402
+from lib.doc_graph import build_graph, load_corpus, parse_git_log, site_graph, to_json  # noqa: E402
+
+
+def git_dates(root: Path) -> dict[str, tuple[str, str]]:
+    """First and last commit date per doc from one ``git log`` pass; empty when git or history is missing."""
+    cmd = ["git", "-C", str(root), "-c", "core.quotepath=off", "log", "--format=%cs", "--name-only",
+           "--", "docs"]
+    try:
+        done = subprocess.run(cmd, capture_output=True, text=True, check=True)  # noqa: S603
+    except (OSError, subprocess.CalledProcessError) as err:
+        print(f"WARNING: no git dates ({err}); docs without frontmatter dates stay undated",
+              file=sys.stderr)
+        return {}
+    return parse_git_log(done.stdout)
 
 
 def main() -> None:
@@ -37,7 +51,7 @@ def main() -> None:
         sys.exit(2)
 
     docs = load_corpus(args.root)
-    graph = site_graph(build_graph(docs), hub_filing(docs))
+    graph = site_graph(build_graph(docs), hub_filing(docs), git_dates(args.root))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(to_json(graph), encoding="utf-8")
     # Reason: same count as the page's checkboxes, which leave the hubs themselves to their own boxes.
