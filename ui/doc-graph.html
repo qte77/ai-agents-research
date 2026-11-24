@@ -53,6 +53,7 @@
     #timeline { display: flex; align-items: flex-end; gap: 1px; height: 44px; border-bottom: 1px solid var(--border); }
     #timeline > * { flex: 1; min-width: 0; padding: 0; border: 0; background: var(--border); }
     #timeline button { background: var(--text-muted); cursor: pointer; }
+    #timeline button:disabled { background: var(--border); cursor: default; }
     #timeline button[aria-pressed="true"] { background: var(--primary); }
     #tl-readout { display: flex; justify-content: space-between; align-items: center; margin: 4px 0 0; font-size: 0.75rem; }
     #detail { margin-bottom: calc(var(--unit) * 2); padding-bottom: var(--unit); border-bottom: 1px solid var(--border); }
@@ -165,7 +166,10 @@
         });
         var mode = "folder";
         function docColour(n) {
-          if (mode === "topic") { return n.hubs.length ? topicColour[n.hubs[0]] : token("--text-muted"); }
+          if (mode === "topic") {
+            var first = n.hubs.filter(function (h) { return checked[h]; })[0]; // first CHECKED hub
+            return first ? topicColour[first] : token("--text-muted");
+          }
           return colour[folder(n)];
         }
         var dim = token("--border");
@@ -198,7 +202,7 @@
         function buildLegend() {
           legend.textContent = "";
           var items = mode === "topic"
-            ? hubIds.map(function (id) { return [hubLabel(data.nodes.filter(function (n) { return n.id === id; })[0]), topicColour[id]]; })
+            ? hubIds.filter(function (id) { return checked[id]; }).map(function (id) { return [hubLabel(data.nodes.filter(function (n) { return n.id === id; })[0]), topicColour[id]]; })
               .concat([["no hub", token("--text-muted")]])
             : FOLDERS.map(function (f) { return [f[0], colour[f[0]]]; });
           items.forEach(function (it) {
@@ -251,8 +255,10 @@
         var picked = { status: {}, doc_type: {}, platform: {} };
         var range = null; // {from, to} ISO dates, inclusive
         var docs = data.nodes.filter(function (n) { return n.bucket !== "_topics"; });
-        function chipOk(n) {
+        function hubOk(n) { return n.hubs.length ? n.hubs.some(function (h) { return checked[h]; }) : checked[n.filing]; }
+        function chipOk(n, skip) {
           return FACETS.every(function (f) {
+            if (f[0] === skip) { return true; }
             var on = Object.keys(picked[f[0]]);
             return !on.length || f[2](n).some(function (v) { return picked[f[0]][v]; });
           });
@@ -261,11 +267,10 @@
         function visible(n) {
           if (isHub(n)) { return checked[n.id]; }
           if (n.bucket === "_topics") { return true; }
-          var hubOk = n.hubs.length ? n.hubs.some(function (h) { return checked[h]; }) : checked[n.filing];
-          return hubOk && chipOk(n) && rangeOk(n);
+          return hubOk(n) && chipOk(n) && rangeOk(n);
         }
         var shown = el("span");
-        var network = null;
+        var network = null, recolour = null;
         // Physics runs only while the layout settles; a filter change re-settles briefly, then stops.
         function restabilise() {
           if (!network) { return; }
@@ -275,12 +280,28 @@
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
           restabilise();
+          if (recolour && mode === "topic") { recolour(); } // multi-hub docs follow their first checked hub
+          refreshCounts();
+          refreshTimeline();
           all.checked = boxes.every(function (b) { return b.checked; });
           var k = docs.filter(visible).length;
           shown.textContent = " Showing " + k + " of " + docs.length + " docs.";
         }
         document.getElementById("stats").appendChild(shown);
 
+        // Chip counts: docs that pass the hub boxes, the timeline range and the OTHER chip groups.
+        var chipRefs = [];
+        function refreshCounts() {
+          var per = {};
+          FACETS.forEach(function (f) {
+            var c = {};
+            docs.forEach(function (n) {
+              if (hubOk(n) && rangeOk(n) && chipOk(n, f[0])) { f[2](n).forEach(function (v) { c[v] = (c[v] || 0) + 1; }); }
+            });
+            per[f[0]] = c;
+          });
+          chipRefs.forEach(function (r) { r.b.textContent = r.v + " " + (per[r.group][r.v] || 0); });
+        }
         function tally(f) {
           var c = {};
           docs.forEach(function (n) { f[2](n).forEach(function (v) { c[v] = (c[v] || 0) + 1; }); });
@@ -299,6 +320,7 @@
             applyFilter();
           });
           into.appendChild(b);
+          chipRefs.push({ group: group, v: v, b: b });
         }
         FACETS.forEach(function (f) {
           var wrap = el("div"), head = el("h3", f[1]), row = el("div"), rows = tally(f);
@@ -338,37 +360,41 @@
           clear.hidden = !range;
           readout.textContent = !range ? "Click a day, then another day for a range."
             : (range.from === range.to ? range.from : range.from + " to " + range.to) + " (" +
-              docs.filter(rangeOk).length + " docs)";
+              docs.filter(function (n) { return hubOk(n) && chipOk(n) && rangeOk(n); }).length + " docs)";
           applyFilter();
         }
+        // Day bars count docs passing the hub boxes and chips (not the range, so a range can be widened).
+        function refreshTimeline() {
+          var counts = {}, peak = 1;
+          docs.forEach(function (n) {
+            if (n.updated && hubOk(n) && chipOk(n)) { counts[n.updated] = (counts[n.updated] || 0) + 1; }
+          });
+          dayBtns.forEach(function (d) { peak = Math.max(peak, counts[d.day] || 0); });
+          dayBtns.forEach(function (d) {
+            var c = counts[d.day] || 0;
+            d.b.disabled = !c;
+            d.b.style.height = Math.max(c / peak * 100, 4) + "%";
+            d.b.title = d.day + ": " + c;
+            d.b.setAttribute("aria-label", d.day + ": " + c + " docs updated");
+          });
+        }
         if (newest) {
-          var end = Date.parse(newest), counts = {}, peak = 1;
-          docs.forEach(function (n) { if (n.updated) { counts[n.updated] = (counts[n.updated] || 0) + 1; } });
+          var end = Date.parse(newest);
           for (var i = WINDOW - 1; i >= 0; i--) {
             (function (day) {
-              var c = counts[day] || 0, node;
-              if (c) {
-                node = el("button");
-                node.type = "button";
-                node.setAttribute("aria-pressed", "false");
-                node.setAttribute("aria-label", day + ": " + c + " docs updated");
-                node.addEventListener("click", function () {
-                  if (!range || range.from !== range.to) { range = { from: day, to: day }; }
-                  else if (day === range.from) { range = null; }
-                  else { range = { from: day < range.from ? day : range.from, to: day < range.from ? range.from : day }; }
-                  paintRange();
-                });
-                dayBtns.push({ day: day, b: node });
-                peak = Math.max(peak, c);
-              } else { node = el("span"); }
-              node.title = day + ": " + c;
-              node.dataset.count = c;
+              var node = el("button");
+              node.type = "button";
+              node.setAttribute("aria-pressed", "false");
+              node.addEventListener("click", function () {
+                if (!range || range.from !== range.to) { range = { from: day, to: day }; }
+                else if (day === range.from) { range = null; }
+                else { range = { from: day < range.from ? day : range.from, to: day < range.from ? range.from : day }; }
+                paintRange();
+              });
+              dayBtns.push({ day: day, b: node });
               tl.appendChild(node);
             })(iso(end - i * DAY));
           }
-          Array.prototype.forEach.call(tl.children, function (node) {
-            node.style.height = Math.max(Number(node.dataset.count) / peak * 100, 4) + "%";
-          });
         } else { document.getElementById("tl-title").textContent = "Recently updated (no dates in data)"; }
         clear.addEventListener("click", function () { range = null; paintRange(); });
         paintRange();
@@ -393,14 +419,17 @@
         network.on("stabilizationIterationsDone", function () { network.setOptions({ physics: { enabled: false } }); });
 
         // Colour mode: recolour nodes and legend; hub-edge springs are set per edge above.
-        document.getElementById("colour-by").addEventListener("change", function (ev) {
-          mode = ev.target.value;
+        recolour = function () {
           data.nodes.forEach(function (n) {
             if (n.id === HUB_INDEX) { return; }
             base[n.id] = isHub(n) ? (mode === "topic" ? topicColour[n.id] : token("--text")) : docColour(n);
           });
           search.dispatchEvent(new Event("input"));
           buildLegend();
+        };
+        document.getElementById("colour-by").addEventListener("change", function (ev) {
+          mode = ev.target.value;
+          recolour();
         });
 
         // Click opens the details panel (title, purpose, facets, hubs, dates, GitHub link).
@@ -425,7 +454,7 @@
           row(dl, "Updated", n.updated || "unknown");
           detail.appendChild(dl);
           var p = el("p"), a = el("a", "Open on GitHub");
-          a.href = REPO + n.id;
+          a.href = REPO + n.id.split("/").map(encodeURIComponent).join("/");
           a.target = "_blank";
           a.rel = "noopener";
           p.appendChild(a);
