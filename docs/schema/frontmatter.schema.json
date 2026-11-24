@@ -39,8 +39,8 @@
     "validated_links_on": {
       "type": "string",
       "format": "date",
-      "description": "Date the doc's URLs were last checked.",
-      "x-rdf": null
+      "description": "Date the doc's URLs were last checked. Maps only approximately to schema:lastReviewed (\"last reviewed for accuracy and/or completeness\"): a link check is part of such a review.",
+      "x-rdf": "schema:lastReviewed"
     },
     "status": {
       "enum": [
@@ -52,8 +52,46 @@
         "reference",
         "archived"
       ],
-      "description": "Where the doc's subject stands for us: Technology Radar rings (adopt, trial, assess, hold) plus research, reference and archived; see CONTRIBUTING §2. The mapping to schema:creativeWorkStatus is approximate: the rings assess the subject, not the doc's own lifecycle.",
-      "x-rdf": "schema:creativeWorkStatus"
+      "description": "One key, three kinds of value: the Technology Radar rings (adopt, trial, assess, hold) are our verdict on the doc's subject; research and reference say what kind of doc it is; archived is the doc's own lifecycle. See CONTRIBUTING §2. Each value has its own RDF mapping in x-rdf-values.",
+      "x-rdf": null,
+      "x-rdf-values": {
+        "adopt": {
+          "property": "schema:reviewRating",
+          "ratingValue": 4,
+          "bestRating": 4,
+          "worstRating": 1
+        },
+        "trial": {
+          "property": "schema:reviewRating",
+          "ratingValue": 3,
+          "bestRating": 4,
+          "worstRating": 1
+        },
+        "assess": {
+          "property": "schema:reviewRating",
+          "ratingValue": 2,
+          "bestRating": 4,
+          "worstRating": 1
+        },
+        "hold": {
+          "property": "schema:reviewRating",
+          "ratingValue": 1,
+          "bestRating": 4,
+          "worstRating": 1
+        },
+        "research": {
+          "property": "dcterms:type",
+          "value": "research"
+        },
+        "reference": {
+          "property": "dcterms:type",
+          "value": "reference"
+        },
+        "archived": {
+          "property": "schema:creativeWorkStatus",
+          "value": "archived"
+        }
+      }
     },
     "source": {
       "type": "string",
