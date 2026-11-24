@@ -16,7 +16,7 @@ open rows moved here unchanged (they keep their `13-` IDs), so there is one live
 remnants", and "strengthen the topics, frontmatter and indices and cross-refs instead". Status
 2026-11-22: P2 is done (all 49 landscapes checked) and every other agent row has shipped (13-A9 recorded 2026-11-24); each row below names its PR. v0.23.0 released 2026-11-22.
 Status 2026-11-24: the owner's 2026-11-23 fold-in batches shipped as N14–N26 (#1045–#1058, N26 in the PR that adds it), including
-the one-line `purpose` limit (N24) and the RDFS and frontmatter wrap-up (N25). Bot PRs whose commits are
+the one-line `purpose` limit (N24) and the RDFS and frontmatter wrap-up (N25). Then N27–N33 (#1062–#1068): the `/tui` renderer notes, the frontmatter schema file with RDF terms (`docs/schema/frontmatter.schema.json`), the `validated_links_on` rename, `platform_scope` as harness slugs, per-value RDF mapping for `status`, doc-graph facets and the `pdma.org` link-check exclude. v0.24.0 released 2026-11-24. Bot PRs whose commits are
 unsigned (weekly changelog triage, outage archive, M365 drift state) stay blocked by the signed-commit
 rule even with green checks: the owner merges them.
 
@@ -28,7 +28,7 @@ rule even with green checks: the owner merges them.
    green, check the tag and the GitHub Release.
 
 **Owner-gated, don't start:** 13-A7 part (3) (deferred by the owner 2026-11-22), N9 Cole Medin (#1009: the owner picks a transcript route; the ai-that-works part is done),
-13-A5, 13-A8, and 13-O5, 13-O10 (deferred by the owner 2026-11-22); whether to add a hand-written `topics:` frontmatter key (N25; default no, the doc graph already lists each doc's hubs). Measuring Caveman Code
+13-A5, 13-A8, and 13-O5, 13-O10 (deferred by the owner 2026-11-22); whether to add a hand-written `topics:` frontmatter key (N25; default no, the doc graph already lists each doc's hubs); whether to exclude `akamai.com` from the link check (403 to lychee in CI and locally on every run seen 2026-11-24, both cited pages in `web-scraping-extraction-landscape.md` load with polyfetch; default no exclude). `splunk.com` needs none: it passed lychee locally and in CI on 2026-11-24. Measuring Caveman Code
 belongs to `qte77/coding-harness-eval#74` (owner 2026-11-22), not this plan.
 
 **Rules of thumb kept from earlier sessions:** topic lanes and pruning sweeps run from the
