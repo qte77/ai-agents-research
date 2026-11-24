@@ -50,6 +50,7 @@ exclude = [
     "blog.jetbrains.com",
     "neptune.ai",
     "openai.com",  # 403 to HEAD on /index/* article URLs
+    "pdma.org",  # 2026-11-24 (owner OK): 403 to lychee in CI and locally; page verified live with polyfetch; goal-tracking-attribution-landscape.md (Dealing with Darwin review)
     # 2026-11-13: 403 to lychee locally and in CI on every URL (persistent bot-block, not runner-IP);
     # one page per host verified live the same day (WebFetch; polyfetch for developer.*). Host-level: #817 cites ~20 pages per host.
     "developer.salesforce.com",  # replaces the 2026-07-23 exact-URL entry (MCP GA blog); salesforce-agentforce-analysis.md, CC-business-api-integrations.md
