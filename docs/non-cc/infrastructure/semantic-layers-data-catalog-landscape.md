@@ -89,7 +89,7 @@ Two separate LLM jobs sit between the formal standards above and the agent-nativ
 
 ### Agent-native ontology tools (2026 MCP wave)
 
-Five 2026 tools expose an ontology as an MCP surface for coding agents — the same "connect the agent to governed meaning" goal as Genie Ontology and OKF above, but scoped to a single ontology store rather than a whole platform. Scored 2026-09-30 against the [agent substrate rubric][rubric].
+These 2026 tools expose an ontology as an MCP surface for coding agents — the same "connect the agent to governed meaning" goal as Genie Ontology and OKF above, but scoped to a single ontology store rather than a whole platform. Scored 2026-09-30 against the [agent substrate rubric][rubric].
 
 **[Ontology Atlas][ontology-atlas]** (MIT, 139★, pushed 2026-09-28) keeps a project's ontology as an `atlas/` folder of Markdown (`project`/`domain`/`capability`/`element`/`document` frontmatter types) that a desktop app, CLI, and MCP server read directly from disk — "local-first... no Atlas backend, account, or telemetry." Multiple coding agents (Claude Code, Codex, Cursor, Antigravity) connect via one MCP button each, and every proposed change to the ontology arrives as a Markdown diff a human reviews in Git before it lands, with unknowns surfaced as unknown rather than papered over. An `.ontology-atlas/llm-audit.jsonl` log records every model/provider transfer.
 
