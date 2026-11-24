@@ -30,16 +30,19 @@
 
     <p>
       A continuously-updated research catalog: make informed
-      <strong>adopt / defer / skip</strong> decisions about coding agents and
+      <strong>adopt / trial / assess / hold</strong> decisions about coding agents and
       their ecosystems before building production systems on them. Tracks Claude
       Code, JetBrains Air, DeerFlow, Goose, Codex, Devin and others — plus the
       surrounding plugins, observability, SDLC patterns, and cross-repo learnings.
     </p>
     <p>
-      Each analysis follows the same four-section structure:
-      <code>What it is</code> → <code>How it works</code> →
-      <code>Adoption decision</code> → <code>Action items</code>. Currency is
-      maintained by four cron-driven monitors.
+      Each doc opens with frontmatter (a <code>status</code> ring, dates, a
+      one-line purpose; see the
+      <a href="https://github.com/qte77/ai-agents-research/blob/main/docs/schema/frontmatter.schema.json">schema</a>),
+      a <code>What It Is</code> section, and ends with a Sources table. Docs are
+      grouped by folder and by topic hub. Scheduled workflows keep it current: Claude
+      Code changelog, status and community monitors, a link-rot check, an M365 drift
+      check, a plan reconcile and a weekly paper triage.
     </p>
 
     <div class="actions">
@@ -49,13 +52,17 @@
 
     <h2>Contents</h2>
     <div class="grid">
+      <a class="card" href="https://github.com/qte77/ai-agents-research/blob/main/docs/_topics/README.md">
+        <div class="name">topic hubs</div>
+        <div class="desc">Start here: one page per topic (harness, memory, context, skills, security, evals, RAG …) listing the docs that cover it.</div>
+      </a>
       <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/cc-native">
         <div class="name">cc-native</div>
         <div class="desc">Anthropic-native features: agents/skills, CI/sandboxing, context/memory, configuration, plugins, model-internals, MCP.</div>
       </a>
       <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/non-cc">
         <div class="name">non-cc</div>
-        <div class="desc">Non-CC agents, orchestrators, and infrastructure: JetBrains Air, DeerFlow, Goose, Rowboat, and more.</div>
+        <div class="desc">Other harnesses and the stack around them: agents, coding agents, orchestrators, frameworks, protocols, context and memory, infrastructure, knowledge management.</div>
       </a>
       <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/cc-community">
         <div class="name">cc-community</div>
@@ -72,6 +79,10 @@
       <a class="card" href="https://github.com/qte77/ai-agents-research/tree/main/docs/research">
         <div class="name">research</div>
         <div class="desc">Auto-generated cumulative index of agentic-AI papers from the rxiv eval pipeline.</div>
+      </a>
+      <a class="card" href="https://github.com/qte77/ai-agents-research/blob/main/docs/glossary.md">
+        <div class="name">glossary</div>
+        <div class="desc">Abbreviations and which doc owns each term.</div>
       </a>
     </div>
 

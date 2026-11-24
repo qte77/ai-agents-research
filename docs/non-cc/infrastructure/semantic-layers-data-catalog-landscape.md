@@ -89,7 +89,7 @@ Two separate LLM jobs sit between the formal standards above and the agent-nativ
 
 ### Agent-native ontology tools (2026 MCP wave)
 
-Five 2026 tools expose an ontology as an MCP surface for coding agents — the same "connect the agent to governed meaning" goal as Genie Ontology and OKF above, but scoped to a single ontology store rather than a whole platform. Scored 2026-09-30 against the [agent substrate rubric][rubric].
+These 2026 tools expose an ontology as an MCP surface for coding agents — the same "connect the agent to governed meaning" goal as Genie Ontology and OKF above, but scoped to a single ontology store rather than a whole platform. Scored 2026-09-30 against the [agent substrate rubric][rubric].
 
 **[Ontology Atlas][ontology-atlas]** (MIT, 139★, pushed 2026-09-28) keeps a project's ontology as an `atlas/` folder of Markdown (`project`/`domain`/`capability`/`element`/`document` frontmatter types) that a desktop app, CLI, and MCP server read directly from disk — "local-first... no Atlas backend, account, or telemetry." Multiple coding agents (Claude Code, Codex, Cursor, Antigravity) connect via one MCP button each, and every proposed change to the ontology arrives as a Markdown diff a human reviews in Git before it lands, with unknowns surfaced as unknown rather than papered over. An `.ontology-atlas/llm-audit.jsonl` log records every model/provider transfer.
 
@@ -155,6 +155,10 @@ These five give the [agent substrate rubric][rubric] its first ontology-doc evid
 **[NVIDIA Auto Ontology][auto-ontology]** (Apache-2.0, 10.8k★ on 2026-11-09 and 11.8k★ on 2026-11-11, `gh api`; version 1.2.0 in `pyproject.toml` and the Helm chart, no GitHub release or PyPI package) is the relational, SQL-only member of this wave. Its README sums it up as three stages: "it generates an ontology, people certify it, and the agent answers questions from it." An ingestion service reads database schemas, profiles columns, extracts business terms table by table, infers joins and bridge tables, and suggests reusable SQL expressions from query history; terms, relationships and SQL attributes are stored "in Postgres, with embeddings in pgvector". People then test, refine and certify that draft. At question time a text-to-SQL agent retrieves certified terms, writes SQL, checks filter values and the query against the database, repairs it when a check fails, and returns the answer with its SQL; when the candidates can't support a query it says the question can't be answered. There is no RDF, OWL or SPARQL layer: the "graph" is the term/relationship graph shown in its UI. Agents reach it through a read-only MCP server, where "every call runs with that user's permissions", plus a CLI and REST API. Inference defaults to NVIDIA NIM, and an optional KumoRFM route for predictive questions uploads the connected tables to that hosted service. Two cautions from the README: the backend trusts a user ID the frontend forwards in a header, and the ingestion endpoints "have no authentication of their own", so only the web app's port should be exposed; and the project "is currently not accepting external contributions."
 
 Not rubric-scored: it is Ontology-subject and could not move the reference architecture's one open cell (Context·Reproducible).
+
+Pointer, not a tool profile: for the KumoRFM route above, [NVIDIA Kumo Engine][kumo-engine] (Apache-2.0, 197★, `kumo-engine-v1.0.1` 2026-11-05; `gh api`, read 2026-11-24) is a separate open-source library, part of the NVIDIA Kumo family per its README, that trains predictive models on relational tables. It is not an agent tool or ontology layer: its README only adds an optional agent skill to help a coding agent write the workflow.
+
+**[OntoBricks][ontobricks]** (`databrickslabs/ontobricks`; 505★, `v0.9.3` 2026-11-21, repo created 2026-04-07, `gh api`, read 2026-11-24) turns Unity Catalog tables into a knowledge graph through ontology design, mapping and SPARQL, executed as Spark SQL; each domain is published to agents over MCP, with the domain choosing which tools and datasets it exposes ([README][ontobricks]). Three constraints decide fit: it needs a Databricks workspace and deploys as a Databricks App (a documented local dev run still connects to a workspace; it reuses Databricks Unity Catalog, a SQL Warehouse and Databricks Lakebase, with Neo4j as an optional graph backend); its `LICENSE.txt` is the "Databricks License", which limits use to connection with Databricks Services, so it is source-available, not OSI-open, despite the Labs repo being public (GitHub reports NOASSERTION); and the README says Databricks Labs projects are exploration-only, AS-IS and without SLAs. Domain versions go through a draft, review and published lifecycle. Not rubric-scored, and unrelated to Genie Ontology (see [Databricks Genie analysis](../agents/databricks-genie-analysis.md)).
 
 **TrustGraph** (Apache-2.0; RDF/OWL ontology-guided extraction, SHACL per-node query policies, PROV-O lineage, MCP server) is profiled in [agent-frameworks-infrastructure-landscape.md](../frameworks/agent-frameworks-infrastructure-landscape.md#agent-native-graph--hybrid-rag-platforms) as a vendor-described ontology runtime, not restated here.
 
@@ -227,6 +231,8 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | André Lindenberg — *The Join Nobody Approved* (LinkedIn, 2026-11-01; `linkedin.com/pulse/join-nobody-approved-andré-lindenberg-9mylf`) | Design lens: measure join keys, declare, then gate; framing practitioner single-source (LinkedIn — not link-checked) |
 | André Lindenberg — *Audit the Auditor* (LinkedIn, 2026-08-29; `linkedin.com/pulse/audit-auditor-andré-lindenberg-odvfe`) | Design lens: a tool's CHANGELOG, not its pitch, is the real evidence for an audit-trail claim (LinkedIn — not link-checked) |
 | [NVIDIA Auto Ontology README][auto-ontology] | Generate/certify/answer stages, Postgres + pgvector store, read-only MCP server, NIM default, KumoRFM route, ingestion-auth caution; Apache-2.0 LICENSE, `pyproject.toml` 1.2.0; `gh api` 2026-11-09 |
+| [NVIDIA Kumo Engine README][kumo-engine] | Predictive-model library over relational tables, optional agent skill; Apache-2.0 LICENSE, stars and release read 2026-11-24 |
+| [OntoBricks README][ontobricks] · [LICENSE.txt][ontobricks-license] | UC tables to knowledge graph, per-domain MCP publishing, Databricks App only; "Databricks License" read 2026-11-24 |
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
 
 [pg-altertable]: https://www.postgresql.org/docs/current/sql-altertable.html
@@ -283,6 +289,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [ai-act-12]: https://artificialintelligenceact.eu/article/12/
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [auto-ontology]: https://github.com/NVIDIA/auto-ontology
+[kumo-engine]: https://github.com/NVIDIA/kumo-engine
+[ontobricks]: https://github.com/databrickslabs/ontobricks
+[ontobricks-license]: https://github.com/databrickslabs/ontobricks/blob/master/LICENSE.txt
 [auto-ontology-mcp]: https://github.com/gogoymh/auto-ontology-mcp
 [ontogenia-paper]: https://arxiv.org/abs/2503.05388
 [wikidata-kgc]: https://arxiv.org/abs/2412.20942
