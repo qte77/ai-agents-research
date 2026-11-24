@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-11-22
+updated: 2026-11-24
 validated_links_on: 2026-11-09
 status: reference
 ---
@@ -136,7 +136,7 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 
 **When to use what**: Crawl4AI for free local LLM-ready output. Firecrawl for managed/enterprise. Jina for lightweight HTML→Markdown.
 
-**Firecrawl Universal Scrape** (announced 2026-10-08, [Firecrawl blog](https://www.firecrawl.dev/blog/universal-scrape)): the `/scrape` endpoint now also returns third-party provider data, bringing "more of the data your agents need into the `/scrape` endpoint you already use". Provider calls go through Alexandria, Firecrawl's provider layer, via an `alexandria` object (`provider`, `capability`, `options`); the post says "Alexandria has more than 200 providers", of which Universal Scrape works with "a growing selection", e.g. Apollo, FullEnrich and Data Legion (people and companies), Fiscal.ai and Benzinga (financial data), Particle (podcasts). Provider calls are "billed in Firecrawl credits at each tool's listed price"; some providers need an org admin to accept their terms first. The post states no GA/beta status. Our reading (not a Firecrawl claim): this moves Firecrawl from scraper toward data broker; the same API key now reaches paid third-party datasets, so budget and data-licensing review belong with the integration.
+**Firecrawl Universal Scrape** (announced 2026-10-08, [Firecrawl blog](https://www.firecrawl.dev/blog/universal-scrape)): the `/scrape` endpoint now also returns third-party provider data, bringing "more of the data your agents need into the `/scrape` endpoint you already use". Provider calls go through Alexandria, Firecrawl's provider layer, via an `alexandria` object (`provider`, `capability`, `options`); the post says "Alexandria has more than 200 providers" (Firecrawl's figures vary by page: "100+" in the [Claude changelog][fc-alex-claude] 2026-09-24 but "550+" on the [Claude integration page][fc-claude-integration] (read 2026-11-24), "550+" in the [ChatGPT blog][fc-alex-chatgpt] 2026-09-29 and its [data-connectors post][fc-data-connectors] dated 2026-10-21; the [catalog][fc-alex-site] gives only per-category counts, no total, so treat the total as unsettled), of which Universal Scrape works with "a growing selection", e.g. Apollo, FullEnrich and Data Legion (people and companies), Fiscal.ai and Benzinga (financial data), Particle (podcasts). Provider calls are "billed in Firecrawl credits at each tool's listed price"; some providers need an org admin to accept their terms first. The post states no GA/beta status. Our reading (not a Firecrawl claim): this moves Firecrawl from scraper toward data broker; the same API key now reaches paid third-party datasets, so budget and data-licensing review belong with the integration. Hosted route (Firecrawl's documentation, read 2026-11-24, not tested): the same Alexandria catalog is reachable from a ChatGPT plugin and a Claude directory connector via Firecrawl-account sign-in (no API key), and from other MCP clients via the hosted OAuth or API-key endpoint. Billing, sign-in, tool counts and evidence levels: [Hosted Connector Route](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#hosted-connector-route-chatgpt-and-claude).
 
 ## Search APIs
 
@@ -322,6 +322,7 @@ Each tool links to its first-party page inline in the tables above. This catalog
 | [RFC 9421][rfc9421] · [Cloudflare Web Bot Auth][cf-wba] · [signed agents blog][cf-signed-blog] · [signed agents docs][cf-signed-docs] | HTTP Message Signatures; Web Bot Auth mechanism; signed agents (2025-08-28; verified merge 2026-07-01) |
 | [Akamai blog][akamai-wba] · [Akamai framework release][akamai-fw] · [DataDome docs][datadome-id] · [Kasada release][kasada-ait] · [HUMAN newsroom][human-agentcore] | Vendor agent-handling table, 2026-11-18 |
 | Pricing pages: [Exa](https://exa.ai/pricing), [Tavily](https://docs.tavily.com/documentation/api-credits), [Serper](https://serper.dev/), [SerpAPI](https://serpapi.com/pricing), [Brave](https://brave.com/search/api/) | Search API prices, read 2026-11-18 |
+| [Firecrawl Alexandria in Claude][fc-alex-claude] · [in ChatGPT and Codex][fc-alex-chatgpt] · [data connectors][fc-data-connectors] · [Claude integration][fc-claude-integration] · [catalog][fc-alex-site] | Provider-count figures, hosted connector route |
 | [Proxyway 2025 report][proxyway] · [AICC arXiv 2511.16397][aicc] | Scrape-quality evidence |
 | [hiQ stipulation][hiq-stip] · [Nebius newsroom][nebius-tavily] · [TechCrunch 2024-02-26][tc-meta-bd] · [Proskauer][proskauer-hiq] · [ZwillGen][zwillgen-hiq] · [Farella Braun][fbm-meta] · [TheNextWeb][tnw-serpapi] | Legal note (secondary summaries) |
 
@@ -351,3 +352,8 @@ Each tool links to its first-party page inline in the tables above. This catalog
 [nebius-tavily]: https://nebius.com/newsroom/nebius-announces-agreement-to-acquire-tavily-to-add-agentic-search-to-its-ai-cloud-platform
 [hiq-stip]: https://s3.documentcloud.org/documents/23429042/hiq-stip.pdf
 [tc-meta-bd]: https://techcrunch.com/2024/02/26/meta-drops-lawsuit-against-web-scraping-firm-bright-data-that-sold-millions-of-instagram-records/
+[fc-alex-claude]: https://www.firecrawl.dev/changelog/alexandria-claude
+[fc-alex-chatgpt]: https://firecrawl.dev/blog/alexandria-chatgpt-codex
+[fc-data-connectors]: https://www.firecrawl.dev/blog/data-connectors
+[fc-alex-site]: https://alexandria.firecrawl.dev/
+[fc-claude-integration]: https://www.firecrawl.dev/integrations/claude
