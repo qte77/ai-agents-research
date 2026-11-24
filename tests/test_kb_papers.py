@@ -2,6 +2,7 @@
 
 No network: the Atom response is a small recorded snippet.
 """
+import importlib.util
 import json
 import sys
 import tempfile
@@ -11,6 +12,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / ".github" / "scripts"))
 
 from lib import kb_papers as kb  # noqa: E402
+
+_SCRIPT = Path(__file__).resolve().parents[1] / ".github" / "scripts" / "build-kb-papers-feed.py"
+_spec = importlib.util.spec_from_file_location("build_kb_papers_feed", _SCRIPT)
+feed = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(feed)
 
 ATOM = """<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:arxiv="http://arxiv.org/schemas/atom">
@@ -55,6 +61,54 @@ class ExtractIdsTests(unittest.TestCase):
             kb.extract_ids("arxiv.org/abs/2301.1234 arxiv.org/abs/2301.12345"),
             {"2301.1234", "2301.12345"},
         )
+
+
+class IdShapeTests(unittest.TestCase):
+    def test_uppercase_host(self):
+        self.assertEqual(kb.extract_ids("https://arXiv.org/abs/2603.13594"), {"2603.13594"})
+
+    def test_trailing_digit_guard(self):
+        self.assertEqual(kb.extract_ids("arxiv.org/abs/2301.123456"), set())
+
+    def test_digits_by_yymm(self):
+        self.assertEqual(kb.extract_ids("arxiv.org/abs/1412.1234 arxiv.org/abs/0704.0001"),
+                         {"1412.1234", "0704.0001"})
+        self.assertEqual(kb.extract_ids("arxiv.org/abs/1412.12345 arxiv.org/abs/1501.1234"), set())
+        self.assertEqual(kb.extract_ids("arxiv.org/abs/1501.12345"), {"1501.12345"})
+        self.assertEqual(kb.extract_ids("arxiv.org/abs/0703.0001"), set())
+
+
+class MainTests(unittest.TestCase):
+    def _run(self, fetch):
+        d = tempfile.TemporaryDirectory()
+        self.addCleanup(d.cleanup)
+        root = Path(d.name)
+        (root / "docs").mkdir()
+        (root / "docs" / "a.md").write_text("arxiv.org/abs/2603.13594 arxiv.org/abs/2603.99999")
+        out = root / "out" / "arxiv-kb.jsonl"
+        argv = ["--docs", str(root / "docs"), "--feed", str(root / "none"),
+                "--out", str(out), "--batch-size", "1"]
+        feed.fetch = fetch
+        feed.DELAY_S = 0
+        return feed.main(argv), out
+
+    def test_missing_id_exits_1_and_still_writes(self):
+        code, out = self._run(lambda ids: ATOM if ids == ["2603.13594"] else "<feed xmlns='http://www.w3.org/2005/Atom'/>")
+        self.assertEqual(code, 1)
+        self.assertEqual([r["doi"] for r in kb.read_jsonl(out)], ["2603.13594"])
+
+    def test_fetch_failure_writes_partial_and_exits_2(self):
+        def fetch(ids):
+            if ids == ["2603.13594"]:
+                return ATOM
+            raise OSError("boom")
+        code, out = self._run(fetch)
+        self.assertEqual(code, 2)
+        self.assertEqual([r["doi"] for r in kb.read_jsonl(out)], ["2603.13594"])
+
+    def test_all_found_exits_0(self):
+        code, _ = self._run(lambda ids: ATOM)
+        self.assertEqual(code, 1)  # 2603.99999 is not in ATOM
 
 
 class CollectTests(unittest.TestCase):
