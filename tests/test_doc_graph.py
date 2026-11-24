@@ -128,6 +128,36 @@ class BuildGraphTests(unittest.TestCase):
         self.assertTrue(dg.to_json(self.g).endswith("\n"))
 
 
+class FacetTests(unittest.TestCase):
+    """Clustering facets derived per doc: status, doc type and platforms (plan 0015 N32)."""
+
+    CORPUS = {
+        "docs/non-cc/a/foo-landscape.md": "---\ntitle: F\nstatus: assess\nplatform_scope: [codex, cursor]\n---\n",
+        "docs/cc-native/c/CC-bar-analysis.md": "---\ntitle: B\nstatus: adopt\n---\n",
+        "docs/cc-community/CC-baz-reference.md": "---\ntitle: Z\nstatus: reference\nplatform_scope: [claude-code, zed]\n---\n",
+        "docs/sdlc-lcm/ops-runbook.md": "# R\n",
+    }
+
+    def setUp(self):
+        self.nodes = {n["id"]: n for n in dg.site_graph(dg.build_graph(self.CORPUS))["nodes"]}
+
+    def test_doc_type_comes_from_the_filename_suffix(self):
+        self.assertEqual(self.nodes["docs/non-cc/a/foo-landscape.md"]["doc_type"], "landscape")
+        self.assertEqual(self.nodes["docs/cc-native/c/CC-bar-analysis.md"]["doc_type"], "analysis")
+        self.assertEqual(self.nodes["docs/cc-community/CC-baz-reference.md"]["doc_type"], "reference")
+        self.assertEqual(self.nodes["docs/sdlc-lcm/ops-runbook.md"]["doc_type"], "runbook")
+
+    def test_platforms_come_from_frontmatter_or_the_cc_folders(self):
+        self.assertEqual(self.nodes["docs/non-cc/a/foo-landscape.md"]["platforms"], ["codex", "cursor"])
+        self.assertEqual(self.nodes["docs/cc-native/c/CC-bar-analysis.md"]["platforms"], ["claude-code"])
+        self.assertEqual(self.nodes["docs/cc-community/CC-baz-reference.md"]["platforms"], ["claude-code", "zed"])
+        self.assertEqual(self.nodes["docs/sdlc-lcm/ops-runbook.md"]["platforms"], [])
+
+    def test_status_is_carried_and_none_when_missing(self):
+        self.assertEqual(self.nodes["docs/cc-native/c/CC-bar-analysis.md"]["status"], "adopt")
+        self.assertIsNone(self.nodes["docs/sdlc-lcm/ops-runbook.md"]["status"])
+
+
 class SiteGraphTests(unittest.TestCase):
     """The slim projection the Pages site loads (plan 0015 G2)."""
 
@@ -135,10 +165,11 @@ class SiteGraphTests(unittest.TestCase):
         self.site = dg.site_graph(dg.build_graph(CORPUS))
         self.nodes = {n["id"]: n for n in self.site["nodes"]}
 
-    def test_nodes_carry_only_title_bucket_and_hubs(self):
+    def test_nodes_carry_title_bucket_hubs_and_facets(self):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"],
                          {"id": "docs/non-cc/a/x.md", "title": "X", "bucket": "non-cc/a",
-                          "hubs": ["docs/_topics/memory.md"]})
+                          "hubs": ["docs/_topics/memory.md"], "status": "trial",
+                          "doc_type": "other", "platforms": []})
 
     def test_hub_rows_pointing_at_a_section_count_once(self):
         self.assertEqual(self.nodes["docs/non-cc/a/x.md"]["hubs"], ["docs/_topics/memory.md"])
