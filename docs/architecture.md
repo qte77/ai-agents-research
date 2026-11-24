@@ -45,7 +45,7 @@ ai-agents-research/
 │   └── rxiv/                  # ArXiv paper eval triage (filtered by RXIV_TOPIC)
 ├── scripts/                   # Site-info + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles)
 ├── tests/                     # Unit tests for scripts/ + .github/scripts/lib modules
-├── ui/                        # Branded gh-pages site (index.html, doc-graph.html, assets)
+├── ui/                        # gh-pages site: the doc graph (doc-graph.html), a root redirect (index.html), assets
 ├── changelog.d/               # scriv changelog fragments (collected on release)
 └── .github/
     ├── workflows/             # content-monitor crons, link-rot, m365-drift + plan-reconcile health monitors, manual model evals, lint, release, Pages
@@ -126,7 +126,7 @@ The rxiv triage job additionally runs `markdownlint-cli2` against the assembled 
 
 **Build metadata:** every page shows the release version (`pyproject.toml`), last-modified date and commit link. The deploy writes `build.json` with `scripts/build-site-info.py` (pure logic in `pages_build.site_info`), and `ui/build-info.js` renders it.
 
-**Live site:** <https://qte77.github.io/ai-agents-research/> — a branded EyeRest landing page (`index.html`) linking to the doc graph at `/doc-graph.html`.
+**Live site:** <https://qte77.github.io/ai-agents-research/> — the doc graph at `/doc-graph.html`; `index.html` only redirects to it (plan 0016 N44: a separate landing page repeated the README and went stale). Docs without frontmatter dates (topic hubs, folder READMEs, examples) take their first and last commit dates from one `git log` pass in `build-doc-graph.py`, so the Pages checkout fetches full history; the details panel marks those dates as from git history.
 
 ### Published site (gh-pages)
 
@@ -134,7 +134,7 @@ The site applies the qte77 EyeRest brand (`qte77/qte77/brand/DESIGN.md`: zero-bl
 
 | Path | Role |
 |---|---|
-| `ui/index.html` | Branded landing page (site root) |
+| `ui/index.html` | Redirect from the site root to the doc graph |
 | `ui/doc-graph.html` | Doc graph page; its JSON is built by the deploy |
 | `ui/vendor/vis-network.min.js` | Self-hosted vis-network (the doc graph's renderer) — committed so the graph renders offline / without a CDN round-trip |
 | `ui/style.css` | EyeRest design tokens + `@font-face` + layout |

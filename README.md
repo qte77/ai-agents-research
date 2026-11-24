@@ -7,7 +7,7 @@
 [![Lint](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml/badge.svg)](https://github.com/qte77/ai-agents-research/actions/workflows/lint.yaml)
 [![CodeFactor](https://www.codefactor.io/repository/github/qte77/ai-agents-research/badge)](https://www.codefactor.io/repository/github/qte77/ai-agents-research)
 
-**Live:** [doc graph](https://qte77.github.io/ai-agents-research/doc-graph.html) · [site](https://qte77.github.io/ai-agents-research/)
+**Live:** [doc graph](https://qte77.github.io/ai-agents-research/doc-graph.html) (the site root redirects to it)
 
 ## What
 
