@@ -2,7 +2,7 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-11-20
+updated: 2026-11-24
 validated_links: 2026-11-18
 status: adopt
 ---
@@ -136,6 +136,7 @@ Toggle metric attributes to trade granularity for storage cost. Source: [monitor
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN` | (unset) | Set to `1` to opt out of the fullscreen alternate-screen renderer and keep the conversation in the terminal's native scrollback. Useful for tmux, logging pipelines, or terminals that mishandle alternate-screen. (v2.1.132) | CHANGELOG v2.1.132 |
+| `CLAUDE_CODE_NO_FLICKER` | (unset) | `1` turns on fullscreen rendering (research preview) and overrides the `tui` setting, even after a failed fullscreen start; `0` keeps the classic renderer. `CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN=1` takes precedence over both. Switch inside a session with `/tui` ([CC-tools-inventory.md](CC-tools-inventory.md#documented)) | [env-vars][env-vars] |
 
 ### Update & Package Management
 
