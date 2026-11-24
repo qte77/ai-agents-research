@@ -1,6 +1,6 @@
 ---
 title: CC Memory Tooling Landscape
-purpose: Persistent cross-session memory tools that integrate with Claude Code — ByteRover (archived), Claude-Mem, MemPalace, MemSearch, Roampal Core, plus cross-agent/procedural-memory tools (agent-memory, ai-memory, claude-reflect, CortexDB, Core, deja-vu, engrim, Leviathan), plus second-brain vault tools (gbrain, COG-second-brain).
+purpose: Persistent cross-session memory tools for Claude Code (ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core), cross-agent and procedural memory tools, and second-brain vault tools.
 status: research
 created: 2026-06-14
 updated: 2026-11-23

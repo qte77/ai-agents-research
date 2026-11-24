@@ -1,6 +1,6 @@
 ---
 title: Agent Frameworks & Infrastructure Landscape
-purpose: Catalog of multi-agent orchestration frameworks, LLM-orchestration/routing tools, agent memory infrastructure, agent-oriented foundation models, and specialist models agents call as tools beyond Claude Code — restored and refreshed from the archived frameworks-infrastructure landscape.
+purpose: Catalog of multi-agent orchestration frameworks, LLM routing tools, agent memory infrastructure, agent-oriented foundation models and specialist models agents call as tools, beyond Claude Code.
 status: research
 created: 2026-06-14
 updated: 2026-11-23

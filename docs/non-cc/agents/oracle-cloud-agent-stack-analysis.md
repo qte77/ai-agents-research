@@ -1,7 +1,7 @@
 ---
 title: Oracle Cloud Agent Stack Analysis — OCI Generative AI Agents, Enterprise AI Agents, AI Agent Studio for Fusion Applications
 source: https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/overview.htm
-purpose: First-party fact-check of Oracle's two agent stacks (OCI Generative AI Agents and Enterprise AI Agents on OCI; AI Agent Studio inside Fusion Applications) for roles needed to build, deploy and invoke agents, identity, licence basis, Claude availability, MCP/A2A and regions; no prices.
+purpose: "First-party fact-check of Oracle's two agent stacks (OCI Generative AI Agents; AI Agent Studio in Fusion Applications): roles, identity, licensing, Claude availability, MCP/A2A, regions; no prices."
 created: 2026-11-20
 updated: 2026-11-20
 validated_links: 2026-11-20

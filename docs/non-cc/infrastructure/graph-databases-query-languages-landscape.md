@@ -1,7 +1,7 @@
 ---
 title: Graph Databases & Query Languages — Agent Landscape
 source: https://opencypher.org/
-purpose: A thin, dated table of the graph query languages (Cypher/openCypher, ISO GQL, SPARQL, Gremlin, Datalog), the graph databases most relevant to agents, text-to-query evidence, and vendor and vendor-labs graph MCP servers, linking the per-tool analyses in this corpus. Facts as of 2026-11-19 (query-language and W3C status re-read 2026-11-21).
+purpose: A thin dated table of graph query languages, graph databases relevant to agents, text-to-query evidence and graph MCP servers, linking the per-tool analyses. Facts as of 2026-11-19.
 created: 2026-11-19
 updated: 2026-11-21
 validated_links: 2026-11-19

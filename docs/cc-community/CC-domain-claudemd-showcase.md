@@ -1,6 +1,6 @@
 ---
 title: CC Domain-Specific CLAUDE.md Showcase
-purpose: Analysis of CLAUDE.md as a domain-specific pipeline controller — genome analysis toolkit case study demonstrating the pattern of CLAUDE.md orchestrating multi-script workflows beyond software development.
+purpose: "Case study of CLAUDE.md as a domain-specific pipeline controller: a genome analysis toolkit where CLAUDE.md orchestrates multi-script workflows beyond software development."
 status: research
 created: 2026-03-13
 updated: 2026-07-23
