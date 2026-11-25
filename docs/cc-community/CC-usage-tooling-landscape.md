@@ -3,7 +3,7 @@ title: CC Usage-Observability Tooling Landscape
 purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor.
 status: research
 created: 2026-06-14
-updated: 2026-11-22
+updated: 2026-11-25
 validated_links_on: 2026-09-24
 ---
 
@@ -176,6 +176,15 @@ Only tool in this category that does **prediction** (not just retrospective meas
 
 Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-analysis.md) — Anthropic plan limits and 5-hour windows
 
+## Prompt-cache hit and miss
+
+The tools above total tokens and cost. Whether each turn hit the prompt cache, and why it missed, is
+covered in [CC-prompt-caching-behavior.md](../cc-native/context-memory/CC-prompt-caching-behavior.md):
+Claude Code's own `/usage` "Prompt cache (main)" line and the API's cache diagnostics in
+[§ Predicting a hit or a miss](../cc-native/context-memory/CC-prompt-caching-behavior.md#predicting-a-hit-or-a-miss),
+and this repo's [`scripts/cc_cache_usage.py`](../../scripts/cc_cache_usage.py), which reads one session
+transcript, in [§ One week of sessions](../cc-native/context-memory/CC-prompt-caching-behavior.md#one-week-of-sessions-on-one-machine-2026-11-07-to-2026-11-14).
+
 ## Cross-References
 
 - [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md) — full cross-tool comparison + the rest of the CC tooling landscape
@@ -196,6 +205,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 |---|---|---|---|
 | cc-costline | Criterion 3: 28 stars, no measured benefit or named independent users; also no LICENSE file (`gh api` 2026-11-22). Its optional ccclub integration (38 stars) goes with it | 2026-11-22 | <https://github.com/Ventuss-OvO/cc-costline> |
 | agentacct | Criterion 3: 758 stars, repo created 2026-07-24; the README calls it early alpha; no measured benefit or named independent users (`gh api` 2026-11-22) | 2026-11-22 | <https://github.com/mikehasa/agentacct> |
+| cachemiss | Criterion 3: 1 star, created 2026-09-26, last push 2026-09-28 (`gh api` 2026-11-25). Its rule for counting a miss is credited in [CC-prompt-caching-behavior.md](../cc-native/context-memory/CC-prompt-caching-behavior.md#one-week-of-sessions-on-one-machine-2026-11-07-to-2026-11-14) | 2026-11-25 | <https://github.com/CedricConday/cachemiss> |
 
 ## Sources
 
