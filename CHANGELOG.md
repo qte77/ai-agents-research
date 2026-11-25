@@ -11,6 +11,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.25.0] - 2026-11-25
+
+### Added
+
+- Surrogate-harness training for RLM harnesses (arXiv 2611.28298) in the Prime Agent analysis with a cross-reference from the programmatic tool calling analysis; EGGROLL and chat-data.com as dated lines in the agent frameworks landscape (plan 0016 N35, N39).
+
+- Agent tools (plan 0016 N36): T3 Code column and note in the remote-access landscape, a `vercel/board` section in the cross-session messaging analysis, OntoBricks and a Kumo Engine pointer in the semantic-layers landscape, linked from the Genie analysis.
+
+- `make kb-papers` exports the arXiv papers cited in `docs/` but missing from the rxiv feed to `triage/kb-papers/arxiv-kb.jsonl` (arXiv API metadata, paperverse JSONL schema; plan 0016 N37).
+
+- Firecrawl hosted connector route (ChatGPT plugin, Claude directory connector, hosted MCP with OAuth) in the CC web-scraping plugins analysis, and Alexandria provider-count figures reconciled by source and date in the web-scraping landscape.
+
+- Plan 0016 (`docs/plans/2026-11-24-0016-graph-ui-sources-paperverse-feed.md`, #1071): doc-graph page facets and timeline, the 2026-11-24 sources, the KB papers export and the paperverse sync fix, run as parallel worktree lanes; plan 0015 superseded, its open rows moved over unchanged.
+
+- shrink-anything (dead-code and unused-dependency remover that keeps a cut only if your own tests pass) added next to fast-anything in the CC community tooling landscape (plan 0016 N46).
+
+- Workflow landscape: Prefect, Dagster and Apache Airflow with their AI/agent surfaces (MCP servers, agent skills, LLM providers), and a Kaval.AI entry in the agent-frameworks catalog (plan 0016 N47).
+
+- CC community skills landscape: scottduncanai/pid-to-knowledge-graph, a Claude skill that builds a process knowledge graph from piping and instrumentation diagram (P&ID) PDFs (plan 0016 N48).
+
+### Changed
+
+- Doc graph page: filter chips with counts (status, doc type, platform), a details panel on node click, a "recently updated" timeline, a folder or topic-hub colour mode, hub-edge clustering with physics that stops once the layout settles, and docs in no hub hidden until ticked; graph nodes now carry `purpose`, `created` and `updated`.
+
+- Site start page (`ui/index.html`): current doc conventions, status rings and scheduled workflows; topic hubs and glossary cards.
+
+- Doc graph: the hub index star sits fixed at the centre; the details panel labels hubs and folder indexes, shows a hub's intro and doc count, fills missing dates from git history (the Pages build now checks out full history) and hides empty rows; physics runs gently for 2 s after layout and each filter change, then stops; the start page is now a redirect to the graph, and the header links to the GitHub README (plan 0016 N44).
+
+- Doc graph: topic clusters are softer (hubs move with their docs, wider overlapping clouds, weaker springs; physics still stops after 1 s); the timeline offers full history (weekly bars) next to the last 90 days; "Colour by" and "Filters" are collapsible panels (plan 0016 N49).
+
+### Fixed
+
+- Doc graph: topic hubs are fixed on a ring around the hub index and each doc is seeded near its first checked hub, so clusters show from the first frame; central gravity is on, physics runs for 1 s after load and after each filter change, then stops, and the view re-fits (plan 0016 N45).
+
 ## [0.24.0] - 2026-11-24
 
 ### Added
