@@ -82,7 +82,9 @@ def _add_gaps(s, recs, gap_min):
         try:
             now = _ts(rec["time"])
         except (TypeError, ValueError, AttributeError):
-            continue  # no usable timestamp: counted in the totals, left out of the gap logic
+            # Reason: a record without a usable timestamp counts in the totals but is left out of
+            # the gap logic, so the next turn's miss check compares with the last timestamped turn.
+            continue
         if prev is not None:
             gap = (now - prev).total_seconds() / 60
             # Reason: gaps run between responses, so they slightly understate the time since the
@@ -101,7 +103,8 @@ def _add_gaps(s, recs, gap_min):
 
 
 def summarize(lines, gap_min=60, ttl_min=None):
-    """Summarize transcript lines (JSON strings) into token totals, gaps, predictions, compactions.
+    """Summarize transcript lines (JSON strings) into token totals, gaps, predicted and actual
+    hits and misses (with the tokens rebuilt), and compactions.
 
     ttl_min=None picks the cache lifetime from the write buckets: 5 minutes when most writes are
     5-minute writes, else 60.
