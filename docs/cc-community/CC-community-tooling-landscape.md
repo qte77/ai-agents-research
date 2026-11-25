@@ -4,7 +4,7 @@ purpose: Survey of community developer tools that integrate with Claude Code (co
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-23
+updated: 2026-11-25
 validated_links_on: 2026-11-12
 ---
 
@@ -421,6 +421,7 @@ Two Claude Code plugins that are days old. Stars, licence, dates and latest rele
 |---|---|---|---|---|
 | [mobile-agent-testers][mat] | created 2026-11-16, 1,324 stars | v0.1.0 (2026-11-19) | A GitHub Actions workflow plus Claude Code plugin: each "tester" is a Claude Code agent with its own iOS Simulator or Android emulator and a persona (device, language, text size), which explores the app and writes a bug report with screenshots | The README's own example runs (LocalSend, AnkiDroid, a Flutter sample) are the author's runs on public apps, not user reports. Model cost reported at $0.15 to $0.55 per phone in those runs (vendor claim). It "sometimes misreads a screen" (3 of 20 agents in one run flagged the Simulator keyboard), covers main paths only, and agents explore, so runs are not repeatable; it is not a replacement for scripted tests. Hosted runners are meant for the repo's own project; the author is exploring a hosted version for teams with private apps |
 | [fast-anything][fast-anything] | created 2026-11-21, 2,951 stars | v0.8.5 (2026-11-23) | A CLI, Claude Code plugin and MCP server that profiles a Python, Node, Ruby, Java, Go and other app, has the coding agent port only the hot function to Rust, replays recorded real calls to check identical results, and swaps it in reversibly | Speed-ups in the README (for example 116x on a Python fuzzy-dedupe example, 3x on Java) are the author's runs on one i5-10500 Windows machine over its own `examples/`, not independent benchmarks. It ports top-level deterministic functions over plain data, and needs a Rust toolchain. Agent-neutral: `--agent` takes `claude`, `codex` or any command reading a prompt on stdin |
+| [shrink-anything][shrink-anything] | created 2026-11-23, 249 stars (as of 2026-11-25) | v0.1.0 (2026-11-23) | A CLI, Claude Code plugin and MCP server (8 tools) that finds dead code, unused dependencies and assets and duplicates in 19 languages, deletes them, and keeps a cut only if your own check command exits 0 and at least as many tests run as before; anything it cannot prove is handed to your agent or left alone | The README's demo cuts (for example 45% fewer lines on a TypeScript cart) and "46% fewer tokens" are the author's own numbers on its `examples/`, not independent measurements. Counts names rather than building a call graph, so it can miss dead code; public library names are kept. Agent-neutral: `--agent` takes `claude`, `codex` or any command reading a prompt on stdin |
 
 ---
 
@@ -487,7 +488,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Source | Content |
 |---|---|
-| [mobile-agent-testers][mat] · [fast-anything][fast-anything] | Two new Claude Code plugins: README, MIT `LICENSE`, `gh api` records and releases (read 2026-11-23); self-reported claims only |
+| [mobile-agent-testers][mat] · [fast-anything][fast-anything] · [shrink-anything][shrink-anything] | Three new Claude Code plugins: README, MIT `LICENSE`, `gh api` records and releases (read 2026-11-23; shrink-anything 2026-11-25); self-reported claims only |
 | [RTK repository][rtk-repo] | CLI proxy, hook integration, benchmarks |
 | [rtk-ai/rtk#839][rtk-839] | Independent benchmark findings |
 | [GSD repository][gsd-repo] · [GSD Core][gsd-core] | Meta-prompting + context engineering framework; archived, README points to GSD Core (`gh api` 2026-11-21) |
@@ -571,3 +572,4 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [docs-mirror]: https://github.com/ericbuess/claude-code-docs
 [mat]: https://github.com/pierridotite/mobile-agent-testers
 [fast-anything]: https://github.com/EL4CTEO/fast-anything
+[shrink-anything]: https://github.com/EL4CTEO/shrink-anything
