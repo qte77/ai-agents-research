@@ -205,10 +205,14 @@ prints the input split (cache reads, cache writes by 5-minute and 1-hour lifetim
 tokens, the turns after an idle gap longer than `gap_min` (default 60) with their cache write and read,
 the share of writes after gaps, a hit/miss prediction (a miss when the gap since the previous response
 exceeds the cache lifetime, which defaults to 5 or 60 minutes from the session's write buckets) checked
-against the outcome (a miss when a turn writes more than it reads), and the compaction markers. It
-dedupes on message ID only (keeping the last streamed chunk) and skips subagent sidechains, so its counts
-can differ slightly from the week's table, which also deduped on request ID. Run it on your own
-transcripts before relying on these shares.
+against the outcome, and the compaction markers. A turn counts as a miss when it writes again part of
+what the previous turn had cached, that is, when it reads less than the previous turn read and wrote;
+a turn that reads the whole cached prefix and writes a large new suffix is a hit. The rule follows the
+rebuilt-token ledger of [cachemiss][cachemiss] (source read, not run, 2026-11-25). On the session in the
+second data point below it counts 14 misses in 1,826 turns, where the earlier rule "writes more than
+it reads" counted 11. The script dedupes on message ID only (keeping the last streamed chunk) and skips
+subagent sidechains, so its counts can differ slightly from the week's table, which also deduped on
+request ID. Run it on your own transcripts before relying on these shares.
 
 ### Second data point: one long session (2026-11-22 to 2026-11-25)
 
@@ -430,6 +434,7 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | [CC changelog][cc-changelog] | Idle compaction: 2.1.299 (terminal, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`), 2.1.302 (`/config` row), 2.1.314 (VS Code, Desktop, gateways), 2.1.318 (fix) (read 2026-11-09) |
 | [Settings reference][settings-ref] | `idleCompaction` description, default `true`, v2.1.290+ (read 2026-11-09); conditions list with "about an hour" idle time and the one-hour-TTL requirement (read 2026-11-25) |
 | [Cache diagnostics][cache-diag] | `diagnostics.previous_message_id`, `cache_miss_reason` types, stable status, same-workspace limit (read 2026-11-25) |
+| [cachemiss][cachemiss] | Rebuilt-token rule for a cache miss (tokens the previous call had cached that this call writes again); MIT, source read 2026-11-25, not run |
 | [Claude Code caching docs][cc-caching] | Prefix layers, subagent and fork cache sharing, `/usage` "Prompt cache (main)" line, cache scope (read 2026-11-25) |
 | [arXiv 2604.22750][p-spend], [2508.21433][p-complexity], [2610.04433][p-harness-tokens], [2601.06007][p-dontbreak], [2307.03172][p-lost-middle] | Cost-lever papers, abstracts read 2026-11-25 (preprints; 2307.03172 peer-reviewed in 2023) |
 | [Chroma, Context Rot][chroma-rot], [Manus][manus-ctx], [Anthropic, context management][anth-context-mgmt] | Practitioner and vendor sources for the context-size and prompt-stability levers (read 2026-11-25) |
@@ -452,6 +457,7 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 [effort]: https://platform.claude.com/docs/en/build-with-claude/effort
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 [cache-diag]: https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics
+[cachemiss]: https://github.com/CedricConday/cachemiss
 [p-spend]: https://arxiv.org/abs/2604.22750
 [p-complexity]: https://arxiv.org/abs/2508.21433
 [p-harness-tokens]: https://arxiv.org/abs/2610.04433
