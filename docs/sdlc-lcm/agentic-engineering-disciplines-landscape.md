@@ -61,8 +61,8 @@ search over whole harnesses; results and caveats live in
 
 A teaching picture, not a new definition; the definitions stay in the table above. A diagram by Shittu
 Olumide ([image][rings-img], hosted by KDnuggets) draws four concentric rings with the caption "Each layer
-contains the one before it." It accompanies *An Introduction to Loop Engineering* (Machine Learning
-Mastery, 2026-07-23, per the [KDnuggets roundup][kdn-roundup]); the article page
+contains the one before it." It accompanies *An Introduction to Loop Engineering* (2026-07-23, on
+machinelearningmastery.com, as linked from the [KDnuggets roundup][kdn-roundup]); the article page
 (`machinelearningmastery.com/an-introduction-to-loop-engineering/`) refuses automated clients (HTTP 403),
 so only the image and the roundup were read (2026-11-25).
 
@@ -95,7 +95,7 @@ so only the image and the roundup were read (2026-11-25).
 
 ### Loop engineering in practice
 
-One cluster, not seven corroborations: the sources below date from 2026-06-07 to 2026-07-22, restate Osmani's post or each other, and most sell something (noted per source). Only the Claude Code article documents shipped features; the rest are vendor guidance or practitioner claims. The one systematic study found so far, [Lulla et al.][loop-study] (arXiv 2608.21884, 5 authors, v1 2026-08-22, v3 2026-10-22; abstract read 2026-11-25), reviews this grey literature and mines 217 open-source repositories with agent loops: loops commonly have scheduled or event triggers, machine-checkable stop conditions, state files and token budgets, and of the claimed benefits the abstract says "These sources provide no systematic evidence".
+One cluster, not seven corroborations: the sources below date from 2026-06-07 to 2026-07-22, restate Osmani's post or each other, and most sell something (noted per source). Only the Claude Code article documents shipped features; the rest are vendor guidance or practitioner claims. The one systematic study found so far, [Lulla et al.][loop-study] (arXiv 2608.21884, 5 authors, v1 2026-08-22, v3 2026-10-22; abstract read 2026-11-25), reviews this grey literature, which recommends scheduled or event triggers, machine-checkable stop conditions, state files and token budgets, and mines 217 open-source repositories with agent loops (out of 36,710 searched): nearly all commit the configuration that starts the loop, almost none commit the recommended state files, and of the claimed benefits the abstract says "These sources provide no systematic evidence".
 
 **Provenance.** [Osmani][osmani-loop] (2026-06-07, practitioner) defines a loop as a recursive goal and the job as designing the system that prompts the agent; he credits Peter Steinberger and Cherny for the framing and does not name a coiner. One secondary source has him posting the day after a Steinberger statement; an earlier, undated Steinberger statement is reported secondhand and was not reached. swyx's "Loopcraft: the art of stacking loops" (Latent Space, 2026-06-12; search snippet only, no working URL, original not read) is a parallel framing: stack loops. [LangChain][lc-loop] (2026-06-16), [Kilo][kilo-loop] (2026-06-10), [Data Science Dojo][dsd-loop] (2026-06-24), [codecentric][cc-loop] (2026-07-05, which names Osmani as coiner), [IBM][ibm-loop] (2026-07-17) and [Augment][augment-loop] (2026-07-22) restate it; IBM and Data Science Dojo name no coiner. Huntley's Ralph loop (2025) predates all of these; Greyling's repo (created 2026-06-09, after Osmani's post) is a later concrete reference (row above).
 
