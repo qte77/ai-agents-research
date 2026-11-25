@@ -2,7 +2,7 @@
 title: CC Prompt Caching Behavior — Server-Side Mechanism and Session Economics
 purpose: How Anthropic's server-side prompt caching works in CC sessions — what's cached, matching, TTL, hit rates, and cost impact.
 created: 2026-03-27
-updated: 2026-11-23
+updated: 2026-11-25
 validated_links_on: 2026-11-09
 status: adopt
 ---
@@ -161,6 +161,9 @@ The other side of the TTL: a session you step away from loses its cache, and the
 
 - **Setting:** `idleCompaction` in any settings file, default `true`. Per the [settings reference][settings-ref]: "Idle compaction compacts a long conversation that you've stepped away from. Your next message then sends a summary instead of the whole conversation." The key "requires Claude Code v2.1.290 or later. On an earlier version, which ignores this key, turn off `autoCompactEnabled` to stop idle compaction."
 - **Threshold:** `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` changes the 200K-token minimum (changelog, 2.1.299).
+- **Idle time, two wordings:** the [changelog][cc-changelog] (2.1.299, read 2026-11-09) says "about 54 minutes"; the [settings reference][settings-ref] (read 2026-11-25) lists the condition "about an hour has passed since the last request, and your computer stays awake until then". Both say "about", neither gives an exact trigger; the two are consistent with a check shortly before the one-hour lifetime ends (inference, not documented). The settings reference also requires the conversation to be on the one-hour TTL, auto-compaction to be on, and an interactive terminal, the VS Code chat panel, or the desktop Code tab running on your machine or over SSH.
+- **Resume does not compact:** the [sessions page][cc-sessions] (read 2026-11-25) describes a resumed session as restoring the history up to the last compaction, with no compaction step on resume. Compaction on a resumed old session is something you trigger or auto-compact triggers, and the [Claude Code caching page][cc-caching] says `/compact` "costs the most" there because the summarization request reprocesses the history uncached.
+- **Needs a running session:** idle compaction runs inside the Claude Code process of the open session. When the host is stopped (a container or dev container, a VM, a desktop app, a CI runner, a serverless function scaled to zero), nothing runs, so it cannot fire; the cache then expires unseen and the next request pays a full rewrite. The settings reference's "your computer stays awake" condition points the same way (documented condition; the consequence for stopped hosts is our inference).
 - **Where it runs:** terminal from 2.1.299; `/config` gained an "Idle compaction" toggle in 2.1.302; 2.1.314 added it to VS Code and Claude Desktop's Code tab (there, "the summary is used on your next message if the prompt cache has expired") and extended it to "subscribers with telemetry turned off, and on Bedrock, Vertex, Foundry and LLM gateways once the one-hour prompt cache is on"; 2.1.318 "Fixed idle compaction replacing a conversation with a reply that was not a summary."
 - **Trade-off:** the next turn is cheaper (a summary instead of a full cache rebuild of 200K+ tokens), but it continues from a summary, so detail from the conversation can be lost exactly as with `/compact`. Turn it off for sessions where you need the full transcript after a break, and see [CC-extended-context-analysis.md](CC-extended-context-analysis.md) for compaction in general.
 
@@ -335,7 +338,8 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | [CC prompt-caching docs][cc-caching] | CC-specific TTL buckets, choose-the-TTL precedence, disable vars, cache scope, actions that invalidate/keep the cache (accessed 2026-10-15) |
 | [CC env vars reference][cc-env-vars] | `CLAUDE_CODE_PROMPT_CACHE_TTL`, `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`, `FORCE_PROMPT_CACHING_5M`, `ENABLE_PROMPT_CACHING_1H`, `DISABLE_PROMPT_CACHING*` (accessed 2026-10-15) |
 | [CC changelog][cc-changelog] | Idle compaction: 2.1.299 (terminal, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`), 2.1.302 (`/config` row), 2.1.314 (VS Code, Desktop, gateways), 2.1.318 (fix) (read 2026-11-09) |
-| [Settings reference][settings-ref] | `idleCompaction` description, default `true`, v2.1.290+ (read 2026-11-09) |
+| [Settings reference][settings-ref] | `idleCompaction` description, default `true`, v2.1.290+ (read 2026-11-09); conditions list with "about an hour" idle time and the one-hour-TTL requirement (read 2026-11-25) |
+| [Sessions][cc-sessions] | What a resumed session restores: history up to the last compaction, no compaction on resume (read 2026-11-25) |
 | CC 2.1.83, session `9f7de296`, Codespaces, 2026-03-27 | Cache warmup curve, 96.3% hit rate — predates the TTL-bucket model (CC v2.1.242+) described above |
 | [AWS Bedrock prompt-caching docs][bedrock-caching] | Per-model minimum cacheable prefix on Bedrock specifically (Fable/Mythos 5.x = 512 tokens, same as other platforms) (accessed 2026-10-15) |
 
@@ -347,7 +351,8 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 [api]: https://platform.claude.com/docs/en/api/messages
 [cc-caching]: https://code.claude.com/docs/en/prompt-caching
 [cc-env-vars]: https://code.claude.com/docs/en/env-vars
-[settings-ref]: https://code.claude.com/docs/en/settings-reference
+[settings-ref]: https://code.claude.com/docs/en/settings-reference#idlecompaction
+[cc-sessions]: https://code.claude.com/docs/en/sessions
 [bedrock-caching]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html
 [cc-gateway]: https://code.claude.com/docs/en/llm-gateway-protocol
 [effort]: https://platform.claude.com/docs/en/build-with-claude/effort
