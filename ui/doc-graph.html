@@ -285,7 +285,7 @@
         // every doc is seeded near its primary hub, so clusters exist from the first frame and do not
         // depend on how long physics runs. Physics only relaxes the docs inside their cluster for
         // RUN_MS after a change (a new change cancels the pending stop). No perpetual motion.
-        var RUN_MS = 1000, stopTimer = null, seeded = {};
+        var RUN_MS = 1000, stopTimer = null, ready = false, userMoved = false;
         function jitter(id, salt) { // deterministic value in [0, 1) from an id
           var h = 2166136261;
           for (var i = 0; i < id.length; i++) { h = Math.imul(h ^ id.charCodeAt(i), 16777619); }
@@ -302,12 +302,13 @@
           });
           var spread = Math.max(40, Math.min(90, ring * Math.PI / on.length * 0.5)); // cluster radius
           docs.forEach(function (n) {
-            var home = primaryHub(n), c = home ? at[home] : { x: 0, y: 0 }, key = home || "";
+            var home = primaryHub(n), c = home ? at[home] : { x: 0, y: 0 };
             var show = visible(n), up = { id: n.id, physics: show };
-            if (show && seeded[n.id] !== key) { // new doc or a new primary hub: re-seed near it
+            // Reason: the ring radius and hub angles change with every filter, so every visible doc is
+            // re-seeded next to its hub's new position (deterministic jitter keeps it stable).
+            if (show) {
               var r = (home ? spread : 60) * Math.sqrt(jitter(n.id, 1)), t = 2 * Math.PI * jitter(n.id, 2);
               up.x = c.x + r * Math.cos(t); up.y = c.y + r * Math.sin(t);
-              seeded[n.id] = key;
             }
             ups.push(up);
           });
@@ -323,18 +324,20 @@
                            animation: animate ? { duration: 300 } : false });
         }
         function restabilise() {
-          if (!network) { return; }
+          // Reason: wait for the first pre-layout, or a stop timer could cut it short.
+          if (!network || !ready) { return; }
           clearTimeout(stopTimer);
-          seedLayout();
+          userMoved = false;
           network.setOptions({ physics: { enabled: true } });
           stopTimer = setTimeout(function () {
             network.setOptions({ physics: { enabled: false } });
-            fitView(true);
+            if (!userMoved) { fitView(true); } // keep a search zoom or the user's own pan/zoom
           }, RUN_MS);
         }
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
           syncSprings();
+          seedLayout();
           restabilise();
           if (recolour && mode === "topic") { recolour(); } // multi-hub docs follow their first checked hub
           refreshCounts();
@@ -476,7 +479,9 @@
         });
 
         // After the invisible pre-layout: fit the view around the hub index, then run physics for RUN_MS.
-        network.once("stabilizationIterationsDone", function () { fitView(false); restabilise(); });
+        network.once("stabilizationIterationsDone", function () { ready = true; fitView(false); restabilise(); });
+        network.on("dragStart", function () { userMoved = true; });
+        network.on("zoom", function () { userMoved = true; });
 
         // Colour mode: recolour nodes and legend; hub-edge springs are set per edge above.
         recolour = function () {
@@ -560,6 +565,7 @@
           var top = (matches() || []).filter(visible)[0];
           if (top) {
             network.selectNodes([top.id]);
+            userMoved = true;
             network.focus(top.id, { scale: 1.2, animation: true });
           }
         });
