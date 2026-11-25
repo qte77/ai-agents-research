@@ -424,7 +424,8 @@ Checked 2026-11-23 against the [skills page][cc-skills] (synced-skills section),
 **What it is.** A skill built into Claude Code for building on the Claude API and the
 Anthropic SDKs. The changelog first lists it at v2.1.69 ([changelog][cc-changelog]; checked
 2026-11-25). The [skills page][cc-skills-bundled] names it among the bundled skills, and the
-[commands page][cc-commands] lists its subcommands and says it also activates when code imports
+[commands page][cc-commands] lists its subcommands (the skills page's "Work on Claude API projects"
+table gives what each does and its minimum version) and says it also activates when code imports
 `anthropic` or `@anthropic-ai/sdk`. The same skill is published as the `claude-api` folder in
 [`anthropics/skills`][gh-skills], whose own `LICENSE.txt` is the Apache License 2.0 (read via
 `gh api`, 2026-11-25). The upstream copy can differ from the one bundled in a given Claude Code
@@ -432,12 +433,12 @@ version; the layout below is the bundled one.
 
 **Layout (Claude Code 2.1.331, read 2026-11-25).** The unpacked folder holds one folder per
 language (`python`, `typescript`, `go`, `java`, `ruby`, `php`, `csharp`, `curl`), each with a
-`claude-api/` reference set (README, streaming, tool use and so on) and, for most, a
-`managed-agents/` README, plus `shared/`. `shared/` has 64 files: 38 top-level (models, prompt
+`claude-api/` reference set (README, streaming, tool use and so on); six of the eight also have a
+`managed-agents/` folder (`curl` has a `managed-agents.md` file, `csharp` neither), plus `shared/`. `shared/` has 64 files: 38 top-level (models, prompt
 caching, cost and latency optimisation, migration guides, the Managed Agents set, `live-sources.md`)
 and four subfolders, `evals/` (7), `latency-optimization/` (4), `managed-agents-quickstarts/` (12)
 and `preserved-thinking-migration/` (3). The whole folder has 111 files. `SKILL.md` was **not** in
-the unpacked folder (a `find` over the machine found none); its body is read from the upstream
+the unpacked folder (a `find` under the bundled-skills folder found none); its body is read from the upstream
 copy here.
 
 **Subcommands** (invoked as `/claude-api <subcommand>`; from the
@@ -461,9 +462,8 @@ The upstream `SKILL.md` read on 2026-11-25 has no table row for `api-version`, `
 or `managed-agents-secure`, although the commands page lists all three, so the upstream copy lags the
 bundled one; those three lines rest on the commands page, the changelog and the bundled files.
 
-**Where it lands on disk (observed, one machine, 2026-11-25; not documented).** The skills and
-commands pages say nothing about it; a search of those two pages for an unpack folder found
-nothing. Observed on one Linux machine: when a bundled skill with reference files is invoked, its
+**Where it lands on disk (observed, one machine, 2026-11-25).** Not found on the skills and
+commands pages, the only two pages searched. Observed on one Linux machine: when a bundled skill with reference files is invoked, its
 files are unpacked under `/tmp/claude-<uid>/bundled-skills/<CC version>/<hash>/<skill>/`. Only
 skills invoked there appeared. The lead observed that the previous version's folder was gone after
 the 2.1.330 to 2.1.331 update (not re-checked here). Being under `/tmp`, the copy is temporary and
