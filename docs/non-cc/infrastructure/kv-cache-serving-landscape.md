@@ -177,7 +177,8 @@ A closed provider's prompt cache can't be rebuilt or hosted locally. The vendor 
 isolation per organization (Anthropic also per workspace) and no export; that the cached state depends
 on the provider's unpublished weights is our inference, not a vendor statement. From the client side,
 the usage counts and TTFT show hit or miss, and timing studies such as the Gu et al. audit have also
-inferred architecture details, but none recovered prompts across organization-isolated caches. Local caching and persistence need open weights and an
+inferred architecture details; none of the studies cited here reports recovering prompts from a
+per-organization cache. Local caching and persistence need open weights and an
 engine such as vLLM, SGLang, LMCache or llama.cpp.
 
 ## Current state of the art (2026)
