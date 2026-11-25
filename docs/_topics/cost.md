@@ -54,6 +54,7 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 | [llm-routers-gateways-landscape.md § When to Use What](../non-cc/infrastructure/llm-routers-gateways-landscape.md#when-to-use-what) | Routing requests to cheaper models through a gateway; LiteLLM `agent_eval` (preview) reports pass rate, cost and duration per harness | non-cc |
 | [context-management.md](../cc-native/examples/rules/context-management.md) | Example rule: context-utilization target and compaction triggers | cc-native |
 | [kv-cache-serving-landscape.md](../non-cc/infrastructure/kv-cache-serving-landscape.md) | KV cache in serving: vendor prompt-caching APIs and open serving-stack internals | non-cc |
+| [kv-cache-serving-landscape.md § Cache timing, isolation and local reuse](../non-cc/infrastructure/kv-cache-serving-landscape.md#cache-timing-isolation-and-local-reuse) | Vendor prompt-cache isolation, what timing reveals, and local KV cache persistence with open weights (llama.cpp slots, CacheGen, CacheBlend) | non-cc |
 
 ## Measuring
 

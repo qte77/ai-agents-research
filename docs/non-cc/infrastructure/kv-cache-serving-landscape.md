@@ -2,7 +2,7 @@
 title: KV-Cache Serving Landscape — Vendor Prompt Caching & Inference Internals
 purpose: "Survey of KV (key-value) cache mechanisms in LLM serving: vendor prompt-caching APIs (Anthropic, OpenAI, Gemini) and open serving-stack internals such as paging, prefix reuse and offload."
 created: 2026-07-08
-updated: 2026-11-23
+updated: 2026-11-25
 validated_links_on: 2026-09-24
 status: reference
 ---
@@ -116,6 +116,71 @@ Anthropic's per-model minimums verified against the [prompt-caching docs][anthro
   complementary to, not competing with, mainstream high-throughput KV-cache serving. **Research/early**
   — repo ~3 months old, 821 stars (`gh api` 2026-11-22).
 
+## Cache timing, isolation and local reuse
+
+Defensive/academic summary of what a prompt cache's timing exposes, how vendors isolate it, and
+whether a client can rebuild or host one locally. Builds on the vendor table in section 1 and the
+engines in section 2 (vLLM APC, SGLang, LMCache, Mooncake); the CPU-side analogue is in
+[detokenization-leaks-analysis.md](../../sdlc-lcm/detokenization-leaks-analysis.md).
+
+### What timing can and cannot reveal
+
+A cache hit skips prefill, so time-to-first-token (TTFT) is lower; a client sees hit or miss, never the
+cached tensors. Evidence levels below are peer-reviewed or preprint as stated.
+
+- **Provider audit** ([Gu et al., 2502.07776][gu-audit], ICML 2025): statistical timing audit. In the
+  paper's results it found global (cross-user) sharing in 7 providers (Azure, Deep Infra, Fireworks,
+  Lepton, OpenAI, Perplexity, Replicate) and per-organization sharing only for Anthropic (Claude 3
+  Haiku) and OpenAI GPT-4o mini. The abstract reports the OpenAI embedding model as decoder-only,
+  inferred from timing. **As of the paper (v1 2025-02, v2 2025-07)**; the paper reports
+  that the OpenAI embedding model's global sharing "has been patched", so it is not a current-state
+  statement for any provider.
+- **PromptPeek** ([Wu et al., NDSS][promptpeek]): self-hosted multi-tenant serving (SGLang, vLLM
+  class) that shares KV blocks across users lets one tenant reconstruct another's prompt; the paper
+  concludes such serving needs careful resource management. Its setting is self-hosted multi-tenant
+  serving; the abstract does not test closed provider APIs.
+- **InputSnatch** ([2411.18191][inputsnatch], preprint, no venue listed) and **Early Bird**
+  ([2409.20002][earlybird], accepted at IEEE TIFS) apply the same timing idea to prefix and semantic
+  caches. Success figures are in the papers, not repeated here (not stated on the abstract pages).
+
+### Prompt reconstruction from KV caches and defences
+
+- **KV-Cloak** ([2508.09442][kvcloak], NDSS 2026): threat model is a party with access to the KV cache
+  itself; the paper shows direct inversion, collision and injection attacks and proposes reversible
+  matrix obfuscation of the cache, reporting reconstruction reduced to noise with minimal overhead.
+- **SafeKV** ([2508.08438][safekv], preprint, no venue): isolate only blocks detected as sensitive
+  instead of isolating everything; reports up to 40.58% lower TTFT overhead and up to 2.66x
+  throughput versus full isolation (abstract, as of v2 2026-02-09).
+
+### Vendor isolation
+
+- **Anthropic** ([docs][anthropic-caching], read 2026-11-25): "Different organizations never share
+  caches, even if they use identical prompts." On the Claude API, Claude Platform on AWS and
+  Microsoft Foundry caches are also isolated between workspaces; on Claude Models on Google Cloud
+  (Google managed) and Amazon Bedrock "caches are isolated by organization only".
+- **OpenAI** ([docs][openai-caching], read 2026-11-25): "Caches are not shared across organizations
+  and cannot be reused across regional processing boundaries." Setting a separate `prompt_cache_key` per
+  user "also helps prevent cache-hit probing across customers".
+
+### Local persistence and reuse (open weights only)
+
+| Item | What it does | Evidence / status (as of 2026-11-25) |
+|---|---|---|
+| **llama.cpp server** ([repo][llamacpp]) | `--slot-save-path` plus `POST /slots/{id}?action=save` / `restore` write a slot's prompt cache to a file and reload it; `cache_prompt` reuse defaults on | MIT, 136,235 stars, pushed 2026-11-25; documented in the server README |
+| **CacheGen** ([2310.07240][cachegen]) | Compresses and streams KV caches; reports 3.5-4.3x smaller cache and 3.2-3.7x lower fetch+processing delay vs prior reuse systems | SIGCOMM'24; [repo][cachegen-repo] 176 stars, no licence field, last push 2024-10-09 (stale) |
+| **CacheBlend** ([2405.16444][cacheblend]) | Reuses non-prefix KV caches (retrieval-augmented generation (RAG) chunks) with partial recompute; 2.2-3.3x lower TTFT, 2.8-5x throughput | Preprint; abstract page links [LMCache][lmcache]; standalone [repo][cacheblend-repo] 207 stars, no licence field, last push 2025-07-15 |
+| **SCBench** ([2412.10319][scbench]) | Benchmark of long-context methods from a KV-cache angle (12 tasks, 8 solution categories); sub-O(n) memory methods struggle in multi-turn | ICLR 2025. Measures accuracy under KV reuse, **not** cache hit rate or TTFT savings |
+
+### Verdict
+
+A closed provider's prompt cache can't be rebuilt or hosted locally. The vendor docs above document
+isolation per organization (Anthropic also per workspace) and no export; that the cached state depends
+on the provider's unpublished weights is our inference, not a vendor statement. From the client side,
+the usage counts and TTFT show hit or miss, and timing studies such as the Gu et al. audit have also
+inferred architecture details; none of the studies cited here reports recovering prompts from a
+per-organization cache. Local caching and persistence need open weights and an
+engine such as vLLM, SGLang, LMCache or llama.cpp.
+
 ## Current state of the art (2026)
 
 - **Production table stakes:** PagedAttention block memory + exact-prefix caching (vLLM APC / SGLang
@@ -142,6 +207,9 @@ Anthropic's per-model minimums verified against the [prompt-caching docs][anthro
 | [MQA][mqa] · [GQA][gqa] · [MLA][mla] · [CLA][cla] | Architectural KV reduction |
 | [DistServe][distserve] · [Mooncake][mooncake] · [LMCache][lmcache] | Offload / disaggregation |
 | [Execution-State Capsules][capsules] · [FlashRT][flashrt] | Checkpoint/restore, physical-AI/robotics serving |
+| [Gu et al. audit][gu-audit] · [PromptPeek][promptpeek] · [InputSnatch][inputsnatch] · [Early Bird][earlybird] | Cache-timing attacks and audits |
+| [KV-Cloak][kvcloak] · [SafeKV][safekv] | KV-cache reconstruction defences |
+| [llama.cpp][llamacpp] · [CacheGen][cachegen] · [CacheBlend][cacheblend] · [SCBench][scbench] | Local persistence/reuse and benchmark |
 
 [anthropic-caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 [openai-caching]: https://developers.openai.com/api/docs/guides/prompt-caching
@@ -175,3 +243,15 @@ Anthropic's per-model minimums verified against the [prompt-caching docs][anthro
 [ultraquant]: https://arxiv.org/abs/2606.20474
 [capsules]: https://arxiv.org/abs/2606.20537
 [flashrt]: https://github.com/flashrt-project/FlashRT
+[gu-audit]: https://arxiv.org/abs/2502.07776
+[promptpeek]: https://www.ndss-symposium.org/ndss-paper/i-know-what-you-asked-prompt-leakage-via-kv-cache-sharing-in-multi-tenant-llm-serving/
+[inputsnatch]: https://arxiv.org/abs/2411.18191
+[earlybird]: https://arxiv.org/abs/2409.20002
+[kvcloak]: https://arxiv.org/abs/2508.09442
+[safekv]: https://arxiv.org/abs/2508.08438
+[llamacpp]: https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+[cachegen]: https://arxiv.org/abs/2310.07240
+[cachegen-repo]: https://github.com/UChi-JCL/CacheGen
+[cacheblend]: https://arxiv.org/abs/2405.16444
+[cacheblend-repo]: https://github.com/YaoJiayi/CacheBlend
+[scbench]: https://arxiv.org/abs/2412.10319
