@@ -168,7 +168,7 @@ cached tensors. Evidence levels below are peer-reviewed or preprint as stated.
 |---|---|---|
 | **llama.cpp server** ([repo][llamacpp]) | `--slot-save-path` plus `POST /slots/{id}?action=save` / `restore` write a slot's prompt cache to a file and reload it; `cache_prompt` reuse defaults on | MIT, 136,235 stars, pushed 2026-11-25; documented in the server README |
 | **CacheGen** ([2310.07240][cachegen]) | Compresses and streams KV caches; reports 3.5-4.3x smaller cache and 3.2-3.7x lower fetch+processing delay vs prior reuse systems | SIGCOMM'24; [repo][cachegen-repo] 176 stars, no licence field, last push 2024-10-09 (stale) |
-| **CacheBlend** ([2405.16444][cacheblend]) | Reuses non-prefix KV caches (RAG chunks) with partial recompute; 2.2-3.3x lower TTFT, 2.8-5x throughput vs full recompute | Preprint; abstract page links [LMCache][lmcache]; standalone [repo][cacheblend-repo] 207 stars, no licence field, last push 2025-07-15 |
+| **CacheBlend** ([2405.16444][cacheblend]) | Reuses non-prefix KV caches (retrieval-augmented generation (RAG) chunks) with partial recompute; 2.2-3.3x lower TTFT, 2.8-5x throughput | Preprint; abstract page links [LMCache][lmcache]; standalone [repo][cacheblend-repo] 207 stars, no licence field, last push 2025-07-15 |
 | **SCBench** ([2412.10319][scbench]) | Benchmark of long-context methods from a KV-cache angle (12 tasks, 8 solution categories); sub-O(n) memory methods struggle in multi-turn | ICLR 2025. Measures accuracy under KV reuse, **not** cache hit rate or TTFT savings |
 
 ### Verdict
