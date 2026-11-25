@@ -3,7 +3,7 @@ title: Doc-graph page facets and timeline, 2026-11-24 sources, KB papers into pa
 status: approved
 issue: "#1071"
 created: 2026-11-24
-updated: 2026-11-24
+updated: 2026-11-25
 ---
 
 Tracking issue: #1071. Successor to [plan 0015](2026-11-20-0015-kb-structure-graphify-removal.md)
@@ -12,12 +12,13 @@ plan and `make reconcile`, which reads only the newest plan, checks all of it.
 
 ## Current status
 
-**Read this first.** Plan opened 2026-11-24 from four owner requests: ideas for the doc-graph page
-from a screenshot of a live "Hypergraph" dashboard, two papers, five repos and products, and "update
-paperverse with the papers in this KB and the selected ones from the rxiv workflows". The owner
-answered the open questions the same day ([§ Owner decisions](#owner-decisions-2026-11-24)).
-Nothing in [§ Remaining work](#remaining-work) has shipped yet. Plan 0015 closed with N14 to N33
-merged (#1045 to #1068) and v0.24.0 released (#1069).
+**Read this first.** Plan opened 2026-11-24 from four owner requests (doc-graph ideas, two papers,
+five repos and products, KB papers into paperverse); the owner answered the open questions the same
+day ([§ Owner decisions](#owner-decisions-2026-11-24)). **Status 2026-11-25:** N34 to N37, N39, N40
+and N43 to N49 have shipped (#1072 to #1084; each struck row names its PR). Still open in
+[§ Remaining work](#remaining-work): N38 (handed to a paperverse session as `qte77/paperverse#187`),
+N41 (freshness rule, waiting on the owner), N42 (connectors-directory section) and the owner-gated
+rows below. Plan 0015 closed with N14 to N33 merged (#1045 to #1068) and v0.24.0 released (#1069).
 
 **How this plan runs: parallel worktree lanes.** Every agent row belongs to exactly one lane
 ([§ Lanes](#lanes)). A lane is one subagent working in its own git worktree on its own branch, and
@@ -28,20 +29,17 @@ worktrees, sends the briefs, verifies, integrates and merges. Run at most three 
 
 1. `git pull`, `make reconcile`, list open PRs (merge a weekly bot PR first if one is open, after
    bringing it up to date with `main`).
-2. **Wave 1**, three lanes in one message: K (N37), G (N34), P (N35, N39). For each: create the
-   worktree from `origin/main` as a sibling of the checkout (`git worktree add ../wt-<lane> -b
-   <branch> origin/main`), then start one subagent with the brief in [§ Lanes](#lanes).
-3. Hand row N38 to a **separate paperverse session** (the owner opens it in `qte77/paperverse`;
-   paste [§ Source map: paperverse](#paperverse-n38) into it). It can start at once on the sync fix;
-   adding `triage/kb-papers` as a source and the catch-up wait until N37 has merged, because the
-   folder doesn't exist before that and the sync's listing would fail the run.
+2. **New owner sources:** run each topic as a lane (one worktree from `origin/main` as a sibling of
+   the checkout, `git worktree add ../wt-<lane> -b <branch> origin/main`, and one subagent with the
+   brief in [§ The loop](#the-loop)); at most three at once. Add a struck row per topic in its PR.
+3. **N42** next as an agent row (a browser pass of the connectors directory); **N41** once the owner
+   answers. Check `qte77/paperverse#187` for N38.
 4. As each lane returns: re-check its strongest claims at source, run the checks for its kind
    ([§ The loop](#the-loop)) and add the hub, index and glossary rows it proposes. Right before the
    merge, merge `main` into the lane branch and then add the plan-row strike as the last commit
    (sibling lanes strike adjacent rows, so striking earlier conflicts); push, open the PR, run the
    link gate and merge. Merge serially. Then remove the worktree and both branches.
-5. **Wave 2** when a slot frees: lane R (N36).
-6. After all lanes merge: release (dispatch the bump workflow, minor; merge its PR once CI is green;
+5. After a batch merges: release (dispatch the bump workflow, minor; merge its PR once CI is green;
    check the tag and the GitHub Release). Comment progress on #1071.
 
 **Owner-gated, don't start:** the N38 fix choice if it needs a repo setting or an App
