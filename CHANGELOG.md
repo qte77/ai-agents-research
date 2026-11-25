@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.26.0] - 2026-11-25
+
+### Added
+
+- Bundled `/claude-api` skill: what it is, folder layout (`shared/` 64 files), subcommands, observed on-disk unpack behaviour (not documented) and its own "cached tables" caveat, in `CC-skills-adoption-analysis.md`, with a pointer from `CC-changelog-feature-scan.md` (plan 0016 N50).
+
+- KV-cache serving landscape: cache-timing audits and attacks, KV-cache reconstruction defences, vendor cache isolation, and local cache persistence with open weights (plan 0016 N53).
+
+- `scripts/cc_cache_usage.py`: a stdlib report of one Claude Code session's prompt-cache usage from its transcript (cache reads and writes by lifetime, rewrites after idle gaps, a hit/miss prediction checked against the outcome, compaction markers), with unit tests (plan 0016 N54).
+
+### Changed
+
+- Prompt caching: idle-compaction wording (about 54 minutes vs about an hour, resume does not compact, needs a running session), a second one-session measurement, cost-lever evidence by level, stopped-host options, hit/miss prediction and a claims-checked table (plan 0016 N51, N52).
+
 ## [0.25.0] - 2026-11-25
 
 ### Added
