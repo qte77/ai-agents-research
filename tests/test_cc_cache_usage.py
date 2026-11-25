@@ -55,6 +55,29 @@ class SummarizeTests(unittest.TestCase):
         self.assertEqual(s["predicted"], {"hit": 1, "miss": 1})
         self.assertEqual(s["prediction_correct"], 2)
 
+    def test_a_large_new_tool_result_is_not_a_miss(self):
+        # Reason: turn b reads everything turn a cached and writes only its new suffix; a rule of
+        # "writes > reads" would call it a miss. Turn c reads less than b held: the prefix was rebuilt.
+        lines = [
+            resp("a", "2026-11-25T10:00:00Z", read=1000, write=200),
+            resp("b", "2026-11-25T10:01:00Z", read=1200, write=5000),
+            resp("c", "2026-11-25T10:02:00Z", read=0, write=6300),
+        ]
+        s = cu.summarize(lines, ttl_min=60)
+        self.assertEqual(s["actual"], {"hit": 1, "miss": 1})
+        self.assertEqual(s["rebuilt"], 6200)
+
+    def test_a_shrunk_prefix_after_compaction_is_a_partial_rebuild(self):
+        lines = [
+            resp("a", "2026-11-25T10:00:00Z", read=480000, write=2000),
+            resp("b", "2026-11-25T10:01:00Z", read=20000, write=5000),  # summary prefix: smaller
+            resp("c", "2026-11-25T10:02:00Z", read=25000),  # reads all of b: hit
+        ]
+        s = cu.summarize(lines, ttl_min=60)
+        self.assertEqual(s["actual"], {"hit": 1, "miss": 1})
+        self.assertEqual(s["rebuilt"], 5000)
+        self.assertIn("misses: 1 of 2 turns", cu.report(s))
+
     def test_compactions(self):
         lines = [boundary("2026-11-25T13:32:57Z", 490310, 25638)]
         s = cu.summarize(lines)

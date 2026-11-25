@@ -7,8 +7,9 @@ Transcripts live under ~/.claude/projects/<project>/<session-id>.jsonl. The repo
 main-thread API response once (streamed chunks repeat a message id; subagent turns are sidechains
 with their own cache), sums the usage fields, lists turns after idle gaps longer than gap_min with
 their cache write and read, checks a simple hit/miss prediction (miss when the gap since the
-previous response exceeds ttl_min) against the actual outcome (miss when a turn writes more than it
-reads), and lists the compaction markers. Token counts only; multiply by your model's prices.
+previous response exceeds ttl_min) against the actual outcome (miss when a turn writes again part of
+the prefix the previous turn had cached, i.e. it reads less than that turn read and wrote), and lists
+the compaction markers. Token counts only; multiply by your model's prices.
 """
 import json
 import sys
@@ -67,36 +68,51 @@ def _add_totals(s, recs):
         s["output"] += u.get("output_tokens") or 0
 
 
+def _rebuilt(prev, rec):
+    """Tokens this turn wrote again because the previous turn's cached prefix was not read back."""
+    # Reason: a turn that reads all the previous turn cached and writes only a new suffix (say, a
+    # large tool result) is a hit, though it writes more than it reads.
+    lost = max(0, prev["read"] + prev["write"] - rec["read"])
+    return min(lost, rec["write"])
+
+
 def _add_gaps(s, recs, gap_min):
-    prev = None
+    prev, prev_rec = None, None
     for rec in recs:
         try:
             now = _ts(rec["time"])
         except (TypeError, ValueError, AttributeError):
-            continue  # no usable timestamp: counted in the totals, left out of the gap logic
+            # Reason: a record without a usable timestamp counts in the totals but is left out of
+            # the gap logic, so the next turn's miss check compares with the last timestamped turn.
+            continue
         if prev is not None:
             gap = (now - prev).total_seconds() / 60
             # Reason: gaps run between responses, so they slightly understate the time since the
             # previous request started, which is where the cache lifetime counts from.
             predicted = "miss" if gap > s["ttl_min"] else "hit"
-            actual = "miss" if rec["write"] > rec["read"] else "hit"
+            rebuilt = _rebuilt(prev_rec, rec)
+            actual = "miss" if rebuilt else "hit"
             s["predicted"][predicted] += 1
+            s["actual"][actual] += 1
+            s["rebuilt"] += rebuilt
             s["prediction_correct"] += predicted == actual
             if gap > gap_min:
                 s["gaps"].append({"time": rec["time"], "gap_min": round(gap), "write": rec["write"], "read": rec["read"]})
                 s["gap_write"] += rec["write"]
-        prev = now
+        prev, prev_rec = now, rec
 
 
 def summarize(lines, gap_min=60, ttl_min=None):
-    """Summarize transcript lines (JSON strings) into token totals, gaps, predictions, compactions.
+    """Summarize transcript lines (JSON strings) into token totals, gaps, predicted and actual
+    hits and misses (with the tokens rebuilt), and compactions.
 
     ttl_min=None picks the cache lifetime from the write buckets: 5 minutes when most writes are
     5-minute writes, else 60.
     """
     recs, compactions = _parse(lines)
     s = dict(responses=0, read=0, write=0, write_1h=0, write_5m=0, uncached=0, output=0, ttl_min=ttl_min,
-             gaps=[], gap_write=0, predicted={"hit": 0, "miss": 0}, prediction_correct=0, compactions=compactions)
+             gaps=[], gap_write=0, predicted={"hit": 0, "miss": 0}, actual={"hit": 0, "miss": 0}, rebuilt=0,
+             prediction_correct=0, compactions=compactions)
     _add_totals(s, recs)
     if s["ttl_min"] is None:
         s["ttl_min"] = 5 if s["write_5m"] > s["write_1h"] else 60
@@ -112,7 +128,9 @@ def report(s):
            f"input: cache read {s['read']:,} ({s['read'] / inp:.1%}), cache write {s['write']:,} "
            f"({s['write'] / inp:.1%}; 1h {s['write_1h']:,}, 5m {s['write_5m']:,}), uncached {s['uncached']:,}",
            f"output: {s['output']:,}",
-           f"prediction (miss after a gap past the {s['ttl_min']:g}-minute lifetime; actual miss = writes > reads): "
+           f"misses: {s['actual']['miss']} of {n} turns rewrote part of the previous turn's cached prefix "
+           f"({s['rebuilt']:,} tokens rebuilt)",
+           f"prediction (miss after a gap past the {s['ttl_min']:g}-minute lifetime): "
            f"{s['prediction_correct']}/{n} turns right",
            "turns after an idle gap (time UTC, gap min, cache write, cache read):"]
     out += [f"  {g['time'][:16]}  {g['gap_min']:6}  {g['write']:>9,}  {g['read']:>9,}" for g in s["gaps"]]
