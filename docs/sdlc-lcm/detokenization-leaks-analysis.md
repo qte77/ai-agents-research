@@ -3,7 +3,7 @@ title: Detokenization Leaks — Cache-Timing Reconstruction of Local LLM Output
 purpose: A CPU cache-timing side channel that reconstructs text from a locally hosted LLM during detokenization, and what it does and does not say about agent frameworks like Claude Code.
 source: https://arxiv.org/abs/2609.06674
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-25
 validated_links_on: 2026-09-24
 status: assess
 ---

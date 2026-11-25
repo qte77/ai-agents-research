@@ -132,11 +132,13 @@ cached tensors. Evidence levels below are peer-reviewed or preprint as stated.
   paper's results it found global (cross-user) sharing in 7 providers (Azure, Deep Infra, Fireworks,
   Lepton, OpenAI, Perplexity, Replicate) and per-organization sharing only for Anthropic (Claude 3
   Haiku) and OpenAI GPT-4o mini. The abstract reports the OpenAI embedding model as decoder-only,
-  inferred from timing. **As of the paper (v1 2025-02, v2 2025-07)**; vendors changed policies after
-  disclosure, so it is not a current-state statement.
+  inferred from timing. **As of the paper (v1 2025-02, v2 2025-07)**; the paper reports
+  that the OpenAI embedding model's global sharing "has been patched", so it is not a current-state
+  statement for any provider.
 - **PromptPeek** ([Wu et al., NDSS][promptpeek]): self-hosted multi-tenant serving (SGLang, vLLM
   class) that shares KV blocks across users lets one tenant reconstruct another's prompt; the paper
-  concludes such serving needs careful resource management. Targets self-hosted engines, not closed APIs.
+  concludes such serving needs careful resource management. Its setting is self-hosted multi-tenant
+  serving; the abstract does not test closed provider APIs.
 - **InputSnatch** ([2411.18191][inputsnatch], preprint, no venue listed) and **Early Bird**
   ([2409.20002][earlybird], accepted at IEEE TIFS) apply the same timing idea to prefix and semantic
   caches. Success figures are in the papers, not repeated here (not stated on the abstract pages).
@@ -157,8 +159,8 @@ cached tensors. Evidence levels below are peer-reviewed or preprint as stated.
   Microsoft Foundry caches are also isolated between workspaces; on Claude Models on Google Cloud
   (Google managed) and Amazon Bedrock "caches are isolated by organization only".
 - **OpenAI** ([docs][openai-caching], read 2026-11-25): "Caches are not shared across organizations
-  and cannot be reused across regional processing boundaries." Separate `prompt_cache_key` values
-  per customer "help prevent cache-hit probing across customers" (a mitigation, not a guarantee).
+  and cannot be reused across regional processing boundaries." Setting a separate `prompt_cache_key` per
+  user "also helps prevent cache-hit probing across customers".
 
 ### Local persistence and reuse (open weights only)
 
@@ -171,9 +173,11 @@ cached tensors. Evidence levels below are peer-reviewed or preprint as stated.
 
 ### Verdict
 
-A closed provider's prompt cache cannot be rebuilt or hosted locally: the cache holds tensors tied to
-closed weights and is isolated per organization (Anthropic also per workspace). The client can observe
-only hit/miss (billing counts and TTFT). Local caching and persistence need open weights and an
+A closed provider's prompt cache can't be rebuilt or hosted locally. The vendor docs above document
+isolation per organization (Anthropic also per workspace) and no export; that the cached state depends
+on the provider's unpublished weights is our inference, not a vendor statement. From the client side,
+the usage counts and TTFT show hit or miss, and timing studies such as the Gu et al. audit have also
+inferred architecture details, but none recovered prompts across organization-isolated caches. Local caching and persistence need open weights and an
 engine such as vLLM, SGLang, LMCache or llama.cpp.
 
 ## Current state of the art (2026)
