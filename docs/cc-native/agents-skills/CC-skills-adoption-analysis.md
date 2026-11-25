@@ -3,7 +3,7 @@ title: Claude Code Skills Adoption - Implementation Summary
 purpose: Implementation summary of adopting Claude Code Skills for modular agent capabilities, including format analysis and ecosystem context.
 status: adopt
 created: 2026-01-11
-updated: 2026-11-23
+updated: 2026-11-25
 validated_links_on: 2026-10-23
 ---
 
@@ -419,6 +419,61 @@ Checked 2026-11-23 against the [skills page][cc-skills] (synced-skills section),
 - **Namespaces.** Synced skills carry the name `anthropic-skills:<name>`, and the short name works when nothing else uses it (changelog v2.1.281 shows the short name in the `/` menu, `/skills`, `/context` and the `/plugin` Installed list). The skills page documents `anthropic-skills` as reserved: a local skill or command with a name in it does not load (changelog v2.1.282 adds workflow commands). Changelog v2.1.282 reserved both `anthropic-skills` and `claude-ai`; v2.1.283 **reverted the `claude-ai` reservation**, so only `anthropic-skills` stays reserved as of the changelog copy read 2026-11-23 (CLI v2.1.330).
 - **What the list shows per skill.** The skills page documents a **claude.ai sync** group in `/skills`, and `/skill-doctor` for what each skill costs in context and how often it is used (changelog: added to show unused skills and their context cost). Changelog v2.1.280 added each skill's source, token estimate and on/off state to the VS Code slash-commands dialog. Owner observation, CLI v2.1.330, one screen, possibly partial: the terminal list showed a source tag (for example `claude.ai`, `claude.ai sync`), an on/off marker, an approximate token cost and a usage line. Examples only: `google-workspace` as claude.ai sync, about 247 tokens, never used; `pdf` about 115 tokens, used once 33 days ago; `docx`, `computer-use` and `chrome-browser` shown as off. The skills page does not document these columns, so treat the exact layout as observed, not specified.
 
+## Bundled reference skill: `/claude-api` (2026-11-25)
+
+**What it is.** A skill built into Claude Code for building on the Claude API and the
+Anthropic SDKs. The changelog first lists it at v2.1.69 ([changelog][cc-changelog]; checked
+2026-11-25). The [skills page][cc-skills-bundled] names it among the bundled skills, and the
+[commands page][cc-commands] lists its subcommands (the skills page's "Work on Claude API projects"
+table gives what each does and its minimum version) and says it also activates when code imports
+`anthropic` or `@anthropic-ai/sdk`. The same skill is published as the `claude-api` folder in
+[`anthropics/skills`][gh-skills], whose own `LICENSE.txt` is the Apache License 2.0 (read via
+`gh api`, 2026-11-25). The upstream copy can differ from the one bundled in a given Claude Code
+version; the layout below is the bundled one.
+
+**Layout (Claude Code 2.1.331, read 2026-11-25).** The unpacked folder holds one folder per
+language (`python`, `typescript`, `go`, `java`, `ruby`, `php`, `csharp`, `curl`), each with a
+`claude-api/` reference set (README, streaming, tool use and so on); six of the eight also have a
+`managed-agents/` folder (`curl` has a `managed-agents.md` file, `csharp` neither), plus `shared/`. `shared/` has 64 files: 38 top-level (models, prompt
+caching, cost and latency optimisation, migration guides, the Managed Agents set, `live-sources.md`)
+and four subfolders, `evals/` (7), `latency-optimization/` (4), `managed-agents-quickstarts/` (12)
+and `preserved-thinking-migration/` (3). The whole folder has 111 files. `SKILL.md` was **not** in
+the unpacked folder (a `find` under the bundled-skills folder found none); its body is read from the upstream
+copy here.
+
+**Subcommands** (invoked as `/claude-api <subcommand>`; from the
+[upstream `SKILL.md`][gh-claude-api-skill] tables, which the commands page lists):
+
+- `migrate`: moves existing code to a newer model, scope question first, then the per-target breaking changes.
+- `prompt-audit`: finds dated prompt patterns in prompts and agent config; see [§ Ecosystem Context](#ecosystem-context) above.
+- `upgrade`: upgrades the SDK across a major version (Python 0.x to 1.x at the time of reading).
+- `api-version`: handles API-version migrations (bundled `shared/api-version-migration.md`).
+- `cost-optimize`: ranks cost levers from the app's measured token profile.
+- `latency-optimize`: finds where the code makes people wait and tries faster settings against an eval ([changelog][cc-changelog] entry that added it).
+- `build-eval`, `hillclimb`: build an eval set, then improve the app against it; see
+  [EDD operationalised][edd-claude-api].
+- `preserved-thinking-migration`: makes an integration compatible with the preserved-thinking check.
+- `managed-agents-onboard` (no argument, `<quickstart-name>` or `<url>`): interview, Console-style
+  quickstart template, or set-up from a page. `managed-agents-secure [agent id]`: compares one
+agent's settings with Anthropic's published security guide and changes nothing (from the bundled
+`shared/managed-agents-secure.md`).
+
+The upstream `SKILL.md` read on 2026-11-25 has no table row for `api-version`, `latency-optimize`
+or `managed-agents-secure`, although the commands page lists all three, so the upstream copy lags the
+bundled one; those three lines rest on the commands page, the changelog and the bundled files.
+
+**Where it lands on disk (observed, one machine, 2026-11-25).** Not found on the skills and
+commands pages, the only two pages searched. Observed on one Linux machine: when a bundled skill with reference files is invoked, its
+files are unpacked under `/tmp/claude-<uid>/bundled-skills/<CC version>/<hash>/<skill>/`. Only
+skills invoked there appeared. The lead observed that the previous version's folder was gone after
+the 2.1.330 to 2.1.331 update (not re-checked here). Being under `/tmp`, the copy is temporary and
+is unpacked again on next use.
+
+**Why it matters for this KB.** It is a source of API facts shipped with Claude Code: a model
+table, caching economics, migration steps. `shared/models.md` calls its tables "cached" and tells
+the reader to query the Models API or the URLs in `shared/live-sources.md` for current data, so
+treat its numbers as a dated snapshot and re-check them against the live docs before citing them.
+
 ## Settings Configuration
 
 Update `.claude/settings.json` to adopt Skills:
@@ -437,6 +492,10 @@ Update `.claude/settings.json` to adopt Skills:
 [skills-best-practices]: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
 [skills-pdf]: https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf
 [gh-skills]: https://github.com/anthropics/skills/tree/main/skills
+[gh-claude-api-skill]: https://github.com/anthropics/skills/blob/main/skills/claude-api/SKILL.md
+[cc-skills-bundled]: https://code.claude.com/docs/en/skills#bundled-skills
+[cc-commands]: https://code.claude.com/docs/en/commands
+[edd-claude-api]: ../../sdlc-lcm/evaluation-data-resources-landscape.md#operationalizing-edd-claude-api-build-eval-and-claude-api-hillclimb
 [gh-skills-apache]: https://github.com/anthropics/skills/commit/2c5958e
 [skills-sh]: https://skills.sh/
 [org-skills]: https://support.claude.com/en/articles/13119606

@@ -24,6 +24,9 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 |---|---|---|
 | [CC-prompt-caching-behavior.md § TTL varies by request bucket and billing method](../cc-native/context-memory/CC-prompt-caching-behavior.md#ttl-varies-by-request-bucket-and-billing-method) | Cache TTL per request bucket, and how to choose it | cc-native |
 | [CC-prompt-caching-behavior.md § Idle compaction (before the cache expires)](../cc-native/context-memory/CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires) | Compacting an idle session before its cache expires | cc-native |
+| [CC-prompt-caching-behavior.md § Cost levers and their evidence](../cc-native/context-memory/CC-prompt-caching-behavior.md#cost-levers-and-their-evidence) | Smaller context, a stable prompt start and no idle past the cache lifetime, each backed by papers, vendor docs or own measurements | cc-native |
+| [CC-prompt-caching-behavior.md § Stopped host options](../cc-native/context-memory/CC-prompt-caching-behavior.md#stopped-host-options) | When the container, VM or function running Claude Code stops: compact before stop, a longer host idle limit, or one cold rewrite | cc-native |
+| [CC-prompt-caching-behavior.md § Predicting a hit or a miss](../cc-native/context-memory/CC-prompt-caching-behavior.md#predicting-a-hit-or-a-miss) | Hit or miss is predictable from prefix bytes, model, workspace and elapsed time; contents are not | cc-native |
 | [CC-env-vars-reference.md § Context & Token Control](../cc-native/configuration/CC-env-vars-reference.md#context--token-control) | Auto-compact threshold and window, compaction switches, Bash/MCP output caps, output and thinking budgets, MCP tool search | cc-native |
 | [CC-extended-context-analysis.md § Setting the auto-compact window (`/autocompact`)](../cc-native/context-memory/CC-extended-context-analysis.md#setting-the-auto-compact-window-autocompact) | `/autocompact`, `--autocompact`, `autoCompactWindow` and the env var: precedence, per-model and subagent windows | cc-native |
 | [CC-env-vars-reference.md § Prompt Caching](../cc-native/configuration/CC-env-vars-reference.md#prompt-caching) | Cache TTL and disable variables | cc-native |
@@ -54,6 +57,7 @@ that lower them, and the tools that measure them. Pointers only; see [the hub in
 | [llm-routers-gateways-landscape.md § When to Use What](../non-cc/infrastructure/llm-routers-gateways-landscape.md#when-to-use-what) | Routing requests to cheaper models through a gateway; LiteLLM `agent_eval` (preview) reports pass rate, cost and duration per harness | non-cc |
 | [context-management.md](../cc-native/examples/rules/context-management.md) | Example rule: context-utilization target and compaction triggers | cc-native |
 | [kv-cache-serving-landscape.md](../non-cc/infrastructure/kv-cache-serving-landscape.md) | KV cache in serving: vendor prompt-caching APIs and open serving-stack internals | non-cc |
+| [kv-cache-serving-landscape.md § Cache timing, isolation and local reuse](../non-cc/infrastructure/kv-cache-serving-landscape.md#cache-timing-isolation-and-local-reuse) | Vendor prompt-cache isolation, what timing reveals, and local KV cache persistence with open weights (llama.cpp slots, CacheGen, CacheBlend) | non-cc |
 
 ## Measuring
 

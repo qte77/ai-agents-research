@@ -54,5 +54,6 @@ vulnerability discovery and offensive agents. Pointers only; see [the hub index]
 | [agentic-ai-vulnerability-landscape.md § 7. Offensive-security agents (authorized testing)](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#7-offensive-security-agents-authorized-testing) | ARTEX, Claude-BugHunter, cross-tool observations | sdlc-lcm |
 | [CC-community-skills-landscape.md § cloudflare/security-audit-skill](../cc-community/CC-community-skills-landscape.md#cloudflaresecurity-audit-skill) | Community security-audit skill | cc-community |
 | [rea-analysis.md](../non-cc/infrastructure/rea-analysis.md) | REA: reverse-engineering tools for native binaries, JS/Electron apps, .NET assemblies and websites | non-cc |
+| [kv-cache-serving-landscape.md § Cache timing, isolation and local reuse](../non-cc/infrastructure/kv-cache-serving-landscape.md#cache-timing-isolation-and-local-reuse) | Prompt-cache timing side channels, prompt reconstruction from KV caches and their defences, vendor cache isolation | non-cc |
 
 Related hubs: [harness.md](harness.md), [management.md](management.md), [agentic-web.md](agentic-web.md), [evals-benchmarks.md](evals-benchmarks.md), [plugins.md](plugins.md).

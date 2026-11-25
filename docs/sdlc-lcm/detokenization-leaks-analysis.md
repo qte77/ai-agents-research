@@ -3,7 +3,7 @@ title: Detokenization Leaks — Cache-Timing Reconstruction of Local LLM Output
 purpose: A CPU cache-timing side channel that reconstructs text from a locally hosted LLM during detokenization, and what it does and does not say about agent frameworks like Claude Code.
 source: https://arxiv.org/abs/2609.06674
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-25
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -48,6 +48,8 @@ observation layer rather than only at the code layer — but on the *inference h
 (cache timing) rather than the *network boundary* (eBPF/TLS interception) that doc's
 existing entries (AgentSight) cover. Relevant to any project evaluating **self-hosted**
 open-weight coding-agent backends on shared or multi-tenant hardware.
+
+For prompt-cache (KV-cache) timing against shared serving and vendor isolation, see [KV-cache serving landscape](../non-cc/infrastructure/kv-cache-serving-landscape.md#cache-timing-isolation-and-local-reuse).
 
 ## Sources
 
