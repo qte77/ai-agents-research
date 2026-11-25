@@ -415,7 +415,7 @@ Not scored. Each flagged name's outcome (folded, covered or dropped, with a reas
 
 ## New and unproven: agent plugins (2026-11-23)
 
-Two Claude Code plugins that are days old. Stars, licence, dates and latest release come from each repo's `gh api` record on 2026-11-23, the `LICENSE` file (MIT in both; no other licence file in either tree) and the README. Everything about what they do is the README's own account; nothing here was installed or run. Both are **new; adoption not yet shown**: no named independent users, so these are watch entries, not recommendations.
+Three Claude Code plugins that are days old. Stars, licence, dates and latest release come from each repo's `gh api` record on the date in its row (2026-11-23; 2026-11-25 for shrink-anything), the `LICENSE` file (MIT in all three; no other licence file at any repo root) and the README. Everything about what they do is the README's own account; nothing here was installed or run. All three are **new; adoption not yet shown**: no named independent users, so these are watch entries, not recommendations.
 
 | Tool | Created, stars | Latest release | What the README describes | Caveats stated in or by the README |
 |---|---|---|---|---|
