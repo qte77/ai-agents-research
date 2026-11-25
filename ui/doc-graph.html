@@ -36,7 +36,7 @@
     }
     #info h2, #info details.panel > summary { font-size: 1rem; margin: var(--unit) 0; color: var(--text); font-weight: 600; }
     #info details.panel > summary { cursor: pointer; }
-    #tl-window { font: inherit; font-size: 0.75rem; }
+    #tl-window { font: inherit; font-size: 0.75rem; margin-bottom: 4px; }
     #info p { margin: 0 0 var(--unit); }
     #hubs label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 2px 0; }
     #hubs .all { font-weight: 600; color: var(--text); }
@@ -87,17 +87,19 @@
       <p>Dots are docs, diamonds are topic hubs, the star is the hub index, lines are links between them. Click a node for its details
         and a link to GitHub. Built from the docs on every deploy, without an LLM.</p>
       <p id="stats"></p>
-      <details class="panel" open>
+      <details class="panel">
         <summary>Colour by</summary>
         <select id="colour-by" aria-label="Colour by"><option value="topic">topic hub</option><option value="folder">folder</option></select>
         <p class="legend" id="legend"></p>
       </details>
-      <details class="panel" open>
+      <details class="panel">
         <summary>Filters</summary>
         <div id="facets"></div>
+      </details>
+      <details class="panel">
+        <summary id="tl-title">Updated</summary>
         <div class="facet">
-          <h3><span id="tl-title">Updated</span>
-            <select id="tl-window" aria-label="Timeline span"><option value="90">last 90 days</option><option value="all">full history</option></select></h3>
+          <select id="tl-window" aria-label="Timeline span"><option value="90">last 90 days</option><option value="all">full history</option></select>
           <div id="timeline" role="group" aria-labelledby="tl-title"></div>
           <p id="tl-readout"><span id="tl-text">Click a bar, then another bar for a range.</span>
             <button type="button" class="chip" id="tl-clear" hidden>Clear</button></p>
@@ -205,7 +207,7 @@
           var a = byNode[e[0]], b = byNode[e[1]];
           if (isHub(a) && !isHub(b) && b.bucket !== "_topics") { springEdge[i] = { hub: a.id, doc: b }; }
           if (isHub(b) && !isHub(a) && a.bucket !== "_topics") { springEdge[i] = { hub: b.id, doc: a }; }
-          return { id: i, from: e[0], to: e[1], length: 40, physics: false };
+          return { id: i, from: e[0], to: e[1], length: 25, physics: false };
         }));
         function primaryHub(n) { return n.hubs.filter(function (h) { return checked[h]; })[0]; }
         function syncSprings() {
@@ -290,9 +292,10 @@
         // Layout: the hub index stays at the centre and the checked hubs start on a ring around it. Every
         // doc starts in a loose cloud around its primary hub, wide enough that neighbouring clouds
         // overlap. Physics then moves hubs and docs together for RUN_MS after a change (a new change
-        // cancels the pending stop), so topics read as soft regions rather than tight rings. No
-        // perpetual motion.
-        var RUN_MS = 1000, stopTimer = null, ready = false, userMoved = false;
+        // cancels the pending stop), so topics read as soft regions rather than tight rings. Then the
+        // simulation slows down over FADE_MS (its time step eases towards zero) and physics stops: no
+        // abrupt halt, no perpetual motion.
+        var RUN_MS = 1000, FADE_MS = 1500, STEP = 0.5, stopTimer = null, ready = false, userMoved = false;
         function jitter(id, salt) { // deterministic value in [0, 1) from an id
           var h = 2166136261;
           for (var i = 0; i < id.length; i++) { h = Math.imul(h ^ id.charCodeAt(i), 16777619); }
@@ -307,7 +310,7 @@
             at[id] = { x: Math.round(ring * Math.cos(a)), y: Math.round(ring * Math.sin(a)) };
             ups.push({ id: id, x: at[id].x, y: at[id].y, fixed: false, physics: true });
           });
-          var spread = Math.max(80, Math.min(200, ring * Math.PI / on.length * 1.1)); // cloud radius
+          var spread = Math.max(80, Math.min(150, ring * Math.PI / on.length * 1.1)); // cloud radius
           docs.forEach(function (n) {
             var home = primaryHub(n), c = home ? at[home] : { x: 0, y: 0 };
             var show = visible(n), up = { id: n.id, physics: show };
@@ -335,11 +338,21 @@
           if (!network || !ready) { return; }
           clearTimeout(stopTimer);
           userMoved = false;
-          network.setOptions({ physics: { enabled: true } });
-          stopTimer = setTimeout(function () {
-            network.setOptions({ physics: { enabled: false } });
-            if (!userMoved) { fitView(true); } // keep a search zoom or the user's own pan/zoom
-          }, RUN_MS);
+          network.setOptions({ physics: { enabled: true, timestep: STEP, adaptiveTimestep: true } });
+          var t0 = Date.now() + RUN_MS;
+          function step() {
+            var f = (Date.now() - t0) / FADE_MS;
+            if (f >= 1) {
+              network.setOptions({ physics: { enabled: false } });
+              if (!userMoved) { fitView(true); } // keep a search zoom or the user's own pan/zoom
+              return;
+            }
+            // Reason: a fixed, shrinking time step slows the whole simulation evenly; lowering the speed
+            // cap instead left nodes moving at almost full speed when measured.
+            if (f > 0) { network.setOptions({ physics: { adaptiveTimestep: false, timestep: Math.max(0.005, STEP * Math.pow(1 - f, 2)) } }); }
+            stopTimer = setTimeout(step, 50);
+          }
+          stopTimer = setTimeout(step, RUN_MS);
         }
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
@@ -471,7 +484,7 @@
           }
         }
         if (newest) { buildTimeline("90"); }
-        else { // no dates: say so and drop the span picker (the title is a span, so this leaves the select)
+        else { // no dates: say so and drop the span picker (the title is the panel's summary, so the select is untouched)
           document.getElementById("tl-title").textContent = "Updated (no dates in data)";
           document.getElementById("tl-window").hidden = true;
         }
@@ -495,7 +508,7 @@
         network = new vis.Network(document.getElementById("graph"), { nodes: nodes, edges: edges }, {
           physics: { solver: "forceAtlas2Based", stabilization: { iterations: 150 }, maxVelocity: 20,
                      forceAtlas2Based: { gravitationalConstant: -30, centralGravity: 0.01, springLength: 90,
-                                         springConstant: 0.05, damping: 0.7, avoidOverlap: 0.3 } },
+                                         springConstant: 0.12, damping: 0.7, avoidOverlap: 0.3 } },
           edges: { color: { color: token("--border"), highlight: token("--primary") }, width: 1, smooth: false },
           nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
           interaction: { hover: true, tooltipDelay: 120 }
