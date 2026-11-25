@@ -3,13 +3,13 @@ title: CC Community Skills Landscape
 purpose: Survey of community-built Claude Code skill libraries, such as gstack, pm-skills, agent-skills, caveman and last30days, with what each one is for.
 status: research
 created: 2026-03-13
-updated: 2026-11-22
+updated: 2026-11-25
 validated_links_on: 2026-10-11
 ---
 
 ## Summary
 
-Nine community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, claude-howto delivers example-driven learning with production-ready templates, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Two later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file) and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A third addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi). A fourth addition (2026-10-11, also not rubric-scored — a new diagram/illustration row does not move a filled skills census cell): wheresryan22/anatomy, a Claude Code Agent Skill that turns a technical idea into an audited, interactive isometric SVG/WebGL/3D figure of a real machine. A fifth (2026-11-14, not rubric-scored): GoogleChrome/modern-web-guidance, a browser-vendor skill that retrieves current web-platform guides on demand through a bundled CLI, packaged as plugins for Claude Code and other hosts.
+Nine community skill libraries demonstrate distinct models for packaging CC capabilities: gstack enforces cognitive mode-switching through role-locked skills, pm-skills delivers professional frameworks as installable plugins, claude-code-best-practice curates a knowledge index of CC patterns and open questions, claude-howto delivers example-driven learning with production-ready templates, superpowers enforces a complete TDD-driven development methodology with subagent orchestration, agent-skills encodes Google engineering practices across the full SDLC, caveman compresses agent output via telegraphic-speech intensity levels, and last30days fans out real-time social research across 14+ platforms with engagement-scored synthesis, and agent-native packages composable cross-agent meta-skills installed à la carte via the `@agent-native/skills` CLI. Two later additions (2026-09-30, scored against the [agent substrate rubric][rubric]): coleam00/excalidraw-diagram-skill (a single diagram-generation skill with no license file) and cloudflare/security-audit-skill (a six-phase audit skill with adversarial validation and a JSON-schema-verified findings trail — the strongest `Traceable` score in this set). A third addition (2026-10-06, not rubric-scored — every skills·* cell is already filled in the census, so a new row would not move one): cathrynlavery/diagram-design, an editorial diagram-generation skill (44 diagram types by live file count; the README tagline says 42) spanning five hosts (Claude Code, Codex, GitHub Copilot, Factory Droid, Pi). A fourth addition (2026-10-11, also not rubric-scored — a new diagram/illustration row does not move a filled skills census cell): wheresryan22/anatomy, a Claude Code Agent Skill that turns a technical idea into an audited, interactive isometric SVG/WebGL/3D figure of a real machine. A fifth (2026-11-14, not rubric-scored): GoogleChrome/modern-web-guidance, a browser-vendor skill that retrieves current web-platform guides on demand through a bundled CLI, packaged as plugins for Claude Code and other hosts. A sixth (2026-11-25, not rubric-scored): scottduncanai/pid-to-knowledge-graph, a single-domain skill that turns piping and instrumentation diagram (P&ID) PDFs into a process knowledge graph.
 
 ## gstack (Garry Tan)
 
@@ -608,6 +608,46 @@ in the README, not a tested result.
 model: methodology delivered as a playbook-router skill plus a Claude Code adapter generated from the
 Cursor tree.
 
+## scottduncanai/pid-to-knowledge-graph
+
+**Repo**: [scottduncanai/pid-to-knowledge-graph][pidkg-repo] | **Stars**: 379 | **License**: MIT (`LICENSE` file) |
+created 2026-11-08, last push 2026-11-08, no releases, Python (`gh api`, 2026-11-25)
+
+A domain skill (`skills/pid-to-kg`) that reads piping and instrumentation diagram (P&ID) and process flow
+diagram PDFs, digital or scanned, and builds a process knowledge graph: flow between equipment and pipe
+segments, which instrument measures what and where, and control loops (sensor, controller, final element,
+including relays, cascades, interlocks and VFD drives) assembled from ISA-5.1 tag numbers and drawn signal lines.
+The README presents it as one layer of a chemical-manufacturing "context layer" for LLM applications.
+
+- **Split of work.** Claude does the visual reading (symbols, line tracing) sheet by sheet and writes one
+  JSON extraction file per sheet; plain Python scripts do the rest (page classification, rendering, graph
+  build, QA, query, export). A QA loop (`qa_report.md`) flags doubtful items and Claude rebuilds until clean.
+- **Digital vs scanned.** A probe script classifies each page: searchable-text vector, outlined-text vector,
+  scanned, or scanned with an OCR layer. Vector pages are rendered from the vector data; scans are upscaled
+  up to 2.5x with a contrast boost. Pages are auto-oriented and cut into overlapping tiles. Optional
+  RapidOCR gives a tag cross-check, but only on Python 3.10-3.12.
+- **Outputs.** `graph.json` (with a JSON Schema), `graph.duckdb` (SQL, recursive upstream/downstream macros),
+  `summary.md` (LLM context) and `qa_report.md`; Neo4j and GraphML export on request. Every item records its
+  source sheet. Classes carry the closest DEXPI (a P&ID data-exchange standard) class; the README says this
+  is informative, not a certified DEXPI export.
+- **Install and use.** Copy `skills/pid-to-kg` into `~/.claude/skills/` and open the folder in Claude Code
+  (desktop or terminal); the repo also has a `.claude-plugin/plugin.json`. The README documents Claude Code
+  only. Needs Python 3.10+ and `pypdfium2`, `pillow`, `pydantic`, `duckdb`, `networkx`.
+- **Stated limits (the author's own).** Quality depends on scan legibility; logic that lives only in
+  control narratives is not captured; flow direction is sometimes inferred and marked; the graph must be
+  reviewed by a qualified engineer before design, operations or safety-study use. The changelog says it was
+  tested on three real plants; no accuracy figures are published (an `eval_kg.py` scorer ships, with no
+  results).
+
+**Maturity.** All activity is on one day (2026-11-08) and there is no release, so treat it as early. Its
+adoption (379 stars, no named independent users found in the README) is below the 1,000-star bar in the
+[pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter), and no
+measured benefit is published; it stays as a domain example pending that review. Related graph coverage:
+[Knowledge Graphs hub](../_topics/knowledge-graphs.md); LLM-built graphs and their provenance in
+[agent-frameworks-infrastructure-landscape.md](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence);
+ontology-constrained extraction in
+[semantic-layers-data-catalog-landscape.md](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction).
+
 ## Cross-References
 
 - [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills-adoption-analysis.md) — native skills format and adoption
@@ -654,6 +694,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (43,595 stars, MIT; `gh api` 2026-10-06) |
 | [cursor/plugins pstack][pstack-repo] | Playbook-router skill pack (22 playbooks) for Cursor, installable in Claude Code (MIT; `gh api` 2026-11-20) |
 | [wheresryan22/anatomy][anatomy] | Isometric interactive figure-generation Agent Skill, audited geometry + screenshot verification loop (3,109 stars, MIT; `gh api` 2026-10-11) |
+| [scottduncanai/pid-to-knowledge-graph][pidkg-repo] | P&ID-to-knowledge-graph Claude skill (379 stars, MIT, created and last pushed 2026-11-08; `gh api` 2026-11-25) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -691,3 +732,4 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [pstack-repo]: https://github.com/cursor/plugins/tree/main/pstack
 [mwg-docs]: https://developer.chrome.com/docs/modern-web-guidance
 [mwg-evals]: https://googlechrome.github.io/modern-web-guidance-src/
+[pidkg-repo]: https://github.com/scottduncanai/pid-to-knowledge-graph
