@@ -198,8 +198,17 @@ Read it as one user's working pattern, not a benchmark:
   or `/compact` before stepping away from a long session, start a new session after a long break rather
   than resuming a large one, and run fewer long-lived sessions in parallel.
 
-The method above is enough to reproduce the table on your own transcripts with a short script; do that
-before relying on these shares.
+**Reproduce it.** [`scripts/cc_cache_usage.py`](../../../scripts/cc_cache_usage.py) (stdlib, unit-tested)
+applies this method to one session: `python3 scripts/cc_cache_usage.py <transcript.jsonl> [gap_min]
+[ttl_min]`, where the transcript is a `<session-id>.jsonl` under `~/.claude/projects/<project>/`. It
+prints the input split (cache reads, cache writes by 5-minute and 1-hour lifetime, uncached), output
+tokens, the turns after an idle gap longer than `gap_min` (default 60) with their cache write and read,
+the share of writes after gaps, a hit/miss prediction (a miss when the gap since the previous response
+exceeds the cache lifetime, which defaults to 5 or 60 minutes from the session's write buckets) checked
+against the outcome (a miss when a turn writes more than it reads), and the compaction markers. It
+dedupes on message ID only (keeping the last streamed chunk) and skips subagent sidechains, so its counts
+can differ slightly from the week's table, which also deduped on request ID. Run it on your own
+transcripts before relying on these shares.
 
 ### Second data point: one long session (2026-11-22 to 2026-11-25)
 
