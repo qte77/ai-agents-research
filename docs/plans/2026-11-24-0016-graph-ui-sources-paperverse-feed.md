@@ -17,8 +17,9 @@ five repos and products, KB papers into paperverse); the owner answered the open
 day ([§ Owner decisions](#owner-decisions-2026-11-24)). **Status 2026-11-25:** N34 to N37, N39, N40
 and N43 to N49 have shipped (#1072 to #1084; each struck row names its PR). Still open in
 [§ Remaining work](#remaining-work): N38 (handed to a paperverse session as `qte77/paperverse#187`),
-N41 (freshness rule, waiting on the owner), N42 (connectors-directory section) and the owner-gated
-rows below. Plan 0015 closed with N14 to N33 merged (#1045 to #1068) and v0.24.0 released (#1069).
+N41 (freshness rule, waiting on the owner), N42 (connectors-directory section), N50 to N53
+(caching, compaction and the `/claude-api` skill, from the owner's 2026-11-25 questions) and the
+owner-gated rows below. Plan 0015 closed with N14 to N33 merged (#1045 to #1068) and v0.24.0 released (#1069).
 
 **How this plan runs: parallel worktree lanes.** Every agent row belongs to exactly one lane
 ([§ Lanes](#lanes)). A lane is one subagent working in its own git worktree on its own branch, and
@@ -32,8 +33,9 @@ worktrees, sends the briefs, verifies, integrates and merges. Run at most three 
 2. **New owner sources:** run each topic as a lane (one worktree from `origin/main` as a sibling of
    the checkout, `git worktree add ../wt-<lane> -b <branch> origin/main`, and one subagent with the
    brief in [§ The loop](#the-loop)); at most three at once. Add a struck row per topic in its PR.
-3. **N42** next as an agent row (a browser pass of the connectors directory); **N41** once the owner
-   answers. Check `qte77/paperverse#187` for N38.
+3. **N50 to N53** next, as lanes S, C and V in one message ([§ Caching and
+   compaction](#caching-and-compaction-n50-to-n53)); then **N42** (a browser pass of the connectors
+   directory); **N41** once the owner answers. Check `qte77/paperverse#187` for N38.
 4. As each lane returns: re-check its strongest claims at source, run the checks for its kind
    ([§ The loop](#the-loop)) and add the hub, index and glossary rows it proposes. Right before the
    merge, merge `main` into the lane branch and then add the plan-row strike as the last commit
@@ -246,6 +248,71 @@ alone). Follow paperverse's own `AGENTS.md` and `CONTRIBUTING.md`; its gate is `
   deployed page shows the real dataset.
 - **Docs there:** `docs/roadmap.md` (58, 91) and `docs/architecture.md` (92) describe the sync.
 
+### Caching and compaction (N50 to N53)
+
+From the owner's 2026-11-25 questions on auto-compact, the prompt cache and the bundled `/claude-api`
+skill. The lead's research notes are outside the repo; lanes re-fetch every source below and treat
+each finding as advisory until checked at source.
+
+**Lanes (disjoint files):** S = N50 (`docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`,
+plus a one-line pointer in `docs/cc-native/configuration/CC-changelog-feature-scan.md` line 96);
+C = N51 and N52 (`docs/cc-native/context-memory/CC-prompt-caching-behavior.md`,
+`docs/cc-native/context-memory/CC-extended-context-analysis.md`,
+`docs/cc-native/configuration/CC-env-vars-reference.md`); V = N53
+(`docs/non-cc/infrastructure/kv-cache-serving-landscape.md`, with a cross-reference from
+`docs/sdlc-lcm/detokenization-leaks-analysis.md`). Hub rows: `skills`, `cost`, `context`, `security`.
+
+**What is already in the KB (cite, don't repeat):** idle compaction and its settings
+(`CC-prompt-caching-behavior.md` § Idle compaction, `CC-extended-context-analysis.md` line 119,
+`CC-env-vars-reference.md` line 47); one week of measured sessions (`CC-prompt-caching-behavior.md`
+§ One week of sessions on one machine: 98.6% cache reads, idle rewrites 52% of cache writes); vLLM
+prefix caching, SGLang, LMCache and Mooncake (`kv-cache-serving-landscape.md`); the `/claude-api`
+skill, its `prompt-audit`, `build-eval` and `hillclimb` (`CC-changelog-feature-scan.md` line 96,
+`CC-skills-adoption-analysis.md` line 335, `evaluation-data-resources-landscape.md` line 16).
+
+**Second data point for N52 (one session, 2026-11-22 to 11-25, read from its transcript):** 1,706
+main-thread responses; input 99.2% cache reads (472M tokens), 0.8% cache writes (3.7M, all with
+the 1-hour lifetime); writes after idle gaps over 60 minutes 33% (4 gaps of 2 to 17 hours rewrote
+110K to 435K tokens each); 5 compactions, all `trigger: "auto"` at 469K to 492K tokens, down to 15K
+to 27K. Idle compaction did not fire before those gaps (observed; the likely cause, the Claude Code process
+not running because its host stopped, is unverified). The host can be any runtime: a container or
+dev container, a VM, a desktop app, a CI runner or a serverless function; when it stops or scales
+to zero, nothing sends requests, the cache expires and the in-process idle compaction can't run. Subagent turns are sidechains with their
+own cache and do not warm the main thread's.
+
+**Claims checked in the discussion.** Lanes write the corrected form and drop or mark the rest:
+
+| Claim | Status | Source |
+|---|---|---|
+| Auto-compact has no time-based trigger (lead, 2026-11-25) | Wrong: `idleCompaction`, default `true`, compacts a long idle session before its cache expires | [settings reference][cc-settings-idle] |
+| The session had compacted once (lead) | Wrong: five times, all `trigger: "auto"` | the session transcript's `compact_boundary` entries |
+| Idle compaction after "about 54 minutes" (KB, from changelog 2.1.299) | Conflicts with "about an hour" in the settings reference; N51 records both with dates | [changelog][cc-changelog], [settings reference][cc-settings-idle] |
+| Claude Code compacts on resume or restart (owner question) | Not found: a resumed session opens at its "Conversation compacted" row; compacting is costliest when resuming an old session | [sessions][cc-sessions], [prompt caching in Claude Code][cc-prompt-caching] |
+| A prompt cache can be exported, rebuilt or hosted locally | Not possible for a closed model: caches are isolated per workspace or organization and no export is documented | [Claude API prompt caching][api-prompt-caching] |
+| Timing reveals what a cache holds | Partly: timing shows hit or miss; prompt extraction worked on providers that shared caches globally and on self-hosted SGLang, not on per-organization caches | [arXiv 2502.07776][p-audit-cache], [PromptPeek, NDSS 2025][p-promptpeek] |
+| A keep-alive ping from outside the session keeps the cache warm | No (lead inference, not a source): it needs a byte-identical prefix to the one Claude Code sends | [Claude API prompt caching][api-prompt-caching] (prefix matching) |
+| Subagents or other sessions can share the main thread's cache (owner question) | Only for a byte-identical prefix on the same model and workspace: a fresh subagent has its own system prompt, tools and often model, so it builds its own cache; a forked subagent inherits the parent's context and model, so its first request could read the parent's cached prefix (inference, unverified); other sessions in the same repo share at most the common system and tool part | [Claude API prompt caching][api-prompt-caching] |
+| A watchdog or stop hook on the host can compact before the host stops | Plausible, untested: run a headless `/compact` on the resumed session while the cache is still warm (on a graceful stop signal, or when the transcript has been idle about 50 minutes); only works if the stop leaves time for one request | [sessions][cc-sessions], [settings reference][cc-settings-idle] |
+| Cache hits can be predicted before sending | Yes, as hit or miss only: same prefix bytes as the last request, same model and workspace, and less than the cache lifetime since that request's start; the cache-diagnosis beta reports why a request missed | [Claude API prompt caching][api-prompt-caching] |
+| Bundled skills unpack on use per Claude Code version and the old version's folder is removed | Observed on one machine only; not documented | none; N50 marks it observed |
+| `/claude-api` `shared/` has 35 top-level files (lead) | Wrong: 38 top-level, 64 in all (Claude Code 2.1.331) | the unpacked skill folder |
+| SWE-Pruner: 76.1% of the token budget goes to reads | Unverified (search snippet) | [arXiv 2601.16746][p-swepruner] |
+| InputSnatch recovery rates; Early Bird's list of affected providers | Unverified (search digests) | [arXiv 2411.18191][p-inputsnatch], [arXiv 2409.20002][p-earlybird] |
+| "Don't Break the Cache": caching only the system prompt is the most consistent | Unverified (search summary); the 41–80% cost cut is from the abstract | [arXiv 2601.06007][p-dontbreak] |
+
+**Sources for N52 (cost levers):** [arXiv 2604.22750][p-spend] (input tokens drive agent cost),
+[arXiv 2508.21433][p-complexity] (observation masking about halves cost), [arXiv 2610.04433][p-harness-tokens]
+(already cited), [arXiv 2601.06007][p-dontbreak], [Chroma, Context Rot][chroma-rot],
+[arXiv 2307.03172][p-lost-middle], [Anthropic, context management][anth-context-mgmt] (vendor internal
+eval), [Manus, context engineering][manus-ctx], [OpenAI prompt caching][oai-prompt-caching].
+
+**Sources for N53 (cache timing, reconstruction, local caches):** [arXiv 2502.07776][p-audit-cache],
+[PromptPeek][p-promptpeek], [arXiv 2411.18191][p-inputsnatch], [arXiv 2409.20002][p-earlybird],
+[arXiv 2508.09442][p-kvcloak] (KV-Cloak), [arXiv 2508.08438][p-safekv] (SafeKV), [arXiv 2310.07240][p-cachegen]
+(CacheGen), [arXiv 2405.16444][p-cacheblend] (CacheBlend), [llama.cpp server][llamacpp] (slot save and
+restore), [arXiv 2412.10319][p-scbench] (SCBench). Weak or unverified, drop unless confirmed:
+[arXiv 2602.20595][p-optileak], [arXiv 2605.30613][p-cacheprobe], [arXiv 2608.09225][p-kvgov].
+
 ## Remaining work
 
 | Row | Item | Gate | Done when |
@@ -267,6 +334,10 @@ alone). Follow paperverse's own `AGENTS.md` and `CONTRIBUTING.md`; its gate is `
 | ~~N47~~ | ~~Prefect, Dagster and Apache Airflow AI features, plus Kaval.AI (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): three rows in workflow-frameworks-landscape.md's framework table and a dated "Data orchestrators with an AI surface" subsection (FastMCP, prefect-mcp-server, Marvin, ControlFlow archived; Dagster+ MCP beta, dagster-io/skills; Airflow common-ai, anthropic and openai providers, no official Apache MCP server found); Kaval.AI as one owner-requested watch line in agent-frameworks-infrastructure-landscape.md § 3 (below the pruning rule's adoption bar); long-running hub row; two fact-check passes applied |
 | ~~N48~~ | ~~pid-to-knowledge-graph, a Claude skill that turns P&ID (piping and instrumentation diagram) PDFs into a process knowledge graph (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): a section in CC-community-skills-landscape.md re-checked at the repo on 2026-11-25, kept at the owner's request as a watch entry although it is below the pruning rule's adoption bar; skills and knowledge-graphs hub rows; two fact-check passes applied |
 | ~~N49~~ | ~~Doc graph refinements (owner 2026-11-25): "the graph is too extremely clustered now … less obvious and more subtle"; "offer a full history in addition to 'Recently updated (last 90 days)'"; "let 'Filters' and 'Colour by' be details/summary"~~ | agent | Shipped 2026-11-25 (this PR): hubs no longer fixed, wider overlapping doc clouds and softer physics (docs nearest their own hub 168/190 instead of 190/190; motion still stops ~1.1 s after load); timeline span select with full history (37 weekly bars); Colour by and Filters as open-by-default details panels. patchright e2e on desktop dark and phone light: all checks pass, no console errors, no horizontal scroll |
+| N50 | Bundled `/claude-api` skill (owner 2026-11-25: "is this path included in our KB?"): a dated section in `CC-skills-adoption-analysis.md` before § Settings Configuration covering what the skill is, its folder layout (`SKILL.md`, per-language folders, `shared/` with 64 files), its subcommands (one line each, linking existing coverage), the on-disk unpack location as observed behaviour (placeholder paths, no operator commands), and the skill's own caveat that it can lag the live docs; a pointer from `CC-changelog-feature-scan.md` line 96 | agent | Lane S; two fact-check passes; `skills` hub row; `make lint` green; row struck in its PR |
+| ~~N51~~ | ~~Idle-compaction wording~~ | agent | Shipped 2026-11-25 (this PR): "about an hour" (settings reference) and "about 54 minutes" (changelog 2.1.299) recorded with read dates in `CC-prompt-caching-behavior.md`, `CC-extended-context-analysis.md` and `CC-env-vars-reference.md`; resume described as adding no compaction step (our reading of the sessions page); idle compaction needs a running session; the setting and variable need v2.1.290 or later |
+| ~~N52~~ | ~~Cost-lever evidence (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): `CC-prompt-caching-behavior.md` § Cost levers and their evidence (papers, vendor docs and own measurements, each at its evidence level), a second measured data point (n=1 session), § Stopped host options, § Predicting a hit or a miss, and the checked claims; cost and context hub rows; two fact-check passes applied |
+| ~~N53~~ | ~~Cache timing, reconstruction and local caches (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): § Cache timing, isolation and local reuse in `kv-cache-serving-landscape.md` (provider audit arXiv 2502.07776, PromptPeek, InputSnatch and Early Bird without unverified numbers, KV-Cloak, SafeKV, verbatim Anthropic and OpenAI isolation quotes, llama.cpp slot save and restore, CacheGen, CacheBlend, SCBench, a verdict scoped to the cited sources); cross-reference from `detokenization-leaks-analysis.md`; cost and security hub rows; OptiLeak, CacheProbe and KVGov dropped (single-author or no result in the abstract); two fact-check passes applied |
 | 13-A5 | Labels from `decide()` in issue triage at a measured threshold (moved from plan 0012's Deferred list) | data | About 50 issues across the shadowed repos carry the shadow section; then sweep `hi` against the labels the existing triage set and decide |
 | 13-A7 | Drift checks for the decision models: (1) a monthly scheduled run of `decision-model-eval.yaml` on the gold sets, flagged against the 2026-11-10/11 baseline (AUC drop above about 0.03, Brier rise, recommended `hi` moving by 0.05 or more); (2) store each weekly paper run's decided / fallback / escalated counts (the artifact summary already prints "Decided via decide()") and flag a sustained fall in the decided share or a rise in escalations; (3) on about 10% of papers also run the chat call and track the disagreement rate. Pin model versions (`jev-1.13.0`, `clef`) and re-run the gold sets before any bump; set thresholds on one half of a gold set and report on the other. **Part (1) shipped 2026-11-12** (`#813`: `decision-model-eval.yaml` monthly on the 1st, `data/gold/baseline.json`, `decision-drift` issue; Brier shown, not flagged). A manual run the same day reproduced the Clef and Clef-flash baseline exactly, so run-to-run noise for Clef is nil on this evidence (Jev not re-run). **Part (2) shipped 2026-11-17** (`#875`): the committed triage reports already store each run's "Decided via decide()" line, so `lib/decide_counts.py` reads them and the monthly `decision-model-eval.yaml` run appends a per-run table to its summary and a note to `drift.md` (the `decision-drift` issue) when each of the last 3 runs' decided share is more than 0.10 below the earlier mean; it needs 6 runs before it can flag. First data point: W45, 88 of 100 decided. Escalations are not printed separately in the summary, so they are counted as fallbacks. Left: (3) the chat-call disagreement sample — ask the owner whether it earns its cost; the split-half thresholds belong to A8 | owner (deferred) | Monthly workflow live with a baseline file; counts stored per run; disagreement sample in the summary. **Part (3) deferred by the owner 2026-11-22** (not built now); parts (1) and (2) ship. Resume only on an owner go |
 | 13-A8 | Gold-set refresh against the in-sample caveat: add a second paper week as a held-out set, a human spot-check of about 20 items, and real (not planted) off-topic issues | agent + owner spot-check | Second paper set and an issue set with real negatives in `.github/scripts/data/gold/`; H1 numbers re-reported out of sample |
@@ -292,3 +363,31 @@ alone). Follow paperverse's own `AGENTS.md` and `CONTRIBUTING.md`; its gate is `
 [kumo]: https://github.com/NVIDIA/kumo-engine
 [ontobricks]: https://github.com/databrickslabs/ontobricks
 [chatdata]: https://www.chat-data.com
+[cc-settings-idle]: https://code.claude.com/docs/en/settings-reference#idlecompaction
+[cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[cc-sessions]: https://code.claude.com/docs/en/sessions
+[cc-prompt-caching]: https://code.claude.com/docs/en/prompt-caching
+[api-prompt-caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+[p-audit-cache]: https://arxiv.org/abs/2502.07776
+[p-promptpeek]: https://www.ndss-symposium.org/ndss-paper/i-know-what-you-asked-prompt-leakage-via-kv-cache-sharing-in-multi-tenant-llm-serving/
+[p-swepruner]: https://arxiv.org/abs/2601.16746
+[p-inputsnatch]: https://arxiv.org/abs/2411.18191
+[p-earlybird]: https://arxiv.org/abs/2409.20002
+[p-dontbreak]: https://arxiv.org/abs/2601.06007
+[p-spend]: https://arxiv.org/abs/2604.22750
+[p-complexity]: https://arxiv.org/abs/2508.21433
+[p-harness-tokens]: https://arxiv.org/abs/2610.04433
+[chroma-rot]: https://www.trychroma.com/research/context-rot
+[p-lost-middle]: https://arxiv.org/abs/2307.03172
+[anth-context-mgmt]: https://www.claude.com/blog/context-management
+[manus-ctx]: https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
+[oai-prompt-caching]: https://developers.openai.com/api/docs/guides/prompt-caching
+[p-kvcloak]: https://arxiv.org/abs/2508.09442
+[p-safekv]: https://arxiv.org/abs/2508.08438
+[p-cachegen]: https://arxiv.org/abs/2310.07240
+[p-cacheblend]: https://arxiv.org/abs/2405.16444
+[llamacpp]: https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+[p-scbench]: https://arxiv.org/abs/2412.10319
+[p-optileak]: https://arxiv.org/abs/2602.20595
+[p-cacheprobe]: https://arxiv.org/abs/2605.30613
+[p-kvgov]: https://arxiv.org/abs/2608.09225

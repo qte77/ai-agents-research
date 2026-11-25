@@ -26,5 +26,6 @@ patterns across the corpus. Pointers only; see [the hub index](README.md).
 | [agent-design-formats-landscape.md](../non-cc/infrastructure/agent-design-formats-landscape.md) | Design-system formats agents consume (DESIGN.md, design-token chain) | non-cc |
 | [multi-agent-onboarding-outlook.md](../sdlc-lcm/multi-agent-onboarding-outlook.md) | Context fragmentation across coding agents and the move to AGENTS.md | sdlc-lcm |
 | [CC-vlm-screen-sharing-landscape.md](../cc-community/CC-vlm-screen-sharing-landscape.md) | Vision language models, image token maths and screen-sharing workflows with Claude Code | cc-community |
+| [CC-prompt-caching-behavior.md § Idle compaction (before the cache expires)](../cc-native/context-memory/CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires) | Idle compaction's two documented thresholds, resume behaviour, and why it can't run while the host is stopped | cc-native |
 
 Related hubs: [memory.md](memory.md), [code-tooling.md](code-tooling.md), [rag.md](rag.md), [cost.md](cost.md).
