@@ -24,15 +24,9 @@ def _usage(rec):
     return u if isinstance(u, dict) else {}
 
 
-def summarize(lines, gap_min=60, ttl_min=None):
-    """Summarize transcript lines (JSON strings) into token totals, gaps, predictions, compactions.
-
-    ttl_min=None picks the cache lifetime from the write buckets: 5 minutes when most writes are
-    5-minute writes, else 60.
-    """
-    s = dict(responses=0, read=0, write=0, write_1h=0, write_5m=0, uncached=0, output=0, ttl_min=ttl_min,
-             gaps=[], gap_write=0, predicted={"hit": 0, "miss": 0}, prediction_correct=0, compactions=[])
-    recs, by_id = [], {}
+def _parse(lines):
+    """Return (main-thread response records, compaction markers); one record per message id."""
+    recs, by_id, compactions = [], {}, []
     for line in lines:
         try:
             d = json.loads(line)
@@ -42,8 +36,8 @@ def summarize(lines, gap_min=60, ttl_min=None):
             continue  # Reason: subagent turns and markers are sidechains with their own cache.
         if d.get("subtype") == "compact_boundary":
             cm = d.get("compactMetadata") if isinstance(d.get("compactMetadata"), dict) else {}
-            s["compactions"].append({"time": d.get("timestamp"), "trigger": cm.get("trigger"),
-                                     "pre": cm.get("preTokens", 0), "post": cm.get("postTokens", 0)})
+            compactions.append({"time": d.get("timestamp"), "trigger": cm.get("trigger"),
+                                "pre": cm.get("preTokens", 0), "post": cm.get("postTokens", 0)})
             continue
         m = d.get("message")
         if d.get("type") != "assistant" or not isinstance(m, dict):
@@ -56,7 +50,10 @@ def summarize(lines, gap_min=60, ttl_min=None):
         recs.append(rec)
         if mid is not None:
             by_id[mid] = rec
+    return recs, compactions
 
+
+def _add_totals(s, recs):
     for rec in recs:
         u = _usage(rec)
         cc = u.get("cache_creation") if isinstance(u.get("cache_creation"), dict) else {}
@@ -68,15 +65,15 @@ def summarize(lines, gap_min=60, ttl_min=None):
         s["write_5m"] += cc.get("ephemeral_5m_input_tokens") or 0
         s["uncached"] += u.get("input_tokens") or 0
         s["output"] += u.get("output_tokens") or 0
-    if s["ttl_min"] is None:
-        s["ttl_min"] = 5 if s["write_5m"] > s["write_1h"] else 60
 
+
+def _add_gaps(s, recs, gap_min):
     prev = None
     for rec in recs:
         try:
             now = _ts(rec["time"])
         except (TypeError, ValueError, AttributeError):
-            continue  # no usable timestamp: counted above, left out of the gap logic
+            continue  # no usable timestamp: counted in the totals, left out of the gap logic
         if prev is not None:
             gap = (now - prev).total_seconds() / 60
             # Reason: gaps run between responses, so they slightly understate the time since the
@@ -89,6 +86,21 @@ def summarize(lines, gap_min=60, ttl_min=None):
                 s["gaps"].append({"time": rec["time"], "gap_min": round(gap), "write": rec["write"], "read": rec["read"]})
                 s["gap_write"] += rec["write"]
         prev = now
+
+
+def summarize(lines, gap_min=60, ttl_min=None):
+    """Summarize transcript lines (JSON strings) into token totals, gaps, predictions, compactions.
+
+    ttl_min=None picks the cache lifetime from the write buckets: 5 minutes when most writes are
+    5-minute writes, else 60.
+    """
+    recs, compactions = _parse(lines)
+    s = dict(responses=0, read=0, write=0, write_1h=0, write_5m=0, uncached=0, output=0, ttl_min=ttl_min,
+             gaps=[], gap_write=0, predicted={"hit": 0, "miss": 0}, prediction_correct=0, compactions=compactions)
+    _add_totals(s, recs)
+    if s["ttl_min"] is None:
+        s["ttl_min"] = 5 if s["write_5m"] > s["write_1h"] else 60
+    _add_gaps(s, recs, gap_min)
     return s
 
 
