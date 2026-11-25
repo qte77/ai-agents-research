@@ -3,7 +3,7 @@ title: Glossary and concept owners
 purpose: Where each recurring term and abbreviation is defined in this corpus, so a doc links its owner instead of defining it again.
 created: 2026-11-21
 updated: 2026-11-25
-validated_links_on: 2026-11-21
+validated_links_on: 2026-11-25
 status: reference
 ---
 
