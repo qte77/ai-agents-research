@@ -43,7 +43,7 @@ ai-agents-research/
 │   ├── community/             # Community-sources triage
 │   ├── status-monitor/        # CC status page incident archive + stats
 │   └── rxiv/                  # ArXiv paper eval triage (filtered by RXIV_TOPIC)
-├── scripts/                   # Site-info + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles)
+├── scripts/                   # Site-info + font-fetch helpers (stdlib-only); cc-multi-account.sh (CLAUDE_CONFIG_DIR profiles); cc_cache_usage.py (prompt-cache report for one CC transcript)
 ├── tests/                     # Unit tests for scripts/ + .github/scripts/lib modules
 ├── ui/                        # gh-pages site: the doc graph (doc-graph.html), a root redirect (index.html), assets
 ├── changelog.d/               # scriv changelog fragments (collected on release)
