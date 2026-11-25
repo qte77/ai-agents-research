@@ -3,7 +3,7 @@ title: Agent Frameworks & Infrastructure Landscape
 purpose: Catalog of multi-agent orchestration frameworks, LLM routing tools, agent memory infrastructure, agent-oriented foundation models and specialist models agents call as tools, beyond Claude Code.
 status: research
 created: 2026-06-14
-updated: 2026-11-24
+updated: 2026-11-25
 validated_links_on: 2026-11-19
 ---
 
@@ -206,6 +206,7 @@ Moved here from the cc-community tooling landscape on 2026-11-19 (owner decision
 - [smolAgents (HuggingFace)](https://github.com/huggingface/smolagents) — minimalist code-first agents with HF model access.
 - [Youtu-Agent (Tencent)](https://github.com/Tencent/Youtu-agent) — async, YAML-configured agents; 71.47% WebWalkerQA, OSS-model friendly.
 - [chat-data.com][chatdata] — closed SaaS builder for customer-support chatbots trained on your own content; no open-source repo checked. Pricing page, read 2026-11-24: free tier with 100 message credits a month, paid tiers priced by message credits (the entry tier lists $15.83 a month billed annually for 1,500 credits). Its SOC 2 (security audit), HIPAA (US health-data law) and MCP-app-count claims are vendor claims, not checked here.
+- [Kaval.AI][kavalai] — Python library for typed agentic workflows, chatbots and tools (Apache-2.0 per the repo LICENSE; 13 stars, repo created 2025-11-11, v1.1.0 released 2026-11-25; as of 2026-11-25). Below the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter)'s adoption bar; kept at the owner's request (2026-11-25) as a watch entry, not a recommendation. Per its docs: Pydantic I/O, OpenAI / Gemini / Anthropic / Scaleway / Ollama models, tools as Python functions, REST or MCP, YAML or Python graph workflows, RAG on SQLite or pgvector, and a back-office tracing UI. Vendor docs, not independently tested.
 - [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), [BabyAGI](https://github.com/yoheinakajima/babyagi), [SuperAGI](https://github.com/TransformerOptimus/SuperAGI) — the original autonomous-task-loop projects (recursive planning; AutoGPT/BabyAGI/SuperAGI respectively minimal→GUI).
 - [Rippletide](https://www.rippletide.com/) — neuro-symbolic "hypergraph decision engine" for autonomous sales agents (zero-hallucination claims).
 - [autoharness (Kayba)](https://github.com/kayba-ai/autoharness) — autonomous, benchmark-driven optimizer for an *existing* agent harness: runs proposal→evaluate→promote-champion loops (overnight) using pluggable generators (`claude_code`, `codex_cli`, `openai_responses`) and benchmark adapters (`pytest`, `harbor`, `tau2_bench`, `hal`, …) (MIT, Python 3.11+). Online learning counterpart: ACE (§4); benchmarks → [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md).
@@ -606,6 +607,7 @@ GEPA entry (§2) — first-party checked 2026-11-22 (plan 0015, row N9):
 | Source | Content |
 |---|---|
 | [arXiv:2511.16652][eggroll-paper], [project page][eggroll-site], [HyperscaleES][eggroll-repo], [nano-egg][eggroll-nano] | Method, speed-up claim, LICENSE files (GPL-3.0 both), stars (`gh api` 2026-11-24) |
+| [Kaval.AI docs][kavalai] · [repo](https://github.com/Kaval-AI/kavalai) | Kaval.AI features, licence, stars and release (2026-11-25) |
 | [chat-data.com pricing][chatdata] | Plans and message credits (as of 2026-11-24); marketing page, claims unchecked |
 | [gepa-ai/gepa][gepa-repo] | README (method, install, key-results claims), LICENSE file (MIT), stars, release, last push (`gh api` 2026-11-22) |
 | [arXiv:2507.19457][gepa-paper] | Abstract page: title, authors, ICLR 2026 Oral note, method summary, headline numbers vs GRPO and MIPROv2 |
@@ -744,3 +746,4 @@ RAG and retrieval refresh (§7) — first-party pages read 2026-11-21:
 [eggroll-site]: https://eshyperscale.github.io/
 [eggroll-repo]: https://github.com/ESHyperscale/HyperscaleES
 [eggroll-nano]: https://github.com/ESHyperscale/nano-egg
+[kavalai]: https://docs.kaval.ai
