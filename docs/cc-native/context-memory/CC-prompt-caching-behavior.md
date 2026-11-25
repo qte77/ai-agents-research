@@ -201,6 +201,87 @@ Read it as one user's working pattern, not a benchmark:
 The method above is enough to reproduce the table on your own transcripts with a short script; do that
 before relying on these shares.
 
+### Second data point: one long session (2026-11-22 to 2026-11-25)
+
+A second own measurement, read from one session's transcript with the method above (main thread only, one
+machine, n=1; not a benchmark). Observed on 2026-11-25:
+
+| Metric | Value |
+|---|---|
+| Main-thread responses | 1,706 |
+| Input tokens served as cache reads | 99.2% (472M tokens) |
+| Cache writes | 0.8% (3.7M tokens), all at the one-hour lifetime |
+| Writes after idle gaps over 60 minutes | 33% of writes: 4 gaps of 2 to 17 hours rewrote 110K to 435K tokens each |
+| Compactions | 5, all `trigger: "auto"` at 469K to 492K tokens, down to 15K to 27K tokens |
+
+- Idle compaction did not fire before those gaps. The cause is **unverified**; the likely one is that the Claude
+  Code process was not running while its host was stopped (see [Stopped host](#stopped-host-options)).
+- Subagent turns are sidechains with their own cache and do not warm the main thread's ([CC caching docs][cc-caching],
+  "Subagents and the cache").
+- Both measurements agree on the pattern (a very high read share, with a large part of the writes coming from
+  rebuilds after long gaps). They differ in the share (52% of writes in the week, 33% here), so read the share as
+  workload-dependent.
+
+### Cost levers and their evidence
+
+Three levers follow from the mechanics above: keep the context smaller, keep the prompt start stable, and do not
+idle past the cache lifetime. Each is stated at its own evidence level; none of the studies below measures Claude
+Code itself.
+
+| Lever | Evidence | Level |
+|---|---|---|
+| Keep the context smaller | Across agentic coding runs, "input tokens rather than output tokens" drive the overall cost, and runs on the same task "can differ by up to 30x in total tokens" ([arXiv 2604.22750][p-spend], v3 2026-10-02, preprint). Replacing old tool observations with placeholders "halves cost relative to the raw agent" and matches LLM summarization's solve rate on SWE-agent ([arXiv 2508.21433][p-complexity], preprint, 2025-08-29; the abstract does not mention caching, so the saving is not shown net of cache effects). Cost differences between harnesses "from under 10% to 3 to 4 times" depending on the model ([arXiv 2610.04433][p-harness-tokens], preprint, 2026-10-03). | Papers (preprints) |
+| Smaller context also helps quality | Performance "grows increasingly unreliable as input length grows" across 18 models ([Chroma, Context Rot][chroma-rot], 2025-07-14, practitioner report with code); accuracy "significantly degrades" for information in the middle of long inputs ([arXiv 2307.03172][p-lost-middle], 2023, older models). Anthropic reports context editing +29% and +39% with the memory tool on "an internal evaluation set for agentic search", and an 84% token cut in a 100-turn web-search eval, with no eval size or baseline given ([Anthropic, context management][anth-context-mgmt], 2025-09-29). | Paper, practitioner, vendor claim (internal eval) |
+| Keep the prompt start stable | A hit needs "100 percent identical prompt segments" up to the breakpoint, in the order tools, system, messages ([prompt caching docs][caching], read 2026-11-25). Across three providers, caching cut API cost 41-80% and time to first token 13-31% on long agentic tasks ([arXiv 2601.06007][p-dontbreak], abstract, 2026-01; which caching placement works best is not taken from the abstract and is **unverified** here). Manus calls the KV-cache hit rate "the single most important metric" for a production agent, cites an input-to-output ratio of "around 100:1" and 0.30 against 3 USD/MTok cached against uncached on Claude Sonnet (as of its 2025 post), and advises against a second-precise timestamp at the start of the system prompt and for append-only context ([Manus][manus-ctx], practitioner). | Vendor doc, paper (preprint), practitioner |
+| Do not idle past the cache lifetime | The lifetime is measured from the start of the request that wrote or read the entry ([prompt caching docs][caching], read 2026-11-25); in Claude Code the main conversation gets one hour only on a subscription within plan usage, five minutes otherwise ([above](#ttl-varies-by-request-bucket-and-billing-method)). The two own measurements in this doc show rebuilds after long gaps at 52% (week) and 33% (one session) of cache writes. No independent measurement of cold-cache cost after idle gaps was found. | Vendor doc, own measurement (n=1 each) |
+
+What is not shown: no study found compares compaction with an append-only, cache-preserving history on total
+cost, so "smaller is cheaper" is not shown net of the cache rebuild a compaction causes (the Claude Code caching
+page says compaction invalidates the conversation layer, then the next turn rebuilds the cache for only the shorter
+history). For cross-vendor caching rules (OpenAI, Gemini) and serving-engine internals, see
+[kv-cache-serving-landscape.md](../../non-cc/infrastructure/kv-cache-serving-landscape.md).
+
+### Stopped host options
+
+When the host is stopped, nothing sends requests and the in-session idle compaction cannot run
+([Idle compaction](#idle-compaction-before-the-cache-expires)). Options, none of which is Claude Code behaviour
+documented as a feature:
+
+- **Compact before the stop (untested):** a stop hook or a watchdog on the host could run a headless
+  `claude -p --resume <session-id> "/compact"` while the cache is still warm, on a graceful stop signal or after
+  about 50 minutes of transcript idleness. It works only if the stop leaves time for one request, and a
+  [`SessionEnd` hook][cc-sessions] receives the transcript path. Whether a slash command works in `-p` mode was not checked.
+- **Raise the host's idle limit above the cache lifetime:** keeping the host alive past one hour lets idle
+  compaction run (documented condition: the computer stays awake).
+- **Accept one cold rewrite:** after a long stop the next request reprocesses the prefix once; with a very large
+  context, resume into a new session instead of the old one ([sessions][cc-sessions]).
+- **A keep-alive ping from outside the session does not help** unless it sends a byte-identical prefix to the one
+  Claude Code sends (our inference from the exact-match rule, not a documented statement).
+
+### Predicting a hit or a miss
+
+A request hits when its prefix is byte-identical to the last request's, on the same model and speed, in the same
+workspace, and within the lifetime of that request's start ([caching docs][caching], [CC caching docs][cc-caching],
+read 2026-11-25). This predicts hit or miss only, not the saving. In Claude Code, `/usage` shows a
+"Prompt cache (main)" line with the hit ratio, misses and whether the cache is warm, plus a likely cause such as
+"tool definitions changed" (v2.1.260 or later). For code that builds its own requests, the API's
+[cache diagnostics][cache-diag] (documented stable on the Claude API; the SDKs expose it under their `beta` namespace, read 2026-11-25)
+compare consecutive requests via `diagnostics.previous_message_id` and report the first divergence (`model_changed`,
+`system_changed`, `tools_changed`, `messages_changed`); it needs the previous response's `id`, the same workspace, and
+closely spaced requests.
+
+### Claims checked (2026-11-25)
+
+| Claim | Status | Source |
+|---|---|---|
+| Auto-compact has no time-based trigger | Wrong: `idleCompaction` (default `true`) compacts a long idle session before its cache expires | [settings reference][settings-ref] |
+| Idle compaction fires after exactly 54 minutes | Conflict: changelog "about 54 minutes", settings reference "about an hour"; both recorded above | [changelog][cc-changelog], [settings reference][settings-ref] |
+| Claude Code compacts on resume or restart | Not found: a resumed session restores history to its last compaction; compacting an old session costs the most | [sessions][cc-sessions], [CC caching docs][cc-caching] |
+| A cache can be exported, rebuilt or hosted locally | Not possible for a closed model: caches are isolated per organization (and per workspace on the Claude API); no export is documented | [caching docs][caching] |
+| A subagent or another session shares the main thread's cache | Fresh subagent: no (own prompt and tools). Fork: yes, it inherits the parent's prompt, tools and history, so its first request reads the parent's cache. Parallel sessions in one directory can read each other's cache | [CC caching docs][cc-caching] |
+| Prompt-caching cost cut of 41-80% | From the abstract, across three providers; one study | [arXiv 2601.06007][p-dontbreak] |
+| "Agents spend 76.1% of the token budget on reads" (SWE-Pruner) | Unverified (search snippet only); not used | [arXiv 2601.16746](https://arxiv.org/abs/2601.16746) |
+
 ### Cache warmup curve
 
 Observed in session `9f7de296` (CC 2.1.83, 281 turns):
@@ -339,6 +420,10 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | [CC env vars reference][cc-env-vars] | `CLAUDE_CODE_PROMPT_CACHE_TTL`, `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`, `FORCE_PROMPT_CACHING_5M`, `ENABLE_PROMPT_CACHING_1H`, `DISABLE_PROMPT_CACHING*` (accessed 2026-10-15) |
 | [CC changelog][cc-changelog] | Idle compaction: 2.1.299 (terminal, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`), 2.1.302 (`/config` row), 2.1.314 (VS Code, Desktop, gateways), 2.1.318 (fix) (read 2026-11-09) |
 | [Settings reference][settings-ref] | `idleCompaction` description, default `true`, v2.1.290+ (read 2026-11-09); conditions list with "about an hour" idle time and the one-hour-TTL requirement (read 2026-11-25) |
+| [Cache diagnostics][cache-diag] | `diagnostics.previous_message_id`, `cache_miss_reason` types, stable status, same-workspace limit (read 2026-11-25) |
+| [Claude Code caching docs][cc-caching] | Prefix layers, subagent and fork cache sharing, `/usage` "Prompt cache (main)" line, cache scope (read 2026-11-25) |
+| [arXiv 2604.22750][p-spend], [2508.21433][p-complexity], [2610.04433][p-harness-tokens], [2601.06007][p-dontbreak], [2307.03172][p-lost-middle] | Cost-lever papers, abstracts read 2026-11-25 (preprints; 2307.03172 peer-reviewed in 2023) |
+| [Chroma, Context Rot][chroma-rot], [Manus][manus-ctx], [Anthropic, context management][anth-context-mgmt] | Practitioner and vendor sources for the context-size and prompt-stability levers (read 2026-11-25) |
 | [Sessions][cc-sessions] | What a resumed session restores: history up to the last compaction, no compaction on resume (read 2026-11-25) |
 | CC 2.1.83, session `9f7de296`, Codespaces, 2026-03-27 | Cache warmup curve, 96.3% hit rate — predates the TTL-bucket model (CC v2.1.242+) described above |
 | [AWS Bedrock prompt-caching docs][bedrock-caching] | Per-model minimum cacheable prefix on Bedrock specifically (Fable/Mythos 5.x = 512 tokens, same as other platforms) (accessed 2026-10-15) |
@@ -357,3 +442,12 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 [cc-gateway]: https://code.claude.com/docs/en/llm-gateway-protocol
 [effort]: https://platform.claude.com/docs/en/build-with-claude/effort
 [cc-changelog]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+[cache-diag]: https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics
+[p-spend]: https://arxiv.org/abs/2604.22750
+[p-complexity]: https://arxiv.org/abs/2508.21433
+[p-harness-tokens]: https://arxiv.org/abs/2610.04433
+[p-dontbreak]: https://arxiv.org/abs/2601.06007
+[p-lost-middle]: https://arxiv.org/abs/2307.03172
+[chroma-rot]: https://www.trychroma.com/research/context-rot
+[manus-ctx]: https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
+[anth-context-mgmt]: https://www.claude.com/blog/context-management
