@@ -3,7 +3,7 @@ title: CC Changelog Feature Scan
 source: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 purpose: Weekly changelog monitor cutoff (CHANGELOG.md checked v2.1.0–2.1.330; the monitor bumps it, not a coverage claim) plus a hand-written feature scan of v2.1.0 to v2.1.71.
 created: 2026-03-07
-updated: 2026-11-15
+updated: 2026-11-25
 validated_links_on: 2026-04-06
 status: research
 ---
@@ -95,7 +95,7 @@ Resume sessions linked to a specific PR. Sessions auto-link to PRs created via `
 
 #### `/claude-api` Skill (v2.1.69)
 
-Built-in skill for building applications with Claude API and Anthropic SDK. ([source][changelog])
+Built-in skill for building applications with Claude API and Anthropic SDK. ([source][changelog]) Layout, subcommands and on-disk behaviour: [bundled `/claude-api` skill](../agents-skills/CC-skills-adoption-analysis.md#bundled-reference-skill-claude-api-2026-11-25).
 
 **Relevance**: Useful for any project using the Anthropic API. Skill can assist with API integration tasks, model configuration, and SDK patterns.
 
