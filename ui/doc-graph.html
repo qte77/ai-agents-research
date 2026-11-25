@@ -347,8 +347,8 @@
               if (!userMoved) { fitView(true); } // keep a search zoom or the user's own pan/zoom
               return;
             }
-            // Reason: a lower speed cap does not slow nodes down, because the adaptive time step grows to
-            // compensate; a fixed, shrinking time step slows the whole simulation evenly.
+            // Reason: a fixed, shrinking time step slows the whole simulation evenly; lowering the speed
+            // cap instead left nodes moving at almost full speed when measured.
             if (f > 0) { network.setOptions({ physics: { adaptiveTimestep: false, timestep: Math.max(0.005, STEP * Math.pow(1 - f, 2)) } }); }
             stopTimer = setTimeout(step, 50);
           }
@@ -484,7 +484,7 @@
           }
         }
         if (newest) { buildTimeline("90"); }
-        else { // no dates: say so and drop the span picker (the title is a span, so this leaves the select)
+        else { // no dates: say so and drop the span picker (the title is the panel's summary, so the select is untouched)
           document.getElementById("tl-title").textContent = "Updated (no dates in data)";
           document.getElementById("tl-window").hidden = true;
         }
