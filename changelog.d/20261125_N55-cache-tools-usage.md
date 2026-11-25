@@ -1,3 +1,0 @@
-### Changed
-
-- `scripts/cc_cache_usage.py` counts a turn as a cache miss when it writes again part of the prefix the previous turn had cached (the rule credited to cachemiss), not when it writes more than it reads; `CC-prompt-caching-behavior.md` explains how to run it, and `CC-usage-tooling-landscape.md` points to the hit/miss coverage (plan 0016 N55).
