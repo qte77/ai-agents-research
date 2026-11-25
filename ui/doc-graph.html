@@ -96,7 +96,7 @@
         <summary>Filters</summary>
         <div id="facets"></div>
         <div class="facet">
-          <h3 id="tl-title">Updated
+          <h3><span id="tl-title">Updated</span>
             <select id="tl-window" aria-label="Timeline span"><option value="90">last 90 days</option><option value="all">full history</option></select></h3>
           <div id="timeline" role="group" aria-labelledby="tl-title"></div>
           <p id="tl-readout"><span id="tl-text">Click a bar, then another bar for a range.</span>
@@ -471,7 +471,10 @@
           }
         }
         if (newest) { buildTimeline("90"); }
-        else { document.getElementById("tl-title").textContent = "Updated (no dates in data)"; }
+        else { // no dates: say so and drop the span picker (the title is a span, so this leaves the select)
+          document.getElementById("tl-title").textContent = "Updated (no dates in data)";
+          document.getElementById("tl-window").hidden = true;
+        }
         document.getElementById("tl-window").addEventListener("change", function (ev) {
           buildTimeline(ev.target.value); refreshTimeline(); paintRange();
         });
