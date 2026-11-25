@@ -3,7 +3,7 @@ title: Doc-graph page facets and timeline, 2026-11-24 sources, KB papers into pa
 status: approved
 issue: "#1071"
 created: 2026-11-24
-updated: 2026-11-24
+updated: 2026-11-25
 ---
 
 Tracking issue: #1071. Successor to [plan 0015](2026-11-20-0015-kb-structure-graphify-removal.md)
@@ -12,12 +12,13 @@ plan and `make reconcile`, which reads only the newest plan, checks all of it.
 
 ## Current status
 
-**Read this first.** Plan opened 2026-11-24 from four owner requests: ideas for the doc-graph page
-from a screenshot of a live "Hypergraph" dashboard, two papers, five repos and products, and "update
-paperverse with the papers in this KB and the selected ones from the rxiv workflows". The owner
-answered the open questions the same day ([§ Owner decisions](#owner-decisions-2026-11-24)).
-Nothing in [§ Remaining work](#remaining-work) has shipped yet. Plan 0015 closed with N14 to N33
-merged (#1045 to #1068) and v0.24.0 released (#1069).
+**Read this first.** Plan opened 2026-11-24 from four owner requests (doc-graph ideas, two papers,
+five repos and products, KB papers into paperverse); the owner answered the open questions the same
+day ([§ Owner decisions](#owner-decisions-2026-11-24)). **Status 2026-11-25:** N34 to N37, N39, N40
+and N43 to N49 have shipped (#1072 to #1084; each struck row names its PR). Still open in
+[§ Remaining work](#remaining-work): N38 (handed to a paperverse session as `qte77/paperverse#187`),
+N41 (freshness rule, waiting on the owner), N42 (connectors-directory section) and the owner-gated
+rows below. Plan 0015 closed with N14 to N33 merged (#1045 to #1068) and v0.24.0 released (#1069).
 
 **How this plan runs: parallel worktree lanes.** Every agent row belongs to exactly one lane
 ([§ Lanes](#lanes)). A lane is one subagent working in its own git worktree on its own branch, and
@@ -28,20 +29,17 @@ worktrees, sends the briefs, verifies, integrates and merges. Run at most three 
 
 1. `git pull`, `make reconcile`, list open PRs (merge a weekly bot PR first if one is open, after
    bringing it up to date with `main`).
-2. **Wave 1**, three lanes in one message: K (N37), G (N34), P (N35, N39). For each: create the
-   worktree from `origin/main` as a sibling of the checkout (`git worktree add ../wt-<lane> -b
-   <branch> origin/main`), then start one subagent with the brief in [§ Lanes](#lanes).
-3. Hand row N38 to a **separate paperverse session** (the owner opens it in `qte77/paperverse`;
-   paste [§ Source map: paperverse](#paperverse-n38) into it). It can start at once on the sync fix;
-   adding `triage/kb-papers` as a source and the catch-up wait until N37 has merged, because the
-   folder doesn't exist before that and the sync's listing would fail the run.
+2. **New owner sources:** run each topic as a lane (one worktree from `origin/main` as a sibling of
+   the checkout, `git worktree add ../wt-<lane> -b <branch> origin/main`, and one subagent with the
+   brief in [§ The loop](#the-loop)); at most three at once. Add a struck row per topic in its PR.
+3. **N42** next as an agent row (a browser pass of the connectors directory); **N41** once the owner
+   answers. Check `qte77/paperverse#187` for N38.
 4. As each lane returns: re-check its strongest claims at source, run the checks for its kind
    ([§ The loop](#the-loop)) and add the hub, index and glossary rows it proposes. Right before the
    merge, merge `main` into the lane branch and then add the plan-row strike as the last commit
    (sibling lanes strike adjacent rows, so striking earlier conflicts); push, open the PR, run the
    link gate and merge. Merge serially. Then remove the worktree and both branches.
-5. **Wave 2** when a slot frees: lane R (N36).
-6. After all lanes merge: release (dispatch the bump workflow, minor; merge its PR once CI is green;
+5. After a batch merges: release (dispatch the bump workflow, minor; merge its PR once CI is green;
    check the tag and the GitHub Release). Comment progress on #1071.
 
 **Owner-gated, don't start:** the N38 fix choice if it needs a repo setting or an App
@@ -268,6 +266,7 @@ alone). Follow paperverse's own `AGENTS.md` and `CONTRIBUTING.md`; its gate is `
 | ~~N46~~ | ~~shrink-anything, a Claude Code plugin, CLI and MCP server that cuts dead code and unused dependencies (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): a watch-entry row next to fast-anything in CC-community-tooling-landscape.md § New and unproven: agent plugins, with facts re-checked at the repo on 2026-11-25 and the demo figures labelled as the author's own; the plugins hub row extended; two fact-check passes applied |
 | ~~N47~~ | ~~Prefect, Dagster and Apache Airflow AI features, plus Kaval.AI (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): three rows in workflow-frameworks-landscape.md's framework table and a dated "Data orchestrators with an AI surface" subsection (FastMCP, prefect-mcp-server, Marvin, ControlFlow archived; Dagster+ MCP beta, dagster-io/skills; Airflow common-ai, anthropic and openai providers, no official Apache MCP server found); Kaval.AI as one owner-requested watch line in agent-frameworks-infrastructure-landscape.md § 3 (below the pruning rule's adoption bar); long-running hub row; two fact-check passes applied |
 | ~~N48~~ | ~~pid-to-knowledge-graph, a Claude skill that turns P&ID (piping and instrumentation diagram) PDFs into a process knowledge graph (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): a section in CC-community-skills-landscape.md re-checked at the repo on 2026-11-25, kept at the owner's request as a watch entry although it is below the pruning rule's adoption bar; skills and knowledge-graphs hub rows; two fact-check passes applied |
+| ~~N49~~ | ~~Doc graph refinements (owner 2026-11-25): "the graph is too extremely clustered now … less obvious and more subtle"; "offer a full history in addition to 'Recently updated (last 90 days)'"; "let 'Filters' and 'Colour by' be details/summary"~~ | agent | Shipped 2026-11-25 (this PR): hubs no longer fixed, wider overlapping doc clouds and softer physics (docs nearest their own hub 168/190 instead of 190/190; motion still stops ~1.1 s after load); timeline span select with full history (37 weekly bars); Colour by and Filters as open-by-default details panels. patchright e2e on desktop dark and phone light: all checks pass, no console errors, no horizontal scroll |
 | 13-A5 | Labels from `decide()` in issue triage at a measured threshold (moved from plan 0012's Deferred list) | data | About 50 issues across the shadowed repos carry the shadow section; then sweep `hi` against the labels the existing triage set and decide |
 | 13-A7 | Drift checks for the decision models: (1) a monthly scheduled run of `decision-model-eval.yaml` on the gold sets, flagged against the 2026-11-10/11 baseline (AUC drop above about 0.03, Brier rise, recommended `hi` moving by 0.05 or more); (2) store each weekly paper run's decided / fallback / escalated counts (the artifact summary already prints "Decided via decide()") and flag a sustained fall in the decided share or a rise in escalations; (3) on about 10% of papers also run the chat call and track the disagreement rate. Pin model versions (`jev-1.13.0`, `clef`) and re-run the gold sets before any bump; set thresholds on one half of a gold set and report on the other. **Part (1) shipped 2026-11-12** (`#813`: `decision-model-eval.yaml` monthly on the 1st, `data/gold/baseline.json`, `decision-drift` issue; Brier shown, not flagged). A manual run the same day reproduced the Clef and Clef-flash baseline exactly, so run-to-run noise for Clef is nil on this evidence (Jev not re-run). **Part (2) shipped 2026-11-17** (`#875`): the committed triage reports already store each run's "Decided via decide()" line, so `lib/decide_counts.py` reads them and the monthly `decision-model-eval.yaml` run appends a per-run table to its summary and a note to `drift.md` (the `decision-drift` issue) when each of the last 3 runs' decided share is more than 0.10 below the earlier mean; it needs 6 runs before it can flag. First data point: W45, 88 of 100 decided. Escalations are not printed separately in the summary, so they are counted as fallbacks. Left: (3) the chat-call disagreement sample — ask the owner whether it earns its cost; the split-half thresholds belong to A8 | owner (deferred) | Monthly workflow live with a baseline file; counts stored per run; disagreement sample in the summary. **Part (3) deferred by the owner 2026-11-22** (not built now); parts (1) and (2) ship. Resume only on an owner go |
 | 13-A8 | Gold-set refresh against the in-sample caveat: add a second paper week as a held-out set, a human spot-check of about 20 items, and real (not planted) off-topic issues | agent + owner spot-check | Second paper set and an issue set with real negatives in `.github/scripts/data/gold/`; H1 numbers re-reported out of sample |

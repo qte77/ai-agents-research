@@ -34,7 +34,9 @@
       width: 300px; flex-shrink: 0; overflow-y: auto; padding: calc(var(--unit) * 2);
       border-left: 1px solid var(--border); font-size: 0.875rem; color: var(--text-muted);
     }
-    #info h2 { font-size: 1rem; margin: var(--unit) 0; color: var(--text); }
+    #info h2, #info details.panel > summary { font-size: 1rem; margin: var(--unit) 0; color: var(--text); font-weight: 600; }
+    #info details.panel > summary { cursor: pointer; }
+    #tl-window { font: inherit; font-size: 0.75rem; }
     #info p { margin: 0 0 var(--unit); }
     #hubs label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 2px 0; }
     #hubs .all { font-weight: 600; color: var(--text); }
@@ -84,19 +86,23 @@
       <input id="search" type="search" placeholder="Find a doc… (Enter zooms)" aria-label="Find a doc" />
       <p>Dots are docs, diamonds are topic hubs, the star is the hub index, lines are links between them. Click a node for its details
         and a link to GitHub. Built from the docs on every deploy, without an LLM.</p>
-      <label for="colour-by">Colour by
-        <select id="colour-by"><option value="topic">topic hub</option><option value="folder">folder</option></select>
-      </label>
-      <p class="legend" id="legend"></p>
       <p id="stats"></p>
-      <h2>Filters</h2>
-      <div id="facets"></div>
-      <div class="facet">
-        <h3 id="tl-title">Recently updated (last 90 days)</h3>
-        <div id="timeline" role="group" aria-labelledby="tl-title"></div>
-        <p id="tl-readout"><span id="tl-text">Click a day, then another day for a range.</span>
-          <button type="button" class="chip" id="tl-clear" hidden>Clear</button></p>
-      </div>
+      <details class="panel" open>
+        <summary>Colour by</summary>
+        <select id="colour-by" aria-label="Colour by"><option value="topic">topic hub</option><option value="folder">folder</option></select>
+        <p class="legend" id="legend"></p>
+      </details>
+      <details class="panel" open>
+        <summary>Filters</summary>
+        <div id="facets"></div>
+        <div class="facet">
+          <h3><span id="tl-title">Updated</span>
+            <select id="tl-window" aria-label="Timeline span"><option value="90">last 90 days</option><option value="all">full history</option></select></h3>
+          <div id="timeline" role="group" aria-labelledby="tl-title"></div>
+          <p id="tl-readout"><span id="tl-text">Click a bar, then another bar for a range.</span>
+            <button type="button" class="chip" id="tl-clear" hidden>Clear</button></p>
+        </div>
+      </details>
       <h2>Topic hubs</h2>
       <div id="hubs"></div>
     </aside>
@@ -281,10 +287,11 @@
         }
         var shown = el("span");
         var network = null, recolour = null;
-        // Layout: the hub index stays at the centre, the checked hubs are fixed on a ring around it and
-        // every doc is seeded near its primary hub, so clusters exist from the first frame and do not
-        // depend on how long physics runs. Physics only relaxes the docs inside their cluster for
-        // RUN_MS after a change (a new change cancels the pending stop). No perpetual motion.
+        // Layout: the hub index stays at the centre and the checked hubs start on a ring around it. Every
+        // doc starts in a loose cloud around its primary hub, wide enough that neighbouring clouds
+        // overlap. Physics then moves hubs and docs together for RUN_MS after a change (a new change
+        // cancels the pending stop), so topics read as soft regions rather than tight rings. No
+        // perpetual motion.
         var RUN_MS = 1000, stopTimer = null, ready = false, userMoved = false;
         function jitter(id, salt) { // deterministic value in [0, 1) from an id
           var h = 2166136261;
@@ -298,9 +305,9 @@
           on.forEach(function (id, i) {
             var a = 2 * Math.PI * i / on.length - Math.PI / 2;
             at[id] = { x: Math.round(ring * Math.cos(a)), y: Math.round(ring * Math.sin(a)) };
-            ups.push({ id: id, x: at[id].x, y: at[id].y, fixed: true, physics: false });
+            ups.push({ id: id, x: at[id].x, y: at[id].y, fixed: false, physics: true });
           });
-          var spread = Math.max(40, Math.min(90, ring * Math.PI / on.length * 0.5)); // cluster radius
+          var spread = Math.max(80, Math.min(200, ring * Math.PI / on.length * 1.1)); // cloud radius
           docs.forEach(function (n) {
             var home = primaryHub(n), c = home ? at[home] : { x: 0, y: 0 };
             var show = visible(n), up = { id: n.id, physics: show };
@@ -403,58 +410,74 @@
           document.getElementById("facets").appendChild(wrap);
         });
 
-        // Timeline: docs per `updated` day over the 90 days ending at the newest `updated` date
-        // in the data (a fixed window would go empty on a stale deploy).
-        var DAY = 86400000, WINDOW = 90;
+        // Timeline: docs per `updated` date, as bars over the last 90 days (one bar per day) or the
+        // full history (one bar per 7 or 30 days, so the bar count stays small). Both end at the
+        // newest `updated` date in the data (a fixed window would go empty on a stale deploy).
+        var DAY = 86400000;
         var newest = docs.reduce(function (m, n) { return n.updated && n.updated > m ? n.updated : m; }, "");
+        var oldest = docs.reduce(function (m, n) { return n.updated && (!m || n.updated < m) ? n.updated : m; }, "");
         var tl = document.getElementById("timeline");
         var readout = document.getElementById("tl-text");
         var clear = document.getElementById("tl-clear");
-        var dayBtns = [];
+        var bars = []; // {from, to, b}: ISO dates, inclusive
         function iso(ms) { return new Date(ms).toISOString().slice(0, 10); }
         function paintRange() {
-          dayBtns.forEach(function (d) {
-            d.b.setAttribute("aria-pressed", String(!!range && d.day >= range.from && d.day <= range.to));
+          bars.forEach(function (d) {
+            d.b.setAttribute("aria-pressed", String(!!range && d.from >= range.from && d.to <= range.to));
           });
           clear.hidden = !range;
-          readout.textContent = !range ? "Click a day, then another day for a range."
+          readout.textContent = !range ? "Click a bar, then another bar for a range."
             : (range.from === range.to ? range.from : range.from + " to " + range.to) + " (" +
               docs.filter(function (n) { return hubOk(n) && chipOk(n) && rangeOk(n); }).length + " docs)";
           applyFilter();
         }
-        // Day bars count docs passing the hub boxes and chips (not the range, so a range can be widened).
+        // Bars count docs passing the hub boxes and chips (not the range, so a range can be widened).
         function refreshTimeline() {
-          var counts = {}, peak = 1;
-          docs.forEach(function (n) {
-            if (n.updated && hubOk(n) && chipOk(n)) { counts[n.updated] = (counts[n.updated] || 0) + 1; }
+          var peak = 1, counts = bars.map(function (d) {
+            return docs.filter(function (n) {
+              return n.updated && n.updated >= d.from && n.updated <= d.to && hubOk(n) && chipOk(n);
+            }).length;
           });
-          dayBtns.forEach(function (d) { peak = Math.max(peak, counts[d.day] || 0); });
-          dayBtns.forEach(function (d) {
-            var c = counts[d.day] || 0;
+          counts.forEach(function (c) { peak = Math.max(peak, c); });
+          bars.forEach(function (d, i) {
+            var c = counts[i], span = d.from === d.to ? d.from : d.from + " to " + d.to;
             d.b.disabled = !c;
             d.b.style.height = Math.max(c / peak * 100, 4) + "%";
-            d.b.title = d.day + ": " + c;
-            d.b.setAttribute("aria-label", d.day + ": " + c + " docs updated");
+            d.b.title = span + ": " + c;
+            d.b.setAttribute("aria-label", span + ": " + c + " docs updated");
           });
         }
-        if (newest) {
-          var end = Date.parse(newest);
-          for (var i = WINDOW - 1; i >= 0; i--) {
-            (function (day) {
+        function buildTimeline(win) {
+          tl.textContent = ""; bars = []; range = null;
+          if (!newest) { return; }
+          var end = Date.parse(newest), days = win === "all" ? Math.round((end - Date.parse(oldest)) / DAY) + 1 : 90;
+          var step = days <= 90 ? 1 : days <= 730 ? 7 : 30, n = Math.ceil(days / step);
+          for (var i = n - 1; i >= 0; i--) {
+            (function (d) {
               var node = el("button");
               node.type = "button";
               node.setAttribute("aria-pressed", "false");
               node.addEventListener("click", function () {
-                if (!range || range.from !== range.to) { range = { from: day, to: day }; }
-                else if (day === range.from) { range = null; }
-                else { range = { from: day < range.from ? day : range.from, to: day < range.from ? range.from : day }; }
+                // First click picks one bar, a second click on another bar widens to a range, a click
+                // on the picked bar clears it, and a click after a range starts over.
+                if (!range || !range.single) { range = { from: d.from, to: d.to, single: true }; }
+                else if (range.from === d.from && range.to === d.to) { range = null; }
+                else { range = { from: d.from < range.from ? d.from : range.from,
+                                 to: d.to > range.to ? d.to : range.to, single: false }; }
                 paintRange();
               });
-              dayBtns.push({ day: day, b: node });
-              tl.appendChild(node);
-            })(iso(end - i * DAY));
+              d.b = node; bars.push(d); tl.appendChild(node);
+            })({ from: iso(end - (i * step + step - 1) * DAY), to: iso(end - i * step * DAY) });
           }
-        } else { document.getElementById("tl-title").textContent = "Recently updated (no dates in data)"; }
+        }
+        if (newest) { buildTimeline("90"); }
+        else { // no dates: say so and drop the span picker (the title is a span, so this leaves the select)
+          document.getElementById("tl-title").textContent = "Updated (no dates in data)";
+          document.getElementById("tl-window").hidden = true;
+        }
+        document.getElementById("tl-window").addEventListener("change", function (ev) {
+          buildTimeline(ev.target.value); refreshTimeline(); paintRange();
+        });
         clear.addEventListener("click", function () { range = null; paintRange(); });
         paintRange();
         panel.addEventListener("change", function (ev) {
@@ -471,8 +494,8 @@
         seedLayout();
         network = new vis.Network(document.getElementById("graph"), { nodes: nodes, edges: edges }, {
           physics: { solver: "forceAtlas2Based", stabilization: { iterations: 150 }, maxVelocity: 20,
-                     forceAtlas2Based: { gravitationalConstant: -8, centralGravity: 0.008, springLength: 25,
-                                         springConstant: 0.4, damping: 0.8, avoidOverlap: 0.5 } },
+                     forceAtlas2Based: { gravitationalConstant: -30, centralGravity: 0.01, springLength: 90,
+                                         springConstant: 0.05, damping: 0.7, avoidOverlap: 0.3 } },
           edges: { color: { color: token("--border"), highlight: token("--primary") }, width: 1, smooth: false },
           nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
           interaction: { hover: true, tooltipDelay: 120 }
