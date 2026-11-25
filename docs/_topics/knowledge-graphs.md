@@ -9,6 +9,7 @@ see [the hub index](README.md).
 | [CC-code-tooling-landscape.md § Graphify](../cc-community/CC-code-tooling-landscape.md#graphify-safishamsi) | Graphify: knowledge-graph builder with CC hook/MCP integration | cc-community |
 | [CC-code-tooling-landscape.md § Code-Review-Graph](../cc-community/CC-code-tooling-landscape.md#code-review-graph-tirth8205) | Code graph for PR review | cc-community |
 | [CC-code-tooling-landscape.md § codebase-memory-mcp](../cc-community/CC-code-tooling-landscape.md#codebase-memory-mcp-deusdata) | Embedded typed code graph over MCP | cc-community |
+| [CC-community-skills-landscape.md § pid-to-knowledge-graph](../cc-community/CC-community-skills-landscape.md#scottduncanaipid-to-knowledge-graph) | Claude skill that builds a process knowledge graph (JSON + DuckDB) from P&ID (piping and instrumentation diagram) PDFs; early watch entry | cc-community |
 | [helixdb-analysis.md](../non-cc/context-memory/helixdb-analysis.md) | Rust graph-vector database | non-cc |
 | [latticedb-analysis.md](../non-cc/context-memory/latticedb-analysis.md) | Embedded graph + vector + full-text database | non-cc |
 | [minigraf-analysis.md](../non-cc/context-memory/minigraf-analysis.md) | Embedded bi-temporal Datalog graph database (Rust/Python/WASM/mobile) | non-cc |
