@@ -116,7 +116,7 @@ subscription, Sonnet 4.6 at 1M (and both 4.6 models on Pro) draws on usage
 credits. For headless runs, `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` keeps sessions at
 200K and compacts them there.
 
-Idle sessions: since v2.1.299 Claude Code compacts a 200K+ token conversation left idle, before its one-hour prompt cache expires (`idleCompaction`, default on). The changelog says "about 54 minutes" (read 2026-11-09), the settings reference "about an hour" (read 2026-11-25). Resuming does not itself compact, and idle compaction runs inside the running session, so it cannot fire while the host is stopped. See [CC-prompt-caching-behavior.md § Idle compaction](CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires).
+Idle sessions: since v2.1.299 Claude Code compacts a 200K+ token conversation left idle, before its one-hour prompt cache expires (`idleCompaction`, default on). The changelog says "about 54 minutes" (read 2026-11-09), the settings reference "about an hour" (read 2026-11-25). The sessions page describes no compaction step on resume (our reading), and idle compaction runs inside the running session, so it cannot fire while the host is stopped. See [CC-prompt-caching-behavior.md § Idle compaction](CC-prompt-caching-behavior.md#idle-compaction-before-the-cache-expires).
 
 ## Context Quality Degradation
 
