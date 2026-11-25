@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.27.0] - 2026-11-25
+
+- `scripts/cc_cache_usage.py` counts a turn as a cache miss when it writes again part of the prefix the previous turn had cached (the rule credited to cachemiss), not when it writes more than it reads; `CC-prompt-caching-behavior.md` explains how to run it, and `CC-usage-tooling-landscape.md` points to the hit/miss coverage (plan 0016 N55).
+
+- `agentic-engineering-disciplines-landscape.md` § Four rings: prompt, context, harness and loop engineering as a simplified nested picture (Shittu Olumide's diagram), with the contested outermost layer and the academic progression (arXiv 2608.21884, 2606.20683); the loop-engineering section cites the 217-repository study; glossary row and context/harness hub rows (plan 0016 N57).
+
+### Added
+
+- `CC-connectors-overview.md` § Public Connectors Directory: the directory's counts and filters as read on 2026-11-25, what the Anthropic verified label means per Anthropic's verification page, and a ten-row table of well-known entries checked at their own directory pages (plan 0016 N42).
+
 ## [0.26.0] - 2026-11-25
 
 ### Added
