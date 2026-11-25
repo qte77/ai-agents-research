@@ -49,6 +49,8 @@ observation layer rather than only at the code layer — but on the *inference h
 existing entries (AgentSight) cover. Relevant to any project evaluating **self-hosted**
 open-weight coding-agent backends on shared or multi-tenant hardware.
 
+For prompt-cache (KV-cache) timing against shared serving and vendor isolation, see [KV-cache serving landscape](../non-cc/infrastructure/kv-cache-serving-landscape.md#cache-timing-isolation-and-local-reuse).
+
 ## Sources
 
 | Source | Content |
