@@ -135,7 +135,7 @@ Each entry's detail page shows its categories, maker, whether sign-in is require
 | [Figma][c-figma] | Design context to code; diagrams in FigJam | Nov 2025 | Required |
 | [Shopify][c-shopify] | Store building, products, orders, inventory, analytics | Apr 2026 | Not required |
 | [ElevenLabs][c-elevenlabs] | Create and manage ElevenAgents voice agents | Jul 2026 | Required |
-| [Zoho CRM][c-zohocrm] | Leads, deals, contacts; regional MCP URLs | Mar 2026 | Required |
+| [Zoho CRM][c-zohocrm] | Leads, deals, contacts; regional MCP URLs | Sep 2026 | Required |
 
 - **Business and CRM entries**: monday.com and Zoho CRM are not covered in [CC-business-api-integrations.md](CC-business-api-integrations.md) (its [CRM section](CC-business-api-integrations.md#crm) covers HubSpot and Salesforce); that doc owns the business-API comparison and this table does not repeat it.
 - **Entries in other docs**: Firecrawl's directory connector (Verified, added July 2026, read 2026-11-25) is analysed in [CC-web-scraping-plugins-analysis.md § Hosted Connector Route](CC-web-scraping-plugins-analysis.md#hosted-connector-route-chatgpt-and-claude); Checkatrade's (Verified, added July 2026, sign-in not required, read 2026-11-25) in [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md#3-datasets). Submission requirements are in [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#2-authorize-the-agent-on-behalf-of-a-human-delegated-scoped-auditable).
