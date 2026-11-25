@@ -2,8 +2,8 @@
 title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
-updated: 2026-07-23
-validated_links_on: 2026-07-23
+updated: 2026-11-25
+validated_links_on: 2026-11-25
 status: assess
 ---
 
@@ -110,7 +110,35 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 ## Discovery
 
 - Full docs index: `https://claude.com/docs/llms.txt`
-- Connectors Directory: vetted third-party integrations across all Claude products
+- Connectors Directory: third-party integrations across Claude products; see [§ Public Connectors Directory](#public-connectors-directory)
+
+### Public Connectors Directory
+
+Observed 2026-11-25 on the [public directory page][dir] (a JavaScript-rendered page, read with a headless browser; a plain fetch returns nothing). Evidence level: observed on the vendor's page; the counts move, so treat them as a snapshot.
+
+- **Counts (2026-11-25)**: "Show all 1224" connectors and "Show all 544" plugins. A fetch of the same page on 2026-11-24 showed 1,218 and 542. Only the first screen of cards (34 distinct connector links) was read in full; the other connectors sit behind the "Show all" links and were not enumerated.
+- **Layout**: sections for Top connectors, Top plugins, Trending connectors (9) and New connectors (7), then a filter bar.
+- **Filters**: 17 categories (Commerce & shopping, Communication, Consumer health, Creative, Data & analytics, Developer tools, Education, Financial services, Health & life sciences, Legal, Media & entertainment, Nonprofit, Other, Productivity, Sales & marketing, Travel, Healthcare); three types (Web, Desktop extension, Interactive); five sorts (Recommended, Most popular, Trending, Newest, A-Z).
+- **"Anthropic verified" badge**: every card and detail page read on 2026-11-25 (34 listed connectors, and 12 detail pages: the ten in the table below plus Firecrawl and Checkatrade) carries the checkmark with the tooltip "Anthropic verified". Anthropic's own [verification page][verif] defines the labels: a Verified connector had its tools tested for quality and compatibility and met the Software Directory Policy at review time; Anthropic says this is not a security audit or a guarantee, and the developer can change the tools afterwards. The other label is Community (screened, not reviewed in depth). New submissions are listed as Community by default, and Anthropic's automated assessment may escalate popular ones to Verified review; there is no separate application ([submission guide][submit]). No Community card was visible in the portion read, so the share of Verified entries across all 1,224 is unknown.
+- **Surfaces**: the detail pages do not state which Claude surfaces (web, desktop, Claude Code) a connector supports; only the Type filter hints at it. Claude Code reaches claude.ai connectors through the [MCP bridge](#claude-code-mcp-bridge-v2146).
+
+Each entry's detail page shows its categories, maker, whether sign-in is required, the month added, the remote MCP URL and the tool list. Selected entries, each read at its own directory page on 2026-11-25 (all show the Anthropic verified badge). "Added" is the month the page shows; seven of the ten show November 2025, which may mark when the current listing began rather than when the connector first shipped:
+
+| Entry | What it connects | Added | Sign-in |
+|---|---|---|---|
+| [Canva][c-canva] | Search, create, import and export designs | Nov 2025 | Required |
+| [Box][c-box] | Search, Q&A and metadata extraction over Box files | Nov 2025 | Required |
+| [monday.com][c-monday] | Boards, items and workflows; also CRM use | Nov 2025 | Required |
+| [Notion][c-notion] | Search and edit pages and databases; skills and memory in Notion | Nov 2025 | Required |
+| [Asana][c-asana] | Tasks, projects, portfolios and goals | Nov 2025 | Required |
+| [Atlassian MCP][c-atlassian] | Jira, Confluence, Loom, Bitbucket under existing permissions; admin controls delete tools | Nov 2025 | Required |
+| [Figma][c-figma] | Design context to code; diagrams in FigJam | Nov 2025 | Required |
+| [Shopify][c-shopify] | Store building, products, orders, inventory, analytics | Apr 2026 | Not required |
+| [ElevenLabs][c-elevenlabs] | Create and manage ElevenAgents voice agents | Jul 2026 | Required |
+| [Zoho CRM][c-zohocrm] | Leads, deals, contacts; regional MCP URLs | Sep 2026 | Required |
+
+- **Business and CRM entries**: monday.com and Zoho CRM are not covered in [CC-business-api-integrations.md](CC-business-api-integrations.md) (its [CRM section](CC-business-api-integrations.md#crm) covers HubSpot and Salesforce); that doc owns the business-API comparison and this table does not repeat it.
+- **Entries in other docs**: Firecrawl's directory connector (Verified, added July 2026, read 2026-11-25) is analysed in [CC-web-scraping-plugins-analysis.md § Hosted Connector Route](CC-web-scraping-plugins-analysis.md#hosted-connector-route-chatgpt-and-claude); Checkatrade's (Verified, added July 2026, sign-in not required, read 2026-11-25) in [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md#3-datasets). Submission requirements are in [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#2-authorize-the-agent-on-behalf-of-a-human-delegated-scoped-auditable).
 
 ## References
 
@@ -123,6 +151,7 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 - [Microsoft 365 connector][ms365]
 - [CC MCP docs][cc-mcp-docs]
 - [MCP specification][mcp]
+- [Connectors directory][dir], [connector verification][verif], [submission guide][submit]
 - [Cowork plugins & enterprise analysis](CC-cowork-plugins-enterprise-analysis.md)
 
 [overview]: https://claude.com/docs/connectors/overview
@@ -133,5 +162,18 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 [slack]: https://claude.com/docs/connectors/slack/index
 [ms365]: https://claude.com/docs/connectors/microsoft/365
 [mcp]: https://modelcontextprotocol.io
+[dir]: https://claude.com/marketplace/connectors-plugins
+[verif]: https://claude.com/docs/connectors/verification
+[submit]: https://claude.com/docs/connectors/building/submission
+[c-canva]: https://claude.com/marketplace/connectors/canva
+[c-box]: https://claude.com/marketplace/connectors/box
+[c-monday]: https://claude.com/marketplace/connectors/monday
+[c-notion]: https://claude.com/marketplace/connectors/notion
+[c-asana]: https://claude.com/marketplace/connectors/asana
+[c-atlassian]: https://claude.com/marketplace/connectors/atlassian
+[c-figma]: https://claude.com/marketplace/connectors/figma
+[c-shopify]: https://claude.com/marketplace/connectors/shopify
+[c-elevenlabs]: https://claude.com/marketplace/connectors/elevenlabs
+[c-zohocrm]: https://claude.com/marketplace/connectors/zohocrm
 [cc-changelog]: https://code.claude.com/docs/en/changelog
 [cc-mcp-docs]: https://code.claude.com/docs/en/mcp
