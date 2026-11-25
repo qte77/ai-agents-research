@@ -62,5 +62,36 @@ class SummarizeTests(unittest.TestCase):
                                              "pre": 490310, "post": 25638}])
 
 
+class RobustnessTests(unittest.TestCase):
+    def test_skips_non_objects_and_missing_fields(self):
+        lines = ["[1]", '"x"', "null", json.dumps({"type": "assistant", "message": {"id": "z"}}),
+                 resp("a", "2026-11-25T10:00:00Z", read=5)]
+        s = cu.summarize(lines)
+        self.assertEqual(s["responses"], 2)  # the timestamp-less response counts, without gap logic
+        self.assertEqual(s["read"], 5)
+
+    def test_idless_messages_are_not_merged(self):
+        line = json.dumps({"type": "assistant", "timestamp": "2026-11-25T10:00:00Z",
+                           "message": {"usage": {"cache_read_input_tokens": 3}}})
+        self.assertEqual(cu.summarize([line, line])["responses"], 2)
+
+    def test_keeps_last_chunk_of_a_streamed_message(self):
+        lines = [resp("a", "2026-11-25T10:00:00Z", read=100, out=1),
+                 resp("a", "2026-11-25T10:00:05Z", read=100, out=40)]
+        self.assertEqual(cu.summarize(lines)["output"], 40)
+
+    def test_sidechain_compactions_are_skipped(self):
+        d = json.loads(boundary("2026-11-25T13:32:57Z", 10, 5))
+        d["isSidechain"] = True
+        self.assertEqual(cu.summarize([json.dumps(d)])["compactions"], [])
+
+    def test_lifetime_defaults_from_the_write_buckets(self):
+        lines = [resp("a", "2026-11-25T10:00:00Z", write=100, w1h=0),  # 5-minute writes
+                 resp("b", "2026-11-25T10:10:00Z", write=100, w1h=0)]
+        s = cu.summarize(lines)
+        self.assertEqual(s["ttl_min"], 5)
+        self.assertEqual(s["predicted"], {"hit": 0, "miss": 1})
+
+
 if __name__ == "__main__":
     unittest.main()
