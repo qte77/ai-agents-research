@@ -108,6 +108,10 @@ files in its row plus its own `changelog.d/` fragment.
 | G | N34 | `.github/scripts/lib/doc_graph.py`, `tests/test_doc_graph.py`, `ui/doc-graph.html`, `ui/style.css` | `feat/doc-graph-page-facets` | 1 |
 | P | N35, N39 | `docs/non-cc/coding-agents/prime-agent-analysis.md`, `docs/non-cc/protocols/programmatic-tool-calling-analysis.md`, `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` | `docs/rlm-harness-eggroll-chatdata` | 1 |
 | R | N36 | `docs/cc-native/ci-remote/CC-remote-access-landscape.md`, `docs/cc-native/agents-skills/CC-cross-session-messaging-analysis.md`, `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md`, `docs/non-cc/agents/databricks-genie-analysis.md` | `docs/agent-tools-2026-11-24` | 2 |
+| S | N50 | `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`, one line in `docs/cc-native/configuration/CC-changelog-feature-scan.md` | `docs/claude-api-bundled-skill` | 3 |
+| C | N51, N52 | `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`, `docs/cc-native/context-memory/CC-extended-context-analysis.md`, `docs/cc-native/configuration/CC-env-vars-reference.md` | `docs/caching-compaction-evidence` | 3 |
+| V | N53 | `docs/non-cc/infrastructure/kv-cache-serving-landscape.md`, one line in `docs/sdlc-lcm/detokenization-leaks-analysis.md` | `docs/kv-cache-timing-local` | 3 |
+| U | N54 | new `scripts/cc_cache_usage.py`, new `tests/test_cc_cache_usage.py` | `feat/cc-cache-usage` | 3 |
 | paperverse | N38 | `qte77/paperverse` only, in its own session and worktree | per paperverse's CONTRIBUTING | any |
 
 The lead owns `docs/plans/`, `docs/_topics/`, every `README.md`, `docs/glossary.md`,
@@ -313,6 +317,20 @@ eval), [Manus, context engineering][manus-ctx], [OpenAI prompt caching][oai-prom
 restore), [arXiv 2412.10319][p-scbench] (SCBench). Weak or unverified, drop unless confirmed:
 [arXiv 2602.20595][p-optileak], [arXiv 2605.30613][p-cacheprobe], [arXiv 2608.09225][p-kvgov].
 
+**Cache report script (N54) and reusable hit/miss tools (N55).** `scripts/cc_cache_usage.py` reads one
+session transcript (stdlib, unit-tested in `tests/test_cc_cache_usage.py`): totals by cache lifetime,
+rewrites after idle gaps, a hit/miss prediction (miss when the gap since the previous response exceeds
+the cache lifetime) checked against the outcome (miss when a turn writes more than it reads), and the
+compaction markers. On this session it predicted 1,754 of 1,759 turns right. Tools surveyed for reuse
+(owner question 2026-11-25; advisory, re-verify): [cache diagnostics][api-cache-diag] (live API only,
+`cache_miss_reason`), Claude Code `/usage` "Prompt cache (main)" and its "likely cause" line
+([prompt caching in Claude Code][cc-prompt-caching]), [OpenTelemetry cache fields][cc-monitoring]
+(totals), [cachemiss][cachemiss] (MIT, 1 star: idle-gap rebuild ledger from transcripts, closest to
+ours, no forecast), [claude-code-cache-fix][cc-cache-fix] (an API interceptor with prefix diffing),
+ccusage and CodeBurn (totals; already in `CC-usage-tooling-landscape.md`), Langfuse and LiteLLM
+(token totals). The bundled `/claude-api` skill also ships a `prefix_diff.py` under
+`shared/preserved-thinking-migration/`. No surveyed tool forecasts hit or miss from a transcript.
+
 ## Remaining work
 
 | Row | Item | Gate | Done when |
@@ -391,3 +409,7 @@ restore), [arXiv 2412.10319][p-scbench] (SCBench). Weak or unverified, drop unle
 [p-optileak]: https://arxiv.org/abs/2602.20595
 [p-cacheprobe]: https://arxiv.org/abs/2605.30613
 [p-kvgov]: https://arxiv.org/abs/2608.09225
+[api-cache-diag]: https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics
+[cc-monitoring]: https://code.claude.com/docs/en/monitoring-usage
+[cachemiss]: https://github.com/CedricConday/cachemiss
+[cc-cache-fix]: https://github.com/cnighswonger/claude-code-cache-fix
