@@ -2,8 +2,8 @@
 title: Agentic Workflow Frameworks — Landscape
 purpose: The workflows-vs-agents distinction (Anthropic's 5 patterns), agentic-workflow frameworks, durable-execution engines and production anti-patterns, beyond Claude Code's own workflow tool.
 created: 2026-06-27
-updated: 2026-11-18
-validated_links_on: 2026-11-18
+updated: 2026-11-25
+validated_links_on: 2026-11-25
 status: research
 ---
 
@@ -35,8 +35,23 @@ The orchestration frameworks themselves are catalogued in [agent-frameworks-infr
 | [Mastra][mastra] | 25.5K | TS workflows + agents | suspend/resume |
 | [Burr][burr] | 2.5K | explicit state-machine DAG | persisters |
 | [Conductor (OSS)][conductor] | 32.0K | server-orchestrated DAG | yes (server-side) |
+| [Prefect][prefect] | 24.2K (2026-11-25) | Python flows; data/workflow orchestrator | not assessed |
+| [Dagster][dagster] | 16.5K (2026-11-25) | asset-based pipelines; data orchestrator | not assessed |
+| [Apache Airflow][airflow] | 47.7K (2026-11-25) | Python-defined DAGs; scheduler | not assessed |
 
-LangGraph/CrewAI detail lives in the catalog — cross-referenced, not duplicated.
+LangGraph/CrewAI detail lives in the catalog — cross-referenced, not duplicated. The last three rows are data/workflow orchestrators that predate LLM agents; their durability was not assessed here, and the section below covers only their AI surfaces.
+
+### Data orchestrators with an AI surface (2026-11-25)
+
+All three are Apache-2.0 (repo LICENSE as reported by the GitHub API); stars, versions and dates were read on 2026-11-25. Evidence level is "documented" unless noted. For the Model Context Protocol (MCP) see [glossary](../../glossary.md); HITL below means a human approval pause.
+
+| Engine | Latest release | AI / agent surface |
+|---|---|---|
+| Prefect | 3.9.5 (2026-11-24) | **FastMCP** ([PrefectHQ/fastmcp][fastmcp], Apache-2.0, 28.7K stars, v4.2.6) is a Prefect-org library for building MCP servers and clients. **prefect-mcp-server** ([repo][pf-mcp], MIT, 56 stars) gives MCP clients read-only tools over flows, runs, deployments and logs; its README calls it experimental and subject to drastic change. **Marvin** (v3.3.0, 6.2K stars) is built on Pydantic AI, see [agent-frameworks catalog § Structured output](agent-frameworks-infrastructure-landscape.md#structured-output--schema-enforcement). ControlFlow is archived (last release v0.12.1, 2025-02-06) |
+| Dagster | 1.13.31 (2026-11-19) | **Dagster+ MCP server**: docs call it beta and Dagster+-only (plan tiers not stated); it can launch runs, materialize assets, fetch logs and Insights metrics. The [dagster-io/skills][dg-skills] plugin (Apache-2.0, 219 stars) bundles that MCP server with Dagster agent skills; its README lists Claude Code, Cursor, OpenAI Codex, GitHub Copilot, OpenCode and Pi. Integrations: `dagster-openai` is labelled Dagster-supported; `dagster-anthropic` (an `AnthropicResource`) is labelled community-maintained |
+| Apache Airflow | 3.4.0 (2026-11-06) | **common-ai provider** 1.2.0 (2026-11-23, Apache-2.0, needs Airflow >= 2.11): `@task.llm`, tool-using agents as tasks, batch operator, HITL approval (on Airflow 3.3+ a parked task holds no worker slot; on 3.1 and 3.2 it stays running and polls); built on pydantic-ai. PyPI classifies it Production/Stable, but its stability page marks some features experimental (for example `decision_policy`). `anthropic` provider 1.2.1 (needs Airflow >= 3.0: batch operator, batch sensor, Managed Agents session operator); `openai` provider 2.2.0 (embedding, Responses and Batch operators). **No official Apache Airflow MCP server found** (see caveat). `astronomer/airflow-ai-sdk` (525 stars, v0.1.8) is **archived** (last push 2026-07-01) |
+
+Caveat on the Airflow MCP absence: searched the `apache` GitHub org's repository names for "mcp" (11 other-project servers, none for Airflow), the `apache/airflow` providers directory, and GitHub search for "airflow mcp server". The community servers found there (for example `yangkyeongmo/mcp-server-apache-airflow`, 183 stars; `astronomer/astro-airflow-mcp`, 13 stars, archived) are not Apache projects. The airflow.apache.org nav and PyPI were not exhaustively searched (PyPI search page failed to load), so this is "none found", not "none exists".
 
 ## Durable execution (the layer the catalog omits)
 
@@ -121,6 +136,7 @@ Four October 2026 preprints, abstract pages read 2026-11-18; all single-source a
 | [Temporal workflow execution][temporal-we] · [activity failures][temporal-af] · [DBOS architecture][dbos-arch] · [Restate durable execution][restate-de] · [Inngest execution][inngest-ex] | Engine recovery and heartbeat semantics (2026-11-18) |
 | [CC sessions][cc-sessions] · [CC CLI][cc-cli] · [Codex commands][codex-cmds] · [Gemini sessions][gem-sessions] · [OpenCode CLI][oc-cli] | Harness resume and caps (2026-11-18) |
 | [AgentTime][arx-agenttime] · [Loud/Quiet Failures][arx-quiet] · [Sentry][arx-sentry] · [Transect][arx-transect] | Long-run failure preprints (abstract pages, 2026-11-18) |
+| [Prefect][prefect] · [Dagster][dagster] · [Airflow][airflow] · [FastMCP][fastmcp] · [prefect-mcp-server][pf-mcp] · [dagster-io/skills][dg-skills] · [Airflow common-ai][af-ai] · [Airflow anthropic][af-anth] · [Airflow openai][af-oai] · [Dagster+ MCP][dg-mcp] · [Dagster anthropic][dg-anth] · [Dagster openai][dg-oai] | Data-orchestrator AI surfaces (`gh api`, PyPI, vendor docs, 2026-11-25) |
 | [LangGraph][langgraph] · [CrewAI][crewai] · [Langflow][langflow] · [Mastra][mastra] · [Burr][burr] · [Conductor (OSS)][conductor] | Workflow / orchestration frameworks (stars via `gh api`, 2026-06-27) |
 
 [anthropic-bea]: https://www.anthropic.com/research/building-effective-agents
@@ -147,3 +163,15 @@ Four October 2026 preprints, abstract pages read 2026-11-18; all single-source a
 [arx-quiet]: https://arxiv.org/abs/2610.10062
 [arx-sentry]: https://arxiv.org/abs/2610.02994
 [arx-transect]: https://arxiv.org/abs/2610.08364
+[prefect]: https://github.com/PrefectHQ/prefect
+[dagster]: https://github.com/dagster-io/dagster
+[airflow]: https://github.com/apache/airflow
+[fastmcp]: https://github.com/PrefectHQ/fastmcp
+[pf-mcp]: https://github.com/PrefectHQ/prefect-mcp-server
+[dg-skills]: https://github.com/dagster-io/skills
+[af-ai]: https://airflow.apache.org/docs/apache-airflow-providers-common-ai/stable/index.html
+[af-anth]: https://airflow.apache.org/docs/apache-airflow-providers-anthropic/stable/index.html
+[af-oai]: https://airflow.apache.org/docs/apache-airflow-providers-openai/stable/index.html
+[dg-mcp]: https://dagster.io/docs/getting-started/ai-tools/dagster-mcp
+[dg-anth]: https://dagster.io/docs/integrations/libraries/anthropic
+[dg-oai]: https://dagster.io/docs/integrations/libraries/openai
