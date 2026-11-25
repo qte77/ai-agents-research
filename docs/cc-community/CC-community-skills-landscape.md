@@ -624,8 +624,8 @@ The README presents it as one layer of a chemical-manufacturing "context layer" 
   build, QA, query, export). A QA loop (`qa_report.md`) flags doubtful items and Claude rebuilds until clean.
 - **Digital vs scanned.** A probe script classifies each page: searchable-text vector, outlined-text vector,
   scanned, or scanned with an OCR layer. Vector pages are rendered from the vector data; scans are upscaled
-  up to 2.5x with a contrast boost. Pages are auto-oriented and cut into overlapping tiles. Optional
-  RapidOCR gives a tag cross-check, but only on Python 3.10-3.12.
+  up to 2.5x with a contrast boost, then cut into overlapping tiles. Optional RapidOCR adds a tag
+  cross-check and automatic page orientation, but only on Python 3.10-3.12.
 - **Outputs.** `graph.json` (with a JSON Schema), `graph.duckdb` (SQL, recursive upstream/downstream macros),
   `summary.md` (LLM context) and `qa_report.md`; Neo4j and GraphML export on request. Every item records its
   source sheet. Classes carry the closest DEXPI (a P&ID data-exchange standard) class; the README says this
@@ -642,7 +642,8 @@ The README presents it as one layer of a chemical-manufacturing "context layer" 
 **Maturity.** All activity is on one day (2026-11-08) and there is no release, so treat it as early. Its
 adoption (379 stars, no named independent users found in the README) is below the 1,000-star bar in the
 [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter), and no
-measured benefit is published; it stays as a domain example pending that review. Related graph coverage:
+measured benefit is published. It is kept at the owner's request (2026-11-25) as a watch entry, a
+domain example rather than a recommendation. Related graph coverage:
 [Knowledge Graphs hub](../_topics/knowledge-graphs.md); LLM-built graphs and their provenance in
 [agent-frameworks-infrastructure-landscape.md](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence);
 ontology-constrained extraction in
