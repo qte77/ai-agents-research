@@ -14,8 +14,8 @@ plan and `make reconcile`, which reads only the newest plan, checks all of it.
 
 **Read this first.** Plan opened 2026-11-24 from four owner requests (doc-graph ideas, two papers,
 five repos and products, KB papers into paperverse); the owner answered the open questions the same
-day ([§ Owner decisions](#owner-decisions-2026-11-24)). **Status 2026-11-25 (late):** N34 to N37, N39, N40, N42 to N55 and N57 have shipped (#1072 to #1093 and
-this PR; each struck row names its PR). Still open in [§ Remaining work](#remaining-work): N38 (handed
+day ([§ Owner decisions](#owner-decisions-2026-11-24)). **Status 2026-11-25 (late):** N34 to N37, N39, N40, N42 to N55 and N57 have shipped (#1072 to #1094; each
+struck row names its PR). Still open in [§ Remaining work](#remaining-work): N38 (handed
 to a paperverse session as `qte77/paperverse#187`), N41 (freshness rule, waiting on the owner), N56 (cache-tool comparison, waiting on the owner's `/usage` paste and
 approval to run cachemiss) and the owner-gated rows below. Plan 0015 closed with N14 to N33 merged (#1045 to #1068) and v0.24.0 released (#1069).
 
@@ -31,8 +31,7 @@ worktrees, sends the briefs, verifies, integrates and merges. Run at most three 
 2. **New owner sources:** run each topic as a lane (one worktree from `origin/main` as a sibling of
    the checkout, `git worktree add ../wt-<lane> -b <branch> origin/main`, and one subagent with the
    brief in [§ The loop](#the-loop)); at most three at once. Add a struck row per topic in its PR.
-3. No agent row is open: **N56** and **N41** wait on the owner; check `qte77/paperverse#187` for N38. Check
-   `qte77/paperverse#187` for N38.
+3. No agent row is open: **N56** and **N41** wait on the owner; check `qte77/paperverse#187` for N38.
 4. As each lane returns: re-check its strongest claims at source, run the checks for its kind
    ([§ The loop](#the-loop)) and add the hub, index and glossary rows it proposes. Right before the
    merge, merge `main` into the lane branch and then add the plan-row strike as the last commit
