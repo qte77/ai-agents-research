@@ -14,12 +14,11 @@ plan and `make reconcile`, which reads only the newest plan, checks all of it.
 
 **Read this first.** Plan opened 2026-11-24 from four owner requests (doc-graph ideas, two papers,
 five repos and products, KB papers into paperverse); the owner answered the open questions the same
-day ([§ Owner decisions](#owner-decisions-2026-11-24)). **Status 2026-11-25:** N34 to N37, N39, N40
-and N43 to N49 have shipped (#1072 to #1084; each struck row names its PR). Still open in
-[§ Remaining work](#remaining-work): N38 (handed to a paperverse session as `qte77/paperverse#187`),
-N41 (freshness rule, waiting on the owner), N42 (connectors-directory section), N50 to N53
-(caching, compaction and the `/claude-api` skill, from the owner's 2026-11-25 questions) and the
-owner-gated rows below. Plan 0015 closed with N14 to N33 merged (#1045 to #1068) and v0.24.0 released (#1069).
+day ([§ Owner decisions](#owner-decisions-2026-11-24)). **Status 2026-11-25 (late):** N34 to N37, N39, N40 and N43 to N54 have shipped (#1072 to #1089 and
+this PR; each struck row names its PR). Still open in [§ Remaining work](#remaining-work): N38 (handed
+to a paperverse session as `qte77/paperverse#187`), N41 (freshness rule, waiting on the owner), N42
+(connectors-directory section), N55 (reuse of existing cache hit/miss tools) and the owner-gated rows
+below. Plan 0015 closed with N14 to N33 merged (#1045 to #1068) and v0.24.0 released (#1069).
 
 **How this plan runs: parallel worktree lanes.** Every agent row belongs to exactly one lane
 ([§ Lanes](#lanes)). A lane is one subagent working in its own git worktree on its own branch, and
@@ -33,9 +32,9 @@ worktrees, sends the briefs, verifies, integrates and merges. Run at most three 
 2. **New owner sources:** run each topic as a lane (one worktree from `origin/main` as a sibling of
    the checkout, `git worktree add ../wt-<lane> -b <branch> origin/main`, and one subagent with the
    brief in [§ The loop](#the-loop)); at most three at once. Add a struck row per topic in its PR.
-3. **N50 to N53** next, as lanes S, C and V in one message ([§ Caching and
-   compaction](#caching-and-compaction-n50-to-n53)); then **N42** (a browser pass of the connectors
-   directory); **N41** once the owner answers. Check `qte77/paperverse#187` for N38.
+3. **N55** next (compare the three cache tools on one session, then document usage), then **N42** (a
+   browser pass of the connectors directory); **N41** once the owner answers. Check
+   `qte77/paperverse#187` for N38.
 4. As each lane returns: re-check its strongest claims at source, run the checks for its kind
    ([§ The loop](#the-loop)) and add the hub, index and glossary rows it proposes. Right before the
    merge, merge `main` into the lane branch and then add the plan-row strike as the last commit
@@ -108,6 +107,10 @@ files in its row plus its own `changelog.d/` fragment.
 | G | N34 | `.github/scripts/lib/doc_graph.py`, `tests/test_doc_graph.py`, `ui/doc-graph.html`, `ui/style.css` | `feat/doc-graph-page-facets` | 1 |
 | P | N35, N39 | `docs/non-cc/coding-agents/prime-agent-analysis.md`, `docs/non-cc/protocols/programmatic-tool-calling-analysis.md`, `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` | `docs/rlm-harness-eggroll-chatdata` | 1 |
 | R | N36 | `docs/cc-native/ci-remote/CC-remote-access-landscape.md`, `docs/cc-native/agents-skills/CC-cross-session-messaging-analysis.md`, `docs/non-cc/infrastructure/semantic-layers-data-catalog-landscape.md`, `docs/non-cc/agents/databricks-genie-analysis.md` | `docs/agent-tools-2026-11-24` | 2 |
+| S | N50 | `docs/cc-native/agents-skills/CC-skills-adoption-analysis.md`, one line in `docs/cc-native/configuration/CC-changelog-feature-scan.md` | `docs/claude-api-bundled-skill` | 3 |
+| C | N51, N52 | `docs/cc-native/context-memory/CC-prompt-caching-behavior.md`, `docs/cc-native/context-memory/CC-extended-context-analysis.md`, `docs/cc-native/configuration/CC-env-vars-reference.md` | `docs/caching-compaction-evidence` | 3 |
+| V | N53 | `docs/non-cc/infrastructure/kv-cache-serving-landscape.md`, one line in `docs/sdlc-lcm/detokenization-leaks-analysis.md` | `docs/kv-cache-timing-local` | 3 |
+| U | N54 | new `scripts/cc_cache_usage.py`, new `tests/test_cc_cache_usage.py` | `feat/cc-cache-usage` | 3 |
 | paperverse | N38 | `qte77/paperverse` only, in its own session and worktree | per paperverse's CONTRIBUTING | any |
 
 The lead owns `docs/plans/`, `docs/_topics/`, every `README.md`, `docs/glossary.md`,
@@ -313,6 +316,20 @@ eval), [Manus, context engineering][manus-ctx], [OpenAI prompt caching][oai-prom
 restore), [arXiv 2412.10319][p-scbench] (SCBench). Weak or unverified, drop unless confirmed:
 [arXiv 2602.20595][p-optileak], [arXiv 2605.30613][p-cacheprobe], [arXiv 2608.09225][p-kvgov].
 
+**Cache report script (N54) and reusable hit/miss tools (N55).** `scripts/cc_cache_usage.py` reads one
+session transcript (stdlib, unit-tested in `tests/test_cc_cache_usage.py`): totals by cache lifetime,
+rewrites after idle gaps, a hit/miss prediction (miss when the gap since the previous response exceeds
+the cache lifetime) checked against the outcome (miss when a turn writes more than it reads), and the
+compaction markers. On this session it predicted 1,754 of 1,759 turns right. Tools surveyed for reuse
+(owner question 2026-11-25; advisory, re-verify): [cache diagnostics][api-cache-diag] (live API only,
+`cache_miss_reason`), Claude Code `/usage` "Prompt cache (main)" and its "likely cause" line
+([prompt caching in Claude Code][cc-prompt-caching]), [OpenTelemetry cache fields][cc-monitoring]
+(totals), [cachemiss][cachemiss] (MIT, 1 star: idle-gap rebuild ledger from transcripts, closest to
+ours, no forecast), [claude-code-cache-fix][cc-cache-fix] (an API interceptor with prefix diffing),
+ccusage and CodeBurn (totals; already in `CC-usage-tooling-landscape.md`), Langfuse and LiteLLM
+(token totals). The bundled `/claude-api` skill also ships a `prefix_diff.py` under
+`shared/preserved-thinking-migration/`. No surveyed tool forecasts hit or miss from a transcript.
+
 ## Remaining work
 
 | Row | Item | Gate | Done when |
@@ -338,6 +355,8 @@ restore), [arXiv 2412.10319][p-scbench] (SCBench). Weak or unverified, drop unle
 | ~~N51~~ | ~~Idle-compaction wording~~ | agent | Shipped 2026-11-25 (this PR): "about an hour" (settings reference) and "about 54 minutes" (changelog 2.1.299) recorded with read dates in `CC-prompt-caching-behavior.md`, `CC-extended-context-analysis.md` and `CC-env-vars-reference.md`; resume described as adding no compaction step (our reading of the sessions page); idle compaction needs a running session; the setting and variable need v2.1.290 or later |
 | ~~N52~~ | ~~Cost-lever evidence (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): `CC-prompt-caching-behavior.md` § Cost levers and their evidence (papers, vendor docs and own measurements, each at its evidence level), a second measured data point (n=1 session), § Stopped host options, § Predicting a hit or a miss, and the checked claims; cost and context hub rows; two fact-check passes applied |
 | ~~N53~~ | ~~Cache timing, reconstruction and local caches (owner 2026-11-25)~~ | agent | Shipped 2026-11-25 (this PR): § Cache timing, isolation and local reuse in `kv-cache-serving-landscape.md` (provider audit arXiv 2502.07776, PromptPeek, InputSnatch and Early Bird without unverified numbers, KV-Cloak, SafeKV, verbatim Anthropic and OpenAI isolation quotes, llama.cpp slot save and restore, CacheGen, CacheBlend, SCBench, a verdict scoped to the cited sources); cross-reference from `detokenization-leaks-analysis.md`; cost and security hub rows; OptiLeak, CacheProbe and KVGov dropped (single-author or no result in the abstract); two fact-check passes applied |
+| ~~N54~~ | ~~Cache report script (owner 2026-11-25: "git the script for cache analysis")~~ | agent | Shipped 2026-11-25 (this PR): `scripts/cc_cache_usage.py` (stdlib) with `tests/test_cc_cache_usage.py` written first; reports one transcript's cache reads and writes by lifetime, rewrites after idle gaps, a hit/miss prediction checked against the outcome (lifetime picked from the write buckets) and compaction markers; tier-2 review fixes applied (non-object lines, missing timestamps, id-less messages, last streamed chunk, sidechain markers); listed in `CONTRIBUTING.md` and `docs/architecture.md` |
+| N55 | Reuse of existing hit/miss tools (owner question 2026-11-25), sources in [§ Caching and compaction](#caching-and-compaction-n50-to-n53): run `scripts/cc_cache_usage.py`, Claude Code `/usage` and cachemiss on one session and compare; adopt the API's `cache_miss_reason` names; document usage (default: a "Reproduce it" line in `CC-prompt-caching-behavior.md` § One week of sessions, plus a row in `CC-usage-tooling-landscape.md` for cachemiss and the cache-diagnostics API) | agent | The three tools' numbers for one session agree or the differences are explained; usage line and landscape row merged; offer the prediction column upstream only if they agree |
 | 13-A5 | Labels from `decide()` in issue triage at a measured threshold (moved from plan 0012's Deferred list) | data | About 50 issues across the shadowed repos carry the shadow section; then sweep `hi` against the labels the existing triage set and decide |
 | 13-A7 | Drift checks for the decision models: (1) a monthly scheduled run of `decision-model-eval.yaml` on the gold sets, flagged against the 2026-11-10/11 baseline (AUC drop above about 0.03, Brier rise, recommended `hi` moving by 0.05 or more); (2) store each weekly paper run's decided / fallback / escalated counts (the artifact summary already prints "Decided via decide()") and flag a sustained fall in the decided share or a rise in escalations; (3) on about 10% of papers also run the chat call and track the disagreement rate. Pin model versions (`jev-1.13.0`, `clef`) and re-run the gold sets before any bump; set thresholds on one half of a gold set and report on the other. **Part (1) shipped 2026-11-12** (`#813`: `decision-model-eval.yaml` monthly on the 1st, `data/gold/baseline.json`, `decision-drift` issue; Brier shown, not flagged). A manual run the same day reproduced the Clef and Clef-flash baseline exactly, so run-to-run noise for Clef is nil on this evidence (Jev not re-run). **Part (2) shipped 2026-11-17** (`#875`): the committed triage reports already store each run's "Decided via decide()" line, so `lib/decide_counts.py` reads them and the monthly `decision-model-eval.yaml` run appends a per-run table to its summary and a note to `drift.md` (the `decision-drift` issue) when each of the last 3 runs' decided share is more than 0.10 below the earlier mean; it needs 6 runs before it can flag. First data point: W45, 88 of 100 decided. Escalations are not printed separately in the summary, so they are counted as fallbacks. Left: (3) the chat-call disagreement sample — ask the owner whether it earns its cost; the split-half thresholds belong to A8 | owner (deferred) | Monthly workflow live with a baseline file; counts stored per run; disagreement sample in the summary. **Part (3) deferred by the owner 2026-11-22** (not built now); parts (1) and (2) ship. Resume only on an owner go |
 | 13-A8 | Gold-set refresh against the in-sample caveat: add a second paper week as a held-out set, a human spot-check of about 20 items, and real (not planted) off-topic issues | agent + owner spot-check | Second paper set and an issue set with real negatives in `.github/scripts/data/gold/`; H1 numbers re-reported out of sample |
@@ -391,3 +410,7 @@ restore), [arXiv 2412.10319][p-scbench] (SCBench). Weak or unverified, drop unle
 [p-optileak]: https://arxiv.org/abs/2602.20595
 [p-cacheprobe]: https://arxiv.org/abs/2605.30613
 [p-kvgov]: https://arxiv.org/abs/2608.09225
+[api-cache-diag]: https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics
+[cc-monitoring]: https://code.claude.com/docs/en/monitoring-usage
+[cachemiss]: https://github.com/CedricConday/cachemiss
+[cc-cache-fix]: https://github.com/cnighswonger/claude-code-cache-fix
