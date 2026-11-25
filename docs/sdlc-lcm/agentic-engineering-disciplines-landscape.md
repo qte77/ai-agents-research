@@ -2,8 +2,8 @@
 title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines and "-driven development" methodologies that keep an agentic coding fleet compounding, with a five-layer stack and a reference implementation.
 created: 2026-06-23
-updated: 2026-11-23
-validated_links_on: 2026-11-18
+updated: 2026-11-25
+validated_links_on: 2026-11-25
 status: assess
 ---
 
@@ -57,15 +57,53 @@ NEW vs current repo coverage: the Anthropic context-engineering and OpenAI harne
 search over whole harnesses; results and caveats live in
 [weco-aide-recursive-self-improvement-analysis.md § Harness search results](../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md#harness-search-results).
 
+### Four rings: a simplified view
+
+A teaching picture, not a new definition; the definitions stay in the table above. A diagram by Shittu
+Olumide ([image][rings-img], hosted by KDnuggets) draws four concentric rings with the caption "Each layer
+contains the one before it." It accompanies *An Introduction to Loop Engineering* (2026-07-23, on
+machinelearningmastery.com, as linked from the [KDnuggets roundup][kdn-roundup]); the article page
+(`machinelearningmastery.com/an-introduction-to-loop-engineering/`) refuses automated clients (HTTP 403),
+so only the image and the roundup were read (2026-11-25).
+
+| Ring, inner to outer | Date on the diagram | What it adds (our words) |
+|---|---|---|
+| Prompt engineering | 2022–2024 | the wording of one call |
+| Context engineering | 2025 | what the model sees at each step |
+| Harness engineering | early 2026 | the runtime around the model: tools, state, checks |
+| Loop engineering | 2026 | when the work repeats and when it stops |
+
+- **Dates mark when a term spread, not when the practice began.** The table above dates prompt
+  engineering to the GPT-3 era (2020), context engineering to June 2025, harness engineering to OpenAI's
+  February 2026 post and loop engineering to Osmani's June 2026 post.
+- **Which ring is outermost is contested.** [Avi Chawla][chawla-rings] (2026-07-03) uses the same order
+  ("Each one wraps the last, and the model sits in the middle"), and [codecentric][cc-loop] puts the loop
+  on top ([§ Loop engineering in practice](#loop-engineering-in-practice)). [Simpliaxis][simpliaxis-rings]
+  (2026-10-13) makes harness engineering the outermost layer and notes that writers disagree, and this
+  landscape's nesting line above also places the loop inside the harness definition. The readings use
+  "harness" differently: the runtime around one agent (the loop sits outside it) or the whole environment,
+  schedules and triggers included (the harness sits outside).
+- **Academic framing is a progression, not nesting.** [Lulla et al.][loop-study] (arXiv 2608.21884) say
+  developer guidance "has moved up several levels of abstraction", "from phrasing prompts to engineering
+  context to configuring the harness around the underlying model"; the survey by [Guo et al.][harness-survey]
+  (arXiv 2606.20683, 17 authors) traces agent systems "from prompt engineering to workflows and context
+  engineering, harness engineering, and agent-native training". Neither abstract claims that one layer
+  contains another (full texts not read).
+- **Use:** the rings are a fair first picture of what each term adds, and their inner-to-outer order
+  matches the fix-order heuristic below (context, then harness, then loop). For design, use the table and
+  the nesting line.
+
 ### Loop engineering in practice
 
 One cluster, not seven corroborations: the sources below date from 2026-06-07 to 2026-07-22, restate Osmani's post or each other, and most sell something (noted per source). Only the Claude Code article documents shipped features; the rest are vendor guidance or practitioner claims.
+
+**Systematic evidence.** The one systematic study found in this pass (arXiv and web search, 2026-11-25), [Lulla et al.][loop-study] (arXiv 2608.21884, 5 authors, v1 2026-08-22, v3 2026-10-22; abstract read 2026-11-25), reviews this grey literature, which recommends scheduled or event triggers, machine-checkable stop conditions, state files and token budgets, and mines 217 open-source repositories with agent loops (out of 36,710 searched): nearly all commit the configuration that starts the loop, almost none commit the recommended state files, and of the claimed benefits the abstract says "These sources provide no systematic evidence".
 
 **Provenance.** [Osmani][osmani-loop] (2026-06-07, practitioner) defines a loop as a recursive goal and the job as designing the system that prompts the agent; he credits Peter Steinberger and Cherny for the framing and does not name a coiner. One secondary source has him posting the day after a Steinberger statement; an earlier, undated Steinberger statement is reported secondhand and was not reached. swyx's "Loopcraft: the art of stacking loops" (Latent Space, 2026-06-12; search snippet only, no working URL, original not read) is a parallel framing: stack loops. [LangChain][lc-loop] (2026-06-16), [Kilo][kilo-loop] (2026-06-10), [Data Science Dojo][dsd-loop] (2026-06-24), [codecentric][cc-loop] (2026-07-05, which names Osmani as coiner), [IBM][ibm-loop] (2026-07-17) and [Augment][augment-loop] (2026-07-22) restate it; IBM and Data Science Dojo name no coiner. Huntley's Ralph loop (2025) predates all of these; Greyling's repo (created 2026-06-09, after Osmani's post) is a later concrete reference (row above).
 
 **Anatomy.** Vendor-guidance consensus: trigger, execution, verification, outcome, improvement ([Augment][augment-loop]); goal, action, observation, adjustment ([IBM][ibm-loop]). [LangChain][lc-loop] names four stacked loops: agent, verification (grader sends failures back), event-driven (schedule/webhook), hill-climbing (trace analysis updates prompts, tools and graders). [Osmani][osmani-loop] lists automations, worktrees, skills, connectors, sub-agents and persistent state (a markdown file or board). The author's own canvas ([Lindenberg's loop-engineering-canvas][lindenberg-canvas], 36 stars as of 2026-11-23, NOASSERTION licence, one-author template, not adoption-backed) adds explicit Limits (budget, max iterations, no-progress detection) and Observability fields; use as a checklist, not a standard.
 
-**Loop vs harness vs context.** [codecentric][cc-loop] (practitioner/consultancy claim): context supplies the right tokens, the harness adds guardrails (feedforward guides, feedback sensors), the loop automates repetition on top; each layer inherits the weaknesses below it, so fix context, then harness, then loop. Definitions stay in the table above; this is a sequencing heuristic, consistent with the nesting line below it.
+**Loop vs harness vs context.** [codecentric][cc-loop] (practitioner/consultancy claim): context supplies the right tokens, the harness adds guardrails (feedforward guides, feedback sensors), the loop automates repetition on top; each layer inherits the weaknesses below it, so fix context, then harness, then loop. Definitions stay in the table above; this is a sequencing heuristic, consistent with the nesting line above.
 
 **What Anthropic documents (first-party).** [Getting started with loops][claude-loops] (Delba de Oliveira and Michael Segner, 2026-06-30) names four loop types: "Turn-based", "Goal-based (/goal)", "Time-based (/loop and /schedule)" and "Proactive loops" (event or schedule, no real-time human). For `/goal` an evaluator model checks the stop condition, with a maximum turn count; deterministic criteria work best. Feature detail lives in [CC-goal-analysis.md][cc-goal], [CC-loop-cron-analysis.md][cc-loop-cron] and [CC-web-scheduled-tasks-analysis.md][cc-sched]; not restated here.
 
@@ -150,6 +188,9 @@ These map onto the Layer 4 evals (regression suite) and the human-approval gates
 | Source | Content |
 |---|---|
 | [HarnessFlow (arXiv 2611.06254)][harnessflow] · [Meta-Harness repo][meta-harness] | Tree search over whole agent harnesses; its baseline |
+| [Shittu Olumide, four-ring diagram][rings-img] · [KDnuggets roundup][kdn-roundup] | Prompt, context, harness and loop engineering as nested rings with dates; article page not readable (HTTP 403), read 2026-11-25 |
+| [Avi Chawla, Daily Dose of Data Science][chawla-rings] · [Simpliaxis][simpliaxis-rings] | Practitioner posts that disagree on the outermost layer (loop vs harness), read 2026-11-25 |
+| [Lulla et al. (arXiv 2608.21884)][loop-study] · [Guo et al. (arXiv 2606.20683)][harness-survey] | Loop-engineering study (grey literature, 217 repositories) and agent-harness survey; abstracts read 2026-11-25 |
 | [Anthropic — Effective Context Engineering][anthropic-ce] | Canonical 4-component context-engineering framework |
 | [Anthropic — Building Effective Agents][anthropic-bea] | Workflows-vs-agents; 5 patterns |
 | [OpenAI — Harness Engineering][openai-harness] | Convergent harness definition; Codex throughput evidence |
@@ -278,3 +319,9 @@ These map onto the Layer 4 evals (regression suite) and the human-approval gates
 [cc-loop-cron]: ../cc-native/configuration/CC-loop-cron-analysis.md
 [cc-sched]: ../cc-native/ci-remote/CC-web-scheduled-tasks-analysis.md
 [rust-anything]: https://github.com/erkamyaman/rust-anything
+[rings-img]: https://www.kdnuggets.com/wp-content/uploads/KDN-Shittu-A-nested-rings-diagram-of-four-concentric-circles.png
+[kdn-roundup]: https://www.kdnuggets.com/kdnuggets-weekly-roundup-2026-07-20
+[chawla-rings]: https://blog.dailydoseofds.com/p/prompt-context-harness-and-loop-engineering
+[simpliaxis-rings]: https://www.simpliaxis.com/resources/prompt-context-loop-harness-engineering
+[loop-study]: https://arxiv.org/abs/2608.21884
+[harness-survey]: https://arxiv.org/abs/2606.20683

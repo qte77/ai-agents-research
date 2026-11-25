@@ -2,8 +2,8 @@
 title: Glossary and concept owners
 purpose: Where each recurring term and abbreviation is defined in this corpus, so a doc links its owner instead of defining it again.
 created: 2026-11-21
-updated: 2026-11-22
-validated_links_on: 2026-11-21
+updated: 2026-11-25
+validated_links_on: 2026-11-25
 status: reference
 ---
 
@@ -20,6 +20,7 @@ definition first; if one exists, link it, and if not, add the term here with its
 | A2A | Agent-to-Agent Protocol | [ag-ui-protocol-landscape.md § A2A][a2a] |
 | AG-UI | Agent-User Interaction Protocol | [ag-ui-protocol-landscape.md § AG-UI][ag-ui] |
 | MCP | Model Context Protocol | [ag-ui-protocol-landscape.md § MCP as a Protocol Spec][mcp] |
+| Prompt, context, harness, loop, graph, flow and spec engineering | — | [agentic-engineering-disciplines-landscape.md § 1][disciplines-1] |
 | Agent identity, delegated authorization | — | [agent-identity-auth-landscape.md § 1][identity-1] and [§ 2][identity-2] |
 
 ## Memory and retrieval
@@ -70,6 +71,7 @@ This page cites only corpus docs; each owner section carries its own sources.
 [mcp]: non-cc/protocols/ag-ui-protocol-landscape.md#mcp-as-a-protocol-spec
 [identity-1]: sdlc-lcm/agent-identity-auth-landscape.md#1-authenticate-the-agent-agent-as-a-first-class-principal
 [identity-2]: sdlc-lcm/agent-identity-auth-landscape.md#2-authorize-the-agent-on-behalf-of-a-human-delegated-scoped-auditable
+[disciplines-1]: sdlc-lcm/agentic-engineering-disciplines-landscape.md#1-the--engineering-ladder
 [memory]: cc-community/CC-memory-tooling-landscape.md#memory-taxonomy
 [rag]: non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#rag-patterns-at-a-glance
 [graphrag]: non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-family
