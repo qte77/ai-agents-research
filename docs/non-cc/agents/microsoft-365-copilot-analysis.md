@@ -788,8 +788,8 @@ accounts as "Not supported".
 | Search | `POST /beta/copilot/search` | Beta, "(Preview)" | Delegated (work or school): `Files.Read.All` and `Sites.Read.All`; application "Not supported" [search-api] | Add-on licence only [search-overview] | OneDrive for work or school file hits (the only supported source) |
 | Interaction export | `GET /v1.0/copilot/users/{id}/interactionHistory/getAllEnterpriseInteractions` (also beta) | v1.0 documented | Application only: `AiEnterpriseInteraction.Read.All`; delegated "Not supported" [interaction-export-api] | Copilot licence with the Graph-grounded chat service plan | Prompts and responses; excludes Copilot Studio agents |
 | Usage reports | `GET /v1.0/copilot/reports/getMicrosoft365CopilotUsageUserDetail(...)` (also beta) | v1.0 documented | Delegated and application: `Reports.Read.All`, plus an admin role when delegated [copilot-usage-reports-api] | Returns data only for licensed users | Per-user usage as CSV (v1.0) or JSON (beta) |
-| Package management (list) | `GET /v1.0/copilot/admin/catalog/packages` (also beta) | v1.0 documented; several sibling operations marked preview | Delegated and application: `CopilotPackages.Read.All` [copilot-packages-list] | Microsoft Agent 365 licence | The organisation's agent catalog |
-| Meeting insights, change notifications, cost management | `/copilot/users/{id}/onlineMeetings/{id}/aiInsights`; `/v1.0/subscriptions`; `/copilot/costManagement/...` | Not recorded in this table | (unverified): no standard permissions table was found for meeting insights or cost management; change notifications use `AiEnterpriseInteraction.Read` (delegated, per user) or `.Read.All` (application) [copilot-apis-overview] | Not checked | Not checked |
+| Package management (list) | `GET /v1.0/copilot/admin/catalog/packages` (also beta) | v1.0 documented | Delegated and application: `CopilotPackages.Read.All` [copilot-packages-list] | Microsoft Agent 365 licence | The organisation's agent catalog |
+| Meeting insights, change notifications, cost management | `/copilot/users/{id}/onlineMeetings/{id}/aiInsights`; `/v1.0/subscriptions`; `/copilot/costManagement/...` | Not recorded in this table | (unverified): no standard permissions table was found for meeting insights or cost management; change notifications not checked either [copilot-apis-overview] | Not checked | Not checked |
 
 The Chat reference pages carry the standing `/beta` warning: "APIs under the `/beta` version are
 subject to change. Use of these APIs in production applications is not supported."
@@ -822,7 +822,7 @@ page returned 404), so a beta-only resource outside this tree is not excluded.
 **Four ways to use the licence from outside**, each at the evidence level read:
 
 1. **GitHub Copilot CLI with Entra sign-in** (public preview, changelog 2026-11-17): sign-in can
-   "use your Microsoft 365 Copilot license" and, for that path, "you don't need a GitHub account".
+   use the Microsoft 365 Copilot licence, and on that path no GitHub account is needed.
    Conditions: the organisation is in Frontier with usage-based billing for the licence, Windows and
    macOS only ("Linux support will follow"), CLI 1.0.113 or later [copilot-cli-entra],
    [copilot-cli-auth]. Without GitHub authentication, `/delegate`, the GitHub MCP server and Code
@@ -847,12 +847,14 @@ Guidelines", which opens "You may NOT:"). Three items bear on wrapping the licen
 software:
 
 - 3(b)(12): "Make your Application available for use in a manner that circumvents the need for users
-  to obtain a valid license".
-- 3(b)(13): "Redistribute or resell, or sublicense access to, the M365 Copilot APIs".
+  to obtain a valid license ..." (the clause goes on to name the Microsoft application or service
+  accessed through the APIs).
+- 3(b)(13): "Redistribute or resell, or sublicense access to, the M365 Copilot APIs ...", which the full
+  item extends to data obtained through the APIs and any other Microsoft offering accessed through them.
 - 3(b)(18): "You may not create an Application that is not human directed, such as bots, multiplexing or
   similar."
 
-Our reading, not legal advice: (12) and (13) point at one licensed user per caller, and (18) at a
+Our reading, not legal advice: (12) and (13) point at one licensed user per caller and no resale of the APIs, their data or other offerings reached through them, and (18) at a
 person driving each call, which cuts against an unattended or shared service on one seat. The
 overview calls these terms "Microsoft 365 Copilot APIs Terms of Use (preview)" [copilot-apis-overview].
 
@@ -1648,7 +1650,7 @@ re-checked even when Microsoft leaves the page unchanged.
 [retrieval-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/retrieval/overview
 [search-api]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/search/copilotroot-search
 [search-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/search/overview
-[copilot-usage-reports-api]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/admin-settings/reports/resources/copilotreportroot-getmicrosoft365copilotusageuserdetail
+[copilot-usage-reports-api]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/admin-settings/reports/copilotreportroot-getmicrosoft365copilotusageuserdetail
 [copilot-packages-list]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/admin-settings/package/copilotpackages-list
 [copilot-apis-toc]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/toc.json
 [copilot-apis-terms]: https://learn.microsoft.com/en-us/legal/m365-copilot-apis/terms-of-use
