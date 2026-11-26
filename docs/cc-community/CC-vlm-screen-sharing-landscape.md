@@ -4,7 +4,7 @@ purpose: Survey of Vision Language Models, local runtimes, image token math, and
 status: research
 platform_scope: [claude-code]
 created: 2026-04-11
-updated: 2026-11-19
+updated: 2026-11-26
 validated_links_on: 2026-06-26
 ---
 
@@ -50,37 +50,29 @@ The in-process Python path (llama-cpp-python) keeps everything in one process, a
 
 All numbers below are from the [official Anthropic vision documentation][anthropic-vision]. These govern Tier 1 (CC-native vision) cost.
 
-**Token formula** (when the image is not auto-resized):
+**Token formula** (when the image is not auto-resized; patch-based per the vision docs, checked 2026-11-26, replacing the earlier width x height / 750 formula):
 
 ```text
-tokens = (width_px * height_px) / 750
+tokens = ceil(width_px / 28) * ceil(height_px / 28)   # one visual token per 28x28 px patch
 ```
 
-**Auto-resize threshold**: if the image's long edge is more than 1568 pixels **or** the image is more than approximately 1,600 tokens, the server downscales it while preserving aspect ratio before inference. Downscaling increases time-to-first-token with no benefit to output quality.
+**Resize limits** (two tiers, automatic, no beta header; checked 2026-11-26): the high-resolution tier (Claude 4.7 and later) allows a 2,576 px long edge and 4,784 visual tokens; the standard tier (all other models) allows 1,568 px and 1,568 visual tokens. Images over either limit are downscaled while preserving aspect ratio. Downscaling increases time-to-first-token with no benefit to output quality (earlier-read claim, not re-confirmed).
 
-**Minimum edge**: images with any edge below 200 pixels may degrade output quality.
+**Minimum edge**: the docs now say Claude may hallucinate or make mistakes on low-quality, rotated, or very small images under 200 pixels.
 
-**Hard rejection**: images larger than 8000×8000 px are rejected. With more than 20 images in a single API request, the per-image limit drops to 2000×2000 px.
+**Hard rejection**: images larger than 8000×8000 px are rejected. Above 20 images in one request a stricter per-image limit applies (the docs advise keeping each dimension at or below 3,000 px, or using 20 or fewer image and document blocks); the earlier 2000×2000 figure is no longer stated. Per-request caps: 100 images for models with a 200k-token context window, 600 otherwise; 10 MB base64 per image on the Claude API (5 MB on Amazon Bedrock).
 
-**Recommended sweet spot** (from the docs): resize to no more than 1.15 megapixels and within 1568 px on both dimensions.
+**Sizing advice**: the earlier "1.15 megapixel, within 1568 px" recommendation and the Sonnet 4.6 aspect-ratio ceiling table are no longer on the vision page (checked 2026-11-26), which instead advises downsampling before sending when the extra fidelity isn't needed and notes high-resolution images can use up to about 3x the visual tokens of a standard-tier model; the 1.15 MP figure below is therefore unverified. Example downsizing: 1920×1080 goes to 1456×819 on the standard tier and stays unresized on the high-resolution tier.
 
-**Aspect ratio ceilings that avoid resize** (from the docs, for Claude Sonnet 4.6):
+**Example token counts** (from the docs, checked 2026-11-26; the earlier Sonnet 4.6 dollar figures are not stated by the docs and are dropped as unverified):
 
-| Aspect ratio | Max size that avoids resize |
-| ------------ | --------------------------- |
-| 1:1          | 1092 × 1092 px |
-| 3:4          | 951 × 1268 px  |
-| 2:3          | 896 × 1344 px  |
-| 9:16         | 819 × 1456 px  |
-| 1:2          | 784 × 1568 px  |
+| Image size | Tokens |
+| ---------- | ------ |
+| 200×200 px (0.04 MP) | 64 |
+| 1000×1000 px (1 MP)  | 1,296 |
+| 1092×1092 px (1.19 MP) | 1,521 |
 
-**Example token costs** (Sonnet 4.6 per-token pricing, from the docs):
-
-| Image size | Tokens | Cost / image | Cost / 1k images |
-| ---------- | ------ | ------------ | ---------------- |
-| 200×200 px (0.04 MP) | ~54   | ~$0.00016 | ~$0.16 |
-| 1000×1000 px (1 MP)  | ~1334 | ~$0.004   | ~$4.00 |
-| 1092×1092 px (1.19 MP) | ~1590 | ~$0.0048 | ~$4.80 |
+The docs' worked costs: at Claude Haiku 4.5's $1 per million input tokens, a 1000×1000 image is about $1.30 per 1k images; at Claude Opus 5.5's $4 per million on the high-resolution tier, about $5.18 per 1k, and a 4K image about $19.14 per 1k.
 
 Supported image formats: JPEG, PNG, GIF, WebP. Token cost is pixel-based, so format choice does not affect cost (only upload size).
 
@@ -90,7 +82,7 @@ Three architecture patterns for integrating visual context with Claude Code, pre
 
 | Tier | Approach | Token footprint | Privacy | Winning use case |
 | ---- | -------- | --------------- | ------- | ---------------- |
-| 1. CC-native vision   | Capture → resize to ≤ 1.15 MP → send as image block to Claude | Per formula above; ~1590 tokens / 1092² image | Sent to Anthropic API | You already pay for Claude tokens; minimum complexity |
+| 1. CC-native vision   | Capture → resize to ≤ 1.15 MP → send as image block to Claude | Per formula above; 1,521 tokens / 1092² image | Sent to Anthropic API | You already pay for Claude tokens; minimum complexity |
 | 2. Local VLM → text   | Capture → local VLM inference → text description → Claude text request | Only the text output tokens | Vision is fully local | Heavy visual workloads; sensitive screen content |
 | 3. Hybrid             | Local VLM preprocessing + a compressed image sent to Claude for deeper reasoning | Mixed | Partial local | Want both local preprocessing and Claude's vision |
 
@@ -124,7 +116,7 @@ Three FRs on the `anthropics/claude-code` issue tracker are relevant to visual c
 
 ## Claude Code Routing Options (for LLM-agnostic flows)
 
-If a workflow needs to route different tasks (e.g. visual OCR vs. code generation) to different model providers within a single Claude Code session, the current community answer is an external router. [claude-code-router][cc-router] (~34.9K stars, multi-provider) is the most prominent example; it sits in front of Claude Code and routes requests per task to OpenRouter, DeepSeek, Ollama, Gemini, and others. See [CC-model-provider-configuration.md][cc-router-config] for setup and the full routing-scenario list.
+If a workflow needs to route different tasks (e.g. visual OCR vs. code generation) to different model providers within a single Claude Code session, the current community answer is an external router. [claude-code-router][cc-router] (~38.4K stars as of 2026-11-26, multi-provider) is the most prominent example; it sits in front of Claude Code and routes requests per task to OpenRouter, DeepSeek, Ollama, Gemini, and others. See [CC-model-provider-configuration.md][cc-router-config] for setup and the full routing-scenario list.
 
 Using a router is orthogonal to the VLM landscape above — a Tier 2 workflow could route visual-OCR subagents to local Ollama and reasoning subagents to Anthropic, without waiting for FR #38698.
 
@@ -135,7 +127,7 @@ This doc covers feeding screens to a VLM for context, not agents that act on the
 ## Observed Implementations
 
 - [qte77/cc-voice-plugin-prototype][cc-voice] — plugin integration demonstrating a Tier 2 pipeline (local VLM → text) for a voice-driven CC workflow. See the repo's own docs and ADRs for the specific model / runtime / resize choices adopted there.
-- [StarTrail-org/PixelRAG][pixelrag] — **pixel-native RAG**: renders pages/PDFs to image tiles and retrieves by visual similarity with a fine-tuned [Qwen3-VL][qwen3-vl]-Embedding model, skipping text parsing entirely. Ships a Claude Code **`pixelbrowse`** plugin (`claude plugin install pixelbrowse@pixelrag-plugins`) — a skill calling `pixelshot` (Playwright/CDP) via a `/screenshot <url>` command; no MCP server or backend. A Tier 1 (CC-native plugin) visual-retrieval pattern, distinct from the Tier 2 local-VLM→text prototype above. ~4.2k★ (v0.3.0, 2026-06-23).
+- [StarTrail-org/PixelRAG][pixelrag] — **pixel-native RAG**: renders pages/PDFs to image tiles and retrieves by visual similarity with a fine-tuned [Qwen3-VL][qwen3-vl]-Embedding model, skipping text parsing entirely. Ships a Claude Code **`pixelbrowse`** plugin (`claude plugin install pixelbrowse@pixelrag-plugins`) — a skill calling `pixelshot` (Playwright/CDP) via a `/screenshot <url>` command; no MCP server or backend. A Tier 1 (CC-native plugin) visual-retrieval pattern, distinct from the Tier 2 local-VLM→text prototype above. ~11k★ (v0.4.0, 2026-07-16; checked 2026-11-26); the `pixelbrowse` plugin and install-command claims were not re-checked against the README (unverified).
 
 ## Sources
 
@@ -166,9 +158,9 @@ This doc covers feeding screens to a VLM for context, not agents that act on the
 [llamacpp-py]: https://github.com/abetlen/llama-cpp-python
 [ollama]: https://github.com/ollama/ollama
 [mlx]: https://github.com/ml-explore/mlx
-[mlx-vlm]: https://github.com/Blaizzy/mlx-vlm
+[mlx-vlm]: https://github.com/Neywa-Labs/mlx-vlm
 [python-mss]: https://github.com/BoboTiG/python-mss
-[peekaboo]: https://github.com/steipete/Peekaboo
+[peekaboo]: https://github.com/openclaw/Peekaboo
 [cc-22903]: https://github.com/anthropics/claude-code/issues/22903
 [cc-38698]: https://github.com/anthropics/claude-code/issues/38698
 [cc-router]: https://github.com/musistudio/claude-code-router

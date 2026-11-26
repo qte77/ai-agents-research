@@ -3,7 +3,7 @@ title: CC CLI-Anything Analysis
 source: https://github.com/HKUDS/CLI-Anything
 purpose: Evaluate CLI-Anything as a framework for generating agent-native CLIs from existing software, and its fit relative to .gitmodules, bun scripts, and Makefile recipes.
 created: 2026-03-12
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: research
 ---
@@ -82,7 +82,7 @@ Applications use authentic backends, not UI automation ([source][cli-anything]):
 /cli-anything:refine <software-path> [optional-focus]
 ```
 
-Also available for OpenCode (experimental, `.opencode/commands/`), Codex (`codex-skill/` directory), Pi Coding Agent, Goose (Desktop/CLI, experimental/community), Qodercli (community), OpenClaw (community), Hermes (experimental/community), Reasonix (experimental/community), and GitHub Copilot CLI (community) — with Cursor and Windsurf listed as "coming soon" ([source][cli-anything]).
+Also available for OpenCode (experimental, `.opencode/commands/`), Codex (`codex-skill/` directory), Pi Coding Agent, Goose (Desktop/CLI, experimental/community), Qodercli (community), OpenClaw (community), Hermes (experimental/community), Reasonix (experimental/community), and GitHub Copilot CLI (community) — with Cursor supported via a plugin in `cursor-plugin/` and only Windsurf listed as "coming soon" ([source][cli-anything]).
 
 ## Comparison with Existing Tooling
 
