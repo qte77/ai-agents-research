@@ -3,7 +3,7 @@ title: Omnigent — Meta-Harness for Multi-Agent Unification
 source: https://omnigent.ai/
 purpose: Evaluate Omnigent as a meta-harness layer for unifying Claude Code, Codex, Pi, and custom agents with policy governance and OS-level sandboxing
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: assess
 platform_scope: [claude-code, codex, pi]
@@ -16,7 +16,7 @@ platform_scope: [claude-code, codex, pi]
 [Omnigent][omnigent-home] is an open-source meta-harness that sits above individual AI agent frameworks,
 providing a unified layer for running and supervising multiple agents — [Claude Code][omnigent-home],
 Codex, Pi, and custom YAML-defined agents — without rewriting code per-agent. It was introduced by
-the Databricks AI team and Neon in June 2026 as an alpha release.
+Databricks in June 2026 (blog dated 2026-06-13) as an alpha release; an earlier Neon attribution is unverified.
 
 The key framing from [the Databricks blog][databricks-blog]: a meta-harness operates at a layer above
 individual agent frameworks, enabling agents "to become interoperable parts of a richer system" rather
@@ -54,7 +54,7 @@ workspace's Foundation Model API.
 
 A flexible sandbox can intercept and transform network requests and prevent agents from accessing
 sensitive credentials. Filesystem and network restrictions apply with credential isolation. Cloud
-sandboxes (Modal, Daytona, Islo) provide disposable ephemeral environments.
+sandboxes (Modal, Daytona, Islo, E2B) provide disposable ephemeral environments.
 
 **Built-in agents:**
 
@@ -68,18 +68,18 @@ Real-time session sharing via URL with comment and steering capabilities for co-
 
 **Technical facts (GitHub, 2026-06-16):**
 
-- Stars: ~5.3k (2026-06-28)
-- Primary language: Python (83.1%), TypeScript (16.2%)
+- Stars: ~11.6k (11,574, checked 2026-11-26)
+- Primary language: Python (~70% of bytes), TypeScript (~26%), plus JavaScript, Kotlin, Swift and Rust (checked 2026-11-26)
 - Requires Python 3.12+
-- Install: `uv tool install omnigent` or `brew install omnigent-ai/tap/omnigent`
+- Install: the README leads with a one-line installer script (`scripts/install_oss.sh`); `uv tool install omnigent` or `brew install omnigent-ai/tap/omnigent` are the manual route (checked 2026-11-26)
 - License: Apache-2.0
 - Status: alpha
 
 ## Adoption Decision
 
 **Assess** — Omnigent addresses a genuine gap: there is no established neutral layer for routing work
-across Claude Code, Codex, Pi, and custom agents with unified policy controls. The Databricks AI + Neon
-lineage gives it a credible security posture (OS sandbox, credential isolation) beyond what individual
+across Claude Code, Codex, Pi, and custom agents with unified policy controls. The Databricks
+lineage (Neon involvement unverified) gives it a credible security posture (OS sandbox, credential isolation) beyond what individual
 agent harnesses provide.
 
 For this repo's agent-research context, the CC integration surface is meaningful — Claude Code is a
@@ -90,10 +90,10 @@ ongoing multi-agent orchestration research.
 
 - Alpha status means the API surface and YAML schema will change; any integration built today carries
   migration risk.
-- 1.9k stars (June 2026) is early-adopter territory; community and ecosystem are not yet established.
+- 1.9k stars (June 2026; about 11.6k on 2026-11-26) is early-adopter territory; community and ecosystem are not yet established.
 - Policy expressiveness (contextual rules, spend caps) is useful but the implementation details are not
   yet documented beyond high-level examples.
-- Sandboxing is a first-class feature but cloud sandbox providers (Modal, Daytona, Islo) introduce
+- Sandboxing is a first-class feature but cloud sandbox providers (Modal, Daytona, Islo, E2B) introduce
   external dependencies and latency.
 - The model-routing approach (YAML executor sections, `/model` mid-session swap) is pragmatic but adds
   a new config dialect on top of per-agent configs already maintained.
@@ -105,7 +105,7 @@ Claude Code + policy-governance path to assess real friction.
 
 - Prototype: install via `uv tool install omnigent` and wire up a Claude Code session to validate the
   `claude-sdk` harness integration and spend-cap policy behavior.
-- Track: watch [omnigent-ai/omnigent][omnigent-gh] for a beta/stable tag before committing to the
+- Track: watch [omnigent-ai/omnigent][omnigent-gh] for a beta/stable tag before committing (tagged releases exist, latest v0.23.0 on 2026-11-19, but the README badge still says alpha) to the
   YAML config schema.
 - Evaluate: compare Omnigent's contextual policy controls against native Claude Code hooks
   (`.claude/settings.json` permissions, `PreToolUse` hooks) to identify whether the meta-layer adds
@@ -120,7 +120,7 @@ Claude Code + policy-governance path to assess real friction.
 | [omnigent.ai][omnigent-home] | Architecture, features, sandbox, policy controls, supported agents, alpha status |
 | [omnigent-ai/omnigent (GitHub)][omnigent-gh] | Stars, license, language, install methods, README feature list |
 | [Omnigent models docs][omnigent-models] | Claude Code harness, model routing, Databricks prefix, mid-session swap |
-| [Databricks blog: Introducing Omnigent][databricks-blog] | Meta-harness definition, Databricks + Neon authorship, launch date (June 2026), policy and sandbox details |
+| [Databricks blog: Introducing Omnigent][databricks-blog] | Meta-harness definition, Databricks authorship (Neon unverified), launch date (June 2026), policy and sandbox details |
 
 [omnigent-home]: https://omnigent.ai/
 [omnigent-gh]: https://github.com/omnigent-ai/omnigent

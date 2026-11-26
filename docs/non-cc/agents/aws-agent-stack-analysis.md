@@ -2,7 +2,7 @@
 title: AWS Agent Stack Analysis — Bedrock AgentCore, Agents Classic, Quick
 purpose: First-party read of what AWS ships for business and developer agents (services, least-privilege IAM, identity, licences, regions, release status), with Claude availability; no prices.
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-11-20
 status: assess
 ---
@@ -109,9 +109,9 @@ capacity ([Q Business][qbiz]); its tier names were not read and are **unverified
 
 ## Regions
 
-The [AgentCore region table][ac-regions] (read 2026-11-20) lists 22 columns including GovCloud (US-West).
-Runtime microVMs, Gateway, Identity, Observability and Policy show "Yes" in every column; Harness, Memory,
-Runtime Instances and Agent Registry are subsets (Registry 10 of the 22 columns, so the
+The [AgentCore region table][ac-regions] (checked 2026-11-26) lists 24 columns including 2 China regions and GovCloud (US-West).
+Runtime microVMs, Gateway, Identity, Observability and Built-in Tools show "Yes" in every column (Policy is "Yes" in 22 of 24; "No" for China (Beijing) and China (Ningxia)); Harness, Memory,
+Runtime Instances and Agent Registry are subsets (Registry 10 of the 24 columns, so the
 five-region count at GA has grown). Check the table for the exact region before planning.
 
 ## At a glance
@@ -125,7 +125,7 @@ five-region count at GA has grown). Check the table for the exact region before 
 | Agent identity and IdP | AgentCore Identity (workload identities); inbound JWT from any OIDC/OAuth IdP; IAM Identity Center for people |
 | Least-privilege roles | `BedrockAgentCoreFullAccess` is broad; per-resource invoke and custom policies recommended; no one deploy policy |
 | Licences and seats | AgentCore consumption-only (no seat found, inferred); AWS Quick per-user plans; Kiro per-user plans ([kiro-analysis.md][kiro]); Q Business closed to new customers |
-| Regions | AgentCore in up to 22 listed regions, feature-dependent |
+| Regions | AgentCore in up to 24 listed regions, feature-dependent |
 | Release status | AgentCore GA 2025-10-13; Registry GA 2026-08-31; Agents Classic maintenance; Quick current |
 
 ## Sources

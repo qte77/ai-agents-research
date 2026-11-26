@@ -3,7 +3,7 @@ title: OpenResearch Analysis
 source: https://github.com/alphaXiv/OpenResearch
 purpose: Evaluate OpenResearch as a local-first, git-native workspace that turns coding agents into autonomous research/experiment agents.
 created: 2026-09-30
-updated: 2026-11-19
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: assess
 ---
@@ -30,15 +30,15 @@ capabilities such as organizations and managed compute" ([README][openresearch])
 
 ### Agent integration
 
-`orx install-skills` installs the OpenResearch skill into supported coding agents. Core CLI
+`orx install-skills` installs the OpenResearch skill into supported coding agents (unverified: not in the README as of 2026-11-26). Core CLI
 surface: `orx projects`, `orx project view`, `orx runs`, `orx logs`, `orx exp run`, `orx discover
 keyword <query>`, `orx paper <arxiv-id-or-doi>` — the last two cover paper discovery and lookup by arXiv id or DOI;
-the README does not name the service behind them ([README][openresearch]).
+the README does not name the service behind them ([README][openresearch]); these command names are unverified against the current README.
 
 ### Reproducibility and evidence
 
 Every experiment runs inside a **git-native experiment tree**: "every run receives an immutable
-archive of its recorded commit," and OpenResearch explicitly frames this as "Reproducible
+archive of its recorded commit" (unverified: not found in the README as of 2026-11-26), and OpenResearch explicitly frames this as "Reproducible
 experiments" — the *code* a run executed is commit-pinned and re-derivable. The agent's own
 decisions inside that loop (what to try next, how to read the evidence) remain model-driven and
 are not pinned to a model/version. "Evidence in context" keeps logs, diffs, files, results and
@@ -56,14 +56,14 @@ The same committed source snapshot runs locally, over SSH, or on Slurm, Kubernet
 Face Jobs, Modal, Tinker, or managed OpenResearch compute — "publishing the repository is not
 required." Running against a remote host (`orx up --remote user@host`) has a stated security
 caveat: "the remote service binds to loopback and has no application-level authentication, so
-other users on that host can reach it" ([README][openresearch]).
+other users on that host can reach it" (unverified: not found in the current README, checked 2026-11-26; the repo's `arc/remote.md` says orx binds only loopback unless asked).
 
 ### Platforms
 
 - **macOS 11+** — signed with a Developer ID and notarized by Apple; the primary download path
-- **Windows** — beta, requires [Git for Windows][openresearch-install]; the installer isn't
-  code-signed yet, so Windows shows an unsigned-app warning
-- **Linux** — AppImage for x86_64 or aarch64, needs glibc 2.35+ ([install docs][openresearch-install]);
+- **Windows** — beta, requires [Git for Windows][openresearch-install]; the install page says
+  SmartScreen may warn on first launch (code-signing status unverified)
+- **Linux** — AppImage for x86_64 or ARM64, needs glibc 2.35+ and `fusermount` (FUSE; otherwise run with `--appimage-extract-and-run`) ([install docs][openresearch-install]);
   `linux/OpenResearch.desktop` in the repo is Linux launcher packaging (a `.desktop` entry), not a
   separate platform feature
 - **CLI-only install** (`curl -LsSf https://openresearch.sh/install.sh | sh`) is unsigned — device-
@@ -82,7 +82,7 @@ Scored 2026-09-30 against the [agent substrate rubric][rubric].
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| partial [README][openresearch] ("multiple agents can explore different directions in parallel while the experiment tree preserves their lineage" — concurrent multi-agent access to one experiment tree, but single-user by default, not a multi-user shared store) | yes [README][openresearch] ("run locally, on your own infrastructure, or with managed OpenResearch compute" across SSH/Slurm/Kubernetes/Ray/HF Jobs/Modal/Tinker) | partial [README][openresearch] (runs are commit-pinned — "immutable archive of its recorded commit" — but the agent's own propose/decide steps are model-driven with no pinned model/version documented) | yes [README][openresearch] (choice of agent — Claude Code/Codex/OpenCode/Cursor/Antigravity — and choice of compute backend, both swappable per session) | yes [README][openresearch] (git-native experiment tree; immutable per-run commit archives) | yes [README][openresearch] ("Evidence in context": logs, diffs, files, results and artifacts kept tied to the run that produced them) |
+| partial [README][openresearch] ("multiple agents can explore different directions in parallel while the experiment tree preserves their lineage" — concurrent multi-agent access to one experiment tree, but single-user by default, not a multi-user shared store) | yes [README][openresearch] ("run locally, on your own infrastructure, or with managed OpenResearch compute" across SSH/Slurm/Kubernetes/Ray/HF Jobs/Modal/Tinker) | partial [README][openresearch] (runs are commit-pinned — "immutable archive of its recorded commit" (unverified) — but the agent's own propose/decide steps are model-driven with no pinned model/version documented) | yes [README][openresearch] (choice of agent — Claude Code/Codex/OpenCode/Cursor/Antigravity — and choice of compute backend, both swappable per session) | yes [README][openresearch] (git-native experiment tree; immutable per-run commit archives) | yes [README][openresearch] ("Evidence in context": logs, diffs, files, results and artifacts kept tied to the run that produced them) |
 
 ## Adoption Decision
 
@@ -91,7 +91,7 @@ Scored 2026-09-30 against the [agent substrate rubric][rubric].
 | **Use case** | Turning an existing coding agent into an autonomous research/experiment loop, with reproducible, git-native experiment lineage |
 | **Runtime** | Local Rust desktop app (Tauri-style: tao/wry/gtk, not the Tauri framework) + `orx` CLI; local SQLite store by default |
 | **Compute** | Local, SSH, Slurm, Kubernetes, Ray, Hugging Face Jobs, Modal, Tinker, or managed OpenResearch compute |
-| **Maturity** | Active: 6,259★/398 forks, v0.2.14, pushed 2026-09-30 (`gh api`, 2026-09-30); GitHub Trending #1 Repository of the Day |
+| **Maturity** | Active: 8,553★/607 forks, v0.2.30 (2026-11-22), pushed 2026-11-26 (`gh api`, checked 2026-11-26); GitHub Trending #1 Repository of the Day |
 | **License** | MIT (LICENSE file confirmed, `gh api` 2026-09-30) |
 
 **Strengths**: local-by-default with no forced cloud dependency; git-native experiment tree gives a

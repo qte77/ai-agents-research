@@ -3,7 +3,7 @@ title: Browser Agents Landscape
 source: https://code.claude.com/docs/en/chrome
 purpose: "Landscape of agents that use websites: agentic browsers, Claude in Chrome vs Chrome DevTools MCP vs Playwright MCP, WebMCP, hosted agent browsers, dated benchmarks, and prompt-injection safety."
 created: 2026-11-19
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-11-19
 status: reference
 ---
@@ -60,7 +60,7 @@ both Model Context Protocol (MCP) servers); behaviour from each project's own do
 | Aspect | Claude in Chrome | Chrome DevTools MCP | Playwright MCP |
 | ------ | ---------------- | ------------------- | -------------- |
 | Run by | Anthropic | Chrome DevTools team ([`ChromeDevTools` org][dt-gh]) | Microsoft ([`microsoft` org][pw-gh]) |
-| Form | Chrome extension (side panel; also tools inside Claude Code and Cowork) | MCP server and CLI, npm `chrome-devtools-mcp`, latest release v1.13.0 (2026-11-11) | MCP server, latest release v0.0.86 (2026-11-18); its README also points coding agents to a separate CLI-plus-skills tool |
+| Form | Chrome extension (side panel; also tools inside Claude Code and Cowork) | MCP server and CLI, npm `chrome-devtools-mcp`, latest release v1.14.0 (2026-11-24, checked 2026-11-26) | MCP server, latest release v0.0.86 (2026-11-18); its README also points coding agents to a separate CLI-plus-skills tool |
 | Licence | proprietary extension | Apache-2.0 | Apache-2.0 |
 | How it drives the browser | Extension acts in your Chrome tabs; [Claude Code docs][cc-chrome] say it opens new tabs in a tab group | Puppeteer for automation plus DevTools for traces, network, console | Playwright with structured accessibility snapshots; "No vision models needed" per README |
 | Session and logins | Your real browser, shares your login state; pauses on login pages and CAPTCHAs (Claude Code docs) | Own profile by default (`$HOME/.cache/chrome-devtools-mcp/chrome-profile`); `--autoConnect` attaches to a local Chrome 144+ with remote debugging on ([config][dt-cfg]) | README describes a persistent profile under a per-workspace cache path (its option table says a temporary directory when `--user-data-dir` is unset, so the README is not consistent); `--isolated` keeps it in memory; `--extension` attaches to a running Chrome or Edge |

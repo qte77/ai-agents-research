@@ -3,7 +3,7 @@ title: HarnessX — Composable, Adaptive, and Evolvable Agent Harness Foundry
 source: https://arxiv.org/abs/2606.14249
 purpose: Paper analysis of HarnessX, a harness-as-primitive framework that evolves agent scaffolding from execution traces.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: assess
 ---
@@ -30,21 +30,21 @@ Across five benchmarks — ALFWorld, GAIA, WebShop, tau³-Bench, and SWE-bench V
 
 ### License and Code
 
-The paper is published under Creative Commons BY 4.0. The authors state that "the complete codebase will be open-sourced in a future release"; no repository URL is provided as of the submission date (2026-06-12, accessed 2026-06-16).
+The paper is published under Creative Commons BY 4.0. The authors stated that "the complete codebase will be open-sourced in a future release", with no repository URL as of the submission date (2026-06-12, accessed 2026-06-16). A public repository now exists: [Darwin-Agent/HarnessX][repo] (MIT, created 2026-04-30, last pushed 2026-11-03, checked 2026-11-26), linked from the [project page][project]. The paper has since reached v3 (2026-07-23); the figures below match the abstract.
 
 ## Adoption Decision
 
 **Assess.** HarnessX is relevant to this repository's focus on agentic harness patterns, but adoption is premature for two reasons:
 
-1. **No public code yet.** The codebase is promised but not released. The framework cannot be evaluated, reproduced, or integrated until the repository ships.
+1. **Code only recently evaluable.** The repository was not public at the time of the first reading (2026-06-16) and has not yet been evaluated here; the framework cannot be treated as reproduced or integrated until it has been.
 2. **Benchmark claims need reproduction.** A +14.5% average gain is substantial; independent reproduction on at least one benchmark (e.g., SWE-bench Verified) is needed before treating the numbers as reliable priors.
 
-The conceptual contribution — treating harness components as typed primitives composable via algebra, and evolving them from traces — directly maps onto the patterns catalogued in [CC-agentic-harness-patterns-analysis.md][harness-patterns] and the dynamic orchestration model documented in [CC-dynamic-workflows-analysis.md][dynamic-workflows]. Once the code is released, HarnessX is a strong Trial candidate for informing how CC harness patterns could be made data-driven rather than hand-authored.
+The conceptual contribution — treating harness components as typed primitives composable via algebra, and evolving them from traces — directly maps onto the patterns catalogued in [CC-agentic-harness-patterns-analysis.md][harness-patterns] and the dynamic orchestration model documented in [CC-dynamic-workflows-analysis.md][dynamic-workflows]. With the code public, HarnessX is a strong Trial candidate for informing how CC harness patterns could be made data-driven rather than hand-authored.
 
 ## Action Items
 
-- Watch the authors' affiliations and arXiv for the promised open-source release; re-assess on code drop.
-- On release, reproduce one benchmark (SWE-bench Verified preferred, as it has stable public tooling) to validate the +14.5% average claim.
+- Re-assess against the now-public repository.
+- Reproduce one benchmark (SWE-bench Verified preferred, as it has stable public tooling) to validate the +14.5% average claim.
 - Evaluate whether the substitution algebra maps onto the harness primitive taxonomy in [CC-agentic-harness-patterns-analysis.md][harness-patterns]; if so, document the correspondence.
 - Check whether AEGIS's trace-driven evolution approach overlaps with or supersedes existing RL-based scaffolding work (e.g., AgentBench, DSPy); add cross-refs if confirmed.
 
@@ -52,8 +52,11 @@ The conceptual contribution — treating harness components as typed primitives 
 
 | Source | Content |
 |---|---|
-| [HarnessX arXiv abstract (2606.14249)][paper] | Title, authors, submission date, abstract, architecture, benchmark results, license, code availability — accessed 2026-06-16 |
+| [HarnessX arXiv abstract (2606.14249)][paper] | Title, authors, submission date, abstract, architecture, benchmark results, license, code availability — accessed 2026-06-16; versions v1 2026-06-12, v2 2026-07-02, v3 2026-07-23 |
+| [Darwin-Agent/HarnessX][repo] · [project page][project] | Public repository (MIT) and project page; the +14.5% is an absolute average gain across 15 model-benchmark configurations and the +44.0% maximum is ALFWorld with Qwen3.5-9B (checked 2026-11-26) |
 
 [paper]: https://arxiv.org/abs/2606.14249
+[repo]: https://github.com/Darwin-Agent/HarnessX
+[project]: https://darwin-agent.github.io/HarnessX/
 [harness-patterns]: ../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md
 [dynamic-workflows]: ../../cc-native/agents-skills/CC-dynamic-workflows-analysis.md

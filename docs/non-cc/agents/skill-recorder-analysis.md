@@ -3,13 +3,13 @@ title: Microsoft Skill Recorder Analysis
 source: https://github.com/microsoft/skill-recorder
 purpose: Analysis of Microsoft's Skill Recorder, a desktop app that turns a recorded (or imported) screen-capture session into a reusable agent Skill or scheduled Automation via the GitHub Copilot CLI.
 created: 2026-11-12
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: assess
 ---
 
-**Details:** MIT; 5,762★/654 forks (re-checked 2026-11-12, up from 5,760★); created 2026-07-29,
-last pushed 2026-11-04 (`gh api`, re-confirmed 2026-11-12 — no new push since). Note: the repo's
+**Details:** MIT; 5,924★/667 forks (checked 2026-11-26); created 2026-07-29,
+last pushed 2026-11-25 (`gh api`, checked 2026-11-26); latest release v0.9.4 (2026-11-23). Note: the repo's
 one-line GitHub description says the GitHub **Copilot SDK**; the README's own body text says the
 **Copilot CLI** does the reconstruction, and ships with the app — the README is treated as
 authoritative per this corpus's convention of preferring body text over a short description. The
@@ -56,15 +56,15 @@ spoken" (README).
 The original imported/recorded file is untouched; a local copy and derived artifacts live in the
 app's Sessions store, and deleting a session removes only that copy. Choosing a file does not by
 itself send it anywhere — **choosing `Analyze` does**: selected frames, transcribed speech, and any
-typed details go through the app's "existing privacy-protection pipeline" to GitHub Copilot (a
+typed details go through the app's "existing privacy-protection pipeline" to the selected AI provider (GitHub Copilot or a bring-your-own-model provider; a
 cloud call). Debug exports carry the same private data as the live session they came from.
 
 ## Install
 
 Distributed as a **source release**, not a prebuilt binary: one command (copied from the specific
 GitHub release page, not a generic template) downloads a pinned Node.js runtime and builds the
-exact release commit locally, producing a "Skill Recorder (Source)" app. Requires a GitHub account
-with Copilot access; the Copilot CLI ships with the app. The README states "macOS is the primary
+exact release commit locally, producing a "Skill Recorder (Source)" app. Requires either a GitHub account
+with Copilot access or a supported model provider's API key (bring-your-own-model uses the bundled Copilot SDK/CLI without GitHub login and still sends data to the provider); the Copilot CLI ships with the app. The README states "macOS is the primary
 target. Windows 11 (x64 and ARM64) is supported too" — but the README's own install steps (re-read
 2026-11-12) direct users to the release page to pick either **"Windows 11 x64 or ARM64"** or
 **"macOS or Ubuntu"**, and separately say to open "Terminal on macOS or Ubuntu" to run the copied
@@ -74,8 +74,7 @@ README's one-line platform summary doesn't name it alongside macOS and Windows.
 ## Adoption Decision
 
 **Assess.** MIT-licensed and genuinely novel in mechanism (reconstruct-then-generalize from a
-single demonstrated session, rather than hand-written skill prompts), but entirely tied to GitHub
-Copilot as the reconstruction engine; which surfaces consume its output is sourced only to the
+single demonstrated session, rather than hand-written skill prompts), but entirely tied to the Copilot CLI/SDK as the reconstruction engine (GitHub Copilot or a bring-your-own-model provider); which surfaces consume its output is sourced only to the
 repo's GitHub description (Microsoft Autopilot/Cowork/Copilot Studio), not confirmed in the README
 body — no Claude Code or other third-party agent integration is documented anywhere in either.
 Young project (created 2026-07-29); the memory-use and import-limit figures in its own README are
@@ -90,7 +89,7 @@ explicitly self-reported single-platform measurements (Windows ARM64), not indep
 | Source | Content |
 |---|---|
 | [microsoft/skill-recorder README][repo] | Capture/import mechanism, privacy boundary, install path, limits; re-read 2026-11-12, including the Ubuntu/Linux-sharing-macOS install path and the absence of "Scout"/"Cowork"/"Copilot Studio"/"Autopilot"/"Claude"/"Anthropic" anywhere in the body text |
-| [microsoft/skill-recorder][repo] `gh api` metadata + `/license` | MIT, 5,762★/654 forks, created 2026-07-29, pushed 2026-11-04 (re-checked 2026-11-12) |
+| [microsoft/skill-recorder][repo] `gh api` metadata + `/license` | MIT, 5,924★/667 forks, created 2026-07-29, pushed 2026-11-25 (checked 2026-11-26) |
 | [microsoft/skill-recorder][repo] GitHub description field | Sole source for the Scout/Cowork/Copilot Studio consumer-surface claim and for "Copilot SDK" |
 
 [repo]: https://github.com/microsoft/skill-recorder

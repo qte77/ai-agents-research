@@ -3,7 +3,7 @@ title: "Karpathy on Agentic Coding — Vibe Coding to Agentic Engineering"
 source: https://karpathy.bearblog.dev/
 purpose: Primary-source map of Andrej Karpathy's agentic-coding arc (2023 LLM OS → 2025 Software 3.0 / vibe coding → 2026 agentic engineering) and its relevance to agentic-SDLC and harness design.
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-11-26
 validated_links_on: 2026-07-08
 status: research
 ---
@@ -28,7 +28,7 @@ the discipline framing in [../sdlc-lcm/agentic-engineering-disciplines-landscape
   intent and running LLM-generated code without close review. The low-rigor end of the spectrum he
   later contrasts with agentic engineering.
 - **"Vibe Coding MenuGen"** ([bearblog][menugen], 2025-04-27): field report — prototyping is fast, but
-  the grind moves to browser-only SaaS dashboards (Vercel/Clerk/Stripe) "not accessible or manipulable
+  the grind moves to browser-only SaaS dashboards (Vercel/Clerk/Stripe) "not even accessible or manipulatable
   by an LLM." Seeds the **"build for agents too"** (CLI/curl/markdown, not just GUIs) argument.
 - **"Software Is Changing (Again)" / Software 3.0** (YC AI Startup School talk, 2025-06-17 —
   [YouTube][sw3-talk], [YC Library][sw3-yc]): the core talk. LLMs as a new computer programmed in

@@ -2,7 +2,7 @@
 title: System-1 Decision Models Landscape
 purpose: "Survey of alternatives to TypeSafe's Jev: fast, typed-output classifiers (one forward pass, no free text) for agent routing, guardrails and verification, scored against the agent substrate rubric."
 created: 2026-09-30
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-11
 status: assess
 ---
@@ -59,7 +59,7 @@ confidence per choice.
   `escalate` tickets are then handed to a *second*, more capable system (the Agent API) for an
   investigation plan — escalation-based routing to one fixed downstream system, the same pattern
   already described above for the Panhwar cascade, not a choice among several candidate models.
-- [RouteLLM][routellm-home] (stale: 5,723 stars; last push 2024-08-10 (`gh api` 2026-11-22), widely
+- [RouteLLM][routellm-home] (stale: 5,739 stars; last push 2024-08-10 (`gh api` 2026-11-26), widely
   adopted) and [Not Diamond][notdiamond-home] (shipped) — classifier-trained per-query routers, already cataloged in
   [llm-routers-gateways-landscape.md § Open / Self-Hostable Gateways][llm-routers-open] and
   [§ Hosted Aggregators][llm-routers-hosted]; cross-referenced here, not duplicated. Neither uses
@@ -287,7 +287,7 @@ v1.1 (Perplexity): 643 of 669 right
 on the board, and under Apache-2.0 a hospital can run it on its own servers." The same post:
 "GPT-6 Luna (OpenAI), through its new Decisions API: 637 of 669, tied at #1, and the only top model
 with zero severe misses"; "Mistral Large 4: 617 of 669, also zero severe misses, and the best
-triage score on the board (238 of 240)"; and "Jev 1.13, at 345 ms a decision." Mistral Large 4
+triage score on the board (238 of 240)"; and "Jev 1.13, at 345 ms a decision" (Jev 1.14.0 is the newest version listed at docs.typesafe.ai/models on 2026-11-26). Mistral Large 4
 appears on the post only as a scored entrant on the leaderboard, not as a vendor shipping its own
 Jev-style decision API — this corpus found no first-party Mistral page describing one, so it gets
 no section here.
@@ -336,7 +336,7 @@ guide's own SDK code samples (not shown on the reference page itself).
 
 **Status — three first-party pages, three different words, within 72 hours**: the
 [Decisions API guide][openai-decisions-guide] (checked 2026-10-09) states: "The Decisions API is
-in public beta, and we expect to GA in the coming weeks." The [API changelog][openai-changelog]'s
+in public beta, and we expect to GA in the coming weeks." (As of 2026-11-26 the guide says "The Decisions API is now generally available.") The [API changelog][openai-changelog]'s
 Oct 6, 2026 entry agrees on the stage: "Released the Decisions API in beta with `gpt-6-luna`." The
 [DevDay 2026 recap][openai-devday] (dated Oct 6–7, 2026 — the page carries both timestamps) uses
 different wording for the same release: "Available in limited preview today with a broad release
@@ -357,7 +357,7 @@ recap, not in the technical guide, and no worked example of it is shown in eithe
 § Use cases → Tool-call gating above.
 
 **Pricing (documented)**: "input costs $0.10 per 1M tokens. You pay only for input tokens: there
-are no cache-read, cache-write, or output-token charges" (guide, checked 2026-10-09). Regional
+are no cache-read, cache-write, or output-token charges" (guide, checked 2026-10-09). As of 2026-11-26 the guide says the API is generally available, uncached input is still $0.10 per 1M tokens, output tokens are not charged, but cache hits are discounted and cache writes are charged (so the quoted no-cache-charges sentence is superseded). Regional
 processing premiums and long-context multipliers can apply; the Decisions API supports Zero Data
 Retention and HIPAA use for eligible customers, with data residency in the US and EEA/Switzerland.
 
@@ -401,7 +401,7 @@ million tokens," and the later "pplx-decider-v1.1-27b replaces v1" entry states 
 $0.02 per million tokens, down from $0.04," with "requests that still use the older v1 name" kept
 working "at the same $0.02 rate." Neither changelog entry uses the words beta, preview, or GA, so
 this corpus found no first-party release-stage label for Perplexity's Decisions API (contrast
-OpenAI's explicit "public beta," above).
+OpenAI's explicit "public beta," above). As of 2026-11-26 the pricing page lists `pplx-decider-v1.3` ($0.02) and `pplx-decider-flash-v1.3` ($0.01), with v1.2 and flash v1.2 at the same prices, all per 1M input tokens with free output; `pplx-decider-v1.1-27b` is a legacy alias of `pplx-decider-v1-27b` ($0.02), and web grounding adds $0.001 per search and $0.0005 per successful URL fetch.
 
 **Benchmark (documented; reconciled 2026-10-10)**: the v1.1 card reports its own "Decision Index"
 score — 61.56 overall against Jev's 57.9 (v1 scored 56.4), "now outperforms Jev by more than 3.5
@@ -489,7 +489,7 @@ Microsoft's own
 "Now available in public preview, Microsoft-Decision-1 is a decision model built on Qwen3.5-9B..."
 The [Foundry catalog page][msft-decision1-catalog] for the same model disagrees, in both its
 rendered badge and its own embedded page state: "Lifecycle Generally available (GA)" (rendered UI)
-and `"lifecycle","Generally Available"` (the page's own JSON). The catalog's License tab, however,
+and `"lifecycle","Generally Available"` (the page's own JSON) as read on 2026-10-10; a 2026-11-26 re-read of the client-rendered page showed lifecycle Preview (unverified). The catalog's License tab, however,
 still points at Azure's generic preview terms: `licenseDescription`: "Use of this Azure Direct
 Model is subject to supplemental Terms of Use for Microsoft Azure"
 (`azure.microsoft.com/.../support/legal/preview-supplemental-terms/`) — not resolved here, quoted
@@ -1667,7 +1667,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 |---|---|
 | Maziyar Panahi, LinkedIn post, 2026-10-08 (plain text, no link: `linkedin.com/posts/maziyarpanahi_someone-just-open-sourced-a-better-jev-share-7513969858003439616-8dc6`) | Trigger for this section; self-reported 24-model/669-decision clinical leaderboard, fetched verbatim via polyfetch 2026-10-09; post and its 7 comments checked for a leaderboard link (none found) |
 | Hugging Face Spaces API, `?author=MaziyarPanahi` | Author's full Space list (12), checked 2026-10-09 for a leaderboard match (none found) |
-| [OpenAI Decisions API guide][openai-decisions-guide] | Request/response shape, status ("public beta"), pricing, use cases; fetched 2026-10-09 |
+| [OpenAI Decisions API guide][openai-decisions-guide] | Request/response shape, status ("public beta" on 2026-10-09; generally available on 2026-11-26), pricing, use cases; fetched 2026-10-09 |
 | [OpenAI Decisions API reference — `decisions.create`][openai-decisions-ref] | Worked request/response example (`model`/`input`/`questions`, `answers`/`usage`); fetched 2026-10-09 |
 | [OpenAI DevDay 2026 recap][openai-devday] | "Limited preview" status wording (differs from the guide/changelog) and the "agent's next action" use case; published 2026-10-07, fetched 2026-10-09 |
 | [OpenAI API changelog][openai-changelog] | Oct 6, 2026 "Released the Decisions API in beta" entry |

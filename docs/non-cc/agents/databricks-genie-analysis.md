@@ -3,7 +3,7 @@ title: "Databricks Genie One: Agentic Data Coworker (Genie Ontology + Genie Agen
 source: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
 purpose: Assess Databricks Genie One and its Genie Ontology semantic layer as an enterprise data-agent platform
 created: 2026-06-20
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-11-19
 status: trial
 ---
@@ -104,8 +104,9 @@ Genie conversations. A user can spin one up from a single prompt; the agent
 inherits the conversation's memory (sources, instructions, behavior) and can be
 shared with teammates to execute multi-step tasks. They evolved from Genie
 Spaces. Per the [press release][genie-press], Genie One and Genie Agents reached
-GA on 2026-06-16, while Genie Ontology entered Public Preview (2026-06-15);
-Genie App Builder and Genie ZeroOps were announced in Private Preview.
+GA on 2026-06-16; Genie App Builder and Genie ZeroOps were to enter private preview
+shortly after the Data + AI Summit. The press release gives Genie Ontology no status or date; its
+Public Preview status (from 2026-06-15) rests on the [AI/BI release notes][genie-rn] alone (checked 2026-11-26).
 
 ## Adoption Decision
 
@@ -133,7 +134,7 @@ the same data-agent-grounding problem), and [rowboat-analysis.md](rowboat-analys
 | Source | Content |
 |---|---|
 | [Genie One introduction blog][genie-blog] | Genie One / Genie Ontology / Genie Agents capabilities, authority-scoring model, internal benchmarks, 2026-06-16 announcement |
-| [Genie One launch press release][genie-press] | GA status, preview tiers, availability surfaces (Slack/Teams/iOS/Android) |
+| [Genie One launch press release][genie-press] | GA status, App Builder/ZeroOps private-preview timing, web/iOS/Android availability (Slack/Teams and the Genie MCP App come from the blog) |
 | [Genie Ontology docs][genie-ont-docs] | Modeled vs learned knowledge, snippet provenance fields, pricing note, limitations (page dated 2026-11-16, read 2026-11-19) |
 | [AI/BI release notes 2026][genie-rn] | Dated ontology rollout entries (07-02, 08-06, 08-13, 10-22), free-usage extension |
 | [talentbricks — Genie Ontology][talentbricks] | Third-party — "50+ sources", "200 snippets/Space" (unconfirmed against first-party) |

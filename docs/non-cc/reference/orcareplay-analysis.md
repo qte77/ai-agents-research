@@ -3,7 +3,7 @@ title: OrcaReplay Analysis
 source: https://github.com/Continuum-AI-Corp/OrcaReplay
 purpose: Analysis of OrcaReplay, a record/replay/fork debugger for coding-agent runs, as first-party evidence for reproducible and traceable long-running agent work.
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-11-26
 validated_links_on: 2026-09-30
 status: assess
 ---
@@ -13,7 +13,7 @@ status: assess
 OrcaReplay's own framing is "Your agent broke something at 2am. Replay it at 9am": record any
 coding-agent run, replay it deterministically offline with no model called, then fork it from any
 step onto a different model ([README][repo]). Built by the team behind [OrcaRouter][orcarouter] (a multi-provider LLM API gateway),
-under **Apache-2.0** for the code (LICENSE-badge-linked, `gh api` confirmed: 268 stars, 64 forks, pushed
+under **Apache-2.0** for the code (LICENSE-badge-linked, `gh api` confirmed: about 1.2k stars, 189 forks (checked 2026-11-26; 268 and 64 on 2026-09-30), pushed
 2026-09-29, created 2026-08-29) with a separate **CC BY 4.0** trace-format specification
 (`spec/orca-trace-v0.md`).
 
@@ -58,7 +58,7 @@ Scored 2026-09-30 against the [agent-substrate-rubric.md](../../sdlc-lcm/agent-s
 
 **Assess.** The mechanism is genuinely novel in this corpus (no existing doc covers deterministic
 agent-run replay), the license is a real Apache-2.0 with a separately-licensed open trace spec, and the
-`quickstart` path lets the claim be checked without a live model key. It is young (about a month old,
+`quickstart` path lets the claim be checked without a live model key. It is young (about three months old as of 2026-11-26,
 created 2026-08-29) and single-vendor; the "byte-for-byte" reproducibility claim rests on OrcaReplay's own demo
 rather than an independent third-party reproduction. Re-assess after broader adoption or an independent
 write-up.
@@ -73,7 +73,7 @@ write-up.
 | Source | Content |
 |---|---|
 | [Continuum-AI-Corp/OrcaReplay README][repo] | Product description, CLI commands, capture mechanism, comparison table vs. observability tools, licensing (Apache-2.0 code / CC BY 4.0 trace spec) |
-| `gh api repos/Continuum-AI-Corp/OrcaReplay`, 2026-09-30 | License, stars (268), forks (64), created/pushed dates |
+| `gh api repos/Continuum-AI-Corp/OrcaReplay`, 2026-09-30 | License, stars (about 1.2k), forks (189), checked 2026-11-26, created/pushed dates |
 
 [repo]: https://github.com/Continuum-AI-Corp/OrcaReplay
 [orcarouter]: https://www.orcarouter.ai
