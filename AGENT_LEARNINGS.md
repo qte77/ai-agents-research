@@ -48,7 +48,11 @@ description: Non-obvious patterns that prevent repeated mistakes across sprints
   - a corpus-mismatch finding counted only the docs it was given and missed a row elsewhere (a verifier agreed);
   - two absence claims were wrong because only one page was checked: Flue "has no repo" (K6), and AAIF "publishes no charter" (written in #545, then repeated by the falsifier's correction and its verifier).
   Review a correction like any other claim: check absence site-wide and corpus counts against the full corpus. Fixed in #573; the skill guardrail now says so.
-- **References**: PRs #559, #561, #568, #571–#573.
+- **Follow-up (2026-11-26)**: the plan 0016 N61 refresh (1,049 proposed corrections across 204 docs) showed two more gaps.
+  - A verifier's per-doc verdict is not a filter. Docs marked "holds" carried caveats, and docs marked "does not hold" had a sound core correction. Each claim needs its own outcome (apply, apply as amended, mark `(unverified)`, or drop), recorded in a worklist.
+  - Applying verified corrections still introduced errors. A second fact-check pass on each lane's diff found 1–6 per lane: a stale verbatim quote, qualifiers with no source, a true fact deleted, a tense stronger than the source, and lane notes ("per the pack", "not re-read by me") written into published docs. The workflow's own proposals were also wrong a few times, for example a star count and a permission count.
+  - Lane briefs now forbid process voice in docs and require repeated numbers to agree across files. Every lane diff gets the second pass before merge.
+- **References**: PRs #559, #561, #568, #571–#573; #1100–#1107 and this PR (N61).
 
 ### Pruning lanes misjudge "no code" and "no adoption" from the wrong page or repo
 
