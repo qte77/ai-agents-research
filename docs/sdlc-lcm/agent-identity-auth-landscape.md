@@ -32,7 +32,7 @@ The agent has its own identity, independent of any human.
 - **SPIFFE / SPIRE** — workload identity: SPIRE issues short-lived, auto-rotating **SVIDs** (X.509 or
   JWT) asserting "this workload, this context, this identity," independent of any OAuth session.
   Increasingly proposed as the substrate under agentic systems. [spiffe.io][spiffe].
-- **Microsoft Entra Agent ID** (GA April 2026) — an agent identity is a dedicated **service principal**
+- **Microsoft Entra Agent ID** (GA April 2026, unverified: the cited page says only that it is available to all Entra customers) — an agent identity is a dedicated **service principal** (unverified: the page speaks of blueprint-based "specialized identity constructs")
   in Entra ID (a genuine non-human identity that may also be "authorized to impersonate" a user);
   agents built in Azure AI Foundry / Copilot Studio auto-register. [learn.microsoft.com][entra].
   Foundry's current docs describe it as a specialised Entra identity type with a parent
@@ -41,8 +41,8 @@ The agent has its own identity, independent of any human.
 - **ERC-8004 "Trustless Agents"** (Draft EIP) — on-chain Identity / Reputation / Validation registries
   (ERC-721 identity handle → off-chain agent registration JSON) for cross-org agent discovery/trust
   without pre-existing trust. Contracts deployed, EIP still Draft. [eips.ethereum.org][erc8004].
-- **Agent Mesh** (`google/agentmesh`, formerly `google/sam`; Apache-2.0, 1,211★, created 2026-04-21,
-  `gh api` 2026-11-22) — a private network for agents giving each node a verifiable identity, built on
+- **Agent Mesh** (`google/agentmesh`, formerly `google/sam`; Apache-2.0, 1,469★, created 2026-04-21,
+  `gh api` 2026-11-26) — a private network for agents giving each node a verifiable identity, built on
   two stated principles: "Nothing is reachable by default" (a node exposes no services until
   configured, and policy grants are by service name rather than network address) and
   "Identity comes from your identity provider" (a node enrolls via an OIDC or bootstrap
@@ -74,7 +74,7 @@ The agent has its own identity, independent of any human.
   app-to-app connections, replacing long-lived API keys with real-time, revocable delegation + audit.
   [okta.com][xaa].
 - **Google AP2 Mandates** — AP2's core primitive is the **Mandate**, a W3C Verifiable Credential;
-  Intent → Cart → Payment Mandate chain, ECDSA/P-256-signed, cryptographically proving a purchase was
+  Intent → Cart → Payment Mandate chain, ECDSA/P-256-signed (unverified: the repo's docs/overview.md uses "Checkout Mandate" and "Payment Mandate" and does not mention these terms), cryptographically proving a purchase was
   human-authorized. A trust/authorization layer feeding [agentic payments](../non-cc/protocols/agentic-payments-landscape.md).
   [AP2 repo][ap2].
 
@@ -86,24 +86,23 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
 
 - **World ID / World (Worldcoin)** — one-time in-person **Orb** (iris) enrollment yields a reusable,
   ZK "proof of human" (no biometric template revealed on reuse); ~40M signed up; "Orb Mini" targeted
-  2026. Explicitly framed against the agent era eroding anti-bot defenses. [world.org][worldid].
+  2026 (both unverified: not on the cited page). Explicitly framed against the agent era eroding anti-bot defenses. [world.org][worldid].
 - **Humanity Protocol** — palm-vein biometric → "Proof-of-Trust"; zkProofer on-chain verification, no
-  central raw-biometric storage; Mastercard partnership. ⚠️ Per Biometric Update (Feb 2026) it has
+  central raw-biometric storage; Mastercard partnership (palm-vein and Mastercard unverified: not on the linked homepage). ⚠️ Per Biometric Update (Feb 2026) it has
   pivoted *messaging* away from "proof-of-personhood" while keeping the tech — a moving target.
   [docs.humanity.org][humanity].
 - **Cloudflare Web Bot Auth / signed agents** — built on **HTTP Message Signatures** (RFC 9421, a
   Proposed Standard, Feb 2024); the key-directory and architecture documents are IETF Internet-Drafts: an operator publishes a public key at a well-known URL
-  (e.g. `anthropic.com/.well-known/http-message-signatures-directory`); requests are signed per-origin
+  (e.g. `anthropic.com/.well-known/http-message-signatures-directory` (unverified: the cited Cloudflare post gives no path)); requests are signed per-origin
   and verified server-side — cryptographic proof of *which* bot, replacing spoofable UA/IP. AWS WAF
-  added support Nov 2025; OpenAI signs Operator requests this way. [blog.cloudflare.com][webbotauth]. Crawler-side detail and a dated vendor table: [web-scraping-extraction-landscape.md § Agent Identity and Vendor Handling](../non-cc/infrastructure/web-scraping-extraction-landscape.md#agent-identity-and-vendor-handling); publisher side: [ai-crawlers-discoverability-landscape.md](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md).
+  added support Nov 2025 (unverified: not in the cited post); OpenAI signs Operator requests this way. [blog.cloudflare.com][webbotauth]. Crawler-side detail and a dated vendor table: [web-scraping-extraction-landscape.md § Agent Identity and Vendor Handling](../non-cc/infrastructure/web-scraping-extraction-landscape.md#agent-identity-and-vendor-handling); publisher side: [ai-crawlers-discoverability-landscape.md](../non-cc/infrastructure/ai-crawlers-discoverability-landscape.md).
 - **Visa Trusted Agent Protocol (TAP)** — Visa's version of the same idea for commerce: introduced
-  2025-10-14 and "available today in the Visa Developer Center and GitHub", built on "cryptographic
-  standards (RFC9421)" so merchants can tell legitimate agents from bots
+  2025-10-14 and "available today in the Visa Developer Center and GitHub" (press release), built on "cryptographic
+  standards (RFC9421)" (per the overview page; the press release only says it builds on the HTTP Message Signature standard) so merchants can tell legitimate agents from bots
   ([announcement][visa-tap-release] · [overview][visa-tap-overview] · sample
   [visa/trusted-agent-protocol][visa-tap-repo]). Identity, not payment — the payment side is in
   [agentic-payments-landscape.md § Card networks](../non-cc/protocols/agentic-payments-landscape.md#card-networks-visa-and-mastercard).
-- **Pay-or-authenticate (pay-per-crawl)** — repurposes HTTP 402: a crawler must both **pay** and
-  **authenticate** (via Web Bot Auth) to proceed — a literal fusion of the identity and payment axes.
+- **Pay-or-authenticate (pay-per-crawl)** — repurposes HTTP 402: a crawler should identify itself with Web Bot Auth signature headers and either **pay** or receive a 402 with pricing — a literal fusion of the identity and payment axes.
   [blog.cloudflare.com][paypercrawl].
 
 ## One-time / just-in-time permissions
@@ -124,7 +123,7 @@ As agents pass CAPTCHAs, sites need a stronger signal than behavioral heuristics
   *authorize it for a human* (MCP-OAuth, XAA, AP2 Mandates). Pick the axis a given standard actually
   addresses before comparing.
 - **Personhood is now infrastructure, not research:** World ID's scale + Cloudflare's Sept-15-2026
-  default bot policy give the human-vs-agent line real commercial/legal weight.
+  default bot policy (unverified: no source cited) give the human-vs-agent line real commercial/legal weight.
 - **Identity underpins payments:** AP2 Mandates and x402 payer identities make this doc a prerequisite
   read for [../non-cc/protocols/agentic-payments-landscape.md](../non-cc/protocols/agentic-payments-landscape.md).
 - **Assess:** standards are early and fragmented (OAuth-vs-workload-identity-vs-onchain), several EIPs
@@ -146,7 +145,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [SPIFFE/SPIRE][spiffe] | Workload identity (SVIDs) |
 | [Microsoft Entra Agent ID][entra] | Agent service-principal identity (GA 2026-04) |
 | [ERC-8004][erc8004] | On-chain trustless-agent identity/reputation (Draft) |
-| [Agent Mesh][sam] (`google/agentmesh`) | P2P agent-network identity/discovery; 1,211★, Apache-2.0, `gh api` 2026-11-22 |
+| [Agent Mesh][sam] (`google/agentmesh`) | P2P agent-network identity/discovery; 1,469★, Apache-2.0, `gh api` 2026-11-26 |
 | [MCP Authorization][mcp-authz] | OAuth 2.1 resource-server model |
 | [Okta Cross-App Access][xaa] | ID-JAG delegated agent authorization |
 | [Google AP2 spec][ap2] | Mandate (W3C VC) authorization chain |
