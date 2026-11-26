@@ -2,7 +2,7 @@
 title: CC Advisor Tool Analysis
 purpose: First-party analysis of Anthropic's advisor tool — a server-executed API beta that lets an executor model consult a stronger advisor model mid-request — and its Claude Code /advisor surface.
 created: 2026-10-26
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-08
 status: assess
 ---
@@ -32,7 +32,7 @@ All of this happens inside one `/v1/messages` request, with no extra round trip 
 | `type` | string | required | Must be `"advisor_20260301"` |
 | `name` | string | required | Must be `"advisor"` |
 | `model` | string | required | Advisor model ID; billed at that model's rates |
-| `max_uses` | integer | unlimited | Per-request cap on advisor calls — "not a per-conversation cap" |
+| `max_uses` | integer | unlimited | Cap on advisor calls in a single turn (a turn can span several requests); not a conversation-level cap |
 | `max_tokens` | integer | advisor's output cap | Caps advisor output (thinking + text) per call; minimum 1024 |
 | `caching` | object \| null | off (`null`) | `{"type": "ephemeral", "ttl": "5m" \| "1h"}` — advisor-side transcript caching |
 
@@ -65,9 +65,9 @@ Claude Code exposes the API tool as `/advisor`:
 - `--advisor <model>` flag — single-session override; Claude Code "doesn't list `--advisor` in `claude --help`."
 - `advisorModel` setting — persistent default in the settings file.
 
-`/advisor` works non-interactively (`-p`), in the Agent SDK, the desktop app, and over Remote Control only on **Claude Code v2.1.260+**. Other version gates: **Fable 5.1 requires v2.1.257+**; **Sonnet 5.5 as advisor for an Opus 4.7/4.8 main model requires v2.1.287+**; **Haiku 5.5 as main model or advisor requires v2.1.293+** ([advisor-cc]).
+`/advisor` works non-interactively (`-p`), in the Agent SDK, the desktop app, and over Remote Control only on **Claude Code v2.1.260+**. Other version gates: **Fable 5.1 requires v2.1.257+**; **Sonnet 5.5 as advisor for an Opus 4.7/4.8 main model requires v2.1.287+**; **Haiku 5.5 as main model or advisor requires v2.1.293+**; **Fable 5.2 requires v2.1.321+**; on Claude Platform on AWS and Claude Models on Google Cloud (Anthropic managed) the advisor requires **v2.1.300+** ([advisor-cc], checked 2026-11-26).
 
-Setting `CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1` disables the advisor entirely: `/advisor` becomes unavailable, any configured `advisorModel` is ignored, and `--advisor` is accepted but has no effect. Claude Code turns the advisor on through a feature flag it fetches from Anthropic; a session with flag-fetching disabled (e.g. `DISABLE_TELEMETRY`) keeps the advisor off regardless of configuration. Subagents inherit the configured advisor and apply the same pairing check against their own model.
+Setting `CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1` disables the advisor entirely: `/advisor` becomes unavailable, any configured `advisorModel` is ignored, and `--advisor` is accepted but has no effect. Claude Code turns the advisor on through a feature flag it fetches from Anthropic; a session with flag-fetching disabled (e.g. `DISABLE_TELEMETRY`) keeps the advisor off regardless of configuration, unless it runs on Claude Platform on AWS or Claude Models on Google Cloud (Anthropic managed), where the advisor does not need the fetched flag ([advisor-cc], checked 2026-11-26). Subagents inherit the configured advisor and apply the same pairing check against their own model.
 
 **Caching interaction**: toggling `/advisor` mid-session does not invalidate the main model's prompt cache (unlike switching models) — the cached prefix stays intact, and the advisor's returned guidance is cached as part of the transcript on later turns. The advisor model's own read of the conversation is never cached: "each advisor call processes the full transcript anew, with no reuse between calls" ([advisor-cc]). "There is no setting to cap or force advisor calls" from Claude Code either — ask for more or fewer consultations in the prompt itself.
 
@@ -84,16 +84,16 @@ Setting `CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1` disables the advisor entirely: `/ad
 Read 2026-11-08:
 
 - **API** ([advisor-tool-api]): "The advisor tool is available in beta on the Claude API, on Claude Platform on AWS, and on Claude Models on Google Cloud (Anthropic managed)." Amazon Bedrock, Google-managed Google Cloud and Microsoft Foundry are not listed. (On 2026-10-26 the page also said "It is not currently available on Amazon Bedrock, Claude Models on Google Cloud (Google managed), or Microsoft Foundry"; that sentence has since been removed.)
-- **Claude Code** ([advisor-cc]): "It is not available on Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, or Microsoft Foundry."
+- **Claude Code** ([advisor-cc]): requires the Anthropic API, Claude Platform on AWS or Claude Models on Google Cloud (Anthropic managed), the latter two on Claude Code v2.1.300+; it is unavailable only on Amazon Bedrock, Google Cloud's Agent Platform and Microsoft Foundry (checked 2026-11-26). (Earlier reads of this page, including 2026-11-08, listed Claude Platform on AWS as unavailable.)
 
-These don't conflict. Claude Platform on AWS supports the tool at the API level, but Claude Code's provider page for it says "Client-side features that Claude Code turns on through Anthropic's feature-flag service are off by default, and the advisor tool isn't available" ([cc-cpoaws]). Direct Messages API callers on Claude Platform on AWS can use the advisor; Claude Code users there cannot. (Claude Code enables the advisor through a fetched feature flag, per [advisor-cc]; the provider page puts the two facts side by side without saying "because", so the causal link is an inference.)
+The two pages now agree: Claude Platform on AWS supports the tool at the API level and, from Claude Code v2.1.300, in Claude Code too, without the fetched feature flag that other providers need ([advisor-cc], checked 2026-11-26). The Claude Platform on AWS provider page ([cc-cpoaws]) only points to the feature-availability matrix and the feature-flag-fetching list.
 
 ## Gotchas
 
 - **Claude Managed Agents has a separate advisor config**, not the tool-definition form above: set `"advisor": {"type": "enabled", "model": ...}` in the agent's `multiagent` block; it takes no `max_uses`/`max_tokens`/`caching`, and advice arrives as session event-stream thread events rather than `advisor_tool_result` blocks. Don't conflate the two surfaces.
-- **No conversation-level cap exists anywhere in the API** — `max_uses` is per-request only; client-side counting is the one lever for a conversation-level budget.
+- **No conversation-level cap exists anywhere in the API** — `max_uses` caps calls per turn only (earlier requests in the same turn count); client-side counting is the one lever for a conversation-level budget.
 - **LLM gateways**: through `ANTHROPIC_BASE_URL`, advisor availability depends on whether the gateway forwards the request intact to the Anthropic API.
-- **Encrypted advice is silent**: on the seven newer executors that only pair with redacted-result advisors, the advice still steers the executor — it is simply unreadable, whether inspecting the API response directly or reading a Claude Code transcript with `Ctrl+O`.
+- **Encrypted advice is silent**: on the nine executors that only pair with redacted-result advisors, the advice still steers the executor — it is simply unreadable, whether inspecting the API response directly or reading a Claude Code transcript with `Ctrl+O`.
 - **Haiku 4.5 asymmetry**: it can call the advisor as an executor but is never listed as an advisor. The API table implies it through the capability floor; the Claude Code docs state it outright: "Haiku 4.5 can call the advisor but can't act as one" ([advisor-cc]). Haiku 5.5, by contrast, does act as an advisor.
 
 ## Sources
@@ -102,7 +102,7 @@ These don't conflict. Claude Platform on AWS supports the tool at the API level,
 |---|---|
 | [Advisor tool — Claude API docs][advisor-tool-api] | Tool schema, pairing table, billing/usage accounting, streaming, caching, platform availability (accessed 2026-10-26) |
 | [Fable 5.2 migration guide][fable52-migration] and [announcement][fable52-intro] | Fable 5.2 / Mythos 5.2 executor-advisor pairing rule, encrypted advice, Advisor/Orchestrator role (read 2026-11-23); the advisor page's compatibility table and result-variants section re-read the same day |
-| [Claude Code on Claude Platform on AWS][cc-cpoaws] | Advisor unavailable in Claude Code on that provider; feature-flag features off by default (accessed 2026-11-08) |
+| [Claude Code on Claude Platform on AWS][cc-cpoaws] | Provider page: features that need the fetched feature flag are off by default; it no longer says the advisor is unavailable (checked 2026-11-26) |
 | [Escalate hard decisions with the advisor tool — Claude Code docs][advisor-cc] | `/advisor` command, `advisorModel` setting, `--advisor` flag, version gates, disable env var, cache interaction (accessed 2026-10-26) |
 
 Cross-ref: [CC-tools-inventory.md](CC-tools-inventory.md), [CC-cli-reference.md](CC-cli-reference.md), [CC-env-vars-reference.md](CC-env-vars-reference.md), [CC-model-provider-configuration.md](CC-model-provider-configuration.md) (opusplan/subagent comparison), [CC-community-reimplementations-landscape.md](../../cc-community/CC-community-reimplementations-landscape.md) (leaked `advisor-tool` beta header)

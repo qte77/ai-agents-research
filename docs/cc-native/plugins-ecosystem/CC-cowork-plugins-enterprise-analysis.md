@@ -3,12 +3,12 @@ title: CC Cowork, Plugins & Enterprise Analysis
 source: https://claude.com/blog/cowork-plugins-across-enterprise
 purpose: Analysis of Claude's Cowork enterprise platform, plugin architecture, and connector ecosystem for potential relevance to projects using Claude Code.
 created: 2026-03-07
-updated: 2026-11-12
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: hold
 ---
 
-**Details:** Generally available. Standard feature across paid plans (Cowork); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout
+**Details:** Rolling out across paid plans (not labelled generally available; checked 2026-11-26); "computer use" screen-interaction capability remains research preview (Cowork and Claude Code); Plugin architecture in active rollout
 
 > **Disambiguation.** This doc covers Anthropic's own **Cowork**. **Microsoft Copilot Cowork** is a
 > different, Microsoft-branded product that Microsoft says it "integrated the technology behind
@@ -19,11 +19,11 @@ status: hold
 
 ## What Cowork & Plugins Are
 
-**Cowork** is Claude's agentic application for knowledge work — available via web, desktop (macOS, Windows x64/arm64, Linux, ChromeOS), and mobile (web/mobile in beta), where users give Claude access to local files and tools, set a task, and step away ([source][cowork-product]). Operates with more agency than Claude Chat: users describe outcomes and cadence, Claude takes action and reports progress ([source][cowork-product]). Available on all paid plans (Pro, Max, Team, Enterprise); agent safety is still in development ([source][cowork-product]).
+**Cowork** is Claude's agentic application for knowledge work — available via web, desktop and mobile (Windows arm64, ChromeOS and a mobile beta are unverified), where users give Claude access to local files and tools, set a task, and step away ([source][cowork-product]). Operates with more agency than Claude Chat: users describe outcomes and cadence, Claude takes action and reports progress ([source][cowork-product]). Available on Pro, Max, Ultra, Team and Enterprise plans, rolling out to Pro, Max and Ultra with more plans to follow; per the page, Claude is designed to work only within what you choose, deleting anything needs approval, and plan-approval permissions can be enabled ([source][cowork-product]).
 
-**Dispatch** enables one continuous conversation with Claude across phone and desktop — start a Cowork task from mobile, continue on desktop, or vice versa. Bridges the gap between mobile Claude app and desktop Cowork for non-coding tasks.
+**Dispatch** enables one continuous conversation with Claude across phone and desktop — start a Cowork task from mobile, continue on desktop, or vice versa. Bridges the gap between mobile Claude app and desktop Cowork for non-coding tasks. As of 2026-11-26 it is in limited beta on some Pro, Max and Ultra plans, not available to new users (existing users keep it), and needs the desktop app (macOS, Windows x64, Linux) plus the mobile app ([support article](https://support.claude.com/en/articles/13947068-assign-tasks-to-claude-from-anywhere-in-cowork)).
 
-**Plugins** are portable file-system bundles that transform into specialized agents, deployable across Cowork and anything built on the Claude Agent SDK ([source][sdk-plugins]).
+**Plugins** are portable file-system bundles that transform into specialized agents, deployable across Cowork ([source][cowork-blog]) and Claude Agent SDK applications, which load local plugins ([source][sdk-plugins]).
 
 ### Core Components
 
@@ -31,7 +31,7 @@ status: hold
 
 - Plugins are "simple, portable file systems that you own" ([source][cowork-blog])
 - Transform into specialized agents for distinct job functions ([source][sdk-plugins])
-- Cross-platform: work in Cowork and Claude Agent SDK applications ([source][sdk-plugins])
+- Cross-platform: work in Cowork ([source][cowork-blog]) and Claude Agent SDK applications (the SDK page documents local plugins only and does not mention Cowork) ([source][sdk-plugins])
 - Slash commands launch structured forms for workflow execution ([source][cowork-blog])
 - Private GitHub repos as plugin sources (beta) ([source][cowork-blog])
 - Organization-specific marketplaces for plugin distribution ([source][cowork-blog])
@@ -68,7 +68,7 @@ Claude coordinates tasks across Excel and PowerPoint — running analyses in one
 ### Availability
 
 - UX updates: All Cowork users
-- Admin controls (branding, provisioning, connectors): Team and Enterprise
+- Admin controls (branding, provisioning, MCP controls): Team and Enterprise
 - Excel/PowerPoint cross-app: Research preview, paid plans, Mac and Windows ([source][cowork-blog])
 
 ## Applicability
@@ -109,7 +109,7 @@ If the framework or tooling becomes a team-wide tool:
 
 Anthropic's reference collection of production-ready financial services agents and plugins. Distinct from the generic pre-built templates in the Cowork plugin templates above — this is a standalone repo with agent cookbooks, vertical plugins, and Model Context Protocol (MCP) data connectors.
 
-**10 named agents** (in `managed-agent-cookbooks/`):
+**10 named agents** (as Cowork plugins in `plugins/agent-plugins/<slug>` and as Managed Agent templates in `managed-agent-cookbooks/`; checked 2026-11-26):
 
 | Category | Agents |
 |----------|--------|
@@ -118,7 +118,7 @@ Anthropic's reference collection of production-ready financial services agents a
 | Fund Admin & Finance Ops | Valuation Reviewer, GL Reconciler, Month-End Closer, Statement Auditor |
 | Operations & Onboarding | KYC Screener |
 
-**7 vertical plugins** (in `plugins/vertical-plugins/`): financial-analysis (core), investment-banking, equity-research, private-equity, wealth-management, fund-admin, operations.
+**6 vertical plugins** (in `plugins/vertical-plugins/`, checked 2026-11-26): financial-analysis (core), investment-banking, equity-research, private-equity, fund-admin, operations. The earlier wealth-management directory is gone.
 **2 partner-built plugins** (in `plugins/partner-built/`): LSEG, S&P Global.
 
 **12 MCP data connectors**: Daloopa, Morningstar, S&P Global, FactSet, Moody's, MT Newswires, Aiera, LSEG, PitchBook, Chronograph, Egnyte, Box.

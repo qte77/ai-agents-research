@@ -4,7 +4,7 @@ purpose: Survey of community developer tools that integrate with Claude Code (co
 status: research
 platform_scope: [claude-code, cursor, codex, gemini-cli, opencode, windsurf, zed, antigravity]
 created: 2026-03-13
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 ---
 
@@ -42,13 +42,13 @@ A layered approach to keeping context in Claude's ~75k-token "smart zone" via de
 
 | Layer | Mechanism | Tool / Pattern | Evidence (who measured, when) | Known limitation |
 |---|---|---|---|---|
-| **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` (or `"includeGitInstructions": false` in settings) strips the built-in commit/PR instructions and the git status snapshot from context (CC v2.1.69+) | Shell env / `.env` / settings | not measured | The docs state no headless-only scope, so it applies to interactive sessions too (our reading of the [settings reference][cc-settings-ref-git], checked 2026-11-19); cloud sessions never include the snapshot anyway. No source sizes the saving; you lose the built-in git guidance |
+| **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` (or `"includeGitInstructions": false` in settings) strips the built-in commit/PR instructions and the git status snapshot from context (CC v2.1.69+, unverified) | Shell env / `.env` / settings | not measured | The docs state no headless-only scope, so it applies to interactive sessions too (our reading of the [settings reference][cc-settings-ref-git], checked 2026-11-19); cloud sessions never include the snapshot anyway. No source sizes the saving; you lose the built-in git guidance |
 | **2 — Native hook filters (DIY)** | `run_silent()` PostToolUse bash wrapper: captures stdout to a temp file, emits `✓ <desc>` on exit 0, surfaces full output only on non-zero exit; pair with failFast flags (`pytest -x`, `jest --bail`, `go test -failfast`) to halt at first failure | CC PostToolUse hook | not measured (pattern from [hlyr-backpressure][hlyr-backpressure], 2025-12-09) | Must be written per project; no packaging or reuse mechanism built in |
 | **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); a third-party benchmark measured zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | third-party: this repo owner's run, not RTK's authors: [rtk-839][rtk-839], 2026-03-26 (v0.33.1), see [Independent Benchmark](#independent-benchmark-2026-03-26-v0331) | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
 | **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity (caveman 4.x also ships a separate input-shrinking proxy, see its entry) | See [CC-community-skills-landscape.md][skills-landscape] | independent: JetBrains, July 2026 — 8.5% fewer output tokens with caveman forced on (a ceiling, p = 0.82 on quality; [details][skills-caveman]) | Output-side only; does not reduce tool or shell output |
 | **5 — Context/prompt compression (library)** | Prune low-information tokens from the prompt before the model call — [LLMLingua][llmlingua] (perplexity-based; LLMLingua-2 is task-agnostic and 3–6× faster). *Adjacent mechanism:* [semantic-router][semantic-router] skips the LLM call entirely for recognized intents (routing, not compression) | [LLMLingua][llmlingua] · [semantic-router][semantic-router] | vendor claim, README "up to 20x" (LLMLingua, read 2026-11-22); not measured on a CC workload | General-purpose libraries, **not CC-native** — wire in upstream via a model gateway/proxy or PreToolUse hook |
 | **6 — Cross-session learned control** | Learns per repository which tools go unused, which facts the agent keeps rediscovering and when a turn loops, then prunes tools, injects facts or redirects | [TokenEconomizer](#tokeneconomizer-microsoft) | author-run, [paper][tokeneconomizer-paper] (read 2026-11-09), not independently replicated | Early (v0.1.0); savings figures are the authors' own; tool pruning edits `.claude/settings.local.json` |
-| **7 — Tool-output sandbox** | Keeps raw tool output out of the context: a hook sends large reads, fetches and shell results to a local sandbox and index, and only a short result or search hit reaches the model | [context-mode][context-mode] (34.4K stars, Elastic License 2.0 — source-available, not open source; `gh api` 2026-11-22) | author-run, bench 2026-11-01 on a 2.0.0 pre-release build: 99.4% median reduction in output *bytes* over 36 rows with 10 KB or more of raw output (bytes, not tokens or session cost) | Savings are per tool call, not per session; the licence bars offering it as a hosted service; needs Node 24.15+ |
+| **7 — Tool-output sandbox** | Keeps raw tool output out of the context: a hook sends large reads, fetches and shell results to a local sandbox and index, and only a short result or search hit reaches the model | [context-mode][context-mode] (34.5K stars, Elastic License 2.0 — source-available, not open source; `gh api` checked 2026-11-26) | author-run, bench 2026-11-01 on a 2.0.0 pre-release build: 99.4% median reduction in output *bytes* over 36 rows with 10 KB or more of raw output (bytes, not tokens or session cost) | Savings are per tool call, not per session; the licence bars offering it as a hosted service; needs Node 24.15+ |
 | **8 — Compression proxy** | A local proxy compresses what the agent sends to the model (repeated JSON, logs, search results); `headroom wrap claude` routes Claude Code through it | [Headroom][headroom] (80.4K stars, Apache-2.0; `gh api` 2026-11-22) | author-run, seeded benchmark (seed 20260902; README read 2026-11-22): 21–57% fewer input tokens on four agent scenarios, 90%+ on repeated JSON/log lines, little on prose | Sits between agent and provider (a proxy, not a hook); savings scale with repetitive payloads; the README labels output-token savings an estimate |
 
 Layer 1 cross-ref: [CC-changelog-feature-scan.md](../cc-native/configuration/CC-changelog-feature-scan.md) — env var inventory.
@@ -66,17 +66,17 @@ GSD (Get Shit Done, a meta-prompting and spec-driven development system for Clau
 
 ## everything-claude-code
 
-**Repo**: [affaan-m/everything-claude-code][ecc] | **Stars**: 50K+ | **License**: MIT
+**Repo**: [affaan-m/ECC][ecc] (renamed from `everything-claude-code`; plugin slug `ecc@ecc`) | **Stars**: 311K (checked 2026-11-26) | **License**: MIT
 
-Comprehensive agent, skill, and workflow framework for Claude Code. Won the Anthropic Build with Claude hackathon (June 2025).
+Comprehensive agent, skill, and workflow framework for Claude Code. Won the Anthropic Build with Claude hackathon (June 2025) (unverified: no first-party source found; the README mentions a different hackathon).
 
 ### What It Provides
 
 | Category | Count | Examples |
 |----------|-------|---------|
-| **Agents** | 36 | Code reviewer, debugger, data scientist, security auditor, DevOps, PM |
-| **Skills** | 156 | Code generation, testing, documentation, refactoring, deployment |
-| **Command shims** | 72 | Pre-built slash commands wrapping common workflows |
+| **Agents** | 72 | Code reviewer, debugger, data scientist, security auditor, DevOps, PM |
+| **Skills** | 328 | Code generation, testing, documentation, refactoring, deployment |
+| **Command shims** | 99 (legacy) | Pre-built slash commands wrapping common workflows |
 | **Hooks** | Architecture | PreToolUse/PostToolUse pipeline for quality gates and automation |
 
 ### Architecture
@@ -88,14 +88,14 @@ Layered system: skills compose into agents, agents are dispatched by command shi
 **Strengths**:
 
 - Broadest single-package coverage of CC extensibility (agents + skills + hooks + shims)
-- Active community (50K+ stars, hackathon-validated)
+- Active community (311K stars as of 2026-11-26; hackathon win unverified)
 - MIT licensed, installable as plugin
 
 **Risks**:
 
 - Large surface area — may conflict with project-specific skills or hooks
 - Shim commands may shadow custom slash commands
-- Quality varies across 156 skills — not all independently validated
+- Quality varies across 328 skills — not all independently validated
 
 Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) (§ Superpowers) — the closest peer at equivalent scale (~135K★), methodology-first vs. this collection's framework-first packaging.
 
@@ -113,7 +113,7 @@ A hook plugin from UC Berkeley, Microsoft Research and Microsoft Security that l
 | **Tool pruning** | A tool unused over *p* = 10 prompts across at least *m* = 2 sessions, or over *s* = 5 sessions, is left out through the agent's own settings (on Claude Code: single tools, written to `.claude/settings.local.json`) | On |
 | **Loop guard** | When a turn keeps hitting the same failures, a judge model at confidence ≥ 0.7 adds at most one redirect note; the README says "it never stops a turn itself" | On |
 
-- **Claude Code integration**: plugin hooks for SessionStart, UserPromptSubmit, PostToolUse, PostToolUseFailure, Stop and SessionEnd (`plugin/hooks/hooks.json`). Installed from a local clone with `claude plugin marketplace add "$PWD/TokenEconomizer"`, then `claude plugin install tokeneconomizer@tokeneconomizer`. Supported Claude Code versions are 2.1.300 to 2.1.310; older ones are "not supported".
+- **Claude Code integration**: plugin hooks for SessionStart, UserPromptSubmit, PostToolUse, PostToolUseFailure, Stop and SessionEnd (`plugin/hooks/hooks.json`). Installed from a local clone with `claude plugin marketplace add "$PWD/TokenEconomizer"`, then `claude plugin install tokeneconomizer@tokeneconomizer`. Supported Claude Code versions are 2.1.300 to 2.1.329 (README table, checked 2026-11-26); older ones are "not supported".
 - **Other agents**: Codex, GitHub Copilot CLI and Pi are supported; opencode, Cursor Agent, Grok Build, Hermes Agent and Antigravity CLI are experimental. Tool pruning writes to each agent's own settings, so it removes single tools on Claude Code but whole Model Context Protocol (MCP) servers on Copilot CLI.
 - **Costs and data**: its own model calls (proposer, judge, redirect) run through the user's agent on the same plan, need no separate API key, and are counted in its reports. What it learns stays in `~/.tokeneconomizer`.
 - **Reported results** (by the authors, not independently replicated): on SWE-Bench tasks, "18.4–30.9% lower mean cost" across five agent–model combinations, cheaper in all 30 repository × combination cells, and Pass@1 up in 4 of 5.
@@ -126,16 +126,16 @@ Cross-ref: [CC-usage-tooling-landscape.md](CC-usage-tooling-landscape.md) (measu
 
 ## CC Switch (farion1231)
 
-**Repo**: [farion1231/cc-switch][cc-switch] | **Stars**: 38.9K | **License**: TBD | **Commits**: 1,376
+**Repo**: [farion1231/cc-switch][cc-switch] | **Stars**: 157.4K (checked 2026-11-26) | **License**: MIT | **Version**: v4.0.43 (2026-11-26) | **Commits**: ~3,977 (checked 2026-11-26)
 
-Cross-platform desktop app managing 5 AI CLI tools: Claude Code, Codex, Gemini CLI, OpenCode, and OpenClaw. Consolidates provider management, eliminating manual config file editing.
+Cross-platform desktop app managing 12 tools per its README ("One App, Twelve Tools", checked 2026-11-26): Claude Code, Claude Desktop, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw, Hermes, Pi, MiniMax Code, Kimi Code and Oh My Pi. Consolidates provider management, eliminating manual config file editing.
 
 ### Features
 
 | Feature | Description |
 |---------|-------------|
-| **Provider switching** | One-click switching between 50+ built-in API provider presets, no config file editing |
-| **MCP/Prompts/Skills** | Unified management across all 5 tools with bidirectional sync |
+| **Provider switching** | One-click switching between 90+ built-in API provider presets, no config file editing |
+| **MCP/Prompts/Skills** | Unified management across the supported tools with bidirectional sync |
 | **System tray** | Quick-access provider switching without opening the app |
 | **Cloud sync** | Dropbox, OneDrive, iCloud, WebDAV support |
 | **Usage tracking** | Cost monitoring and request logging across tools |
@@ -156,7 +156,7 @@ Cross-ref: [CC-model-provider-configuration.md](../cc-native/configuration/CC-mo
 
 ## abide (coldteadotai)
 
-**Repo**: [coldteadotai/abide][abide] | **Stars**: 457 | **License**: MIT (confirmed against
+**Repo**: [coldteadotai/abide][abide] | **Stars**: 633 (checked 2026-11-26) | **License**: MIT (confirmed against
 `LICENSE`) | **Version**: latest tag v0.0.4, no GitHub Release (pushed 2026-09-29, `gh api` 2026-09-30)
 
 Hooks into Claude Code, Codex, and OpenCode to catch AGENTS.md/CLAUDE.md rules that no linter can
@@ -227,7 +227,7 @@ Cross-ref: [agents-md-cookbook-analysis.md § Field-Study Evidence](../non-cc/pr
 
 ## cc-sessions (GWUDCAP)
 
-**Repo**: [GWUDCAP/cc-sessions][cc-sessions] | **Stars**: 1,550 | **License**: MIT | **Version**: v0.3.6 (2025-10-17; README banner stale at "v0.3.0")
+**Repo**: [GWUDCAP/cc-sessions][cc-sessions] | **Stars**: 1,536 (checked 2026-11-26) | **License**: MIT | **Version**: v0.3.6 (2025-10-17; README banner stale at "v0.3.0")
 
 Opinionated session/workflow manager that gates Edit/Write/MultiEdit behind a **Discussion-Alignment-Implementation-Check (DAIC)** protocol, binds task files to git branches, and delegates heavy work to 5 specialized subagents.
 
@@ -240,7 +240,7 @@ Opinionated session/workflow manager that gates Edit/Write/MultiEdit behind a **
 
 ### Adoption Considerations
 
-- Highest adoption in this batch (1,550 stars) but **no main-branch commits or releases since 2025-10-17** (~9 months as of 2026-07-23) — maintenance status unclear
+- Highest adoption in this batch (1,536 stars, checked 2026-11-26) but **no main-branch commits or releases since 2025-10-17** (latest commit on `main` 2025-10-17, checked 2026-11-26; the repo's `pushed_at` is 2025-12-17, from another branch) — maintenance status unclear
 - DAIC overlaps CC's native plan mode conceptually; the differentiator is *enforcement* (hard tool-gating + branch discipline) vs. guidance
 - Same opinionated-workflow niche as GSD (above) — see Comparison
 
@@ -250,7 +250,7 @@ Cross-ref: [CC-hooks-system-analysis.md](../cc-native/configuration/CC-hooks-sys
 
 ## TeamAI-CLI (Tencent)
 
-**Repo**: [Tencent/teamai-cli][teamai-cli] | **Stars**: 4,981 | **License**: MIT (Tencent-preambled `LICENSE`; GitHub's detector reports "Other" because of the added copyright header, but the license body is the standard MIT text) | **Version**: v0.25.0 (2026-09-22)
+**Repo**: [Tencent/teamai-cli][teamai-cli] | **Stars**: 5,942 (checked 2026-11-26) | **License**: MIT (Tencent-preambled `LICENSE`; GitHub's detector reports "Other" because of the added copyright header, but the license body is the standard MIT text) | **Version**: v0.30.0 (2026-11-11)
 
 Git-backed shared foundation for a team's AI assets — skills, rules, MCP servers, hooks, docs, and agent config — kept in sync across every teammate's machine and across 15+ agent harnesses (Claude Code, Codex, Cursor, GitHub Copilot CLI, CodeBuddy, WorkBuddy, OpenCode, Pi Coding Agent, OpenClaw, Hermes, DeepSeek Harness, Qoder, Kiro, ZCode, Oh My Pi, and others).
 
@@ -263,7 +263,7 @@ Git-backed shared foundation for a team's AI assets — skills, rules, MCP serve
 
 ### Adoption Considerations
 
-**Strengths**: broadest harness coverage in this doc (15+ named CLIs); git-native sync needs no separate server; MIT-licensed with active CI and a fast release cadence (v0.25.0 as of 2026-09-22).
+**Strengths**: broadest harness coverage in this doc (15+ named CLIs); git-native sync needs no separate server; MIT-licensed with active CI and a fast release cadence (v0.30.0 as of 2026-11-11).
 
 **Risks**: centralizing skills/rules/MCP config in one shared repo makes that repo a single point of failure and drift for the whole team; no independent review of what "learnings" or "codebase graph" capture or retain.
 
@@ -279,7 +279,7 @@ Moved to [agent-frameworks-infrastructure-landscape.md § Agent session runtimes
 
 ## human-review (petergyang)
 
-**Repo**: [petergyang/human-review][human-review] | **Stars**: 1,302 | **License**: MIT (confirmed
+**Repo**: [petergyang/human-review][human-review] | **Stars**: 1,466 (checked 2026-11-26) | **License**: MIT (confirmed
 against `LICENSE`; the README's own "## License" section also states MIT) | **Version**: v0.8.2
 (`gh api` 2026-09-30), pushed 2026-09-17
 
@@ -334,9 +334,9 @@ Cross-ref: [CC-memory-system-analysis.md § Three-Phase Workflow with Human-Revi
 
 ## Plannotator (backnotprop)
 
-**Repo**: [backnotprop/plannotator][plannotator] | **Stars**: 10,062 | **License**: MIT or Apache-2.0
+**Repo**: [backnotprop/plannotator][plannotator] | **Stars**: 15.2K (checked 2026-11-26) | **License**: MIT or Apache-2.0
 at your option (`LICENSE-MIT` + `LICENSE-APACHE`; the README says "Dual-licensed under Apache 2.0
-or MIT at your option"; GitHub's API shows only Apache-2.0) | **Version**: v0.28.61 (2026-11-10),
+or MIT at your option"; GitHub's API shows only Apache-2.0) | **Version**: v0.29.5 (2026-11-26),
 created 2025-12-28 (`gh api` 2026-11-11)
 
 A "local, browser-based review surface for AI coding agents" (README). When the agent finishes a
@@ -387,7 +387,7 @@ default with no telemetry; widely adopted (10k stars, against human-review's 1.3
 
 **Risks**: the non-blocking flow depends on a recent Claude Code version and on hooks modules,
 and was not tested here; team sharing is moving to a hosted product with no published terms; a
-fast release cadence (v0.28.61 within eleven months) means behaviour can shift between installs.
+fast release cadence (v0.29.5 as of 2026-11-26, same fast cadence) means behaviour can shift between installs.
 
 Not rubric-scored yet.
 
@@ -441,16 +441,16 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 
 | Tool | Layer | CC Integration | Approach | Maturity |
 |---|---|---|---|---|
-| **RTK** | Tool output compression | Hooks (transparent rewrite) | Reduce input noise | Stable (v0.33.1) |
+| **RTK** | Tool output compression | Hooks (transparent rewrite) | Reduce input noise | Stable (v1.2.1, 2026-11-19; the benchmark above predates it and measured v0.33.1) |
 | **GSD** | Meta-prompting + orchestration | Hooks + slash commands | Structured workflows, subagents | Archived; continues as GSD Core (`gh api` 2026-11-21) |
-| **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (50K+ stars) |
+| **everything-claude-code** | Agent/skill framework | Plugin (drop-in) | Bundled agents, skills, shims | Active (311K stars, checked 2026-11-26) |
 | **TokenEconomizer** | Cross-session cost control | Plugin hooks (6 events) + `settings.local.json` | Micro-skills, tool pruning, loop guard learned per repository | Early (v0.1.0, Apache-2.0) |
 | **ByteRover** | Persistent memory | MCP server | Hierarchical context trees, cloud sync | Archived (4,943 stars, `gh api` 2026-11-21) |
-| **Claude-Mem** | Persistent memory + compression (cross-agent) | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (115.2K stars, v15.13.0) |
-| **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 5 AI CLIs | Active (38.9K stars, 1,376 commits) |
-| **abide** | AGENTS.md rule enforcement | Hooks (Claude Code, Codex, OpenCode) | Per-edit/turn Jev decision-model question per rule, agent self-repairs | Early (457 stars, v0.0.4) |
-| **cc-sessions** | Session/workflow enforcement | Hooks + subagents + trigger phrases | DAIC tool-gating, task↔branch binding | Adopted but dormant (1,550 stars, v0.3.6, no commits since 2025-10) |
-| **TeamAI-CLI** | Team-shared AI config | Skill + CLI (git-backed shared repo) | Sync skills/rules/MCP/hooks across 15+ harnesses | Active (4,981 stars, v0.25.0) |
+| **Claude-Mem** | Persistent memory + compression (cross-agent) | Hooks + MCP + plugin | AI-compressed observations, progressive search | Active (119.9K stars, v17.0.0, 2026-11-26) |
+| **CC Switch** | Multi-CLI provider management | Desktop app (GUI) | Unified config across 12 tools | Active (157.4K stars, ~3,977 commits, checked 2026-11-26) |
+| **abide** | AGENTS.md rule enforcement | Hooks (Claude Code, Codex, OpenCode) | Per-edit/turn Jev decision-model question per rule, agent self-repairs | Early (633 stars, v0.0.4) |
+| **cc-sessions** | Session/workflow enforcement | Hooks + subagents + trigger phrases | DAIC tool-gating, task↔branch binding | Adopted but dormant (1,536 stars, v0.3.6, no commits since 2025-10) |
+| **TeamAI-CLI** | Team-shared AI config | Skill + CLI (git-backed shared repo) | Sync skills/rules/MCP/hooks across 15+ harnesses | Active (5,942 stars, v0.30.0) |
 | **Graphify** | Code→knowledge graph | Hooks + slash commands + MCP + CLAUDE.md | Semantic knowledge graphs from repos | Active (16.5K stars) |
 | **MemPalace** | Persistent memory | MCP server + plugin marketplace | Verbatim palace-metaphor memory | Active (33.6K stars, v3.0.0) |
 | **MemSearch** | Persistent memory (cross-agent) | Plugin (hooks + skill, no MCP) | Markdown source-of-truth + Milvus hybrid search | Active (~2K stars, v0.4.7) |
@@ -458,13 +458,13 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **codebase-memory-mcp** | Code→graph + LSP + embeddings | MCP (14 tools) + PreToolUse hook + auto-config | Single-binary knowledge graph | Active (~19K stars, v0.8.1) |
 | **Serena** | Semantic code (live LSP) | MCP server (20+ tools) | Symbol-level retrieve/edit/refactor | Active (25.2K stars, v1.5.3) |
 | **ast-grep MCP** | Structural search/rewrite | MCP server (4 tools) | tree-sitter AST patterns | Experimental (419 stars, no release) |
-| **Repomix** | Repo→single-file context export | MCP server + official CC plugins | tree-sitter compression + token counts | Stable (26.2K stars, v1.14.1) |
+| **Repomix** | Repo→single-file context export | MCP server + official CC plugins | tree-sitter compression + token counts | Stable (29.4K stars, v1.19.0, checked 2026-11-26) |
 | **code2prompt** | Repo→single-prompt context export | MCP server + CLI | Templated export + token counts | Stable (7.4K stars, v4.2.0) |
 | **CodeBurn** | Token-usage observability (cross-agent) | CLI (reads on-disk session data) | Cross-agent dashboard, 13 task categories, optimize/compare | Active (4K stars) |
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
 | **Claude-Code-Usage-Monitor** | Predictive usage monitoring | Real-time TUI | P90-based limit prediction, burn-rate analytics, plan-aware | Active (7.8K stars, v3.1.0) |
-| **human-review** | Visual review + feedback relay | Skill (any agent with skill support) | Google-Doc-style comments/edits batched to the waiting agent | Active (1,302 stars, v0.8.2) |
-| **Plannotator** | Plan/diff review + feedback relay | Plugin: `PermissionRequest` hook on `ExitPlanMode` + hooks module | Browser annotation, approve/deny with structured feedback; plan diffs between rounds | Active (10,062 stars, v0.28.61) |
+| **human-review** | Visual review + feedback relay | Skill (any agent with skill support) | Google-Doc-style comments/edits batched to the waiting agent | Active (1,466 stars, v0.8.2) |
+| **Plannotator** | Plan/diff review + feedback relay | Plugin: `PermissionRequest` hook on `ExitPlanMode` + hooks module | Browser annotation, approve/deny with structured feedback; plan diffs between rounds | Active (15.2K stars, v0.29.5) |
 
 All twenty-four address different layers of the agent stack — complementary, not competing. The five code-analysis tools (graphify, Code-Review-Graph, codebase-memory-mcp, Serena, ast-grep MCP) split along precompute-a-graph vs. live-LSP vs. on-demand-structural-search; the two repo packers (Repomix, code2prompt) are one-shot context export rather than a live server. Full per-tool entries for the memory, code-analysis, and usage-observability rows are in the topic docs linked above.
 
@@ -492,23 +492,23 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [RTK repository][rtk-repo] | CLI proxy, hook integration, benchmarks |
 | [rtk-ai/rtk#839][rtk-839] | Independent benchmark findings |
 | [GSD repository][gsd-repo] · [GSD Core][gsd-core] | Meta-prompting + context engineering framework; archived, README points to GSD Core (`gh api` 2026-11-21) |
-| [everything-claude-code][ecc] | Agent/skill/hook framework (50K+ stars) |
-| [context-mode][context-mode] | Tool-output sandbox plugin: README, LICENSE (Elastic License 2.0), v2.2.1 release (`gh api` 2026-11-22) |
+| [everything-claude-code][ecc] | Agent/skill/hook framework (311K stars, checked 2026-11-26) |
+| [context-mode][context-mode] | Tool-output sandbox plugin: README, LICENSE (Elastic License 2.0), v2.2.4 release (`gh api` checked 2026-11-26) |
 | [Headroom][headroom] | Compression proxy: README benchmark table, Apache-2.0 LICENSE, v0.45.0 release (`gh api` 2026-11-22) |
 | [TokenEconomizer][tokeneconomizer] · [paper][tokeneconomizer-paper] | Cross-session cost control plugin: README, `plugin/hooks/hooks.json`, v0.1.0 release (Apache-2.0; read 2026-11-09) |
 | [ByteRover CLI][byterover] | Portable memory layer for coding agents (MCP, context trees) |
 | [ByteRover paper][byterover-paper] | arXiv:2604.01599 — agent-native memory via hierarchical context |
-| [Claude-Mem][claude-mem] | Persistent memory compression system, cross-agent (115.2K stars, v15.13.0; `gh api` 2026-11-09) |
-| [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (38.9K stars) |
-| [abide][abide] | AGENTS.md rule enforcement via a Jev decision-model question per rule, per edit/turn, across Claude Code/Codex/OpenCode (457 stars, MIT) |
+| [Claude-Mem][claude-mem] | Persistent memory compression system, cross-agent (119.9K stars, v17.0.0; `gh api` checked 2026-11-26) |
+| [CC Switch][cc-switch] | Cross-platform multi-CLI provider management (157.4K stars, checked 2026-11-26) |
+| [abide][abide] | AGENTS.md rule enforcement via a Jev decision-model question per rule, per edit/turn, across Claude Code/Codex/OpenCode (633 stars, MIT; checked 2026-11-26) |
 | [SWE Refactor Bench (arXiv:2608.23564)][swe-refactor-bench] | 520 agent migrations, 3-stage verification, "Blindness" failure mode (abstract fetched 2026-09-30) |
 | GAO-25-107795 (`gao.gov/products/gao-25-107795`) | Federal legacy-system age (23–60 yrs) and 2019-modernization completion status (fetched 2026-09-30) |
 | [FreshBrew (arXiv:2510.04852)][freshbrew] | Java-to-JDK-17 agent migration benchmark, 228 repositories (abstract fetched 2026-09-30) |
 | André Lindenberg — *Complete and Correct* (LinkedIn, 2026-09-26; `linkedin.com/pulse/complete-correct-andré-lindenberg-wukfe`) | Design lens: recovered business rules as the unit a migration rubric should check (LinkedIn — not link-checked) |
-| [cc-sessions][cc-sessions] | DAIC session/workflow enforcement, npm+PyPI dual-packaged (1,550 stars, MIT, v0.3.6) |
-| [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (4,981 stars, MIT, v0.25.0) |
-| [human-review][human-review] | Visual HTML/Markdown review — comments and edits batched to the waiting agent (1,302 stars, MIT, v0.8.2) |
-| [Plannotator repository][plannotator] | README (integrations, privacy, sharing), `hooks.json`, `LICENSE-MIT`/`LICENSE-APACHE`, v0.28.61 release; `gh api` 2026-11-11 |
+| [cc-sessions][cc-sessions] | DAIC session/workflow enforcement, npm+PyPI dual-packaged (1,536 stars, MIT, v0.3.6) |
+| [TeamAI-CLI][teamai-cli] | Git-backed shared AI config (skills/rules/MCP/hooks) across 15+ agent harnesses (5,942 stars, MIT, v0.30.0; checked 2026-11-26) |
+| [human-review][human-review] | Visual HTML/Markdown review — comments and edits batched to the waiting agent (1,466 stars, MIT, v0.8.2) |
+| [Plannotator repository][plannotator] | README (integrations, privacy, sharing), `hooks.json`, `LICENSE-MIT`/`LICENSE-APACHE`, v0.29.5 release; `gh api` checked 2026-11-26 |
 | [Graphify][graphify] | Code→knowledge graph via slash commands, hooks, MCP (16.5K stars) |
 | [MemPalace][mempalace] | Local-first AI memory with palace metaphor, 96.6% LongMemEval (33.6K stars) |
 | [MemSearch][memsearch] | Markdown + Milvus persistent memory for CC/OpenCode/Codex, hooks+skill (no MCP), hybrid vector+BM25 (~2K stars, MIT) |
@@ -516,7 +516,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [codebase-memory-mcp][codebase-memory-mcp] | Single-binary code knowledge graph: 159 tree-sitter grammars + hybrid LSP + embeddings, 14 MCP tools (3.2K stars, MIT) |
 | [Serena][serena] | LSP-based semantic coding MCP toolkit, 20+ symbol-level tools, 40+ languages (25.2K stars, MIT) |
 | [ast-grep MCP][ast-grep-mcp] | MCP wrapper for ast-grep structural AST search/rewrite, 4 tools (419 stars, MIT) |
-| [Repomix][repomix] | Repo→single-file packer, tree-sitter `--compress`, MCP server + CC plugins (26.2K stars, MIT) |
+| [Repomix][repomix] | Repo→single-file packer, tree-sitter `--compress`, MCP server + CC plugins (29.4K stars, MIT; checked 2026-11-26) |
 | [code2prompt][code2prompt] | Repo→single-prompt CLI with token counting, MCP server + Python SDK (7.4K stars, MIT) |
 | [CodeBurn][codeburn] | Cross-agent token-usage TUI dashboard (4K stars, MIT) |
 | [ccusage][ccusage] | CC/Codex JSONL usage analyzer, MCP-integrated (13.4K stars, MIT) |
@@ -539,7 +539,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [rtk-839]: https://github.com/rtk-ai/rtk/issues/839
 [gsd-repo]: https://github.com/gsd-build/get-shit-done
 [gsd-core]: https://github.com/open-gsd/gsd-core
-[ecc]: https://github.com/affaan-m/everything-claude-code
+[ecc]: https://github.com/affaan-m/ECC
 [tokeneconomizer]: https://github.com/microsoft/TokenEconomizer
 [tokeneconomizer-paper]: https://arxiv.org/abs/2610.22732
 [byterover]: https://github.com/campfirein/byterover-cli
@@ -557,7 +557,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
-[ccusage]: https://github.com/ryoppippi/ccusage
+[ccusage]: https://github.com/ccusage/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
 [llmlingua]: https://github.com/microsoft/LLMLingua
 [context-mode]: https://github.com/mksglu/context-mode

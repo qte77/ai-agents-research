@@ -4,7 +4,7 @@ source: https://github.com/virgiliojr94/book-to-skill
 purpose: Analysis of book-to-skill — converts technical books and documents into on-demand Claude Code (and other-harness) Skills, avoiding both PDF search and full-context dumping.
 platform_scope: [claude-code, github-copilot]
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: trial
 ---
@@ -18,10 +18,10 @@ agent loads on demand, rather than a static summary or a document dump into cont
 7 existed."* PDF search returns pages, not answers; asking the agent about the book either
 hallucinates or gets a "no content" refusal; hand-written notes go unread. book-to-skill's answer
 is a skill the agent consults selectively, chapter by chapter, across Claude Code, GitHub Copilot
-CLI, Amp, Hermes Agent, and OpenClaw.
+CLI, Amp, Hermes Agent, and OpenClaw (the README now also lists Codex and OpenCode).
 
-Basics (first-party, 2026-09-24): [virgiliojr94/book-to-skill][repo]; MIT; 32,193 stars, 3,349
-forks; Python; repo created 2026-05-01, last push 2026-09-22 (active).
+Basics (first-party, 2026-09-24): [virgiliojr94/book-to-skill][repo]; MIT; 39,094 stars, 4,171
+forks (checked 2026-11-26); Python; repo created 2026-05-01, last push 2026-11-24 (active).
 
 ## How It Works
 
@@ -59,8 +59,8 @@ conversation turn," versus a smaller 2.4×–15.6× advantage over a manual disc
 
 ## Adoption Considerations
 
-**Strengths**: rapid adoption (32.2K stars from a 2026-05-01 repo creation date) with active
-maintenance (pushed 2026-09-22); a reproducible, first-party benchmark methodology rather than a
+**Strengths**: rapid adoption (39.1K stars as of 2026-11-26, from a 2026-05-01 repo creation date) with active
+maintenance (pushed 2026-11-24); a reproducible, first-party benchmark methodology rather than a
 bare marketing number; cross-platform skill discovery (one install registers on multiple
 harnesses); MIT-licensed (`LICENSE.md`), though the README itself notes this covers the tool, not
 the books you feed it — "follow the license or terms of the source document."
@@ -68,7 +68,7 @@ the books you feed it — "follow the license or terms of the source document."
 **Risks**: extraction quality depends on which optional per-format tool is installed (`pdftotext`
 vs. `docling` vs. Calibre for MOBI) — the `--check` flag exists precisely because this varies by
 machine; chapter auto-detection has documented gaps (e.g. books that head chapters with section
-titles rather than "Chapter N" don't auto-segment); the token-reduction numbers are self-measured
+titles rather than "Chapter N" don't auto-segment, per [how-it-works.md][how-it-works]); the token-reduction numbers are self-measured
 on the project's own chosen book set, not an independent benchmark.
 
 Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) — the Agent Skills
@@ -80,6 +80,8 @@ ecosystem this tool targets.
 |---|---|
 | [virgiliojr94/book-to-skill][repo] | Repository README, license, stars, install (2026-09-24) |
 | [book-to-skill performance docs][perf] | First-party token-cost methodology and per-book measurements |
+| [book-to-skill how-it-works][how-it-works] | Chapter auto-detection limits (explicit chapter headings needed) |
 
 [repo]: https://github.com/virgiliojr94/book-to-skill
 [perf]: https://github.com/virgiliojr94/book-to-skill/blob/master/docs/performance.md
+[how-it-works]: https://github.com/virgiliojr94/book-to-skill/blob/master/docs/how-it-works.md

@@ -4,7 +4,7 @@ source: https://code.claude.com/docs/en/agent-teams
 purpose: Analysis of Claude Code Agent Teams for parallel code review, cross-layer implementation, and adversarial debugging.
 test_run: 2026-02-11 (parallel code review with 3 teammates)
 created: 2026-02-08
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-09-23
 status: trial
 ---
@@ -19,14 +19,14 @@ Coordinates multiple independent CC sessions with:
 - **Inter-agent communication** — direct teammate-to-teammate messaging via tmux (v2.1.33)
 - **Parallel execution** — each teammate has its own context window
 - **Task dependency management** with automatic unblocking
-- **Quality gates** via `TeammateIdle` and `TaskCompleted` hook events (v2.1.33)
-- **Delegate mode** — restricts lead to coordination only ([source][cc-teams-docs])
-- **Plan approval** — teammates plan in read-only mode; lead approves/rejects autonomously ([source][cc-teams-docs])
+- **Quality gates** via `TeammateIdle`, `TaskCreated` (exit code 2 prevents creation) and `TaskCompleted` hook events (v2.1.33 for the first and last)
+- **Delegate mode** — restricts lead to coordination only (unverified: the current [agent teams docs][cc-teams-docs] have no delegate-mode section)
+- **Plan approval** — a teammate spawned while the lead is in plan mode plans read-only; if its permission mode is unchanged since spawn, Claude Code approves the plan automatically with no lead review, and the lead reviews only when an in-process teammate was put in plan mode with Shift+Tab ([source][cc-teams-docs])
 - **Agent memory** — teammates have user/project/local scoped memory (v2.1.33)
 - **Worktree isolation** — `isolation: worktree` gives each agent an isolated repo copy (v2.1.49–v2.1.50). Worktree auto-cleaned if agent makes no changes; path and branch returned if changes exist. `.claude/` project configs auto-shared across worktrees (v2.1.63) — no duplication or symlinking needed
 - **Background agents** — `background: true` lets agents run while user works (v2.1.49, v2.0.60); Ctrl+F kills background agents (two-press confirmation, v2.1.49)
 - **Agent frontmatter hooks** — PreToolUse, PostToolUse, Stop hooks in agent definitions (v2.1.0)
-- **Agent spawning restrictions** — `Task(agent_type)` controls which agents can spawn (v2.1.33)
+- **Agent spawning restrictions** — `Agent(agent_type)` (renamed from `Task(agent_type)` in v2.1.63; `Task(...)` still works as an alias) controls which agents can spawn (v2.1.33); applies only to an agent running as the main thread via `claude --agent`
 - **`claude agents` CLI** — manage agents from the command line (v2.1.50)
 
 ### How It Works
@@ -36,7 +36,7 @@ Coordinates multiple independent CC sessions with:
 - Teammates load project context (project instructions, MCP servers, skills) automatically
 - Lead's conversation history does NOT carry over to teammates
 - Display modes: in-process (single terminal, Shift+Down to cycle teammates) or split panes (tmux/iTerm2, click into pane)
-- `--teammate-mode` CLI flag: `in-process`, `tmux`, or `auto` (default). `auto` uses split panes if already inside tmux, in-process otherwise
+- `--teammate-mode` CLI flag: `auto`, `tmux` or `iterm2` per the [agent teams docs][cc-teams-docs]. Teammates run in-process until `teammateMode` is changed, so `auto` is not the default; `auto` uses split panes inside tmux or iTerm2. The flag is experimental and absent from `claude --help`
 - `teammateMode` in `settings.json` for persistent config; iTerm2 split panes require [`it2` CLI](https://github.com/mkusaka/it2) + Python API enabled
 
 ### Configuration
@@ -47,7 +47,7 @@ Coordinates multiple independent CC sessions with:
 
 ### Delegate Mode
 
-Restricts lead to coordination-only (spawn, assign, synthesize). Blocks direct implementation. Toggle with **Shift+Tab** after starting a team. ([source][cc-teams-docs])
+Restricts lead to coordination-only (spawn, assign, synthesize). Blocks direct implementation. (Unverified: the current [agent teams docs][cc-teams-docs] have no delegate-mode section; there Shift+Tab cycles a running teammate's permission mode.)
 
 **Use when**: Lead keeps implementing instead of delegating; 3+ teammates. **Skip when**: Task is already pure coordination; small teams.
 
@@ -56,7 +56,7 @@ Restricts lead to coordination-only (spawn, assign, synthesize). Blocks direct i
 - `--agent` CLI flag overrides agent configuration for a session
 - `agent` setting customizes main thread behavior
 - `--resume` reuses `--agent` value from previous session (v2.1.32)
-- Agent disabling via `Task(AgentName)` syntax (v2.1.0)
+- Agent disabling via `Task(AgentName)` syntax (v2.1.0); now `Agent(AgentName)`, e.g. `Agent(Explore)` under `permissions.deny` (v2.1.63 rename)
 - `skills` frontmatter auto-loads skills for subagents (v2.0.43)
 - Bedrock/Vertex/Foundry support for teammates (v2.1.45)
 
@@ -95,10 +95,10 @@ CHANGELOG entries ([source](https://github.com/anthropics/claude-code/blob/main/
 7. **Shutdown can be slow** — teammates finish current request/tool call before exiting ([source][cc-teams-docs])
 8. **Linear token cost** — each teammate is a separate Claude instance ([source][cc-teams-docs])
 9. **Experimental, disabled by default** ([source][cc-teams-docs])
-10. **Split panes require tmux or iTerm2** — not supported in VS Code terminal, Windows Terminal, or Ghostty ([source][cc-teams-docs])
+10. **Split panes require tmux or iTerm2** — the in-process default works in any terminal; the named unsupported terminals (VS Code terminal, Windows Terminal, Ghostty) are no longer listed on the docs page (unverified) ([source][cc-teams-docs])
 11. **Agent Teams crash fixes ongoing** — v2.1.34, v2.1.41 addressed model identifier and crash issues
-12. **Structured messages cannot be broadcast** — `SendMessage` with `to: "*"` only supports plain text. Structured JSON protocol messages (`shutdown_request`, `shutdown_response`, `plan_approval_response`) must be sent to a named teammate individually. Attempting broadcast with a structured payload returns `"structured messages cannot be broadcast"`. No first-party documentation exists for this constraint — it is enforced by the tool schema at runtime. Workaround: loop shutdown requests to each teammate by name. Related: broadcast is "push-based and ephemeral" with no persistence ([#30140][broadcast-30140]), SendMessage routing bugs ([#25135][routing-25135]), shutdown delivery failures ([#31788][shutdown-31788]).
-13. **`isolation: "worktree"` silently ignored with `team_name`** — worktree creation skipped; all teammates run in lead's CWD causing file-edit race conditions. Agent Teams remain experimental (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`, [docs][cc-teams-docs]). The official [Limitations section][cc-teams-limits] lists 8 items but does not mention this bug. `isolation: "worktree"` is [documented as a subagent frontmatter field][cc-subagent-isolation] ("creates a temporary git worktree so the agent works on an isolated copy of the repo") and works correctly for non-team subagents (v2.1.49+). Root cause: teammate subprocess spawn command omits worktree flags when `team_name` is present ([repro in #38949][wt-38949]). No Anthropic fix timeline as of v2.1.83 (2026-03-26). Issues: [#38949][wt-38949] (has repro, 2026-03-25), [#33045][wt-33045] (oldest, 7 comments, 2026-03-18), [#37549][wt-37549] (2026-03-22). Feature request: [#37587][wt-37587] (extend `EnterWorktree` for team orchestration). **Mitigations**: (a) standalone `Agent` + `isolation: "worktree"` without `team_name` — worktrees work but lose team coordination (shared task list, SendMessage); (b) teams without worktree + file-partitioned tasks — no conflicts if each teammate edits different files; (c) accept shared-CWD chaos — agents self-heal via cherry-picks but waste tokens (validated: 10 PRs across 2 team runs, all delivered despite races, CC v2.1.83, 2026-03-26).
+12. **Structured messages cannot be broadcast** — `SendMessage` with `to: "*"` only supports plain text. Structured JSON protocol messages (`shutdown_request`, `shutdown_response`, `plan_approval_response`) must be sent to a named teammate individually. Attempting broadcast with a structured payload returns `"structured messages cannot be broadcast"`. The [agent teams docs][cc-teams-docs] now say to reach everyone you send one message per recipient; the exact error string is not on a first-party page (unverified) and the constraint is enforced by the tool schema at runtime. Workaround: loop shutdown requests to each teammate by name. Related: broadcast is "push-based and ephemeral" with no persistence ([#30140][broadcast-30140], closed as duplicate), SendMessage routing bugs ([#25135][routing-25135], closed as not_planned), shutdown delivery failures ([#31788][shutdown-31788], closed as duplicate).
+13. **`isolation: "worktree"` silently ignored with `team_name`** — worktree creation skipped; all teammates run in lead's CWD causing file-edit race conditions. Agent Teams remain experimental (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`, [docs][cc-teams-docs]). The official [Limitations section][cc-teams-limits] now lists 9 items (the new one: no background subagents from in-process teammates) but still does not mention this bug; it does say an `Agent` call passing `isolation` on the call itself is launched as a subagent, not a teammate. `isolation: "worktree"` is [documented as a subagent frontmatter field][cc-subagent-isolation] ("creates a temporary git worktree so the agent works on an isolated copy of the repo") and works correctly for non-team subagents (v2.1.49+). Root cause (unverified, from third-party issue text): teammate subprocess spawn command omits worktree flags when `team_name` is present ([repro in #38949][wt-38949]). No Anthropic fix timeline as of v2.1.83 (2026-03-26); all four issues below are now closed (checked 2026-11-26). Issues: [#38949][wt-38949] (has repro, 2026-03-25; closed as duplicate), [#33045][wt-33045] (oldest, 7 comments, 2026-03-18; closed as not_planned), [#37549][wt-37549] (2026-03-22; closed as not_planned). Feature request: [#37587][wt-37587] (extend `EnterWorktree` for team orchestration; closed as duplicate). **Mitigations**: (a) standalone `Agent` + `isolation: "worktree"` without `team_name` — worktrees work but lose team coordination (shared task list, SendMessage); (b) teams without worktree + file-partitioned tasks — no conflicts if each teammate edits different files; (c) accept shared-CWD chaos — agents self-heal via cherry-picks but waste tokens (validated: 10 PRs across 2 team runs, all delivered despite races, CC v2.1.83, 2026-03-26).
 
 [broadcast-30140]: https://github.com/anthropics/claude-code/issues/30140
 [routing-25135]: https://github.com/anthropics/claude-code/issues/25135
@@ -218,7 +218,7 @@ CC OTel integrates at the infrastructure level (env vars + Phoenix endpoint), se
 
 **Wait on**: Replacing an autonomous development loop or subagent architecture. Limitations (no resumption, task lag, no nested teams) make it unreliable for structured workflows.
 
-**When ready**: Enable in `settings.json`, start with review/research tasks, pre-approve common operations, use delegate mode for 3+ teammates.
+**When ready**: Enable in `settings.json`, start with review/research tasks, pre-approve common operations, use delegate mode for 3+ teammates (unverified, see Delegate Mode).
 
 ### Observability Strategy for CC Evaluation
 
@@ -244,13 +244,13 @@ Agent Teams artifacts stored under `~/.claude/`:
 │       ├── 1.json                   # Task 1 metadata
 │       ├── 2.json                   # Task 2 metadata
 │       └── n.json                   # Task n metadata
-└── transcripts/                     # Full teammate session logs (if enabled)
+└── transcripts/                     # Full teammate session logs (if enabled; unverified, not on the docs page)
     └── {session-id}.jsonl
 ```
 
 ### 1. Team Configuration
 
-**Location**: `~/.claude/teams/{team-name}/config.json`
+**Location**: `~/.claude/teams/{team-name}/config.json`. Team and task names are session-derived (`session-` plus the first 8 characters of the session ID); the team directory is removed when the session ends, while `~/.claude/tasks/{team-name}/` stays on disk subject to `cleanupPeriodDays`, so post-hoc analysis of `teams/` and `inboxes/` needs capture before the session ends. The docs call the config runtime state: do not hand-edit it.
 
 Contains complete team orchestration metadata:
 
@@ -454,7 +454,7 @@ Cross-ref: [CC-community-reimplementations-landscape.md](../../cc-community/CC-c
 | [C Compiler with 16 Agents][compiler-case] | Anthropic/Register | 2,000 sessions, 100k-line compiler |
 | [Cross-session messaging docs][cc-xsession-doc] | Anthropic | Inbox socket, `ListAgents` / `SendMessage` (re-check 2026-11-18) |
 | [Environment variables reference][cc-env-vars] | Anthropic | No Coordinator Mode variable (re-check 2026-11-18) |
-| [Claude Code CHANGELOG][cc-changelog] | Anthropic | Checked through v2.1.327 (re-check 2026-11-18) |
+| [Claude Code CHANGELOG][cc-changelog] | Anthropic | Checked through v2.1.332 (re-check 2026-11-26) |
 
 [cc-teams-docs]: https://code.claude.com/docs/en/agent-teams
 [cc-xsession-doc]: https://code.claude.com/docs/en/cross-session-messaging

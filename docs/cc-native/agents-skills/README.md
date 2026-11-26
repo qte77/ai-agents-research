@@ -8,7 +8,7 @@ CC agent teams, recursive spawning, skills system, and autonomous loop patterns.
 | [CC-cross-session-messaging-analysis.md](CC-cross-session-messaging-analysis.md) | Cross-session messaging: `ListAgents`/`SendMessage`, `/list-agents`, delivery/trust model, `crossSessionInbound`, `isolatePeerMachines`, `notify_when_idle`, cross-machine Remote Control, inbox socket env vars, limits, version gates |
 | [CC-recursive-spawning-patterns.md](CC-recursive-spawning-patterns.md) | Recursive CC subprocess spawning and depth limits |
 | [CC-skills-adoption-analysis.md](CC-skills-adoption-analysis.md) | Skills format adoption, progressive disclosure, auto-discovery, `context: fork` mechanics and economics |
-| [CC-plans-as-skill-rule-templates.md](CC-plans-as-skill-rule-templates.md) | Extracting plans into reusable skills and rules, UltraPlan (research preview) |
+| [CC-plans-as-skill-rule-templates.md](CC-plans-as-skill-rule-templates.md) | Extracting plans into reusable skills and rules; UltraPlan (removed) |
 | [CC-ralph-enhancement-research.md](CC-ralph-enhancement-research.md) | Ralph autonomous loop enhancement research; history and naming |
 | [CC-cli-anything-analysis.md](CC-cli-anything-analysis.md) | CC CLI invocation patterns and capabilities |
 | [CC-agentic-harness-patterns-analysis.md](CC-agentic-harness-patterns-analysis.md) | 12 agentic harness patterns (Bilgin Ibryam): memory, orchestration, tools, automation |

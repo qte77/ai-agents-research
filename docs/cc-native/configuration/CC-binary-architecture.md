@@ -2,7 +2,7 @@
 title: CC Binary Architecture
 purpose: Analysis of Claude Code CLI binary and VS Code extension internals — build system, shared codebase proof, internal API endpoints, model IDs, directory map, /stats data flow, /voice timeline.
 created: 2026-03-29
-updated: 2026-04-13
+updated: 2026-11-26
 validated_links_on: 2026-04-13
 status: research
 ---
@@ -11,14 +11,14 @@ status: research
 
 Claude Code ships as two closed-source artifacts that share a single bundled JavaScript codebase:
 
-1. **CLI binary** — `~/.local/share/claude/versions/<version>` (~213MB single-executable Bun app) ([frr-build][frr-build])
+1. **CLI binary** — `~/.local/share/claude/versions/<version>` (single-executable Bun app; ~213MB is own observation (CC 2.1.87), unverified at source — the cited article gives ~100MB, about 95MB Bun runtime plus about 5MB bundled code (checked 2026-11-26)) ([frr-build][frr-build])
 2. **VS Code extension** — `extension.js` (1.8MB) + `webview/index.js` (4.6MB) in `anthropic.claude-code-<version>-<platform>/`
 
 Both are minified JS bundles with no source maps. The CLI binary embeds a JavaScriptCore runtime via Bun's single-executable packaging ([frr-build][frr-build]). A community attempt to restore source via source maps was taken down by Anthropic via DMCA ([ghuntley][ghuntley], [hn-thread][hn-thread]).
 
 ## Shared Codebase Proof
 
-The `claude-code-settings.schema.json` (80+ settings including `plansDirectory`) is embedded in **both** artifacts:
+The `claude-code-settings.schema.json` (80+ settings including `plansDirectory`; count unverified, own observation) is embedded in **both** artifacts:
 
 ```bash
 # Extension — explicit JSON file
@@ -127,7 +127,7 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 | `beacon.claude-ai.staging.ant.dev` | Staging telemetry | String extraction |
 | `downloads.claude.ai/.../claude-plugins-official` | Official plugin distribution | String extraction |
 | `storage.googleapis.com/claude-code-dist-*` | CLI binary distribution bucket | String extraction |
-| `json.schemastore.org/claude-code-settings.json` | Settings schema ([schema-store][schema-store]) | Not linked from official docs ([gh-11795][gh-11795]) |
+| `json.schemastore.org/claude-code-settings.json` | Settings schema ([schema-store][schema-store]) | Now linked from the official settings page as the published schema (`$schema`, checked 2026-11-26); earlier request [gh-11795][gh-11795] was closed as not planned on 2026-02-28 |
 | `claude.ai/code/scheduled` | Scheduled triggers UI | Documented — [remote-control][remote-control] |
 | `platform.claude.com/v1/oauth/token` | Platform OAuth token exchange | String extraction |
 | `raw.githubusercontent.com/.../security.json` | Plugin security checks | String extraction |
@@ -137,7 +137,9 @@ Extracted from CLI binary v2.1.87. **Not documented** in first-party docs unless
 
 All model IDs found in CLI binary v2.1.87. Includes current, deprecated, and **potentially unreleased** models.
 
-### Current (CC 2.1.87)
+### Current (CC 2.1.87 snapshot)
+
+Point-in-time list from the 2.1.87 binary. The [model configuration page](https://code.claude.com/docs/en/model-config) now lists newer IDs such as `claude-fable-5-2`, `claude-fable-5-1`, `claude-fable-5`, `claude-opus-5-5`, `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-5-5` and Sonnet 5.5, plus the aliases `fable`, `opus`, `sonnet`, `haiku`, and still lists `claude-opus-4-6`, `claude-sonnet-4-6` and `claude-haiku-4-5` (checked 2026-11-26).
 
 | Model ID | Family |
 |---|---|
@@ -152,8 +154,8 @@ All model IDs found in CLI binary v2.1.87. Includes current, deprecated, and **p
 
 | Model ID | Notes |
 |---|---|
-| `claude-opus-4-5-20251101` | Opus 4.5 — not in current model docs |
-| `claude-opus-4-1-20250805` | Opus 4.1 — not in current model docs |
+| `claude-opus-4-5-20251101` | Opus 4.5 — not found on the model configuration page (checked 2026-11-26; unverified) |
+| `claude-opus-4-1-20250805` | Opus 4.1 — a documented ID: the model configuration page lists `claude-opus-4-1` and says Opus 4 / 4.1 IDs run on the model `opus` resolves to (checked 2026-11-26) |
 
 ### Deprecated (Still in Binary)
 
@@ -177,7 +179,7 @@ Direct observation, Codespaces, 2026-03-29.
 | Path | Purpose | Evidence |
 |---|---|---|
 | `projects/<hash>/` | Transcripts (`.jsonl`), tool results, subagent logs, memory | Direct observation |
-| `sessions/<pid>.json` | Session index keyed by PID. Fields: `sessionId`, `cwd`, `startedAt`, `name`. **Not listed** in first-party [.claude directory cleanup tables](https://code.claude.com/docs/en/claude-directory#application-data) — appears in neither "cleaned automatically" nor "kept until you delete". Cleanup lifecycle undocumented. Observation: Opus 4.6, 2026-04-13 | Direct observation |
+| `sessions/<pid>.json` | Session index keyed by PID. Fields: `sessionId`, `cwd`, `startedAt`, `name`. **Not listed** in first-party [.claude directory cleanup tables](https://code.claude.com/docs/en/claude-directory#application-data) — appears in neither "cleaned automatically" nor "kept until you delete". The first-party page now documents it: one small file per running session, used to detect concurrent sessions and crashes; not part of the age-based sweep; removed when the session exits, with crash leftovers cleared on the next launch (checked 2026-11-26). Observation: Opus 4.6, 2026-04-13 | Direct observation |
 | `plans/` | Plan mode output files | Verified — `plansDirectory` setting |
 | `file-history/<session>/` | File checkpoints for rewind feature (`fileCheckpointingEnabled`) | Direct observation |
 | `history.jsonl` | User command history with timestamps and session IDs | Direct observation |
@@ -191,7 +193,7 @@ Direct observation, Codespaces, 2026-03-29.
 | Path | Purpose | Evidence |
 |---|---|---|
 | `cache/` | Only `changelog.md` (fetched from GitHub). **Not login tokens** | Direct observation — only 1 file |
-| `telemetry/` | OTel export staging. **Empty unless `CLAUDE_CODE_ENABLE_TELEMETRY=1`** | Binary: `lH(process.env.CLAUDE_CODE_ENABLE_TELEMETRY)`. Exports at 300s intervals. See [monitoring docs][monitoring] |
+| `telemetry/` | OTel export staging. **Empty unless `CLAUDE_CODE_ENABLE_TELEMETRY=1`** | Binary: `lH(process.env.CLAUDE_CODE_ENABLE_TELEMETRY)`. Exports at 300s intervals (unverified: the monitoring docs give `OTEL_METRIC_EXPORT_INTERVAL` default 60000 ms and `OTEL_LOGS_EXPORT_INTERVAL` default 5000 ms, and a `telemetry/` directory was not confirmed there). See [monitoring docs][monitoring] |
 | `session-env/<session>/` | Per-session environment snapshots | Direct observation |
 | `shell-snapshots/` | Bash shell state snapshots (aliases, functions) | Direct observation |
 | `plugins/` | Plugin cache, blocklist, marketplace metadata. Contains `installed_plugins.json` with `projectPath` entries scoping installs to projects — stale paths cause plugins to silently stop loading for that project. See [plugins reference](https://code.claude.com/docs/en/plugins-reference). Observation: Opus 4.6, 2026-04-13 | Rebuilt on install |
@@ -211,9 +213,9 @@ Both commands compute from transcript `.jsonl` files — no separate output file
 | Command | Data Source | Introduced | Evidence |
 |---|---|---|---|
 | `/stats` | Aggregates `"usage"` blocks across all project transcripts + `sessions/*.json` index | v2.0.64 ([changelog][cc-changelog]) | v2.1.69 fix: "crash when transcript files contain entries with missing or malformed timestamps" |
-| `/usage` | Current session in-memory counters (`totalCostUSD`, `totalAPIDuration`, etc.) | Unknown (VS Code: v2.1.6) | Binary: in-memory state struct with `totalCostUSD`, `totalToolDuration`, `turnToolCount` |
+| `/usage` | Current session in-memory counters (`totalCostUSD`, `totalAPIDuration`, etc.); first-party docs also show it reading the persistent `stats-cache.json` for historical totals | Unknown (VS Code: v2.1.6) | Binary: in-memory state struct with `totalCostUSD`, `totalToolDuration`, `turnToolCount` |
 
-`stats-cache.json`: Constant `YA9="stats-cache.json"` exists in binary with `require("fs/promises")` — likely a computed cache to avoid re-scanning all transcripts. Not found on disk (may be temp-dir-only or feature-gated). The **transcripts are the persistent source of truth**.
+`stats-cache.json`: Constant `YA9="stats-cache.json"` exists in binary with `require("fs/promises")` — likely a computed cache to avoid re-scanning all transcripts. The first-party [.claude directory page](https://code.claude.com/docs/en/claude-directory#application-data) lists `~/.claude/stats-cache.json` under files kept until you delete them ("aggregated token and cost counts shown by `/usage`"; deleting it loses historical `/usage` totals), so it is a documented persistent cache, not temp-only or feature-gated (checked 2026-11-26).
 
 Per-message usage block format (from transcript `.jsonl`):
 
@@ -240,7 +242,7 @@ Voice mode first appears in changelog at **v2.1.69** (bug fixes + STT language a
 | v2.1.83 | Fixed 1-8s UI freeze on startup with voice enabled | Bug fix |
 | v2.1.84 | Stats screenshot (Ctrl+S in /stats) 16x faster | Enhancement |
 
-Settings key: `voiceEnabled:y.boolean().optional()` — toggled via `/voice` command or `settings.json`.
+Settings key: `voiceEnabled:y.boolean().optional()` — toggled via `/voice` command or `settings.json`. The settings reference now calls `voiceEnabled` the older single-key form and has a separate `voice` key (checked 2026-11-26).
 
 ## Sources
 

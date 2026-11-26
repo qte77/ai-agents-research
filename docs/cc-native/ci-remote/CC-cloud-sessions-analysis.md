@@ -3,12 +3,12 @@ title: CC Cloud Sessions (Claude Code on the Web) Analysis
 source: https://code.claude.com/docs/en/claude-code-on-the-web
 purpose: Analysis of Claude Code cloud execution for parallel baseline collection, remote task offloading, and CI-like autonomous runs.
 created: 2026-03-07
-updated: 2026-10-02
+updated: 2026-11-26
 validated_links_on: 2026-10-02
 status: assess
 ---
 
-**Details:** Research preview.
+**Details:** Pro, Max, Ultra and Team plans plus Enterprise premium or Chat + Claude Code seats (the "research preview" label is no longer on the docs page, checked 2026-11-26; absence-based).
 
 **Verified**: code.claude.com docs, 2026-09-24
 
@@ -22,8 +22,8 @@ Run Claude Code tasks on Anthropic-managed cloud VMs via `claude.ai/code` or the
 - **Isolated VMs**: Each session runs in its own Anthropic-managed VM ([source][cc-cloud])
 - **Default image**: Pre-installed Python, Node.js, Ruby, PHP, Java, Go, Rust, C++, PostgreSQL 16, Redis 7.0 ([source][cc-cloud])
 - **Setup scripts**: Bash scripts run before Claude Code launches (install deps, configure tools) ([source][cc-cloud])
-- **Network policy**: Trusted by default (allowlisted domains), configurable to "None", "Full", or "Custom" ([source][cc-cloud])
-- **Self-hosted environments** (public beta, Team/Enterprise, off by default): an Owner can route cloud sessions to infrastructure the org operates instead of Anthropic-managed VMs. A named **environment** groups **runners** — long-lived processes (the self-hosted-CI-runner analogy) that poll Anthropic's control plane, claim queued sessions, clone the repo, and spawn a `claude` child process inside the org's own network. Unavailable for Zero Data Retention orgs. Model inference still calls `api.anthropic.com` directly (no Bedrock/Vertex/Foundry/gateway routing in self-hosted mode) and the conversation transcript still reaches Anthropic for that inference — only the repo checkout, build artifacts, and secrets stay on the org's own hosts ([source][cc-self-hosted])
+- **Network policy**: Limited by default (the default allowlist plus any listed domains; formerly "Trusted"), configurable to "None" or "Full" ([source][cc-cloud])
+- **Self-hosted environments** (public beta, Team/Enterprise, off by default): an Owner can route cloud sessions to infrastructure the org operates instead of Anthropic-managed VMs. A named **environment** groups **runners** — long-lived processes (the self-hosted-CI-runner analogy) that poll Anthropic's control plane, claim queued sessions, clone the repo, and spawn a `claude` child process inside the org's own network. Unavailable for Zero Data Retention orgs. Model inference uses the Anthropic API by default, but a runner can be configured to send model requests to Amazon Bedrock or Google Cloud's Agent Platform (Foundry or gateway routing: no first-party statement found, unverified); session content still reaches `api.anthropic.com` in the event stream either way, and on a runner configured that way server-managed settings and organization policies from claude.ai do not reach sessions — only the repo checkout, build artifacts, and secrets stay on the org's own hosts ([source][cc-self-hosted])
 - **Diff view**: Review changes inline before creating PR, iterate with comments ([source][cc-cloud])
 - **Session sharing**: Team visibility (Enterprise/Teams) or Public (Max/Pro) ([source][cc-cloud])
 
@@ -73,14 +73,13 @@ pip install -r requirements.txt
 
 | Level | Behavior |
 | ----- | -------- |
-| Trusted (default) | Allowlisted domains only (GitHub, npm, PyPI, Docker, cloud providers, etc.) |
-| None | Only Anthropic API communication |
-| Full | Unrestricted outbound access |
-| Custom | Your own allowlist, optionally including the Trusted defaults |
+| Limited (default) | The default allowlist (while "Allow package managers" is checked; GitHub, npm, PyPI, Docker, cloud providers, etc.) plus any domains you list; formerly "Trusted", and saved "Trusted"/"Custom" environments open as Limited (Full if the list had a bare `*`) |
+| None | No outbound network access through the session's network; the Anthropic API, the GitHub proxy and enabled MCP connectors stay reachable |
+| Full | Any domain |
 
 ### Security Model
 
-- **GitHub proxy**: Scoped credentials; push restricted to current working branch ([source][cc-cloud])
+- **GitHub proxy**: Scoped credentials; the proxy rejects branch deletions and non-branch pushes such as tags, and does not limit which branches a push can update ([source][cc-cloud])
 - **HTTP/HTTPS proxy**: All outbound traffic through security proxy (rate limiting, content filtering) ([source][cc-cloud])
 - **Credential isolation**: Git credentials and signing keys never inside sandbox ([source][cc-cloud])
 
@@ -120,7 +119,7 @@ cc_run_cloud:
 2. **User-local MCP servers only** — MCP servers added via `claude mcp add` (local user config) are unavailable in cloud; servers declared in the repo's committed `.mcp.json` are part of the clone and remain available
 3. **No persistent state** — `~/.claude/teams/` and local state files not available
 4. **Setup script complexity** — Would need to install project deps and configure env in a setup script
-5. **Research preview** — pricing and availability may change
+5. **Research preview label removed** — the docs page no longer carries it (checked 2026-11-26); pricing and availability may still change
 
 Revisit when:
 

@@ -2,14 +2,14 @@
 title: CC CLI Reference
 purpose: Single canonical reference for all claude CLI flags, subcommands, and constraints. Other docs cross-ref here for flag definitions.
 created: 2026-04-13
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: adopt
 ---
 
 ## What It Is
 
-Complete reference for the `claude` CLI. Sourced from the [official CLI reference][cli-ref] and `claude --help` (Opus 4.6). The official docs note that `--help` does not list every flag — this document covers both.
+Complete reference for the `claude` CLI. Sourced from the [official CLI reference][cli-ref] and `claude --help` (Opus 4.6; this snapshot predates the current CLI (unverified)). This page is a subset: the live CLI reference (checked 2026-11-26) also documents further subcommands (`claude gateway`, `attach`, `daemon`, `import`, `logs`, `purge`, `respawn`, `rm`, `self-hosted-runner`, `stop`, `ultrareview`; `claude rc` aliases `claude remote-control`; `claude install` accepts a version such as `2.1.118`) and flags such as `--bg`, `--exec`, `--cloud`, `--desktop`, `--environment`, `--autocompact`, `--plugin-url`, `--permission-prompts`, `--safe-mode`, `--restricted`, `--prompt-suggestions`, `--forward-subagent-text`, `--append-subagent-system-prompt(-file)`, `--system-prompt-snapshot`, `--ax-screen-reader`, `--metadata`, `--ref` and `--correlation-id`. The official docs note that `--help` does not list every flag — this document covers both.
 
 For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools see [CC-tools-inventory.md](CC-tools-inventory.md).
 
@@ -24,7 +24,7 @@ For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools
 | `claude auth login` | Sign in. Accepts `--email`, `--sso`, `--console` | [auth][auth] |
 | `claude auth logout` | Sign out | [cli-ref][cli-ref] |
 | `claude auth status` | Auth status as JSON. `--text` for human-readable | [cli-ref][cli-ref] |
-| `claude agents` | Open agent view (research preview) to monitor and dispatch background sessions; `--cwd <path>` filters by directory, `--json` prints active sessions | [cli-ref][cli-ref] |
+| `claude agents` | Open agent view to monitor and dispatch background sessions (the CLI reference row no longer says research preview; checked 2026-11-26); `--cwd <path>` filters by directory, `--json` prints active sessions (`--json --all` includes completed ones); `--permission-mode`, `--model`, `--effort`, `--agent` set defaults for dispatched sessions | [cli-ref][cli-ref] |
 | `claude auto-mode defaults` | Print built-in auto-mode classifier rules as JSON | [auto-mode][auto-mode] |
 | `claude auto-mode config` | Show effective auto-mode config with settings applied | [auto-mode][auto-mode] |
 | `claude mcp` | Configure Model Context Protocol (MCP) servers | [mcp][mcp] |
@@ -32,7 +32,7 @@ For env vars see [CC-env-vars-reference.md](CC-env-vars-reference.md). For tools
 | `claude remote-control` | Start Remote Control server (no local session) | [remote-control][remote-control] |
 | `claude setup-token` | Generate long-lived OAuth token for CI/scripts | [auth][auth] |
 | `claude update` | Update to latest version | [cli-ref][cli-ref] |
-| `claude doctor` | Health check for auto-updater | [cli-ref][cli-ref] |
+| `claude doctor` | Read-only installation and settings diagnostics without starting a session (install health, settings validation errors, Remote Control eligibility); in-session `/doctor` can also apply fixes | [cli-ref][cli-ref] |
 | `claude install [target]` | Install native build (`stable`, `latest`, or version) | [cli-ref][cli-ref] |
 
 **Analysis**: [CC-version-pinning-resilience.md](../ci-remote/CC-version-pinning-resilience.md), [CC-web-auth-setup-analysis.md](../ci-remote/CC-web-auth-setup-analysis.md)
@@ -84,7 +84,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 |---|---|---|---|
 | `--model` | Model alias (`sonnet`, `opus`) or full ID | — | [model-config][model-config] |
 | `--effort` | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`, or `ultracode` (turns ultracode on and sets `xhigh`) — support varies by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | Session-scoped, not persisted | [model-config][model-config] |
-| `--fallback-model` | Auto-fallback model when primary is overloaded | `--print` only | [cli-ref][cli-ref] |
+| `--fallback-model` | Auto-fallback model(s) when primary is overloaded or not available (e.g. retired); comma-separated list tried in order; `fallbackModel` setting persists a chain | No longer marked print-only (checked 2026-11-26) | [cli-ref][cli-ref] |
 | `--max-turns` | Limit agentic turns; exits with error when reached | `--print` only | [cli-ref][cli-ref] |
 | `--max-budget-usd` | Maximum dollar spend before stopping | `--print` only | [cli-ref][cli-ref] |
 | `--betas` | Beta headers for API requests | API key users only | [cli-ref][cli-ref] |
@@ -102,7 +102,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 | `--system-prompt-file` | Replace with file contents | Mutually exclusive with `--system-prompt` | [cli-ref][cli-ref] |
 | `--append-system-prompt` | Append text to default prompt | — | [cli-ref][cli-ref] |
 | `--append-system-prompt-file` | Append file contents to default prompt | — | [cli-ref][cli-ref] |
-| `--exclude-dynamic-system-prompt-sections` | Move per-machine sections to first user message for better prompt-cache reuse | Ignored with `--system-prompt`/`--system-prompt-file` | [cli-ref][cli-ref] |
+| `--exclude-dynamic-system-prompt-sections` | Move per-user context (e.g. auto memory location) into the first user message for better prompt-cache reuse across users and machines | Ignored with `--system-prompt`/`--system-prompt-file` | [cli-ref][cli-ref] |
 
 **Analysis**: [CC-prompt-caching-behavior.md](../context-memory/CC-prompt-caching-behavior.md)
 
@@ -110,7 +110,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 
 | Flag | Description | Constraints | Source |
 |---|---|---|---|
-| `--permission-mode` | Start in mode: `default`, `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions` | Overrides `defaultMode` from settings | [permission-modes][permission-modes] |
+| `--permission-mode` | Start in mode: `default`, `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions`, or `manual` (alias for `default`; v2.1.200+) | Overrides `defaultMode` from settings | [permission-modes][permission-modes] |
 | `--dangerously-skip-permissions` | Skip all permission prompts (alias for `--permission-mode bypassPermissions`) | — | [permission-modes][permission-modes] |
 | `--allow-dangerously-skip-permissions` | Add `bypassPermissions` to Shift+Tab cycle without starting in it | — | [permission-modes][permission-modes] |
 | `--enable-auto-mode` | Removed in v2.1.111 (documented in the [CLI reference](https://code.claude.com/docs/en/cli-reference) and the changelog: "Auto mode no longer requires `--enable-auto-mode`"). Auto mode is in the Shift+Tab cycle by default; start in it with `--permission-mode auto`. Availability: [CC-permissions-bypass-analysis.md](../sandboxing/CC-permissions-bypass-analysis.md#auto-mode-availability-classifier-and-defaults-read-2026-11-18) | Removed | [auto-mode][auto-mode] |
@@ -127,7 +127,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 |---|---|---|---|
 | `--mcp-config` | Load MCP servers from JSON files or strings | Space-separated | [mcp][mcp] |
 | `--strict-mcp-config` | Only use MCP servers from `--mcp-config`, ignore all others | — | [cli-ref][cli-ref] |
-| `--plugin-dir` | Load plugins from directory (repeatable) | Session only | [cli-ref][cli-ref] |
+| `--plugin-dir` | Load a plugin from a directory or `.zip` archive, or several from a folder of plugins (v2.1.265+); one path per flag, repeatable | Session only | [cli-ref][cli-ref] |
 | `--channels` | MCP server channel notifications to listen for | Research preview; requires Claude.ai auth | [channels][channels] |
 | `--dangerously-load-development-channels` | Enable non-allowlisted channels for local dev | Prompts for confirmation | [channels-ref][channels-ref] |
 | `--chrome` | Enable Chrome browser integration | — | [chrome][chrome] |
@@ -141,9 +141,9 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 |---|---|---|---|
 | `--agent` | Specify agent for the session (overrides `agent` setting) | — | [cli-ref][cli-ref] |
 | `--agents` | Define custom subagents via JSON (same fields as frontmatter + `prompt`) | — | [sub-agents][sub-agents] |
-| `--teammate-mode` | Agent team display: `auto` (default), `in-process`, `tmux` | — | [agent-teams][agent-teams] |
+| `--teammate-mode` | Agent team display: `in-process` (default), `auto`, `tmux`, `iterm2` | — | [agent-teams][agent-teams] |
 | `-w`, `--worktree` | Start in isolated git worktree (optional name) | — | [worktrees][worktrees] |
-| `--tmux` | Create tmux session for worktree; `--tmux=classic` for traditional tmux | Requires `--worktree` | [cli-ref][cli-ref] |
+| `--tmux` | Create tmux session for worktree; uses iTerm2 native panes when available; `--tmux=classic` for traditional tmux | Requires `--worktree` | [cli-ref][cli-ref] |
 
 **Analysis**: [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md), [CC-recursive-spawning-patterns.md](../agents-skills/CC-recursive-spawning-patterns.md)
 
@@ -151,7 +151,8 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 
 | Flag | Description | Constraints | Source |
 |---|---|---|---|
-| `--remote` | Create new web session on claude.ai with task description | — | [web-sessions][web-sessions] |
+| `--cloud` | Create a new cloud session from a task description, or with a session ID or claude.ai/code URL plus `-p` queue a message into that session | — | [cli-ref][cli-ref] |
+| `--remote` | Deprecated alias for `--cloud` | — | [cli-ref][cli-ref] |
 | `--teleport` | Resume a web session in local terminal | — | [web-sessions][web-sessions] |
 | `--remote-control`, `--rc` | Start interactive session with Remote Control enabled | Optional name argument | [remote-control][remote-control] |
 | `--remote-control-session-name-prefix` | Prefix for auto-generated Remote Control session names | Defaults to hostname | [remote-control][remote-control] |
@@ -174,9 +175,9 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 
 | Flag | Description | Constraints | Source |
 |---|---|---|---|
-| `--init` | Run initialization hooks and start interactive mode | — | [cli-ref][cli-ref] |
-| `--init-only` | Run initialization hooks and exit (no session) | — | [cli-ref][cli-ref] |
-| `--maintenance` | Run maintenance hooks and start interactive mode | — | [cli-ref][cli-ref] |
+| `--init` | Run Setup hooks (`init` matcher) before the session; print mode only (`claude -p --init "query"`) | — | [cli-ref][cli-ref] |
+| `--init-only` | Run Setup and `SessionStart` hooks, then exit without starting a conversation | — | [cli-ref][cli-ref] |
+| `--maintenance` | Run Setup hooks (`maintenance` matcher) before the session; print mode only | — | [cli-ref][cli-ref] |
 
 **Analysis**: [CC-hooks-system-analysis.md](CC-hooks-system-analysis.md)
 
@@ -200,7 +201,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 
 | Flag | Description | Constraints | Source |
 |---|---|---|---|
-| `--file` | Download file resources at startup. Format: `file_id:relative_path` | Repeatable | [cli-ref][cli-ref] |
+| `--file` | Download file resources at startup. Format: `file_id:relative_path` | Repeatable; not in the current CLI reference flag table (checked 2026-11-26) (unverified) | [cli-ref][cli-ref] |
 
 ## Sources
 

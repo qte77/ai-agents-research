@@ -3,7 +3,7 @@ title: CC Community Reimplementations Landscape
 purpose: Survey of community reimplementations and educational deconstructions of Claude Code — cleanroom rebuilds, spec-derived ports, educational courses, and leak-derived alternatives.
 status: research
 created: 2026-04-04
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-10-26
 ---
 
@@ -16,11 +16,11 @@ Multiple community projects have reimplemented or deconstructed Claude Code's ar
 | Repo | Language | Approach | Stars | License | Risk |
 |------|----------|----------|-------|---------|------|
 | [ultraworkers/claw-code][claw] | Rust 93% / Python 7% | Cleanroom | 194K | MIT | LOW |
-| [Kuberwastaken/claude-code][claurst] (CLAURST) | Rust | Spec-derived | 9.8K | GPL-3.0 | MEDIUM |
-| [shareAI-lab/learn-claude-code][learn] | Python / TypeScript | Educational | 66.7K | MIT | LOW |
-| [Twigpine/openclaude][openclaude] (formerly Gitlawb) | TypeScript 99.7% | Leak-derived | 34K | NOTICE: Anthropic-proprietary derived code; contributors' changes MIT where permissible | MEDIUM |
-| [coder/claudecode.nvim][nvim] | Lua | Cleanroom | 2.8K | MIT | LOW |
-| [agentforce314/clawcodex][clawcodex] | Python 100% | Cleanroom | 928 | MIT | LOW |
+| [Kuberwastaken/claurst][claurst] (CLAURST; renamed, old URL redirects) | Rust | Spec-derived | 10.3K (checked 2026-11-26) | GPL-3.0 | MEDIUM |
+| [shareAI-lab/learn-claude-code][learn] | Python / TypeScript | Educational | 80.9K (checked 2026-11-26) | MIT | LOW |
+| [Twigpine/openclaude][openclaude] (formerly Gitlawb) | TypeScript 99.7% | Leak-derived | 34.5K (checked 2026-11-26) | NOTICE: Anthropic-proprietary derived code; contributors' changes MIT where permissible | MEDIUM |
+| [coder/claudecode.nvim][nvim] | Lua | Cleanroom | 3.2K (checked 2026-11-26) | MIT | LOW |
+| [agentforce314/clawcodex][clawcodex] | TypeScript and Python (by bytes, checked 2026-11-26) | Cleanroom (self-described; README now says "ported from the TypeScript reference implementation", so the label is in doubt) | 927 | MIT | LOW |
 | [razakiau/claude-code][zack] (formerly zackautocracy) | TypeScript | Leak-derived (snapshot) | 1.0K | — | **HIGH** |
 
 ## Provenance & Risk Classification
@@ -34,9 +34,9 @@ Multiple community projects have reimplemented or deconstructed Claude Code's ar
 
 ## instructkr/claw-code
 
-**Repo**: [ultraworkers/claw-code][claw] (formerly `instructkr/claw-code`; org renamed, old URL redirects) | **Stars**: 194K | **License**: MIT | **Approach**: Cleanroom
+**Repo**: [ultraworkers/claw-code][claw] (formerly `instructkr/claw-code`; org renamed, old URL redirects) | **Stars**: 194.7K (checked 2026-11-26) | **License**: MIT | **Approach**: Cleanroom
 
-Cleanroom reimplementation of an AI agent harness in Rust and Python. Described as the fastest repo to surpass 50K stars (2 hours after publication).
+Cleanroom reimplementation of an AI agent harness in Rust and Python. Described as the fastest repo to surpass 50K stars (2 hours after publication) (unverified).
 
 **Architecture**: Rust workspace with modular crates (API client, runtime, tools, commands, plugins, CLI, LSP). Python workspace for porting infrastructure and parity auditing.
 
@@ -44,9 +44,9 @@ Cleanroom reimplementation of an AI agent harness in Rust and Python. Described 
 
 **Note**: Repository describes itself as studying a different AI agent harness system, not explicitly Claude Code. Temporary ownership transfer noted with maintenance continuing at a parity repo.
 
-## Kuberwastaken/claude-code (CLAURST)
+## Kuberwastaken/claurst (CLAURST)
 
-**Repo**: [Kuberwastaken/claude-code][claurst] | **Stars**: 9.8K | **License**: GPL-3.0 | **Version**: v0.1.5 (2026-06-11) | **Approach**: Spec-derived
+**Repo**: [Kuberwastaken/claurst][claurst] (formerly `Kuberwastaken/claude-code`) | **Stars**: 10.3K (checked 2026-11-26) | **License**: GPL-3.0 | **Version**: v0.2.1 (2026-10-26) | **Approach**: Spec-derived
 
 Two-phase clean-room project by Kuber Mehta: (1) an AI agent analyzed the leaked source and produced behavioral **specs** (`spec/`), (2) a separate AI agent implemented from specs alone in idiomatic Rust (`src-rust/`). Claims 100% behavioral coverage. Claims legal precedent via Phoenix Technologies v. IBM (1984) clean-room pattern. The README doubles as the **most detailed public technical breakdown** of CC internals from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31).
 
@@ -58,31 +58,31 @@ Two-phase clean-room project by Kuber Mehta: (1) an AI agent analyzed the leaked
 | **KAIROS** | Always-on proactive assistant: tick engine with 15-second blocking budget, max 2 proactive messages per evaluation. Append-only daily logs. Brief output mode. 3 exclusive tools: `SendUserFile`, `PushNotification`, `SubscribePR`. Feature flags: `PROACTIVE` + `KAIROS` (both disabled) |
 | **Auto-Dream** | Background memory consolidation: three-gate trigger (24h + 5 sessions + lock), four phases (Orient → Gather Signal → Consolidate → Prune & Index). Read-only bash. Forked subagent. Telemetry: `tengu_auto_dream_fired/completed/failed` |
 | **Coordinator Mode** | Multi-agent orchestration via `CLAUDE_CODE_COORDINATOR_MODE=1`. Four phases: Research → Synthesis → Implementation → Verification. Shared scratchpad (`tengu_scratch`). UDS Inbox for inter-session IPC. `<task-notification>` XML protocol. Anti-lazy-delegation prompt rule |
-| **UltraPlan** | Cloud-offloaded planning: remote CCR session running Opus 4.6, 30-min budget, 3s polling. `__ULTRAPLAN_TELEPORT_LOCAL__` sentinel. **Now officially documented**: [code.claude.com/docs/en/ultraplan][ultraplan] |
+| **UltraPlan** | Cloud-offloaded planning: remote CCR session running Opus 4.6, 30-min budget, 3s polling. `__ULTRAPLAN_TELEPORT_LOCAL__` sentinel. **Officially documented, then removed**: [code.claude.com/docs/en/ultraplan][ultraplan] now states the research preview is no longer available and points to plan mode or cloud sessions (checked 2026-11-26) |
 | **Undercover Mode** | Prevents `USER_TYPE === 'ant'` employees from leaking codenames in public commits. No force-OFF. Suppresses: animal codenames (Capybara, Tengu, Fennec), unreleased model versions, internal tooling names, "Claude Code" attribution |
 | **Penguin Mode** | Fast mode internal codename. API endpoint: `api/claude_code_penguin_mode`. Kill switch: `tengu_penguins_off`. Config: `penguinModeOrgEnabled` |
 
 ### Additional Coverage
 
 - **40+ tool registry** including internal-only tools (ConfigTool, TungstenTool, SuggestBackgroundPRTool) and feature-gated tools — cross-ref: [CC-tools-inventory.md](../cc-native/configuration/CC-tools-inventory.md)
-- **15 API beta headers** including unreleased: `redact-thinking`, `afk-mode`, `advisor-tool`, `token-efficient-tools` — `advisor-tool` has since shipped as the beta header `advisor-tool-2026-03-01`; see [CC-advisor-tool-analysis.md](../cc-native/configuration/CC-advisor-tool-analysis.md)
+- **15 API beta headers** (unverified: third-party count) including unreleased: `redact-thinking`, `afk-mode`, `advisor-tool`, `token-efficient-tools` — `advisor-tool` has since shipped as the beta header `advisor-tool-2026-03-01`; see [CC-advisor-tool-analysis.md](../cc-native/configuration/CC-advisor-tool-analysis.md)
 - **12 compile-time feature flags** (PROACTIVE, KAIROS, DAEMON, BRIDGE_MODE, VOICE_MODE, COORDINATOR_MODE, BUDDY, etc.)
-- **Upcoming models**: Capybara v2 (with fast tier, 1M context), Opus 4.7, Sonnet 4.8 referenced in code
+- **Upcoming models**: Capybara v2 (with fast tier, 1M context), Opus 4.7, Sonnet 4.8 referenced in code (unverified third-party claim)
 - **System prompt architecture**: `SYSTEM_PROMPT_DYNAMIC_BOUNDARY` marker splitting static (cacheable) vs dynamic (per-user) sections
 - **Model codename history**: Fennec→Opus, Sonnet 1M→Sonnet 4.5→Sonnet 4.6
 - **Computer Use "Chicago"**: `@ant/computer-use-mcp`, screenshot/click/keyboard, Max/Pro gated
 
 ### Provenance Assessment
 
-Despite the "clean-room" claim, the specs were **AI-generated from leaked source** — the separation is AI-to-AI, not human-to-human. The GPL-3.0 license does not resolve the underlying IP question. Feature names and specs are reverse-engineered from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]). Do not treat these as confirmed CC features in other docs.
+Despite the "clean-room" claim, the specs were **AI-generated from leaked source** — the separation is AI-to-AI, not human-to-human. The GPL-3.0 license does not resolve the underlying IP question. Feature names and specs are reverse-engineered from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]; the version number is not named by that article, unverified there). Do not treat these as confirmed CC features in other docs.
 
 ## shareAI-lab/learn-claude-code
 
-**Repo**: [shareAI-lab/learn-claude-code][learn] | **Stars**: 66.7K | **License**: MIT | **Approach**: Educational
+**Repo**: [shareAI-lab/learn-claude-code][learn] | **Stars**: 80.9K (checked 2026-11-26) | **License**: MIT | **Approach**: Educational
 
-Comprehensive educational project teaching "harness engineering" — building infrastructure for AI agents to operate in specific domains. Deconstructs CC architecture through 12 progressive sessions.
+Comprehensive educational project teaching "harness engineering" — building infrastructure for AI agents to operate in specific domains. Deconstructs CC architecture through progressive sessions (the README's canonical track is now s01–s17; an older 12-session track is kept as legacy).
 
-**Sessions** (s01–s12): Basic agent loops → tools → planning → context management → task systems → multi-agent team coordination.
+**Sessions** (s01–s17 in the current track; s01–s12 earlier): Basic agent loops → tools → planning → context management → task systems → multi-agent team coordination.
 
 **Platform**: Interactive Next.js web interface, docs in EN/CN/JP.
 
@@ -92,7 +92,7 @@ Comprehensive educational project teaching "harness engineering" — building in
 
 ## Twigpine/openclaude
 
-**Repo**: [Twigpine/openclaude][openclaude] (formerly `Gitlawb/openclaude`; old URL redirects) | **Stars**: 34K | **License**: not plain MIT: its LICENSE file is a NOTICE saying the code is derived from Anthropic's proprietary Claude Code and that contributors' changes are MIT "where legally permissible" (GitHub reports no SPDX match; read 2026-11-22) | **Version**: v0.37.0 (2026-11-17) | **Approach**: Leak-derived
+**Repo**: [Twigpine/openclaude][openclaude] (formerly `Gitlawb/openclaude`; old URL redirects) | **Stars**: 34.5K (checked 2026-11-26) | **License**: not plain MIT: its LICENSE file is a NOTICE saying the code is derived from Anthropic's proprietary Claude Code and that contributors' changes are MIT "where legally permissible" (GitHub reports no SPDX match; read 2026-11-22) | **Version**: v0.37.0 (2026-11-17) | **Approach**: Leak-derived
 
 Open-source multi-provider CLI derived from the March 2026 Claude Code source exposure. Strips telemetry and adds provider-agnostic functionality.
 
@@ -100,11 +100,11 @@ Open-source multi-provider CLI derived from the March 2026 Claude Code source ex
 
 **Features**: Bash/file tools, grep/glob, slash commands, MCP integration, web search (DuckDuckGo/Firecrawl), per-task agent routing for cost optimization, and a headless gRPC server mode for embedding in other apps.
 
-**Provenance note**: Explicitly acknowledges derivation from leaked source. "Not an authorized fork or open-source release by Anthropic." Claude remains trademarked by Anthropic. 804 commits, actively maintained.
+**Provenance note**: Explicitly acknowledges derivation from leaked source. "Not an authorized fork or open-source release by Anthropic." Claude remains trademarked by Anthropic. About 1,477 commits (checked 2026-11-26), actively maintained.
 
 ## coder/claudecode.nvim
 
-**Repo**: [coder/claudecode.nvim][nvim] | **Stars**: 2.8K | **License**: MIT | **Version**: v0.3.0 (2025-09-16) | **Approach**: Cleanroom
+**Repo**: [coder/claudecode.nvim][nvim] | **Stars**: 3.2K (checked 2026-11-26) | **License**: MIT | **Version**: v0.4.0 (2026-11-09) | **Approach**: Cleanroom
 
 Pure Lua Neovim plugin that reverse-engineered the Claude Code IDE integration protocol (WebSocket JSON-RPC 2.0 / MCP). Achieved 100% compatibility with the VS Code extension protocol without accessing proprietary source.
 
@@ -116,7 +116,7 @@ Cross-ref: [CC-ide-integration-protocol.md](../cc-native/configuration/CC-ide-in
 
 ## agentforce314/clawcodex (ClawCodex)
 
-**Repo**: [agentforce314/clawcodex][clawcodex] | **Stars**: 928 (`gh api` 2026-11-22) | **License**: MIT | **Approach**: Cleanroom
+**Repo**: [agentforce314/clawcodex][clawcodex] | **Stars**: 927 (`gh api`, checked 2026-11-26) | **License**: MIT | **Approach**: Cleanroom
 
 Production-oriented Python rebuild of a Claude Code-style agent harness, described as "real architecture, reliable CLI agent" with new features released weekly. ~233,520 lines across 1,093 Python files (Python 3.10+), accessed 2026-06-16.
 
@@ -128,15 +128,15 @@ Production-oriented Python rebuild of a Claude Code-style agent harness, describ
 
 **Benchmarks (self-reported)**: the repository README now reports Terminal-Bench 2.1 at 80.9% (72 of 89 tasks, pass@1) on Claude Opus 5, and an `/eco` mode that cut Bash-output tokens by 80% (92,989 → 17,767 across 27 replayed command outputs) (README, read 2026-11-22). The SWE-bench Verified figure the June README gave is no longer stated there.
 
-**Provenance note**: Self-described cleanroom rebuild with no stated derivation from leaked source. LOW risk for citation.
+**Provenance note**: Self-described cleanroom rebuild with no stated derivation from leaked source; however its README (checked 2026-11-26) says it was "ported from the TypeScript reference implementation", which conflicts with the cleanroom label and is unresolved. LOW risk for citation.
 
-**Adoption**: **Assess** — Benchmark numbers are self-reported, and 928 stars and no external validation of its benchmark methodology warrant monitoring before deeper integration. The multi-LLM angle distinguishes it from other reimplementations in this landscape.
+**Adoption**: **Assess** — Benchmark numbers are self-reported, and 927 stars and no external validation of its benchmark methodology warrant monitoring before deeper integration. The multi-LLM angle distinguishes it from other reimplementations in this landscape.
 
 ## zackautocracy/claude-code
 
 **Repo**: [razakiau/claude-code][zack] (formerly `zackautocracy/claude-code`; old URL redirects) | **Stars**: 1.0K | **Approach**: Leak-derived (snapshot)
 
-Read-only source snapshot from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]). Not a reimplementation — a navigable archive maintained for *"educational, defensive security research, and software supply-chain analysis"* by a university student (autocracy101).
+Read-only source snapshot from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure ([2026-03-31][register-leak]; the version number is not named by that article, unverified there). Not a reimplementation — a navigable archive maintained for *"educational, defensive security research, and software supply-chain analysis"* by a university student (autocracy101).
 
 Powers [ccunpacked.dev][ccunpacked] — a visual architecture explorer with interactive codebase tiles, agent loop walkthrough, tool/command catalogs, and hidden features documentation.
 

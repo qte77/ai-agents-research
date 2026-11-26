@@ -3,7 +3,7 @@ title: CC Cross-Session Messaging
 source: https://code.claude.com/docs/en/cross-session-messaging
 purpose: Analysis of Claude Code's first-party cross-session messaging — independent sessions you start and steer yourself message each other, distinct from agent-team/subagent mailboxes.
 created: 2026-09-23
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-10-24
 status: adopt
 ---
@@ -51,7 +51,7 @@ Same-machine, cross-repo messaging works with no configuration: "two sessions ca
 
 ## Third-Party Alternative: Vercel `board`
 
-[`vercel/board`][vboard] (Apache-2.0 per its `LICENSE`; 257 stars; `@vercel/board` 0.56.1 released 2026-11-23; repo created 2026-10-01; `gh api`, read 2026-11-24) is not a Claude Code feature. It is a message board for people and coding agents, with channels, threads and leased tasks, kept in Vercel's API (or a local or tailnet board you serve yourself) ([README][vboard]). Where the native channel above is a direct, same-machine or Remote Control message between independent sessions, `board` is a shared, durable log that any agent or CI job reads and writes.
+[`vercel/board`][vboard] (Apache-2.0 per its `LICENSE`; 294 stars (checked 2026-11-26); `@vercel/board` 0.56.1 released 2026-11-23; repo created 2026-10-01; `gh api`) is not a Claude Code feature. It is a message board for people and coding agents, with channels, threads and leased tasks, kept in Vercel's API (or a local or tailnet board you serve yourself) ([README][vboard]). Where the native channel above is a direct, same-machine or Remote Control message between independent sessions, `board` is a shared, durable log that any agent or CI job reads and writes.
 
 - **How a Claude Code session uses it**: through the `vb` CLI (`vb post`, `reply`, `read`, `wait`, `tasks claim`) plus an installable agent skill (`npx skills add vercel/board --skill board`) that teaches the agent to read a thread before joining and to wait for answers ([README][vboard]; [coding-agents guide][vboard-agents]). No Claude Code docs page names it; this is the generic skill-plus-CLI route.
 - **Identity model**: no accounts; every request carries an OpenID Connect (OIDC) token and every message records the verified principal that wrote it (`vercel:user:<id>`, GitHub Actions repo, Vercel deployment, or `tailscale:user:<login>` on a tailnet board). An agent names itself with `--as`, shown as, for example, "claude via julian" ([identity doc][vboard-identity]; README). This is attribution of who wrote, not isolation between agents.
@@ -62,7 +62,7 @@ Same-machine, cross-repo messaging works with no configuration: "two sessions ca
 
 ### Message delivery mechanics
 
-The receiving Claude reads a message between tool calls during an active turn (a running tool is never interrupted); if the receiving session is idle, Claude Code starts a new turn with the message. An `@` mention of a file or Model Context Protocol (MCP) resource inside a message arrives as plain text — Claude Code attaches nothing automatically. Before v2.1.251, an `@` mention that started a new turn did attach the file or resource on the receiving side (docs page only — no distinct CHANGELOG line found for this specific behavior change; see [Availability](#other-stated-gates-docs-page-only-not-independently-changelog-confirmed)) ([cross-session-messaging][cc-xsm]).
+The receiving Claude reads a message between tool calls during an active turn (a running tool is never interrupted); if the receiving session is idle, Claude Code starts a new turn with the message. An `@` mention of a file or Model Context Protocol (MCP) resource inside a message arrives as plain text — Claude Code attaches nothing automatically. The page states this holds whether the message starts a new turn or arrives during one ([cross-session-messaging][cc-xsm]).
 
 Claude Code refuses to send a message (in the sending session, before it leaves) when: it is over the ~1M-character size cap; a rapid burst to the target has exceeded what that session's inbox accepts; the reply-target socket on this machine fails a safety check (e.g., a symlinked target); or the message addresses the sending session's own name.
 
@@ -183,10 +183,6 @@ Cross-checked each stated gate against the [`anthropics/claude-code` CHANGELOG][
 ### Native Windows — unresolved discrepancy
 
 The docs page states native Windows requires **v2.1.234+**, both in its opening note and in its Availability section ("v2.1.224 or later on macOS, Linux, and WSL 2, and v2.1.234 or later on native Windows"). The CHANGELOG's v2.1.234 entry has no cross-session-messaging line for Windows at all; the first (and only) explicit Windows-availability entry found is at **v2.1.239**: "Windows: cross-session messaging is now available, so Claude Code sessions across your machines can message each other with `SendMessage` and find each other with `ListAgents`, as on macOS and Linux." **This is unreconciled as of 2026-09-23** — the two first-party sources disagree by five patch releases, and no CHANGELOG entry at v2.1.234–v2.1.238 supports the docs page's earlier date. Confirm against `claude --version` behavior on a native-Windows install before relying on either number.
-
-### Other stated gates (docs page only, not independently CHANGELOG-confirmed)
-
-The docs page also states, without a distinct CHANGELOG line found for it: before v2.1.251, an `@` mention in a message that started a new turn attached the file/MCP resource on the receiving side (v2.1.251's changelog entries cover file-tool symlink and plugin-path fixes but no line matching this specific behavior change) — included above with the caveat that it is sourced from the docs page alone.
 
 ### Platform / provider matrix
 

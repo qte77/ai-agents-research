@@ -3,7 +3,7 @@ title: CC Web Setup, Authentication & API Key Usage
 source: https://code.claude.com/docs/en/claude-code-on-the-web
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive use, connect remote sessions, and the Claude Console admin surface an org API key touches.
 created: 2026-03-24
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-11-15
 status: assess
 ---
@@ -20,7 +20,7 @@ This document covers **authentication and setup** for Claude Code across web, te
 
 ### Prerequisites
 
-- Claude Pro, Max, Team, or Enterprise account ([source][cc-web])
+- Claude Pro, Max, Ultra, or Team plan, or an Enterprise account with premium or Chat + Claude Code seats; on Team and Enterprise `/web-setup` stays hidden until an Owner turns on the Quick setup toggle ([source][cc-web])
 - GitHub-hosted repository (GitLab/other providers not supported) ([source][cc-web])
 
 ### Setup Steps
@@ -38,7 +38,7 @@ This document covers **authentication and setup** for Claude Code across web, te
 The web UI at `claude.ai/code` prompts you to connect your GitHub account via OAuth. This installs the **Claude GitHub App** which provides:
 
 - Repository cloning into isolated VMs
-- Branch pushing (restricted to working branch)
+- Branch pushing (the proxy rejects branch deletions and non-branch pushes such as tags)
 - PR creation
 
 **GitHub App permissions** (managed by Anthropic, not user-configurable):
@@ -62,7 +62,7 @@ The terminal-initiated cloud-session flow:
 2. Connect GitHub via `/web-setup` (`gh auth login` first) or in `claude.ai/code` settings (one-time)
 3. From terminal: `claude --cloud "task description"` creates a cloud session — the older `--remote` spelling still works as a deprecated alias for `--cloud` ([source][cc-web])
 
-Once connected, the Claude GitHub App handles all git operations in the cloud VM through a dedicated proxy with scoped credentials ([source][cc-web]).
+Once connected, the Claude GitHub App handles all git operations in the cloud VM through a dedicated proxy with scoped credentials ([source][cc-web]). With `/web-setup` instead, your own `gh` token is stored encrypted and used with no App installation; the proxy attaches whichever credential is stored. Public repos can be cloned either way, private repos need the App or a `/web-setup` token.
 
 #### GitHub Proxy — How Git Auth Works in Cloud
 
@@ -71,7 +71,7 @@ Inside the cloud VM sandbox, the git client does **not** have your GitHub creden
 - A **scoped credential** is injected into the sandbox
 - All git operations go through a **dedicated GitHub proxy** service
 - The proxy verifies the scoped credential and translates it to your actual GitHub auth token
-- Push operations are **restricted to the current working branch** ([source][cc-web])
+- The proxy rejects branch deletions and pushes of anything other than a branch, such as a tag; it does not limit which branches a push can update, so use GitHub branch protection or rulesets for that ([source][cc-web])
 
 Sensitive credentials (GitHub tokens, signing keys) are never inside the sandbox.
 
@@ -163,7 +163,7 @@ Personal and service-account keys are identity-backed and preferred for new inte
 
 A key created for one specific workspace only ever runs there, and its requests can omit any workspace header. A key granted access to several workspaces (a multi-workspace personal or service-account key) must instead name the target workspace on every request, in the `anthropic-workspace-id` header — the CLI/SDK equivalent is an `extra_headers`/`default_headers` entry, or (Claude Code specifically, see below) `ANTHROPIC_CUSTOM_HEADERS` ([source][console-auth]).
 
-**Owner observation** (2026-10-14), running `claude -p` headless with an exported Console key: a 400 error reading "This API key is not scoped to a workspace, so this request must include the anthropic-workspace-id header." The current Console docs' own wording for the same condition differs slightly but states the identical requirement — a 400 `invalid_request_error`: "anthropic-workspace-id is required when authenticating with an identity-linked API key; send the id of the workspace this request acts in." ([source][console-auth]) A header value that isn't a valid workspace ID, or that names a workspace the key's owner can't access, returns a different 400/404 ([source][console-auth]).
+**Owner observation** (2026-10-14), running `claude -p` headless with an exported Console key: a 400 error reading "This API key is not scoped to a workspace, so this request must include the anthropic-workspace-id header." The current Console docs' own wording for the same condition differs slightly but states the identical requirement — a 400 `invalid_request_error`: "This API key is not scoped to a workspace, so this request must include the anthropic-workspace-id header with the ID of the workspace to use. Add the header, or use an API key that is scoped to a workspace." ([source][console-auth]) (checked 2026-11-26; the earlier "identity-linked" wording is gone) A header value that isn't a valid workspace ID, or that names a workspace the key's owner can't access, returns a different 400 ("must be a valid workspace ID") or 404 ("Workspace not found") ([source][console-auth]).
 
 Two ways to resolve it:
 
@@ -235,10 +235,10 @@ For rotating keys (e.g., from HashiCorp Vault):
 }
 ```
 
-- Called after 5 minutes or on HTTP 401
+- Called after 5 minutes or on HTTP 401 (newer pages also mention reruns on a 403 and on JWT expiry, v2.1.246+; unverified)
 - Custom TTL: set `CLAUDE_CODE_API_KEY_HELPER_TTL_MS` env var
 - Warning shown if script takes >10 seconds
-- **Only applies to terminal CLI** — not Desktop or remote sessions ([source][cc-auth])
+- Applies to the CLI and the surfaces that wrap it (VS Code extension, Agent SDK, GitHub Actions); Claude Desktop and cloud sessions do not call it ([source][cc-auth])
 
 ### Org-Level Rate Limits and Spend Caps
 
@@ -250,6 +250,8 @@ These apply only to Path B (Console API keys); they have no bearing on the claud
 - Request a higher tier or cap via **Request tier increase** on the Rate limits page, or Anthropic support for urgent needs ([source][console-ratelimits]).
 
 ### Monitoring Org Spend — Usage and Cost Admin API
+
+The docs now label this API legacy ("remains supported") and direct new integrations to the Usage and Cost Analytics API; for per-user Claude Code cost they point first to that API's cost endpoint (`products[]=claude_code&group_by[]=actor`) and also name the Claude Code Analytics API (checked 2026-11-26).
 
 For visibility into Path B spend across an org's keys and workspaces, the **Usage and Cost Admin API** exposes `/v1/organizations/usage_report/messages` (token counts, filterable/groupable by `api_key_ids[]`, `workspace_ids[]`, `models[]`, `service_tiers[]`) and `/v1/organizations/cost_report` (USD cost, daily buckets only) ([source][console-usagecost]).
 
@@ -352,7 +354,7 @@ in the docs read" means those pages are silent, not that no rule exists elsewher
 | [Gemini CLI](../../non-cc/coding-agents/gemini-cli-analysis.md) | `-p` or a non-TTY run ([headless][gemini-headless]) | Cached login, `GEMINI_API_KEY`, or Vertex AI ([auth][gemini-auth]) | Gemini Code Assist (individual) login: 1,000 requests/day; Google AI Pro 1,500; AI Ultra 2,000; unpaid API key: 250/day, Flash only ([quotas][gemini-quota]) | "Directly accessing the services powering Gemini CLI (for example, the Gemini Code Assist service) using third-party software, tools, or services (for example, using OpenClaw with Gemini CLI OAuth) is a violation of applicable terms and policies" ([terms][gemini-tos]); scripted use of the CLI itself not stated |
 | [Copilot CLI](../../non-cc/agents/github-copilot-cli-analysis.md) | `copilot -p` | `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN`; classic `ghp_` PATs "Not supported by Copilot CLI" ([auth][copilot-auth]); in Actions, a PAT "if you want usage billed to a specific user's Copilot seat" ([Actions][copilot-actions]) | GitHub AI Credits, "1 AI credit = $0.01 USD" ([billing][copilot-billing]) | No rule in the Copilot CLI docs read |
 | [Cursor CLI](../../non-cc/coding-agents/cursor-analysis.md) | `agent -p` (`--force` to skip approvals) | `CURSOR_API_KEY` ([auth][cursor-auth]); team admins can turn on "Disable CLI headless mode" ([headless][cursor-headless]) | Paid plans have "a weekly pool of usage for Cursor models"; third-party models at "API list price, from prepaid credit" on Premium and above ([pricing][cursor-pricing]); the page doesn't name the CLI | No rule in the CLI docs read; Cursor's general terms not checked |
-| [opencode](../../non-cc/coding-agents/opencode-analysis.md) Go plan | `opencode run`, "designed for scripts, CI jobs, and other workflows" ([CLI][opencode-cli]) | Provider keys or logins ([providers][opencode-providers]) | Go $10/month, Go Plus $40, Go Teams $20/member; "Service accounts are not covered by Go Teams" ([Go][opencode-go]) | "Go and Go Plus are for workspaces with a single member"; "Traffic is monitored for abuse" ([Go][opencode-go]) |
+| [opencode](../../non-cc/coding-agents/opencode-analysis.md) Go plan | `opencode run`, "designed for scripts, CI jobs, and other workflows" ([CLI][opencode-cli]) | Provider keys or logins ([providers][opencode-providers]) | Go $10/month, Go Plus $40, Go Teams $20/member; "Service accounts are not covered by Go Teams" ([Go][opencode-go]) | the page says Go and Go Plus cover the member who subscribes and the workspace's API keys, while other invited members use free models or the workspace balance; "Traffic is monitored for abuse" ([Go][opencode-go]) |
 | Z.ai GLM Coding Plan | Through a supported tool | Plan API key | Plan quota | "may only be used within officially supported tools and products"; "Accounts with more than three violations may be banned" ([usage policy][zai-policy]) |
 | MiniMax M Plan | Through a compatible tool | Plan API key | Plan quota | "designed for individual, interactive developer use ... Pay-as-you-go is recommended for production use" ([FAQ][minimax-faq]) |
 

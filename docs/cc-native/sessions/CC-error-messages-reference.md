@@ -3,7 +3,7 @@ title: CC Error Messages Reference
 purpose: Catalog of Claude error messages with triggers, resolutions, and community workarounds
 source: https://support.claude.com/en/articles/12466728-troubleshoot-claude-error-messages
 created: 2026-04-04
-updated: 2026-04-04
+updated: 2026-11-26
 validated_links_on: 2026-04-04
 status: assess
 ---
@@ -18,9 +18,10 @@ Reference of user-facing error messages in Claude and Claude Code, sourced from 
 
 | Message | Trigger | Resolution |
 |---------|---------|------------|
-| "Approaching 5-hour limit." | Approaching plan's limit within a 5-hour window | Review [usage limit best practices][err-article] |
+| "Approaching session limit" / "Approaching weekly limit" (may show "You've used X% of your weekly limit") | Approaching the plan's session or weekly limit | Review [usage limit best practices][err-article] |
 | "5-hour limit reached - resets [time]." | Plan limit exceeded | Wait for reset timer |
-| "5-hour limit resets [time] - continuing with extra usage." | Paid user with extra usage enabled hits limit | Consult extra usage docs for plan type |
+| "You've reached your weekly limit. It resets [day] at [time]." | Weekly limit reached without usage credits | Wait for reset |
+| "5-hour limit resets [time] - continuing with usage credits" (also "Now using credits. Your plan limit resets [day] at [time]") | Usage credits are enabled and the limit was hit; work continues on credits | No action needed |
 
 Community perspectives on limits and workarounds:
 
@@ -33,7 +34,7 @@ Community perspectives on limits and workarounds:
 
 | Message | Trigger | Resolution |
 |---------|---------|------------|
-| "Your message will exceed the length limit for this chat..." | Input exceeds maximum length | Break into smaller chunks, summarize key sections, start new conversation |
+| "Your message will exceed the length limit for this chat. Try attaching fewer or smaller files or starting a new conversation." | Input exceeds maximum length (paid plans with code execution summarize earlier messages automatically) | Break into smaller chunks, summarize key sections, start new conversation |
 
 ### Login Errors
 
@@ -45,7 +46,7 @@ Community perspectives on limits and workarounds:
 
 | Message | Trigger | Resolution |
 |---------|---------|------------|
-| "Due to unexpected capacity constraints, Claude is unable to respond..." | High system-wide demand | Retry in a few minutes (temporary, not an outage) |
+| "Due to unexpected capacity constraints, Claude is unable to respond... Please try again soon." | High system-wide demand; these messages do not appear on the status page (load management) | Retry in a few minutes (temporary, not an outage) |
 
 ### Service Incidents
 
@@ -55,12 +56,12 @@ Community perspectives on limits and workarounds:
 
 ## BUDDY / Companion
 
-The BUDDY companion (Glitch) is a Tamagotchi-style pet displayed beside the input box. Users looking to disable it:
+The BUDDY companion (name unverified; issue titles name Clatter and Welkin) is a Tamagotchi-style pet displayed beside the input box. Users looking to disable it:
 
-- `/buddy off` — works per-session but [reappears after 1-2 minutes][gh-42348]
-- No persistent disable exists — no settings.json key, no env var, no CLI flag (verified 2026-04-04)
+- `/buddy off` — works per-session but [reappears after 1-2 minutes][gh-42348] (unverified)
+- No persistent disable exists — no settings.json key, no env var, no CLI flag (checked 2026-04-04; unverified as of 2026-11-26)
 - Hooks cannot invoke `/buddy off` (slash commands run inside REPL, hooks run shell scripts outside it)
-- Tracked in [anthropics/claude-code#42506][gh-42506] (dupes: [#42348][gh-42348], [#42287][gh-42287], [#41942][gh-41942])
+- Tracked in [anthropics/claude-code#42506][gh-42506], closed as not planned (checked 2026-11-26) (dupes, also closed as not planned: [#42348][gh-42348], [#42287][gh-42287], [#41942][gh-41942])
 - Community guide: [How to disable the BUDDY pet][buddy-guide]
 
 ## Cross-References
