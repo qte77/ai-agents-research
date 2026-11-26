@@ -2,7 +2,7 @@
 title: Google Cloud Agent Stack Analysis — Gemini Enterprise Agent Platform, ADK, Gemini Enterprise
 purpose: First-party read of what Google Cloud ships for business and developer agents (platform, runtime, identity, gateway, registry, IAM roles, editions, regions), with Claude availability; no prices.
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-11-20
 status: assess
 ---
@@ -33,7 +33,7 @@ Python client with `reasoningEngines` still in IAM permission names.
 | Name | What it is (per docs) | Status as read |
 |---|---|---|
 | **Gemini Enterprise Agent Platform** | Build, scale, govern, optimize pillars; 200+ models in Model Garden ([overview][overview]) | Platform; stages are per feature |
-| **Agent Development Kit (ADK)** | Modular, model-agnostic open-source framework; repo [google/adk-python][adk] is Apache-2.0, latest release v2.15.0 (2026-11-19) | Shipped |
+| **Agent Development Kit (ADK)** | Modular, model-agnostic open-source framework; repo [google/adk-python][adk] is Apache-2.0, latest release v2.15.1 (2026-11-25) | Shipped |
 | **Agent Studio / Agent Garden** | Low-code canvas and prebuilt agents/templates ([overview][overview]) | Per-feature; not dated here |
 | **Agent Runtime** (ex Agent Engine) | Managed runtime for deployed agents, with Sessions, Memory Bank and sandboxed code execution; long-running operations up to 7 days per the 2026-04-22 note | Renamed 2026-04-22; GA date of the runtime itself not re-verified |
 | **Agent Identity** | Per-agent identity tied to the agent's lifecycle | GA per release note of 2026-04-22; its newer `agentidentity.googleapis.com` API is in Preview |
@@ -140,7 +140,7 @@ processing follows the model endpoint's location.
 | [claude-page] | [Claude on the platform][claude-page] | Claude model names |
 | [ge-overview] | [Gemini Enterprise overview][ge-overview] | Editions, connectors |
 | [ge-editions] | [Gemini Enterprise editions][ge-editions] | Seats, identity, partner models |
-| [adk] | [google/adk-python][adk] | Apache-2.0, v2.15.0 (GitHub API, 2026-11-20) |
+| [adk] | [google/adk-python][adk] | Apache-2.0, v2.15.1 (GitHub API, checked 2026-11-26) |
 | [gcp-overview] | [Claude Models on Google Cloud][gcp-overview] | Anthropic-managed vs Google-managed split |
 
 ## Cross-References
