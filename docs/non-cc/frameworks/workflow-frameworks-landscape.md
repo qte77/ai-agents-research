@@ -2,7 +2,7 @@
 title: Agentic Workflow Frameworks — Landscape
 purpose: The workflows-vs-agents distinction (Anthropic's 5 patterns), agentic-workflow frameworks, durable-execution engines and production anti-patterns, beyond Claude Code's own workflow tool.
 created: 2026-06-27
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-11-25
 status: research
 ---
@@ -27,14 +27,14 @@ Claude Code's own Workflow tool implements these in a deterministic JS script �
 
 The orchestration frameworks themselves are catalogued in [agent-frameworks-infrastructure-landscape.md §1](agent-frameworks-infrastructure-landscape.md) (LangGraph, CrewAI, AutoGen, …); this table adds the axis that matters for *workflows* — **deterministic-DAG vs agentic** control flow, and whether execution is **durable** (survives a crash/restart). Stars via `gh api`, 2026-06-27.
 
-| Framework | Stars | Control flow | Durable? |
+| Framework | Stars (2026-11-26) | Control flow | Durable? |
 |---|---|---|---|
-| [LangGraph][langgraph] | 35.9K | graph (DAG + agentic) | checkpointers |
-| [CrewAI][crewai] | 54.5K | roles + flows | app-level only |
-| [Langflow][langflow] | 150.1K | visual DAG builder | no |
-| [Mastra][mastra] | 25.5K | TS workflows + agents | suspend/resume |
-| [Burr][burr] | 2.5K | explicit state-machine DAG | persisters |
-| [Conductor (OSS)][conductor] | 32.0K | server-orchestrated DAG | yes (server-side) |
+| [LangGraph][langgraph] | 45.5K | graph (DAG + agentic) | checkpointers |
+| [CrewAI][crewai] | 61.3K | roles + flows | app-level only |
+| [Langflow][langflow] | 157.0K | visual DAG builder | no |
+| [Mastra][mastra] | 29.8K | TS workflows + agents | suspend/resume |
+| [Burr][burr] | 2.6K | explicit state-machine DAG | persisters |
+| [Conductor (OSS)][conductor] | 32.5K | server-orchestrated DAG | yes (server-side) |
 | [Prefect][prefect] | 24.2K (2026-11-25) | Python flows; data/workflow orchestrator | not assessed |
 | [Dagster][dagster] | 16.5K (2026-11-25) | asset-based pipelines; data orchestrator | not assessed |
 | [Apache Airflow][airflow] | 47.7K (2026-11-25) | Python-defined DAGs; scheduler | not assessed |
@@ -57,11 +57,11 @@ Caveat on the Airflow MCP absence: searched the `apache` GitHub org's repository
 
 When a workflow must survive process crashes, provider timeouts, or human-in-the-loop pauses lasting hours, **durable-execution engines** persist each step so a fresh process resumes from the last checkpoint. The pattern mainstreamed across AWS / Cloudflare / Vercel in late 2025.
 
-| Engine | Stars | Model |
+| Engine | Stars (2026-11-26) | Model |
 |---|---|---|
-| [Temporal][temporal] | 21.3K (MIT) | workflows-as-code; deterministic replay from an event history |
-| [Inngest][inngest] | 5.5K | event-driven durable functions with built-in flow control |
-| [Restate][restate] | 4.1K | durable execution + virtual objects; low-latency |
+| [Temporal][temporal] | 24.6K (MIT) | workflows-as-code; deterministic replay from an event history |
+| [Inngest][inngest] | 6.1K | event-driven durable functions with built-in flow control |
+| [Restate][restate] | 4.7K | durable execution + virtual objects; low-latency |
 
 The core primitive is idempotency on a stable **`(workflow_id, step_id)`** key — so a replayed step is a no-op, not a duplicated side-effect.
 
@@ -137,7 +137,7 @@ Four October 2026 preprints, abstract pages read 2026-11-18; all single-source a
 | [CC sessions][cc-sessions] · [CC CLI][cc-cli] · [Codex commands][codex-cmds] · [Gemini sessions][gem-sessions] · [OpenCode CLI][oc-cli] | Harness resume and caps (2026-11-18) |
 | [AgentTime][arx-agenttime] · [Loud/Quiet Failures][arx-quiet] · [Sentry][arx-sentry] · [Transect][arx-transect] | Long-run failure preprints (abstract pages, 2026-11-18) |
 | [Prefect][prefect] · [Dagster][dagster] · [Airflow][airflow] · [FastMCP][fastmcp] · [prefect-mcp-server][pf-mcp] · [dagster-io/skills][dg-skills] · [Airflow common-ai][af-ai] · [Airflow anthropic][af-anth] · [Airflow openai][af-oai] · [Dagster+ MCP][dg-mcp] · [Dagster anthropic][dg-anth] · [Dagster openai][dg-oai] | Data-orchestrator AI surfaces (`gh api`, PyPI, vendor docs, 2026-11-25) |
-| [LangGraph][langgraph] · [CrewAI][crewai] · [Langflow][langflow] · [Mastra][mastra] · [Burr][burr] · [Conductor (OSS)][conductor] | Workflow / orchestration frameworks (stars via `gh api`, 2026-06-27) |
+| [LangGraph][langgraph] · [CrewAI][crewai] · [Langflow][langflow] · [Mastra][mastra] · [Burr][burr] · [Conductor (OSS)][conductor] | Workflow / orchestration frameworks (stars via `gh api`, 2026-11-26) |
 
 [anthropic-bea]: https://www.anthropic.com/research/building-effective-agents
 [temporal]: https://github.com/temporalio/temporal
@@ -147,7 +147,7 @@ Four October 2026 preprints, abstract pages read 2026-11-18; all single-source a
 [crewai]: https://github.com/crewAIInc/crewAI
 [langflow]: https://github.com/langflow-ai/langflow
 [mastra]: https://github.com/mastra-ai/mastra
-[burr]: https://github.com/DAGWorks-Inc/burr
+[burr]: https://github.com/apache/burr
 [conductor]: https://github.com/conductor-oss/conductor
 [temporal-we]: https://docs.temporal.io/workflow-execution
 [temporal-af]: https://docs.temporal.io/encyclopedia/detecting-activity-failures
