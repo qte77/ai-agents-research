@@ -3,12 +3,12 @@ title: GitHub Copilot CLI Analysis
 source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface, plus the Copilot SDK that embeds the same engine.
 created: 2026-06-11
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-10-24
 status: assess
 ---
 
-**Details:** Proprietary ([custom license][copilot-cli-license], no derivatives) | **GA**: 2026-02-25 | **Version**: v1.0.61 (2026-06-09) | requires active Copilot subscription. Also runs on or integrates with: `cli`, `cloud`.
+**Details:** Proprietary ([custom license][copilot-cli-license], no derivatives) | **GA**: 2026-02-25 | **Version**: v1.0.116 (2026-11-25, checked 2026-11-26) | requires active Copilot subscription. Also runs on or integrates with: `cli`, `cloud`.
 
 ## What It Is
 
@@ -105,8 +105,8 @@ README and `gh api`).
   `COPILOT_GITHUB_TOKEN` / `GH_TOKEN` / `GITHUB_TOKEN`.
 - **Tools by default:** the CLI's first-party tools are exposed, similar to `--allow-all`; the
   application's permission handler decides each call, so an embedding app owns the approval policy.
-- **Status (2026-11-20):** latest stable release v2.0.1 (2026-11-18); v2.0.2 pre-releases on
-  2026-11-19; repository pushed 2026-11-19. The README states "The Microsoft Copilot SDK is
+- **Status (2026-11-26):** latest stable release v2.0.3 (2026-11-25); v2.0.4 preview
+  pre-releases followed; repository pushed 2026-11-26. The README states "The Microsoft Copilot SDK is
   generally available and follows semantic versioning" ([README][copilot-sdk]).
 - **Licence scope:** the repository is MIT, but the README does not say whether the MIT licence
   also covers the native runtime the SDK loads (it describes a separate runtime component), so
@@ -123,7 +123,7 @@ README and `gh api`).
 | **Model flexibility** | Multi-provider via `/model` (default Claude Sonnet 4.5) |
 | **Extensibility** | MCP (GitHub server default), custom agents, plugins, LSP |
 | **Permission model** | Preview-every-action → plan/autopilot → `--yolo`; local/cloud sandbox |
-| **Maturity** | GA 2026-02-25, actively released (v1.0.61) |
+| **Maturity** | GA 2026-02-25, actively released (v1.0.116, checked 2026-11-26) |
 | **License** | **Proprietary** (CLI) — no modification, no standalone redistribution; the SDK repository is MIT, runtime licence unclear ([SDK section](#copilot-sdk-embed-the-clis-agent-engine)) |
 | **Cost** | Copilot Pro / Pro+ / Business / Enterprise; usage billed in GitHub AI Credits. The SDK also works on the Copilot free tier (limited usage) per its README, or with your own model key |
 

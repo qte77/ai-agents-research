@@ -4,7 +4,7 @@ source: https://github.com/HKUDS/AutoAgent
 purpose: Analysis of AutoAgent as a zero-code LLM agent framework with self-developing capabilities.
 status: research
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-11-26
 validated_links_on: 2026-04-06
 ---
 
@@ -14,9 +14,9 @@ validated_links_on: 2026-04-06
 
 AutoAgent is a **fully-automated, zero-code LLM agent framework** from the University of Hong Kong (HKUDS lab). Users create and deploy agents through natural language alone -- no programming required. It operates as an autonomous Agent Operating System with self-developing capabilities: the system can generate its own tools, agents, and workflows at runtime.
 
-**Stars**: 8,925 | **License**: MIT | **Paper**: [arxiv:2502.05957](https://arxiv.org/abs/2502.05957)
+**Stars**: 9,839 (checked 2026-11-26) | **License**: MIT | **Paper**: [arxiv:2502.05957](https://arxiv.org/abs/2502.05957)
 
-**Key distinction**: Unlike LangChain or AutoGen (which require programming), AutoAgent targets the 99.97% of the population without coding skills. Unlike CC (which requires CLI proficiency), AutoAgent accepts plain natural language task descriptions.
+**Key distinction**: Unlike LangChain or AutoGen (which require programming), AutoAgent targets the 99.97% of the population without coding skills (unverified; not in the arXiv abstract or README). Unlike CC (which requires CLI proficiency), AutoAgent accepts plain natural language task descriptions.
 
 ## Cross-References in This Repository
 
@@ -52,7 +52,7 @@ Four components forming an autonomous Agent Operating System:
 3. **Self-Managing File System** -- autonomous resource management
 4. **Self-Play Agent Customization** -- iterative self-refinement for single and multi-agent systems
 
-**Self-modification**: Docker sandbox allows AutoAgent to update its own codebase, adding new tools/agents/workflows to a cloned mirror repository during runtime.
+**Self-modification**: in the agent and workflow editor modes, AutoAgent clones a mirror of its repository into the Docker-containerized agent-interactive environment and updates it, adding new tools/agents/workflows during runtime ([README](https://github.com/HKUDS/AutoAgent)).
 
 ## Model Support
 
@@ -73,7 +73,7 @@ Uses [LiteLLM](https://github.com/BerriAI/litellm) abstraction layer (100+ model
 | Benchmark | Result |
 |-----------|--------|
 | [GAIA](https://gaia-benchmark-leaderboard.hf.space/) | Surpasses existing SOTA on generalist multi-agent tasks |
-| MultiHopRAG | Superior performance vs alternative LLM-based RAG (Retrieval-Augmented Generation) solutions |
+| MultiHopRAG | Superior performance vs alternative LLM-based RAG (Retrieval-Augmented Generation) solutions (the paper's claim; the [README](https://github.com/HKUDS/AutoAgent#agentic-rag) lists a MultiHopRAG evaluation script) |
 | SWE-bench | Planned |
 | WebArena | Planned |
 
@@ -86,7 +86,7 @@ Uses [LiteLLM](https://github.com/BerriAI/litellm) abstraction layer (100+ model
 | Self-modification | Yes (Docker sandbox) | No | No |
 | Tool creation | Runtime code generation | Model Context Protocol (MCP) servers | 43+ built-in tools |
 | Multi-agent | Workflow Editor mode | Agent teams | Coordinator subsystem |
-| MCP support | No (own tool system) | Yes | Yes |
+| MCP support | Not documented in README (unverified); own tool system | Yes | Yes |
 | Model default | Claude 3.5 Sonnet | Claude (native) | Configurable |
 | Sandboxing | Docker (mandatory) | Filesystem + network | Filesystem |
 

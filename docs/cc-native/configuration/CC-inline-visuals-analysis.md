@@ -3,14 +3,14 @@ title: CC Inline Visuals Analysis
 source: https://claude.com/blog/claude-builds-visuals
 purpose: Analysis of Claude's custom inline visualization capabilities (charts, diagrams, interactive visuals in conversation).
 created: 2026-03-13
-updated: 2026-09-23
+updated: 2026-11-26
 validated_links_on: 2026-03-13
 status: assess
 ---
 
 **Details:** Beta (March 12, 2026) — all plans including free tier
 
-**Scope**: Claude.ai web + desktop app feature (server-side). Not a Claude Code CLI feature — no CC version required. Tracked here because it's an Anthropic platform capability relevant to CC research context.
+**Scope**: Claude.ai web + desktop app feature (server-side), in chat and, per the Help Center article updated 2026-04-22, Cowork (beta). Not a Claude Code CLI feature — no CC version required. Tracked here because it's an Anthropic platform capability relevant to CC research context.
 
 ## What Inline Visuals Are
 
@@ -50,7 +50,7 @@ Visuals can be saved if needed: copy as image, download as `.svg` or `.html`, or
 Visualizations can interact with external platforms via connectors ([source][connectors]):
 
 - **Figma**: Visualize ideas as diagrams directly
-- **Canva**: Generate and browse designs
+- **Canva**: Turn presentation outlines into branded decks with live design edits (per the Jan 2026 connectors page, checked 2026-11-26)
 - **Amplitude**: Build analytics charts with interactive parameter adjustment
 
 ### Availability
@@ -61,7 +61,7 @@ Visualizations can interact with external platforms via connectors ([source][con
 
 ### Limitations
 
-- Generation can take ~30 seconds for complex visuals ([source][engadget])
+- Generation can take ~30 seconds for complex visuals ([source][engadget]) (unverified, third-party)
 - Visuals may disappear unexpectedly during conversations ([source][opentools])
 - Mobile not supported yet ([source][helpcenter])
 - Beta quality — rendering quirks possible ([source][engadget])
@@ -72,6 +72,8 @@ Evolution of "Imagine with Claude" — a temporary experience previewed in Fall 
 
 ### Competitive Context (March 2026)
 
+The comparison below has no first-party source (unverified).
+
 | Provider | Feature | Date | Availability |
 |----------|---------|------|-------------|
 | OpenAI | Dynamic visual explanations (ChatGPT) | Mar 10, 2026 | Paid tiers |
@@ -81,7 +83,7 @@ Evolution of "Imagine with Claude" — a temporary experience previewed in Fall 
 ## References
 
 [blog]: https://claude.com/blog/claude-builds-visuals "Claude builds interactive visuals right in your conversation"
-[helpcenter]: https://support.claude.com/en/articles/13979539-custom-visuals-in-chat-and-cowork "Custom visuals in chat — Claude Help Center"
+[helpcenter]: https://support.claude.com/en/articles/13979539-custom-visuals-in-chat-and-cowork "Custom visuals in chat and Cowork — Claude Help Center"
 [engadget]: https://www.engadget.com/ai/claude-can-now-generate-charts-and-diagrams-160000369.html "Claude can now generate charts and diagrams — Engadget"
 [thenewstack]: https://thenewstack.io/anthropics-claude-interactive-visualizations/ "Anthropic's Claude interactive visualizations — The New Stack"
 [opentools]: https://opentools.ai/news/anthropics-claude-ai-unleashes-exciting-inline-visualization-capabilities "Anthropic's Claude AI inline visualization capabilities — OpenTools"

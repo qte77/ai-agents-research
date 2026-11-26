@@ -3,7 +3,7 @@ title: Amazon Q Developer (CLI + IDE Agent) Analysis
 source: https://aws.amazon.com/q/developer/
 purpose: Assess Amazon Q Developer as a CLI and IDE coding agent, including its deprecation timeline and transition to Kiro.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: hold
 ---
@@ -18,9 +18,9 @@ Bedrock][q-bedrock-note] and augmented with AWS-specific content for architectur
 guidance, code generation, security scanning, and agentic task execution.
 
 **Hold rationale (as of 2026-06-16):** AWS announced end-of-support for Q
-Developer IDE plugins and paid subscriptions on [April 30, 2026][q-eos-blog],
-with the support deadline set for **April 30, 2027**. New Q Developer Free Tier
-account creation and new subscriptions have been blocked since **May 15, 2026**.
+Developer IDE plugins and paid subscriptions on [April 30, 2026][q-eos-blog] (unverified),
+with the support deadline set for **April 30, 2027** ([confirmed][q-docs-what-is]). New Q Developer Free Tier
+account creation and new subscriptions have been blocked since **May 15, 2026** (unverified).
 The CLI has already been rebranded: the [AWS docs CLI page][q-cli-page] now reads
 "The Q CLI has become the Kiro CLI," and the [open-source CLI repo][q-cli-repo]
 (Apache-2.0 + MIT) states it "receives only critical security fixes" with new
@@ -56,9 +56,11 @@ Plugins for VS Code, JetBrains, Visual Studio, and Eclipse (preview) deliver:
 - Security vulnerability scanning (Java, Python, JavaScript)
 - Code transformation: Java language upgrades (up to 4,000 lines/month on Pro), .NET porting
 
-AWS Console, AWS Documentation website, Microsoft Teams, and Slack integrations
-are **not** in the deprecation scope — those continue operating unchanged per the
-[end-of-support announcement][q-eos-blog].
+The Q Developer conversational experience in the AWS Management Console and Console Mobile
+App was renamed the AWS assistant (the AWS Documentation website now has the AWS
+documentation assistant), per the [docs what-is page][q-docs-what-is]. The docs say
+Q Developer in the IDE and on the command line keeps its name, and Teams and Slack are still
+documented as "Amazon Q Developer in chat applications".
 
 ### Model and data handling
 
@@ -71,23 +73,23 @@ not stated in first-party sources reviewed (2026-06-16).
 | Tier | Cost | Agentic requests | Code transformation |
 |---|---|---|---|
 | Free | $0 | 50/month | 1,000 lines/month |
-| Pro | $19/user/month | 10,000 inference calls/month | 4,000 lines/month (pooled) |
+| Pro | $19/user/month | Included, with limits (no numeric cap published; checked 2026-11-26) | 4,000 lines/month (pooled) |
 
 Pro overage for code transformation: $0.003 per line submitted beyond the
 monthly allocation. New Pro subscriptions are no longer available (blocked May 15,
-2026).
+2026, unverified).
 
 ## Adoption Decision
 
 | Dimension | Assessment |
 |---|---|
-| **Status** | **Deprecated** — new signups blocked 2026-05-15; IDE + subscription EOS 2027-04-30 |
+| **Status** | **Deprecated** — new signups blocked 2026-05-15 (unverified); IDE EOS 2027-04-30; subscription EOS date unverified |
 | **CLI** | Rebranded to Kiro CLI; open-source repo maintenance-only |
-| **IDE plugins** | Active through 2027-04-30; no new features |
+| **IDE plugins** | Active through 2027-04-30 (support ends that day); no new features |
 | **License (CLI repo)** | Apache-2.0 + MIT (open source, but maintenance-only) |
 | **License (service)** | Proprietary (AWS managed service) |
 | **Model flexibility** | AWS Bedrock only; no provider switching |
-| **AWS integration** | Deep — Console, Slack/Teams, IAM, AWS Builder ID free login |
+| **AWS integration** | Deep — Console (now the AWS assistant), Slack/Teams, IAM, AWS Builder ID free login |
 | **Cost** | Free tier (50 agentic req/month); Pro $19/user/month (no new subs) |
 
 **Strengths** (historical / for existing users): Deep AWS ecosystem integration
@@ -109,8 +111,9 @@ peers (see [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md)'s `/mo
   in-place rebrand path.
 - **Do not onboard new teams** to Q Developer — new Free Tier account creation
   and new subscription creation are blocked since May 15, 2026.
-- **AWS Console / chat-app users** (Teams, Slack): No action required — these
-  surfaces are not in the deprecation scope.
+- **AWS Console / chat-app users** (Teams, Slack): The Console experience is now the
+  AWS assistant; chat-app integration is still documented under the Q Developer name.
+  Check the AWS docs for your surface.
 - **Track Kiro** as a separate entry once it reaches GA and first-party pricing
   and feature docs stabilize.
 
@@ -123,7 +126,7 @@ peers (see [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md)'s `/mo
 | [Amazon Q Developer pricing page][q-pricing] | Free tier limits (50 agentic req, 1,000 lines), Pro $19/user/month, overage rates (access 2026-06-16) |
 | [Q Developer CLI docs page][q-cli-page] | "The Q CLI has become the Kiro CLI" — confirms CLI rebrand (access 2026-06-16) |
 | [Upgrade to Kiro docs][q-upgrade-kiro] | Rebrand mechanics, admin migration, Kiro console (access 2026-06-16) |
-| [EOS announcement blog][q-eos-blog] | Dates: signup block 2026-05-15, IDE+sub EOS 2027-04-30, blog posted 2026-04-30 |
+| [EOS announcement blog][q-eos-blog] | Dates: signup block 2026-05-15, IDE+sub EOS 2027-04-30, blog posted 2026-04-30 (only 2027-04-30 confirmed, via the docs; other dates unverified) |
 | [amazon-q-developer-cli GitHub repo][q-cli-repo] | License (Apache-2.0 + MIT), v1.19.7 last release 2025-11-17, maintenance-only status (access 2026-06-16) |
 | [Amazon Q Developer FAQs][q-faqs] | CLI shell support (bash/zsh/fish), 250+ CLI completions, language list (access 2026-06-16) |
 

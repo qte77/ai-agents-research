@@ -2,7 +2,7 @@
 title: Spec-Driven Frameworks — Landscape
 purpose: Comparison of spec-driven development frameworks (Spec-Kit, OpenSpec, BMAD-METHOD, Agent-OS, Kiro, Tessl), the deep-dive behind the synthesis entry in the agentic-engineering disciplines landscape.
 created: 2026-06-27
-updated: 2026-11-19
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: research
 ---
@@ -20,7 +20,7 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 | [bmad-code-org/BMAD-METHOD][bmad] | 55.5K (v6.12.4, 2026-10-14) | MIT per the LICENSE file (the API reports "NOASSERTION"); the file adds a trademark notice on the BMad names | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec; moved from `bmadcode/` to the `bmad-code-org` org |
 | [buildermethods/agent-os][agent-os] | 5.6K (v3.0.0, 2026-01-20; last push 2026-10-07) | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
 | [kirodotdev/Kiro][kiro-repo] | 4.5K (no releases; last push 2026-11-05) | Proprietary (AWS Customer Agreement); the GitHub repo has no LICENSE file | requirements/bugfix → design → tasks "waves" | full IDE; specs workflow (variants, Quick Spec, bugfix specs) in [kiro-analysis.md § Spec-Driven Workflow](../coding-agents/kiro-analysis.md) |
-| Tessl | [`tesslio/spec-driven-development-tile`][tessl-tile]: 58 | MIT (that repo) | steering tile, "No framework" per its README | see [Tessl status](#tessl-status); the earlier "closed-beta / spec-as-source" description is unverified and withdrawn |
+| Tessl | [`tesslio/spec-driven-development-tile`][tessl-tile]: 58 | MIT (that repo) | steering tile, "No framework" per its README | see [Tessl status](#tessl-status); the earlier "closed-beta / spec-as-source" description is a dated October 2025 claim ([Fowler][fowler-sdd]), not reproducible today |
 
 ## How they differ
 
@@ -31,7 +31,7 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 
 ## Tessl status
 
-Checked 2026-11-19. The `tesslio` GitHub org holds [`spec-driven-development-tile`][tessl-tile] (58 stars, MIT), whose README describes a "steering tile" for writing specs before coding and states "No framework"; an open-source tile. The org has other repos (for example `cli`, 71 stars, no SPDX license detected by the API), so the old "~41" may have come from one of them; that is a guess, not verified. [tessl.io][tessl] now frames the company around Context, Loops and Factory (footer: Tessl Platform, Tessl Agent, Tessl Registry), with no mention of a spec framework, tiles or beta/GA status. The earlier "~41 stars, closed-beta, spec-as-source" row could not be reproduced and is removed rather than carried forward.
+Checked 2026-11-19. The `tesslio` GitHub org holds [`spec-driven-development-tile`][tessl-tile] (58 stars, MIT), whose README describes a "steering tile" for writing specs before coding and states "No framework"; an open-source tile. The org has other repos (for example `cli`, 71 stars, no SPDX license detected by the API), so the old "~41" may have come from one of them; that is a guess, not verified. [tessl.io][tessl] now frames the company around Context, Loops and Factory (footer, checked 2026-11-26: Tessl Platform, Tessl Registry, Pricing, Docs, System Status), with no mention of a spec framework, tiles or beta/GA status. The earlier "~41 stars, closed-beta, spec-as-source" row could not be reproduced from current sources; its private-beta and spec-as-source wording matches an October 2025 survey by Birgitta Böckeler ([Fowler][fowler-sdd], 15 Oct 2025), a dated claim and not current status.
 
 ## Where SDD sits
 

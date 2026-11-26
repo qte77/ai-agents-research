@@ -3,23 +3,21 @@ title: Cursor AI Code Editor Analysis
 source: https://cursor.com/
 purpose: Analysis of Cursor as a GUI-first AI code editor with agentic composer and a secondary headless CLI.
 created: 2026-06-16
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: trial
 ---
 
-**Details:** **Proprietary** (no open-source license stated) | **GA**: actively shipping | **Version**: 3.7 (2026-06-05) | **Vendor**: Anysphere, Inc.
+**Details:** **Proprietary** (no open-source license stated) | **GA**: actively shipping | **Version**: not shown on the changelog as of 2026-11-26 (3.7 on 2026-06-05, unverified) | **Vendor**: Anysphere, Inc.
 
 ## What It Is
 
 Cursor is a **GUI-first AI code editor** built by Anysphere, Inc., forked from VS
 Code and extended with deep agentic capabilities. The headline product is a
 desktop IDE; a secondary [CLI][cursor-cli-docs] (`agent`) was added for terminal
-and headless workflows. As of version 3.7 (released 2026-06-05), Cursor positions
-itself as an "applied research team focused on the future of software development"
-and claims adoption by over 50% of Fortune 500 companies, with NVIDIA reporting
-all 40,000+ engineers using it (sourced from [cursor.com homepage][cursor-home],
-accessed 2026-06-16 — marketing copy, unaudited).
+and headless workflows. The homepage (checked 2026-11-26) describes Cursor as "an applied research team focused on building the future of software development"
+and says it is "Trusted by over half of the Fortune 500"; a quoted NVIDIA CEO testimonial says about 40,000 of its engineers are assisted by AI
+(sourced from [cursor.com homepage][cursor-home] — marketing copy, unaudited).
 
 **Key distinction vs terminal-native peers** (Claude Code, [GitHub Copilot
 CLI][copilot-cli-analysis]): Cursor's primary interaction surface is a rich
@@ -50,7 +48,7 @@ mode runs autonomously and has access to a broad tool set:
 rollback without requiring Git. **Queued messages** let users stack follow-up
 instructions (Enter to queue; Cmd+Enter for immediate dispatch).
 
-As of the 2026-06-10 Bugbot update, code review runs are powered by Composer 2.5
+As of the 2026-06-10 Bugbot update (unverified; not on the current changelog index), code review runs are powered by Composer 2.5
 and complete in approximately 90 seconds (down from ~5 minutes), with a reported
 10% improvement in bug detection (sourced from [cursor.com/changelog][cursor-changelog],
 accessed 2026-06-16).
@@ -60,7 +58,7 @@ accessed 2026-06-16).
 **Tab** is a separate, specialized autocomplete model that "predicts your next
 action" — distinct from the agent. It runs continuously in the IDE background.
 
-### CLI (`cursor agent`)
+### CLI (`agent`)
 
 A secondary terminal surface installable via:
 
@@ -74,11 +72,11 @@ Key CLI commands (sourced from [cursor.com/docs/cli][cursor-cli-docs], accessed
 
 | Command | Behavior |
 |---|---|
-| `cursor agent` | Launch interactive session |
-| `cursor agent "prompt"` | Start session with initial instruction |
-| `cursor agent -p "prompt"` | Non-interactive / headless run |
-| `cursor agent ls` | List previous sessions |
-| `cursor agent resume` | Continue latest session |
+| `agent` | Launch interactive session |
+| `agent "prompt"` | Start session with initial instruction |
+| `agent -p "prompt"` | Non-interactive / headless run |
+| `agent ls` | List previous sessions |
+| `agent resume` | Continue latest session |
 | `--model "model-id"` | Specify model |
 | `--output-format text` | Plain-text output for automation |
 
@@ -90,9 +88,9 @@ the CLI **Partial** headless — the GUI IDE itself has no headless mode.
 
 ### Model selection
 
-Users select from multiple frontier models in Composer; the homepage (accessed
-2026-06-16) lists Composer 2.5, GPT-5.5, Opus 4.8, Gemini 3.1 Pro, and Grok 4.3
-as available options. Model IDs are vendor-marketing names as of 2026-06-16 and
+Users select from multiple frontier models in Composer; the homepage (checked
+2026-11-26) lists Auto, Grok 4.7, GPT-5.6 Sol, Fable 5.2 Max, Opus 5.5, Gemini 3.1 Pro and Composer 2.5
+as available options. Model IDs are vendor-marketing names as of 2026-11-26 and
 subject to change.
 
 ### Extensibility
@@ -101,20 +99,20 @@ subject to change.
 - **Rules**: Repository-level and user-level instruction files
 - **Skills/plugins**: Marketplace on Teams/Enterprise tier; example cross-harness pack in Cursor's plugin repo: [pstack](../../cc-community/CC-community-skills-landscape.md#cursorplugins-pstack-lauren-tan)
 - **SDK**: Custom tools via `local.customTools`, nested subagents, JSONL and
-  custom store options for agent metadata persistence (SDK updates 2026-06-04)
+  custom store options for agent metadata persistence (SDK updates 2026-06-04, unverified; the changelog announced the Agent SDK as generally available on 2026-10-20)
 
 ## Adoption Decision
 
 | Dimension | Assessment |
 |---|---|
 | **Primary surface** | GUI desktop IDE (VS Code fork) |
-| **Headless/CLI** | Partial — `cursor agent -p` supports non-interactive runs |
+| **Headless/CLI** | Partial — `agent -p` supports non-interactive runs |
 | **Agent capability** | Composer 2.5: file edits, shell, browser, image gen, web search |
 | **Model flexibility** | Multi-provider via model picker in IDE |
 | **Extensibility** | MCP, rules, skills, SDK with custom tools and subagents |
 | **License** | Proprietary — no open-source license stated |
-| **Pricing** | Hobby (free, limited), Individual ($20/mo), Teams ($40/user/mo), Enterprise (custom) |
-| **Maturity** | Version 3.7 (2026-06-05), active weekly releases |
+| **Pricing** | Free ($0), Plus ($8/mo, Grok models only), Premium ($30/mo), Super ($100/mo), Ultra ($200/mo), Teams ($30+/user/mo), Enterprise (custom) (cursor.com/pricing, checked 2026-11-26) |
+| **Maturity** | Version number not shown on the changelog (3.7 on 2026-06-05, unverified); newest changelog entry 2026-11-06 |
 
 **Strengths**: Best-in-class GUI IDE experience with AI deeply integrated at
 every layer (autocomplete, agent, code review, browser control). Checkpoints for
@@ -124,7 +122,7 @@ logs, AI code tracking API).
 
 **Risks**: **Proprietary and GUI-first** — not suitable as a headless CI agent
 without the CLI (`-p` flag). No OSS fallback or self-host option. Pricing scales
-with seats (Teams: $40/user/mo). Model names on the pricing/home page are
+with seats (Teams: $30+/user/mo). Model names on the pricing/home page are
 marketing copy and may not reflect exact upstream model versions. Adoption at
 scale locks into Anysphere's cloud infrastructure.
 
@@ -165,7 +163,7 @@ user message, up to `loop_limit` (default 5) times ([hooks][goal-cursor-hooks]).
 | [Cursor pricing][cursor-pricing] | Plan tiers, prices, feature matrix (2026-06-16) |
 | [Cursor agent docs][cursor-agent-docs] | Agent mode, tool set, checkpoints, queued messages (2026-06-16) |
 | [Cursor CLI docs][cursor-cli-docs] | CLI install, commands, modes, headless usage (2026-06-16) |
-| [Cursor changelog][cursor-changelog] | Version 3.7 (2026-06-05), Bugbot, SDK updates, Canvas (2026-06-16) |
+| [Cursor changelog][cursor-changelog] | Changelog entries (newest 2026-11-06; 3.7 / 2026-06-05 unverified), Bugbot, SDK updates, Canvas (2026-06-16) |
 
 [cursor-home]: https://cursor.com/
 [cursor-pricing]: https://cursor.com/pricing

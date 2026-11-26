@@ -2,7 +2,7 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem, from SharePoint Skills and Copilot Studio to Agent 365, Cowork and Researcher.
 created: 2026-10-21
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-22
 status: assess
 ---
@@ -180,15 +180,15 @@ for why that one is also a case study in "not found" versus "refuted").
   identifiers like `init` beyond that [sp-skills].
 - Governance is standard SharePoint file governance only: permissions, retention, sensitivity
   labels, and auditing apply to skill files the same way they apply to any other library content.
-  Site owners get a settings panel, but there is no skill-specific admin on/off switch
+  Site owners get a settings panel, and there is no tenant-level admin switch for skills (the page says there are "no separate admin controls to turn skills on or off"), but site owners can enable or disable individual site skills under Settings > Site skills (checked 2026-11-26)
   [sp-skills] [sp-get-started].
 - The vendor's documented display name and conceptual path both use a space — the "Agent Assets"
   library, at `/Agent Assets/Skills/<skill-name>/SKILL.md`. The literal browser/REST URL segment
   for that library is **not documented anywhere** on the vendor's page. Confirm the real
   addressable segment against a live tenant before hard-coding either the spaced or unspaced
   form — this is undocumented, not confirmed either way.
-- A skill file in this mechanism is a single markdown file, with no documented subfolder or
-  package concept. That is a real contrast with the open Agent Skills specification's optional
+- A site skill in this mechanism is a Markdown `SKILL.md` in a per-skill folder; the page also mentions replacing a skill's "package" and a Versions tab, but documents no
+  `scripts/`-style package directories (checked 2026-11-26). That is a real contrast with the open Agent Skills specification's optional
   `scripts/`/`references/`/`assets/` package directories (covered separately in
   [CC-skills-adoption-analysis.md][cc-skills-doc]) — Microsoft's own skill documentation is simply
   silent on any such structure for this specific feature, not inconsistent with it.
@@ -380,7 +380,7 @@ but serves the same posts through its board RSS feed.
   for most customers in commercial cloud (excluding EU/EFTA and UK)." EU, EFTA and UK
   organizations that "previously opted in to use Claude models under Anthropic's separate
   commercial terms and data processing agreement" now "need to opt in again"; the toggle starts
-  **Off**. The page (revised 2026-11-04) gives no date or reason for the re-opt-in
+  **Off**. The page (revised 2026-11-20) gives no date or reason for the re-opt-in
   [eudb-subprocessor].
 - **Stated here as plainly as the Microsoft-side gaps above:** Claude's own hosting on Microsoft
   Foundry has the same shape of limitation. Claude is available only in a **Global Standard** or a
@@ -490,6 +490,7 @@ Anthropic's Claude Cowork** — see the disambiguation above.
   | GA announcement blog [cowork-ga-blog] | 2026-06-16 | "Opus 4.8 and Sonnet 4.6... In Frontier, customers can use GPT 5.5" |
   | What's-new log (cumulative) [cowork-whats-new] | updated 2026-11-06 | Opus 4.7 (May) → Opus 4.8 + Sonnet 5 replacing Sonnet 4.6 (June GA) → Fable 5 Preview, "requires data retention" (June) → GPT 6 Astra, Fable 5.1 replacing Fable 5 (Sept) → GPT 6.1 Sol replacing GPT 6 Sol, Grok 4.7 "provided by xAI as an independent processor" (Oct) |
   | What's-new log, re-read 2026-11-18 [cowork-whats-new] | page dated 2026-11-16 | November: "Fable 5.2 is now available in the model selector for select customers, replacing Fable 5.1"; Claude Opus 5.5 with a Fast option; "GPT 5.5 is no longer available in the model selector," replaced by GPT 6.1 Sol hosted in Azure |
+  | What's-new log, re-read 2026-11-26 [cowork-whats-new] | page dated 2026-11-25 | November adds: an Auto model chooser (Fast option); GPT 6.2 Sol (Fast option) and GPT 6.2 Astra; "GPT 5.5 and 5.6 Terra" retired (not only GPT 5.5), GPT 6.1 Sol hosted in Azure replacing GPT 5.5; Fable 5.2 requires data retention; the Customize page renamed Plugins |
   | Frontier features page [frontier-features] | read 2026-11-18 | still says "Copilot Cowork now runs on both OpenAI GPT-5.5 and Anthropic" and still lists Edge browser use as a Frontier item — stale against the what's-new log above, which records both changes |
 
   The first four rows are not wrong — each was captured at a different point in a changing

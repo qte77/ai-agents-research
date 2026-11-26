@@ -4,12 +4,12 @@ source: https://github.com/zed-industries/zed
 purpose: Analysis of the Zed editor as an agent host — its own Zed Agent, external agents such as Claude Agent over the Agent Client Protocol (ACP), and agent CLIs in terminal threads.
 platform_scope: [zed, claude-code, codex, opencode, github-copilot, cursor, pi, gemini-cli]
 created: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: assess
 ---
 
-**Details:** GPL-3.0-or-later with Apache-2.0 components; v1.27.0 (2026-11-04); read 2026-11-09.
+**Details:** GPL-3.0-or-later with Apache-2.0 components; v1.30.2 (2026-11-25); checked 2026-11-26.
 
 ## What It Is
 
@@ -46,7 +46,7 @@ ACP draws a configuration boundary. Per the [external-agents page][zed-external]
 
 There are two routes:
 
-1. **Claude Agent (External Agent).** Installed from the ACP Registry. It "owns its own authentication and billing"; an Anthropic key set for Zed Agent does not configure it. `/login` authenticates "with an API key or with Claude Code where supported", and `CLAUDE.md` "may be read by Claude Agent directly". The adapter is [`agentclientprotocol/claude-agent-acp`][claude-agent-acp] (formerly `zed-industries/claude-code-acp`), described as "Use Claude Agent SDK from any ACP client" (Apache-2.0, v0.101.0, 2026-11-05). So Zed drives the **Claude Agent SDK** through ACP, not the `claude` terminal UI. Which Claude Code features (hooks, slash commands, plan mode) survive that path is not documented on the page and is unverified here.
+1. **Claude Agent (External Agent).** Installed from the ACP Registry. It "owns its own authentication and billing"; an Anthropic key set for Zed Agent does not configure it. `/login` authenticates "with an API key or with Claude Code where supported", and `CLAUDE.md` "may be read by Claude Agent directly". The adapter is [`agentclientprotocol/claude-agent-acp`][claude-agent-acp] (formerly `zed-industries/claude-code-acp`), described as "Use Claude Agent SDK from any ACP client" (Apache-2.0, v0.113.0, 2026-11-26). So Zed drives the **Claude Agent SDK** through ACP, not the `claude` terminal UI. Which Claude Code features (hooks, slash commands, plan mode) survive that path is not documented on the page and is unverified here.
 2. **Terminal Thread.** The `claude` CLI runs unchanged in a terminal that Zed "organizes as a thread" ([terminal threads][zed-terminal]). This keeps the full CLI feature set but gives up ACP's rendered thread and MCP forwarding.
 
 Cross-ref: Claude Code's own IDE protocol (the VS Code and JetBrains extensions) is in [CC-ide-integration-protocol.md](../../cc-native/configuration/CC-ide-integration-protocol.md).
@@ -59,7 +59,7 @@ Other ACP implementations covered in this corpus: [Goose](../agents/goose-analys
 
 ## Edit Predictions
 
-The default inline-completion provider is Zeta, which the [edit-prediction docs][zed-edit-prediction] describe as "an open source model developed by Zed". Zeta predictions are included with Zed Pro, the Pro trial and the Student plan. GitHub Copilot, Codestral, Mercury Coder and local or OpenAI-compatible endpoints are the alternatives. The license of the Zeta weights was not checked here.
+The default inline-completion provider is Zeta, which the [edit-prediction docs][zed-edit-prediction] describe as "an open source model developed by Zed". Zeta predictions are included with Zed Pro, the Pro trial, and the Student and Business plans; the Free plan does not include it. GitHub Copilot, Codestral, Mercury Coder and local or OpenAI-compatible endpoints are the alternatives. The license of the Zeta weights was not checked here.
 
 ## Adoption Decision
 
@@ -69,12 +69,12 @@ The default inline-completion provider is Zeta, which the [edit-prediction docs]
 
 | Source | Content |
 |---|---|
-| [zed-industries/zed][zed-repo] | README (description, Licensing), root license files, v1.27.0 release (2026-11-04); `gh api` 2026-11-09 |
+| [zed-industries/zed][zed-repo] | README (description, Licensing), root license files, v1.30.2 release (2026-11-25); `gh api` 2026-11-26 |
 | [Zed AI overview][zed-ai-overview] | Three agent modes, Threads Sidebar |
 | [Zed external agents][zed-external] | ACP Registry, curated agent list, Claude Agent auth/billing, ACP configuration boundary |
 | [Zed terminal threads][zed-terminal] | Agent CLIs in terminal-backed threads |
 | [Zed edit prediction][zed-edit-prediction] | Zeta default, plan inclusion, alternative providers |
-| [agentclientprotocol/claude-agent-acp][claude-agent-acp] | Claude Agent SDK adapter for ACP (Apache-2.0, v0.101.0, 2026-11-05) |
+| [agentclientprotocol/claude-agent-acp][claude-agent-acp] | Claude Agent SDK adapter for ACP (Apache-2.0, v0.113.0, 2026-11-26) |
 | [agentclientprotocol/agent-client-protocol][acp-repo] | ACP spec repo: stable protocol version 1, versioning rules, SDK list |
 
 Docs pages were read from the `docs/src/ai/` sources in the Zed repo on 2026-11-09; the links point to their published versions.

@@ -3,7 +3,7 @@ title: CC Session Keepalive Across Environments
 source: https://code.claude.com/docs/en/remote-control
 purpose: Actionable techniques to keep CC sessions alive on local machines, in containers, and in GitHub Codespaces.
 created: 2026-03-25
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: research
 ---
@@ -15,7 +15,7 @@ status: research
 | Host sleep | Machine suspends, WebSocket drops | Local (macOS/Linux/Windows) |
 | WSL VM shutdown | WSL2 VM idles out (default 60s) | Windows/WSL |
 | CC idle timeout | No user interaction during background tasks ([#32050][gh-32050], closed as stale, unresolved) | All |
-| Platform timeout | Codespace stops after inactivity (default 30 min, max 4h) ([source][gh-idle-timeout]) | Codespace |
+| Platform timeout | Codespace stops after inactivity (default 30 min; the idle timeout maxes out at 4h, and a codespace has a separate 12h maximum lifetime) ([source][gh-idle-timeout]) | Codespace |
 
 ## macOS
 
@@ -28,11 +28,11 @@ active sessions ([#21432][gh-21432]). This prevents idle sleep but respawns ever
 
 **Survive terminal close:** Run CC inside tmux — detach/reattach freely.
 
-**Auto-restart on schedule:** `/loop` expires after 7 days (see
+**Auto-restart on schedule:** `/loop` expires after 30 days (7 days before v2.1.330) (see
 [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md)), OAuth
-after ~2 days ([#36807][gh-36807], closed as stale, unresolved). Use `launchctl` to restart the tmux+CC
+after ~2 days ([#36807][gh-36807], closed as stale, unresolved; unverified). Use `launchctl` to restart the tmux+CC
 session daily ([source][apple-launchd]). Cron doesn't work — runs outside the
-user login session, no keychain/auth access.
+user login session, no keychain/auth access (unverified).
 
 ## Linux
 
@@ -53,7 +53,7 @@ CC runs inside WSL2. Two extra kill vectors beyond host sleep:
 
 ```ini
 [wsl2]
-vmIdleTimeout=-1          # never auto-shutdown VM (-1 = disabled)
+vmIdleTimeout=-1          # never auto-shutdown VM (-1 = disabled; unverified, the WSL docs state -1 only for instanceIdleTimeout)
 
 [general]
 instanceIdleTimeout=-1    # never auto-shutdown distro instance
@@ -75,7 +75,7 @@ sessions remain).
 
 ## Docker Container
 
-Containers don't sleep. Keep container alive independently of CC:
+Containers don't sleep (the `nezhar/claude-container` image below is unverified). Keep container alive independently of CC:
 
 ```yaml
 services:
@@ -109,7 +109,7 @@ gh codespace create --idle-timeout 240m
 
 **3. tmux inside Codespace** — CC survives terminal tab switches and browser reconnects.
 
-**4. For truly unattended work** — don't fight the 4h hard limit. Use `claude --cloud` (cloud VM, survives everything; `--remote` still works as a deprecated alias). See [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
+**4. For truly unattended work** — don't fight the 12h codespace lifetime cap (the 4h figure is only the maximum idle timeout). Use `claude --cloud` (cloud VM, survives everything; `--remote` still works as a deprecated alias). See [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
 
 **Auth persistence:** Store `ANTHROPIC_API_KEY` as a Codespace secret
 ([source][gh-codespace-secrets]) — injected on every start. OAuth requires
@@ -117,7 +117,7 @@ gh codespace create --idle-timeout 240m
 
 ## CC-Internal Keepalive (All Environments)
 
-**`/loop` as keepalive:** `/loop 5m echo keepalive` — keeps session active.
+**`/loop` as keepalive:** `/loop 5m echo keepalive` — keeps session active (unverified).
 
 **Remote Control + tmux:** Best combo for long-running interactive sessions. See [CC-remote-control-analysis.md](../ci-remote/CC-remote-control-analysis.md).
 

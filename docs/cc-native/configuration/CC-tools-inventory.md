@@ -2,14 +2,14 @@
 title: CC Tools Inventory
 purpose: Point-in-time snapshot of all CC built-in tools, slash commands, and configuration surfaces with permission requirements and categories.
 created: 2026-03-27
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: adopt
 ---
 
 ## What It Is
 
-CC 2.1.83 ships 28 built-in tools. This is a categorized snapshot linking to the [official tools reference][tools-ref] as the authoritative source. Check that page for current descriptions — tools are added across CC releases.
+CC 2.1.83 shipped 28 built-in tools. The live tools reference (checked 2026-11-26) lists roughly 55 (count inferred from its table, unverified), including Artifact, EndConversation, ListAgents, ListPlugins, ListSkills, Monitor, PushNotification, RemoteTrigger, REPL, ReportFindings, ScheduleWakeup, SearchPlugins, SearchSkills, SendFeedback, SendMessage, SendUserFile, SubagentHandback and SuggestPluginInstall, which the table below lacks. This is a categorized snapshot linking to the [official tools reference][tools-ref] as the authoritative source. Check that page for current descriptions — tools are added across CC releases.
 
 ## Tool Inventory (CC 2.1.83, 2026-03-27)
 
@@ -21,27 +21,27 @@ CC 2.1.83 ships 28 built-in tools. This is a categorized snapshot linking to the
 | `Edit` | Yes | Targeted edits to files |
 | `Write` | Yes | Create or overwrite files |
 | `NotebookEdit` | Yes | Modify Jupyter notebook cells |
-| `Glob` | No | Find files by pattern |
-| `Grep` | No | Search file contents by regex |
+| `Glob` | No | Find files by pattern (absent by default on macOS, Linux and WSL; checked 2026-11-26) |
+| `Grep` | No | Search file contents by regex (absent by default on macOS, Linux and WSL; checked 2026-11-26) |
 
 ### Execution
 
 | Tool | Permission | Purpose |
 |---|---|---|
 | `Bash` | Yes | Execute shell commands |
-| `PowerShell` | Yes | Execute PowerShell (Windows, opt-in preview) |
+| `PowerShell` | Yes | Execute PowerShell (enabled automatically on Windows without Git Bash, on by default for claude.ai and Console accounts on Windows with Git Bash; opt-in on Linux, macOS and WSL via `CLAUDE_CODE_USE_POWERSHELL_TOOL=1`; no longer called a preview; checked 2026-11-26) |
 
 ### Agent & Task Management
 
 | Tool | Permission | Purpose |
 |---|---|---|
 | `Agent` | No | Spawn subagent with own context window |
-| `TaskCreate` | No | Create task in task list |
+| `TaskCreate` | No | Create task in task list (the four Task tools are default only on Opus 4.7, Sonnet 4.6, Haiku 4.5 and earlier, opt-in on other models; `TodoWrite` is off by default and `CLAUDE_CODE_ENABLE_TASKS=0` re-enables it; checked 2026-11-26) |
 | `TaskGet` | No | Get task details |
 | `TaskList` | No | List all tasks |
 | `TaskUpdate` | No | Update task status/dependencies |
 | `TaskStop` | No | Kill background task |
-| `TaskOutput` | No | (Deprecated) Read background task output — use `Read` instead |
+| `TaskOutput` | No | Removed in v2.1.277 (previously deprecated); Claude reads a background task's output file with `Read` instead |
 | `TodoWrite` | No | Session task checklist (non-interactive / Agent SDK) |
 
 ### Planning & Navigation
@@ -50,8 +50,8 @@ CC 2.1.83 ships 28 built-in tools. This is a categorized snapshot linking to the
 |---|---|---|
 | `EnterPlanMode` | No | Switch to plan mode |
 | `ExitPlanMode` | Yes | Present plan for approval |
-| `EnterWorktree` | No | Create isolated git worktree |
-| `ExitWorktree` | No | Exit worktree session |
+| `EnterWorktree` | Some worktrees | Create isolated git worktree |
+| `ExitWorktree` | No; yes on v2.1.327+ to remove a worktree it can't check or that holds work at risk, with `permissions.blockWritesOutsideWorkingDirectories` on | Exit worktree session |
 | `LSP` | No | Code intelligence via language servers |
 
 ### Scheduling
@@ -79,7 +79,7 @@ Documented and empirically observed behaviors researchers should know before rel
 - **Minimal schema, no header customization.** The tool takes only `url` and `prompt` — there is no parameter for `User-Agent`, `Accept`, `Accept-Language`, or `Referer`. The permission specifier is `WebFetch(domain:...)` only ([permissions][permissions]).
 - **Cross-host redirects do not auto-follow.** When a fetched URL redirects to a different host, `WebFetch` returns the redirect target in a special format and asks the caller to issue a new `WebFetch` request — protecting against unintended cross-domain fetches without an explicit re-confirmation.
 - **GitHub URLs: prefer the `gh` CLI.** The tool's own description explicitly recommends `gh` CLI (`gh pr view`, `gh issue view`, `gh api`) for GitHub content — the API surface returns richer, structured data than HTML scraping.
-- **Two caches, not one.** A ~15-minute self-cleaning **content cache** is documented in the tool's Anthropic-authored description (per-URL, holds fetched body). A separate **5-minute per-hostname safety-preflight cache** is documented in [data-usage][data-usage] (caches domain-allow decisions, not content). Don't conflate them when reasoning about cache hits.
+- **Two caches, not one.** A ~15-minute self-cleaning **content cache** is documented in the [tools reference][tools-ref] (page reuse for 15 minutes; configurable via `CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS`; checked 2026-11-26) (per-URL, holds fetched body). A separate **5-minute per-hostname safety-preflight cache** is documented in [data-usage][data-usage] (caches domain-allow decisions, not content). Don't conflate them when reasoning about cache hits.
 - **Default User-Agent is a bot token, not a browser.** `WebFetch` sends `Claude-User (claude-code/<version>; +https://support.anthropic.com/)` — observed as `Claude-User (claude-code/2.1.185; +https://support.anthropic.com/)` (`CC 2.1.185, Codespaces, 2026-06-22`, cross-verified against `postman-echo.com/headers` and `ifconfig.me/ua`). There is **no override**: no `User-Agent` parameter (per the minimal-schema note above) and no documented env var. CC identifies itself honestly (no browser spoofing), which is exactly why anti-bot WAFs reject it.
 - **Bot-block behavior is bimodal.** WAF-protected hosts return HTTP `403` to the bot UA; separately, a CC-side denylist refuses some hosts before any request leaves (`Claude Code is unable to fetch from <host>`). A `403` here means *the bot UA was rejected*, not necessarily a dead link — verify in a browser before adding a host to `lychee.toml` excludes.
 - **Account-email guardrail on outbound tool calls, evolving across versions.** Separately from the fixed `WebFetch` UA string above, the CC `CHANGELOG.md` records a distinct check on network requests from web/shell tool calls: **v2.1.317** "Added a check that asks before a web or shell tool call sends your account email address to the network"; **v2.1.321** "Changed the account email check to refuse only a shell command that holds your email and names a User-Agent, without asking, so other commands and scheduled runs no longer stop at its prompt" ([source][changelog]). A still-**open** GitHub issue, [claude-code#107757][issue-107757] (filed 2026-11-05, reporter-stated version 2.1.318, labels `bug`/`platform:macos`/`area:tools`/`area:security`), reports the account's email being sent "in the `User-Agent` request header while conducting web searches" without the user's permission; the changelog entries above describe the surrounding guardrail's documented behavior but do not state that they were a response to this issue.
@@ -102,11 +102,11 @@ Observed status codes (`CC 2.1.185, Codespaces, 2026-06-22`):
 | Tool | Permission | Purpose |
 |---|---|---|
 | `AskUserQuestion` | No | Multiple-choice questions for requirements |
-| `Skill` | Yes | Execute a skill in main conversation. Since v2.1.325 scheduled tasks and `/loop` ask before running a skill that declares `allowed-tools` or hooks; add `Skill(name)` to `permissions.allow` to run it unattended (changelog) |
+| `Skill` | Some skills (those setting `allowed-tools`, `disallowed-tools` or hooks can prompt) | Execute a skill in main conversation. Since v2.1.325 scheduled tasks and `/loop` ask before running a skill that declares `allowed-tools` or hooks; add `Skill(name)` to `permissions.allow` to run it unattended (changelog) |
 
 ### Code Mode (v2.1.323)
 
-Documented at the [Code Mode page][code-mode-page] (read 2026-11-17, re-read 2026-11-18): an experimental, off-by-default mode in which Claude writes JavaScript that makes several tool calls in one step, run in the session by a `REPL` tool. Opt in with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1` (shell or user settings; ignored in project settings; `0` in managed settings blocks it for an organization). Requirements per the page: v2.1.323 or later (v2.1.326 for agent teams), native build, interactive terminal session only (not `-p`, SDK, VS Code, Desktop or cloud), direct Anthropic API access (no gateway or cloud provider), a supported model, and no HIPAA or zero-data-retention organization. Permissions: `deny` and `ask` rules and `PreToolUse` hooks apply per tool call; in auto mode the classifier reviews the code, not each call. Supported models per the page: Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.2. A Code Mode session resumes only with the variable still set to `1`. Start-up is refused with some settings on, such as an API key helper (`apiKeyHelper`), OpenTelemetry export (`CLAUDE_CODE_ENABLE_TELEMETRY`) or `DISABLE_TELEMETRY`, and with an installed mod that checks tool calls. A `PreToolUse` hook matching `REPL` can read `tool_input.code`. Code that waits stops after ten minutes; background code can run up to two hours.
+Documented at the [Code Mode page][code-mode-page] (read 2026-11-17, re-read 2026-11-18): an experimental, off-by-default mode in which Claude writes JavaScript that makes several tool calls in one step, run in the session by a `REPL` tool. Opt in with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1` (shell or user settings; ignored in project settings; `0` in managed settings blocks it for an organization). Requirements per the page: v2.1.323 or later (v2.1.326 for agent teams), native build, interactive terminal session only (not `-p`, SDK, VS Code, Desktop or cloud), a Claude subscription, Console account or cloud provider (Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry; v2.1.331 or later), but not a gateway or Claude for Government (an Enterprise Admin Console sign-in needs Agent Platform, or Bedrock without the Mantle endpoint), a supported model, and no HIPAA or zero-data-retention organization. Permissions: `deny` and `ask` rules and `PreToolUse` hooks apply per tool call; in auto mode the classifier reviews the code, not each call. Supported models per the page: Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.2. A Code Mode session resumes only with the variable still set to `1`. Start-up is refused with some settings on: an API key helper (`apiKeyHelper`, also `ANTHROPIC_AUTH_TOKEN` and auth headers in `ANTHROPIC_CUSTOM_HEADERS`) and OpenTelemetry tracing on every version; mods that hook tool calls work on v2.1.327+, and feature-flag fetching off (`DISABLE_TELEMETRY`) or OpenTelemetry events and metrics on work on v2.1.329+. A `PreToolUse` hook matching `REPL` can read `tool_input.code`. Code that waits stops after ten minutes (in Manual and acceptEdits modes, time at a tool permission prompt does not count, from v2.1.328); background code, which needs auto or bypassPermissions mode, can run up to two hours.
 
 Related and not the same thing, despite the shared name: (1) the API's [programmatic tool calling][ptc-pointer] feature, where the model emits code that calls tools server-side (see [programmatic-tool-calling-analysis.md](../../non-cc/protocols/programmatic-tool-calling-analysis.md)); (2) Cloudflare's "Code Mode" ([blog post][cf-code-mode], 2025-09-26), which turns MCP tools into a TypeScript API and runs model-written code in a V8-isolate sandbox that reaches the MCP servers only through bindings; (3) TrueForge's "Code Mode" in [agent-frameworks-infrastructure-landscape.md](../../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md), another vendor's use of the name; (4) the 2026-09-01 "Code Mode for Extensible Software" episode and the general idea of "agents write code against an API", noted in [software-factory-landscape.md](../../sdlc-lcm/software-factory-landscape.md). Claude Code's Code Mode is a Claude Code session mode with a `REPL` tool, gated by the environment variable above. An X post from the ClaudeDevs account about Code Mode could not be read through the fetch tools on 2026-11-18, so nothing here rests on it.
 
@@ -127,9 +127,9 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/advisor` | Set or clear the advisor model (`/advisor off`) that the advisor tool — a server-executed API tool — consults mid-task; see [CC-advisor-tool-analysis.md](CC-advisor-tool-analysis.md) | [advisor-cc][advisor-cc] |
 | `/clear` | Clear conversation | [cli-ref][cli-ref] |
 | `/code-review` | Review the current diff, a PR, a branch, or a path for correctness bugs; `ultra` escalates to a cloud multi-agent review. Alias: `/review`. Formerly named `/simplify` before v2.1.147. See [details below](#code-review-review-simplify-and-ultrareview) | [commands][commands], [code-review-local][code-review-local] |
-| `/commit` | Commit staged changes | [cli-ref][cli-ref] |
-| `/config` | Open interactive config panel (`.claude.json` prefs) | [cli-ref][cli-ref] |
-| `/exit` | Exit session | [cli-ref][cli-ref] |
+| `/commit` | Commit staged changes (unverified; not on the commands page) | [cli-ref][cli-ref] |
+| `/config` | Open the Settings interface; accepts `key=value` pairs | [cli-ref][cli-ref] |
+| `/exit` | Exit session (alias `/quit`); detaches from an attached background session | [cli-ref][cli-ref] |
 | `/fast` | Toggle fast mode | [fast-mode][fast-mode] |
 | `/feedback` | Submit feedback | [cli-ref][cli-ref] |
 | `/focus` | Toggle the focus view: only the last prompt, a one-line tool-call summary with edit diffstats (also counting subagents launched and collapsing finished background-task notifications), and the final response. Fullscreen rendering only. The choice persists across sessions; the [`viewMode`][settings-ref-viewmode] setting (`"default"`, `"verbose"` or `"focus"`; allowed in any settings file; default unset, so `verbose` and the last `/focus` choice apply) overrides it. From a Remote Control client, `/focus [on\|off]` applies to the current session only (v2.1.281+). The VS Code extension has its own Focus view toggle, independent of `viewMode`. Introducing version not stated in the docs. Verified 2026-10-23; `viewMode` 2026-10-24 | [commands][commands], [settings-ref-viewmode][settings-ref-viewmode] |
@@ -141,12 +141,12 @@ Commands extracted via `grep -oP` from CLI binary. **Documented** commands are l
 | `/model` | Switch model | [model-config][model-config] |
 | `/powerup` | Interactive lessons that teach Claude Code features with animated demos (v2.1.90; its tour was still referenced in v2.1.232). Verified in the CHANGELOG 2026-11-12 | CHANGELOG v2.1.90 |
 | `/remote-control`, `/rc` | Enable Remote Control on current session | [remote-control][remote-control] |
-| `/remote-env` | Configure default remote environment for `--remote` web sessions | [commands][commands] |
+| `/remote-env` | Choose the default cloud environment for cloud sessions started from the CLI | [commands][commands] |
 | `/review` | Alias of `/code-review` (CC v2.1.223+). Before v2.1.223 it was a separate, single-pass, read-only review of a GitHub PR by number | [commands][commands], [code-review-local][code-review-local] |
-| `/schedule` | Manage scheduled remote agents | [remote-control][remote-control] |
+| `/schedule` | Manage cloud scheduled tasks (formerly routines; alias `/routines`) | [remote-control][remote-control] |
 | `/simplify` | Reviews changed code for reuse/simplification/efficiency/abstraction-level cleanup via 4 parallel agents and applies the fixes; does not look for correctness bugs (use `/code-review` for that). Former name of `/code-review` before v2.1.147 | [commands][commands] |
-| `/status` | Show session status | [cli-ref][cli-ref] |
-| `/tui` | Switch renderer: `/tui fullscreen` (research preview, flicker-free; saves the `tui` setting and relaunches) or `/tui default`, which v2.1.327 also names `/tui classic`; `/tui` alone shows the current renderer and why. After a fullscreen session crashes before it has started, the next launch uses the classic renderer and says so ("didn't finish starting last time"); after two failed starts it stays classic until you update or run `/tui fullscreen`. Since v2.1.236 ([fullscreen][fullscreen-docs], read 2026-11-24) | [fullscreen][fullscreen-docs] |
+| `/status` | Open the Settings interface on the Status tab | [cli-ref][cli-ref] |
+| `/tui` | Switch renderer: `/tui fullscreen` (research preview, flicker-free; saves the `tui` setting and relaunches) or `/tui classic` (v2.1.327+; also `default`), syntax `/tui` followed by `classic` or `fullscreen`; `/tui` alone shows the current renderer and why. After a fullscreen session crashes before it has started, the next launch uses the classic renderer and says so ("didn't finish starting last time"); after two failed starts it stays classic until you update or run `/tui fullscreen`. Since v2.1.236 ([fullscreen][fullscreen-docs], read 2026-11-24) | [fullscreen][fullscreen-docs] |
 | `/ultrareview` | Alias of `/code-review ultra`, once ultrareview is available to the account — a deep, multi-agent review in a cloud sandbox. Research preview. See [details below](#code-review-review-simplify-and-ultrareview) | [commands][commands], [ultrareview][ultrareview] |
 
 #### `/code-review`, `/review`, `/simplify`, and ultrareview
@@ -168,26 +168,26 @@ Verified against the live [code-review-local][code-review-local], [ultrareview][
 
 **Aliases and renames**: `/review` is an alias of `/code-review` since **CC v2.1.223**; before that it was a separate, single-pass, read-only review of a GitHub PR by number (and from v2.1.186–v2.1.201 ran the same multi-agent engine as `/code-review medium`). The command was named **`/simplify`** before **CC v2.1.147**, when it applied fixes by default; `/simplify` still exists today as a separate, narrower command — 4 parallel agents reviewing reuse, simplification, efficiency, and abstraction level, with no correctness-bug check.
 
-**`ultrareview`** (`/code-review ultra`, alias `/ultrareview` once available to the account) is a **research preview**: "Ultrareview is a research preview feature. The feature, pricing, and availability may change based on feedback." It launches a fleet of reviewer agents as a cloud session on Anthropic's infrastructure, with every finding independently reproduced and verified. "A review typically takes 15 to 25 minutes."
+**`ultrareview`** (`/code-review ultra`, alias `/ultrareview` once available to the account) is a **research preview**: "Ultrareview is a research preview feature. The feature, pricing, and availability may change based on feedback." It launches a fleet of reviewer agents as a cloud session on Anthropic's infrastructure, with every finding independently reproduced and verified. "A review typically takes 5 to 15 minutes." (checked 2026-11-26)
 
 - **User-started only**: the command runs only when invoked as `/code-review ultra` — Claude does not start it on its own. A scheduled task never launches the cloud review (schedule `/code-review` without `ultra`). `claude -p '/code-review ultra'` launches the cloud review and exits before the findings arrive, so it does not return findings; the documented CI/script route is the `claude ultrareview` subcommand, which blocks until the review finishes and prints findings to stdout — but only when a human or script invokes it directly: when Claude runs that subcommand itself (e.g. via the Bash tool), Claude Code refuses the whole-repository-fallback case.
 - **Targets**: no argument compares the current branch to the repository's default branch (plus uncommitted/staged changes); a branch name, commit id, or tag can replace the default-branch base; a `github.com` PR number (also `#1234`, `PR 1234`, or a pasted URL) reviews that PR instead. The docs document these three target forms plus a free-text note attached to a branch review; **a file or directory path is not among them** (unlike plain `/code-review`, which does support a path target).
 - **Diff handling**: refuses an empty diff (names what it compared against and suggests a fix); reviews the whole repository only on a first commit (after an interactive confirmation; refuses untracked files) or when there is no merge base (again gated on interactive confirmation or the `claude ultrareview` subcommand's own consent).
 - **Limits**: a branch review defaults to up to 500 changed files and 8,000 changed lines; the exact values can change, and a refusal names the ones in effect.
-- **Billing**: bills against usage credits, not plan-included usage. Pro and Max each get three free runs as a one-time, non-refreshing allotment; after that, "typically $5 to $25 in usage credits depending on the size of the change". A run counts once the cloud session starts, even if stopped early or failed.
+- **Billing**: bills against usage credits, not plan-included usage. Pro, Max and Ultra each get three free runs as a one-time, non-refreshing allotment (checked 2026-11-26); after that, "typically $5 to $25 in usage credits depending on the size of the change". A run counts once the cloud session starts, even if stopped early or failed.
 - **Platform/compliance restrictions**: unavailable on Amazon Bedrock, Google Cloud's Agent Platform, and Microsoft Foundry, and to organizations with Zero Data Retention or the HIPAA configuration applied — in those cases `/code-review ultra` runs a local review instead. "Organizations that use customer-managed encryption keys (CMEK) can't run ultrareview." For CMEK, unlike the other four cases, there is no stated automatic local fallback — the docs say to run `/code-review` directly.
 
 ### Undocumented (String Extraction)
 
 | Command | Observed Behavior | Notes |
 |---|---|---|
-| `/settings` | Routes to `update-config` skill (conversational, modifies `settings.json`) | **Not** an alias for `/config`; confirmed CC 2.1.87 |
-| `/update-config` | Same skill as `/settings`, direct invocation | Asks "what would you like to configure?" |
-| `/bash` | Unknown | String extraction, CC 2.1.87 |
-| `/btw` | Side-question during task ([btw-gist][btw-gist]) | String extraction; community-documented |
-| `/chrome` | Chrome extension related | String extraction, CC 2.1.87 |
-| `/commit-push-pr` | Combined commit+push+PR workflow | String extraction, CC 2.1.87 |
-| `/issue` | Create/reference GitHub issue | String extraction, CC 2.1.87 |
+| `/settings` | Routes to `update-config` skill (conversational, modifies `settings.json`; not on the commands page, unverified) | **Not** an alias for `/config`; confirmed CC 2.1.87 |
+| `/update-config` | Now documented as a bundled skill, `/update-config [request]`: describe a settings change and Claude edits the matching settings.json; points to `/config` for theme and model | [commands][commands] (checked 2026-11-26) |
+| `/bash` | Unknown (unverified; not on the commands page) | String extraction, CC 2.1.87 |
+| `/btw` | Now documented: `/btw [question]` asks a side question without adding to the conversation ([btw-gist][btw-gist] earlier) | [commands][commands] (checked 2026-11-26) |
+| `/chrome` | Now documented: configures Claude in Chrome settings | [commands][commands] (checked 2026-11-26) |
+| `/commit-push-pr` | Combined commit+push+PR workflow (unverified; not on the commands page) | String extraction, CC 2.1.87 |
+| `/issue` | Create/reference GitHub issue (unverified; not on the commands page) | String extraction, CC 2.1.87 |
 
 `/ultrareview` was listed here as an undocumented string-extraction finding ("Unknown — enhanced review?", CC 2.1.87). It is now documented: see the [Documented](#documented) table and [details below](#code-review-review-simplify-and-ultrareview).
 

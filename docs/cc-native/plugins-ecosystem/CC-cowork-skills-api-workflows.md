@@ -3,7 +3,7 @@ title: Cowork, Skills API & CC Web Programmatic Workflows
 source: https://platform.claude.com/docs/en/build-with-claude/skills-guide
 purpose: API-level analysis of Cowork, Skills API, Chrome extension, and CC Web for programmatic workflow creation, GitHub integration, and multi-repo orchestration.
 created: 2026-03-18
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-21
 status: research
 ---
@@ -31,7 +31,7 @@ Can Claude's product surfaces (Cowork, CC Web, Chrome extension) be populated vi
 ### Required Beta Headers
 
 ```text
-anthropic-beta: code-execution-2025-08-25,skills-2025-10-02,files-api-2025-04-14
+anthropic-beta: code-execution-2025-08-25,skills-2025-10-02,files-api-2025-04-14  # unverified
 ```
 
 ### Skill Types
@@ -40,7 +40,7 @@ anthropic-beta: code-execution-2025-08-25,skills-2025-10-02,files-api-2025-04-14
 |---|---|---|
 | Type value | `anthropic` | `custom` |
 | IDs | Short names: `pptx`, `xlsx`, `docx`, `pdf` | Generated: `skill_01Abc...` |
-| Version format | Date-based: `20251013` or `latest` | Epoch timestamp or `latest` |
+| Version format | Date-based: `20251013` or `latest` | Version ID `skver_...` or `latest` |
 | Scope | Available to all users | Private to workspace |
 
 ### Usage in Messages API
@@ -61,7 +61,7 @@ response = client.beta.messages.create(
 )
 ```
 
-- Max 8 skills per request
+- Up to 20 skills per request
 - Container reuse via `response.container.id` for multi-turn
 - Long-running: handle `pause_turn` stop reason
 
@@ -82,7 +82,7 @@ Separate from the API's `pptx`/`xlsx`/`docx`/`pdf` skills above, Anthropic's [su
 
 - **Free, Pro, Max, Ultra**: on by default, with network access allowed for package installs. Users toggle it under Settings > Capabilities ("Code execution and file creation", relabeled "Create and edit files" in the updated settings layout).
 - **Team and Enterprise**: on by default for new organizations; owners can disable it in organization settings, and network egress is configured there. The article's text is inconsistent on both: its availability section says network access is off by default for Team and Enterprise, while its getting-started section says Team starts with egress on for package managers only and new Enterprise organizations start with egress off; check the live page before relying on either.
-- **Network egress options**: off, package managers only (marked as the default in the options list), package managers plus allowlisted domains, or all domains (the article calls this the riskiest). Model Context Protocol (MCP) integrations can still reach the network regardless of the egress setting.
+- **Network egress options**: off, package managers only (marked as the default in the options list), package managers plus allowlisted domains, or all domains (the article excludes domains on Anthropic's legal blocklist and calls this the riskiest option). Model Context Protocol (MCP) integrations can still reach the network regardless of the egress setting.
 - **Limit**: 30MB per file for uploads and downloads.
 
 The Settings > Capabilities toggle is an authenticated claude.ai page and was not opened for this note; it is described here only as the article describes it.
@@ -131,8 +131,8 @@ plugin-name/
 
 | Capability | API? | How |
 |---|---|---|
-| Start sessions | Yes | `claude --remote "prompt"` |
-| Parallel execution | Yes | Multiple `--remote` calls |
+| Start sessions | Yes | `claude --cloud "prompt"` |
+| Parallel execution | Yes | Multiple `--cloud` calls |
 | GitHub integration | Native | Clones repo, pushes branches, creates PRs |
 | Project config | Yes | `CLAUDE.md`, `.claude/`, hooks travel with repo |
 | Save output | Automatic | Git branches + PRs |
@@ -175,14 +175,14 @@ Projects that wrap Claude Code for multi-repo/parallel execution:
 | Project | Architecture | CC Web? | Multi-repo? | Long-running? |
 |---|---|---|---|---|
 | [claude_code_agent_farm](https://github.com/Dicklesworthstone/claude_code_agent_farm) | Python + tmux, 20-50 agents, file-lock coordination | Local only | Single project | Auto-restart, idle timeout |
-| [agent-orchestrator](https://github.com/ComposioHQ/agent-orchestrator) | TypeScript, plugin-based (tmux/Docker/K8s), agent-agnostic | Local only | Git worktrees | Session restore, CI retry, escalation |
+| [agent-orchestrator](https://github.com/OrchestratorInc/agent-orchestrator) | TypeScript, plugin-based (tmux/Docker/K8s), agent-agnostic | Local only | Git worktrees | Session restore, CI retry, escalation |
 | [async-code](https://github.com/ObservedObserver/async-code) | Next.js + Flask, Docker isolation, Codex-style UI | Local only | Per-container | Containerized |
 | [247-claude-code-remote](https://github.com/QuivrHQ/247-claude-code-remote) | Tailscale + Fly.io VMs, tmux, Cloudflare tunnels | Local (remote access) | Multiple sessions | tmux persistence |
 | [Claude-Code-Remote](https://github.com/JessyTsui/Claude-Code-Remote) | Email/Discord/Telegram notifications | Local | Single | Notification on completion |
 | [ccswarm](https://github.com/nwiizo/ccswarm) | Rust, git worktrees, MessageBus (93% token savings) | Local only | Worktrees | Crash recovery |
-| [overstory](https://github.com/jayminwest/overstory) | SQLite mail, 4-tier conflict resolution, FIFO merge | Local only | Multi-layer | SQLite persistence |
+| [overstory](https://github.com/jayminwest/overstory) (archived, checked 2026-11-26) | SQLite mail, 4-tier conflict resolution, FIFO merge | Local only | Multi-layer | SQLite persistence |
 
-**Gap**: No community tool uses `claude --remote` for cloud execution. All wrap local CLI sessions.
+**Gap**: No community tool uses `claude --cloud` (formerly `--remote`, still a deprecated alias) for cloud execution (unverified). All wrap local CLI sessions.
 
 ## Multi-Repo Cloud Execution
 
@@ -195,10 +195,10 @@ CC Web assumes **1 session = 1 repo = 1 branch = 1 PR**. Cross-repo context shar
 ### Workaround: Parallel Independent Sessions
 
 ```bash
-# Each repo gets its own cloud session
-claude --remote "Run make validate" --repo github.com/org/repo-a
-claude --remote "Run make validate" --repo github.com/org/repo-b
-claude --remote "Run make validate" --repo github.com/org/repo-c
+# Each repo gets its own cloud session (--cloud takes one repo, the current directory's GitHub remote)
+(cd repo-a && claude --cloud "Run make validate")
+(cd repo-b && claude --cloud "Run make validate")
+(cd repo-c && claude --cloud "Run make validate")
 ```
 
 Results: independent PRs per repo. No cross-repo coordination.
@@ -223,25 +223,25 @@ jobs:
 
 | Method | Session Scope | Persistence | Monitoring |
 |---|---|---|---|
-| `/loop` (session cron) | Session-scoped, 7-day expiry | Dies with process | In-session only |
-| `claude --remote` | Cloud VM | Survives disconnect | `/tasks`, web, mobile |
+| `/loop` (session cron) | Session-scoped, 30-day expiry (7 days before v2.1.330) | Dies with process | In-session only |
+| `claude --cloud` | Cloud VM | Survives disconnect | `/tasks`, web, mobile |
 | GitHub Actions cron | Workflow-scoped | Survives everything | Actions UI |
 | Desktop scheduled tasks | Desktop app | Survives restarts | Desktop notifications |
 
-**Recommendation**: `claude --remote` for ad-hoc long tasks; GitHub Actions for durable recurring automation.
+**Recommendation**: `claude --cloud` for ad-hoc long tasks; GitHub Actions for durable recurring automation.
 
 ## Adoption Decision
 
 | Surface | Populate via API | Save to GitHub | Verdict |
 |---|---|---|---|
-| **CC Web** | `--remote` + GH Actions | Automatic (PRs) | **Adopt** — full loop |
+| **CC Web** | `--cloud` + GH Actions | Automatic (PRs) | **Adopt** — full loop |
 | **Skills API** | `/v1/skills` CRUD | Store skill source in GitHub | **Adopt** — for API surface |
 | **Cowork** | Plugins from GitHub repos (CLI) | Manual | **Defer** — no API control |
 | **Chrome** | None | None | **Skip** — no programmatic access |
 
 ## Action Items
 
-1. Adapt polyforge `cc-parallel.sh` → `cc-parallel-web.sh` using `claude --remote`
+1. Adapt polyforge `cc-parallel.sh` → `cc-parallel-web.sh` using `claude --cloud`
 2. Add GitHub Actions workflows for scheduled cross-repo validation
 3. Store custom skills in GitHub repo with CI pushing to Skills API
 4. Watch [#23627](https://github.com/anthropics/claude-code/issues/23627) for multi-repo cloud support

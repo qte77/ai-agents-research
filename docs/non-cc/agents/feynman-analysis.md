@@ -1,9 +1,9 @@
 ---
 title: Feynman Research Agent Analysis
-source: https://github.com/getcompanion-ai/feynman
+source: https://github.com/Companion-Inc/feynman
 purpose: Analysis of Feynman as an open-source terminal-based AI research agent with multi-agent investigation workflows.
 created: 2026-04-09
-updated: 2026-09-30
+updated: 2026-11-26
 validated_links_on: 2026-09-30
 status: assess
 ---
@@ -26,7 +26,7 @@ replication on local or cloud GPUs.
 
 ```text
 User → CLI commands → Dispatcher → Sub-agents (4 bundled)
-                                 → AlphaXiv (paper search)
+                                 → Paper search (alphaXiv plus other indexes)
                                  → GPU backends (Modal, RunPod)
                                  → Session recall
 ```
@@ -51,7 +51,8 @@ User → CLI commands → Dispatcher → Sub-agents (4 bundled)
 | `/review` | Simulated peer review with severity grades |
 | `/compare` | Cross-paper comparison |
 | `/draft` | Structured writing |
-| `/watch` | Monitoring mode |
+| `/recipe` | Ranked ML training recipes |
+| `/summarize` | Summarisation |
 | `/autoresearch` | Autonomous research loops |
 
 ## Adoption Decision
@@ -59,9 +60,9 @@ User → CLI commands → Dispatcher → Sub-agents (4 bundled)
 | Dimension | Assessment |
 |-----------|------------|
 | **Use case** | Scientific research, literature review, experiment replication |
-| **Runtime** | Pi agent runtime, Node.js 20.19.0+ |
-| **GPU support** | Local, Modal, RunPod for experiment replication |
-| **Maturity** | Active (3.8K stars, 451 forks) |
+| **Runtime** | Pi agent runtime, Node.js >=22.22.0 for npm installs (package.json engines, feynman 0.5.74, checked 2026-11-26) |
+| **GPU support** | Local, Modal, RunPod (optional, each only if its CLI is set up, per the repo's [replicate prompt][feynman-replicate]) for experiment replication |
+| **Maturity** | Active (about 10.2K stars, 1.1K forks, last push 2026-11-25; checked 2026-11-26) |
 | **License** | MIT |
 
 **Strengths**: Only agent in this survey with dedicated experiment replication
@@ -69,7 +70,7 @@ User → CLI commands → Dispatcher → Sub-agents (4 bundled)
 citations. Session-based recall for research continuity.
 
 **Risks**: Niche scope — research-only, not general-purpose coding. Pi runtime
-dependency (not widely adopted). AlphaXiv integration may limit paper coverage.
+dependency (not widely adopted). The README lists many paper indexes (alphaXiv, Semantic Scholar, OpenAlex, arXiv, PubMed and others), so coverage is not limited to alphaXiv (checked 2026-11-26).
 
 ## Cross-References
 
@@ -83,7 +84,9 @@ dependency (not widely adopted). AlphaXiv integration may limit paper coverage.
 |---|---|
 | [Feynman repo][feynman] | Open-source research agent |
 | [Feynman docs][feynman-docs] | Installation and workflow documentation |
+| [Replicate prompt][feynman-replicate] | Modal and RunPod are used only if their CLIs are set up |
 
-[feynman]: https://github.com/getcompanion-ai/feynman
+[feynman]: https://github.com/Companion-Inc/feynman
 [feynman-site]: https://feynman.is
 [feynman-docs]: https://feynman.is/docs
+[feynman-replicate]: https://github.com/Companion-Inc/feynman/blob/main/prompts/replicate.md

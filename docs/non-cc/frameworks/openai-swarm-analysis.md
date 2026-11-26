@@ -3,7 +3,7 @@ title: OpenAI Swarm Analysis
 source: https://github.com/openai/swarm
 purpose: Analysis of OpenAI Swarm as a deprecated educational multi-agent orchestration framework superseded by the OpenAI Agents SDK.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: hold
 ---
@@ -38,12 +38,12 @@ through every agent call for stateful bookkeeping) and **function calling**
 Because the orchestration loop runs client-side and statelessly, Swarm is easy
 to trace and debug but unsuitable for long-running or production workloads.
 
-| Attribute | Value (fetched 2026-06-16) |
+| Attribute | Value (fetched 2026-11-26) |
 |---|---|
 | Language | Python (100%) |
 | License | MIT |
-| Stars | 21.6k |
-| Forks | 2.3k |
+| Stars | 22.2k |
+| Forks | 2.4k |
 | Commits | 29 total |
 | Published releases | None |
 | Status | Deprecated — educational only |

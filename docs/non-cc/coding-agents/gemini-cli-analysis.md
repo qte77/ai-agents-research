@@ -3,7 +3,7 @@ title: Gemini CLI Analysis
 source: https://github.com/google-gemini/gemini-cli
 purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now deprecated for non-enterprise users.
 created: 2026-06-16
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: hold
 ---
@@ -40,8 +40,8 @@ other docs use the union of the three lists (free or individual, AI Pro, AI Ultr
 Google One). All three give 2026-06-18. The FAQ adds a separate deprecation schedule
 for Standard/Enterprise that the maintainer post does not mention.
 
-The Apache 2.0 repository remains public (not archived, latest release v0.68.0 on
-2026-11-10, per the GitHub API on 2026-11-18), but without Google's backend serving requests, it is not independently operable by
+The Apache 2.0 repository remains public (not archived, latest release v0.71.1 on
+2026-11-24, per the GitHub API on 2026-11-26), but without Google's backend serving requests, it is not independently operable by
 community users.
 
 ## How It Works
@@ -54,7 +54,7 @@ authentication pathways:
 
 | Auth method | User tier | Free quota |
 |---|---|---|
-| Google OAuth (personal account) | Free / Pro / Ultra | 60 req/min, 1,000 req/day |
+| Google OAuth (personal account) | Free / Pro / Ultra | 1,000 req/day (per-minute limits apply; the launch-era 60 req/min figure is unverified) |
 | Gemini API key (Google AI Studio) | Free / paid | 1,000 req/day (free tier) at launch; 250 req/day, Flash only, per the [quota page][gemini-quota] checked 2026-11-15 |
 | Vertex AI credentials | Enterprise | Usage-based billing |
 
@@ -104,11 +104,11 @@ page, accessed 2026-06-16):
 
 Latest stable at time of writing: **v0.46.0** (2026-06-10).
 
-**Correction 2026-11-15:** the [latest GitHub release][gemini-latest] is v0.68.0 (2026-11-10); v0.46.0 is no longer current.
+**Correction 2026-11-15:** the [latest GitHub release][gemini-latest] is v0.71.1 (2026-11-24; v0.68.0 on 2026-11-10 was the latest at the 2026-11-15 correction); v0.46.0 is no longer current.
 
 ## Providers
 
-Checked 2026-11-23 against the repo's [authentication guide][gemini-auth] and [configuration reference][gemini-config] (repo docs at v0.70.0, released 2026-11-19; status stays Hold, see below).
+Checked 2026-11-23 against the repo's [authentication guide][gemini-auth] and [configuration reference][gemini-config] (repo docs at v0.70.0, released 2026-11-19; newer releases exist; status stays Hold, see below).
 
 - **Google Cloud.** Vertex AI is a documented auth method with three credential options: Application Default Credentials via `gcloud`, a service-account JSON key (`GOOGLE_APPLICATION_CREDENTIALS`) and a Google Cloud API key (`GOOGLE_API_KEY`). All need `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`; set any Gemini or Google API key variables aside first, as the guide says.
 - **Google AI Studio.** The other direct route is a Gemini API key in `GEMINI_API_KEY`.
@@ -150,7 +150,7 @@ guarantees for paying users.
   sandbox and headless use: see [antigravity-analysis.md](antigravity-analysis.md#antigravity-cli-agy-first-party-docs-checked-2026-11-18)); no source or licence file is published in its repo
 - For Google-ecosystem organizations with Gemini Code Assist Standard/Enterprise
   licenses, Google documents continued access on a separate deprecation schedule
-  ([FAQs][gcfa-faqs]); no end date seen in the excerpt read. Latest release v0.68.0 as of 2026-11-18
+  ([FAQs][gcfa-faqs]); no end date seen in the excerpt read. Latest release v0.71.1 as of 2026-11-26
 
 ## Sources
 

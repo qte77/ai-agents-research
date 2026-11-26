@@ -3,12 +3,12 @@ title: CC Channels — Push Events via Telegram, Discord, iMessage
 source: https://code.claude.com/docs/en/channels
 purpose: Analysis of Claude Code channels for pushing external events into running sessions via MCP server plugins.
 created: 2026-03-24
-updated: 2026-10-15
+updated: 2026-11-26
 validated_links_on: 2026-10-15
 status: assess
 ---
 
-**Details:** Research preview; v2.1.80+ (earlier research finding — the current channels and channels-reference pages, re-checked 2026-10-15, no longer state a minimum version), allowlisted plugins only. Neither `--channels` nor `--dangerously-load-development-channels` appears in `claude --help` while the feature is in preview, though both flags work.
+**Details:** Research preview; v2.1.80+ (unverified; earlier research finding — the current channels and channels-reference pages, re-checked 2026-10-15, no longer state a minimum version), allowlisted plugins only. Neither `--channels` nor `--dangerously-load-development-channels` appears in `claude --help` while the feature is in preview, though both flags work.
 
 ## What Channels Are
 
@@ -20,8 +20,8 @@ Unlike web sessions (fresh cloud sandbox) or Remote Control (you drive), channel
 
 | Channel | Setup | Auth | Platform |
 |---------|-------|------|----------|
-| **Telegram** | BotFather → token → `/telegram:configure <token>` | Bot token | Cross-platform |
-| **Discord** | Developer Portal → bot → `/discord:configure <token>` | Bot token + Message Content Intent |  Cross-platform |
+| **Telegram** | BotFather → token → `/telegram:configure <token>` | Bot token | Cross-platform (unverified) |
+| **Discord** | Developer Portal → bot → `/discord:configure <token>` | Bot token + Message Content Intent |  Cross-platform (unverified) |
 | **iMessage** | No token needed — reads `~/Library/Messages/chat.db` | Full Disk Access | macOS only |
 | **fakechat** | Demo — localhost:8787 chat UI | None | Any |
 
@@ -53,12 +53,12 @@ claude --dangerously-load-development-channels server:my-webhook
 - **Sender allowlist**: only paired/approved IDs can push messages; others silently dropped
 - **Per-session opt-in**: `--channels` flag required each session; being in `.mcp.json` is not enough
 - **Permission relay**: allowlisted senders can approve/deny tool use remotely, if the channel declares the `claude/channel/permission` capability and Claude Code registered it as a channel for the session (CC v2.1.234+ sends permission requests only to servers registered as channels for the session). CC v2.1.211+ sanitizes the relayed `description`/`input_preview` fields (neutralizes direction-override/invisible characters, folds whitespace, elides text over 3,500 code points); CC v2.1.234+ additionally masks recognizable credential tokens (API keys, personal access tokens) as `[REDACTED]` in both fields, and relays `(value unserializable)` in place of an `input_preview` field it can't serialize safely. Before v2.1.234, Claude Code treated an explicit `false` for the permission capability the same as declaring it.
-- **Enterprise**: blocked by default on claude.ai Team and Enterprise until an Owner enables `channelsEnabled`; permitted by default for Anthropic Console API-key authentication unless that organization deploys managed settings; Pro/Max users without an organization skip these checks entirely and opt in per session with `--channels`
+- **Enterprise**: blocked by default on claude.ai Team and Enterprise until an Owner enables `channelsEnabled`; permitted by default for Anthropic Console API-key authentication unless that organization deploys managed settings; Pro, Max, and Ultra users without an organization skip these checks entirely and opt in per session with `--channels`
 
 ### Requirements
 
 - Anthropic authentication via claude.ai login or Console API key (not available on Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry)
-- CC v2.1.80+
+- CC v2.1.80+ (unverified)
 - Bun runtime for pre-built plugins
 - Team/Enterprise: admin must enable `channelsEnabled`
 
@@ -77,7 +77,7 @@ claude --dangerously-load-development-channels server:my-webhook
 |---------|-------------|-----------|
 | **Channels** | External systems push events into running local session | Inbound push |
 | [CC Web sessions](../ci-remote/CC-cloud-sessions-analysis.md) | Fresh cloud sandbox from GitHub | Outbound delegation |
-| [Claude in Slack](https://code.claude.com/docs/en/slack) | `@Claude` mention spawns web session (being replaced by Claude Tag for Team/Enterprise workspaces) | Outbound delegation |
+| [Claude Tag](https://claude.com/docs/claude-tag/overview) (replaces the retired Claude Code in Slack, [docs](https://code.claude.com/docs/en/slack)) | `@Claude` mention in a channel or thread spawns a cloud session (Team/Enterprise only; not on individual plans) | Outbound delegation |
 | [Standard MCP](CC-connectors-overview.md) | Claude queries on demand | Outbound pull |
 | [Remote Control](../ci-remote/CC-remote-control-analysis.md) | You drive local session from web/mobile | Bidirectional steering |
 

@@ -2,7 +2,7 @@
 title: Salesforce Agentforce 360 Analysis — Claude on Bedrock, Agentforce Registry, Agent Script, Pricing
 purpose: "First-party fact-check of Salesforce Agentforce 360 against Salesforce's own docs, press releases and rate card: platform scope, Claude via Bedrock, registry, pricing, data masking, licences, roles."
 created: 2026-11-12
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -454,7 +454,7 @@ other Products that no longer use Einstein Requests" [rate-card].
 
 - Flex Credits: "$500" per 100,000 credits (USD).
 - Conversations: "$2" per conversation (USD).
-- Agentforce add-ons: "$125" user/month; Agentforce Industries add-ons: "$150" user/month.
+- Agentforce add-ons: "$150" user/month; Agentforce Industries add-ons: "$175" user/month (checked 2026-11-26).
 - **Max Edition**: "from $550" user/month, including "2.75M Flex Credits per org per year"
   [agentforce-pricing].
 - **Agentforce User License**: "$5" USD/user/month (requires Flex Credits) [agentforce-pricing].
@@ -716,7 +716,7 @@ four as background context, not as verified facts of this analysis.
 | [Winter '27 platform release post][winter27-blog] | 2026-10-13; MCP Risk Score; "264" release numbering; blanket GA policy |
 | [Flex Credits Rate Card, 11.3.2026][rate-card] | Full multiplier table; "Updated as of November 3, 2026"; new rows vs. the August version |
 | [Flex Credits Rate Card, 08.18.2026 (superseded)][rate-card-aug] | The earlier version this doc previously cited as primary |
-| [Agentforce pricing page][agentforce-pricing] | Current list prices, accessed 2026-11-12; Flex Credits/Conversations non-combinability FAQ |
+| [Agentforce pricing page][agentforce-pricing] | Current list prices, accessed 2026-11-12 (add-on prices checked 2026-11-26); Flex Credits/Conversations non-combinability FAQ |
 | [Hyperforce Operating Zone FAQ][eu-oz-1] | "select set of products and features ... vetted"; no Agentforce/cloud-provider statement (URL redirected since original fetch) |
 | [Hyperforce EU Operating Zone product page][eu-oz-2] | Product-scope statement: "Sales Cloud, Service Cloud, the Salesforce Platform, industries, and more" |
 | [Data Masking Limitations in Agentforce (Salesforce Help)][masking-agents] | Verbatim masking-disabled-for-agents statement and trust-boundary clause |

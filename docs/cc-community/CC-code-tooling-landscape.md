@@ -3,7 +3,7 @@ title: CC Code-Analysis Tooling Landscape
 purpose: Code-understanding tools that integrate with Claude Code (knowledge graphs, semantic LSP, structural search, repo packers) and cross-harness evidence on grep vs. semantic search.
 status: research
 created: 2026-06-14
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 ---
 
@@ -11,7 +11,7 @@ Code-analysis and code-context tools for Claude Code: knowledge-graph builders, 
 
 ## Graphify (safishamsi)
 
-**Repo**: [safishamsi/graphify][graphify] | **Stars**: 16.5K | **License**: MIT
+**Repo**: [Graphify-Labs/graphify][graphify] (formerly `safishamsi/graphify`; the old URL still resolves) | **Stars**: 153,737 | **License**: Apache-2.0 (`LICENSE` file) | **Version**: v0.9.120 (2026-11-25); stars and version checked 2026-11-26
 
 Transforms codebases, documentation, papers, and images into queryable knowledge graphs. Two-pass architecture: AST extraction via tree-sitter (local, deterministic) then LLM-powered semantic extraction (parallel subagents). Results merge into a NetworkX graph, clustered via Leiden community detection, exported as interactive HTML, JSON, and markdown reports.
 
@@ -26,8 +26,8 @@ Transforms codebases, documentation, papers, and images into queryable knowledge
 
 ### Key Features
 
-- **71.5x token reduction** on mixed corpora versus raw file reading
-- **20+ languages**: Python, TypeScript, Go, Rust, Java, C/C++, Ruby, C#, Kotlin, Scala, PHP, Swift, Lua, Zig, PowerShell, Elixir, Objective-C, Julia
+- **71.5x token reduction** on mixed corpora versus raw file reading (unverified: not found in the current README, checked 2026-11-26)
+- **~40 languages** parsed locally with tree-sitter per the current README (checked 2026-11-26); an earlier version of this doc listed 18 names under "20+"
 - **Multimodal**: code, PDFs, markdown, screenshots, diagrams
 - **Confidence tagging**: EXTRACTED (1.0), INFERRED (0.0–1.0), AMBIGUOUS
 - **SHA256 caching**: only changed files reprocess; `--watch` mode for auto-sync
@@ -54,7 +54,7 @@ Cross-ref: [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo
 
 ## AxiomCode Graph (AxiomCodeAI)
 
-**Repo**: [AxiomCodeAI/axiomcodegraph][axiomcode] | **Stars**: 609 | **License**: FSL-1.1-Apache-2.0 (Functional Source License — free for internal use, non-commercial research/education and professional services; converts to Apache-2.0 two years after each version's release; **not** an OSI-approved open-source license while under FSL) | **Version**: npm `@axiomcode/code-graph`, `gh api` 2026-11-12
+**Repo**: [AxiomCodeAI/axiomcodegraph][axiomcode] | **Stars**: 811 (checked 2026-11-26; latest release v0.2.3, 2026-11-05) | **License**: FSL-1.1-Apache-2.0 (Functional Source License — free for internal use, non-commercial research/education and professional services; converts to Apache-2.0 two years after each version's release; **not** an OSI-approved open-source license while under FSL) | **Version**: npm `@axiomcode/code-graph`, `gh api` 2026-11-12
 
 Builds a codebase knowledge graph from **formal methods** rather than tree-sitter syntax matching: each call edge is resolved from the receiver's declared/inferred type "the way the compiler does" — scored against Java bytecode and the TypeScript type checker — instead of guessed from a name match. Supports Java, TypeScript and Python (stable); JavaScript and C# (beta).
 
@@ -78,13 +78,13 @@ Cross-ref: Graphify and Code-Review-Graph below — AxiomCode Graph's own benchm
 
 ## Graphicle (Graphicle-AI)
 
-**Repo**: [Graphicle-AI/graphicle][graphicle] | **Stars**: 561 | **License**: Apache-2.0 | **Version**: v0.1.11 (README benchmark label), `gh api` 2026-11-12
+**Repo**: [Graphicle-AI/graphicle][graphicle] | **Stars**: 623 | **License**: Apache-2.0 | **Version**: v0.1.19 (2026-11-21), `gh api` checked 2026-11-26
 
 A Rust port of Graphify's code-graph engine, explicitly credited as such — "Graphify, ported to Rust. Plus memory... Graphicle is not affiliated with Graphify Labs" (README) — with an added agent-memory layer in the same binary. Maps a repository into a code graph and "remembers your project's docs, decisions and past agent sessions," giving cited excerpts (file + line) from both.
 
 ### Benchmarks (self-reported, `docs/benchmarks.md`, against named Graphify version)
 
-Graphicle 0.1.11 vs. Graphify 0.9.100, one machine: first build of Kubernetes v1.37.1 (code-only graph) in 1 min 14s vs. 29 min 18s (23.9×); across 13 codebases, 3.4–23.9× less build time in 34 of 39 measurements (Graphify was faster only on no-change incremental updates, where it "now stops early"). On agent memory (LoCoMo-10, pre-release build, one open model — Qwen3.8-27B — as every system's reader/judge): 87.7 accuracy, level with Hindsight 0.10.2 (87.3) and above Mem0 OSS 2.2.1 (81.9), at ~12 model calls per conversation against 160 (Hindsight) and 332 (Mem0).
+Graphicle 0.1.11 vs. Graphify 0.9.100 (an older run; the README now labels its benchmark 0.1.17 vs. 0.9.108), one machine: first build of Kubernetes v1.37.1 (code-only graph) in 1 min 14s vs. 29 min 18s (23.9×); across 13 codebases, 3.4–23.9× less build time in 34 of 39 measurements (Graphify was faster only on no-change incremental updates, where it "now stops early"). On agent memory (LoCoMo-10, pre-release build, one open model — Qwen3.8-27B — as every system's reader/judge): 87.7 accuracy, level with Hindsight 0.10.2 (87.3) and above Mem0 OSS 2.2.1 (81.9), at ~12 model calls per conversation against 160 (Hindsight) and 332 (Mem0).
 
 ### CC Integration
 
@@ -94,7 +94,7 @@ Graphicle 0.1.11 vs. Graphify 0.9.100, one machine: first build of Kubernetes v1
 
 **Strengths**: direct, benchmarked lineage from Graphify with a stated large speed advantage on both first build and incremental updates; folds agent memory into the same binary instead of requiring a second tool; `graphicle disconnect` reverses every file `setup` touched, with backups.
 
-**Risks**: pre-1.0 (v0.1.11), very young (created 2026-10-14); all benchmark numbers are the vendor's own, against named-version competitors it chose, and the memory comparison uses a single open model as reader/judge for every system including competitors (disclosed, not independently confirmed); overlaps directly with Graphify, and for the memory half with every cross-agent memory tool in [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) — pick one per role.
+**Risks**: pre-1.0 (v0.1.19 as of 2026-11-26), very young (created 2026-10-14); all benchmark numbers are the vendor's own, against named-version competitors it chose, and the memory comparison uses a single open model as reader/judge for every system including competitors (disclosed, not independently confirmed); overlaps directly with Graphify, and for the memory half with every cross-agent memory tool in [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) — pick one per role.
 
 Cross-ref: [Graphify](#graphify-safishamsi) above — the engine Graphicle ports; [CC-memory-tooling-landscape.md](CC-memory-tooling-landscape.md) — cross-agent memory tools, for the memory half of Graphicle's scope
 
@@ -102,29 +102,28 @@ Cross-ref: [Graphify](#graphify-safishamsi) above — the engine Graphicle ports
 
 ## Code-Review-Graph (tirth8205)
 
-**Repo**: [tirth8205/code-review-graph][code-review-graph] | **Stars**: 7.1K | **License**: MIT
+**Repo**: [tirth8205/code-review-graph][code-review-graph] | **Stars**: 32,956 (checked 2026-11-26) | **License**: MIT | **Version**: v2.4.0 (2026-11-11)
 
 Persistent structural knowledge graph of codebases via tree-sitter AST parsing. Computes "blast radius" of changes — which functions, classes, and files are affected — to provide AI assistants with precisely scoped review context.
 
 ### Key Claims
 
-- **8.2x average token reduction** across 6 repositories
-- **Up to 49x fewer tokens** for monorepo daily tasks
-- **100% recall** in impact analysis (no missed affected files)
+- **~63x median per-question token reduction** across the same 6 repositories (358x maximum, one repository; self-reported README benchmark, checked 2026-11-26); the earlier 8.2x and 49x figures are no longer in the README
+- **0.69 average impact F1** against graph-derived ground truth; the README calls its recall of 1.0 a circular upper bound, so the earlier "100% recall" claim no longer holds
 - **Sub-2s incremental updates** (re-parses only modified files)
 
 ### CC Integration
 
-`code-review-graph install` auto-configures Claude Code (plus Cursor, Windsurf, Zed, Continue, OpenCode, Antigravity). Exposes 22 MCP tools:
+`code-review-graph install` auto-configures Claude Code (plus Cursor, Windsurf, Zed, Continue, OpenCode, Antigravity). Exposes 30 MCP tools by default per the current README (checked 2026-11-26; earlier text said 22):
 
 - Impact radius computation
 - Token-optimized review context generation
 - Graph querying (callers, callees, test coverage)
 - Semantic search across codebase entities
 
-### Language Support (19)
+### Language Support
 
-Python, TypeScript, JavaScript, Go, Rust, Java, C, C++, Ruby, C#, Kotlin, PHP, Swift, Scala, Lua, Elixir, Dart, R, Jupyter notebooks.
+Python, TypeScript, JavaScript, Go, Rust, Java, C, C++, Ruby, C#, Kotlin, PHP, Swift, Scala, Lua, Elixir, Dart, R, Jupyter notebooks (unverified: the earlier "19 languages" count is not in the current README; it also documents custom grammar mapping via `languages.toml`).
 
 ### Architecture
 
@@ -168,22 +167,22 @@ Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-
 
 ## codebase-memory-mcp (DeusData)
 
-**Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Docs**: [deusdata.github.io][codebase-memory-mcp-docs] | **Stars**: ~19K (2026-06-28) | **License**: MIT | **Version**: v0.8.1 (2026-06-12)
+**Repo**: [DeusData/codebase-memory-mcp][codebase-memory-mcp] | **Docs**: [deusdata.github.io][codebase-memory-mcp-docs] | **Stars**: 49,203 (checked 2026-11-26) | **License**: MIT | **Version**: v0.12.1 (2026-10-16)
 
-Single static binary that builds a persistent code knowledge graph for agents — no runtime dependencies, no external API. Combines 159 vendored tree-sitter grammars (syntactic parse), a clean-room hybrid-LSP type-resolution layer (Python, TS/JS, PHP, C#, Go, C/C++), and bundled `nomic-embed-code` embeddings (semantic search) into a SQLite-backed graph of typed nodes (Function, Class, Route) and edges (CALLS, IMPORTS, HTTP_CALLS).
+Single static binary that builds a persistent code knowledge graph for agents — no runtime dependencies, no external API. Combines 164 vendored tree-sitter grammars (syntactic parse), a clean-room hybrid-LSP type-resolution layer (Python, TS/JS, PHP, C#, Go, C/C++), and bundled `nomic-embed-code` embeddings (semantic search) into a SQLite-backed graph of typed nodes (Function, Class, Route) and edges (CALLS, IMPORTS, HTTP_CALLS).
 
 ### CC Integration
 
 | Surface | Mechanism |
 |---------|-----------|
-| **MCP server** | 14 tools — `index_repository`, `search_graph`, `trace_path`, `query_graph` (Cypher-like read-only), `get_architecture`, `detect_changes`, `manage_adr`, `ingest_traces` |
+| **MCP server** | 17 tools — `index_repository`, `search_graph`, `trace_path`, `query_graph` (Cypher-like read-only), `get_architecture`, `detect_changes`, `manage_adr`, `ingest_traces` |
 | **PreToolUse hook** | Augments Grep/Glob with graph results before keyword search |
-| **Auto-config** | `install` wires up Claude Code, Codex, Gemini CLI, Zed, OpenCode, Aider + others (PreToolUse hook for CC; SessionStart reminders for the rest) |
+| **Auto-config** | `install` wires up Claude Code, Codex, Gemini CLI, Zed, OpenCode, Aider + others (46 automatic or conditional client surfaces per the README, checked 2026-11-26; PreToolUse hook for CC; SessionStart reminders for the rest) |
 
 ### Key Features
 
 - **99.2% token reduction** claim: ~3,400 tokens for 5 structural queries vs ~412,000 via file-by-file grep
-- **159 languages** (88 full AST, 71 additional); Linux kernel (~28M LOC) indexed in ~3 min, sub-ms queries
+- **164 languages** per the README badge (the earlier 88 full AST / 71 additional split was not re-checked, unverified); Linux kernel (~28M LOC) indexed in ~3 min, sub-ms queries
 - **Install**: one-line `curl … | bash`, plus AUR / Homebrew / PyPI / npm; macOS / Linux / Windows
 
 ### Adoption Considerations
@@ -198,7 +197,7 @@ Cross-ref: Graphify and Code-Review-Graph above — same code→graph category; 
 
 ## cocoindex-code (cocoindex-io)
 
-**Repo**: [cocoindex-io/cocoindex-code][cocoindex-code] | **Stars**: 2.2K | **License**: Apache-2.0 | **Version**: v0.2.36 (2026-06-19)
+**Repo**: [cocoindex-io/cocoindex-code][cocoindex-code] | **Stars**: 2,996 (checked 2026-11-26) | **License**: Apache-2.0 | **Version**: v0.2.44 (2026-11-25)
 
 A lightweight embedded **semantic code-search** CLI (`ccc`) built on the Rust [CocoIndex](../non-cc/context-memory/cocoindex-analysis.md) engine — natural-language queries over a codebase with a self-reported ~70% token saving vs file reading. tree-sitter AST chunking across 28+ languages, embeddings via local SentenceTransformers or 100+ providers (LiteLLM), incremental re-indexing of changed files only, and LMDB embedded storage (no external service).
 
@@ -206,6 +205,7 @@ A lightweight embedded **semantic code-search** CLI (`ccc`) built on the Rust [C
 
 | Surface | Mechanism |
 |---------|-----------|
+| **Skill (recommended)** | `ccc` skill via `npx skills add cocoindex-io/cocoindex-code`; the repo is also a Claude Code plugin marketplace (`.claude-plugin/marketplace.json`) |
 | **MCP server** | `ccc mcp` — exposes code search to Claude Code, Codex, OpenCode |
 
 ### Adoption Considerations
@@ -218,7 +218,7 @@ Cross-ref: [cocoindex-analysis.md](../non-cc/context-memory/cocoindex-analysis.m
 
 ## Serena (oraios)
 
-**Repo**: [oraios/serena][serena] | **Stars**: 25.2K | **License**: MIT | **Version**: v1.5.3 (2026-05-26)
+**Repo**: [oraios/serena][serena] | **Stars**: 31,731 (checked 2026-11-26) | **License**: split per component, not MIT overall: the Serena application is GPL-3.0-or-later, only the bundled SolidLSP is MIT (`LICENSE` "Serena Licensing Overview") | **Version**: v2.1.0 (2026-10-19)
 
 LSP-based semantic coding toolkit — "an IDE for your agent." Unlike the AST/graph tools above (which precompute a graph), Serena drives live language servers via the Language Server Protocol, giving agents symbol-level operations: find symbol, find references, type hierarchy, rename/move refactor, safe delete, and diagnostics — atomic cross-file edits instead of text-replace guesswork.
 
@@ -248,7 +248,7 @@ Cross-ref: [CC-official-plugins-landscape.md](../cc-native/plugins-ecosystem/CC-
 
 ## ast-grep MCP (ast-grep)
 
-**Repo**: [ast-grep/ast-grep-mcp][ast-grep-mcp] | **Stars**: 419 | **License**: MIT | **Version**: unreleased (main branch)
+**Repo**: [ast-grep/ast-grep-mcp][ast-grep-mcp] | **Stars**: 500 (checked 2026-11-26) | **License**: MIT | **Version**: unreleased (main branch)
 
 Experimental MCP wrapper around the [ast-grep][ast-grep] Rust structural search/rewrite CLI. Exposes tree-sitter AST pattern matching to agents so they search by *syntax structure* (functions, classes, imports, call shapes) instead of text — fewer false positives than Grep, and structure-preserving rewrites.
 
@@ -277,7 +277,7 @@ Cross-ref: complements the persistent-graph tools above (search/rewrite vs navig
 
 ## tgrep (microsoft)
 
-**Repo**: [microsoft/tgrep][tgrep] | **Stars**: 3,346 | **License**: MIT | **Version**: v1.0.10 (2026-09-21)
+**Repo**: [microsoft/tgrep][tgrep] | **Stars**: 3,521 (checked 2026-11-26) | **License**: MIT | **Version**: v1.2.9 (2026-11-25)
 
 Trigram-indexed grep with a client/server architecture, built to search large codebases locally faster than plain regex scanning. A trigram index narrows each query to candidate files before the regex engine verifies matches, so tgrep skips reading files that cannot match.
 
@@ -294,9 +294,9 @@ Per its own `BENCHMARKS.md` (August 24, 2026 sweep): tgrep beat ripgrep in 17 of
 
 ### Adoption Considerations
 
-**No first-party Claude Code integration.** `install-agent.sh`, the official agent installer, wires only **Codex** and **pi** (`--agent codex,pi`) — it does not target Claude Code as of 2026-09-24. A Claude Code user can still run tgrep as a faster local `grep`/`rg` substitute via Bash, or hand-wire its stdio MCP server into `.mcp.json` the way any other MCP server is added, but neither path is documented or maintained by the project itself.
+**No first-party Claude Code integration.** `install-agent.sh`, the official agent installer, wires only **Codex** and **pi** (`--agent codex,pi`) — it does not target Claude Code (README and installer re-checked 2026-11-26). A Claude Code user can still run tgrep as a faster local `grep`/`rg` substitute via Bash, or hand-wire its stdio MCP server into `.mcp.json` the way any other MCP server is added, but neither path is documented or maintained by the project itself.
 
-**Strengths**: a pre-built index makes repeat searches on large repos far faster than a cold ripgrep scan; Microsoft-maintained with active CI and a fast release cadence (v1.0.10 as of 2026-09-21).
+**Strengths**: a pre-built index makes repeat searches on large repos far faster than a cold ripgrep scan; Microsoft-maintained with active CI and a fast release cadence (v1.2.9 as of 2026-11-25).
 
 **Risks**: the index can lag filesystem changes between refreshes (mitigated by `--no-index` at the cost of speed); the speedup benchmark is self-reported; no CC-native install path.
 
@@ -306,7 +306,7 @@ Cross-ref: ast-grep MCP above — structural AST search vs. tgrep's indexed rege
 
 ## zg / zvec-grep (zvec-ai)
 
-**Repo**: [zvec-ai/zvec-grep][zvec-grep] | **Stars**: 3,752 | **License**: Apache-2.0 | **Version**: v0.2.0 (2026-08-27)
+**Repo**: [zvec-ai/zvec-grep][zvec-grep] | **Stars**: 4,384 (checked 2026-11-26) | **License**: Apache-2.0 | **Version**: v0.3.1 (2026-11-18)
 
 Local-first search layer that unifies ripgrep (exact/regex), BM25 (lexical ranking), and vector search (semantic) behind one interface, "for humans and agents." Built on [zvec][zvec] (Alibaba's vector engine); the documented implementation is TypeScript/Node.js ≥22 (npm), with a separate Rust implementation developed in the repo's `rust/` subdirectory.
 
@@ -324,7 +324,7 @@ Agents are steered to use native grep/rg for exact lookups (a known word, quote,
 
 ### Adoption Considerations
 
-**Strengths**: unlike tgrep above (no CC target at all) and ast-grep MCP (manual JSON client config only), zg ships an explicit, documented `--target claude` installer that writes CC's own config files directly; combines exact, lexical, and semantic retrieval in one local index rather than requiring a separate vector DB; broad multi-agent install coverage (8 named harnesses/IDEs).
+**Strengths**: unlike tgrep above (no CC target at all) and ast-grep MCP (manual JSON client config only), zg ships a documented `zg --install --target <name>` installer (the README example shows `--target opencode`; a `--target claude` option was not re-confirmed on 2026-11-26, unverified) that writes CC's own config files directly; combines exact, lexical, and semantic retrieval in one local index rather than requiring a separate vector DB; broad multi-agent install coverage (8 named harnesses/IDEs).
 
 **Risks**: young (repo created 2026-07-10); the dual TS/Rust implementation is a maintenance surface to watch; no independent benchmark of its own retrieval-quality claims (the repo carries internal `zg-retrieval-metric-review.md` / `zg-retrieval-only-sweqa20-design.md` design docs, not third-party validation).
 
@@ -334,7 +334,7 @@ Cross-ref: cocoindex-code above — the other embeddings-based semantic search t
 
 ## XERJ (xerj-org)
 
-**Repo**: [xerj-org/xerj][xerj] | **Stars**: 18,868 (GitHub's Trendshift badges label it "#1 Rust Repository of the Day/Week") | **License**: Apache-2.0 | **Version**: v1.0.0-rc.101 (README, `gh api` 2026-11-12)
+**Repo**: [xerj-org/xerj][xerj] | **Stars**: 21,600 (checked 2026-11-26; GitHub's Trendshift badges label it "#1 Rust Repository of the Day/Week") | **License**: Apache-2.0 | **Version**: v1.0.0-rc.105 (2026-11-23, `gh api` checked 2026-11-26)
 
 Local-first, Elasticsearch-API-compatible search engine and MCP server: one Rust binary indexes code, docs, logs, JSONL/CSV and PDFs for BM25 full-text, vector and hybrid search. Its flagship coding-agent use case is **reference coding** — `xerj autoindex` clones and indexes the open-source repos closest to a task so a coding agent reuses how they solved the same problem instead of writing from memory.
 
@@ -358,8 +358,8 @@ Cross-ref: [zg / zvec-grep](#zg--zvec-grep-zvec-ai) above — the other hybrid l
 
 ## jevgrep (dzhng)
 
-**Repo**: [dzhng/jevgrep][jevgrep] | **Stars**: 3,262 (1,848 on 2026-09-30; `gh api`, 2026-11-23) | **License**: MIT (confirmed against
-`LICENSE`) | **Version**: latest tag v0.7.0, latest GitHub Release v0.6.0 (provider selection requires 0.3.0+), pushed 2026-11-12
+**Repo**: [dzhng/jevgrep][jevgrep] | **Stars**: 3,270 (1,848 on 2026-09-30; `gh api`, checked 2026-11-26) | **License**: MIT (confirmed against
+`LICENSE`) | **Version**: latest tag v0.8.5, latest GitHub Release v0.8.0 (2026-10-01) (provider selection requires 0.3.0+), pushed 2026-11-12
 (`gh api`, 2026-11-23; 2026-09-29 at the 2026-09-30 read)
 
 A CLI (`jg`) that answers a natural-language question about a repository ("Where is
@@ -405,7 +405,7 @@ A distinct sub-category: one-shot **context export** rather than a live MCP grap
 
 ### Repomix (yamadashy)
 
-**Repo**: [yamadashy/repomix][repomix] | **Stars**: 26.2K | **License**: MIT | **Version**: v1.14.1 (2026-05-27)
+**Repo**: [yamadashy/repomix][repomix] | **Stars**: 29,447 (checked 2026-11-26) | **License**: MIT | **Version**: v1.19.0 (2026-11-08)
 
 Packs a repository into one AI-friendly file (XML / Markdown / JSON / plain text), respecting `.gitignore` and scanning for secrets via Secretlint. `--compress` uses tree-sitter to keep classes/functions/interfaces and drop bodies — **~70% token reduction** while preserving structure. Reports per-file and repo-wide token counts (`o200k_base` / `cl100k_base`). **CC integration**: MCP server (`pack_codebase`, `pack_remote_repository`, `read_repomix_output`, `grep_repomix_output`, …) plus official CC plugins — `repomix-mcp`, `repomix-commands`, `repomix-explorer` via `/plugin marketplace add yamadashy/repomix`. Run with `npx repomix@latest`.
 
@@ -421,7 +421,7 @@ Rust CLI that renders a codebase into a single prompt with a source tree, Handle
 
 ## Floorplan (haydenschmitty)
 
-**Repo**: [haydenschmitty/floorplan][floorplan] | **Stars**: 3,682★/299 forks (`gh api`, 2026-11-12) | **License**: MIT | **Version**: 0.8.0 (`plugin.json`/`CHANGELOG.md`, checked 2026-11-12)
+**Repo**: [haydenschmitty/floorplan][floorplan] | **Stars**: 6,930★/636 forks (`gh api`, checked 2026-11-26) | **License**: MIT | **Version**: floorplan--v0.11.0 (GitHub Release, 2026-11-18)
 
 A different category from the graph/LSP/search/packer tools above: Floorplan asks Claude Code or Codex to read a codebase and draw an **interactive, zoomable visual map** — parts, files and web requests, each given a plain-English name, with every connection shown, including requests that cross from a frontend repo to a backend repo. It runs locally, updates incrementally (re-reading only what changed), and exports a map as one self-contained HTML file. Two features go beyond mapping: a **Health check** that flags classic AI-assisted-app mistakes (secrets committed to code, open Supabase tables, permissive Firebase rules, fakeable Stripe webhooks, sign-in-less endpoints) with a ready-to-paste fix per finding, and a **Recent work** view that highlights exactly which map nodes the agent's last changes touched and why. It can also draw a **blueprint** — the same map shape, dashed to mark it as a plan — from a PRD or spec for work not yet built.
 
@@ -501,7 +501,7 @@ before native reads"). Aider's repo map and LSP tools were not tested. Code:
 - [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo-to-docs-tools-landscape.md) — repo-to-docs generators
 - [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) — standalone SaaS PR-review products (CodeRabbit, Greptile, Sourcery, …) moved out of this doc per #326
 
-[graphify]: https://github.com/safishamsi/graphify
+[graphify]: https://github.com/Graphify-Labs/graphify
 [axiomcode]: https://github.com/AxiomCodeAI/axiomcodegraph
 [graphicle]: https://github.com/Graphicle-AI/graphicle
 [xerj]: https://github.com/xerj-org/xerj

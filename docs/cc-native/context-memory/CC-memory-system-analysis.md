@@ -3,7 +3,7 @@ title: CC Memory System Analysis
 source: https://code.claude.com/docs/en/memory
 purpose: Analysis of Claude Code's dual memory system (CLAUDE.md + auto memory) for optimizing agent instructions, cross-session learning, and headless CC workflow context management.
 created: 2026-03-07
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: adopt
 ---
@@ -115,7 +115,7 @@ ln -s ~/company-standards/security.md .claude/rules/security.md
 
 Circular symlinks are detected and handled gracefully ([source][cc-mem]).
 
-"Claude Code treats a symlink whose target is outside your working directory like an external import": such rules "don't load until you approve external imports for the project" ([source][cc-mem]). Observed exception: per-file symlinks in `~/.claude/rules/` pointing into a separate clone outside the working directory loaded with no approval prompt in a headless run (CC 2.1.303, Codespaces, 2026-10-19). The documented sentence is in the project-rules section, so user-level symlinks may simply be out of its scope; unverified.
+"Claude Code treats a symlink whose target is outside your working directory like an external import": such rules "don't load until you approve external imports for the project" ([source][cc-mem]). The docs now cover the user-level case: to load shared rules without that approval, keep them in `~/.claude/rules/`, and user-scope files such as `~/.claude/CLAUDE.md` and `~/.claude/rules/` load their imports without the dialog, except in Cowork desktop sessions, where symlinks and imports resolving outside the working directory are skipped (checked 2026-11-26). This matches our earlier observation (per-file symlinks in `~/.claude/rules/` into a separate clone loaded with no prompt in a headless run, CC 2.1.303, Codespaces, 2026-10-19).
 
 ### Monorepo Management
 
@@ -263,7 +263,7 @@ A controlled ablation complicates the adherence-optimization advice above. [Khat
 
 Or: `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` env var. Toggle via `/memory` command in session ([source][cc-mem]).
 
-**Requires Claude Code v2.1.59+** for auto memory. **Custom location**: set `autoMemoryDirectory` in `settings.json` (absolute or `~/`-prefixed path; honored only after the workspace-trust dialog) to relocate the memory directory from the default `~/.claude/projects/<project>/memory/` ([source][cc-mem]).
+**Requires Claude Code v2.1.59+** for auto memory (gate no longer stated on the memory page, unverified). **Custom location**: set `autoMemoryDirectory` in `settings.json` (absolute or `~/`-prefixed path; read from any settings scope: user, project, local, policy or `--settings`; for a project's `.claude/settings.json` or `.claude/settings.local.json` it is honored under the same workspace-trust rule as hooks in settings files) to relocate the memory directory from the default `~/.claude/projects/<project>/memory/` ([source][cc-mem]).
 
 #### Auditing
 
@@ -283,7 +283,7 @@ The MEMORY.md-index / topic-file split above is a variant of a broader pattern �
 
 ### Key Behaviors
 
-- **Import syntax**: `@path/to/file` expands imports in CLAUDE.md. Both relative and absolute paths supported; relative paths resolve relative to the containing file. Max 5 hops recursion ([source][cc-mem])
+- **Import syntax**: `@path/to/file` expands imports in CLAUDE.md. Both relative and absolute paths supported; relative paths resolve relative to the containing file. Max 4 hops recursion ([source][cc-mem])
 - **Size target**: Under 200 lines per CLAUDE.md for best adherence ([source][cc-mem])
 - **`/init`**: Auto-generates starting CLAUDE.md from codebase analysis. If CLAUDE.md exists, suggests improvements rather than overwriting; `CLAUDE_CODE_NEW_INIT=1` enables an interactive multi-phase flow that also sets up skills/hooks and proposes changes before writing ([source][cc-mem])
 - **`/memory`**: Lists all loaded instruction files; toggles auto memory; opens memory folder ([source][cc-mem])
@@ -357,7 +357,7 @@ Four references situate CC's memory system against other enterprise agent-memory
 
 **Claude Managed Agents memory stores** (beta header `agent-memory-2026-07-22`) are a distinct Anthropic product from CC's CLAUDE.md/auto memory: a workspace-scoped store of text "memories," mounted as a directory (`/mnt/memory/<slug>/`) inside a Managed Agents session sandbox and read/written with the same file tools the agent uses elsewhere. Up to 8 stores per session, `read_only` or `read_write` access, and every write creates an immutable **memory version** (`memver_...`) — an audit/redaction capability CC's local memory files don't have. Per-store caps of 10,000 memories and 100KB (~25k tokens) per memory keep stores bounded ([source][cc-managed-mem]).
 
-**Microsoft Copilot Studio "Memory"** (preview, GitHub Copilot harness) captures user preferences and context automatically during conversation into a per-user, Microsoft-managed folder, applies it on later turns, and exposes a self-service portal where a user can view or delete what's remembered; unused memories expire after 28 days idle ([source][ms-copilot-mem]).
+**Microsoft Copilot Studio "Memory"** (rolling out to general availability, still preview in some regions; titled "Memory (Microsoft Copilot)") captures user preferences and context automatically during conversation into a per-user, Microsoft-managed folder, applies it on later turns, and exposes a self-service portal where a user can view or delete what's remembered; unused memories expire after 28 days idle ([source][ms-copilot-mem]).
 
 **Grounding Agent Memory** ([Suresh, Mak, Bhatnagar, Methani, Gutierrez Munoz — Microsoft Corporation, submitted 2026-09-10][grounding-agent-mem]) proposes environment-probing curation: a curator agent validates and refreshes stored memories using read-only tools against the live environment, requiring no model retraining. On the CLBench database-task benchmark it reports pass rate improving from 39% to 73% and pass-discounted reward from 8.60 to 22.60, average queries per question dropping from 8.8 to 4.7, and per-task agent cost falling from $3.38 to $1.68; on a second benchmark (APEX, management consulting) all 18 memory comparisons showed positive results, with tool calls down 16–75%. Results held across Claude Sonnet 4.6 and Opus 4.7. The core idea — validate a memory against ground truth before trusting it — has no direct analog in CC's memory system today, where both CLAUDE.md and auto memory are trusted without runtime verification.
 
@@ -508,7 +508,7 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 - ["Do Context Files Help Coding Agents?" (arXiv 2607.27250)][khatri-context-ablation] — Khatri, 2026-07-28; two-agent ablation study
 - [Claude Managed Agents memory][cc-managed-mem] — memory-store feature docs
 - [The components of agent memory][anthropic-components] — Anthropic Engineering, 2026-11-06
-- [Microsoft Copilot Studio memory overview][ms-copilot-mem]
+- [Microsoft Copilot Studio memory, manage and privacy][ms-copilot-mem]
 - ["Grounding Agent Memory" (arXiv 2609.11060)][grounding-agent-mem] — Suresh et al., Microsoft, 2026-09-10
 - ["Why Does CLAUDE.md Keep Growing? Catastrophic Remembering in Agentic Coding" (arXiv 2608.11095)][claude-md-growth] — Chakrabarti, submitted 2026-08-11
 - [coleam00/context-engineering-intro][cei] — MIT-licensed CLAUDE.md/PRP starter template, 13.9k★ (verified 2026-09-30)
@@ -538,7 +538,7 @@ The mod mechanism itself (function hooks) is scored separately in [CC-mods-funct
 [khatri-context-ablation]: https://arxiv.org/abs/2607.27250
 [cc-managed-mem]: https://platform.claude.com/docs/en/managed-agents/memory
 [anthropic-components]: https://www.anthropic.com/research/components-of-agent-memory
-[ms-copilot-mem]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/memory-overview
+[ms-copilot-mem]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/memory-manage-privacy
 [grounding-agent-mem]: https://arxiv.org/abs/2609.11060
 [claude-md-growth]: https://arxiv.org/abs/2608.11095
 [cei]: https://github.com/coleam00/context-engineering-intro

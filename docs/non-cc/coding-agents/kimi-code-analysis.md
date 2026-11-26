@@ -3,18 +3,18 @@ title: Kimi Code (Moonshot AI) Analysis
 source: https://github.com/MoonshotAI/kimi-code
 purpose: Analysis of Kimi Code CLI as a terminal-first AI coding agent from Moonshot AI, successor to the earlier kimi-cli Python tool.
 created: 2026-06-16
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
 
 ## What It Is
 
-Kimi Code is Moonshot AI's terminal-first AI coding agent, distributed as a single-binary TypeScript CLI (`@moonshot-ai/kimi-code`). It reads and edits code, executes shell commands, searches the filesystem, and fetches web pages while planning and adjusting actions autonomously. It is the successor to the earlier Python-based `kimi-cli` (which is being wound down as of 2026-06; [archived repo][kimi-cli-repo] still receives fixes).
+Kimi Code is Moonshot AI's terminal-first AI coding agent, distributed as a single-binary TypeScript CLI (`@moonshot-ai/kimi-code`). It reads and edits code, executes shell commands, searches the filesystem, and fetches web pages while planning and adjusting actions autonomously. It is the successor to the earlier Python-based `kimi-cli` (which is archived and no longer maintained as of 2026-11-26; [archived repo][kimi-cli-repo]).
 
-The CLI is MIT-licensed and open source. The underlying model — `kimi-for-coding` — is a stable alias that automatically tracks Moonshot AI's latest flagship coding release; as of 2026-06-15 this resolves to Kimi K2.7-Code (1T MoE, 32B active parameters). The CLI itself is free; model access requires either a Kimi membership (subscription, quota-based) or a Moonshot AI Open Platform API key (pay-per-token) (accessed 2026-06-16).
+The CLI is MIT-licensed and open source. The underlying model — `kimi-for-coding` — is a stable alias that automatically tracks Moonshot AI's latest flagship coding release; as of 2026-11-26 the docs say it resolves to K2.8 Preview (up to 1M context; was K2.7-Code on 2026-06-15, whose 1T MoE / 32B active parameter figures are unverified); `kimi-for-coding-highspeed` is K2.7 Code HighSpeed, and K3.1 Pro model IDs also exist. The CLI itself is free; model access requires either a Kimi membership (subscription, quota-based) or a Moonshot AI Open Platform API key (pay-per-token) (accessed 2026-06-16).
 
-Stars: 2.4k (`github.com/MoonshotAI/kimi-code`, accessed 2026-06-16). Latest release: `@moonshot-ai/kimi-code@0.15.0` (2026-06-15).
+Stars: 8.3k (`github.com/MoonshotAI/kimi-code`, checked 2026-11-26). Latest release: `@moonshot-ai/kimi-code@2.8.1` (2026-11-26); a separate `kimi-code-desktop` line (1.5.1) also exists.
 
 ## How It Works
 
@@ -24,7 +24,7 @@ Stars: 2.4k (`github.com/MoonshotAI/kimi-code`, accessed 2026-06-16). Latest rel
 curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
 ```
 
-**Authentication** — OAuth via `kimi.com` account or `MOONSHOT_API_KEY` env var for the Open Platform. The product page lists compatibility with OpenAI-compatible and Anthropic-compatible API protocols, enabling the model via third-party harnesses.
+**Authentication** — `/login` with Kimi Code OAuth or a Moonshot Open Platform API key; third-party tools use an API key from the Kimi Code Console (up to 5 keys). The `MOONSHOT_API_KEY` env var name is unverified. The product page lists compatibility with OpenAI-compatible and Anthropic-compatible API protocols, enabling the model via third-party harnesses.
 
 **Built-in subagents** — three purpose-built agents run in isolated contexts for parallel work:
 
@@ -40,13 +40,13 @@ curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
 
 **Lifecycle hooks** — local command execution hooks for pre/post-tool-call automation (analogous to CC hooks).
 
-**Throughput** — up to 100 tokens/second output; subscription plan allows 300–1,200 requests per 5-hour window with up to 30 concurrent requests (accessed 2026-06-16; quota figures are plan-tier-specific and subject to change).
+**Throughput** — up to 100 tokens/second output; subscription plan allows 300–1,200 requests per 5-hour window with up to 30 concurrent requests (accessed 2026-06-16; unverified, the current docs give no figures and defer to a membership page; quota figures are plan-tier-specific and subject to change).
 
 **Video input** — accepts screen recordings as context, not just text/images.
 
 ## Adoption Decision
 
-Kimi Code enters the **Assess** quadrant. The underlying K2.7-Code model (June 2026) reports strong coding benchmark numbers (+21.8% on Kimi Code Bench v2 over K2.6 and 30% fewer reasoning tokens), but all benchmarks cited are Moonshot's own; independent third-party evaluation on SWE-bench or similar is not yet confirmed from first-party sources.
+Kimi Code enters the **Assess** quadrant. The K2.7-Code model (June 2026; the `kimi-for-coding` alias has since moved to K2.8 Preview) reports strong coding benchmark numbers (+21.8% on Kimi Code Bench v2 over K2.6 and 30% fewer reasoning tokens), but all benchmarks cited are Moonshot's own; independent third-party evaluation on SWE-bench or similar is not yet confirmed from first-party sources.
 
 The CLI architecture is mature — single-binary distribution, fast startup, MCP support, ACP protocol, subagent parallelism — and closely mirrors the CC harness design. The model alias `kimi-for-coding` auto-updates, which reduces maintenance burden but introduces version-instability risk without pinning.
 
@@ -54,7 +54,7 @@ Key considerations:
 
 - **Open source / self-hostable model**: K2.7-Code has a Modified MIT license for the model weights (accessible via Hugging Face); the CLI is MIT. This is meaningfully different from fully proprietary agents.
 - **Access model**: subscription quota or API key; no fully free unlimited tier confirmed (accessed 2026-06-16).
-- **Ecosystem maturity**: 2.4k stars as of 2026-06-16 vs. the established CLI agents. The Python predecessor (`kimi-cli`) reached 9k stars but is being retired.
+- **Ecosystem maturity**: 8.3k stars as of 2026-11-26 vs. the established CLI agents. The Python predecessor (`kimi-cli`, 11.4k stars) is archived and no longer maintained.
 - **China-origin vendor**: Moonshot AI (Beijing). Procurement/data-residency review may be needed for enterprise contexts.
 
 Assess before adopting: validate independently on SWE-bench or project-specific benchmarks; confirm data-handling policy from [Moonshot AI privacy docs][moonshot-privacy] before using with proprietary codebases.
@@ -65,7 +65,7 @@ Assess before adopting: validate independently on SWE-bench or project-specific 
 
 - [ ] Run Kimi Code on internal benchmark tasks to validate K2.7-Code coding quality independently of vendor benchmarks
 - [ ] Review Moonshot AI data-handling and privacy policy for enterprise suitability
-- [ ] Track Kimi Code CLI release cadence (current: v0.15.0, 2026-06-15) — version pinning strategy needed given `kimi-for-coding` auto-update alias
+- [ ] Track Kimi Code CLI release cadence (current: v2.8.1, 2026-11-26) — version pinning strategy needed given `kimi-for-coding` auto-update alias
 - [ ] Compare throughput (100 tok/s, 30 concurrent) against team concurrency requirements; check subscription plan tier limits
 - [ ] Evaluate ACP integration for IDE plug-in alongside [GitHub Copilot CLI][copilot-cli-crossref] for terminal agent shortlist
 
@@ -73,10 +73,10 @@ Assess before adopting: validate independently on SWE-bench or project-specific 
 
 | Source | Content |
 |---|---|
-| [Kimi Code GitHub repo][kimi-code-repo] | License (MIT), stars, v0.15.0 release date, language breakdown, feature list; accessed 2026-06-16 |
+| [Kimi Code GitHub repo][kimi-code-repo] | License (MIT), stars, v2.8.1 release date (checked 2026-11-26), language breakdown, feature list; accessed 2026-06-16 |
 | [Kimi Code official site][kimi-code-site] | Product overview, model alias `kimi-for-coding`, pricing/quota model, ACP integrations; accessed 2026-06-16 |
 | [Kimi Code docs (EN)][kimi-code-docs] | Feature details, authentication, throughput figures, third-party integrations; accessed 2026-06-16 |
-| [kimi-cli legacy repo][kimi-cli-repo] | Predecessor Python tool (9k stars), wind-down notice, Apache-2.0 license; accessed 2026-06-16 |
+| [kimi-cli legacy repo][kimi-cli-repo] | Predecessor Python tool (11.4k stars), archived, Apache-2.0 license; checked 2026-11-26 |
 | [MarkTechPost — Kimi Code CLI release][marktechpost-cli] | Third-party coverage of June 2026 TypeScript CLI release; corroborates MIT license and subagent design |
 | [MarkTechPost — K2.7-Code][marktechpost-k27] | K2.7-Code benchmark claims (+21.8% Kimi Code Bench v2, -30% reasoning tokens); vendor-sourced figures |
 | [Anthropic — threat-intelligence report, Sep 2026][anthropic-threat-report-2026-09] | First-party allegation (GTG-16002) that Moonshot proxied ~300k Kimi requests to Claude Opus and extracted CoT reasoning traces; Anthropic says it does not know whether customers were notified; accessed 2026-09-24 |

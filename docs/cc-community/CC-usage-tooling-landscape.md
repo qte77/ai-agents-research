@@ -3,7 +3,7 @@ title: CC Usage-Observability Tooling Landscape
 purpose: Token-usage and cost observability tools for Claude Code (and sibling agents) — CodeBurn, ccusage, Claude-Code-Usage-Monitor.
 status: research
 created: 2026-06-14
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 ---
 
@@ -11,7 +11,7 @@ Tools that measure token usage and cost across coding-agent sessions. Split out 
 
 ## CodeBurn (AgentSeal)
 
-**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 11.9K (`gh api` 2026-11-22) | **License**: MIT | **Latest**: v0.9.25 / Menubar v0.9.25 (2026-09-21, [GitHub Releases][codeburn-releases]; npm registry confirms `codeburn@0.9.25`, corrects the prior "Menubar v0.9.0 (2026-04-25)" note) | **Stack**: TypeScript, Node.js >=22.13.0 (per `package.json` `engines`, corrects the prior "Node.js 20+" note)
+**Repo**: [getagentseal/codeburn][codeburn] | **Stars**: 11.9K (`gh api` 2026-11-22) | **License**: MIT | **Latest**: v0.9.28 (2026-11-08; mac, windows and desktop builds the same day, checked 2026-11-26; [GitHub Releases][codeburn-releases]; npm registry confirms `codeburn@0.9.28`, corrects the prior "Menubar v0.9.0 (2026-04-25)" note) | **Stack**: TypeScript, Node.js >=22.15.0 (per `package.json` `engines`, corrects the prior "Node.js 20+" note)
 
 Local-first TUI dashboard that tracks AI coding token usage and cost across multiple coding agents. Reads session data directly from disk — no API keys, no proxy ([README][codeburn]).
 
@@ -37,7 +37,7 @@ Per the [README][codeburn]: Claude Code, Claude Desktop, Codex, Cursor, cursor-a
 - **`codeburn compare`** — side-by-side model performance metrics
 - **`codeburn report -p 30days`** — rolling-window analysis
 - **`codeburn export`** — CSV/JSON across multiple time periods, filterable by `--billing <metered|subscription>` among other flags
-- **`codeburn doctor`** — per-provider detection diagnostics: "paths probed, sessions found, parse health (diagnose empty or wrong numbers)" (confirmed via `codeburn doctor --help`, v0.9.25)
+- **`codeburn doctor`** — per-provider detection diagnostics: "paths probed, sessions found, parse health (diagnose empty or wrong numbers)" (confirmed via `codeburn doctor --help`, v0.9.25; not re-run on v0.9.28)
 - **Subscription tracking** — Claude Pro/Max, Cursor Pro
 - **Currency conversion** — 162 ISO 4217 codes
 - **Pricing data** sourced from LiteLLM with 24h cached refresh; hardcoded fallbacks for Claude and GPT-5 to prevent fuzzy-match errors
@@ -89,9 +89,9 @@ Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) 
 
 ---
 
-## ccusage (ryoppippi)
+## ccusage (ccusage)
 
-**Repo**: [ryoppippi/ccusage][ccusage] | **Stars**: 19.5K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v18.0.11 (2026-04-19) | **Stack**: TypeScript
+**Repo**: [ccusage/ccusage][ccusage] (now `ccusage/ccusage`, formerly `ryoppippi/ccusage`) | **Stars**: 19.5K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v20.1.2 (2026-11-25; two majors past v18.0.11, so the feature and report descriptions below were read on v18 and are unverified for v20) | **Stack**: TypeScript
 
 CLI tool that analyzes Claude Code / Codex CLI usage from local JSONL files. Established reference tool in the CC usage-tracking space — predates and is broader-adopted than CodeBurn ([README][ccusage]).
 
@@ -136,7 +136,7 @@ Cross-ref: [CC-session-cost-analysis.md](../cc-native/sessions/CC-session-cost-a
 
 ## Claude-Code-Usage-Monitor (Maciek-roboblog)
 
-**Repo**: [Maciek-roboblog/Claude-Code-Usage-Monitor][claude-monitor] | **Stars**: 8.8K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v3.1.0 | **Stack**: Python 3.9+
+**Repo**: [Maciek-roboblog/Claude-Code-Usage-Monitor][claude-monitor] | **Stars**: 8.8K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v4.0.0 (2026-06-27; plan limits, views and dependency list below were read on 3.x and are unverified for 4.0.0) | **Stack**: Python 3.9+
 
 Real-time terminal monitor for Claude Code with **predictions and warnings**, distinguishing it from after-the-fact analyzers like ccusage / CodeBurn ([README][claude-monitor]).
 
@@ -193,7 +193,7 @@ transcript, in [§ One week of sessions](../cc-native/context-memory/CC-prompt-c
 [codeburn]: https://github.com/getagentseal/codeburn
 [codeburn-optimize]: https://github.com/getagentseal/codeburn/blob/main/src/optimize.ts
 [codeburn-releases]: https://github.com/getagentseal/codeburn/releases
-[ccusage]: https://github.com/ryoppippi/ccusage
+[ccusage]: https://github.com/ccusage/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
 [cc-session-cost-usage]: ../cc-native/sessions/CC-session-cost-analysis.md#shared-plan-usage-across-claude-products
 
@@ -209,4 +209,4 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 ## Sources
 
-Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor]). CodeBurn's v0.9.25 version bump verified via `registry.npmjs.org/codeburn/latest` metadata and [GitHub Releases][codeburn-releases] (`v0.9.25`, `mac-v0.9.25`, both 2026-09-21); its `plan`, `export --billing`, `quota`, and `doctor` subcommand behavior verified directly against `npx codeburn@0.9.25 --help` / `plan --help` / `export --help` / `quota --help` / `doctor --help` and the [README][codeburn], 2026-09-24.
+Each tool cites its repo inline via the reference-style link definitions above ([CodeBurn][codeburn], [ccusage][ccusage], [Claude-Code-Usage-Monitor][claude-monitor]). CodeBurn's version (v0.9.28, 2026-11-26) verified via `registry.npmjs.org/codeburn/latest` metadata and [GitHub Releases][codeburn-releases] (`v0.9.28`, 2026-11-08); its `plan`, `export --billing`, `quota`, and `doctor` subcommand behavior verified directly against `npx codeburn@0.9.25 --help` / `plan --help` / `export --help` / `quota --help` / `doctor --help` and the [README][codeburn], 2026-09-24.

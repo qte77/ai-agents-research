@@ -2,7 +2,7 @@
 title: Agentic Payments Landscape — Machine-Native Payment Rails for Agents
 purpose: Survey of emerging agent payment protocols and rails (x402, AP2, Stripe MPP, L402, ACP, UCP, Visa and Mastercard programmes) letting agents pay for APIs or goods without a human per transaction.
 created: 2026-07-08
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: research
 ---
@@ -21,7 +21,7 @@ Mandates *are* the authorization primitive) and the security angle in
 
 | Protocol | Backer / governance | Mechanism | Settlement | Maturity |
 |---|---|---|---|---|
-| **x402** | Coinbase-originated → **Linux Foundation** | HTTP `402` challenge/response; signed payment header | USDC on **Base** (EIP-3009 / Permit2) | Live, 20k+ payable endpoints (Apify) |
+| **x402** | Coinbase-originated → **Linux Foundation** (unverified) | HTTP `402` challenge/response; signed payment header | USDC on **Base** (EIP-3009 / Permit2) | Live; Apify's 20k+ payable endpoints figure is unverified |
 | **Google AP2** | Google (`google-agentic-commerce`) | **Mandates** (W3C VC): Intent→Cart→Payment, ECDSA/P-256 — an authorization layer, not a rail | Payment-method-agnostic | Early (v0.2.0, 2026-04-28) |
 | **Stripe MPP** | Stripe + Tempo (Machine Payments Protocol) | HTTP `402` challenge; agent authorizes, retries, gets the resource plus a receipt | Cards via Shared Payment Tokens; USDC.e on Tempo, USDC on Solana | Documented in Stripe's docs |
 | **L402** | Lightning Labs | HTTP `402` + `WWW-Authenticate: L402 macaroon=…, invoice=…`; credential = macaroon + invoice preimage | Bitcoin Lightning | Spec + reference repo (no maturity label) |
@@ -35,16 +35,16 @@ Mandates *are* the authorization primitive) and the security angle in
 
 [x402][x402-repo] repurposes the dormant **HTTP 402 "Payment Required"** code: an agent requests a paid
 resource, the server replies `402` with a payment challenge, the agent's wallet signs a blockchain
-authorization (**EIP-3009 `TransferWithAuthorization`** or **Permit2**), retries with a payment header,
+authorization (**EIP-3009 `TransferWithAuthorization`** or **Permit2**; unverified against the README, which does not name them), retries with a payment header,
 and the server verifies/settles. Originally built by **Coinbase**, it is now an **open-source protocol
-under the Linux Foundation** — a real maturity signal (single-vendor → neutral governance). Settlement
+under the Linux Foundation** (unverified: the x402-foundation/x402 README, checked 2026-11-26, does not mention the Linux Foundation) — a real maturity signal (single-vendor → neutral governance). Settlement
 is **USDC on Base**; two pricing schemes (`exact` fixed-price, `upto` capped-variable).
 
 **Apify case study** ([blog][x402-apify-blog] · [docs][x402-apify-docs]): Apify made its Actor
 marketplace payable via x402 without API keys — an agent funds a **Coinbase Agentic Wallet** (`awal`)
 with USDC on Base, buys a **prepaid token balance** (`npx awal x402 pay`, $1 minimum, acts as a hard
-spending cap), and each Actor run draws it down. Apify reports **~20,000+ x402-enabled Actors** (≈10×
-growth) as of 2026-06-30; eligible Actors must be "pay-per-event," limited-permission, no Standby.
+spending cap), and each Actor run draws it down. Apify reported **~20,000+ x402-enabled Actors** (≈10×
+growth) as of 2026-06-30 (unverified: the current Apify docs and blog give no count; the blog says "thousands of Actors"); the docs (checked 2026-11-26) say the prepaid token runs any limited-permission Actor whatever its pricing model (a Standby restriction is unverified).
 A prior community RFC to gate payments *inside the MCP server* per-tool-call
 ([apify-mcp-server#626][x402-mcp-issue], via a `@tomopay/gateway` supporting both x402 and Stripe MPP)
 was **closed as superseded** by this platform-level integration — i.e., agent payments are landing at
@@ -98,10 +98,7 @@ listed for shopping; separate lists cover lodging and food, and an "Endorsed acr
 section includes Visa, Mastercard, Amex and Adyen. No version number is stated.
 
 [Shopify's agent docs][shopify-agents] are the most concrete implementation: Global Catalog, Storefront
-Catalog, Cart, Checkout and Order tools exposed as "Shopify's UCP-compliant MCP servers", where Checkout
-MCP will "Convert carts into checkouts and complete purchases for trusted agents." A Universal Cart sits
-behind an early-access waitlist (the page offers "Join the early access waitlist"; it does not say the
-feature is live). The page doesn't mention ACP.
+Catalog, Cart, Checkout and Order tools exposed as MCP servers; the Checkout MCP page (checked 2026-11-26) says it implements the UCP checkout capability, lets agents create and manage checkout sessions and convert carts into checkouts, and refers buyers to the merchant storefront to complete purchases. The "UCP-compliant MCP servers" wording, a Universal Cart behind an early-access waitlist, and agents completing purchases for trusted agents are unverified. The page doesn't mention ACP.
 
 ### Card networks: Visa and Mastercard
 

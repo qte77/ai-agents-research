@@ -3,7 +3,7 @@ title: CC Plugin Packaging Research
 source: https://code.claude.com/docs/en/agent-sdk/plugins
 purpose: Evaluate packaging project skills, agents, and rules as a CC Plugin — including migration from repo-local configuration to a plugin-based integration.
 created: 2026-03-07
-updated: 2026-11-11
+updated: 2026-11-26
 validated_links_on: 2026-11-11
 status: research
 ---
@@ -14,7 +14,7 @@ This research evaluates whether a project's CC configuration — skills, agents,
 
 ## What CC Plugins Are
 
-Plugins are portable directory bundles that extend Claude Code with commands, agents, skills, hooks, and Model Context Protocol (MCP) servers ([source][sdk-plugins]). They work across Cowork and the Claude Agent SDK.
+Plugins are portable directory bundles that extend Claude Code with commands, agents, skills, hooks, and Model Context Protocol (MCP) servers ([source][sdk-plugins]). They load in the Claude Agent SDK (local plugins only, per [the SDK page][sdk-plugins]) and in Cowork and claude.ai, where a different set of components loads (for example, plugins with a top-level `bin/` directory are not installed) ([source][plugin-manifest-ref]).
 
 ### Plugin Structure
 
@@ -22,7 +22,7 @@ Plugins are portable directory bundles that extend Claude Code with commands, ag
 my-plugin/
 ├── .claude-plugin/
 │   └── plugin.json          # Optional: manifest (auto-discovery if omitted)
-├── commands/                 # Custom slash commands (legacy — use skills/ for new plugins)
+├── commands/                 # Skills as flat .md files (use skills/ for new plugins)
 │   └── custom-cmd.md
 ├── agents/                   # Custom subagents
 │   └── specialist.md
@@ -56,18 +56,18 @@ async for message in query(
 /plugin install my-plugin@marketplace
 # Or reference by path in settings
 
-# Fetch a plugin .zip archive from a URL for the current session only (v2.1.129)
+# Fetch a plugin .zip archive from a URL for the current session only (v2.1.129, unverified)
 claude --plugin-url https://example.com/my-plugin.zip
 ```
 
-**`--plugin-url <url>` (v2.1.129)**: Fetches a plugin `.zip` archive from a URL and loads it for the current session without installing to `~/.claude/plugins/`. Useful for one-shot use of a remote plugin, CI testing of unpublished plugins, or ephemeral sessions where a persistent install is undesirable.
+**`--plugin-url <url>` (v2.1.129, unverified; see the [plugin commands reference][plugin-cli-ref])**: Fetches a plugin `.zip` archive from a URL and loads it for the current session without installing to `~/.claude/plugins/`. Useful for one-shot use of a remote plugin, CI testing of unpublished plugins, or ephemeral sessions where a persistent install is undesirable.
 
 ([source][sdk-plugins])
 
 ### Key Mechanics
 
 - Commands namespaced: `plugin-name:command-name` ([source][sdk-plugins])
-- `commands/` is now documented as a **legacy format** — "Use `skills/` for new plugins. Claude Code continues to support both formats for backward compatibility" ([source][sdk-plugins])
+- `commands/` holds skills as flat Markdown files; the SDK page says to use `skills/` for new plugins and that Claude Code supports both locations ([source][sdk-plugins], checked 2026-11-26)
 - Plugins discovered via `.claude-plugin/plugin.json` manifest ([source][sdk-plugins])
 - CLI-installed plugins stored in `~/.claude/plugins/` ([source][sdk-plugins])
 - Plugins loaded at session init; appear in system init message ([source][sdk-plugins])
@@ -104,7 +104,7 @@ Package project skills, agents, and automation commands as a plugin:
 example-plugin/
 ├── .claude-plugin/
 │   └── plugin.json
-├── commands/                # legacy format — use skills/ for new plugins
+├── commands/                # skills as flat .md files — use skills/ for new plugins
 │   ├── loop-init.md         # /example-plugin:loop-init
 │   ├── loop-run.md          # /example-plugin:loop-run
 │   └── loop-status.md       # /example-plugin:loop-status
@@ -167,7 +167,7 @@ and cross-referencing official Anthropic plugins ([source][cc-plugins-official])
 
 ### 1. Duplicate Hooks from Explicit Manifest Reference
 
-**Symptom**: "Duplicate hooks file detected: ./hooks/hooks.json resolves to
+**Symptom** (error string unverified): "Duplicate hooks file detected: ./hooks/hooks.json resolves to
 already-loaded file"
 
 **Cause**: `plugin.json` includes `"hooks": "./hooks/hooks.json"`, but CC
@@ -204,12 +204,12 @@ auto-discovery ([source][cc-plugins-official]).
 ### 2. Manifest is Optional — Prefer Auto-Discovery
 
 The `plugin.json` manifest is optional. If omitted, CC auto-discovers components
-at standard paths and derives the plugin name from the directory name
-([source][cc-plugins-ref]).
+at standard paths; the plugin name comes from the marketplace entry, or from the
+directory name only when loaded with `--plugin-dir` ([source][plugin-manifest-ref]).
 
 **Rule**: Only add component path fields (`commands`, `agents`, `skills`,
 `hooks`, `mcpServers`) when files are at *non-standard* locations. Standard
-locations are always auto-discovered.
+locations are auto-discovered unless a `commands` or `agents` field replaces the default scan.
 
 | Component | Standard Path (auto-discovered) | Manifest field needed? |
 | --------- | ------------------------------- | ---------------------- |
@@ -217,14 +217,14 @@ locations are always auto-discovered.
 | MCP | `.mcp.json` | No — only for additional configs |
 | LSP | `.lsp.json` | No — only for additional configs |
 | Skills | `skills/` | No — only for additional directories |
-| Agents | `agents/` | No — only for additional files |
-| Commands | `commands/` | No — only for additional files |
+| Agents | `agents/` | Setting it replaces the default scan; entries must be `.md` files, not directories ([source][plugin-manifest-ref]) |
+| Commands | `commands/` | Setting it replaces the default scan ([source][plugin-manifest-ref]) |
 
 ### 3. Plugin Cache and Symlink Resolution
 
 Marketplace plugins are copied to `~/.claude/plugins/cache/` at install time.
 Symlink handling during this copy depends on where the link resolves
-([source][cc-plugins-ref]):
+([source][host-marketplace]; for local-path installs and `command` sources in copy mode, only within-plugin symlinks are preserved and all others are skipped):
 
 - **Resolves within the plugin's own directory** (e.g., shared rules
   referenced from multiple skills) — **preserved as a relative symlink** in
@@ -237,8 +237,7 @@ This means DRY patterns using symlinked references (e.g., shared rules across
 skills) work both during development and after marketplace installation.
 
 Changing `plugin.json` in the marketplace source does **not** propagate to
-already-installed users until they run `claude plugin update` or the version
-is bumped ([source][cc-plugins-ref]).
+already-installed users until the computed version changes (a manifest `version` pins it, so bump it on each release); a user can also update manually with `claude plugin update` ([source][host-marketplace]).
 
 **Implication**: Always bump `version` in `plugin.json` (or `marketplace.json`)
 when publishing fixes. Users with cached copies won't see changes otherwise.
@@ -252,7 +251,7 @@ fields. This is the recommended baseline ([source][cc-plugins-official]):
 ```json
 {
   "name": "security-guidance",
-  "version": "2.0.6",
+  "version": "2.0.21",
   "description": "Security review for Claude-generated code. Pattern-based warnings on edits, LLM-powered diff review on Stop, and an agentic commit reviewer that catches injection, XSS, SSRF, hardcoded secrets, and 25+ other vulnerability classes.",
   "author": {
     "name": "David Dworken",
@@ -333,12 +332,16 @@ This is YAGNI until a second project needs these skills.
 - [CC Memory docs][cc-mem] — CLAUDE.md and rules (repo-local patterns)
 - [Plugin manifest reference][plugin-manifest-ref] — `plugin.json` fields, `version` pinning semantics
 - [Marketplace reference][plugin-marketplace-ref] — `marketplace.json` fields, `ref`/`sha`/`sha256` source pinning
+- [Host and maintain a marketplace][host-marketplace] — how installed users receive updates
+- [Plugin commands reference][plugin-cli-ref] — `claude plugin` subcommands
 
 [sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
 [cc-plugins]: https://code.claude.com/docs/en/plugins
 [cc-plugins-ref]: https://code.claude.com/docs/en/plugins-reference
 [plugin-structure]: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/plugin-structure
-[skill-dev]: https://lobehub.com/skills/sjnims-plugin-dev-skill-development
+[skill-dev]: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/skill-development
+[host-marketplace]: https://code.claude.com/docs/en/plugins/host-marketplace
+[plugin-cli-ref]: https://code.claude.com/docs/en/plugins/cli-reference
 [cc-mem]: https://code.claude.com/docs/en/memory
 [plugin-manifest-ref]: https://code.claude.com/docs/en/plugins/manifest-reference
 [plugin-marketplace-ref]: https://code.claude.com/docs/en/plugins/marketplace-reference

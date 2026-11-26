@@ -3,7 +3,7 @@ title: CC /goal Command Analysis
 source: https://code.claude.com/docs/en/goal
 purpose: "Analysis of the /goal command, a session-scoped completion-condition loop: its evaluation mechanism, lifecycle, version gates, and relation to other long-running-session approaches here."
 created: 2026-10-15
-updated: 2026-10-22
+updated: 2026-11-26
 validated_links_on: 2026-10-22
 status: assess
 ---
@@ -43,10 +43,10 @@ The evaluator "does not call tools, so it can only judge what Claude has already
 the conversation" — a condition must be something Claude's own output can demonstrate (e.g.
 "`npm test` exits 0" is checkable; a condition resting on state Claude never prints is not).
 [`ANTHROPIC_DEFAULT_HAIKU_MODEL`][model-config] redirects the evaluator, but the docs warn it
-also "resolves the `haiku` alias to that model and runs background functionality, such as
-conversation summarization, on it" — a single env var reaches further than `/goal` alone.
-Evaluation tokens bill on the small fast model and are "typically negligible compared to
-main-turn spend" (stated, not independently measured by this corpus).
+also "resolves the `haiku` alias to that model and runs session title generation and some
+other background tasks on it" — a single env var reaches further than `/goal` alone.
+The evaluator runs on the configured small fast model, and evaluation tokens are billed in
+addition to main-turn spend (checked 2026-11-26).
 
 If Claude answers the evaluator without using a tool for several turns running, "Claude Code
 stops the loop, prints a warning, and returns control to you with the goal still set" —
@@ -89,12 +89,13 @@ reactive compaction `` and `` Fixed an active `/goal` being lost when resuming (
 
 ### Errors
 
-Four kinds of failure **clear** the goal outright (Claude Code prints a warning starting
+Five kinds of failure **clear** the goal outright (Claude Code prints a warning starting
 `Goal cleared after an unrecoverable error` and ending `Run /goal again to continue`):
 
 - An authentication failure, when Claude Code manages its own credentials (a host-managed
   session — the desktop app or a cloud session — leaves the goal active instead, since the
   host restores access on its own)
+- A disk too full for Claude Code to renew your claude.ai login, when Claude Code manages its own credentials (the warning shows `(disk full)`)
 - An exhausted credit balance
 - A context overflow that auto-compaction couldn't clear
 - A model that isn't available
@@ -120,7 +121,7 @@ subagents are still running ``.)*
 Once background work has held the goal 30 minutes (the default), a check-in is due: Claude
 Code lists the running tasks and asks Claude to keep waiting, or fix/stop anything stuck.
 Check-ins require **v2.1.234 or later**; after the first, each later check-in waits twice as
-long, up to four times the first interval (1h, then every 2h by default) — confirmed by the
+long, up to four times the first interval (1h, then every 2h by default); before v2.1.239 only idle check-ins backed off this way, and a check-in delivered at a turn end recurred at the first interval — confirmed by the
 CHANGELOG at that version (`` /goal: when background tasks keep a goal waiting for 30+ minutes,
 Claude now checks in on them instead of waiting indefinitely... ``). **Idle check-ins** (Claude
 Code starting a turn on its own while the session sits idle, rather than waiting for the next
@@ -166,7 +167,7 @@ that is a documented absence, not inferred.
 | v2.1.139 | `/goal` added | CHANGELOG: `` Added `/goal` command: set a completion condition and Claude keeps working across turns until it's met. Works in interactive, `-p`, and Remote Control. Shows live elapsed/turns/tokens as an overlay panel `` |
 | v2.1.234 | Background check-ins require this or later | docs page; CHANGELOG |
 | v2.1.236 | Idle check-ins require this or later | docs page; CHANGELOG |
-| v2.1.239 | `claude --resume` picker restores an active goal (previously the one resume route that didn't) | docs page; CHANGELOG |
+| v2.1.239 | `claude --resume` picker restores an active goal (previously the one resume route that didn't); check-ins delivered at a turn end also back off (earlier, only idle check-ins did) | docs page; CHANGELOG |
 | v2.1.246 | Idle check-ins capped at three per goal between prompts (previously uncapped) | docs page; CHANGELOG |
 | v2.1.269 | Interactive sessions print retry/pause notices naming the cause | docs page; CHANGELOG |
 | v2.1.274 | Fixed losing an active goal across a compacted resume, and a post-compaction overflow ending the turn instead of compacting | CHANGELOG |
@@ -193,7 +194,7 @@ managed settings — in each case "the command tells you why instead of silently
 - `/goal` **does not change permission mode** — Manual mode still prompts.
 - A no-progress loop (answering the evaluator without tool use) pauses the loop and returns
   control, but leaves the goal set rather than clearing it.
-- Only four specific failure classes clear the goal outright; everything else retries or
+- Only five specific failure classes clear the goal outright; everything else retries or
   pauses rather than failing permanently or retrying forever.
 
 ## Pairing `/goal` With a Persistent Task List
@@ -281,7 +282,7 @@ conditions but only from what Claude printed. The two combine: the same parsing 
 ## Offloading and Batch Runs
 
 Read 2026-10-22 from the [headless][headless], [cloud sessions][cloud-web] and
-[routines][routines] docs. Where a combination is ours rather than documented, it says so.
+[cloud scheduled tasks (formerly routines)][routines] docs. Where a combination is ours rather than documented, it says so.
 
 - **Headless needs a permission mode.** "With Claude Code v2.1.302 or later, `claude -p` runs start
   in Manual mode when nothing sets a permission mode", and there "a call that needs approval is
@@ -302,9 +303,8 @@ Read 2026-10-22 from the [headless][headless], [cloud sessions][cloud-web] and
   cloud mention is the auth-failure carve-out above. `--cloud` is the current offload flag ("The older
   `--remote` spelling still works as a deprecated alias for `--cloud`"). Running a goal in a cloud
   session is therefore untested here; the one cloud observation is in the measured section below.
-  Routines are the same: the page doesn't name `/goal`, and warns
-  that "A green status in the run list means the session started and exited without an
-  infrastructure error. It does not mean the work your prompt describes succeeded." — so a routine's
+  Cloud scheduled tasks (formerly routines) are the same: the page doesn't name `/goal`, and says
+  the run outcomes say how the session ended, not whether Claude completed the work the prompt describes — so a scheduled task's
   prompt has to carry its own completion check either way.
 
 ### Measured: headless batch runs (2026-10-24 and 2026-10-29)
@@ -333,10 +333,7 @@ and a condition naming a task file plus a report file to write. 20 processes ran
 ### From goal to spec to PR
 
 Anthropic's [best practices][best-practices] already describe the chain this section's pattern
-plugs into: the heading "Explore first, then plan, then code"; a spec step ("Keep interviewing until
-we've covered everything, then write a complete spec to SPEC.md."); and, for the run itself, "set the
-check as a `/goal` condition", because "The `/goal` and Stop hook versions are what let an unattended
-run finish correctly without you." Planning locally and executing in a cloud session is covered in
+plugs into: a spec step ("Interview me until you could write the spec, then write it to SPEC.md.", under "Brainstorm with Claude first"); and, for the run itself, "for runs nobody's watching, `/goal` or a `Stop` hook enforces it", with `/goal` described as a condition a separate model checks after every turn that matters for long background runs. Planning locally and executing in a cloud session is covered in
 [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
 
 Composed into one chain (ours): an objective → a spec or plan file → one `claude -p "/goal …"` per
@@ -378,7 +375,7 @@ combine is in [Pairing `/goal` With a Persistent Task List](#pairing-goal-with-a
 | [CC hooks reference][hooks-ref] | Stop hook blocking (exit 2 / `decision: "block"`), `stop_hook_active`, continuation cap |
 | [CC headless docs][headless] | Manual-mode default for `claude -p` (v2.1.302+), permission flags, exit codes |
 | [CC cloud sessions docs][cloud-web] | Supported commands in cloud sessions; `--remote` → `--cloud` |
-| [CC routines docs][routines] | What a green run status does and doesn't mean |
+| [CC cloud scheduled tasks docs (formerly routines)][routines] | What a run outcome does and doesn't mean |
 | [CC best practices][best-practices] | Explore → plan → code, SPEC.md, `/goal` / Stop hook as the unattended completion gate |
 
 [goal-docs]: https://code.claude.com/docs/en/goal

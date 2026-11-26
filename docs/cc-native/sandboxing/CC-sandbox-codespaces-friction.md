@@ -3,7 +3,7 @@ title: CC Sandbox Friction in Codespaces — Research Summary
 purpose: Analysis of sandbox friction points in Codespace/devcontainer environments and mitigation strategies.
 source: https://code.claude.com/docs/en/sandboxing
 created: 2026-03-17
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: research
 ---
@@ -15,8 +15,8 @@ an already-isolated Codespace container, causing repeated friction for
 multi-repo workflows.
 
 Friction points below were reproduced against earlier CC releases (gh-28730
-was filed against v2.1.56); verified current as of Claude Code v2.1.218,
-2026-07-23 unless otherwise noted.
+was filed against v2.1.56); verified current as of Claude Code v2.1.332,
+2026-11-26 unless otherwise noted. Edits to the sandbox filesystem lists apply to the running session at the next sandboxed command ([source][cc-sandboxing]).
 
 ## Four Friction Points Identified
 
@@ -26,7 +26,6 @@ was filed against v2.1.56); verified current as of Claude Code v2.1.218,
 | Git/gh operations fail | Same — `.git/` writes outside CWD rejected | Same fix. Note: `excludedCommands: ["git"]` does NOT work ([source][gh-28730]) |
 | Credential sourcing blocked | `source` denied + fresh shell per Bash call | Use Codespace encrypted secrets (injected as env vars at container creation) |
 | Secret env vars appear empty | Sandbox masks secret values in Bash tool output (e.g., `echo $KEY` returns blank) | Secrets ARE available — scripts can use them, but `echo`/`head` output is stripped. Test presence without exposing: `echo "key set: ${SECRET:+yes}"` → `key set: yes` (CC 2.1.81, 2026-03-25) |
-| Settings don't hot-reload | Sandbox is an OS-level process primitive, baked at startup | Pre-configure correctly; restart session for changes ([source][cc-sandboxing]) |
 
 ## Key External Findings
 
@@ -40,11 +39,11 @@ was filed against v2.1.56); verified current as of Claude Code v2.1.218,
   (project settings) or `~/.claude` (user settings) — standard path
   conventions. This differs from Read/Edit permission rules, which use
   `//path` for absolute and `/path` for project-relative — the scheme
-  originally reported here ([source][gh-32287]).
+  originally reported here ([source][gh-32287]; closed as not planned 2026-04-06).
 - **`.claude/skills/` write-denied via `denyWithinAllow`** — intentional CC
   enforcement, not removable via settings.
-- **Trail of Bits devcontainer auto-configures `bypassPermissions` mode**
-  ([source][tob-devcontainer]), not sandbox disablement — it bypasses
+- **Trail of Bits devcontainer is for running Claude Code with `bypassPermissions` enabled**
+  ([source][tob-devcontainer]; the repo is archived as of 2026-11-26 and its README recommends `trailofbits/coop`), not sandbox disablement — it bypasses
   permission prompts (a distinct CC feature from the Bash sandbox's
   filesystem/network isolation), reasoning that the container itself is the
   sandbox.
@@ -55,7 +54,7 @@ was filed against v2.1.56); verified current as of Claude Code v2.1.218,
 ## Solution: Option C — Hybrid
 
 **Network sandbox ON, filesystem sandbox relaxed.** Container provides
-filesystem isolation; CC provides network exfiltration protection.
+filesystem isolation; CC's network sandbox filters outbound domains.
 
 ```json
 "sandbox": {
@@ -72,10 +71,8 @@ filesystem isolation; CC provides network exfiltration protection.
 
 ### Why not fully disable?
 
-Network isolation remains valuable even inside a container — it prevents prompt
-injection attacks from exfiltrating data to attacker-controlled servers
-([source][cc-security]). The container alone does not restrict outbound network
-traffic.
+Network isolation remains valuable even inside a container — it limits
+prompt-injection-driven exfiltration to hosts on the allowlist. It is not airtight: the proxy decides from the client-supplied hostname without TLS inspection, so broad entries such as `github.com` can allow exfiltration via domain fronting ([sandboxing Limitations](https://code.claude.com/docs/en/sandboxing), checked 2026-11-26). That the container alone does not restrict outbound network traffic is unverified.
 
 ### Options Considered
 

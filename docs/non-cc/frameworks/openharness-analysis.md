@@ -3,7 +3,7 @@ title: OpenHarness Analysis
 source: https://github.com/HKUDS/OpenHarness
 purpose: Analysis of HKUDS OpenHarness — an open-source Python agent harness framework (10 subsystems) compatible with Claude Code conventions but provider-agnostic.
 created: 2026-06-27
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-06-27
 status: assess
 ---
@@ -38,7 +38,7 @@ OpenHarness (HKUDS) is an **open-source Python agent harness framework** — inf
 
 **Strengths**: Most complete open harness (10 subsystems, 43 tools, 114 tests, 6 E2E suites). CC-convention compatible — skills, plugins, CLAUDE.md, hooks all work. Multi-provider. MIT licensed.
 
-**Risks**: Early stage (v0.1.0). Not a CC replacement — lacks CC's model quality, context-window management, and Anthropic infrastructure. Python-only (CC is TypeScript/Node).
+**Risks**: Early stage (v0.1.x; latest v0.1.9). Not a CC replacement — lacks CC's model quality, context-window management, and Anthropic infrastructure. Python-only (CC is TypeScript/Node).
 
 ## Cross-References
 

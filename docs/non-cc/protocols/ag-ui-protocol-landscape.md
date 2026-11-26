@@ -2,7 +2,7 @@
 title: AG-UI / A2UI / OpenGenerativeUI Landscape
 purpose: Disambiguates the agent-interoperability Protocol Triangle (AG-UI/A2UI frontend, A2A agent-to-agent, MCP model-to-tools) plus the AGNTCY stack, and tracks 2026 ecosystem adoption.
 created: 2026-04-24
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-10-24
 status: research
 ---
@@ -58,7 +58,7 @@ Complementary to MCP, not competing: "encapsulating an agent as a simple [tool] 
 
 ## AGNTCY ("Internet of Agents")
 
-An open-source **infrastructure stack beneath** the semantic protocols — discovery, identity, messaging, observability — rather than a task-semantics protocol itself. Initiated by **Cisco (Outshift)** in 2026-03, donated to the **Linux Foundation** by 2026-07 (75+ orgs). Components ([agntcy.org][agntcy]):
+An open-source **infrastructure stack beneath** the semantic protocols — discovery, identity, messaging, observability — rather than a task-semantics protocol itself. Initiated by **Cisco (Outshift)** in 2026-03, donated to the **Linux Foundation** by 2026-07 (75+ orgs) (unverified: agntcy.org, checked 2026-11-26, says only "a Series of LF Projects, LLC"). Components ([agntcy.org][agntcy]):
 
 | Component | Role | Status |
 |---|---|---|
@@ -66,13 +66,13 @@ An open-source **infrastructure stack beneath** the semantic protocols — disco
 | **Agent Directory** | Federated, synchronized agent registry | active |
 | **SLIM** (Secure Low-latency Interactive Messaging) | Transport (gRPC/HTTP2 + MLS E2E encryption); carries A2A/MCP as payload | IETF draft |
 | **Identity** | Agent/MCP identity via W3C Verifiable Credentials + DIDs | v0.0.x |
-| **ACP** (Agent Connect Protocol) | REST interface to invoke remote agents | **archived 2026-04** |
+| **ACP** (Agent Connect Protocol) | REST interface to invoke remote agents | **archived** (the `agntcy/acp-spec` repo is archived; the 2026-04 date is unverified) |
 
 Positioned as complementary infra *below* the semantic protocols (SLIM transports A2A/MCP; OASF and the Directory index both). Overlap with A2A's coordination role exists at different stack layers; independent overlap analysis is limited (vendor framing). Note: "AGP" (Agent Gateway Protocol) is informal naming — **SLIM** is the actual transport component.
 
 ## MCP as a Protocol Spec
 
-The **model ↔ tools** leg ([modelcontextprotocol.io][mcp]). Spec revisions are date-stamped `YYYY-MM-DD`; current stable **2025-11-25**. Key additions over **2025-06-18** ([changelog][mcp-changelog]):
+The **model ↔ tools** leg ([modelcontextprotocol.io][mcp]). Spec revisions are date-stamped `YYYY-MM-DD`; the current protocol version is **2026-07-28** ([versioning][mcp-versioning], checked 2026-11-26; every request declares its version in `_meta` and `server/discover` is a mandatory RPC), and **2025-11-25** is a past handshake-based revision. Key additions of the 2025-11-25 revision over **2025-06-18** ([changelog][mcp-changelog]):
 
 - **Tasks** (experimental) — durable requests with polling + deferred result retrieval (mirrors A2A's Task lifecycle at the tool layer).
 - **Auth** — OpenID Connect Discovery, OAuth Client ID Metadata Documents, incremental scope consent via `WWW-Authenticate`.
@@ -120,13 +120,15 @@ Confirmed integrations per the [ag-ui README][ag-ui-repo] and [CopilotKit AG-UI 
 |---|---|---|
 | **Google ADK** | [ag-ui README][ag-ui-repo] | Native integration — ADK agents collaborate via AG-UI |
 | **Microsoft Agent Framework** | [Microsoft Learn — AG-UI Integration][ms-learn-agui] | Official docs page; CopilotKit supplies UI components |
-| **AWS Strands Agents / Bedrock AgentCore** | [ag-ui README][ag-ui-repo] | Dedicated AG-UI endpoint in AgentCore + FAST template pattern (March 2026), per the AG-UI README. Strands' own docs list AG-UI only as a community-tier integration page and still say "This feature is only supported in Python" (checked 2026-11-12); a TypeScript adapter merged into the ag-ui repo on 2026-05-26 (`ag-ui-protocol/ag-ui#1681`) and ships as the `@ag-ui/aws-strands` npm package, but Strands' own docs have not caught up to it |
+| **AWS Strands Agents / Bedrock AgentCore** | [ag-ui README][ag-ui-repo] | Dedicated AG-UI endpoint in AgentCore + FAST template pattern (March 2026), per the AG-UI README, which now lists Strands under built-in integrations and AgentCore under deployment (checked 2026-11-26). Strands' own docs list AG-UI only as a community-tier integration page and still say "This feature is only supported in Python" (checked 2026-11-12); a TypeScript adapter merged into the ag-ui repo on 2026-05-26 (`ag-ui-protocol/ag-ui#1681`) and ships as the `@ag-ui/aws-strands` npm package, but Strands' own docs have not caught up to it |
 | **Oracle Agent Spec** | [Oracle blog — Agent Spec + AG-UI][oracle-agui] (March 2026) | Three-way alignment with Oracle + CopilotKit + Google (AG-UI + A2UI) |
 | **LangGraph**, **CrewAI** | [ag-ui README][ag-ui-repo] | Origin partnerships |
 | **Mastra**, **Pydantic AI**, **Agno**, **LlamaIndex**, **AG2**, **Langroid** | [ag-ui README][ag-ui-repo] | Framework integrations |
-| **Community SDKs** | [ag-ui README][ag-ui-repo] | Kotlin, Go, Dart, Java, Rust, Ruby, .NET, Nim, C++ |
+| **Community SDKs** | [ag-ui README][ag-ui-repo] | Kotlin, Go, Dart, Java, Rust, Ruby, C++, Swift (.NET is now an official SDK alongside TypeScript and Python; checked 2026-11-26) |
 
-Scale signals (as reported by [CopilotKit][ag-ui-copilotkit]): 9K+ GitHub stars, 120K weekly installs combined with CopilotKit, 2M agent↔user interactions/week.
+As of 2026-11-26 the AG-UI README announces AG-UI 1.0 with a stable, frozen specification, from which the TypeScript, Python and .NET SDKs are generated ([ag-ui README][ag-ui-repo]).
+
+Scale signals: about 21.8K GitHub stars on the ag-ui repo (`gh api`, checked 2026-11-26); an earlier CopilotKit-reported 120K weekly installs combined with CopilotKit and 2M agent↔user interactions/week are unverified (not on the [CopilotKit page][ag-ui-copilotkit] on 2026-11-26).
 
 ### Non-Adopters (as of 2026-04-24)
 
@@ -168,7 +170,7 @@ A self-hosted template (MIT app; the memory service is separately licensed, belo
 - **Newer surface (README, 2026-11-20)**: scheduled routines (15-minute minimum interval), Slack and Microsoft Teams channels in the team edition, human take-over of a Bot's browser at a login or 2FA wall, reusable `/` skills, SSO (Google, Microsoft, Okta, SAML/OIDC), and desktop installers for Mac and Windows.
 - **Stack**: React/Vite frontend, Hono API server, PostgreSQL, Docker Compose and Helm charts; tools via MCP and Composio.
 
-**License**: MIT for the app; CopilotKit Intelligence (memory, threads) is **separately licensed** (free local license for personal use, paid for production, per the README). **Stars**: 13,018 (`gh api` 2026-11-20; 5,483 on 2026-09-24). Latest release v1.1.1 (2026-11-19). Self-hosted (clone-and-customize, with Helm charts, a team edition with Slack/Teams and desktop installers per the README); no managed service was found in the README. It sits in the same "self-hostable alternative to closed always-on bots" class as the projects in [Hermes: Always-on Teammate Agents](../agents/hermes-agent-analysis.md#always-on-teammate-agents).
+**License**: MIT for the app; CopilotKit Intelligence (memory, threads) is **separately licensed** (free local license for personal use, paid for production, per the README). **Stars**: about 13.6K (`gh api` 2026-11-26; 13,018 on 2026-11-20, 5,483 on 2026-09-24). Latest release v1.2.0 (2026-11-25). Self-hosted (clone-and-customize, with Helm charts, a team edition with Slack/Teams and desktop installers per the README); no managed service was found in the README. It sits in the same "self-hostable alternative to closed always-on bots" class as the projects in [Hermes: Always-on Teammate Agents](../agents/hermes-agent-analysis.md#always-on-teammate-agents).
 
 ## OpenUI (Thesys — Generative UI Language and Renderers)
 
@@ -250,7 +252,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Nous Research — Hermes Agent][hermes-nous] | Self-improving agent — no HUD / "heads-up display" framing |
 | [A2A protocol][a2a] · [spec][a2a-spec] | Agent-to-agent interop (Google → Linux Foundation), v1.0.1 |
 | [AGNTCY][agntcy] | "Internet of Agents" infra stack (Cisco → Linux Foundation): OASF, Directory, SLIM, Identity |
-| [MCP spec 2025-11-25][mcp] · [changelog][mcp-changelog] | Model↔tools protocol; current spec revision |
+| [MCP spec][mcp] · [versioning][mcp-versioning] · [2025-11-25 changelog][mcp-changelog] | Model↔tools protocol; current revision 2026-07-28, 2025-11-25 revision cited for its feature list |
 
 [ag-ui-repo]: https://github.com/ag-ui-protocol/ag-ui
 [ag-ui-docs]: https://docs.ag-ui.com/
@@ -283,6 +285,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [agntcy]: https://agntcy.org/
 [mcp]: https://modelcontextprotocol.io/
 [mcp-changelog]: https://modelcontextprotocol.io/specification/2025-11-25
+[mcp-versioning]: https://modelcontextprotocol.io/specification/versioning
 [openbot-repo]: https://github.com/CopilotKit/openbot
 [openbot-site]: https://copilotkit.ai/openbot
 [openui-repo]: https://github.com/thesysdev/openui

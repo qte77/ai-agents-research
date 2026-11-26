@@ -3,7 +3,7 @@ title: VS Code Copilot Chat (Agent Mode) Analysis
 source: https://github.com/microsoft/vscode-copilot-chat
 purpose: Analysis of VS Code Copilot Chat extension with focus on agent mode for autonomous multi-file coding tasks.
 created: 2026-06-16
-updated: 2026-10-24
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: adopt
 ---
@@ -11,9 +11,9 @@ status: adopt
 ## What It Is
 
 VS Code Copilot Chat is the AI chat extension for Visual Studio Code that powers
-inline suggestions, inline chat, and — as of 2026 — a fully generally available
+inline suggestions, inline chat, and — as of 2026 — a current
 **agent mode** capable of autonomous, multi-file coding tasks. The extension
-(publisher: GitHub, v0.48.1 as of 2026-06-08) ships 75 million+ installs via
+(publisher: GitHub, v0.48.1, inferred from the Marketplace icon URL, checked 2026-11-26) ships 79 million+ installs via
 the [VS Code Marketplace][marketplace] and is **MIT-licensed open source**.
 
 The original standalone repo ([microsoft/vscode-copilot-chat][gh-repo], MIT,
@@ -39,12 +39,14 @@ multiple files, runs terminal commands, and self-corrects when errors arise —
 all in a single session. Key properties (verified at [vscode-features][vscode-features],
 2026-06-16):
 
-- **GA status** — agent mode is documented as a current, non-experimental feature
-  alongside still-experimental capabilities (merge-conflict resolution, test
-  coverage generation)
+- **GA status** — agent mode is documented as a current chat mode, not labelled experimental,
+  alongside Ask and Plan; the features page labels cloud sessions, computer use and
+  Agents-window extension management experimental and cloud automations, GitHub
+  environments and Copilot connectors preview (checked 2026-11-26). The Local harness
+  is deprecated and will be removed in February 2027
 - **Parallel sessions** — multiple agent sessions can run concurrently from a
   central session-management view; sessions can run locally in VS Code,
-  in the background via [Copilot CLI][copilot-cli-doc], or in the cloud
+  in the background via [Copilot CLI][copilot-cli-doc] (unverified), or in the cloud
 - **Tool use** — agents invoke built-in tools (terminal, file system) plus
   external services via [MCP (Model Context Protocol)][mcp] servers and VS Code
   extensions that contribute specialized tools
@@ -58,13 +60,13 @@ all in a single session. Key properties (verified at [vscode-features][vscode-fe
 Agent mode itself runs inside VS Code's GUI. The background and cloud-agent
 surfaces (Copilot CLI, cloud agent) are **separate products** — see
 [GitHub Copilot CLI Analysis][copilot-cli-doc] for the terminal surface.
-There is a `code --agents` command reference in the docs but the primary UX
+There is a `code --agents` command reference in the docs (unverified) but the primary UX
 is GUI-driven; agent mode is **not headless**.
 
 ## Adoption Decision
 
 VS Code Copilot Chat's agent mode is the most-installed IDE-native coding
-agent (75M+ installs as of 2026-06-08). It is GA, MIT open source, and
+agent (79M+ installs as of 2026-11-26). It is a current feature (not labelled experimental), MIT open source, and
 integrated directly into the world's most popular editor. The free tier
 (Copilot Free) provides a monthly AI-credit allowance sufficient for
 evaluation; paid tiers unlock higher limits and premium models.
@@ -80,14 +82,13 @@ current availability before onboarding).
 | Plan | Price | Notes |
 |---|---|---|
 | Free | $0 | Monthly AI-credit allowance; agent mode included |
-| Pro | $10/month | Unlimited completions, cloud agent, monthly credits |
-| Pro+ | $39/month | Higher credit allowance, premium models |
-| Max | $100/month | Highest individual credit allowance, priority features |
-| Business | $19/seat/month | Org-level management, policy controls |
-| Enterprise | $39/seat/month | Priority models, larger credit pool, enterprise features |
+| Pro | $10/month | 1,500 monthly AI credits (1,000 base + 500 flex); cloud agent; "unlimited completions" is unverified |
+| Pro+ | $39/month | 7,000 monthly AI credits; premium models |
+| Max | $100/month | 20,000 monthly AI credits; priority features (unverified) |
+| Business | $19/seat/month | 1,900 credits per user; org-level management, policy controls |
+| Enterprise | $39/seat/month | 3,900 credits per user; priority models, larger credit pool, enterprise features |
 
-New Pro/Pro+/Max/Student sign-ups paused 2026-04-20; Business paused
-2026-04-22. Verify availability before onboarding.
+New Student/Pro/Pro+ sign-ups paused 2026-04-20 (Max not stated by the vendor; unverified); new self-serve Business sign-ups for organizations on GitHub Free and GitHub Team plans paused 2026-04-22. Verify availability before onboarding.
 
 ## Action Items
 
@@ -111,7 +112,7 @@ like Claude Code's `/goal`.
 | Source | Content |
 |---|---|
 | [microsoft/vscode-copilot-chat (archived)][gh-repo] | MIT license, archived repo notice, feature list; accessed 2026-06-16 |
-| [VS Code Marketplace — GitHub Copilot Chat][marketplace] | v0.48.1, 75M+ installs, last updated 2026-06-08; accessed 2026-06-16 |
+| [VS Code Marketplace — GitHub Copilot Chat][marketplace] | v0.48.1 (inferred), 79.5M installs; checked 2026-11-26 |
 | [VS Code Copilot features docs][vscode-features] | Agent mode GA status, tool use, parallel sessions; accessed 2026-06-16 |
 | [GitHub Copilot plans][gh-plans] | Pricing tiers, sign-up pause notice; accessed 2026-06-16 |
 | [VS Code Copilot setup][vscode-setup] | Free tier details, plan pointers; accessed 2026-06-16 |

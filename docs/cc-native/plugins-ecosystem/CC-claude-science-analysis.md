@@ -3,12 +3,12 @@ title: Claude Science Analysis
 source: https://claude.com/docs/claude-science/overview
 purpose: Record what Anthropic's Claude Science desktop workbench is, how it runs analyses, and how its provenance and reviewer features relate to Claude Code and Cowork.
 created: 2026-10-03
-updated: 2026-10-06
+updated: 2026-11-26
 validated_links_on: 2026-10-06
 status: assess
 ---
 
-**Details:** beta; Pro, Max, Team and Enterprise plans; separate desktop app (docs, fetched 2026-10-03)
+**Details:** beta; Pro, Max, Ultra, Team and Enterprise plans; separate desktop app (docs, fetched 2026-10-03)
 
 ## What It Is
 
@@ -25,14 +25,14 @@ How it works, per the docs ([docs][overview]):
 
 ## Plans and Platforms
 
-- **Plans**: Pro, Max, Team or Enterprise; not Free. On Team and Enterprise an Owner must enable it for the organization first ([docs][overview], [support][support]).
+- **Plans**: Pro, Max, Ultra, Team or Enterprise; not Free (the launch post still lists only Pro, Max, Team and Enterprise). The Team plan for scientists has it on by default; on other Team and Enterprise plans an Owner must enable it for the organization first ([docs][overview], [support][support]; checked 2026-11-26).
 - **Usage**: "Your Claude Science usage counts toward the same usage limits as the rest of your Claude plan, including Claude Code and Cowork" ([docs][overview]).
-- **Platforms — a timeline, not a conflict.** The [changelog][changelog] dates both steps: "Public launch of Claude Science" (0.1.14, Jun 30, 2026) and "Claude Science is now available for Windows" (0.1.47, Sep 10, 2026). The sources simply predate or postdate Windows:
+- **Platforms — a timeline, not a conflict.** The [changelog][changelog] dates both steps: "Public launch of Claude Science" (0.1.14, Jun 30, 2026) and "Claude Science is now available for Windows" (0.1.47, Sep 10, 2026). Only the launch post still predates Windows:
 
 | Source | Date | Platforms stated |
 |---|---|---|
 | [Launch post][news] | Jun 30, 2026 | "available in beta on macOS and Linux" |
-| [Support article][support] | updated Aug 21, 2026 (before Windows) | "macOS 13 or later, and Linux x64" |
+| [Support article][support] | checked 2026-11-26 | "macOS 13 or later, Windows 11 (x64), and Linux x64" |
 | [Docs overview][overview] | fetched 2026-10-03 | "macOS, Windows, and Linux"; requirements list Windows 11 (x64) |
 
 Linux also needs socat, bubblewrap 0.8.0 or later and unprivileged user namespaces ([docs][overview]); 0.1.43 (Aug 31, 2026) fixed Linux commands breaking after "bubblewrap's recent security update" ([changelog][changelog]). For bubblewrap behaviour in Claude Code itself see [CC-sandbox-bwrap-host-quirks.md](../sandboxing/CC-sandbox-bwrap-host-quirks.md).
@@ -45,7 +45,7 @@ Claude Science shares plan limits with Claude Code and Cowork but is a separate 
 
 - *Export: yes.* An artifact's menu offers **Download**, **Export Metadata** and **Export to Cloud**, and the project folder under `~/.claude-science` can be copied ([artifacts][artifacts]).
 - *Sharing: no.* "Anthropic doesn't sync your projects, artifacts, or conversation history to your Claude account"; each computer "keeps its own projects", and a file saved with **Export session** "can't be loaded into Claude Science on another computer" ([multiple computers][multi]). The documented way to reach the same projects from several computers is one install on a Linux server reached over an SSH tunnel.
-- *Replay: partial.* The Code tab gives a downloadable script or notebook and the Environment tab the package versions, but the reviewer "doesn't re-run analyses" ([docs][overview]), and the docs do not document pinning the model or random seeds.
+- *Replay: partial.* The Code tab gives a downloadable script or notebook and the Environment tab the package versions, but the reviewer "doesn't re-run analyses" ([docs][overview]), and the docs do not document pinning the model or random seeds (unverified).
 
 No rubric score is given. Under the gap-driven policy (plan 0011, O1), a score would only matter if it could change a cell of the [reference architecture](../../sdlc-lcm/agent-substrate-reference-architecture.md). At best this is `partial` on Reproducible for harness and long-running, which those subjects already reach. It is not a context layer, so it does not bear on the open context·Reproducible cell.
 
@@ -57,7 +57,7 @@ Cross-ref: [research-agents-landscape.md](../../non-cc/knowledge-management/rese
 |---|---|
 | [Claude Science docs overview][overview] | Description, sandbox, provenance, reviewer, remote compute, requirements, plans and usage |
 | [Anthropic news: Claude Science][news] | Launch post (Jun 30, 2026): workbench framing, curated skills/connectors, reviewer agent, macOS + Linux beta |
-| [Support: Get started with Claude Science][support] | Plan enablement, supported OS (updated Aug 21, 2026) |
+| [Support: Get started with Claude Science][support] | Plan enablement, supported OS (checked 2026-11-26) |
 | [Claude Science product page][product] | Product page |
 | [Artifacts in Claude Science][artifacts] | Provenance tabs, versions, Download / Export Metadata / Export to Cloud |
 | [Use Claude Science on more than one computer][multi] | No cloud sync; per-computer projects; Export session not loadable elsewhere |

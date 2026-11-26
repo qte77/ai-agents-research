@@ -3,7 +3,7 @@ title: Rowboat AI Coworker Analysis
 source: https://github.com/rowboatlabs/rowboat
 purpose: Analysis of Rowboat as a local-first AI coworker building long-lived knowledge graphs from communications.
 created: 2026-04-09
-updated: 2026-06-22
+updated: 2026-11-26
 validated_links_on: 2026-06-22
 status: assess
 ---
@@ -41,11 +41,11 @@ Communication Sources (Gmail, Calendar, Meetings)
 
 | Category | Services |
 |----------|----------|
-| **Communication** | Gmail, Google Calendar |
-| **Meeting notes** | Fireflies |
+| **Communication** | Gmail, Google Calendar, Google Drive |
+| **Meeting notes** | Fireflies (unverified: the current README does not mention it; it describes a built-in meeting note taker) |
 | **Web search** | Exa |
 | **Tools library** | Composio |
-| **MCP servers** | Twitter/X, Slack, Linear, GitHub, ElevenLabs |
+| **MCP servers** | Twitter/X, Slack, Linear/Jira, GitHub, ElevenLabs |
 | **Voice input** | Deepgram API |
 | **Voice output** | ElevenLabs API |
 
@@ -65,17 +65,17 @@ API key, fully model-agnostic. The tags are discovery/categorization only.
 | **Use case** | Knowledge work: meeting prep, people tracking, artifact generation |
 | **Storage** | Obsidian-compatible Markdown vault |
 | **Privacy** | Local-first, all data on disk |
-| **Platforms** | Mac, Windows, Linux desktop apps |
-| **Maturity** | Active (15K stars, 1.5K forks) |
+| **Platforms** | Mac, Windows, Linux desktop apps; web (spaces.rowboatlabs.com) and iPhone app (checked 2026-11-26) |
+| **Maturity** | Active (about 18K stars, 1.8K forks, checked 2026-11-26) |
 | **License** | Apache-2.0 |
-| **Stack** | TypeScript (96.6%) |
+| **Stack** | TypeScript (98.0% of bytes, checked 2026-11-26) |
 
-**Strengths**: Largest community in the knowledge-work agent space (15K stars).
+**Strengths**: Largest community in the knowledge-work agent space (about 18K stars, checked 2026-11-26).
 Obsidian compatibility means no vendor lock-in. MCP support for extensibility.
 Local model support (Ollama) for fully offline operation.
 
 **Risks**: Not a coding agent — different use case than most entries in this
-survey. Desktop-app distribution (no headless/CI mode documented). Integration
+survey. Desktop-app centred distribution (the README now documents a headless `rowboat-server` in `apps/x` and an open-source Harbor Spaces server in `apps/harbor`). Integration
 depth with each service may vary.
 
 ## Cross-References
@@ -87,7 +87,7 @@ depth with each service may vary.
 
 | Source | Content |
 |---|---|
-| [Rowboat repo][rowboat] | Open-source AI coworker (15K stars) |
+| [Rowboat repo][rowboat] | Open-source AI coworker (about 18K stars, checked 2026-11-26) |
 | [Rowboat Labs][rowboat-site] | Company site and downloads |
 
 [rowboat]: https://github.com/rowboatlabs/rowboat

@@ -2,7 +2,7 @@
 title: CC 1.x Session Artifact Schema
 purpose: Reference for the CC 1.x session JSONL wire format -- directory layout, event type catalog, and field reference -- for downstream consumers such as polyforge learnings-sync.sh and cc-meta bigpicture.
 created: 2026-04-23
-updated: 2026-04-23
+updated: 2026-11-26
 validated_links_on: 2026-04-23
 status: research
 ---
@@ -11,7 +11,7 @@ status: research
 
 Claude Code persists every conversation to JSONL files under `~/.claude/`. This document specifies the on-disk layout and the event types written to those files. It is a companion to [CC-session-lifecycle-analysis.md](CC-session-lifecycle-analysis.md), which covers lifecycle and `/rename` bugs, and [CC-subagent-session-artifacts.md](CC-subagent-session-artifacts.md), which covers subagent-specific artifacts.
 
-Source observations: CC 2.1.90, Codespaces, 2026-04-02. Field inventory from live JSONL inspection.
+Source observations: CC 2.1.90, Codespaces, 2026-04-02. Field inventory from live JSONL inspection; not re-verified against later versions (latest release 2.1.332, checked 2026-11-26). Changelog entries touching transcripts: 2.1.329 (last-message timestamp fix, `/rename` titles in remote-control sessions) and 2.1.330 (Bash edit diff may be absent from transcripts).
 
 ## Directory Layout
 
@@ -25,7 +25,7 @@ Source observations: CC 2.1.90, Codespaces, 2026-04-02. Field inventory from liv
 │           └── subagents/
 │               └── agent-<hash>.jsonl     # subagent sidechain transcript
 ├── plans/
-│   └── <slug>.md                         # plan-mode plan files (when /plan is used)
+│   └── <slug>.md                         # plan-mode plan files (written in plan mode)
 ├── tasks/
 │   └── <id>/
 │       ├── .lock                          # advisory lock while task runs
@@ -102,7 +102,7 @@ Written at session open.
 {"type":"permission-mode","permissionMode":"default","sessionId":"..."}
 ```
 
-`permissionMode` values: `"default"`, `"acceptEdits"`, `"bypassPermissions"`.
+`permissionMode` values seen in the observed data: `"default"`, `"acceptEdits"`, `"bypassPermissions"`. The first-party [permission-modes page](https://code.claude.com/docs/en/permission-modes) lists `default` (CLI alias `manual`), `acceptEdits`, `plan`, `auto`, `dontAsk` and `bypassPermissions` (checked 2026-11-26).
 
 ### `file-history-snapshot`
 
@@ -290,7 +290,7 @@ Maps a process ID to session metadata. Not documented in first-party cleanup tab
 }
 ```
 
-Files for dead PIDs may be cleaned up, but the exact lifecycle is undocumented.
+Per the [claude-directory page](https://code.claude.com/docs/en/claude-directory) (checked 2026-11-26), `sessions/` holds one small file per running session, used to detect concurrent sessions and crashes; it is outside the age-based sweep, each file is removed when its session exits, and crash leftovers are cleared on next launch. The `<pid>.json` filename and the fields above are observed only.
 Source: [CC-binary-architecture.md](../configuration/CC-binary-architecture.md).
 
 ## Stability Notes
@@ -304,8 +304,8 @@ Source: [CC-binary-architecture.md](../configuration/CC-binary-architecture.md).
 | `message.usage` shape | Experimental | Subfields added between minor versions; parse defensively |
 | `attachment.type` values | Experimental | New types may be added without notice |
 | `toolUseResult` shape | Experimental | Per-tool; not documented in first-party sources |
-| `sessions/<pid>.json` | Undocumented | Not in first-party cleanup tables; treat as ephemeral |
-| `plans/` and `tasks/` layout | Undocumented | Internal structure not verified |
+| `sessions/<pid>.json` | Lifecycle documented; filename and fields observed only | Removed on session exit, crash leftovers cleared on next launch (claude-directory page, checked 2026-11-26) |
+| `plans/` and `tasks/` layout | Directories documented; internals undocumented | Both are in the first-party "Cleaned up automatically" table (`plans/` plan-mode files, `tasks/` one directory per task list; checked 2026-11-26); per-task files such as `.lock` and `.highwatermark` are undocumented |
 | `thinking` block `signature` | Experimental | Cryptographic; content may be empty or redacted |
 
 ## Cross-References

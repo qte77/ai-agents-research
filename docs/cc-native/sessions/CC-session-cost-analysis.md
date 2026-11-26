@@ -2,7 +2,7 @@
 title: CC Session Cost Analysis from Transcript JSONL
 purpose: Extract per-session cost and token usage from CC transcript files using jq.
 created: 2026-03-27
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-10-26
 status: adopt
 ---
@@ -68,7 +68,7 @@ These fields match the [OTel `api_request` event attributes][monitoring] (`input
 
 The `speed` and `inference_geo` fields shown above aren't just telemetry — each corresponds to a real pricing multiplier on the [pricing page][pricing] (accessed 2026-10-26). For the base per-model rate table these modifiers multiply, see [CC-models-reference.md § Model Pricing][models-reference-pricing] (not duplicated here).
 
-- **`speed: "fast"`** — [Fast mode][fast-mode] premium pricing, available for Claude Opus 5.5, Claude Opus 5, and Claude Opus 4.8 (research preview for the latter two): Opus 5.5 is $8/MTok input, $40/MTok output; Opus 5 and Opus 4.8 are $10/MTok input, $50/MTok output. Fast mode pricing "is not available with the Batch API" and applies across the full context window, including requests over 200k input tokens. It stacks with prompt-caching and data-residency multipliers ("apply on top of fast mode pricing").
+- **`speed: "fast"`** — [Fast mode][fast-mode] premium pricing, available for Claude Fable 5.2 and Claude Mythos 5.2 ($16/MTok input, $80/MTok output, both), Claude Opus 5.5 ($8/$40), Claude Opus 5 (research preview, $10/$50, beta header `fast-mode-2026-02-01`, via waitlist or account manager) and Claude Opus 4.8 ($10/$50 until it is deprecated and removed on 2026-11-30, after which `speed: "fast"` on `claude-opus-4-8` errors) (checked 2026-11-26). Fast mode pricing "is not available with the Batch API" and applies across the full context window, including requests over 200k input tokens. It stacks with prompt-caching and data-residency multipliers ("apply on top of fast mode pricing").
 - **`inference_geo: "us"`** — a 1.1x multiplier on all token pricing categories (input, output, cache writes, cache reads) for Claude 4.6 and later models. "Earlier models do not support the `inference_geo` parameter and always use standard pricing; requests that include the parameter on these models return a 400 error." `inference_geo: "global"` (the default) uses standard pricing.
 - **Cloud regional endpoints** — Bedrock and Claude Models on Google Cloud (Google managed) regional/multi-region endpoints for Claude Sonnet 4.5+, Haiku 4.5+, and Opus 4.5+ models "include a 10 percent premium over global endpoints." On Claude in Microsoft Foundry, the Azure "US Data Zone Standard" deployment type applies the same 1.1x multiplier as `inference_geo: "us"` rather than this separate 10% figure.
 - **Long-context pricing** — Claude 4.6+ models (except Haiku 5.5) and Claude Mythos Preview bill the full 1M-token context window at standard per-token rates (a 900k-token request costs the same per token as a 9k-token one). Claude Haiku 5.5 is the exception: it is priced by prompt length, with a request whose prompt (including cache reads and cache writes) exceeds 100,000 tokens billed at the higher per-request tier shown in [CC-models-reference.md][models-reference-pricing]; each request is priced on its own.
@@ -222,24 +222,24 @@ The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin o
 
 **Owner observation** (claude.ai Settings > Usage, observed 2026-09-23): the usage page splits usage per product — Claude Code / Chats / Cowork / Other. None of the three help-center articles cited above documents this per-product split; [usage-limits][usage-limits] states only that the three surfaces share one limit, not how the dashboard breaks it out.
 
-**Fable models: a sub-cap, not a separate pool.** Per [Claude Fable models on your plan][fable-plan] (help center, modified 2026-09-02):
+**Fable models: a sub-cap, not a separate pool.** Per [Claude Fable models on your plan][fable-plan] (help center, checked 2026-11-26):
 
-- **Max, and premium Team / seat-based Enterprise seats:** "You can use up to 50% of your weekly usage limits on Fable models at no extra cost. They draw from your plan's regular weekly usage limits and use them faster than other Claude models."
+- **Max, Ultra, and premium Team / seat-based Enterprise seats:** "You can use up to 50% of your weekly usage limits on Fable models at no extra cost. They draw from your plan's regular weekly usage limits and use them faster than other Claude models."
   - So Fable usage fills both the Fable bar and the general weekly pool. Switching to Fable does not preserve the general pool.
   - Past the 50% Fable cap: "keep using Fable models with usage credits, or switch to another Claude model."
 - **Pro, and standard Team / seat-based Enterprise seats:** Fable "aren't included in your plan's usage limits" and run on pay-as-you-go usage credits.
 - **Usage-based Enterprise and the API:** billed at standard API rates.
-- **History:** the earlier "up to 50% at no extra cost" promotion for Fable 5 ended 2026-07-19. Fable 5 and 5.1 now "work the same way on your plan."
-- **CC version gates:** Fable 5 needs CC v2.1.170+, Fable 5.1 needs v2.1.255+.
+- **History:** the earlier "up to 50% at no extra cost" promotion for Fable 5 ended 2026-07-19. The 2026-07-19 promotion applied to Fable 5 only; Fable 5.1 and 5.2 were never part of it. The page now says Fable 5 models "all work the same way on your plan" and qualifies this with a plan-by-plan breakdown, plus limited-time launch offers with extra Fable usage on eligible paid plans for Fable 5.2.
+- **CC version gates:** Fable 5 needs CC v2.1.170+, Fable 5.1 needs v2.1.255+, Fable 5.2 needs v2.1.321+.
 
-**Limit resets (redeemable).** Separate from the automatic five-hour and weekly refills, "Limit resets are given occasionally to eligible plans, and set your usage limits back to full when you choose to use one." Per [What is a limit reset?][limit-reset] (help center, modified 2026-09-22):
+**Limit resets (redeemable).** Separate from the automatic five-hour and weekly refills, "Limit resets are given occasionally to eligible plans, and set your usage limits back to full when you choose to use one." Per [What is a limit reset?][limit-reset] (help center, checked 2026-11-26):
 
 - "Depending on the limit reset shown, either your five-hour session limit or your weekly usage limit go back to full right away. Your weekly limits still reset on their usual day and time."
 - It can be used before a limit is reached and "can't [be] undo[ne]." An expiry, if any, is shown in Settings > Usage. It "doesn't refund extra usage you've already been billed for or change your usage credit balance," and it is lost on downgrade or cancellation before use.
-- To redeem it, go to Settings > Usage on the web or in Claude Desktop → "Reset for free" in the **Resets** section; the same button appears on the limit-reached message. The button "isn't currently available on Claude Mobile or in Claude Code in your terminal or IDE," but because limits are shared, a reset also refills Claude Code.
+- To redeem it, go to Settings > Usage on the web, in Claude Desktop or on mobile → "Reset for free" in the **Limit resets** section; the same button appears on the limit-reached message. The button is not available in Claude Code in your terminal or IDE, but because limits are shared, a reset also refills Claude Code. A Fable limit reset type also exists: it restores weekly usage spent on Fable models and, if the account has a five-hour limit, refills it fully, including other models.
 - The article does not name which plans are "eligible." The Claude Code CHANGELOG (through 2.1.283, checked 2026-09-27) has no entry for redeeming a reset. Related CC behavior is limited to resuming automatically when a limit resets: sessions (CC v2.1.234+, toggle in `/config`: "Continue automatically at usage limit") and dynamic workflows (CC v2.1.271+).
 
-**Owner observation** (claude.ai Settings > Usage, German UI, observed 2026-09-27): the Resets section reads, in translation, "A reset refills your 5-hour and weekly limits when you use it. Your week keeps its usual reset day. You currently have no resets." This conflicts with the article, which says a given reset refills *either* the five-hour *or* the weekly limit. Treat the article as authoritative until Anthropic reconciles the two.
+**Owner observation** (claude.ai Settings > Usage, German UI, observed 2026-09-27): the Resets section reads, in translation, "A reset refills your 5-hour and weekly limits when you use it. Your week keeps its usual reset day. You currently have no resets." This conflicts with the article, which says a given reset refills *either* the five-hour *or* the weekly limit (the article now also lists a Fable reset type, so the two may differ less than they did). Treat the article as authoritative until Anthropic reconciles the two.
 
 **UNVERIFIED**: per-plan usage amounts (e.g., token or message counts for Pro/Max/Team) and the weekly limit's size. None of the articles cited above state either; [limit-reset][limit-reset] confirms that a weekly usage limit exists.
 
@@ -250,13 +250,13 @@ The [statusline][statusline] receives pre-aggregated cost/usage JSON via stdin o
 Frequency, verbatim:
 
 - **Pro**: *"Up to once per weekly usage period, whether or not the full allowance is used that time."*
-- **Max and Team (Premium seats)**: *"When you reach a five-hour usage limit, within your weekly limit."*
+- **Max, Ultra (frequency unverified) and Team (Premium seats)**: *"When you reach a five-hour usage limit, within your weekly limit."*
 
 It counts toward the weekly limit without increasing it, and the response ends when it completes, the allowance runs out, or it's interrupted; if usage credits are enabled, the included allowance is used first and the response then continues on credits at standard rates, subject to any spend limit.
 
 What it is not, verbatim (from separate sentences, not a single stitched quote): *"The Wrap-Up Allowance is not a credit, promotional credit, or usage credit."* *"It has no cash value and is not transferable."* *"It can't be exchanged or refunded."* *"It can't be requested, saved, or carried over to a later response or usage period."* Anthropic may change, pause, or discontinue it at any time without notice.
 
-Eligibility requires all of: Pro, Max, or a Team plan with a Premium seat, in good standing; **CC v2.1.277 or later**, signed in with a Claude account (not an API key, a third-party cloud provider, or claude.ai chats); an unpublished minimum account/organization age; and inclusion in a gradual rollout.
+Eligibility requires all of: Pro, Max, Ultra (listed as "an Ultra plan with a temporary limit"), or a Team plan with a Premium seat, in good standing; **CC v2.1.277 or later**, signed in with a Claude account (not an API key, a third-party cloud provider, or claude.ai chats); an unpublished minimum account/organization age; and inclusion in a gradual rollout.
 
 ### Local tools vs plan usage
 
@@ -270,7 +270,7 @@ CodeBurn's separate `codeburn quota` subcommand is the exception to the transcri
 
 The [CC OTel integration][monitoring] exports `claude_code.cost.usage` (USD metric) and `claude_code.token.usage` (by type: input/output/cacheRead/cacheCreation) as time-series metrics. It also exports `api_request` events with per-call cost. Transcripts provide the same data without OTel infrastructure. Use transcripts for local analysis; use OTel for centralized dashboards across teams.
 
-**Note**: CC now has a "Traces (beta)" feature exporting distributed trace spans (`claude_code.interaction`, `claude_code.llm_request`, `claude_code.tool`, etc.), enabled via `CLAUDE_CODE_ENABLE_TELEMETRY=1` + `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER` (CC v2.1.216+, [monitoring docs][monitoring]). Upstream issues [#9584][gh-9584] and [#2090][gh-2090], which had requested this capability, are now closed. See also [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (OTel section).
+**Note**: CC now has a "Traces (beta)" feature exporting distributed trace spans (`claude_code.interaction`, `claude_code.llm_request`, `claude_code.tool`, etc.), enabled via `CLAUDE_CODE_ENABLE_TELEMETRY=1` + `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER` (CC v2.1.216+, [monitoring docs][monitoring]). Upstream issues [#9584][gh-9584] and [#2090][gh-2090], which had requested this capability, are now closed (#9584 as a duplicate, #2090 as not planned; checked 2026-11-26). See also [CC-agent-teams-orchestration.md](../agents-skills/CC-agent-teams-orchestration.md) (OTel section).
 
 ## Documented cost levers
 

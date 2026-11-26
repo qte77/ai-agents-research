@@ -3,7 +3,7 @@ title: Claude Code Sandboxing and Security Analysis
 purpose: Analysis of CC sandboxing mechanics, configuration options, security model, and sandbox configuration options.
 source: https://code.claude.com/docs/en/sandboxing
 created: 2026-03-07
-updated: 2026-11-17
+updated: 2026-11-26
 validated_links_on: 2026-09-23
 status: research
 ---
@@ -27,7 +27,7 @@ backdoor system resources to gain network access ([source][cc-security]).
 | macOS | Seatbelt (built-in) | Works out of the box |
 | Linux/WSL2 | bubblewrap + socat | `make setup_sandbox` or `sudo apt-get install bubblewrap socat` |
 | WSL1 | Not supported | bubblewrap requires WSL2 kernel features |
-| Windows | Not supported | not supported (use WSL2); no first-party statement on native support. Microsoft lists Claude Code among agents that "will be releasing support" for its MXC sandbox (announcement only, unconfirmed by Anthropic): [microsoft-mxc-analysis.md](../../non-cc/infrastructure/microsoft-mxc-analysis.md) |
+| Windows | Not supported | not supported: on native Windows Claude Code runs commands unsandboxed, and the sandbox needs a WSL2 distribution ([source][cc-sandboxing], checked 2026-11-26). Microsoft lists Claude Code among agents that "will be releasing support" for its MXC sandbox (announcement only, unconfirmed by Anthropic): [microsoft-mxc-analysis.md](../../non-cc/infrastructure/microsoft-mxc-analysis.md) |
 
 ([source][cc-sandboxing])
 
@@ -102,9 +102,7 @@ the default dev setup — must be run separately.
 | `sandbox.filesystem.denyWrite` | Paths blocked from writing |
 | `sandbox.filesystem.denyRead` | Paths blocked from reading |
 
-**Defaults**: Write access to the current working directory and its
-subdirectories, plus the session temp directory that `$TMPDIR` points to. Read
-entire filesystem except explicitly denied paths ([source][cc-sandboxing]).
+**Defaults**: Write access to the working directory, directories added with `--add-dir` or `permissions.additionalDirectories`, and the per-user temp directory that `$TMPDIR` points to. Reads: access to the entire computer except certain denied directories; this default still allows reading credential files. With `permissions.blockReadsOutsideWorkingDirectories` on, sandboxed commands also lose read access outside the working directory ([source][cc-sandboxing], checked 2026-11-26).
 
 ### Network
 
@@ -146,9 +144,7 @@ absolute and `/path` for project-relative ([source][cc-sandboxing]).
 ### Array Merging Across Scopes
 
 When `allowWrite`, `denyWrite`, or `denyRead` are defined in multiple settings
-scopes (managed, user, project, local), arrays **merge** (concatenate +
-deduplicate) rather than replace. No scope can accidentally remove another
-scope's entries ([source][cc-sandbox-settings]).
+scopes (managed, user, project, local), arrays combine across files rather than replace ([source][cc-sandbox-settings]). "Concatenate + deduplicate" and "no scope can remove another scope's entries" are unverified: `allowWrite` also takes paths from `Edit(...)` allow rules and omits repository-settings entries while `permissions.blockReadsOutsideWorkingDirectories` is on, and `denyRead` also takes paths from `Read(...)` deny rules (checked 2026-11-26).
 
 ## How It Works
 
@@ -161,8 +157,7 @@ Claude's own file tools ([source][cc-sandboxing]).
 ### Network Isolation
 
 Controlled through a **proxy server running outside the sandbox**. Only approved
-domains pass through. Unapproved domain requests trigger permission prompts
-(unless `allowManagedDomainsOnly` auto-blocks them) ([source][cc-sandboxing]).
+domains pass through. Unapproved domain requests trigger permission prompts depending on the permission mode (see the sandboxing page); `strictAllowlist` (v2.1.219, user, managed or `--settings`) or `allowManagedDomainsOnly` makes the proxy deny hosts outside the allowlist instead of prompting. The proxy decides from the requested hostname and does not inspect TLS by default ([source][cc-sandboxing], checked 2026-11-26).
 
 ### Escape Hatch
 
@@ -227,11 +222,11 @@ Based on architecture:
 | Feature | Description |
 | ------- | ----------- |
 | Command approval | `curl` and `wget` are not auto-approved by default — they prompt like any other non-read-only Bash command; add to `permissions.deny` to block entirely |
-| Isolated WebFetch | Separate context window prevents prompt injection via web |
-| Trust verification | First-time codebase runs require trust confirmation |
-| Command injection detection | Suspicious bash commands require manual approval |
-| Fail-closed matching | Unmatched commands default to requiring approval |
-| Credential storage | API keys/tokens stored in the macOS Keychain when available; protected by file permissions on Windows and Linux |
+| Web page summaries | For most WebFetch fetches, a separate model call reads the page and Claude receives that call's answer instead of the raw page ([security](https://code.claude.com/docs/en/security), checked 2026-11-26) |
+| Trust verification | In an interactive session, a workspace trust dialog appears for untrusted folders (no trust prompt in a `-p` session) |
+| Command injection detection | In Manual mode, Claude Code asks before running a Bash command it can't fully analyze; an allow rule for part of a command doesn't skip that prompt, and sandboxed commands in auto-allow mode can run without it |
+| Fail-closed matching | In Manual mode, unmatched commands require approval by default |
+| Credential storage | API keys/tokens stored in the macOS Keychain when available; on Linux in a file with mode 0600, on Windows in a file that inherits the access controls of the user profile directory |
 
 ([source][cc-security])
 
@@ -241,7 +236,7 @@ The sandbox runtime is available as a standalone npm package
 ([source][sandbox-runtime]):
 
 ```bash
-npx @anthropic-ai/sandbox-runtime <command-to-sandbox>
+npx @anthropic-ai/sandbox-runtime <command-to-sandbox>  # unverified: the sandboxing page shows only `npm install -g @anthropic-ai/sandbox-runtime` (seccomp helper)
 ```
 
 Enables sandboxing outside Claude Code, including Model Context Protocol (MCP) servers.
@@ -258,22 +253,19 @@ sibling repos under `/workspaces/`), the Bash sandbox blocks writes by default.
 Bash sandbox entirely. Only Bash tool commands are subject to
 `sandbox.filesystem` restrictions.
 
-**Solution**: Add the parent workspace path to `write.allowOnly`:
+**Solution**: Add the parent workspace path to `sandbox.filesystem.allowWrite` (no `filesystem.write.allowOnly` key is documented):
 
 ```json
 "sandbox": {
   "filesystem": {
-    "write": {
-      "allowOnly": ["/tmp/claude-1000", ".git", "/workspaces/qte77"]
-    }
+    "allowWrite": ["/workspaces/qte77"]
   }
 }
 ```
 
 **Alternatives**:
 
-- Use `sandbox.filesystem.allowWrite` (additive, merges across scopes) instead
-  of modifying `allowOnly`
+- `sandbox.filesystem.allowWrite` adds paths to the default write set (the wording "additive, merges across scopes" is unverified)
 - Set in `~/.claude/settings.json` (user-level) for global cross-repo access
 - Use `permissions.additionalDirectories` to expand the overall permission scope
 
@@ -309,7 +301,7 @@ bubblewrap/Seatbelt enforcement, see
 - [Sandbox runtime (open source)][sandbox-runtime]
 
 [cc-sandboxing]: https://code.claude.com/docs/en/sandboxing
-[cc-sandbox-settings]: https://code.claude.com/docs/en/settings#sandbox-settings
+[cc-sandbox-settings]: https://code.claude.com/docs/en/settings-reference
 [cc-security]: https://code.claude.com/docs/en/security
 [sandbox-runtime]: https://github.com/anthropics/sandbox-runtime
 [cc-changelog-2]: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md

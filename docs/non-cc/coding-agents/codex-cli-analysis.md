@@ -3,7 +3,7 @@ title: OpenAI Codex CLI (Terminal Agent)
 source: https://github.com/openai/codex
 purpose: Evaluate Codex CLI as an interactive and headless terminal coding agent, distinct from the cloud Codex environment.
 created: 2026-06-16
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-15
 status: trial
 platform_scope: [cursor, windsurf]
@@ -13,7 +13,7 @@ platform_scope: [cursor, windsurf]
 
 ## What It Is
 
-Codex CLI is OpenAI's open-source, locally-running coding agent for the terminal. It ships as a single binary (written primarily in Rust) that opens a full-screen TUI, reads and edits code in the current working directory, executes shell commands, and streams model responses — all with a two-layer safety model (sandbox + approval policy). The repository ([github.com/openai/codex][gh-codex]) reached 91 k GitHub stars and version 0.140.0 as of 2026-06-15.
+Codex CLI is OpenAI's open-source, locally-running coding agent for the terminal. It ships as a single binary (written primarily in Rust) that opens a full-screen TUI, reads and edits code in the current working directory, executes shell commands, and streams model responses — all with a two-layer safety model (sandbox + approval policy). The repository ([github.com/openai/codex][gh-codex]) reached 136.6 k GitHub stars and release rust-v0.172.0 (2026-11-24) as of 2026-11-26 (91 k stars and 0.140.0 on 2026-06-15).
 
 This doc covers the **terminal agent** only. The cloud Codex environment — a hosted, sandboxed execution layer used by the GitHub Actions integration — is a separate product and is covered in [CC-github-actions-analysis.md](../../cc-native/ci-remote/CC-github-actions-analysis.md).
 
@@ -21,7 +21,7 @@ This doc covers the **terminal agent** only. The cloud Codex environment — a h
 
 ### Architecture
 
-The agent binary is written in Rust (96 % of codebase per GitHub language breakdown, accessed 2026-06-16) with supplementary Python, TypeScript, and shell components. It runs fully on the local machine; the only network call is to the OpenAI API for inference.
+The agent binary is written in Rust (about 97.5 % of the codebase per the GitHub language breakdown, checked 2026-11-26) with supplementary Python, TypeScript, and shell components. It runs fully on the local machine; the only network call is to the OpenAI API for inference.
 
 ### Approval modes and sandboxing
 
@@ -35,7 +35,7 @@ Codex enforces a two-layer protection model ([agent-approvals-security][approval
 | `read-only` | Read access only; no edits or network |
 | `danger-full-access` | No restrictions; not recommended |
 
-Protected paths (`.git`, `.agents`, `.codex`) are read-only even in `workspace-write` mode.
+Protected paths (`.git`, `.agents`, `.codex`, `.aws`) are read-only even in `workspace-write` mode.
 
 **Approval policies** (controls when the agent must pause and ask):
 
@@ -67,7 +67,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 
 - **Image input**: attach screenshots or design specs via `-i`/`--image` flag or paste in composer (PNG, JPEG)
 - **Web search**: built-in, uses OpenAI cached index by default; `--search` switches to live results
-- **Model selection**: `gpt-5.5` recommended for complex tasks; switch mid-session with `/model`. GPT-5.5 retired from Codex with ChatGPT sign-in on 2026-10-14; API-key sessions are not affected ([Codex pricing][codex-pricing], checked 2026-11-15)
+- **Model selection**: switch mid-session with `/model`. The [Codex pricing][codex-pricing] page (checked 2026-11-26) lists GPT-6.2 Astra and Sol, GPT-6.1 Terra and Sol and others, and names no single recommended model; CLI 0.171.0 (2026-11-20) added GPT-6.2 Sol and Astra with Sol as the default catalog selection ([changelog](https://learn.chatgpt.com/docs/changelog)). The earlier claim that GPT-5.5 was retired from Codex with ChatGPT sign-in on 2026-10-14 is unverified (the pricing page does not state it)
 - **Subagent parallelisation**: explicit fan-out for parallel subtasks (extra token cost)
 - **MCP support**: connect STDIO or streaming-HTTP Model Context Protocol (MCP) servers via `config.toml`; launched automatically
 - **Session resume**: `codex resume` restores prior conversation and repository state
@@ -92,10 +92,10 @@ Checked 2026-11-23 against the vendor's [config reference][codex-config-ref] and
 
 ## Adoption Decision
 
-Codex CLI is **Trial**. The two-layer sandbox + approval model, headless `codex exec` path, and MCP integration make it production-credible for local and CI use. The 91 k-star repo and 842+ releases signal strong community traction and rapid iteration. However, it is not yet Adopt because:
+Codex CLI is **Trial**. The two-layer sandbox + approval model, headless `codex exec` path, and MCP integration make it production-credible for local and CI use. The 136.6 k-star repo and 1,324 releases (checked 2026-11-26) signal strong community traction and rapid iteration. However, it is not yet Adopt because:
 
-1. **ChatGPT plan dependency**: access requires a paid ChatGPT subscription or API key; no free tier for the recommended `gpt-5.5` model. For CI, OpenAI recommends an API key, billed at API rates rather than plan credits; see [CC-web-auth-setup-analysis.md § Other Coding CLIs](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing).
-2. **Rapid version churn**: 842 releases in roughly one year; APIs and config schema change frequently.
+1. **ChatGPT plan dependency**: Codex is included in the ChatGPT Free, Go, Plus, Pro, Business, Edu and Enterprise plans (Free for quick coding tasks), or usable with an API key (pricing page, checked 2026-11-26). For CI, OpenAI recommends an API key, billed at API rates rather than plan credits; see [CC-web-auth-setup-analysis.md § Other Coding CLIs](../../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing).
+2. **Rapid version churn**: 1,324 releases (checked 2026-11-26); APIs and config schema change frequently.
 3. **No Claude Code parity**: lacks CC's CLAUDE.md conventions, has fewer documented hook events (14 vs 33 as of 2026-11-15; see the [cross-harness matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15)), and lacks CC's project-skill architecture, and operator permission model — relevant when evaluating as a CC alternative.
 
 For teams already on OpenAI/ChatGPT Enterprise, this is an immediately viable terminal agent. For CC-native workflows, the primary value is as a reference model for headless sandboxing and approval-policy design.
@@ -105,7 +105,6 @@ See also [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.
 ## Action Items
 
 - Validate `codex exec` + `--json` pipeline in a container to confirm JSONL schema stability across minor versions.
-- Track whether OpenAI exposes a free or lower-cost access tier (not stated as of 2026-06-16).
 - Compare AGENTS.md instruction surface to CC's CLAUDE.md/hooks after both stabilise.
 
 ## Goal Loop
