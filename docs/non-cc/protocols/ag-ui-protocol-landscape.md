@@ -126,6 +126,8 @@ Confirmed integrations per the [ag-ui README][ag-ui-repo] and [CopilotKit AG-UI 
 | **Mastra**, **Pydantic AI**, **Agno**, **LlamaIndex**, **AG2**, **Langroid** | [ag-ui README][ag-ui-repo] | Framework integrations |
 | **Community SDKs** | [ag-ui README][ag-ui-repo] | Kotlin, Go, Dart, Java, Rust, Ruby, C++, Swift (.NET is now an official SDK alongside TypeScript and Python; checked 2026-11-26) |
 
+As of 2026-11-26 the AG-UI README announces AG-UI 1.0 with a stable, frozen specification, from which the TypeScript, Python and .NET SDKs are generated ([ag-ui README][ag-ui-repo]).
+
 Scale signals: about 21.8K GitHub stars on the ag-ui repo (`gh api`, checked 2026-11-26); an earlier CopilotKit-reported 120K weekly installs combined with CopilotKit and 2M agent↔user interactions/week are unverified (not on the [CopilotKit page][ag-ui-copilotkit] on 2026-11-26).
 
 ### Non-Adopters (as of 2026-04-24)

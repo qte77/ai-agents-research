@@ -11,7 +11,7 @@ status: assess
 
 This analysis examines the specific technical mechanisms used by 18 observability platforms (updated June 2026) to trace and observe AI agent behavior. The research reveals five primary technical patterns plus emerging multi-agent observability capabilities: decorator-based instrumentation, proxy-based interception, OpenTelemetry standard implementation, native framework integration, specialized statistical approaches, and distributed multi-agent coordination tracking.
 
-**2026 Update**: The landscape has matured significantly with 89% of organizations implementing agent observability. OpenTelemetry GenAI semantic conventions for agent applications are in Development status (checked 2026-11-26), with framework-specific conventions in active development. New standards enable consistent tracing across IBM Bee Stack, CrewAI, AutoGen, LangGraph, and other major frameworks.
+**2026 Update**: The landscape has matured significantly with 89% of organizations implementing agent observability. OpenTelemetry GenAI semantic conventions for agent applications are in Development status ([status page][otel-invoke-agent], checked 2026-11-26), with framework-specific conventions in active development. New standards enable consistent tracing across IBM Bee Stack, CrewAI, AutoGen, LangGraph, and other major frameworks.
 
 **Key Developments**: Six new tools added (Braintrust, Maxim AI, AgentOps, Datadog LLM Observability, Pydantic Logfire, otel-tui), six existing tools received major feature updates (Langfuse v2 APIs, MLflow TypeScript support, Arize Phoenix continuous releases, enhanced multi-agent observability across platforms).
 
@@ -611,7 +611,7 @@ The 2026 landscape shows significant maturation with 89% of organizations implem
 
 ### Key 2026 Developments
 
-**OpenTelemetry Standardization**: GenAI semantic conventions for agent applications are in Development status (checked 2026-11-26), with framework-specific conventions actively developed for IBM Bee Stack, CrewAI, AutoGen, and LangGraph. Datadog added native support (v1.37+; "first major vendor" is unverified), signaling enterprise adoption of standardized agent observability.
+**OpenTelemetry Standardization**: GenAI semantic conventions for agent applications are in Development status ([status page][otel-invoke-agent], checked 2026-11-26), with framework-specific conventions actively developed for IBM Bee Stack, CrewAI, AutoGen, and LangGraph. Datadog added native support (v1.37+; "first major vendor" is unverified), signaling enterprise adoption of standardized agent observability.
 
 **Multi-Agent Observability Emerges**: New pattern addressing distributed agent coordination, with specialized tracking for agent-to-agent communication, coordination quality metrics, and behavioral deviation detection. Tools like AgentOps, MLflow (chat sessions), and Datadog now provide dedicated multi-agent capabilities.
 
@@ -645,3 +645,4 @@ Design-stance sources: [ai-that-works ep. #64, "agent observability" (2026-07-07
 [aiw-obs]: https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-07-agent-observability
 [otel-sensitive]: https://opentelemetry.io/docs/security/handling-sensitive-data/
 [otel-common]: https://opentelemetry.io/docs/specs/otel/common/
+[otel-invoke-agent]: https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/client-invoke-agent.md

@@ -61,7 +61,7 @@ User → CLI commands → Dispatcher → Sub-agents (4 bundled)
 |-----------|------------|
 | **Use case** | Scientific research, literature review, experiment replication |
 | **Runtime** | Pi agent runtime, Node.js >=22.22.0 for npm installs (package.json engines, feynman 0.5.74, checked 2026-11-26) |
-| **GPU support** | Local, Modal, RunPod (optional, each only if its CLI is set up) for experiment replication |
+| **GPU support** | Local, Modal, RunPod (optional, each only if its CLI is set up, per the repo's [replicate prompt][feynman-replicate]) for experiment replication |
 | **Maturity** | Active (about 10.2K stars, 1.1K forks, last push 2026-11-25; checked 2026-11-26) |
 | **License** | MIT |
 
@@ -84,7 +84,9 @@ dependency (not widely adopted). The README lists many paper indexes (alphaXiv, 
 |---|---|
 | [Feynman repo][feynman] | Open-source research agent |
 | [Feynman docs][feynman-docs] | Installation and workflow documentation |
+| [Replicate prompt][feynman-replicate] | Modal and RunPod are used only if their CLIs are set up |
 
 [feynman]: https://github.com/Companion-Inc/feynman
 [feynman-site]: https://feynman.is
 [feynman-docs]: https://feynman.is/docs
+[feynman-replicate]: https://github.com/Companion-Inc/feynman/blob/main/prompts/replicate.md

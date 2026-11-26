@@ -14,7 +14,7 @@ status: trial
 "high-performance agent workspace that keeps a complete record of everything
 it did," with terminal and desktop shells running the same workbench UI against one "Runtime Host"
 process (README, checked 2026-11-26). Its defining architectural claim, per the README as read
-on 2026-09-24 (the current README no longer uses this wording, checked 2026-11-26; unverified): "the
+on 2026-09-24 (that wording is no longer in the README, checked 2026-11-26): "the
 log is the runtime" — every model message, tool call, permission decision,
 and termination is recorded as an append-only `RuntimeEvent`, and the UI, the
 next prompt, and crash recovery are all *projections* of that log rather than
@@ -32,9 +32,8 @@ Harbor evaluation runner against the native host (README, checked 2026-11-22). O
 
 Maka is an **Apache Incubator podling** ("(Incubating)" appears throughout
 the README and project name), not a graduated top-level Apache project.
-**The latest Apache-approved release is `0.2.2` (incubating)** — the README
-states that the signed source archive is the official release (checked 2026-11-26), and links the
-[downloads page][downloads] (unverified). Development builds remain the
+**The latest Apache-approved release is `0.2.2` (incubating)** — the
+[downloads page][downloads] lists 0.2.2 as the latest release (2026-10-30) with a signed source archive, and states that the signed source archive is the release (checked 2026-11-26). Development builds remain the
 other channel. Maka is still an incubating podling, not a top-level project, so readers evaluating
 it for production use should weigh that status.
 
@@ -57,7 +56,7 @@ agents — rather than a local execution log that *is* the runtime record.
 | Source | Content |
 |---|---|
 | [apache/maka repo][repo] | README, incubation status, architecture claims (first-party) |
-| [Maka downloads page][downloads] | Release channel (linked from the README; unverified) |
+| [Maka downloads page][downloads] | Latest approved release 0.2.2 (2026-10-30), signed source archive, incubation wording (checked 2026-11-26) |
 | GitHub API repo metadata, 2026-11-26 | Stars(6,010)/forks(582)/open issues(405), language, license, dates |
 
 [repo]: https://github.com/apache/maka
