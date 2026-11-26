@@ -3,7 +3,7 @@ title: CC Memory Tooling Landscape
 purpose: Persistent cross-session memory tools for Claude Code (ByteRover, Claude-Mem, MemPalace, MemSearch, Roampal Core), cross-agent and procedural memory tools, and second-brain vault tools.
 status: research
 created: 2026-06-14
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-10-06
 ---
 
@@ -36,7 +36,7 @@ Legend: ✓ explicit layer · ~ partial/implicit · — not a documented layer. 
 
 ## agent-memory (tigerless-labs)
 
-**Repo**: [tigerless-labs/agent-memory][agent-memory] | **Stars**: 1,692 | **License**: MIT | **Version**: 0.1.0 (README badge; no tagged GitHub release as of 2026-09-30, `gh api` — install from a checkout, no PyPI package yet)
+**Repo**: [tigerless-labs/agent-memory][agent-memory] | **Stars**: 3,999 (checked 2026-11-26) | **License**: MIT | **Version**: 0.1.0 (README badge; no tagged GitHub release as of 2026-09-30, `gh api` — install from a checkout, no PyPI package yet)
 
 Long-term memory runtime pitched as "the two lines" of prior memory architecture in one store: a retrieval engine (ranking, links-as-graph) indexing a plain markdown filesystem the agent can still `ls`/`grep` directly. Markdown files are the single source of truth; the SQLite/FTS5 index beside them is a deletable cache.
 
@@ -82,7 +82,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## ai-memory (akitaonrails)
 
-**Repo**: [akitaonrails/ai-memory][ai-memory] | **Stars**: 16,057 (2026-11-17; was 8.2K at last review) | **License**: MIT | **Version**: v3.4.7 (2026-11-15; was 2.4.0 at last review)
+**Repo**: [akitaonrails/ai-memory][ai-memory] | **Stars**: 16.5K (checked 2026-11-26; 8.2K at an earlier review) | **License**: MIT | **Version**: v3.6.3 (2026-11-26; was 2.4.0 at an earlier review)
 
 Rust-based cross-agent long-term memory: "Quit Claude Code mid-task, start OpenAI Codex in the same directory, continue without re-explaining the architecture" ([README][ai-memory]). A git-backed Markdown wiki is the source of truth (`wiki/` pages, `raw/` sanitized transcript segments), with a derived SQLite index (FTS5 + local embeddings) for retrieval — the same "plain-text is durable, index is disposable" pattern MemSearch uses below.
 
@@ -109,13 +109,13 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## ByteRover CLI (campfirein)
 
-[campfirein/byterover-cli][byterover] (Elastic License 2.0; paper [arXiv:2604.01599][byterover-paper]): agent memory layer CLI exposed to Claude Code over MCP. Archived on GitHub (4,943 stars, last push 2026-06-25, last release v3.16.1 on 2026-05-27; `gh api` 2026-11-21).
+[campfirein/byterover-cli][byterover] (Elastic License 2.0; paper [arXiv:2604.01599][byterover-paper]): agent memory layer CLI exposed to Claude Code over MCP. Archived on GitHub (4,945 stars (checked 2026-11-26), last push 2026-06-25, last release v3.16.1 on 2026-05-27; `gh api` 2026-11-21).
 
 ## Claude-Mem (thedotmack / Alex Newman)
 
-**Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 115.2K (`gh api`, 2026-11-09) | **License**: Apache-2.0 | **Version**: v15.13.0 (2026-11-09)
+**Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 119.9K (`gh api`, checked 2026-11-26) | **License**: Apache-2.0 | **Version**: v17.0.0 (2026-11-26)
 
-Persistent memory compression system, started for Claude Code and now cross-agent. A second "observer" agent turns the session's tool activity into observations and summaries, and the next session starts with a short index that pulls in details only when needed. The README says it "Works with Claude Code, Codex, Cursor, OpenCode and 11 more agents", and that Copilot CLI, Goose, Roo Code and Warp can search the memory but their sessions aren't recorded. Placement stays here because the hook, plugin and MCP surface is the analysis focus (see [CONTRIBUTING § Classification](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc)).
+Persistent memory compression system, started for Claude Code and now cross-agent. A second "observer" agent turns the session's tool activity into observations and summaries, and the next session starts with a short index that pulls in details only when needed. The README says it "Works with Claude Code, Codex, Cursor, OpenCode and 11 more agents", and that Copilot CLI, Goose, Roo Code and Warp (and Zed, per the 2026-11-26 README as reported by the pack, not re-read by me) can search the memory but their sessions aren't recorded. Placement stays here because the hook, plugin and MCP surface is the analysis focus (see [CONTRIBUTING § Classification](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc)).
 
 ### Architecture
 
@@ -166,7 +166,7 @@ A dedicated observer AI watches each session in real-time, generating searchable
 
 ### Adoption Considerations
 
-**Strengths**: 115.2K stars (2026-11-09), progressive disclosure saves tokens, hybrid search (FTS5 + vector), cross-agent adapters, web UI for browsing history, [dedicated docs site][claude-mem-docs].
+**Strengths**: 119.9K stars (2026-11-26), progressive disclosure saves tokens, hybrid search (FTS5 + vector), cross-agent adapters, web UI for browsing history, [dedicated docs site][claude-mem-docs].
 
 **Risks**: Heavy dependencies (Bun + uv + Chroma). Overlaps with CC's built-in memory system. The README states "Anonymous usage analytics are on by default" (`npx claude-mem telemetry disable` turns them off). The hosted observer and cloud sync are paid or opt-in services next to the Apache-2.0 core.
 
@@ -176,7 +176,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## claude-reflect (BayramAnnakov)
 
-**Repo**: [BayramAnnakov/claude-reflect][claude-reflect] | **Stars**: 1.7K | **License**: MIT | **Version**: 3.2.0
+**Repo**: [BayramAnnakov/claude-reflect][claude-reflect] | **Stars**: 2.0K (checked 2026-11-26) | **License**: MIT | **Version**: 3.3.1 (2026-10-03)
 
 Self-learning Claude Code plugin that "captures corrections and discovers workflow patterns — turning them into permanent memory and reusable skills" ([README][claude-reflect]). Distinct from the session-recall tools in this doc: it targets the taxonomy's *procedural* layer (behavior correction), not episodic/semantic recall.
 
@@ -203,7 +203,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## CortexDB (liliang-cn)
 
-**Repo**: [liliang-cn/cortexdb][cortexdb] | **Stars**: 531 | **License**: MIT | **Version**: Go module v2, `gh api` 2026-11-23 (479 on 2026-11-12)
+**Repo**: [liliang-cn/cortexdb][cortexdb] | **Stars**: 532 | **License**: MIT | **Version**: Go module v2, latest release v2.172.0 (2026-11-26), `gh api` checked 2026-11-26 (479 on 2026-11-12)
 
 Pure-Go AI memory and knowledge graph in one SQLite file — "no service to run, works without an embedding model" ([README][cortexdb]). Combines vector search (HNSW/IVF/flat/binary), FTS5 full-text, RAG knowledge, scoped agent memory, and a Resource Description Framework (RDF) 1.2 knowledge graph ([SPARQL](../glossary.md#knowledge-structures) 1.1/1.2, OWL 2 RL inference, SHACL validation, read-only Cypher) plus a Palantir-style governed-action ontology, behind 100+ tools exposed in-process or over MCP.
 
@@ -237,7 +237,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## Atuin Agent Threads (atuinsh)
 
-**Repo**: [atuinsh/atuin][atuin] | **Stars**: 32,577 | **License**: MIT | pushed 2026-11-23 (`gh api`, 2026-11-23)
+**Repo**: [atuinsh/atuin][atuin] | **Stars**: 32.7K | **License**: MIT | pushed 2026-11-26 (`gh api`, checked 2026-11-26)
 
 Atuin is a shell-history tool whose README now also describes **Agent Threads** (documented, README read 2026-11-23): it captures Claude Code, Codex, OpenCode and other agent sessions; a thread started on one machine can be picked up with `atuin resume` on another machine and in a different harness. Agents can optionally search the history through a built-in MCP server, and history plus threads can sync end-to-end encrypted or stay offline. This is session-continuity across machines and harnesses rather than a distilled memory store, so it complements the tools above instead of replacing them. Not verified here: how complete a resumed thread is across harnesses, and the newsletter's claims that capture is opt-in and that the sync server can be self-hosted (Lindenberg, *Point It at Something*, LinkedIn, 2026-11-21, single source for those two details).
 
@@ -245,7 +245,7 @@ Atuin is a shell-history tool whose README now also describes **Agent Threads** 
 
 ## Core (RedPlanetHQ)
 
-**Repo**: [RedPlanetHQ/core][core] | **Stars**: 2K | **License**: AGPL-3.0 | **Version**: 0.7.20
+**Repo**: [RedPlanetHQ/core][core] | **Stars**: 2.0K (checked 2026-11-26) | **License**: AGPL-3.0 per the LICENSE file (titled "Core License", AGPL text; GitHub's detector reports NOASSERTION) | **Version**: 0.7.20
 
 Self-hosted "Personal AI OS" — broader in scope than the other tools in this doc: it indexes email, meetings, GitHub, Linear, Slack, and conversation history into a persistent memory layer, then acts on it via voice, chat, and messaging (WhatsApp/Slack/Telegram) interfaces, not just as a coding-agent sidecar.
 
@@ -265,7 +265,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## deja-vu (vshulcz)
 
-**Repo**: [vshulcz/deja-vu][deja-vu] | **Stars**: 935 | **License**: MIT | **Version**: 0.21.1
+**Repo**: [vshulcz/deja-vu][deja-vu] | **Stars**: 1.7K (checked 2026-11-26) | **License**: MIT | **Version**: v0.25.1 (2026-11-24)
 
 Local memory index built from session history already on disk — "one memory shared by Claude Code, Codex, Cursor, Copilot CLI, OpenClaw and 29 more coding agents... including months of sessions from before you installed it" ([README][deja-vu]). A single Go binary; no LLM or embeddings required for core retrieval (optional semantic recall via local Ollama or OpenAI endpoints).
 
@@ -279,7 +279,7 @@ Local memory index built from session history already on disk — "one memory sh
 
 **Strengths**: Retroactive indexing parses each agent's *existing* on-disk session stores directly, so months of pre-install history become searchable immediately — no separate backfill step (claude-reflect above can also recover pre-install learnings, but only by re-scanning sessions through its own capture pipeline); no LLM or embedding dependency for core full-text search; self-reported **88.1% hit@1 on LongMemEval-S** and **70.5% retrieval hit@1 on LoCoMo**, both reproducible in-repo against the public datasets (see [Benchmarks](#benchmarks) below); millisecond lookups.
 
-**Risks**: Overlaps with CC's built-in memory and every other tool in this doc — pick one. Depends on each agent's own on-disk session format; a harness that changes its log layout could break parsing until deja-vu updates. Pre-1.0 (v0.21.1).
+**Risks**: Overlaps with CC's built-in memory and every other tool in this doc — pick one. Depends on each agent's own on-disk session format; a harness that changes its log layout could break parsing until deja-vu updates. Pre-1.0 (v0.25.1).
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -287,7 +287,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## engrim (timgordontg)
 
-**Repo**: [timgordontg/engrim][engrim] | **Stars**: 283 | **License**: MIT | **Version**: 1.4.11
+**Repo**: [timgordontg/engrim][engrim] | **Stars**: 304 (checked 2026-11-26) | **License**: MIT | **Version**: 1.4.11
 
 Local-first SQLite episodic-memory store aimed at the "200,000-token context window trap": rather than replaying raw transcripts, it distills project memory into "4,000 characters of high-precision, curated episodic working memory" in a single file (`~/.engrim/memory.db`, WAL mode, restrictive POSIX permissions) ([README][engrim]). Its README reports a measured result from one project: across 105 sessions on a 50,000-line codebase, context fell from about 153,000 tokens to under 1,000 (self-reported in the README, read 2026-11-21).
 
@@ -301,7 +301,7 @@ Local-first SQLite episodic-memory store aimed at the "200,000-token context win
 
 **Strengths**: Only tool in this doc with a Google Antigravity adapter (alongside Claude Code, Cursor, Codex CLI, Copilot CLI, OpenCode, and Windsurf — seven environments total); per-entry `origin_agent` provenance lets a team see which agent contributed a given decision; tiny on-disk footprint (single SQLite file); MIT, with an optional commercial variant for teams rather than a required upsell.
 
-**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (283 stars vs. ai-memory's 8.2K (16,057 on 2026-11-17) and deja-vu's 935). No third-party or public benchmark number, unlike MemPalace/deja-vu.
+**Risks**: Overlaps with CC's built-in memory, ai-memory, and deja-vu above — three cross-agent stores in this doc alone; pick one. Smaller community than its cross-agent peers here (304 stars vs. ai-memory's 16.5K and deja-vu's 1.7K (checked 2026-11-26)). No third-party or public benchmark number, unlike MemPalace/deja-vu.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -309,7 +309,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## Leviathan (elstongun)
 
-**Repo**: [elstongun/leviathan][leviathan] | **Stars**: 881 | **License**: Apache-2.0 | **Version**: Rust 1.88+ (README badge), `gh api` 2026-11-12
+**Repo**: [elstongun/leviathan][leviathan] | **Stars**: 886 (checked 2026-11-26; tagged release v0.3.0, 2026-10-29) | **License**: Apache-2.0 | **Version**: Rust 1.88+ (README badge), `gh api` 2026-11-12
 
 Single static Rust binary that turns records (JSONL, JSON, CSV/TSV, SQLite, or any database CLI's output) into a ranked full-text (FTS5 + BM25) index, so an agent gets "the few records that answer the question" instead of grepping raw history ([README][leviathan]). A separate, opt-in **memory** mode lives in its own SQLite file: the agent `remember`s one claim at a time keyed so a later write replaces rather than contradicts the old value, and `recall` returns only what fits a token budget.
 
@@ -343,7 +343,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## MemPalace (milla-jovovich)
 
-**Repo**: [milla-jovovich/mempalace][mempalace] | **Stars**: 33.6K | **License**: MIT | **Version**: 3.0.0
+**Repo**: [MemPalace/mempalace][mempalace] (formerly `milla-jovovich/mempalace`; old path redirects) | **Stars**: 60.7K (checked 2026-11-26) | **License**: MIT | **Version**: v3.12.0 (2026-11-12)
 
 Local-first AI memory system storing conversation histories verbatim using a spatial "palace" metaphor. Achieved 96.6% R@5 on [LongMemEval benchmark][longmemeval] — the highest published result — without cloud dependencies.
 
@@ -376,7 +376,7 @@ claude plugin marketplace add milla-jovovich/mempalace   # marketplace install
 claude mcp add mempalace -- python -m mempalace.mcp_server  # MCP install
 ```
 
-19 MCP tools for search and memory operations. Also supports ChatGPT, Cursor, Gemini, and local models (Ollama, Mistral).
+47 MCP tools per the current README (earlier text said 19; checked 2026-11-26) for search and memory operations. Also supports ChatGPT, Cursor, Gemini, and local models (Ollama, Mistral).
 
 ### Adoption Considerations
 
@@ -390,7 +390,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 ## MemSearch (zilliztech)
 
-**Repo**: [zilliztech/memsearch][memsearch] | **Stars**: 2K | **Forks**: 184 | **License**: MIT | **Version**: v0.4.8 (2026-06-15)
+**Repo**: [zilliztech/memsearch][memsearch] | **Stars**: 2.9K | **Forks**: 297 (checked 2026-11-26) | **License**: MIT | **Version**: v0.4.26 (2026-11-25)
 
 Persistent, cross-session semantic memory for AI coding agents from the Milvus/Zilliz team. Stores conversation history as human-readable Markdown and indexes it with Milvus for hybrid vector + BM25 search. Unlike MCP-based memory tools, it ships as a **native Claude Code plugin** — "4 shell hooks + 1 skill + 1 watch process, no MCP, no sidecar service" ([CC plugin docs][memsearch-docs]).
 
@@ -416,7 +416,7 @@ The memory-recall skill runs in a `context: fork` subagent, so intermediate sear
 
 **Strengths**: Zero permanent context overhead (no MCP tool defs); human-readable Markdown that survives index loss; local embeddings need no API key; one memory store across multiple agent CLIs.
 
-**Risks**: Overlaps with CC's built-in memory, Claude-Mem, and MemPalace — pick one. Milvus/Zilliz dependency for the index. Pre-1.0 (v0.4.8), active release cadence. Distinct from Zilliz's separate `claude-context` code-search MCP — do not conflate the two.
+**Risks**: Overlaps with CC's built-in memory, Claude-Mem, and MemPalace — pick one. Milvus/Zilliz dependency for the index. Pre-1.0 (v0.4.26), active release cadence. Distinct from Zilliz's separate `claude-context` code-search MCP — do not conflate the two.
 
 Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-access-landscape.md) — memsearch as a mobile/remote supporting tool
 
@@ -424,7 +424,7 @@ Cross-ref: [CC-remote-access-landscape.md](../cc-native/ci-remote/CC-remote-acce
 
 ## Roampal Core (roampal-ai)
 
-**Repo**: [roampal-ai/roampal-core][roampal-core] | **PyPI**: [`roampal`][roampal-pypi] | **Stars**: 47 | **Forks**: 7 | **License**: Apache-2.0 | **Version**: 0.5.7 (2026-05-12)
+**Repo**: [roampal-ai/roampal-core][roampal-core] | **PyPI**: [`roampal`][roampal-pypi] | **Stars**: 53 | **Forks**: 8 (checked 2026-11-26) | **License**: Apache-2.0 | **Version**: v0.6.0 (2026-09-26)
 
 Outcome-based persistent-memory MCP server for Claude Code and OpenCode. Auto-injects contextual memories into coding-assistant sessions and continuously promotes advice that led to good outcomes while demoting advice that didn't, based on per-exchange scoring — a design distinct from the static-recall model of the other tools in this doc.
 
@@ -445,9 +445,9 @@ One of exactly two first-class clients alongside OpenCode (the README also state
 
 ### Adoption Considerations
 
-**Strengths**: Outcome-based scoring loop (promotes memories tied to good outcomes, demotes ones tied to bad ones) rather than static recall. Fully OSS (Apache-2.0). CPU-only embeddings, no GPU or API key required. Single `pip install` auto-configures detected clients. Active recent release (v0.5.7, 2026-05-12; release notes cite 720 passing tests, including new coverage for stale-timestamp pruning and atomic-write contracts).
+**Strengths**: Outcome-based scoring loop (promotes memories tied to good outcomes, demotes ones tied to bad ones) rather than static recall. Fully OSS (Apache-2.0). CPU-only embeddings, no GPU or API key required. Single `pip install` auto-configures detected clients. Active recent release (v0.6.0, 2026-09-26; the v0.5.7 notes of 2026-05-12 cited 720 passing tests, including new coverage for stale-timestamp pruning and atomic-write contracts).
 
-**Risks**: No independent or third-party benchmark for the core "good advice promoted / bad advice demoted improves outcomes" claim — the README's own LoCoMo result (85.8% on a corrected non-adversarial subset, self-run, per its README read 2026-11-21) is vendor-reported, not independently reproduced. Small community relative to siblings in this doc (47 stars, 7 forks). ChromaDB dependency. Overlaps with CC's built-in memory, Claude-Mem, MemPalace, and MemSearch — pick one.
+**Risks**: No independent or third-party benchmark for the core "good advice promoted / bad advice demoted improves outcomes" claim — the README's own LoCoMo result (85.8% on a corrected non-adversarial subset, self-run, per its README read 2026-11-21) is vendor-reported, not independently reproduced. Small community relative to siblings in this doc (53 stars, 8 forks, checked 2026-11-26). ChromaDB dependency. Overlaps with CC's built-in memory, Claude-Mem, MemPalace, and MemSearch — pick one.
 
 Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-system-analysis.md) — CC's native memory for comparison
 
@@ -459,12 +459,12 @@ Metadata as of 2026-11-17 (`gh api`, READMEs read the same day). Both are MIT-li
 
 | Tool | Store | Harnesses (as documented) | Retrieval | Write path | Stars / last push |
 |---|---|---|---|---|---|
-| [gbrain][gbrain] | Database (PGlite or Postgres) indexing markdown folders; an Obsidian vault works as a source | Claude Code and Codex via `gbrain setup`; MCP for OpenClaw, Hermes, opencode, Cursor, ChatGPT, Claude Desktop and others | Keyword by default; semantic search once an embedding key is added; optional graph and synthesis layer | Agent writes via MCP and hooks; `gbrain sync` re-reads source folders; an optional overnight "dream" cycle | 33,218 / 2026-11-17 |
-| [COG-second-brain][cog] | Obsidian vault of plain `.md` files, optional git | Claude Code, Antigravity, Cursor, Kiro, Gemini CLI; Codex and others via `AGENTS.md` | None documented; the agent reads the files | User-invoked skills (braindump, daily-brief, weekly-checkin, knowledge-consolidation) | 1,499 / 2026-10-23 |
+| [gbrain][gbrain] | Database (PGlite or Postgres) indexing markdown folders; an Obsidian vault works as a source | Claude Code and Codex via `gbrain setup`; MCP for OpenClaw, Hermes, opencode, Cursor, ChatGPT, Claude Desktop and others | Keyword by default; semantic search once an embedding key is added; optional graph and synthesis layer | Agent writes via MCP and hooks; `gbrain sync` re-reads source folders; an optional overnight "dream" cycle | 33.6K / 2026-11-25 (stars checked 2026-11-26) |
+| [COG-second-brain][cog] | Obsidian vault of plain `.md` files, optional git | Claude Code, Antigravity, Cursor, Kiro, Gemini CLI; Codex and others via `AGENTS.md` | None documented; the agent reads the files | User-invoked skills (braindump, daily-brief, weekly-checkin, knowledge-consolidation) | 1.5K (1,524 at the 2026-11-25 pack read, unverified by me) / 2026-10-23 |
 
 Evidence levels: **documented** = stated in the project's README or docs; **shipped in code** = checked against repo contents; **vendor claim** = the author's own assertion, not independently reproduced.
 
-**gbrain** ([garrytan/gbrain][gbrain], latest release v0.60.734.0, 2026-11-17; the README says new releases come out many times a day and a slower `stable` channel is the default install)
+**gbrain** ([garrytan/gbrain][gbrain], latest release v0.60.772.0, 2026-11-25; the README says new releases come out many times a day and a slower `stable` channel is the default install)
 
 - Repo created 2026-04-05; README presents it as a "brain" read by every connected agent, with `gbrain setup claude-code` registering MCP, hooks and a brain-first block in the agent's instruction file (documented).
 - Self-hostable and keyless to start; hosted gbrain.io is an optional paid service (documented).
