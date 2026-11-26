@@ -332,8 +332,9 @@
           });
           network.moveTo({ position: { x: 0, y: 0 }, scale: Math.min(1, 0.9 / far),
                            animation: animate ? { duration: 300 } : false });
-          // Reason: moveTo fires no "zoom" event, so the edge fade is re-checked here.
-          if (animate) { network.once("animationFinished", fadeEdges); } else { fadeEdges(); }
+          // Reason: moveTo fires no "zoom" event, so the edge fade is re-checked here (animated
+          // moves re-check on "animationFinished", below).
+          if (!animate) { fadeEdges(); }
         }
         // Edges fade below one zoom scale, so the zoomed-out view isn't a hairball; a selected
         // node's own edges keep full strength (see `chosen` in the network options).
@@ -372,6 +373,8 @@
         }
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
+          // Reason: a focus set from before the filter change could leave every visible node dimmed.
+          if (focus) { focus = null; paint(); }
           syncSprings();
           seedLayout();
           restabilise();
@@ -538,6 +541,7 @@
         network.once("stabilizationIterationsDone", function () { ready = true; fitView(false); restabilise(); });
         network.on("dragStart", function () { userMoved = true; });
         network.on("zoom", function () { userMoved = true; fadeEdges(); });
+        network.on("animationFinished", fadeEdges); // fitView and the search's Enter zoom
 
         // Colour mode: recolour nodes and legend; hub-edge springs are set per edge above.
         recolour = function () {
