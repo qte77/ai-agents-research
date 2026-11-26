@@ -171,7 +171,7 @@ For security-specific checks, see the
 - [Anthropic: Effective Harnesses][ant-harness]
 - [PydanticAI][pydantic-ai]
 - [12-Factor App][12fa-app] (Heroku, 2011) — original methodology
-- [OWASP MAESTRO][owasp-maestro]
+- [OWASP Multi-Agentic System Threat Modeling Guide v1.0][owasp-maestro]
 - [ai-that-works ep. #30, "Event-driven agentic loops"][aiw-events] — practitioner talk, 2025-11-05; a conversation with a demo, not shipped code
 - [Martin Fowler: Event Sourcing][fowler-es] — replay and rebuild from an event log
 - [AWS HPC blog: multi-agent AI and Synera][aws-synera] — vendor case study, 2025-05-06 (guided waterfall)

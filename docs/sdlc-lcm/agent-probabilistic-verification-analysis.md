@@ -68,7 +68,7 @@ was found anywhere in the paper; this is a paper-only publication (no GitHub rep
 
 This is a **runtime-verification / reference-monitor technique**, distinct from the
 threat-taxonomy and vulnerability-scoring material already in this directory:
-[mas-security-framework.md](mas-security-framework.md) covers OWASP MAESTRO's 7-layer threat
+[mas-security-framework.md](mas-security-framework.md) covers a seven-layer, MAESTRO-inspired threat
 *taxonomy*, and [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md)
 covers AIVSS scoring and MITRE ATLAS incident tracking — both catalog threats/incidents rather
 than formally bound policy-violation probability at runtime. This doc is a new sub-topic
