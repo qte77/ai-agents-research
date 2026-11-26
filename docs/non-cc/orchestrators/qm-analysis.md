@@ -3,7 +3,7 @@ title: QM — Y Combinator's Multiplayer Agent Harness
 source: https://github.com/yc-software/qm
 purpose: Evaluate QM's multi-scope (personal + shared) agent harness for team/startup use, and its multi-harness (Pi/OpenCode/Codex/Claude Code) design
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -18,14 +18,13 @@ first-party, not inferred from the repo name alone.
 Where most agent harnesses model a single personal assistant, QM is architected for a whole
 company: each person and each shared "room" (channel/project) gets its own scoped memory, files,
 keychain view, permissions, crons, web apps, and durable sandbox (per the [README][qm-gh],
-accessed 2026-09-24). It is **harness-agnostic** at the model-loop layer: "Pi, OpenCode, Codex, and
-Claude Code all drive the same core, so a deployment isn't tied to any single vendor" — see
+accessed 2026-09-24). The README says QM runs models from many providers, so a deployment isn't tied to any single vendor, and names Pi as the agent loop inside core; that Pi, OpenCode, Codex and Claude Code all drive the same core is unverified (the README only says QM's security approach follows local coding agents like OpenCode, Codex and Claude Code) — see
 [`pi-analysis.md`](../coding-agents/pi-analysis.md), [`opencode-analysis.md`](../coding-agents/opencode-analysis.md),
 [`codex-cli-analysis.md`](../coding-agents/codex-cli-analysis.md) for those individually.
 
-**Repository facts** (`gh api repos/yc-software/qm`, accessed 2026-09-24): 15,226 stars, 1,866
-forks, **MIT** license, created 2026-07-29, latest tagged release `v0.1.12` (published
-2026-09-19) — under two months old with unusually fast star growth for its age, consistent with a
+**Repository facts** (`gh api repos/yc-software/qm`, checked 2026-11-26): 15,794 stars, 1,960
+forks, **MIT** license, created 2026-07-29, latest tagged release `v0.1.18` (published
+2026-11-11) — about four months old with unusually fast star growth for its age, consistent with a
 high-visibility YC-backed launch.
 
 ## How It Works
@@ -49,49 +48,45 @@ core (Fastify HTTP) holds the API, identity/policy layer, scheduler, and the age
 PostgreSQL is the persistence layer for sessions, memory, and the work queue; each scope (person or
 room) gets its own isolated, durable sandbox for `execute` and other tool calls; the web/admin UI
 and Slack integration are separate services/plugins that talk to the core over its HTTP API. For
-durability across restarts, `DATABASE_URL` + `SESSION_STORE=postgres` must be set — otherwise
-sessions live only in process memory.
+durability across restarts, `DATABASE_URL` must be set (the README says core requires Postgres); that `SESSION_STORE=postgres` is also needed, and that sessions otherwise live only in process memory, is unverified.
 
 **Deployment.** QM is self-hosted, not via the source repo but via `qm init`, which materializes a
 deployment directory from the published `@yc-software/qm` npm package into an empty
 organization-owned repo. Per the repo's [`docs/getting-started.md`][qm-deploy-docs] (accessed
-2026-09-24): the operator chooses **Fly.io or AWS** at init time (provider choice is fixed
+2026-09-24): the operator chooses **AWS, Render or Fly.io** at init time (`--target aws|render|fly`; Render also needs `--repo` and `--branch`; the page says the installed package carries Fly and AWS templates) (provider choice is fixed
 thereafter — switching providers means a fresh init), and `qm init` also generates a
 `deployment.md` and a `.codex/skills/deploy-qm/` skill meant to be handed to an agent, which
 confirms the billing account before mutating anything, wires email-gated onboarding, and returns
-the live operational URLs. A third-party hosted version is mentioned on `agent37.com` but that is
-not a first-party QM source and is not verified here.
+the live operational URLs. The README links Agent 37 as a fully hosted option (www.agent37.com/qm); who operates it is unverified.
 
 ## Adoption Decision
 
 **Assess.** QM's per-scope isolation model (personal workspace + shared room, each with its own
 sandbox/permissions/memory) is a genuinely different shape than the single-user assistants and
-single-team-channel bots more commonly covered in this corpus, and its harness-agnostic core (same
-runtime driving Pi, OpenCode, Codex, or Claude Code) is a concrete multi-harness design worth
+single-team-channel bots more commonly covered in this corpus, and its multi-provider core (the claim that the same
+runtime drives Pi, OpenCode, Codex, or Claude Code is unverified) is a concrete multi-harness design worth
 comparing against [`agent-frameworks-infrastructure-landscape.md`](../frameworks/agent-frameworks-infrastructure-landscape.md).
-Star growth is exceptional for a two-month-old repo, though that on its own is not evidence of
+Star growth is exceptional for a repo about four months old, though that on its own is not evidence of
 production maturity — no independent case studies were found as of 2026-09-24, and the project is
-self-hosted with no first-party managed-hosting offering (the `agent37.com` listing is third-party
-and unverified).
+self-hosted with no first-party managed-hosting offering (the README links Agent 37 as a hosted option; its operator is unverified).
 
 ## Action Items
 
-- Verify whether QM's Claude Code driver mode has any first-party documentation of its own (beyond
-  "all four harnesses drive the same core") before treating it as equivalent in depth to a native
+- Verify whether QM's Claude Code driver mode has any first-party documentation of its own (the README sentence that all four harnesses drive the same core is unverified) before treating it as equivalent in depth to a native
   CC integration.
 - Track `v0.1.x` → `v1.0` for API stability signals.
-- Do not cite the `agent37.com` hosted offering as first-party QM material without independently
-  verifying it.
+- Do not present the Agent 37 hosted offering as QM-operated without independently
+  verifying who runs it.
 
 ## Sources
 
 | Source | Content |
 |---|---|
 | [yc-software/qm README][qm-gh] | Product description, scopes/features, architecture diagram |
-| [`docs/getting-started.md`][qm-deploy-docs] | `qm init` deployment mechanics, Fly.io/AWS provider choice, accessed 2026-09-24 |
+| [`docs/getting-started.md`][qm-deploy-docs] | `qm init` deployment mechanics, AWS/Render/Fly.io provider choice, accessed 2026-09-24 |
 | `gh api orgs/yc-software` | Org display name "Y Combinator" — confirms first-party YC affiliation, accessed 2026-09-24 |
-| `gh api repos/yc-software/qm` | Stars (15,226), forks (1,866), license (MIT), created (2026-07-29), accessed 2026-09-24 |
-| `gh api repos/yc-software/qm/releases/latest` | Latest tag `v0.1.12`, published 2026-09-19, accessed 2026-09-24 |
+| `gh api repos/yc-software/qm` | Stars (15,794), forks (1,960), license (MIT), created (2026-07-29), checked 2026-11-26 |
+| `gh api repos/yc-software/qm/releases/latest` | Latest tag `v0.1.18`, published 2026-11-11, checked 2026-11-26 |
 
 [qm-gh]: https://github.com/yc-software/qm
 [qm-deploy-docs]: https://github.com/yc-software/qm/blob/main/docs/getting-started.md
