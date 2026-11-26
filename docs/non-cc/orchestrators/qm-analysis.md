@@ -57,7 +57,7 @@ organization-owned repo. Per the repo's [`docs/getting-started.md`][qm-deploy-do
 thereafter — switching providers means a fresh init), and `qm init` also generates a
 `deployment.md` and a `.codex/skills/deploy-qm/` skill meant to be handed to an agent, which
 confirms the billing account before mutating anything, wires email-gated onboarding, and returns
-the live operational URLs. The README links Agent 37 as a fully hosted option (www.agent37.com/qm); who operates it is unverified.
+the live operational URLs. The README links Agent 37 as a fully hosted option (`www.agent37.com/qm`); who operates it is unverified.
 
 ## Adoption Decision
 
