@@ -2,7 +2,7 @@
 title: Agent Identity, Authentication & Personhood Landscape
 purpose: Survey of how agents get identity and authorization, and how human-vs-agent is proven — the "who may act, and how is it proven" layer, distinct from CC-local runtime permissions.
 created: 2026-07-08
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-10-24
 status: assess
 ---
