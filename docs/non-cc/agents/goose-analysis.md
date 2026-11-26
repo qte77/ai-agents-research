@@ -118,7 +118,7 @@ names no specific projects): ten in total as of 2026-11-26 (six at the 2026-09-3
 - **OpenEnv** — "Open environments for training AI agents" (listed 2026-11-26)
 - **OpenSandbox** — "a general purpose sandbox platform built for AI applications" (listed 2026-11-26)
 
-**Relevance to skills/plugins standards**: indirect, not direct. AAIF now hosts an Agent Skills project (an open format for reusable agent expertise, listed 2026-11-26) but, as far as we checked, no plugin-packaging specification of its own (unverified; the Skills listing arrived after the 2026-09-30 reading) — the [Agent Plugins standard][agent-plugins] (v1.0.0,
+**Relevance to skills/plugins standards**: indirect, not direct. AAIF now hosts an Agent Skills project (an open format for reusable agent expertise, listed 2026-11-26) but no plugin-packaging specification of its own (unverified) — the [Agent Plugins standard][agent-plugins] (v1.0.0,
 packaging Skills + MCP servers) is a separate, unaffiliated effort with its own Technical Steering
 Committee (Amazon, Cursor, Microsoft, OpenAI, Vercel), not an AAIF project. AAIF's relevance to this
 arc's Skills/Plugins subject runs mainly through the two protocols it hosts (plus Agent Skills): **MCP** is the transport

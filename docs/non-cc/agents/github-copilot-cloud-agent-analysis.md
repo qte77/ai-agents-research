@@ -30,8 +30,7 @@ event in a repository" ([create automations][automations]):
 
 - **Triggers:** the docs page (checked 2026-11-26) describes schedule, repository-event (issue and
   pull request) and API triggers plus a Manual trigger for testing, and does not list schedule
-  intervals; an earlier reading quoted "When a pull request is synchronized" and hourly/daily/weekly
-  intervals, which we could not find on the current page (unverified). A later changelog entry, "Trigger Copilot automations with comments"
+  intervals or a "pull request is synchronized" trigger (the 2026-10 text of this doc quoted both; unverified). A later changelog entry, "Trigger Copilot automations with comments"
   ([2026-08-03][cl-comments]), adds comment triggers, which the docs page's trigger list doesn't
   yet show.
 - **Where:** "Automations are not available in public repositories." The launch entry says they are
@@ -97,9 +96,8 @@ For agent-config portability this matters: a repo that already keeps an `AGENTS.
   eligible reviews for licensed members bill to the organization that owns the repository;
   selecting "Member" in settings bills members' entitlements instead (checked 2026-11-26) ([code review concepts][cr-concepts]).
 - **External licences:** the page (checked 2026-11-26) says owners and admins "can optionally block"
-  reviews requested with an external license, without stating a default; an earlier reading quoted
-  "By default, people can use an external license" and a setting "Only allow Copilot code review to
-  be triggered by authorized users", neither found on the current page (unverified). An external license is one not provided by the organization that owns the repository; "Automatic reviews
+  reviews requested with an external license, without stating a default (a "by default" allowance and a setting named "Only allow Copilot code review to
+  be triggered by authorized users" are unverified). An external license is one not provided by the organization that owns the repository; "Automatic reviews
   configured by repository or organization rulesets still run" ([code review concepts][cr-concepts]).
 
 Other review products are compared in

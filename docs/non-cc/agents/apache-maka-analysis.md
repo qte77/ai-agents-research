@@ -14,8 +14,7 @@ status: trial
 "high-performance agent workspace that keeps a complete record of everything
 it did," with terminal and desktop shells running the same workbench UI against one "Runtime Host"
 process (README, checked 2026-11-26). Its defining architectural claim, per the README as read
-on 2026-09-24 (the current README no longer uses this wording, checked 2026-11-26; the rest of this
-paragraph is unverified against the current README): "the
+on 2026-09-24 (the current README no longer uses this wording, checked 2026-11-26; unverified): "the
 log is the runtime" — every model message, tool call, permission decision,
 and termination is recorded as an append-only `RuntimeEvent`, and the UI, the
 next prompt, and crash recovery are all *projections* of that log rather than
@@ -35,7 +34,7 @@ Maka is an **Apache Incubator podling** ("(Incubating)" appears throughout
 the README and project name), not a graduated top-level Apache project.
 **The latest Apache-approved release is `0.2.2` (incubating)** — the README
 states that the signed source archive is the official release (checked 2026-11-26), and links the
-[downloads page][downloads]; we did not fetch that page. Development builds remain the
+[downloads page][downloads] (unverified). Development builds remain the
 other channel. Maka is still an incubating podling, not a top-level project, so readers evaluating
 it for production use should weigh that status.
 
@@ -58,7 +57,7 @@ agents — rather than a local execution log that *is* the runtime record.
 | Source | Content |
 |---|---|
 | [apache/maka repo][repo] | README, incubation status, architecture claims (first-party) |
-| [Maka downloads page][downloads] | Release channel (linked from the README; not fetched, unverified) |
+| [Maka downloads page][downloads] | Release channel (linked from the README; unverified) |
 | GitHub API repo metadata, 2026-11-26 | Stars(6,010)/forks(582)/open issues(405), language, license, dates |
 
 [repo]: https://github.com/apache/maka
