@@ -4,7 +4,7 @@ source: https://github.com/InsForge/InsForge
 purpose: Analysis of InsForge as a backend platform providing semantic infrastructure for AI coding agents.
 platform_scope: [claude-code, cursor]
 created: 2026-04-09
-updated: 2026-04-09
+updated: 2026-11-26
 validated_links_on: 2026-04-09
 status: assess
 ---
@@ -42,7 +42,7 @@ primitives, and inspecting state through structured schemas.
 
 | Component | Repo | Purpose |
 |-----------|------|---------|
-| **InsForge** | [InsForge/InsForge][insforge] (7.3K stars) | Core platform |
+| **InsForge** | [InsForge/InsForge][insforge] (13.4K stars, checked 2026-11-26) | Core platform |
 | **insforge-skills** | [InsForge/insforge-skills][insforge-skills] | Skill modules |
 | **insforge-mcp** | [InsForge/insforge-mcp][insforge-mcp] | Model Context Protocol (MCP) integration |
 | **CLI** | [InsForge/CLI][insforge-cli] | Command-line interface |
@@ -57,22 +57,22 @@ All repos Apache-2.0 licensed.
 | Platform | Mechanism |
 |----------|-----------|
 | **Claude Code** | Claude Plugin |
-| **Cursor** | Direct integration |
+| **Cursor** | Via the MCP server (the README does not state a direct integration) |
 | **Generic agents** | MCP server ([insforge-mcp][insforge-mcp]) |
 
 ## Deployment Options
 
 - **Cloud**: [insforge.dev][insforge-cloud]
 - **Self-hosted**: Docker Compose (Docker + Node.js)
-- **One-click**: Railway, Zeabur, Sealos
+- **One-click**: Railway, Zeabur, Sealos, RepoCloud, ZopDay
 
 ## Adoption Decision
 
 | Dimension | Assessment |
 |-----------|------------|
 | **Use case** | Backend infrastructure for agent-built apps |
-| **Primitives** | Auth, PostgreSQL, S3 storage, edge functions, model gateway |
-| **Maturity** | Active (7.3K stars, 581 forks) |
+| **Primitives** | Auth, PostgreSQL, S3 storage, edge functions (Deno), model gateway; the [docs site][insforge-docs] also lists Realtime (database changes, pub/sub) and Compute (long-running containers; "private preview" per the README) |
+| **Maturity** | Active (13.4K stars, 1.3K forks, checked 2026-11-26) |
 | **License** | Apache-2.0 |
 
 **Strengths**: Complete backend stack in a single platform. Semantic layer
@@ -81,7 +81,7 @@ compatibility. Self-hostable with one-click deploy options.
 
 **Risks**: Competes with established BaaS platforms (Supabase, Firebase).
 Agent-specific differentiation is the semantic layer — unclear how deep that
-goes versus conventional APIs. Skills library is early (12 stars).
+goes versus conventional APIs. Skills library is early (49 stars, checked 2026-11-26).
 
 ## Cross-References
 
@@ -92,7 +92,7 @@ goes versus conventional APIs. Skills library is early (12 stars).
 
 | Source | Content |
 |---|---|
-| [InsForge repo][insforge] | Core platform (7.3K stars) |
+| [InsForge repo][insforge] | Core platform (13.4K stars, checked 2026-11-26) |
 | [InsForge docs][insforge-docs] | Platform documentation |
 
 [insforge]: https://github.com/InsForge/InsForge

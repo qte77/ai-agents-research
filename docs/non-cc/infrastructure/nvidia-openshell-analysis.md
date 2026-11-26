@@ -1,18 +1,18 @@
 ---
 title: NVIDIA OpenShell Analysis
-source: https://github.com/NVIDIA/OpenShell
-purpose: Analysis of OpenShell, NVIDIA's kernel-enforced, formally-verified policy runtime for fleets of autonomous AI agents.
+source: https://github.com/ai-openshell/openshell
+purpose: Analysis of OpenShell, NVIDIA's kernel-enforced, formally-verified policy runtime for autonomous AI agents.
 created: 2026-09-30
-updated: 2026-11-09
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: assess
 ---
 
 ## What It Is
 
-[OpenShell][repo] is "the safe, private runtime for fleets of autonomous AI agents" ([README][repo]),
-published under the **NVIDIA** GitHub org (**Apache-2.0**, LICENSE-badge-linked and confirmed by
-`gh api`: 11,079 stars, 1,457 forks, pushed 2026-09-30, created 2026-02-24). It targets the problem this
+[OpenShell][repo] is "the safe, private runtime for autonomous AI agents" (GitHub repo description; the NVIDIA/OpenShell README intro still says "fleets of autonomous AI agents"),
+initially published under the **NVIDIA** GitHub org and now part of the CNCF, with development moved to `ai-openshell/openshell` per the NVIDIA/OpenShell README (**Apache-2.0**, confirmed by
+`gh api`, checked 2026-11-26: about 21,960 stars, 2,156 forks, pushed 2026-11-26, created 2026-02-24). It targets the problem this
 corpus's harness research keeps surfacing: an agent is useful only once it can read files, install
 packages, call APIs and use credentials, but each of those is also how an agent (or a prompt-injected
 one) does damage. OpenShell's answer is to declare, per agent, exactly what it can touch, and enforce
@@ -35,7 +35,7 @@ Two mechanisms, per the [README][repo]:
 The architecture separates a **gateway** (control plane for sandboxes, policy and access), a
 **supervisor**, and the **sandbox** runtime itself; it deploys via a CLI-driven local gateway or via
 Helm on Kubernetes (documented requirement: the cluster's CNI must enforce `NetworkPolicy`). SDKs and a
-public skill package (`npx skills add NVIDIA/OpenShell`) teach a coding agent to drive the CLI, author
+public skill package (`npx skills add ai-openshell/openshell`) teach a coding agent to drive the CLI, author
 policies, and debug the gateway/routing — i.e., OpenShell is itself packaged as an agent-consumable
 tool, not just an admin one.
 
@@ -55,8 +55,8 @@ Scored 2026-09-30 against the [agent-substrate-rubric.md](../../sdlc-lcm/agent-s
 
 ## Adoption Decision
 
-**Assess.** OpenShell is a substantial, actively-pushed (same-day) NVIDIA project with a real
-license, a stable 0.1.x release line, PyPI and Helm distribution, and a documented security model that
+**Assess.** OpenShell is a substantial, actively-pushed (pushed 2026-11-26) NVIDIA project with a real
+license, a stable 0.1.x release line (latest v0.1.10, 2026-11-24), PyPI and Helm distribution, and a documented security model that
 goes beyond "run it in a container" — the formal-verification step on policy diffs is the differentiator
 worth tracking. It is orthogonal to, not competing with, the orchestration layer covered by
 [Archon/Paperclip/AX in §1][ax-entry]: those decide *what* an agent runs next, OpenShell decides *what
@@ -75,8 +75,8 @@ this check; re-assess once the project accumulates real-world incident reports.
 
 | Source | Content |
 |---|---|
-| [NVIDIA/OpenShell README][repo] | Product description, architecture (gateway/supervisor/sandbox), kernel enforcement + formal-verification model, Kubernetes/Helm deployment, skills package |
-| `gh api repos/NVIDIA/OpenShell`, 2026-09-30 | License (Apache-2.0), stars (11,079), forks (1,457), created/pushed dates |
+| [OpenShell README][repo] | Product description, architecture (gateway/supervisor/sandbox), kernel enforcement + formal-verification model, Kubernetes/Helm deployment, skills package |
+| `gh api repos/NVIDIA/OpenShell` (resolves to ai-openshell/openshell), 2026-11-26 | License (Apache-2.0), stars (about 21,960), forks (2,156), created/pushed dates |
 
-[repo]: https://github.com/NVIDIA/OpenShell
+[repo]: https://github.com/ai-openshell/openshell
 [ax-entry]: ../frameworks/agent-frameworks-infrastructure-landscape.md

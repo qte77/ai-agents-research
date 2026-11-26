@@ -3,7 +3,7 @@ title: "Open Knowledge Format (OKF): Agent-Readable Data-Catalog Standard"
 source: https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing/
 purpose: Assess OKF as an interchange format for agent knowledge bundles in the ai-agents-research context
 created: 2026-06-16
-updated: 2026-11-19
+updated: 2026-11-26
 validated_links_on: 2026-11-19
 status: assess
 ---
@@ -31,11 +31,11 @@ Re-checked against the live repo and spec (documented / shipped):
 - **Still permissive** — consumers must not reject a concept for missing
   optional families, and the only mandatory field remains `type`.
 - **Repo shape changed.** The root now lists `okf/`, `samples/` and
-  `toolbox/` (no top-level `agents/`); the repo description reads "Google Cloud
+  `toolbox/` (no top-level `agents/`; the three sample bundles now live in `okf/samples/`, the root `samples/` holds agent samples, and `toolbox/` holds `enrichment` and `mdcode`, checked 2026-11-26); the repo description reads "Google Cloud
   Knowledge Catalog Tools and Samples"; recent commits (2026-11) are mostly
   `fix(push)` / `fix(bigquery)` work on a tool that pushes models to the
   catalog, so the repo is active and BigQuery/Google-Cloud-centric. Apache-2.0
-  (`gh api`), 9,690 stars on 2026-11-19 (4.5k on 2026-06-20).
+  (`gh api`), 9,757 stars on 2026-11-26 (4.5k on 2026-06-20).
 - **Not verified:** adoption by non-Google frameworks (none found in the repo
   itself; absence in one repo is not proof of absence elsewhere).
 
@@ -72,8 +72,8 @@ The repo was organised into four top-level components when first assessed (2026-
 |---|---|
 | `agents/` | AI agent implementations for enrichment and retrieval |
 | `okf/` | The OKF interchange-format specification (this doc's subject) |
-| `samples/` | Reference knowledge bundles (GA4, Stack Overflow, Bitcoin) |
-| `toolbox/` | Supporting utilities and the static HTML graph visualiser |
+| `samples/` | Reference knowledge bundles (GA4, Stack Overflow, Bitcoin); by 2026-11-26 these live in `okf/samples/` |
+| `toolbox/` | Supporting utilities and the static HTML graph visualiser (current location of the visualiser unverified) |
 
 OKF is therefore the wire format that the platform's agents produce and
 consume; the other components provide the runtime, tooling, and examples that
@@ -108,10 +108,10 @@ alongside the spec:
 - **Enrichment agent** — a two-pass tool (a BigQuery metadata pass + an LLM
   web-crawl pass seeded via `--web-seed-file`) that drafts and enriches OKF
   documents with schema citations; built on `google-adk >= 2.0`, Python 3.11+
-  (Python is ~50 % of the repo by language).
+  (by GitHub language bytes on 2026-11-26 the repo is about 93 % TypeScript and 1.7 % Python).
 - **Static HTML visualiser** — renders an OKF bundle as an interactive graph
-  view with no backend required (a single self-contained file built with
-  Cytoscape.js and marked.js; TypeScript/HTML, ~49 %).
+  view with no backend required (described as a single self-contained file built with
+  Cytoscape.js and marked.js, unverified).
 - **Three sample bundles** — GA4 e-commerce, Stack Overflow, and Bitcoin
   datasets.
 
@@ -182,7 +182,7 @@ with breaking changes already made, so expect more. Key trade-offs:
   prescribe how agents plan, act, or coordinate; it only specifies the
   knowledge bundle they consume or produce.
 - Star count (~4.5 k as of 2026-06-20, up from ~2.2 k at launch) signals rapid
-  early interest, but the low commit count (~37) and Google Cloud / BigQuery
+  early interest, but the Google Cloud / BigQuery
   origin mean it is not yet broad cross-framework ecosystem adoption.
 
 **Recommended next step**: trial OKF as the knowledge-bundle wire format in
@@ -208,7 +208,7 @@ an internal agent experiment before committing to it as a standard.
 | [Google Cloud Blog — OKF introduction][blog] | OKF purpose, design principles, v0.1 release date (2026-06-12), structure examples, reference implementations |
 | [OKF SPEC.md][spec] | v0.1 (2026-06-20 read) fields, bundle organisation, link conventions, tolerance rules; v0.2 (2026-11-19 read) provenance/trust/lifecycle families and section 13 change list |
 | [GoogleCloudPlatform/knowledge-catalog (GitHub)][repo] | Apache 2.0 license, ~4.5 k stars (2026-06-20), language breakdown, repo description |
-| [knowledge-catalog platform][repo] | Parent platform repo — directory structure (`agents/`, `okf/`, `samples/`, `toolbox/`), ~4.5 k stars, platform description verified 2026-06-20 |
+| [knowledge-catalog platform][repo] | Parent platform repo — directory structure (`agents/`, `okf/`, `samples/`, `toolbox/`), ~9.8 k stars (checked 2026-11-26), platform description verified 2026-06-20 |
 | [Genie Ontology docs][genie-docs] | Per-snippet provenance fields (page dated 2026-11-16, read 2026-11-19) |
 | [PR #227 (v0.2 migration)][pr227] | Migration commit to OKF v0.2, 2026-07-24 |
 | [Databricks Genie One blog][genie-blog] | Basis for the OKF-vs-Genie-Ontology comparison (proprietary managed semantic layer) |

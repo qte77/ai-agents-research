@@ -4,7 +4,7 @@ source: https://github.com/morluto/rea
 purpose: Assess REA, an MCP server and CLI giving coding agents reverse-engineering tools for native binaries, JS/Electron apps, .NET assemblies, and websites.
 platform_scope: [claude-code, codex, cursor, gemini-cli]
 created: 2026-10-11
-updated: 2026-11-17
+updated: 2026-11-26
 validated_links_on: 2026-10-11
 status: assess
 ---
@@ -19,12 +19,12 @@ binary, a JavaScript/Electron app, a .NET assembly, a website, an Android APK, f
 and REA returns findings with their evidence, which the agent then uses to explain the behavior or
 reimplement it.
 
-`npx rea-agents setup` registers REA's MCP server and matching workflow instructions. Quoting the
-README verbatim: "Setup supports Claude Code, Codex, Cursor, Gemini CLI, Grok Build and other
-agents" — Claude Code is one of several first-class named targets, not the product's differentiator.
-Deep native-binary analysis (pseudocode, assembly, symbols) can drive an existing Hopper, Ghidra, or
-IDA installation; static JavaScript/Electron and .NET analysis need no native engine at all. The
-analysis-target table in the README lists over a dozen formats beyond native binaries and JS/.NET,
+`npx rea-agents setup` registers REA's MCP server and matching workflow instructions. The README (checked 2026-11-26)
+says "Any agent that supports local MCP servers" and that setup configures the supported agents; the
+[installation guide][rea-install]
+lists many clients (Claude Code, Claude Desktop, Codex, Cursor, Gemini CLI, Windsurf, Devin, OpenCode, Grok Build, DeepSeek Harness (`dsh`) and others) — Claude Code is one of several named targets, not the product's differentiator.
+Deep native-binary analysis (pseudocode, assembly, symbols) can drive an existing Hopper, Ghidra, IDA or Kuna installation; static JavaScript/Electron and .NET analysis need no native engine at all. The
+supported-targets reference ([docs/reference/supported-targets.md][rea-targets]; the README itself now has a prose summary instead of a table) lists over a dozen formats beyond native binaries and JS/.NET,
 including WASM artifacts, EVM bytecode, HAR network captures, Android APKs/devices, JEB projects,
 firmware, and raw process-behavior capture — each with its own requirements and a dedicated guide.
 Analysis runs locally; the README states results "include the evidence and limitations behind each
@@ -34,7 +34,7 @@ conclusion."
 
 **Refresh, 2026-11-17** (`gh api repos/morluto/rea`): still MIT (`LICENSE` unchanged, "Copyright (c) 2026
 morluto"). 466,058 stars, 114,052 forks, 1,528 open issues and PRs combined, 1,751 subscribers; last push
-2026-11-17; latest release `rea-agents-6.9.0` (2026-11-12, `gh api repos/morluto/rea/releases/latest`). The
+2026-11-17; latest release at that date `rea-agents-6.9.0` (2026-11-12, `gh api repos/morluto/rea/releases/latest`; by 2026-11-26 the latest is `rea-agents-6.10.1`, 2026-11-20). The
 README's star milestone now reads 400,000. The star count rose from 101,489 on 2026-10-11 to about 466,000
 in five weeks. We have no explanation for that jump, and it is an anomaly in a platform metric, not
 evidence of adoption. The 2026-10-11 values below are kept as the dated baseline. For how REA compares with
@@ -48,9 +48,8 @@ reverse-engineering MCP server for comparison.
 2026-04-14; last pushed 2026-10-11 (same day) — under six months old. The README's own star-history
 section reports crossing 90,000 stars as a milestone, and the repo carries a Trendshift badge. A star
 count this large for a six-month-old repo is unusual; this is reported as an observed GitHub metric,
-not evidence of production adoption, which this review did not independently assess. The README
-also includes a disclaimer stating REA has "not issued or endorsed any cryptocurrency or token" and
-that tokens using the REA name are unaffiliated.
+not evidence of production adoption, which this review did not independently assess. The README as of 2026-10-11 also included a disclaimer stating REA has "not issued or endorsed any cryptocurrency or token" and
+that tokens using the REA name are unaffiliated; that disclaimer is no longer in the README (checked 2026-11-26).
 
 The repo's own GitHub topics (`gh api repos/morluto/rea`) include `dsh-plugin` and `cordis` alongside
 the expected `mcp`/`reverse-engineering`/`ctf` tags — Cordis is the dependency-injection framework
@@ -97,12 +96,14 @@ reverse-engineering binaries and can launch native analysis engines) are availab
 
 | Source | Content |
 |---|---|
-| [morluto/rea][repo] (README) | Product description, target-analysis table, agent support list, FAQ, disclaimer, star-history (accessed 2026-10-11) |
+| [morluto/rea][repo] (README) | Product description, target summary, agent support list, FAQ, disclaimer (removed by 2026-11-26), star-history (accessed 2026-10-11, checked 2026-11-26) |
 | [morluto/rea][repo] (repo metadata) | Stars/forks/issues/watchers, license, created/pushed dates (accessed 2026-10-11 via GitHub API) |
 | `LICENSE` file, decoded via GitHub API, 2026-10-11 | MIT license text, copyright "morluto" |
 | [morluto/rea][repo] (repo metadata, latest release) | Refreshed stars/forks/issues, license, push date, `rea-agents-6.9.0` (accessed 2026-11-17 via GitHub API) |
 | [bethington/ghidra-mcp][ghidra-mcp] | Nearest open reverse-engineering MCP server; Apache-2.0, 219 tools per README (accessed 2026-11-17) |
 
 [repo]: https://github.com/morluto/rea
+[rea-install]: https://github.com/morluto/rea/blob/main/docs/getting-started/installation.md#supported-agents
+[rea-targets]: https://github.com/morluto/rea/blob/main/docs/reference/supported-targets.md
 [ghidra-mcp]: https://github.com/bethington/ghidra-mcp
 [dsh]: ../coding-agents/deepseek-harness-analysis.md

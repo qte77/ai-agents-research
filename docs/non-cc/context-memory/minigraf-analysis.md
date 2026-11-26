@@ -3,7 +3,7 @@ title: Minigraf Analysis
 source: https://github.com/project-minigraf/minigraf
 purpose: Analysis of Minigraf, an embedded bi-temporal Datalog graph database pitched as agent memory.
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-11-26
 validated_links_on: 2026-10-11
 status: assess
 ---
@@ -11,12 +11,12 @@ status: assess
 ## What It Is
 
 [Minigraf][repo] is a single-file embedded graph database — "the SQLite of bi-temporal graph
-databases," per its own tagline — queried with **Datalog** and supporting **bi-temporal time
+databases" (the README headline continues "Embedded graph memory for AI agents, mobile apps, and the browser") — queried with **Datalog** and supporting **bi-temporal time
 travel** (separate transaction-time and valid-time dimensions on every fact). The core is Rust
-(crates.io, current v2.0.5, MSRV 1.89), with published bindings for Python (PyPI), Node.js (npm),
+(crates.io, current v2.0.12 per the README (checked 2026-11-26), MSRV 1.89), with published bindings for Python (PyPI), Node.js (npm),
 browser/WASM (`@minigraf/browser`, IndexedDB-backed via `wasm-pack`), WASI (`@minigraf/wasi`), and
 native mobile (Android `.aar` + iOS `.xcframework` via [Mozilla's uniffi-rs][uniffi]). `cargo test`
-runs 1,250 tests; CI, Clippy, and Codecov badges are green per the README (not independently re-run
+runs 1,335 tests (1,326 passing, 9 ignored); CI, Clippy, and Codecov badges are green per the README (not independently re-run
 by this review).
 
 ## How It Works
@@ -52,8 +52,8 @@ Dual-licensed **MIT OR Apache-2.0** — confirmed by opening and reading both li
 not just their directory listing: `LICENSE-MIT` begins "MIT License / Copyright (c) 2023-2026 Aditya
 Mukhopadhyay"; `LICENSE-APACHE` is the unmodified Apache License, Version 2.0 text. GitHub's own
 repo-level `license` API field can report only one value for a dual-licensed repo and shows
-`apache-2.0`. 186 stars, 13 forks, 45 open issues (`gh api repos/project-minigraf/minigraf`,
-2026-10-11). Created 2023-07-02, last pushed 2026-10-11 (same day) — over three years of continuous
+`apache-2.0`. 230 stars, 14 forks, 8 open issues (`gh api repos/project-minigraf/minigraf`,
+checked 2026-11-26). Created 2023-07-02, last pushed 2026-11-26 (same day) — over three years of continuous
 history, not a flash project. The README itself states this is "a solo-maintained project with a
 long-term vision."
 

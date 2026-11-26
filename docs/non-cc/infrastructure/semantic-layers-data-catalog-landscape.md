@@ -1,9 +1,9 @@
 ---
 title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
-source: https://cube.dev/docs/product/apis-integrations/mcp-server
+source: https://docs.cube.dev/docs/integrations/mcp-server
 purpose: "The semantic-layer and data-catalog substrate that grounds agentic data access: what each tool exposes to an agent and how it relates to agent-native context layers. Verified 2026-06-22."
 created: 2026-06-22
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-11-19
 status: assess
 ---
@@ -42,8 +42,8 @@ Define metrics/dimensions once; query consistently across clients.
 
 | Tool | License | Agent surface | Notes |
 |---|---|---|---|
-| [Cube][cube] | Apache-2.0 (~20k★) | **MCP server** (hosted, OAuth PKCE) + outbound MCP connectors | Most agent-ready of the group; `claude mcp add` documented |
-| [dbt MetricFlow / Semantic Layer][metricflow] | Apache-2.0 (~1.6k★) | JDBC/GraphQL API; community MCP wrappers only | Engine behind dbt Cloud's Semantic Layer; part of the Open Semantic Interchange effort |
+| [Cube][cube] | Apache-2.0 (default; some packages MIT) (~21k★, checked 2026-11-26) | **MCP server** (hosted, OAuth PKCE); outbound MCP connectors (unverified) | Most agent-ready of the group; `claude mcp add` documented |
+| [dbt MetricFlow / Semantic Layer][metricflow] | Apache-2.0 (~1.9k★, checked 2026-11-26) | JDBC/GraphQL API; community MCP wrappers only | Engine behind dbt Cloud's Semantic Layer; part of the Open Semantic Interchange effort |
 | [Malloy][malloy] | MIT (Google; ~2.5k★) | None official (one community MCP wrapper) | Semantic *query language* compiling to SQL; VS Code-first |
 | AtScale ([`atscale.com`][atscale]) | Proprietary | None documented here (a third-party typed-query MCP wrapper moved to Not included) | Established semantic-layer vendor; homepage returned 404 on 2026-07-23 but loaded on 2026-11-22 |
 
@@ -53,9 +53,9 @@ Discovery, lineage, ownership, and permissions across the data estate.
 
 | Tool | License | Agent surface | Notes |
 |---|---|---|---|
-| [OpenMetadata][openmetadata] | Apache-2.0 (~14k★) | **Official MCP** (OAuth PKCE, user-scoped perms) | Self-describes as "for humans, AI assistants, and agents" |
-| [DataHub][datahub] | Apache-2.0 (~12k★) | **Official MCP** ([acryldata/mcp-server-datahub][datahub-mcp]) | NL search, column-level lineage, usage-grounded SQL generation |
-| [Unity Catalog (OSS)][unity-catalog] | Apache-2.0 / LF (~3.4k★) | **SDK** (`unitycatalog-ai`) with Anthropic/LangChain/etc. integrations | UC functions as agent tools; LF project, distinct from Databricks' proprietary UC |
+| [OpenMetadata][openmetadata] | Apache-2.0 (~16k★, checked 2026-11-26) | **Official MCP** (OAuth PKCE, user-scoped perms) | Self-describes as "for humans, AI assistants, and agents" |
+| [DataHub][datahub] | Apache-2.0 (~13k★, checked 2026-11-26) | **Official MCP** ([acryldata/mcp-server-datahub][datahub-mcp]) | NL search, column-level lineage, usage-grounded SQL generation |
+| [Unity Catalog (OSS)][unity-catalog] | Apache-2.0 / LF (~3.6k★, checked 2026-11-26) | **SDK** (`unitycatalog-ai`) with Anthropic/LangChain/etc. integrations | UC functions as agent tools; LF project, distinct from Databricks' proprietary UC |
 | [Apache Atlas][atlas] | Apache-2.0 (~2.1k★) | None (pre-MCP; REST only) | Hadoop-era lineage backend; no LLM-facing surface |
 | [Google Dataplex / Universal Catalog][dataplex] | Proprietary (Google) | Gemini NL querying; underpins the OKF reference impl | Managed GCP governance + metadata |
 
@@ -236,7 +236,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Agent substrate rubric][rubric] | Six-property scoring rubric applied to the five ontology tools above |
 
 [pg-altertable]: https://www.postgresql.org/docs/current/sql-altertable.html
-[cube]: https://cube.dev/docs/product/apis-integrations/mcp-server
+[cube]: https://docs.cube.dev/docs/integrations/mcp-server
 [metricflow]: https://github.com/dbt-labs/metricflow
 [malloy]: https://github.com/malloydata/malloy
 [openmetadata]: https://github.com/open-metadata/OpenMetadata

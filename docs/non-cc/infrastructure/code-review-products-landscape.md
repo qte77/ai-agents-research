@@ -2,7 +2,7 @@
 title: AI PR-Review Products — Tool Landscape
 purpose: Catalog of standalone SaaS PR-review products (multi-platform GitHub/GitLab review bots), distinct from Claude Code-integrated review tooling.
 created: 2026-06-27
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-10-24
 status: research
 ---
@@ -20,8 +20,8 @@ For related code-review tooling — Qodo's cross-repo review, and the Code-Revie
 
 ## Products
 
-- [CodeRabbit](https://www.coderabbit.ai/) — GitHub/GitLab/Azure/Bitbucket app + IDE (VS Code/Cursor/Windsurf) + CLI; bills itself "the most installed AI app on GitHub" (SaaS).
-- [Greptile](https://www.greptile.com/) — a swarm of agents builds a codebase graph index, then reviews PRs in parallel; GitHub/GitLab, API, **MCP**, and a Claude Code plugin; SaaS or self-hosted in AWS.
+- [CodeRabbit](https://www.coderabbit.ai/) — GitHub/GitLab/Azure/Bitbucket app + IDE (VS Code/Cursor/Windsurf) + CLI; its home page shows a "Most installed AI App" heading with GitHub and GitLab logos; the Azure/Bitbucket/IDE/CLI list is unverified (SaaS).
+- [Greptile](https://www.greptile.com/) — a swarm of agents builds a codebase graph index, then reviews PRs in parallel; GitHub/GitLab, API, **MCP**, and a Claude Code plugin; SaaS or self-hosted in your own cloud or on-premises (Docker Compose or Kubernetes).
 - [Sourcery](https://sourcery.ai/) — review focused on security and AI-generated-code defects; GitHub/GitLab, VS Code/JetBrains, fixes via coding agents (SaaS).
 - [Qodo Merge / PR-Agent](https://github.com/The-PR-Agent/pr-agent) — the original open-source PR reviewer (MIT); the repo now lives in the separate `The-PR-Agent` GitHub org and its description says it is not the Qodo free tier (`gh api` 2026-11-22); `/review` `/improve` `/describe` `/ask` via CLI, GitHub Action, Docker, or webhooks; GitHub/GitLab/Bitbucket/Azure/Gitea. Qodo's platform adds **Auto Approval Workflows** (Beta) and **Agent Session Review** (Research Preview), announced 2026-11-18 ([blog][qodo-auto-approval], vendor announcement, not tested here): after a review finishes, a workflow can approve the PR as `qodo-bot` or add a "Qodo approved" label based on criteria such as a severity threshold, blast radius and team rules (the blog lists these as available criteria, not all required); "guards" (repos, paths such as `auth/**`, authors incl. coding-agent logins) are never auto-approved, and approval is re-checked and withdrawn on each new commit. The bot approval counts as one approval, with required reviewers and code owners still applying. Agent Session Review is a `/qodo-agent-session-review` skill in Qodo's Agentic Toolbox that bundles every PR an agent opened in a session, with plan deviations and a reading plan, into one work package. Qodo's CC-integrated pieces: [CC-code-tooling-landscape.md § Qodo](../../cc-community/CC-code-tooling-landscape.md#qodo-qodo-ai).
 - [Graphite](https://graphite.com/) — AI reviewer bundled with Graphite's PR-stacking workflow, now called "Graphite Agent" ([AI reviews docs](https://graphite.com/docs/ai-reviews), read 2026-11-22); GitHub app (SaaS).
@@ -29,7 +29,7 @@ For related code-review tooling — Qodo's cross-repo review, and the Code-Revie
 - [Cubic](https://www.cubic.dev/) — YC-backed AI review plus whole-codebase bug scanning; GitHub app + IDE, one-click fixes, custom rules (SaaS).
 - [Bito](https://bito.ai/) — codebase-aware AI Code Review Agent for GitHub/GitLab/Bitbucket (SaaS).
 - [Korbit](https://www.korbit.ai/) — AI review across GitHub/GitLab/Bitbucket with bug explanations and auto-generated PR descriptions (SaaS).
-- [GitHub Copilot code review](https://docs.github.com/en/copilot/concepts/agent-capabilities/agent-powered-workflows-and-operations/code-review) — built into GitHub, generally available; requested by hand or automatically via a branch-ruleset rule, billed in AI credits plus GitHub Actions minutes, and shares the repository's MCP config with the Copilot cloud agent (read-only tools only). Details: [github-copilot-cloud-agent-analysis.md § Automatic code review](../agents/github-copilot-cloud-agent-analysis.md#automatic-code-review).
+- [GitHub Copilot code review](https://docs.github.com/en/copilot/concepts/agent-capabilities/agent-powered-workflows-and-operations/code-review) — built into GitHub, generally available; requested by hand or automatically via a branch-ruleset rule, billed in AI credits plus GitHub Actions minutes, and shares the repository's MCP config with the Copilot cloud agent (read-only tools only: unverified). Details: [github-copilot-cloud-agent-analysis.md § Automatic code review](../agents/github-copilot-cloud-agent-analysis.md#automatic-code-review).
 
 These overlap heavily; the differentiators are codebase-context depth (Greptile's graph
 index), OSS vs SaaS (open-code-review, below, is Apache-2.0; PR-Agent is MIT-licensed —
@@ -40,7 +40,7 @@ covered in the Claude Code tooling docs — see Cross-References.
 ### Hybrid deterministic + LLM review
 
 Unlike the pure-LLM products above, [open-code-review][open-code-review] (Alibaba;
-Apache-2.0, 42,772★, `gh api` 2026-09-30) reads Git diffs and combines a **deterministic
+Apache-2.0, about 56.6k★, `gh api` checked 2026-11-26) reads Git diffs and combines a **deterministic
 pipeline** — file selection, "smart file bundling" that fans large changesets out to
 isolated sub-agents, and fine-grained rule matching by file type — with an **LLM agent**
 for the judgment calls, via any OpenAI- or Anthropic-compatible model. It runs as a

@@ -3,7 +3,7 @@ title: AUTO — Compiling Agent Behavior to Deterministic WASM
 purpose: Assess RightNow AI's AUTO compiler and its self-published "Auto — The AGI Compiler" paper
 source: https://github.com/RightNow-AI/auto
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -18,13 +18,13 @@ artifacts, described as having zero external imports and measured resource
 bounds) that run without the frontier model in the loop. Spans that are not
 proven deterministic still fall back to the frontier model. The project
 frames itself as treating "frontier models as interpreters" and building a
-compiler on top of them, with three layers: capturing agent traces,
+compiler on top of them, with three layers (this framing is unverified; the README describes a compiler that records, compiles and verifies, a tiered runtime with a frontier-model fallback, and the `.cbin` artifact): capturing agent traces,
 compiling deterministic portions into small specialist models, and emitting
 the sandboxed WASM artifacts. It is written in Rust and Apache-2.0 licensed.
 
 ## The Paper's Claims (Self-Reported, Not Independently Reviewed)
 
-The repo's own homepage links "Auto: The AGI Compiler"
+The repo's own description links "Auto: The AGI Compiler"
 ([arXiv:2607.04542][paper], Jaber Jaber and Osama Jaber, submitted
 2026-07-05). Its abstract-level claims, fetched from the arXiv listing page
 today and reported here **as the authors' own figures on their own
@@ -45,7 +45,7 @@ AUTO-BENCH benchmark suite** — not independently re-run or peer-reviewed:
 ## Repo Activity
 
 Created 2026-07-05, last pushed 2026-07-07 — two days later — with no
-further pushes recorded as of 2026-09-24 (today). 128 stars, 13 forks, 0 open
+further pushes recorded as of 2026-11-26. 131 stars, 14 forks, 0 open
 issues. Treat as dormant since its initial publication rather than under
 active development.
 
@@ -55,7 +55,7 @@ active development.
 |---|---|
 | [RightNow-AI/auto repo][repo] | README, architecture description, license (first-party) |
 | [arXiv:2607.04542][paper] | Paper abstract and self-reported benchmark figures |
-| GitHub API repo metadata, 2026-09-24 | Stars(128)/forks(13)/issues(0), Apache-2.0, dates (created/pushed) |
+| GitHub API repo metadata, 2026-11-26 | Stars(131)/forks(14)/issues(0), Apache-2.0, dates (created/pushed) |
 
 [repo]: https://github.com/RightNow-AI/auto
 [paper]: https://arxiv.org/abs/2607.04542

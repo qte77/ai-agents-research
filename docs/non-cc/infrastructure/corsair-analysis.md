@@ -3,7 +3,7 @@ title: Corsair — Unified Integration Layer for AI Agents
 purpose: Assess Corsair's managed-OAuth, unified-API integration layer for agents and clarify its licensing
 source: https://github.com/corsairdev/corsair
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: trial
 ---
@@ -34,10 +34,10 @@ substantive license difference — but it is flagged here because GitHub's
 UI-level license badge will show as `Other` despite the file itself being
 standard Apache-2.0.
 
-## Repo Stats (2026-09-24)
+## Repo Stats (2026-11-26)
 
-11,911 stars · 666 forks · 310 open issues · TypeScript · created
-2025-10-14 · last push 2026-09-24 (same day as this verification) — actively
+15,620 stars · 727 forks · 320 open issues and PRs · TypeScript · created
+2025-10-14 · last push 2026-11-26 (same day as this verification) — actively
 maintained.
 
 ## Sources
@@ -46,6 +46,6 @@ maintained.
 |---|---|
 | [corsairdev/corsair repo][repo] | README, integration model, platform description (first-party) |
 | `LICENSE` file, decoded via GitHub API, 2026-09-24 | Apache-2.0 text vs. GitHub's `other`/`NOASSERTION` detection |
-| GitHub API repo metadata, 2026-09-24 | Stars(11,911)/forks(666)/issues(310), language, dates |
+| GitHub API repo metadata, 2026-11-26 | Stars(15,620)/forks(727)/issues+PRs(320), language, dates |
 
 [repo]: https://github.com/corsairdev/corsair

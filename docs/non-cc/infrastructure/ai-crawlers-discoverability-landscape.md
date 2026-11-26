@@ -2,7 +2,7 @@
 title: AI Crawlers and Discoverability Landscape
 purpose: Which AI crawlers and fetchers exist, what each robots.txt token controls, publisher-side controls (Cloudflare AI Crawl Control, Content Signals), and what answer engines say on appearing in answers.
 created: 2026-10-24
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-11-14
 status: research
 ---
@@ -26,7 +26,8 @@ robots.txt tokens, and they don't all honour robots.txt the same way.
 | OpenAI | `GPTBot` | Training — disallowing it "indicates a site's content should not be used in training generative AI foundation models" | Honoured | [OpenAI bots][openai-bots] |
 | OpenAI | `OAI-SearchBot` | ChatGPT search — opted-out sites "will not be shown in ChatGPT search answers", though they "can still appear as navigational links" | Honoured | [OpenAI bots][openai-bots] |
 | OpenAI | `ChatGPT-User` | User-triggered fetches | "Because these actions are initiated by a user, robots.txt rules may not apply" | [OpenAI bots][openai-bots] |
-| Anthropic | `ClaudeBot`, `Claude-SearchBot`, `Claude-User` | Training, search indexing, user-triggered fetches | All three "respect 'do not crawl' signals by honoring industry standard directives in robots.txt"; Anthropic also supports "the non-standard Crawl-delay extension" (page dated April 7, 2026) | [Anthropic crawlers][anthropic-bots] |
+| OpenAI | `OAI-AdsBot` | Checks landing pages that advertisers submit on ChatGPT; not used to train foundation models | Visits submitted ad pages only | [OpenAI bots][openai-bots] |
+| Anthropic | `ClaudeBot`, `Claude-SearchBot`, `Claude-User` | Training, search indexing, user-triggered fetches | All three "respect 'do not crawl' signals by honoring industry standard directives in robots.txt"; Anthropic also supports "the non-standard Crawl-delay extension" (page undated, shows "Updated over 3 weeks ago" as of 2026-11-26; it also says that as of October 30, 2026 Anthropic has begun recognizing a machine-readable signal, and that it will honor a "no AI training" preference signal, rolling it out across its services over time) | [Anthropic crawlers][anthropic-bots] |
 | Google | `Google-Extended` | A product token for Gemini Apps, the Vertex AI API for Gemini and grounding; it "doesn't have a separate HTTP request user agent string" and "does not impact a site's inclusion in Google Search nor is it used as a ranking signal" | Token only | [Google crawlers][google-crawlers] |
 | Perplexity | `PerplexityBot` | Search — "It is not used to crawl content for AI foundation models" | Honoured | [Perplexity bots][perplexity-bots] |
 | Perplexity | `Perplexity-User` | User-triggered fetches — "this fetcher generally ignores robots.txt rules" | Generally ignored | [Perplexity bots][perplexity-bots] |
@@ -57,7 +58,7 @@ search, and blocking a search bot does not stop a user's assistant from fetching
   the crawler-side view is in
   [web-scraping-extraction-landscape.md § Agent Identity and Vendor Handling](web-scraping-extraction-landscape.md#agent-identity-and-vendor-handling).
 - **Content Signals in managed robots.txt** — three purposes, `search`, `ai-input` and `ai-train`,
-  plus an optional `use=` key: `immediate` ("Interact, but store and reuse nothing"), `reference`
+  plus an optional `use=` key (`content-use`, which Cloudflare says it is testing): `immediate` ("Interact, but store and reuse nothing"), `reference`
   ("Index, excerpt, and link back") and `full` ("Summarize and reproduce"). Cloudflare is explicit
   that "`robots.txt` compliance is voluntary" ([docs][cf-managed-robots]).
 
@@ -67,7 +68,7 @@ search, and blocking a search bot does not stop a user's assistant from fetching
   special optimizations necessary", and "You don't need to create new machine readable files, AI
   text files, or markup to appear in these features" ([AI features][google-ai-features]). The controls
   are the ordinary snippet and indexing ones (`nosnippet`, `max-snippet`, `noindex`).
-  Google's [AI optimization guide][google-ai-guide] (announced May 2026, last updated 2026-07-10) goes
+  Google's [AI optimization guide][google-ai-guide] (announced May 2026, last-updated date unverified) goes
   further and lists what to ignore: llms.txt and similar files "will neither harm nor help your site's
   visibility or rankings in Google Search, as Google Search ignores them"; "Structured data isn't
   required for generative AI search, and there's no special schema.org markup you need to add" (though
@@ -196,7 +197,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [IETF aipref WG][aipref] | Usage-preference vocabulary and attachment drafts (WG Documents, 2026-11-14) |
 | [Netlify: Agent Experience][netlify-ax] | AX definition; agents as users of a product |
 | [Peec AI][peec] · [Scrunch][scrunch] | AI-search visibility tracking vendors (self-described) |
-| [OpenAI bots][openai-bots] | GPTBot, OAI-SearchBot, ChatGPT-User |
+| [OpenAI bots][openai-bots] | GPTBot, OAI-SearchBot, OAI-AdsBot, ChatGPT-User |
 | [Anthropic crawler article][anthropic-bots] | ClaudeBot, Claude-SearchBot, Claude-User; Crawl-delay |
 | [Google common crawlers][google-crawlers] | Google-Extended scope and non-impact on Search |
 | [Perplexity bots][perplexity-bots] | PerplexityBot, Perplexity-User |
