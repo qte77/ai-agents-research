@@ -333,6 +333,23 @@
           });
           network.moveTo({ position: { x: 0, y: 0 }, scale: Math.min(1, 0.9 / far),
                            animation: animate ? { duration: 300 } : false });
+          // Reason: moveTo fires no "zoom" event, so the edge fade is re-checked here (animated
+          // moves re-check on "animationFinished", below).
+          if (!animate) { fadeEdges(); }
+        }
+        // Edges fade below one zoom scale, so the zoomed-out view isn't a hairball; a selected
+        // node's own edges keep full strength (see `chosen` in the network options).
+        var EDGE_FADE_SCALE = 0.5, faded = null, edgeHighlight = token("--primary");
+        function fadeEdges() {
+          var f = network.getScale() < EDGE_FADE_SCALE;
+          if (f === faded) { return; }
+          faded = f;
+          network.setOptions({ edges: { color: edgeColour(f ? 0.15 : 1) } });
+        }
+        // Reason: vis-network edges inherit the node colour unless the whole colour object is
+        // given each time, and its opacity override can't parse the hsl() topic colours.
+        function edgeColour(opacity) {
+          return { color: token("--border"), highlight: token("--primary"), inherit: false, opacity: opacity };
         }
         function restabilise() {
           // Reason: wait for the first pre-layout, or a stop timer could cut it short.
@@ -357,6 +374,8 @@
         }
         function applyFilter() {
           nodes.update(data.nodes.map(function (n) { return { id: n.id, hidden: !visible(n) }; }));
+          // Reason: a focus set from before the filter change could leave every visible node dimmed.
+          if (focus) { focus = null; paint(); }
           syncSprings();
           seedLayout();
           restabilise();
@@ -510,7 +529,11 @@
           physics: { solver: "forceAtlas2Based", stabilization: { iterations: 150 }, maxVelocity: 20,
                      forceAtlas2Based: { gravitationalConstant: -30, centralGravity: 0.01, springLength: 90,
                                          springConstant: 0.12, damping: 0.7, avoidOverlap: 0.3 } },
-          edges: { color: { color: token("--border"), highlight: token("--primary") }, width: 1, smooth: false },
+          edges: { color: edgeColour(1), width: 1, smooth: false,
+                   // Reason: a chosen function replaces vis-network's own highlight, so it sets the colour too.
+                   chosen: { edge: function (v, id, selected) {
+                     if (selected) { v.opacity = 1; v.color = edgeHighlight; }
+                   } } },
           nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
           interaction: { hover: true, tooltipDelay: 120 }
         });
@@ -518,7 +541,8 @@
         // After the invisible pre-layout: fit the view around the hub index, then run physics for RUN_MS.
         network.once("stabilizationIterationsDone", function () { ready = true; fitView(false); restabilise(); });
         network.on("dragStart", function () { userMoved = true; });
-        network.on("zoom", function () { userMoved = true; });
+        network.on("zoom", function () { userMoved = true; fadeEdges(); });
+        network.on("animationFinished", fadeEdges); // fitView and the search's Enter zoom
 
         // Colour mode: recolour nodes and legend; hub-edge springs are set per edge above.
         recolour = function () {
@@ -576,10 +600,6 @@
           detail.appendChild(p);
           document.getElementById("info").scrollTop = 0;
         }
-        network.on("click", function (params) {
-          if (params.nodes.length) { openDetail(byId[params.nodes[0]]); }
-        });
-
         // Live search: dim every doc that doesn't match; Enter zooms to the first visible match.
         var search = document.getElementById("search");
         function matches() {
@@ -589,14 +609,31 @@
             return n.id.toLowerCase().indexOf(q) >= 0 || n.title.toLowerCase().indexOf(q) >= 0;
           });
         }
-        search.addEventListener("input", function () {
+        // Focus: a clicked or tapped node and its linked nodes keep their colour; clicking empty
+        // space clears it. One paint() serves search and focus, so the two dims combine.
+        var focus = null; // node id -> true for the focused node and its neighbours
+        function paint() {
           var hits = matches();
           var hit = {};
           (hits || []).forEach(function (n) { hit[n.id] = true; });
           nodes.update(data.nodes.map(function (n) {
-            return { id: n.id, color: !hits || hit[n.id] ? base[n.id] : dim };
+            var on = (!hits || hit[n.id]) && (!focus || focus[n.id]);
+            return { id: n.id, color: on ? base[n.id] : dim };
           }));
+        }
+        network.on("click", function (params) {
+          if (params.nodes.length) {
+            var id = params.nodes[0];
+            focus = {};
+            focus[id] = true;
+            network.getConnectedNodes(id).forEach(function (c) { focus[c] = true; });
+            openDetail(byId[id]);
+          } else if (!params.edges.length) {
+            focus = null;
+          }
+          paint();
         });
+        search.addEventListener("input", paint);
         search.addEventListener("keydown", function (ev) {
           if (ev.key !== "Enter") { return; }
           var top = (matches() || []).filter(visible)[0];
