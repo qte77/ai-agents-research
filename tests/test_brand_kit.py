@@ -24,10 +24,19 @@ class BrandKitTests(unittest.TestCase):
 
     def test_style_css_defines_no_colour_tokens(self):
         css = (UI / "style.css").read_text(encoding="utf-8")
-        defined = set(re.findall(r"(--[a-z0-9-]+)\s*:", css))
+        css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+        defined = {d.lower() for d in re.findall(r"(--[a-z0-9-]+)\s*:", css, flags=re.I)}
         banned = {f"--{p}" for p in KIT_COLOUR_PROPS}
         self.assertEqual(defined & banned, set())
         self.assertEqual({d for d in defined if d.startswith(("--data-", "--cat-"))}, set())
+
+    def test_pages_link_kit_before_style(self):
+        for page in ("doc-graph.html", "index.html"):
+            html = (UI / page).read_text(encoding="utf-8")
+            kit = html.find('href="eyerest.css"')
+            style = html.find('href="style.css"')
+            self.assertGreaterEqual(kit, 0, page)
+            self.assertGreater(style, kit, page)
 
 
 if __name__ == "__main__":
