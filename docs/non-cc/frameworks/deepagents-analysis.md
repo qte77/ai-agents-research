@@ -3,7 +3,7 @@ title: deepagents Analysis
 source: https://github.com/langchain-ai/deepagents
 purpose: Architecture analysis of deepagents — LangChain's batteries-included harness for long-horizon agents with planning, sub-agent delegation, and a virtual filesystem, built on LangGraph.
 created: 2026-06-13
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-06-13
 status: assess
 ---
@@ -14,8 +14,8 @@ status: assess
 
 - **License**: MIT
 - **Package**: `deepagents` ([PyPI][pypi])
-- **Version**: 0.6.10 (latest release as of 2026-11-18: deepagents 0.7.39, 2026-11-16, via `gh api`)
-- **Stars**: 24.6k
+- **Version**: 0.7.42 (2026-11-26, via `gh api`)
+- **Stars**: 31.6k (checked 2026-11-26)
 
 ## Key Concepts
 
@@ -32,7 +32,7 @@ status: assess
 | **Skills** | Loadable, reusable agent behaviours |
 | **LangSmith integration** | Built-in tracing and evaluation for production deployment |
 
-The public entry point is `create_deep_agent`, which returns a compiled LangGraph agent (the `model` argument is optional and defaults to a Claude model):
+The public entry point is `create_deep_agent`, which returns a compiled LangGraph agent (the `model` argument is optional; when omitted it falls back to a default Claude model, `claude-sonnet-4-6`, which needs `ANTHROPIC_API_KEY`; that fallback is deprecated, so pass a model explicitly):
 
 ```python
 from deepagents import create_deep_agent
