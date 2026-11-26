@@ -42,7 +42,7 @@ A layered approach to keeping context in Claude's ~75k-token "smart zone" via de
 
 | Layer | Mechanism | Tool / Pattern | Evidence (who measured, when) | Known limitation |
 |---|---|---|---|---|
-| **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` (or `"includeGitInstructions": false` in settings) strips the built-in commit/PR instructions and the git status snapshot from context (CC v2.1.69+, unverified: the settings page fetch was truncated) | Shell env / `.env` / settings | not measured | The docs state no headless-only scope, so it applies to interactive sessions too (our reading of the [settings reference][cc-settings-ref-git], checked 2026-11-19); cloud sessions never include the snapshot anyway. No source sizes the saving; you lose the built-in git guidance |
+| **1 — Env vars** | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` (or `"includeGitInstructions": false` in settings) strips the built-in commit/PR instructions and the git status snapshot from context (CC v2.1.69+, unverified) | Shell env / `.env` / settings | not measured | The docs state no headless-only scope, so it applies to interactive sessions too (our reading of the [settings reference][cc-settings-ref-git], checked 2026-11-19); cloud sessions never include the snapshot anyway. No source sizes the saving; you lose the built-in git guidance |
 | **2 — Native hook filters (DIY)** | `run_silent()` PostToolUse bash wrapper: captures stdout to a temp file, emits `✓ <desc>` on exit 0, surfaces full output only on non-zero exit; pair with failFast flags (`pytest -x`, `jest --bail`, `go test -failfast`) to halt at first failure | CC PostToolUse hook | not measured (pattern from [hlyr-backpressure][hlyr-backpressure], 2025-12-09) | Must be written per project; no packaging or reuse mechanism built in |
 | **3 — Wrapper scripts** | RTK intercepts shell command outputs via hooks — see [RTK section above](#rtk-rust-token-killer); a third-party benchmark measured zero savings on `cat`/`grep`/`pytest`/`ruff` | [RTK][rtk-repo] | third-party: this repo owner's run, not RTK's authors: [rtk-839][rtk-839], 2026-03-26 (v0.33.1), see [Independent Benchmark](#independent-benchmark-2026-03-26-v0331) | Does not filter content RTK doesn't recognise; zero gains on passthrough categories |
 | **4 — Output-style skills** | caveman and similar skills compress the model's own response verbosity (caveman 4.x also ships a separate input-shrinking proxy, see its entry) | See [CC-community-skills-landscape.md][skills-landscape] | independent: JetBrains, July 2026 — 8.5% fewer output tokens with caveman forced on (a ceiling, p = 0.82 on quality; [details][skills-caveman]) | Output-side only; does not reduce tool or shell output |
@@ -240,7 +240,7 @@ Opinionated session/workflow manager that gates Edit/Write/MultiEdit behind a **
 
 ### Adoption Considerations
 
-- Highest adoption in this batch (1,536 stars, checked 2026-11-26) but **no main-branch commits or releases since 2025-10-17** (~9 months as of 2026-07-23) — maintenance status unclear
+- Highest adoption in this batch (1,536 stars, checked 2026-11-26) but **no main-branch commits or releases since 2025-10-17** (latest commit on `main` 2025-10-17, checked 2026-11-26; the repo's `pushed_at` is 2025-12-17, from another branch) — maintenance status unclear
 - DAIC overlaps CC's native plan mode conceptually; the differentiator is *enforcement* (hard tool-gating + branch discipline) vs. guidance
 - Same opinionated-workflow niche as GSD (above) — see Comparison
 
@@ -458,7 +458,7 @@ Design-systems / format tooling (awesome-design-md, Google Labs DESIGN.md spec +
 | **codebase-memory-mcp** | Code→graph + LSP + embeddings | MCP (14 tools) + PreToolUse hook + auto-config | Single-binary knowledge graph | Active (~19K stars, v0.8.1) |
 | **Serena** | Semantic code (live LSP) | MCP server (20+ tools) | Symbol-level retrieve/edit/refactor | Active (25.2K stars, v1.5.3) |
 | **ast-grep MCP** | Structural search/rewrite | MCP server (4 tools) | tree-sitter AST patterns | Experimental (419 stars, no release) |
-| **Repomix** | Repo→single-file context export | MCP server + official CC plugins | tree-sitter compression + token counts | Stable (26.2K stars, v1.14.1) |
+| **Repomix** | Repo→single-file context export | MCP server + official CC plugins | tree-sitter compression + token counts | Stable (29.4K stars, v1.19.0, checked 2026-11-26) |
 | **code2prompt** | Repo→single-prompt context export | MCP server + CLI | Templated export + token counts | Stable (7.4K stars, v4.2.0) |
 | **CodeBurn** | Token-usage observability (cross-agent) | CLI (reads on-disk session data) | Cross-agent dashboard, 13 task categories, optimize/compare | Active (4K stars) |
 | **ccusage** | Token-usage observability (CC/Codex) | CLI + MCP server + statusline | JSONL analyzer, cache-token split, offline mode | Stable (13.4K stars, v18.0.11) |
@@ -516,7 +516,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [codebase-memory-mcp][codebase-memory-mcp] | Single-binary code knowledge graph: 159 tree-sitter grammars + hybrid LSP + embeddings, 14 MCP tools (3.2K stars, MIT) |
 | [Serena][serena] | LSP-based semantic coding MCP toolkit, 20+ symbol-level tools, 40+ languages (25.2K stars, MIT) |
 | [ast-grep MCP][ast-grep-mcp] | MCP wrapper for ast-grep structural AST search/rewrite, 4 tools (419 stars, MIT) |
-| [Repomix][repomix] | Repo→single-file packer, tree-sitter `--compress`, MCP server + CC plugins (26.2K stars, MIT) |
+| [Repomix][repomix] | Repo→single-file packer, tree-sitter `--compress`, MCP server + CC plugins (29.4K stars, MIT; checked 2026-11-26) |
 | [code2prompt][code2prompt] | Repo→single-prompt CLI with token counting, MCP server + Python SDK (7.4K stars, MIT) |
 | [CodeBurn][codeburn] | Cross-agent token-usage TUI dashboard (4K stars, MIT) |
 | [ccusage][ccusage] | CC/Codex JSONL usage analyzer, MCP-integrated (13.4K stars, MIT) |
@@ -557,7 +557,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [hlyr-backpressure]: https://www.hlyr.dev/blog/context-efficient-backpressure
 [skills-landscape]: CC-community-skills-landscape.md
 [codeburn]: https://github.com/getagentseal/codeburn
-[ccusage]: https://github.com/ryoppippi/ccusage
+[ccusage]: https://github.com/ccusage/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
 [llmlingua]: https://github.com/microsoft/LLMLingua
 [context-mode]: https://github.com/mksglu/context-mode

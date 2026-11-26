@@ -78,8 +78,8 @@ for our own agent integrations regardless of the video domain.
 | [OpenMontageInc/OpenMontage (GitHub)][repo] | Primary repo (formerly `calesthio/OpenMontage`) — README, `CLAUDE.md`, AGPL-3.0, ~83k stars (2026-11-26), language split |
 | [AGENT_GUIDE.md][guide] | Routing rules, three-layer architecture, checkpoint protocol |
 | [calesthio (author)][author] | Bio + sibling projects (Crucix, SessionAnchor) |
-| [Palmier Pro (GitHub)][palmier] | Concepts + pivot — GPLv3 macOS video editor with an embedded MCP server |
-| [Palmier YC profile][palmier-yc] | YC S24; YC S24, team size, product description (pivot history not stated there) |
+| [Palmier Pro (GitHub)][palmier] | Concepts + pivot — macOS video editor with an embedded MCP server (GPLv3 through v0.7.6, proprietary binaries after) |
+| [Palmier YC profile][palmier-yc] | YC S24; team size and product description |
 
 [repo]: https://github.com/OpenMontageInc/OpenMontage
 [guide]: https://github.com/OpenMontageInc/OpenMontage/blob/main/AGENT_GUIDE.md

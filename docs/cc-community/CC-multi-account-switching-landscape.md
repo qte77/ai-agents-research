@@ -88,8 +88,8 @@ Two behaviours matter:
 
 | Tool | Mechanism | Concurrent? | Signals (checked 2026-11-26) | License |
 |---|---|---|---|---|
-| [claude-swap][claude-swap] | Backs up/rotates OAuth credentials per account (Keychain/file); scopes a terminal to one account; **auto-rotation on rate-limit** + usage TUI | **Yes** — explicit design goal | 4,979★, pushed 2026-11-26 (`gh api`, 2026-11-26; mechanism text rests on repo metadata, README not re-read) | MIT |
-| [claude-multiprofile][multiprofile] | Native `CLAUDE_CONFIG_DIR` + per-profile macOS Keychain handling; also isolates Claude **Desktop** via `open -n` + `--user-data-dir` | **Yes** — incl. Desktop instances | 230★, v0.1.41 2026-11-25 (`gh api` 2026-11-26; mechanism text rests on repo metadata, README not re-read) | MIT |
+| [claude-swap][claude-swap] | Backs up/rotates OAuth credentials per account (Keychain/file); scopes a terminal to one account; **auto-rotation on rate-limit** + usage TUI | **Yes** — explicit design goal | 4,979★, pushed 2026-11-26 (`gh api`, 2026-11-26; mechanism text from repo metadata, unverified) | MIT |
+| [claude-multiprofile][multiprofile] | Native `CLAUDE_CONFIG_DIR` + per-profile macOS Keychain handling; also isolates Claude **Desktop** via `open -n` + `--user-data-dir` | **Yes** — incl. Desktop instances | 230★, v0.1.41 2026-11-25 (`gh api` 2026-11-26; mechanism text from repo metadata, unverified) | MIT |
 
 **Recommendation shape**: no tool trust required → the alias pattern (works on macOS too, per the authentication page).
 Concurrency with rotation/observability → claude-swap. Claude Desktop profiles too →

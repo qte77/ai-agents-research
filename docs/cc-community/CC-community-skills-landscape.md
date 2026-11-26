@@ -108,7 +108,7 @@ All CC features categorized under three primary tags:
 | Concepts Table | 12 | Subagents, Commands, Skills, Workflows, Hooks, MCP Servers, Plugins, Settings, Status Line, Memory, Checkpointing, CLI Startup Flags |
 | Hot Features | 8+ | Power-ups, Ultraplan, CC Web, No Flicker, Computer Use, Auto Mode, Channels, Slack, Code Review, GHA, Chrome Extension, Scheduled Tasks, Voice, Simplify & Batch, Agent Teams, Remote Control, Worktrees, Ralph |
 | Orchestration Workflow | 1 | Visual diagram: Command -> Agent -> Skill architecture |
-| Development Workflows | 9+ | everything-claude-code (137K stars, unverified, from the cited README), Superpowers (327K stars, checked 2026-11-26), Spec Kit (see [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md)), gstack, GSD, BMAD-METHOD, OpenSpec, oh-my-claudecode, Compound Engineering, HumanLayer — with uniqueness badges and component breakdowns |
+| Development Workflows | 9+ | everything-claude-code (now `affaan-m/ECC`, 311K stars, checked 2026-11-26), Superpowers (327K stars, checked 2026-11-26), Spec Kit (see [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md)), gstack, GSD, BMAD-METHOD, OpenSpec, oh-my-claudecode, Compound Engineering, HumanLayer — with uniqueness badges and component breakdowns |
 | Tips and Tricks | 38+ | Across 7 categories (prompting, planning, workflows, debugging, utilities, daily) |
 | Startup Comparison | 5 | CC features vs commercial tool equivalents |
 | Open Research Questions | 13 | Across 4 domains |
@@ -548,7 +548,7 @@ See also the offensive-security skill bundles [Claude-BugHunter][cbh], [pentest-
 
 ## GoogleChrome/modern-web-guidance
 
-**Repo**: [GoogleChrome/modern-web-guidance][mwg-repo] | **Stars**: 26.2K (checked 2026-11-26) | **License**: Apache-2.0 |
+**Repo**: [GoogleChrome/modern-web-guidance][mwg-repo] | **Stars**: 26.6K (checked 2026-11-26) | **License**: Apache-2.0 |
 created 2026-03-23, pushed 2026-11-10 (`gh api`, 2026-11-14) | **Docs**: [developer.chrome.com][mwg-docs]
 
 A vendor-maintained skill, unlike the community libraries above: the README says it is "Stewarded by the

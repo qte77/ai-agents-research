@@ -115,7 +115,7 @@ Cross-ref: [CC-memory-system-analysis.md](../cc-native/context-memory/CC-memory-
 
 **Repo**: [thedotmack/claude-mem][claude-mem] | **Stars**: 119.9K (`gh api`, checked 2026-11-26) | **License**: Apache-2.0 | **Version**: v17.0.0 (2026-11-26)
 
-Persistent memory compression system, started for Claude Code and now cross-agent. A second "observer" agent turns the session's tool activity into observations and summaries, and the next session starts with a short index that pulls in details only when needed. The README says it "Works with Claude Code, Codex, Cursor, OpenCode and 11 more agents", and that Copilot CLI, Goose, Roo Code and Warp (and Zed, per the 2026-11-26 README as reported by the pack, not re-read by me) can search the memory but their sessions aren't recorded. Placement stays here because the hook, plugin and MCP surface is the analysis focus (see [CONTRIBUTING § Classification](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc)).
+Persistent memory compression system, started for Claude Code and now cross-agent. A second "observer" agent turns the session's tool activity into observations and summaries, and the next session starts with a short index that pulls in details only when needed. The README says it "Works with Claude Code, Codex, Cursor, OpenCode and 11 more agents", and that Copilot CLI, Goose, Roo Code and Warp (and Zed, per the README, checked 2026-11-26) can search the memory but their sessions aren't recorded. Placement stays here because the hook, plugin and MCP surface is the analysis focus (see [CONTRIBUTING § Classification](../../CONTRIBUTING.md#classification-cc-community-vs-non-cc)).
 
 ### Architecture
 
@@ -460,7 +460,7 @@ Metadata as of 2026-11-17 (`gh api`, READMEs read the same day). Both are MIT-li
 | Tool | Store | Harnesses (as documented) | Retrieval | Write path | Stars / last push |
 |---|---|---|---|---|---|
 | [gbrain][gbrain] | Database (PGlite or Postgres) indexing markdown folders; an Obsidian vault works as a source | Claude Code and Codex via `gbrain setup`; MCP for OpenClaw, Hermes, opencode, Cursor, ChatGPT, Claude Desktop and others | Keyword by default; semantic search once an embedding key is added; optional graph and synthesis layer | Agent writes via MCP and hooks; `gbrain sync` re-reads source folders; an optional overnight "dream" cycle | 33.6K / 2026-11-25 (stars checked 2026-11-26) |
-| [COG-second-brain][cog] | Obsidian vault of plain `.md` files, optional git | Claude Code, Antigravity, Cursor, Kiro, Gemini CLI; Codex and others via `AGENTS.md` | None documented; the agent reads the files | User-invoked skills (braindump, daily-brief, weekly-checkin, knowledge-consolidation) | 1.5K (1,524 at the 2026-11-25 pack read, unverified by me) / 2026-10-23 |
+| [COG-second-brain][cog] | Obsidian vault of plain `.md` files, optional git | Claude Code, Antigravity, Cursor, Kiro, Gemini CLI; Codex and others via `AGENTS.md` | None documented; the agent reads the files | User-invoked skills (braindump, daily-brief, weekly-checkin, knowledge-consolidation) | 1.5K (1,525, checked 2026-11-26) / 2026-10-23 |
 
 Evidence levels: **documented** = stated in the project's README or docs; **shipped in code** = checked against repo contents; **vendor claim** = the author's own assertion, not independently reproduced.
 

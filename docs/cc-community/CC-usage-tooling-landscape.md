@@ -89,9 +89,9 @@ Cross-ref: [CC-community-skills-landscape.md](CC-community-skills-landscape.md) 
 
 ---
 
-## ccusage (ryoppippi)
+## ccusage (ccusage)
 
-**Repo**: [ryoppippi/ccusage][ccusage] | **Stars**: 19.5K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v20.1.2 (2026-11-25; two majors past v18.0.11, so the feature and report descriptions below were read on v18 and are unverified for v20) | **Stack**: TypeScript
+**Repo**: [ccusage/ccusage][ccusage] (now `ccusage/ccusage`, formerly `ryoppippi/ccusage`) | **Stars**: 19.5K (`gh api` 2026-11-22) | **License**: MIT | **Version**: v20.1.2 (2026-11-25; two majors past v18.0.11, so the feature and report descriptions below were read on v18 and are unverified for v20) | **Stack**: TypeScript
 
 CLI tool that analyzes Claude Code / Codex CLI usage from local JSONL files. Established reference tool in the CC usage-tracking space — predates and is broader-adopted than CodeBurn ([README][ccusage]).
 
@@ -193,7 +193,7 @@ transcript, in [§ One week of sessions](../cc-native/context-memory/CC-prompt-c
 [codeburn]: https://github.com/getagentseal/codeburn
 [codeburn-optimize]: https://github.com/getagentseal/codeburn/blob/main/src/optimize.ts
 [codeburn-releases]: https://github.com/getagentseal/codeburn/releases
-[ccusage]: https://github.com/ryoppippi/ccusage
+[ccusage]: https://github.com/ccusage/ccusage
 [claude-monitor]: https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor
 [cc-session-cost-usage]: ../cc-native/sessions/CC-session-cost-analysis.md#shared-plan-usage-across-claude-products
 
