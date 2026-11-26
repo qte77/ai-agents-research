@@ -6,6 +6,7 @@
   <title>Doc graph · ai-agents-research</title>
   <meta name="description" content="Graph of the ai-agents-research docs and the links between them, filterable by topic hub." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="eyerest.css" />
   <link rel="stylesheet" href="style.css" />
   <script>
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "system";
@@ -127,8 +128,8 @@
         ["not-hub-content", "Not hub content", "Never expected in a hub: folder README indexes " +
           "(including the hub index), example files, plans and research notes."]];
       // Top-level folder -> colour token; anything else (root files, plans, learnings) is muted.
-      var FOLDERS = [["cc-native", "--primary"], ["non-cc", "--cat-rust"],
-                     ["cc-community", "--cat-olive"], ["sdlc-lcm", "--cat-clay"],
+      var FOLDERS = [["cc-native", "--data-positive"], ["non-cc", "--data-caution"],
+                     ["cc-community", "--data-negative"], ["sdlc-lcm", "--data-alt"],
                      ["other", "--text-muted"]];
       var sel = document.getElementById("theme");
       sel.value = localStorage.getItem("theme") || "system";
