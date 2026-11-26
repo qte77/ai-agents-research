@@ -1,7 +1,7 @@
 ---
 title: QM — Y Combinator's Multiplayer Agent Harness
 source: https://github.com/yc-software/qm
-purpose: Evaluate QM's multi-scope (personal + shared) agent harness for team/startup use, and its multi-harness (Pi/OpenCode/Codex/Claude Code) design
+purpose: Evaluate QM's multi-scope (personal + shared) agent harness for team/startup use, and its multi-provider core with Pi as the agent loop (other harness drivers unverified)
 created: 2026-09-24
 updated: 2026-11-26
 validated_links_on: 2026-09-24
