@@ -3,7 +3,7 @@ title: Programmatic and Speculative Tool Calling
 source: https://arxiv.org/abs/2608.06370
 purpose: Evaluate the evidence for programmatic tool calling (PTC) over JSON tool calling, and speculative PTC (sPTC) as a technique for overlapping expensive tool/sub-LLM calls with code generation
 created: 2026-09-24
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -27,7 +27,7 @@ schema per turn:
 
 Per the [arXiv abstract page][ptc-paper] (accessed 2026-09-24): the paper's headline finding is
 that "programmatic tool calling matches or exceeds native JSON tool calling in 11 of 14 models,"
-with one model (GPT-5.6, per the abstract) showing a 10.6% improvement. The evaluation covers
+with the GPT-5.6 family showing a 10.6% improvement (per the abstract). The evaluation covers
 BFCL v4 under real-world conditions — parallel tool execution and context-degradation scenarios —
 and reports that PTC remains stable where standard JSON tool calling shows measurable performance
 decline as context degrades. The paper frames typed Python function stubs as enabling natural
@@ -47,7 +47,7 @@ codeblock is still being generated" (accessed 2026-09-24). It positions itself a
 designs like **Recursive Language Models (RLMs)** and **CodeAct**, where sub-LLM calls embedded in
 generated code are often the dominant share of runtime. For training a model to fit an RLM harness, see [Prime Agent § Training the Model for an RLM Harness](../coding-agents/prime-agent-analysis.md#training-the-model-for-an-rlm-harness).
 
-**Repository facts** (`gh api repos/alexzhang13/spec-ptc`, accessed 2026-09-24): 214 stars, 17
+**Repository facts** (`gh api repos/alexzhang13/spec-ptc`, checked 2026-11-26): 233 stars, 15
 forks, **MIT** license, created 2026-08-21, latest tagged release `v0.1.1` (published 2026-08-24).
 
 **Mechanism** (per the README):
@@ -144,7 +144,7 @@ Evidence lives in one place:
 **Assess.** The paper is independent, multi-model evidence — not a single vendor's benchmark —
 for a concrete claim (PTC ≥ JSON tool calling in 11/14 models, more stable under context
 degradation), which is useful corroboration for anyone deciding between tool-calling styles in a
-harness. `spec-ptc` is a small (214-star), very new (five weeks old as of 2026-09-24) reference
+harness. `spec-ptc` is a small (233-star as of 2026-11-26), very new (five weeks old as of 2026-09-24) reference
 implementation rather than a production-hardened library, but its direct wrapper for Claude Code
 and its explicit link to Claude's own programmatic-tool-calling docs make it a concrete,
 inspectable example of the sPTC pattern against a harness already tracked in this corpus.
@@ -164,7 +164,7 @@ inspectable example of the sPTC pattern against a harness already tracked in thi
 |---|---|
 | [arXiv:2608.06370 — "The Bitter Lesson of Tool Calling"][ptc-paper] | Title, authors, abstract, submission date (2026-08-06), headline finding (PTC ≥ JSON in 11/14 models) |
 | [alexzhang13/spec-ptc README][sptc-gh] | sPTC technique description, mechanism (Speculator/shadow REPL/daemon), harness wrappers, install instructions |
-| `gh api repos/alexzhang13/spec-ptc` | Stars (214), forks (17), license (MIT), created (2026-08-21), accessed 2026-09-24 |
+| `gh api repos/alexzhang13/spec-ptc` | Stars (233), forks (15), license (MIT), created (2026-08-21), checked 2026-11-26 |
 | `gh api repos/alexzhang13/spec-ptc/releases/latest` | Latest tag `v0.1.1`, published 2026-08-24, accessed 2026-09-24 |
 | BFCL leaderboard; τ-bench; τ²-Bench; xLAM; OSWorld | Benchmark versions, dates, and quoted abstract claims (read 2026-11-18) |
 | arXiv 2609.34971, 2610.23342, 2608.23635, 2610.19068 | Schema bias, interface drift, stage-wise failure diagnosis, tool discovery at scale (abstract pages, 2026-11-18) |
