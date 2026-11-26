@@ -2,7 +2,7 @@
 title: CC First-Party Documentation Index
 purpose: Canonical Anthropic URLs for CC, Agent SDK, Anthropic SDK, API, and best practices.
 created: 2026-03-28
-updated: 2026-10-15
+updated: 2026-11-26
 validated_links_on: 2026-10-15
 status: reference
 ---
@@ -27,50 +27,49 @@ status: reference
 | Sub-agents | <https://code.claude.com/docs/en/sub-agents> |
 | Agent Teams | <https://code.claude.com/docs/en/agent-teams> |
 | MCP integration | <https://code.claude.com/docs/en/mcp> |
-| Plugins reference | <https://code.claude.com/docs/en/plugins-reference> |
+| Plugin manifest reference | <https://code.claude.com/docs/en/plugins/manifest-reference>; [marketplace](https://code.claude.com/docs/en/plugins/marketplace-reference), [commands](https://code.claude.com/docs/en/plugins/cli-reference) |
 | Mods overview | <https://code.claude.com/docs/en/plugins/mods/overview> |
 | Mods admin (manage for an org) | <https://code.claude.com/docs/en/plugins/mods/admin> |
 | Mods reference | <https://code.claude.com/docs/en/plugins/mods/reference> |
 | Channels | <https://code.claude.com/docs/en/channels> |
 | Channels reference (build your own) | <https://code.claude.com/docs/en/channels-reference> |
-| Slash commands | <https://code.claude.com/docs/en/slash-commands> |
+| Commands | <https://code.claude.com/docs/en/commands> |
 | Goal (`/goal`) | <https://code.claude.com/docs/en/goal> |
 | Scheduled tasks (`/loop`, local) | <https://code.claude.com/docs/en/scheduled-tasks> |
 | Routines (cloud scheduling; now "scheduled tasks", formerly routines, see [CC-web-scheduled-tasks-analysis.md](ci-remote/CC-web-scheduled-tasks-analysis.md)) | <https://code.claude.com/docs/en/routines> |
 | Desktop scheduled tasks | <https://code.claude.com/docs/en/desktop-scheduled-tasks> |
 | Hooks reference | <https://code.claude.com/docs/en/hooks> |
 | Chrome extension | <https://code.claude.com/docs/en/chrome> |
-| Docs map (LLM sitemap) | <https://code.claude.com/docs/en/claude_code_docs_map.md> |
+| Docs map (LLM sitemap; legacy, not listed in `llms.txt`) | <https://code.claude.com/docs/en/claude_code_docs_map.md> |
 | LLMs.txt | <https://code.claude.com/docs/llms.txt> |
 
-## Agent SDK (platform.claude.com)
+## Agent SDK (code.claude.com)
 
 | Topic | URL |
 |-------|-----|
-| Overview | <https://platform.claude.com/docs/en/agent-sdk/overview> |
-| Quickstart | <https://platform.claude.com/docs/en/agent-sdk/quickstart> |
-| Python reference | <https://platform.claude.com/docs/en/agent-sdk/python> |
-| TypeScript reference | <https://platform.claude.com/docs/en/agent-sdk/typescript> |
-| Agent loop internals | <https://platform.claude.com/docs/en/agent-sdk/agent-loop> |
-| Subagents | <https://platform.claude.com/docs/en/agent-sdk/subagents> |
-| Skills | <https://platform.claude.com/docs/en/agent-sdk/skills> |
-| Hosting | <https://platform.claude.com/docs/en/agent-sdk/hosting> |
-| Best practices | <https://platform.claude.com/docs/en/agent-sdk/best-practices> |
+| Overview | <https://code.claude.com/docs/en/agent-sdk/overview> |
+| Quickstart | <https://code.claude.com/docs/en/agent-sdk/quickstart> |
+| Python reference | <https://code.claude.com/docs/en/agent-sdk/python> |
+| TypeScript reference | <https://code.claude.com/docs/en/agent-sdk/typescript> |
+| Agent loop internals | <https://code.claude.com/docs/en/agent-sdk/agent-loop> |
+| Subagents | <https://code.claude.com/docs/en/agent-sdk/subagents> |
+| Skills | <https://code.claude.com/docs/en/agent-sdk/skills> |
+| Hosting | <https://code.claude.com/docs/en/agent-sdk/hosting> |
 
 ## Anthropic SDK (API client)
 
 | Topic | URL |
 |-------|-----|
-| Client SDKs (Python + TypeScript) | <https://platform.claude.com/docs/en/api/client-sdks> |
+| SDKs, CLI, and libraries (seven languages plus the `ant` CLI) | <https://platform.claude.com/docs/en/cli-sdks-libraries/overview> |
 | GitHub (Python) | <https://github.com/anthropics/anthropic-sdk-python> |
 | GitHub (TypeScript) | <https://github.com/anthropics/anthropic-sdk-typescript> |
 
-## Claude API & Best Practices (docs.anthropic.com)
+## Claude API & Best Practices (platform.claude.com)
 
 | Topic | URL |
 |-------|-----|
-| Tool use overview | <https://platform.claude.com/docs/en/docs/agents-and-tools/tool-use/overview> |
-| Text editor tool | <https://platform.claude.com/docs/en/docs/build-with-claude/tool-use/text-editor-tool> |
+| Tool use overview | <https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview> |
+| Text editor tool | <https://platform.claude.com/docs/en/agents-and-tools/tool-use/text-editor-tool> |
 | Building effective agents | <https://www.anthropic.com/engineering/building-effective-agents> |
 
 ## GitHub Resources
