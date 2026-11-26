@@ -1,9 +1,9 @@
 ---
 title: CC Sandbox Platforms Landscape
-source: https://github.com/alibaba/OpenSandbox
+source: https://github.com/opensandbox-group/OpenSandbox
 purpose: Comparison of external sandbox platforms for AI agent code execution — self-hosted and cloud options that complement or replace CC's built-in sandboxing.
 created: 2026-03-08
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: research
 ---
@@ -25,13 +25,13 @@ environments — from self-hosted open-source to managed cloud services.
 | ------ | ----------- | ------------------ | --------------------- | --- | -------------------- | ------- |
 | **Type** | Local (OS-level) | Local (npm package) | Self-hosted (Docker/K8s) | Cloud SaaS | Cloud SaaS | Cloud / self-hosted |
 | **Isolation** | bubblewrap (Linux), Seatbelt (macOS) | Same as CC built-in | gVisor, Kata, Firecracker | Firecracker microVM | Firecracker microVM | Container (optional enhanced) |
-| **Cold start** | N/A (local process) | N/A | <800ms | ~150ms | 1-2s (cold), <1s (warm) | Fast (container) |
-| **State** | N/A | N/A | Ephemeral | Ephemeral (24h max) | Persistent + checkpoint/restore (~300ms) | Stateful |
+| **Cold start** | N/A (local process) | N/A | <800ms | ~150ms (unverified) | 1-2s (cold), <1s (warm) | Fast (container) |
+| **State** | N/A | N/A | Ephemeral | Up to 24h per run on Pro (1h on Hobby); pause/resume preserves full state | Persistent + checkpoint/restore ("about a second" per fly.io; restore time not stated) | Stateful |
 | **Storage** | Local filesystem | Local filesystem | Container volumes | Ephemeral per session | 100GB persistent NVMe | Persistent |
 | **SDKs** | N/A (settings config) | npm CLI | Python, JS/TS, Java/Kotlin, C#/.NET, Go | Python, JS/TS | REST API | Python, JS/TS |
 | **CC integration** | Native | npm package | Documented | Via SDK | Via API | Via SDK |
-| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Closed source (legacy OSS repo frozen) |
-| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available) | $0.07/CPU-hr, $0.04/GB-hr (idle = free) | Usage-based |
+| **License** | Proprietary (CC) | Open source | Apache 2.0 | Open source (core) | Proprietary | Closed source (legacy OSS repo archived) |
+| **Pricing** | Free (with CC) | Free | Free (self-hosted) | Per-second (BYOC available, unverified) | $0.0385/CPU-hr, $0.021875/GB-hr; warm and cold Sprites not billed for compute (checked 2026-11-26) | Usage-based |
 | **GPU support** | N/A | N/A | Via K8s | No | No (CPU-only; use Fly Machines for GPU) | Yes |
 
 ## Platform Details
@@ -49,7 +49,7 @@ entry point.
 
 ### OpenSandbox (Alibaba)
 
-Open-sourced March 2026 under Apache 2.0. ~17.8k GitHub stars (as of 2026-11-22)
+Open-sourced March 2026 under Apache 2.0. ~17.9k GitHub stars (checked 2026-11-26); the repo now lives under the `opensandbox-group` org (the old `alibaba/OpenSandbox` URL redirects), and the Alibaba attribution comes from the March 2026 announcement
 ([source][opensandbox-gh]).
 
 **Architecture** — four-layer modular stack ([source][opensandbox-gh]):
@@ -85,11 +85,11 @@ Cloud-managed Firecracker microVMs for ephemeral AI code execution
 
 **Key characteristics**:
 
-- ~150ms cold starts — fastest in class
-- Session-scoped (ephemeral) — designed for stateless execution per agent run
-- 24-hour maximum session duration
+- ~150ms cold starts — fastest in class (unverified; no cold-start figure on the sandbox docs page)
+- Session-scoped by default — designed for per-run execution; a sandbox can be paused and resumed, which preserves its full state indefinitely (checked 2026-11-26)
+- Sandboxes run up to 24 hours on Pro and 1 hour on Hobby
 - Custom templates define starting environment (packages, config, files)
-- BYOC (Bring Your Own Cloud) on AWS for enterprise/VPC requirements
+- BYOC (Bring Your Own Cloud) on AWS for enterprise/VPC requirements (unverified)
 - Python and JS/TS SDKs
 
 **Lifecycle**: `Sandbox.create()` → `sandbox.commands.run()` → sandbox auto-destroys
@@ -111,13 +111,14 @@ Stateful sandbox environments with checkpoint/restore, launched January 2026
 maintain full filesystem state between executions:
 
 - 100GB persistent NVMe-backed storage (object storage with NVMe read-through cache)
-- Checkpoint/restore in ~300ms (incremental, only changed blocks)
+- Checkpoints snapshot the whole filesystem "in about a second" per fly.io (checked 2026-11-26); the earlier ~300ms restore figure is unverified
 - Idle hibernation with automatic wake-up (no charges when idle)
 - Pre-installed packages, services, and policies survive checkpoints
 
-**Pricing**: $0.07/CPU-hour, $0.04375/GB-hour memory. A 4-hour Claude Code session
-costs ~$0.44. No charges for idle time or allocated-but-unused storage
-([source][sprites]).
+**Pricing**: $0.0385/CPU-hour, $0.021875/GB-hour memory, hot storage $0.000683/GB-hour
+(awake) and cold storage $0.000027/GB-hour. The page's 4-hour Claude Code example costs
+$0.23; warm and cold Sprites are not billed for compute, and storage used is billed
+(checked 2026-11-26) ([source][sprites]).
 
 **AI agent integration**: `/.sprite/llm.txt` teaches Claude how Sprites works
 (port opening, checkpoints). Pre-installed skills for self-management
@@ -136,7 +137,7 @@ E2B's "rebuild everything each session" overhead.
 Pivoted to AI code execution in 2026. Container-based with optional enhanced
 isolation. Moved its production codebase to closed source as of 2026-06-11,
 citing AI-assisted vulnerability discovery risk; the original open-source repo
-stays public but is frozen, receiving no further updates or releases
+stays public but is archived (last push 2026-07-24, checked 2026-11-26), receiving no further updates or releases
 ([source][daytona], [source][daytona-closed]).
 
 Less relevant for CC-specific workflows but included for completeness in the
@@ -169,8 +170,7 @@ standby cost — between E2B's ephemeral model and Sprites' always-warm persiste
 
 ### forkd (now sandstorm)
 
-Renamed to `deeplethe/sandstorm` (checked 2026-11-22); its current README documents both gVisor and
-Firecracker backends. The details below were verified on 2026-09-24, before the rename, and the source
+Renamed to `deeplethe/sandstorm`. The current release is v0.6.0 (2026-11-01), whose README makes gVisor the default backend, with Firecracker chosen node by node, and reports 126ms for 1 clone, 1.7s for 100 clones and a 30ms snapshot (checked 2026-11-26). The details below are v0.5.3-only: they were verified on 2026-09-24, before the rename, and the source
 link points at the v0.5.3 tag they match.
 
 Firecracker microVM sandbox runtime built for AI agent fan-out: spawning many
@@ -188,9 +188,9 @@ isolated children from one warmed parent snapshot via copy-on-write memory shari
   without duplicating base images ([source][forkd])
 - Per-child KVM isolation, network namespaces, cgroup memory limits; REST API plus
   Python/TypeScript SDKs ([source][forkd])
-- Apache-2.0, Rust, 6.1k stars (as of 2026-11-22) ([source][forkd])
+- Apache-2.0, Rust, ~5.6k stars (checked 2026-11-26) ([source][forkd])
 
-**Maturity**: Alpha. README states core functionality is "in place and exercised by
+**Maturity** (v0.5.3-only; the v0.6.0 README has no Alpha wording): Alpha. README states core functionality is "in place and exercised by
 25 unit + integration tests" but on-disk formats and API shapes may change before
 1.0; multi-node scheduling and third-party security audits are gaps
 ([source][forkd]).
@@ -279,10 +279,10 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [blaxel-pricing]: https://blaxel.ai/pricing
 [blaxel-docs]: https://docs.blaxel.ai/Overview
 [forkd]: https://github.com/deeplethe/sandstorm/tree/v0.5.3
-[opensandbox-gh]: https://github.com/alibaba/OpenSandbox
+[opensandbox-gh]: https://github.com/opensandbox-group/OpenSandbox
 [opensandbox-marktechpost]: https://www.marktechpost.com/2026/03/03/alibaba-releases-opensandbox-to-provide-software-developers-with-a-unified-secure-and-scalable-api-for-autonomous-ai-agent-execution/
 [e2b]: https://e2b.dev
-[e2b-docs]: https://e2b.dev/docs
+[e2b-docs]: https://docs.e2b.dev/docs/sandbox
 [e2b-gh]: https://github.com/e2b-dev/E2B
 [sprites]: https://fly.io/sprites
 [sprites-simon]: https://simonwillison.net/2026/Jan/9/sprites-dev/
