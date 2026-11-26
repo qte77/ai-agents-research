@@ -3,7 +3,7 @@ title: CC Sandbox bwrap Host Quirks — Phantom Files and AppArmor Friction
 purpose: bwrap-on-Linux friction independent of execution context (local, WSL2, Codespaces) — phantom dotfile leakage and AppArmor user-namespace prerequisites.
 source: https://github.com/anthropics/claude-code/issues/17727
 created: 2026-05-02
-updated: 2026-09-23
+updated: 2026-11-26
 validated_links_on: 2026-09-23
 status: reference
 ---
@@ -139,7 +139,7 @@ Upstream fix tracker: [`anthropics/sandbox-runtime#139`][sr-139].
   active. Real content can be lost.
 
 The only working mitigations are gitignore (cosmetic), full sandbox disable,
-or waiting for [`sandbox-runtime#139`][sr-139].
+or waiting for [`sandbox-runtime#139`][sr-139]. For placeholders left at `.claude` settings paths, the [sandboxing docs](https://code.claude.com/docs/en/sandboxing) describe a `claude doctor` warning ("Sandbox mask files left behind at write-deny paths") and manual `rm` while no other session runs in the project; the doctor check was added in v2.1.257, before which leftovers after a killed session were not flagged (checked 2026-11-26). The docs do not say this resolves #17727.
 
 ### Version timeline
 
@@ -151,6 +151,7 @@ or waiting for [`sandbox-runtime#139`][sr-139].
 | 2.1.120 (2026-04-25) | Reproduces ([nathanschram on #17727][gh-17727]) |
 | 2.1.123 | One reporter sees no recurrence ([gnprice on #29316][gh-29316]) — unconfirmed |
 | current (2026-05-02) | Reproduces locally on Fedora 43 |
+| 2.1.257 | Vendor docs add the `claude doctor` check for leftover placeholders at `.claude` settings paths (checked 2026-11-26) |
 
 ## Friction 2 — AppArmor `userns` Prerequisite (Ubuntu 24.04+)
 
@@ -192,7 +193,7 @@ and Claude Code starts cleanly.
 ### Status
 
 Hard startup-blocker as of v2.1.120 — first-time Ubuntu 24.04 users hit a
-wall with no actionable error message. Tracking: [#17727][gh-17727].
+wall with no actionable error message (the state before v2.1.310). Since v2.1.310 Claude Code checks for the restriction at startup and the sandboxing docs show an explicit AppArmor message; by default (`sandbox.failIfUnavailable` unset) a failed sandbox only runs commands unsandboxed, and Claude Code exits at startup only when `failIfUnavailable` is `true` (checked 2026-11-26). Tracking: [#17727][gh-17727].
 
 ## Friction 3 — Bind-Mount-Held Files Block `git unlink`
 
