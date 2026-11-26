@@ -2,7 +2,7 @@
 title: Agent Skill Evolution Research Landscape
 purpose: Survey of research (papers and reference repos) on constructing, evolving and transferring agent skills and tool sets, distinct from the packaging landscapes in cc-community and cc-native.
 created: 2026-09-30
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: assess
 ---
@@ -51,8 +51,7 @@ winning "all six model × benchmark combinations," +8.8–24.2pp over the one-sh
 ## NVlabs Skill2Env
 
 **Repo**: [NVlabs/Skill2Env][skill2env] — Apache-2.0 (project-owned source; third-party material in
-`SkillHub/` keeps its own upstream licenses), last push 2026-11-14 (checked 2026-11-22). Tagline: "Democratizing Collective
-Intelligence." Turns any [Agent Skill][agentskills-org] into RL-ready terminal tasks in the
+`SkillHub/` keeps its own upstream licenses), last push 2026-11-14 (checked 2026-11-22). Subtitle: "Reinforcing Agents with Collective Skills". Turns [Agent Skills][agentskills-org] into RL-ready terminal tasks in the
 [Harbor][harbor] framework: a planner/creator pipeline (Codex agents in Docker containers) generates
 task instructions, a containerized environment, deterministic tests (`test.sh` + a grading `rubric.md`),
 and a reference solution per skill, retaining only tasks with `retained_tasks >= 1`. This converts a
@@ -65,7 +64,7 @@ task performance. Requires a Codex CLI login and Docker; `--resume` makes batch 
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| no data [README][skill2env] (single-operator CLI tool; no multi-user task-generation store documented) | no [README][skill2env] (Docker containers on one host; `--max-parallel-workers` scales locally, not across machines) | partial [README][skill2env] (`--codex-version` pins the Codex CLI in the generator image and `--model`/`--reasoning-effort` are explicit flags, but task generation still depends on an LLM-driven planner/creator with no seed/determinism guarantee across runs) | yes [README][skill2env] (`--input-root` accepts one Skill, a family, or the whole hub; works on "any Agent Skill" per the tagline) | yes [README][skill2env] (Apache-2.0 git repo; `--resume` persists partial-batch state across runs; a `_corpus_manifest.json` tracks retained tasks) | partial [README][skill2env] (`SkillHub/skillhub_source_licenses.csv` traces each source skill's license/origin; individual generated tasks carry no lineage back to the LLM decisions that produced them) |
+| no data [README][skill2env] (single-operator CLI tool; no multi-user task-generation store documented) | no [README][skill2env] (Docker containers on one host; `--max-parallel-workers` scales locally, not across machines) | partial [README][skill2env] (`--codex-version` pins the Codex CLI in the generator image and `--model`/`--reasoning-effort` are explicit flags, but task generation still depends on an LLM-driven planner/creator with no seed/determinism guarantee across runs) | yes [README][skill2env] (`--input-root` accepts one Skill, a family, or the whole hub; the README says it turns Agent Skills into tasks; "any Agent Skill" is unverified) | yes [README][skill2env] (Apache-2.0 git repo; `--resume` persists partial-batch state across runs; a `_corpus_manifest.json` tracks retained tasks) | partial [README][skill2env] (`SkillHub/skillhub_source_licenses.csv` traces each source skill's license/origin; individual generated tasks carry no lineage back to the LLM decisions that produced them) |
 
 `scored 2026-09-30`
 

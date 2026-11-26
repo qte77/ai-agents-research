@@ -3,14 +3,14 @@ title: Google Antigravity Analysis
 source: https://antigravity.google/
 purpose: Analysis of Google Antigravity as an agent-first IDE and agentic development platform announced at Google I/O 2026.
 created: 2026-06-16
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: assess
 ---
 
 ## What It Is
 
-Google Antigravity is an agentic development platform comprising a desktop IDE, CLI (`agy`), and SDK, with no published licence for the CLI (observed 2026-11-18). Announced at [Google I/O 2026][io-2026-blog], it positions itself as an "agent-first" environment built for multi-agent orchestration rather than single-turn AI code completion. Version 1.11.2 launched in public preview on 2025-11-18; version 2.0.1 shipped 2026-05-19 and is the current preview release (access date: 2026-06-16, per [Wikipedia][wiki]).
+Google Antigravity is an agentic development platform comprising a desktop IDE, CLI (`agy`), and SDK, with no published licence for the CLI (observed 2026-11-18). Announced at [Google I/O 2026][io-2026-blog], it positions itself as an "agent-first" environment built for multi-agent orchestration rather than single-turn AI code completion. It launched in public preview on 2025-11-18 (version 1.11.2, unverified). Per [Wikipedia][wiki] (third-party, checked 2026-11-26) the stable releases are Antigravity 2.0 at 2.31.0 (2026-11-09) and the IDE at 2.6.0 (2026-10-26); the install docs reference desktop v2.30.0+.
 
 Antigravity is described as a heavily modified fork of Visual Studio Code, though some sources debate whether it derives from Windsurf. It replaces Google's open-source [Gemini CLI][gemini-cli-fossforce], which was sunset for non-enterprise users on 2026-06-18.
 
@@ -28,7 +28,7 @@ Key capabilities (sourced from [Google Codelabs][codelabs-getting-started] and [
 - **Browser Subagent** — spins up a real Chrome instance, clicks UI elements, takes screenshots, and self-debugs visual failures
 - **MCP integration** — local and remote Model Context Protocol (MCP) servers ground agents in external data systems
 - **Skills system** — contextual knowledge packages loaded on demand via markdown + optional Python/Bash scripts
-- **Model support** — primarily Gemini 3.1 Pro and Gemini 3.5 Flash; also supports Claude Sonnet 4.6, Claude Opus 4.6, and GPT-OSS-120B (per [Wikipedia][wiki], 2026-06-16)
+- **Model support** — primarily Gemini 3.1 Pro and Gemini 3.5 Flash; also supports Claude Sonnet 4.6, Claude Opus 4.6, and GPT-OSS-120B (per [Wikipedia][wiki], 2026-06-16; unverified). Wikipedia (2026-11-26) now lists Claude Opus and Sonnet 4.6 and 5.5, with 5.5 for paid Pro and Ultra subscribers and Wikipedia stated Claude 4.6 would be removed on 2026-11-02 (current status unverified); the Gemini model names are unverified
 
 The CLI (`agy`) provides a lightweight terminal interface for instant agent creation. The SDK exposes the same agent harness programmatically. An enterprise tier ("Antigravity in Gemini Enterprise Agent Platform") integrates with Google Cloud.
 
@@ -55,18 +55,18 @@ numbers) and any end date for Code Assist Standard/Enterprise Gemini CLI access.
 
 ## Adoption Decision
 
-**Assess** — Antigravity is in public preview and pricing is not yet finalised. The multi-agent orchestration, artifact-first workflow, and Browser Subagent are meaningfully differentiated from single-agent IDEs. However, several factors warrant caution:
+**Assess** — Antigravity was in public preview at the last first-party check, and pricing finalisation is unverified. The multi-agent orchestration, artifact-first workflow, and Browser Subagent are meaningfully differentiated from single-agent IDEs. However, several factors warrant caution:
 
-- **Preview status** — v2.0.1 is labelled preview; paid tiers are not finalised (access date: 2026-06-16)
+- **Preview status** — preview label and paid-tier finalisation unverified against a first-party page; third-party sources list stable 2.x releases (checked 2026-11-26)
 - **No published source or licence** (observed 2026-11-18) — replaces the open-source Gemini CLI; extensions continue as plugins (`agy plugin import gemini`)
 - **Vendor lock-in** — deepest value requires Google AI Studio, Firebase, and Gemini ecosystem; cross-provider model support (Claude, GPT-OSS) partially mitigates this
 - **Pricing trajectory** — what FOSS Force calls a bait-and-switch, from open-source Gemini CLI to proprietary Antigravity, combined with opaque credit structures, signals pricing risk (per [FOSS Force][fossforce])
 
-For teams already invested in the Google Cloud/Firebase stack and comfortable with Gemini models, this warrants hands-on evaluation. For teams prioritising open tooling or multi-cloud neutrality, wait for GA and stable pricing.
+For teams already invested in the Google Cloud/Firebase stack and comfortable with Gemini models, this warrants hands-on evaluation. For teams prioritising open tooling or multi-cloud neutrality, wait for stable pricing (status unverified).
 
 ## Action Items
 
-- [ ] Re-evaluate at GA (expected after preview period; track [antigravity.google][antigravity])
+- [ ] Re-evaluate once GA status is confirmed (track [antigravity.google][antigravity])
 - [ ] Benchmark Browser Subagent against Playwright-based agents for UI verification workflows
 - [ ] Assess Antigravity SDK against the existing agent harness if MCP integration is a priority
 - [ ] Monitor pricing finalisation — free tier rate limits refresh every ~5 hours; paid tiers under active change (access date: 2026-06-16)
@@ -77,7 +77,7 @@ For teams already invested in the Google Cloud/Firebase stack and comfortable wi
 Checked 2026-10-22 against the vendor's own docs; compared across agents in
 [goal-loops-landscape.md](goal-loops-landscape.md).
 
-Antigravity has `/goal`: "The goal ends only when the agent declares it complete", and "there's no
+Antigravity has `/goal`: "The goal ends only when the agent declares it complete or when you ask the agent to stop", and "there's no
 iteration cap"; "Only one goal is active at a time in a conversation" ([goal command][goal-ag-goal]).
 With no cap, set your own bound. A `Stop` hook can return `decision: "continue"` to re-enter the
 execution loop ([hooks][goal-ag-hooks]).

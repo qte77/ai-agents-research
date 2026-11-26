@@ -3,7 +3,7 @@ title: OpenAI Agents SDK Analysis
 source: https://openai.github.io/openai-agents-python/
 purpose: Production-ready Python framework for building multi-agent workflows with handoffs, guardrails, sessions, and tracing — the successor to Swarm.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: trial
 ---
@@ -15,7 +15,7 @@ MIT-licensed Python framework for building production multi-agent workflows.
 OpenAI published it as the direct, production-ready successor to [Swarm][swarm]
 (now Hold/deprecated); the Swarm README itself redirects users here.
 
-The SDK reached v0.17.5 on 2026-06-11 (27 k GitHub stars as of 2026-06-16) and
+The SDK reached v0.26.0 on 2026-11-24 (about 30.9 k GitHub stars as of 2026-11-26) and
 is listed as GA — no preview or experimental qualification appears in the
 repository or documentation (accessed 2026-06-16). It requires Python 3.10+
 and is installed via `pip install openai-agents`. There is no separate pricing
@@ -79,7 +79,7 @@ OpenAI.
 
 ## Adoption Decision
 
-**Trial** — The SDK is mature (v0.17.5, GA, MIT, 27 k stars), actively
+**Trial** — The SDK is mature (v0.26.0, GA, MIT, about 30.9 k stars; checked 2026-11-26), actively
 maintained, and the declared successor to Swarm. Its abstractions map directly
 onto the agent patterns tracked in the [frameworks landscape][landscape]:
 handoffs, guardrails, tracing, and session management are all first-class.
@@ -97,7 +97,7 @@ Cross-ref catalog entry: [agent-frameworks-infrastructure-landscape.md][landscap
 
 ## Action Items
 
-- Monitor v1.0 release for API stability signal; re-evaluate "Adopt" threshold.
+- Monitor v1.0 release for API stability signal (v1.0.0-alpha.1 on 2026-11-20 and alpha.2 on 2026-11-23 are already out as pre-releases); re-evaluate "Adopt" threshold.
 - Evaluate tracing export compatibility with any existing observability stack
   (Langfuse, Datadog) against the 31+ listed integrations.
 - For Claude Code agent research: assess whether handoff/guardrail patterns
@@ -108,7 +108,7 @@ Cross-ref catalog entry: [agent-frameworks-infrastructure-landscape.md][landscap
 | Source | Content |
 |---|---|
 | [Agents SDK docs][docs] | Overview, features, installation — accessed 2026-06-16 |
-| [GitHub repo][repo] | License (MIT), v0.17.5 release date, star count — accessed 2026-06-16 |
+| [GitHub repo][repo] | License (MIT), v0.26.0 release date, star count — checked 2026-11-26 |
 | [Handoffs docs][handoffs] | Handoff API, configuration options, nesting — accessed 2026-06-16 |
 | [Guardrails docs][guardrails] | Guardrail types, execution modes, tripwires — accessed 2026-06-16 |
 | [Tracing docs][tracing] | Span types, backends, 31+ integrations — accessed 2026-06-16 |

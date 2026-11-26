@@ -3,7 +3,7 @@ title: Trae (ByteDance Agentic IDE)
 source: https://www.trae.ai/
 purpose: Evaluate Trae, ByteDance's VS Code-based agentic IDE, for adoption as a coding agent alternative to Cursor or GitHub Copilot.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: assess
 ---
@@ -14,10 +14,10 @@ Trae ("The Real AI Engineer") is a proprietary AI-native IDE built and distribut
 ByteDance (Singapore entity: SPRING(SG)PTE.LTD), based on a fork of Code OSS (the open
 source base of Visual Studio Code). It launched in January 2025 and reached
 [general availability of its SOLO autonomous agent][trae-blog] in November 2025, followed
-by Trae Work (a general-purpose AI work assistant) in June 2026. As of access date
-2026-06-16, [pricing][trae-pricing] spans Free → Lite ($3/mo) → Pro ($10/mo) → Pro+
-($30/mo) → Ultra ($100/mo), with token-based usage allocations per tier introduced
-February 24, 2026.
+by Trae Work (a general-purpose AI work assistant) in June 2026. As of 2026-11-26,
+the [pricing page][trae-pricing] lists four tiers: Free ($0), Pro ($20/mo, $20 of usage), Pro+ ($60/mo, 3x Pro)
+and Ultra ($200/mo, 10x Pro), with a 17% yearly saving. This supersedes the February 24, 2026
+five-tier structure (Free, Lite $3, Pro $10, Ultra $100) from the vendor's membership post.
 
 Trae runs on macOS and Windows; a browser-based Cloud IDE is available. Linux support is
 not yet released as of 2026-06-16.
@@ -69,7 +69,7 @@ engineering contexts:
    confirmed the VS Code telemetry toggle does not suppress all data collection. A "Privacy
    Mode" was later introduced but its scope is narrow (chat/code not used for model
    training); background telemetry to ByteDance domains is not fully opt-out-able.
-   Personal data is retained for 5 years after account closure. No SOC 2 Type II or ISO
+   Personal data is retained for 5 years after account closure (unverified). No SOC 2 Type II or ISO
    certification is documented as of 2026-06-16.
 
 2. **Proprietary closed source with ByteDance ownership** — The underlying VS Code fork
@@ -100,7 +100,7 @@ context with clear Microsoft privacy commitments and enterprise audit controls.
 | Source | Content |
 |---|---|
 | [Trae homepage][trae-home] | Product overview, TRAE Work and TRAE IDE landing (accessed 2026-06-16) |
-| [Trae pricing][trae-pricing] | Five-tier token-based pricing, effective 2026-02-24 (accessed 2026-06-16) |
+| [Trae pricing][trae-pricing] | Four-tier usage-based pricing (checked 2026-11-26; supersedes the five-tier structure effective 2026-02-24) |
 | [Trae blog index][trae-blog] | GA dates: SOLO GA Nov 4 2025, SOLO beta Mar 31 2026, Trae Work Jun 9 2026 (accessed 2026-06-16) |
 | [Unit 221B telemetry report][unit221b] | ByteDance device tracking, persistent connections, JWT exposure analysis |
 | [The Register, Jul 28 2025][register] | ~500 calls/7 min, 26 MB telemetry, ByteDance official response |

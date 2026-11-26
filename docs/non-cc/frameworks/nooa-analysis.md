@@ -3,7 +3,7 @@ title: NOOA — NVIDIA Object-Oriented Agents Framework
 source: https://github.com/NVIDIA-NeMo/labs-OO-Agents
 purpose: Evaluate NOOA's object-oriented Python paradigm for agent development against the workflow/graph frameworks already covered in this corpus
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -33,12 +33,12 @@ class SupportAgent(Agent):
         ...
 ```
 
-The GitHub repository (`NVIDIA-NeMo/labs-OO-Agents`) had 2,235 stars and 302 forks, and its
+The GitHub repository (`NVIDIA-NeMo/labs-OO-Agents`) had 2,331 stars and 321 forks (checked 2026-11-26), and its
 license is **Apache 2.0** (confirmed from the repo's `LICENSE` file — the GitHub UI's automatic
 detector reports the ambiguous `NOASSERTION`/"Other" for this repo, so the file was read
-directly). The project's latest tagged release is `v0.0.10` (published 2026-09-04, accessed
-2026-09-24), and its repository was created 2026-07-20 — an early-stage, actively pushed project
-(last push 2026-09-24). It ships an accompanying [arXiv paper][nooa-paper] and an
+directly). The project's latest tagged release is `v0.0.12` (published 2026-11-06, accessed
+2026-11-26), and its repository was created 2026-07-20 — an early-stage, actively pushed project
+(last push 2026-11-26). It ships an accompanying [arXiv paper][nooa-paper] and an
 [NVIDIA developer blog post][nooa-blog] describing "six agent harness capabilities for higher
 model performance."
 
@@ -80,7 +80,7 @@ node graph, which should make agents easier to unit-test, refactor, and version-
 standard tooling. It is backed by NVIDIA-NeMo Labs and has an arXiv paper and a dedicated
 developer-blog writeup, giving it more research grounding than a typical early hobby project.
 
-Against that: the project is under three months old, its latest tagged release is `v0.0.10`
+Against that: the project is about four months old, its latest tagged release is `v0.0.12`
 (pre-1.0), and — like any framework that executes LLM-generated code — it inherits the sandboxing
 burden the README itself flags. No first-party evidence of Claude Code or CC-adjacent tooling
 integration was found as of 2026-09-24. **Assess**, not **Trial**, until the API and release
@@ -102,8 +102,8 @@ cadence stabilize past `v0.x`.
 |---|---|
 | [NVIDIA-NeMo/labs-OO-Agents README][nooa-gh] | Framework description, code example, install commands, safety note |
 | [NVIDIA-NeMo/labs-OO-Agents LICENSE][nooa-license] | Apache 2.0 full text (read directly; GitHub UI license detector returns "Other/NOASSERTION" for this repo) |
-| `gh api repos/NVIDIA-NeMo/labs-OO-Agents` | Stars (2,235), forks (302), created (2026-07-20), pushed (2026-09-24), accessed 2026-09-24 |
-| `gh api repos/NVIDIA-NeMo/labs-OO-Agents/releases/latest` | Latest tag `v0.0.10`, published 2026-09-04, accessed 2026-09-24 |
+| `gh api repos/NVIDIA-NeMo/labs-OO-Agents` | Stars (2,331), forks (321), created (2026-07-20), pushed (2026-11-26), checked 2026-11-26 |
+| `gh api repos/NVIDIA-NeMo/labs-OO-Agents/releases/latest` | Latest tag `v0.0.12`, published 2026-11-06, checked 2026-11-26 |
 | [arXiv:2607.20709][nooa-paper] | Accompanying paper, linked from the repo README |
 | [NVIDIA developer blog][nooa-blog] | "Six agent harness capabilities for higher model performance," linked from the repo README |
 

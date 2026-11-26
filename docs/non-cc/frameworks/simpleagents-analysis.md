@@ -3,7 +3,7 @@ title: SimpleAgents Analysis
 source: https://github.com/CraftsMan-Labs/SimpleAgents
 purpose: Architecture analysis of SimpleAgents — Rust-first LLM agent framework with polyglot bindings and YAML workflow orchestration.
 created: 2026-03-29
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: assess
 ---
@@ -13,7 +13,7 @@ status: assess
 Rust-first framework for building LLM agent applications with a unified OpenAI-compatible provider client, YAML-driven workflow authoring, and polyglot bindings ([repo][repo]).
 
 - **Stack**: Rust (edition 2021, MSRV 1.75), 7 crates in workspace
-- **Version**: 0.5.2 | **License**: Apache-2.0 (root) / MIT OR Apache-2.0 (crates, per `Cargo.toml`) | **Stars**: 34
+- **Version**: 0.5.2 | **License**: Apache-2.0 (root) / MIT OR Apache-2.0 (crates, per `Cargo.toml`) | **Stars**: 36 (checked 2026-11-26)
 - **Bindings**: Python (PyO3), Node.js/TypeScript (N-API, npm `simple-agents-node`), WASM (Rust backend) — Go/C-FFI removed in v0.3.7
 - **Docs**: VitePress at `docs.simpleagents.craftsmanlabs.net`
 
@@ -44,7 +44,7 @@ Custom workflow steps run as an in-process "custom worker" callback inside each 
 | Issue | Detail |
 |---|---|
 | [#25][gh-25] | Skills system for coding agents — requested but unbuilt |
-| No GitHub Releases | v0.5.2 in Cargo.toml; 82 git tags (v0.2.4–v0.5.2) but 0 formal GitHub Releases |
+| No GitHub Releases | v0.5.2 in Cargo.toml; 48 git tags (v0.2.7–v0.5.2; checked 2026-11-26) but 0 formal GitHub Releases |
 | Bus factor of 1 | 696 contributions from single contributor |
 
 ## Positioning

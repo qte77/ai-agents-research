@@ -3,7 +3,7 @@ title: Tencent Cloud CodeBuddy Analysis
 source: https://www.codebuddy.ai/
 purpose: Analysis of CodeBuddy as a Tencent Cloud AI coding agent spanning IDE plugin, standalone IDE, and CLI surfaces.
 created: 2026-06-16
-updated: 2026-11-09
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: assess
 ---
@@ -12,11 +12,11 @@ status: assess
 
 CodeBuddy (Tencent Cloud Code Assistant) is a **full-stack AI coding agent** developed by [Tencent Cloud][codebuddy-home]. It operates across three surfaces: an **IDE plugin** (VS Code, JetBrains, WeChat Developer Tools), a **standalone IDE** (CodeBuddy IDE, described informally as "Chinese Cursor"), and a **CLI agent** (CodeBuddy Code CLI, launched September 2025). Tencent positions it as the first Chinese product to offer all three forms simultaneously.
 
-The product is powered primarily by Tencent's own **Hunyuan** large language model (including the HY3-Preview variant as of 2026) and [DeepSeek V3][codebuddy-release-notes] as a second model option. It supports 200+ programming languages and frameworks.
+The product is powered primarily by Tencent's own **Hunyuan** large language model (including the HY3-Preview variant as of 2026) and DeepSeek V3 as a second model option (unverified at first party; the [release notes][codebuddy-release-notes] mention Claude, Kimi, GLM, GPT-5.x and custom models via `.codebuddy/models.json`). It supports 200+ programming languages and frameworks (unverified).
 
 Its strongest differentiator is **deep integration with the WeChat / Mini Program ecosystem** — it trains on WeChat and Tencent Cloud API documentation and supports WeChat Developer Tools natively. For teams building outside that ecosystem, differentiation is narrower.
 
-Version 4.9.5 (released 2026-04-15, per [release notes][codebuddy-release-notes]) is the latest IDE release observed on 2026-06-16.
+Version 4.10.4 (released 2026-07-22, per [release notes][codebuddy-release-notes]) is the latest IDE release observed on 2026-11-26.
 
 ## How It Works
 
@@ -39,7 +39,7 @@ CodeBuddy surfaces four autonomous tiers:
 
 - **MCP protocol**: ACP protocol support added in v2.0 (early 2026); [plugin marketplace][codebuddy-plugins] distributes extensions via JSON manifests from local paths, GitHub repos, GitLab, or HTTP URLs — analogous to Claude Code's Model Context Protocol (MCP) server model.
 - **Skills**: A configurable skills system (added v2.0) lets teams define reusable agent capabilities.
-- **Rules / Hooks / Commands**: Plugin marketplace manifest supports Rules, MCP, Skills, Commands, and Hooks — a surface overlap with Claude Code's `AGENTS.md` / `.claude/` conventions.
+- **Rules / Hooks / Commands**: Plugin marketplace manifest supports Commands, Agents, Skills, Hooks, and MCP servers (Rules is not listed on the plugin-marketplace page) — a surface overlap with Claude Code's `AGENTS.md` / `.claude/` conventions.
 - **SDK**: Opened for external integration in v2.0.
 
 ### IDE support
@@ -54,15 +54,15 @@ v2.0 introduced a **secure code execution environment** based on an isolated san
 
 | Tier | Price |
 |---|---|
-| **Free / Trial** | 50 daily Craft credits; limited features (confirmed via search, not stated on first-party pricing page) |
-| **Pro (monthly)** | USD $9.95/month (50% promotional discount from $19.90); 1,000 credits/month |
-| **Pro (yearly)** | USD $119.40/year |
+| **Free / Trial** | 100 base credits/month plus 30 promotional credits/day during a limited-time offer; 7-day Pro trial (checked 2026-11-26) |
+| **Pro (monthly)** | USD $10.00/month; 2,000 credits/month (1,000 base + 1,000 bonus; checked 2026-11-26) |
+| **Pro (yearly)** | USD $96.00/year ($8.00/month billed annually; checked 2026-11-26) |
 | **Team (monthly)** | USD $40.00/seat/month; 1,000 credits/seat pooled; admin console |
 | **Team (yearly)** | USD $480.00/seat/year |
-| **Enterprise Flagship (RMB)** | CNY 198/user/month (raised from CNY 78, effective 2026-05-15; ~154% increase) |
+| **Enterprise Flagship (RMB)** | CNY 198/user/month (third-party only) (raised from CNY 78, effective 2026-05-15; ~154% increase) |
 | **Enterprise Exclusive (RMB)** | CNY 316/user/month (raised from CNY 158; 100% increase) |
 
-Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabilities and CloudAgent platform access. Credits are consumed per conversation turn; rate varies by model (Hunyuan vs DeepSeek) and task complexity.
+Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabilities and CloudAgent platform access. Credits are consumed per conversation turn; rate varies by model (Hunyuan vs DeepSeek; unverified) and task complexity.
 
 ## Adoption Decision
 
@@ -70,18 +70,18 @@ Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabili
 |---|---|
 | **Use case** | IDE plugin + standalone IDE + CLI agent; full SDLC coverage |
 | **Vendor** | Tencent Cloud (Chinese hyperscaler) |
-| **Models** | Hunyuan (HY3-Preview) + DeepSeek V3; no multi-provider switching stated |
+| **Models** | Hunyuan (HY3-Preview) + DeepSeek V3 (unverified); release notes also list other third-party models and custom models |
 | **Extensibility** | MCP/ACP, Skills, plugin marketplace, SDK, Hooks, Rules |
 | **Autonomy** | Craft Mode (multi-file), Plan Mode, parallel agents, sandboxed CLI |
 | **WeChat ecosystem** | Native; strongest differentiation for WeChat/Mini Program developers |
 | **Pricing** | Credit-based; free tier limited; enterprise pricing rose sharply in May 2026 |
 | **License** | Proprietary (not open source) |
 | **Headless / CLI** | Yes — CodeBuddy Code CLI, launched September 2025 |
-| **Maturity** | GA (IDE v4.9.5 as of 2026-04-15); CLI launched 2025-09; active development |
+| **Maturity** | GA (IDE v4.10.4 as of 2026-07-22); CLI launched 2025-09; active development |
 
-**Strengths**: Three-surface coverage (plugin/IDE/CLI) from one vendor is unusual at this maturity level. MCP/ACP + Skills + sandbox + parallel agents in v2.0 closes the gap with Claude Code and GitHub Copilot CLI architecturally. WeChat ecosystem depth is unmatched. Promotional pricing ($9.95/month Pro) is aggressive.
+**Strengths**: Three-surface coverage (plugin/IDE/CLI) from one vendor is unusual at this maturity level. MCP/ACP + Skills + sandbox + parallel agents in v2.0 closes the gap with Claude Code and GitHub Copilot CLI architecturally. WeChat ecosystem depth is unmatched. Pro at $10.00/month with 2,000 credits is aggressive (checked 2026-11-26).
 
-**Risks**: Tencent Cloud vendor concentration and data-residency considerations matter for non-Chinese enterprises. Model selection is narrower than multi-provider peers (Copilot CLI, Kilo Code). The sharp May 2026 enterprise price hikes (~100–154%) signal pricing instability. CLI surface is newer and less documented than IDE surface. Not open source — no self-host path without enterprise contract.
+**Risks**: Tencent Cloud vendor concentration and data-residency considerations matter for non-Chinese enterprises. Model selection is unverified against multi-provider peers (Copilot CLI, Kilo Code). The sharp May 2026 enterprise price hikes (~100–154%) signal pricing instability. CLI surface is newer and less documented than IDE surface. Not open source — no self-host path without enterprise contract.
 
 **Verdict**: Worth **assessing** for teams targeting the WeChat/Tencent ecosystem, or as a cost-competitive alternative to Copilot in APAC. For most Western enterprise shops, Copilot CLI or Claude Code remains the lower-risk choice given vendor and pricing uncertainty.
 
@@ -103,7 +103,7 @@ Enterprise plans include 2,000 credits/user/month plus WorkBuddy office capabili
 |---|---|
 | [CodeBuddy home][codebuddy-home] | Vendor confirmation (Tencent Cloud), product positioning |
 | [Pricing docs (codebuddy.ai)][codebuddy-pricing] | USD plan names, credit amounts, Pro/Team pricing |
-| [Release notes][codebuddy-release-notes] | Version 4.9.5 (2026-04-15); Agents mode, Skills, MCP, sandbox |
+| [Release notes][codebuddy-release-notes] | Version 4.10.4 (2026-07-22); Agents mode, Skills, MCP, sandbox |
 | [CLI launch article (aibase.com)][codebuddy-cli-news] | CLI agent description, WeChat ecosystem scope, September 2025 launch |
 | [Enterprise price hike (BigGo Finance)][codebuddy-pricing-news] | May 2026 RMB pricing changes (+100–154%); plan names |
 | [EEWorld / QbitAI article][codebuddy-eeworld] | v2.0 Plan Mode, ACP protocol, SDK, sandbox, Skills — fetched 2026-06-16 (page returned empty; facts corroborated via WebSearch) |

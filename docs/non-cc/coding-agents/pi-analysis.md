@@ -3,7 +3,7 @@ title: Pi — Minimal Extensible AI Coding Agent CLI
 source: https://pi.dev/
 purpose: Evaluate Pi as an open-source terminal coding agent harness with multi-provider LLM support and extension-first architecture
 created: 2026-06-16
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: trial
 ---
@@ -20,18 +20,18 @@ home under [Earendil Inc.][pi-home] in May 2026, with npm packages republished u
 Pi is the third named harness integrated by [Omnigent][omnigent-doc], alongside Claude Code and
 Codex, confirming its standing as a peer-level coding agent in that ecosystem.
 
-The monorepo ships three packages (as of v0.79.4, 2026-06-15, accessed 2026-06-16; latest release as of 2026-11-18: v1.5.2, 2026-11-10, via `gh api`):
+The monorepo's `packages/` directory now lists 12 directories (agent, ai, chord, codemode, coding-agent, durable, env, evals, mcp, schema, telemetry, tui; checked 2026-11-26; directory names are not confirmed to equal npm package names); latest release v1.6.1, 2026-11-25, via `gh api`. Three core packages, as of v0.79.4 (2026-06-15):
 
 - **`@earendil-works/pi-coding-agent`** — interactive CLI for coding tasks
 - **`@earendil-works/pi-agent-core`** — runtime handling tool-calling and state management
 - **`@earendil-works/pi-ai`** — unified multi-provider LLM API
 
-The GitHub repository (`earendil-works/pi`) had approximately 46,000 stars as of 2026-06-16.
+The GitHub repository (`earendil-works/pi`) has approximately 124,000 stars and 16,000 forks as of 2026-11-26 (about 46,000 stars on 2026-06-16).
 
 ## How It Works
 
 Pi operates as a terminal-based agent loop. The core loop is deliberately minimal (described as
-approximately 150 lines), leaving capabilities to the extension layer rather than embedding them
+approximately 150 lines; unverified, pi.dev says only that the system prompt is minimal), leaving capabilities to the extension layer rather than embedding them
 in the core.
 
 **Operational modes** (per [pi.dev][pi-home], accessed 2026-06-16):
@@ -77,9 +77,9 @@ renames that propagate through re-exports and barrel files, a real debugger back
 kernels, memory/skills persisted across sessions, and live session sharing (`omp join` or a
 browser link with a QR code).
 
-**Repository facts** (`gh api repos/can1357/oh-my-pi`, accessed 2026-09-24): 33,081 stars, 3,513
-forks, **MIT** license, latest tagged release `v18.3.0` (published 2026-09-24) — substantial
-traction for a fork (Pi itself has ~46k stars, per the Sources above), and the omp repository's
+**Repository facts** (`gh api repos/can1357/oh-my-pi`, checked 2026-11-26): 39,946 stars, 4,640
+forks, **MIT** license, latest tagged release `v19.2.1` (published 2026-11-25) — substantial
+traction for a fork (Pi itself has ~124k stars, per the Sources above), and the omp repository's
 push history shows continuous daily activity.
 
 **Installation** (accessed 2026-09-24):
@@ -92,17 +92,16 @@ irm https://omp.sh/install.ps1 | iex             # Windows PowerShell
 ```
 
 **Homepage vs. repo framing.** The [omp.sh][omp-site] landing page separately markets an "omp²"
-positioning — a "native Rust core" with Windows-native support requiring no WSL — which is
+positioning — a "native Rust core" with Windows-native support requiring no WSL (unverified) — which is
 consistent with, but more forward-leaning than, the GitHub README's own "~80k lines of Rust core"
 figure and its plain PowerShell/Windows install path. This doc describes the GitHub-repo-documented
-`v18.3.0` release; the omp.sh page's "omp²" framing is noted here as a homepage marketing claim, not
-independently confirmed as a distinct shipped version.
+`v19.2.1` release; the omp.sh page's headline reads "omp², soon!", so omp² is presented as upcoming, not as a shipped version.
 
 ## Adoption Decision
 
 Pi occupies a well-defined niche: a minimal, transparent, extension-first coding agent for
 developers who want to own their toolchain rather than accept a feature-complete but opinionated
-harness. With 46k GitHub stars, an MIT license, active release cadence (v0.79.4 on 2026-06-15),
+harness. With 124k GitHub stars (checked 2026-11-26), an MIT license, active release cadence (v1.6.1 on 2026-11-25),
 and first-class integration in [Omnigent][omnigent-doc], it has demonstrated community traction.
 
 **For adoption in this project's context**: Pi is worth **Trial** status. Its multi-provider
@@ -127,8 +126,8 @@ the first-party site (not stated, as of 2026-06-16).
 
 | Source | Content |
 |---|---|
-| [Pi homepage][pi-home] | Feature overview, installation, pricing (MIT/free), 2026-06-16 |
-| [earendil-works/pi GitHub][pi-gh] | Repository, license (MIT), star count (~46k), v0.79.4 release date 2026-06-15, accessed 2026-06-16 |
+| [Pi homepage][pi-home] | Feature overview, installation, license (MIT), 2026-06-16 |
+| [earendil-works/pi GitHub][pi-gh] | Repository, license (MIT), star count (~124k), v1.6.1 release date 2026-11-25, checked 2026-11-26 |
 | [Pi new home announcement][pi-new-home] | Organizational move from @mariozechner to Earendil Inc., v0.74.0 transition, accessed 2026-06-16 |
 | [pi-coding-agent PyPI][pi-pypi] | Separate community package by Ashutosh Sharma (MIT, v0.6.0 2026-06-12); distinct from earendil-works/pi |
 | [omnigent-analysis.md][omnigent-doc] | Pi named as peer harness alongside Claude Code and Codex in Omnigent meta-harness |
@@ -136,8 +135,8 @@ the first-party site (not stated, as of 2026-06-16).
 | [Dan Saattrup Smart blog][pi-blog] | Practitioner writeup on Pi in Neovim workflow, 2026-06-02 |
 | [can1357/oh-my-pi README][omp-gh] | omp fork description, provider/tool/LSP/DAP counts, Rust-core line count, install commands, accessed 2026-09-24 |
 | [omp.sh][omp-site] | Homepage "omp²" framing (Rust core, no-WSL Windows support) |
-| `gh api repos/can1357/oh-my-pi` | Stars (33,081), forks (3,513), license (MIT), accessed 2026-09-24 |
-| `gh api repos/can1357/oh-my-pi/releases/latest` | Latest tag `v18.3.0`, published 2026-09-24 |
+| `gh api repos/can1357/oh-my-pi` | Stars (39,946), forks (4,640), license (MIT), checked 2026-11-26 |
+| `gh api repos/can1357/oh-my-pi/releases/latest` | Latest tag `v19.2.1`, published 2026-11-25 |
 
 [pi-home]: https://pi.dev/
 [pi-gh]: https://github.com/earendil-works/pi

@@ -3,7 +3,7 @@ title: Prime Agent Analysis
 source: https://github.com/PrimeIntellect-ai/prime-agent
 purpose: Analysis of Prime Agent, Prime Intellect's open-source self-improving coding harness built on the Recursive Language Model (RLM) abstraction, for long-horizon coding and autonomous-task workflows.
 created: 2026-09-24
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -13,14 +13,14 @@ status: assess
 Prime Agent is Prime Intellect's open-source, self-improving coding-agent harness for long-horizon coding and autonomous-task workflows ([repo][repo]). The accompanying paper describes it as "an open-source harness for long-horizon evaluation and coding-agent workflows" ([arXiv:2608.23552][paper]).
 
 - **License**: MIT
-- **Stars**: 21,261 (verified 2026-09-24)
-- **Language**: TypeScript
+- **Stars**: 22,931 (checked 2026-11-26)
+- **Language**: Rust (primary, about 26.2 MB; Python about 2.9 MB; checked 2026-11-26), with a persistent Python REPL as the model's control environment
 
 ## Architecture
 
 Two abstractions anchor the design ([repo][repo], [paper][paper]):
 
-- **Recursive Language Model (RLM)** — the model's context is treated as variables and its tools as function calls inside a persistent REPL (the harness itself is TypeScript; the RLM abstraction is language-agnostic), rather than a flat prompt-and-response loop.
+- **Recursive Language Model (RLM)** — the model's context is treated as variables and its tools as function calls inside a persistent REPL (the harness itself is primarily Rust, with a Python REPL as the control environment; the RLM abstraction is language-agnostic), rather than a flat prompt-and-response loop.
 - **Continual Harness** — supplemental prompts, histories, memories, and skills persist as durable state across task trajectories instead of resetting each session, while the base system prompt stays immutable.
 
 Supporting mechanisms documented in the repo:
@@ -48,7 +48,7 @@ A separate paper trains the model to fit an RLM-style harness rather than buildi
 - **Average score over eight long-context benchmarks (Table 4, [HTML][rlm-cg-html], read 2026-11-24):** RLM-27B 58.5 vs 46.1 for the untrained RLM harness on the same base model (+12.4 points, about +27% relative). The comparison rows with RL instead of SFT score 52.9 (RL on the synthetic tasks) and 48.5 (RL on short tasks).
 - **Chained tasks (Table 6):** full-chain solve rate 55.2% for RLM-27B vs 19.3% for Qwen3.8-27B in the same harness; 77.5% for RLM-27B with additional recursion SFT data (depth 3).
 - **Cost:** the paper states about 2x fewer inference tokens in the abstract and, for root trajectories in section 4.2, 3x fewer turns and 6x fewer input tokens.
-- **Artifacts:** code [`alexzhang13/harness-cg`][rlm-cg-repo] (MIT per its LICENSE file; 17 stars, `gh api` 2026-11-24) and a synthetic SFT [dataset][rlm-cg-data].
+- **Artifacts:** code [`alexzhang13/harness-cg`][rlm-cg-repo] (MIT per its LICENSE file; 24 stars, `gh api` 2026-11-26) and a synthetic SFT [dataset][rlm-cg-data].
 
 For the RLM and CodeAct framing of sub-LLM calls, see [programmatic-tool-calling-analysis.md](../protocols/programmatic-tool-calling-analysis.md#speculative-programmatic-tool-calling-spec-ptc).
 

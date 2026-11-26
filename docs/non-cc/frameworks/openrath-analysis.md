@@ -3,7 +3,7 @@ title: OpenRath — PyTorch-Like Multi-Agent / Multi-Session Runtime
 source: https://github.com/Rath-Team/OpenRath
 purpose: Evaluate OpenRath's Session-centered runtime abstraction for multi-agent, multi-session Python workflows and its v2.0.0 durable-execution layer
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -32,7 +32,7 @@ The README draws an explicit analogy to PyTorch's own abstractions:
 Sessions can be forked into branches, merged back together, and handed between agents — a
 collaboration pattern the README contrasts with single-session, agent-loop-first frameworks.
 
-**Repository facts** (`gh api repos/Rath-Team/OpenRath`, accessed 2026-09-24): 1,138 stars, 59
+**Repository facts** (`gh api repos/Rath-Team/OpenRath`, checked 2026-11-26): 954 stars, 51
 forks, **BSD-3-Clause** license, created 2026-05-04, latest tagged release `v2.0.0` (published
 2026-07-31). An accompanying paper, [arXiv:2606.19409][openrath-paper] ("OpenRath: Session-Centered
 Runtime State for Agent Systems," Wen/Wang/Xu, submitted 2026-06-17), documents the Session
@@ -75,7 +75,7 @@ analogy gives Python developers a familiar mental model. The v2.0.0 durability l
 effect ledger, durable interrupts) targets a production concern most agent frameworks leave to the
 caller.
 
-Against that: 1.1k stars and 59 forks is modest traction four months after creation, the
+Against that: 954 stars and 51 forks is modest traction four months after creation, the
 accompanying paper explicitly defers quantitative evaluation, and no first-party evidence of
 Claude Code or CC-adjacent integration was found as of 2026-09-24. **Assess**, watching for
 production case studies and independent benchmark evidence.
@@ -92,7 +92,7 @@ production case studies and independent benchmark evidence.
 | Source | Content |
 |---|---|
 | [Rath-Team/OpenRath README][openrath-gh] | Session/Sandbox/Memory/Tool/Agent/Workflow/Selector design, PyTorch analogy table, v2.0.0 durable-runtime description, install commands |
-| `gh api repos/Rath-Team/OpenRath` | Stars (1,138), forks (59), license (BSD-3-Clause), created (2026-05-04), accessed 2026-09-24 |
+| `gh api repos/Rath-Team/OpenRath` | Stars (954), forks (51), license (BSD-3-Clause), created (2026-05-04), checked 2026-11-26 |
 | `gh api repos/Rath-Team/OpenRath/releases/latest` | Latest tag `v2.0.0`, published 2026-07-31, accessed 2026-09-24 |
 | [arXiv:2606.19409][openrath-paper] | "OpenRath: Session-Centered Runtime State for Agent Systems" (Wen, Wang, Xu), submitted 2026-06-17, linked from the repo README |
 
