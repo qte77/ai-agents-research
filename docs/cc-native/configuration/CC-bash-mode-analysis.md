@@ -3,7 +3,7 @@ title: CC Bash Mode — CLI `!` Prefix and Dynamic Context Injection in Skills/R
 source: https://code.claude.com/docs/en/interactive-mode
 purpose: Document bash mode usage in CLI interactive sessions and dynamic shell execution within skills and rules files.
 created: 2026-03-12
-updated: 2026-11-09
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: adopt
 ---
@@ -78,7 +78,7 @@ Rapid iteration combining bash mode with fast mode ([source][cc-interactive-mode
 
 ### Permission Behavior
 
-Bash mode commands respect the configured permission rules. They may still trigger approval prompts based on allow/deny classifications in your permission settings ([source][cc-interactive-mode]).
+Shell mode does not require Claude to interpret or approve the command. Unless the session is one of those under strict sandbox mode, commands typed in shell mode run outside the sandbox even when sandboxing is enabled, because the sandbox applies to the commands Claude runs ([source][cc-interactive-mode], checked 2026-11-26). That the user's allow/deny permission rules also apply to them is unverified.
 
 ## Dynamic Context Injection (`` !`command` ``)
 
@@ -127,6 +127,8 @@ Skills support these built-in variables alongside bash injection ([source][cc-sk
 | `${CLAUDE_SKILL_DIR}` | Directory containing the skill's `SKILL.md` |
 | `${CLAUDE_EFFORT}` | Current effort level: `low`/`medium`/`high`/`xhigh`/`max` |
 | `${CLAUDE_PROJECT_DIR}` | Project root directory; usable in bash injection and in `allowed-tools` rules (requires v2.1.196+) |
+| `${CLAUDE_PLUGIN_ROOT}` | Plugin installation directory (plugin skills only) |
+| `${CLAUDE_PLUGIN_DATA}` | Plugin persistent data directory (plugin skills only) |
 
 ### Use Cases for Dynamic Injection
 
@@ -198,7 +200,9 @@ While `.claude/rules/*.md` files are static markdown (no bash injection support)
 | **Preprocessing only** | Commands run before Claude sees the prompt — no interactive or conditional execution |
 | **No `$()` syntax** | Uses `` !`command` `` (backtick), not `$(command)` shell substitution |
 | **Timeout** | Long-running commands may timeout; keep injection commands fast |
-| **Error handling** | If a command fails, the error output (or empty string) replaces the placeholder — no retry logic |
+| **Error handling** | A failed command aborts the entire skill invocation, and Claude never sees the skill content. Append `|| true` for commands expected to exit non-zero; with the default bash shell, exit code 1 from search and comparison commands counts as a normal result and codes of 2 or higher fail (checked 2026-11-26) |
+| **Inline placement** | The inline form is recognized only when `!` starts a line or follows whitespace; `` KEY=!`cmd` `` stays literal. Multi-line commands use a fenced ` ```! ` block |
+| **Shell and policy** | The `shell` frontmatter field selects `bash` (default) or `powershell`; the `disableSkillShellExecution` setting replaces each command with `[shell command execution disabled by policy]` |
 
 ## Comparison: CLI `!` vs Skill `` !`cmd` ``
 
@@ -216,8 +220,8 @@ While `.claude/rules/*.md` files are static markdown (no bash injection support)
 ### CLI Bash Mode
 
 - Commands run with the user's full shell permissions
-- Permission rules (allow/deny) still apply based on settings
-- No sandboxing beyond CC's configured permission model
+- Commands typed in shell mode run outside the sandbox even when sandboxing is enabled, unless the session is under strict sandbox mode ([cc-interactive-mode], checked 2026-11-26)
+- Whether allow/deny permission rules apply to shell-mode commands is unverified
 
 ### Dynamic Context Injection
 
@@ -250,7 +254,7 @@ The Agent SDK provides a server-side Bash tool (`bash_20250124`) that is distinc
 |---|---|---|
 | **Side** | Client-side (user's terminal) | Server-side (Claude requests execution, host implements) |
 | **Session** | User's shell | Persistent bash session maintained by host |
-| **Pricing** | No API cost (direct execution) | 325 input tokens per request including the bash tool (Claude Opus 4.7/4.8); 244 input tokens (Claude Opus 4.6, Claude Sonnet 4.6, and earlier), plus output/error tokens |
+| **Pricing** | No API cost (direct execution) | 325 input tokens per request including the bash tool (Claude 4.7 and later models and Claude Mythos Preview); 244 input tokens (Claude 4.6 and earlier models) (checked 2026-11-26), plus output/error tokens |
 | **Approval** | None (direct) | Host controls execution policy |
 | **State** | User's env | Persistent across tool calls (env vars, cwd) |
 
