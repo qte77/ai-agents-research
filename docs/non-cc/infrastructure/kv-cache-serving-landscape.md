@@ -2,7 +2,7 @@
 title: KV-Cache Serving Landscape — Vendor Prompt Caching & Inference Internals
 purpose: "Survey of KV (key-value) cache mechanisms in LLM serving: vendor prompt-caching APIs (Anthropic, OpenAI, Gemini) and open serving-stack internals such as paging, prefix reuse and offload."
 created: 2026-07-08
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: reference
 ---
@@ -24,13 +24,13 @@ that doc doesn't. See also the KV-cache-invalidation gotcha for self-hosted back
 ## 1. Vendor prompt-caching APIs (KV reuse as a billing/latency feature)
 
 All three expose **cross-request KV reuse** (skip prefill on a shared prefix) as an API feature. Exact
-prefix match only — no semantic/fuzzy matching. Cache **read** is ~90% cheaper than base input.
+prefix match only — no semantic/fuzzy matching. Cache **read** is ~90% cheaper than base input on most models (Anthropic and OpenAI list cheaper read rates for some newer models; see the table).
 
 | Vendor | Mechanism | Min prefix | TTL | Read / write pricing |
 |---|---|---|---|---|
-| **Anthropic** | Explicit `cache_control` breakpoints (auto or ≤4 manual); cumulative-hash prefix | 1,024 (Opus 4.8, Sonnet 5/4.6/4.5); 4,096 (Opus 4.6/4.5, Haiku 4.5); 2,048 (Opus 4.7); 512 (Fable 5.x/Mythos 5.x, Opus 5/5.5, Sonnet 5.5, Haiku 5.5) | 5-min default (free refresh) / 1-hour opt-in | read 0.1×; write 1.25× (5m) / 2× (1h) |
-| **OpenAI** | Automatic prefix caching (no flag); hash of ~first 256 tokens; optional `prompt_cache_key` for routing affinity | 1,024 (then 128-tok increments) | 5–60 min inactivity, up to 1 h; extended tier to 24 h | read 0.1× (90% off) |
-| **Google Gemini** | Implicit (on by default, 2.5+) + explicit `CachedContent` resource (generateContent API) | 2,048 (2.5 Flash/Pro); 4,096 (3.x preview) | implicit auto; explicit default 1 h, configurable | cached-token rate (~0.1×) **plus** a per-hour storage rate |
+| **Anthropic** | Explicit `cache_control` breakpoints (auto or ≤4 manual); cumulative-hash prefix | 1,024 (Opus 4.8, Sonnet 5/4.6/4.5); 4,096 (Opus 4.6/4.5, Haiku 4.5); 2,048 (Opus 4.7); 512 (Fable 5.x/Mythos 5.x, Opus 5/5.5, Sonnet 5.5, Haiku 5.5) | 5-min default (free refresh) / 1-hour opt-in | read 0.1× (0.05× for Opus 5.5 / Sonnet 5.5; 0.025× for Fable 5.1/5.2 and Mythos 5.1/5.2, per the pricing footnotes); write 1.25× (5m) / 2× (1h) |
+| **OpenAI** | Automatic prefix caching (no flag); hash of the initial tokens after hidden OpenAI content (count varies by model); optional `prompt_cache_key` for routing affinity | 1,024 for GPT-5.6 and later; earlier models vary with request settings (reported cached tokens round down to a multiple of 128) | Earlier models: about 5–10 min inactivity, up to 1 h; `24h` retention up to 24 h. GPT-5.6 and later: 30 min default, 12 h in the Responses API | read 0.1× (90% off) on most models, 0.05× on some GPT-6.x models; GPT-5.6 and later write 1.25× (30m) / 2.5× (12h) |
+| **Google Gemini** | Implicit (on by default, 2.5+) + explicit `CachedContent` resource (generateContent API) | 2,048 (2.5 Flash/Pro); 4,096 (Gemini 3.1 Pro Preview, 3.6 Flash, 3.8 Flash and the Gemini 4 models) | implicit auto; explicit default TTL not stated on the caching page (earlier "1 h" unverified), configurable | the page says only that cost savings are passed on; earlier "~0.1×" and per-hour storage rate unverified |
 
 Anthropic's per-model minimums verified against the [prompt-caching docs][anthropic-caching]
 (2026-07-08; 512-token list re-read 2026-11-23). An earlier note here said Bedrock uses 1,024 for Fable 5 / Mythos 5; that was corrected on 2026-10-15 (see [CC-prompt-caching-behavior.md](../../cc-native/context-memory/CC-prompt-caching-behavior.md#minimum-cacheable-prefix)). CC picks the TTL tier per request (it is not limited to the 5-min tier); see
@@ -49,7 +49,7 @@ Anthropic's per-model minimums verified against the [prompt-caching docs][anthro
   virtual-memory idea one level up from PagedAttention: decouples GPU *virtual* addressing from
   *physical* KV allocation so vLLM (≥v0.8.4) and SGLang (≥v0.4.9) can elastically share one GPU across
   multiple LLM instances with no engine-code changes, plus a frontend router and per-model sleep mode.
-  **Shipped** — v0.1.5 (2026-04-07), 2,054 stars (`gh api` 2026-11-22), and listed under the README's own "Trusted and
+  **Shipped** — v0.1.6 (2026-10-03), 2,055 stars (`gh api` 2026-11-26), and listed under the README's own "Trusted and
   deployed by" logos (Google, LinkedIn, Intel, AMD, Red Hat, and others; accessed 2026-09-24). Vendor-
   reported benchmark: **2–28x TTFT reduction** serving three Llama-3.1-8B instances on one A100-80G
   under intermittent-peak load, vs. static per-model memory reservation.
@@ -114,7 +114,7 @@ Anthropic's per-model minimums verified against the [prompt-caching docs][anthro
   N1.6-N1.7/Pi0-FAST) plus LLM serving (Qwen3.6-27B). TTFT speedup over cold prefill scales 3.9x (2k
   tokens) to 27x (16k tokens); sub-millisecond GPU-resident snapshot/restore. Positioned as
   complementary to, not competing with, mainstream high-throughput KV-cache serving. **Research/early**
-  — repo ~3 months old, 821 stars (`gh api` 2026-11-22).
+  — repo ~3 months old, 827 stars (`gh api` 2026-11-26).
 
 ## Cache timing, isolation and local reuse
 
@@ -166,7 +166,7 @@ cached tensors. Evidence levels below are peer-reviewed or preprint as stated.
 
 | Item | What it does | Evidence / status (as of 2026-11-25) |
 |---|---|---|
-| **llama.cpp server** ([repo][llamacpp]) | `--slot-save-path` plus `POST /slots/{id}?action=save` / `restore` write a slot's prompt cache to a file and reload it; `cache_prompt` reuse defaults on | MIT, 136,235 stars, pushed 2026-11-25; documented in the server README |
+| **llama.cpp server** ([repo][llamacpp]) | `--slot-save-path` plus `POST /slots/{id}?action=save` / `restore` write a slot's prompt cache to a file and reload it; `cache_prompt` reuse defaults on | MIT, 136,358 stars, pushed 2026-11-26; documented in the server README |
 | **CacheGen** ([2310.07240][cachegen]) | Compresses and streams KV caches; reports 3.5-4.3x smaller cache and 3.2-3.7x lower fetch+processing delay vs prior reuse systems | SIGCOMM'24; [repo][cachegen-repo] 176 stars, no licence field, last push 2024-10-09 (stale) |
 | **CacheBlend** ([2405.16444][cacheblend]) | Reuses non-prefix KV caches (retrieval-augmented generation (RAG) chunks) with partial recompute; 2.2-3.3x lower TTFT, 2.8-5x throughput | Preprint; abstract page links [LMCache][lmcache]; standalone [repo][cacheblend-repo] 207 stars, no licence field, last push 2025-07-15 |
 | **SCBench** ([2412.10319][scbench]) | Benchmark of long-context methods from a KV-cache angle (12 tasks, 8 solution categories); sub-O(n) memory methods struggle in multi-turn | ICLR 2025. Measures accuracy under KV reuse, **not** cache hit rate or TTFT savings |
@@ -213,7 +213,7 @@ engine such as vLLM, SGLang, LMCache or llama.cpp.
 
 [anthropic-caching]: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 [openai-caching]: https://developers.openai.com/api/docs/guides/prompt-caching
-[gemini-caching]: https://ai.google.dev/gemini-api/docs/caching
+[gemini-caching]: https://aistudio.google.com/docs/caching
 [paged]: https://arxiv.org/abs/2309.06180
 [vllm]: https://github.com/vllm-project/vllm
 [vattention]: https://arxiv.org/abs/2405.04437

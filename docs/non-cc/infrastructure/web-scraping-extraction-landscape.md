@@ -3,7 +3,7 @@ title: Web Scraping and Data Extraction — Tool Landscape
 source: https://github.com/qte77/polyfetch-scrape/blob/main/docs/scraping-landscape.md
 purpose: Single-source-of-truth catalog of scraping, crawling, and extraction tooling for agent/RAG pipelines across the qte77 ecosystem
 created: 2026-04-23
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: reference
 ---
@@ -32,7 +32,7 @@ Claude Code provides two built-in tools for web access — no setup required.
 
 | Tool | What it does | Limitations |
 |------|-------------|-------------|
-| **WebSearch** | Search query → titles + URLs (Claude.ai backend) | US-only; returns URLs only, not content |
+| **WebSearch** | Search query → titles + URLs (Anthropic web search backend) | Available on the Claude API, Claude Platform on AWS, Claude Models on Google Cloud (Anthropic managed) and Microsoft Foundry, not on Amazon Bedrock; returns URLs only, not content |
 | **WebFetch** | URL → HTML-to-markdown → LLM summary | No JS rendering; 10MB limit; PDF bug (returns binary); 15-min cache |
 | **Read** | Local PDF/image parsing (poppler-utils) | Max 20 pages/request; not a web tool |
 
@@ -44,7 +44,7 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 
 | Tool | License | TLS Fingerprinting | Differentiator |
 |------|---------|-------------------|----------------|
-| [curl_cffi](https://github.com/lexiforest/curl_cffi) | MIT | Yes (JA3/HTTP2/HTTP3) | Impersonates Chrome 99-146; fastest TLS bypass |
+| [curl_cffi](https://github.com/lexiforest/curl_cffi) | MIT | Yes (JA3/HTTP2/HTTP3) | Impersonates Chrome up to 152 per the v0.17.0 README (earlier lower bound "99" unverified); fastest TLS bypass |
 | [tls_client](https://github.com/FlorianREGAZ/Python-Tls-Client) | MIT | Yes (JA3) | Go-based, simpler API, Python bindings |
 | [httpx](https://github.com/encode/httpx) | BSD-3 | No | Modern async/sync client, HTTP/2; no anti-bot |
 | [aiohttp](https://github.com/aio-libs/aiohttp) | Apache-2.0 | No | High-performance async; no TLS spoofing |
@@ -72,7 +72,7 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 
 **Magnitude — vision-first, two products from `magnitudedev`.** [Magnitude](https://magnitude.run) (`@magnitudedev/browser-agent` + `magnitude-test`, ~4.1 k stars, TypeScript) drives the browser through a visually-grounded LLM (Claude Sonnet 4 recommended; most non-vision OpenAI/Gemini/Llama models unsupported) and works as a Model Context Protocol (MCP) tool in Cline/Cursor/Windsurf — resilient to UI churn that breaks selector-based tools. Do **not** confuse it with [magnitude.dev](https://magnitude.dev), the same org's separate **CLI coding agent** (open-model routing — GLM 5.2 + DeepSeek V4 Flash + Kimi K2.7 Code; pass-through pricing + $5 free credits; license unconfirmed). Selector-based contrast: [CC web-scraping plugins analysis](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md) (Playwright MCP).
 
-**Lightpanda — built-from-scratch, not a Chromium fork.** [Lightpanda](https://lightpanda.io) ([repo](https://github.com/lightpanda-io/browser), AGPL-3.0, 35.5k★ verified 2026-09-24) is a headless browser engine written in Zig from scratch — not a Chromium or WebKit fork — targeting automation/crawling/AI workloads rather than human browsing. It speaks the Chrome DevTools Protocol, so it works as a drop-in replacement in existing Puppeteer/Playwright code. Lightpanda's own site reports (vendor benchmark, not independently reproduced here) ~9x faster crawling than Chrome (5s vs 46s) and ~16x lower peak memory (123MB vs 2GB).
+**Lightpanda — built-from-scratch, not a Chromium fork.** [Lightpanda](https://lightpanda.io) ([repo](https://github.com/lightpanda-io/browser), AGPL-3.0, 42.6k★, `gh api` 2026-11-26) is a headless browser engine written in Zig from scratch — not a Chromium or WebKit fork — targeting automation/crawling/AI workloads rather than human browsing. It speaks the Chrome DevTools Protocol, so it works as a drop-in replacement in existing Puppeteer/Playwright code. Lightpanda's own site reports (vendor benchmark, not independently reproduced here) ~9x faster crawling than Chrome (5s vs 46s) and ~16x lower peak memory (123MB vs 2GB).
 
 **moli — also built from scratch, Rust instead of Zig.** [moli](https://github.com/lexmount/moli) (dual MIT/Apache-2.0 — confirmed by opening and reading both `LICENSE-MIT` and `LICENSE-APACHE` directly; GitHub's single-value repo API field reports only Apache-2.0; 16,369★, created 2026-08-10, verified 2026-10-11) is a standalone headless-browser kernel built in Rust — not a Chromium or WebKit fork — as a workspace of 95 `moli-*` top-level directories (`moli-dom`, `moli-layout`, `moli-css-parse`, `moli-renderer-v8`, `moli-protocol-cdp`, `moli-protocol-webdriver-bidi`, among others; count confirmed from the repo's own root directory listing, not from `[workspace] members` in `Cargo.toml`). It defaults to `LayoutPolicy::Mock` — reading DOM/style state directly, with no layout or paint — and only runs real layout/screenshots when `--layout` is passed — its own "structure first, pixels on demand" design. One binary serves CDP, WebDriver Classic, and WebDriver BiDi (no separate ChromeDriver/geckodriver), and the repo ships three installable agent skills (`github.com/lexmount/moli/tree/main/skills`: `moli-cdp-server`, `moli-webfetch`, `moli-websearch`) that an agent installs to drive it directly. On Lexmount's own benchmark suite (vendor-authored, not independently reproduced here), moli's README reports beating Lightpanda on both a 192-URL mixed public-web crawl (103 useful pages / 53.6% success vs. Lightpanda's 85 / 44.3%) and the 1,308-task Lexbench-Headless-Browser suite (81.9% vs. Lightpanda's 53.3%, against Chrome's 99.8% reference). Moli is Lexmount's open-source engine; Lexmount Browser is a separate managed cloud layer built on top, and the open-source browser is fully usable standalone.
 
@@ -82,7 +82,7 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 - **No anti-detection goal.** Patchright exists to hide automation leaks; moli's README never mentions stealth, and the one related item is a closed issue, [lexmount/moli#371](https://github.com/lexmount/moli/issues/371) ("stealth(renderer): expose Chromium `window.chrome` surface").
 - **Distribution:** a prebuilt binary through an installer script piped into the shell (`moli-installer.sh | sh`), not a PyPI or npm package. The README lists Linux, macOS and Windows; musl/Alpine is unverified.
 - **Fidelity is the vendor's own number:** 81.9% vs Chrome's 99.8% on Lexmount's Lexbench-Headless-Browser, not independently reproduced.
-- **Moving fast:** 20,397★ and `v1.1.19` (2026-10-21) as of this check, so expect API churn.
+- **Moving fast:** 24.5k★ and `v1.1.27` (2026-11-20) as of 2026-11-26, so expect API churn.
 
 At most an optional, experimental CDP backend for low-fidelity, structure-first crawling, and only after a spike shows that console and network events, full-page screenshots and typed input work over `connect_over_cdp()`. The verdict is unchanged; note that "console events" is a criterion Patchright itself fails for page-script output (see the polyfetch subsection below), so the spike should compare against that baseline, not against full Playwright behaviour.
 
@@ -122,7 +122,7 @@ A third way to feed a rendered page to an LLM, between raw DOM/HTML and vision/s
 |------|---------|-------------|----------------|
 | [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) | MIT | No | Pythonic HTML/XML parse-tree navigation over lxml/html5lib |
 | [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup) | MIT | No | Requests + BeautifulSoup with auto cookie/form handling |
-| [Requests-HTML](https://github.com/psf/requests-html) | MIT | Yes (pyppeteer) | HTML parsing + JS rendering; stale but widely adopted (13,798 stars): last release v0.10.0 2019-02-18, last push 2024-04-16 (`gh api` 2026-11-22) |
+| [Requests-HTML](https://github.com/psf/requests-html) | MIT | Yes (pyppeteer) | HTML parsing + JS rendering; stale but widely adopted (13,797 stars): last release v0.10.0 2019-02-18, last push 2024-04-16 (`gh api` 2026-11-26) |
 
 ## AI/LLM-Native Scrapers
 
@@ -149,7 +149,7 @@ Prices read from each vendor's pricing page on **2026-11-18**; they change often
 | [Serper](https://serper.dev/) | 2.5K queries, no card | $1.00 (Starter, $50 for 50K) down to $0.30 (Ultimate, $3,750 for 12.5M) | Google SERP proxy with knowledge graphs |
 | [SerpAPI](https://serpapi.com/pricing) | 250 searches/mo | $25 (Starter, $25 for 1K), $7.25 at 100K, about $3.75 (Cloud 1M, $3,750 for 1M) | Multi-engine (Google, Bing, Baidu, Yandex) |
 | [Brave Search](https://brave.com/search/api/) | $5 credit/mo (page headline also says "up to $20") | $5 (Search plan); Answers plan $4 plus token fees | Own search index (page count not stated on the cited page; Brave's own pages give differing figures); privacy-focused |
-| [SearXNG](https://github.com/searxng/searxng) | Self-hosted | Free (AGPL-3.0) | Self-hostable metasearch; docs say "260 search engines of which 81 are enabled by default" ([SearXNG docs](https://docs.searxng.org/user/configured_engines.html), read 2026-11-18); no API keys |
+| [SearXNG](https://github.com/searxng/searxng) | Self-hosted | Free (AGPL-3.0) | Self-hostable metasearch; docs say "261 search engines of which 80 are enabled by default" ([SearXNG docs](https://docs.searxng.org/user/configured_engines.html), read 2026-11-26); no API keys |
 
 Notes: Serper's table lists credits per plan; we read one credit as one query (the excerpt we read did not say). Per-1K figures for SerpAPI and Serper are our division of plan price by plan quota, not figures the vendors publish.
 

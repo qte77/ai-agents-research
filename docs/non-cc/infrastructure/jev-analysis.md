@@ -2,7 +2,7 @@
 title: Jev (TypeSafe AI) — System-One Decision Model
 purpose: What Jev is (question types, pricing, limits) and the qte77/feelings measured pilot using it as a pre-CI code-review gate.
 created: 2026-09-30
-updated: 2026-10-24
+updated: 2026-11-26
 validated_links_on: 2026-10-24
 status: trial
 ---
@@ -27,16 +27,14 @@ weigh multiple factors in one call.
 
 ## Pricing and Limits
 
-Verified at [docs.typesafe.ai/models][typesafe-models] on 2026-09-30 — re-check before
-relying on these; TypeSafe states its own limits "can change without notice":
+Verified at [docs.typesafe.ai/models][typesafe-models] on 2026-09-30 and re-checked 2026-11-26 — re-check before
+relying on these:
 
-- Model: `jev-1.13.0`; the `jev-latest` and `jev-preview` aliases both currently point to it.
+- Model: `jev-1.14.0` (available from 2026-10-14); `jev-1.13.0` is still listed and pinnable. The `jev-latest` and `jev-preview` aliases both point to `jev-1.14.0` (no preview build exists right now).
 - Input tokens cost $0.042 per million ($42 per billion); output tokens are free.
 - 64k tokens per request (the `state` plus every question combined); 32k tokens for the
-  `state` plus the single longest question.
-- Rate limits: 100k tokens/second and 40 requests/second, but "Rate limits are adjusting
-  dynamically. We are serving a very large volume of demand, and the limits above can change
-  without notice while we do."
+  `state` plus the single longest question. A `TypeSafe-Danger-Zone-Long-Context: true` header raises both limits to 262k tokens (slower and less accurate).
+- Rate limits: set per organization, shown in the developer console, measured in tokens per second and requests per second; exceeding either returns 429, and higher limits are available on custom and enterprise plans. The earlier published figures (100k tokens/second, 40 requests/second) are no longer on the page.
 
 ## Measured: Pre-CI Code-Change Gate
 
@@ -107,7 +105,7 @@ classifier API, not a persistent store, so **Shared** and **Versionable** are ma
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| n/a (stateless per-request API; no shared store for multiple agents to read/write) [docs.typesafe.ai/api][typesafe-api] | partial (hosted multi-tenant service — "serving a very large volume of demand" — but no documented multi-node deployment for a self-run client) [docs.typesafe.ai/models][typesafe-models] | partial (a pinnable versioned model, `jev-1.13.0`, but the default `jev-latest`/`jev-preview` aliases drift, and no decoding-determinism guarantee is documented) [docs.typesafe.ai/models][typesafe-models] | yes (three question types — `noul`/`choice`/`score` — cover yes/no, multi-option and rubric-scored decisions without a schema rewrite) [docs.typesafe.ai/api][typesafe-api] | n/a (no persistent user-owned state to snapshot, diff or roll back; only the model release itself is versioned) [docs.typesafe.ai/models][typesafe-models] | no (returns a probability/confidence, not a citation or audit trail; self-reported confidence is not traceability) [docs.typesafe.ai/api][typesafe-api] |
+| n/a (stateless per-request API; no shared store for multiple agents to read/write) [docs.typesafe.ai/api][typesafe-api] | partial (hosted multi-tenant service (earlier docs wording "serving a very large volume of demand" is no longer on the page) but no documented multi-node deployment for a self-run client) [docs.typesafe.ai/models][typesafe-models] | partial (a pinnable versioned model, `jev-1.14.0` (current; `jev-1.13.0` also listed), but the default `jev-latest`/`jev-preview` aliases drift, and no decoding-determinism guarantee is documented) [docs.typesafe.ai/models][typesafe-models] | yes (three question types — `noul`/`choice`/`score` — cover yes/no, multi-option and rubric-scored decisions without a schema rewrite) [docs.typesafe.ai/api][typesafe-api] | n/a (no persistent user-owned state to snapshot, diff or roll back; only the model release itself is versioned) [docs.typesafe.ai/models][typesafe-models] | no (returns a probability/confidence, not a citation or audit trail; self-reported confidence is not traceability) [docs.typesafe.ai/api][typesafe-api] |
 
 `scored 2026-09-30`
 
@@ -120,7 +118,7 @@ third-party, community-run "Decision Index" leaderboard (61.56 vs. 57.9) — a f
 doc could only partly reconcile against that board's own live data. See
 [system-1-decision-models-landscape.md § OpenAI Decisions API][s1-openai] and
 [§ Perplexity pplx-decider][s1-pplx] for details, including a self-reported, unverified LinkedIn
-leaderboard claiming both outscore Jev 1.13 on a 669-decision clinical benchmark.
+leaderboard claiming both outscore Jev 1.13 (the default has been 1.14.0 since 2026-10-14) on a 669-decision clinical benchmark.
 
 ## Cross-References
 

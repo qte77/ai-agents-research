@@ -2,7 +2,7 @@
 title: Agentic Database Access — MCP Servers, Text-to-SQL, Write Safety
 purpose: "How agents reach databases: vendor database MCP servers and read-only controls, text-to-SQL benchmarks, and write-safety evidence (read-only roles, branching, incidents). As of 2026-11-18."
 created: 2026-11-18
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -20,7 +20,7 @@ each vendor's own docs or repo as of 2026-11-18.
 
 | Server | License | Read-only control (documented) | Notes |
 |---|---|---|---|
-| [MCP Toolbox for Databases][toolbox] (Google, `googleapis/mcp-toolbox`) | Apache-2.0 | Not stated on the README; tools are defined per database/toolset | Open-source Model Context Protocol (MCP) server for many databases (Google Cloud services plus PostgreSQL, MySQL, SQL Server, Oracle, MongoDB, Snowflake and others); README examples use v1.17.0; ~16.9k stars on 2026-11-18 (`gh api`) |
+| [MCP Toolbox for Databases][toolbox] (Google, `googleapis/mcp-toolbox`) | Apache-2.0 | Not stated on the README; tools are defined per database/toolset | Open-source Model Context Protocol (MCP) server for many databases (Google Cloud services plus PostgreSQL, MySQL, SQL Server, Oracle, MongoDB, Snowflake and others); README examples use v1.18.0 (checked 2026-11-26); ~16.9k stars on 2026-11-18 (`gh api`) |
 | [Supabase MCP][supabase-mcp] (`supabase/mcp`) | Apache-2.0 | `read_only=true` URL parameter (runs SQL as a read-only Postgres user per the [security guidance][supabase-docs]); `project_ref` scoping; `features` groups | Its [docs][supabase-docs] say to connect to production only when the task needs production evidence, and then to combine project scoping, read-only mode and limited feature groups. ~3.0k stars on 2026-11-18; the old `supabase-community` URL redirects here; the separate postgrest MCP package is deprecated |
 | [Neon MCP][neon-mcp] (`neondatabase/mcp-server-neon`) | MIT | `?readonly=true` hides write tools and runs `run_sql` in a READ ONLY transaction; `projectId`, `category`, `roleName`, `secrets` parameters | Hosted at the Neon MCP endpoint; local stdio package deprecated; the [README][neon-mcp] says it is for local development and IDE use, not production; the [docs page][neon-docs] says the same and that the local stdio package is deprecated |
 | [PlanetScale MCP][planetscale-mcp] | Hosted service (not open source) | Access scope none / read-only / full per organization or database; admins set query access separately | `UPDATE`/`DELETE` without `WHERE` and `TRUNCATE` blocked; DDL asks for human confirmation; short-lived credentials; Vitess and Postgres |
@@ -72,10 +72,9 @@ Layers, cheapest first; none is sufficient alone.
 2. **Tool-level modes are not a boundary.** The Anthropic reference Postgres MCP server wrapped each
    query in a read-only transaction, but Datadog Security Labs showed (2025-08-21) that a statement
    such as `COMMIT; DROP SCHEMA public CASCADE;` ended that transaction and ran writes. Datadog says the flaw
-   is present from v0.1.0, that 0.6.2 is the latest npm/Docker release and unpatched, that a Zed fork
+   is present from v0.1.0, that 0.6.2 was the latest npm/Docker release and unpatched as of the article (2025-05-29; its timeline says Anthropic fixed it in git via PR #1889 and archived the server, but the fix was not released), that a Zed fork
    (`@zeddotdev/postgres-context-server` v0.1.4) carries the fix, and that the server is deprecated and
-   archived ([Datadog][datadog-pg]). Evidence: researcher-reported (Datadog Security Labs); vendor
-   response not found.
+   archived ([Datadog][datadog-pg]). Evidence: researcher-reported (Datadog Security Labs); no direct Anthropic statement found beyond the git fix and archive described in Datadog's timeline.
 3. **Branching before merging.** Neon's migration tools run a change on a temporary branch and apply
    it to the main branch only on a second call (`prepare_database_migration`,
    `complete_database_migration`; [README][neon-mcp]); Supabase's guidance tells users to test changes on a

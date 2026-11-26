@@ -2,7 +2,7 @@
 title: Data Platforms and Lakehouses for Agents — Table Formats, Branching, Warehouse-Native Agents, Scratch Engines, Cost Controls
 purpose: "What the data-lake and lakehouse layer offers an agent: open table formats, catalogs, warehouse-native agents, local analytical engines, and cost and permission controls. As of 2026-11-18."
 created: 2026-11-18
-updated: 2026-11-21
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -93,7 +93,7 @@ queries against the warehouse.
 |---|---|---|---|
 | [DuckDB][duckdb] | MIT | v2.0.1 (2026-11-20) | In-process SQL; DuckLake 1.1 requires 2.0.0 or later. MotherDuck's MCP server is covered in [agentic-database-access-landscape.md](agentic-database-access-landscape.md) |
 | [chDB][chdb] | Apache-2.0 | v4.5.1 (2026-11-18) | In-process ClickHouse engine |
-| [Polars][polars] | MIT | py-2.1.0 (2026-10-25) | DataFrame library; not SQL-first |
+| [Polars][polars] | MIT | py-2.2.0 (2026-11-24, checked 2026-11-26) | DataFrame library; not SQL-first |
 
 DuckDB's [security guidance][duckdb-secure] lists settings for running untrusted SQL: `enable_external_access =
 false`, allow-lists (`allowed_directories`), disabling auto-install and community extensions,

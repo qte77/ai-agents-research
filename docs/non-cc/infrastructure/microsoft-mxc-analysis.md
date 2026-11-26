@@ -3,13 +3,13 @@ title: Microsoft MXC (Execution Containers) Analysis
 source: https://github.com/microsoft/mxc
 purpose: Analysis of Microsoft's MXC, a cross-platform, policy-driven sandbox SDK for running agent-generated code and tools, with a Windows-native process container.
 created: 2026-11-09
-updated: 2026-11-12
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: assess
 ---
 
-**Details:** MIT; v1.0.0 GA 2026-10-07, latest v1.0.1 (2026-10-17, unchanged); 3,132★ (re-checked
-2026-11-12, up from 3,116★). Also runs on or integrates with: `windows`, `linux`, `macos`.
+**Details:** MIT; v1.0.0 GA 2026-10-07, latest v1.1.0 (2026-11-15; adds experimental MicroVM (NVX, Windows x64) and Windows 365 for Agents backends, Dev JSON APIs and Seatbelt Learning Mode); 3,198★ (checked
+2026-11-26). Also runs on or integrates with: `windows`, `linux`, `macos`.
 
 ## What It Is
 
@@ -25,7 +25,7 @@ For this corpus its main interest is Windows: Claude Code's own sandbox has no n
 |---|---|---|
 | Windows 11 x64 / ARM64 | `processcontainer` (AppContainer-based) | `windows_sandbox`\*, `wslc`, `microvm`\*, `hyperlight`\*, `isolation_session` |
 | Linux x64 / ARM64 | `bubblewrap` | `lxc`, `hyperlight` |
-| macOS | `seatbelt` | — |
+| macOS (ARM64 / x64) | `seatbelt` | — |
 
 \* experimental. The README says "MicroVM is currently available on Windows x64 only"; the blog's table lists MicroVM for "Windows 11 and Linux, experimental". The two disagree; the README is the more specific source. On Windows the process container's network policy is enforced with WFP filters ([networking docs][mxc-networking]), and each backend has a minimum Windows 11 build ([OS-version support][mxc-os]).
 
@@ -41,13 +41,13 @@ The blog says agents and frameworks "already support MXC, including GitHub Copil
 
 ## Caveats
 
-- **Telemetry.** For the development `1.1.0-alpha` request contract, official builds send Required diagnostic data (four events: execution start and end, categorized failures, process exits). Per the README these "need no user consent or per-request opt-in, and administrative policy does not block them". The published `0.9.0-alpha` and `1.0.0` contracts keep telemetry optional.
+- **Telemetry.** Per the README (checked 2026-11-26), eligible Windows builds send Required diagnostic data for all supported request contracts (`0.9.0-alpha`, `1.0.0` and `1.1.0-alpha`) (four events: execution start and end, categorized failures, process exits). Per the README these "need no user consent or per-request opt-in, and administrative policy does not block them". Consent-management APIs remain but do not enable or disable Required collection; local debug builds are not routed to Microsoft, while release builds built from source are routed unless the component path variable is set empty; telemetry is a no-op on non-Windows platforms.
 - **Experimental backends.** Windows Sandbox, MicroVM and Hyperlight are marked experimental; the GA claim covers the stable contract and default backends.
 - **Containment strength varies by backend.** A process container (AppContainer, Seatbelt, Bubblewrap) is a weaker boundary than a VM; the blog positions MicroVM for "Higher-risk workloads that benefit from a hardware-backed virtualized boundary."
 
 ## Adoption Decision
 
-**Assess.** Shipped, MIT, cross-platform, with a deny-by-default policy and a learning mode for writing policies. It matters for Claude Code on Windows if Anthropic ships the support Microsoft announced; until then, Claude Code's documented options on Windows remain WSL2-based. Watch: Anthropic confirmation, Intune management, and whether Required telemetry carries into the next stable contract.
+**Assess.** Shipped, MIT, cross-platform, with a deny-by-default policy and a learning mode for writing policies. It matters for Claude Code on Windows if Anthropic ships the support Microsoft announced; until then, Claude Code's documented options on Windows remain WSL2-based. Watch: Anthropic confirmation, Intune management.
 
 ## Cross-References
 
@@ -59,7 +59,7 @@ The blog says agents and frameworks "already support MXC, including GitHub Copil
 | Source | Content |
 |---|---|
 | [Windows Developer blog, 2026-10-07][blog] | GA announcement, backend table, Enforcement/Learning/Permissive modes, agent support lists, OpenShell integration, Intune plan, Windows 365 GA |
-| [microsoft/mxc README][repo] | Name, backends per platform, experimental flags, audit-mode warning, telemetry; `gh api` (MIT `LICENSE.md`, releases v1.0.0 2026-10-07 / v1.0.1 2026-10-17 — no newer release as of re-check, 3,132★), re-read 2026-11-12 |
+| [microsoft/mxc README][repo] | Name, backends per platform, experimental flags, audit-mode warning, telemetry; `gh api` (MIT `LICENSE.md`, releases v1.0.0 2026-10-07 / v1.0.1 2026-10-17 / v1.1.0 2026-11-15, 3,198★), re-read 2026-11-26 |
 | [Containment policy 1.0.0][mxc-policy] | Stable contract status, closed JSON request, network deny defaults |
 | [Process-container networking][mxc-networking] | WFP-based network enforcement on Windows |
 | [OS-version support][mxc-os] | Minimum Windows 11 builds per backend |

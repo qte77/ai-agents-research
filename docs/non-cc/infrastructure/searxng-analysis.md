@@ -3,26 +3,26 @@ title: SearXNG Analysis
 source: https://github.com/searxng/searxng
 purpose: Analysis of SearXNG as a self-hostable privacy-respecting metasearch engine usable as a web-search backend for AI agent and deep-research workflows.
 created: 2026-06-13
-updated: 2026-06-13
+updated: 2026-11-26
 validated_links_on: 2026-06-13
 status: assess
 ---
 
 ## What It Is
 
-SearXNG is a free, self-hostable metasearch engine that aggregates results from up to 268 search services — including Google, Bing, DuckDuckGo, Brave, and Startpage — without tracking or profiling users ([repo][repo]).
+SearXNG is a free, self-hostable metasearch engine that aggregates results from many search services (the earlier "up to 268" count is unverified) — including Google, Bing, DuckDuckGo, Brave, and Startpage — without tracking or profiling users ([repo][repo]).
 
 - **License**: AGPL-3.0
-- **Language**: Python (81.5%)
-- **Stars**: 32,000
+- **Language**: Python
+- **Stars**: about 39.9k (checked 2026-11-26)
 
 ## How It Works
 
 SearXNG fans out each query to a configurable set of search engines in parallel, merges and deduplicates the results, and returns them through a single uniform API. The engine list and weights are declared in `settings.yml`; no engine-specific credentials are required for the default set.
 
-**JSON API.** Operators enable the JSON output format in `settings.yml`. Clients then query either `GET /` or `GET /search` with `?q=<query>&format=json`. Optional parameters include `categories`, `engines`, `language`, `pageno`, `time_range`, and `safesearch`. The response contains a flat list of result objects (url, title, content, engine, score). No authentication token is required — the instance is the access boundary. The full parameter set is documented in the [search API reference][api].
+**JSON API.** Operators enable the JSON output format in `settings.yml`. Clients then query either `GET /` or `GET /search` with `?q=<query>&format=json`. Optional parameters include `categories`, `language`, `pageno`, `time_range` (day/month/year), `safesearch` (0/1/2) and `theme`; an `engines` parameter is not documented on the search API page (unverified). An output format that is not enabled returns 403 Forbidden. The response contains a flat list of result objects (url, title, content, engine, score; field list unverified). No authentication token is required — the instance is the access boundary. The full parameter set is documented in the [search API reference][api].
 
-**Self-hosting.** The canonical deployment path is Docker Compose using the image from the project's container directory. NGINX or Apache sit in front as the TLS terminator. For tighter integration, Granian (an ASGI server) or uWSGI are documented alternatives. The `settings.yml` file controls everything: active engines, rate limits, safe-search defaults, and format allowlists. See the [SearXNG documentation][docs] for the complete configuration reference.
+**Self-hosting.** The installation docs list three methods (installation container, installation script, step-by-step) and recommend the container or the script for most users (Docker Compose and TLS termination are not stated on that page). NGINX, Apache, Granian (an ASGI server) and uWSGI have separate documentation pages. The `settings.yml` file controls everything: active engines, rate limits, safe-search defaults, and format allowlists. See the [SearXNG documentation][docs] for the complete configuration reference.
 
 **No user tracking.** SearXNG keeps no query logs by default. Cookies and JavaScript are optional — the engine works with plain HTTP GET requests, which is the typical agent access pattern. Tor exit node compatibility is documented for operators who want an additional anonymity layer.
 
