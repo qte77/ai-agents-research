@@ -22,7 +22,7 @@ Benchmarked by the project on Apple M5 (README, v0.17.0, medians of five runs, c
 - 10-NN vector search at 1M vectors, default 100 MB cache: 1.34 ms p50, 3.1 ms p99, recall@10 95.6%; with a 2 GB cache 0.21 ms p50, 0.46 ms p99.
 - Graph traversal vs. SQLite: level for 1-3 hops and about 2x faster for `*1..5` paths (600 μs vs. 1,361 μs in the repo's competitive-analysis page); SQLite inserts rows several times faster (332K nodes/s vs. 1.84M rows/s). M1 figures (including a 2,819x traversal speedup) are not in the current README.
 
-The README has no cross-vendor comparison section, so no cross-vendor multiples are given here (an "order-of-magnitude orientation" caveat attributed to it is unverified).
+The README benchmarks against SQLite and links a separate [competitive-analysis page][competitive] that lists other systems' published figures as citations kept apart from its own measurements; no cross-vendor multiples are repeated here.
 
 ## Known Gaps
 
@@ -41,9 +41,11 @@ The README has no cross-vendor comparison section, so no cross-vendor multiples 
 | Source | Content |
 |---|---|
 | [LatticeDB GitHub repo][repo] (README) | Architecture, query language, feature list, benchmark tables, license (checked 2026-11-26) |
+| [Competitive analysis][competitive] | SQLite traversal and insert figures (checked 2026-11-26) |
 | [kuzudb/kuzu][kuzu] (repo metadata) | Archived flag and last push date (checked 2026-11-26 via GitHub API) |
 | [jeffhajewski/latticedb][repo] (repo metadata, releases, contributors) | Stars, license, language, created/pushed dates, v0.18.1 release date, 5-contributor count (checked 2026-11-26 via GitHub API) |
 
 [repo]: https://github.com/jeffhajewski/latticedb
 [kuzu]: https://github.com/kuzudb/kuzu
+[competitive]: https://github.com/jeffhajewski/latticedb/blob/main/book/src/performance/competitive-analysis.md
 [site]: https://latticedb.org

@@ -83,7 +83,7 @@ Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, 
 
 **URL**: [github.com/langchain-ai/openwiki](https://github.com/langchain-ai/openwiki) | **Stars**: 18.1k (2026-11-22) | **License**: MIT | **Version**: v0.9.0 (2026-11-05, pre-1.0)
 
-A CLI whose README tagline is "A living wiki for your code, your agents, and you." Its output is a linked Markdown wiki that humans can read (or explore as an interactive graph) and that agents consume as context via MCP retrieval tools (`openwiki_search`, `openwiki_read`); newer README features include linked multi-repo workspaces (`openwiki link`) and many agent integrations (Codex, Claude Code, OpenCode, Cursor, Copilot CLI and others):
+A CLI whose README tagline is "A living wiki for your code, your agents, and you." Its output is a linked Markdown wiki that humans can read (or explore as an interactive graph) and that agents consume as context via Model Context Protocol (MCP) retrieval tools (`openwiki_search`, `openwiki_read`); newer README features include linked multi-repo workspaces (`openwiki link`) and many agent integrations (Codex, Claude Code, OpenCode, Cursor, Copilot CLI and others):
 
 - `npm install -g openwiki`; bootstrap with `openwiki --init`, refresh on change.
 - Writes generated docs into an `openwiki/` directory, and, on each `code` run, maintains an `AGENTS.md` at the repo root (it refreshes `CLAUDE.md` only when the repo already has one, rewriting only its own marked block) so coding agents find the context.

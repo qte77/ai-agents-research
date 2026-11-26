@@ -10,7 +10,7 @@ status: assess
 
 ## What It Is
 
-[OpenShell][repo] is "the safe, private runtime for autonomous AI agents" (GitHub repo description; the older NVIDIA/OpenShell README text says "fleets of autonomous AI agents"),
+[OpenShell][repo] is "the safe, private runtime for autonomous AI agents" (GitHub repo description; the NVIDIA/OpenShell README intro still says "fleets of autonomous AI agents"),
 initially published under the **NVIDIA** GitHub org and now part of the CNCF, with development moved to `ai-openshell/openshell` per the NVIDIA/OpenShell README (**Apache-2.0**, confirmed by
 `gh api`, checked 2026-11-26: about 21,960 stars, 2,156 forks, pushed 2026-11-26, created 2026-02-24). It targets the problem this
 corpus's harness research keeps surfacing: an agent is useful only once it can read files, install

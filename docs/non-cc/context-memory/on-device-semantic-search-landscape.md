@@ -58,7 +58,7 @@ WASM), no API/GPU. `embed()` → 384-dim L2-normalized vectors for both tiers (b
 | [LanceDB][lancedb] | yes (serverless) | yes | IVF-PQ + SQL/FTS filter | Apache-2.0 |
 | [Chroma][chroma] `PersistentClient` | yes | yes | HNSW | Apache-2.0 |
 | [Qdrant local mode][qdrant-client] | yes (`:memory:`/path) | yes | HNSW | Apache-2.0 |
-| [DuckDB `vss`][duckdb-vss] | yes | yes | HNSW (underlying library not stated on the vss page; experimental extension, persistence not recommended for production) | MIT |
+| [DuckDB `vss`][duckdb-vss] | yes | yes | HNSW (uses usearch, per the [duckdb-vss README][duckdb-vss-readme]; experimental extension, persistence not recommended for production) | MIT |
 | [sqlite-vec][sqlite-vec] | yes | yes | ⚠️ **brute-force only today** | Apache-2.0/MIT |
 | [Voy][voy] (stale: last push 2023-09-20, `gh api` 2026-11-22) | yes (WASM) | no (JS) | k-d tree | MIT/Apache-2.0 |
 | [LEANN][leann] | yes (recompute, not store) | yes | HNSW or DiskANN backend | MIT |
@@ -122,7 +122,7 @@ residency-aware gate `azure-doc-workflows#165` proposes).
 |---|---|
 | [ternlight][ternlight] · [demo][ternlight-demo] | Trigger tool: WASM ternary embedder (first-party README, npm sizes, quality table) |
 | [fastembed][fastembed] · [sentence-transformers][sbert] · [model2vec][model2vec] · [Transformers.js][transformers-js] | Layer-A embedders (first-party repos/docs) |
-| [FAISS][faiss] · [usearch][usearch] · [hnswlib][hnswlib] · [LanceDB][lancedb] · [Chroma][chroma] · [Qdrant client][qdrant-client] · [DuckDB vss][duckdb-vss] · [sqlite-vec][sqlite-vec] · [Voy][voy] | Layer-B embedded stores (first-party repos/docs) |
+| [FAISS][faiss] · [usearch][usearch] · [hnswlib][hnswlib] · [LanceDB][lancedb] · [Chroma][chroma] · [Qdrant client][qdrant-client] · [DuckDB vss][duckdb-vss] · [duckdb-vss README][duckdb-vss-readme] · [sqlite-vec][sqlite-vec] · [Voy][voy] | Layer-B embedded stores (first-party repos/docs) |
 | [asg017/sqlite-vec#25][sqlite-vec-25] | sqlite-vec ANN = roadmap-only confirmation |
 | [OpenCLIP][openclip] · [SigLIP2][siglip2] · [Azure AI Vision][azure-vision] | Multimodal encoders |
 | [#383][gh-383] (research 2026-07-12) | Original survey + Radar verdicts this doc promotes |
@@ -141,6 +141,7 @@ residency-aware gate `azure-doc-workflows#165` proposes).
 [chroma]: https://github.com/chroma-core/chroma
 [qdrant-client]: https://github.com/qdrant/qdrant-client
 [duckdb-vss]: https://duckdb.org/docs/2.0/core_extensions/vss.html
+[duckdb-vss-readme]: https://github.com/duckdb/duckdb-vss
 [sqlite-vec]: https://github.com/asg017/sqlite-vec
 [sqlite-vec-25]: https://github.com/asg017/sqlite-vec/issues/25
 [voy]: https://github.com/tantaraio/voy

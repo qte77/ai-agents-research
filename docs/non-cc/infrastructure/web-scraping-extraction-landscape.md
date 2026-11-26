@@ -32,7 +32,7 @@ Claude Code provides two built-in tools for web access — no setup required.
 
 | Tool | What it does | Limitations |
 |------|-------------|-------------|
-| **WebSearch** | Search query → titles + URLs (Anthropic web search backend) | Available on the Claude API, Claude Platform on AWS, Claude Models on Google Cloud (Anthropic managed) and Microsoft Foundry, not on Amazon Bedrock; returns URLs only, not content |
+| **WebSearch** | Search query → titles + URLs (Anthropic web search backend) | Per the Claude Code tools reference, available on the Claude API, Claude Platform on AWS, Claude Models on Google Cloud (Anthropic managed) and Microsoft Foundry (Bedrock not listed); the API web-search tool page lists the same platforms, with only the basic `web_search_20250305` tool on Google-managed Google Cloud and Azure-hosted Foundry; returns URLs only, not content |
 | **WebFetch** | URL → HTML-to-markdown → LLM summary | No JS rendering; 10MB limit; PDF bug (returns binary); 15-min cache |
 | **Read** | Local PDF/image parsing (poppler-utils) | Max 20 pages/request; not a web tool |
 

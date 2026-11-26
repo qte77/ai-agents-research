@@ -11,7 +11,7 @@ status: assess
 
 ## What It Is
 
-[HelixDB][repo] is, per its README (checked 2026-11-26), "an open-source (Apache 2.0) graph database with native vector search and BM25 full-text search, built in Rust on object storage". The README FAQ frames use as memory and retrieval for AI applications (agent memory, GraphRAG/hybrid RAG, knowledge graphs) and answers that a separate vector database is not needed next to it (vectors are properties on nodes and edges). Key-value, document and relational support, and replacing a whole stack of separate databases, are not stated in the README (unverified), so evaluate the consolidation claim against a real workload rather than taking it at face value.
+[HelixDB][repo] is, per its README (checked 2026-11-26), "an open-source (Apache 2.0) graph database with native vector search and BM25 full-text search, built in Rust on object storage". The README FAQ frames use as memory and retrieval for AI applications (agent memory, GraphRAG/hybrid Retrieval-Augmented Generation (RAG), knowledge graphs) and answers that a separate vector database is not needed next to it (vectors are properties on nodes and edges). Key-value, document and relational support, and replacing a whole stack of separate databases, are not stated in the README (unverified), so evaluate the consolidation claim against a real workload rather than taking it at face value.
 
 Stars: 6,315 · License: Apache-2.0 · Language: Rust · Latest release: **v3.7.0** (2026-11-11) · 37 non-anonymous contributors · homepage [helix-db.com][site] (all checked 2026-11-26, via GitHub API + latest-release lookup).
 
@@ -24,7 +24,7 @@ Stars: 6,315 · License: Apache-2.0 · Language: Rust · Latest release: **v3.7.
 
 ## Adoption Decision
 
-**Assess.** Apache-2.0 licensing, 6k+ stars, and an active release cadence (v3.3.0 to v3.7.0, 2026-09-20 to 2026-11-11, five releases in about two months) make HelixDB worth evaluating for AI-agent memory or knowledge-graph backends, especially given first-class multi-language SDKs and the `helix chef` agent-handoff flow. Caveats: it is a young (created Nov 2024), single-vendor, YC-backed project with a hosted-Cloud upsell — check the commercial-vs-self-hosted feature split before depending on it for production memory. The README itself publishes no performance-benchmark figures; independent benchmarks were not sought in this pass and should be run before a capacity-sensitive deployment.
+**Assess.** Apache-2.0 licensing, 6k+ stars, and an active release cadence (v3.3.0 to v3.7.0, 2026-09-20 to 2026-11-11, five minor versions, 12 releases in all, 2026-09-20 to 2026-11-11, checked 2026-11-26) make HelixDB worth evaluating for AI-agent memory or knowledge-graph backends, especially given first-class multi-language SDKs and the `helix chef` agent-handoff flow. Caveats: it is a young (created Nov 2024), single-vendor, YC-backed project with a hosted-Cloud upsell — check the commercial-vs-self-hosted feature split before depending on it for production memory. The README itself publishes no performance-benchmark figures; independent benchmarks were not sought in this pass and should be run before a capacity-sensitive deployment.
 
 ## Sources
 
