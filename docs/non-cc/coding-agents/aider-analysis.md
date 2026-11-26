@@ -3,7 +3,7 @@ title: Aider — Terminal AI Pair Programmer
 source: https://aider.chat/
 purpose: OSS terminal coding agent with git-native workflow and multi-LLM support
 created: 2026-06-16
-updated: 2026-06-22
+updated: 2026-11-26
 validated_links_on: 2026-06-22
 status: adopt
 ---
@@ -19,7 +19,7 @@ via git.
 Key facts (accessed 2026-06-16):
 
 - **License**: Apache-2.0 ([confirmed][aider-license])
-- **Stars**: 46.3 k (GitHub, 2026-06-16)
+- **Stars**: 50.3 k (GitHub, checked 2026-11-26)
 - **Latest release**: v0.86.0 (2025-08-09, per [GitHub releases][aider-releases])
 - **Install count**: 6.8 M total pip installs (aider.chat homepage, 2026-06-16)
 - **Active throughput**: ~15 B tokens/week (aider.chat homepage, 2026-06-16)
@@ -53,7 +53,7 @@ How the map is built and sized ([aider.chat docs][aider-repomap]):
 - **Symbol extraction** — each file is parsed for its key identifiers (classes,
   functions, method signatures) and the critical lines that define them.
 - **Graph ranking** — Aider builds a dependency graph (files as nodes,
-  references as edges) and applies a PageRank-style ranking to surface the
+  references as edges) and applies a PageRank-style (unverified) ranking to surface the
   identifiers most often referenced elsewhere, so the most load-bearing symbols
   win the limited budget rather than a flat file listing.
 - **Token budget** — `--map-tokens` (default **1,000**) caps the map; Aider
@@ -82,10 +82,10 @@ Aider supports virtually any LLM via API, including:
 
 | Provider | Example models |
 |---|---|
-| Anthropic | Claude 3.7 Sonnet, Claude 4.x (main-branch aliases, 2026-06-16) |
+| Anthropic | Claude 3.7 Sonnet, Claude 4.5/4.6 (main-branch aliases, checked 2026-11-26) |
 | OpenAI | GPT-5, o3-mini, GPT-4o |
 | DeepSeek | R1, Chat V3, Reasoner |
-| Google | Gemini 2.5 Pro/Flash |
+| Google | Gemini 2.5 Pro/Flash (unverified) |
 | Local/self-hosted | Any model via OpenAI-compatible endpoint |
 
 Model selection: `aider --model <model-id>`.
@@ -123,7 +123,7 @@ is used to guide model selection recommendations.
 | **Model flexibility** | Any LLM with an OpenAI-compatible API |
 | **Git integration** | First-class — auto-commits, clean diff history |
 | **Headless/CI** | Yes — pure terminal, scriptable, no GUI required |
-| **Maturity** | 46 k stars, 6.8 M installs, active releases (v0.86.0, 2025-08-09) |
+| **Maturity** | 50 k stars (checked 2026-11-26), 6.8 M installs, active releases (v0.86.0, 2025-08-09) |
 | **Self-improvement** | Aider uses itself to write its own code (88 % of v0.86.0) |
 | **Sandboxing** | None built-in — runs linters/tests via shell; trust model |
 
