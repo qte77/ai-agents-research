@@ -103,7 +103,7 @@ URL: [ghuntley][ghuntley]
 
 Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31; the site itself says only "based on publicly available source code" and names neither version nor sourcemap, so that attribution is unverified at this source). Created by autocracy101 (`github.com/zackautocracy`) within hours of the leak using AI-assisted development.
 
-**Sections**: Architecture Explorer (color-coded codebase tiles linking to source files), Agent Loop (message processing from `TextInput.tsx` through response), Tool Systems (40+ tools categorized by function), Command Catalog (50+ slash commands), Hidden Features (Buddy, Kairos, UltraPlan, Coordinator Mode, Bridge, Daemon Mode, UDS Inbox, Auto-Dream).
+**Sections**: Architecture Explorer (color-coded codebase tiles linking to source files), Agent Loop (message processing from `TextInput.tsx` through response), Tool Systems (40+ tools categorized by function), Command Catalog (50+ slash commands), Hidden Features (Buddy, Kairos, UltraPlan (since removed), Coordinator Mode, Bridge, Daemon Mode, UDS Inbox, Auto-Dream).
 
 **Companion repo**: zackautocracy/claude-code *(now redirects to razakiau/claude-code; 1,047 stars, last push 2026-03-31, `gh api` 2026-11-22)* — read-only source snapshot the site navigates. No license. Described as maintained for *"educational, defensive security research, and software supply-chain analysis."*
 

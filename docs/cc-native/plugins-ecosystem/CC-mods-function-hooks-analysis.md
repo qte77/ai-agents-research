@@ -70,7 +70,7 @@ No CONTRIBUTING file, PR template, or README "how to contribute" section was fou
 
 ## Changes in v2.1.321–325
 
-Changelog entries unless marked "documented" (the [plugin manifest reference](https://code.claude.com/docs/en/plugins-reference), read 2026-11-17).
+Changelog entries unless marked "documented" (the [plugin manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference), checked 2026-11-26).
 
 - **Version gating (v2.1.323).** `plugin.json` accepts `engines["claude-code"]`; plugins outside the stated Claude Code range are not installed, updated or loaded, and install and update pick the newest version that fits. Documented: a semver range such as `">=2.1.400"`; v2.0.15 to v2.1.75 reject a manifest that has the field with an `Unrecognized key` error, so omit it to stay compatible with them.
 - **`claude plugin validate` (v2.1.323, v2.1.325).** Type-checks a plugin's TypeScript hooks module (each finding a warning; `--strict` fails on it), reports the `$` nouns a mod's `engine.create` hook adds, withholds or replaces, fails a mod whose `engine.create` hook is not in the one accepted form (installed mods keep loading), and reports some unsafe paths and links in a plugin folder, which loading skips (v2.1.325). `claude plugin install --json` gains `unsetOptionCount`, the number of `userConfig` options not yet set (v2.1.323).
@@ -100,7 +100,7 @@ Changelog entries unless marked "documented" (the [plugin manifest reference](ht
 | [CC-plugin-packaging-research.md §5][packaging-pinning] | Marketplace version-pinning mechanics (`ref`/`sha`/`sha256`), reused for Reproducible above |
 | [anthropics/claude-code `LICENSE.md`][gh-license] | "All rights reserved" — the `mods/` source is published, not open source |
 | [claude.dev mods showcase][claudedev-mods] | Samples, built-ins and the community "Next steps" mod (`next-steps@claude-community`) |
-| [CC CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) / [plugin manifest reference](https://code.claude.com/docs/en/plugins-reference) | v2.1.321–325 plugin and mod entries; `engines` (accessed 2026-11-17) |
+| [CC CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) / [plugin manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference) | v2.1.321–325 plugin and mod entries; `engines` (accessed 2026-11-17) |
 
 [mods-overview]: https://code.claude.com/docs/en/plugins/mods/overview
 [mods-admin]: https://code.claude.com/docs/en/plugins/mods/admin

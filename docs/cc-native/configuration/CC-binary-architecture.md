@@ -196,7 +196,7 @@ Direct observation, Codespaces, 2026-03-29.
 | `telemetry/` | OTel export staging. **Empty unless `CLAUDE_CODE_ENABLE_TELEMETRY=1`** | Binary: `lH(process.env.CLAUDE_CODE_ENABLE_TELEMETRY)`. Exports at 300s intervals (unverified: the monitoring docs give `OTEL_METRIC_EXPORT_INTERVAL` default 60000 ms and `OTEL_LOGS_EXPORT_INTERVAL` default 5000 ms, and a `telemetry/` directory was not confirmed there). See [monitoring docs][monitoring] |
 | `session-env/<session>/` | Per-session environment snapshots | Direct observation |
 | `shell-snapshots/` | Bash shell state snapshots (aliases, functions) | Direct observation |
-| `plugins/` | Plugin cache, blocklist, marketplace metadata. Contains `installed_plugins.json` with `projectPath` entries scoping installs to projects — stale paths cause plugins to silently stop loading for that project. See [plugins reference](https://code.claude.com/docs/en/plugins-reference). Observation: Opus 4.6, 2026-04-13 | Rebuilt on install |
+| `plugins/` | Plugin cache, blocklist, marketplace metadata. Contains `installed_plugins.json` with `projectPath` entries scoping installs to projects — stale paths cause plugins to silently stop loading for that project. See [plugins reference](https://code.claude.com/docs/en/plugins/loading#find-plugins-on-disk). Observation: Opus 4.6, 2026-04-13 | Rebuilt on install |
 | `mcp-needs-auth-cache.json` | MCP auth state cache | Transient |
 
 ### Not in `~/.claude/` (stored elsewhere)

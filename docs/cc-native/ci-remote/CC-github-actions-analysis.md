@@ -12,7 +12,7 @@ status: research
 
 Claude Code GitHub Actions (`anthropics/claude-code-action@v1`) brings AI-powered automation to GitHub workflows. Mention `@claude` in any PR or issue, and Claude analyzes code, creates PRs, implements features, and fixes bugs — following the repo's `CLAUDE.md` standards ([source][cc-gha-docs]).
 
-Built on the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview). Without `--model` the action uses the Claude Code default model (the page no longer states a Sonnet default); its examples use `--model claude-opus-5-5` and `--model claude-sonnet-5` ([source][cc-gha-docs]).
+Built on the [Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview). Without `--model` the action uses the Claude Code default model (the page no longer states a Sonnet default); its examples use `--model claude-opus-5-5` and `--model claude-sonnet-5` ([source][cc-gha-docs]).
 
 The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. Publisher: Anthropic (`@anthropics`); built on the publicly available Claude Agent SDK and provided as a third-party GitHub App governed by separate terms beyond GitHub's ([setup.md][gha-setup]). The full permission surface is documented in [GitHub App Permission Surface](#github-app-permission-surface) below.
 

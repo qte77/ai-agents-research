@@ -224,7 +224,7 @@ Source: [cli-ref][cli-ref]; [sessions guide][sessions-doc], "What a resumed sess
 [permissions]: https://code.claude.com/docs/en/permissions#additional-directories-grant-file-access-not-configuration
 [model-config]: https://code.claude.com/docs/en/model-config
 [mcp]: https://code.claude.com/docs/en/mcp
-[plugins-ref]: https://code.claude.com/docs/en/plugins-reference#cli-commands-reference
+[plugins-ref]: https://code.claude.com/docs/en/plugins/cli-reference#claude-plugin-commands
 [channels]: https://code.claude.com/docs/en/channels
 [channels-ref]: https://code.claude.com/docs/en/channels-reference#test-during-the-research-preview
 [chrome]: https://code.claude.com/docs/en/chrome
