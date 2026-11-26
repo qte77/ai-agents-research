@@ -4,7 +4,7 @@ source: https://github.com/EverMind-AI/Raven
 purpose: Analysis of Raven, EverMind's "harness of harnesses" — a multi-agent orchestrator with a benchmark-gated self-evolution loop and pluggable third-party coding-agent backends.
 platform_scope: [claude-code, github-copilot, qwen-code]
 created: 2026-09-24
-updated: 2026-10-06
+updated: 2026-11-26
 validated_links_on: 2026-10-06
 status: assess
 ---
@@ -35,8 +35,8 @@ Per the README, five components make up the system:
   in this corpus as a Markdown-native, local-first memory layer (see
   [Cross-References](#cross-references)); Raven consumes it rather than
   reimplementing memory.
-- **SkillForge** — retrieves specialized expertise from local libraries and a
-  catalog the README states contains "114,190 skills" (per README, accessed
+- **SkillForge** — retrieves specialized expertise from local libraries, EverOS memory and a
+  SkillHub catalog the README states contains "114,190 skills" (per README, accessed
   2026-09-24 — an unverified vendor count, not independently audited).
 - **Proactivity** — combines event monitoring and scheduled execution for
   anticipatory task initiation.
@@ -49,9 +49,9 @@ software development and debugging), **Raven-Design** (visual design and
 presentation creation), and **Raven-Oncall** (unattended workflow automation
 spanning hours or overnight).
 
-Separately, the README states Raven connects to 13 external agents via ACP,
-CLI, or OpenAI-compatible APIs, including Claude Code, GitHub Copilot, and
-Qwen Code. Claude Code is one of several pluggable third-party backends here,
+Separately, the README states Raven ships presets for 16 third-party agents (plus nine Mirasim-routed presets) via ACP,
+CLI, or OpenAI-compatible APIs (checked 2026-11-26); that they include Claude Code, GitHub Copilot, and
+Qwen Code is unverified. Claude Code is one of several pluggable third-party backends here,
 not an exclusive integration surface — the same pattern documented for MOSS's
 `CodingAgentRunner` interface (see [Cross-References](#cross-references)) —
 which is why this doc sits in `non-cc/` rather than `cc-community/`.
@@ -66,9 +66,9 @@ The WebUI launches with `raven web`.
 ## License and Maturity
 
 Apache-2.0 (per `gh api repos/EverMind-AI/Raven`). Created 2026-05-21, latest
-release `v0.2.0` (published 2026-09-23), most recent push 2026-09-24 —
-4,058 stars, 93 forks, 87 open issues (all via `gh api`, accessed
-2026-09-24). This is a fast-moving, ~4-month-old project; the star/fork
+release `v0.2.8` (published 2026-11-17), most recent push 2026-11-26 —
+6,328 stars, 282 forks, 60 open issues including PRs (all via `gh api`, checked
+2026-11-26). This is a fast-moving, ~6-month-old project; the star/fork
 counts indicate visibility but no independent evidence of production
 adoption was found beyond the repo's own activity.
 
@@ -121,7 +121,7 @@ state.
 | Source | Content |
 |---|---|
 | [EverMind-AI/Raven repo][repo] | README — architecture, components, install methods, built-in agents, third-party integrations, license |
-| GitHub API `repos/EverMind-AI/Raven`, accessed 2026-09-24 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
+| GitHub API `repos/EverMind-AI/Raven`, checked 2026-11-26 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
 | [arXiv 2609.33439 abstract page][raven-paper] | Title, author/affiliation ("EverMind AI"), submission date (2026-09-27), full abstract verbatim, confirmation of no numeric results in the abstract — accessed 2026-10-06 |
 
 [repo]: https://github.com/EverMind-AI/Raven
