@@ -3,7 +3,7 @@ title: CC Plans as Skill and Rule Templates
 purpose: Analysis of Claude Code plan files — anatomy, plan mode mechanics, and patterns for extracting reusable skills and rules from recurring plans.
 status: research
 created: 2026-03-13
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-04-05
 ---
 
@@ -186,43 +186,9 @@ The most reusable parts of plans are:
 - Plans where the context section is the primary value (the "why" doesn't generalize)
 - Plans with fewer than 3 occurrences of the pattern
 
-## UltraPlan — Cloud-Offloaded Planning (Research Preview)
+## UltraPlan — Removed
 
-UltraPlan hands a planning task from the local CLI to a [Claude Code on the web][cc-web] session running Opus in plan mode. The plan drafts asynchronously in the cloud while the terminal stays free for other work. A browser-based review surface provides inline comments, emoji reactions, and an outline sidebar — none of which exist in local plan mode ([source][ultraplan]).
-
-### Invocation
-
-| Method | Example | Notes |
-|--------|---------|-------|
-| Command | `/ultraplan migrate auth from sessions to JWTs` | Shows confirmation dialog |
-| Keyword | Include `ultraplan` anywhere in a normal prompt | Shows confirmation dialog |
-| Escalate from local plan | Choose *"No, refine with Ultraplan on Claude Code on the web"* from local plan approval dialog | Skips confirmation (selection is implicit) |
-
-### Terminal Status Indicators
-
-| Indicator | Meaning |
-|-----------|---------|
-| `◇ ultraplan` | Claude is researching and drafting the plan |
-| `◇ ultraplan needs your input` | Clarifying question — open session link to respond |
-| `◆ ultraplan ready` | Plan ready for browser review |
-
-Run `/tasks` and select the ultraplan entry for session link, agent activity, and a **Stop ultraplan** action.
-
-### Execution After Approval
-
-From the browser, choose one of:
-
-1. **Execute on the web** — Claude implements in the same cloud session; review diff and create PR from the browser
-2. **Teleport back to terminal** — plan sent back to the waiting CLI with three sub-options:
-   - *Implement here* — inject into current conversation
-   - *Start new session* — clear conversation, begin fresh with plan as context (`claude --resume` command printed for return)
-   - *Cancel* — save plan to file without executing
-
-### Requirements and Constraints
-
-- Requires [Claude Code on the web][cc-web] account and a GitHub repository
-- Disconnects [Remote Control][rc] when active (both occupy the claude.ai/code interface)
-- Cloud session runs in the account's default cloud environment
+Ultraplan, the cloud-offloaded planning preview, is no longer available (checked 2026-11-26): the [docs page][ultraplan] says the removal covers the `/ultraplan` command, the `ultraplan` keyword trigger and the "No, refine with Ultraplan on Claude Code on the web" option in the plan approval dialog. The vendor names local plan mode and [Claude Code on the web][cc-web] as the replacements. The plan approval dialog now offers "Yes, and use auto mode" (or the auto-accept-edits / bypass-permissions variant, depending on the session), "Yes, manually approve edits" and "No, keep planning", plus a clear-context option when `showClearContextOnPlanAccept` is on ([permission modes][cc-pm]). The earlier invocation, status-indicator and execution-after-approval tables were dropped.
 
 Cross-ref: [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md) — cloud execution environment details
 
@@ -234,10 +200,9 @@ Cross-ref: [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analys
 
 ## References
 
-- [UltraPlan][ultraplan] — official documentation (research preview)
+- [UltraPlan][ultraplan] — removal notice
 - [Agent Skills Spec](https://agentskills.io/) — open standard for agent skills
 
 [ultraplan]: https://code.claude.com/docs/en/ultraplan
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
-[rc]: https://code.claude.com/docs/en/remote-control
 [cc-pm]: https://code.claude.com/docs/en/permission-modes

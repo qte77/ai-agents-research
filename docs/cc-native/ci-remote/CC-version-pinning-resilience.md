@@ -3,7 +3,7 @@ title: CC Version Pinning & Provider Resilience
 source: https://code.claude.com/docs/en/setup
 purpose: How to pin Claude Code versions for reproducible CI/CD, containers, self-hosted runners and cloud dev environments, and stay resilient to Anthropic API outages or discontinuation.
 created: 2026-03-12
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: reference
 ---
@@ -198,9 +198,9 @@ Self-hosted runners support a wide range of OS and architecture combinations ([s
 
 | OS | Architectures |
 |---|---|
-| Linux | x64, ARM64 |
-| macOS | x64, ARM64 (Apple Silicon) |
-| Windows | x64, ARM64 |
+| Linux | x64, ARM64 (public preview) |
+| macOS | x64, ARM64 (Apple Silicon; public preview) |
+| Windows | x64, ARM64 (public preview) |
 
 ### Deployment Levels
 
@@ -232,16 +232,16 @@ Self-hosted runners need outbound HTTPS (443) to these domains ([source][gh-runn
 | `api.github.com` | API calls |
 | `*.actions.githubusercontent.com` | Action downloads, artifacts |
 | `ghcr.io`, `*.ghcr.io` | Container registry |
-| `objects.githubusercontent.com` | Release asset downloads |
+| `objects.githubusercontent.com` | Runner version updates (with `objects-origin`, `github-releases`, `github-registry-files`); release assets come from `release-assets.githubusercontent.com`; `codeload.github.com` serves actions downloads; `results-receiver.actions.githubusercontent.com` and `*.blob.core.windows.net` carry logs, artifacts and caches |
 
 **CC-specific additions**:
 
 | Domain | Purpose |
 |---|---|
 | `api.anthropic.com` | Anthropic API (primary) |
-| `claude.ai` | CC installer + auto-updates |
+| `claude.ai` | Install script host (`install.sh`, `install.ps1`, `install.cmd`) and claude.ai account authentication; native auto-updates and version checks use `downloads.claude.ai` (from 2.1.116) |
 | `downloads.claude.ai` | CC binary distribution: native installer, native auto-updater, and update version checks (primary since v2.1.116) |
-| `storage.googleapis.com` | Install counts and plugin metadata shown in `/plugin`; signed artifact-upload fallback; native installer/auto-updater only on CC versions prior to 2.1.116 |
+| `storage.googleapis.com` | Install counts and plugin metadata shown in `/plugin`; native installer/auto-updater only on CC versions prior to 2.1.116 |
 | OpenRouter / Bedrock / Vertex endpoints | If using fallback providers |
 
 ### Autoscaling Options
@@ -255,7 +255,7 @@ Self-hosted runners need outbound HTTPS (443) to these domains ([source][gh-runn
 
 ### Security Considerations
 
-- Runners receive **automatic updates** for the runner application only (within 30 days). OS and other software is your responsibility ([source][gh-runners])
+- Runners receive **automatic updates** for the runner application only: with automatic updates on, a runner updates when assigned a job or within a week of release if idle; with them off, it must update within 63 days of a newer version or the service stops assigning it jobs. OS and other software is your responsibility ([source][gh-runners])
 - **Don't need a clean instance** for every job — but for CC, ephemeral mode is recommended to prevent state leakage
 - **Log forwarding**: Configure centralized logging for audit trails of CC command execution
 - **Minimal permissions**: Run the runner process as a dedicated non-root user
@@ -395,5 +395,5 @@ For scenarios where Anthropic may be entirely unavailable (business discontinuat
 [datacamp-docker]: https://www.datacamp.com/tutorial/claude-code-docker
 [local-setup]: https://medium.com/@luongnv89/run-claude-code-on-local-cloud-models-in-5-minutes-ollama-openrouter-llama-cpp-6dfeaee03cda
 [gh-runners]: https://docs.github.com/en/actions/concepts/runners/self-hosted-runners
-[gh-runners-req]: https://docs.github.com/en/actions/concepts/runners/self-hosted-runners#requirements-for-self-hosted-runner-machines
-[gh-runners-net]: https://docs.github.com/en/actions/concepts/runners/self-hosted-runners#communication-requirements
+[gh-runners-req]: https://docs.github.com/en/actions/reference/runners/self-hosted-runners#requirements-for-self-hosted-runner-machines
+[gh-runners-net]: https://docs.github.com/en/actions/reference/runners/self-hosted-runners#requirements-for-communication-with-github

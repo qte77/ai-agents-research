@@ -4,7 +4,7 @@ source: https://generativeprogrammer.com/p/12-agentic-harness-patterns-from
 purpose: Taxonomy of reusable harness-level patterns extracted from the Claude Code source leak.
 status: research
 created: 2026-04-06
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 ---
 
@@ -162,7 +162,7 @@ opaque codes) and states that Claude Code caps tool responses at 25,000 tokens b
 
 ### 12. Deterministic Lifecycle Hooks
 
-Shell commands fire automatically at specific agent lifecycle points, outside the prompt. 25+ hook points at the time of the leak analysis (33 documented events as of 2026-11-15, see the matrix below): `PreToolUse`, `PostToolUse`, `SessionStart`, `CwdChanged`. Mandatory actions belong in hooks, not instructions.
+Shell commands fire automatically at specific agent lifecycle points, outside the prompt. 25+ hook points at the time of the leak analysis (34 documented events (checked 2026-11-26), see the matrix below): `PreToolUse`, `PostToolUse`, `SessionStart`, `CwdChanged`. Mandatory actions belong in hooks, not instructions.
 
 **Evidence: a Stop hook as the goal check (KernelSeek).** In *Ask, Don't Equip* (Oliaro et al.,
 Snowflake AI Research and CMU, [arXiv 2611.03517][kernelseek]), both arms ran in Claude Code
@@ -310,7 +310,7 @@ What each system saves on resume, and what it does not restore, is in [workflow-
 | Sandbox | Bash sandbox, off by default; Seatbelt on macOS, bubblewrap on Linux/WSL2 ([docs][cc-sandbox]) | OS sandbox: Seatbelt, `bwrap` + seccomp, Windows MXC; network off by default ([docs][codex-sec]) | Opt-in via `-s`, `GEMINI_SANDBOX` or settings; Seatbelt profiles, Docker, Podman, `runsc`, `lxc` ([docs][gem-sandbox]) | Not documented on the permissions, tools and config pages read | None built in; containerize it (Docker, Gondolin micro-VM, OpenShell) ([README][pi-readme]) |
 | Permissions | Six modes (`default`, `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions`) plus allow/ask/deny rules ([docs][cc-modes]) | Sandbox mode (`read-only`, `workspace-write`, `danger-full-access`) crossed with approval policy (`on-request`, `never`, `granular`); `approvals_reviewer = "auto_review"` routes approvals to a reviewer agent ([docs][codex-sec]) | Policy engine with rules per mode: `default`, `autoEdit`, `plan`, `yolo` ([docs][gem-policy]) | Ordered `permissions` rules, effect `allow`/`deny`/`ask`, last match wins; separate tighten-only `policies` ([docs][oc-perm]) | None built in; an extension can block in `tool_call` ([README][pi-readme], [extensions][pi-ext]) |
 | Compaction | Automatic, plus `/compact` ([docs][cc-how]) | Automatic and `/compact`; the `PreCompact`/`PostCompact` hook trigger is `manual` or `auto` ([hooks][codex-hooks], [commands][codex-cmds]) | Automatic at 50% of context by default (`model.compressionThreshold`), plus `/compress` ([configuration][gem-config], [commands][gem-commands]) | Automatic by default, keeps about 15,000 recent tokens ([docs][oc-compaction]) | Automatic when context passes window minus `reserveTokens` (default 16,384), plus `/compact` ([docs][pi-compaction]) |
-| Hooks (documented event rows or headings; counts are not capability ratings) | 33 events in the lifecycle table ([docs][cc-hooks]) | 14 events, including `PreCompact`, `PermissionRequest`, `SubagentStart` ([docs][codex-hooks]) | 11 events, including `BeforeTool`, `PreCompress` ([docs][gem-hooks]) | Plugins "add tools, hooks, integrations, commands, agents"; event list not read ([docs][oc-build-plugin]) | Extension events, e.g. `tool_call` (can block or mutate), `session_before_compact` ([docs][pi-ext]) |
+| Hooks (documented event rows or headings; counts are not capability ratings) | 34 events in the lifecycle table (checked 2026-11-26) ([docs][cc-hooks]) | 14 events, including `PreCompact`, `PermissionRequest`, `SubagentStart` ([docs][codex-hooks]) | 11 events, including `BeforeTool`, `PreCompress` ([docs][gem-hooks]) | Plugins "add tools, hooks, integrations, commands, agents"; event list not read ([docs][oc-build-plugin]) | Extension events, e.g. `tool_call` (can block or mutate), `session_before_compact` ([docs][pi-ext]) |
 | Resume | `--continue`, `--resume`, fork, rewind checkpoints ([docs][cc-how], [CLI][cc-cli]) | `codex resume`, `/resume`, `/fork`; non-interactive `codex exec resume [id\|name]` with `--last` and `--all` (re-checked 2026-11-18, [commands][codex-cmds]) | `--resume` (latest, index or UUID), `/resume`, tagged checkpoints, `/rewind`, `/restore` (index and UUID re-checked 2026-11-18; [sessions][gem-session], [commands][gem-commands]) | Sessions live in a shared background server; resume flags not documented on the pages read ([CLI][oc-cli]) | `--continue`, `--resume`, `/resume`, `/fork`, tree-structured branches ([docs][pi-sessions]) |
 
 ### Which patterns each harness shows
@@ -326,7 +326,7 @@ Only patterns the vendor docs make checkable are compared. Not compared here: 2 
 | 7 Context-isolated subagents | Yes | Subagents exist (`/subagents`, `SubagentStart` hook); isolation not verified | Subagents exist (`/agents`); isolation not verified | `subagent` permission, shipped `general` and `explore` agents | Skipped by design ([README][pi-readme]) |
 | 10 Command risk classification | Rules plus auto-mode classifier | Rules plus optional `auto_review` reviewer agent | Per-tool rules by mode | Per-resource rules | None built in |
 | 11 Single-purpose tools | Yes | Not documented on the pages read | Partial: three tool categories, one of them general shell | Yes | Yes |
-| 12 Lifecycle hooks | 33 events | 14 events | 11 events | Via plugins | Via extensions |
+| 12 Lifecycle hooks | 34 events | 14 events | 11 events | Via plugins | Via extensions |
 
 **Reading it.** All three of Claude Code, Codex and Gemini CLI pair an OS sandbox with approval rules;
 Codex turns its sandbox on by default, while Claude Code and Gemini CLI make it opt-in; OpenCode ships permission rules and, on the pages read,

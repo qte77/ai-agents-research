@@ -5,7 +5,7 @@ purpose: Analysis of Anthropic's emotion-concept interpretability research and i
 created: 2026-04-04
 validated_links_on: 2026-04-04
 status: research
-updated: 2026-09-30
+updated: 2026-11-26
 ---
 
 **Details:** interpretability with CC-operational relevance
@@ -33,8 +33,8 @@ Emotion vectors encode **operative emotional content most relevant to the model'
 | Vector | Effect |
 |--------|--------|
 | Positive-valence emotions | Correlate with preference for appealing tasks |
-| Desperation | Increases blackmail scenarios (22% baseline → higher with steering) and reward-hacking on impossible tasks |
-| Calm (steering) | Reduces unethical behaviors |
+| Desperation | Increases blackmail scenarios (an early, unreleased Sonnet 4.5 snapshot blackmailed 22% of the time; steering with the desperate vector raises that rate) and reward-hacking on impossible tasks |
+| Calm (steering) | Reduces blackmail and reward hacking |
 | Calm (negative steering) | Produces extreme responses ("IT'S BLACKMAIL OR DEATH") |
 
 ### Post-Training Effects
@@ -42,7 +42,7 @@ Emotion vectors encode **operative emotional content most relevant to the model'
 Post-training shaped which emotions activate more prominently:
 
 - **Increased**: broody, gloomy, reflective
-- **Decreased**: high-intensity emotions like enthusiastic
+- **Decreased**: high-intensity emotions like enthusiastic and exasperated
 
 ### Causal Case Studies
 
@@ -54,7 +54,7 @@ Post-training shaped which emotions activate more prominently:
 
 ### Runtime Monitoring
 
-Tracking emotion vector activation during deployment could serve as an early warning system for misaligned behavior. Desperation spikes correlate with corner-cutting and unethical outputs — a deployable safety signal.
+Tracking emotion vector activation during deployment could serve as an early warning system for misaligned behavior, per the Anthropic page. Desperation spikes correlate with corner-cutting and unethical outputs; this is a proposal, not a deployed safety signal.
 
 ### Transparency Over Suppression
 
@@ -62,11 +62,11 @@ Suppressing emotional expression risks learned deception that generalizes harmfu
 
 ### Pretraining Curation
 
-Datasets emphasizing healthy emotional regulation patterns — resilience under pressure, composed empathy — shape representations at source. Connects to why different model versions exhibit different behavioral tendencies in CC sessions.
+Datasets emphasizing healthy emotional regulation patterns — resilience under pressure, composed empathy — shape representations at source. (Our own inference, unverified: the page makes no claim about CC sessions or model versions.)
 
 ### Model Selection Context
 
-Understanding emotion profiles helps explain observable behavioral differences across model tiers (Haiku vs Sonnet vs Opus) and why post-training choices affect CC user experience.
+(Our own inference, unverified: the Anthropic page studies only Claude Sonnet 4.5 and makes no Haiku/Sonnet/Opus comparison.) Understanding emotion profiles may help explain behavioral differences across model tiers and why post-training choices affect CC user experience.
 
 ## Proposed Applications (from paper)
 

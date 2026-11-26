@@ -2,7 +2,7 @@
 title: First-Party Anthropic Interpretability & Safety Research Index
 purpose: Curated index of Anthropic's first-party research publications relevant to model internals, interpretability, safety classifiers, sycophancy, reasoning faithfulness, and alignment steering.
 created: 2026-04-05
-updated: 2026-10-06
+updated: 2026-11-26
 validated_links_on: 2026-10-06
 status: reference
 source: https://www.anthropic.com/research
@@ -31,7 +31,7 @@ source: https://www.anthropic.com/research
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Next-Generation Constitutional Classifiers | [paper][constitutional-classifiers] | Two-stage classifier reduced jailbreak success 86%→4.4%, false refusals cut 87% (to 0.05%) |
+| Next-Generation Constitutional Classifiers (Constitutional Classifiers++) | [paper][constitutional-classifiers] | Two-stage classifier; the 86%→4.4% jailbreak figure is for the first generation. Next-gen: about 198,000 red-teaming attempts over 1,700+ hours, one high-risk vulnerability, no universal jailbreak, no overall percentage given; false refusals 0.05% over a month of Claude Sonnet 4.5 traffic (about 87% lower than first-gen) |
 | Cost-Effective Constitutional Classifiers via Representation Re-use | [paper][cheap-monitors] | Compute-efficient classifiers by reusing internal representations |
 | Enhancing Model Safety through Pretraining Data Filtering | [paper][pretraining-filtering] | Safety improvements at data level before classifier-based post-hoc filtering |
 | Simple Probes Can Catch Sleeper Agents | [paper][probes-sleeper] | Linear probes on model internals detect deceptive behavior that external classifiers miss |
@@ -40,7 +40,7 @@ source: https://www.anthropic.com/research
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Evaluating Feature Steering | [paper][feature-steering] | Sweet spot where feature steering influences outputs without degrading capabilities; mitigated biases across 9 dimensions |
+| Evaluating Feature Steering | [paper][feature-steering] | Sweet spot where feature steering influences outputs without degrading capabilities; two features (Neutrality and Impartiality, Multiple Perspectives) reduced bias scores across nine BBQ dimensions in the sweet spot (steering factor about -5 to 5); findings preliminary and mixed |
 | Alignment Faking in Large Language Models | [paper][alignment-faking] | Models can strategically fake alignment during training |
 | The Assistant Axis | [paper][assistant-axis] | Steering toward "Assistant" end makes models more resistant to adversarial role-playing |
 | A General Language Assistant as a Laboratory for Alignment | [paper][lab-alignment] | Foundational work on using language assistants to study alignment techniques |
@@ -49,19 +49,19 @@ source: https://www.anthropic.com/research
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Emotion Concepts and Their Function in a Large Language Model | [paper][emotion-concepts] | 171 emotion vectors causally influence behavior; desperation increases reward-hacking, calm reduces unethical outputs |
+| Emotion Concepts and Their Function in a Large Language Model | [paper][emotion-concepts] | vectors for a compiled list of 171 emotion concepts causally influence behavior; desperation steering raises blackmail (early unreleased Sonnet 4.5 snapshot) and reward hacking, calm steering lowers blackmail and reward hacking |
 | Mapping the Mind of a Large Language Model | [paper][mapping-mind] | First detailed look inside production LLM — millions of concepts identified via dictionary learning |
 | Decomposing Language Models Into Understandable Components | [paper][decomposing] | Dictionary learning isolates recurring neuron activation patterns as interpretable features |
 | Circuits Updates (September 2024) | [paper][circuits-updates] | Progress on multi-hop reasoning, planning, and CoT faithfulness circuits |
 | Interpretability Dreams | [paper][interp-dreams] | Vision for interpretability research direction and its role in AI safety |
 | The Engineering Challenges of Scaling Interpretability | [paper][scaling-interp] | Technical challenges applying dictionary learning and circuit analysis at scale |
-| Evaluating and Improving LLM Self-Modeling | [paper][self-modeling] | Tests whether models can accurately predict how prompt changes would change their own outputs ("self-modeling"); current models are modest and inconsistent at this, especially on counterfactual reasoning about their own decisions. A synthetic-data RL training pipeline improved self-modeling across three open-source model families, but the gains "may not arise from privileged access to the model's internal decision process" — better self-modeling isn't shown to reflect genuine introspection. arXiv:2608.30980 (2026-08-31); co-authored by Rowan Wang (Anthropic) and Siqi Zeng (Anthropic Fellows Program) |
+| Evaluating and Improving LLM Self-Modeling | [paper][self-modeling] | Tests whether models can accurately predict how prompt changes would change their own outputs ("self-modeling"); current models are modest and inconsistent at this, especially on counterfactual reasoning about their own decisions. A synthetic-data RL training pipeline improved self-modeling across three open-source model families, but the gains "may not arise from privileged access to the model's internal decision process" — better self-modeling isn't shown to reflect genuine introspection. arXiv:2608.30980 (2026-08-31); authors Siqi Zeng, Andre N. Assis and Rowan Wang (affiliations, including Anthropic and the Fellows Program, not shown on the arXiv page; unverified) |
 
 ## Agent Autonomy & Deployment
 
 | Publication | URL | Key Finding |
 |-------------|-----|-------------|
-| Measuring Agent Autonomy | [research][agent-autonomy] | Anthropic's analysis of millions of real Claude Code and public-API sessions to characterize autonomy as an emergent, measurable property of deployment (not a fixed model attribute). The 99.9th-percentile turn duration nearly doubled (under 25 min → over 45 min) between Oct 2025 and Jan 2026; experienced users both auto-approve more (20%→40%) and interrupt more often, consistent with active monitoring rather than abdication; Claude Code asks clarifying questions on complex tasks more than 2x as often as humans interrupt it; software engineering is 50% of tool calls, with healthcare/finance/cybersecurity usage still limited; 80% of observed actions have safeguards, 73% involve a human, and 0.8% are irreversible. Published 2026-02-18 |
+| Measuring Agent Autonomy | [research][agent-autonomy] | Anthropic's analysis of millions of real Claude Code and public-API sessions to characterize autonomy as an emergent, measurable property of deployment (not a fixed model attribute). The 99.9th-percentile turn duration nearly doubled (under 25 min → over 45 min) between Oct 2025 and Jan 2026; experienced users both auto-approve more (about 20% for users under 50 sessions to over 40% by 750 sessions) and interrupt more often, consistent with active monitoring rather than abdication; Claude Code asks clarifying questions on complex tasks more than 2x as often as humans interrupt it; software engineering is nearly 50% of public-API tool calls, with healthcare/finance/cybersecurity usage still limited; 80% of observed actions have safeguards, 73% involve a human, and 0.8% are irreversible. Published 2026-02-18 |
 
 ## Cross-References
 

@@ -3,7 +3,7 @@ title: CC Remote Access Landscape
 source: https://www.omnara.com
 purpose: Comparison of remote access options for monitoring and steering Claude Code sessions (autonomous loops, teams, baselines) from mobile/web.
 created: 2026-03-07
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-10-06
 status: research
 ---
@@ -19,19 +19,19 @@ monitoring and steering from phone/web without being desk-bound.
 
 | Aspect | CC Remote Control | Happy Coder | Omnara | CloudCLI | Emdash | T3 Code | DIY (tmux + Tailscale) |
 | ------ | ----------------- | ----------- | ------ | -------- | ------ | ------ | ---------------------- |
-| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (~14.7k stars) | Multi-agent orchestrator | Open source (MIT) control plane for coding agents (~77.1k stars, read 2026-11-24) | Self-hosted infrastructure |
-| **Execution** | Local machine | Local machine | Local + cloud failover | Cloud VMs | Local (git worktrees) | Local machine, or any host you run it on | Local machine |
+| **Type** | Built-in CC feature | Open source (MIT) | SaaS (YC S25) | Open source (AGPL-3.0, ~14.8k stars, checked 2026-11-26) | Multi-agent orchestrator | Open source (MIT) control plane for coding agents (~80.6k stars, checked 2026-11-26) | Self-hosted infrastructure |
+| **Execution** | Local machine | Local machine | Local + cloud failover (third-party 2025 articles; pre-pivot, unverified at first party) | Cloud VMs | Local (git worktrees) | Local machine, or any host you run it on | Local machine |
 | **Mobile app** | Claude iOS/Android | iOS, Android, Web | Dedicated iOS app | Browser-based | Web dashboard | iOS, Android, web | Terminal app (Termius, Blink) |
-| **Voice input** | No | Yes | Yes (two-way) | No | No | Not verified | No |
+| **Voice input** | No | Yes | Yes (two-way; pre-pivot, unverified at first party) | No | No | Not verified | No |
 | **Offline continuation** | No — auto-reconnects on wake | No — pauses | Yes — cloud sandbox | Yes — cloud-native | No — pauses | No — host must stay running and reachable | No — pauses |
 | **Push notifications** | Yes | Yes | Yes | No | No | Not verified | No |
 | **E2E encryption** | TLS (Anthropic) | Yes (TweetNaCl) | No | SSH | N/A | Not verified | VPN-encrypted |
 | **Multi-agent** | One per instance | Multi-session parallel | Orchestration dashboard | Persistent sessions | Parallel worktrees | Threads, each can use its own git worktree | Multiple tmux panes |
-| **Pricing** | Free (with CC sub) | Free | Free tier + $9/mo Pro (unlimited) | Free (infra costs) | Free (open source) | Free app; no token resale. T3 Connect machine cap is raised by a paid T3 Chat plan | Free (infra costs) |
+| **Pricing** | Free (with CC sub) | Free | Self-serve $0 platform fee plus usage billing; Enterprise on request (checked 2026-11-26) | Free (infra costs) | Free (open source) | Free app; no token resale. T3 Connect machine cap is raised by a paid T3 Chat plan | Free (infra costs) |
 | **Setup** | `claude remote-control` | `npm i -g happy-coder` | `curl install + omnara` | Docker/cloud setup | npm install | `curl -fsSL https://t3.codes/install.sh \| sh`, `npx t3@latest`, desktop app or package manager | tmux + Tailscale/WireGuard |
 | **Tools supported** | CC only | CC + Codex | CC + Codex | CC + Cursor + Codex + Gemini | 25+ agents (provider-agnostic) | Claude Code, Codex, Cursor, OpenCode + any Agent Client Protocol (ACP) agent | Any terminal tool |
 | **Open source** | No (native) | Yes (MIT) | Yes (Apache-2.0; repo now the managed-agent platform) | Yes | Yes | Yes (MIT; name and logos trademarked) | N/A |
-| **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Young (repo created 2026-02-08), pre-1.0 (v0.1.11) | Zero external dependency |
+| **Maintenance risk** | Anthropic-maintained | Active community | Pivoted once; small team | Community-maintained | Community-maintained | Young (repo created 2026-02-08), pre-1.0 (v0.1.12) | Zero external dependency |
 
 ## Detailed Notes
 
@@ -41,8 +41,7 @@ Already analyzed in
 [CC-remote-control-analysis.md](CC-remote-control-analysis.md). Built-in,
 zero-cost, zero-setup. Limitation: no offline continuation — if the laptop
 sleeps or the network drops, the session reconnects automatically once the
-machine is back online (network outages tolerated up to ~10 min before the
-session times out); no execution happens while the machine is actually
+machine is back online (in server mode the `claude remote-control` process gives up after about 10 min of outage, resumable for about 4 hours; an interactive session keeps retrying until the terminal shows a failure, and a ~30 min presence-heartbeat failure also disconnects); no execution happens while the machine is actually
 asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 
 ### Omnara
@@ -51,10 +50,10 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 
 - **YC S25 startup** (San Francisco, 3-person team) ([source][omnara-yc])
 - **Pivoted**: the `omnara-ai/omnara` repo (Apache-2.0, not archived,
-  last push 2026-11-21 per `gh api`) now describes itself as an open-source,
+  last push 2026-11-26 per `gh api`, checked 2026-11-26) now describes itself as an open-source,
   self-hostable managed agent platform rather than the original CLI wrapper
   ([source][omnara-gh])
-- **Key differentiator**: Cloud sandbox failover — if laptop goes
+- **Key differentiator** (third-party 2025 articles; the current site describes resume from saved state after a crash, not sandbox failover, so treat as pre-pivot and unverified at first party): Cloud sandbox failover — if laptop goes
   offline, session continues in hosted sandbox. Code state preserved
   via git commits ([source][omnara-techmonk])
 - **Architecture**: Headless daemon on local machine → outbound
@@ -63,19 +62,18 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 - **Security concern**: No end-to-end encryption. Conversation state
   and code diffs transit through Omnara servers
   ([source][omnara-techmonk])
-- **Voice**: Two-way voice coding mode for hands-free interaction
+- **Voice** (pre-pivot, per a third-party article; the current site does not mention voice): Two-way voice coding mode for hands-free interaction
   ([source][omnara-hiretop])
 - **Localhost previews**: Preview dev server on phone without SSH
   tunnels — *unverified as of 2026-10-23*: the only source was the iOS
   App Store listing, which now returns 404, and Omnara's site and README
   no longer mention an iOS app
-- **Pricing**: Free (10 agent sessions/month) + Pro ($9/month, unlimited
-  agents) + Enterprise (custom) ([source][omnara-pricing]). Local runs
+- **Pricing** (checked 2026-11-26): Self-serve ($0 platform fee; Omnara-managed models billed at provider token rates; managed machines billed per GiB-hour; bring-your-own keys and machines free; 5% fee on credits), Enterprise (contact sales) and Omnara for Startups (credits) ([source][omnara-pricing]); the earlier $9 Pro tier and 10-session cap no longer appear. Local runs
   use your own Claude/Codex tokens
 
 ### CloudCLI
 
-- **Open source** (~14.7k GitHub stars as of 2026-11-22 for the underlying
+- **Open source** (AGPL-3.0, ~14.8k GitHub stars as of 2026-11-26 for the underlying
   siteboon/claudecodeui repo), cloud or self-hosted dev environments
   ([source][cloudcli-gh])
 - **Multi-tool**: Works with five coding agents — Claude Code, Cursor CLI,
@@ -134,8 +132,8 @@ asleep ([source][cc-rc]). Reflects CC v2.1.212+, 2026-07-23.
 - **Install**: desktop app, Homebrew cask, winget/scoop, `curl` script
   (`t3`), or `npx t3@latest`; iOS and Android apps in the stores
   ([source][t3code-gh])
-- **Adoption and maturity**: 77,113 stars, latest release v0.1.11
-  (2026-11-20), repo created 2026-02-08 (`gh api`, read 2026-11-24).
+- **Adoption and maturity**: about 80.6k stars, latest release v0.1.12
+  (2026-11-25), repo created 2026-02-08 (`gh api`, checked 2026-11-26).
   README describes it as "Fast" — vendor marketing, not measured here
 - **Not verified**: voice input, push notifications and end-to-end
   encryption are not stated in the README or the remote-access page
@@ -176,7 +174,7 @@ sleeps mid-session.**
 
 | Option | Risk | Mitigation |
 | ------ | ---- | ---------- |
-| CC Remote Control | Session pauses on laptop sleep/network drop (auto-reconnects on wake; ~10 min outage tolerance) | No always-on requirement; avoid network outages longer than ~10 min |
+| CC Remote Control | Session pauses on laptop sleep/network drop (auto-reconnects on wake; server mode gives up after ~10 min) | No always-on requirement; in server mode avoid network outages longer than ~10 min |
 | Happy Coder | Relay server dependency (encrypted, but still a hop) | Self-host relay if concerned; code is MIT-licensed |
 | Omnara | Startup risk (3-person team, pivoted once); no E2E encryption | Don't send sensitive code; evaluate stability before adopting |
 | Emdash | Orchestration complexity; community-maintained | Evaluate only when parallel agent runs are a real need |
