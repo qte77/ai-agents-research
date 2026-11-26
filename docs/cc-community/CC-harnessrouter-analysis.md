@@ -3,7 +3,7 @@ title: HarnessRouter Analysis
 source: https://github.com/HarnessRouter/harnessrouter
 purpose: Unified multi-harness API for AI coding-agent backends (Codex, Claude Code, Hermes, DeepSeek Harness, Pi) — architecture, protocol, and fit with this corpus's agent-integration research.
 created: 2026-09-24
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-09-30
 status: assess
 platform_scope: [claude-code, codex, hermes, deepseek-harness, pi]
@@ -14,11 +14,11 @@ platform_scope: [claude-code, codex, hermes, deepseek-harness, pi]
 [HarnessRouter][repo] positions itself as "the unified interface for agent harnesses" — a single
 API that lets an application drive multiple AI coding-agent backends (**harnesses**) without a
 bespoke integration per backend. Per the repo description and README, it unifies **Codex, Claude
-Code, Hermes, Pi, and DSH (DeepSeek Harness)**, with individual harness CLIs installing
+Code, Hermes, Pi, and DSH (DeepSeek Harness)** (as read 2026-09-30; the README now lists 31 harness bases and the "DSH" expansion was not re-found, unverified), with individual harness CLIs installing
 automatically on first launch. It ships as **HarnessRouter Community Edition**, self-hosted under
-**Apache-2.0** ([`gh api repos/HarnessRouter/harnessrouter`][repo], re-verified 2026-09-30: license
-`Apache-2.0`, 2,789 stars (up from 2,496 on 2026-09-24), latest release `v0.26.16` (2026-09-30),
-repo created 2026-08-09, pushed 2026-09-30). The repo's own description calls it "the self-hosted,
+**Apache-2.0** ([`gh api repos/HarnessRouter/harnessrouter`][repo], re-verified 2026-11-26: license
+`Apache-2.0`, 4,546 stars (2,789 on 2026-09-30), latest release `v0.41.27` (2026-11-24),
+repo created 2026-08-09, pushed 2026-11-26). The repo's own description calls it "the self-hosted,
 Apache-2.0 edition of the unified interface for agent harnesses," implying a separate hosted tier;
 a managed **HarnessRouter Cloud** offering is described on the project's marketing site
 ([harnessrouter.ai][site]), whose specifics are marketing-only and out of scope for the
@@ -63,13 +63,13 @@ Scored 2026-09-30 against the [agent-substrate-rubric.md](../sdlc-lcm/agent-subs
 
 ## Related: NVIDIA NeMo Switchyard (model-level routing for Claude Code)
 
-[NVIDIA-NeMo/Switchyard][switchyard] sits one layer below HarnessRouter: it routes LLM traffic across models and providers while keeping OpenAI- and Anthropic-compatible APIs (Apache-2.0, 3,671 stars, latest release v0.3.0, pushed 2026-11-23; `gh api`, 2026-11-23). Its README lists several routing strategies, among them an **escalation router** that starts a conversation on a cheaper model and uses an LLM judge to latch the session onto a stronger one after sustained trouble (repeated errors, loops, drift), judging how the run is going rather than predicting difficulty from the request (documented, [escalation doc][switchyard-escalation], read 2026-11-23). A Claude Code example plugin routes between Sonnet and Opus using the user's Claude login and shows the chosen model in the status line; it needs Linux x86_64, Claude Code CLI 2.1.301 or newer with mods enabled, and is built from source ([example README][switchyard-claude]). Manual model selection pauses routing and subagents keep Claude's own model choice. Not verified here: which routing algorithm the Claude Code plugin uses by default, and the newsletter's detail that a repeated failure sends the next three requests to the stronger model so the prompt cache stays warm (Lindenberg, *Point It at Something*, LinkedIn, 2026-11-21; single source, routing docs for the plugin not read). Pointer only: no rubric row is added.
+[NVIDIA-NeMo/Switchyard][switchyard] sits one layer below HarnessRouter: it routes LLM traffic across models and providers while keeping OpenAI- and Anthropic-compatible APIs (Apache-2.0, 3,718 stars, latest release v0.4.0 (2026-11-23), pushed 2026-11-26; `gh api`, 2026-11-26). Its README lists several routing strategies, among them an **escalation router** that starts a conversation on a cheaper model and uses an LLM judge to latch the session onto a stronger one after sustained trouble (repeated errors, loops, drift), judging how the run is going rather than predicting difficulty from the request (documented, [escalation doc][switchyard-escalation], read 2026-11-23). A Claude Code example plugin routes between Sonnet and Opus using the user's Claude login and shows the chosen model in the status line; it needs Linux x86_64, Claude Code CLI 2.1.301 or newer with mods enabled, and is built from source ([example README][switchyard-claude]). Manual model selection pauses routing and subagents keep Claude's own model choice. Not verified here: which routing algorithm the Claude Code plugin uses by default, and the newsletter's detail that a repeated failure sends the next three requests to the stronger model so the prompt cache stays warm (Lindenberg, *Point It at Something*, LinkedIn, 2026-11-21; single source, routing docs for the plugin not read). Pointer only: no rubric row is added.
 
 ## Adoption Decision
 
-**Assess.** The Apache-2.0 self-hosted core, real Docker image, tagged releases (`v0.23.11`,
-2026-09-23), and documented protocol are genuine open infrastructure, not vaporware — but the repo
-is young (created 2026-08-09, roughly six weeks old as of this check). The marketing site makes
+**Assess.** The Apache-2.0 self-hosted core, real Docker image, tagged releases (`v0.41.27`,
+2026-11-24), and documented protocol are genuine open infrastructure, not vaporware — but the repo
+is young (created 2026-08-09, roughly fifteen weeks old as of 2026-11-26). The marketing site makes
 backing/funding claims that neither the README nor the repo metadata corroborate; this doc omits
 them rather than repeat unverified marketing copy. Track for a future pass once the protocol and
 harness-coverage matrix have had more time to stabilize, and once independent (non-vendor) usage
