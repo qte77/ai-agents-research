@@ -32,7 +32,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [multi-agent-onboarding-outlook.md](multi-agent-onboarding-outlook.md) | Multi-agent support: CC, Kiro, Cursor, Gemini CLI, AGENTS.md convergence |
 | [mas-design-principles.md](mas-design-principles.md) | MAS design principles from 12-Factor Agents, Anthropic harnesses, PydanticAI |
 | [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md) | Production best practices for MAS development and benchmarking |
-| [mas-security-framework.md](mas-security-framework.md) | OWASP MAESTRO v1.0 threat modeling (7-layer) for multi-agent systems |
+| [mas-security-framework.md](mas-security-framework.md) | Seven-layer threat model for multi-agent systems, inspired by CSA MAESTRO |
 | [ai-security-governance-analysis.md](ai-security-governance-analysis.md) | NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001 frameworks |
 | [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) | Operational vuln layer: AIVSS scoring, MITRE ATLAS + AI Incident Sharing, vendor discovery (MDASH/Vuln.AI), Berkeley tracker; prompt-injection taxonomy; guardrail layers comparison |
 | [agent-identity-auth-landscape.md](agent-identity-auth-landscape.md) | Agent identity/auth/personhood: SPIFFE, Entra Agent ID, MCP-OAuth, Okta XAA, AP2 Mandates, World ID, Cloudflare Web Bot Auth |
@@ -54,7 +54,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 
 ## Framework Grounding
 
-Specs build on NIST AI RMF, ISO 42001 A.6, ISO 23894, and OWASP MAESTRO. See sdlc-spec.md cross-framework summary table.
+Specs build on NIST AI RMF, ISO 42001 A.6, ISO 23894, and CSA MAESTRO. See sdlc-spec.md cross-framework summary table.
 
 ## Target Repo
 

@@ -32,6 +32,8 @@ run locally, outside the sandbox, with full system access.
 | `WorktreeCreate` | Git worktree created | v2.1.50 | Environment setup for isolated agents |
 | `WorktreeRemove` | Git worktree removed | v2.1.50 | Cleanup after agent completes |
 
+This table covers 11 events. The [hooks reference](https://code.claude.com/docs/en/hooks) lists 34 (checked 2026-11-26), among them `UserPromptSubmit`, `SubagentStop`, `PreCompact`, `SessionEnd` and `Elicitation`; use that page for the full list.
+
 ## Hook Configuration
 
 ```json

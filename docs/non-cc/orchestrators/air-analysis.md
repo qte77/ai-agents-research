@@ -1,6 +1,6 @@
 ---
 title: JetBrains Air Analysis
-source: https://air.dev
+source: https://www.jetbrains.com/air/
 purpose: Analysis of JetBrains Air as an agentic development environment for multi-agent orchestration.
 created: 2026-03-20
 updated: 2026-11-26
@@ -82,6 +82,6 @@ coding-harness-eval harness builds programmatically.
 
 | Source | Content |
 |---|---|
-| [air.dev](https://air.dev) | Product page |
+| [jetbrains.com/air](https://www.jetbrains.com/air/) | Product page |
 | [JetBrains blog](https://blog.jetbrains.com/air/2026/03/air-launches-as-public-preview-a-new-wave-of-dev-tooling-built-on-26-years-of-experience/) | Launch announcement |
 | [Air in IDEs quickstart](https://www.jetbrains.com/help/air/air-in-ides-quickstart.html) | Setup and usage |

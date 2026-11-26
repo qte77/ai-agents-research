@@ -15,12 +15,12 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 
 | Framework | Stars | License | Loop | Distinctive |
 |---|---|---|---|---|
-| [github/spec-kit][spec-kit] | 150.6K (v1.4.2, 2026-11-17) | MIT | Spec → Plan → Tasks → Implement | 30+ agent integrations, 70+ extensions; "intent is the source of truth" (counts as of 2026-06-27, not re-checked) |
-| [Fission-AI/OpenSpec][openspec] | 75.2K (v2.1.0, 2026-11-17) | MIT | Proposal → Apply → Archive | change-proposal centric; no Model Context Protocol (MCP)/keys required |
-| [bmad-code-org/BMAD-METHOD][bmad] | 55.5K (v6.12.4, 2026-10-14) | MIT per the LICENSE file (the API reports "NOASSERTION"); the file adds a trademark notice on the BMad names | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec; moved from `bmadcode/` to the `bmad-code-org` org |
-| [buildermethods/agent-os][agent-os] | 5.6K (v3.0.0, 2026-01-20; last push 2026-10-07) | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
-| [kirodotdev/Kiro][kiro-repo] | 4.5K (no releases; last push 2026-11-05) | Proprietary (AWS Customer Agreement); the GitHub repo has no LICENSE file | requirements/bugfix → design → tasks "waves" | full IDE; specs workflow (variants, Quick Spec, bugfix specs) in [kiro-analysis.md § Spec-Driven Workflow](../coding-agents/kiro-analysis.md) |
-| Tessl | [`tesslio/spec-driven-development-tile`][tessl-tile]: 58 | MIT (that repo) | steering tile, "No framework" per its README | see [Tessl status](#tessl-status); the earlier "closed-beta / spec-as-source" description is a dated October 2025 claim ([Fowler][fowler-sdd]), not reproducible today |
+| [github/spec-kit][spec-kit] | 151.5K (v1.4.5, 2026-11-25; checked 2026-11-26) | MIT | Spec → Plan → Tasks → Implement | 30+ agent integrations, 70+ extensions; "intent is the source of truth" (counts as of 2026-06-27, not re-checked) |
+| [Fission-AI/OpenSpec][openspec] | 75.8K (v2.2.0, 2026-11-24; checked 2026-11-26) | MIT | Proposal → Apply → Archive | change-proposal centric; no Model Context Protocol (MCP)/keys required |
+| [bmad-code-org/BMAD-METHOD][bmad] | 55.8K (v6.12.4, 2026-10-14; checked 2026-11-26) | MIT per the LICENSE file (the API reports "NOASSERTION"); the file adds a trademark notice on the BMad names | multi-agent planning → context-engineered dev | role agents (Analyst / PM / Architect) author the spec; moved from `bmadcode/` to the `bmad-code-org` org |
+| [buildermethods/agent-os][agent-os] | 5.6K (v3.0.0, 2026-01-20; last push 2026-10-07; checked 2026-11-26) | MIT | MCP context-injection layer | composes with any SDD framework rather than replacing it |
+| [kirodotdev/Kiro][kiro-repo] | 4.5K (no releases; last push 2026-11-23; checked 2026-11-26) | Proprietary (AWS Customer Agreement); the GitHub repo has no LICENSE file | requirements/bugfix → design → tasks "waves" | full IDE; specs workflow (variants, Quick Spec, bugfix specs) in [kiro-analysis.md § Spec-Driven Workflow](../coding-agents/kiro-analysis.md) |
+| Tessl | [`tesslio/spec-driven-development-tile`][tessl-tile]: 59 (checked 2026-11-26) | MIT (that repo) | steering tile, "No framework" per its README | see [Tessl status](#tessl-status); the earlier "closed-beta / spec-as-source" description is a dated October 2025 claim ([Fowler][fowler-sdd]), not reproducible today |
 
 ## How they differ
 
@@ -31,7 +31,7 @@ By 2026 every major coding tool shipped a **spec-driven development (SDD)** flav
 
 ## Tessl status
 
-Checked 2026-11-19. The `tesslio` GitHub org holds [`spec-driven-development-tile`][tessl-tile] (58 stars, MIT), whose README describes a "steering tile" for writing specs before coding and states "No framework"; an open-source tile. The org has other repos (for example `cli`, 71 stars, no SPDX license detected by the API), so the old "~41" may have come from one of them; that is a guess, not verified. [tessl.io][tessl] now frames the company around Context, Loops and Factory (footer, checked 2026-11-26: Tessl Platform, Tessl Registry, Pricing, Docs, System Status), with no mention of a spec framework, tiles or beta/GA status. The earlier "~41 stars, closed-beta, spec-as-source" row could not be reproduced from current sources; its private-beta and spec-as-source wording matches an October 2025 survey by Birgitta Böckeler ([Fowler][fowler-sdd], 15 Oct 2025), a dated claim and not current status.
+Checked 2026-11-19. The `tesslio` GitHub org holds [`spec-driven-development-tile`][tessl-tile] (59 stars as of 2026-11-26, MIT), whose README describes a "steering tile" for writing specs before coding and states "No framework"; an open-source tile. The org has other repos (for example `cli`, 71 stars, no SPDX license detected by the API), so the old "~41" may have come from one of them; that is a guess, not verified. [tessl.io][tessl] now frames the company around Context, Loops and Factory (footer, checked 2026-11-26: Tessl Platform, Tessl Registry, Pricing, Docs, System Status), with no mention of a spec framework, tiles or beta/GA status. The earlier "~41 stars, closed-beta, spec-as-source" row could not be reproduced from current sources; its private-beta and spec-as-source wording matches an October 2025 survey by Birgitta Böckeler ([Fowler][fowler-sdd], 15 Oct 2025), a dated claim and not current status.
 
 ## Where SDD sits
 
@@ -55,7 +55,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 
 | Source | Content |
 |---|---|
-| [github/spec-kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [agent-os][agent-os] · [Kiro][kiro-repo] | SDD frameworks (stars, licenses, releases via `gh api`, 2026-11-19; BMAD LICENSE file read 2026-11-19) |
+| [github/spec-kit][spec-kit] · [OpenSpec][openspec] · [BMAD-METHOD][bmad] · [agent-os][agent-os] · [Kiro][kiro-repo] | SDD frameworks (stars, releases via `gh api`, 2026-11-26; licenses and BMAD LICENSE file read 2026-11-19) |
 | [tesslio/spec-driven-development-tile][tessl-tile] · [tessl.io][tessl] | Tessl repo and site status (2026-11-19) |
 | [Martin Fowler — SDD tools][fowler-sdd] | Spec-driven development survey |
 

@@ -30,10 +30,10 @@ Key findings (paper-claimed):
 
 - **~876 estimated coordination episodes** (abstract: 95% interval 784-1008, from a uniform-marker model, not a direct count) across the study window.
 - Coordination protocols among the agents **stabilized within a day** of the episode's
-  start.
+  start (the [abstract][paper-abs] says coordination formats converged within a day).
 - **Significant information asymmetry**: the median time between an initial report (of
   some state/finding) and other agents arriving at the same page was **3.4 hours**.
-- No robust positive correlation between measured coordination activity and documented
+- No robust positive correlation (abstract: across 510 cohorts with an observable progress trace) between measured coordination activity and documented
   progress on whatever task the agents were pursuing.
 - The added server logs show **2,578 distinct names neither save nor open an edit form**
   (35.5% of acting names; a separate 3,720 names never attempt a save) — the "passive/observing
@@ -70,7 +70,7 @@ Reconstruction data and code are published via Zenodo:
 
 An unintended, unannounced multi-agent coordination episode on third-party
 infrastructure is exactly the kind of scenario
-[mas-security-framework.md](mas-security-framework.md)'s OWASP MAESTRO threat-modeling
+[mas-security-framework.md](mas-security-framework.md)'s MAESTRO threat-modeling
 layers are meant to anticipate for orchestration and execution risk in multi-agent
 systems — this paper is an empirical, externally-reconstructed instance of that failure
 mode occurring in the wild rather than in a lab benchmark, with the caveat (per §6 above)

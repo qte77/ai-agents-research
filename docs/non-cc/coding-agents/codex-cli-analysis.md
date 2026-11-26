@@ -63,7 +63,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 - `--dangerously-bypass-approvals-and-sandbox` (`--yolo`) — bypass everything; only inside externally hardened VMs
 - `--ephemeral` — no session files persisted to disk
 
-### Key features (as of 2026-06-16, [cli-features][features])
+### Key features (as of 2026-06-16, [CLI overview][features])
 
 - **Image input**: attach screenshots or design specs via `-i`/`--image` flag or paste in composer (PNG, JPEG)
 - **Web search**: built-in, uses OpenAI cached index by default; `--search` switches to live results
@@ -76,7 +76,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 
 ### Authentication and access
 
-Codex CLI authenticates via ChatGPT account sign-in (Plus, Pro, Business, Edu, Enterprise plans) or via API key. Access dates back to the initial open-source release; the current access model was confirmed 2026-06-16 on [developers.openai.com/codex][dev-codex].
+Codex CLI authenticates via ChatGPT account sign-in (Plus, Pro, Business, Edu, Enterprise plans) or via API key. Access dates back to the initial open-source release; the current access model was confirmed 2026-06-16 on [learn.chatgpt.com/docs][dev-codex].
 
 ## Providers
 
@@ -126,18 +126,18 @@ A `Stop` hook can return `"decision": "block"` to force another turn ([hooks][go
 | [openai/codex GitHub repo][gh-codex] | License, star count, version, language breakdown, install methods |
 | [Codex developer docs overview][dev-codex] | Access/pricing, GA status, feature overview |
 | [Agent approvals & security][approvals] | Sandbox modes, approval policies, defaults |
-| [CLI features][features] | Image input, web search, MCP, subagent parallelisation, model selection |
+| [CLI overview][features] | Image input, web search, MCP, subagent parallelisation, model selection |
 | [CLI command-line reference][cli-ref] | `codex exec` flags, headless/CI options |
 | [AGENTS.md guide][agents-md] | Custom per-project instructions support |
 | [Codex config reference][codex-config-ref] | `model_provider` / `model_providers` keys, built-in `amazon-bedrock` and `gcp` provider keys (2026-11-23) |
 | [Codex advanced configuration][codex-config-adv] | Custom provider, Azure and Ollama examples (2026-11-23) |
 
 [gh-codex]: https://github.com/openai/codex
-[dev-codex]: https://developers.openai.com/codex
-[approvals]: https://developers.openai.com/codex/agent-approvals-security
-[features]: https://developers.openai.com/codex/cli/features
-[cli-ref]: https://developers.openai.com/codex/cli/reference
-[agents-md]: https://developers.openai.com/codex/guides/agents-md
+[dev-codex]: https://learn.chatgpt.com/docs
+[approvals]: https://learn.chatgpt.com/docs/agent-approvals-security
+[features]: https://learn.chatgpt.com/docs/codex/cli
+[cli-ref]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
+[agents-md]: https://learn.chatgpt.com/docs/agent-configuration/agents-md
 [goal-codex-changelog]: https://learn.chatgpt.com/docs/changelog
 [goal-codex-follow]: https://learn.chatgpt.com/use-cases/follow-goals
 [goal-codex-cmds]: https://learn.chatgpt.com/docs/developer-commands?surface=cli

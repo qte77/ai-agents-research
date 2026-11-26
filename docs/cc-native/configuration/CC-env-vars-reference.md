@@ -226,7 +226,7 @@ MCP servers and hook commands are spawned from Claude Code's own process environ
 
 This commonly affects user-local Node.js installs (e.g., `~/.local/share/node/bin/`) that rely on `.bashrc` PATH additions. MCP servers using `npx` will fail with "command not found" unless the symlink or env override is in place.
 
-Source: [CC plugins reference — environment variables](https://code.claude.com/docs/en/plugins-reference), [CC MCP docs](https://code.claude.com/docs/en/mcp). Observation: Opus 4.6, 2026-04-13.
+Source: [CC plugins reference — environment variables](https://code.claude.com/docs/en/plugins/manifest-reference#environment-variables), [CC MCP docs](https://code.claude.com/docs/en/mcp). Observation: Opus 4.6, 2026-04-13.
 
 ## Discovery Method
 

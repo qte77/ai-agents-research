@@ -109,7 +109,7 @@ as the interface. Multi-agent onboarding requires:
 
 ## Sources
 
-- [Gemini API: coding agents](https://ai.google.dev/gemini-api/docs/coding-agents)
+- [Gemini API: coding agents](https://aistudio.google.com/docs/coding-agents)
 - [Kiro: steering](https://kiro.dev/docs/steering/)
 - [AI context management across Claude, Cursor, Kiro, Gemini and custom agents (dev.to, secondary)](https://dev.to/madeburo/ai-context-management-across-claude-cursor-kiro-gemini-and-custom-agents-2n1f)
 - [AGENTS.md: AI coding agent configuration (Particula, secondary)](https://particula.tech/blog/agents-md-ai-coding-agent-configuration)
