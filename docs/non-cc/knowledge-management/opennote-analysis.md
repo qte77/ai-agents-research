@@ -10,7 +10,7 @@ status: assess
 
 **Details:**. Also runs on or integrates with: `web`, `google-drive`, `notion`, `api-sdk`.
 
-> **Status note (checked 2026-11-26):** [opennote.com][opennote-site] says Opennote was acquired by Reducto (announced 2026-05-06) and that the app has been sunset and is no longer available. The product description, pricing and adoption text below describe the product as it stood on 2026-06-20, before this check, and are kept for the record. The `opennote-dev` SDK repos remain public and MIT-licensed on GitHub; whether they are still maintained is unverified.
+> **Status note (checked 2026-11-26):** [opennote.com][opennote-site] says Opennote was acquired by Reducto (announced 2026-05-06) and that the app has been sunset and is no longer available. The product description, pricing and adoption text below describe the product as it stood on 2026-06-20 and are kept for the record. The `opennote-dev` SDK repos remain public and MIT-licensed on GitHub; whether they are still maintained is unverified.
 
 ## What It Is
 
@@ -51,7 +51,7 @@ corpus is via its open SDKs and document-agent pipeline rather than developer
 tooling.
 
 Pricing (per [BetaKit][betakit], as of 2026-06-20; the first-party pricing page now shows only the acquisition notice): free tier; Premium ~$15/mo (unlimited chats,
-video generation); enterprise quote-based. A "20% student discount" in the earlier version of this analysis is not in the BetaKit article (unverified). Treat exact
+video generation); enterprise quote-based. A "20% student discount" is not in the BetaKit article (unverified). Treat exact
 figures as secondary-sourced and historical.
 
 ## Sources

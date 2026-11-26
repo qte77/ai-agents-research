@@ -25,7 +25,7 @@ Model Context Protocol (MCP) servers or Skills. Its stats, features and CC integ
 
 **Core repo**: Apache 2.0 | Rust ~58% + Python ~42% | ~11.9k stars | v1.2.1 (2026-11-26) (checked 2026-11-26)
 
-(Core counts/version as fetched 2026-11-26.)
+(Core counts/version checked 2026-11-26.)
 
 ## How It Works
 

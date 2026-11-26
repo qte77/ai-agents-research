@@ -23,7 +23,7 @@ Per the CLI README (checked 2026-11-26; v0.7.3, a native Rust binary):
 3. Shallow-clones the repository at the matching version tag
 4. Caches it globally at `~/.opensrc/repos/<host>/<owner>/<repo>/<version>/` (override with `OPENSRC_HOME`), with metadata in `~/.opensrc/sources.json`
 
-The current README documents no project-local `opensrc/` directory and no `.gitignore`, `tsconfig.json` or `AGENTS.md` changes; earlier versions (npx-based) did, per the earlier version of this analysis.
+The current README documents no project-local `opensrc/` directory and no `.gitignore`, `tsconfig.json` or `AGENTS.md` changes (whether older npx-based versions did is unverified).
 
 ## CLI Usage
 

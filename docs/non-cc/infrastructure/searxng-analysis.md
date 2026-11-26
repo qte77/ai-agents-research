@@ -10,7 +10,7 @@ status: assess
 
 ## What It Is
 
-SearXNG is a free, self-hostable metasearch engine that aggregates results from many search services (the earlier "up to 268" count is unverified) — including Google, Bing, DuckDuckGo, Brave, and Startpage — without tracking or profiling users ([repo][repo]).
+SearXNG is a free, self-hostable metasearch engine that aggregates results from many search services (261 engines, 80 enabled by default, per the SearXNG docs, checked 2026-11-26) — including Google, Bing, DuckDuckGo, Brave, and Startpage — without tracking or profiling users ([repo][repo]).
 
 - **License**: AGPL-3.0
 - **Language**: Python

@@ -21,10 +21,10 @@ reimplement it.
 
 `npx rea-agents setup` registers REA's MCP server and matching workflow instructions. The README (checked 2026-11-26)
 says "Any agent that supports local MCP servers" and that setup configures the supported agents; the
-[installation guide](https://github.com/morluto/rea/blob/main/docs/getting-started/installation.md#supported-agents)
+[installation guide][rea-install]
 lists many clients (Claude Code, Claude Desktop, Codex, Cursor, Gemini CLI, Windsurf, Devin, OpenCode, Grok Build, DeepSeek Harness (`dsh`) and others) — Claude Code is one of several named targets, not the product's differentiator.
 Deep native-binary analysis (pseudocode, assembly, symbols) can drive an existing Hopper, Ghidra, IDA or Kuna installation; static JavaScript/Electron and .NET analysis need no native engine at all. The
-supported-targets reference ([docs/reference/supported-targets.md](https://github.com/morluto/rea/blob/main/docs/reference/supported-targets.md); the README itself now has a prose summary instead of a table) lists over a dozen formats beyond native binaries and JS/.NET,
+supported-targets reference ([docs/reference/supported-targets.md][rea-targets]; the README itself now has a prose summary instead of a table) lists over a dozen formats beyond native binaries and JS/.NET,
 including WASM artifacts, EVM bytecode, HAR network captures, Android APKs/devices, JEB projects,
 firmware, and raw process-behavior capture — each with its own requirements and a dedicated guide.
 Analysis runs locally; the README states results "include the evidence and limitations behind each
@@ -96,12 +96,14 @@ reverse-engineering binaries and can launch native analysis engines) are availab
 
 | Source | Content |
 |---|---|
-| [morluto/rea][repo] (README) | Product description, target summary, agent support list, FAQ, disclaimer (removed by 2026-11-26), star-history (accessed 2026-10-11, re-read 2026-11-26) |
+| [morluto/rea][repo] (README) | Product description, target summary, agent support list, FAQ, disclaimer (removed by 2026-11-26), star-history (accessed 2026-10-11, checked 2026-11-26) |
 | [morluto/rea][repo] (repo metadata) | Stars/forks/issues/watchers, license, created/pushed dates (accessed 2026-10-11 via GitHub API) |
 | `LICENSE` file, decoded via GitHub API, 2026-10-11 | MIT license text, copyright "morluto" |
 | [morluto/rea][repo] (repo metadata, latest release) | Refreshed stars/forks/issues, license, push date, `rea-agents-6.9.0` (accessed 2026-11-17 via GitHub API) |
 | [bethington/ghidra-mcp][ghidra-mcp] | Nearest open reverse-engineering MCP server; Apache-2.0, 219 tools per README (accessed 2026-11-17) |
 
 [repo]: https://github.com/morluto/rea
+[rea-install]: https://github.com/morluto/rea/blob/main/docs/getting-started/installation.md#supported-agents
+[rea-targets]: https://github.com/morluto/rea/blob/main/docs/reference/supported-targets.md
 [ghidra-mcp]: https://github.com/bethington/ghidra-mcp
 [dsh]: ../coding-agents/deepseek-harness-analysis.md

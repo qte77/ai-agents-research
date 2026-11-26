@@ -34,7 +34,7 @@ relying on these:
 - Input tokens cost $0.042 per million ($42 per billion); output tokens are free.
 - 64k tokens per request (the `state` plus every question combined); 32k tokens for the
   `state` plus the single longest question. A `TypeSafe-Danger-Zone-Long-Context: true` header raises both limits to 262k tokens (slower and less accurate).
-- Rate limits: set per organization, shown in the developer console, measured in tokens per second and requests per second; exceeding either returns 429, and higher limits are available on custom and enterprise plans. The earlier published figures (100k tokens/second, 40 requests/second) are no longer on the page.
+- Rate limits: set per organization, shown in the developer console, measured in tokens per second and requests per second; exceeding either returns 429, and higher limits are available on custom and enterprise plans. Numeric limits (100k tokens/second, 40 requests/second) are not on the page.
 
 ## Measured: Pre-CI Code-Change Gate
 
@@ -105,7 +105,7 @@ classifier API, not a persistent store, so **Shared** and **Versionable** are ma
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| n/a (stateless per-request API; no shared store for multiple agents to read/write) [docs.typesafe.ai/api][typesafe-api] | partial (hosted multi-tenant service (earlier docs wording "serving a very large volume of demand" is no longer on the page) but no documented multi-node deployment for a self-run client) [docs.typesafe.ai/models][typesafe-models] | partial (a pinnable versioned model, `jev-1.14.0` (current; `jev-1.13.0` also listed), but the default `jev-latest`/`jev-preview` aliases drift, and no decoding-determinism guarantee is documented) [docs.typesafe.ai/models][typesafe-models] | yes (three question types — `noul`/`choice`/`score` — cover yes/no, multi-option and rubric-scored decisions without a schema rewrite) [docs.typesafe.ai/api][typesafe-api] | n/a (no persistent user-owned state to snapshot, diff or roll back; only the model release itself is versioned) [docs.typesafe.ai/models][typesafe-models] | no (returns a probability/confidence, not a citation or audit trail; self-reported confidence is not traceability) [docs.typesafe.ai/api][typesafe-api] |
+| n/a (stateless per-request API; no shared store for multiple agents to read/write) [docs.typesafe.ai/api][typesafe-api] | partial (hosted multi-tenant service (a "very large volume of demand" statement is not on the current models page, unverified) but no documented multi-node deployment for a self-run client) [docs.typesafe.ai/models][typesafe-models] | partial (a pinnable versioned model, `jev-1.14.0` (current; `jev-1.13.0` also listed), but the default `jev-latest`/`jev-preview` aliases drift, and no decoding-determinism guarantee is documented) [docs.typesafe.ai/models][typesafe-models] | yes (three question types — `noul`/`choice`/`score` — cover yes/no, multi-option and rubric-scored decisions without a schema rewrite) [docs.typesafe.ai/api][typesafe-api] | n/a (no persistent user-owned state to snapshot, diff or roll back; only the model release itself is versioned) [docs.typesafe.ai/models][typesafe-models] | no (returns a probability/confidence, not a citation or audit trail; self-reported confidence is not traceability) [docs.typesafe.ai/api][typesafe-api] |
 
 `scored 2026-09-30`
 

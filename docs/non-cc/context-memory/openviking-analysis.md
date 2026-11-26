@@ -53,9 +53,9 @@ CLI / SDK / HTTP client
       |- Vector index -- URIs, vectors, metadata and retrieval text (incl. abstracts)
 ```
 
-Processing: Parse (PDF/MD/HTML to structured trees via TreeBuilder); memory extraction and merge/dedup via schema-driven LLM steps (SessionCompressorV3); retrieval as global vector search with optional rerank (see below). The storage layer was called AGFS in the earlier version of this analysis; the current doc calls it RAGFS.
+Processing: Parse (PDF/MD/HTML to structured trees via TreeBuilder); memory extraction and merge/dedup via schema-driven LLM steps (SessionCompressorV3); retrieval as global vector search with optional rerank (see below). The storage layer is RAGFS (named AGFS in older versions of the project).
 
-**Deployment**: the current architecture doc describes HTTP mode only (clients such as `SyncHTTPClient(url=..., api_key=...)` connect to a server); an embedded mode is not described there. Managed options also exist: Volcengine SaaS, BytePlus hosting, and a self-managed commercial edition (vendor claims, unverified).
+**Deployment**: the current architecture doc describes HTTP mode only (clients such as `SyncHTTPClient(url=..., api_key=...)` connect to a server); an embedded mode is not described there.
 
 ## Tiered Loading System (L0/L1/L2)
 
@@ -63,8 +63,8 @@ The key cost-reduction mechanism. Every piece of content is processed into three
 
 | Layer | Token Budget | Purpose | API |
 |-------|-------------|---------|-----|
-| **L0 (Abstract)** | ~100 tokens (earlier figure, unverified) | Vector search, quick filtering | `client.abstract(uri)` |
-| **L1 (Overview)** | ~2,000 tokens (earlier figure, unverified) | Reranking, content navigation | `client.overview(uri)` |
+| **L0 (Abstract)** | ~100 tokens (unverified) | Vector search, quick filtering | `client.abstract(uri)` |
+| **L1 (Overview)** | ~2,000 tokens (unverified) | Reranking, content navigation | `client.overview(uri)` |
 | **L2 (Detail)** | Unlimited | Full content, on-demand | `client.read(uri)` |
 
 **Generation**: Asynchronous, bottom-up, applied per directory (no per-file L0/L1 sidecars for images, audio or video). SemanticProcessor traverses directory hierarchies from leaf nodes upward. Child abstracts aggregate into parent overviews, creating navigable hierarchy.
@@ -74,7 +74,7 @@ The key cost-reduction mechanism. Every piece of content is processed into three
 - LoCoMo accuracy: OpenClaw 24.20% native vs 82.08% with OpenViking; Hermes 33.38% vs 82.86%; Claude Code 57.21% vs 80.32%
 - Input tokens down 34.3-91.0%; query latency down 58.45-66.10%
 - tau2-bench task success: Retail 70.94% vs 77.81%, Airline 54.38% vs 66.25%
-- The earlier figures (1,540 cases, 24.6M to 4.3M tokens, 550 tokens per retrieval, 35.65% to 52.08%) are no longer in the README and are unverified.
+- Figures of 1,540 cases, 24.6M to 4.3M tokens, 550 tokens per retrieval and 35.65% to 52.08% task completion are not in the README (unverified).
 
 ## Three Context Roots
 
@@ -84,17 +84,17 @@ viking://user/       -- preferences, interaction history -- agent-extracted, dyn
 viking://agent/      -- learned skills, operational experience -- agent-written, evolving
 ```
 
-## Memory Extraction (8 Categories)
+## Memory Extraction
 
-Current memory types per the context-types doc (checked 2026-11-26): profile, preferences, entities, events, cases, trajectories, experiences, plus custom types, stored under `~/memories/<type>/` (e.g. `viking://user/alice/memories/profile.md`). The schema-defined `tools` and `skills` memory types are disabled (standalone Skills remain supported), and `patterns` no longer appears. The earlier version of this analysis listed eight categories including patterns, tools and skills, with an Update Strategy column (immutable/appendable/mergeable) that the current docs do not confirm (unverified).
+Current memory types per the context-types doc (checked 2026-11-26): profile, preferences, entities, events, cases, trajectories, experiences, plus custom types, stored under `~/memories/<type>/` (e.g. `viking://user/alice/memories/profile.md`). The schema-defined `tools` and `skills` memory types are disabled (standalone Skills remain supported), and `patterns` no longer appears. Per-type update strategies (immutable, appendable, mergeable) and an eight-category scheme including patterns are not confirmed by the current docs (unverified).
 
-**Dedup pipeline**: schema-constrained LLM extraction, then merge/edit/create/delete of memory files (earlier version: Vector Pre-filter and LLM Dedup Decision skip/create/merge/delete). Details of the commit diff output (`memory_diff.json`) and of `experiences` activating other types are unverified.
+**Dedup pipeline**: schema-constrained LLM extraction, then merge/edit/create/delete of memory files. Details of the commit diff output (`memory_diff.json`) and of `experiences` activating other types are unverified.
 
 **Self-evolution**: Agents can write new skills to their own `/skills` folder. These become immediately available for subsequent tasks.
 
 ## Retrieval Algorithm
 
-Per the retrieval doc (checked 2026-11-26), retrieval is now: Query, optional intent analysis, global vector search, optional rerank. Scores use rerank scores when available, otherwise vector scores. The doc states that directory priority queues, parent-to-child score propagation and convergence rounds are removed, so the earlier description (directory-first recursion, 50/50 score blend, 3-iteration convergence) no longer applies. `find()` uses QUICK mode; `search()` selects THINKING only when a reranker is configured (recalling 2x limit candidates, returning at most limit).
+Per the retrieval doc (checked 2026-11-26), retrieval is now: Query, optional intent analysis, global vector search, optional rerank. Scores use rerank scores when available, otherwise vector scores. The doc states that directory priority queues, parent-to-child score propagation and convergence rounds are removed, so directory-first recursion, a 50/50 score blend and 3-iteration convergence are not part of the current retrieval. `find()` uses QUICK mode; `search()` selects THINKING only when a reranker is configured (recalling 2x limit candidates, returning at most limit).
 
 ## Comparison with Traditional Vector DB / RAG
 
@@ -140,8 +140,8 @@ Source: the project's about-us page (checked 2026-11-26).
 | CLI | Rust (`ov_cli`) |
 | Filesystem | RAGFS (Go 1.22+: unverified) |
 | Deployment | Docker, Kubernetes/Helm |
-| Models | A model provider with an embedding model and a VLM is required (README); `openviking-server init` lists Volcengine, OpenAI, Codex OAuth, Kimi, GLM and local Ollama; the earlier LiteLLM provider list is unverified |
-| Embeddings | provider list unverified (earlier: volcengine, openai, jina, voyage, minimax, gemini) |
+| Models | A model provider with an embedding model and a VLM is required (README); `openviking-server init` lists Volcengine, OpenAI, Codex OAuth, Kimi, GLM and local Ollama; a LiteLLM provider list is unverified |
+| Embeddings | provider list unverified |
 
 ## Sources
 

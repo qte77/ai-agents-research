@@ -65,7 +65,7 @@ WASM), no API/GPU. `embed()` → 384-dim L2-normalized vectors for both tiers (b
 
 **Key gotcha:** `sqlite-vec` is **brute-force only** today — ANN is not
 shipped; the tracking issue is still open ([asg017/sqlite-vec#25][sqlite-vec-25], checked 2026-11-26). It does **not** buy scale over a
-naive scan. For SQLite-native ANN, use `usearch`'s [SQLite functions](https://github.com/unum-cloud/usearch/blob/main/sqlite/README.md) (scalar functions, separate from sqlite-vec's storage) instead; a `Vec1` extension was also named here earlier (unverified).
+naive scan. For SQLite-native ANN, use [usearch][usearch]'s SQLite functions (scalar functions, separate from sqlite-vec's storage, per maintainer comments on the tracking issue) instead; a `Vec1` extension is also cited (unverified).
 
 **LEANN takes a different tack than the rest of Layer B.** Instead of storing every embedding, it
 recomputes them on demand via "graph-based selective recomputation with high-degree preserving

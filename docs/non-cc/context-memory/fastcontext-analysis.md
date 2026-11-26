@@ -56,7 +56,7 @@ variant is reported to sometimes outperform the larger 30 B-SFT model.
 before adoption:
 
 - The paper ([arXiv 2606.14066][paper]) is dated 2026-06-12 and was withdrawn on 2026-06-30
-  (the withdrawn version carries no licence; earlier CC BY-NC-ND 4.0 claim no longer shown);
+  (the withdrawn version carries no licence; CC BY-NC-ND 4.0 is no longer shown on the page);
   the repo has 17 stars and the model card reported only 13 HuggingFace downloads last month (unverified), indicating
   very early community uptake.
 - Results are reported with Mini-SWE-Agent as the harness and specific backbone

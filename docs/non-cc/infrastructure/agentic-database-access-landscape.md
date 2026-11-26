@@ -72,7 +72,7 @@ Layers, cheapest first; none is sufficient alone.
 2. **Tool-level modes are not a boundary.** The Anthropic reference Postgres MCP server wrapped each
    query in a read-only transaction, but Datadog Security Labs showed (2025-08-21) that a statement
    such as `COMMIT; DROP SCHEMA public CASCADE;` ended that transaction and ran writes. Datadog says the flaw
-   is present from v0.1.0, that 0.6.2 was the latest npm/Docker release and unpatched as of the article (2025-05-29; its timeline says Anthropic fixed it in git via PR #1889 and archived the server, but the fix was not released), that a Zed fork
+   is present from v0.1.0, that 0.6.2 was the latest npm/Docker release and unpatched as of the timeline entry dated 2025-05-29 (its timeline says Anthropic fixed it in git via PR #1889 and archived the server, but the fix was not released), that a Zed fork
    (`@zeddotdev/postgres-context-server` v0.1.4) carries the fix, and that the server is deprecated and
    archived ([Datadog][datadog-pg]). Evidence: researcher-reported (Datadog Security Labs); no direct Anthropic statement found beyond the git fix and archive described in Datadog's timeline.
 3. **Branching before merging.** Neon's migration tools run a change on a temporary branch and apply

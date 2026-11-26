@@ -20,9 +20,9 @@ Benchmarked by the project on Apple M5 (README, v0.17.0, medians of five runs, c
 
 - Property read by node id: 0.22 μs p50 (C API, open read transaction).
 - 10-NN vector search at 1M vectors, default 100 MB cache: 1.34 ms p50, 3.1 ms p99, recall@10 95.6%; with a 2 GB cache 0.21 ms p50, 0.46 ms p99.
-- Graph traversal vs. SQLite: level for 1-3 hops and about 2x faster for `*1..5` paths (600 μs vs. 1,361 μs in the repo's competitive-analysis page); SQLite inserts rows several times faster (332K nodes/s vs. 1.84M rows/s). The earlier M1 figures (including a 2,819x traversal speedup) are no longer in the README.
+- Graph traversal vs. SQLite: level for 1-3 hops and about 2x faster for `*1..5` paths (600 μs vs. 1,361 μs in the repo's competitive-analysis page); SQLite inserts rows several times faster (332K nodes/s vs. 1.84M rows/s). M1 figures (including a 2,819x traversal speedup) are not in the current README.
 
-The README's cross-vendor comparison section cited in the earlier version of this analysis is no longer present (unverified), so no cross-vendor multiples are repeated here.
+The README has no cross-vendor comparison section, so no cross-vendor multiples are given here (an "order-of-magnitude orientation" caveat attributed to it is unverified).
 
 ## Known Gaps
 
@@ -34,14 +34,16 @@ The README's cross-vendor comparison section cited in the earlier version of thi
 
 ## Adoption Decision
 
-**Assess.** MIT-licensed, ~11 months old (created 2025-12-20), with credible self-reported latency numbers for the embedded-single-writer niche it targets — comparable in spirit to Kuzu, whose own [GitHub repo](https://github.com/kuzudb/kuzu) is archived (last push 2025-10-10, checked 2026-11-26). Worth a pilot for local-first agent-memory or Retrieval-Augmented Generation (RAG) use cases where a single embedded process is acceptable; the low bus factor (5 contributors) and young ecosystem are the main risks to track before depending on it in production.
+**Assess.** MIT-licensed, ~11 months old (created 2025-12-20), with credible self-reported latency numbers for the embedded-single-writer niche it targets — comparable in spirit to Kuzu, whose own [GitHub repo][kuzu] is archived (last push 2025-10-10, checked 2026-11-26). Worth a pilot for local-first agent-memory or Retrieval-Augmented Generation (RAG) use cases where a single embedded process is acceptable; the low bus factor (5 contributors) and young ecosystem are the main risks to track before depending on it in production.
 
 ## Sources
 
 | Source | Content |
 |---|---|
 | [LatticeDB GitHub repo][repo] (README) | Architecture, query language, feature list, benchmark tables, license (checked 2026-11-26) |
+| [kuzudb/kuzu][kuzu] (repo metadata) | Archived flag and last push date (checked 2026-11-26 via GitHub API) |
 | [jeffhajewski/latticedb][repo] (repo metadata, releases, contributors) | Stars, license, language, created/pushed dates, v0.18.1 release date, 5-contributor count (checked 2026-11-26 via GitHub API) |
 
 [repo]: https://github.com/jeffhajewski/latticedb
+[kuzu]: https://github.com/kuzudb/kuzu
 [site]: https://latticedb.org

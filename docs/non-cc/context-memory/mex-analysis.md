@@ -13,7 +13,7 @@ status: assess
 
 [mex][repo] (npm package `mex-agent`) is a CLI plus local "Hub" that keeps a team's project memory — architecture, decisions, requirements, handoffs — as canonical Markdown files under `.mex/` in the repository, shared through ordinary Git commits. There is no hosted service or central server: Git is the only sharing layer, and each engineer or agent rebuilds their own local, non-shared SQLite indexes (a Tree-sitter-based Code Graph and a full-text Wiki search index) from that canonical Markdown.
 
-Stars: 1,794 · License: MIT · Language: TypeScript · Latest release: **v0.8.5** (2026-10-29; a 0.9.0 beta pre-release exists, 2026-11-18) · 30 contributors per the GitHub API · homepage [mexmemory.com][site] (all checked 2026-11-26). Requires Node.js ≥22.5 with SQLite FTS5 support and a Git repository.
+Stars: 1,794 · License: MIT · Language: TypeScript · Latest release: **v0.8.5** (2026-10-29; a 0.9.0 beta pre-release exists, 2026-11-18) · 32 contributors per the GitHub API · homepage [mexmemory.com][site] (all checked 2026-11-26). Requires Node.js ≥22.5 with SQLite FTS5 support and a Git repository.
 
 ## Key Differentiator: Human Approval Boundary
 
@@ -41,7 +41,7 @@ mex does not upload canonical records, the Graph, the Wiki index, drafts, or Hub
 
 ## Adoption Decision
 
-**Assess.** MIT-licensed, actively maintained (30 contributors, a stable release as recent as 2026-10-29), and its Inbox/Relay review workflow addresses a real risk class — an agent silently "correcting" shared project knowledge — without requiring a hosted service, though the gate is procedural (plan/`--apply`, a self-approval path exists for solo use) rather than an enforced technical restriction. Requires Node ≥22.5 with SQLite FTS5 support; verify that constraint against your CI/dev images before piloting, and note the Code Graph covers TypeScript/TSX, JavaScript/JSX, Python and Rust, with partial C# support and bounded framework resolvers (Express, Next.js App Router, FastAPI, Flask, NestJS) per the v0.8.5 README.
+**Assess.** MIT-licensed, actively maintained (32 contributors, a stable release as recent as 2026-10-29), and its Inbox/Relay review workflow addresses a real risk class — an agent silently "correcting" shared project knowledge — without requiring a hosted service, though the gate is procedural (plan/`--apply`, a self-approval path exists for solo use) rather than an enforced technical restriction. Requires Node ≥22.5 with SQLite FTS5 support; verify that constraint against your CI/dev images before piloting, and note the Code Graph covers TypeScript/TSX, JavaScript/JSX, Python and Rust, with partial C# support and bounded framework resolvers (Express, Next.js App Router, FastAPI, Flask, NestJS) per the v0.8.5 README.
 
 ## Sources
 

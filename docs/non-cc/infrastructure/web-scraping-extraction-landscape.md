@@ -44,7 +44,7 @@ See [CC Web Scraping Plugins Analysis](../../cc-native/plugins-ecosystem/CC-web-
 
 | Tool | License | TLS Fingerprinting | Differentiator |
 |------|---------|-------------------|----------------|
-| [curl_cffi](https://github.com/lexiforest/curl_cffi) | MIT | Yes (JA3/HTTP2/HTTP3) | Impersonates Chrome up to 152 per the v0.17.0 README (earlier lower bound "99" unverified); fastest TLS bypass |
+| [curl_cffi](https://github.com/lexiforest/curl_cffi) | MIT | Yes (JA3/HTTP2/HTTP3) | Impersonates Chrome up to 152 per the v0.17.0 README (a Chrome 99 lower bound is unverified); fastest TLS bypass |
 | [tls_client](https://github.com/FlorianREGAZ/Python-Tls-Client) | MIT | Yes (JA3) | Go-based, simpler API, Python bindings |
 | [httpx](https://github.com/encode/httpx) | BSD-3 | No | Modern async/sync client, HTTP/2; no anti-bot |
 | [aiohttp](https://github.com/aio-libs/aiohttp) | Apache-2.0 | No | High-performance async; no TLS spoofing |
@@ -149,7 +149,7 @@ Prices read from each vendor's pricing page on **2026-11-18**; they change often
 | [Serper](https://serper.dev/) | 2.5K queries, no card | $1.00 (Starter, $50 for 50K) down to $0.30 (Ultimate, $3,750 for 12.5M) | Google SERP proxy with knowledge graphs |
 | [SerpAPI](https://serpapi.com/pricing) | 250 searches/mo | $25 (Starter, $25 for 1K), $7.25 at 100K, about $3.75 (Cloud 1M, $3,750 for 1M) | Multi-engine (Google, Bing, Baidu, Yandex) |
 | [Brave Search](https://brave.com/search/api/) | $5 credit/mo (page headline also says "up to $20") | $5 (Search plan); Answers plan $4 plus token fees | Own search index (page count not stated on the cited page; Brave's own pages give differing figures); privacy-focused |
-| [SearXNG](https://github.com/searxng/searxng) | Self-hosted | Free (AGPL-3.0) | Self-hostable metasearch; docs say "261 search engines of which 80 are enabled by default" ([SearXNG docs](https://docs.searxng.org/user/configured_engines.html), read 2026-11-26); no API keys |
+| [SearXNG](https://github.com/searxng/searxng) | Self-hosted | Free (AGPL-3.0) | Self-hostable metasearch; docs say "261 search engines of which 80 are enabled by default" ([SearXNG docs](https://docs.searxng.org/user/configured_engines.html), checked 2026-11-26); no API keys |
 
 Notes: Serper's table lists credits per plan; we read one credit as one query (the excerpt we read did not say). Per-1K figures for SerpAPI and Serper are our division of plan price by plan quota, not figures the vendors publish.
 

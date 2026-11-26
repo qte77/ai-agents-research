@@ -59,7 +59,7 @@ The blog says agents and frameworks "already support MXC, including GitHub Copil
 | Source | Content |
 |---|---|
 | [Windows Developer blog, 2026-10-07][blog] | GA announcement, backend table, Enforcement/Learning/Permissive modes, agent support lists, OpenShell integration, Intune plan, Windows 365 GA |
-| [microsoft/mxc README][repo] | Name, backends per platform, experimental flags, audit-mode warning, telemetry; `gh api` (MIT `LICENSE.md`, releases v1.0.0 2026-10-07 / v1.0.1 2026-10-17 / v1.1.0 2026-11-15, 3,198★), re-read 2026-11-26 |
+| [microsoft/mxc README][repo] | Name, backends per platform, experimental flags, audit-mode warning, telemetry; `gh api` (MIT `LICENSE.md`, releases v1.0.0 2026-10-07 / v1.0.1 2026-10-17 / v1.1.0 2026-11-15, 3,198★), checked 2026-11-26 |
 | [Containment policy 1.0.0][mxc-policy] | Stable contract status, closed JSON request, network deny defaults |
 | [Process-container networking][mxc-networking] | WFP-based network enforcement on Windows |
 | [OS-version support][mxc-os] | Minimum Windows 11 builds per backend |

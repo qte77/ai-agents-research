@@ -71,7 +71,7 @@ All repos Apache-2.0 licensed.
 | Dimension | Assessment |
 |-----------|------------|
 | **Use case** | Backend infrastructure for agent-built apps |
-| **Primitives** | Auth, PostgreSQL, S3 storage, edge functions (Deno), model gateway; the [docs site](https://docs.insforge.dev/introduction) also lists Realtime (database changes, pub/sub) and Compute (long-running containers; "private preview" per the README) |
+| **Primitives** | Auth, PostgreSQL, S3 storage, edge functions (Deno), model gateway; the [docs site][insforge-docs] also lists Realtime (database changes, pub/sub) and Compute (long-running containers; "private preview" per the README) |
 | **Maturity** | Active (13.4K stars, 1.3K forks, checked 2026-11-26) |
 | **License** | Apache-2.0 |
 
