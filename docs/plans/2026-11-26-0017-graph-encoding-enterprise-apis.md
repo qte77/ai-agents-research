@@ -18,7 +18,7 @@ checks all of it.
 - **Shipped before this plan:** plan 0016 rows N34 to N58 and N61 (#1072 to #1108).
 - **Opened 2026-11-26** from the owner's decisions in one sitting. Every decision is recorded in
   [§ Owner decisions](#owner-decisions-2026-11-26), so nothing needs asking again.
-- **In flight:** none yet. This PR adds the plan only.
+- **In flight:** wave 1. N60 shipped (#1110); N59, N64a, N64b and N64c in review.
 
 **Next, in order** (rows in [§ Remaining work](#remaining-work)):
 
