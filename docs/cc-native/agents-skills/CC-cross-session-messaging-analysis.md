@@ -184,7 +184,6 @@ Cross-checked each stated gate against the [`anthropics/claude-code` CHANGELOG][
 
 The docs page states native Windows requires **v2.1.234+**, both in its opening note and in its Availability section ("v2.1.224 or later on macOS, Linux, and WSL 2, and v2.1.234 or later on native Windows"). The CHANGELOG's v2.1.234 entry has no cross-session-messaging line for Windows at all; the first (and only) explicit Windows-availability entry found is at **v2.1.239**: "Windows: cross-session messaging is now available, so Claude Code sessions across your machines can message each other with `SendMessage` and find each other with `ListAgents`, as on macOS and Linux." **This is unreconciled as of 2026-09-23** — the two first-party sources disagree by five patch releases, and no CHANGELOG entry at v2.1.234–v2.1.238 supports the docs page's earlier date. Confirm against `claude --version` behavior on a native-Windows install before relying on either number.
 
-
 ### Platform / provider matrix
 
 - **Operating system**: macOS, Windows, and Linux (including WSL2).
