@@ -3,7 +3,7 @@ title: Locksmith Loop — Agentic Deterministic Validation for COBOL-to-Java Mig
 purpose: American Express's agentic test-synthesis method for validating COBOL-to-Java legacy code migrations without a human-written oracle.
 source: https://arxiv.org/abs/2607.28271
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -30,8 +30,10 @@ scale is the harder, under-solved half of the task.
    lockstep under perturbation rather than only on a fixed input set.
 4. **Locked Paragraphs** — where the agent hits a routing boundary it cannot drive
    through, an analyzer flags the blocking paragraph explicitly rather than silently
-   under-covering it. The abstract names the concept but does not enumerate which kinds
-   of boundaries qualify — that detail would need a read of the full paper body.
+   under-covering it. The paper body defines it as a paragraph that cannot be reached by
+   Witness Search alone and gives no taxonomy of boundaries; it attributes the
+   production program's remaining gaps mainly to multi-step paragraph chains
+   (control variables set incrementally across earlier sections) and external coupling.
 
 The loop is deterministic in its acceptance criterion: a migration is validated by
 checking Java output against COBOL output under the same witness inputs, not by an LLM
@@ -39,10 +41,11 @@ judging equivalence.
 
 ## Evaluation
 
-Tested on three case studies (430–4,114 source lines): near-complete branch coverage on
-two open-source COBOL programs, and **91.90% branch coverage on an internal
+Tested on three case studies (430–4,114 source lines): branch coverage of 96.8% (60/62 probes) on
+CBACT01C (430 lines) and 74.0% on CBSTM03A (924 lines) in the paper body, where the abstract says
+"nearly complete" for both open-source programs, and **91.90% branch coverage on an internal
 production-like COBOL program** (paper-reported). Java output matched COBOL behavior
-under the deterministic validation checks for the covered branches. No linked code
+under the deterministic parity checks in all accepted test cases (abstract). No linked code
 repository was found in the abstract or comments field — this appears to be a
 paper-only submission as of v1.
 

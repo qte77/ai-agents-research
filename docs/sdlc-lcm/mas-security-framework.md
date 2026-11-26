@@ -1,17 +1,21 @@
 ---
 title: "Multi-Agent System Security Framework"
-purpose: OWASP MAESTRO v1.0 threat modeling framework for multi-agent systems — 7 security layers with concrete controls.
+purpose: Seven-layer threat model for multi-agent systems, loosely inspired by the Cloud Security Alliance MAESTRO framework, with concrete controls.
 created: 2026-02-09
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
 
-Based on [OWASP MAESTRO
-v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
--- a 7-layer threat modeling framework for multi-agent systems.
+Inspired by the [Cloud Security Alliance's MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro)
+(created by Ken Huang), a 7-layer threat modeling framework for agentic AI. The layer names, concerns and
+mitigations below are this project's own taxonomy and design choices, not MAESTRO's (unverified against
+any first-party source). MAESTRO's own layers are Foundation Models, Data Operations, Agent Frameworks,
+Deployment and Infrastructure, Evaluation and Observability, Security and Compliance (a vertical layer)
+and Agent Ecosystem. The [OWASP Multi-Agentic System Threat Modeling Guide v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
+(2025-04-23) is a separate document.
 
-## MAESTRO Layers
+## Layers (project taxonomy)
 
 | Layer | Focus | Key Concern |
 | ----- | ----- | ----------- |
@@ -136,7 +140,8 @@ Checklist](mas-design-principles.md#agentplugin-design-checklist).
 
 ## References
 
-- [OWASP MAESTRO
+- [CSA MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro)
+- [OWASP Multi-Agentic System Threat Modeling Guide
   v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
 - [12-Factor App](https://12factor.net/)
 - [OWASP Top 10 for LLM

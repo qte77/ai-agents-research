@@ -4,14 +4,14 @@ source: https://github.com/openai/codex-plugin-cc
 purpose: Analysis of OpenAI's official Claude Code plugin that delegates to Codex — a rival lab building on CC's own hook/slash-command/subagent extension surface.
 platform_scope: [claude-code, codex]
 created: 2026-07-08
-updated: 2026-09-30
+updated: 2026-11-26
 validated_links_on: 2026-09-30
 status: assess
 ---
 
 ## What It Is
 
-[codex-plugin-cc][repo] is an **official OpenAI** Claude Code plugin (Apache-2.0; ~26.9k stars, v1.0.6
+[codex-plugin-cc][repo] is an **official OpenAI** Claude Code plugin (Apache-2.0; ~35.5k stars (checked 2026-11-26), v1.0.6
 as of 2026-07-08) that lets a Claude Code user invoke **OpenAI Codex from inside their CC session** —
 for code review or task delegation — without switching tools. Its README opener: *"Use Codex from
 inside Claude Code for code reviews or to delegate tasks to Codex."*

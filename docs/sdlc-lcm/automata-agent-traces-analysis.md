@@ -3,7 +3,7 @@ title: Automata from Agent Traces — FSM Reconstruction for Failure & Next-Step
 purpose: Reconstructing a compact finite-state machine from LLM-agent trace corpora to predict failures and next steps, and to audit agent behavior independent of the underlying model.
 source: https://arxiv.org/abs/2608.23670
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -11,7 +11,7 @@ status: assess
 ## What It Is
 
 An arXiv paper, "Automata from Agent Traces: Failure and Next-Step Prediction"
-(arXiv:2608.23670v1, submitted 2026-08-24, cs.AI / cs.CL / cs.LG; authors Seonglae Cho,
+(arXiv:2608.23670, v1 submitted 2026-08-24, revised as v2 on 2026-11-12 (current version, checked 2026-11-26; only the abstract was re-read), cs.AI / cs.CL / cs.LG; authors Seonglae Cho,
 Franklin Cardenoso Fernandez, Umar Mohammed, Zekun Wu, Kleyton Da Costa, Ilham
 Wicaksono, Adriano Koshiyama), addressing the opacity of LLM-agent behavior by building
 **a single, compact finite-state machine (FSM)** that serves as a structural substrate

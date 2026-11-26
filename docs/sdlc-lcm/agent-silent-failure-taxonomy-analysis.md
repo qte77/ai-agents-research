@@ -3,7 +3,7 @@ title: Silent Failures in a Production LLM Agent Runtime — Taxonomy Analysis
 purpose: Analysis of arXiv:2606.14589, an 8-week case study deriving a 5-class taxonomy of silent failures in a production LLM agent runtime, plus its 5-pillar defense framework.
 source: https://arxiv.org/abs/2606.14589
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: assess
 ---
@@ -50,8 +50,9 @@ that never surfaced as an error at all, only as plausible-looking narrative.
 - Retrospective audit measured **0% ex-ante (predictive) prevention** but
   **87% ex-post regression-blocking value** — audits catch recurrences, they
   don't predict novel failures.
-- Failure longevity tracked **component interface/seam count**, not code
-  complexity — more integration seams, longer-lived silent failures.
+- Incident latency (13 hours to 60 days) tracked the failure mechanism, not code
+  complexity; the longest-lived failures sat in the seams between components,
+  where no test runs (abstract wording; no seam-count metric is stated there).
 
 ## The 5-Pillar Defense Framework
 
@@ -64,8 +65,8 @@ that never surfaced as an error at all, only as plausible-looking narrative.
 5. **Self-monitoring watchdogs** — alarms independent of the component they
    watch.
 
-Summarized by the author as: *"audit is a regression engine, not a
-prediction engine"* — advocating **seam reduction over defense accretion**.
+Summarized by the author as: *"audits are regression engines, not prediction engines"*. (A "seam reduction over
+defense accretion" recommendation is unverified: it is not in the abstract and the paper body was not read.)
 
 ## Why It Matters for Agentic-SDLC Research
 
@@ -76,7 +77,7 @@ surface (or don't) in a running agent*, not how they're modeled a priori.
 "Fail-plausible" names a failure class not covered elsewhere in this corpus:
 an LLM turning an infrastructure error into confident, false narrative
 output, distinct from prompt-injection or jailbreak-style adversarial
-framing. The "audit ≠ prediction" and "seams over complexity" findings are
+framing. The "audit ≠ prediction" and "seams over complexity" finding (as the abstract words it) are
 directly relevant to designing observability and postmortem practice for
 production agent SDLCs.
 

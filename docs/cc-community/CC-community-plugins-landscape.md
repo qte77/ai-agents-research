@@ -3,13 +3,13 @@ title: CC Community Plugins Landscape
 purpose: Survey of community plugin catalogs — awesome-claude-code (curated resource list) and awesome-claude-code-plugins (installable plugin registry with marketplace format).
 status: research
 created: 2026-03-13
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 ---
 
 ## Summary
 
-Two community-maintained catalogs serve complementary roles: awesome-claude-code is a broad curated resource list (~100-200+ entries across 9 categories), while awesome-claude-code-plugins is a structured plugin registry (~136 installable plugins across 13 categories with marketplace format). Together they represent the community ecosystem around Claude Code extensions.
+Two community-maintained catalogs serve complementary roles: awesome-claude-code is a broad curated resource list (~100-200+ entries across 9 categories), while awesome-claude-code-plugins is a structured plugin registry (~192 plugin links under about 20 category headings, counted 2026-11-26, with marketplace format). Together they represent the community ecosystem around Claude Code extensions.
 
 ## awesome-claude-code (hesreallyhim)
 
@@ -50,24 +50,27 @@ A curated "awesome list" of Claude Code resources — links, tools, configuratio
 
 A structured plugin registry organized around Claude Code's installable plugin format (`/plugin` command, `.claude-plugin/marketplace.json`).
 
-### Categories (13)
+### Categories (counted 2026-11-26)
+
+Per-heading counts of distinct `./plugins/` links in the README (last pushed 2026-08-12). The README has further headings (for example MCP Servers, AI & Speech, Audio & Media) that list other entry types and carry no such links.
 
 | Category | Plugins | Notable Focus |
 |----------|---------|---------------|
 | Official Claude Code Plugins | 5 | Anthropic-maintained |
-| Code Quality Testing | 16 | Linting, testing, review automation |
-| Development Engineering | 15 | Language-specific tooling, frameworks |
+| Workflow Orchestration | 26 | Multi-step automation, pipelines |
+| Development Engineering | 25 | Language-specific tooling, frameworks |
+| Code Quality Testing | 21 | Linting, testing, review automation |
+| Data Analytics | 16 | Dashboards, data processing, visualization |
+| Marketing Growth | 16 | SEO, content, analytics |
 | Git Workflow | 14 | Review, branching, commit messaging |
-| Project & Product Management | 10 | Agile, roadmapping, stakeholder tools |
-| Business Sales | 8 | CRM, outreach, pipeline management |
-| Workflow Orchestration | 8 | Multi-step automation, pipelines |
-| Design UX | 8 | UI patterns, accessibility, prototyping |
-| Documentation | 8 | Doc generation, API docs, changelogs |
-| Marketing Growth | 7 | SEO, content, analytics |
-| Security, Compliance & Legal | 7 | Vulnerability scanning, policy generation |
-| Automation DevOps | 5 | CI/CD, infrastructure, deployment |
-| Data Analytics | 5 | Dashboards, data processing, visualization |
-| **Total** | **~136** | |
+| Project & Product Management | 13 | Agile, roadmapping, stakeholder tools |
+| Documentation | 12 | Doc generation, API docs, changelogs |
+| Business Sales | 11 | CRM, outreach, pipeline management |
+| Security, Compliance & Legal | 11 | Vulnerability scanning, policy generation |
+| Automation DevOps | 10 | CI/CD, infrastructure, deployment |
+| Design UX | 10 | UI patterns, accessibility, prototyping |
+| Lifestyle & Entertainment, Knowledge Management | 1 each | Other |
+| **Total** | **~192** | |
 
 ### Plugin System
 
@@ -75,7 +78,7 @@ A structured plugin registry organized around Claude Code's installable plugin f
 - **Package format**: `.claude-plugin/marketplace.json` in a Git repo
 - **Composability**: each plugin bundles slash commands + subagents + Model Context Protocol (MCP) servers + hooks as a single unit
 - **Role-specific subagents**: plugins target named roles (data-scientist, frontend-developer, legal-advisor)
-- **100% Python** implementation
+- **Mixed-language** repository: by bytes JavaScript is largest (155,233), then Python (118,760) and Shell (70,208) (GitHub languages API, checked 2026-11-26); the earlier "100% Python" label was wrong
 
 ### Contribution Model
 
@@ -93,7 +96,7 @@ A structured plugin registry organized around Claude Code's installable plugin f
 | **Business coverage** | Technical/developer focus | Includes Sales, Marketing, Legal |
 | **Contribution** | Issue-only; Claude submits PRs | Open PRs; decentralized marketplaces |
 | **License** | CC BY-NC-ND 4.0 (restrictive) | Apache-2.0 (permissive) |
-| **Size** | ~100-200+ resources | ~136 plugins |
+| **Size** | ~100-200+ resources | ~192 plugins (checked 2026-11-26) |
 | **Unique content** | Workflow methodologies, CLAUDE.md examples, alternative clients | Business-function plugins, formal marketplace format |
 
 ## TTS / Voice Output Plugins (Emerging Category)
@@ -116,8 +119,8 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 
 | Engine | Params | Latency (10s audio) | Designed For | Notes |
 |--------|--------|---------------------|-------------|-------|
-| [Moonshine][moonshine] | 34M (tiny) – 245M (medium) | 34ms (tiny, MacBook) – 802ms (medium, RPi5) | Edge/mobile/IoT | Variable-length input, no zero-padding; 8 languages ([source][moonshine]) |
-| [whisper.cpp][whispercpp] | 39M (tiny) – 1.5B (large) | ~200-500ms (medium, CPU) | Desktop/server | C++ port of OpenAI Whisper; GPU acceleration; 99 languages |
+| [Moonshine][moonshine] | 34M (tiny) – 245M (medium) (unverified: not in the README) | 34ms (tiny, MacBook) – 802ms (medium, RPi5) (unverified: not in the README) | Edge/mobile/IoT | Variable-length input, no zero-padding; 10 speech-to-text languages and 16 text-to-speech languages per the README, checked 2026-11-26 ([source][moonshine]) |
+| [whisper.cpp][whispercpp] | 39M (tiny) – 1.5B (large) (unverified: README gives disk/memory sizes, not parameters) | ~200-500ms (medium, CPU) (unverified) | Desktop/server | C++ port of OpenAI Whisper; GPU acceleration (CUDA, Metal, Vulkan, ROCm among others, per README); 99 languages (unverified) |
 | [Vosk][vosk] | 50MB (small model) | Real-time streaming | Lightweight/embedded | Continuous listening built-in; offline; 20+ languages |
 
 **Key gap**: CC's native `/voice` is cloud-only and push-to-talk. No native continuous listening, no local STT, no wake-word activation. The one community project that clears the [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter), [mbailey/voicemode][tts-voice] (local Whisper STT + Kokoro TTS over MCP, see the table above), fills part of these gaps but requires separate installation.
@@ -126,7 +129,7 @@ CC has native push-to-talk voice dictation via `/voice` — cloud-only, requires
 
 **Repo**: [AgriciDaniel/claude-seo][claude-seo] | **Homepage**: [claude-seo.md][claude-seo-site] | **License**: MIT | **CC version**: 1.0.33+ (plugin install) | **Category**: Marketing Growth
 
-Representative example of the Marketing Growth category. Per the [repo README][claude-seo-readme], the plugin now ships **26 sub-skills and 19 specialist subagents**, with 9 optional extensions (up from 3) adding live SEO data sources, exposed through a single `/seo` command. **Refreshed 2026-11-12** (`gh api`): 28,262★/3,649 forks, last pushed 2026-11-11 — up sharply from the 2026-04-15 snapshot this section originally recorded (23 skill directories, 17 subagents, 3 extensions). The repo's own README now states this 26/19 count directly, so the earlier "GitHub short description undercounts the README" discrepancy no longer applies. Selected subcommands:
+Representative example of the Marketing Growth category. Per the [repo README][claude-seo-readme], the plugin now ships **29 sub-skills and 20 specialist agents** (up to 17 run in parallel), with an extensions group adding live SEO data sources, exposed through a single `/seo` command. **Refreshed 2026-11-26** (`gh api`): 32,575★/3,963 forks, last pushed 2026-11-26 — up sharply from the 2026-04-15 snapshot this section originally recorded (23 skill directories, 17 subagents, 3 extensions). The GitHub short description still says 26 sub-skills, 19 sub-agents and 9 extensions, so it again undercounts the README. Selected subcommands:
 
 | Command | Purpose |
 |---------|---------|
@@ -167,7 +170,7 @@ Manual install via `git clone` + `install.sh` (Unix) or `install.ps1` (Windows) 
 
 ## Notable Plugin Profile: ponytail (Code Quality — Cross-Agent)
 
-**Repo**: [DietrichGebert/ponytail][ponytail] | **License**: MIT | **Stars**: ~16.6k | **Language**: JavaScript (~91%)
+**Repo**: [DietrichGebert/ponytail][ponytail] | **License**: MIT | **Stars**: 199,224 (`gh api`, checked 2026-11-26) | **Language**: JavaScript is largest at about 49% by bytes (JavaScript 309,843, Python 157,958, TypeScript 157,343; checked 2026-11-26)
 
 A cross-agent ruleset/plugin that enforces YAGNI-first minimalism across all major AI coding platforms. Tagline: *"Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote."*
 
@@ -202,11 +205,11 @@ The repo ships Node.js lifecycle hooks (`hooks/`), platform-specific markdown ru
 /plugin marketplace add DietrichGebert/ponytail
 ```
 
-**Notable pattern**: Unusually high star count (~16.6k) for a code-quality plugin reflects broad cross-ecosystem appeal — the minimalism philosophy is platform-agnostic and the multi-platform distribution lowers the barrier for polyglot teams.
+**Notable pattern**: Unusually high star count (~199k as of 2026-11-26) for a code-quality plugin reflects broad cross-ecosystem appeal — the minimalism philosophy is platform-agnostic and the multi-platform distribution lowers the barrier for polyglot teams.
 
 ## Notable Plugin Profile: Impeccable (pbakaus — Design, Cross-Agent)
 
-**Repo**: [pbakaus/impeccable][impeccable] | **License**: Apache-2.0 | **Stars**: 108,300★/6,438 forks (`gh api`, 2026-11-12) | **Category**: Design review
+**Repo**: [pbakaus/impeccable][impeccable] | **License**: Apache-2.0 | **Stars**: 117,355★/7,024 forks (`gh api`, checked 2026-11-26) | **Category**: Design review
 
 Impeccable is a "design vocabulary for your coding agent" — 24 slash commands grouped into Steer (`bolder`, `quieter`, `distill`, `colorize`, `typeset`, `layout`, `animate`, `delight`, `overdrive`), Review (`critique`, `audit`), Finish (`polish`, `harden`, `clarify`, `adapt`, `optimize`, `onboard`), and Iterate-live (`live`, `generate`), plus `shape`/`init`/`document`/`extract` for setup. Its own framing: each command "loads a playbook written for that one move and points it at one target," addressing the recurring "AI slop" look (Inter font, purple-to-blue gradients, cards nested in cards) that shows up "across models and projects" when an agent is given no design direction. A **62-rule, no-LLM detector** (`npx impeccable detect`) catches pattern tells plus accessibility/contrast issues on a rendered page, runs in CI with `--github` annotations, and backs a design hook that scans every UI file an agent edits before it calls the work done.
 
@@ -218,7 +221,7 @@ See also the Cursor-hosted cross-harness pack [pstack](CC-community-skills-lands
 
 ## Notable Plugin Profile: Elephant-Goldfish Model (Google — Design/Spec Review, Cross-Agent)
 
-**Repo**: [google/elephant-goldfish-model][egm] | **License**: Apache-2.0 | **Stars**: 17,685★/1,322 forks (`gh api`, 2026-11-12) | **Category**: Spec review
+**Repo**: [google/elephant-goldfish-model][egm] | **License**: Apache-2.0 | **Stars**: 23,170★/1,710 forks (`gh api`, checked 2026-11-26) | **Category**: Spec review
 
 EGM pairs two agent roles for spec-driven work: "Elephant," a context-holding drafter that keeps the project's context and drafts a specification, and "Goldfish," a fresh-context reviewer that examines the draft and its referenced source material without the drafting conversation — "Design with an elephant. Review with a goldfish," per the README. A human still makes the architectural trade-offs and approves the specification before implementation. Skills cover brainstorm, draft, resolve, bootstrap, review, review-loop and drift-report; if the host agent cannot spin up a genuinely fresh subagent context for the Goldfish step, EGM stops the review rather than fake it.
 
@@ -226,7 +229,7 @@ Not CC-exclusive — Claude Code is one of four installable surfaces: `claude pl
 
 ## Notable Plugin Profile: codex-plugin-cc (OpenAI Codex → CC delegation)
 
-[openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) — an **official OpenAI** plugin (Apache-2.0, ~26.9k★, v1.0.6) that runs Codex from inside a CC session for review or task delegation. Notable for building entirely on CC's own extension surface: slash commands (`/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:transfer`, …), a `codex-rescue` subagent, and a **`Stop`-hook review gate** that can block Claude's response when Codex flags issues; plus background delegation and full session transfer. A rival lab productizing cross-agent delegation on CC primitives. Full analysis: [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md).
+[openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) — an **official OpenAI** plugin (Apache-2.0, ~35.5k★ as of 2026-11-26, v1.0.6) that runs Codex from inside a CC session for review or task delegation. Notable for building entirely on CC's own extension surface: slash commands (`/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:transfer`, …), a `codex-rescue` subagent, and a **`Stop`-hook review gate** that can block Claude's response when Codex flags issues; plus background delegation and full session transfer. A rival lab productizing cross-agent delegation on CC primitives. Full analysis: [CC-codex-plugin-cc-analysis.md](CC-codex-plugin-cc-analysis.md).
 
 ## Community Mod Catalogs
 
@@ -248,7 +251,7 @@ app"). Since "Mods aren't sandboxed" ([first-party docs][mods-overview-cc]), our
 ## Notable Plugin Profile: lot-map (Live Session Map Mod)
 
 **Repo**: [alexeyw/lot-map][lot-map] | **License**: MIT (LICENSE file, "Copyright (c) 2026 Aleksei
-Volodin") | **Stars**: 407★/45 forks (`gh api`, 2026-11-12) | **Category**: Agent observability /
+Volodin") | **Stars**: 1,179★/123 forks (`gh api`, checked 2026-11-26) | **Category**: Agent observability /
 visualization
 
 lot-map is a concrete example of a [mod](../cc-native/plugins-ecosystem/CC-mods-function-hooks-analysis.md)
@@ -258,16 +261,14 @@ steps, hooks, skills and subagents each sending a pulse from a centre node (defa
 out to one of ten "stations" — You, Model, Memory, Files, Shell, Network, Browser, Agents, Skills,
 Hooks — as they happen; a spoke thickens the more its station is used, and a fading route line traces
 the last few hops. Its own README: "Built and tested on Claude Code 2.1.321 on macOS; users report it
-working on Windows as well" (mods require CC v2.1.287+, per the native-feature doc above). The README's
+working on Windows as well" (wording as read 2026-11-12; not found in the README on 2026-11-26, unverified) (mods require CC v2.1.287+, per the native-feature doc above). The README's
 own demo GIF is explicitly "a made-up session replayed through the mod's own drawing code," not a
 captured real run.
 
-**Basics** (first-party, `gh api`, 2026-11-12): repo created 2026-11-09, last pushed 2026-11-12 — a
-3-day-old repo already at 407★/45 forks; `plugin.json` reports version 0.5.1; no GitHub Releases or
-tags exist, so version history lives only in `CHANGELOG.md` and `plugin.json`, not GitHub Releases.
-`plugin.json`'s `userConfig.language` options list six languages (`en`, `ru`, `es`, `fr`, `de`, `it`);
-the GitHub repo short description says "in five languages" — a stale count against the live
-`plugin.json`.
+**Basics** (first-party, `gh api`): repo created 2026-11-09, last pushed 2026-11-22 (checked 2026-11-26) — it
+had 407★/45 forks at 3 days old and now has 1,179★/123 forks; `plugin.json` reports version 0.14.1,
+with 14 tags and a GitHub Release v0.14.1 (it had none on 2026-11-12). The repo description now says
+"in 8 languages", and `userConfig.language` lists eight (`en`, `ru`, `es`, `fr`, `de`, `it`, `pt`, `vi`), so the earlier stale-count note no longer applies.
 
 **Install**: `/plugin install lot-map --marketplace alexeyw/lot-map`. The pane opens by itself when a
 session starts; in a terminal it needs at least 144 columns and draws text only, otherwise `/lot-map`
@@ -299,7 +300,7 @@ can read and write your files, start processes, and make network requests" with 
 own access, so this scoping is enforced by the mod's own code, not by a sandbox.
 
 **Caution**: very young (created 2026-11-09) with a fast-moving CHANGELOG — 0.3.6 through 0.5.1 all
-land on 2026-11-11, including one feature (a Hooks-station row) removed in 0.4.0 for an unnamed plugin
+land on 2026-11-11 (the 0.5.1 baseline of 2026-11-12; now 0.14.1), including one feature (a Hooks-station row) removed in 0.4.0 for an unnamed plugin
 catalogue's verification rule, then restored in 0.5.0 — so no settled track record yet. The README
 itself flags the update-trust model: a marketplace added from this repo follows its `main` branch, "so
 an update brings whatever is there: read the diff before updating if that matters to you."
@@ -308,8 +309,8 @@ an update brings whatever is there: read the diff before updating if that matter
 
 1. **Business-function plugins** (Sales, Marketing, Legal) exist only in the ccplugins registry — the awesome-claude-code list is developer-focused
 2. **Ralph Wiggum Pattern** appears in both catalogs, confirming community convergence on autonomous loop workflows
-3. **5 official plugins** are tracked by ccplugins, establishing a baseline for the official-to-community plugin ratio (~1:27)
-4. **Git workflow** is disproportionately represented (14 plugins in ccplugins + numerous entries in awesome-cc), suggesting this is the primary CC extension use case
+3. **5 official plugins** are tracked by ccplugins, establishing a baseline for the official-to-community plugin ratio (~1:37, 5 of ~192 as of 2026-11-26)
+4. **Git workflow** is disproportionately represented (14 plugins in ccplugins, unchanged at the 2026-11-26 recount, + numerous entries in awesome-cc), suggesting this is the primary CC extension use case
 
 ## Cross-References
 

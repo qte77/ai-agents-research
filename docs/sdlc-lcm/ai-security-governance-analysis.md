@@ -2,7 +2,7 @@
 title: "AI Security & Governance Frameworks Analysis"
 purpose: Analysis of four AI security and governance frameworks (NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001) applicable to multi-agent systems.
 created: 2026-03-01
-updated: 2026-11-15
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: assess
 ---
@@ -420,7 +420,7 @@ tested.
 
 ## Defensive Tooling
 
-The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](../cc-community/CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (~285 stars, Python + TypeScript).
+The frameworks above model threats; [AgentSeal](https://github.com/getagentseal/agentseal) (getagentseal — same maker as the [CodeBurn](../cc-community/CC-usage-tooling-landscape.md#codeburn-agentseal) token tracker) is a concrete open-source scanner that tests for several of them. `pip install agentseal` / `npm install agentseal`; no API key for local scans (386 stars, checked 2026-11-26; Python + TypeScript).
 
 | Command | What it does | Maps to (this doc) |
 | --- | --- | --- |
@@ -434,7 +434,7 @@ Backed by an MCP Security Registry (6,600+ indexed servers), semantic analysis (
 **Adoption caveat**: licensed FSL-1.1-Apache-2.0 (Functional Source License → Apache-2.0 after the change window) — source-available, not OSI-open at release. Review the license window before bundling it into permissively-licensed tooling.
 
 [Microsoft's Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit)
-(MIT, ~6,300 stars) governs agents at the application layer instead of relying on
+(MIT, ~6,600 stars, checked 2026-11-26) governs agents at the application layer instead of relying on
 prompt-level defenses: "every tool call, message send, and delegation is
 intercepted in deterministic application code before the model's intent reaches the
 wire" (repo README). It ships a YAML/OPA/Cedar policy engine, an immediate kill
@@ -453,7 +453,7 @@ npm/NuGet/Cargo/Go); a Claude Code plugin registers via
 
 Where AgentSeal and the Agent Governance Toolkit act on agent configuration and
 runtime policy, [deepsec](https://github.com/vercel-labs/deepsec) (Vercel Labs,
-Apache-2.0, ~8,000 stars) turns an agent loose on the codebase itself: a security
+Apache-2.0, ~8,600 stars, checked 2026-11-26) turns an agent loose on the codebase itself: a security
 harness that combines regex candidate matching with agentic investigation
 (extended-thinking models) to surface vulnerabilities that may have sat unnoticed
 for years. It distributes large scans across machines via Vercel Sandbox, resumes

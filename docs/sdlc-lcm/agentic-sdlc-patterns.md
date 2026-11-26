@@ -2,7 +2,7 @@
 title: Agentic SDLC Patterns
 purpose: Emerging lifecycle patterns for AI agent-driven development.
 created: 2026-03-24
-updated: 2026-10-22
+updated: 2026-11-26
 validated_links_on: 2026-09-30
 status: assess
 ---
@@ -48,7 +48,7 @@ the author's commercial "governing AI agents" offer, and its claim that Anthropi
 
 ## 2. Agentic SDLC (Microsoft/GitLab/PwC)
 
-Specialized agents per SDLC phase, orchestrated in parallel.
+Specialized agents per SDLC phase, orchestrated in parallel (unverified: the GitLab and PwC pages in Sources were not read for this claim).
 
 ```text
 Orchestrator
@@ -59,8 +59,9 @@ Orchestrator
   +-- Monitor Agent         (gap: no monitoring agent)
 ```
 
-**Measured impact (early 2026):** ~55% faster task completion, 38.7% of AI
-review comments lead to code fixes (Atlassian RovoDev).
+**Measured impact (early 2026):** 38.7% of AI review comments lead to code fixes, as the
+[Microsoft Tech Community article](https://techcommunity.microsoft.com/blog/appsonazureblog/an-ai-led-sdlc-building-an-end-to-end-agentic-software-development-lifecycle-wit/4491896)
+reports it, attributing it to an Atlassian RovoDev 2026 study (secondhand, the Atlassian study itself is unverified). An earlier "~55% faster task completion" figure is removed: that article does not state it.
 
 ## 3. Spec-Driven Development (SDD)
 
@@ -74,14 +75,14 @@ review comments lead to code fixes (Atlassian RovoDev).
 **qte77 mapping:** RAPID pipeline + Ralph prd.json already spec-driven.
 Gap: no automated spec-change -> agent-trigger pipeline.
 
-**SpecShip** (`aws-samples/sample-specship`, MIT, 252 stars, created 2026-07-10,
-`gh api` 2026-09-24) is AWS Samples' own instance of the SDD pattern: a five-stage
+**SpecShip** (`aws-samples/sample-specship`, MIT, 258 stars, created 2026-07-10,
+`gh api` 2026-11-26) is AWS Samples' own instance of the SDD pattern: a five-stage
 pipeline (brownfield recon -> plan, with market research -> TDD build -> adversarial
 validation -> ship with PR + changelog) packaged as a "Kiro Power" -- a reusable skill
 package for the Kiro agent-orchestration platform. Its quality gate is the "human
 review shifts from code to specs" idea made concrete: the builder agent cannot judge
-its own code, so seven independent validator subagents (code review, security, browser
-QA, design, alignment, load testing) run in parallel with typed verdicts before a
+its own code, so up to seven independent validator subagents (code review, security, browser
+QA, design, alignment, load testing; list not exhaustive, and load testing runs only when a performance requirement exists) run in parallel with typed verdicts before a
 milestone is accepted, on top of failing-tests-first TDD. Installed via a single
 `./install.sh` that auto-detects dependencies (superpowers, gstack, Playwright MCP — a Model Context Protocol server) and
 copies steering files to `~/.kiro/steering/`; runs guided (pauses for plan approval) or
@@ -117,7 +118,7 @@ Traditional SDLC artifacts reimagined as coordination layers for agents.
 
 | Source | Content |
 |---|---|
-| [SpecShip][specship] (`aws-samples/sample-specship`) | Kiro Power SDD workflow; 252★, MIT, `gh api` 2026-09-24 |
+| [SpecShip][specship] (`aws-samples/sample-specship`) | Kiro Power SDD workflow; 258★, MIT, `gh api` 2026-11-26 |
 | [EPAM: agentic development lifecycle explained](https://www.epam.com/insights/ai/blogs/agentic-development-lifecycle-explained) | Background reading |
 | [Microsoft Tech Community: an AI-led SDLC](https://techcommunity.microsoft.com/blog/appsonazureblog/an-ai-led-sdlc-building-an-end-to-end-agentic-software-development-lifecycle-wit/4491896) | Background reading |
 | [Amplify Partners: the agent-first developer toolchain](https://www.amplifypartners.com/blog-posts/the-agent-first-developer-toolchain-how-ai-will-radically-transform-the-sdlc) | § 4 |
