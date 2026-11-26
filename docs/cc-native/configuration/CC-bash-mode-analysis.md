@@ -78,7 +78,7 @@ Rapid iteration combining bash mode with fast mode ([source][cc-interactive-mode
 
 ### Permission Behavior
 
-Shell mode does not require Claude to interpret or approve the command. Unless the session is one of those under strict sandbox mode, commands typed in shell mode run outside the sandbox even when sandboxing is enabled, because the sandbox applies to the commands Claude runs ([source][cc-interactive-mode], checked 2026-11-26). That the user's allow/deny permission rules also apply to them is unverified.
+Shell mode does not require Claude to interpret or approve the command. Commands typed in shell mode run outside the sandbox even when sandboxing is enabled, because the sandbox applies to the commands Claude runs; the exceptions are background sessions and Linux sessions with `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` set, where strict sandbox mode covers shell-mode commands too ([source][cc-interactive-mode], [sandboxing](https://code.claude.com/docs/en/sandboxing), checked 2026-11-26). That the user's allow/deny permission rules also apply to them is unverified.
 
 ## Dynamic Context Injection (`` !`command` ``)
 
@@ -220,7 +220,7 @@ While `.claude/rules/*.md` files are static markdown (no bash injection support)
 ### CLI Bash Mode
 
 - Commands run with the user's full shell permissions
-- Commands typed in shell mode run outside the sandbox even when sandboxing is enabled, unless the session is under strict sandbox mode ([cc-interactive-mode], checked 2026-11-26)
+- Commands typed in shell mode run outside the sandbox even when sandboxing is enabled, except in background sessions and Linux sessions with `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` set under strict sandbox mode ([cc-interactive-mode], checked 2026-11-26)
 - Whether allow/deny permission rules apply to shell-mode commands is unverified
 
 ### Dynamic Context Injection

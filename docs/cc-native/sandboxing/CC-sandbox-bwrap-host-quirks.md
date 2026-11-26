@@ -151,7 +151,7 @@ or waiting for [`sandbox-runtime#139`][sr-139]. For placeholders left at `.claud
 | 2.1.120 (2026-04-25) | Reproduces ([nathanschram on #17727][gh-17727]) |
 | 2.1.123 | One reporter sees no recurrence ([gnprice on #29316][gh-29316]) — unconfirmed |
 | current (2026-05-02) | Reproduces locally on Fedora 43 |
-| 2.1.257 | Vendor docs add the `claude doctor` check for leftover placeholders at `.claude` settings paths (checked 2026-11-26) |
+| 2.1.257 | Claude Code v2.1.257 adds a `claude doctor` warning for leftover placeholders at `.claude` settings paths (checked 2026-11-26) |
 
 ## Friction 2 — AppArmor `userns` Prerequisite (Ubuntu 24.04+)
 

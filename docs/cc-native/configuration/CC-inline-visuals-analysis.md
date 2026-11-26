@@ -70,7 +70,9 @@ Visualizations can interact with external platforms via connectors ([source][con
 
 Evolution of "Imagine with Claude" — a temporary experience previewed in Fall 2025 that enabled real-time UI generation on a virtual desktop ([source][thenewstack]).
 
-### Competitive Context (March 2026; unverified, no first-party source)
+### Competitive Context (March 2026)
+
+The comparison below has no first-party source (unverified).
 
 | Provider | Feature | Date | Availability |
 |----------|---------|------|-------------|
