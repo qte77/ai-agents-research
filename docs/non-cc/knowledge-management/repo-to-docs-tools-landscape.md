@@ -4,7 +4,7 @@ source: https://deepwiki.com
 purpose: Survey of AI-powered tools that generate documentation from GitHub repositories.
 status: research
 created: 2026-04-06
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 ---
 
@@ -16,7 +16,7 @@ Two tools represent an emerging category of **AI-powered repo-to-documentation g
 
 A fourth tool, **Understand Anything** (Egonex-AI, 93.7k stars on 2026-11-22), sits at the graph end of this space: it emits an interactive knowledge graph rather than prose.
 
-A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes docs **for coding agents**, appending pointers into `AGENTS.md`/`CLAUDE.md`, rather than human-browsable wikis.
+A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes a linked Markdown wiki for your code, your agents and you, and maintains agent-facing pointers in `AGENTS.md` (and `CLAUDE.md` when one exists).
 
 A sixth entrant, **OpenKB** (VectifyAI), flips the *input*: rather than a GitHub URL, it takes raw **documents** (PDF, Word, Markdown, PowerPoint, HTML, Excel, CSV, URLs) and compiles them once into a persistent, interlinked wiki — the document-corpus sibling of OpenWiki's code-corpus, agent-oriented output.
 
@@ -69,7 +69,7 @@ Published examples: [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-C
 
 Unlike the doc-*generators* in this landscape, Understand Anything emits an **interactive knowledge graph** -- files, functions, classes, and dependencies as color-coded, navigable nodes.
 
-Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, call graphs) plus LLMs for semantic summaries and architecture classification, run through a **5-agent pipeline** (scanner -> analyzer -> architecture-mapper -> tour-builder -> reviewer) in parallel, with incremental updates.
+Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, call graphs) plus LLMs for semantic summaries and architecture classification, run through a **5-agent pipeline** (project-scanner -> file-analyzer -> architecture-analyzer -> tour-builder -> graph-reviewer), with incremental updates; only the file analyzers run in parallel (up to 5 workers, 20-30 files per batch), and `/understand-domain` and `/understand-knowledge` add a 6th and 7th agent (README, checked 2026-11-26).
 
 - **Structural + business-logic views** -- pan/zoom/search nodes; a domain view maps code to real processes
 - **Guided tours** -- auto-generated, dependency-ordered walkthroughs
@@ -83,10 +83,10 @@ Hybrid extraction: Tree-sitter for deterministic parsing (imports, definitions, 
 
 **URL**: [github.com/langchain-ai/openwiki](https://github.com/langchain-ai/openwiki) | **Stars**: 18.1k (2026-11-22) | **License**: MIT | **Version**: v0.9.0 (2026-11-05, pre-1.0)
 
-A CLI that "writes and maintains documentation for your codebase, **built specifically for agents**." Unlike the human-facing generators above, its output is *agent context*, not a browsable wiki:
+A CLI whose README tagline is "A living wiki for your code, your agents, and you." Its output is a linked Markdown wiki that humans can read (or explore as an interactive graph) and that agents consume as context via Model Context Protocol (MCP) retrieval tools (`openwiki_search`, `openwiki_read`); newer README features include linked multi-repo workspaces (`openwiki link`) and many agent integrations (Codex, Claude Code, OpenCode, Cursor, Copilot CLI and others):
 
 - `npm install -g openwiki`; bootstrap with `openwiki --init`, refresh on change.
-- Writes generated docs into an `openwiki/` directory, and **auto-appends pointers into `AGENTS.md` and `CLAUDE.md`** so coding agents find the context.
+- Writes generated docs into an `openwiki/` directory, and, on each `code` run, maintains an `AGENTS.md` at the repo root (it refreshes `CLAUDE.md` only when the repo already has one, rewriting only its own marked block) so coding agents find the context.
 - CI/CD integration opens PRs with documentation refreshes as the repo changes.
 - TypeScript-heavy; pre-1.0 (v0.0.3 when first reviewed; v0.9.0 on 2026-11-22).
 

@@ -3,7 +3,7 @@ title: GoClaw Multi-Tenant Agent Gateway Analysis
 source: https://github.com/nextlevelbuilder/goclaw
 purpose: Analysis of GoClaw as a multi-tenant AI agent platform with 8-stage execution pipeline and multi-channel messaging.
 created: 2026-04-09
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-06-28
 status: assess
 ---
@@ -67,7 +67,7 @@ graph access, media generation, skill management, team orchestration, scheduling
 | **Use case** | Multi-tenant agent deployment across messaging channels |
 | **Language** | Go (single binary, ~25 MB) |
 | **Multi-tenancy** | 5-layer security isolation |
-| **Maturity** | Active (2.4K stars) |
+| **Maturity** | Active (3.7k stars, checked 2026-11-26) |
 | **License** | CC BY-NC 4.0 (non-commercial) |
 
 **Strengths**: Single-binary deployment. Broadest messaging channel support in
@@ -76,7 +76,7 @@ provides clear execution model. Anthropic prompt caching support.
 
 **Risks**: CC BY-NC 4.0 license prohibits commercial use without separate
 agreement. Successor to OpenClaw — migration path unclear. Smaller community
-than alternatives (2.4K stars vs Hermes 43K, both counts dated; see the [Hermes analysis](../agents/hermes-agent-analysis.md) for 2026-11-20 figures).
+than alternatives (3.7k stars on 2026-11-26 vs Hermes about 265K on 2026-11-20, both counts dated; see the [Hermes analysis](../agents/hermes-agent-analysis.md) for 2026-11-20 figures).
 
 ## Cross-References
 
@@ -87,7 +87,7 @@ than alternatives (2.4K stars vs Hermes 43K, both counts dated; see the [Hermes 
 
 | Source | Content |
 |---|---|
-| [GoClaw repo][goclaw] | Multi-tenant agent platform (2.4K stars) |
+| [GoClaw repo][goclaw] | Multi-tenant agent platform (3.7k stars, checked 2026-11-26) |
 | [GoClaw docs][goclaw-docs] | Platform documentation |
 
 [goclaw]: https://github.com/nextlevelbuilder/goclaw

@@ -3,7 +3,7 @@ title: Graph Databases & Query Languages — Agent Landscape
 source: https://opencypher.org/
 purpose: A thin dated table of graph query languages, graph databases relevant to agents, text-to-query evidence and graph MCP servers, linking the per-tool analyses. Facts as of 2026-11-19.
 created: 2026-11-19
-updated: 2026-11-21
+updated: 2026-11-26
 validated_links_on: 2026-11-19
 status: assess
 ---
@@ -64,7 +64,7 @@ licence metadata (Minigraf: `Cargo.toml` plus its licence files, per its analysi
 |---|---|---|---|---|
 | [Neo4j][neo4j] | Property graph; Cypher | GPL-3.0 text in `LICENSE.txt`; commercial editions are separate and not examined here | 17,459 · 2026-11-06 · the repo's latest GitHub *release* is a 2017 alpha, so use tags (newest `2026.10.2`) | Cypher was developed by Neo4j (per openCypher). Agent-memory project in the corpus: [Neo4j Agent Memory][fw] |
 | [Memgraph][memgraph] | In-memory property graph; Cypher-compatible | `LICENSE` says files are variously Business Source License 1.1 or Memgraph Enterprise License | 4,665 · 2026-11-19 · v3.14.0 (2026-10-21) | BUSL-1.1 is not OSI-approved per [SPDX][spdx-busl] (`isOsiApproved: false`). Self-described for GraphRAG and agent memory (vendor claim) |
-| [FalkorDB][falkordb] | Property graph on GraphBLAS sparse matrices; openCypher | Server Side Public License v1 (`LICENSE`) | 10,506 · 2026-11-19 · v6.0.4 (2026-11-05) | SSPL-1.0 is not OSI-approved per [SPDX][spdx-sspl] (`isOsiApproved: false`). Positions itself as a knowledge-graph store for GraphRAG (vendor claim) |
+| [FalkorDB][falkordb] | Property graph on GraphBLAS sparse matrices; openCypher | Server Side Public License v1 (`LICENSE`) | 10,506 · 2026-11-19 · v6.2.1 (2026-11-24, checked 2026-11-26) | SSPL-1.0 is not OSI-approved per [SPDX][spdx-sspl] (`isOsiApproved: false`). Positions itself as a knowledge-graph store for GraphRAG (vendor claim) |
 | [Kuzu][kuzu] | Embedded property graph; Cypher | MIT | 4,022 · **archived** · v0.11.3 (2025-10-10) | Stale but adopted: repo archived by its owner (GitHub flag; last push 2025-10-10, `gh api` 2026-11-19). The corpus's [LatticeDB][latticedb] analysis uses it as the comparison point. Treat as unmaintained unless a maintained fork is verified |
 | [Apache AGE][age] | PostgreSQL extension (query language not re-checked in this pass) | Apache-2.0 | 4,954 · 2026-11-04 · `PG18/v1.8.0-rc0` (2026-07-09) | The releases page lists per-Postgres-version release candidates; adds graph queries to an existing Postgres |
 | [NebulaGraph][nebula] | Distributed property graph | Apache-2.0 | 12,473 · 2026-09-08 · latest release 2024-05-17 | High star count, but the releases page shows no release since 2024-05; pushes continue |

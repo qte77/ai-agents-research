@@ -4,7 +4,7 @@ source: https://github.com/redhat-et/ripwire
 purpose: Analysis of Ripwire, a Red Hat Emerging Technologies CLI (with optional MCP server) that produces deterministic, disclosed-confidence code-context maps for coding agents.
 platform_scope: [claude-code, cursor, windsurf, gemini-cli]
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -41,7 +41,7 @@ whose registered name is "Red Hat Emerging Technologies" (per
   Markdown/YAML/TOML/JSON.
 - **"Honesty contract"**: the README states every truncation is disclosed,
   confidence scores accompany rankings, and ambiguous calls are labelled
-  rather than hidden — "every guess labelled, every loss published."
+  rather than hidden — "Every guess is marked in the output, and every mark has a next step."
 
 ## Core Commands
 
@@ -61,16 +61,16 @@ C++23 compiler (clang 16+, gcc 13+, or MSVC).
 ## Research Grounding
 
 The repo publishes a lineage document that the README says folds in "49
-repositories and 71 papers," spanning McCabe's 1976 cyclomatic-complexity
+repositories and 79 papers," spanning McCabe's 1976 cyclomatic-complexity
 work through 2026 publications on retrieval for agents — a self-reported
 count, not independently verified here.
 
 ## License and Maturity
 
 Apache-2.0 (per `gh api repos/redhat-et/ripwire`). Created 2026-07-29 —
-roughly two months old at the time of writing — latest release `v0.6.2`
-(published 2026-09-21), most recent push 2026-09-24: 2,334 stars, 151 forks,
-52 open issues (all via `gh api`, accessed 2026-09-24).
+roughly four months old as of 2026-11-26 — latest release `v0.7.0`
+(published 2026-11-23), most recent push 2026-11-26: 2,566 stars, 182 forks,
+about 120 open issues including PRs (all via `gh api`, checked 2026-11-26).
 
 ## Corpus Relevance
 
@@ -93,7 +93,7 @@ but as a standalone CLI/MCP tool rather than a subagent pattern.
 | Source | Content |
 |---|---|
 | [redhat-et/ripwire repo][repo] | README — architecture, commands, performance claims, language support, lineage document, license |
-| GitHub API `repos/redhat-et/ripwire`, accessed 2026-09-24 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
+| GitHub API `repos/redhat-et/ripwire`, checked 2026-11-26 | Stars, forks, open issues, license, created/pushed timestamps, latest release tag |
 
 [repo]: https://github.com/redhat-et/ripwire
 [fastcontext]: fastcontext-analysis.md
