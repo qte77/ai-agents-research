@@ -35,7 +35,7 @@ This supersedes this doc's earlier claim of a flat **"default interval: 10 minut
 - **Units**: `s`/`m`/`h`/`d` -- natural language intervals also work (e.g. `every 2 hours`); seconds round up to the nearest minute (cron's 1-minute granularity), and odd intervals like `7m` round to the nearest clean cron step
 - **Max**: 50 scheduled jobs per session (unchanged, re-confirmed 2026-10-15; the 7-to-30-day expiry change is below)
 - **Feature gate**: `tengu_kairos_cron` — see the Details line above
-- **Self-paced loops appear in the task list** like any fixed-interval one, so `CronList`/cancellation work the same way; they're also subject to the recurring-task expiry below (30 days)
+- **Self-paced loops appear in the task list** like any fixed-interval one, so `CronList`/cancellation work the same way; they're also subject to the recurring-task expiry below (30 days, checked 2026-11-26)
 - **`/loop 20m /code-review 1234`-style skill re-runs** only execute skills Claude is [allowed to invoke on its own][skill-invocation]; built-in commands (`/permissions`, `/model`, `/clear`), `disable-model-invocation: true` skills, skills withheld by a `skillOverrides` setting or a `Skill` deny rule, and Model Context Protocol (MCP) prompts (`/mcp__server__name`) instead reach Claude as plain text on a scheduled fire
 - A session with the [Monitor tool available][monitor-tool] may use it directly for a dynamic `/loop` request instead of polling — streaming a background script's output back is often more token-efficient and responsive than re-running a prompt on an interval
 
@@ -70,7 +70,7 @@ different default, with no `durable` parameter named** ([source][cc-sched-loop])
 
 - Tasks are session-scoped, but on `--resume`/`--continue`, Claude Code restores
   **every** task scheduled with `CronCreate` by default, **except**: recurring
-  tasks that have [expired](#recurring-task-expiry) (30 days; 7 days for tasks created before v2.1.330), one-shot tasks whose
+  tasks that have [expired](#recurring-task-expiry) (30 days; 7 days for tasks created before v2.1.330; checked 2026-11-26), one-shot tasks whose
   fire time has passed, and a **self-paced `/loop`** specifically (which is never
   restored — run `/loop` again to restart it). Background Bash and Monitor tasks
   are never restored on resume, either.

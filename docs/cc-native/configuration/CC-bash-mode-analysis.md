@@ -200,7 +200,7 @@ While `.claude/rules/*.md` files are static markdown (no bash injection support)
 | **Preprocessing only** | Commands run before Claude sees the prompt — no interactive or conditional execution |
 | **No `$()` syntax** | Uses `` !`command` `` (backtick), not `$(command)` shell substitution |
 | **Timeout** | Long-running commands may timeout; keep injection commands fast |
-| **Error handling** | A failed command aborts the entire skill invocation, and Claude never sees the skill content. Append `|| true` for commands expected to exit non-zero; with the default bash shell, exit code 1 from search and comparison commands counts as a normal result and codes of 2 or higher fail (checked 2026-11-26) |
+| **Error handling** | A failed command aborts the entire skill invocation, and Claude never sees the skill content. Append `\|\| true` for commands expected to exit non-zero; with the default bash shell, exit code 1 from search and comparison commands counts as a normal result and codes of 2 or higher fail (checked 2026-11-26) |
 | **Inline placement** | The inline form is recognized only when `!` starts a line or follows whitespace; `` KEY=!`cmd` `` stays literal. Multi-line commands use a fenced ` ```! ` block |
 | **Shell and policy** | The `shell` frontmatter field selects `bash` (default) or `powershell`; the `disableSkillShellExecution` setting replaces each command with `[shell command execution disabled by policy]` |
 
