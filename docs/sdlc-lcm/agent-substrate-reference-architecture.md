@@ -2,7 +2,7 @@
 title: Agent Substrate Reference Architecture — a Shared, Versioned, Traceable Memory and Context Layer
 purpose: Synthesis of the plan 0009 rubric rows into one store-first reference architecture for shared, versioned, traceable agent memory and context, mapped to qte77 estate repos.
 created: 2026-09-30
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-09-30
 status: reference
 ---
@@ -78,7 +78,7 @@ that run off-box ([OpenResearch][openresearch], [triagebot-action][sf-rubric]) a
 
 **Store.** One canonical store that is a version-control system for its own data, read and written by
 every agent and session: Dolt under [Beads][fw4] (branch, merge, `bd dolt push`/`pull`), Lance under
-[Omnigraph][fw7p] ("branchable, time-travelable"), git under [Ontology Atlas][ont] ("Your disk is the
+[Omnigraph][fw7p] (README: "a branch per agent or task", "time travel across the whole graph"), git under [Ontology Atlas][ont] ("Your disk is the
 database; Git is the history") and under every git-hosted skills row, and a plain-file truth with a
 rebuildable index under [agent-memory][memtool] and [lossless-memory][fw4]. Derived indexes are
 disposable; the store is not.
@@ -93,7 +93,7 @@ update but never delete without confirmation. [mex][mex] (an Inbox draft a human
 described in the corpus but not rubric-scored) is the same shape.
 
 **Share.** Concurrency is defined by the store's own semantics, not by the agent: branch-and-merge
-([Omnigraph][fw7p] runs "hundreds of agents" on isolated branches; [AgentiCow][fw4] branches one shared
+([Omnigraph][fw7p] runs many agents on isolated branches (a "hundreds of agents" figure is unverified: the README gives no count); [AgentiCow][fw4] branches one shared
 base memory; [Beads][fw4] avoids collisions with hash IDs), an elected single writer per cell
 ([HydraDB][fw4]), workspace RBAC ([WeKnora][fw7p], the [AWS accelerator][ont]), or explicit intent
 registration before writing ([mcp-git-coord][fw1]).
@@ -133,11 +133,11 @@ distributed.
 - **Plan 0010 outcome for the four cells plan 0009 left open** (2026-10-02):
   - *Context·Shared* and *Context·Distributed*: **filled by new evidence** at `partial`. [Redis Iris's
     Context Retriever][redis-ctx] shares business context "across all agents" and syncs it from source
-    databases "within seconds". Rubric rule 6 also lifts [CLAUDE.md][ccmem] and AGENTS.md to `partial`
+    databases "within seconds" (both phrases unverified for Context Retriever: on the Redis Iris overview page the first is a general reuse claim and the second belongs to Data Integration). Rubric rule 6 also lifts [CLAUDE.md][ccmem] and AGENTS.md to `partial`
     on both.
   - *Skills·Shared* and *Skills·Distributed*: **filled by new evidence** at `yes`. [Organization-level
-    skill provisioning][orgskills] lets owners and members share skills across a Claude organization,
-    and those skills load in Claude Code.
+    skill provisioning][orgskills] lets owners provision skills across a Claude organization,
+    and those owner-provisioned skills load in Claude Code (members can share skills with colleagues, but the article does not say those load in Claude Code).
   - *Context·Reproducible*: **confirmed open**. All six context rows are `no data`: CLAUDE.md,
     AGENTS.md, Redis Iris's Context Retriever, context-engineering-intro, the CLAUDE.md-growth paper and
     TrackPoint. Of the
