@@ -2,7 +2,7 @@
 title: Multi-Agent Onboarding Outlook
 purpose: How multiple coding agents (CC, Kiro, Antigravity, Cursor, etc.) integrate with SDLC/LCM lifecycle management.
 created: 2026-03-24
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-11-21
 status: assess
 ---
@@ -21,11 +21,11 @@ Each coding agent reads a different config file for project context:
 | Agent | Config File | Format |
 |-------|------------|--------|
 | Claude Code | `CLAUDE.md` | Markdown |
-| Cursor | `.cursorrules` | Markdown |
-| Windsurf | `.windsurf/rules/*.md` | Markdown |
-| Kiro | `.kiro/steering/*.md` | Markdown |
+| Cursor | `.cursor/rules/*.mdc`, `AGENTS.md` (the current rules page does not mention `.cursorrules`) | Markdown |
+| Windsurf | `.devin/rules/*.md` (`.windsurf/rules/*.md` and `.windsurfrules` are legacy but still imported); also reads `AGENTS.md` | Markdown |
+| Kiro | `.kiro/steering/*.md`; also reads `AGENTS.md` ([steering docs](https://kiro.dev/docs/steering/), checked 2026-11-26) | Markdown |
 | Gemini CLI / Antigravity | `GEMINI.md` | Markdown |
-| GitHub Copilot | `.github/copilot-instructions.md`; also reads `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` (github.com and CLI, checked 2026-10-24 — see [github-copilot-cloud-agent-analysis.md](../non-cc/agents/github-copilot-cloud-agent-analysis.md#repository-custom-instructions)) | Markdown |
+| GitHub Copilot | `.github/copilot-instructions.md`; also reads `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` (github.com; the CLI part is unverified: the repository-instructions page does not mention it; checked 2026-10-24 — see [github-copilot-cloud-agent-analysis.md](../non-cc/agents/github-copilot-cloud-agent-analysis.md#repository-custom-instructions)) | Markdown |
 | OpenAI Codex | `AGENTS.md` | Markdown |
 | General | `llms.txt` | Plain text |
 
@@ -34,16 +34,16 @@ They go out of sync when one is updated and the rest forgotten.
 
 ## AGENTS.md Convergence
 
-**AGENTS.md** (originated by OpenAI, Aug 2025) is becoming the universal standard:
+**AGENTS.md** (originated by OpenAI; "Aug 2025" unverified) is becoming the universal standard:
 
-- Adopted by Linux Foundation's **Agentic AI Foundation** (AAIF) alongside Model Context Protocol (MCP) and Goose (MCP co-creator — see [goose-analysis](../non-cc/agents/goose-analysis.md))
-- 60,000+ repos, supported by Codex, Cursor, Windsurf, Zed, Jules, Gemini CLI
-- **Exception**: Claude Code uses CLAUDE.md (open issue with 3,000+ upvotes)
-- MCP Dev Summit (April 2026, NYC) may bring further governance updates
+- Adopted by Linux Foundation's **Agentic AI Foundation** (AAIF) alongside Model Context Protocol (MCP, contributed by Anthropic) and Goose (contributed by Block — see [goose-analysis](../non-cc/agents/goose-analysis.md))
+- 60,000+ repos (agents.md: "over 60k open-source projects"), supported by Codex, Cursor, Windsurf, Zed, Jules, Gemini CLI and many others
+- **Claude Code**: reads CLAUDE.md first; since v2.1.277 it falls back to AGENTS.md when no CLAUDE.md exists (default `/config` Project instructions mode `claude-md-or-agents-md`; [memory docs](https://code.claude.com/docs/en/memory#agents-md); long-running request [#6235](https://github.com/anthropics/claude-code/issues/6235), now closed, 5,197 thumbs-up, checked 2026-11-26)
+- MCP Dev Summit North America was held 2026-04-02 to 04-03 in New York
 
 **Implication for qte77**: current `AGENTS.md` + `CLAUDE.md` dual approach covers
-both CC-specific and standard agent contexts. When CC adopts AGENTS.md (if ever),
-consolidate.
+both CC-specific and standard agent contexts. CC now reads AGENTS.md as a fallback (v2.1.277+), so the open choice is
+whether to consolidate (a CLAUDE.md that imports `@AGENTS.md`, or AGENTS.md alone).
 
 ## Agent-Agnostic Artifact Design
 
@@ -65,7 +65,7 @@ No agent-specific dependency. No Python imports required.
 |-------|---------------------|-----------------|
 | **Claude Code** | CC plugin skill reads `[tool.lcm]` + `.lcm/status.json` | `.claude/skills/` |
 | **Kiro** | Steering doc references phase constraints | `.kiro/steering/lifecycle.md` |
-| **Cursor** | Rules file includes phase-aware constraints | `.cursorrules` |
+| **Cursor** | Rules file includes phase-aware constraints | `.cursor/rules/*.mdc` |
 | **Gemini CLI** (status 2026-11-18: [replaced by Antigravity CLI](../non-cc/coding-agents/gemini-cli-analysis.md) for non-enterprise users; Antigravity CLI's migration docs say `GEMINI.md` and `AGENTS.md` keep working) | GEMINI.md references phase metadata | `GEMINI.md` |
 | **Codex/AGENTS.md** | AGENTS.md includes phase section | `AGENTS.md` |
 
@@ -92,9 +92,9 @@ agents. No architectural changes needed to support Kiro-like workflows.
 | Protocol | Owner | Purpose | Relevance |
 |----------|-------|---------|-----------|
 | **MCP** | Anthropic / AAIF | Tool access standardization | CC plugins, Gemini CLI tools |
-| **A2A** (Agent-to-Agent Protocol) | Google | Agent-to-agent collaboration | Multi-agent orchestration (future) |
-| **ACP** | IBM | Enterprise governance | Compliance/audit (Phase 3) |
-| **AG-UI** (Agent-User Interaction Protocol) | Community | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
+| **A2A** (Agent-to-Agent Protocol) | Linux Foundation (originated by Google) | Agent-to-agent collaboration | Multi-agent orchestration (future) |
+| **ACP** | now part of A2A under the Linux Foundation (its site) | Enterprise governance | Compliance/audit (Phase 3) |
+| **AG-UI** (Agent-User Interaction Protocol) | CopilotKit-originated (per its docs) | Human-in-the-loop UX | RAPID cockpit — *RAPID is legacy (archived 2026-04-26, superseded by [qte77/qte77](https://github.com/qte77/qte77))* |
 
 The frontend / agent / tool **protocol triangle** (AG-UI · A2A · MCP) is mapped in detail in [ag-ui-protocol-landscape.md](../non-cc/protocols/ag-ui-protocol-landscape.md).
 
@@ -110,5 +110,6 @@ as the interface. Multi-agent onboarding requires:
 ## Sources
 
 - [Gemini API: coding agents](https://ai.google.dev/gemini-api/docs/coding-agents)
-- [AI context management across Claude, Cursor, Kiro, Gemini and custom agents (dev.to)](https://dev.to/madeburo/ai-context-management-across-claude-cursor-kiro-gemini-and-custom-agents-2n1f)
-- [AGENTS.md: AI coding agent configuration (Particula)](https://particula.tech/blog/agents-md-ai-coding-agent-configuration)
+- [Kiro: steering](https://kiro.dev/docs/steering/)
+- [AI context management across Claude, Cursor, Kiro, Gemini and custom agents (dev.to, secondary)](https://dev.to/madeburo/ai-context-management-across-claude-cursor-kiro-gemini-and-custom-agents-2n1f)
+- [AGENTS.md: AI coding agent configuration (Particula, secondary)](https://particula.tech/blog/agents-md-ai-coding-agent-configuration)

@@ -3,7 +3,7 @@ title: The German Wiki Incident — A Reconstructed Unintended Multi-Agent Coord
 purpose: An externally reconstructed case study of autonomous LLM agents unintentionally coordinating on a public German-language wiki, including the authors' own documented self-corrections between versions.
 source: https://arxiv.org/abs/2609.12748
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -22,22 +22,22 @@ for German-speaking software developers."
 ## Method & Findings
 
 The reconstruction (v1) is built from **14,591 archived revisions** across 3,103
-distinct names and 4,579 pages. v2 adds **5.2 million server request log records**,
+distinct names and 4,579 pages. v2 adds **5,157,202 server request log records**,
 strengthening the reconstruction with traffic data the revision history alone couldn't
 provide.
 
 Key findings (paper-claimed):
 
-- **~876 coordination episodes** identified across the study window.
+- **~876 estimated coordination episodes** (abstract: 95% interval 784-1008, from a uniform-marker model, not a direct count) across the study window.
 - Coordination protocols among the agents **stabilized within a day** of the episode's
   start.
 - **Significant information asymmetry**: the median time between an initial report (of
   some state/finding) and other agents arriving at the same page was **3.4 hours**.
 - No robust positive correlation between measured coordination activity and documented
   progress on whatever task the agents were pursuing.
-- The added server logs show **2,578 distinct names accessed the wiki but never edited
-  it** — a much larger population of passive/observing agents than the edit history
-  alone would suggest.
+- The added server logs show **2,578 distinct names neither save nor open an edit form**
+  (35.5% of acting names; a separate 3,720 names never attempt a save) — the "passive/observing
+  agents" reading is this doc's own interpretation, not the paper's.
 
 ## Self-Correction Between v1 and v2 (§6, "What we got wrong the first time")
 
@@ -47,13 +47,15 @@ than quietly revising them:
 - The v1 claim that a shutdown/timing signal was "also rolled" (generalizable beyond the
   one task family that measured its own last activity) is walked back — it does not hold
   outside that one case.
-- The v1 interpretation of certain content requests as evidence of information
-  **transmission** between agents is **withdrawn**: the authors now say page choice,
+- The first-pass interpretation of certain content requests as evidence of information
+  **transmission** between agents (an intermediate draft the paper labels "version 4", not the arXiv v1) is **withdrawn** per the abstract and narrowed to a crude 8.49-point association (100/249 vs 140/442): the authors now say page choice,
   shared background behavior, and action-dependent nameability make that causal read
   unsupportable from the data.
 - An earlier claim about a "manipulable clock" mechanism is narrowed: the authors now
   frame the real finding as time-axis heterogeneity in general, not a specific
-  manipulable-clock effect.
+  manipulable-clock effect ("a special case, and the weakest"). v1's universal claim that any
+  heterogeneity generates an information trade, and the causal thesis that the two-speed clock
+  produced it, were also withdrawn.
 
 That self-correction is itself relevant context for anyone citing this paper's numbers:
 the v2 figures above are what survived the authors' own re-examination, not the original

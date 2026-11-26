@@ -2,7 +2,7 @@
 title: "Multi-Agent Systems & Benchmarking Best Practices"
 purpose: Production best practices for multi-agent system development and benchmarking, covering infrastructure, training, and evaluation.
 created: 2026-01-13
-updated: 2026-11-15
+updated: 2026-11-26
 validated_links_on: 2026-11-15
 status: assess
 ---
@@ -66,7 +66,7 @@ status: assess
 1. **Outcome validity**: High scores genuinely reflect successful task completion (most critical)
 2. **Real-world scenarios**: Practical tasks (e.g., "book a flight") over abstract puzzles
 3. **Contamination resistance**: Dynamic benchmarks (DynaBench, LiveCodeBench) resist training data leakage and saturation
-   - **Multilingual extension** [2606.20517] Multi-LCB: Extends LiveCodeBench's Python-only problems to 12 languages; evaluating 24 LLMs exposes systematic Python-favoring bias (mean Pass@1 48.2% on Python vs. <29% on Scala) and cross-language ranking instability — Python-only leaderboards mask model rankings that flip on other languages. Residual contamination is still detectable via step-like Pass@1 drops at model training cutoffs
+   - **Multilingual extension** [2606.20517] Multi-LCB: Extends LiveCodeBench's Python-only problems to 12 languages; evaluating 24 LLMs exposes systematic Python-favoring bias (mean Pass@1 48.2% on Python vs. <29% on Scala) and cross-language ranking instability — Python-only leaderboards mask model rankings that flip on other languages. Residual contamination is still detectable via step-like Pass@1 drops when the evaluation window crosses model cutoffs
 4. **Appropriate difficulty**: Stratified levels to differentiate capabilities
 5. **Baseline provision**: Clear reference points for comparison
 6. **Reproducibility**: Systematic measurement with ground truth and rigorous rubrics
@@ -81,7 +81,7 @@ How to build, validate, release and maintain a benchmark against these criteria:
 
 **Common Failures:**
 
-- Task setup flaws overestimate performance by 100% [2507.02825] ABC
+- Task setup or reward-design flaws can under- or overestimate performance by up to 100% (relative) [2507.02825] ABC
 - Insufficient tests (SWE-bench), degenerate solutions (TAU-bench empty responses)
 - Noisy/biased data, gaming via benchmark-specific optimization
 - Test/production environment mismatch
@@ -112,7 +112,7 @@ How to build, validate, release and maintain a benchmark against these criteria:
 
 - Formal framework measuring how LLM-evaluator preferences propagate across interacting agents in multi-agent LLM systems
 - Contagion coefficient γ (an agent's evaluation strategy shifting toward peers') measured at γ ∈ [0.157, 0.352] across 3 DeepSeek-chat agents with distinct evaluator-preference profiles
-- Mitigation: raising the evaluator committee from k=1 to k=3 cuts contagion by roughly 70% (reported ~69-72%, varying by paper revision)
+- Mitigation: raising the evaluator committee from k=1 to k=3 cuts effective contagion by 68.9% ± 14.1% (n=4 seeds, per the current abstract)
 - Topology matters: chain communication suppresses propagation; fully-connected topology enables cascading spread once a spectral-radius threshold is crossed
 
 **Verifiable Social Reasoning** [2609.17496] FUSE:
