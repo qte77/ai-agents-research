@@ -3,17 +3,17 @@ title: Hyperspell Analysis
 source: https://hyperspell.com
 purpose: Analysis of Hyperspell, a hosted company-data memory/context platform for AI agents, scored against the agent-substrate rubric as a lead for the context Shared and Distributed cells.
 created: 2026-10-02
-updated: 2026-10-02
+updated: 2026-11-26
 validated_links_on: 2026-10-02
 status: assess
 ---
 
 ## What It Is
 
-Hyperspell is a hosted platform, described on its own site as the "memory layer for your business": it
+Hyperspell is a hosted platform, described on its own site (headline "A brain for your company", 50+ pre-built connectors) as a company "brain" that
 connects company data sources (Slack, email, drive, CRM, and more) and "surfaces it as a filesystem any
-agent can read" ([hyperspell.com][hyperspell-home], fetched 2026-10-02). The company (YC F25; founder Conor
-Brennan-Burke) frames the problem as agents lacking "sufficient context and memory to be truly useful"
+agent can read" ([hyperspell.com][hyperspell-home], checked 2026-11-26). The company (YC F25; founder Conor
+Brennan-Burke) frames the problem as companies struggling to give agents "the context and memory they need"
 ([Every.io profile][every-profile]).
 
 **Context or memory?** Despite the "context" framing in places, Hyperspell's own description —
@@ -32,13 +32,13 @@ those cells.
   via a universal API/SDK ([hyperspell.com][hyperspell-home]).
 - Client libraries are published under the `hyperspell` GitHub org: [`node-sdk`][node-sdk] (MIT, 4★/1 fork,
   pushed 2026-09-27, `gh api` 2026-10-02), a Python SDK (MIT, 3★/0 forks per repo listing, `gh api`
-  2026-10-02), and a Go SDK, plus an `hyperspell-mcp` Model Context Protocol (MCP) server, an `hyperspell-openclaw` plugin, and an
+  2026-10-02), and a Go SDK, plus an `hyperspell-mcp` Model Context Protocol (MCP) server (archived, last pushed 2026-06-29, checked 2026-11-26), an `hyperspell-openclaw` plugin, and an
   `hyperspell-n8n-node` community node.
 - **No LICENSE file for the core platform**: the hosted service itself is closed, with no self-hosting path
   documented. Only the thin client SDKs (REST wrappers) are open-source (MIT) — the same pattern this
   corpus already notes for Mitosis Cortex (closed engine, MIT client-side integrations) and Runtype (closed
   platform, Apache-2.0 CLI only).
-- YC F25 batch; raised ~$2.0M from Y Combinator and The Autopilot Fund ([startup profile sources][yc-funding]).
+- YC F25 batch; raised ~$2.0M from Y Combinator and The Autopilot Fund (unverified: neither the [YC page][yc-funding] nor the Every.io profile states a funding figure).
 - No first-party documentation of multi-agent concurrent access, cross-machine sync, or self-hosting was
   found on the fetched pages.
 
@@ -51,7 +51,7 @@ placement note above).
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| no data [hyperspell.com][hyperspell-home] (describes a per-company knowledge model multiple agents can query, but no concurrency/locking semantics are documented — the rubric's own trap: "a hosted SaaS alone is not 'shared' if each user gets an isolated silo," and nothing here rules that reading) | no data [hyperspell.com][hyperspell-home] (a hosted SaaS with no self-hosting path or deployment architecture disclosed) | no data [hyperspell.com][hyperspell-home] (describes continuous, query-reinforced synthesis — an unpinned, evolving process — with no pinned model/version or rebuild path stated) | no data [hyperspell.com][hyperspell-home] (no schema/plugin/extension mechanism documented beyond "connect your tools") | no data [hyperspell.com][hyperspell-home] (no snapshot/diff/rollback of the context graph documented) | no data [hyperspell.com][hyperspell-home] (no citation or audit-trail mechanism documented for what the agent reads) |
+| no data [hyperspell.com][hyperspell-home] (describes a per-company knowledge model multiple agents can query, but no concurrency/locking semantics are documented — the rubric's own trap: "a hosted SaaS alone is not 'shared' if each user gets an isolated silo," and nothing here rules that reading) | no data [hyperspell.com][hyperspell-home] (a hosted SaaS with no self-hosting path or deployment architecture disclosed) | no data [hyperspell.com][hyperspell-home] (describes continuous, query-reinforced synthesis — an unpinned, evolving process — with no pinned model/version or rebuild path stated) | no data [hyperspell.com][hyperspell-home] (no schema/plugin/extension mechanism documented beyond "connect your tools") | no data [hyperspell.com][hyperspell-home] (no snapshot/diff/rollback of the context graph documented) | no data [hyperspell.com][hyperspell-home] (the vendor claims "every fact traced to source" on its YC company page, but no citation or audit-trail mechanism is documented) |
 
 **Strongest claim check**: nothing here is scored above `no data` — the fetched marketing page makes
 architecture claims ("bespoke model of the company", "continuous learning") but documents no mechanism for

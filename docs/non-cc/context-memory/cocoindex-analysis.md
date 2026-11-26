@@ -3,7 +3,7 @@ title: CocoIndex — Incremental Indexing Engine for AI/RAG Pipelines
 source: https://github.com/cocoindex-io/cocoindex
 purpose: Evaluate CocoIndex as an incremental ETL/indexing layer for AI agent context ingestion and RAG pipelines.
 created: 2026-06-16
-updated: 2026-09-25
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: assess
 ---
@@ -14,7 +14,7 @@ status: assess
 "incremental engine for long horizon agents." It keeps AI agent context continuously
 fresh by processing only data deltas — changed files, documents, or records — rather
 than reindexing everything on every run. The project self-describes as targeting
-"sub-second freshness at any repo size."
+"sub-second freshness" (README image alt text for the cocoindex-code hero image).
 
 A companion project, [cocoindex-code][cocoindex-code-gh], is a lightweight, embedded
 AST-based semantic code-search CLI built on the same engine. It targets the code-search
@@ -23,9 +23,9 @@ Model Context Protocol (MCP) servers or Skills. Its stats, features and CC integ
 [CC-code-tooling-landscape.md](../../cc-community/CC-code-tooling-landscape.md#cocoindex-code-cocoindex-io)
 (the canonical entry for cocoindex-code); this analysis covers the core engine.
 
-**Core repo**: Apache 2.0 | Rust (50%) + Python (50%) | 10.3k stars | v1.0.10 (2026-06-14)
+**Core repo**: Apache 2.0 | Rust ~58% + Python ~42% | ~11.9k stars | v1.2.1 (2026-11-26) (checked 2026-11-26)
 
-(Core counts/version as fetched 2026-06-16.)
+(Core counts/version as fetched 2026-11-26.)
 
 ## How It Works
 
@@ -46,7 +46,7 @@ synchronization automatically. The mechanics:
 video/audio transcripts, blob stores.
 
 **Target stores**: vector databases, relational databases, data warehouses, graph
-databases, message queues.
+databases, message queues, feature stores.
 
 ## Adoption Decision
 
@@ -56,8 +56,8 @@ the integration barrier for existing Python-based research workflows.
 
 The cocoindex-code variant is directly relevant to the repo's CC-native work: it
 provides MCP-compatible semantic code search that complements Claude Code's built-in
-file tools. At v1.0.10, the core is past early prototyping, but the 1.x release cadence
-(v1.0.10 in June 2026) suggests the API surface is still changing.
+file tools. At v1.2.1, the core is past early prototyping, but the 1.x release cadence
+(v1.1.0 on 2026-11-01, v1.2.0 on 2026-11-09, v1.2.1 on 2026-11-26) suggests the API surface is still changing.
 
 **Trade-offs:**
 
@@ -69,7 +69,7 @@ file tools. At v1.0.10, the core is past early prototyping, but the 1.x release 
 | Wide connector/target-store coverage | Requires persistent embedding infrastructure |
 | Python-native declarations | — |
 
-The primary risk is API stability: taking a dependency on a library at v1.0.x while
+The primary risk is API stability: taking a dependency on a library at v1.x while
 the release pace is high means migration cost. A time-boxed trial (2–4 weeks) against
 one existing Retrieval-Augmented Generation (RAG) use case is the appropriate next step before broader adoption.
 
@@ -86,7 +86,7 @@ than competing.
 - [ ] Track v1.x release notes for breaking API changes before committing to a
       dependency.
 - [ ] Revisit star trajectory and issue velocity at next quarterly review (core:
-      10.3k as of 2026-06-16).
+      ~11.9k as of 2026-11-26, up from 10.3k on 2026-06-16).
 
 ## Sources
 

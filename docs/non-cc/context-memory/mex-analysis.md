@@ -4,7 +4,7 @@ source: https://github.com/mex-memory/mex
 purpose: Analysis of mex, a Git-shared, human-approval-gated project memory and drift-detection CLI for coding agents.
 platform_scope: [claude-code, codex, cursor, windsurf, github-copilot, opencode]
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -13,7 +13,7 @@ status: assess
 
 [mex][repo] (npm package `mex-agent`) is a CLI plus local "Hub" that keeps a team's project memory — architecture, decisions, requirements, handoffs — as canonical Markdown files under `.mex/` in the repository, shared through ordinary Git commits. There is no hosted service or central server: Git is the only sharing layer, and each engineer or agent rebuilds their own local, non-shared SQLite indexes (a Tree-sitter-based Code Graph and a full-text Wiki search index) from that canonical Markdown.
 
-Stars: 1,705 · License: MIT · Language: TypeScript · Latest release: **v0.8.2** (2026-09-13) · 22 contributors · homepage [mexmemory.com][site] (all accessed 2026-09-24). Requires Node.js ≥22.5 with SQLite FTS5 support and a Git repository.
+Stars: 1,794 · License: MIT · Language: TypeScript · Latest release: **v0.8.5** (2026-10-29; a 0.9.0 beta pre-release exists, 2026-11-18) · 30 contributors per the GitHub API · homepage [mexmemory.com][site] (all checked 2026-11-26). Requires Node.js ≥22.5 with SQLite FTS5 support and a Git repository.
 
 ## Key Differentiator: Human Approval Boundary
 
@@ -27,8 +27,8 @@ A Wiki claim can be "grounded" to a specific Code Graph node (stored as a node I
 
 | Integration | Setup behavior | Explicit commands |
 |---|---|---|
-| Claude Code | Installs/updates project anchor + skills under `.claude/skills/` | `/mex-inbox`, `/mex-relay` |
-| Codex | Installs/updates project anchor + skills under `.agents/skills/` | `$mex-inbox`, `$mex-relay` |
+| Claude Code | Installs/updates project anchor + skills under `.claude/skills/` | `/mex-inbox`, `/mex-relay`, `/mex-statechart` |
+| Codex | Installs/updates project anchor + skills under `.agents/skills/` | `$mex-inbox`, `$mex-relay`, `$mex-statechart` |
 | Cursor, Windsurf, GitHub Copilot, OpenCode | Instruction-anchor/template only | No official skill commands in 0.8 |
 
 ## What It Explicitly Is Not
@@ -41,14 +41,14 @@ mex does not upload canonical records, the Graph, the Wiki index, drafts, or Hub
 
 ## Adoption Decision
 
-**Assess.** MIT-licensed, actively maintained (22 contributors, a release as recent as 2026-09-13), and its Inbox/Relay review workflow addresses a real risk class — an agent silently "correcting" shared project knowledge — without requiring a hosted service, though the gate is procedural (plan/`--apply`, a self-approval path exists for solo use) rather than an enforced technical restriction. Requires Node ≥22.5 with SQLite FTS5 support; verify that constraint against your CI/dev images before piloting, and note the Code Graph currently covers only TypeScript/TSX, JavaScript/JSX, Python, and Rust.
+**Assess.** MIT-licensed, actively maintained (30 contributors, a stable release as recent as 2026-10-29), and its Inbox/Relay review workflow addresses a real risk class — an agent silently "correcting" shared project knowledge — without requiring a hosted service, though the gate is procedural (plan/`--apply`, a self-approval path exists for solo use) rather than an enforced technical restriction. Requires Node ≥22.5 with SQLite FTS5 support; verify that constraint against your CI/dev images before piloting, and note the Code Graph covers TypeScript/TSX, JavaScript/JSX, Python and Rust, with partial C# support and bounded framework resolvers (Express, Next.js App Router, FastAPI, Flask, NestJS) per the v0.8.5 README.
 
 ## Sources
 
 | Source | Content |
 |---|---|
-| [mex GitHub repo][repo] (README) | Architecture, human-approval model, drift detection, agent integrations, telemetry (accessed 2026-09-24) |
-| [mex-memory/mex][repo] (repo metadata + releases) | Stars, license, language, created/pushed dates, v0.8.2 release date (accessed 2026-09-24 via GitHub API) |
+| [mex GitHub repo][repo] (README) | Architecture, human-approval model, drift detection, agent integrations, telemetry (checked 2026-11-26) |
+| [mex-memory/mex][repo] (repo metadata + releases) | Stars, license, language, created/pushed dates, v0.8.5 release date (checked 2026-11-26 via GitHub API) |
 
 [repo]: https://github.com/mex-memory/mex
 [site]: https://mexmemory.com
