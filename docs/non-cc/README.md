@@ -49,7 +49,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 |---|---|---|---|
 | [cline-analysis.md](coding-agents/cline-analysis.md) | Cline (autonomous coding agent; VS Code, CLI, SDK) | Yes | Yes (Apache-2.0) |
 | [opencode-analysis.md](coding-agents/opencode-analysis.md) | opencode (terminal agent; TUI + headless CLI, 75+ providers) | Yes | Yes (MIT) |
-| [codebuff-analysis.md](coding-agents/codebuff-analysis.md) | Codebuff (terminal agent; multi-agent orchestration, OpenRouter) | Yes | Yes (Apache-2.0) |
+| [codebuff-analysis.md](coding-agents/codebuff-analysis.md) | Codebuff (terminal agent; shuts down 2026-12-01, free Freebuff variant) | Yes | Yes (Apache-2.0) |
 | [gemini-cli-analysis.md](coding-agents/gemini-cli-analysis.md) | Gemini CLI (Google; no longer served for free, AI Pro, AI Ultra or Google One users since 2026-06-18, replaced by Antigravity CLI; Standard/Enterprise on a separate deprecation schedule per the Code Assist FAQ; re-checked 2026-11-18) — **Hold** | Yes | Yes (Apache-2.0) |
 | [cursor-analysis.md](coding-agents/cursor-analysis.md) | Cursor (GUI AI editor, VS Code fork; Composer agent + CLI) | Partial | No |
 | [antigravity-analysis.md](coding-agents/antigravity-analysis.md) | Google Antigravity (agent-first IDE + CLI; preview) | Partial | No |
