@@ -3,14 +3,14 @@ title: CC Web Scheduled Tasks — Cloud Recurring Automation
 source: https://code.claude.com/docs/en/routines
 purpose: "Analysis of cloud-native scheduled tasks (formerly routines) for autonomous work without a local machine: the Schedule, API and GitHub triggers; rubric scores cover the Schedule trigger only."
 created: 2026-03-24
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: assess
 ---
 
-**Details:** Available (all CC Web users — Pro, Max, Team, Enterprise). Vendor marks the underlying feature as **research preview** — behavior, limits, and API surface may change.
+**Details:** Available on Pro, Max, Ultra, Team and Enterprise plans. Vendor marks the underlying feature as **research preview** — behavior, limits, and API surface may change.
 
-> **Note**: Anthropic renamed this feature to **Routines** (canonical page: [routines][cc-sched], H1 "Automate work with routines"). A routine now supports three trigger types — Schedule, API (HTTP POST to a per-routine `/fire` endpoint), and GitHub event (PR/release webhooks) — not only recurring schedules. The Schedule trigger is covered first; the API and GitHub triggers and the unattended permission posture are in [API Trigger](#api-trigger), [GitHub Trigger](#github-trigger) and [Permission Posture in Unattended Runs](#permission-posture-in-unattended-runs).
+> **Note**: Anthropic's feature was named **Routines** (canonical page: [routines][cc-sched], H1 now "Automate work with scheduled tasks"). A routine now supports three trigger types — Schedule, API (HTTP POST to a per-routine `/fire` endpoint), and GitHub event (PR/release webhooks) — not only recurring schedules. The Schedule trigger is covered first; the API and GitHub triggers and the unattended permission posture are in [API Trigger](#api-trigger), [GitHub Trigger](#github-trigger) and [Permission Posture in Unattended Runs](#permission-posture-in-unattended-runs).
 >
 > **Rename, re-checked 2026-11-18**: the live page at the same URL is now headed "Automate work with scheduled tasks" and says "scheduled tasks, formerly routines". The old name survives in the web address `claude.ai/code/routines`, the `/routines` alias, the `/fire` endpoint path, its beta header and the `<routine-fire-payload>` tag ([cc-sched][cc-sched], section "Where the name routines still appears"). This doc keeps the older name for continuity.
 >
@@ -30,9 +30,9 @@ Recurring prompts that run on Anthropic cloud infrastructure on a schedule. Task
 | Persistent across restarts | Yes | Yes | Restored on `--resume` if unexpired |
 | Access to local files | No (fresh clone) | Yes | Yes |
 | Model Context Protocol (MCP) servers | Connectors per task | Config files + connectors | Inherits from session |
-| Permission prompts | No (runs autonomously) | Configurable per task | Inherits from session |
-| Customizable schedule | Via `/schedule update` in the CLI | Yes | Yes |
-| Minimum interval | 1 hour | 1 minute | 1 minute |
+| Permission prompts | Auto mode by default (a classifier allows or blocks; a run can still stop on ask rules or repeated blocks) | Configurable per task | Inherits from session |
+| Customizable schedule | Yes | Yes | Yes |
+| Minimum interval | 1 hour | 1 minute when Claude sets it, 1 hour in the forms (the Custom cron form rejects more frequent expressions) | 1 minute |
 
 For `/loop` details, see [CC-loop-cron-analysis.md](../configuration/CC-loop-cron-analysis.md).
 
@@ -41,7 +41,7 @@ For `/loop` details, see [CC-loop-cron-analysis.md](../configuration/CC-loop-cro
 Three entry points:
 
 1. **Web**: [claude.ai/code/routines](https://claude.ai/code/routines) → New routine
-2. **Desktop**: Routines (sidebar) → New routine → choose **Cloud** (choosing **Local** creates a Desktop scheduled task instead)
+2. **Desktop**: sidebar **Scheduled** → **New task**; **Only on this computer** (under Advanced settings) makes it local, while a repository, GitHub-event or API trigger makes it cloud (accounts still on the earlier name see Routines / New routine and a Local/Cloud menu)
 3. **CLI**: `/schedule` (guided) or `/schedule daily PR review at 9am` — also available under the alias `/routines`
 
 ### Configuration
@@ -61,7 +61,7 @@ Three entry points:
 | Frequency | Behavior |
 |-----------|----------|
 | Hourly | Every hour |
-| Daily | Once/day at specified time (default 9:00 AM local) |
+| Daily | Once/day at specified time (local time zone; the page gives no default time, unverified earlier "9:00 AM"); a bare 5-field custom cron expression is read in UTC unless prefixed with `CRON_TZ=` |
 | Weekdays | Daily, skipping Saturday/Sunday |
 | Weekly | Once/week on specified day and time |
 
@@ -69,7 +69,7 @@ A run can start several minutes after its scheduled time — the live page gives
 
 ### One-off Runs
 
-A schedule trigger can also fire a routine a single time at a specific future timestamp instead of recurring, e.g. `/schedule tomorrow at 9am, summarize yesterday's merged PRs` or `/schedule in 2 weeks, open a cleanup PR that removes the feature flag`. After it fires, the trigger auto-disables and the web UI marks the routine **Ran**; editing the routine with a new one-off time re-arms it. One-off runs count against the same hourly limits as other scheduled runs (below).
+A schedule trigger can also fire a routine a single time at a specific future timestamp instead of recurring, e.g. `/schedule tomorrow at 9am, summarize yesterday's merged PRs` or `/schedule in 2 weeks, open a cleanup PR that removes the feature flag`. After it fires, the trigger auto-disables and the web UI marks the task **Completed**; to re-run it, select **One-time** (or **Once**) in the edit dialog and set a new date and time. One-off runs count against the same hourly limits as other scheduled runs (below).
 
 ### Usage Limits
 
@@ -135,7 +135,7 @@ Routines (Schedule trigger only; the API and GitHub triggers are not scored), sc
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-| no [cc-sched][cc-sched] ("Routines belong to your individual claude.ai account. They are not shared with teammates, and their runs count against your account's usage and limits") | yes [cloud-sessions-rubric][cloud-sessions-rubric] (every run executes as a cloud session, on the same Anthropic-managed or self-hosted runner-fleet infrastructure scored there) | no [cc-sched][cc-sched] (the creation form has "a model selector," and "Claude uses the selected model on every run" — a named model, not a pinned snapshot id; the rubric's own guidance treats LLM-driven work with no fixed model/version as `no`, not `no data`) | yes [cc-sched][cc-sched] ("change the name, prompt, repositories, environment, connectors, or any of the routine's triggers" at any time, with no rebuild — re-verified verbatim 2026-10-15) | partial [cc-sched][cc-sched] (each run opens as its own session, independent of the routine, that you can rename, archive, or delete from the session's own menu — but the routine's own prompt/config carries no revision history or rollback of its own; the current page no longer states what happens to past run sessions when the routine itself is deleted, so that specific claim from an earlier pass of this doc is dropped as unverified) | partial [cc-sched][cc-sched] (each run is a full, reviewable session, and the CLI can read a run's log to "explain what happened, including tool errors, permission denials, and the final result" on request, requires CC v2.1.227+ — but "a green status... does not mean the task in your prompt succeeded," so nothing short of opening the transcript closes the loop) |
+| no [cc-sched][cc-sched] ("Scheduled tasks belong to your individual claude.ai account. They are not shared with teammates, and their runs count against your account's usage and limits") | yes [cloud-sessions-rubric][cloud-sessions-rubric] (every run executes as a cloud session, on the same Anthropic-managed or self-hosted runner-fleet infrastructure scored there) | no [cc-sched][cc-sched] (the creation form has "a model selector," and "Select a model in the prompt input's model selector for Claude to use on every run" — a named model, not a pinned snapshot id; the rubric's own guidance treats LLM-driven work with no fixed model/version as `no`, not `no data`) | yes [cc-sched][cc-sched] ("change the name, prompt, repositories, environment, connectors, or any of the routine's triggers" at any time, with no rebuild — re-verified verbatim 2026-10-15) | partial [cc-sched][cc-sched] (each run opens as its own session, independent of the routine, that you can rename, archive, or delete from the session's own menu — but the routine's own prompt/config carries no revision history or rollback of its own; the current page no longer states what happens to past run sessions when the routine itself is deleted, so that specific claim from an earlier pass of this doc is dropped as unverified) | partial [cc-sched][cc-sched] (each run is a full, reviewable session, and the CLI can read a run's log to "explain what happened, including tool errors, permission denials, and the final result" on request, requires CC v2.1.227+ — but "a green status... does not mean the task in your prompt succeeded," so nothing short of opening the transcript closes the loop) |
 
 Re-verified against the live [Routines][cc-sched] page 2026-10-15. Trigger types, the core frequency presets, and the minimum one-hour interval still match; the comparison table gained two rows (Permission prompts, Customizable schedule — added above), one-off scheduled runs and per-action hourly limits were net-new and are now covered above, the Branch permissions row's "Allow unrestricted" toggle claim is no longer supported by the live page and was removed, and the Adaptable and Versionable rubric cells needed verbatim-quote or evidence corrections (both fixed above).
 
@@ -155,7 +155,7 @@ Re-verified against the live [Routines][cc-sched] page 2026-10-15. Trigger types
 - [Agent Substrate Rubric][rubric]
 
 [cc-sched]: https://code.claude.com/docs/en/routines
-[cc-cloud]: https://code.claude.com/docs/en/claude-code-on-the-web#the-cloud-environment
+[cc-cloud]: https://code.claude.com/docs/en/cloud-environments
 [cc-desktop]: https://code.claude.com/docs/en/desktop-scheduled-tasks
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
 [cloud-sessions-rubric]: CC-cloud-sessions-analysis.md#scored-on-the-agent-substrate-rubric

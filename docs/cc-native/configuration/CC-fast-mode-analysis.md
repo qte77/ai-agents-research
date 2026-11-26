@@ -3,12 +3,12 @@ title: CC Fast Mode Analysis
 source: https://code.claude.com/docs/en/fast-mode
 purpose: Analysis of Claude Code Fast Mode and the underlying API `speed` parameter for potential adoption within CC-based workflows.
 created: 2026-02-17
-updated: 2026-11-19
+updated: 2026-11-26
 validated_links_on: 2026-11-08
 status: hold
 ---
 
-**Details:** (2026-11-17 update: the [CC page][cc-fast] now also lists Fable 5.2, from v2.1.321.) Available on Opus 5.5, research preview on Opus 5 and Opus 4.8 — the API and Claude Code pages now both state this per model; Opus 4.8 fast mode is deprecated (2026-10-30) and will be removed 2026-11-30 (both pages read 2026-11-08)
+**Details:** (2026-11-17 update: the [CC page][cc-fast] now also lists Fable 5.2, from v2.1.321.) Available on Opus 5.5, research preview on Opus 5; Opus 4.8 is labelled deprecated on the API page and research preview on the Claude Code page (checked 2026-11-26); Opus 4.8 fast mode is deprecated (2026-10-30) and will be removed 2026-11-30 (both pages read 2026-11-08)
 
 ## What Fast Mode Is
 
@@ -18,13 +18,14 @@ Supported models (2026-11-08):
 
 | Model | API status | Access |
 |---|---|---|
-| Fable 5.2 | Listed on the CC page (read 2026-11-17); API-page status not re-read | Claude Code v2.1.321 or later; with `/fast` it persists only if turned on while using Fable 5.2; `"fastMode": true` alone has no effect on it until `/fast` is run on Fable 5.2 ([CC][cc-fast]) |
+| Fable 5.2 | Available (stable) on the Claude API, Claude Models on Google Cloud (Anthropic managed and Google managed) and Microsoft Foundry (hosted on Anthropic); default fast rate limit in the Start, Build and Scale tiers, no beta header or access request ([API][api-fast], checked 2026-11-26) | Claude Code v2.1.321 or later; with `/fast` it persists only if turned on while using Fable 5.2; `"fastMode": true` alone has no effect on it until `/fast` is run on Fable 5.2 ([CC][cc-fast]) |
 | Opus 5.5 | Generally available | No beta header, no access request; default fast rate limit in the Start, Build and Scale tiers, not Evaluation ([API][api-fast]) |
-| Opus 5, Opus 4.8 | Research preview | `fast-mode-2026-02-01` beta header (else `400`) plus provisioned access (the API page names account manager or waitlist for Opus 5); Opus 4.8 fast mode deprecated 2026-10-30, removal 2026-11-30 ([API][api-fast], [CC][cc-fast]) |
+| Opus 5 | Research preview | `fast-mode-2026-02-01` beta header (else `400`) plus provisioned access (the API page names account manager or waitlist) ([API][api-fast], checked 2026-11-26) |
+| Opus 4.8 | Deprecated on the API page (research preview on the CC page, whose warning block gives the same dates) | `fast-mode-2026-02-01` beta header; fast mode deprecated 2026-10-30, removal 2026-11-30, after which `speed: "fast"` requests return an error ([API][api-fast], [CC][cc-fast], checked 2026-11-26) |
 | Opus 4.7 | Removed | Deprecated 2026-06-25, removed 2026-07-24; switching to it turns fast mode off ([CC][cc-fast]) |
 | Opus 4.6 | Not supported | With the beta header, a `speed: "fast"` request succeeds but runs at standard speed (`usage.speed` = `"standard"`); on Google Cloud (Anthropic managed) it returns `400` ([API][api-fast]) |
 
-Not available on Sonnet or Haiku ([CC][cc-fast]). Supported on the Anthropic API: Fable 5.2, Opus 5.5, Opus 5 and Opus 4.8 ([CC][cc-fast], 2026-11-17).
+Not available on Sonnet or Haiku ([CC][cc-fast]). Supported on the Anthropic API: Fable 5.2, Opus 5.5, Opus 5 and Opus 4.8 ([CC][cc-fast], 2026-11-17). At the API layer only, the [API fast-mode page][api-fast] also lists Claude Mythos 5.2 (limited availability) at $16 / $80 per MTok fast (checked 2026-11-26); the CC page does not list Mythos.
 
 **Claude Code default fast-mode model:** Opus 5.5 from v2.1.280; Opus 5 on v2.1.219–v2.1.279 ([CC][cc-fast]). Earlier releases defaulted to Opus 4.8 (v2.1.154–v2.1.218 per the page as read 2026-10-26; that range is no longer listed).
 
@@ -32,7 +33,7 @@ Not available on Sonnet or Haiku ([CC][cc-fast]). Supported on the Anthropic API
 
 | Model | Fast input (MTok) | Fast output (MTok) | Standard input / output |
 |---|---|---|---|
-| Fable 5.2 | $16 | $80 | not re-read |
+| Fable 5.2 | $16 | $80 | $8 / $40 ([pricing][pricing], checked 2026-11-26) |
 | Opus 5.5 | $8 | $40 | $4 / $20 |
 | Opus 5, Opus 4.8 | $10 | $50 | $5 / $25 |
 
@@ -69,19 +70,19 @@ After `/usage-credits`, `/fast` remains available.
 ### Key Mechanics
 
 - **Mid-conversation cost:** the first enable in a conversation pays the full fast-mode uncached input price for the whole context; fast and standard speed keep separate caches, so every later switch re-reads uncached ([CC][cc-fast]). API: "Requests at different speeds do not share cached prefixes." ([API][api-fast])
-- **Rate limits:** a dedicated fast-mode limit separate from standard Opus ([API][api-fast]); in Claude Code all supported Opus models share one fast pool ([CC][cc-fast]).
+- **Rate limits:** a dedicated fast-mode limit separate from standard Opus ([API][api-fast]); the CC page says only that fast mode has separate rate limits from standard speed, and the claim that all supported Opus models share one fast pool is unverified (Fable 5.2 and Opus 5.5 each have a default fast limit per the API page).
   - **API:** over the limit returns `429` with `retry-after`; no automatic fallback — the SDK retries `429` up to 2 times by default, and falling back means retrying without `speed` ([API][api-fast]). Limit status is in `anthropic-fast-{input,output}-tokens-{limit,remaining,reset}` headers.
   - **Claude Code:** falls back to standard speed automatically, the `↯` icon greys during cooldown, then re-enables ([CC][cc-fast]).
 - **Billing:** subscription plans (Pro/Max/Ultra/Team/Enterprise; Ultra is the renamed Max 20x plan per [feature availability][cc-features]) pay from usage credits only, even with plan usage left; Console organizations pay per token with the rest of their API usage ([CC][cc-fast]).
-- **Enablement:** Team/Enterprise need an Owner to enable it; Console organizations need access provisioned — without it every fast request is rejected with a 429 that Claude Code treats as a rate limit ([CC][cc-fast]).
+- **Enablement:** Team/Enterprise need an Owner to enable it; Console organizations need access provisioned for Opus 5 or Opus 4.8 (without it fast requests hit the fast-mode rate limit and Claude Code falls back to standard speed); Fable 5.2 and Opus 5.5 instead depend on usage tier, and on the free Evaluation plan `/fast` shows "Fast mode unavailable during evaluation" ([CC][cc-fast], checked 2026-11-26).
 - **Not combinable** with the Batch API or a Priority Tier commitment ([API][api-fast]).
 - ZDR eligible, excluding Covered Models ([API][api-fast] page metadata).
 
 ### Platform availability (read 2026-11-08; CC layer re-read 2026-11-17)
 
-- **API layer** ([API][api-fast]): `speed: "fast"` on Opus 5.5 works on the Claude API, Claude Models on Google Cloud (Anthropic managed) and Microsoft Foundry (hosted on Azure); the Opus 5 / 4.8 preview and Managed Agents fast mode are Claude API only.
+- **API layer** ([API][api-fast]): `speed: "fast"` on Opus 5.5 works on the Claude API, Claude Models on Google Cloud (Anthropic managed) and Microsoft Foundry (hosted on Azure); Managed Agents fast mode for Opus 5.5 is available on the Claude API and Claude Models on Google Cloud (Anthropic managed); only the Opus 5 preview and the Opus 4.8 deprecated status are Claude API only. Fable 5.2 Messages API fast mode is also on Google Cloud (Google managed). On Foundry, fast mode uses separate model IDs ending in `-fast` (for example `claude-opus-5-5-fast`) with no `speed` parameter; setting `speed` on a standard deployment returns an error (checked 2026-11-26).
 - **Claude Code layer** ([CC][cc-fast], [feature availability][cc-features]): Anthropic Console or claude.ai subscription only — as re-read 2026-11-17, available through the Console API, subscriptions with usage credits and (with conditions) Google Cloud's Agent Platform; "not available on Amazon Bedrock, Microsoft Foundry, or Claude Platform on AWS". The 2026-11-08 reading also listed Agent Platform as unavailable; see the Vertex section below.
-- **Why the API and CC layers differ (Agent Platform part superseded, see below):** "Google Cloud's Agent Platform" is the Google-managed offering (`CLAUDE_CODE_USE_VERTEX`, `aiplatform.googleapis.com`), a different product from Claude Models on Google Cloud (Anthropic managed) (`claude.googleapis.com`), for which Claude Code documents no integration ([Google Cloud overview][gcp-overview]). Microsoft Foundry is the same product on both pages: the API supports fast mode there for Opus 5.5, but Claude Code's Foundry integration doesn't offer it. A client limitation, not a disagreement about the API.
+- **Why the API and CC layers differ (Agent Platform part superseded, see below):** "Google Cloud's Agent Platform" is the Google-managed offering (`CLAUDE_CODE_USE_VERTEX`, `aiplatform.googleapis.com`), a different product from Claude Models on Google Cloud (Anthropic managed) (`claude.googleapis.com`). Claude Code now documents the Anthropic-managed provider too (`CLAUDE_CODE_USE_ANTHROPIC_GOOGLE_CLOUD`, per the [feature availability][cc-features] page), with fast mode unavailable there ([Google Cloud overview][gcp-overview]). Microsoft Foundry is the same product on both pages: the API supports fast mode there for Opus 5.5, but Claude Code's Foundry integration doesn't offer it. A client limitation, not a disagreement about the API.
 
 ### Fast mode on Vertex (v2.1.322, supersedes the 2026-11-08 reading above)
 
@@ -133,7 +134,7 @@ autonomous_run:
 |---|---|
 | [CC Fast Mode docs][cc-fast] | Claude Code toggles, defaults, version gates, billing, rate-limit fallback, platform list |
 | [API Fast mode docs][api-fast] | `speed` parameter, model status, beta header, rate-limit headers, platforms, Batch/Priority Tier exclusions |
-| [CC feature availability][cc-features] | Per-provider feature matrix (fast mode ✗ on Bedrock, Foundry; Agent Platform per the 2026-11-08 read, now superseded by the fast-mode page); Ultra plan name |
+| [CC feature availability][cc-features] | Per-provider feature matrix (fast mode ✗ on Amazon Bedrock, Claude Platform on AWS, Google Cloud (Anthropic managed) and Microsoft Foundry; ✓ on Google Cloud (Google managed / Agent Platform) for Fable 5.2 with conditions; checked 2026-11-26); Ultra plan name |
 | [Claude Models on Google Cloud overview][gcp-overview] | Anthropic-managed vs Google-managed offerings |
 | [Claude API pricing][pricing] | Standard Opus rates for the 2x comparison |
 | [CC Model Configuration][cc-model] | Effort defaults |

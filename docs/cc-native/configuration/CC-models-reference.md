@@ -3,7 +3,7 @@ title: CC Models Reference
 source: https://platform.claude.com/docs/en/about-claude/models/overview
 purpose: Descriptive reference for Claude Code's primary agentic model, the 5.x lifecycle and the per-model pricing table; the model facts behind CC-model-provider-configuration.md, which owns provider facts.
 created: 2026-06-14
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: reference
 ---
@@ -59,11 +59,11 @@ Documented on the per-model overview pages, the Fable 5.2 migration guide and th
 
 Settings unchanged from Fable 5.1 per the guide: thinking cannot be disabled (`disabled` and manual `budget_tokens` return 400), assistant prefill returns 400, `temperature`, `top_p` and `top_k` should be omitted, and forced `tool_choice` (`any` or `tool`) returns 400 (relative to Fable 5 this one is breaking). Behavior notes from the same guide (Anthropic's own testing): prompt lines asking for less thinking do not stop thinking at medium effort and above, and at xhigh or max in an agentic coding product the model was seen starting subagents to review its own work. Permitted refusal-fallback targets for Fable 5.2 are Opus 4.8 and Opus 5.
 
-**Deprecations (deprecations page, 2026-11-23).** `claude-sonnet-4-5-20250929` (and the undated `claude-sonnet-4-5`) retires 2026-11-30, with `claude-sonnet-5-5` as the recommended replacement. `claude-mythos-preview` is listed as deprecated since 2026-06-09 with its retirement date "to be announced"; it has no announced end-of-life date on that page.
+**Deprecations (deprecations page, 2026-11-23).** `claude-sonnet-4-5-20250929` (and the undated `claude-sonnet-4-5`) retires 2026-11-30, with `claude-sonnet-5-5` as the recommended replacement. `claude-mythos-preview` is listed as deprecated since 2026-06-09 with its retirement date "to be announced"; it has no announced end-of-life date on that page. The same page has a 2026-11-23 entry deprecating `claude-opus-4-5-20251101` (and the undated `claude-opus-4-5`), retiring 2027-01-22, with `claude-opus-5-5` as the recommended replacement (checked 2026-11-26).
 
 ## Model Pricing (current lineup)
 
-Per-model USD pricing from the [pricing page][models-pricing] (accessed 2026-10-26), all rates per million tokens (MTok):
+Per-model USD pricing from the [pricing page][models-pricing] (checked 2026-11-26), all rates per million tokens (MTok):
 
 | Model | Input | 5m cache write | 1h cache write | Cache hit | Output |
 | --- | --- | --- | --- | --- | --- |
@@ -78,7 +78,7 @@ Per-model USD pricing from the [pricing page][models-pricing] (accessed 2026-10-
 | Claude Opus 4.8 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
 | Claude Opus 4.7 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
 | Claude Opus 4.6 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
-| Claude Opus 4.5 | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
+| Claude Opus 4.5 (deprecated 2026-11-23, retires 2027-01-22) | $5 | $6.25 | $10 | $0.50 (0.1x) | $25 |
 | Claude Sonnet 5.5 | $2 | $2.50 | $4 | $0.10 (0.05x) | $10 |
 | Claude Sonnet 5 | $2 | $2.50 | $4 | $0.20 (0.1x) | $10 |
 | Claude Sonnet 4.6 | $3 | $3.75 | $6 | $0.30 (0.1x) | $15 |

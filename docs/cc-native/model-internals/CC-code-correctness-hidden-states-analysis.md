@@ -3,7 +3,7 @@ title: Code Correctness Is Linearly Decodable from LLM Hidden States Before Gene
 purpose: Third-party interpretability study on pre-generation code-correctness probing and its relevance to coding-agent repair heuristics
 source: https://arxiv.org/abs/2606.14530
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: assess
 ---
@@ -17,9 +17,10 @@ prompt's final token — before any code tokens are generated. arXiv:2606.14530,
 currently v3 (submitted 2026-07-16; cs.LG, no institutional affiliation listed
 on the abstract page). v1 (2026-06-12) carried the title "...Pre-Generation
 Probing and Repair Geometry"; v2 followed 2026-07-10. The "Repair Geometry"
-claim was dropped from the title by v3, consistent with the paper's own
-finding below that this secondary analysis doesn't hold up under covariate
-control.
+claim was dropped from the title by v3, whose abstract says the
+repair-geometry question could not be tested because successful repairs
+after a failed first attempt were too rare (the covariate-control finding
+below belongs to v1; the v2 title is unverified).
 
 ## Probing Method
 
@@ -36,19 +37,21 @@ control.
 - **0.842** (±0.010) after residualizing out prompt length.
 - vs. **0.657** (±0.014) for a prompt-length-only baseline.
 - The correctness signal is present pre-generation and is not merely a proxy
-  for prompt length. (An earlier pass surfaced a possible v1 figure of 0.931;
-  it could not be corroborated against primary text and is omitted here — the
-  0.881/0.842/0.657 triple above is the one confirmed against both the arXiv
-  abstract and the repo README.)
+  for prompt length. (The superseded v1 abstract reported 0.931 / 0.911 /
+  0.754 for the same three quantities; the 0.881/0.842/0.657 triple above is
+  the current v3 one, confirmed against the arXiv abstract page and the repo
+  README.)
 
-## Repair-Geometry Analysis (Secondary, Weaker)
+## Repair-Geometry Analysis (v1 only; no finding in v3)
 
-236 repair attempts (failing attempt to its repair) were analyzed for a
-directional shift in hidden-state space. A statistically detectable shift
-exists, but it is confounded by repair-context covariates and does not hold
-up as evidence of standalone "repair comprehension" once controlled — the
-paper is explicit that this analysis is underpowered/inconclusive for a
-strong repair-geometry claim.
+The v1 abstract (2026-06-12) analyzed 236 cleaned repair cases (failing
+attempt to its repair) and reported a statistically detectable contrastive
+direction that did not survive residualization against repair-context
+covariates, read as a correlate of repair success rather than an isolated
+repair-comprehension feature. The current v3 abstract makes no repair-geometry
+finding: it says the question could not be tested because successful repairs
+were too rare. Specific task counts for that data starvation (reported
+secondhand) are not on the abstract page (unverified).
 
 ## Repair Implications
 
@@ -57,7 +60,7 @@ repair-trigger design: if a linear probe on hidden states can flag
 likely-incorrect code before any tokens are generated, a harness could use it
 as a cheap pre-check for deciding when to trigger self-repair or
 re-generation — without first executing or evaluating the generated code. The
-repair-geometry finding is weaker and, per the authors, not yet actionable.
+current version makes no repair-geometry finding, so nothing there is actionable.
 
 ## Corpus Relevance
 

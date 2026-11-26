@@ -2,7 +2,7 @@
 title: CC Reverse Engineering Landscape
 purpose: Survey of community tools, blogs, and trackers that reverse engineer Claude Code internals — system prompts, binary analysis, env vars, API interception.
 created: 2026-03-29
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-04-05
 status: research
 ---
@@ -17,7 +17,7 @@ Cross-ref: [CC-binary-architecture.md][binary-arch] — our own binary analysis 
 
 ### Piebald-AI/claude-code-system-prompts
 
-The most comprehensive resource. Extracts prompts from CC's compiled source via a script run against the npm package. Tracks changes across **136 CC versions** since v2.0.14.
+The most comprehensive resource. Extracts prompts from CC's compiled source via a script run against the npm package. Tracks changes across **343 CC versions** since v2.0.14 (README, as of CC v2.1.331, checked 2026-11-26).
 
 - ~60 core system prompt fragments (conditionally assembled)
 - ~40 system reminders (context notifications)
@@ -69,7 +69,7 @@ URL: [cl4r1t4s][cl4r1t4s]
 
 ### frr.dev — Native Build Analysis
 
-Documents that the CLI binary is a **~213MB single-executable Bun application** with JavaScriptCore runtime. The Bun runtime extracts and executes embedded JS at launch.
+Documents that the CLI binary is a **~100MB single-executable Bun application** (Bun runtime ~95MB plus ~5MB of bundled JS, per the cited article; an earlier ~213MB figure was not in that source) with JavaScriptCore runtime. The Bun runtime extracts and executes embedded JS at launch.
 
 URL: [frr-build][frr-build]
 
@@ -101,7 +101,7 @@ URL: [ghuntley][ghuntley]
 
 ### ccunpacked.dev — Visual Architecture Guide
 
-Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31). Created by autocracy101 (`github.com/zackautocracy`) within hours of the leak using AI-assisted development.
+Interactive visual documentation of CC internals built from the `@anthropic-ai/claude-code@2.1.88` npm sourcemap exposure (2026-03-31; the site itself says only "based on publicly available source code" and names neither version nor sourcemap, so that attribution is unverified at this source). Created by autocracy101 (`github.com/zackautocracy`) within hours of the leak using AI-assisted development.
 
 **Sections**: Architecture Explorer (color-coded codebase tiles linking to source files), Agent Loop (message processing from `TextInput.tsx` through response), Tool Systems (40+ tools categorized by function), Command Catalog (50+ slash commands), Hidden Features (Buddy, Kairos, UltraPlan, Coordinator Mode, Bridge, Daemon Mode, UDS Inbox, Auto-Dream).
 
@@ -119,7 +119,7 @@ Cross-ref: [CC-community-reimplementations-landscape.md](CC-community-reimplemen
 
 ### TurboAI.dev — Version Tracker
 
-Tracks every CC release with structured diffs. As of v2.1.86 (2026-03-27):
+Tracks every CC release with structured diffs. As of v2.1.86 (2026-03-27; the tracker has since moved on to v2.1.332):
 
 | Metric | Count |
 |---|---|
@@ -143,7 +143,7 @@ URL: [unkn0wncode][unkn0wncode]
 
 ### JSON Schema Store
 
-Full `claude-code-settings.json` schema published at SchemaStore but **not linked from official CC docs** (tracked in [gh-11795][gh-11795]).
+Full `claude-code-settings.json` schema published at SchemaStore; the official [settings page](https://code.claude.com/docs/en/settings) now links it and shows a `$schema` example (checked 2026-11-26), and warns the schema can lag newer CLI releases. The request to link it ([gh-11795][gh-11795]) was closed as not planned.
 
 URL: [schema-store][schema-store]
 

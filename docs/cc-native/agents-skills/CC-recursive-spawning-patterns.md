@@ -3,7 +3,7 @@ title: CC Recursive Spawning Patterns
 source: https://code.claude.com/docs/en/sub-agents
 purpose: Analysis of recursive claude -p invocation patterns, the CLAUDECODE=1 session guard, and spawning method trade-offs for autonomous agent orchestration.
 created: 2026-03-17
-updated: 2026-11-18
+updated: 2026-11-26
 validated_links_on: 2026-11-21
 status: research
 ---
@@ -66,8 +66,8 @@ any work.
 
 **Mitigations**:
 
-- Use isolated config (`--no-plugins`, minimal MCP) for child processes
-- Set `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`
+- Use isolated config (`--bare`, which skips hooks, skills, subagents, installed plugins, MCP servers, auto memory and CLAUDE.md; or `--strict-mcp-config` for MCP only) for child processes
+- `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` disables auto-updates, telemetry, error reporting and similar nonessential network traffic (not a token-cost mitigation; its entry does not mention model API calls, an inference from silence)
 - Set `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` to skip git context
 - Set `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` to prevent extended context
 
@@ -82,7 +82,7 @@ any work.
 | `CLAUDE_CODE_SUBAGENT_MODEL` | Model for subagents/teammates |
 | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` | Save context in headless loops |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` | Prevent extended context in headless runs |
-| `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` | Reduce API calls |
+| `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | Disable nonessential traffic (updates, telemetry); does not reduce model API calls |
 
 ## Spawning Methods Comparison
 
@@ -91,7 +91,7 @@ any work.
 | `claude -p` (external harness) | Shell subprocess | Yes (unlimited) | N/A -- parent isn't CC | Fresh each call |
 | `claude -p` (from within CC) | `CLAUDECODE= claude -p` | Yes (unlimited) | **Must clear** | Fresh each call |
 | Agent Teams (in-process) | `TeamCreate` + `Agent` | **No** -- can't spawn sub-teams | Handled internally | Persistent within team |
-| Agent Teams (tmux) | `--teammate-mode tmux` | Teammates get Agent tool | Handled internally | Persistent within team |
+| Agent Teams (tmux) | `--teammate-mode tmux` | Teammates get Agent tool (unverified; the docs only say teammates cannot spawn their own teammates) | Handled internally | Persistent within team |
 | Subagents (`Agent` tool) | Within single session | Up to 3 layers by default (see update below) | Handled internally | Own context; summary returns to parent |
 | Claude Agent SDK | `subprocess_cli.py` | Yes | **Must filter** `os.environ` | Fresh per call |
 
@@ -132,8 +132,8 @@ continuity. Each call is independent -- no session coupling.
 
 **No true "recursive team mode" exists** (as of 2026-11-18; agent teams document no nesting). The closest pattern is a shell
 harness (Ralph) calling `claude -p` with
-`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` per iteration, but each iteration's
-teams are independent.
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` per iteration, but this does not
+form teams: per the [agent teams docs](https://code.claude.com/docs/en/agent-teams), in `-p` mode (including Agent SDK sessions) Claude does not spawn teammates and a named subagent runs as an ordinary subagent.
 
 ## Cross-References
 

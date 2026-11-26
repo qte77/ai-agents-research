@@ -2,7 +2,7 @@
 title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-11-25
 status: assess
 ---
@@ -15,16 +15,16 @@ CC version requirements: >=2.1.46 (MCP bridge), >=2.1.63 (opt-out env var), 2.1.
 
 ## Prebuilt Connectors
 
-| Connector | Read | Write | Plan | Status |
+| Connector | Read | Write | Plan | Status (unverified) |
 |-----------|------|-------|------|--------|
-| Google Drive | Docs only (up to 10 MB) | No | Pro+ | Beta |
+| Google Drive | Docs, Sheets, Slides, PDF, Office, OpenDocument, PNG/JPEG (about 10 MB export cap on Google files) | Creates new files | Pro+ (unverified) | Beta |
 | Gmail | Search & read threads | No (can't send/draft) | Pro+ | Beta |
 | Google Calendar | Schedule, attendees, conflicts | No (can't create/modify/delete) | Pro+ | Beta |
 | GitHub | File names, file contents, branch content | No | All plans | GA |
-| Slack | Messages, channels | No (search only) | Team/Enterprise | Beta |
-| Microsoft 365 | SharePoint, OneDrive, Outlook, Teams | Yes (mail, calendar, SharePoint files) | All plans (Team/Enterprise: admin consent) | GA |
+| Slack | Searches channels, direct messages, files (Claude app must be installed in Slack first) | No (search only; inferred, writes not stated) | Team/Enterprise | Beta |
+| Microsoft 365 | SharePoint, OneDrive, Outlook, Teams | Yes (OneDrive/SharePoint files, Outlook mail, drafts and calendar events, Teams messages; admin-controlled) | All plans (work/school accounts need Entra Global Administrator consent; Team/Enterprise: work/school only) | GA |
 
-**Key pattern**: Google connectors are **read-only** — Claude can search and answer questions but cannot create, modify, or delete any content.
+**Key pattern**: Gmail, Google Calendar and GitHub are **read-only** — Claude can search and answer questions but cannot create, modify, or delete content there. Drive can create new files, and Microsoft 365 has write actions.
 
 ## Custom Connector Types
 
@@ -53,7 +53,7 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 
 1. **Configure in claude.ai**: Go to [claude.ai/settings/connectors](https://claude.ai/settings/connectors) and add Google connectors. Authenticate with your Google account. (Team/Enterprise: admin must enable first.)
 2. **Connectors auto-appear in CC**: Start Claude Code and run `/mcp` — claude.ai servers show up with indicators marking their origin. No extra CLI setup needed.
-3. **Use naturally**: Ask Claude directly — "search my Gmail for emails about the deploy failure", "what meetings do I have tomorrow", "find the architecture doc in Drive". Connectors are read-only; Claude searches and answers but cannot send, create, or modify anything.
+3. **Use naturally**: Ask Claude directly — "search my Gmail for emails about the deploy failure", "what meetings do I have tomorrow", "find the architecture doc in Drive". Gmail, Calendar and GitHub are read-only; Claude searches and answers there but cannot send, create, or modify anything.
 
 **Opt out**: `ENABLE_CLAUDEAI_MCP_SERVERS=false claude` (added in [v2.1.63, Feb 28, 2026][cc-changelog])
 
@@ -68,18 +68,19 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 
 ### Google Drive
 
-- **Supported**: Google Docs only (text extraction, live sync with latest version)
-- **Not supported**: Google Sheets, Google Slides, images/comments within docs
+- **Supported**: Google Docs, Sheets and Slides, PDF, Word/Excel/PowerPoint, OpenDocument and PNG/JPEG files; can create new files in Drive (checked 2026-11-26)
+- **Not supported**: comments and suggested edits
+- **Size cap**: about 10 MB applies to Google's export of Docs/Sheets/Slides for files picked into a chat or project; over the cap Claude gets only the name and details. Picked files convert to Markdown (Docs, no images), CSV (Sheets, all tabs) and plain text (Slides)
 - **Access**: Permission-mirrored — only docs the user can view
-- **Setup**: Plus (+) button in chat or "Add Content" in projects → Google auth
+- **Setup**: + then "Add from Google Drive" in chat; in a private project, knowledge section → "Add files" → Google Drive
 - **Workaround**: Convert `.docx` to Google Docs via File → Save as Google Docs
-- **Reconnect**: Settings → Integrations → disconnect and re-authenticate
+- **Reconnect**: on the connector's page under claude.ai/customize/connectors/yours (Reconnect, Disconnect, Remove)
 
 ### Gmail
 
 - **Can do**: Search emails, analyze threads, provide citations linking to source
 - **Cannot do**: Create, send, or modify emails; view embedded images
-- **Access**: Mirrors existing Gmail permissions (specific OAuth scopes undocumented)
+- **Access**: Mirrors existing Gmail permissions (specific OAuth scopes undocumented; unverified)
 
 ### Google Calendar
 
@@ -91,7 +92,7 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 
 - **Auth**: Direct Google account authentication (no API keys)
 - **Admin**: Team/Enterprise requires Owner or Primary Owner to enable integrations
-- **Data handling**: Retrieved data stored on Anthropic servers with security protections; retention tied to chat (delete chat = delete data); models not trained on integration data
+- **Data handling**: Retrieved data stored on Anthropic servers with security protections; retention tied to chat (delete chat = delete data); models not trained on integration data (unverified)
 - **Access pattern**: Data retrieved only on explicit user request, minimal information fetched
 
 ## Applicability to Coding Agent Workflows
@@ -100,12 +101,12 @@ Since [v2.1.46 (Feb 18, 2026)][cc-changelog], Claude Code automatically surfaces
 |--------|-----|-----------|
 | Code execution | No | Connectors are for data access, not compute |
 | Research input | Yes | Drive/Gmail feed docs and threads into CC context via MCP bridge |
-| Task automation | Low | Google connectors are read-only; no write actions |
+| Task automation | Low | Gmail, Calendar and GitHub are read-only; Drive and Microsoft 365 can write |
 | CI/CD integration | No | Use GitHub Actions or Claude Code directly |
 | Multi-repo orchestration | No | Connectors don't provide repo-level operations |
 | Enterprise admin | Yes | Connectors + plugins provisioning via admin controls |
 
-**Bottom line**: Since v2.1.46, all claude.ai connectors work in Claude Code via the MCP bridge. Google, GitHub, and Slack connectors are read-only (search/answer only, no create/send/modify actions); Microsoft 365 is the only prebuilt connector with write actions (mail, calendar, SharePoint files), gated by admin consent on Team/Enterprise plans.
+**Bottom line**: Since v2.1.46, all claude.ai connectors work in Claude Code via the MCP bridge. Gmail, Calendar, GitHub and Slack connectors are read-only (search/answer only; Slack write capability is not stated, search-only is inferred); Drive can create new files and Microsoft 365 has the broadest write actions (OneDrive/SharePoint files, mail, calendar events, Teams messages), admin-controlled for work/school accounts.
 
 ## Discovery
 

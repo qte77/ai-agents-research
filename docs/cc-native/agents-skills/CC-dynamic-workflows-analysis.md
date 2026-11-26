@@ -3,12 +3,12 @@ title: CC Dynamic Workflows, Ultracode & deep-research
 source: https://code.claude.com/docs/en/workflows
 purpose: Document Claude Code's dynamic workflow orchestration tool, the ultracode effort setting, and the bundled /deep-research workflow, with first-party sourcing.
 created: 2026-06-11
-updated: 2026-11-19
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: trial
 ---
 
-**Details:** GA since CC v2.1.154; paid plans + API/Bedrock/Vertex/Foundry
+**Details:** GA since CC v2.1.154; paid plans + API/Bedrock/Google Cloud's Agent Platform/Foundry
 
 ## What It Is
 
@@ -16,7 +16,7 @@ A **dynamic workflow** is a JavaScript script that orchestrates [subagents][cc-s
 
 Surfaced as the feature-gated `WorkflowTool` (`WORKFLOW_SCRIPTS` flag) in [CC-tools-inventory.md](../configuration/CC-tools-inventory.md); this doc is the first-party-documented analysis of that tool.
 
-**Availability**: CC **v2.1.154+**, all paid plans, plus Anthropic API, Bedrock, Vertex AI, and Foundry. On Pro, enable via the *Dynamic workflows* row in `/config` ([workflows][cc-workflows]).
+**Availability**: CC **v2.1.154+**, all paid plans, plus Anthropic API, Amazon Bedrock, Google Cloud's Agent Platform, and Microsoft Foundry. On Pro, enable via the *Dynamic workflows* row in `/config` ([workflows][cc-workflows]).
 
 ## When to Use vs Subagents / Skills / Agent Teams
 
@@ -45,9 +45,9 @@ Invoke a saved workflow as `Workflow({ scriptPath, args })`, or have Claude auth
 
 **Saving & args**: `/workflows` → `s` saves a run's script to `.claude/workflows/` (project, shared) or `~/.claude/workflows/` (personal); project beats personal on a name clash. Saved workflows run as `/<name>`. Input is passed via the `args` parameter and read inside the script as the `args` global (structured data, not a string).
 
-**Execution model**: the runtime runs the script in an isolated environment; intermediate results stay in script variables; the script is written to a file under `~/.claude/projects/` (readable/editable). Runs are **resumable within the same session** (completed agents return cached results); exiting CC restarts a running workflow fresh next session.
+**Execution model**: the runtime runs the script in an isolated environment; intermediate results stay in script variables; the script is written to a file under `~/.claude/projects/` (readable/editable). Runs are **resumable within the same session** (completed agents return cached results); exiting CC does not continue or restart the run on its own: saved results stay under `~/.claude/projects/`, and after `claude --resume` asking Claude to relaunch replays the run.
 
-**Limits** ([workflows][cc-workflows]): no mid-run user input (only agent permission prompts pause it); no direct filesystem/shell from the script itself (agents do that); **up to 16 concurrent agents**; **1,000 agents total per run**. Spawned subagents always run in `acceptEdits` and inherit the tool allowlist regardless of session mode.
+**Limits** ([workflows][cc-workflows]): no mid-run user input (agent permission prompts pause it, and a run can also pause on its own to wait out a usage limit, then continue automatically: v2.1.271+, v2.1.319+ in the Desktop Code tab; needs `autoContinueAtUsageLimit` on, a reset within 24h and at most two waits per run; earlier versions fail the affected agents); no direct filesystem/shell from the script itself (agents do that); **16 concurrent agents by default** (fewer on limited CPUs; `CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS`, 1 to 256, v2.1.269+); **1,000 agents total per run**; 4,096 items per `parallel()`/`pipeline()` call. Workflow subagents use the user's permission rules and Claude Code picks their permission mode by the sub-agents rules; add needed tools to allow rules first to avoid prompts on long runs ([approve the plan][cc-workflows]).
 
 ## Ultracode (effort setting)
 
@@ -84,13 +84,13 @@ Progress-view controls ([watch the run][cc-watch]):
 | `r` | Restart the selected running agent |
 | `s` | Save the run's script as a `/<name>` command |
 
-**Resume** is **same-session only**: a paused or stopped run resumes with completed agents returning cached results and the rest running live (select it and press `p`, or ask Claude to relaunch). Exiting Claude Code restarts a running workflow fresh in the next session ([manage runs][cc-manage]).
+**Resume**: a paused or stopped run resumes with completed agents returning saved results and the rest running live (select it and press `p`, or ask Claude to relaunch). Exiting Claude Code does not continue the run on its own; saved results stay under `~/.claude/projects/`, and after `claude --resume` asking Claude to relaunch replays the run. In a fresh session Claude has no earlier run to relaunch and starts over, and if the saved results are missing the relaunch fails with `nothing to resume`. A Failed or edited agent reruns every agent after it. From v2.1.305 completed agents no longer rerun on an unedited script (scoped to `pipeline()` items or `parallel()` tasks that ran more than one agent each); from v2.1.318 usage-limit failures rerun while completed agents keep results, but if another agent ran after the failed one and returned a result, every agent started after the failed one also reruns ([manage runs][cc-manage]).
 
 ## Across surfaces: interactive, headless (`claude -p`), Agent SDK
 
 Dynamic workflows run on **every** Claude Code surface — interactive CLI, Desktop, IDE extensions, headless `claude -p`, and the [Agent SDK][cc-agent-sdk] ([workflows][cc-workflows]). Availability is uniform; execution and discovery differ:
 
-- **Headless awaits the run.** A workflow's background agents are part of the final output, so `claude -p` does not exit until they finish (unlike a background Bash task, killed ~5s after the result). From **v2.1.182** that wait is capped at **10 minutes** by default — adjust via `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS` (`0` = unlimited) ([headless][cc-headless]).
+- **Headless awaits the run.** A workflow's background agents are part of the final output, so `claude -p` waits for background work (background commands, subagents and workflows, Monitor watches, pending `/loop` wakeups) and stops waiting after **10 minutes** of continuous idle waiting, dropping the partial result; the cap does not end the wait while a background command the main conversation started is still running (the v2.1.182 gate is not stated on the headless page, unverified) — adjust via `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS` (`0` = unlimited) ([headless][cc-headless]).
 - **`--bare` skips auto-discovery.** `--bare` (recommended for scripted/SDK runs, and slated to become the `-p` default) skips hooks, skills, plugins, Model Context Protocol (MCP) servers, auto-memory, and `CLAUDE.md` — so a workflow **saved as a `/<name>` command won't auto-load**; pass what's needed explicitly (`--agents`, `--settings`, `--mcp-config`) ([headless][cc-headless]).
 - **The primitives are headless-capable.** Subagents run and are awaited as above; **user-invoked skills and custom commands work in `-p`** since **v2.1.181** (put `/skill-name` in the prompt string) — but built-in interactive-dialog commands (e.g. `/login`) are not ([headless][cc-headless]).
 - **SDK control.** From the Agent SDK, workflows and their subagents are driven programmatically (the `agents` option, hook callbacks, and `ultracode` via `--settings` or a control request — see [Ultracode](#ultracode-effort-setting)).
@@ -117,7 +117,7 @@ So a `completed` run can still be missing agents: a collector should check cover
 
 Workflow and subagent execution is observable via Claude Code's OpenTelemetry export (opt-in: `CLAUDE_CODE_ENABLE_TELEMETRY=1`) — **metrics** and **log events** are GA; **traces (spans)** are **beta** (`CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1` + `OTEL_TRACES_EXPORTER`) ([monitoring][cc-monitoring]).
 
-- **Per-subagent spans.** With beta traces on, a spawned subagent's `claude_code.llm_request` and `claude_code.tool` spans **nest under the parent `claude_code.tool` (Agent tool) span**, carrying `agent_id` / `parent_agent_id` — a real agent-trajectory trace, not just session metrics. There is **no dedicated "workflow phase" span**; structure is inferred from Agent-tool nesting. Without beta traces you still get per-subagent attribution on metrics/log events (`query_source` = `main`/`subagent`/`auxiliary`, `agent.name`, token/cost) but no span waterfall.
+- **Per-subagent spans.** With beta traces on, a spawned subagent's `claude_code.llm_request` and `claude_code.tool` spans **nest under the parent `claude_code.tool` (Agent tool) span**, carrying `agent_id` / `parent_agent_id` — a real agent-trajectory trace, not just session metrics. There is **no dedicated "workflow phase" span**, but spans of agents spawned by a Workflow run carry `workflow.run_id` (prefixed `wf_`) and `workflow.name` attributes (user-authored names report as `custom` unless `OTEL_LOG_TOOL_DETAILS=1`), so run grouping needs no inference from Agent-tool nesting. Without beta traces you still get per-subagent attribution on metrics/log events (`query_source` = `main`/`subagent`/`auxiliary`, `agent.name`, token/cost) but no span waterfall.
 - **GenAI conventions (partial):** spans carry `gen_ai.system`, `gen_ai.request.model`, `gen_ai.response.*`, `gen_ai.tool.call.id`, but CC uses its own `claude_code.*` span namespace (not the `invoke_agent` naming). The in-session `/workflows` progress view is a **TUI**, not OTel export.
 - **Backends:** the output is standard **OTLP**, so any OTLP backend ingests it — Arize Phoenix, Pydantic Logfire, Grafana/Tempo, Honeycomb, Datadog, Langfuse. **None has a CC-specific integration** — it's generic OTLP, so you get the span waterfall but not bespoke CC topology rendering. Datadog's GenAI-convention support (v1.37+) parses the `gen_ai.*` attributes closest to CC-aware; Phoenix lacks OpenInference tags natively; Logfire's "zero-config CC" path is CC→Logfire-as-MCP-server, not Logfire parsing CC's OTel. Full platform + OTel-attribute detail: [agent-observability-methods-analysis.md](../../non-cc/protocols/agent-observability-methods-analysis.md).
 
@@ -136,7 +136,7 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 - [CC-tools-inventory.md](../configuration/CC-tools-inventory.md) — `WorkflowTool` / `WORKFLOW_SCRIPTS` feature gate (leak-derived name)
 - [CC-agentic-harness-patterns-analysis.md](CC-agentic-harness-patterns-analysis.md) — harness patterns that map to `parallel()` / `agent()`
 - [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md) — the agent-teams alternative (a lead agent holds the plan)
-- [CC-plans-as-skill-rule-templates.md](CC-plans-as-skill-rule-templates.md) — UltraPlan (cloud planning), a separate "ultra" feature
+- [CC-plans-as-skill-rule-templates.md](CC-plans-as-skill-rule-templates.md) — UltraPlan (cloud planning), no longer available (removed; see the doc for the replacement guidance)
 - [CC-skills-adoption-analysis.md](CC-skills-adoption-analysis.md) — skills, the lighter alternative
 
 ## Sources

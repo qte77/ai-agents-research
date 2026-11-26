@@ -3,7 +3,7 @@ title: CC Model & Provider Configuration
 source: https://code.claude.com/docs/en/env-vars
 purpose: Reference for configuring Claude Code with alternative models, endpoints, API keys, third-party providers, local models and LLM gateway proxies.
 created: 2026-03-07
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: reference
 ---
@@ -104,7 +104,7 @@ Or in `.claude/settings.local.json` (project-level; this file holds a key, so ma
 
 **Benefits**: Provider failover during Anthropic outages, centralized team budget controls, real-time cost monitoring via Activity Dashboard. ([source][openrouter])
 
-**Fast Mode via OpenRouter** (CC v2.1.96+): CC's built-in `/fast` command sends `speed: "fast"` in the request (up to 2.5× faster output on Opus 4.7, premium pricing). OpenRouter supports this parameter and auto-routes such requests to the Anthropic 1P provider while injecting the required beta header. To enable: ([source][openrouter])
+**Fast Mode via OpenRouter** (CC v2.1.96+): CC's built-in `/fast` command sends `speed: "fast"` in the request (up to 2.5× faster output at premium pricing; supported on Fable 5.2, Mythos 5.2, Opus 5.5, Opus 5 and Opus 4.8 (deprecated), not Opus 4.7 or earlier; Claude Code v2.1.280+ for Opus 5.5 and v2.1.321+ for Fable 5.2; pin a versioned model ID, since a `~latest` alias makes `/fast` report ON without sending `speed`) (checked 2026-11-26). OpenRouter supports this parameter and auto-routes such requests to the Anthropic 1P provider while injecting the required beta header. To enable: ([source][openrouter])
 
 ```bash
 export CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK=1
@@ -236,8 +236,8 @@ claude --model qwen3-coder
 **Requirements** ([source][ollama-claude]):
 
 - Ollama v0.14.0+
-- Model with at least 32K context window (64K+ recommended for agentic use)
-- 32GB+ RAM recommended for usable coding experience (Apple Silicon unified memory or PC RAM)
+- Model with at least 32K context window (the 64K+ agentic-use figure is unverified; the source states only the 32K minimum)
+- RAM guidance: none stated in the source (the earlier 32GB+ figure is unverified)
 
 **Recommended models** (as of March 2026): `qwen3-coder`, `gpt-oss:20b`, `glm-4.7:cloud`, `minimax-m2.1:cloud` ([source][ollama-claude])
 
@@ -270,7 +270,7 @@ claude
 
 - Also exposes an OpenAI-compatible endpoint at `/v1` for non-Anthropic clients, and `/v1/responses` for Codex CLI and other OpenAI Responses API clients.
 - Ships a separate Model Context Protocol (MCP) server (`tools/strata_mcp.py`, stdlib-only Python) that lets an agent **manage** Strata itself — install, start, stop, check VRAM/logs, recommend a model size for the host's hardware — via `claude mcp add strata -- python3 /path/to/Strata/tools/strata_mcp.py`. This is setup/ops tooling, not an inference-serving MCP tool; the Anthropic-compatible HTTP endpoint above is what Claude Code actually talks to for inference.
-- MIT, 21,540 stars, 2,037 forks (`gh api`, 2026-10-11); created 2026-09-24 — 17 days old at time of writing, so no independent track record yet.
+- MIT, 48,365 stars, 5,453 forks (`gh api`, checked 2026-11-26); created 2026-09-24, so a short track record.
 
 #### LM Studio & Other OpenAI-Compatible Servers
 
@@ -291,7 +291,7 @@ claude
 
 | Tip | Detail |
 |---|---|
-| **KV cache invalidation** | CC prepends an attribution header that invalidates KV cache. Set `CLAUDE_CODE_ATTRIBUTION_HEADER=0` to prevent this ([source][local-setup]) |
+| **KV cache invalidation** | CC prepends an attribution block (client version and prompt fingerprint). Before v2.1.181 it also carried a per-request token on custom base URLs and Foundry connections, which invalidates a body-keyed cache, so on those versions set `CLAUDE_CODE_ATTRIBUTION_HEADER=0` when a gateway caches on the request body ([env vars](https://code.claude.com/docs/en/env-vars), checked 2026-11-26) |
 | **Login bypass** | If CC prompts for login, add `"hasCompletedOnboarding": true` and `"primaryApiKey": "sk-dummy-key"` to `~/.claude.json` ([source][local-setup]) |
 | **Non-essential traffic** | Set `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` to reduce calls to Anthropic servers ([source][cc-settings]) |
 | **Cost savings** | Local models are free; third-party cloud options like DeepSeek V3.2 are ~$0.28/$0.42 per million tokens vs Opus 4.8 $5/$25 (Fable 5 $10/$50) ([source][models-pricing]) |
@@ -302,7 +302,7 @@ For enterprise or multi-provider setups, an LLM gateway sits between CC and the 
 
 #### LiteLLM
 
-Full-featured proxy supporting 100+ providers. Recommended for team environments. Latest: v1.89.0 (2026-06-14, MIT) ([source][litellm]).
+Full-featured proxy supporting 100+ providers. Recommended for team environments. Latest: v1.111.0 (2026-11-25; GitHub reports the licence as NOASSERTION/Other, check the LICENSE file) (checked 2026-11-26) ([source][litellm]).
 
 ```bash
 # Start LiteLLM proxy
@@ -318,7 +318,7 @@ Supports: `claude --model gpt-4o`, `claude --model gemini-3.0-flash-exp`, `claud
 
 #### Bifrost (Maxim AI)
 
-Open-source Go-based gateway supporting 1000+ models across 23+ providers (5,814 stars, Apache-2.0, enterprise v1.4.9). Intercepts Anthropic-format requests, converts to target provider format, and translates responses back transparently. Also acts as an MCP gateway (`claude mcp add --transport http bifrost http://localhost:8080/mcp`) that aggregates upstream MCP servers behind a single endpoint ([source][bifrost]).
+Open-source Go-based gateway supporting 1000+ models across 23+ providers (10,047 stars, Apache-2.0; checked 2026-11-26). Intercepts Anthropic-format requests, converts to target provider format, and translates responses back transparently. Also acts as an MCP gateway (`claude mcp add --transport http bifrost http://localhost:8080/mcp`) that aggregates upstream MCP servers behind a single endpoint ([source][bifrost]).
 
 #### Claude Code Router (CCR)
 
@@ -332,7 +332,7 @@ ccr code     # launches CC with ANTHROPIC_BASE_URL=http://localhost:3456
 
 - **Routing scenarios**: `default`, `background`, `think`, `longContext` (auto-switches past a token threshold, default ~60K), `webSearch`, `image` (beta)
 - **Providers / transformers**: OpenRouter, DeepSeek, Gemini, Ollama, Volcengine, SiliconFlow, ModelScope, DashScope, AIHubmix; plus custom JS routing functions
-- **Maturity**: very popular (35K stars, MIT, v2.0.0) but a large open-issue backlog (~800+) — pin a known-good version
+- **Maturity**: very popular (38.4K stars, MIT, v3.1.6 of 2026-11-21) but a large open-issue backlog (~1,165 open issues) (checked 2026-11-26) — pin a known-good version
 
 Unlike the passive proxies above (LiteLLM/Bifrost translate API formats), CCR decides *which* model handles each request. CCR is also the community routing layer noted in [CC-vlm-screen-sharing-landscape.md](../../cc-community/CC-vlm-screen-sharing-landscape.md).
 
@@ -346,7 +346,7 @@ export ANTHROPIC_BASE_URL=http://localhost:<PORT>
 export ANTHROPIC_AUTH_TOKEN=<cliproxy-key>
 ```
 
-- **Stars / version**: 37.6K stars, v7.2.7 (MIT, Go)
+- **Stars / version**: 59.5K stars, v8.1.7 (2026-11-26) (MIT, Go) (checked 2026-11-26)
 - **CC story**: wraps `claude` via OAuth account; supports multi-account switching, per-credential circuit breakers, quota management. Note this is *gateway-level* multi-account (quota harvesting for downstream clients) — for running N interactive CC sessions on N subscription accounts, see [CC-multi-account-switching-landscape.md](../../cc-community/CC-multi-account-switching-landscape.md)
 - **Also routes**: Gemini CLI (status 2026-11-18: [no longer served for free, AI Pro, AI Ultra users](../../non-cc/coding-agents/gemini-cli-analysis.md), so its free-tier quota harvesting no longer applies to those accounts; routing claims are the project's own), Codex, Grok Build, Antigravity — plus OpenAI-compatible upstream relay (e.g. OpenRouter)
 - **Companion GUI**: [EasyCLI][easycli] (Rust/Tauri desktop app)
@@ -361,7 +361,7 @@ Multi-tool AI gateway with built-in RTK token compression (~20–40% savings), r
 # "anthropic_api_key": "<9router-key>"
 ```
 
-- **Stars / version**: 17.6K stars, v0.4.80 (MIT, JavaScript)
+- **Stars / version**: 32.9K stars, latest GitHub release v0.5.35 (2026-07-16) (MIT, JavaScript) (checked 2026-11-26)
 - **Providers**: OpenRouter, DeepSeek, Groq, xAI, Mistral, Kiro AI, OpenCode Free, Vertex AI, custom OpenAI-compatible endpoints, plus subscription proxies (CC, Codex, Copilot, Cursor)
 - **Pricing**: free/open-source; no billing layer — users pay providers directly (free tiers available; cheap fallback from $0.20/1M tokens)
 
@@ -374,7 +374,7 @@ Hot-swaps local models on demand across llama.cpp, vLLM, tabbyAPI, and other bac
 # or OPENAI_BASE_URL for OpenAI-compatible path
 ```
 
-- **Stars / version**: 4,571 stars, v226 (MIT, Go)
+- **Stars / version**: 6.3K stars, v276 (2026-11-26) (MIT, Go) (checked 2026-11-26)
 - **CC story**: exposes both `/v1/messages` (Anthropic) and `/v1/chat/completions` (OpenAI) — point CC at it via `ANTHROPIC_BASE_URL`. Routing is model-name-based: the `model` field in the request selects which backend process to hot-load.
 - **Backends**: llama.cpp, vLLM, tabbyAPI, stable-diffusion.cpp, whisper.cpp, ik-llama-server, and any OpenAI/Anthropic-compatible server; OpenRouter supported as a remote peer.
 - **No CC-specific docs** found as of 2026-06-16 — integration inferred from Anthropic endpoint support.
@@ -388,7 +388,7 @@ Hot-swaps local models on demand across llama.cpp, vLLM, tabbyAPI, and other bac
 export ANTHROPIC_BASE_URL=http://127.0.0.1:<PORT>
 ```
 
-- **Stars / version**: 912 stars, v7.5.0 (MIT, TypeScript)
+- **Stars / version**: 1,020 stars, v14.29.2 (2026-11-26); licence not detected by GitHub, so MIT is unverified (TypeScript) (checked 2026-11-26)
 - **Providers**: OpenRouter (580+ models), Google Gemini, OpenAI, MiniMax, Kimi, GLM, Z.AI, OllamaCloud, Vertex AI, Ollama, LM Studio, vLLM, MLX
 - **Routing**: `provider@model[:concurrency]` notation; auto-detection for well-known model names (e.g. `gemini-2.0-flash` routes to Google automatically)
 
@@ -466,7 +466,7 @@ Changelog entries unless marked; see [CC-env-vars-reference](CC-env-vars-referen
 
 | Variable | Purpose | Default |
 | -------- | ------- | ------- |
-| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | Max output tokens | 32,000 (max 64,000) |
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | Max output tokens | Defaults and caps vary by model; values above a model's cap are lowered to it; for an unrecognised model ID the default is 32,000 and the cap 128,000 (checked 2026-11-26) |
 | `CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS` | Token limit for file reads | Default |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | `1` removes `[1m]` variants and holds models that default to the 1M window to 200K; since v2.1.323 it also keeps 200K for an unrecognized model ID (see [extended context analysis](../context-memory/CC-extended-context-analysis.md)) | unset |
 

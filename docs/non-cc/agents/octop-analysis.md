@@ -3,7 +3,7 @@ title: Octop — Self-Hosted Multi-User, Multi-Agent AI Assistant
 source: https://github.com/TencentCloud/Octop
 purpose: Evaluate Octop's single-process, multi-user agent-orchestration architecture, its memory/context layer, and its outbound ACP delegation to coding agents including Claude Code.
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-11-26
 validated_links_on: 2026-10-09
 status: assess
 ---
@@ -14,9 +14,9 @@ status: assess
 assistant" that is "not just a tool — it's a digital life form that can operate in parallel" through
 a multi-agent architecture. Its own framing of who it serves (verbatim): "Octop is a self-hosted AI
 assistant platform for households and small teams." Repository facts (`gh api
-repos/TencentCloud/Octop`, accessed 2026-10-09): **8,189 stars, 991 forks, MIT license** (confirmed
+repos/TencentCloud/Octop`, checked 2026-11-26): **12,524 stars, 1,800 forks, MIT license** (confirmed
 from the repo's `LICENSE` file directly, not only the GitHub API's derived license field), created
-2026-07-08, Python as primary language. Latest tagged release: `v1.0.2b6`, published 2026-10-04
+2026-07-08, Python as primary language. Latest tagged release: `v1.0.3b7`, published 2026-11-18
 (`gh api repos/TencentCloud/Octop/releases/latest`).
 
 ## How It Works
@@ -69,11 +69,11 @@ APIs, DashScope (Qwen), Ollama, and other presets — model-agnostic rather than
 
 **Deployment.** A one-line installer script (macOS/Linux, using `uv` to provision Python 3.12 under
 `~/.octop/`), PowerShell/batch installers for Windows, `pip install octop` from PyPI, Docker
-(`docker-compose.yml` or a build script), and native desktop apps for Windows/macOS/Linux plus FnOS
+(`docker-compose.yml` or a build script), a Helm chart for Kubernetes (for a shared PostgreSQL and multiple replicas), and native desktop apps for Windows/macOS/Linux plus FnOS
 NAS packages. First run is `octop init` then `octop run`, serving a local dashboard at
 `http://127.0.0.1:8088`; `octop service start` runs it as a system service. The companion repos
 `TencentCloud/octop-harness`, `octop-gateway`, `octop-memory`, and `octop-browser` are each split out
-as separate projects.
+as separate projects. The README's related projects also list Octop Pet, a desktop pet that lives in a different repository (`jubaoliang/OctopPet`).
 
 **Claude Code tie-in.** Claude itself is not otherwise discussed in the README; the only first-party
 integration found is Claude Code as one of the outbound ACP coding-agent targets Octop can delegate
@@ -82,13 +82,13 @@ CC is one of several backends, not the primary surface.
 
 **Roadmap** (per the README, accessed 2026-10-09): shipped items include the shared expert resource
 pool, expert sharing, and the PC desktop client; in progress are AgentTeams (Beta) and a closed-beta
-mobile client; planned items include self-evolution, a plugin marketplace, managed agents, and a
-cloud-edge continuum.
+mobile client; planned items include self-evolution, a plugin marketplace, managed agents, a
+cloud-edge continuum, browser and terminal polishing, Project, and a conversational control plane (the README calls the roadmap "indicative only").
 
 ## Adoption Decision
 
-**Assess.** Octop is a young but fast-growing project (created 2026-07-08; 8,189 stars/991 forks
-within three months) with a concrete, documented architecture — ADRs for the single-process model
+**Assess.** Octop is a young but fast-growing project (created 2026-07-08; 12,524 stars/1,800 forks
+within about four and a half months, checked 2026-11-26) with a concrete, documented architecture — ADRs for the single-process model
 and database backends, a stated rationale for the shared-registry design — rather than only
 marketing claims, a stronger documentation posture than many single-README entries in this corpus.
 Its outbound-ACP delegation to Claude Code (alongside OpenCode, CodeBuddy, Codex) is a concrete,
@@ -98,7 +98,7 @@ is a distinct architecture from this corpus's other self-hosted-assistant entrie
 channel-breadth-focused): Octop's isolation model and AgentTeams coordinator are the differentiating
 facts worth tracking.
 
-Against that: the project is pre-1.0 (`v1.0.2b6`), its multi-user isolation rests on row-level checks
+Against that: the project is pre-1.0 (`v1.0.3b7`), its multi-user isolation rests on row-level checks
 inside one shared process rather than per-user sandboxing, and the one memory-internals doc fetched
 (`docs/memory-slim.md`) documents only maintenance mechanics, not how hierarchical recall actually
 ranks or retrieves memories. No independent security or scaling review was found. **Assess** — track
@@ -128,9 +128,9 @@ self-evolution roadmap items ship.
 | Source | Content |
 |---|---|
 | [TencentCloud/Octop README][octop-gh] | Tagline, who-it's-for framing, AgentTeams description, feature summary (connectors, ACP, browser/terminal/remote-desktop, plugins, knowledge base), model providers, deployment paths, roadmap — accessed 2026-10-09 |
-| `gh api repos/TencentCloud/Octop` | Stars (8,189), forks (991), license (MIT), created (2026-07-08), language (Python) — accessed 2026-10-09 |
+| `gh api repos/TencentCloud/Octop` | Stars (12,524), forks (1,800), license (MIT), created (2026-07-08), language (Python) — checked 2026-11-26 |
 | `gh api repos/TencentCloud/Octop/contents/LICENSE` | License text confirmed MIT directly from the LICENSE file — accessed 2026-10-09 |
-| `gh api repos/TencentCloud/Octop/releases/latest` | Latest tag `v1.0.2b6`, published 2026-10-04 — accessed 2026-10-09 |
+| `gh api repos/TencentCloud/Octop/releases/latest` | Latest tag `v1.0.3b7`, published 2026-11-18 — checked 2026-11-26 |
 | [`docs/architecture.md`][octop-arch] | Single-process model, layering, multi-user row-level isolation, stated design rationale — accessed 2026-10-09 |
 | [`docs/memory-slim.md`][octop-memslim] | Memory maintenance mechanics (backup/compaction), LangGraph SQLite checkpointer — accessed 2026-10-09 |
 

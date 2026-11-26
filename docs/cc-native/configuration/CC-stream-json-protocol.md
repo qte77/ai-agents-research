@@ -1,15 +1,15 @@
 ---
 title: CC stream-json Protocol Reference
-purpose: Undocumented NDJSON event format for --output-format stream-json, including event types, stream chaining, and community parsers.
+purpose: Partially documented NDJSON event format for --output-format stream-json, including event types, stream chaining, and community parsers.
 created: 2026-04-04
-updated: 2026-04-04
+updated: 2026-11-26
 validated_links_on: 2026-04-04
 status: research
 ---
 
 ## What It Is
 
-`claude -p "task" --output-format stream-json --verbose` emits newline-delimited JSON (NDJSON) with token-level streaming events. This is the only programmatic way to access Claude Code's output as it generates. Headless mode only (`-p` flag required).
+`claude -p "task" --output-format stream-json --verbose` emits newline-delimited JSON (NDJSON) with token-level streaming events. The Agent SDK (Python and TypeScript) also exposes streaming programmatically via `include_partial_messages` / `includePartialMessages`, yielding `stream_event` messages for the main session ([streaming output](https://code.claude.com/docs/en/agent-sdk/streaming-output), checked 2026-11-26). For the CLI, headless mode only (`-p` flag required).
 
 ## Event Types
 
@@ -17,7 +17,7 @@ status: research
 
 | Type | Purpose |
 |------|---------|
-| `system` | System messages (includes `system/api_retry`) |
+| `system` | System messages: `system/init` (first event, may be preceded by `plugin_install` and hook events), `system/api_retry` (`attempt`, `max_retries`, `retry_delay_ms`, `error_status`, error category; `no_response` on v2.1.261+), `system/plugin_install` (with `CLAUDE_CODE_SYNC_PLUGIN_INSTALL`), `permission_denied` messages (with `--permission-prompts none`, v2.1.259+) ([headless](https://code.claude.com/docs/en/headless), checked 2026-11-26). Subagent output arrives as `assistant`/`user` messages with `parent_tool_use_id` (null for the main conversation); foreground subagent text needs `--forward-subagent-text` |
 | `stream_event` | Raw API streaming events (token-level) |
 | `assistant` | Assistant message snapshots |
 | `result` | Final result |
@@ -55,20 +55,20 @@ claude -p --output-format stream-json "First task" \
   | claude -p --input-format stream-json "Final report"
 ```
 
-**Required flags**: `--verbose` must be paired with `stream-json` or the CLI may fail silently. See [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md).
+**Required flags**: `--verbose` is paired with `stream-json` in the first-party examples; that omitting it fails silently is unverified. See [CC-print-mode-gotchas.md](../sessions/CC-print-mode-gotchas.md).
 
 ## Community Tools
 
 | Tool | Purpose |
 |------|---------|
-| [claude-code-parser][parser] | TypeScript parser (11 kB, zero deps). First standalone documentation of the undocumented protocol, including deduplication algorithms and edge cases |
+| [claude-code-parser][parser] | TypeScript parser (11 kB, zero deps). Early standalone documentation of the protocol (now partly documented first-party), including deduplication algorithms and edge cases |
 | [format-claude-stream][formatter] | Converts stream-json output to human-readable terminal text |
 
 ## Known Gaps
 
-- [#24596][gh-24596] — `--output-format stream-json` lacks event type reference (Anthropic acknowledged)
-- [#24594][gh-24594] — `--input-format stream-json` usage is completely undocumented
-- No way to access stream-json events in interactive mode (only `-p` headless)
+- [#24596][gh-24596] — `--output-format stream-json` lacks event type reference (issue closed as not planned 2026-03-11)
+- [#24594][gh-24594] — `--input-format stream-json` usage is undocumented beyond the CLI flags table (issue closed as not planned 2026-03-12)
+- No way to access stream-json events in interactive mode (only `-p` headless, or the Agent SDK's programmatic streaming)
 
 ## Cross-References
 
