@@ -23,7 +23,7 @@ Each coding agent reads a different config file for project context:
 | Claude Code | `CLAUDE.md` | Markdown |
 | Cursor | `.cursor/rules/*.mdc`, `AGENTS.md` (the current rules page does not mention `.cursorrules`) | Markdown |
 | Windsurf | `.devin/rules/*.md` (`.windsurf/rules/*.md` and `.windsurfrules` are legacy but still imported); also reads `AGENTS.md` | Markdown |
-| Kiro | `.kiro/steering/*.md`; also reads `AGENTS.md` | Markdown |
+| Kiro | `.kiro/steering/*.md`; also reads `AGENTS.md` ([steering docs](https://kiro.dev/docs/steering/), checked 2026-11-26) | Markdown |
 | Gemini CLI / Antigravity | `GEMINI.md` | Markdown |
 | GitHub Copilot | `.github/copilot-instructions.md`; also reads `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` (github.com; the CLI part is unverified: the repository-instructions page does not mention it; checked 2026-10-24 — see [github-copilot-cloud-agent-analysis.md](../non-cc/agents/github-copilot-cloud-agent-analysis.md#repository-custom-instructions)) | Markdown |
 | OpenAI Codex | `AGENTS.md` | Markdown |
@@ -110,5 +110,6 @@ as the interface. Multi-agent onboarding requires:
 ## Sources
 
 - [Gemini API: coding agents](https://ai.google.dev/gemini-api/docs/coding-agents)
+- [Kiro: steering](https://kiro.dev/docs/steering/)
 - [AI context management across Claude, Cursor, Kiro, Gemini and custom agents (dev.to, secondary)](https://dev.to/madeburo/ai-context-management-across-claude-cursor-kiro-gemini-and-custom-agents-2n1f)
 - [AGENTS.md: AI coding agent configuration (Particula, secondary)](https://particula.tech/blog/agents-md-ai-coding-agent-configuration)
