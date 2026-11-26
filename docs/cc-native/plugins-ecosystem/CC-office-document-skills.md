@@ -2,7 +2,7 @@
 title: Office Document Skills & MCP Servers
 purpose: Ecosystem analysis of document generation/manipulation capabilities — Anthropic official skills, knowledge-work plugins, community skills, and MCP servers for docx, xlsx, pptx, and pdf.
 created: 2026-03-26
-updated: 2026-11-09
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: research
 ---
@@ -26,7 +26,7 @@ These are the production skills powering Claude.ai, Cowork, and the Skills API. 
 | `pptx` | Yes | Yes | Yes | Template-aware generation (slide masters), OOXML, thumbnails |
 | `pdf` | Yes | Limited | Yes | Form filling, merging, extraction. No full content editing |
 
-**Access**: Skills API (`/v1/skills`), Cowork, Claude.ai. Max 8 skills per request. Model: a model supporting the code execution tool (current docs exemplify `claude-opus-4-8`).
+**Access**: Skills API (`/v1/skills`), Cowork, Claude.ai. Up to 20 skills per request. Model: a model supporting the code execution tool (current docs exemplify `claude-opus-5-5`).
 
 ## Layer 2: Anthropic Knowledge-Work Plugins
 
@@ -78,7 +78,7 @@ CC-native SKILL.md files for office document workflows. Mirrors the Anthropic sk
 
 ### ade-document-processing-skills (LandingAI)
 
-**Repo**: [landing-ai/ade-document-processing-skills][ade-skills] (68 stars, MIT license, verified 2026-09-24)
+**Repo**: [landing-ai/ade-document-processing-skills][ade-skills] (69 stars, MIT license, checked 2026-11-26)
 
 Vendor-published agent skills teaching coding assistants to call LandingAI's own Agentic Document Extraction (ADE) API — a hosted document-AI service that parses complex real-world documents into structured Markdown/JSON without templates or ML training. The skills follow the Agent Skills convention (`SKILL.md` files) and cover parsing to Markdown, JSON-schema field extraction, page classification, and multi-document batch splitting, plus patterns for batch processing, Retrieval-Augmented Generation (RAG) preparation, and table stitching.
 

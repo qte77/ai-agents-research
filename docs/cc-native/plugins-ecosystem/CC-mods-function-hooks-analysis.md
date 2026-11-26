@@ -3,7 +3,7 @@ title: CC Mods (Function Hooks) Analysis
 source: https://code.claude.com/docs/en/plugins/mods/overview
 purpose: Analysis of Claude Code mods, in-process JavaScript/TypeScript event handlers shipped as plugins, for extensibility, governance and the agent substrate rubric.
 created: 2026-10-02
-updated: 2026-11-23
+updated: 2026-11-26
 validated_links_on: 2026-10-22
 status: assess
 ---
@@ -14,7 +14,7 @@ status: assess
 
 A mod is a [plugin](CC-official-plugins-landscape.md) whose code is JavaScript or TypeScript functions, called hooks, that Claude Code calls directly inside its own process when an event happens — a tool call, a submitted prompt, part of the interface being drawn, and more ([source][mods-overview]). Anthropic explicitly distinguishes a mod's handlers from the settings-file hooks this corpus already documents in [CC-hooks-system-analysis.md](../configuration/CC-hooks-system-analysis.md): "Claude Code's existing hooks also run on events, as a shell command, HTTP request, or prompt you configure in a settings file. A mod's handlers are functions that run inside Claude Code instead" ([source][mods-overview], re-checked 2026-10-15 — the settings-hook side of this sentence has broadened since this doc's first pass to cover HTTP- and prompt-based settings hooks, not only a shell command over stdin/stdout). Both are called "hooks" by Anthropic; this doc follows the docs' own disambiguation and calls the settings-file kind a "settings hook."
 
-Proposed publicly by a contributor (`poteat`) in [claude-code#91870][issue-91870] (2026-09-03, "Mods - make Claude 10x more extensible," 230 comments and 218 reactions as of this check), iterated in public under the feature flag `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS`, then made the default in **Claude Code v2.1.287**, which also makes the flag a no-op ([source][mods-overview], [source][mods-admin]). Whether `poteat` is an Anthropic employee is unverified: a GitHub public-membership check against the `anthropics` org returns 404 for that username, which GitHub returns both for "not a member" and for "a private member" (`gh api orgs/anthropics/public_members/poteat`, checked 2026-10-02 — the 404 itself is the evidence, so this is not a dead link to fix); the issue's `author_association` field reads `CONTRIBUTOR`, not `OWNER` or `MEMBER`. Treat the issue as a community-filed proposal Anthropic adopted, not as an Anthropic announcement in its own voice.
+Proposed publicly by a contributor (`poteat`) in [claude-code#91870][issue-91870] (2026-09-03, "Mods - make Claude 10x more extensible," 281 comments and 225 reactions as of 2026-11-26), iterated in public under the feature flag `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS`, then made the default in **Claude Code v2.1.287**, which also makes the flag a no-op ([source][mods-overview], [source][mods-admin]). Whether `poteat` is an Anthropic employee is unverified: a GitHub public-membership check against the `anthropics` org returns 404 for that username, which GitHub returns both for "not a member" and for "a private member" (`gh api orgs/anthropics/public_members/poteat`, checked 2026-10-02 — the 404 itself is the evidence, so this is not a dead link to fix); the issue's `author_association` field reads `CONTRIBUTOR`, not `OWNER` or `MEMBER`. Treat the issue as a community-filed proposal Anthropic adopted, not as an Anthropic announcement in its own voice.
 
 ### How a Mod Is Built
 

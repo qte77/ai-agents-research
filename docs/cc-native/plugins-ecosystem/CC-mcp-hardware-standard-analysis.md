@@ -2,7 +2,7 @@
 title: Model Hardware Standard (MHS) Analysis
 purpose: Analysis of Anthropic's Model Hardware Standard research preview — a shared specification for AI agents to operate physical lab/manufacturing hardware, and its relationship to MCP.
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -34,7 +34,7 @@ disparate hardware a unified interface.
 
 ## Research Preview Status
 
-MHS is an early, invite-only preview — Anthropic is sharing it with "a first
+MHS is an early, application-based preview — Anthropic is sharing it with "a first
 group of scientific research labs and advanced manufacturers" and plans to
 develop safety evaluations and best practices before making the standard open
 source; no open-source timeline is given ([source][mhs-announce]). There is
@@ -58,12 +58,12 @@ Automata, Danaher, Doosan, MBF Bioscience, QIAGEN, Tecan, and Universal Robots
 | ------ | --- | --------- |
 | CC / Agent SDK software workflows | Not applicable | MHS targets physical lab/manufacturing hardware, not software tool-calling |
 | MCP-based agent tooling | Conditional | MHS is reachable via MCP as one of its "standard protocols," so an MCP-aware agent harness (including Claude Code) could in principle drive MHS-compliant hardware once a device exposes it |
-| Research/lab automation projects | Strong (if invited) | Directly relevant if a project automates physical lab equipment and can join the research preview |
+| Research/lab automation projects | Strong (if accepted) | Directly relevant if a project automates physical lab equipment and can join the research preview |
 
 ### Decision Rule
 
 **Not actionable for typical CC software projects today** — MHS is an
-invite-only preview with no public integration path, and it targets physical
+application-based preview with no public repo or release (access by application, checked 2026-11-26), and it targets physical
 hardware rather than software tools. Relevant only to projects that operate
 lab/manufacturing equipment and can request preview access. Revisit once MHS
 is open-sourced and a reference MCP server or driver SDK is published.
