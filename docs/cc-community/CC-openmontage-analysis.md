@@ -1,9 +1,9 @@
 ---
 title: "OpenMontage: Agentic Video Production as a CLAUDE.md-Driven Workspace"
-source: https://github.com/calesthio/OpenMontage
+source: https://github.com/OpenMontageInc/OpenMontage
 purpose: Analyze OpenMontage's CLAUDE.md-as-domain-controller architecture (and the parallel Palmier pivot signal) for the agent-workspace patterns this corpus tracks
 created: 2026-06-22
-updated: 2026-06-22
+updated: 2026-11-26
 validated_links_on: 2026-06-22
 status: trial
 platform_scope: [claude-code, cursor, github-copilot, windsurf, codex]
@@ -21,17 +21,17 @@ engine. That makes it a direct sibling to the genome-analysis case study in
 [CC-domain-claudemd-showcase.md][showcase].
 
 Basics (first-party, figures hedged): author [calesthio][author] — also Crucix and the SessionAnchor
-CC-session-memory tool; AGPL-3.0; ~10.5 k stars; Python ~89 % / TypeScript ~9 %; first commits ~2026-04-08;
+CC-session-memory tool; AGPL-3.0; ~83k stars as of 2026-11-26; Python ~73 % / HTML ~16.5 % / JavaScript ~5 % / TypeScript ~4 % by bytes (GitHub languages API, 2026-11-26); first commits ~2026-04-08 (unverified; the repo was created 2026-03-29);
 **no tagged releases (unversioned)**.
 
 ## How It Works
 
 The novel core is a **three-layer knowledge architecture** the agent reads at runtime:
 
-1. **Tool registry** — *what exists*: ~52 production tools (video/image generation, TTS, music, audio
+1. **Tool registry** — *what exists*: ~52 production tools (unverified: the guide gives no count; the `tools/` directory has 27 top-level entries) (video/image generation, TTS, music, audio
    mixing, subtitles) discoverable at runtime via `capability_catalog()` / `provider_menu_summary()` —
    no hardcoded provider lists.
-2. **Stage-director skills** — *how to use them*: ~12 pipelines (explainers, documentaries, trailers,
+2. **Stage-director skills** — *how to use them*: 13 pipelines (per `AGENT_GUIDE.md`'s list, checked 2026-11-26) (explainers, documentaries, trailers,
    clip factories, localization, …) expressed as YAML manifests.
 3. **Vendor skills** — *provider-specific prompting* (FAL.ai, ElevenLabs, Runway, Kling, Suno, …).
 
@@ -39,7 +39,7 @@ Execution is **checkpoint-gated**: canonical JSON artifacts flow brief → scrip
 asset_manifest → edit_decisions → render_report, with quality gates (e.g. slideshow-risk detection) and an
 explicit composition-runtime choice (Remotion vs HyperFrames — never a silent default). A **zero-cost path**
 (Piper TTS + open archives such as Archive.org / NASA / Wikimedia + free composition) lets the pipeline run
-with no API keys, and a 7-dimension provider-scoring step ranks tools before selection.
+with no API keys, and, per an earlier read, a 7-dimension provider-scoring step ranks tools before selection (unverified: `AGENT_GUIDE.md` says selectors route by user preference, then availability, then discovery order).
 
 ## Related Pattern & Market Signal: Palmier
 
@@ -50,14 +50,11 @@ patterns this corpus tracks:
 - **Timeline-as-MCP-workspace** — Palmier embeds a local Model Context Protocol (MCP) server (`127.0.0.1:19789/mcp`) that exposes
   its project state to any MCP client (Claude Desktop, Cursor, Codex), which can then read and mutate the
   timeline. Generalizes to: *expose your app's domain state as a local MCP server so any agent can drive it.*
-- **Control-plane-open / generation-plane-monetized** — the editor, MCP server, and in-app agent chat are
-  GPLv3; only the generative compute is paid. A clean split between the (open) agent control surface and the
-  (paid) heavy compute.
+- **Control-plane-open / generation-plane-monetized** — source through the `last-gpl-source` tag (releases up to v0.7.6) is GPLv3 per the README; later binary releases are proprietary and their source is not published, and the README does not say which parts are paid (the paid-compute split described earlier is unverified).
 
 **Market signal — a coding-agent startup left coding agents.** Palmier ([YC S24][palmier-yc]) launched in
 2024 as "AI that understands any codebase" — a coding-agent/sandbox platform that powered SWE-agent (its
-`SWE-ReX` fork still sits on [the org][palmier-org]) — then **pivoted to video in 2025** (reported reason:
-it kept dogfooding its own tooling to cut launch videos and found more pull there). A coding-agent company
+`SWE-ReX` fork still sits on [the org][palmier-org]) — then **pivoted to video** (the 2025 date and the reported dogfooding reason are unverified: the YC profile states neither). A coding-agent company
 walking away from coding agents is a notable differentiation-pressure signal for the space this corpus
 tracks. The pivot rationale is reported, not independently audited.
 
@@ -69,7 +66,7 @@ generative-UI layer in [ag-ui-protocol-landscape.md][agui]; OpenMontage's domain
 
 **Trial.** OpenMontage is genuinely novel (declarative three-layer skill system, runtime capability
 discovery, checkpoint-gated orchestration) and AGPL-3.0 with a zero-cost path lowers the barrier — but it
-is young (~2 months, no tagged releases) and `AGENT_GUIDE.md` is Claude-Code-idiomatic, so its cross-assistant
+is young (~8 months old as of 2026-11-26, no tagged releases) and `AGENT_GUIDE.md` is Claude-Code-idiomatic, so its cross-assistant
 claims are unverified. Trial it as a reference implementation of the CLAUDE.md-as-domain-controller pattern.
 The transferable Palmier patterns (timeline-as-MCP-workspace; control/generation-plane split) are reusable
 for our own agent integrations regardless of the video domain.
@@ -78,14 +75,14 @@ for our own agent integrations regardless of the video domain.
 
 | Source | Content |
 |---|---|
-| [calesthio/OpenMontage (GitHub)][repo] | Primary repo — README, `CLAUDE.md`, AGPL-3.0, ~10.5 k stars, language split |
+| [OpenMontageInc/OpenMontage (GitHub)][repo] | Primary repo (formerly `calesthio/OpenMontage`) — README, `CLAUDE.md`, AGPL-3.0, ~83k stars (2026-11-26), language split |
 | [AGENT_GUIDE.md][guide] | Routing rules, three-layer architecture, checkpoint protocol |
 | [calesthio (author)][author] | Bio + sibling projects (Crucix, SessionAnchor) |
 | [Palmier Pro (GitHub)][palmier] | Concepts + pivot — GPLv3 macOS video editor with an embedded MCP server |
-| [Palmier YC profile][palmier-yc] | YC S24; founder + pivot history (coding-agent → video) |
+| [Palmier YC profile][palmier-yc] | YC S24; YC S24, team size, product description (pivot history not stated there) |
 
-[repo]: https://github.com/calesthio/OpenMontage
-[guide]: https://github.com/calesthio/OpenMontage/blob/main/AGENT_GUIDE.md
+[repo]: https://github.com/OpenMontageInc/OpenMontage
+[guide]: https://github.com/OpenMontageInc/OpenMontage/blob/main/AGENT_GUIDE.md
 [author]: https://github.com/calesthio
 [showcase]: CC-domain-claudemd-showcase.md
 [connectors]: ../cc-native/plugins-ecosystem/CC-connectors-overview.md
