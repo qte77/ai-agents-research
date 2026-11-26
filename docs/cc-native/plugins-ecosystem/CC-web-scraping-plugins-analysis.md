@@ -3,7 +3,7 @@ title: CC Web Scraping Plugins — Firecrawl & Playwright MCP vs Built-in Tools
 source: https://docs.firecrawl.dev/mcp-server
 purpose: Evaluate Firecrawl and Playwright MCP plugins for web scraping in Claude Code, compared to built-in WebFetch/WebSearch tools.
 created: 2026-03-12
-updated: 2026-11-24
+updated: 2026-11-26
 validated_links_on: 2026-11-19
 status: research
 ---
@@ -48,7 +48,7 @@ Both Firecrawl and Playwright are available in **two forms**. The underlying MCP
 - **Size limit**: `maxContentLength: 10485760` (10MB) ([source][webfetch-pdf-issue])
 - **HTTPS**: Automatic HTTP → HTTPS upgrade ([source][cc-system-prompts])
 - **PDF fetching**: API tool returns base64-encoded PDF data with automatic text extraction ([source][webfetch-api-docs]). **CC's wrapper has a known bug**: returns raw binary for PDFs, causing model hallucination from binary fragments ([source][webfetch-pdf-issue]). Workaround: `curl` + `pdftotext` + `Read`
-- **Dynamic filtering** (`web_fetch_20260209`): Claude can write and execute code to filter fetched content before it enters context, reducing token consumption. Requires code execution tool. Available with Opus 4.6 and Sonnet 4.6 ([source][webfetch-api-docs])
+- **Dynamic filtering** (`web_fetch_20260209`; the latest version is `web_fetch_20260318`, which adds `response_inclusion`, and `web_fetch_20260309` adds cache bypass): Claude can write and execute code to filter fetched content before it enters context, reducing token consumption. Requires code execution tool. Available with Claude 4.6 and later models and Claude Mythos Preview; Microsoft Foundry deployments on Azure support only `web_fetch_20250910` (checked 2026-11-26) ([source][webfetch-api-docs])
 - **No additional cost** beyond standard token pricing ([source][webfetch-api-docs]). Typical token usage: avg web page ~2,500 tokens, large doc ~25K, PDF ~125K ([source][webfetch-api-docs])
 
 ### Read Tool: PDF & Image Parsing
@@ -132,29 +132,27 @@ claude mcp add firecrawl -e FIRECRAWL_API_KEY=your-api-key -- npx -y firecrawl-m
 | Tool | Purpose | Returns |
 |---|---|---|
 | `firecrawl_scrape` | Single-page content extraction | JSON / markdown / raw HTML |
-| `firecrawl_batch_scrape` | Parallel multi-URL scraping | JSON / markdown array |
 | `firecrawl_map` | Discover all URLs on a site (sitemap + crawl) | URL array |
 | `firecrawl_crawl` | Multi-page async crawling with depth control | Markdown / HTML array |
 | `firecrawl_search` | Web search with optional result scraping | Search results array |
-| `firecrawl_extract` | LLM-powered structured data extraction via schema | JSON per schema |
 | `firecrawl_agent` | Autonomous multi-source research agent | Structured JSON |
-| `firecrawl_browser` | Interactive browser session (CDP) | Live session control |
+| `firecrawl_interact` / `firecrawl_interact_stop` | Interactive browser session and its shutdown (replaces the former `firecrawl_browser`) | Live session control |
 
-([source][firecrawl-mcp-docs], [source][firecrawl-mcp-gh])
+Checked 2026-11-26: the hosted tools page and the local server README no longer list `firecrawl_batch_scrape`, `firecrawl_extract` or `firecrawl_browser`, and the hosted page says the former Extract tool is deprecated. The surface also includes `firecrawl_parse`, `firecrawl_check_crawl_status`, `firecrawl_agent_status`, research, monitor and credit-usage tools, and varies by connection mode, plan and team policy ([source][firecrawl-mcp-docs], [source][firecrawl-mcp-gh]).
 
 ### Key Features
 
 - **Anti-bot handling**: Automatic proxy rotation, JavaScript rendering, CAPTCHA handling ([source][firecrawl-mcp-docs])
 - **Clean output**: Strips ads, navigation, footers — returns only content ([source][firecrawl-ai-mcps])
 - **Self-hosted option**: Set `FIRECRAWL_API_URL` for private instances ([source][firecrawl-mcp-gh])
-- **Credit monitoring**: Warning at 1000, critical at 100 credits (configurable) ([source][firecrawl-mcp-gh])
+- **Credit monitoring**: Warning at 1000, critical at 100 credits (configurable; unverified) ([source][firecrawl-mcp-gh])
 - **Retry with backoff**: Configurable max attempts, delay, backoff factor ([source][firecrawl-mcp-gh])
 
 ### Pricing
 
-- **Free tier**: 500 credits **lifetime** (not monthly), no credit card required ([source][firecrawl-ai-mcps])
-- **Rate limits (free)**: 10 scrapes/min, 10 maps/min, 5 searches/min, 1 crawl/min ([source][firecrawl-ai-mcps])
-- **Paid tiers**: Scale with credit packs; see [firecrawl.dev/pricing](https://www.firecrawl.dev/pricing)
+- **Free tier**: 1,000 credits per month, no credit card required, described as monthly rather than lifetime (checked 2026-11-26) ([source][firecrawl-pricing])
+- **Rate limits (free)**: 10/min each for scrape, map and search, 2/min for crawl, and 2 concurrent browsers (checked 2026-11-26) ([source][firecrawl-pricing])
+- **Paid tiers** (checked 2026-11-26): Hobby $19 (5,000 credits), Standard $99 (100,000), Growth $399 (500,000), Scale $749 (1,000,000), Enterprise custom; annual billing is cheaper ([source][firecrawl-pricing])
 - **Self-hosted**: No credit cost; requires Docker Compose (5 containers: API, Redis, RabbitMQ, PostgreSQL, Playwright-service) ([source][firecrawl-self-host])
 
 ### Hosted Connector Route (ChatGPT and Claude)
@@ -185,8 +183,8 @@ Besides the local `firecrawl-mcp` server and the plugin, Firecrawl ships hosted 
 
 ### Limitations
 
-- **API key effectively required** — cloud needs a key; self-hosted has a [persistent bug][firecrawl-key-bug] enforcing it. Workaround: dummy key (`api_key="no-key"`)
-- **Credit consumption** — 500 lifetime credits exhaust quickly during development
+- **API key required for the REST API** — the hosted MCP server also accepts OAuth sign-in or keyless connections limited to search, scrape and parse within daily limits (checked 2026-11-26); self-hosted has a [persistent bug][firecrawl-key-bug] enforcing it. Workaround: dummy key (`api_key="no-key"`)
+- **Credit consumption** — the free allowance (1,000 credits per month, checked 2026-11-26) can exhaust quickly during development
 - **Latency** — cloud round-trip adds overhead vs local tools
 - **Privacy** — page content passes through Firecrawl's cloud (unless self-hosted)
 
@@ -364,17 +362,17 @@ For event scraping across multiple sites:
 
 | Capability | WebFetch/WebSearch | Firecrawl MCP | Playwright MCP |
 |---|---|---|---|
-| **Setup complexity** | None (built-in) | Low (API key + npx) | Low (npx, no key) |
+| **Setup complexity** | None (built-in) | Low (API key + npx, or hosted OAuth) | Low (npx, no key) |
 | **JavaScript rendering** | No | Yes (cloud) | Yes (local browser) |
 | **Raw content access** | No (summarized only) | Yes (markdown, JSON, HTML) | Yes (accessibility tree, HTML) |
-| **Batch scraping** | No | Yes (batch_scrape, crawl) | No (one page at a time) |
+| **Batch scraping** | No | Yes (crawl; `batch_scrape` no longer listed) | No (one page at a time) |
 | **Site crawling/mapping** | No | Yes (crawl, map tools) | No |
-| **Structured extraction** | No | Yes (LLM-powered schemas) | No |
-| **Form filling / auth** | No | Via browser tool | Yes (full browser control) |
+| **Structured extraction** | No | Extract tool deprecated (checked 2026-11-26) | No |
+| **Form filling / auth** | No | Via interact tool | Yes (full browser control) |
 | **Anti-bot / CAPTCHA** | No | Yes (proxy rotation, anti-bot) | No |
 | **Search integration** | Yes (WebSearch) | Yes (firecrawl_search) | No |
-| **Cost** | Free (included) | Credits (500 free) | Free (local) |
-| **API key required** | No | Yes (cloud) / No (self-hosted) | No |
+| **Cost** | Free (included) | Credits (1,000 free per month, checked 2026-11-26) | Free (local) |
+| **API key required** | No | Yes (REST API, cloud) / OAuth or limited keyless (hosted MCP) / No (self-hosted) | No |
 | **Privacy** | Content → Anthropic | Content → Firecrawl + Anthropic | Content → Anthropic |
 | **Self-QA (localhost)** | Limited | No (cloud can't reach localhost) | Yes (local browser) |
 | **Test code generation** | No | No | Yes (--codegen) |
@@ -434,7 +432,7 @@ Beyond Firecrawl and Playwright MCP, several agent-browser tools are worth notin
 | Tool | License (lang) | Representation | Token eff. (community) | Best for |
 |---|---|---|---|---|
 | [agent-browser][agent-browser-gh] (Vercel) | Apache-2.0 (Rust CLI + MCP) | Accessibility tree (`@e1` refs) | 3–5K tokens/page | Backup browser automation; standalone CLI |
-| [Chrome DevTools MCP][chrome-devtools-mcp-gh] (Google) | Apache-2.0 (TS) | A11y-tree snapshot over raw CDP | ~10K tokens/page | Raw DevTools access; perf traces; latest release v1.13.0 (2026-11-11), `--autoConnect` to a local Chrome 144+ (README/config, 2026-11-19) |
+| [Chrome DevTools MCP][chrome-devtools-mcp-gh] (Google) | Apache-2.0 (TS) | A11y-tree snapshot over raw CDP | ~10K tokens/page | Raw DevTools access; perf traces; latest release v1.14.0 (2026-11-24, checked 2026-11-26), `--autoConnect` to a local Chrome 144+ (README/config, 2026-11-19) |
 | [Stagehand][stagehand-gh] (Browserbase) | MIT (TS + Python) | Accessibility tree + DOM hybrid | n/a | `act()`/`extract()`/`observe()` over a browser |
 | [browser-use][browser-use-gh] | MIT (Python) | Custom numbered-DOM map (**not** the native a11y tree) | ~10K tokens/page | Complex autonomous form-filling |
 | [jev-ultrafast][jev-ultrafast-gh] (browser-use) | MIT (Python) | Indexed element table (operations + targets), no a11y tree | n/a — one [Jev][typesafe-jev-web] decision request per step, not a token-cost model | Fast, cheap DOM-action selection with no per-step LLM reasoning |
@@ -462,7 +460,7 @@ hosted Jev API plus a hosted text LLM (OpenRouter). See the wider comparison in
 
 ### Short-term (Tier 2)
 
-- **Add Firecrawl MCP** when research or data extraction tasks arise — free tier (500 credits) sufficient for evaluation. Setup: `claude mcp add firecrawl -e FIRECRAWL_API_KEY=key -- npx -y firecrawl-mcp`
+- **Add Firecrawl MCP** when research or data extraction tasks arise — free tier (1,000 credits per month, checked 2026-11-26) sufficient for evaluation. Setup: `claude mcp add firecrawl -e FIRECRAWL_API_KEY=key -- npx -y firecrawl-mcp`
 
 ### Deferred (Tier 3)
 
