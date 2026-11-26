@@ -30,7 +30,7 @@ event in a repository" ([create automations][automations]):
 
 - **Triggers:** the docs page (checked 2026-11-26) describes schedule, repository-event (issue and
   pull request) and API triggers plus a Manual trigger for testing, and does not list schedule
-  intervals or a "pull request is synchronized" trigger (the 2026-10 text of this doc quoted both; unverified). A later changelog entry, "Trigger Copilot automations with comments"
+  intervals or a "pull request is synchronized" trigger. A later changelog entry, "Trigger Copilot automations with comments"
   ([2026-08-03][cl-comments]), adds comment triggers, which the docs page's trigger list doesn't
   yet show.
 - **Where:** "Automations are not available in public repositories." The launch entry says they are
