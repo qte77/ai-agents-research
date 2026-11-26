@@ -19,14 +19,14 @@ system (PydanticAI-based MAS evaluating academic papers via LLM providers).
 
 | Framework | Type | Certifiable | Focus | MAS Relevance |
 | --- | --- | --- | --- | --- |
-| OWASP MAESTRO | Threat model | No | Multi-agent system threats (7 layers) | Direct — designed for MAS |
+| CSA MAESTRO | Threat model | No | Multi-agent system threats (7 layers) | Direct — designed for MAS |
 | MITRE ATLAS | Attack taxonomy | No | Adversarial tactics/techniques for AI/ML | High — maps attacker TTPs |
 | NIST AI RMF 1.0 | Risk framework | No (voluntary) | AI lifecycle risk management | Medium — governance structure |
 | ISO 42001 / 23894 | Standards | Yes (42001) | AI management system / AI risk guidance | Medium — certification path |
 
-## 1. OWASP MAESTRO
+## 1. MAESTRO (Cloud Security Alliance)
 
-**Source**: [OWASP MAESTRO v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
+**Source**: [CSA MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro); the [OWASP Multi-Agentic System Threat Modeling Guide v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/) is a separate document
 **Existing coverage**: Comprehensive — see [mas-security-framework.md](mas-security-framework.md)
 
 ### 7-Layer Threat Model
@@ -341,7 +341,7 @@ MITRE ATLAS (attack taxonomy — what adversaries do)
       |
       | informs threat identification
       v
-OWASP MAESTRO (threat model — what to defend against in MAS)
+CSA MAESTRO (threat model — what to defend against in MAS)
       |
       | maps threats to controls
       v
@@ -551,7 +551,8 @@ is not warranted. A lightweight alignment approach:
 
 ## References
 
-- [OWASP MAESTRO v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
+- [CSA MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro)
+- [OWASP Multi-Agentic System Threat Modeling Guide v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/)
 - [MITRE ATLAS](https://atlas.mitre.org/)
 - [NIST AI RMF 1.0 (AI 100-1)](https://www.nist.gov/artificial-intelligence/executive-order-safe-secure-and-trustworthy-artificial-intelligence)
 - [NIST AI 600-1 Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1)
