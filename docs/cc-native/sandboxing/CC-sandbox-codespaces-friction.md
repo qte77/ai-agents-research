@@ -16,7 +16,7 @@ multi-repo workflows.
 
 Friction points below were reproduced against earlier CC releases (gh-28730
 was filed against v2.1.56); verified current as of Claude Code v2.1.332,
-2026-11-26 unless otherwise noted. Edits to the sandbox filesystem lists apply to the running session at the next sandboxed command. A `sandbox.enabled` change taking effect at the next shell command is unverified ([source][cc-sandboxing]).
+2026-11-26 unless otherwise noted. Edits to the sandbox filesystem lists apply to the running session at the next sandboxed command ([source][cc-sandboxing]).
 
 ## Four Friction Points Identified
 
