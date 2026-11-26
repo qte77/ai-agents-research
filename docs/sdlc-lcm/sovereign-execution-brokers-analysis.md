@@ -3,7 +3,7 @@ title: Sovereign Execution Broker (SEB)
 purpose: Runtime enforcement boundary requiring certificate-bound authority — not agent/LLM reasoning alone — before an autonomous agent can mutate production infrastructure.
 source: https://arxiv.org/abs/2606.20520
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: assess
 ---
@@ -47,9 +47,11 @@ or rendered read of the PDF would be needed before citing specific figures. No l
 GitHub repository or code artifact for SEB was found; this appears to be a paper-only
 submission as of v2.
 
-A related paper, arXiv:2606.11632 ("Sovereign Assurance Boundary"), is reportedly the
-source of the certificates SEB enforces against — noted here as likely context, not yet
-independently confirmed against SEB's primary text.
+A related paper by the same authors, arXiv:2606.11632 ("Sovereign Assurance Boundary:
+Certificate-Bound Admission for Agentic Infrastructure"), is the source of the certificates SEB
+enforces against: the SEB abstract says SEB consumes certificates issued by the Sovereign
+Assurance Boundary, and the SAB abstract says a sovereign execution broker verifies the signed
+certificate with fresh pre-execution revocation checks.
 
 ## Corpus Relevance & Cross-References
 
@@ -69,7 +71,7 @@ for those layers.
 |---|---|
 | [SEB abstract page][seb-abs] | Title, authors, categories, license, version history |
 | [SEB PDF][seb-pdf] | Architecture (proposal/admission/execution), enforcement mechanics |
-| [Sovereign Assurance Boundary][sab] | Related paper (certificate origin) — unconfirmed against SEB primary text |
+| [Sovereign Assurance Boundary][sab] | Related paper (certificate origin), confirmed by both abstracts (checked 2026-11-26) |
 
 [seb-abs]: https://arxiv.org/abs/2606.20520
 [seb-pdf]: https://arxiv.org/pdf/2606.20520
