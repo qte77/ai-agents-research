@@ -224,14 +224,14 @@ machine, n=1; not a benchmark). Observed on 2026-11-25:
 | Main-thread responses | 1,706 |
 | Input tokens served as cache reads | 99.2% (472M tokens) |
 | Cache writes | 0.8% (3.7M tokens), all at the one-hour lifetime |
-| Writes after idle gaps over 60 minutes | 33% of writes: 4 gaps of 2 to 17 hours rewrote 110K to 435K tokens each |
+| Writes after idle gaps over 60 minutes | 33% of writes: 4 gaps of 2 to 18 hours rewrote 110K to 435K tokens each |
 | Compactions | 5, all `trigger: "auto"` at 469K to 492K tokens, down to 15K to 27K tokens |
 
-- Idle compaction left no trace before those gaps. The cause is **unverified**; the better-supported one is a stopped host (inference, below).
-  - One gap does not need an explanation: the 2.3 h gap followed a 135K-token conversation, under the 200K-token minimum, so idle compaction was not due.
-  - On 2.1.332, which carries the [skipped-compaction fix](#idle-compaction-before-the-cache-expires), a 17.1 h gap at 232K tokens (ended 2026-11-26) also left no compaction marker in the transcript. Every recorded compaction is `auto` or `manual`; whether idle compaction writes a marker at all is not documented, so the absence is weak evidence.
-  - A stopped host fits all the long gaps (inference, not observed). GitHub's [Codespaces timeout docs][gh-cs-timeout] say "By default this period is 30 minutes" and "a codespace has a maximum lifetime of 12 hours". The default is shorter than the about 54 to 60 minutes idle compaction waits, and the lifetime is shorter than the 12.6, 14.6 and 17.5 h gaps (see [Stopped host](#stopped-host-options)). This codespace's own timeout setting was not read (it needs a token scope the session lacked).
-  - The 2.1.332 bug is not excluded: the gaps ran on 2.1.330 to 2.1.332 and the changelog does not say which versions skipped idle compaction.
+- Idle compaction left no trace before those gaps. The cause is **unverified**; the better-supported one is a stopped host (inference, below). The per-gap figures and the absence of a compaction marker come from the same transcript (one machine, n=1). The four gaps in the table are 2.3, 12.6, 14.6 and 17.5 h, and they ran on 2.1.330 and 2.1.331.
+  - One gap does not need an explanation: in the 2.3 h gap the conversation was 135K tokens when the gap began, below the 200K-token minimum, so idle compaction was not due.
+  - A fifth, later gap of 17.1 h at 232K tokens (ended 2026-11-26, after the observation above) ran on 2.1.332, which carries the [skipped-compaction fix](#idle-compaction-before-the-cache-expires), and also left no compaction marker in the transcript. Every recorded compaction is `auto` or `manual`; whether idle compaction writes a marker at all is not documented, so the absence is weak evidence.
+  - A stopped host fits the long gaps (inference, not observed). GitHub's [Codespaces timeout docs][gh-cs-timeout] say "By default this period is 30 minutes", so the default would stop the codespace in any gap longer than 30 minutes, before idle compaction's about 54 to 60 minutes (see [Stopped host](#stopped-host-options)). The docs also say "a codespace has a maximum lifetime of 12 hours", which caps the three longest gaps (12.6, 14.6 and 17.5 h) and the 17.1 h one. This codespace's own timeout setting was not checked.
+  - The 2.1.332 bug is not excluded: the changelog does not say which versions skipped idle compaction, and the four table gaps ran on versions before the fix.
 - Subagent turns are sidechains with their own cache and do not warm the main thread's ([CC caching docs][cc-caching],
   "Subagents and the cache").
 - Both measurements (one machine each, so n=1 apiece) show the same pattern (a very high read share, with a large part of the writes coming from
@@ -435,7 +435,7 @@ invalidation gotcha on self-hosted backends (`CLAUDE_CODE_ATTRIBUTION_HEADER=0`)
 | [CC prompt-caching docs][cc-caching] | CC-specific TTL buckets, choose-the-TTL precedence, disable vars, cache scope, actions that invalidate/keep the cache (accessed 2026-10-15) |
 | [CC env vars reference][cc-env-vars] | `CLAUDE_CODE_PROMPT_CACHE_TTL`, `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`, `FORCE_PROMPT_CACHING_5M`, `ENABLE_PROMPT_CACHING_1H`, `DISABLE_PROMPT_CACHING*` (accessed 2026-10-15) |
 | [CC changelog][cc-changelog] | Idle compaction: 2.1.299 (terminal, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`), 2.1.302 (`/config` row), 2.1.314 (VS Code, Desktop, gateways), 2.1.318 (fix) (read 2026-11-09); 2.1.326 (terminal status fix), 2.1.332 (skipped-compaction fix) (read 2026-11-26) |
-| [Codespaces timeout][gh-cs-timeout] | Default idle timeout 30 minutes; maximum lifetime 12 hours (read 2026-11-26, via the page source in github/docs) |
+| [Codespaces timeout][gh-cs-timeout] | Default idle timeout 30 minutes; maximum lifetime 12 hours (read 2026-11-26) |
 | [Settings reference][settings-ref] | `idleCompaction` description, default `true`, v2.1.290+ (read 2026-11-09); conditions list with "about an hour" idle time and the one-hour-TTL requirement (read 2026-11-25) |
 | [Cache diagnostics][cache-diag] | `diagnostics.previous_message_id`, `cache_miss_reason` types, stable status, same-workspace limit (read 2026-11-25) |
 | [cachemiss][cachemiss] | Rebuilt-token rule for a cache miss (tokens the previous call had cached that this call writes again); MIT, source read 2026-11-25, not run |
