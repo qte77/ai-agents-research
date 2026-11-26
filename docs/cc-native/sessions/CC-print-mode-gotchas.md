@@ -33,7 +33,7 @@ cost, tool calls) must include `--verbose` or all runs silently fail.
 
 ## 2. `--bare` Breaks OAuth/Keychain Auth
 
-The `--bare` flag is documented (CLI reference, checked 2026-11-26) as "Minimal mode: skip auto-discovery of your hooks and of skills, custom commands, subagents, installed plugins, MCP servers, auto memory, and CLAUDE.md so scripted calls start faster". The critical detail, per the headless page, is that bare mode never reads OAuth credentials or the system keychain, so tokens stored there are not read. The headless page also says `--bare` will become the default for `-p` in a future release.
+The `--bare` flag is documented (CLI reference, checked 2026-11-26) as "Minimal mode: skip auto-discovery of your hooks and of skills, custom commands, subagents, installed plugins, Model Context Protocol (MCP) servers, auto memory, and CLAUDE.md so scripted calls start faster". The critical detail, per the headless page, is that bare mode never reads OAuth credentials or the system keychain, so tokens stored there are not read. The headless page also says `--bare` will become the default for `-p` in a future release.
 
 ```bash
 # FAILS in Codespaces — "Not logged in · Please run /login"

@@ -237,7 +237,7 @@ This means DRY patterns using symlinked references (e.g., shared rules across
 skills) work both during development and after marketplace installation.
 
 Changing `plugin.json` in the marketplace source does **not** propagate to
-already-installed users until the computed version changes (a manifest `version` pins it, so bump it on each release) or they run `claude plugin update` ([source][host-marketplace]).
+already-installed users until the computed version changes (a manifest `version` pins it, so bump it on each release); a user can also update manually with `claude plugin update` ([source][host-marketplace]).
 
 **Implication**: Always bump `version` in `plugin.json` (or `marketplace.json`)
 when publishing fixes. Users with cached copies won't see changes otherwise.
@@ -332,6 +332,8 @@ This is YAGNI until a second project needs these skills.
 - [CC Memory docs][cc-mem] — CLAUDE.md and rules (repo-local patterns)
 - [Plugin manifest reference][plugin-manifest-ref] — `plugin.json` fields, `version` pinning semantics
 - [Marketplace reference][plugin-marketplace-ref] — `marketplace.json` fields, `ref`/`sha`/`sha256` source pinning
+- [Host and maintain a marketplace][host-marketplace] — how installed users receive updates
+- [Plugin commands reference][plugin-cli-ref] — `claude plugin` subcommands
 
 [sdk-plugins]: https://code.claude.com/docs/en/agent-sdk/plugins
 [cc-plugins]: https://code.claude.com/docs/en/plugins

@@ -333,7 +333,7 @@ and a condition naming a task file plus a report file to write. 20 processes ran
 ### From goal to spec to PR
 
 Anthropic's [best practices][best-practices] already describe the chain this section's pattern
-plugs into: a spec step ("Interview me until you could write the spec, then write it to SPEC.md.", under "Brainstorm with Claude first"); and, for the run itself, "for runs nobody's watching, `/goal` or a `Stop` hook enforces it", with `/goal` described as a condition a separate model checks after every turn that matters for long background runs Planning locally and executing in a cloud session is covered in
+plugs into: a spec step ("Interview me until you could write the spec, then write it to SPEC.md.", under "Brainstorm with Claude first"); and, for the run itself, "for runs nobody's watching, `/goal` or a `Stop` hook enforces it", with `/goal` described as a condition a separate model checks after every turn that matters for long background runs. Planning locally and executing in a cloud session is covered in
 [CC-cloud-sessions-analysis.md](../ci-remote/CC-cloud-sessions-analysis.md).
 
 Composed into one chain (ours): an objective → a spec or plan file → one `claude -p "/goal …"` per
