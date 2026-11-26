@@ -3,7 +3,7 @@ title: Netdata MCP Server Analysis
 source: https://github.com/netdata/netdata
 purpose: Netdata's built-in MCP server for incident-time infrastructure queries from Claude Code, Claude Desktop, Cursor, and other MCP clients — what it exposes, transports, and auth.
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 platform_scope: [claude-code, claude-desktop, cursor, gemini-cli, codex, crush, opencode]
@@ -13,8 +13,8 @@ platform_scope: [claude-code, claude-desktop, cursor, gemini-cli, codex, crush, 
 
 ## What It Is
 
-[Netdata][repo] is a large, established (GPL-3.0, Go, **80.6K stars**, latest release `v2.11.1`
-(2026-09-16), per [`gh api repos/netdata/netdata`][repo], verified 2026-09-24) real-time
+[Netdata][repo] is a large, established (GPL-3.0, Go, **81.7K stars**, latest release `v2.13.0`
+(2026-11-19), per [`gh api repos/netdata/netdata`][repo], verified 2026-11-26) real-time
 infrastructure-monitoring agent. Since v2.6.0 it ships a built-in **Model Context Protocol (MCP)
 server**, letting AI
 assistants query live observability data — metrics, alerts, logs, topology, and running processes
@@ -110,7 +110,7 @@ server would plug into.
 
 | Source | Content |
 |---|---|
-| [netdata/netdata][repo] (GitHub API) | Stars, license (GPL-3.0), language, activity, latest release — `gh api repos/netdata/netdata` + `.../releases/latest`, 2026-09-24 |
+| [netdata/netdata][repo] (GitHub API) | Stars, license (GPL-3.0), language, activity, latest release — `gh api repos/netdata/netdata` + `.../releases/latest`, 2026-11-26 |
 | [`docs/netdata-ai/mcp/README.md`][mcp-docs] | Data exposure, transports, auth, deployment options, supported clients |
 | [`src/web/mcp/README.md`][mcp-src] | Transport adapters, tool surface, hierarchy/visibility model |
 | [`docs/netdata-ai/mcp/mcp-clients/`][mcp-clients-docs] | Per-client (Claude Code, Cursor, …) connection instructions |
