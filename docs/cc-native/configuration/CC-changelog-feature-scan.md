@@ -3,7 +3,7 @@ title: CC Changelog Feature Scan
 source: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
 purpose: Weekly changelog monitor cutoff (CHANGELOG.md checked v2.1.0–2.1.330; the monitor bumps it, not a coverage claim) plus a hand-written feature scan of v2.1.0 to v2.1.71.
 created: 2026-03-07
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-04-06
 status: research
 ---
@@ -33,7 +33,7 @@ Run prompts or slash commands at recurring intervals: `/loop 5m check the deploy
 
 #### Structured Outputs for `-p` Mode (v2.1.22)
 
-`claude -p` now supports structured output schemas, not just `--output-format json`. ([source][changelog])
+The v2.1.22 changelog entry reads only "Fixed structured outputs for non-interactive (-p) mode", a fix; that `-p` supports structured output schemas is unverified here. ([source][changelog], checked 2026-11-26)
 
 **Relevance**: Headless CC invocations using `claude -p --output-format json` can now enforce result schemas (pass/fail/error + identifiers) directly in the CLI call, reducing parsing brittleness in shell wrapper scripts.
 
@@ -55,7 +55,7 @@ JSON POST/receive on hook events. See [CC-hooks-system-analysis.md](CC-hooks-sys
 
 #### Agent Worktree Isolation (`isolation: worktree`) (v2.1.50)
 
-Spawn subagents in isolated git worktrees via `Agent(isolation: "worktree")`. Worktree auto-cleaned if agent makes no changes; path and branch returned if changes exist. ([source][changelog])
+The v2.1.50 changelog adds support for `isolation: worktree` in agent definitions, plus `WorktreeCreate` and `WorktreeRemove` hook events. An `Agent(isolation: ...)` call form and the auto-clean and path/branch-return behavior are not in the changelog entry (unverified). ([source][changelog], checked 2026-11-26)
 
 **Relevance**: Native CC support for isolated parallel agent execution. Could simplify worktree-based workflows that previously required bash scaffolding — each subagent gets an isolated worktree automatically.
 
@@ -138,12 +138,12 @@ Hook fires when CC configuration changes — useful for security auditing. ([sou
 
 ### Open Community Feature Requests (from triage)
 
-Tracked from changelog/native-sources triage monitors. Not shipped features — open enhancement requests.
+Tracked from changelog/native-sources triage monitors. Not shipped features — enhancement requests, as of the 2026-04 triage; status re-checked 2026-11-26 below (all four are now closed).
 
-- [ ] **`WriteTemp()` tool** ([#34939][writetemp], 2026-03-18) — Medium. Temporary file creation without permission prompts. Would simplify headless scripts that generate intermediate files
-- [ ] **Compaction-proof `INVARIANT.md`** ([#34716][invariant], 2026-03-17) — Medium. `~/.claude/INVARIANT.md` that survives context compaction. Would guarantee critical instructions persist in long sessions
-- [ ] **riscv64 architecture support** ([#35016][riscv64], 2026-03-18) — Low. Linux RISC-V support. Niche — only relevant if deploying CC on RISC-V hardware
-- [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19) — Medium. Cowork dispatch for CC CLI. See [CC-cowork-plugins-enterprise-analysis.md](../plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md#open-feature-requests)
+- [ ] **`WriteTemp()` tool** ([#34939][writetemp], 2026-03-18; closed as not planned 2026-04-14 (checked 2026-11-26)) — Medium. Temporary file creation without permission prompts. Would simplify headless scripts that generate intermediate files
+- [ ] **Compaction-proof `INVARIANT.md`** ([#34716][invariant], 2026-03-17; closed as not planned 2026-04-14 (checked 2026-11-26)) — Medium. `~/.claude/INVARIANT.md` that survives context compaction. Would guarantee critical instructions persist in long sessions
+- [ ] **riscv64 architecture support** ([#35016][riscv64], 2026-03-18; closed 2026-03-20 as a duplicate of #19406, itself closed as completed 2026-01-20; whether riscv64 support shipped is unverified (checked 2026-11-26)) — Low. Linux RISC-V support. Niche — only relevant if deploying CC on RISC-V hardware
+- [ ] **Dispatch for CLI** ([#36011][dispatch-cli], 2026-03-19; closed as not planned 2026-04-17 (checked 2026-11-26)) — Medium. Cowork dispatch for CC CLI. See [CC-cowork-plugins-enterprise-analysis.md](../plugins-ecosystem/CC-cowork-plugins-enterprise-analysis.md#open-feature-requests)
 
 [writetemp]: https://github.com/anthropics/claude-code/issues/34939
 [invariant]: https://github.com/anthropics/claude-code/issues/34716

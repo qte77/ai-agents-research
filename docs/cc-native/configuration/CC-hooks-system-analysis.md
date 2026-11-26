@@ -3,7 +3,7 @@ title: CC Hooks System Analysis
 source: https://code.claude.com/docs/en/hooks
 purpose: Analysis of Claude Code hooks system for automation, quality gates, and headless CC workflow integration.
 created: 2026-03-07
-updated: 2026-11-20
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: adopt
 ---
@@ -24,7 +24,7 @@ run locally, outside the sandbox, with full system access.
 | `PostToolUse` | After any tool completes | v1.0.38 | Logging, trace collection, quality checks |
 | `Stop` | Before session ends | v1.0.38 | Cleanup, final validation, re-prompting (Ralph Wiggum pattern) |
 | `SessionStart` | Session begins | v1.0.62 | Repo maintenance, env setup; deferred for ~500ms faster startup (v2.1.47) |
-| `Setup` | Repo initialization | v2.1.10 | One-time repo maintenance tasks |
+| `Setup` | Fires on `--init-only`, or `--init` / `--maintenance` in `-p` mode (matchers `init`, `maintenance`); not on ordinary repo initialization; exit code and stderr ignored | v2.1.10 (unverified; not on the hooks page) | One-time preparation in CI or scripts |
 | `PermissionRequest` | User prompted for permission | v2.0.45 | Automatic approval/denial policies (v2.0.54: processes 'always allow') |
 | `SubagentStart` | Subagent spawns | v2.0.43 | Subagent monitoring; `agent_id`/`agent_transcript_path` fields added to `SubagentStop` hooks (v2.0.42), not `SubagentStart` |
 | `TeammateIdle` | Agent Teams teammate becomes idle | v2.1.33 | Work redistribution, progress tracking |
@@ -71,7 +71,7 @@ run locally, outside the sandbox, with full system access.
 | `matcher` | Tool name filter (`*` for all, specific tool name) | v1.0.38 |
 | `command` | Shell command to execute (string form — passed to shell) | v1.0.38 |
 | `args` | `string[]` exec form — spawns the command directly without a shell, so path placeholders never need quoting. Mutually exclusive with `command`. | v2.1.139 |
-| `continueOnBlock` | `PostToolUse` only. When `true`, a blocking hook result feeds the rejection reason back to Claude as context and continues the turn instead of halting. (Not found in current first-party hooks docs' schema as of 2026-07-23 — may be renamed/superseded; current docs describe the equivalent behavior via a hook's returned `decision: "block"`/`reason` and `hookSpecificOutput.additionalContext`. Verify the field name before relying on it.) | v2.1.139 |
+| `continueOnBlock` | Optional field in the prompt-hook configuration table of the current hooks docs (checked 2026-11-26); not `PostToolUse`-only. On the events it applies to, `true` feeds an `ok: false` reason back to Claude and continues instead of ending the turn (default `false`). Agent hooks have no such field. | v2.1.139 (unverified; not on the hooks page) |
 | `once` | Runs once per session, then is removed. Only honored for hooks declared in **skill frontmatter**; ignored in settings files and agent frontmatter (see examples below, which predate this scoping). | v2.1.0 |
 | `model` | Custom model for hook evaluation | v2.0.41 |
 | `tool_use_id` | Available in hook input | v2.0.43 |

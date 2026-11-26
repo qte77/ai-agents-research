@@ -2,7 +2,7 @@
 title: CC Environment Variables Reference
 purpose: Consolidated reference for CLAUDE_CODE_* and related env vars relevant to autonomous agent workflows, including undocumented vars from binary string extraction.
 created: 2026-03-27
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-11-18
 status: adopt
 ---
@@ -21,7 +21,8 @@ This doc covers vars observed in agent workflows. For the **complete authoritati
 
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
-| `ANTHROPIC_MODEL` | `sonnet` | Primary model alias or full ID | [env-vars][env-vars] |
+| `ANTHROPIC_MODEL` | `sonnet` (unverified; the env vars page gives no default, see [model-config](https://code.claude.com/docs/en/model-config.md#environment-variables)) | Primary model alias or full ID | [env-vars][env-vars] |
+| `ANTHROPIC_DEFAULT_MODEL` | — | Model new sessions start on by default; applies only when no settings file sets `model`; requires v2.1.236+ (checked 2026-11-26) | [env-vars][env-vars] |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | (inherits primary) | Default model for subagents, agent-team teammates and workflow agents that get no model another way; an alias such as `haiku` or a full model name. Since v2.1.251 a model Claude passes at spawn time and a `model` field in the agent definition (including `inherit`) take precedence over it; before that the variable overrode both. `inherit` is the same as unset. Order: [CC-session-cost-analysis.md § Documented cost levers](../sessions/CC-session-cost-analysis.md#documented-cost-levers) | [env-vars][env-vars] |
 | `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` | (unset) | `1` applies the model set in `CLAUDE_CODE_SUBAGENT_MODEL` to every subagent, teammate and workflow agent: definition `model` fields are ignored and Claude can't pass a model at spawn time. Forks and skills running in a subagent with `model: inherit` still use the parent's model; set alone, subagents use the main conversation's model (built-in Explore keeps its own). Check with `/tasks`. Requires v2.1.257+ ([subagents][subagents-one-model]) | [env-vars][env-vars] |
 | `CLAUDE_CODE_EFFORT_LEVEL` | (unset) | Reasoning effort: `low`, `medium`, `high`, `xhigh`, `max`; outranks `--effort`, `/effort` and the effort settings (a `maxEffortLevel` cap still applies). `auto` or `unset` sends no effort level, so the API default applies. Support and defaults vary by model (see [Effort Levels](CC-model-provider-configuration.md#effort-levels)) | [env-vars][env-vars] |
@@ -149,9 +150,9 @@ Toggle metric attributes to trade granularity for storage cost. Source: [monitor
 | Variable | Default | Purpose | Source |
 |---|---|---|---|
 | `CLAUDECODE` | Set by CC | Session guard — set to `1` in shells CC spawns. Clear to enable recursive spawning | [env-vars][env-vars] |
-| `CLAUDE_CONFIG_DIR` | `~/.claude` | Override the configuration directory (settings, hooks, plugins, memory; on Linux/Windows also credentials → per-dir login = one account per dir, enabling concurrent multi-account sessions; macOS credentials stay in Keychain and carry over). **Documented only in the [debug-config guide][debug-config]** — absent from the official env vars list as of 2026-07-23 | [debug-config][debug-config] |
+| `CLAUDE_CONFIG_DIR` | `~/.claude` | Override the configuration directory (settings, hooks, plugins, memory; on Linux/Windows also credentials → per-dir login = one account per dir, enabling concurrent multi-account sessions; macOS credentials stay in Keychain and carry over). Now listed on the official env vars page (checked 2026-11-26); ignored in project and local settings; credential storage is covered by the [authentication docs](https://code.claude.com/docs/en/authentication.md#credential-management). Earlier (2026-07-23) documented only in the [debug-config guide][debug-config] | [env-vars][env-vars] |
 | `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` | `8` | Consecutive times a `Stop`/`SubagentStop` hook may block the turn from ending before CC overrides it and ends the turn; `0` disables the cap. See [CC-hooks-system-analysis.md § Stop-hook loop cap](CC-hooks-system-analysis.md#stop-hook-loop-cap) | [env-vars][env-vars] |
-| `CLAUDE_CODE_TMPDIR` | `/tmp` (Unix) | Override temp directory. CC appends `/claude/` | [env-vars][env-vars] |
+| `CLAUDE_CODE_TMPDIR` | `/tmp` (macOS); `os.tmpdir()` (Linux, Windows) | Override temp directory. CC appends `/claude-{uid}/` on Unix, `/claude/` on Windows; default `/tmp` on macOS, `os.tmpdir()` on Linux and Windows; sandboxed Bash subprocesses get a short fallback `$TMPDIR` when the override is a long path (checked 2026-11-26) | [env-vars][env-vars] |
 | `CLAUDE_CODE_AUTO_MODE_SERVER` | (depends on session) | Whether CC asks the server to review auto-mode actions; `0` = CC's own classifier requests. v2.1.271+ (direct API connection: v2.1.281+). Since v2.1.319, with telemetry or feature flags off (including behind LLM gateways), calls the server can't check are asked about or denied with no fallback to the built-in classifier unless this is `0` (Bedrock, Vertex and Foundry are unchanged); behind a gateway, `1` turns the server check on even with `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` set | [env-vars][env-vars], [changelog][changelog] (2.1.319) |
 | `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` | `120000` | Milliseconds before a still-running MCP tool call moves to a background task; `0` turns automatic backgrounding off and, interactively, makes Claude wait for MCP tasks. v2.1.212+ | [env-vars][env-vars] |
 | `CLAUDE_CODE_DISABLE_MCP_TASK_BACKGROUND` | (unset) | `1` = in an interactive session Claude waits for an MCP task's result (a call still moves to the background after the auto-background threshold). The docs say v2.1.304+; the changelog lists it under 2.1.319, when MCP tasks started running in the background in the terminal | [env-vars][env-vars], [changelog][changelog] (2.1.319) |
@@ -374,7 +375,7 @@ Cross-ref: [CC-binary-architecture.md](CC-binary-architecture.md), [CC RE landsc
 | `ANTHROPIC_FOUNDRY_AUTH_TOKEN` | Foundry auth token | String extraction, CC 2.1.87 |
 | `ANTHROPIC_FOUNDRY_BASE_URL` | Foundry endpoint | String extraction, CC 2.1.87 |
 | `ANTHROPIC_FOUNDRY_RESOURCE` | Foundry resource ID | String extraction, CC 2.1.87 |
-| `ANTHROPIC_SMALL_FAST_MODEL` | Haiku-tier model override | String extraction, CC 2.1.87 |
+| `ANTHROPIC_SMALL_FAST_MODEL` | Now documented on the env vars page as deprecated (Haiku-class model for background tasks; checked 2026-11-26) | [env-vars][env-vars]; string extraction, CC 2.1.87 |
 | `ANTHROPIC_SMALL_FAST_MODEL_AWS_REGION` | Haiku model AWS region | String extraction, CC 2.1.87 |
 | `ANTHROPIC_CUSTOM_MODEL_OPTION` | Custom model option | String extraction, CC 2.1.87 |
 | `ANTHROPIC_CUSTOM_MODEL_OPTION_NAME` | Custom model display name | String extraction, CC 2.1.87 |
