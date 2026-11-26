@@ -3,18 +3,18 @@ title: Kiro Analysis
 source: https://kiro.dev/
 purpose: Analysis of Kiro, AWS's spec-driven agentic IDE, as a coding agent platform distinct from conversational AI coding assistants.
 created: 2026-06-16
-updated: 2026-11-19
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: trial
 ---
 
-**Details:** **Vendor**: Amazon Web Services | **License**: Proprietary (AWS Customer Agreement) | **Preview**: 2025-07-14 | **GA**: 2025-11-17 | **CLI version**: 2.7.0 (2026-06-12) | Requires AWS Builder ID
+**Details:** **Vendor**: Amazon Web Services | **License**: Proprietary (AWS Customer Agreement) | **Preview**: 2025-07-14 | **GA**: 2025-11-17 | **CLI version**: 3.6.2 (2026-11-25, checked 2026-11-26) | Requires AWS Builder ID
 
 ## What It Is
 
 Kiro is an **agentic IDE** from Amazon Web Services, launched in public preview on 2025-07-14 (at AWS Summit New York) and reaching general availability on 2025-11-17. It is positioned as the successor to Amazon Q Developer (new Q Developer signups blocked 2026-05-15; IDE plugins and paid subscriptions retired by 2027-04-30). It positions itself between "vibe coding" (unstructured prompt-to-code) and disciplined software engineering through a **spec-driven development** model: before any agent writes code, it produces three structured planning documents (requirements, design, tasks) that drive parallel agentic execution.
 
-The product ships three surfaces — a desktop IDE (Code OSS-based, compatible with VS Code settings and extensions), a CLI (macOS/Linux/Windows), and a browser interface at `app.kiro.dev`. Models default to **Claude Sonnet 4.5**; Pro Max and Power tiers add **Claude Opus 4.8** (1M context window). Copyright is held by ©2026 Amazon.com, Inc. or its affiliates; the software is proprietary (accessed 2026-06-16).
+The product ships three surfaces — a desktop IDE (Code OSS-based, compatible with VS Code settings and extensions), a CLI (macOS/Linux/Windows), and a browser interface at `app.kiro.dev`. Prompts default to **Auto**, an agent that combines several frontier and specialised models; paid tiers can choose premium models such as Claude Opus 5.5, Opus 5, Sonnet 5.5 and Haiku 5.5, and the Free tier lists Claude Sonnet 4.5 plus open-weight models ([pricing](https://kiro.dev/pricing/), checked 2026-11-26). The earlier Opus 4.8 (1M context) per-tier claim is unverified. Copyright is held by ©2026 Amazon.com, Inc. or its affiliates; the software is proprietary (accessed 2026-06-16).
 
 **Key distinction vs peers** (GitHub Copilot CLI, Cursor, Windsurf): Kiro's differentiator is the first-class spec phase (requirements, design, tasks; Quick Spec skips approval gates) — requirements, design, and tasks are first-class artifacts, not ephemeral chat history. This makes it the closest production IDE analogue to the structured-agent patterns documented in this research repo.
 
@@ -53,7 +53,7 @@ Actions are either **agent prompts** (Kiro interprets instructions) or **shell c
 Steering files (`.kiro/steering/*.md`) provide persistent markdown guidance that Kiro loads into interactions to enforce team conventions, patterns, and library choices. Unlike `AGENTS.md` (which lacks inclusion modes), steering supports four loading strategies:
 
 - **Always** — loaded into every interaction
-- **Conditional** — loaded when file patterns match (e.g., `components/**/*.tsx`)
+- **Conditional** (`fileMatch`) — loaded when file patterns match (e.g., `components/**/*.tsx`)
 - **Manual** — referenced explicitly via `#steering-file-name` in chat
 - **Auto** — intelligently included when the request matches the file's description
 
@@ -65,39 +65,39 @@ Kiro supports [MCP (Model Context Protocol)][kiro-mcp] servers enabled via Setti
 
 ### Autopilot Mode
 
-> **Update 2026-10-22:** the CLI's autonomous mode is now `/autonomous on` (v2.31.0, 2026-10-13:
-> "Run /autonomous on in a local V3 session…", [CLI changelog][kiro-cli-changelog]). Kiro's `/goal`
+> **Update 2026-10-22:** the CLI's autonomous mode is now `/autonomous on` (v2.31.0, 2026-10-13, unverified: "Run /autonomous on in a local V3 session…"; the 3.0.0 entry of 2026-11-03 says it "runs tasks without per-command approval with sandboxing on", [CLI changelog][kiro-cli-changelog]). Kiro's `/goal`
 > has the agent write its own checks — "The agent derives acceptance criteria from your goal
 > statement" — and "By default, the agent runs up to 5 iterations — increase this with --max"
 > ([goal command][kiro-goal-doc]). Compared across agents in
 > [goal-loops-landscape.md](goal-loops-landscape.md).
 
-An **autopilot** mode (equivalent to "yolo" in peers) allows fully autonomous task execution without per-action approval. The `/goal` command (added CLI 2.7.0, 2026-06-12) enables iterative task completion with built-in verification loops. **Queue Steering** (`Ctrl+S`) allows mid-turn course corrections without stopping the agent.
+An **autopilot** mode (equivalent to "yolo" in peers) allows fully autonomous task execution without per-action approval. The `/goal` command (added CLI 2.7.0, 2026-06-12; unverified) enables iterative task completion with built-in verification loops. **Queue Steering** (`Ctrl+S`) allows mid-turn course corrections without stopping the agent.
 
-### Pricing (accessed 2026-06-16)
+### Pricing (checked 2026-11-26)
 
 | Plan | Monthly | Credits | Notes |
 |---|---|---|---|
 | Free | $0 | 50 | Claude Sonnet 4.5 + open-weight models only |
 | Pro | $20 | 1,000 | Premium models; $0.04/credit overage |
 | Pro+ | $40 | 2,000 | Premium models |
-| Pro Max | $100 | 5,000 | Launched 2026-06-10 |
+| Pro Max | $100 | 5,000 | Launched 2026-06-10 (unverified) |
 | Power | $200 | 10,000 | Highest individual tier |
-| Team / Enterprise | Same base pricing | Same | Adds SAML/SCIM SSO via AWS IAM Identity Center, centralized billing, usage analytics |
+| Teams | $20/seat (2+ seats pool credits) | 500 per seat, pooled | $0.04 add-on credits; add-on credits expire 12 months after purchase |
+| Enterprise | Credit pooling, billed through AWS | Pooled | Adds SAML/SCIM SSO via AWS IAM Identity Center, centralized billing, usage analytics (unverified) |
 | GovCloud | ~20% higher | — | Free tier unavailable |
 
-Credits reset monthly; unused credits do not roll over. Overage billing is disabled by default and must be enabled in settings. Subscriptions process on the 1st of each month.
+Credits reset monthly; unused included credits do not roll over. A first Free-to-Pro upgrade grants 500 trial credits usable within 12 months. Overage billing is disabled by default and must be enabled in settings. Subscriptions process on the 1st of each month.
 
 ## Adoption Decision
 
 | Dimension | Assessment |
 |---|---|
 | **Use case** | Spec-driven feature development; structured agentic coding in complex codebases |
-| **Model** | Claude Sonnet 4.5 default; Opus 4.8 (1M context) on paid tiers |
+| **Model** | Auto default; premium models on paid tiers (Opus 5.5, Sonnet 5.5 and others; Free: Sonnet 4.5 and open-weight; checked 2026-11-26) |
 | **Spec workflow** | Requirements (or bugfix) → design → tasks pipeline; Quick Spec generates all three without approval gates |
 | **Extensibility** | MCP, steering files, hooks, VS Code plugin compatibility |
 | **Autonomy control** | Per-action approval → autopilot; `/goal` + Queue Steering for mid-turn correction |
-| **Maturity** | Preview 2025-07-14; GA 2025-11-17; CLI v2.7.0 (2026-06-12); active release cadence |
+| **Maturity** | Preview 2025-07-14; GA 2025-11-17; CLI v3.6.2 (2026-11-25); active release cadence |
 | **License** | **Proprietary** — AWS Customer Agreement; incorporates OSS components (Chromium/BSD, Bun/MIT, WebKit/LGPL-2) |
 | **Cost** | Free tier (50 credits/month); paid tiers $20–$200/month; requires AWS Builder ID |
 | **AWS lock-in** | Auth via AWS Builder ID; native AWS Documentation MCP; designed around AWS CDK/Lambda/DynamoDB workflows |
@@ -129,7 +129,7 @@ Credits reset monthly; unused credits do not roll over. Overage billing is disab
 | [Kiro steering docs][kiro-steering] | Inclusion modes, scope hierarchy, file reference syntax |
 | [Kiro MCP docs][kiro-mcp] | MCP enablement, AWS Documentation MCP server example |
 | [Kiro license][kiro-license] | AWS Customer Agreement, proprietary status, OSS component list; ©2026 Amazon.com |
-| [Kiro changelog][kiro-changelog] | CLI v2.7.0 (2026-06-12), /goal command, Queue Steering, GitLab support, Opus 4.8 |
+| [Kiro changelog][kiro-changelog] | CLI v3.6.2 (2026-11-25), /autonomous on (3.0.0), /goal command, Queue Steering, GitLab support |
 | [Constellation Research — AWS launches Kiro][constellation] | Preview launch 2025-07-14 at AWS Summit New York; AWS executives Nikhil Swaminathan and Deepak Singh |
 | [AWS blog — Kiro GA (2025-11-24 roundup)][aws-kiro-ga] | GA date (week of 2025-11-17); 250k preview users; four GA-launch capabilities including CLI and enterprise plans |
 | usage.ai — AWS May 2026 updates (`usage.ai/blogs/aws/monthly-updates/aws-may-2026`, dead as of 2026-07-23 — redirect loop; retained for provenance) | Kiro Web launch; Q Developer retirement timeline; new Q Developer signups blocked 2026-05-15 |

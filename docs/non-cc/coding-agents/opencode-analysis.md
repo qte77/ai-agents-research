@@ -3,24 +3,24 @@ title: opencode Analysis
 source: https://github.com/sst/opencode
 purpose: Analysis of opencode as a provider-agnostic, open-source terminal coding agent with TUI, desktop, and headless modes.
 created: 2026-06-16
-updated: 2026-11-09
+updated: 2026-11-26
 validated_links_on: 2026-11-09
 status: trial
 ---
 
-**Details:** **License**: MIT | **Latest release**: v1.17.7 (2026-06-14) | **Stars**: ~175 k (anomalyco/opencode, 2026-06-16). Also runs on or integrates with: `terminal`, `desktop`, `ide`, `web`, `headless`.
+**Details:** **License**: MIT | **Latest release**: v1.19.6 (2026-11-17) | **Stars**: ~229 k (anomalyco/opencode, checked 2026-11-26). Also runs on or integrates with: `terminal`, `desktop`, `ide`, `web`, `headless`.
 
 ## What It Is
 
 opencode is an **open-source, provider-agnostic AI coding agent** built for the
 terminal. It combines a rich TUI (Terminal User Interface) with a headless
-`opencode run` mode, a desktop beta application (macOS/Windows/Linux), and IDE
+`opencode run` mode, a desktop application (macOS/Windows/Linux; no longer labelled beta on first-party pages as of 2026-11-26), and IDE
 extensions — all driven by the same engine and `opencode.json` configuration.
 
 The project originated inside [SST][sst] (the Serverless Stack infra framework
 team) and is now maintained by Anomaly under the
 [`anomalyco/opencode`][gh-repo] GitHub organisation (the `sst/opencode`
-canonical URL still resolves). It reached ~175 k GitHub stars by mid-2026,
+canonical URL still resolves). It reached ~229 k GitHub stars by 2026-11-26,
 making it one of the fastest-growing open-source coding-agent projects.
 
 **Key distinction vs proprietary peers** (GitHub Copilot CLI, Cursor): opencode
@@ -44,7 +44,7 @@ context clean.
 
 ### Provider support
 
-opencode integrates 75+ LLM providers via the AI SDK and [Models.dev][models-dev],
+opencode integrates 200+ LLM providers (per opencode.ai, checked 2026-11-26) via the AI SDK and [Models.dev][models-dev],
 including Anthropic, OpenAI, Google Vertex AI, Azure OpenAI, AWS Bedrock, GitHub
 Copilot, GitLab Duo, DeepSeek, Groq, xAI, Ollama, LM Studio, OpenRouter, and
 OpenAI-compatible custom endpoints. Credentials are stored in
@@ -115,16 +115,15 @@ npm install -g opencode                         # npm
 
 ## Adoption Decision
 
-**Trial** — opencode is real, active, and already at significant scale (~175 k
-stars, v1.17.7 in June 2026). The MIT license, 75+ provider support, and full
+**Trial** — opencode is real, active, and already at significant scale (~229 k
+stars, v1.19.6 in November 2026). The MIT license, 200+ provider support, and full
 headless mode make it immediately deployable without a vendor subscription.
 Two concerns prevent **Adopt** today:
 
-1. The desktop application is explicitly **beta** across all platforms
-   ([opencode.ai][home]). Stability for GUI surface is unvalidated.
+1. The desktop application was labelled **beta** on opencode.ai in June 2026; the label is gone as of 2026-11-26 ([opencode.ai][home]), but stability for the GUI surface is unvalidated.
 2. Managed tiers (Zen, Go) are new commercial offerings with limited public
-   track record — BYOK path remains solid but tier pricing/SLA details are not
-   disclosed on first-party pages (as of 2026-06-16).
+   track record — BYOK path remains solid but SLA details are not
+   disclosed on first-party pages. Go is priced "from $10/month" (opencode.ai, checked 2026-11-26); Zen is not mentioned there (unverified).
 
 For terminal/headless use in CI or local development with BYOK, opencode is
 ready to trial. Gate full adoption on desktop GA and production mileage reports.
@@ -134,8 +133,8 @@ ready to trial. Gate full adoption on desktop GA and production mileage reports.
 - [ ] Run `opencode run` in a sample repo to validate headless CI integration.
 - [ ] Benchmark context consumption with the GitHub MCP server enabled (MCP
       docs warn this can exhaust limits).
-- [ ] Track desktop GA announcement — upgrade status to **Adopt** once GA.
-- [ ] Evaluate OpenCode Zen/Go managed tiers when pricing becomes public.
+- [ ] Track whether a desktop GA is announced — the beta label is gone but no GA statement was seen.
+- [ ] Evaluate OpenCode Zen/Go managed tiers (Go pricing is public; Zen is unverified).
 - [ ] Verify AGENTS.md compatibility with CC and Copilot CLI harnesses
       (cross-tool portability).
 
@@ -143,14 +142,14 @@ ready to trial. Gate full adoption on desktop GA and production mileage reports.
 
 | Source | Content |
 |---|---|
-| [anomalyco/opencode GitHub repo][gh-repo] | License (MIT), star count (~175 k), v1.17.7 release date, install methods; accessed 2026-06-16 |
-| [opencode.ai home][home] | Product overview, desktop beta status, 75+ providers claim; accessed 2026-06-16 |
+| [anomalyco/opencode GitHub repo][gh-repo] | License (MIT), star count (~229 k), v1.19.6 release date, install methods; accessed 2026-06-16 |
+| [opencode.ai home][home] | Product overview, desktop status, 200+ providers claim; checked 2026-11-26 |
 | [opencode.ai/docs][docs] | TUI features, plan mode, /undo, /share, AGENTS.md, image input; accessed 2026-06-16 |
 | [opencode.ai/docs/providers][providers-doc] | Full provider list, Zen/Go tiers, /connect + /models workflow; accessed 2026-06-16 |
 | [opencode.ai/docs/config][config-doc] | Configuration layers, MCP key, tool/permission/snapshot options; accessed 2026-06-16 |
 | [opencode.ai/docs/mcp-servers][mcp-doc] | Local/remote MCP, OAuth, token budget warning; accessed 2026-06-16 |
 | [opencode.ai/docs/cli][cli-doc] | `opencode run`, `serve`, `web`, `attach`, `--format json`; accessed 2026-06-16 |
-| [GitHub release v1.17.7][release] | Plugin architecture, ACP shell, MCP workspace roots; 2026-06-14 |
+| [GitHub release v1.19.6][release] | Latest release, 2026-11-17 |
 | [GitHub Copilot CLI analysis][gh-copilot-cli] | Proprietary peer comparison |
 | [anomalyco/rune][rune] | README, PLAN.md, LICENSE (MIT), no releases; `gh api` 2026-11-09 |
 
@@ -161,7 +160,7 @@ ready to trial. Gate full adoption on desktop GA and production mileage reports.
 [config-doc]: https://opencode.ai/docs/config
 [mcp-doc]: https://opencode.ai/docs/mcp-servers
 [cli-doc]: https://opencode.ai/docs/cli
-[release]: https://github.com/sst/opencode/releases/tag/v1.17.7
+[release]: https://github.com/sst/opencode/releases/tag/v1.19.6
 [models-dev]: https://models.dev
 [sst]: https://sst.dev
 [gh-copilot-cli]: ../agents/github-copilot-cli-analysis.md
