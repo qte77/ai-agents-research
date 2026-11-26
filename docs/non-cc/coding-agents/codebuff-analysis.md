@@ -89,10 +89,8 @@ Codebuff occupies a similar terminal-agent niche to [GitHub Copilot CLI][copilot
 [homepage]: https://www.codebuff.com/
 [pricing]: https://www.codebuff.com/pricing
 [releases]: https://github.com/CodebuffAI/freebuff/releases
-[readme-arch]: https://github.com/CodebuffAI/freebuff/blob/main/README.md
 [readme-bench]: https://github.com/CodebuffAI/freebuff/blob/main/README.md
 [readme-freebuff]: https://github.com/CodebuffAI/freebuff/blob/main/README.md
-[readme-models]: https://github.com/CodebuffAI/freebuff/blob/main/README.md
 [readme-sdk]: https://github.com/CodebuffAI/freebuff/blob/main/README.md
 [openrouter]: https://openrouter.ai/
 [copilot-ref]: ../agents/github-copilot-cli-analysis.md
