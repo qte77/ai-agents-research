@@ -4,7 +4,7 @@ source: https://arxiv.org/abs/2605.22794
 purpose: Analysis of MOSS, a self-evolving AI assistant that autonomously rewrites its own source code to fix underperforming behavior surfaced from production sessions.
 platform_scope: [claude-code, codex, deepseek-tui, opencode]
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-11-26
 validated_links_on: 2026-07-23
 status: assess
 ---
@@ -63,8 +63,8 @@ Apache-2.0 (root `LICENSE`, "Copyright 2026 HKGAI"). Code vendored under
 `openclaw/` retains upstream OpenClaw's original MIT license (OpenClaw by
 Peter Steinberger); the arXiv paper text is under arXiv's standard
 nonexclusive-distrib license, separate from the code. Early-stage research
-artifact: repo created 2026-05-22, last pushed 2026-05-23, 19 stars, 3 forks,
-1 open issue — no independent evidence of production adoption beyond these
+artifact: repo created 2026-05-22, last pushed 2026-05-23, 29 stars, 5 forks,
+3 open issues (checked 2026-11-26) — no independent evidence of production adoption beyond these
 counts was verified.
 
 ## Corpus Relevance
