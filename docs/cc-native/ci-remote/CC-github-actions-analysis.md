@@ -3,7 +3,7 @@ title: CC GitHub Actions — claude-code-action & Claude GitHub App
 source: https://code.claude.com/docs/en/github-actions
 purpose: Evaluate Claude Code GitHub Actions for PR automation, code review, issue triage, and scheduled workflows — setup, capabilities, limitations, and cost.
 created: 2026-03-12
-updated: 2026-06-22
+updated: 2026-11-26
 validated_links_on: 2026-06-22
 status: research
 ---
@@ -12,28 +12,33 @@ status: research
 
 Claude Code GitHub Actions (`anthropics/claude-code-action@v1`) brings AI-powered automation to GitHub workflows. Mention `@claude` in any PR or issue, and Claude analyzes code, creates PRs, implements features, and fixes bugs — following the repo's `CLAUDE.md` standards ([source][cc-gha-docs]).
 
-Built on the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview). Defaults to Sonnet; Opus 4.6 available via `--model claude-opus-4-6` ([source][cc-gha-docs]).
+Built on the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview). Without `--model` the action uses the Claude Code default model (the page no longer states a Sonnet default); its examples use `--model claude-opus-5-5` and `--model claude-sonnet-5` ([source][cc-gha-docs]).
 
 The **Claude GitHub App** ([github.com/apps/claude][claude-app]) is the companion app that provides the GitHub integration layer — handling permissions, webhooks, and token management. Publisher: Anthropic (`@anthropics`); built on the publicly available Claude Agent SDK and provided as a third-party GitHub App governed by separate terms beyond GitHub's ([setup.md][gha-setup]). The full permission surface is documented in [GitHub App Permission Surface](#github-app-permission-surface) below.
 
 ## GitHub App Permission Surface
 
-`gh api /apps/claude` (live, 2026-05-18) returns 10 permission scopes:
+`gh api /apps/claude` (live, checked 2026-11-26) returns 15 permission scopes (10 on the 2026-05-18 read); the vendor docs table also lists 15 rows, with `vulnerability_alerts` shown as "Dependabot alerts":
 
 | Scope | Access | Notable |
 |---|---|---|
-| `actions` | read | — |
+| `actions` | write | — |
+| `administration` | read | — |
 | `checks` | write | — |
 | `contents` | write | modify any repo file |
 | `discussions` | write | — |
 | `issues` | write | — |
 | `members` | read | — |
+| `merge_queues` | read | — |
 | `metadata` | read | — |
 | `pull_requests` | write | — |
+| `repository_creation` | write | — |
 | `repository_hooks` | write | manage webhooks |
+| `statuses` | read | — |
+| `vulnerability_alerts` | read | — |
 | `workflows` | write | modify GHA workflows themselves |
 
-Not a vulnerability — by design for `claude-code-action`'s code-write flows. The implication for downstream design: any caller using `apps/claude` as a `GH_TOKEN` source grants all 10 scopes to the App, even if the workflow only posts comments. Per-repo permissions can be restricted at App installation time, but the App's *available* surface remains the full set.
+Not a vulnerability — by design for `claude-code-action`'s code-write flows. The implication for downstream design: any caller using `apps/claude` as a `GH_TOKEN` source grants all 15 scopes to the App, even if the workflow only posts comments. Per-repo permissions can be restricted at App installation time, but the App's *available* surface remains the full set.
 
 The App identity (`claude[bot]`) is honest only because `claude-code-action` is Claude-only across every auth path (see [Auth Path Constraints](#auth-path-constraints)). Reusing the App for an arbitrary multi-LLM workflow breaks that identity guarantee.
 
@@ -46,7 +51,7 @@ The App identity (`claude[bot]`) is honest only because `claude-code-action` is 
 /install-github-app
 ```
 
-Requires repository admin. Only available for direct Anthropic API users (not Bedrock/Vertex) ([source][cc-gha-docs]).
+Requires repository admin. Quick setup (`/install-github-app`) works with the Claude API or a Claude subscription, on github.com repos only; Bedrock, Google Cloud's Agent Platform (Vertex) and Foundry use the manual path in the cloud-providers page ([source][cc-gha-docs]).
 
 ### Interactive Setup Flow
 
@@ -66,7 +71,7 @@ Two authentication paths, gated by repository secret name ([setup.md][gha-setup]
 
 | Choice | Secret name | Source |
 |---|---|---|
-| **Long-lived OAuth token** | `CLAUDE_CODE_OAUTH_TOKEN` | Claude Pro/Max subscription via `claude setup-token` |
+| **Long-lived OAuth token** | `CLAUDE_CODE_OAUTH_TOKEN` | Pro, Max, Ultra, Team or Enterprise subscription via `claude setup-token` |
 | **Anthropic API key** | `ANTHROPIC_API_KEY` | Console-issued, value starts `sk-ant-` |
 
 The OAuth path lets Pro/Max subscribers run the action without a separate API key — the workflow consumes subscription quota. API key remains the path for org accounts and Bedrock/Vertex routing.
@@ -140,7 +145,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: "Generate a summary of yesterday's commits and open issues"
-          claude_args: "--model opus"
+          claude_args: "--model claude-opus-5-5 --allowedTools mcp__github__list_commits,mcp__github__list_issues"
 ```
 
 ([source][cc-gha-docs])
@@ -183,10 +188,13 @@ Aggregate merged PR titles/descriptions, filter for user-facing changes, group b
 | `github_token` | GitHub token for API access | No |
 | `trigger_phrase` | Custom trigger (default: `@claude`) | No |
 | `use_bedrock` | Use AWS Bedrock | No |
-| `use_vertex` | Use Google Vertex AI | No |
+| `use_vertex` | Use Google Cloud's Agent Platform (formerly Vertex AI) | No |
+| `use_foundry` | Use Microsoft Foundry | No |
+| `claude_code_oauth_token` | Subscription OAuth token | No |
+| `plugins`, `plugin_marketplaces`, `settings` | Plugins to load, their marketplaces, and settings JSON | No |
 
 \*Optional — when omitted for comments, responds to trigger phrase
-\*\*Required for direct API, not for Bedrock/Vertex
+\*\*Required for direct API unless `claude_code_oauth_token` or workload identity federation is used; not for Bedrock/Vertex/Foundry
 
 ([source][cc-gha-docs])
 
@@ -195,7 +203,7 @@ Aggregate merged PR titles/descriptions, filter for user-facing changes, group b
 See [CC-cli-reference.md](../configuration/CC-cli-reference.md) for canonical flag definitions. Common flags used in GHA workflows:
 
 ```yaml
-claude_args: "--max-turns 5 --model claude-sonnet-4-6 --mcp-config /path/to/config.json"
+claude_args: "--max-turns 5 --model claude-sonnet-5 --mcp-config /path/to/config.json"
 ```
 
 ### Migration from Beta to v1
@@ -207,14 +215,14 @@ claude_args: "--max-turns 5 --model claude-sonnet-4-6 --mcp-config /path/to/conf
 | `custom_instructions` | `claude_args: --append-system-prompt` |
 | `max_turns` | `claude_args: --max-turns` |
 | `model` | `claude_args: --model` |
-| `allowed_tools` | `claude_args: --allowedTools` |
-| `claude_env` | `settings` JSON format |
+| `allowed_tools` | `claude_args: --allowedTools` (unverified: not on the current upgrade section, see the action's migration guide) |
+| `claude_env` | `settings` JSON format (unverified: not on the current upgrade section, see the action's migration guide) |
 
 ([source][cc-gha-docs])
 
 ## Auth Path Constraints
 
-`anthropics/claude-code-action`'s `action.yml` defines exactly 5 auth inputs (verified at `@main`). All 5 paths route to Claude — there is no model-shopping capability.
+`anthropics/claude-code-action`'s `action.yml` defined 5 auth inputs when last read at `@main`; the vendor docs now also list workload-identity-federation inputs (`anthropic_federation_rule_id`, `anthropic_organization_id`, `anthropic_service_account_id`, `anthropic_workspace_id`), so the count is stale and the current `action.yml` was not re-read (unverified). All paths route to Claude — there is no model-shopping capability.
 
 | Input | Auths to | Model | Env var |
 |---|---|---|---|
@@ -226,26 +234,26 @@ claude_args: "--max-turns 5 --model claude-sonnet-4-6 --mcp-config /path/to/conf
 
 **Common misreading**: `use_bedrock: true` does *not* enable "any model from Bedrock." Bedrock, Vertex, and Foundry are billing/hosting layers; model selection is constrained to Claude variants the hyperscaler ships. Default model IDs per first-party docs:
 
-- **Bedrock**: `us.anthropic.claude-sonnet-4-5-20250929-v1:0` ([source][cc-bedrock])
-- **Vertex**: `claude-sonnet-4-5@20250929` ([source][cc-vertex])
-- **Foundry**: `claude-opus-4-7`, `claude-sonnet-4-6`, `claude-haiku-4-5` ([source][cc-foundry])
+- **Bedrock**: primary default Opus 5.5 (`us.anthropic.claude-opus-5-5`, v2.1.280+); the earlier Sonnet 4.5 ID (`us.anthropic.claude-sonnet-4-5-20250929-v1:0`) is the small/fast default ([source][cc-bedrock])
+- **Vertex**: primary default Opus 5.5 (`claude-opus-5-5`); `claude-sonnet-4-5@20250929` is the small/fast default ([source][cc-vertex])
+- **Foundry**: the `opus` alias resolves to Opus 4.6 by default; docs pin examples are `claude-opus-4-8`, `claude-sonnet-5`, `claude-haiku-4-5` ([source][cc-foundry])
 
 The Mantle endpoint (Bedrock-served Claude via Anthropic-native API shape) reaches the same conclusion via a different transport — still Claude.
 
 ## Enterprise: AWS Bedrock & Google Vertex AI
 
-Both providers use OIDC authentication (no static credentials). Requires a custom GitHub App for token generation ([source][cc-gha-docs]).
+Bedrock, Google Cloud's Agent Platform and Foundry use OIDC authentication (no static credentials). A custom GitHub App is optional: choose the official Claude GitHub App, a custom app (3 permissions) or `GITHUB_TOKEN` (which does not trigger CI) ([source][cc-gha-docs]).
 
 ### AWS Bedrock
 
 - Enable Bedrock + request Claude model access
 - Configure GitHub OIDC Identity Provider in AWS
-- Create IAM role with `AmazonBedrockFullAccess`
+- Create IAM role with the scoped invocation policy from the Bedrock IAM configuration (`bedrock:InvokeModel`, `InvokeModelWithResponseStream`, `ListInferenceProfiles`, `GetInferenceProfile` plus two `aws-marketplace` actions), trust limited to the repo
 - Model ID format includes region prefix: `us.anthropic.claude-sonnet-4-6`
 
 ### Google Vertex AI
 
-- Enable Vertex AI API + IAM Credentials API + STS API
+- Enable Vertex AI API (Google Cloud's Agent Platform, formerly Vertex AI) + IAM Credentials API + STS API
 - Create Workload Identity Federation pool with GitHub OIDC provider
 - Create service account with `Vertex AI User` role
 - Project ID auto-retrieved from auth step
@@ -254,7 +262,7 @@ Both providers use OIDC authentication (no static credentials). Requires a custo
 
 ### PR Creation Not Fully Automatic
 
-Claude Code Action does not call GitHub's PR creation API directly. It generates a "Create PR" button/link in the comment that users must click manually. The codebase has no `octokit.rest.pulls.create` calls ([source][gh-discussion-578]). This is a significant gap for fully autonomous issue-to-PR workflows.
+Claude Code Action was reported not to call GitHub's PR creation API directly, instead generating a "Create PR" link that users click ([source][gh-discussion-578]); unverified as of 2026-11-26, since the vendor docs now say quick setup lets Claude "create PRs and push changes". This is a significant gap for fully autonomous issue-to-PR workflows.
 
 ### CLAUDE.md Is the Primary Control Surface
 
@@ -278,15 +286,15 @@ Standard runners (`ubuntu-latest`) are 2-core/7 GB RAM. For large repos or compl
 | Runner | Cores | Per-min (Linux x64) | Notes |
 |---|---|---|---|
 | Standard | 2 | $0.006 | Included minutes on private repos |
-| Larger 4-core | 4 | $0.012 | No included minutes; per-minute only |
-| Larger 16-core | 16 | $0.048 | Good balance for CC agent workloads |
-| Larger 64-core | 64 | $0.168 | Heavy parallel / large codebase |
-| GPU (4-core + T4) | 4 | $0.052 | ML workloads only |
+| Larger 4-core | 4 | $0.012 | Per-minute; included-value eligibility unverified |
+| Larger 16-core | 16 | $0.042 | Good balance for CC agent workloads |
+| Larger 64-core | 64 | $0.162 | Heavy parallel / large codebase |
+| GPU (4-core; T4 unverified) | 4 | $0.052 | ML workloads only |
 | arm64 2-core | 2 | $0.005 | Cheapest option |
 
 ([source][gh-runner-pricing])
 
-**Key billing facts**: Minutes rounded up to nearest whole minute. Larger runners are *not* free for public repos and *cannot* use included plan minutes. No extra cost for static IPs on larger runners ([source][gh-runner-pricing]).
+**Key billing facts**: Minutes rounded up to nearest whole minute. Larger runners are *not* free for public repos; for Team and Enterprise Cloud accounts, eligible larger-runner usage can draw from included value (eligibility not defined on the pricing page, checked 2026-11-26). No extra cost for static IPs on larger runners ([source][gh-runner-pricing]).
 
 **Selecting a larger runner** — use the runner label directly in `runs-on` ([source][gh-larger-runner-jobs]):
 
@@ -314,7 +322,7 @@ runs-on:
 
 **Adopt for `@claude` interactive use.** The mention-based workflow is low-friction — install app, add secret, copy workflow, start mentioning. Ideal for PR feedback, issue triage, and ad-hoc code questions.
 
-**Evaluate for automated PR review.** The prompt-driven mode on `pull_request: [opened, synchronize]` enables auto-review, but results post as comments, not GitHub review annotations. Compare with the [Code Review plugin](../plugins-ecosystem/CC-official-plugins-landscape.md#code-review) for structured multi-agent scoring.
+**Evaluate for automated PR review.** The prompt-driven mode on `pull_request: [opened, synchronize]` enables auto-review, but the review workflow posts inline comments per finding or one summary comment (from v2.1.229; earlier only in the run log), skips drafts, closed, trivial or automated PRs and PRs already commented on, and uses the `code-review` plugin; the vendor also documents a first-party Code Review product that needs no workflow. Compare with the [Code Review plugin](../plugins-ecosystem/CC-official-plugins-landscape.md#code-review) for structured multi-agent scoring.
 
 **Defer for fully autonomous issue-to-PR.** PR creation is manual (button click). Until the action calls the PR creation API directly, fully unattended issue→branch→PR pipelines require wrapper scripts.
 
