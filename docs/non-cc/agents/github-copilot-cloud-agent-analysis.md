@@ -2,13 +2,13 @@
 title: GitHub Copilot Cloud Agent Analysis
 purpose: Analysis of Copilot on github.com (cloud agent, automations, MCP configuration, custom instructions, automatic code review, responsible-use mitigations) as the cloud counterpart to the Copilot CLI.
 created: 2026-10-24
-updated: 2026-11-12
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 status: assess
 ---
 
 **Details:** Proprietary, GitHub-hosted. Automations launched 2026-06-02 ([changelog][cl-automations]);
-Copilot code review is generally available, Copilot approvals are public preview
+Copilot code review is generally available, Copilot approvals are public preview (unverified: the code review page, checked 2026-11-26, labels only cross-repository context, passing suggestions to the cloud agent and Max/Adaptive effort as preview)
 ([code review concepts][cr-concepts]). Every claim below was fetched first-party on 2026-10-24 and
 re-checked by an independent falsification pass (19 of 19 confirmed, none wrong); the
 [GitHub certifications](#github-certifications) rows were added and fetched first-party on
@@ -28,9 +28,10 @@ Model Context Protocol (MCP) configuration.
 Automations make the cloud agent "run automatically, either on a schedule or in response to an
 event in a repository" ([create automations][automations]):
 
-- **Triggers:** "On a schedule", "When an issue is created", "When a pull request is opened", "When a
-  pull request is synchronized". Schedules use "a recurring interval, either hourly, daily, or
-  weekly". A later changelog entry, "Trigger Copilot automations with comments"
+- **Triggers:** the docs page (checked 2026-11-26) describes schedule, repository-event (issue and
+  pull request) and API triggers plus a Manual trigger for testing, and does not list schedule
+  intervals; an earlier reading quoted "When a pull request is synchronized" and hourly/daily/weekly
+  intervals, which we could not find on the current page (unverified). A later changelog entry, "Trigger Copilot automations with comments"
   ([2026-08-03][cl-comments]), adds comment triggers, which the docs page's trigger list doesn't
   yet show.
 - **Where:** "Automations are not available in public repositories." The launch entry says they are
@@ -59,8 +60,8 @@ Per [configure MCP servers][mcp-config]:
   Code review only uses read-only tools: it "excludes tools when this [`annotations.readOnlyHint`]
   annotation is missing or set to `false`."
 
-**[github/github-mcp-server][gh-mcp]** — MIT, 33,895★, latest release `v2.0.3` (2026-10-21)
-(`gh api`, 2026-10-24). Runs remotely at `https://api.githubcopilot.com/mcp/` or locally (Docker image
+**[github/github-mcp-server][gh-mcp]** — MIT, 34,782★, latest release `v2.3.0` (2026-11-24)
+(`gh api`, checked 2026-11-26). Runs remotely at `https://api.githubcopilot.com/mcp/` or locally (Docker image
 or stdio binary). A `--read-only` flag skips write tools ("Read-only mode takes priority"), and
 toolsets narrow what is exposed. "GitHub Enterprise Server does not support remote server hosting",
 so GHES users run it locally. Playwright MCP's own coverage is in
@@ -92,10 +93,13 @@ For agent-config portability this matters: a repo that already keeps an `AGENTS.
   pushes" and "Review draft pull requests" options ([configure code review][cr-config]).
 - **Billing:** for automatic reviews, "AI credits consumption is attributed to the pull request
   author", and reviews also consume GitHub Actions minutes; a manually requested review is
-  attributed to the person who requested it ([code review concepts][cr-concepts]).
-- **External licences:** "By default, people can use an external license to request a review from
-  Copilot" — a licence not provided by the organization that owns the repository. The setting "Only
-  allow Copilot code review to be triggered by authorized users" stops that; "Automatic reviews
+  attributed to the person who requested it. By default, with no administrator billing choice,
+  eligible reviews for licensed members bill to the organization that owns the repository;
+  selecting "Member" in settings bills members' entitlements instead (checked 2026-11-26) ([code review concepts][cr-concepts]).
+- **External licences:** the page (checked 2026-11-26) says owners and admins "can optionally block"
+  reviews requested with an external license, without stating a default; an earlier reading quoted
+  "By default, people can use an external license" and a setting "Only allow Copilot code review to
+  be triggered by authorized users", neither found on the current page (unverified). An external license is one not provided by the organization that owns the repository; "Automatic reviews
   configured by repository or organization rulesets still run" ([code review concepts][cr-concepts]).
 
 Other review products are compared in
@@ -105,7 +109,7 @@ Other review products are compared in
 
 Per [responsible use of agents][responsible]:
 
-- "Copilot cannot push directly to your default branch (for example, `main`)" — work lands in a
+- "Copilot cannot push directly to your default branch (for example, `main`)" (unverified: not found on the responsible-use page, checked 2026-11-26, which says the agent can only push to a single branch, the PR branch or a new `copilot/` branch) — work lands in a
   pull request.
 - "By default, the cloud agent has a firewall enabled to prevent exfiltration of code or other
   sensitive data."
@@ -155,7 +159,7 @@ skills either one assesses.
 - **Automations run without a person.** A scheduled or event-triggered agent acting on issue or PR
   text is exposed to whatever that text says; combine automations with the read-only and secret
   scoping above.
-- **Docs vs changelog drift.** The comment trigger shows the docs page can lag the changelog.
+- **Docs vs changelog drift.** The comment trigger may show the docs page lagging the changelog (unverified: the current page, checked 2026-11-26, describes repository-event triggers generically).
 
 ## Sources
 
