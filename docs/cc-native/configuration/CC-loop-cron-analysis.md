@@ -3,7 +3,7 @@ title: CC /loop Command and Cron System Analysis
 source: https://code.claude.com/docs/en/scheduled-tasks
 purpose: Analysis of the /loop slash command for recurring autonomous tasks, its CronCreate/List/Delete internals, and external scheduling alternatives; notes /loop exits after one iteration in -p mode.
 created: 2026-03-17
-updated: 2026-10-18
+updated: 2026-11-26
 validated_links_on: 2026-10-18
 status: assess
 ---
@@ -33,9 +33,9 @@ What you provide determines how the loop behaves ([source][cc-sched-loop]):
 This supersedes this doc's earlier claim of a flat **"default interval: 10 minutes"** — no such default exists in the current docs; omitting the interval now means Claude self-paces instead.
 
 - **Units**: `s`/`m`/`h`/`d` -- natural language intervals also work (e.g. `every 2 hours`); seconds round up to the nearest minute (cron's 1-minute granularity), and odd intervals like `7m` round to the nearest clean cron step
-- **Max**: 50 scheduled jobs per session (unchanged, re-confirmed 2026-10-15)
+- **Max**: 50 scheduled jobs per session (unchanged, re-confirmed 2026-10-15; the 7-to-30-day expiry change is below)
 - **Feature gate**: `tengu_kairos_cron` — see the Details line above
-- **Self-paced loops appear in the task list** like any fixed-interval one, so `CronList`/cancellation work the same way; they're also subject to the 7-day expiry below
+- **Self-paced loops appear in the task list** like any fixed-interval one, so `CronList`/cancellation work the same way; they're also subject to the recurring-task expiry below (30 days)
 - **`/loop 20m /code-review 1234`-style skill re-runs** only execute skills Claude is [allowed to invoke on its own][skill-invocation]; built-in commands (`/permissions`, `/model`, `/clear`), `disable-model-invocation: true` skills, skills withheld by a `skillOverrides` setting or a `Skill` deny rule, and Model Context Protocol (MCP) prompts (`/mcp__server__name`) instead reach Claude as plain text on a scheduled fire
 - A session with the [Monitor tool available][monitor-tool] may use it directly for a dynamic `/loop` request instead of polling — streaming a background script's output back is often more token-efficient and responsive than re-running a prompt on an interval
 
@@ -54,7 +54,7 @@ Under the hood, `/loop` is syntactic sugar over internal tools, officially docum
 - `CronCreate` -- schedule a new task; takes a 5-field cron expression, the prompt to run, and whether it recurs or fires once
 - `CronList` -- list scheduled tasks with their IDs, schedules, next run times (next-run times require CC v2.1.299+), and prompts
 - `CronDelete` -- cancel a task by its 8-character ID
-- `ScheduleWakeup` -- used internally by a **self-paced** loop to schedule its next wakeup, or to end the loop by calling it with `stop: true`. If an iteration ends without rescheduling or stopping, Claude Code schedules one fallback wakeup ~20 minutes later and ends the loop if that iteration doesn't reschedule either.
+- `ScheduleWakeup` -- used internally by a **self-paced** loop to schedule its next wakeup, or to end the loop by calling it with `stop: true`. A self-paced loop can stop when an iteration ends without scheduling the next one; the first-party page ties one extra iteration about 20 minutes later to the `CLAUDE_CODE_LOOP_KEEPALIVE` environment variable and does not say whether that fallback is on by default (default unverified, checked 2026-11-26). The page's tools table does not list `ScheduleWakeup`.
 
 These tools are available to the model within the session but are not exposed
 as user-facing slash commands beyond `/loop`; ask Claude in natural language
@@ -70,7 +70,7 @@ different default, with no `durable` parameter named** ([source][cc-sched-loop])
 
 - Tasks are session-scoped, but on `--resume`/`--continue`, Claude Code restores
   **every** task scheduled with `CronCreate` by default, **except**: recurring
-  tasks that have [expired](#seven-day-expiry) (7 days), one-shot tasks whose
+  tasks that have [expired](#recurring-task-expiry) (30 days; 7 days for tasks created before v2.1.330), one-shot tasks whose
   fire time has passed, and a **self-paced `/loop`** specifically (which is never
   restored — run `/loop` again to restart it). Background Bash and Monitor tasks
   are never restored on resume, either.
@@ -104,7 +104,7 @@ Re-confirm against a current build before relying on either reading.
   holding PID is alive before honoring the lock. *(Original gist/empirical
   finding; the current first-party page doesn't mention a lock file either way.)*
 
-**Known bug**: `scheduled_tasks.lock` is written to `.claude/` in the working
+**Reported bug** (both issues below are now closed as not planned, 2026-04-06 and 2026-05-30, so a fix is not confirmed; checked 2026-11-26): `scheduled_tasks.lock` is written to `.claude/` in the working
 tree instead of `~/.claude/`, polluting the repo with ephemeral runtime state.
 Not gitignored by default.
 
@@ -161,9 +161,9 @@ claude --dangerously-skip-permissions
 **Key detail**: `/loop` rounds intervals up to 1-minute minimum (cron
 granularity).
 
-### Seven-day expiry
+### Recurring task expiry
 
-Recurring tasks auto-expire 7 days after creation — unchanged, re-confirmed 2026-10-15. The task fires one final time, then deletes itself. A self-paced loop is also subject to this expiry. For longer-lived recurring work, cancel and recreate before expiry, or use [Routines](../ci-remote/CC-web-scheduled-tasks-analysis.md) or Desktop scheduled tasks instead.
+Recurring tasks auto-expire 30 days after creation, as of the first-party page checked 2026-11-26: the task fires one final time, then deletes itself. Before Claude Code v2.1.330 the limit was 7 days, and recurring tasks created with `CronCreate` on those versions keep it. A self-paced loop also expires 30 days after it starts. For longer-lived recurring work, cancel and recreate before expiry, or use [Routines](../ci-remote/CC-web-scheduled-tasks-analysis.md) or Desktop scheduled tasks instead.
 
 ### Disable the scheduler
 
@@ -171,7 +171,7 @@ Set `CLAUDE_CODE_DISABLE_CRON=1` in the environment to disable the scheduler ent
 
 ### Stop a loop
 
-To stop a **self-paced** `/loop` while it waits for its next iteration, press `Esc` — this clears the pending wakeup so it doesn't fire again. A fixed-interval loop, or one scheduled by asking Claude directly, isn't affected by `Esc` and keeps running until cancelled ([source][cc-sched-loop]) or the 7-day expiry above.
+To stop a **self-paced** `/loop` while it waits for its next iteration, press `Esc` — this clears the pending wakeup so it doesn't fire again. A fixed-interval loop, or one scheduled by asking Claude directly, isn't affected by `Esc` and keeps running until cancelled ([source][cc-sched-loop]) or the expiry above. Esc works on an empty prompt; Ctrl+C also stops a self-paced loop while Claude is idle, except in an attached background session; a "Pending wakeup cancelled" notice confirms it (checked 2026-11-26).
 
 ## `/loop` + `--dangerously-skip-permissions`
 
@@ -250,7 +250,7 @@ for GitHub Actions integration.
 
 | Source | Content |
 |---|---|
-| [Run prompts on a schedule][cc-sched-loop] | Official first-party page (found 2026-10-15): self-paced loops, `loop.md`, `CronCreate`/`CronList`/`CronDelete`/`ScheduleWakeup`, resume-restore rules, 7-day expiry, `CLAUDE_CODE_DISABLE_CRON`, skill-invocation reach rules |
+| [Run prompts on a schedule][cc-sched-loop] | Official first-party page (found 2026-10-15): self-paced loops, `loop.md`, `CronCreate`/`CronList`/`CronDelete`/`ScheduleWakeup`, resume-restore rules, recurring-task expiry (30 days; 7 before v2.1.330), `CLAUDE_CODE_DISABLE_CRON`, skill-invocation reach rules |
 | gist by @sorrycc (v2.1.71 cli.js decompilation) | Original `/loop` internals, feature gate, and the `durable: true` claim this doc's 2026-10-15 pass found only partly corroborated — see [Durable vs session-only jobs](#durable-vs-session-only-jobs--revised-2026-10-15-evidence-is-mixed-not-a-clean-supersession) |
 | [Official agent teams docs](https://code.claude.com/docs/en/agent-teams) | Permission inheritance for recurring tasks |
 
