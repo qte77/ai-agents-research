@@ -3,7 +3,7 @@ title: FM-Bench — Long-Horizon Competitive-Agent Benchmark
 purpose: A football-club-management benchmark that tests LLM agents on long-horizon decision-making with cumulative consequences, in both isolated and competitive multi-agent settings.
 source: https://arxiv.org/abs/2608.18423
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: assess
 ---
@@ -30,10 +30,9 @@ Within the simulation, the agent must:
 - Answer to a simulated board for results and spending — an accountability signal
   distinct from raw task completion.
 
-The benchmark runs models in two modes: **isolated** (one agent per club, no direct
-competition) and **arena** (multiple agent-run clubs competing in the same league),
-making it one of the few agent benchmarks that measures long-horizon management and
-competitive multi-agent dynamics in the same harness.
+The benchmark runs models in two modes: **solo** (each of 15 models plays against a frozen scripted world) and **arena** (the same
+models plus a scripted anchor in one shared 20-year world). The authors call it, to their
+knowledge, the first head-to-head evaluation at this scale (abstract; their own claim).
 
 ## Results (paper-claimed)
 

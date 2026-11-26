@@ -3,7 +3,7 @@ title: Agent Code Analysis Landscape — SCA & DCA for AI Coding Agents
 purpose: Static (SCA) and dynamic (DCA) code analysis for AI coding agents, in both directions (of agent code, and by agents), the tooling, the CI matrix and sandboxing as an analysis boundary.
 status: assess
 created: 2026-07-23
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-11-12
 ---
 
@@ -41,13 +41,13 @@ This landscape cross-references those rather than duplicating them.
 |---|---|---|---|
 | [CodeQL][codeql] | GitHub's semantic code-scanning engine | Default or advanced setup; SARIF upload; **Copilot Autofix** proposes AI fixes on alerts | Source-available (GitHub) |
 | [Semgrep][semgrep] | 10,000+ rules, CI-job model | GitHub Actions / GitLab CI; findings to GHAS/GitLab dashboards | LGPL-2.1 (OSS engine) |
-| [Semgrep Guardian][guardian] | Purpose-built for **AI-agent-generated code** | Bundles Semgrep **MCP server + Hooks + Skills** in one install; hooks "fire on every file write, ensuring a scan regardless of what the agent does"; scans via Semgrep Code + Supply Chain + Secrets | Commercial-tiered |
+| [Semgrep Guardian][guardian] | Purpose-built for **AI-agent-generated code** | Bundles Semgrep **MCP server + Hooks + Skills** in one install; hooks scan every file an agent generates (the docs name a hook or an MCP tool call, depending on the integration); scans via Semgrep Code + Supply Chain + Secrets | Commercial-tiered |
 | [Bandit][bandit] | Python AST security linter | CLI / pre-commit / CI (used in this estate's own CI) | Apache-2.0 |
 | [Trivy][trivy] | All-in-one: deps, containers, IaC, secrets, SBOM | CLI / CI action | Apache-2.0 |
-| [agent-audit][agent-audit] | Static analyzer for **agent frameworks** | 51 rules mapped to OWASP Agentic Top 10; tool-boundary-aware taint (tracks `@tool` params → `eval`/`subprocess`/`cursor.execute`); LangChain/CrewAI/AutoGen | MIT (`gh api` 2026-11-22) |
+| [agent-audit][agent-audit] | Static analyzer for **agent frameworks** | 66 rules mapped to OWASP Agentic Top 10 (README-reported; the repo description says 51 and the README's per-category table sums differently, so treat the count as unverified); tool-boundary-aware taint (tracks `@tool` params → `eval`/`subprocess`/`cursor.execute`); LangChain/CrewAI/AutoGen/AgentScope | MIT (`gh api` 2026-11-26) |
 
 **Semgrep Guardian** is the standout for the _analysis-of-agents_ direction: it targets
-Claude Code, Codex, Cursor, GitHub Copilot, Kiro, Devin/Windsurf, and any MCP client,
+Claude Code, Codex, Cursor, GitHub Copilot, VS Code, Windsurf, Kiro, and any MCP client,
 scanning for OWASP Top 10 issues, malicious OSS packages, and hardcoded secrets in
 agent-written code. Announced **2026-06-23** ([official blog][guardian-blog]). _Note:
 rule-pack names/counts circulating on aggregator sites ("27/122/186 rules") are **not
@@ -56,7 +56,7 @@ confirmed on any first-party Semgrep source** and are omitted here._
 [SkillSpector][skillspector] (NVIDIA, Apache-2.0) is a further agent-specific static analyzer: a
 two-stage (static + optional LLM) scanner for AI-agent skills (Claude Code, Codex CLI, Gemini CLI,
 MCP) across 71 vulnerability patterns. First-party-verified (repo and `LICENSE` read directly,
-19,514★ as of `gh api`, 2026-10-06) — the full write-up, with its research-basis figures and
+27,769★ (checked 2026-11-26)) — the full write-up, with its research-basis figures and
 Verified Skills pipeline role, is at
 [agentic-ai-vulnerability-landscape.md § NVIDIA SkillSpector][skillspector-vuln].
 
@@ -117,20 +117,20 @@ or rules files, and fix or flag vulnerable sibling code the agent may copy. Pred
   discovering zero-days (paper-claimed — a signal that agent detection is now measured
   head-to-head against incumbent SCA/DCA tools, not just used alongside them).
 - **[Specular][specula]** (formerly Specula, renamed by 2026-11-22; `specular-org/Specular`,
-  Apache-2.0, 699★, created 2025-06-15, `gh api` 2026-11-22; paper
+  Apache-2.0, 715★ (checked 2026-11-26), created 2025-06-15; paper
   [arXiv:2607.25333][specular-arxiv]) — an agentic tool that has coding agents write and check **TLA+
   formal specifications** to find deep bugs in concurrent/distributed system code, a
   different verification mode from the fuzzing/dataflow tools above. A five-skill
   pipeline (code analysis → spec generation → harness generation → validation → bug
   confirmation) has the agent read target source, author a TLA+ model + invariants, run
   a TLA+ model checker, and trace any violation back to the source line. Supports
-  Claude Code (Opus 4.8 or Fable), Codex (GPT-5.5/5.6-Sol), Copilot CLI, OpenCode, and
-  Pi as the underlying coding agent; the project maintains a public case-study archive
+  Claude Code (README recommends Opus 5.5 or Fable 5.2), Codex (GPT-6-Astra or GPT-6.1-Sol),
+  Copilot CLI, OpenCode, Pi and Antigravity CLI as the underlying coding agent (README, checked 2026-11-26); the project maintains a public case-study archive
   of bugs found in open-source projects. No aggregate precision/recall benchmark was found in
   the README fetch (2026-09-24); the paper's results are summarised in
   [agentic-engineering-disciplines-landscape.md](agentic-engineering-disciplines-landscape.md).
-- **[OpenQodex](https://github.com/openqodex/openqodex)** (Apache-2.0, 1,094★/80
-  forks, created 2026-10-02, `gh api` 2026-11-12) — a pre-push review pipeline that
+- **[OpenQodex](https://github.com/openqodex/openqodex)** (Apache-2.0, 1,220★/88
+  forks, created 2026-10-02, checked 2026-11-26) — a pre-push review pipeline that
   pairs conventional scanners with agent-as-reviewer. A `scan` pass (no model) runs
   the scanners matching the changed files — including gitleaks, semgrep,
   osv-scanner, brakeman, rubocop and kubeconform — and keeps only findings on
@@ -146,7 +146,7 @@ or rules files, and fix or flag vulnerable sibling code the agent may copy. Pred
   function") round it out.
   **Caveat**: the optional Bearer CLI integration uses the Elastic License 2.0,
   which the project's own README describes as not open source — a mixed-license
-  surface to check before bundling.
+  surface to check before bundling (unverified: neither the README nor NOTICE read on 2026-11-26 mentions Bearer; NOTICE flags brakeman as the non-open-source scanner).
 
 ## 4. CI-Forge Integration (verified first-party)
 
@@ -213,8 +213,7 @@ synthesis opportunity, not an existing CC feature.
 - **Research, not shipped products**: VIPER-MCP, AgentSight, VulnLLM-R,
   CodeMender (not public at time of Google's post).
 - **Unverified**: Forgejo-Actions portability of GitHub-marketplace
-  security actions. SkillSpector is now first-party-verified (Apache-2.0, 19,514★, `gh api`
-  2026-10-06) — see [agentic-ai-vulnerability-landscape.md § NVIDIA SkillSpector][skillspector-vuln].
+  security actions. SkillSpector is now first-party-verified (Apache-2.0, 27,769★ (checked 2026-11-26)) — see [agentic-ai-vulnerability-landscape.md § NVIDIA SkillSpector][skillspector-vuln].
 
 ## Not included
 
@@ -236,7 +235,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [agent-audit][agent-audit] | Agent-framework static taint analyzer (repo, MIT) |
 | [AgentSight][agentsight] (arXiv:2508.02736) · [VIPER-MCP][viper] (arXiv:2605.21392) | eBPF boundary tracing; hybrid MCP taint+PoC (106 zero-days/67 CVEs, paper-reported) |
 | [Google Cloud — AI-Assisted Vulnerability Management][gcloud-blueprint] | Agents-as-scanner blueprint, 2026-07-16, −7-day TTE, binary-oracle finding (first-party, single source) |
-| [Specular][specula] (`specular-org/Specular`, formerly Specula) | Agentic TLA+ formal-verification bug finder; 699★, Apache-2.0, `gh api` 2026-11-22 |
+| [Specular][specula] (`specular-org/Specular`, formerly Specula) | Agentic TLA+ formal-verification bug finder; 715★ (checked 2026-11-26), Apache-2.0 |
 | [Specula paper (arXiv:2607.25333)][specular-arxiv] (the tool is now Specular) | Method and results of the TLA+ trace and invariant checker |
 | [VulnLLM-R][vulnllm] (2512.07533) · [ICLR formalization][iclr-formalize] (#10016279) | Agent-based detection papers (arXiv/ICLR-first-party; results paper-claimed) |
 | [OWASP Top 10 for Agentic Applications 2026][owasp-agentic-top10] | Ranked agentic-risk list, 2025-12-09 (distinct from MAESTRO / LLM Top 10; categories not enumerated here) |
