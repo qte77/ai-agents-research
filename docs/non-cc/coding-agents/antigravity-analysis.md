@@ -28,7 +28,7 @@ Key capabilities (sourced from [Google Codelabs][codelabs-getting-started] and [
 - **Browser Subagent** — spins up a real Chrome instance, clicks UI elements, takes screenshots, and self-debugs visual failures
 - **MCP integration** — local and remote Model Context Protocol (MCP) servers ground agents in external data systems
 - **Skills system** — contextual knowledge packages loaded on demand via markdown + optional Python/Bash scripts
-- **Model support** — primarily Gemini 3.1 Pro and Gemini 3.5 Flash; also supports Claude Sonnet 4.6, Claude Opus 4.6, and GPT-OSS-120B (per [Wikipedia][wiki], 2026-06-16; unverified). Wikipedia (2026-11-26) now lists Claude Opus and Sonnet 4.6 and 5.5, with 5.5 for paid Pro and Ultra subscribers and 4.6 slated for removal on 2026-11-02; the Gemini model names are unverified
+- **Model support** — primarily Gemini 3.1 Pro and Gemini 3.5 Flash; also supports Claude Sonnet 4.6, Claude Opus 4.6, and GPT-OSS-120B (per [Wikipedia][wiki], 2026-06-16; unverified). Wikipedia (2026-11-26) now lists Claude Opus and Sonnet 4.6 and 5.5, with 5.5 for paid Pro and Ultra subscribers and Wikipedia stated Claude 4.6 would be removed on 2026-11-02 (current status unverified); the Gemini model names are unverified
 
 The CLI (`agy`) provides a lightweight terminal interface for instant agent creation. The SDK exposes the same agent harness programmatically. An enterprise tier ("Antigravity in Gemini Enterprise Agent Platform") integrates with Google Cloud.
 

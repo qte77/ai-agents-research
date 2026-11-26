@@ -120,7 +120,7 @@ than legacy Cascade per Cognition blog, 2026-06-02).
 Secrets, Knowledge) unavailable locally, creating a feature gap for teams
 that rely on them. ACU pricing is opaque at the free/Pro tier level (not
 documented first-party as of 2026-06-16). Quota shared across CLI + Desktop +
-Cloud sessions means heavy Desktop use reduces CLI budget. The landing page FAQ says AGENTS.md rules, MCP servers and
+Cloud sessions means heavy Desktop use reduces CLI budget. The landing page FAQ says AGENTS.md rules, Model Context Protocol (MCP) servers and
 Claude Code plugins load as-is; CLAUDE.md pick-up is not stated.
 
 **Verdict — Trial**: The `/handoff` bridge and multi-model support make Devin

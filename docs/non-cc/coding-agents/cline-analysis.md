@@ -47,7 +47,7 @@ Cline warrants **Adopt** based on:
 - **MCP ecosystem**: Native MCP support aligns with the direction of agentic tool extensibility in this research corpus.
 - **Low switching cost**: Provider-agnostic design means the agent can run against any model, including self-hosted options via Ollama.
 
-Considerations: JetBrains plugin is closed-source and listed as an Enterprise-plan feature (checked 2026-11-26). Enterprise features (fine-grained permissions, advanced config management) are listed as "coming soon" (2026-06-16). Inference cost is the user's responsibility under BYOK.
+Considerations: JetBrains plugin source is not published (the [README][cline-gh] says it is not being open-sourced) and the pricing page lists a JetBrains extension under Enterprise (checked 2026-11-26). Enterprise features (fine-grained permissions, advanced config management) are listed as "coming soon" (2026-06-16). Inference cost is the user's responsibility under BYOK.
 
 ## Action Items
 
