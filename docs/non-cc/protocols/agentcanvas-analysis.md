@@ -3,7 +3,7 @@ title: AgentCanvas — Pydantic AI Execution Trace Visualizer
 source: https://github.com/vstorm-co/agentcanvas
 purpose: Evaluate AgentCanvas as an observability/debugging tool for Pydantic AI agents via Logfire traces.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: assess
 ---
@@ -47,9 +47,9 @@ Key features (from the README, accessed 2026-06-16):
 - Guided tours (auto and manual step modes) for client demonstrations
 - Single-file HTML output — no server required after generation
 
-**Language**: Python 98.7% (with Makefile 1.3%), requires Python 3.12+.
+**Language**: Python 98.6% (with Makefile 1.4%; checked 2026-11-26), requires Python 3.12+.
 **Core dependencies**: Pydantic AI, Logfire, OpenTelemetry, genai-prices.
-**Repository stats** (accessed 2026-06-16): 26 stars, 2 forks, MIT license.
+**Repository stats** (checked 2026-11-26): 85 stars, 9 forks, MIT license.
 
 ## Adoption Decision
 
@@ -67,7 +67,7 @@ limit its scope:
 
 Within those constraints the tool is well-scoped: fully typed, uses ruff and
 mypy, MIT-licensed, and installable in one `pip install agentcanvas` step. At
-v0.1.1 it is early-stage (26 stars), so API stability is not guaranteed.
+v0.1.1 it is early-stage (85 stars on 2026-11-26), so API stability is not guaranteed.
 
 For research contexts in this repo, AgentCanvas is worth tracking as a
 reference implementation of OTel-driven agent visualization. It does not
