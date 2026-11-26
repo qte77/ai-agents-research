@@ -3,35 +3,33 @@ title: Windsurf Analysis (now Devin Desktop, by Cognition)
 source: https://devin.ai/
 purpose: Analysis of Windsurf as an agentic IDE product — acquired by Cognition in 2025, rebranded Devin Desktop June 2026.
 created: 2026-06-16
-updated: 2026-06-16
+updated: 2026-11-26
 validated_links_on: 2026-06-16
 status: trial
 ---
 
-**Details:** **Proprietary** (No open-source license) | **GA**: as Windsurf (pre-acquisition); as Devin Desktop: June 2, 2026 | **Owner**: Cognition AI (acquired December 2025)
+**Details:** **Proprietary** (No open-source license) | **GA**: as Windsurf (pre-acquisition); as Devin Desktop: June 2, 2026 | **Owner**: Cognition AI (acquisition announced July 14, 2025)
 
 ## What It Is
 
 Windsurf was an **agentic IDE** built by Codeium — a VS Code-compatible editor
 with a proprietary AI layer (Cascade) offering inline completions, multi-file
 edits, and autonomous agent "flows." As of **June 2, 2026**, the Windsurf IDE has
-been rebranded **Devin Desktop** by Cognition AI, which acquired the product in
-December 2025 for approximately $250 million (accessed 2026-06-16, first-party via
-[Cognition acquisition blog][cognition-windsurf-blog]).
+been rebranded **Devin Desktop** by Cognition AI, which announced a definitive agreement to acquire the product on
+July 14, 2025 ([Cognition acquisition blog][cognition-windsurf-blog]); the price (about $250 million) is not stated there (unverified).
 
 The product retains backward compatibility with VS Code extensions and continues
 under active development. Pricing, plans, and extensions carried over without
 change at the rebrand date ([Devin Desktop launch post][devin-desktop-blog]). See also [devin-cli-analysis.md](devin-cli-analysis.md) — Cognition's terminal Devin CLI in the same product family.
 
-**Ownership chain** (as of 2026-06-16, via [cognition.ai][cognition-windsurf-blog]):
+**Ownership chain** (as of 2026-11-26, via [cognition.com][cognition-windsurf-blog]):
 
 - **Codeium** built Windsurf; operated it until mid-2025
-- **OpenAI** negotiated acquisition at ~$3B; deal collapsed (not confirmed on
-  first-party pages — noted as "not stated" in Cognition's announcement)
+- **OpenAI** negotiated acquisition at ~$3B; deal collapsed (unverified; not on first-party pages)
 - **Google DeepMind** licensed Windsurf technology and hired key founders
-  (Varun Mohan, Douglas Chen) in a separate transaction
+  (Varun Mohan, Douglas Chen) in a separate transaction (unverified; not on first-party pages)
 - **Cognition AI** acquired Windsurf — IP, product, trademark, brand, and ~210
-  employees — in December 2025 for ~$250M; Cognition's announcement states
+  employees (headcount and ~$250M price unverified) — announced July 14, 2025; Cognition's announcement states
   $82M ARR and 350+ enterprise customers at acquisition time
 
 ## How It Works
@@ -40,26 +38,25 @@ change at the rebrand date ([Devin Desktop launch post][devin-desktop-blog]). Se
 
 The product shipped under two AI stacks post-acquisition:
 
-- **Cascade** — Windsurf's original multi-file edit and agent-flow engine; still
-  the default local engine
-- **Devin Local** — a Rust rewrite of Cascade introduced at the June 2026
+- **Cascade** — Windsurf's original multi-file edit and agent-flow engine; replaced as
+  the primary local agent by Devin Local; legacy Cascade was available through July 1 (per the launch post, which gives no year)
+- **Devin Local** — the successor to Cascade as the primary local agent, rewritten from scratch in Rust and introduced at the June 2026
   rebrand; described as "up to 30% more token efficient" and adds subagent
   support ([Devin Desktop launch post][devin-desktop-blog])
-- **SWE-1.6** — Cognition's proprietary coding model, available free on the Pro
+- **SWE-2** — Cognition's proprietary coding model, available free on the Pro
   tier; built for agentic tasks rather than general assistance
 
-Model access on Pro and above spans OpenAI, Claude, and Gemini via a
-credit/quota system (accessed 2026-06-16 via [devin.ai/pricing][devin-pricing]).
+Model access on Pro and above spans OpenAI, Claude, Gemini, SpaceXAI and open-source models, with extra usage billed at API pricing (checked 2026-11-26 via [devin.ai/pricing][devin-pricing]).
 
 ### Agent Command Center
 
-Introduced in **Windsurf 2.0** (April 15, 2026) and carried into the Devin
+Introduced in **Windsurf 2.0** (April 15, 2026; date unverified) and carried into the Devin
 Desktop rebrand, the Agent Command Center provides a Kanban-style view for
 managing multiple local and cloud agents from a single IDE surface. **Spaces**
 group sessions, PRs, files, and shared context across agents.
 
 The IDE supports the **Agent Client Protocol (ACP)**, allowing third-party agents
-(Claude Code Agent, OpenAI Codex, OpenCode) to run inside Devin Desktop as
+(Claude Agent, OpenAI Codex, OpenCode) to run inside Devin Desktop as
 first-class participants alongside Devin Cloud agents.
 
 ### Codemaps
@@ -73,8 +70,7 @@ first-party page.
 
 ### Headless / CLI mode
 
-No dedicated headless or CLI invocation mode was found on first-party pages as of
-2026-06-16. The product is **GUI-first** (desktop IDE). Devin Cloud (available on
+No headless invocation mode for the desktop IDE was found on first-party pages. The launch post describes a separate terminal product, Devin CLI (see [devin-cli-analysis.md](devin-cli-analysis.md)). The IDE is **GUI-first**. Devin Cloud (available on
 Pro+) can run autonomous coding tasks in a cloud environment, which is the closest
 equivalent to headless execution, but it is browser/API-accessed rather than
 terminal-native.
@@ -93,10 +89,10 @@ Pricing as of 2026-06-16 ([devin.ai/pricing][devin-pricing], accessed 2026-06-16
 | Tier | Price | Key limits |
 |---|---|---|
 | Free | $0/month | Light quota; unlimited inline edits and Tab completions |
-| Pro | $20/month | Full model access (OpenAI, Claude, Gemini); free SWE-1.6; Devin Cloud |
+| Pro | $20/month | Full model access (OpenAI, Claude, Gemini, SpaceXAI, open-source); free SWE-2; Devin Cloud |
 | Max | $200/month | Everything in Pro, significantly higher quotas |
-| Teams | $80/month + $40/seat | Centralized billing, admin dashboard, collaboration |
-| Enterprise | Custom | SAML/OIDC SSO, dedicated deployment, HIPAA/FedRAMP (not stated on pricing page — "not stated" for compliance tier details) |
+| Teams | $80/month (up to 100 users; a "+$40/seat" charge is unverified) | Multiplayer sessions, three cost-control usage tiers, centralized billing, SAML/OIDC SSO, Slack channel support, Devin Bots |
+| Enterprise | Custom | SCIM and RBAC, centralized admin controls, dedicated deployment option (HIPAA/FedRAMP not stated on the pricing page; unverified) |
 
 Note: an earlier third-party report ([nxcode.io][nxcode-acquisition]) cited a
 $15/month Pro price as of May 2026; the current first-party page shows $20/month
@@ -107,7 +103,7 @@ $15/month Pro price as of May 2026; the current first-party page shows $20/month
 | Dimension | Assessment |
 |---|---|
 | **Use case** | Agentic IDE (GUI); multi-agent command center replacing the terminal-only coding agent pattern |
-| **Model flexibility** | Multi-provider (OpenAI, Claude, Gemini) + proprietary SWE-1.6 on Pro+ |
+| **Model flexibility** | Multi-provider (OpenAI, Claude, Gemini) + proprietary SWE-2 on Pro+ |
 | **Extensibility** | ACP for third-party agents; VS Code extension compatibility; Devin Cloud for autonomous tasks |
 | **Headless** | No — GUI-first; Devin Cloud is the nearest analog for unattended runs |
 | **Maturity** | GA (June 2, 2026 as Devin Desktop); actively developed post-acquisition |
@@ -117,7 +113,7 @@ $15/month Pro price as of May 2026; the current first-party page shows $20/month
 **Strengths**: Strong multi-agent surface (ACP, Agent Command Center, Spaces)
 positions it ahead of single-agent IDEs for orchestration workflows. Devin Cloud
 integration gives autonomous background execution without leaving the IDE.
-Proprietary SWE-1.6 model included at no extra cost on Pro. Large enterprise base
+Proprietary SWE-2 model included at no extra cost on Pro. Large enterprise base
 ($82M ARR, 350+ customers) inherited from Codeium suggests production stability.
 
 **Risks**: Layered acquisition history (Codeium → Google licensing split →
@@ -130,17 +126,17 @@ fork. GUI-only limits CI/headless workflows compared with terminal peers such as
 **Trial recommendation**: Worth evaluating for teams that want a unified
 IDE + multi-agent command center and are comfortable with proprietary tooling.
 Hold final adoption until the Cognition/Windsurf integration trajectory stabilizes
-(rebrand is less than 30 days old as of this writing).
+(the rebrand dates from June 2, 2026).
 
 ## Action Items
 
 - **Pilot** on a team already familiar with VS Code-compatible IDEs — zero
   extension migration cost; evaluate ACP and Agent Command Center for
   multi-agent orchestration fit.
-- **Benchmark SWE-1.6** against Claude Sonnet 4.5 and GPT-5 on
+- **Benchmark SWE-2** against Claude Sonnet 4.5 and GPT-5 on
   representative agentic tasks before committing Pro/Teams spend.
 - **Clarify headless story** — if CI/unattended runs are needed, assess Devin
-  Cloud API access (not investigated; no first-party CLI docs found 2026-06-16)
+  Cloud API access (not investigated; see the Devin CLI analysis for the terminal product)
   or compare against [GitHub Copilot CLI][github-copilot-cli-analysis] for
   terminal-native workflows.
 - **Track branding stability** — the Devin Desktop rebrand is recent; re-verify
@@ -160,7 +156,7 @@ Hold final adoption until the Cognition/Windsurf integration trajectory stabiliz
 | [NxCode acquisition report][nxcode-acquisition] | Third-party: SWE-1.5, Codemaps, $250M deal, May 2026 pricing |
 | [windsurf.com redirect][windsurf-redirect] | 308 permanent redirect to devin.ai/desktop; accessed 2026-06-16 |
 
-[cognition-windsurf-blog]: https://cognition.ai/blog/windsurf
+[cognition-windsurf-blog]: https://cognition.com/blog/windsurf
 [devin-desktop-blog]: https://devin.ai/blog/windsurf-is-now-devin-desktop
 [devin-pricing]: https://devin.ai/pricing
 [nxcode-acquisition]: https://www.nxcode.io/resources/news/cognition-windsurf-acquisition-swe-1-5-codemaps-2026
