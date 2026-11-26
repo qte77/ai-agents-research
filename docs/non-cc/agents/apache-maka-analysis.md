@@ -3,7 +3,7 @@ title: Apache Maka (Incubating) — Local-First Agent Workspace
 purpose: Assess Apache Maka's event-sourced, local-first agent runtime and its Apache Incubator status
 source: https://github.com/apache/maka
 created: 2026-09-24
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: trial
 ---
@@ -12,8 +12,10 @@ status: trial
 
 [Apache Maka (Incubating)][repo] is a local-first AI agent workspace — a
 "high-performance agent workspace that keeps a complete record of everything
-it did," with Desktop, TUI, and CLI clients sharing one "Runtime Host"
-execution authority. Its defining architectural claim, per the README: "the
+it did," with terminal and desktop shells running the same workbench UI against one "Runtime Host"
+process (README, checked 2026-11-26). Its defining architectural claim, per the README as read
+on 2026-09-24 (the current README no longer uses this wording, checked 2026-11-26; the rest of this
+paragraph is unverified against the current README): "the
 log is the runtime" — every model message, tool call, permission decision,
 and termination is recorded as an append-only `RuntimeEvent`, and the UI, the
 next prompt, and crash recovery are all *projections* of that log rather than
@@ -31,17 +33,17 @@ Harbor evaluation runner against the native host (README, checked 2026-11-22). O
 
 Maka is an **Apache Incubator podling** ("(Incubating)" appears throughout
 the README and project name), not a graduated top-level Apache project.
-**No Apache-approved release exists yet** — the README states that when one
-does, the signed source archive will be the official release, with
-development builds as the current interim channel. Readers evaluating Maka
-for production use should treat this as pre-release, ASF-governed but
-not-yet-released software.
+**The latest Apache-approved release is `0.2.2` (incubating)** — the README
+states that the signed source archive is the official release (checked 2026-11-26), and links the
+[downloads page][downloads]; we did not fetch that page. Development builds remain the
+other channel. Maka is still an incubating podling, not a top-level project, so readers evaluating
+it for production use should weigh that status.
 
-## Repo Stats (2026-09-24)
+## Repo Stats (checked 2026-11-26)
 
-5,645 stars · 529 forks · 504 open issues+PRs combined · Apache License 2.0 ·
-TypeScript · created 2026-05-27 · last push 2026-09-24 (same day as this
-verification).
+6,010 stars · 582 forks · 405 open issues+PRs combined · Apache License 2.0 ·
+Rust (the TypeScript part is the plugin SDK package) · created 2026-05-27 · last push 2026-11-26.
+Earlier snapshot (2026-09-24): 5,645 stars, 529 forks, 504 open issues+PRs, labelled TypeScript.
 
 ## Corpus Relevance
 
@@ -56,7 +58,9 @@ agents — rather than a local execution log that *is* the runtime record.
 | Source | Content |
 |---|---|
 | [apache/maka repo][repo] | README, incubation status, architecture claims (first-party) |
-| GitHub API repo metadata, 2026-09-24 | Stars(5,645)/forks(529)/open issues(504), license, dates |
+| [Maka downloads page][downloads] | Release channel (linked from the README; not fetched, unverified) |
+| GitHub API repo metadata, 2026-11-26 | Stars(6,010)/forks(582)/open issues(405), language, license, dates |
 
 [repo]: https://github.com/apache/maka
 [eval]: https://github.com/apache/maka/tree/main/products/eval
+[downloads]: https://maka.apache.org/en/downloads/
