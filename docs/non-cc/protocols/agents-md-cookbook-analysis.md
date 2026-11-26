@@ -4,28 +4,28 @@ purpose: Assess a tested AGENTS.md template/linter/migrator kit and its claim of
 source: https://github.com/Taiizor/agents-md-cookbook
 platform_scope: [cursor, codex, github-copilot, windsurf, cline, zed, amp, google-jules, opencode, roocode, claude-code]
 created: 2026-07-23
-updated: 2026-09-30
+updated: 2026-11-26
 validated_links_on: 2026-09-30
 status: assess
 ---
 
 ## What It Is
 
-A tested, tool-agnostic [AGENTS.md][agents-standard] kit: 15 stack-specific
+A tested, tool-agnostic [AGENTS.md][agents-standard] kit: 16 stack-specific
 AGENTS.md templates, a CI linter (`agents-md-lint`), and a migrator
 (`agents-md-migrate`) that converts an existing `CLAUDE.md`/`.cursorrules`/
 `GEMINI.md`/Copilot/Windsurf/Cline/Aider config into a single AGENTS.md.
-MIT-licensed, single-maintainer ([Taiizor][repo]), v1.0.0 (tagged
-2026-06-14, aliased `v1` for its GitHub Action), last pushed 2026-08-08.
-19 stars, 19 watchers, 2 forks, 0 open issues (re-verified via GitHub API,
-2026-09-24).
+MIT-licensed, single-maintainer ([Taiizor][repo]), v1.0.1 (tagged
+2026-08-08; the `v1` alias for its GitHub Action points at a later commit, also 2026-08-08), last pushed 2026-08-08.
+30 stars, 1 watcher, 2 forks, 0 open issues (GitHub API,
+checked 2026-11-26).
 
 ## Contents and Verification
 
-- **15 templates** (`templates/`, confirmed by directory listing): typescript-node,
+- **16 templates** (`templates/`, directory listing checked 2026-11-26): typescript-node,
   python, go, rust, java-spring, dotnet-csharp, nextjs, react-vite, django,
-  fastapi, rails, monorepo, data-ml, react-native, minimal.
-- **`packages/*`** npm monorepo (Node >=18, Bun+TS): `agents-md-lint` (scores/lints
+  fastapi, rails, monorepo, data-ml, react-native, minimal, tuurio-oidc-react-vite.
+- **`packages/*`** npm monorepo (root Node >=20, linter Node >=18, Bun+TS): `agents-md-lint` (scores/lints
   AGENTS.md, fails CI on regressions) and `agents-md-migrate` (converts other
   agents' configs into AGENTS.md). Plus a first-party GitHub Action and a docs
   handbook (`anatomy.md`, `best-practices.md`, `nesting-monorepos.md`,
@@ -101,9 +101,9 @@ answer to it.
 |---|---|
 | [agents-md-cookbook repo][repo] | README, templates/, packages/, action.yml, docs handbook (first-party) |
 | [LICENSE][license] | MIT text, verified via decode against `Copyright (c) 2026 Taiizor` |
-| [package.json][pkg] | Root + `packages/linter` version 1.0.0, `node >=18`, Bun+TS scripts |
+| [package.json][pkg] | Root + `packages/linter` version 1.0.1, root `node >=20`, linter `node >=18`, Bun+TS scripts |
 | [COMPATIBILITY.md][compat] | Native-vs-adapter classification (Claude Code = ADAPTER) |
-| GitHub API repo metadata, 2026-09-24 | Stars(19)/watchers(19)/forks(2)/issues(0), dates, v1.0.0 = v1 tag alias |
+| GitHub API repo metadata, 2026-09-24 | Stars(30)/watchers(1)/forks(2)/issues(0), dates, latest tag v1.0.1 (checked 2026-11-26) |
 | [Coldtea AGENTS.md field study][field-study] | 100-repo sample stats: adoption, word count, rule-language prevalence |
 | [abide][abide] | Coldtea's own AGENTS.md rule-enforcement tool (cross-ref) |
 
