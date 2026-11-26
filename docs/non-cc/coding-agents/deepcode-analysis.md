@@ -3,8 +3,8 @@ title: DeepCode — Open Agentic Coding Harness (HKUDS)
 purpose: Assess DeepCode's multi-agent coding harness, including its Paper2Code origin and current broader "Open Agentic Coding" framing
 source: https://github.com/HKUDS/DeepCode
 created: 2026-09-24
-updated: 2026-09-24
-validated_links_on: 2026-09-24
+updated: 2026-11-26
+validated_links_on: 2026-11-26
 status: trial
 ---
 
@@ -31,11 +31,11 @@ The repo's homepage field cites arXiv:2512.07921 (Li et al.) as the
 associated paper; that paper itself was not independently fetched for this
 entry and is cited here only as the citation the repo names.
 
-## Repo Stats (2026-09-24)
+## Repo Stats (2026-11-26)
 
-16,632 stars · 2,163 forks · MIT license · Python 3.12+ (with Rust
-components for Desktop) · created 2025-05-14 · 16 tagged releases, latest
-**v2.2.0** (published 2026-09-06) · last push 2026-09-22.
+16,872 stars · 2,197 forks · MIT license · Python 3.12+ (unverified; with Rust
+components for Desktop) · created 2025-05-14 · 19 tagged releases, latest
+**v2.4.0** (published 2026-11-16) · last push 2026-11-23.
 
 ## Corpus Relevance
 
@@ -52,6 +52,6 @@ whoever next maintains that table.
 | Source | Content |
 |---|---|
 | [HKUDS/DeepCode repo][repo] | README, architecture description, release history (first-party) |
-| GitHub API repo metadata, 2026-09-24 | Stars(16,632)/forks(2,163), MIT, dates, release list |
+| GitHub API repo metadata, 2026-11-26 | Stars(16,872)/forks(2,197), MIT, dates, release list |
 
 [repo]: https://github.com/HKUDS/DeepCode
