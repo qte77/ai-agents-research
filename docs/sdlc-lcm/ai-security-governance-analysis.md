@@ -26,7 +26,7 @@ system (PydanticAI-based MAS evaluating academic papers via LLM providers).
 
 ## 1. MAESTRO (Cloud Security Alliance)
 
-**Source**: [CSA MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro); the [OWASP Multi-Agentic System Threat Modeling Guide v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/) is a separate document
+**Source**: [MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro), published on the Cloud Security Alliance blog by Ken Huang (2025-02-06); the [OWASP Multi-Agentic System Threat Modeling Guide v1.0](https://genai.owasp.org/resource/multi-agentic-system-threat-modeling-guide-v1-0/) is a separate document
 **Existing coverage**: Comprehensive — see [mas-security-framework.md](mas-security-framework.md)
 
 ### 7-Layer Threat Model
