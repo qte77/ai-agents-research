@@ -76,7 +76,7 @@ Codex detects the folder context automatically: version-controlled projects get 
 
 ### Authentication and access
 
-Codex CLI authenticates via ChatGPT account sign-in (Plus, Pro, Business, Edu, Enterprise plans) or via API key. Access dates back to the initial open-source release; the current access model was confirmed 2026-06-16 on [developers.openai.com/codex][dev-codex].
+Codex CLI authenticates via ChatGPT account sign-in (Plus, Pro, Business, Edu, Enterprise plans) or via API key. Access dates back to the initial open-source release; the current access model was confirmed 2026-06-16 on [learn.chatgpt.com/docs][dev-codex].
 
 ## Providers
 
@@ -133,11 +133,11 @@ A `Stop` hook can return `"decision": "block"` to force another turn ([hooks][go
 | [Codex advanced configuration][codex-config-adv] | Custom provider, Azure and Ollama examples (2026-11-23) |
 
 [gh-codex]: https://github.com/openai/codex
-[dev-codex]: https://developers.openai.com/codex
-[approvals]: https://developers.openai.com/codex/agent-approvals-security
-[features]: https://developers.openai.com/codex/cli/features
-[cli-ref]: https://developers.openai.com/codex/cli/reference
-[agents-md]: https://developers.openai.com/codex/guides/agents-md
+[dev-codex]: https://learn.chatgpt.com/docs
+[approvals]: https://learn.chatgpt.com/docs/agent-approvals-security
+[features]: https://learn.chatgpt.com/docs/codex/cli
+[cli-ref]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
+[agents-md]: https://learn.chatgpt.com/docs/agent-configuration/agents-md
 [goal-codex-changelog]: https://learn.chatgpt.com/docs/changelog
 [goal-codex-follow]: https://learn.chatgpt.com/use-cases/follow-goals
 [goal-codex-cmds]: https://learn.chatgpt.com/docs/developer-commands?surface=cli
