@@ -136,7 +136,7 @@ Workflows run in the CLI, Desktop, IDE extensions, headless (`claude -p`), and t
 - [CC-tools-inventory.md](../configuration/CC-tools-inventory.md) — `WorkflowTool` / `WORKFLOW_SCRIPTS` feature gate (leak-derived name)
 - [CC-agentic-harness-patterns-analysis.md](CC-agentic-harness-patterns-analysis.md) — harness patterns that map to `parallel()` / `agent()`
 - [CC-agent-teams-orchestration.md](CC-agent-teams-orchestration.md) — the agent-teams alternative (a lead agent holds the plan)
-- [CC-plans-as-skill-rule-templates.md](CC-plans-as-skill-rule-templates.md) — UltraPlan (cloud planning), a separate "ultra" feature
+- [CC-plans-as-skill-rule-templates.md](CC-plans-as-skill-rule-templates.md) — UltraPlan (cloud planning), no longer available (removed; see the doc for the replacement guidance)
 - [CC-skills-adoption-analysis.md](CC-skills-adoption-analysis.md) — skills, the lighter alternative
 
 ## Sources

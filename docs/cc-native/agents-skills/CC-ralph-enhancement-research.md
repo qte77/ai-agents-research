@@ -64,7 +64,7 @@ Any LLM-backed CLI can be substituted; the critical primitive is the declarative
 2. Community variations and blog popularization
 3. Official Anthropic `ralph-loop` Claude Code plugin (renamed from `ralph-wiggum`) — formalizes the loop via a
    Stop hook that intercepts session exit and re-prompts with the original task
-   (released December 2025 per the HumanLayer history, a third-party source; unverified at first party)
+   (added to `anthropics/claude-code` on 2025-11-16; renamed to `ralph-loop` in `claude-plugins-official` on 2026-01-06; `gh api`, checked 2026-11-26)
 
 **Overbaking** refers to extended runs that produce emergent, unplanned behavior. Noted
 examples include post-quantum cryptography support appearing spontaneously, and
@@ -178,8 +178,8 @@ A dependency-free, production-minded Ralph loop that drives **four** coding CLIs
 - [Everything Claude Code][ralphinho] — Autonomous loop patterns including Ralphinho
 - [Trellis docs][trellis] — Cross-layer validation commands
 - [LobeHub Ralph Loop skill][lobehub-ralph] — Community skill implementation
-- [Ralph Wiggum plugin][ralph-official] — Official Anthropic plugin
-- [LinearB podcast][linearb] — Huntley on context rot and loop discipline
+- [Ralph Loop plugin (formerly Ralph Wiggum)][ralph-official] — Official Anthropic plugin
+- [LinearB podcast][linearb] — Huntley on the loop technique and its origin
 - [Shipyard Ralph guide][shipyard] — Ralph loop pattern explanation
 - [SantanderAI/ralph][santander-ralph] — Banco Santander AI Lab multi-CLI Ralph harness (Apache-2.0, v0.1.0)
 - [ralph-vault-skill][santander-vault] — knowledge-vault generator companion to the loop

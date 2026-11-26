@@ -40,7 +40,7 @@ status: reference
 | Desktop scheduled tasks | <https://code.claude.com/docs/en/desktop-scheduled-tasks> |
 | Hooks reference | <https://code.claude.com/docs/en/hooks> |
 | Chrome extension | <https://code.claude.com/docs/en/chrome> |
-| Docs map (LLM sitemap; legacy, not listed in `llms.txt`) | <https://code.claude.com/docs/en/claude_code_docs_map.md> |
+| Docs map (LLM sitemap; auto-generated, not listed in `llms.txt`) | <https://code.claude.com/docs/en/claude_code_docs_map.md> |
 | LLMs.txt | <https://code.claude.com/docs/llms.txt> |
 
 ## Agent SDK (code.claude.com)
