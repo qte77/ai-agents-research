@@ -2,7 +2,7 @@
 title: CC Subagent Session Artifacts
 purpose: Reference for subagent session artifacts — worktree lifecycle, meta.json tombstones, transcript storage, and cleanup behavior.
 created: 2026-04-13
-updated: 2026-04-13
+updated: 2026-11-26
 validated_links_on: 2026-04-13
 status: research
 ---
@@ -13,9 +13,9 @@ When Claude Code spawns subagents via the Agent tool, each subagent produces ses
 
 ## Worktree Isolation
 
-Subagents can run in their own temporary git worktree by setting `isolation: worktree` in the [subagent frontmatter][sub-agents-frontmatter]. Each subagent gets an isolated copy of the repository at `<repo>/.claude/worktrees/agent-<hash>`, branching from the default remote branch (`origin/HEAD`).
+Subagents can run in their own temporary git worktree by setting `isolation: worktree` in the [subagent frontmatter][sub-agents-frontmatter]. Each subagent gets an isolated copy of the repository under `<repo>/.claude/worktrees/` (the `agent-<hash>` name is observed only, unverified). By default (`worktree.baseRef: "fresh"`) it branches from the repository's default branch on the remote, fetching it if the repo has not been fetched in 24 hours (5-second cap) and falling back to local HEAD when there is no remote or cached `origin/HEAD`; `"head"` branches from the current local HEAD instead. Subagent worktrees use the same base as `--worktree` (checked 2026-11-26).
 
-Source: [Sub-agents — Supported frontmatter fields][sub-agents-frontmatter], [Common workflows — Subagent worktrees][subagent-worktrees]
+Source: [Sub-agents — Supported frontmatter fields][sub-agents-frontmatter], [Worktrees — Isolate subagents with worktrees][subagent-worktrees]
 
 ## meta.json Structure
 
@@ -37,17 +37,17 @@ Each subagent worktree session produces a `meta.json` alongside its `.jsonl` tra
 
 The `worktreePath` is historical only — worktrees are cleaned up on completion (see below). The path is never re-used; it records where the worktree *was*, not where it *is*.
 
-**Note**: meta.json is **not documented** in any first-party source. Structure observed from Opus 4.6 session artifacts, 2026-04-13.
+**Note**: the [sub-agents page](https://code.claude.com/docs/en/sub-agents) documents per-subagent `agent-{agentId}.meta.json` files next to the `.jsonl` transcript, used to look up an agent ID by name after a restart; the field structure is not documented. The fields shown here (`agentType`, `worktreePath`, `description`) were observed from Opus 4.6 session artifacts, 2026-04-13 (unverified).
 
 ## Transcript Storage
 
 Subagent transcripts are stored alongside the parent session's transcripts:
 
 ```text
-~/.claude/projects/<project-key>/<parent-session-id>/subagents/agent-<hash>.jsonl
+~/.claude/projects/<project-key>/<parent-session-id>/subagents/agent-<agentId>.jsonl
 ```
 
-The `<project-key>` is the working directory path with `/` replaced by `-` (e.g., `-home-user-repos-my-project`). Each `.jsonl` file contains the full subagent conversation: messages, tool calls, and tool results.
+The `<project-key>` is the working directory path with `/` replaced by `-` (e.g., `-home-user-repos-my-project`; observed, unverified for `projects/`). Each `.jsonl` file contains the full subagent conversation: messages, tool calls, and tool results.
 
 Source: [.claude directory — Application data][claude-directory]
 
@@ -55,27 +55,27 @@ Source: [.claude directory — Application data][claude-directory]
 
 ### Worktree cleanup
 
-When a subagent finishes, worktree cleanup depends on whether changes were made:
+When a subagent finishes, Claude Code keeps the worktree if git shows changed files, untracked files or new commits; otherwise it can remove the worktree right away. A kept worktree stays on disk until the periodic sweep can remove it without losing work (the keep-or-remove prompt applies to interactive `--worktree` session exits, not to subagent completion):
 
 | Condition | Behavior |
 |---|---|
-| No changes | Worktree + branch auto-removed |
-| Changes or commits exist | Parent session prompted to keep or remove |
-| Orphaned (crash/interrupt) | Auto-removed at startup after [`cleanupPeriodDays`][settings] if no uncommitted changes, untracked files, or unpushed commits |
+| No changes | Worktree can be removed right away |
+| Changed files, untracked files or new commits | Worktree kept until the periodic sweep can remove it without losing work |
+| Orphaned (crash/interrupt) | A periodic sweep removes worktrees Claude created for subagents and background sessions once older than [`cleanupPeriodDays`][settings], unless they hold changed or untracked files or unpushed commits, or a checked-out submodule holds changes or cannot be inspected (v2.1.274+); locks Claude set for dead sessions are released |
 
-User-created worktrees (`--worktree` flag) are **never** removed by the automatic sweep — only subagent worktrees.
+Worktrees of `--worktree` sessions you have not backgrounded are **never** removed by the automatic sweep, and neither are worktrees you created with `git worktree add` outside `.claude/worktrees/`; the sweep covers subagent and background-session worktrees, so a backgrounded `--worktree` session can be swept.
 
-Source: [Common workflows — Worktree cleanup][worktree-cleanup]
+Source: [Worktrees — Clean up subagent and background-session worktrees][worktree-cleanup]
 
 ### Transcript cleanup
 
-Subagent transcripts follow the same cleanup as parent session transcripts: deleted at startup once older than [`cleanupPeriodDays`][settings] (default: 30 days).
+Subagent transcripts follow the same cleanup as parent session transcripts: the `subagents/` directory is removed with the parent session transcript when it ages out past [`cleanupPeriodDays`][settings] (default: 30 days, minimum 1).
 
-Source: [.claude directory — Application data][claude-directory], [Settings — cleanupPeriodDays][settings]
+Source: [.claude directory — Application data][claude-directory], [Settings reference — cleanupPeriodDays][settings]
 
 ### meta.json cleanup
 
-meta.json files are retained alongside the subagent `.jsonl` transcript for history/debugging. They follow the same `cleanupPeriodDays` lifecycle as transcripts.
+meta.json files are retained alongside the subagent `.jsonl` transcript for history/debugging. They presumably follow the same `cleanupPeriodDays` lifecycle as transcripts, inferred from the directory-level rule above (unverified for meta.json specifically).
 
 ## Cross-References
 
@@ -91,15 +91,15 @@ meta.json files are retained alongside the subagent `.jsonl` transcript for hist
 | Source | Content |
 |---|---|
 | [CC sub-agents — frontmatter][sub-agents-frontmatter] | `isolation: worktree` field documentation |
-| [CC common workflows — subagent worktrees][subagent-worktrees] | Subagent worktree behavior |
-| [CC common workflows — worktree cleanup][worktree-cleanup] | Cleanup rules for worktrees |
+| [CC worktrees — isolate subagents][subagent-worktrees] | Subagent worktree behavior |
+| [CC worktrees — clean up subagent and background-session worktrees][worktree-cleanup] | Cleanup rules for worktrees |
 | [CC .claude directory][claude-directory] | `~/.claude/` application data and cleanup |
-| [CC settings][settings] | `cleanupPeriodDays` definition |
+| [CC settings reference][settings] | `cleanupPeriodDays` definition |
 | Opus 4.6 session artifacts, 2026-04-13 | meta.json structure observation |
 
 [sub-agents]: https://code.claude.com/docs/en/sub-agents
 [sub-agents-frontmatter]: https://code.claude.com/docs/en/sub-agents#supported-frontmatter-fields
-[subagent-worktrees]: https://code.claude.com/docs/en/common-workflows#subagent-worktrees
-[worktree-cleanup]: https://code.claude.com/docs/en/common-workflows#worktree-cleanup
+[subagent-worktrees]: https://code.claude.com/docs/en/worktrees#isolate-subagents-with-worktrees
+[worktree-cleanup]: https://code.claude.com/docs/en/worktrees#clean-up-subagent-and-background-session-worktrees
 [claude-directory]: https://code.claude.com/docs/en/claude-directory#application-data
-[settings]: https://code.claude.com/docs/en/settings#available-settings
+[settings]: https://code.claude.com/docs/en/settings-reference#cleanupperioddays

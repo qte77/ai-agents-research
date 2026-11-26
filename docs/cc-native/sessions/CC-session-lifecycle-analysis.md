@@ -2,7 +2,7 @@
 title: CC Session Lifecycle — Naming, Persistence, and /rename Bugs
 purpose: Analysis of session creation, naming, persistence, /resume discovery, and known /rename bugs with reproduction evidence.
 created: 2026-03-27
-updated: 2026-04-13
+updated: 2026-11-26
 validated_links_on: 2026-04-13
 status: research
 ---
@@ -17,7 +17,7 @@ CC sessions have a lifecycle: create → auto-name (slug) → optionally `/renam
 
 | Location | Content | Used by |
 |---|---|---|
-| `~/.claude/history.jsonl` | Global index — one line per user prompt: `sessionId`, `display` (prompt text), `project`, `timestamp` | Unknown — not used by `/resume` |
+| `~/.claude/history.jsonl` | Global index — one line per user prompt: `sessionId`, `display` (prompt text), `project`, `timestamp` | Prompt recall (up-arrow, Ctrl+R history search, `!` completion); not used by `/resume` (checked 2026-11-26) |
 | `~/.claude/projects/<key>/<id>.jsonl` | Per-project transcript — full conversation with messages, usage, tool results | `/resume` session discovery |
 
 The `<key>` is derived from the working directory path with `/` replaced by `-` (e.g., `-workspaces-Agents-eval`). The `<id>` is the session UUID.
@@ -26,7 +26,7 @@ The `<key>` is derived from the working directory path with `/` replaced by `-` 
 
 **Path migration risk**: Because `<key>` encodes the absolute working directory, moving a repo (e.g., `/home/user/repos/foo` → `/home/user/repos/org/foo`) orphans all project data. CC auto-creates a new project directory on first session from the new path, so a manual `mv` of the old project dir into the already-existing new one causes double nesting. Observation: Opus 4.6, 2026-04-13.
 
-Source: observed CC 2.1.83, Codespaces, 2026-03-27. `history.jsonl` fields: `["display","pastedContents","project","sessionId","timestamp"]`.
+Source: observed CC 2.1.83, Codespaces, 2026-03-27 (not re-tested on later versions). `history.jsonl` fields: `["display","pastedContents","project","sessionId","timestamp"]`.
 
 ### Session identification fields
 
@@ -46,7 +46,7 @@ Source: per-project JSONL inspection, CC 2.1.83. `cwd` field observation: Opus 4
 
 ### Session index files
 
-`~/.claude/sessions/<pid>.json` maps PIDs to session metadata (`sessionId`, `cwd`, `startedAt`, `name`). These files are **not listed** in the first-party [.claude directory cleanup tables][claude-directory] — they appear in neither the "cleaned up automatically" nor "kept until you delete" categories. Observed behavior: index files for dead PIDs may be cleaned up, but the exact lifecycle is undocumented. Synthetic entries with fake PIDs survive across sessions.
+`~/.claude/sessions/<pid>.json` maps PIDs to session metadata (`sessionId`, `cwd`, `startedAt`, `name`). The first-party [.claude directory page][claude-directory] documents the lifecycle (checked 2026-11-26): `sessions/` holds one small file per running session, used to detect concurrent sessions and crashes; it is not age-swept, each file is removed when its session exits, and crash leftovers are cleared on next launch. The `<pid>.json` filename and fields are observed only. Synthetic entries with fake PIDs survive across sessions.
 
 Source: [CC-binary-architecture.md](../configuration/CC-binary-architecture.md). Cleanup gap observation: Opus 4.6, 2026-04-13.
 
@@ -103,63 +103,63 @@ After resuming a renamed session and sending new messages, the auto-title logic 
 
 Compaction re-triggers auto-title generation, overwriting the custom name set via `/rename`.
 
-**Upstream**: [anthropics/claude-code#33898][gh-33898] (open, has repro)
+**Upstream**: [anthropics/claude-code#33898][gh-33898] (closed as not planned, stale label, 2026-05-01; current product behavior unverified)
 
 ### 4. `/rename` breaks in-session `/resume` picker
 
 After `/rename`, the in-session `/resume` picker shows only the renamed session instead of all sessions. Workaround: use `claude --resume` from a new terminal.
 
-**Upstream**: [anthropics/claude-code#37083][gh-37083] (open, has repro)
+**Upstream**: [anthropics/claude-code#37083][gh-37083] (closed as not planned, stale label, 2026-04-19; current product behavior unverified)
 
 ### 5. CLI `--resume` doesn't find renamed sessions
 
-`claude -r <custom-name>` fails to find sessions renamed via `/rename`.
+Historical report (observed around CC 2.1.7x, not re-tested): `claude -r <custom-name>` failed to find sessions renamed via `/rename`. The CLI reference now documents resuming by name (`claude --resume <name>`).
 
-**Upstream**: [anthropics/claude-code#27195][gh-27195] (open)
+**Upstream**: [anthropics/claude-code#27195][gh-27195] (closed as not planned, stale label, 2026-04-16; current product behavior unverified)
 
 ### 6. `--resume` + `--print` ignores renamed sessions
 
 Headless resume mode doesn't accept custom names.
 
-**Upstream**: [anthropics/claude-code#34360][gh-34360] (open, has repro)
+**Upstream**: [anthropics/claude-code#34360][gh-34360] (closed as not planned, stale label, 2026-04-12; current product behavior unverified)
 
 ### 7. Session JSONL missing despite history entry
 
 A session can exist in `history.jsonl` (global index) but have no per-project JSONL file. In this case, `/rename` has nowhere to persist the name, and `/resume` cannot discover the session.
 
-**Possible causes**: `cleanupPeriodDays` purged the file (default 30 days, [settings docs][settings]), `--no-session-persistence` was active, session ran from a different project path, or abnormal exit before first JSONL flush.
+**Possible causes**: `cleanupPeriodDays` purged the file (default 30 days, [.claude directory docs][settings]), `--no-session-persistence` (print mode only) or `CLAUDE_CODE_SKIP_PROMPT_HISTORY` was active, session ran from a different project path, or abnormal exit before first JSONL flush.
 
 ## Session Cleanup
 
-Retention is controlled by the `cleanupPeriodDays` setting (default: 30 days). Sessions inactive longer than this period are deleted at startup. Setting to `0` disables persistence entirely — no `.jsonl` files are written and `/resume` shows no conversations.
+Retention is controlled by the `cleanupPeriodDays` setting (default: 30 days). Sessions inactive longer than this period are deleted at startup. The minimum is 1; setting `0` fails with a validation error. Persistence is disabled instead by `CLAUDE_CODE_SKIP_PROMPT_HISTORY` (any mode) or `--no-session-persistence` (print mode only) (checked 2026-11-26).
 
-Source: [settings docs][settings]
+Source: [.claude directory docs][settings]
 
-### `claude project purge` (v2.1.126)
+### `claude purge` (`claude project purge` before v2.1.288)
 
-Deletes **all** Claude Code state for a project: transcripts, task records, file history, and the project's config entry. Useful when a project has been moved, archived, or accumulated stale data that causes discovery issues.
+Deletes **all** Claude Code state for a project: transcripts and auto memory, per-session tasks, debug logs, file history, matching prompt lines in `history.jsonl`, and the project's `~/.claude.json` entry (checked 2026-11-26). Useful when a project has been moved, archived, or accumulated stale data that causes discovery issues.
 
 ```bash
 # Preview what will be deleted without removing anything
-claude project purge --dry-run
+claude purge --dry-run
 
 # Delete state for the current directory
-claude project purge
+claude purge
 
 # Delete with confirmation prompt skipped
-claude project purge --yes
+claude purge --yes
 
 # Interactive selection of which data to purge
-claude project purge --interactive
+claude purge --interactive
 
 # Purge state for a specific path
-claude project purge /path/to/project
+claude purge /path/to/project
 
 # Purge state for all projects
-claude project purge --all
+claude purge --all
 ```
 
-Source: CHANGELOG v2.1.126
+Source: [.claude directory docs][claude-directory]; introduced in v2.1.126 (unverified), renamed in v2.1.288
 
 ## Cross-References
 
@@ -175,7 +175,7 @@ Source: CHANGELOG v2.1.126
 |---|---|
 | [CC commands reference][commands] | `/rename`, `/resume`, `/clear` behavior |
 | [CC CLI reference][cli] | `--name`, `--resume`, `--continue`, `--no-session-persistence` flags |
-| [CC settings docs][settings] | `cleanupPeriodDays` retention control |
+| [CC .claude directory docs][settings] | `cleanupPeriodDays` retention control |
 | [#25090][gh-25090] | Name disappears after second exit |
 | [#33898][gh-33898] | Name reverts after compaction |
 | [#37083][gh-37083] | `/rename` breaks `/resume` picker |
@@ -188,7 +188,7 @@ Source: CHANGELOG v2.1.126
 [commands]: https://code.claude.com/docs/en/commands
 [claude-directory]: https://code.claude.com/docs/en/claude-directory#application-data
 [cli]: https://code.claude.com/docs/en/cli-reference
-[settings]: https://code.claude.com/docs/en/settings
+[settings]: https://code.claude.com/docs/en/claude-directory#cleaned-up-automatically
 [gh-25090]: https://github.com/anthropics/claude-code/issues/25090
 [gh-33898]: https://github.com/anthropics/claude-code/issues/33898
 [gh-37083]: https://github.com/anthropics/claude-code/issues/37083
