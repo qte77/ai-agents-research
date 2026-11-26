@@ -92,7 +92,7 @@ No public MCP server found (2026-03-26). Accountable is a German freelancer acco
 - Auth: OAuth 2.0 + PKCE
 - Launched August 2025 (2025-08-12)
 
-**SAP**: No dedicated MCP server as of 2026-03-26.
+**SAP**: SAP's own GitHub orgs publish MCP servers for developer tooling, for example [cap-js/mcp-server](https://github.com/cap-js/mcp-server) and [SAP/mdk-mcp-server](https://github.com/SAP/mdk-mcp-server) (checked 2026-11-26); a first-party MCP server for SAP business data was not found as of 2026-03-26 (unverified).
 
 ## Productivity / Google Workspace
 
