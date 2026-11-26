@@ -3,7 +3,7 @@ title: Claude Code Skills Adoption - Implementation Summary
 purpose: Implementation summary of adopting Claude Code Skills for modular agent capabilities, including format analysis and ecosystem context.
 status: adopt
 created: 2026-01-11
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-10-23
 ---
 
@@ -94,17 +94,17 @@ mean more recently-used skills fit inside this ceiling after compaction.
 
 Skill descriptions are always in context so Claude knows which skills
 exist. They share a budget that, per the Troubleshooting section of
-[`code.claude.com/docs/en/skills`][cc-skills], "scales dynamically at 1%
-of the context window, with a fallback of 8,000 characters." Additional
+[`code.claude.com/docs/en/skills`][cc-skills], "The budget scales at 1% of
+the model's context window" (the earlier "fallback of 8,000 characters" wording is gone); it is raised via the `skillListingBudgetFraction` setting (0.02 = 2%) or `SLASH_COMMAND_TOOL_CHAR_BUDGET` (a fixed character count), and when the listing overflows, descriptions are dropped starting with the least-invoked skills. Additional
 mechanics from the same source:
 
-- **Per-skill cap: 250 characters.** Entries longer than this are
-  truncated in the skill listing regardless of the shared budget.
-- **Override via `SLASH_COMMAND_TOOL_CHAR_BUDGET`** environment variable
-  to raise the shared ceiling.
+- **Per-skill cap: 1,536 characters** on the combined `description` and `when_to_use` text (earlier doc versions cited 250). Longer entries are
+  truncated in the skill listing regardless of the shared budget; configurable via `skillListingMaxDescChars`.
+- **Override via the `skillListingBudgetFraction` setting or the `SLASH_COMMAND_TOOL_CHAR_BUDGET`** environment variable
+  to raise the shared ceiling; `skillOverrides` with `"name-only"` lists low-priority skills without a description.
 - **Front-load trigger keywords** in the description so truncation does
   not hide the match terms Claude needs for auto-discovery.
-- **`disable-model-invocation: true` exempts a skill from the budget.**
+- **`disable-model-invocation: true` exempts a skill from the budget** (our inference; the page never uses the word "budget" for this).
   Per the invocation-control table in the same page, such a skill's
   description is "not in context" — the skill loads only on explicit
   user invocation via `/name`.
@@ -112,7 +112,7 @@ mechanics from the same source:
 ### Skills as the replacement for procedural CLAUDE.md content
 
 The framing statement from [`code.claude.com/docs/en/skills`][cc-skills]:
-"Create a skill when you keep pasting the same playbook, checklist, or
+"Create a skill when you keep pasting the same instructions, checklist, or
 multi-step procedure into chat, or when a section of CLAUDE.md has grown
 into a procedure rather than a fact. Unlike CLAUDE.md content, a skill's
 body loads only when it's used, so long reference material costs almost
@@ -139,7 +139,7 @@ The skills system has evolved significantly since initial adoption:
 - **Skill suggestion prioritization** in autocomplete (v2.1.0)
 - **Skill progress display** during execution (v2.1.0)
 - **Skills context visualization** — see what context skills inject (v2.1.0)
-- **Skill character budget scales with context** — 2% of context window (v2.1.32)
+- **Skill character budget scales with context** — 2% of context window (v2.1.32; superseded, the skills page now states a 1% default)
 
 ### New Frontmatter Fields (v2.1.0+)
 
@@ -245,7 +245,7 @@ field remains `allowed-tools`, still marked Experimental; no field named `tools`
 The specification's optional package directories are exactly `scripts/`, `references/`, and
 `assets/` — there is **no spec-defined `evals/` directory**. (The skill-creator plugin documented
 for Claude Code "stores prompts, input files, and expected behavior in `evals/evals.json` inside the
-skill directory", in "its own `evals/evals.json` format" per [code.claude.com/docs/en/skills][cc-skills]
+skill directory", in "its own `evals/evals.json` format" per [code.claude.com/docs/en/skills][cc-skills] (the page also documents `claude plugin eval`, a separate format: "the two formats aren't interchangeable")
 — a plugin convention, not part of the open specification.)
 
 ### 2. Claude Code Extensions (top-level frontmatter)
@@ -262,6 +262,7 @@ CC extends the standard with additional fields documented at
 | `context` | `fork` = run in isolated subagent context |
 | `agent` | Subagent type when `context: fork` (e.g. `Explore`) |
 | `hooks` | Skill lifecycle hooks |
+| `when_to_use`, `arguments`, `disallowed-tools`, `effort`, `background`, `paths`, `shell` | Further CC fields listed on the [skills page][cc-skills]; `allowed-tools`, `disallowed-tools` and others are CC additions outside the Agent Skills spec |
 
 CC-specific features not in the open standard (see [Skills Evolution](#skills-evolution-v210v2169) for version details):
 

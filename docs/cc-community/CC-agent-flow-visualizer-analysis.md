@@ -4,7 +4,7 @@ source: https://github.com/patoles/agent-flow
 purpose: Analysis of Agent Flow — a VS Code extension and standalone web app that replays a Claude Code or Codex agent session as an interactive node graph, for debugging and understanding agent behavior.
 platform_scope: [claude-code, codex]
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: trial
 ---
@@ -18,9 +18,8 @@ execution is a black box — you see the final result, not the journey."* Built 
 CraftMyGame (an AI-agent-driven game creation platform) while debugging that project's own agent
 behavior.
 
-Basics (first-party, 2026-09-24): [patoles/agent-flow][repo]; Apache-2.0; 1,655 stars, 195 forks;
-TypeScript; repo created 2026-03-21, last push 2026-07-11 (~2.5 months with no commits as of this
-writing).
+Basics (first-party, 2026-09-24): [patoles/agent-flow][repo]; Apache-2.0; 1,818 stars, 223 forks (checked 2026-11-26);
+TypeScript; repo created 2026-03-21, last push 2026-11-20 (checked 2026-11-26).
 
 ## How It Works
 
@@ -57,8 +56,8 @@ something like this); two independent capture paths (hooks + rollout tailing) me
 depend on Claude Code alone; the zero-config `npx agent-flow-app` path lowers the trial barrier;
 Apache-2.0.
 
-**Risks**: no commits since 2026-07-11 (~2.5 months as of 2026-09-24) — maintenance cadence
-unclear; 27 open issues against 1,655 stars; trademarks on the "Agent Flow" name are asserted
+**Risks**: 5 open issues and 12 open pull requests against 1,818 stars (checked 2026-11-26);
+trademarks on the "Agent Flow" name are asserted
 separately (`TRADEMARK.md`) even though the code is Apache-2.0; no independent review of what the
 local hook server does with session data beyond what the README states (local-only, no mention of
 telemetry).

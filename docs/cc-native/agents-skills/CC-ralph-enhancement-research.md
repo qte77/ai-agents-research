@@ -2,7 +2,7 @@
 title: Ralph Loop Enhancement Research
 purpose: Identify actionable enhancements to autonomous headless CC development loops (Ralph pattern) based on gap analysis and external pattern research.
 created: 2026-03-07
-updated: 2026-09-24
+updated: 2026-11-26
 validated_links_on: 2026-09-24
 status: research
 ---
@@ -43,9 +43,10 @@ These are patterns to watch for in any Ralph implementation — bugs or inconsis
 
 The technique is named after **Ralph Wiggum** from The Simpsons — an ironic nod to the
 naive simplicity of the core idea: a bash while-loop driving an LLM agent indefinitely.
-Geoffrey Huntley created and popularized the loop; the term "Ralph Wiggum Loop" was
-coined on the [LinearB podcast][linearb], which features Dex Horthy,
-Vaibhav, and Huntley discussing the pattern across 75 minutes. Dex Horthy / HumanLayer
+Geoffrey Huntley created and popularized the loop; he named it at a 2025 San Francisco
+meetup (he says July in the [LinearB podcast][linearb] episode, hosted by Andrew Zigler and
+Ben Lloyd Pearson, about 55 minutes; the HumanLayer history below dates the meetup to
+June 19) and discusses the pattern there. Dex Horthy / HumanLayer
 recount its history in [A Brief History of Ralph][ralph-history-post] (2026-01-06).
 
 **Core form** — the canonical bash loop in its original incarnation:
@@ -61,9 +62,9 @@ Any LLM-backed CLI can be substituted; the critical primitive is the declarative
 
 1. Raw bash while-loop (Huntley blog posts)
 2. Community variations and blog popularization
-3. Official Anthropic `ralph-wiggum` Claude Code plugin — formalizes the loop via a
+3. Official Anthropic `ralph-loop` Claude Code plugin (renamed from `ralph-wiggum`) — formalizes the loop via a
    Stop hook that intercepts session exit and re-prompts with the original task
-   (released December 2025)
+   (added to `anthropics/claude-code` on 2025-11-16; renamed to `ralph-loop` in `claude-plugins-official` on 2026-01-06; `gh api`, checked 2026-11-26)
 
 **Overbaking** refers to extended runs that produce emergent, unplanned behavior. Noted
 examples include post-quantum cryptography support appearing spontaneously, and
@@ -83,7 +84,7 @@ Source: [A Brief History of Ralph][ralph-history-post] (Dex Horthy, hlyr.dev, 20
 
 ### Ralphinho — RFC-Driven Multi-Agent DAG
 
-**Source**: `affaan-m/everything-claude-code` ([GitHub][ralphinho], 58k stars)
+**Source**: `affaan-m/everything-claude-code` ([GitHub][ralphinho], about 311k stars, checked 2026-11-26; repo now named `affaan-m/ECC`)
 
 Extends Ralph from sequential story execution to DAG-based parallel orchestration:
 
@@ -108,9 +109,9 @@ Adds layer-specific quality checks as slash commands:
 
 ### Stop-Hook Pattern (Official Plugin)
 
-**Source**: Anthropic `ralph-wiggum` plugin ([GitHub][ralph-official])
+**Source**: Anthropic `ralph-loop` plugin, formerly `ralph-wiggum` ([GitHub][ralph-official])
 
-The official plugin uses a `StopTool` hook that intercepts session exit and re-prompts with the original task. Simpler than the Ralph bash loop but less control:
+The official plugin uses a `Stop` hook (`hooks/stop-hook.sh`) that blocks session exit and feeds the same prompt back, with `--max-iterations` and `--completion-promise` options; the commands are `/ralph-loop` and `/cancel-ralph`. Simpler than the Ralph bash loop but less control:
 
 - No TDD enforcement
 - No baseline-aware validation
@@ -123,13 +124,13 @@ The official plugin uses a `StopTool` hook that intercepts session exit and re-p
 
 **Source**: Geoffrey Huntley ([blog][ghuntley-loop]), LinearB podcast ([source][linearb])
 
-Key insight: "Context rot" — agent quality degrades as context fills with stale information. Solutions:
+Key insight (the "context rot" attribution to Huntley is unverified: his loop post uses "context engineering"): "Context rot" — agent quality degrades as context fills with stale information. Solutions:
 
 - Fresh context per iteration (`claude -p` starts clean each time)
 - Filesystem as memory (`prd.json` + `progress.txt` + git)
 - Never let the agent compact — start fresh instead
 
-**Relevance**: Already implemented in the Ralph pattern. The loop spawns a fresh `claude -p` per story, using external state files for continuity. This is the recommended approach per Huntley and Anthropic's "effective harnesses" guide ([source][effective-harnesses]). Anthropic's [cwc-long-running-agents][cwc-long-running] repo packages the same fresh-context-per-iteration idea as standalone hooks and a subagent — a Default-FAIL evidence contract, a no-Write/Edit "Fresh-Context Evaluator" subagent that grades from a virgin context window, and an agent-maintained `PROGRESS.md` handoff re-read on restart (Apache-2.0, 677★; "example ingredients" from a Code with Claude 2026 take-home station, not maintained).
+**Relevance**: Already implemented in the Ralph pattern. The loop spawns a fresh `claude -p` per story, using external state files for continuity. This follows Huntley's approach; Anthropic's "effective harnesses" guide describes an artifact-based handoff between sessions (progress file, feature list, git commits), not fresh context per iteration ([source][effective-harnesses]). Anthropic's [cwc-long-running-agents][cwc-long-running] repo packages the same fresh-context-per-iteration idea as standalone hooks and a subagent — a Default-FAIL evidence contract, a no-Write/Edit "Fresh-Context Evaluator" subagent that grades from a virgin context window, and an agent-maintained `PROGRESS.md` handoff re-read on restart (Apache-2.0, 771★ (checked 2026-11-26); "example ingredients" from a Code with Claude 2026 take-home station, not maintained).
 
 ### LobeHub Skills Marketplace
 
@@ -143,7 +144,7 @@ Community-published Ralph loop as a CC Skill. Uses `.claude/ralph-loop.local.md`
 
 **Source**: Banco Santander AI Lab ([SantanderAI/ralph][santander-ralph], [ralph-vault-skill][santander-vault])
 
-A dependency-free, production-minded Ralph loop that drives **four** coding CLIs — Claude Code, Codex, Gemini CLI, Devin — with a fresh session per iteration and all continuity living in the workspace. Apache-2.0, v0.1.0 (2026-06-17), ~57★. Notable beyond the bash baseline: live `.ralph/.env` reload before each iteration; automatic agent rotation on token exhaustion (codex→claude→gemini→devin); systemd-enforced hard RAM caps (8 GB default, kernel OOM-kill); project-level **distributed skills** that travel with the repo (`juez` for task review, `maestro` for skill curation); a `stop.md` signal file for graceful shutdown; automatic log rotation. The companion [`ralph-vault-skill`][santander-vault] (~49★) generates progressive-disclosure knowledge vaults as the planning artifact a Ralph loop consumes.
+A dependency-free, production-minded Ralph loop that drives **four** coding CLIs — Claude Code, Codex, Gemini CLI, Devin — with a fresh session per iteration and all continuity living in the workspace. Apache-2.0, v0.1.0 (2026-06-17), ~99★ (checked 2026-11-26). Notable beyond the bash baseline: live `.ralph/.env` reload before each iteration; automatic agent rotation on token exhaustion (codex→claude→gemini→devin); systemd-enforced hard RAM caps (8 GB default, kernel OOM-kill); project-level **distributed skills** that travel with the repo (`juez` for task review, `maestro` for skill curation); a `stop.md` signal file for graceful shutdown; automatic log rotation. The companion [`ralph-vault-skill`][santander-vault] (~69★, checked 2026-11-26) generates progressive-disclosure knowledge vaults as the planning artifact a Ralph loop consumes.
 
 **Relevance**: A maintained multi-CLI harness whose agent-rotation and distributed-skills design extend the single-CLI bash baseline; the vault skill complements the LobeHub skill-packaging above.
 
@@ -165,20 +166,20 @@ A dependency-free, production-minded Ralph loop that drives **four** coding CLIs
 1. **BDD workflow support**: Add `RALPH_TEST_WORKFLOW` switch when a BDD project needs Ralph
 2. **Cross-layer validation commands**: Add `/check-backend` etc. when a project becomes multi-layer
 3. **Rust/Python rewrite**: When bash brittleness measurably blocks development
-4. **`/loop` command as alternative** (v2.1.71): CC now has a built-in `/loop` command with cron scheduling for recurring prompts/commands on intervals. This overlaps with Ralph's core loop mechanic. Key differences: `/loop` is session-bound (no external state), lacks TDD enforcement, no story dependencies or PRD tracking. Could replace Ralph for simple repeating tasks but insufficient for structured multi-story workflows. Worth monitoring if `/loop` gains state persistence or hook integration.
+4. **`/loop` command as alternative** (v2.1.71): CC now has a built-in `/loop` command with cron scheduling for recurring prompts/commands on intervals. This overlaps with Ralph's core loop mechanic. Key differences: `/loop` tasks are session-scoped but restored on `--resume`/`--continue` (a self-paced `/loop` is not), can take a project `.claude/loop.md` default prompt, and recurring tasks expire after 30 days (7 before v2.1.330); it lacks TDD enforcement, no story dependencies or PRD tracking. Could replace Ralph for simple repeating tasks but insufficient for structured multi-story workflows. Durable scheduling is via cloud scheduled tasks, Desktop scheduled tasks or GitHub Actions, and `/goal` covers keep-working-toward-a-condition ([scheduled tasks](https://code.claude.com/docs/en/scheduled-tasks)).
 
 ## References
 
 - [A Brief History of Ralph][ralph-history-post] — Dex Horthy (hlyr.dev, 2026-01-06); origin, naming, overbaking, Desired State Loops
 - [Effective Harnesses for Long-Running Agents][effective-harnesses] — Anthropic engineering blog
-- [cwc-long-running-agents][cwc-long-running] — Anthropic reference hooks/subagent for long-running agent harnesses (Apache-2.0, 677★)
+- [cwc-long-running-agents][cwc-long-running] — Anthropic reference hooks/subagent for long-running agent harnesses (Apache-2.0, 771★, checked 2026-11-26)
 - [Ralph Pattern][ghuntley-ralph] — Geoffrey Huntley original post
-- [Ralph Playbook][ralph-playbook] — ClaytonFarr comprehensive guide (853 stars)
+- [Ralph Playbook][ralph-playbook] — ClaytonFarr comprehensive guide (1,040 stars, checked 2026-11-26)
 - [Everything Claude Code][ralphinho] — Autonomous loop patterns including Ralphinho
 - [Trellis docs][trellis] — Cross-layer validation commands
 - [LobeHub Ralph Loop skill][lobehub-ralph] — Community skill implementation
-- [Ralph Wiggum plugin][ralph-official] — Official Anthropic plugin
-- [LinearB podcast][linearb] — Huntley on context rot and loop discipline
+- [Ralph Loop plugin (formerly Ralph Wiggum)][ralph-official] — Official Anthropic plugin
+- [LinearB podcast][linearb] — Huntley on the loop technique and its origin
 - [Shipyard Ralph guide][shipyard] — Ralph loop pattern explanation
 - [SantanderAI/ralph][santander-ralph] — Banco Santander AI Lab multi-CLI Ralph harness (Apache-2.0, v0.1.0)
 - [ralph-vault-skill][santander-vault] — knowledge-vault generator companion to the loop

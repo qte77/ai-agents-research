@@ -3,12 +3,12 @@ title: llms.txt Specification, Anthropic Documentation Index, and Project Implem
 purpose: Analysis of the llms.txt standard, Anthropic's documentation surface area, and a project's template and workflows.
 source: https://llmstxt.org/
 created: 2026-03-07
-updated: 2026-10-24
+updated: 2026-11-26
 validated_links_on: 2026-10-24
 status: assess
 ---
 
-**Details:** Stable; spec analysis + 651-page Anthropic index + example project implementation
+**Details:** Stable; spec analysis + 965-page Anthropic index (checked 2026-11-26) + example project implementation
 
 ## Summary
 
@@ -84,8 +84,10 @@ Optional body content (no headings)
 
 ### platform.claude.com/llms.txt (API/SDK docs)
 
-651 English pages across 11 language versions. Full content at
+965 English pages (checked 2026-11-26), plus 11 other languages at 364 pages each, only English inlined. Full content at
 `platform.claude.com/llms-full.txt`.
+
+The section table below is an earlier snapshot: its page counts were not re-derived and the current file groups English pages under different H3 headings (Docs home, Messages, Managed Agents, Admin, Best practices, Models & pricing, SDKs/CLI/libraries, API reference, Claude API skill, release notes) (unverified).
 
 | Section | Pages | Key Topics |
 | ------- | ----- | ---------- |
@@ -111,33 +113,33 @@ Ruby, Terraform, TypeScript.
 
 ### code.claude.com/docs/llms.txt (CC docs)
 
-- ~70 entries in a single flat alphabetical list (no H2 sub-sections)
-- Each entry has 1-2 sentence description
+- About 220 doc links plus 11 language index links (hand count, approximate, checked 2026-11-26) under 9 H2 sections (Getting started, Build with Claude Code, Plugins, Administration, Configuration, Reference, Agent SDK, Resources, Indexes) with H3/H4 sub-groups, in navigation order rather than alphabetical
+- Each entry has a one-line description
 - No `## Optional` section, no `llms-full.txt` companion
 
 ### Key URLs for CC Research
 
 | Category | URL | Why It Matters |
 | -------- | --- | -------------- |
-| Agent SDK Overview | `platform.claude.com/docs/en/agent-sdk/overview` | Foundation for understanding CC internals |
-| Agent SDK Plugins | `platform.claude.com/docs/en/agent-sdk/plugins` | Plugin architecture for portable agent bundles |
-| Agent SDK Skills | `platform.claude.com/docs/en/agent-sdk/skills` | Skills API for programmatic skill management |
-| Agent SDK Subagents | `platform.claude.com/docs/en/agent-sdk/subagents` | Subagent architecture reference |
-| Agent SDK Hooks | `platform.claude.com/docs/en/agent-sdk/hooks` | Hook system for execution control |
-| Agent SDK Cost Tracking | `platform.claude.com/docs/en/agent-sdk/cost-tracking` | Cost/usage monitoring patterns |
+| Agent SDK Overview | `code.claude.com/docs/en/agent-sdk/overview` | Foundation for understanding CC internals |
+| Agent SDK Plugins | `code.claude.com/docs/en/agent-sdk/plugins` | Plugin architecture for portable agent bundles |
+| Agent SDK Skills | `code.claude.com/docs/en/agent-sdk/skills` | Skills API for programmatic skill management |
+| Agent SDK Subagents | `code.claude.com/docs/en/agent-sdk/subagents` | Subagent architecture reference |
+| Agent SDK Hooks | `code.claude.com/docs/en/agent-sdk/hooks` | Hook system for execution control |
+| Agent SDK Cost Tracking | `code.claude.com/docs/en/agent-sdk/cost-tracking` | Cost/usage monitoring patterns |
 | Fast Mode | `platform.claude.com/docs/en/build-with-claude/fast-mode` | API-level fast mode |
 | Batch Processing | `platform.claude.com/docs/en/build-with-claude/batch-processing` | 50% cost reduction for async workloads |
 | Structured Outputs | `platform.claude.com/docs/en/build-with-claude/structured-outputs` | JSON schema enforcement |
-| CC Analytics API | `platform.claude.com/docs/en/build-with-claude/claude-code-analytics-api` | Programmatic CC usage data |
-| Eval Tool | `platform.claude.com/docs/en/test-and-evaluate/eval-tool` | Anthropic's evaluation tooling |
+| CC Analytics API | `platform.claude.com/docs/en/manage-claude/claude-code-analytics-api` | Programmatic CC usage data |
+| Define success and build evaluations (formerly "Eval Tool") | `platform.claude.com/docs/en/test-and-evaluate/develop-tests` | Anthropic's evaluation tooling |
 
 ### Pattern Comparison
 
 | Attribute | platform.claude.com | code.claude.com | Example project |
 | --------- | ------------------- | --------------- | --------------- |
-| H2 sections | 3 grouped | None (flat list) | 5 grouped |
-| Link count | ~400+ | ~70 | ~17 |
-| Link format | `**[name](url)** - desc` | `[name](url): desc` | `[name](url): desc` |
+| H2 sections | 5 (English content in H3 groups) | 9 (with H3/H4 groups) | 5 grouped |
+| Link count | hundreds (965 English pages) | ~220 (approx.) | ~17 |
+| Link format | `- [Title](url.md)`, optional description | `[name](url): desc` | `[name](url): desc` |
 | URL pattern | `.md` suffix | `.md` suffix | GitHub blob links |
 | `## Optional` | Not used | Not used | Used |
 | Companion file | `llms-full.txt` | None | None |

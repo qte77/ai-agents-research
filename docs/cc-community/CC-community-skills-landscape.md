@@ -3,7 +3,7 @@ title: CC Community Skills Landscape
 purpose: Survey of community-built Claude Code skill libraries, such as gstack, pm-skills, agent-skills, caveman and last30days, with what each one is for.
 status: research
 created: 2026-03-13
-updated: 2026-11-25
+updated: 2026-11-26
 validated_links_on: 2026-10-11
 ---
 
@@ -13,7 +13,7 @@ Nine community skill libraries demonstrate distinct models for packaging CC capa
 
 ## gstack (Garry Tan)
 
-**Repo**: [garrytan/gstack](https://github.com/garrytan/gstack) | **Stars**: 4,000+ | **License**: MIT
+**Repo**: [garrytan/gstack](https://github.com/garrytan/gstack) | **Stars**: 142.7K (checked 2026-11-26) | **License**: MIT
 
 8 skills targeting founder/engineering workflows with browser automation:
 
@@ -51,7 +51,7 @@ The central design principle: *"Planning is not review. Review is not shipping. 
 
 ## pm-skills (Pawel Huryn)
 
-**Repo**: [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | **Stars**: 6,800+ | **License**: MIT
+**Repo**: [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | **Stars**: 28.3K (checked 2026-11-26) | **License**: MIT
 
 65 skills and 36 chained workflow commands across 8 plugins:
 
@@ -87,7 +87,7 @@ pm-skills is the clearest public example of CC plugins as a **domain expertise d
 
 ## claude-code-best-practice (shanraisshan)
 
-**Repo**: [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) | **Stars**: 31.8K | **Author**: Claude Community Ambassador
+**Repo**: [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) | **Stars**: 69.4K (checked 2026-11-26) | **Author**: Claude Community Ambassador
 
 *"practice made claude perfect"* — a **living community knowledge base** and curated reference index, not a skill library or plugin.
 
@@ -108,7 +108,7 @@ All CC features categorized under three primary tags:
 | Concepts Table | 12 | Subagents, Commands, Skills, Workflows, Hooks, MCP Servers, Plugins, Settings, Status Line, Memory, Checkpointing, CLI Startup Flags |
 | Hot Features | 8+ | Power-ups, Ultraplan, CC Web, No Flicker, Computer Use, Auto Mode, Channels, Slack, Code Review, GHA, Chrome Extension, Scheduled Tasks, Voice, Simplify & Batch, Agent Teams, Remote Control, Worktrees, Ralph |
 | Orchestration Workflow | 1 | Visual diagram: Command -> Agent -> Skill architecture |
-| Development Workflows | 9+ | everything-claude-code (137K stars), Superpowers (135K), Spec Kit (see [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md)), gstack, GSD, BMAD-METHOD, OpenSpec, oh-my-claudecode, Compound Engineering, HumanLayer — with uniqueness badges and component breakdowns |
+| Development Workflows | 9+ | everything-claude-code (now `affaan-m/ECC`, 311K stars, checked 2026-11-26), Superpowers (327K stars, checked 2026-11-26), Spec Kit (see [spec-driven-frameworks-landscape.md](../non-cc/frameworks/spec-driven-frameworks-landscape.md)), gstack, GSD, BMAD-METHOD, OpenSpec, oh-my-claudecode, Compound Engineering, HumanLayer — with uniqueness badges and component breakdowns |
 | Tips and Tricks | 38+ | Across 7 categories (prompting, planning, workflows, debugging, utilities, daily) |
 | Startup Comparison | 5 | CC features vs commercial tool equivalents |
 | Open Research Questions | 13 | Across 4 domains |
@@ -130,7 +130,7 @@ Valuable as a **community health indicator** and discovery entry point. The open
 
 ## claude-howto (luongnv89)
 
-**Repo**: [luongnv89/claude-howto][claude-howto] | **Stars**: 18.9K | **License**: MIT
+**Repo**: [luongnv89/claude-howto][claude-howto] | **Stars**: 47.6K (checked 2026-11-26) | **License**: MIT
 
 Example-driven learning guide for Claude Code — 10 sequential modules covering slash commands, memory, skills, subagents, Model Context Protocol (MCP), hooks, plugins, checkpoints, advanced features, and CLI. Bridges the gap between official reference docs and production-ready implementation.
 
@@ -148,7 +148,7 @@ Learning resource with production-ready templates, not a plugin. Where claude-co
 
 ## Superpowers (obra / Jesse Vincent)
 
-**Repo**: [obra/superpowers][superpowers] | **Stars**: 135K | **License**: MIT | **Version**: v5.0.7
+**Repo**: [obra/superpowers][superpowers] | **Stars**: 327K (checked 2026-11-26) | **License**: MIT | **Version**: v7.0.2 (2026-11-03)
 
 *"An agentic skills framework & software development methodology that works."* Composable skills and initial instructions that enable coding agents to execute structured development workflows autonomously.
 
@@ -185,7 +185,7 @@ Where gstack locks cognitive *modes* and pm-skills delivers domain *frameworks*,
 
 ## agent-skills (Addy Osmani)
 
-**Repo**: [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | **Stars**: 5,554 | **License**: MIT
+**Repo**: [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | **Stars**: 120.6K (checked 2026-11-26) | **License**: MIT
 
 19 production-grade SDLC skills, 7 slash commands, 3 agent personas, and 4 reference checklists. Platform-agnostic (Claude Code, Cursor, Gemini CLI, Windsurf, GitHub Copilot). Heavily influenced by [Google's engineering practices](https://google.github.io/eng-practices/) and [Software Engineering at Google](https://abseil.io/resources/swe-book).
 
@@ -247,7 +247,7 @@ Cross-ref: [Addy Osmani: Claude Code Agent Teams](https://addyosmani.com/blog/cl
 
 ## Caveman (JuliusBrussee)
 
-**Repo**: [JuliusBrussee/caveman][caveman] | **Stars**: ~122K | **License**: Apache-2.0 | **Version**: v4.2.0 (2026-11-22) | all as of 2026-11-22 ([GitHub API][caveman-api], [LICENSE][caveman-license], [releases][caveman-releases])
+**Repo**: [JuliusBrussee/caveman][caveman] | **Stars**: ~123K | **License**: Apache-2.0 | **Version**: v4.2.0 (2026-11-22) | all as of 2026-11-22 ([GitHub API][caveman-api], [LICENSE][caveman-license], [releases][caveman-releases])
 
 **Site**: [caveman.so][caveman-site], the project's own site (it links the repo; `getcaveman.dev` serves the same page and declares `caveman.so` canonical) · **Docs**: [docs.caveman.so][caveman-docs] (the repo's homepage field) · read 2026-11-22
 
@@ -329,7 +329,7 @@ Cross-ref: [CC-community-tooling-landscape.md](CC-community-tooling-landscape.md
 
 ## last30days (mvanhorn)
 
-**Repo**: [mvanhorn/last30days-skill][last30days] | **Stars**: 34,179 | **License**: MIT | **Version**: v3.x
+**Repo**: [mvanhorn/last30days-skill][last30days] | **Stars**: 75.6K (checked 2026-11-26) | **License**: MIT | **Version**: v3.x
 
 Real-time social-research skill. Fans out parallel searches across 14+ platforms simultaneously and synthesizes results with an AI judge:
 
@@ -351,7 +351,7 @@ npx skills add mvanhorn/last30days-skill -g
 
 ## agent-native skills (Builder.io)
 
-**Repo**: [BuilderIO/skills][builderio-skills] | **Stars**: 1.5K | **License**: MIT | **Version**: v0.2.35 (2026-06-19, npm `@agent-native/skills`)
+**Repo**: [BuilderIO/skills][builderio-skills] | **Stars**: 4.7K (checked 2026-11-26) | **License**: MIT | **Version**: v0.4.13 (npm `@agent-native/skills`, checked 2026-11-26; no GitHub release)
 
 Ten à-la-carte, cross-agent **meta-skills** — orchestration, review, and guardrail capabilities rather than a full methodology. Installed via the `@agent-native/skills` CLI through the shared `.agents` path (Codex, Pi, Cursor, OpenCode, GitHub Copilot / VS Code) plus Claude Code's native skills path. Visual outputs render as MDX.
 
@@ -383,7 +383,7 @@ Cross-ref: [CC-skills-adoption-analysis.md](../cc-native/agents-skills/CC-skills
 
 ## coleam00 (Cole Medin): excalidraw-diagram-skill
 
-**Repo**: [coleam00/excalidraw-diagram-skill][excalidraw-skill] | **Stars**: 5,240 (2026-11-12) | **License**: none
+**Repo**: [coleam00/excalidraw-diagram-skill][excalidraw-skill] | **Stars**: 5,352 (checked 2026-11-26) | **License**: none
 found — the repo ships no `LICENSE` file and GitHub's own license detector returns `null`; only
 `.gitignore`, `README.md`, `SKILL.md`, and `references/` are present (checked via the GitHub contents
 API, 2026-09-30). A single skill that generates `.excalidraw` JSON diagrams designed to "argue, not
@@ -402,8 +402,8 @@ back before declaring the diagram done.
 
 ## cathrynlavery/diagram-design
 
-**Repo**: [cathrynlavery/diagram-design][diagram-design] | **Stars**: 43,595 | **Forks**: 2,820 |
-**License**: MIT | pushed 2026-10-06 (`gh api`, 2026-10-06)
+**Repo**: [cathrynlavery/diagram-design][diagram-design] | **Stars**: 73.7K (checked 2026-11-26) | **Forks**: 2,820 |
+**License**: MIT | pushed 2026-11-25 (`gh api`, checked 2026-11-26)
 
 A Claude Code skill and multi-host Agent-Skills plugin, distinct from the single-renderer
 excalidraw-diagram-skill above: it targets five hosts out of the box. The repo's own description field:
@@ -460,9 +460,9 @@ corpus's other diagram/visualization tools.
 
 ## wheresryan22/anatomy
 
-**Repo**: [wheresryan22/anatomy][anatomy] | **Stars**: 3,109 | **Forks**: 235 | **License**: MIT
+**Repo**: [wheresryan22/anatomy][anatomy] | **Stars**: 29.3K (checked 2026-11-26) | **Forks**: 235 | **License**: MIT
 (confirmed by reading the `LICENSE` file — "MIT License / Copyright (c) 2026 Ryan") | created
-2026-10-08, pushed 2026-10-11 (`gh api`, 2026-10-11) — 3 days old.
+2026-10-08, pushed 2026-10-11 at the first read (3 days old then); last push 2026-10-18 (`gh api`, checked 2026-11-26).
 
 A Claude Code [Agent Skill][cc-skills-doc] — a plain folder with a
 `SKILL.md` at its root, not a plugin — that has Claude invent a real physical machine whose mechanism
@@ -521,7 +521,7 @@ geometry are a different rendering approach from either. See
 
 ## cloudflare/security-audit-skill
 
-**Repo**: [cloudflare/security-audit-skill][cf-sec-audit] | **Stars**: 23,302 | **License**: MIT |
+**Repo**: [cloudflare/security-audit-skill][cf-sec-audit] | **Stars**: 78.7K (checked 2026-11-26) | **License**: MIT |
 pushed 2026-09-14
 
 A coding-agent skill that runs a structured six-phase security audit — reconnaissance, coverage-led
@@ -548,7 +548,7 @@ See also the offensive-security skill bundles [Claude-BugHunter][cbh], [pentest-
 
 ## GoogleChrome/modern-web-guidance
 
-**Repo**: [GoogleChrome/modern-web-guidance][mwg-repo] | **Stars**: 14,896 | **License**: Apache-2.0 |
+**Repo**: [GoogleChrome/modern-web-guidance][mwg-repo] | **Stars**: 26.6K (checked 2026-11-26) | **License**: Apache-2.0 |
 created 2026-03-23, pushed 2026-11-10 (`gh api`, 2026-11-14) | **Docs**: [developer.chrome.com][mwg-docs]
 
 A vendor-maintained skill, unlike the community libraries above: the README says it is "Stewarded by the
@@ -566,7 +566,7 @@ Google Chrome, Microsoft Edge, Mozilla Firefox, and MDN teams". It targets one f
   enters the context. A third command, `legacy-scan`, scans a codebase for legacy patterns. Guides cover
   250 web features and 203 use cases (README counts), including WebMCP guides for exposing page
   functions as agent tools.
-- **npm package.** `modern-web-guidance` on npm (v1.0.0, 121 published versions since 2026-04-30,
+- **npm package.** `modern-web-guidance` on npm (v1.0.2 as of 2026-11-26; the "121 published versions" count dates from the earlier read and is unverified,
   Apache-2.0; the package's `bin` is the skill's own `modern-web.mjs`).
 - **Plugin packaging for many hosts.** The same repo ships a Claude Code plugin and marketplace
   (`.claude-plugin/marketplace.json`, marketplace `googlechrome`: `/plugin marketplace add
@@ -590,7 +590,7 @@ measured uplift. Cross-ref: WebMCP in
 ## cursor/plugins pstack (Lauren Tan)
 
 **Repo**: [cursor/plugins `pstack/`][pstack-repo] | **License**: MIT (`pstack/LICENSE`, plugin.json 0.15.46) |
-repo 17,719 stars, `pstack/` last touched 2026-11-19 (`gh api`, 2026-11-20)
+repo 19.7K stars (checked 2026-11-26), `pstack/` last touched 2026-11-19 (`gh api`, 2026-11-20)
 
 A skill pack published in Cursor's own plugin repository (described as "Cursor plugin specification and
 official plugins") but also installable in Claude Code (`/plugin marketplace add cursor/plugins`, then
@@ -608,9 +608,9 @@ in the README, not a tested result.
 model: methodology delivered as a playbook-router skill plus a Claude Code adapter generated from the
 Cursor tree.
 
-## scottduncanai/pid-to-knowledge-graph
+## ScottDuncanAI/PID-to-Knowledge-Graph
 
-**Repo**: [scottduncanai/pid-to-knowledge-graph][pidkg-repo] | **Stars**: 379 | **License**: MIT (`LICENSE` file) |
+**Repo**: [ScottDuncanAI/PID-to-Knowledge-Graph][pidkg-repo] | **Stars**: 431 (checked 2026-11-26) | **License**: MIT (`LICENSE` file) |
 created 2026-11-08, last push 2026-11-08, no releases, Python (`gh api`, 2026-11-25)
 
 A domain skill (`skills/pid-to-kg`) that reads piping and instrumentation diagram (P&ID) and process flow
@@ -640,7 +640,7 @@ The README presents it as one layer of a chemical-manufacturing "context layer" 
   results).
 
 **Maturity.** All activity is on one day (2026-11-08) and there is no release, so treat it as early. Its
-adoption (379 stars, no named independent users found in the README) is below the 1,000-star bar in the
+adoption (431 stars (2026-11-26), no named independent users found in the README) is below the 1,000-star bar in the
 [pruning rule](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter), and no
 measured benefit is published. It is kept at the owner's request (2026-11-25) as a watch entry, a
 domain example rather than a recommendation. Related graph coverage:
@@ -678,24 +678,24 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [pm-skills][pm-skills] | Product management skill framework |
 | [claude-code-best-practice][ccbp] | Community knowledge base |
 | [claude-howto][claude-howto] | Example-driven CC learning guide (10 modules, templates) |
-| [superpowers][superpowers] | Agentic skills framework & dev methodology (135K stars) |
-| [agent-skills][agent-skills] | Google SDLC engineering skill pack (5,554 stars) |
+| [superpowers][superpowers] | Agentic skills framework & dev methodology (327K stars, checked 2026-11-26) |
+| [agent-skills][agent-skills] | Google SDLC engineering skill pack (120.6K stars, checked 2026-11-26) |
 | [modern-web-guidance][mwg-repo] · [docs][mwg-docs] · [eval dashboard][mwg-evals] | Browser-vendor web-platform skill, CLI, plugin manifests, eval loop |
-| [caveman][caveman] | Output-voice skill plus local token-saving proxy and CLI (~122K stars, Apache-2.0, v4.2.0, 2026-11-22) |
+| [caveman][caveman] | Output-voice skill plus local token-saving proxy and CLI (~123K stars, Apache-2.0, v4.2.0, 2026-11-22) |
 | [caveman LICENSE][caveman-license] · [LICENSING.md][caveman-licensing] · [v1.6.0 LICENSE][caveman-v160-license] · [releases][caveman-releases] · [repo API][caveman-api] | Caveman licence history, latest version and repo stats, checked 2026-11-22 |
 | [JetBrains A/B][caveman-jetbrains] | Independent paired A/B of caveman on SkillsBench: 8.5% output-token saving, no significant score difference (p = 0.82), checked 2026-11-22 |
 | [CAVEWOMAN, arXiv 2606.24083][caveman-cavewoman] | Study of caveman-style output and input compression across eight models, checked 2026-11-22 |
 | [caveman.so][caveman-site] · [docs][caveman-docs] · [Caveman Code][caveman-code] · [download][caveman-dl] · [models][caveman-models] · [trim-1][caveman-trim1] | Project site and docs; Caveman Code app: platforms, not open source, plans and credit cap, stated token strategy, self-reported Terminal-Bench 4 and DeepSWE results; helper models, read 2026-11-22 |
-| [last30days][last30days] | Real-time social research across 14+ platforms (34K+ stars) |
+| [last30days][last30days] | Real-time social research across 14+ platforms (75K+ stars, checked 2026-11-26) |
 | [agent-native skills][builderio-skills] | Composable cross-agent meta-skills (visual plan/recap, watchdog, guardrails) |
-| [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (5,240 stars, no license file, 2026-11-12) |
-| [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (23,302 stars, MIT) |
+| [coleam00/excalidraw-diagram-skill][excalidraw-skill] | Excalidraw diagram-generation skill (5,352 stars, no license file, checked 2026-11-26) |
+| [cloudflare/security-audit-skill][cf-sec-audit] | Six-phase coding-agent security-audit skill (78.7K stars, checked 2026-11-26, MIT) |
 | [Claude-BugHunter][cbh] · [pentest-ai-agents][psa] · [communitytools][ct] | Offensive-security skill bundles for authorized testing (stars and details in the linked comparison, 2026-11-17) |
 | [Cloudflare: Build your own vulnerability harness][cf-blog] | Cloudflare's own account of the harness this skill seeded |
-| [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (43,595 stars, MIT; `gh api` 2026-10-06) |
+| [cathrynlavery/diagram-design][diagram-design] | Editorial diagram-design skill for Claude Code, Codex, Copilot, Droid, Pi — 44 types by live count, README tagline says 42 (73.7K stars, MIT; `gh api` checked 2026-11-26) |
 | [cursor/plugins pstack][pstack-repo] | Playbook-router skill pack (22 playbooks) for Cursor, installable in Claude Code (MIT; `gh api` 2026-11-20) |
-| [wheresryan22/anatomy][anatomy] | Isometric interactive figure-generation Agent Skill, audited geometry + screenshot verification loop (3,109 stars, MIT; `gh api` 2026-10-11) |
-| [scottduncanai/pid-to-knowledge-graph][pidkg-repo] | P&ID-to-knowledge-graph Claude skill (379 stars, MIT, created and last pushed 2026-11-08; `gh api` 2026-11-25) |
+| [wheresryan22/anatomy][anatomy] | Isometric interactive figure-generation Agent Skill, audited geometry + screenshot verification loop (29.3K stars, MIT; `gh api` checked 2026-11-26) |
+| [scottduncanai/pid-to-knowledge-graph][pidkg-repo] | P&ID-to-knowledge-graph Claude skill (431 stars, MIT, created and last pushed 2026-11-08; `gh api` checked 2026-11-26) |
 
 [agent-skills]: https://github.com/addyosmani/agent-skills
 [gstack]: https://github.com/garrytan/gstack
@@ -733,4 +733,4 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [pstack-repo]: https://github.com/cursor/plugins/tree/main/pstack
 [mwg-docs]: https://developer.chrome.com/docs/modern-web-guidance
 [mwg-evals]: https://googlechrome.github.io/modern-web-guidance-src/
-[pidkg-repo]: https://github.com/scottduncanai/pid-to-knowledge-graph
+[pidkg-repo]: https://github.com/ScottDuncanAI/PID-to-Knowledge-Graph

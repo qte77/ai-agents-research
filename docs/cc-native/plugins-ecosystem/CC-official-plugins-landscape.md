@@ -3,7 +3,7 @@ title: CC Official Plugins Landscape
 source: https://www.firecrawl.dev/blog/best-claude-code-plugins
 purpose: Catalog the official CC plugin ecosystem, assess coverage gaps in this research repo, and provide adoption guidance per plugin.
 created: 2026-03-12
-updated: 2026-11-22
+updated: 2026-11-26
 validated_links_on: 2026-10-18
 status: reference
 ---
@@ -12,19 +12,19 @@ status: reference
 
 ## Overview
 
-The CC plugin ecosystem has grown to 9,000+ plugins across the marketplace, ClaudePluginHub, and Claude-Plugins.dev ([source][firecrawl-blog]). This document catalogs the top official plugins, maps coverage in this research repo, and provides adoption guidance.
+The CC plugin ecosystem has grown to "over 9,000" plugins across ClaudePluginHub, Claude-Plugins.dev and Anthropic's marketplace, per a third-party blog with no source or date for the figure (unverified) ([source][firecrawl-blog]). This document catalogs the top official plugins, maps coverage in this research repo, and provides adoption guidance.
 
 ## Plugin Coverage Matrix
 
-| # | Plugin | Installs | This Repo Coverage | Action |
+| # | Plugin | Installs (third-party, as of 2026-01-19) | This Repo Coverage | Action |
 |---|---|---|---|---|
 | 1 | [Frontend Design](#frontend-design) | 96.4k | None | Brief section (UI-focused, skip unless frontend) |
 | 2 | [Context7](#context7) | 71.8k | None | Full section (actively used via MCP) |
 | 3 | [Code Review](#code-review) | 50k | Name-only mention | Moderate section (multi-agent scoring) |
 | 4 | Firecrawl | — | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
 | 5 | Playwright | 28.1k | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
-| 6 | [Security Guidance](#security-guidance) | 25.5k | Name-only mention | Full section (three review layers, hooks, switches; v2.0.21) |
-| 7 | Chrome DevTools MCP | 20k | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
+| 6 | [Security Guidance](#security-guidance) | 25.5k+ | Name-only mention | Full section (three review layers, hooks, switches; v2.0.21) |
+| 7 | Chrome DevTools MCP | 20k+ | Full ([web-scraping analysis](CC-web-scraping-plugins-analysis.md)) | Cross-ref only |
 | 8 | [Figma MCP](#figma-mcp) | 18.1k | None | Brief section (design-focused, skip unless UI) |
 | 9 | [Linear](#linear) | 9.5k | None | Brief section (adopt if using Linear PM) |
 | 10 | Ralph Loop | — | Full ([ralph enhancement research](../agents-skills/CC-ralph-enhancement-research.md)) | Cross-ref only |
@@ -67,7 +67,7 @@ mcp__context7__get-library-docs \
 
 **Installation**: `/plugin install code-review@claude-plugins-official`
 
-**Author / version**: the two first-party files disagree. `.claude-plugin/plugin.json` lists the author as "Anthropic" (`support@anthropic.com`) and has no version field ([source][cr-plugin-json]); the README's own `## Author` / `## Version` sections instead give "Boris Cherny (`boris@anthropic.com`)" and "1.0.0" ([source][cr-plugin-readme]).
+**Author / version**: the two first-party files disagree. `.claude-plugin/plugin.json` lists the author as "Anthropic" (`support@anthropic.com`) and version 1.0.1 (checked 2026-11-26) ([source][cr-plugin-json]); the README's own `## Author` / `## Version` sections instead give "Boris Cherny (`boris@anthropic.com`)" and "1.0.0" ([source][cr-plugin-readme]).
 
 **Usage**: the plugin ships its own `commands/code-review.md` command file, also named `code-review` (frontmatter `description: Code review a pull request`). Because a plugin command is namespaced as `/plugin-name:command-name`, it runs alongside — not in place of — the bundled `/code-review` command documented in [§ `/code-review` command and ultrareview](#code-review-command-and-ultrareview): `claude plugin list` confirms `code-review@claude-plugins-official` is installed here, and the available-skills list (CC 2.1.302, Codespaces, 2026-10-18) carries both `code-review` (the bundled command, long description) and `code-review:code-review` ("Code review a pull request" — this plugin's own description) as separate entries, so the plugin's review runs as `/code-review:code-review`, not bare `/code-review`.
 
@@ -98,9 +98,9 @@ mcp__context7__get-library-docs \
 
 **What `/code-review` does**: reviews the current diff, a PR, a branch, or a path for correctness bugs (plus reuse/simplification/efficiency cleanup, depending on model and effort level), and reports findings in the conversation; `--fix` applies them, `--comment` posts them to the GitHub PR or GitLab MR. It follows the project's `CLAUDE.md` but does not read `REVIEW.md` (that file configures the managed service below). `/review` is an alias since **CC v2.1.223**; before that it was a separate single-pass read-only GitHub-PR reviewer. The command was named **`/simplify`** before **CC v2.1.147**; `/simplify` still exists as a narrower, correctness-blind cleanup command. Full targets table, effort levels, and flags: [CC-tools-inventory.md § `/code-review`, `/review`, `/simplify`, and ultrareview](../configuration/CC-tools-inventory.md#code-review-review-simplify-and-ultrareview).
 
-**`ultrareview`** (`/code-review ultra`, alias `/ultrareview`) escalates to a **research-preview** cloud review. "Ultrareview is a deep code review that runs as a cloud session on Anthropic's infrastructure." It launches a fleet of reviewer agents whose findings are independently reproduced and verified before they're reported — higher signal than the local review's effort-level scaling, at the cost of a cloud round trip. It is **user-started only**: Claude never launches it on its own, and a scheduled `/code-review` task never escalates to `ultra`. It bills against usage credits once the three free runs on Pro and Max are used, "typically $5 to $25 in usage credits depending on the size of the change". "A review typically takes 15 to 25 minutes." A branch review defaults to up to 500 changed files / 8,000 changed lines; a PR review targets a `github.com` PR number. It is unavailable on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, Zero Data Retention, and HIPAA-configured orgs (falls back to a local review in those cases), and organizations using customer-managed encryption keys (CMEK) can't run it at all — no automatic fallback is documented for CMEK. Details: [CC-tools-inventory.md § ultrareview](../configuration/CC-tools-inventory.md#code-review-review-simplify-and-ultrareview).
+**`ultrareview`** (`/code-review ultra`, alias `/ultrareview`) escalates to a **research-preview** cloud review. "Ultrareview is a deep code review that runs as a cloud session on Anthropic's infrastructure." It launches a fleet of reviewer agents whose findings are independently reproduced and verified before they're reported — higher signal than the local review's effort-level scaling, at the cost of a cloud round trip. It is **user-started only**: Claude never launches it on its own, and a scheduled `/code-review` task never escalates to `ultra`. It bills against usage credits once the three free runs on Pro, Max and Ultra are used, "typically $5 to $25 in usage credits depending on the size of the change". "A review typically takes 5 to 15 minutes." A branch review defaults to up to 500 changed files / 8,000 changed lines; a PR review targets a `github.com` PR number. It is unavailable on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, Zero Data Retention, and HIPAA-configured orgs (falls back to a local review in those cases), and organizations using customer-managed encryption keys (CMEK) can't run it at all — no automatic fallback is documented for CMEK. Details: [CC-tools-inventory.md § ultrareview](../configuration/CC-tools-inventory.md#code-review-review-simplify-and-ultrareview).
 
-**Fit assessment**: **Adopt by default for `/code-review`** — it needs no install and runs on any plan, so there's no reason not to use it alongside, or instead of, the `code-review@claude-plugins-official` plugin above. **Escalate to `ultrareview` selectively** for substantial, pre-merge changes, given its cost and ~15–25 minute turnaround; it is not a substitute for the fast local loop. Adopt the managed [Code Review][code-review-managed] service separately if this org is on Team/Enterprise and wants review to run automatically on every PR without a local session.
+**Fit assessment**: **Adopt by default for `/code-review`** — it needs no install and runs on any plan, so there's no reason not to use it alongside, or instead of, the `code-review@claude-plugins-official` plugin above. **Escalate to `ultrareview` selectively** for substantial, pre-merge changes, given its cost and ~5–15 minute turnaround; it is not a substitute for the fast local loop. Adopt the managed [Code Review][code-review-managed] service separately if this org is on Team/Enterprise and wants review to run automatically on every PR without a local session.
 
 ### Security Guidance
 
@@ -166,9 +166,9 @@ The README names the classes covered as common web vulnerabilities: injection, X
 
 **Installation**: `/plugin install code-modernization@claude-plugins-official`
 
-**Author / version / license**: Anthropic; version 1.0.0; Apache 2.0, verified from the plugin's own `LICENSE` file, not marketing copy ([source][cm-plugin-json], [source][cm-license]).
+**Author / version / license**: Anthropic; version 1.1.0 (checked 2026-11-26); Apache 2.0, verified from the plugin's own `LICENSE` file, not marketing copy ([source][cm-plugin-json], [source][cm-license]).
 
-**How it works** — 9 commands, each writing only to `analysis/<name>/` or `modernized/` and never editing the legacy source (a `.claude/settings.json` deny rule the plugin's own `preflight` step checks for) ([source][cm-readme]):
+**How it works** — 13 command files (the table below lists the main steps; it omits `modernize-status` and the README's pane commands `/modernize-panel`, `/modernize-review-pane` and `/modernize-sign`, which need `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1`; checked 2026-11-26), each writing only to `analysis/<name>/` or `modernized/` and never editing the legacy source (a `.claude/settings.json` deny rule the plugin's own `preflight` step checks for) ([source][cm-readme]):
 
 | Step | Command | Output |
 |---|---|---|
@@ -195,7 +195,7 @@ The README names the classes covered as common web vulnerabilities: injection, X
 
 | Shared | Distributed | Reproducible | Adaptable | Versionable | Traceable |
 |---|---|---|---|---|---|
-|  no data (no CONTRIBUTING file or PR template found in `claude-plugins-official`; its README's own "Contributing" section documents a submission flow for `external_plugins/` only — `code-modernization` is an internal plugin, "developed by Anthropic team members," with no equivalent external contribution flow documented) | no data (same reason as Shared) | partial [cm-readme][cm-readme] (the proof step is deterministic: verdicts are computed by `scripts/proof_pack.py` and "Every verdict is computed again from current evidence each time; none is carried over from an earlier run". But the analysis and the rewrite run "as agents" with no pinned model, the rubric's "pinned code but unpinned model" case; re-scored 2026-10-02) | yes [cm-plugin-json][cm-plugin-json] (six `userConfig` options — `system`, `track`, `panel`, `xray`, `commandPrefix`, `legacyDir`, `telemetry` — change behavior with no code edit) | partial [cm-readme][cm-readme] ("the commands never commit to your repository, so commit `analysis/` and `modernized/` yourself" — the plugin's outputs are explicitly meant to be git-tracked, but nothing in the plugin commits or versions them itself) | yes [cm-readme][cm-readme] (business rules cite `file:line` in the legacy source; the proof step's masked fields, accepted differences, and verdicts are all listed in the output rather than asserted; a booby-trapped test codebase's planted instructions were "listed in the report" rather than silently followed)  |
+|  no data (no CONTRIBUTING file or PR template found in `claude-plugins-official`; its README's own "Contributing" section documents a submission flow for `external_plugins/` only — `code-modernization` is an internal plugin, "developed by Anthropic team members," with no equivalent external contribution flow documented) | no data (same reason as Shared) | partial [cm-readme][cm-readme] (the proof step is deterministic: verdicts are computed by `scripts/proof_pack.py` and "Every verdict is computed again from current evidence each time; none is carried over from an earlier run". But the analysis and the rewrite run "as agents" with no pinned model, the rubric's "pinned code but unpinned model" case; re-scored 2026-10-02) | yes [cm-plugin-json][cm-plugin-json] (seven `userConfig` options — `system`, `track`, `panel`, `xray`, `commandPrefix`, `legacyDir`, `telemetry` — change behavior with no code edit) | partial [cm-readme][cm-readme] ("the commands never commit to your repository, so commit `analysis/` and `modernized/` yourself" — the plugin's outputs are explicitly meant to be git-tracked, but nothing in the plugin commits or versions them itself) | yes [cm-readme][cm-readme] (business rules cite `file:line` in the legacy source; the proof step's masked fields, accepted differences, and verdicts are all listed in the output rather than asserted; a booby-trapped test codebase's planted instructions were "listed in the report" rather than silently followed)  |
 
 ## Applicability Decision Framework
 
@@ -215,11 +215,11 @@ The README names the classes covered as common web vulnerabilities: injection, X
 
 **Source**: [anthropics/claude-plugins-official][cpp-gh] | **Docs**: [plugin-marketplaces][cpp-docs]
 
-The repository has a two-tier structure: `plugins/` (35 Anthropic-internal plugins) and `external_plugins/` (15 partner/community plugins).
+The repository has a two-tier structure: `plugins/` (43 directories as of 2026-11-26, of which 8 are not catalogued here: `champion-kit`, `claude-for-manufacturing`, `claude-security`, `example-plugin`, `math-proof`, `project-artifact`, `receipts`, `theme-examples`) and `external_plugins/` (14 partner/community plugins as of 2026-11-26).
 
 ### Additional Internal Plugins Not Covered Above
 
-**LSP language servers** (13): `clangd-lsp`, `csharp-lsp`, `gopls-lsp`, `jdtls-lsp`, `kotlin-lsp`, `lua-lsp`, `php-lsp`, `pyright-lsp`, `ruby-lsp`, `rust-analyzer-lsp`, `swift-lsp`, `typescript-lsp` — per-language LSP integrations; install the one matching your stack.
+**LSP language servers** (12): `clangd-lsp`, `csharp-lsp`, `gopls-lsp`, `jdtls-lsp`, `kotlin-lsp`, `lua-lsp`, `php-lsp`, `pyright-lsp`, `ruby-lsp`, `rust-analyzer-lsp`, `swift-lsp`, `typescript-lsp` — per-language LSP integrations; install the one matching your stack.
 
 **Dev workflow** (13): `agent-sdk-dev`, `claude-code-setup`, `claude-md-management`, [`code-modernization`](#code-modernization), `code-simplifier`, `commit-commands`, `feature-dev`, `hookify`, `mcp-server-dev`, `mcp-tunnels`, `playground`, `plugin-dev`, `pr-review-toolkit` — scaffolding, migration, hook authoring, MCP development, and PR tooling.
 
@@ -229,9 +229,9 @@ The repository has a two-tier structure: `plugins/` (35 Anthropic-internal plugi
 
 **Other**: `math-olympiad` — competitive math problem solving.
 
-### External Partners (15)
+### External Partners (14)
 
-`asana`, `context7`, `discord`, `fakechat`, `firebase`, `github`, `gitlab`, `greptile`, `imessage`, `laravel-boost`, `linear`, `playwright`, `serena`, `telegram`, `terraform`
+`asana`, `context7`, `discord`, `fakechat`, `firebase`, `github`, `gitlab`, `imessage`, `laravel-boost`, `linear`, `playwright`, `serena`, `telegram`, `terraform`
 
 ### Skill-Bundle Packaging Format
 
