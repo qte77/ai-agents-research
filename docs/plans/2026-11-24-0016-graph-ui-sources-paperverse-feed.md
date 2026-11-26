@@ -1,9 +1,9 @@
 ---
 title: Doc-graph page facets and timeline, 2026-11-24 sources, KB papers into paperverse
-status: approved
+status: superseded
 issue: "#1071"
 created: 2026-11-24
-updated: 2026-11-25
+updated: 2026-11-26
 ---
 
 Tracking issue: #1071. Successor to [plan 0015](2026-11-20-0015-kb-structure-graphify-removal.md)
@@ -11,6 +11,8 @@ Tracking issue: #1071. Successor to [plan 0015](2026-11-20-0015-kb-structure-gra
 plan and `make reconcile`, which reads only the newest plan, checks all of it.
 
 ## Current status
+
+**Superseded 2026-11-26 by [plan 0017](2026-11-26-0017-graph-encoding-enterprise-apis.md).** Its open rows (N9, N38, N41, N56, N59, N60, N62 and the `13-*` rows) moved there with their IDs; read that plan instead.
 
 **Read this first.** Plan opened 2026-11-24 from four owner requests (doc-graph ideas, two papers,
 five repos and products, KB papers into paperverse); the owner answered the open questions the same
