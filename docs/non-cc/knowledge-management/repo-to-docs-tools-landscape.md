@@ -4,7 +4,7 @@ source: https://deepwiki.com
 purpose: Survey of AI-powered tools that generate documentation from GitHub repositories.
 status: research
 created: 2026-04-06
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-09-24
 ---
 
@@ -19,6 +19,8 @@ A fourth tool, **Understand Anything** (Egonex-AI, 93.7k stars on 2026-11-22), s
 A fifth entrant, **OpenWiki** (LangChain), targets a different *consumer*: it writes a linked Markdown wiki for your code, your agents and you, and maintains agent-facing pointers in `AGENTS.md` (and `CLAUDE.md` when one exists).
 
 A sixth entrant, **OpenKB** (VectifyAI), flips the *input*: rather than a GitHub URL, it takes raw **documents** (PDF, Word, Markdown, PowerPoint, HTML, Excel, CSV, URLs) and compiles them once into a persistent, interlinked wiki — the document-corpus sibling of OpenWiki's code-corpus, agent-oriented output.
+
+A seventh, **CodeKB** (AWS Labs), works across *many* repositories at once: it indexes what each function does in business terms and lets agents search and walk the call graph over a whole organization, rather than documenting one repo.
 
 ## Comparison
 
@@ -129,6 +131,17 @@ output rather than re-analyzing on every query, and both explicitly target
 coding-agent consumption (skill distillation for Claude Code/Codex/Gemini)
 alongside human browsing.
 
+## CodeKB (AWS Labs)
+
+**URL**: [github.com/awslabs/codekb][s-codekb] | **Stars**: 245 (read 2026-11-27) | **License**: Apache-2.0 (LICENSE file) | **Version**: v1.1.0 (released 2026-11-27, read 2026-11-27; repo created 2026-11-12)
+
+A self-hosted service that builds an understanding of code across **many repositories** and exposes it to people (web UI and a chat agent) and to coding agents (an MCP server, with Kiro and Claude Code named in the README as example clients). Per its README: it parses each repository with Tree-sitter, rebuilds the call graph, has an LLM on Amazon Bedrock describe each function in business language together with what it calls, and embeds those descriptions into Amazon S3 Vectors, so search is by intent rather than keyword and call-graph tools then walk to callers and callees. Related repositories are grouped into a "hyperspace" so search and generated overviews span a whole system. Refreshing a Git-sourced space re-parses only changed files and re-describes the callers affected, keeping the previous index searchable if a refresh fails (README description, not tested here).
+
+- **Where it sits**: the cross-repository, code-understanding end of this space. DeepWiki and OpenWiki generate per-repository docs; CodeKB's stated aim is picking the relevant repositories for a task out of a large organization, an unusual angle here.
+- **Requirements** (README): Amazon Bedrock access to a supported Claude model and Titan Text Embeddings V2, plus an AWS account for the recommended CDK deployment (ECS Fargate, CloudFront, WAF, Cognito); a local single-user mode also exists. It is AWS-bound, unlike the tools above.
+- **Evidence level**: README claims only; not run here. The README gives no benchmark or measured result.
+- **Why it is listed despite the 1,000-star bar**: it meets the usable-artifact and alive criteria of the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) but not the adoption one (245 stars; the README names no independent users; read 2026-11-27); kept because the owner named it in the 2026-11-27 source list, under plan 0018's decision to add low-adoption owner sources at their evidence level (a first-party AWS Labs repo); to be re-checked at the next prune.
+
 ## Pattern Analysis
 
 Both doc-generators share a common pipeline:
@@ -219,6 +232,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [egonex-ai/understand-anything][s-ua] | Understand Anything repository |
 | [langchain-ai/openwiki][s-openwiki] | OpenWiki repository |
 | [VectifyAI/OpenKB][s-openkb] | OpenKB repository |
+| [awslabs/codekb][s-codekb] | README, LICENSE and `gh api` metadata (stars, release, creation date), read 2026-11-27 |
 | [VectifyAI/PageIndex][pageindex] | PageIndex repository |
 | `gh api repos/VectifyAI/OpenKB` and `repos/VectifyAI/PageIndex`, 2026-09-24 | Stars, license, latest release tag |
 | `gh api repos/egonex-ai/understand-anything`, `repos/langchain-ai/openwiki` and `repos/VectifyAI/OpenKB`, 2026-11-22 | Refreshed stars and latest release tags |
@@ -263,6 +277,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [s-ua]: https://github.com/egonex-ai/understand-anything
 [s-openwiki]: https://github.com/langchain-ai/openwiki
 [s-openkb]: https://github.com/VectifyAI/OpenKB
+[s-codekb]: https://github.com/awslabs/codekb
 [pageindex]: https://github.com/VectifyAI/PageIndex
 [s-ms-delta]: https://learn.microsoft.com/en-us/graph/api/driveitem-delta?view=graph-rest-1.0
 [s-ms-driveitem]: https://learn.microsoft.com/en-us/graph/api/resources/driveitem?view=graph-rest-1.0
