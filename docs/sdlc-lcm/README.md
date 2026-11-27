@@ -35,6 +35,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md) | Production best practices for MAS development and benchmarking |
 | [mas-security-framework.md](mas-security-framework.md) | Seven-layer threat model for multi-agent systems, inspired by CSA MAESTRO |
 | [ai-security-governance-analysis.md](ai-security-governance-analysis.md) | NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001 frameworks |
+| [privacy-law-touchpoints-landscape.md](privacy-law-touchpoints-landscape.md) | Privacy law for agent systems: GDPR (EU), UK GDPR, CCPA/CPRA, PIPEDA (Quebec unverified), with KB touchpoints; not legal advice |
 | [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) | Operational vuln layer: AIVSS scoring, MITRE ATLAS + AI Incident Sharing, vendor discovery (MDASH/Vuln.AI), Berkeley tracker; prompt-injection taxonomy; guardrail layers comparison |
 | [agent-identity-auth-landscape.md](agent-identity-auth-landscape.md) | Agent identity/auth/personhood: SPIFFE, Entra Agent ID, MCP-OAuth, Okta XAA, AP2 Mandates, World ID, Cloudflare Web Bot Auth |
 | [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) | Agent evaluation metrics survey (task completion, reasoning, safety; judge calibration, trace evals, eval statistics) |
