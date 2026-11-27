@@ -1,6 +1,6 @@
 ---
 title: Coding Agents and Harnesses Compared
-purpose: "Coding agents and harnesses compared from their own docs: input, media processing, configuration and policy, billing, compaction; each cell sourced and dated."
+purpose: "Coding agents and harnesses compared from their own docs: input, media processing, configuration and policy, billing, compaction, app builders; each cell sourced and dated."
 created: 2026-11-22
 updated: 2026-11-27
 validated_links_on: 2026-11-22
