@@ -35,6 +35,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [mas-design-principles.md](mas-design-principles.md) | MAS design principles from 12-Factor Agents, Anthropic harnesses, PydanticAI |
 | [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md) | Production best practices for MAS development and benchmarking |
 | [mas-security-framework.md](mas-security-framework.md) | Seven-layer threat model for multi-agent systems, inspired by CSA MAESTRO |
+| [distributed-systems-concepts-landscape.md](distributed-systems-concepts-landscape.md) | Distributed systems as a concept space for agents: fallacies, system borders, contracts, communication, timeline of key papers, layers, topologies, patterns |
 | [ai-security-governance-analysis.md](ai-security-governance-analysis.md) | NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001 frameworks |
 | [privacy-law-touchpoints-landscape.md](privacy-law-touchpoints-landscape.md) | Privacy law for agent systems: GDPR (EU), UK GDPR, CCPA/CPRA, PIPEDA (Quebec unverified), with KB touchpoints; not legal advice |
 | [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) | Operational vuln layer: AIVSS scoring, MITRE ATLAS + AI Incident Sharing, vendor discovery (MDASH/Vuln.AI), Berkeley tracker; prompt-injection taxonomy; guardrail layers comparison |

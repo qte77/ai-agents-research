@@ -386,13 +386,13 @@ The section's table in the disciplines landscape keeps the clearest cases.
 | ~~N75~~ | ~~Capability map: new mechanic rows in the Cross-Harness Matrix ([§ Lane tasks](#n75-capability-map))~~ | agent | shipped (seven Cross-Harness Matrix rows: OpenCode subagents, Gemini built-in agents, A2A, resume flags) |
 | ~~N76~~ | ~~Coverage-depth audit of the top coding harnesses against Claude Code ([§ Lane tasks](#n76-coverage-depth-audit))~~ | agent, then owner | shipped (audit table in § N76; gaps 1, 2 and 5 went to N78 to N80, the rest to owner row N87) |
 | N87 | Owner pick from the N76 audit: per-harness sandboxing, hooks, skills and subagents in the harnesses' own docs, auth-table and community coverage ([§ N76](#n76-coverage-depth-audit)) | owner | Owner names which become rows; default: none until N78 to N80 have shipped |
-| N77 | Definitions: knowledge graph, hypergraph and hyperedge, HybridRAG vs hybrid search, plus glossary rows ([§ Second batch](#second-batch-owner-2026-11-27)) | agent | Each term has a first-party definition source; glossary rows added; two fact-check passes |
+| ~~N77~~ | ~~Definitions: knowledge graph, hypergraph and hyperedge, HybridRAG vs hybrid search, plus glossary rows ([§ Second batch](#second-batch-owner-2026-11-27))~~ | agent | shipped (Hogan et al. KG definition, HyperNetX hypergraph quote, HybridRAG row, glossary rows) |
 | N78 | Capability table: Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf added to the Cross-Harness Matrix | agent | All 13 mechanics filled or marked not documented, dated; two passes |
 | ~~N79~~ | ~~Session save and resume for the same seven harnesses; re-check the unverified rows~~ | agent | shipped (checkpoint and resume rows for seven harnesses; Codex, Gemini CLI and OpenCode re-checked) |
 | N80 | Configuration and policy by harness | agent | Table merged; two passes |
-| N81 | Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps | agent | Table merged; two passes |
-| N82 | Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens) | agent | New doc merged with hub and index rows; two passes |
-| ~~N83~~ | ~~Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires)~~ | agent | shipped (test- and eval-driven development landscape) |
+| ~~N81~~ | ~~Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps~~ | agent | shipped (§ Capability map across forges, 16 capabilities × 6 forges) |
+| ~~N82~~ | ~~Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens)~~ | agent | shipped (distributed systems concepts landscape) |
+| N83 | Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires) | agent | New doc merged; m3d leads verified or dropped; two passes |
 | ~~N84~~ | ~~Privacy law touchpoints: GDPR (EU), UK GDPR, CCPA/CPRA, Canada (PIPEDA, Quebec Law 25)~~ | agent | shipped (privacy law touchpoints: GDPR, UK GDPR, CCPA/CPRA, PIPEDA; Quebec unverified) |
 | N85 | Self-evolving and meta-learning: survey the three docs, add what is missing | agent | Gap survey in the PR body; additions merged; two passes |
 | ~~N86~~ | ~~Diverge and converge: audit and one section~~ | agent | shipped (§ Diverge and converge; audit in § N86 audit) |
