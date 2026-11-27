@@ -769,6 +769,95 @@ two paths [ext-overview]; the page states no GA or preview level (status not sta
   connectors used in Copilot Studio are "a different integration model".
 - **Tooling:** start with Work IQ Dev Tools and add Agents Toolkit or an SDK only when needed.
 
+#### Microsoft Graph Copilot APIs (Learn, read 2026-11-26)
+
+The Copilot APIs are REST endpoints under `graph.microsoft.com/v1.0/copilot` and
+`graph.microsoft.com/beta/copilot`; the overview says they "use the same authentication and
+authorization process that other Microsoft Graph APIs use" and requires a Microsoft 365 Copilot
+licence "for each user who accesses Microsoft 365 Copilot functionality via these APIs"
+[copilot-apis-overview]. The overview lists no per-API path, version or permission type, so the
+table below is read from each reference page. Each reference page read lists personal Microsoft
+accounts as "Not supported".
+
+| API | Path (version) | Status read | Permission type (reference page) | Licence | Returns |
+|---|---|---|---|---|---|
+| Chat: create conversation | `POST /beta/copilot/conversations` | Beta; Chat API titled "(Preview)" | Delegated (work or school) only, with the same seven permissions as the chat call; application "Not supported" [chat-api] | Add-on licence, no extra charge; no support for users without it [chat-api-overview] | An empty `{}` body in; a conversation out (`201 Created`) [chat-api] |
+| Chat: sync | `POST /beta/copilot/conversations/{id}/chat` | Beta | Delegated (work or school) only: `Sites.Read.All`, `Mail.Read`, `People.Read.All`, `OnlineMeetingTranscript.Read.All`, `Chat.Read`, `ChannelMessage.Read.All` and `ExternalItem.Read.All`, all required; application "Not supported" [chat-api-chat] | As above | The conversation with Copilot's text reply (`200 OK`) |
+| Chat: streamed | `POST /beta/copilot/conversations/{id}/chatOverStream` | Beta | Same table as the sync call [chat-api-stream] | As above | Server-sent events (`text/event-stream`), each carrying the conversation |
+| Retrieval | `POST /v1.0/copilot/retrieval` and `/beta/copilot/retrieval` | Both paths documented; its pay-as-you-go option is preview | Delegated (work or school): `Files.Read.All` and `Sites.Read.All` (both for SharePoint and OneDrive), `ExternalItem.Read.All` for connectors; application "Not supported" [retrieval-api] | Add-on licence at no extra cost; pay-as-you-go (preview) for tenant-level sources, not OneDrive [retrieval-overview] | Grounding hits: `webUrl`, text extracts with a relevance score, resource type and sensitivity label; up to 25 results, 200 requests per user per hour [retrieval-api], [retrieval-overview] |
+| Search | `POST /beta/copilot/search` | Beta, "(Preview)" | Delegated (work or school): `Files.Read.All` and `Sites.Read.All`; application "Not supported" [search-api] | Add-on licence only [search-overview] | OneDrive for work or school file hits (the only supported source) |
+| Interaction export | `GET /v1.0/copilot/users/{id}/interactionHistory/getAllEnterpriseInteractions` (also beta) | v1.0 documented | Application only: `AiEnterpriseInteraction.Read.All`; delegated "Not supported" [interaction-export-api] | Copilot licence with the Graph-grounded chat service plan | Prompts and responses; excludes Copilot Studio agents |
+| Usage reports | `GET /v1.0/copilot/reports/getMicrosoft365CopilotUsageUserDetail(...)` (also beta) | v1.0 documented | Delegated and application: `Reports.Read.All`, plus an admin role when delegated [copilot-usage-reports-api] | Returns data only for licensed users | Per-user usage as CSV (v1.0) or JSON (beta) |
+| Package management (list) | `GET /v1.0/copilot/admin/catalog/packages` (also beta) | v1.0 documented | Delegated and application: `CopilotPackages.Read.All` [copilot-packages-list] | Microsoft Agent 365 licence | The organisation's agent catalog |
+| Meeting insights, change notifications, cost management | `/copilot/users/{id}/onlineMeetings/{id}/aiInsights`; `/v1.0/subscriptions`; `/copilot/costManagement/...` | Not recorded in this table | (unverified): no standard permissions table was found for meeting insights or cost management; change notifications not checked either [copilot-apis-overview] | Not checked | Not checked |
+
+The Chat reference pages carry the standing `/beta` warning: "APIs under the `/beta` version are
+subject to change. Use of these APIs in production applications is not supported."
+[chat-api-chat]. The Chat API reference's request body takes `message`, `additionalContext`,
+`locationHint` and `contextualResources`; files go in `contextualResources` as OneDrive or
+SharePoint links, and web search is a toggle there [chat-api-chat].
+
+**Chat API limits** (read from [chat-api-overview]):
+
+- Text in, text out. "The Chat API only responds with textual responses", and it "doesn't support
+  action or content generation skills like creating files, sending emails, or scheduling meetings".
+- Files come only as OneDrive or SharePoint links (`contextualResources`), not as uploads.
+- The overview says the API "doesn't support tools such as code interpreter and graphic art" and
+  "doesn't support long running tasks"; such messages "are prone to gateway timeouts".
+- Image input, model choice and a system prompt are not mentioned on the overview or on the three
+  reference pages read (not documented, so absent from the request body; this is an absence on
+  four pages, not a vendor statement).
+
+**What is not there.** On the pages read, no public API exists for Copilot Cowork, Researcher,
+Analyst or Managed Runtime, and no job or poll API. Pages checked on 2026-11-26: the
+[Copilot APIs overview][copilot-apis-overview], [Ways to extend Microsoft 365 Copilot][ext-overview],
+the [Graph beta API overview][graph-beta-overview]
+(body text only, no Copilot entries), and the extensibility navigation tree [copilot-apis-toc],
+whose "API reference" titles hold AI Services (Retrieval, Search, Meeting insights, Change
+notifications, Interaction export, Chat), Admin (limited mode, policy settings, usage reports, Agent
+Registration, Package management, Cost Management) and none of those terms, nor "job", "task",
+"poll" or "operation". Not read: the Graph beta reference table of contents (its copilot resource
+page returned 404), so a beta-only resource outside this tree is not excluded.
+
+**Four ways to use the licence from outside**, each at the evidence level read:
+
+1. **GitHub Copilot CLI with Entra sign-in** (public preview, changelog 2026-11-17): sign-in can
+   use the Microsoft 365 Copilot licence, and on that path no GitHub account is needed.
+   Conditions: the organisation is in [Frontier](#the-frontier-program) with usage-based billing for the licence, Windows and
+   macOS only ("Linux support will follow"), CLI 1.0.113 or later [copilot-cli-entra],
+   [copilot-cli-auth]. Without GitHub authentication, `/delegate`, the GitHub MCP server and Code
+   Search are unavailable [copilot-cli-auth].
+2. **Copilot calling out to your tools.** MCP and API plugins are "custom actions that enable
+   declarative agents in Microsoft 365 Copilot to interact with" MCP servers or REST APIs, hosted
+   "outside of Microsoft 365" [plugins-overview]; the page states no preview or GA level. For
+   Copilot Studio agents, the "No charge" inclusion (footnote 1 to the billing table) applies when
+   the agent "operates using the authenticated Microsoft 365 Copilot USL user's identity"; autonomous
+   runs, event-triggered or flow-started, consume Copilot Credits at the standard rate, and the
+   inclusion does not apply to agents on the Microsoft Copilot harness ([naming](#three-things-called-harness)) [studio-billing]. The
+   footnote names neither MCP servers nor API plugins, so whether a plugin call is covered is not
+   stated on the page.
+3. **The Chat API from your own app** with the signed-in user's token and the limits above.
+4. **Work IQ APIs:** A2A, a remote MCP server and REST; the overview says "Work IQ API access is
+   independent of Microsoft 365 Copilot licensing and available through usage-based billing"
+   [work-iq-overview]. This path does not use the Copilot licence; the page states no preview or GA
+   level (the GA date is in [work-iq-ga]).
+
+**Terms** ([copilot-apis-terms], page dated December 2025, sections under 3(b) "M365 Copilot API
+Guidelines", which opens "You may NOT:"). Three items bear on wrapping the licence in your own
+software:
+
+- 3(b)(12): "Make your Application available for use in a manner that circumvents the need for users
+  to obtain a valid license ..." (the clause goes on to name the Microsoft application or service
+  accessed through the APIs).
+- 3(b)(13): "Redistribute or resell, or sublicense access to, the M365 Copilot APIs ...", which the full
+  item extends to data obtained through the APIs and any other Microsoft offering accessed through them.
+- 3(b)(18): "You may not create an Application that is not human directed, such as bots, multiplexing or
+  similar."
+
+Our reading, not legal advice: (12) and (13) point at one licensed user per caller and no resale of the APIs, their data or other offerings reached through them, and (18) at a
+person driving each call, which may rule out an unattended or shared service on one seat. The
+overview calls these terms "Microsoft 365 Copilot APIs Terms of Use (preview)" [copilot-apis-overview].
+
 #### Copilot UX components (SPFx)
 
 Copilot UX components are client-side UI components built with the SharePoint Framework (SPFx) that
@@ -1115,7 +1204,7 @@ against a specific vendor sentence.
 | 3. Recursive / multi-agent patterns | Partly documented | Copilot Studio documents Child Agents (embedded, no separate authentication) and Connected Agents (independently published, referenced by a main agent), plus A2A connections including to Work IQ [add-other-agents] [agent-to-agent] [work-iq-overview] | A reuse rule is documented (an agent already acting as a main agent with its own Connected Agents cannot also serve as a Connected Agent elsewhere); no numeric depth or hop limit is documented, only a qualitative latency warning |
 | 4. Shared memory across agents/sessions | Not documented as a finished feature; partly documented as a building block | Work IQ Workspaces (SharePoint-Embedded-backed storage within the tenant boundary) is the closest documented building block for shared state across a long-running workflow [work-iq-overview] | Personal Copilot memory and Copilot Studio's own agent memory are both preview and explicitly siloed per user (and per agent, for Studio) — neither is a shared or global memory; Copilot Studio memory auto-deletes after 28 days of inactivity [copilot-memory] [studio-memory] |
 | 5. Tracing and tracking across the tenant | Documented, as a mix of GA and preview pieces | Microsoft Purview Audit logs every Copilot/agent interaction automatically under dedicated record types (GA for Microsoft's own apps) [audit-copilot]; the Office 365 Management Activity API can export that audit data, including Copilot interaction records, to an external HTTPS endpoint (GA) [mgmt-activity-api] | Copilot Studio's own OpenTelemetry-format agent telemetry to Application Insights is preview, excludes declarative agents, and has no documented export beyond Azure [agent-telemetry]; Defender XDR's AI-agent detection on Agent 365 telemetry is a separate, public-preview capability [defender-agent-detection] |
-| 6. CLI/API steering instead of each user's own Copilot session | Partly documented | Copilot Studio's "Execute Agent" / "Execute Agent and wait" connector actions are callable from any Power Automate flow (GA) [copilot-studio-connector] | The Chat API is delegated (a signed-in user is required), preview, and cannot take actions (no file creation, no email, no calendar entries) [chat-api]; the Interaction Export API is app-only but is a read-only compliance export, and explicitly excludes Copilot Studio agent interactions [interaction-export-api] |
+| 6. CLI/API steering instead of each user's own Copilot session | Partly documented | Copilot Studio's "Execute Agent" / "Execute Agent and wait" connector actions are callable from any Power Automate flow (GA) [copilot-studio-connector] | The Chat API is delegated (a signed-in user is required), preview, and cannot take actions (no file creation, no email, no calendar entries) [chat-api] (endpoint detail in [Microsoft Graph Copilot APIs](#microsoft-graph-copilot-apis-learn-read-2026-11-26)); the Interaction Export API is app-only but is a read-only compliance export, and explicitly excludes Copilot Studio agent interactions [interaction-export-api] |
 | 7. A quick-action shortcut or rule triggers an agent | Partly documented, only indirectly | The only documented path is two-step: a quick-action shortcut starts a Power Automate flow, and that flow calls "Execute Agent" / "Execute Agent and wait" as its own action [copilot-studio-connector]; alternatively, a Copilot Studio event trigger placed directly on the agent itself | Whether a SharePoint rule (beyond its notification function) can also start a flow or agent was not checked in this pass; a direct, one-step call from a shortcut straight into an agent is not documented |
 | 8. Scheduled Copilot runs | Documented, via two separate mechanisms | Scheduled prompts for Copilot Chat/Teams/Outlook — no preview marker on the support page, capped at 10 scheduled prompts [scheduled-prompts]; a Copilot Studio Recurrence trigger for agents with generative orchestration switched on, authenticated currently using only the agent author's own credentials, not each end user's [studio-triggers] | A third, more capable "Workflows" agent exists for natural-language automation with its own recurrence/event triggers, but it is Frontier early access, not generally available [workflows-agent-start] |
 
@@ -1413,7 +1502,23 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Copilot Studio — Advanced environment-level agent telemetry][agent-telemetry] | Preview OpenTelemetry export, excludes declarative agents |
 | [Defender XDR — AI agent detection and protection][defender-agent-detection] | Public-preview Agent 365 telemetry detection |
 | [Microsoft Copilot Studio connector (Power Platform)][copilot-studio-connector] | "Execute Agent" / "Execute Agent and wait" actions |
-| [Copilot APIs — Chat API][chat-api] | Delegated-only, preview, no actions |
+| [Copilot APIs — Chat API][chat-api] | Delegated (work or school) only with seven required permissions, application and personal accounts "Not supported", beta; text-only, no actions |
+| [Copilot APIs — Chat API overview][chat-api-overview] | Add-on licence, text-only, no tools or long-running tasks |
+| [Copilot APIs — Chat: chat and chatOverStream][chat-api-chat] | Beta paths, permissions table, request body, `/beta` warning |
+| [Copilot APIs — Chat over stream][chat-api-stream] | Same permissions table as the sync call; server-sent events |
+| [Copilot APIs — Retrieval API overview][retrieval-overview] | Licence text, pay-as-you-go preview, 25-result and 200-per-hour limits |
+| [Copilot APIs — Search API overview][search-overview] | Licence text, OneDrive-only scope |
+| [Microsoft Graph — API overview (beta)][graph-beta-overview] | Absence check: no Copilot entries in the body text |
+| [Copilot APIs — Retrieval API][retrieval-api] | v1.0 and beta paths, delegated-only permissions, response shape |
+| [Copilot APIs — Search API][search-api] | Beta path, OneDrive only, delegated-only |
+| [Copilot APIs — Usage reports API][copilot-usage-reports-api] | `Reports.Read.All`, delegated and application |
+| [Copilot APIs — List packages][copilot-packages-list] | `CopilotPackages.Read.All`, Agent 365 licence |
+| [Copilot APIs — navigation tree (toc.json)][copilot-apis-toc] | Titles of the API reference groups; absence check |
+| [Microsoft 365 Copilot APIs terms of use][copilot-apis-terms] | 3(b)(12), (13), (18) |
+| [Copilot Studio — Copilot Credits and messages][studio-billing] | Footnote 1: "No charge" only under the licensed user's identity |
+| [MCP and API plugins for declarative agents][plugins-overview] | How Copilot calls your MCP server or API |
+| [GitHub changelog — Copilot CLI Microsoft Entra sign-in (2026-11-17)][copilot-cli-entra] | Public preview, Microsoft 365 licence path, Windows and macOS |
+| [GitHub Docs — Authenticate Copilot CLI][copilot-cli-auth] | Entra prerequisites; features lost without GitHub sign-in |
 | [Microsoft Graph — aiInteractionHistory: getAllEnterpriseInteractions][interaction-export-api] | App-only, read-only compliance export |
 | [Schedule your most used Copilot prompts][scheduled-prompts] | Scheduled prompts, capped at 10, no preview marker |
 | [Copilot Studio — Authoring triggers][studio-triggers] | Recurrence/event triggers, author-credential auth |
@@ -1541,6 +1646,22 @@ re-checked even when Microsoft leaves the page unchanged.
 [defender-agent-detection]: https://learn.microsoft.com/en-us/defender-xdr/security-for-ai/ai-agent-detection-protection
 [copilot-studio-connector]: https://learn.microsoft.com/en-gb/connectors/microsoftcopilotstudio
 [chat-api]: https://learn.microsoft.com/microsoft-365/copilot/extensibility/api/ai-services/chat/copilotroot-post-conversations
+[graph-beta-overview]: https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-beta
+[chat-api-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/chat/overview
+[chat-api-chat]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/chat/copilotconversation-chat
+[chat-api-stream]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/chat/copilotconversation-chatoverstream
+[retrieval-api]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/retrieval/copilotroot-retrieval
+[retrieval-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/retrieval/overview
+[search-api]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/search/copilotroot-search
+[search-overview]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/search/overview
+[copilot-usage-reports-api]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/admin-settings/reports/copilotreportroot-getmicrosoft365copilotusageuserdetail
+[copilot-packages-list]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/admin-settings/package/copilotpackages-list
+[copilot-apis-toc]: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/toc.json
+[copilot-apis-terms]: https://learn.microsoft.com/en-us/legal/m365-copilot-apis/terms-of-use
+[studio-billing]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management
+[plugins-overview]: https://learn.microsoft.com/en-us/plugins/overview-plugins
+[copilot-cli-entra]: https://github.blog/changelog/2026-11-17-github-copilot-cli-adds-microsoft-entra-sign-in-as-a-preview
+[copilot-cli-auth]: https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/authenticate-copilot-cli
 [interaction-export-api]: https://learn.microsoft.com/en-us/graph/api/aiinteractionhistory-getallenterpriseinteractions
 [scheduled-prompts]: https://support.microsoft.com/en-us/topic/schedule-your-most-used-copilot-prompts-29dfd5fb-211a-4515-88a6-730b8074e489
 [studio-triggers]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-triggers-about
