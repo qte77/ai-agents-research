@@ -44,6 +44,7 @@ and lifecycle. Pointers only; see [the hub index](README.md).
 | [microsoft-365-copilot-analysis.md § Roles, identity and licences](../non-cc/agents/microsoft-365-copilot-analysis.md#roles-identity-and-licences) | Azure/Foundry: RBAC roles, managed identity, Entra agent identity, licences | non-cc |
 | [oracle-cloud-agent-stack-analysis.md](../non-cc/agents/oracle-cloud-agent-stack-analysis.md) | Oracle: OCI Generative AI Agents, Fusion AI Agent Studio; IAM, licences | non-cc |
 | [ibm-agent-stack-analysis.md](../non-cc/agents/ibm-agent-stack-analysis.md) | IBM: watsonx Orchestrate and ADK; connections, MAU plans | non-cc |
+| [ibm-agent-stack-analysis.md § IBM Bob](../non-cc/agents/ibm-agent-stack-analysis.md#ibm-bob-coding-agent) | IBM Bob, IBM's coding and SDLC agent: surfaces, models, list prices and GA dates (SaaS and self-hosted) | non-cc |
 | [alibaba-cloud-agent-stack-analysis.md](../non-cc/agents/alibaba-cloud-agent-stack-analysis.md) | Alibaba Cloud: Model Studio, AgentRun, Agent Identity; RAM policies, licences | non-cc |
 
 ## Work classification
