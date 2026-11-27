@@ -505,13 +505,13 @@ differences between continuation strategies, not scores comparable with the othe
 ## Meta-levels: what is being optimized (added 2026-11-27)
 
 The per-method sections here and in [moss-self-evolving-agent-analysis.md][moss] sit at the top of a
-ladder. Each rung below optimizes something one level further out, and "recursive self-improvement"
-means the optimizer is itself a target. This table adds the well-known earlier landmarks so the
+ladder. Each rung below optimizes something one level further out, up to methods whose optimizer is itself a
+target (our framing; the Weco authors call AIDE² "Level 1" RSI, see [§ Stated Limitations](#stated-limitations-the-authors-own-hedges-blog-verbatim)). This table adds the well-known earlier landmarks so the
 newer entries have a lineage; it does not restate method detail. Each paper was read on its arXiv
 abstract page (AlphaEvolve's is a white paper) on 2026-11-27; results are the authors' own, on their
 own benchmarks, and not comparable across rows.
 
-| Level optimized | Landmark (year) | Idea in one line | Authors' own reported result |
+| What is optimized | Landmark (year) | Idea in one line | Authors' own reported result |
 |---|---|---|---|
 | Weights, via the starting point | [MAML][maml] (Finn, Abbeel, Levine, 2017) | Train the initial parameters so a few gradient steps on a new task generalize | State of the art on two few-shot image-classification benchmarks |
 | The optimizer algorithm itself | [Learning to learn by gradient descent by gradient descent][l2l] (Andrychowicz et al., 2016) | Cast optimizer design as a learning problem; an LSTM is the update rule | Learned optimizers beat generic hand-designed ones on their training tasks and generalized to similar tasks |
@@ -528,11 +528,11 @@ own benchmarks, and not comparable across rows.
 
 **Reading it.**
 
-- **Where the entries in this doc fall.** AIDE² and MOSS (and, in the table, the Darwin Gödel Machine) rewrite the agent's own source.
+- **Where the entries in this doc fall.** AIDE² and MOSS (and, in the table, Gödel Agent and the Darwin Gödel Machine) rewrite the agent's own source.
   RRSI, Harness² and the other harness-search rows below search the harness around a fixed model;
-  Self-HPO alternates harness and policy updates. ROFT and FineEnvs act on weights. The first-order
-  methods (MAML, learned optimizers, prompt optimizers) improve a target but leave the optimizer fixed;
-  the self-referential rows (Promptbreeder, STOP, Gödel Agent, DGM) make the optimizer a target too.
+  Self-HPO alternates harness and policy updates. ROFT and FineEnvs act on weights. Most rows improve a
+  target with a fixed optimizer (MAML; OPRO, TextGrad and DSPy on prompts and programs; AlphaEvolve, AFlow
+  and ADAS on code and agent designs); learned optimizers learn the update rule itself; the self-referential rows (Promptbreeder, STOP, Gödel Agent, DGM) make the optimizer a target too.
 - **Not duplicated here.** DSPy and GEPA, the practical prompt and program optimizers, are listed in
   [agent-frameworks-infrastructure-landscape.md § 2](../frameworks/agent-frameworks-infrastructure-landscape.md#2-llm-orchestration--routing);
   skill-level evolution is in [agent-skill-evolution-research-landscape.md][skill-evolution].
