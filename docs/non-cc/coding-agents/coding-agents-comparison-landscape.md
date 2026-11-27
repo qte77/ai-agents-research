@@ -1,6 +1,6 @@
 ---
 title: Coding Agents and Harnesses Compared
-purpose: "Cross-vendor comparison of coding agents and harnesses from their own docs: input modalities, model access and billing, and context compaction, each cell sourced and dated."
+purpose: "Coding agents and harnesses compared from their own docs: input, media processing, configuration and policy, billing, compaction; each cell sourced and dated."
 created: 2026-11-22
 updated: 2026-11-27
 validated_links_on: 2026-11-22
@@ -8,7 +8,7 @@ status: assess
 ---
 
 **Details:** Every cell was read from the vendor's own docs on 2026-11-22 and re-checked in a
-second pass the same day. Nothing here was run. A cell says what the **harness documents**, not
+second pass the same day; sections added later carry their own read date. Nothing here was run. A cell says what the **harness documents**, not
 what the underlying model can do: a model that accepts video says nothing about whether a command
 line interface (CLI) or integrated development environment (IDE) lets you attach one. "not documented
 (checked 2026-11-22)" means the sentence was not found on the vendor pages listed in
@@ -121,6 +121,67 @@ Findings from the table:
   tools reference: that doc described poppler as used for text extraction (now corrected there), while the
   tools reference names `pdftoppm`, which renders page images, for page-range reads; the whole-file path for short PDFs has no
   first-party description of where parsing happens.
+
+## Configuration and policy by harness
+
+Where each harness keeps its settings, which layer wins, which environment variables the docs name, what an
+administrator can enforce, and how a project overrides the user's defaults. Cells come from each vendor's own
+docs page, each read 2026-11-27; nothing was run. "Not documented on the pages read" means the sentence was not
+on the pages in [Sources](#sources), not that the feature is absent. MDM is mobile device management; MCP is the Model Context Protocol (MCP), see the [glossary](../../glossary.md). The 11 rows are the harnesses whose configuration pages were read; Kiro, Zed, Kimi Code and Antigravity were not read for this section. Two tables with the same rows keep the cells
+readable. Instruction files (`AGENTS.md` and relatives) are summarized in the second table; for Claude Code, Codex
+CLI, Gemini CLI and OpenCode the
+[cross-harness matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows)
+row "1 Persistent instruction file" is the fuller view.
+
+### Settings files, precedence and environment variables
+
+| Harness | Settings files and precedence | Environment variables |
+|---|---|---|
+| Claude Code ([settings][cfg-cc-settings]) | See the Claude Code docs in this corpus instead of a copy here: [CC-managed-settings-fleet-analysis.md](../../cc-native/configuration/CC-managed-settings-fleet-analysis.md) (managed layer and fleet scope), [CC-cli-reference.md](../../cc-native/configuration/CC-cli-reference.md) | [CC-env-vars-reference.md](../../cc-native/configuration/CC-env-vars-reference.md) |
+| Codex CLI ([analysis](codex-cli-analysis.md)) | Highest first: CLI flags and `--config`, project `.codex/config.toml` (closest wins, trusted projects only), `--profile` files `~/.codex/<name>.config.toml`, user `~/.codex/config.toml`, cloud-managed defaults, system `/etc/codex/config.toml`, built-ins; an untrusted project's `.codex/` layers are skipped ([config basics][cfg-codex-basic], read 2026-11-27) | `CODEX_HOME` moves the state directory (default `~/.codex`) ([advanced config][cfg-codex-adv]); the [config reference][cfg-codex-ref] also names variables for provider keys and MCP servers, not listed here |
+| Gemini CLI ([analysis](gemini-cli-analysis.md)) | Lowest to highest: defaults, system defaults file, user `~/.gemini/settings.json`, project `.gemini/settings.json`, system settings file (overrides all settings files), environment variables (may come from `.env`), command-line arguments; system files live in `/etc/gemini-cli/` (Linux), `C:\ProgramData\gemini-cli\` (Windows) or `/Library/Application Support/GeminiCli/` (macOS) ([configuration][cfg-gem-ref], read 2026-11-27) | Documented on the same page, among them `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_CLI_HOME`, `GEMINI_CLI_SYSTEM_SETTINGS_PATH` and `GEMINI_CLI_SYSTEM_DEFAULTS_PATH` |
+| GitHub Copilot CLI ([analysis](../agents/github-copilot-cli-analysis.md)) | Later overrides earlier: built-in defaults, MDM managed settings, user `~/.copilot/settings.json`, repository `.github/copilot/settings.json`, local `.github/copilot/settings.local.json`, environment variables, flags; it also reads `.claude/settings.json` for a shared subset of keys ([config directory][cfg-cop-dir], read 2026-11-27) | `COPILOT_HOME` relocates the user directory; `COPILOT_PROVIDERS_CONFIG` relocates `providers.json`; legacy `COPILOT_PROVIDER_*` variables are used when that file declares nothing (same page) |
+| VS Code Copilot Chat ([analysis](vscode-copilot-chat-analysis.md)) | VS Code scopes, later overrides earlier: defaults, user, remote, workspace (`.vscode/settings.json`), workspace folder, language-specific variants, then policy settings, which always override; application-wide update and security settings cannot be set per workspace ([settings][cfg-vsc-set], read 2026-11-27) | Not documented on the pages read |
+| Cursor ([analysis](cursor-analysis.md)) | Editor: a deployed policy overrides the setting at every level ([deployment patterns][cfg-cur-dep]); the user-level editor settings file is not described on the pages read. CLI: global `~/.cursor/cli-config.json`, project `<project>/.cursor/cli.json` for `permissions` only ([CLI configuration][cfg-cur-cli]). `sandbox.json` merges `~/.cursor/` and `<workspace>/.cursor/`, repo values winning ([sandbox reference][cfg-cur-sbx]) | CLI: `CURSOR_CONFIG_DIR`, and `XDG_CONFIG_HOME` on Linux and BSD (CLI configuration page) |
+| Cline ([analysis](cline-analysis.md)) | Global `~/.cline/` (settings under `~/.cline/data/settings/`, shared by IDE, CLI and SDK) and project `.cline/`; which scope wins for a setting is not stated on the page read ([config][cfg-cline-cfg], read 2026-11-27) | `CLINE_DIR`, `CLINE_DATA_DIR`, `CLINE_HOOKS_DIR`, `CLINE_LOG_PATH` and others (same page) |
+| Aider ([analysis](aider-analysis.md)) | `.aider.conf.yml` read from the home directory, the git root, then the current directory, later files winning; `--config` loads only that file ([YAML config][cfg-aider-yml]). A `.env` file follows the same three places plus `--env-file` ([dotenv][cfg-aider-env]) | Each option has an `AIDER_*` variable, for example `AIDER_MODEL` ([options reference][cfg-aider-opt]) |
+| OpenCode ([analysis](opencode-analysis.md)) | Lowest to highest: global `~/.config/opencode/opencode.json(c)`, project files found from the current directory up to the filesystem root (`.opencode/` files after direct ones), then the system directory (`/etc/opencode`, macOS `/Library/Application Support/opencode`, Windows `%ProgramData%\opencode`) ([config][cfg-oc-cfg], read 2026-11-27) | Config values can read variables with `{env:NAME}`; `OPENCODE_DB` is named on the [CLI page][cfg-oc-cli]; no full list on the pages read |
+| Amp ([analysis](amp-analysis.md)) | User `~/.config/amp/settings.json(c)`, workspace `.amp/settings.json(c)` searched upward, `--settings-file` for a custom user file; workspace overrides user, except keys such as `amp.url`, `amp.proxy` and `amp.dangerouslyAllowAll`, which are ignored there ([configuration][cfg-amp-set], read 2026-11-27) | `AMP_SKIP_UPDATE_CHECK`, `AMP_DISABLE_AMP_THREAD_TRAILER`, `AMP_FORCE_BEL` (same page); standard Node proxy and certificate variables for corporate networks |
+| Windsurf, now Devin Desktop ([analysis](windsurf-analysis.md)) | Documented per feature, not as one settings file: MCP servers in project `.devin/mcp_config.json`, gitignored `.devin/mcp_config.local.json` and user `~/.config/devin/mcp_config.json`; permission rules at project, user or organization level ([customizations][cfg-ws-cust], [permissions][cfg-ws-perm], read 2026-11-27) | Not documented on the pages read |
+
+### Managed policy, project overrides and instruction files
+
+| Harness | Managed or enterprise policy | Project overrides and instruction files |
+|---|---|---|
+| Claude Code | [CC-managed-settings-fleet-analysis.md](../../cc-native/configuration/CC-managed-settings-fleet-analysis.md) | [Matrix row 1](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows) |
+| Codex CLI | `requirements.toml` constrains what users may set. Local layers, lowest to highest: system `/etc/codex/requirements.toml` (Windows `%ProgramData%\OpenAI\Codex\`), Agent Security cloud policy, legacy `managed_config.toml` fields, macOS MDM (`com.openai.codex`); legacy `managed_config.toml` supplies defaults the user can change ([managed configuration][cfg-codex-mgd], read 2026-11-27) | Project `.codex/config.toml` (trusted projects only); `AGENTS.override.md` or `AGENTS.md` per directory, concatenated root-down, 32 KiB cap by default ([AGENTS.md][cfg-codex-agents]); [matrix row 1](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows) |
+| Gemini CLI | The system settings file overrides user and project files; it can set tool allowlists and policy-engine rules, and a wrapper script can pin its path. The page says this is meant to prevent accidental misuse, not to stop a local administrator ([enterprise][cfg-gem-ent], read 2026-11-27) | Project `.gemini/settings.json`; `GEMINI.md` ([matrix row 1](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows)) |
+| GitHub Copilot CLI | MDM plist `com.github.copilot` (macOS), registry `HKLM\SOFTWARE\Policies\GitHubCopilot` (Windows) or `managed-settings.json` files (`/Library/Application Support/GitHubCopilot/`, `%ProgramFiles%\GitHubCopilot\`, `/etc/github-copilot/`), plus server-managed settings; for most keys users can override the baseline, but managed sandbox values are a floor and `permissions.disableBypassPermissionsMode = "disable"` always wins; deny rules beat ask and allow across managed sources ([config directory][cfg-cop-dir]) | `.github/copilot/settings.json` and `.local.json`; `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, extra directories in `COPILOT_CUSTOM_INSTRUCTIONS_DIRS`, plus personal files under `~/.copilot/` ([custom instructions][cfg-cop-instr]) |
+| VS Code Copilot Chat | VS Code enterprise policies: Windows Group Policy (ADMX templates, registry), macOS configuration profiles, Linux `/etc/vscode/policy.json` from v1.106; computer-level beats user-level on Windows; the policy reference lists chat and agent policies such as `chat.agent.enabled` and sandbox settings ([policies][cfg-vsc-ent], read 2026-11-27) | `.vscode/settings.json`; `.github/copilot-instructions.md` or `AGENTS.md`, `CLAUDE.md`, `*.instructions.md` ([custom instructions][cfg-vsc-instr]) |
+| Cursor | MDM policies on Windows (Group Policy), macOS (configuration profiles) and Linux (JSON, from Cursor 2.0); documented policies include allowed team IDs and allowed extensions ([deployment patterns][cfg-cur-dep], read 2026-11-27). Team and Enterprise plans add dashboard Team Rules, which take precedence over other rules ([rules][cfg-cur-rules]), and enterprise team-admin policies that layer over `sandbox.json` (sandbox reference); Enterprise also has enterprise-managed hooks ([hooks][cfg-cur-hooks]) | `.cursor/rules/*.mdc`, user rules, `AGENTS.md` (rules page); CLI project file `.cursor/cli.json` for permissions only |
+| Cline | Remote configuration from the hosted admin console, applied when a member signs in: rules and workflows, skills, allowed providers, MCP controls and telemetry, with support differing by product (VS Code and JetBrains most, CLI rules and workflows only, Cline Desktop none of the listed controls); written into `.cline/remote-config/` or `.cline/enterprise/` in the workspace ([remote configuration][cfg-cline-ent], read 2026-11-27) | `.cline/` (rules, workflows, skills, hooks), older `.clinerules/`, `AGENTS.md` at the project root, `~/.agents/AGENTS.md` globally; workspace rules take precedence over global rules when they conflict ([config][cfg-cline-cfg], [rules][cfg-cline-rules]) |
+| Aider | Not documented on the pages read | `.aider.conf.yml` at the git root or current directory; conventions are an ordinary file such as `CONVENTIONS.md` loaded with `--read` or `read:` in the YAML ([conventions][cfg-aider-conv]); no `AGENTS.md` mention on the pages read |
+| OpenCode | System directory and macOS managed preferences (domain `ai.opencode.managed`, user profile replaces machine-wide) have the highest precedence; a `policies` array allows or denies providers, tools, MCP servers, skills and plugins, never prompts, and can also arrive from a connected OpenCode Console workspace ([config][cfg-oc-cfg], [policies][cfg-oc-pol], read 2026-11-27) | `opencode.json(c)` or `.opencode/opencode.json(c)` per directory; `AGENTS.md`, with a `CLAUDE.md` fallback ([instructions][cfg-oc-instr]; our [OpenCode doc](opencode-analysis.md)), [matrix row 1](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows) |
+| Amp | `managed-settings.json` in `/etc/ampcode/` (macOS `/Library/Application Support/ampcode/`, Windows `%ProgramData%\ampcode\`) beats the workspace Managed Settings document, which beats local settings; lists combine workspace-first and objects merge with workspace values winning; clients refresh in about 10 minutes ([configuration][cfg-amp-set], read 2026-11-27). Enterprise admins also set allowed models ([allowed models][cfg-amp-models]) | `.amp/settings.json(c)`; `AGENTS.md` read from the project and from `~/.config/amp/`, `~/.config/`, and `/etc/ampcode/` (macOS and Windows equivalents) ([AGENTS.md][cfg-amp-agents]) |
+| Windsurf, now Devin Desktop | Enterprise admins set a root-level baseline and per-organization overrides from Settings, Enterprise, Devin Desktop (permissions, sandbox, MCP, models, and more); enterprise-enforced rules always outrank user and project configuration; an override replaces list values instead of merging; changes take up to 15 minutes ([local agent controls][cfg-ws-ctrl], read 2026-11-27). Organization overrides are "being rolled out gradually" per that page. Device policies (MDM) are enforced by the OS and "cannot be changed from inside the editor": Windows Group Policy (`Software\Policies\Windsurf\Devin`), a macOS configuration profile, or `/etc/vscode/policy.json` on Linux; system-level files live under `/etc/devin/` on Linux and WSL (same page) | `AGENTS.md`, `AGENTS.local.md`, `.devin/rules/*.md`, `.devin/global_rules.md`, user copies under `~/.devin/`; legacy `.windsurf/` rules are still imported ([customizations][cfg-ws-cust]) |
+
+Findings from the tables:
+
+- **Most harnesses have a user file, a project file and a machine-wide layer.** In Gemini CLI (below environment
+  variables and flags), OpenCode and Amp the machine-wide file overrides the other files, and VS Code, Cursor and
+  Windsurf policies override user settings; Codex CLI's `requirements.toml` constrains what the other layers
+  may set instead. Copilot CLI differs: its managed layer is the lowest and most keys can be overridden, except
+  the floors named above.
+- **A documented machine-level file or MDM route exists for** Codex CLI, Gemini CLI (system files, no MDM
+  named on the pages read), Copilot CLI, VS Code, Cursor, OpenCode, Amp and Windsurf (Devin Desktop device policies). Cline's documented
+  route is a hosted console, and Aider documents none (on the pages read).
+- **Project config is gated or limited in several harnesses**: Codex skips untrusted projects' `.codex/` layers,
+  Amp ignores listed keys in workspace settings, and Cursor's CLI takes only `permissions` at project level. Amp's page gives the reason
+  (anyone who can change a repository could otherwise choose those values for the user); Codex's says "for
+  security"; the Cursor page read gives none.
+- **Gemini CLI's status.** Its docs site carried a banner (read 2026-11-27) saying the unpaid tier and Google One
+  users moved to Antigravity CLI on 2026-06-18; the settings above describe the CLI as documented, and which
+  accounts can still use it was not checked here.
 
 ## Model access and billing
 
@@ -381,6 +442,40 @@ Defaults are vendor-documented values, not observed behaviour.
 | [Kimi Code: config files][kimi-config] | `reserved_context_size` |
 | [Antigravity: `/compact`][ag-compact] | Command and auto behaviour |
 | [Goose: smart context management][goose-ctx] | Percent and token compaction settings, `0.0` disables |
+| [Claude Code: settings][cfg-cc-settings] | Settings scopes (linked, not repeated) |
+| [Codex: config basics][cfg-codex-basic] | Precedence, project trust |
+| [Codex: advanced config][cfg-codex-adv] | `CODEX_HOME`, profiles |
+| [Codex: config reference][cfg-codex-ref] | Key and variable reference |
+| [Codex: managed configuration][cfg-codex-mgd] | `requirements.toml`, MDM, layers |
+| [Codex: AGENTS.md][cfg-codex-agents] | Discovery, override file, size cap |
+| [Gemini CLI: configuration][cfg-gem-ref] | Layers, file paths, variables |
+| [Gemini CLI: enterprise][cfg-gem-ent] | System settings, policy engine |
+| [Copilot CLI: config directory][cfg-cop-dir] | Settings order, MDM sources, `COPILOT_HOME` |
+| [Copilot CLI: custom instructions][cfg-cop-instr] | Instruction file locations |
+| [VS Code: settings][cfg-vsc-set] | Scopes and precedence |
+| [VS Code: enterprise policies][cfg-vsc-ent] | Group Policy, profiles, `policy.json` |
+| [VS Code: custom instructions][cfg-vsc-instr] | Instruction file names |
+| [Cursor: deployment patterns][cfg-cur-dep] | MDM policies, precedence |
+| [Cursor: CLI configuration][cfg-cur-cli] | `cli-config.json`, variables |
+| [Cursor: sandbox.json][cfg-cur-sbx] | Merge order, enterprise layer |
+| [Cursor: rules][cfg-cur-rules] | Rule types, Team Rules |
+| [Cursor: hooks][cfg-cur-hooks] | Team and enterprise hooks |
+| [Cline: config][cfg-cline-cfg] | Directory layout, variables |
+| [Cline: remote configuration][cfg-cline-ent] | Controls per product |
+| [Cline: rules][cfg-cline-rules] | Rule locations |
+| [Aider: YAML config][cfg-aider-yml] | Search order |
+| [Aider: .env][cfg-aider-env] | `.env` locations |
+| [Aider: options][cfg-aider-opt] | `AIDER_*` variables |
+| [Aider: conventions][cfg-aider-conv] | `CONVENTIONS.md` with `--read` |
+| [OpenCode: config][cfg-oc-cfg] | Locations, precedence, managed |
+| [OpenCode: policies][cfg-oc-pol] | Policy statements |
+| [OpenCode: CLI][cfg-oc-cli] | `OPENCODE_DB` |
+| [Amp: configuration][cfg-amp-set] | Settings, managed settings |
+| [Amp: allowed models][cfg-amp-models] | Enterprise model policy |
+| [Amp: AGENTS.md][cfg-amp-agents] | Lookup paths |
+| [Devin Local: customizations][cfg-ws-cust] | Rules, MCP file paths |
+| [Devin Local: permissions][cfg-ws-perm] | Permission scopes |
+| [Devin: local agent controls][cfg-ws-ctrl] | Root and org controls |
 
 [cc-workflows]: https://code.claude.com/docs/en/common-workflows
 [cc-tools]: https://code.claude.com/docs/en/tools-reference
@@ -494,3 +589,38 @@ Defaults are vendor-documented values, not observed behaviour.
 [gemini-rel]: https://github.com/google-gemini/gemini-cli/releases/tag/v0.71.1
 [oc-rel]: https://github.com/anomalyco/opencode/releases/tag/v1.19.6
 [aider-rel]: https://github.com/Aider-AI/aider/releases/tag/v0.86.0
+[cfg-cc-settings]: https://code.claude.com/docs/en/settings
+[cfg-codex-basic]: https://learn.chatgpt.com/docs/config-file/config-basic
+[cfg-codex-adv]: https://learn.chatgpt.com/docs/config-file/config-advanced
+[cfg-codex-ref]: https://learn.chatgpt.com/docs/config-file/config-reference
+[cfg-codex-mgd]: https://learn.chatgpt.com/docs/enterprise/managed-configuration
+[cfg-codex-agents]: https://learn.chatgpt.com/docs/agent-configuration/agents-md
+[cfg-gem-ref]: https://geminicli.com/docs/reference/configuration/
+[cfg-gem-ent]: https://geminicli.com/docs/cli/enterprise/
+[cfg-cop-dir]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference
+[cfg-cop-instr]: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+[cfg-vsc-set]: https://code.visualstudio.com/docs/configure/settings
+[cfg-vsc-ent]: https://code.visualstudio.com/docs/enterprise/policies
+[cfg-vsc-instr]: https://code.visualstudio.com/docs/agent-customization/custom-instructions
+[cfg-cur-dep]: https://cursor.com/docs/enterprise/deployment-patterns
+[cfg-cur-cli]: https://cursor.com/docs/cli/reference/configuration
+[cfg-cur-sbx]: https://cursor.com/docs/reference/sandbox
+[cfg-cur-rules]: https://cursor.com/docs/rules
+[cfg-cur-hooks]: https://cursor.com/docs/hooks
+[cfg-cline-cfg]: https://docs.cline.bot/getting-started/config
+[cfg-cline-ent]: https://docs.cline.bot/enterprise-solutions/configuration/remote-configuration/overview
+[cfg-cline-rules]: https://docs.cline.bot/customization/cline-rules
+[cfg-aider-yml]: https://aider.chat/docs/config/aider_conf.html
+[cfg-aider-env]: https://aider.chat/docs/config/dotenv.html
+[cfg-aider-opt]: https://aider.chat/docs/config/options.html
+[cfg-aider-conv]: https://aider.chat/docs/usage/conventions.html
+[cfg-oc-cfg]: https://opencode.ai/docs/config/
+[cfg-oc-pol]: https://opencode.ai/docs/policies/
+[cfg-oc-cli]: https://opencode.ai/docs/cli/
+[cfg-oc-instr]: https://opencode.ai/docs/instructions/
+[cfg-amp-set]: https://ampcode.com/docs/markdown/cli/settings
+[cfg-amp-models]: https://ampcode.com/docs/markdown/enterprise/allowed-models
+[cfg-amp-agents]: https://ampcode.com/docs/markdown/customize/agents-md
+[cfg-ws-cust]: https://docs.devin.ai/desktop/devin-local/customizations
+[cfg-ws-perm]: https://docs.devin.ai/desktop/devin-local/permissions
+[cfg-ws-ctrl]: https://docs.devin.ai/enterprise/local/controls
