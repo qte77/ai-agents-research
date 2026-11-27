@@ -23,7 +23,6 @@ layers, catalogs and ontologies, graph and vector stores. Pointers only; see [th
 | [data-platforms-lakehouse-landscape.md § Warehouse-native agents](../non-cc/infrastructure/data-platforms-lakehouse-landscape.md#warehouse-native-agents) | Snowflake Cortex Agents, BigQuery conversational analytics, Genie, Fabric data agent | non-cc |
 | [data-platforms-lakehouse-landscape.md § Local engines as agent scratch space](../non-cc/infrastructure/data-platforms-lakehouse-landscape.md#local-engines-as-agent-scratch-space) | DuckDB, chDB, Polars as agent scratch space | non-cc |
 | [data-platforms-lakehouse-landscape.md § Cost and permission controls](../non-cc/infrastructure/data-platforms-lakehouse-landscape.md#cost-and-permission-controls) | Cost and permission controls for agents on data platforms | non-cc |
-| [agentic-enterprise-os-landscape.md § Enterprise data APIs for agents](../non-cc/frameworks/agentic-enterprise-os-landscape.md#enterprise-data-apis-for-agents) | Auth, plan, unattended access, terms and MCP servers for 16 enterprise data vendors | non-cc |
 
 ## Semantic layers, catalogs and ontologies
 
@@ -36,6 +35,12 @@ layers, catalogs and ontologies, graph and vector stores. Pointers only; see [th
 | [open-knowledge-format-analysis.md](../non-cc/knowledge-management/open-knowledge-format-analysis.md) | Open Knowledge Format: agent-readable data-catalog spec (v0.2) | non-cc |
 
 Ontology generation and the agent-native ontology tools are indexed in [knowledge-graphs.md](knowledge-graphs.md).
+
+## Enterprise data APIs
+
+| Doc / section | What it covers | Bucket |
+|---|---|---|
+| [agentic-enterprise-os-landscape.md § Enterprise data APIs for agents](../non-cc/frameworks/agentic-enterprise-os-landscape.md#enterprise-data-apis-for-agents) | Auth, plan, unattended access, terms and MCP servers for 16 enterprise data vendors | non-cc |
 
 ## Graphs and vectors
 
