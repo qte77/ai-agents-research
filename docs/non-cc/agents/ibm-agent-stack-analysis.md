@@ -1,5 +1,5 @@
 ---
-title: IBM Agent Stack Analysis — watsonx Orchestrate and its Agent Development Kit
+title: IBM Agent Stack Analysis — watsonx Orchestrate, its Agent Development Kit and IBM Bob
 purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate, ADK, MCP/A2A, models incl. Claude, identity, licences, regions) and IBM Bob, its coding agent, with list prices.
 created: 2026-11-20
 updated: 2026-11-27
@@ -10,7 +10,7 @@ status: assess
 **Details:** Feeds the cloud-agent-stacks synthesis (plan 0014 K34). Scope is the business-and-dev agent path on IBM: **watsonx Orchestrate** (agent builder,
 runtime, catalog) and its open-source **Agent Development Kit (ADK)**. ML training is out of scope; data
 platforms are only linked ([data-platforms-lakehouse-landscape.md][data-platforms]). No watsonx Orchestrate prices are
-given; licence metrics are named only. The [IBM Bob section](#ibm-bob-coding-agent) is the exception: it records Bob's published list prices (read 2026-11-27). Evidence is as of 2026-11-20 and labelled *documented* (vendor
+given; licence metrics are named only. The [IBM Bob section](#ibm-bob-coding-agent) is the exception: it records Bob's published list prices (read 2026-11-27). Evidence is as of 2026-11-20 (the IBM Bob section: 2026-11-27) and labelled *documented* (vendor
 docs read now), *index entry only* (listed in the ADK docs index, page not read) or **unverified**
 (could not be read first-party). The IBM product docs site (`ibm.com/docs`) and
 `cloud.ibm.com/docs` are JavaScript-rendered and were not read, so IAM role names and workforce SSO stay unverified (re-tried 2026-11-20 with a headless browser: `ibm.com/docs` returned 403 and `cloud.ibm.com/docs` failed at the network layer); the
@@ -24,6 +24,7 @@ ADK docs site and the pricing page were readable.
 | Agent Development Kit (ADK) | Python library + `orchestrate` CLI to author, import and deploy agents/tools; the ADK repo is MIT-licensed | documented ([repo][adk-repo], licence field via GitHub API) |
 | Developer Edition | local, self-contained copy of Orchestrate run via a docker engine for iteration before connecting to a remote instance; needs a valid Developer Edition licence | documented ([ADK README][adk-readme], [setup][adk-setup]) |
 | watsonx.ai agents / Agent Lab | IBM's model-platform side; Orchestrate can register watsonx.ai agents as *external* agents | documented for external-agent registration ([agents overview][adk-agents]); Agent Lab itself **unverified** |
+| IBM Bob | IBM's coding and SDLC agent, separate from Orchestrate; see [IBM Bob](#ibm-bob-coding-agent) | documented (read 2026-11-27) |
 | watsonx.governance | agent inventory/lifecycle monitoring | **unverified** first-party here; the ADK docs expose a "governance-monitoring" API (agent monitoring setup), see [Governance hooks](#governance-hooks) |
 
 ## Build and runtime
@@ -130,7 +131,7 @@ Evidence below is documented (IBM's own pages), with marketing quotes and custom
   $20 per month (50 Bobcoins), Pro+ at $60 (180) and Ultra at $200 (1,000), with opt-in overage billed monthly;
   prices are "indicative", vary by country and exclude taxes. Premium packages: DevSecOps and Java Modernization
   $20 per month each, IBM i $40, IBM Z enterprise-only and annual. Enterprise-only features include on-premises or
-  air-gapped deployment, team and Bobcoin management and Bobalytics. What a Bobcoin buys is on an FAQ we did not read.
+  air-gapped deployment, team and Bobcoin management and Bobalytics. Bobcoins are the plans' usage credits; what one buys is on an FAQ we did not read.
 - **Status.** Generally available as SaaS since the 2026-04-28 launch release (read 2026-11-27). The self-hosted
   deployment on Red Hat OpenShift is generally available as of 2026-09-24 and sales-led (September release post, read
   2026-11-27). The docs banner says support for IDE versions 2.0.2 and 2.1.0 ends on 2027-01-06.
@@ -148,7 +149,7 @@ customer figures quoted on the product page (testimonials, not evidence).
 | Memory | Agentic SDK `/memories` APIs for custom agents (documented); native-agent memory unverified |
 | Agent identity and IdP | `ibm_iam`/`mcsp`/`cpd` auth; per-tool connections (OAuth, OBO SSO); no distinct agent-identity object found; workforce SSO/IdP unverified |
 | Least-privilege roles | Not confirmed: IBM Cloud IAM role pages (ibm.com/docs, cloud.ibm.com/docs) are JS-rendered and were not read, 2026-11-20 |
-| Licences and who needs one | Plan tiers by MAU, messages, doc volume; premier models metered extra; no per-seat licence found; Developer Edition needs a licence; no prices here |
+| Licences and who needs one | Plan tiers by MAU, messages, doc volume; premier models metered extra; no per-seat licence found; Developer Edition needs a licence; no Orchestrate prices here (IBM Bob's list prices are in its section) |
 | Regions | AWS and IBM Cloud regions, GovCloud (US), on-prem; Claude in 3 AWS + 5 IBM Cloud regions |
 | Release status | ADK 2.20.0 docs 2026-11-11 (GitHub latest release 2.19.1, 2026-10-22); Claude preview; model policies preview |
 
