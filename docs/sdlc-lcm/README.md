@@ -26,6 +26,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [lcm-spec.md](lcm-spec.md) | Product lifecycle phase definitions with SLA expectations and allowed changes |
 | [lcm-release-runbook.md](lcm-release-runbook.md) | Release management checklist bridging SDLC release phase to LCM transitions |
 | [oss-alm-landscape.md](oss-alm-landscape.md) | OSS ALM tool comparison (Tuleap, OpenProject, Redmine, GitLab) |
+| [github-platform-capabilities-analysis.md](github-platform-capabilities-analysis.md) | GitHub's own platform by plan tier: Actions, Codespaces and dev containers, rulesets, org and enterprise features, agent surfaces |
 | [agentic-sdlc-patterns.md](agentic-sdlc-patterns.md) | Emerging patterns: ADLC, Agentic SDLC, Spec-Driven Development |
 | [agentic-engineering-disciplines-landscape.md](agentic-engineering-disciplines-landscape.md) | Synthesis: "-engineering" disciplines (prompt→spec) + "-driven-dev" methodologies (TDD→EDD→SDD) in a five-layer credo stack |
 | [goal-tracking-attribution-landscape.md](goal-tracking-attribution-landscape.md) | Top-down goals → bottom-up attribution: the goal→spec→build→learning loop, qte77-estate worked examples, and the commercial OKR/PM baseline |
