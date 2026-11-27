@@ -100,6 +100,7 @@ Terminal/CLI agents and agentic IDEs beyond Claude Code — the former "Planned"
 | [poolside-laguna-analysis.md](reference/poolside-laguna-analysis.md) | Poolside Laguna S 2.1 — 118B-MoE frontier agentic-coding model, 1M-token context, long-horizon autonomous coding | Blog (vendor-reported benchmarks; license unstated) |
 | [orcareplay-analysis.md](reference/orcareplay-analysis.md) | OrcaReplay — record/replay/fork debugger for coding-agent runs, byte-for-byte deterministic offline replay | Repo + docs (Apache-2.0 code / CC BY 4.0 trace spec) |
 | [system-1-decision-models-landscape.md](reference/system-1-decision-models-landscape.md) | System-1 decision models landscape — open-weight/research alternatives to TypeSafe's Jev (Laya, kev, CLM/CLM-8B, GLiNER2.5-Decide, RuVector, JevK5, SemIf); rubric-scored | Repos + papers (Mixed: Apache-2.0/MIT open weights, one research-only model) |
+| [micro-language-models-landscape.md](reference/micro-language-models-landscape.md) | Micro and small language models in agent systems: 8M–30M on-device openers (arXiv 2604.19642), SPREAD's fine-tuned Nemotron (vendor claim), llama2.c, a bare-metal inference experiment | Paper, repos and a vendor story (MIT code repos; vendor claims labelled) |
 
 ## Context & Memory Infrastructure
 

@@ -26,6 +26,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [lcm-spec.md](lcm-spec.md) | Product lifecycle phase definitions with SLA expectations and allowed changes |
 | [lcm-release-runbook.md](lcm-release-runbook.md) | Release management checklist bridging SDLC release phase to LCM transitions |
 | [oss-alm-landscape.md](oss-alm-landscape.md) | OSS ALM tool comparison (Tuleap, OpenProject, Redmine, GitLab) |
+| [code-forge-ci-alternatives-landscape.md](code-forge-ci-alternatives-landscape.md) | Code forges, CI/CD systems and GitHub Actions runner services compared: licence, hosting, agent surface, migration path |
 | [github-platform-capabilities-analysis.md](github-platform-capabilities-analysis.md) | GitHub's own platform by plan tier: Actions, Codespaces and dev containers, rulesets, org and enterprise features, agent surfaces |
 | [agentic-sdlc-patterns.md](agentic-sdlc-patterns.md) | Emerging patterns: ADLC, Agentic SDLC, Spec-Driven Development |
 | [agentic-engineering-disciplines-landscape.md](agentic-engineering-disciplines-landscape.md) | Synthesis: "-engineering" disciplines (prompt→spec) + "-driven-dev" methodologies (TDD→EDD→SDD) in a five-layer credo stack |
@@ -45,7 +46,7 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [ledger-state-tool-calling-analysis.md](ledger-state-tool-calling-analysis.md) | LedgerAgent: ledger-state tool-calling for auditable agent actions (arXiv:2606.20529) |
 | [agent-probabilistic-verification-analysis.md](agent-probabilistic-verification-analysis.md) | Efficient and sound probabilistic verification of agent behavior (arXiv:2606.20510) |
 | [agent-code-analysis-landscape.md](agent-code-analysis-landscape.md) | SCA & DCA for AI coding agents: CodeQL/Semgrep-Guardian/garak/AgentSight/VIPER-MCP, GitHub·GitLab·Codeberg CI matrix, agents-as-scanner (Google Blueprint), sandboxing as analysis boundary, OWASP Agentic Top 10 |
-| [agentic-legacy-migration-validation-analysis.md](agentic-legacy-migration-validation-analysis.md) | Locksmith Loop: American Express's agentic test-synthesis method for validating COBOL-to-Java legacy migrations without a human-written oracle (arXiv:2607.28271) |
+| [agentic-legacy-migration-validation-analysis.md](agentic-legacy-migration-validation-analysis.md) | Validating a legacy migration without a human-written oracle: Locksmith Loop, American Express's agentic test-synthesis method for COBOL-to-Java (arXiv:2607.28271), and shadow comparison of old and new code (Anthropic's Rust migration, GitHub Scientist) |
 | [automata-agent-traces-analysis.md](automata-agent-traces-analysis.md) | FSM reconstruction from LLM-agent trace corpora for failure & next-step prediction, model-independent behavior auditing (arXiv:2608.23670) |
 | [detokenization-leaks-analysis.md](detokenization-leaks-analysis.md) | Detokenization Leaks: CPU cache-timing side channel (Flush+Reload, Prime+Probe) reconstructing locally hosted LLM output (arXiv:2609.06674) |
 | [fm-bench-analysis.md](fm-bench-analysis.md) | FM-Bench: football-club-management benchmark for long-horizon LLM agent decision-making, isolated and competitive multi-agent settings (arXiv:2608.18423) |
