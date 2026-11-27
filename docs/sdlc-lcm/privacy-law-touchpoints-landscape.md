@@ -26,7 +26,7 @@ equivalence. Article and section numbers are the load-bearing part; the wording 
 ## Requirements at a glance
 
 Legal text read 2026-11-27: GDPR on [EUR-Lex][gdpr] (version in force as published there); UK GDPR as
-revised on [legislation.gov.uk][ukgdpr]; CCPA from the [California statute text][ccpa-stat], with the
+revised on [legislation.gov.uk][ukgdpr]; CCPA from the California statute text (URL in Sources), with the
 [Attorney General's page][oag] as the pointer; PIPEDA from [Justice Laws][pipeda]. The Quebec column is
 **unverified** throughout: LégisQuébec and the Commission d'accès à l'information (CAI) blocked every
 read attempt (see [Not verified](#not-verified)).
@@ -124,7 +124,7 @@ All items are **our synthesis**; each points at the obligations cited above.
 | [GDPR, Regulation (EU) 2016/679, EUR-Lex][gdpr] | Arts. 3, 6, 15, 17, 22, 28, 30, 33, 35, 44, 46, 83 (read 2026-11-27) |
 | [UK GDPR, legislation.gov.uk][ukgdpr] | Revised text: Arts. 3, 6, 22A-22C, 33, 35, 44, 44A, 45B, 83 (read 2026-11-27) |
 | [Data (Use and Access) Act 2025][duaa] | Amending Act; no outstanding effects noted (read 2026-11-27) |
-| [CCPA statute text, California Legislative Information][ccpa-stat] | Civil Code §§ 1798.100-1798.185 (read 2026-11-27) |
+| CCPA statute text, California Legislative Information, `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CIV&division=3.&title=1.81.5.&part=4.&chapter=&article=` (plain text: the site returns 403 to the link checker) | Civil Code §§ 1798.100-1798.185 (read 2026-11-27) |
 | [California Attorney General, CCPA][oag] | Pointer page, lags the statute on rulemaking (read 2026-11-27) |
 | [PIPEDA, Justice Laws Website][pipeda] | ss. 4, 10.1, 10.3, 28; Schedule 1 clauses 4.1.3, 4.5.3, 4.9 (read 2026-11-27) |
 | [OPC annual report 2024-2025][opc-ar] | C-27 status (read 2026-11-27) |
@@ -133,7 +133,6 @@ All items are **our synthesis**; each points at the obligations cited above.
 [gdpr]: https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679
 [ukgdpr]: https://www.legislation.gov.uk/eur/2016/679/contents
 [duaa]: https://www.legislation.gov.uk/ukpga/2025/18/contents
-[ccpa-stat]: https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CIV&division=3.&title=1.81.5.&part=4.&chapter=&article=
 [oag]: https://www.oag.ca.gov/privacy/ccpa
 [pipeda]: https://laws-lois.justice.gc.ca/eng/acts/P-8.6/FullText.html
 [opc-ar]: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202425/ar_202425/
