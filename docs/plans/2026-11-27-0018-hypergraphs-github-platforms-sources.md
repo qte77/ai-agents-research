@@ -19,7 +19,7 @@ checks all of it.
   v0.28.0 (#1118).
 - **Opened 2026-11-27** from the owner's three asks of that day: (1) deepen hypergraphs and
   multi-dimensional, layered relationships in graphs; (2) GitHub capabilities and its competition;
-  (3) fold in a list of sources. Defaults for every open decision are in
+  (3) fold in a list of sources, plus three Pydantic AI coding-agent sources sent later that day. Defaults for every open decision are in
   [§ Owner decisions](#owner-decisions-2026-11-27); the owner can override any of them.
 - **In flight:** nothing.
 
@@ -92,7 +92,7 @@ row owns moves to that row.
 | N67 | `docs/non-cc/infrastructure/graph-databases-query-languages-landscape.md` | § Property Graph vs RDF (edge data, RDF 1.2 triple terms); § Not Verified line on hyperedges (replace); frameworks doc § GraphRAG vs vector RAG and KG construction evidence (hypergraph RAG and memory papers, hyperedge definition); `minigraf-analysis.md` (bi-temporal); frameworks doc § Temporal knowledge-graph memory; `semantic-layers-data-catalog-landscape.md` § Formal Ontologies; Graphify's hyperedges in `CC-code-tooling-landscape.md` |
 | N68 | new `docs/sdlc-lcm/github-platform-capabilities-analysis.md`; new hub `docs/_topics/dev-platforms.md` (lead) | `CC-github-actions-analysis.md`, `github-copilot-cloud-agent-analysis.md`, `agent-code-analysis-landscape.md` § 4 CI-Forge Integration, the Codespaces and devcontainer mentions (`git grep -il devcontainer -- docs`) |
 | N69 | new `docs/sdlc-lcm/code-forge-ci-alternatives-landscape.md` | `oss-alm-landscape.md` (GitLab CE as an ALM option), N68's doc for GitHub itself |
-| N70 | `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` | § 4 Agent memory infrastructure; § GraphRAG vs vector RAG; § 3 Lightweight and specialized frameworks (Harness², rust-anything already there) |
+| N70 | `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` | § 4 Agent memory infrastructure; § GraphRAG vs vector RAG; § 3 Lightweight and specialized frameworks (Harness², rust-anything already there); the PydanticAI bullet in § 1 and the archived `pydantic-ai-harness` Sources row |
 | N71 | `docs/sdlc-lcm/agentic-legacy-migration-validation-analysis.md`, `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`, `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`, `docs/non-cc/knowledge-management/repo-to-docs-tools-landscape.md` | weco doc § Harness²; frameworks doc rust-anything bullet |
 | N72 | new `docs/non-cc/reference/micro-language-models-landscape.md` | `system-1-decision-models-landscape.md` (typed-output classifiers, § Train your own: Unsloth), `on-device-semantic-search-landscape.md` |
 | N73 | `docs/non-cc/agents/computer-use-agents-landscape.md`, `docs/non-cc/orchestrators/orchestrators-landscape.md`, `docs/non-cc/agents/openresearch-analysis.md`, `docs/cc-native/plugins-ecosystem/CC-connectors-overview.md`, `docs/non-cc/agents/ibm-agent-stack-analysis.md` | `agentic-engineering-disciplines-landscape.md` (names IBM Bob once) |
@@ -126,6 +126,9 @@ Every URL from the owner's list ends in one row, or in "covered".
 | docs.docker.com/ai/docker-agent | N70 | |
 | github.com/google-research/harness2 | covered | weco doc § Harness² and frameworks doc § 3; N71 cross-links it |
 | lnkd.in/e5U-gMX6, resolves to Hugging Face's "Scaling Swarms to Thousands of Agents" report | N73 | `orchestrators-landscape.md` |
+| martinfowler.com "Building your own CLI Coding Agent with Pydantic-AI" (sent later the same day) | N70 | Next to the Pydantic AI harness entry |
+| pydantic.dev docs: Pydantic AI harness, Coder | N70 | Same place |
+| pydantic.dev article: Pax, the Pydantic AI coding agent for the terminal (beta) | N70 | Same place; beta status dated |
 
 ## Lane tasks
 
@@ -186,6 +189,10 @@ four lead pages are cited as leads, not as evidence.
 - **Docker Agent** (Docker docs) in § 3 or the closest section; say which.
 - ***Agentic GraphRAG*** (O'Reilly) as a book pointer in § GraphRAG vs vector RAG; catalog facts
   only (authors, publisher, date as listed).
+- **Pydantic AI coding agents:** the harness's Coder docs, the Pax beta article and Martin Fowler's
+  article on building a CLI coding agent with Pydantic AI, next to the existing Pydantic AI harness
+  entry (archived `pydantic/pydantic-ai-harness`, development moved into `pydantic/pydantic-ai`).
+  Beta status dated; Fowler's article cited as a practitioner write-up.
 
 ### N71: SDLC sources
 
@@ -220,7 +227,7 @@ decision models doc instead of repeating it.
 | N67 | Hypergraphs and multi-layer relationships in `graph-databases-query-languages-landscape.md`, plus `caviri/rete` ([§ Lane tasks](#n67-hypergraphs-and-layered-relationships)) | agent | Section merged with two fact-check passes; the "not checked" note replaced; hub row in `knowledge-graphs.md` |
 | N68 | GitHub platform capabilities analysis and the `dev-platforms.md` hub ([§ Lane tasks](#n68-github-platform-capabilities)) | agent | Doc merged with two fact-check passes, every plan tier and preview status dated; hub listed in `docs/_topics/README.md` |
 | N69 | Code forge, CI/CD and GitHub Actions runner alternatives landscape ([§ Lane tasks](#n69-forge-and-ci-alternatives)) | agent | Doc merged with two fact-check passes; row in `dev-platforms.md` |
-| N70 | Hindsight, Docker Agent and *Agentic GraphRAG* in the frameworks doc ([§ Lane tasks](#n70-frameworks-doc-sources)) | agent | Merged with two fact-check passes; hub rows added |
+| N70 | Hindsight, Docker Agent, *Agentic GraphRAG* and the Pydantic AI coding-agent sources (Coder, Pax, Fowler) in the frameworks doc ([§ Lane tasks](#n70-frameworks-doc-sources)) | agent | Merged with two fact-check passes; hub rows added |
 | N71 | Rust migration and Scientist, GUARD and self-improvement memory, the over-edit study, and codekb ([§ Lane tasks](#n71-sdlc-sources)) | agent | Merged with two fact-check passes; hub rows added |
 | N72 | Micro language models landscape ([§ Lane tasks](#n72-micro-language-models)) | agent | Doc merged with two fact-check passes; hub and index rows added |
 | N73 | n8n nod, Hugging Face swarms report, OpenResearch example, PandaDoc connector and IBM Bob ([§ Lane tasks](#n73-agent-and-connector-sources)) | agent | Merged with two fact-check passes; hub rows added |
