@@ -29,7 +29,7 @@ frameworks are in [spec-driven-frameworks-landscape.md][sdd]; guardrail tripwire
 |---|---|---|
 | **TDD** (test-driven development) | Write a failing unit test, make it pass with the least code, refactor, repeat | The baseline. A developer writes the test; the answer is exact and repeatable |
 | **BDD** (behaviour-driven development) | Write the behaviour as a business-readable scenario, automate it, then build to it | The check doubles as a shared specification for non-programmers |
-| **PBT** (property-based testing) | State a rule that must hold for every input; a library generates the inputs and shrinks failures | The author writes the property, not the examples; inputs are machine-chosen |
+| **PBT** (property-based testing) | State a rule that must hold for every input; a library generates the inputs and reports the simplest failing example it finds | The author writes the property, not the examples; inputs are machine-chosen |
 | **EDD** (eval-driven development) | Write the eval (dataset plus grader) for the behaviour first, run a baseline, change the agent, compare experiments | Outputs are non-deterministic and several answers can be right, so a score replaces a boolean |
 
 - **TDD.** Martin Fowler's page, updated 2023-12-11, gives the steps as write a test, write the code until it passes,
@@ -55,7 +55,7 @@ frameworks are in [spec-driven-frameworks-landscape.md][sdd]; guardrail tripwire
 |---|---|---|---|---|---|---|
 | TDD | Unit test with exact expected value | Developer | Assertion holds | Yes | xUnit-family frameworks (pytest, JUnit) | [Fowler][fowler-tdd] |
 | BDD | Gherkin scenario bound to step code | Developer plus business and test roles | Every step passes | Yes (the step code is ordinary tests) | Cucumber | [Gherkin][gherkin], [North][north-bdd] |
-| PBT | Property over generated inputs | Developer | Property holds for every generated input | Repeatable only with a fixed seed or a replay of the stored failing example | Hypothesis (Python); other languages have their own libraries | [Hypothesis docs][hyp-docs] |
+| PBT | Property over generated inputs | Developer | Property holds for every generated input | How a failure is replayed was not read (the docs list a "Replaying failed tests" page) | Hypothesis (Python); other languages have their own libraries | [Hypothesis docs][hyp-docs] |
 | EDD | Dataset of inputs, optional reference outputs, plus code and LLM-judge graders | Product, domain experts and engineers, often seeded from real runs | Score at or above a threshold, with no regression on previously passing examples | No: model output varies run to run | LangSmith, DeepEval, Inspect, Harbor and similar ([catalog][eval-cat]) | [Paper][arxiv-abs], [LangChain][lc-edd], [Airbnb][airbnb-edd] |
 
 Reading the table: the first three produce a boolean you can trust to repeat; EDD produces a distribution, so the pass
@@ -103,15 +103,15 @@ reduces it to three steps (all statements are the vendor's own, written around i
 3. **Make the change and compare experiments.** Look past the average to per-example regressions, read traces to see
    why something failed, and turn production failures into new dataset examples.
 
-The post names two pitfalls: judging only the average score, and adding evals not tied to a specific failure or change.
+The post's "Common mistakes" section lists five, among them checking only the average score and adding evals not tied to a specific failure or change.
 For agents that act in an environment, it says to check the state left behind, not just the answer, using
-its Harbor harness (an open-source framework, per the post; not checked further here).
+the Harbor harness (an open-source framework, per the post; not checked further here).
 
 ### Airbnb's practice (company engineering blog)
 
 [Eval-driven development: Lessons from evaluating GenAI at scale][airbnb-edd] (Airbnb Engineering, five named authors)
 calls EDD the generative-AI analogue of TDD and says the habit starts from looking at real outputs. Its recommendations,
-stated as the company's own and explicitly "not prescriptive":
+stated as the company's own and explicitly "not intended to be prescriptive":
 
 - Five principles: define goals and gates up front, let observed errors define metrics, keep the evaluator set small
   (3 to 5 calibrated LLM judges preferred over 20 to 30 noisy ones), appoint a human decision-maker, collaborate
@@ -151,7 +151,7 @@ No single standard term covers all of the cases below; the names are the sources
 | **RED-first check** | A new test that can never fail | See the TDD step: run the new test, confirm it fails for the expected reason before writing the code | [Wikipedia TDD][w-tdd] (secondary, citing Beck) |
 | **Guardrail tripwire** | Unsafe or off-policy agent input, output or tool call at runtime | A guardrail function sets a tripwire flag; the runner raises an exception and halts the run | [OpenAI Agents SDK guardrails][oai-guardrails], KB: [Guardrails][oai-guard] |
 | **Eval regression gate** | A change that degrades a behaviour that used to work | Baseline-versus-experiment comparison in CI per example | [LangChain][lc-edd] |
-| **Judge calibration** | A drifting LLM judge | Re-score the golden set, require agreement to stay in range | [Airbnb][airbnb-edd] |
+| **Judge calibration** | A drifting LLM judge | Re-score the golden set; Airbnb says to "Recalibrate periodically as failure modes evolve" (treating falling agreement as drift is our synthesis) | [Airbnb][airbnb-edd] |
 
 Details per row:
 
@@ -165,7 +165,7 @@ Details per row:
 - **Never-failing tests.** Wikipedia's TDD page gives the purpose of the RED step as showing that new code is needed,
   that the harness works and that the new test is not flawed and will always pass ([Wikipedia TDD][w-tdd], secondary).
   Mutation testing is the after-the-fact version of the same check. Our synthesis: a test that pattern-matches source
-  text is the classic never-failing candidate, because an over-broad pattern also matches comments or look-alike names.
+  text can pass forever when the pattern is over-broad, because it also matches comments or look-alike names (one project's case, below).
 - **Guardrail tripwires** are a runtime concept, not a test: the OpenAI Agents SDK runs input and output guardrails and
   raises a tripwire exception when triggered; in default parallel mode the agent may already have spent tokens or
   run tools before an input tripwire fires, while blocking mode stops it first ([docs][oai-guardrails]). The same
@@ -175,17 +175,22 @@ Details per row:
 
 ### A practitioner protocol (one project's report)
 
-A practitioner report from another project (2026-11-24, unverified beyond that project) describes a protocol that
-combines the items above; treat it as one team's experience, not a standard:
+A practitioner from another project (2026-11-24, unverified beyond that project) reports one check and proposes a
+protocol around it; treat both as one team's experience, not a standard.
+
+Reported: a manual mutation probe. Eight hand-picked bugs were injected one at a time in a throwaway worktree, and
+the tests caught all eight (the report says the sample was hand-picked and is not a coverage claim). The same report
+found a source-text test that could never fail: a case-insensitive pattern also matched a longer look-alike name,
+fixed by anchoring the pattern and checking that the test now fails.
+
+Proposed, not reported as practised:
 
 1. Commit the new tests alone first (RED) and require each to fail by assertion, not by a syntax or setup error.
 2. Record that commit; implement (GREEN) with the test directory unchanged, checked by a diff of the test paths since
    the RED commit being empty.
-3. Probe the suite by injecting a handful of hand-picked bugs one at a time in a throwaway worktree and confirming the
-   tests fail (a manual mutation probe; the report itself says the sample was hand-picked and is not a coverage claim).
 
-The adds over the primary sources are the read-only-tests rule (it stops an agent from weakening a test to get green)
-and the RED-commit record. Whether to enforce it with a hook is a settings decision for the repository owner.
+The adds over the primary sources are the read-only-tests rule (it would stop an agent from weakening a test to get
+green) and the RED-commit record. Whether to enforce it with a hook is a settings decision for the repository owner.
 
 ## How Agents Use Them
 
