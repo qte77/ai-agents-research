@@ -25,7 +25,7 @@ failure modes apply to it unchanged:
 |---|---|
 | Model API call from a harness | Remote call with timeouts, retries, partial failure |
 | Tool call to a Model Context Protocol ([MCP][mcp-spec]) server | Request/response over stdio or Streamable HTTP, with a schema contract |
-| Agent-to-agent call (Agent2Agent, [A2A][a2a-spec]) | Cross-trust-boundary RPC between independently run services |
+| Agent-to-agent call (Agent-to-Agent Protocol, [A2A][a2a-spec]) | Cross-trust-boundary RPC between independently run services |
 | Remote or cloud sandbox ([cloud sessions](../cc-native/ci-remote/CC-cloud-sessions-analysis.md)) | Failure domain and trust boundary behind a network link |
 | Parallel subagents, shared files or queues | Concurrent writers with no shared clock; message passing |
 | Long task with side effects (deploys, payments) | Multi-step transaction needing compensation, not rollback |
@@ -126,7 +126,7 @@ sides upgrade at different times; the proto3 guide states the field-number rules
 messages over stdio or Streamable HTTP. [A2A][a2a-spec] describes itself as "an open standard designed
 to facilitate communication and interoperability between independent, potentially opaque AI agent
 systems", with an Agent Card for discovery and "Opaque Execution" (agents need not share internals).
-KB coverage: [Agent-User Interaction (AG-UI) protocol landscape](../non-cc/protocols/ag-ui-protocol-landscape.md),
+KB coverage: [Agent-User Interaction Protocol (AG-UI) landscape](../non-cc/protocols/ag-ui-protocol-landscape.md),
 [agent plugins standard](../non-cc/protocols/agent-plugins-standard-analysis.md),
 [CC cross-session messaging](../cc-native/agents-skills/CC-cross-session-messaging-analysis.md).
 **Our synthesis:** an MCP tool schema is the consumer-visible contract, but a model reads its
