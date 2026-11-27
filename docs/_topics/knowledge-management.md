@@ -13,6 +13,7 @@ enterprise knowledge layers across the corpus. Pointers only; see [the hub index
 | [rowboat-analysis.md](../non-cc/agents/rowboat-analysis.md) | AI coworker that keeps a markdown vault with backlinks | non-cc |
 | [deepwiki-analysis.md](../non-cc/knowledge-management/deepwiki-analysis.md) | Auto-generated repo wikis | non-cc |
 | [repo-to-docs-tools-landscape.md](../non-cc/knowledge-management/repo-to-docs-tools-landscape.md) | Tools that turn repos into docs or wikis | non-cc |
+| [repo-to-docs-tools-landscape.md § Doc-link graphs over a DMS](../non-cc/knowledge-management/repo-to-docs-tools-landscape.md#doc-link-graphs-over-a-document-management-system-feasibility) | Feasibility of our doc graph over SharePoint, Google Drive, Box, Confluence, Nextcloud or OpenCloud | non-cc |
 | [onyx-analysis.md](../non-cc/knowledge-management/onyx-analysis.md) | Self-hostable company knowledge layer (connectors, permission-aware search) | non-cc |
 | [agentic-enterprise-os-landscape.md § Company brain](../non-cc/frameworks/agentic-enterprise-os-landscape.md#company-brain-adjacent-synthesis-label) | Enterprise knowledge layers and enterprise search products | non-cc |
 | [semantic-layers-data-catalog-landscape.md § Choosing a Structure](../non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#choosing-a-structure) | Tags, taxonomies, SKOS, ontologies and knowledge graphs compared | non-cc |

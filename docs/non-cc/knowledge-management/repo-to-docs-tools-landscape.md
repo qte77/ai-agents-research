@@ -158,29 +158,28 @@ links that land on another doc in the set become edges.
 | Store | Incremental listing | Outgoing links | Unattended auth | Notes |
 |---|---|---|---|---|
 | SharePoint / OneDrive | [driveItem delta][s-ms-delta] on the drive root: follow `@odata.nextLink`, store `@odata.deltaLink`, handle HTTP 410 resync | No link or backlink relationship on the [driveItem resource][s-ms-driveitem]; download via [content][s-ms-content], then extract | [Client credentials][s-ms-app]; application permission `Files.Read.All` (least) or `Sites.Read.All`; [`Sites.Selected`][s-ms-selected] limits it to granted sites | driveItem calls are not on the [metered list][s-ms-metered] (only `assignSensitivityLabel` is, for SharePoint) |
-| Google Drive | [`changes.getStartPageToken` then `changes.list`][s-g-changes]; `files.list` for the first pass | [Docs API][s-g-docs] `TextStyle.link` carries `url`, `bookmark` or `heading` targets; [export][s-g-export] to `text/markdown` or `text/html` | [Service account with domain-wide delegation][s-g-sa]; reading all files needs a [restricted scope][s-g-scopes] (`drive.readonly`) and its OAuth verification | Drive has no document-to-document link API (none found) |
-| Box | [Events][s-box-events] (`changes`, `sync` streams); [folder items][s-box-items] (marker paging) | None found; extract from content | [Client Credentials Grant or JWT][s-box-auth] for server apps | Events stream position not confirmed (unverified) |
+| Google Drive | [`changes.getStartPageToken` then `changes.list`][s-g-changes]; `files.list` for the first pass | [Docs API][s-g-docs] `TextStyle.link` carries `url`, `bookmark` or `heading` targets; [export][s-g-export] to `text/markdown` or `text/html` | [Service account with domain-wide delegation][s-g-sa]; reading all files needs a [restricted scope][s-g-scopes] (`drive.readonly`) and its OAuth verification | The Drive API has no link endpoint (none found); in a Google Doc, a [`richLink`][s-g-docs] element points to a Drive file |
+| Box | [Events][s-box-events] (`changes`, `sync` streams), resumed from a saved [`stream_position`][s-box-pos]; [folder items][s-box-items] (marker paging) | None found; extract from content | [Client Credentials Grant or JWT][s-box-auth] for server apps | |
 | Confluence Cloud | [`GET /pages`][s-cf-pages] (cursor paging); [CQL `lastmodified`][s-cf-cql] for changed pages; [descendants][s-cf-desc] for the tree | No link endpoint found in the v1 or v2 pages read; parse the body: [storage format][s-cf-storage] marks page links `ac:link` + `ri:page` (Data Center 11.0 page; Cloud equivalence unverified) | [API token + basic auth or OAuth 2.0 (3LO)][s-cf-auth]; [service-account tokens][s-cf-sa] exist and carry scopes | Data Center's [page information][s-cf-info] lists incoming links in the UI |
-| Nextcloud | WebDAV [PROPFIND][s-nc-dav] with `Depth`, `d:getetag`, `oc:fileid`; [WebDAV SEARCH][s-nc-search] can filter by modified date; no `sync-collection` REPORT documented | None; extract from content | [App passwords][s-nc-dav] (device passwords bypass 2FA) | [Collectives][s-nc-coll] README documents Markdown pages; no backlink graph mentioned |
+| Nextcloud | WebDAV [PROPFIND][s-nc-dav] with `Depth`, `d:getetag`, `oc:fileid`; [WebDAV SEARCH][s-nc-search] can filter by modified date; no `sync-collection` REPORT documented | None; extract from content | [App passwords][s-nc-dav], which the docs suggest for scripts where 2FA is enforced | [Collectives][s-nc-coll] README documents Markdown pages; no backlink graph mentioned |
 | OpenCloud | [Libre Graph spec][s-oc-spec] has `driveItem` paths but no `/delta` path (read 2026-11-26); WebDAV docs are a [stub][s-oc-docs] | None found | Not verified | [Apache-2.0][s-oc-lic]; use PROPFIND as for Nextcloud (unverified) |
 
-**Links.** Only Confluence (body markup) and Google Docs (`TextStyle.link`) expose links as structured
+**Links.** Only Confluence (body markup) and Google Docs (`TextStyle.link`, `richLink`) expose links as structured
 data; elsewhere they sit inside the file. doc-pipeline-engine ([README][s-dpe], Apache-2.0) turns PDF,
 Office, image, email and text into structured summaries rendered as Markdown, DOCX or PDF; its README
 does not say hyperlinks survive, so it is a text leg, not a link extractor (unverified). `.docx`
 hyperlinks live in the package's relationship parts (unverified at first party here).
 
-**Products.** Obsidian's [graph view][s-obs-graph] draws internal links of a Markdown vault, so a DMS
+**Products.** Obsidian's [graph view][s-obs-graph] shows "the relationships between the notes in your vault", so a DMS
 needs a Markdown export first; its [licence][s-obs-lic] allows commercial use. Atlassian's
 [Teamwork Graph][s-tg] stores [relationships][s-tg-rel] between objects (a Jira work item linked to a
-Confluence page); it is in Forge Preview behind admin-granted scopes, and page-to-page links are
-unverified. Microsoft retired [Viva Topics][s-viva] (as of 2025-02-22); the semantic-index and Graph
+Confluence page); its release status and page-to-page links are unverified. Microsoft retired [Viva Topics][s-viva] (as of 2025-02-22); the semantic-index and Graph
 insights pages returned 404 here, so no Microsoft document-link graph is confirmed (unverified).
 
 **Adapter.** The builder takes text, not `(path, title, links)`. Smallest change: render each DMS item
 to a stub (`# title` plus `[t](relative/path.md)` per resolved link, item IDs mapped to synthetic paths),
-leaving the builder untouched; `bucket_of` assumes `docs/<section>/`, so site or library becomes the
-section. Cleaner for several stores: a second entry point taking `(path, title, links)` that reuses the
+leaving the builder untouched; `bucket_of` assumes `docs/<section>/`, so stub paths take the form
+`docs/<site>/…`. Cleaner for several stores: a second entry point taking `(path, title, links)` that reuses the
 edge aggregation.
 
 **Recommendation.** Do not build now: this corpus is git markdown and no DMS corpus is in scope. If one
@@ -229,11 +228,12 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Microsoft Graph Sites.Selected][s-ms-selected] | per-site grant |
 | [Microsoft Graph metered APIs][s-ms-metered] | only assignSensitivityLabel metered for SharePoint |
 | [Google Drive manage changes][s-g-changes] | start page token, changes.list |
-| [Google Docs API documents][s-g-docs] | TextStyle.link fields (page partly read) |
-| [Google Drive export formats][s-g-export] | text/markdown export, 10 MB limit |
+| [Google Docs API documents][s-g-docs] | TextStyle.link fields, richLink element |
+| [Google Drive export formats][s-g-export] | text/markdown export |
 | [Google service accounts][s-g-sa] | domain-wide delegation |
 | [Google Drive scopes][s-g-scopes] | restricted-scope classification |
 | [Box events][s-box-events] | event streams |
+| [Box events pagination][s-box-pos] | `stream_position`, `next_stream_position` |
 | [Box folder items][s-box-items] | marker paging |
 | [Box authentication][s-box-auth] | CCG and JWT for server apps |
 | [Confluence Cloud REST v2 pages][s-cf-pages] | GET /pages |
@@ -252,9 +252,9 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [qte77/doc-pipeline-engine][s-dpe] | README (v0.3.1, Apache-2.0) |
 | [Obsidian graph view][s-obs-graph] | graph of internal links in a vault |
 | [Obsidian licence][s-obs-lic] | free for commercial use (page dated 2025-02-20) |
-| [Atlassian Teamwork Graph][s-tg] | data layer; Forge Preview |
+| [Atlassian Teamwork Graph][s-tg] | data layer |
 | [Teamwork Graph relationships][s-tg-rel] | relationship example |
-| [Viva Topics][s-viva] | retirement notice |
+| [Changes coming to Topics][s-viva] | "Viva Topics has been retired as of February 22, 2025" |
 
 [s-deepwiki]: https://deepwiki.com
 [s-c2t]: https://code2tutorial.com
@@ -275,6 +275,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [s-g-sa]: https://developers.google.com/identity/protocols/oauth2/service-account
 [s-g-scopes]: https://developers.google.com/workspace/drive/api/guides/api-specific-auth
 [s-box-events]: https://developer.box.com/guides/events/
+[s-box-pos]: https://developer.box.com/guides/events/parameters/pagination
 [s-box-items]: https://developer.box.com/reference/get-folders-id-items/
 [s-box-auth]: https://developer.box.com/guides/authentication/
 [s-cf-pages]: https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-page/
@@ -295,7 +296,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [s-obs-lic]: https://obsidian.md/license
 [s-tg]: https://developer.atlassian.com/platform/teamwork-graph/
 [s-tg-rel]: https://developer.atlassian.com/platform/teamwork-graph/relationships/
-[s-viva]: https://learn.microsoft.com/en-us/viva/topics/
+[s-viva]: https://learn.microsoft.com/en-us/microsoft-365/topics/changes-coming-to-topics
 
 ## Action Items
 
