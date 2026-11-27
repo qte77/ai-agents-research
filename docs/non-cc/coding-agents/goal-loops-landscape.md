@@ -75,7 +75,8 @@ A first-pass search found no named goal feature in: opencode (commands, TUI, plu
 pages), Aider (options, lint/test pages), Jules (docs and changelog), Roo Code (auto-approve
 docs), Amp and Devin (manual / docs index — both have stop hooks, above), and Copilot Studio
 (what's-new page). These are absences in the pages named, not a site-wide check. Bolt, Lovable and
-Azure AI Foundry were only searched, not read first-party.
+Azure AI Foundry were only searched, not read first-party (Bolt and Lovable have since been read for
+[coding-agents-comparison-landscape.md § Prompt-to-app builders](coding-agents-comparison-landscape.md#prompt-to-app-builders), not for stop hooks).
 
 ## Plan files across agents (re-checked 2026-11-18)
 
