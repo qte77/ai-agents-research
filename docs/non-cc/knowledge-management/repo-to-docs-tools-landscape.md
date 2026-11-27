@@ -140,7 +140,7 @@ A self-hosted service that builds an understanding of code across **many reposit
 - **Where it sits**: the cross-repository, code-understanding end of this space. DeepWiki and OpenWiki generate per-repository docs; CodeKB's stated aim is picking the relevant repositories for a task out of a large organization, an unusual angle here.
 - **Requirements** (README): Amazon Bedrock access to a supported Claude model and Titan Text Embeddings V2, plus an AWS account for the recommended CDK deployment (ECS Fargate, CloudFront, WAF, Cognito); a local single-user mode also exists. It is AWS-bound, unlike the tools above.
 - **Evidence level**: README claims only; not run here. The README gives no benchmark or measured result.
-- **Why it is listed despite the 1,000-star bar**: it meets the usable-artifact and alive criteria of the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) but not the adoption one (245 stars, no named independent users found, read 2026-11-27); kept as an owner-requested entry from a first-party AWS Labs repo, to be re-checked at the next prune.
+- **Why it is listed despite the 1,000-star bar**: it meets the usable-artifact and alive criteria of the [pruning rule](../../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter) but not the adoption one (245 stars; the README names no independent users; read 2026-11-27); kept because the owner listed it on 2026-11-27 (a first-party AWS Labs repo), to be re-checked at the next prune.
 
 ## Pattern Analysis
 
