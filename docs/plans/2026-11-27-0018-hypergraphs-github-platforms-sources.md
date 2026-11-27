@@ -370,6 +370,9 @@ The section's table in the disciplines landscape keeps the clearest cases.
   followed by a narrow vertical one (the audit result goes in this plan), then one short section
   with first-party sources (for example the Design Council's Double Diamond) and links to the
   places found.
+- **N88, prompt-to-app builders** (owner 2026-11-27, chose "add the four plus well-known peers"). One section in
+  `coding-agents-comparison-landscape.md`: hosted builders that generate, run and deploy a web app from chat,
+  each cell from vendor pages; HeyBoss as a note if it fails the well-known filter.
 
 ## Remaining work
 
@@ -396,6 +399,7 @@ The section's table in the disciplines landscape keeps the clearest cases.
 | ~~N84~~ | ~~Privacy law touchpoints: GDPR (EU), UK GDPR, CCPA/CPRA, Canada (PIPEDA, Quebec Law 25)~~ | agent | shipped (privacy law touchpoints: GDPR, UK GDPR, CCPA/CPRA, PIPEDA; Quebec unverified) |
 | ~~N85~~ | ~~Self-evolving and meta-learning: survey the three docs, add what is missing~~ | agent | shipped (§ Meta-levels in the Weco doc, 12 landmarks; gap survey in the PR body) |
 | ~~N86~~ | ~~Diverge and converge: audit and one section~~ | agent | shipped (§ Diverge and converge; audit in § N86 audit) |
+| ~~N88~~ | ~~Prompt-to-app builders (owner 2026-11-27): Lovable, Bolt.new (StackBlitz WebContainers), HeyBoss, plus well-known peers v0 and Replit~~ | agent | shipped (§ Prompt-to-app builders: Lovable, Bolt.new, v0, Replit; HeyBoss and Firebase Studio notes) |
 | N9 | Assess YouTube videos (ai-that-works playlist, Cole Medin channel) as research leads (owner 2026-11-22; #1009) | owner | **ai-that-works part done 2026-11-22** (owner narrowed it to the companion repo's transcripts): all 86 episode dirs triaged from the repo (github.com/ai-that-works/ai-that-works, no licence, so read and cited only), 47 with transcripts; 3 strong, 18 possible and 38 dropped leads, list and reasons in the session triage notes. Shipped, each re-checked at first-party sources with two fact-check passes: #1031 GEPA, #1032 SlopCodeBench, #1033 HumanLayer status, #1034 lethal trifecta. **Concept pass** (owner 2026-11-22: concepts, how-tos and best practices count, not only tools): about 225 ideas triaged, 24 kept, each cited as a single-source practitioner claim with outside corroboration where it exists: #1039 harness patterns, #1040 eval practices, #1041 memory, skills, observability and event-log projections; five LLM-application patterns held for lack of a fitting doc. **Open, owner-gated:** Cole Medin's channel, once the owner picks a transcript route (from this Codespace, yt-dlp and headless browsers hit YouTube's sign-in bot check) |
 | N38 | paperverse: make the weekly real-feed sync mergeable, add `triage/kb-papers` as a source, then one catch-up sync (D2) | agent in a paperverse session; owner if the fix needs a setting or an App | The sync PR gets every required check and merges without help; paperverse `main` holds all weekly files and `arxiv-kb.jsonl`; deployed page shows them |
 | N56 | Compare `scripts/cc_cache_usage.py` with Claude Code `/usage` "Prompt cache (main)" and with a cachemiss run on one session (residual of N55) | owner | The owner pasted the `/usage` section on 2026-11-25 (46 main-thread requests, 99% of input from cache, no misses); still waits on approval to run cachemiss (external code); the three sets of numbers agree or the differences are explained in `CC-prompt-caching-behavior.md`; offer the prediction column to cachemiss only if they agree |
