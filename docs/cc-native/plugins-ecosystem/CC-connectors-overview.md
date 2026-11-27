@@ -2,7 +2,7 @@
 title: Claude Connectors — MCP-Based Integrations
 purpose: Analysis of Claude's connector ecosystem, capabilities, limitations, and platform availability.
 created: 2026-03-19
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-25
 status: assess
 ---
@@ -138,6 +138,7 @@ Each entry's detail page shows its categories, maker, whether sign-in is require
 | [ElevenLabs][c-elevenlabs] | Create and manage ElevenAgents voice agents | Jul 2026 | Required |
 | [Zoho CRM][c-zohocrm] | Leads, deals, contacts; regional MCP URLs | Sep 2026 | Required |
 
+- **PandaDoc (read 2026-11-27)**: document creation, e-signature sending and tracking. The [directory page][c-pandadoc] shows "Anthropic verified", sign-in required, added May 2026, remote MCP URL `https://mcp.pandadoc.com/v1/mcp` and 11 tools (create, create from Markdown, update, send, status get and change, details, summary, content, list, search). PandaDoc's [help article][pandadoc-help] and [developer guide][pandadoc-dev] document OAuth sign-in (Allow access, then Authorize), install from Customize > Connectors, and `claude mcp add pandadoc --transport http <url>` for Claude Code. Two caveats from those pages: accounts on `app.pandadoc.eu` must add a custom connector with `https://mcp.pandadoc.eu/v1/mcp`, because the directory listing reaches only the global server (each server returns only its own region's documents); and the help article says the connector is included in all PandaDoc plans at no extra cost "for a limited time", with usage limits possible later. Neither page states a Claude plan requirement; a PandaDoc [community post][pandadoc-post] (a lead, not evidence) says building an artifact on the connector needs a Claude plan with connected artifacts and Create and edit files enabled. We did not test the connector.
 - **Business and CRM entries**: monday.com and Zoho CRM are not covered in [CC-business-api-integrations.md](CC-business-api-integrations.md) (its [CRM section](CC-business-api-integrations.md#crm) covers HubSpot and Salesforce); that doc owns the business-API comparison and this table does not repeat it.
 - **Entries in other docs**: Firecrawl's directory connector (Verified, added July 2026, read 2026-11-25) is analysed in [CC-web-scraping-plugins-analysis.md § Hosted Connector Route](CC-web-scraping-plugins-analysis.md#hosted-connector-route-chatgpt-and-claude); Checkatrade's (Verified, added July 2026, sign-in not required, read 2026-11-25) in [evaluation-data-resources-landscape.md](../../sdlc-lcm/evaluation-data-resources-landscape.md#3-datasets). Submission requirements are in [agent-identity-auth-landscape.md](../../sdlc-lcm/agent-identity-auth-landscape.md#2-authorize-the-agent-on-behalf-of-a-human-delegated-scoped-auditable).
 
@@ -153,6 +154,7 @@ Each entry's detail page shows its categories, maker, whether sign-in is require
 - [CC MCP docs][cc-mcp-docs]
 - [MCP specification][mcp]
 - [Connectors directory][dir], [connector verification][verif], [submission guide][submit]
+- PandaDoc: [directory page][c-pandadoc], [help article][pandadoc-help], [developer guide][pandadoc-dev]
 - [Cowork plugins & enterprise analysis](CC-cowork-plugins-enterprise-analysis.md)
 
 [overview]: https://claude.com/docs/connectors/overview
@@ -176,5 +178,9 @@ Each entry's detail page shows its categories, maker, whether sign-in is require
 [c-shopify]: https://claude.com/marketplace/connectors/shopify
 [c-elevenlabs]: https://claude.com/marketplace/connectors/elevenlabs
 [c-zohocrm]: https://claude.com/marketplace/connectors/zohocrm
+[c-pandadoc]: https://claude.com/marketplace/connectors/pandadoc
+[pandadoc-help]: https://support.pandadoc.com/en/articles/15206200-pandadoc-claude-connector
+[pandadoc-dev]: https://developers.pandadoc.com/docs/getting-started-with-mcp
+[pandadoc-post]: https://community.pandadoc.com/inspiration-33/turn-claude-into-your-pandadoc-workspace-3173
 [cc-changelog]: https://code.claude.com/docs/en/changelog
 [cc-mcp-docs]: https://code.claude.com/docs/en/mcp
