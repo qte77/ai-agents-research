@@ -76,7 +76,7 @@ come from the papers' standard citations, not from re-reading the PDFs.
 | 1985 | FLP: no deterministic consensus in an asynchronous system if even one process may crash | Fischer, Lynch, Paterson | ["Impossibility of Distributed Consensus with One Faulty Process"][flp] |
 | 1987 | Sagas: a long transaction as local transactions with compensations | Garcia-Molina, Salem | ["Sagas"][sagas-paper] |
 | 1998 | Paxos: consensus by a replicated log of decrees (paper written earlier, published 1998) | Lamport | ["The Part-Time Parliament"][paxos] |
-| 2000/02 | CAP: conjecture (2000), formal proof (2002): a service cannot have consistency, availability and partition tolerance together | Brewer; Gilbert, Lynch | ["Brewer's Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services"][cap] |
+| 2000/02 | CAP: conjecture (2000), formal proof (2002): under a network partition, a service must give up either consistency or availability (simplified) | Brewer; Gilbert, Lynch | ["Brewer's Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services"][cap] |
 | 2007 | Dynamo: always-writable key-value store with eventual consistency and vector clocks | DeCandia et al. (Amazon) | ["Dynamo"][dynamo] |
 | 2011 | CRDTs: data types whose replicas converge without coordination | Shapiro, Preguiça, Baquero, Zawirski | ["A comprehensive study of Convergent and Commutative Replicated Data Types"][crdt] |
 | 2012 | PACELC: under partition choose availability or consistency; else latency or consistency | Abadi | ["Consistency Tradeoffs in Modern Distributed Database System Design"][pacelc] |
@@ -94,10 +94,10 @@ A border is where assumptions change: who is trusted, who owns the model, what c
 
 | Border | Meaning | Source |
 |---|---|---|
-| Trust boundary | Data crossing it is untrusted until validated; fallacy 4 and the later "trustworthy party" fallacy | [Wikipedia][wiki-fallacies] (secondary) |
+| Trust boundary | Data crossing it is untrusted until validated (our synthesis); related: fallacy 4 and the later "trustworthy party" fallacy | [Wikipedia][wiki-fallacies] (secondary, for the fallacies) |
 | Bounded context | A scope inside which one model and vocabulary is consistent; Fowler: DDD divides "a large system into Bounded Contexts, each of which can have a unified model" | [Fowler, Bounded Context][bc] |
 | Failure domain | Set of components that fail together; the [bulkhead pattern](#patterns) isolates them | [Azure bulkhead][bulkhead] |
-| Administrative domain | One owner and policy set (fallacy 6) | [Wikipedia][wiki-fallacies] (secondary) |
+| Administrative domain | One owner and policy set (our synthesis); fallacy 6 assumes there is only one | [Deutsch][deutsch] |
 
 **Agent sandbox borders (our synthesis).** A sandbox is a trust boundary and a failure domain at once:
 see [mas-security-framework.md](mas-security-framework.md), [NVIDIA OpenShell](../non-cc/infrastructure/nvidia-openshell-analysis.md),
@@ -132,6 +132,10 @@ KB coverage: [Agent-User Interaction Protocol (AG-UI) landscape](../non-cc/proto
 description, so the contract also includes natural-language text that no schema validator checks.
 
 ## Communication
+
+For agent runtimes, idempotent steps, checkpoints and replay are covered in
+[workflow-frameworks-landscape.md § Durable execution](../non-cc/frameworks/workflow-frameworks-landscape.md#durable-execution-the-layer-the-catalog-omits);
+this section stays at the general distributed-systems level.
 
 | Axis | Choices | Notes |
 |---|---|---|
