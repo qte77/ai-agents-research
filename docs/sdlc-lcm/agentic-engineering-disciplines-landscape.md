@@ -176,12 +176,12 @@ These map onto the Layer 4 evals (regression suite) and the human-approval gates
 
 ## Diverge and converge
 
-Many agentic workflows widen first (several angles, candidates or attempts) and then narrow (verify,
+Many agentic workflows widen first (several angles, candidates or attempts) and then narrow (merge, verify,
 select, go deep on one). The design-process name for this is the Double Diamond: the Design Council
 describes four phases in two diamonds, Discover and Define for the problem, then Develop and Deliver
 for the solution. Develop asks for "different answers" and Deliver rejects those that do not work
-and improves the rest (page read via an archived copy, 2026-01-12; the live page returned a bot
-check to our fetcher) [Design Council][double-diamond]. The page does not use the words diverge and
+and improves the rest (page read via an [archived copy][double-diamond-archive] of 2026-01-12; the live page returned a bot
+check to our fetcher) [Design Council][double-diamond]. The archived page does not use the words diverge and
 converge, so naming the broad half and the narrow half that way is our reading. The same shape in
 reinforcement learning is the exploration-exploitation trade-off ([Sutton & Barto][sutton-barto];
 the book page was read, the chapter text was not, so the link to it is unverified).
@@ -198,19 +198,20 @@ How agent harnesses implement it (our synthesis, not a vendor claim):
   (see Loop engineering in practice above).
 
 Where this knowledge base mentions or does the pattern. "Mentions" means the doc describes it;
-"does" means the doc's own method follows it. The full audit is in the lane findings, not here.
+"does" means the doc's own method follows it. The table lists the clearest cases; the full audit is in
+[plan 0018 § N86 audit](../plans/2026-11-27-0018-hypergraphs-github-platforms-sources.md#n86-audit-diverge-and-converge).
 
 | Place | Wide phase | Narrow phase | Mentions or does |
 |---|---|---|---|
 | [Explore-Plan-Act][epa] | Explore, read-only | Act with full tools | Mentions, phases named |
-| [Fork-Join Parallelism][forkjoin] | Parallel subagents in worktrees | Merge when all finish | Mentions |
+| [Fork-Join Parallelism][forkjoin] | Parallel subagents in worktrees | Join: merge the results when all finish | Mentions |
 | [`/deep-research`][dr] | Search angles in parallel | Cross-check, vote per claim, drop unsupported | Mentions, phases named |
 | [Deep-research agent mapping][ra] | Fan-out in each agent | Cross-check, cited synthesis | Mentions |
-| [Anthropic's five patterns][bea5] | Parallelization, orchestrator-workers | Voting, evaluator-optimizer loop | Mentions |
+| [Anthropic's five patterns][bea5] | Parallelization (sectioning or voting), orchestrator-workers | Aggregating the parallel outputs; the lead's synthesis | Mentions |
 | [Superpowers stages][sp] | Brainstorming | Plan, execute, review | Mentions |
 | [Addy Osmani agent-skills][osm] | `idea-refine`: "divergent/convergent thinking" | Spec and plan phases | Mentions, terms named |
 | [Vibe Kanban attempts][vk] | Several runs per task | Manual best-of-N pick | Mentions |
-| [Harness search results][hsr] | Propose-Probe-Compose; MCTS refinement tree | Composed or best-scoring harness | Mentions, not run by us |
+| [Harness search results][hsr] | Propose-Probe-Compose; MCTS refinement tree | One kept or composed harness (the selection rule differs per method) | Mentions, not run by us |
 | [Enrich a topic][enrich] | Gap survey, up to three lanes | Falsification passes, then integrate | Does |
 
 ## Cross-References
@@ -312,6 +313,7 @@ Where this knowledge base mentions or does the pattern. "Mentions" means the doc
 [kiro]: https://kiro.dev/docs/specs/
 [oach]: https://qte77.github.io/open-agentic-coding-harness/
 [double-diamond]: https://www.designcouncil.org.uk/our-resources/the-double-diamond/
+[double-diamond-archive]: https://web.archive.org/web/20260112201722/https://www.designcouncil.org.uk/our-resources/the-double-diamond/
 [sutton-barto]: http://incompleteideas.net/book/the-book-2nd.html
 [epa]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#6-explore-plan-act-loop
 [forkjoin]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#8-fork-join-parallelism
