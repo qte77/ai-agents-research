@@ -392,7 +392,7 @@ The section's table in the disciplines landscape keeps the clearest cases.
 | N80 | Configuration and policy by harness | agent | Table merged; two passes |
 | ~~N81~~ | ~~Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps~~ | agent | shipped (§ Capability map across forges, 16 capabilities × 6 forges) |
 | ~~N82~~ | ~~Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens)~~ | agent | shipped (distributed systems concepts landscape) |
-| N83 | Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires) | agent | New doc merged; m3d leads verified or dropped; two passes |
+| ~~N83~~ | ~~Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires)~~ | agent | shipped (test- and eval-driven development landscape) |
 | ~~N84~~ | ~~Privacy law touchpoints: GDPR (EU), UK GDPR, CCPA/CPRA, Canada (PIPEDA, Quebec Law 25)~~ | agent | shipped (privacy law touchpoints: GDPR, UK GDPR, CCPA/CPRA, PIPEDA; Quebec unverified) |
 | N85 | Self-evolving and meta-learning: survey the three docs, add what is missing | agent | Gap survey in the PR body; additions merged; two passes |
 | ~~N86~~ | ~~Diverge and converge: audit and one section~~ | agent | shipped (§ Diverge and converge; audit in § N86 audit) |
