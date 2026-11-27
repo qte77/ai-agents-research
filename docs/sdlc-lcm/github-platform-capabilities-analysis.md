@@ -101,7 +101,7 @@ What an agent can drive without a browser:
 |---|---|
 | [REST API][rest] and [GraphQL API][gql] | Endpoints per resource; GraphQL has schema introspection and its own rate limits. Rulesets have REST endpoints ([rules API][rest-rules]); GraphQL support for rulesets was not checked |
 | [`gh` CLI][ghcli] | Open source; repositories, issues, pull requests, reviews, merging; `cli/cli` is MIT (read 2026-11-27) |
-| [GitHub MCP server][mcp-repo] | Official; MIT, 34,797 stars (read 2026-11-27). Remote server hosted by GitHub (reachable at the `api.githubcopilot.com/mcp/` endpoint per the README) with toolset configuration; GitHub Enterprise Server does not support the hosted remote server, the local one is used (README, read 2026-11-27) |
+| [GitHub MCP server][mcp-repo] | Official Model Context Protocol (MCP) server; MIT, 34,797 stars (read 2026-11-27). Remote server hosted by GitHub (reachable at the `api.githubcopilot.com/mcp/` endpoint per the README) with toolset configuration; GitHub Enterprise Server does not support the hosted remote server, the local one is used (README, read 2026-11-27) |
 | Copilot cloud agent | See [github-copilot-cloud-agent-analysis.md](../non-cc/agents/github-copilot-cloud-agent-analysis.md) and [github-copilot-cli-analysis.md](../non-cc/agents/github-copilot-cli-analysis.md) |
 | Claude Code in Actions | See [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md) |
 | Review products on top of the PR flow | [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) |
