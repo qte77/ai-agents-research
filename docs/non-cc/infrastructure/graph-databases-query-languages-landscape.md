@@ -4,7 +4,7 @@ source: https://opencypher.org/
 purpose: A thin dated table of graph query languages, graph databases relevant to agents, text-to-query evidence and graph MCP servers, linking the per-tool analyses. Facts as of 2026-11-19.
 created: 2026-11-19
 updated: 2026-11-27
-validated_links_on: 2026-11-19
+validated_links_on: 2026-11-27
 status: assess
 ---
 
