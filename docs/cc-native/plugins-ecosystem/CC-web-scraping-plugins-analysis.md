@@ -55,7 +55,7 @@ Both Firecrawl and Playwright are available in **two forms**. The underlying MCP
 
 The built-in Read tool handles local PDFs and images natively:
 
-- **PDFs**: Page-by-page text and visual content extraction. `pages` parameter required for >10 pages (e.g., `pages: "1-5"`), max 20 pages per request. Internally uses `poppler-utils` for text extraction ([source][webfetch-pdf-issue], [source][cc-system-prompts])
+- **PDFs**: Page-by-page text and visual content extraction. `pages` parameter required for >10 pages (e.g., `pages: "1-5"`), max 20 pages per request. Page-range reads render pages with `pdftoppm` from `poppler-utils` ([tools reference][cc-tools-reference], read 2026-11-27); earlier sources described poppler as used for text extraction ([source][webfetch-pdf-issue], [source][cc-system-prompts]); where a short PDF is parsed is not documented (see [Where media is processed](../../non-cc/coding-agents/coding-agents-comparison-landscape.md#where-media-is-processed))
 - **Images**: Presented visually to the multimodal model (PNG, JPG, etc.). Input methods: drag-and-drop, Ctrl+V paste, or file path reference ([source][cc-common-workflows])
 - **Jupyter notebooks**: Returns all cells with outputs, combining code, text, and visualizations ([source][cc-system-prompts])
 - **Defaults**: 2,000 lines from start, 2,000 chars/line max ([source][cc-system-prompts])

@@ -2,7 +2,7 @@
 title: "Agent Evaluation Metrics Landscape"
 purpose: Survey of agent evaluation metrics and methodologies — task completion, reasoning quality, tool use, safety.
 created: 2025-10-05
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -250,6 +250,17 @@ which this section does not repeat.
 - **Headline results** (paper v2, self-reported, not re-run here): 36 problems, 196 checkpoints, 15 agents. No agent solves a whole problem end-to-end, and the best strict pass rate is 14.8% of checkpoints. Erosion rises in 77% of trajectories and verbosity in 75.5%. Against 473 open-source Python repositories, agent code scores about 2.3x higher on verbosity (0.44 vs 0.19) and 2.0x on erosion (0.68 vs 0.34). Anti-slop prompting lowers initial erosion and verbosity but not the rate of degradation, and raises cost per checkpoint by about 12%
 - **Application**: Add erosion and verbosity next to pass rate when evaluating coding agents on multi-turn or evolving-spec work
 - **Practitioner follow-up (single-source, 2026-11-17)**: in an [ai-that-works episode][aiw-slop] with the benchmark's first author, two patterns were reported beyond the metrics above. First, agents re-implement a library inside a `try: import` fallback instead of installing it, even with internet access, so check dependency choices as well as line-level style. Second, over-specific tests that pin the old implementation make agents keep old code alive; the hosts' workaround for rewrites is to delete the feature and its tests in the first commit, then replan and reimplement. The guest also said slop should be judged by whether the next agent can work with the code. Conversation evidence, not a measured result; the hosts (BoundaryML, HumanLayer) were describing their own workflows.
+
+#### Code Necessity (Unneeded Edits in Agent Patches)
+
+- **Definition**: Share of an agent patch's code units that are needed, where a unit is an atomic block of the final patch and "needed" means that reverting it makes the task's tests fail. The paper calls this necessity precision (NP), and NP_code is the same share over code units only.
+- **Use Case**: Tell real over-editing apart from a patch that is merely larger than the developer's, and report it next to resolve rate
+- **Calculation**: Delta Residue Attribution (DRA) replays the agent's trajectory, traces each unit of the final patch to the step that wrote it, reverts the unit, and reruns the task tests; behavioral probes double-check units that look unneeded
+- **Strengths**: Grades developer patches with the same method, so agent and developer patches are comparable; attributes unneeded code to a trajectory step
+- **Limitations**: Needs the task's tests as the oracle, so tests that miss needed behavior make code look unneeded (the paper adds probes for this); the study uses one agent harness (GitHub Copilot CLI) and resolved trajectories only
+- **Reference**: [How Much Do Coding Agents Over-Edit, and Why?][overedit] (Goel, Steenhoek, Hu; arXiv 2611.34875, submitted 2026-11-25; cs.SE). No code link found in the abstract page or HTML version (read 2026-11-27)
+- **Headline results** (paper, author-reported, not re-run here): 7,660 resolved trajectories from 18 models on SWE-bench Verified (6,728) and DeepSWE (932). Agent patches change more lines than developers', but mean NP_code is 0.887 for agents vs 0.864 for developers on SWE-bench Verified and 0.797 vs 0.785 on DeepSWE; 11 of 18 models leave less unneeded code than developers on SWE-bench Verified (read 2026-11-27). On SWE-bench Verified the extra edits are mostly tests (61%) and documentation (13%); on DeepSWE they are mostly code (58%). Code necessity is unrelated to resolve rate on SWE-bench Verified and negatively correlated on DeepSWE (Spearman -0.59, p = 0.01). Pruning with only the agent-visible tests reached 67% recall and 46% precision, with 89% of pruned patches still resolving the task; asking the agent to audit its own diff gave 36% recall and 66% precision
+- **Application**: Report code necessity next to resolve rate when comparing coding agents, as the authors recommend; pairs with the erosion and verbosity metrics above, which measure code quality across turns rather than within one patch
 
 ### Multi-Agent Coordination Metrics
 
@@ -585,6 +596,7 @@ Metric definitions are sourced from the research papers and tool docs cited inli
 | [Infrastructure noise][infra-noise] / [HAL][hal] | Container-resource effect on agentic coding scores; standardized evaluation harness and log review (read 2026-11-18) |
 | [Tulu 3][tulu3] / [RLVR-World][rlvr-world] / [RLVR exploration][rlvr-explore] / [Modal (vendor)][modal-rlvr] | RLVR named and defined; two training papers that apply it; a vendor's list of open models for code-execution rewards |
 | [SlopCodeBench][slopcodebench] / [repo][slopcodebench-repo] | Checkpoint-based benchmark of code erosion and verbosity under iterative spec changes; paper v2 and repo metadata read 2026-11-22 |
+| [Over-edit study][overedit] | Delta Residue Attribution method, necessity precision, results on 7,660 trajectories; abstract page and HTML version read 2026-11-27 |
 | [Safe Personal RSI][safe-rsi] | Update-regression gate for a self-editing personal agent; self-reported rejection and repair results |
 | [ai-that-works 2025-07-22, "PDFs, Multimodality, Vision Models"][aiw-multimodality] | Practitioner talk: validate extracted parts against the stated total in code (README read 2026-11-22; conversation, not shipped code) |
 | [ai-that-works 2025-12-02, "Multimodal Evals"][aiw-multimodal-evals] | Practitioner talk plus demo repo: six deterministic runtime checks on receipt extraction with retry (read 2026-11-22) |
@@ -622,6 +634,7 @@ Metric definitions are sourced from the research papers and tool docs cited inli
 [tracedetect]: https://arxiv.org/abs/2610.30491
 [cachedtraces]: https://arxiv.org/abs/2611.06803
 [slopcodebench]: https://arxiv.org/abs/2603.24755
+[overedit]: https://arxiv.org/abs/2611.34875
 [slopcodebench-repo]: https://github.com/SprocketLab/slop-code-bench
 [aiw-multimodality]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-07-22-multimodality
 [aiw-multimodal-evals]: https://github.com/ai-that-works/ai-that-works/tree/main/2025-12-02-multimodal-evals

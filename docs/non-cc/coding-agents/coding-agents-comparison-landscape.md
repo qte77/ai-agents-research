@@ -2,7 +2,7 @@
 title: Coding Agents and Harnesses Compared
 purpose: "Cross-vendor comparison of coding agents and harnesses from their own docs: input modalities, model access and billing, and context compaction, each cell sourced and dated."
 created: 2026-11-22
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-22
 status: assess
 ---
@@ -30,7 +30,7 @@ and image token cost in
 |---|---|---|---|---|
 | Claude Code ([CLI reference](../../cc-native/configuration/CC-cli-reference.md)) | Drag and drop, `Ctrl+V` paste (`Alt+V` on Windows and WSL), or a path in the prompt ([workflows][cc-workflows]); the Read tool returns PNG, JPEG, GIF, WebP as visual content ([tools][cc-tools]) | Read tool reads PDFs, with page ranges for long ones ([tools][cc-tools]; detail in [Read Tool: PDF & Image Parsing](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#read-tool-pdf--image-parsing)) | not documented (checked 2026-11-22) | `/voice` dictation into the prompt; needs a claude.ai sign-in, not API-key or cloud-provider auth ([voice][cc-voice]) |
 | [Codex CLI](codex-cli-analysis.md) | Paste into the composer, or `--image`/`-i` with comma-separated or repeated paths ([image inputs][codex-img], [commands][codex-cmds]) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) | `/voice` or F8 starts a voice conversation, in a terminal build that supports voice ([commands][codex-cmds]) |
-| [Gemini CLI](gemini-cli-analysis.md) | `read_file` "Supports text, images, audio, and PDF"; clipboard image paste not documented (checked 2026-11-22) ([file tools][gemini-fs], [shortcuts][gemini-keys]) | Same `read_file` line ([file tools][gemini-fs]) | not documented (checked 2026-11-22); the same line lists audio, not video | Hold `Space` to speak in Voice Mode ([shortcuts][gemini-keys]) |
+| [Gemini CLI](gemini-cli-analysis.md) | `read_file` "Supports text, images, audio, and PDF"; clipboard image paste not documented (checked 2026-11-22) ([file tools][gemini-fs], [shortcuts][gemini-keys]) | Same `read_file` line ([file tools][gemini-fs]) | not documented (checked 2026-11-22); the same line lists audio, not video, though the code accepts video (see [Where media is processed](#where-media-is-processed)) | Hold `Space` to speak in Voice Mode ([shortcuts][gemini-keys]) |
 | [GitHub Copilot CLI](../agents/github-copilot-cli-analysis.md) | JPEG, PNG, GIF, WebP, HEIC and HEIF by `@path`, drag-and-drop or clipboard paste (`Alt+V`), with a model that supports image input ([using Copilot CLI][copilot-cli-use]); `--attachment PATH` in the [CLI reference][copilot-cli] | PDF attachments the same ways ([using Copilot CLI][copilot-cli-use]) | not documented (checked 2026-11-22) | `/voice` toggles voice mode and picks the microphone; `Ctrl+Space` toggles dictation ([CLI reference][copilot-cli]) |
 | [VS Code Copilot Chat](vscode-copilot-chat-analysis.md) | Attach images such as screenshots or UI mockups as context, with a "Mark Up" crop and draw step ([agent mode][vscode-agent]) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) | Voice Mode (experimental) listens for follow-ups and reads answers aloud ([agent mode][vscode-agent]) |
 | [Cursor](cursor-analysis.md) | Attach, drag and drop into the chat input, or `Cmd+V` paste including screenshots ([prompting][cursor-prompt]); the Read tool also supports image files ([overview][cursor-overview]) | not documented (checked 2026-11-22) | not documented (checked 2026-11-22) | Dictation turns speech into text in the chat input ([voice chat][cursor-voice]) |
@@ -67,6 +67,60 @@ and image token cost in
   selected model will accept the input.
 - **Windsurf docs moved.** `docs.windsurf.com` redirects to `docs.devin.ai`; no image page was found
   there, so its image cell stays undocumented rather than inferred.
+
+## Where media is processed
+
+[Input by harness](#input-by-harness) and [Input notes](#input-notes) say what each harness accepts.
+This section says where the work happens: on the user's machine before the request, or at the model
+provider. Evidence is the harness source at a named release tag for the open-source rows, and
+first-party docs for the rest, each read 2026-11-27. Nothing was run.
+
+| Harness | Local step (package) | Sent to the model API | PDF handling | Source |
+|---|---|---|---|---|
+| Claude Code (closed source) | Resizes and recompresses large images before sending (package not documented); for PDFs over 10 pages, renders page ranges with `pdftoppm` from `poppler-utils` | Image blocks; PDF as a document block is not documented for Claude Code | Short PDFs read whole; longer ones in page ranges of up to 20 pages, rendered locally by `pdftoppm`; the API itself, given a PDF, extracts text and renders page images server-side | [Tools reference][cc-tools] (read 2026-11-27); [Claude API: PDF support][claude-pdf] |
+| Codex CLI (`rust-v0.172.0`) | Rust `image` crate 0.25.9 (JPEG, PNG, GIF, WebP). PNG, JPEG and WebP within the limits keep their original bytes; GIF is re-encoded to PNG; larger images are resized with a triangle filter to 2048 px longest edge and 2,500 32-pixel patches by default (6000 px and 10,000 patches for "original" detail). The `view_image` tool returns the original bytes as a `data:` URL and leaves resizing to the history step | An image content item (`input_image`) carrying the data URL | No local reader for user PDF files found; `pdf` appears in a PDF artifact plugin and in the web-search tool (screenshots of PDF pages it opens online), not in the file-upload path. The model-info type has no document or video modality (`Text`, `Image`, `Audio` among its input modalities) | `codex-rs/utils/image/Cargo.toml` and `src/lib.rs`; `codex-rs/core/src/tools/handlers/view_image.rs`; `codex-rs/protocol/src/openai_models.rs`, `codex-rs/core-plugins/src/artifact_operation.rs`, `codex-rs/codex-api/src/search.rs` ([release][codex-rel]) |
+| Gemini CLI (`v0.71.1`) | None for media: `read_file` reads the bytes, base64-encodes them and takes the MIME type from the `mime` package (file extension) for images, PDF and video, while audio uses an extension allowlist and an unsupported audio file returns an error; no resize | One `inlineData` part (base64 data plus MIME type) for image, PDF, audio and video | Not parsed locally: no PDF package in `packages/core/package.json`; the model API reads the PDF | `packages/core/src/utils/fileUtils.ts`; [release][gemini-rel] |
+| OpenCode (`v1.19.6`) | Two read tools in the tree. The one in `packages/opencode` base64-encodes PNG, JPEG, GIF, WebP and PDF into a `data:` attachment with no resize. A newer `packages/core` read tool normalizes images through an image service whose resizer package is the `photon-node` WebAssembly build (`@silvia-odwyer/photon-node`); which tool the shipped binary uses was not traced | A file attachment with a data URL | Passed as an attachment, not parsed locally | `packages/opencode/src/tool/read.ts`; `packages/core/src/tool/read.ts`; `packages/core/src/image.ts` ([release][oc-rel]) |
+| Aider (`v0.86.0`) | Reads the file and base64-encodes it, no resize found in the paths read; Pillow is imported in `aider/models.py` and `aider/commands.py` (`ImageGrab` in the `/paste` command); the `models.py` use was not traced | An `image_url` message part with a data URL, only if the model is marked as supporting images or PDFs | Sent as an `image_url` part with a data URL plus a text part naming the PDF file, if the model metadata says it takes PDFs; not parsed locally | `aider/coders/base_coder.py`, `aider/utils.py`, `aider/models.py`, `aider/commands.py`, `requirements/requirements.in` ([release][aider-rel]) |
+
+Cline was not read at source; its row stays in [Input by harness](#input-by-harness).
+
+Model side (read 2026-11-27):
+
+- **GPT-6.2 Astra** (Codex's model in this corpus; see [Codex CLI](codex-cli-analysis.md)): the model
+  page lists input "Text, Image", output "Text", and Audio and Video as "Not supported"
+  ([GPT-6.2 Astra][oai-astra]). So, on OpenAI's own page, Astra does not take video input; only this model page was checked,
+  not whether OpenAI uses the name Astra for another product.
+- **OpenAI API, PDFs:** the Responses API extracts text and page images from a PDF and sends both
+  to models that take images; other documents get text only ([file inputs][oai-files]).
+- **Claude API:** a PDF reaches the model as extracted text plus a page image per page
+  ([PDF support][claude-pdf]); images over the model's size limits are downscaled by the API
+  ([vision][claude-vision]). Image token numbers are in
+  [Claude Code Image Token Economics](../../cc-community/CC-vlm-screen-sharing-landscape.md#claude-code-image-token-economics).
+  Neither page lists video.
+- **Gemini API:** documents take up to 1,000 PDF pages inline or via the Files API ([document
+  processing][gem-doc]); video is a separate input type ([video understanding][gem-vid]). Which model
+  Gemini CLI uses by default is not settled by its code: `models.ts` at `v0.71.1` names several
+  (`gemini-2.5-pro` as `DEFAULT_GEMINI_MODEL`, `gemini-3.5-flash` as the stable flash tier), so no
+  single default-model cell is given.
+
+Findings from the table:
+
+- **Of the open-source harnesses read, Codex CLI is the one with a confirmed local resize path (Rust
+  `image` crate), applied to images over its limits.** Gemini CLI and Aider (in the paths read) ship the raw bytes as base64, as does the older OpenCode read
+  tool; any downscaling for those happens at the provider API (not verified per provider).
+- **PDF parsing is not done locally by any open-source harness read here.** Gemini CLI, OpenCode and
+  Aider pass the file through; Codex CLI has no local reader for user PDF files in what was read. The one documented local PDF
+  step is Claude Code's page rendering with `pdftoppm`, and only for page-range reads.
+- **Gemini CLI's code accepts video, its docs do not.** `fileUtils.ts` at `v0.71.1` classifies `video`
+  alongside `image` and `pdf` and sends it as `inlineData`; the [file tools page][gemini-fs] lists audio
+  but not video, so the "not documented" cell in [Input by harness](#input-by-harness) understates the code.
+- **Inference (ours):** the Claude Code claim in
+  [Read Tool: PDF & Image Parsing](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#read-tool-pdf--image-parsing)
+  that cites an issue and system-prompt extracts for `poppler-utils` is only partly backed by Claude Code's own
+  tools reference: that doc described poppler as used for text extraction (now corrected there), while the
+  tools reference names `pdftoppm`, which renders page images, for page-range reads; the whole-file path for short PDFs has no
+  first-party description of where parsing happens.
 
 ## Model access and billing
 
@@ -297,6 +351,13 @@ Defaults are vendor-documented values, not observed behaviour.
 | [Copilot CLI Entra sign-in changelog (2026-11-17)][copilot-entra] | Preview announcement; Linux to follow; limits managed in Microsoft 365 |
 | [Copilot supports OpenCode (2026-01-16)][copilot-oc] | Paid Copilot plans sign in to OpenCode |
 | [Copilot: third-party coding agents][copilot-3p] | Claude and Codex agents on a Copilot plan, preview, billing |
+| [Claude API: PDF support][claude-pdf] | Text plus page image per page, limits |
+| [Claude API: vision][claude-vision] | Image limits, downscaling |
+| [GPT-6.2 Astra][oai-astra] | Modalities: text and image in, text out |
+| [OpenAI: file inputs][oai-files] | PDF text plus page images |
+| [Gemini API: document processing][gem-doc] | PDF page limit, inline or Files API |
+| [Gemini API: video understanding][gem-vid] | Video as a separate input |
+| Codex CLI, Gemini CLI, OpenCode, Aider releases ([codex][codex-rel], [gemini][gemini-rel], [opencode][oc-rel], [aider][aider-rel]) | Tags the media-handling code was read at |
 | [Claude Code: Remote Control][cc-rc] | Subscription-only; excluded endpoints |
 | [copilot-api README][px-capi], [copilot-proxy-api README][px-cpa] | Unofficial proxies: self-description and warnings (stars from the GitHub API, 2026-11-26) |
 | [Cline: Claude Code provider][cline-cc] | Subscription route via the CLI |
@@ -423,3 +484,13 @@ Defaults are vendor-documented values, not observed behaviour.
 [kimi-config]: https://moonshotai.github.io/kimi-code/en/configuration/config-files.html
 [ag-compact]: https://antigravity.google/docs/commands/compact/
 [goose-ctx]: https://goose-docs.ai/docs/guides/sessions/smart-context-management
+[claude-pdf]: https://platform.claude.com/docs/en/build-with-claude/pdf-support
+[claude-vision]: https://platform.claude.com/docs/en/build-with-claude/vision
+[oai-astra]: https://developers.openai.com/api/docs/models/gpt-6.2-astra
+[oai-files]: https://developers.openai.com/api/docs/guides/file-inputs
+[gem-doc]: https://ai.google.dev/gemini-api/docs/document-processing
+[gem-vid]: https://ai.google.dev/gemini-api/docs/video-understanding
+[codex-rel]: https://github.com/openai/codex/releases/tag/rust-v0.172.0
+[gemini-rel]: https://github.com/google-gemini/gemini-cli/releases/tag/v0.71.1
+[oc-rel]: https://github.com/anomalyco/opencode/releases/tag/v1.19.6
+[aider-rel]: https://github.com/Aider-AI/aider/releases/tag/v0.86.0

@@ -3,7 +3,7 @@ title: AIDE² — Weco AI's Recursive Self-Improvement Experiment
 source: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 purpose: Analysis of Weco AI's AIDE2 experiment, where an outer-loop agent rewrote the inner AIDE research agent's code over 100 iterations, with related recursive self-improvement papers as comparison points.
 created: 2026-09-24
-updated: 2026-11-18
+updated: 2026-11-27
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -461,6 +461,47 @@ released at [MSR-Orchard/Self-HPO][self-hpo-repo] (confirmed by the repo's own a
 MIT, 65★/4 forks, created 2026-10-10) and [huggingface.co/self-hpo][self-hpo-hf]. Not rubric-scored: a
 second harness-plus-policy co-optimization method alongside AIDE²/RRSI above.
 
+## GUARD — Regret-Guided Harness Updates Without a Grader (added 2026-11-27)
+
+[GUARD: Stabilizing Recursive Self-Improvement with Regret Guidance][guard] (Zhang, Kang, Ming, Chen, Yu,
+Zhuang, Lee; arXiv 2611.23476, submitted 2026-11-17, cs.AI) targets the failure the abstract names for
+self-editing harnesses without an external grader: a reflection or scalar score mixes up what an edit
+newly broke with what is still unsolved, so edits cause local regressions, skill forgetting and memory
+bloat. GUARD (Grader-free Unsupervised Environment Design with Adaptive Rule Distillation) splits each task
+into pre-execution self-checks, grades trajectories against them each round, pins rules already mastered,
+and steers the next edit toward newly broken behaviour (the paper's "directional regret"). It selects among
+parallel candidate edits by a critic-free group-relative fitness, and a "Soft-HURT" gate promotes an edit
+only when its gains outweigh its regressions. Per the abstract, that gate guarantees non-regression on its
+own gated buffer, not on unseen tasks. At test time one frozen harness runs in a single pass, and the
+authors report that it improves performance on benchmarks for memory, skill evolution, continual task
+streams and domain reasoning, without forgetting or memory pollution, while cutting deployment tokens
+(abstract, author-reported; no figures quoted here because the abstract gives none and the tables were not
+reproduced). Our reading, not the paper's: like [Harness²](#harness²--recursive-agent-harnessing-without-verifiers-added-2026-11-12),
+GUARD drops the ground-truth verifier, so how it keeps a wrong self-check from being locked in is the
+part to read in the full text; this note did not check it. No code link was found on the abstract
+page or in the HTML version (searched for "github", "code", "release" and "artifact", 2026-11-27). Not
+rubric-scored; not in the [harness search results](#harness-search-results) table, since the abstract reports no comparable numbers.
+
+## Self-Improvement Memory — Continuing Harness Optimization Across Models and Benchmarks (added 2026-11-27)
+
+[Self-Improvement Memory Enables Continual Recursive Self-Improvement][sim] (Yu, Xia, Pan, Tang, Liu, Yu,
+Jiang, Chen, Xue, Yu; arXiv 2611.18856, submitted 2026-11-13, cs.LG) asks what happens when the policy
+model or the benchmark changes partway through harness optimization, so the optimizer must decide which
+parts of an evolved harness to keep. The authors call this setting Continual Recursive Self-Improvement
+(CRSI), defined as cross-dataset continuation with the policy fixed and cross-model continuation with the
+benchmark and split fixed. Their Self-Improvement Memory (SIM) is kept for the harness optimizer, not for
+the task-solving agent: it groups edits by the recurring harness problem they address and records each
+edit's rationale, predicted and observed outcome and evaluation context, and new attempts extend that
+history. Author-reported results (abstract; HTML for the counts): across four domains SIM ends higher than
+harness-only and root-cause-only continuation; across ten independent coding source runs, paired SIM
+continuations improve final scores by 2.36 points on average over harness-only continuation (p=0.003; 9 of
+10 runs improve per the HTML introduction). The paper's own limitations note says repeated runs cover coding only, the other domains
+having one run per condition, and that the settings need compatible harness interfaces. So read the four-domain claim as
+weaker than the coding one. The memory idea complements, rather than replaces, the cross-task
+lesson distillation in Harness² above; whether the two combine is our speculation, not tested in either paper. No code link found (same search as for GUARD, 2026-11-27).
+Not rubric-scored; kept out of the harness search results table, because its numbers are paired
+differences between continuation strategies, not scores comparable with the other rows.
+
 ## Harness search results
 
 As of 2026-11-18, one home for the harness-search comparison. The entries in
@@ -542,6 +583,8 @@ rows are **not comparable with each other**; read each row against its own basel
 | [MSR-Orchard/Self-HPO README][self-hpo-repo] | Confirms the repo via its own arXiv:2610.22791 badge |
 | `gh api repos/MSR-Orchard/Self-HPO`, 2026-11-12 | License (MIT), stars (65), forks (4), created/pushed dates |
 | [arXiv 2611.06254 abstract page and HTML version][harnessflow] | Title, authors, submission date (2026-11-04), abstract figures, Table 1 means, executor and refiner models, five-run protocol, code "will be released" — accessed 2026-11-18 |
+| [arXiv 2611.23476 abstract page and HTML version][guard] | GUARD title, authors, submission date (2026-11-17), abstract; no code link in either page — read 2026-11-27 |
+| [arXiv 2611.18856 abstract page and HTML version][sim] | SIM title, authors, submission date (2026-11-13), abstract, CRSI definition, 9-of-10 count and limitations note; no code link — read 2026-11-27 |
 
 [blog]: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 [paper]: https://arxiv.org/abs/2609.26457
@@ -589,5 +632,7 @@ rows are **not comparable with each other**; read each row against its own basel
 [fe-qwen]: https://arxiv.org/abs/2603.00729
 [fe-deepseekv32]: https://arxiv.org/abs/2512.02556
 [harnessflow]: https://arxiv.org/abs/2611.06254
+[guard]: https://arxiv.org/abs/2611.23476
+[sim]: https://arxiv.org/abs/2611.18856
 [rrsi-config]: https://github.com/google-research/rrsi/blob/main/domains/coding/rrsi.json
 [meta-harness]: https://github.com/stanford-iris-lab/meta-harness
