@@ -4,7 +4,7 @@ source: https://docs.cube.dev/docs/integrations/mcp-server
 purpose: "The semantic-layer and data-catalog substrate that grounds agentic data access: what each tool exposes to an agent and how it relates to agent-native context layers. Verified 2026-06-22."
 created: 2026-06-22
 updated: 2026-11-27
-validated_links_on: 2026-11-19
+validated_links_on: 2026-11-27
 status: assess
 ---
 
