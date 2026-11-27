@@ -8,7 +8,7 @@ validated_links_on: 2026-11-27
 ---
 
 **Details:** read from first-party pages on 2026-11-27. Vendor and company statements are labelled as their own claims.
-Volatile facts carry `(read 2026-11-27)`. Abbreviations are expanded in [../glossary.md](../glossary.md).
+Volatile facts carry `(read 2026-11-27)`. Abbreviations are expanded at first use; shared terms are in the [glossary](../glossary.md).
 
 Four practices share one loop: state what correct looks like as a runnable check, watch it fail, then make the
 code (or the prompt, tools and harness) pass it. They differ in who writes the check, what a pass means and whether
@@ -29,7 +29,7 @@ frameworks are in [spec-driven-frameworks-landscape.md][sdd]; guardrail tripwire
 |---|---|---|
 | **TDD** (test-driven development) | Write a failing unit test, make it pass with the least code, refactor, repeat | The baseline. A developer writes the test; the answer is exact and repeatable |
 | **BDD** (behaviour-driven development) | Write the behaviour as a business-readable scenario, automate it, then build to it | The check doubles as a shared specification for non-programmers |
-| **PBT** (property-based testing) | State a rule that must hold for every input; a library generates the inputs and reports the simplest failing example it finds | The author writes the property, not the examples; inputs are machine-chosen |
+| **PBT** (property-based testing) | State a rule that must hold for every input; a library generates the inputs and reports the simplest failing example it finds | The author writes the property, not the examples; inputs are machine-chosen; for LLM output, see [property-based checks on agent output](../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#verification--fact-checking) |
 | **EDD** (eval-driven development) | Write the eval (dataset plus grader) for the behaviour first, run a baseline, change the agent, compare experiments | Outputs are non-deterministic and several answers can be right, so a score replaces a boolean |
 
 - **TDD.** Martin Fowler's page, updated 2023-12-11, gives the steps as write a test, write the code until it passes,
@@ -148,7 +148,7 @@ No single standard term covers all of the cases below; the names are the sources
 | Tripwire | What it detects | Mechanism | Source |
 |---|---|---|---|
 | **Mutation testing** | A test suite that cannot catch faults | Tool seeds small faults ("mutants") into the code, runs the tests, and counts mutants killed (tests fail) versus survived (tests pass) | [Stryker][stryker], [PIT][pit], [mutmut][mutmut] |
-| **RED-first check** | A new test that can never fail | See the TDD step: run the new test, confirm it fails for the expected reason before writing the code | [Wikipedia TDD][w-tdd] (secondary, citing Beck) |
+| **RED-first check** | A new test that can never fail | See the TDD step: run the new test, confirm it fails for the expected reason before writing the code | [Wikipedia TDD][w-tdd] (secondary) |
 | **Guardrail tripwire** | Unsafe or off-policy agent input, output or tool call at runtime | A guardrail function sets a tripwire flag; the runner raises an exception and halts the run | [OpenAI Agents SDK guardrails][oai-guardrails], KB: [Guardrails][oai-guard] |
 | **Eval regression gate** | A change that degrades a behaviour that used to work | Baseline-versus-experiment comparison in CI per example | [LangChain][lc-edd] |
 | **Judge calibration** | A drifting LLM judge | Re-score the golden set; Airbnb says to "Recalibrate periodically as failure modes evolve" (treating falling agreement as drift is our synthesis) | [Airbnb][airbnb-edd] |
@@ -199,7 +199,7 @@ green) and the RED-commit record. Whether to enforce it with a hook is a setting
   The discipline ladder maps TDD's red-green-refactor to a per-task stop condition and BDD's Given-When-Then to
   task boundaries: [agentic-engineering-disciplines-landscape.md](agentic-engineering-disciplines-landscape.md).
 - **Agents writing tests first.** The test-first order protects against an agent writing tests that merely mirror its
-  own implementation; the RED-first and read-only rules above are the controls. This is our synthesis, not a measured
+  own implementation; the RED-first and read-only rules above are the proposed controls. This is our synthesis, not a measured
   result.
 - **Agents writing property tests.** The Hypothesis team published a paper and a Claude Code command in which Claude
   writes and runs Hypothesis tests and found real bugs in numpy, pandas and other packages (their own report, linked
