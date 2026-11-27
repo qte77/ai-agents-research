@@ -9,6 +9,7 @@ vulnerability discovery and offensive agents. Pointers only; see [the hub index]
 |---|---|---|
 | [ai-security-governance-analysis.md](../sdlc-lcm/ai-security-governance-analysis.md) | CSA MAESTRO, MITRE ATLAS, NIST AI RMF, ISO/IEC 42001 and 23894 | sdlc-lcm |
 | [mas-security-framework.md](../sdlc-lcm/mas-security-framework.md) | MAESTRO layers with threats, mitigations and a security checklist | sdlc-lcm |
+| [privacy-law-touchpoints-landscape.md](../sdlc-lcm/privacy-law-touchpoints-landscape.md) | GDPR (EU), UK GDPR, CCPA/CPRA and PIPEDA duties mapped to agent memory, logs, transfers and automated decisions; not legal advice | sdlc-lcm |
 | [agentic-ai-vulnerability-landscape.md § 1. Scoring & classification standards](../sdlc-lcm/agentic-ai-vulnerability-landscape.md#1-scoring--classification-standards) | OWASP AIVSS, MITRE ATLAS as a knowledge base, MITRE AI incident sharing | sdlc-lcm |
 
 ## Attacks and defenses
