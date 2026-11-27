@@ -13,8 +13,8 @@ status: assess
 
 Three separate choices hide behind "alternatives to GitHub", and teams make them independently: where the Git
 repositories and reviews live (a **code forge**), what runs the builds (a **CI/CD system**), and which machines run
-the jobs when the workflows are GitHub Actions (a **runner service**). This doc keeps the three apart. It does not
-describe GitHub's own features. GitLab Community Edition as an application lifecycle management (ALM) option is
+the jobs when the workflows are GitHub Actions (a **runner service**). This doc keeps the three apart. GitHub's own
+features, by plan tier, are in [github-platform-capabilities-analysis.md](github-platform-capabilities-analysis.md). GitLab Community Edition as an application lifecycle management (ALM) option is
 covered in [oss-alm-landscape.md](oss-alm-landscape.md), so this doc does not repeat its ALM assessment; GitLab's row here adds the agent surface and
 migration path that doc lacks. How GitHub, GitLab and Codeberg/Forgejo compare as hosts for code analysis in CI is in
 [agent-code-analysis-landscape.md § 4](agent-code-analysis-landscape.md#4-ci-forge-integration-verified-first-party).
