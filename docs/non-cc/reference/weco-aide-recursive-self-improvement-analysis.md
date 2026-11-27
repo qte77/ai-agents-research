@@ -502,6 +502,46 @@ lesson distillation in Harness² above; whether the two combine is our speculati
 Not rubric-scored; kept out of the harness search results table, because its numbers are paired
 differences between continuation strategies, not scores comparable with the other rows.
 
+## Meta-levels: what is being optimized (added 2026-11-27)
+
+The per-method sections here and in [moss-self-evolving-agent-analysis.md][moss] sit at the top of a
+ladder. Each rung below optimizes something one level further out, up to methods whose optimizer is itself a
+target (our framing; the Weco authors call AIDE² "Level 1" RSI, see [§ Stated Limitations](#stated-limitations-the-authors-own-hedges-blog-verbatim)). This table adds the well-known earlier landmarks so the
+newer entries have a lineage; it does not restate method detail. Each paper was read on its arXiv
+abstract page (AlphaEvolve's is a white paper) on 2026-11-27; results are the authors' own, on their
+own benchmarks, and not comparable across rows.
+
+| What is optimized | Landmark (year) | Idea in one line | Authors' own reported result |
+|---|---|---|---|
+| Weights, via the starting point | [MAML][maml] (Finn, Abbeel, Levine, 2017) | Train the initial parameters so a few gradient steps on a new task generalize | State of the art on two few-shot image-classification benchmarks |
+| The optimizer algorithm itself | [Learning to learn by gradient descent by gradient descent][l2l] (Andrychowicz et al., 2016) | Cast optimizer design as a learning problem; an LSTM is the update rule | Learned optimizers beat generic hand-designed ones on their training tasks and generalized to similar tasks |
+| Prompts, by LLM-as-optimizer | [OPRO][opro] (Yang et al., 2023; ICLR 2024) | Show the LLM past candidates with scores and let it propose the next | Prompts up to 8% above human-designed on GSM8K and up to 50% on Big-Bench Hard |
+| Prompts, with a self-referential mutator | [Promptbreeder][promptbreeder] (Fernando et al., 2023) | Evolve task-prompts and also the mutation-prompts that change them | Beat Chain-of-Thought and Plan-and-Solve prompting on arithmetic and commonsense benchmarks |
+| Text variables in a compound system | [TextGrad][textgrad] (Yuksekgonul et al., 2024) | Pass LLM-written textual feedback backward through a computation graph | GPT-4o zero-shot GPQA accuracy 51% to 55%; 20% relative gain on LeetCode-Hard solutions |
+| Declared LM pipelines | [DSPy][dspy-paper] (Khattab et al., 2023) | A compiler tunes prompts and demonstrations of declared modules against a metric | Compiled pipelines beat standard few-shot prompting, generally by over 25% (GPT-3.5) and 65% (llama2-13b-chat) |
+| Programs by evolutionary search | [AlphaEvolve][alphaevolve] (Novikov et al., 2025; its abstract cites Romera-Paredes et al. 2023 as prior automated discovery work) | LLMs edit code, evaluators score it, an evolutionary loop keeps the best | A 4x4 complex-matrix multiply in 48 scalar multiplications, which the authors call the first improvement over Strassen in 56 years in that setting |
+| Agent workflows as code | [AFlow][aflow] (Zhang et al., 2024) | Monte Carlo tree search over code-represented workflows | 5.7% average gain over baselines on six benchmarks; smaller models beat GPT-4o on specific tasks at 4.55% of the cost |
+| Whole agent design | [ADAS, Meta Agent Search][adas] (Hu, Lu, Clune, 2024) | A meta agent programs new agents into an archive of discoveries | Discovered agents beat hand-designed ones and kept their edge when transferred across domains and models |
+| Scaffolding program, recursively | [STOP][stop] (Zelikman et al., 2023) | A seed "improver" program improves itself by querying an LM | Improved improver beats its seed on a small set of tasks; the authors say it is not full recursive self-improvement, since the LM is unchanged |
+| The agent's own code, self-referential | [Gödel Agent][godel-agent] (Yin et al., ACL 2025) | The agent rewrites its own logic, guided only by a high-level objective | Beat manually crafted agents on math reasoning and agent tasks |
+| The agent's own code, open-ended | [Darwin Gödel Machine][dgm] (Zhang et al., 2025) | Keep an archive of agents; sample one, let a model write a variant, validate on benchmarks | SWE-bench 20.0% to 50.0%, Polyglot 14.2% to 30.7%; run with sandboxing and human oversight |
+
+**Reading it.**
+
+- **Where the entries in this doc fall.** AIDE² and MOSS (and, in the table, Gödel Agent and the Darwin Gödel Machine) rewrite the agent's own source.
+  RRSI, Harness² and the other harness-search rows below search the harness around a fixed model;
+  Self-HPO alternates harness and policy updates. ROFT and FineEnvs act on weights. Most rows improve a
+  target with a fixed optimizer (MAML; OPRO, TextGrad and DSPy on prompts and programs; AlphaEvolve, AFlow
+  and ADAS on code and agent designs); learned optimizers learn the update rule itself; the self-referential rows (Promptbreeder, STOP, Gödel Agent, DGM) make the optimizer a target too.
+- **Not duplicated here.** DSPy and GEPA, the practical prompt and program optimizers, are listed in
+  [agent-frameworks-infrastructure-landscape.md § 2](../frameworks/agent-frameworks-infrastructure-landscape.md#2-llm-orchestration--routing);
+  skill-level evolution is in [agent-skill-evolution-research-landscape.md][skill-evolution].
+- **Safety.** STOP's abstract reports an evaluation of how often generated code bypasses its sandbox,
+  and the DGM abstract states its safety precautions; neither result is reproduced here.
+- **Kept out (well-known filter).** The long tail of follow-ups to each row, and survey papers; the
+  rows above are the widely cited originals. The prior work AlphaEvolve's abstract cites (Romera-Paredes et al.
+  2023) has no row; its own paper was not read for this note.
+
 ## Harness search results
 
 As of 2026-11-18, one home for the harness-search comparison. The entries in
@@ -585,6 +625,7 @@ rows are **not comparable with each other**; read each row against its own basel
 | [arXiv 2611.06254 abstract page and HTML version][harnessflow] | Title, authors, submission date (2026-11-04), abstract figures, Table 1 means, executor and refiner models, five-run protocol, code "will be released" — accessed 2026-11-18 |
 | [arXiv 2611.23476 abstract page and HTML version][guard] | GUARD title, authors, submission date (2026-11-17), abstract; no code link in either page — read 2026-11-27 |
 | [arXiv 2611.18856 abstract page and HTML version][sim] | SIM title, authors, submission date (2026-11-13), abstract, CRSI definition, 9-of-10 count and limitations note; no code link — read 2026-11-27 |
+| [Meta-level landmarks (MAML, learned optimizers, OPRO, Promptbreeder, TextGrad, DSPy, AlphaEvolve, AFlow, ADAS, STOP, Gödel Agent, DGM)][maml] | arXiv abstract pages (links in the Meta-levels table), read 2026-11-27: authors, year, method summary and each paper's own reported result |
 
 [blog]: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 [paper]: https://arxiv.org/abs/2609.26457
@@ -636,3 +677,16 @@ rows are **not comparable with each other**; read each row against its own basel
 [sim]: https://arxiv.org/abs/2611.18856
 [rrsi-config]: https://github.com/google-research/rrsi/blob/main/domains/coding/rrsi.json
 [meta-harness]: https://github.com/stanford-iris-lab/meta-harness
+[maml]: https://arxiv.org/abs/1703.03400
+[l2l]: https://arxiv.org/abs/1606.04474
+[opro]: https://arxiv.org/abs/2309.03409
+[promptbreeder]: https://arxiv.org/abs/2309.16797
+[textgrad]: https://arxiv.org/abs/2406.07496
+[dspy-paper]: https://arxiv.org/abs/2310.03714
+[alphaevolve]: https://arxiv.org/abs/2506.13131
+[aflow]: https://arxiv.org/abs/2410.10762
+[adas]: https://arxiv.org/abs/2408.08435
+[stop]: https://arxiv.org/abs/2310.02304
+[godel-agent]: https://arxiv.org/abs/2410.04444
+[dgm]: https://arxiv.org/abs/2505.22954
+[skill-evolution]: ../frameworks/agent-skill-evolution-research-landscape.md

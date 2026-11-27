@@ -56,7 +56,7 @@ languages.
 
 ## Higher-order and layered relationships
 
-An n-ary fact is one relation among three or more things (a purchase: buyer, seller, item). The hyperedge definition and the hypergraph retrieval and memory evidence live in the [frameworks doc][fw-hyper]; this section covers how stores can hold such facts. Evidence labels: **documented** (first-party page read) and **inference** (our reading).
+An n-ary fact is one relation among three or more things (a purchase: buyer, seller, item). The hyperedge wording and the hypergraph retrieval and memory evidence live in the [frameworks doc][fw-hyper]; this section covers how stores can hold such facts. Evidence labels: **documented** (first-party page read) and **inference** (our reading).
 
 | Model | How an n-ary fact is stored | How it is queried | Source |
 |---|---|---|---|
