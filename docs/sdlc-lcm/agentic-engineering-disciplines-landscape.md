@@ -180,7 +180,7 @@ Many agentic workflows widen first (several angles, candidates or attempts) and 
 select, go deep on one). The design-process name for this is the Double Diamond: the Design Council
 describes four phases in two diamonds, Discover and Define for the problem, then Develop and Deliver
 for the solution. Develop asks for "different answers" and Deliver rejects those that do not work
-and improves the rest (page read via an [archived copy][double-diamond-archive] of 2026-01-12; the live page returned a bot
+and improves the rest (page read via an archived copy of 2026-01-12, `web.archive.org/web/20260112201722/https://www.designcouncil.org.uk/our-resources/the-double-diamond/`; the live page returned a bot
 check to our fetcher) [Design Council][double-diamond]. The archived page does not use the words diverge and
 converge, so naming the broad half and the narrow half that way is our reading. The same shape in
 reinforcement learning is the exploration-exploitation trade-off ([Sutton & Barto][sutton-barto];
@@ -313,7 +313,6 @@ Where this knowledge base mentions or does the pattern. "Mentions" means the doc
 [kiro]: https://kiro.dev/docs/specs/
 [oach]: https://qte77.github.io/open-agentic-coding-harness/
 [double-diamond]: https://www.designcouncil.org.uk/our-resources/the-double-diamond/
-[double-diamond-archive]: https://web.archive.org/web/20260112201722/https://www.designcouncil.org.uk/our-resources/the-double-diamond/
 [sutton-barto]: http://incompleteideas.net/book/the-book-2nd.html
 [epa]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#6-explore-plan-act-loop
 [forkjoin]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#8-fork-join-parallelism
