@@ -186,7 +186,7 @@
           return out;
         }
         function docColour(n) {
-          if (mode === "age") { // oldest --border to newest --primary, linear in time
+          if (mode === "age") { // oldest --border to newest --primary, linear in time (dimming: see paint)
             if (!n[dateKey]) { return token("--text-muted"); }
             var lo = Date.parse(oldest), hi = Date.parse(newest);
             return mix(token("--border"), token("--primary"), hi > lo ? (Date.parse(n[dateKey]) - lo) / (hi - lo) : 1);
@@ -655,8 +655,10 @@
           var hit = {};
           (hits || []).forEach(function (n) { hit[n.id] = true; });
           nodes.update(data.nodes.map(function (n) {
-            var on = (!hits || hit[n.id]) && (!focus || focus[n.id]);
-            return { id: n.id, color: on ? base[n.id] : dim };
+            var on = (!hits || hit[n.id]) && (!focus || focus[n.id]), age = mode === "age";
+            // Reason: in age mode --border is the oldest docs' colour, so a dimmed node fades by
+            // opacity instead of turning --border (owner 2026-11-27).
+            return { id: n.id, color: on || age ? base[n.id] : dim, opacity: on || !age ? 1 : 0.2 };
           }));
         }
         network.on("click", function (params) {
