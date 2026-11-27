@@ -21,21 +21,14 @@ checks all of it.
   multi-dimensional, layered relationships in graphs; (2) GitHub capabilities and its competition;
   (3) fold in a list of sources, plus three Pydantic AI coding-agent sources sent later that day. Defaults for every open decision are in
   [§ Owner decisions](#owner-decisions-2026-11-27); the owner can override any of them.
+- **Shipped 2026-11-27:** every agent row, N67 to N86 and N88 (#1122 to #1141); the N76 audit
+  table is in [§ N76](#n76-coverage-depth-audit), the N86 audit in [§ N86 audit](#n86-audit-diverge-and-converge).
 - **In flight:** nothing.
 
-**Next, in order** (rows in [§ Remaining work](#remaining-work)):
+**Next:** only owner-gated work is left. N87 (pick which N76 audit gaps become rows; default none),
+then the **release (minor)** for the batch on the owner's word (deferred by the owner 2026-11-27).
 
-1. **Wave 1, three lanes in parallel:** N67 (hypergraphs), N68 (GitHub capabilities, plus the new
-   hub), N69 (forge and CI alternatives).
-2. **Wave 2:** N70 (frameworks doc sources), N71 (SDLC sources), N72 (micro language models).
-3. **Wave 3:** N73 (agent and connector sources), N74 (where harnesses process PDFs and images), N75 (capability map).
-4. **Then:** N76 (coverage-depth audit), whose output is a list of deepen rows for the owner to pick.
-5. **Second batch (owner 2026-11-27, all agent rows, defaults below):** N77 to N86, each after the
-   earlier PR that owns its file has merged (see [§ Source map](#source-map)). N83 waits for the
-   findings that session m3d sends on TDD and tripwire tests (peer input: leads only, verified at source).
-6. **Release (minor)** for the batch, only on the owner's word (deferred by the owner 2026-11-27).
-
-**Owner-gated, don't start:** N9, N38, N56 and N62, plus the `13-*` rows. Each row's own text
+**Owner-gated, don't start:** N87, N9, N38, N56 and N62, plus the `13-*` rows. Each row's own text
 gives its gate.
 
 **Watch-outs:**
