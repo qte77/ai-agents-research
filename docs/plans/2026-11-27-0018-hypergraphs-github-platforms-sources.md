@@ -360,7 +360,7 @@ auth-table and community coverage (5) → row N87.
 | N87 | Owner pick from the N76 audit: per-harness sandboxing, hooks, skills and subagents in the harnesses' own docs, auth-table and community coverage ([§ N76](#n76-coverage-depth-audit)) | owner | Owner names which become rows; default: none until N78 to N80 have shipped |
 | N77 | Definitions: knowledge graph, hypergraph and hyperedge, HybridRAG vs hybrid search, plus glossary rows ([§ Second batch](#second-batch-owner-2026-11-27)) | agent | Each term has a first-party definition source; glossary rows added; two fact-check passes |
 | N78 | Capability table: Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf added to the Cross-Harness Matrix | agent | All 13 mechanics filled or marked not documented, dated; two passes |
-| N79 | Session save and resume for the same seven harnesses; re-check the unverified rows | agent | Rows merged; two passes |
+| ~~N79~~ | ~~Session save and resume for the same seven harnesses; re-check the unverified rows~~ | agent | shipped (checkpoint and resume rows for seven harnesses; Codex, Gemini CLI and OpenCode re-checked) |
 | N80 | Configuration and policy by harness | agent | Table merged; two passes |
 | N81 | Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps | agent | Table merged; two passes |
 | N82 | Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens) | agent | New doc merged with hub and index rows; two passes |
