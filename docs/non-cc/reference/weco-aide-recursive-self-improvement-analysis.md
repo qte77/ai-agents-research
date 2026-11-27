@@ -519,7 +519,7 @@ own benchmarks, and not comparable across rows.
 | Prompts, with a self-referential mutator | [Promptbreeder][promptbreeder] (Fernando et al., 2023) | Evolve task-prompts and also the mutation-prompts that change them | Beat Chain-of-Thought and Plan-and-Solve prompting on arithmetic and commonsense benchmarks |
 | Text variables in a compound system | [TextGrad][textgrad] (Yuksekgonul et al., 2024) | Pass LLM-written textual feedback backward through a computation graph | GPT-4o zero-shot GPQA accuracy 51% to 55%; 20% relative gain on LeetCode-Hard solutions |
 | Declared LM pipelines | [DSPy][dspy-paper] (Khattab et al., 2023) | A compiler tunes prompts and demonstrations of declared modules against a metric | Compiled pipelines beat standard few-shot prompting, generally by over 25% (GPT-3.5) and 65% (llama2-13b-chat) |
-| Programs by evolutionary search | [AlphaEvolve][alphaevolve] (Novikov et al., 2025; its abstract names FunSearch, Romera-Paredes et al. 2023, as prior work) | LLMs edit code, evaluators score it, an evolutionary loop keeps the best | A 4x4 complex-matrix multiply in 48 scalar multiplications, which the authors call the first improvement over Strassen in 56 years in that setting |
+| Programs by evolutionary search | [AlphaEvolve][alphaevolve] (Novikov et al., 2025; its abstract cites Romera-Paredes et al. 2023 as prior automated discovery work) | LLMs edit code, evaluators score it, an evolutionary loop keeps the best | A 4x4 complex-matrix multiply in 48 scalar multiplications, which the authors call the first improvement over Strassen in 56 years in that setting |
 | Agent workflows as code | [AFlow][aflow] (Zhang et al., 2024) | Monte Carlo tree search over code-represented workflows | 5.7% average gain over baselines on six benchmarks; smaller models beat GPT-4o on specific tasks at 4.55% of the cost |
 | Whole agent design | [ADAS, Meta Agent Search][adas] (Hu, Lu, Clune, 2024) | A meta agent programs new agents into an archive of discoveries | Discovered agents beat hand-designed ones and kept their edge when transferred across domains and models |
 | Scaffolding program, recursively | [STOP][stop] (Zelikman et al., 2023) | A seed "improver" program improves itself by querying an LM | Improved improver beats its seed on a small set of tasks; the authors say it is not full recursive self-improvement, since the LM is unchanged |
@@ -528,7 +528,7 @@ own benchmarks, and not comparable across rows.
 
 **Reading it.**
 
-- **Where the entries in this doc fall.** AIDE², MOSS and the DGM family rewrite the agent's own source.
+- **Where the entries in this doc fall.** AIDE² and MOSS (and, in the table, the Darwin Gödel Machine) rewrite the agent's own source.
   RRSI, Harness² and the other harness-search rows below search the harness around a fixed model;
   Self-HPO alternates harness and policy updates. ROFT and FineEnvs act on weights. The first-order
   methods (MAML, learned optimizers, prompt optimizers) improve a target but leave the optimizer fixed;
@@ -539,8 +539,8 @@ own benchmarks, and not comparable across rows.
 - **Safety.** STOP's abstract reports an evaluation of how often generated code bypasses its sandbox,
   and the DGM abstract states its safety precautions; neither result is reproduced here.
 - **Kept out (well-known filter).** The long tail of follow-ups to each row, and survey papers; the
-  rows above are the widely cited originals. FunSearch is named through AlphaEvolve's abstract only;
-  its own paper was not read for this note.
+  rows above are the widely cited originals. The prior work AlphaEvolve's abstract cites (Romera-Paredes et al.
+  2023) has no row; its own paper was not read for this note.
 
 ## Harness search results
 
