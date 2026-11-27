@@ -15,8 +15,9 @@ Three separate choices hide behind "alternatives to GitHub", and teams make them
 repositories and reviews live (a **code forge**), what runs the builds (a **CI/CD system**), and which machines run
 the jobs when the workflows are GitHub Actions (a **runner service**). This doc keeps the three apart. It does not
 describe GitHub's own features. GitLab Community Edition as an application lifecycle management (ALM) option is
-covered in [oss-alm-landscape.md](oss-alm-landscape.md), so GitLab appears here only for what that doc lacks: agent
-surface and migration path.
+covered in [oss-alm-landscape.md](oss-alm-landscape.md), so this doc does not repeat its ALM assessment; GitLab's row here adds the agent surface and
+migration path that doc lacks. How GitHub, GitLab and Codeberg/Forgejo compare as hosts for code analysis in CI is in
+[agent-code-analysis-landscape.md § 4](agent-code-analysis-landscape.md#4-ci-forge-integration-verified-first-party).
 
 **Leads, not evidence.** Four pages pointed us at candidates: [Blacksmith's home page][bs-home],
 [openalternative.co's list][lead-oa], [Spacelift's Actions-alternatives article][lead-sp] and
@@ -63,7 +64,7 @@ Separate from the forge: most of these run against GitHub repositories too. "Run
 | Jenkins | Self-hosted | MIT, 26,821 stars (read 2026-11-27) (`gh api`) | `Jenkinsfile` ([docs][jk-file]) | No, own format | MCP Server plugin on the plugin index; `jenkinsci/mcp-server-plugin`, MIT, 121 stars (read 2026-11-27) ([plugin][jk-mcp]) |
 | Azure Pipelines | With Azure DevOps (Services or Server) | Commercial | Not read | No | Azure DevOps MCP server ([§ 1](#1-code-forges)) |
 | Woodpecker CI | Self-hosted; Codeberg runs `ci.codeberg.org` ([docs][cb-ci]) | Apache-2.0, 8,295 stars (read 2026-11-27) (`gh api`) | Own YAML workflow syntax ([docs][wp-syntax]) | No, own syntax | Not read |
-| Gitea Actions and Forgejo Actions | With the forge | As the forge | GitHub Actions-style YAML | Largely, with documented gaps: Gitea's comparison page lists unsupported syntax, including complex `runs-on` values ([compare][gitea-cmp]); Forgejo says compatibility is not a goal ([docs][fj-gha]) | Forge API |
+| Gitea Actions and Forgejo Actions | With the forge | As the forge | GitHub Actions-style YAML | Gitea: largely, with documented gaps; its comparison page lists unsupported syntax, including complex `runs-on` values ([compare][gitea-cmp]). Forgejo: a familiar format, but compatibility is not a goal ([docs][fj-gha]) | Forge API |
 | Dagger | Engine runs on your machine or on a shared remote engine | Apache-2.0, 16,655 stars (read 2026-11-27) (`gh api`); docs show version 1.0-beta (read 2026-11-27) | Typed modules instead of YAML ([intro][dagger]) | No; it can sit under any CI that calls it | Positioned by its docs for coding agents; no MCP server claim read |
 
 IaC-focused platforms are a different kind of CI/CD: they run Terraform, OpenTofu and similar plans and applies with
@@ -86,24 +87,25 @@ below is a **vendor claim**, not a measurement of ours, `(read 2026-11-27)`.
 
 ## When teams move off GitHub (or keep it and swap CI)
 
-Our synthesis, not a sourced finding. Teams that only want faster or cheaper builds can change the `runs-on` label and
-keep everything else, which is the lowest-risk move and the only one in this doc that leaves workflows untouched.
+Our synthesis, not a sourced finding. Teams that only want faster or cheaper builds keep GitHub and the workflow files, change the
+`runs-on` label in each job and install the vendor's GitHub App (or, for RunsOn, deploy its stack in their own AWS
+account); of the three moves this one changes the least.
 Teams that want a different CI system keep GitHub as the forge and add a pipeline definition elsewhere. Teams that
-move the forge carry the biggest cost: the CI definition changes too, since only Gitea Actions and Forgejo Actions keep
-the workflow format close, and neither promises full compatibility. For agent-driven work, check three things before
+move the forge carry the biggest cost: the CI definition changes too, since Gitea Actions is the only system here that aims at the GitHub
+Actions format (with documented gaps) and Forgejo Actions keeps it familiar without aiming at compatibility. For agent-driven work, check three things before
 choosing: an official MCP server for the forge and for the CI system, how the platform's terms treat agent-written
 code ([§ 1](#1-code-forges), Codeberg and SourceHut note), and whether the migration tool carries over issues and
 reviews or only Git history.
 
 ## Not included
 
-Pruned under the [well-known, performance-optimised filter](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter)
+Each reason names its criterion: pruned under the [well-known, performance-optimised filter](../../CONTRIBUTING.md#pruning-entries-well-known-performance-optimised-filter)
 or deferred (named, not yet read first-party).
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
 | Agola | 1,632 stars; last push 2025-09-24, older than 12 months (`gh api`) | 2026-11-27 | [repo][agola] |
-| WarpBuild | Adoption evidence: product page and docs read, but only vendor claims; no open code or named independent users read | 2026-11-27 | [docs][wb-docs] |
+| WarpBuild | Deferred: product page and docs read, but no row written in this pass | 2026-11-27 | [docs][wb-docs] |
 | TeamCity (JetBrains) | Deferred: well-known, but its licence and agent-surface pages were not read first-party in this pass (they load as of 2026-11-27) | 2026-11-27 | [docs][tc-docs] |
 | Gogs | Deferred: 48,007 stars, active MIT project (`gh api`), but its docs were not read first-party in this pass | 2026-11-27 | [repo][gogs] |
 | Octopus Deploy, Devtron, Northflank, Travis CI, AWS CodePipeline, Launchpad, SourceForge, RhodeCode | Scope: deployment, Kubernetes or hosting-platform products rather than forges or CI (Octopus Deploy, Devtron, Northflank, AWS CodePipeline); deferred, not read first-party in this pass (Travis CI, Launchpad, SourceForge, RhodeCode) | 2026-11-27 | [Spacelift lead][lead-sp], [openalternative lead][lead-oa] |
