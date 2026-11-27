@@ -127,7 +127,7 @@ Findings from the table:
 Where each harness keeps its settings, which layer wins, which environment variables the docs name, what an
 administrator can enforce, and how a project overrides the user's defaults. Cells come from each vendor's own
 docs page, each read 2026-11-27; nothing was run. "Not documented on the pages read" means the sentence was not
-on the pages in [Sources](#sources), not that the feature is absent. MDM is mobile device management. Two tables with the same rows keep the cells
+on the pages in [Sources](#sources), not that the feature is absent. MDM is mobile device management; MCP is the Model Context Protocol (MCP). Two tables with the same rows keep the cells
 readable. Instruction files (`AGENTS.md` and relatives) are summarized in the second table; for Claude Code, Codex
 CLI, Gemini CLI and OpenCode the
 [cross-harness matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows)
