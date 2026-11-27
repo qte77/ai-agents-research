@@ -3,7 +3,7 @@ title: Graph Databases & Query Languages — Agent Landscape
 source: https://opencypher.org/
 purpose: A thin dated table of graph query languages, graph databases relevant to agents, text-to-query evidence and graph MCP servers, linking the per-tool analyses. Facts as of 2026-11-19.
 created: 2026-11-19
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-19
 status: assess
 ---
@@ -53,6 +53,38 @@ What this means for agents: Cypher/openCypher is supported by most databases lis
 Memgraph, FalkorDB, Kuzu, Neptune), GQL is the ISO direction it is
 converging on, SPARQL belongs to the RDF world, and Gremlin is a traversal language embedded in host
 languages.
+
+## Higher-order and layered relationships
+
+An n-ary fact is one relation among three or more things (a purchase: buyer, seller, item). The hyperedge definition and the hypergraph retrieval and memory evidence live in the [frameworks doc][fw-hyper]; this section covers how stores can hold such facts. Evidence labels: **documented** (first-party page read) and **inference** (our reading).
+
+| Model | How an n-ary fact is stored | How it is queried | Source |
+|---|---|---|---|
+| Hypergraph | One hyperedge joins any number of nodes | Library or store specific; see Libraries below | [frameworks doc][fw-hyper] |
+| Property graph | Intermediate "event" node linked to each participant, or properties on a binary edge (inference: the event node is the only way to join 3+ things; properties cover extra data on a pair) | Cypher, GQL, Gremlin: ordinary traversals through the event node | [Neo4j concepts][neo4j-pg] (relationships are binary, carry properties) |
+| RDF 1.1 | The W3C note's patterns introduce a new class for the relation, whose instance links to each participant; the note says its patterns do not use RDF reification | SPARQL, as plain triples | [N-ary relations note][nary] (Working Group Note, 2006-04-12) |
+| RDF 1.2 triple terms | A triple used as the object of another triple, to attach data to a statement (a statement about a pair, not a native 3+-way relation; inference) | SPARQL 1.2 | [RDF 1.2 Concepts][rdf12], [§ Property Graph vs RDF](#property-graph-vs-rdf) |
+| Named graphs | A group of triples gets a name (an IRI or blank node), so a fact bundle can be described as a unit | SPARQL dataset queries | [RDF 1.1 Concepts][rdf11] |
+| TypeDB | A relation type declares one or more named roles; entities or relations play them, so a 3-role relation is native | TypeQL | [TypeDB docs][typedb-docs] (MPL-2.0 `LICENSE`; its docs navigation labels it a "hypergraph database", a vendor label) |
+
+**Multilayer and multiplex graphs.** One node set with several kinds of relationship, or layers that can also change in time, is the subject of the survey by Kivelä et al. ([Multilayer networks][kivela], J. Complex Networks 2014): its abstract describes systems with "multiple subsystems and layers of connectivity" and proposes a general framework and terminology. How common stores hold layers is our inference, not a documented feature of each: a relationship type per layer in a property graph (a relationship has one type, per the Neo4j page), one named graph per layer in RDF, or separate graphs per layer. None of the stores in the table above was checked for built-in multilayer queries or analytics.
+
+**Time as a layer.** Valid-time and transaction-time edges are covered in [Minigraf](../context-memory/minigraf-analysis.md) (bi-temporal Datalog) and in the frameworks doc's [temporal knowledge-graph memory](../frameworks/agent-frameworks-infrastructure-landscape.md#temporal-knowledge-graph-memory-evidence-and-caveats) section; not restated here.
+
+**Libraries for analysis** (stars, versions and push dates via `gh api`, licence text read from each repo's LICENSE file, all read 2026-11-27):
+
+| Library | Scope | License | Stars · last push · latest release |
+|---|---|---|---|
+| [HyperNetX][hnx] | Hypergraph analysis and visualisation, Python; maintained by Pacific Northwest National Laboratory (PNNL) scientists per its README | BSD 3-clause text (`LICENSE.rst`; GitHub shows no SPDX id) | 723 · 2026-07-08 · v2.4.3 (2026-04-14) |
+| [XGI][xgi] | Hypergraphs, directed hypergraphs and simplicial complexes, Python; has a JOSS paper | BSD 3-clause (`LICENSE.md`) | 267 · 2026-11-13 · v1.1 (2026-11-13) |
+| [pymnet][pymnet] | Multilayer networks in the Kivelä formalism, Python; JOSS paper | GPL-3.0 (`LICENSE.txt`) | 169 · last push 2024-07-24 (no push for about 28 months, no GitHub release) |
+| [HyperGraphDB][hgdb] | Embeddable Java hypergraph store; the site title reads "A Graph Database" and its README gives no data-model detail, so hyperedge semantics are **not verified here** | Apache-2.0 (`LICENSE.txt`) | 252 · 2026-10-25 (commits resumed 2026-10) · tag v1.3, no GitHub release |
+
+Left out: further hypergraph or multilayer Python packages that were not checked (adoption unknown); pymnet and HyperGraphDB are kept with their caveats because they are the named multilayer and hypergraph-store references, not because they are recommended.
+
+**[rete][rete]** (Apache-2.0, 74 stars, created 2026-06-05, v0.7.8 on 2026-11-22; read 2026-11-27) stores an RDF graph in one immutable file queried with SPARQL over HTTP range requests, with no server. Its README calls it "highly experimental" and says it is not a database (immutable files, no writes or transactions). Evidence level: small, young project; relevant here only as a way to publish a read-only RDF graph (and its named graphs) for an agent to query.
+
+**Agent relevance (our synthesis).** A memory or knowledge-graph design needs an n-ary or layered edge when one episode, trajectory or decision involves several participants that must stay one retrievable unit, or when the same entities relate in several distinct ways (who-reported-to-whom vs who-worked-with-whom, or per time slice). Absent that, binary edges with an event node cover most cases; the head-to-head benefit of native hyperedges is unproven (see the frameworks doc).
 
 ## Graph Databases Relevant to Agents
 
@@ -107,7 +139,7 @@ branch and injection controls see [Write safety][adb-ws] in Agentic Database Acc
 
 ## Not Verified
 
-- Native hyperedge (n-ary relation) support in these graph databases was not checked; the hypergraph-vs-graph retrieval and memory evidence is in the [frameworks doc](../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence).
+- Native n-ary support was read first-party for TypeDB (roles) and HyperGraphDB only at title level; Neo4j, Memgraph, FalkorDB, Kuzu, AGE, NebulaGraph, Neptune, HelixDB, LatticeDB and Minigraf were not checked for hyperedges or multilayer queries (the property-graph row above rests on the Neo4j concepts page). Retrieval and memory evidence is in the [frameworks doc][fw-hyper].
 - Exact ISO publication day for GQL (iso.org and the ANSI store blocked).
 - NebulaGraph's openCypher compatibility, Neptune's SPARQL support, and TigerGraph (no first-party page read).
 - TEXT2SPARQL organiser result tables (site unreachable); Neo4j Enterprise licence terms.
@@ -123,6 +155,8 @@ branch and injection controls see [Write safety][adb-ws] in Agentic Database Acc
 | SPDX [BUSL-1.1][spdx-busl] · [SSPL-1.0][spdx-sspl] | OSI-approval flag (license-list-data JSON, `isOsiApproved`) |
 | [neo4j][neo4j] · [memgraph][memgraph] · [FalkorDB][falkordb] · [kuzu][kuzu] · [age][age] · [nebula][nebula] · [helix-db][helixdb] | Repo metadata, LICENSE files, releases via `gh api`, 2026-11-19 |
 | [latticedb][latticedb-gh] · [minigraf][minigraf-gh] | Repo metadata via `gh api`, 2026-11-19 |
+| [N-ary relations note][nary] · [Multilayer networks][kivela] · [TypeDB docs][typedb-docs] · [hypergraphdb.org][hgdb-site] | W3C note (2006), arXiv abstract page, TypeDB entities-relations-attributes page, site title |
+| [typedb][typedb] · [HyperNetX][hnx] · [xgi][xgi] · [pymnet][pymnet] · [hypergraphdb][hgdb] · [rete][rete] | Repo metadata, LICENSE and README via `gh api`, 2026-11-27 |
 | [Text2Cypher][t2c] · [SPARQL-LLM][sparqlllm] · [SPARQL-LLM 2026][sparqlllm26] | arXiv abstract pages |
 | [neo4j/mcp][neo4j-mcp] · [mcp-neo4j][neo4j-labs] · [FalkorDB-MCPServer][falkordb-mcp] · [ai-toolkit][memgraph-ai] · [Neptune MCP][neptune-mcp] | MCP tools, read-only controls, licences |
 
@@ -162,3 +196,14 @@ branch and injection controls see [Write safety][adb-ws] in Agentic Database Acc
 [falkordb-mcp]: https://github.com/FalkorDB/FalkorDB-MCPServer
 [memgraph-ai]: https://github.com/memgraph/ai-toolkit
 [neptune-mcp]: https://github.com/awslabs/mcp/tree/main/src/amazon-neptune-mcp-server
+[fw-hyper]: ../frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence
+[nary]: https://www.w3.org/TR/swbp-n-aryRelations/
+[kivela]: https://arxiv.org/abs/1309.7233
+[typedb-docs]: https://typedb.com/docs/core-concepts/typeql/entities-relations-attributes/
+[typedb]: https://github.com/typedb/typedb
+[hnx]: https://github.com/pnnl/HyperNetX
+[xgi]: https://github.com/xgi-org/xgi
+[pymnet]: https://github.com/mnets/pymnet
+[hgdb]: https://github.com/hypergraphdb/hypergraphdb
+[hgdb-site]: https://hypergraphdb.org/
+[rete]: https://github.com/caviri/rete
