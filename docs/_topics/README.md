@@ -25,6 +25,7 @@ lives in the linked docs. For where a term is defined, see the [glossary](../glo
 | [management.md](management.md) | Agent management: fleet policy, registries, cost attribution, identity, licences, lifecycle |
 | [knowledge-management.md](knowledge-management.md) | Wikis, LLM-maintained knowledge bases, knowledge-organisation methods, frontmatter schemas, enterprise knowledge layers |
 | [model-internals.md](model-internals.md) | Interpretability and hidden-state research: what activations reveal, monitoring and detection uses |
+| [dev-platforms.md](dev-platforms.md) | Code forges, CI/CD and runners, dev environments, repository rules and enterprise features |
 
 To score the tools behind these hubs, use the [agent substrate rubric](../sdlc-lcm/agent-substrate-rubric.md) (shared, distributed, reproducible, adaptable, versionable, traceable).
 The scored rows are read together in the [agent substrate reference architecture](../sdlc-lcm/agent-substrate-reference-architecture.md) (evidence matrix per subject and property, layers, open cells).

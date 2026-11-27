@@ -28,8 +28,9 @@ checks all of it.
 1. **Wave 1, three lanes in parallel:** N67 (hypergraphs), N68 (GitHub capabilities, plus the new
    hub), N69 (forge and CI alternatives).
 2. **Wave 2:** N70 (frameworks doc sources), N71 (SDLC sources), N72 (micro language models).
-3. **Wave 3:** N73 (agent and connector sources).
-4. **Release (minor)** for the batch, only on the owner's word.
+3. **Wave 3:** N73 (agent and connector sources), N74 (where harnesses process PDFs and images), N75 (capability map).
+4. **Then:** N76 (coverage-depth audit), whose output is a list of deepen rows for the owner to pick.
+5. **Release (minor)** for the batch, only on the owner's word.
 
 **Owner-gated, don't start:** N9, N38, N56 and N62, plus the `13-*` rows. Each row's own text
 gives its gate.
@@ -95,6 +96,9 @@ row owns moves to that row.
 | N70 | `docs/non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` | § 4 Agent memory infrastructure; § GraphRAG vs vector RAG; § 3 Lightweight and specialized frameworks (Harness², rust-anything already there); the PydanticAI bullet in § 1 and the archived `pydantic-ai-harness` Sources row |
 | N71 | `docs/sdlc-lcm/agentic-legacy-migration-validation-analysis.md`, `docs/non-cc/reference/weco-aide-recursive-self-improvement-analysis.md`, `docs/sdlc-lcm/agent-evaluation-metrics-landscape.md`, `docs/non-cc/knowledge-management/repo-to-docs-tools-landscape.md` | weco doc § Harness²; frameworks doc rust-anything bullet |
 | N72 | new `docs/non-cc/reference/micro-language-models-landscape.md` | `system-1-decision-models-landscape.md` (typed-output classifiers, § Train your own: Unsloth), `on-device-semantic-search-landscape.md` |
+| N74 | `docs/non-cc/coding-agents/coding-agents-comparison-landscape.md` | § Input by harness and § Input notes (what each harness accepts); `CC-web-scraping-plugins-analysis.md` § Read Tool: PDF & Image Parsing (Claude Code, poppler-utils); `CC-vlm-screen-sharing-landscape.md` § Claude Code Image Token Economics; `codex-cli-analysis.md` model list (GPT-6.2 Astra) |
+| N75 | `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md` § Cross-Harness Matrix | Its six mechanic rows (tools, sandbox, permissions, compaction, hooks, resume) checked 2026-11-15; `CC-web-auth-setup-analysis.md` § Other Coding CLIs (headless sign-in, billing); the per-harness analysis docs |
+| N76 | this plan (audit table), then rows the owner picks | `docs/non-cc/coding-agents/` (25 docs), `docs/cc-native/` (72 docs), `docs/cc-community/` (19 docs) |
 | N73 | `docs/non-cc/agents/computer-use-agents-landscape.md`, `docs/non-cc/orchestrators/orchestrators-landscape.md`, `docs/non-cc/agents/openresearch-analysis.md`, `docs/cc-native/plugins-ecosystem/CC-connectors-overview.md`, `docs/non-cc/agents/ibm-agent-stack-analysis.md` | `agentic-engineering-disciplines-landscape.md` (names IBM Bob once) |
 
 ### Source disposition (owner list, 2026-11-27)
@@ -220,17 +224,51 @@ decision models doc instead of repeating it.
 - **PandaDoc's Claude connector** in `CC-connectors-overview.md`, facts from PandaDoc's docs.
 - **IBM Bob** in `ibm-agent-stack-analysis.md`.
 
+### N74: where harnesses process PDFs and images
+
+Owner questions 2026-11-27: where do Claude Code, Codex and Gemini CLI parse PDFs and process images
+(on the user's machine or on the provider's servers), with which packages; and does OpenAI's GPT-6.2
+Astra take video as well as images? New section "Where media is processed" in the comparison
+landscape. Defaults:
+
+- **Sources:** vendor docs first; for open-source harnesses (Codex CLI, Gemini CLI, OpenCode, Cline,
+  Aider) the source code at a named release tag (manifest files such as `Cargo.toml` and
+  `package.json`, and the code that reads an image or PDF). Claude Code is closed source: use its docs
+  and the corpus's leak provenance standard; mark anything else unverified.
+- **Per harness:** what happens locally (resize, re-encode, text extraction, page rendering) and what
+  is sent to the model API as an image or document block; the package that does the local step.
+- **Model side:** which API input types the harness's default models accept (images, PDFs, video),
+  from the provider's model pages; GPT-6.2 Astra's modalities from OpenAI's own model page, dated.
+
+### N75: capability map
+
+Extend the Cross-Harness Matrix with rows for the mechanics it lacks, keeping its five columns
+(Claude Code, Codex CLI, Gemini CLI, OpenCode, Pi): instruction and memory files, skills, plugins or
+extensions, subagents, MCP configuration, headless and CI mode, cloud or remote runs. Cells from
+vendor docs, dated; "not documented" where the docs are silent. Don't refresh the existing rows.
+
+### N76: coverage-depth audit
+
+Owner question 2026-11-27: does the KB cover Codex, Gemini CLI and the other top coding harnesses
+as deeply as Claude Code? One table in this plan: harness × the topic areas the `cc-native/` folders
+cover (configuration, context and memory, agents and skills, plugins, sandboxing, sessions, CI and
+remote), each cell the doc or section that covers it, or a gap. Top-10 by the comparison landscape's
+rows. Done when the table is in the plan and each gap the owner picks is its own row.
+
 ## Remaining work
 
 | Row | Item | Gate | Done when |
 |---|---|---|---|
-| N67 | Hypergraphs and multi-layer relationships in `graph-databases-query-languages-landscape.md`, plus `caviri/rete` ([§ Lane tasks](#n67-hypergraphs-and-layered-relationships)) | agent | Section merged with two fact-check passes; the "not checked" note replaced; hub row in `knowledge-graphs.md` |
-| N68 | GitHub platform capabilities analysis and the `dev-platforms.md` hub ([§ Lane tasks](#n68-github-platform-capabilities)) | agent | Doc merged with two fact-check passes, every plan tier and preview status dated; hub listed in `docs/_topics/README.md` |
-| N69 | Code forge, CI/CD and GitHub Actions runner alternatives landscape ([§ Lane tasks](#n69-forge-and-ci-alternatives)) | agent | Doc merged with two fact-check passes; row in `dev-platforms.md` |
+| ~~N67~~ | ~~Hypergraphs and multi-layer relationships in `graph-databases-query-languages-landscape.md`, plus `caviri/rete` ([§ Lane tasks](#n67-hypergraphs-and-layered-relationships))~~ | agent | Shipped 2026-11-27 (this PR): § Higher-order and layered relationships in the graph-databases doc (n-ary table, multilayer, time as a layer, libraries, rete), the frameworks doc's hyperedge note now points to it, knowledge-graphs hub row; two fact-check passes |
+| ~~N68~~ | ~~GitHub platform capabilities analysis and the `dev-platforms.md` hub ([§ Lane tasks](#n68-github-platform-capabilities))~~ | agent | Shipped 2026-11-27 (this PR): github-platform-capabilities-analysis.md (Actions, dev environments, rules and enforcement, org and enterprise features, agent surfaces; every tier and status dated), new dev-platforms.md hub, sdlc-lcm index row; two fact-check passes |
+| ~~N69~~ | ~~Code forge, CI/CD and GitHub Actions runner alternatives landscape ([§ Lane tasks](#n69-forge-and-ci-alternatives))~~ | agent | Shipped 2026-11-27 (this PR): code-forge-ci-alternatives-landscape.md (forges, CI/CD systems, GitHub Actions runner services, Codeberg and SourceHut rules on agent-written code; leads cited as leads), cross-linked with the GitHub capabilities doc, dev-platforms hub row; two fact-check passes |
 | N70 | Hindsight, Docker Agent, *Agentic GraphRAG* and the Pydantic AI coding-agent sources (Coder, Pax, Fowler) in the frameworks doc ([§ Lane tasks](#n70-frameworks-doc-sources)) | agent | Merged with two fact-check passes; hub rows added |
 | N71 | Rust migration and Scientist, GUARD and self-improvement memory, the over-edit study, and codekb ([§ Lane tasks](#n71-sdlc-sources)) | agent | Merged with two fact-check passes; hub rows added |
 | N72 | Micro language models landscape ([§ Lane tasks](#n72-micro-language-models)) | agent | Doc merged with two fact-check passes; hub and index rows added |
 | N73 | n8n nod, Hugging Face swarms report, OpenResearch example, PandaDoc connector and IBM Bob ([§ Lane tasks](#n73-agent-and-connector-sources)) | agent | Merged with two fact-check passes; hub rows added |
+| N74 | Where Claude Code, Codex CLI, Gemini CLI and other open-source harnesses process PDFs and images (local or server, which packages), and GPT-6.2 Astra's input modalities ([§ Lane tasks](#n74-where-harnesses-process-pdfs-and-images)) | agent | Section merged with two fact-check passes; each local or server claim cites docs or source at a tag |
+| N75 | Capability map: new mechanic rows in the Cross-Harness Matrix ([§ Lane tasks](#n75-capability-map)) | agent | Rows merged with two fact-check passes |
+| N76 | Coverage-depth audit of the top coding harnesses against Claude Code ([§ Lane tasks](#n76-coverage-depth-audit)) | agent, then owner | Audit table in this plan; the owner picks which gaps become rows |
 | N9 | Assess YouTube videos (ai-that-works playlist, Cole Medin channel) as research leads (owner 2026-11-22; #1009) | owner | **ai-that-works part done 2026-11-22** (owner narrowed it to the companion repo's transcripts): all 86 episode dirs triaged from the repo (github.com/ai-that-works/ai-that-works, no licence, so read and cited only), 47 with transcripts; 3 strong, 18 possible and 38 dropped leads, list and reasons in the session triage notes. Shipped, each re-checked at first-party sources with two fact-check passes: #1031 GEPA, #1032 SlopCodeBench, #1033 HumanLayer status, #1034 lethal trifecta. **Concept pass** (owner 2026-11-22: concepts, how-tos and best practices count, not only tools): about 225 ideas triaged, 24 kept, each cited as a single-source practitioner claim with outside corroboration where it exists: #1039 harness patterns, #1040 eval practices, #1041 memory, skills, observability and event-log projections; five LLM-application patterns held for lack of a fitting doc. **Open, owner-gated:** Cole Medin's channel, once the owner picks a transcript route (from this Codespace, yt-dlp and headless browsers hit YouTube's sign-in bot check) |
 | N38 | paperverse: make the weekly real-feed sync mergeable, add `triage/kb-papers` as a source, then one catch-up sync (D2) | agent in a paperverse session; owner if the fix needs a setting or an App | The sync PR gets every required check and merges without help; paperverse `main` holds all weekly files and `arxiv-kb.jsonl`; deployed page shows them |
 | N56 | Compare `scripts/cc_cache_usage.py` with Claude Code `/usage` "Prompt cache (main)" and with a cachemiss run on one session (residual of N55) | owner | The owner pasted the `/usage` section on 2026-11-25 (46 main-thread requests, 99% of input from cache, no misses); still waits on approval to run cachemiss (external code); the three sets of numbers agree or the differences are explained in `CC-prompt-caching-behavior.md`; offer the prediction column to cachemiss only if they agree |
