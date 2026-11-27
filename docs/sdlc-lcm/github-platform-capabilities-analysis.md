@@ -106,7 +106,7 @@ What an agent can drive without a browser:
 | Claude Code in Actions | See [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md) |
 | Review products on top of the PR flow | [code-review-products-landscape.md](../non-cc/infrastructure/code-review-products-landscape.md) |
 
-Agents run under the same gates as people: required checks, rulesets, environments and OIDC trust all apply to a pull request or deployment an agent opens, which is why this doc is organised by gate.
+**Our synthesis:** agents run under the same gates as people: required checks, rulesets, environments and OIDC trust all apply to a pull request or deployment an agent opens, which is why this doc is organised by gate.
 
 ## Not verified
 
