@@ -34,8 +34,9 @@ full before starting. The lead fills in each `<placeholder>`.
      exists, link its owner section instead of restating it.
 2. **Research first-party.** Use vendor docs, the paper's arXiv abstract page, and the upstream
    README, LICENSE and releases (`gh api repos/<o>/<r>`).
-   - Read the licence from the LICENSE file. Take counts and versions from the live source, with an
-     as-of date.
+   - Read the licence from the LICENSE file. Take counts and versions from the live source, with
+     `(read <date>)` after them (CONTRIBUTING
+     [§ 4](../../../../CONTRIBUTING.md#4-inline-references)).
    - For blocked or JS-only pages, escalate as CONTRIBUTING
      [§ Research Workflow](../../../../CONTRIBUTING.md#research-workflow) describes.
    - Save fetched pages and scripts only in `<lane-dir>`.
@@ -46,7 +47,7 @@ full before starting. The lead fills in each `<placeholder>`.
    - State each claim at its evidence level: documented, announced, shipped, observed or vendor claim.
      No headline may claim more than its caveat.
    - Extend existing docs first; create a new doc only where your task says so.
-   - Every score or benchmark number carries an as-of date.
+   - Every score, benchmark number, price or GA/beta status carries `(read <date>)`.
 4. **Follow the conventions.** Apply the frontmatter schema in CONTRIBUTING
    [§ 1](../../../../CONTRIBUTING.md#1-frontmatter) and
    [§ 2](../../../../CONTRIBUTING.md#2-frontmatter-status), and set `updated: <date>`. Use
