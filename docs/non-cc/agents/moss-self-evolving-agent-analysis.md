@@ -4,7 +4,7 @@ source: https://arxiv.org/abs/2605.22794
 purpose: Analysis of MOSS, a self-evolving AI assistant that autonomously rewrites its own source code to fix underperforming behavior surfaced from production sessions.
 platform_scope: [claude-code, codex, deepseek-tui, opencode]
 created: 2026-07-23
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-07-23
 status: assess
 ---
@@ -80,6 +80,7 @@ not an internal CC feature.
   successor; MOSS instead extends the original TypeScript OpenClaw with
   autonomous self-rewriting, giving two divergent evolutions of the same
   lineage.
+- [weco-aide-recursive-self-improvement-analysis.md § Meta-levels](../reference/weco-aide-recursive-self-improvement-analysis.md#meta-levels-what-is-being-optimized-added-2026-11-27) — where source-level self-rewriting sits among earlier self-referential agents (Gödel Agent, Darwin Gödel Machine, STOP) and meta-learning landmarks
 
 ## Sources
 

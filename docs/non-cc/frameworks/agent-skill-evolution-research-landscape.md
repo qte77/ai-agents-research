@@ -2,7 +2,7 @@
 title: Agent Skill Evolution Research Landscape
 purpose: Survey of research (papers and reference repos) on constructing, evolving and transferring agent skills and tool sets, distinct from the packaging landscapes in cc-community and cc-native.
 created: 2026-09-30
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-12
 status: assess
 ---
@@ -95,6 +95,7 @@ Not rubric-scored: a batch-triage addition; score if promoted to a dedicated ana
 - [docs/_topics/skills.md](../../_topics/skills.md) — topic hub pointer
 - [CC-community-skills-landscape.md](../../cc-community/CC-community-skills-landscape.md) — distribution-side skill libraries (coleam00, cloudflare, superpowers, …)
 - [agent-frameworks-infrastructure-landscape.md](agent-frameworks-infrastructure-landscape.md) — `runtypelabs/skills`, the adjacent distribution-side entry for this research batch; also ACM (§1), a general agentic-configuration-governance paper that names "skills" as one of several configuration-item types it covers but gives it no distinct treatment (checked and found not to fill the skills·Shared/Distributed open cells, plan 0010 row L3)
+- [weco-aide-recursive-self-improvement-analysis.md § Meta-levels](../reference/weco-aide-recursive-self-improvement-analysis.md#meta-levels-what-is-being-optimized-added-2026-11-27) — the wider ladder this research sits on: prompt and program optimizers, automated agent design, self-referential agents
 
 ## Not included
 
