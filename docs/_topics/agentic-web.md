@@ -20,7 +20,7 @@ sites identify, admit and charge agents. Pointers only; see [the hub index](READ
 |---|---|---|
 | [computer-use-agents-landscape.md § First-party Claude computer use](../non-cc/agents/computer-use-agents-landscape.md#first-party-claude-computer-use) | Claude computer use tool and Claude Desktop | non-cc |
 | [computer-use-agents-landscape.md § Other vendors](../non-cc/agents/computer-use-agents-landscape.md#other-vendors) | OpenAI and Gemini computer-use tools | non-cc |
-| [computer-use-agents-landscape.md § Open models and frameworks](../non-cc/agents/computer-use-agents-landscape.md#open-models-and-frameworks) | Agent S, OpenCUA, UI-TARS (archived) | non-cc |
+| [computer-use-agents-landscape.md § Open models and frameworks](../non-cc/agents/computer-use-agents-landscape.md#open-models-and-frameworks) | Agent S, OpenCUA, UI-TARS (archived); Nod (n8n), an Apache-2.0 personal agent with its own sandboxed computer | non-cc |
 | [computer-use-agents-landscape.md § Pixels versus accessibility tree](../non-cc/agents/computer-use-agents-landscape.md#pixels-versus-accessibility-tree) | Screenshot vs accessibility-tree input | non-cc |
 | [computer-use-agents-landscape.md § App bridges instead of screens](../non-cc/agents/computer-use-agents-landscape.md#app-bridges-instead-of-screens-blender-and-bonsai-checked-2026-11-24) | MCP for Blender and the Bonsai (IFC/BIM) MCP bridges: driving a desktop app through its scripting API; IFC-MCQ benchmark | non-cc |
 

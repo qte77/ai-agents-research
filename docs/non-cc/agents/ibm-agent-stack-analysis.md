@@ -1,16 +1,16 @@
 ---
-title: IBM Agent Stack Analysis — watsonx Orchestrate and its Agent Development Kit
-purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate, ADK, MCP/A2A support, model choice incl. Claude, identity, licence metrics, regions); no prices.
+title: IBM Agent Stack Analysis — watsonx Orchestrate, its Agent Development Kit and IBM Bob
+purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate, ADK, MCP/A2A, models incl. Claude, identity, licences, regions) and IBM Bob, its coding agent, with list prices.
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-27
 validated_links_on: 2026-11-20
 status: assess
 ---
 
 **Details:** Feeds the cloud-agent-stacks synthesis (plan 0014 K34). Scope is the business-and-dev agent path on IBM: **watsonx Orchestrate** (agent builder,
 runtime, catalog) and its open-source **Agent Development Kit (ADK)**. ML training is out of scope; data
-platforms are only linked ([data-platforms-lakehouse-landscape.md][data-platforms]). No prices are
-given; licence metrics are named only. Evidence is as of 2026-11-20 and labelled *documented* (vendor
+platforms are only linked ([data-platforms-lakehouse-landscape.md][data-platforms]). No watsonx Orchestrate prices are
+given; licence metrics are named only. The [IBM Bob section](#ibm-bob-coding-agent) is the exception: it records Bob's published list prices (read 2026-11-27). Evidence is as of 2026-11-20 (the IBM Bob section: 2026-11-27) and labelled *documented* (vendor
 docs read now), *index entry only* (listed in the ADK docs index, page not read) or **unverified**
 (could not be read first-party). The IBM product docs site (`ibm.com/docs`) and
 `cloud.ibm.com/docs` are JavaScript-rendered and were not read, so IAM role names and workforce SSO stay unverified (re-tried 2026-11-20 with a headless browser: `ibm.com/docs` returned 403 and `cloud.ibm.com/docs` failed at the network layer); the
@@ -24,6 +24,7 @@ ADK docs site and the pricing page were readable.
 | Agent Development Kit (ADK) | Python library + `orchestrate` CLI to author, import and deploy agents/tools; the ADK repo is MIT-licensed | documented ([repo][adk-repo], licence field via GitHub API) |
 | Developer Edition | local, self-contained copy of Orchestrate run via a docker engine for iteration before connecting to a remote instance; needs a valid Developer Edition licence | documented ([ADK README][adk-readme], [setup][adk-setup]) |
 | watsonx.ai agents / Agent Lab | IBM's model-platform side; Orchestrate can register watsonx.ai agents as *external* agents | documented for external-agent registration ([agents overview][adk-agents]); Agent Lab itself **unverified** |
+| IBM Bob | IBM's coding and SDLC agent, separate from Orchestrate; see [IBM Bob](#ibm-bob-coding-agent) | documented (read 2026-11-27) |
 | watsonx.governance | agent inventory/lifecycle monitoring | **unverified** first-party here; the ADK docs expose a "governance-monitoring" API (agent monitoring setup), see [Governance hooks](#governance-hooks) |
 
 ## Build and runtime
@@ -107,6 +108,37 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
   or a custom image registry. So the ADK is open source; running the Developer Edition is not free
   of an Orchestrate entitlement.
 
+## IBM Bob (coding agent)
+
+IBM Bob is a separate product from watsonx Orchestrate: IBM's AI coding and software-development-lifecycle (SDLC)
+agent, which its [docs][bob-docs] call "an AI SDLC (Software Development Lifecycle) partner". The launch release calls it the evolution of IBM's code assistants:
+existing watsonx Code Assistant (WCA) clients stay supported and get an adoption path to Bob ([launch release][bob-news]).
+Evidence below is documented (IBM's own pages), with marketing quotes and customer testimonials on the
+[product page][bob-home] left out.
+
+- **Surfaces.** An IDE (Agent, Ask and Plan modes), Bob Shell for the command line and CI/CD
+  pipelines, subagents you approve before each spawn, MCP (the client moved to the 2026-07-28 spec in the
+  September 2026 release, and HTTP+SSE transport was removed), skills, hooks and plugin directories, plus
+  Bobalytics for usage analytics ([docs][bob-docs], [September release post][bob-sep], posted 2026-10-01). Premium packages add modes,
+  skills and workflows for DevSecOps, Java modernization, IBM i and IBM Z.
+- **Models.** The launch release says Bob routes each task across a mix of Claude, Mistral open models, IBM Granite
+  and fine-tuned models. For self-hosted deployments the docs name one core model per install: frontier Claude
+  Sonnet 5, Claude Opus 4.8, Gemini 3.7 Flash or GPT5.6 Sol through the customer's own cloud account, or open-weight
+  Mistral Medium 3.5 (Z package only), Nemotron 3 Ultra, Nemotron 3.5 Super or Poolside Laguna S 2.1 for air-gapped
+  sites ([supported models][bob-models], read 2026-11-27). The release post names only Nemotron 3 Ultra and Laguna S 2.1
+  as the tuned and evaluated open-weight route, so the docs list is wider than the announcement.
+- **Pricing (list, read 2026-11-27).** The [pricing page][bob-pricing] shows a free 30-day trial with 50 Bobcoins, Pro at
+  $20 per month (50 Bobcoins), Pro+ at $60 (180) and Ultra at $200 (1,000), with opt-in overage billed monthly;
+  prices are "indicative", vary by country and exclude taxes. Premium packages: DevSecOps and Java Modernization
+  $20 per month each, IBM i $40, IBM Z enterprise-only and annual. Enterprise-only features include on-premises or
+  air-gapped deployment, team and Bobcoin management and Bobalytics. Bobcoins are the plans' usage credits; what one buys is on an FAQ we did not read.
+- **Status.** Generally available as SaaS since the 2026-04-28 launch release (read 2026-11-27). The self-hosted
+  deployment on Red Hat OpenShift is generally available as of 2026-09-24 and sales-led (September release post, read
+  2026-11-27). The docs banner says support for IDE versions 2.0.2 and 2.1.0 ends on 2027-01-06.
+
+Not verified: licensing terms of the client, benchmark results (none are given on the pages read) and the
+customer figures quoted on the product page (testimonials, not evidence).
+
 ## At a glance
 
 | Dimension | IBM watsonx Orchestrate (+ ADK) |
@@ -117,7 +149,7 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
 | Memory | Agentic SDK `/memories` APIs for custom agents (documented); native-agent memory unverified |
 | Agent identity and IdP | `ibm_iam`/`mcsp`/`cpd` auth; per-tool connections (OAuth, OBO SSO); no distinct agent-identity object found; workforce SSO/IdP unverified |
 | Least-privilege roles | Not confirmed: IBM Cloud IAM role pages (ibm.com/docs, cloud.ibm.com/docs) are JS-rendered and were not read, 2026-11-20 |
-| Licences and who needs one | Plan tiers by MAU, messages, doc volume; premier models metered extra; no per-seat licence found; Developer Edition needs a licence; no prices here |
+| Licences and who needs one | Plan tiers by MAU, messages, doc volume; premier models metered extra; no per-seat licence found; Developer Edition needs a licence; no Orchestrate prices here (IBM Bob's list prices are in its section) |
 | Regions | AWS and IBM Cloud regions, GovCloud (US), on-prem; Claude in 3 AWS + 5 IBM Cloud regions |
 | Release status | ADK 2.20.0 docs 2026-11-11 (GitHub latest release 2.19.1, 2026-10-22); Claude preview; model policies preview |
 
@@ -148,6 +180,9 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
 | [ADK release notes][adk-release] | 2.20.0 (2026-11-11) |
 | [ADK repo][adk-repo] / [README][adk-readme] | MIT licence, Developer Edition, latest GitHub release 2.19.1 |
 | [Orchestrate pricing page][wxo-pricing] | plan names and allowance metrics (prices deliberately not recorded) |
+| [IBM Bob product page][bob-home], [docs][bob-docs], [pricing][bob-pricing] | Bob surfaces, modes, plans and list prices (read 2026-11-27) |
+| [Bob supported models][bob-models] · [September 2026 release][bob-sep] | Self-hosted model list; self-hosted GA 2026-09-24; MCP client v2 |
+| [Bob launch release][bob-news] | 2026-04-28 SaaS GA, multi-model routing, WCA adoption path |
 
 [data-platforms]: ../infrastructure/data-platforms-lakehouse-landscape.md
 [registries]: ../frameworks/agentic-enterprise-os-landscape.md#agent-registries-compared
@@ -166,3 +201,9 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
 [adk-repo]: https://github.com/IBM/ibm-watsonx-orchestrate-adk
 [adk-readme]: https://github.com/IBM/ibm-watsonx-orchestrate-adk/blob/main/README.md
 [wxo-pricing]: https://www.ibm.com/products/watsonx-orchestrate/pricing
+[bob-home]: https://bob.ibm.com/
+[bob-docs]: https://bob.ibm.com/docs
+[bob-pricing]: https://bob.ibm.com/pricing
+[bob-models]: https://bob.ibm.com/docs/ide/enterprise/on-premises/model-gateway/supported-models
+[bob-sep]: https://bob.ibm.com/blog/september-2026-release/
+[bob-news]: https://newsroom.ibm.com/2026-04-28-introducing-ibm-bob-ai-development-partner-that-takes-enterprises-from-ai-assisted-coding-to-production-ready-software
