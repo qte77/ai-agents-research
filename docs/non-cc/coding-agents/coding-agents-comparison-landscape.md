@@ -1,6 +1,6 @@
 ---
 title: Coding Agents and Harnesses Compared
-purpose: "Cross-vendor comparison of coding agents and harnesses from their own docs: input modalities, model access and billing, and context compaction, each cell sourced and dated."
+purpose: "Cross-vendor comparison of coding agents and harnesses from their own docs: input modalities, media processing, configuration and policy, model access and billing, context compaction; each cell sourced and dated."
 created: 2026-11-22
 updated: 2026-11-27
 validated_links_on: 2026-11-22
@@ -8,7 +8,7 @@ status: assess
 ---
 
 **Details:** Every cell was read from the vendor's own docs on 2026-11-22 and re-checked in a
-second pass the same day. Nothing here was run. A cell says what the **harness documents**, not
+second pass the same day; sections added later carry their own read date. Nothing here was run. A cell says what the **harness documents**, not
 what the underlying model can do: a model that accepts video says nothing about whether a command
 line interface (CLI) or integrated development environment (IDE) lets you attach one. "not documented
 (checked 2026-11-22)" means the sentence was not found on the vendor pages listed in
@@ -127,7 +127,7 @@ Findings from the table:
 Where each harness keeps its settings, which layer wins, which environment variables the docs name, what an
 administrator can enforce, and how a project overrides the user's defaults. Cells come from each vendor's own
 docs page, each read 2026-11-27; nothing was run. "Not documented on the pages read" means the sentence was not
-on the pages in [Sources](#sources), not that the feature is absent. MDM is mobile device management; MCP is the Model Context Protocol (MCP). Two tables with the same rows keep the cells
+on the pages in [Sources](#sources), not that the feature is absent. MDM is mobile device management; MCP is the Model Context Protocol (MCP), see the [glossary](../../glossary.md). The 11 rows are the harnesses whose configuration pages were read; Kiro, Zed, Kimi Code and Antigravity were not read for this section. Two tables with the same rows keep the cells
 readable. Instruction files (`AGENTS.md` and relatives) are summarized in the second table; for Claude Code, Codex
 CLI, Gemini CLI and OpenCode the
 [cross-harness matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows)
@@ -156,7 +156,7 @@ row "1 Persistent instruction file" is the fuller view.
 | Claude Code | [CC-managed-settings-fleet-analysis.md](../../cc-native/configuration/CC-managed-settings-fleet-analysis.md) | [Matrix row 1](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows) |
 | Codex CLI | `requirements.toml` constrains what users may set. Local layers, lowest to highest: system `/etc/codex/requirements.toml` (Windows `%ProgramData%\OpenAI\Codex\`), Agent Security cloud policy, legacy `managed_config.toml` fields, macOS MDM (`com.openai.codex`); legacy `managed_config.toml` supplies defaults the user can change ([managed configuration][cfg-codex-mgd], read 2026-11-27) | Project `.codex/config.toml` (trusted projects only); `AGENTS.override.md` or `AGENTS.md` per directory, concatenated root-down, 32 KiB cap by default ([AGENTS.md][cfg-codex-agents]); [matrix row 1](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows) |
 | Gemini CLI | The system settings file overrides user and project files; it can set tool allowlists and policy-engine rules, and a wrapper script can pin its path. The page says this is meant to prevent accidental misuse, not to stop a local administrator ([enterprise][cfg-gem-ent], read 2026-11-27) | Project `.gemini/settings.json`; `GEMINI.md` ([matrix row 1](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#which-patterns-each-harness-shows)) |
-| GitHub Copilot CLI | MDM plist `com.github.copilot` (macOS), registry `HKLM\SOFTWARE\Policies\GitHubCopilot` (Windows) or `managed-settings.json` files (`/Library/Application Support/GitHubCopilot/`, `%ProgramFiles%\GitHubCopilot\`, `/etc/github-copilot/`), plus server-managed settings; for most keys users can override the baseline, but managed sandbox values are a floor and `permissions.disableBypassPermissionsMode = "disable"` always wins; deny rules beat ask and allow across managed sources ([config directory][cfg-cop-dir]) | `.github/copilot/settings.json` and `.local.json`; `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md`, `AGENTS.md`, `CLAUDE.md` plus personal files under `~/.copilot/` ([custom instructions][cfg-cop-instr]) |
+| GitHub Copilot CLI | MDM plist `com.github.copilot` (macOS), registry `HKLM\SOFTWARE\Policies\GitHubCopilot` (Windows) or `managed-settings.json` files (`/Library/Application Support/GitHubCopilot/`, `%ProgramFiles%\GitHubCopilot\`, `/etc/github-copilot/`), plus server-managed settings; for most keys users can override the baseline, but managed sandbox values are a floor and `permissions.disableBypassPermissionsMode = "disable"` always wins; deny rules beat ask and allow across managed sources ([config directory][cfg-cop-dir]) | `.github/copilot/settings.json` and `.local.json`; `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, extra directories in `COPILOT_CUSTOM_INSTRUCTIONS_DIRS`, plus personal files under `~/.copilot/` ([custom instructions][cfg-cop-instr]) |
 | VS Code Copilot Chat | VS Code enterprise policies: Windows Group Policy (ADMX templates, registry), macOS configuration profiles, Linux `/etc/vscode/policy.json` from v1.106; computer-level beats user-level on Windows; the policy reference lists chat and agent policies such as `chat.agent.enabled` and sandbox settings ([policies][cfg-vsc-ent], read 2026-11-27) | `.vscode/settings.json`; `.github/copilot-instructions.md` or `AGENTS.md`, `CLAUDE.md`, `*.instructions.md` ([custom instructions][cfg-vsc-instr]) |
 | Cursor | MDM policies on Windows (Group Policy), macOS (configuration profiles) and Linux (JSON, from Cursor 2.0); documented policies include allowed team IDs and allowed extensions ([deployment patterns][cfg-cur-dep], read 2026-11-27). Team and Enterprise plans add dashboard Team Rules, which take precedence over other rules ([rules][cfg-cur-rules]), and enterprise team-admin policies that layer over `sandbox.json` (sandbox reference); Enterprise also has enterprise-managed hooks ([hooks][cfg-cur-hooks]) | `.cursor/rules/*.mdc`, user rules, `AGENTS.md` (rules page); CLI project file `.cursor/cli.json` for permissions only |
 | Cline | Remote configuration from the hosted admin console, applied when a member signs in: rules and workflows, skills, allowed providers, MCP controls and telemetry, with support differing by product (VS Code and JetBrains most, CLI rules and workflows only, Cline Desktop none of the listed controls); written into `.cline/remote-config/` or `.cline/enterprise/` in the workspace ([remote configuration][cfg-cline-ent], read 2026-11-27) | `.cline/` (rules, workflows, skills, hooks), older `.clinerules/`, `AGENTS.md` at the project root, `~/.agents/AGENTS.md` globally; workspace rules take precedence over global rules when they conflict ([config][cfg-cline-cfg], [rules][cfg-cline-rules]) |
@@ -167,8 +167,9 @@ row "1 Persistent instruction file" is the fuller view.
 
 Findings from the tables:
 
-- **Most harnesses have a user file, a project file and a machine-wide layer.** In Gemini CLI, OpenCode and Amp
-  the machine-wide layer overrides the others; Codex CLI's `requirements.toml` constrains what the other layers
+- **Most harnesses have a user file, a project file and a machine-wide layer.** In Gemini CLI (below environment
+  variables and flags), OpenCode and Amp the machine-wide file overrides the other files, and VS Code, Cursor and
+  Windsurf policies override user settings; Codex CLI's `requirements.toml` constrains what the other layers
   may set instead. Copilot CLI differs: its managed layer is the lowest and most keys can be overridden, except
   the floors named above.
 - **A documented machine-level file or MDM route exists for** Codex CLI, Gemini CLI (system files, no MDM
