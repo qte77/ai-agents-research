@@ -3,7 +3,7 @@ title: OpenResearch Analysis
 source: https://github.com/alphaXiv/OpenResearch
 purpose: Evaluate OpenResearch as a local-first, git-native workspace that turns coding agents into autonomous research/experiment agents.
 created: 2026-09-30
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-09
 status: assess
 ---
@@ -57,6 +57,16 @@ Face Jobs, Modal, Tinker, or managed OpenResearch compute — "publishing the re
 required." Running against a remote host (`orx up --remote user@host`) has a stated security
 caveat: "the remote service binds to loopback and has no application-level authentication, so
 other users on that host can reach it" (unverified: not found in the current README, checked 2026-11-26; the repo's `arc/remote.md` says orx binds only loopback unless asked).
+
+### Shared projects
+
+OpenResearch has a public share page for a whole project. The example read 2026-11-27 is
+["packing-problems"][openresearch-shared], shared by Myles Anderson and published 2026-11-25. The page lists 92
+experiments, 93 runs, 64 chats and 64 agents (models shown: opus, sonnet), describes the project as code,
+experiments, runs, logs and agent chats you can open in the app and continue, and offers a 144.2 MiB `.orx`
+download. The page does not say what the project found, so it shows the sharing feature, not a research result; we
+did not download or open the `.orx` file. This refines the "Shared" rubric column below: a project can be exported and
+shared through the service, though that is a hand-off, not a multi-user store (our reading).
 
 ### Platforms
 
@@ -119,11 +129,13 @@ and not reproducible in the way the underlying code commits are.
 | [OpenResearch repo][openresearch] | README: architecture, platforms, run-anywhere compute targets, security note, telemetry |
 | [OpenResearch about page][openresearch-about] | Team origin ("We started alphaXiv…"); local CLI plus remote compute |
 | [Repo page][openresearch-langs] (language bar; read via `gh api` 2026-09-30) | Language breakdown (Rust core, TypeScript/JS UI) |
+| [Shared project page][openresearch-shared] | Example share page: counts, models, `.orx` download (read 2026-11-27) |
 | [Install docs][openresearch-install] | Git for Windows prerequisite; glibc 2.35+ on Linux (the repo's `docs/` folder was removed 2026-11-06, #918) |
 
 [openresearch]: https://github.com/alphaXiv/OpenResearch
 [openresearch-about]: https://openresearch.sh/about
 [openresearch-langs]: https://github.com/alphaXiv/OpenResearch
 [openresearch-install]: https://openresearch.sh/docs/install
+[openresearch-shared]: https://openresearch.sh/p/xZeKt3JQPpB7
 [feynman-analysis]: feynman-analysis.md
 [rubric]: ../../sdlc-lcm/agent-substrate-rubric.md
