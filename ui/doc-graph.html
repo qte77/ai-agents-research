@@ -532,6 +532,7 @@
           // No dates: say so and drop the span picker (the title is the panel's summary).
           document.getElementById("tl-title").textContent = newest ? name : name + " (no dates in data)";
           document.getElementById("tl-window").hidden = !newest;
+          // Reason: bar spans depend on the date, so a set range is cleared (buildTimeline resets it).
           buildTimeline(document.getElementById("tl-window").value);
         }
         useDate("updated");
