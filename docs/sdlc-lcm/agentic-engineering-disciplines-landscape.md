@@ -151,7 +151,7 @@ Red-Green-Refactor    Given-When-Then          LLM-judge + human       Spec→Pl
 
 **Dave Farley** (Continuous Delivery Ltd; *Continuous Delivery* 2010, *Modern Software Engineering* 2021; courses at `courses.cd.training`) is the throughline authority: TDD as a *design* tool (the *Driven* is load-bearing) with three mindsets (developer/tester/architect); BDD as *outside-in* acceptance testing ("Executable Specifications"); and CD/MSE as **empirical, small-step, fast-feedback** engineering — the same discipline a compounding agent fleet needs. *(davefarley.net carried an expired TLS cert at the 2026-06-23 access; cited from secondary sources.)*
 
-NEW vs current repo coverage: **BDD, ATDD, EDD-as-methodology, Dave Farley, DDD+LLM, README-driven, contract-driven** — none are currently covered. The eval *tools* (DeepEval/RAGAs/TruLens) are in [CC-evaluation-data-resources-landscape.md][eval-data]; EDD is the *methodology* that gives them purpose.
+NEW vs current repo coverage: **BDD, ATDD, EDD-as-methodology, Dave Farley, DDD+LLM, README-driven, contract-driven** — none were covered when this was written; BDD and EDD-as-methodology now are, in [test-eval-driven-development-landscape.md](test-eval-driven-development-landscape.md). The eval *tools* (DeepEval/RAGAs/TruLens) are in [CC-evaluation-data-resources-landscape.md][eval-data]; EDD is the *methodology* that gives them purpose.
 
 ## §3. Spec-driven frameworks (the 2025–26 inflection)
 
