@@ -269,6 +269,42 @@ Defaults are vendor-documented values, not observed behaviour.
 - **No per-agent compaction setting was found** on the pages read; OpenCode documents per-provider or
   per-model type only.
 
+## Prompt-to-app builders
+
+A prompt-to-app builder is a hosted agent that generates, runs and deploys a whole web app from a chat,
+usually with a built-in database, sign-in and a public URL, in the vendor's cloud. Our synthesis, not a
+vendor definition: the harnesses above run in your terminal or editor against a repository you already
+have, while these start from an empty prompt and own the runtime and hosting. Rows were read from each
+vendor's own docs and pricing pages on 2026-11-27; nothing was run. "Not documented on the pages read"
+means those pages were silent. Existing mentions: Lovable as a Managed Runtime creation path in
+[Microsoft 365 Copilot](../agents/microsoft-365-copilot-analysis.md); Replit in the
+[SaaStr database incident](../infrastructure/agentic-database-access-landscape.md); Bolt and Lovable only
+searched, not read, in [goal loops](goal-loops-landscape.md).
+
+| Builder | Builds and runs on | Backend and data | Code ownership and export | Model and agent notes | Plans (read 2026-11-27) |
+|---|---|---|---|---|---|
+| Lovable ([docs][lov-docs]) | Web apps; React + Vite older template, TanStack Start default for new projects since 2026-05-13 ([upgrade page][lov-tss]); published free to a `lovable.app` URL, custom domain on paid plans ([hosting][lov-host]) | Built-in backend (database, auth, storage, edge functions) on "Supabase's open-source foundation"; external Supabase connectable ([backend][lov-cloud]) | Pricing FAQ says you own the code; two-way Git sync to GitHub, GitLab or Bitbucket; codebase download on paid plans ([Git sync][lov-git], [pricing][lov-price]) | Build mode and subagents documented ([build mode][lov-agent]); models not documented on the pages read | Free, Pro, Business, Enterprise; credit-based ([plans][lov-plans]) |
+| Bolt.new ([help center][bolt-docs]) | Web and mobile apps (mobile via Expo); runs in the browser on WebContainers, which StackBlitz describes as a browser-based runtime for Node.js ([intro][bolt-intro], [WebContainers][wc]); Safari gets hosted previews ([supported tech][bolt-tech]); built-in hosting, Netlify option ([Cloud][bolt-cloud]) | Bolt Cloud built-in database with auth, file storage and server functions; Supabase connectable ([Cloud][bolt-cloud]) | GitHub sync; project download ([GitHub][bolt-git], [projects][bolt-mp]) | Two agents, Standard and Max; Bolt picks the model behind the scenes; Forge uses open-source models ([agents][bolt-agents]) | Free, Pro, Teams, Enterprise; token-based ([pricing][bolt-price]) |
+| v0 by Vercel ([docs][v0-docs]) | Next.js, Tailwind, shadcn/ui stack named; one-click deploy to Vercel ([docs][v0-docs]) | One-click Marketplace integrations: Upstash, Neon, Supabase, Vercel Blob ([databases][v0-db]) | GitHub sync, branches and pull requests ([GitHub][v0-gh]) | Own model family: v0 Mini, Pro, Max, Max Fast, with token rates ([pricing][v0-price]) | Free, Plus, Business, Enterprise ([pricing][v0-price]) |
+| Replit ([docs][rep-docs]) | Web apps, mobile apps, slides, designs; built and published inside Replit | Built-in SQL database (PostgreSQL; its dev database was on Neon before 2025-12-04) ([database][rep-db]) | GitHub or GitLab repository connection documented ([code][rep-code]); export not documented on the pages read | Mode tiers Auto, Power, Max; the model selector page lists, for example, Claude Sonnet 5 and GPT-6 Sol ([models][rep-models], [overview][rep-docs]) | Core, Pro, Enterprise; Starter closed to new builders ([plans][rep-plans]) |
+
+### Notes
+
+- **Bolt open-source status.** The `stackblitz/bolt.new` repository is MIT-licensed per its LICENSE
+  file (read 2026-11-27); its last push was 2024-12-17 (read 2026-11-27); whether it matches the hosted product was not checked.
+  `bolt.diy` (`stackblitz-labs`, MIT) is a separate community project, started by an outside developer
+  per its README, that lets you pick any model; it is active (pushed 2026-11-21) ([bolt.new repo][bolt-repo],
+  [bolt.diy repo][boltdiy-repo]).
+- **Firebase Studio is not a current peer.** Google's docs say it sunsets on 2027-03-22, with new
+  workspaces and signups disabled since 2026-06-22, and point to Google AI Studio and Google Antigravity
+  ([Firebase docs][fbs]). Deployed apps keep running.
+- **HeyBoss (heyboss.xyz), named by the owner, small.** Its own pages describe a prompt-based
+  site-and-business builder aimed at small businesses, with Free, Basic, Premium and Platinum plans
+  ([site][hb], [pricing][hb-price]). The pages read give no usage or adoption figure, so it does not
+  pass the well-known filter and gets no table row.
+- **Not read:** the Replit pricing page returned 403 to the fetcher, so Replit plan names come from its
+  billing docs.
+
 ## Sources
 
 | Source | Established |
@@ -381,6 +417,14 @@ Defaults are vendor-documented values, not observed behaviour.
 | [Kimi Code: config files][kimi-config] | `reserved_context_size` |
 | [Antigravity: `/compact`][ag-compact] | Command and auto behaviour |
 | [Goose: smart context management][goose-ctx] | Percent and token compaction settings, `0.0` disables |
+| [Lovable docs, pricing][lov-docs] | Backend, Git sync, hosting, plans, ownership FAQ |
+| [Bolt help center, pricing][bolt-docs] | Intro, agents, Cloud, GitHub, download, plans |
+| [WebContainers][wc] | Browser-based Node.js runtime from StackBlitz |
+| [bolt.new][bolt-repo], [bolt.diy][boltdiy-repo] repos | MIT licence, last push, community fork |
+| [v0 docs, pricing][v0-docs] | Stack, databases, GitHub, models, plans |
+| [Replit docs][rep-docs] | Agent overview, database, Git, model tiers, plans |
+| [Firebase Studio][fbs] | Sunset date and migration targets |
+| [HeyBoss][hb] | Positioning and plan names; no adoption figure |
 
 [cc-workflows]: https://code.claude.com/docs/en/common-workflows
 [cc-tools]: https://code.claude.com/docs/en/tools-reference
@@ -494,3 +538,34 @@ Defaults are vendor-documented values, not observed behaviour.
 [gemini-rel]: https://github.com/google-gemini/gemini-cli/releases/tag/v0.71.1
 [oc-rel]: https://github.com/anomalyco/opencode/releases/tag/v1.19.6
 [aider-rel]: https://github.com/Aider-AI/aider/releases/tag/v0.86.0
+[lov-docs]: https://docs.lovable.dev/introduction/welcome
+[lov-tss]: https://docs.lovable.dev/features/upgrade-to-tanstack-start
+[lov-host]: https://docs.lovable.dev/features/hosting
+[lov-cloud]: https://docs.lovable.dev/features/cloud
+[lov-git]: https://docs.lovable.dev/integrations/git-sync-overview
+[lov-price]: https://lovable.dev/pricing
+[lov-agent]: https://docs.lovable.dev/features/agent-mode
+[lov-plans]: https://docs.lovable.dev/introduction/subscription-plans
+[bolt-docs]: https://support.bolt.new/
+[bolt-intro]: https://support.bolt.new/get-started/intro-bolt
+[wc]: https://webcontainers.io/
+[bolt-tech]: https://support.bolt.new/reference/supported-technologies
+[bolt-cloud]: https://support.bolt.new/bolt-cloud
+[bolt-git]: https://support.bolt.new/integrations/git
+[bolt-mp]: https://support.bolt.new/managing-projects/projects-files
+[bolt-agents]: https://support.bolt.new/building/agents
+[bolt-price]: https://bolt.new/pricing
+[bolt-repo]: https://github.com/stackblitz/bolt.new
+[boltdiy-repo]: https://github.com/stackblitz-labs/bolt.diy
+[v0-docs]: https://v0.app/docs
+[v0-db]: https://v0.app/docs/databases
+[v0-gh]: https://v0.app/docs/github
+[v0-price]: https://v0.app/pricing
+[rep-docs]: https://docs.replit.com/features/agent/overview
+[rep-db]: https://docs.replit.com/features/data-and-storage/sql-database
+[rep-code]: https://docs.replit.com/build/code/code-with-replit
+[rep-models]: https://docs.replit.com/features/agent/model-selector
+[rep-plans]: https://docs.replit.com/billing/plans/replit-core
+[fbs]: https://firebase.google.com/docs/studio
+[hb]: https://heyboss.xyz
+[hb-price]: https://heyboss.xyz/pricing
