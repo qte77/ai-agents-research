@@ -4,7 +4,7 @@ source: https://generativeprogrammer.com/p/12-agentic-harness-patterns-from
 purpose: Taxonomy of reusable harness-level patterns extracted from the Claude Code source leak.
 status: research
 created: 2026-04-06
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-18
 ---
 
@@ -302,6 +302,8 @@ and not repeated here. Image, PDF, video and voice input across 15 harnesses are
 
 Status 2026-11-18: the Gemini CLI column describes the repository as read on 2026-11-15; Google stopped serving free, AI Pro, AI Ultra and Google One users on 2026-06-18 and points them to Antigravity CLI ([tier reconciliation](../../non-cc/coding-agents/gemini-cli-analysis.md)). Antigravity CLI is not a column here; its sandbox, resume and headless docs are in [antigravity-analysis.md](../../non-cc/coding-agents/antigravity-analysis.md#antigravity-cli-agy-first-party-docs-checked-2026-11-18).
 
+Status 2026-11-27: the last seven rows (instruction and memory files through cloud or remote runs) were read from each vendor's docs on 2026-11-27; the first six rows are from 2026-11-15 and were not re-read. "Not documented" again means the pages read are silent.
+
 What each system saves on resume, and what it does not restore, is in [workflow-frameworks-landscape.md § Checkpoint and resume matrix](../../non-cc/frameworks/workflow-frameworks-landscape.md#checkpoint-and-resume-matrix).
 
 | Mechanic | Claude Code | Codex CLI | Gemini CLI | OpenCode | Pi |
@@ -312,6 +314,13 @@ What each system saves on resume, and what it does not restore, is in [workflow-
 | Compaction | Automatic, plus `/compact` ([docs][cc-how]) | Automatic and `/compact`; the `PreCompact`/`PostCompact` hook trigger is `manual` or `auto` ([hooks][codex-hooks], [commands][codex-cmds]) | Automatic at 50% of context by default (`model.compressionThreshold`), plus `/compress` ([configuration][gem-config], [commands][gem-commands]) | Automatic by default, keeps about 15,000 recent tokens ([docs][oc-compaction]) | Automatic when context passes window minus `reserveTokens` (default 16,384), plus `/compact` ([docs][pi-compaction]) |
 | Hooks (documented event rows or headings; counts are not capability ratings) | 34 events in the lifecycle table (checked 2026-11-26) ([docs][cc-hooks]) | 14 events, including `PreCompact`, `PermissionRequest`, `SubagentStart` ([docs][codex-hooks]) | 11 events, including `BeforeTool`, `PreCompress` ([docs][gem-hooks]) | Plugins "add tools, hooks, integrations, commands, agents"; event list not read ([docs][oc-build-plugin]) | Extension events, e.g. `tool_call` (can block or mutate), `session_before_compact` ([docs][pi-ext]) |
 | Resume | `--continue`, `--resume`, fork, rewind checkpoints ([docs][cc-how], [CLI][cc-cli]) | `codex resume`, `/resume`, `/fork`; non-interactive `codex exec resume [id\|name]` with `--last` and `--all` (re-checked 2026-11-18, [commands][codex-cmds]) | `--resume` (latest, index or UUID), `/resume`, tagged checkpoints, `/rewind`, `/restore` (index and UUID re-checked 2026-11-18; [sessions][gem-session], [commands][gem-commands]) | Sessions live in a shared background server; resume flags not documented on the pages read ([CLI][oc-cli]) | `--continue`, `--resume`, `/resume`, `/fork`, tree-structured branches ([docs][pi-sessions]) |
+| Instruction and memory files (read 2026-11-27) | `CLAUDE.md` at managed, user, project and local levels, concatenated up the tree; `@path` imports; auto memory on by default locally; `AGENTS.md` read only when no `CLAUDE.md` ([docs][cc-memory]) | `AGENTS.md` (or `AGENTS.override.md`) from `~/.codex` then project root down, 32 KiB cap by default; separate local memory store ([AGENTS.md][cx-agents], [memories][cx-mem]) | `GEMINI.md` (global, workspace, parents), `@file.md` imports, `/memory`; experimental Auto Memory proposes updates for review ([GEMINI.md][gem-md], [Auto Memory][gem-automem]) | `AGENTS.md` global plus each one from workspace upward; falls back to `CLAUDE.md`; memory store not documented on the page read ([docs][oc-instr]) | Context files `AGENTS.md` or `CLAUDE.md` from agent directory, working directory and parents; `SYSTEM.md` replaces the system prompt; memory not documented ([config][pi-conf]) |
+| Skills (read 2026-11-27) | `SKILL.md` folders on the Agent Skills open standard, plus Claude Code extensions such as invocation control ([docs][cc-skills]) | Agent Skills standard; name and description first, full `SKILL.md` on use; in CLI, IDE extension and desktop app ([docs][cx-skills]) | Agent Skills standard; `activate_skill` tool after a consent prompt; `.gemini/skills/` or `.agents/skills/` ([docs][gem-skills]) | `SKILL.md` in `.opencode/skills/<id>`; also searches `~/.claude/skills` and `~/.agents/skills`; loaded by the `skill` tool ([docs][oc-skills]) | Agent Skills specification; `SKILL.md` folders loaded when the description matches ([docs][pi-skills]) |
+| Plugins or extensions (read 2026-11-27) | Plugin: folder of skills, agents, hooks, MCP servers; manifest `.claude-plugin/plugin.json`; installed with `/plugin` from marketplaces ([docs][cc-plugins]) | Plugins bundle skills and MCP servers, shared with ChatGPT; `/plugins` browser in the CLI; IDE extension unsupported ([docs][cx-plugins]) | Extensions bundle prompts, MCP servers, commands, themes, hooks, subagents, skills; gallery at geminicli.com ([docs][gem-ext]) | `plugins` config array of npm packages or local directories, plus files in `.opencode/plugins/` ([docs][oc-plugins]) | Packages bundle extensions, skills, prompt templates, themes; `pi install` from npm, git or path ([docs][pi-pkg]) |
+| Subagents (read 2026-11-27) | Built-in (Explore, Plan, general-purpose) and custom Markdown in `.claude/agents/`; separate background agents run sessions in parallel ([docs][cc-subagents]) | Built-in `default`, `worker`, `explorer`; custom TOML in `.codex/agents/`; spawns several in parallel, collects results ([docs][cx-sub]) | Built-in `codebase_investigator`; custom Markdown in `.gemini/agents/`; `@name` forces one; on by default ([docs][gem-sub]) | Markdown agents in `.opencode/agents/` with `mode: subagent`; parallelism not documented on the page read ([docs][oc-agents]) | None built in; README says Pi skips sub-agents ([README][pi-readme]) |
+| MCP configuration (read 2026-11-27) | `claude mcp add`; remote HTTP and local stdio; scopes local (default, `~/.claude.json`), project (`.mcp.json`), user ([docs][cc-mcp]) | stdio and streamable HTTP; `config.toml` in `~/.codex` or project `.codex/`; `codex mcp add`, `login` ([docs][cx-mcp]) | `mcpServers` in `settings.json`; stdio, SSE or streamable HTTP; per-server `trust` ([docs][gem-mcp]) | `mcp.servers` in `opencode.jsonc` (V2); local and remote types, OAuth default for remote; `opencode mcp add` ([docs][oc-mcp]) | stdio or streamable HTTP; `~/.pi/agent/mcp.json`, project `.pi/mcp.json` after trust; `pi mcp add` ([docs][pi-mcp]) |
+| Headless and CI mode (read 2026-11-27) | `-p`; `--output-format` text, json or stream-json; `--bare`; official `anthropics/claude-code-action@v1` ([docs][cc-headless], [Action][cc-gha]) | `codex exec`; `--json` JSONL, `--output-schema`; read-only sandbox by default; `openai/codex-action@v1` ([exec][cx-exec], [Action][cx-gha]) | `-p` or non-TTY; `--output-format` json or stream-json; Action repo `google-github-actions/run-gemini-cli` exists, its docs not read ([docs][gem-headless], [repo][gem-gha]) | `opencode run` for scripts and CI; output formats not documented on the page read; GitHub integration only on the previous-version docs ([CLI][oc-cli], [v1][oc-gh]) | `--print`, `--mode json` (JSONL), `--mode rpc`; GitHub Action not documented on the pages read ([CLI][pi-cli]) |
+| Cloud or remote runs (read 2026-11-27) | Cloud sessions from web, phone, desktop or terminal (`--cloud`, `--teleport`); Remote Control drives a local session from claude.ai or mobile ([cloud][cc-web], [Remote Control][cc-rc]) | Codex Cloud runs tasks in hosted environments, startable from the CLI; remote connections to another computer or SSH host ([cloud][cx-cloud], [remote][cx-remote]) | Vendor-hosted runs not documented on the pages read; it can call remote A2A subagents ([docs][gem-remote]) | Shared background server, `--server <url>` connects a client; hosted runs not documented on the pages read ([CLI][oc-cli]) | Not documented (read 2026-11-27); RPC mode controls a separate Pi process ([CLI][pi-cli]) |
 
 ### Which patterns each harness shows
 
@@ -359,6 +368,45 @@ to `permissions`/`shell`/`subagent` ([permissions][oc-perm]); its analysis doc c
 [cc-hooks]: https://code.claude.com/docs/en/hooks
 [cc-how]: https://code.claude.com/docs/en/how-claude-code-works
 [cc-cli]: https://code.claude.com/docs/en/cli-reference
+[cc-memory]: https://code.claude.com/docs/en/memory
+[cc-skills]: https://code.claude.com/docs/en/skills
+[cc-plugins]: https://code.claude.com/docs/en/plugins/overview
+[cc-subagents]: https://code.claude.com/docs/en/sub-agents
+[cc-mcp]: https://code.claude.com/docs/en/mcp
+[cc-headless]: https://code.claude.com/docs/en/headless
+[cc-gha]: https://code.claude.com/docs/en/github-actions
+[cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
+[cc-rc]: https://code.claude.com/docs/en/remote-control
+[cx-agents]: https://learn.chatgpt.com/docs/agent-configuration/agents-md
+[cx-mem]: https://learn.chatgpt.com/docs/customization/memories
+[cx-skills]: https://learn.chatgpt.com/docs/build-skills
+[cx-plugins]: https://learn.chatgpt.com/docs/plugins
+[cx-sub]: https://learn.chatgpt.com/docs/agent-configuration/subagents
+[cx-mcp]: https://learn.chatgpt.com/docs/extend/mcp
+[cx-exec]: https://learn.chatgpt.com/docs/non-interactive-mode
+[cx-gha]: https://learn.chatgpt.com/docs/github-action
+[cx-cloud]: https://learn.chatgpt.com/docs/cloud
+[cx-remote]: https://learn.chatgpt.com/docs/remote-connections
+[gem-md]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/gemini-md.md
+[gem-automem]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/auto-memory.md
+[gem-skills]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/skills.md
+[gem-ext]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/extensions/index.md
+[gem-sub]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/core/subagents.md
+[gem-mcp]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/tools/mcp-server.md
+[gem-headless]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/headless.md
+[gem-gha]: https://github.com/google-github-actions/run-gemini-cli
+[gem-remote]: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/core/remote-agents.md
+[oc-instr]: https://opencode.ai/docs/instructions
+[oc-skills]: https://opencode.ai/docs/skills
+[oc-plugins]: https://opencode.ai/docs/plugins
+[oc-agents]: https://opencode.ai/docs/agents
+[oc-mcp]: https://opencode.ai/docs/mcp-servers
+[oc-gh]: https://opencode.ai/v1/docs/github/
+[pi-conf]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/configuration.md
+[pi-skills]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md
+[pi-pkg]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md
+[pi-mcp]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/mcp.md
+[pi-cli]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/cli.md
 
 ## Build vs Adopt a Harness (checked 2026-11-18)
 
