@@ -362,7 +362,7 @@ auth-table and community coverage (5) → row N87.
 | N78 | Capability table: Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf added to the Cross-Harness Matrix | agent | All 13 mechanics filled or marked not documented, dated; two passes |
 | ~~N79~~ | ~~Session save and resume for the same seven harnesses; re-check the unverified rows~~ | agent | shipped (checkpoint and resume rows for seven harnesses; Codex, Gemini CLI and OpenCode re-checked) |
 | N80 | Configuration and policy by harness | agent | Table merged; two passes |
-| N81 | Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps | agent | Table merged; two passes |
+| ~~N81~~ | ~~Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps~~ | agent | shipped (§ Capability map across forges, 16 capabilities × 6 forges) |
 | N82 | Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens) | agent | New doc merged with hub and index rows; two passes |
 | N83 | Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires) | agent | New doc merged; m3d leads verified or dropped; two passes |
 | N84 | Privacy law touchpoints: GDPR (EU), UK GDPR, CCPA/CPRA, Canada (PIPEDA, Quebec Law 25) | agent | New doc merged with touchpoint table and links; two passes |
