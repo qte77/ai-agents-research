@@ -1,7 +1,6 @@
-/* EyeRest design tokens (default variant), vendored from the canonical brand
-   source qte77/qte77/brand/DESIGN.md. Reference tokens, never a raw hex, never a
-   blue accent. `prefers-color-scheme` flips light/dark; values re-resolve from
-   the matching block. */
+/* Colours come from eyerest.css (EyeRest brand kit copy, not hand-edited; qte77/qte77
+   brand/DESIGN.md is the source). This file holds fonts, layout tokens and rules only.
+   Reference tokens, never a raw hex, never a blue accent. */
 
 /* -- Fonts: self-hosted Inter + JetBrains Mono (latin woff2).
    Fetched on demand into assets/fonts/ via `make graph-fonts`; if absent, the
@@ -28,18 +27,8 @@
   src: url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
 
+/* Colour-scheme hints per theme (the colour tokens themselves come from eyerest.css). */
 :root {
-  --bg: #ece8d8;
-  --surface: #e2dec8;
-  --border: #c8c4b0;
-  --text: #2c2818;
-  --text-muted: #686040;
-  --primary: #7a6010;
-  --primary-on: #ece8d8;
-  /* Folder colours for the doc graph: warm hues only (EyeRest is zero-blue). */
-  --cat-rust: #9a4a28;
-  --cat-olive: #5a6a1a;
-  --cat-clay: #8a6a4a;
   color-scheme: light;
 
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -52,36 +41,12 @@
   --container: 768px;
 }
 
-/* Dark palette — explicit `data-theme="dark"`, or the OS preference unless the
-   user has explicitly chosen a mode. The block is duplicated by necessity: a
-   media-query selector can't be grouped with a plain one. No-JS users (no
-   data-theme attr) still get OS-driven dark via the second block. */
 :root[data-theme="dark"] {
-  --bg: #1c1a14;
-  --surface: #242018;
-  --border: #383428;
-  --text: #d8d0b8;
-  --text-muted: #a89878;
-  --primary: #c8a858;
-  --primary-on: #1c1a14;
-  --cat-rust: #d08860;
-  --cat-olive: #a8b868;
-  --cat-clay: #c8a888;
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --bg: #1c1a14;
-    --surface: #242018;
-    --border: #383428;
-    --text: #d8d0b8;
-    --text-muted: #a89878;
-    --primary: #c8a858;
-    --primary-on: #1c1a14;
-    --cat-rust: #d08860;
-    --cat-olive: #a8b868;
-    --cat-clay: #c8a888;
     color-scheme: dark;
   }
 }
