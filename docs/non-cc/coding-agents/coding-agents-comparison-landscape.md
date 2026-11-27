@@ -81,7 +81,7 @@ first-party docs for the rest, each read 2026-11-27. Nothing was run.
 | Codex CLI (`rust-v0.172.0`) | Rust `image` crate 0.25.9 (JPEG, PNG, GIF, WebP). PNG, JPEG and WebP within the limits keep their original bytes; GIF is re-encoded to PNG; larger images are resized with a triangle filter to 2048 px longest edge and 2,500 32-pixel patches by default (6000 px and 10,000 patches for "original" detail). The `view_image` tool returns the original bytes as a `data:` URL and leaves resizing to the history step | An image content item (`input_image`) carrying the data URL | No local reader for user PDF files found; `pdf` appears in a PDF artifact plugin and in the web-search tool (screenshots of PDF pages it opens online), not in the file-upload path. The model-info type has no document or video modality (`Text`, `Image`, `Audio` among its input modalities) | `codex-rs/utils/image/Cargo.toml` and `src/lib.rs`; `codex-rs/core/src/tools/handlers/view_image.rs`; `codex-rs/protocol/src/openai_models.rs`, `codex-rs/core-plugins/src/artifact_operation.rs`, `codex-rs/codex-api/src/search.rs` ([release][codex-rel]) |
 | Gemini CLI (`v0.71.1`) | None for media: `read_file` reads the bytes, base64-encodes them and takes the MIME type from the `mime` package (file extension) for images, PDF and video, while audio uses an extension allowlist and an unsupported audio file returns an error; no resize | One `inlineData` part (base64 data plus MIME type) for image, PDF, audio and video | Not parsed locally: no PDF package in `packages/core/package.json`; the model API reads the PDF | `packages/core/src/utils/fileUtils.ts`; [release][gemini-rel] |
 | OpenCode (`v1.19.6`) | Two read tools in the tree. The one in `packages/opencode` base64-encodes PNG, JPEG, GIF, WebP and PDF into a `data:` attachment with no resize. A newer `packages/core` read tool normalizes images through an image service whose resizer package is the `photon-node` WebAssembly build (`@silvia-odwyer/photon-node`); which tool the shipped binary uses was not traced | A file attachment with a data URL | Passed as an attachment, not parsed locally | `packages/opencode/src/tool/read.ts`; `packages/core/src/tool/read.ts`; `packages/core/src/image.ts` ([release][oc-rel]) |
-| Aider (`v0.86.0`) | Reads the file and base64-encodes it, no resize; Pillow is imported in `aider/models.py` and `aider/commands.py` (`ImageGrab` in the `/paste` command); the `models.py` use was not traced | An `image_url` message part with a data URL, only if the model is marked as supporting images or PDFs | Sent as an `image_url` part with a data URL plus a text part naming the PDF file, if the model metadata says it takes PDFs; not parsed locally | `aider/coders/base_coder.py`, `aider/utils.py`, `aider/models.py`, `aider/commands.py`, `requirements/requirements.in` ([release][aider-rel]) |
+| Aider (`v0.86.0`) | Reads the file and base64-encodes it, no resize found in the paths read; Pillow is imported in `aider/models.py` and `aider/commands.py` (`ImageGrab` in the `/paste` command); the `models.py` use was not traced | An `image_url` message part with a data URL, only if the model is marked as supporting images or PDFs | Sent as an `image_url` part with a data URL plus a text part naming the PDF file, if the model metadata says it takes PDFs; not parsed locally | `aider/coders/base_coder.py`, `aider/utils.py`, `aider/models.py`, `aider/commands.py`, `requirements/requirements.in` ([release][aider-rel]) |
 
 Cline was not read at source; its row stays in [Input by harness](#input-by-harness).
 
@@ -93,9 +93,11 @@ Model side (read 2026-11-27):
   not whether OpenAI uses the name Astra for another product.
 - **OpenAI API, PDFs:** the Responses API extracts text and page images from a PDF and sends both
   to models that take images; other documents get text only ([file inputs][oai-files]).
-- **Claude API:** a PDF reaches the model as extracted text plus a page image per page, at most 1,568
-  visual tokens per page image ([PDF support][claude-pdf]); images are downscaled by the API when over the
-  model's long-edge or visual-token limit ([vision][claude-vision]). Neither page lists video.
+- **Claude API:** a PDF reaches the model as extracted text plus a page image per page
+  ([PDF support][claude-pdf]); images over the model's size limits are downscaled by the API
+  ([vision][claude-vision]). Image token numbers are in
+  [Claude Code Image Token Economics](../../cc-community/CC-vlm-screen-sharing-landscape.md#claude-code-image-token-economics).
+  Neither page lists video.
 - **Gemini API:** documents take up to 1,000 PDF pages inline or via the Files API ([document
   processing][gem-doc]); video is a separate input type ([video understanding][gem-vid]). Which model
   Gemini CLI uses by default is not settled by its code: `models.ts` at `v0.71.1` names several
@@ -105,7 +107,7 @@ Model side (read 2026-11-27):
 Findings from the table:
 
 - **Of the open-source harnesses read, Codex CLI is the one with a confirmed local resize path (Rust
-  `image` crate), applied to images over its limits.** Gemini CLI and Aider ship the raw bytes as base64, as does the older OpenCode read
+  `image` crate), applied to images over its limits.** Gemini CLI and Aider (in the paths read) ship the raw bytes as base64, as does the older OpenCode read
   tool; any downscaling for those happens at the provider API (not verified per provider).
 - **PDF parsing is not done locally by any open-source harness read here.** Gemini CLI, OpenCode and
   Aider pass the file through; Codex CLI has no local reader for user PDF files in what was read. The one documented local PDF
@@ -115,8 +117,9 @@ Findings from the table:
   but not video, so the "not documented" cell in [Input by harness](#input-by-harness) understates the code.
 - **Inference (ours):** the Claude Code claim in
   [Read Tool: PDF & Image Parsing](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#read-tool-pdf--image-parsing)
-  that cites an issue and system-prompt extracts for `poppler-utils` is now backed by Claude Code's own
-  tools reference, which names `pdftoppm` for page-range reads; the whole-file path for short PDFs has no
+  that cites an issue and system-prompt extracts for `poppler-utils` is only partly backed by Claude Code's own
+  tools reference: that doc says poppler is used for text extraction, while the tools reference names
+  `pdftoppm`, which renders page images, for page-range reads; the whole-file path for short PDFs has no
   first-party description of where parsing happens.
 
 ## Model access and billing
