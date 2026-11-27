@@ -36,7 +36,7 @@ The list is eight false assumptions that people building their first distributed
 [Peter Deutsch's own page][deutsch] (read 2026-11-27) states them: "The network is reliable; Latency is
 zero; Bandwidth is infinite; The network is secure; Topology doesn't change; There is one administrator;
 Transport cost is zero; The network is homogeneous", and says all "prove to be false in the long run". It
-points to Arnon Rotem-Gal-Oz's article for details ([rgo-pdf][rgo-pdf]; **that PDF timed out when fetched
+points to Arnon Rotem-Gal-Oz's article for details (`https://www.rgoarchitects.com/Files/fallacies.pdf`; **that PDF timed out when fetched
 on 2026-11-27 and was not read**). The secondary [Wikipedia page][wiki-fallacies] (read 2026-11-27)
 describes the list as "a set of assertions made by L. Peter Deutsch and others at Sun Microsystems".
 
@@ -197,7 +197,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Name | Reason | Date | Link |
 |---|---|---|---|
-| Rotem-Gal-Oz fallacies PDF as a source | Fetch timed out; the page was not read, so not quoted | 2026-11-27 | [PDF][rgo-pdf] |
+| Rotem-Gal-Oz fallacies PDF as a source | Fetch timed out; the page was not read, so not quoted | 2026-11-27 | PDF URL in the fallacies section (plain text) |
 | Richards/Ford "three more fallacies" as established | Seen only on Wikipedia; stated as secondary-only | 2026-11-27 | [Wikipedia][wiki-fallacies] |
 | AlgoMaster explainer as evidence | Tutorial site with no first-party sourcing; lead only | 2026-11-27 | [AlgoMaster][algomaster] |
 
@@ -205,7 +205,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 
 | Source | Content |
 |---|---|
-| [Wikipedia fallacies][wiki-fallacies], [APNIC][apnic], [AlgoMaster][algomaster], [Rotem-Gal-Oz PDF][rgo-pdf] | Fallacies list and history (secondary; PDF unread) |
+| [Wikipedia fallacies][wiki-fallacies], [APNIC][apnic], [AlgoMaster][algomaster], Rotem-Gal-Oz PDF (plain-text URL above) | Fallacies list and history (secondary; PDF unread) |
 | [Lamport clocks][lamport-clocks], [Byzantine][byz], [Paxos][paxos], [End-to-end][e2e], [FLP][flp], [CAP][cap], [Dynamo][dynamo], [CRDT][crdt], [PACELC][pacelc], [Sagas][sagas-paper] | Papers (URL resolved; body not text-read) |
 | [Raft site][raft-site], [Raft paper][raft-paper] | Raft (site read) |
 | [Fowler bounded context][bc], [circuit breaker][cb], [event sourcing][evsrc] | Concept definitions |
@@ -218,7 +218,6 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [deutsch]: https://nighthacks.com/jag/res/Fallacies.html
 [apnic]: https://blog.apnic.net/2025/12/08/21-years-and-counting-of-eight-fallacies-of-distributed-computing/
 [algomaster]: https://algomaster.io/learn/computer-networks/fallacies-of-distributed-computing
-[rgo-pdf]: https://www.rgoarchitects.com/Files/fallacies.pdf
 [lamport-clocks]: https://lamport.azurewebsites.net/pubs/time-clocks.pdf
 [byz]: https://lamport.azurewebsites.net/pubs/byz.pdf
 [paxos]: https://lamport.azurewebsites.net/pubs/lamport-paxos.pdf
