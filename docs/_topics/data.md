@@ -36,6 +36,12 @@ layers, catalogs and ontologies, graph and vector stores. Pointers only; see [th
 
 Ontology generation and the agent-native ontology tools are indexed in [knowledge-graphs.md](knowledge-graphs.md).
 
+## Enterprise data APIs
+
+| Doc / section | What it covers | Bucket |
+|---|---|---|
+| [agentic-enterprise-os-landscape.md § Enterprise data APIs for agents](../non-cc/frameworks/agentic-enterprise-os-landscape.md#enterprise-data-apis-for-agents) | Auth, plan, unattended access, terms and MCP servers for 16 enterprise data vendors | non-cc |
+
 ## Graphs and vectors
 
 Graph databases, graph query languages, graph MCP servers and ontology tools are indexed in

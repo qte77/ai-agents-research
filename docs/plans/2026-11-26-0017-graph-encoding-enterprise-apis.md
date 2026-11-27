@@ -3,7 +3,7 @@ title: Doc-graph focus, kit colours and encoding; harness subscriptions, M365 AP
 status: approved
 issue: "#1071"
 created: 2026-11-26
-updated: 2026-11-26
+updated: 2026-11-27
 ---
 
 Tracking issue: #1071 (kept from plan 0016). Successor to
@@ -18,19 +18,15 @@ checks all of it.
 - **Shipped before this plan:** plan 0016 rows N34 to N58 and N61 (#1072 to #1108).
 - **Opened 2026-11-26** from the owner's decisions in one sitting. Every decision is recorded in
   [§ Owner decisions](#owner-decisions-2026-11-26), so nothing needs asking again.
-- **In flight:** wave 1. N60 shipped (#1110); N59, N64a, N64b and N64c in review.
+- **Shipped in this plan (2026-11-26 to 11-27):** every agent row. N60 (#1110), N64c (#1111), N59
+  (#1112), N64a (#1113), N64b (#1114), N63 (#1115), N66 (#1116) and N65 (the PR that carries this
+  status).
+- **In flight:** nothing.
 
 **Next, in order** (rows in [§ Remaining work](#remaining-work)):
 
-1. **Parallel wave 1.** Up to five lanes at once, one git worktree each:
-   - **Code:** N60, then N59.
-   - **Content:** N64a, N64b and N64c.
-2. **Parallel wave 2,** once wave 1's lanes return:
-   - **Code:** N63. It builds on N60's `paint()`, so it branches from `main` after N60 merges.
-   - **Content:** N65, in three lanes of about five vendors each, then N66.
-3. **Merging.** Merge serially as each lane passes its checks. Merge `main` into the branch, strike the
-   row as the last commit, then push and merge.
-4. **After the batch:** release (minor), but only on the owner's word.
+1. **Release (minor)** for the batch, but only on the owner's word.
+2. **Owner-gated rows** below, when the owner opens one. No agent row is open.
 
 **Owner-gated, don't start:** N9, N38, N41, N56 and N62, plus the `13-*` rows. Each row's own text
 gives its gate.
@@ -42,6 +38,10 @@ gives its gate.
   worktree right after its merge.
 - **The shell hook rewrites `grep` and `du`** (compact output). Use `git grep` or a small `python3`
   filter when you need exact lines.
+- **Reading web pages from a subagent:** a lane's own page-fetch subagents could not hand their
+  reports back, so lanes and fact-checkers read pages with the polyfetch CLI (browser tier for
+  JavaScript sites) and saved the text to grep. Pages that return 403 to the link checker are cited
+  as plain-text URLs in the Sources table, not linked, as the Gartner row there already does.
 - **CI link check:** a GitHub blob URL can return 503 from the runner. Confirm the file exists with
   `gh api repos/<o>/<r>/contents/<path>` and that the URL is not in the PR's diff. Then treat it as
   green under the link-gate rule. No excludes without the owner.
@@ -290,7 +290,7 @@ Re-fetch these before writing. Quote only text that is verbatim at the source.
 | ~~N64a~~ | ~~Harness subscriptions update in `coding-agents-comparison-landscape.md` ([§ Lane tasks](#lane-tasks))~~ | agent | Shipped 2026-11-26 (this PR): § Using subscriptions in other harnesses gains Copilot CLI Entra sign-in on a Microsoft 365 Copilot licence (preview, Frontier), GitHub's official OpenCode sign-in, the Claude and Codex agents on a Copilot plan, Remote Control's subscription-only rule, the gateway credential rule, and the unofficial Copilot proxies marked as such; two fact-check passes |
 | ~~N64b~~ | ~~M365 Graph and Copilot APIs subsection in `microsoft-365-copilot-analysis.md`, plus the Chat API permission label fix~~ | agent | Shipped 2026-11-26 (this PR): § Microsoft Graph Copilot APIs (Chat, Retrieval, Search, interaction export, usage reports; permissions and licence per endpoint), the four ways to use the licence from outside, the Copilot APIs terms (12), (13) and (18), and the Chat API Sources label fixed to delegated-only with seven permissions; two fact-check passes |
 | ~~N64c~~ | ~~Idle-compaction cause update in `CC-prompt-caching-behavior.md`~~ | agent | Shipped 2026-11-26 (this PR): § Idle compaction gains the 2.1.326 and 2.1.332 changelog entries; § Second data point names the four gaps (2.3, 12.6, 14.6, 17.5 h on 2.1.330 and 2.1.331), the 2.3 h gap below the 200K minimum, a later 17.1 h gap on 2.1.332 with no marker (weak evidence), and a stopped host as the better-supported cause (Codespaces 30-minute default idle timeout, 12-hour maximum lifetime; inference); two fact-check passes |
-| N65 | Enterprise data APIs for agents: one table of 16 vendors in `agentic-enterprise-os-landscape.md` | agent | Merged after two fact-check passes; no cell without a vendor source or an `(unverified)` mark; hub rows added |
+| ~~N65~~ | ~~Enterprise data APIs for agents: one table of 16 vendors in `agentic-enterprise-os-landscape.md`~~ | agent | Shipped 2026-11-27 (this PR): § Enterprise data APIs for agents in `agentic-enterprise-os-landscape.md`, 16 vendors by auth model, licence or plan, unattended access, terms on automation or AI, and official MCP server, each cell from the vendor's own pages or marked unverified with a reason (SAP, Workday, Notion terms and ServiceNow product docs not readable); hub section in `_topics/data.md`; three lanes, a re-verify round and two fact-check passes |
 | ~~N66~~ | ~~Feasibility study: the doc graph on SharePoint and other document management systems, in `repo-to-docs-tools-landscape.md`~~ | agent | Shipped 2026-11-27 (this PR): § Doc-link graphs over a document management system (feasibility) in `repo-to-docs-tools-landscape.md`: listing, links and unattended auth for SharePoint/OneDrive, Google Drive, Box, Confluence, Nextcloud and OpenCloud; links as structured data only in Confluence and Google Docs; stub-markdown adapter for `doc_graph.py`; recommendation: don't build now, SharePoint first if a DMS corpus appears; effort 3 to 5 days (our estimate); hub row added; two fact-check passes |
 | N9 | Assess YouTube videos (ai-that-works playlist, Cole Medin channel) as research leads (owner 2026-11-22; #1009) | owner | **ai-that-works part done 2026-11-22** (owner narrowed it to the companion repo's transcripts): all 86 episode dirs triaged from the repo (github.com/ai-that-works/ai-that-works, no licence, so read and cited only), 47 with transcripts; 3 strong, 18 possible and 38 dropped leads, list and reasons in the session triage notes. Shipped, each re-checked at first-party sources with two fact-check passes: #1031 GEPA, #1032 SlopCodeBench, #1033 HumanLayer status, #1034 lethal trifecta. **Concept pass** (owner 2026-11-22: concepts, how-tos and best practices count, not only tools): about 225 ideas triaged, 24 kept, each cited as a single-source practitioner claim with outside corroboration where it exists: #1039 harness patterns, #1040 eval practices, #1041 memory, skills, observability and event-log projections; five LLM-application patterns held for lack of a fitting doc. **Open, owner-gated:** Cole Medin's channel, once the owner picks a transcript route (from this Codespace, yt-dlp and headless browsers hit YouTube's sign-in bot check) |
 | N38 | paperverse: make the weekly real-feed sync mergeable, add `triage/kb-papers` as a source, then one catch-up sync (D2) | agent in a paperverse session; owner if the fix needs a setting or an App | The sync PR gets every required check and merges without help; paperverse `main` holds all weekly files and `arxiv-kb.jsonl`; deployed page shows them |
