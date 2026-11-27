@@ -32,6 +32,7 @@ definition first; if one exists, link it, and if not, add the term here with its
 | GraphRAG | Graph-based retrieval-augmented generation | [agent-frameworks-infrastructure-landscape.md § GraphRAG family][graphrag] |
 | Hybrid search, RRF | RRF = Reciprocal Rank Fusion | [agent-frameworks-infrastructure-landscape.md § Hybrid search & query transforms][hybrid] |
 | Reranker | — | [agent-frameworks-infrastructure-landscape.md § Rerankers][rerankers] |
+| HybridRAG | Knowledge-graph plus vector retrieval (not hybrid search) | [agent-frameworks-infrastructure-landscape.md § RAG patterns at a glance][rag] |
 
 ## Knowledge structures
 
@@ -48,6 +49,8 @@ definition first; if one exists, link it, and if not, add the term here with its
 | SPARQL | The W3C query language for RDF | [same section][formal] |
 | JSON-LD | The W3C JSON format for Linked Data | [same section][formal] |
 | Property graph | — | [graph-databases-query-languages-landscape.md § Property Graph vs RDF][pg-rdf] |
+| Hypergraph, hyperedge | — | [agent-frameworks-infrastructure-landscape.md § GraphRAG vs vector RAG and KG construction evidence][hyper] |
+| N-ary relation, multilayer network | — | [graph-databases-query-languages-landscape.md § Higher-order and layered relationships][higher-order] |
 | Cypher, GQL | GQL = the ISO graph query language (ISO/IEC 39075) | [graph-databases-query-languages-landscape.md § Query Languages][query] |
 | Data lake, lakehouse, data warehouse | — | [data-platforms-lakehouse-landscape.md § Data lake vs lakehouse vs data warehouse][lakehouse] |
 | MOC, Zettelkasten, PARA, Diátaxis | MOC = Map of Content; PARA = Projects, Areas, Resources, Archives | [knowledge-organisation-methods-landscape.md § Methods at a glance][methods] |
@@ -87,6 +90,8 @@ This page cites only corpus docs; each owner section carries its own sources.
 [hybrid]: non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#hybrid-search--query-transforms
 [rerankers]: non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#rerankers
 [structure]: non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#choosing-a-structure
+[hyper]: non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#graphrag-vs-vector-rag-and-kg-construction-evidence
+[higher-order]: non-cc/infrastructure/graph-databases-query-languages-landscape.md#higher-order-and-layered-relationships
 [privacy]: sdlc-lcm/privacy-law-touchpoints-landscape.md#requirements-at-a-glance
 [formal]: non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#formal-ontologies--semantic-web
 [pg-rdf]: non-cc/infrastructure/graph-databases-query-languages-landscape.md#property-graph-vs-rdf
