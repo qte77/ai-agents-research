@@ -118,8 +118,8 @@ Findings from the table:
 - **Inference (ours):** the Claude Code claim in
   [Read Tool: PDF & Image Parsing](../../cc-native/plugins-ecosystem/CC-web-scraping-plugins-analysis.md#read-tool-pdf--image-parsing)
   that cites an issue and system-prompt extracts for `poppler-utils` is only partly backed by Claude Code's own
-  tools reference: that doc says poppler is used for text extraction, while the tools reference names
-  `pdftoppm`, which renders page images, for page-range reads; the whole-file path for short PDFs has no
+  tools reference: that doc described poppler as used for text extraction (now corrected there), while the
+  tools reference names `pdftoppm`, which renders page images, for page-range reads; the whole-file path for short PDFs has no
   first-party description of where parsing happens.
 
 ## Model access and billing
